@@ -33,7 +33,7 @@ type DE_VE83769_Url_1={
 
 type E_VE83769_Url=TE_Endpoint_3<"urlEndpoint",DU_Url,M_VE83769>|{
 	clickTrackingParams: string;
-	loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/paralleladinteraction?${string}`>[];
+	loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/paralleladinteraction?ai=${string}&sigh=${string}`>[];
 	commandMetadata: M_VE83769;
 	urlEndpoint: DE_VE83769_Url_1;
 };
