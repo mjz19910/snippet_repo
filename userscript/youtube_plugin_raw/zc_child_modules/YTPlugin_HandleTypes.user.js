@@ -2107,40 +2107,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @type {string[]} */
 	continuation_logged_str=[];
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
-	decode_continuation_token_obj(cf,x) {
-		switch(cf) {
-			default: {
-				if(this.continuation_logged_str.includes(cf)) break;
-				this.continuation_logged_str.push(cf);
-				console.log(`\ncase "${cf}":`);
-				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
-				debugger;
-			} break;
-			case "ad_layout.ad_serving_data_entry":{
-				/** @type {P_ad_layout_ad_serving_data_entry} */
-				let u=as_any(x);
-				this.P_ad_layout_ad_serving_data_entry(u);
-			} break;
-			case "tracking.click_tracking_params": {
-				/** @type {R_ClickTrackingObj} */
-				let u=as_any(x);
-				this.R_ClickTrackingObj(u);
-			} break;
-			case "tracking.params": {
-				/** @type {P_tracking_params} */
-				let u=as_any(x);
-				this.R_TrackingObj(u);
-			} break;
-		}
-	}
 	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
 	decode_continuation_token_dec_arr(cf,x) {
 		if(x.length===0) debugger;
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
 		try {
-			this.decode_continuation_token_obj(cf,bin_obj);
+			this.decode_binary_object(cf,bin_obj);
 		} catch(e) {
 			console.log("failed to decode token",bin_obj);
 			console.log("[failed_with]");
@@ -4403,6 +4376,33 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(typeof f3==="number"&&f3>0b11111100000000010110010000100111) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
+		}
+	}
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
+	decode_binary_object(cf,x) {
+		switch(cf) {
+			default: {
+				if(this.continuation_logged_str.includes(cf)) break;
+				this.continuation_logged_str.push(cf);
+				console.log(`\ncase "${cf}":`);
+				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
+				debugger;
+			} break;
+			case "ad_layout.ad_serving_data_entry":{
+				/** @type {P_ad_layout_ad_serving_data_entry} */
+				let u=as_any(x);
+				this.P_ad_layout_ad_serving_data_entry(u);
+			} break;
+			case "tracking.click_tracking_params": {
+				/** @type {R_ClickTrackingObj} */
+				let u=as_any(x);
+				this.R_ClickTrackingObj(u);
+			} break;
+			case "tracking.params": {
+				/** @type {P_tracking_params} */
+				let u=as_any(x);
+				this.R_TrackingObj(u);
+			} break;
 		}
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
