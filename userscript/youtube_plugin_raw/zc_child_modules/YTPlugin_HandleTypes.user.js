@@ -222,15 +222,6 @@ class HandleTypes extends ServiceMethods {
 		if("richSectionRenderer" in x) return this.R_RichSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_RichItemContent} x */
-	G_RichItemContent(x) {
-		const cf="G_RichItemContent"; this.k(cf,x);
-		if("adSlotRenderer" in x) return this.R_AdSlot(x);
-		if("videoRenderer" in x) return this.R_Video(x);
-		if("radioRenderer" in x) return this.R_Radio(x);
-		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
 	G_ResponseTypes(response,x) {
 		const cf="G_ResponseTypes"; this.g_k(cf,x);
