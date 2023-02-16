@@ -188,7 +188,7 @@ class IndexedDBService extends BaseService {
 					if(cur_cursor===null) {
 						if(i===0) {
 							this.committed_data.push(value);
-							this.add_data_to_store(obj_store,value);
+							await this.add_data_to_store(obj_store,value);
 						}
 						if(i===0||i===1) break;
 						console.log("cursor_done after %o",i);
