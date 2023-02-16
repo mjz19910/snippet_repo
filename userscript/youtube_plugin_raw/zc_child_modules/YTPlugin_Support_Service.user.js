@@ -42,7 +42,11 @@ class Support_RS_Player extends ServiceMethods {
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {
 		let [sig_0,sig_1]=split_string_once(x,".");
-		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
+		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger;
+		switch(sig_0.length) {
+			default: debugger; break;
+			case 38: case 40:
+		}
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
 	}
 	/** @private @arg {D_Cache_MD} x */
