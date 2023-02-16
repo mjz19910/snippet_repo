@@ -7644,5 +7644,14 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(channelHandleText);
 		this.G_Text(videosCountText);
 	}
+	/** @private @arg {R_ChannelHeaderLinks} x */
+	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
+	/** @private @arg {D_ChannelHeaderLinks} x */
+	D_ChannelHeaderLinks(x) {
+		const cf="D_ChannelHeaderLinks";
+		const {primaryLinks,secondaryLinks,...y}=this.s(cf,x); this.g(y);
+		this.z(primaryLinks,this.D_PrimaryLinkItem);
+		this.tz(secondaryLinks,this.D_PrimaryLinkItem);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
