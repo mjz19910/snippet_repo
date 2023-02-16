@@ -5750,6 +5750,53 @@ class ServiceMethods extends ServiceData {
 		let [u2]=this.z(u1,x => this.handle_types.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.handle_types.D_NotificationMenuPopupMenuItem);
 	}
+	/** @public @arg {R_CompactLink} x */
+	R_CompactLink(x) {this.H_("R_CompactLink","compactLinkRenderer",x,this.D_CompactLink);}
+	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
+	D_CompactLink_NavEndpoint(x) {
+		const cf="D_CompactLink_NavEndpoint"; this.k(cf,x);
+		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
+		if("browseEndpoint" in x) {debugger; return;}
+		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
+	D_CompactLink_Styled(cf,x) {
+		switch(x.style) {
+			default: x===""; debugger; break;
+			case "COMPACT_LINK_STYLE_TYPE_HISTORY_MY_ACTIVITY_LINK": {
+				let u=this.D_Link_Omit(cf,x);
+				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
+				this.D_CompactLink_NavEndpoint(navigationEndpoint);
+			} break;
+			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": {
+				let u=this.D_Link_Omit(cf,x);
+				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
+				this.D_CompactLink_NavEndpoint(navigationEndpoint);
+			} break;
+			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
+				let u=this.D_Link_Omit(cf,x);
+				const {icon,style,navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
+				this.D_CompactLink_NavEndpoint(navigationEndpoint);
+			} break;
+		}
+	}
+	/** @private @arg {D_CompactLink} x */
+	D_CompactLink(x) {
+		const cf="D_CompactLink"; this.k(cf,x);
+		if("style" in x) {return this.D_CompactLink_Styled(`${cf}.Styled`,x);}
+		if("icon" in x) {
+			let u=this.D_Link_Omit(cf,x);
+			const {icon,...y}=this.s(`${cf}.icon`,u); this.g(y);
+			switch(x.icon.iconType) {
+				case "PERSON_ADD": break;
+				default: debugger; break;
+			}
+			return;
+		}
+		this.cg.make_codegen_group(cf,x);
+	}
 	/** @private @arg {D_TopbarMenuButton_MenuItem} x */
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem";
@@ -5757,7 +5804,7 @@ class ServiceMethods extends ServiceData {
 		this.ceq(sections.length,1);
 		let n=this.handle_types.TR_MP_MenuSection(sections[0]);
 		let n1=this.handle_types.T_Items_TP("R_CompactLink_Items",n);
-		this.tz(n1,this.handle_types.R_CompactLink);
+		this.tz(n1,this.R_CompactLink);
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}

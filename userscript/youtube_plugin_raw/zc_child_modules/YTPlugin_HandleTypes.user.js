@@ -550,8 +550,6 @@ class HandleTypes extends ServiceMethods {
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
 	/** @private @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
-	/** @public @arg {R_CompactLink} x */
-	R_CompactLink(x) {this.H_("R_CompactLink","compactLinkRenderer",x,this.D_CompactLink);}
 	/** @private @arg {R_PlaylistSidebar} x */
 	R_PlaylistSidebar(x) {this.H_("PlaylistSidebar","playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
@@ -1038,51 +1036,6 @@ class HandleTypes extends ServiceMethods {
 		const {title,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.z(items,this.R_CompactLink);
-	}
-	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
-	D_CompactLink_NavEndpoint(x) {
-		const cf="D_CompactLink_NavEndpoint"; this.k(cf,x);
-		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
-		if("browseEndpoint" in x) {debugger; return;}
-		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
-	D_CompactLink_Styled(cf,x) {
-		switch(x.style) {
-			default: x===""; debugger; break;
-			case "COMPACT_LINK_STYLE_TYPE_HISTORY_MY_ACTIVITY_LINK": {
-				let u=this.D_Link_Omit(cf,x);
-				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
-				this.D_CompactLink_NavEndpoint(navigationEndpoint);
-			} break;
-			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": {
-				let u=this.D_Link_Omit(cf,x);
-				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
-				this.D_CompactLink_NavEndpoint(navigationEndpoint);
-			} break;
-			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
-				let u=this.D_Link_Omit(cf,x);
-				const {icon,style,navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
-				this.D_CompactLink_NavEndpoint(navigationEndpoint);
-			} break;
-		}
-	}
-	/** @private @arg {D_CompactLink} x */
-	D_CompactLink(x) {
-		const cf="D_CompactLink"; this.k(cf,x);
-		if("style" in x) {return this.D_CompactLink_Styled(`${cf}.Styled`,x);}
-		if("icon" in x) {
-			let u=this.D_Link_Omit(cf,x);
-			const {icon,...y}=this.s(`${cf}.icon`,u); this.g(y);
-			switch(x.icon.iconType) {
-				case "PERSON_ADD": break;
-				default: debugger; break;
-			}
-			return;
-		}
-		this.cg.make_codegen_group(cf,x);
 	}
 	/** @private @template {D_CompactLink} T @arg {CF_D_Link} cf @arg {T} x */
 	D_Link_Omit(cf,x) {
