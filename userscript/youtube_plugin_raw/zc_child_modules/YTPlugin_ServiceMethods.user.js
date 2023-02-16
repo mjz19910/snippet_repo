@@ -7471,6 +7471,16 @@ class ServiceMethods extends ServiceData {
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @arg {R_RichSection} x */
+	R_RichSection(x) {this.H_("R_RichSection","richSectionRenderer",x,this.D_RichSection);}
+	/** @arg {D_RichSection} x */
+	D_RichSection(x) {
+		const cf="D_RichSection";
+		const {content: a,trackingParams: b,fullBleed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_RichSection(a);
+		this.trackingParams(b);
+		if(fullBleed!==false) debugger;
+	}
 	/** @private @arg {G_RichGridContent} x */
 	D_RichGridContent(x) {
 		const cf="D_RichGridContent";

@@ -545,8 +545,6 @@ class HandleTypes extends ServiceMethods {
 	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
-	/** @arg {R_RichSection} x */
-	R_RichSection(x) {this.H_("R_RichSection","richSectionRenderer",x,this.D_RichSection);}
 	/** @arg {R_RichShelf} x */
 	R_RichShelf(x) {this.H_("R_RichShelf","richShelfRenderer",x,this.D_RichShelf);}
 	/** @arg {R_InlineSurvey} x */
@@ -615,14 +613,6 @@ class HandleTypes extends ServiceMethods {
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
 	D_PlaylistSidebarSecondaryInfo(x) {this.H_("D_PlaylistSidebarSecondaryInfo","videoOwner",x,this.R_VideoOwner);}
-	/** @arg {D_RichSection} x */
-	D_RichSection(x) {
-		const cf="D_RichSection";
-		const {content: a,trackingParams: b,fullBleed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_RichSection(a);
-		this.trackingParams(b);
-		if(fullBleed!==false) debugger;
-	}
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
