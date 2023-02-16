@@ -1184,7 +1184,13 @@ type D_GuideEntry_WatchHistory={
 	formattedTitle: G_Text;
 	accessibility: TD_Accessibility<"History">;
 };
-type D_GuideEntry_WatchLater=TD_GuideEntry_Simple<"WATCH_LATER">;
+type D_GuideEntry_WatchLater={
+	navigationEndpoint: E_VE5754;
+	icon: T_Icon<"WATCH_LATER">;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: TD_Accessibility<"Watch Later">;
+};
 type D_GuideEntry_WhatToWatch={
 	navigationEndpoint: E_VE3854;
 	icon: T_Icon<"WHAT_TO_WATCH">;

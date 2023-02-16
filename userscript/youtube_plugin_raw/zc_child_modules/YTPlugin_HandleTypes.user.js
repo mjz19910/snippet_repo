@@ -2520,6 +2520,7 @@ class HandleTypes extends ServiceMethods {
 		x: {
 			let x2=navigationEndpoint;
 			if("browseEndpoint" in x2) {
+				if(x2.commandMetadata.webCommandMetadata.rootVe!==6827) debugger;
 				this.E_VE6827(x2);
 				break x;
 			}
@@ -2531,9 +2532,14 @@ class HandleTypes extends ServiceMethods {
 		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType.WithNavEP);
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
 		{
-			let x=navigationEndpoint;
-			if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-			if("browseEndpoint" in x) {debugger; return;};
+			let x2=navigationEndpoint;
+			if("urlEndpoint" in x2) return this.E_VE83769_Url(x2);
+			if("browseEndpoint" in x2) {
+				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
+				x2; debugger;
+				return;
+			};
 		}
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithPrimary} x */
