@@ -4806,6 +4806,18 @@ class ServiceMethods extends ServiceData {
 		this.params("continuation.params",continuation);
 		this.clickTrackingParams(clickTrackingParams);
 	}
+	/** @public @arg {R_LiveChatHeader} x */
+	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.D_LiveChatHeader);}
+	/** @private @arg {D_LiveChatHeader} x */
+	D_LiveChatHeader(x) {
+		const cf="D_LiveChatHeader";
+		const {overflowMenu,collapseButton,viewSelector,...y}=this.s(cf,x); this.g(y);
+		this.R_Menu(overflowMenu);
+		this.R_Button(collapseButton);
+		this.R_SortFilterSubMenu(viewSelector);
+	}
+	/** @public @arg {D_ClientMessages} x */
+	D_ClientMessages(x) {this.k("D_ClientMessages",x); this.z(Object.values(x),this.G_Text);}
 	/** @private @arg {D_LiveChat} x */
 	D_LiveChat(x) {
 		const cf="D_LiveChat";

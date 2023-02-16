@@ -719,8 +719,6 @@ class HandleTypes extends ServiceMethods {
 	R_LiveChatTicker(x) {this.H_("R_LiveChatTicker","liveChatTickerRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatItemList} x */
 	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.g);}
-	/** @public @arg {R_LiveChatHeader} x */
-	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.D_LiveChatHeader);}
 	/** @private @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.g);}
 	/** @private @arg {R_EmojiPicker} x */
@@ -3199,8 +3197,6 @@ class HandleTypes extends ServiceMethods {
 		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);
 		this.a_primitive_bool(isLocked);
 	}
-	/** @public @arg {D_ClientMessages} x */
-	D_ClientMessages(x) {this.k("D_ClientMessages",x); this.z(Object.values(x),this.G_Text);}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
 		const cf="D_CommentSimplebox"; this.k(cf,x);
@@ -4089,24 +4085,6 @@ class HandleTypes extends ServiceMethods {
 		this.z(contents,this.G_Text);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {D_LiveChatHeader} x */
-	D_LiveChatHeader(x) {
-		const cf="D_LiveChatHeader";
-		const {overflowMenu,collapseButton,viewSelector,...y}=this.s(cf,x); this.g(y);
-		this.R_Menu(overflowMenu);
-		this.R_Button(collapseButton);
-		this.R_SortFilterSubMenu(viewSelector);
-	}
-	/** @public @arg {D_AudioConfig} x */
-	D_AudioConfig(x) {x;}
-	/** @public @arg {D_StartSeconds} x */
-	D_StartSeconds(x) {x;}
-	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {x;}
-	/** @public @arg {R_DynamicReadaheadConfig} x */
-	R_DynamicReadaheadConfig(x) {x;}
-	/** @public @arg {D_WebPlayerConfig} x */
-	D_WebPlayerConfig(x) {x;}
 	/** @public @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
 		const cf="D_PlayerConfig";
@@ -4430,6 +4408,16 @@ class HandleTypes extends ServiceMethods {
 	P_dislike_params(x) {x;}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {x;}
+	/** @public @arg {D_AudioConfig} x */
+	D_AudioConfig(x) {x;}
+	/** @public @arg {D_StartSeconds} x */
+	D_StartSeconds(x) {x;}
+	/** @public @arg {D_StreamSelectionConfig} x */
+	D_StreamSelectionConfig(x) {x;}
+	/** @public @arg {R_DynamicReadaheadConfig} x */
+	R_DynamicReadaheadConfig(x) {x;}
+	/** @public @arg {D_WebPlayerConfig} x */
+	D_WebPlayerConfig(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
