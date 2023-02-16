@@ -5295,13 +5295,14 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {R_PageTopAdLayout} x */
 	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
-	/** @private @arg {R_FulfilledLayout} x */
-	R_FulfillmentLayout(x) {
-		this.H_("R_FulfillmentLayout","fulfilledLayout",x,x => {
-			if("inFeedAdLayoutRenderer" in x) return this.R_InFeedAdLayout(x);
-			if("pageTopAdLayoutRenderer" in x) return this.R_PageTopAdLayout(x);
-		});
+	/** @arg {D_FulfilledLayout_Item} x */
+	D_FulfilledLayout_Item(x) {
+		if("inFeedAdLayoutRenderer" in x) return this.R_InFeedAdLayout(x);
+		if("pageTopAdLayoutRenderer" in x) return this.R_PageTopAdLayout(x);
+		debugger;
 	}
+	/** @private @arg {R_FulfilledLayout} x */
+	R_FulfillmentLayout(x) {this.H_("R_FulfillmentLayout","fulfilledLayout",x,this.D_FulfilledLayout_Item);}
 	/** @public @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {D_AdSlot} x */
