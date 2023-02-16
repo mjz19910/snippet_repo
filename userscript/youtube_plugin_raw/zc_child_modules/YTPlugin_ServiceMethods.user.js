@@ -5864,9 +5864,15 @@ class ServiceMethods extends ServiceData {
 			case "BADGE_STYLE_TYPE_AD": case "BADGE_STYLE_TYPE_COLLECTION":
 			case "BADGE_STYLE_TYPE_YPC":
 			case "BADGE_STYLE_TYPE_SIMPLE": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				const {style: {},trackingParams,label,...y}=this.s(cf,x);/*#destructure_later*/
 				this.trackingParams(trackingParams);
 				ia.push(["label",[label]]);
+				if("icon" in y) {
+					const {icon,...y1}=y;
+					ia.push(["icon",[icon.iconType]]);
+					return;
+				}
+				this.g(y);
 			} break;
 			case "BADGE_STYLE_TYPE_MEDIUM_GREY": {
 				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
