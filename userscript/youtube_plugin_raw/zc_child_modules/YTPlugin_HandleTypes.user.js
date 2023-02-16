@@ -125,9 +125,10 @@ class HandleTypes extends ServiceMethods {
 	constructor(x) {
 		super(x);
 		generate_typedef.value=new ss.TypedefGenerator(x);
-		this.z_RS_support_player=new ss.Support_RS_Player(x);
-		this.z_Support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
-		this.z_Support_RS_Watch=new ss.Support_RS_Watch(x);
+		this.support_RS_Player=new ss.Support_RS_Player(x);
+		this.support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
+		this.support_RS_Watch=new ss.Support_RS_Watch(x);
+		this.support_RS_Page_Browse=new ss.Support_RS_Page_Browse(x);
 	}
 	//#endregion
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
@@ -276,7 +277,7 @@ class HandleTypes extends ServiceMethods {
 			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
 			case "notification.record_interactions": return this.RS_Success(x.data);
-			case "player": return this.z_RS_support_player.RS_Player(x.data);
+			case "player": return this.support_RS_Player.RS_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
 			case "reel.reel_item_watch": return this.RSW_ReelItem(x.data);
 			case "reel.reel_watch_sequence": return this.RS_ReelWatchSequence(x.data);
@@ -352,7 +353,7 @@ class HandleTypes extends ServiceMethods {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
-		this.z_RS_support_player.RS_Player(playerResponse);
+		this.support_RS_Player.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
@@ -377,7 +378,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="shorts") debugger;
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.z_RS_support_player.RS_Player(playerResponse);
+		this.support_RS_Player.RS_Player(playerResponse);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
@@ -762,27 +763,6 @@ class HandleTypes extends ServiceMethods {
 		this.RS_Browse(response);
 		return y;
 	}
-	/** @private @arg {RS_Page_Browse} x */
-	RS_Page_Browse(x) {
-		const cf="RS_Page_Browse";
-		if("rootVe" in x) {
-			switch(x.rootVe) {
-				case 3854: {
-					const {rootVe,expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
-					this._primitive_of(expirationTime,"number");
-					this.save_number(`${cf}.rootVe`,rootVe);
-				} break;
-				default: debugger; break;
-			}
-			return;
-		}
-		if("expirationTime" in x) {
-			const {expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
-			this._primitive_of(expirationTime,"number");
-			return;
-		}
-		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
-	}
 	//#region Grouped Endpoints
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
@@ -1115,18 +1095,18 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {YTNavigateFinishDetail["response"]} x */
+	/** @private @arg {DataResponsePageType} x */
 	DataResponsePageType(x) {
 		const cf="DataResponsePageType";
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.RS_Page_Browse(x);
-			case "watch": return this.z_Support_RS_WatchPage.RS_WatchPage(x);
+			case "watch": return this.support_RS_WatchPage.RS_WatchPage(x);
 			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);
 			case "settings": return this.G_RS_Page_Settings(x);
 			case "shorts": return this.G_RS_Page_Shorts(x);
-			case "search": return this.RS_SearchPage(x);
+			case "search": return this.RS_Page_Search(x);
 			default: break;
 		}
 		console.log("pt",x);
@@ -2258,7 +2238,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {RS_Page_Search} x */
-	RS_SearchPage(x) {
+	RS_Page_Search(x) {
 		const cf="RS_SearchPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="search") debugger;

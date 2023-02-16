@@ -655,8 +655,8 @@ class Support_RS_WatchPage extends ServiceMethods {
 		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		this.E_Watch(endpoint);
 		if(preconnect!==void 0) this.handle_types.parse_preconnect_arr(preconnect);
-		this.handle_types.z_RS_support_player.RS_Player(playerResponse);
-		this.handle_types.z_Support_RS_Watch.RS_Watch(response);
+		this.handle_types.support_RS_Player.RS_Player(playerResponse);
+		this.handle_types.support_RS_Watch.RS_Watch(response);
 		this.t(csn,x => this.handle_types.D_VeCsn(x));
 	}
 	/** @private @arg {RS_Page_Watch} x */
@@ -664,8 +664,8 @@ class Support_RS_WatchPage extends ServiceMethods {
 		const cf="RS_Page_Watch"; this.k(cf,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.E_Watch(endpoint);
-		this.handle_types.z_Support_RS_Watch.RS_Watch(response);
-		this.handle_types.z_RS_support_player.RS_Player(playerResponse);
+		this.handle_types.support_RS_Watch.RS_Watch(response);
+		this.handle_types.support_RS_Player.RS_Player(playerResponse);
 		let wp_params=this.handle_types.parse_watch_page_url(cf,url);
 		this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => this.handle_types.D_VeCsn(x,true));
@@ -688,9 +688,33 @@ class Support_RS_Watch extends ServiceMethods {
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 }
+class Support_RS_Page_Browse extends ServiceMethods {
+	/** @public @arg {RS_Page_Browse} x */
+	RS_Page_Browse(x) {
+		const cf="RS_Page_Browse";
+		if("rootVe" in x) {
+			switch(x.rootVe) {
+				case 3854: {
+					const {rootVe,expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+					this._primitive_of(expirationTime,"number");
+					this.save_number(`${cf}.rootVe`,rootVe);
+				} break;
+				default: debugger; break;
+			}
+			return;
+		}
+		if("expirationTime" in x) {
+			const {expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+			this._primitive_of(expirationTime,"number");
+			return;
+		}
+		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+	}
+}
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
 	exports.Support_RS_WatchPage=Support_RS_WatchPage;
 	exports.Support_RS_Watch=Support_RS_Watch;
+	exports.Support_RS_Page_Browse=Support_RS_Page_Browse;
 });
