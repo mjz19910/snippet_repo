@@ -968,18 +968,6 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		return [endpoint,y];
 	}
-	/**
-	 * @arg {CF_TE_Endpoint_2} cf1
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
-	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
-	 * */
-	TE_TrackedObj(cf1,k,x) {
-		const cf2="TE_Endpoint_2";
-		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
-		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
-		this.clickTrackingParams(clickTrackingParams);
-		return [endpoint,y];
-	}
 	/** @protected @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
@@ -2660,7 +2648,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.cg.codegen_str(cf,raw_id);
 	}
-	/** @protected @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
+	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
