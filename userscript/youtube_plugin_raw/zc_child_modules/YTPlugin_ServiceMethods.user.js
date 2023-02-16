@@ -40,6 +40,15 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @returns {true} */
 	true_() {return true;}
+	/** @public @arg {string} x @arg {boolean} is_prev */
+	D_VeCsn(x,is_prev=false) {
+		let csn_dec=atob(x);
+		if(is_prev) {
+			console.log("[prev_csn_dec]",csn_dec);
+		} else {
+			console.log("[csn_dec]",csn_dec);
+		}
+	}
 	/** @private @arg {object} x1 */
 	get_codegen_name(x1) {return this.cg.get_codegen_name_obj(x1);}
 	/** @public @arg {string} cf @arg {{}} x */

@@ -651,7 +651,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 		if(preconnect!==void 0) this.handle_types.parse_preconnect_arr(preconnect);
 		this.handle_types.support_RS_Player.RS_Player(playerResponse);
 		this.handle_types.support_RS_Watch.RS_Watch(response);
-		this.t(csn,x => this.handle_types.D_VeCsn(x));
+		this.t(csn,x => this.D_VeCsn(x));
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
@@ -662,7 +662,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 		this.handle_types.support_RS_Player.RS_Player(playerResponse);
 		let wp_params=this.handle_types.parse_watch_page_url(cf,url);
 		this.save_keys(`${cf}.wp_params`,wp_params);
-		this.t(previousCsn,x => this.handle_types.D_VeCsn(x,true));
+		this.t(previousCsn,x => this.D_VeCsn(x,true));
 	}
 }
 class Support_RS_Watch extends ServiceMethods {
@@ -1362,7 +1362,7 @@ class Support_EventInput extends ServiceMethods {
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="search") debugger;
 		this.E_VE4724_Search(endpoint);
-		this.RS_Search(response);
+		this.handle_types.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
@@ -1371,15 +1371,6 @@ class Support_EventInput extends ServiceMethods {
 		const cf="D_GraftedVeItem";
 		const {veData,csn,...y}=this.s(cf,x); this.g(y);
 		this.D_VeCsn(csn);
-	}
-	/** @public @arg {string} x @arg {boolean} is_prev */
-	D_VeCsn(x,is_prev=false) {
-		let csn_dec=atob(x);
-		if(is_prev) {
-			console.log("[prev_csn_dec]",csn_dec);
-		} else {
-			console.log("[csn_dec]",csn_dec);
-		}
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
