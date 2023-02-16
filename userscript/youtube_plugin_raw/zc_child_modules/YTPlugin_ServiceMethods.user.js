@@ -756,7 +756,7 @@ class ServiceMethods extends ServiceData {
 		this.save_string("GetSurvey.action",action);
 		switch(action) {
 			default: debugger; break;
-			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;
+			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL":
 		}
 		this.G_DC_GetSurvey_Endpoint(a);
 	}
@@ -5160,17 +5160,20 @@ class ServiceMethods extends ServiceData {
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {SI_DB_EngagementPanel_Ads} x */
+	SI_DB_EngagementPanel_Ads(x) {
+		const cf="SI_DB_EngagementPanel_Ads";
+		const {content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_AdsEngagementPanelContent(content);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+	}
 	/** @private @arg {G_SI_DB_EngagementPanel} x */
 	G_SI_DB_EngagementPanel(x) {
 		const cf="DB_SI_EngagementPanel";
 		switch(x.targetId) {
 			default: x===""; debugger; break;
-			case "engagement-panel-ads": {
-				const {content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.R_AdsEngagementPanelContent(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-			} break;
+			case "engagement-panel-ads": return this.SI_DB_EngagementPanel_Ads(x);
 			case "engagement-panel-clip-create": {
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
@@ -6054,6 +6057,11 @@ class ServiceMethods extends ServiceData {
 		this.D_ChannelId(channelId);
 		debugger;
 	}
+	/** @private @arg {TR_SectionListItem_3_Empty} x */
+	TR_SectionListItem_3_Empty(x) {
+		const cf="TR_SectionListItem_3_Empty";
+		this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x) {
 		const cf="D_SectionList_BrowseFeed_Subscriptions"; this.k(cf,x);
@@ -6088,6 +6096,31 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		if(targetId!=="search-feed") debugger;
 		this.z(contents,this.TR_SectionListItem_3_Empty);
+	}
+	/** @private @arg {R_MusicCarouselShelf} x */
+	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
+	/** @private @arg {D_MusicCarouselShelf} x */
+	D_MusicCarouselShelf(x) {
+		const cf="D_MusicCarouselShelf"; this.k(cf,x);
+		const {contents,header,trackingParams,itemSize,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.ceq);
+		this.g(header);
+		this.trackingParams(trackingParams);
+		this.ceq(itemSize,"COLLECTION_STYLE_ITEM_SIZE_MEDIUM");
+	}
+	/** @private @arg {R_MusicShelf} x */
+	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
+	/** @private @arg {D_MusicShelf} x */
+	D_MusicShelf(x) {
+		const cf="D_MusicShelf"; this.k(cf,x);
+		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.R_MusicResponsiveListItem);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		this.z(continuations,this.CD_Reload);
+		this.R_MusicShelfDivider(shelfDivider);
+		this.ceq(autoReloadWhenEmpty,true);
+		this.R_Button(bottomButton);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

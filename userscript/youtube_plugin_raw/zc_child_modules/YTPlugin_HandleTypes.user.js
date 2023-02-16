@@ -603,10 +603,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
-	/** @private @arg {R_MusicCarouselShelf} x */
-	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
-	/** @private @arg {R_MusicShelf} x */
-	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection","guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
 	/** @private @arg {R_GuideDownloadsEntry} x */
@@ -3467,27 +3463,6 @@ class HandleTypes extends ServiceMethods {
 		let u=this.D_VideoOwner_Omit(cf,x); const {navigationEndpoint,badges,...y}=this.s(`${cf}:1`,u); this.g(y);/*#destructure_done*/
 		this.tz(badges,this.RMD_Badge);
 	}
-	/** @private @arg {D_MusicCarouselShelf} x */
-	D_MusicCarouselShelf(x) {
-		const cf="D_MusicCarouselShelf"; this.k(cf,x);
-		const {contents,header,trackingParams,itemSize,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.ceq);
-		this.g(header);
-		this.trackingParams(trackingParams);
-		this.ceq(itemSize,"COLLECTION_STYLE_ITEM_SIZE_MEDIUM");
-	}
-	/** @private @arg {D_MusicShelf} x */
-	D_MusicShelf(x) {
-		const cf="D_MusicShelf"; this.k(cf,x);
-		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.R_MusicResponsiveListItem);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
-		this.z(continuations,this.CD_Reload);
-		this.R_MusicShelfDivider(shelfDivider);
-		this.ceq(autoReloadWhenEmpty,true);
-		this.R_Button(bottomButton);
-	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
 		const cf="D_AddToPlaylistCreate"; this.k(cf,x);
@@ -3619,11 +3594,6 @@ class HandleTypes extends ServiceMethods {
 		const {commentText,chipRenderer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(commentText);
 		this.R_PdgCommentChip(chipRenderer);
-	}
-	/** @private @arg {TR_SectionListItem_3_Empty} x */
-	TR_SectionListItem_3_Empty(x) {
-		const cf="TR_SectionListItem_3_Empty";
-		this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_NavigationLinkItem} x */
 	D_PrimaryLinkItem(x) {
