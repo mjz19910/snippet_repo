@@ -812,7 +812,10 @@ class HandleTypes extends ServiceMethods {
 	RS_Browse(x) {
 		const cf="RS_Browse";
 		x: {
-			let jk=this.get_keys_of(x).join();
+			let jk=this.get_keys_of(x).filter(e=>{
+				if(e==="responseContext") return false;
+				return true;
+			}).join();
 			if(jk==="responseContext,contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="responseContext,continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
