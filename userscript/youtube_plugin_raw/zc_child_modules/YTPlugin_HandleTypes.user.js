@@ -1039,6 +1039,7 @@ class HandleTypes extends ServiceMethods {
 				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.E_VE3854(endpoint);
 				const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
+				if(ve!==3854) debugger;
 				{
 					let x=response;
 					if("rootVe" in x) {
