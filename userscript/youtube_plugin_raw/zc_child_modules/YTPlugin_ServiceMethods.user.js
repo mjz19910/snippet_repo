@@ -205,6 +205,49 @@ class ServiceMethods extends ServiceData {
 			case "video_description":
 		}
 	}
+	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
+	GM_VE3611(x) {
+		const cf="GM_VE3611";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GU_VE3611_Url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		if(rootVe!==3611) debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE3832} x */
+	GM_VE3832(x) {
+		const cf="GM_VE3832";
+		const {url,rootVe,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			if(this.str_starts_with(url,"/playlist")) break x;
+			if(this.str_starts_with(url,"/watch")) break x;
+			debugger;
+		}
+		if(rootVe!==3832) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
+	}
+	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
+	GM_VE3854(x) {
+		const cf="GM_VE3854";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			if(url==="/") break x;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==3854) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE4724} x @returns {`VE${rootVe}`} */
+	GM_VE4724(x) {
+		const cf="GM_VE4724";
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		if(rootVe!==4724) debugger;
+		return `VE${rootVe}`;
+	}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @private @arg {GM_YpcGetOffers} x */
@@ -1841,49 +1884,6 @@ class ServiceMethods extends ServiceData {
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
 	/** @private @arg {M_VE96368} x */
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
-	/** @private @arg {GM_VE3832} x */
-	GM_VE3832(x) {
-		const cf="GM_VE3832";
-		const {url,rootVe,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		x: {
-			if(this.str_starts_with(url,"/playlist")) break x;
-			if(this.str_starts_with(url,"/watch")) break x;
-			debugger;
-		}
-		if(rootVe!==3832) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
-	}
-	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
-	GM_VE3611(x) {
-		const cf="GM_VE3611";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GU_VE3611_Url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		if(rootVe!==3611) debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
-	GM_VE3854(x) {
-		const cf="GM_VE3854";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		x: {
-			if(url==="/") break x;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==3854) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE4724} x @returns {`VE${rootVe}`} */
-	GM_VE4724(x) {
-		const cf="GM_VE4724";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		if(rootVe!==4724) debugger;
-		return `VE${rootVe}`;
-	}
 	/** @private @arg {M_ResolveUrlCommand} x */
 	M_ResolveUrlCommand(x) {
 		const cf="M_ResolveUrlCommand";

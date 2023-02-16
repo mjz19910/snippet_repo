@@ -469,11 +469,15 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList_p2";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE37414_WC";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3832";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3832_WatchPlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3854";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3854_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE42352_WC";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE4724";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE4724_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE5754_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE6827";}
@@ -488,6 +492,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_ResolveUrlCommand";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3854";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
