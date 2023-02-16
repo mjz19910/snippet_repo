@@ -2062,6 +2062,19 @@ class ServiceMethods extends ServiceData {
 				let [,y1]=a1;
 				if(this.str_starts_with_rx("UC",y1)) return;
 			} break;
+			case "source": {
+				let [,y1]=a1;
+				let a2=split_string_once(y1,"/");
+				let [,y2]=a2;
+				let [path,y3]=split_string_once(y2,"?");
+				if(path!=="shorts") debugger;
+				let x=this.parse_url_search_params(y3);
+				if("bp" in x) {
+					console.log("shorts.source.bp",x.bp);
+					return;
+				}
+				debugger;
+			} break;
 		}
 	}
 	/** @private @arg {GU_VE5754_Url} x */
