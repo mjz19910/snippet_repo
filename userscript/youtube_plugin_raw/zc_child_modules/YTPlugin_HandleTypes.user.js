@@ -2503,8 +2503,11 @@ class HandleTypes extends ServiceMethods {
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			if(this.is_TE_VE(navigationEndpoint,3854)) {
 				this.E_VE3854(navigationEndpoint);
+			} else if(this.is_TE_VE(navigationEndpoint,96368)) {
+				this.E_VE96368(navigationEndpoint);
+			} else {
+				debugger;
 			}
-			if(icon.iconType!=="WHAT_TO_WATCH") debugger;
 			switch(icon.iconType) {
 				case "SUBSCRIPTIONS": break;
 				case "WHAT_TO_WATCH": break;
