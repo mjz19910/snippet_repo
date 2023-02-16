@@ -7618,7 +7618,10 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {D_FancyDismissibleDialog} x */
 	D_FancyDismissibleDialog(x) {
 		const cf="D_PlaylistHeader";
-		const {...y}=this.s(cf,x); this.g(y);
+		const {dialogMessage,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(dialogMessage);
+		this.G_Text(confirmLabel);
+		this.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_FancyDismissibleDialog} x */
 	R_FancyDismissibleDialog(x) {this.H_("R_FancyDismissibleDialog","fancyDismissibleDialogRenderer",x,this.D_FancyDismissibleDialog);}
