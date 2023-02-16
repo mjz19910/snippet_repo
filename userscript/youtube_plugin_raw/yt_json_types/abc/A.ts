@@ -23,7 +23,7 @@ type A_Signal=TE_Endpoint_2<"signalAction",AD_Signal>;
 type A_UndoFeedback=TE_Endpoint_2<"undoFeedbackAction",B_Hack>;
 type A_AccountItem=TE_Endpoint_1<"accountItem",AD_AccountItem>;
 type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;
-type A_ActionAddVideo={action: "ACTION_ADD_VIDEO"; addedVideoId: string;};
+type A_ActionAddVideo={action: "ACTION_ADD_VIDEO"; addedVideoId?: string;};
 type A_ActionSetPlaylistVideoOrder={action: "ACTION_SET_PLAYLIST_VIDEO_ORDER";};
 //#region AU_
 type AU_ChannelSwitcherPage={updateChannelSwitcherPageAction: AD_UpdateChannelSwitcherPage;};

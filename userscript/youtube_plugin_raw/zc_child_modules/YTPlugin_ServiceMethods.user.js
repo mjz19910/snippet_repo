@@ -223,7 +223,7 @@ class ServiceMethods extends ServiceData {
 				case "ACTION_ADD_VIDEO": {
 					const cf="A_ActionAddVideo";
 					const {action: {},addedVideoId,...y}=this.s(cf,x); this.g(y);
-					this.videoId(addedVideoId);
+					this.t(addedVideoId,this.videoId);
 				} break;
 				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID": {
 					const cf="D_ActionRemoveVideoByVideoId";
