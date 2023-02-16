@@ -7349,15 +7349,6 @@ class ServiceMethods extends ServiceData {
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
 		return y;
 	}
-	/** @private @arg {R_MusicQueue} x */
-	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
-	/** @private @arg {D_MusicQueue} x */
-	D_MusicQueue(x) {
-		const cf="D_MusicQueue";
-		const {content,hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(content,this.R_PlaylistPanel);
-		this.t(hack,x => {if(x!==true) debugger;});
-	}
 	/** @private @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
 	/** @private @arg {D_Tab} x */
@@ -7421,6 +7412,15 @@ class ServiceMethods extends ServiceData {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("richSectionRenderer" in x) return this.R_RichSection(x);
 		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {R_MusicQueue} x */
+	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
+	/** @private @arg {D_MusicQueue} x */
+	D_MusicQueue(x) {
+		const cf="D_MusicQueue";
+		const {content,hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(content,this.R_PlaylistPanel);
+		this.t(hack,x => {if(x!==true) debugger;});
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
