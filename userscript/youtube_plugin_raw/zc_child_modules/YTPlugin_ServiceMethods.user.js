@@ -5009,12 +5009,13 @@ class ServiceMethods extends ServiceData {
 		this.save_number(`${cf}.code`,code);
 		this.save_enum("PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
+	D_ActiveView(x) {x;}
 	/** @private @arg {R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {
 		const cf="D_PromotedSparklesWeb";
-		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,noopTapEndpoints,menu,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
+		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,noopTapEndpoints,menu,activeView,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
 		this.D_Thumbnail(thumbnail);
 		this.T_Icon(`${cf}:icon`,icon);
 		this.G_Text(title);
@@ -5025,6 +5026,7 @@ class ServiceMethods extends ServiceData {
 		this.z(impressionCommands,this.D_ImpressionCommand);
 		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.R_Menu(menu);
+		this.t(activeView,this.D_ActiveView)
 		this.trackingParams(trackingParams);
 		this.z(clickLocationTargets,this.D_ClickLocationTarget);
 		this.t(adBadge,this.RMD_Badge);

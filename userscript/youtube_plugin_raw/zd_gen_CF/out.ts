@@ -459,6 +459,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Pinging";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GA_Continuation_CommentRepliesItem";}
