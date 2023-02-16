@@ -10,6 +10,7 @@
 // @run-at       document-start
 // ==/UserScript==
 // @ts-nocheck
+
 (function() {
 	'use strict';
 	/*$_P_0:*/{
