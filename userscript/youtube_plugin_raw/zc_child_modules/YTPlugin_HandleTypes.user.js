@@ -2157,7 +2157,7 @@ class HandleTypes extends ServiceMethods {
 				this.R_ClickTrackingObj(u);
 			} break;
 			case "tracking.params": {
-				/** @type {P_tracking_params} */
+				/** @type {R_TrackingObj} */
 				let u=as_any(x);
 				this.R_TrackingObj(u);
 			} break;

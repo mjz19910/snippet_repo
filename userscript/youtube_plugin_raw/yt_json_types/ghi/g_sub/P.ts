@@ -1,3 +1,8 @@
+type P_tracking_params={
+	1: T_VW_3<"data32",0>;
+	2: T_VW_3<"data32",13188>;
+	4: T_VW_2<V_BinaryTimestamp>;
+};
 type P_ad_layout_ad_serving_data_entry={
 	4: T_VW_3<"data32",3>;
 	5: T_VW_3<"data32",2>;
