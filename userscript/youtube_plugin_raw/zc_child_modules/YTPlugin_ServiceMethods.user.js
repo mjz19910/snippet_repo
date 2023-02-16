@@ -20,6 +20,12 @@ const split_string=bs.split_string; const split_string_once=bs.split_string_once
 const as_any=bs.as_any;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @arg {D_CustomEmoji['emojiId']} x */
+	parse_emoji_id(x) {
+		let eid=split_string_once(x,"/");
+		this.D_ChannelId(eid[0]);
+		return eid[1];
+	}
 	/** @public @template {string} SW @arg {SW} sw @arg {["",string]} x @returns {x is ["",`${SW}${string}`]} */
 	str_starts_with_rx_in_arr(x,sw) {
 		return this.str_starts_with(x[1],sw);
@@ -6091,12 +6097,6 @@ class ServiceMethods extends ServiceData {
 		const {accessibility,thumbnails,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
 		this.z(thumbnails,this.D_ThumbnailItem);
-	}
-	/** @arg {D_CustomEmoji['emojiId']} x */
-	parse_emoji_id(x) {
-		let eid=split_string_once(x,"/");
-		this.D_ChannelId(eid[0]);
-		return eid[1];
 	}
 	/** @private @arg {D_CustomEmoji} x */
 	D_CustomEmoji(x) {this.g(this.D_CustomEmoji_Omit("D_CustomEmoji",x));}
