@@ -4394,15 +4394,19 @@ class HandleTypes extends ServiceMethods {
 		if(this.is_tp_xx_2(x,6236)) {
 			return;
 		}
-		if(!x[3]) debugger;
-		const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=x; this.g(y);
-		this.save_number(`${cf}.f1`,f1);
-		this.a_primitive_num(f2);
-		switch(f3) {
-			default: this.codegen_typedef_bin(cf,x); debugger; break;
-			case 1: case 2:
+		if(this.is_tp_xx_2(x,62457)) {
+			if(!x[3]) debugger;
+			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=x; this.g(y);
+			this.save_number(`${cf}.f1`,f1);
+			this.a_primitive_num(f2);
+			switch(f3) {
+				default: this.codegen_typedef_bin(cf,x); debugger; break;
+				case 1: case 2:
+			}
+			this.V_BinaryTimestamp(f4);
+			return;
 		}
-		this.V_BinaryTimestamp(f4);
+		x;
 	}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
