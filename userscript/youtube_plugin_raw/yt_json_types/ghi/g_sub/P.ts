@@ -181,3 +181,12 @@ type P_shorts_source_bp={
 		5: T_VW_Bigint<1879003204532078215n>
 	}
 };
+type P_get_transcript_params={
+	1: T_VSR<string>,
+	2: T_VSR<string>,
+	3: T_D32<1>,
+	5: T_VSR<"engagement-panel-searchable-transcript-search-panel">,
+	6: T_D32<1>,
+	7: T_D32<1>,
+	8: T_D32<1>
+};
