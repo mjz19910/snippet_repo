@@ -2501,6 +2501,9 @@ class HandleTypes extends ServiceMethods {
 		if("isPrimary" in x) {
 			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
+			if(this.is_TE_VE(navigationEndpoint,3854)) {
+				this.E_VE3854(navigationEndpoint);
+			}
 			if(icon.iconType!=="WHAT_TO_WATCH") debugger;
 			switch(icon.iconType) {
 				case "SUBSCRIPTIONS": break;

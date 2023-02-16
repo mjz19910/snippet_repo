@@ -2010,7 +2010,7 @@ class ServiceMethods extends ServiceData {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}
-	/** @private @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
+	/** @protected @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
 	is_TE_VE(x,t) {
 		return x.commandMetadata.webCommandMetadata.rootVe===t;
 	}
