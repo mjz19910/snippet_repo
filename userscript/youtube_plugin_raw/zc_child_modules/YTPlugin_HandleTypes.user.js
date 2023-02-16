@@ -2177,6 +2177,13 @@ class HandleTypes extends ServiceMethods {
 						let [f1,f2,f3]=sp;
 						if(f1!=="") debugger;
 						if(!f2.startsWith("@")) debugger;
+						if(this.str_is_search(f3)) {
+							let [p,s]=split_string_once(f3,"?");
+							if(p!=="search") debugger;
+							let {query,...y}=this.parse_url_search_params(s); this.g(y);
+							this.a_primitive_str(query);
+							return;
+						}
 						switch(f3) {
 							default: debugger; break;
 							case "videos": case "playlists": case "community": case "channels":
