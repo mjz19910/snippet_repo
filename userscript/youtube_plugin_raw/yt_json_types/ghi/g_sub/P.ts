@@ -277,3 +277,10 @@ type P_reel_sequence_params={
 		3: T_D32<12>
 	}
 };
+type P_get_pdg_buy_flow_params={
+	1: {
+		1: T_VSR<"jsuDKlNI0uw">,
+		2: T_VSR<"UCAMMArn7VSN6NvEmkKO_9Lw">,
+		3: T_D32<1>
+	}
+};

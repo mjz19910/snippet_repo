@@ -3588,6 +3588,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_reel_sequence_params(u);
 			} break;
+			case "get_pdg_buy_flow.params": {
+				/** @type {P_get_pdg_buy_flow_params} */
+				let u=as_any(x);
+				this.P_get_pdg_buy_flow_params(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3595,6 +3600,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_get_pdg_buy_flow_params} x */
+	P_get_pdg_buy_flow_params(x) {x;}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {x;}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
