@@ -851,15 +851,6 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(helpButton);
 		this.R_Button(dismissButton);
 	}
-	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
-	D_Tab_subscriptionsEndpoint(x) {
-		const cf="D_Tab_subscriptionsEndpoint";
-		switch(x.commandMetadata.webCommandMetadata.rootVe) {
-			default: this.codegen_typedef(cf,x); debugger; break;
-			case 96368: break;
-		}
-		debugger;
-	}
 	/** @private @arg {D_MusicQueue} x */
 	D_MusicQueue(x) {
 		const cf="D_MusicQueue";

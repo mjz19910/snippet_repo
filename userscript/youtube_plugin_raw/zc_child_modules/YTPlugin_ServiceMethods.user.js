@@ -7302,6 +7302,24 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(y);
 	}
+	/** @private @arg {D_Tab_History} x */
+	D_Tab_History(x) {
+		const cf="D_Tab_History";
+		const {selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);
+		if(selected!==true) debugger;
+		if(!content.sectionListRenderer) debugger;
+		this.R_SectionList(content);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
+	D_Tab_subscriptionsEndpoint(x) {
+		const cf="D_Tab_subscriptionsEndpoint";
+		switch(x.commandMetadata.webCommandMetadata.rootVe) {
+			default: this.codegen_typedef(cf,x); debugger; break;
+			case 96368: break;
+		}
+		debugger;
+	}
 	/** @private @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
 	/** @private @arg {D_Tab} x */
@@ -7310,13 +7328,7 @@ class ServiceMethods extends ServiceData {
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				default: debugger; break;
-				case "FEhistory": {
-					const {selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_History`,x); this.g(y);
-					if(selected!==true) debugger;
-					if(!content.sectionListRenderer) debugger;
-					this.R_SectionList(content);
-					this.trackingParams(trackingParams);
-				} break;
+				case "FEhistory": return this.D_Tab_History(x);
 				case "FEsubscriptions": {
 					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_Subscriptions`,x); this.g(y);
 					this.D_Tab_subscriptionsEndpoint(endpoint);
