@@ -20,6 +20,12 @@ const split_string=bs.split_string; const split_string_once=bs.split_string_once
 const as_any=bs.as_any;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
+	parse_emoji_shortcut(x) {
+		let fs=split_string_once(x,":");
+		let [ls,w]=split_string_once_last(fs[1],":",null); if(w!=="") debugger;
+		return ls;
+	}
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
 	rl(cf,x) {
 		this.k(`${cf}:omit`,x);

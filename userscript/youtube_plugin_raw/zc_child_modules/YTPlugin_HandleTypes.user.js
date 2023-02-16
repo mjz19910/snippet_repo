@@ -2630,12 +2630,6 @@ class HandleTypes extends ServiceMethods {
 		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);
 		this.a_primitive_bool(isLocked);
 	}
-	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
-	parse_emoji_shortcut(x) {
-		let fs=split_string_once(x,":");
-		let [ls,w]=split_string_once_last(fs[1],":",null); if(w!=="") debugger;
-		return ls;
-	}
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
 		const cf="D_C4TabbedHeader"; this.k(cf,x);
