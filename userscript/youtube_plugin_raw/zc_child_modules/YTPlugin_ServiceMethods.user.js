@@ -5152,6 +5152,23 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 		};
 	}
+	/** @public @arg {R_FeedFilterChipBar} x */
+	R_FeedFilterChipBar(x) {this.H_("R_FeedFilterChipBar","feedFilterChipBarRenderer",x,this.D_FeedFilterChipBar);}
+	/** @private @arg {D_FeedFilterChipBar} x */
+	D_FeedFilterChipBar(x) {
+		const cf="D_FeedFilterChipBar"; this.k(cf,x);
+		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.R_ChipCloudChip);
+		this.trackingParams(trackingParams);
+		this.t(nextButton,this.R_Button);
+		this.t(previousButton,this.R_Button);
+		switch(styleType) {
+			default: debugger; break;
+			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID": break;
+			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT": break;
+		}
+		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
+	}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @private @arg {AD_AppendContinuationItems} x */

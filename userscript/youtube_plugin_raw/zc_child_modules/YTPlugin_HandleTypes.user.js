@@ -619,8 +619,6 @@ class HandleTypes extends ServiceMethods {
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
 	/** @private @arg {R_FeedTabbedHeader} x */
 	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader","feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
-	/** @public @arg {R_FeedFilterChipBar} x */
-	R_FeedFilterChipBar(x) {this.H_("R_FeedFilterChipBar","feedFilterChipBarRenderer",x,this.D_FeedFilterChipBar);}
 	/** @private @arg {R_TwoColumnBrowseResults} x */
 	R_TwoColumnBrowseResults(x) {this.H_("R_TwoColumnBrowseResults","twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
 	/** @private @arg {R_AddToPlaylist} x */
@@ -2695,21 +2693,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.R_SettingsSidebar(sidebar);
-	}
-	/** @private @arg {D_FeedFilterChipBar} x */
-	D_FeedFilterChipBar(x) {
-		const cf="D_FeedFilterChipBar"; this.k(cf,x);
-		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.R_ChipCloudChip);
-		this.trackingParams(trackingParams);
-		this.t(nextButton,this.R_Button);
-		this.t(previousButton,this.R_Button);
-		switch(styleType) {
-			default: debugger; break;
-			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID": break;
-			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT": break;
-		}
-		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
