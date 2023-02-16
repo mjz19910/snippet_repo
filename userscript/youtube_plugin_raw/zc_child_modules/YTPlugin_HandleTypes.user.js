@@ -586,8 +586,6 @@ class HandleTypes extends ServiceMethods {
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @public @arg {R_CommentsSimplebox} x */
 	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
-	/** @public @arg {R_AdSlot} x */
-	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {R_FulfilledLayout} x */
 	R_FulfillmentLayout(x) {
 		this.H_("R_FulfillmentLayout","fulfilledLayout",x,x => {
@@ -1729,14 +1727,6 @@ class HandleTypes extends ServiceMethods {
 				return this.x;
 			}
 		})(x);
-	}
-	/** @private @arg {D_AdSlot} x */
-	D_AdSlot(x) {
-		const cf="D_AdSlot"; this.k(cf,x);
-		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.DMD_AdSlot(adSlotMetadata);
-		this.R_FulfillmentLayout(fulfillmentContent);
-		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
 	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_GetUnseenCount(x) {

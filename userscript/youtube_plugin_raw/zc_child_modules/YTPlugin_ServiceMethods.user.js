@@ -5293,6 +5293,16 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 	}
+	/** @public @arg {R_AdSlot} x */
+	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
+	/** @private @arg {D_AdSlot} x */
+	D_AdSlot(x) {
+		const cf="D_AdSlot"; this.k(cf,x);
+		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.DMD_AdSlot(adSlotMetadata);
+		this.R_FulfillmentLayout(fulfillmentContent);
+		this._primitive_of(enablePacfLoggingWeb,"boolean");
+	}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
 		const cf="G_Watch_SecondaryResults_G_SectionItem";
