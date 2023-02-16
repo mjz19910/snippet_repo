@@ -416,13 +416,6 @@ class HandleTypes extends ServiceMethods {
 		if("accountItem" in x) return this.A_AccountItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @arg {G_PlaylistPanel_Item} x */
-	G_PlaylistPanel_Item(x) {
-		const cf="G_PlaylistPanel_Item";
-		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
-		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {G_ChatItem} x */
 	G_ChatItem(x) {
 		const cf="G_ChatItem";
@@ -641,27 +634,6 @@ class HandleTypes extends ServiceMethods {
 	R_ProfilePageHeaderInformationViewModel(x) {this.H_("R_ProfilePageHeaderInformationViewModel","profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
 	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("R_ProfilePageHeaderTitleViewModel","profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
-	/** @private @arg {R_PlaylistPanel} x */
-	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
-	/** @arg {D_PlaylistPanel} x */
-	D_PlaylistPanel(x) {
-		const cf="D_PlaylistPanel";
-		const {title,contents,currentIndex,playlistId,ownerName,isInfinite,continuations,shortBylineText,longBylineText,trackingParams,titleText,isEditable,previewDescription,numItemsToShow,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(title!=="YouTube Mix") debugger;
-		this.z(contents,this.G_PlaylistPanel_Item);
-		this.t(currentIndex,this.a_primitive_num);
-		this.playlistId(playlistId);
-		this.t(ownerName,this.G_Text);
-		if(isInfinite!==true) debugger;
-		this.tz(continuations,this.CD_NextRadio);
-		this.G_Text(shortBylineText);
-		this.t(longBylineText,this.G_Text);
-		this.trackingParams(trackingParams);
-		this.G_Text(titleText);
-		if(isEditable!==true) debugger;
-		this.t(previewDescription,this.g);
-		this.t(numItemsToShow,x => {if(x!==25) debugger;});
-	}
 	/** @arg {R_RatingSurveyOption} x */
 	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
 	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
@@ -684,11 +656,6 @@ class HandleTypes extends ServiceMethods {
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
-	/** @private @arg {CD_NextRadio} x */
-	CD_NextRadio(x) {
-		this.y("CD_NextRadio","nextRadioContinuationData",x,
-			x => this.DC_Generic_CTP("next_radio.continuation",x));
-	}
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
