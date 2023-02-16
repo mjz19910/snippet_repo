@@ -1995,7 +1995,7 @@ class HandleTypes extends ServiceMethods {
 					if(obj!==null) {
 						if(1 in obj&&2 in obj&&3 in obj&&obj[1][0]==="data32") {
 							console.log("maybe_handle_bin.do_V_BinaryTimestamp",obj);
-							return "TYPE::T_VW<V_BinaryTimestamp>";
+							return "TYPE::V_BinaryTimestamp";
 						}
 						console.log("maybe_handle_bin.do_obj",obj);
 						return obj;
