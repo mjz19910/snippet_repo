@@ -7230,26 +7230,43 @@ class ServiceMethods extends ServiceData {
 	DE_VE6827(x) {
 		const cf="DE_VE6827";
 		const {browseId,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(browseId) {
+			case "FEguide_builder":
+			case "FEhashtag":
+			case "FEhistory":
+			case "FElibrary":
+			case "FEsfv_audio_pivot":
+			case "FEstorefront":
+			case "FEtrending":
+			case "SPreport_history":
+		}
 	}
 	/** @public @arg {DE_VE11487} x */
 	DE_VE11487(x) {
 		const cf="DE_VE11487";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(browseId!=="SPunlimited") debugger;
 	}
 	/** @public @arg {DE_VE23462} x */
 	DE_VE23462(x) {
 		const cf="DE_VE23462";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(browseId) {
+			case "SPaccount_overview":
+			case "SPaccount_notifications":
+		}
 	}
 	/** @public @arg {DE_VE42352} x */
 	DE_VE42352(x) {
 		const cf="DE_VE42352";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(browseId!=="FEdownloads") debugger;
 	}
 	/** @public @arg {DE_VE96368} x */
 	DE_VE96368(x) {
 		const cf="DE_VE96368";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(browseId!=="FEsubscriptions") debugger;
 	}
 	/** @public @arg {A_AddToToast} x */
 	A_AddToToast(x) {let [a,y]=this.TE_Endpoint_2("A_AddToToast","addToToastAction",x); this.g(y); this.AD_AddToToast(a);}
