@@ -7311,14 +7311,11 @@ class ServiceMethods extends ServiceData {
 		this.R_SectionList(content);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
-	D_Tab_subscriptionsEndpoint(x) {
-		const cf="D_Tab_subscriptionsEndpoint";
-		switch(x.commandMetadata.webCommandMetadata.rootVe) {
-			default: this.codegen_typedef(cf,x); debugger; break;
-			case 96368: this.E_VE96368(x); break;
-		}
-		debugger;
+	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
+	D_Tab_Subscriptions_EP(x) {
+		const cf="D_Tab_Subscriptions_EP";
+		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
@@ -7331,7 +7328,7 @@ class ServiceMethods extends ServiceData {
 				case "FEhistory": return this.D_Tab_History(x);
 				case "FEsubscriptions": {
 					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_Subscriptions`,x); this.g(y);
-					this.D_Tab_subscriptionsEndpoint(endpoint);
+					this.D_Tab_Subscriptions_EP(endpoint);
 					if(selected!==true) debugger;
 					if(!content.sectionListRenderer) debugger;
 					this.R_SectionList(content);
