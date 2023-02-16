@@ -1934,7 +1934,7 @@ type D_ClickLocationTarget={
 };
 type E_Pinging={
 	clickTrackingParams: string;
-	loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`>[];
+	loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?ai=${string}&sigh=${string}&label=noop_tap`>[];
 	pingingEndpoint: B_Hack;
 };
 type D_EmptyMap={emptyMap: true;};
