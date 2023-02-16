@@ -4505,6 +4505,11 @@ class HandleTypes extends ServiceMethods {
 				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
 				debugger;
 			} break;
+			case "logging_context.serialized_context_data": {
+				/** @type {P_logging_context_serialized_context_data} */
+				let u=as_any(x);
+				this.P_logging_context_serialized_context_data(u);
+			} break;
 			case "reel.player_params": {
 				/** @type {P_reel_player_params} */
 				let u=as_any(x);
