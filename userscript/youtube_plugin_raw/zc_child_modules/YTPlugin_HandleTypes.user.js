@@ -4384,11 +4384,17 @@ class HandleTypes extends ServiceMethods {
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.continuation_logged_str.push(cf);
-				console.log(`\ncase "${cf}": {}`);
+				let str_arr=[""];
+				/** @arg {string} code */
+				function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
+				let pad=1;
+				ap(`case "${cf}": {`);
+				pad+=1;
+				ap(`case "${cf}": {`);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
 				debugger;
 			} break;
-			case "ad_layout.ad_serving_data_entry":{
+			case "ad_layout.ad_serving_data_entry": {
 				/** @type {P_ad_layout_ad_serving_data_entry} */
 				let u=as_any(x);
 				this.P_ad_layout_ad_serving_data_entry(u);
