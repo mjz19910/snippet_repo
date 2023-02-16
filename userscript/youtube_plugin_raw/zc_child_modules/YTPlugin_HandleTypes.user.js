@@ -2226,7 +2226,7 @@ class HandleTypes extends ServiceMethods {
 						if(!f2.startsWith("@")) debugger;
 						switch(f3) {
 							default: debugger; break;
-							case "shorts": case "videos":
+							case "shorts": case "videos": case "playlists":
 						}
 					}
 				}
