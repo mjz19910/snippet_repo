@@ -595,23 +595,6 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(helpButton);
 		this.R_Button(dismissButton);
 	}
-	/** @private @arg {DataResponsePageType} x */
-	DataResponsePageType(x) {
-		const cf="DataResponsePageType";
-		this.RC_ResponseContext(x.response.responseContext);
-		switch(x.page) {
-			case "browse": return this.support_RS_Page_Browse.RS_Page_Browse(x);
-			case "watch": return this.support_RS_WatchPage.RS_WatchPage(x);
-			case "channel": return this.RS_Page_Channel(x);
-			case "playlist": return this.G_RS_Page_Playlist(x);
-			case "settings": return this.G_RS_Page_Settings(x);
-			case "shorts": return this.G_RS_Page_Shorts(x);
-			case "search": return this.RS_Page_Search(x);
-			default: break;
-		}
-		console.log("pt",x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @public @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";

@@ -1201,6 +1201,23 @@ class Support_EventInput extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {DataResponsePageType} x */
+	DataResponsePageType(x) {
+		const cf="DataResponsePageType";
+		this.RC_ResponseContext(x.response.responseContext);
+		switch(x.page) {
+			case "browse": return this.handle_types.support_RS_Page_Browse.RS_Page_Browse(x);
+			case "watch": return this.handle_types.support_RS_WatchPage.RS_WatchPage(x);
+			case "channel": return this.handle_types.RS_Page_Channel(x);
+			case "playlist": return this.handle_types.G_RS_Page_Playlist(x);
+			case "settings": return this.handle_types.G_RS_Page_Settings(x);
+			case "shorts": return this.handle_types.G_RS_Page_Shorts(x);
+			case "search": return this.handle_types.RS_Page_Search(x);
+			default: break;
+		}
+		console.log("pt",x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
