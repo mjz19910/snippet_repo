@@ -236,7 +236,7 @@ class ServiceMethods extends ServiceData {
 		{
 			/** @type {{}} */
 			let x2=s_map;
-			const {...y}=x2; this.g(y);
+			const {sa,ai,ae,num,cid,sig,client,rf,adurl,...y}=x2; this.g(y);
 		}
 		debugger;
 	}
