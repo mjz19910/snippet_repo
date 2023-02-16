@@ -195,18 +195,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
-	/** @public @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
-	GT_ShortsSurfaceIdentifier(x) {
-		const cf="GT_ShortsSurfaceIdentifier"; this.k(cf,x);
-		const {surface,tag,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
-		switch(tag) {
-			case "engagement-panel-structured-description": break;
-			case "shorts-comments-panel": break;
-			default: debugger; break;
-		}
-		return tag;
-	}
 	/** @arg {G_RichSection} x */
 	G_RichSection(x) {
 		const cf="G_RichSection"; this.k(cf,x);

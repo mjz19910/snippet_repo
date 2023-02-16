@@ -4497,79 +4497,106 @@ class ServiceMethods extends ServiceData {
 		}
 		debugger;
 	}
+	/** @public @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
+	GT_ShortsSurfaceIdentifier(x) {
+		const cf="GT_ShortsSurfaceIdentifier"; this.k(cf,x);
+		const {surface,tag,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
+		switch(tag) {
+			case "engagement-panel-structured-description": break;
+			case "shorts-comments-panel": break;
+			default: debugger; break;
+		}
+		return tag;
+	}
+	/** @private @arg {SI_VE76278_EngagementPanel} x */
+	SI_VE76278_EngagementPanel(x) {
+		const cf="SI_VE76278_EngagementPanel";
+		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x);
+		if(panelIdentifier!=="comment-item-section") debugger;
+		this.R_EngagementPanelTitleHeader(header);
+		this.R_SectionList(content);
+		if(targetId!=="engagement-panel-comments-section") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+		if("identifier" in y) {
+			this.force_parse_identifier(cf,y);
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {SI_VE99999_EngagementPanel} x */
+	SI_VE99999_EngagementPanel(x) {
+		const cf="SI_VE99999_EngagementPanel";
+		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
+		this.R_EngagementPanelTitleHeader(header);
+		this.R_ProductList(content);
+		if(targetId!=="shopping_panel_for_entry_point_5") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+	}
+	/** @private @arg {SI_VE126250_EngagementPanel} x */
+	SI_VE126250_EngagementPanel(x) {
+		const cf="SI_VE126250_EngagementPanel";
+		const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+		this.R_EngagementPanelTitleHeader(header);
+		this.R_ContinuationItem(content);
+		if(targetId!=="engagement-panel-searchable-transcript") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+		if("identifier" in y) {
+			this.force_parse_identifier(cf,y);
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {SI_VE124975_EngagementPanel} x */
+	SI_VE124975_EngagementPanel(x) {
+		const cf="SI_VE124975_EngagementPanel";
+		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
+		this.R_EngagementPanelTitleHeader(header);
+		this.R_StructuredDescriptionContent(content);
+		if(targetId!=="engagement-panel-structured-description") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+		if(identifier) {
+			let a1=this.GT_ShortsSurfaceIdentifier(identifier);
+			if(a1!=="engagement-panel-structured-description") debugger;
+		}
+	}
+	/** @private @arg {SI_VE139722_EngagementPanel} x */
+	SI_VE139722_EngagementPanel(x) {
+		const cf="SI_VE139722_EngagementPanel";
+		const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_SectionList(content);
+		this.t(header,this.R_EngagementPanelTitleHeader);
+		if(targetId!=="engagement-panel-comments-section") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+		if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
+		if(!identifier) debugger;
+		let a1=this.GT_ShortsSurfaceIdentifier(identifier);
+		if(a1!=="shorts-comments-panel") debugger;
+	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
-		const cf="D_EngagementPanelSectionList";
+		const cf="D_EngagementPanelSectionList"; this.k(cf,x);
 		if("veType" in x) {
 			switch(x.veType) {
 				default: debugger; break;
-				case 76278: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x);
-					if(panelIdentifier!=="comment-item-section") debugger;
-					this.R_EngagementPanelTitleHeader(header);
-					this.R_SectionList(content);
-					if(targetId!=="engagement-panel-comments-section") debugger;
-					this.targetId(cf,targetId);
-					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.D_LoggingDirectives(loggingDirectives);
-					if("identifier" in y) {
-						this.force_parse_identifier(cf,y);
-						return;
-					}
-					this.g(y);
-				} break;
-				case 99999: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
-					this.R_EngagementPanelTitleHeader(header);
-					this.R_ProductList(content);
-					if(targetId!=="shopping_panel_for_entry_point_5") debugger;
-					this.targetId(cf,targetId);
-					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.D_LoggingDirectives(loggingDirectives);
-				} break;
-				case 126250: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
-					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
-					this.R_EngagementPanelTitleHeader(header);
-					this.R_ContinuationItem(content);
-					if(targetId!=="engagement-panel-searchable-transcript") debugger;
-					this.targetId(cf,targetId);
-					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.D_LoggingDirectives(loggingDirectives);
-					if("identifier" in y) {
-						this.force_parse_identifier(cf,y);
-						return;
-					}
-					this.g(y);
-				} break;
-				case 124975: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
-					this.R_EngagementPanelTitleHeader(header);
-					this.R_StructuredDescriptionContent(content);
-					if(targetId!=="engagement-panel-structured-description") debugger;
-					this.targetId(cf,targetId);
-					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.D_LoggingDirectives(loggingDirectives);
-					if(identifier) {
-						let a1=this.GT_ShortsSurfaceIdentifier(identifier);
-						if(a1!=="engagement-panel-structured-description") debugger;
-					}
-				} break;
-				case 139722: {
-					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					this.R_SectionList(content);
-					this.t(header,this.R_EngagementPanelTitleHeader);
-					if(targetId!=="engagement-panel-comments-section") debugger;
-					this.targetId(cf,targetId);
-					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.D_LoggingDirectives(loggingDirectives);
-					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
-					if(!identifier) debugger;
-					let a1=this.GT_ShortsSurfaceIdentifier(identifier);
-					if(a1!=="shorts-comments-panel") debugger;
-				} break;
+				case 76278: return this.SI_VE76278_EngagementPanel(x);
+				case 99999: return this.SI_VE99999_EngagementPanel(x);
+				case 126250: return this.SI_VE126250_EngagementPanel(x);
+				case 124975: return this.SI_VE124975_EngagementPanel(x);
+				case 139722: return this.SI_VE139722_EngagementPanel(x);
 			}
 			return;
 		}
