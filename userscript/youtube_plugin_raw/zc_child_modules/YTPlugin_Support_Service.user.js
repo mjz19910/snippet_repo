@@ -764,6 +764,32 @@ class Support_RS_Browse extends ServiceMethods {
 		this.t(continuationContents,this.RC_SectionList);
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
 	}
+	/** @private @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
+	RS_Playlist_AlertItem(cf1,x) {
+		const cf2="RS_Playlist_AlertItem";
+		if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
+		this.codegen_typedef(`${cf1}$${cf2}`,x);
+	}
+	/** @private @arg {D_Cache_MD} x */
+	D_Cache_MD(x) {
+		const cf="CacheMetadata";
+		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!isCacheHit) debugger;
+	}
+	/** @private @arg {G_Browse_MD} x */
+	G_Browse_MD(x) {
+		const cf="G_Browse_MD";
+		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
+		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {G_BrowseSidebar} x */
+	G_BrowseSidebar(x) {
+		const cf="G_BrowseSidebar";
+		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
+		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @private @arg {DC_ResetChannelUnreadCount} x */

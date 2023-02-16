@@ -196,20 +196,6 @@ class HandleTypes extends ServiceMethods {
 		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_Browse_MD} x */
-	G_Browse_MD(x) {
-		const cf="G_Browse_MD";
-		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
-		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_BrowseSidebar} x */
-	G_BrowseSidebar(x) {
-		const cf="G_BrowseSidebar";
-		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
-		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x) {
 		const cf="G_PlaylistSidebarItem";
@@ -2059,12 +2045,6 @@ class HandleTypes extends ServiceMethods {
 		const {title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 	}
-	/** @private @arg {D_Cache_MD} x */
-	D_Cache_MD(x) {
-		const cf="CacheMetadata";
-		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(!isCacheHit) debugger;
-	}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
@@ -2162,12 +2142,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.R_Microformat(microformat);
 		this.R_PlaylistSidebar(sidebar);
-	}
-	/** @private @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
-	RS_Playlist_AlertItem(cf1,x) {
-		const cf2="RS_Playlist_AlertItem";
-		if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
-		this.codegen_typedef(`${cf1}$${cf2}`,x);
 	}
 	/** @private @arg {RS_Settings} x */
 	RS_Settings(x) {
