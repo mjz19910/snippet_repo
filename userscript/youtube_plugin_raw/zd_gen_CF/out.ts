@@ -89,8 +89,12 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AU_ToggleButtonTextData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_ActionAddVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_ActionSetPlaylistVideoOrder";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_AddVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_BrowseFeed";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_COPY_FROM_PLAYLIST";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_CommentsSectionContinuation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_RemoveVideoByVideoId";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_SetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_Hack";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_TagObj";}

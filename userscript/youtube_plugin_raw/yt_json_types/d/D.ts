@@ -2891,9 +2891,9 @@ type D_VideoIdTagStr=string&{_tag: "YtVideoId";};
 type D_VideoOwner={
 	thumbnail: D_Thumbnail;
 	title: G_Text;
-	subscriptionButton: D_SubscriptionButton;
+	subscriptionButton?: D_SubscriptionButton;
 	navigationEndpoint: GE_Browse;
-	subscriberCountText: G_Text;
+	subscriberCountText?: G_Text;
 	trackingParams: string;
 	badges?: RMD_Badge[];
 	membershipButton?: R_Button;

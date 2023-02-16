@@ -5602,8 +5602,8 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(thumbnail);
 		this.G_Text(title);
 		this.trackingParams(trackingParams);
-		this.G_Text(subscriberCountText);
-		this.D_SubscriptionButton(subscriptionButton);
+		this.t(subscriberCountText,this.G_Text);
+		this.t(subscriptionButton,this.D_SubscriptionButton);
 		this.t(membershipButton,this.R_Button);
 		return y;
 	}
@@ -5868,7 +5868,7 @@ class ServiceMethods extends ServiceData {
 				this.trackingParams(trackingParams);
 				ia.push(["label",[label]]);
 				if("icon" in y) {
-					const {icon,...y1}=y;
+					const {icon,...y1}=y; this.g(y1);
 					ia.push(["icon",[icon.iconType]]);
 					return;
 				}
