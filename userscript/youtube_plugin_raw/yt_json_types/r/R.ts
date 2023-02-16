@@ -289,8 +289,20 @@ type R_PageTypeWatch={
 };
 type R_PageTypeBrowse={
 	pageType: "browse";
-	endpoint: GE_Browse;
-	response: RS_Page_Browse;
+	endpoint: E_VE3854;
+	response: {
+		page: "browse";
+		endpoint: E_VE3854;
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			header: R_FeedTabbedHeader;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+			onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
+		};
+		url: "/";
+	};
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
