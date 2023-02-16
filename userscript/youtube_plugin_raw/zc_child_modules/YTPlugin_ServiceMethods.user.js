@@ -24,7 +24,7 @@ class ServiceMethods extends ServiceData {
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
 		this.trackingParams(trackingParams);
-		return this.w_priv("items",y);
+		return this.w(`T_Items_TP:${cf}`,"items",y);
 	}
 	/** @public @template T @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return this.wn("TR_MP_MenuSection",x,"multiPageMenuSectionRenderer");}
