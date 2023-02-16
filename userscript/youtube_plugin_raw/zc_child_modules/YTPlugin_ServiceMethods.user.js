@@ -14,10 +14,10 @@
 const __module_name__="mod$ServiceMethods",store=required(window.__plugin_modules__),bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
-const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_;
+const base64_dec=bs.base64_dec,base64_url_dec=bs.base64_url_dec;
+const as=bs.as_,as_any=bs.as_any;
 const ServiceData=bs.ServiceData;
-const split_string=bs.split_string,split_string_once=bs.split_string_once.split_string_once_last=bs.split_string_once_last;
-const as_any=bs.as_any;
+const split_string=bs.split_string,split_string_once=bs.split_string_once,split_string_once_last=bs.split_string_once_last;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
