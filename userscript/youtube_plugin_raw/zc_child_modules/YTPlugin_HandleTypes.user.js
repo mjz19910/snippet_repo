@@ -2145,6 +2145,16 @@ class HandleTypes extends ServiceMethods {
 				console.log(`\ncase "${cf}":`);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x);
 			} break;
+			// case "tracking.params": {
+			// 	/** @type {R_TrackingObj} */
+			// 	let u=as_any(x);
+			// 	this.R_TrackingObj(u);
+			// } break;
+			case "tracking.params": {
+				/** @type {P_tracking_params} */
+				let u=as_any(x);
+				this.R_TrackingObj(u);
+			} break;
 			// case "ad_layout.ad_serving_data_entry": {
 			// 	/** @type {P_continuation_request_reel_watch_sequence_token} */
 			// 	let u=as_any(x); u;
@@ -2208,11 +2218,6 @@ class HandleTypes extends ServiceMethods {
 			// 	/** @type {R_GetPgdBuyFlow} */
 			// 	let u=as_any(x);
 			// 	this.R_GetPgdBuyFlow(u);
-			// } break;
-			// case "tracking.params": {
-			// 	/** @type {R_TrackingObj} */
-			// 	let u=as_any(x);
-			// 	this.R_TrackingObj(u);
 			// } break;
 			// case "tracking.click_tracking_params": {
 			// 	/** @type {R_ClickTrackingObj} */
@@ -2301,29 +2306,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
-	/** @protected @arg {R_TrackingObj} x */
+	/** @protected @arg {P_tracking_params} x */
 	R_TrackingObj(x) {
-		const cf="R_TrackingObj";
-		const {1: [f1],2: [f2],4: [f4],...u}=x;
+		const cf="R_TrackingObj"; this.k(cf,x);
+		const {1: [,f1],2: [,f2],4: [,,f4],...u}=x;
 		this.a_primitive_num(f1);
 		this.a_primitive_num(f2);
 		this.V_BinaryTimestamp(f4);
-		if(6 in u) {
-			const {6: [s1],...y}=u; this.g(y);
-			this.save_string(`${cf}.f6`,s1);
-			return;
-		}
-		if(3 in u&&8 in u) {
-			const {3: [f3],8: [f8],...y}=u; this.g(y);
-			this.save_number(`${cf}.f3`,f3);
-			this._primitive_of(f8,"bigint");
-			return;
-		}
-		if(3 in u) {
-			const {3: [f3],...y}=u; this.g(y);
-			this.save_number(`${cf}.f3`,f3);
-			return;
-		}
 		this.g(u);
 	}
 	/** @private @arg {V_BinaryTimestamp} x */
