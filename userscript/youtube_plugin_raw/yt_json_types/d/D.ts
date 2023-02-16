@@ -2485,7 +2485,7 @@ type D_ReelItem={
 type D_ReelPlayerHeader={
 	reelTitleText: G_Text;
 	timestampText: G_Text;
-	channelNavigationEndpoint: GE_Browse;
+	channelNavigationEndpoint: E_VE3611;
 	channelTitleText: G_Text;
 	channelThumbnail: D_Thumbnail;
 	trackingParams: string;

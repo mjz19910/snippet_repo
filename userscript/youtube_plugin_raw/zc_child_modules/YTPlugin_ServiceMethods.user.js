@@ -545,7 +545,7 @@ class ServiceMethods extends ServiceData {
 		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(reelTitleText);
 		this.G_Text(timestampText);
-		debugger; channelNavigationEndpoint;
+		this.E_VE3611(channelNavigationEndpoint);
 		this.G_Text(channelTitleText);
 		this.D_Thumbnail(channelThumbnail);
 		this.trackingParams(trackingParams);
