@@ -1993,6 +1993,9 @@ class HandleTypes extends ServiceMethods {
 				if(otu.length===3) {
 					const [,binary_arr,obj]=otu;
 					if(obj!==null) {
+						if(1 in obj&&2 in obj&&3 in obj) {
+							return "TYPE::T_VW<V_BinaryTimestamp>";
+						}
 						console.log("maybe_handle_bin.do_obj",obj);
 						return obj;
 					}
