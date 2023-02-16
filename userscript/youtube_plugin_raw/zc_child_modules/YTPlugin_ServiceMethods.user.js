@@ -4443,7 +4443,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
-	/** 
+	/**
 	 * @private
 	 * @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]["itemSectionRenderer"]} x
 	 * @arg {[R_ContinuationItem[], "comment-item-section", "engagement-panel-comments-section"][]} u1
@@ -4462,10 +4462,22 @@ class ServiceMethods extends ServiceData {
 		if(z.length!==0) debugger;
 		u2.push(...v);
 	}
-	/** @public @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]} x */
+	/**
+	 * @private
+	 * @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]} x
+	 * @arg {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} u1
+	 * @arg {R_Message[]} u2
+	 */
 	GD_RC_SectionList_p2_contentItem(x,u1,u2) {
 		const {itemSectionRenderer,...y}=x; this.g(y);
 		this.GD_RC_SectionList_p2_ItemSection(itemSectionRenderer,u1,u2);
+	}
+	/** @public @arg {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"]} x */
+	GD_RC_SectionList_res_1(x) {
+		let [u,k1,k2]=x;
+		if(k1!=="comment-item-section") {debugger; return;}
+		if(k2!=="engagement-panel-comments-section") {debugger; return;}
+		this.z(u,this.R_ContinuationItem);
 	}
 	/** @public @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>} x */
 	GD_RC_SectionList_p2(x) {
@@ -4478,18 +4490,7 @@ class ServiceMethods extends ServiceData {
 		let ux_2=[];
 		for(let item of arr) this.GD_RC_SectionList_p2_contentItem(item,ux_1,ux_2);
 		this.z(ux_1,x => {
-			/** @type {DC_SectionListBase} */
-			switch(x[1]) {
-				default: debugger; break;
-				case "comment-item-section": {
-					let [x0,,x2]=x;
-					if(x2!=="engagement-panel-comments-section") debugger;
-					this.z(x0,x => {
-						if(!x.continuationItemRenderer) debugger;
-						return this.R_ContinuationItem(x);
-					});
-				} break;
-			}
+			this.GD_RC_SectionList_res_1(x);
 		});
 		this.trackingParams(trackingParams);
 	}
