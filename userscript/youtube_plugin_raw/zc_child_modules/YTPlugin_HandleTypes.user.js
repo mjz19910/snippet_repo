@@ -2117,6 +2117,11 @@ class HandleTypes extends ServiceMethods {
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
 				debugger;
 			} break;
+			case "ad_layout.ad_serving_data_entry":{
+				/** @type {P_ad_layout_ad_serving_data_entry} */
+				let u=as_any(x);
+				this.P_ad_layout_ad_serving_data_entry(u);
+			} break;
 			case "tracking.click_tracking_params": {
 				/** @type {R_ClickTrackingObj} */
 				let u=as_any(x);
@@ -2150,59 +2155,6 @@ class HandleTypes extends ServiceMethods {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		this.decode_continuation_token_dec_arr(cf,dec);
-	}
-	/** @protected @arg {V_VeDescObj} x */
-	V_VeDescObj(x) {
-		const cf="V_VeDescObj";
-		const {1: [f1],2: [f2],...y}=x; this.g(y);
-		this.save_number(`${cf}.f1`,f1);
-		if(f2!==3832) debugger;
-	}
-	/** @protected @arg {R_ClickTrackingObj_t1} x */
-	R_ClickTrackingObj_t1(x) {
-		const cf="R_ClickTrackingObj_t1";
-		const {1: [t1,f1],2: [t2,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-		if(t1!=="data32") debugger;
-		if(t2!=="data32") debugger;
-		this.save_number(`${cf}.${t1}.f1`,f1);
-		this.a_primitive_num(f2);
-		this.V_BinaryTimestamp(f4);
-	}
-	/** @protected @arg {R_ClickTrackingObj} x */
-	R_ClickTrackingObj(x) {
-		const cf="R_ClickTrackingObj"; this.k(cf,x);
-		if(1 in x) return this.R_ClickTrackingObj_t1(x);
-		const {4: [,,f4],...u}=this.s(cf,x);
-		this.V_BinaryTimestamp(f4);
-		if(6 in u) {
-			const {6: [ty,[ty2,f6]],...y}=u; this.g(y);
-			if(ty!=="raw") debugger;
-			if(ty2!=="string") debugger;
-			if(f6!=="external") debugger;
-			return;
-		}
-		this.g(u);
-	}
-	/** @protected @arg {P_tracking_params} x */
-	R_TrackingObj(x) {
-		const cf="R_TrackingObj"; this.k(cf,x);
-		const {1: [,f1],2: [,f2],4: [,,f4],...u}=x;
-		this.a_primitive_num(f1);
-		this.a_primitive_num(f2);
-		this.V_BinaryTimestamp(f4);
-		this.g(u);
-	}
-	/** @private @arg {V_BinaryTimestamp} x */
-	V_BinaryTimestamp(x) {
-		const cf="V_BinaryTimestamp";
-		const {1: [,f1],2: [,f2],3: [,f3],...y}=this.s(cf,x); this.g(y);
-		if(typeof f1!=="number") debugger;
-		if(typeof f2==="number"&&f2>0b1010111011010101010000001011) {
-			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
-		}
-		if(typeof f3==="number"&&f3>0b11111100000000010110010000100111) {
-			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
-		}
 	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
@@ -4400,6 +4352,61 @@ class HandleTypes extends ServiceMethods {
 		this.ceq(isUnpluggedCorpus,false);
 		this.ceq(isLiveContent,false);
 	}
+	/** @protected @arg {V_VeDescObj} x */
+	V_VeDescObj(x) {
+		const cf="V_VeDescObj";
+		const {1: [f1],2: [f2],...y}=x; this.g(y);
+		this.save_number(`${cf}.f1`,f1);
+		if(f2!==3832) debugger;
+	}
+	/** @protected @arg {R_ClickTrackingObj_t1} x */
+	R_ClickTrackingObj_t1(x) {
+		const cf="R_ClickTrackingObj_t1";
+		const {1: [t1,f1],2: [t2,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
+		if(t1!=="data32") debugger;
+		if(t2!=="data32") debugger;
+		this.save_number(`${cf}.${t1}.f1`,f1);
+		this.a_primitive_num(f2);
+		this.V_BinaryTimestamp(f4);
+	}
+	/** @protected @arg {R_ClickTrackingObj} x */
+	R_ClickTrackingObj(x) {
+		const cf="R_ClickTrackingObj"; this.k(cf,x);
+		if(1 in x) return this.R_ClickTrackingObj_t1(x);
+		const {4: [,,f4],...u}=this.s(cf,x);
+		this.V_BinaryTimestamp(f4);
+		if(6 in u) {
+			const {6: [ty,[ty2,f6]],...y}=u; this.g(y);
+			if(ty!=="raw") debugger;
+			if(ty2!=="string") debugger;
+			if(f6!=="external") debugger;
+			return;
+		}
+		this.g(u);
+	}
+	/** @protected @arg {P_tracking_params} x */
+	R_TrackingObj(x) {
+		const cf="R_TrackingObj"; this.k(cf,x);
+		const {1: [,f1],2: [,f2],4: [,,f4],...u}=x;
+		this.a_primitive_num(f1);
+		this.a_primitive_num(f2);
+		this.V_BinaryTimestamp(f4);
+		this.g(u);
+	}
+	/** @private @arg {V_BinaryTimestamp} x */
+	V_BinaryTimestamp(x) {
+		const cf="V_BinaryTimestamp";
+		const {1: [,f1],2: [,f2],3: [,f3],...y}=this.s(cf,x); this.g(y);
+		if(typeof f1!=="number") debugger;
+		if(typeof f2==="number"&&f2>0b1010111011010101010000001011) {
+			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
+		}
+		if(typeof f3==="number"&&f3>0b11111100000000010110010000100111) {
+			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
+		}
+	}
+	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
+	P_ad_layout_ad_serving_data_entry(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
