@@ -7486,5 +7486,15 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(placeholderText);
 		this.trackingParams(trackingParams);
 	}
+	/** @private @arg {R_AlertWithButton} x */
+	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
+	/** @private @arg {D_AlertWithButton} x */
+	D_AlertWithButton(x) {
+		const cf="D_AlertWithButton";
+		const {type,text,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(type!=="INFO") debugger;
+		this.G_Text(text);
+		this.R_Button(dismissButton);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

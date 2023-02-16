@@ -542,16 +542,6 @@ class HandleTypes extends ServiceMethods {
 	R_Channel_MD(x) {this.H_("R_Channel_MD","channelMetadataRenderer",x,this.D_Channel_MD);}
 	/** @private @arg {R_Playlist_MD} x */
 	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
-	/** @private @arg {R_AlertWithButton} x */
-	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
-	/** @private @arg {D_AlertWithButton} x */
-	D_AlertWithButton(x) {
-		const cf="D_AlertWithButton";
-		const {type,text,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(type!=="INFO") debugger;
-		this.G_Text(text);
-		this.R_Button(dismissButton);
-	}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {R_AddToPlaylistCreate} x */
