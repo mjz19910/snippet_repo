@@ -647,8 +647,6 @@ class HandleTypes extends ServiceMethods {
 	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
-	/** @public @arg {R_RichListHeader} x */
-	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
 	/** @arg {R_RichSection} x */
@@ -2825,14 +2823,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_ExternalChannelId"; this.k(cf,x);
 		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_ChannelId(externalChannelId);
-	}
-	/** @private @arg {D_RichListHeader} x */
-	D_RichListHeader(x) {
-		const cf="D_RichListHeader"; this.k(cf,x);
-		const {title,trackingParams,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.G_Text(title);
-		this.R_Button(navigationButton);
 	}
 	/** @private @arg {D_PdgCommentPreview} x */
 	D_PdgCommentPreview(x) {

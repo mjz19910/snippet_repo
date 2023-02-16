@@ -6303,6 +6303,16 @@ class ServiceMethods extends ServiceData {
 		this.t(showMoreText,this.G_Text);
 		this.t(showLessText,this.G_Text);
 	}
+	/** @public @arg {R_RichListHeader} x */
+	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
+	/** @private @arg {D_RichListHeader} x */
+	D_RichListHeader(x) {
+		const cf="D_RichListHeader"; this.k(cf,x);
+		const {title,trackingParams,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.G_Text(title);
+		this.R_Button(navigationButton);
+	}
 	/** @private @arg {D_HorizontalCardList} x */
 	D_HorizontalCardList(x) {
 		const cf="D_HorizontalCardList";
