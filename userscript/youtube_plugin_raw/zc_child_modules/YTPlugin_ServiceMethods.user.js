@@ -4102,6 +4102,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
+	/** @protected @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {const [a,y]=this.TE_Endpoint_2("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.g(a);}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist";
@@ -4111,8 +4113,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_CreatePlaylist} x */
 	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
-	/** @protected @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {x; debugger;}
 	/** @public @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
 		const cf="RC_ResponseContext";
@@ -4991,12 +4991,14 @@ class ServiceMethods extends ServiceData {
 		this.save_number(`${cf}.code`,code);
 		this.save_enum("PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
+	/** @private @arg {E_Pinging} x */
+	E_Pinging(x) {x;}
 	/** @private @arg {R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {
 		const cf="D_PromotedSparklesWeb";
-		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,menu,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
+		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,noopTapEndpoints,menu,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
 		this.D_Thumbnail(thumbnail);
 		this.T_Icon(`${cf}:icon`,icon);
 		this.G_Text(title);
@@ -5005,6 +5007,7 @@ class ServiceMethods extends ServiceData {
 		this.R_Button(actionButton);
 		this.E_VE83769_Url(navigationEndpoint);
 		this.z(impressionCommands,this.D_ImpressionCommand);
+		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.R_Menu(menu);
 		this.trackingParams(trackingParams);
 		this.z(clickLocationTargets,this.D_ClickLocationTarget);
