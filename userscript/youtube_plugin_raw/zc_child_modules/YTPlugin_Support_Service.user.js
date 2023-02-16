@@ -632,7 +632,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 	/** @private @arg {RS_VE3832_Page_Watch} x */
 	RS_VE3832_Page_Watch(x) {
 		const cf="R_WatchPage_VE3832"; this.k(cf,x);
-		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==3832) debugger;
 		let wp_params=this.handle_types.parse_watch_page_url(cf,url);
 		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
@@ -640,6 +640,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 		if(preconnect!==void 0) this.handle_types.parse_preconnect_arr(preconnect);
 		this.handle_types.z_RS_support_player.RS_Player(playerResponse);
 		this.handle_types.z_Support_RS_Watch.RS_Watch(response);
+		this.t(csn,x => this.handle_types.D_VeCsn(x));
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
