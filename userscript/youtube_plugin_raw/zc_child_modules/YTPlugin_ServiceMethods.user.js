@@ -271,6 +271,102 @@ class ServiceMethods extends ServiceData {
 			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
 		}
 	}
+	/** @private @arg {AD_SendFeedback} x */
+	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
+	/** @private @arg {AD_Notification} x */
+	AD_Notification(x) {
+		const cf="AD_Notification";
+		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(responseText);
+		this.t(actionButton,this.R_Button);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
+	AD_ChangeEngagementPanelVisibility(x) {
+		const cf="AD_ChangeEngagementPanelVisibility";
+		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_EngagementPanelTargetId(cf,targetId);
+		switch(visibility) {
+			default: this.cg.codegen_case(`${cf}.visibility`,visibility); break;
+			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
+			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
+		}
+	}
+	/** @private @arg {AD_HideEnclosing} x */
+	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
+	/** @private @arg {AD_ReplaceEnclosing} x */
+	AD_ReplaceEnclosing(x) {
+		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
+		let k=this.get_keys_of(x.item);
+		switch(k[0]) {
+			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
+			case "notificationTextRenderer":
+			case "reelDismissalActionRenderer":
+			case "notificationMultiActionRenderer":
+		}
+	}
+	/** @arg {AD_ReplaceEnclosing_Item} x */
+	AD_ReplaceEnclosing_Item(x) {
+		const cf="AD_ReplaceEnclosing_Item"; this.ks(cf,x);
+		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
+		if("reelDismissalActionRenderer" in x) return this.RA_ReelDismissal(x);
+		if("notificationMultiActionRenderer" in x) return this.RA_NotificationMulti(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {AD_HideEngagementPanelTargetId} x */
+	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
+	/** @private @arg {AD_SetActivePanelItem} x */
+	AD_SetActivePanelItem(x) {
+		const cf="AD_SetActivePanelItem";
+		const {panelTargetId,itemIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(panelTargetId) {
+			default: debugger; break;
+			case "engagement-panel-macro-markers-auto-chapters":
+		}
+		this.save_number(`${cf}.itemIndex`,itemIndex);
+	}
+	/** @private @arg {AD_ShowEngagementPanelScrim} x */
+	AD_ShowEngagementPanelScrim(x) {
+		const cf="AD_ShowEngagementPanelScrim";
+		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
+		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
+		let [x1]=this.z(n,this.unpack_popup_dialog);
+		let [x2]=this.z(x1,x => {
+			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
+			return x[1];
+		});
+		this.z(x2,this.R_ConfirmDialog);
+	}
+	/** @public @arg {AD_AddToToast} x */
+	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
+	/** @public @arg {AD_ReelDismissal} x */
+	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
+	/** @private @arg {AD_AppendContinuationItems} x */
+	AD_AppendContinuationItems(x) {
+		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId);
+		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
+		if(this.starts_with_targetId(x,"browse-feed")) {
+			if(this.starts_with_targetId(x,"browse-feedUC")) {
+				const cp0=split_string(x.targetId,"browse-feed")[1];
+				let cp=split_string(cp0,"channels");
+				this.D_ChannelId(cp[0]);
+				if(cp[1]!=="156") debugger;
+				return;
+			}
+			switch(x.targetId) {
+				case "browse-feedFEwhat_to_watch": {
+					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
+				} break;
+			}
+			return;
+		}
+		switch(x.targetId) {
+			case "comments-section": this.A_CommentsSectionContinuation(x); break;
+			case "watch-next-feed": this.A_WatchNext(x); break;
+			default: x===0; debugger;
+		}
+	}
 	/** @protected @arg {R_ConfirmDialog} x */
 	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
 	/** @private @arg {D_ConfirmDialog} x */
@@ -319,8 +415,6 @@ class ServiceMethods extends ServiceData {
 			case "TOAST": case "TOP_ALIGNED_DIALOG": case "DIALOG":
 		}
 	}
-	/** @private @arg {AD_SendFeedback} x */
-	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
 	/** @private @arg {A_SendFeedback} x */
 	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
 	/** @private @arg {E_ShowEngagementPanel} x */
@@ -410,14 +504,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {RA_Notification} x */
 	RA_Notification(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
-	/** @private @arg {AD_Notification} x */
-	AD_Notification(x) {
-		const cf="AD_Notification";
-		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(responseText);
-		this.t(actionButton,this.R_Button);
-		this.trackingParams(trackingParams);
-	}
 	/** @protected @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
 	T_BaseUrl(x,f) {
 		const cf="T_BaseUrl";
@@ -3125,17 +3211,6 @@ class ServiceMethods extends ServiceData {
 	rootVe(x) {this.on_root_visual_element(x);}
 	/** @protected @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
-	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
-	AD_ChangeEngagementPanelVisibility(x) {
-		const cf="AD_ChangeEngagementPanelVisibility";
-		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_EngagementPanelTargetId(cf,targetId);
-		switch(visibility) {
-			default: this.cg.codegen_case(`${cf}.visibility`,visibility); break;
-			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
-			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
-		}
-	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {
 		const cf="D_ThumbnailOverlayInlineUnplayable";
@@ -3388,8 +3463,6 @@ class ServiceMethods extends ServiceData {
 		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 	}
-	/** @private @arg {AD_HideEnclosing} x */
-	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
@@ -3506,25 +3579,6 @@ class ServiceMethods extends ServiceData {
 	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
 	/** @private @arg {A_ReplaceEnclosing} x */
 	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
-	/** @private @arg {AD_ReplaceEnclosing} x */
-	AD_ReplaceEnclosing(x) {
-		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
-		let k=this.get_keys_of(x.item);
-		switch(k[0]) {
-			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
-			case "notificationTextRenderer":
-			case "reelDismissalActionRenderer":
-			case "notificationMultiActionRenderer":
-		}
-	}
-	/** @arg {AD_ReplaceEnclosing_Item} x */
-	AD_ReplaceEnclosing_Item(x) {
-		const cf="AD_ReplaceEnclosing_Item"; this.ks(cf,x);
-		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
-		if("reelDismissalActionRenderer" in x) return this.RA_ReelDismissal(x);
-		if("notificationMultiActionRenderer" in x) return this.RA_NotificationMulti(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {DE_GetReportForm} x */
 	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm","get_report_form.params",x);}
 	/** @private @arg {DE_NotificationOptOut} x */
@@ -3839,60 +3893,6 @@ class ServiceMethods extends ServiceData {
 	false_() {return false;}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
-	/** @private @arg {AD_HideEngagementPanelTargetId} x */
-	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
-	/** @private @arg {AD_SetActivePanelItem} x */
-	AD_SetActivePanelItem(x) {
-		const cf="AD_SetActivePanelItem";
-		const {panelTargetId,itemIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(panelTargetId) {
-			default: debugger; break;
-			case "engagement-panel-macro-markers-auto-chapters":
-		}
-		this.save_number(`${cf}.itemIndex`,itemIndex);
-	}
-	/** @private @arg {AD_ShowEngagementPanelScrim} x */
-	AD_ShowEngagementPanelScrim(x) {
-		const cf="AD_ShowEngagementPanelScrim";
-		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
-		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
-		let [x1]=this.z(n,this.unpack_popup_dialog);
-		let [x2]=this.z(x1,x => {
-			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
-			return x[1];
-		});
-		this.z(x2,this.R_ConfirmDialog);
-	}
-	/** @public @arg {AD_AddToToast} x */
-	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
-	/** @public @arg {AD_ReelDismissal} x */
-	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
-	/** @private @arg {AD_AppendContinuationItems} x */
-	AD_AppendContinuationItems(x) {
-		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId);
-		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
-		if(this.starts_with_targetId(x,"browse-feed")) {
-			if(this.starts_with_targetId(x,"browse-feedUC")) {
-				const cp0=split_string(x.targetId,"browse-feed")[1];
-				let cp=split_string(cp0,"channels");
-				this.D_ChannelId(cp[0]);
-				if(cp[1]!=="156") debugger;
-				return;
-			}
-			switch(x.targetId) {
-				case "browse-feedFEwhat_to_watch": {
-					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
-				} break;
-			}
-			return;
-		}
-		switch(x.targetId) {
-			case "comments-section": this.A_CommentsSectionContinuation(x); break;
-			case "watch-next-feed": this.A_WatchNext(x); break;
-			default: x===0; debugger;
-		}
-	}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
 	/** @protected @arg {DC_EntityBatchUpdate} x */
