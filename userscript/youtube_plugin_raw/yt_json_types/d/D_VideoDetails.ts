@@ -2,7 +2,7 @@ type D_VideoDetails={
 	videoId: string;
 	title: string;
 	lengthSeconds: `${number}`;
-	keywords: string[];
+	keywords?: string[];
 	channelId: `UC${string}`;
 	isOwnerViewing: false;
 	shortDescription: string;

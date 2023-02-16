@@ -2953,6 +2953,7 @@ class HandleTypes extends ServiceMethods {
 					if(gen.has) break;
 					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				}; break;
+				case "n4v7s":
 				case "nx57y":
 				case "o097z":
 				case "nx5s7":
@@ -3157,7 +3158,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(title);
 		let num=this.parse_number_template(lengthSeconds);
 		this.a_primitive_num(num);
-		this.z(keywords,this.a_primitive_str);
+		this.tz(keywords,this.a_primitive_str);
 		this.channelId(channelId);
 		this.a_primitive_bool(isOwnerViewing);
 		this.ceq(isOwnerViewing,false);
