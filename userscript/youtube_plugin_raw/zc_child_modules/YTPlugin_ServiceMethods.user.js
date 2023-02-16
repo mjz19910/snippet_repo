@@ -1371,8 +1371,7 @@ class ServiceMethods extends ServiceData {
 				if(x2.host!=="www.youtube.com") debugger;
 				if(x2.pathname!=="/pagead/paralleladinteraction") debugger;
 				let pa=x2.search.split("?")[1].split("&"); pa;
-				let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x2.search); y;
-				debugger;
+				let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x2.search); this.g(y);
 			}));
 			this.M_VE83769(commandMetadata);
 			this.DE_VE83769_Url_1(urlEndpoint);
