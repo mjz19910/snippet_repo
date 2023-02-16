@@ -3475,26 +3475,6 @@ class HandleTypes extends ServiceMethods {
 	R_LiveChatPlaceholderItem(x) {x;}
 	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
 	R_LiveChatViewerEngagementMessage(x) {x;}
-	/** @private @arg {DE_VE96368} x */
-	DE_VE96368(x) {x;}
-	/** @private @arg {DE_VE42352} x */
-	DE_VE42352(x) {x;}
-	/** @private @arg {DE_VE6827} x */
-	DE_VE6827(x) {x;}
-	/** @private @arg {DE_VE11487} x */
-	DE_VE11487(x) {x;}
-	/** @private @arg {DE_VE23462} x */
-	DE_VE23462(x) {x;}
-	/** @private @arg {DE_VE3611} x */
-	DE_VE3611(x) {x;}
-	/** @private @arg {DE_VE3854} x */
-	DE_VE3854(x) {x;}
-	/** @private @arg {A_AddToToast} x */
-	A_AddToToast(x) {x;}
-	/** @private @arg {RA_ReelDismissal} x */
-	RA_ReelDismissal(x) {x;}
-	/** @private @arg {RA_NotificationMultiAction} x */
-	RA_NotificationMultiAction(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

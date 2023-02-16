@@ -956,6 +956,18 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(clickTrackingParams);
 		return [endpoint,y];
 	}
+	/**
+	 * @arg {CF_TE_Endpoint_2} cf1
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
+	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
+	 * */
+	TE_TrackedObj(cf1,k,x) {
+		const cf2="TE_Endpoint_2";
+		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
+		this.clickTrackingParams(clickTrackingParams);
+		return [endpoint,y];
+	}
 	/** @protected @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
@@ -3467,8 +3479,7 @@ class ServiceMethods extends ServiceData {
 		const cf="AD_ReplaceEnclosing_Item"; this.ks(cf,x);
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 		if("reelDismissalActionRenderer" in x) return this.RA_ReelDismissal(x);
-		if("notificationMultiActionRenderer" in x) return this.RA_NotificationMultiAction(x);
-		x.notificationMultiActionRenderer;
+		if("notificationMultiActionRenderer" in x) return this.RA_NotificationMulti(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {DE_GetReportForm} x */
@@ -7116,5 +7127,64 @@ class ServiceMethods extends ServiceData {
 		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
+	/** @public @arg {DE_VE3611} x */
+	DE_VE3611(x) {
+		const cf="DE_VE3611";
+		const {params,browseId,canonicalBaseUrl,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {DE_VE3854} x */
+	DE_VE3854(x) {
+		const cf="DE_VE3854";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {DE_VE6827} x */
+	DE_VE6827(x) {
+		const cf="DE_VE6827";
+		const {browseId,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {DE_VE11487} x */
+	DE_VE11487(x) {
+		const cf="DE_VE11487";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {DE_VE23462} x */
+	DE_VE23462(x) {
+		const cf="DE_VE23462";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {DE_VE42352} x */
+	DE_VE42352(x) {
+		const cf="DE_VE42352";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {DE_VE96368} x */
+	DE_VE96368(x) {
+		const cf="DE_VE96368";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {A_AddToToast} x */
+	A_AddToToast(x) {let [a,y]=this.TE_Endpoint_2("A_AddToToast","addToToastAction",x); this.g(y); this.AD_AddToToast(a);}
+	/** @public @arg {AD_AddToToast} x */
+	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
+	/** @public @arg {RA_ReelDismissal} x */
+	RA_ReelDismissal(x) {this.H_("RA_ReelDismissal","reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
+	/** @public @arg {AD_ReelDismissal} x */
+	AD_ReelDismissal(x) {
+		let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal","",x); this.g(y); this.RA_Notification(a);
+	}
+	/**
+	 * @arg {CF_TE_TrackedObj_2} cf1
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
+	 * @returns {[T_EP[EP_Key],Omit<T_EP,"trackingParams"|EP_Key>]}
+	 * */
+	TE_TrackedObj_2(x) {
+		const cf2="TE_Endpoint_2";
+		const {trackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
+		this.trackingParams(trackingParams);
+		return [endpoint,y];
+	}
+	/** @public @arg {RA_NotificationMulti} x */
+	RA_NotificationMulti(x) {this.H_("RA_NotificationMulti","notificationMultiActionRenderer",x,this.AD_ReelDismissal);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

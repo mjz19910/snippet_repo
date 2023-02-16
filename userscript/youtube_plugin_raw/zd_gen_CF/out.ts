@@ -133,10 +133,17 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_UndoFeedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_UserFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE11487";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE23462";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3611";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:playlistSetVideoId:params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:videoId";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3854";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE42352";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE5754";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE6827";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE83769_Url";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE96368";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_Badge";}
@@ -635,9 +642,11 @@ export namespace Gen {
 		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_CreateComment";}
 		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_YpcGetCart";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "AD_ReelDismissal";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "AU_NotificationsUnseenCount";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddChatItem";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddToGuideSection";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddToToast";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AppendContinuationItems";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_ChangeEngagementPanelVisibility";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_HideEnclosing";}

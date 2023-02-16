@@ -1,8 +1,8 @@
+type AD_AddToToast={item: R_NotificationText;};
+
 type A_AddToToast={
 	clickTrackingParams: string;
-	addToToastAction: {
-		item: R_NotificationText;
-	};
+	addToToastAction: AD_AddToToast;
 };
 
 type D_PivotButton={
