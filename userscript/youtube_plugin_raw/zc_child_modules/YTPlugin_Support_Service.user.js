@@ -1131,20 +1131,21 @@ class Support_EventInput extends ServiceMethods {
 		switch(x.pageType) {
 			case "browse": {
 				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.E_VE3854(endpoint);
+				if(this.is_TE_VE(endpoint,3854)) this.E_VE3854(endpoint);
+				if(this.is_TE_VE(endpoint,96368)) this.E_VE96368(endpoint);
 				const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
-				if(ve!==3854) debugger;
+				switch(ve) {
+					case 3854: case 96368:
+				}
 				{
+					/** @type {`RS_Page_VE${typeof ve}_Browse`} */
+					const cf=`RS_Page_VE${ve}_Browse`;
 					let x=response;
 					if("rootVe" in x) {
-						/** @type {"RS_Page_VE3854_Browse"} */
-						const cf=`RS_Page_VE${ve}_Browse`;
 						const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 						if(rootVe!==ve) debugger;
 						if(url!=="/") debugger;
 					} else {
-						/** @type {"RS_Page_VE3854_Browse"} */
-						const cf=`RS_Page_VE${ve}_Browse`;
 						const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 						if(url!=="/") debugger;
 					}
