@@ -2329,7 +2329,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
-		const {1: [f1],2: [f2],3: [f3],...y}=this.s(cf,x); this.g(y);
+		const {1: [,f1],2: [,f2],3: [,f3],...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="number") debugger;
 		if(typeof f2==="number"&&f2>0b1010111011010101010000001011) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
