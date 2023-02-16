@@ -2259,8 +2259,8 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj"; this.k(cf,x);
+		if(1 in x) return;
 		const {4: [,,f4],...u}=x;
-		debugger;
 		this.V_BinaryTimestamp(f4);
 		if(6 in u) {
 			const {6: [ty,[ty2,f6]],...y}=u; this.g(y);
