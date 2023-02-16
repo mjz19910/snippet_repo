@@ -7322,10 +7322,41 @@ class ServiceMethods extends ServiceData {
 		const cf="D_Tab_Subscriptions";
 		const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.D_Tab_Subscriptions_EP(endpoint);
-		if(selected!==true) debugger;
-		if(!content.sectionListRenderer) debugger;
+		this.ceq(selected,true);
 		this.R_SectionList(content);
 		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {R_RichGrid} x */
+	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
+	/** @private @arg {D_RichGrid} x */
+	D_RichGrid(x) {
+		const cf="D_RichGrid";
+		if("masthead" in x) {
+			const {masthead,...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
+			this.R_AdSlot(masthead);
+			return;
+		}
+		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
+	}
+	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
+	D_RichGrid_Omit(cf,x) {
+		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
+		if(targetId!=="browse-feedFEwhat_to_watch") debugger;
+		this.z(contents,this.D_RichGridContent);
+		this.R_FeedFilterChipBar(header);
+		this.trackingParams(trackingParams);
+		if(reflowOptions.minimumRowsOfVideosAtStart!==2) debugger;
+		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
+		return y;
+	}
+	/** @private @arg {R_MusicQueue} x */
+	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
+	/** @private @arg {D_MusicQueue} x */
+	D_MusicQueue(x) {
+		const cf="D_MusicQueue";
+		const {content,hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(content,this.R_PlaylistPanel);
+		this.t(hack,x => {if(x!==true) debugger;});
 	}
 	/** @private @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
@@ -7340,8 +7371,7 @@ class ServiceMethods extends ServiceData {
 					this.D_Tab_Subscriptions(x);} break;
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
-					if(selected!==true) debugger;
-					if(!content.richGridRenderer) debugger;
+					this.ceq(selected,true);
 					this.R_RichGrid(content);
 					this.trackingParams(trackingParams);
 				} break;
@@ -7382,6 +7412,14 @@ class ServiceMethods extends ServiceData {
 		const cf="G_SecondaryContents";
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {G_RichGridContent} x */
+	D_RichGridContent(x) {
+		const cf="D_RichGridContent";
+		if("richItemRenderer" in x) return this.R_RichItem(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("richSectionRenderer" in x) return this.R_RichSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 }

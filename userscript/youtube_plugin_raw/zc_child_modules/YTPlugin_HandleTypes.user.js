@@ -217,14 +217,6 @@ class HandleTypes extends ServiceMethods {
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_RichGridContent} x */
-	D_RichGridContent(x) {
-		const cf="D_RichGridContent";
-		if("richItemRenderer" in x) return this.R_RichItem(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		if("richSectionRenderer" in x) return this.R_RichSection(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
 	G_ResponseTypes(response,x) {
 		const cf="G_ResponseTypes"; this.ks(cf,x);
@@ -512,10 +504,6 @@ class HandleTypes extends ServiceMethods {
 	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview","pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader","pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
-	/** @private @arg {R_MusicQueue} x */
-	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
-	/** @private @arg {R_RichGrid} x */
-	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -850,34 +838,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(text);
 		this.R_Button(helpButton);
 		this.R_Button(dismissButton);
-	}
-	/** @private @arg {D_MusicQueue} x */
-	D_MusicQueue(x) {
-		const cf="D_MusicQueue";
-		const {content,hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(content,this.R_PlaylistPanel);
-		this.t(hack,x => {if(x!==true) debugger;});
-	}
-	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
-	D_RichGrid_Omit(cf,x) {
-		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
-		if(targetId!=="browse-feedFEwhat_to_watch") debugger;
-		this.z(contents,this.D_RichGridContent);
-		this.R_FeedFilterChipBar(header);
-		this.trackingParams(trackingParams);
-		if(reflowOptions.minimumRowsOfVideosAtStart!==2) debugger;
-		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
-		return y;
-	}
-	/** @private @arg {D_RichGrid} x */
-	D_RichGrid(x) {
-		const cf="D_RichGrid";
-		if("masthead" in x) {
-			const {masthead,...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
-			this.R_AdSlot(masthead);
-			return;
-		}
-		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
 	}
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
 	GR_MP_MenuNotificationSection_Item(x) {
