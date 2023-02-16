@@ -514,32 +514,8 @@ class HandleTypes extends ServiceMethods {
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {R_BrowseFeedActions} x */
-	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
-	/** @private @arg {D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions","contents",x,x => this.z(x,this.G_BrowseFeedContent));}
-	/** @private @arg {G_BrowseFeedContent} x */
-	G_BrowseFeedContent(x) {
-		const cf="G_BrowseFeedContent";
-		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
-		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
-		if("buttonRenderer" in x) return this.R_Button(x);
-		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
-	/** @private @arg {R_MusicThumbnail} x */
-	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
-	/** @private @arg {D_MusicThumbnail} x */
-	D_MusicThumbnail(x) {
-		const cf="D_MusicThumbnail";
-		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(a);
-		this.D_Thumbnail(thumbnail);
-		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
-		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
-	}
 	/** @private @arg {R_ReportFormModal} x */
 	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.g);}
 	/** @private @arg {R_PlaylistHeader} x */
@@ -558,8 +534,6 @@ class HandleTypes extends ServiceMethods {
 	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry","profileColumnStatsEntryRenderer",x,this.D_ProfileColumnStatsEntry);}
 	/** @private @arg {R_ProfileColumnUserInfo} x */
 	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
-	/** @private @arg {R_SearchBox} x */
-	R_SearchBox(x) {this.H_("R_SearchBox","searchBoxRenderer",x,this.D_SearchBox);}
 	/** @private @arg {R_SubFeedSelector} x */
 	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector","subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
 	/** @private @arg {R_SubFeedOption} x */
@@ -570,6 +544,14 @@ class HandleTypes extends ServiceMethods {
 	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
 	/** @private @arg {R_AlertWithButton} x */
 	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
+	/** @private @arg {D_AlertWithButton} x */
+	D_AlertWithButton(x) {
+		const cf="D_AlertWithButton";
+		const {type,text,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(type!=="INFO") debugger;
+		this.G_Text(text);
+		this.R_Button(dismissButton);
+	}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {R_AddToPlaylistCreate} x */
@@ -2288,16 +2270,6 @@ class HandleTypes extends ServiceMethods {
 		this.D_ChannelId(channelId);
 		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
-	/** @private @arg {D_SearchBox} x */
-	D_SearchBox(x) {
-		const cf="D_SearchBox";
-		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		debugger;
-		this.R_Button(searchButton);
-		this.R_Button(clearButton);
-		this.G_Text(placeholderText);
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
@@ -2461,14 +2433,6 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(title);
 		this.a_primitive_str(iosAppindexingLink);
 		this.a_primitive_str(androidAppindexingLink);
-	}
-	/** @private @arg {D_AlertWithButton} x */
-	D_AlertWithButton(x) {
-		const cf="D_AlertWithButton";
-		const {type,text,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(type!=="INFO") debugger;
-		this.G_Text(text);
-		this.R_Button(dismissButton);
 	}
 	/** @private @arg {D_ChannelSwitcherPage} x */
 	D_ChannelSwitcherPage(x) {

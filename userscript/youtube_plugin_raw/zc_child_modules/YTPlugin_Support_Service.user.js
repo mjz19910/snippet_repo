@@ -764,11 +764,16 @@ class Support_RS_Browse extends ServiceMethods {
 		this.t(continuationContents,this.RC_SectionList);
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
 	}
-	/** @private @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
-	RS_Playlist_AlertItem(cf1,x) {
-		const cf2="RS_Playlist_AlertItem";
-		if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
-		this.codegen_typedef(`${cf1}$${cf2}`,x);
+	/** @private @arg {R_MusicThumbnail} x */
+	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
+	/** @private @arg {D_MusicThumbnail} x */
+	D_MusicThumbnail(x) {
+		const cf="D_MusicThumbnail";
+		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(a);
+		this.D_Thumbnail(thumbnail);
+		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
+		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
 	/** @private @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {

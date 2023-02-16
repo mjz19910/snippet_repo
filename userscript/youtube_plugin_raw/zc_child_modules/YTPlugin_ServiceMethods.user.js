@@ -7398,6 +7398,19 @@ class ServiceMethods extends ServiceData {
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {R_BrowseFeedActions} x */
+	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
+	/** @private @arg {D_BrowseFeedActions} x */
+	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions","contents",x,x => this.z(x,this.G_BrowseFeedContent));}
+	/** @private @arg {G_BrowseFeedContent} x */
+	G_BrowseFeedContent(x) {
+		const cf="G_BrowseFeedContent";
+		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
+		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x) {
 		const cf="G_SecondaryContents";
@@ -7454,6 +7467,24 @@ class ServiceMethods extends ServiceData {
 	CD_NextRadio(x) {
 		this.y("CD_NextRadio","nextRadioContinuationData",x,
 			x => this.DC_Generic_CTP("next_radio.continuation",x));
+	}
+	/** @protected @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
+	RS_Playlist_AlertItem(cf1,x) {
+		const cf2="RS_Playlist_AlertItem";
+		if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
+		this.codegen_typedef(`${cf1}$${cf2}`,x);
+	}
+	/** @private @arg {R_SearchBox} x */
+	R_SearchBox(x) {this.H_("R_SearchBox","searchBoxRenderer",x,this.D_SearchBox);}
+	/** @private @arg {D_SearchBox} x */
+	D_SearchBox(x) {
+		const cf="D_SearchBox";
+		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		debugger;
+		this.R_Button(searchButton);
+		this.R_Button(clearButton);
+		this.G_Text(placeholderText);
+		this.trackingParams(trackingParams);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
