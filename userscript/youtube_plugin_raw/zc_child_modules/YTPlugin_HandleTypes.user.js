@@ -2841,12 +2841,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.R_Button(emojiButton);
 	}
-	/** @arg {D_CustomEmoji['emojiId']} x */
-	parse_emoji_id(x) {
-		let eid=split_string_once(x,"/");
-		this.D_ChannelId(eid[0]);
-		return eid[1];
-	}
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {
 		let fs=split_string_once(x,":");
