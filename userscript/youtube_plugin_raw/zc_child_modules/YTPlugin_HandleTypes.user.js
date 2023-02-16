@@ -2348,14 +2348,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(commentText);
 		this.R_PdgCommentChip(chipRenderer);
 	}
-	/** @private @arg {D_NavigationLinkItem} x */
-	D_PrimaryLinkItem(x) {
-		const cf="D_PrimaryLinkItem";
-		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_VE83769_Url(navigationEndpoint);
-		this.D_Thumbnail(icon);
-		this.G_Text(title);
-	}
 	/** @private @arg {AD_AccountItem} x */
 	AD_AccountItem(x) {
 		const cf="AD_AccountItem";

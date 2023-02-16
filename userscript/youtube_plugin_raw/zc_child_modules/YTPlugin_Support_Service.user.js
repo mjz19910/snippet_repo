@@ -783,27 +783,13 @@ class Support_RS_Browse extends ServiceMethods {
 		this.z(primaryLinks,this.D_PrimaryLinkItem);
 		this.tz(secondaryLinks,this.D_PrimaryLinkItem);
 	}
-	/** @public @arg {R_C4TabbedHeader} x */
-	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
-	/** @private @arg {D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x) {
-		const cf="D_C4TabbedHeader";
-		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_ChannelId(channelId);
-		this.a_primitive_str(title);
-		this.E_VE3611(navigationEndpoint);
-		this.D_Thumbnail(avatar);
-		this.D_Thumbnail(banner);
-		this.tz(badges,this.RMD_Badge);
-		this.R_ChannelHeaderLinks(headerLinks);
-		this.R_SubscribeButton(subscribeButton);
-		this.G_Text(subscriberCountText);
-		this.D_Thumbnail(tvBanner);
-		this.D_Thumbnail(mobileBanner);
-		this.trackingParams(trackingParams);
-		this.t(sponsorButton,this.R_Button);
-		this.G_Text(channelHandleText);
-		this.G_Text(videosCountText);
+	/** @private @arg {D_NavigationLinkItem} x */
+	D_PrimaryLinkItem(x) {
+		const cf="D_PrimaryLinkItem";
+		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.E_VE83769_Url(navigationEndpoint);
+		this.D_Thumbnail(icon);
+		this.G_Text(title);
 	}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
