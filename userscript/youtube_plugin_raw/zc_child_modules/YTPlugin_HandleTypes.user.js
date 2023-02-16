@@ -2097,14 +2097,13 @@ class HandleTypes extends ServiceMethods {
 		let [,mi]=ss2;
 		let ap=this.get_gv_parts(mi);
 		if(ap.length!==2) debugger;
-		this.save_string(`${cf1}.google_video_partition`,ap[0]);
-		this.save_string(`${cf1}.google_video_selector`,ap[1]);
+		this.save_string(`${cf}.google_video_partition`,ap[0]);
+		this.save_string(`${cf}.google_video_selector`,ap[1]);
 		switch(ap[0]) {
 			default: {
-				let [x]=ap;
-				let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
+				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,ap);
 				if(gen.has) break;
-				console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+				console.log(`-- [js_gen_case:${cf}.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 			}; break;
 			case "n4v7s":
 			case "nx57y":
