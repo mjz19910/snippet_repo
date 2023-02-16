@@ -860,10 +860,6 @@ class HandleTypes extends ServiceMethods {
 	ignore_incorrect_name_set=new Set([
 		"D_CommonConfig",
 	]);
-	/** @private @arg {object} x1 */
-	get_codegen_name(x1) {
-		return this.cg.get_codegen_name_obj(x1);
-	}
 	/** @private @arg {RS_UpdateMetadata} x */
 	RSU_M(x) {
 		const cf="RSU_M";

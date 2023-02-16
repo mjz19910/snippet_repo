@@ -40,6 +40,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @returns {true} */
 	true_() {return true;}
+	/** @private @arg {object} x1 */
+	get_codegen_name(x1) {return this.cg.get_codegen_name_obj(x1);}
 	/** @public @arg {string} cf @arg {{}} x */
 	GEN(cf,x) {
 		let name=this.get_codegen_name(x);
