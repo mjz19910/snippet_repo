@@ -6355,6 +6355,12 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(shortBylineText);
 		return y;
 	}
+	/** @private @arg {D_VideoLike_richThumbnail} x */
+	D_VideoLike_richThumbnail(x) {
+		const cf="D_VideoLike_richThumbnail"; this.k(cf,x);
+		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x @returns {T_OmitKey<T,Exclude<keyof T,Omit_y>>} */
 	D_CompactVideo_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);

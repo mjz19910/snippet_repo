@@ -1150,12 +1150,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_RichItemContent(content);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {D_VideoLike_richThumbnail} x */
-	D_VideoLike_richThumbnail(x) {
-		const cf="D_VideoLike_richThumbnail"; this.k(cf,x);
-		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
 		const cf="D_MovingThumbnail"; this.k(cf,x);
