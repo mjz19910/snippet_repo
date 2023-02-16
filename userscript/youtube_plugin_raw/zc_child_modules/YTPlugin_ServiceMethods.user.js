@@ -4912,7 +4912,7 @@ class ServiceMethods extends ServiceData {
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.T_Icon(`${cf}:iconImage`,iconImage);
 		this.G_Text(tooltipText);
-		debugger;
+		this.E_VE3854(endpoint);
 		this.trackingParams(trackingParams);
 		this.a_primitive_str(overrideEntityKey);
 	}
