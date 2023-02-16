@@ -3510,6 +3510,16 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_get_transcript_params(u);
 			} break;
+			case "transcript_track_selection.entity.key": {
+				/** @type {P_transcript_track_selection_entity_key} */
+				let u=as_any(x);
+				this.P_transcript_track_selection_entity_key(u);
+			} break;
+			case "transcript_track_selection.serialized_params": {
+				/** @type {P_transcript_track_selection_serialized_params} */
+				let u=as_any(x);
+				this.P_transcript_track_selection_serialized_params(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3517,6 +3527,10 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_transcript_track_selection_serialized_params} x */
+	P_transcript_track_selection_serialized_params(x) {x;}
+	/** @private @arg {P_transcript_track_selection_entity_key} x */
+	P_transcript_track_selection_entity_key(x) {x;}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {x;}
 	/** @private @arg {P_shorts_source_bp} x */

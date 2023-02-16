@@ -190,3 +190,16 @@ type P_get_transcript_params={
 	7: T_D32<1>,
 	8: T_D32<1>
 };
+type P_transcript_track_selection_entity_key={
+	2: T_VSR<".transcript.track.selection.key">,
+	4: T_D32<315>,
+	5: T_D32<1>
+};
+type P_transcript_track_selection_serialized_params={
+	1: T_VSR<"tjqBrtu1Igs">,
+	2: T_VSR<"CgNhc3ISAmVuGgA%3D">,
+	3: T_D32<1>,
+	6: T_D32<0>,
+	7: T_D32<1>,
+	8: T_D32<0>
+};
