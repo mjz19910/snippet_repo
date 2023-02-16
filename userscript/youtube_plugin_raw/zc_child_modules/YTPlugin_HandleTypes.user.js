@@ -2122,8 +2122,6 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_bool(subscribed);
 		this.D_ChannelId(channelId);
 	}
-	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
-	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";

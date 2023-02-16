@@ -52,6 +52,8 @@ class ServiceMethods extends ServiceData {
 			other: o3,
 		};
 	}
+	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
+	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
@@ -7597,7 +7599,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {
-		const cf="CacheMetadata";
+		const cf="D_Cache_MD";
 		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!isCacheHit) debugger;
 	}
