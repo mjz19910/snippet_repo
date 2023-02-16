@@ -1125,6 +1125,12 @@ class Support_GenericApi extends ServiceMethods {
 class Support_EventInput extends ServiceMethods {
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
+	/** @arg {R_PageTypeBrowse["endpoint"]} x */
+	R_Page_DefaultEndpoint(x) {
+		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
+		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
+		debugger;
+	}
 	/** @public @arg {R_PageTypeBrowse["response"]} x */
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
@@ -1144,8 +1150,7 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeBrowse(x) {
 		const cf="R_PageTypeBrowse";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(this.is_TE_VE(endpoint,3854)) this.E_VE3854(endpoint);
-		if(this.is_TE_VE(endpoint,96368)) this.E_VE96368(endpoint);
+		this.R_Page_DefaultEndpoint(endpoint);
 		const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
 		switch(ve) {
 			case 3854: case 96368:
