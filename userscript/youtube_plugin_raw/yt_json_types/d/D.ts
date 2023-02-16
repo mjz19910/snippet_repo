@@ -1090,7 +1090,7 @@ type D_GridVideo={
 	viewCountText: G_Text;
 };
 type D_GuideEntry_PresentationNewContent={
-	navigationEndpoint: GE_Browse;
+	navigationEndpoint: E_VE3611;
 	thumbnail: D_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
 	trackingParams: string;
