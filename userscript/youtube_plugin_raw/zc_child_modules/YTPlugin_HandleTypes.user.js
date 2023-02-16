@@ -475,28 +475,6 @@ class HandleTypes extends ServiceMethods {
 	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
-	/** @public @arg {R_C4TabbedHeader} x */
-	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
-	/** @private @arg {D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x) {
-		const cf="D_C4TabbedHeader";
-		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_ChannelId(channelId);
-		this.a_primitive_str(title);
-		this.E_VE3611(navigationEndpoint);
-		this.D_Thumbnail(avatar);
-		this.D_Thumbnail(banner);
-		this.tz(badges,this.RMD_Badge);
-		this.R_ChannelHeaderLinks(headerLinks);
-		this.R_SubscribeButton(subscribeButton);
-		this.G_Text(subscriberCountText);
-		this.D_Thumbnail(tvBanner);
-		this.D_Thumbnail(mobileBanner);
-		this.trackingParams(trackingParams);
-		this.t(sponsorButton,this.R_Button);
-		this.G_Text(channelHandleText);
-		this.G_Text(videosCountText);
-	}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
 	/** @public @arg {R_TemplateUpdate} x */
