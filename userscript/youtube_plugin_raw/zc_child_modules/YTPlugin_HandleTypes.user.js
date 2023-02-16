@@ -188,14 +188,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
-	/** @arg {G_RichSection} x */
-	G_RichSection(x) {
-		const cf="G_RichSection";
-		if("richShelfRenderer" in x) return this.R_RichShelf(x);
-		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
-		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x) {
 		const cf="G_PlaylistSidebarItem";
