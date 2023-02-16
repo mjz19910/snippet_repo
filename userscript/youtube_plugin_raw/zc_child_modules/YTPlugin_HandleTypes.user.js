@@ -525,8 +525,6 @@ class HandleTypes extends ServiceMethods {
 	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.g);}
-	/** @private @arg {R_ChannelHeaderLinks} x */
-	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
 	/** @private @arg {R_TextInputFormField} x */
@@ -2226,13 +2224,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_LiveChatEmoji";
 		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);
 		this.a_primitive_bool(isLocked);
-	}
-	/** @private @arg {D_ChannelHeaderLinks} x */
-	D_ChannelHeaderLinks(x) {
-		const cf="D_ChannelHeaderLinks";
-		const {primaryLinks,secondaryLinks,...y}=this.s(cf,x); this.g(y);
-		this.z(primaryLinks,this.D_PrimaryLinkItem);
-		this.tz(secondaryLinks,this.D_PrimaryLinkItem);
 	}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
