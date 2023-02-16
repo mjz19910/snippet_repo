@@ -1053,13 +1053,6 @@ class HandleTypes extends ServiceMethods {
 	//#endregion
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @public @arg {string} cf @arg {{}} x */
-	GEN(cf,x) {
-		let name=this.get_codegen_name(x);
-		if(!name) return;
-		this.cg.codegen_renderer(x,`${cf}$${name}`);
-		debugger;
-	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */

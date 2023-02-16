@@ -40,6 +40,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @returns {true} */
 	true_() {return true;}
+	/** @public @arg {string} cf @arg {{}} x */
+	GEN(cf,x) {
+		let name=this.get_codegen_name(x);
+		if(!name) return;
+		this.cg.codegen_renderer(x,`${cf}$${name}`);
+		debugger;
+	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
 		let [v,o]=this.unwrap_prefix(x,"url");
