@@ -169,3 +169,15 @@ type P_subscription_state_key={
 	4: T_D32<51>,
 	5: T_D32<1>
 };
+type P_shorts_source_bp={
+	94: {
+		1: {
+			2: {
+				1: T_VSR<"xSNX8P68wJ8">,
+				2: T_VSR<"xSNX8P68wJ8">,
+				3: T_VSR<"xSNX8P68wJ8">
+			}
+		},
+		5: T_VW_Bigint<1879003204532078215n>
+	}
+};

@@ -3500,6 +3500,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_subscription_state_key(u);
 			} break;
+			case "shorts.source.bp": {
+				/** @type {P_shorts_source_bp} */
+				let u=as_any(x);
+				this.P_shorts_source_bp(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3507,6 +3512,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_shorts_source_bp} x */
+	P_shorts_source_bp(x) {x;}
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {x;}
 	/** @private @arg {P_create_backstage_post_params} x */

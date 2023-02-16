@@ -1032,6 +1032,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reload.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "remove_like.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "shorts.source.bp";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe_button.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscription_state.key";}

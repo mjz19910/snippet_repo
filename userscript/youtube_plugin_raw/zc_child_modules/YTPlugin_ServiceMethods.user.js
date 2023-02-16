@@ -2070,8 +2070,8 @@ class ServiceMethods extends ServiceData {
 				if(path!=="shorts") debugger;
 				let x=this.parse_url_search_params(y3);
 				if("bp" in x) {
-					console.log("shorts.source.bp",x.bp);
-					return;
+					const {bp,...y}=x; this.g(y);
+					return this.params("shorts.source.bp",bp);
 				}
 				debugger;
 			} break;
