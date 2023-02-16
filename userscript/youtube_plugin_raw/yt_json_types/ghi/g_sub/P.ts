@@ -173,9 +173,9 @@ type P_shorts_source_bp={
 	94: {
 		1: {
 			2: {
-				1: T_VSR<"xSNX8P68wJ8">;
-				2: T_VSR<"xSNX8P68wJ8">;
-				3: T_VSR<"xSNX8P68wJ8">;
+				1: T_VSR<string>;
+				2: T_VSR<string>;
+				3: T_VSR<string>;
 			};
 		};
 		5: T_VW_Bigint<1879003204532078215n>;
