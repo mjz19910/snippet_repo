@@ -750,8 +750,6 @@ class HandleTypes extends ServiceMethods {
 	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
 	/** @arg {R_RatingSurvey} x */
 	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
-	/** @arg {R_PageTopAdLayout} x */
-	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
 	/** @arg {R_AutomixPreviewVideo} x */
 	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.g);}
 	/** @private @arg {R_RichMetadata} x */

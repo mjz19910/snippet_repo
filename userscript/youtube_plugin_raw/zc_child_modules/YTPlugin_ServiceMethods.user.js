@@ -5293,6 +5293,8 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 	}
+	/** @arg {R_PageTopAdLayout} x */
+	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
 	/** @private @arg {R_FulfilledLayout} x */
 	R_FulfillmentLayout(x) {
 		this.H_("R_FulfillmentLayout","fulfilledLayout",x,x => {
