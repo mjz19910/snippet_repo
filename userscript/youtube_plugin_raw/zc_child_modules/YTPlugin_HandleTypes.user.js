@@ -433,9 +433,9 @@ class HandleTypes extends ServiceMethods {
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
-	/** @private @arg {R_SettingsSidebar} x */
+	/** @public @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
-	/** @private @arg {R_PlaylistSidebar} x */
+	/** @public @arg {R_PlaylistSidebar} x */
 	R_PlaylistSidebar(x) {this.H_("PlaylistSidebar","playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
 	R_PlaylistSidebarPrimaryInfo(x) {this.H_("R_PlaylistSidebarPrimaryInfo","playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
@@ -475,7 +475,7 @@ class HandleTypes extends ServiceMethods {
 	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
-	/** @private @arg {R_C4TabbedHeader} x */
+	/** @public @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
@@ -487,7 +487,7 @@ class HandleTypes extends ServiceMethods {
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {R_ReportFormModal} x */
 	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.g);}
-	/** @private @arg {R_PlaylistHeader} x */
+	/** @public @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
 	/** @private @arg {R_TwoColumnSearchResults} x */
 	R_TwoColumnSearchResults(x) {this.H_("R_TwoColumnSearchResults","twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
@@ -495,9 +495,9 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistSidebarSecondaryInfo(x) {this.H_("R_PlaylistSidebarSecondaryInfo","playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
-	/** @private @arg {R_Channel_MD} x */
+	/** @public @arg {R_Channel_MD} x */
 	R_Channel_MD(x) {this.H_("R_Channel_MD","channelMetadataRenderer",x,this.D_Channel_MD);}
-	/** @private @arg {R_Playlist_MD} x */
+	/** @public @arg {R_Playlist_MD} x */
 	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
@@ -661,7 +661,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(availableCountries,this.a_primitive_str);
 		this.z(linkAlternates,this.B_HrefUrl);
 	}
-	/** @private @arg {B_HrefUrl} x */
+	/** @public @arg {B_HrefUrl} x */
 	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {

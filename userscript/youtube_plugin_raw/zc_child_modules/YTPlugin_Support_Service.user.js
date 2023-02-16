@@ -49,12 +49,6 @@ class Support_RS_Player extends ServiceMethods {
 		}
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
 	}
-	/** @private @arg {D_Cache_MD} x */
-	D_Cache_MD(x) {
-		const cf="CacheMetadata"; this.k(cf,x);
-		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(!isCacheHit) debugger;
-	}
 	//#endregion
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
@@ -776,8 +770,8 @@ class Support_RS_Browse extends ServiceMethods {
 	G_BrowseHeader(x) {
 		const cf="G_BrowseHeader";
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
-		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
-		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
+		if("c4TabbedHeaderRenderer" in x) return this.handle_types.R_C4TabbedHeader(x);
+		if("playlistHeaderRenderer" in x) return this.handle_types.R_PlaylistHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_MusicThumbnail} x */
@@ -794,15 +788,15 @@ class Support_RS_Browse extends ServiceMethods {
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
 		const cf="G_Browse_MD";
-		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
-		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
+		if("channelMetadataRenderer" in x) return this.handle_types.R_Channel_MD(x);
+		if("playlistMetadataRenderer" in x) return this.handle_types.R_Playlist_MD(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar";
-		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
-		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
+		if("settingsSidebarRenderer" in x) return this.handle_types.R_SettingsSidebar(x);
+		if("playlistSidebarRenderer" in x) return this.handle_types.R_PlaylistSidebar(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */

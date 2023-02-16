@@ -7373,7 +7373,8 @@ class ServiceMethods extends ServiceData {
 				default: debugger; break;
 				case "FEhistory": return this.D_Tab_History(x);
 				case "FEsubscriptions": {
-					this.D_Tab_Subscriptions(x);} break;
+					this.D_Tab_Subscriptions(x);
+				} break;
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
 					this.ceq(selected,true);
@@ -7484,9 +7485,9 @@ class ServiceMethods extends ServiceData {
 	/** @arg {G_RichSection} x */
 	G_RichSection(x) {
 		const cf="G_RichSection";
-		if("richShelfRenderer" in x) return this.R_RichShelf(x);
-		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
-		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
+		if("richShelfRenderer" in x) return this.handle_types.R_RichShelf(x);
+		if("inlineSurveyRenderer" in x) return this.handle_types.R_InlineSurvey(x);
+		if("sourcePivotHeaderRenderer" in x) return this.handle_types.R_SourcePivotHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RichGridContent} x */
@@ -7530,7 +7531,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {G_PlaylistPanel_Item} x */
 	G_PlaylistPanel_Item(x) {
 		const cf="G_PlaylistPanel_Item";
-		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
+		if("automixPreviewVideoRenderer" in x) return this.handle_types.R_AutomixPreviewVideo(x);
 		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
@@ -7604,7 +7605,7 @@ class ServiceMethods extends ServiceData {
 			this.tz(tags,this.a_primitive_str);
 			this.t(familySafe,x => {if(x!==true) debugger;});
 			this.tz(availableCountries,this.a_primitive_str);
-			this.z(linkAlternates,this.B_HrefUrl);
+			this.z(linkAlternates,x => this.handle_types.B_HrefUrl(x));
 		}
 		{
 			const {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,ios); this.g(y);

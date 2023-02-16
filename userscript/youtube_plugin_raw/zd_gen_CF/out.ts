@@ -184,6 +184,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:serviceEndpoint";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:style";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Cache_MD";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CaptionTrackItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Card";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CardCollection";}
