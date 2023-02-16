@@ -4645,6 +4645,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_subscribe_params(u);
 			} break;
+			case "unsubscribe.params": {
+				/** @type {P_unsubscribe_params} */
+				let u=as_any(x);
+				this.P_unsubscribe_params(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -4652,6 +4657,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_unsubscribe_params} x */
+	P_unsubscribe_params(x) {x;}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {x;}
 	/** @private @arg {P_subscribe_button_entity_key} x */

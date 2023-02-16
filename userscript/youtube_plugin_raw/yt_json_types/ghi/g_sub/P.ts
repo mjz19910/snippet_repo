@@ -148,3 +148,24 @@ type P_subscribe_params={
 	3: T_D32<0>,
 	4: T_VSR<D_VideoId>;
 };
+type P_unsubscribe_params={
+	1: {
+		1: T_D32<3>
+	},
+	2: T_VSR<D_VideoId>,
+	3: T_D32<0>
+};
+type P_continuation_request_watch_next_token={
+	2: {
+		2: T_VSR<"z6EQlZaB7v8">
+	},
+	3: T_D32<6>,
+	6: {
+		4: {
+			4: T_VSR<"z6EQlZaB7v8">,
+			6: T_D32<0>,
+			15: T_D32<2>
+		},
+		8: T_VSR<"comments-section">
+	}
+};
