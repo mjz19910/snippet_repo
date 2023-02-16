@@ -1096,30 +1096,6 @@ class HandleTypes extends ServiceMethods {
 		this.k(`${cf}:omit`,x);
 		return x;
 	}
-	/** @private @arg {CF_D_Video_Handle} cf @arg {D_Video} x */
-	D_Video_Handle(cf,x) {
-		let u=this.D_Video_Omit(cf,x);
-		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=this.rl(cf,u); this.g(y);/*#destructure_done*/
-		this.t(descriptionSnippet,this.G_Text);
-		this.t(publishedTimeText,this.G_Text);
-		this.t(lengthText,this.G_Text);
-		this.t(viewCountText,this.G_Text);
-		this.tz(ownerBadges,this.RMD_Badge);
-		this.tz(badges,this.RMD_Badge);
-		this.t(upcomingEventData,x => {
-			const {isReminderSet,startTime,upcomingEventText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(isReminderSet!==false) debugger;
-			this.a_primitive_str(startTime);
-			this.G_Text(upcomingEventText);
-		});
-		this.t(owner,this.D_Video_Owner);
-		this.t(shortViewCountText,this.G_Text);
-		this.t(isWatched,x => this.ceq(x,this.true_()));
-		this.t(topStandaloneBadge,this.RMD_Badge);
-		this.t(richThumbnail,this.R_MovingThumbnail);
-		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
-		this.tz(buttons,this.R_ToggleButton);
-	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
