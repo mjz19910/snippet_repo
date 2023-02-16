@@ -1424,15 +1424,6 @@ class HandleTypes extends ServiceMethods {
 			case "el": case "ee":
 		}
 	}
-	/** @private @arg {"RS_Page_Channel"} cf @template {RS_Page_Channel} T @arg {T} x */
-	RS_Page_Channel_Omit(cf,x) {
-		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
-		if(page!=="channel") debugger;
-		debugger;
-		this.RS_Channel(response);
-		this.a_primitive_str(url);
-		return y;
-	}
 	/** @public @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */

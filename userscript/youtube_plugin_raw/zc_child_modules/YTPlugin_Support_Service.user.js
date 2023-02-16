@@ -1220,6 +1220,15 @@ class Support_EventInput extends ServiceMethods {
 		console.log("pt",x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {"RS_Page_Channel"} cf @template {RS_Page_Channel} T @arg {T} x */
+	RS_Page_Channel_Omit(cf,x) {
+		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
+		if(page!=="channel") debugger;
+		debugger;
+		this.RS_Channel(response);
+		this.a_primitive_str(url);
+		return y;
+	}
 	/** @private @arg {RS_Page_Channel} x */
 	RS_Page_Channel(x) {
 		const cf="RS_Page_Channel";
