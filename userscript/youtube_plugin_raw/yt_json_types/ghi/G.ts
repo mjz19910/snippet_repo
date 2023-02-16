@@ -497,21 +497,21 @@ type G_RendererContentItem=
 	|R_CompactPlaylist
 	;
 ;
+type DC_SectionList_1={
+	trackingParams: string;
+	disablePullToRefresh: true;
+};
+type D_ItemSection_T_Message={contents: R_Message[]; trackingParams: string;};
+
+type R_ItemSection_T_Message={itemSectionRenderer: D_ItemSection_T_Message;};
+type DC_SectionList_2={
+	contents: R_ItemSection_T_Message[];
+	trackingParams: string;
+};
 type GD_RC_SectionList=
 	|DC_SectionListBase
-	|{
-		trackingParams: string;
-		disablePullToRefresh: true;
-	}
-	|{
-		contents: {
-			itemSectionRenderer: {
-				contents: R_Message[];
-				trackingParams: string;
-			};
-		}[];
-		trackingParams: string;
-	}
+	|DC_SectionList_1
+	|DC_SectionList_2
 	|DC_SectionList_SearchFeed
 	|DC_SectionList_BrowseFeed_ChannelFeatured
 	|DC_SectionList_BrowseFeed_Subscriptions
