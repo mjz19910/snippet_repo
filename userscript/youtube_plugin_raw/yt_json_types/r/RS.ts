@@ -267,19 +267,19 @@ type RS_Page_Channel={
 	expirationTime: number;
 }|{
 	page: "channel";
-	endpoint: GE_Browse;
+	endpoint: E_VE3611;
 	response: RS_Channel;
 	url: string;
 }|{
 	page: "channel";
-	endpoint: GE_Browse;
+	endpoint: E_VE3611;
 	response: RS_Channel;
 	url: `/@${string}/videos`;
 	expirationTime: number;
 }|{
 	rootVe: 3611;
 	url: `/@${string}/videos`;
-	endpoint: GE_Browse;
+	endpoint: E_VE3611;
 	page: "channel";
 	response: RS_Channel;
 	expirationTime: number;
