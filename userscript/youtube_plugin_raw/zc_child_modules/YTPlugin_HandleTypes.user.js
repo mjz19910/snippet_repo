@@ -541,8 +541,6 @@ class HandleTypes extends ServiceMethods {
 	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
-	/** @public @arg {R_CommentSimplebox} x */
-	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
@@ -2647,20 +2645,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_LiveChatEmoji"; this.k(cf,x);
 		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);
 		this.a_primitive_bool(isLocked);
-	}
-	/** @private @arg {D_CommentSimplebox} x */
-	D_CommentSimplebox(x) {
-		const cf="D_CommentSimplebox"; this.k(cf,x);
-		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_Button(submitButton);
-		this.R_Button(cancelButton);
-		this.params("aadc_guidelines_state.entity_key",aadcGuidelinesStateEntityKey);
-		this.D_Thumbnail(authorThumbnail);
-		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
-		this.G_Text(placeholderText);
-		this.R_EmojiPicker(emojiPicker);
-		this.trackingParams(trackingParams);
-		this.R_Button(emojiButton);
 	}
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {

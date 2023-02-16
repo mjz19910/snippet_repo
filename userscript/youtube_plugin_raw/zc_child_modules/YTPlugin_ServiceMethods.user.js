@@ -6202,6 +6202,22 @@ class ServiceMethods extends ServiceData {
 		if(x[2]!=="comments-section") debugger;
 		this.z(x[0],this.R_ContinuationItem);
 	}
+	/** @public @arg {R_CommentSimplebox} x */
+	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
+	/** @private @arg {D_CommentSimplebox} x */
+	D_CommentSimplebox(x) {
+		const cf="D_CommentSimplebox"; this.k(cf,x);
+		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_Button(submitButton);
+		this.R_Button(cancelButton);
+		this.params("aadc_guidelines_state.entity_key",aadcGuidelinesStateEntityKey);
+		this.D_Thumbnail(authorThumbnail);
+		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
+		this.G_Text(placeholderText);
+		this.R_EmojiPicker(emojiPicker);
+		this.trackingParams(trackingParams);
+		this.R_Button(emojiButton);
+	}
 	/** @private @arg {D_CommentsHeader} x */
 	D_CommentsHeader(x) {
 		const cf="D_CommentsHeader";
