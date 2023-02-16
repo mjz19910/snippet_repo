@@ -37,7 +37,7 @@ class TypedefGenerator extends ServiceMethods {
 		return null;
 	}
 }
-class HandleRS extends ServiceMethods {
+class Support_RS_Player extends ServiceMethods {
 	//#region dup
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {
@@ -686,4 +686,4 @@ class HandleRS extends ServiceMethods {
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
-export_(exports => {exports.HandleRS=HandleRS;});
+export_(exports => {exports.Support_RS_Player=Support_RS_Player;});

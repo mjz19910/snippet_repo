@@ -125,7 +125,7 @@ class HandleTypes extends ServiceMethods {
 	constructor(x) {
 		super(x);
 		generate_typedef.value=new ss.TypedefGenerator(x);
-		this.RS_handle=new ss.HandleRS(x);
+		this.z_RS_support_player=new ss.Support_RS_Player(x);
 	}
 	//#endregion
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
@@ -274,7 +274,7 @@ class HandleTypes extends ServiceMethods {
 			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
 			case "notification.record_interactions": return this.RS_Success(x.data);
-			case "player": return this.RS_handle.RS_Player(x.data);
+			case "player": return this.z_RS_support_player.RS_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
 			case "reel.reel_item_watch": return this.RSW_ReelItem(x.data);
 			case "reel.reel_watch_sequence": return this.RS_ReelWatchSequence(x.data);
@@ -351,7 +351,7 @@ class HandleTypes extends ServiceMethods {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
-		this.RS_handle.RS_Player(playerResponse);
+		this.z_RS_support_player.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
@@ -376,7 +376,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="shorts") debugger;
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.RS_handle.RS_Player(playerResponse);
+		this.z_RS_support_player.RS_Player(playerResponse);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
@@ -1115,7 +1115,7 @@ class HandleTypes extends ServiceMethods {
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.RS_Page_Browse(x);
-			case "watch": return this.RS_handle.RS_WatchPage(x);
+			case "watch": return this.z_RS_support_player.RS_WatchPage(x);
 			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);
 			case "settings": return this.G_RS_Page_Settings(x);
