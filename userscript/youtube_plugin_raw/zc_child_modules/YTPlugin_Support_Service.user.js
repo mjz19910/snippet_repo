@@ -857,6 +857,10 @@ class Support_RS_Browse extends ServiceMethods {
 		this.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
 	}
+	/** @private @arg {R_HeroPlaylistThumbnail} x */
+	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
+	/** @private @arg {R_PlaylistByline} x */
+	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

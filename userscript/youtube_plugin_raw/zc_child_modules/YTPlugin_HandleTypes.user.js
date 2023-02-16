@@ -501,10 +501,6 @@ class HandleTypes extends ServiceMethods {
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
-	/** @private @arg {R_HeroPlaylistThumbnail} x */
-	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
-	/** @private @arg {R_PlaylistByline} x */
-	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {R_TranscriptFooter} x */
