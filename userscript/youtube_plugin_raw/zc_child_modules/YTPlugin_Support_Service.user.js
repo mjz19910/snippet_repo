@@ -1125,39 +1125,42 @@ class Support_GenericApi extends ServiceMethods {
 class Support_EventInput extends ServiceMethods {
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
+	/** @public @arg {R_PageTypeBrowse} x */
+	R_PageTypeBrowse(x) {
+		const cf="R_PageTypeBrowse";
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(this.is_TE_VE(endpoint,3854)) this.E_VE3854(endpoint);
+		if(this.is_TE_VE(endpoint,96368)) this.E_VE96368(endpoint);
+		const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
+		switch(ve) {
+			case 3854: case 96368:
+		}
+		{
+			/** @type {`RS_Page_VE${typeof ve}_Browse`} */
+			const cf=`RS_Page_VE${ve}_Browse`;
+			let x=response;
+			if("rootVe" in x) {
+				const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(rootVe!==ve) debugger;
+				if(url!=="/") debugger;
+			} else {
+				const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				switch(url) {
+					default: debugger; break;
+					case "/":
+					case "/feed/subscriptions":
+				}
+			}
+		}
+		this.parser.parse_page_type(pageType);
+		this._primitive_of(fromHistory,"boolean");
+		this.a_primitive_num(navigationDoneMs);
+	}
 	/** @public @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail";
 		switch(x.pageType) {
-			case "browse": {
-				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(this.is_TE_VE(endpoint,3854)) this.E_VE3854(endpoint);
-				if(this.is_TE_VE(endpoint,96368)) this.E_VE96368(endpoint);
-				const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
-				switch(ve) {
-					case 3854: case 96368:
-				}
-				{
-					/** @type {`RS_Page_VE${typeof ve}_Browse`} */
-					const cf=`RS_Page_VE${ve}_Browse`;
-					let x=response;
-					if("rootVe" in x) {
-						const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-						if(rootVe!==ve) debugger;
-						if(url!=="/") debugger;
-					} else {
-						const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-						switch(url) {
-							default: debugger; break;
-							case "/":
-							case "/feed/subscriptions":
-						}
-					}
-				}
-				this.parser.parse_page_type(pageType);
-				this._primitive_of(fromHistory,"boolean");
-				this.a_primitive_num(navigationDoneMs);
-			} break;
+			case "browse": return this.R_PageTypeBrowse(x);
 			case "channel": {
 				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.DataResponsePageType(response);
