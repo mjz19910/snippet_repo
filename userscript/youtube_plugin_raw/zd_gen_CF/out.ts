@@ -143,6 +143,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE5754";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE6827";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE83769_Url";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE83769_Url_1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE96368";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlot";}
