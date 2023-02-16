@@ -6214,7 +6214,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);
-		this.R_EmojiPicker(emojiPicker);
+		this.handle_types.R_EmojiPicker(emojiPicker);
 		this.trackingParams(trackingParams);
 		this.R_Button(emojiButton);
 	}
@@ -6257,6 +6257,18 @@ class ServiceMethods extends ServiceData {
 		if("menuRenderer" in x) return this.R_Menu(x);
 		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
 		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {R_CommentReplies} x */
+	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
+	/** @private @arg {D_CommentReplies} x */
+	D_CommentReplies(x) {
+		const cf="D_CommentReplies";
+		const {contents,trackingParams,viewReplies,hideReplies,targetId,...y}=this.s(cf,x); this.g(y);
+		this.z(contents,this.R_ContinuationItem);
+		this.trackingParams(trackingParams);
+		this.R_Button(viewReplies);
+		this.R_Button(hideReplies);
+		if(!this.str_starts_with(targetId,"comment-replies-item-")) debugger;
 	}
 	/** @private @arg {D_CommentThread} x */
 	D_CommentThread(x) {

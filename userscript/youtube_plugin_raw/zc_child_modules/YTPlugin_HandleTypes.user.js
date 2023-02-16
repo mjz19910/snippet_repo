@@ -695,8 +695,6 @@ class HandleTypes extends ServiceMethods {
 	R_EmojiPickerCategory(x) {this.H_("R_EmojiPickerCategory","emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
 	R_EmojiPickerCategoryButton(x) {this.H_("R_EmojiPickerCategoryButton","emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
-	/** @public @arg {R_CommentReplies} x */
-	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @public @arg {R_MetadataRow} x */
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {CD_TimedContinuation} x */
@@ -3313,16 +3311,6 @@ class HandleTypes extends ServiceMethods {
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("performCommentActionEndpoint" in x) return;
 		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {D_CommentReplies} x */
-	D_CommentReplies(x) {
-		const cf="D_CommentReplies";
-		const {contents,trackingParams,viewReplies,hideReplies,targetId,...y}=this.s(cf,x); this.g(y);
-		this.z(contents,this.R_ContinuationItem);
-		this.trackingParams(trackingParams);
-		this.R_Button(viewReplies);
-		this.R_Button(hideReplies);
-		if(!this.str_starts_with(targetId,"comment-replies-item-")) debugger;
 	}
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {
