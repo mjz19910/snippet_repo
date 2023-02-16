@@ -4640,6 +4640,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_subscribe_button_entity_key(u);
 			} break;
+			case "subscribe.params": {
+				/** @type {P_subscribe_params} */
+				let u=as_any(x);
+				this.P_subscribe_params(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -4647,6 +4652,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_subscribe_params} x */
+	P_subscribe_params(x) {x;}
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {x;}
 	/** @private @arg {P_dislike_params} x */

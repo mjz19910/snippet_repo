@@ -137,7 +137,14 @@ type P_dislike_params={
 	}
 };
 type P_subscribe_button_entity_key={
-	2: T_VSR<"UCuiqmg77rElIv0lXnDzogcA">,
+	2: T_VSR<`UC${string}`>,
 	4: T_D32<51>,
 	5: T_D32<1>
+};
+type P_subscribe_params={
+	2: {
+		1: T_D32<3>
+	},
+	3: T_D32<0>,
+	4: T_VSR<"z6EQlZaB7v8">
 };
