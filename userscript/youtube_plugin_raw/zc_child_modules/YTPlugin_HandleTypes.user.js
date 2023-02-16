@@ -3238,9 +3238,7 @@ class HandleTypes extends ServiceMethods {
 			if(!f19) debugger;
 			return;
 		}
-		let kk=this.get_keys_of(x);
-		if(this.eq_keys(kk,[1,2,3,4])) return;
-		if(this.eq_keys(kk,[1,2,4])) return;
+		if(1 in x) return;
 		debugger;
 	}
 	/** @protected @arg {R_ClickTrackingObj} x */
