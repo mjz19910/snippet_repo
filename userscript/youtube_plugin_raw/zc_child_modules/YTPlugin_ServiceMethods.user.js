@@ -4397,13 +4397,40 @@ class ServiceMethods extends ServiceData {
 		if(modifiedSets!==void 0) this.z(modifiedSets,this.D_ModifiedSetItem);
 		this.trackingParams(trackingParams);
 	}
+	/** @public @arg {R_PlaylistPanelVideo} x */
+	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
+	/** @private @arg {D_PlaylistPanelVideo} x */
+	D_PlaylistPanelVideo(x) {
+		const cf="D_PlaylistPanelVideo"; this.k(cf,x);
+		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_off*/
+		this.D_Thumbnail(thumbnail);
+		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		this.videoId(videoId);
+		this.a_primitive_str(playlistSetVideoId);
+		this.D_DarkColorPalette(cf,darkColorPalette);
+		this.D_LightColorPalette(cf,lightColorPalette);
+		this.G_Text(longBylineText);
+		this.G_Text(shortBylineText);
+		this.a_primitive_bool(selected);
+		this.G_Text(lengthText);
+		this.R_Menu(menu);
+		this.E_Watch(navigationEndpoint);
+		if("indexText" in y) return this.y(cf,"indexText",y,this.G_Text);
+		let kl=this.get_keys_of(y).length;
+		if(kl>0) {
+			this.codegen_typedef(`${cf}:omit`,y);
+		}
+		this.g(y);
+	}
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent_Omit(x) {
 		const cf="D_PlaylistContent";
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x);/*#destructure_omit*/
 		this.trackingParams(trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.G_Text);
-		this.z(contents,x => this.handle_types.R_PlaylistPanelVideo(x));
+		this.z(contents,this.R_PlaylistPanelVideo);
 		this.a_primitive_str(title);
 		this.a_primitive_str(playlistId);
 		this.a_primitive_num(currentIndex);
@@ -4424,7 +4451,7 @@ class ServiceMethods extends ServiceData {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x);
 					if(panelIdentifier!=="comment-item-section") debugger;
 					this.R_EngagementPanelTitleHeader(header);
-					this.handle_types.R_SectionList(content);
+					this.R_SectionList(content);
 					if(targetId!=="engagement-panel-comments-section") debugger;
 					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -4449,7 +4476,7 @@ class ServiceMethods extends ServiceData {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
 					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 					this.R_EngagementPanelTitleHeader(header);
-					this.handle_types.R_ContinuationItem(content);
+					this.R_ContinuationItem(content);
 					if(targetId!=="engagement-panel-searchable-transcript") debugger;
 					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -4470,13 +4497,13 @@ class ServiceMethods extends ServiceData {
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 					if(identifier) {
-						let a1=this.handle_types.GT_ShortsSurfaceIdentifier(identifier);
+						let a1=this.GT_ShortsSurfaceIdentifier(identifier);
 						if(a1!=="engagement-panel-structured-description") debugger;
 					}
 				} break;
 				case 139722: {
 					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					this.handle_types.R_SectionList(content);
+					this.R_SectionList(content);
 					this.t(header,this.R_EngagementPanelTitleHeader);
 					if(targetId!=="engagement-panel-comments-section") debugger;
 					this.targetId(cf,targetId);
@@ -4484,7 +4511,7 @@ class ServiceMethods extends ServiceData {
 					this.D_LoggingDirectives(loggingDirectives);
 					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
 					if(!identifier) debugger;
-					let a1=this.handle_types.GT_ShortsSurfaceIdentifier(identifier);
+					let a1=this.GT_ShortsSurfaceIdentifier(identifier);
 					if(a1!=="shorts-comments-panel") debugger;
 				} break;
 			}
@@ -4507,7 +4534,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(byline);
 		this.G_Text(pauseText);
 		this.D_Thumbnail(background);
-		let cds=this.handle_types.num_to_string(countDownSecs);
+		let cds=this.num_to_string(countDownSecs);
 		switch(cds) {
 			default: debugger; break;
 			case "3": case "8":
@@ -4568,7 +4595,7 @@ class ServiceMethods extends ServiceData {
 				case "engagement-panel-structured-description": break;
 				default: debugger; return;
 			}
-			let a1=this.handle_types.GT_ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
+			let a1=this.GT_ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
@@ -4576,8 +4603,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Video} T @arg {T} x */
 	D_Omit_Compact_Video(cf,x) {
-		let u=this.handle_types.D_Omit_Compact_Player(cf,x);
-		let {videoId,shortViewCountText,publishedTimeText,...y}=this.handle_types.D_Omit_ThumbnailOverlay(cf,u);
+		let u=this.D_Omit_Compact_Player(cf,x);
+		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
 		this.videoId(videoId);
 		this.G_Text(publishedTimeText);
 		this.G_Text(shortViewCountText);
@@ -4674,11 +4701,11 @@ class ServiceMethods extends ServiceData {
 		const {continuations,header,trackingParams,clientMessages,isReplay,initialDisplayState,showHideButton,...y}=this.s(cf,x); this.g(y);
 		this.z(continuations,x => {
 			if(!x.reloadContinuationData) debugger;
-			this.handle_types.D_ReloadContinuationData(x);
+			this.D_ReloadContinuationData(x);
 		});
-		this.handle_types.R_LiveChatHeader(header);
+		this.R_LiveChatHeader(header);
 		this.trackingParams(trackingParams);
-		this.handle_types.D_ClientMessages(clientMessages);
+		this.D_ClientMessages(clientMessages);
 		this.a_primitive_bool(isReplay);
 		this.save_enum("LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
 		this.R_ToggleButton(showHideButton);
@@ -4892,7 +4919,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_AdSlotAndLayoutItem";
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(adLayoutMetadata,this.MG_AdLayout);
-		this.handle_types.DMD_AdSlot(adSlotMetadata);
+		this.DMD_AdSlot(adSlotMetadata);
 	}
 	/** @private @arg {D_FusionSearchbox} x */
 	D_FusionSearchbox(x) {
@@ -4935,7 +4962,7 @@ class ServiceMethods extends ServiceData {
 				let iterable_items=continuationItems;
 				this.z(iterable_items,x => {
 					if("commentsHeaderRenderer" in x) return this.R_CommentsHeader(x);
-					if("feedFilterChipBarRenderer" in x) return this.handle_types.R_FeedFilterChipBar(x);
+					if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 					debugger;
 				});
 			} break;
@@ -5036,9 +5063,9 @@ class ServiceMethods extends ServiceData {
 	G_Watch_SecondaryResults_G_SectionItem(x) {
 		const cf="G_Watch_SecondaryResults_G_SectionItem";
 		if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
-		if("compactVideoRenderer" in x) return this.handle_types.R_CompactVideo(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
-		if("adSlotRenderer" in x) return this.handle_types.R_AdSlot(x);
+		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
 		x===""; this.codegen_typedef(cf,x);
@@ -5092,7 +5119,7 @@ class ServiceMethods extends ServiceData {
 	G_WatchResultItem_ItemSectionGroup(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
-		let u=this.handle_types.TR_ItemSection_2(x); if(!u) return;
+		let u=this.TR_ItemSection_2(x); if(!u) return;
 		this.TD_ItemSection_2_CommentsEntryPoint(u,this.R_CommentItemSection_EntryPoint);
 	}
 	/** @private @arg {G_WatchNextEndScreenItem} x */
@@ -5108,7 +5135,7 @@ class ServiceMethods extends ServiceData {
 		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.trackingParams(trackingParams);
-		this.handle_types.R_VideoViewCount(viewCount);
+		this.R_VideoViewCount(viewCount);
 		this.R_Menu(videoActions);
 		this.t(superTitleLink,this.G_Text);
 		this.tz(badges,this.RMD_Badge);
@@ -5125,7 +5152,7 @@ class ServiceMethods extends ServiceData {
 		this.RMD_RowContainer(metadataRowContainer);
 		this.G_Text(showMoreText);
 		this.G_Text(showLessText);
-		this.handle_types.R_VideoOwner(owner);
+		this.R_VideoOwner(owner);
 		this.ceq(defaultExpanded,false);
 		this.a_primitive_num(descriptionCollapsedLines);
 		this.t(showMoreCommand,this.C_Executor);
@@ -5298,7 +5325,7 @@ class ServiceMethods extends ServiceData {
 		this.z(continuationItems,x => {
 			const cf="G_CommentsSection";
 			if("commentThreadRenderer" in x) return this.R_CommentThread(x);
-			if("continuationItemRenderer" in x) return this.handle_types.R_ContinuationItem(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 			x===""; this.codegen_typedef(cf,x);
 		});
 	}
@@ -5309,8 +5336,8 @@ class ServiceMethods extends ServiceData {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,x => {
 			const cf="G_CommentRepliesItem";
-			if("commentRenderer" in x) return this.handle_types.R_Comment(x);
-			if("continuationItemRenderer" in x) return this.handle_types.R_ContinuationItem(x);
+			if("commentRenderer" in x) return this.R_Comment(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 			this.codegen_typedef(cf,x);
 		});
 	}
@@ -5366,7 +5393,7 @@ class ServiceMethods extends ServiceData {
 		return y;
 	}
 	/** @private @arg {DC_Generic_CTP} x */
-	D_CD_Next(x) {this.handle_types.DC_Generic_CTP("next.continuation",x);}
+	D_CD_Next(x) {this.DC_Generic_CTP("next.continuation",x);}
 	/** @private @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {R_MerchandiseItem} x */
@@ -5400,8 +5427,8 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
 		const cf="G_WatchNext";
-		if("continuationItemRenderer" in x) return this.handle_types.R_ContinuationItem(x);
-		if("compactVideoRenderer" in x) return this.handle_types.R_CompactVideo(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
@@ -5416,8 +5443,8 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {G_BrowseFeed} x */
 	G_BrowseFeed(x) {
 		const cf="G_BrowseFeed";
-		if("richItemRenderer" in x) return this.handle_types.R_RichItem(x);
-		if("continuationItemRenderer" in x) return this.handle_types.R_ContinuationItem(x);
+		if("richItemRenderer" in x) return this.R_RichItem(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
@@ -5496,7 +5523,7 @@ class ServiceMethods extends ServiceData {
 	D_MacroMarkersList(x) {
 		const cf="D_MacroMarkersList";
 		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.handle_types.R_MacroMarkersListItem);
+		this.z(contents,this.R_MacroMarkersListItem);
 		this.G_Text(syncButtonLabel);
 		this.trackingParams(trackingParams);
 	}
@@ -5541,7 +5568,7 @@ class ServiceMethods extends ServiceData {
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(icon.iconType!=="NOTIFICATIONS") debugger;
 		let [g_menu,menu_signal]=this.T_SE_Signal(`${cf}.menuRequest.T_SE_Signal`,menuRequest);
-		this.handle_types.M_GetNotificationMenu(g_menu);
+		this.M_GetNotificationMenu(g_menu);
 		this.Signal_GetNotificationsMenu(menu_signal);
 		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
 		this.trackingParams(trackingParams);
@@ -5561,7 +5588,7 @@ class ServiceMethods extends ServiceData {
 		if("menuRenderer" in u) {
 			const {icon,menuRenderer,style,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
 			if(icon.iconType!=="VIDEO_CALL") debugger;
-			let uv=this.handle_types.TR_MultiPageMenu("R_TopbarMenu",menuRenderer);
+			let uv=this.TR_MultiPageMenu("R_TopbarMenu",menuRenderer);
 			this.D_TopbarMenuButton_MenuItem(uv);
 			if(style!=="STYLE_DEFAULT") debugger;
 			return;
@@ -5575,8 +5602,8 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
-		let {secondaryNavigationEndpoint: a,shareUrl: b,...o}=this.handle_types.Omit_Menu_Radio(cf,x); o;
-		this.D_CompactRadio_NavE(a); this.handle_types.D_RadioShareUrl(b);
+		let {secondaryNavigationEndpoint: a,shareUrl: b,...o}=this.Omit_Menu_Radio(cf,x); o;
+		this.D_CompactRadio_NavE(a); this.D_RadioShareUrl(b);
 	}
 	/** @private @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
@@ -5599,15 +5626,15 @@ class ServiceMethods extends ServiceData {
 	ItemSection_3_CommentItemSection(x) {
 		if(x[1]!=="comment-item-section") debugger;
 		if(x[2]!=="comments-section") debugger;
-		this.z(x[0],this.handle_types.R_ContinuationItem);
+		this.z(x[0],this.R_ContinuationItem);
 	}
 	/** @private @arg {D_CommentsHeader} x */
 	D_CommentsHeader(x) {
 		const cf="D_CommentsHeader";
 		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(countText);
-		this.handle_types.R_CommentSimplebox(createRenderer);
-		this.handle_types.R_SortFilterSubMenu(sortMenu);
+		this.R_CommentSimplebox(createRenderer);
+		this.R_SortFilterSubMenu(sortMenu);
 		this.trackingParams(trackingParams);
 		this.G_Text(titleText);
 		this.G_Text(commentsCount);
@@ -5638,15 +5665,15 @@ class ServiceMethods extends ServiceData {
 	G_EngagementPanelMenu(x) {
 		const cf="G_EngagementPanelMenu";
 		if("menuRenderer" in x) return this.R_Menu(x);
-		if("sortFilterSubMenuRenderer" in x) return this.handle_types.R_SortFilterSubMenu(x);
+		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_CommentThread} x */
 	D_CommentThread(x) {
 		const cf="D_CommentThread";
 		const {comment,replies,trackingParams,renderingPriority,isModeratedElqComment,loggingDirectives,...y}=this.s(cf,x); this.g(y);
-		this.handle_types.R_Comment(comment);
-		this.t(replies,this.handle_types.R_CommentReplies);
+		this.R_Comment(comment);
+		this.t(replies,this.R_CommentReplies);
 		this.trackingParams(trackingParams);
 		if(renderingPriority!=="RENDERING_PRIORITY_UNKNOWN") debugger;
 		this.ceq(isModeratedElqComment,false);
@@ -5664,9 +5691,9 @@ class ServiceMethods extends ServiceData {
 	D_HorizontalCardList(x) {
 		const cf="D_HorizontalCardList";
 		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(cards,this.handle_types.R_MacroMarkersListItem);
+		this.z(cards,this.R_MacroMarkersListItem);
 		this.trackingParams(trackingParams);
-		this.handle_types.R_RichListHeader(header);
+		this.R_RichListHeader(header);
 		x: {
 			let x1=style;
 			if("styleType" in x1) {this.ceq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
@@ -5702,32 +5729,32 @@ class ServiceMethods extends ServiceData {
 		const cf="D_VideoDescriptionMusicSection";
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(sectionTitle);
-		this.z(carouselLockups,this.handle_types.R_CarouselLockup);
-		this.handle_types.R_TopicLink(topicLink);
+		this.z(carouselLockups,this.R_CarouselLockup);
+		this.R_TopicLink(topicLink);
 		this.G_Text(premiumUpsellLink);
 	}
 	/** @private @arg {DMD_RowItem} x */
 	DMD_RowItem(x) {
-		if("metadataRowRenderer" in x) return this.handle_types.R_MetadataRow(x);
-		if("richMetadataRowRenderer" in x) return this.handle_types.R_RichMetadataRow(x);
+		if("metadataRowRenderer" in x) return this.R_MetadataRow(x);
+		if("richMetadataRowRenderer" in x) return this.R_RichMetadataRow(x);
 	}
 	/** @private @arg {D_CustomEmoji} x */
-	D_CustomEmoji(x) {this.g(this.handle_types.D_CustomEmoji_Omit("D_CustomEmoji",x));}
+	D_CustomEmoji(x) {this.g(this.D_CustomEmoji_Omit("D_CustomEmoji",x));}
 	/** @private @arg {S_GetAccountMenu} x */
 	S_GetAccountMenu(x) {
 		const cf="S_GetAccountMenu";
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		let [u]=this.z(actions,x => this.TA_OpenPopup("TA_OpenPopup<D_GetAccountMenu_Popup>",x));
-		let [u1]=this.z(u,this.handle_types.Popup_GetAccountMenu);
-		let [u2]=this.z(u1,x => this.handle_types.TR_MultiPageMenu("TR_MultiPageMenu<MP_AccountMenu>",x));
-		this.z(u2,this.handle_types.MP_AccountMenu);
+		let [u1]=this.z(u,this.Popup_GetAccountMenu);
+		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("TR_MultiPageMenu<MP_AccountMenu>",x));
+		this.z(u2,this.MP_AccountMenu);
 	}
 	/** @private @arg {D_CommentsEntryPointHeader_contentRenderer} x */
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		const cf="D_CommentsEntryPointHeader_contentRenderer";
-		if("commentsEntryPointTeaserRenderer" in x) return this.handle_types.R_CommentsEntryPointTeaser(x);
-		if("commentsSimpleboxRenderer" in x) return this.handle_types.R_CommentsSimplebox(x);
+		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
+		if("commentsSimpleboxRenderer" in x) return this.R_CommentsSimplebox(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {"D_TopbarMenuButton"} cf @arg {D_TopbarMenuButton} x */
@@ -5745,10 +5772,10 @@ class ServiceMethods extends ServiceData {
 		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
 		/** @type {[(G_Action_GetNotificationsMenu["openPopupAction"])[], never[]]} */
 		let [u]=this.z(actions,x => this.TA_OpenPopup("G_Action_GetNotificationsMenu",x));
-		let [u1]=this.z(u,this.handle_types.G_Action_GetNotificationsMenu_Popup);
+		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
 		/** @type {[D_NotificationMenuPopupMenuItem[], never[]]} */
-		let [u2]=this.z(u1,x => this.handle_types.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
-		this.z(u2,this.handle_types.D_NotificationMenuPopupMenuItem);
+		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
+		this.z(u2,this.D_NotificationMenuPopupMenuItem);
 	}
 	/** @public @arg {R_CompactLink} x */
 	R_CompactLink(x) {this.H_("R_CompactLink","compactLinkRenderer",x,this.D_CompactLink);}
@@ -5809,18 +5836,18 @@ class ServiceMethods extends ServiceData {
 		const cf="D_TopbarMenuButton_MenuItem";
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.ceq(sections.length,1);
-		let n=this.handle_types.TR_MP_MenuSection(sections[0]);
-		let n1=this.handle_types.T_Items_TP("R_CompactLink_Items",n);
+		let n=this.TR_MP_MenuSection(sections[0]);
+		let n1=this.T_Items_TP("R_CompactLink_Items",n);
 		this.tz(n1,this.R_CompactLink);
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}
 	/** @private @arg {CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
 	D_Playlist_Omit(cf,x) {
-		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.handle_types.Omit_Menu_Radio(cf,x);
+		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
 		this.G_Text(shortBylineText);
 		this.z(sidebarThumbnails,this.D_Thumbnail);
-		this.handle_types.D_RadioShareUrl(shareUrl);
+		this.D_RadioShareUrl(shareUrl);
 		return y;
 	}
 	/** @private @arg {D_CompactRadio['secondaryNavigationEndpoint']} x */
@@ -5853,8 +5880,8 @@ class ServiceMethods extends ServiceData {
 		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		this.D_Thumbnail(userAvatar);
-		this.handle_types.R_ClipCreationTextInput(titleInput);
-		this.handle_types.R_ClipCreationScrubber(scrubber);
+		this.R_ClipCreationTextInput(titleInput);
+		this.R_ClipCreationScrubber(scrubber);
 		this.R_Button(saveButton);
 		this.G_Text(displayName);
 		switch(publicityLabel) {
@@ -5863,8 +5890,8 @@ class ServiceMethods extends ServiceData {
 			case "Unlisted":
 			case "Public":
 		}
-		this.handle_types.R_Button(cancelButton);
-		this.handle_types.R_ClipAdState(adStateOverlay);
+		this.R_Button(cancelButton);
+		this.R_ClipAdState(adStateOverlay);
 		this.videoId(externalVideoId);
 		switch(publicityLabelIcon) {
 			default: debugger; break;

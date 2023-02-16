@@ -633,8 +633,6 @@ class HandleTypes extends ServiceMethods {
 	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
-	/** @public @arg {R_PlaylistPanelVideo} x */
-	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
 	/** @private @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
 	/** @private @arg {R_FeedTabbedHeader} x */
@@ -3454,31 +3452,6 @@ class HandleTypes extends ServiceMethods {
 		const {accessibility,thumbnails,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
 		this.z(thumbnails,this.D_ThumbnailItem);
-	}
-	/** @private @arg {D_PlaylistPanelVideo} x */
-	D_PlaylistPanelVideo(x) {
-		const cf="D_PlaylistPanelVideo"; this.k(cf,x);
-		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_off*/
-		this.D_Thumbnail(thumbnail);
-		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
-		this.videoId(videoId);
-		this.a_primitive_str(playlistSetVideoId);
-		this.D_DarkColorPalette(cf,darkColorPalette);
-		this.D_LightColorPalette(cf,lightColorPalette);
-		this.G_Text(longBylineText);
-		this.G_Text(shortBylineText);
-		this.a_primitive_bool(selected);
-		this.G_Text(lengthText);
-		this.R_Menu(menu);
-		this.E_Watch(navigationEndpoint);
-		if("indexText" in y) return this.y(cf,"indexText",y,this.G_Text);
-		let kl=this.get_keys_of(y).length;
-		if(kl>0) {
-			this.codegen_typedef(`${cf}:omit`,y);
-		}
-		this.g(y);
 	}
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
