@@ -197,7 +197,7 @@ type P_transcript_track_selection_entity_key={
 };
 type P_transcript_track_selection_serialized_params={
 	1: T_VSR<string>;
-	2: T_VSR<"CgNhc3ISAmVuGgA%3D">;
+	2: T_VSR<string>;
 	3: T_D32<1>;
 	6: T_D32<0>;
 	7: T_D32<1>;
@@ -205,7 +205,7 @@ type P_transcript_track_selection_serialized_params={
 };
 type P_continuation_request_reel_watch_sequence_token={
 	3: {
-		1: T_VSR<"RqmS9CSMkxA">;
+		1: T_VSR<string>;
 		3: T_D32<10>;
 		4: T_D32<2>;
 		6: T_VW_Bigint<3749702744313588453n>;
@@ -219,7 +219,7 @@ type P_continuation_request_reel_watch_sequence_token={
 		1: T_D32<11>;
 		3: T_D32<11>;
 		6: {
-			1: T_VSR<"RqmS9CSMkxA">;
+			1: T_VSR<string>;
 			2: {
 				6: T_D32<26>;
 			};
