@@ -2021,6 +2021,9 @@ class HandleTypes extends ServiceMethods {
 				}
 				return this.convert_arr_to_obj([otu]);
 			}
+			if(otu[0]==="raw") {
+				return `TYPE::["raw",${otu[1]}]`;
+			}
 			/** @type {(D_DecTypeNum|V_ParamObj_2[number])[]} */
 			let ota=obj;
 			if(ota[0][0]==="child") {
