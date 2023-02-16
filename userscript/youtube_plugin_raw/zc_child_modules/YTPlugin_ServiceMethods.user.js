@@ -3920,7 +3920,7 @@ class ServiceMethods extends ServiceData {
 	DS_EY_Subscription(x) {
 		const cf="DS_EY_Subscription";
 		const {key,subscribed,...y}=this.s(cf,x); this.g(y);
-		this.params("subscriptionState.key",key);
+		this.params("subscription_state.key",key);
 		this.a_primitive_bool(subscribed);
 	}
 	/** @private @arg {DS_EY_PlaylistLoop} x */

@@ -1033,7 +1033,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "remove_like.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe_button.entity_key";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscriptionState.key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscription_state.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.click_tracking_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.params";}
