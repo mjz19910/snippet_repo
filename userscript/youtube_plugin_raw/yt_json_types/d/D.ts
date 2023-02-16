@@ -2766,7 +2766,7 @@ type D_TokenJarDefaultExpirationSeconds=600;
 type D_TopbarLogo={
 	iconImage: T_Icon<"YOUTUBE_LOGO">;
 	tooltipText: G_Text;
-	endpoint: GE_Browse;
+	endpoint: E_VE3854;
 	trackingParams: string;
 	overrideEntityKey: string;
 };
@@ -2862,7 +2862,7 @@ type D_VideoDescriptionHeader={
 	publishDate: G_Text;
 	factoid: R_Factoid[];
 	// ChannelNavigationEndpointWebCommandMetadata
-	channelNavigationEndpoint: GE_Browse;
+	channelNavigationEndpoint: E_VE3611;
 	channelThumbnail: D_Thumbnail;
 };
 type D_VideoDescriptionMusicSection={

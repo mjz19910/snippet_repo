@@ -6423,7 +6423,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(views);
 		this.G_Text(publishDate);
 		this.z(factoid,this.R_Factoid);
-		debugger;
+		this.E_VE3611(channelNavigationEndpoint);
 		this.D_Thumbnail(channelThumbnail);
 	}
 	/** @public @arg {R_Factoid} x */
