@@ -818,6 +818,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "live_chat_replay.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "logging_context.serialized_context_data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_markers_list.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation";}

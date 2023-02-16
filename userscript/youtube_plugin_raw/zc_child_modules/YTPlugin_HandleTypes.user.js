@@ -324,7 +324,7 @@ class HandleTypes extends ServiceMethods {
 		if("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="settings") debugger;
-		this.GE_Browse(endpoint);
+		debugger;
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 	}
@@ -333,7 +333,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="R_PlaylistPage"; this.k(cf,x);
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(page!=="playlist") debugger;
-		this.GE_Browse(endpoint);
+		debugger;
 		this.RS_Playlist(response);
 		this.a_primitive_str(url);
 		if("rootVe" in y) {
@@ -351,7 +351,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="Settings_VE23462"; this.k(cf,x);
 		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="settings") debugger;
-		this.GE_Browse(endpoint);
+		debugger;
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 		if(rootVe!==23462) debugger;
@@ -886,7 +886,7 @@ class HandleTypes extends ServiceMethods {
 	RS_BrowsePage_Omit(cf,x) {
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
-		this.GE_Browse(endpoint);
+		debugger;
 		if(page!=="browse") debugger;
 		this.RS_Browse(response);
 		return y;
@@ -917,7 +917,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_Page} x */
 	E_Page(x) {
 		const cf="E_Page"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("browseEndpoint" in x) {debugger; return;}
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
 		if("_tag" in x) return this.E_Settings(x);
@@ -1035,7 +1035,7 @@ class HandleTypes extends ServiceMethods {
 	D_CompactLink_NavEndpoint(x) {
 		const cf="D_CompactLink_NavEndpoint"; this.k(cf,x);
 		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("browseEndpoint" in x) {debugger; return;}
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
 		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
@@ -1135,7 +1135,7 @@ class HandleTypes extends ServiceMethods {
 			default: this.codegen_typedef(cf,x); debugger; break;
 			case 96368: break;
 		}
-		this.GE_Browse(x);
+		debugger;
 	}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
@@ -1183,7 +1183,7 @@ class HandleTypes extends ServiceMethods {
 			const cf2=`${cf}_WithEndpoint`;
 			const {endpoint,title,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
 			if(endpoint.commandMetadata.webCommandMetadata.rootVe!==3611) debugger;
-			this.GE_Browse(endpoint);
+			debugger;
 			this.trackingParams(trackingParams);
 			this.save_string(`${cf2}.title`,title);
 		}
@@ -1396,7 +1396,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_Video_Owner"; this.k(cf,x);
 		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(thumbnail);
-		this.GE_Browse(navigationEndpoint);
+		debugger;
 		this.D_Accessibility(accessibility);
 		this.a_primitive_str(title);
 	}
@@ -1421,7 +1421,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("browseEndpoint" in x) {debugger; return;}
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
@@ -2361,7 +2361,7 @@ class HandleTypes extends ServiceMethods {
 	D_GuideEntry_WithTargetId(cf,x) {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
-		this.GE_Browse(navigationEndpoint);
+		debugger;
 		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
 		this.D_GuideEntry_TargetId(targetId);
 		if(isPrimary!==true) debugger;
@@ -2451,7 +2451,7 @@ class HandleTypes extends ServiceMethods {
 		if("isPrimary" in x) {
 			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.GE_Browse(navigationEndpoint);
+			debugger;
 			switch(icon.iconType) {
 				case "SUBSCRIPTIONS": break;
 				case "WHAT_TO_WATCH": break;
@@ -2464,7 +2464,7 @@ class HandleTypes extends ServiceMethods {
 		x: {
 			let x=navigationEndpoint;
 			if("browseEndpoint" in x) {
-				this.GE_Browse(x);
+				debugger;
 				break x;
 			}
 			if("urlEndpoint" in x) {
@@ -2477,7 +2477,7 @@ class HandleTypes extends ServiceMethods {
 		{
 			let x=navigationEndpoint;
 			if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-			if("browseEndpoint" in x) return this.GE_Browse(x);;
+			if("browseEndpoint" in x) {debugger; return;};
 		}
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithPrimary} x */
@@ -2508,7 +2508,7 @@ class HandleTypes extends ServiceMethods {
 			if("icon" in x) {
 				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 				if(!navigationEndpoint.browseEndpoint) debugger;
-				this.GE_Browse(navigationEndpoint);
+				debugger;
 				switch(icon.iconType) {
 					default: icon===""; this.codegen_typedef(cf1,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
@@ -2519,7 +2519,7 @@ class HandleTypes extends ServiceMethods {
 			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=this.s(cf2,u); this.g(y);/*#destructure_done*/
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.GE_Browse(navigationEndpoint);
+			debugger;
 			this.D_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
 			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
@@ -2561,7 +2561,7 @@ class HandleTypes extends ServiceMethods {
 		if("presentationStyle" in x) {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.GE_Browse(navigationEndpoint);
+			debugger;
 			this.D_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
 			this.trackingParams(trackingParams);
@@ -2645,7 +2645,7 @@ class HandleTypes extends ServiceMethods {
 	RS_Page_Channel_Omit(cf,x) {
 		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(page!=="channel") debugger;
-		this.GE_Browse(endpoint);
+		debugger;
 		this.RS_Channel(response);
 		this.a_primitive_str(url);
 		return y;
@@ -2987,7 +2987,7 @@ class HandleTypes extends ServiceMethods {
 	D_SubFeedOption_NavEP(x) {
 		const cf="D_SubFeedOption_NavEP"; this.k(cf,x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("browseEndpoint" in x) {debugger; return;}
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_SubFeedOption} x */
@@ -3133,7 +3133,7 @@ class HandleTypes extends ServiceMethods {
 	D_SearchBox(x) {
 		const cf="D_SearchBox"; this.k(cf,x);
 		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GE_Browse(endpoint);
+		debugger;
 		this.R_Button(searchButton);
 		this.R_Button(clearButton);
 		this.G_Text(placeholderText);
@@ -3147,7 +3147,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_Thumbnail(authorThumbnail);
 		this.R_CommentActionButtons(actionButtons);
 		this.R_Menu(actionMenu);
-		this.GE_Browse(authorEndpoint);
+		debugger;
 		this.a_primitive_bool(authorIsChannelOwner);
 		this.a_primitive_str(commentId);
 		this.G_Text(contentText);
@@ -3175,7 +3175,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_EditableDetails(editableDetails);
 		this.E_PlaylistEditor(editorEndpoint);
 		this.a_primitive_bool(isEditable);
-		this.GE_Browse(ownerEndpoint);
+		debugger;
 		this.z(serviceEndpoints,this.E_PlaylistEdit);
 		this.R_Menu(moreActionsMenu);
 		this.G_Text(title);
@@ -3453,7 +3453,7 @@ class HandleTypes extends ServiceMethods {
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_ChannelId(channelId);
 		this.a_primitive_str(title);
-		this.GE_Browse(navigationEndpoint);
+		debugger;
 		this.D_Thumbnail(avatar);
 		this.D_Thumbnail(banner);
 		this.tz(badges,this.RMD_Badge);
@@ -3541,7 +3541,7 @@ class HandleTypes extends ServiceMethods {
 				this.G_Text(callToAction);
 				this.T_Icon(`${cf}:icon`,callToActionIcon);
 				if(!endpoint.browseEndpoint) debugger;
-				this.GE_Browse(endpoint);
+				debugger;
 				this.trackingParams(trackingParams);
 			} break;
 			case "RICH_METADATA_RENDERER_STYLE_TOPIC": {
@@ -3552,7 +3552,7 @@ class HandleTypes extends ServiceMethods {
 				this.G_Text(callToAction);
 				this.T_Icon(`${cf}:icon`,callToActionIcon);
 				if(!endpoint.browseEndpoint) debugger;
-				this.GE_Browse(endpoint);
+				debugger;
 				this.trackingParams(trackingParams);
 			} break;
 		}
@@ -3575,7 +3575,7 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(subscriberCountText);
 		this.D_SubscriptionButton(subscriptionButton);
 		this.t(membershipButton,this.R_Button);
-		this.GE_Browse(navigationEndpoint);
+		debugger;
 		return y;
 	}
 	/** @private @arg {D_SubscriptionButton} x */
@@ -3678,7 +3678,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_Thumbnail(thumbnailDetails);
 		this.G_Text(title);
 		this.trackingParams(trackingParams);
-		this.GE_Browse(endpoint);
+		debugger;
 		if(callToActionIcon.iconType!=="CHEVRON_RIGHT") debugger;
 	}
 	/** @private @arg {D_CarouselLockup} x */
