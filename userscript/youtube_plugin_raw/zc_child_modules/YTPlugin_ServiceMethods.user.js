@@ -874,8 +874,6 @@ class ServiceMethods extends ServiceData {
 	R_Menu(x) {this.H_("R_Menu","menuRenderer",x,this.D_Menu);}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
 	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
-	/** @private @arg {R_MenuNavigationItem} x */
-	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
 	/** @private @arg {R_CommonConfig} x */
 	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {G_MenuItem} x */
@@ -3296,6 +3294,8 @@ class ServiceMethods extends ServiceData {
 		this.save_number(rk,f);
 		this.save_number(k,1);
 	}
+	/** @private @arg {R_MenuNavigationItem} x */
+	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
 		const cf="D_MenuNavigationItem";
