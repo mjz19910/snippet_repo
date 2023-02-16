@@ -401,15 +401,6 @@ class HandleTypes extends ServiceMethods {
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_BrowseFeedContent} x */
-	G_BrowseFeedContent(x) {
-		const cf="G_BrowseFeedContent";
-		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
-		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
-		if("buttonRenderer" in x) return this.R_Button(x);
-		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x) {
 		const cf="G_LiveChatContinuationItem";
@@ -544,6 +535,17 @@ class HandleTypes extends ServiceMethods {
 	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
 	/** @private @arg {R_BrowseFeedActions} x */
 	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
+	/** @private @arg {D_BrowseFeedActions} x */
+	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions","contents",x,x => this.z(x,this.G_BrowseFeedContent));}
+	/** @private @arg {G_BrowseFeedContent} x */
+	G_BrowseFeedContent(x) {
+		const cf="G_BrowseFeedContent";
+		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
+		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {R_MusicThumbnail} x */
@@ -575,8 +577,6 @@ class HandleTypes extends ServiceMethods {
 	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry","profileColumnStatsEntryRenderer",x,this.D_ProfileColumnStatsEntry);}
 	/** @private @arg {R_ProfileColumnUserInfo} x */
 	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
-	/** @private @arg {D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions","contents",x,x => this.z(x,this.G_BrowseFeedContent));}
 	/** @private @arg {R_SearchBox} x */
 	R_SearchBox(x) {this.H_("D_ProfileColumn","searchBoxRenderer",x,this.D_SearchBox);}
 	/** @private @arg {R_SubFeedSelector} x */
@@ -641,6 +641,25 @@ class HandleTypes extends ServiceMethods {
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("R_ProfilePageHeaderTitleViewModel","profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
 	/** @private @arg {R_PlaylistPanel} x */
 	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
+	/** @arg {D_PlaylistPanel} x */
+	D_PlaylistPanel(x) {
+		const cf="D_PlaylistPanel";
+		const {title,contents,currentIndex,playlistId,ownerName,isInfinite,continuations,shortBylineText,longBylineText,trackingParams,titleText,isEditable,previewDescription,numItemsToShow,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(title!=="YouTube Mix") debugger;
+		this.z(contents,this.G_PlaylistPanel_Item);
+		this.t(currentIndex,this.a_primitive_num);
+		this.playlistId(playlistId);
+		this.t(ownerName,this.G_Text);
+		if(isInfinite!==true) debugger;
+		this.tz(continuations,this.CD_NextRadio);
+		this.G_Text(shortBylineText);
+		this.t(longBylineText,this.G_Text);
+		this.trackingParams(trackingParams);
+		this.G_Text(titleText);
+		if(isEditable!==true) debugger;
+		this.t(previewDescription,this.g);
+		this.t(numItemsToShow,x => {if(x!==25) debugger;});
+	}
 	/** @arg {R_RatingSurveyOption} x */
 	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
 	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
@@ -2711,25 +2730,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.a_primitive_bool(checked);
 		this.a_primitive_bool(selected);
-	}
-	/** @arg {D_PlaylistPanel} x */
-	D_PlaylistPanel(x) {
-		const cf="D_PlaylistPanel";
-		const {title,contents,currentIndex,playlistId,ownerName,isInfinite,continuations,shortBylineText,longBylineText,trackingParams,titleText,isEditable,previewDescription,numItemsToShow,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(title!=="YouTube Mix") debugger;
-		this.z(contents,this.G_PlaylistPanel_Item);
-		this.t(currentIndex,this.a_primitive_num);
-		this.playlistId(playlistId);
-		this.t(ownerName,this.G_Text);
-		if(isInfinite!==true) debugger;
-		this.tz(continuations,this.CD_NextRadio);
-		this.G_Text(shortBylineText);
-		this.t(longBylineText,this.G_Text);
-		this.trackingParams(trackingParams);
-		this.G_Text(titleText);
-		if(isEditable!==true) debugger;
-		this.t(previewDescription,this.g);
-		this.t(numItemsToShow,x => {if(x!==25) debugger;});
 	}
 	/** @arg {S_VideoGoodPutShape} x */
 	S_VideoGoodPutShape(x) {
