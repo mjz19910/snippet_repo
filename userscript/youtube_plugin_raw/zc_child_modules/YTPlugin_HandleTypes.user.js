@@ -4374,7 +4374,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_num(f2);
 		switch(f3) {
 			default: this.codegen_typedef_bin(cf,x); debugger; break;
-			case 1: case 3:
+			case 1: case 2:
 		}
 		this.V_BinaryTimestamp(f4);
 	}
