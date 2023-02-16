@@ -2051,15 +2051,6 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
-	/** @private @arg {G_TextRun_Endpoint} x */
-	G_TextRun_Endpoint(x) {
-		const cf="G_TextRun_Endpoint";
-		if("browseEndpoint" in x) {debugger; return; }
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @protected @arg {D_Label} x */
 	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
 	/** @protected @arg {D_Accessibility} x */
