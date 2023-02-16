@@ -701,6 +701,87 @@ class HandleTypes extends ServiceMethods {
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @public @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
+	/** @private @arg {GD_RC_SectionList} x */
+	GD_RC_SectionList(x) {
+		const cf="GD_RC_SectionList"; this.k(cf,x);
+		if("targetId" in x) {
+			switch(x.targetId) {
+				default: {
+					if(this.str_starts_with_rx("browse-feed",x.targetId)) {
+						let ss=split_string(x.targetId,"browse-feed");
+						if(ss.length!==2) {debugger; return;}
+						let sa=ss[1];
+						let ll=sa.slice(24);
+						if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
+							/** @returns {`UC${string}`} */
+							function wx() {return "UCx";}
+							let [cid,fe]=split_string_once_last(sa,"featured",wx());
+							if(fe!=="") debugger;
+							this.D_ChannelId(cid);
+							return;
+						}
+						console.log("target_id.ll",ll);
+						if(this.str_starts_with_rx(sa,"UC")) {
+							let floc=sa.indexOf("featured");
+							if(floc<0) {debugger; return;}
+							let s1=sa.slice(0,floc);
+							let s2=sa.slice(floc);
+							if(ll!==s2) debugger;
+							console.log("[RichGrid.targetId]",x.targetId);
+							console.log("[target_id_parse]",s1,s2);
+						}
+						return;
+					};
+					debugger;
+				} return;
+				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
+				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
+				case "search-feed": return this.DC_SectionList_SearchFeed(x);
+			}
+		}
+		if("contents" in x) {
+			const {contents: arr,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(!arr) {debugger; return;}
+			/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
+			let ux_1=[];
+			let ux_2=[];
+			for(let item of arr) {
+				const {itemSectionRenderer: x,...y}=item; this.g(y);
+				if("targetId" in x) {
+					let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
+					if(r===null) continue;
+					ux_1.push(r);
+					continue;
+				}
+				let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
+				ux_2.push(r);
+				x;
+			}
+			this.z(ux_1,x => {
+				/** @type {DC_SectionListBase} */
+				switch(x[1]) {
+					default: debugger; break;
+					case "comment-item-section": {
+						let [x0,,x2]=x;
+						if(x2!=="engagement-panel-comments-section") debugger;
+						this.z(x0,x => {
+							if(!x.continuationItemRenderer) debugger;
+							return this.R_ContinuationItem(x);
+						});
+					} break;
+				}
+			});
+			this.trackingParams(trackingParams);
+			return;
+		}
+		if("disablePullToRefresh" in x) {
+			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			if(disablePullToRefresh!==true) debugger;
+			return;
+		}
+		debugger;
+	}
 	/** @private @arg {R_AddToPlaylistCreate} x */
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
@@ -2161,90 +2242,6 @@ class HandleTypes extends ServiceMethods {
 		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
-	}
-	/** @private @arg {GD_RC_SectionList} x */
-	GD_RC_SectionList(x) {
-		const cf="GD_RC_SectionList"; this.k(cf,x);
-		if("targetId" in x) {
-			switch(x.targetId) {
-				default: {
-					if(this.str_starts_with_rx("browse-feed",x.targetId)) {
-						let ss=split_string(x.targetId,"browse-feed");
-						if(ss.length!==2) {debugger; return;}
-						let sa=ss[1];
-						let ll=sa.slice(24);
-						if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
-							/** @returns {`UC${string}`} */
-							function wx() {return "UCx";}
-							let [cid,fe]=split_string_once_last(sa,"featured",wx());
-							if(fe!=="") debugger;
-							this.D_ChannelId(cid);
-							return;
-						}
-						console.log("target_id.ll",ll);
-						if(this.str_starts_with_rx(sa,"UC")) {
-							let floc=sa.indexOf("featured");
-							if(floc<0) {debugger; return;}
-							let s1=sa.slice(0,floc);
-							let s2=sa.slice(floc);
-							if(ll!==s2) debugger;
-							console.log("[RichGrid.targetId]",x.targetId);
-							console.log("[target_id_parse]",s1,s2);
-						}
-						return;
-					};
-					debugger;
-				} return;
-				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
-				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
-				case "search-feed": return this.DC_SectionList_SearchFeed(x);
-			}
-		}
-		if("contents" in x) {
-			const {contents: arr,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(!arr) {debugger; return;}
-			/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
-			let ux_1=[];
-			let ux_2=[];
-			for(let item of arr) {
-				const {itemSectionRenderer: x,...y}=item; this.g(y);
-				if("targetId" in x) {
-					let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
-					if(r===null) continue;
-					ux_1.push(r);
-					continue;
-				}
-				let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
-				ux_2.push(r);
-				x;
-			}
-			this.z(ux_1,x => {
-				/** @type {DC_SectionListBase} */
-				switch(x[1]) {
-					default: debugger; break;
-					case "comment-item-section": {
-						let [x0,,x2]=x;
-						if(x2!=="engagement-panel-comments-section") debugger;
-						this.z(x0,x => {
-							if(!x.continuationItemRenderer) debugger;
-							return this.R_ContinuationItem(x);
-						});
-					} break;
-				}
-			});
-			this.trackingParams(trackingParams);
-			return;
-		}
-		if("disablePullToRefresh" in x) {
-			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			if(disablePullToRefresh!==true) debugger;
-			return;
-		}
-		// this.tz(continuations,this.RD_NextContinuation);
-		// this.t(subMenu,a => this.save_keys(`${cf}.subMenu`,a));
-		// if(hideBottomSeparator!==void 0) this.save_boolean(`${cf}.hideBottomSeparator`,hideBottomSeparator);
-		debugger;
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x) {
