@@ -1445,6 +1445,67 @@ class Support_EventInput extends ServiceMethods {
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.handle_types.R_SettingsSidebar(sidebar);
 	}
+	/** @protected @arg {R_Tab} x */
+	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
+	/** @private @arg {D_Tab} x */
+	D_Tab(x) {
+		const cf="D_Tab";
+		if("tabIdentifier" in x) {
+			switch(x.tabIdentifier) {
+				default: debugger; break;
+				case "FEhistory": return this.D_Tab_History(x);
+				case "FEsubscriptions": {
+					this.D_Tab_Subscriptions(x);
+				} break;
+				case "FEwhat_to_watch": {
+					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
+					this.ceq(selected,true);
+					this.R_RichGrid(content);
+					this.trackingParams(trackingParams);
+				} break;
+			}
+			return;
+		}
+		if("selected" in x) {return;}
+		if("content" in x) {
+			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
+			const cf2=`${cf}_${"R_MusicQueue"}`;
+			const {content,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			this.R_MusicQueue(content);
+			this.trackingParams(trackingParams);
+			return;
+		}
+		x: {
+			if(!("endpoint" in x)) break x;
+			/** @type {`${typeof cf}_WithEndpoint`} */
+			const cf2=`${cf}_WithEndpoint`;
+			const {endpoint,title,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			y: {
+				if(this.is_TE_VE(endpoint,3611)) {this.E_VE3611(endpoint); break y;}
+				debugger;
+			}
+			this.trackingParams(trackingParams);
+			this.save_string(`${cf2}.title`,title);
+		}
+	}
+	/** @private @arg {D_Tab_History} x */
+	D_Tab_History(x) {
+		const cf="D_Tab_History";
+		const {selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);
+		if(selected!==true) debugger;
+		if(!content.sectionListRenderer) debugger;
+		this.R_SectionList(content);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_Tab_Subscriptions} x */
+	D_Tab_Subscriptions(x) {
+		const cf="D_Tab_Subscriptions";
+		const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_Tab_Subscriptions_EP(endpoint);
+		this.ceq(selected,true);
+		this.R_SectionList(content);
+		this.trackingParams(trackingParams);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
