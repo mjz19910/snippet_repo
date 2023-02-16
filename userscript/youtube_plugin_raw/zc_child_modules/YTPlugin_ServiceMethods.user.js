@@ -20,6 +20,21 @@ const ServiceData=bs.ServiceData;
 const split_string=bs.split_string,split_string_once=bs.split_string_once,split_string_once_last=bs.split_string_once_last;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @override @returns {"unknown"|"normal"} */
+	get service_type() {return "normal";}
+	get handle_types() {
+		return this.x.get("handle_types");
+	}
+	/** @type {this["handle_types"]|null} */
+	_b_cls=null;
+	get b_cls() {
+		if(this._b_cls) return this._b_cls;
+		this._b_cls=this.handle_types;
+		return this._b_cls;
+	}
+	get indexed_db() {
+		return this.x.get("indexed_db");
+	}
 	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
@@ -48,9 +63,6 @@ class ServiceMethods extends ServiceData {
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
-	get handle_types() {
-		return this.x.get("handle_types");
-	}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
@@ -147,13 +159,6 @@ class ServiceMethods extends ServiceData {
 		let u=gu();
 		this.assert_is_omit_key(x,y,u);
 		return u;
-	}
-	/** @type {this["handle_types"]|null} */
-	_b_cls=null;
-	get b_cls() {
-		if(this._b_cls) return this._b_cls;
-		this._b_cls=this.handle_types;
-		return this._b_cls;
 	}
 	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
 	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.b_cls.R_EngagementPanelSectionList(x));}
@@ -2620,9 +2625,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {string} x */
 	clickTrackingParams(x) {this.params("tracking.click_tracking_params",x);}
-	get indexed_db() {
-		return this.x.get("indexed_db");
-	}
 	indexed_db_version=3;
 	/** @protected @arg {AGA_push_waiting_obj_noVersion} args */
 	indexed_db_put(...args) {
@@ -2738,8 +2740,6 @@ class ServiceMethods extends ServiceData {
 		if(x.popupType!=="DIALOG") return [false,x.popupType];
 		return [true,x.popup];
 	}
-	/** @override @returns {"unknown"|"normal"} */
-	get service_type() {return "normal";}
 	/** @public @template {string} PN @template {string} HR @template {string} HS @template {string} Pr_C @template {string} PRS @template {UrlParseRes<HR,HS,Pr_C,PRS,string>} T @arg {T} x @arg {PN} pathname @template {T extends infer E extends T?E["pathname"] extends PN?E:never:never} R @returns {x is R} */
 	static is_url_with_pathname(x,pathname) {
 		/** @arg {R} x */
