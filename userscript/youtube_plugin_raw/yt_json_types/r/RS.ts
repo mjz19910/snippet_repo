@@ -296,7 +296,7 @@ type RS_Page_Channel={
 };
 type RS_Page_Playlist={
 	page: "playlist";
-	endpoint: GE_Browse;
+	endpoint: E_VE5754;
 	response: RS_Playlist;
 	url: string;
 };
