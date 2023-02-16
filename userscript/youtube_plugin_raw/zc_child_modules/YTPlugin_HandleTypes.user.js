@@ -4389,7 +4389,7 @@ class HandleTypes extends ServiceMethods {
 				function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
 				const n_cf=`P_${cf.replaceAll(".","_")}`;
 				let pad=1;
-				ap(`case "${n_cf}": {`);
+				ap(`case "${cf}": {`);
 				pad+=1;
 				ap(`/** @type {${n_cf}} */`);
 				ap("let u=as_any(x);");
