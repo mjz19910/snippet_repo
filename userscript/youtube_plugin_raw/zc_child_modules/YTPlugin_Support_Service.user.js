@@ -464,7 +464,7 @@ class HandleRS extends ServiceMethods {
 		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
 		this.D_Thumbnail(watermark);
 		this.trackingParams(trackingParams);
-		this.GE_Browse(navigationEndpoint);
+		debugger;
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
 	}
