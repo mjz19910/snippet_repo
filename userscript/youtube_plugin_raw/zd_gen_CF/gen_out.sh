@@ -5,6 +5,7 @@ export TMP_DIR="/dev/shm/snippet_repo_tmp"
 . "$PROJ_DIR/$DEST_DIR/gen_out_support.sh"
 function gen_code {
 	for ((i = 0; ; ++i)); do
+		tail "$TMP_DIR/errors.out"
 		generate_ts_filter_errors "$TMP_DIR/errors.out" | generate_ts_with_perl | sort -u >"$TMP_DIR/tmp_out.txt"
 		echo "--- [tmp_out.txt] $i ---"
 		tail "$TMP_DIR/tmp_out.txt"
