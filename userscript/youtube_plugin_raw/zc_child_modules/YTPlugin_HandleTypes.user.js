@@ -2011,13 +2011,13 @@ class HandleTypes extends ServiceMethods {
 			}
 			if(otu[0]==="data32") {
 				if(otu.length===2) {
-					return `TYPE::T_VW_3<"data32",${otu[1]}>`;
+					return `TYPE::T_D32<${otu[1]}>`;
 				}
 				return this.convert_arr_to_obj([otu]);
 			}
 			if(otu[0]==="data_fixed32") {
 				if(otu.length===2) {
-					return `TYPE::T_VW_3<"data_fixed32",${otu[1]}>`;
+					return `TYPE::T_Fx_D32<${otu[1]}>`;
 				}
 				return this.convert_arr_to_obj([otu]);
 			}
