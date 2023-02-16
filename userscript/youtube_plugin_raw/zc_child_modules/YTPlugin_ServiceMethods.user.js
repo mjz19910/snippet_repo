@@ -1340,7 +1340,10 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_CommonConfig} x */
 	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
 	/** @protected @arg {E_VE3611} x */
-	E_VE3611(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);}
+	E_VE3611(x) {
+		if(!this.is_TE_VE(x2,3611)) {debugger; return;}
+		let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);
+	}
 	/** @protected @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
 	/** @protected @arg {E_VE4724_Search} x */
