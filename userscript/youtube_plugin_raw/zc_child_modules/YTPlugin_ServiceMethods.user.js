@@ -7233,14 +7233,8 @@ class ServiceMethods extends ServiceData {
 		const cf="DE_VE6827";
 		const {browseId,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(browseId) {
-			case "FEguide_builder":
-			case "FEhashtag":
-			case "FEhistory":
-			case "FElibrary":
-			case "FEsfv_audio_pivot":
-			case "FEstorefront":
-			case "FEtrending":
-			case "SPreport_history":
+			case "FEguide_builder": case "FEhashtag": case "FEhistory": case "FElibrary": case "FEsfv_audio_pivot":
+			case "FEstorefront": case "FEtrending": case "SPreport_history":
 		}
 	}
 	/** @public @arg {DE_VE11487} x */
