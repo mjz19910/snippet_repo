@@ -6054,5 +6054,13 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		if(targetId!=="browse-feedFEhistory") debugger;
 	}
+	/** @private @arg {DC_SectionList_SearchFeed} x */
+	DC_SectionList_SearchFeed(x) {
+		const cf="DC_SectionList_SearchFeed"; this.k(cf,x);
+		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		if(targetId!=="search-feed") debugger;
+		this.z(contents,this.TR_SectionListItem_3_Empty);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

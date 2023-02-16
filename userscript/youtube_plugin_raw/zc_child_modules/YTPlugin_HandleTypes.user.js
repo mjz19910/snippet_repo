@@ -3207,14 +3207,6 @@ class HandleTypes extends ServiceMethods {
 		this.params(path,continuation);
 		this.clickTrackingParams(clickTrackingParams);
 	}
-	/** @private @arg {DC_SectionList_SearchFeed} x */
-	DC_SectionList_SearchFeed(x) {
-		const cf="DC_SectionList_SearchFeed"; this.k(cf,x);
-		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		if(targetId!=="search-feed") debugger;
-		this.z(contents,this.TR_SectionListItem_3_Empty);
-	}
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
 		const cf="DC_LiveChat"; this.k(cf,x);
