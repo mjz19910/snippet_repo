@@ -558,6 +558,12 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_Obj_f19";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeBrowse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeBrowse_Response";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeChannel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypePlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeSearch";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeSettings";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeShorts";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeWatch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}

@@ -1127,7 +1127,7 @@ class Support_GenericApi extends ServiceMethods {
 class Support_EventInput extends ServiceMethods {
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
-	/** @arg {R_PageTypeBrowse["endpoint"]} x */
+	/** @private @arg {R_PageTypeBrowse["endpoint"]} x */
 	R_Page_DefaultEndpoint(x) {
 		const cf="R_Page_DefaultEndpoint"; this.k(cf,x);
 		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
@@ -1135,7 +1135,7 @@ class Support_EventInput extends ServiceMethods {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}
-	/** @public @arg {R_PageTypeBrowse["response"]} x */
+	/** @private @arg {R_PageTypeBrowse["response"]} x */
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
 		if("rootVe" in x) {
@@ -1154,7 +1154,7 @@ class Support_EventInput extends ServiceMethods {
 			}
 		}
 	}
-	/** @public @arg {R_PageTypeBrowse} x */
+	/** @private @arg {R_PageTypeBrowse} x */
 	R_PageTypeBrowse(x) {
 		const cf="R_PageTypeBrowse";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1168,8 +1168,9 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @public @arg {R_PageTypeChannel} x */
+	/** @private @arg {R_PageTypeChannel} x */
 	R_PageTypeChannel(x) {
+		const cf="R_PageTypeChannel";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.DataResponsePageType(response);
 		this.E_VE3611(endpoint);
@@ -1177,8 +1178,9 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @public @arg {R_PageTypePlaylist} x */
+	/** @private @arg {R_PageTypePlaylist} x */
 	R_PageTypePlaylist(x) {
+		const cf="R_PageTypePlaylist";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		debugger;
 		this.DataResponsePageType(response);
@@ -1186,7 +1188,9 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
+	/** @private @arg {R_PageTypeSearch} x */
 	R_PageTypeSearch(x) {
+		const cf="R_PageTypeSearch";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.E_VE4724_Search(endpoint);
 		this.DataResponsePageType(response);
@@ -1194,7 +1198,9 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
+	/** @private @arg {R_PageTypeSettings} x */
 	R_PageTypeSettings(x) {
+		const cf="R_PageTypeSettings";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.E_Settings(endpoint);
 		this.DataResponsePageType(response);
@@ -1202,18 +1208,21 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	R_PageTypeWatch(x) {
+	/** @private @arg {R_PageTypeShorts} x */
+	R_PageTypeShorts(x) {
+		const cf="R_PageTypeShorts";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Watch(endpoint);
+		this.E_ReelWatch(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @public @arg {R_PageTypeShorts} x */
-	R_PageTypeShorts(x) {
+	/** @private @arg {R_PageTypeWatch} x */
+	R_PageTypeWatch(x) {
+		const cf="R_PageTypeWatch";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_ReelWatch(endpoint);
+		this.E_Watch(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");

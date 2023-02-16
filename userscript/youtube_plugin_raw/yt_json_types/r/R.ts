@@ -387,11 +387,25 @@ type R_PageTypeChannel={
 	navigationDoneMs: number;
 };
 type R_PageTypePlaylist={
+	endpoint: E_VE5754;
 	pageType: "playlist";
-	endpoint: {};
-	response: G_RS_Page_Playlist;
-	fromHistory: boolean;
-	navigationDoneMs: number;
+	fromHistory: false;
+	response: {
+		page: "playlist";
+		endpoint: E_VE5754;
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			header: R_PlaylistHeader;
+			metadata: R_Playlist_MD;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+			microformat: R_MicroformatData;
+			sidebar: R_PlaylistSidebar;
+		};
+		url: "/playlist?list=WL";
+	};
+	navigationDoneMs: 1676555876221;
 };
 type R_PageTypeSearch={
 	pageType: "search";
