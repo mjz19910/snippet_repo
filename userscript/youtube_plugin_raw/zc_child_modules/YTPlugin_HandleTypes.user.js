@@ -1430,6 +1430,7 @@ class HandleTypes extends ServiceMethods {
 				{
 					let x=response;
 					{
+						/** @type {"RS_Page_VE3854_Browse"} */
 						const cf=`RS_Page_VE${ve}_Browse`;
 						const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 						if(url!=="/") debugger;
