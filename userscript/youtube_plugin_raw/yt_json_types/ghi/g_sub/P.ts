@@ -76,7 +76,7 @@ type P_continuation_request_browse_token={
 	};
 };
 type P_reel_player_params={
-	30: T_D32<1>,
+	30: T_D32<1>;
 	71: T_D32<15>;
 };
 type P_reel_params={
@@ -90,16 +90,22 @@ type P_logging_context_serialized_context_data={
 type P_like_params={
 	1: {
 		1: {
-			8: T_FD32<1382109803>,
-			9: T_FD32<2126714>,
+			8: T_FD32<1382109803>;
+			9: T_FD32<2126714>;
 			14: T_D32<115>;
 		};
-	},
-	4: T_D32<0>,
-	5: T_D32<1>,
+	};
+	4: T_D32<0>;
+	5: T_D32<1>;
 	6: {
-		1: T_D32<1676517982>,
+		1: T_D32<1676517982>;
 		2: T_D32<685626069>;
-	},
+	};
 	7: T_D32<1>;
+};
+type P_playability_status_context_params={
+	1: T_D32<1>;
+	2: {
+		1: T_D32<2>;
+	};
 };
