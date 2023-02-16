@@ -1445,7 +1445,7 @@ class Support_EventInput extends ServiceMethods {
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.handle_types.R_SettingsSidebar(sidebar);
 	}
-	/** @protected @arg {R_Tab} x */
+	/** @public @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {

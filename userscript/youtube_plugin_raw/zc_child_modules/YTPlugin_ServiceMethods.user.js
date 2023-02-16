@@ -7360,7 +7360,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {RG_Result} x */
 	RG_Result(x) {
 		const cf="RG_Result";
-		if("tabRenderer" in x) return this.R_Tab(x);
+		if("tabRenderer" in x) return this.handle_types.support_EventInput.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
