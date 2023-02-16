@@ -34,7 +34,7 @@ type RS_Browse={
 	metadata?: G_Browse_MD;
 	trackingParams: string;
 	topbar?: R_DesktopTopbar;
-	microformat?: R_Microformat;
+	microformat?: R_MicroformatData;
 	frameworkUpdates?: DC_EntityBatchUpdate;
 	maxAgeStoreSeconds?: number;
 	background?: R_MusicThumbnail;
@@ -50,7 +50,7 @@ type RS_Channel={
 	metadata: R_Channel_MD;
 	trackingParams: string;
 	topbar: R_DesktopTopbar;
-	microformat: R_Microformat;
+	microformat: R_MicroformatData;
 	onResponseReceivedActions: C_ResetChannelUnreadCount[];
 	cacheMetadata?: D_Cache_MD;
 };
@@ -137,7 +137,7 @@ type RS_Playlist=Record<"contents",R_TwoColumnBrowseResults>&{
 	metadata: R_Playlist_MD;
 	trackingParams: string;
 	topbar: R_DesktopTopbar;
-	microformat: R_Microformat;
+	microformat: R_MicroformatData;
 	sidebar: R_PlaylistSidebar;
 };
 type RS_Reel={
@@ -258,6 +258,7 @@ type RS_Page_Browse={
 	response: RS_Browse;
 	expirationTime: number;
 };
+type R_ChannelMetadata=R_Channel_MD;
 type RS_Page_Channel={
 	page: "channel";
 	endpoint: E_VE3611;
@@ -275,6 +276,12 @@ type RS_Page_Channel={
 	endpoint: E_VE3611;
 	response: RS_Channel;
 	url: `/@${string}/videos`;
+	expirationTime: number;
+}|{
+	page: "channel";
+	endpoint: E_VE3611;
+	response: RS_Channel;
+	url: `/@${string}`;
 	expirationTime: number;
 }|{
 	rootVe: 3611;

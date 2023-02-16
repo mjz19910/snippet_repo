@@ -506,7 +506,7 @@ class HandleTypes extends ServiceMethods {
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
-	/** @private @arg {R_Microformat} x */
+	/** @private @arg {R_MicroformatData} x */
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
 	/** @private @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
@@ -2185,8 +2185,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if("expirationTime" in x) {
-			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			const {expirationTime,...y}=u; this.g(y);
+			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);
 			this._primitive_of(expirationTime,"number");
 			return;
 		}
