@@ -332,6 +332,16 @@ class ServiceMethods extends ServiceData {
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
 	}
+	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
+	GM_VE96368(x) {
+		const cf="GM_VE96368_WC_browse";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(url!=="/feed/subscriptions") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==96368) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @private @arg {GM_YpcGetOffers} x */
@@ -2122,16 +2132,6 @@ class ServiceMethods extends ServiceData {
 				}
 			} break;
 		}
-	}
-	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
-	GM_VE96368(x) {
-		const cf="GM_VE96368_WC_browse";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(url!=="/feed/subscriptions") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==96368) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
 	}
 	/** @protected @arg {GE_Browse} x */
 	GE_Browse_old(x) {
