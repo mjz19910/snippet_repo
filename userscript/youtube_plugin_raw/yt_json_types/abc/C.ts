@@ -51,7 +51,12 @@ type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;}
 type DC_Reload=DC_Generic_CTP;
 type DC_ResetChannelUnreadCount={channelId: `UC${string}`;};
 type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["targetId"];};
-type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_SectionList_BrowseFeed_ChannelFeatured=
+	|T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>
+	|T_DC_Content_2<`browse-feedUC${string}search`,TR_SectionListItem_3_Empty>
+	;
+;
+type ScratchPad=DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`?R:never;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
 type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;

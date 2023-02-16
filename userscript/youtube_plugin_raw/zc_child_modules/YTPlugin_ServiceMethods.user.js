@@ -6905,16 +6905,17 @@ class ServiceMethods extends ServiceData {
 		const {ctoken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params("get_notification_menu.ctoken",ctoken);
 	}
-	/** @private @arg {DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}featured`,`UC${string}`,string]|[1,`UC${string}featured`,`UC${string}`,"featured"]]} */
+	/** @typedef {"featured"|"search"} S_BrowseFeedEnd  */
+	/** @private @arg {DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,string]|[1,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,S_BrowseFeedEnd]]} */
 	is_browse_feedUC(x) {
 		if(this.str_starts_with_rx("browse-feed",x.targetId)) {
 			let ss=split_string(x.targetId,"browse-feed");
 			if(ss.length!==2) return [false,null];
 			if(!this.str_starts_with_rx_in_arr(ss,"UC")) return [false,null];
 			let sa=ss[1];
-			let ll=sa.slice(24);
+			/** @type {DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`?R:never} */
+			let ll=as(sa.slice(24));
 			if(!this.str_starts_with_rx("UC",sa)) return [false,null];
-			if(ll!=="featured") return [false,null];
 			/** @returns {`UC${string}`} */
 			function wx() {return "UC";}
 			let [cid,fe]=split_string_once_last(sa,"featured",wx()); if(fe!=="") debugger;
@@ -6944,9 +6945,11 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		let [,,channelId,last_part]=bp;
-		if(last_part!=="featured") debugger;
+		switch(last_part) {
+			default: debugger; break;
+			case "featured": case "search":
+		}
 		this.D_ChannelId(channelId);
-		debugger;
 	}
 	/** @private @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {
