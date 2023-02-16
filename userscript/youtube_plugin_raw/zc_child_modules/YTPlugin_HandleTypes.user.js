@@ -3192,29 +3192,28 @@ class HandleTypes extends ServiceMethods {
 				this.V_BinaryTimestamp(f4);
 				return;
 			}
-			const {1: [,f1],2: [,f2],4: [,,f4],6: f6w,9: f9w,19: f19w,...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f1`,f1);
-			this.a_primitive_num(f2);
-			this.V_BinaryTimestamp(f4);
-			if(f6w) {
-				const [,[,f6]]=f6w;
-				switch(f6) {
-					case "autoplay": break;
+			if(19 in x) {
+				const {1: [,f1],2: [,f2],4: [,,f4],6: f6w,9: f9w,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
+				this.save_number(`${cf}.f1`,f1);
+				this.a_primitive_num(f2);
+				this.V_BinaryTimestamp(f4);
+				if(f6w) {
+					const [,[,f6]]=f6w;
+					switch(f6) {
+						case "autoplay": break;
+					}
 				}
-			}
-			if(!f6w) debugger;
-			if(f9w) {
-				const [ty,,f9]=f9w;
-				if(ty!=="data64") debugger;
-				this._primitive_of(f9,"bigint");
-			}
-			if(!f9w) debugger;
-			if(f19w) {
-				const [ty,,f19]=f19w;
-				if(ty!=="child") debugger;
+				if(!f6w) debugger;
+				if(f9w) {
+					const [ty,,f9]=f9w;
+					if(ty!=="data64") debugger;
+					this._primitive_of(f9,"bigint");
+				}
+				if(!f9w) debugger;
+				if(t19!=="child") debugger;
 				console.log("f19",f19);
+				return;
 			}
-			if(!f19w) debugger;
 			return;
 		}
 		if(this.is_tp_xx(x,501)||this.is_tp_xx(x,512)) {

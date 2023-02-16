@@ -1,3 +1,19 @@
+type R_ClickTrackingObj_t1_v0_v13187={
+	1: T_D32<0>;
+	2: T_D32<13187>;
+	4: T_VW_2<V_BinaryTimestamp>;
+}|{
+	1: T_D32<0>;
+	2: T_D32<13187>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	6: T_VSR<"autoplay">;
+	9: T_VW_Bigint<14961257671762767615n>;
+	19: T_VW_2<{
+		1: T_D32<16>;
+		2: T_D32<3832>;
+	}>;
+};
+
 // R_ClickTrackingObj_t1_v337
 type R_ClickTrackingObj_t1={
 	1: T_D32<0>;
@@ -26,16 +42,6 @@ type R_ClickTrackingObj_t1={
 		3: T_D32<158>;
 	}>;
 }|{
-	1: T_D32<0>;
-	2: T_D32<13187>;
-	4: T_VW_2<V_BinaryTimestamp>;
-	6: T_VSR<"autoplay">;
-	9: T_VW_Bigint<14961257671762767615n>;
-	19: T_VW_2<{
-		1: T_D32<16>;
-		2: T_D32<3832>;
-	}>;
-}|{
 	1: T_D32<242>;
 	2: T_D32<119920>;
 	3: T_D32<0>;
@@ -50,4 +56,4 @@ type R_ClickTrackingObj_t1={
 	3: T_D32<1>,
 	4: T_VW_2<V_BinaryTimestamp>,
 	9: T_VW_Bigint<16785184010802868134n>
-};
+}|R_ClickTrackingObj_t1_v0_v13187;
