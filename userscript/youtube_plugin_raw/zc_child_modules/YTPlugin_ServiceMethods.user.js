@@ -6144,6 +6144,15 @@ class ServiceMethods extends ServiceData {
 	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.ceq(x,"/youtubei/v1/notification/get_unseen_count"));}
 	/** @private @arg {R_ClipCreation} x */
 	R_ClipCreation(x) {this.H_("C_RunAttestation","clipCreationRenderer",x,this.D_ClipCreation);}
+	/** @public @arg {R_ClipCreationTextInput} x */
+	R_ClipCreationTextInput(x) {this.H_("R_ClipCreationTextInput","clipCreationTextInputRenderer",x,this.D_ClipCreationTextInput);}
+	/** @private @arg {D_ClipCreationTextInput} x */
+	D_ClipCreationTextInput(x) {
+		const cf="D_ClipCreationTextInput"; this.k(cf,x);
+		const {placeholderText,maxCharacterLimit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(placeholderText);
+		if(maxCharacterLimit!==140) debugger;
+	}
 	/** @private @arg {D_ClipCreation} x */
 	D_ClipCreation(x) {
 		const cf="D_ClipCreation";

@@ -673,8 +673,6 @@ class HandleTypes extends ServiceMethods {
 	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {R_PlaylistByline} x */
 	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
-	/** @public @arg {R_ClipCreationTextInput} x */
-	R_ClipCreationTextInput(x) {this.H_("R_ClipCreationTextInput","clipCreationTextInputRenderer",x,this.D_ClipCreationTextInput);}
 	/** @public @arg {R_ClipAdState} x */
 	R_ClipAdState(x) {this.H_("R_ClipAdState","clipAdStateRenderer",x,this.D_ClipAdState);}
 	/** @public @arg {R_ClipCreationScrubber} x */
@@ -2915,13 +2913,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
-	/** @private @arg {D_ClipCreationTextInput} x */
-	D_ClipCreationTextInput(x) {
-		const cf="D_ClipCreationTextInput"; this.k(cf,x);
-		const {placeholderText,maxCharacterLimit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(placeholderText);
-		if(maxCharacterLimit!==140) debugger;
-	}
 	/** @private @arg {D_ClipAdState} x */
 	D_ClipAdState(x) {
 		const cf="D_ClipAdState"; this.k(cf,x);
