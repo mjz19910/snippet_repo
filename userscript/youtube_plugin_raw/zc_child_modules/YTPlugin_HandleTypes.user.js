@@ -3188,7 +3188,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(shortDescription);
 		this.ceq(isCrawlable,true);
 		this.D_Thumbnail(thumbnail);
-		this.ceq(allowRatings,true);
+		this.a_primitive_bool(allowRatings);
 		this.t(viewCount,x => {
 			let num=this.parse_number_template(x);
 			this.a_primitive_num(num);
