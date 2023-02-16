@@ -1997,6 +1997,12 @@ class HandleTypes extends ServiceMethods {
 				if(otu.length===2) return otu;
 				return this.convert_arr_to_obj([otu]);
 			}
+			if(otu[0]==="data_fixed32") {
+				if(otu.length===2) {
+					return `TYPE::Fixed32<${otu[1]}>`;
+				}
+				return this.convert_arr_to_obj([otu]);
+			}
 			/** @type {(D_DecTypeNum|V_ParamObj_2[number])[]} */
 			let ota=obj;
 			if(ota[0][0]==="child") {
