@@ -271,3 +271,9 @@ type P_continuation_request_reel_watch_sequence_token={
 		}
 	}
 };
+type P_reel_sequence_params={
+	1: T_VSR<"ss-I6WAiMFA">,
+	5: {
+		3: T_D32<12>
+	}
+};
