@@ -303,7 +303,6 @@ class HandleTypes extends ServiceMethods {
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		x===""; this.codegen_typedef(cf,x); x==="";
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RS_Page_Settings} x */
@@ -2043,7 +2042,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
-		x===""; this.codegen_typedef(cf,x); x==="";
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
