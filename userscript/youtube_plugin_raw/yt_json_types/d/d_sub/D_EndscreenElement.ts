@@ -14,6 +14,7 @@ type D_EndscreenElement={
 	callToAction?: G_Text;
 	dismiss?: G_Text;
 	endpoint: D_EndscreenElement_EP;
+	subscribersText?: G_Text;
 	hovercardButton?: R_SubscribeButton;
 	trackingParams: string;
 	isSubscribe?: true;
