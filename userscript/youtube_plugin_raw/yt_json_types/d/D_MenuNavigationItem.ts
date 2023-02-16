@@ -1,20 +1,39 @@
+type D_ReasonItem={
+	reason: G_Text;
+	endpoint: E_Pinging;
+};
+
+type DE_MuteAd={
+	type: "HIDE";
+	actions: A_HideEnclosing[];
+};
+
+type E_MuteAd={
+	clickTrackingParams: string;
+	muteAdEndpoint: DE_MuteAd;
+};
+
+type D_AdFeedback={
+	title: G_Text;
+	confirmLabel: G_Text;
+	cancelLabel: G_Text;
+	reasons: D_ReasonItem[];
+	completionMessage: G_Text;
+	trackingParams: string;
+	impressionEndpoint: E_MuteAd;
+};
+
+type R_AdFeedback={adFeedbackRenderer: D_AdFeedback;};
+type DE_AdFeedback={content: R_AdFeedback;};
+type E_AdFeedback={
+	clickTrackingParams: string;
+	loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`>[];
+	adFeedbackEndpoint: DE_AdFeedback;
+};
 type D_MenuNavigationItem={
 	text: G_Text;
-	icon: T_Icon<"INFO">;
-	navigationEndpoint: TA_OpenPopup_Empty;
+	icon: T_Icon<"INFO"|"FEEDBACK">;
+	navigationEndpoint: E_UserFeedback|TA_OpenPopup_Empty|E_AdFeedback;
 	trackingParams: string;
-}|{
-	text: G_Text;
-	icon: T_Icon<"FEEDBACK">;
-	navigationEndpoint: E_UserFeedback;
-	trackingParams: string;
-	accessibility: TD_Accessibility<"Send feedback">;
-}|{
-	text: G_Text;
-	navigationEndpoint: {
-		clickTrackingParams: string;
-		loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`>[];
-		adFeedbackEndpoint: D_Content;
-	};
-	trackingParams: string;
+	accessibility?: TD_Accessibility<"Send feedback">;
 };
