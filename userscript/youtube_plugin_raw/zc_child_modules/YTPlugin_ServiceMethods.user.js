@@ -230,8 +230,14 @@ class ServiceMethods extends ServiceData {
 		const {url,target,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(target!=="TARGET_NEW_WINDOW") debugger;
 		let x1=this.parse_with_url_parse(url);
+		if(x1.hostname!=="googleads.g.doubleclick.net") debugger;
 		if(x1.pathname!=="/aclk") debugger;
 		let s_map=Object.fromEntries(x1.searchParams.entries());
+		{
+			/** @type {{}} */
+			let x2=s_map;
+			const {...y}=x2; this.g(y);
+		}
 		debugger;
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
