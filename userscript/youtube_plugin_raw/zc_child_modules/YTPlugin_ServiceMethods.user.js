@@ -7317,6 +7317,16 @@ class ServiceMethods extends ServiceData {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {D_Tab_Subscriptions} x */
+	D_Tab_Subscriptions(x) {
+		const cf="D_Tab_Subscriptions";
+		const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_Tab_Subscriptions_EP(endpoint);
+		if(selected!==true) debugger;
+		if(!content.sectionListRenderer) debugger;
+		this.R_SectionList(content);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
 	/** @private @arg {D_Tab} x */
@@ -7327,13 +7337,7 @@ class ServiceMethods extends ServiceData {
 				default: debugger; break;
 				case "FEhistory": return this.D_Tab_History(x);
 				case "FEsubscriptions": {
-					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_Subscriptions`,x); this.g(y);
-					this.D_Tab_Subscriptions_EP(endpoint);
-					if(selected!==true) debugger;
-					if(!content.sectionListRenderer) debugger;
-					this.R_SectionList(content);
-					this.trackingParams(trackingParams);
-				} break;
+					this.D_Tab_Subscriptions(x);} break;
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
 					if(selected!==true) debugger;
