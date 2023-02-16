@@ -3035,29 +3035,12 @@ class HandleTypes extends ServiceMethods {
 		this.z(contents,this.R_RichMetadata);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
-	D_VideoOwner_Omit(cf,x) {
-		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,...y}=this.s(cf,x);
-		this.D_Thumbnail(thumbnail);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
-		this.G_Text(subscriberCountText);
-		this.D_SubscriptionButton(subscriptionButton);
-		this.t(membershipButton,this.R_Button);
-		return y;
-	}
 	/** @private @arg {D_SubscriptionButton} x */
 	D_SubscriptionButton(x) {
 		const cf="D_SubscriptionButton"; this.k(cf,x);
 		const {type,subscribed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_string("button.type",type);
 		this.t(subscribed,this.a_primitive_bool);
-	}
-	/** @private @arg {D_VideoOwner} x */
-	D_VideoOwner(x) {
-		const cf="D_VideoOwner"; this.k(cf,x);
-		let u=this.D_VideoOwner_Omit(cf,x); const {navigationEndpoint,badges,...y}=this.s(`${cf}:1`,u); this.g(y);/*#destructure_done*/
-		this.tz(badges,this.RMD_Badge);
 	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
