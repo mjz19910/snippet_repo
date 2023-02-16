@@ -586,15 +586,6 @@ class HandleTypes extends ServiceMethods {
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @public @arg {R_CommentsSimplebox} x */
 	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
-	/** @private @arg {R_FulfilledLayout} x */
-	R_FulfillmentLayout(x) {
-		this.H_("R_FulfillmentLayout","fulfilledLayout",x,x => {
-			let k=this.get_keys_of(x);
-			switch(k[0]) {case "inFeedAdLayoutRenderer": case "pageTopAdLayoutRenderer": }
-			if("inFeedAdLayoutRenderer" in x) return this.R_InFeedAdLayout(x);
-			if("pageTopAdLayoutRenderer" in x) return this.R_PageTopAdLayout(x);
-		});
-	}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
