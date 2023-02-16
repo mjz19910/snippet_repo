@@ -537,8 +537,6 @@ class HandleTypes extends ServiceMethods {
 	R_Radio(x) {this.H_("R_Radio","radioRenderer",x,this.D_Radio);}
 	/** @private @arg {R_ChildVideo} x */
 	R_ChildVideo(x) {this.H_("R_Radio","childVideoRenderer",x,this.D_ChildVideo);}
-	/** @private @arg {R_Video} x */
-	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
@@ -1122,11 +1120,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
 		this.tz(buttons,this.R_ToggleButton);
 	}
-	/** @private @arg {"D_Video_Other"|"D_Video_With:accessibility"|"D_Video_With:owner"|"D_Video_With:videoId"|"D_Video_With:videoId:topStandaloneBadge"|"D_Video_With:videoId:descriptionSnippet"} cf @arg {D_Video} x */
-	D_Video_With_Add_IsWatched(cf,x) {
-		if("isWatched" in x) return this.D_Video_Handle(`${cf}:isWatched`,x);
-		return this.D_Video_Handle(cf,x);
-	}
 	/** @private @arg {D_Video} x */
 	D_Video_With_VideoId(x) {
 		const cf="D_Video_With:videoId";
@@ -1138,17 +1131,6 @@ class HandleTypes extends ServiceMethods {
 	D_Video_With_Owner(x) {
 		const cf="D_Video_With:owner";
 		return this.D_Video_With_Add_IsWatched(cf,x);
-	}
-	/** @private @arg {D_Video} x */
-	D_Video(x) {
-		if("accessibility" in x) {
-			return this.D_Video_With_Add_IsWatched("D_Video_With:accessibility",x);
-		}
-		if("owner" in x) return this.D_Video_With_Owner(x);
-		if("videoId" in x) return this.D_Video_With_VideoId(x);
-		console.log("video.other",this.get_keys_of(x).join());
-		debugger;
-		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
 	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {

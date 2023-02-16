@@ -5784,6 +5784,24 @@ class ServiceMethods extends ServiceData {
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {"D_Video_Other"|"D_Video_With:accessibility"|"D_Video_With:owner"|"D_Video_With:videoId"|"D_Video_With:videoId:topStandaloneBadge"|"D_Video_With:videoId:descriptionSnippet"} cf @arg {D_Video} x */
+	D_Video_With_Add_IsWatched(cf,x) {
+		if("isWatched" in x) return this.D_Video_Handle(`${cf}:isWatched`,x);
+		return this.D_Video_Handle(cf,x);
+	}
+	/** @private @arg {R_Video} x */
+	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
+	/** @private @arg {D_Video} x */
+	D_Video(x) {
+		if("accessibility" in x) {
+			return this.D_Video_With_Add_IsWatched("D_Video_With:accessibility",x);
+		}
+		if("owner" in x) return this.D_Video_With_Owner(x);
+		if("videoId" in x) return this.D_Video_With_VideoId(x);
+		console.log("video.other",this.get_keys_of(x).join());
+		debugger;
+		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
+	}
 	/** @private @arg {G_RichItemContent} x */
 	G_RichItemContent(x) {
 		const cf="G_RichItemContent"; this.k(cf,x);
