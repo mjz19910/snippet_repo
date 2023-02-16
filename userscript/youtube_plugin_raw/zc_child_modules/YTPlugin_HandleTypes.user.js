@@ -129,6 +129,7 @@ class HandleTypes extends ServiceMethods {
 		this.support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
 		this.support_RS_Watch=new ss.Support_RS_Watch(x);
 		this.support_RS_Page_Browse=new ss.Support_RS_Page_Browse(x);
+		this.support_RS_Browse=new ss.Support_RS_Browse(x);
 	}
 	//#endregion
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
@@ -752,17 +753,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
 	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
-	/** @private */
-	log_url=false;
-	/** @private @arg {"RS_Page_Browse"} cf @template {RS_Page_Browse} T @arg {T} x */
-	RS_BrowsePage_Omit(cf,x) {
-		const {url,endpoint,page,response,...y}=this.s(cf,x);
-		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
-		debugger;
-		if(page!=="browse") debugger;
-		this.RS_Browse(response);
-		return y;
-	}
 	//#region Grouped Endpoints
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
@@ -788,47 +778,6 @@ class HandleTypes extends ServiceMethods {
 	DE_YpcGetCart(x) {this.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
-	/** @private @arg {RS_Browse} x */
-	RS_Browse(x) {
-		const cf="RS_Browse";
-		x: {
-			let jk=this.get_keys_of(x).filter(e => {
-				if(e==="responseContext") return false;
-				return true;
-			}).join();
-			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
-			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
-			if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
-			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
-			if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
-			if(jk==="header,trackingParams,onResponseReceivedActions") break x;
-			if(jk==="trackingParams,onResponseReceivedActions") break x;
-			if(jk==="contents,trackingParams,topbar,sidebar") break x;
-			if(jk==="contents,header,trackingParams,topbar") break x;
-			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
-			debugger;
-		}
-		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
-		this.t(header,this.G_BrowseHeader);
-		this.trackingParams(trackingParams);
-		this.tz(onResponseReceivedActions,this.GA_ResponseReceived);
-		this.t(contents,this.G_BrowseContents);
-		this.t(topbar,this.R_DesktopTopbar);
-		this.t(frameworkUpdates,this.R_EntityBatchUpdate);
-		this.t(sidebar,this.G_BrowseSidebar);
-		this.tz(observedStateTags,this.B_StateTag);
-		this.t(cacheMetadata,this.D_Cache_MD);
-		this.t(metadata,this.G_Browse_MD);
-		this.t(microformat,this.R_Microformat);
-		this.t(maxAgeStoreSeconds,x => this._primitive_of(x,"number"));
-		this.t(background,this.R_MusicThumbnail);
-		this.t(continuationContents,this.RC_SectionList);
-		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
-	}
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x) {
 		const cf="D_Microformat_Other";

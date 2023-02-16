@@ -710,6 +710,60 @@ class Support_RS_Page_Browse extends ServiceMethods {
 		}
 		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
 	}
+	/** @private */
+	log_url=false;
+	/** @private @arg {"RS_Page_Browse"} cf @template {RS_Page_Browse} T @arg {T} x */
+	RS_BrowsePage_Omit(cf,x) {
+		const {url,endpoint,page,response,...y}=this.s(cf,x);
+		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
+		debugger;
+		if(page!=="browse") debugger;
+		this.handle_types.support_RS_Browse.RS_Browse(response);
+		return y;
+	}
+}
+class Support_RS_Browse extends ServiceMethods {
+	/** @public @arg {RS_Browse} x */
+	RS_Browse(x) {
+		const cf="RS_Browse";
+		x: {
+			let jk=this.get_keys_of(x).filter(e => {
+				if(e==="responseContext") return false;
+				return true;
+			}).join();
+			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
+			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
+			if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
+			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
+			if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
+			if(jk==="header,trackingParams,onResponseReceivedActions") break x;
+			if(jk==="trackingParams,onResponseReceivedActions") break x;
+			if(jk==="contents,trackingParams,topbar,sidebar") break x;
+			if(jk==="contents,header,trackingParams,topbar") break x;
+			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
+			debugger;
+		}
+		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.RC_ResponseContext(responseContext);
+		this.t(header,this.G_BrowseHeader);
+		this.trackingParams(trackingParams);
+		this.tz(onResponseReceivedActions,this.GA_ResponseReceived);
+		this.t(contents,this.G_BrowseContents);
+		this.t(topbar,this.R_DesktopTopbar);
+		this.t(frameworkUpdates,this.R_EntityBatchUpdate);
+		this.t(sidebar,this.G_BrowseSidebar);
+		this.tz(observedStateTags,this.B_StateTag);
+		this.t(cacheMetadata,this.D_Cache_MD);
+		this.t(metadata,this.G_Browse_MD);
+		this.t(microformat,this.R_Microformat);
+		this.t(maxAgeStoreSeconds,x => this._primitive_of(x,"number"));
+		this.t(background,this.R_MusicThumbnail);
+		this.t(continuationContents,this.RC_SectionList);
+		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
@@ -717,4 +771,5 @@ export_(exports => {
 	exports.Support_RS_WatchPage=Support_RS_WatchPage;
 	exports.Support_RS_Watch=Support_RS_Watch;
 	exports.Support_RS_Page_Browse=Support_RS_Page_Browse;
+	exports.Support_RS_Browse=Support_RS_Browse;
 });
