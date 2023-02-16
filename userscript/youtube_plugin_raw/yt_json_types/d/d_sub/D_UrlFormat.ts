@@ -36,6 +36,6 @@ type D_UrlFormat=
 	|`/v/${string}?version=3&autohide=1`
 	|D_PlayerMicroformat["ownerProfileUrl"]
 	|`https://www.youtube.com/pagead/adview?${string}`
+	|DE_VE83769_Url_1["url"]
 	;
 ;
-

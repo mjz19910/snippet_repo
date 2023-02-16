@@ -275,6 +275,7 @@ class ParserService extends BaseService {
 			case "www.gstatic.com": return;
 			case "support.google.com": return;
 			case "m.youtube.com": return;
+			case "googleads.g.doubleclick.net": return;
 			default:
 		}
 		this.x.get("handle_types").on_google_video_url(r);
