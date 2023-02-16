@@ -513,7 +513,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @protected @arg {string} cf @arg {{}} x */
-	g_k=(cf,x) => this.k(cf,x);
+	g_k=this.k;
 	/** @protected @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {M_Like} x */
@@ -983,7 +983,7 @@ class ServiceMethods extends ServiceData {
 	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
 	/** @protected @arg {D_EndscreenElement_EP} x */
 	D_EndscreenElement_EP(x) {
-		const cf="D_EndscreenElement_EP"; this.k(cf,x);
+		const cf="D_EndscreenElement_EP";
 		if("browseEndpoint" in x) return this.E_VE3611(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
@@ -4435,7 +4435,7 @@ class ServiceMethods extends ServiceData {
 	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
-		const cf="D_PlaylistPanelVideo"; this.k(cf,x);
+		const cf="D_PlaylistPanelVideo";
 		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_off*/
 		this.D_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
@@ -4530,7 +4530,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {GD_RC_SectionList} x */
 	GD_RC_SectionList(x) {
-		const cf="GD_RC_SectionList"; this.k(cf,x);
+		const cf="GD_RC_SectionList";
 		if("targetId" in x) {
 			switch(x.targetId) {
 				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
@@ -4552,7 +4552,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
 	GT_ShortsSurfaceIdentifier(x) {
-		const cf="GT_ShortsSurfaceIdentifier"; this.k(cf,x);
+		const cf="GT_ShortsSurfaceIdentifier";
 		const {surface,tag,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
 		switch(tag) {
@@ -4641,7 +4641,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
-		const cf="D_EngagementPanelSectionList"; this.k(cf,x);
+		const cf="D_EngagementPanelSectionList";
 		if("veType" in x) {
 			switch(x.veType) {
 				default: debugger; break;
@@ -5092,7 +5092,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
 	D_SerializedSlotAdServingDataEntry(x) {
-		const cf="D_SerializedSlotAdServingDataEntry"; this.k(cf,x);
+		const cf="D_SerializedSlotAdServingDataEntry";
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params("ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
 	}
@@ -5122,7 +5122,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {DMD_AdSlot} x */
 	DMD_AdSlot(x) {
-		const cf="DMD_AdSlot",u=this.DMD_AdSlot_Omit(cf,x); this.k(cf,x);
+		const cf="DMD_AdSlot",u=this.DMD_AdSlot_Omit(cf,x);
 		if("adSlotLoggingData" in u) {
 			const {adSlotLoggingData,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
 			return this.D_SerializedSlotAdServingDataEntry(adSlotLoggingData);
@@ -5188,7 +5188,7 @@ class ServiceMethods extends ServiceData {
 	R_FeedFilterChipBar(x) {this.H_("R_FeedFilterChipBar","feedFilterChipBarRenderer",x,this.D_FeedFilterChipBar);}
 	/** @private @arg {D_FeedFilterChipBar} x */
 	D_FeedFilterChipBar(x) {
-		const cf="D_FeedFilterChipBar"; this.k(cf,x);
+		const cf="D_FeedFilterChipBar";
 		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.R_ChipCloudChip);
 		this.trackingParams(trackingParams);
@@ -5305,7 +5305,7 @@ class ServiceMethods extends ServiceData {
 	R_CompactVideo(x) {this.H_("R_CompactVideo","compactVideoRenderer",x,this.D_CompactVideo);}
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
-		const cf="D_CompactVideo"; this.k(cf,x);
+		const cf="D_CompactVideo";
 		if("ownerBadges" in x&&"publishedTimeText" in x) {
 			let {publishedTimeText,lengthText,ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
 			this.G_Text(publishedTimeText);
@@ -5339,7 +5339,7 @@ class ServiceMethods extends ServiceData {
 	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {D_AdSlot} x */
 	D_AdSlot(x) {
-		const cf="D_AdSlot"; this.k(cf,x);
+		const cf="D_AdSlot";
 		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.DMD_AdSlot(adSlotMetadata);
 		this.R_FulfillmentLayout(fulfillmentContent);
@@ -5422,7 +5422,7 @@ class ServiceMethods extends ServiceData {
 	R_VideoViewCount(x) {this.H_("R_VideoViewCount","videoViewCountRenderer",x,this.D_VideoViewCount);}
 	/** @private @arg {D_VideoViewCount} x */
 	D_VideoViewCount(x) {
-		const cf="D_VideoViewCount"; this.k(cf,x);
+		const cf="D_VideoViewCount";
 		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(viewCount);
 		this.t(shortViewCount,this.G_Text);
@@ -5446,7 +5446,7 @@ class ServiceMethods extends ServiceData {
 	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {D_VideoOwner} x */
 	D_VideoOwner(x) {
-		const cf="D_VideoOwner"; this.k(cf,x);
+		const cf="D_VideoOwner";
 		let u=this.D_VideoOwner_Omit(cf,x); const {navigationEndpoint,badges,...y}=this.s(`${cf}:1`,u); this.g(y);/*#destructure_done*/
 		this.tz(badges,this.RMD_Badge);
 	}
@@ -5463,7 +5463,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_SubscriptionButton} x */
 	D_SubscriptionButton(x) {
-		const cf="D_SubscriptionButton"; this.k(cf,x);
+		const cf="D_SubscriptionButton";
 		const {type,subscribed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_string("button.type",type);
 		this.t(subscribed,this.a_primitive_bool);
@@ -5808,7 +5808,7 @@ class ServiceMethods extends ServiceData {
 	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {
-		const cf="D_FeedNudge"; this.k(cf,x);
+		const cf="D_FeedNudge";
 		const {lightIconImage,title,subtitle,dismissButton,impressionEndpoint,trackingParams,style,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(lightIconImage);
 		this.G_Text(title);
@@ -5823,7 +5823,7 @@ class ServiceMethods extends ServiceData {
 	R_Radio(x) {this.H_("R_Radio","radioRenderer",x,this.D_Radio);}
 	/** @private @arg {D_Radio} x */
 	D_Radio(x) {
-		const cf="D_Radio"; this.k(cf,x);
+		const cf="D_Radio";
 		let {...y}=this.Omit_Menu_Radio(cf,x);
 		const {videos,...z}=this.s(cf,y); this.g(z);/*#destructure_done*/
 		this.z(videos,this.R_ChildVideo);
@@ -5832,7 +5832,7 @@ class ServiceMethods extends ServiceData {
 	R_ChildVideo(x) {this.H_("R_Radio","childVideoRenderer",x,this.D_ChildVideo);}
 	/** @private @arg {D_ChildVideo} x */
 	D_ChildVideo(x) {
-		const cf="D_ChildVideo"; this.k(cf,x);
+		const cf="D_ChildVideo";
 		let y=this.D_ChildVideo_Omit(cf,x);
 		this.g(y);
 	}
@@ -5858,13 +5858,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
 	D_Video_inlinePlaybackEndpoint(x) {
-		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
+		const cf="D_Video_inlinePlaybackEndpoint";
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_TopicLink} x */
 	D_TopicLink(x) {
-		const cf="D_TopicLink"; this.k(cf,x);
+		const cf="D_TopicLink";
 		const {thumbnailDetails,title,trackingParams,endpoint,callToActionIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(thumbnailDetails);
 		this.G_Text(title);
@@ -5893,13 +5893,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_CarouselLockup} x */
 	D_CarouselLockup(x) {
-		const cf="D_CarouselLockup"; this.k(cf,x);
+		const cf="D_CarouselLockup";
 		const {infoRows,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(infoRows,this.R_InfoRow);
 	}
 	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
 	D_ChannelThumbnail_navigationEndpoint(x) {
-		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
+		const cf="D_ChannelThumbnail_navigationEndpoint";
 		if("browseEndpoint" in x) {debugger; return;}
 		x===""; this.codegen_typedef(cf,x);
 	}
@@ -5913,7 +5913,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_ChannelThumbnailWithLink} x */
 	D_ChannelThumbnailWithLink(x) {
-		const cf="D_ChannelThumbnailWithLink"; this.k(cf,x);
+		const cf="D_ChannelThumbnailWithLink";
 		if("title" in x) {
 			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
 			this.a_primitive_str(title);
@@ -5923,7 +5923,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {
-		const cf="D_Video_Owner"; this.k(cf,x);
+		const cf="D_Video_Owner";
 		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(thumbnail);
 		debugger;
@@ -5974,7 +5974,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {G_RichItemContent} x */
 	G_RichItemContent(x) {
-		const cf="G_RichItemContent"; this.k(cf,x);
+		const cf="G_RichItemContent";
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
@@ -5985,7 +5985,7 @@ class ServiceMethods extends ServiceData {
 	R_RichItem(x) {this.H_("R_RichItem","richItemRenderer",x,this.D_RichItem);}
 	/** @private @arg {D_RichItem} x */
 	D_RichItem(x) {
-		const cf="D_RichItem"; this.k(cf,x);
+		const cf="D_RichItem";
 		if("rowIndex" in x) {
 			const {content,trackingParams,rowIndex,colIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.G_RichItemContent(content);
@@ -6080,7 +6080,7 @@ class ServiceMethods extends ServiceData {
 	R_MacroMarkersListItem(x) {this.H_("R_MacroMarkersListItem","macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
-		const cf="D_MacroMarkersListItem"; this.k(cf,x);
+		const cf="D_MacroMarkersListItem";
 		if("playerStateEntityKey" in x) {
 			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
 			this.G_Text(title);
@@ -6310,7 +6310,7 @@ class ServiceMethods extends ServiceData {
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
-		const cf="D_CommentSimplebox"; this.k(cf,x);
+		const cf="D_CommentSimplebox";
 		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_Button(submitButton);
 		this.R_Button(cancelButton);
@@ -6397,7 +6397,7 @@ class ServiceMethods extends ServiceData {
 	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
 	/** @private @arg {D_RichListHeader} x */
 	D_RichListHeader(x) {
-		const cf="D_RichListHeader"; this.k(cf,x);
+		const cf="D_RichListHeader";
 		const {title,trackingParams,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		this.G_Text(title);
@@ -6434,7 +6434,7 @@ class ServiceMethods extends ServiceData {
 	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,"factoidRenderer",x,this.D_Factoid);}
 	/** @private @arg {D_Factoid} x */
 	D_Factoid(x) {
-		const cf="D_Factoid"; this.k(cf,x);
+		const cf="D_Factoid";
 		const {value,label,accessibilityText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(value);
 		this.G_Text(label);
@@ -6457,7 +6457,7 @@ class ServiceMethods extends ServiceData {
 	R_RichMetadata(x) {this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);}
 	/** @private @arg {D_RichMetadata} x */
 	D_RichMetadata(x) {
-		const cf="D_RichMetadata"; this.k(cf,x);
+		const cf="D_RichMetadata";
 		switch(x.style) {
 			default: this.cg.codegen_case_key(cf,x,"style","break"); break;
 			case "RICH_METADATA_RENDERER_STYLE_BOX_ART": {
@@ -6489,7 +6489,7 @@ class ServiceMethods extends ServiceData {
 	R_RichMetadataRow(x) {this.H_("R_RichMetadataRow","richMetadataRowRenderer",x,this.D_RichMetadataRow);}
 	/** @private @arg {D_RichMetadataRow} x */
 	D_RichMetadataRow(x) {
-		const cf="D_RichMetadataRow"; this.k(cf,x);
+		const cf="D_RichMetadataRow";
 		if(!x.contents) debugger;
 		if(!x.trackingParams) debugger;
 		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6519,7 +6519,7 @@ class ServiceMethods extends ServiceData {
 	 * use that instead of repeating the code
 	 * */
 	D_EmojiImage(x) {
-		const cf="D_EmojiImage"; this.k(cf,x);
+		const cf="D_EmojiImage";
 		const {accessibility,thumbnails,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
 		this.z(thumbnails,this.D_ThumbnailItem);
@@ -6540,7 +6540,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {D_GetAccountMenu_Popup} x */
 	Popup_GetAccountMenu(x) {
-		const cf="Popup_GetAccountMenu"; this.k(cf,x);
+		const cf="Popup_GetAccountMenu";
 		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(b!=="DROPDOWN") debugger;
 		if(c!==true) debugger;
@@ -6560,7 +6560,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {
-		const cf="MP_AccountMenu"; this.k(cf,x);
+		const cf="MP_AccountMenu";
 		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
 		this.trackingParams(trackingParams);
@@ -6580,7 +6580,7 @@ class ServiceMethods extends ServiceData {
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
-		const cf="D_CommentsEntryPointTeaser"; this.k(cf,x);
+		const cf="D_CommentsEntryPointTeaser";
 		const {teaserAvatar,teaserContent,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!teaserAvatar.accessibility) debugger;
 		this.D_Thumbnail(teaserAvatar);
@@ -6604,7 +6604,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {D_NotificationMenuPopupMenuItem} x */
 	D_NotificationMenuPopupMenuItem(x) {
-		const cf="D_NotificationMenuPopupMenuItem"; this.k(cf,x);
+		const cf="D_NotificationMenuPopupMenuItem";
 		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
@@ -6624,7 +6624,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {G_Action_GetNotificationsMenu_Popup} x */
 	G_Action_GetNotificationsMenu_Popup(x) {
-		const cf="G_Action_GetNotificationsMenu_Popup"; this.k(cf,x);
+		const cf="G_Action_GetNotificationsMenu_Popup";
 		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(popupType!=="DROPDOWN") debugger;
 		if(beReused!==true) debugger;
@@ -6641,7 +6641,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
 	D_CompactLink_NavEndpoint(x) {
-		const cf="D_CompactLink_NavEndpoint"; this.k(cf,x);
+		const cf="D_CompactLink_NavEndpoint";
 		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
 		if("browseEndpoint" in x) {debugger; return;}
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
@@ -6671,7 +6671,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
-		const cf="D_CompactLink"; this.k(cf,x);
+		const cf="D_CompactLink";
 		if("style" in x) {return this.D_CompactLink_Styled(`${cf}.Styled`,x);}
 		if("icon" in x) {
 			let u=this.D_Link_Omit(cf,x);
@@ -6799,7 +6799,7 @@ class ServiceMethods extends ServiceData {
 	R_ClipCreationTextInput(x) {this.H_("R_ClipCreationTextInput","clipCreationTextInputRenderer",x,this.D_ClipCreationTextInput);}
 	/** @private @arg {D_ClipCreationTextInput} x */
 	D_ClipCreationTextInput(x) {
-		const cf="D_ClipCreationTextInput"; this.k(cf,x);
+		const cf="D_ClipCreationTextInput";
 		const {placeholderText,maxCharacterLimit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(placeholderText);
 		if(maxCharacterLimit!==140) debugger;
@@ -6808,7 +6808,7 @@ class ServiceMethods extends ServiceData {
 	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber","clipCreationScrubberRenderer",x,this.D_ClipCreationScrubber);}
 	/** @private @arg {D_ClipCreationScrubber} x */
 	D_ClipCreationScrubber(x) {
-		const cf="D_ClipCreationScrubber"; this.k(cf,x);
+		const cf="D_ClipCreationScrubber";
 		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(lengthTemplate!=="$clip_length seconds") debugger;
 		let u=this.exact_arr(60000,5000,15000,120000);
@@ -6820,7 +6820,7 @@ class ServiceMethods extends ServiceData {
 	R_ClipAdState(x) {this.H_("R_ClipAdState","clipAdStateRenderer",x,this.D_ClipAdState);}
 	/** @private @arg {D_ClipAdState} x */
 	D_ClipAdState(x) {
-		const cf="D_ClipAdState"; this.k(cf,x);
+		const cf="D_ClipAdState";
 		const {title,body,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.G_Text(body);
@@ -6929,7 +6929,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x) {
-		const cf="D_SectionList_BrowseFeed_Subscriptions"; this.k(cf,x);
+		const cf="D_SectionList_BrowseFeed_Subscriptions";
 		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,x => {
 			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
@@ -6942,7 +6942,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
 	D_SectionList_BrowseFeed_History(x) {
-		const cf="D_SectionList_BrowseFeed_History"; this.k(cf,x);
+		const cf="D_SectionList_BrowseFeed_History";
 		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,x => {
 			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
@@ -6956,7 +6956,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x) {
-		const cf="DC_SectionList_SearchFeed"; this.k(cf,x);
+		const cf="DC_SectionList_SearchFeed";
 		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		if(targetId!=="search-feed") debugger;
@@ -6966,7 +6966,7 @@ class ServiceMethods extends ServiceData {
 	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
-		const cf="D_MusicCarouselShelf"; this.k(cf,x);
+		const cf="D_MusicCarouselShelf";
 		const {contents,header,trackingParams,itemSize,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.ceq);
 		this.g(header);
@@ -6977,7 +6977,7 @@ class ServiceMethods extends ServiceData {
 	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
 	/** @private @arg {D_MusicShelf} x */
 	D_MusicShelf(x) {
-		const cf="D_MusicShelf"; this.k(cf,x);
+		const cf="D_MusicShelf";
 		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.R_MusicResponsiveListItem);
 		this.G_Text(title);
@@ -6995,7 +6995,7 @@ class ServiceMethods extends ServiceData {
 	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
 	/** @private @arg {D_SortFilterSubMenu} x */
 	D_SortFilterSubMenu(x) {
-		const cf="D_SortFilterSubMenu"; this.k(cf,x);
+		const cf="D_SortFilterSubMenu";
 		if("targetId" in x) return this.D_SortFilterSubMenu_WithTargetId(x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(subMenuItems,this.D_ActionSetPlaylistVideoOrder);
@@ -7007,7 +7007,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_ActionSetPlaylistVideoOrder} x */
 	D_ActionSetPlaylistVideoOrder(x) {
-		const cf="D_ActionSetPlaylistVideoOrder"; this.k(cf,x);
+		const cf="D_ActionSetPlaylistVideoOrder";
 		const {title,selected,continuation,serviceEndpoint,accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(title);
 		this.a_primitive_bool(selected);
@@ -7085,7 +7085,7 @@ class ServiceMethods extends ServiceData {
 	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
-		const cf="D_MovingThumbnail"; this.k(cf,x);
+		const cf="D_MovingThumbnail";
 		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(movingThumbnailDetails,x => {
 			if("logAsMovingThumbnail" in x) {
@@ -7114,14 +7114,14 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ElementUpdate} x */
 	D_ElementUpdate(x) {
 		const cls_=this.x.get("handle_types");
-		const cf="D_ElementUpdate"; this.k(cf,x);
+		const cf="D_ElementUpdate";
 		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @arg {D_FrameworkUpdates} x */
 	D_FrameworkUpdates(x) {
-		const cf="D_FrameworkUpdates"; this.k(cf,x);
+		const cf="D_FrameworkUpdates";
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
