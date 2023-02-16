@@ -4358,8 +4358,8 @@ class HandleTypes extends ServiceMethods {
 		this.g(u);
 	}
 	/** @protected @arg {P_tracking_params} x */
-	R_TrackingObj(x) {
-		const cf="R_TrackingObj"; this.k(cf,x);
+	P_tracking_params(x) {
+		const cf="P_tracking_params"; this.k(cf,x);
 		const {1: [,f1],2: [,f2],4: [,,f4],...u}=x;
 		this.a_primitive_num(f1);
 		this.a_primitive_num(f2);
@@ -4418,7 +4418,7 @@ class HandleTypes extends ServiceMethods {
 			case "tracking.params": {
 				/** @type {P_tracking_params} */
 				let u=as_any(x);
-				this.R_TrackingObj(u);
+				this.P_tracking_params(u);
 			} break;
 		}
 	}
