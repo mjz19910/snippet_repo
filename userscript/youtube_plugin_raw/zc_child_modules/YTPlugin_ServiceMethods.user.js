@@ -2865,7 +2865,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {string} x */
 	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
-	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @arg {[key: U, value: DT_DatabaseStoreTypes[U]]} args */
+	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
 	indexed_db_put(key,value) {
 		this.indexed_db.put(key,value,this.indexed_db_version);
 	}

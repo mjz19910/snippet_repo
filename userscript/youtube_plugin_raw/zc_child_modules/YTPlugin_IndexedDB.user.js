@@ -86,21 +86,19 @@ class IndexedDBService extends BaseService {
 		debugger;
 		this.is_broken=true;
 	}
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {[key: U,value: DT_DatabaseStoreTypes[U],version: number]} args */
-	put(...args) {
-		if(!args[1]) {debugger; return;}
-		const [key,value,version]=args;
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @arg {number} version */
+	put(key,value,version) {
+		if(!value) {debugger; return;}
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
 		if(cache?.includes(cache_key)) return;
 		if(!this.database_open) this.requestOpen(as_any({key,value}),version);
-		this.push_waiting_obj(...args);
+		this.push_waiting_obj(key,value);
 		this.check_size(key);
 	}
 	log_cache_push=false;
-	/** @private @template {keyof DT_DatabaseStoreTypes} T @arg {TA_push_waiting_obj<T>} args */
-	push_waiting_obj(...args) {
-		const [key,obj]=args;
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @arg {DT_DatabaseStoreTypes[T]} obj */
+	push_waiting_obj(key,obj) {
 		let d_cache=this.get_data_cache(key);
 		/** @type {{[R in T]?: [R,Map<string,number>]}} */
 		let sk_ac=this.store_cache_index;
