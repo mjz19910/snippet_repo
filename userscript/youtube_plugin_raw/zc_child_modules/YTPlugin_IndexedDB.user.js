@@ -305,8 +305,8 @@ class IndexedDBService extends BaseService {
 					let cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
 						if(i===0) {
-							this.committed_data.push(value);
 							await this.add_data_to_store(obj_store,value);
+							this.committed_data.push(value);
 						}
 						if(i===0||i===1) break;
 						console.log("cursor_done after %o",i);
@@ -324,6 +324,9 @@ class IndexedDBService extends BaseService {
 						console.log("[database_needs_obj_merge]");
 						console.log("[obj_merge_new]",value);
 						console.log("[obj_merge_cur]",cursor_value);
+						await this.get_async_result(obj_store.delete(value.key));
+						await this.add_data_to_store(obj_store,value);
+						this.committed_data.push(value);
 						debugger;
 					} else {
 						this.committed_data.push(value);
