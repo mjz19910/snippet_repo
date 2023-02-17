@@ -14,13 +14,30 @@ type G_Gv_0=
 type PT_DigDomain=[
 	"rr1.sn-n8v7znlk.googlevideo.com.",
 	"rr1.sn-n8v7znsd.googlevideo.com.",
-]
+];
+type PT_TypeS=[
+	[1,"9gv7l"],
+	[1,"a5mek"],
+	[1,"hp57k"],
+	[2,"n",[
+		["4",["v7","s"]],
+		["8",["v7","z"]],
+		["x5",[
+			["s7","7y"],
+		]],
+	]],
+	[2,"o",["097z"]],
+	[2,"p",[
+		[["p5q"],["ls"]],
+		[["p5q"],["s7"]],
+	]],
+];
 type PT_TypeArr=[
 	["9gv7l",["es","ez","le","s7"]],
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],
 	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],
-	["n8v7z",[]],
+	["n8v7z",["lk","sd"]],
 	["nx5s7",["7d","7s","7y","7z","76","ee","el"]],
 	["nx57y",["lk","sd","se","sk","sl","ss","sz"]],
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
