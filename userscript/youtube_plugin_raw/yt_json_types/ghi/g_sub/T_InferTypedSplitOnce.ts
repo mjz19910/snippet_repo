@@ -42,8 +42,10 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 			// ?
 			// T_InferredSplitOnce_NB_1<WA,Begin>
 			return TF_InferredSplitOnce_NB_1(WA,Begin);
+		} else {
+			// :
+			// Begin extends `${WA}`
 		}
-		// :Begin extends `${WA}`
 	}
 	return [S];
 	/*
