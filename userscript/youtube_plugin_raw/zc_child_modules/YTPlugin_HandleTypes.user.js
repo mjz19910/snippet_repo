@@ -384,6 +384,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
+	/** @private @arg {D_TranscriptSegment} x */
+	D_TranscriptSegment(x) {
+		const cf="D_TranscriptSegment";
+		const {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(startMs);
+		this.a_primitive_str(endMs);
+		this.G_Text(snippet);
+		this.G_Text(startTimeText);
+		this.trackingParams(trackingParams);
+		this.D_Accessibility(accessibility);
+		this.t(targetId,x => this.save_string(`${cf}.targetId`,x));
+	}
 	/** @private @arg {D_TranscriptFooter} x */
 	D_TranscriptFooter(x) {this.H_("D_TranscriptFooter","languageMenu",x,this.R_SortFilterSubMenu);}
 	/** @public @arg {D_TimedTextApi} x */
@@ -1986,18 +1998,6 @@ class HandleTypes extends ServiceMethods {
 		const {item,clientId,...y}=this.s(cf,x); this.g(y);
 		this.G_ChatItem(item);
 		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
-	}
-	/** @private @arg {D_TranscriptSegment} x */
-	D_TranscriptSegment(x) {
-		const cf="D_TranscriptSegment";
-		const {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_str(startMs);
-		this.a_primitive_str(endMs);
-		this.G_Text(snippet);
-		this.G_Text(startTimeText);
-		this.trackingParams(trackingParams);
-		this.D_Accessibility(accessibility);
-		this.t(targetId,x => this.save_string(`${cf}.targetId`,x));
 	}
 	/** @private @arg {D_PdgCommentChip} x */
 	D_PdgCommentChip(x) {
