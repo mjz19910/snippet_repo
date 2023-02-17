@@ -1725,7 +1725,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
 			for(let to_load of boxed) {
-				let k_parts=split_string_once(split_string_once(to_load.key,":")[1],":");
+				let k_parts=split_string_once(to_load.key,"boxed_id:str:");
 				console.log(k_parts);
 				debugger;
 			}

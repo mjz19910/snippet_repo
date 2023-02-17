@@ -13,9 +13,9 @@ type DT_DatabaseStoreTypes={
 		key: `hashtag_id:${string}`;
 		hashtag: string;
 	};
-	boxed_id: {
+	boxed_id: GenIdBox<GenIdSrcNum>|{
 		key: `boxed_id:${string}:${string}`;
-		type: string;
+		type: "num";
 		id: ["many_num",["one",number[]]|["many",number[][]]]|["many_str",["one",string[]]|["many",string[][]]];
 	};
 	channel_id: {
@@ -47,3 +47,13 @@ type PlaylistIdDatabaseObj={
 	id: string;
 	raw_id: `${D_PlaylistIdTypeBase}${string}`;
 };
+type GenIdSrcNum={
+	key_type: "num";
+	type: number;
+};
+type GenIdBox<SV extends GenIdSrcNum,T extends SV["key_type"]=SV["key_type"],V=GenIdSrcNum["type"]>={
+	key: `boxed_id:${T}:${string}`;
+	type: T;
+	id: [`many_${T}`,["one",V[]]|["many",V[][]]];
+};
+// ["many_str",["one",string[]]|["many",string[][]]]
