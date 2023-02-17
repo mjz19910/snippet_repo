@@ -1,6 +1,7 @@
+type D_VideoPlayback_Itag="137"|"140";
 
 type D_VideoPlaybackShape_Other={
-	itag?: "137";
+	itag?: D_VideoPlayback_Itag;
 	gcr?: "ca";
 	mt: `${number}`;
 	fvip: "4";
