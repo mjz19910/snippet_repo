@@ -1885,7 +1885,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
-		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,xtags,mime,ns,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
+		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
@@ -1899,6 +1899,7 @@ class HandleTypes extends ServiceMethods {
 		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
 		this.save_string(`${cf1}.mime`,mime);
 		this.save_b64_binary(`${cf2}.ns`,ns);
+		cnr&&this.save_string(`${cf1}.cnr`,cnr);
 		if(gir) this.save_string(`${cf1}.gir`,gir);
 		this.t(clen,x => {
 			let x1=this.parse_number_template(x);
@@ -1940,7 +1941,7 @@ class HandleTypes extends ServiceMethods {
 			set_obj(ro,x,k);
 		}
 		let y2=ro;
-		const {mh,mm,mn,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ms,mv,mvi,pl,initcwndbps,...y3}=y2;
+		const {mh,mm,mn,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,ms,mv,mvi,pl,initcwndbps,...y3}=y2;
 		this.save_string(`${cf1}.mh`,mh);
 		this.save_string(`${cf1}.mm`,mm);
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
@@ -1989,7 +1990,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
-		cnr&&this.save_string(`${cf1}.cnr`,cnr);
 		const {gcr,...y}=y3; y;
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}
