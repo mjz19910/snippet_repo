@@ -3,12 +3,6 @@ type V_BinaryTimestamp={
 	2: T_FD32<number>;
 	3: T_FD32<number>;
 };
-type RB_ClickTrackingObj=
-	|RB_ClickTrackingObj_t1
-	|R_ClickTrackingObj_w46
-	|R_ClickTrackingObj_wx4
-	;
-;
 type P_ad_layout_ad_serving_data_entry={
 	4: T_D32<3>;
 	5: T_D32<2>;
