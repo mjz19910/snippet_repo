@@ -1527,10 +1527,10 @@ class HandleTypes extends ServiceMethods {
 			Promise.resolve().then(() => this.logged_hosts.length=0);
 		}
 	}
-	/** @private @arg {RE_D_VE3832_PreconnectUrl} cf @arg {D_GoogleVideoHostPartition} x */
+	/** @private @arg {"RE_D_VE3832_PreconnectUrl"} cf @arg {D_GoogleVideoHostPartition} x */
 	D_GoogleVideoHostPartition(cf,x) {
-		this.save_string(`${cf}.google_video_partition`,ap.partition);
-		this.save_string(`${cf}.google_video_selector`,ap.selector);
+		this.save_string(`${cf}.google_video_partition`,x.partition);
+		this.save_string(`${cf}.google_video_selector`,x.selector);
 	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
@@ -1555,7 +1555,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		let [,mi]=ss2;
 		let ap=this.get_gv_parts(mi);
-		this.D_GoogleVideoHostPartition(ap);
+		this.D_GoogleVideoHostPartition(cf,ap);
 		switch(ap.partition) {
 			default: {
 				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,mi);
