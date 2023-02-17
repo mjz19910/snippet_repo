@@ -21,26 +21,18 @@ type T_InferredSplitOnce_NB_2<WA extends string,S extends string,D extends strin
 	;
 ;
 function never_return(): never {throw new Error();}
-function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends string>(WA: WA,S: S,_D: D) {
+function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends string,PT extends S extends `${infer Begin}${D}${infer Rest}`? [Begin,Rest]:never>(WA: WA,S: S,_D: D,PT: PT) {
 	function chk(_a: any,_b: string) {
 		return true;
 	}
 	function chk_w(_a: any,_b: WA|"") {
 		return true;
 	}
-	function get_infer_1<_S,_A,_B,_TM>(_a: string): _A {
-		return "" as _A;
-	}
-	function get_infer_2<_S,_A,_B,_TM>(_a: string): _B {
-		return "" as _B;
-	}
 	// S extends `${infer Begin}${D}${infer Rest}`
 	if(chk(S,"`${infer Begin}${D}${infer Rest}`")) {
 		// ?
-		type A=S extends `${infer Begin}${D}${string}`? Begin:never;
-		type B=S extends `${string}${D}${infer Rest}`? Rest:never;
-		let Begin=get_infer_1<S,A,B,`${A}${D}${B}`>("infer Begin");
-		let Rest=get_infer_2<S,A,B,`${A}${D}${B}`>("infer Rest");
+		let Begin=PT[0];
+		let Rest=PT[1];
 		// Rest extends ""
 		if(chk_w(Rest,"")) {
 			// ?
@@ -51,11 +43,11 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 		// Begin extends `${WA}`
 		if(chk_w(Begin,WA)) {
 			// ?
-			return [WA,Rest];
+			return [WA,Rest] as const;
 		}
 		// :
 		// Begin extends ""
-		if(chk_w(Begin,"")) {
+		if(Begin==="") {
 			// ?
 			// T_InferredSplitOnce_NB_2<WA,S,D>
 			return TF_InferredSplitOnce_NB_2(WA,S,_D);
@@ -65,7 +57,7 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 		if(chk_w(Rest,WA)) {
 			// ?
 			// [Begin,WA]
-			return [Begin,WA];
+			return [Begin,WA] as const;
 		}
 		// :
 		// never
@@ -73,7 +65,7 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 	}
 	// :
 	// [S]
-	return [S];
+	return [S] as const;
 }
 function TF_InferredSplitOnce_NB_1(WA: string,Begin: string) {WA; Begin;}
 function TF_InferredSplitOnce_NB_2(WA: string,S: string,D: string) {WA; S; D;}
