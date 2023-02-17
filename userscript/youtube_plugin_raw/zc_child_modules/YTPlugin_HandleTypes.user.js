@@ -1505,7 +1505,6 @@ class HandleTypes extends ServiceMethods {
 		/** @type {D_GoogleVideoHostPartition} */
 		let ap=this.get_gv_parts(mi);
 		this.D_GoogleVideoHostPartition("url",ap);
-		this.D_VideoPlaybackShape_LS_Params("url",ap);
 		const gen_cf="js_gen_case:log_googlevideo_host";
 		let ap_z=ap.partition;
 		switch(ap_z) {
