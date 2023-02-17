@@ -54,7 +54,7 @@ type GenIdSrcStr={
 type GenIdSrc=GenIdSrcNum|GenIdSrcStr;
 type GenBoxedIdObj=GenIdBox<GenIdSrcNum>|GenIdBox<GenIdSrcStr>;
 // ["many_str",["one",string[]]|["many",string[][]]]
-type GenIdBox<SV extends GenIdSrc,T extends SV["key_type"]=SV["key_type"],V=GenIdSrc["type"]>={
+type GenIdBox<SV extends GenIdSrc,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${string}`;
 	type: T;
 	id: [`many_${T}`,["one",V[]]|["many",V[][]]];
