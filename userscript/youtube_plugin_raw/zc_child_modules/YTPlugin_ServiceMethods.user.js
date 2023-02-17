@@ -910,6 +910,31 @@ class ServiceMethods extends ServiceData {
 	R_Hint(x) {this.H_("hintRenderer",x,this.D_Hint);}
 	/** @protected @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
+	/** @private @arg {D_ReelPlayerOverlay} x */
+	D_ReelPlayerOverlay(x) {
+		const cf="D_ReelPlayerOverlay";
+		const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.trackingParams(trackingParams);
+		switch(reelPlayerNavigationModel) {
+			default: this.cg.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef(cf,x); break;
+			case void 0:
+			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
+		}
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.t(likeButton,this.R_LikeButton);
+		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
+		this.t(menu,this.R_Menu);
+		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
+		this.t(pivotButton,this.R_PivotButton);
+		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
+		this.t(videoInteractions,this.g);
+		this.t(nextItemButton,this.R_Button);
+		this.t(prevItemButton,this.R_Button);
+		this.t(shareButton,this.R_Button);
+		this.t(viewCommentsButton,this.R_Button);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {R_ReelPlayerHeader} x */
 	R_ReelPlayerHeader(x) {this.H_("reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
 	/** @private @arg {D_ReelPlayerHeader} x */
@@ -1240,31 +1265,6 @@ class ServiceMethods extends ServiceData {
 			}
 			this.targetId(cf,x);
 		});
-	}
-	/** @private @arg {D_ReelPlayerOverlay} x */
-	D_ReelPlayerOverlay(x) {
-		const cf="D_ReelPlayerOverlay";
-		const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.trackingParams(trackingParams);
-		switch(reelPlayerNavigationModel) {
-			default: this.cg.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef(cf,x); break;
-			case void 0:
-			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
-		}
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.t(likeButton,this.R_LikeButton);
-		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
-		this.t(menu,this.R_Menu);
-		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
-		this.t(pivotButton,this.R_PivotButton);
-		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
-		this.t(videoInteractions,this.g);
-		this.t(nextItemButton,this.R_Button);
-		this.t(prevItemButton,this.R_Button);
-		this.t(shareButton,this.R_Button);
-		this.t(viewCommentsButton,this.R_Button);
-		this.trackingParams(trackingParams);
 	}
 	/** @protected @arg {CF_T_Icon} cf1 @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(cf1,x) {
