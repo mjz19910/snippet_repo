@@ -33,4 +33,12 @@ type D_Tab_ContentMusicQueue={
 	content: R_MusicQueue;
 	trackingParams: string;
 };
-type D_Tab=D_Tab_Home|D_Tab_WhatToWatch|D_Tab_History|D_Tab_ContentSectionList|D_Tab_Subscriptions|D_Tab_ContentMusicQueue;
+type D_Tab_Library={
+	endpoint: E_VE6827;
+	selected: true;
+	content: R_SectionList;
+	tabIdentifier: "FElibrary";
+	accessibility: TD_Accessibility<"library">;
+	trackingParams: string;
+};
+type D_Tab=D_Tab_Library|D_Tab_Home|D_Tab_WhatToWatch|D_Tab_History|D_Tab_ContentSectionList|D_Tab_Subscriptions|D_Tab_ContentMusicQueue;

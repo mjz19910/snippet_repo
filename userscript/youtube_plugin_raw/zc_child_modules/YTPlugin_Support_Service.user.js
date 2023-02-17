@@ -1204,19 +1204,31 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
 		if("rootVe" in x) {
-			const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(url!=="/") debugger;
-		} else {
-			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			switch(url) {
-				default: url===""; debugger; switch(url) {
-					case "/feed/history":
+			switch(x.rootVe) {
+				case 3854: {
+					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					switch(url) {
+						case "/":
+					}
 				} break;
-				case "/feed/history":
-				case "/feed/library":
-				case "/":
-				case "/feed/subscriptions":
+				case 96368: {
+					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					switch(url) {
+						case "/feed/subscriptions":
+					}
+				} break;
 			}
+			return;
+		}
+		const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(url) {
+			default: url===""; debugger; switch(url) {
+				case "/":
+			} break;
+			case "/":
+			case "/feed/history":
+			case "/feed/library":
+			case "/feed/subscriptions":
 		}
 	}
 	/** @private @arg {R_PageTypeBrowse} x */
@@ -1544,24 +1556,28 @@ class Support_EventInput extends ServiceMethods {
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.handle_types.R_SettingsSidebar(sidebar);
 	}
+	/** @private @arg {D_Tab_WhatToWatch} x */
+	D_Tab_WhatToWatch(x) {
+		const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s("D_Tab_WhatToWatch",x); this.g(y);
+		this.ceq(selected,true);
+		this.handle_types.R_RichGrid(content);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_Tab_Library} x */
+	D_Tab_Library(x) {x;}
 	/** @public @arg {R_Tab} x */
 	R_Tab(x) {this.H_("tabRenderer",x,this.D_Tab);}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
 		const cf="D_Tab";
 		if("tabIdentifier" in x) {
+			let ux=x;
 			switch(x.tabIdentifier) {
-				default: debugger; break;
+				default: this.codegen_typedef(`${cf}_${ux.tabIdentifier}`,x,false); break;
 				case "FEhistory": return this.D_Tab_History(x);
-				case "FEsubscriptions": {
-					this.D_Tab_Subscriptions(x);
-				} break;
-				case "FEwhat_to_watch": {
-					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
-					this.ceq(selected,true);
-					this.handle_types.R_RichGrid(content);
-					this.trackingParams(trackingParams);
-				} break;
+				case "FEsubscriptions": return this.D_Tab_Subscriptions(x);
+				case "FEwhat_to_watch": return this.D_Tab_WhatToWatch(x);
+				case "FElibrary": return this.D_Tab_Library(x);
 			}
 			return;
 		}

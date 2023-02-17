@@ -376,6 +376,23 @@ type R_PageTypeBrowse=|{
 			onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
 		};
 		expirationTime: 1676534033586;
+	}|{
+		rootVe: 96368;
+		url: "/feed/subscriptions";
+		endpoint: E_VE96368;
+		page: "browse";
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			header: R_FeedTabbedHeader;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+			observedStateTags: {
+				stateTag: 3;
+				instruction: "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY";
+			}[];
+		};
+		expirationTime: 1676678289197;
 	};
 	fromHistory: boolean;
 	navigationDoneMs: number;
