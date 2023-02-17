@@ -319,8 +319,8 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version */
 	async database_diff(version) {
-		let open_db=await this.get_async_result(indexedDB.open("yt_plugin",version));
-		let tx=open_db.transaction("video_id","readonly");
+		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
+		let tx=db.transaction("video_id","readonly");
 		let store=this.objectStore(tx,"video_id");
 		let store_data=await this.get_async_result(store.getAll());
 		let store_diff=[];
@@ -330,7 +330,7 @@ class IndexedDBService extends BaseService {
 			store_diff.push(item);
 		}
 		return {
-			db: open_db,
+			db,
 			store,
 			store_data,
 			store_diff,
