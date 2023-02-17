@@ -1759,6 +1759,38 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	#new_strings=[];
 	/** @private @arg {string} ns @arg {string} k @arg {string|string[]} x */
 	save_to_store(ns,k,x) {this.save_string_impl(`${ns}:${k}`,x);}
+	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
+	add_to_index(k,x,store) {
+		/** @private @type {StoreDescription<T>['data'][number]} */
+		let p=[k,x];
+		let nk=store.data.push(p)-1;
+		store.index[k]=nk;
+		return p;
+	}
+	/** @private @template T @arg {string} key @arg {StoreDescription<T>} store */
+	get_seen_string_item_store(key,store) {
+		const {index,data}=store;
+		let idx=index[key];
+		if(idx) return data[idx];
+		idx=data.findIndex(e => e[0]===key);
+		if(idx<0) return this.add_to_index(key,["one",[]],store);
+		index[key]=idx;
+		return data[idx];
+	}
+	/** @public @template T @arg {string} ns @arg {string} k @arg {T|T[]} x @arg {StoreDescription<T>} store */
+	save_to_store_2(ns,k,x,store) {
+		let store_item=this.get_seen_string_item_store(k,store);
+		let store_index=this.save_to_data_item(x,store_item);
+		if(store_index<0) return false;
+		store.new_data.push([k,x]);
+		this.#onDataChange();
+		console.log(`store [${ns}] [${k}] %o`,x);
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return;}
+		this.show_strings_bitmap(ns,idx,store);
+		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
+		return true;
+	}
 	do_random_breakpoint=false;
 	/** @api @public @arg {string} k @arg {number|number[]} x */
 	save_number_impl(k,x) {
@@ -1805,7 +1837,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		});
 		return;
 	}
-	/** @public @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
+	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
 		let p=store.data[idx];
 		if(!p) return;
@@ -1824,7 +1856,11 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			return;
 		} else {
 			let bitmap_src=cur[1];
-			let linear_map=bitmap_src.every(e => !e.includes(","));
+			if(bitmap_src.length===0) return;
+			let linear_map=bitmap_src.every(e => {
+				if(typeof e!=="string") return false;
+				return !e.includes(",");
+			});
 			if(linear_map) {
 				console.log(` --------- [${ns}] [${k}] --------- `);
 				console.log(bitmap_src.join(","));
@@ -1858,10 +1894,16 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
 		this.#get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
 	}
-	/** @private @arg {string[]} bitmap_src */
+	/** @private @template T @arg {T[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
-		let map_arr=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])];
-		let bitmap="\n"+bitmap_src.map(e => e.split(",").map(e => map_arr.indexOf(e))).map(e => {
+		let map_arr=[...new Set([...bitmap_src.map(e => {
+			if(typeof e!=="string") return [];
+			return e.split(",");
+		}).flat()])];
+		let bitmap="\n"+bitmap_src.map(e => {
+			if(typeof e!=="string") return [];
+			return e.split(",").map(e => map_arr.indexOf(e));
+		}).map(e => {
 			let ta=new Array(map_arr.length).fill(0);
 			for(let x of e) ta[x]=1;
 			let bs=ta.join("");
