@@ -2272,7 +2272,7 @@ function do_message_handler_overwrite(handler) {
 }
 
 class ProxyTargetMap {
-	constructor() {inject_api.proxyTargetMap=this;}
+	constructor() {export_(exports => {exports.proxyTargetMap=this;});}
 	weak_map=new WeakMap();
 }
 inject_api.ProxyTargetMap=ProxyTargetMap;
@@ -2283,15 +2283,14 @@ let new_elevated_event_handlers=[];
 inject_api.elevate_event_handlers=new_elevated_event_handlers;
 
 /** @arg {EventListenersT} event_handler */
-function elevate_event_handler(event_handler) {
-	if(!inject_api.addEventListenerExtension) return;
-	inject_api.addEventListenerExtension.elevate_handler(event_handler);
-}
+function elevate_event_handler(event_handler) {export_(exports => {exports.addEventListenerExtension.elevate_handler(event_handler);});}
 
 class AddEventListenerExtension {
 	static attach_to_api() {
-		inject_api.AddEventListenerExtension=this;
-		inject_api.addEventListenerExtension=new this;
+		export_(exports => {
+			exports.AddEventListenerExtension=this;
+			exports.addEventListenerExtension=new this;
+		});
 	}
 	/** @private */
 	original_prototype={
