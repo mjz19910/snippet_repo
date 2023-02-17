@@ -3072,7 +3072,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	convert_notification(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -3098,7 +3098,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	convert_live_chat(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -3115,7 +3115,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	convert_res_att(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -3132,7 +3132,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	convert_account(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -3154,7 +3154,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	convert_pdg(t,x) {
 		switch(t[1]) {
 			case "get_pdg_buy_flow": return {
@@ -3165,7 +3165,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	convert_music(t,x) {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
@@ -3176,7 +3176,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	convert_share(t,x) {
 		switch(t[1]) {
 			case "get_share_panel": return {
@@ -3187,7 +3187,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	convert_playlist(t,x) {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
@@ -3198,7 +3198,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	convert_subscription(t,x) {
 		switch(t[1]) {
 			case "subscribe": return {
@@ -3214,7 +3214,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	convert_browse(t,x) {
 		switch(t.length) {
 			case 2: switch(t[1]) {
