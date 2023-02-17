@@ -44,13 +44,6 @@ class TypedIndexedDb {
 	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
 	getAll(store) {return store.getAll();}
 }
-class TypedIDBKeyRangeS {
-	/** @template T @arg {T} key @returns {TypedIDBKeyRange<T>} */
-	static only(key) {
-		const key_range=IDBKeyRange.only(key);
-		return {type: "key_range",key_range,key};
-	}
-}
 class TypedIDBValidKeyS {
 	/** @template {IDBValidKey} T @arg {T} key @returns {TypedIDBValidKey<T>} */
 	static only(key) {
@@ -132,7 +125,9 @@ class IndexedDBService extends BaseService {
 		if(this.database_opening||this.database_open) return;
 		console.log("open db");
 		this.database_opening=true;
-		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
+		let db_req=indexedDB.open("yt_plugin",version);
+		db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
+		let db=await this.get_async_result(db_req);
 		this.database_opening=false;
 		this.database_open=true;
 		let typed_db=new TypedIndexedDb;
@@ -239,108 +234,8 @@ class IndexedDBService extends BaseService {
 		c_index.set(index_val,idx);
 		if(this.log_cache_push) console.log("push wait",key,index_val,idx,obj);
 	}
-	/** @arg {AG_DatabaseStoreDescription} store_desc @arg {number} version */
-	requestOpen(store_desc,version) {
-		if(this.database_opening||this.database_open) return;
-		this.database_opening=true;
-		this.open(store_desc,version);
-	}
-	/** @arg {AG_DatabaseStoreDescription} store_desc @arg {number} version */
-	open(store_desc,version) {
-		const request=indexedDB.open("yt_plugin",version);
-		this.onOpenRequest(request,store_desc);
-	}
-	/** @private @arg {IDBOpenDBRequest} request @arg {AG_DatabaseStoreDescription} store_desc */
-	onOpenRequest(request,store_desc) {
-		request.onsuccess=event => this.onSuccess(request,event,store_desc);
-		request.onerror=event => this.onError(event);
-		request.onupgradeneeded=event => this.onUpgradeNeeded(request,event);
-	}
 	log_all_events=false;
 	close_db_on_transaction_complete=false;
-	/** @private @arg {IDBOpenDBRequest} request @arg {Event} event @arg {AG_DatabaseStoreDescription} store_desc */
-	onSuccess(request,event,store_desc) {
-		if(this.log_all_events) console.log("OpenDBRequest success",event);
-		this.onDatabaseReady(request.result,store_desc);
-	}
-	/** @private @arg {IDBDatabase} db @arg {AG_DatabaseStoreDescription} store_desc */
-	onDatabaseReady(db,store_desc) {
-		this.database_opening=false;
-		this.database_open=true;
-		this.onDatabaseResult(db);
-		this.start_transaction(db,store_desc);
-	}
-	/** @private @arg {IDBDatabase} db */
-	onDatabaseResult(db) {
-		db.onerror=event => console.log("IDBDatabase: error",event);
-		db.onabort=event => console.log("IDBDatabase: abort",event);
-		db.onclose=event => {
-			console.log("IDBDatabase: close",event);
-			this.database_open=false;
-		};
-		db.onversionchange=event => this.onDatabaseVersionChange(db,event);
-	}
-	/** @private @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
-	onDatabaseVersionChange(db,event) {
-		this.database_open=false;
-		console.log("IDBDatabase: version_change",event);
-		db.close();
-	}
-	/** @private @arg {IDBDatabase} db @arg {AG_DatabaseStoreDescription} store_desc */
-	async start_transaction(db,store_desc) {
-		let typed_db=new TypedIndexedDb;
-		let {key: tx_namespace}=store_desc;
-		const transaction=db.transaction(tx_namespace,"readwrite");
-		transaction.onerror=event => console.log("IDBTransaction: error",event);
-		transaction.onabort=event => console.log("IDBTransaction: abort",event);
-		try {
-			let [,d_cache]=this.get_data_cache(tx_namespace);
-			const obj_store=typed_db.objectStore(transaction,tx_namespace);
-			for(let value of d_cache) {
-				if(this.committed_data.includes(value)) continue;
-				const index_val=value.key;
-				const cursor_req=typed_db.openCursor(obj_store,TypedIDBKeyRangeS.only(index_val));
-				for(let i=0;;i++) {
-					let cur_cursor=await this.get_async_result(cursor_req);
-					if(cur_cursor===null) {
-						if(i===0) {
-							await this.add_data_to_store(obj_store,value);
-							this.committed_data.push(value);
-						}
-						if(i===0||i===1) break;
-						console.log("cursor_done after %o",i);
-						break;
-					}
-					const cursor_value=cur_cursor.value;
-					if(cursor_value.key!==index_val) {
-						console.log(cursor_value.key.split(":"));
-						console.log(index_val.split(":"));
-						debugger;
-					}
-					let value_keys=this.get_keys_of_2(value);
-					let cursor_keys=this.get_keys_of_2(cursor_value);
-					if(!this.eq_keys(value_keys,cursor_keys)) {
-						console.log("[database_needs_obj_merge]");
-						console.log("[obj_merge_new]",value);
-						console.log("[obj_merge_cur]",cursor_value);
-						await this.get_async_result(obj_store.delete(value.key));
-						await this.add_data_to_store(obj_store,value);
-						this.committed_data.push(value);
-					} else {
-						this.committed_data.push(value);
-					}
-					try {
-						cur_cursor.continue();
-					} catch(e) {
-						debugger;
-					}
-				}
-			}
-		} catch(e) {
-			console.log("db transaction failed",e);
-			throw e;
-		}
-	}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
 		if(!obj) {debugger;}
@@ -348,12 +243,6 @@ class IndexedDBService extends BaseService {
 		/** @private @type {any} */
 		let ra=rq;
 		return ra;
-	}
-	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
-	async add_data_to_store(store,data) {
-		let success=await this.await_success(store.add(data));
-		if(this.log_all_events) console.log("IDBRequest: success",success);
-		this.committed_data.push(data);
 	}
 	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	async update(store,data) {
@@ -399,8 +288,6 @@ class IndexedDBService extends BaseService {
 		if(!tx) throw new Error("No transaction");
 		this.x.get("handle_types").indexed_db_createDatabaseSchema(this,event.oldVersion,db);
 	}
-	/** @private @arg {Event} event */
-	onError(event) {console.log("idb error",event);}
 	database_diff_keys=new Set;
 	/** @template T @arg {IDBRequest<T>} req @returns {Promise<["success",T]|["error",Event,DOMException]>} */
 	async get_async_result_impl(req) {
