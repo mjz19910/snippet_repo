@@ -293,7 +293,6 @@ class IndexedDBService extends BaseService {
 		const transaction=db.transaction(tx_namespace,"readwrite");
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
-		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
 		try {
 			let [,d_cache]=this.get_data_cache(tx_namespace);
 			const obj_store=typed_db.objectStore(transaction,tx_namespace);
@@ -327,7 +326,6 @@ class IndexedDBService extends BaseService {
 						await this.get_async_result(obj_store.delete(value.key));
 						await this.add_data_to_store(obj_store,value);
 						this.committed_data.push(value);
-						debugger;
 					} else {
 						this.committed_data.push(value);
 					}
@@ -350,19 +348,6 @@ class IndexedDBService extends BaseService {
 		/** @private @type {any} */
 		let ra=rq;
 		return ra;
-	}
-	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {AG_DatabaseStoreDescription} store_desc */
-	onTransactionComplete(db,event,store_desc) {
-		const key=store_desc.key;
-		const [,d_cache]=this.get_data_cache(key);
-		if(this.log_all_events) console.log("IDBTransaction: complete",event);
-		this.cached_data.set(key,[]);
-		this.committed_data.length=0;
-		d_cache.length=0;
-		let index=this.get_data_index_cache(key);
-		index.clear();
-		this.database_open=false;
-		db.close();
 	}
 	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	async add_data_to_store(store,data) {
