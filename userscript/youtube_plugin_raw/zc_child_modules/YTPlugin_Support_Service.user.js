@@ -1675,7 +1675,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			this.load_database();
 		});
 	}
-	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
+	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k @returns {[A,B]} */
 	split_box_type(k) {
 		/** @returns {`${A}:${B}`|null} */
 		function gn() {return null;}
