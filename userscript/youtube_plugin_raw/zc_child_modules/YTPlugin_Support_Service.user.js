@@ -1126,7 +1126,11 @@ class Support_GenericApi extends ServiceMethods {
 }
 class Support_EventInput extends ServiceMethods {
 	/** @private @arg {E_Settings} x */
-	E_Settings(x) {x; debugger;}
+	E_Settings(x) {
+		const cf="E_Settings";
+		const {_tag,...y}=this.s(cf,x); this.g(y);
+		if(_tag!=="E_Settings") debugger;
+	}
 	/** @private @arg {R_PageTypeBrowse["endpoint"]} x */
 	R_Page_DefaultEndpoint(x) {
 		const cf="R_Page_DefaultEndpoint"; this.k(cf,x);
