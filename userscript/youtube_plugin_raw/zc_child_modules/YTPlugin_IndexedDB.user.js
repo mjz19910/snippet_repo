@@ -24,8 +24,14 @@ function h_detect_firefox() {
 }
 const is_firefox=h_detect_firefox(); is_firefox;
 class TypedIndexedDb {
-	/** @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes["video_id"]>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes["video_id"]>|null>} */
+	/** @template {keyof DT_DatabaseStoreTypes} K @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes[K]>} obj_store @arg {TypedIDBValidKey<K>|TypedIDBKeyRange<K>} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes[K]>|null>} */
 	openCursor(obj_store,query,direction) {
+		if(query) {
+			if(query.type==="key") {
+				return obj_store.openCursor(query.valid_key,direction);
+			}
+			return obj_store.openCursor(query.key_range,direction);
+		}
 		return obj_store.openCursor(query,direction);
 	}
 	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
@@ -115,6 +121,7 @@ class IndexedDBService extends BaseService {
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
 		const tx=this.transaction(db,key,"readwrite");
 		const obj_store=typed_db.objectStore(tx,key);
+		const cursor_req=typed_db.openCursor(obj_store,IDBKeyRange.only(key));
 		await this.add_data_to_store(obj_store,value);
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
