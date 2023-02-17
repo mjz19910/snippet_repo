@@ -411,22 +411,6 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
-	GM_VE37414(x) {
-		const cf="GM_VE37414_WC";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		x: {
-			if(url==="/shorts/") break x;
-			let up=split_string_once(url,"/");
-			let [p1,p2]=up; if(p1!=="") debugger;
-			let u2=split_string_once(p2,"/");
-			let [p3,p4]=u2; if(p3!=="shorts") debugger;
-			this.videoId(p4);
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
-		if(rootVe!==37414) debugger;
-		return `VE${rootVe}`;
-	}
 	/** @private @arg {GM_VE42352} x @returns {`VE${rootVe}`} */
 	GM_VE42352(x) {
 		const cf="GM_VE42352_WC";
@@ -1533,8 +1517,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
-	/** @protected @arg {E_ReelWatch} x */
-	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @protected @arg {E_VE83769_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
 	/** @protected @arg {B_Hack} x */
@@ -2096,8 +2078,6 @@ class ServiceMethods extends ServiceData {
 	M_VE11487(x) {this.T_WCM("M_VE83769",x,this.GM_VE11487);}
 	/** @private @arg {M_VE23462} x */
 	M_VE23462(x) {this.T_WCM("M_VE83769",x,this.GM_VE23462);}
-	/** @private @arg {M_VE37414} x */
-	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @private @arg {M_VE42352} x */
 	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
 	/** @private @arg {M_VE83769} x */

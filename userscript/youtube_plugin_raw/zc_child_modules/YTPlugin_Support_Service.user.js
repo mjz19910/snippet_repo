@@ -1970,7 +1970,28 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return this.save_to_store_2(k,k,x,store);
 	}
 }
-class Support_VE37414 {}
+class Support_VE37414 extends ServiceMethods {
+	/** @protected @arg {E_ReelWatch} x */
+	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
+	/** @public @arg {M_VE37414} x */
+	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
+	/** @public @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
+	GM_VE37414(x) {
+		const cf="GM_VE37414_WC";
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			if(url==="/shorts/") break x;
+			let up=split_string_once(url,"/");
+			let [p1,p2]=up; if(p1!=="") debugger;
+			let u2=split_string_once(p2,"/");
+			let [p3,p4]=u2; if(p3!=="shorts") debugger;
+			this.videoId(p4);
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
+		if(rootVe!==37414) debugger;
+		return `VE${rootVe}`;
+	}
+}
 export_(exports => {
 	exports.TypedefGenerator=TypedefGenerator;
 	exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;
@@ -1983,4 +2004,5 @@ export_(exports => {
 	exports.Support_RS_Browse=Support_RS_Browse;
 	exports.Support_GenericApi=Support_GenericApi;
 	exports.Support_EventInput=Support_EventInput;
+	exports.Support_VE37414=Support_VE37414;
 });
