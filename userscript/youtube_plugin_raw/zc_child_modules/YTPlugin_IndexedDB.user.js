@@ -180,6 +180,8 @@ class IndexedDBService extends BaseService {
 								console.log("update sync cache item",item);
 								await this.update(obj_store,item);
 							} break cursor_loop;
+							// not a dynamic value
+							case "playlist_id:self": break;
 						};
 					}
 					try {
