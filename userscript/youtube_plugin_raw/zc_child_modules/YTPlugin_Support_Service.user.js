@@ -1971,6 +1971,39 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 }
 class Support_VE37414 extends ServiceMethods {
+	/** @private @arg {DE_ReelWatch} x */
+	DE_VE37414_ReelWatch(x) {
+		const cf="DE_ReelWatch";
+		if("videoId" in x) {
+			const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(videoId,this.videoId);
+			this.params("reel.player_params",playerParams);
+			this.t(thumbnail,this.D_Thumbnail);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params("reel.params",params);
+			if(loggingContext) {
+				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
+			}
+			this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
+			this.t(sequenceParams,x => this.params("reel.sequence_params",x));
+			return;
+		}
+		if("inputType" in x) {
+			const {playerParams,overlay,params,sequenceProvider,inputType,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.params("reel.player_params",playerParams);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params("reel.params",params);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
+			if(loggingContext) {
+				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
+			}
+			return;
+		}
+		this.g(x);
+	}
 	/** @protected @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @public @arg {M_VE37414} x */
