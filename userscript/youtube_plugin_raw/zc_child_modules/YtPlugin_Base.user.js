@@ -3422,14 +3422,23 @@ class ModifyEnv extends BaseService {
 //#region YtPlugin
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class YtPlugin extends BaseService {
+	static init_once=false;
+	/** @arg {YtPlugin} instance */
+	static do_init(instance) {
+		if(this.init_once) return;
+		this.init_once=true;
+		export_(exports => {
+			exports.modules=new Map;
+			exports.modules.set("yt",instance);
+		});
+	}
 	get indexed_db() {return this.x.get("indexed_db");}
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
 	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
-		inject_api.modules??=new Map;
-		inject_api.modules.set("yt",this);
+		YtPlugin.do_init(this);
 	}
 	/** @api @public @template {{name:string}} T @arg {T} function_obj */
 	add_function(function_obj) {
@@ -3539,16 +3548,5 @@ export_(exports => {exports.base64_url_dec=base64_url_dec;});
 export_(exports => {exports.is_firefox=is_firefox;});
 //#endregion
 //#region global exports
-export_((exports) => {
-	exports.__youtube_plugin_base_loaded__=true;
-	/** @returns {Exclude<window["inject_api"],undefined>} */
-	function fake_inject_api() {
-		/** @type {Exclude<window["inject_api"],undefined>} */
-		let res=as({});
-		return res;
-	}
-	/** @private @type {Exclude<window["inject_api"],undefined>} */
-	let inject_api=window.inject_api??fake_inject_api();
-	window.inject_api=inject_api;
-},{global: true});
+export_((exports) => {exports.__youtube_plugin_base_loaded__=true;},{global: true});
 //#endregion

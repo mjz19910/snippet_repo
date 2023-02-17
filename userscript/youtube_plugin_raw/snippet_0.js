@@ -1,5 +1,3 @@
-import {Base64Binary} from "./support_1/Base64Binary";
-const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=",/[^A-Za-z0-9\-\_\=]/g);
 export function con_snippet_1() {
 	let x={};
 	/** @arg {{}} o */
@@ -20,8 +18,6 @@ export function con_snippet_1() {
 	let u=nx(x);
 	console.log(u);
 }
-const decoder=new TextDecoder();
-const base64_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",/[^A-Za-z0-9\+\/\=]/g);
 export let no_storage_access=false;
 try {
 	localStorage.setItem("test","test_value");
@@ -64,41 +60,6 @@ export class Snippet_0_tmp {
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
 	primitive_of(x,y) {if(typeof x!==y) debugger;}
-	/** @private @arg {string} x */
-	decode_url_b64(x) {
-		x=x.replaceAll("_","/").replaceAll("-","+");
-		return base64_dec.decodeByteArray(x);
-	}
-	/** @public @arg {string} x */
-	parse_endpoint_params(x) {
-		let arr=this.decode_url_b64(x);
-		if(!arr) return;
-		let reader=new MyReader(arr);
-		let res=reader.try_read_any();
-		if(!res) return;
-		const [f0]=res;
-		if(f0[0]!=="child") {
-			console.log(f0);
-			return;
-		}
-		console.log(...res);
-		let [,field_id,data]=f0;
-		reader.pos=data.byteOffset;
-		let more=reader.try_read_any(data.byteLength);
-		if(more&&!more.find(e => e[0]==="error")) {
-			const [f0]=more;
-			console.log(
-				"parsed_endpoint_param field_id=%o result(%o)={message}",
-				field_id,data.length
-			);
-			console.log("{message}",f0);
-		} else {
-			console.log(
-				"parsed_endpoint_param field_id=%o result(%o)=\"%s\"",
-				field_id,data.length,decoder.decode(data)
-			);
-		}
-	}
 	split_string_once=split_string_once;
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
@@ -176,28 +137,6 @@ export class Snippet_0_tmp {
 		rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
 		console.log(rn);
 	}
-	/** @arg {MyReader} reader @arg {D_ProtobufObj[]} results */
-	unpack_children_reader_result(reader,results) {
-		/** @type {D_ProtobufObj[]} */
-		let out=[];
-		for(let item of results) {
-			switch(item[0]) {
-				case "child": {
-					let buffer=item[2];
-					reader.pos=buffer.byteOffset;
-					let res=reader.try_read_any(buffer.byteLength);
-					if(!res) {out.push(item); break;}
-					let unpack=this.unpack_children_reader_result(reader,res);
-					if(!unpack) {out.push(item); break;}
-					out.push(["struct",item[1],unpack]);
-				} break;
-				case "info": break;
-				default: out.push(item); break;
-				case "error": return null;
-			}
-		}
-		return out;
-	}
 	/** @public @template {number} T  @arg {T} a @arg {T} b */
 	float_cmp(a,b) {
 		let epsilon=0.0000001;
@@ -224,14 +163,6 @@ export class Snippet_0_tmp {
 	}
 	/** @public @template {{}} T @arg {{commands:T[]}} x @arg {(x:T)=>void} f */
 	CommandsTemplate(x,f) {this.z(x.commands,f);}
-	/** @public @arg {string} x */
-	decode_url_b64_proto_obj(x) {
-		x=x.replaceAll("_","/").replaceAll("-","+");
-		let ba=base64_dec.decodeByteArray(x);
-		if(!ba) return null;
-		let reader=new MyReader(ba);
-		return reader.try_read_any();
-	}
 	/** @public @template T @arg {T|undefined} val @returns {T} */
 	non_null(val) {
 		if(val===void 0) throw new Error();
@@ -381,13 +312,6 @@ class ND extends Snippet_0_tmp {
 	}
 	/** @template {{}} T @arg {T} x */
 	sd(x) {return x;}
-	/** @api @public @arg {string} str */
-	_decode_b64_url_proto_obj(str) {
-		let buffer=base64_url_dec.decodeByteArray(str);
-		if(!buffer) return null;
-		let reader=new MyReader(buffer);
-		return reader.try_read_any();
-	}
 	/** @protected @template {string} T @arg {T_StyleType<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {
 		const {styleType,...y}=x; this.g(y); // ! #destructure
