@@ -61,6 +61,11 @@ type RB_ClickTrackingObj_t1={
 	2: T_D32<119921>;
 	4: T_VW_2<V_BinaryTimestamp>;
 }|{
+	1: T_D32<411>,
+	2: T_D32<5531>,
+	4: T_VW_2<V_BinaryTimestamp>,
+	6: T_VSR<"watch">;
+}|{
 	1: T_D32<370>;
 	2: T_D32<21965>;
 	3: T_D32<1>;
