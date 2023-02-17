@@ -1716,9 +1716,16 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	async export_db_data(ss,boxed) {
 		if(ss.data.length>0) {
 			for(let sd of ss.data) {
-				let [key,arr]=sd;
+				const [key,arr]=sd;
+				/** @type {`boxed_id:str:${string}`} */
+				const find_key=`boxed_id:str:${key}`;
+				const box=boxed.find(v=>v.key===find_key);
+				if(box) {
+					debugger;
+					return;
+				}
 				this.indexed_db.put("boxed_id",{
-					key: `boxed_id:str:${key}`,
+					key: find_key,
 					type: "str",
 					id: ["many_str",arr],
 				},3);
@@ -1736,7 +1743,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				debugger;
 			}
 			let ss=store.get_string_store();
-			this.export_db_data(ss);
+			this.export_db_data(ss,boxed);
 		} else {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
@@ -1808,7 +1815,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 				}
 			}
-			this.export_db_data(ss);
+			this.export_db_data(ss,boxed);
 		}
 	}
 	expected_id=0;
