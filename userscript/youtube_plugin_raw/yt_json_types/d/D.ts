@@ -2119,10 +2119,10 @@ type D_Microformat={
 	linkAlternates: B_HrefUrl[];
 };
 type D_MicroformatEmbed={
-	width: number;
-	height: number;
 	iframeUrl: `https://www.youtube.com/embed/${string}`;
 	flashUrl: `http://www.youtube.com/v/${string}?version=3&autohide=1`;
+	width: number;
+	height: number;
 	flashSecureUrl: `https://www.youtube.com/v/${string}?version=3&autohide=1`;
 };
 type D_ModifiedSetItem={
