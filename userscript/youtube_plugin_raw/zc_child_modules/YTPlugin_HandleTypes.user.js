@@ -1947,11 +1947,6 @@ class HandleTypes extends ServiceMethods {
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
 		}
-		// {
-		// 	let x=mt;
-		// 	let x1=this.parse_number_template(x);
-		// 	this.a_primitive_num(x1);
-		// }
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
@@ -2011,7 +2006,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
-		const {gcr,...y}=y3; y;
+		const {gcr,xtags,ctier,mt,...y}=y3; y;
+		{
+			let x=mt;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}
 	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
