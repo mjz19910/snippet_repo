@@ -175,9 +175,10 @@ class IndexedDBService extends BaseService {
 			}
 		} catch(e) {
 			console.log("db error",e);
+		} finally {
+			this.database_open=false;
+			console.log("close db");
 		}
-		this.database_open=false;
-		console.log("close db");
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
