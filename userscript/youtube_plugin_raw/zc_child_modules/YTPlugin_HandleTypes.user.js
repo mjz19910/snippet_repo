@@ -2211,6 +2211,14 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
+		if(3 in x) {
+			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],9: f9,...y}=this.s(cf,x);
+			this.save_number(`${cf}.w3.f1`,f1);
+			this.save_number(`${cf}.w3.f3`,f3);
+			this.a_primitive_num(f2);
+			this.V_BinaryTimestamp(f4);
+			return;
+		}
 		x;
 		debugger;
 	}
