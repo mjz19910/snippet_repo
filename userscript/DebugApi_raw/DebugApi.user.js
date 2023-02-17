@@ -57,12 +57,6 @@ export_(exports => {exports.DebugApiH_o=DebugApiH_o;});
 // Use module types
 /** @type {import("./__global.js")} */
 // #endregion
-// #region InjectApi
-/** @readonly */
-const InjectApiStr="inject_api";
-/** @type {{_tag:null}} */
-let inject_api={_tag:null};
-// #endregion InjectApi
 // #region saved
 /** @type {[string,{name:string}][]} */
 const saved_function_objects=[];

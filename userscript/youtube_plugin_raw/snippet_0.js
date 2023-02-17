@@ -1,5 +1,4 @@
 import {Base64Binary} from "./support_1/Base64Binary";
-import {MyReader} from "./support_2/MyReader";
 const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=",/[^A-Za-z0-9\-\_\=]/g);
 export function con_snippet_1() {
 	let x={};
