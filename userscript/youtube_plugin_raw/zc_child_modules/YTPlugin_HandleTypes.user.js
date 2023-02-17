@@ -1873,10 +1873,6 @@ class HandleTypes extends ServiceMethods {
 		if(x instanceof Uint8Array) x=[...x];
 		return super.save_number(k,x,force_update);
 	}
-	/** @private @arg {string} x */
-	D_VideoPlayback_ns(x) {
-		this.save_b64_binary("video_playback.buf.ns",x);
-	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
 	get_gv_parts(x) {
 		let ss=split_string(x,"-")[1];
@@ -1935,7 +1931,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.vprv`,vprv);
 		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
 		this.save_string(`${cf1}.mime`,mime);
-		this.D_VideoPlayback_ns(ns);
+		console.log(`${cf1}.ns`,ns);
 		if(gir) this.save_string(`${cf1}.gir`,gir);
 		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.t(clen,x => {
@@ -1956,7 +1952,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.fexp`,fexp);
 		this.save_string(`${cf1}.c`,c);
 		this.save_string(`${cf1}.txp`,txp);
-		this.save_b64_binary("video_playback.api_url.n",n);
+		console.log(`${cf1}.n`,n);
 		this.save_string(`${cf1}.sparams`,sparams);
 		this.save_string(`${cf1}.lsparams`,lsparams);
 		this.save_b64_binary(`${cf2}.lsig`,lsig);

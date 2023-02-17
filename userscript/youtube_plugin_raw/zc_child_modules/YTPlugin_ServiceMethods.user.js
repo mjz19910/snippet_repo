@@ -3750,7 +3750,14 @@ class ServiceMethods extends ServiceData {
 		return super.save_number(k,x,force_update);
 	}
 	/** @protected @arg {string} cf @arg {string} x */
-	save_b64_binary(cf,x) {this.t(base64_url_dec.decodeByteArray(x),x => this.save_number(`${cf}.bytes.0`,x[0]));}
+	save_b64_binary(cf,x) {
+		this.t(base64_url_dec.decodeByteArray(x),x => {
+			if(x[0]===0) {
+				this.save_number(`${cf}.bytes.1`,x[1]);
+			}
+			this.save_number(`${cf}.bytes.0`,x[0]);
+		});
+	}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {this.save_b64_binary("undo_token",x);}
 	/** @private @arg {M_Feedback} x */
