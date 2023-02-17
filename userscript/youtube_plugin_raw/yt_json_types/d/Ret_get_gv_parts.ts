@@ -10,8 +10,11 @@ type G_Gv_0=
 	|"p5qs7"
 	;
 ;
+type PT_TypeArr=[
+
+];
 type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`;
 type D_GoogleVideoHostPartition={
-	partition:G_Gv_0,
-	selector:G_Gv_1,
+	partition: G_Gv_0,
+	selector: G_Gv_1,
 };
