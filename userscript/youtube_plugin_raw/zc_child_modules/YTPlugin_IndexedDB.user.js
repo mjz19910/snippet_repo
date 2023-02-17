@@ -146,9 +146,7 @@ class IndexedDBService extends BaseService {
 				cursor_loop: for(let i=0;;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
-						debugger;
-						this.committed_data.push(item);
-						await this.add_data_to_store(obj_store,item);
+						await this.update(obj_store,item);
 						break cursor_loop;
 					}
 					const cursor_value=cur_cursor.value;
@@ -347,6 +345,12 @@ class IndexedDBService extends BaseService {
 	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	async add_data_to_store(store,data) {
 		let success=await this.await_success(store.add(data));
+		if(this.log_all_events) console.log("IDBRequest: success",success);
+		this.committed_data.push(data);
+	}
+	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
+	async update(store,data) {
+		let success=await this.await_success(store.put(data));
 		if(this.log_all_events) console.log("IDBRequest: success",success);
 		this.committed_data.push(data);
 	}
