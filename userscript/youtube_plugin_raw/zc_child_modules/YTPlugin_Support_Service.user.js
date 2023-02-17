@@ -1712,27 +1712,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
-	expected_id=0;
-	async load_database() {
-		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
-		if(!update_id) {
-			this.indexed_db.put("boxed_id",{
-				key: "boxed_id:update_id",
-				type: "update_id",
-				id: 1,
-			},3);
-			this.expected_id=1;
-		} else {
-			if(update_id.id!==this.expected_id) {
-				debugger;
-			}
-			this.expected_id++;
-			this.indexed_db.put("boxed_id",{
-				key: "boxed_id:update_id",
-				type: "update_id",
-				id: this.expected_id,
-			},3);
-		}
+	async do_boxed_update_from_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
 		console.log("load_database all boxed",boxed);
 		if(boxed.length===0) {
@@ -1834,6 +1814,34 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					},3);
 				}
 			}
+		}
+	}
+	expected_id=0;
+	async load_database() {
+		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		if(!update_id) {
+			this.indexed_db.put("boxed_id",{
+				key: "boxed_id:update_id",
+				type: "update_id",
+				id: 1,
+			},3);
+			this.expected_id=1;
+		} else {
+			if(update_id.id!==this.expected_id) {
+				await this.do_boxed_update_from_database();
+				this.indexed_db.put("boxed_id",{
+					key: "boxed_id:update_id",
+					type: "update_id",
+					id: this.expected_id,
+				},3);
+				return;
+			}
+			this.expected_id++;
+			this.indexed_db.put("boxed_id",{
+				key: "boxed_id:update_id",
+				type: "update_id",
+				id: this.expected_id,
+			},3);
 		}
 	}
 	#get_string_store() {return this.#data_store.get_string_store();}
