@@ -5,7 +5,7 @@ type D_UrlFormat=
 	|"android-app://com.google.android.youtube/http/youtube.com/premium"
 	|`/@${string}`
 	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
-	|`/${D_ApiPathFormat_1}`
+	|D_ApiPathFormat_1
 	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/api/stats/ads?${string}`
 	|`/channel/UC${string}`
