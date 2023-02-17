@@ -593,15 +593,21 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {D_Card} x */
 	D_Card(x) {
 		const cf="D_Card";
-		const {teaser,cueRanges,trackingParams,...y}=this.s(cf,x); this.g(y);
+		const {teaser,content,cueRanges,icon,trackingParams,cardId,feature,...y}=this.s(cf,x); this.g(y);
 		this.R_SimpleCardTeaser(teaser);
+		this.t(content,this.R_CollaboratorInfoCardContent);
 		this.z(cueRanges,this.D_CueRangeItem);
 		this.trackingParams(trackingParams);
+		this.t(cardId,this.a_primitive_str);
+		this.t(feature,x => {
+			if(x!=="cards") debugger;
+		});
 	}
+	R_CollaboratorInfoCardContent(x) {this.H_("R_SimpleCardTeaser","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
 	/** @private @arg {D_TrackingParams} x */
 	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
 	/** @private @arg {R_SimpleCardTeaser} x */
-	R_SimpleCardTeaser(x) {this.H_("R_Card","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	R_SimpleCardTeaser(x) {this.H_("R_SimpleCardTeaser","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
 	/** @private @arg {D_CueRangeItem} x */
 	D_CueRangeItem(x) {
 		const cf="D_CueRangeItem";

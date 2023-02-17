@@ -1,0 +1,1 @@
+type R_CollaboratorInfoCardContent={collaboratorInfoCardContentRenderer: D_CollaboratorInfoCardContent;};
