@@ -100,8 +100,18 @@ class IndexedDBService extends BaseService {
 		this.is_broken=true;
 	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @arg {number} version */
-	put(key,value,version) {
+	async put(key,value,version) {
 		if(!value) {debugger; return;}
+		let typed_db=new TypedIndexedDb;
+		if(this.database_opening||this.database_open) {
+			debugger;
+			return;
+		}
+		this.database_opening=true;
+		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
+		const tx=this.transaction(db,key,"readonly");
+		const obj_store=typed_db.objectStore(tx,key);
+		typed_db.put;
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
 		if(cache?.includes(cache_key)) return;
@@ -208,9 +218,7 @@ class IndexedDBService extends BaseService {
 				const index_val=value.key;
 				const cursor_req=typed_db.openCursor(obj_store,IDBKeyRange.only(index_val));
 				for(let i=0;;i++) {
-					let cursor_res=await this.await_success(cursor_req);
-					cursor_res;
-					const cur_cursor=cursor_req.result;
+					let cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
 						if(i===0) {
 							this.committed_data.push(value);

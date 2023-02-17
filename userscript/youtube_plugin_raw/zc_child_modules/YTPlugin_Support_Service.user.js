@@ -1713,6 +1713,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return this.exact_arr(za,zb);
 	}
 	async load_database() {
+		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		if(!update_id) {
+			this.indexed_db.put("boxed_id",{
+				key: "boxed_id:update_id",
+				type: "update_id",
+				id: 1,
+			},3);
+		}
 		let boxed=await this.indexed_db.getAll("boxed_id");
 		console.log("load_database all boxed",boxed);
 		if(boxed.length===0) {

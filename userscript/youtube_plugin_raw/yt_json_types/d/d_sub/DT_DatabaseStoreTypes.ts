@@ -13,7 +13,11 @@ type DT_DatabaseStoreTypes={
 		key: `hashtag_id:${string}`;
 		hashtag: string;
 	};
-	boxed_id: GenBoxedIdObj;
+	boxed_id: GenBoxedIdObj|{
+		key: "boxed_id:update_id";
+		type: "update_id";
+		id: number;
+	};
 	channel_id: {
 		key: `channel_id:UC:${string}`;
 		type: "channel_id:UC";
