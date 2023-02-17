@@ -30,6 +30,13 @@ class TypedIndexedDb {
 	openCursor(obj_store,query,direction) {
 		return obj_store.openCursor(query,direction);
 	}
+	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
+	objectStore(tx,key) {
+		let rq=tx.objectStore(key);
+		return as(rq);
+	}
+	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} key @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T|null>} */
+	get(store,key) {return store.get(key);}
 }
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class IndexedDBService extends BaseService {
@@ -102,12 +109,14 @@ class IndexedDBService extends BaseService {
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
 	}
-	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {string} store_key */
+	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
+		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
 		const tx=this.transaction(db,key,"readonly");
-		const obj_store=this.objectStore(tx,key);
-		obj_store.get(store_key);
+		const obj_store=typed_db.objectStore(tx,key);
+		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
+		return result;
 	}
 	log_cache_push=false;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @arg {DT_DatabaseStoreTypes[T]} obj */
@@ -184,7 +193,7 @@ class IndexedDBService extends BaseService {
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
 		try {
 			let [,d_cache]=this.get_data_cache(tx_namespace);
-			const obj_store=this.objectStore(transaction,tx_namespace);
+			const obj_store=typed_db.objectStore(transaction,tx_namespace);
 			for(let value of d_cache) {
 				if(this.committed_data.includes(value)) continue;
 				const index_val=value.key;
@@ -264,11 +273,6 @@ class IndexedDBService extends BaseService {
 			request.onerror=reject;
 		});
 	}
-	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
-	objectStore(tx,key) {
-		let rq=tx.objectStore(key);
-		return as(rq);
-	}
 	/**
 	 * @template {keyof DT_DatabaseStoreTypes} K
 	 * @template {DT_DatabaseStoreTypes[K]} T
@@ -277,7 +281,8 @@ class IndexedDBService extends BaseService {
 	 * @arg {IDBDatabase} db
 	 */
 	async transfer_store(tx,key,db) {
-		const src_obj_store=this.objectStore(tx,key);
+		let typed_db=new TypedIndexedDb;
+		const src_obj_store=typed_db.objectStore(tx,key);
 		/** @private @type {IDBRequest<T[]>} */
 		let get_all_video_id_req=src_obj_store.getAll();
 		await this.await_success(get_all_video_id_req);
@@ -341,10 +346,11 @@ class IndexedDBService extends BaseService {
 	transaction(db,storeNames,mode) {return db.transaction(storeNames,mode);}
 	/** @arg {number} version */
 	async database_diff(version) {
+		let typed_db=new TypedIndexedDb;
 		let ret={};
 		ret.db=await this.get_async_result(indexedDB.open("yt_plugin",version));
 		let tx=this.transaction(ret.db,"video_id","readonly");
-		ret.store=this.objectStore(tx,"video_id");
+		ret.store=typed_db.objectStore(tx,"video_id");
 		ret.store_data=await this.get_async_result(this.getAll(ret.store));
 		ret.store_diff=this.get_diff_by_key(this.database_diff_keys,ret.store_data);
 		return ret;
