@@ -140,7 +140,7 @@ class IndexedDBService extends BaseService {
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {
-			for(let item of d_cache) {
+			for_loop: for(let item of d_cache) {
 				let cursor_req=typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key));
 				cursor_loop: for(let i=0;;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
@@ -165,8 +165,16 @@ class IndexedDBService extends BaseService {
 					} else {
 						switch(item.type) {
 							default: debugger; break;
+							case "video_id:normal": {
+								if(cursor_value.type!==item.type) {
+									debugger;
+									continue for_loop;
+								}
+								if(item.v===cursor_value.v) {
+									this.committed_data.push(item);
+								};
+							} break;
 						};
-						this.committed_data.push(item);
 					}
 					try {
 						cur_cursor.continue();
