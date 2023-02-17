@@ -17,9 +17,9 @@ type PT_DigDomain=[
 	"rr1.sn-n8v7znsd.googlevideo.com.",
 ];
 type PT_TypeS=[
-	["gen",["raw","9gv7l"]],
-	["gen",["raw","a5mek"]],
-	["gen",["raw","hp57k"]],
+	["gen",null,["raw","9gv7l"]],
+	["gen",null,["raw","a5mek"]],
+	["gen",null,["raw","hp57k"]],
 	["gen","n",["arr",[
 		["gen","4",["gen2","v7","s"]],
 		["gen","8",["gen2","v7","z"]],
