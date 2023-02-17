@@ -249,11 +249,11 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBRequest: success",success);
 		this.committed_data.push(data);
 	}
-	/** @template T @arg {IDBRequest<T>} db_request @returns {Promise<Event>} */
-	await_success(db_request) {
+	/** @template T @arg {IDBRequest<T>} request @returns {Promise<Event>} */
+	await_success(request) {
 		return new Promise(function(accept,reject) {
-			db_request.onsuccess=function(event) {accept(event);};
-			db_request.onerror=function(event) {reject(event);};
+			request.onsuccess=accept;
+			request.onerror=reject;
 		});
 	}
 	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
@@ -293,6 +293,36 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @arg {Event} event */
 	onError(event) {console.log("idb error",event);}
+	database_diff_keys=new Set;
+	async database_diff() {
+		{
+			let idb=this;
+			let open_req=indexedDB.open("yt_plugin",3);
+			try {
+				await idb.await_success(open_req);
+				let open_db=open_req.result;
+				let tx=open_db.transaction("video_id","readonly");
+				let store=idb.objectStore(tx,"video_id");
+				let all_req=store.getAll();
+				await idb.await_success(all_req);
+				let store_data=all_req.result;
+				let store_diff=[];
+				for(let item of store_data) {
+					if(this.database_diff_keys.has(item.key)) continue;
+					this.database_diff_keys.add(item.key);
+					store_diff.push(item);
+				}
+				return {
+					db: open_db,
+					store,
+					store_data,
+					store_diff,
+				};
+			} catch(event) {
+				throw open_req.error;
+			}
+		}
+	}
 }
 export_(exports => {
 	exports.__module_loaded__=true;
