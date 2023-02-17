@@ -1719,8 +1719,26 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				const [key,arr]=sd;
 				/** @type {`boxed_id:str:${string}`} */
 				const find_key=`boxed_id:str:${key}`;
-				const box=boxed.find(v=>v.key===find_key);
+				/** @arg {G_BoxedIdObj} v @returns {v is {key: typeof find_key}} */
+				let fk=v => v.key===find_key;
+				const box=boxed.find(v => v.key===find_key);
 				if(box) {
+					if(!fk(box)) continue;
+					switch(arr[0]) {
+						case "many": {
+							let from_db=box.id[1];
+							if(from_db[0]!=="many") continue;
+							for(let src_item of arr[1]) {
+								let has=from_db[1].find(v => this.eq_keys(v,src_item));
+								if(has===null) {
+									debugger;
+								}
+							}
+						} break;
+						case "one": {
+							debugger;
+						} break;
+					}
 					debugger;
 					return;
 				}
