@@ -1782,6 +1782,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 								} break;
 								case "one": {
 									if(from_db.length!==1) {debugger; continue;}
+									if(fd[1][1].includes(from_db[0])) continue;
 									fd[1][1].push(from_db[0]);
 								}
 							}
