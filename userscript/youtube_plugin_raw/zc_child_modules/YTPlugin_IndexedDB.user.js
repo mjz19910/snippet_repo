@@ -130,6 +130,7 @@ class IndexedDBService extends BaseService {
 			this.check_size(key);
 		}
 		if(this.database_opening||this.database_open) return;
+		console.log("open db");
 		this.database_opening=true;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
 		db.onclose=() => {
@@ -165,20 +166,6 @@ class IndexedDBService extends BaseService {
 				this.committed_data.push(item);
 			}
 		}
-		debugger;
-		tx.commit();
-		db.close();
-		await Promise.all([new Promise(a => {
-			tx.oncomplete=() => {
-				console.log("tx oncomplete");
-				a(void 0);
-			};
-		}),new Promise(a => {
-			db.onclose=() => {
-				console.log("db onclose");
-				a(void 0);
-			};
-		})]);
 		this.database_open=false;
 		console.log("close db");
 	}
