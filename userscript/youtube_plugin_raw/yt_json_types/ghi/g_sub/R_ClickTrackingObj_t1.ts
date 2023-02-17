@@ -1,6 +1,9 @@
 type RB_Obj_f19={
 	1: T_D32<16>;
 	2: T_D32<3832>;
+}|{
+	2: T_D32<3854>;
+	3: T_D32<158>;
 };
 
 type R_ClickTrackingObj_t1_v0_v13187={
@@ -30,6 +33,11 @@ type RB_ClickTrackingObj_t1={
 	1: T_D32<501>;
 	2: T_D32<79431>;
 	3: T_D32<2>;
+	4: T_VW_2<V_BinaryTimestamp>;
+}|{
+	1: T_D32<416>;
+	2: T_D32<76764>;
+	3: T_D32<26>;
 	4: T_VW_2<V_BinaryTimestamp>;
 }|{
 	1: T_D32<416>;

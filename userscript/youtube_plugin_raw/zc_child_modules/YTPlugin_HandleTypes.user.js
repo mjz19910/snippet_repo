@@ -2127,12 +2127,25 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {RB_Obj_f19} x */
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
-		const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
-		this.save_number(`${cf}.f1`,f1);
-		this.save_number(`${cf}.f2`,f2);
-		switch(f2) {
-			default: debugger; break;
-			case 3832:
+		if(1 in x) {
+			const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
+			this.save_number(`${cf}.f1`,f1);
+			this.save_number(`${cf}.f2`,f2);
+			switch(f2) {
+				default: debugger; break;
+				case 3832:
+			}
+			return;
+		}
+		if(3 in x) {
+			const {2: [,f2],3: [,f3],...y}=this.s(cf,x); this.g(y);
+			this.save_number(`${cf}.f2`,f2);
+			this.save_number(`${cf}.f3`,f3);
+			switch(f2) {
+				default: debugger; break;
+				case 3854:
+			}
+			return;
 		}
 	}
 	/** @protected @arg {RB_ClickTrackingObj_t1} x */
@@ -2191,13 +2204,14 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(this.is_tp_xx(x,416)) {
-			const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: f19,...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.t416.f1`,f1);
-			this.a_primitive_num(f2);
-			this.V_BinaryTimestamp(f4);
-			if(!f6) debugger;
-			if(!f11) debugger;
-			if(!f19) debugger;
+			if(6 in x&&11 in x&&19 in x) {
+				const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
+				this.save_number(`${cf}.t416.f1`,f1);
+				this.a_primitive_num(f2);
+				this.V_BinaryTimestamp(f4);
+				if(t19!=="child") debugger;
+				this.RB_Obj_f19(f19);
+			}
 			return;
 		}
 		if(9 in x) {
