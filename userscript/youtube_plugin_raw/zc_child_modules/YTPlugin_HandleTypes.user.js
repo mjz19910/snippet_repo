@@ -2212,7 +2212,16 @@ class HandleTypes extends ServiceMethods {
 				this.V_BinaryTimestamp(f4);
 				if(t19!=="child") debugger;
 				this.RB_Obj_f19(f19);
+				return;
 			}
+			if(3 in x) {
+				const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
+				this.save_number(`${cf}.t416.f1`,f1);
+				this.a_primitive_num(f2);
+				this.V_BinaryTimestamp(f4);
+				return;
+			}
+			debugger;
 			return;
 		}
 		if(9 in x) {
