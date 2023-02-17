@@ -1612,9 +1612,11 @@ class StoreData {
 		const {numbers_index: index,seen_numbers: data}=this;
 		return {index,data,new_data};
 	}
+	/** @type {[string,StoreData['seen_keys'][number][1][1][number]][]} */
+	new_keys=[];
 	get_keys_store() {
-		const {seen_keys_index: index,seen_keys: data}=this;
-		return {index,data};
+		const {seen_keys_index: index,seen_keys: data,new_keys: new_data}=this;
+		return {index,data,new_data};
 	}
 	get_seen_booleans() {return this.seen_booleans;}
 	get_seen_root_visual_elements() {return this.seen_root_visual_elements;}
@@ -1675,7 +1677,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	#get_keys_store() {return this.#data_store.get_keys_store();}
+	#get_keys_store() {return this.#data_store.get_keys_store(this.#new_keys);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
 		if(!x) return;
