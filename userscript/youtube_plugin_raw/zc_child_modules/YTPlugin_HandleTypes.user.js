@@ -1938,7 +1938,7 @@ class HandleTypes extends ServiceMethods {
 			set_obj(ro,x,k);
 		}
 		let y2=ro;
-		const {mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
+		const {itag,mh,mm,mn,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.save_string(`${cf1}.itag`,itag);
 		this.save_string(`${cf1}.mh`,mh);
 		this.save_string(`${cf1}.mm`,mm);
