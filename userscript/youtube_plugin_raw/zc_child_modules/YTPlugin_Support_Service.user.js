@@ -665,8 +665,8 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_LearningResource";
 		const {learningResourceType,educationalLevel,educationalLevelCountry,...y}=this.s(cf,x); this.g(y);
 		this.save_string("D_LearningResource.learningResourceType",learningResourceType);
-		this.save_string("D_LearningResource.educationalLevel",educationalLevel);
-		this.save_string("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
+		educationalLevel&&this.save_string("D_LearningResource.educationalLevel",educationalLevel);
+		educationalLevelCountry&&this.save_string("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
 	}
 }
 class Support_RS_WatchPage extends ServiceMethods {
