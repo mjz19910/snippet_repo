@@ -18,7 +18,7 @@ function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__modu
 const base64_dec=bs.base64_dec,base64_url_dec=bs.base64_url_dec;
 const as=bs.as_,as_any=bs.as_any;
 const ServiceData=bs.ServiceData;
-const split_string=bs.split_string,split_string_once=bs.split_string_once,split_string_once_last=bs.split_string_once_last;
+const split_string=bs.split_string,split_string_once=bs.split_string_once;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;
@@ -7000,8 +7000,6 @@ class ServiceMethods extends ServiceData {
 			/** @type {DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`?R:never} */
 			let ll=as(sa.slice(24));
 			if(!this.str_starts_with_rx("UC",sa)) return [false,null];
-			/** @returns {`UC${string}`} */
-			function wx() {return "UC";}
 			let [cid,fe]=split_string_once(sa,ll); if(fe!=="") debugger;
 			return [true,[1,sa,cid,ll]];
 		}
