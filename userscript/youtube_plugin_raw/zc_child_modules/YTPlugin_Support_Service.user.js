@@ -1630,11 +1630,15 @@ class StoreData {
 		data: [],
 		new_data: [],
 	};
+	/** @returns {StoreDescription<boolean>} */
+	get_boolean_store() {return this.seen_bool_obj;}
+	/** @returns {StoreDescription<string>} */
 	get_string_store() {return this.seen_string_obj;}
-	get_number_store() {return this.seen_number_obj;}
 	/** @returns {StoreDescription<string>} */
 	get_keys_store() {return this.seen_keys_obj;}
-	get_boolean_store() {return this.seen_bool_obj;}
+	/** @returns {StoreDescription<number>} */
+	get_number_store() {return this.seen_number_obj;}
+	/** @returns {StoreDescription<number>} */
 	get_root_visual_elements_store() {return this.seen_root_visual_elements_obj;}
 }
 class LocalStorageSeenDatabase extends ServiceMethods {
