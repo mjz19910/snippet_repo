@@ -1739,7 +1739,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 							debugger;
 						} break;
 					}
-					debugger;
 					return;
 				}
 				this.indexed_db.put("boxed_id",{
