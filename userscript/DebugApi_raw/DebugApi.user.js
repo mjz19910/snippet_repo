@@ -41,6 +41,7 @@ function do_export(fn,flags,exports,module_name) {
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
+export_(exports => {exports.do_export=do_export;});
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {return x;}
@@ -2741,6 +2742,7 @@ class BaseCompression {
 		return [false,dst];
 	}
 }
+export_(exports => {exports.BaseCompression=BaseCompression;});
 
 /** @template T @template U */
 class CompressStateBase {
@@ -2770,6 +2772,12 @@ class CompressState extends CompressStateBase {
 }
 
 class MulCompression extends BaseCompression {
+	constructor() {
+		super();
+		this.stats_calculator=new CompressionStatsCalculator;
+		/** @type {any[]} */
+		this.compression_stats=[];
+	}
 	/** @arg {{i:number,arr:string[],ret:string[]}} state @arg {string} item */
 	compress_rle(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
@@ -2814,18 +2822,17 @@ class MulCompression extends BaseCompression {
 		}
 		return this.compress_result_state(state);
 	}
-	/** @arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
+	/** @arg {string[]} arr */
 	try_decompress(arr) {
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
-			if(i+1<arr.length) {
-				let [item_type,num_data]=[item[0],item.slice(1)];
-				let parsed=parseInt(num_data);
-				if(!Number.isNaN(parsed)) {
-					for(let j=0;j<parsed;j++) ret.push(item_type);
-					continue;
-				}
+			if(!item) continue;
+			let [item_type,num_data]=[item[0],item.slice(1)];
+			let parsed=parseInt(num_data);
+			if(!Number.isNaN(parsed)) {
+				for(let j=0;j<parsed;j++)ret.push(item_type);
+				continue;
 			}
 			ret.push(arr[i]);
 		}
@@ -2837,16 +2844,17 @@ class MulCompression extends BaseCompression {
 		[success,res]=this.try_decompress(arr);
 		if(success) arr=res;
 		for(let i=0;i<4;i++) {
-			stats_calculator_info.stats_calculator.calc_for_stats_index(stats_calculator_info.compression_stats,arr,i);
-			let ls=stats_calculator_info.compression_stats[i];
-			if(ls.length>0) continue;
+			this.stats_calculator.calc_for_stats_index(this.compression_stats,arr,i);
+			let ls=this.compression_stats[i];
+			if(ls.length>0) {continue;}
 			break;
 		}
-		let res_1=this.try_compress(arr);
-		if(res_1[0]) return res_1[1];
+		[success,res]=this.try_compress(arr);
+		if(success) return res;
 		return arr;
 	}
 }
+export_(exports => {exports.MulCompression=MulCompression;});
 
 /** @typedef {typeof DisabledMulCompression} DisabledMulCompressionT */
 class DisabledMulCompression extends MulCompression {
@@ -3201,14 +3209,7 @@ class CompressionStatsCalculator {
 	}
 }
 export_(exports => {exports.CompressionStatsCalculator=CompressionStatsCalculator;});
-
-let stats_calculator_info={
-	stats_calculator: new CompressionStatsCalculator,
-	/** @type {[string, number][][]} */
-	compression_stats: [],
-};
 export_(exports => {exports.range_matches=range_matches;});
-let compressionStatsCalc=stats_calculator_info.stats_calculator;
 /** @arg {[unknown, number][]} stats */
 function log_stats(stats) {console.log(...stats.sort((a,b) => b[1]-a[1]));}
 add_function(log_stats);
@@ -3483,6 +3484,7 @@ class CompressDual {
 		this.ret=[];
 	}
 }
+export_(exports => {exports.CompressDual=CompressDual;});
 
 
 /** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj @arg {number} max_id */

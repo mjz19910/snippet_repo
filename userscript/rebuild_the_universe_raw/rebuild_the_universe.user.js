@@ -21,6 +21,12 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
+const __module_name__="debug$RebuildTheUniverse"
+const store=required(window.__plugin_modules__);
+const bs=required(store["DebugApi"]);
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 function fetch_all_images() {
 	return Promise.all(window.arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
 		try {
@@ -1156,9 +1162,8 @@ class CompressionStatsCalculatorImpl {
 	/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} index */
 	calc_for_stats_index(stats_arr,arr,index) {stats_arr[index]=this.calc_compression_stats(arr,index+1);}
 }
-/** @implements {BaseCompression} */
 class BaseCompressionImpl {
-	/** @arg {CompressDual} arg0 @returns {DualR_0} */
+	/** @arg {import("../DebugApi_raw/DebugApi.user").CompressDual} arg0 @returns {DualR_0} */
 	compress_result_state_dual(arg0) {return this.compress_result_dual(arg0.arr,arg0.ret);}
 	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string,number>[]} dst @returns {DualR_0} */
 	compress_result_dual(src,dst) {
@@ -1211,96 +1216,6 @@ class CompressState extends CompressStateBase {
 		this.item=null;
 	}
 }
-/** @implements {MulCompression} */
-class MulCompressionImpl extends BaseCompressionImpl {
-	constructor() {
-		super();
-		this.stats_calculator=new CompressionStatsCalculatorImpl;
-		/** @type {any[]} */
-		this.compression_stats=[];
-	}
-
-	/** @arg {{i:number,arr:string[],ret:string[]}} state @arg {string} item */
-	compress_rle(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(`${item}${off}`);
-		state.i+=off-1;
-		return true;
-	}
-
-	/** @arg {{i:number,arr:number[],ret:(number|Repeat_0<number>)[]}} state @arg {number} item */
-	compress_rle_number(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(new Repeat_0(item,off));
-		state.i+=off-1;
-		return true;
-	}
-
-	/** @arg {string[]} arr */
-	try_compress(arr) {
-		/** @type {CompressState<string, string>} */
-		let state=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return this.compress_result_state(state);
-	}
-
-	/** @arg {number[]} arr */
-	try_compress_number(arr) {
-		/** @type {CompressState<number, number>} */
-		let state=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle_number(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return this.compress_result_state(state);
-	}
-
-	/** @arg {string[]} arr */
-	try_decompress(arr) {
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(!item) continue;
-			let [item_type,num_data]=[item[0],item.slice(1)];
-			let parsed=parseInt(num_data);
-			if(!Number.isNaN(parsed)) {
-				for(let j=0;j<parsed;j++)ret.push(item_type);
-				continue;
-			}
-			ret.push(arr[i]);
-		}
-		return this.decompress_result(arr,ret);
-	}
-	/** @arg {string[]} arr */
-	compress_array(arr) {
-		let success,res;
-		[success,res]=this.try_decompress(arr);
-		if(success) arr=res;
-		for(let i=0;i<4;i++) {
-			this.stats_calculator.calc_for_stats_index(this.compression_stats,arr,i);
-			let ls=this.compression_stats[i];
-			if(ls.length>0) {continue;}
-			break;
-		}
-		[success,res]=this.try_compress(arr);
-		if(success) return res;
-		return arr;
-	}
-}
-window.MulCompression=MulCompressionImpl;
 class TimeoutTarget {
 	/** @arg {AutoBuyStateImplR|AutoBuyImplR|null} obj @arg {()=>void} callback */
 	constructor(obj,callback) {
@@ -2010,7 +1925,7 @@ class AutoBuyImplR {
 		this.local_data_loader=new DataLoaderImplR(localStorage);
 		this.state=new AutoBuyStateImplR(this.root_node);
 		this.debug=this.state.debug;
-		this.compressor=new MulCompression;
+		this.compressor=new bs.MulCompression;
 		let history_loaded=this.local_data_loader.load_str_arr("auto_buy_history_str");
 		if(history_loaded[0]) {this.state_history_arr=history_loaded[1];} else {	this.state_history_arr=["S"];}
 		this.epoch_start_time=Date.now();

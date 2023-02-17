@@ -39,9 +39,6 @@ declare global {
 	interface Window {constelOff(): void;}
 }
 
-// MulCompression
-declare global {interface Window {MulCompression: typeof MulCompression;}}
-
 // AutoBuyState
 declare global {
 	function calcPres(): number;

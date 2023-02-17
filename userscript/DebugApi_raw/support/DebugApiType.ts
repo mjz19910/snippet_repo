@@ -1,1 +1,0 @@
-type DebugApiType=typeof DebugApi;
