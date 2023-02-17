@@ -17,9 +17,7 @@ const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-const base_store=required(store.mod$YoutubePluginBase);
-const is_firefox=base_store.is_firefox;
-const BaseService=base_store.BaseService;
+const BaseService=bs.BaseService;
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	static known_experiments=[
@@ -64,7 +62,7 @@ class ECatcherService extends BaseService {
 			new_expected.push(e);
 		});
 		if(new_expected.length>0) {
-			if(is_firefox) {
+			if(bs.is_firefox) {
 				this.log_new_experiments(new_expected);
 				return;
 			}
