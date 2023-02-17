@@ -2142,6 +2142,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
+	/** @protected @arg {P_tracking_params} x */
+	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
 	/** @protected @arg {Extract<RB_ClickTrackingObj,{1:any}>} x */
 	RB_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
@@ -2234,8 +2236,6 @@ class HandleTypes extends ServiceMethods {
 	is_tp_xx(x,t) {return x[1][1]===t;}
 	/** @template {number} T @arg {T} t @arg {{2:T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
 	is_tp_xx_2(x,t) {return x[2][1]===t;}
-	/** @protected @arg {P_tracking_params} x */
-	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
