@@ -416,6 +416,43 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
+	/** @private @arg {D_ChannelSwitcherPage} x */
+	D_ChannelSwitcherPage(x) {
+		const cf="D_ChannelSwitcherPage";
+		const {header,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_ChannelSwitcherHeader(header);
+		this.ceq(targetId,"ceq");
+		this.z(contents,this.G_ChannelSwitcherContent);
+	}
+	/** @private @arg {D_ChannelSwitcherHeader} x */
+	D_ChannelSwitcherHeader(x) {
+		const cf="D_ChannelSwitcherHeader";
+		const {title,button,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.R_Button(button);
+	}
+	/** @private @arg {D_Channel_MD} x */
+	D_Channel_MD(x) {
+		const cf="D_Channel_MD";
+		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,facebookProfileId,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(facebookProfileId,this.a_primitive_str);
+		this.a_primitive_str(title);
+		this.a_primitive_str(description);
+		this.a_primitive_str(androidDeepLink);
+		this.a_primitive_str(iosAppindexingLink);
+		this.ceq(isFamilySafe,true);
+		this.a_primitive_str(externalId);
+		this.a_primitive_str(androidAppindexingLink);
+		this.z(availableCountryCodes,this.a_primitive_str);
+		this.D_Thumbnail(avatar);
+		this.a_primitive_str(rssUrl);
+		this.a_primitive_str(keywords);
+		if(ownerUrls.length!==1) debugger;
+		let ur=this.parse_with_url_parse(ownerUrls[0]);
+		this.ceq(this.str_starts_with_rx("/@",ur.pathname),true);
+		this.a_primitive_str(channelUrl);
+		this.a_primitive_str(vanityChannelUrl);
+	}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
 	/** @arg {R_RichShelf} x */
@@ -1626,28 +1663,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(popoutMessage,this.R_Message);
 		this.t(viewerName,this.a_primitive_str);
 	}
-	/** @private @arg {D_Channel_MD} x */
-	D_Channel_MD(x) {
-		const cf="D_Channel_MD";
-		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,facebookProfileId,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(facebookProfileId,this.a_primitive_str);
-		this.a_primitive_str(title);
-		this.a_primitive_str(description);
-		this.a_primitive_str(androidDeepLink);
-		this.a_primitive_str(iosAppindexingLink);
-		this.ceq(isFamilySafe,true);
-		this.a_primitive_str(externalId);
-		this.a_primitive_str(androidAppindexingLink);
-		this.z(availableCountryCodes,this.a_primitive_str);
-		this.D_Thumbnail(avatar);
-		this.a_primitive_str(rssUrl);
-		this.a_primitive_str(keywords);
-		if(ownerUrls.length!==1) debugger;
-		let ur=this.parse_with_url_parse(ownerUrls[0]);
-		this.ceq(this.str_starts_with_rx("/@",ur.pathname),true);
-		this.a_primitive_str(channelUrl);
-		this.a_primitive_str(vanityChannelUrl);
-	}
 	/** @private @arg {D_Playlist_MD} x */
 	D_Playlist_MD(x) {
 		const cf="D_Playlist_MD";
@@ -1655,21 +1670,6 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(title);
 		this.a_primitive_str(iosAppindexingLink);
 		this.a_primitive_str(androidAppindexingLink);
-	}
-	/** @private @arg {D_ChannelSwitcherPage} x */
-	D_ChannelSwitcherPage(x) {
-		const cf="D_ChannelSwitcherPage";
-		const {header,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_ChannelSwitcherHeader(header);
-		this.ceq(targetId,"ceq");
-		this.z(contents,this.G_ChannelSwitcherContent);
-	}
-	/** @private @arg {D_ChannelSwitcherHeader} x */
-	D_ChannelSwitcherHeader(x) {
-		const cf="D_ChannelSwitcherHeader";
-		const {title,button,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.R_Button(button);
 	}
 	/** @private @arg {D_RunAttestation} x */
 	D_RunAttestation(x) {
