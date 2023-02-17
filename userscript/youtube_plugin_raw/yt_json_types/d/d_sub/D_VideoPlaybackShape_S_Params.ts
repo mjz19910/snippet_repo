@@ -13,6 +13,7 @@ type D_VideoPlaybackShape_S_Params={
 	xtags?: "acont=dubbed:lang=es-MX";
 	mime: "video/mp4";
 	ns: string;
+	cnr?: "14";
 	gir?: "yes";
 	clen?: `${number}`;
 	ratebypass?: "yes";
