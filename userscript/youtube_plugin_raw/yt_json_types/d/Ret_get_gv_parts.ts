@@ -11,7 +11,6 @@ type G_Gv_0=
 	;
 ;
 type PT_TypeArr=[
-	["p5qs7",["zk","zy","sk","sr","6d"]],
 	["9gv7l",["es","ez","le","s7"]],
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],
