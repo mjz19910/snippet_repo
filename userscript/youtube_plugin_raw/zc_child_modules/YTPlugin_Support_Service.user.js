@@ -1769,7 +1769,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						let fd=ss.data.find(v => v[0]===k_parts[1]);
 						if(!fd) {
 							for(let from_db of str_arr) {
-								ss.data.push([k_parts[1],["one",[from_db]]]);
+								ss.data.push([k_parts[1],["one",from_db]]);
 								debugger;
 							}
 							continue;
