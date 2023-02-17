@@ -761,7 +761,6 @@ class Support_RS_Browse extends ServiceMethods {
 				return true;
 			}).join();
 			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
 			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
@@ -769,11 +768,15 @@ class Support_RS_Browse extends ServiceMethods {
 			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,sidebar") break x;
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
 			if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
-			if(jk==="header,trackingParams,onResponseReceivedActions") break x;
-			if(jk==="trackingParams,onResponseReceivedActions") break x;
-			if(jk==="contents,trackingParams,topbar,sidebar") break x;
 			if(jk==="contents,header,trackingParams,topbar") break x;
+			if(jk==="contents,trackingParams,topbar,sidebar") break x;
 			if(jk==="contents,trackingParams,topbar") break x;
+			// -contents
+			if(jk==="header,trackingParams,onResponseReceivedActions") break x;
+			// -header
+			if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="trackingParams,onResponseReceivedEndpoints") break x;
+			if(jk==="trackingParams,onResponseReceivedActions") break x;
 			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
 			debugger;
 		}
@@ -1749,11 +1752,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 		}
 	}
+	log_load_database=false;
 	async do_boxed_update_from_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
-		console.log("load_database all boxed",boxed);
+		if(this.log_load_database) console.log("load_database all boxed",boxed);
 		if(boxed.length===0) {
-			let store=this.#data_store; store;
+			let store=this.#data_store;
 			let changes=store.get_changed_stores();
 			for(let changed of changes) {
 				if(changed==="string") continue;
