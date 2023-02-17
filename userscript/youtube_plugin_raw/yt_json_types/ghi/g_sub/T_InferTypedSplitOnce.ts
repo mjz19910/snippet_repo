@@ -20,12 +20,12 @@ type T_InferTypedSplitOnce_NoBegin<WA extends string,S extends string,D extends 
 	:[S]
 	;
 ;
-type T_InferTypedSplitOnceLast<WX extends string,S extends string,D extends string>=
+type T_InferTypedSplitOnceLast<WA extends string,S extends string,D extends string>=
 	S extends `${infer U}${D}`
-	? U extends WX? [WX,""]
+	? U extends WA? [WA,""]
 	:never
 	:S extends `${D}${infer U}`
-	? U extends `${WX}${infer A}`
-	? ["",`${WX}${A}`]
+	? U extends `${WA}${infer A}`
+	? ["",`${WA}${A}`]
 	:never
 	:[S];
