@@ -25,6 +25,12 @@ const is_firefox=h_detect_firefox(); is_firefox;
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const as_any=required(store.mod$YoutubePluginBase).as_any; as_any;
 const as=bs.as_;
+class TypedIndexedDb {
+	/** @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes["video_id"]>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes["video_id"]>|null>} */
+	openCursor(obj_store,query,direction) {
+		return obj_store.openCursor(query,direction);
+	}
+}
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class IndexedDBService extends BaseService {
 	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
@@ -96,12 +102,12 @@ class IndexedDBService extends BaseService {
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
 	}
-	/** @arg {keyof DT_DatabaseStoreTypes} key */
-	async get(key) {
+	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {string} store_key */
+	async get(key,store_key) {
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
 		const tx=this.transaction(db,key,"readonly");
 		const obj_store=this.objectStore(tx,key);
-		obj_store.get(key);
+		obj_store.get(store_key);
 	}
 	log_cache_push=false;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @arg {DT_DatabaseStoreTypes[T]} obj */
@@ -168,12 +174,9 @@ class IndexedDBService extends BaseService {
 		console.log("IDBDatabase: version_change",event);
 		db.close();
 	}
-	/** @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes["video_id"]>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes["video_id"]>|null>} */
-	openCursor(obj_store,query,direction) {
-		return obj_store.openCursor(query,direction);
-	}
 	/** @private @arg {IDBDatabase} db @arg {AG_DatabaseStoreDescription} store_desc */
 	async start_transaction(db,store_desc) {
+		let typed_db=new TypedIndexedDb;
 		let {key: tx_namespace}=store_desc;
 		const transaction=db.transaction(tx_namespace,"readwrite");
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
@@ -185,7 +188,7 @@ class IndexedDBService extends BaseService {
 			for(let value of d_cache) {
 				if(this.committed_data.includes(value)) continue;
 				const index_val=value.key;
-				const cursor_req=this.openCursor(obj_store,IDBKeyRange.only(index_val));
+				const cursor_req=typed_db.openCursor(obj_store,IDBKeyRange.only(index_val));
 				for(let i=0;;i++) {
 					let cursor_res=await this.await_success(cursor_req);
 					cursor_res;

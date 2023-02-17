@@ -1763,6 +1763,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {string} k @arg {number|number[]} x */
 	save_number_impl(k,x) {
 		if(x===void 0) {debugger; return;}
+		this.indexed_db.get("boxed_id",`boxed_id:num:${k}`);
 		this.indexed_db_put("boxed_id",{key: `boxed_id:num:${k}`,type: k,id: ["many_num",x]});
 	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
