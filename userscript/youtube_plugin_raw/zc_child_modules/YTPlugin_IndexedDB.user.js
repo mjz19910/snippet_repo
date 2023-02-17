@@ -165,6 +165,7 @@ class IndexedDBService extends BaseService {
 				this.committed_data.push(item);
 			}
 		}
+		debugger;
 		tx.commit();
 		db.close();
 		await Promise.all([new Promise(a => {
