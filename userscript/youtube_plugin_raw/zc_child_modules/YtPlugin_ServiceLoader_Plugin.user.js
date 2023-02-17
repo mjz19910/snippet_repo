@@ -28,7 +28,7 @@ class ServiceLoader {
 	constructor(x) {
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
-			run(detail) {this.x.get("handle_types").x_EventInput.YTNavigateFinishDetail(detail);}
+			run(detail) {this.x.get("x_EventInput").YTNavigateFinishDetail(detail);}
 		}
 		class RT_Caller extends HandleTypes {
 			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
