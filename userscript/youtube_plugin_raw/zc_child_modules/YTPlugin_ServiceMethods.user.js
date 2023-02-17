@@ -83,7 +83,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {
 		let fs=split_string_once(x,":");
-		let [ls,w]=split_string_once_last(fs[1],":",null); if(w!=="") debugger;
+		let [ls,w]=split_string_once(fs[1],":"); if(w!=="") debugger;
 		return ls;
 	}
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
@@ -7002,7 +7002,7 @@ class ServiceMethods extends ServiceData {
 			if(!this.str_starts_with_rx("UC",sa)) return [false,null];
 			/** @returns {`UC${string}`} */
 			function wx() {return "UC";}
-			let [cid,fe]=split_string_once_last(sa,ll,wx()); if(fe!=="") debugger;
+			let [cid,fe]=split_string_once(sa,ll); if(fe!=="") debugger;
 			return [true,[1,sa,cid,ll]];
 		}
 		return [false,null];

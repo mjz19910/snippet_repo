@@ -1898,7 +1898,7 @@ function split_string_once_ex(s,d=as(","),_wa) {
 	let q=r;
 	return as(q);
 }
-/** @private @arg {WA|null} _wx @template {string} S @template {string} WA @arg {S} s @template {string} D @arg {D} d @returns {S extends `${infer Begin}${D}`?Begin extends WA?[WA,""]:never:S extends `${D}${WA}${infer Rest}`?["",`${WA}${Rest}`]:[S]} */
+/** @private @arg {WA|null} _wx @template {string} S @template {string} WA @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_NE<WA,S,D>} */
 function split_string_once_last(s,d,_wx) {
 	if(s==="") {
 		/** @private @type {[]} */

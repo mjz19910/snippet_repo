@@ -55,9 +55,7 @@ class JsonReplacerState {
 	}
 }
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
-const split_string_once=required(store.mod$YoutubePluginBase).split_string_once;
-/** @template {string} T @template {string} D @arg {T} s @arg {D} d */
-function split_string_once_last(s,d) {return bs.split_string_once_last(s,d,null);}
+const split_string_once=bs.split_string_once;
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
@@ -746,16 +744,16 @@ class CodegenService extends BaseService {
 			}
 		}
 		if(type_name.endsWith("Action")) {
-			let real_val=split_string_once_last(type_name,"Action")[0];
+			let real_val=split_string_once(type_name,"Action")[0];
 			if(real_val==="OpenPopup") return type_name;
 			return `A_${real_val}`;
 		}
 		if(type_name.endsWith("Command")) {
-			let real_val=split_string_once_last(type_name,"Command")[0];
+			let real_val=split_string_once(type_name,"Command")[0];
 			return `C_${real_val}`;
 		}
 		if(type_name.endsWith("Endpoint")) {
-			let real_val=split_string_once_last(type_name,"Endpoint")[0];
+			let real_val=split_string_once(type_name,"Endpoint")[0];
 			if(real_val==="Browse") {
 				console.log(type_name);
 				debugger;
@@ -765,7 +763,7 @@ class CodegenService extends BaseService {
 			return `E_${real_val}`;
 		}
 		if(type_name.endsWith("Renderer")) {
-			let real_val=split_string_once_last(type_name,"Renderer")[0];
+			let real_val=split_string_once(type_name,"Renderer")[0];
 			return `R_${real_val}`;
 		}
 		return `D_${type_name}`;
