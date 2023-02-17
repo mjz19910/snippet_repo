@@ -1970,6 +1970,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return this.save_to_store_2(k,k,x,store);
 	}
 }
+class Support_VE37414 {}
 export_(exports => {
 	exports.TypedefGenerator=TypedefGenerator;
 	exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;
