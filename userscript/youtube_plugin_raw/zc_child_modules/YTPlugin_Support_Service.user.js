@@ -1690,9 +1690,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
-		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
-		let ret=this.save_to_store("save_keys",k,keys.join(),store);
+		let ret=this.save_to_store("save_keys",k,keys.join());
 		return ret;
 	}
 	/** @no_mod @arg {string} str @returns {Partial<ReturnType<StoreData['destructure']>>} */
@@ -1757,117 +1756,29 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	#get_string_store() {return this.#data_store.get_string_store(this.#new_strings);}
 	/** @no_mod @type {[string,string|string[]][]} */
-	#new_keys=[];
-	#get_keys_store() {return this.#data_store.get_keys_store(this.#new_keys);}
-	/** @private @template T @arg {string} key @arg {StoreDescription<T>} store */
-	get_seen_string_item_store(key,store) {
-		const {index,data}=store;
-		let idx=index[key];
-		if(idx) return data[idx];
-		idx=data.findIndex(e => e[0]===key);
-		if(idx<0) return this.add_to_index(key,["one",[]],store);
-		index[key]=idx;
-		return data[idx];
-	}
-	/** @no_mod @type {[string,string|string[]][]} */
 	#new_strings=[];
-	/** @private @template {string|number} T @arg {T|T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} data_item */
-	save_to_data_item(x,data_item) {
-		let target=data_item[1];
-		if(x instanceof Array) {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
-	}
-	/** @private @template {string|number} T @arg {T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} item */
-	add_many_to_data_item(x,item) {
-		let target=item[1];
-		if(target[0]==="one") {
-			let inner=target[1].map(e => [e]);
-			target=["many",inner];
-			item[1]=target;
-		}
-		let found=target[1].find(e => this.eq_keys(e,x));
-		if(!found) return target[1].push(x);
-		return -1;
-	}
-	/** @private @template T @arg {T} x @arg {["one", T[]] | ["many", T[][]]} target */
-	add_one_to_data_arr(x,target) {
-		if(target[0]==="one") {if(!target[1].includes(x)) return target[1].push(x);} else if(target[0]==="many") {
-			let res=target[1].find(([e,...r]) => !r.length&&e===x);
-			if(!res) return target[1].push([x]);
-		}
-		return -1;
-	}
-	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
-	add_to_index(k,x,store) {
-		/** @private @type {StoreDescription<T>['data'][number]} */
-		let p=[k,x];
-		let nk=store.data.push(p)-1;
-		store.index[k]=nk;
-		return p;
-	}
-	/** @private @arg {string} ns @arg {string} k @arg {string|string[]} x @arg {StoreDescription<string>} store */
-	save_to_store(ns,k,x,store) {
-		if(x===void 0) {debugger; return;}
-		let store_item=this.get_seen_string_item_store(k,store);
-		let store_index=this.save_to_data_item(x,store_item);
-		if(store_index<0) return false;
-		store.new_data.push([k,x]);
-		this.#onDataChange();
-		console.log(`store [${ns}] [${k}] %o`,x);
-		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return;}
-		this.show_strings_bitmap(ns,idx,store);
-		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
-		return true;
-	}
+	/** @private @arg {string} ns @arg {string} k @arg {string|string[]} x */
+	save_to_store(ns,k,x) {this.save_string_impl(`${ns}:${k}`,x);}
 	do_random_breakpoint=false;
-	#get_number_store() {return this.#data_store.get_number_store(this.#new_numbers);}
-	/** @api @public @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
-	save_number_impl(k,x,force_update) {
-		if(x===void 0) {debugger; return true;}
-		let store=this.#get_number_store();
-		let store_item=this.get_seen_string_item_store(k,store);
-		if(!store_item) {
-			store_item=[k,["one",[]]];
-			let nk=store.data.push(store_item)-1;
-			store.index[k]=nk;
-		}
-		let was_known=this.save_to_data_item(x,store_item);
-		if(was_known<0&&!force_update) return false;
-		store.new_data.push([k,x]);
-		this.#onDataChange();
-		console.log("store_num [%s]",k,x);
-		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return true;}
-		return true;
+	/** @api @public @arg {string} k @arg {number|number[]} x */
+	save_number_impl(k,x) {
+		if(x===void 0) {debugger; return;}
+		this.indexed_db_put("boxed_id",{key: `boxed_id:num:${k}:${x}`,type: k,id: `${x}`});
 	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
 	save_string_impl(k,x) {
-		if(x===void 0) {debugger; return true;}
+		if(x===void 0) {debugger; return;}
 		if(x instanceof Array) {
 			for(let i=0;i<x.length;i++) {
 				let v=x[i];
-				this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}[${i}]`,type:`${k}[${i}]`,id:v});
+				this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}[${i}]`,type: `${k}[${i}]`,id: v});
 			}
 		} else {
-			this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}`,type:k,id:x});
+			this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}`,type: k,id: x});
 		}
-		let store=this.#get_string_store();
-		let store_item=this.get_seen_string_item_store(k,store);
-		if(!store_item) {
-			store_item=[k,["one",[]]];
-			let nk=store.data.push(store_item)-1;
-			store.index[k]=nk;
-		}
-		let was_known=this.save_to_data_item(x,store_item);
-		if(was_known<0) return false;
-		store.new_data.push([k,x]);
-		this.#onDataChange();
-		console.log(`store_str [${k}]${bs.is_firefox?"":" "}%o`,x);
-		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return true;}
-		return true;
+		return;
 	}
-	/** @private @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
+	/** @public @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
 	show_strings_bitmap(ns,idx,store) {
 		let p=store.data[idx];
 		if(!p) return;
@@ -2010,8 +1921,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let bitmap_rle=this.rle_enc(bitmap);
 		return new BitmapResult(map_arr,bitmap_rle);
 	}
-	/** @no_mod @type {[string,number|number[]][]} */
-	#new_numbers=[];
 	/** @no_mod @type {[string,{t:boolean;f:boolean}][]} */
 	#new_booleans=[];
 	/** @api @public @arg {string} key @arg {boolean} bool */
