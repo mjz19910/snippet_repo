@@ -76,7 +76,7 @@ type WatchUrlFormat=
 ;
 type D_UrlFormatStr_2=
 	|"/channel_switcher"
-	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
+	|`/@${string}${ChannelSubUrlFormat}`
 	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/channel/UC${string}`
 	|`/feed/${D_BrowseEndpointPages}`
@@ -1528,6 +1528,7 @@ type D_ChannelHeaderLinks={
 	secondaryLinks?: D_NavigationLinkItem[];
 };
 type ChannelSubUrlFormat=
+	|""
 	|"/about"
 	|"/channels"
 	|"/community"
