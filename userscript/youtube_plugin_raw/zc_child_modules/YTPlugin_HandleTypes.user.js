@@ -585,6 +585,16 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_num(perceptualLoudnessDb);
 		this.a_primitive_bool(enablePerFormatLoudness);
 	}
+	/** @public @arg {R_DynamicReadaheadConfig} x */
+	R_DynamicReadaheadConfig(x) {this.H_("R_DynamicReadaheadConfig","dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
+	/** @public @arg {D_DynamicReadaheadConfig} x */
+	D_DynamicReadaheadConfig(x) {
+		const cf="D_DynamicReadaheadConfig";
+		const {maxReadAheadMediaTimeMs,minReadAheadMediaTimeMs,readAheadGrowthRateMs,...y}=this.s(cf,x); this.g(y);
+		this.ceq(maxReadAheadMediaTimeMs,120000);
+		this.ceq(minReadAheadMediaTimeMs,15000);
+		this.ceq(readAheadGrowthRateMs,1000);
+	}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
 	/** @private @arg {CD_TimedContinuation} x */
@@ -2509,16 +2519,6 @@ class HandleTypes extends ServiceMethods {
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
 	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
-	/** @public @arg {R_DynamicReadaheadConfig} x */
-	R_DynamicReadaheadConfig(x) {this.H_("R_DynamicReadaheadConfig","dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
-	/** @public @arg {D_DynamicReadaheadConfig} x */
-	D_DynamicReadaheadConfig(x) {
-		const cf="D_DynamicReadaheadConfig";
-		const {maxReadAheadMediaTimeMs,minReadAheadMediaTimeMs,readAheadGrowthRateMs,...y}=this.s(cf,x); this.g(y);
-		this.ceq(maxReadAheadMediaTimeMs,120000);
-		this.ceq(minReadAheadMediaTimeMs,15000);
-		this.ceq(readAheadGrowthRateMs,1000);
-	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
