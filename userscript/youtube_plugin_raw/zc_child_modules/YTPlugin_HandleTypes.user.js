@@ -1894,6 +1894,19 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.source`,source);
 		this.save_string(`${cf1}.requiressl`,requiressl);
 		this.t(ctier,x => this.ceq("SH",x));
+		this.save_string(`${cf1}.vprv`,vprv);
+		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
+		this.save_string(`${cf1}.mime`,mime);
+		this.save_b64_binary(`${cf2}.ns`,ns);
+		if(gir) this.save_string(`${cf1}.gir`,gir);
+		this.t(clen,x => {
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		});
+		let dur_=this.parse_number_template(dur);
+		this.a_primitive_num(dur_);
+		let lmt_=this.parse_number_template(lmt);
+		this.a_primitive_num(lmt_);
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
@@ -1959,19 +1972,6 @@ class HandleTypes extends ServiceMethods {
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
 		}
-		this.save_string(`${cf1}.vprv`,vprv);
-		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
-		this.save_string(`${cf1}.mime`,mime);
-		this.save_b64_binary(`${cf2}.ns`,ns);
-		if(gir) this.save_string(`${cf1}.gir`,gir);
-		// this.t(clen,x => {
-		// 	let x1=this.parse_number_template(x);
-		// 	this.a_primitive_num(x1);
-		// });
-		// let dur_=this.parse_number_template(dur);
-		// this.a_primitive_num(dur_);
-		// let lmt_=this.parse_number_template(lmt);
-		// this.a_primitive_num(lmt_);
 		{
 			let x=mt;
 			let x1=this.parse_number_template(x);
