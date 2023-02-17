@@ -1766,6 +1766,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						}
 						let k_parts=this.split_box_type(to_load.key);
 						if(k_parts[0]!=="str") debugger;
+						// save database to local
 						for(let from_db of str_arr) {
 							let fd=ss.data.find(v => v[0]===k_parts[1]);
 							if(!fd) {
@@ -1783,6 +1784,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 								}
 							}
 						}
+						// save local to database
 						for(let from_db of str_arr) {
 							let fd=ss.data.find(v => v[0]===k_parts[1]);
 							if(fd) {
