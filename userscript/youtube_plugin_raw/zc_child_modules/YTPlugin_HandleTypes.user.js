@@ -331,6 +331,10 @@ class HandleTypes extends ServiceMethods {
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {R_TranscriptFooter} x */
 	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter","transcriptFooterRenderer",x,this.D_TranscriptFooter);}
+	/** @private @arg {R_TranscriptSearchPanel} x */
+	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
+	/** @private @arg {R_TranscriptSegment} x */
+	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
@@ -359,8 +363,6 @@ class HandleTypes extends ServiceMethods {
 	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
 	R_PlaylistSidebarSecondaryInfo(x) {this.H_("R_PlaylistSidebarSecondaryInfo","playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
-	/** @private @arg {R_TranscriptSearchPanel} x */
-	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
 	/** @public @arg {R_Channel_MD} x */
 	R_Channel_MD(x) {this.H_("R_Channel_MD","channelMetadataRenderer",x,this.D_Channel_MD);}
 	/** @public @arg {R_Playlist_MD} x */
@@ -501,8 +503,6 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_num(perceptualLoudnessDb);
 		this.a_primitive_bool(enablePerFormatLoudness);
 	}
-	/** @private @arg {R_TranscriptSegment} x */
-	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
 	/** @private @arg {CD_TimedContinuation} x */
