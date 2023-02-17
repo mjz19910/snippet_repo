@@ -3425,6 +3425,7 @@ class ModifyEnv extends BaseService {
 //#region YtPlugin
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class YtPlugin extends BaseService {
+	get indexed_db() {return this.x.get("indexed_db");}
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
 	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */

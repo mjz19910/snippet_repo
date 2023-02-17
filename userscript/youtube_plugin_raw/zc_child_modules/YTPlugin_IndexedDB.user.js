@@ -341,6 +341,21 @@ class IndexedDBService extends BaseService {
 		ret.store_diff=this.get_diff_by_key(this.database_diff_keys,ret.store_data);
 		return ret;
 	}
+	async database_diff_console_example() {
+		let [set_p]=await Promise.allSettled([(async () => {
+			let yt_plugin=window.yt_plugin;
+			if(!yt_plugin) throw new Error();
+			let idb=yt_plugin.indexed_db;
+			return idb.database_diff(3);
+		})()]);
+		if(set_p.status==="rejected") {
+			console.log(set_p.reason);
+			return;
+		}
+		let res=set_p.value;
+		console.log(res.store_diff);
+
+	}
 }
 export_(exports => {
 	exports.__module_loaded__=true;
