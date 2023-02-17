@@ -1742,7 +1742,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		} else {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
-			let changed_data=false;
+			// let changed_data=false;
 			for(let to_load of boxed) {
 				let k_parts=this.split_box_type(to_load.key);
 				if(k_parts[0]==="str") {
@@ -1799,7 +1799,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 				}
 			}
-			if(changed_data&&ss.data.length>0) {
+			if(ss.data.length>0) {
 				for(let sd of ss.data) {
 					let [key,arr]=sd;
 					this.indexed_db.put("boxed_id",{
