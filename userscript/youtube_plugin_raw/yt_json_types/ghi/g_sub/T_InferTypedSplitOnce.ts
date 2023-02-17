@@ -10,12 +10,12 @@ type TI_SplitOnce_1<WA extends string,S extends string,D extends string,Begin ex
 	? [WA,Rest]
 	:Begin extends ""
 	? TI_SplitOnce_NB_2<WA,S,D>
-	:TI_SplitOnce_2<WA,Begin,Rest>;
+	:TI_SplitOnce_2<WA,[Begin,Rest]>;
 ;
-type TI_SplitOnce_3<WA extends string,S extends string,D extends string,Begin extends string,Rest extends string>=
-	Begin extends ""? TI_SplitOnce_NB_2<WA,S,D>:TI_SplitOnce_2<WA,Begin,Rest>;
+type TI_SplitOnce_3<WA extends string,S extends string,D extends string,Split extends [string,string]>=
+	Split[0] extends ""? TI_SplitOnce_NB_2<WA,S,D>:TI_SplitOnce_2<WA,Split>;
 ;
-type TI_SplitOnce_2<WA extends string,Begin extends string,Rest extends string>=Rest extends WA? [Begin,WA]:never;
+type TI_SplitOnce_2<WA extends string,Split extends [string,string]>=Split[1] extends WA? [Split[0],WA]:never;
 type TI_SplitOnce_NR_1<WA extends string,Begin extends string,Rest extends string>=Rest extends WA? [Begin,WA]:never;
 type TI_SplitOnce_NB_1<WA extends string,Begin extends string>=Begin extends WA? [WA,""]:never;
 type TI_SplitOnce_NB_2<WA extends string,S extends string,D extends string>=S extends `${D}${infer Rest}`? TI_SplitOnce_NR_2<WA,Rest>:[S];
