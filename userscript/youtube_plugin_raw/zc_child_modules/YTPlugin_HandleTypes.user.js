@@ -1895,6 +1895,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.source`,source);
 		this.save_string(`${cf1}.requiressl`,requiressl);
 		this.t(ctier,x => this.ceq("SH",x));
+		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
 		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
 		this.save_string(`${cf1}.mime`,mime);
@@ -1985,7 +1986,7 @@ class HandleTypes extends ServiceMethods {
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
 		}
-		/** @typedef {"sparams"|"lsparams"|T_Split<typeof sparams>[number]|T_Split<typeof lsparams>[number]} OmitY1Keys */
+		/** @typedef {"sparams"|"lsparams"|keyof D_VideoPlaybackShape_S_Params|keyof D_VideoPlaybackShape_LS_Params} OmitY1Keys */
 		/** @type {Omit<typeof x,OmitY1Keys>} */
 		let y1=as({});
 		/** @type {Exclude<(typeof kk_x)[number],OmitY1Keys>[]} */
@@ -1994,7 +1995,7 @@ class HandleTypes extends ServiceMethods {
 			set_obj(y1,x,k);
 		}
 		this.D_VideoPlaybackShape_LS_Params(obj_lsparams);
-		const {fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,...y3}=y1;
+		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y3}=y1;
 		this.save_string(`${cf1}.fvip`,fvip);
 		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
 		this.save_string(`${cf1}.fexp`,fexp);
@@ -2004,9 +2005,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.sparams`,sparams);
 		this.save_string(`${cf1}.lsparams`,lsparams);
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
-		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
-		const {gcr,xtags,ctier,mt,...y}=y3; y;
+		const {gcr,mt,...y}=y3; this.g(y);
 		{
 			let x=mt;
 			let x1=this.parse_number_template(x);
