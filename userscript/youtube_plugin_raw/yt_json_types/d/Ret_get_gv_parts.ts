@@ -11,7 +11,7 @@ type G_Gv_0=
 	;
 ;
 type PT_TypeArr=[
-
+	"sn-p5qs7nzk",["p5qs7",["zk","zy","sk","sr","6d"]],
 ];
 type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`;
 type D_GoogleVideoHostPartition={
