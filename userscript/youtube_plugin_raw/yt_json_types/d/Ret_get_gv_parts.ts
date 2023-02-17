@@ -29,10 +29,7 @@ type PT_TypeS=[
 	]]],
 	["gen","o",["raw","097z"]],
 	["gen","p",["arr",[
-		["gen","p5q",[5,[
-			"ls",
-			"s7",
-		]]]
+		["gen","p5q",["or",["ls","s7"]]]
 	]]],
 ];
 type PT_TypeArr=[
