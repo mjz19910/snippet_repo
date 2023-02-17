@@ -1371,12 +1371,13 @@ type ApiFormatObj=[
 	["youtubei",[["v1",[
 	]]]]
 ];
-type ApiNotificationLast=[
-	"get_unseen_count",
-	"get_notification_menu",
-	"record_interactions",
-	"modify_channel_preference"
-][number];
+type ApiNotificationLast=
+	|"get_unseen_count"
+	|"get_notification_menu"
+	|"record_interactions"
+	|"modify_channel_preference"
+	;
+;
 type D_ApiPathFormat_1=
 	|"youtubei/v1/ypc/get_offers"
 	|"youtubei/v1/ypc/get_cart"
