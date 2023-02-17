@@ -1719,7 +1719,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						type: "num",
 						id: ["many_str",arr],
 					},3);
-					debugger;
 				}
 			}
 		} else {
