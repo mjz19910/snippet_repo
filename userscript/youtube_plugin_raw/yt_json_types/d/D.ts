@@ -1695,17 +1695,17 @@ type D_DarkColorPalette_1={
 	section4Color: 4278979079;
 };
 type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
-type D_DataArrType=[number,number,D_ProtobufObj[]][];
+type D_DataArrType=[fieldId: number,wireType: number,arr: D_ProtobufObj[]][];
 type D_ProtobufObj=
-	["data32",number,number]|
-	["data_fixed32",number,number]|
-	["data64",number,number[],bigint]|
-	["data_fixed64",number,bigint]|
-	["info",number,number]|
-	["child",number,Uint8Array,D_ProtobufObj[]|null]|
-	["struct",number,D_ProtobufObj[]]|
-	["group",number,D_ProtobufObj[]]|
-	["error",number];
+	|[type: "data32",fieldId: number,value: number]
+	|[type: "data_fixed32",fieldId: number,value: number]
+	|[type: "data64",fieldId: number,as_arr: number[],value: bigint]
+	|[type: "data_fixed64",fieldId: number,value: bigint]
+	|[type: "info",fieldId: number,value: number]
+	|[type: "child",fieldId: number,as_arr: Uint8Array,parsed_value: D_ProtobufObj[]|null]
+	|[type: "struct",fieldId: number,arr: D_ProtobufObj[]]
+	|[type: "group",fieldId: number,arr: D_ProtobufObj[]]
+	|[type: "error",fieldId: number];
 type D_DesktopWatchAds={
 	// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
 	gutParams: B_TagObj<"\\4061\\ytpwmpu">;
