@@ -159,7 +159,6 @@ type D_VE6827_PageLocation=
 	|"library"
 	;
 ;
-type D_ApiPathFormat=`/${Join<url_pathname_parts,"/">}`;
 type D_ApiStatsAdsStr=`ver=${string}&ns=${string}&event=${string}&device=${string}&content_v=${string}&el=${string}&ei=${string}&devicever=${string}&bti=${string}&break_type=${string}&conn=${string}&cpn=${string}&lact=${string}&m_pos=${string}&mt=${string}&p_h=${string}&p_w=${string}&rwt=${string}&sdkv=${string}&slot_pos=${string}&vis=${string}&vol=${string}&wt=${string}&sli=${string}&slfs=${string}&loginael=${string}`;
 type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiPathFormat_1}`;
 type D_ChanLoc=`channel.${ChanTabStr|""}`;
