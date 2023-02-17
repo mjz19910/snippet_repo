@@ -1777,6 +1777,34 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		index[key]=idx;
 		return data[idx];
 	}
+	/** @private @template T @arg {T|T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} data_item */
+	save_to_data_item(x,data_item) {
+		let target=data_item[1];
+		if(x instanceof Array) {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
+	}
+	/** @private @template T @arg {T} x @arg {["one", T[]] | ["many", T[][]]} target */
+	add_one_to_data_arr(x,target) {
+		if(target[0]==="one") {if(!target[1].includes(x)) return target[1].push(x);} else if(target[0]==="many") {
+			let res=target[1].find(([e,...r]) => !r.length&&e===x);
+			if(!res) return target[1].push([x]);
+		}
+		return -1;
+	}
+	/** @private @template T @arg {T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} item */
+	add_many_to_data_item(x,item) {
+		let target=item[1];
+		if(target[0]==="one") {
+			let inner=target[1].map(e => [e]);
+			target=["many",inner];
+			item[1]=target;
+		}
+		let found=target[1].find(e => {
+			debugger;
+			e;
+		});
+		if(!found) return target[1].push(x);
+		return -1;
+	}
 	/** @public @template T @arg {string} ns @arg {string} k @arg {T|T[]} x @arg {StoreDescription<T>} store */
 	save_to_store_2(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
