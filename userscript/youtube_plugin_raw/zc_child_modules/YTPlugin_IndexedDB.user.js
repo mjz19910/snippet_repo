@@ -115,13 +115,12 @@ class IndexedDBService extends BaseService {
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @arg {number} version */
 	async put(key,value,version) {
 		if(!value) {debugger; return;}
-		let typed_db=new TypedIndexedDb;
+		let cache=this.cached_data.get(key);
+		let cache_key=value.key;
+		if(cache?.includes(cache_key)) return;
+		this.push_waiting_obj(key,value);
+		this.check_size(key);
 		if(this.database_opening||this.database_open) {
-			let cache=this.cached_data.get(key);
-			let cache_key=value.key;
-			if(cache?.includes(cache_key)) return;
-			this.push_waiting_obj(key,value);
-			this.check_size(key);
 			return;
 		}
 		this.database_opening=true;
@@ -131,6 +130,7 @@ class IndexedDBService extends BaseService {
 		};
 		this.database_opening=false;
 		this.database_open=true;
+		let typed_db=new TypedIndexedDb;
 		const tx=this.transaction(db,key,"readwrite");
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
