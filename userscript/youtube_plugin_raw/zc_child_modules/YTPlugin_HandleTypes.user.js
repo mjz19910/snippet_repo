@@ -367,6 +367,12 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistVideoThumbnail(x) {this.H_("R_PlaylistVideoThumbnail","playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
 	/** @private @arg {R_Message} x */
 	R_Message(x) {this.H_("R_Message","messageRenderer",x,this.g);}
+	/** @private @arg {D_LiveBroadcastingBadge} x */
+	D_LiveBroadcastingBadge(x) {
+		const cf="D_LiveBroadcastingBadge";
+		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(liveBroadcasting);
+	}
 	/** @private @arg {R_LiveChatParticipantsList} x */
 	R_LiveChatParticipantsList(x) {this.H_("R_LiveChatParticipantsList","liveChatParticipantsListRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatTicker} x */
@@ -401,6 +407,12 @@ class HandleTypes extends ServiceMethods {
 		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(message);
 		console.log(`${cf}.id`,id);
+	}
+	/** @private @arg {D_LiveChatEmoji} x */
+	D_LiveChatEmoji(x) {
+		const cf="D_LiveChatEmoji";
+		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);
+		this.a_primitive_bool(isLocked);
 	}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
@@ -1180,12 +1192,6 @@ class HandleTypes extends ServiceMethods {
 		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.parse_guide_entry_id(guideEntryId);
 	}
-	/** @private @arg {D_LiveBroadcastingBadge} x */
-	D_GuideEntryBadges(x) {
-		const cf="D_GuideEntryBadges";
-		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(liveBroadcasting);
-	}
 	/** @type {D_GuideEntry_IconType_Obj} */
 	D_GuideEntry_IconType={
 		WithNavEP: [
@@ -1292,7 +1298,7 @@ class HandleTypes extends ServiceMethods {
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			this.D_Thumbnail(thumbnail);
-			this.D_GuideEntryBadges(badges);
+			this.D_LiveBroadcastingBadge(badges);
 			return;
 		}
 		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
@@ -1332,7 +1338,7 @@ class HandleTypes extends ServiceMethods {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.E_VE3611(navigationEndpoint);
 			this.D_Thumbnail(thumbnail);
-			this.D_GuideEntryBadges(badges);
+			this.D_LiveBroadcastingBadge(badges);
 			this.trackingParams(trackingParams);
 			this.G_Text(formattedTitle);
 			this.D_Accessibility(accessibility);
@@ -1619,12 +1625,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(participantsList,this.R_LiveChatParticipantsList);
 		this.t(popoutMessage,this.R_Message);
 		this.t(viewerName,this.a_primitive_str);
-	}
-	/** @private @arg {D_LiveChatEmoji} x */
-	D_LiveChatEmoji(x) {
-		const cf="D_LiveChatEmoji";
-		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);
-		this.a_primitive_bool(isLocked);
 	}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {

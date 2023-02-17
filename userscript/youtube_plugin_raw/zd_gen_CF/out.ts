@@ -299,8 +299,12 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.like";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LinearAdSequence";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveBroadcastDetails";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveBroadcastingBadge";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChat";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatHeader";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatPlaceholderItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatTextMessage";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatViewerEngagementMessage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LoggingDirectives";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersList";}
@@ -466,6 +470,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WatchNextEndScreen";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WatchNextTabbedResults";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WatchResults";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPlayerActionsPorting";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPlayerConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPrefetch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebSearchboxConfig";}
