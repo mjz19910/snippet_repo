@@ -178,6 +178,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AddToPlaylistCreate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AlertWithButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AttBgChallenge";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AudioConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AudioTrack";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AudioTrackItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplayContent";}
@@ -818,6 +819,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle_Content";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RelatedChipCloud";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_StartSeconds";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_StreamSelectionConfig";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_Survey_Watch";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}

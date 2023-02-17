@@ -2461,6 +2461,7 @@ class HandleTypes extends ServiceMethods {
 	P_reel_player_params(x) {x;}
 	/** @public @arg {D_AudioConfig} x */
 	D_AudioConfig(x) {
+		const cf="D_AudioConfig";
 		const {loudnessDb,perceptualLoudnessDb,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(loudnessDb);
 		this.a_primitive_num(perceptualLoudnessDb);
@@ -2469,14 +2470,17 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {D_StartSeconds} x */
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {
-		this.y("D_StreamSelectionConfig","maxBitrate",x,x => {
-			let v=this.parse_number_template(x);
-			this.a_primitive_num(v);
-		});
-	}
+	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
 	/** @public @arg {R_DynamicReadaheadConfig} x */
-	R_DynamicReadaheadConfig(x) {x;}
+	R_DynamicReadaheadConfig(x) {this.H_("R_DynamicReadaheadConfig","dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
+	/** @public @arg {D_DynamicReadaheadConfig} x */
+	D_DynamicReadaheadConfig(x) {
+		const cf="D_AudioConfig";
+		const {maxReadAheadMediaTimeMs,minReadAheadMediaTimeMs,readAheadGrowthRateMs,...y}=this.s(cf,x); this.g(y);
+		this.ceq(maxReadAheadMediaTimeMs,120000);
+		this.ceq(minReadAheadMediaTimeMs,15000);
+		this.ceq(readAheadGrowthRateMs,1000);
+	}
 	/** @public @arg {D_WebPlayerConfig} x */
 	D_WebPlayerConfig(x) {x;}
 	/** @public @arg {R_LiveChatTextMessage} x */
