@@ -37,7 +37,7 @@ type PT_TypeArr=[
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],// hit
 	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],// hit
-	["n8v7z",["lk","sd"]],// hit
+	["n8v7z",["lk","lr","ly","s6","s7","sd","se","sk","sl","sr","ss","sy","sz","z7","ze","zl"]],// hit
 	["nx5s7",["7d","7s","7y","7z","76","ee","el"]],// hit
 	["nx57y",["lk","sd","se","sk","sl","ss","sz"]],// hit
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
