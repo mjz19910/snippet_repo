@@ -2483,7 +2483,7 @@ class AddEventListenerExtension {
 AddEventListenerExtension.attach_to_api();
 
 class IterExtensions {
-	static attach_to_api() {inject_api.IterExtensions=this;}
+	static attach_to_api() {export_(exports => {exports.IterExtensions=this;});}
 	static init() {
 		let map=new Map;
 		let val_iter=map.values();
