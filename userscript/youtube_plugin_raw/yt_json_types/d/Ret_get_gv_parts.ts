@@ -10,7 +10,7 @@ type G_Gv_0=
 	;
 ;
 type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`;
-type Ret_get_gv_parts={
-	part1:G_Gv_0,
-	part2:G_Gv_1,
+type D_GoogleVideoHostPartition={
+	partition:G_Gv_0,
+	selector:G_Gv_1,
 };

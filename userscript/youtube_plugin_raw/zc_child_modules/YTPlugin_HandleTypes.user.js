@@ -1511,16 +1511,15 @@ class HandleTypes extends ServiceMethods {
 		let [m2]=url_parts;
 		let m3=split_string_once(m2,"---");
 		let [,mi]=m3;
-		/** @type {Ret_get_gv_parts} */
+		/** @type {D_GoogleVideoHostPartition} */
 		let ap=this.get_gv_parts(mi);
-		if(ap.length!==2) debugger;
-		this.save_string(`url.google_video_partition`,ap[0]);
-		this.save_string(`url.google_video_selector`,ap[1]);
+		this.save_string(`url.google_video_partition`,ap.partition);
+		this.save_string(`url.google_video_selector`,ap.selector);
 		const gen_cf="js_gen_case:log_googlevideo_host";
-		let ap_z=ap[0];
+		let ap_z=ap.partition;
 		switch(ap_z) {
 			default: {
-				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,ap[0]);
+				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,ap.partition);
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 			}; break;
@@ -1560,10 +1559,9 @@ class HandleTypes extends ServiceMethods {
 		}
 		let [,mi]=ss2;
 		let ap=this.get_gv_parts(mi);
-		if(ap.length!==2) debugger;
-		this.save_string(`${cf}.google_video_partition`,ap[0]);
-		this.save_string(`${cf}.google_video_selector`,ap[1]);
-		switch(ap[0]) {
+		this.save_string(`${cf}.google_video_partition`,ap.partition);
+		this.save_string(`${cf}.google_video_selector`,ap.selector);
+		switch(ap.partition) {
 			default: {
 				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,mi);
 				if(gen.has) break;
@@ -1892,14 +1890,13 @@ class HandleTypes extends ServiceMethods {
 		if(x instanceof Uint8Array) x=[...x];
 		return super.save_number(k,x);
 	}
-	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {Ret_get_gv_parts} */
+	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {D_GoogleVideoHostPartition} */
 	get_gv_parts(x) {
 		let parts=this.get_gv_parts_impl(x);
-		return {
-			part1:parts[0],
-			part2:parts[1],
-		}
-		return as_any(this.get_gv_parts_impl(x));
+		return as_any({
+			partition: parts[0],
+			selector: parts[1],
+		});
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
 	get_gv_parts_impl(x) {
@@ -1951,13 +1948,13 @@ class HandleTypes extends ServiceMethods {
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
-			/** @type {Ret_get_gv_parts} */
+			/** @type {D_GoogleVideoHostPartition} */
 			let ap=this.get_gv_parts(mi);
-			this.save_string(`${cf1}.google_video_partition`,ap[0]);
-			this.save_string(`${cf1}.google_video_selector`,ap[1]);
-			switch(ap.part1) {
+			this.save_string(`${cf1}.google_video_partition`,ap.partition);
+			this.save_string(`${cf1}.google_video_selector`,ap.selector);
+			switch(ap.partition) {
 				default: {
-					let [x]=ap;
+					let {partition: x}=ap;
 					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
 					if(gen.has) break;
 					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
