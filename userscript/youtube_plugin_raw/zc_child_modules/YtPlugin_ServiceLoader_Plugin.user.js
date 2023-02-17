@@ -26,39 +26,23 @@ class ServiceLoader {
 	start_message_channel_loop() {bs.start_message_channel_loop(this.handle_types);}
 	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
-		class HT_Caller extends HandleTypes {
-			/** @public @arg {YTNavigateFinishDetail} detail */
-			run(detail) {this.x.get("x_EventInput").YTNavigateFinishDetail(detail);}
-		}
-		class RT_Caller extends HandleTypes {
-			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
-			run(response,x) {this.G_ResponseTypes.call(this.x.get("handle_types"),response,x);}
-			/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
-			decode_input(url_type,x) {return this.get_res_data(url_type,x);}
-			/** @public @arg {D_ApiUrlFormat} url */
-			decode_url(url) {return this.use_template_url(url);}
-		}
 		let ss=required(store.mod$SupportService);
 		let bs=required(store.mod$YoutubePluginBase);
-		this.ht_caller=new HT_Caller(x);
-		this.response_types_handler=new RT_Caller(x);
-		const CsiService=bs.CsiService;
-		this.csi_service=new CsiService(x);
 		const ECatcherService=required(store.mod$ECatcherService).ECatcherService;
-		this.e_catcher_service=new ECatcherService(x);
-		const GFeedbackService=bs.GFeedbackService;
-		this.g_feedback_service=new GFeedbackService(x);
-		const GuidedHelpService=bs.GuidedHelpService;
-		this.guided_help_service=new GuidedHelpService(x);
-		this.service_tracking=new bs.TrackingServices(x);
 		const ParserService=required(store.mod$ParserService).ParserService;
+		const CodegenService=required(store.mod$CodegenService).CodegenService;
+		const IndexedDBService=required(store.mod$IndexedDBService).IndexedDBService;
+		this.csi_service=new bs.CsiService(x);
+		this.e_catcher_service=new ECatcherService(x);
+		this.g_feedback_service=new bs.GFeedbackService(x);
+		this.guided_help_service=new bs.GuidedHelpService(x);
+		this.service_tracking=new bs.TrackingServices(x);
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new bs.YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
 		this.local_seen_db=new ss.LocalStorageSeenDatabase(x);
-		const CodegenService=required(store.mod$CodegenService).CodegenService;
 		this.codegen=new CodegenService(x);
-		this.indexed_db=new (required(store.mod$IndexedDBService).IndexedDBService)(x);
+		this.indexed_db=new IndexedDBService(x);
 		this.yt_plugin=new bs.YtPlugin(x);
 		this.modify_env=new bs.ModifyEnv(x);
 		this.x_RS_Player=new ss.Support_RS_Player(x);

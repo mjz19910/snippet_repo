@@ -2938,7 +2938,7 @@ class ServiceMethods extends ServiceData {
 		return x.pathname===pathname;
 	}
 	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
-	get_res_data(url_type,x) {
+	decode_input(url_type,x) {
 		/** @private @type {T_Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
 		/** @private @type {G_ResponseTypes|null} */
@@ -2984,7 +2984,7 @@ class ServiceMethods extends ServiceData {
 		return null;
 	}
 	/** @protected @arg {D_ApiUrlFormat} x */
-	use_template_url(x) {
+	decode_url(x) {
 		const res_parse=this.parse_with_url_parse(x);
 		if("_tag" in res_parse) {
 			console.log("parse failed (should never happen)",x,res_parse);

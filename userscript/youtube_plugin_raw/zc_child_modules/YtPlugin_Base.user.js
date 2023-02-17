@@ -2385,7 +2385,7 @@ class YtHandlers extends BaseService {
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
 		let res=ht.decode_input(url_type,data);
-		if(res) {ht.run(response,res);} else {console.log("failed to decode_input");}
+		if(res) {ht.G_ResponseTypes(response,res);} else {console.log("failed to decode_input");}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
@@ -2432,7 +2432,7 @@ class YtHandlers extends BaseService {
 	on_page_type_changed(detail) {
 		try {
 			if(this.do_initial_data_trace) console.log('ptc detail',detail);
-			this.x.get("ht_caller").run(detail);
+			this.x.get("x_EventInput").YTNavigateFinishDetail(detail);
 		} catch(e) {
 			console.log("plugin error");
 			console.log(e);
