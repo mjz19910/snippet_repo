@@ -10,21 +10,19 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
+
+const {do_export,as, BaseService, as_any}=require("./YtPlugin_Base.user");
+
 // ==/UserScript==
 const __module_name__="mod$IndexedDBService";
-const store=required(window.__plugin_modules__);
-const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 function h_detect_firefox() {
 	let ua=navigator.userAgent;
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
 }
 const is_firefox=h_detect_firefox(); is_firefox;
-const BaseService=required(store.mod$YoutubePluginBase).BaseService;
-const as_any=required(store.mod$YoutubePluginBase).as_any; as_any;
-const as=bs.as_;
 class TypedIndexedDb {
 	/** @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes["video_id"]>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes["video_id"]>|null>} */
 	openCursor(obj_store,query,direction) {
