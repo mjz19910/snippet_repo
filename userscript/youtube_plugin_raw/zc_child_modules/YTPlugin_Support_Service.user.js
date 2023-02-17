@@ -1764,7 +1764,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 								str_arr.push(item);
 							}
 						}
-						str_arr
+						str_arr;
 					}
 				}
 				let k_parts=this.split_box_type(to_load.key);
@@ -1788,7 +1788,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 							if(typeof item!=="string") continue;
 							str_arr.push([item]);
 						}
-						ss.data.push([k_parts[1],["one",str_arr]]);
+						for(let from_db of str_arr) {
+							ss.data.push([k_parts[1],["one",from_db]]);
+							debugger;
+						}
 						continue;
 					}
 					/** @type {string[][]} */
@@ -1815,7 +1818,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						} else {
 							if(ck[0]==="one") continue;
 							let mv=ck[1];
-							if(mv.findIndex(v=>this.eq_keys(v,from_db))>=0) continue;
+							if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
 							mv.push(from_db);
 						}
 					}
