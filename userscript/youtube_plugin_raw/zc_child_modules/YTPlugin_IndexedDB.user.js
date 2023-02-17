@@ -118,14 +118,17 @@ class IndexedDBService extends BaseService {
 		debugger;
 		this.is_broken=true;
 	}
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @arg {number} version */
-	async put(key,value,version) {
-		if(!value) {debugger; return;}
-		let cache=this.cached_data.get(key);
-		let cache_key=value.key;
-		if(cache?.includes(cache_key)) return;
-		this.push_waiting_obj(key,value);
-		this.check_size(key);
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} arg_value @arg {number} version */
+	async put(key,arg_value,version) {
+		{
+			let value=arg_value;
+			if(!value) {debugger; return;}
+			let cache=this.cached_data.get(key);
+			let cache_key=value.key;
+			if(cache?.includes(cache_key)) return;
+			this.push_waiting_obj(key,value);
+			this.check_size(key);
+		}
 		if(this.database_opening||this.database_open) return;
 		this.database_opening=true;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
@@ -141,25 +144,25 @@ class IndexedDBService extends BaseService {
 		for(let item of d_cache) {
 			const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key)));
 			if(cur_cursor===null) {
-				this.committed_data.push(value);
-				await this.add_data_to_store(obj_store,value);
+				this.committed_data.push(item);
+				await this.add_data_to_store(obj_store,item);
 				return;
 			}
 			const cursor_value=cur_cursor.value;
-			if(cursor_value.key!==value.key) {
+			if(cursor_value.key!==item.key) {
 				console.log(cursor_value.key.split(":"));
-				console.log(value.key.split(":"));
+				console.log(item.key.split(":"));
 				debugger;
 			}
-			let value_keys=this.get_keys_of_2(value);
+			let value_keys=this.get_keys_of_2(item);
 			let cursor_keys=this.get_keys_of_2(cursor_value);
 			if(!this.eq_keys(value_keys,cursor_keys)) {
 				console.log("[database_needs_obj_merge]");
-				console.log("[obj_merge_new]",value);
+				console.log("[obj_merge_new]",item);
 				console.log("[obj_merge_cur]",cursor_value);
 				debugger;
 			} else {
-				this.committed_data.push(value);
+				this.committed_data.push(item);
 			}
 		}
 	}
