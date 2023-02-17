@@ -2195,6 +2195,11 @@ class HandleTypes extends ServiceMethods {
 			if(!f19) debugger;
 			return;
 		}
+		if(9 in x) {
+			const {1: [,f1],2: [,f2],4: [,,f4],9: f9,...y}=this.s(cf,x);
+			return;
+		}
+		x;
 		debugger;
 	}
 	/** @protected @arg {RB_ClickTrackingObj} x */
