@@ -2496,7 +2496,7 @@ class LocalStorageSeenDatabase extends ApiBase {
 const local_seen_db=new LocalStorageSeenDatabase;
 /** @private @template T_ServiceLoader,T_ServiceFlags */
 class BaseServicePrivate extends ApiBase {
-	//#region Public
+	#x;
 	/** @constructor @public @arg {ResolverT<T_ServiceLoader,T_ServiceFlags>} x */
 	constructor(x) {
 		super();
@@ -2548,8 +2548,6 @@ class BaseServicePrivate extends ApiBase {
 	save_number(k,x,force_update=false) {
 		return this.local_seen_db.save_number(k,x,force_update);
 	}
-	//#endregion
-	#x;
 }
 /** @private @template T_ServiceLoader,T_ServiceFlags @extends {BaseServicePrivate<T_ServiceLoader,T_ServiceFlags>} */
 class BaseService extends BaseServicePrivate {
