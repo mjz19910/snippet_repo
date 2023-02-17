@@ -1,9 +1,3 @@
-type GM_Base={
-	url?: D_UrlFormat;
-	webPageType?: YtPageTypeEnum;
-	apiUrl?: D_ApiPathFormat;
-	sendPost?: boolean;
-};
 //#region WebCommandMetadata
 //#region WebCommandMetadata Objects
 type GM_PostApiLike={sendPost: true; apiUrl: string;};
