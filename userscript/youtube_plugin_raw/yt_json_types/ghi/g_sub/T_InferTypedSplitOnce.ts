@@ -2,7 +2,9 @@
 // @template {string} WA @template {string} S @template {string} D 
 type T_InferTypedSplitOnce<WA extends string,S extends string,D extends string>=
 	S extends `${infer Begin}${D}${infer Rest}`
-	? Begin extends ""
+	? Begin extends `${WA}`
+	? [WA,Rest]
+	:Begin extends ""
 	? T_InferTypedSplitOnce_NoBegin<WA,S,D>
 	:Rest extends `${WA}`
 	? [Begin,WA]
@@ -18,3 +20,12 @@ type T_InferTypedSplitOnce_NoBegin<WA extends string,S extends string,D extends 
 	:[S]
 	;
 ;
+type T_InferTypedSplitOnceLast<WX extends string,S extends string,D extends string>=
+	S extends `${infer U}${D}`
+	? U extends WX? [WX,""]
+	:never
+	:S extends `${D}${infer U}`
+	? U extends `${WX}${infer A}`
+	? ["",`${WX}${A}`]
+	:never
+	:[S];
