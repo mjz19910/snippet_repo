@@ -3,5 +3,5 @@ type D_SimpleCardTeaser={
 	trackingParams: string;
 	prominent: true;
 	logVisibilityUpdates: true;
-	onTapCommand: A_ChangeEngagementPanelVisibility;
+	onTapCommand?: A_ChangeEngagementPanelVisibility;
 };

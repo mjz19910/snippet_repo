@@ -628,7 +628,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.ceq(prominent,true);
 		this.ceq(logVisibilityUpdates,true);
-		this.A_ChangeEngagementPanelVisibility(onTapCommand);
+		this.t(onTapCommand,this.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {D_LearningResource} x */
 	D_LearningResource(x) {
