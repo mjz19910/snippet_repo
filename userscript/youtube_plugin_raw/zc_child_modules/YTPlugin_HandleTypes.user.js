@@ -2117,14 +2117,7 @@ class HandleTypes extends ServiceMethods {
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
 	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
-	/** @protected @arg {V_VeDescObj} x */
-	V_VeDescObj(x) {
-		const cf="V_VeDescObj";
-		const {1: [f1],2: [f2],...y}=x; this.g(y);
-		this.save_number(`${cf}.f1`,f1);
-		if(f2!==3832) debugger;
-	}
-	/** @protected @arg {RB_Obj_f19} x */
+	/** @protected @arg {RB_Obj_f19} x @name V_VeDescObj */
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
 		if(1 in x) {
