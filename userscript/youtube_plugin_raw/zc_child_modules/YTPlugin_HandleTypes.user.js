@@ -2460,11 +2460,21 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {x;}
 	/** @public @arg {D_AudioConfig} x */
-	D_AudioConfig(x) {x;}
+	D_AudioConfig(x) {
+		const {loudnessDb,perceptualLoudnessDb,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(loudnessDb);
+		this.a_primitive_num(perceptualLoudnessDb);
+		this.a_primitive_bool(enablePerFormatLoudness);
+	}
 	/** @public @arg {D_StartSeconds} x */
-	D_StartSeconds(x) {x;}
+	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {x;}
+	D_StreamSelectionConfig(x) {
+		this.y("D_StreamSelectionConfig","maxBitrate",x,x => {
+			let v=this.parse_number_template(x);
+			this.a_primitive_num(v);
+		});
+	}
 	/** @public @arg {R_DynamicReadaheadConfig} x */
 	R_DynamicReadaheadConfig(x) {x;}
 	/** @public @arg {D_WebPlayerConfig} x */

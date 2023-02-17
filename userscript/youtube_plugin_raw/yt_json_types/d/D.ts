@@ -2658,7 +2658,7 @@ type D_SimpleMenuHeader={
 	title: G_Text;
 	buttons: R_Button[];
 };
-type D_StreamSelectionConfig={maxBitrate: `${number};`;};
+type D_StreamSelectionConfig={maxBitrate: `${number}`;};
 type D_StructuredDescriptionContent={items: G_StructuredDescriptionContentItem[];};
 type D_SubFeedSelector={
 	title: G_Text;
