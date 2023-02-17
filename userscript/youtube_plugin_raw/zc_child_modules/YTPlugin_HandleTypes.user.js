@@ -431,6 +431,8 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(title);
 		this.R_Button(button);
 	}
+	/** @private @arg {D_ChipColorPalette} x */
+	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.codegen_typedef(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
@@ -479,6 +481,26 @@ class HandleTypes extends ServiceMethods {
 	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
 	/** @arg {R_AutomixPreviewVideo} x */
 	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.g);}
+	/** @private @arg {D_AttBgChallenge} x */
+	D_AttBgChallenge(x) {
+		const cf="D_AttBgChallenge";
+		const {interpreterUrl,interpreterHash,program,globalName,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(interpreterUrl,a => {
+			let uw=this.UrlWrappedValueT(a);
+			this.a_primitive_str(uw);
+		});
+		this.a_primitive_str(interpreterHash);
+		this.a_primitive_str(program);
+		if(globalName!=="trayride") debugger;
+	}
+	/** @public @arg {D_AudioConfig} x */
+	D_AudioConfig(x) {
+		const cf="D_AudioConfig";
+		const {loudnessDb,perceptualLoudnessDb,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(loudnessDb);
+		this.a_primitive_num(perceptualLoudnessDb);
+		this.a_primitive_bool(enablePerFormatLoudness);
+	}
 	/** @private @arg {R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
@@ -1484,18 +1506,6 @@ class HandleTypes extends ServiceMethods {
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
 		this.clickTrackingParams(clickTrackingParams);
 	}
-	/** @private @arg {D_AttBgChallenge} x */
-	D_AttBgChallenge(x) {
-		const cf="D_AttBgChallenge";
-		const {interpreterUrl,interpreterHash,program,globalName,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(interpreterUrl,a => {
-			let uw=this.UrlWrappedValueT(a);
-			this.a_primitive_str(uw);
-		});
-		this.a_primitive_str(interpreterHash);
-		this.a_primitive_str(program);
-		if(globalName!=="trayride") debugger;
-	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
 		const cf="D_TemplateUpdate";
@@ -1977,8 +1987,6 @@ class HandleTypes extends ServiceMethods {
 		this.D_Accessibility(accessibility);
 		this.t(targetId,x => this.save_string(`${cf}.targetId`,x));
 	}
-	/** @private @arg {D_ChipColorPalette} x */
-	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.codegen_typedef(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PdgCommentChip} x */
 	D_PdgCommentChip(x) {
 		const cf="D_PdgCommentChip";
@@ -2485,14 +2493,6 @@ class HandleTypes extends ServiceMethods {
 	P_create_playlist_params(x) {x;}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {x;}
-	/** @public @arg {D_AudioConfig} x */
-	D_AudioConfig(x) {
-		const cf="D_AudioConfig";
-		const {loudnessDb,perceptualLoudnessDb,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(loudnessDb);
-		this.a_primitive_num(perceptualLoudnessDb);
-		this.a_primitive_bool(enablePerFormatLoudness);
-	}
 	/** @public @arg {D_StartSeconds} x */
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
