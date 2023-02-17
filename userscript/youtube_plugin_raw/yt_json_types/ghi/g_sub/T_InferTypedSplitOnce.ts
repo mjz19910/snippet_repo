@@ -8,10 +8,8 @@ type TI_SplitOnce_1<WA extends string,S extends string,D extends string,Begin ex
 	? TI_SplitOnce_NB_1<WA,Begin>
 	:Begin extends WA
 	? [WA,Rest]
-	:TI_SplitOnce_4<WA,S,D,[Begin,Rest]>;
+	:TI_SplitOnce_3<WA,S,D,[Begin,Rest]>;
 ;
-type TI_SplitOnce_4<WA extends string,S extends string,D extends string,Split extends [string,string]>=
-	Split[0] extends ""? TI_SplitOnce_NB_2<WA,S,D>:TI_SplitOnce_2<WA,Split>;
 type TI_SplitOnce_3<WA extends string,S extends string,D extends string,Split extends [string,string]>=
 	Split[0] extends ""? TI_SplitOnce_NB_2<WA,S,D>:TI_SplitOnce_2<WA,Split>;
 ;
