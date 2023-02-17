@@ -360,10 +360,28 @@ class HandleTypes extends ServiceMethods {
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
+	/** @private @arg {D_TranscriptSegmentList} x */
+	D_TranscriptSegmentList(x) {
+		const cf="D_TranscriptSegmentList";
+		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(initialSegments,this.R_TranscriptSegment);
+		this.G_Text(noResultLabel);
+		this.G_Text(retryLabel);
+		this.a_primitive_bool(touchCaptionsEnabled);
+	}
 	/** @private @arg {R_TranscriptFooter} x */
 	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter","transcriptFooterRenderer",x,this.D_TranscriptFooter);}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
+	/** @private @arg {D_TranscriptSearchPanel} x */
+	D_TranscriptSearchPanel(x) {
+		const cf="D_TranscriptSearchPanel";
+		const {body,footer,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_TranscriptSegmentList(body);
+		this.R_TranscriptFooter(footer);
+		this.trackingParams(trackingParams);
+		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
+	}
 	/** @private @arg {R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {D_TranscriptFooter} x */
@@ -1629,24 +1647,6 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
-	}
-	/** @private @arg {D_TranscriptSearchPanel} x */
-	D_TranscriptSearchPanel(x) {
-		const cf="D_TranscriptSearchPanel";
-		const {body,footer,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_TranscriptSegmentList(body);
-		this.R_TranscriptFooter(footer);
-		this.trackingParams(trackingParams);
-		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
-	}
-	/** @private @arg {D_TranscriptSegmentList} x */
-	D_TranscriptSegmentList(x) {
-		const cf="D_TranscriptSegmentList";
-		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(initialSegments,this.R_TranscriptSegment);
-		this.G_Text(noResultLabel);
-		this.G_Text(retryLabel);
-		this.a_primitive_bool(touchCaptionsEnabled);
 	}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x) {
