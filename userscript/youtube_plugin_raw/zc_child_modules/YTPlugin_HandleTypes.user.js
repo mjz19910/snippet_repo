@@ -113,6 +113,7 @@ class HandleTypes extends ServiceMethods {
 		this.support_RS_Browse=new ss.Support_RS_Browse(x);
 		this.support_GenericApi=new ss.Support_GenericApi(x);
 		this.support_EventInput=new ss.Support_EventInput(x);
+		this.x_VE37414=new ss.Support_VE37414(x);
 	}
 	//#endregion
 	/** @private @arg {D_WatchNextTabbedResults} x */

@@ -1503,20 +1503,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected */
 	_decoder=new TextDecoder();
-	/** @private @arg {D_VssLoggingContext} x */
-	D_VssLoggingContext(x) {
-		const cf="D_VssLoggingContext";
-		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params("logging_context.serialized_context_data",serializedContextData);
-	}
-	/** @private @arg {D_SerializedContextData} x */
-	D_QoeLoggingContext(x) {
-		const cf="D_QoeLoggingContext";
-		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params("logging_context.serialized_context_data",serializedContextData);
-	}
-	/** @protected @arg {R_VssLoggingContext} x */
-	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
 	/** @protected @arg {E_VE83769_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
 	/** @protected @arg {B_Hack} x */

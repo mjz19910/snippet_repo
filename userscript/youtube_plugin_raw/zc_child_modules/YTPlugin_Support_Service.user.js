@@ -1971,6 +1971,20 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 }
 class Support_VE37414 extends ServiceMethods {
+	/** @protected @arg {R_VssLoggingContext} x */
+	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
+	/** @private @arg {D_VssLoggingContext} x */
+	D_VssLoggingContext(x) {
+		const cf="D_VssLoggingContext";
+		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params("logging_context.serialized_context_data",serializedContextData);
+	}
+	/** @private @arg {D_SerializedContextData} x */
+	D_QoeLoggingContext(x) {
+		const cf="D_QoeLoggingContext";
+		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params("logging_context.serialized_context_data",serializedContextData);
+	}
 	/** @private @arg {DE_ReelWatch} x */
 	DE_VE37414_ReelWatch(x) {
 		const cf="DE_ReelWatch";
