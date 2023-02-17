@@ -2950,7 +2950,7 @@ class ServiceMethods extends ServiceData {
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
 		if(keys.length!==1) {debugger; return;}
-		let cf=this.get_codegen_name(k);
+		let cf=this.get_codegen_name(x);
 		if(!cf) {debugger; return;}
 		let wr=this.wn(cf,x,k);
 		if(!wr) return;
