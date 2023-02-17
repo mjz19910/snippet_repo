@@ -1769,7 +1769,6 @@ class ServiceMethods extends ServiceData {
 				const {type,id,raw_id}=value;
 				let type_2=split_string(type,":")[2];
 				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,type: `playlist_id:${type_2}`,id,raw_id});
-				this.put_boxed_id(value);
 				let is_critical=this.get_playlist_url_info_critical(value);
 				this.log_playlist_id(value,is_critical);
 			} break;
