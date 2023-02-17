@@ -236,6 +236,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopWatchAds";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DisplayAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Dropdown";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DynamicReadaheadConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EY_Offlineability";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ElementResourceStatus";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Emoji";}
@@ -465,6 +466,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WatchNextEndScreen";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WatchNextTabbedResults";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WatchResults";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPlayerConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPrefetch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebSearchboxConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_YtConfig";}

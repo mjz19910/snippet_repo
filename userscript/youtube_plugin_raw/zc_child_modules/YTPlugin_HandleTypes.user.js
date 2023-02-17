@@ -407,6 +407,14 @@ class HandleTypes extends ServiceMethods {
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
+	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
+	R_LiveChatViewerEngagementMessage(x) {this.H_("R_LiveChatViewerEngagementMessage","liveChatViewerEngagementMessageRenderer",x,this.D_LiveChatViewerEngagementMessage);}
+	/** @public @arg {D_LiveChatViewerEngagementMessage} x */
+	D_LiveChatViewerEngagementMessage(x) {
+		const cf="D_LiveChatViewerEngagementMessage";
+		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_SubscribeButton} x */
@@ -2475,20 +2483,43 @@ class HandleTypes extends ServiceMethods {
 	R_DynamicReadaheadConfig(x) {this.H_("R_DynamicReadaheadConfig","dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
 	/** @public @arg {D_DynamicReadaheadConfig} x */
 	D_DynamicReadaheadConfig(x) {
-		const cf="D_AudioConfig";
+		const cf="D_DynamicReadaheadConfig";
 		const {maxReadAheadMediaTimeMs,minReadAheadMediaTimeMs,readAheadGrowthRateMs,...y}=this.s(cf,x); this.g(y);
 		this.ceq(maxReadAheadMediaTimeMs,120000);
 		this.ceq(minReadAheadMediaTimeMs,15000);
 		this.ceq(readAheadGrowthRateMs,1000);
 	}
 	/** @public @arg {D_WebPlayerConfig} x */
-	D_WebPlayerConfig(x) {x;}
+	D_WebPlayerConfig(x) {
+		const cf="D_WebPlayerConfig";
+		const {useCobaltTvosDash,webPlayerActionsPorting,...y}=this.s(cf,x); this.g(y);
+		this.ceq(useCobaltTvosDash,true);
+		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
+	}
+	/** @public @arg {D_WebPlayerActionsPorting} x */
+	D_WebPlayerActionsPorting(x) {
+		const cf="D_WebPlayerActionsPorting";
+		const {getSharePanelCommand,subscribeCommand,unsubscribeCommand,addToWatchLaterCommand,removeFromWatchLaterCommand,...y}=this.s(cf,x); this.g(y);
+	}
 	/** @public @arg {R_LiveChatTextMessage} x */
-	R_LiveChatTextMessage(x) {x;}
+	R_LiveChatTextMessage(x) {this.H_("R_LiveChatTextMessage","liveChatTextMessageRenderer",x,this.D_LiveChatTextMessage);}
+	/** @public @arg {D_LiveChatTextMessage} x */
+	D_LiveChatTextMessage(x) {
+		const cf="D_LiveChatTextMessage";
+		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(message);
+		console.log(`${cf}.id`,id);
+	}
 	/** @public @arg {R_LiveChatPlaceholderItem} x */
-	R_LiveChatPlaceholderItem(x) {x;}
-	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
-	R_LiveChatViewerEngagementMessage(x) {x;}
+	R_LiveChatPlaceholderItem(x) {this.H_("R_LiveChatPlaceholderItem","liveChatPlaceholderItemRenderer",x,this.D_LiveChatPlaceholderItem);}
+	/** @public @arg {D_LiveChatPlaceholderItem} x */
+	D_LiveChatPlaceholderItem(x) {
+		const cf="D_LiveChatPlaceholderItem";
+		const {id,timestampUsec,...y}=this.s(cf,x); this.g(y);
+		console.log(`${cf}.id`,id);
+		let u_seconds=this.parse_number_template(timestampUsec);
+		this.a_primitive_num(u_seconds);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
