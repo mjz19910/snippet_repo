@@ -143,6 +143,7 @@ class IndexedDBService extends BaseService {
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		for(let item of d_cache) {
+			console.log("sync cache item",item);
 			const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key)));
 			if(cur_cursor===null) {
 				this.committed_data.push(item);
