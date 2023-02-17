@@ -2256,6 +2256,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text";
+		if(!x) {debugger; return;}
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(simpleText,this.a_primitive_str);
 		this.tz(runs,this.D_TextRun);
@@ -5911,7 +5912,7 @@ class ServiceMethods extends ServiceData {
 	D_CommentsHeader(x) {
 		const cf="D_CommentsHeader";
 		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(countText);
+		this.t(countText,this.G_Text);
 		this.R_CommentSimplebox(createRenderer);
 		this.R_SortFilterSubMenu(sortMenu);
 		this.trackingParams(trackingParams);

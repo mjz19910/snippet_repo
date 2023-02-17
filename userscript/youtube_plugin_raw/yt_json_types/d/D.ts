@@ -1646,7 +1646,7 @@ type D_CommentsEntryPointHeader={
 };
 type D_CommentsEntryPointHeader_contentRenderer=D_CommentsEntryPointHeader["contentRenderer"];
 type D_CommentsHeader={
-	countText: G_Text;
+	countText?: G_Text;
 	createRenderer: R_CommentSimplebox;
 	sortMenu: R_SortFilterSubMenu;
 	trackingParams: string;
