@@ -1887,7 +1887,6 @@ class HandleTypes extends ServiceMethods {
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
 		const {sparams,lsparams,...y1}=this.s(cf1,x);
-		let y2=y1;
 		/** @type {Omit<typeof x,T_Split<typeof sparams>[number]>} */
 		let ro=as({});
 		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
@@ -1912,6 +1911,7 @@ class HandleTypes extends ServiceMethods {
 		for(let k of kk_ro) {
 			set_obj(ro,x,k);
 		}
+		let y2=ro;
 		this.D_VideoPlaybackShape_S_Params(obj_sparams);
 		// this.a_primitive_str(expire);
 		// this.a_primitive_str(ei);
