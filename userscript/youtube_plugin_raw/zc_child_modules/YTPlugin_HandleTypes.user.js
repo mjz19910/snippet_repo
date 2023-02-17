@@ -82,27 +82,8 @@ ECatcherService.known_experiments.push(...[
 	[],
 ].flat());
 class HandleTypes extends ServiceMethods {
-	/** @public @arg {D_TimedTextApi} x */
-	D_TimedTextApi(x) {
-		const cf="D_TimedTextApi";
-		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
-		this.videoId(v);
-		caps&&this.save_string(`${cf}.caps`,caps);
-		this.save_string(`${cf}.xoaf`,xoaf);
-		xoadf&&this.save_string(`${cf}.xoadf`,xoadf);
-		xosf&&this.save_string(`${cf}.xosf`,xosf);
-		this.save_string(`${cf}.hl`,hl);
-		this.save_string(`${cf}.ip`,ip);
-		this.save_string(`${cf}.ipbits`,ipbits);
-		let e_num=this.parse_number_template(expire);
-		if(Number.isNaN(e_num)) debugger;
-		this.a_primitive_num(e_num);
-		this.parse_signature(signature);
-		this.save_string(`${cf}.sparams`,sparams);
-		this.save_string(`${cf}.key`,key);
-		kind&&this.save_string(`${cf}.kind`,kind);
-		this.save_string(`${cf}.lang`,lang);
-	}
+	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
+	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
 	fmt_arr(x) {
 		return as(x.map(v => `${v}`).join(".f"));
@@ -152,8 +133,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_WebPlayerActionsPorting";
 		const {getSharePanelCommand,subscribeCommand,unsubscribeCommand,addToWatchLaterCommand,removeFromWatchLaterCommand,...y}=this.s(cf,x); this.g(y);
 	}
-	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
-	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @public @arg {CF_L_TP_Params} cf @arg {D_WatchPageUrl} x */
 	D_WatchPageUrl(cf,x) {
 		let u1=split_string_once(x,"/")[1];
@@ -341,10 +320,44 @@ class HandleTypes extends ServiceMethods {
 	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @public @arg {R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
+	/** @private @arg {D_TemplateUpdate} x */
+	D_TemplateUpdate(x) {
+		const cf="D_TemplateUpdate";
+		if("dependencies" in x) {
+			const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			let idp=split_string_once(identifier,"|");
+			if(idp[0]!=="track_selection_sheet_option.eml") debugger;
+			this.save_string("D_TemplateUpdate.identifier.id",idp[0]);
+			this.save_string("D_TemplateUpdate.identifier.hash",idp[1]);
+			this.t(dependencies,dep_arr => {
+				if(dep_arr.length!==1) debugger;
+				const dep=dep_arr[0];
+				let ddp=split_string_once(dep,"|");
+				if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
+				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
+				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
+			});
+			this.a_primitive_str(a);
+		} else {
+			const {identifier,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			let idp=split_string_once(identifier,"|");
+			if(idp[0]!=="bottom_sheet_list_option.eml") debugger;
+			this.a_primitive_str(a);
+		}
+	}
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
+	/** @private @arg {D_Transcript} x */
+	D_Transcript(x) {
+		const cf="D_Transcript";
+		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.R_TranscriptSearchPanel(a);
+	}
 	/** @private @arg {R_TwoColumnSearchResults} x */
 	R_TwoColumnSearchResults(x) {this.H_("R_TwoColumnSearchResults","twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
+	/** @private @arg {D_TwoColumnSearchResults} x */
+	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {R_TranscriptFooter} x */
@@ -353,6 +366,29 @@ class HandleTypes extends ServiceMethods {
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
 	/** @private @arg {R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
+	/** @private @arg {D_TranscriptFooter} x */
+	D_TranscriptFooter(x) {this.H_("D_TranscriptFooter","languageMenu",x,this.R_SortFilterSubMenu);}
+	/** @public @arg {D_TimedTextApi} x */
+	D_TimedTextApi(x) {
+		const cf="D_TimedTextApi";
+		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
+		this.videoId(v);
+		caps&&this.save_string(`${cf}.caps`,caps);
+		this.save_string(`${cf}.xoaf`,xoaf);
+		xoadf&&this.save_string(`${cf}.xoadf`,xoadf);
+		xosf&&this.save_string(`${cf}.xosf`,xosf);
+		this.save_string(`${cf}.hl`,hl);
+		this.save_string(`${cf}.ip`,ip);
+		this.save_string(`${cf}.ipbits`,ipbits);
+		let e_num=this.parse_number_template(expire);
+		if(Number.isNaN(e_num)) debugger;
+		this.a_primitive_num(e_num);
+		this.parse_signature(signature);
+		this.save_string(`${cf}.sparams`,sparams);
+		this.save_string(`${cf}.key`,key);
+		kind&&this.save_string(`${cf}.kind`,kind);
+		this.save_string(`${cf}.lang`,lang);
+	}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
@@ -387,8 +423,6 @@ class HandleTypes extends ServiceMethods {
 	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
-	/** @private @arg {D_TranscriptFooter} x */
-	D_TranscriptFooter(x) {this.H_("D_TranscriptFooter","languageMenu",x,this.R_SortFilterSubMenu);}
 	/** @private @arg {R_PlaylistVideoThumbnail} x */
 	R_PlaylistVideoThumbnail(x) {this.H_("R_PlaylistVideoThumbnail","playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
 	/** @private @arg {R_Message} x */
@@ -555,8 +589,6 @@ class HandleTypes extends ServiceMethods {
 		if(timeoutMs!==60000) debugger;
 		this.params("timed_continuation.data",continuation);
 	}
-	/** @private @arg {D_TwoColumnSearchResults} x */
-	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
 	D_PlaylistSidebarSecondaryInfo(x) {this.H_("D_PlaylistSidebarSecondaryInfo","videoOwner",x,this.R_VideoOwner);}
 	cg_mismatch_set=new Set();
@@ -1518,40 +1550,8 @@ class HandleTypes extends ServiceMethods {
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
 		this.clickTrackingParams(clickTrackingParams);
 	}
-	/** @private @arg {D_TemplateUpdate} x */
-	D_TemplateUpdate(x) {
-		const cf="D_TemplateUpdate";
-		if("dependencies" in x) {
-			const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			let idp=split_string_once(identifier,"|");
-			if(idp[0]!=="track_selection_sheet_option.eml") debugger;
-			this.save_string("D_TemplateUpdate.identifier.id",idp[0]);
-			this.save_string("D_TemplateUpdate.identifier.hash",idp[1]);
-			this.t(dependencies,dep_arr => {
-				if(dep_arr.length!==1) debugger;
-				const dep=dep_arr[0];
-				let ddp=split_string_once(dep,"|");
-				if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
-				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
-				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
-			});
-			this.a_primitive_str(a);
-		} else {
-			const {identifier,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			let idp=split_string_once(identifier,"|");
-			if(idp[0]!=="bottom_sheet_list_option.eml") debugger;
-			this.a_primitive_str(a);
-		}
-	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
-	/** @private @arg {D_Transcript} x */
-	D_Transcript(x) {
-		const cf="D_Transcript";
-		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.R_TranscriptSearchPanel(a);
-	}
 	/** @public @arg {RS_Channel} x */
 	RS_Channel(x) {
 		const cf="RS_Channel";
