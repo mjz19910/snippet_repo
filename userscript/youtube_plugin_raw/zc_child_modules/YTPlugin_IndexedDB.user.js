@@ -104,20 +104,19 @@ class IndexedDBService extends BaseService {
 		if(!value) {debugger; return;}
 		let typed_db=new TypedIndexedDb;
 		if(this.database_opening||this.database_open) {
-			debugger;
+			let cache=this.cached_data.get(key);
+			let cache_key=value.key;
+			if(cache?.includes(cache_key)) return;
+			this.push_waiting_obj(key,value);
+			this.check_size(key);
 			return;
 		}
 		this.database_opening=true;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
 		const tx=this.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
-		typed_db.put;
-		let cache=this.cached_data.get(key);
-		let cache_key=value.key;
-		if(cache?.includes(cache_key)) return;
+		await this.add_data_to_store(obj_store,value);
 		if(!this.database_open) this.requestOpen(as_any({key,value}),version);
-		this.push_waiting_obj(key,value);
-		this.check_size(key);
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
