@@ -1563,7 +1563,400 @@ class Support_EventInput extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 }
-export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
+class LocalStorageSeenDatabase extends ServiceMethods {
+	constructor() {
+		super();
+		this.#load_data();
+		this.#store_data();
+	}
+	/** @arg {string} key */
+	get_store_keys(key) {
+		return this.get_data_store().get_string_store(this.#new_strings).data.find(e => e[0]===key);
+	}
+	/** @private @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
+	save_key_objs={};
+	do_save_keys_obj=false;
+	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
+	unwrap_brackets(x) {
+		/** @returns {T|null} */
+		function gn() {return null;}
+		let wv=gn();
+		let wa=split_string_once_ex(x,"[",wv);
+		let [_s1,s2]=wa;
+		let ua=split_string_once_last(s2,"]",wv);
+		let [s3,_s4]=ua;
+		return s3;
+	}
+	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
+	save_keys(k,x) {
+		if(!x) return;
+		let ki=k;
+		if(this.do_save_keys_obj) {
+			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
+				arr: [],
+				/** @private @arg {{}} o */
+				set(o) {this.arr.push(o);}
+			};
+			this.save_key_objs[ki]?.set(x);
+		}
+		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
+		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
+		let store=this.#get_keys_store();
+		let keys=this.get_keys_of(x);
+		let ret=this.save_to_store("save_keys",k,keys.join(),store);
+		return ret;
+	}
+	/** @no_mod @arg {string} str @returns {Partial<ReturnType<StoreData['destructure']>>} */
+	#parse_data(str) {
+		let obj=JSON.parse(str);
+		return obj;
+	}
+	#store_data() {
+		let data=this.get_data_store();
+		for(let v=0;v<data.get_seen_numbers().length;v++) {
+			const j=data.get_seen_numbers()[v];
+			const [_n,[_k,c]]=j;
+			for(let i=0;i<c.length;i++) {
+				if(c[i]===null) {
+					c.splice(i,1);
+					i--;
+				}
+			}
+		}
+		let json_str=JSON.stringify(data);
+		this.#save_local_storage(json_str);
+	}
+	#load_data() {
+		if(this.#loaded_from_storage) return;
+		let json_str=this.#get_local_storage();
+		if(json_str) {
+			let ret=this.#parse_data(json_str);
+			this.#push_data_to_parent(ret);
+			this.#loaded_from_storage=true;
+		}
+	}
+	#data_store=new StoreData({});
+	get_data_store() {return this.#data_store;}
+	/** @no_mod @arg {string} seen_data */
+	#save_local_storage(seen_data) {
+		if(no_storage_access) {
+			this.#seen_data_json_str=seen_data;
+			return;
+		}
+		localStorage.seen_data=seen_data;
+	}
+	#get_local_storage() {
+		if(no_storage_access) return this.#seen_data_json_str;
+		return localStorage.getItem("seen_data");
+	}
+	/** @no_mod @arg {Partial<ReturnType<StoreData['destructure']>>} x */
+	#push_data_to_parent(x) {
+		let x1=this.get_data_store();
+		x1.update(x);
+	}
+	/** @no_mod @type {string|null} */
+	#seen_data_json_str=null;
+	#loaded_from_storage=false;
+	/** @no_mod @type {number|null|Nullable<{}>} */
+	#idle_id=null;
+	#onDataChange() {
+		if(this.#idle_id!==null) return;
+		this.#idle_id=requestIdleCallback(() => {
+			this.#idle_id=null;
+			this.#store_data();
+		});
+	}
+	#get_string_store() {return this.#data_store.get_string_store(this.#new_strings);}
+	/** @no_mod @type {[string,string|string[]][]} */
+	#new_keys=[];
+	#get_keys_store() {return this.#data_store.get_keys_store(this.#new_keys);}
+	/** @private @template T @arg {string} key @arg {StoreDescription<T>} store */
+	get_seen_string_item_store(key,store) {
+		const {index,data}=store;
+		let idx=index[key];
+		if(idx) return data[idx];
+		idx=data.findIndex(e => e[0]===key);
+		if(idx<0) return this.add_to_index(key,["one",[]],store);
+		index[key]=idx;
+		return data[idx];
+	}
+	/** @no_mod @type {[string,string|string[]][]} */
+	#new_strings=[];
+	/** @private @template {string|number} T @arg {T|T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} data_item */
+	save_to_data_item(x,data_item) {
+		let target=data_item[1];
+		if(x instanceof Array) {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
+	}
+	/** @private @template {string|number} T @arg {T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} item */
+	add_many_to_data_item(x,item) {
+		let target=item[1];
+		if(target[0]==="one") {
+			let inner=target[1].map(e => [e]);
+			target=["many",inner];
+			item[1]=target;
+		}
+		let found=target[1].find(e => this.eq_keys(e,x));
+		if(!found) return target[1].push(x);
+		return -1;
+	}
+	/** @private @template T @arg {T} x @arg {["one", T[]] | ["many", T[][]]} target */
+	add_one_to_data_arr(x,target) {
+		if(target[0]==="one") {if(!target[1].includes(x)) return target[1].push(x);} else if(target[0]==="many") {
+			let res=target[1].find(([e,...r]) => !r.length&&e===x);
+			if(!res) return target[1].push([x]);
+		}
+		return -1;
+	}
+	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
+	add_to_index(k,x,store) {
+		/** @private @type {StoreDescription<T>['data'][number]} */
+		let p=[k,x];
+		let nk=store.data.push(p)-1;
+		store.index[k]=nk;
+		return p;
+	}
+	/** @private @arg {string} ns @arg {string} k @arg {string|string[]} x @arg {StoreDescription<string>} store */
+	save_to_store(ns,k,x,store) {
+		if(x===void 0) {debugger; return;}
+		let store_item=this.get_seen_string_item_store(k,store);
+		let store_index=this.save_to_data_item(x,store_item);
+		if(store_index<0) return false;
+		store.new_data.push([k,x]);
+		this.#onDataChange();
+		console.log(`store [${ns}] [${k}] %o`,x);
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return;}
+		this.show_strings_bitmap(ns,idx,store);
+		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
+		return true;
+	}
+	do_random_breakpoint=false;
+	#get_number_store() {return this.#data_store.get_number_store(this.#new_numbers);}
+	/** @api @public @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
+	save_number(k,x,force_update) {
+		if(x===void 0) {debugger; return true;}
+		let store=this.#get_number_store();
+		let store_item=this.get_seen_string_item_store(k,store);
+		if(!store_item) {
+			store_item=[k,["one",[]]];
+			let nk=store.data.push(store_item)-1;
+			store.index[k]=nk;
+		}
+		let was_known=this.save_to_data_item(x,store_item);
+		if(was_known<0&&!force_update) return false;
+		store.new_data.push([k,x]);
+		this.#onDataChange();
+		console.log("store_num [%s]",k,x);
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return true;}
+		return true;
+	}
+	get indexed_db() {return this.x.get("indexed_db");}
+	/** @protected @arg {AGA_push_waiting_obj_noVersion} args */
+	indexed_db_put(...args) {
+		this.indexed_db.put(...args,this.indexed_db_version);
+	}
+	/** @api @public @arg {string} k @arg {string|string[]} x */
+	save_string(k,x) {
+		if(x===void 0) {debugger; return true;}
+		this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}`,type:k,id:x});
+		let store=this.#get_string_store();
+		let store_item=this.get_seen_string_item_store(k,store);
+		if(!store_item) {
+			store_item=[k,["one",[]]];
+			let nk=store.data.push(store_item)-1;
+			store.index[k]=nk;
+		}
+		let was_known=this.save_to_data_item(x,store_item);
+		if(was_known<0) return false;
+		store.new_data.push([k,x]);
+		this.#onDataChange();
+		console.log(`store_str [${k}]${is_firefox?"":" "}%o`,x);
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return true;}
+		return true;
+	}
+	/** @private @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
+	show_strings_bitmap(ns,idx,store) {
+		let p=store.data[idx];
+		if(!p) return;
+		let k=p[0];
+		let cur=p[1];
+		if(cur[0]==="many") {
+			let src_data=cur[1];
+			let max_len=src_data.map(e => e.length).reduce((a,b) => Math.max(a,b));
+			for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++) {
+				let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
+				let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
+				console.log(` --------- [${ns}] [store["${k}"][${bitmap_src_idx}]] --------- `);
+				console.log(index_map.map(e => `"${e}"`).join(","));
+				console.log(bitmap);
+			}
+			return;
+		} else {
+			let bitmap_src=cur[1];
+			let linear_map=bitmap_src.every(e => !e.includes(","));
+			if(linear_map) {
+				console.log(` --------- [${ns}] [${k}] --------- `);
+				console.log(bitmap_src.join(","));
+				return;
+			}
+			let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
+			console.log(` --------- [${ns}] [${k}] --------- `);
+			console.log(index_map.join(","));
+			console.log(bitmap);
+		}
+	}
+	/** @private @arg {string} x */
+	rle_enc(x) {
+		let rle=x.replaceAll(/(1+)|(0+)/g,(v,c1,c2) => {
+			let rle=c1?.length??c2?.length;
+			if(rle<4) return "!"+v[0]+":"+v.length;
+			if(c1?.length!==void 0) return "!"+c1[0]+":"+c1.length;
+			if(c2?.length!==void 0) return "!"+c2[0]+":"+c2.length;
+			return ["!",c1?.length,"$",c2?.length,":"]+"";
+		}).split("!").slice(1);
+		return rle.join("!");
+	}
+	num_bitmap_console() {
+		let gg=this.get_data_store().get_seen_numbers().find(e => e[0]==="P_tracking_params.f1");
+		if(!gg) return;
+		let g1=gg[1];
+		if(g1[0]==="many") return;
+		let sr=g1[1].slice().sort((a,b) => a-b);
+		this.save_number("arr.P_tracking_params.f1",sr);
+		let bm=this.generate_bitmap_num(g1[1]).bitmap;
+		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		this.#get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
+	}
+	/** @private @arg {string[]} bitmap_src */
+	generate_bitmap(bitmap_src) {
+		let map_arr=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])];
+		let bitmap="\n"+bitmap_src.map(e => e.split(",").map(e => map_arr.indexOf(e))).map(e => {
+			let ta=new Array(map_arr.length).fill(0);
+			for(let x of e) ta[x]=1;
+			let bs=ta.join("");
+			return bs;
+		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
+		return new BitmapResult(map_arr,bitmap);
+	}
+	/** @private @arg {number[]} src */
+	generate_bitmap_num_raw(src) {
+		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
+		let zz=map_arr.at(-1)??0;
+		let ta=new Array(zz+1).fill(0);
+		src.forEach(e => {ta[e]=1;});
+		let bs=ta.join("");
+		return new BitmapResult(map_arr,bs);
+	}
+	/** @private @arg {number[]} src */
+	generate_bitmap_num_raw_fill(src,fill_value=0) {
+		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
+		let zz=map_arr.at(-1)??0;
+		let ta=new Array(zz+1).fill(fill_value);
+		/** @private @type {0|1} */
+		let replace_value;
+		if(fill_value===0) {replace_value=1;} else {replace_value=0;}
+		src.forEach(e => {ta[e]=replace_value;});
+		let bs=ta.join("");
+		return new BitmapResult(map_arr,bs);
+	}
+	bitmap_console_todo_1() {
+		let yt_plugin={ds: this,};
+		let gg=yt_plugin.ds.get_data_store().get_seen_numbers().find(e => e[0]==="tracking.trackingParams.f1");
+		if(!gg) return;
+		if(gg[1][0]==="many") return;
+		gg[1][1].sort((a,b) => a-b);
+		let g1=gg[1];
+		/** @private @arg {string} str */
+		function find_one_set_bit(str) {
+			let rx=/(?<=0)1{1}(?=0)/g;
+			/** @private @type {[number,string][]} */
+			let r=[];
+			for(;;) {
+				let rr=rx.exec(str);
+				if(rr===null) return r;
+				r.push([rx.lastIndex,rr[0]]);
+			}
+		}
+		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1[1],1).bitmap;
+		let mm=find_one_set_bit(bm);
+		/** @private @arg {string} bm */
+		function unset_bits(bm) {
+			let mu=bm.split("");
+			for(let u of mm) {
+				let [k,v]=u;
+				let cx=k-1;
+				let off=0;
+				if(v.length===2) off=0;
+				if(v.length===1) off=1;
+				for(let i=cx-1;i<k+v.length-2;i++) {
+					let ui=i+off;
+					let log_clear=false;
+					if(log_clear) console.log("clear",ui,"of",mu[ui]);
+					mu[ui]="0";
+				}
+			}
+			return mu;
+		}
+		/** @private @arg {string[]} s */
+		function swap_mask(s) {return s.map(e => e==="0"? "1":"0").join("");}
+		let mu=unset_bits(bm);
+		new Map(mm);
+		yt_plugin.ds.rle_enc(mu.join(""));
+		let mc=swap_mask(mu);
+		mm=find_one_set_bit(mc);
+		mu=unset_bits(mc);
+		let mu_=swap_mask(mu);
+		let mx=mu_;
+		let rle_x=yt_plugin.ds.rle_enc(mx);
+		console.log(rle_x.split("!"));
+	}
+	console_code_2() {"0:0!1:1".split("!").map(e => e.split(":").map(e => parseInt(e,10))).map((e,i) => [...e,i]).sort(([,a],[,b]) => a-b).map(([a,b,i]) => `${b}$${i}$${a}`);}
+	/** @private @arg {number[]} bitmap_src */
+	generate_bitmap_num(bitmap_src) {
+		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
+		let bitmap_rle=this.rle_enc(bitmap);
+		return new BitmapResult(map_arr,bitmap_rle);
+	}
+	/** @no_mod @type {[string,number|number[]][]} */
+	#new_numbers=[];
+	/** @no_mod @type {[string,{t:boolean;f:boolean}][]} */
+	#new_booleans=[];
+	/** @api @public @arg {string} key @arg {boolean} bool */
+	save_boolean(key,bool) {
+		let krc=this.#data_store.get_seen_booleans().find(e => e[0]===key);
+		if(!krc) {
+			krc=[key,{t: false,f: false}];
+			this.#data_store.get_seen_booleans().push(krc);
+		}
+		let [,kc]=krc;
+		if(bool) {
+			if(!kc.t) {console.log(key,bool);}
+			kc.t=true;
+		} else {
+			if(!kc.f) {console.log(key,bool);}
+			kc.f=true;
+		}
+		this.#new_booleans.push([key,kc]);
+		this.#onDataChange();
+	}
+	/** @no_mod @type {number[]} */
+	#new_root_visual_elements=[];
+	/** @api @public @arg {number} x */
+	save_root_visual_element(x) {
+		if(x===void 0) {debugger; return;}
+		if(this.#data_store.get_seen_root_visual_elements().includes(x)) return;
+		console.log("store [root_visual_element]",x);
+		this.#data_store.get_seen_root_visual_elements().push(x);
+		this.#new_root_visual_elements.push(x);
+		this.#onDataChange();
+	}
+}
+export_(exports => {
+	exports.TypedefGenerator=TypedefGenerator;
+	exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;
+});
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
 	exports.Support_RS_WatchPage=Support_RS_WatchPage;
