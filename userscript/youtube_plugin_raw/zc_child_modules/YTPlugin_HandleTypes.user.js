@@ -1529,7 +1529,7 @@ class HandleTypes extends ServiceMethods {
 		switch(ap[0]) {
 			default: {
 				switch(ap) {case "": }
-				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,x);
+				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,ap[0]);
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 			}; break;
