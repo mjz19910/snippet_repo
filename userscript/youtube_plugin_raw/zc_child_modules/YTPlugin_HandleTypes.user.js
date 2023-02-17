@@ -1894,6 +1894,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {Ret_get_gv_parts} */
 	get_gv_parts(x) {
+		let parts=this.get_gv_parts_impl(x);
+		return {
+			part1:parts[0],
+			part2:parts[1],
+		}
 		return as_any(this.get_gv_parts_impl(x));
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
@@ -1948,10 +1953,9 @@ class HandleTypes extends ServiceMethods {
 		for(let mi of mn_arr) {
 			/** @type {Ret_get_gv_parts} */
 			let ap=this.get_gv_parts(mi);
-			if(ap.length!==2) debugger;
 			this.save_string(`${cf1}.google_video_partition`,ap[0]);
 			this.save_string(`${cf1}.google_video_selector`,ap[1]);
-			switch(ap[0]) {
+			switch(ap.part1) {
 				default: {
 					let [x]=ap;
 					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
