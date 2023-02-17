@@ -12,3 +12,5 @@ typescript_build/
 dist/
 errors.txt
 *.hidden.*
+/*.out
+/*.out.js
