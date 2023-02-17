@@ -1931,7 +1931,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.vprv`,vprv);
 		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
 		this.save_string(`${cf1}.mime`,mime);
-		console.log(`${cf1}.ns`,ns);
+		this.save_b64_binary(`${cf2}.ns`,ns);
 		if(gir) this.save_string(`${cf1}.gir`,gir);
 		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.t(clen,x => {
@@ -1952,7 +1952,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.fexp`,fexp);
 		this.save_string(`${cf1}.c`,c);
 		this.save_string(`${cf1}.txp`,txp);
-		console.log(`${cf1}.n`,n);
+		this.save_b64_binary(`${cf2}.n`,n);
 		this.save_string(`${cf1}.sparams`,sparams);
 		this.save_string(`${cf1}.lsparams`,lsparams);
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
