@@ -2126,11 +2126,20 @@ class HandleTypes extends ServiceMethods {
 		if("performCommentActionEndpoint" in x) return;
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @arg {string} cf @arg {string} sig_str */
+	validate_sig(cf,sig_str) {
+		if(sig_str.match(/^[0-9A-F]+$/)===null) debugger;
+		this.save_number(cf,sig_str.length);
+		switch(sig_str.length) {
+			default: debugger; break;
+			case 38: case 40:
+		}
+	}
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {
 		let [sig_0,sig_1]=split_string_once(x,".");
-		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
-		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
+		this.validate_sig("sig.0",sig_0);
+		this.validate_sig("sig.1",sig_1);
 	}
 	/** @public @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
