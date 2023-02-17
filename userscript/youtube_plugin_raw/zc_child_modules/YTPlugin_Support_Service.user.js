@@ -1779,20 +1779,30 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					data.id[1][1].push(x);
 				}
 			}
-			x;
+			this.indexed_db.put("boxed_id",data,3);
 		});
 	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
 	save_string_impl(k,x) {
 		if(x===void 0) {debugger; return;}
-		if(x instanceof Array) {
-			for(let i=0;i<x.length;i++) {
-				let v=x[i];
-				this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}[${i}]`,type: `${k}[${i}]`,id: v});
+		this.indexed_db.get("boxed_id",`boxed_id:str:${k}`).then(data => {
+			if(!data) return;
+			if(data.id[0]!=="many_str") {debugger; return;}
+			if(data.id[1][0]==="many") {
+				if(x instanceof Array) {
+					data.id[1][1].push(x);
+				} else {
+					data.id[1][1].push([x]);
+				}
+			} else {
+				if(x instanceof Array) {
+					data.id[1]=["many",[x]];
+				} else {
+					data.id[1][1].push(x);
+				}
 			}
-		} else {
-			this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}`,type: k,id: x});
-		}
+			this.indexed_db.put("boxed_id",data,3);
+		});
 		return;
 	}
 	/** @public @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
