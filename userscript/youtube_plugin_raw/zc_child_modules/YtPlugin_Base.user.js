@@ -42,12 +42,29 @@ function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
+const path_map={
+	/** @type {"YoutubePluginBase"} */
+	["./YtPlugin_Base.user"]: "YoutubePluginBase"
+};
+/** @template {keyof typeof path_map} T @arg {T} x */
+function require(x) {
+	window.__plugin_modules__??={};
+	let all_modules=window.__plugin_modules__;
+	if(x===void 0) {throw new Error("missing required");}
+	let loc=path_map[x];
+	let imp=all_modules[`mod$${loc}`];
+	if(!imp) {debugger; throw new Error("missing require path map");}
+	return imp;
+}
 /** @template T @arg {T|null} x @returns {T} */
 function require_notNull(x) {
 	if(x===null) {throw new Error("Null not expected");}
 	return x;
 }
-export_(exports => {exports.required=required;},{global: true});
+export_(exports => {
+	exports.required=required;
+	exports.require=require;
+},{global: true});
 export_(exports => {exports.do_export=do_export;});
 const log_imports=false;
 export_(exports => {exports.__yt_plugin_log_imports__=log_imports;},{global: true});
@@ -59,7 +76,7 @@ function as(e,x=e) {return x;}
 /** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
 function as_any(e,x=e) {return x;}
 export_(exports => {
-	exports.as_=as;
+	exports.as=as;
 	exports.as_any=as_any;
 });
 //#endregion

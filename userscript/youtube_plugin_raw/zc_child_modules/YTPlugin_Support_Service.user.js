@@ -22,6 +22,33 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 const split_string_once_ex=bs.split_string_once_ex;
 const split_string_once_last=bs.split_string_once_last;
+const {as}=bs;
+split_string_once_ex_v2;
+/** @private @arg {WA|null} _wa @template {[string,string]} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce<WA,S,D>} */
+function split_string_once_ex_v2(s,d=bs.as(","),_wa) {
+	if(s==="") {
+		/** @private @type {[]} */
+		let r=[];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let i=s.indexOf(d);
+	if(i===-1) {
+		/** @private @type {[S]} */
+		let r=[s];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let a=s.slice(0,i);
+	let b=s.slice(i+d.length);
+	/** @private @type {[string,string]} */
+	let r=[a,b];
+	/** @private @type {any} */
+	let q=r;
+	return as(q);
+}
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -1685,9 +1712,15 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			wa;
 		}
 		/** @type {`${A}:${B}`} */
-		let z=wa[1];
-		let zr=split_string_once(z,":");
-		return zr;
+		let z1=wa[1];
+		/** @returns {B|null} */
+		function gb() {return null;}
+		/** @returns {[A,B]|null} */
+		function gb_a() {return null;}
+		let zr=split_string_once_ex(z1,":",gb());
+		let [z2]=split_string_once_ex_v2(z1,":",gb_a()); z2;
+		let [z,a]=zr; z; a;
+		return [z,a];
 	}
 	async load_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");

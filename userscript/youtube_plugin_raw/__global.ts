@@ -1,4 +1,5 @@
 import {required as required_} from "./zc_child_modules/YtPlugin_Base.user.js";
+import {require as require_} from "./zc_child_modules/YtPlugin_Base.user.js";
 import {ServiceLoader as ServiceLoader_} from "./zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js";
 
 export {};
@@ -18,5 +19,6 @@ declare global {
 		entries(): IterableIterator<[string,string]>;
 	}
 	var required: typeof required_;
+	var require: typeof require_;
 	type ServiceLoader=ServiceLoader_;
 }
