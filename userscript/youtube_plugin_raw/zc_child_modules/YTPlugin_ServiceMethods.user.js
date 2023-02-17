@@ -10,15 +10,13 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
+
+const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as_any, base64_dec}=require("./YtPlugin_Base.user");
+
 // ==/UserScript==
-const __module_name__="mod$ServiceMethods",store=required(window.__plugin_modules__);
-const bs=required(store["mod$YoutubePluginBase"]);
+const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
-const base64_dec=bs.base64_dec,base64_url_dec=bs.base64_url_dec;
-const as=bs.as_,as_any=bs.as_any;
-const ServiceData=bs.ServiceData;
-const split_string=bs.split_string,split_string_once=bs.split_string_once;
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;

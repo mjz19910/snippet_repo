@@ -12,19 +12,18 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+
+const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export, as_any}=require("./YtPlugin_Base.user");
+const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
+const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
+const {TypedefGenerator}=require("./YTPlugin_Support_Service.user");
+
 //#region module setup
 const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {throw new Error("Failed to load base plugin");}
 if(window.__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
-const store=required(window.__plugin_modules__);
-const bs=required(store["mod$YoutubePluginBase"]);
-const as=required(bs.as_);
-const split_string=bs.split_string;
-const split_string_once=bs.split_string_once;
-const base64_url_dec=bs.base64_url_dec;
-const MyReader=bs.MyReader;
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 //#region module init
@@ -37,15 +36,8 @@ function init_module() {
 	//#endregion
 }
 //#endregion
-//#region module imports
-const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
-const ServiceResolver=bs.ServiceResolver; ServiceResolver;
-const as_any=bs.as_any;
-const CodegenService=required(store["mod$CodegenService"]).CodegenService; CodegenService;
-const ss=required(store["mod$SupportService"]);
-//#endregion
 //#region Constants
-/** @type {{value:InstanceType<(typeof ss)["TypedefGenerator"]>|null}} */
+/** @type {{value:TypedefGenerator|null}} */
 const generate_typedef={value: null};
 //#endregion
 //#region HandleTypesEval
@@ -76,7 +68,6 @@ window.HandleTypesEval=HandleTypesEval;
 eval(handle_types_eval_code);
 //#endregion
 //#region HandleTypes
-const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
 	[],

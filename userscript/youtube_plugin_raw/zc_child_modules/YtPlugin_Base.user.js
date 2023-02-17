@@ -44,7 +44,13 @@ function required(x) {
 }
 const path_map={
 	/** @type {"YoutubePluginBase"} */
-	["./YtPlugin_Base.user"]: "YoutubePluginBase"
+	["./YtPlugin_Base.user"]: "YoutubePluginBase",
+	/** @type {"SupportService"} */
+	["./YTPlugin_Support_Service.user"]: "SupportService",
+	/** @type {"ECatcherService"} */
+	["./YTPlugin_ECatcherService.user"]: "ECatcherService",
+	/** @type {"ServiceMethods"} */
+	["./YTPlugin_ServiceMethods.user"]: "ServiceMethods",
 };
 /** @template {keyof typeof path_map} T @arg {T} x */
 function require(x) {
