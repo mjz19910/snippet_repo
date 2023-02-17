@@ -760,25 +760,47 @@ class Support_RS_Browse extends ServiceMethods {
 				if(e==="responseContext") return false;
 				return true;
 			}).join();
-			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
-			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
-			if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
-			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,sidebar") break x;
-			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
-			if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
-			if(jk==="contents,header,trackingParams,topbar") break x;
-			if(jk==="contents,trackingParams,topbar,sidebar") break x;
-			if(jk==="contents,trackingParams,topbar") break x;
-			// -contents
-			if(jk==="header,trackingParams,onResponseReceivedActions") break x;
-			// -header
-			if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="trackingParams,onResponseReceivedEndpoints") break x;
-			if(jk==="trackingParams,onResponseReceivedActions") break x;
-			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
-			debugger;
+			// contents,header [tag_1]
+			{
+				if(jk==="contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+				if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
+				if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
+				if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
+				if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
+				if(jk==="contents,header,metadata,trackingParams,topbar,microformat,sidebar") break x;
+				if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
+				if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
+				if(jk==="contents,header,trackingParams,topbar") break x;
+				if("contents" in x&&"header" in x) {
+					console.log(`-- [RS_Browse.jk_gen_tag_1] --\n\nif(jk==="${jk}") break x;`);
+					break x;
+				}
+			}
+			// contents [tag_2]
+			{
+				if(jk==="contents,trackingParams,topbar,sidebar") break x;
+				if(jk==="contents,trackingParams,topbar") break x;
+				if("contents" in x) {
+					console.log(`-- [RS_Browse.jk_gen_tag_2] --\n\nif(jk==="${jk}") break x;`);
+					break x;
+				}
+			}
+			// -contents,header [tag_3]
+			{
+				if(jk==="header,trackingParams,onResponseReceivedActions") break x;
+				if("header" in x) {
+					console.log(`-- [RS_Browse.tag_3] --\n\nif(jk==="${jk}") break x;`);
+					break x;
+				}
+			}
+			// -contents,-header [tag_4]
+			{
+				if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+				if(jk==="trackingParams,onResponseReceivedEndpoints") break x;
+				if(jk==="trackingParams,onResponseReceivedActions") break x;
+				console.log(`-- [RS_Browse.tag_4] --\n\nif(jk==="${jk}") break x;`);
+				break x;
+			}
 		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_ResponseContext(responseContext);
