@@ -1956,12 +1956,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
-		const {sparams,...u1}=this.s(cf1,x);
-		/** @type {Omit<typeof x,T_Split<typeof sparams>[number]>} */
-		let ro=as({});
+		const {sparams}=this.s(cf1,x);
 		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
 		let obj_sparams=as({});
 		let kk_x=this.get_keys_of(x);
+		let idx=kk_x.indexOf("sparams");
+		kk_x.splice(idx,1);
 		let kk_sparams=this.split_str(sparams);
 		/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
 		function set_obj(trg,src,k) {
@@ -1976,13 +1976,10 @@ class HandleTypes extends ServiceMethods {
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
 		}
-		/** @type {Exclude<(typeof kk_x)[number],T_Split<typeof sparams>[number]>[]} */
-		let kk_ro=as(kk_x);
-		for(let k of kk_ro) {
-			set_obj(ro,x,k);
-		}
 		this.D_VideoPlaybackShape_S_Params(obj_sparams);
-		const {lsparams,...u2}=u1;
+		const {lsparams}=x;
+		idx=kk_x.indexOf("lsparams");
+		kk_x.splice(idx,1);
 		let kk_lsparams=this.split_str(lsparams);
 		/** @type {{[U in T_Split<typeof lsparams>[number]]:D_VideoPlaybackShape[U]}} */
 		let obj_lsparams=as({});
@@ -1993,12 +1990,12 @@ class HandleTypes extends ServiceMethods {
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
 		}
-		/** @type {Omit<typeof ro,T_Split<typeof lsparams>[number]>} */
+		/** @type {Omit<typeof x,T_Split<typeof lsparams>[number]>} */
 		let y1=as({});
-		/** @type {Exclude<(typeof kk_ro)[number],T_Split<typeof lsparams>[number]>[]} */
+		/** @type {Exclude<(typeof kk_x)[number],T_Split<typeof lsparams>[number]>[]} */
 		let kk_y1=as(kk_x);
 		for(let k of kk_y1) {
-			set_obj(y1,u2,k);
+			set_obj(y1,x,k);
 		}
 		this.D_VideoPlaybackShape_LS_Params(obj_lsparams);
 		const {fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,...y3}=y1;
