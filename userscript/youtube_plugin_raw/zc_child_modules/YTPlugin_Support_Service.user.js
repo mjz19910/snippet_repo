@@ -595,7 +595,10 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_Card";
 		const {teaser,content,cueRanges,icon,trackingParams,cardId,feature,...y}=this.s(cf,x); this.g(y);
 		this.R_SimpleCardTeaser(teaser);
-		this.t(content,this.R_CollaboratorInfoCardContent);
+		this.t_cf(`${cf}:content`,content,(cf,x) => {
+			if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
+			cf; debugger;
+		});
 		this.z(cueRanges,this.D_CueRangeItem);
 		this.trackingParams(trackingParams);
 		this.t(cardId,this.a_primitive_str);

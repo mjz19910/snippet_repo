@@ -19,6 +19,14 @@ type R_ClickTrackingObj_t1_v0_v13187={
 	19: T_VW_2<RB_Obj_f19>;
 };
 
+type R_ClickTrackingObj_t9={
+	1: T_D32<370>;
+	2: T_D32<21965>;
+	3: T_D32<1>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	9: T_VW_Bigint<bigint>;
+};
+
 // R_ClickTrackingObj_t1_v337
 type RB_ClickTrackingObj_t1={
 	1: T_D32<0>;
@@ -65,10 +73,4 @@ type RB_ClickTrackingObj_t1={
 	2: T_D32<5531>,
 	4: T_VW_2<V_BinaryTimestamp>,
 	6: T_VSR<"watch">;
-}|{
-	1: T_D32<370>;
-	2: T_D32<21965>;
-	3: T_D32<1>;
-	4: T_VW_2<V_BinaryTimestamp>;
-	9: T_VW_Bigint<bigint>;
-}|R_ClickTrackingObj_t1_v0_v13187;
+}|R_ClickTrackingObj_t9|R_ClickTrackingObj_t1_v0_v13187;
