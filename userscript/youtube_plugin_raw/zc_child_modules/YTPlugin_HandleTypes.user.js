@@ -2145,15 +2145,15 @@ class HandleTypes extends ServiceMethods {
 		if(this.is_tp_xx(x,0)) {
 			if(this.is_tp_xx_2(x,13188)) {
 				const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.f1`,f1);
-				this.save_number(`${cf}.f2`,f2);
+				this.save_number(`${cf}.t0.f1`,f1);
+				this.save_number(`${cf}.t0.f2`,f2);
 				this.V_BinaryTimestamp(f4);
 				return;
 			}
 			if(19 in x) {
 				const {1: [,f1],2: [,f2],4: [,,f4],6: f6w,9: f9w,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.f1`,f1);
-				this.save_number(`${cf}.f2`,f2);
+				this.save_number(`${cf}.t0.f1`,f1);
+				this.save_number(`${cf}.t0.f2`,f2);
 				this.V_BinaryTimestamp(f4);
 				if(f6w) {
 					const [,[,f6]]=f6w;
