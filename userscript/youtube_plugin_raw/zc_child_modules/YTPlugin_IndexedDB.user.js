@@ -166,8 +166,10 @@ class IndexedDBService extends BaseService {
 						switch(item.type) {
 							default: debugger; break;
 							case "video_id:normal": {
+								let cv=cursor_value;
 								if(cursor_value.type!==item.type) {
-									debugger;
+									cv.type=item.type;
+									await this.update(obj_store,cv);
 									continue for_loop;
 								}
 								if(item.v===cursor_value.v) {
