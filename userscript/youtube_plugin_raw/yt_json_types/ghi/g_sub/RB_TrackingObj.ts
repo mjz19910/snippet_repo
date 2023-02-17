@@ -6,7 +6,8 @@ type RB_TrackingObj=
 	|RB_TrackingObj_w6n1
 	|RB_TrackingObj_w6w3
 	|RB_TrackingObj_w9
+	|RB_TrackingObj_w19n3
+	|RB_TrackingObj_w19w3
 	|RB_TrackingObj_w19w11
-	|RB_TrackingObj_w19
 	;
 ;
