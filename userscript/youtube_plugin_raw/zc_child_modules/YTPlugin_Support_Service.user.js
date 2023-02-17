@@ -1687,7 +1687,11 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(this.#idle_id!==null) return;
 		this.#idle_id=requestIdleCallback(() => {
 			this.#idle_id=null;
+			this.load_database();
 		});
+	}
+	async load_database() {
+		await this.indexed_db.asyncGetAll("boxed_id");
 	}
 	#get_string_store() {return this.#data_store.get_string_store();}
 	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
@@ -1744,6 +1748,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
 		if(!this.is_ready) {
+			debugger;
 			this.#onDataChange();
 			return;
 		}

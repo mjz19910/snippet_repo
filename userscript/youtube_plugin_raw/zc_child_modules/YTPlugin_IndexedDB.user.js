@@ -37,6 +37,8 @@ class TypedIndexedDb {
 	}
 	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} key @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T|null>} */
 	get(store,key) {return store.get(key);}
+	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
+	getAll(store) {return store.getAll();}
 }
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class IndexedDBService extends BaseService {
@@ -111,6 +113,15 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
+		let typed_db=new TypedIndexedDb;
+		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
+		const tx=this.transaction(db,key,"readonly");
+		const obj_store=typed_db.objectStore(tx,key);
+		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
+		return result;
+	}
+	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
+	async asyncGetAll(key,store_key) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
 		const tx=this.transaction(db,key,"readonly");
@@ -330,8 +341,6 @@ class IndexedDBService extends BaseService {
 		}
 		return res[1];
 	}
-	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
-	getAll(store) {return store.getAll();}
 	/** @template {{key:string}} T @arg {Set<string>} key_set @arg {T[]} x */
 	get_diff_by_key(key_set,x) {
 		let diff_arr=[];
@@ -351,7 +360,7 @@ class IndexedDBService extends BaseService {
 		ret.db=await this.get_async_result(indexedDB.open("yt_plugin",version));
 		let tx=this.transaction(ret.db,"video_id","readonly");
 		ret.store=typed_db.objectStore(tx,"video_id");
-		ret.store_data=await this.get_async_result(this.getAll(ret.store));
+		ret.store_data=await this.get_async_result(typed_db.getAll(ret.store));
 		ret.store_diff=this.get_diff_by_key(this.database_diff_keys,ret.store_data);
 		return ret;
 	}
