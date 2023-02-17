@@ -18,7 +18,6 @@ const bs=required(store["mod$YoutubePluginBase"]);
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const as_any=bs.as_any; as_any;
 const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
-const as=bs.as_;
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 const split_string_once_ex=bs.split_string_once_ex;
@@ -1681,12 +1680,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		/** @returns {`${A}:${B}`|null} */
 		function gn() {return null;}
 		let wv=gn();
-		let wa=split_string_once_ex(k,":",wv);
+		let wa=split_string_once_ex(k,"boxed_id:",wv);
 		if(wa.length===2) {
 			wa;
 		}
-		let z=wa[0];
-		return split_string_once(split_string_once(k,":")[1],":");
+		let z=wa[1];
+		return split_string_once(z,":");
 	}
 	async load_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
