@@ -1,7 +1,7 @@
 function do_dig() {
-	echo /tmp/dig_res.$a2.* | xargs -n 1 bash -c 'echo -n > $1' v
-	echo rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 100 -P 25 zsh -c '. ./dig.zsh child '$a2' "$@"'
-	echo "[results] -- [/${1}n[0-9a-z][0-9a-z]/] --"
+	echo /tmp/dig_res.$a2.*(N) | xargs -n 1 bash -c 'echo -n > $1' v
+	echo rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 300 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
+	printf "!"
 	cat /tmp/dig_res.$a2.*
 }
 function run {
@@ -15,7 +15,7 @@ function dig_batch() {
 	eval '{ do_dig; } always { popd; }'
 }
 function run_child {
-	echo "TempDir:$1"
+	printf "."
 	TF0=$(mktemp /tmp/dig_res.$1.XXX)
 	shift
 	rm $TF0
