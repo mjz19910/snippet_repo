@@ -1882,58 +1882,74 @@ class HandleTypes extends ServiceMethods {
 		let r2=ss.slice(idx+1);
 		return as_any([r1,r2]);
 	}
+	D_VideoPlaybackShape_S_Params(x) {x;}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
-		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,...y1}=this.s(cf1,x);
-		this.a_primitive_str(expire);
-		this.a_primitive_str(ei);
-		this.a_primitive_str(ip);
-		this.save_string(`${cf1}.id.0-2`,id.slice(0,2));
-		this.save_string(`${cf1}.itag`,itag);
-		if(aitags) this.save_string(`${cf1}.aitags`,aitags);
-		this.save_string(`${cf1}.source`,source);
-		this.save_string(`${cf1}.requiressl`,requiressl);
-		this.t(ctier,x => this.ceq("SH",x));
-		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,xtags,mime,ns,gir,...y2}=y1;
-		this.save_string(`${cf1}.mh`,mh);
-		this.save_string(`${cf1}.mm`,mm);
-		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
-		let mn_arr=split_string(mn);
-		for(let mi of mn_arr) {
-			let ap=this.get_gv_parts(mi);
-			if(ap.length!==2) debugger;
-			this.save_string(`${cf1}.google_video_partition`,ap[0]);
-			this.save_string(`${cf1}.google_video_selector`,ap[1]);
-			switch(ap[0]) {
-				default: {
-					let [x]=ap;
-					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
-					if(gen.has) break;
-					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
-				}; break;
-				case "n4v7s":
-				case "nx57y":
-				case "o097z":
-				case "nx5s7":
-				case "9gv7l":
-			}
+		const {sparams,lsparams,...y1}=this.s(cf1,x);
+		let y2=y1;
+		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
+		let obj_sparams=as({});
+		let kk_sparams=this.split_str(sparams);
+		/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
+		function set_obj(trg,src,k) {
+			trg[k]=src[k];
 		}
-		this.save_string(`${cf1}.ms`,ms);
-		this.save_string(`${cf1}.mv`,mv);
-		this.save_string(`${cf1}.mvi`,mvi);
-		this.save_string(`${cf1}.pl`,pl);
-		{
-			let x=initcwndbps;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
+		/** @type {any} */
+		let xa=x;
+		/** @type {typeof obj_sparams} */
+		let xt=xa;
+		for(let k of kk_sparams) {
+			set_obj(obj_sparams,xt,k);
 		}
-		this.save_string(`${cf1}.vprv`,vprv);
-		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
-		this.save_string(`${cf1}.mime`,mime);
-		this.save_b64_binary(`${cf2}.ns`,ns);
-		if(gir) this.save_string(`${cf1}.gir`,gir);
-		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
+		this.D_VideoPlaybackShape_S_Params(obj_sparams);
+		// this.a_primitive_str(expire);
+		// this.a_primitive_str(ei);
+		// this.a_primitive_str(ip);
+		// this.save_string(`${cf1}.id.0-2`,id.slice(0,2));
+		// this.save_string(`${cf1}.itag`,itag);
+		// if(aitags) this.save_string(`${cf1}.aitags`,aitags);
+		// this.save_string(`${cf1}.source`,source);
+		// this.save_string(`${cf1}.requiressl`,requiressl);
+		// this.t(ctier,x => this.ceq("SH",x));
+		// this.save_string(`${cf1}.mh`,mh);
+		// this.save_string(`${cf1}.mm`,mm);
+		// // cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
+		// let mn_arr=split_string(mn);
+		// for(let mi of mn_arr) {
+		// 	let ap=this.get_gv_parts(mi);
+		// 	if(ap.length!==2) debugger;
+		// 	this.save_string(`${cf1}.google_video_partition`,ap[0]);
+		// 	this.save_string(`${cf1}.google_video_selector`,ap[1]);
+		// 	switch(ap[0]) {
+		// 		default: {
+		// 			let [x]=ap;
+		// 			let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
+		// 			if(gen.has) break;
+		// 			console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+		// 		}; break;
+		// 		case "n4v7s":
+		// 		case "nx57y":
+		// 		case "o097z":
+		// 		case "nx5s7":
+		// 		case "9gv7l":
+		// 	}
+		// }
+		// this.save_string(`${cf1}.ms`,ms);
+		// this.save_string(`${cf1}.mv`,mv);
+		// this.save_string(`${cf1}.mvi`,mvi);
+		// this.save_string(`${cf1}.pl`,pl);
+		// {
+		// 	let x=initcwndbps;
+		// 	let x1=this.parse_number_template(x);
+		// 	this.a_primitive_num(x1);
+		// }
+		// this.save_string(`${cf1}.vprv`,vprv);
+		// if(xtags) this.save_string(`${cf1}.xtags`,xtags);
+		// this.save_string(`${cf1}.mime`,mime);
+		// this.save_b64_binary(`${cf2}.ns`,ns);
+		// if(gir) this.save_string(`${cf1}.gir`,gir);
+		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.t(clen,x => {
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
@@ -1960,7 +1976,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
 		cnr&&this.save_string(`${cf1}.cnr`,cnr);
 		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
-		const {gcr,...y}=y3; this.g(y);
+		const {gcr,...y}=y3; y;
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}
 	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
