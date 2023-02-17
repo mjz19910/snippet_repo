@@ -1702,7 +1702,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			this.load_database();
 		});
 	}
-	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k @returns {[A,B]} */
+	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
 	split_box_type(k) {
 		/** @returns {`${A}:${B}`|null} */
 		function gn() {return null;}
@@ -1715,8 +1715,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let z1=wa[1];
 		/** @returns {[A,B]|null} */
 		function gb_a() {return null;}
-		let zr=split_string_once_ex_v2(z1,":",gb_a());
-		return zr;
+		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
+		return this.exact_arr(za,zb);
 	}
 	async load_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
