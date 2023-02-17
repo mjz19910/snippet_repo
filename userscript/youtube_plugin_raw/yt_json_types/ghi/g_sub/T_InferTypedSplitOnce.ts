@@ -21,3 +21,18 @@ type TI_SplitOnce_NB_1<WA extends string,S extends string>=S extends WA? [WA,""]
 type TI_SplitOnce_NR_3<WA extends string,S extends string>=S extends ""? [WA,""]:never;
 type TI_SplitOnce_NB_2<WA extends string,S extends string,D extends string>=S extends `${D}${infer Rest}`? Rest extends `${WA}${infer Rest2}`? ["",`${WA}${Rest2}`]:never:[S];
 type TI_SplitOnce_NR_2<WA extends string,Rest extends string>=Rest extends `${WA}${infer Rest2}`? ["",`${WA}${Rest2}`]:never;
+
+
+type TI_SplitOnce_2_v2<WA extends [string,string],Split extends [string,string]>=Split[0] extends WA[0]? Split[1] extends WA[1]? [WA[0],WA[1]]:never:never;
+type TI_SplitOnce_NB_2_v2<WA extends [string,string],S extends string,D extends string>=S extends `${D}${infer Rest}`? Rest extends `${WA[0]}${infer Rest2}`? ["",`${WA[0]}${Rest2}`]:never:[S];
+type TI_SplitOnce_3_v2<WA extends [string,string],S extends string,D extends string,Split extends [string,string]>=
+	Split[0] extends ""? TI_SplitOnce_NB_2_v2<WA,S,D>:TI_SplitOnce_2_v2<WA,Split>;
+;
+type TI_SplitOnce_1_v2<WA extends [string,string],S extends string,D extends string,Begin extends string,Rest extends string>=
+	Begin extends WA[0]
+	? TI_SplitOnce_NR_3<WA[1],Rest>
+	:TI_SplitOnce_3_v2<WA,S,D,[Begin,Rest]>;
+;
+type TI_SplitOnce_v2<WA extends [string,string],S extends string,D extends string>=
+	S extends `${infer Begin}${D}${infer Rest}`? TI_SplitOnce_1_v2<WA,S,D,Begin,Rest>:["not extends `${infer Begin}${D}${infer Rest}`",S];
+;
