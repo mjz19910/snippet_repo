@@ -1898,10 +1898,10 @@ class HandleTypes extends ServiceMethods {
 		let ss=split_string(x,"-")[1];
 		let idx=5;
 		let r1=ss.slice(0,idx);
-		if(ss[idx]!=="n") return as_any([x]);
 		let r2=ss.slice(idx+1);
 		/** @type {any} */
 		let rt=[r1,r2];
+		if(ss[idx]!=="n") debugger;
 		return rt;
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
