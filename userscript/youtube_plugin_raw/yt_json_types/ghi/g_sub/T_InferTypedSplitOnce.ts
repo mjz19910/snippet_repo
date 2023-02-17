@@ -20,6 +20,6 @@ type T_InferredSplitOnce_NB_2<WA extends string,S extends string,D extends strin
 	:[S]
 	;
 ;
-type T_InferTypedSplitOnce_NR_1<WA extends string,Begin extends string,Rest extends string>=Rest extends `${WA}`? [Begin,WA]:never;
+type T_InferTypedSplitOnce_NR_1<WA extends string,Begin extends string,Rest extends string>=Rest extends WA? [Begin,WA]:never;
 type T_InferTypedSplitOnce_NR<WA extends string,Rest extends string>=Rest extends `${WA}${infer A}`? ["",`${WA}${A}`]:never;
 type T_InferredSplitOnce_NB_1<WA extends string,Begin extends string>=Begin extends WA? [WA,""]:never;
