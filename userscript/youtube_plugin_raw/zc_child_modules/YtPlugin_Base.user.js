@@ -2030,65 +2030,6 @@ class ApiBase {
 }
 //#endregion
 //#region Service
-/** @private @template T */
-class BitmapResult {
-	/** @constructor @public @arg {T[]} map_arr @arg {string} bitmap */
-	constructor(map_arr,bitmap) {
-		this.map_arr=map_arr;
-		this.bitmap=bitmap;
-	}
-} class StoreData {
-	/** @arg {Partial<ReturnType<StoreData['destructure']>>} src */
-	constructor(src) {this.update(src);}
-	/** @arg {[string,StoreData['seen_strings'][number][1][1][number]][]} new_data */
-	get_string_store(new_data) {
-		const {strings_key_index_map: index,seen_strings: data}=this;
-		return {index,data,new_data};
-	}
-	/** @arg {[string,StoreData["seen_numbers"][number][1][1][number]][]} new_data */
-	get_number_store(new_data) {
-		const {numbers_index: index,seen_numbers: data}=this;
-		return {index,data,new_data};
-	}
-	/** @arg {[string,StoreData['seen_keys'][number][1][1][number]][]} new_data */
-	get_keys_store(new_data) {
-		const {seen_keys_index: index,seen_keys: data}=this;
-		return {index,data,new_data};
-	}
-	get_seen_booleans() {return this.seen_booleans;}
-	get_seen_root_visual_elements() {return this.seen_root_visual_elements;}
-	/** @api @protected @type {[string,{t:boolean;f:boolean}][]} */
-	seen_booleans=[];
-	/** @api @protected @type {number[]} */
-	seen_root_visual_elements=[];
-	/** @api @protected @type {{[x:string]:number}} */
-	numbers_index={};
-	/** @api @protected @type {{[x:string]:number}} */
-	strings_key_index_map={};
-	/** @api @protected @type {{[x:string]:number}} */
-	seen_keys_index={};
-	/** @api @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
-	seen_keys=[];
-	/** @api @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
-	seen_strings=[];
-	/** @api @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
-	seen_numbers=[];
-	get_seen_numbers() {return this.seen_numbers;}
-	/** @api @public @arg {Partial<ReturnType<StoreData['destructure']>>} other */
-	update(other) {
-		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=other;
-		if(seen_booleans) this.seen_booleans=seen_booleans;
-		if(seen_numbers) this.seen_numbers=seen_numbers;
-		if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
-		if(seen_strings) this.seen_strings=seen_strings;
-		if(seen_keys) this.seen_keys=seen_keys;
-	}
-	/** @protected */
-	destructure() {
-		const {seen_booleans,seen_keys,seen_numbers,seen_root_visual_elements,seen_strings}=this;
-		return {seen_booleans,seen_keys,seen_numbers,seen_root_visual_elements,seen_strings};
-	}
-}
 /** @private @template T_ServiceLoader,T_ServiceFlags */
 class BaseServicePrivate extends ApiBase {
 	#x;
