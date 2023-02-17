@@ -5,12 +5,17 @@ namespace DT_Database {
 type DT_DatabaseStoreKeys=DT_Database.V_StoreKeys_;
 type DT_DatabaseStoreTypes={
 	video_id: {
-		key: `video_id:${AG_put_video_args_Args["type"]}:${string}`;
-		type: AG_put_video_args_Args["type"];
+		key: `video_id:normal:${string}`;
+		type: "video_id:normal";
+		v: string;
+	}|{
+		key: `video_id:shorts:${string}`;
+		type: "video_id:shorts";
 		v: string;
 	};
 	hashtag_id: {
 		key: `hashtag_id:${string}`;
+		type: "hashtag_id",
 		hashtag: string;
 	};
 	boxed_id: G_BoxedIdObj;
@@ -35,11 +40,12 @@ type G_PlaylistIdObj={
 	raw_id: `RDCMUC${string}`;
 }|{
 	key: `playlist_id:self:${D_PlaylistSelfId}`;
-	type: string;
+	type: "playlist_id:self";
 	id: D_PlaylistSelfId;
 }|{
 	key: `playlist_id:${D_PlaylistIdTypeBase}:${string}`;
-	type: string;
+	type: "playlist_id";
+	base_type: D_PlaylistIdTypeBase;
 	id: string;
 	raw_id: `${D_PlaylistIdTypeBase}${string}`;
 };

@@ -141,11 +141,11 @@ class IndexedDBService extends BaseService {
 		let [,d_cache]=this.get_data_cache(key);
 		try {
 			for(let item of d_cache) {
-				console.log("sync cache item",item);
 				let cursor_req=typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key));
 				cursor_loop: for(let i=0;;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
+						console.log("update sync cache item",item);
 						await this.update(obj_store,item);
 						break cursor_loop;
 					}
@@ -163,6 +163,7 @@ class IndexedDBService extends BaseService {
 						console.log("[obj_merge_cur]",cursor_value);
 						debugger;
 					} else {
+						item.key;
 						this.committed_data.push(item);
 					}
 					try {
