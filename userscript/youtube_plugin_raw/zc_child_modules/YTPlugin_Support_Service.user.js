@@ -1768,6 +1768,21 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						ss.data.push([k_parts[1],["one",str_arr]]);
 						continue;
 					}
+					/** @type {string[]} */
+					let str_arr=[];
+					for(let item of to_load.id[1][1]) {
+						if(item instanceof Array) {
+							for(let val of item) {
+								if(typeof val==="string") {
+									str_arr.push(val);
+								}
+							}
+							continue;
+						}
+						if(typeof item==="string") {
+							str_arr.push(item);
+						}
+					}
 					debugger;
 				}
 				console.log(k_parts);
