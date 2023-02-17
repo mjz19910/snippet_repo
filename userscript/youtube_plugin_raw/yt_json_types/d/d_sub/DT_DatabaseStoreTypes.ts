@@ -43,22 +43,22 @@ type PlaylistIdDatabaseObj={
 	id: string;
 	raw_id: `${D_PlaylistIdTypeBase}${string}`;
 };
-type GenIdSrcNum={
+type B_IdSrcNum={
 	key_type: "num";
 	type: number;
 };
-type GenIdSrcStr={
+type B_IdSrcStr={
 	key_type: "str";
 	type: string;
 };
-type GenIdSrc=GenIdSrcNum|GenIdSrcStr;
-type G_BoxedIdObj=GenIdBox<GenIdSrcNum>|GenIdBox<GenIdSrcStr>|{
+type G_IdSrc=B_IdSrcNum|B_IdSrcStr;
+type G_BoxedIdObj=T_IdBox<B_IdSrcNum>|T_IdBox<B_IdSrcStr>|{
 	key: "boxed_id:update_id";
 	type: "update_id";
 	id: number;
 };
 // ["many_str",["one",string[]]|["many",string[][]]]
-type GenIdBox<SV extends GenIdSrc,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
+type T_IdBox<SV extends G_IdSrc,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${string}`;
 	type: T;
 	id: [`many_${T}`,["one",V[]]|["many",V[][]]];
