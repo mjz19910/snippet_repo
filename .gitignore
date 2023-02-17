@@ -13,4 +13,4 @@ dist/
 errors.txt
 *.hidden.*
 /*.out
-/*.out.js
+/*.out.[jt]s
