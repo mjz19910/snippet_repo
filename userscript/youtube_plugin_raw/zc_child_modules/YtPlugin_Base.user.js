@@ -832,7 +832,7 @@ class MyReader {
 	/** @private */
 	read_any_impl() {
 		this.failed=false;
-		/** @private @type {D_DataArrType} */
+		/** @private @type {D_ProtobufWireFormat[]} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;

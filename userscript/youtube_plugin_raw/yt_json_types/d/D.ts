@@ -1695,7 +1695,7 @@ type D_DarkColorPalette_1={
 	section4Color: 4278979079;
 };
 type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
-type D_DataArrType=[fieldId: number,wireType: number,arr: D_ProtobufObj[]][];
+type D_ProtobufWireFormat=[fieldId: number,wireType: number,arr: D_ProtobufObj[]];
 type D_ProtobufObj=
 	|[type: "data32",fieldId: number,value: number]
 	|[type: "data_fixed32",fieldId: number,value: number]
