@@ -1520,7 +1520,6 @@ class HandleTypes extends ServiceMethods {
 		let ap_z=ap[0];
 		switch(ap_z) {
 			default: {
-				switch(ap_z) {case "": }
 				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,ap[0]);
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
@@ -1548,13 +1547,15 @@ class HandleTypes extends ServiceMethods {
 		let [ux,u1,...y]=split_string(hn,".googlevideo.com");
 		if(y.length!==0) debugger;
 		if(u1!=="") debugger;
-		/** @type {`rr${1|2|3|4|5}---sn-${"nx57y"|"nx5s7"}n7z`} */
+		/** @type {`rr${1}---sn-${"nx57y"}n7z`} */
 		let utx=as_any(ux);
 		let ss2=split_string(utx,"---");
 		if(!this.str_starts_with(ss2[0],"rr")) debugger;
 		let ss3=split_string_once(ss2[0],"rr")[1];
-		switch(ss3) {
-			default: ss3===""; debugger; break;
+		/** @type {`${1|2|3|4|5}`} */
+		let s3_t=as_any(ss3);
+		switch(s3_t) {
+			default: s3_t===""; debugger; break;
 			case "1": case "2": case "3": case "4": case "5":
 		}
 		let [,mi]=ss2;
@@ -1564,7 +1565,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf}.google_video_selector`,ap[1]);
 		switch(ap[0]) {
 			default: {
-				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,ap);
+				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,mi);
 				if(gen.has) break;
 				console.log(`-- [js_gen_case:${cf}.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				debugger;
@@ -1581,9 +1582,11 @@ class HandleTypes extends ServiceMethods {
 		}
 		let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
 		let ss6=this.join_string(ss5,"");
+		/** @type {G_Gv_1|"lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`} */
+		let s6=as_any(ss6);
 		console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`);
-		switch(ss6) {
-			default: ss6===""; debugger; break;
+		switch(s6) {
+			default: s6===""; debugger; break;
 			case "lk":
 			case "sd": case "se": case "sk": case "sl": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
@@ -1943,6 +1946,7 @@ class HandleTypes extends ServiceMethods {
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
+			/** @type {Ret_get_gv_parts} */
 			let ap=this.get_gv_parts(mi);
 			if(ap.length!==2) debugger;
 			this.save_string(`${cf1}.google_video_partition`,ap[0]);
