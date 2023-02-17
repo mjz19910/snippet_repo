@@ -142,27 +142,35 @@ class IndexedDBService extends BaseService {
 		try {
 			for(let item of d_cache) {
 				console.log("sync cache item",item);
-				const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key)));
-				if(cur_cursor===null) {
-					this.committed_data.push(item);
-					await this.add_data_to_store(obj_store,item);
-					return;
-				}
-				const cursor_value=cur_cursor.value;
-				if(cursor_value.key!==item.key) {
-					console.log(cursor_value.key.split(":"));
-					console.log(item.key.split(":"));
-					debugger;
-				}
-				let value_keys=this.get_keys_of_2(item);
-				let cursor_keys=this.get_keys_of_2(cursor_value);
-				if(!this.eq_keys(value_keys,cursor_keys)) {
-					console.log("[database_needs_obj_merge]");
-					console.log("[obj_merge_new]",item);
-					console.log("[obj_merge_cur]",cursor_value);
-					debugger;
-				} else {
-					this.committed_data.push(item);
+				let cursor_req=typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key));
+				for(let i=0;;i++) {
+					const cur_cursor=await this.get_async_result(cursor_req);
+					if(cur_cursor===null) {
+						this.committed_data.push(item);
+						await this.add_data_to_store(obj_store,item);
+						return;
+					}
+					const cursor_value=cur_cursor.value;
+					if(cursor_value.key!==item.key) {
+						console.log(cursor_value.key.split(":"));
+						console.log(item.key.split(":"));
+						debugger;
+					}
+					let value_keys=this.get_keys_of_2(item);
+					let cursor_keys=this.get_keys_of_2(cursor_value);
+					if(!this.eq_keys(value_keys,cursor_keys)) {
+						console.log("[database_needs_obj_merge]");
+						console.log("[obj_merge_new]",item);
+						console.log("[obj_merge_cur]",cursor_value);
+						debugger;
+					} else {
+						this.committed_data.push(item);
+					}
+					try {
+						cur_cursor.continue();
+					} catch(e) {
+						debugger;
+					}
 				}
 			}
 		} catch(e) {
