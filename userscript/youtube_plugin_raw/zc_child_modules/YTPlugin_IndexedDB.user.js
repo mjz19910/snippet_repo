@@ -120,9 +120,7 @@ class IndexedDBService extends BaseService {
 		if(cache?.includes(cache_key)) return;
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
-		if(this.database_opening||this.database_open) {
-			return;
-		}
+		if(this.database_opening||this.database_open) return;
 		this.database_opening=true;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
 		db.onclose=() => {
