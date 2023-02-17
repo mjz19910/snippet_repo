@@ -2182,8 +2182,8 @@ class HandleTypes extends ServiceMethods {
 		if(9 in x) {
 			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],9: [,,f9],...y}=this.s(cf,x); this.g(y);
 			this.save_number(`${cf}.w9.f1`,f1);
+			this.save_number(`${cf}.w9.f2`,f2);
 			this.save_number(`${cf}.w9.f3`,f3);
-			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
 			this.a_primitive_bigint(f9);
 			return;
@@ -2191,24 +2191,24 @@ class HandleTypes extends ServiceMethods {
 		if(3 in x) {
 			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=this.s(cf,x); this.g(y);
 			this.save_number(`${cf}.w3.f1`,f1);
+			this.save_number(`${cf}.w9.f2`,f2);
 			this.save_number(`${cf}.w3.f3`,f3);
-			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
 		if(6 in x) {
 			const {1: [,f1],2: [,f2],4: [,,f4],6: [t1,[t2,f6]],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.w1w4.f1`,f1);
-			this.a_primitive_num(f2);
+			this.save_number(`${cf}.w6.f1`,f1);
+			this.save_number(`${cf}.w6.f2`,f2);
 			this.V_BinaryTimestamp(f4);
-			this.save_string(`${cf}.w1w4.f6.type`,`${t1}:${t2}`);
-			this.save_string(`${cf}.w1w4.f6`,f6);
+			this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}`);
+			this.save_string(`${cf}.w6.f6`,f6);
 			return;
 		}
 		if(1 in x&&2 in x&&4 in x) {
 			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
 			this.save_number(`${cf}.w1w2w4.f1`,f1);
-			this.a_primitive_num(f2);
+			this.save_number(`${cf}.w9.f2`,f2);
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
@@ -2235,33 +2235,7 @@ class HandleTypes extends ServiceMethods {
 	/** @template {number} T @arg {T} t @arg {{2:T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
 	is_tp_xx_2(x,t) {return x[2][1]===t;}
 	/** @protected @arg {P_tracking_params} x */
-	P_tracking_params(x) {
-		const cf="P_tracking_params";
-		if(this.is_tp_xx(x,0)) {
-			if(16 in x) return;
-			const {1: [,f1],2: [,f2],4: [,,f4],...y}=x; this.g(y);
-			this.save_number(`${cf}.f1`,f1);
-			this.a_primitive_num(f2);
-			this.V_BinaryTimestamp(f4);
-			return;
-		}
-		if(this.is_tp_xx_2(x,6236)) {
-			return;
-		}
-		if(this.is_tp_xx_2(x,62457)) {
-			if(!x[3]) debugger;
-			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=x; this.g(y);
-			this.save_number(`${cf}.f1`,f1);
-			this.a_primitive_num(f2);
-			switch(f3) {
-				default: this.codegen_typedef_bin(cf,x); break;
-				case 1: case 2: case 3: case 4:
-			}
-			this.V_BinaryTimestamp(f4);
-			return;
-		}
-		x;
-	}
+	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
