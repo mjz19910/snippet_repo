@@ -2142,7 +2142,6 @@ class HandleTypes extends ServiceMethods {
 			if(!f19) debugger;
 			return;
 		}
-		if(1 in x) return;
 		debugger;
 	}
 	/** @protected @arg {R_ClickTrackingObj} x */
