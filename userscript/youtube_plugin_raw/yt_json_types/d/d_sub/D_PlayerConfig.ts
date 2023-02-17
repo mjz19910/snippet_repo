@@ -1,5 +1,3 @@
-type D_StartSeconds={startSeconds: 635;};
-
 type D_PlayerConfig={
 	audioConfig: D_AudioConfig;
 	playbackStartConfig?: D_StartSeconds;
