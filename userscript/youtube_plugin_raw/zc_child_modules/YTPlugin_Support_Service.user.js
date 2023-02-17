@@ -1624,7 +1624,7 @@ class StoreData {
 		data: [],
 		new_data: [],
 	};
-	seen_root_visual_elements_obj={
+	seen_ve_num_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
 		data: [],
@@ -1639,7 +1639,17 @@ class StoreData {
 	/** @returns {StoreDescription<number>} */
 	get_number_store() {return this.seen_number_obj;}
 	/** @returns {StoreDescription<number>} */
-	get_root_visual_elements_store() {return this.seen_root_visual_elements_obj;}
+	get_root_visual_elements_store() {return this.seen_ve_num_obj;}
+	get_changed_stores() {
+		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
+		let changed=[];
+		if(this.seen_bool_obj.new_data.length>0) changed.push("bool");
+		if(this.seen_string_obj.new_data.length>0) changed.push("string");
+		if(this.seen_keys_obj.new_data.length>0) changed.push("keys");
+		if(this.seen_number_obj.new_data.length>0) changed.push("number");
+		if(this.seen_ve_num_obj.new_data.length>0) changed.push("ve");
+		return changed;
+	}
 }
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
@@ -1693,6 +1703,19 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	async load_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
 		console.log("load_database all boxed",boxed);
+		if(boxed.length===0) {
+			let store=this.#data_store; store;
+			store.get_changed_stores();
+			if(store.get_boolean_store().data.length>0) {
+				debugger;
+			}
+			if(store.get_string_store().data.length>0) {
+				debugger;
+			}
+		} else {
+			let store=this.#data_store; store;
+			debugger;
+		}
 	}
 	#get_string_store() {return this.#data_store.get_string_store();}
 	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
@@ -1749,7 +1772,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
 		if(!this.is_ready) {
-			debugger;
 			this.#onDataChange();
 			return;
 		}
