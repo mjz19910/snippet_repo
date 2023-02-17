@@ -14,6 +14,5 @@ type D_VideoPlaybackShape=D_VideoPlaybackShape_S_Params&D_VideoPlaybackShape_LS_
 	lsparams: "mh,mm,mn,ms,mv,mvi,pl,initcwndbps";
 	lsig: string;
 	cnr?: "14";
-	ratebypass?: "yes";
 };
 type D_VPS_Req=Required<D_VideoPlaybackShape>;
