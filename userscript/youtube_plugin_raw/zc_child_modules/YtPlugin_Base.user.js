@@ -3447,8 +3447,6 @@ function h_detect_firefox() {
 }
 const is_firefox=h_detect_firefox();
 //#endregion
-//#region HelperServices
-//#endregion
 //#region sizeof_js & Generate
 let text_encoder=new TextEncoder;
 /** @private @type {Map<unknown,number>} */
