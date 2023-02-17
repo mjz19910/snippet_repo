@@ -47,7 +47,8 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 			// :
 			// Begin extends `${WA}`
 			if((() => true)()) {
-				// ? [WA,Rest]
+				// ?
+				// [WA,Rest]
 				// :Begin extends ""
 				// ? T_InferredSplitOnce_NB_2<WA,S,D>
 				// :Rest extends `${WA}`
