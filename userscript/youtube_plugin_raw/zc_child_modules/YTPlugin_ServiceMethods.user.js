@@ -2804,6 +2804,8 @@ class ServiceMethods extends ServiceData {
 			case "watch-next-feed": case "watch-related-menu-button":
 		}
 	}
+	/** @arg {bigint} x */
+	a_primitive_bigint(x) {this._primitive_of(x,"bigint");}
 	/** @protected @arg {string} x */
 	a_primitive_str(x) {this._primitive_of(x,"string");}
 	/** @arg {number} x */
