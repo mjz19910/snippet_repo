@@ -685,7 +685,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==3832) debugger;
 		let wp_params=this.handle_types.D_WatchPageUrl(cf,url);
-		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
+		wp_params&&this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		this.E_Watch(endpoint);
 		if(preconnect!==void 0) this.handle_types.parse_preconnect_arr(preconnect);
 		this.handle_types.support_RS_Player.RS_Player(playerResponse);
@@ -700,7 +700,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 		this.handle_types.support_RS_Watch.RS_Watch(response);
 		this.handle_types.support_RS_Player.RS_Player(playerResponse);
 		let wp_params=this.handle_types.D_WatchPageUrl(cf,url);
-		this.save_keys(`${cf}.wp_params`,wp_params);
+		wp_params&&this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => this.D_VeCsn(x,true));
 	}
 }
@@ -1652,6 +1652,7 @@ class StoreData {
 	}
 }
 class LocalStorageSeenDatabase extends ServiceMethods {
+	/** @constructor @public @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		this.#load_data();
@@ -1727,14 +1728,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	get_data_store() {return this.#data_store;}
 	/** @no_mod @arg {string} seen_data */
 	#save_local_storage(seen_data) {
-		if(no_storage_access) {
+		if(bs.no_storage_access) {
 			this.#seen_data_json_str=seen_data;
 			return;
 		}
 		localStorage.seen_data=seen_data;
 	}
 	#get_local_storage() {
-		if(no_storage_access) return this.#seen_data_json_str;
+		if(bs.no_storage_access) return this.#seen_data_json_str;
 		return localStorage.getItem("seen_data");
 	}
 	/** @no_mod @arg {Partial<ReturnType<StoreData['destructure']>>} x */
@@ -1821,7 +1822,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	do_random_breakpoint=false;
 	#get_number_store() {return this.#data_store.get_number_store(this.#new_numbers);}
 	/** @api @public @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
-	save_number(k,x,force_update) {
+	save_number_impl(k,x,force_update) {
 		if(x===void 0) {debugger; return true;}
 		let store=this.#get_number_store();
 		let store_item=this.get_seen_string_item_store(k,store);
@@ -1839,15 +1840,17 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(idx<0) {debugger; return true;}
 		return true;
 	}
-	get indexed_db() {return this.x.get("indexed_db");}
-	/** @protected @arg {AGA_push_waiting_obj_noVersion} args */
-	indexed_db_put(...args) {
-		this.indexed_db.put(...args,this.indexed_db_version);
-	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {
+	save_string_impl(k,x) {
 		if(x===void 0) {debugger; return true;}
-		this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}`,type:k,id:x});
+		if(x instanceof Array) {
+			for(let i=0;i<x.length;i++) {
+				let v=x[i];
+				this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}[${i}]`,type:`${k}[${i}]`,id:v});
+			}
+		} else {
+			this.indexed_db_put("boxed_id",{key: `boxed_id:str:${k}:${x}`,type:k,id:x});
+		}
 		let store=this.#get_string_store();
 		let store_item=this.get_seen_string_item_store(k,store);
 		if(!store_item) {
@@ -1859,7 +1862,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(was_known<0) return false;
 		store.new_data.push([k,x]);
 		this.#onDataChange();
-		console.log(`store_str [${k}]${is_firefox?"":" "}%o`,x);
+		console.log(`store_str [${k}]${bs.is_firefox?"":" "}%o`,x);
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return true;}
 		return true;
@@ -2012,7 +2015,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @no_mod @type {[string,{t:boolean;f:boolean}][]} */
 	#new_booleans=[];
 	/** @api @public @arg {string} key @arg {boolean} bool */
-	save_boolean(key,bool) {
+	save_boolean_impl(key,bool) {
 		let krc=this.#data_store.get_seen_booleans().find(e => e[0]===key);
 		if(!krc) {
 			krc=[key,{t: false,f: false}];

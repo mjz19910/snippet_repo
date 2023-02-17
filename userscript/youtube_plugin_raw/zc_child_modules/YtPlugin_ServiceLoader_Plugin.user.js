@@ -54,6 +54,8 @@ class ServiceLoader {
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new bs.YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
+		const LocalStorageSeenDatabase=required(store.mod$SupportService).LocalStorageSeenDatabase
+		this.local_seen_db=new LocalStorageSeenDatabase(x);
 		const CodegenService=required(store.mod$CodegenService).CodegenService;
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new (required(store.mod$IndexedDBService).IndexedDBService)(x);

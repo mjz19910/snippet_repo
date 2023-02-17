@@ -333,7 +333,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					window.yt_plugin?.local_seen_db.save_string("body_element",fut_data);
+					window.yt_plugin?.get_local_seen_db().save_string_impl("body_element",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -1632,6 +1632,7 @@ if(!title_save) {
 	title_save="{\"value\":false}";
 	if(!no_storage_access) {localStorage.setItem("title_save_data",title_save);}
 }
+export_(exports => {exports.no_storage_access=no_storage_access;});
 let title_text_overlay_enabled=true;
 let title_on=JSON.parse(title_save).value;
 /** @private @type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}} */
@@ -2047,8 +2048,6 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
 	}
-	/** @protected */
-	local_seen_db=local_seen_db;
 	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
 		if(s===void 0) debugger;
@@ -2064,10 +2063,14 @@ class BaseServicePrivate extends ApiBase {
 		} while(ps!==s);
 		return s;
 	}
+	/** @protected @this {BaseServicePrivate<ServiceLoader,{}>} */
+	get local_seen_db() {
+		return this.x.get("local_seen_db");
+	}
 	/** @protected @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {return this.local_seen_db.save_string(k,x);}
+	save_string(k,x) {return this.local_seen_db.save_string_impl(k,x);}
 	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean(k,x) {return this.local_seen_db.save_boolean(k,x);}
+	save_boolean(k,x) {return this.local_seen_db.save_boolean_impl(k,x);}
 	/** @arg {string} x */
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */
@@ -2075,11 +2078,9 @@ class BaseServicePrivate extends ApiBase {
 		return this.local_seen_db.unwrap_brackets(y);
 	}
 	/** @protected @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
-	save_number(k,x,force_update=false) {
-		return this.local_seen_db.save_number(k,x,force_update);
-	}
+	save_number(k,x,force_update=false) {return this.local_seen_db.save_number_impl(k,x,force_update);}
 }
-/** @private @template T_ServiceLoader,T_ServiceFlags @extends {BaseServicePrivate<T_ServiceLoader,T_ServiceFlags>} */
+/** @private @template T_ServiceLoader,T_ServiceFlags @extends {BaseServicePrivate<ServiceLoader,ServiceOptions>} */
 class BaseService extends BaseServicePrivate {
 	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
 	split_str(x,s=as(",")) {
@@ -2164,18 +2165,12 @@ class BaseService extends BaseServicePrivate {
 		let ret=a;
 		return ret;
 	}
-	/** @private @arg {string} str */
+	/** @protected @arg {string} str */
 	_decode_b64_proto_obj(str) {
 		let buffer=base64_dec.decodeByteArray(str);
 		if(!buffer) return null;
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
-	}
-	/** @private */
-	_use() {this._decode_b64_proto_obj(btoa("\0"));}
-	static {
-		let y=new this({value: new ServiceResolver({},{})});
-		y._use();
 	}
 	/** @protected @arg {string} str */
 	_decode_b64_url_proto_obj(str) {
@@ -2312,8 +2307,6 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @protected @type {LocalStorageSeenDatabase['save_keys']} @arg {string} k @arg {{}|undefined} x */
-	save_keys(k,x) {return this.local_seen_db.save_keys(k,x);}
 }
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class YtHandlers extends BaseService {
@@ -2976,6 +2969,7 @@ class YtPlugin extends BaseService {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
+	get_local_seen_db() {return this.local_seen_db;}
 	get_data_saver() {return this.local_seen_db;}
 }
 function h_detect_firefox() {
@@ -2983,6 +2977,7 @@ function h_detect_firefox() {
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
 }
 const is_firefox=h_detect_firefox();
+export_(exports => {exports.is_firefox=is_firefox;});
 //#endregion
 //#region sizeof_js & Generate
 let text_encoder=new TextEncoder;

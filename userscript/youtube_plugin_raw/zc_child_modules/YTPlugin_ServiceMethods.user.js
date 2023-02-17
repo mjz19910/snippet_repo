@@ -4495,6 +4495,10 @@ class ServiceMethods extends ServiceData {
 	R_PlayerOverlayVideoDetails(x) {this.H_("playerOverlayVideoDetailsRenderer",x,this.D_PlayerOverlayVideoDetails);}
 	/** @public @arg {R_CinematicContainer} x */
 	R_CinematicContainer(x) {this.H_("cinematicContainerRenderer",x,this.D_CinematicContainer);}
+	/** @arg {string} k @arg {{}} x */
+	save_keys(k,x) {
+		this.local_seen_db.save_keys_impl(k,x);
+	}
 	/** @private @arg {D_CinematicContainer} x */
 	D_CinematicContainer(x) {
 		const cf="D_CinematicContainer";
