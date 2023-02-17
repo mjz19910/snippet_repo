@@ -2149,91 +2149,20 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @protected @arg {RB_ClickTrackingObj_t1} x */
+	/** @protected @arg {Extract<RB_ClickTrackingObj,{1:any}>} x */
 	RB_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
 		if(1 in x) {
 			const {1: [,f1]}=x;
 			this.save_number(`${cf}.f1`,f1);
 		}
-		if(this.is_tp_xx(x,0)) {
-			if(this.is_tp_xx_2(x,13188)) {
-				const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.t0.f1`,f1);
-				this.save_number(`${cf}.t0.f2`,f2);
-				this.V_BinaryTimestamp(f4);
-				return;
-			}
-			if(19 in x) {
-				const {1: [,f1],2: [,f2],4: [,,f4],6: f6w,9: f9w,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.t0.f1`,f1);
-				this.save_number(`${cf}.t0.f2`,f2);
-				this.V_BinaryTimestamp(f4);
-				if(f6w) {
-					const [,[,f6]]=f6w;
-					switch(f6) {
-						case "autoplay": break;
-					}
-				}
-				if(!f6w) debugger;
-				if(f9w) {
-					const [ty,,f9]=f9w;
-					if(ty!=="data64") debugger;
-					this._primitive_of(f9,"bigint");
-				}
-				if(!f9w) debugger;
-				if(t19!=="child") debugger;
-				this.RB_Obj_f19(f19);
-				return;
-			}
-			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.t0.f1`,f1);
-			this.save_number(`${cf}.t0.f2`,f2);
-			this.V_BinaryTimestamp(f4);
-			return;
-		}
-		if(this.is_tp_xx(x,501)||this.is_tp_xx(x,512)) {
-			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-			if(f1===501) {this.save_number(`${cf}.t501.f1`,f1);}
-			if(f1===512) {this.save_number(`${cf}.t512.f1`,f1);}
-			this.a_primitive_num(f2);
-			switch(f3) {
-				default: this.codegen_typedef_bin(cf,x); debugger; break;
-				case 2:
-			}
-			this.V_BinaryTimestamp(f4);
-			return;
-		}
-		if(this.is_tp_xx(x,416)) {
-			if(6 in x&&11 in x&&19 in x) {
-				const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.t416.f1`,f1);
-				this.a_primitive_num(f2);
-				this.V_BinaryTimestamp(f4);
-				if(t19!=="child") debugger;
-				this.RB_Obj_f19(f19);
-				return;
-			}
-			if(3 in x) {
-				const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.t416.f1`,f1);
-				this.save_number(`${cf}.t416.f2`,f2);
-				this.save_number(`${cf}.t416.f3`,f3);
-				this.V_BinaryTimestamp(f4);
-				return;
-			}
-			debugger;
-			return;
-		}
-		if(9 in x) {
-			const {1: [,f1],2: [,f2],4: [,,f4],9: f9,...y}=this.s(cf,x);
-			this.save_number(`${cf}.w9.f1`,f1);
+		if(6 in x&&11 in x&&19 in x) {
+			const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
+			this.save_number(`${cf}.t416.f1`,f1);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
-			if(3 in y) {
-				const {3: [,f3],...y1}=y; this.g(y1);
-				this.save_number(`${cf}.w9.f3`,f3);
-			}
+			if(t19!=="child") debugger;
+			this.RB_Obj_f19(f19);
 			return;
 		}
 		if(3 in x) {
