@@ -1736,13 +1736,17 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(!found) return target[1].push(x);
 		return -1;
 	}
+	is_ready=false;
 	/** @public @template T @arg {string} ns @arg {string} k @arg {T|T[]} x @arg {StoreDescription<T>} store */
 	save_to_store_2(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
-		this.#onDataChange();
+		if(!this.is_ready) {
+			this.#onDataChange();
+			return;
+		}
 		console.log(`store [${ns}] [${k}] %o`,x);
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return;}
