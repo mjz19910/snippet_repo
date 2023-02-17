@@ -1797,10 +1797,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 							debugger;
 						}
 					}
-					debugger;
 				}
-				console.log(k_parts);
-				debugger;
 			}
 			if(ss.data.length>0) {
 				for(let sd of ss.data) {
