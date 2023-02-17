@@ -688,8 +688,8 @@ class Support_RS_WatchPage extends ServiceMethods {
 		wp_params&&this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		this.E_Watch(endpoint);
 		if(preconnect!==void 0) this.handle_types.parse_preconnect_arr(preconnect);
-		this.handle_types.x_RS_Player.RS_Player(playerResponse);
-		this.handle_types.x_RS_Watch.RS_Watch(response);
+		this.x.get("x_RS_Player").RS_Player(playerResponse);
+		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.t(csn,x => this.D_VeCsn(x));
 	}
 	/** @private @arg {RS_Page_Watch} x */
@@ -697,8 +697,8 @@ class Support_RS_WatchPage extends ServiceMethods {
 		const cf="RS_Page_Watch"; this.k(cf,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.E_Watch(endpoint);
-		this.handle_types.x_RS_Watch.RS_Watch(response);
-		this.handle_types.x_RS_Player.RS_Player(playerResponse);
+		this.x.get("x_RS_Watch").RS_Watch(response);
+		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		let wp_params=this.handle_types.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => this.D_VeCsn(x,true));
@@ -751,7 +751,7 @@ class Support_RS_Page_Browse extends ServiceMethods {
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		debugger;
 		if(page!=="browse") debugger;
-		this.handle_types.x_RS_Browse.RS_Browse(response);
+		this.x.get("x_RS_Browse").RS_Browse(response);
 		return y;
 	}
 }
@@ -912,7 +912,7 @@ class Support_GenericApi extends ServiceMethods {
 			case "att.get": return this.handle_types.RS_AttGet(x.data);
 			case "att.log": return this.handle_types.RS_AttLog_RC(x.data);
 			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
-			case "browse": return this.handle_types.x_RS_Browse.RS_Browse(x.data);
+			case "browse": return this.x.get("x_RS_Browse").RS_Browse(x.data);
 			case "feedback": return this.handle_types.RS_Feedback(x.data);
 			case "get_transcript": return this.handle_types.RSG_Transcript(x.data);
 			case "get_survey": return this.handle_types.RSG_Survey(x.data);
@@ -930,7 +930,7 @@ class Support_GenericApi extends ServiceMethods {
 			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
 			case "notification.record_interactions": return this.RS_Success(x.data);
-			case "player": return this.handle_types.x_RS_Player.RS_Player(x.data);
+			case "player": return this.x.get("x_RS_Player").RS_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
 			case "reel.reel_item_watch": return this.handle_types.RSW_ReelItem(x.data);
 			case "reel.reel_watch_sequence": return this.handle_types.RS_ReelWatchSequence(x.data);
@@ -1255,7 +1255,7 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeShorts(x) {
 		const cf="R_PageTypeShorts";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_ReelWatch(endpoint);
+		this.x.get("x_VE37414").E_ReelWatch(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
@@ -1290,8 +1290,8 @@ class Support_EventInput extends ServiceMethods {
 		const cf="DataResponsePageType";
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
-			case "browse": return this.handle_types.x_RS_Page_Browse.RS_Page_Browse(x);
-			case "watch": return this.handle_types.x_RS_WatchPage.RS_WatchPage(x);
+			case "browse": return this.x.get("x_RS_Page_Browse").RS_Page_Browse(x);
+			case "watch": return this.x.get("x_RS_WatchPage").RS_WatchPage(x);
 			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);
 			case "settings": return this.G_RS_Page_Settings(x);
@@ -1438,9 +1438,9 @@ class Support_EventInput extends ServiceMethods {
 		if("rootVe" in x) return this.RS_VE37414_Shorts(x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,previousCsn,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="shorts") debugger;
-		this.E_ReelWatch(endpoint);
+		this.x.get("x_VE37414").E_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.handle_types.x_RS_Player.RS_Player(playerResponse);
+		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.t(reelWatchSequenceResponse,x => this.handle_types.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
@@ -1479,8 +1479,8 @@ class Support_EventInput extends ServiceMethods {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
-		this.handle_types.x_RS_Player.RS_Player(playerResponse);
-		this.E_ReelWatch(endpoint);
+		this.x.get("x_RS_Player").RS_Player(playerResponse);
+		this.x.get("x_VE37414").E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,x => this.handle_types.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
@@ -1971,9 +1971,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 }
 class Support_VE extends ServiceMethods {
-	/** @protected @arg {R_VssLoggingContext} x */
+	/** @public @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
-	/** @private @arg {D_VssLoggingContext} x */
+	/** @public @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext";
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1998,7 +1998,7 @@ class Support_VE37414 extends ServiceMethods {
 			this.R_ReelPlayerOverlay(overlay);
 			this.params("reel.params",params);
 			if(loggingContext) {
-				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.x.get("x_VE").D_VssLoggingContext(loggingContext.vssLoggingContext);
 				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
 			}
 			this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
@@ -2013,7 +2013,7 @@ class Support_VE37414 extends ServiceMethods {
 			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
 			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
 			if(loggingContext) {
-				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.x.get("x_VE").D_VssLoggingContext(loggingContext.vssLoggingContext);
 				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
 			}
 			return;

@@ -111,7 +111,7 @@ class HandleTypes extends ServiceMethods {
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
 		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,x => this.x_EventInput.R_Tab(x));
+		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
 	}
 	/** @public @arg {D_WebPlayerConfig} x */
 	D_WebPlayerConfig(x) {
@@ -186,8 +186,6 @@ class HandleTypes extends ServiceMethods {
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
-	G_ResponseTypes(response,x) {this.x_GenericApi.G_ResponseTypes(response,x);}
 	/** @private @arg {G_NextContents} x */
 	G_NextContents(x) {
 		const cf="G_NextContents";
@@ -855,7 +853,7 @@ class HandleTypes extends ServiceMethods {
 	RS_ReelWatchSequence(x) {
 		const cf="RS_ReelWatchSequence";
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entries,x => this.T_Command_TP(x,this.E_ReelWatch));
+		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_ReelWatch(x)));
 		this.trackingParams(trackingParams);
 		this.t(continuationEndpoint,this.C_Continuation);
 	}
@@ -985,7 +983,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
-		this.t(replacementEndpoint,this.E_ReelWatch);
+		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_ReelWatch(x));
 		this.t(sequenceContinuation,this.a_primitive_str);
 		this.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
@@ -1403,7 +1401,7 @@ class HandleTypes extends ServiceMethods {
 		x: {
 			let x=serviceEndpoint;
 			if("reelWatchEndpoint" in x) {
-				this.E_ReelWatch(x);
+				this.x.get("x_VE37414").E_ReelWatch(x);
 				break x;
 			}
 			if("signalServiceEndpoint" in x) {
@@ -1882,10 +1880,10 @@ class HandleTypes extends ServiceMethods {
 		this.parse_signature(signature);
 		this.save_string(`${cf}.key`,key);
 	}
-	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x @arg {boolean} [force_update] */
-	save_number(k,x,force_update=false) {
+	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x */
+	save_number(k,x) {
 		if(x instanceof Uint8Array) x=[...x];
-		return super.save_number(k,x,force_update);
+		return super.save_number(k,x);
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
 	get_gv_parts(x) {

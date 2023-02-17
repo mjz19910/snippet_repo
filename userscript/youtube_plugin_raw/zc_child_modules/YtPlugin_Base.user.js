@@ -1791,49 +1791,17 @@ Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|Arra
 	return res;
 };
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
-/** @private @template T,U */
+/** @private @template T @template U */
 class ServiceResolver {
-	/** @private @type {T|null} */
-	services=null;
-	/** @private @type {U|null} */
-	params=null;
 	/** @constructor @public @arg {T} services @arg {U} params */
 	constructor(services,params) {
 		this.services=services;
 		this.params=params;
 	}
-	/** @private @arg {U} params */
-	set_params(params) {this.params=params;}
 	/** @api @public @arg {keyof U} key */
-	get_param(key) {
-		if(!this.params) throw new Error("No service params");
-		return this.params[key];
-	}
+	get_param(key) {return this.params[key];}
 	/** @api @public @template {keyof T} V @arg {V} key */
-	get(key) {
-		if(!this.services) throw new Error("No services");
-		return this.services[key];
-	}
-	/** @private @template {keyof T} V @arg {V} key @arg {Extract<T,{}>[V]} value */
-	set(key,value) {
-		if(!this.services) throw new Error("No services");
-		this.services[key]=value;
-	}
-	/** @private @arg {keyof T} k */
-	_use(k) {
-		/** @private @type {any} */
-		let x={};
-		/** @private @type {U} */
-		let u=x;
-		this.set_params(u);
-		/** @private @type {Extract<T, {}>[keyof T]} */
-		let v=x;
-		this.set(k,v);
-	}
-	static {
-		let y=new this({a: 1},{});
-		y._use("a");
-	}
+	get(key) {return this.services[key];}
 }
 //#endregion
 //#region main
@@ -2386,7 +2354,7 @@ class YtHandlers extends BaseService {
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
 		let res=ht.decode_input(url_type,data);
-		if(res) {ht.G_ResponseTypes(response,res);} else {console.log("failed to decode_input");}
+		if(res) {this.x.get("x_GenericApi").G_ResponseTypes(response,res);} else {console.log("failed to decode_input");}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */

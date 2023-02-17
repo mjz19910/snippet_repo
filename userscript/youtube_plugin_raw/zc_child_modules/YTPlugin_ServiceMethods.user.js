@@ -2075,7 +2075,7 @@ class ServiceMethods extends ServiceData {
 				this.params("watch.params",params);
 				this.a_primitive_num(startTimeSeconds);
 				if(continuePlayback!==false) debugger;
-				this.R_VssLoggingContext(loggingContext);
+				this.x.get("x_VE").R_VssLoggingContext(loggingContext);
 				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
 				this.playerParams("watch.player_params",playerParams);
@@ -3692,10 +3692,10 @@ class ServiceMethods extends ServiceData {
 		this.parse_undo_token(undoToken);
 		this.z(actions,this.A_UndoFeedback);
 	}
-	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x @arg {boolean} [force_update] */
-	save_number(k,x,force_update=false) {
+	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x */
+	save_number(k,x) {
 		if(x instanceof Uint8Array) x=[...x];
-		return super.save_number(k,x,force_update);
+		return super.save_number(k,x);
 	}
 	/** @protected @arg {string} cf @arg {string} x */
 	save_b64_binary(cf,x) {
@@ -7164,7 +7164,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_CompactVideo["navigationEndpoint"]} x */
 	D_ThumbnailOverlay_NavEP(x) {
-		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
+		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_ReelWatch(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		let k=this.get_keys_of(x);
 		k.pop()==="";
@@ -7350,7 +7350,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {RG_Result} x */
 	RG_Result(x) {
 		const cf="RG_Result";
-		if("tabRenderer" in x) return this.handle_types.x_EventInput.R_Tab(x);
+		if("tabRenderer" in x) return this.x.get("x_EventInput").R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
