@@ -1743,6 +1743,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
 			for(let to_load of boxed) {
+				let changed_data=false;
 				let k_parts=this.split_box_type(to_load.key);
 				if(k_parts[0]==="str") {
 					debugger;
