@@ -1917,36 +1917,17 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let bitmap_rle=this.rle_enc(bitmap);
 		return new BitmapResult(map_arr,bitmap_rle);
 	}
-	/** @no_mod @type {[string,{t:boolean;f:boolean}][]} */
-	#new_booleans=[];
 	/** @api @public @arg {string} key @arg {boolean} bool */
 	save_boolean_impl(key,bool) {
-		let krc=this.#data_store.get_seen_booleans().find(e => e[0]===key);
-		if(!krc) {
-			krc=[key,{t: false,f: false}];
-			this.#data_store.get_seen_booleans().push(krc);
-		}
-		let [,kc]=krc;
-		if(bool) {
-			if(!kc.t) {console.log(key,bool);}
-			kc.t=true;
-		} else {
-			if(!kc.f) {console.log(key,bool);}
-			kc.f=true;
-		}
-		this.#new_booleans.push([key,kc]);
-		this.#onDataChange();
+		let store=this.#data_store.get_boolean_store();
+		return this.save_to_store_2("save_boolean",k,x,store);
 	}
 	/** @no_mod @type {number[]} */
 	#new_root_visual_elements=[];
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
-		if(x===void 0) {debugger; return;}
-		if(this.#data_store.get_seen_root_visual_elements().includes(x)) return;
-		console.log("store [root_visual_element]",x);
-		this.#data_store.get_seen_root_visual_elements().push(x);
-		this.#new_root_visual_elements.push(x);
-		this.#onDataChange();
+		let store=this.#data_store.get_boolean_store();
+		return this.save_to_store_2("root_visual_element",k,x,store);
 	}
 }
 export_(exports => {
