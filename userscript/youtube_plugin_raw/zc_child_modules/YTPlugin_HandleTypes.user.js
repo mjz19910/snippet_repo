@@ -1961,7 +1961,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_b64_binary(`${cf2}.n`,n);
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
-		const {gcr,mt,...y}=y1; this.g(y);
+		const {gcr,mt,itag,...y}=y1; this.g(y);
+		itag&&this.save_string(`${cf1}.itag`,itag);
 		{
 			let x=mt;
 			let x1=this.parse_number_template(x);
