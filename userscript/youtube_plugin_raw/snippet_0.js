@@ -289,8 +289,6 @@ export class Snippet_0_tmp {
 	}
 	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	H$R_(x,f) {f.call(this,this.w(x));}
-	/** @arg {AD_Notification} x */
-	AD_Notification(x) {x;}
 }
 class ND extends Snippet_0_tmp {
 	/** @protected @arg {string} x */
@@ -304,7 +302,6 @@ class ND extends Snippet_0_tmp {
 			case "INFO": break;
 			default: debugger;
 		}
-		this.G_Text(text);
 	}
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
 	c1(f) {return x => f.call(this,x);}
@@ -397,11 +394,5 @@ class ND extends Snippet_0_tmp {
 		const {styleType,...y}=x; this.g(y); // ! #destructure
 		f.call(this,styleType);
 	}
-	/** @protected @arg {G_Text} x */
-	G_Text(x) {x; debugger;}
-	/** @arg {C_Continuation} x */
-	C_Continuation(x) {x;}
-	/** @arg {R_Notification} x */
-	R_Notification(x) {x;}
 }
 new ND;

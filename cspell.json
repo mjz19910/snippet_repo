@@ -206,6 +206,7 @@
       "noframe",
       "noindex",
       "noncharacter",
+      "nonnull",
       "noti",
       "nthis",
       "nuxt_visitor",
