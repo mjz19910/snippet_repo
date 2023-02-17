@@ -19,6 +19,7 @@ type PT_TypeArr=[
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],
 	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],
+	["n8v7z",[]],
 	["nx5s7",["7d","7s","7y","7z","76","ee","el"]],
 	["nx57y",["lk","sd","se","sk","sl","ss","sz"]],
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
