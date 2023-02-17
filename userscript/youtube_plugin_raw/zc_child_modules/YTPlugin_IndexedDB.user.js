@@ -112,11 +112,10 @@ class IndexedDBService extends BaseService {
 			return;
 		}
 		this.database_opening=true;
-		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
-		const tx=this.transaction(db,key,"readonly");
+		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
+		const tx=this.transaction(db,key,"readwrite");
 		const obj_store=typed_db.objectStore(tx,key);
 		await this.add_data_to_store(obj_store,value);
-		if(!this.database_open) this.requestOpen(as_any({key,value}),version);
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
