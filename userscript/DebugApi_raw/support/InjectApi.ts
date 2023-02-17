@@ -20,13 +20,13 @@ declare global {
 		reversePrototypeChain?: {};
 		ProxyTargetMap?: {};
 		proxyTargetMap?: {};
-		elevate_event_handlers?: {}[];
+		new_elevated_event_handlers?: {}[];
 		AddEventListenerExtension?: {};
 		addEventListenerExtension?: IAddEventListenerExtension;
 		IterExtensions?: {};
 		getPlaybackRateMap?: {};
 		CreateObjURLCache?: {};
-		Repeat?: {};
+		RepeatImpl_0?: {};
 		CompressRepeated?: {};
 		to_tuple_arr?: {};
 		DisabledMulCompression?: {};

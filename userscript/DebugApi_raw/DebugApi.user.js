@@ -60,6 +60,8 @@ export_(exports => {exports.DebugApiH_o=DebugApiH_o;});
 // #region InjectApi
 /** @readonly */
 const InjectApiStr="inject_api";
+/** @type {{_tag:null}} */
+let inject_api={_tag:null};
 // #endregion InjectApi
 // #region saved
 /** @type {[string,{name:string}][]} */
@@ -1985,7 +1987,7 @@ function parse_javascript_str(code_str) {
 	}
 	console.log(`parsed ${i} tokens`);
 }
-inject_api.parse_javascript_str=parse_javascript_str;
+export_(exports => {exports.parse_javascript_str=parse_javascript_str;});
 // #endregion
 
 var api_debug_enabled=false;
@@ -1999,7 +2001,7 @@ console.log=console.log.bind(window.console);
 // #endregion
 
 class LoggingEventTarget {dispatchEvent=console.log.bind(console);}
-inject_api.LoggingEventTarget=LoggingEventTarget;
+export_(exports => {exports.LoggingEventTarget=LoggingEventTarget;});
 
 class ApiProxyManager {
 	/** @arg {LoggingEventTarget} event_handler */
@@ -2275,12 +2277,12 @@ class ProxyTargetMap {
 	constructor() {export_(exports => {exports.proxyTargetMap=this;});}
 	weak_map=new WeakMap();
 }
-inject_api.ProxyTargetMap=ProxyTargetMap;
+export_(exports => {exports.ProxyTargetMap=ProxyTargetMap;});
 let proxyTargetMap=new ProxyTargetMap;
 
 /** @type {((arg0: EventListenersT) => void)[]} */
 let new_elevated_event_handlers=[];
-inject_api.elevate_event_handlers=new_elevated_event_handlers;
+export_(exports => {exports.new_elevated_event_handlers=new_elevated_event_handlers;});
 
 /** @arg {EventListenersT} event_handler */
 function elevate_event_handler(event_handler) {export_(exports => {exports.addEventListenerExtension.elevate_handler(event_handler);});}
@@ -2518,7 +2520,7 @@ function getPlaybackRateMap(include_uninteresting) {
 		if(elem.length==1) {progress_map.set("some:"+i,[...elem]);} else if(elem.length>0) {progress_map.set("some:"+i,[...elem]);}
 	}; return progress_map;
 };
-inject_api.getPlaybackRateMap=getPlaybackRateMap;
+export_(exports => {exports.getPlaybackRateMap=getPlaybackRateMap;});
 
 class CreateObjURLCache {
 	/** @readonly */
@@ -2559,7 +2561,7 @@ class CreateObjURLCache {
 		}
 	}
 }
-inject_api.CreateObjURLCache=CreateObjURLCache;
+export_(exports => {exports.CreateObjURLCache=CreateObjURLCache;});
 CreateObjURLCache.enable();
 
 /** @template T @implements {Repeat_0<T>} */
@@ -2614,7 +2616,7 @@ class RepeatImpl_0 {
 	toString() {return this.value+"x"+this.times;}
 }
 
-inject_api.Repeat=RepeatImpl_0;
+export_(exports => {exports.RepeatImpl_0=RepeatImpl_0;});
 class CompressRepeated {
 	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
 	did_compress(src,dst) {return dst.length<src.length;}
@@ -2688,7 +2690,7 @@ class CompressRepeated {
 		return arr;
 	}
 }
-inject_api.CompressRepeated=CompressRepeated;
+export_(exports => {exports.CompressRepeated=CompressRepeated;});
 
 /** @template T */
 class W {
@@ -2710,7 +2712,7 @@ function to_tuple_arr(keys,values) {
 	}
 	return ret;
 }
-inject_api.to_tuple_arr=to_tuple_arr;
+export_(exports => {exports.to_tuple_arr=to_tuple_arr;});
 
 /** @arg {any[]} arr @arg {number} index @arg {number} value */
 function range_matches(arr,value,index) {
@@ -2884,12 +2886,12 @@ class DisabledMulCompression extends MulCompression {
 		return [false,arr];
 	}
 }
-inject_api.DisabledMulCompression=DisabledMulCompression;
+export_(exports => {exports.DisabledMulCompression=DisabledMulCompression;});
 /** @type {HTMLIFrameElement|null} */
 let cached_iframe=null;
 /** @type {string[]} */
 let function_as_string_vec=[];
-inject_api.function_as_string_vec=function_as_string_vec;
+export_(exports => {exports.function_as_string_vec=function_as_string_vec;});
 
 function resolve_function_constructor() {
 	if(globalThis.Node===void 0) {throw new Error("Javascript Runtime without DOM not supported (node js)");}
@@ -2960,7 +2962,7 @@ function run_wasm_plugin() {
 
 	wasm_global_memory_view.set(wasm_header,0);
 }
-inject_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin,[]);
+export_(exports => {exports.run_wasm_plugin=new VoidCallback(run_wasm_plugin,[]);});
 
 /** @arg {(Promise<{}>|{})[]} arr @arg {Promise<{}>|{}} item */
 async function remove_awaited(arr,item) {
@@ -3082,7 +3084,6 @@ function gen_function_prototype_use(safe_function_prototype) {
 }
 
 function run_modules_plugin() {
-	if(!inject_api.function_as_string_vec) throw 1;
 	let function_prototype=resolve_function_constructor().prototype;
 
 	let function_prototype_call=function_prototype.call;
@@ -3135,22 +3136,20 @@ function run_modules_plugin() {
 	Function.prototype.call=function_prototype_call_inject;
 	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
-		if(!inject_api.function_as_string_vec) throw 1;
 		let ret=bound_apply_call(this,[thisArg,...argArray]);
-		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {inject_api.function_as_string_vec.push(this.toString());}
+		if(function_as_string_vec.indexOf(this.toString())==-1) {function_as_string_vec.push(this.toString());}
 		return ret;
 	};
 	/** @this {()=>void} @arg {any} tv @arg {any} r */
 	function function_prototype_apply_inject(tv,r) {
-		if(!inject_api.function_as_string_vec) throw 1;
 		if(r===void 0||r===null) r=[];
 		let ret=bound_apply_call(this,[tv,...r]);
-		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {inject_api.function_as_string_vec.push(this.toString());}
+		if(function_as_string_vec.indexOf(this.toString())==-1) {function_as_string_vec.push(this.toString());}
 		return ret;
 	};
 	Function.prototype.apply=function_prototype_apply_inject;
 }
-inject_api.run_modules_plugin=new VoidCallback(run_modules_plugin,[]);
+export_(exports => {exports.run_modules_plugin=new VoidCallback(run_modules_plugin,[]);});
 
 class CompressionStatsCalculator {
 	constructor() {
@@ -3209,14 +3208,14 @@ class CompressionStatsCalculator {
 		console.log("compressed",res);
 	}
 }
-inject_api.CompressionStatsCalculator=CompressionStatsCalculator;
+export_(exports => {exports.CompressionStatsCalculator=CompressionStatsCalculator;});
 
 let stats_calculator_info={
 	stats_calculator: new CompressionStatsCalculator,
 	/** @type {[string, number][][]} */
 	compression_stats: [],
 };
-inject_api.range_matches=range_matches;
+export_(exports => {exports.range_matches=range_matches;});
 let compressionStatsCalc=stats_calculator_info.stats_calculator;
 /** @arg {[unknown, number][]} stats */
 function log_stats(stats) {console.log(...stats.sort((a,b) => b[1]-a[1]));}
@@ -3454,7 +3453,7 @@ class DoCalc {
 		}
 	}
 }
-inject_api.DoCalc=DoCalc;
+export_(exports => {exports.DoCalc=DoCalc;});
 
 class CompressDual {
 	/** @type {number} */
@@ -3820,8 +3819,7 @@ function compress_main(stats) {
 	}
 	g_obj_arr.value=flat_obj(obj_start);
 }
-
-inject_api.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);
+export_(exports => {exports.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);});
 
 class HexRandomDataGenerator {
 	constructor() {
@@ -3881,7 +3879,7 @@ class HexRandomDataGenerator {
 		return (size+num).toString(16).slice(1);
 	}
 }
-inject_api.HexRandomDataGenerator=HexRandomDataGenerator;
+export_(exports => {exports.HexRandomDataGenerator=HexRandomDataGenerator;});
 const random_data_generator=new HexRandomDataGenerator;
 export_(exports => {exports.random_data_generator=random_data_generator;});
 
@@ -3894,7 +3892,7 @@ class EventListenerValue {
 		this.options=options;
 	}
 }
-inject_api.EventListenerValue=EventListenerValue;
+export_(exports => {exports.EventListenerValue=EventListenerValue;});
 
 class GenericEvent {
 	#default_prevented=false;
@@ -3904,7 +3902,7 @@ class GenericEvent {
 	preventDefault() {this.#default_prevented=true;}
 	get defaultPrevented() {return this.#default_prevented;}
 }
-inject_api.GenericEvent=GenericEvent;
+export_(exports => {exports.GenericEvent=GenericEvent;});
 
 class GenericDataEvent extends GenericEvent {
 	/** @arg {string} type @arg {any} data */
@@ -3913,7 +3911,7 @@ class GenericDataEvent extends GenericEvent {
 		this.data=data;
 	}
 }
-inject_api.GenericDataEvent=GenericDataEvent;
+export_(exports => {exports.GenericDataEvent=GenericDataEvent;});
 
 //#region is_helpers
 /** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
@@ -4224,7 +4222,7 @@ class Socket {
 		setTimeout(this.reconnect.bind(this),20);
 	}
 }
-inject_api.Socket=Socket;
+export_(exports => {exports.Socket=Socket;});
 
 class OriginState {
 	/** @private @readonly */
@@ -4239,7 +4237,7 @@ class OriginState {
 		} else if(this.m_top) {return this.m_top;} else {throw new Error("Invalid state, not top and window.top is null");}
 	}
 }
-inject_api.OriginState=OriginState;
+export_(exports => {exports.OriginState=OriginState;});
 
 class ConnectionFlags {does_proxy_to_opener=false;}
 
@@ -4499,7 +4497,7 @@ function parse_html_to_binary_arr(html) {
 	html_parsing_div_element.innerHTML=html;
 	return Array.prototype.map.call(html_parsing_div_element.textContent,e => e.charCodeAt(0));
 }
-inject_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
+export_(exports => {exports.parse_html_to_binary_arr=parse_html_to_binary_arr;});
 
 class DebugApi {
 	next_remote_id=0;
@@ -4758,4 +4756,4 @@ class DebugApi {
 		};
 	}
 }
-inject_api.DebugApi=DebugApi;
+export_(exports => {exports.DebugApi=DebugApi;});
