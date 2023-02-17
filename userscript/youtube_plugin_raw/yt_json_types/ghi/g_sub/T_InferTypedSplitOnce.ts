@@ -55,14 +55,14 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 		}
 		// :
 		// Begin extends ""
-		if((() => true)()) {
+		if(chk_w(Begin,"")) {
 			// ?
 			// T_InferredSplitOnce_NB_2<WA,S,D>
 			return TF_InferredSplitOnce_NB_2(WA,S,_D);
 		}
 		// :
 		// Rest extends `${WA}`
-		if((() => true)()) {
+		if(chk_w(Rest,WA)) {
 			// ?
 			// [Begin,WA]
 			return [Begin,WA];
