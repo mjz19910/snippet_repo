@@ -165,6 +165,16 @@ class IndexedDBService extends BaseService {
 				this.committed_data.push(item);
 			}
 		}
+		tx.commit();
+		await Promise.all([new Promise(a => {
+			tx.oncomplete=() => {
+				a(void 0);
+			};
+		}),new Promise(a => {
+			db.onclose=() => {
+				a(void 0);
+			};
+		})]);
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
