@@ -2,7 +2,7 @@ type S_VideoGoodPutShape={
 	id: string;
 	source: string;
 	range: string;
-	expire: string;
+	expire: `${number}`;
 	ip: string;
 	ms: string;
 	mm: string;

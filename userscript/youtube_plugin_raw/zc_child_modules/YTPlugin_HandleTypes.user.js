@@ -1852,15 +1852,16 @@ class HandleTypes extends ServiceMethods {
 	S_VideoGoodPutShape(x) {
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.id`,id);
+		this.save_b64_binary(`${cf}.id`,id);
 		this.save_string(`${cf}.source`,source);
 		this.save_string(`${cf}.range`,range);
-		this.save_string(`${cf}.expire`,expire);
+		let exp=this.parse_number_template(expire);
+		this.a_primitive_num(exp);
 		this.save_string(`${cf}.ip`,ip);
 		this.save_string(`${cf}.ms`,ms);
 		this.save_string(`${cf}.mm`,mm);
 		this.save_string(`${cf}.pl`,pl);
-		this.save_string(`${cf}.nh`,nh);
+		this.save_b64_binary(`${cf}.nh`,nh);
 		switch(sparams) {
 			default: this.cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
