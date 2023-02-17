@@ -916,7 +916,7 @@ class ServiceMethods extends ServiceData {
 		/** @type {D_ReelPlayerOverlay_Gen} */
 		let rtx=as_any(x);
 		if("reelPlayerNavigationModel" in x) {
-			const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,...y}=this.s(cf,rtx); this.g(y);/*#destructure_done*/
+			const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,badge,...y}=this.s(cf,rtx); this.g(y);/*#destructure_done*/
 			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 			this.trackingParams(trackingParams);
 			switch(reelPlayerNavigationModel) {
@@ -950,6 +950,7 @@ class ServiceMethods extends ServiceData {
 		this.t(pivotButton,this.R_PivotButton);
 		this.t(nextItemButton,this.R_Button);
 		this.t(prevItemButton,this.R_Button);
+		this.t(badge,this.RMD_Badge);
 		this.t(shareButton,this.R_Button);
 		this.t(viewCommentsButton,this.R_Button);
 		this.trackingParams(trackingParams);
