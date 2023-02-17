@@ -63,16 +63,14 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 			// ?
 			// [Begin,WA]
 			return [Begin,WA];
-		} else {
-			// :
-			// never
-			return never_return();
 		}
-	} else {
 		// :
-		// [S]
-		return [S];
+		// never
+		return never_return();
 	}
+	// :
+	// [S]
+	return [S];
 	/*
 	? [WA,Rest]
 	:Begin extends ""
