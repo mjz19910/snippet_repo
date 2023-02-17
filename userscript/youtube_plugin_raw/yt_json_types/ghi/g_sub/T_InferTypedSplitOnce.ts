@@ -48,12 +48,25 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 			// Begin extends `${WA}`
 			if((() => true)()) {
 				// ?
-				// [WA,Rest]
-				// :Begin extends ""
-				// ? T_InferredSplitOnce_NB_2<WA,S,D>
-				// :Rest extends `${WA}`
-				// ? [Begin,WA]
+				return [WA,Rest];
 			} else {
+				// :
+				// Begin extends ""
+				if((() => true)()) {
+					// ?
+					// T_InferredSplitOnce_NB_2<WA,S,D>
+					return TF_InferredSplitOnce_NB_2(WA,S,_D);
+				} else {
+
+				}
+				{
+					{
+						// :
+						// Rest extends `${WA}`
+						// ?
+						// [Begin,WA]
+					}
+				}
 				// :
 				// never
 				return never_return();
@@ -75,6 +88,7 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 ;*/
 }
 function TF_InferredSplitOnce_NB_1(WA: string,Begin: string) {WA; Begin;}
+function TF_InferredSplitOnce_NB_2(WA: string,S: string,D: string) {WA; S; D;}
 type T_InferTypedSplitOnce_NR_1<WA extends string,Begin extends string,Rest extends string>=Rest extends WA? [Begin,WA]:never;
 type T_InferTypedSplitOnce_NR<WA extends string,Rest extends string>=Rest extends `${WA}${infer Rest2}`? ["",`${WA}${Rest2}`]:never;
 type T_InferredSplitOnce_NB_1<WA extends string,Begin extends string>=Begin extends WA? [WA,""]:never;
