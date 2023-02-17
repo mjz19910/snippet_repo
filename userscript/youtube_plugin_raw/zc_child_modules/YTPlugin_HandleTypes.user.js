@@ -1011,8 +1011,8 @@ class HandleTypes extends ServiceMethods {
 		this.z(feedbackResponses,this.D_FeedbackResponseProcessedStatus);
 	}
 	/** @public @arg {P_ParamParse} cf @arg {string} x */
-	decode_continuation_token(cf,x) {
-		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
+	decode_binary_obj(cf,x) {
+		this.decode_binary_obj_s1(cf,decodeURIComponent(x));
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
@@ -1161,26 +1161,26 @@ class HandleTypes extends ServiceMethods {
 	/** @type {string[]} */
 	continuation_logged_str=[];
 	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
-	decode_continuation_token_dec_arr(cf,x) {
+	decode_binary_arr(cf,x) {
 		if(x.length===0) debugger;
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
 		try {
-			this.decode_binary_object(cf,bin_obj);
+			this.binary_result(cf,bin_obj);
 		} catch(e) {
-			console.log("failed to decode token",bin_obj);
-			console.log("[failed_with]");
+			console.log("[binary_result_obj]",bin_obj);
+			console.log("[binary_result_error]");
 			console.log(e);
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
-	decode_continuation_token_no_uri(cf,x) {
+	decode_binary_obj_s1(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
-		this.decode_continuation_token_dec_arr(cf,dec);
+		this.decode_binary_arr(cf,dec);
 	}
 	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
@@ -2269,7 +2269,7 @@ class HandleTypes extends ServiceMethods {
 		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
-	decode_binary_object(cf,x) {
+	binary_result(cf,x) {
 		switch(cf) {
 			case "reel.player_params": {
 				/** @type {P_reel_player_params} */

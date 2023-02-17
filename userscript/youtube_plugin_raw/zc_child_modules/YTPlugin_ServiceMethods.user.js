@@ -2827,11 +2827,11 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {P_ParamParse} cf @arg {string} x */
 	params(cf,x) {
-		this.x.get("handle_types").decode_continuation_token(cf,x);
+		this.x.get("handle_types").decode_binary_obj(cf,x);
 	}
 	/** @api @public @arg {P_ParamParse} cf @arg {string} x */
 	playerParams(cf,x) {
-		this.x.get("handle_types").decode_continuation_token(cf,x);
+		this.x.get("handle_types").decode_binary_obj(cf,x);
 	}
 	/**
 	 * @api @public
