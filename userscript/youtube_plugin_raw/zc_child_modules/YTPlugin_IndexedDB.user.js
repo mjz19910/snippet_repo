@@ -96,6 +96,13 @@ class IndexedDBService extends BaseService {
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
 	}
+	/** @arg {keyof DT_DatabaseStoreTypes} key */
+	async get(key) {
+		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
+		const tx=this.transaction(db,key,"readonly");
+		const obj_store=this.objectStore(tx,key);
+		obj_store.get(key);
+	}
 	log_cache_push=false;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @arg {DT_DatabaseStoreTypes[T]} obj */
 	push_waiting_obj(key,obj) {
