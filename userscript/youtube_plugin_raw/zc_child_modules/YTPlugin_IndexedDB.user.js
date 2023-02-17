@@ -133,27 +133,30 @@ class IndexedDBService extends BaseService {
 		this.database_open=true;
 		const tx=this.transaction(db,key,"readwrite");
 		const obj_store=typed_db.objectStore(tx,key);
-		const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBKeyRangeS.only(value.key)));
-		if(cur_cursor===null) {
-			this.committed_data.push(value);
-			await this.add_data_to_store(obj_store,value);
-			return;
-		}
-		const cursor_value=cur_cursor.value;
-		if(cursor_value.key!==value.key) {
-			console.log(cursor_value.key.split(":"));
-			console.log(value.key.split(":"));
-			debugger;
-		}
-		let value_keys=this.get_keys_of_2(value);
-		let cursor_keys=this.get_keys_of_2(cursor_value);
-		if(!this.eq_keys(value_keys,cursor_keys)) {
-			console.log("[database_needs_obj_merge]");
-			console.log("[obj_merge_new]",value);
-			console.log("[obj_merge_cur]",cursor_value);
-			debugger;
-		} else {
-			this.committed_data.push(value);
+		let [,d_cache]=this.get_data_cache(key);
+		for(let item of d_cache) {
+			const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBKeyRangeS.only(item.key)));
+			if(cur_cursor===null) {
+				this.committed_data.push(value);
+				await this.add_data_to_store(obj_store,value);
+				return;
+			}
+			const cursor_value=cur_cursor.value;
+			if(cursor_value.key!==value.key) {
+				console.log(cursor_value.key.split(":"));
+				console.log(value.key.split(":"));
+				debugger;
+			}
+			let value_keys=this.get_keys_of_2(value);
+			let cursor_keys=this.get_keys_of_2(cursor_value);
+			if(!this.eq_keys(value_keys,cursor_keys)) {
+				console.log("[database_needs_obj_merge]");
+				console.log("[obj_merge_new]",value);
+				console.log("[obj_merge_cur]",cursor_value);
+				debugger;
+			} else {
+				this.committed_data.push(value);
+			}
 		}
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
