@@ -9,7 +9,7 @@ type RB_Obj_f19_w3={
 };
 
 type RB_Obj_f19=RB_Obj_f19_w1|RB_Obj_f19_w3;
-type RB_ClickTrackingObj_w1_w2_w4={
+type RB_ClickTrackingObj_w1w2w4={
 	1: T_D32<0>;
 	2: T_D32<13188>;
 	4: T_VW_2<V_BinaryTimestamp>;
@@ -49,7 +49,7 @@ type RB_ClickTrackingObj_w19={
 	}>;
 };
 type RB_ClickTrackingObj=
-	|RB_ClickTrackingObj_w1_w2_w4
+	|RB_ClickTrackingObj_w1w2w4
 	|RB_ClickTrackingObj_w4
 	|RB_ClickTrackingObj_w3
 	|RB_ClickTrackingObj_w1w4

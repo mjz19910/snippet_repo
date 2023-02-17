@@ -2158,7 +2158,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(19 in x) {
 			const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.t416.f1`,f1);
+			this.save_number(`${cf}.w19.f1`,f1);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
 			if(t19!=="child") debugger;
@@ -2167,8 +2167,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(9 in x) {
 			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],9: [,,f9],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.w3.f1`,f1);
-			this.save_number(`${cf}.w3.f3`,f3);
+			this.save_number(`${cf}.w9.f1`,f1);
+			this.save_number(`${cf}.w9.f3`,f3);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
 			this.a_primitive_bigint(f9);
@@ -2184,16 +2184,16 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(6 in x) {
 			const {1: [,f1],2: [,f2],4: [,,f4],6: [t1,[t2,f6]],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.w6.f1`,f1);
+			this.save_number(`${cf}.w1w4.f1`,f1);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
-			this.save_string(`${cf}.w_all.f6.type`,`${t1}:${t2}`);
-			this.save_string(`${cf}.w_all.f6`,f6);
+			this.save_string(`${cf}.w1w4.f6.type`,`${t1}:${t2}`);
+			this.save_string(`${cf}.w1w4.f6`,f6);
 			return;
 		}
 		if(1 in x&&2 in x&&4 in x) {
 			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.w_all.f1`,f1);
+			this.save_number(`${cf}.w1w2w4.f1`,f1);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
 			return;
