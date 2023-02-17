@@ -154,8 +154,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
-	/** @public @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
-	parse_watch_page_url(root,x) {
+	/** @public @arg {CF_L_TP_Params} cf @arg {D_WatchPageUrl} x */
+	D_WatchPageUrl(cf,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=this.parse_url_search_params(u2);
@@ -173,7 +173,7 @@ class HandleTypes extends ServiceMethods {
 			if(this.is_eq_keys(u4,this.exact_arr("v","list","index"))) break x;
 			u4==="";
 		}
-		this.parser.parse_url(root,x);
+		this.parser.parse_url(cf,x);
 		return u3;
 	}
 	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
