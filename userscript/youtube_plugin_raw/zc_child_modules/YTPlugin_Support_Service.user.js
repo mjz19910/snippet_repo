@@ -1715,8 +1715,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				for(let sd of ss.data) {
 					let [key,arr]=sd;
 					this.indexed_db.put("boxed_id",{
-						key: `boxed_id:num:${key}`,
-						type: "num",
+						key: `boxed_id:str:${key}`,
+						type: "str",
 						id: ["many_str",arr],
 					},3);
 				}
