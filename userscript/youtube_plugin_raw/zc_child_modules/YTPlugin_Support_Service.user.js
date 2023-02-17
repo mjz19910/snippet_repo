@@ -1602,32 +1602,47 @@ class BitmapResult {
 class StoreData {
 	/** @arg {Partial<ReturnType<StoreData['destructure']>>} src */
 	constructor(src) {this.update(src);}
-	/** @type {[string,StoreData['seen_strings'][number][1][1][number]][]} */
-	new_strings=[];
+	seen_string_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+	};
+	seen_number_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+	};
+	seen_keys_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+	};
 	get_string_store() {
-		const {strings_key_index_map: index,seen_strings: data,new_strings: new_data}=this;
-		return {index,data,new_data};
+		return this.seen_string_obj;
 	}
-	/** @type {[string,StoreData['seen_numbers'][number][1][1][number]][]} */
-	new_numbers=[];
 	get_number_store() {
-		const {numbers_index: index,seen_numbers: data,new_numbers: new_data}=this;
-		return {index,data,new_data};
+		return this.seen_number_obj;
 	}
-	/** @type {[string,StoreData['seen_keys'][number][1][1][number]][]} */
-	new_keys=[];
 	get_keys_store() {
-		const {seen_keys_index: index,seen_keys: data,new_keys: new_data}=this;
-		return {index,data,new_data};
+		return this.seen_keys_obj;
 	}
-	get_seen_booleans() {return this.seen_booleans;}
-	get_seen_root_visual_elements() {return this.seen_root_visual_elements;}
-	/** @api @protected @type {[string,{t:boolean;f:boolean}][]} */
-	seen_booleans=[];
-	/** @api @protected @type {number[]} */
-	seen_root_visual_elements=[];
-	/** @api @protected @type {{[x:string]:number}} */
-	numbers_index={};
+	seen_bool_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+	};
+	seen_root_visual_elements_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+	};
+	get_seen_booleans() {return this.seen_bool_obj;}
+	get_seen_root_visual_elements() {return this.seen_root_visual_elements_obj;}
 	/** @api @protected @type {{[x:string]:number}} */
 	strings_key_index_map={};
 	/** @api @protected @type {{[x:string]:number}} */
