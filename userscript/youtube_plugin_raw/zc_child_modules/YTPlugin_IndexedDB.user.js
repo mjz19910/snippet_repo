@@ -174,6 +174,10 @@ class IndexedDBService extends BaseService {
 									this.committed_data.push(item);
 								};
 							} break;
+							case "update_id": {
+								console.log("update sync cache item",item);
+								await this.update(obj_store,item);
+							} break cursor_loop;
 						};
 					}
 					try {
