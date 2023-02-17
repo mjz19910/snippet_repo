@@ -39,9 +39,9 @@ class ServiceLoader {
 			decode_url(url) {return this.use_template_url(url);}
 		}
 		let ss=required(store.mod$SupportService);
+		let bs=required(store.mod$YoutubePluginBase);
 		this.ht_caller=new HT_Caller(x);
 		this.response_types_handler=new RT_Caller(x);
-		let bs=required(store.mod$YoutubePluginBase);
 		const CsiService=bs.CsiService;
 		this.csi_service=new CsiService(x);
 		const ECatcherService=required(store.mod$ECatcherService).ECatcherService;
