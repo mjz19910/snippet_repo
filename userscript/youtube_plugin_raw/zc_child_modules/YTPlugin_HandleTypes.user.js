@@ -1886,6 +1886,14 @@ class HandleTypes extends ServiceMethods {
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
 		const {expire,ei,ip,aitags,id,source,requiressl,ctier,spc,vprv,xtags,mime,ns,gir,clen,dur,lmt,...y}=this.s(cf1,x); this.g(y);
+		this.a_primitive_str(expire);
+		this.a_primitive_str(ei);
+		this.a_primitive_str(ip);
+		if(aitags) this.save_string(`${cf1}.aitags`,aitags);
+		this.save_string(`${cf1}.id.0-2`,id.slice(0,2));
+		this.save_string(`${cf1}.source`,source);
+		this.save_string(`${cf1}.requiressl`,requiressl);
+		this.t(ctier,x => this.ceq("SH",x));
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
@@ -1917,15 +1925,8 @@ class HandleTypes extends ServiceMethods {
 			set_obj(ro,x,k);
 		}
 		let y2=ro;
-		this.a_primitive_str(expire);
-		this.a_primitive_str(ei);
-		this.a_primitive_str(ip);
-		this.save_string(`${cf1}.id.0-2`,id.slice(0,2));
+		const {mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.save_string(`${cf1}.itag`,itag);
-		if(aitags) this.save_string(`${cf1}.aitags`,aitags);
-		this.save_string(`${cf1}.source`,source);
-		this.save_string(`${cf1}.requiressl`,requiressl);
-		this.t(ctier,x => this.ceq("SH",x));
 		this.save_string(`${cf1}.mh`,mh);
 		this.save_string(`${cf1}.mm`,mm);
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
@@ -1963,7 +1964,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.mime`,mime);
 		this.save_b64_binary(`${cf2}.ns`,ns);
 		if(gir) this.save_string(`${cf1}.gir`,gir);
-		const {mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		// this.t(clen,x => {
 		// 	let x1=this.parse_number_template(x);
 		// 	this.a_primitive_num(x1);
