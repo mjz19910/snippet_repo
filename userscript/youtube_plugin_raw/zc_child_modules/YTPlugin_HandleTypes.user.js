@@ -1990,9 +1990,10 @@ class HandleTypes extends ServiceMethods {
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
 		}
-		/** @type {Omit<typeof x,"sparams"|"lsparams"|T_Split<typeof sparams>[number]|T_Split<typeof lsparams>[number]>} */
+		/** @typedef {"sparams"|"lsparams"|T_Split<typeof sparams>[number]|T_Split<typeof lsparams>[number]} OmitY1Keys */
+		/** @type {Omit<typeof x,OmitY1Keys>} */
 		let y1=as({});
-		/** @type {Exclude<(typeof kk_x)[number],T_Split<typeof lsparams>[number]>[]} */
+		/** @type {Exclude<(typeof kk_x)[number],OmitY1Keys>[]} */
 		let kk_y1=as(kk_x);
 		for(let k of kk_y1) {
 			set_obj(y1,x,k);
