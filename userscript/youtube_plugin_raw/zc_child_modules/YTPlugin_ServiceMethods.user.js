@@ -1437,7 +1437,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return res;
 	}
-	/** @arg {D_DecTypeNum[]} x */
+	/** @arg {D_ProtobufObj[]} x */
 	convert_arr_to_obj(x) {
 		/** @private @type {V_ParamObj_2} */
 		let res_obj={};

@@ -853,7 +853,7 @@ class MyReader {
 			}
 			if(!log_slow&&loop_count%4096==0) {console.log("taking a very long time to read protobuf data",loop_count/4096|0);}
 		}
-		/** @private @type {D_DecTypeNum[]} */
+		/** @private @type {D_ProtobufObj[]} */
 		let res_arr=[];
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
@@ -1032,7 +1032,7 @@ class MyReader {
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
-		/** @private @type {D_DecTypeNum[]} */
+		/** @private @type {D_ProtobufObj[]} */
 		let first_num=[];
 		switch(wireType) {
 			case 0:
@@ -1092,7 +1092,7 @@ class MyReader {
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
-				/** @private @type {D_DecTypeNum} */
+				/** @private @type {D_ProtobufObj} */
 				try {this.skip(size);} catch {
 					console.log("skip failed at",this.pos,fieldId);
 					first_num.push(["error",fieldId]);
@@ -2570,7 +2570,7 @@ class BaseService extends BaseServicePrivate {
 		if(res_e.find(e => e[0]==="error")) {return null;}
 		return this.make_param_map(res_e);
 	}
-	/** @protected @arg {D_DecTypeNum[]} res_e */
+	/** @protected @arg {D_ProtobufObj[]} res_e */
 	make_param_map(res_e) {
 		/** @private @type {V_ParamMapType} */
 		let ret_map=new Map();

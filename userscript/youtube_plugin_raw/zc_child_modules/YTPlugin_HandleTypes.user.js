@@ -1012,7 +1012,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {P_ParamParse} cf @arg {string} x */
 	decode_binary_obj(cf,x) {
-		this.decode_binary_obj_s1(cf,decodeURIComponent(x));
+		let binary_arr=this.read_b64_protobuf(decodeURIComponent(x));
+		if(!binary_arr) {debugger; return;}
+		this.decode_binary_arr(cf,binary_arr);
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
@@ -1033,7 +1035,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}>`;
 			}
-			/** @type {D_DecTypeNum|V_ParamObj_2[number]} */
+			/** @type {D_ProtobufObj|V_ParamObj_2[number]} */
 			let otu=as(obj);
 			if(otu[0]==="child") {
 				if(otu.length===3) {
@@ -1080,7 +1082,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				return this.convert_arr_to_obj([otu]);
 			}
-			/** @type {(D_DecTypeNum|V_ParamObj_2[number])[]} */
+			/** @type {(D_ProtobufObj|V_ParamObj_2[number])[]} */
 			let ota=obj;
 			if(ota[0][0]==="child") {
 				debugger;
@@ -1160,7 +1162,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @type {string[]} */
 	continuation_logged_str=[];
-	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
+	/** @private @arg {P_ParamParse} cf @arg {D_ProtobufObj[]} x */
 	decode_binary_arr(cf,x) {
 		if(x.length===0) debugger;
 		let bin_obj=this.convert_arr_to_obj(x);
@@ -1173,14 +1175,12 @@ class HandleTypes extends ServiceMethods {
 			console.log(e);
 		}
 	}
-	/** @private @arg {P_ParamParse} cf @arg {string} x */
-	decode_binary_obj_s1(cf,x) {
+	/** @private @arg {string} x */
+	read_b64_protobuf(x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
-		if(!buffer) return;
+		if(!buffer) {debugger; return null;}
 		let reader=new MyReader(buffer);
-		let dec=reader.try_read_any();
-		if(!dec) {debugger; return;}
-		this.decode_binary_arr(cf,dec);
+		return reader.try_read_any();
 	}
 	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {

@@ -1695,16 +1695,16 @@ type D_DarkColorPalette_1={
 	section4Color: 4278979079;
 };
 type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
-type D_DataArrType=[number,number,D_DecTypeNum[]][];
-type D_DecTypeNum=
+type D_DataArrType=[number,number,D_ProtobufObj[]][];
+type D_ProtobufObj=
 	["data32",number,number]|
 	["data_fixed32",number,number]|
 	["data64",number,number[],bigint]|
 	["data_fixed64",number,bigint]|
 	["info",number,number]|
-	["child",number,Uint8Array,D_DecTypeNum[]|null]|
-	["struct",number,D_DecTypeNum[]]|
-	["group",number,D_DecTypeNum[]]|
+	["child",number,Uint8Array,D_ProtobufObj[]|null]|
+	["struct",number,D_ProtobufObj[]]|
+	["group",number,D_ProtobufObj[]]|
 	["error",number];
 type D_DesktopWatchAds={
 	// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/

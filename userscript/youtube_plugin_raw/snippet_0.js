@@ -177,9 +177,9 @@ export class Snippet_0_tmp {
 		rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
 		console.log(rn);
 	}
-	/** @arg {MyReader} reader @arg {D_DecTypeNum[]} results */
+	/** @arg {MyReader} reader @arg {D_ProtobufObj[]} results */
 	unpack_children_reader_result(reader,results) {
-		/** @type {D_DecTypeNum[]} */
+		/** @type {D_ProtobufObj[]} */
 		let out=[];
 		for(let item of results) {
 			switch(item[0]) {
