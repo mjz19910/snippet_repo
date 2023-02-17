@@ -20,8 +20,6 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
-	/** @template T @typedef {NonNullable<T>} N */
-	/** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
 	start_message_channel_loop() {bs.start_message_channel_loop(this.handle_types);}
 	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
