@@ -175,6 +175,7 @@ class IndexedDBService extends BaseService {
 				a(void 0);
 			};
 		})]);
+		this.database_open=false;
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
