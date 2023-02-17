@@ -3883,6 +3883,7 @@ class HexRandomDataGenerator {
 }
 inject_api.HexRandomDataGenerator=HexRandomDataGenerator;
 const random_data_generator=new HexRandomDataGenerator;
+export_(exports => {exports.random_data_generator=random_data_generator;});
 
 class EventListenerValue {
 	/** @arg {EventListenerOrEventListenerObject|null} callback @arg {boolean|EventListenerOptions} options */
