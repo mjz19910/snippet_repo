@@ -1867,7 +1867,8 @@ function yt_plugin_base_main() {
 	services.modify_env.modify_global_env();
 
 	// wait for plugin requirements
-	services.start_message_channel_loop();
+	const bs=required(store["mod$YoutubePluginBase"]);
+	bs.start_message_channel_loop(services.handle_types);
 	/** @private @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
