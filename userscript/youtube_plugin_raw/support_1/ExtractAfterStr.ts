@@ -1,1 +1,0 @@
-type ExtractAfterStr<V extends string,U extends string>=T_SplitIntoGroups<V,`${string}`> extends infer Z? Z extends [U,...any[]]?Join<RemoveFirst<Z>,"">:never:never;
