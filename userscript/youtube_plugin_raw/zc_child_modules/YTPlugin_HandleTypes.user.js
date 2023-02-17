@@ -1885,7 +1885,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
-		const {...y}=this.s(cf1,x); this.g(y);
+		const {expire,ei,ip,aitags,id,source,requiressl,ctier,spc,vprv,xtags,mime,ns,gir,clen,dur,lmt,...y}=this.s(cf1,x); this.g(y);
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
