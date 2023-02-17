@@ -1511,14 +1511,16 @@ class HandleTypes extends ServiceMethods {
 		let [m2]=url_parts;
 		let m3=split_string_once(m2,"---");
 		let [,mi]=m3;
+		/** @type {Ret_get_gv_parts} */
 		let ap=this.get_gv_parts(mi);
 		if(ap.length!==2) debugger;
 		this.save_string(`url.google_video_partition`,ap[0]);
 		this.save_string(`url.google_video_selector`,ap[1]);
 		const gen_cf="js_gen_case:log_googlevideo_host";
-		switch(ap[0]) {
+		let ap_z=ap[0];
+		switch(ap_z) {
 			default: {
-				switch(ap) {case "": }
+				switch(ap_z) {case "": }
 				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,ap[0]);
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
@@ -1546,7 +1548,9 @@ class HandleTypes extends ServiceMethods {
 		let [ux,u1,...y]=split_string(hn,".googlevideo.com");
 		if(y.length!==0) debugger;
 		if(u1!=="") debugger;
-		let ss2=split_string(ux,"---");
+		/** @type {`rr${1|2|3|4|5}---sn-${"nx57y"|"nx5s7"}n7z`} */
+		let utx=as_any(ux);
+		let ss2=split_string(utx,"---");
 		if(!this.str_starts_with(ss2[0],"rr")) debugger;
 		let ss3=split_string_once(ss2[0],"rr")[1];
 		switch(ss3) {
@@ -1885,8 +1889,17 @@ class HandleTypes extends ServiceMethods {
 		if(x instanceof Uint8Array) x=[...x];
 		return super.save_number(k,x);
 	}
-	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
+	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {Ret_get_gv_parts} */
 	get_gv_parts(x) {
+		let ss=split_string(x,"-")[1];
+		let idx=5;
+		let r1=ss.slice(0,idx);
+		if(ss[idx]!=="n") return as_any([x]);
+		let r2=ss.slice(idx+1);
+		return as_any([r1,r2]);
+	}
+	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
+	get_gv_parts_impl(x) {
 		let ss=split_string(x,"-")[1];
 		let idx=5;
 		let r1=ss.slice(0,idx);
