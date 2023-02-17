@@ -5907,6 +5907,21 @@ class ServiceMethods extends ServiceData {
 	R_AdsEngagementPanelContent(x) {this.H_("adsEngagementPanelContentRenderer",x,this.B_Hack);}
 	/** @private @arg {R_CommentsHeader} x */
 	R_CommentsHeader(x) {this.H_("commentsHeaderRenderer",x,this.D_CommentsHeader);}
+	/** @private @arg {D_CommentsHeader} x */
+	D_CommentsHeader(x) {
+		const cf="D_CommentsHeader";
+		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(countText);
+		this.R_CommentSimplebox(createRenderer);
+		this.R_SortFilterSubMenu(sortMenu);
+		this.trackingParams(trackingParams);
+		this.G_Text(titleText);
+		this.G_Text(commentsCount);
+		if(showSeparator!==true) debugger;
+		this.z(customEmojis,this.D_CustomEmoji);
+		this.parser.parse_url(cf,as(unicodeEmojisUrl));
+		this.D_LoggingDirectives(loggingDirectives);
+	}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
 	R_HotkeyDialogSectionOption(x) {this.H_("hotkeyDialogSectionOptionRenderer",x,this.D_HotkeyDialogSectionOption);}
 	/** @private @arg {G_WatchNext} x */
@@ -6448,21 +6463,6 @@ class ServiceMethods extends ServiceData {
 		this.R_EmojiPicker(emojiPicker);
 		this.trackingParams(trackingParams);
 		this.R_Button(emojiButton);
-	}
-	/** @private @arg {D_CommentsHeader} x */
-	D_CommentsHeader(x) {
-		const cf="D_CommentsHeader";
-		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(countText);
-		this.R_CommentSimplebox(createRenderer);
-		this.R_SortFilterSubMenu(sortMenu);
-		this.trackingParams(trackingParams);
-		this.G_Text(titleText);
-		this.G_Text(commentsCount);
-		if(showSeparator!==true) debugger;
-		this.z(customEmojis,this.D_CustomEmoji);
-		this.parser.parse_url(cf,as(unicodeEmojisUrl));
-		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {M_AccountMenu} x */
 	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
