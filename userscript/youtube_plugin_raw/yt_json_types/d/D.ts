@@ -1389,8 +1389,7 @@ type D_ApiPathFormat_2=
 	|"youtubei/v1/browse/edit_playlist"
 	|"youtubei/v1/flag/get_form"
 	|"youtubei/v1/notification/opt_out"
-	|"youtubei/v1/ypc/get_cart"
-	|"youtubei/v1/ypc/get_offers"
+	|`youtubei/v1/ypc/${"get_cart"|"get_offers"}`
 	|`youtubei/v1/${"browse"|"guide"|"next"|"player"}`
 	|`youtubei/v1/account/${"account_menu"|"accounts_list"|"set_setting"}`
 	|`youtubei/v1/att/${"get"|"log"}`
