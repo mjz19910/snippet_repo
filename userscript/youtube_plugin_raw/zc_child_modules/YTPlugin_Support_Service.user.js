@@ -1776,6 +1776,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 							}
 							switch(fd[1][0]) {
 								case "many": {
+									let mv=fd[1][1];
+									if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
 									fd[1][1].push(from_db);
 								} break;
 								case "one": {
