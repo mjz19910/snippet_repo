@@ -28,7 +28,7 @@ class TypedIndexedDb {
 	openCursor(obj_store,query,direction) {
 		if(query) {
 			if(query.type==="key") {
-				return obj_store.openCursor(query.valid_key,direction);
+				return obj_store.openCursor(query.key,direction);
 			}
 			return obj_store.openCursor(query.key_range,direction);
 		}
@@ -49,6 +49,12 @@ class TypedIDBKeyRangeS {
 	static only(key) {
 		const key_range=IDBKeyRange.only(key);
 		return {type: "key_range",key_range,key};
+	}
+}
+class TypedIDBValidKeyS {
+	/** @template {IDBValidKey} T @arg {T} key @returns {TypedIDBValidKey<T>} */
+	static only(key) {
+		return {type: "key",key};
 	}
 }
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
@@ -133,7 +139,7 @@ class IndexedDBService extends BaseService {
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		for(let item of d_cache) {
-			const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBKeyRangeS.only(item.key)));
+			const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key)));
 			if(cur_cursor===null) {
 				this.committed_data.push(value);
 				await this.add_data_to_store(obj_store,value);
