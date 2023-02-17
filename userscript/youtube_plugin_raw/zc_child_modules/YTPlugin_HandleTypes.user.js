@@ -1900,7 +1900,9 @@ class HandleTypes extends ServiceMethods {
 		let r1=ss.slice(0,idx);
 		if(ss[idx]!=="n") return as_any([x]);
 		let r2=ss.slice(idx+1);
-		return as_any([r1,r2]);
+		/** @type {any} */
+		let rt=[r1,r2];
+		return rt;
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
