@@ -230,7 +230,10 @@ class IndexedDBService extends BaseService {
 	onDatabaseResult(db) {
 		db.onerror=event => console.log("IDBDatabase: error",event);
 		db.onabort=event => console.log("IDBDatabase: abort",event);
-		db.onclose=event => console.log("IDBDatabase: close",event);
+		db.onclose=event => {
+			console.log("IDBDatabase: close",event);
+			this.database_open=false;
+		};
 		db.onversionchange=event => this.onDatabaseVersionChange(db,event);
 	}
 	/** @private @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
