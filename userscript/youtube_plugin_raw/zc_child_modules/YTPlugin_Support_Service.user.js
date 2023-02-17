@@ -1763,7 +1763,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 							if(typeof item==="string") {
 								str_arr.push(item);
 							}
-							item;
 						}
 						debugger;
 						ss.data.push([k_parts[1],["one",str_arr]]);
