@@ -1767,38 +1767,39 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						let k_parts=this.split_box_type(to_load.key);
 						if(k_parts[0]!=="str") debugger;
 						let fd=ss.data.find(v => v[0]===k_parts[1]);
-						if(!fd) {
-							for(let from_db of str_arr) {
-								let fd=ss.data.find(v => v[0]===k_parts[1]);
-								if(fd) {
-									switch(fd[1][0]) {
-										case "many": {
-											fd[1][1].push(from_db);
-										} break;
-										case "one": {
-											if(from_db.length!==1) {debugger; continue;}
-											fd[1][1].push(from_db[0]);
-										}
+						for(let from_db of str_arr) {
+							if(fd) {
+								switch(fd[1][0]) {
+									case "many": {
+										fd[1][1].push(from_db);
+									} break;
+									case "one": {
+										if(from_db.length!==1) {debugger; continue;}
+										fd[1][1].push(from_db[0]);
 									}
-									continue;
 								}
-								ss.data.push([k_parts[1],["one",from_db]]);
-								debugger;
+								continue;
 							}
-							continue;
+							ss.data.push([k_parts[1],["one",from_db]]);
+							debugger;
 						}
 						for(let from_db of str_arr) {
-							let ck=fd[1];
-							if(from_db.length===1) {
-								if(ck[0]==="many") continue;
-								if(ck[1].includes(from_db[0])) continue;
-								ck[1].push(from_db[0]);
-							} else {
-								if(ck[0]==="one") continue;
-								let mv=ck[1];
-								if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
-								mv.push(from_db);
+							let fd=ss.data.find(v => v[0]===k_parts[1]);
+							if(fd) {
+								let ck=fd[1];
+								if(from_db.length===1) {
+									if(ck[0]==="many") continue;
+									if(ck[1].includes(from_db[0])) continue;
+									ck[1].push(from_db[0]);
+								} else {
+									if(ck[0]==="one") continue;
+									let mv=ck[1];
+									if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
+									mv.push(from_db);
+								}
+								continue;
 							}
+							debugger;
 						}
 					}
 				}
