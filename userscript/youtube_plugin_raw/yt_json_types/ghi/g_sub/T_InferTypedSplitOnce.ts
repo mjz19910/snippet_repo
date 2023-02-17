@@ -71,15 +71,6 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 	// :
 	// [S]
 	return [S];
-	/*
-	? [WA,Rest]
-	:Begin extends ""
-	? T_InferredSplitOnce_NB_2<WA,S,D>
-	:Rest extends `${WA}`
-	? [Begin,WA]
-	:never
-	;
-;*/
 }
 function TF_InferredSplitOnce_NB_1(WA: string,Begin: string) {WA; Begin;}
 function TF_InferredSplitOnce_NB_2(WA: string,S: string,D: string) {WA; S; D;}
