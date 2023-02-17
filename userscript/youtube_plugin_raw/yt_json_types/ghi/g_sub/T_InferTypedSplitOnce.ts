@@ -15,7 +15,10 @@ type TI_SplitOnce_1<WA extends string,S extends string,D extends string,Begin ex
 	? [Begin,WA]
 	:never;
 function never_return(): never {throw new Error();}
-function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends string,PT extends S extends `${infer Begin}${D}${infer Rest}`? [Begin,Rest]:never>(WA: WA,S: S,_D: D,PT: PT) {
+function TF_InferTypedSplitOnce<
+	WA extends string,S extends string,D extends string,
+	PT extends S extends `${infer Begin}${D}${infer Rest}`? [Begin,Rest]:never
+>(WA: WA,S: S,_D: D,PT: PT) {
 	function chk(_a: any,_b: string) {
 		return true;
 	}
