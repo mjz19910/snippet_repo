@@ -56,6 +56,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_With:videoId:isWatched";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_With:videoId:topStandaloneBadge";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_With:videoId:topStandaloneBadge:isWatched";}
+		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Browse";}
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Next";}
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Watch";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
