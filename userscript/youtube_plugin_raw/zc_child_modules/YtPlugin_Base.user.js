@@ -328,7 +328,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					data_saver.save_string("body_element",fut_data);
+					local_seen_db.save_string("body_element",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2109,7 +2109,7 @@ class BitmapResult {
 		return {seen_booleans,seen_keys,seen_numbers,seen_root_visual_elements,seen_strings};
 	}
 }
-class KnownDataSaver extends ApiBase {
+class LocalStorageSeenDatabase extends ApiBase {
 	constructor() {
 		super();
 		this.#load_data();
@@ -2493,7 +2493,7 @@ class KnownDataSaver extends ApiBase {
 		this.#onDataChange();
 	}
 }
-const data_saver=new KnownDataSaver;
+const local_seen_db=new LocalStorageSeenDatabase;
 /** @private @template T_ServiceLoader,T_ServiceFlags */
 class BaseServicePrivate extends ApiBase {
 	//#region Public
@@ -2501,8 +2501,6 @@ class BaseServicePrivate extends ApiBase {
 	constructor(x) {
 		super();
 		this.#x=x;
-		/** @protected */
-		this.ds=data_saver;
 	}
 	/** @protected */
 	get x() {
@@ -2519,6 +2517,8 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
 	}
+	/** @protected */
+	local_seen_db=local_seen_db
 	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
 		if(s===void 0) debugger;
@@ -2535,18 +2535,18 @@ class BaseServicePrivate extends ApiBase {
 		return s;
 	}
 	/** @protected @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {return this.ds.save_string(k,x);}
+	save_string(k,x) {return this.local_seen_db.save_string(k,x);}
 	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean(k,x) {return this.ds.save_boolean(k,x);}
+	save_boolean(k,x) {return this.local_seen_db.save_boolean(k,x);}
 	/** @arg {string} x */
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */
 		let y=as(x);
-		return this.ds.unwrap_brackets(y);
+		return this.local_seen_db.unwrap_brackets(y);
 	}
 	/** @protected @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
 	save_number(k,x,force_update=false) {
-		return this.ds.save_number(k,x,force_update);
+		return this.local_seen_db.save_number(k,x,force_update);
 	}
 	//#endregion
 	#x;
@@ -2784,8 +2784,8 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @protected @type {KnownDataSaver['save_keys']} @arg {string} k @arg {{}|undefined} x */
-	save_keys(k,x) {return this.ds.save_keys(k,x);}
+	/** @protected @type {LocalStorageSeenDatabase['save_keys']} @arg {string} k @arg {{}|undefined} x */
+	save_keys(k,x) {return this.local_seen_db.save_keys(k,x);}
 }
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class YtHandlers extends BaseService {
@@ -3439,7 +3439,7 @@ class YtPlugin extends BaseService {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
-	get_data_saver() {return this.ds;}
+	get_data_saver() {return this.local_seen_db;}
 }
 function h_detect_firefox() {
 	let ua=navigator.userAgent;
