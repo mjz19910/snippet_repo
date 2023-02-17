@@ -1712,8 +1712,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
-	/** @arg {StoreDescription<string>} ss */
-	async export_db_data(ss) {
+	/** @arg {StoreDescription<string>} ss @arg {G_BoxedIdObj[]} boxed */
+	async export_db_data(ss,boxed) {
 		if(ss.data.length>0) {
 			for(let sd of ss.data) {
 				let [key,arr]=sd;

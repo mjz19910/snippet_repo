@@ -13,11 +13,7 @@ type DT_DatabaseStoreTypes={
 		key: `hashtag_id:${string}`;
 		hashtag: string;
 	};
-	boxed_id: GenBoxedIdObj|{
-		key: "boxed_id:update_id";
-		type: "update_id";
-		id: number;
-	};
+	boxed_id: G_BoxedIdObj;
 	channel_id: {
 		key: `channel_id:UC:${string}`;
 		type: "channel_id:UC";
@@ -56,7 +52,11 @@ type GenIdSrcStr={
 	type: string;
 };
 type GenIdSrc=GenIdSrcNum|GenIdSrcStr;
-type GenBoxedIdObj=GenIdBox<GenIdSrcNum>|GenIdBox<GenIdSrcStr>;
+type G_BoxedIdObj=GenIdBox<GenIdSrcNum>|GenIdBox<GenIdSrcStr>|{
+	key: "boxed_id:update_id";
+	type: "update_id";
+	id: number;
+};
 // ["many_str",["one",string[]]|["many",string[][]]]
 type GenIdBox<SV extends GenIdSrc,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${string}`;
