@@ -1873,7 +1873,7 @@ function split_string(x,s=as(",")) {
 	let r=x.split(s);
 	return as(r);
 }
-/** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {S extends `${D}${infer U}`?U extends `${WA}${infer A}`?["",`${WA}${A}`]:never:[S]} */
+/** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_InferTypedSplitOnce<WA,S,D>} */
 function split_string_once_ex(s,d=as(","),_wa) {
 	if(s==="") {
 		/** @private @type {[]} */
