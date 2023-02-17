@@ -1600,8 +1600,6 @@ class BitmapResult {
 	}
 }
 class StoreData {
-	/** @arg {Partial<ReturnType<StoreData['destructure']>>} src */
-	constructor(src) {this.update(src);}
 	seen_string_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
@@ -1620,15 +1618,6 @@ class StoreData {
 		data: [],
 		new_data: [],
 	};
-	get_string_store() {
-		return this.seen_string_obj;
-	}
-	get_number_store() {
-		return this.seen_number_obj;
-	}
-	get_keys_store() {
-		return this.seen_keys_obj;
-	}
 	seen_bool_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
@@ -1641,33 +1630,12 @@ class StoreData {
 		data: [],
 		new_data: [],
 	};
-	get_seen_booleans() {return this.seen_bool_obj;}
-	get_seen_root_visual_elements() {return this.seen_root_visual_elements_obj;}
-	/** @api @protected @type {{[x:string]:number}} */
-	strings_key_index_map={};
-	/** @api @protected @type {{[x:string]:number}} */
-	seen_keys_index={};
-	/** @api @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
-	seen_keys=[];
-	/** @api @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
-	seen_strings=[];
-	/** @api @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
-	seen_numbers=[];
-	get_seen_numbers() {return this.seen_numbers;}
-	/** @api @public @arg {Partial<ReturnType<StoreData['destructure']>>} other */
-	update(other) {
-		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=other;
-		if(seen_booleans) this.seen_booleans=seen_booleans;
-		if(seen_numbers) this.seen_numbers=seen_numbers;
-		if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
-		if(seen_strings) this.seen_strings=seen_strings;
-		if(seen_keys) this.seen_keys=seen_keys;
-	}
-	/** @protected */
-	destructure() {
-		const {seen_booleans,seen_keys,seen_numbers,seen_root_visual_elements,seen_strings}=this;
-		return {seen_booleans,seen_keys,seen_numbers,seen_root_visual_elements,seen_strings};
-	}
+	get_string_store() {return this.seen_string_obj;}
+	get_number_store() {return this.seen_number_obj;}
+	/** @returns {StoreDescription<string>} */
+	get_keys_store() {return this.seen_keys_obj;}
+	get_boolean_store() {return this.seen_bool_obj;}
+	get_root_visual_elements_store() {return this.seen_root_visual_elements_obj;}
 }
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @constructor @public @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
@@ -1678,7 +1646,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	/** @arg {string} key */
 	get_store_keys(key) {
-		return this.get_data_store().get_string_store(this.#new_strings).data.find(e => e[0]===key);
+		return this.get_data_store().get_string_store().data.find(e => e[0]===key);
 	}
 	/** @private @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
