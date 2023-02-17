@@ -86,7 +86,7 @@ class IndexedDBService extends BaseService {
 		debugger;
 		this.is_broken=true;
 	}
-	/** @api @public @arg {AGA_push_waiting_obj} args */
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {[key: U,value: DT_DatabaseStoreTypes[U],version: number]} args */
 	put(...args) {
 		if(!args[1]) {debugger; return;}
 		const [key,value,version]=args;
