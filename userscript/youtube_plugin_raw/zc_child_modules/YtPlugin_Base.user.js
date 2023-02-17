@@ -2078,8 +2078,8 @@ class BaseServicePrivate extends ApiBase {
 		let y=as(x);
 		return this.local_seen_db.unwrap_brackets(y);
 	}
-	/** @protected @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
-	save_number(k,x,force_update=false) {return this.local_seen_db.save_number_impl(k,x,force_update);}
+	/** @protected @arg {string} k @arg {number|number[]} x */
+	save_number(k,x) {return this.local_seen_db.save_number_impl(k,x);}
 }
 /** @private @template T_ServiceLoader,T_ServiceFlags @extends {BaseServicePrivate<ServiceLoader,ServiceOptions>} */
 class BaseService extends BaseServicePrivate {
