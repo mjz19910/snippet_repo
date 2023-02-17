@@ -2865,7 +2865,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {string} x */
 	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
-	/** @protected @arg {AGA_push_waiting_obj_noVersion} args */
+	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {[key: U, value: DT_DatabaseStoreTypes[U]]} args */
 	indexed_db_put(...args) {
 		this.indexed_db.put(...args,this.indexed_db_version);
 	}
