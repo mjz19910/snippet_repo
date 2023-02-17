@@ -1889,7 +1889,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
-		if(aitags) this.save_string(`${cf1}.aitags`,aitags);
+		aitags&&this.save_string(`${cf1}.aitags`,aitags);
 		this.save_b64_binary(`${cf2}.id`,id);
 		itag&&this.save_string(`${cf1}.itag`,itag);
 		this.save_string(`${cf1}.source`,source);
