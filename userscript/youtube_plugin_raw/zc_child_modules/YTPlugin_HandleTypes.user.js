@@ -1917,7 +1917,6 @@ class HandleTypes extends ServiceMethods {
 			set_obj(ro,x,k);
 		}
 		let y2=ro;
-		this.D_VideoPlaybackShape_S_Params(obj_sparams);
 		// this.a_primitive_str(expire);
 		// this.a_primitive_str(ei);
 		// this.a_primitive_str(ip);
