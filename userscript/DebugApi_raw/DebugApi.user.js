@@ -2066,8 +2066,6 @@ class ReversePrototypeChain {
 		let object_index=this.object_cache.indexOf(value);
 		if(!value) {return `a_null::${object_index}`;}
 		if(value instanceof Window&&this.window_list.includes(value)) {return "window_id::"+this.window_list.indexOf(value);}
-		if(value===inject_api)
-			return `self::inject_api:${object_index}`;
 		let key;
 		if(Symbol.toStringTag in value) {key=value[Symbol.toStringTag];}
 		if(value.hasOwnProperty("constructor")) {
@@ -2302,8 +2300,8 @@ class AddEventListenerExtension {
 	failed_obj=null;
 	/** @private @type {WeakRef<{}>[]} */
 	object_ids=[];
-	/** @private @readonly @type {`__${typeof InjectApiStr}_${commit_id_sha1}_namespace`} */
-	namespace_key=`__${InjectApiStr}_${commit_id_sha1}_namespace`;
+	/** @private @readonly @type {`__inject_api_${commit_id_sha1}_namespace`} */
+	namespace_key=`__inject_api_${commit_id_sha1}_namespace`;
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
 	/** @private */
@@ -4013,6 +4011,7 @@ add_function(cast_to_record_with_key_and_string_type);
 
 /** @readonly @type {`CrossOriginConnection_${typeof commit_id_sha1}`} */
 const post_message_connect_message_type=`CrossOriginConnection_${commit_id_sha1}`;
+export_(exports => {exports.post_message_connect_message_type=post_message_connect_message_type;});
 
 class FlagHandler {
 	is_none() {return this.f===0;}
@@ -4559,16 +4558,17 @@ class DebugApi {
 	activateApply(function_value,target_obj,arg_vec) {return Reflect.apply(function_value,target_obj,arg_vec);}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		window.inject_api?.DebugApi&&(window.inject_api.DebugApi.the().get_k("__k").get=(/** @type {string} */ __v) => {
-			if(__v==="__v") {return {type: "eval-hidden-var"};}
-			try {
-				return {
-					type: "var",
-					data: [__v,eval(__v)]
-				};
-			} catch {return {type: "no-var"};}
-		});
-		if(window.inject_api?.DebugApi) {if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");} } else {console.log("missing window.inject_api");}
+		console.log("FIXME add breakpoint code");
+		// window.inject_api?.DebugApi&&(window.inject_api.DebugApi.the().get_k("__k").get=(/** @type {string} */ __v) => {
+		// 	if(__v==="__v") {return {type: "eval-hidden-var"};}
+		// 	try {
+		// 		return {
+		// 			type: "var",
+		// 			data: [__v,eval(__v)]
+		// 		};
+		// 	} catch {return {type: "no-var"};}
+		// });
+		// if(window.inject_api?.DebugApi) {if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");} } else {console.log("missing window.inject_api");}
 		0;
 	}
 	/** @returns {boolean} */

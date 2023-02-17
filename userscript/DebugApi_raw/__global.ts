@@ -1,3 +1,4 @@
+import {post_message_connect_message_type} from "./DebugApi.user.js";
 import {IDValue_0 as IDValue_0_import} from "./support/IDValueI_0.js";
 
 declare global {
@@ -53,14 +54,7 @@ declare global {interface NodeListOf<TNode extends Node> extends NodeList {[Symb
 // inject_api global
 declare global {
 	type SavedArrayItemType<T>=[string, T];
-	interface Window {inject_api?: InjectApi;}
 }
-
-function test_inject_api() {
-	let inject_api=new InjectApi;
-	inject_api;
-}
-test_inject_api();
 
 // SafeFunctionPrototype
 declare global {
@@ -208,7 +202,6 @@ declare global {
 export {type DebugApiH_Type as DebugApiH_Type};
 declare global {
 	type DebugApiH_Type={
-		InjectApi: InjectApi,
 		Repeat_0: typeof Repeat_0,
 	};
 }
