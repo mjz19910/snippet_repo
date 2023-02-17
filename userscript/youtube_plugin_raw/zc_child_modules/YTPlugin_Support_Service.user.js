@@ -1712,6 +1712,19 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
+	/** @arg {StoreDescription<string>} ss */
+	async export_db_data(ss) {
+		if(ss.data.length>0) {
+			for(let sd of ss.data) {
+				let [key,arr]=sd;
+				this.indexed_db.put("boxed_id",{
+					key: `boxed_id:str:${key}`,
+					type: "str",
+					id: ["many_str",arr],
+				},3);
+			}
+		}
+	}
 	async do_boxed_update_from_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
 		console.log("load_database all boxed",boxed);
@@ -1723,16 +1736,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				debugger;
 			}
 			let ss=store.get_string_store();
-			if(ss.data.length>0) {
-				for(let sd of ss.data) {
-					let [key,arr]=sd;
-					this.indexed_db.put("boxed_id",{
-						key: `boxed_id:str:${key}`,
-						type: "str",
-						id: ["many_str",arr],
-					},3);
-				}
-			}
+			this.export_db_data(ss);
 		} else {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
@@ -1804,16 +1808,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 				}
 			}
-			if(ss.data.length>0) {
-				for(let sd of ss.data) {
-					let [key,arr]=sd;
-					this.indexed_db.put("boxed_id",{
-						key: `boxed_id:str:${key}`,
-						type: "str",
-						id: ["many_str",arr],
-					},3);
-				}
-			}
+			this.export_db_data(ss);
 		}
 	}
 	expected_id=0;
