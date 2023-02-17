@@ -319,15 +319,15 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
 	getAll(store) {return store.getAll();}
-	/** @template {{key:string}} T @arg {T[]} x */
-	get_diff_by_key(x) {
-		let store_diff=[];
+	/** @template {{key:string}} T @arg {Set<string>} key_set @arg {T[]} x */
+	get_diff_by_key(key_set,x) {
+		let diff_arr=[];
 		for(let item of x) {
-			if(this.database_diff_keys.has(item.key)) continue;
-			this.database_diff_keys.add(item.key);
-			store_diff.push(item);
+			if(key_set.has(item.key)) continue;
+			key_set.add(item.key);
+			diff_arr.push(item);
 		}
-		return store_diff;
+		return diff_arr;
 	}
 	/** @arg {IDBDatabase} db @arg {keyof DT_DatabaseStoreTypes} storeNames @arg {IDBTransactionMode} mode */
 	transaction(db,storeNames,mode) {return db.transaction(storeNames,mode);}
@@ -338,7 +338,7 @@ class IndexedDBService extends BaseService {
 		let tx=this.transaction(ret.db,"video_id","readonly");
 		ret.store=this.objectStore(tx,"video_id");
 		ret.store_data=await this.get_async_result(this.getAll(ret.store));
-		ret.store_diff=this.get_diff_by_key(ret.store_data);
+		ret.store_diff=this.get_diff_by_key(this.database_diff_keys,ret.store_data);
 		return ret;
 	}
 }
