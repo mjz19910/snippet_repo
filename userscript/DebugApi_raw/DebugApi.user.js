@@ -3219,28 +3219,6 @@ export_(exports => {exports.range_matches=range_matches;});
 /** @arg {[unknown, number][]} stats */
 function log_stats(stats) {console.log(...stats.sort((a,b) => b[1]-a[1]));}
 add_function(log_stats);
-/** @arg {any[]} arr @arg {number} start */
-function next_chunk(arr,start) {
-	let s_arr=null;
-	let last;
-	let c_len;
-	for(let i=start;i<start+30;i++) {
-		if(s_arr) {last=s_arr[0][1];}
-		s_arr=sorted_comp_stats(arr,i);
-		if(!last)
-			continue;
-		let diff=last-s_arr[0][1];
-		if(diff===0)
-			continue;
-		if(diff===1) {
-			c_len=i;
-			break;
-		}
-		console.log(s_arr[0],...s_arr.slice(0,8).map(e => e[1]));
-	}
-	return c_len;
-}
-add_function(next_chunk);
 /** @type {{value:string[]}} */
 let ids={value: []};
 /** @arg {string} value */

@@ -1130,82 +1130,6 @@ class EventHandlerDispatch {
 	/** @arg {any} event */
 	handleEvent(event) {this.target_obj[this.target_name](event);}
 }
-class CompressionStatsCalculatorImpl {
-	constructor() {
-		/** @type {number[]} */
-		this.hit_counts=[];
-		/** @type {string[]} */
-		this.cache=[];
-	}
-	map_values() {return this.hit_counts;}
-	map_keys() {return this.cache;}
-	/** @arg {number} index */
-	add_hit(index) {if(!this.map_values()[index]) {			this.map_values()[index]=1;} else this.map_values()[index]++;}
-	/** @arg {string} key */
-	add_item(key) {
-		let index=this.map_keys().indexOf(key);
-		if(index==-1) index=this.map_keys().push(key)-1;
-		else this.add_hit(index);
-	}
-	reset() {
-		this.map_keys().length=0;
-		this.map_values().length=0;
-	}
-	/** @arg {any[]} arr @arg {number} win_size */
-	calc_compression_stats(arr,win_size) {
-		this.reset();
-		for(let i=0;i<arr.length;i++) {if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}}
-		return to_tuple_arr(this.map_keys(),this.map_values()).filter((e) => e[1]!==void 0);
-	}
-	/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} win_size */
-	calc_for_stats_window_size(stats_arr,arr,win_size) {stats_arr[win_size-1]=this.calc_compression_stats(arr,win_size);}
-	/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} index */
-	calc_for_stats_index(stats_arr,arr,index) {stats_arr[index]=this.calc_compression_stats(arr,index+1);}
-}
-class BaseCompressionImpl {
-	/** @arg {import("../DebugApi_raw/DebugApi.user").CompressDual} arg0 @returns {DualR_0} */
-	compress_result_state_dual(arg0) {return this.compress_result_dual(arg0.arr,arg0.ret);}
-	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string,number>[]} dst @returns {DualR_0} */
-	compress_result_dual(src,dst) {
-		if(this.did_compress(src,dst)) return [true,dst];
-		return [false,src];
-	}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress(src,dst) {	return dst.length<src.length;}
-	/** @template T @arg {T[]} src @arg {T[]} dst */
-	did_decompress(src,dst) {	return dst.length>src.length;}
-	/** @template T,U @arg {CompressStateBase<T, U>} state */
-	compress_result_state(state) {return this.compress_result(state.arr,state.ret);}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
-	compress_result(src,dst) {
-		if(this.did_compress(src,dst))
-			return [true,dst];
-		return [false,src];
-	}
-	/** @arg {string[]} src @arg {string[]} dst @returns {[res: boolean,dst: string[]]} */
-	decompress_result(src,dst) {
-		// maybe this is not a decompression, just a modification to make
-		// later decompression work
-		if(this.did_decompress(src,dst))
-			return [true,dst];
-		return [false,dst];
-	}
-}
-/** @template T @template U */
-class CompressStateBase {
-	/** @type {number} */
-	i;
-	/** @type {T[]} */
-	arr;
-	/** @type {U[]} */
-	ret;
-	/** @arg {number} i @arg {T[]} arr @arg {U[]} ret */
-	constructor(i,arr,ret) {
-		this.i=i;
-		this.arr=arr;
-		this.ret=ret;
-	}
-}
 class TimeoutTarget {
 	/** @arg {AutoBuyStateImplR|AutoBuyImplR|null} obj @arg {()=>void} callback */
 	constructor(obj,callback) {
@@ -2733,19 +2657,6 @@ async function do_auto_unit_promote() {
 	} else {tonext(res);}
 }
 const auto_buy_obj=new AutoBuyImplR;
-/** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
-function to_tuple_arr(keys,values) {
-	/** @type {[typeof keys[0], typeof values[0]][]} */
-	let ret=[];
-	for(let i=0;i<keys.length;i++) {
-		let k=keys[i];
-		let v=values[i];
-		/** @type {[typeof k, typeof v]} */
-		let item=[k,v];
-		ret.push(item);
-	}
-	return ret;
-}
 /** @arg {string[]} arr @arg {number} rem_target_len */
 function array_sample_end(arr,rem_target_len) {
 	arr=arr.slice(-300);
