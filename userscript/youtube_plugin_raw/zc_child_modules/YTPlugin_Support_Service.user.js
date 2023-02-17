@@ -1612,10 +1612,9 @@ class StoreData {
 		const {numbers_index: index,seen_numbers: data}=this;
 		return {index,data,new_data};
 	}
-	/** @arg {[string,StoreData['seen_keys'][number][1][1][number]][]} new_data */
-	get_keys_store(new_data) {
+	get_keys_store() {
 		const {seen_keys_index: index,seen_keys: data}=this;
-		return {index,data,new_data};
+		return {index,data};
 	}
 	get_seen_booleans() {return this.seen_booleans;}
 	get_seen_root_visual_elements() {return this.seen_root_visual_elements;}
@@ -1676,6 +1675,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
+	#get_keys_store() {return this.#data_store.get_keys_store();}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
 		if(!x) return;
@@ -1690,8 +1690,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
+		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
-		let ret=this.save_to_store("save_keys",k,keys.join());
+		let ret=this.save_to_store_2("save_keys",k,keys.join(),store);
 		return ret;
 	}
 	/** @no_mod @arg {string} str @returns {Partial<ReturnType<StoreData['destructure']>>} */
@@ -1758,7 +1759,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @no_mod @type {[string,string|string[]][]} */
 	#new_strings=[];
 	/** @private @arg {string} ns @arg {string} k @arg {string|string[]} x */
-	save_to_store(ns,k,x) {this.save_string_impl(`${ns}:${k}`,x);}
+	save_to_store(ns,k,x) {
+		this.save_to_store_2(ns,k,x,store);
+		this.save_string_impl(`${ns}:${k}`,x);
+	}
 	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
 	add_to_index(k,x,store) {
 		/** @private @type {StoreDescription<T>['data'][number]} */
