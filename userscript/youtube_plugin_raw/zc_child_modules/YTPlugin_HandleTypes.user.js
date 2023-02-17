@@ -1517,7 +1517,28 @@ class HandleTypes extends ServiceMethods {
 	log_googlevideo_host=false;
 	/** @private @arg {RE_D_GoogleVideoUrl_Hostname} x */
 	on_googlevideo_host(x) {
-		this.save_string("googlevideo_host",x);
+		let url_parts=split_string_once(x,".");
+		let [m2]=url_parts;
+		let m3=split_string_once(m2,"---");
+		let [,mi]=m3;
+		let ap=this.get_gv_parts(mi);
+		if(ap.length!==2) debugger;
+		this.save_string(`url.google_video_partition`,ap[0]);
+		this.save_string(`url.google_video_selector`,ap[1]);
+		const gen_cf="js_gen_case:log_googlevideo_host";
+		switch(ap[0]) {
+			default: {
+				switch(ap) {case "": }
+				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,x);
+				if(gen.has) break;
+				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+			}; break;
+			case "hp57k":
+			case "nx5s7":
+			case "nx57y":
+			case "p5qls":
+			case "p5qs7":
+		}
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x)) return;
 			this.logged_hosts.push(x);
