@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export, as_any}=require("./YtPlugin_Base.user");
+const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any}=require("./YtPlugin_Base.user");
 const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 const {TypedefGenerator}=require("./YTPlugin_Support_Service.user");
@@ -1513,11 +1513,7 @@ class HandleTypes extends ServiceMethods {
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 			}; break;
-			case "hp57k":
-			case "nx5s7":
-			case "nx57y":
-			case "p5qls":
-			case "p5qs7":
+			case "a5mek": case "hp57k": case "nx5s7": case "nx57y": case "p5qls": case "p5qs7":
 		}
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x)) return;
@@ -1562,8 +1558,7 @@ class HandleTypes extends ServiceMethods {
 				console.log(`-- [js_gen_case:${cf}.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				debugger;
 			}; break;
-			case "nx57y":
-			case "nx5s7":
+			case "nx57y": case "nx5s7":
 		}
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		x: {
@@ -1952,11 +1947,7 @@ class HandleTypes extends ServiceMethods {
 					if(gen.has) break;
 					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				}; break;
-				case "n4v7s":
-				case "nx57y":
-				case "o097z":
-				case "nx5s7":
-				case "9gv7l":
+				case "n4v7s": case "nx57y": case "o097z": case "nx5s7": case "9gv7l":
 			}
 		}
 		this.save_string(`${cf1}.ms`,ms);
