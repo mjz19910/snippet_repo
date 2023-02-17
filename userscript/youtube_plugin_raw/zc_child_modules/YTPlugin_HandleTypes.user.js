@@ -1914,7 +1914,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
-		const {sparams,lsparams}=this.s(cf1,x);
+		const {sparams}=this.s(cf1,x);
 		/** @type {Omit<typeof x,T_Split<typeof sparams>[number]>} */
 		let ro=as({});
 		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
@@ -1940,7 +1940,25 @@ class HandleTypes extends ServiceMethods {
 			set_obj(ro,x,k);
 		}
 		this.D_VideoPlaybackShape_S_Params(obj_sparams);
-		let y2=ro;
+		const {lsparams}=x;
+		let kk_lsparams=this.split_str(lsparams);
+		/** @type {{[U in T_Split<typeof lsparams>[number]]:D_VideoPlaybackShape[U]}} */
+		let obj_lsparams=as({});
+		/** @type {typeof obj_lsparams} */
+		let xt1=xa;
+		for(let k of kk_lsparams) {
+			set_obj(obj_lsparams,xt1,k);
+			let idx=kk_x.indexOf(k);
+			kk_x.splice(idx,1);
+		}
+		/** @type {Omit<typeof ro,T_Split<typeof lsparams>[number]>} */
+		let y1=as({});
+		/** @type {Exclude<(typeof kk_ro)[number],T_Split<typeof lsparams>[number]>[]} */
+		let kk_y1=as(kk_x);
+		for(let k of kk_y1) {
+			set_obj(y1,x,k);
+		}
+		let y2=y1;
 		const {mh,mm,mn,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,ms,mv,mvi,pl,initcwndbps,...y3}=y2;
 		this.save_string(`${cf1}.mh`,mh);
 		this.save_string(`${cf1}.mm`,mm);
