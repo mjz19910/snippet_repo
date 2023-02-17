@@ -1705,8 +1705,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		console.log("load_database all boxed",boxed);
 		if(boxed.length===0) {
 			let store=this.#data_store; store;
-			store.get_changed_stores();
-			if(store.get_boolean_store().data.length>0) {
+			let changes=store.get_changed_stores();
+			for(let changed of changes) {
+				if(changed==="string") continue;
 				debugger;
 			}
 			if(store.get_string_store().data.length>0) {
