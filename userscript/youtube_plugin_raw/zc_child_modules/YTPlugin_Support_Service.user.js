@@ -802,11 +802,12 @@ class Support_RS_Browse extends ServiceMethods {
 				break x;
 			}
 		}
-		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,header,trackingParams,onResponseReceivedActions,onResponseReceivedEndpoints,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_ResponseContext(responseContext);
 		this.t(header,this.G_BrowseHeader);
 		this.trackingParams(trackingParams);
 		this.tz(onResponseReceivedActions,this.GA_ResponseReceived);
+		this.tz_cf(cf,onResponseReceivedEndpoints,this.GE_ResponseReceived);
 		this.t(contents,this.G_BrowseContents);
 		this.t(topbar,this.R_DesktopTopbar);
 		this.t(frameworkUpdates,this.R_EntityBatchUpdate);

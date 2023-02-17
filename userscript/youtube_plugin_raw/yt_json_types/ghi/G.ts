@@ -57,6 +57,7 @@ type GE_ResponseReceived=
 	|C_ChangeKeyedMarkersVisibility
 	|C_LoadMarkers
 	|C_ReloadContinuationItems
+	|C_ReloadContinuationItems
 	|E_SignalService_SendPost
 	;
 ;

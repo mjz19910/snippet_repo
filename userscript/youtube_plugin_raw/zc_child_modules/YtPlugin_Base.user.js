@@ -2296,12 +2296,12 @@ class BaseService extends BaseServicePrivate {
 		if(x===void 0) return;
 		f.call(this,cf,x);
 	}
-	/** @protected @arg {string} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:string,x:T)=>void} f */
+	/** @protected @template {string} CF @arg {CF} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:CF,x:T)=>void} f */
 	tz_cf(cf,x,f) {
 		if(x===void 0) return;
 		this.z_cf(cf,x,f);
 	}
-	/** @protected @arg {string} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:string,x:U,i:number)=>void} f  */
+	/** @protected @template {string} CF @arg {CF} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:CF,x:U,i:number)=>void} f  */
 	z_cf(cf,x,f) {
 		if(x===void 0) {debugger; return;}
 		if(!x.entries) debugger;

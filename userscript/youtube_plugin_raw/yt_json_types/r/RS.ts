@@ -26,13 +26,16 @@ type RS_AttGet={
 };
 type RS_AttLog_RC={responseContext: RC_ResponseContext;};
 type RS_Browse={
+	// responseContext,contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates
 	responseContext: RC_ResponseContext;
 	contents?: G_BrowseContents;
-	continuationContents?: RC_SectionList;
 	header?: G_BrowseHeader;
+	// continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates
+	continuationContents?: RC_SectionList;
 	alerts?: R_AlertWithButton[];
 	metadata?: G_Browse_MD;
 	trackingParams: string;
+	onResponseReceivedEndpoints?: C_ReloadContinuationItems[];
 	topbar?: R_DesktopTopbar;
 	microformat?: R_MicroformatData;
 	frameworkUpdates?: DC_EntityBatchUpdate;
