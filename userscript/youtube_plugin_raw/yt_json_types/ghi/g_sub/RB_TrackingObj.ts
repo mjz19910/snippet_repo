@@ -2,7 +2,7 @@ type RB_TrackingObj_w4w6={
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VW_R<"string","external">;
 };
-type RB_TrackingObj_w1w2w4={
+type RB_TrackingObj_n3={
 	1: T_D32<0>;
 	2: T_D32<13188>;
 	4: T_VW_2<V_BinaryTimestamp>;
@@ -68,7 +68,7 @@ type RB_TrackingObj_w19={
 	}>;
 };
 type RB_TrackingObj=
-	|RB_TrackingObj_w1w2w4
+	|RB_TrackingObj_n3
 	|RB_TrackingObj_w4
 	|RB_TrackingObj_w3
 	|RB_TrackingObj_w1w4
