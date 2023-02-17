@@ -329,11 +329,13 @@ class IndexedDBService extends BaseService {
 		}
 		return store_diff;
 	}
+	/** @arg {IDBDatabase} db @arg {keyof DT_DatabaseStoreTypes} storeNames @arg {IDBTransactionMode} mode */
+	transaction(db,storeNames,mode) {return db.transaction(storeNames,mode);}
 	/** @arg {number} version */
 	async database_diff(version) {
 		let ret={};
 		ret.db=await this.get_async_result(indexedDB.open("yt_plugin",version));
-		let tx=ret.db.transaction("video_id","readonly");
+		let tx=this.transaction(ret.db,"video_id","readonly");
 		ret.store=this.objectStore(tx,"video_id");
 		ret.store_data=await this.get_async_result(this.getAll(ret.store));
 		ret.store_diff=this.get_diff_by_key(ret.store_data);
