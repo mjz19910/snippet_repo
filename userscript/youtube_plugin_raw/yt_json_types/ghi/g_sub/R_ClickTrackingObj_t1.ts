@@ -45,10 +45,10 @@ type RB_ClickTrackingObj_w19={
 	4: T_VW_2<V_BinaryTimestamp>,
 	6: T_VSR<"related-auto">,
 	9: T_VW_Bigint<2846068225792461286n>,
-	19: {
+	19: T_VW_2<{
 		1: T_D32<3>,
-		2: T_D32<3832>
-	}
+		2: T_D32<3832>;
+	}>;
 };
 type RB_ClickTrackingObj=
 	|RB_ClickTrackingObj_w1w2w4
