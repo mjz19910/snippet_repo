@@ -117,6 +117,7 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBRequest: success",success);
 		this.committed_data.push(data);
 	}
+	log_db_actions=false;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} arg_value @arg {number} version */
 	async put(key,arg_value,version) {
 		{
@@ -129,7 +130,7 @@ class IndexedDBService extends BaseService {
 			this.check_size(key);
 		}
 		if(this.database_opening||this.database_open) return;
-		console.log("open db");
+		if(this.log_db_actions) console.log("open db");
 		this.database_opening=true;
 		let db_req=indexedDB.open("yt_plugin",version);
 		db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
@@ -146,7 +147,7 @@ class IndexedDBService extends BaseService {
 				cursor_loop: for(let i=0;;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
-						console.log("update sync cache item",item);
+						if(this.log_db_actions) console.log("update sync cache item",item);
 						await this.update(obj_store,item);
 						break cursor_loop;
 					}
@@ -198,7 +199,7 @@ class IndexedDBService extends BaseService {
 			console.log("db error",e);
 		} finally {
 			this.database_open=false;
-			console.log("close db");
+			if(this.log_db_actions) console.log("close db");
 		}
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
