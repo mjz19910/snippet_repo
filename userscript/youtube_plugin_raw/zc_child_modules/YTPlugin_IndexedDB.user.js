@@ -317,24 +317,27 @@ class IndexedDBService extends BaseService {
 		}
 		return res[1];
 	}
-	/** @arg {number} version */
-	async database_diff(version) {
-		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
-		let tx=db.transaction("video_id","readonly");
-		let store=this.objectStore(tx,"video_id");
-		let store_data=await this.get_async_result(store.getAll());
+	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
+	getAll(store) {return store.getAll();}
+	/** @template {{key:string}} T @arg {T[]} x */
+	get_diff_by_key(x) {
 		let store_diff=[];
-		for(let item of store_data) {
+		for(let item of x) {
 			if(this.database_diff_keys.has(item.key)) continue;
 			this.database_diff_keys.add(item.key);
 			store_diff.push(item);
 		}
-		return {
-			db,
-			store,
-			store_data,
-			store_diff,
-		};
+		return store_diff;
+	}
+	/** @arg {number} version */
+	async database_diff(version) {
+		let ret={};
+		ret.db=await this.get_async_result(indexedDB.open("yt_plugin",version));
+		let tx=ret.db.transaction("video_id","readonly");
+		ret.store=this.objectStore(tx,"video_id");
+		ret.store_data=await this.get_async_result(this.getAll(ret.store));
+		ret.store_diff=this.get_diff_by_key(ret.store_data);
+		return ret;
 	}
 }
 export_(exports => {
