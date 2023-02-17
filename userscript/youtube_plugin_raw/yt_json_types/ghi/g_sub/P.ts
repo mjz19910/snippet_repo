@@ -3,8 +3,8 @@ type V_BinaryTimestamp={
 	2: T_FD32<number>;
 	3: T_FD32<number>;
 };
-type R_ClickTrackingObj=
-	|R_ClickTrackingObj_t1
+type RB_ClickTrackingObj=
+	|RB_ClickTrackingObj_t1
 	|R_ClickTrackingObj_w46
 	|R_ClickTrackingObj_wx4
 	;

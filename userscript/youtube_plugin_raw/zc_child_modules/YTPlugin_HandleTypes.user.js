@@ -2120,8 +2120,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_number(`${cf}.f1`,f1);
 		if(f2!==3832) debugger;
 	}
-	/** @protected @arg {R_Obj_f19} x */
-	R_Obj_f19(x) {
+	/** @protected @arg {RB_Obj_f19} x */
+	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
 		const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
 		this.save_number(`${cf}.f1`,f1);
@@ -2131,8 +2131,8 @@ class HandleTypes extends ServiceMethods {
 			case 3832:
 		}
 	}
-	/** @protected @arg {R_ClickTrackingObj_t1} x */
-	R_ClickTrackingObj_t1(x) {
+	/** @protected @arg {RB_ClickTrackingObj_t1} x */
+	RB_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
 		if(this.is_tp_xx(x,0)) {
 			if(this.is_tp_xx_2(x,13188)) {
@@ -2161,7 +2161,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				if(!f9w) debugger;
 				if(t19!=="child") debugger;
-				this.R_Obj_f19(f19);
+				this.RB_Obj_f19(f19);
 				return;
 			}
 			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
@@ -2193,10 +2193,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @protected @arg {R_ClickTrackingObj} x */
-	R_ClickTrackingObj(x) {
+	/** @protected @arg {RB_ClickTrackingObj} x */
+	RB_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj";
-		if(1 in x) return this.R_ClickTrackingObj_t1(x);
+		if(1 in x) return this.RB_ClickTrackingObj_t1(x);
 		const {4: [,,f4],...u}=this.s(cf,x);
 		this.V_BinaryTimestamp(f4);
 		if(6 in u) {
@@ -2300,9 +2300,9 @@ class HandleTypes extends ServiceMethods {
 				this.P_ad_layout_ad_serving_data_entry(u);
 			} break;
 			case "tracking.click_tracking_params": {
-				/** @type {R_ClickTrackingObj} */
+				/** @type {RB_ClickTrackingObj} */
 				let u=as_any(x);
-				this.R_ClickTrackingObj(u);
+				this.RB_ClickTrackingObj(u);
 			} break;
 			case "tracking.params": {
 				/** @type {P_tracking_params} */
