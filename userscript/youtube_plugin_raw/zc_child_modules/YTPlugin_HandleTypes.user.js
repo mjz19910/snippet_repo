@@ -1911,6 +1911,48 @@ class HandleTypes extends ServiceMethods {
 		let lmt_=this.parse_number_template(lmt);
 		this.a_primitive_num(lmt_);
 	}
+	/** @private @arg {D_VideoPlaybackShape_LS_Params} x */
+	D_VideoPlaybackShape_LS_Params(x) {
+		const cf1="D_VideoPlaybackShape_LS_Params",cf2="video_playback.api_url"; cf2;
+		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,...y}=this.s(cf1,x); this.g(y);
+		this.save_string(`${cf1}.mh`,mh);
+		this.save_string(`${cf1}.mm`,mm);
+		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
+		let mn_arr=split_string(mn);
+		for(let mi of mn_arr) {
+			let ap=this.get_gv_parts(mi);
+			if(ap.length!==2) debugger;
+			this.save_string(`${cf1}.google_video_partition`,ap[0]);
+			this.save_string(`${cf1}.google_video_selector`,ap[1]);
+			switch(ap[0]) {
+				default: {
+					let [x]=ap;
+					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
+					if(gen.has) break;
+					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+				}; break;
+				case "n4v7s":
+				case "nx57y":
+				case "o097z":
+				case "nx5s7":
+				case "9gv7l":
+			}
+		}
+		this.save_string(`${cf1}.ms`,ms);
+		this.save_string(`${cf1}.mv`,mv);
+		this.save_string(`${cf1}.mvi`,mvi);
+		this.save_string(`${cf1}.pl`,pl);
+		{
+			let x=initcwndbps;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
+		{
+			let x=mt;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
+	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
@@ -1958,45 +2000,9 @@ class HandleTypes extends ServiceMethods {
 		for(let k of kk_y1) {
 			set_obj(y1,x,k);
 		}
+		this.D_VideoPlaybackShape_LS_Params(obj_lsparams);
 		let y2=y1;
-		const {mh,mm,mn,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,ms,mv,mvi,pl,initcwndbps,...y3}=y2;
-		this.save_string(`${cf1}.mh`,mh);
-		this.save_string(`${cf1}.mm`,mm);
-		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
-		let mn_arr=split_string(mn);
-		for(let mi of mn_arr) {
-			let ap=this.get_gv_parts(mi);
-			if(ap.length!==2) debugger;
-			this.save_string(`${cf1}.google_video_partition`,ap[0]);
-			this.save_string(`${cf1}.google_video_selector`,ap[1]);
-			switch(ap[0]) {
-				default: {
-					let [x]=ap;
-					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
-					if(gen.has) break;
-					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
-				}; break;
-				case "n4v7s":
-				case "nx57y":
-				case "o097z":
-				case "nx5s7":
-				case "9gv7l":
-			}
-		}
-		this.save_string(`${cf1}.ms`,ms);
-		this.save_string(`${cf1}.mv`,mv);
-		this.save_string(`${cf1}.mvi`,mvi);
-		this.save_string(`${cf1}.pl`,pl);
-		{
-			let x=initcwndbps;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		}
-		{
-			let x=mt;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		}
+		const {fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,...y3}=y2;
 		this.save_string(`${cf1}.fvip`,fvip);
 		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
 		this.save_string(`${cf1}.fexp`,fexp);
