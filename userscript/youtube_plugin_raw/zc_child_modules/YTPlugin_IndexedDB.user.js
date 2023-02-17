@@ -111,6 +111,12 @@ class IndexedDBService extends BaseService {
 		debugger;
 		this.is_broken=true;
 	}
+	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
+	async add_data_to_store(store,data) {
+		let success=await this.await_success(store.add(data));
+		if(this.log_all_events) console.log("IDBRequest: success",success);
+		this.committed_data.push(data);
+	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} arg_value @arg {number} version */
 	async put(key,arg_value,version) {
 		{
@@ -156,7 +162,9 @@ class IndexedDBService extends BaseService {
 						console.log("[database_needs_obj_merge]");
 						console.log("[obj_merge_new]",item);
 						console.log("[obj_merge_cur]",cursor_value);
-						debugger;
+						await this.get_async_result(obj_store.delete(item.key));
+						await this.add_data_to_store(obj_store,item);
+						this.committed_data.push(item);
 					} else {
 						switch(item.type) {
 							default: debugger; break;
