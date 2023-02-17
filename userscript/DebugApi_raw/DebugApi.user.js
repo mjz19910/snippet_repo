@@ -95,7 +95,7 @@ function add_object_with_name(name,object) {
 	const instance_item=[name,instance_obj];
 	saved_instances.push(instance_item);
 }
-inject_api.add_object_with_name=add_object_with_name;
+export_(exports => {exports.add_object_with_name=add_object_with_name;});
 /** @template {{}} U @template {new (...args: any) => U} T @arg {T} constructor_ @arg {U} object */
 function add_object(constructor_,object) {
 	const name=constructor_.name;
@@ -2695,7 +2695,7 @@ class W {
 	/** @arg {T} val */
 	constructor(val) {this.val=val;}
 }
-z.add_function(W);
+add_function(W);
 
 /** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
@@ -2915,7 +2915,7 @@ function wasm_encode_section(id,arr) {
 	}
 	return [id,arr.length,...arr];
 }
-z.add_function(wasm_encode_section);
+add_function(wasm_encode_section);
 
 // Looked at .zz impl for https://github.com/little-core-labs/varint-wasm
 /** @arg {number[]} arr */
@@ -2928,14 +2928,14 @@ function wasm_encode_string(arr) {
 	}
 	return [...out,n,...arr];
 }
-z.add_function(wasm_encode_string);
+add_function(wasm_encode_string);
 
 /** @type {<T>(v:T|null)=>T} */
 function not_null(value) {
 	if(value===null) throw new Error("Unexpected null");
 	return value;
 }
-z.add_function(not_null);
+add_function(not_null);
 
 /** @template {any[]} T @template U */
 class VoidCallback {
@@ -3056,7 +3056,7 @@ async function decode_wasm_data() {
 	let wasm_module_bytes=await fetch_wasm_module();
 	console.log(wasm_module_bytes);
 }
-z.add_function(decode_wasm_data);
+add_function(decode_wasm_data);
 
 /** @arg {SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
@@ -3220,7 +3220,7 @@ inject_api.range_matches=range_matches;
 let compressionStatsCalc=stats_calculator_info.stats_calculator;
 /** @arg {[unknown, number][]} stats */
 function log_stats(stats) {console.log(...stats.sort((a,b) => b[1]-a[1]));}
-z.add_function(log_stats);
+add_function(log_stats);
 /** @arg {string[]} arr @arg {number} calc_win */
 function sorted_comp_stats(arr,calc_win) {
 	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
@@ -3248,7 +3248,7 @@ function next_chunk(arr,start) {
 	}
 	return c_len;
 }
-z.add_function(next_chunk);
+add_function(next_chunk);
 /** @type {{value:string[]}} */
 let ids={value: []};
 /** @arg {string} value */
@@ -3302,7 +3302,7 @@ class IDValueImpl {
 		this.stats_win=0;
 	}
 }
-z.add_function(IDValueImpl);
+add_function(IDValueImpl);
 
 /** @arg {IDValueImpl_0} next */
 function get_next({next}) {
@@ -3528,7 +3528,7 @@ function assign_next(value,next) {
 	value.next=next;
 	return next;
 }
-z.add_function(assign_next);
+add_function(assign_next);
 /** @implements {IDValueImpl_0} */
 class Value {
 	set_arr_T() {}
@@ -3561,7 +3561,7 @@ class Value {
 	/** @type {any} */
 	stats_win;
 }
-z.add_function(Value);
+add_function(Value);
 
 let max_id={value: 0};
 /** @arg {IDValueImpl_0} obj @arg {CompressionStatsCalculator} stats */
@@ -3768,7 +3768,7 @@ function deep_eq(obj_1,obj_2) {
 	if(obj_1 instanceof Map&&obj_2 instanceof Map) {return deep_eq([...obj_1.entries()],[...obj_2.entries()]);}
 	throw new Error("Fixme");
 }
-z.add_function(deep_eq);
+add_function(deep_eq);
 
 /** @arg {string[][]} arr_2d @arg {number} key @arg {string} value */
 function make_group_from_item(arr_2d,key,value) {
@@ -4014,7 +4014,7 @@ function cast_to_record_with_key_and_string_type(x,k) {
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
 }
-z.add_function(cast_to_record_with_key_and_string_type);
+add_function(cast_to_record_with_key_and_string_type);
 //#endregion
 
 
@@ -4300,9 +4300,11 @@ class ListenSocket {
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
 		if(!info.data) return;
-		if(!inject_api.remote_origin) return;
+		export_(exports => {
+			if(!exports.remote_origin) return;
+			exports.remote_origin.push_tcp_message(info);
+		});
 		if(info.data.type==="forward"&&this.m_flags.does_proxy_to_opener) {
-			inject_api.remote_origin.push_tcp_message(info);
 			return;
 		}
 		if(this.m_log_downstream) {console.log("downstream_event",info.data,info.flags,info.client_id);}
@@ -4486,11 +4488,7 @@ class CrossOriginConnection {
 		window.addEventListener("beforeunload",this);
 		window.addEventListener("unload",this);
 	}
-	static connect_to_api() {
-		inject_api.CrossOriginConnection=this;
-		let remote_origin=new this();
-		inject_api.remote_origin=remote_origin;
-	}
+	static connect_to_api() {export_(exports => {exports.CrossOriginConnection=this; exports.remote_origin=new this;});}
 }
 CrossOriginConnection.connect_to_api();
 
