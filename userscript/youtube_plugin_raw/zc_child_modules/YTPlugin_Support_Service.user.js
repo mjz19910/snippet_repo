@@ -447,14 +447,8 @@ class Support_RS_Player extends ServiceMethods {
 		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
 		this.parser.parse_url(cf,iframeUrl);
 		this.parser.parse_url(cf,flashUrl);
-		switch(width) {
-			default: debugger; break;
-			case 1280: case 480: case 405:
-		}
-		switch(height) {
-			default: debugger; break;
-			case 720: case 360:
-		}
+		this.save_number(`${cf}.width`,width);
+		this.save_number(`${cf}.height`,height);
 		this.parser.parse_url(cf,flashSecureUrl);
 	}
 	/** @private @arg {D_VideoCategory} x */
