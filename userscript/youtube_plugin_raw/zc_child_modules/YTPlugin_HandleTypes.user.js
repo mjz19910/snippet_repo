@@ -1890,6 +1890,7 @@ class HandleTypes extends ServiceMethods {
 		let y2=y1;
 		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
 		let obj_sparams=as({});
+		let kk_x=this.get_keys_of(x);
 		let kk_sparams=this.split_str(sparams);
 		/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
 		function set_obj(trg,src,k) {
@@ -1901,6 +1902,8 @@ class HandleTypes extends ServiceMethods {
 		let xt=xa;
 		for(let k of kk_sparams) {
 			set_obj(obj_sparams,xt,k);
+			let idx=kk_x.indexOf(k);
+			kk_x.splice(idx,1);
 		}
 		this.D_VideoPlaybackShape_S_Params(obj_sparams);
 		// this.a_primitive_str(expire);
