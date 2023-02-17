@@ -2316,7 +2316,7 @@ class LocalStorageSeenDatabase extends ApiBase {
 		if(was_known<0) return false;
 		store.new_data.push([k,x]);
 		this.#onDataChange();
-		console.log("store_str [%s] %o",k,x);
+		console.log(`store_str [${k}]${is_firefox?"":" "}%o`,x);
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return true;}
 		return true;
