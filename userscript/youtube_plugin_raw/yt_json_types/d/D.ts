@@ -1379,16 +1379,18 @@ type ApiNotificationLast=
 	;
 ;
 type D_ApiPathFormat_1=
-	|"youtubei/v1/ypc/get_offers"
-	|"youtubei/v1/ypc/get_cart"
 	|D_ApiPathFormat_2
 	;
 ;
 type D_ApiPathFormat_2=
 	|"getAccountSwitcherEndpoint"
 	|"getDatasyncIdsEndpoint"
+	|"youtubei/v1/backstage/create_post"
 	|"youtubei/v1/browse/edit_playlist"
+	|"youtubei/v1/flag/get_form"
 	|"youtubei/v1/notification/opt_out"
+	|"youtubei/v1/ypc/get_cart"
+	|"youtubei/v1/ypc/get_offers"
 	|`youtubei/v1/${"browse"|"guide"|"next"|"player"}`
 	|`youtubei/v1/account/${"account_menu"|"accounts_list"|"set_setting"}`
 	|`youtubei/v1/att/${"get"|"log"}`
@@ -1407,8 +1409,6 @@ type D_ApiPathFormat_2=
 	|`youtubei/v1/share/get_share_panel`
 	|`youtubei/v1/subscription/${"subscribe"|"unsubscribe"}`
 	|`youtubei/v1/updated_metadata`
-	|"youtubei/v1/flag/get_form"
-	|"youtubei/v1/backstage/create_post"
 	;
 ;
 type D_AttBgChallenge={
