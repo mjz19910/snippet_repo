@@ -1602,14 +1602,16 @@ class BitmapResult {
 class StoreData {
 	/** @arg {Partial<ReturnType<StoreData['destructure']>>} src */
 	constructor(src) {this.update(src);}
-	/** @arg {[string,StoreData['seen_strings'][number][1][1][number]][]} new_data */
-	get_string_store(new_data) {
-		const {strings_key_index_map: index,seen_strings: data}=this;
+	/** @type {[string,StoreData['seen_strings'][number][1][1][number]][]} */
+	new_strings=[];
+	get_string_store() {
+		const {strings_key_index_map: index,seen_strings: data,new_strings: new_data}=this;
 		return {index,data,new_data};
 	}
-	/** @arg {[string,StoreData["seen_numbers"][number][1][1][number]][]} new_data */
-	get_number_store(new_data) {
-		const {numbers_index: index,seen_numbers: data}=this;
+	/** @type {[string,StoreData['seen_numbers'][number][1][1][number]][]} */
+	new_numbers=[];
+	get_number_store() {
+		const {numbers_index: index,seen_numbers: data,new_numbers: new_data}=this;
 		return {index,data,new_data};
 	}
 	/** @type {[string,StoreData['seen_keys'][number][1][1][number]][]} */
@@ -1677,7 +1679,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	#get_keys_store() {return this.#data_store.get_keys_store(this.#new_keys);}
+	#get_keys_store() {return this.#data_store.get_keys_store();}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
 		if(!x) return;
@@ -1694,8 +1696,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
-		let ret=this.save_to_store_2("save_keys",k,keys.join(),store);
-		return ret;
+		return this.save_to_store_2("save_keys",k,keys.join(),store);
 	}
 	/** @no_mod @arg {string} str @returns {Partial<ReturnType<StoreData['destructure']>>} */
 	#parse_data(str) {
@@ -1760,11 +1761,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	#get_string_store() {return this.#data_store.get_string_store(this.#new_strings);}
 	/** @no_mod @type {[string,string|string[]][]} */
 	#new_strings=[];
-	/** @private @arg {string} ns @arg {string} k @arg {string|string[]} x */
-	save_to_store(ns,k,x) {
-		this.save_to_store_2(ns,k,x,store);
-		this.save_string_impl(`${ns}:${k}`,x);
-	}
 	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
 	add_to_index(k,x,store) {
 		/** @private @type {StoreDescription<T>['data'][number]} */
@@ -1825,51 +1821,19 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
 		return true;
 	}
+	#get_number_store() {return this.#data_store.get_number_store();}
 	do_random_breakpoint=false;
 	/** @api @public @arg {string} k @arg {number|number[]} x */
 	save_number_impl(k,x) {
 		if(x===void 0) {debugger; return;}
-		this.indexed_db.get("boxed_id",`boxed_id:num:${k}`).then(data => {
-			if(!data) return;
-			if(data.id[0]!=="many_num") {debugger; return;}
-			if(data.id[1][0]==="many") {
-				if(x instanceof Array) {
-					data.id[1][1].push(x);
-				} else {
-					data.id[1][1].push([x]);
-				}
-			} else {
-				if(x instanceof Array) {
-					data.id[1]=["many",[x]];
-				} else {
-					data.id[1][1].push(x);
-				}
-			}
-			this.indexed_db.put("boxed_id",data,3);
-		});
+		let store=this.#get_number_store();
+		return this.save_to_store_2("save_number",k,x,store);
 	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
 	save_string_impl(k,x) {
 		if(x===void 0) {debugger; return;}
-		this.indexed_db.get("boxed_id",`boxed_id:str:${k}`).then(data => {
-			if(!data) return;
-			if(data.id[0]!=="many_str") {debugger; return;}
-			if(data.id[1][0]==="many") {
-				if(x instanceof Array) {
-					data.id[1][1].push(x);
-				} else {
-					data.id[1][1].push([x]);
-				}
-			} else {
-				if(x instanceof Array) {
-					data.id[1]=["many",[x]];
-				} else {
-					data.id[1][1].push(x);
-				}
-			}
-			this.indexed_db.put("boxed_id",data,3);
-		});
-		return;
+		let store=this.#get_string_store();
+		return this.save_to_store_2("save_string",k,x,store);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
