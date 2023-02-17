@@ -191,6 +191,13 @@ class IndexedDBService extends BaseService {
 									debugger;
 									continue for_loop;
 								}
+								switch(item.base_type) {
+									default: debugger; break;
+									case "PL": break;
+									case "RD": break;
+									case "RDMM": break;
+									case "UU": break;
+								}
 								this.committed_data.push(item);
 							} break;
 						};
