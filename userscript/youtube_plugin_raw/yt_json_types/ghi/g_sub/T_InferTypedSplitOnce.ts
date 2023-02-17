@@ -49,25 +49,24 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 			if((() => true)()) {
 				// ?
 				return [WA,Rest];
+			}
+			// :
+			// Begin extends ""
+			if((() => true)()) {
+				// ?
+				// T_InferredSplitOnce_NB_2<WA,S,D>
+				return TF_InferredSplitOnce_NB_2(WA,S,_D);
+			}
+			// :
+			// Rest extends `${WA}`
+			if((() => true)()) {
+				// ?
+				// [Begin,WA]
+				return [Begin,WA];
 			} else {
 				// :
-				// Begin extends ""
-				if((() => true)()) {
-					// ?
-					// T_InferredSplitOnce_NB_2<WA,S,D>
-					return TF_InferredSplitOnce_NB_2(WA,S,_D);
-				}
-				// :
-				// Rest extends `${WA}`
-				if((() => true)()) {
-					// ?
-					// [Begin,WA]
-					return [Begin,WA];
-				} else {
-					// :
-					// never
-					return never_return();
-				}
+				// never
+				return never_return();
 			}
 		}
 	} else {
