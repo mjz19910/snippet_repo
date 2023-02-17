@@ -3160,6 +3160,12 @@ class CompressionStatsCalculator {
 		/** @type {MulCompression} */
 		this.compressor=new MulCompression;
 	}
+	/** @arg {string[]} arr @arg {number} calc_win */
+	sorted_comp_stats(arr,calc_win) {
+		let ret=this.calc_compression_stats(arr,calc_win);
+		ret.sort((a,b) => b[1]-a[1]);
+		return ret;
+	}
 	/** @arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
 	calc_for_stats_index(stats_arr,arr,index) {stats_arr[index]=this.calc_compression_stats(arr,index+1);}
 	/** @arg {number} index */
@@ -3213,12 +3219,6 @@ export_(exports => {exports.range_matches=range_matches;});
 /** @arg {[unknown, number][]} stats */
 function log_stats(stats) {console.log(...stats.sort((a,b) => b[1]-a[1]));}
 add_function(log_stats);
-/** @arg {string[]} arr @arg {number} calc_win */
-function sorted_comp_stats(arr,calc_win) {
-	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
-	ret.sort((a,b) => b[1]-a[1]);
-	return ret;
-}
 /** @arg {any[]} arr @arg {number} start */
 function next_chunk(arr,start) {
 	let s_arr=null;
