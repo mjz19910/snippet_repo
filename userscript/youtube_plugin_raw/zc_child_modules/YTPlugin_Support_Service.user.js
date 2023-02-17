@@ -83,31 +83,31 @@ class Support_RS_Player extends ServiceMethods {
 		this.t(cacheMetadata,this.D_Cache_MD);
 	}
 	/** @private @arg {R_EndscreenElement} x */
-	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
+	R_EndscreenElement(x) {this.H_("endscreenElementRenderer",x,this.D_EndscreenElement);}
 	/** @private @arg {R_AdPlacementConfig} x */
-	R_AdPlacementConfig(x) {this.H_("R_AdPlacementConfig","adPlacementConfig",x,this.D_AdPlacementConfig);}
+	R_AdPlacementConfig(x) {this.H_("adPlacementConfig",x,this.D_AdPlacementConfig);}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
-	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded","playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
+	R_PlayerAnnotationsExpanded(x) {this.H_("playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
 	/** @private @arg {R_Miniplayer} x */
-	R_Miniplayer(x) {this.H_("R_Miniplayer","miniplayerRenderer",x,this.D_Miniplayer);}
+	R_Miniplayer(x) {this.H_("miniplayerRenderer",x,this.D_Miniplayer);}
 	/** @private @arg {R_DesktopWatchAds} x */
-	R_DesktopWatchAds(x) {this.H_("R_DesktopWatchAds","playerLegacyDesktopWatchAdsRenderer",x,this.D_DesktopWatchAds);}
+	R_DesktopWatchAds(x) {this.H_("playerLegacyDesktopWatchAdsRenderer",x,this.D_DesktopWatchAds);}
 	/** @private @arg {R_PlayerCaptionsTracklist} x */
-	R_PlayerCaptionsTracklist(x) {this.H_("R_Miniplayer","playerCaptionsTracklistRenderer",x,this.D_PlayerCaptionsTracklist);}
+	R_PlayerCaptionsTracklist(x) {this.H_("playerCaptionsTracklistRenderer",x,this.D_PlayerCaptionsTracklist);}
 	/** @private @arg {R_VideoQualityPromo} x */
-	R_VideoQualityPromo(x) {this.H_("R_Miniplayer","videoQualityPromoRenderer",x,this.D_VideoQualityPromo);}
+	R_VideoQualityPromo(x) {this.H_("videoQualityPromoRenderer",x,this.D_VideoQualityPromo);}
 	/** @private @arg {R_PlayerAttestation} x */
-	R_PlayerAttestation(x) {this.H_("R_Miniplayer","playerAttestationRenderer",x,this.D_PlayerAttestation);}
+	R_PlayerAttestation(x) {this.H_("playerAttestationRenderer",x,this.D_PlayerAttestation);}
 	/** @private @arg {R_CardCollection} x */
-	R_CardCollection(x) {this.H_("R_Miniplayer","cardCollectionRenderer",x,this.D_CardCollection);}
+	R_CardCollection(x) {this.H_("cardCollectionRenderer",x,this.D_CardCollection);}
 	/** @private @arg {R_PlayerMicroformat} x */
-	R_PlayerMicroformat(x) {this.H_("R_Miniplayer","playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
+	R_PlayerMicroformat(x) {this.H_("playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
 	/** @private @arg {R_AdPlacement} x */
-	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
+	R_AdPlacement(x) {this.H_("adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @private @arg {R_Endscreen} x */
-	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
+	R_Endscreen(x) {this.H_("endscreenRenderer",x,this.D_Endscreen);}
 	/** @private @arg {R_PaidContentOverlay} x */
-	R_PaidContentOverlay(x) {this.H_("R_PaidContentOverlay","paidContentOverlayRenderer",x,this.D_PaidContentOverlay);}
+	R_PaidContentOverlay(x) {this.H_("paidContentOverlayRenderer",x,this.D_PaidContentOverlay);}
 	/** @private @arg {D_PaidContentOverlay} x */
 	D_PaidContentOverlay(x) {
 		const cf="D_PaidContentOverlay";
@@ -498,9 +498,9 @@ class Support_RS_Player extends ServiceMethods {
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 	}
 	/** @private @arg {R_Card} x */
-	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.D_Card);}
+	R_Card(x) {this.H_("cardRenderer",x,this.D_Card);}
 	/** @private @arg {R_InfoCardIcon} x */
-	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,this.D_InfoCardIcon);}
+	R_InfoCardIcon(x) {this.H_("infoCardIconRenderer",x,this.D_InfoCardIcon);}
 	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {D_FormatItem_signatureCipher} x */
 	D_Format_signatureCipher(cf,x) {
 		/** @type {`${cf}:signatureCipher`} */
@@ -603,11 +603,14 @@ class Support_RS_Player extends ServiceMethods {
 			if(x!=="cards") debugger;
 		});
 	}
-	R_CollaboratorInfoCardContent(x) {this.H_("R_SimpleCardTeaser","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	/** @private @arg {R_CollaboratorInfoCardContent} x */
+	R_CollaboratorInfoCardContent(x) {this.H_("collaboratorInfoCardContentRenderer",x,this.D_CollaboratorInfoCardContent);}
+	/** @private @arg {D_CollaboratorInfoCardContent} x */
+	D_CollaboratorInfoCardContent(x) {x;}
 	/** @private @arg {D_TrackingParams} x */
 	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
 	/** @private @arg {R_SimpleCardTeaser} x */
-	R_SimpleCardTeaser(x) {this.H_("R_SimpleCardTeaser","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
 	/** @private @arg {D_CueRangeItem} x */
 	D_CueRangeItem(x) {
 		const cf="D_CueRangeItem";
@@ -767,7 +770,7 @@ class Support_RS_Browse extends ServiceMethods {
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
 	}
 	/** @private @arg {R_FeedTabbedHeader} x */
-	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader","feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
+	R_FeedTabbedHeader(x) {this.H_("feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
 		const cf="D_FeedTabbedHeader";
@@ -783,7 +786,7 @@ class Support_RS_Browse extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_MusicThumbnail} x */
-	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
+	R_MusicThumbnail(x) {this.H_("musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {D_MusicThumbnail} x */
 	D_MusicThumbnail(x) {
 		const cf="D_MusicThumbnail";
@@ -832,7 +835,7 @@ class Support_RS_Browse extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {RC_SectionList} x */
-	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
+	RC_SectionList(x) {this.H_("sectionListContinuation",x,this.GD_RC_SectionList);}
 }
 class Support_GenericApi extends ServiceMethods {
 	// //#region TODO
@@ -996,7 +999,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.a_primitive_num(timeoutMs);
 	}
 	/** @private @arg {R_AddToPlaylist} x */
-	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
+	R_AddToPlaylist(x) {this.H_("addToPlaylistRenderer",x,this.D_AddToPlaylist);}
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
 		const cf="D_AddToPlaylist";
@@ -1005,7 +1008,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.z(actions,this.R_AddToPlaylistCreate);
 	}
 	/** @private @arg {R_AddToPlaylistCreate} x */
-	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
+	R_AddToPlaylistCreate(x) {this.H_("addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
 		const cf="D_AddToPlaylistCreate";
@@ -1017,7 +1020,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.E_CreatePlaylistService(serviceEndpoint);
 	}
 	/** @private @arg {R_PlaylistAddToOption} x */
-	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
+	R_PlaylistAddToOption(x) {this.H_("playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
 	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
@@ -1055,7 +1058,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {R_SimpleMenuHeader} x */
-	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader","simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
+	_R_SimpleMenuHeader(x) {this.H_("simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {
 		const cf="D_SimpleMenuHeader";
@@ -1064,7 +1067,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.z(buttons,this.R_Button);
 	}
 	/** @private @arg {R_TextInputFormField} x */
-	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
+	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @private @arg {D_TextInputFormField} x */
 	D_TextInputFormField(x) {
 		const cf="D_TextInputFormField";
@@ -1077,7 +1080,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.ceq(required,true);
 	}
 	/** @private @arg {R_Dropdown} x */
-	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
+	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
 	/** @private @arg {D_Dropdown_Privacy} x */
 	D_Dropdown(x) {
 		const cf="D_Dropdown";
@@ -1086,7 +1089,7 @@ class Support_GenericApi extends ServiceMethods {
 		if(label!=="Privacy") debugger;
 	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
+	R_MP_MenuNotificationSection(x) {this.H_("multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
 	D_MP_MenuNotificationSection(x) {
 		const cf="D_MP_MenuNotificationSection";
@@ -1095,7 +1098,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.z(items,this.GR_MP_MenuNotificationSection_Item);
 	}
 	/** @private @arg {R_PrivacyDropdownItem} x */
-	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
+	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
 	/** @private @arg {D_PrivacyDropdownItem} x */
 	D_PrivacyDropdownItem(x) {
 		const cf="D_PrivacyDropdownItem";
@@ -1115,7 +1118,7 @@ class Support_GenericApi extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_Notification} x */
-	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
+	R_Notification(x) {this.H_("notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification";
@@ -1490,7 +1493,7 @@ class Support_EventInput extends ServiceMethods {
 		this.handle_types.R_SettingsSidebar(sidebar);
 	}
 	/** @public @arg {R_Tab} x */
-	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
+	R_Tab(x) {this.H_("tabRenderer",x,this.D_Tab);}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
 		const cf="D_Tab";
