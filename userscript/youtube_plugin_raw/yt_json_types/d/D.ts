@@ -160,7 +160,7 @@ type D_VE6827_PageLocation=
 	;
 ;
 type D_ApiStatsAdsStr=`ver=${string}&ns=${string}&event=${string}&device=${string}&content_v=${string}&el=${string}&ei=${string}&devicever=${string}&bti=${string}&break_type=${string}&conn=${string}&cpn=${string}&lact=${string}&m_pos=${string}&mt=${string}&p_h=${string}&p_w=${string}&rwt=${string}&sdkv=${string}&slot_pos=${string}&vis=${string}&vol=${string}&wt=${string}&sli=${string}&slfs=${string}&loginael=${string}`;
-type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiPathFormat_1}`;
+type D_ApiUrlFormat=`https://www.youtube.com${D_ApiPathFormat_1}`;
 type D_ChanLoc=`channel.${string}`;
 type D_ChannelId=`UC${string}`;
 type T_ChannelIdStr<T extends string>=`UC${T}`;
@@ -1378,6 +1378,7 @@ type ApiNotificationLast=
 	|"modify_channel_preference"
 	;
 ;
+type DG_ApiUrl=T_Split<T_SplitOnce<D_ApiPathFormat_1,"/">[1],"/">;
 type D_ApiPathFormat_1=
 	|"/getAccountSwitcherEndpoint"
 	|"/getDatasyncIdsEndpoint"
