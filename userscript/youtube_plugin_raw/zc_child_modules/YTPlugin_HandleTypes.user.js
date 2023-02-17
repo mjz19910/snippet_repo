@@ -2215,26 +2215,6 @@ class HandleTypes extends ServiceMethods {
 		console.log(`-- [binary_gen_case:${cf}] --\n${str_arr.join("\n")}`);
 		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
-	/** @private @arg {P_entity_key} x */
-	P_entity_key(x) {x;}
-	/** @private @arg {P_playability_status_context_params} x */
-	P_playability_status_context_params(x) {x;}
-	/** @private @arg {P_like_params} x */
-	P_like_params(x) {x;}
-	/** @private @arg {P_logging_context_serialized_context_data} x */
-	P_logging_context_serialized_context_data(x) {x;}
-	/** @private @arg {P_reel_params} x */
-	P_reel_params(x) {x;}
-	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
-	P_ad_layout_ad_serving_data_entry(x) {x;}
-	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
-	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
-	/** @private @arg {P_continuation_request_browse_token} x */
-	P_continuation_request_browse_token(x) {x;}
-	/** @private @arg {P_create_playlist_params} x */
-	P_create_playlist_params(x) {x;}
-	/** @private @arg {P_reel_player_params} x */
-	P_reel_player_params(x) {x;}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	decode_binary_object(cf,x) {
 		switch(cf) {
@@ -2459,6 +2439,26 @@ class HandleTypes extends ServiceMethods {
 	P_dislike_params(x) {x;}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {x;}
+	/** @private @arg {P_entity_key} x */
+	P_entity_key(x) {x;}
+	/** @private @arg {P_playability_status_context_params} x */
+	P_playability_status_context_params(x) {x;}
+	/** @private @arg {P_like_params} x */
+	P_like_params(x) {x;}
+	/** @private @arg {P_logging_context_serialized_context_data} x */
+	P_logging_context_serialized_context_data(x) {x;}
+	/** @private @arg {P_reel_params} x */
+	P_reel_params(x) {x;}
+	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
+	P_ad_layout_ad_serving_data_entry(x) {x;}
+	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
+	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
+	/** @private @arg {P_continuation_request_browse_token} x */
+	P_continuation_request_browse_token(x) {x;}
+	/** @private @arg {P_create_playlist_params} x */
+	P_create_playlist_params(x) {x;}
+	/** @private @arg {P_reel_player_params} x */
+	P_reel_player_params(x) {x;}
 	/** @public @arg {D_AudioConfig} x */
 	D_AudioConfig(x) {x;}
 	/** @public @arg {D_StartSeconds} x */
