@@ -1206,16 +1206,6 @@ class CompressStateBase {
 		this.ret=ret;
 	}
 }
-/** @template T @template U @extends {CompressStateBase<T,U>} */
-class CompressState extends CompressStateBase {
-	/** @type {T|null} */
-	item;
-	/** @arg {T[]} arr */
-	constructor(arr) {
-		super(0,arr,[]);
-		this.item=null;
-	}
-}
 class TimeoutTarget {
 	/** @arg {AutoBuyStateImplR|AutoBuyImplR|null} obj @arg {()=>void} callback */
 	constructor(obj,callback) {
