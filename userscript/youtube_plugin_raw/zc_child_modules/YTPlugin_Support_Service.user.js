@@ -1744,6 +1744,29 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			let ss=store.get_string_store();
 			// let changed_data=false;
 			for(let to_load of boxed) {
+				switch(to_load.type) {
+					case "num": {
+						debugger;
+					} break;
+					case "str": {
+						/** @type {string[]} */
+						let str_arr=[];
+						for(let item of to_load.id[1][1]) {
+							if(item instanceof Array) {
+								for(let val of item) {
+									if(typeof val==="string") {
+										str_arr.push(val);
+									}
+								}
+								continue;
+							}
+							if(typeof item==="string") {
+								str_arr.push(item);
+							}
+						}
+						str_arr
+					}
+				}
 				let k_parts=this.split_box_type(to_load.key);
 				if(k_parts[0]==="str") {
 					debugger;
@@ -1754,11 +1777,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						let str_arr=[];
 						for(let item of to_load.id[1][1]) {
 							if(item instanceof Array) {
-								for(let val of item) {
-									if(typeof val==="string") {
-										str_arr.push(val);
-									}
-								}
+								debugger;
 								continue;
 							}
 							if(typeof item==="string") {
