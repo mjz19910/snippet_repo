@@ -133,9 +133,6 @@ class IndexedDBService extends BaseService {
 		console.log("open db");
 		this.database_opening=true;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
-		db.onclose=() => {
-			this.database_open=false;
-		};
 		this.database_opening=false;
 		this.database_open=true;
 		let typed_db=new TypedIndexedDb;
