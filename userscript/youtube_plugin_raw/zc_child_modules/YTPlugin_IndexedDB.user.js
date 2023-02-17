@@ -181,7 +181,7 @@ class IndexedDBService extends BaseService {
 								await this.update(obj_store,item);
 							} break cursor_loop;
 							// not a dynamic value
-							case "playlist_id:self": break;
+							case "playlist_id:self": this.committed_data.push(item); break;
 						};
 					}
 					try {
