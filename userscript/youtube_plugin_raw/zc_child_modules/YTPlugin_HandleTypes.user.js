@@ -1891,12 +1891,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {Ret_get_gv_parts} */
 	get_gv_parts(x) {
-		let ss=split_string(x,"-")[1];
-		let idx=5;
-		let r1=ss.slice(0,idx);
-		if(ss[idx]!=="n") return as_any([x]);
-		let r2=ss.slice(idx+1);
-		return as_any([r1,r2]);
+		return as_any(this.get_gv_parts_impl(x));
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
 	get_gv_parts_impl(x) {
