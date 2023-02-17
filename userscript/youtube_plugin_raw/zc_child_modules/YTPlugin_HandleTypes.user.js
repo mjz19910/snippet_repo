@@ -2159,10 +2159,11 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(19 in x) {
-			const {1: [,f1],2: [,f2],4: [,,f4],6: f6,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
+			const {1: [,f1],2: [,f2],4: [,,f4],6: f6,9: [,,f9],19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
 			this.save_number(`${cf}.w19.f1`,f1);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
+			this.a_primitive_bigint(f9);
 			if(t19!=="child") debugger;
 			this.RB_Obj_f19(f19);
 			return;
