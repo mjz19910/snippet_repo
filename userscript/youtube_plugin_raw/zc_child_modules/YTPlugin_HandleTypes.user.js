@@ -105,22 +105,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
-		generate_typedef.value=new ss.TypedefGenerator(x);
-		this.support_RS_Player=new ss.Support_RS_Player(x);
-		this.support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
-		this.support_RS_Watch=new ss.Support_RS_Watch(x);
-		this.support_RS_Page_Browse=new ss.Support_RS_Page_Browse(x);
-		this.support_RS_Browse=new ss.Support_RS_Browse(x);
-		this.support_GenericApi=new ss.Support_GenericApi(x);
-		this.support_EventInput=new ss.Support_EventInput(x);
-		this.x_VE37414=new ss.Support_VE37414(x);
 	}
 	//#endregion
 	/** @private @arg {D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
 		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,x => this.support_EventInput.R_Tab(x));
+		this.z(tabs,x => this.x_EventInput.R_Tab(x));
 	}
 	/** @public @arg {D_WebPlayerConfig} x */
 	D_WebPlayerConfig(x) {
@@ -196,7 +187,7 @@ class HandleTypes extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
-	G_ResponseTypes(response,x) {this.support_GenericApi.G_ResponseTypes(response,x);}
+	G_ResponseTypes(response,x) {this.x_GenericApi.G_ResponseTypes(response,x);}
 	/** @private @arg {G_NextContents} x */
 	G_NextContents(x) {
 		const cf="G_NextContents";

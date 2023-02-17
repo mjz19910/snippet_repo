@@ -28,7 +28,7 @@ class ServiceLoader {
 	constructor(x) {
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
-			run(detail) {this.x.get("handle_types").support_EventInput.YTNavigateFinishDetail(detail);}
+			run(detail) {this.x.get("handle_types").x_EventInput.YTNavigateFinishDetail(detail);}
 		}
 		class RT_Caller extends HandleTypes {
 			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
@@ -38,6 +38,7 @@ class ServiceLoader {
 			/** @public @arg {D_ApiUrlFormat} url */
 			decode_url(url) {return this.use_template_url(url);}
 		}
+		let ss=required(store.mod$SupportService);
 		this.ht_caller=new HT_Caller(x);
 		this.response_types_handler=new RT_Caller(x);
 		let bs=required(store.mod$YoutubePluginBase);
@@ -54,13 +55,22 @@ class ServiceLoader {
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new bs.YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
-		const LocalStorageSeenDatabase=required(store.mod$SupportService).LocalStorageSeenDatabase
-		this.local_seen_db=new LocalStorageSeenDatabase(x);
+		this.local_seen_db=new ss.LocalStorageSeenDatabase(x);
 		const CodegenService=required(store.mod$CodegenService).CodegenService;
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new (required(store.mod$IndexedDBService).IndexedDBService)(x);
 		this.yt_plugin=new bs.YtPlugin(x);
 		this.modify_env=new bs.ModifyEnv(x);
+		this.x_RS_Player=new ss.Support_RS_Player(x);
+		this.x_RS_WatchPage=new ss.Support_RS_WatchPage(x);
+		this.x_RS_Watch=new ss.Support_RS_Watch(x);
+		this.x_RS_Page_Browse=new ss.Support_RS_Page_Browse(x);
+		this.x_RS_Browse=new ss.Support_RS_Browse(x);
+		this.x_GenericApi=new ss.Support_GenericApi(x);
+		this.x_EventInput=new ss.Support_EventInput(x);
+		this.x_VE37414=new ss.Support_VE37414(x);
+		this.x_VE=new ss.Support_VE(x);
+		this.x_gen_typedef=new ss.TypedefGenerator(x);
 	}
 }
 
