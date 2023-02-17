@@ -321,9 +321,7 @@ class IndexedDBService extends BaseService {
 		let open_db=await this.get_async_result(indexedDB.open("yt_plugin",3));
 		let tx=open_db.transaction("video_id","readonly");
 		let store=this.objectStore(tx,"video_id");
-		let all_req=store.getAll();
-		await this.await_success(all_req);
-		let store_data=all_req.result;
+		let store_data=await this.get_async_result(store.getAll());
 		let store_diff=[];
 		for(let item of store_data) {
 			if(this.database_diff_keys.has(item.key)) continue;
