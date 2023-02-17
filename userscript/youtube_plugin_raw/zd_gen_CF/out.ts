@@ -518,6 +518,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "O_DU_Persistence";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_ShareEntityService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj:click_tracking";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj:tracking";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RCA_RelevantStateTags";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RC_ConsistencyTokenJar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RC_MainAppWebResponseContext";}
@@ -1068,6 +1070,8 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_radio.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "params.click_tracking";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "params.tracking";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_seek.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key";}
@@ -1083,8 +1087,6 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe_button.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscription_state.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.click_tracking_params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.serialized_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}

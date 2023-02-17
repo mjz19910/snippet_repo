@@ -2144,8 +2144,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
-	/** @protected @arg {Extract<RB_ClickTrackingObj,{1:any}>} x */
-	RB_ClickTrackingObj_t1(x) {
+	/** @protected @arg {Extract<RB_TrackingObj,{1:any}>} x */
+	RB_TrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
 		if(1 in x) {
 			const {1: [,f1]}=x;
@@ -2217,10 +2217,11 @@ class HandleTypes extends ServiceMethods {
 		x;
 		debugger;
 	}
-	/** @protected @arg {RB_ClickTrackingObj} x */
-	RB_ClickTrackingObj(x) {
-		const cf="R_ClickTrackingObj";
-		if(1 in x) return this.RB_ClickTrackingObj_t1(x);
+	/** @protected @arg {RB_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
+	RB_TrackingObj(x,flags) {
+		/** @type {`RB_TrackingObj:${typeof flags["type"]}`} */
+		const cf=`RB_TrackingObj:${flags.type}`;
+		if(1 in x) return this.RB_TrackingObj_t1(x);
 		const {4: [,,f4],...u}=this.s(cf,x);
 		this.V_BinaryTimestamp(f4);
 		if(6 in u) {
@@ -2295,15 +2296,15 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_ad_layout_ad_serving_data_entry(u);
 			} break;
-			case "tracking.click_tracking_params": {
-				/** @type {RB_ClickTrackingObj} */
+			case "params.click_tracking": {
+				/** @type {RB_TrackingObj} */
 				let u=as_any(x);
-				this.RB_ClickTrackingObj(u);
+				this.RB_TrackingObj(u,{type: "click_tracking"});
 			} break;
-			case "tracking.params": {
+			case "params.tracking": {
 				/** @type {P_tracking_params} */
 				let u=as_any(x);
-				this.P_tracking_params(u);
+				this.RB_TrackingObj(u,{type: "tracking"});
 			} break;
 			case "reel.params": {
 				/** @type {P_reel_params} */

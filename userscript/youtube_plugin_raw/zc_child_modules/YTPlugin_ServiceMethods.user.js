@@ -2863,7 +2863,7 @@ class ServiceMethods extends ServiceData {
 		}));
 	}
 	/** @protected @arg {string} x */
-	clickTrackingParams(x) {this.params("tracking.click_tracking_params",x);}
+	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
 	/** @protected @arg {AGA_push_waiting_obj_noVersion} args */
 	indexed_db_put(...args) {
@@ -2916,7 +2916,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template T @template {T} U @arg {T} v1 @arg {U} v2 */
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {string} x */
-	trackingParams(x) {this.params("tracking.params",x);}
+	trackingParams(x) {this.params("params.tracking",x);}
 	/** @protected @arg {string} cf @arg {{}} x */
 	codegen_typedef(cf,x,do_break=false) {
 		this.cg.codegen_typedef(cf,x,do_break,false);
