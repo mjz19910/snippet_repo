@@ -2138,6 +2138,10 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {RB_ClickTrackingObj_t1} x */
 	RB_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
+		if(1 in x) {
+			const {1: [,f1]}=x;
+			this.save_number(`${cf}.t0.f1`,f1);
+		}
 		if(this.is_tp_xx(x,0)) {
 			if(this.is_tp_xx_2(x,13188)) {
 				const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
