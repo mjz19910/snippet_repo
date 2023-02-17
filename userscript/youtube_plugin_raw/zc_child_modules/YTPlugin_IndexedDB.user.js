@@ -143,12 +143,12 @@ class IndexedDBService extends BaseService {
 			for(let item of d_cache) {
 				console.log("sync cache item",item);
 				let cursor_req=typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key));
-				for(let i=0;;i++) {
+				cursor_loop: for(let i=0;;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
 						this.committed_data.push(item);
 						await this.add_data_to_store(obj_store,item);
-						return;
+						break cursor_loop;
 					}
 					const cursor_value=cur_cursor.value;
 					if(cursor_value.key!==item.key) {
