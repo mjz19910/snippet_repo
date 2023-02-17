@@ -2518,7 +2518,7 @@ class BaseServicePrivate extends ApiBase {
 		return this.#x.value.get("codegen");
 	}
 	/** @protected */
-	local_seen_db=local_seen_db
+	local_seen_db=local_seen_db;
 	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
 		if(s===void 0) debugger;
