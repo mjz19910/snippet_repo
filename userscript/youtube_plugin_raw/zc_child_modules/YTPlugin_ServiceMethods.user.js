@@ -5338,6 +5338,7 @@ class ServiceMethods extends ServiceData {
 					this.save_string("Body.targetId",targetId);
 					switch(targetId) {
 						default: debugger; break;
+						case "comments-section":
 						case "browse-feedFEwhat_to_watch":
 					}
 				}

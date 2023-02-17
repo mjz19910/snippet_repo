@@ -19,6 +19,10 @@ type DC_ReloadContinuationItems={
 	targetId: "browse-feedFEwhat_to_watch";
 	continuationItems: G_SectionItem[];
 }|{
+	targetId: "comments-section";
+	continuationItems: R_CommentThread[];
+	slot: "RELOAD_CONTINUATION_SLOT_BODY";
+}|{
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 	targetId: "comments-section";
 	continuationItems: R_CommentsHeader[];
