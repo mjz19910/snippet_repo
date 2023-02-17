@@ -70,7 +70,7 @@ eval(handle_types_eval_code);
 //#region HandleTypes
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
-	[],
+	[24476774],
 ].flat());
 class HandleTypes extends ServiceMethods {
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
