@@ -32,8 +32,12 @@ class ServiceLoader {
 		const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 		const IndexedDBService=required(store.mod$IndexedDBService).IndexedDBService;
 		const ParserService=required(store.mod$ParserService).ParserService;
-		this.csi_service=new bs.CsiService(x);
+		//#region 
+		this.codegen=new CodegenService(x);
+		this.indexed_db=new IndexedDBService(x);
 		this.e_catcher_service=new ECatcherService(x);
+		//#endregion
+		this.csi_service=new bs.CsiService(x);
 		this.g_feedback_service=new bs.GFeedbackService(x);
 		this.guided_help_service=new bs.GuidedHelpService(x);
 		this.service_tracking=new bs.TrackingServices(x);
@@ -41,8 +45,6 @@ class ServiceLoader {
 		this.yt_handlers=new bs.YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
 		this.local_seen_db=new ss.LocalStorageSeenDatabase(x);
-		this.codegen=new CodegenService(x);
-		this.indexed_db=new IndexedDBService(x);
 		this.yt_plugin=new bs.YtPlugin(x);
 		this.modify_env=new bs.ModifyEnv(x);
 		this.x_RS_Player=new ss.Support_RS_Player(x);
