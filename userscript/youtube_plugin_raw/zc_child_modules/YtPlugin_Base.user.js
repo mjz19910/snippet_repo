@@ -42,6 +42,11 @@ function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
+/** @template T @arg {T|null} x @returns {T} */
+function require_notNull(x) {
+	if(x===null) {throw new Error("Null not expected");}
+	return x;
+}
 export_(exports => {exports.required=required;},{global: true});
 export_(exports => {exports.do_export=do_export;});
 const log_imports=false;
@@ -2503,7 +2508,7 @@ class BaseServicePrivate extends ApiBase {
 		this.#x=x;
 	}
 	/** @protected */
-	get x() {return not_null(this.#x.value);}
+	get x() {return require_notNull(this.#x.value);}
 	/** @protected @this {BaseServicePrivate<ServiceLoader,{}>} */
 	get parser() {return this.x.get("parser_service");}
 	/** @protected @this {BaseServicePrivate<ServiceLoader,{}>} */
