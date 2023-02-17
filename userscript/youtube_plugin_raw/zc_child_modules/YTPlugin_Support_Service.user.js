@@ -1744,6 +1744,33 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			let ss=store.get_string_store();
 			for(let to_load of boxed) {
 				let k_parts=this.split_box_type(to_load.key);
+				if(k_parts[0]==="str") {
+					debugger;
+				} else {
+					let fd=ss.data.find(v => v[0]===k_parts[1]);
+					if(!fd) {
+						/** @type {string[]} */
+						let str_arr=[];
+						for(let item of to_load.id[1][1]) {
+							if(item instanceof Array) {
+								for(let val of item) {
+									if(typeof val==="string") {
+										str_arr.push(val);
+									}
+								}
+								continue;
+							}
+							if(typeof item==="string") {
+								str_arr.push(item);
+							}
+							item;
+						}
+						debugger;
+						ss.data.push([k_parts[1],["one",str_arr]]);
+						continue;
+					}
+					debugger;
+				}
 				console.log(k_parts);
 				debugger;
 			}
