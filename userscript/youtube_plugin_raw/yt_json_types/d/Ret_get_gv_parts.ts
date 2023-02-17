@@ -10,6 +10,10 @@ type G_Gv_0=
 	|"p5qs7"
 	;
 ;
+// cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
+type PT_DigDomain=[
+	"rr1.sn-n8v7znlk.googlevideo.com.",
+]
 type PT_TypeArr=[
 	["9gv7l",["es","ez","le","s7"]],
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],
