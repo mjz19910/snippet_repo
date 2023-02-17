@@ -1379,10 +1379,6 @@ type ApiNotificationLast=
 	;
 ;
 type D_ApiPathFormat_1=
-	|D_ApiPathFormat_2
-	;
-;
-type D_ApiPathFormat_2=
 	|"getAccountSwitcherEndpoint"
 	|"getDatasyncIdsEndpoint"
 	|"youtubei/v1/backstage/create_post"
