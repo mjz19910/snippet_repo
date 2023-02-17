@@ -146,6 +146,7 @@ class IndexedDBService extends BaseService {
 				cursor_loop: for(let i=0;;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
+						debugger;
 						this.committed_data.push(item);
 						await this.add_data_to_store(obj_store,item);
 						break cursor_loop;
