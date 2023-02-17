@@ -354,7 +354,6 @@ class IndexedDBService extends BaseService {
 		}
 		let res=set_p.value;
 		console.log(res.store_diff);
-
 	}
 }
 export_(exports => {
