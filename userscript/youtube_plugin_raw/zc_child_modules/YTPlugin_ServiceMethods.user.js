@@ -2937,11 +2937,12 @@ class ServiceMethods extends ServiceData {
 		function use_r_2(x) {x; use_r(x);}
 		return x.pathname===pathname;
 	}
-	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @typedef {G_ResponseTypes} DecodeReturn */
+	/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {DecodeReturn|null} */
 	decode_input(url_type,x) {
 		/** @private @type {T_Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
-		/** @private @type {G_ResponseTypes|null} */
+		/** @private @type {DecodeReturn|null} */
 		let res=null;
 		switch(target[0]) {
 			case "account": res=this.convert_account(target,x); break;
@@ -2966,7 +2967,7 @@ class ServiceMethods extends ServiceData {
 			data: x,
 		};
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	convert_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break; case "dislike": return {
@@ -2983,7 +2984,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @protected @arg {D_ApiUrlFormat} x */
+	/** @public @arg {D_ApiUrlFormat} x */
 	decode_url(x) {
 		const res_parse=this.parse_with_url_parse(x);
 		if("_tag" in res_parse) {
@@ -2993,7 +2994,7 @@ class ServiceMethods extends ServiceData {
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.parser.get_url_type(path_parts);
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	convert_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
@@ -3055,7 +3056,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	convert_reel(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;

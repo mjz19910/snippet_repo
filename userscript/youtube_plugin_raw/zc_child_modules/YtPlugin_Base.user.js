@@ -2369,7 +2369,7 @@ class YtHandlers extends BaseService {
 		let parsed_url=convert_to_url(request).url;
 		/** @private @type {D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
-		let ht=this.x.get("response_types_handler");
+		let ht=this.x.get("handle_types");
 		let url_type=ht.decode_url(api_url);
 		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
