@@ -2217,6 +2217,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
+	/** @protected @template T @arg {T_VW_2<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	T_VW_2(x,f) {
+		if(x[0]!=="child") {debugger; return null;}
+		return f.call(this,x[2]);
+	}
 	/** @protected @arg {Extract<RB_TrackingObj,{1:any}>} x */
 	RB_TrackingObj_t1(x) {
 		const cf="RB_TrackingObj_t1";
@@ -2255,6 +2260,14 @@ class HandleTypes extends ServiceMethods {
 				this.RB_Obj_f19(f19);
 				return;
 			}
+			return;
+		}
+		if(16 in x) {
+			const {1: [,f1],2: [,f2],4: [,,f4],16: f16,...y}=this.s(cf,x); this.g(y);
+			this.save_number(`${cf}.n3.f1`,f1);
+			this.save_number(`${cf}.n3.f2`,f2);
+			this.V_BinaryTimestamp(f4);
+			this.T_VW_2(f16,this.V_BinaryTimestamp);
 			return;
 		}
 		if(9 in x) {
