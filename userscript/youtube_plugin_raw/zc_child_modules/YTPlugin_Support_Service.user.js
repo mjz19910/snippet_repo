@@ -1686,7 +1686,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		/** @type {`${A}:${B}`} */
 		let z=wa[1];
-		return split_string_once(z,":");
+		let zr=split_string_once(z,":");
+		return zr;
 	}
 	async load_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
