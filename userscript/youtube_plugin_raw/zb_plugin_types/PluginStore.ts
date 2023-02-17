@@ -9,4 +9,5 @@ interface PluginStore {
 	mod$SupportService: typeof import("../zc_child_modules/YTPlugin_Support_Service.user.js");
 	mod$InitPlugin: typeof import("../zc_child_modules/YTPlugin_Init.user.js");
 	mod$ServiceMethods: typeof import("../zc_child_modules/YTPlugin_ServiceMethods.user.js");
+	DebugApi: {};
 }

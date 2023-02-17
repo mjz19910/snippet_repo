@@ -16,6 +16,35 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
+const __module_name__="DebugApi";
+/** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+function do_export(fn,flags,exports,module_name) {
+	/** @typedef {typeof exports} ExportsT */
+	if(typeof exports==="object") {fn(exports);} else {
+		/** @type {ExportsT} */
+		let exports;
+		if(flags.global) {
+			/** @type {{}} */
+			let win_exp=window;
+			exports=as(win_exp);
+		} else {
+			window.__plugin_modules__??={};
+			let all_modules=window.__plugin_modules__;
+			exports=as(all_modules[module_name]??{});
+			/** @type {{[U in keyof PluginStore]?:{}}} */
+			let ok_modules=all_modules;
+			ok_modules[module_name]=as(exports);
+		}
+		fn(as(exports));
+	}
+}
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
+//#region basic
+/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+function as(e,x=e) {return x;}
+//#endregion
 // #region Use module
 // Use module constants
 const DebugApiH_o={
@@ -24,37 +53,35 @@ const DebugApiH_o={
 	/** @type {unique symbol} */
 	Repeat_0: Symbol.for("Repeat_0"),
 };
+export_(exports => {exports.DebugApiH_o=DebugApiH_o;});
 // Use module types
 /** @type {import("./__global.js")} */
 // #endregion
 // #region InjectApi
 /** @readonly */
 const InjectApiStr="inject_api";
-class InjectApi {
-	/** @arg {{name:string}} function_obj */
-	add_function(function_obj) {
-		if(!this.saved_function_objects) return;
-		this.saved_function_objects.push([function_obj.name,function_obj]);
-	}
-}
-let inject_api=new InjectApi;
-let z=inject_api;
-window.inject_api=inject_api;
 // #endregion InjectApi
 // #region saved
-inject_api.saved_function_objects=[];
-inject_api.saved_object_arrays=[];
+/** @type {[string,{name:string}][]} */
+const saved_function_objects=[];
+/** @arg {{name:string}} function_obj */
+function add_function(function_obj) {
+	saved_function_objects.push([function_obj.name,function_obj]);
+}
+export_(exports => {exports.add_function=add_function;});
+/** @type {{type:"array",value:{}[]}[]} */
+const saved_object_arrays=[];
+export_(exports => {exports.saved_object_arrays=saved_object_arrays;});
 /** @arg {{}[]} ids_dec */
 function add_array(ids_dec) {
-	if(!inject_api.saved_object_arrays) return;
-	inject_api.saved_object_arrays.push(ids_dec);
+	saved_object_arrays.push({type: "array",value: ids_dec});
 }
-inject_api.add_array=add_array;
-
-inject_api.saved_instances=[];
+export_(exports => {exports.add_array=add_array;});
+/** @type {SavedInstanceType[]} */
+const saved_instances=[];
+export_(exports => {exports.saved_instances=saved_instances;});
 /** @arg {string} name @arg {{}} object */
 function add_object_with_name(name,object) {
-	if(!inject_api.saved_instances) return;
 	/** @type {MetaTagForPrototypeOf} */
 	const instance_meta={
 		/** @type {"meta_for_prototype_of"}*/
@@ -66,12 +93,11 @@ function add_object_with_name(name,object) {
 	const instance_obj=[instance_meta,object];
 	/** @type {SavedInstanceType} */
 	const instance_item=[name,instance_obj];
-	inject_api.saved_instances?.push(instance_item);
+	saved_instances.push(instance_item);
 }
 inject_api.add_object_with_name=add_object_with_name;
 /** @template {{}} U @template {new (...args: any) => U} T @arg {T} constructor_ @arg {U} object */
 function add_object(constructor_,object) {
-	if(!inject_api.saved_instances) return;
 	const name=constructor_.name;
 	/** @type {MetaTagForConstructor} */
 	const instance_meta={
@@ -84,9 +110,9 @@ function add_object(constructor_,object) {
 	const instance_obj=[instance_meta,object];
 	/** @type {SavedInstanceType} */
 	const instance_item=[name,instance_obj];
-	inject_api.saved_instances.push(instance_item);
+	saved_instances.push(instance_item);
 }
-z.add_function(add_object);
+add_function(add_object);
 // #endregion saved
 // #region sha1_hash
 const commit_id_sha1=/* @sha1 */"ce87fbfd";
@@ -107,7 +133,7 @@ class HashMap {
 		this.m_data.set(key,value);
 		return this;
 	}
-	clear() {if(this.m_data) {this.m_data.clear();}}
+	clear() {if(this.m_data) {this.m_data.clear();} }
 	/** @arg {K} key */
 	get(key) {
 		if(!this.m_data) return;
@@ -124,7 +150,7 @@ class HashMap {
 		// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
 		if(!this.m_data)
 			return;
-		for(let x of this.m_data.entries()) {if(callback.apply(this,x)==="Break") {break;}}
+		for(let x of this.m_data.entries()) {if(callback.apply(this,x)==="Break") {break;} }
 	}
 }
 
@@ -300,29 +326,29 @@ class JSWhiteSpace extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-WhiteSpace
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	WhiteSpace(str,index) {
-		if(str[index]===" ") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\t") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u000b") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u000c") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\uFEFF") {	return [true,"WhiteSpace",1];}
+		if(str[index]===" ") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\t") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u000b") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u000c") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\uFEFF") {return [true,"WhiteSpace",1];}
 		// Unicode Space_Separator general category
 		// NBSP
-		if(str[index]==="\u00a0") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u1680") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2000") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2001") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2002") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2003") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2004") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2005") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2006") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2007") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2008") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u2009") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u200a") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u202f") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u205f") {	return [true,"WhiteSpace",1];}
-		if(str[index]==="\u3000") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u00a0") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u1680") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2000") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2001") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2002") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2003") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2004") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2005") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2006") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2007") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2008") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2009") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u200a") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u202f") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u205f") {return [true,"WhiteSpace",1];}
+		if(str[index]==="\u3000") {return [true,"WhiteSpace",1];}
 		return [false,null,0];
 	}
 }
@@ -1033,7 +1059,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-OctalDigit
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	OctalDigit(str,index) {
-		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="7".charCodeAt(0)) {	return [true,"OctalDigit",1];}
+		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="7".charCodeAt(0)) {return [true,"OctalDigit",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NonOctalDigit
@@ -1088,9 +1114,9 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} index @returns {JsLexerReturnType} */
 	HexDigit(index) {
 		let str=this.str;
-		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="9".charCodeAt(0)) {			return [true,"HexDigit",1];}
-		if(str.charCodeAt(index)>="a".charCodeAt(0)&&str.charCodeAt(index)<="f".charCodeAt(0)) {			return [true,"HexDigit",1];}
-		if(str.charCodeAt(index)>="A".charCodeAt(0)&&str.charCodeAt(index)<="F".charCodeAt(0)) {			return [true,"HexDigit",1];}
+		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="9".charCodeAt(0)) {return [true,"HexDigit",1];}
+		if(str.charCodeAt(index)>="a".charCodeAt(0)&&str.charCodeAt(index)<="f".charCodeAt(0)) {return [true,"HexDigit",1];}
+		if(str.charCodeAt(index)>="A".charCodeAt(0)&&str.charCodeAt(index)<="F".charCodeAt(0)) {return [true,"HexDigit",1];}
 		return [false,null,0];
 	}
 }
@@ -1997,15 +2023,18 @@ class ApiProxyManager {
 		window.postMessage=this.create_proxy_for_function("postMessage_sent",window.postMessage);
 	}
 	static do_postMessage_logging=true;
-	static attach_to_api() {
-		inject_api.ApiProxyManager=this;
-		let any_api_logger=new this(new LoggingEventTarget);
-		inject_api.any_api_logger=any_api_logger;
+	/** @arg {ApiProxyManager} instance */
+	static attach_to_api(instance) {
 		if(!this.do_postMessage_logging) return;
-		any_api_logger.start_postMessage_proxy();
+		instance.start_postMessage_proxy();
 	}
 }
-ApiProxyManager.attach_to_api();
+export_(exports => {
+	exports.ApiProxyManager=ApiProxyManager;
+	let any_api_logger=new ApiProxyManager(new LoggingEventTarget);
+	ApiProxyManager.attach_to_api(any_api_logger);
+	exports.any_api_logger=any_api_logger;
+});
 
 class ReversePrototypeChain {
 	/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
@@ -2032,7 +2061,7 @@ class ReversePrototypeChain {
 				continue;
 			this.window_list.push(window[i]);
 		}
-		for(let target of this.targets) {		this.process_target(target);}
+		for(let target of this.targets) {this.process_target(target);}
 		if(top===window) {if(api_debug_enabled) console.log(this.destination);}
 	}
 	/** @arg {{}|null} value */
@@ -2049,7 +2078,8 @@ class ReversePrototypeChain {
 			let constructor_name=value.constructor.name;
 			if(key) {return `constructor_key::${constructor_name}:${key}:${object_index}`;} else {return `constructor_key::${constructor_name}:${object_index}`;}
 		} else if(key) {return `to_string_tag::${key}:${object_index}`;}
-		try {if(value.hasOwnProperty("constructor")) {}
+		try {
+			if(value.hasOwnProperty("constructor")) {}
 		} catch {}
 		let index=this.object_cache.indexOf(value);
 		if(index<0) {index=this.object_cache.push(value)-1;}
@@ -2096,7 +2126,7 @@ class ReversePrototypeChain {
 			return;
 		let sub_key=this.get_cache_key(value);
 		let dest_value=this.destination[sub_key];
-		if(dest_value) {		prototypes.push(dest_value);} else {
+		if(dest_value) {prototypes.push(dest_value);} else {
 			/** @type {destination_index_type} */
 			let sub_value={
 				__proto__: null,
@@ -2297,7 +2327,7 @@ class AddEventListenerExtension {
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
 	}
-	get_target_prototype() {	return this.target_prototype;}
+	get_target_prototype() {return this.target_prototype;}
 	/** @arg {EventListenersT} handler */
 	elevate_handler(handler) {this.elevated_event_handlers.push(handler);}
 	/** @private @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
@@ -2396,7 +2426,7 @@ class AddEventListenerExtension {
 	}
 	/** @private @arg {Node} val */
 	generate_node_id(val) {
-		if(val.__id_holder) {	return val.__id_holder.value;}
+		if(val.__id_holder) {return val.__id_holder.value;}
 		let list=this.node_list.deref();
 		if(!list) {list=[];}
 		let ids=this.node_list_ids.deref();
@@ -2541,7 +2571,7 @@ class RepeatImpl_0 {
 	static map_num=new Map;
 	/** @arg {string} value @arg {number} times */
 	static get(value,times) {
-		if(!this.map.has(value)) {		this.map.set(value,new Map);}
+		if(!this.map.has(value)) {this.map.set(value,new Map);}
 		let tm_map=this.map.get(value);
 		if(!tm_map)
 			throw new Error("no-reach");
@@ -2588,9 +2618,9 @@ class RepeatImpl_0 {
 inject_api.Repeat=RepeatImpl_0;
 class CompressRepeated {
 	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
-	did_compress(src,dst) {	return dst.length<src.length;}
+	did_compress(src,dst) {return dst.length<src.length;}
 	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
-	did_decompress(src,dst) {	return dst.length>src.length;}
+	did_decompress(src,dst) {return dst.length>src.length;}
 	/** @arg {string[]} src @arg {(string|RepeatImpl_0<string>)[]} dst @returns {[boolean, (string|RepeatImpl_0<string>)[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
@@ -2698,9 +2728,9 @@ class BaseCompression {
 		return [false,src];
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress(src,dst) {	return dst.length<src.length;}
+	did_compress(src,dst) {return dst.length<src.length;}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
-	did_decompress(src,dst) {	return dst.length>src.length;}
+	did_decompress(src,dst) {return dst.length>src.length;}
 	/** @template T,U @arg {CompressStateBase<T, U>} state */
 	compress_result_state(state) {return this.compress_result(state.arr,state.ret);}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
@@ -2860,7 +2890,7 @@ inject_api.DisabledMulCompression=DisabledMulCompression;
 let cached_iframe=null;
 /** @type {string[]} */
 let function_as_string_vec=[];
-inject_api.function_as_string_vec=function_as_string_vec
+inject_api.function_as_string_vec=function_as_string_vec;
 
 function resolve_function_constructor() {
 	if(globalThis.Node===void 0) {throw new Error("Javascript Runtime without DOM not supported (node js)");}
@@ -3141,7 +3171,7 @@ class CompressionStatsCalculator {
 	/** @arg {string} key */
 	add_item(key) {
 		let index=this.cache.indexOf(key);
-		if(index==-1) {	index=this.cache.push(key)-1;}
+		if(index==-1) {index=this.cache.push(key)-1;}
 		this.add_hit(index);
 	}
 	reset() {
@@ -3153,7 +3183,7 @@ class CompressionStatsCalculator {
 	/** @arg {string[]} arr @arg {number} win_size */
 	calc_compression_stats(arr,win_size) {
 		this.reset();
-		for(let i=0;i<arr.length;i++) {if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}}
+		for(let i=0;i<arr.length;i++) {if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));} }
 		let keys=this.map_keys();
 		let values=this.map_values();
 		return to_tuple_arr(keys,values);
@@ -3567,7 +3597,7 @@ function find_matching_value(val,e) {
 }
 
 /** @arg {string|number} val */
-function key_not_found(val) {	console.log("not found",val);}
+function key_not_found(val) {console.log("not found",val);}
 
 /** @type {number[]} */
 let id_map_one=[];
@@ -3778,7 +3808,7 @@ function compress_main(stats) {
 	let arr=disabled_com.try_compress_T(el_ids.value);
 	let obj_start=new IDValueImpl_0(0,null);
 	obj_start.arr_rep=el_ids.value;
-	if(arr[0]===true) {	obj_start.arr_rep_num=arr[1];} else if(arr[0]===false) {obj_start.arr_num=arr[1];}
+	if(arr[0]===true) {obj_start.arr_rep_num=arr[1];} else if(arr[0]===false) {obj_start.arr_num=arr[1];}
 	for(let i=0,cur=obj_start;i<3000;i++) {
 		let comp_res=run_calc(stats,cur);
 		if(!cur.stats) break;
@@ -3870,8 +3900,8 @@ class GenericEvent {
 	#default_prevented=false;
 	type="unknown";
 	/** @arg {string} type */
-	constructor(type) {if(type) {this.type=type;}}
-	preventDefault() {	this.#default_prevented=true;}
+	constructor(type) {if(type) {this.type=type;} }
+	preventDefault() {this.#default_prevented=true;}
 	get defaultPrevented() {return this.#default_prevented;}
 }
 inject_api.GenericEvent=GenericEvent;
@@ -4126,7 +4156,7 @@ class Socket {
 		if(ListenSocket.direct_message) {ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));} else {this.m_port.postMessage(data);}
 	}
 	/** @arg {ConnectionMessage} message */
-	client_connect(message) {if(testing_tcp) {console.log("on_client_connect",message,this.m_event_source);}}
+	client_connect(message) {if(testing_tcp) {console.log("on_client_connect",message,this.m_event_source);} }
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(Socket.prototype===this) return;
@@ -4164,8 +4194,8 @@ class Socket {
 	handle_tcp_data(tcp_message) {
 		let f=new FlagHandler(tcp_message.flags);
 		if(this.m_local_log) {console.log("local",tcp_message);}
-		if(f.is_syn()&&f.is_ack()) {	this.send_ack(tcp_message,0);}
-		if(tcp_message.flags==0) {	this.send_ack(tcp_message,0);}
+		if(f.is_syn()&&f.is_ack()) {this.send_ack(tcp_message,0);}
+		if(tcp_message.flags==0) {this.send_ack(tcp_message,0);}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
 		if(testing_tcp) {console.log("Socket.handle_tcp_data(message.data())");}
@@ -4183,7 +4213,7 @@ class Socket {
 			case "side":
 		}
 	}
-	client_start_connect() {if(!this.m_port) {throw new Error("No remote port to communicate with");}}
+	client_start_connect() {if(!this.m_port) {throw new Error("No remote port to communicate with");} }
 	/** @arg {ConnectionMessage} message */
 	client_disconnect(message) {
 		if(testing_tcp) {console.log("on_client_disconnect",message);}
@@ -4343,7 +4373,7 @@ class ListenSocket {
 			// seq=number & ack=null;
 			this.send_ack(tcp_message,tcp_syn);
 		}
-		if(f.is_none()&&!f.is_syn()) {	this.send_ack(tcp_message,0);}
+		if(f.is_none()&&!f.is_syn()) {this.send_ack(tcp_message,0);}
 		if(f.is_none()&&seq==null) {console.log("bad tcp",tcp_message);}
 		if(f.is_ack()&&this.m_is_connecting) {
 			this.m_is_connecting=false;
@@ -4444,10 +4474,10 @@ class CrossOriginConnection {
 	/** @arg {Event} event */
 	handleEvent(event) {
 		switch(event.type) {
-			case "message": {if(event instanceof MessageEvent) {	this.on_message_event(event);} else {console.log("Event type is \"message\" and not an instance of MessageEvent",event);}} break;
-			case "beforeunload": {for(let connection of this.m_connections) {connection.will_disconnect(false);}} break;
+			case "message": {if(event instanceof MessageEvent) {this.on_message_event(event);} else {console.log("Event type is \"message\" and not an instance of MessageEvent",event);} } break;
+			case "beforeunload": {for(let connection of this.m_connections) {connection.will_disconnect(false);} } break;
 			case "unload": {
-				for(let connection of this.m_connections) {				connection.disconnected();}
+				for(let connection of this.m_connections) {connection.disconnected();}
 				this.m_connections.length=0;
 			} break;
 		}
@@ -4510,8 +4540,8 @@ class DebugApi {
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
 		/** @arg {Constructor} func @arg {any} f_this @arg {any[]} c_args */
-		function do_activate(func,f_this,c_args) {try {return Reflect.apply(func,f_this,c_args);} catch {}}
-		let activate=do_activate.bind(null,func,{},[{get target() {throw new Error("1");}}]);
+		function do_activate(func,f_this,c_args) {try {return Reflect.apply(func,f_this,c_args);} catch {} }
+		let activate=do_activate.bind(null,func,{},[{get target() {throw new Error("1");} }]);
 		return this.debuggerGetVar_a({
 			type: "class-breakpoint",
 			name,
@@ -4548,7 +4578,7 @@ class DebugApi {
 				};
 			} catch {return {type: "no-var"};}
 		});
-		if(window.inject_api?.DebugApi) {if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");}} else {console.log("missing window.inject_api");}
+		if(window.inject_api?.DebugApi) {if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");} } else {console.log("missing window.inject_api");}
 		0;
 	}
 	/** @returns {boolean} */
@@ -4563,14 +4593,14 @@ class DebugApi {
 	/** @argument {Function} function_value @returns {string} */
 	stringifyFunction(function_value) {
 		let function_code=function_value.toString();
-		if(function_code.includes("{}"[0])) {function_code=function_code.slice(function_code.indexOf("{}"[0]));} else {			console.log(function_code);}
+		if(function_code.includes("{}"[0])) {function_code=function_code.slice(function_code.indexOf("{}"[0]));} else {console.log(function_code);}
 		return function_code;
 	}
 	/** @arg {IDebugBreakpointArgs} breakpoint_arguments @returns {dbg_result} */
 	debuggerGetVarArray_a(breakpoint_arguments) {
 		let function_value=breakpoint_arguments.target;
 		let var_match=breakpoint_arguments.name;
-		if(!this.hasData("d")||!this.getData("u")) {return {			type: "invalid-state-error"};}
+		if(!this.hasData("d")||!this.getData("u")) {return {type: "invalid-state-error"};}
 		if(typeof function_value!="function") {return {type: "argument-error"};}
 		let ma=var_match.matchAll(/.-.|./g);
 		let sr=[];

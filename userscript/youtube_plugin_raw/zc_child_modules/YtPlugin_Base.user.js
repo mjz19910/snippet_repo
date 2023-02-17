@@ -2503,15 +2503,9 @@ class BaseServicePrivate extends ApiBase {
 		this.#x=x;
 	}
 	/** @protected */
-	get x() {
-		if(!this.#x.value) throw new Error();
-		return this.#x.value;
-	}
+	get x() {return not_null(this.#x.value);}
 	/** @protected @this {BaseServicePrivate<ServiceLoader,{}>} */
-	get parser() {
-		if(!this.#x.value) throw new Error();
-		return this.#x.value.get("parser_service");
-	}
+	get parser() {return this.x.get("parser_service");}
 	/** @protected @this {BaseServicePrivate<ServiceLoader,{}>} */
 	get cg() {
 		if(!this.#x.value) throw new Error();
