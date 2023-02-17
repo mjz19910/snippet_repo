@@ -2113,6 +2113,10 @@ class HandleTypes extends ServiceMethods {
 		this.ceq(isUnpluggedCorpus,false);
 		this.ceq(isLiveContent,false);
 	}
+	/** @public @arg {D_StartSeconds} x */
+	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
+	/** @public @arg {D_StreamSelectionConfig} x */
+	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
 	/** @protected @arg {V_VeDescObj} x */
 	V_VeDescObj(x) {
 		const cf="V_VeDescObj";
@@ -2515,10 +2519,6 @@ class HandleTypes extends ServiceMethods {
 	P_create_playlist_params(x) {x;}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {x;}
-	/** @public @arg {D_StartSeconds} x */
-	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
-	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
