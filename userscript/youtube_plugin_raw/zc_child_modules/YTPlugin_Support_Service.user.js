@@ -1917,17 +1917,16 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let bitmap_rle=this.rle_enc(bitmap);
 		return new BitmapResult(map_arr,bitmap_rle);
 	}
-	/** @api @public @arg {string} key @arg {boolean} bool */
-	save_boolean_impl(key,bool) {
+	/** @api @public @arg {string} k @arg {boolean} x */
+	save_boolean_impl(k,x) {
 		let store=this.#data_store.get_boolean_store();
-		return this.save_to_store_2("save_boolean",k,x,store);
+		return this.save_to_store_2("boolean",k,x,store);
 	}
-	/** @no_mod @type {number[]} */
-	#new_root_visual_elements=[];
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
-		let store=this.#data_store.get_boolean_store();
-		return this.save_to_store_2("root_visual_element",k,x,store);
+		let store=this.#data_store.get_root_visual_elements_store();
+		const k="root_visual_element";
+		return this.save_to_store_2(k,k,x,store);
 	}
 }
 export_(exports => {
