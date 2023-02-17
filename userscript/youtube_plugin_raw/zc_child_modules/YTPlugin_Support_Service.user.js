@@ -1712,6 +1712,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
+	expected_id=0;
 	async load_database() {
 		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
 		if(!update_id) {
@@ -1719,6 +1720,17 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				key: "boxed_id:update_id",
 				type: "update_id",
 				id: 1,
+			},3);
+			this.expected_id=1;
+		} else {
+			if(update_id.id!==this.expected_id) {
+				debugger;
+			}
+			this.expected_id++;
+			this.indexed_db.put("boxed_id",{
+				key: "boxed_id:update_id",
+				type: "update_id",
+				id: this.expected_id,
 			},3);
 		}
 		let boxed=await this.indexed_db.getAll("boxed_id");
