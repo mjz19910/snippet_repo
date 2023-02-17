@@ -2184,12 +2184,11 @@ class ReversePrototypeChain {
 			this.values.push(target);
 		}
 	}
-	static attach_to_api() {
-		inject_api.ReversePrototypeChain=this;
-		inject_api.reversePrototypeChain=new this(Object.prototype,[]);
-	}
 }
-ReversePrototypeChain.attach_to_api();
+export_(exports => {
+	exports.ReversePrototypeChain=ReversePrototypeChain;
+	exports.reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
+});
 /** @arg {AddEventListenerExtension} obj */
 function overwrite_addEventListener(obj) {
 	/** @type {arg_list_item_type[][]} */
