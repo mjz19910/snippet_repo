@@ -20,7 +20,7 @@ type DT_DatabaseStoreTypes={
 		id: string;
 		raw_id: `UC${string}`;
 	};
-	playlist_id: PlaylistIdDatabaseObj;
+	playlist_id: G_PlaylistIdObj;
 	browse_id: {
 		key: `browse_id:VL:${string}`;
 		type: "browse_id:VL";
@@ -28,7 +28,7 @@ type DT_DatabaseStoreTypes={
 		raw_id: `VLPL${string}`;
 	};
 };
-type PlaylistIdDatabaseObj={
+type G_PlaylistIdObj={
 	key: `playlist_id:RDCM:UC${string}`;
 	type: "playlist_id:RDCM";
 	id: `UC${string}`;
