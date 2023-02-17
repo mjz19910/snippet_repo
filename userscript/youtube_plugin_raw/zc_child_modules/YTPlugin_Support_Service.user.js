@@ -1642,12 +1642,6 @@ class StoreData {
 	get_root_visual_elements_store() {return this.seen_root_visual_elements_obj;}
 }
 class LocalStorageSeenDatabase extends ServiceMethods {
-	/** @constructor @public @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-		this.#load_data();
-		this.#store_data();
-	}
 	/** @arg {string} key */
 	get_store_keys(key) {
 		return this.get_data_store().get_string_store().data.find(e => e[0]===key);
@@ -1685,85 +1679,33 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let keys=this.get_keys_of(x);
 		return this.save_to_store_2("save_keys",k,keys.join(),store);
 	}
-	/** @no_mod @arg {string} str @returns {Partial<ReturnType<StoreData['destructure']>>} */
-	#parse_data(str) {
-		let obj=JSON.parse(str);
-		return obj;
-	}
-	#store_data() {
-		let data=this.get_data_store();
-		for(let v=0;v<data.get_seen_numbers().length;v++) {
-			const j=data.get_seen_numbers()[v];
-			const [_n,[_k,c]]=j;
-			for(let i=0;i<c.length;i++) {
-				if(c[i]===null) {
-					c.splice(i,1);
-					i--;
-				}
-			}
-		}
-		let json_str=JSON.stringify(data);
-		this.#save_local_storage(json_str);
-	}
-	#load_data() {
-		if(this.#loaded_from_storage) return;
-		let json_str=this.#get_local_storage();
-		if(json_str) {
-			let ret=this.#parse_data(json_str);
-			this.#push_data_to_parent(ret);
-			this.#loaded_from_storage=true;
-		}
-	}
-	#data_store=new StoreData({});
+	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
-	/** @no_mod @arg {string} seen_data */
-	#save_local_storage(seen_data) {
-		if(bs.no_storage_access) {
-			this.#seen_data_json_str=seen_data;
-			return;
-		}
-		localStorage.seen_data=seen_data;
-	}
-	#get_local_storage() {
-		if(bs.no_storage_access) return this.#seen_data_json_str;
-		return localStorage.getItem("seen_data");
-	}
-	/** @no_mod @arg {Partial<ReturnType<StoreData['destructure']>>} x */
-	#push_data_to_parent(x) {
-		let x1=this.get_data_store();
-		x1.update(x);
-	}
-	/** @no_mod @type {string|null} */
-	#seen_data_json_str=null;
-	#loaded_from_storage=false;
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	#onDataChange() {
 		if(this.#idle_id!==null) return;
 		this.#idle_id=requestIdleCallback(() => {
 			this.#idle_id=null;
-			this.#store_data();
 		});
 	}
-	#get_string_store() {return this.#data_store.get_string_store(this.#new_strings);}
-	/** @no_mod @type {[string,string|string[]][]} */
-	#new_strings=[];
+	#get_string_store() {return this.#data_store.get_string_store();}
 	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
 	add_to_index(k,x,store) {
 		/** @private @type {StoreDescription<T>['data'][number]} */
 		let p=[k,x];
 		let nk=store.data.push(p)-1;
-		store.index[k]=nk;
+		store.index.set(k,nk);
 		return p;
 	}
 	/** @private @template T @arg {string} key @arg {StoreDescription<T>} store */
 	get_seen_string_item_store(key,store) {
 		const {index,data}=store;
-		let idx=index[key];
+		let idx=index.get(key);
 		if(idx) return data[idx];
 		idx=data.findIndex(e => e[0]===key);
 		if(idx<0) return this.add_to_index(key,["one",[]],store);
-		index[key]=idx;
+		store.index.set(key,idx);
 		return data[idx];
 	}
 	/** @private @template T @arg {T|T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} data_item */
@@ -1869,7 +1811,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let gg=this.get_data_store().get_seen_numbers().find(e => e[0]==="P_tracking_params.f1");
+		let gg=this.get_data_store().get_number_store().data.find(e => e[0]==="P_tracking_params.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]==="many") return;
@@ -1919,7 +1861,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	bitmap_console_todo_1() {
 		let yt_plugin={ds: this,};
-		let gg=yt_plugin.ds.get_data_store().get_seen_numbers().find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=yt_plugin.ds.get_data_store().get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1][0]==="many") return;
 		gg[1][1].sort((a,b) => a-b);
