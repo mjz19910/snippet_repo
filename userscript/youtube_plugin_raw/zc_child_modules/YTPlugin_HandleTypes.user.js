@@ -375,6 +375,14 @@ class HandleTypes extends ServiceMethods {
 	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.g);}
+	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
+	R_LiveChatViewerEngagementMessage(x) {this.H_("R_LiveChatViewerEngagementMessage","liveChatViewerEngagementMessageRenderer",x,this.D_LiveChatViewerEngagementMessage);}
+	/** @public @arg {D_LiveChatViewerEngagementMessage} x */
+	D_LiveChatViewerEngagementMessage(x) {
+		const cf="D_LiveChatViewerEngagementMessage";
+		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
 	/** @private @arg {R_PdgCommentOption} x */
@@ -407,14 +415,6 @@ class HandleTypes extends ServiceMethods {
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
-	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
-	R_LiveChatViewerEngagementMessage(x) {this.H_("R_LiveChatViewerEngagementMessage","liveChatViewerEngagementMessageRenderer",x,this.D_LiveChatViewerEngagementMessage);}
-	/** @public @arg {D_LiveChatViewerEngagementMessage} x */
-	D_LiveChatViewerEngagementMessage(x) {
-		const cf="D_LiveChatViewerEngagementMessage";
-		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_SubscribeButton} x */
