@@ -1680,7 +1680,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		/** @returns {`${A}:${B}`|null} */
 		function gn() {return null;}
 		let wv=gn();
-		let wa=split_string_once_ex(k,"boxed_id:",wv);
+		let wa=split_string_once_ex(k,"",wv);
 		if(wa.length===2) {
 			wa;
 		}
