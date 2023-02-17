@@ -1711,7 +1711,16 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				debugger;
 			}
 			if(store.get_string_store().data.length>0) {
-				debugger;
+				let ss=store.get_string_store();
+				for(let sd of ss.data) {
+					let [key,arr]=sd;
+					this.indexed_db.put("boxed_id",{
+						key: `boxed_id:num:${key}`,
+						type: "num",
+						id: ["many_str",arr],
+					},3);
+					debugger;
+				}
 			}
 		} else {
 			let store=this.#data_store; store;
