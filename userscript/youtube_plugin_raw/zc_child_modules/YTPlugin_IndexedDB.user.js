@@ -295,7 +295,7 @@ class IndexedDBService extends BaseService {
 	onError(event) {console.log("idb error",event);}
 	database_diff_keys=new Set;
 	/** @template T @arg {IDBRequest<T>} req @returns {Promise<["success",T]|["error",Event,DOMException]>} */
-	async get_async_result(req) {
+	async get_async_result_impl(req) {
 		/** @type {[Event,DOMException]|null} */
 		let error_event=null;
 		try {
