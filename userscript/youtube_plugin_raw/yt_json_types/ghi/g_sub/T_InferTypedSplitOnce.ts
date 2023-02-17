@@ -24,8 +24,4 @@ type T_InferTypedSplitOnceLast<WA extends string,S extends string,D extends stri
 	S extends `${infer U}${D}`
 	? U extends WA? [WA,""]
 	:never
-	:S extends `${D}${infer U}`
-	? U extends `${WA}${infer A}`
-	? ["",`${WA}${A}`]
-	:never
-	:[S];
+	:T_InferTypedSplitOnce_NoBegin<WA,S,D>;
