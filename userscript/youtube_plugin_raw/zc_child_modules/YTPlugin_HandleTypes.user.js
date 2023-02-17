@@ -2147,6 +2147,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
+		debugger;
 	}
 	/** @protected @arg {RB_ClickTrackingObj_t1} x */
 	RB_ClickTrackingObj_t1(x) {
