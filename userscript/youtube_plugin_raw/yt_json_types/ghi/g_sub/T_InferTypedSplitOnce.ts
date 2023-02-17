@@ -32,7 +32,7 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 	}
 	// S extends `${infer Begin}${D}${infer Rest}`
 	if(chk(S,"`${infer Begin}${D}${infer Rest}`")) {
-		// ? 
+		// ?
 		type A=S extends `${infer Begin}${D}${string}`? Begin:never;
 		type B=S extends `${string}${D}${infer Rest}`? Rest:never;
 		let Begin=get_infer_1<S,A,B,`${A}${D}${B}`>("infer Begin");
