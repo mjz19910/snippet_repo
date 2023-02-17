@@ -1947,11 +1947,11 @@ class HandleTypes extends ServiceMethods {
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
 		}
-		{
-			let x=mt;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		}
+		// {
+		// 	let x=mt;
+		// 	let x1=this.parse_number_template(x);
+		// 	this.a_primitive_num(x1);
+		// }
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
