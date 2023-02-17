@@ -106,6 +106,7 @@ class HandleTypes extends ServiceMethods {
 	constructor(x) {
 		super(x);
 		generate_typedef.value=new ss.TypedefGenerator(x);
+		this.ls_db=new ss.LocalStorageSeenDatabase(x);
 		this.support_RS_Player=new ss.Support_RS_Player(x);
 		this.support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
 		this.support_RS_Watch=new ss.Support_RS_Watch(x);

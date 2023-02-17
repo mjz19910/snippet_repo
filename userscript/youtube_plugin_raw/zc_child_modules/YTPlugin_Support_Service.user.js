@@ -20,6 +20,31 @@ const as_any=bs.as_any; as_any;
 const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
+/** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {S extends `${D}${infer U}`?U extends `${WA}${infer A}`?["",`${WA}${A}`]:never:[S]} */
+function split_string_once_ex(s,d=as(","),_wa) {
+	if(s==="") {
+		/** @private @type {[]} */
+		let r=[];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let i=s.indexOf(d);
+	if(i===-1) {
+		/** @private @type {[S]} */
+		let r=[s];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let a=s.slice(0,i);
+	let b=s.slice(i+d.length);
+	/** @private @type {[string,string]} */
+	let r=[a,b];
+	/** @private @type {any} */
+	let q=r;
+	return as(q);
+}
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -1564,8 +1589,8 @@ class Support_EventInput extends ServiceMethods {
 	}
 }
 class LocalStorageSeenDatabase extends ServiceMethods {
-	constructor() {
-		super();
+	constructor(x) {
+		super(x);
 		this.#load_data();
 		this.#store_data();
 	}
