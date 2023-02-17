@@ -459,6 +459,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoOwner";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoOwner:1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPlaybackShape";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPlaybackShape_S_Params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPrimaryInfo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoQualityPromo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoSecondaryInfo";}
@@ -518,8 +519,10 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "O_DU_Persistence";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_ShareEntityService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj:click_tracking";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj:tracking";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj_t1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RCA_RelevantStateTags";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RC_ConsistencyTokenJar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RC_MainAppWebResponseContext";}
@@ -572,8 +575,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Success";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj_t1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_Obj_f19";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeBrowse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeBrowse_Response";}

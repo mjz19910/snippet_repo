@@ -1882,11 +1882,15 @@ class HandleTypes extends ServiceMethods {
 		let r2=ss.slice(idx+1);
 		return as_any([r1,r2]);
 	}
-	D_VideoPlaybackShape_S_Params(x) {x;}
+	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
+	D_VideoPlaybackShape_S_Params(x) {
+		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
+		const {...y}=this.s(cf1,x); this.g(y);
+	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
-		const {sparams,lsparams,...y1}=this.s(cf1,x);
+		const {sparams,lsparams}=this.s(cf1,x);
 		/** @type {Omit<typeof x,T_Split<typeof sparams>[number]>} */
 		let ro=as({});
 		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
@@ -1906,6 +1910,7 @@ class HandleTypes extends ServiceMethods {
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
 		}
+		this.D_VideoPlaybackShape_S_Params(obj_sparams);
 		/** @type {Exclude<(typeof kk_x)[number],T_Split<typeof sparams>[number]>[]} */
 		let kk_ro=as(kk_x);
 		for(let k of kk_ro) {
@@ -1959,15 +1964,15 @@ class HandleTypes extends ServiceMethods {
 		// this.save_string(`${cf1}.mime`,mime);
 		// this.save_b64_binary(`${cf2}.ns`,ns);
 		// if(gir) this.save_string(`${cf1}.gir`,gir);
-		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
-		this.t(clen,x => {
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		});
-		let dur_=this.parse_number_template(dur);
-		this.a_primitive_num(dur_);
-		let lmt_=this.parse_number_template(lmt);
-		this.a_primitive_num(lmt_);
+		const {mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
+		// this.t(clen,x => {
+		// 	let x1=this.parse_number_template(x);
+		// 	this.a_primitive_num(x1);
+		// });
+		// let dur_=this.parse_number_template(dur);
+		// this.a_primitive_num(dur_);
+		// let lmt_=this.parse_number_template(lmt);
+		// this.a_primitive_num(lmt_);
 		{
 			let x=mt;
 			let x1=this.parse_number_template(x);
