@@ -1,7 +1,11 @@
 function run {
-	echo /tmp/dig_res.* | xargs -n 1 bash -c 'echo -n > $1' v
-	echo rr1.sn-{a,h,n,o,p}{g,p}{v,m}{e,s,l}{l,y,z}n{es,6d,dd,ee,lk}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 100 -P 25 zsh -c '. ./dig.zsh child "$@"'
-	eval 'cat /tmp/dig_res.*'
+	pushd `dirname $1`;
+	function r() {
+		echo /tmp/dig_res.* | xargs -n 1 bash -c 'echo -n > $1' v;
+		echo rr1.sn-{9gv7l,a5mek}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 100 -P 25 zsh -c '. ./dig.zsh child "$@"';
+		eval 'cat /tmp/dig_res.*';
+	}
+	eval '{ r; } always { popd; }';
 }
 function run_child {
 	TF0=$(mktemp /tmp/dig_res.XXX)
@@ -17,10 +21,10 @@ else
 	shift
 fi
 case $MODE in
-run)
-	run
+"run")
+	run $0;
 	;;
-child)
-	run_child "$@"
+"child")
+	run_child "$@";
 	;;
 esac
