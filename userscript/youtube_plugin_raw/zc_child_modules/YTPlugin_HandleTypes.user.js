@@ -1949,9 +1949,29 @@ class HandleTypes extends ServiceMethods {
 			this.a_primitive_num(x1);
 		}
 	}
+	/** @private @arg {D_VideoPlaybackShape_Other} x */
+	D_VideoPlaybackShape_Other(x) {
+		const cf1="D_VideoPlaybackShape_Other",cf2="video_playback.api_url";
+		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y1}=this.s(cf1,x);
+		this.save_string(`${cf1}.fvip`,fvip);
+		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
+		this.save_string(`${cf1}.fexp`,fexp);
+		this.save_string(`${cf1}.c`,c);
+		this.save_string(`${cf1}.txp`,txp);
+		this.save_b64_binary(`${cf2}.n`,n);
+		this.save_b64_binary(`${cf2}.lsig`,lsig);
+		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
+		const {gcr,mt,...y}=y1; this.g(y);
+		{
+			let x=mt;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
+		this.t(gcr,x => this.ceq(x,"ca"));
+	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
-		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
+		const cf1="D_VideoPlaybackShape";
 		const {sparams}=this.s(cf1,x);
 		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
 		let obj_sparams=as({});
@@ -1994,25 +2014,10 @@ class HandleTypes extends ServiceMethods {
 		for(let k of kk_y1) {
 			set_obj(y1,x,k);
 		}
-		this.D_VideoPlaybackShape_LS_Params(obj_lsparams);
-		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y3}=y1;
-		this.save_string(`${cf1}.fvip`,fvip);
-		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
-		this.save_string(`${cf1}.fexp`,fexp);
-		this.save_string(`${cf1}.c`,c);
-		this.save_string(`${cf1}.txp`,txp);
-		this.save_b64_binary(`${cf2}.n`,n);
 		this.save_string(`${cf1}.sparams`,sparams);
 		this.save_string(`${cf1}.lsparams`,lsparams);
-		this.save_b64_binary(`${cf2}.lsig`,lsig);
-		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
-		const {gcr,mt,...y}=y3; this.g(y);
-		{
-			let x=mt;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		}
-		this.t(gcr,x => this.ceq(x,"ca"));
+		this.D_VideoPlaybackShape_LS_Params(obj_lsparams);
+		this.D_VideoPlaybackShape_Other(y1);
 	}
 	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
