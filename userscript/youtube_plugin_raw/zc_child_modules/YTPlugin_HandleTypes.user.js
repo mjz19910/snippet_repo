@@ -1023,11 +1023,19 @@ class HandleTypes extends ServiceMethods {
 					const [,binary_arr,obj]=otu;
 					if(obj!==null) {
 						if(1 in obj&&2 in obj&&3 in obj&&obj[1][0]==="data32") {
+							if(obj[1][0]==="data32"&&obj[2][0]==="data_fixed32"&&obj[3][0]==="data_fixed32") {
+								let kk=this.get_keys_of(obj);
+								if(this.eq_keys(kk,[1,2,3])) {
+									/** @type {V_BinaryTimestamp} */
+									let bts={...obj,1: obj[1],2: obj[2],3: obj[3]}; bts;
+									return `TYPE::T_VW_2<V_BinaryTimestamp>`;
+								}
+							}
 							console.log("maybe_handle_bin.do_V_BinaryTimestamp",obj);
-							return `TYPE::T_VW_2<V_BinaryTimestamp>`;
+							return `TYPE::T_VW_2<${this.typedef_json_replace_bin(s,"vw.bin_ts",obj)}>`;
 						}
 						console.log("maybe_handle_bin.do_obj",obj);
-						return obj;
+						return `TYPE::T_VW_2<${this.typedef_json_replace_bin(s,"vw",obj)}>`;
 					}
 					let decoded_string=this._decoder.decode(binary_arr);
 					if(binary_arr[0]===0) {
@@ -2222,6 +2230,8 @@ class HandleTypes extends ServiceMethods {
 		if(x[0]!=="child") {debugger; return null;}
 		return f.call(this,x[2]);
 	}
+	/** @protected @arg {Extract<RB_TrackingObj,{16:any}>[16]} x */
+	RB_TrackingObj_f16(x) {x;}
 	/** @protected @arg {Extract<RB_TrackingObj,{1:any}>} x */
 	RB_TrackingObj_t1(x) {
 		const cf="RB_TrackingObj_t1";
@@ -2267,7 +2277,7 @@ class HandleTypes extends ServiceMethods {
 			this.save_number(`${cf}.n3.f1`,f1);
 			this.save_number(`${cf}.n3.f2`,f2);
 			this.V_BinaryTimestamp(f4);
-			this.T_VW_2(f16,this.V_BinaryTimestamp);
+			this.RB_TrackingObj_f16(f16);
 			return;
 		}
 		if(9 in x) {
