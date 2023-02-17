@@ -15,6 +15,7 @@ function dig_batch() {
 	eval '{ do_dig; } always { popd; }'
 }
 function run_child {
+	echo "TempDir:$1"
 	TF0=$(mktemp /tmp/dig_res.$1.XXX)
 	shift
 	rm $TF0
