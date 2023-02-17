@@ -19,7 +19,6 @@ function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__modu
 export_(exports => {exports.__is_module_flag__=true;});
 
 if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
-const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 class ServiceLoader {
 	/** @template T @typedef {NonNullable<T>} N */
 	/** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
@@ -28,10 +27,11 @@ class ServiceLoader {
 	constructor(x) {
 		let ss=required(store.mod$SupportService);
 		let bs=required(store.mod$YoutubePluginBase);
-		const ECatcherService=required(store.mod$ECatcherService).ECatcherService;
-		const ParserService=required(store.mod$ParserService).ParserService;
 		const CodegenService=required(store.mod$CodegenService).CodegenService;
+		const ECatcherService=required(store.mod$ECatcherService).ECatcherService;
+		const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 		const IndexedDBService=required(store.mod$IndexedDBService).IndexedDBService;
+		const ParserService=required(store.mod$ParserService).ParserService;
 		this.csi_service=new bs.CsiService(x);
 		this.e_catcher_service=new ECatcherService(x);
 		this.g_feedback_service=new bs.GFeedbackService(x);
