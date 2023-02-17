@@ -1504,8 +1504,8 @@ class HandleTypes extends ServiceMethods {
 		let [,mi]=m3;
 		/** @type {D_GoogleVideoHostPartition} */
 		let ap=this.get_gv_parts(mi);
-		this.save_string(`url.google_video_partition`,ap.partition);
-		this.save_string(`url.google_video_selector`,ap.selector);
+		this.D_GoogleVideoHostPartition("url",ap);
+		this.D_VideoPlaybackShape_LS_Params("url",ap);
 		const gen_cf="js_gen_case:log_googlevideo_host";
 		let ap_z=ap.partition;
 		switch(ap_z) {
@@ -1527,10 +1527,10 @@ class HandleTypes extends ServiceMethods {
 			Promise.resolve().then(() => this.logged_hosts.length=0);
 		}
 	}
-	/** @private @arg {"RE_D_VE3832_PreconnectUrl"} cf @arg {D_GoogleVideoHostPartition} x */
+	/** @private @arg {"RE_D_VE3832_PreconnectUrl"|"D_VideoPlaybackShape_LS_Params"|"url"} cf @arg {D_GoogleVideoHostPartition} x */
 	D_GoogleVideoHostPartition(cf,x) {
-		this.save_string(`${cf}.google_video_partition`,x.partition);
-		this.save_string(`${cf}.google_video_selector`,x.selector);
+		this.save_string(`google_video.${cf}.partition`,x.partition);
+		this.save_string(`google_video.${cf}.selector`,x.selector);
 	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
@@ -1945,8 +1945,7 @@ class HandleTypes extends ServiceMethods {
 		for(let mi of mn_arr) {
 			/** @type {D_GoogleVideoHostPartition} */
 			let ap=this.get_gv_parts(mi);
-			this.save_string(`${cf1}.google_video_partition`,ap.partition);
-			this.save_string(`${cf1}.google_video_selector`,ap.selector);
+			this.D_GoogleVideoHostPartition(cf1,ap);
 			switch(ap.partition) {
 				default: {
 					let {partition: x}=ap;
