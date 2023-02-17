@@ -1780,6 +1780,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 											fd[1][1].push(from_db[0]);
 										}
 									}
+									continue;
 								}
 								ss.data.push([k_parts[1],["one",from_db]]);
 								debugger;
