@@ -18,35 +18,10 @@ const bs=required(store["mod$YoutubePluginBase"]);
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const as_any=bs.as_any; as_any;
 const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
-const as=bs.as_;
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
+const split_string_once_ex=bs.split_string_once_ex;
 const split_string_once_last=bs.split_string_once_last;
-/** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {S extends `${D}${infer U}`?U extends `${WA}${infer A}`?["",`${WA}${A}`]:never:[S]} */
-function split_string_once_ex(s,d=as(","),_wa) {
-	if(s==="") {
-		/** @private @type {[]} */
-		let r=[];
-		/** @private @type {any} */
-		let q=r;
-		return as(q);
-	}
-	let i=s.indexOf(d);
-	if(i===-1) {
-		/** @private @type {[S]} */
-		let r=[s];
-		/** @private @type {any} */
-		let q=r;
-		return as(q);
-	}
-	let a=s.slice(0,i);
-	let b=s.slice(i+d.length);
-	/** @private @type {[string,string]} */
-	let r=[a,b];
-	/** @private @type {any} */
-	let q=r;
-	return as(q);
-}
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -1700,6 +1675,18 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			this.load_database();
 		});
 	}
+	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
+	split_box_type(k) {
+		/** @returns {`${A}:${B}`|null} */
+		function gn() {return null;}
+		let wv=gn();
+		let wa=split_string_once_ex(k,":",wv);
+		if(wa.length===2) {
+			wa;
+		}
+		let z=wa[0];
+		return split_string_once(split_string_once(k,":")[1],":");
+	}
 	async load_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
 		console.log("load_database all boxed",boxed);
@@ -1725,7 +1712,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
 			for(let to_load of boxed) {
-				let k_parts=split_string_once(to_load.key,"boxed_id:str:");
+				let k_parts=this.split_box_type(to_load.key);
 				console.log(k_parts);
 				debugger;
 			}

@@ -3038,6 +3038,7 @@ export_(exports => {exports.start_message_channel_loop=start_message_channel_loo
 export_(exports => {
 	exports.MyReader=MyReader;
 	exports.split_string=split_string;
+	exports.split_string_once_ex=split_string_once_ex;
 });
 export_(exports => {exports.base64_url_dec=base64_url_dec;});
 export_(exports => {exports.is_firefox=is_firefox;});
