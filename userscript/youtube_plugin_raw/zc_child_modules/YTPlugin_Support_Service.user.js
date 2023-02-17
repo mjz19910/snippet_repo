@@ -1783,8 +1783,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			item[1]=target;
 		}
 		let found=target[1].find(e => {
-			debugger;
-			e;
+			if(e.length!==x.length) return false;
+			for(let i=0;i<e.length;i++) {
+				let c=e[i]; let o=x[i];
+				if(c!==o) return false;
+			}
+			return true;
 		});
 		if(!found) return target[1].push(x);
 		return -1;
