@@ -141,7 +141,6 @@ let r_window=window; r_window;
 AudioContext=window.AudioContext;
 /** @arg {MessageChannel} message_channel */
 function destroy_env(message_channel) {
-	window.inject_api=void 0;
 	let ports=[message_channel.port1,message_channel.port2];
 	for(let port of ports) {
 		port.close();

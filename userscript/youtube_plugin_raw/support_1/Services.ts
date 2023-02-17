@@ -1,1 +1,1 @@
-type ServiceTypeVal=ResolverT<import("../zc_child_modules/YTPlugin_ServiceLoader.user.js").ServiceLoader,ServiceOptions>;
+type ServiceTypeVal=ResolverT<import("../zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js").ServiceLoader,ServiceOptions>;
