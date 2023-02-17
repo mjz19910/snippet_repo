@@ -318,33 +318,24 @@ class IndexedDBService extends BaseService {
 		return res[1];
 	}
 	async database_diff() {
-		{
-			let idb=this;
-			let open_req=indexedDB.open("yt_plugin",3);
-			try {
-				await idb.await_success(open_req);
-				let open_db=open_req.result;
-				let tx=open_db.transaction("video_id","readonly");
-				let store=idb.objectStore(tx,"video_id");
-				let all_req=store.getAll();
-				await idb.await_success(all_req);
-				let store_data=all_req.result;
-				let store_diff=[];
-				for(let item of store_data) {
-					if(this.database_diff_keys.has(item.key)) continue;
-					this.database_diff_keys.add(item.key);
-					store_diff.push(item);
-				}
-				return {
-					db: open_db,
-					store,
-					store_data,
-					store_diff,
-				};
-			} catch(event) {
-				throw open_req.error;
-			}
+		let open_db=await this.get_async_result(indexedDB.open("yt_plugin",3));
+		let tx=open_db.transaction("video_id","readonly");
+		let store=this.objectStore(tx,"video_id");
+		let all_req=store.getAll();
+		await this.await_success(all_req);
+		let store_data=all_req.result;
+		let store_diff=[];
+		for(let item of store_data) {
+			if(this.database_diff_keys.has(item.key)) continue;
+			this.database_diff_keys.add(item.key);
+			store_diff.push(item);
 		}
+		return {
+			db: open_db,
+			store,
+			store_data,
+			store_diff,
+		};
 	}
 }
 export_(exports => {
