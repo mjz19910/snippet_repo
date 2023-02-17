@@ -1,5 +1,6 @@
 function run {
 	pushd `dirname $1`;
+	echo $2;
 	function r() {
 		echo /tmp/dig_res.* | xargs -n 1 bash -c 'echo -n > $1' v;
 		echo rr1.sn-${2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 100 -P 25 zsh -c '. ./dig.zsh child "$@"';
