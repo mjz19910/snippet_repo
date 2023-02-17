@@ -1970,7 +1970,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return this.save_to_store_2(k,k,x,store);
 	}
 }
-class Support_VE37414 extends ServiceMethods {
+class Support_VE extends ServiceMethods {
 	/** @protected @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
 	/** @private @arg {D_VssLoggingContext} x */
@@ -1979,6 +1979,8 @@ class Support_VE37414 extends ServiceMethods {
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params("logging_context.serialized_context_data",serializedContextData);
 	}
+}
+class Support_VE37414 extends ServiceMethods {
 	/** @private @arg {D_SerializedContextData} x */
 	D_QoeLoggingContext(x) {
 		const cf="D_QoeLoggingContext";
@@ -2018,7 +2020,7 @@ class Support_VE37414 extends ServiceMethods {
 		}
 		this.g(x);
 	}
-	/** @protected @arg {E_ReelWatch} x */
+	/** @public @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @public @arg {M_VE37414} x */
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
@@ -2052,4 +2054,5 @@ export_(exports => {
 	exports.Support_GenericApi=Support_GenericApi;
 	exports.Support_EventInput=Support_EventInput;
 	exports.Support_VE37414=Support_VE37414;
+	exports.Support_VE=Support_VE;
 });
