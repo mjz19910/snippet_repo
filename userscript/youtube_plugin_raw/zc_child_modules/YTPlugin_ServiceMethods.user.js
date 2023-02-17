@@ -11,7 +11,7 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 
-const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as_any, base64_dec}=require("./YtPlugin_Base.user");
+const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as_any,base64_dec}=require("./YtPlugin_Base.user");
 
 // ==/UserScript==
 const __module_name__="mod$ServiceMethods";
@@ -1740,7 +1740,8 @@ class ServiceMethods extends ServiceData {
 				const oo={
 					/** @type {`playlist_id:self:${typeof id}`} */
 					key: `playlist_id:self:${id}`,
-					type: "self",
+					/** @type {"playlist_id:self"} */
+					type: "playlist_id:self",
 					id,
 				};
 				this.indexed_db_put("playlist_id",oo);
@@ -1749,7 +1750,7 @@ class ServiceMethods extends ServiceData {
 			case "playlist:4:UU": case "playlist:3:PL": {
 				const {type,id,raw_id}=value;
 				let type_2=split_string(type,":")[2];
-				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,type: `playlist_id:${type_2}`,id,raw_id});
+				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,type: `playlist_id`,base_type: type_2,id,raw_id});
 				let is_critical=this.get_playlist_url_info_critical(value);
 				this.log_playlist_id(value,is_critical);
 			} break;
@@ -2153,7 +2154,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,ht,...u]=p;
 				if(u.length===0) {
-					this.indexed_db_put("hashtag_id",{key: `hashtag_id:${ht}`,hashtag: ht});
+					this.indexed_db_put("hashtag_id",{key: `hashtag_id:${ht}`,type: "hashtag_id",hashtag: ht});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -2762,7 +2763,7 @@ class ServiceMethods extends ServiceData {
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
 		this.a_primitive_str(x);
-		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,type: "normal",v: x});
+		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,type: "video_id:normal",v: x});
 	}
 	/** @type {any[]} */
 	log_list=[];

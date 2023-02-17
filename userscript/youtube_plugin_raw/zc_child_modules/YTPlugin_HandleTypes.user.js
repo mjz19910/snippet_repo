@@ -1261,7 +1261,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,id]=x; if(sec!=="shorts") debugger;
-		this.indexed_db_put("video_id",{key: `video_id:shorts:${id}`,type: "shorts",v: id});
+		this.indexed_db_put("video_id",{key: `video_id:shorts:${id}`,type: "video_id:shorts",v: id});
 	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {

@@ -163,7 +163,9 @@ class IndexedDBService extends BaseService {
 						console.log("[obj_merge_cur]",cursor_value);
 						debugger;
 					} else {
-						item.key;
+						switch(item.type) {
+							default: debugger; break;
+						};
 						this.committed_data.push(item);
 					}
 					try {
