@@ -11,7 +11,7 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 
-const {do_export,as, BaseService, as_any}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,as_any}=require("./YtPlugin_Base.user");
 
 // ==/UserScript==
 const __module_name__="mod$IndexedDBService";
@@ -24,7 +24,7 @@ function h_detect_firefox() {
 }
 const is_firefox=h_detect_firefox(); is_firefox;
 class TypedIndexedDb {
-	/** @template {keyof DT_DatabaseStoreTypes} K @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes[K]>} obj_store @arg {TypedIDBValidKey<K>|TypedIDBKeyRange<K>} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes[K]>|null>} */
+	/** @template {keyof DT_DatabaseStoreTypes} K @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes[K]>} obj_store @arg {TypedIDBValidKey<DT_DatabaseStoreTypes[K]["key"]>|TypedIDBKeyRange<DT_DatabaseStoreTypes[K]["key"]>} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes[K]>|null>} */
 	openCursor(obj_store,query,direction) {
 		if(query) {
 			if(query.type==="key") {
@@ -43,6 +43,13 @@ class TypedIndexedDb {
 	get(store,key) {return store.get(key);}
 	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
 	getAll(store) {return store.getAll();}
+}
+class TypedIDBKeyRangeS {
+	/** @template T @arg {T} key @returns {TypedIDBKeyRange<T>} */
+	static only(key) {
+		const key_range=IDBKeyRange.only(key);
+		return {type: "key_range",key_range,key};
+	}
 }
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class IndexedDBService extends BaseService {
@@ -121,8 +128,28 @@ class IndexedDBService extends BaseService {
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",version));
 		const tx=this.transaction(db,key,"readwrite");
 		const obj_store=typed_db.objectStore(tx,key);
-		const cursor_req=typed_db.openCursor(obj_store,IDBKeyRange.only(key));
-		await this.add_data_to_store(obj_store,value);
+		const cur_cursor=await this.get_async_result(typed_db.openCursor(obj_store,TypedIDBKeyRangeS.only(value.key)));
+		if(cur_cursor===null) {
+			this.committed_data.push(value);
+			await this.add_data_to_store(obj_store,value);
+			return;
+		}
+		const cursor_value=cur_cursor.value;
+		if(cursor_value.key!==value.key) {
+			console.log(cursor_value.key.split(":"));
+			console.log(value.key.split(":"));
+			debugger;
+		}
+		let value_keys=this.get_keys_of_2(value);
+		let cursor_keys=this.get_keys_of_2(cursor_value);
+		if(!this.eq_keys(value_keys,cursor_keys)) {
+			console.log("[database_needs_obj_merge]");
+			console.log("[obj_merge_new]",value);
+			console.log("[obj_merge_cur]",cursor_value);
+			debugger;
+		} else {
+			this.committed_data.push(value);
+		}
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
 	async get(key,store_key) {
@@ -221,7 +248,7 @@ class IndexedDBService extends BaseService {
 			for(let value of d_cache) {
 				if(this.committed_data.includes(value)) continue;
 				const index_val=value.key;
-				const cursor_req=typed_db.openCursor(obj_store,IDBKeyRange.only(index_val));
+				const cursor_req=typed_db.openCursor(obj_store,TypedIDBKeyRangeS.only(index_val));
 				for(let i=0;;i++) {
 					let cur_cursor=await this.get_async_result(cursor_req);
 					if(cur_cursor===null) {
