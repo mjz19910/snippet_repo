@@ -1,8 +1,7 @@
 // T_SplitOnce<T,D>
 // @template {string} WA @template {string} S @template {string} D 
-type T_InferTypedSplitOnce<WA extends string,S extends string,D extends string>=
-	S extends `${infer Begin}${D}${infer Rest}`
-	? Rest extends ""
+type T_InferTypedSplitOnce<WA extends string,S extends string,D extends string>=S extends `${infer Begin}${D}${infer Rest}`? T_InferTypedSplitOnce_1<WA,S,D,Begin,Rest>:[S];
+type T_InferTypedSplitOnce_1<WA extends string,S extends string,D extends string,Begin extends string,Rest extends string>=Rest extends ""
 	? T_SplitOnce_NB_1<WA,Begin>
 	:Begin extends `${WA}`
 	? [WA,Rest]
@@ -10,10 +9,7 @@ type T_InferTypedSplitOnce<WA extends string,S extends string,D extends string>=
 	? T_SplitOnce_NB_2<WA,S,D>
 	:Rest extends `${WA}`
 	? [Begin,WA]
-	:never
-	:[S]
-	;
-;
+	:never;
 function never_return(): never {throw new Error();}
 function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends string,PT extends S extends `${infer Begin}${D}${infer Rest}`? [Begin,Rest]:never>(WA: WA,S: S,_D: D,PT: PT) {
 	function chk(_a: any,_b: string) {
