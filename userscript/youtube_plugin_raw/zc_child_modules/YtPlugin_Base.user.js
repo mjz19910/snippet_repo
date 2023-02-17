@@ -109,12 +109,12 @@ let active_blob_set=new Set;
 /** @private @type {D_Saved} */
 let saved_data=as({});
 //#endregion
-/** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>x is X} */
-function assume_is_instanceof(_value,_constructor_type) {return true;}
+/** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>asserts x is X} */
+function assume_assert_is_instanceof(_value,_constructor_type) {}
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X} */
 function as_instanceof(value,_constructor_type) {
-	if(assume_is_instanceof(value,_constructor_type)) {return value;}
-	throw new Error("Failed to cast");
+	assume_assert_is_instanceof(value,_constructor_type);
+	return value;
 }
 /** @private @template {{length:number;[x:number]:T[number]}} T */
 class Iterator {
