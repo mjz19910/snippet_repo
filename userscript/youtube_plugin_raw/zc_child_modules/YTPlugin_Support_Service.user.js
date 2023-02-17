@@ -1691,7 +1691,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		});
 	}
 	async load_database() {
-		await this.indexed_db.asyncGetAll("boxed_id");
+		await this.indexed_db.getAll("boxed_id");
 	}
 	#get_string_store() {return this.#data_store.get_string_store();}
 	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */

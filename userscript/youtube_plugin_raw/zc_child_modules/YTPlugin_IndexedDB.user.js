@@ -121,7 +121,7 @@ class IndexedDBService extends BaseService {
 		return result;
 	}
 	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
-	async asyncGetAll(key,store_key) {
+	async getAll(key,store_key) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
 		const tx=this.transaction(db,key,"readonly");
