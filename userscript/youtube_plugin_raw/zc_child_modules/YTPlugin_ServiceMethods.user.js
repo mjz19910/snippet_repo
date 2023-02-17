@@ -939,7 +939,7 @@ class ServiceMethods extends ServiceData {
 			this.trackingParams(trackingParams);
 			return;
 		}
-		const {style,trackingParams,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,viewCommentsButton,shareButton,nextItemButton,prevItemButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,trackingParams,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,viewCommentsButton,shareButton,nextItemButton,prevItemButton,badge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.trackingParams(trackingParams);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
