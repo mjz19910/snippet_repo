@@ -1789,9 +1789,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						}
 						// save local to database
 						for(let from_db of str_arr) {
-							let fd=ss.data.find(v => v[0]===k_parts[1]);
-							if(fd) {
-								let ck=fd[1];
+							let local_data=ss.data.find(v => v[0]===k_parts[1]);
+							if(local_data) {
+								let ck=local_data[1];
 								if(from_db.length===1) {
 									if(ck[0]==="many") continue;
 									if(ck[1].includes(from_db[0])) continue;
