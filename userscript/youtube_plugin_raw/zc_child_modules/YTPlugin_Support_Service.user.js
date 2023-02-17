@@ -1710,8 +1710,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				if(changed==="string") continue;
 				debugger;
 			}
-			if(store.get_string_store().data.length>0) {
-				let ss=store.get_string_store();
+			let ss=store.get_string_store();
+			if(ss.data.length>0) {
 				for(let sd of ss.data) {
 					let [key,arr]=sd;
 					this.indexed_db.put("boxed_id",{
@@ -1722,7 +1722,22 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				}
 			}
 		} else {
-			let store=this.#data_store; store;
+			let store=this.#data_store;
+			let ss=store.get_string_store();
+			for(let to_load of boxed) {
+				console.log(to_load.key);
+				debugger;
+			}
+			if(ss.data.length>0) {
+				for(let sd of ss.data) {
+					let [key,arr]=sd;
+					this.indexed_db.put("boxed_id",{
+						key: `boxed_id:num:${key}`,
+						type: "num",
+						id: ["many_str",arr],
+					},3);
+				}
+			}
 			debugger;
 		}
 	}
