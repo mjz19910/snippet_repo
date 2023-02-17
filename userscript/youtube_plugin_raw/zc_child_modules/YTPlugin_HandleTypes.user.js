@@ -134,6 +134,24 @@ class HandleTypes extends ServiceMethods {
 		this.support_EventInput=new ss.Support_EventInput(x);
 	}
 	//#endregion
+	/** @private @arg {D_WatchNextTabbedResults} x */
+	D_WatchNextTabbedResults(x) {
+		const cf="D_WatchNextTabbedResults";
+		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(tabs,x => this.support_EventInput.R_Tab(x));
+	}
+	/** @public @arg {D_WebPlayerConfig} x */
+	D_WebPlayerConfig(x) {
+		const cf="D_WebPlayerConfig";
+		const {useCobaltTvosDash,webPlayerActionsPorting,...y}=this.s(cf,x); this.g(y);
+		this.ceq(useCobaltTvosDash,true);
+		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
+	}
+	/** @public @arg {D_WebPlayerActionsPorting} x */
+	D_WebPlayerActionsPorting(x) {
+		const cf="D_WebPlayerActionsPorting";
+		const {getSharePanelCommand,subscribeCommand,unsubscribeCommand,addToWatchLaterCommand,removeFromWatchLaterCommand,...y}=this.s(cf,x); this.g(y);
+	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @public @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
@@ -807,12 +825,6 @@ class HandleTypes extends ServiceMethods {
 	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
-	/** @private @arg {D_WatchNextTabbedResults} x */
-	D_WatchNextTabbedResults(x) {
-		const cf="D_WatchNextTabbedResults";
-		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,x => this.support_EventInput.R_Tab(x));
-	}
 	//#region pause
 	//#endregion
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
@@ -2506,18 +2518,6 @@ class HandleTypes extends ServiceMethods {
 		this.ceq(maxReadAheadMediaTimeMs,120000);
 		this.ceq(minReadAheadMediaTimeMs,15000);
 		this.ceq(readAheadGrowthRateMs,1000);
-	}
-	/** @public @arg {D_WebPlayerConfig} x */
-	D_WebPlayerConfig(x) {
-		const cf="D_WebPlayerConfig";
-		const {useCobaltTvosDash,webPlayerActionsPorting,...y}=this.s(cf,x); this.g(y);
-		this.ceq(useCobaltTvosDash,true);
-		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
-	}
-	/** @public @arg {D_WebPlayerActionsPorting} x */
-	D_WebPlayerActionsPorting(x) {
-		const cf="D_WebPlayerActionsPorting";
-		const {getSharePanelCommand,subscribeCommand,unsubscribeCommand,addToWatchLaterCommand,removeFromWatchLaterCommand,...y}=this.s(cf,x); this.g(y);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
