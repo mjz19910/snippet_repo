@@ -2169,14 +2169,15 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f1`,f1);
-			this.save_number(`${cf}.f2`,f2);
+			this.save_number(`${cf}.t0.f1`,f1);
+			this.save_number(`${cf}.t0.f2`,f2);
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
 		if(this.is_tp_xx(x,501)||this.is_tp_xx(x,512)) {
 			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f1`,f1);
+			if(f1===501) {this.save_number(`${cf}.t501.f1`,f1);}
+			if(f1===512) {this.save_number(`${cf}.t512.f1`,f1);}
 			this.a_primitive_num(f2);
 			switch(f3) {
 				default: this.codegen_typedef_bin(cf,x); debugger; break;
@@ -2187,7 +2188,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(this.is_tp_xx(x,416)) {
 			const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: f19,...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f1`,f1);
+			this.save_number(`${cf}.t416.f1`,f1);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
 			if(!f6) debugger;
@@ -2197,6 +2198,9 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(9 in x) {
 			const {1: [,f1],2: [,f2],4: [,,f4],9: f9,...y}=this.s(cf,x);
+			this.save_number(`${cf}.w9.f1`,f1);
+			this.a_primitive_num(f2);
+			this.V_BinaryTimestamp(f4);
 			return;
 		}
 		x;
