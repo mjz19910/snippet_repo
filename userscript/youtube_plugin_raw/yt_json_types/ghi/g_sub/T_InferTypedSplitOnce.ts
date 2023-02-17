@@ -25,7 +25,7 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 	function chk(_a: any,_b: string) {
 		return true;
 	}
-	function chk_w(_a: any,_b: WA) {
+	function chk_w(_a: any,_b: WA|"") {
 		return true;
 	}
 	function get_infer_1<_S,_A,_B,_TM>(_a: string): _A {
@@ -42,7 +42,7 @@ function TF_InferTypedSplitOnce<WA extends string,S extends string,D extends str
 		let Begin=get_infer_1<S,A,B,`${A}${D}${B}`>("infer Begin");
 		let Rest=get_infer_2<S,A,B,`${A}${D}${B}`>("infer Rest");
 		// Rest extends ""
-		if(Rest==="") {
+		if(chk_w(Rest,"")) {
 			// ?
 			// T_InferredSplitOnce_NB_1<WA,Begin>
 			return TF_InferredSplitOnce_NB_1(WA,Begin);
