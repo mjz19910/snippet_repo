@@ -1749,48 +1749,31 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						debugger;
 					} break;
 					case "str": {
-						/** @type {string[]} */
+						/** @type {string[][]} */
 						let str_arr=[];
 						for(let item of to_load.id[1][1]) {
 							if(item instanceof Array) {
+								let res=[];
 								for(let val of item) {
-									if(typeof val==="string") {
-										str_arr.push(val);
-									}
+									if(typeof val!=="string") continue;
+									res.push(val);
 								}
+								str_arr.push(res);
 								continue;
 							}
-							if(typeof item==="string") {
-								str_arr.push(item);
-							}
+							if(typeof item!=="string") continue;
+							str_arr.push([item]);
 						}
 						let k_parts=this.split_box_type(to_load.key);
 						if(k_parts[0]!=="str") debugger;
 						let fd=ss.data.find(v => v[0]===k_parts[1]);
 						if(!fd) {
-							/** @type {string[][]} */
-							let str_arr=[];
-							for(let item of to_load.id[1][1]) {
-								if(item instanceof Array) {
-									let res=[];
-									for(let val of item) {
-										if(typeof val!=="string") continue;
-										res.push(val);
-									}
-									str_arr.push(res);
-									continue;
-								}
-								if(typeof item!=="string") continue;
-								str_arr.push([item]);
-							}
 							for(let from_db of str_arr) {
-								ss.data.push([k_parts[1],["one",from_db]]);
+								ss.data.push([k_parts[1],["one",[from_db]]]);
 								debugger;
 							}
 							continue;
 						}
-						/** @type {string[][]} */
-						let str_arr=[];
 						for(let item of to_load.id[1][1]) {
 							if(item instanceof Array) {
 								let res=[];
