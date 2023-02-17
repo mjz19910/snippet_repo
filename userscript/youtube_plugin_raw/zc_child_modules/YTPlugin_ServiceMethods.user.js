@@ -1722,11 +1722,6 @@ class ServiceMethods extends ServiceData {
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
 	/** @private @arg {DE_VE4724_Search} x */
 	DE_VE4724_Search(x) {this.H_("query",x,this.a_primitive_str);}
-	/** @arg {G_PlaylistUrlInfo|G_ChannelUrlInfo} value*/
-	put_boxed_id(value) {
-		const {type,id}=value;
-		this.indexed_db_put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
-	}
 	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
 		if(x.type==="playlist:1:LL") return false;

@@ -16,7 +16,7 @@ type DT_DatabaseStoreTypes={
 	boxed_id: {
 		key: `boxed_id:${string}:${string}`;
 		type: string;
-		id: string;
+		id: ["one",number[]]|["many",number[][]];
 	};
 	channel_id: {
 		key: `channel_id:UC:${string}`;
