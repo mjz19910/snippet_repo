@@ -1769,6 +1769,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				}
 				let k_parts=this.split_box_type(to_load.key);
 				if(k_parts[0]==="str") {
+					let fd=ss.data.find(v => v[0]===k_parts[1]);
+					if(!fd) {}
 					debugger;
 				} else {
 					let fd=ss.data.find(v => v[0]===k_parts[1]);
