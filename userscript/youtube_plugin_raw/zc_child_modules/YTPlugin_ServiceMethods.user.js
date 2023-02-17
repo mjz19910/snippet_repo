@@ -5314,6 +5314,7 @@ class ServiceMethods extends ServiceData {
 					switch(targetId) {
 						default: debugger; break;
 						case "comments-section":
+						case "engagement-panel-comments-section":
 					}
 				}
 				/** @type {typeof continuationItems[number][]} */
