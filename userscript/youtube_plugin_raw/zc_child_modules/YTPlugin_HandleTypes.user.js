@@ -383,6 +383,25 @@ class HandleTypes extends ServiceMethods {
 		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.trackingParams(trackingParams);
 	}
+	/** @public @arg {R_LiveChatPlaceholderItem} x */
+	R_LiveChatPlaceholderItem(x) {this.H_("R_LiveChatPlaceholderItem","liveChatPlaceholderItemRenderer",x,this.D_LiveChatPlaceholderItem);}
+	/** @public @arg {D_LiveChatPlaceholderItem} x */
+	D_LiveChatPlaceholderItem(x) {
+		const cf="D_LiveChatPlaceholderItem";
+		const {id,timestampUsec,...y}=this.s(cf,x); this.g(y);
+		console.log(`${cf}.id`,id);
+		let u_seconds=this.parse_number_template(timestampUsec);
+		this.a_primitive_num(u_seconds);
+	}
+	/** @public @arg {R_LiveChatTextMessage} x */
+	R_LiveChatTextMessage(x) {this.H_("R_LiveChatTextMessage","liveChatTextMessageRenderer",x,this.D_LiveChatTextMessage);}
+	/** @public @arg {D_LiveChatTextMessage} x */
+	D_LiveChatTextMessage(x) {
+		const cf="D_LiveChatTextMessage";
+		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(message);
+		console.log(`${cf}.id`,id);
+	}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
 	/** @private @arg {R_PdgCommentOption} x */
@@ -2499,25 +2518,6 @@ class HandleTypes extends ServiceMethods {
 	D_WebPlayerActionsPorting(x) {
 		const cf="D_WebPlayerActionsPorting";
 		const {getSharePanelCommand,subscribeCommand,unsubscribeCommand,addToWatchLaterCommand,removeFromWatchLaterCommand,...y}=this.s(cf,x); this.g(y);
-	}
-	/** @public @arg {R_LiveChatTextMessage} x */
-	R_LiveChatTextMessage(x) {this.H_("R_LiveChatTextMessage","liveChatTextMessageRenderer",x,this.D_LiveChatTextMessage);}
-	/** @public @arg {D_LiveChatTextMessage} x */
-	D_LiveChatTextMessage(x) {
-		const cf="D_LiveChatTextMessage";
-		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(message);
-		console.log(`${cf}.id`,id);
-	}
-	/** @public @arg {R_LiveChatPlaceholderItem} x */
-	R_LiveChatPlaceholderItem(x) {this.H_("R_LiveChatPlaceholderItem","liveChatPlaceholderItemRenderer",x,this.D_LiveChatPlaceholderItem);}
-	/** @public @arg {D_LiveChatPlaceholderItem} x */
-	D_LiveChatPlaceholderItem(x) {
-		const cf="D_LiveChatPlaceholderItem";
-		const {id,timestampUsec,...y}=this.s(cf,x); this.g(y);
-		console.log(`${cf}.id`,id);
-		let u_seconds=this.parse_number_template(timestampUsec);
-		this.a_primitive_num(u_seconds);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
