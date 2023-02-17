@@ -1,14 +1,3 @@
-type RB_Obj_f19_w1={
-	1: T_D32<16>;
-	2: T_D32<3832>;
-};
-
-type RB_Obj_f19_w3={
-	2: T_D32<3854>;
-	3: T_D32<158>;
-};
-
-type RB_Obj_f19=RB_Obj_f19_w1|RB_Obj_f19_w3;
 type RB_ClickTrackingObj_w4w6={
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VW_R<"string","external">;
