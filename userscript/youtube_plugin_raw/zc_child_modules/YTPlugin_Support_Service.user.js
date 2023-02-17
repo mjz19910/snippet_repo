@@ -1783,6 +1783,20 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						if(typeof item!=="string") continue;
 						str_arr.push([item]);
 					}
+					for(let from_db of str_arr) {
+						let ck=fd[1];
+						if(from_db.length===1) {
+							if(ck[0]==="many") continue;
+							if(ck[1].includes(from_db[0])) continue;
+							ck[1].push(from_db[0]);
+						} else {
+							if(ck[0]==="one") continue;
+							let mv=ck[1];
+							if(mv.findIndex(v=>this.eq_keys(v,from_db))>=0) continue;
+							mv.push(from_db);
+							debugger;
+						}
+					}
 					debugger;
 				}
 				console.log(k_parts);
