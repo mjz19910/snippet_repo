@@ -11,7 +11,13 @@ type TI_SplitOnce_1<WA extends string,S extends string,D extends string,Begin ex
 	? [WA,Rest]
 	:Begin extends ""
 	? TI_SplitOnce_NB_2<WA,S,D>
-	:TI_SplitOnce_2<WA,Begin,Rest>;
+	:TI_SplitOnce_2<WA,Begin,Rest>
+	;
+;
+type TI_SplitOnce_3<WA extends string,S extends string,D extends string,Begin extends string,Rest extends string>=
+	Begin extends ""? TI_SplitOnce_NB_2<WA,S,D>:TI_SplitOnce_2<WA,Begin,Rest>
+	;
+;
 type TI_SplitOnce_2<WA extends string,Begin extends string,Rest extends string>=
 	Rest extends WA? [Begin,WA]:never;
 function never_return(): never {throw new Error();}
