@@ -178,7 +178,7 @@ class IndexedDBService extends BaseService {
 								}
 								if(item.v===cursor_value.v) {
 									this.committed_data.push(item);
-								};
+								}
 							} break;
 							case "update_id": {
 								console.log("update sync cache item",item);
@@ -186,6 +186,9 @@ class IndexedDBService extends BaseService {
 							} break cursor_loop;
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
+							case "playlist_id": {
+
+							} break;
 						};
 					}
 					try {
