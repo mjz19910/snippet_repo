@@ -307,6 +307,16 @@ class IndexedDBService extends BaseService {
 		if(error_event!==null) return ["error",...error_event];
 		return ["success",req.result];
 	}
+	/** @template T @arg {IDBRequest<T>} req @returns {Promise<T>} */
+	async get_async_result(req) {
+		let res=await this.get_async_result_impl(req);
+		if(res[0]==="error") {
+			let [,event,error]=res;
+			if(event.type!=="error") throw new AggregateError([event,error]);
+			throw error;
+		}
+		return res[1];
+	}
 	async database_diff() {
 		{
 			let idb=this;
