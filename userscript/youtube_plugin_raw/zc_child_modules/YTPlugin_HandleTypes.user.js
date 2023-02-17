@@ -1934,12 +1934,12 @@ class HandleTypes extends ServiceMethods {
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
 		}
-		this.D_VideoPlaybackShape_S_Params(obj_sparams);
 		/** @type {Exclude<(typeof kk_x)[number],T_Split<typeof sparams>[number]>[]} */
 		let kk_ro=as(kk_x);
 		for(let k of kk_ro) {
 			set_obj(ro,x,k);
 		}
+		this.D_VideoPlaybackShape_S_Params(obj_sparams);
 		let y2=ro;
 		const {mh,mm,mn,mt,fvip,keepalive,fexp,c,txp,n,lsig,spc,sig,ms,mv,mvi,pl,initcwndbps,...y3}=y2;
 		this.save_string(`${cf1}.mh`,mh);
