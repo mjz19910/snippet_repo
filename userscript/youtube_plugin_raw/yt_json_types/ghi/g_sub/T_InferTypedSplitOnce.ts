@@ -17,8 +17,8 @@ type TI_SplitOnce_4<WA extends string,S extends string,D extends string,Split ex
 type TI_SplitOnce_3<WA extends string,S extends string,D extends string,Split extends [string,string]>=
 	Split[0] extends ""? TI_SplitOnce_NB_2<WA,S,D>:TI_SplitOnce_2<WA,Split>;
 ;
+// S extends `${infer U}${D}`?U extends WA?[WA,""]:never:S extends `${D}${WA}${infer A}`?["",`${WA}${A}`]:[S]
 type TI_SplitOnce_2<WA extends string,Split extends [string,string]>=Split[1] extends WA? [Split[0],WA]:never;
-type TI_SplitOnce_NR_1<WA extends string,Begin extends string,Rest extends string>=Rest extends WA? [Begin,WA]:never;
 type TI_SplitOnce_NB_1<WA extends string,Begin extends string>=Begin extends WA? [WA,""]:never;
 type TI_SplitOnce_NB_2<WA extends string,S extends string,D extends string>=S extends `${D}${infer Rest}`? TI_SplitOnce_NR_2<WA,Rest>:[S];
 type TI_SplitOnce_NR_2<WA extends string,Rest extends string>=Rest extends `${WA}${infer Rest2}`? ["",`${WA}${Rest2}`]:never;
