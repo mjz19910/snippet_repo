@@ -2146,7 +2146,7 @@ class HandleTypes extends ServiceMethods {
 	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
 	/** @protected @arg {Extract<RB_TrackingObj,{1:any}>} x */
 	RB_TrackingObj_t1(x) {
-		const cf="R_ClickTrackingObj_t1";
+		const cf="RB_TrackingObj_t1";
 		if(1 in x) {
 			const {1: [,f1]}=x;
 			this.save_number(`${cf}.f1`,f1);
