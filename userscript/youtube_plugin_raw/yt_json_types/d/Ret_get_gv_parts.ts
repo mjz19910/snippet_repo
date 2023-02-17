@@ -12,6 +12,7 @@ type G_Gv_0=
 ;
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
+	"rr1.sn-9gv7lnes.googlevideo.com.",
 	"rr1.sn-n8v7znlk.googlevideo.com.",
 	"rr1.sn-n8v7znsd.googlevideo.com.",
 ];
@@ -19,17 +20,21 @@ type PT_TypeS=[
 	[1,"9gv7l"],
 	[1,"a5mek"],
 	[1,"hp57k"],
-	[2,"n",[
-		["4",["v7","s"]],
-		["8",["v7","z"]],
-		["x5",[
+	[1,"n",[
+		[1,"4",["v7","s"]],
+		[1,"8",["v7","z"]],
+		[1,"x5",[
 			["s7","7y"],
 		]],
 	]],
-	[2,"o",["097z"]],
-	[2,"p",[
-		[["p5q"],["ls"]],
-		[["p5q"],["s7"]],
+	[1,"o",["097z"]],
+	[1,"p",[
+		[4,[
+			[1,"p5q",[5,[
+				"ls",
+				"s7",
+			]]]],
+		],
 	]],
 ];
 type PT_TypeArr=[
