@@ -187,7 +187,11 @@ class IndexedDBService extends BaseService {
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
 							case "playlist_id": {
-
+								if(cursor_value.type!==item.type) {
+									debugger;
+									continue for_loop;
+								}
+								this.committed_data.push(item);
 							} break;
 						};
 					}
