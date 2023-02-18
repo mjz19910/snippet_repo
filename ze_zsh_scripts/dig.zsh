@@ -52,6 +52,7 @@ case $MODE in
 	dig_batch $1;
 	;;
 "child")
+	echo "run_child" "$@"
 	run_child "$@";
 	;;
 "failure")
