@@ -9,12 +9,6 @@ type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 type T_Item<T>={item: T;};
 type T_Menu<T>={menu: T;};
 type T_Page<T>={page: T;};
-type T_OpenPopup_Dialog<T>={popup: T; popupType: "DIALOG";};
-type T_OpenPopup_Dropdown<T>={popupType: "DROPDOWN"; popup: T;};
-type T_OpenPopup_ReuseableDialog<T>={popup: T; popupType: "DIALOG"; beReused: boolean;};
-type T_OpenPopup_ReuseableDropdown<T>={popup: T; popupType: "DROPDOWN"; beReused: true;};
-type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
-type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
 type T_Items<T>={items: T[];};
 type T_Items_TP<T>={trackingParams: string; items: T[];};
 type T_Actions<T>={actions: T[];};
@@ -112,6 +106,14 @@ type T_ParseCallbackFunction<T extends CF_L_Params>=(
 	is_debug_enabled: boolean,
 ) => boolean;
 type T_UserFeedbackEndpointProductSpecificValueData<K,V>={userFeedbackEndpointProductSpecificValueData: T_MapEntry<K,V>;};
+//#endregion
+//#region T_OpenPopup
+type T_OpenPopup_Dialog<T>={popup: T; popupType: "DIALOG";};
+type T_OpenPopup_Dropdown<T>={popupType: "DROPDOWN"; popup: T;};
+type T_OpenPopup_ReuseableDialog<T>={popup: T; popupType: "DIALOG"; beReused: boolean;};
+type T_OpenPopup_ReuseableDropdown<T>={popup: T; popupType: "DROPDOWN"; beReused: true;};
+type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
+type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
 //#endregion
 //#region Types that modify other types
 type T_OmitKey<T,K extends keyof T>=T extends infer U? Omit<U,K>:never;
