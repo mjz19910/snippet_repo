@@ -1,8 +1,8 @@
 function do_dig() {
 	printf "."
 	echo $$ >/tmp/dig_res.pid.$a2
-	echo /tmp/dig_res.$a2.* | xargs -n 1 bash -c 'echo -n >"$1"' v
-	echo $$ >/tmp/dig_res.$a2.pid
+	find /tmp/ -maxdepth 1 -name 'dig_res.'$a2'.*' | xargs -n 1 bash -c 'echo -n >"$1"' v
+	echo $$ >/tmp/dig_res.pid.$a2
 	echo "rr1.sn-"$a2"n"{{0..9},{a..z}}{{0..9},{a..z}}".googlevideo.com" | stdbuf -i0 -o0 -e0 xargs -n 25 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
 	list=(/tmp/dig_res.$a2.*)
 	TF_2=$(mktemp /tmp/dig_res.out.$1.XXX)
