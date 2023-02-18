@@ -134,6 +134,7 @@ class IndexedDBService extends BaseService {
 			this.open_db_promise=null;
 		},err => {
 			console.log("open_database error",err);
+			this.open_db_promise=null;
 		});
 	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
@@ -246,6 +247,7 @@ class IndexedDBService extends BaseService {
 					return res;
 				}
 			}
+			debugger;
 		}
 		if(this.open_db_promise) {
 			this.get_all_waiting_keys.push(key);
