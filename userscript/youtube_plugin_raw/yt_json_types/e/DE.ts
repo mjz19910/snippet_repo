@@ -14,7 +14,7 @@ type DE_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikePar
 type DE_LikeLike={status: "LIKE"; target: D_LikeApi; actions?: C_MusicLibraryStatusUpdate[]; likeParams?: string;};
 type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId?: "WL"; params?: string;};
-type DE_PlaylistEditor={playlistId: D_PlaylistId;};
+type DE_PlaylistEditor={playlistId: SD_PlaylistId;};
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
 type D_SerializedContextData={
 	serializedContextData: string;

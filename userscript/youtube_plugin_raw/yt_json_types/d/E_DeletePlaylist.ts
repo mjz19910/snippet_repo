@@ -1,7 +1,8 @@
-type E_DeletePlaylist={
+type E_PlaylistDelete={
 	clickTrackingParams: string;
-	commandMetadata: M_playlist_delete;
-	deletePlaylistEndpoint: D_PlaylistId;
+	commandMetadata: M_PlaylistDelete;
+	deletePlaylistEndpoint: DE_PlaylistDelete;
 };
-type M_playlist_delete={webCommandMetadata: GM_playlist_delete;};
-type GM_playlist_delete={sendPost: true; apiUrl: "/youtubei/v1/playlist/delete";};
+type M_PlaylistDelete={webCommandMetadata: GM_PlaylistDelete;};
+type GM_PlaylistDelete={sendPost: true; apiUrl: "/youtubei/v1/playlist/delete";};
+type DE_PlaylistDelete={playlistId: SD_PlaylistId;};

@@ -303,6 +303,12 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
+	/** @protected @arg {E_PlaylistDelete} x */
+	E_PlaylistDelete(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistDelete","deletePlaylistEndpoint",x); this.g(y); this.M_PlaylistDelete(a); this.DE_PlaylistDelete(b);}
+	/** @protected @arg {M_PlaylistDelete} x */
+	M_PlaylistDelete(x) {x;}
+	/** @protected @arg {DE_PlaylistDelete} x */
+	DE_PlaylistDelete(x) {x;}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
 		let token_str=atob(x);
@@ -1448,7 +1454,7 @@ class ServiceMethods extends ServiceData {
 		console.log("[new_parse_playlist_id]",x);
 		{debugger;}
 	}
-	/** @protected @arg {D_PlaylistId} x */
+	/** @protected @arg {SD_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
 	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
 	convert_value_item_to_param_item(x) {

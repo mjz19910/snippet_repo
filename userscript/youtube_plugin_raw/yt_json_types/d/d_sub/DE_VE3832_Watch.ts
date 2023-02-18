@@ -31,7 +31,7 @@ type DE_VE3832_Watch=
 	}
 	|{
 		videoId: string;
-		playlistId: D_PlaylistId;
+		playlistId: SD_PlaylistId;
 		index: number;
 		playlistSetVideoId: string;
 		params: string;

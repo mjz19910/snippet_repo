@@ -67,7 +67,7 @@ type D_PlaylistContent={
 	title: string;
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: number;
-	playlistId: D_PlaylistId;
+	playlistId: SD_PlaylistId;
 	ownerName: G_Text;
 	isInfinite: boolean;
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;

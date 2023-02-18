@@ -2221,6 +2221,8 @@ class HandleTypes extends ServiceMethods {
 		this.E_VE3611(ownerEndpoint);
 		this.z(serviceEndpoints,x => {
 			if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
+			x.deletePlaylistEndpoint;
+			if("deletePlaylistEndpoint" in x) this.E_PlaylistDelete(x);
 			this.codegen_typedef(cf,x,false);
 		});
 		this.R_Menu(moreActionsMenu);

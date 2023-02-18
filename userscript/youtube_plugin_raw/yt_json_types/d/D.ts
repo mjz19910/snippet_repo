@@ -42,7 +42,7 @@ type D_TargetIdStr=
 ;
 type D_PlaylistSelfId="WL"|"LL";
 type D_PlaylistIdTypeBase="RDMM"|"RD"|"PL"|"UU";
-type D_PlaylistId=
+type SD_PlaylistId=
 	|`RD${string}`
 	|`RDMM${string}`
 	|`RDGM${string}`
@@ -96,8 +96,8 @@ type D_WatchPageUrl=
 	;
 ;
 type D_WatchPlaylistUrlFormat=
-	|`list=${D_PlaylistId}`
-	|`list=${D_PlaylistId}&index=${number}`
+	|`list=${SD_PlaylistId}`
+	|`list=${SD_PlaylistId}&index=${number}`
 	|`list=${YtInfinitePlaylistFormat}&start_radio=${1|0}`
 	;
 ;
@@ -165,14 +165,14 @@ type D_ChanLoc=`channel.${string}`;
 type D_ChannelId=`UC${string}`;
 type T_ChannelIdStr<T extends string>=`UC${T}`;
 type D_UUIDString=`${string}-${string}-${string}-${string}-${string}`;
-type D_PlaylistUrlParams=`list=${D_PlaylistId}`;
+type D_PlaylistUrlParams=`list=${SD_PlaylistId}`;
 type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
 type D_RadioPlaylistStr<T extends string>=`RD${T}`;
 type D_SD_UrlTypes=`page_type_${YTNavigateFinishDetail["pageType"]}`|UrlTypes;
 type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
-type D_PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
+type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type D_EngagementPanelTargetId=
 	|"engagement-panel-error-corrections"
@@ -2014,7 +2014,7 @@ type D_LightColorPalette_1={
 };
 
 type D_LightColorPalette=D_LightColorPalette_1|D_LightColorPalette_2|D_LightColorPalette_3|D_LightColorPalette_4;
-type D_LikeApi={videoId: string;}|{playlistId: D_PlaylistId;};
+type D_LikeApi={videoId: string;}|{playlistId: SD_PlaylistId;};
 type D_LiveBroadcastDetails={
 	isLiveNow: true;
 	startTimestamp: string;
@@ -2352,7 +2352,7 @@ type D_PlayerOverlayVideoDetails={
 };
 type D_PlayerStoryboardSpec={spec: string;};
 type D_PlaylistAddToOption={
-	playlistId: D_PlaylistId;
+	playlistId: SD_PlaylistId;
 	title: G_Text;
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";
 	containsSelectedVideos: "NONE";
@@ -2378,7 +2378,7 @@ type D_DropdownFormField={
 };
 type R_DropdownFormField={dropdownFormFieldRenderer: D_DropdownFormField;};
 type D_PlaylistHeader={
-	playlistId: D_PlaylistId;
+	playlistId: SD_PlaylistId;
 	title: G_Text;
 	numVideosText: G_Text;
 	descriptionText: {};
@@ -2390,7 +2390,7 @@ type D_PlaylistHeader={
 	ownerEndpoint: E_VE3611;
 	editableDetails: D_CanDelete;
 	trackingParams: string;
-	serviceEndpoints: (E_PlaylistEdit|E_DeletePlaylist)[];
+	serviceEndpoints: (E_PlaylistEdit|E_PlaylistDelete)[];
 	stats: G_Text[];
 	briefStats: G_Text[];
 	editorEndpoint?: E_PlaylistEditor;
