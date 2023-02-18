@@ -40,6 +40,7 @@ type GU_VE83769_Url=
 	|GU_VE83769_Url_Internal
 	|GU_YoutubeUrlRedirect
 	|GU_VE83769_Url_External
+	|`https://support.google.com/youtube/answer/${number}`
 	;
 ;
 type GU_VE96368_Url="/feed/subscriptions";

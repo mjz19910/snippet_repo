@@ -1065,11 +1065,12 @@ class ServiceMethods extends ServiceData {
 		let url2=this.UrlWrappedValueT(url);
 		this.parser.parse_url(cf,as(url2));
 	}
-	/** @arg {R_FancyDismissibleDialog|R_UnifiedSharePanel|R_AboutThisAd} x */
+	/** @arg {R_FancyDismissibleDialog|R_UnifiedSharePanel|R_ConfirmDialog|R_AboutThisAd} x */
 	h_pt(x) {
 		if("fancyDismissibleDialogRenderer" in x) return this.R_FancyDismissibleDialog(x);
 		if("unifiedSharePanelRenderer" in x) return this.R_UnifiedSharePanel(x);
 		if("aboutThisAdRenderer" in x) return this.R_AboutThisAd(x);
+		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
 		debugger;
 	}
 	/** @template {{}} T @arg {T_OpenPopup_ReuseableDropdown<T>} x */
