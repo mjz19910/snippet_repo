@@ -10,10 +10,10 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
+// ==/UserScript==
 
 const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as_any,base64_dec}=require("./YtPlugin_Base.user");
 
-// ==/UserScript==
 const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
@@ -2845,6 +2845,7 @@ class ServiceMethods extends ServiceData {
 	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
 	 */
 	TE_Endpoint_3(cf1,k,x) {
+		if(!x) {debugger; return as_any(null);}
 		const cf2="TE_Endpoint_3";
 		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(`${cf2}:${cf1}`,x);
 		this.clickTrackingParams(clickTrackingParams);
@@ -7630,7 +7631,7 @@ class ServiceMethods extends ServiceData {
 		this.R_Button(shufflePlayButton);
 		this.trackingParams(trackingParams);
 		this.D_EditableDetails(editableDetails);
-		this.E_PlaylistEditor(editorEndpoint);
+		this.t(editorEndpoint,this.E_PlaylistEditor);
 		this.a_primitive_bool(isEditable);
 		this.E_VE3611(ownerEndpoint);
 		this.z(serviceEndpoints,this.E_PlaylistEdit);

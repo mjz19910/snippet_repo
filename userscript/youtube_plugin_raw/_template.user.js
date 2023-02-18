@@ -15,12 +15,11 @@
 // ==/UserScript==
 const __template__=true;
 const __module_name__="mod${{name}}";
-const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {
 	if(__template__) {throw new Error("Template probably has placeholders");}
-	bs.do_export(fn,flags,exports,__module_name__);
+	do_export(fn,flags,exports,__module_name__);
 }
 export_(exports => {exports.__is_module_flag__=true;});
 

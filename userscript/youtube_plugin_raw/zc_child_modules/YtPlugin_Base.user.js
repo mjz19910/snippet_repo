@@ -43,14 +43,16 @@ function required(x) {
 	return x;
 }
 const path_map={
-	/** @type {"YoutubePluginBase"} */
-	["./YtPlugin_Base.user"]: "YoutubePluginBase",
-	/** @type {"SupportService"} */
-	["./YTPlugin_Support_Service.user"]: "SupportService",
-	/** @type {"ECatcherService"} */
-	["./YTPlugin_ECatcherService.user"]: "ECatcherService",
-	/** @type {"ServiceMethods"} */
-	["./YTPlugin_ServiceMethods.user"]: "ServiceMethods",
+	/** @type {["mod","YoutubePluginBase"]} */
+	["./YtPlugin_Base.user"]: ["mod","YoutubePluginBase"],
+	/** @type {["mod","SupportService"]} */
+	["./YTPlugin_Support_Service.user"]: ["mod","SupportService"],
+	/** @type {["mod","ECatcherService"]} */
+	["./YTPlugin_ECatcherService.user"]: ["mod","ECatcherService"],
+	/** @type {["mod","ServiceMethods"]} */
+	["./YTPlugin_ServiceMethods.user"]: ["mod","ServiceMethods"],
+	/** @type {["raw","DebugApi"]} */
+	["../DebugApi_raw/DebugApi.user.js"]: ["raw","DebugApi"],
 };
 /** @template {keyof typeof path_map} T @arg {T} x */
 function require(x) {
@@ -58,7 +60,11 @@ function require(x) {
 	let all_modules=window.__plugin_modules__;
 	if(x===void 0) {throw new Error("missing required");}
 	let loc=path_map[x];
-	let imp=all_modules[`mod$${loc}`];
+	if(loc[0]==="raw") {
+		let imp=all_modules[loc[1]];
+		return imp;
+	}
+	let imp=all_modules[`${loc[0]}$${loc[1]}`];
 	if(!imp) {debugger; throw new Error("missing require path map");}
 	return imp;
 }
@@ -668,7 +674,6 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-const store=required(window.__plugin_modules__);
 class R_HandleRichGrid_Base {
 	enable_logging=false;
 	/** @readonly */

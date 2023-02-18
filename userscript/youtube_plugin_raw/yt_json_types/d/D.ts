@@ -2372,7 +2372,7 @@ type D_PlaylistHeader={
 	serviceEndpoints: E_PlaylistEdit[];
 	stats: G_Text[];
 	briefStats: G_Text[];
-	editorEndpoint: E_PlaylistEditor;
+	editorEndpoint?: E_PlaylistEditor;
 	playlistHeaderBanner: R_HeroPlaylistThumbnail;
 	moreActionsMenu: R_Menu;
 	playButton: R_Button;

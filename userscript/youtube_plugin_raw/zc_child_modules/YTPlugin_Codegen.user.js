@@ -10,17 +10,14 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
-
-const {as}=require("./YtPlugin_Base.user");
-
 // ==/UserScript==
+
+const {as,BaseService,do_export, split_string_once, split_string}=require("./YtPlugin_Base.user");
+
 if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
-const store=required(window.__plugin_modules__);
-const bs=required(store["mod$YoutubePluginBase"]);
-const split_string=bs.split_string;
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 class ParentWalker {
 	/** @arg {JsonReplacerState} store @arg {unknown} obj */
@@ -56,8 +53,6 @@ class JsonReplacerState {
 		return new ParentWalker(this,x);
 	}
 }
-const BaseService=required(store.mod$YoutubePluginBase).BaseService;
-const split_string_once=bs.split_string_once;
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */

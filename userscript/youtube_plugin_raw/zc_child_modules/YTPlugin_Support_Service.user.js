@@ -12,14 +12,12 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 const __module_name__="mod$SupportService";
-const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 const as_any=bs.as_any; as_any;
 const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
 const split_string=bs.split_string;
-const split_string_once=bs.split_string_once;
 const split_string_once_ex=bs.split_string_once_ex;
 const split_string_once_last=bs.split_string_once_last;
 const {as}=bs;

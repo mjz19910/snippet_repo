@@ -21,11 +21,11 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
+const {do_export}=require("../DebugApi_raw/DebugApi.user.js");
+
 const __module_name__="debug$RebuildTheUniverse"
-const store=required(window.__plugin_modules__);
-const bs=required(store["DebugApi"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 function fetch_all_images() {
 	return Promise.all(window.arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {

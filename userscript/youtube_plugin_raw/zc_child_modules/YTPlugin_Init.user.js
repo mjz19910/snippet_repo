@@ -12,10 +12,9 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Init.user.js
 // ==/UserScript==
 const __module_name__="mod$InitPlugin";
-const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 x: {
 	if(store["mod$ServiceLoaderPlugin"]===void 0) {
