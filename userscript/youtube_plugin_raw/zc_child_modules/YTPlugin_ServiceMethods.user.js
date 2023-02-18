@@ -1251,7 +1251,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu";
-		if("loggingDirectives" in x) {
+		if("loggingDirectives" in x&&"targetId" in x) {
 			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(menuPopupAccessibility,this.D_Label);
 			this.tz(items,this.G_MenuItem);
@@ -1261,13 +1261,21 @@ class ServiceMethods extends ServiceData {
 			this.tz(topLevelButtons,this.D_Menu_Button);
 			this.t(targetId,x => {
 				switch(x) {
-					default: switch(x) {
-					} debugger; break;
 					case "browse-video-menu-button":
 					case "watch-related-menu-button":
 				}
 				this.targetId(cf,x);
 			});
+			return;
+		}
+		if("loggingDirectives" in x) {
+			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(menuPopupAccessibility,this.D_Label);
+			this.tz(items,this.G_MenuItem);
+			if(trackingParams) this.trackingParams(trackingParams);
+			this.t(accessibility,this.D_Accessibility);
+			this.tz(flexibleItems,this.R_MenuFlexibleItem);
+			this.tz(topLevelButtons,this.D_Menu_Button);
 			return;
 		}
 		if("targetId" in x) {
