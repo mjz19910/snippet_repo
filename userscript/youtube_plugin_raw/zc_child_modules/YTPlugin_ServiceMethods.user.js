@@ -1026,24 +1026,41 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
+		/** @type {TA_OpenPopup<unknown>} */
+		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
+		/** @type {D_GetAccountMenu_Popup|Popup_DismissibleDialog|{}|null|undefined} */
+		let ax=xp.openPopupAction;
+		if(ax&&"popupType" in ax&&"popup" in ax) {
+			switch(ax.popupType) {
+				default: debugger; break;
+				case "DIALOG": break;
+				case "DROPDOWN": break;
+			}
+		}
 		if("popupType" in a) {
 			this.codegen_typedef(`${cf1}_Popup`,a,false);
-			if(a.popupType==="DIALOG"&&"popup" in a) {
-				/** @type {R_FancyDismissibleDialog|{}|null|undefined} */
-				let pt=a.popup;
-				if(pt&&"fancyDismissibleDialogRenderer" in pt) {
-					this.T_OpenPopup_Dialog("any",{
-						popup: pt,
-						popupType: "DIALOG",
-					});
-				} else {
-					pt;
-					debugger;
+			if("popup" in a) {
+				switch(a.popupType) {
+					case "DIALOG": {
+						/** @type {R_FancyDismissibleDialog|{}|null|undefined} */
+						let pt=a.popup;
+						if(pt&&"fancyDismissibleDialogRenderer" in pt) {
+							this.T_OpenPopup_Dialog("any",{
+								popup: pt,
+								popupType: "DIALOG",
+							});
+						} else {
+							pt;
+							debugger;
+						}
+					} break;
+					case "DROPDOWN": {
+
+					} break;
 				}
 			}
-			debugger;
 		} else {
 			debugger;
 		}
