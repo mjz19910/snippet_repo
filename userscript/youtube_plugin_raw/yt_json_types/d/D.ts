@@ -936,20 +936,6 @@ type D_PlaylistPanelVideo=
 	|(D_PlaylistPanelVideo_Base&{indexText: G_Text;})
 	;
 ;
-type D_PlaylistSidebarPrimaryInfo={
-	thumbnailRenderer: R_PlaylistVideoThumbnail;
-	title: G_Text;
-	stats: G_Text[];
-	menu: R_Menu;
-	thumbnailOverlays: G_ThumbnailOverlayItem[];
-	navigationEndpoint: E_Watch;
-	badges: RMD_Badge[];
-	description?: {};
-	showMoreText: G_Text;
-	titleForm?: R_InlineForm;
-	descriptionForm?: R_InlineForm;
-	privacyForm?: R_DropdownFormField;
-};
 type D_Radio={
 	playlistId: `RD${string}`;
 	title: G_Text;
