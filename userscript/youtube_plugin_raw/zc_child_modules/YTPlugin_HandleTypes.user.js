@@ -2198,30 +2198,36 @@ class HandleTypes extends ServiceMethods {
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
 	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
+	/** @public @arg {BinaryVe} x */
+	BinaryVe(x) {
+		switch(x) {
+			default: debugger; break;
+			case 3832:
+			case 3854:
+		}
+	}
 	/** @protected @arg {RB_Obj_f19} x @name V_VeDescObj */
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
+		if(2 in x&&!(3 in x)&&!(1 in x)) {
+			const {2: [,f2],...y}=this.s(cf,x); this.g(y);
+			this.save_number(`${cf}.f2.BinaryVe@base`,f2);
+		}
 		if(1 in x) {
 			const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
 			this.save_number(`${cf}.f1`,f1);
-			this.save_number(`${cf}.f2`,f2);
-			switch(f2) {
-				default: debugger; break;
-				case 3832:
-			}
+			this.save_number(`${cf}.f2.BinaryVe@f1`,f2);
+			this.BinaryVe(f2);
 			return;
 		}
 		if(3 in x) {
 			const {2: [,f2],3: [,f3],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f2`,f2);
+			this.save_number(`${cf}.f2.BinaryVe@f3`,f2);
+			this.BinaryVe(f2);
 			this.save_number(`${cf}.f3`,f3);
-			switch(f2) {
-				default: debugger; break;
-				case 3854:
-			}
 			return;
 		}
-		debugger;
+		this.codegen_typedef_bin(cf,x);
 	}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
