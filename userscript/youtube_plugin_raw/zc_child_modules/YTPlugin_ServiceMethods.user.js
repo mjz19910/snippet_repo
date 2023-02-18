@@ -2459,7 +2459,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"|"D_Thumbnail"} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
-		/** @type {`D_DarkColorPalette:${cf1}`} */
+		/** @type {`D_DarkColorPalette:${cf1}:dark`} */
 		const cf2=`D_DarkColorPalette:${cf1}:dark`;
 		const cf3="dark";
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
