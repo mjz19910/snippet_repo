@@ -233,12 +233,30 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
 		return result;
 	}
+	/** @type {(keyof DT_DatabaseStoreTypes)[]} */
+	get_all_waiting_keys=[];
+	/** @type {([keyof DT_DatabaseStoreTypes,Promise<DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes][]>])[]} */
+	waiting_promises=[];
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key */
 	async getAll(key) {
+		if(this.get_all_waiting_keys.includes(key)) {
+			for(let waiter of this.waiting_promises) {
+				if(waiter[0]===key) {
+					debugger;
+				}
+			}
+		}
 		if(this.open_db_promise) {
+			this.get_all_waiting_keys.push(key);
 			console.log("getAll wait for close");
 			await this.open_db_promise;
 		}
+		let promise=this.getAllImpl(key);
+		this.waiting_promises.push([key,promise]);
+		return promise;
+	}
+	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key */
+	async getAllImpl(key) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
 		const tx=this.transaction(db,key,"readonly");

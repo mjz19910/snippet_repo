@@ -759,17 +759,14 @@ class CodegenService extends BaseService {
 			const ed="Endpoint";
 			let split_val=split_string_once(type_name,ed);
 			if(split_val.length!==1) {
-				debugger;
-				// 	let real_val=split_val[0];
-				// 	if(real_val==="Browse") {
-				// 		console.log(type_name);
-				// 		debugger;
-				// 		/** @type {GE_Browse} */
-				// 		return "GE_Browse";
-				// 	}
-				// 	return `E_${real_val}`;
-				assert_not_ends_with(type_name,ed);
-				break x;
+				let real_val=split_val[0];
+				if(real_val==="Browse") {
+					console.log(type_name);
+					debugger;
+					/** @type {GE_Browse} */
+					return "GE_Browse";
+				}
+				return `E_${real_val}`;
 			}
 			assert_not_ends_with(type_name,ed);
 		}

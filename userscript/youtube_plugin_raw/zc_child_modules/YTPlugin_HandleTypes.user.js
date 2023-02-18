@@ -290,11 +290,11 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_PlaylistSidebarPrimaryInfo";
 		const {thumbnailRenderer,title,stats,menu,navigationEndpoint,badges,description,showMoreText,titleForm,descriptionForm,privacyForm,...y}=this.D_Omit_ThumbnailOverlay(cf,x); this.g(y);
 		this.R_PlaylistVideoThumbnail(thumbnailRenderer);
-		this.G_Text(title);
+		this.t(title,this.G_Text);
 		this.z(stats,this.G_Text);
 		this.R_Menu(menu);
 		this.E_Watch(navigationEndpoint);
-		this.z(badges,this.RMD_Badge);
+		this.tz(badges,this.RMD_Badge);
 		this.tg(description);
 		this.G_Text(showMoreText);
 		this.t(titleForm,this.R_InlineForm);
