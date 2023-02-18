@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {as,BaseService,do_export,split_string_once,split_string,as_any, JsonReplacerState}=require("./YtPlugin_Base.user");
+const {as,BaseService,do_export,split_string_once,split_string,as_any,JsonReplacerState}=require("./YtPlugin_Base.user");
 
 if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
@@ -743,41 +743,47 @@ class CodegenService extends BaseService {
 			}
 			assert_not_ends_with(type_name,"Action");
 		}
-		{
-			let split_val=split_string_once(type_name,"Command");
-			console.log(split_val);
-			debugger;
-			// if(split_val.length===2) {
-			// 	let real_val=split_val[0];
-			// 	return `C_${real_val}`;
-			// }
-			assert_not_ends_with(type_name,"Command");
+		x: {
+			const ed="Command";
+			let split_val=split_string_once(type_name,ed);
+			if(split_val.length!==1) {
+				debugger;
+				// 	let real_val=split_val[0];
+				// 	return `C_${real_val}`;
+				assert_not_ends_with(type_name,ed);
+				break x;
+			}
+			assert_not_ends_with(type_name,ed);
 		}
-		{
-			let split_val=split_string_once(type_name,"Endpoint");
-			console.log(split_val);
-			debugger;
-			// if(split_val.length===2) {
-			// 	let real_val=split_val[0];
-			// 	if(real_val==="Browse") {
-			// 		console.log(type_name);
-			// 		debugger;
-			// 		/** @type {GE_Browse} */
-			// 		return "GE_Browse";
-			// 	}
-			// 	return `E_${real_val}`;
-			// }
-			assert_not_ends_with(type_name,"Endpoint");
+		x: {
+			const ed="Endpoint";
+			let split_val=split_string_once(type_name,ed);
+			if(split_val.length!==1) {
+				debugger;
+				// 	let real_val=split_val[0];
+				// 	if(real_val==="Browse") {
+				// 		console.log(type_name);
+				// 		debugger;
+				// 		/** @type {GE_Browse} */
+				// 		return "GE_Browse";
+				// 	}
+				// 	return `E_${real_val}`;
+				assert_not_ends_with(type_name,ed);
+				break x;
+			}
+			assert_not_ends_with(type_name,ed);
 		}
-		{
-			let split_val=split_string_once(type_name,"Renderer");
-			console.log(split_val);
-			debugger;
-			// if(split_val.length===2) {
-			// 	let real_val=split_val[0];
-			// 	return `R_${real_val}`;
-			// }
-			assert_not_ends_with(type_name,"Renderer");
+		x: {
+			const ed="Renderer";
+			let split_val=split_string_once(type_name,ed);
+			if(split_val.length!==1) {
+				debugger;
+				// 	let real_val=split_val[0];
+				// 	return `R_${real_val}`;
+				assert_not_ends_with(type_name,ed);
+				break x;
+			}
+			assert_not_ends_with(type_name,ed);
 		}
 		return `D_${type_name}`;
 	}
