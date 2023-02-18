@@ -13,9 +13,9 @@
 // @updateURL	`${updateURL}`
 // @downloadURL	`${downloadURL}`
 // ==/UserScript==
+
 const __template__=true;
 const __module_name__="mod${{name}}";
-const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {
 	if(__template__) {throw new Error("Template probably has placeholders");}

@@ -11,24 +11,22 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Init.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Init.user.js
 // ==/UserScript==
+
+const {do_export,yt_plugin_base_main}=require("./YtPlugin_Base.user");
 const __module_name__="mod$InitPlugin";
-const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 x: {
-	if(store["mod$ServiceLoaderPlugin"]===void 0) {
+	const sl=require("./YtPlugin_ServiceLoader_Plugin.user");
+	if(sl===void 0) {
 		console.log("missing ServiceLoaderPlugin");
 		break x;
 	}
-	const ss=store.mod$SupportService;
+	const ss=require("./YTPlugin_Support_Service.user");
 	if(!ss) {
 		console.log("missing SupportService");
 		break x;
 	}
-	if(!ss.Support_RS_Player) {
-		console.log("missing SupportService.Support_RS_Player");
-		break x;
-	}
-	bs.yt_plugin_base_main();
+	yt_plugin_base_main();
 }

@@ -10,10 +10,10 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
+// ==/UserScript==
 
 const {do_export,as,BaseService,as_any}=require("./YtPlugin_Base.user");
 
-// ==/UserScript==
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
