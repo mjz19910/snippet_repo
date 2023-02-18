@@ -7720,54 +7720,18 @@ class ServiceMethods extends ServiceData {
 		k_acc.push(r[0]);
 		return k_acc.join(".");
 	}
-	/** @public @arg {R_PlaylistHeader} x */
-	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @private @arg {D_PlaylistHeader} x */
-	D_PlaylistHeader(x) {
-		const cf="D_PlaylistHeader";
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x);
-		this.R_Button(playButton);
-		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
-		this.playlistId(playlistId);
-		this.save_string(`${cf}.privacy`,privacy);
-		this.R_Button(shufflePlayButton);
-		this.trackingParams(trackingParams);
-		this.D_EditableDetails(editableDetails);
-		this.t(editorEndpoint,this.E_PlaylistEditor);
-		this.a_primitive_bool(isEditable);
-		this.E_VE3611(ownerEndpoint);
-		this.z(serviceEndpoints,this.E_PlaylistEdit);
-		this.R_Menu(moreActionsMenu);
-		this.G_Text(title);
-		this.G_Text(numVideosText);
-		this.t(descriptionTapText,this.G_Text);
-		this.g(descriptionText);
-		this.TA_OpenPopup(`${cf}.onDescriptionTap`,onDescriptionTap);
-		this.D_CanShare(shareData);
-		this.z(stats,this.G_Text);
-		this.z(briefStats,this.G_Text);
-		this.z(byline,this.R_PlaylistByline);
-		this.G_Text(ownerText);
-		this.G_Text(viewCountText);
-		this.R_CinematicContainer(cinematicContainer);
-		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
-		shareButton;
-		titleForm;
-		descriptionForm;
-		privacyForm;
-	}
 	/** @public @arg {D_FancyDismissibleDialog} x */
 	D_FancyDismissibleDialog(x) {
 		const cf="D_FancyDismissibleDialog";
 		const {dialogMessage,title,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(dialogMessage);
 		this.G_Text(confirmLabel);
-		title;
+		this.t(title,this.G_Text);
 		this.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_FancyDismissibleDialog} x */
 	R_FancyDismissibleDialog(x) {this.H_("fancyDismissibleDialogRenderer",x,this.D_FancyDismissibleDialog);}
-	/** @private @arg {R_HeroPlaylistThumbnail} x */
+	/** @protected @arg {R_HeroPlaylistThumbnail} x */
 	R_HeroPlaylistThumbnail(x) {this.H_("heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {D_HeroPlaylistThumbnail} x */
 	D_HeroPlaylistThumbnail(x) {
@@ -7779,15 +7743,15 @@ class ServiceMethods extends ServiceData {
 		this.E_Watch(onTap);
 		this.G_ThumbnailOverlayItem(thumbnailOverlays);
 	}
-	/** @private @arg {R_PlaylistByline} x */
+	/** @protected @arg {R_PlaylistByline} x */
 	R_PlaylistByline(x) {this.H_("playlistBylineRenderer",x,this.D_PlaylistByline);}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
-	/** @private @arg {D_CanDelete} x */
+	/** @protected @arg {D_CanDelete} x */
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,x => this.ceq(x,false));}
-	/** @private @arg {D_CanShare} x */
+	/** @public @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,x => this.ceq(x,false));}
-	/** @private @arg {E_PlaylistEditor} x */
+	/** @protected @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {M_GetSettingsEditor} x */
 	M_GetSettingsEditor(x) {this.T_WCM("M_GetSettingsEditor",x,this.GM_GetSettingsEditor);}

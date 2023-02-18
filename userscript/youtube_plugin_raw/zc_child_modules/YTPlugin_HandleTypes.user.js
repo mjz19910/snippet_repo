@@ -2200,6 +2200,42 @@ class HandleTypes extends ServiceMethods {
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
 	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
+	/** @public @arg {R_PlaylistHeader} x */
+	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
+	/** @private @arg {D_PlaylistHeader} x */
+	D_PlaylistHeader(x) {
+		const cf="D_PlaylistHeader";
+		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x);
+		this.R_Button(playButton);
+		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
+		this.playlistId(playlistId);
+		this.save_string(`${cf}.privacy`,privacy);
+		this.R_Button(shufflePlayButton);
+		this.trackingParams(trackingParams);
+		this.D_EditableDetails(editableDetails);
+		this.t(editorEndpoint,this.E_PlaylistEditor);
+		this.a_primitive_bool(isEditable);
+		this.E_VE3611(ownerEndpoint);
+		this.z(serviceEndpoints,this.E_PlaylistEdit);
+		this.R_Menu(moreActionsMenu);
+		this.G_Text(title);
+		this.G_Text(numVideosText);
+		this.t(descriptionTapText,this.G_Text);
+		this.g(descriptionText);
+		this.TA_OpenPopup(`${cf}.onDescriptionTap`,onDescriptionTap);
+		this.D_CanShare(shareData);
+		this.z(stats,this.G_Text);
+		this.z(briefStats,this.G_Text);
+		this.z(byline,this.R_PlaylistByline);
+		this.G_Text(ownerText);
+		this.G_Text(viewCountText);
+		this.R_CinematicContainer(cinematicContainer);
+		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
+		this.t(shareButton,this.R_Button);
+		this.t(titleForm,this.R_InlineForm);
+		this.t(descriptionForm,this.R_InlineForm);
+		this.t(privacyForm,this.R_DropdownFormField);
+	}
 	/** @public @arg {BinaryVe} x */
 	BinaryVe(x) {
 		switch(x) {
