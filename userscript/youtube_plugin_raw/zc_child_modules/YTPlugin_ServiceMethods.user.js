@@ -1073,7 +1073,6 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 		if("popupType" in a) {
-			this.codegen_typedef(`${cf1}_Popup`,a,false);
 			if("popup" in a) {
 				switch(a.popupType) {
 					case "DIALOG": {
@@ -1082,7 +1081,7 @@ class ServiceMethods extends ServiceData {
 						if(pt) this.h_pt(pt);
 					} break;
 					case "DROPDOWN": {
-
+						console.log("dropdown popup",a.popup);
 					} break;
 				}
 			}
