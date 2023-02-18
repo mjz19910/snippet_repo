@@ -1070,12 +1070,10 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<{style: string;}>>} x @returns {x is D_GetAccountMenu_Popup} */
 	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
-	/** @typedef {{menuPopupRenderer:D_MenuPopup}} R_MenuPopup */
 	/** @arg {R_MenuPopup} x */
 	R_MenuPopup(x) {
 		this.D_MenuPopup(x.menuPopupRenderer);
 	}
-	/** @typedef {{items: R_MenuServiceItem[]}} D_MenuPopup */
 	/** @arg {D_MenuPopup} x */
 	D_MenuPopup(x) {
 		const cf="D_MenuPopup";
