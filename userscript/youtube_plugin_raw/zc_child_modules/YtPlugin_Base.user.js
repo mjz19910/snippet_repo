@@ -12,9 +12,6 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
-
-const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
-
 //#region module init
 const __module_name__="mod$YoutubePluginBase";
 /** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
@@ -1847,6 +1844,7 @@ class ServiceResolver {
 //#endregion
 //#region main
 function yt_plugin_base_main() {
+	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
 	setTimeout(() => {window.yt_plugin?.get_data_saver().num_bitmap_console();},4000);
 	const log_enabled_page_type_change=false;
 	/** @private @type {ResolverT<ServiceLoader,ServiceOptions>} */
