@@ -151,10 +151,19 @@ class IndexedDBService extends BaseService {
 			for_loop: for(let item of d_cache) {
 				let cursor_req=typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key));
 				cursor_loop: for(let i=0;;i++) {
-					const cur_cursor=await this.get_async_result(cursor_req);
+					const [settled]=await Promise.allSettled([this.get_async_result(cursor_req)]);
+					if(settled.status==="rejected") {
+						console.log("openCursor failed",settled.reason);
+						break for_loop;
+					}
+					const cur_cursor=settled.value;
 					if(cur_cursor===null) {
 						if(this.log_db_actions) console.log("update sync cache item",item);
-						await this.update(obj_store,item);
+						try {
+							await this.update(obj_store,item);
+						} catch(e) {
+							console.log("update failed",e);
+						}
 						break cursor_loop;
 					}
 					const cursor_value=cur_cursor.value;
@@ -169,8 +178,16 @@ class IndexedDBService extends BaseService {
 						console.log("[database_needs_obj_merge]");
 						console.log("[obj_merge_new]",item);
 						console.log("[obj_merge_cur]",cursor_value);
-						await this.get_async_result(obj_store.delete(item.key));
-						await this.add_data_to_store(obj_store,item);
+						try {
+							await this.get_async_result(obj_store.delete(item.key));
+						} catch(e) {
+							console.log("merge delete failed",e);
+						}
+						try {
+							await this.add_data_to_store(obj_store,item);
+						} catch(e) {
+							console.log("merge add failed",e);
+						}
 						this.committed_data.push(item);
 					} else {
 						switch(item.type) {
@@ -179,7 +196,11 @@ class IndexedDBService extends BaseService {
 								let cv=cursor_value;
 								if(cursor_value.type!==item.type) {
 									cv.type=item.type;
-									await this.update(obj_store,cv);
+									try {
+										await this.update(obj_store,cv);
+									} catch(e) {
+										console.log("update fix_type failed",e);
+									}
 									continue for_loop;
 								}
 								if(item.v===cursor_value.v) {
@@ -188,7 +209,11 @@ class IndexedDBService extends BaseService {
 							} break;
 							case "update_id": {
 								console.log("update sync cache item",item);
-								await this.update(obj_store,item);
+								try {
+									await this.update(obj_store,item);
+								} catch(e) {
+									console.log("update sync failed",e);
+								}
 							} break cursor_loop;
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
