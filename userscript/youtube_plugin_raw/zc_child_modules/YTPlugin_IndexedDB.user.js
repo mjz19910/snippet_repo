@@ -160,6 +160,10 @@ class IndexedDBService extends BaseService {
 					if(cur_cursor===null) {
 						if(this.log_db_actions) console.log("update sync cache item",item);
 						try {
+							if(tx.error) {
+								debugger;
+								throw tx.error;
+							}
 							await this.update(obj_store,item);
 						} catch(e) {
 							console.log("update failed",e);
@@ -210,6 +214,10 @@ class IndexedDBService extends BaseService {
 							case "update_id": {
 								console.log("update sync cache item",item);
 								try {
+									if(tx.error) {
+										debugger;
+										throw tx.error;
+									}
 									await this.update(obj_store,item);
 								} catch(e) {
 									console.log("update sync failed",e);

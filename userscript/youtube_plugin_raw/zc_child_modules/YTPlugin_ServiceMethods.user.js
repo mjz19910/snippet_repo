@@ -1380,18 +1380,38 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		if("items" in x&&"targetId" in x) {
-			switch(x.targetId) {
+			const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.z(items,x => {
+				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+				debugger;
+			});
+			switch(targetId) {
 				default: debugger; break;
 				case "playlist-browse-action-menu": break;
 			}
 			return;
 		}
 		if("items" in x&&"accessibility" in x) {
-			if(x.items.length===0) debugger;
-			let i1=x.items[0];
-			if("menuServiceItemRenderer" in i1) return;
-			debugger;
+			const {trackingParams,items,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.D_Accessibility(accessibility);
+			this.z(items,x => {
+				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+				debugger;
+			});
+			return;
 		}
+		if("topLevelButtons" in x) {
+			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.z(topLevelButtons,x => {
+				if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
+				debugger;
+			});
+			return;
+		}
+		x;
 		debugger;
 	}
 	/** @protected @arg {CF_T_Icon} cf1 @template {string} T @arg {T_Icon<T>} x */
@@ -2489,7 +2509,7 @@ class ServiceMethods extends ServiceData {
 	D_Thumbnail(x) {
 		const cf="D_Thumbnail";
 		const {lightColorPalette,darkColorPalette,sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(lightColorPalette,x => this.D_LightColorPalette(`${cf}.light`,x));
+		this.t(lightColorPalette,x => this.D_LightColorPalette(cf,x));
 		this.t(darkColorPalette,x => this.D_DarkColorPalette(cf,x));
 		this.t(sampledThumbnailColor,x => this.D_Color(x));
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
@@ -2498,7 +2518,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @type {{[U in string]?:number[]}} */
 	lc={};
-	/** @private @arg {string} cf1 @arg {string} cf @arg {string} k @arg {number} x */
+	/** @public @arg {string} cf1 @arg {string} cf @arg {string} k @arg {number} x */
 	log_color(cf1,cf,k,x) {
 		let arr=this.lc[k]??=[];
 		if(!arr.includes(x)) {
@@ -2530,18 +2550,18 @@ class ServiceMethods extends ServiceData {
 		this.save_rgba(`${cf3}.s3_c`,s3_c);
 		this.save_rgba(`${cf3}.s4_c`,s4_c);
 	}
-	/** @protected @arg {string} cf1 @arg {D_LightColorPalette} x */
+	/** @protected @arg {"D_Thumbnail"} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
-		/** @type {`D_LightColorPalette:${cf1}:dark`} */
-		const cf2=`D_LightColorPalette:${cf1}:dark`;
-		const cf3="light";
+		const cf2="light";
+		/** @type {`D_LightColorPalette:${typeof cf1}:${cf2}`} */
+		const cf2=`D_LightColorPalette:${cf1}:${cf2}`;
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
-		this.save_rgba(`${cf3}.p_tc`,p_tc);
-		this.save_rgba(`${cf3}.s_tc`,s_tc);
-		this.save_rgba(`${cf3}.s1_c`,s1_c);
-		this.save_rgba(`${cf3}.s2_c`,s2_c);
-		this.save_rgba(`${cf3}.s3_c`,s3_c);
-		this.save_rgba(`${cf3}.s4_c`,s4_c);
+		this.save_rgba(`${cf2}.p_tc`,p_tc);
+		this.save_rgba(`${cf2}.s_tc`,s_tc);
+		this.save_rgba(`${cf2}.s1_c`,s1_c);
+		this.save_rgba(`${cf2}.s2_c`,s2_c);
+		this.save_rgba(`${cf2}.s3_c`,s3_c);
+		this.save_rgba(`${cf2}.s4_c`,s4_c);
 	}
 	/** @protected @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
 	D_Params(cf,path,x) {const {params: p,...y}=this.s(cf,x); this.g(y); this.params(path,x.params);}
