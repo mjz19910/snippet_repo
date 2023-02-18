@@ -38,3 +38,5 @@ type D_Menu={
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
 };
+type R_MenuPopup={menuPopupRenderer: D_MenuPopup;};
+type D_MenuPopup={items: R_MenuServiceItem[];};
