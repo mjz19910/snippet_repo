@@ -2564,7 +2564,7 @@ class ServiceMethods extends ServiceData {
 		this.save_rgba(`${cf2}.s3_c`,s3_c);
 		this.save_rgba(`${cf2}.s4_c`,s4_c);
 	}
-	/** @protected @arg {"D_Thumbnail"|"D_PlaylistPanelVideo"} cf1 @arg {D_LightColorPalette} x */
+	/** @protected @arg {"D_Thumbnail"|"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
 		const cf0="D_LightColorPalette";
 		const cf2="light";
