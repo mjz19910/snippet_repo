@@ -2539,23 +2539,25 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"|"D_Thumbnail"} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
-		/** @type {`D_DarkColorPalette:${cf1}:dark`} */
-		const cf2=`D_DarkColorPalette:${cf1}:dark`;
-		const cf3="dark";
+		const cf0="D_DarkColorPalette";
+		const cf2="dark";
+		/** @type {`${cf0}:${cf1}:${cf2}`} */
+		const cf3=`${cf0}:${cf1}:${cf2}`;
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
-		this.save_rgba(`${cf3}.p_tc`,p_tc);
-		this.save_rgba(`${cf3}.s_tc`,s_tc);
-		this.save_rgba(`${cf3}.s1_c`,s1_c);
-		this.save_rgba(`${cf3}.s2_c`,s2_c);
-		this.save_rgba(`${cf3}.s3_c`,s3_c);
-		this.save_rgba(`${cf3}.s4_c`,s4_c);
+		this.save_rgba(`${cf2}.p_tc`,p_tc);
+		this.save_rgba(`${cf2}.s_tc`,s_tc);
+		this.save_rgba(`${cf2}.s1_c`,s1_c);
+		this.save_rgba(`${cf2}.s2_c`,s2_c);
+		this.save_rgba(`${cf2}.s3_c`,s3_c);
+		this.save_rgba(`${cf2}.s4_c`,s4_c);
 	}
 	/** @protected @arg {"D_Thumbnail"} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
+		const cf0="D_LightColorPalette";
 		const cf2="light";
-		/** @type {`D_LightColorPalette:${typeof cf1}:${cf2}`} */
-		const cf2=`D_LightColorPalette:${cf1}:${cf2}`;
-		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
+		/** @type {`${cf0}:${cf1}:${cf2}`} */
+		const cf3=`${cf0}:${cf1}:${cf2}`;
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf3,x); this.g(y);
 		this.save_rgba(`${cf2}.p_tc`,p_tc);
 		this.save_rgba(`${cf2}.s_tc`,s_tc);
 		this.save_rgba(`${cf2}.s1_c`,s1_c);
