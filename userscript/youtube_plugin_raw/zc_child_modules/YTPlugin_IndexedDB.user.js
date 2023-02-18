@@ -232,7 +232,6 @@ class IndexedDBService extends BaseService {
 		const tx=this.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
-		tx.commit();
 		db.close();
 		return result;
 	}
