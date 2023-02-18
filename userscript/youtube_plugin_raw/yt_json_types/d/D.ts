@@ -268,7 +268,6 @@ type D_TranscriptSearchPanel={
 	targetId: "engagement-panel-searchable-transcript-search-panel";
 };
 type TD_Accessibility<T>={accessibilityData: TD_Label<T>;};
-type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 type D_SubscriptionNotificationToggleButton_States=[
 	{
 		stateId: 2;
@@ -1050,10 +1049,6 @@ type D_Omit_Menu_Radio={
 };
 type D_Omit_Menu_Video_Ex={ownerBadges: RMD_Badge[];};
 type D_NotificationMenu_PopupItemMenu=TR_MultiPageMenu<D_NotificationMenu_PopupItem>;
-type Popup_NotificationMenu={
-	popup: D_NotificationMenu_PopupItemMenu;
-	popupType: "DROPDOWN";
-};
 type D_Channel_MD={
 	title: string;
 	description: string;
@@ -1796,10 +1791,8 @@ type D_FormatColorInfo={
 	matrixCoefficients?: "COLOR_MATRIX_COEFFICIENTS_BT709";
 };
 type G_GetAccountMenuItem=MP_NotificationsMenu|MP_AccountMenu;
-type Popup_GetAccountMenu=TR_MultiPageMenu<MP_AccountMenu>;
-type T_OpenPopup_Dropdown_Reusable<T>={popup: T; popupType: "DROPDOWN"; beReused: true;};
-type T_MenuPopup<T>=T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<T>>;
-type D_GetAccountMenu_Popup=T_OpenPopup_Dropdown_Reusable<Popup_GetAccountMenu>;
+type T_MenuPopup<T>=T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<T>>;
+type R_MultiPageMenu_AccountMenu=TR_MultiPageMenu<MP_AccountMenu>;
 type D_GhostGrid={rows: number;};
 type D_GoogleLoginExternalUrl={url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";}["url"];
 //cspell:ignore ynlk ynsd ynse ynsk ynsl ynss ynsz

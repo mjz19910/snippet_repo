@@ -1063,12 +1063,12 @@ class ServiceMethods extends ServiceData {
 		x;
 		debugger;
 	}
-	/** @template {{}} T @arg {T_OpenPopup_Dropdown_Reusable<T>} x */
+	/** @template {{}} T @arg {T_OpenPopup_ReuseableDropdown<T>} x */
 	TA_on_T_OpenPopup_Dropdown_Reusable(x) {
 		if(x.beReused!==true) debugger;
 		return x.popup;
 	}
-	/** @arg {T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<{style: string;}>>} x @returns {x is D_GetAccountMenu_Popup} */
+	/** @arg {T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<{style: string;}>>} x @returns {x is D_GetAccountMenu_Popup} */
 	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
 	/** @arg {R_MenuPopup} x */
 	R_MenuPopup(x) {this.H_("menuPopupRenderer",x,this.D_MenuPopup);}
@@ -1080,7 +1080,7 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {{popup:R_MenuPopup;popupType:"DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {{popup:R_MenuPopup;popupType:"DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {

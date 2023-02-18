@@ -303,7 +303,6 @@ type GC_EngagementPanelSectionShow=A_ChangeEngagementPanelVisibility|
 	C_ScrollToEngagementPanel;
 type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
 
-type Popup_GetNotificationsMenu=T_DropdownPopup_ReuseFlag<P_NotificationMenu_Popup>;
 type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
 type G_ClientSignal_Item=
 	|A_SendFeedback

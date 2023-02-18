@@ -9,10 +9,12 @@ type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 type T_Item<T>={item: T;};
 type T_Menu<T>={menu: T;};
 type T_Page<T>={page: T;};
+type T_OpenPopup_Dialog<T>={popup: T; popupType: "DIALOG";};
 type T_OpenPopup_Dropdown<T>={popupType: "DROPDOWN"; popup: T;};
+type T_OpenPopup_ReuseableDialog<T>={popup: T; popupType: "DIALOG"; beReused: boolean;};
+type T_OpenPopup_ReuseableDropdown<T>={popup: T; popupType: "DROPDOWN"; beReused: true;};
 type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
 type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
-type T_OpenPopup_Dialog<T>={popupType: "DIALOG"; popup: T;};
 type T_Items<T>={items: T[];};
 type T_Items_TP<T>={trackingParams: string; items: T[];};
 type T_Actions<T>={actions: T[];};
@@ -25,20 +27,6 @@ type T_BaseUrl<T extends string>={
 type T_Command$<T>={
 	command: T;
 	trackingParams: string;
-};
-type T_DialogPopup<T=R_ConfirmDialog>={
-	popup: T;
-	popupType: "DIALOG";
-};
-type T_DialogPopup_ReuseFlag<T=R_ConfirmDialog>={
-	popup: T;
-	popupType: "DIALOG";
-	beReused: boolean;
-};
-type T_DropdownPopup_ReuseFlag<T>={
-	popup: T;
-	popupType: "DROPDOWN";
-	beReused: true;
 };
 type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
 type T_DistributedKeyof_2<T>=T extends infer A? Union2Tuple<keyof A>:[];
@@ -244,7 +232,7 @@ type DecodeUriComponent_4<T extends string>=DecodeUriComponent_3<T_Replace<T,"%2
 type DecodeUriComponent_5<T extends string>=DecodeUriComponent_4<T_Replace<T,"%5B","[">>;
 type DecodeUriComponent_6<T extends string>=DecodeUriComponent_5<T_Replace<T,"%5D","]">>;
 type DecodeUriComponent_all_1<T extends string>=[{[U in keyof UriDecodeMap]: T extends `${U}${string}`? UriDecodeMap[U]:never}[keyof UriDecodeMap]] extends [never]? T:{[U in keyof UriDecodeMap]: T extends `${U}${string}`? UriDecodeMap[U]:never}[keyof UriDecodeMap];
-type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof UriDecodeMap}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`?`${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`?`${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
+type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof UriDecodeMap}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`? `${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`? `${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
 type DecodeUriComponent<T extends string>=DecodeUriComponent_6<T>;
 type Do_Dec=DecodeUriComponent<"%5Bab%5D%5Bab%5D">;
 type DoDec2=DecodeUriComponent_all_1<"=">;
