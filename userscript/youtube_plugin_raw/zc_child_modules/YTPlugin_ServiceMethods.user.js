@@ -2745,22 +2745,38 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		if(this.str_starts_with(x,"browse-feed")) return;
+		if(this.str_starts_with(x,"engagement-panel")) {
+			let ss=split_string_once(x,"-")[1];
+			let s2=split_string_once(ss,"-")[1];
+			if(this.str_starts_with(s2,"macro-markers")) {
+				let ss=split_string_once(s2,"-")[1];
+				let s3=split_string_once(ss,"-")[1];
+				switch(s3) {
+					default: s2===""; this.cg.codegen_case(`D_TargetIdStr:${cf2}:EngagementPanel:MacroMarkers`,s2); break;
+					case "auto-chapters": break;
+					case "description-chapters": break;
+				}
+				return;
+			}
+			switch(s2) {
+				default: s2===""; this.cg.codegen_case(`D_TargetIdStr:${cf2}:EngagementPanel`,s2); break;
+				case "ads":
+				case "clip-create":
+				case "comments-section":
+				case "searchable-transcript-search-panel":
+				case "searchable-transcript":
+				case "structured-description":
+			}
+			return;
+		}
 		switch(x) {
 			default: x===""; this.cg.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
 			case "browse-video-menu-button":
-			case "clip-info-button":			case "comments-section":			case "create-clip-button-action-bar":
-			case "engagement-panel-ads":
-			case "engagement-panel-clip-create":
-			case "engagement-panel-comments-section":
-			case "engagement-panel-macro-markers-auto-chapters":
-			case "engagement-panel-macro-markers-description-chapters":
-			case "engagement-panel-searchable-transcript-search-panel":
-			case "engagement-panel-searchable-transcript":
-			case "engagement-panel-structured-description":
+			case "clip-info-button": case "comments-section": case "create-clip-button-action-bar":
 			case "feed_filter_chip_bar_second_chip":
 			case "playlist-browse-action-menu":
-			case "search-feed":			case "search-page":			case "sponsorships-button":
-			case "watch-next-feed":			case "watch-related-menu-button":			case "watch-supervod-button":
+			case "search-feed": case "search-page": case "sponsorships-button":
+			case "watch-next-feed": case "watch-related-menu-button": case "watch-supervod-button":
 		}
 	}
 	/** @arg {bigint} x */
