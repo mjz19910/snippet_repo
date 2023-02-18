@@ -285,6 +285,19 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistSidebar(x) {this.H_("playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
 	R_PlaylistSidebarPrimaryInfo(x) {this.H_("playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
+	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
+	D_PlaylistSidebarPrimaryInfo(x) {
+		const cf="D_PlaylistSidebarPrimaryInfo";
+		const {thumbnailRenderer,title,stats,menu,navigationEndpoint,badges,description,showMoreText,...y}=this.D_Omit_ThumbnailOverlay(cf,x); this.g(y);
+		this.R_PlaylistVideoThumbnail(thumbnailRenderer);
+		this.G_Text(title);
+		this.z(stats,this.G_Text);
+		this.R_Menu(menu);
+		this.E_Watch(navigationEndpoint);
+		this.z(badges,this.RMD_Badge);
+		this.g(description);
+		this.G_Text(showMoreText);
+	}
 	/** @private @arg {R_PdgBuyFlow} x */
 	R_PdgBuyFlow(x) {this.H_("pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
 	/** @private @arg {R_SuperVodBuyFlowContent} x */
@@ -1682,19 +1695,6 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
-	}
-	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
-	D_PlaylistSidebarPrimaryInfo(x) {
-		const cf="D_PlaylistSidebarPrimaryInfo";
-		const {thumbnailRenderer,title,stats,menu,navigationEndpoint,badges,description,showMoreText,...y}=this.D_Omit_ThumbnailOverlay(cf,x); this.g(y);
-		this.R_PlaylistVideoThumbnail(thumbnailRenderer);
-		this.G_Text(title);
-		this.z(stats,this.G_Text);
-		this.R_Menu(menu);
-		this.E_Watch(navigationEndpoint);
-		this.z(badges,this.RMD_Badge);
-		this.g(description);
-		this.G_Text(showMoreText);
 	}
 	/** @private @arg {D_PlaylistVideoThumbnail} x */
 	D_PlaylistVideoThumbnail(x) {
