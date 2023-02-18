@@ -1015,11 +1015,20 @@ class ServiceMethods extends ServiceData {
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
-	/** @protected @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
+	/** @protected @arg {CF_T_OpenPopup_Dialog} cf1 @arg {T_OpenPopup_Dialog<any>} x */
+	T_OpenPopup_Dialog(cf1,x) {
+		const cf2="TA_OpenPopup";
+		const {popup,popupType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
+		if(popupType!=="DIALOG") {debugger; return;}
+		this.R_FancyDismissibleDialog(popup);
+		debugger;
+	}
+	/** @protected @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T_OpenPopup_Dialog<any>>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
+		this.T_OpenPopup_Dialog("any",a);
 		return a;
 	}
 	/** @protected @arg {D_ToggleButtonIdData} x */
@@ -7622,11 +7631,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_FancyDismissibleDialog} x */
 	R_FancyDismissibleDialog(x) {this.H_("fancyDismissibleDialogRenderer",x,this.D_FancyDismissibleDialog);}
-	/** @private @arg {D_PlaylistHeader["onDescriptionTap"]} x */
-	T_OpenPopup_Dialog(x) {
-		let {popup}=this.TA_OpenPopup("T_OpenPopup_Dialog",x);
-		this.R_FancyDismissibleDialog(popup);
-	}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
@@ -7648,7 +7652,7 @@ class ServiceMethods extends ServiceData {
 			this.G_Text(numVideosText);
 			this.t(descriptionTapText,this.G_Text);
 			this.g(descriptionText);
-			this.T_OpenPopup_Dialog(onDescriptionTap);
+			this.TA_OpenPopup(onDescriptionTap);
 			this.D_CanShare(shareData);
 			this.z(stats,this.G_Text);
 			this.z(briefStats,this.G_Text);

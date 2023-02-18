@@ -32,6 +32,7 @@ type CF_T_Icon_Any=T_ExtractImport<"CF_T_Icon_Any">|"CF_T_Icon_Any"|"a";
 type CF_T_Icon=T_ExtractImport<"CF_T_Icon">|"CF_T_Icon"|"a";
 type CF_T_Items_TP=T_ExtractImport<"CF_T_Items_TP">|"CF_T_Items_TP"|"a";
 type CF_T_Items=T_ExtractImport<"CF_T_Items">|"CF_T_Items"|"a";
+type CF_T_OpenPopup_Dialog="T_OpenPopup_Dialog"|"any";
 type CF_T_SE_Signal_P1=T_ExtractImport<"CF_T_SE_Signal_P1">|"CF_T_SE_Signal_P1"|"a";
 type CF_T_SE_Signal=T_ExtractImport<"CF_T_SE_Signal">|"CF_T_SE_Signal"|"a";
 type CF_T_Signal=T_ExtractImport<"CF_T_Signal">|"CF_T_Signal"|"a";
