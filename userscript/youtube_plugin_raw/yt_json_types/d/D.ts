@@ -1982,16 +1982,6 @@ type D_ItemSectionHeader={
 };
 type D_Label={label: string;};
 type D_Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
-type D_LightColorPalette_1={
-	primaryTitleColor: 4279833872|number;
-	secondaryTitleColor: 4285554760|number;
-	section1Color: 4294966779|number;
-	section2Color: 4294505969|number;
-	section3Color: 4294110695|number;
-	section4Color: 4293650141|number;
-};
-
-type D_LightColorPalette=D_LightColorPalette_1|D_LightColorPalette_2|D_LightColorPalette_3|D_LightColorPalette_4;
 type D_LikeApi={videoId: string;}|{playlistId: SD_PlaylistId;};
 type D_LiveBroadcastDetails={
 	isLiveNow: true;

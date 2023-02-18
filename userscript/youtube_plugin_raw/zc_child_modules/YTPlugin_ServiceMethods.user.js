@@ -2532,140 +2532,16 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {string} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
-		const cf="D_LightColorPalette";
-		/** @arg {string} k @arg {number} x */
-		let log_color=(k,x) => this.log_color(cf1,cf,k,x);
-		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x);
-		{
-			const x=p_tc;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xff) debugger;
-			switch(r) {
-				default: log_color(`l1_p_tc_r`,r); break;
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17: case 0x18: case 0x19:
-			}
-			switch(g) {
-				default: log_color(`l1_p_tc_g`,g); break;
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17: case 0x18: case 0x19:
-			}
-			switch(b) {
-				default: log_color(`l1_p_tc_b`,b); break;
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17: case 0x18: case 0x19:
-			}
-		}
-		{
-			const x=s_tc;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xff) debugger;
-			switch(r) {
-				default: log_color(`l1_s_tc_r`,r); break;
-				case 0x45:
-				case 0x48: case 0x4c: case 0x4f:
-				case 0x50: case 0x52: case 0x53: case 0x55: case 0x56: case 0x57:
-				case 0x59: case 0x5a: case 0x5b: case 0x5d: case 0x5c:
-				case 0x60: case 0x61: case 0x62: case 0x63: case 0x65:
-				case 0x6b:
-				case 0x70: case 0x75: case 0x76:
-				case 0x7a: case 0x7b: case 0x7f:
-			}
-			switch(g) {
-				default: log_color(`l1_s_tc_g`,g); break;
-				case 0x52: case 0x53: case 0x54: case 0x55: case 0x56: case 0x57:
-				case 0x58: case 0x59: case 0x5a: case 0x5b: case 0x5c: case 0x5d: case 0x5e: case 0x5f:
-				case 0x60: case 0x61: case 0x62: case 0x63: case 0x64: case 0x65: case 0x66:
-				case 0x69: case 0x6a: case 0x6b:
-			}
-			switch(b) {
-				default: log_color(`l1_s_tc_b`,b); break;
-				case 0x45:
-				case 0x48: case 0x4c: case 0x4f:
-				case 0x51: case 0x52: case 0x54: case 0x55: case 0x56: case 0x57:
-				case 0x5a: case 0x5b: case 0x5c:
-				case 0x64: case 0x65: case 0x66: case 0x67:
-				case 0x68: case 0x69: case 0x6b: case 0x6d:
-				case 0x70: case 0x75:
-				case 0x7a: case 0x7c: case 0x7f:
-				case 0x84:
-				case 0x89:
-			}
-		}
-		{
-			const x=s2_c;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			switch(r) {
-				default: log_color(`l1_s2_c_r`,r); break;
-				case 0xf4: case 0xf5: case 0xf6:
-				case 0xf8: case 0xf1: case 0xf2: case 0xf3: case 0xf7:
-			}
-			switch(g) {
-				default: log_color(`l1_s2_c_g`,g); break;
-				case 0xf6: case 0xf5: case 0xf4: case 0xf7: case 0xf1: case 0xf3: case 0xf2: case 0xf8:
-			}
-			switch(b) {
-				default: log_color(`l1_s2_c_b`,b); break;
-				case 0xf1: case 0xf8: case 0xf2: case 0xf6: case 0xf5: case 0xf7:
-			}
-			switch(a) {
-				default: log_color(`l1_s2_c_a`,r); break;
-				case 0xf2: case 0xff:
-			}
-		}
-		{
-			const x=s4_c;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			switch(r) {
-				default: log_color(`l1_s4_c_r`,r); break;
-				case 0xdf: case 0xe4: case 0xe5: case 0xe8: case 0xe9:
-				case 0xdd: case 0xde: case 0xe0: case 0xe1: case 0xe2: case 0xeb: case 0xea:
-			}
-			switch(g) {
-				default: log_color(`l1_s4_c_g`,g); break;
-				case 0xe2: case 0xe8: case 0xea:
-				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe1: case 0xe3: case 0xe4: case 0xe5: case 0xe6: case 0xe7: case 0xe9: case 0xeb:
-			}
-			switch(b) {
-				default: log_color(`l1_s4_c_b`,b); break;
-				case 0xe5: case 0xe7: case 0xe9:
-				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe6: case 0xe8: case 0xea: case 0xeb:
-			}
-			switch(a) {
-				default: log_color(`l1_s4_c_a`,r); break;
-				case 0xf2: case 0xff:
-			}
-		}
-		if("section1Color" in y) {
-			const {section1Color: s1_c,section3Color: s3_c,...y1}=y; this.g(y1);
-			{
-				const x=s1_c;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xff) debugger;
-				switch(r) {
-					default: log_color(`l1_s1_c_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l1_s1_c_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l1_s1_c_b`,b); break;
-				}
-			}
-			{
-				const x=s3_c;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xff) debugger;
-				switch(r) {
-					default: log_color(`l1_s3_c_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l1_s3_c_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l1_s3_c_b`,b); break;
-				}
-			}
-			return;
-		}
-		this.g(y);
+		/** @type {`D_LightColorPalette:${cf1}:dark`} */
+		const cf2=`D_LightColorPalette:${cf1}:dark`;
+		const cf3="light";
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
+		this.save_rgba(`${cf3}.p_tc`,p_tc);
+		this.save_rgba(`${cf3}.s_tc`,s_tc);
+		this.save_rgba(`${cf3}.s1_c`,s1_c);
+		this.save_rgba(`${cf3}.s2_c`,s2_c);
+		this.save_rgba(`${cf3}.s3_c`,s3_c);
+		this.save_rgba(`${cf3}.s4_c`,s4_c);
 	}
 	/** @protected @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
 	D_Params(cf,path,x) {const {params: p,...y}=this.s(cf,x); this.g(y); this.params(path,x.params);}
