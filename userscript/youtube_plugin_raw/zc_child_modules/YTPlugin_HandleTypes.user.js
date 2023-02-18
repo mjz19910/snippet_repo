@@ -2694,14 +2694,20 @@ class HandleTypes extends ServiceMethods {
 	P_continuation_request_browse_token(x) {x;}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {x;}
-	/** @private @template {number} T @arg {T_D32<T>} x */
-	T_D32(x,f) {x;}
+	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
+	T_D32(x,f) {
+		if(!x) {debugger; return;}
+		if(x[0]!=="data32") {debugger; return;}
+		f(x[1]);
+	}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params";
 		if(30 in x) {
-			const {30: f30}=x;
-			this.save_number(`${cf}.f1`,f1);
+			const {30: f30,71: f71}=x;
+			this.T_D32(f30,x => this.save_number(`${cf}.f30`,x));
+			this.T_D32(f71,x => this.save_number(`${cf}.f71`,x));
+			return;
 		}
 		debugger;
 	}
