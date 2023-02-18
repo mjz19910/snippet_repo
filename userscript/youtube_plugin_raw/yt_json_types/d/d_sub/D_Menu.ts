@@ -21,6 +21,34 @@ type D_Menu={
 	accessibility?: D_Accessibility;
 	menuPopupAccessibility?: TD_Label<"List of menu actions">;
 	flexibleItems?: R_MenuFlexibleItem[];
-	loggingDirectives?: D_LoggingDirectives;
-	targetId?: D_Menu_TargetId;
+}|{
+	items?: R_MenuServiceItem[];
+	trackingParams?: string;
+	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
+	accessibility?: D_Accessibility;
+	menuPopupAccessibility?: TD_Label<"List of menu actions">;
+	flexibleItems?: R_MenuFlexibleItem[];
+	targetId: D_Menu_TargetId;
+}|{
+	items?: R_MenuServiceItem[];
+	trackingParams?: string;
+	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
+	accessibility?: D_Accessibility;
+	menuPopupAccessibility?: TD_Label<"List of menu actions">;
+	flexibleItems?: R_MenuFlexibleItem[];
+	loggingDirectives: D_LoggingDirectives;
+}|{
+	items?: R_MenuServiceItem[];
+	trackingParams?: string;
+	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
+	accessibility?: D_Accessibility;
+	menuPopupAccessibility?: TD_Label<"List of menu actions">;
+	flexibleItems?: R_MenuFlexibleItem[];
+	loggingDirectives: D_LoggingDirectives;
+	targetId: D_Menu_TargetId;
+}|{
+	items: R_MenuNavigationItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "playlist-browse-action-menu";
 };

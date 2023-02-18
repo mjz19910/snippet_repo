@@ -1251,22 +1251,32 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu";
-		const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(menuPopupAccessibility,this.D_Label);
-		this.tz(items,this.G_MenuItem);
-		if(trackingParams) this.trackingParams(trackingParams);
-		this.t(accessibility,this.D_Accessibility);
-		this.tz(flexibleItems,this.R_MenuFlexibleItem);
-		this.tz(topLevelButtons,this.D_Menu_Button);
-		this.t(targetId,x => {
-			switch(x) {
-				default: switch(x) {
-				} debugger; break;
-				case "browse-video-menu-button":
-				case "watch-related-menu-button":
+		if("loggingDirectives" in x) {
+			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(menuPopupAccessibility,this.D_Label);
+			this.tz(items,this.G_MenuItem);
+			if(trackingParams) this.trackingParams(trackingParams);
+			this.t(accessibility,this.D_Accessibility);
+			this.tz(flexibleItems,this.R_MenuFlexibleItem);
+			this.tz(topLevelButtons,this.D_Menu_Button);
+			this.t(targetId,x => {
+				switch(x) {
+					default: switch(x) {
+					} debugger; break;
+					case "browse-video-menu-button":
+					case "watch-related-menu-button":
+				}
+				this.targetId(cf,x);
+			});
+			return;
+		}
+		if("targetId" in x) {
+			switch(x.targetId) {
+				case "browse-video-menu-button": break;
+				case "playlist-browse-action-menu": break;
+				case "watch-related-menu-button": break;
 			}
-			this.targetId(cf,x);
-		});
+		}
 	}
 	/** @protected @arg {CF_T_Icon} cf1 @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(cf1,x) {
