@@ -1439,7 +1439,7 @@ class ServiceMethods extends ServiceData {
 				debugger;
 			});
 			this.z(items,x => {
-				// if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 				debugger;
 			});

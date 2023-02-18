@@ -29,7 +29,7 @@ type D_Menu_WithItems={
 	accessibility: TD_Accessibility<"Action menu">;
 };
 type D_Menu_WithTargetId={
-	items: R_MenuServiceItem[];
+	items: (R_MenuServiceItem|R_MenuNavigationItem)[];
 	trackingParams: string;
 	topLevelButtons: R_Button[];
 	accessibility: TD_Accessibility<"Action menu">;
