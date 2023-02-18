@@ -2752,7 +2752,7 @@ class ServiceMethods extends ServiceData {
 				let ss=split_string_once(s2,"-")[1];
 				let s3=split_string_once(ss,"-")[1];
 				switch(s3) {
-					default: s2===""; this.cg.codegen_case(`D_TargetIdStr:${cf2}:EngagementPanel:MacroMarkers`,s2); break;
+					default: s3===""; this.cg.codegen_case(`D_TargetIdStr:${cf2}:EngagementPanel:MacroMarkers`,s3); break;
 					case "auto-chapters": break;
 					case "description-chapters": break;
 				}
