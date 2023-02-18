@@ -1040,7 +1040,11 @@ class ServiceMethods extends ServiceData {
 					if(ax.beReused!==true) debugger;
 					if("multiPageMenuRenderer" in ax.popup) {
 						let a_menu=this.TR_MultiPageMenu("any",ax.popup);
-						this.MP_AccountMenu(a_menu);
+						switch(a_menu.style) {
+							default: debugger; break;
+							case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": break;
+							case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": break;
+						}
 					} else {
 						debugger;
 					}
