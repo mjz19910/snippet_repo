@@ -540,7 +540,9 @@ type Ret_get_auto_type_name=
 	|`TA_OpenPopup<${string}>`
 	|"A_OpenPopup"
 	|"{}"
-	|`D_${"PrefetchHintConfig"}`;
+	|`D_${"PrefetchHintConfig"}`
+	|"R_TwoColumnBrowseResults"
+	;
 ;
 type Ret_json_auto_replace_1=Capitalize<Ret_json_auto_raw>|"{}";
 type Ret_json_auto_raw=

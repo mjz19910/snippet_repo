@@ -7534,7 +7534,7 @@ class ServiceMethods extends ServiceData {
 			this.z([title,description,siteName,appName,androidPackage,ogType,schemaDotOrgType],this.a_primitive_str);
 			this.D_Thumbnail(thumbnail);
 			this.a_primitive_bool(noindex);
-			if(unlisted!==false) debugger;
+			this.a_primitive_bool(unlisted);
 			this.tz(tags,this.a_primitive_str);
 			this.t(familySafe,x => {if(x!==true) debugger;});
 			this.tz(availableCountries,this.a_primitive_str);

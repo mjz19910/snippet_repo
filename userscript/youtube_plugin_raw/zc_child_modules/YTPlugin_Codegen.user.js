@@ -777,11 +777,8 @@ class CodegenService extends BaseService {
 			const ed="Renderer";
 			let split_val=split_string_once(type_name,ed);
 			if(split_val.length!==1) {
-				debugger;
-				// 	let real_val=split_val[0];
-				// 	return `R_${real_val}`;
-				assert_not_ends_with(type_name,ed);
-				break x;
+				let real_val=split_val[0];
+				return `R_${real_val}`;
 			}
 			assert_not_ends_with(type_name,ed);
 		}

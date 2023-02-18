@@ -2118,7 +2118,7 @@ type D_Microformat={
 	twitterSiteHandle: string;
 	schemaDotOrgType: string;
 	noindex: boolean;
-	unlisted: false;
+	unlisted: boolean;
 	tags?: string[];
 	familySafe?: true;
 	availableCountries?: string[];
