@@ -1417,7 +1417,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_Menu_WithTargetId} x */
 	D_Menu_WithTargetId(x) {
 		const cf="D_Menu_WithTargetId";
-		if("loggingDirectives" in x&&"targetId" in x) {
+		if("loggingDirectives" in x) {
 			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(menuPopupAccessibility,this.D_Label);
 			this.tz(items,this.G_MenuItem);
@@ -1431,20 +1431,17 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		if("targetId" in x) {
-			const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			this.z(items,x => {
-				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-				debugger;
-			});
-			switch(targetId) {
-				default: debugger; break;
-				case "playlist-browse-action-menu": break;
-				case "watch-related-menu-button": break;
-			}
-			return;
+		const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.z(items,x => {
+			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+			debugger;
+		});
+		switch(targetId) {
+			default: debugger; break;
+			case "playlist-browse-action-menu": break;
+			case "watch-related-menu-button": break;
 		}
 	}
 	/** @private @arg {D_Menu} x */
