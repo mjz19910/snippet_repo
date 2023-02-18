@@ -2448,6 +2448,16 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	binary_result(cf,x) {
 		switch(cf) {
+			case "params.click_tracking": {
+				/** @type {RB_TrackingObj} */
+				let u=as_any(x);
+				this.RB_TrackingObj(u,{type: "click_tracking"});
+			} break;
+			case "params.tracking": {
+				/** @type {P_tracking_params} */
+				let u=as_any(x);
+				this.RB_TrackingObj(u,{type: "tracking"});
+			} break;
 			case "reel.player_params": {
 				/** @type {P_reel_player_params} */
 				let u=as_any(x);
@@ -2472,16 +2482,6 @@ class HandleTypes extends ServiceMethods {
 				/** @type {P_ad_layout_ad_serving_data_entry} */
 				let u=as_any(x);
 				this.P_ad_layout_ad_serving_data_entry(u);
-			} break;
-			case "params.click_tracking": {
-				/** @type {RB_TrackingObj} */
-				let u=as_any(x);
-				this.RB_TrackingObj(u,{type: "click_tracking"});
-			} break;
-			case "params.tracking": {
-				/** @type {P_tracking_params} */
-				let u=as_any(x);
-				this.RB_TrackingObj(u,{type: "tracking"});
 			} break;
 			case "reel.params": {
 				/** @type {P_reel_params} */
@@ -2618,6 +2618,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_aadc_guidelines_state_entity_key(u);
 			} break;
+			case "trending.bp": {
+				/** @type {P_trending_bp} */
+				let u=as_any(x);
+				this.P_trending_bp(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2625,6 +2630,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_trending_bp} x */
+	P_trending_bp(x) {x;}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {x;}
 	/** @private @arg {P_create_comment_params} x */

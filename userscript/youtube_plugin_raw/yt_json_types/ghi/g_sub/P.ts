@@ -319,3 +319,6 @@ type P_aadc_guidelines_state_entity_key={
 	4: T_D32<281>,
 	5: T_D32<1>
 };
+type P_trending_bp={
+	77: T_VSR<"FEexplore">
+};
