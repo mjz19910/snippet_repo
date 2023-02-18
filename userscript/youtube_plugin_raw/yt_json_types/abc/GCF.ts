@@ -6,6 +6,7 @@ type GCF_s=
 	|CF_D_Menu_Omit
 	|CF_D_Params
 	|CF_D_ToggleButton
+	|CF_parse_identifier
 	|CF_T_GM
 	|CF_T_Icon
 	|CF_T_Items_TP

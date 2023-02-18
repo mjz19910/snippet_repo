@@ -4798,7 +4798,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
-		const {identifier,...a}=this.s(`${cf}.identifier`,x); this.g(a);
+		const {identifier,...a}=this.s(cf,x); this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
 			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
 			let yk=this.get_keys_of(identifier);

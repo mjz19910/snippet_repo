@@ -74,7 +74,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlayerMicroformat";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Page_Watch";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_VE3832";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: ".identifier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AccountItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddChatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
@@ -732,7 +731,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ToggleButton.state";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_BinaryTimestamp";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "XP_EntityPayload_Any";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "aCF_parse_identifier.identifier";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CF_parse_identifier.identifier";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_SendPost";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_AdditionalDataItem";}
