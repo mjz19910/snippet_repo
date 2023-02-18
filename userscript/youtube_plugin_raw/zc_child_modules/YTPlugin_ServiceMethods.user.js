@@ -6745,7 +6745,7 @@ class ServiceMethods extends ServiceData {
 		const cf="S_GetAccountMenu";
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		let [u]=this.z(actions,x => this.TA_OpenPopup("TA_OpenPopup<D_GetAccountMenu_Popup>",x));
+		let [u]=this.z(actions,x => this.TA_OpenPopup("A_GetAccountMenu",x));
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("TR_MultiPageMenu<MP_AccountMenu>",x));
 		this.z(u2,this.MP_AccountMenu);

@@ -1,5 +1,5 @@
 //#region S_
-type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU";actions: TA_OpenPopup<D_GetAccountMenu_Popup>[];};
+type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU";actions: A_GetAccountMenu[];};
 type S_acv1_codec=`avc1.${string}`;
 //#endregion
 //#region SP_
