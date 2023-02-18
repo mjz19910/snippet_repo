@@ -1,2 +1,18 @@
-type GCF_s=CF_D_GuideEntry|CF_T_Items_TP|CF_T_SE_Signal|CF_D_Params|CF_TD_Params|CF_D_ToggleButton|CF_T_GM|CF_D_Menu_Omit|CF_D_ChipCloudChip_Omit|CF_D_CustomEmoji|CF_D_Link|Ret_get_auto_type_name|CF_TA_OpenPopup;
+type GCF_s=
+	|CF_D_ChipCloudChip_Omit
+	|CF_D_CustomEmoji
+	|CF_D_GuideEntry
+	|CF_D_Link
+	|CF_D_Menu_Omit
+	|CF_D_Params
+	|CF_D_ToggleButton
+	|CF_T_GM
+	|CF_T_Items_TP
+	|CF_T_SE_Signal
+	|CF_TA_OpenPopup
+	|CF_TD_ItemSection
+	|CF_TD_Params
+	|Ret_get_auto_type_name
+	;
+;
 type GCF_w=CF_T_Commands|CF_T_Signal|CF_M_y|CF_TR_MultiPageMenu|CF_T_Items|CF_T_Items_TP;

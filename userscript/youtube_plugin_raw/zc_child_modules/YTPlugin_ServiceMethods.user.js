@@ -7004,17 +7004,16 @@ class ServiceMethods extends ServiceData {
 		const {itemSectionRenderer: a,...y}=this.s(cf,x);/*#destructure_done*/
 		return [a,y];
 	}
-	/** @arg {CF_TD_ItemSection} cf1 @protected @template CT,T,U @template {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {(VU extends TD_ItemSection_3<CT,T,U>?[VU["contents"],VU["sectionIdentifier"],VU["targetId"]]:[VU["contents"]])|null} */
-	TD_ItemSection(cf1,x) {
-		const cf2="TD_ItemSection";
+	/** @arg {CF_TD_ItemSection} cf @protected @template CT,T,U @template {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {(VU extends TD_ItemSection_3<CT,T,U>?[VU["contents"],VU["sectionIdentifier"],VU["targetId"]]:[VU["contents"]])|null} */
+	TD_ItemSection(cf,x) {
 		/** @type {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} */
 		let u=x;
 		if("targetId" in u) {
-			const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
+			const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(cf,u); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
 			return as_any([contents,sectionIdentifier,targetId]);
 		}
-		const {contents,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
+		const {contents,trackingParams,...y}=this.s_priv(cf,u); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		return as_any([contents]);
 	}
