@@ -1098,6 +1098,7 @@ class ServiceMethods extends ServiceData {
 						if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 						return a;
 					}
+					console.log("AX_Popup",ax.popup);
 				} break;
 			}
 		}
