@@ -1075,7 +1075,7 @@ class ServiceMethods extends ServiceData {
 	RX_Popup(x) {
 		this.RX_MenuPopup(x.menuPopupRenderer);
 	}
-	/** @typedef {{items: {}[]}} RX_MenuPopup */
+	/** @typedef {{items: RX_MenuPopupItem[]}} RX_MenuPopup */
 	/** @arg {RX_MenuPopup} x */
 	RX_MenuPopup(x) {
 		const cf="RX_MenuPopup";
@@ -1083,6 +1083,7 @@ class ServiceMethods extends ServiceData {
 		this.z(arr,this.RX_MenuPopupItem);
 	}
 	/** @typedef {{}} RX_MenuPopupItem */
+	/** @arg {RX_MenuPopupItem} x */
 	RX_MenuPopupItem(x) {
 		const cf="RX_MenuPopupItem";
 		console.log(cf,x);
