@@ -1681,15 +1681,14 @@ type D_CustomEmoji={
 	image: D_EmojiImage;
 	isCustomEmoji: boolean;
 };
-type D_DarkColorPalette_1={
-	primaryTitleColor: 4294964453;
-	secondaryTitleColor: 4291607459;
-	section1Color: 4281871903;
-	section2Color: 4280819991;
-	section3Color: 4279833614;
-	section4Color: 4278979079;
+type D_DarkColorPalette={
+	primaryTitleColor: number;
+	secondaryTitleColor: number;
+	section1Color?: number;
+	section2Color: number;
+	section3Color?: number;
+	section4Color: number;
 };
-type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
 type D_ProtobufWireFormat=[fieldId: number,wireType: number,arr: D_ProtobufObj[]];
 type D_ProtobufObj=
 	|[type: "data32",fieldId: number,value: number]
@@ -1714,7 +1713,7 @@ type D_Dropdown_Privacy={
 	label: "Privacy";
 };
 type D_Dropdown=D_Dropdown_Privacy;
-type D_CanDelete={canDelete: false;};
+type D_CanDelete={canDelete: boolean;};
 type D_ElementResourceStatus={
 	identifier: "bottom_sheet_list_option.eml|cd39732d53f1132c"|
 	"track_selection_sheet_option.eml|f3619d8bb085c9a9";

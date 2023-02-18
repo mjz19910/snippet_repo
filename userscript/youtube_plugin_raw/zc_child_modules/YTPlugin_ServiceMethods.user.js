@@ -2446,143 +2446,28 @@ class ServiceMethods extends ServiceData {
 			arr.sort((a,b) => a-b);
 			console.log(`-- [${cf1}:${cf}:${k}] --\n\n${arr.map(x => `case 0x${x.toString(16)}:`).join(" ")}`);
 		}
-	};
+	}
+	/** @arg {string} cf1 @arg {number|undefined} x */
+	save_rgba(cf1,x) {
+		if(!x) return;
+		const cf2=`${cf1}_p_tc`;
+		let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+		this.save_number(`${cf2}_r`,r);
+		this.save_number(`${cf2}_g`,g);
+		this.save_number(`${cf2}_b`,b);
+		this.save_number(`${cf2}_a`,a);
+	}
 	/** @protected @arg {string} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
-		const cf="D_DarkColorPalette";
-		/** @arg {`d${1|2}_${string}`} k @arg {number} x */
-		let log_color=(k,x) => this.log_color(cf1,cf,k,x);
-		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x);
-		{
-			const x=p_tc;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xff) debugger;
-			switch(r) {
-				default: log_color(`d1_p_tc_r`,r); break;
-				case 0xe5: case 0xe6:
-				case 0xea:
-				case 0xec: case 0xed:
-				case 0xe7: case 0xe9: case 0xeb: case 0xee:
-				case 0xf0: case 0xf1: case 0xf4: case 0xf5: case 0xf9:
-				case 0xfc:
-				case 0xff:
-			}
-			switch(g) {
-				default: log_color(`d1_p_tc_g`,g); break;
-				case 0xe5:
-				case 0xe6: case 0xe7: case 0xe8: case 0xe9: case 0xea: case 0xeb: case 0xec: case 0xed: case 0xee: case 0xef:
-				case 0xf0: case 0xf1: case 0xf2: case 0xf3: case 0xf4: case 0xf5: case 0xf6:
-				case 0xf8: case 0xf9: case 0xfa: case 0xfb: case 0xfc:
-				case 0xff:
-			}
-			switch(b) {
-				default: log_color(`d1_p_tc_b`,b); break;
-				case 0xe5:
-				case 0xe6: case 0xe7:
-				case 0xea:
-				case 0xf2: case 0xf4: case 0xf5: case 0xf6:
-				case 0xf8:
-				case 0xfb: case 0xfc: case 0xfd:
-				case 0xff:
-			}
-		}
-		{
-			const x=s_tc;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xff) debugger;
-			switch(r) {
-				default: log_color(`d1_s_tc_r`,r); break;
-				case 0xa3: case 0xa4: case 0xa5: case 0xa6:
-				case 0xa9: case 0xaa: case 0xab: case 0xac: case 0xaf:
-				case 0xb0: case 0xb2: case 0xb3: case 0xb6:
-				case 0xba: case 0xbd:
-				case 0xc2: case 0xc3:
-				case 0xc8: case 0xcc:
-			}
-			switch(g) {
-				default: log_color(`d1_s_tc_g`,g); break;
-				case 0xa3: case 0xa4: case 0xa5: case 0xa6: case 0xa7:
-				case 0xa8: case 0xa9: case 0xaa: case 0xab: case 0xac: case 0xad: case 0xaf:
-				case 0xb1: case 0xb2: case 0xb3: case 0xb4: case 0xb5: case 0xb6: case 0xb7:
-				case 0xb8: case 0xb9: case 0xba: case 0xbb: case 0xbc: case 0xbd: case 0xbe:
-				case 0xc1: case 0xc3: case 0xc5: case 0xc6: case 0xc7: case 0xcc:
-			}
-			switch(b) {
-				default: log_color(`d1_s_tc_b`,b); break;
-				case 0xb0: case 0xb8: case 0xbb: case 0xbe: case 0xc7: case 0xc8: case 0xc9:
-				case 0xa3: case 0xa4: case 0xa5: case 0xa6: case 0xa7:
-				case 0xab: case 0xac: case 0xae:
-				case 0xbf:
-				case 0xc3: case 0xc6:
-				case 0xcc:
-			}
-		}
-		{
-			const x=s2_c;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			switch(r) {
-				default: log_color(`d1_s2_c_r`,r); break;
-				case 0x05: case 0x06: case 0x07: case 0x09: case 0x0a:
-				case 0x11: case 0x12: case 0x15:
-				case 0x19: case 0x1a: case 0x1e: case 0x1d: case 0x1f: case 0x16: case 0x1b:
-				case 0x20: case 0x21: case 0x22: case 0x23: case 0x24: case 0x26: case 0x27:
-				case 0x28: case 0x29: case 0x2a: case 0x2b: case 0x2c: case 0x2f:
-				case 0x31: case 0x33:
-			}
-			switch(g) {
-				default: log_color(`d1_s2_c_g`,g); break;
-				case 0x22: case 0x28: case 0x2e: case 0x24: case 0x33:
-				case 0x07: case 0x08: case 0x09: case 0x0a: case 0x0b: case 0x0e: case 0x0f:
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17:
-				case 0x18: case 0x19: case 0x1a: case 0x1b: case 0x1c: case 0x1d: case 0x1e: case 0x1f:
-				case 0x20: case 0x21: case 0x23: case 0x25: case 0x26: case 0x27:
-				case 0x29: case 0x2a: case 0x2b: case 0x2c:
-			}
-			switch(b) {
-				default: log_color(`d1_s2_c_b`,b); break;
-				case 0x06: case 0x07: case 0x0c: case 0x0d: case 0x0e:
-				case 0x10: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17:
-				case 0x18: case 0x19: case 0x1a: case 0x1b: case 0x1c: case 0x1d: case 0x1e: case 0x1f:
-				case 0x21: case 0x23: case 0x25: case 0x26: case 0x27:
-				case 0x29: case 0x2b: case 0x2c: case 0x2d: case 0x2f:
-				case 0x30: case 0x31: case 0x33:
-			}
-			switch(a) {
-				default: log_color(`d1_s2_c_a`,b); break;
-			}
-		}
-		{
-			const x=s4_c;
-			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			switch(r) {
-				default: log_color(`d1_s4_c_r`,r); break;
-				case 0x01: case 0x02: case 0x03: case 0x04: case 0x05: case 0x06: case 0x07:
-				case 0x08: case 0x0a: case 0x0c: case 0x0d: case 0x0b: case 0x0e: case 0x0f:
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17:
-				case 0x18: case 0x19:
-			}
-			switch(g) {
-				default: log_color(`d1_s4_c_g`,g); break;
-				case 0x19:
-				case 0x03: case 0x04: case 0x05: case 0x07:
-				case 0x08: case 0x09: case 0x0a: case 0x0b: case 0x0c: case 0x0d: case 0x0e: case 0x0f:
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17:
-			}
-			switch(b) {
-				default: log_color(`d1_s4_c_b`,b); break;
-				case 0x01: case 0x03: case 0x5: case 0x06: case 0x07:
-				case 0x08: case 0x09: case 0x0a: case 0x0b: case 0x0c: case 0x0d: case 0x0e: case 0x0f:
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17:
-				case 0x18: case 0x19:
-			}
-			switch(a) {
-				default: log_color(`d1_s4_c_a`,b); break;
-			}
-		}
-		if("section1Color" in y) {
-			return;
-		}
-		this.g(y);
+		const cf2=`D_DarkColorPalette:${cf1}`;
+		const cf3="dark";
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
+		this.save_rgba(`${cf3}.p_tc`,p_tc);
+		this.save_rgba(`${cf3}.s_tc`,s_tc);
+		this.save_rgba(`${cf3}.s1_c`,s1_c);
+		this.save_rgba(`${cf3}.s2_c`,s2_c);
+		this.save_rgba(`${cf3}.s3_c`,s3_c);
+		this.save_rgba(`${cf3}.s4_c`,s4_c);
 	}
 	/** @protected @arg {string} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
@@ -7750,7 +7635,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
 	/** @protected @arg {D_CanDelete} x */
-	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,x => this.ceq(x,false));}
+	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,this.a_primitive_bool);}
 	/** @public @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,x => this.ceq(x,false));}
 	/** @protected @arg {E_PlaylistEditor} x */
