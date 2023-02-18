@@ -296,6 +296,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InvalidationId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LearningResource";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette:D_MacroMarkersListItem:light";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette:D_PlaylistPanelVideo:light";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette:D_Thumbnail:light";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}
