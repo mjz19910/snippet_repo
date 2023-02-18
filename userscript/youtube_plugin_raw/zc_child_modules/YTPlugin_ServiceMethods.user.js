@@ -309,15 +309,8 @@ class ServiceMethods extends ServiceData {
 	 */
 	TE_Endpoint_3_v2(k,x) {
 		let keys=this.get_keys_of(x);
-		let rk=this.filter_keys(keys);
-		let kk=rk[0];
-		if(typeof kk==="number") return;
-		let dec=this.uppercase_first(kk);
-		/** @type {"PrefetchHintConfig"} */
-		let dt=as(dec);
-		let ren_dec=this.cg.renderer_decode_map.get(dt);
-		let s=new JsonReplacerState("",keys,true);
-		let cf=ren_dec? ren_dec:this.cg.get_auto_type_name(s,x);
+		let s=new JsonReplacerState(k,keys,true);
+		let cf=this.cg.get_auto_type_name(s,x);
 		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
 		this.clickTrackingParams(clickTrackingParams);
 		a;
@@ -326,7 +319,7 @@ class ServiceMethods extends ServiceData {
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @protected @arg {E_PlaylistDelete} x */
 	E_PlaylistDelete(x) {
-		this.TE_Endpoint_3_v2("",x);
+		this.TE_Endpoint_3_v2("deletePlaylistEndpoint",x);
 		const [a,b,y]=this.TE_Endpoint_3("E_PlaylistDelete","deletePlaylistEndpoint",x); this.g(y); this.M_PlaylistDelete(a); this.DE_PlaylistDelete(b);
 	}
 	/** @protected @arg {M_PlaylistDelete} x */

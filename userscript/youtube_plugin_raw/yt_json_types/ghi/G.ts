@@ -543,4 +543,9 @@ type Ret_get_auto_type_name=
 	|`D_${"PrefetchHintConfig"}`;
 ;
 type Ret_json_auto_replace_1=Capitalize<Ret_json_auto_raw>|"{}";
-type Ret_json_auto_raw="prefetchHintConfig"|"openPopupAction"|"metadataBadgeRenderer";
+type Ret_json_auto_raw=
+|"prefetchHintConfig"
+|"openPopupAction"
+|"metadataBadgeRenderer"
+|keyof R_TwoColumnBrowseResults
+;
