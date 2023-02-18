@@ -2,14 +2,18 @@
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com"/
 // cSpell:ignoreRegExp /(?:D_googlevideo_host_|D_GV_)\w+/
 type D_googlevideo_host=[
-	D_GV_9gv7ln,
+	D_GV_9gv7l,
 	D_GV_p5qs7n,
 	D_GV_tt1e7n,
 	D_GV_q4flrn,
 	D_GV_nx57yn,
 	D_GV_nx5s7n,
 ][number];
-type D_GV_9gv7ln=[
+type D_GV_9gv7z=[
+	"sn-9gv7zn76.googlevideo.com",
+	"sn-9gv7zn7e.googlevideo.com",
+];
+type D_GV_9gv7l=[
 	"sn-9gv7lnes.googlevideo.com",
 	"sn-9gv7lnez.googlevideo.com",
 	"sn-9gv7lnle.googlevideo.com",

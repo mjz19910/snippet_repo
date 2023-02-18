@@ -1,5 +1,6 @@
 function do_dig() {
 	printf "$a2:"
+	echo $$ >/tmp/dig_res.$a2.pid
 	echo /tmp/dig_res.$a2.* | xargs -n 1 bash -c 'echo -n >"$1"' v
 	echo rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 25 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
 	TF_2=$(mktemp /tmp/dig_res.$1.out.XXX)
