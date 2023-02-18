@@ -7675,16 +7675,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @public @arg {D_FancyDismissibleDialog} x */
-	D_FancyDismissibleDialog(x) {
-		const cf="D_FancyDismissibleDialog";
-		const {dialogMessage,title,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(dialogMessage);
-		this.G_Text(confirmLabel);
-		this.trackingParams(trackingParams);
-	}
-	/** @public @arg {R_FancyDismissibleDialog} x */
-	R_FancyDismissibleDialog(x) {this.H_("fancyDismissibleDialogRenderer",x,this.D_FancyDismissibleDialog);}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
@@ -7738,6 +7728,16 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
 	}
+	/** @public @arg {D_FancyDismissibleDialog} x */
+	D_FancyDismissibleDialog(x) {
+		const cf="D_FancyDismissibleDialog";
+		const {dialogMessage,title,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(dialogMessage);
+		this.G_Text(confirmLabel);
+		this.trackingParams(trackingParams);
+	}
+	/** @public @arg {R_FancyDismissibleDialog} x */
+	R_FancyDismissibleDialog(x) {this.H_("fancyDismissibleDialogRenderer",x,this.D_FancyDismissibleDialog);}
 	/** @private @arg {R_HeroPlaylistThumbnail} x */
 	R_HeroPlaylistThumbnail(x) {this.H_("heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {D_HeroPlaylistThumbnail} x */
