@@ -28,4 +28,8 @@ type D_Menu={
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
 	targetId: "playlist-browse-action-menu";
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
 };

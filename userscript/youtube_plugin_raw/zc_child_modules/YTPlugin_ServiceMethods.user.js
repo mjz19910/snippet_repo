@@ -1344,6 +1344,12 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
+		if("items" in x&&"accessibility" in x) {
+			if(x.items.length===0) debugger;
+			let i1=x.items[0];
+			if("menuServiceItemRenderer" in i1) return;
+			debugger;
+		}
 		debugger;
 	}
 	/** @protected @arg {CF_T_Icon} cf1 @template {string} T @arg {T_Icon<T>} x */
