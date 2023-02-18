@@ -1380,7 +1380,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {D_Menu_WithItems} x */
 	D_Menu_WithItems(x) {
 		const cf="D_Menu_WithItems";
-		if("topLevelButtons" in x) {
+		if("flexibleItems" in x) {
 			const {trackingParams,topLevelButtons,items,accessibility,flexibleItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
 			this.z(items,x => {
@@ -1391,6 +1391,20 @@ class ServiceMethods extends ServiceData {
 			this.z(flexibleItems,this.R_MenuFlexibleItem);
 			this.z(topLevelButtons,x => {
 				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			return;
+		}
+		if("topLevelButtons" in x) {
+			const {trackingParams,topLevelButtons,items,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.z(items,x => {
+				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+				x;
+				debugger;
+			});
+			this.z(topLevelButtons,x => {
 				if("buttonRenderer" in x) return this.R_Button(x);
 				debugger;
 			});
@@ -2817,6 +2831,7 @@ class ServiceMethods extends ServiceData {
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {`UC${string}`} raw_id */
 	D_ChannelId(raw_id) {
+		if(raw_id===void 0) {debugger; return;}
 		const cf="D_ChannelId"; this.k(cf,raw_id);
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;

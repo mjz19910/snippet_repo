@@ -578,9 +578,9 @@ class HandleTypes extends ServiceMethods {
 	D_AudioConfig(x) {
 		const cf="D_AudioConfig";
 		const {loudnessDb,perceptualLoudnessDb,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(loudnessDb);
-		this.a_primitive_num(perceptualLoudnessDb);
-		this.a_primitive_bool(enablePerFormatLoudness);
+		this.t(loudnessDb,this.a_primitive_num);
+		this.t(perceptualLoudnessDb,this.a_primitive_num);
+		this.t(enablePerFormatLoudness,this.a_primitive_bool);
 	}
 	/** @public @arg {R_DynamicReadaheadConfig} x */
 	R_DynamicReadaheadConfig(x) {this.H_("dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
@@ -1979,7 +1979,7 @@ class HandleTypes extends ServiceMethods {
 		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
 		this.save_string(`${cf1}.fexp`,fexp);
 		this.save_string(`${cf1}.c`,c);
-		this.save_string(`${cf1}.txp`,txp);
+		txp&&this.save_string(`${cf1}.txp`,txp);
 		this.save_b64_binary(`${cf2}.n`,n);
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));

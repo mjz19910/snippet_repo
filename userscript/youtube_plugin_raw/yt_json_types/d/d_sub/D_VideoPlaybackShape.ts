@@ -8,7 +8,7 @@ type D_VideoPlaybackShape_Other={
 	keepalive?: "yes";
 	fexp: `${24007246}`;
 	c: "WEB";
-	txp: `${number}`;
+	txp?: `${number}`;
 	n: string;
 	sig?: string;
 	lsig: string;

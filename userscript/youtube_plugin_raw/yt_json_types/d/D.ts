@@ -3033,9 +3033,9 @@ type D_Omit_Compact_Video=D_Omit_Compact_Player&{
 };
 type D_PaidDigitalGoods={paidDigitalGoods: B_Hack;};
 type D_AudioConfig={
-	loudnessDb: number;
-	perceptualLoudnessDb: number;
-	enablePerFormatLoudness: boolean;
+	loudnessDb?: number;
+	perceptualLoudnessDb?: number;
+	enablePerFormatLoudness?: boolean;
 };
 type D_DescriptionChapters={
 	chapters: R_Chapter[];
