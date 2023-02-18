@@ -828,7 +828,7 @@ class Support_RS_Browse extends ServiceMethods {
 		const cf="G_BrowseHeader";
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
-		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
+		if("playlistHeaderRenderer" in x) return this.handle_types.R_PlaylistHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_MusicThumbnail} x */
@@ -1532,7 +1532,7 @@ class Support_EventInput extends ServiceMethods {
 		const cf="RS_Playlist";
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_TwoColumnBrowseResults(contents);
-		this.R_PlaylistHeader(header);
+		this.handle_types.R_PlaylistHeader(header);
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
 		this.handle_types.R_Playlist_MD(metadata);
 		this.R_DesktopTopbar(topbar);
