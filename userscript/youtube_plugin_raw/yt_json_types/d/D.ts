@@ -22,6 +22,7 @@ type D_UiTargetId=
 //#region String data
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
 type D_TargetIdStr=
+	|Extract<D_Menu,{targetId:any}>["targetId"]
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
 	|AD_UpdateEngagementPanel['targetId']

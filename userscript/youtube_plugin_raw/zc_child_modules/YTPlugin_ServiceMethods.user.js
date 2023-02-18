@@ -1077,7 +1077,7 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {{popup: {_tag:"never"}; popupType: "DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {{popup: { menuPopupRenderer: {_tag:"never"} }; popupType: "DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
@@ -1098,7 +1098,7 @@ class ServiceMethods extends ServiceData {
 						if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 						return a;
 					}
-					console.log("AX_Popup",ax.popup);
+					console.log("RX_MenuPopup",ax.popup.menuPopupRenderer);
 				} break;
 			}
 		}
@@ -1373,7 +1373,6 @@ class ServiceMethods extends ServiceData {
 			switch(targetId) {
 				default: debugger; break;
 				case "browse-video-menu-button":
-				case "watch-related-menu-button":
 			}
 			return;
 		}
@@ -2748,17 +2747,20 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			default: x===""; this.cg.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
-			case "watch-supervod-button":
 			case "browse-video-menu-button":
-			case "clip-info-button":
-			case "create-clip-button-action-bar":
-			case "comments-section":
-			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
-			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
-			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
-			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
-			case "search-feed": case "search-page": case "sponsorships-button":
-			case "watch-next-feed": case "watch-related-menu-button":
+			case "clip-info-button":			case "comments-section":			case "create-clip-button-action-bar":
+			case "engagement-panel-ads":
+			case "engagement-panel-clip-create":
+			case "engagement-panel-comments-section":
+			case "engagement-panel-macro-markers-auto-chapters":
+			case "engagement-panel-macro-markers-description-chapters":
+			case "engagement-panel-searchable-transcript-search-panel":
+			case "engagement-panel-searchable-transcript":
+			case "engagement-panel-structured-description":
+			case "feed_filter_chip_bar_second_chip":
+			case "playlist-browse-action-menu":
+			case "search-feed":			case "search-page":			case "sponsorships-button":
+			case "watch-next-feed":			case "watch-related-menu-button":			case "watch-supervod-button":
 		}
 	}
 	/** @arg {bigint} x */

@@ -22,12 +22,17 @@ type D_Menu={
 	menuPopupAccessibility: TD_Label<"List of menu actions">;
 	flexibleItems: R_MenuFlexibleItem[];
 	loggingDirectives: D_LoggingDirectives;
-	targetId: D_Menu_TargetId;
+	targetId: "browse-video-menu-button";
 }|{
 	items: R_MenuNavigationItem[];
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
 	targetId: "playlist-browse-action-menu";
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "watch-related-menu-button";
 }|{
 	items: R_MenuServiceItem[];
 	trackingParams: string;
