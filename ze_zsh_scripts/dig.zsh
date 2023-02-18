@@ -1,30 +1,42 @@
 function do_dig() {
-	a3="${a2[-1]}"
-	printf "$a3"
-	echo /tmp/dig_res.$a2.*(N) | xargs -n 1 bash -c 'echo -n >"$1"' v
-	echo rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 200 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
-	cat /tmp/dig_res.$a2.*
+	printf "$a2:"
+	echo /tmp/dig_res.$a2.* | xargs -n 1 bash -c 'echo -n >"$1"' v
+	echo rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 25 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
+	TF_2=$(mktemp /tmp/dig_res.$1.out.XXX)
+	cat /tmp/dig_res.$a2.* >> $TF_2
+	if ((`wc -l <$TF_2` != 0)); then
+		foo=$(<$TF_2)
+		printf "\n%s\n" $foo
+	fi
 }
-function run {
-	pushd $(dirname $1)
-	a2="$2"
-	eval '{ do_dig $2; } always { popd; }'
+function run() {
+	pushd -q $SOURCE_DIR
+	a2="$1"
+	do_dig "$a2"
+	popd -q
 }
 function dig_batch() {
-	pushd $(dirname $1)
-	a2="$2"
-	eval '{ do_dig $2; } always { popd; }'
+	pushd -q $SOURCE_DIR
+	a2="$1"
+	do_dig "$a2"
+	popd -q
 }
-function run_child {
+function run_child() {
 	printf "."
-	TF0=$(mktemp /tmp/dig_res.$1.XXX)
+	TF=$(mktemp /tmp/dig_res.$1.XXX)
 	shift
-	rm $TF0
-	TF="${TF0[0, -3]}"
-	stdbuf -oL -eL dig @1.1.1.1 +time=40 +https +noall +answer "$@" >>$TF
+	stdbuf -oL -eL dig @1.1.1.2 +time=40 +noall +answer +https "$@" >>"$TF"
 }
-ARG_NUM=$#@
-if (($ARG_NUM == 0)); then
+ssd() {
+	SOURCE_DIR=`dirname $1`
+}
+SD="${BASH_SOURCE[0]}";
+if [[ "z$SD" == "z" ]]; then
+	ssd $0
+else
+	SOURCE_DIR=$(dirname "$SD")
+fi;
+if [[ ${#@} -eq "0" ]]; then
 	MODE="failure"
 else
 	MODE=$1
@@ -32,10 +44,10 @@ else
 fi
 case $MODE in
 "dig")
-	run $0 $1
+	run $1
 	;;
 "dig_batch")
-	dig_batch $0 $1
+	dig_batch $1
 	;;
 "child")
 	run_child "$@"
