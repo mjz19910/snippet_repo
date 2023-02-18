@@ -290,7 +290,7 @@ type G_MimeTypeFormat=[
 ][number];
 type G_PopupItem=
 	|R_ConfirmDialog
-	|TR_MultiPageMenu<{}>
+	|TR_MultiPageMenu_Empty
 	|RA_Notification
 	|R_PdgBuyFlow
 	|R_UnifiedSharePanel

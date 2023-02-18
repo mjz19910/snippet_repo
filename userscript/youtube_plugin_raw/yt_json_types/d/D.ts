@@ -1048,7 +1048,6 @@ type D_Omit_Menu_Radio={
 	menu: R_Menu;
 };
 type D_Omit_Menu_Video_Ex={ownerBadges: RMD_Badge[];};
-type D_NotificationMenu_PopupItemMenu=TR_MultiPageMenu<D_NotificationMenu_PopupItem>;
 type D_Channel_MD={
 	title: string;
 	description: string;
@@ -1791,8 +1790,6 @@ type D_FormatColorInfo={
 	matrixCoefficients?: "COLOR_MATRIX_COEFFICIENTS_BT709";
 };
 type G_GetAccountMenuItem=MP_NotificationsMenu|MP_AccountMenu;
-type T_MenuPopup<T>=T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<T>>;
-type R_MultiPageMenu_AccountMenu=TR_MultiPageMenu<MP_AccountMenu>;
 type D_GhostGrid={rows: number;};
 type D_GoogleLoginExternalUrl={url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";}["url"];
 //cspell:ignore ynlk ynsd ynse ynsk ynsl ynss ynsz
@@ -2170,7 +2167,7 @@ type D_NotificationMenuPopupMenuItem={
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
 	showLoadingSpinner: true;
 };
-type D_NotificationMenu_PopupItem={
+type D_PopupItemMenu={
 	header: R_SimpleMenuHeader;
 	sections: D_NotificationMenu_Popup_SectionItem[];
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
@@ -2779,7 +2776,7 @@ type D_TopbarLogo={
 	trackingParams: string;
 	overrideEntityKey: string;
 };
-type D_TopbarMenuButton_MenuItem={
+type D_TopbarMenu={
 	sections: [TR_MP_MenuSection<R_CompactLink>];
 	trackingParams: string;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";

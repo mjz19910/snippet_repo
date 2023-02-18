@@ -1,7 +1,7 @@
-type Popup_ConfirmDialog={popup: R_ConfirmDialog; popupType: "DIALOG";};
-type Popup_DismissibleDialog={popup: R_FancyDismissibleDialog; popupType: "DIALOG";};
-type Popup_NotificationMenu=T_OpenPopup_Dropdown<D_NotificationMenu_PopupItemMenu>;
+type Popup_ConfirmDialog=T_OpenPopup_Dialog<R_ConfirmDialog>;
+type Popup_DismissibleDialog=T_OpenPopup_Dialog<R_FancyDismissibleDialog>;
+type Popup_NotificationMenu=T_OpenPopup_Dropdown<R_PopupItemMenu>;
 type Popup_NotificationToast=T_OpenPopup_Toast<RA_Notification>;
 type Popup_GetNotificationsMenu=T_OpenPopup_ReuseableDropdown<P_NotificationMenu_Popup>;
 type Popup_ShareEntityService=T_OpenPopup_ReuseableDialog<R_UnifiedSharePanel>;
-type D_GetAccountMenu_Popup=T_OpenPopup_ReuseableDropdown<R_MultiPageMenu_AccountMenu>;
+type Popup_GetAccountMenu=T_OpenPopup_ReuseableDropdown<R_AccountMenu_2>;

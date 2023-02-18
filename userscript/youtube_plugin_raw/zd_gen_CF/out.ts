@@ -819,7 +819,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "RSG_NotificationMenu_Action";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "RSM_ChannelPreference";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup:R_PdgBuyFlow";}
-		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup<Popup_ConfirmDialog>";}
+		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_ConfirmDialog";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup_Empty";}
 		|{n: Prelude.CF_TA_Page; t: Types.CF_TA_Page_; v: "AD_UpdateChannelSwitcherPage";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_1<any>";}

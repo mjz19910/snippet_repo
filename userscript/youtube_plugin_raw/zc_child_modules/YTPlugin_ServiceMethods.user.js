@@ -639,7 +639,7 @@ class ServiceMethods extends ServiceData {
 		const cf="AD_ShowEngagementPanelScrim";
 		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
-		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
+		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("A_ConfirmDialog",x));
 		let [x1]=this.z(n,this.unpack_popup_dialog);
 		let [x2]=this.z(x1,x => {
 			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
@@ -1068,7 +1068,7 @@ class ServiceMethods extends ServiceData {
 		if(x.beReused!==true) debugger;
 		return x.popup;
 	}
-	/** @arg {T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<{style: string;}>>} x @returns {x is D_GetAccountMenu_Popup} */
+	/** @arg {T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<{style: string;}>>} x @returns {x is Popup_GetAccountMenu} */
 	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
 	/** @arg {R_MenuPopup} x */
 	R_MenuPopup(x) {this.H_("menuPopupRenderer",x,this.D_MenuPopup);}
@@ -1080,7 +1080,7 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {{popup:R_MenuPopup;popupType:"DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {{popup:R_MenuPopup;popupType:"DROPDOWN";}|Popup_GetAccountMenu|T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
@@ -6698,7 +6698,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_bool(isCustomEmoji);
 		return y;
 	}
-	/** @public @arg {D_GetAccountMenu_Popup} x */
+	/** @public @arg {Popup_GetAccountMenu} x */
 	Popup_GetAccountMenu(x) {
 		const cf="Popup_GetAccountMenu";
 		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6848,7 +6848,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.cg.make_codegen_group(cf,x);
 	}
-	/** @private @arg {D_TopbarMenuButton_MenuItem} x */
+	/** @private @arg {D_TopbarMenu} x */
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem";
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

@@ -268,7 +268,6 @@ type R_ThumbnailOverlayToggleButton={thumbnailOverlayToggleButtonRenderer: D_Thu
 type R_ToggleButton={toggleButtonRenderer: D_ToggleButton;};
 type R_ToggleMenuServiceItem={toggleMenuServiceItemRenderer: D_ToggleMenuServiceItem;};
 type R_TopbarLogo={topbarLogoRenderer: D_TopbarLogo;};
-type R_TopbarMenu=TR_MultiPageMenu<D_TopbarMenuButton_MenuItem>;
 type R_TopbarMenuButton={topbarMenuButtonRenderer: D_TopbarMenuButton;};
 type R_TopicLink={topicLinkRenderer: D_TopicLink;};
 type R_Transcript={transcriptRenderer: D_Transcript;};

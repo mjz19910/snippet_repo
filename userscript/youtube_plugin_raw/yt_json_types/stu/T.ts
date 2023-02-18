@@ -205,8 +205,6 @@ type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSection
 type TR_ItemSection_1<T_ContentType>={itemSectionRenderer: TD_ItemSection_1<T_ContentType>;};
 type TR_SectionListItem_1<T_ContentType>=TR_ItemSection_1<T_ContentType>;
 type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
-type TR_MultiPageMenu_Empty=TR_MultiPageMenu<{}>;
-type TR_MultiPageMenu<T>={multiPageMenuRenderer: T;};
 //#endregion
 type TG_SecondaryResultsItem_3<A,B,C>=[
 	R_RelatedChipCloud,
