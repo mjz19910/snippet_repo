@@ -1063,6 +1063,13 @@ class ServiceMethods extends ServiceData {
 		x;
 		debugger;
 	}
+	/** @template {{}} T @arg {T_OpenPopup_Dropdown_Reusable<T>} x */
+	TA_on_T_OpenPopup_Dropdown_Reusable(x) {
+		if(x.beReused!==true) debugger;
+		return x.popup;
+	}
+	/** @arg {T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<{style: string;}>>} x @returns {x is D_GetAccountMenu_Popup} */
+	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
@@ -1070,26 +1077,26 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {{popup: {_tag:"never"}; popupType: "DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
 				default: debugger; break;
 				case "DIALOG": break;
 				case "DROPDOWN": {
-					if(ax.beReused!==true) debugger;
-					if("multiPageMenuRenderer" in ax.popup) {
-						ax.popup.multiPageMenuRenderer.style;
-						let a_menu=this.TR_MultiPageMenu("any",ax.popup);
-						if(!a_menu) {debugger;} else {
-							switch(a_menu.style) {
-								default: debugger; break;
-								case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": break;
-								case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": break;
-							}
+					if("beReused" in ax) {
+						if(this.is_D_GetAccountMenu_Popup(ax)) {
+							let pu=this.TA_on_T_OpenPopup_Dropdown_Reusable(ax);
+							let a_menu=this.TR_MultiPageMenu("any",pu);
+							if(!a_menu) return a;
+							if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
+							return a;
 						}
-					} else {
-						debugger;
+						let pu=this.TA_on_T_OpenPopup_Dropdown_Reusable(ax);
+						let a_menu=this.TR_MultiPageMenu("any",pu);
+						if(!a_menu) return a;
+						if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+						return a;
 					}
 				} break;
 			}
@@ -1117,7 +1124,7 @@ class ServiceMethods extends ServiceData {
 						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": return a;
 					}
 				}
-				return a;
+					return a;
 			}
 		} else {
 			debugger;
