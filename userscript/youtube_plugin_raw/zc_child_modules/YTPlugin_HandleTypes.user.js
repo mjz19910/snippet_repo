@@ -2236,6 +2236,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
 	}
+	//#region binary
 	/** @public @arg {BinaryVe} x */
 	BinaryVe(x) {
 		switch(x) {
@@ -2679,6 +2680,7 @@ class HandleTypes extends ServiceMethods {
 	P_create_playlist_params(x) {x;}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {x;}
+	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
