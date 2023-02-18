@@ -2228,7 +2228,7 @@ class HandleTypes extends ServiceMethods {
 			this.save_number(`${cf}.f3`,f3);
 			return;
 		}
-		this.codegen_typedef_bin(cf,x);
+		this.codegen_typedef_bin(cf,x,false);
 	}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
