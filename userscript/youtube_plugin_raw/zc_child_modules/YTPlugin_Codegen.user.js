@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {as,BaseService,do_export,split_string_once,split_string}=require("./YtPlugin_Base.user");
+const {as,BaseService,do_export,split_string_once,split_string, as_any}=require("./YtPlugin_Base.user");
 
 if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
@@ -227,7 +227,8 @@ class CodegenService extends BaseService {
 		if(r_name) k=r_name;
 		if(k===null) return null;
 		console.log("gen renderer for",x);
-		let t_name=this.uppercase_first(k);
+		/** @type {`A$R_Test`} */
+		let t_name=as_any(this.uppercase_first(k));
 		let keys=Object.keys(x);
 		if(keys.length===1) {
 			if(keys[0].endsWith("Renderer")) {
@@ -240,8 +241,8 @@ class CodegenService extends BaseService {
 				// /** @private @arg {$1} x */
 				// $1(x) {this.H_("$1","$2",x,this.$3);}
 				let self_code=`
-				d1!/** @private @arg {${tc_name}} x @generated {${t_name}} */
-				d1!${tc_name}(x) {this.H_("${tc_name}","${keys[0]}",x,this.D_${name});}\n`;
+				d1!/** @private @arg {R_${name}} x @generated {${t_name}} */
+				d1!R_${name}(x) {this.H_("R_${name}","${keys[0]}",x,this.D_${name});}\n`;
 				req_names.push(keys[0]);
 				return this.#codegen_renderer_finalize(req_names,self_code,keys,x);
 			}
@@ -753,8 +754,8 @@ class CodegenService extends BaseService {
 	}
 	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {Ret_get_auto_type_name} */
 	get_auto_type_name(s,x) {
-		/** @type {"OpenPopupAction"} */
 		let type_name=this.json_auto_replace_1(x);
+		if(type_name==="{}") return "{}";
 		if(type_name==="MetadataBadgeRenderer") {return "RMD_Badge";}
 		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
 			if(!x.openPopupAction) break x;
@@ -777,15 +778,27 @@ class CodegenService extends BaseService {
 				}
 			}
 		}
-		if(type_name.endsWith("Action")) {
-			let real_val=split_string_once(type_name,"Action")[0];
-			if(real_val==="OpenPopup") return type_name;
+		{let split_val=split_string_once(type_name,"Action");
+		if(split_val.length===2) {
+			let real_val=split_val[0];
 			return `A_${real_val}`;
-		}
-		if(type_name.endsWith("Command")) {
-			let real_val=split_string_once(type_name,"Command")[0];
+		}}
+		{let split_val=split_string_once(type_name,"Command");
+		if(split_val.length===2) {
+			let real_val=split_val[0];
 			return `C_${real_val}`;
-		}
+		}}
+		{let split_val=split_string_once(type_name,"Endpoint");
+		if(split_val.length===2) {
+			let real_val=split_val[0];
+			if(real_val==="Browse") {
+				console.log(type_name);
+				debugger;
+				/** @type {GE_Browse} */
+				return "GE_Browse";
+			}
+			return `E_${real_val}`;
+		}}
 		if(type_name.endsWith("Endpoint")) {
 			let real_val=split_string_once(type_name,"Endpoint")[0];
 			if(real_val==="Browse") {
@@ -796,10 +809,11 @@ class CodegenService extends BaseService {
 			}
 			return `E_${real_val}`;
 		}
-		if(type_name.endsWith("Renderer")) {
-			let real_val=split_string_once(type_name,"Renderer")[0];
+		{let split_val=split_string_once(type_name,"Renderer");
+		if(split_val.length===2) {
+			let real_val=split_val[0];
 			return `R_${real_val}`;
-		}
+		}}
 		return `D_${type_name}`;
 	}
 	/** @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x */

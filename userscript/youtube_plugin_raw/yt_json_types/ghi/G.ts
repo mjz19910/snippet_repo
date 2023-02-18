@@ -533,6 +533,9 @@ type GD_RC_SectionList=
 	|DC_SectionList_BrowseFeed_History
 	;
 ;
-type Ret_get_auto_type_name="PrefetchHintConfig"|"RMD_Badge"|`T_OpenPopup_Dialog<${string}>`|`T_OpenPopup_Toast<${string}>`|`TA_OpenPopup<${string}>`;
+type Ret_get_auto_type_name=
+|"PrefetchHintConfig"|"RMD_Badge"|`T_OpenPopup_Dialog<${string}>`|`T_OpenPopup_Toast<${string}>`|`TA_OpenPopup<${string}>`
+|"A_OpenPopup";
+
 type Ret_json_auto_replace_1=Capitalize<Ret_json_auto_raw>|"{}";
-type Ret_json_auto_raw="prefetchHintConfig"|"openPopupAction";
+type Ret_json_auto_raw="prefetchHintConfig"|"openPopupAction"|"metadataBadgeRenderer";

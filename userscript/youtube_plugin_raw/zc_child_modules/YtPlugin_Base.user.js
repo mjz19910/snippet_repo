@@ -1975,10 +1975,10 @@ class ApiBase {
 	/** @protected @template {any[]} T @arg {T} a */
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
-	/** @protected @template {string} T @template {string} R @arg {`${T}${R}`} x @returns {`${Uppercase<T>}${R}`} */
+	/** @protected @template {string} S @arg {S} x @returns {Capitalize<S>} */
 	uppercase_first(x) {
 		let rr=x[0].toUpperCase()+x.slice(1);
-		/** @type {`${Uppercase<T>}${R}`} */
+		/** @type {Capitalize<S>} */
 		let rt=as(rr);
 		return rt;
 	}
