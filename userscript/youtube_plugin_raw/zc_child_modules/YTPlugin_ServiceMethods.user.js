@@ -1378,7 +1378,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {D_Menu_WithItems} x */
 	D_Menu_WithItems(x) {
-		if("items" in x&&"topLevelButtons" in x) {
+		const cf="D_Menu_WithItems";
+		if("topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,items,accessibility,flexibleItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
 			this.z(items,x => {
@@ -1414,6 +1415,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_Menu_WithTargetId} x */
 	D_Menu_WithTargetId(x) {
+		const cf="D_Menu_WithTargetId";
 		if("loggingDirectives" in x&&"targetId" in x) {
 			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(menuPopupAccessibility,this.D_Label);
@@ -1439,6 +1441,7 @@ class ServiceMethods extends ServiceData {
 			switch(targetId) {
 				default: debugger; break;
 				case "playlist-browse-action-menu": break;
+				case "watch-related-menu-button": break;
 			}
 			return;
 		}

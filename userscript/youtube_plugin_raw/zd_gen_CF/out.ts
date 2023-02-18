@@ -322,6 +322,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuNavigationItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuServiceItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuServiceItem_Omit";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu_WithItems";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu_WithTargetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MerchandiseItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MerchandiseShelf";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MetadataRow";}
