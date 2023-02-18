@@ -2213,6 +2213,7 @@ class HandleTypes extends ServiceMethods {
 		if(2 in x&&!(3 in x)&&!(1 in x)) {
 			const {2: [,f2],...y}=this.s(cf,x); this.g(y);
 			this.save_number(`${cf}.f2.BinaryVe@base`,f2);
+			return;
 		}
 		if(1 in x) {
 			const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
@@ -2248,9 +2249,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(19 in x) {
 			if(11 in x) {
-				const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
+				const {1: [,f1],2: [,f2],4: [,,f4],3: f3,6: f6,11: f11,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
 				this.save_number(`${cf}.w19.f1`,f1);
 				this.save_number(`${cf}.w19.f2`,f2);
+				this.t(f3,([t,x]) => this.ceq(t,"data32")&&this.save_number(`${cf}.w19.f3`,x));
 				this.V_BinaryTimestamp(f4);
 				if(t19!=="child") debugger;
 				this.RB_Obj_f19(f19);
