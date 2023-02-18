@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {as,BaseService,do_export, split_string_once, split_string}=require("./YtPlugin_Base.user");
+const {as,BaseService,do_export,split_string_once,split_string}=require("./YtPlugin_Base.user");
 
 if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
@@ -36,10 +36,12 @@ class ParentWalker {
 	}
 }
 class JsonReplacerState {
-	/** @constructor @public @arg {string} gen_name @arg {string[]} keys @arg {boolean} is_root */
-	constructor(gen_name,keys,is_root) {
+	/** @constructor @public @arg {string} cf @arg {string[]} keys @arg {boolean} is_root */
+	constructor(cf,keys,is_root) {
 		this.object_count=0;
-		this.gen_name=gen_name;
+		/** @type {string[]} */
+		this.cf_stack=[];
+		this.cur_cf=cf;
 		this.key_keep_arr=keys;
 		this.is_root=is_root;
 		this.k1="";
@@ -48,11 +50,20 @@ class JsonReplacerState {
 		/** @api @public @type {Map<unknown,[number,string]>} */
 		this.parent_map=new Map;
 	}
+	/** @arg {string} cf */
+	set_cf(cf) {
+		this.cf_stack.push(this.cur_cf);
+		this.cur_cf=cf;
+	}
+	pop_cf() {
+		this.cur_cf=required(this.cf_stack.pop());
+	}
 	/** @arg {unknown} x */
 	get_parent_walker(x) {
 		return new ParentWalker(this,x);
 	}
 }
+export_(exports => {exports.JsonReplacerState=JsonReplacerState;});
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
@@ -254,7 +265,15 @@ class CodegenService extends BaseService {
 	}
 	/** @api @public @arg {string} cf @arg {object} x  @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef_impl(cf,x,ret_val) {
-		let new_typedef=this.codegen_typedef_base(cf,x,true);
+		let k=this.get_name_from_keys(x);
+		if(k===null) return;
+		/** @type {{[U in typeof k]?: unknown}} */
+		let xv=x;
+		let o2=xv[k];
+		if(o2==null) return;
+		let keys=Object.keys(x).concat(Object.keys(o2));
+		let s=new JsonReplacerState(cf,keys,true);
+		let new_typedef=this.codegen_typedef_base(s,cf,x);
 		if(ret_val) return new_typedef;
 		if(new_typedef) {
 			if(!this.typedef_cache.includes(new_typedef)) {
@@ -321,8 +340,8 @@ class CodegenService extends BaseService {
 		if("rootVe" in x) {return `M_VE${x.rootVe}`;}
 		return null;
 	}
-	/** @api @public @arg {object} x1 */
-	get_codegen_name_obj(x1) {
+	/** @api @public @arg {JsonReplacerState} s @arg {object} x1 */
+	get_codegen_name_obj(s,x1) {
 		/** @type {{}} */
 		let x2=x1;
 		/** @type {{[x:string]:unknown;}} */
@@ -346,14 +365,16 @@ class CodegenService extends BaseService {
 		let dec=this.uppercase_first(kk);
 		let ren_dec=this.renderer_decode_map.get(dec);
 		if(ren_dec) {return ren_dec;}
-		return this.get_auto_type_name(x);
+		return this.get_auto_type_name(s,x);
 	}
 	renderer_decode_map=new Map([
 		["PrefetchHintConfig","R_PrefetchHintConfig"],
 	]);
 	/** @api @public @arg {string} cf @arg {{}} x */
 	make_codegen_group(cf,x,collapsed=true) {
-		let u_name=this.get_codegen_name_obj(x);
+		let keys=this.get_keys_of(x);
+		let s=new JsonReplacerState(cf,keys,true);
+		let u_name=this.get_codegen_name_obj(s,x);
 		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
 		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
@@ -427,11 +448,11 @@ class CodegenService extends BaseService {
 			return prev+cur;
 		},"");
 	}
-	/** @template {{}} T @arg {T} x */
-	get_typedef_part(x) {
+	/** @arg {JsonReplacerState} s @template {{}} T @arg {T} x */
+	get_typedef_part(s,x) {
 		let gn=this.get_name_from_keys(x);
 		if(!gn) return null;
-		let gr=this.codegen_typedef_base(gn,x);
+		let gr=this.codegen_typedef_base(s,gn,x);
 		if(!gr) return null;
 		let gr_f=this.filter_typedef_part_gen(gr);
 		let sr=split_string_once(gr_f,"=")[1];
@@ -449,25 +470,25 @@ class CodegenService extends BaseService {
 	get service_type() {return "normal";}
 	text_decoder=new TextDecoder();
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
-	/** @private @arg {JsonReplacerState} state @arg {{[U in string|number]: unknown}|Uint8Array} x @arg {string} k1 @returns {JsonReplacementType} */
-	typedef_json_replace_object(state,x,k1) {
-		if(!state.object_store.includes(x)) {
-			state.object_store.push(x);
-			let mi=state.object_store.indexOf(x);
-			state.parent_map.set(x,[mi,k1]);
+	/** @private @arg {JsonReplacerState} s @arg {{[U in string|number]: unknown}|Uint8Array} x @arg {string} k1 @returns {JsonReplacementType} */
+	typedef_json_replace_object(s,x,k1) {
+		if(!s.object_store.includes(x)) {
+			s.object_store.push(x);
+			let mi=s.object_store.indexOf(x);
+			s.parent_map.set(x,[mi,k1]);
 		}
-		let mi=state.object_store.indexOf(x);
+		let mi=s.object_store.indexOf(x);
 		if(x instanceof Uint8Array) {
 			let res=this.text_decoder.decode(x);
 			return `TYPE::V_Uint8Array<"${res}">`;
 		}
 		let xi=Object.entries(x);
 		for(let [k_in,val] of xi) {
-			if(state.object_store.includes(val)) continue;
-			state.object_store.push(val);
-			state.parent_map.set(val,[mi,k_in]);
+			if(s.object_store.includes(val)) continue;
+			s.object_store.push(val);
+			s.parent_map.set(val,[mi,k_in]);
 		}
-		if(state.is_root&&k1==="") {
+		if(s.is_root&&k1==="") {
 			/** @type {{[U in string|number]: unknown}} */
 			let fx={};
 			let fk=Object.keys(x);
@@ -485,8 +506,8 @@ class CodegenService extends BaseService {
 			}
 			return fx;
 		}
-		let g=() => this.json_auto_replace(x);
-		const {gen_name: r,key_keep_arr}=state;
+		let g=() => this.json_auto_replace(s,x);
+		const {cur_cf: r,key_keep_arr}=s;
 		if(x instanceof Array) {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
@@ -522,9 +543,9 @@ class CodegenService extends BaseService {
 		}
 		x: if(x.signalServiceEndpoint) {
 			let v=this.as_T_SE_Signal(x);
-			let sr=this.get_typedef_part(v.signalServiceEndpoint);
+			let sr=this.get_typedef_part(s,v.signalServiceEndpoint);
 			if(!sr) break x;
-			let wc=this.get_typedef_part(v.commandMetadata);
+			let wc=this.get_typedef_part(s,v.commandMetadata);
 			let sig_type=`T_SE_Signal<${wc},${sr}>`;
 			/** @type {E_SignalService_SendPost} */
 			if(sig_type==="T_SE_Signal<M_SendPost,G_ClientSignal>") sig_type="E_SignalService_SendPost";
@@ -532,7 +553,7 @@ class CodegenService extends BaseService {
 		}
 		x: if(x.multiPageMenuRenderer) {
 			let v=this.as$TR_MP_Menu(x);
-			let sr=this.get_typedef_part(v.multiPageMenuRenderer);
+			let sr=this.get_typedef_part(s,v.multiPageMenuRenderer);
 			if(!sr) break x;
 			return `TYPE::TR_MP_Menu<${sr}>`;
 		}
@@ -592,7 +613,7 @@ class CodegenService extends BaseService {
 			return `TYPE::${sig_type}`;
 		}
 		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
-			let pi=state.parent_map.get(x);
+			let pi=s.parent_map.get(x);
 			if(!pi) break x;
 			if(pi[1]==="owner") {return "TYPE::D_Video_Owner";}
 			console.log(pi);
@@ -637,8 +658,8 @@ class CodegenService extends BaseService {
 		if(k1==="playerConfig") return "TYPE::D_PlayerConfig";
 		if(k1==="storyboards") return "TYPE::G_PlayerStoryboards";
 		let keys=this.filter_keys(this.get_keys_of(x));
-		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
-		if(state.key_keep_arr.includes(state.k1)) return x;
+		if(keys.length===1) return this.get_json_replace_type_len_1(s,r,x,keys);
+		if(s.key_keep_arr.includes(s.k1)) return x;
 		{
 			/** @type {Partial<Popup_ConfirmDialog>} */
 			let xt=x;
@@ -673,8 +694,8 @@ class CodegenService extends BaseService {
 		if(state.object_count<3) return x;
 		return {};
 	}
-	/** @private @arg {string} cf @arg {object} x */
-	codegen_typedef_base(cf,x,is_root=false) {
+	/** @private @arg {JsonReplacerState} s @arg {string} cf @arg {object} x */
+	codegen_typedef_base(s,cf,x) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		/** @private @type {{[x: number|string]:{}}} */
@@ -682,9 +703,8 @@ class CodegenService extends BaseService {
 		let o2=xa[k];
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		if("response" in x&&typeof x.response==='object'&&x.response!==null) {keys=keys.concat(Object.keys(x.response));}
-		/** @private @type {JsonReplacerState} */
-		let state=new JsonReplacerState(cf,keys,is_root);
-		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,state),"\t");
+		s.set_cf(cf);
+		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,s),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
 		tc=this.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
@@ -715,8 +735,8 @@ class CodegenService extends BaseService {
 		if(o_keys.length>0) {return this.uppercase_first(o_keys[0]);}
 		return "{}";
 	}
-	/** @api @public @param {{[U in string]:unknown}} x @returns {string} */
-	get_auto_type_name(x) {
+	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {string} */
+	get_auto_type_name(s,x) {
 		let type_name=this.json_auto_replace_1(x);
 		if(type_name==="MetadataBadgeRenderer") {return "RMD_Badge";}
 		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
@@ -726,15 +746,15 @@ class CodegenService extends BaseService {
 			let at=u.openPopupAction;
 			switch(at.popupType) {
 				case "DIALOG": {
-					let sr=this.get_typedef_part(at.popup);
+					let sr=this.get_typedef_part(s,at.popup);
 					return `T_OpenPopup_Dialog<${sr}>`;
 				}
 				case "TOAST": {
-					let sr=this.get_typedef_part(at.popup);
+					let sr=this.get_typedef_part(s,at.popup);
 					return `T_OpenPopup_Toast<${sr}>`;
 				}
 				default: {
-					let sr=this.get_typedef_part(x.openPopupAction);
+					let sr=this.get_typedef_part(s,x.openPopupAction);
 					if(!sr) break x;
 					return "TA_OpenPopup<"+sr+">";
 				}
@@ -765,9 +785,9 @@ class CodegenService extends BaseService {
 		}
 		return `D_${type_name}`;
 	}
-	/** @param {{[U in string]:unknown}} x */
-	json_auto_replace(x) {
-		let type_name_str=this.get_auto_type_name(x);
+	/** @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x */
+	json_auto_replace(s,x) {
+		let type_name_str=this.get_auto_type_name(s,x);
 		return `TYPE::${type_name_str}`;
 	}
 	/** @param {{[U in string]:unknown}} x */
@@ -816,12 +836,12 @@ class CodegenService extends BaseService {
 		{debugger;}
 		return x;
 	}
-	/** @private @arg {string|null} r @param {{}} x @arg {(string | number)[]} keys */
-	get_json_replace_type_len_1(r,x,keys) {
+	/** @private @arg {JsonReplacerState} s @arg {string|null} r @param {{}} x @arg {(string | number)[]} keys */
+	get_json_replace_type_len_1(s,r,x,keys) {
 		/** @type {{[U in string]:unknown}} */
 		let b=x;
 		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
-		let g=() => this.json_auto_replace(b);
+		let g=() => this.json_auto_replace(s,b);
 		let hg=false
 			||false
 			//#region hg
