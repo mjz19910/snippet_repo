@@ -10,11 +10,11 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
+// ==/UserScript==
 
 const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last}=require("./YtPlugin_Base.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
-// ==/UserScript==
 const __module_name__="mod$SupportService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
@@ -1748,14 +1748,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
-	/** @arg {StoreDescription<string>} ss @arg {G_BoxedIdObj[]} boxed */
+	/** @arg {StoreDescription<string>} ss @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
 	async export_db_data(ss,boxed) {
 		if(ss.data.length>0) {
 			for(let sd of ss.data) {
 				const [key,arr]=sd;
 				/** @type {`boxed_id:str:${string}`} */
 				const find_key=`boxed_id:str:${key}`;
-				/** @arg {G_BoxedIdObj} v @returns {v is {key: typeof find_key}} */
+				/** @arg {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} v @returns {v is {key: typeof find_key}} */
 				let fk=v => v.key===find_key;
 				const box=boxed.find(v => v.key===find_key);
 				if(box) {

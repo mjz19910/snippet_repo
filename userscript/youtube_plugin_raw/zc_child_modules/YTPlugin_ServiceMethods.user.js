@@ -1070,6 +1070,23 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<{style: string;}>>} x @returns {x is D_GetAccountMenu_Popup} */
 	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
+	/** @typedef {{menuPopupRenderer:RX_MenuPopup}} RX_Popup */
+	/** @arg {RX_Popup} x */
+	RX_Popup(x) {
+		this.RX_MenuPopup(x.menuPopupRenderer);
+	}
+	/** @typedef {{items: {}[]}} RX_MenuPopup */
+	/** @arg {RX_MenuPopup} x */
+	RX_MenuPopup(x) {
+		const cf="RX_MenuPopup";
+		const {items: arr,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(arr,this.RX_MenuPopupItem);
+	}
+	/** @typedef {{}} RX_MenuPopupItem */
+	RX_MenuPopupItem(x) {
+		const cf="RX_MenuPopupItem";
+		console.log(cf,x);
+	}
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
@@ -1077,7 +1094,7 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {{popup: { menuPopupRenderer: {_tag:"never"} }; popupType: "DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {{popup:RX_Popup;popupType:"DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
@@ -1098,7 +1115,7 @@ class ServiceMethods extends ServiceData {
 						if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 						return a;
 					}
-					console.log("RX_MenuPopup",ax.popup.menuPopupRenderer);
+					this.RX_Popup(ax.popup);
 				} break;
 			}
 		}
