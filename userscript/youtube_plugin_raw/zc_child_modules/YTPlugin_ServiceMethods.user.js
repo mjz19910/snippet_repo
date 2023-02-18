@@ -6747,8 +6747,8 @@ class ServiceMethods extends ServiceData {
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		let [u]=this.z(actions,x => this.TA_OpenPopup("A_GetAccountMenu",x));
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
-		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("TR_MultiPageMenu<MP_AccountMenu>",x));
-		this.z(u2,this.MP_AccountMenu);
+		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("Popup_GetAccountMenu",x));
+		this.z(u2,this.G_GetAccountMenuItem);
 	}
 	/** @public @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {

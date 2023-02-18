@@ -1806,7 +1806,8 @@ type D_FormatColorInfo={
 	matrixCoefficients?: "COLOR_MATRIX_COEFFICIENTS_BT709";
 };
 type G_GetAccountMenuItem=MP_NotificationsMenu|MP_AccountMenu;
-type D_GetAccountMenu_Popup={popup: TR_MultiPageMenu<G_GetAccountMenuItem>; popupType: "DROPDOWN"; beReused: true;};
+type Popup_GetAccountMenu=TR_MultiPageMenu<MP_AccountMenu>;
+type D_GetAccountMenu_Popup={popup: Popup_GetAccountMenu; popupType: "DROPDOWN"; beReused: true;};
 type D_GhostGrid={rows: number;};
 type D_GoogleLoginExternalUrl={url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";}["url"];
 //cspell:ignore ynlk ynsd ynse ynsk ynsl ynss ynsz

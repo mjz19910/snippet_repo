@@ -610,6 +610,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Signal_GetNotificationsMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Signal_Omit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "StateTag";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:A_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:CF_TA_OpenPopup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:DE_ShareEntityService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:D_PlaylistHeader.onDescriptionTap";}
@@ -852,6 +853,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_Description";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_Title";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_TitleData";}
+		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_GetAccountMenu";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "DE_ShareEntityService";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "D_PlaylistHeader.onDescriptionTap";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "G_Action_GetNotificationsMenu";}
@@ -941,6 +943,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_TrackedObj_2; t: Types.CF_TE_TrackedObj_2_; v: "AD_ReelDismissal";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "D_NotificationMenu_PopupItemMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "P_NotificationMenu_Popup";}
+		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_TopbarMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "TR_MultiPageMenu<MP_AccountMenu>";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "TR_MultiPageMenu_Empty";}
