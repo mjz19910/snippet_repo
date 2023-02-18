@@ -2,8 +2,6 @@ type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
 		//#region
-		|"CF_TR_MultiPageMenu"
-		|"CF_T_Signal"
 		|"CF_add_string_to_map"
 		|"CF_D_Button"
 		|"CF_D_CaseGen"
@@ -20,6 +18,7 @@ export namespace Prelude {
 		|"CF_DC_Generic_CTP"
 		|"CF_decode_continuation_token"
 		|"CF_GE_ResponseReceived"
+		|"CF_H_a"
 		|"CF_L_CTP_Params"
 		|"CF_L_Params"
 		|"CF_L_TP_Params"
@@ -40,6 +39,7 @@ export namespace Prelude {
 		|"CF_T_Items"
 		|"CF_T_SE_Signal_P1"
 		|"CF_T_SE_Signal"
+		|"CF_T_Signal"
 		|"CF_T_WCM_Unpack"
 		|"CF_T_WCM"
 		|"CF_TA_OpenPopup"
@@ -50,6 +50,7 @@ export namespace Prelude {
 		|"CF_TE_Endpoint_3"
 		|"CF_TE_Endpoint_Opt_3"
 		|"CF_TE_TrackedObj_2"
+		|"CF_TR_MultiPageMenu"
 		|"P_ParamParse"
 		//#endregion
 		;
@@ -57,8 +58,6 @@ export namespace Prelude {
 	// |"CF_D_STR"
 	export type CF_NEW_STR="CF_NEW_STR";
 	//#region
-	export type CF_TR_MultiPageMenu="CF_TR_MultiPageMenu";
-	export type CF_T_Signal="CF_T_Signal";
 	export type CF_add_string_to_map="CF_add_string_to_map";
 	export type CF_D_Button="CF_D_Button";
 	export type CF_D_CaseGen="CF_D_CaseGen";
@@ -75,6 +74,7 @@ export namespace Prelude {
 	export type CF_DC_Generic_CTP="CF_DC_Generic_CTP";
 	export type CF_decode_continuation_token="CF_decode_continuation_token";
 	export type CF_GE_ResponseReceived="CF_GE_ResponseReceived";
+	export type CF_H_a="CF_H_a";
 	export type CF_L_CTP_Params="CF_L_CTP_Params";
 	export type CF_L_Params="CF_L_Params";
 	export type CF_L_TP_Params="CF_L_TP_Params";
@@ -95,6 +95,7 @@ export namespace Prelude {
 	export type CF_T_Items="CF_T_Items";
 	export type CF_T_SE_Signal_P1="CF_T_SE_Signal_P1";
 	export type CF_T_SE_Signal="CF_T_SE_Signal";
+	export type CF_T_Signal="CF_T_Signal";
 	export type CF_T_WCM_Unpack="CF_T_WCM_Unpack";
 	export type CF_T_WCM="CF_T_WCM";
 	export type CF_TA_OpenPopup="CF_TA_OpenPopup";
@@ -105,6 +106,7 @@ export namespace Prelude {
 	export type CF_TE_Endpoint_3="CF_TE_Endpoint_3";
 	export type CF_TE_Endpoint_Opt_3="CF_TE_Endpoint_Opt_3";
 	export type CF_TE_TrackedObj_2="CF_TE_TrackedObj_2";
+	export type CF_TR_MultiPageMenu="CF_TR_MultiPageMenu";
 	export type P_ParamParse="P_ParamParse";
 	//#endregion
 }
@@ -117,7 +119,6 @@ export namespace Types {
 	export type CF_NEW_GEN_=CF_NEW_GEN;
 	//#region
 	export type CF_TR_MultiPageMenu_=CF_TR_MultiPageMenu;
-	export type CF_T_Signal_=CF_T_Signal;
 	export type CF_decode_continuation_token_=CF_decode_continuation_token;
 	export type CF_add_string_to_map_=CF_add_string_to_map;
 	export type CF_D_CaseGen_=CF_D_CaseGen;
@@ -133,6 +134,7 @@ export namespace Types {
 	export type CF_D_Video_Handle_=CF_D_Video_Handle;
 	export type CF_DC_Generic_CTP_=CF_DC_Generic_CTP;
 	export type CF_GE_ResponseReceived_=CF_GE_ResponseReceived;
+	export type CF_H_a_=CF_H_a;
 	export type CF_L_CTP_Params_=CF_L_CTP_Params;
 	export type CF_L_Params_=CF_L_Params;
 	export type CF_L_TP_Params_=CF_L_TP_Params;
@@ -151,6 +153,7 @@ export namespace Types {
 	export type CF_T_Items_=CF_T_Items;
 	export type CF_T_Items_TP_=CF_T_Items_TP;
 	export type CF_T_SE_Signal_=CF_T_SE_Signal;
+	export type CF_T_Signal_=CF_T_Signal;
 	export type CF_T_SE_Signal_P1_=CF_T_SE_Signal_P1;
 	export type CF_T_WCM_=CF_T_WCM;
 	export type CF_T_WCM_Unpack_=CF_T_WCM_Unpack;

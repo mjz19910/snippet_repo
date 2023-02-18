@@ -19,6 +19,7 @@ type CF_L_Params=T_ExtractImport<"CF_L_Params">|"CF_L_Params";
 type CF_L_TP_Params=T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params";
 type CF_TR_MultiPageMenu=T_ExtractImport<"CF_TR_MultiPageMenu">|"CF_TR_MultiPageMenu";
 type CF_M_s=T_ExtractImport<"CF_M_s">|"CF_M_s"|GCF_s;
+type CF_H_a=T_ExtractImport<"CF_H_a">|"CF_H_a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE";
 type CF_M_w=T_ExtractImport<"CF_M_w">|"CF_M_w"|GCF_w;
 type CF_M_y=T_ExtractImport<"CF_M_y">|"CF_M_y";

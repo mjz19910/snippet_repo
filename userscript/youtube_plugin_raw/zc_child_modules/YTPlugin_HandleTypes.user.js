@@ -1156,12 +1156,12 @@ class HandleTypes extends ServiceMethods {
 	/**
 	 * @protected
 	 * @template V @template {PropertyKey} K @template {{[U in K]:T_VW<{}>;}} T
-	 * @arg {K} k @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>V} f
+	 * @arg {K} k @arg {CF_H_a} cf @arg {T} x @arg {(this:this,x:T[K][0])=>V} f
 	 * @returns {[y,ret]}
 	 */
 	H_a(cf,k,x,f,save=false) {
 		if(save) this.k(cf,x);
-		const {[k]: [a],...y}=x;
+		const {[k]: [a],...y}=this.s(cf,x);
 		const ret=f.call(this,a);
 		return [y,ret];
 	}
@@ -2016,7 +2016,7 @@ class HandleTypes extends ServiceMethods {
 			kk_x.splice(idx,1);
 		}
 		this.D_VideoPlaybackShape_S_Params(obj_sparams);
-		const {lsparams}=x;
+		const {lsparams}=this.s(cf,x);
 		idx=kk_x.indexOf("lsparams");
 		kk_x.splice(idx,1);
 		let kk_lsparams=this.split_str(lsparams);
@@ -2292,7 +2292,7 @@ class HandleTypes extends ServiceMethods {
 	RB_TrackingObj_t1(x) {
 		const cf="RB_TrackingObj_t1";
 		if(1 in x) {
-			const {1: [,f1]}=x;
+			const {1: [,f1]}=this.s(cf,x);
 			this.save_number(`${cf}.f1`,f1);
 		}
 		if(19 in x) {
@@ -2604,9 +2604,9 @@ class HandleTypes extends ServiceMethods {
 				this.P_get_pdg_buy_flow_params(u);
 			} break;
 			case "continuation.params": {
-				/** @type {P_continuation_params} */
+				/** @type {PR_continuation_params} */
 				let u=as_any(x);
-				this.P_continuation_params(u);
+				this.PR_continuation_params(u);
 			} break;
 			case "create_comment.params": {
 				/** @type {P_create_comment_params} */
@@ -2630,70 +2630,208 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @template T @arg {T_VSR<T>} x @arg {(x:T)=>void} f */
+	T_VSR(x,f) {x;f;}
 	/** @private @arg {P_trending_bp} x */
-	P_trending_bp(x) {x;}
+	P_trending_bp(x) {
+		const cf="P_trending_bp";
+		const {77: a}=this.s(cf,x);
+		this.T_VSR(a,x => this.save_string(`${cf}.f77`,x));
+	}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
-	P_aadc_guidelines_state_entity_key(x) {x;}
+	P_aadc_guidelines_state_entity_key(x) {
+		const cf="P_aadc_guidelines_state_entity_key";
+		const {2: a}=this.s(cf,x);
+		this.T_VSR(a,x => this.save_string(`${cf}.a`,x));
+	}
 	/** @private @arg {P_create_comment_params} x */
-	P_create_comment_params(x) {x;}
-	/** @private @arg {P_continuation_params} x */
-	P_continuation_params(x) {x;}
+	P_create_comment_params(x) {
+		const cf="P_create_comment_params";
+		const {2: a}=this.s(cf,x);
+		this.T_VSR(a,x => this.videoId(x));
+	}
+	/** @private @arg {PD_continuation_params} x */
+	PD_continuation_params(x) {
+		const cf="PD_continuation_params";
+		const {3: a}=this.s(cf,x);
+		a;
+		debugger;
+	}
+	/** @private @arg {PR_continuation_params} x */
+	PR_continuation_params(x) {
+		const cf="PR_continuation_params";
+		const {0x94d81d4: n}=this.s(cf,x);
+		debugger;
+		this.PD_continuation_params(n);
+	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
-	P_get_pdg_buy_flow_params(x) {x;}
+	P_get_pdg_buy_flow_params(x) {
+		const cf="P_get_pdg_buy_flow_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_reel_sequence_params} x */
-	P_reel_sequence_params(x) {x;}
+	P_reel_sequence_params(x) {
+		const cf="P_reel_sequence_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
-	P_continuation_request_reel_watch_sequence_token(x) {x;}
+	P_continuation_request_reel_watch_sequence_token(x) {
+		const cf="P_continuation_request_reel_watch_sequence_token";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
-	P_transcript_track_selection_serialized_params(x) {x;}
+	P_transcript_track_selection_serialized_params(x) {
+		const cf="P_transcript_track_selection_serialized_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_transcript_track_selection_entity_key} x */
-	P_transcript_track_selection_entity_key(x) {x;}
+	P_transcript_track_selection_entity_key(x) {
+		const cf="P_transcript_track_selection_entity_key";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_get_transcript_params} x */
-	P_get_transcript_params(x) {x;}
+	P_get_transcript_params(x) {
+		const cf="P_get_transcript_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_shorts_source_bp} x */
-	P_shorts_source_bp(x) {x;}
+	P_shorts_source_bp(x) {
+		const cf="P_shorts_source_bp";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_subscription_state_key} x */
-	P_subscription_state_key(x) {x;}
+	P_subscription_state_key(x) {
+		const cf="P_subscription_state_key";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_create_backstage_post_params} x */
-	P_create_backstage_post_params(x) {x;}
+	P_create_backstage_post_params(x) {
+		const cf="P_create_backstage_post_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_load_markers_entity_key} x */
-	P_load_markers_entity_key(x) {x;}
+	P_load_markers_entity_key(x) {
+		const cf="P_load_markers_entity_key";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_watch_playlist_params} x */
-	P_watch_playlist_params(x) {x;}
+	P_watch_playlist_params(x) {
+		const cf="P_watch_playlist_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_playlist_loop_state_entity_key} x */
-	P_playlist_loop_state_entity_key(x) {x;}
+	P_playlist_loop_state_entity_key(x) {
+		const cf="P_playlist_loop_state_entity_key";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_entity_key_normal} x */
-	P_entity_key_normal(x) {x;}
+	P_entity_key_normal(x) {
+		const cf="P_entity_key_normal";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
-	P_continuation_request_watch_next_token(x) {x;}
+	P_continuation_request_watch_next_token(x) {
+		const cf="P_continuation_request_watch_next_token";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_unsubscribe_params} x */
-	P_unsubscribe_params(x) {x;}
+	P_unsubscribe_params(x) {
+		const cf="P_unsubscribe_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_subscribe_params} x */
-	P_subscribe_params(x) {x;}
+	P_subscribe_params(x) {
+		const cf="P_subscribe_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_subscribe_button_entity_key} x */
-	P_subscribe_button_entity_key(x) {x;}
+	P_subscribe_button_entity_key(x) {
+		const cf="P_subscribe_button_entity_key";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_dislike_params} x */
-	P_dislike_params(x) {x;}
+	P_dislike_params(x) {
+		const cf="P_dislike_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_remove_like_params} x */
-	P_remove_like_params(x) {x;}
+	P_remove_like_params(x) {
+		const cf="P_remove_like_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_entity_key} x */
-	P_entity_key(x) {x;}
+	P_entity_key(x) {
+		const cf="P_entity_key";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_playability_status_context_params} x */
-	P_playability_status_context_params(x) {x;}
+	P_playability_status_context_params(x) {
+		const cf="P_playability_status_context_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_like_params} x */
-	P_like_params(x) {x;}
+	P_like_params(x) {
+		const cf="P_like_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
-	P_logging_context_serialized_context_data(x) {x;}
+	P_logging_context_serialized_context_data(x) {
+		const cf="P_logging_context_serialized_context_data";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_reel_params} x */
-	P_reel_params(x) {x;}
+	P_reel_params(x) {
+		const cf="P_reel_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
-	P_ad_layout_ad_serving_data_entry(x) {x;}
+	P_ad_layout_ad_serving_data_entry(x) {
+		const cf="P_ad_layout_ad_serving_data_entry";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
-	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
+	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
+		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_continuation_request_browse_token} x */
-	P_continuation_request_browse_token(x) {x;}
+	P_continuation_request_browse_token(x) {
+		const cf="P_continuation_request_browse_token";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @arg {P_create_playlist_params} x */
-	P_create_playlist_params(x) {x;}
+	P_create_playlist_params(x) {
+		const cf="P_create_playlist_params";
+		const {1: f1}=this.s(cf,x);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
 	T_D32(x,f) {
 		if(!x) {debugger; return;}
@@ -2703,8 +2841,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params";
+		const {30: f30}=this.s(cf,x);
+		this.T_D32(f30,x => this.save_number(`${cf}.f30`,x));
 		if(30 in x) {
-			const {30: f30,71: f71}=x;
+			const {30: f30,71: f71}=this.s(cf,x);
 			this.T_D32(f30,x => this.save_number(`${cf}.f30`,x));
 			this.T_D32(f71,x => this.save_number(`${cf}.f71`,x));
 			return;
