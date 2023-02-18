@@ -242,7 +242,8 @@ class IndexedDBService extends BaseService {
 		if(this.get_all_waiting_keys.includes(key)) {
 			for(let waiter of this.waiting_promises) {
 				if(waiter[0]===key) {
-					debugger;
+					let res=await waiter[1];
+					return res;
 				}
 			}
 		}
