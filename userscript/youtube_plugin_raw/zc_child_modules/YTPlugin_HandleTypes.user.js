@@ -2201,9 +2201,10 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {BinaryVe} x */
 	BinaryVe(x) {
 		switch(x) {
-			default: debugger; break;
+			default: x; debugger; break;
 			case 3832:
 			case 3854:
+			case 5754: break;
 		}
 	}
 	/** @protected @arg {RB_Obj_f19} x @name V_VeDescObj */
