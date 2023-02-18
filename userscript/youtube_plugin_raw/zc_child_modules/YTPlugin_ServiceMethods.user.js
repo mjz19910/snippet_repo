@@ -7673,6 +7673,53 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(icon);
 		this.G_Text(title);
 	}
+	/** @arg {{}} x @arg {string[]} [k_acc] */
+	make_key_for(x,k_acc=[],lim=4) {
+		if(lim<=0) return k_acc.join(".");
+		if(x instanceof Array) {
+			k_acc.push("0");
+			return x[0];
+		}
+		let kk1=Object.keys(x);
+		let r=[];
+		for(let kx of kk1) {
+			if(kx=="clickTrackingParams") continue;
+			if(kx=="commandMetadata") continue;
+			r.push(kx);
+		}
+		if(r.length===0) return k_acc.join(".");
+		let k1=r[0];
+		k_acc.push(k1);
+		/** @type {{[U in string]?:unknown}} */
+		let xw=x;
+		let nv=xw[k1];
+		if(typeof nv!=="object") return k_acc.join(".");
+		if(nv===null) return k_acc.join(".");
+		let nvk=Object.keys(nv);
+		r=[];
+		for(let kx of nvk) {
+			if(kx=="playlistId") continue;
+			if(kx=="params") continue;
+			r.push(kx);
+		}
+		k1=r[0];
+		k_acc.push(k1);
+		xw=nv;
+		nv=xw[k1];
+		if(typeof nv!=="object") return k_acc.join(".");
+		if(nv===null) return k_acc.join(".");
+		nv=this.make_key_for(nv,k_acc,2);
+		if(typeof nv!=="object") return k_acc.join(".");
+		if(nv===null) return k_acc.join(".");
+		nvk=Object.keys(nv);
+		r=[];
+		for(let kx of nvk) {
+			if(kx=="action") continue;
+			r.push(kx);
+		}
+		k_acc.push(r[0]);
+		return k_acc.join(".");
+	}
 	/** @public @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
 	/** @private @arg {D_PlaylistHeader} x */

@@ -2360,6 +2360,22 @@ type D_PlaylistAddToOption={
 	trackingParams: string;
 };
 type D_PlaylistByline={text: G_Text;};
+type D_InlineForm={
+	formField: R_TextInputFormField;
+	editButton: R_Button;
+	saveButton: R_Button;
+	cancelButton: R_Button;
+	textDisplayed: G_Text;
+	style: "INLINE_FORM_STYLE_TITLE";
+};
+type R_InlineForm={inlineFormRenderer: D_InlineForm;};
+type R_DropdownFormField={
+	dropdownFormFieldRenderer: {
+		dropdown: R_Dropdown;
+		key: "playlistEditEndpoint.actions.0.playlistPrivacy";
+		onChange: E_PlaylistEdit;
+	};
+};
 type D_PlaylistHeader={
 	playlistId: D_PlaylistId;
 	title: G_Text;
@@ -2385,6 +2401,11 @@ type D_PlaylistHeader={
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
 	descriptionTapText: G_Text;
+	shareButton?: R_Button;
+	titleForm?: R_InlineForm|R_InlineForm;
+	descriptionForm?: R_InlineForm;
+	// key = playlistEditEndpoint.actions.0.playlistPrivacy
+	privacyForm?: R_DropdownFormField;
 };
 type D_PlaylistSidebar={
 	items: G_PlaylistSidebarItem[];
