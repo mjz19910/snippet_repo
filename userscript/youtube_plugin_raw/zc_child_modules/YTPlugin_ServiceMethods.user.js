@@ -1056,11 +1056,20 @@ class ServiceMethods extends ServiceData {
 		if(popupType!=="DIALOG") {debugger; return;}
 		this.R_FancyDismissibleDialog(popup);
 	}
-	/** @arg {Partial<R_FancyDismissibleDialog&R_UnifiedSharePanel>} x */
+	/** @private @arg {R_AboutThisAd} x */
+	R_AboutThisAd(x) {this.H_("aboutThisAdRenderer",x,this.D_AboutThisAd);}
+	/** @private @arg {D_AboutThisAd} x */
+	D_AboutThisAd(x) {
+		this.y("D_AboutThisAd","url",x,(x,cf) => {
+			let url=this.UrlWrappedValueT(x);
+			this.parser.parse_url(cf,as(url));
+		});
+	}
+	/** @arg {R_FancyDismissibleDialog|R_UnifiedSharePanel|R_AboutThisAd} x */
 	h_pt(x) {
-		if(x.fancyDismissibleDialogRenderer) return this.D_FancyDismissibleDialog(x.fancyDismissibleDialogRenderer);
-		if(x.unifiedSharePanelRenderer) return this.D_UnifiedSharePanel(x.unifiedSharePanelRenderer);
-		x;
+		if("fancyDismissibleDialogRenderer" in x) return this.R_FancyDismissibleDialog(x);
+		if("unifiedSharePanelRenderer" in x) return this.R_UnifiedSharePanel(x);
+		if("aboutThisAdRenderer" in x) return this.R_AboutThisAd(x);
 		debugger;
 	}
 	/** @template {{}} T @arg {T_OpenPopup_ReuseableDropdown<T>} x */
@@ -1074,6 +1083,8 @@ class ServiceMethods extends ServiceData {
 	R_MenuPopup(x) {this.H_("menuPopupRenderer",x,this.D_MenuPopup);}
 	/** @arg {D_MenuPopup} x */
 	D_MenuPopup(x) {this.y("D_MenuPopup","items",x,x => this.z(x,this.R_MenuServiceItem));}
+	/** @template {T extends infer U?{} extends U? never:U:never} R @template {{}} T @arg {T} x @returns {x is R} */
+	is_not_empty_obj(x) {return this.get_keys_of(x).length>0;}
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf,x) {
 		/** @type {TA_OpenPopup<unknown>} */
@@ -1108,9 +1119,12 @@ class ServiceMethods extends ServiceData {
 		if("popupType" in a&&"popup" in a) {
 			switch(a.popupType) {
 				case "DIALOG": {
-					/** @type {Partial<R_FancyDismissibleDialog>|{}|null|undefined} */
+					/** @type {R_FancyDismissibleDialog|{}|null|undefined} */
 					let pt=a.popup;
-					if(pt) this.h_pt(pt);
+					x: if(pt) {
+						if(!this.is_not_empty_obj(pt)) break x;
+						this.h_pt(pt);
+					}
 				} return a;
 				case "DROPDOWN": {
 					/** @type {Partial<TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>>|{}|string|number|bigint|null|undefined} */
@@ -1424,6 +1438,15 @@ class ServiceMethods extends ServiceData {
 			this.trackingParams(trackingParams);
 			this.z(topLevelButtons,x => {
 				if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
+				debugger;
+			});
+			return;
+		}
+		if("items" in x) {
+			const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.z(items,x => {
+				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 				debugger;
 			});
 			return;

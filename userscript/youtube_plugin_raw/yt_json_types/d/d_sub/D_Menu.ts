@@ -15,6 +15,9 @@ type D_Menu_old={
 	flexibleItems?: R_MenuFlexibleItem[];
 };
 type D_Menu={
+	items: R_MenuNavigationItem[];
+	trackingParams: string;
+}|{
 	items: R_MenuServiceItem[];
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
