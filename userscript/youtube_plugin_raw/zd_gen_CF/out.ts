@@ -102,6 +102,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_Hack";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_TagObj";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CF_H_a";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_Executor";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_GetSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ScrollToEngagementPanel";}
@@ -521,6 +522,40 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3854";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "O_DU_Persistence";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "PD_continuation_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "PR_continuation_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_aadc_guidelines_state_entity_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ad_layout_ad_serving_data_entry";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_continuation_request_browse_token";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_continuation_request_reel_watch_sequence_token";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_continuation_request_watch_next_token";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_create_backstage_post_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_create_comment_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_create_playlist_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_dislike_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_entity_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_entity_key_normal";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_get_pdg_buy_flow_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_get_transcript_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_like_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_load_markers_entity_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_logging_context_serialized_context_data";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_playability_status_context_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_playlist_loop_state_entity_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_reel_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_reel_player_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_reel_sequence_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_remove_like_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_shorts_source_bp";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscribe_button_entity_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscribe_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscription_state_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_transcript_track_selection_entity_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_transcript_track_selection_serialized_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_trending_bp";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_unsubscribe_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_watch_playlist_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_ShareEntityService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj:click_tracking";}

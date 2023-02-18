@@ -1992,13 +1992,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}
-	/** @private @arg {D_VideoPlaybackShape} x */
-	D_VideoPlaybackShape(x) {
+	/** @private @arg {D_VideoPlaybackShape} uv */
+	D_VideoPlaybackShape(uv) {
 		const cf1="D_VideoPlaybackShape";
-		const {sparams}=this.s(cf1,x);
+		const {sparams}=this.s(cf1,uv);
 		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
 		let obj_sparams=as({});
-		let kk_x=this.get_keys_of(x);
+		let kk_x=this.get_keys_of(uv);
 		let idx=kk_x.indexOf("sparams");
 		kk_x.splice(idx,1);
 		let kk_sparams=this.split_str(sparams);
@@ -2007,7 +2007,7 @@ class HandleTypes extends ServiceMethods {
 			trg[k]=src[k];
 		}
 		/** @type {any} */
-		let xa=x;
+		let xa=uv;
 		/** @type {typeof obj_sparams} */
 		let xt=xa;
 		for(let k of kk_sparams) {
@@ -2016,7 +2016,7 @@ class HandleTypes extends ServiceMethods {
 			kk_x.splice(idx,1);
 		}
 		this.D_VideoPlaybackShape_S_Params(obj_sparams);
-		const {lsparams}=this.s(cf,x);
+		const {lsparams}=uv;
 		idx=kk_x.indexOf("lsparams");
 		kk_x.splice(idx,1);
 		let kk_lsparams=this.split_str(lsparams);
@@ -2030,12 +2030,12 @@ class HandleTypes extends ServiceMethods {
 			kk_x.splice(idx,1);
 		}
 		/** @typedef {"sparams"|"lsparams"|keyof D_VideoPlaybackShape_S_Params|keyof D_VideoPlaybackShape_LS_Params} OmitY1Keys */
-		/** @type {Omit<typeof x,OmitY1Keys>} */
+		/** @type {Omit<typeof uv,OmitY1Keys>} */
 		let y1=as({});
 		/** @type {Exclude<(typeof kk_x)[number],OmitY1Keys>[]} */
 		let kk_y1=as(kk_x);
 		for(let k of kk_y1) {
-			set_obj(y1,x,k);
+			set_obj(y1,uv,k);
 		}
 		this.save_string(`${cf1}.sparams`,sparams);
 		this.save_string(`${cf1}.lsparams`,lsparams);
