@@ -2782,9 +2782,7 @@ class ServiceMethods extends ServiceData {
 	indexed_db_version=3;
 	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
 	indexed_db_put(key,value) {
-		this.indexed_db.put(key,value,this.indexed_db_version).then(() => {
-			console.log("done put");
-		});
+		this.indexed_db.put(key,value,this.indexed_db_version);
 	}
 	/** @protected @arg {`UC${string}`} x */
 	channelId(x) {this.D_ChannelId(x);}

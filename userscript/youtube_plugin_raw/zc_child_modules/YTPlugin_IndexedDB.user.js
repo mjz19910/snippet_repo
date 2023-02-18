@@ -118,18 +118,24 @@ class IndexedDBService extends BaseService {
 		this.committed_data.push(data);
 	}
 	log_db_actions=false;
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} arg_value @arg {number} version */
-	async put(key,arg_value,version) {
-		{
-			let value=arg_value;
-			if(!value) {debugger; return;}
-			let cache=this.cached_data.get(key);
-			let cache_key=value.key;
-			if(cache?.includes(cache_key)) return;
-			this.push_waiting_obj(key,value);
-			this.check_size(key);
-		}
-		if(this.database_opening||this.database_open) return;
+	/** @type {Promise<void>|null} */
+	open_db_promise=null;
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @arg {number} version */
+	put(key,value,version) {
+		if(!value) {debugger; return;}
+		let cache=this.cached_data.get(key);
+		let cache_key=value.key;
+		if(cache?.includes(cache_key)) return;
+		this.push_waiting_obj(key,value);
+		this.check_size(key);
+		if(this.open_db_promise) return;
+		this.open_db_promise=this.open_database(key,version);
+		this.open_db_promise.then(() => {
+			this.open_db_promise=null;
+		});
+	}
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
+	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
 		this.database_opening=true;
 		let db_req=indexedDB.open("yt_plugin",version);
