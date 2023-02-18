@@ -1308,7 +1308,10 @@ type D_FeedNudge={
 };
 type D_YoutubeUrl=DU_InternalUrl["url"]|DU_ChannelUrl["url"];
 //#region imported
-type D_AboutThisAd={url: D_UrlWrappedValue;};
+type D_AboutThisAd={
+	url: D_UrlWrappedValue;
+	trackingParams: string;
+};
 type D_Accessibility={accessibilityData: D_Label;};
 type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;
 type D_AccountSettingIdList=[407];

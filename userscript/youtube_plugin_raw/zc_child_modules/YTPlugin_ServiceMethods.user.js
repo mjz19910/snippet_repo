@@ -1060,10 +1060,10 @@ class ServiceMethods extends ServiceData {
 	R_AboutThisAd(x) {this.H_("aboutThisAdRenderer",x,this.D_AboutThisAd);}
 	/** @private @arg {D_AboutThisAd} x */
 	D_AboutThisAd(x) {
-		this.y("D_AboutThisAd","url",x,(x,cf) => {
-			let url=this.UrlWrappedValueT(x);
-			this.parser.parse_url(cf,as(url));
-		});
+		const cf="D_AboutThisAd";
+		const {url,trackingParams,...y}=this.s(cf,x); this.g(y);
+		let url2=this.UrlWrappedValueT(url);
+		this.parser.parse_url(cf,as(url2));
 	}
 	/** @arg {R_FancyDismissibleDialog|R_UnifiedSharePanel|R_AboutThisAd} x */
 	h_pt(x) {
