@@ -290,7 +290,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x) {
 		const cf="D_PlaylistSidebarPrimaryInfo";
-		const {thumbnailRenderer,title,stats,menu,navigationEndpoint,badges,description,showMoreText,...y}=this.D_Omit_ThumbnailOverlay(cf,x); this.g(y);
+		const {thumbnailRenderer,title,stats,menu,navigationEndpoint,badges,description,showMoreText,titleForm,descriptionForm,privacyForm,...y}=this.D_Omit_ThumbnailOverlay(cf,x); this.g(y);
 		this.R_PlaylistVideoThumbnail(thumbnailRenderer);
 		this.G_Text(title);
 		this.z(stats,this.G_Text);
@@ -299,6 +299,9 @@ class HandleTypes extends ServiceMethods {
 		this.z(badges,this.RMD_Badge);
 		this.tg(description);
 		this.G_Text(showMoreText);
+		this.t(titleForm,this.R_InlineForm);
+		this.t(descriptionForm,this.R_InlineForm);
+		this.t(privacyForm,this.R_DropdownFormField);
 	}
 	/** @private @arg {R_PdgBuyFlow} x */
 	R_PdgBuyFlow(x) {this.H_("pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}

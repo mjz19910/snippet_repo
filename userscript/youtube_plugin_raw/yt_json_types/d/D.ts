@@ -946,6 +946,9 @@ type D_PlaylistSidebarPrimaryInfo={
 	badges: RMD_Badge[];
 	description?: {};
 	showMoreText: G_Text;
+	titleForm?: R_InlineForm;
+	descriptionForm?: R_InlineForm;
+	privacyForm?: R_DropdownFormField;
 };
 type D_Radio={
 	playlistId: `RD${string}`;
