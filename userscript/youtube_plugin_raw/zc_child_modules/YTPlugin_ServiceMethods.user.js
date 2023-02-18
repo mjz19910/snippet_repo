@@ -7725,7 +7725,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x);
 		this.R_Button(playButton);
 		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.playlistId(playlistId);
@@ -7750,6 +7750,11 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(ownerText);
 		this.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
+		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
+		shareButton;
+		titleForm;
+		descriptionForm;
+		privacyForm;
 	}
 	/** @public @arg {D_FancyDismissibleDialog} x */
 	D_FancyDismissibleDialog(x) {
@@ -7757,6 +7762,7 @@ class ServiceMethods extends ServiceData {
 		const {dialogMessage,title,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(dialogMessage);
 		this.G_Text(confirmLabel);
+		title;
 		this.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_FancyDismissibleDialog} x */
