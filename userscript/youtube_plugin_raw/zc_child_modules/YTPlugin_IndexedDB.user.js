@@ -132,6 +132,7 @@ class IndexedDBService extends BaseService {
 		this.open_db_promise=this.open_database(key,version);
 		this.open_db_promise.catch(err => {
 			console.log("open_database error",err);
+			this.database_open=false;
 		}).then(() => {
 			this.open_db_promise=null;
 		});
