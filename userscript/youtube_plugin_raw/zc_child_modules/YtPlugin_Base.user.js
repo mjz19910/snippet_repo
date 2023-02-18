@@ -12,6 +12,9 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+
+const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
+
 //#region module init
 const __module_name__="mod$YoutubePluginBase";
 /** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
@@ -53,18 +56,28 @@ const path_map={
 	["./YTPlugin_ServiceMethods.user"]: ["mod","ServiceMethods"],
 	/** @type {["raw","DebugApi"]} */
 	["../DebugApi_raw/DebugApi.user.js"]: ["raw","DebugApi"],
+	/** @type {["mod","ServiceLoaderPlugin"]} */
+	["./YtPlugin_ServiceLoader_Plugin.user"]: ["mod","ServiceLoaderPlugin"],
+	/** @type {["mod","CodegenService"]} */
+	["./YTPlugin_Codegen.user"]: ["mod","CodegenService"],
+	/** @type {["mod","HandleTypes"]} */
+	["./YTPlugin_HandleTypes.user"]: ["mod","HandleTypes"],
+	/** @type {["mod","IndexedDBService"]} */
+	["./YTPlugin_IndexedDB.user"]: ["mod","IndexedDBService"],
+	/** @type {["mod","ParserService"]} */
+	["./YTPlugin_Parser_Service.user"]: ["mod","ParserService"],
 };
 /** @template {keyof typeof path_map} T @arg {T} x */
 function require(x) {
 	window.__plugin_modules__??={};
-	let all_modules=window.__plugin_modules__;
+	let M=window.__plugin_modules__;
 	if(x===void 0) {throw new Error("missing required");}
 	let loc=path_map[x];
 	if(loc[0]==="raw") {
-		let imp=all_modules[loc[1]];
+		let imp=M[loc[1]];
 		return imp;
 	}
-	let imp=all_modules[`${loc[0]}$${loc[1]}`];
+	let imp=M[`${loc[0]}$${loc[1]}`];
 	if(!imp) {debugger; throw new Error("missing require path map");}
 	return imp;
 }
@@ -1834,7 +1847,6 @@ class ServiceResolver {
 //#endregion
 //#region main
 function yt_plugin_base_main() {
-	const ServiceLoader=required(store["mod$ServiceLoaderPlugin"]).ServiceLoader;
 	setTimeout(() => {window.yt_plugin?.get_data_saver().num_bitmap_console();},4000);
 	const log_enabled_page_type_change=false;
 	/** @private @type {ResolverT<ServiceLoader,ServiceOptions>} */
@@ -1863,8 +1875,7 @@ function yt_plugin_base_main() {
 	services.modify_env.modify_global_env();
 
 	// wait for plugin requirements
-	const bs=required(store["mod$YoutubePluginBase"]);
-	bs.start_message_channel_loop(services.handle_types);
+	start_message_channel_loop(services.handle_types);
 	/** @private @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);

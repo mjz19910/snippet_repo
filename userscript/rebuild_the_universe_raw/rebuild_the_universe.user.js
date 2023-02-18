@@ -21,9 +21,9 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-const {do_export}=require("../DebugApi_raw/DebugApi.user.js");
+const {do_export,MulCompression}=require("../DebugApi_raw/DebugApi.user.js");
 
-const __module_name__="debug$RebuildTheUniverse"
+const __module_name__="debug$RebuildTheUniverse";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
@@ -71,7 +71,7 @@ function append_console_message(level,format_str,...args) {
 	if(!logger_updated) update_logger_vars();
 	let level_str=human_log_level(level);
 	if(level_str!=="unknown") {format_str="[%s] "+format_str;} else {format_str="[%o:%s] "+format_str;}
-	if(level>=LOG_LEVEL_ERROR_IMPL) {if(LogErrorAsConsoleError) {console.error(format_str,level_str,...args);} else {console.info(format_str,level_str,...args);}} else if(level===LOG_LEVEL_WARN_IMPL) {console.warn(format_str,level_str,...args);} else if(level===LOG_LEVEL_NOTICE_IMPL) {console.log(format_str,level_str,...args);} else if(level_str==="unknown") {console.info(format_str,level,level_str,...args);} else {console.info(format_str,level_str,...args);}
+	if(level>=LOG_LEVEL_ERROR_IMPL) {if(LogErrorAsConsoleError) {console.error(format_str,level_str,...args);} else {console.info(format_str,level_str,...args);} } else if(level===LOG_LEVEL_WARN_IMPL) {console.warn(format_str,level_str,...args);} else if(level===LOG_LEVEL_NOTICE_IMPL) {console.log(format_str,level_str,...args);} else if(level_str==="unknown") {console.info(format_str,level,level_str,...args);} else {console.info(format_str,level_str,...args);}
 	logger_updated=false;
 }
 /** @arg {number} level */
@@ -291,7 +291,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_obj @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
 		if(!fn_obj) {throw new Error("Unreachable (type of value is not \"function\")");}
-		if(fn_obj.type==="function_box") {if(fn_obj.return_type==="Box") {return this.handle_as_fn(vm,fn_obj.value,target_this,arg_arr);}} else if(fn_obj.type=="constructor_box") {throw new Error("Unexpected constructor");}
+		if(fn_obj.type==="function_box") {if(fn_obj.return_type==="Box") {return this.handle_as_fn(vm,fn_obj.value,target_this,arg_arr);} } else if(fn_obj.type=="constructor_box") {throw new Error("Unexpected constructor");}
 		else {throw new Error("Unreachable (type of value is never)");}
 	}
 	/** @arg {StackVMImpl} vm @arg {(...a: Box_CJS[]) => Promise<Box_CJS>} fn_value @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
@@ -318,7 +318,7 @@ class InstructionCallImpl extends InstructionImplBase {
 		if(typeof value_box==="function") {
 			if(this.debug) console.log("function is not boxed",value_box);
 			return this.handle_as_fn(vm,value_box,target_this,arg_arr);
-		} else if(value_box===null) {			throw new Error("Invalid");} else if(typeof value_box==="object"&&value_box.type==="void") {throw new Error("Attempt to call a void value");} else {
+		} else if(value_box===null) {throw new Error("Invalid");} else if(typeof value_box==="object"&&value_box.type==="void") {throw new Error("Attempt to call a void value");} else {
 			if("value" in value_box) {
 				console.log("VM: call error value_box not handled",typeof value_box,value_box,value_box.value);
 				this.handle_as_obj(vm,value_box,target_this,arg_arr);
@@ -668,8 +668,9 @@ class InstructionBlockTraceImpl extends InstructionImplBase {
 	/** @type {"vm_block_trace"} */
 	type="vm_block_trace";
 	/** @arg {StackVMImpl} _vm */
-	run(_vm) {}}
-class UnimplementedInstruction extends InstructionImplBase {run() {throw new Error("Unimplemented instruction");}}
+	run(_vm) {}
+}
+class UnimplementedInstruction extends InstructionImplBase {run() {throw new Error("Unimplemented instruction");} }
 const instruction_table={
 	append: new InstructionAppendImpl,
 	breakpoint: new InstructionBreakpointImpl,
@@ -731,7 +732,7 @@ const instruction_descriptor_arr=[
 class StackVmBaseImpl {
 	/** @arg {number} offset @arg {import("./ns.js").Box} value @arg {[string,...any[]]} lex_instruction */
 	update_instruction(offset,value,lex_instruction) {
-		if(offset==0) {if(value.type==="string") {lex_instruction[offset]=value.value;} else {			throw new Error("Invalid");}} else if(offset>0) {lex_instruction[offset]=value;} else {throw new Error("Unreachable");}
+		if(offset==0) {if(value.type==="string") {lex_instruction[offset]=value.value;} else {throw new Error("Invalid");} } else if(offset>0) {lex_instruction[offset]=value;} else {throw new Error("Unreachable");}
 		return lex_instruction;
 	}
 }
@@ -1089,7 +1090,7 @@ class DocumentWriteListImpl {
 		}
 		if(this.document_write_proxy) {this.document_write_proxy=null;}
 		if(this.document_write) {this.document_write=null;}
-		if(this.attached_document) {		this.attached_document=null;}
+		if(this.attached_document) {this.attached_document=null;}
 		if(should_try_to_destroy) {return true;}
 		return false;
 	}
@@ -1097,7 +1098,7 @@ class DocumentWriteListImpl {
 class UniqueIdGeneratorImplR {
 	constructor() {this.m_current=-1;}
 	/** @arg {number} current_value */
-	set_current(current_value) {	this.m_current=current_value;}
+	set_current(current_value) {this.m_current=current_value;}
 	current() {return this.m_current;}
 	next() {return this.m_current++;}
 }
@@ -1536,7 +1537,7 @@ class AutoBuyStateImplR {
 		}
 		this.val=window.totalAtome/window.atomepersecond;
 		let rep_val=this.val/(100*4*window.prestige);
-		if(Number.isFinite(rep_val)) {for(let i=0;i<8;i++) {			this.arr.push(rep_val*.75);}} else {rep_val=0.75;}
+		if(Number.isFinite(rep_val)) {for(let i=0;i<8;i++) {this.arr.push(rep_val*.75);} } else {rep_val=0.75;}
 		this.ratio_types=["10sec","1min","5min","30min","3hour"];
 		let ratio_duration=[10*1000,60*1000,5*60*1000,30*60*1000,3*60*60*1000];
 		let ratio_counts=[80,6,5,6,6];
@@ -1695,7 +1696,7 @@ class AutoBuyStateImplR {
 		let data_arr;
 		xx: if(prev_hist&&prev_hist.startsWith(json_tag)) {
 			let hist_data=prev_hist.slice(json_tag.length);
-			while(hist_data[0]==="@") {	hist_data=hist_data.slice(1);}
+			while(hist_data[0]==="@") {hist_data=hist_data.slice(1);}
 			data_arr=hist_data.split("|");
 			data_arr.push(json_hist);
 		} else {data_arr=[json_hist];}
@@ -1839,9 +1840,9 @@ class AutoBuyImplR {
 		this.local_data_loader=new DataLoaderImplR(localStorage);
 		this.state=new AutoBuyStateImplR(this.root_node);
 		this.debug=this.state.debug;
-		this.compressor=new bs.MulCompression;
+		this.compressor=new MulCompression;
 		let history_loaded=this.local_data_loader.load_str_arr("auto_buy_history_str");
-		if(history_loaded[0]) {this.state_history_arr=history_loaded[1];} else {	this.state_history_arr=["S"];}
+		if(history_loaded[0]) {this.state_history_arr=history_loaded[1];} else {this.state_history_arr=["S"];}
 		this.epoch_start_time=Date.now();
 		this.original_map=new Map;
 		/** @type {Map<string, (Node|string)>} */
@@ -2021,7 +2022,7 @@ class AutoBuyImplR {
 		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
 		if(action_count!==void 0) {
 			action_count=parseInt(action_count);
-			if(Number.isFinite(action_count)) {if(action_count>0) {localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];} else if(forced_action!=="NONE") {localStorage["auto_buy_forced_action"]="NONE,0";}}
+			if(Number.isFinite(action_count)) {if(action_count>0) {localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];} else if(forced_action!=="NONE") {localStorage["auto_buy_forced_action"]="NONE,0";} }
 		}
 	}
 	dom_pre_init() {
@@ -2077,7 +2078,7 @@ class AutoBuyImplR {
 	global_init() {
 		/** @type {any} */
 		let this_any=this;
-		if(window.g_auto_buy&&window.g_auto_buy!==this_any) {		window.g_auto_buy.destroy();}
+		if(window.g_auto_buy&&window.g_auto_buy!==this_any) {window.g_auto_buy.destroy();}
 		window.g_auto_buy=this_any;
 	}
 	destroy() {
@@ -2174,7 +2175,7 @@ class AutoBuyImplR {
 					int_hours++;
 					time_arr[0]=this.do_zero_pad(int_hours,"0",2);
 					console.log("sec+ min+ hour+");
-				} else {					console.log("sec+ min+");}
+				} else {console.log("sec+ min+");}
 				time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
 			} else {console.log("sec+");}
 			time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
@@ -2264,7 +2265,7 @@ class AutoBuyImplR {
 			window.timeplayed+=real_rate;
 		},66);
 		window.secondinterval=interval_id;
-		this.root_node.append_child(new IntervalIdNodeRef(interval_id,function() {	window.secondinterval=void 0;}));
+		this.root_node.append_child(new IntervalIdNodeRef(interval_id,function() {window.secondinterval=void 0;}));
 	}
 	set_timeplayed_update_interval() {
 		this.root_node.append_raw_interval(setInterval(function() {
@@ -2434,7 +2435,7 @@ class AutoBuyImplR {
 		await do_auto_unit_promote();
 		let money_diff=this.pre_total-window.totalAtome;
 		let loss_rate=money_diff/this.pre_total;
-		if(this.pre_total!=window.totalAtome) {	this.unit_upgradable_count++;}
+		if(this.pre_total!=window.totalAtome) {this.unit_upgradable_count++;}
 		if(this.pre_total!=window.totalAtome&&this.debug) {
 			let log_args=[];
 			let percent_change=(loss_rate*100).toFixed(5);
@@ -2839,7 +2840,7 @@ function enable_jquery_proxy_if_needed() {
 
 /** @arg {(value: any) => void} promise_accept */
 function do_load_fire_promise(promise_accept) {
-	if(document.firstChild) {	document.firstChild.remove();}
+	if(document.firstChild) {document.firstChild.remove();}
 	promise_accept(null);
 }
 
@@ -3060,7 +3061,7 @@ function main() {
 						debugger;
 						continue;
 					}
-					if(cur_node instanceof HTMLScriptElement) {	added_scripts.push(cur_node);}
+					if(cur_node instanceof HTMLScriptElement) {added_scripts.push(cur_node);}
 				}
 				let remove_node_list=mut_rec.removedNodes;
 				for(let j=0;j<remove_node_list.length;j++) {

@@ -10,20 +10,16 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
+
+const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last}=require("./YtPlugin_Base.user");
+const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
+
 // ==/UserScript==
 const __module_name__="mod$SupportService";
-const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-const as_any=bs.as_any; as_any;
-const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
-const split_string=bs.split_string;
-const split_string_once_ex=bs.split_string_once_ex;
-const split_string_once_last=bs.split_string_once_last;
-const {as}=bs;
-split_string_once_ex_v2;
 /** @private @arg {WA|null} _wa @template {[string,string]} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_v2<WA,S,D>} */
-function split_string_once_ex_v2(s,d=bs.as(","),_wa) {
+function split_string_once_ex_v2(s,d=as(","),_wa) {
 	if(s==="") {
 		/** @private @type {[]} */
 		let r=[];

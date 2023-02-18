@@ -10,9 +10,17 @@
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js
+
+const {do_export, CsiService, GFeedbackService, GuidedHelpService, TrackingServices, YtHandlers, YtPlugin, ModifyEnv}=require("./YtPlugin_Base.user");
+const {CodegenService}=require("./YTPlugin_Codegen.user");
+const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
+const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
+const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
+const {ParserService}=require("./YTPlugin_Parser_Service.user");
+const {LocalStorageSeenDatabase, Support_RS_Player, Support_RS_WatchPage, Support_RS_Watch, Support_RS_Page_Browse, Support_RS_Browse, Support_GenericApi, Support_EventInput, Support_VE37414, Support_VE, TypedefGenerator}=require("./YTPlugin_Support_Service.user");
+
 // ==/UserScript==
 const __module_name__="mod$ServiceLoaderPlugin";
-const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
@@ -21,38 +29,31 @@ if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
 	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
-		let ss=required(store.mod$SupportService);
-		let bs=required(store.mod$YoutubePluginBase);
-		const CodegenService=required(store.mod$CodegenService).CodegenService;
-		const ECatcherService=required(store.mod$ECatcherService).ECatcherService;
-		const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
-		const IndexedDBService=required(store.mod$IndexedDBService).IndexedDBService;
-		const ParserService=required(store.mod$ParserService).ParserService;
 		//#region 
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new IndexedDBService(x);
 		this.e_catcher_service=new ECatcherService(x);
 		//#endregion
-		this.csi_service=new bs.CsiService(x);
-		this.g_feedback_service=new bs.GFeedbackService(x);
-		this.guided_help_service=new bs.GuidedHelpService(x);
-		this.service_tracking=new bs.TrackingServices(x);
+		this.csi_service=new CsiService(x);
+		this.g_feedback_service=new GFeedbackService(x);
+		this.guided_help_service=new GuidedHelpService(x);
+		this.service_tracking=new TrackingServices(x);
 		this.parser_service=new ParserService(x);
-		this.yt_handlers=new bs.YtHandlers(x);
+		this.yt_handlers=new YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
-		this.local_seen_db=new ss.LocalStorageSeenDatabase(x);
-		this.yt_plugin=new bs.YtPlugin(x);
-		this.modify_env=new bs.ModifyEnv(x);
-		this.x_RS_Player=new ss.Support_RS_Player(x);
-		this.x_RS_WatchPage=new ss.Support_RS_WatchPage(x);
-		this.x_RS_Watch=new ss.Support_RS_Watch(x);
-		this.x_RS_Page_Browse=new ss.Support_RS_Page_Browse(x);
-		this.x_RS_Browse=new ss.Support_RS_Browse(x);
-		this.x_GenericApi=new ss.Support_GenericApi(x);
-		this.x_EventInput=new ss.Support_EventInput(x);
-		this.x_VE37414=new ss.Support_VE37414(x);
-		this.x_VE=new ss.Support_VE(x);
-		this.x_gen_typedef=new ss.TypedefGenerator(x);
+		this.local_seen_db=new LocalStorageSeenDatabase(x);
+		this.yt_plugin=new YtPlugin(x);
+		this.modify_env=new ModifyEnv(x);
+		this.x_RS_Player=new Support_RS_Player(x);
+		this.x_RS_WatchPage=new Support_RS_WatchPage(x);
+		this.x_RS_Watch=new Support_RS_Watch(x);
+		this.x_RS_Page_Browse=new Support_RS_Page_Browse(x);
+		this.x_RS_Browse=new Support_RS_Browse(x);
+		this.x_GenericApi=new Support_GenericApi(x);
+		this.x_EventInput=new Support_EventInput(x);
+		this.x_VE37414=new Support_VE37414(x);
+		this.x_VE=new Support_VE(x);
+		this.x_gen_typedef=new TypedefGenerator(x);
 	}
 }
 
