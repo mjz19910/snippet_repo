@@ -1376,9 +1376,8 @@ class ServiceMethods extends ServiceData {
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {D_Menu} x */
-	D_Menu(x) {
-		const cf="D_Menu";
+	/** @arg {D_Menu_WithItems} x */
+	D_Menu_WithItems(x) {
 		if("loggingDirectives" in x&&"targetId" in x) {
 			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(menuPopupAccessibility,this.D_Label);
@@ -1393,7 +1392,7 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		if("items" in x&&"targetId" in x) {
+		if("targetId" in x) {
 			const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
 			this.z(items,x => {
@@ -1433,20 +1432,26 @@ class ServiceMethods extends ServiceData {
 			});
 			return;
 		}
+		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.z(items,x => {
+			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+			debugger;
+		});
+	}
+	/** @private @arg {D_Menu} x */
+	D_Menu(x) {
+		const cf="D_Menu";
+		if("items" in x) {
+			return;
+		}
 		if("topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
 			this.z(topLevelButtons,x => {
 				if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
-				debugger;
-			});
-			return;
-		}
-		if("items" in x) {
-			const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			this.z(items,x => {
-				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+				if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
 				debugger;
 			});
 			return;
