@@ -2382,7 +2382,7 @@ type D_PlaylistHeader={
 	byline: R_PlaylistByline[];
 	descriptionTapText?: G_Text;
 }|{
-	playlistId: string;
+	playlistId: D_PlaylistId;
 	title: G_Text;
 	numVideosText: G_Text;
 	ownerText: G_Text;

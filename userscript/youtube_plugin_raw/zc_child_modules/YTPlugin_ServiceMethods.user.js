@@ -7630,7 +7630,35 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if("descriptionTapText" in x) {
+			const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.R_Button(playButton);
+			this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
+			this.playlistId(playlistId);
+			this.save_string(`${cf}.privacy`,privacy);
+			this.R_Button(shufflePlayButton);
+			this.trackingParams(trackingParams);
+			this.D_EditableDetails(editableDetails);
+			this.t(editorEndpoint,this.E_PlaylistEditor);
+			this.a_primitive_bool(isEditable);
+			this.E_VE3611(ownerEndpoint);
+			this.z(serviceEndpoints,this.E_PlaylistEdit);
+			this.R_Menu(moreActionsMenu);
+			this.G_Text(title);
+			this.G_Text(numVideosText);
+			this.t(descriptionTapText,this.G_Text);
+			this.g(descriptionText);
+			this.T_OpenPopup_Dialog(onDescriptionTap);
+			this.D_CanShare(shareData);
+			this.z(stats,this.G_Text);
+			this.z(briefStats,this.G_Text);
+			this.z(byline,this.R_PlaylistByline);
+			this.G_Text(ownerText);
+			this.G_Text(viewCountText);
+			this.R_CinematicContainer(cinematicContainer);
+			return;
+		}
+		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_Button(playButton);
 		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.playlistId(playlistId);
@@ -7638,16 +7666,12 @@ class ServiceMethods extends ServiceData {
 		this.R_Button(shufflePlayButton);
 		this.trackingParams(trackingParams);
 		this.D_EditableDetails(editableDetails);
-		this.t(editorEndpoint,this.E_PlaylistEditor);
 		this.a_primitive_bool(isEditable);
 		this.E_VE3611(ownerEndpoint);
 		this.z(serviceEndpoints,this.E_PlaylistEdit);
 		this.R_Menu(moreActionsMenu);
 		this.G_Text(title);
 		this.G_Text(numVideosText);
-		this.G_Text(descriptionTapText);
-		this.g(descriptionText);
-		this.T_OpenPopup_Dialog(onDescriptionTap);
 		this.D_CanShare(shareData);
 		this.z(stats,this.G_Text);
 		this.z(briefStats,this.G_Text);
