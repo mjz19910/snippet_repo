@@ -130,11 +130,9 @@ class IndexedDBService extends BaseService {
 		this.check_size(key);
 		if(this.open_db_promise) return;
 		this.open_db_promise=this.open_database(key,version);
-		this.open_db_promise.catch(err => {
-			console.log("open_database error",err);
-		}).then(() => {
-			this.open_db_promise=null;
-		});
+		this.open_db_promise
+			.catch(err => console.log("open_database error",err))
+			.then(() => this.open_db_promise=null);
 	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
