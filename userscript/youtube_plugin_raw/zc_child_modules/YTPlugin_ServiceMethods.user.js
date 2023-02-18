@@ -1428,11 +1428,10 @@ class ServiceMethods extends ServiceData {
 		x;
 		debugger;
 	}
-	/** @protected @arg {CF_T_Icon} cf1 @template {string} T @arg {T_Icon<T>} x */
-	T_Icon(cf1,x) {
-		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
-		this.save_string(`${cf1}:icon.iconType`,iconType);
+	/** @protected @arg {CF_T_Icon} cf @template {string} T @arg {T_Icon<T>} x */
+	T_Icon(cf,x) {
+		const {iconType,...y}=this.s_priv(cf,x); this.g(y);/*#destructure_done*/
+		this.save_string(`${cf}.iconType`,iconType);
 	}
 	/**
 	 * @arg {CF_TE_Endpoint_2} cf1
@@ -2565,7 +2564,7 @@ class ServiceMethods extends ServiceData {
 		this.save_rgba(`${cf2}.s3_c`,s3_c);
 		this.save_rgba(`${cf2}.s4_c`,s4_c);
 	}
-	/** @protected @arg {"D_Thumbnail"} cf1 @arg {D_LightColorPalette} x */
+	/** @protected @arg {"D_Thumbnail"|"D_PlaylistPanelVideo"} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
 		const cf0="D_LightColorPalette";
 		const cf2="light";
@@ -3208,8 +3207,10 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(text);
 		if(icon.iconType!=="PLAY_ALL") debugger;
 	}
+	/** @private @arg {T_Icon<"MIX">} x */
+	D_MixIcon(x) {this.T_Icon("D_MixIcon",x);}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {const cf="D_ThumbnailOverlayBottomPanel"; this.y(cf,"icon",x,x => this.T_Icon(`${cf}:icon`,x));}
+	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,this.D_MixIcon);}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement";

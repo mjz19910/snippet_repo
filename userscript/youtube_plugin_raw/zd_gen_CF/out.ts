@@ -296,6 +296,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InvalidationId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LearningResource";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette:D_PlaylistPanelVideo:light";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette:D_Thumbnail:light";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.dislike";}
@@ -944,6 +946,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_CollapseIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_MixIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PaidContentOverlay";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PromotedSparklesWeb:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ReelMultimixAttributionLabel";}

@@ -7,6 +7,7 @@ type GCF_s=
 	|CF_D_Params
 	|CF_D_ToggleButton
 	|CF_T_GM
+	|CF_T_Icon
 	|CF_T_Items_TP
 	|CF_T_SE_Signal
 	|CF_TA_OpenPopup
