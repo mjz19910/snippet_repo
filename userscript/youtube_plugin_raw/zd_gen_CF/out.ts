@@ -621,6 +621,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup_Empty";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:T_OpenPopup_Dialog";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:a";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:any";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:CF_TD_ItemSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:TD_ItemSection_1<any>";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
@@ -745,6 +746,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:D_GuideEntry_WithNavEP:icon";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:D_Icon_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:a";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_OpenPopup_Dialog:T_OpenPopup_Dialog";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_OpenPopup_Dialog:any";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_OpenPopup_Toast";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Playlist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_SecondaryResults";}
