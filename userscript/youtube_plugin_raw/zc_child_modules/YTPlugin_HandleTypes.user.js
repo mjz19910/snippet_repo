@@ -2219,7 +2219,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(editorEndpoint,this.E_PlaylistEditor);
 		this.a_primitive_bool(isEditable);
 		this.E_VE3611(ownerEndpoint);
-		this.z(serviceEndpoints,x=>{
+		this.z(serviceEndpoints,x => {
 			if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
 			this.codegen_typedef(cf,x,false);
 		});

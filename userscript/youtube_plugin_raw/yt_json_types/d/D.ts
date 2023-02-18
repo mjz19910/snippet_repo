@@ -2390,7 +2390,7 @@ type D_PlaylistHeader={
 	ownerEndpoint: E_VE3611;
 	editableDetails: D_CanDelete;
 	trackingParams: string;
-	serviceEndpoints: E_PlaylistEdit[];
+	serviceEndpoints: (E_PlaylistEdit|E_DeletePlaylist)[];
 	stats: G_Text[];
 	briefStats: G_Text[];
 	editorEndpoint?: E_PlaylistEditor;
