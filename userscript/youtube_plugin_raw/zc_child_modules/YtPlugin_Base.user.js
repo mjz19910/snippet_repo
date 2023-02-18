@@ -3077,6 +3077,51 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 //#endregion
+class ParentWalker {
+	/** @arg {JsonReplacerState} store @arg {unknown} obj */
+	constructor(store,obj) {
+		this.store=store;
+		this.obj=obj;
+	}
+	get() {
+		return this.obj;
+	}
+	get_parent() {
+		let parent_info=this.store.parent_map.get(this.obj);
+		if(!parent_info) return null;
+		let [index]=parent_info;
+		return new ParentWalker(this.store,this.store.object_store[index]);
+	}
+}
+class JsonReplacerState {
+	/** @constructor @public @arg {string} cf @arg {string[]} keys @arg {boolean} is_root */
+	constructor(cf,keys,is_root) {
+		this.object_count=0;
+		/** @type {string[]} */
+		this.cf_stack=[];
+		this.cur_cf=cf;
+		this.key_keep_arr=keys;
+		this.is_root=is_root;
+		this.k1="";
+		/** @api @public @type {unknown[]} */
+		this.object_store=[];
+		/** @api @public @type {Map<unknown,[number,string]>} */
+		this.parent_map=new Map;
+	}
+	/** @arg {string} cf */
+	set_cf(cf) {
+		this.cf_stack.push(this.cur_cf);
+		this.cur_cf=cf;
+	}
+	pop_cf() {
+		this.cur_cf=required(this.cf_stack.pop());
+	}
+	/** @arg {unknown} x */
+	get_parent_walker(x) {
+		return new ParentWalker(this,x);
+	}
+}
+export_(exports => {exports.JsonReplacerState=JsonReplacerState;});
 //#region exports
 export_((exports) => {
 	exports.ServiceData=ServiceData;

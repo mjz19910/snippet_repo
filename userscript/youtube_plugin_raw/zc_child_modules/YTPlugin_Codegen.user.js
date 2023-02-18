@@ -19,51 +19,6 @@ const __module_name__="mod$CodegenService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-class ParentWalker {
-	/** @arg {JsonReplacerState} store @arg {unknown} obj */
-	constructor(store,obj) {
-		this.store=store;
-		this.obj=obj;
-	}
-	get() {
-		return this.obj;
-	}
-	get_parent() {
-		let parent_info=this.store.parent_map.get(this.obj);
-		if(!parent_info) return null;
-		let [index]=parent_info;
-		return new ParentWalker(this.store,this.store.object_store[index]);
-	}
-}
-class JsonReplacerState {
-	/** @constructor @public @arg {string} cf @arg {string[]} keys @arg {boolean} is_root */
-	constructor(cf,keys,is_root) {
-		this.object_count=0;
-		/** @type {string[]} */
-		this.cf_stack=[];
-		this.cur_cf=cf;
-		this.key_keep_arr=keys;
-		this.is_root=is_root;
-		this.k1="";
-		/** @api @public @type {unknown[]} */
-		this.object_store=[];
-		/** @api @public @type {Map<unknown,[number,string]>} */
-		this.parent_map=new Map;
-	}
-	/** @arg {string} cf */
-	set_cf(cf) {
-		this.cf_stack.push(this.cur_cf);
-		this.cur_cf=cf;
-	}
-	pop_cf() {
-		this.cur_cf=required(this.cf_stack.pop());
-	}
-	/** @arg {unknown} x */
-	get_parent_walker(x) {
-		return new ParentWalker(this,x);
-	}
-}
-export_(exports => {exports.JsonReplacerState=JsonReplacerState;});
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
