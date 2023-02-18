@@ -944,7 +944,7 @@ type D_PlaylistSidebarPrimaryInfo={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	navigationEndpoint: E_Watch;
 	badges: RMD_Badge[];
-	description: {};
+	description?: {};
 	showMoreText: G_Text;
 };
 type D_Radio={

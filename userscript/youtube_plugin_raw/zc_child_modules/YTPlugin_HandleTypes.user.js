@@ -285,6 +285,8 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistSidebar(x) {this.H_("playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
 	R_PlaylistSidebarPrimaryInfo(x) {this.H_("playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
+	/** @private @template {{}} T @arg {({} extends T?T_DistributedKeysOf<T> extends []?T:never:never)|null|undefined} x */
+	tg(x) {this.t(x,this.g);}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x) {
 		const cf="D_PlaylistSidebarPrimaryInfo";
@@ -295,7 +297,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_Menu(menu);
 		this.E_Watch(navigationEndpoint);
 		this.z(badges,this.RMD_Badge);
-		this.g(description);
+		this.tg(description);
 		this.G_Text(showMoreText);
 	}
 	/** @private @arg {R_PdgBuyFlow} x */
