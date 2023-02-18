@@ -1036,7 +1036,15 @@ class ServiceMethods extends ServiceData {
 			switch(ax.popupType) {
 				default: debugger; break;
 				case "DIALOG": break;
-				case "DROPDOWN": break;
+				case "DROPDOWN": {
+					if(ax.beReused!==true) debugger;
+					if("multiPageMenuRenderer" in ax.popup) {
+						let a_menu=this.TR_MultiPageMenu("any",ax.popup);
+						this.MP_AccountMenu(a_menu);
+					} else {
+						debugger;
+					}
+				} break;
 			}
 		}
 		if("popupType" in a) {
