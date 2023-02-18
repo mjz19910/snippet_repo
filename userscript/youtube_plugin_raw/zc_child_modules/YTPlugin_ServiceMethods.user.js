@@ -6388,7 +6388,7 @@ class ServiceMethods extends ServiceData {
 			const {icon,menuRenderer,style,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
 			if(icon.iconType!=="VIDEO_CALL") debugger;
 			let uv=this.TR_MultiPageMenu("R_TopbarMenu",menuRenderer);
-			this.D_TopbarMenuButton_MenuItem(uv);
+			this.t(uv,this.D_TopbarMenuButton_MenuItem);
 			if(style!=="STYLE_DEFAULT") debugger;
 			return;
 		}
