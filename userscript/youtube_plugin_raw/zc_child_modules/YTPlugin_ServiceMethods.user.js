@@ -1266,24 +1266,14 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		if("loggingDirectives" in x) {
-			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(menuPopupAccessibility,this.D_Label);
-			this.tz(items,this.G_MenuItem);
-			if(trackingParams) this.trackingParams(trackingParams);
-			this.t(accessibility,this.D_Accessibility);
-			this.tz(flexibleItems,this.R_MenuFlexibleItem);
-			this.tz(topLevelButtons,this.D_Menu_Button);
-			return;
-		}
 		if("items" in x&&"targetId" in x) {
 			switch(x.targetId) {
 				default: debugger; break;
-				case "browse-video-menu-button": break;
 				case "playlist-browse-action-menu": break;
-				case "watch-related-menu-button": break;
 			}
+			return;
 		}
+		debugger;
 	}
 	/** @protected @arg {CF_T_Icon} cf1 @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(cf1,x) {
