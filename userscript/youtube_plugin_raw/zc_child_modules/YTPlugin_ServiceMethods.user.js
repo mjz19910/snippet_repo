@@ -1378,34 +1378,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {D_Menu_WithItems} x */
 	D_Menu_WithItems(x) {
-		if("loggingDirectives" in x&&"targetId" in x) {
-			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(menuPopupAccessibility,this.D_Label);
-			this.tz(items,this.G_MenuItem);
-			if(trackingParams) this.trackingParams(trackingParams);
-			this.t(accessibility,this.D_Accessibility);
-			this.tz(flexibleItems,this.R_MenuFlexibleItem);
-			this.tz(topLevelButtons,this.D_Menu_Button);
-			switch(targetId) {
-				default: debugger; break;
-				case "browse-video-menu-button":
-			}
-			return;
-		}
-		if("targetId" in x) {
-			const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			this.z(items,x => {
-				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-				debugger;
-			});
-			switch(targetId) {
-				default: debugger; break;
-				case "playlist-browse-action-menu": break;
-			}
-			return;
-		}
 		if("items" in x&&"topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,items,accessibility,flexibleItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
@@ -1440,12 +1412,42 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		});
 	}
+	/** @private @arg {D_Menu_WithTargetId} x */
+	D_Menu_WithTargetId(x) {
+		if("loggingDirectives" in x&&"targetId" in x) {
+			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(menuPopupAccessibility,this.D_Label);
+			this.tz(items,this.G_MenuItem);
+			if(trackingParams) this.trackingParams(trackingParams);
+			this.t(accessibility,this.D_Accessibility);
+			this.tz(flexibleItems,this.R_MenuFlexibleItem);
+			this.tz(topLevelButtons,this.D_Menu_Button);
+			switch(targetId) {
+				default: debugger; break;
+				case "browse-video-menu-button":
+			}
+			return;
+		}
+		if("targetId" in x) {
+			const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.z(items,x => {
+				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+				debugger;
+			});
+			switch(targetId) {
+				default: debugger; break;
+				case "playlist-browse-action-menu": break;
+			}
+			return;
+		}
+	}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu";
-		if("items" in x) {
-			return;
-		}
+		if("targetId" in x) return this.D_Menu_WithTargetId(x);
+		if("items" in x) return this.D_Menu_WithItems(x);
 		if("topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
