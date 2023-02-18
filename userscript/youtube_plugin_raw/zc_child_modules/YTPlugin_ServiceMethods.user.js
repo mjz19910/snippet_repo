@@ -1029,6 +1029,7 @@ class ServiceMethods extends ServiceData {
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
 		if("popupType" in a) {
+			this.codegen_typedef(`${cf1}_Popup`,a);
 			if(a.popupType==="DIALOG"&&"popup" in a) {
 				/** @type {R_FancyDismissibleDialog|{}|null|undefined} */
 				let pt=a.popup;
@@ -7669,7 +7670,7 @@ class ServiceMethods extends ServiceData {
 			this.G_Text(numVideosText);
 			this.t(descriptionTapText,this.G_Text);
 			this.g(descriptionText);
-			this.TA_OpenPopup(onDescriptionTap);
+			this.TA_OpenPopup(`${cf}.onDescriptionTap`,onDescriptionTap);
 			this.D_CanShare(shareData);
 			this.z(stats,this.G_Text);
 			this.z(briefStats,this.G_Text);

@@ -2380,7 +2380,7 @@ type D_PlaylistHeader={
 	onDescriptionTap: TA_OpenPopup<T_OpenPopup_Dialog<R_FancyDismissibleDialog>>;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
-	descriptionTapText?: G_Text;
+	descriptionTapText: G_Text;
 }|{
 	playlistId: D_PlaylistId;
 	title: G_Text;
