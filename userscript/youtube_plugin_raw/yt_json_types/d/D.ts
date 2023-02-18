@@ -1050,7 +1050,7 @@ type D_Omit_Menu_Radio={
 };
 type D_Omit_Menu_Video_Ex={ownerBadges: RMD_Badge[];};
 type D_NotificationMenu_PopupItemMenu=TR_MultiPageMenu<D_NotificationMenu_PopupItem>;
-type D_NotificationMenu_Popup={
+type Popup_NotificationMenu={
 	popup: D_NotificationMenu_PopupItemMenu;
 	popupType: "DROPDOWN";
 };
@@ -2365,6 +2365,7 @@ type D_DropdownFormField={
 	onChange: E_PlaylistEdit;
 };
 type R_DropdownFormField={dropdownFormFieldRenderer: D_DropdownFormField;};
+
 type D_PlaylistHeader={
 	playlistId: SD_PlaylistId;
 	title: G_Text;
@@ -2386,7 +2387,7 @@ type D_PlaylistHeader={
 	moreActionsMenu: R_Menu;
 	playButton: R_Button;
 	shufflePlayButton: R_Button;
-	onDescriptionTap: TA_OpenPopup<T_OpenPopup_Dialog<R_FancyDismissibleDialog>>;
+	onDescriptionTap: A_FancyDismissibleDialog;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
 	descriptionTapText: G_Text;

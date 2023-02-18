@@ -7,6 +7,17 @@ type TA_OpenPopup<T_Action>=TE_Endpoint_2<"openPopupAction",T_Action>;
 //#endregion
 //#region Actions 
 type A_AddChatItem=TE_Endpoint_2<"addChatItemAction",AD_AddChatItem>;
+type A_ConfirmDialog=TA_OpenPopup<Popup_ConfirmDialog>;
+type A_PdgBuyFlow=TA_OpenPopup<R_PdgBuyFlow>;
+type A_FancyDismissibleDialog=TA_OpenPopup<T_OpenPopup_Dialog<R_FancyDismissibleDialog>>;
+type A_ShareEntityService=TA_OpenPopup<Popup_ShareEntityService>;
+type A_GetNotificationsMenu=TA_OpenPopup<Popup_GetNotificationsMenu>;
+type A_NotificationMenuPopup=TA_OpenPopup<Popup_NotificationMenu>;
+type Popup_NotificationToast=T_OpenPopup_Toast<RA_Notification>;
+type A_NotificationToast=TA_OpenPopup<Popup_NotificationToast>;
+type OP_ClientSignal=TA_OpenPopup<P_ClientSignal>;
+type A_GetAccountMenu=TA_OpenPopup<D_GetAccountMenu_Popup>;
+type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
 type A_AddToGuideSection=TE_Endpoint_2<"addToGuideSectionAction",AD_AddToGuideSection>;
 type A_AppendContinuationItems=TE_Endpoint_2<"appendContinuationItemsAction",AD_AppendContinuationItems>;
 type A_ChangeEngagementPanelVisibility=TE_Endpoint_2<"changeEngagementPanelVisibilityAction",AD_ChangeEngagementPanelVisibility>;

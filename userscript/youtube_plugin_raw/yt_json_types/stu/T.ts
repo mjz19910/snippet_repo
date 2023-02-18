@@ -141,7 +141,6 @@ type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trac
 type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
 //#endregion
 //#region TA
-type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
 type G_CommentRepliesItem=R_Comment|R_ContinuationItem;
 type GA_Continuation_CommentRepliesItem=TA_Continuation<`comment-replies-item-${string}`,R_Comment|R_ContinuationItem>;
 //#endregion

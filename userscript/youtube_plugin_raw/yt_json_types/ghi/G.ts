@@ -303,8 +303,7 @@ type GC_EngagementPanelSectionShow=A_ChangeEngagementPanelVisibility|
 	C_ScrollToEngagementPanel;
 type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
 
-type G_Action_GetNotificationsMenu_Popup=T_DropdownPopup_ReuseFlag<P_NotificationMenu_Popup>;
-type G_Action_GetNotificationsMenu=TA_OpenPopup<G_Action_GetNotificationsMenu_Popup>;
+type Popup_GetNotificationsMenu=T_DropdownPopup_ReuseFlag<P_NotificationMenu_Popup>;
 type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
 type G_ClientSignal_Item=
 	|A_SendFeedback
@@ -537,7 +536,6 @@ type Ret_get_auto_type_name=
 	|"RMD_Badge"
 	|`T_OpenPopup_Dialog<${string}>`
 	|`T_OpenPopup_Toast<${string}>`
-	|`TA_OpenPopup<${string}>`
 	|"A_OpenPopup"
 	|"{}"
 	|`D_${"PrefetchHintConfig"}`

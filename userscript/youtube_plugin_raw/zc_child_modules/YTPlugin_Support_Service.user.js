@@ -885,7 +885,7 @@ class Support_RS_Browse extends ServiceMethods {
 }
 class Support_GenericApi extends ServiceMethods {
 	// //#region TODO
-	/** @private @arg {D_NotificationMenu_Popup} x */
+	/** @private @arg {Popup_NotificationMenu} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1020,7 +1020,7 @@ class Support_GenericApi extends ServiceMethods {
 		}));
 		if(unseenCount!==void 0) this.a_primitive_num(unseenCount);
 	}
-	/** @private @arg {RSG_NotificationMenu_Action} x */
+	/** @private @arg {A_NotificationMenuPopup} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action";
 		if("openPopupAction" in x) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);

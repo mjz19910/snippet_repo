@@ -54,15 +54,14 @@ type RSG_GetUnseenCount={
 	actions?: [AU_NotificationsUnseenCount];
 	unseenCount?: number;
 };
-type RSG_NotificationMenu_Action=TA_OpenPopup<D_NotificationMenu_Popup>;
 type RSG_NotificationMenu={
 	responseContext: RC_ResponseContext;
-	actions: RSG_NotificationMenu_Action[];
+	actions: A_NotificationMenuPopup[];
 	trackingParams: string;
 };
 type RSG_PdgBuyFlow={
 	responseContext: RC_ResponseContext;
-	command: TA_OpenPopup<R_PdgBuyFlow>;
+	command: A_PdgBuyFlow;
 	trackingParams: string;
 	frameworkUpdates: D_FrameworkUpdates;
 };
@@ -96,9 +95,10 @@ type RSL_RemoveLike={
 	responseContext: RC_ResponseContext;
 	actions?: (TA_OpenPopup_Empty|A_RemoveFromGuideSection)[];
 };
+
 type RSM_ChannelPreference={
 	responseContext: RC_ResponseContext;
-	actions: TA_OpenPopup<T_OpenPopup_Toast<RA_Notification>>[];
+	actions: A_NotificationToast[];
 	channelId: `UC${string}`;
 	newNotificationButton: R_SubscriptionNotificationToggleButton;
 	trackingParams: string;

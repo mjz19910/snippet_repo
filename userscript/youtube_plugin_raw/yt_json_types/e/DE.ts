@@ -50,7 +50,8 @@ type DE_ReelWatch=
 	;
 ;
 type DE_VE4724_Search={query: string;};
-type DE_ShareEntityService={serializedShareEntity: string; commands: TA_OpenPopup<Popup_ShareEntityService>[];};
+
+type DE_ShareEntityService={serializedShareEntity: string; commands: A_ShareEntityService[];};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type DE_SignalNavigation=T_Signal<"CHANNEL_SWITCHER"|"LIVE_CONTROL_ROOM">;
 //#endregion
