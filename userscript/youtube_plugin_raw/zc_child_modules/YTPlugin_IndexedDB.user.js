@@ -130,10 +130,9 @@ class IndexedDBService extends BaseService {
 		this.check_size(key);
 		if(this.open_db_promise) return;
 		this.open_db_promise=this.open_database(key,version);
-		this.open_db_promise.then(() => {
-			this.open_db_promise=null;
-		},err => {
+		this.open_db_promise.catch(err => {
 			console.log("open_database error",err);
+		}).then(() => {
 			this.open_db_promise=null;
 		});
 	}
@@ -257,7 +256,7 @@ class IndexedDBService extends BaseService {
 		let promise=this.getAllImpl(key);
 		this.waiting_promises.push([key,promise]);
 		await promise;
-		let idx=this.waiting_promises.findIndex(x=>x[0]===key);
+		let idx=this.waiting_promises.findIndex(x => x[0]===key);
 		if(idx>0) this.waiting_promises.splice(idx,1);
 		return promise;
 	}
