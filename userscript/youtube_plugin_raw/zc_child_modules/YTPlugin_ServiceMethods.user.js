@@ -1384,6 +1384,7 @@ class ServiceMethods extends ServiceData {
 			this.trackingParams(trackingParams);
 			this.z(items,x => {
 				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 				debugger;
 			});
 			switch(targetId) {
@@ -1397,11 +1398,13 @@ class ServiceMethods extends ServiceData {
 			this.trackingParams(trackingParams);
 			this.z(items,x => {
 				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+				x;
 				debugger;
 			});
 			this.z(flexibleItems,this.R_MenuFlexibleItem);
 			this.z(topLevelButtons,x => {
 				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+				if("buttonRenderer" in x) return this.R_Button(x);
 				debugger;
 			});
 			return;
