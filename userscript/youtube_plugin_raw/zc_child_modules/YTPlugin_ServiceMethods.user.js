@@ -2543,7 +2543,7 @@ class ServiceMethods extends ServiceData {
 		const cf2="dark";
 		/** @type {`${cf0}:${cf1}:${cf2}`} */
 		const cf3=`${cf0}:${cf1}:${cf2}`;
-		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf3,x); this.g(y);
 		this.save_rgba(`${cf2}.p_tc`,p_tc);
 		this.save_rgba(`${cf2}.s_tc`,s_tc);
 		this.save_rgba(`${cf2}.s1_c`,s1_c);
