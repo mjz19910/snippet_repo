@@ -1777,7 +1777,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 					return;
 				}
-				await this.indexed_db.put("boxed_id",{
+				this.indexed_db.put("boxed_id",{
 					key: find_key,
 					type: "str",
 					id: ["many_str",arr],
@@ -1876,7 +1876,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	async load_database() {
 		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
 		if(!update_id) {
-			await this.indexed_db.put("boxed_id",{
+			this.indexed_db.put("boxed_id",{
 				key: "boxed_id:update_id",
 				type: "update_id",
 				id: 1,
@@ -1885,7 +1885,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		} else {
 			if(update_id.id!==this.expected_id) {
 				await this.do_boxed_update_from_database();
-				await this.indexed_db.put("boxed_id",{
+				this.indexed_db.put("boxed_id",{
 					key: "boxed_id:update_id",
 					type: "update_id",
 					id: this.expected_id,
@@ -1893,7 +1893,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				return;
 			}
 			this.expected_id++;
-			await this.indexed_db.put("boxed_id",{
+			this.indexed_db.put("boxed_id",{
 				key: "boxed_id:update_id",
 				type: "update_id",
 				id: this.expected_id,
