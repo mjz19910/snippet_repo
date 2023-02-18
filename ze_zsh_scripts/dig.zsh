@@ -3,7 +3,7 @@ function do_dig() {
 	echo $$ >/tmp/dig_res.pid.$a2
 	find /tmp/ -maxdepth 1 -name 'dig_res.'$a2'.*' | xargs -rn 1 bash -c 'echo -n >"$0"'
 	echo $$ >/tmp/dig_res.pid.$a2
-	printf "%s\0" rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs --null -n 35 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
+	printf "%s\0" rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -0rn35 -P30 zsh -c '. ./dig.zsh child '$a2' "$@"'
 	list=(/tmp/dig_res.$a2.*)
 	TF_2=$(mktemp /tmp/dig_res.out.$1.XXX)
 	cat $list >> $TF_2
@@ -25,8 +25,13 @@ function dig_batch() {
 	popd -q
 }
 function run_child() {
+	a1=$1;
 	TF=$(mktemp /tmp/dig_res.$1.XXX)
 	shift
+	if ((${#@} == 0)); then
+		return 0
+	fi
+	echo "run_child" "$a1" "$@"
 	stdbuf -oL -eL dig @1.1.1.2 +time=40 +noall +answer +https "$@" >>"$TF"
 }
 ssd() {
@@ -52,7 +57,6 @@ case $MODE in
 	dig_batch $1;
 	;;
 "child")
-	echo "run_child" "$@"
 	run_child "$@";
 	;;
 "failure")
