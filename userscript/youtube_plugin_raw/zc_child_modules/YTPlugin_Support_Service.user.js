@@ -1212,6 +1212,8 @@ class Support_EventInput extends ServiceMethods {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}
+	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
+	is_R_PageTypeBrowse_Response_WithEp(x,t) {return this.is_TE_VE(x.endpoint,t);}
 	/** @private @arg {R_PageTypeBrowse["response"]} x */
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
@@ -1223,25 +1225,35 @@ class Support_EventInput extends ServiceMethods {
 						case "/":
 					}
 				} break;
-				case 96368: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					switch(url) {
-						case "/feed/subscriptions":
-					}
+			}
+
+			return;
+		}
+		if(this.is_R_PageTypeBrowse_Response_WithEp(x,3854)) {
+			return;
+		}
+		if(this.is_R_PageTypeBrowse_Response_WithEp(x,6827)) {
+			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			switch(url) {
+				default: url===""; debugger; switch(url) {
+					case "/":
 				} break;
+				case "/feed/history":
+				case "/feed/library":
 			}
 			return;
 		}
-		const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(url) {
-			default: url===""; debugger; switch(url) {
-				case "/":
-			} break;
-			case "/":
-			case "/feed/history":
-			case "/feed/library":
-			case "/feed/subscriptions":
+		if(this.is_R_PageTypeBrowse_Response_WithEp(x,96368)) {
+			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			switch(url) {
+				default: url===""; debugger; switch(url) {
+					case "/":
+				} break;
+				case "/feed/subscriptions":
+			}
+			return;
 		}
+		debugger;
 	}
 	/** @private @arg {R_PageTypeBrowse} x */
 	R_PageTypeBrowse(x) {

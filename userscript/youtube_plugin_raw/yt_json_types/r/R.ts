@@ -302,41 +302,55 @@ type R_PageTypeWatch={
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
+type R_VE6827_PageType_Browse_Response={
+	page: "browse";
+	endpoint: E_VE6827;
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		header: R_C4TabbedHeader;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+	};
+	url: "/feed/trending?bp=6gQJRkVleHBsb3Jl";
+	expirationTime: 1676762653957;
+}|{
+	page: "browse";
+	endpoint: E_VE6827;
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		header: R_FeedTabbedHeader;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+	};
+	url: "/feed/library";
+	expirationTime: 1676555594925;
+}|{
+	page: "browse";
+	endpoint: E_VE6827;
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+	};
+	url: "/feed/history";
+	expirationTime: 1676555455508;
+};
+
 type R_PageTypeBrowse=|{
 	endpoint: E_VE6827;
 	pageType: "browse";
 	fromHistory: false;
-	response: {
-		page: "browse";
-		endpoint: E_VE6827;
-		response: {
-			responseContext: RC_ResponseContext;
-			contents: R_TwoColumnBrowseResults;
-			trackingParams: string;
-			topbar: R_DesktopTopbar;
-		};
-		url: "/feed/history";
-		expirationTime: 1676555455508;
-	};
-	navigationDoneMs: 1676555455775;
+	response: R_VE6827_PageType_Browse_Response;
+	navigationDoneMs: number;
 }|{
 	endpoint: E_VE6827;
 	pageType: "browse";
 	fromHistory: false;
-	response: {
-		page: "browse";
-		endpoint: E_VE6827;
-		response: {
-			responseContext: RC_ResponseContext;
-			contents: R_TwoColumnBrowseResults;
-			header: R_FeedTabbedHeader;
-			trackingParams: string;
-			topbar: R_DesktopTopbar;
-		};
-		url: "/feed/library";
-		expirationTime: 1676555594925;
-	};
-	navigationDoneMs: 1676555295187;
+	response: R_VE6827_PageType_Browse_Response;
+	navigationDoneMs: number;
 }|{
 	endpoint: E_VE96368;
 	pageType: "browse";
@@ -389,23 +403,6 @@ type R_PageTypeBrowse=|{
 			onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
 		};
 		expirationTime: 1676534033586;
-	}|{
-		rootVe: 96368;
-		url: "/feed/subscriptions";
-		endpoint: E_VE96368;
-		page: "browse";
-		response: {
-			responseContext: RC_ResponseContext;
-			contents: R_TwoColumnBrowseResults;
-			header: R_FeedTabbedHeader;
-			trackingParams: string;
-			topbar: R_DesktopTopbar;
-			observedStateTags: {
-				stateTag: 3;
-				instruction: "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY";
-			}[];
-		};
-		expirationTime: 1676678289197;
 	};
 	fromHistory: boolean;
 	navigationDoneMs: number;
