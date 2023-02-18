@@ -1,13 +1,13 @@
 function do_dig() {
-	printf "$a2:"
+	printf "."
 	echo $$ >/tmp/dig_res.$a2.pid
 	echo /tmp/dig_res.$a2.* | xargs -n 1 bash -c 'echo -n >"$1"' v
-	echo rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -n 25 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
+	echo "rr1.sn-"$a2"n"{{0..9},{a..z}}{{0..9},{a..z}}".googlevideo.com" | stdbuf -i0 -o0 -e0 xargs -n 25 -P 30 zsh -c '. ./dig.zsh child '$a2' "$@"'
 	TF_2=$(mktemp /tmp/dig_res.$1.out.XXX)
 	cat /tmp/dig_res.$a2.* >> $TF_2
 	if ((`wc -l <$TF_2` != 0)); then
 		foo=$(<$TF_2)
-		printf "\n%s\n" $foo
+		printf "[$a2]\n%s\n" $foo
 	fi
 }
 function run() {
@@ -23,7 +23,6 @@ function dig_batch() {
 	popd -q
 }
 function run_child() {
-	printf "."
 	TF=$(mktemp /tmp/dig_res.$1.XXX)
 	shift
 	stdbuf -oL -eL dig @1.1.1.2 +time=40 +noall +answer +https "$@" >>"$TF"
