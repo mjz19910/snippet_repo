@@ -1031,6 +1031,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.serialized_params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "trending.bp";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params";}

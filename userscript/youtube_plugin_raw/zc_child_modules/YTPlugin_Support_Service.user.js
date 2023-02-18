@@ -1204,14 +1204,6 @@ class Support_EventInput extends ServiceMethods {
 		const {_tag,...y}=this.s(cf,x); this.g(y);
 		if(_tag!=="E_Settings") debugger;
 	}
-	/** @private @arg {R_PageTypeBrowse["endpoint"]} x */
-	R_Page_DefaultEndpoint(x) {
-		const cf="R_Page_DefaultEndpoint"; this.k(cf,x);
-		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
-		if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
-		debugger;
-	}
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
 	/** @private @arg {R_PageTypeBrowse["response"]} x */
@@ -1241,6 +1233,19 @@ class Support_EventInput extends ServiceMethods {
 		}
 		if(this.is_EP_Val(x,6827)) {
 			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(this.str_is_search(url)) {
+				let up=split_string_once(url,"?");
+				switch(up[0]) {
+					default: up[0]===""; debugger; switch(up[0]) {
+						case "/":
+					} break;
+					case "/feed/trending": {
+						let {bp,...y}=this.parse_url_search_params(up[1]); this.g(y);
+						this.params("trending.bp",bp);
+					}
+				}
+				return;
+			}
 			switch(url) {
 				default: url===""; debugger; switch(url) {
 					case "/":
