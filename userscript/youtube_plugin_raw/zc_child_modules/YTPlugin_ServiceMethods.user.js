@@ -1030,7 +1030,7 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {D_GetAccountMenu_Popup|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
@@ -1039,6 +1039,7 @@ class ServiceMethods extends ServiceData {
 				case "DROPDOWN": {
 					if(ax.beReused!==true) debugger;
 					if("multiPageMenuRenderer" in ax.popup) {
+						ax.popup.multiPageMenuRenderer.style;
 						let a_menu=this.TR_MultiPageMenu("any",ax.popup);
 						switch(a_menu.style) {
 							default: debugger; break;
@@ -6738,8 +6739,12 @@ class ServiceMethods extends ServiceData {
 		if(c!==true) debugger;
 		return a;
 	}
-	/** @public @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
-	TR_MultiPageMenu(cf,x) {return this.w(cf,"multiPageMenuRenderer",x);}
+	/** @public @arg {CF_TR_MultiPageMenu} cf @template T @template {TR_MultiPageMenu<T>} U @arg {U} x */
+	TR_MultiPageMenu(cf,x) {
+		let [dk]=this.get_keys_of(x);
+		if(dk!=="multiPageMenuRenderer") {debugger; return null;}
+		return this.w(cf,dk,x);
+	}
 	/** @private @arg {S_GetAccountMenu} x */
 	S_GetAccountMenu(x) {
 		const cf="S_GetAccountMenu";
@@ -6748,7 +6753,7 @@ class ServiceMethods extends ServiceData {
 		let [u]=this.z(actions,x => this.TA_OpenPopup("A_GetAccountMenu",x));
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("Popup_GetAccountMenu",x));
-		this.z(u2,this.G_GetAccountMenuItem);
+		this.z(u2,this.MP_AccountMenu);
 	}
 	/** @public @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {
