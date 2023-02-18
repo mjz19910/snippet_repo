@@ -271,20 +271,13 @@ class IndexedDBService extends BaseService {
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key */
 	async getAll(key) {
 		if(this.open_db_promise) {
-			this.get_all_waiting_keys.push(key);
-			console.log("getAll wait for close");
 			await this.open_db_promise;
-			let k_idx=this.get_all_waiting_keys.indexOf(key);
-			if(k_idx>0) this.get_all_waiting_keys.splice(k_idx,1);
 		}
-		if(this.get_all_waiting_keys.includes(key)) {
-			for(let waiter of this.waiting_promises) {
-				if(waiter[0]===key) {
-					let res=await waiter[1];
-					return res;
-				}
-			}
-			debugger;
+		let waiter_idx=this.waiting_promises.findIndex(x => x[0]===key);
+		if(waiter_idx>-1) {
+			let waiter=this.waiting_promises[waiter_idx];
+			let res=await waiter[1];
+			return res;
 		}
 		let promise=this.getAllImpl(key);
 		this.waiting_promises.push([key,promise]);
