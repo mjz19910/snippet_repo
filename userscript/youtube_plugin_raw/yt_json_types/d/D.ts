@@ -2385,27 +2385,6 @@ type D_PlaylistHeader={
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
 	descriptionTapText: G_Text;
-}|{
-	playlistId: D_PlaylistId;
-	title: G_Text;
-	numVideosText: G_Text;
-	ownerText: G_Text;
-	viewCountText: G_Text;
-	shareData: D_CanShare;
-	isEditable: false;
-	privacy: "PRIVATE";
-	ownerEndpoint: E_VE3611;
-	editableDetails: D_CanDelete;
-	trackingParams: string;
-	serviceEndpoints: E_PlaylistEdit[];
-	stats: G_Text[];
-	briefStats: G_Text[];
-	playlistHeaderBanner: R_HeroPlaylistThumbnail;
-	moreActionsMenu: R_Menu;
-	playButton: R_Button;
-	shufflePlayButton: R_Button;
-	cinematicContainer: R_CinematicContainer;
-	byline: R_PlaylistByline[];
 };
 type D_PlaylistSidebar={
 	items: G_PlaylistSidebarItem[];
