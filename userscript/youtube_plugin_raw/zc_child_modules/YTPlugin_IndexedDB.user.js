@@ -236,6 +236,7 @@ class IndexedDBService extends BaseService {
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key */
 	async getAll(key) {
 		if(this.open_db_promise) {
+			console.log("getAll wait for close");
 			await this.open_db_promise;
 		}
 		let typed_db=new TypedIndexedDb;
