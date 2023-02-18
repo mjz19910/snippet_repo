@@ -68,14 +68,19 @@ type GA_FormatItagArr=[
 	302,303,308,315,394,395,396,397,398,399,
 	400,401,
 ];
+type A_CopyFromPlaylist={
+	action: "ACTION_COPY_FROM_PLAYLIST";
+	sourcePlaylistId: "WL";
+};
+
 type GA_Playlist=
 	|A_AddVideo
 	|A_RemoveVideoByVideoId
 	|A_SetPlaylistVideoOrder
-	|{
-		action: "ACTION_COPY_FROM_PLAYLIST";
-		sourcePlaylistId: "WL";
-	}
+	|A_CopyFromPlaylist
+	|{action: "ACTION_SET_PLAYLIST_PRIVACY";}
+	|{action: "ACTION_SET_PLAYLIST_DESCRIPTION";}
+	|{action: "ACTION_SET_PLAYLIST_NAME";}
 	;
 ;
 type GC_Button=

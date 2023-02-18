@@ -237,6 +237,18 @@ class ServiceMethods extends ServiceData {
 					const {action: {},sourcePlaylistId,...y}=this.s(cf,x); this.g(y);
 					this.playlistId(sourcePlaylistId);
 				} break;
+				case "ACTION_SET_PLAYLIST_PRIVACY": {
+					const cf="A_SET_PLAYLIST_PRIVACY";
+					const {action: {},...y}=this.s(cf,x); this.g(y);
+				} break;
+				case "ACTION_SET_PLAYLIST_DESCRIPTION": {
+					const cf="A_SET_PLAYLIST_DESCRIPTION";
+					const {action: {},...y}=this.s(cf,x); this.g(y);
+				} break;
+				case "ACTION_SET_PLAYLIST_NAME": {
+					const cf="A_SET_PLAYLIST_NAME";
+					const {action: {},...y}=this.s(cf,x); this.g(y);
+				} break;
 				default: debugger; break;
 			}
 		});

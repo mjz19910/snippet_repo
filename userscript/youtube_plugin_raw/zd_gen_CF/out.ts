@@ -234,6 +234,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ContinuationItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CueRangeItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DarkColorPalette";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DarkColorPalette:D_MacroMarkersListItem:dark";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DarkColorPalette:D_PlaylistPanelVideo:dark";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DarkColorPalette:D_Thumbnail:dark";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DecoratedPlayerBar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopTopbar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopWatchAds";}
