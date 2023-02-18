@@ -15,6 +15,12 @@ type D_Menu_old={
 	flexibleItems?: R_MenuFlexibleItem[];
 };
 type D_Menu={
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons: R_SegmentedLikeDislikeButton[];
+	accessibility: TD_Accessibility<"More actions">;
+	flexibleItems: R_MenuFlexibleItem[];
+}|{
 	trackingParams: string;
 	topLevelButtons: R_PlaylistLoopButton[];
 }|{

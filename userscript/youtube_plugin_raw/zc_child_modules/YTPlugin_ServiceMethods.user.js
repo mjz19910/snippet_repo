@@ -1392,6 +1392,20 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
+		if("items" in x&&"topLevelButtons" in x) {
+			const {trackingParams,topLevelButtons,items,accessibility,flexibleItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.z(items,x => {
+				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+				debugger;
+			});
+			this.z(flexibleItems,this.R_MenuFlexibleItem);
+			this.z(topLevelButtons,x => {
+				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+				debugger;
+			});
+			return;
+		}
 		if("items" in x&&"accessibility" in x) {
 			const {trackingParams,items,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
