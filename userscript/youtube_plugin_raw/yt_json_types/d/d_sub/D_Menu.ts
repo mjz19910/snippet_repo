@@ -28,7 +28,13 @@ type D_Menu_WithItems={
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
 };
-type D_Menu_WithTargetId=|{
+type D_Menu_WithTargetId={
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons: R_Button[];
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "playlist-browse-action-menu";
+}|{
 	items: R_MenuServiceItem[];
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;

@@ -1431,6 +1431,25 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
+		if("topLevelButtons" in x) {
+			const {trackingParams,topLevelButtons,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			this.z(topLevelButtons,x => {
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			this.z(items,x => {
+				// if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+				debugger;
+			});
+			this.D_Accessibility(accessibility);
+			switch(targetId) {
+				default: debugger; break;
+				case "playlist-browse-action-menu": break;
+			}
+			return;
+		}
 		const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		this.z(items,x => {
@@ -1438,6 +1457,7 @@ class ServiceMethods extends ServiceData {
 			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 			debugger;
 		});
+		this.D_Accessibility(accessibility);
 		switch(targetId) {
 			default: debugger; break;
 			case "playlist-browse-action-menu": break;
