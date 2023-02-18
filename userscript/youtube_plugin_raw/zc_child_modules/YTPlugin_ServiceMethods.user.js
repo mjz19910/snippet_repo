@@ -1259,13 +1259,11 @@ class ServiceMethods extends ServiceData {
 			this.t(accessibility,this.D_Accessibility);
 			this.tz(flexibleItems,this.R_MenuFlexibleItem);
 			this.tz(topLevelButtons,this.D_Menu_Button);
-			this.t(targetId,x => {
-				switch(x) {
-					case "browse-video-menu-button":
-					case "watch-related-menu-button":
-				}
-				this.targetId(cf,x);
-			});
+			switch(targetId) {
+				default: debugger; break;
+				case "browse-video-menu-button":
+				case "watch-related-menu-button":
+			}
 			return;
 		}
 		if("loggingDirectives" in x) {
@@ -1278,8 +1276,9 @@ class ServiceMethods extends ServiceData {
 			this.tz(topLevelButtons,this.D_Menu_Button);
 			return;
 		}
-		if("targetId" in x) {
+		if("items" in x&&"targetId" in x) {
 			switch(x.targetId) {
+				default: debugger; break;
 				case "browse-video-menu-button": break;
 				case "playlist-browse-action-menu": break;
 				case "watch-related-menu-button": break;

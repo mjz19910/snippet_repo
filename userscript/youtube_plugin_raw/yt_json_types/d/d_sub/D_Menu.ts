@@ -15,35 +15,12 @@ type D_Menu_old={
 	flexibleItems?: R_MenuFlexibleItem[];
 };
 type D_Menu={
-	items?: R_MenuServiceItem[];
-	trackingParams?: string;
-	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
-	accessibility?: D_Accessibility;
-	menuPopupAccessibility?: TD_Label<"List of menu actions">;
-	flexibleItems?: R_MenuFlexibleItem[];
-}|{
-	items?: R_MenuServiceItem[];
-	trackingParams?: string;
-	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
-	accessibility?: D_Accessibility;
-	menuPopupAccessibility?: TD_Label<"List of menu actions">;
-	flexibleItems?: R_MenuFlexibleItem[];
-	targetId: D_Menu_TargetId;
-}|{
-	items?: R_MenuServiceItem[];
-	trackingParams?: string;
-	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
-	accessibility?: D_Accessibility;
-	menuPopupAccessibility?: TD_Label<"List of menu actions">;
-	flexibleItems?: R_MenuFlexibleItem[];
-	loggingDirectives: D_LoggingDirectives;
-}|{
-	items?: R_MenuServiceItem[];
-	trackingParams?: string;
-	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
-	accessibility?: D_Accessibility;
-	menuPopupAccessibility?: TD_Label<"List of menu actions">;
-	flexibleItems?: R_MenuFlexibleItem[];
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
+	accessibility: D_Accessibility;
+	menuPopupAccessibility: TD_Label<"List of menu actions">;
+	flexibleItems: R_MenuFlexibleItem[];
 	loggingDirectives: D_LoggingDirectives;
 	targetId: D_Menu_TargetId;
 }|{
