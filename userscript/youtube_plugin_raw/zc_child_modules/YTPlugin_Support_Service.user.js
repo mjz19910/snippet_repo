@@ -750,21 +750,29 @@ class Support_RS_Browse extends ServiceMethods {
 	RS_Browse(x) {
 		const cf="RS_Browse";
 		x: {
-			let jk=this.get_keys_of(x).filter(e => {
+			let kk=this.get_keys_of(x);
+			let jk=kk.filter(e => {
 				if(e==="responseContext") return false;
 				return true;
 			}).join();
 			// contents,header [tag_1]
 			{
-				if(jk==="contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-				if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
-				if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
-				if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
-				if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
-				if(jk==="contents,header,metadata,trackingParams,topbar,microformat,sidebar") break x;
-				if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
-				if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
-				if(jk==="contents,header,trackingParams,topbar") break x;
+				jk=kk.filter(e => {
+					if(e==="responseContext") return false;
+					if(e==="contents") return false;
+					if(e==="header") return false;
+					return true;
+				}).join();
+				if(jk==="metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+				if(jk==="trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
+				if(jk==="trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
+				if(jk==="metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
+				if(jk==="alerts,metadata,trackingParams,topbar,microformat,sidebar") break x;
+				if(jk==="trackingParams,topbar,observedStateTags,cacheMetadata") break x;
+				if(jk==="metadata,trackingParams,topbar,microformat,sidebar") break x;
+				if(jk==="trackingParams,topbar,onResponseReceivedActions") break x;
+				if(jk==="trackingParams,topbar,observedStateTags") break x;
+				if(jk==="trackingParams,topbar") break x;
 				if("contents" in x&&"header" in x) {
 					console.log(`-- [RS_Browse.jk_gen_tag_1] --\n\nif(jk==="${jk}") break x;`);
 					break x;
@@ -772,8 +780,13 @@ class Support_RS_Browse extends ServiceMethods {
 			}
 			// contents [tag_2]
 			{
-				if(jk==="contents,trackingParams,topbar,sidebar") break x;
-				if(jk==="contents,trackingParams,topbar") break x;
+				jk=kk.filter(e => {
+					if(e==="responseContext") return false;
+					if(e==="contents") return false;
+					return true;
+				}).join();
+				if(jk==="trackingParams,topbar,sidebar") break x;
+				if(jk==="trackingParams,topbar") break x;
 				if("contents" in x) {
 					console.log(`-- [RS_Browse.jk_gen_tag_2] --\n\nif(jk==="${jk}") break x;`);
 					break x;
@@ -781,6 +794,11 @@ class Support_RS_Browse extends ServiceMethods {
 			}
 			// -contents,header [tag_3]
 			{
+				jk=kk.filter(e => {
+					if(e==="responseContext") return false;
+					if(e==="header") return false;
+					return true;
+				}).join();
 				if(jk==="header,trackingParams,onResponseReceivedActions") break x;
 				if("header" in x) {
 					console.log(`-- [RS_Browse.tag_3] --\n\nif(jk==="${jk}") break x;`);

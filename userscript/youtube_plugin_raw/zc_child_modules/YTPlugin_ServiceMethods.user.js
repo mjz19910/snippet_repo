@@ -2141,6 +2141,7 @@ class ServiceMethods extends ServiceData {
 			case "www.google.com": return;
 			case "www.googleadservices.com": return;
 			case "googleads.g.doubleclick.net": return;
+			case "support.google.com": return;
 			default: debugger; break;
 		}
 		const hn_yt_studio="https://studio.youtube.com";
