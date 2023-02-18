@@ -1074,12 +1074,11 @@ class ServiceMethods extends ServiceData {
 	R_MenuPopup(x) {this.H_("menuPopupRenderer",x,this.D_MenuPopup);}
 	/** @arg {D_MenuPopup} x */
 	D_MenuPopup(x) {this.y("D_MenuPopup","items",x,x => this.z(x,this.R_MenuServiceItem));}
-	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T>} x */
-	TA_OpenPopup(cf1,x) {
-		const cf2="TA_OpenPopup";
+	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
+	TA_OpenPopup(cf,x) {
 		/** @type {TA_OpenPopup<unknown>} */
 		let xp=x;
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
 		/** @type {{popup:R_MenuPopup;popupType:"DROPDOWN";}|D_GetAccountMenu_Popup|T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;

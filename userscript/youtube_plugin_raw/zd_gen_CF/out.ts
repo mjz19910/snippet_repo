@@ -816,6 +816,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_CanShare";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_InfoCardIcon";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_MenuPopup";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistByline";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistPanelVideo";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle";}
