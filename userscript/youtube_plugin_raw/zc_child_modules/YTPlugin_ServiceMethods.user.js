@@ -7492,7 +7492,8 @@ class ServiceMethods extends ServiceData {
 	D_SearchBox(x) {
 		const cf="D_SearchBox";
 		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		debugger;
+		if(this.is_TE_VE(endpoint,6827)) this.E_VE6827(endpoint);
+		else debugger;
 		this.R_Button(searchButton);
 		this.R_Button(clearButton);
 		this.G_Text(placeholderText);

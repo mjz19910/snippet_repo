@@ -12,22 +12,13 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user.js
 // ==/UserScript==
 
+const {do_export,BaseService,split_string,split_string_once,as}=require("./YtPlugin_Base.user");
+
 const __module_name__="mod$ParserService";
-const store=required(window.__plugin_modules__);
-const bs=required(store["mod$YoutubePluginBase"]);
-const as=bs.as_;
-const split_string=bs.split_string;
-const split_string_once=bs.split_string_once;
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 if(window.__yt_plugin_log_imports__) console.log("Load Parser Service");
-/** @template T @arg {T|undefined} x @returns {T} */
-function required(x) {
-	if(x===void 0) {throw new Error("missing required");}
-	return x;
-}
-const BaseService=required(store["mod$YoutubePluginBase"]).BaseService;
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;
