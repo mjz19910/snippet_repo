@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {as,BaseService,do_export,split_string_once,split_string, as_any}=require("./YtPlugin_Base.user");
+const {as,BaseService,do_export,split_string_once,split_string,as_any}=require("./YtPlugin_Base.user");
 
 if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
@@ -778,42 +778,52 @@ class CodegenService extends BaseService {
 				}
 			}
 		}
-		{let split_val=split_string_once(type_name,"Action");
-		if(split_val.length===2) {
-			let real_val=split_val[0];
-			return `A_${real_val}`;
-		}}
-		{let split_val=split_string_once(type_name,"Command");
-		if(split_val.length===2) {
-			let real_val=split_val[0];
-			return `C_${real_val}`;
-		}}
-		{let split_val=split_string_once(type_name,"Endpoint");
-		if(split_val.length===2) {
-			let real_val=split_val[0];
-			if(real_val==="Browse") {
-				console.log(type_name);
-				debugger;
-				/** @type {GE_Browse} */
-				return "GE_Browse";
+		/** @template {string} O @arg {O} x @arg {U} _sec @template {string} U @returns {asserts x is Exclude<O,`${string}${U}`>}  */
+		function assert_not_ends_with(x,_sec) {x;}
+		{
+			let split_val=split_string_once(type_name,"Action");
+			if(split_val.length===2) {
+				let real_val=split_val[0];
+				return `A_${real_val}`;
 			}
-			return `E_${real_val}`;
-		}}
-		if(type_name.endsWith("Endpoint")) {
-			let real_val=split_string_once(type_name,"Endpoint")[0];
-			if(real_val==="Browse") {
-				console.log(type_name);
-				debugger;
-				/** @type {GE_Browse} */
-				return "GE_Browse";
-			}
-			return `E_${real_val}`;
+			assert_not_ends_with(type_name,"Action");
 		}
-		{let split_val=split_string_once(type_name,"Renderer");
-		if(split_val.length===2) {
-			let real_val=split_val[0];
-			return `R_${real_val}`;
-		}}
+		{
+			let split_val=split_string_once(type_name,"Command");
+			console.log(split_val);
+			debugger;
+			// if(split_val.length===2) {
+			// 	let real_val=split_val[0];
+			// 	return `C_${real_val}`;
+			// }
+			assert_not_ends_with(type_name,"Command");
+		}
+		{
+			let split_val=split_string_once(type_name,"Endpoint");
+			console.log(split_val);
+			debugger;
+			// if(split_val.length===2) {
+			// 	let real_val=split_val[0];
+			// 	if(real_val==="Browse") {
+			// 		console.log(type_name);
+			// 		debugger;
+			// 		/** @type {GE_Browse} */
+			// 		return "GE_Browse";
+			// 	}
+			// 	return `E_${real_val}`;
+			// }
+			assert_not_ends_with(type_name,"Endpoint");
+		}
+		{
+			let split_val=split_string_once(type_name,"Renderer");
+			console.log(split_val);
+			debugger;
+			// if(split_val.length===2) {
+			// 	let real_val=split_val[0];
+			// 	return `R_${real_val}`;
+			// }
+			assert_not_ends_with(type_name,"Renderer");
+		}
 		return `D_${type_name}`;
 	}
 	/** @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x */
