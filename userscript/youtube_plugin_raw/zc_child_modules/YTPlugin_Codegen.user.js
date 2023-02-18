@@ -340,8 +340,10 @@ class CodegenService extends BaseService {
 		if("rootVe" in x) {return `M_VE${x.rootVe}`;}
 		return null;
 	}
-	/** @api @public @arg {JsonReplacerState} s @arg {object} x1 */
-	get_codegen_name_obj(s,x1) {
+	/** @api @public @arg {string} cf @arg {object} x1 */
+	get_codegen_name_obj(cf,x1) {
+		let keys=this.get_keys_of(x1);
+		let s=new JsonReplacerState(cf,keys,true);
 		/** @type {{}} */
 		let x2=x1;
 		/** @type {{[x:string]:unknown;}} */
@@ -372,9 +374,7 @@ class CodegenService extends BaseService {
 	]);
 	/** @api @public @arg {string} cf @arg {{}} x */
 	make_codegen_group(cf,x,collapsed=true) {
-		let keys=this.get_keys_of(x);
-		let s=new JsonReplacerState(cf,keys,true);
-		let u_name=this.get_codegen_name_obj(s,x);
+		let u_name=this.get_codegen_name_obj(cf,x);
 		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
 		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);

@@ -13,7 +13,6 @@
 // ==/UserScript==
 
 const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as_any,base64_dec}=require("./YtPlugin_Base.user");
-const {JsonReplacerState}=require("./YTPlugin_Codegen.user");
 
 const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -48,13 +47,11 @@ class ServiceMethods extends ServiceData {
 			console.log("[csn_dec]",csn_dec);
 		}
 	}
-	/** @private @arg {JsonReplacerState} s @arg {object} x1 */
-	get_codegen_name(s,x1) {return this.cg.get_codegen_name_obj(s,x1);}
+	/** @private @arg {string} cf @arg {object} x1 */
+	get_codegen_name(cf,x1) {return this.cg.get_codegen_name_obj(cf,x1);}
 	/** @public @arg {string} cf @arg {{}} x */
 	GEN(cf,x) {
-		let keys=this.get_keys_of(x);
-		let s=new JsonReplacerState(cf,keys,true);
-		let name=this.get_codegen_name(s,x);
+		let name=this.get_codegen_name(cf,x);
 		if(!name) return;
 		this.cg.codegen_renderer(x,`${cf}$${name}`);
 		debugger;
@@ -2937,8 +2934,7 @@ class ServiceMethods extends ServiceData {
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
 		if(keys.length!==1) {debugger; return;}
-		let s=new JsonReplacerState(k,keys,true);
-		let cf=this.get_codegen_name(s,x);
+		let cf=this.get_codegen_name(k,x);
 		if(!cf) {debugger; return;}
 		let wr=this.wn(cf,x,k);
 		if(!wr) return;
