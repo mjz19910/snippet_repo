@@ -1490,7 +1490,7 @@ type D_ButtonStyleType=[
 	"STYLE_WHITE_WITH_BORDER",
 ][number];
 type D_Cache_MD={isCacheHit: true;};
-type D_CanShare={canShare: false;};
+type D_CanShare={canShare: boolean;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_TimedTextApi={
 	v: D_VideoId;

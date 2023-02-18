@@ -1034,6 +1034,13 @@ class ServiceMethods extends ServiceData {
 		if(popupType!=="DIALOG") {debugger; return;}
 		this.R_FancyDismissibleDialog(popup);
 	}
+	/** @arg {Partial<R_FancyDismissibleDialog&R_UnifiedSharePanel>} x */
+	h_pt(x) {
+		if(x.fancyDismissibleDialogRenderer) return this.D_FancyDismissibleDialog(x.fancyDismissibleDialogRenderer);
+		if(x.unifiedSharePanelRenderer) return this.D_UnifiedSharePanel(x.unifiedSharePanelRenderer);
+		x;
+		debugger;
+	}
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
@@ -1070,17 +1077,9 @@ class ServiceMethods extends ServiceData {
 			if("popup" in a) {
 				switch(a.popupType) {
 					case "DIALOG": {
-						/** @type {R_FancyDismissibleDialog|{}|null|undefined} */
+						/** @type {Partial<R_FancyDismissibleDialog>|{}|null|undefined} */
 						let pt=a.popup;
-						if(pt&&"fancyDismissibleDialogRenderer" in pt) {
-							this.T_OpenPopup_Dialog("any",{
-								popup: pt,
-								popupType: "DIALOG",
-							});
-						} else {
-							pt;
-							debugger;
-						}
+						if(pt) this.h_pt(pt);
 					} break;
 					case "DROPDOWN": {
 
@@ -7655,7 +7654,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_CanDelete} x */
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,this.a_primitive_bool);}
 	/** @public @arg {D_CanShare} x */
-	D_CanShare(x) {this.y("D_CanShare","canShare",x,x => this.ceq(x,false));}
+	D_CanShare(x) {this.y("D_CanShare","canShare",x,this.a_primitive_bool);}
 	/** @protected @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {M_GetSettingsEditor} x */
