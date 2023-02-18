@@ -253,6 +253,9 @@ class IndexedDBService extends BaseService {
 		}
 		let promise=this.getAllImpl(key);
 		this.waiting_promises.push([key,promise]);
+		await promise;
+		let idx=this.waiting_promises.findIndex(x=>x[0]===key);
+		if(idx>0) this.waiting_promises.splice(idx,1);
 		return promise;
 	}
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key */
