@@ -2430,7 +2430,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_Thumbnail";
 		const {lightColorPalette,darkColorPalette,sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(lightColorPalette,x => this.D_LightColorPalette(`${cf}.light`,x));
-		this.t(darkColorPalette,x => this.D_DarkColorPalette(`${cf}.dark`,x));
+		this.t(darkColorPalette,x => this.D_DarkColorPalette(cf,x));
 		this.t(sampledThumbnailColor,x => this.D_Color(x));
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		this.t(accessibility,this.D_Accessibility);
@@ -2457,9 +2457,10 @@ class ServiceMethods extends ServiceData {
 		this.save_number(`${cf2}_b`,b);
 		this.save_number(`${cf2}_a`,a);
 	}
-	/** @protected @arg {string} cf1 @arg {D_DarkColorPalette} x */
+	/** @protected @arg {"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"|"D_Thumbnail"} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
-		const cf2=`D_DarkColorPalette:${cf1}`;
+		/** @type {`D_DarkColorPalette:${cf1}`} */
+		const cf2=`D_DarkColorPalette:${cf1}:dark`;
 		const cf3="dark";
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf2,x); this.g(y);
 		this.save_rgba(`${cf3}.p_tc`,p_tc);
