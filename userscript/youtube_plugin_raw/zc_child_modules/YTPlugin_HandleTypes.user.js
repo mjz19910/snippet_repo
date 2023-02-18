@@ -2236,6 +2236,10 @@ class HandleTypes extends ServiceMethods {
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
 	}
+	/** @public @arg {R_InlineForm} x */
+	R_InlineForm(x) {x;}
+	/** @public @arg {R_DropdownFormField} x */
+	R_DropdownFormField(x) {x;}
 	//#region binary
 	/** @public @arg {BinaryVe} x */
 	BinaryVe(x) {

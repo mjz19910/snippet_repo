@@ -2369,13 +2369,12 @@ type D_InlineForm={
 	style: "INLINE_FORM_STYLE_TITLE";
 };
 type R_InlineForm={inlineFormRenderer: D_InlineForm;};
-type R_DropdownFormField={
-	dropdownFormFieldRenderer: {
-		dropdown: R_Dropdown;
-		key: "playlistEditEndpoint.actions.0.playlistPrivacy";
-		onChange: E_PlaylistEdit;
-	};
+type D_DropdownFormField={
+	dropdown: R_Dropdown;
+	key: "playlistEditEndpoint.actions.0.playlistPrivacy";
+	onChange: E_PlaylistEdit;
 };
+type R_DropdownFormField={dropdownFormFieldRenderer: D_DropdownFormField;};
 type D_PlaylistHeader={
 	playlistId: D_PlaylistId;
 	title: G_Text;
