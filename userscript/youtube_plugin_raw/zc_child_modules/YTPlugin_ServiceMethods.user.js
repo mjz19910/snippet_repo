@@ -1072,18 +1072,16 @@ class ServiceMethods extends ServiceData {
 				} break;
 			}
 		}
-		if("popupType" in a) {
-			if("popup" in a) {
-				switch(a.popupType) {
-					case "DIALOG": {
-						/** @type {Partial<R_FancyDismissibleDialog>|{}|null|undefined} */
-						let pt=a.popup;
-						if(pt) this.h_pt(pt);
-					} break;
-					case "DROPDOWN": {
-						console.log("dropdown popup",a.popup);
-					} break;
-				}
+		if("popupType" in a&&"popup" in a) {
+			switch(a.popupType) {
+				case "DIALOG": {
+					/** @type {Partial<R_FancyDismissibleDialog>|{}|null|undefined} */
+					let pt=a.popup;
+					if(pt) this.h_pt(pt);
+				} break;
+				case "DROPDOWN": {
+					console.log("dropdown popup",a.popup);
+				} break;
 			}
 		} else {
 			debugger;
