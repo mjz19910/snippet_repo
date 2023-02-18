@@ -1714,7 +1714,7 @@ type D_Dropdown_Privacy={
 	label: "Privacy";
 };
 type D_Dropdown=D_Dropdown_Privacy;
-type D_EditableDetails={canDelete: false;};
+type D_CanDelete={canDelete: false;};
 type D_ElementResourceStatus={
 	identifier: "bottom_sheet_list_option.eml|cd39732d53f1132c"|
 	"track_selection_sheet_option.eml|f3619d8bb085c9a9";
@@ -2367,7 +2367,7 @@ type D_PlaylistHeader={
 	isEditable: boolean;
 	privacy: "PRIVATE";
 	ownerEndpoint: E_VE3611;
-	editableDetails: D_EditableDetails;
+	editableDetails: D_CanDelete;
 	trackingParams: string;
 	serviceEndpoints: E_PlaylistEdit[];
 	stats: G_Text[];
@@ -2380,7 +2380,28 @@ type D_PlaylistHeader={
 	onDescriptionTap: TA_OpenPopup<T_OpenPopup_Dialog<R_FancyDismissibleDialog>>;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
-	descriptionTapText: G_Text;
+	descriptionTapText?: G_Text;
+}|{
+	playlistId: string;
+	title: G_Text;
+	numVideosText: G_Text;
+	ownerText: G_Text;
+	viewCountText: G_Text;
+	shareData: D_CanShare;
+	isEditable: false;
+	privacy: "PRIVATE";
+	ownerEndpoint: E_VE3611;
+	editableDetails: D_CanDelete;
+	trackingParams: string;
+	serviceEndpoints: E_PlaylistEdit[];
+	stats: G_Text[];
+	briefStats: G_Text[];
+	playlistHeaderBanner: R_HeroPlaylistThumbnail;
+	moreActionsMenu: R_Menu;
+	playButton: R_Button;
+	shufflePlayButton: R_Button;
+	cinematicContainer: R_CinematicContainer;
+	byline: R_PlaylistByline[];
 };
 type D_PlaylistSidebar={
 	items: G_PlaylistSidebarItem[];
