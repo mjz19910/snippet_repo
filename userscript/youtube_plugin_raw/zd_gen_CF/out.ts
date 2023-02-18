@@ -975,7 +975,9 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE126250_EngagementPanel";}
+		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE126250_Identifier";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE76278_EngagementPanel";}
+		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE76278_Identifier";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_layout.ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
