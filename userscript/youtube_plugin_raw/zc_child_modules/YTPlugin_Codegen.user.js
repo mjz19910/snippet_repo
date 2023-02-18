@@ -365,10 +365,13 @@ class CodegenService extends BaseService {
 		let kk=rk[0];
 		if(typeof kk==="number") return null;
 		let dec=this.uppercase_first(kk);
-		let ren_dec=this.renderer_decode_map.get(dec);
+		/** @type {"PrefetchHintConfig"} */
+		let dt=as(dec);
+		let ren_dec=this.renderer_decode_map.get(dt);
 		if(ren_dec) {return ren_dec;}
 		return this.get_auto_type_name(s,x);
 	}
+	/** @type {Map<"PrefetchHintConfig","R_PrefetchHintConfig">} */
 	renderer_decode_map=new Map([
 		["PrefetchHintConfig","R_PrefetchHintConfig"],
 	]);
@@ -725,18 +728,32 @@ class CodegenService extends BaseService {
 		}
 		return ret;
 	}
-	/** @param {{[U in string]:unknown}} x */
+	/** @param {{[U in string]:unknown}} x @returns {Ret_json_auto_replace_1} */
 	json_auto_replace_1(x) {
 		let o_keys=this.filter_keys(this.get_keys_of(x));
 		if(o_keys.length===1) {
 			let kk=this.get_name_from_keys(x);
-			if(kk) return this.uppercase_first(kk);
+			if(kk) {
+				/** @type {Ret_json_auto_raw} */
+				let kt=as(kk);
+				let rt=this.uppercase_first(kt);
+				return rt;
+			}
 		}
-		if(o_keys.length>0) {return this.uppercase_first(o_keys[0]);}
+		if(o_keys.length>0) {
+			let kk=o_keys[0];
+			if(kk) {
+				/** @type {Ret_json_auto_raw} */
+				let kt=as(kk);
+				let rt=this.uppercase_first(kt);
+				return rt;
+			}
+		}
 		return "{}";
 	}
-	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {string} */
+	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {Ret_get_auto_type_name} */
 	get_auto_type_name(s,x) {
+		/** @type {"OpenPopupAction"} */
 		let type_name=this.json_auto_replace_1(x);
 		if(type_name==="MetadataBadgeRenderer") {return "RMD_Badge";}
 		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
@@ -756,7 +773,7 @@ class CodegenService extends BaseService {
 				default: {
 					let sr=this.get_typedef_part(s,x.openPopupAction);
 					if(!sr) break x;
-					return "TA_OpenPopup<"+sr+">";
+					return `TA_OpenPopup<${sr}>`;
 				}
 			}
 		}
