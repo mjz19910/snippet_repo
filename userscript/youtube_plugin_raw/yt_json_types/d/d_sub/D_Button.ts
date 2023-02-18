@@ -2,9 +2,10 @@ type DC_ShowReelsCommentsOverlay={engagementPanel: R_EngagementPanelSectionList;
 type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsOverlayCommand: DC_ShowReelsCommentsOverlay;};
 type D_Button_NavEP=E_VE23462|E_ShareEntityService|E_VE83769_Url|E_Watch;
 type D_Button_style=
-	|"STYLE_MONO_FILLED_OVERLAY"
 	|"STYLE_BLUE_TEXT"
 	|"STYLE_DEFAULT"
+	|"STYLE_MONO_FILLED_OVERLAY"
+	|"STYLE_MONO_TONAL_OVERLAY"
 	|"STYLE_OPACITY"
 	|"STYLE_PRIMARY"
 	|"STYLE_SUGGESTIVE"

@@ -1174,6 +1174,7 @@ class ServiceMethods extends ServiceData {
 		this.t(style,x => {
 			switch(x) {
 				default: console.log("D_Button.style",x); break;
+				case "STYLE_MONO_TONAL_OVERLAY":
 				case "STYLE_MONO_FILLED_OVERLAY":
 				case "STYLE_PRIMARY":
 				case "STYLE_OPACITY":
