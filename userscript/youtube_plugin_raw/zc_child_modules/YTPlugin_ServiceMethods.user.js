@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // ==/UserScript==
 
-const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as_any,base64_dec, JsonReplacerState}=require("./YtPlugin_Base.user");
+const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as_any,base64_dec,JsonReplacerState}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -1100,10 +1100,24 @@ class ServiceMethods extends ServiceData {
 					/** @type {Partial<R_FancyDismissibleDialog>|{}|null|undefined} */
 					let pt=a.popup;
 					if(pt) this.h_pt(pt);
-				} break;
+				} return a;
 				case "DROPDOWN": {
-					console.log("dropdown popup",a.popup);
-				} break;
+					/** @type {Partial<TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>>|{}|string|number|bigint|null|undefined} */
+					let mpt=a.popup;
+					if(typeof mpt!=="object") break;
+					if(mpt===null) break;
+					if(!("multiPageMenuRenderer" in mpt)) break;
+					if(!mpt.multiPageMenuRenderer) break;
+					let mpr=mpt.multiPageMenuRenderer;
+					switch(mpr.style) {
+						default: {
+							console.log("dropdown popup multiPageMenuRenderer",mpt.multiPageMenuRenderer);
+						} break;
+						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": return a;
+						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": return a;
+					}
+				}
+				return a;
 			}
 		} else {
 			debugger;
