@@ -1071,15 +1071,9 @@ class ServiceMethods extends ServiceData {
 	/** @arg {T_OpenPopup_Dropdown_Reusable<TR_MultiPageMenu<{style: string;}>>} x @returns {x is D_GetAccountMenu_Popup} */
 	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
 	/** @arg {R_MenuPopup} x */
-	R_MenuPopup(x) {
-		this.D_MenuPopup(x.menuPopupRenderer);
-	}
+	R_MenuPopup(x) {this.H_("menuPopupRenderer",x,this.D_MenuPopup);}
 	/** @arg {D_MenuPopup} x */
-	D_MenuPopup(x) {
-		const cf="D_MenuPopup";
-		const {items: arr,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(arr,this.R_MenuServiceItem);
-	}
+	D_MenuPopup(x) {this.y("D_MenuPopup","items",x,x => this.z(x,this.R_MenuServiceItem));}
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
