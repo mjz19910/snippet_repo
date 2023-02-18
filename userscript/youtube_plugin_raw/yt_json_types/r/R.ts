@@ -339,16 +339,10 @@ type R_VE6827_PageType_Browse_Response={
 	expirationTime: 1676555455508;
 };
 
-type R_PageTypeBrowse=|{
+type R_PageTypeBrowse={
 	endpoint: E_VE6827;
 	pageType: "browse";
-	fromHistory: false;
-	response: R_VE6827_PageType_Browse_Response;
-	navigationDoneMs: number;
-}|{
-	endpoint: E_VE6827;
-	pageType: "browse";
-	fromHistory: false;
+	fromHistory: boolean;
 	response: R_VE6827_PageType_Browse_Response;
 	navigationDoneMs: number;
 }|{
@@ -370,9 +364,9 @@ type R_PageTypeBrowse=|{
 			}[];
 		};
 		url: "/feed/subscriptions";
-		expirationTime: 1676554733213;
+		expirationTime: number;
 	};
-	navigationDoneMs: 1676554433787;
+	navigationDoneMs: number;
 }|{
 	pageType: "browse";
 	endpoint: E_VE3854;

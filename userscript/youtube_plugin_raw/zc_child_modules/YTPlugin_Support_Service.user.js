@@ -1213,7 +1213,7 @@ class Support_EventInput extends ServiceMethods {
 		debugger;
 	}
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
-	is_R_PageTypeBrowse_Response_WithEp(x,t) {return this.is_TE_VE(x.endpoint,t);}
+	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
 	/** @private @arg {R_PageTypeBrowse["response"]} x */
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
@@ -1229,10 +1229,17 @@ class Support_EventInput extends ServiceMethods {
 
 			return;
 		}
-		if(this.is_R_PageTypeBrowse_Response_WithEp(x,3854)) {
+		if(this.is_EP_Val(x,3854)) {
+			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			switch(url) {
+				default: url===""; debugger; switch(url) {
+					case "/":
+				} break;
+				case "/":
+			}
 			return;
 		}
-		if(this.is_R_PageTypeBrowse_Response_WithEp(x,6827)) {
+		if(this.is_EP_Val(x,6827)) {
 			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			switch(url) {
 				default: url===""; debugger; switch(url) {
@@ -1243,7 +1250,7 @@ class Support_EventInput extends ServiceMethods {
 			}
 			return;
 		}
-		if(this.is_R_PageTypeBrowse_Response_WithEp(x,96368)) {
+		if(this.is_EP_Val(x,96368)) {
 			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			switch(url) {
 				default: url===""; debugger; switch(url) {
@@ -1258,16 +1265,34 @@ class Support_EventInput extends ServiceMethods {
 	/** @private @arg {R_PageTypeBrowse} x */
 	R_PageTypeBrowse(x) {
 		const cf="R_PageTypeBrowse";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_Page_DefaultEndpoint(endpoint);
-		const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
-		switch(ve) {
-			case 3854: case 96368:
+		if(this.is_EP_Val(x,3854)) {
+			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.E_VE3854(endpoint);
+			this.R_PageTypeBrowse_Response(response);
+			if(pageType!=="browse") debugger;
+			this._primitive_of(fromHistory,"boolean");
+			this.a_primitive_num(navigationDoneMs);
+			return;
 		}
-		this.R_PageTypeBrowse_Response(response);
-		this.parser.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
-		this.a_primitive_num(navigationDoneMs);
+		if(this.is_EP_Val(x,6827)) {
+			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.R_PageTypeBrowse_Response(response);
+			this.E_VE6827(endpoint);
+			if(pageType!=="browse") debugger;
+			this._primitive_of(fromHistory,"boolean");
+			this.a_primitive_num(navigationDoneMs);
+			return;
+		}
+		if(this.is_EP_Val(x,96368)) {
+			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.R_PageTypeBrowse_Response(response);
+			this.E_VE96368(endpoint);
+			if(pageType!=="browse") debugger;
+			this._primitive_of(fromHistory,"boolean");
+			this.a_primitive_num(navigationDoneMs);
+			return;
+		}
+		debugger;
 	}
 	/** @private @arg {R_PageTypeChannel} x */
 	R_PageTypeChannel(x) {
