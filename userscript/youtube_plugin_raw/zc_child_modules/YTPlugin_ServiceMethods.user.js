@@ -1033,7 +1033,6 @@ class ServiceMethods extends ServiceData {
 		const {popup,popupType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		if(popupType!=="DIALOG") {debugger; return;}
 		this.R_FancyDismissibleDialog(popup);
-		debugger;
 	}
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf1 @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
