@@ -2227,7 +2227,7 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(numVideosText);
 		this.t(descriptionTapText,this.G_Text);
 		this.g(descriptionText);
-		this.TA_OpenPopup(`${cf}.onDescriptionTap`,onDescriptionTap);
+		this.TA_OpenPopup("A_FancyDismissibleDialog",onDescriptionTap);
 		this.D_CanShare(shareData);
 		this.z(stats,this.G_Text);
 		this.z(briefStats,this.G_Text);
