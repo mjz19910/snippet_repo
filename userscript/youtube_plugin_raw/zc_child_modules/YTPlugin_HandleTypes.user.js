@@ -2544,10 +2544,14 @@ class HandleTypes extends ServiceMethods {
 			case "click_tracking": {
 				const {v: z}=x; this.G_PR_TrackingObj_1(z,{
 					t: this,
-					num(x,k) {this.t.TK_D32(cf,x,k);},
-					h_tagged_2(x) {this.num(x.tag,"tag"); this.num(x.id,"id");},
-					handle_timestamp(x) {this.t.VW_BinaryTimestamp(x);},
-					handle_f3(x) {this.num(x,"f3");},
+					/** @this {HandleTypes} */
+					TK_D32(x,k) {this.TK_D32(cf,x,k);},
+					/** @this {HandleTypes} */
+					h_tagged_2(x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");},
+					/** @this {HandleTypes} */
+					handle_timestamp(x) {this.VW_BinaryTimestamp(x);},
+					/** @this {HandleTypes} */
+					handle_f3(x) {this.TK_D32(cf,x,"f3");},
 					handle_f6,
 				});
 			} break;

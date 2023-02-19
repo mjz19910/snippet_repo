@@ -11,7 +11,7 @@ type H_TrackingObj_NumKey_1<T extends {},KM>={[U in keyof T as T_GetKeyMap<T,U,K
 type H_TrackingObj_NumKey<T extends {},KM>=`${Extract<keyof H_TrackingObj_NumKey_1<T,KM>,string>}`;
 type H_TrackingObj={
 	t: import("../../zc_child_modules/YTPlugin_HandleTypes.user.js").HandleTypes,
-	num(
+	TK_D32(
 		x: T_D32<number>,
 		k: H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>
 	): void;
