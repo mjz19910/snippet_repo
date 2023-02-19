@@ -70,7 +70,7 @@ type G_Gv_1_List=[
 	"ee","el","es","ey","ez",
 	"k7","l7","le","lk","ll","lr","ls","ly",
 	"rl","rr",
-	"s7","sd","se","sk","sl","sr","ss","sy","sz",
+	"s7","s6","sd","se","sk","sl","sr","ss","sy","sz",
 	"y6","z7",
 	"zd","ze","zk","zl","zr","zs","zy",
 ];
