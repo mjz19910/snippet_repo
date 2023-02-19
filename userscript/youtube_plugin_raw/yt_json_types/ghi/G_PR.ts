@@ -8,13 +8,14 @@ type D_TrackingObj_f19={
 	1: T_D32<16>;
 	2: T_D32<3832>;
 };
-type D_TrackingObj_f6={5: T_FD32<0>;};
 type T_Base64Str=string;
 type P_RT_TK_f1=T_D32<0>;
 
 type P_RT_TK_f2=T_D32<13188>;
 
-type H_TrackingObj_f6=TV_Str<"external"|"list_other"|"related"|"related-auto"|"watch">|T_PArr<["child",Uint8Array,D_TrackingObj_f6]>;
+type H_TrackingObj_f6_Str="external"|"list_other"|"related"|"related-auto"|"watch";
+
+type H_TrackingObj_f6=T_VW_2<{_tag: never;}>|TV_Str<H_TrackingObj_f6_Str>;
 
 type VW_BinaryTimestamp=T_VW_2<V_BinaryTimestamp>;
 

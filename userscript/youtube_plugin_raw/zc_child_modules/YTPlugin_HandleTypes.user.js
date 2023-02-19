@@ -2730,34 +2730,28 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="param_arr") debugger;
-		const [,[a,...y1]]=x; this.ceq(y1.length,0);
+		let [,[a,...y1]]=x; this.ceq(y1.length,0);
 		const [t]=a;
+		/** @type {["T",H_TrackingObj_f6_Str]|["U",string]|null} */
+		let r_str=null;
 		switch(t) {
 			default: debugger; break;
-			case "child": {
-				const [,,b]=a;
-				{
-					const {5: a,...y2}=b; this.g(y2);
-					this.T_FD32(a,x => {
-						x; debugger;
-					});
-				}
-			} break;
-			case "raw_child": {
-				const [,,n,b]=a; if(n!==null) debugger;
-				{
-					const [,a]=b;
-					this.save_string(`${cf}.str`,a);
-					switch(a) {
-						default: this.save_string(`${cf}.str.default`,a); break;
-						case "external": break;
-						case "list_other": break;
-						case "related": break;
-						case "related-auto": break;
-						case "watch": break;
-					}
-				}
-			} break;
+			case "child": const [,a1]=a; let str=this._decoder.decode(a1); r_str=["U",str]; break;
+			case "raw_child": const [,,,b]=a; const [,c]=b; r_str=["T",c];
+		}
+		if(!r_str) return;
+		this.save_string(`${cf}.str`,r_str[1]);
+		if(r_str[0]==="U") {
+			this.save_string(`${cf}.str.unk`,r_str);
+			return;
+		}
+		switch(r_str[1]) {
+			default: this.save_string(`${cf}.str.default`,r_str); break;
+			case "external": break;
+			case "list_other": break;
+			case "related": break;
+			case "related-auto": break;
+			case "watch": break;
 		}
 	}
 	/** @arg {"H_TrackingObj"} cf @arg {{tag: P_RT_TK_f1,id: P_RT_TK_f2;}} x */
