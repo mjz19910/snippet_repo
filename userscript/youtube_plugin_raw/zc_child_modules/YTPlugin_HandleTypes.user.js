@@ -2600,7 +2600,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="V_BinaryTimestamp";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		this.T_D32(f1,x => {
-			if(x<=0b1) return;
+			if(x<=0b101111101010000010100101000011011011011111011111011) return;
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f1] --\n\n[0b${(x).toString(2)}]`);
 		});
 		this.T_FD32(f2,x => {
