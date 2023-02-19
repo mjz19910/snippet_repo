@@ -1155,7 +1155,7 @@ class HandleTypes extends ServiceMethods {
 			return obj;
 		}
 		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
-		return `${obj}`;
+		return obj;
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {unknown} obj @returns {string|symbol|number|boolean|undefined|object|null} */
 	typedef_json_replace_bin(s,key,obj) {
