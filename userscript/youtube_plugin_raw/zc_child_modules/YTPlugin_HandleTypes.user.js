@@ -1123,13 +1123,13 @@ class HandleTypes extends ServiceMethods {
 				} else {
 					obj_json=this.gen_typedef_bin_json(s,x[1]);
 				}
-				let raw_value=x[3];
+				let x1=x[3];
 				let raw_json="{}";
-				switch(raw_value[0]) {
+				switch(x1[0]) {
 					default: debugger; break;
-					case "string": raw_json="";
+					case "string": raw_json=`["string","${x1[1]}"]`; break;
 				}
-				return `TYPE::["${otu[0]}",${gen_json_binary_arr},${obj_json},${raw_json}>`;
+				return `TYPE::["${otu[0]}",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 			};
 			if(otu[0]==="data64") {
 				return this.convert_arr_to_obj([otu]);
@@ -2411,9 +2411,9 @@ class HandleTypes extends ServiceMethods {
 		if(x[0]!=="child") {debugger; return null;}
 		return f.call(this,x[2]);
 	}
-	/** @protected @arg {Extract<RB_TrackingObj,{16:any}>[16]} x */
+	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16]} x */
 	RB_TrackingObj_f16(x) {x;}
-	/** @protected @arg {Extract<RB_TrackingObj,{1:any}>} x */
+	/** @protected @arg {Extract<G_PR_TrackingObj,{1:any}>} x */
 	RB_TrackingObj_t1(x) {
 		const cf="RB_TrackingObj_t1";
 		this.codegen_typedef_bin("RB_TrackingObj",x);
@@ -2521,7 +2521,7 @@ class HandleTypes extends ServiceMethods {
 		x;
 		debugger;
 	}
-	/** @protected @arg {RB_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
+	/** @protected @arg {G_PR_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
 	RB_TrackingObj(x,flags) {
 		const cf="RB_TrackingObj";
 		if(1 in x) return this.RB_TrackingObj_t1(x);
@@ -2579,7 +2579,7 @@ class HandleTypes extends ServiceMethods {
 	binary_result(cf,x) {
 		switch(cf) {
 			case "params.click_tracking": {
-				/** @type {RB_TrackingObj} */
+				/** @type {G_PR_TrackingObj} */
 				let u=as_any(x);
 				this.RB_TrackingObj(u,{type: "click_tracking"});
 			} break;
