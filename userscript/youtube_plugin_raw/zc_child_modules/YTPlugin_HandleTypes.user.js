@@ -1034,24 +1034,34 @@ class HandleTypes extends ServiceMethods {
 			}
 			/** @type {D_ProtobufObj|V_ParamObj_2[number]} */
 			let otu=as(obj);
+			/** @arg {V_ParamObj_2} x */
+			let v_param_2_maybe_binary_ts=(x) => {
+				if(!(1 in x&&2 in x&&3 in x)) return null;
+				if(x[1][1].length!==1) return null;
+				if(x[2][1].length!==1) return null;
+				if(x[3][1].length!==1) return null;
+				let f1=x[1][1][0];
+				let f2=x[2][1][0];
+				let f3=x[3][1][0];
+				if(f1[0]==="data32"&&f2[0]==="data_fixed32"&&f3[0]==="data_fixed32") {
+					let kk=this.get_keys_of(x);
+					if(this.eq_keys(kk,[1,2,3])) {
+						/** @type {V_BinaryTimestamp} */
+						let bts={...x,1: f1,2: f2,3: f3}; bts;
+						return `TYPE::T_VW_2<V_BinaryTimestamp>`;
+					}
+				}; v_param_2_maybe_binary_ts;
+				let gen_json=this.gen_typedef_bin_json(s,x);
+				console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
+				return `TYPE::T_VW_2<${gen_json}>`;
+			};
 			/** @arg {V_ParamObjData_2} otu */
 			let v_param_2_child=(otu) => {
 				if(otu[0]!=="child") return null;
 				const [,binary_arr,obj]=otu;
 				if(obj!==null) {
-					if(1 in obj&&2 in obj&&3 in obj&&obj[1][0]==="data32") {
-						if(obj[1][0]==="data32"&&obj[2][0]==="data_fixed32"&&obj[3][0]==="data_fixed32") {
-							let kk=this.get_keys_of(obj);
-							if(this.eq_keys(kk,[1,2,3])) {
-								/** @type {V_BinaryTimestamp} */
-								let bts={...obj,1: obj[1],2: obj[2],3: obj[3]}; bts;
-								return `TYPE::T_VW_2<V_BinaryTimestamp>`;
-							}
-						}
-						let gen_json=this.gen_typedef_bin_json(s,obj);
-						console.log("maybe_handle_bin.do_V_BinaryTimestamp",obj,gen_json);
-						return `TYPE::T_VW_2<${gen_json}>`;
-					}
+					let bin_ts=v_param_2_maybe_binary_ts(obj);
+					if(bin_ts) return bin_ts;
 					if(1 in obj&&2 in obj) {
 						if(obj[1][0]==="data32"&&obj[2][0]==="data32") {
 							let kk=this.get_keys_of(obj);
