@@ -137,7 +137,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {text,durationMs,navigationEndpoint,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(text);
 		if(durationMs!=="10000") debugger;
-		this.E_VE83769_Url(navigationEndpoint);
+		this.bc.E_VE83769_Url(navigationEndpoint);
 		this.T_Icon(cf,icon);
 		this.trackingParams(trackingParams);
 	}
@@ -305,7 +305,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
 		this.D_TriggerCriteria(triggerCriteria);
 		this.G_Text(text);
-		this.E_VE83769_Url(endpoint);
+		this.bc.E_VE83769_Url(endpoint);
 		this.trackingParams(trackingParams);
 		this.RA_Notification(snackbar);
 	}
