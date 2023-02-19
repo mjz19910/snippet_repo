@@ -3025,8 +3025,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {
 		const cf="P_subscribe_button_entity_key";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {2: a,...y}=this.s(cf,x);
+		this.t(this.T_VSR(a),this.channelId);
+		let k=this.get_keys_of_2(y)[0];
+		console.log("[P_dislike_params.next_key]",k);
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
@@ -3062,7 +3064,6 @@ class HandleTypes extends ServiceMethods {
 					if(this.LP_dislike.includes(x)) return;
 					this.LP_dislike.push(x);
 					x; debugger;
-
 				} break;
 			}
 		});
