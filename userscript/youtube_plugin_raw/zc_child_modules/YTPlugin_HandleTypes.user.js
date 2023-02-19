@@ -2568,7 +2568,7 @@ class HandleTypes extends ServiceMethods {
 					let x=f6;
 					if(x[0]!=="param_arr") debugger;
 					let [t1,[v]]=x;
-					let [t2,a]=v;
+					let [t2,,,a]=v;
 					let [t3,u]=a;
 					this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}:${t3}`);
 					this.save_string(`${cf}.w6.f6`,u);
@@ -2884,12 +2884,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template T @arg {T_VSR<T>} x */
 	T_VSR(x) {
-		this.codegen_typedef_bin("T_VSR",x);
 		let vv=this.T_PArr(x);
 		if(vv===null) {debugger; return null;}
 		let v2=vv;
-		if(v2[0]!=="raw") {debugger; return null;}
-		let v3=v2[1];
+		if(v2[0]!=="raw_child") {this.codegen_typedef_bin("T_VSR",x); return null;}
+		let v3=v2[3];
 		let [a,b]=v3;
 		if(a!=="string") {debugger; return null;}
 		return b;
@@ -2903,27 +2902,25 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {
 		const cf="P_aadc_guidelines_state_entity_key";
-		const {2: a}=this.s(cf,x);
+		const {2: a,...y}=this.s(cf,x); this.g(y);
 		this.t(this.T_VSR(a),x => this.save_string(`${cf}.a`,x));
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
-		const {2: a}=this.s(cf,x);
+		const {2: a,...y}=this.s(cf,x); this.g(y);
 		this.t(this.T_VSR(a),x => this.videoId(x));
 	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
-		const {3: a}=this.s(cf,x);
-		a;
-		debugger;
+		const {3: a,...y}=this.s(cf,x); this.g(y);
+		a; debugger;
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
 		const cf="PR_continuation_params";
 		const {0x94d81d4: n}=this.s(cf,x);
-		debugger;
 		this.PD_continuation_params(n);
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
@@ -2942,7 +2939,8 @@ class HandleTypes extends ServiceMethods {
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
 		const {3: a}=this.s(cf,x);
-		a; debugger;
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
@@ -2953,74 +2951,87 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_transcript_track_selection_entity_key} x */
 	P_transcript_track_selection_entity_key(x) {
 		const cf="P_transcript_track_selection_entity_key";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
 		const {1: a}=this.s(cf,x);
-		a; debugger;
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
 		const {94: a}=this.s(cf,x);
-		a; debugger;
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
-		const {2: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.channelId(x));
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
 		const {1: a}=this.s(cf,x);
-		a; debugger;
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_load_markers_entity_key} x */
 	P_load_markers_entity_key(x) {
 		const cf="P_load_markers_entity_key";
-		const {5: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_playlist_loop_state_entity_key} x */
 	P_playlist_loop_state_entity_key(x) {
 		const cf="P_playlist_loop_state_entity_key";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_entity_key_normal} x */
 	P_entity_key_normal(x) {
 		const cf="P_entity_key_normal";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
-		const {1: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {
@@ -3028,6 +3039,7 @@ class HandleTypes extends ServiceMethods {
 		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),this.channelId);
 		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 		console.log("[P_dislike_params.next_key]",k);
 	}
 	/** @private @arg {P_like_params} x */
@@ -3053,13 +3065,14 @@ class HandleTypes extends ServiceMethods {
 			if(f1[0]!=="param_arr") {debugger; return;}
 			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
 			switch(a[0]) {
+				default: debugger; break;
 				case "child": {
 					let [,,x]=a;
 					if(x===null) {debugger; return;}
 					let {10: b,14: c,...y}=x; this.g(y);
 				} break;
-				case "raw": {
-					let [,[t,x]]=a;
+				case "raw_child": {
+					let [,,,[t,x]]=a;
 					if(t!=="string") debugger;
 					if(this.LP_dislike.includes(x)) return;
 					this.LP_dislike.push(x);
@@ -3068,13 +3081,15 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 		console.log("[P_dislike_params.next_key]",k);
 	}
 	/** @private @arg {P_entity_key} x */
 	P_entity_key(x) {
 		const cf="P_entity_key";
-		const {2: a}=this.s(cf,x);
-		a; debugger;
+		const {...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
@@ -3086,7 +3101,8 @@ class HandleTypes extends ServiceMethods {
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data";
 		const {1: a}=this.s(cf,x);
-		a; debugger;
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
@@ -3098,13 +3114,15 @@ class HandleTypes extends ServiceMethods {
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
 		const {4: a}=this.s(cf,x);
-		a; debugger;
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
 		const {1: a}=this.s(cf,x);
-		a; debugger;
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {PD_continuation_request_browse_token} x */
 	PD_continuation_request_browse_token(x) {
