@@ -1136,6 +1136,7 @@ class HandleTypes extends ServiceMethods {
 						return this.convert_arr_to_obj([otu]);
 					}
 					if(otu.length===2&&typeof otu[0]==="string") {
+						debugger;
 						let ca=otu[1];
 						if(typeof ca==='object') {
 							let gen_json=this.gen_typedef_bin_json(s,ca);
@@ -2370,9 +2371,11 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {Extract<RB_TrackingObj,{1:any}>} x */
 	RB_TrackingObj_t1(x) {
 		const cf="RB_TrackingObj_t1";
-		if(1 in x) {
-			const {1: [,f1]}=this.s(cf,x);
-			this.save_number(`${cf}.f1`,f1);
+		this.codegen_typedef_bin("RB_TrackingObj",x);
+		{
+			const {1: f1}=this.s(cf,x);
+			if(f1[0]!=="data32") {debugger; return;}
+			this.save_number(`${cf}.f1`,f1[1]);
 		}
 		if(19 in x) {
 			if(11 in x) {
@@ -2475,16 +2478,19 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {RB_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
 	RB_TrackingObj(x,flags) {
-		/** @type {`RB_TrackingObj:${typeof flags["type"]}`} */
-		const cf=`RB_TrackingObj:${flags.type}`;
+		const cf="RB_TrackingObj";
 		if(1 in x) return this.RB_TrackingObj_t1(x);
-		const {4: [,,f4],...u}=this.s(cf,x);
-		this.V_BinaryTimestamp(f4);
+		switch(flags.type) {
+			default: debugger; break;
+			case "click_tracking": break;
+			case "tracking": break;
+		}
+		this.codegen_typedef_bin("RB_TrackingObj",x);
+		const {4: f4,...u}=this.s(cf,x);
+		// this.V_BinaryTimestamp(f4);
 		if(6 in u) {
-			const {6: [ty,[ty2,f6]],...y}=u; this.g(y);
-			if(ty!=="raw") debugger;
-			if(ty2!=="string") debugger;
-			if(f6!=="external") debugger;
+			const {6: f6,...y}=u; this.g(y);
+			if(f6[0]!=="raw") debugger;
 			return;
 		}
 		this.g(u);
@@ -2943,6 +2949,139 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		debugger;
+	}
+	/** @arg {D_ProtobufObj[]} x */
+	convert_arr_to_obj(x) {
+		debugger;
+		/** @private @type {V_ParamObj_2} */
+		let res_obj={};
+		/** @arg {number} id @arg {V_ParamObjData_2} obj */
+		const add_obj=(id,obj) => {
+			res_obj[id]??=["param_arr",[]];
+			res_obj[id][1].push(obj);
+		};
+		for(let v of x) {
+			switch(v[0]) {
+				default: debugger; break;
+				case "child": {
+					let [n,id,a,b]=v;
+					if(b===null) {
+						let decoded_string=this._decoder.decode(a);
+						add_obj(id,["raw_child",a,b,["string",decoded_string]]);
+						continue;
+					}
+					add_obj(id,[n,a,this.convert_arr_to_obj(b)]);
+				} break;
+				case "data32": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "data64": {
+					let [n,id,a,b]=v;
+					add_obj(id,[n,a,b]);
+				} break;
+				case "data_fixed32": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "data_fixed64": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "error": {
+					let [n,id]=v;
+					add_obj(id,[n,id]);
+				} break;
+				case "group": {
+					let [n,id,a]=v;
+					add_obj(id,[n,this.convert_arr_to_obj(a)]);
+				} break;
+				case "info": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "struct": {
+					let [n,id,a]=v;
+					add_obj(id,[n,this.convert_arr_to_obj(a)]);
+				} break;
+			}
+		}
+		/*
+		let x1=this.make_param_map(x);
+		if(!x1) {debugger; return null;}
+		return this.convert_map_to_obj(x1);*/
+		return res_obj;
+	}
+	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
+	convert_value_item_to_param_item(x) {
+		if(typeof x==='string') return {0: ["param_arr",[["raw",["string",x]]]]};
+		if(typeof x==="number") return {0: ["param_arr",[["raw",["number",x]]]]};
+		if(x instanceof Map) {
+			let x1=this.convert_map_to_obj(x);
+			if(!x1) {debugger; return null;}
+			return {0: ["param_arr",[["raw",["V_ParamMapType",x]]]]};
+		}
+		if(x instanceof Array) {
+			if(x[0]==="bigint") return {0: ["param_arr",[["raw",["bigint",x[2]]]]]};
+			if(x[0]==="group") {
+				const [,r]=x;
+				let vr=this.convert_arr_to_obj(r);
+				if(!vr) {debugger; return null;}
+				return vr;
+			}
+			if(x[0]==="failed") {debugger; return null;}
+			x==="";
+			return null;
+		}
+		if(x instanceof Uint8Array) return {0: ["param_arr",[["raw",["binary",x]]]]};
+		x==="";
+		return null;
+	}
+	/** @arg {V_ParamMapType} x @returns {V_ParamObj_2|null} */
+	convert_map_to_obj(x) {
+		/** @template T @arg {T[]} x */
+		function first(x) {
+			if(x.length!==1) return null;
+			return x[0];
+		}
+		/** @type {V_ParamObj_2} */
+		let res={};
+		debugger;
+		for(let k of x.keys()) {
+			let value=x.get(k);
+			if(k in res) {
+				debugger;
+			}
+			if(value===void 0) {debugger; continue;}
+			res[k]??=["param_arr",[["raw",["array",[]]]]];
+			let cv=res[k];
+			let ca=cv[1][0];
+			if(cv[0]!=="param_arr") {debugger; continue;}
+			if(ca[0]!=="raw") {debugger; continue;}
+			if(ca[1][0]!=="array") {debugger; continue;}
+			const t=ca[1][1];
+			if(value.length===0) {
+				t.push({});
+				continue;
+			}
+			if(value.length!==1) {
+				/** @template T @arg {T|null} x @returns {x is T} */
+				function is_not_null(x) {return x!==null;}
+				let v1=value.map(x => {
+					let r=this.convert_value_item_to_param_item(x);
+					if(r===null) {debugger; return null;}
+					return r;
+				}).filter(is_not_null);
+				t.push(...v1);
+				continue;
+			}
+			let v2=first(value);
+			if(v2===null) {debugger; continue;}
+			let v3=this.convert_value_item_to_param_item(v2);
+			if(v3===null) {debugger; continue;}
+			t.push(v3);
+		}
+		return res;
 	}
 	//#endregion binary
 	//#endregion
