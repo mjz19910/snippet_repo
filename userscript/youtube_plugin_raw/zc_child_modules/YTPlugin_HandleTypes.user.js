@@ -1001,9 +1001,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {object|null} x @returns {string|object|null} */
-	typedef_json_replace_bin_obj(s,key,x) {
-		key;
+	/** @api @public @arg {JsonReplacerState} s @arg {string} k @arg {object|null} x @returns {string|object|null} */
+	typedef_json_replace_bin_obj(s,k,x) {
 		if(x===null) return x;
 		if(x instanceof Array) {
 			if(x.length===1) {
@@ -1193,52 +1192,24 @@ class HandleTypes extends ServiceMethods {
 		console.log("[maybe_handle_bin.keys.string_like]",keys);
 		return x;
 	}
-	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {unknown} obj @returns {string|symbol|number|boolean|undefined|object|null} */
-	typedef_json_replace_bin(s,key,obj) {
-		s.next_key(key,obj);
-		let to=typeof obj;
-		switch(to) {
-			default: {
-				to==="";
-				throw new Error("New type from typeof obj");
-			}
-			case "undefined": {
-				if(typeof obj!=="undefined") throw new Error("Unreachable");
-				return obj;
-			}
-			case "symbol": {
-				if(typeof obj!=="symbol") throw new Error("Unreachable");
-				return obj;
-			}
-			case "string": {
-				if(typeof obj!=="string") throw new Error("Unreachable");
-				return obj;
-			}
-			case "object": {
-				if(typeof obj!=="object") throw new Error("Unreachable");
-				return this.typedef_json_replace_bin_obj(s,key,obj);
-			}
-			case "number": {
-				if(typeof obj!=="number") throw new Error("Unreachable");
-				return obj;
-			}
-			case "function": {
-				if(typeof obj!=="function") throw new Error("Unreachable");
-				debugger;
-				return obj;
-			}
-			case "boolean": {
-				if(typeof obj!=="boolean") throw new Error("Unreachable");
-				return obj;
-			}
-			case "bigint": {
-				if(typeof obj!=="bigint") throw new Error("Unreachable");
-				return `TYPE::V_Bigint<${obj}n>`;
-			}
+	/** @api @public @arg {JsonReplacerState} s @arg {string} k @arg {unknown} x @returns {string|symbol|number|boolean|undefined|object|null} */
+	typedef_json_replace_bin(s,k,x) {
+		s.next_key(k,x);
+		switch(typeof x) {
+			default: x===""; throw new Error("New type from typeof obj");
+			case "undefined": return x;
+			case "symbol": return x;
+			case "string": return x;
+			case "object": return this.typedef_json_replace_bin_obj(s,k,x);
+			case "number": return x;
+			case "function": return x;
+			case "boolean": return x;
+			case "bigint": return `TYPE::V_Bigint<${x}n>`;
 		}
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {object} x @returns {string} */
 	gen_typedef_bin_json(s,x) {
+		console.log('gen json',x);
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,s),"\t");
 		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
