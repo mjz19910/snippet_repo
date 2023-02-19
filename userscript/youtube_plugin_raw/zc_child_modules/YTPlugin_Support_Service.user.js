@@ -1847,6 +1847,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				let idx=this.stored_changes.indexOf(msg);
 				this.stored_changes.splice(idx,1);
 			}
+			this.is_ready=false;
+			await this.save_database();
+			this.is_ready=true;
 		});
 	}
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
@@ -1964,6 +1967,53 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			debugger;
 		}
 	}
+	/** @template T @arg {StoreDescription<T>} store @arg {[string, make_arr_t<T> | make_many_t<T>]} item */
+	async push_store_item_to_database(store,item) {
+		/** @type {(T_IdBox<B_IdSrcNum,"num",number> | T_IdBox<B_IdSrcStr,"str",string>)[]} */
+		let i_box=[];
+		let boxed=await this.indexed_db.getAll("boxed_id"); boxed; store; item;
+		for(let box of boxed) {
+			switch(box.type) {
+				case "str": if(store.content==="string"||store.content==="keys") i_box.push(box); break;
+				case "num": if(store.content==="number") i_box.push(box); break;
+			}
+		}
+		for(let box of i_box) {
+			if(box.id[0]==="many_num"&&store.content==="number") {
+				debugger;
+			}
+			debugger;
+		}
+		debugger;
+	}
+	/** @template T @arg {StoreDescription<T>} store */
+	async push_store_to_database(store) {
+		for(let item of store.data) {
+			await this.push_store_item_to_database(store,item);
+		}
+	}
+	async do_boxed_push_to_database() {
+		let store=this.#data_store;
+		let changes=store.get_changed_stores();
+		for(let changed of changes) {
+			if(changed==="string") {
+				let ss=store.get_string_store();
+				await this.push_store_to_database(ss);
+				continue;
+			}
+			if(changed==="keys") {
+				let ks=store.get_keys_store();
+				await this.push_store_to_database(ks);
+				continue;
+			}
+			if(changed==="number") {
+				let ns=store.get_number_store();
+				await this.push_store_to_database(ns);
+				continue;
+			}
+			debugger;
+		}
+	}
 	async do_boxed_update_from_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
 		if(this.log_load_database) console.log("load_database all boxed",boxed);
@@ -1975,7 +2025,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				debugger;
 			}
 			let ss=store.get_string_store();
-			this.export_db_data(ss,boxed);
+			await this.export_db_data(ss,boxed);
 		} else {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
@@ -1987,10 +2037,37 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					case "str": this._load_str_type(to_load,ss);
 				}
 			}
-			this.export_db_data(ss,boxed);
+			await this.export_db_data(ss,boxed);
 		}
 	}
 	expected_id=0;
+	async save_database() {
+		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		if(!update_id) throw new Error("Update id not saved when loading database");
+		this.expected_id++;
+		this.indexed_db.put("boxed_id",{
+			key: "boxed_id:update_id",
+			type: "update_id",
+			id: this.expected_id,
+		},3);
+		let wait_close=this.indexed_db.open_db_promise;
+		if(wait_close) await wait_close;
+		update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		if(!update_id) throw new Error("Update id not saved when updating");
+		if(update_id.id!==this.expected_id) {
+			this.indexed_db.put("boxed_id",{
+				key: "boxed_id:update_id",
+				type: "update_id",
+				id: this.expected_id,
+			},3);
+			let wait_close=this.indexed_db.open_db_promise;
+			if(wait_close) await wait_close;
+		}
+		update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		if(!update_id) throw new Error("Update id not saved when updating");
+		if(update_id.id!==this.expected_id) throw new Error("Conflicting access, update_id still not the expected id");
+		await this.do_boxed_push_to_database();
+	}
 	async load_database() {
 		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
 		if(!update_id) {
