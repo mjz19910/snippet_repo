@@ -2411,10 +2411,19 @@ class HandleTypes extends ServiceMethods {
 		if(x[0]!=="child") {debugger; return null;}
 		return f.call(this,x[2]);
 	}
-	/** @protected @template T @template U @arg {T_PArr<T,U>} x @returns {[T,U]} */
+	/** @protected @template T @arg {T_VW<T>} x */
+	T_VW(x) {
+		if(x.length!==1) return null;
+		return x[0];
+	}
+	/** @protected @template T @template U @arg {T_PArr<T,U>} x @returns {[T,U]|null} */
 	T_PArr(x) {
-		if(x[0]!=="param_arr") {debugger; throw new Error("E");}
-		return [x[3],x[2]];
+		if(x[0]!=="param_arr") {debugger; return null;}
+		if(x.length!==2) debugger;
+		let v=this.T_VW(x[1]);
+		if(!v) {debugger; return null;}
+		if(v[0]!=="child") {debugger; return null;}
+		return [v[3],v[2]];
 	}
 	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16][2]} x */
 	PR_TrackingObj_f16(x) {
@@ -2512,7 +2521,10 @@ class HandleTypes extends ServiceMethods {
 		if(6 in x) {
 			if(4 in x&&!(2 in x)) {
 				const {4: f4,6: f6,...y}=this.s(cf,x); this.g(y);
-				let [[f6t,f6v],f6o]=this.T_PArr(f6);
+				let xr=this.T_PArr(f6);
+				if(!xr) return;
+				let [f6w,f6o]=xr;
+				let [f6t,f6v]=f6w;
 				if(f6t!=="string") debugger;
 				if(f6v!=="external") debugger;
 				if(f6o!==null) debugger;
