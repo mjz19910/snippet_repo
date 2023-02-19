@@ -1204,7 +1204,6 @@ class HandleTypes extends ServiceMethods {
 	gen_typedef_bin(s,cf,x) {
 		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)};\n`;
 	}
-	text_decoder=new TextDecoder();
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
 	codegen_typedef_bin(cf,x,do_break=true) {
 		/** @private @type {JsonReplacerState} */

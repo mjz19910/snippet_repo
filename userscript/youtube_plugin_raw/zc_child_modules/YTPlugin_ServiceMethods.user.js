@@ -301,6 +301,7 @@ class ServiceMethods extends ServiceData {
 			const {gclid,...y1}=x3; this.g(y1);
 		}
 	}
+	text_decoder=new TextDecoder();
 	/**
 	 * @protected @template T_Data,T_Meta
 	 * @template {Extract<keyof T_Endpoint,EPL>} EP_Key @template {TE_Endpoint_3<EPL,T_Data,T_Meta>} T_Endpoint @arg {T_Endpoint} x
@@ -308,7 +309,10 @@ class ServiceMethods extends ServiceData {
 	 */
 	TE_Endpoint_3_v2(k,x) {
 		let keys=this.get_keys_of(x);
-		let s=new JsonReplacerState(k,keys,true);
+		let s=new JsonReplacerState({
+			text_decoder: this.text_decoder,
+			cf: k,keys,is_root: true
+		});
 		let cf=this.cg.get_auto_type_name(s,x);
 		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
 		this.clickTrackingParams(clickTrackingParams);
