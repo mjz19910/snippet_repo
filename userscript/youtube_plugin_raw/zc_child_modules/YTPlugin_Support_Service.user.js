@@ -1920,7 +1920,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			to_load={
 				key: to_load_v1.key,
 				base: "boxed_id",
-				type: "str",
+				type: ks[1],
 				id: required(ks.pop()),
 				value: to_load_v1.id,
 			};
