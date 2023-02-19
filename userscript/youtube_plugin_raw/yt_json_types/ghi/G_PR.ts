@@ -7,8 +7,8 @@ type G_PR_TrackingObj=
 	|PR_TrackingObj_9w
 	|PR_TrackingObj_16n3n
 	|PR_TrackingObj_16w3n
+	|PR_TrackingObj_19w3n
 	|PR_TrackingObj_19w3w
 	|PR_TrackingObj_19w11w
-	|PR_TrackingObj_19wn3
 	;
 ;
