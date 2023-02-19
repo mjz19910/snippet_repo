@@ -2475,15 +2475,63 @@ class HandleTypes extends ServiceMethods {
 			const {1: f1}=this.s(cf,x);
 			this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 		}
+		if(1 in x) {
+			const {1: a,...u1}=this.s(cf,x);
+			this.T_D32(a,x => this.save_number(`${cf}.w19.f1`,x));
+			let u3=null,u19n=null;
+			if(19 in u1) {
+				const {19: a,...u2}=u1;
+				const [,b]=a,[c]=b,[,,d]=c;
+				this.RB_Obj_f19(d);
+				u19n=u2;
+			} else {
+				u3=u1;
+			}
+			if(u19n&&11 in u19n) {
+				const {11: a,...u1}=u19n; u1;
+				u19n=u1;
+			}
+			if(u19n&&9 in u19n) {
+				const {9: a,...u1}=u19n;
+				u19n=u1;
+			}
+			if(u19n&&6 in u19n) {
+				const {6: a,...u1}=u19n;
+				u19n=u1;
+			}
+			if(u19n&&4 in u19n) {
+				const {4: a,...u1}=u19n;
+				u19n=u1;
+			}
+			if(u19n&&2 in u19n) {
+				const {2: a,...u1}=u19n;
+				u19n=u1;
+			}
+			x: {
+				if(u19n!==null) {this.g(u19n); break x;}
+				if(u19n===null) break x;
+				debugger;
+			}
+			if(u3&&9 in u3) {
+				return;
+			}
+			if(u3&&8 in u3) {
+				return;
+			}
+			if(u3&&7 in u3) {
+				let {7: a}=u3; a;
+				return;
+			}
+			u3;
+			return;
+		}
 		if(19 in x) {
 			if(11 in x) {
 				const {1: f1,2: f2,4: f4,3: f3,6: f6,11: f11,19: f19,...y}=this.s(cf,x); this.g(y);
-				this.T_D32(f1,x => this.save_number(`${cf}.w19.f1`,x));
 				this.T_D32(f2,x => this.save_number(`${cf}.w19.f1`,x));
 				this.T_D32(f2,x => this.save_number(`${cf}.w19.f2`,x));
 				this.t(f3,x => this.T_D32(x,x => this.save_number(`${cf}.w19.f3`,x)));
 				this.T_VW_2(f4,this.V_BinaryTimestamp);
-				this.T_VW_2(f19,this.RB_Obj_f19);
 				return;
 			}
 			if(9 in x&&6 in x&&3 in x) {
@@ -2505,6 +2553,9 @@ class HandleTypes extends ServiceMethods {
 				this.T_VW_2(f19,this.RB_Obj_f19);
 				return;
 			}
+			const {19: f19,...y}=this.s(cf,x);
+			this.T_VW_2(f19,this.RB_Obj_f19);
+			y;
 			x===""; debugger;
 			return;
 		}

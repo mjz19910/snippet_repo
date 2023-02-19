@@ -22,7 +22,7 @@ type PR_TrackingObj_3w8n={
 };
 type PR_TrackingObj_6w4w2n={
 	4: T_VW_2<V_BinaryTimestamp>;
-	6: T_PArr<["raw_child",T_Uint8Array<8>,null,["string","external"]]>;
+	6: T_VSR<"external">;
 };
 type PR_TrackingObj_6w4w={
 	1: T_D32<411>;
@@ -30,13 +30,13 @@ type PR_TrackingObj_6w4w={
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VSR<"watch">;
 };
-type PR_TrackingObj_6w3w={
+type PR_TrackingObj_7w={
 	1: T_D32<332>;
 	2: T_D32<6180>;
 	3: T_D32<0>;
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VSR<"related">;
-	7?: T_VSR<"bdBCMs1uuj0e1L0L">;
+	7: T_VSR<"bdBCMs1uuj0e1L0L">;
 };
 type PR_TrackingObj_9w={
 	1: T_D32<370>;
