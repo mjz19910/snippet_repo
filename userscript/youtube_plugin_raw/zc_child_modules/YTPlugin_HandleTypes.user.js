@@ -2505,8 +2505,9 @@ class HandleTypes extends ServiceMethods {
 					const [,,n,b]=a; if(n!==null) debugger;
 					{
 						const [,a]=b;
+						this.save_string(`${cf}.f6.str`,a);
 						switch(a) {
-							default: debugger; break;
+							default: this.save_string(`${cf}.f6.str.default`,a); break;
 							case "external": break;
 							case "list_other": break;
 							case "related": break;
