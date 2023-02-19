@@ -94,8 +94,8 @@ type P_dislike_params={
 	};
 	2: T_D32<0>;
 	4: {
-		1: T_D32<1676518936>;
-		2: T_D32<441858121>;
+		1: T_D32<number>;
+		2: T_D32<number>;
 	};
 };
 type P_subscribe_button_entity_key={
