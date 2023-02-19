@@ -2092,6 +2092,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				const [log_ns,log_msg,x]=msg;
 				if(log_ns!==ns) continue;
 				console.log(`delayed ${log_msg}`,x);
+				let idx=this.stored_log_messages.indexOf(msg);
+				this.stored_log_messages.splice(idx,1);
 			}
 			console.log(`store [${ns}] [${k}] %o`,x);
 		}
