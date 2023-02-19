@@ -1488,6 +1488,16 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		});
 	}
+	/** @private @arg {D_Menu_WithTargetId["targetId"]} x */
+	D_Menu_TargetId(x) {
+		switch(x) {
+			default: debugger; break;
+			case "browse-video-menu-button": break;
+			case "playlist-browse-action-menu": break;
+			case "watch-related-menu-button": break;
+		}
+		x;
+	}
 	/** @private @arg {D_Menu_WithTargetId} x */
 	D_Menu_WithTargetId(x) {
 		const cf="D_Menu_WithTargetId";
@@ -1499,10 +1509,7 @@ class ServiceMethods extends ServiceData {
 			this.t(accessibility,this.D_Accessibility);
 			this.tz(flexibleItems,this.R_MenuFlexibleItem);
 			this.tz(topLevelButtons,this.D_Menu_Button);
-			switch(targetId) {
-				default: debugger; break;
-				case "browse-video-menu-button":
-			}
+			this.D_Menu_TargetId(targetId);
 			return;
 		}
 		if("topLevelButtons" in x) {
@@ -1520,8 +1527,8 @@ class ServiceMethods extends ServiceData {
 			this.D_Accessibility(accessibility);
 			switch(targetId) {
 				default: debugger; break;
-				case "playlist-browse-action-menu": break;
 			}
+			this.D_Menu_TargetId(targetId);
 			return;
 		}
 		const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1532,11 +1539,7 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		});
 		this.D_Accessibility(accessibility);
-		switch(targetId) {
-			default: debugger; break;
-			case "playlist-browse-action-menu": break;
-			case "watch-related-menu-button": break;
-		}
+		this.D_Menu_TargetId(targetId);
 	}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {

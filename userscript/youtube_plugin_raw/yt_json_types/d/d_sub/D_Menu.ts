@@ -33,7 +33,12 @@ type D_Menu_WithItems={
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
 };
-type D_Menu_WithTargetId={
+type D_Menu_WithTargetId=|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "browse-video-menu-button";
+}|{
 	items: (R_MenuServiceItem|R_MenuNavigationItem)[];
 	trackingParams: string;
 	topLevelButtons: R_Button[];
