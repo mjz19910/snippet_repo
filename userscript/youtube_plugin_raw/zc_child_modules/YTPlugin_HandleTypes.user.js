@@ -3048,11 +3048,23 @@ class HandleTypes extends ServiceMethods {
 		const {1: a,...y}=this.s(cf,x);
 		this.T_VW_2(a,x => {
 			const {1: f1,...y}=x; this.g(y);
-			this.t(this.T_VSR(f1),x => {
-				if(this.LP_dislike.includes(x)) return;
-				this.LP_dislike.push(x);
-				x; debugger;
-			});
+			if(f1[0]!=="param_arr") {debugger; return;}
+			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
+			switch(a[0]) {
+				case "child": {
+					let [,,x]=a;
+					if(x===null) {debugger; return;}
+					let {10: b,14: c,...y}=x; this.g(y);
+				} break;
+				case "raw": {
+					let [,[t,x]]=a;
+					if(t!=="string") debugger;
+					if(this.LP_dislike.includes(x)) return;
+					this.LP_dislike.push(x);
+					x; debugger;
+
+				} break;
+			}
 		});
 		let k=this.get_keys_of_2(y)[0];
 		console.log("[P_dislike_params.next_key]",k);
