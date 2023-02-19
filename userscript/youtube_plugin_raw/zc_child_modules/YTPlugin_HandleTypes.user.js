@@ -16,7 +16,6 @@
 const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState}=require("./YtPlugin_Base.user");
 const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
-const {TypedefGenerator}=require("./YTPlugin_Support_Service.user");
 
 //#region module setup
 const __module_name__="mod$HandleTypes";
@@ -36,29 +35,300 @@ function init_module() {
 	//#endregion
 }
 //#endregion
-//#region Constants
-/** @type {{value:TypedefGenerator|null}} */
-const generate_typedef={value: null};
-//#endregion
-//#region HandleTypesEval
-/** @arg {TemplateStringsArray} x */
-function raw_template(x) {
-	if(x.raw.length>1) {debugger;}
-	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
-}
-const handle_types_eval_code=raw_template`
-class HandleTypesEval extends ServiceMethods {}
-window.HandleTypesEval=HandleTypesEval;
-//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
-`;
-eval(handle_types_eval_code);
-//#endregion
 //#region HandleTypes
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
 	[24476774],
 ].flat());
 class HandleTypes extends ServiceMethods {
+	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
+	T_D32(x,f) {
+		if(!x) {debugger; return;}
+		if(x[0]!=="param_arr") {debugger; return;}
+		let pa=x[1];
+		if(pa.length!==1) {debugger; return;}
+		let [v]=pa;
+		if(v[0]!=="data32") {debugger; return;}
+		f(v[1]);
+	}
+	/** @private @template {number} T @arg {T_D32<T>} x */
+	T_D32_v(x) {
+		if(!x) return null;
+		if(x[0]!=="param_arr") return null;
+		let pa=x[1];
+		if(pa.length!==1) return null;
+		let [v]=pa;
+		if(v[0]!=="data32") return null;
+		return v[1];
+	}
+	/** @private @template {number} T @template U @arg {T_FD32<T>} x @arg {(this:void,x:T)=>U} f */
+	T_FD32(x,f) {
+		let x1=this.T_RawChild(x);
+		if(!x1) {debugger; return null;}
+		let [t,u]=x1;
+		if(t!=="data_fixed32") {debugger; return null;}
+		return f(u);
+	}
+	/** @arg {D_ProtobufObj[]} x */
+	tr_arr_to_obj(x) {
+		if(!x) {debugger; return null;}
+		/** @private @type {V_ParamObj_2} */
+		let res_obj={};
+		/** @arg {number} id @arg {V_ParamObjData_2} obj */
+		const add_obj=(id,obj) => {
+			res_obj[id]??=["param_arr",[]];
+			res_obj[id][1].push(obj);
+		};
+		for(let v of x) {
+			switch(v[0]) {
+				default: debugger; break;
+				case "child": {
+					let [n,id,a,b]=v;
+					if(b===null) {
+						let decoded_string=this._decoder.decode(a);
+						add_obj(id,["raw_child",a,b,["string",decoded_string]]);
+						continue;
+					}
+					add_obj(id,[n,a,this.tr_arr_to_obj(b)]);
+				} break;
+				case "data32": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "data64": {
+					let [n,id,a,b]=v;
+					add_obj(id,[n,a,b]);
+				} break;
+				case "data_fixed32": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "data_fixed64": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "error": {
+					let [n,id]=v;
+					add_obj(id,[n,id]);
+				} break;
+				case "group": {
+					let [n,id,a]=v;
+					let res=this.tr_arr_to_obj(a);
+					if(res) {
+						add_obj(id,[n,res]);
+					} else {
+						debugger;
+					}
+				} break;
+				case "info": {
+					let [n,id,a]=v;
+					add_obj(id,[n,a]);
+				} break;
+				case "struct": {
+					let [n,id,a]=v;
+					let res=this.tr_arr_to_obj(a);
+					if(res) {
+						add_obj(id,[n,res]);
+					} else {
+						debugger;
+					}
+				} break;
+			}
+		}
+		/*
+		let x1=this.make_param_map(x);
+		if(!x1) {debugger; return null;}
+		return this.convert_map_to_obj(x1);*/
+		return res_obj;
+	}
+	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
+	tr_to_param_item(x) {
+		if(typeof x==='string') return {0: ["param_arr",[["raw",["string",x]]]]};
+		if(typeof x==="number") return {0: ["param_arr",[["raw",["number",x]]]]};
+		if(x instanceof Map) {
+			let x1=this.tr_map_to_obj(x);
+			if(!x1) {debugger; return null;}
+			return {0: ["param_arr",[["raw",["V_ParamMapType",x]]]]};
+		}
+		if(x instanceof Array) {
+			if(x[0]==="bigint") return {0: ["param_arr",[["raw",["bigint",x[2]]]]]};
+			if(x[0]==="group") {
+				const [,r]=x;
+				let vr=this.tr_arr_to_obj(r);
+				if(!vr) {debugger; return null;}
+				return vr;
+			}
+			if(x[0]==="failed") {debugger; return null;}
+			x==="";
+			return null;
+		}
+		if(x instanceof Uint8Array) return {0: ["param_arr",[["raw",["binary",x]]]]};
+		x==="";
+		return null;
+	}
+	/** @arg {V_ParamMapType} x @returns {V_ParamObj_2|null} */
+	tr_map_to_obj(x) {
+		/** @template T @arg {T[]} x */
+		function first(x) {
+			if(x.length!==1) return null;
+			return x[0];
+		}
+		/** @type {V_ParamObj_2} */
+		let res={};
+		debugger;
+		for(let k of x.keys()) {
+			let value=x.get(k);
+			if(k in res) {
+				debugger;
+			}
+			if(value===void 0) {debugger; continue;}
+			res[k]??=["param_arr",[["raw",["array",[]]]]];
+			let cv=res[k];
+			let ca=cv[1][0];
+			if(cv[0]!=="param_arr") {debugger; continue;}
+			if(ca[0]!=="raw") {debugger; continue;}
+			if(ca[1][0]!=="array") {debugger; continue;}
+			const t=ca[1][1];
+			if(value.length===0) {
+				t.push({});
+				continue;
+			}
+			if(value.length!==1) {
+				/** @template T @arg {T|null} x @returns {x is T} */
+				function is_not_null(x) {return x!==null;}
+				let v1=value.map(x => {
+					let r=this.tr_to_param_item(x);
+					if(r===null) {debugger; return null;}
+					return r;
+				}).filter(is_not_null);
+				t.push(...v1);
+				continue;
+			}
+			let v2=first(value);
+			if(v2===null) {debugger; continue;}
+			let v3=this.tr_to_param_item(v2);
+			if(v3===null) {debugger; continue;}
+			t.push(v3);
+		}
+		return res;
+	}
+	/** @type {([type:"number",cf:string,key:string,size:"milliseconds",value:number])[]} */
+	log_buffer=[];
+	/** @type {Promise<null>|null} */
+	loading_promise=null;
+	load_moment_js_if_not_loaded() {
+		if(this.loading_promise!==null) return this.loading_promise;
+		if(this.is_moment_js_loading) return null;
+		let s=document.createElement("script");
+		s.src="https://momentjs.com/downloads/moment.min.js";
+		this.is_moment_js_loading=true;
+		this.loading_promise=new Promise((a) => {
+			s.onload=() => {
+				this.is_moment_js_loaded=true;
+				this.loading_promise=null;
+				a(null);
+			};
+			document.head.append(s);
+		});
+		return this.loading_promise;
+	}
+	async run_logger() {
+		if(this.log_buffer.length===0) return;
+		let ms_set=new Set;
+		for(let log of this.log_buffer) {
+			let [type,cf,name,size,value]=log;
+			if(type!=="number") continue;
+			if(ms_set.has(value)) continue;
+			if(value>=0b101111101010000000000000000000000000000000000000000) {
+				ms_set.add(value);
+				let lp=this.load_moment_js_if_not_loaded();
+				if(lp!==null) await lp;
+				let moment=require("moment");
+				switch(size) {
+					case "milliseconds": {
+						let exp_m_from_now=moment(this.client_now).diff(value/1000)/1000;
+						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
+					} break;
+				}
+				continue;
+			}
+			console.log(cf,name,value);
+		}
+	}
+	/** @type {number} */
+	static client_now=Date.now();
+	client_now=HandleTypes.client_now;
+	/** @type {null|Promise<void>} */
+	imm_wait_promise=null;
+	immediate_run_logger() {
+		if(this.imm_wait_promise) return;
+		let wait_promise=Promise.resolve().then(this.run_logger.bind(this)).then(() => {
+			this.imm_wait_promise=null;
+		});
+		this.imm_wait_promise=wait_promise;
+	}
+	/** @template {number} T @arg {T} t @arg {{1:T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
+	is_tp_xx(x,t) {return x[1][0]==="param_arr"&&x[1][1][0][1]===t;}
+	/** @template {number} T @arg {T} t @arg {{2:T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
+	is_tp_xx_2(x,t) {return x[2][0]==="param_arr"&&x[2][1][0][1]===t;}
+	/** @private @arg {V_BinaryTimestamp} x */
+	V_BinaryTimestamp(x) {
+		const cf="V_BinaryTimestamp";
+		const {1: request_timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
+		this.T_D32(request_timestamp_milli_utc,x => {
+			this.log_buffer.push(["number",`max_gen:${cf}_gen`,"f1","milliseconds",x]);
+			this.immediate_run_logger();
+		});
+		this.T_FD32(f2,x => {
+			if(x<=0b1010111011010101010000001011) return;
+			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(x).toString(2)}]`);
+		});
+		this.T_FD32(f3,x => {
+			if(x<=0b11111111000011111010011111000000) return;
+			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(x).toString(2)}]`);
+		});
+	}
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
+	decode_binary_object_log_info(cf,x) {
+		this._continuation_logged_str.push(cf);
+		const n_cf=`P_${cf.replaceAll(".","_")}`;
+		this.codegen_typedef_bin(n_cf,x,false);
+		let str_arr=[""];
+		/** @arg {string} code */
+		function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
+		let pad=1;
+		ap(`case "${cf}": {`);
+		pad+=1;
+		ap(`/** @type {${n_cf}} */`);
+		ap("let u=as_any(x);");
+		ap(`this.${n_cf}(u);`);
+		pad-=1;
+		ap(`} break;`);
+		console.log(`-- [binary_gen_case:${cf}] --\n${str_arr.join("\n")}`);
+		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
+	}
+	/** @protected @template T @arg {T_VW<T>} x */
+	T_VW(x) {
+		if(x.length!==1) return null;
+		return x[0];
+	}
+	/** @protected @template T @arg {T_PArr<T>} x @returns {T|null} */
+	T_RawChild(x) {
+		if(x[0]!=="param_arr") {debugger; return null;}
+		if(x.length!==2) debugger;
+		return this.T_VW(x[1]);
+	}
+	/** @private @template T @arg {TV_Str<T>} x */
+	TV_Str(x) {
+		let vv=this.T_RawChild(x);
+		if(vv===null) {debugger; return null;}
+		let v2=vv;
+		if(v2[0]!=="raw_child") {this.codegen_typedef_bin("TV_Str",x); return null;}
+		let v3=v2[3];
+		let [a,b]=v3;
+		if(a!=="string") {debugger; return null;}
+		return b;
+	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
@@ -74,14 +344,6 @@ class HandleTypes extends ServiceMethods {
 		for(;c_pos<6;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
 		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
-	}
-	get generate_typedef() {
-		if(!generate_typedef.value) throw new Error();
-		return generate_typedef.value;
-	}
-	/** @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
-	constructor(x) {
-		super(x);
 	}
 	//#endregion
 	/** @private @arg {D_WatchNextTabbedResults} x */
@@ -1096,7 +1358,7 @@ class HandleTypes extends ServiceMethods {
 			/** @arg {V_RawBox} otu */
 			let v_param_2_raw=(otu) => {
 				switch(otu[1][0]) {
-					case "string": return `TYPE::T_VSR<"${otu[1][1]}">`;
+					case "string": return `TYPE::TV_Str<"${otu[1][1]}">`;
 					case "bigint": return `TYPE::T_VW_Bigint<${otu[1][1]}n>`;
 				}
 				return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
@@ -1123,7 +1385,7 @@ class HandleTypes extends ServiceMethods {
 				let x1=x[3];
 				switch(x1[0]) {
 					default: return v_param_rc_def(x);
-					case "string": return `TYPE::T_VSR<"${x1[1]}">`;
+					case "string": return `TYPE::TV_Str<"${x1[1]}">`;
 				}
 			};
 			if(x3[0]==="data64") {
@@ -2422,17 +2684,6 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		return ret;
 	}
-	/** @protected @template T @arg {T_VW<T>} x */
-	T_VW(x) {
-		if(x.length!==1) return null;
-		return x[0];
-	}
-	/** @protected @template T @arg {T_PArr<T>} x @returns {T|null} */
-	T_RawChild(x) {
-		if(x[0]!=="param_arr") {debugger; return null;}
-		if(x.length!==2) debugger;
-		return this.T_VW(x[1]);
-	}
 	/** @protected @arg {D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
@@ -2543,101 +2794,6 @@ class HandleTypes extends ServiceMethods {
 			case "click_tracking": return this.H_TrackingObj(z);
 			case "tracking": return this.P_tracking_params(z);
 		}
-	}
-	/** @type {([type:"number",cf:string,key:string,size:"milliseconds",value:number])[]} */
-	log_buffer=[];
-	/** @type {Promise<null>|null} */
-	loading_promise=null;
-	load_moment_js_if_not_loaded() {
-		if(this.loading_promise!==null) return this.loading_promise;
-		if(this.is_moment_js_loading) return null;
-		let s=document.createElement("script");
-		s.src="https://momentjs.com/downloads/moment.min.js";
-		this.is_moment_js_loading=true;
-		this.loading_promise=new Promise((a) => {
-			s.onload=() => {
-				this.is_moment_js_loaded=true;
-				this.loading_promise=null;
-				a(null);
-			};
-			document.head.append(s);
-		});
-		return this.loading_promise;
-	}
-	async run_logger() {
-		if(this.log_buffer.length===0) return;
-		let ms_set=new Set;
-		for(let log of this.log_buffer) {
-			let [type,cf,name,size,value]=log;
-			if(type!=="number") continue;
-			if(ms_set.has(value)) continue;
-			if(value>=0b101111101010000000000000000000000000000000000000000) {
-				ms_set.add(value);
-				let lp=this.load_moment_js_if_not_loaded();
-				if(lp!==null) await lp;
-				let moment=require("moment");
-				switch(size) {
-					case "milliseconds": {
-						let exp_m_from_now=moment(this.client_now).diff(value/1000)/1000;
-						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
-					} break;
-				}
-				continue;
-			}
-			console.log(cf,name,value);
-		}
-	}
-	/** @type {number} */
-	static client_now=Date.now();
-	client_now=HandleTypes.client_now;
-	/** @type {null|Promise<void>} */
-	imm_wait_promise=null;
-	immediate_run_logger() {
-		if(this.imm_wait_promise) return;
-		let wait_promise=Promise.resolve().then(this.run_logger.bind(this)).then(() => {
-			this.imm_wait_promise=null;
-		});
-		this.imm_wait_promise=wait_promise;
-	}
-	/** @template {number} T @arg {T} t @arg {{1:T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
-	is_tp_xx(x,t) {return x[1][0]==="param_arr"&&x[1][1][0][1]===t;}
-	/** @template {number} T @arg {T} t @arg {{2:T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
-	is_tp_xx_2(x,t) {return x[2][0]==="param_arr"&&x[2][1][0][1]===t;}
-	/** @private @arg {V_BinaryTimestamp} x */
-	V_BinaryTimestamp(x) {
-		const cf="V_BinaryTimestamp";
-		const {1: request_timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
-		this.T_D32(request_timestamp_milli_utc,x => {
-			this.log_buffer.push(["number",`max_gen:${cf}_gen`,"f1","milliseconds",x]);
-			this.immediate_run_logger();
-		});
-		this.T_FD32(f2,x => {
-			if(x<=0b1010111011010101010000001011) return;
-			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(x).toString(2)}]`);
-		});
-		this.T_FD32(f3,x => {
-			if(x<=0b11111111000011111010011111000000) return;
-			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(x).toString(2)}]`);
-		});
-	}
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
-	decode_binary_object_log_info(cf,x) {
-		this._continuation_logged_str.push(cf);
-		const n_cf=`P_${cf.replaceAll(".","_")}`;
-		this.codegen_typedef_bin(n_cf,x,false);
-		let str_arr=[""];
-		/** @arg {string} code */
-		function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
-		let pad=1;
-		ap(`case "${cf}": {`);
-		pad+=1;
-		ap(`/** @type {${n_cf}} */`);
-		ap("let u=as_any(x);");
-		ap(`this.${n_cf}(u);`);
-		pad-=1;
-		ap(`} break;`);
-		console.log(`-- [binary_gen_case:${cf}] --\n${str_arr.join("\n")}`);
-		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	binary_result(cf,x) {
@@ -2817,6 +2973,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_trending_bp(u);
 			} break;
+			case "ypc_get_offers.params": {
+				/** @type {P_ypc_get_offers_params} */
+				let u=as_any(x);
+				this.P_ypc_get_offers_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2824,17 +2985,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @template T @arg {TV_Str<T>} x */
-	TV_Str(x) {
-		let vv=this.T_RawChild(x);
-		if(vv===null) {debugger; return null;}
-		let v2=vv;
-		if(v2[0]!=="raw_child") {this.codegen_typedef_bin("T_VSR",x); return null;}
-		let v3=v2[3];
-		let [a,b]=v3;
-		if(a!=="string") {debugger; return null;}
-		return b;
-	}
+	/** @private @arg {P_ypc_get_offers_params} x */
+	P_ypc_get_offers_params(x) {x;}
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
@@ -3075,34 +3227,6 @@ class HandleTypes extends ServiceMethods {
 		const {1: f1,...y}=this.s(cf,x); this.g(y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
-	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
-	T_D32(x,f) {
-		if(!x) {debugger; return;}
-		if(x[0]!=="param_arr") {debugger; return;}
-		let pa=x[1];
-		if(pa.length!==1) {debugger; return;}
-		let [v]=pa;
-		if(v[0]!=="data32") {debugger; return;}
-		f(v[1]);
-	}
-	/** @private @template {number} T @arg {T_D32<T>} x */
-	T_D32_v(x) {
-		if(!x) return null;
-		if(x[0]!=="param_arr") return null;
-		let pa=x[1];
-		if(pa.length!==1) return null;
-		let [v]=pa;
-		if(v[0]!=="data32") return null;
-		return v[1];
-	}
-	/** @private @template {number} T @template U @arg {T_FD32<T>} x @arg {(this:void,x:T)=>U} f */
-	T_FD32(x,f) {
-		let x1=this.T_RawChild(x);
-		if(!x1) {debugger; return null;}
-		let [t,u]=x1;
-		if(t!=="data_fixed32") {debugger; return null;}
-		return f(u);
-	}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params";
@@ -3115,149 +3239,6 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		debugger;
-	}
-	/** @arg {D_ProtobufObj[]} x */
-	tr_arr_to_obj(x) {
-		if(!x) {debugger; return null;}
-		/** @private @type {V_ParamObj_2} */
-		let res_obj={};
-		/** @arg {number} id @arg {V_ParamObjData_2} obj */
-		const add_obj=(id,obj) => {
-			res_obj[id]??=["param_arr",[]];
-			res_obj[id][1].push(obj);
-		};
-		for(let v of x) {
-			switch(v[0]) {
-				default: debugger; break;
-				case "child": {
-					let [n,id,a,b]=v;
-					if(b===null) {
-						let decoded_string=this._decoder.decode(a);
-						add_obj(id,["raw_child",a,b,["string",decoded_string]]);
-						continue;
-					}
-					add_obj(id,[n,a,this.tr_arr_to_obj(b)]);
-				} break;
-				case "data32": {
-					let [n,id,a]=v;
-					add_obj(id,[n,a]);
-				} break;
-				case "data64": {
-					let [n,id,a,b]=v;
-					add_obj(id,[n,a,b]);
-				} break;
-				case "data_fixed32": {
-					let [n,id,a]=v;
-					add_obj(id,[n,a]);
-				} break;
-				case "data_fixed64": {
-					let [n,id,a]=v;
-					add_obj(id,[n,a]);
-				} break;
-				case "error": {
-					let [n,id]=v;
-					add_obj(id,[n,id]);
-				} break;
-				case "group": {
-					let [n,id,a]=v;
-					let res=this.tr_arr_to_obj(a);
-					if(res) {
-						add_obj(id,[n,res]);
-					} else {
-						debugger;
-					}
-				} break;
-				case "info": {
-					let [n,id,a]=v;
-					add_obj(id,[n,a]);
-				} break;
-				case "struct": {
-					let [n,id,a]=v;
-					let res=this.tr_arr_to_obj(a);
-					if(res) {
-						add_obj(id,[n,res]);
-					} else {
-						debugger;
-					}
-				} break;
-			}
-		}
-		/*
-		let x1=this.make_param_map(x);
-		if(!x1) {debugger; return null;}
-		return this.convert_map_to_obj(x1);*/
-		return res_obj;
-	}
-	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
-	tr_to_param_item(x) {
-		if(typeof x==='string') return {0: ["param_arr",[["raw",["string",x]]]]};
-		if(typeof x==="number") return {0: ["param_arr",[["raw",["number",x]]]]};
-		if(x instanceof Map) {
-			let x1=this.tr_map_to_obj(x);
-			if(!x1) {debugger; return null;}
-			return {0: ["param_arr",[["raw",["V_ParamMapType",x]]]]};
-		}
-		if(x instanceof Array) {
-			if(x[0]==="bigint") return {0: ["param_arr",[["raw",["bigint",x[2]]]]]};
-			if(x[0]==="group") {
-				const [,r]=x;
-				let vr=this.tr_arr_to_obj(r);
-				if(!vr) {debugger; return null;}
-				return vr;
-			}
-			if(x[0]==="failed") {debugger; return null;}
-			x==="";
-			return null;
-		}
-		if(x instanceof Uint8Array) return {0: ["param_arr",[["raw",["binary",x]]]]};
-		x==="";
-		return null;
-	}
-	/** @arg {V_ParamMapType} x @returns {V_ParamObj_2|null} */
-	tr_map_to_obj(x) {
-		/** @template T @arg {T[]} x */
-		function first(x) {
-			if(x.length!==1) return null;
-			return x[0];
-		}
-		/** @type {V_ParamObj_2} */
-		let res={};
-		debugger;
-		for(let k of x.keys()) {
-			let value=x.get(k);
-			if(k in res) {
-				debugger;
-			}
-			if(value===void 0) {debugger; continue;}
-			res[k]??=["param_arr",[["raw",["array",[]]]]];
-			let cv=res[k];
-			let ca=cv[1][0];
-			if(cv[0]!=="param_arr") {debugger; continue;}
-			if(ca[0]!=="raw") {debugger; continue;}
-			if(ca[1][0]!=="array") {debugger; continue;}
-			const t=ca[1][1];
-			if(value.length===0) {
-				t.push({});
-				continue;
-			}
-			if(value.length!==1) {
-				/** @template T @arg {T|null} x @returns {x is T} */
-				function is_not_null(x) {return x!==null;}
-				let v1=value.map(x => {
-					let r=this.tr_to_param_item(x);
-					if(r===null) {debugger; return null;}
-					return r;
-				}).filter(is_not_null);
-				t.push(...v1);
-				continue;
-			}
-			let v2=first(value);
-			if(v2===null) {debugger; continue;}
-			let v3=this.tr_to_param_item(v2);
-			if(v3===null) {debugger; continue;}
-			t.push(v3);
-		}
-		return res;
 	}
 	//#endregion binary
 	//#endregion

@@ -88,10 +88,7 @@ type P_dislike_params={
 	1: T_VW_2<{1: TV_Str<D_VideoId>;}|{
 		1: T_VW_2<{
 			10: T_D32<70>;
-			14: [
-				"data_fixed64",
-				V_Bigint<5290090427792780129n>
-			];
+			14: T_FD64<5290090427792780129n>;
 		}>;
 	}>;
 	2: T_D32<0>;
@@ -164,7 +161,7 @@ type P_create_backstage_post_params={
 	1: TV_Str<`UC${string}`>;
 	2: T_D32<1>;
 };
-type PG_subscription_state_key=P_subscription_state_key
+type PG_subscription_state_key=P_subscription_state_key;
 type P_subscription_state_key={
 	2: TV_Str<`UC${string}`>;
 	4: T_D32<51>;
@@ -324,4 +321,20 @@ type P_aadc_guidelines_state_entity_key={
 };
 type P_trending_bp={
 	77: TV_Str<"FEexplore">;
+};
+
+type P_ypc_get_offers_params={
+	1: T_VW_2<{
+		1: T_D32<3>;
+		2: TV_Str<`UC${string}`>;
+	}>;
+	3: T_D32<3>;
+	5: T_VW_2<{
+		1: TV_Str<"32KKwgF67Ho">;
+		3: T_D32<1>;
+		5: T_VW_2<{
+			1: TV_Str<"32KKwgF67Ho">;
+		}>;
+		9: T_D32<2>;
+	}>;
 };
