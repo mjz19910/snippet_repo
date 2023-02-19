@@ -1885,7 +1885,9 @@ class ServiceMethods extends ServiceData {
 			}
 			let [,id]=split_string_once(raw_id,"RD");
 			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id});
-			return console.log("[guideEntryId.radio.length]",raw_id.length);
+			// 11 + 2 [for the "RD"]
+			if(raw_id.length!==13) console.log("[guideEntryId.radio.length]",raw_id.length);
+			return;
 		}
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			let [,id]=split_string_once(raw_id,"UC");

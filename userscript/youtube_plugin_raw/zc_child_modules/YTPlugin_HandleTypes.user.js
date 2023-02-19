@@ -2897,7 +2897,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
-		const {2: a,...y}=this.s(cf,x);
+		const {2: a,4: {},5: {},...y}=this.s(cf,x); this.g(y);
 		this.t(this.T_VSR(a),x => this.channelId(x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
@@ -3005,7 +3005,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
 		const cf="P_playability_status_context_params";
-		const {1: f1,...y}=this.s(cf,x);
+		const {1: f1,2: {},...y}=this.s(cf,x); this.g(y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
