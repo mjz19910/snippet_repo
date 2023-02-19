@@ -1133,7 +1133,13 @@ class HandleTypes extends ServiceMethods {
 					let gen_json=this.gen_typedef_bin_json(s,ca);
 					return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
 				}
-				return `TYPE::T_VA_2<"${otu[0]}",${this.typedef_json_replace_bin(s,"0",ca)}>`;
+				let rep_obj=this.typedef_json_replace_bin(s,"0",ca);
+				if(typeof rep_obj!=="object") {
+					let gen_json=this.gen_typedef_bin_json(s,{v: rep_obj});
+					return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
+				}
+				let gen_json=this.gen_typedef_bin_json(s,{v: rep_obj});
+				return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
 			}
 			/** @type {(D_ProtobufObj|V_ParamObj_2[number])[]} */
 			let ota=obj;
