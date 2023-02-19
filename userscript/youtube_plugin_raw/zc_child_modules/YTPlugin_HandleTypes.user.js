@@ -1151,6 +1151,7 @@ class HandleTypes extends ServiceMethods {
 							case "data32": return v_param_2_D32(cv);
 							case "data64": return v_param_2_D64(cv);
 							case "raw_child": return v_param_2_raw_child(cv);
+							case "data_fixed64": return cv;
 						}
 						return otu;
 					}
@@ -2533,16 +2534,16 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(6 in x&&3 in x) {
-			const {1: f1,2: f2,3: f3,4: f4,6: [t1,[t2,f6]],7: m7,...y}=this.s(cf,x); this.g(y);
+			const {1: f1,2: f2,3: f3,4: f4,6: f6,7: m7,...y}=this.s(cf,x); this.g(y);
 			this.T_D32(f1,x => this.save_number(`${cf}.w6.f1`,x));
 			this.T_D32(f2,x => this.save_number(`${cf}.w6.f2`,x));
 			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}`);
-			this.save_string(`${cf}.w6.f6`,f6);
-			this.t(m7,x => {
-				const [,[,f7]]=x;
-				this.save_b64_binary(`${cf}.f7`,f7);
+			this.t(this.T_VSR(f6),x => {
+				this.save_string(`${cf}.w6.f6`,x);
+				x;
 			});
+			this.save_string(`${cf}.w6.f6.type`,`${f6[0]}:${f6[1][0][0]}:${f6[1][0][1][0]}`);
+			this.t(m7,x => this.t(this.T_VSR(x),x => this.save_b64_binary(`${cf}.f7`,x)));
 			return;
 		}
 		if(6 in x) {
@@ -2559,12 +2560,19 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			if(4 in x&&2 in x) {
-				const {1: f1,2: f2,4: f4,6: [t1,[t2,f6]],...y}=this.s(cf,x); this.g(y);
+				const {1: f1,2: f2,4: f4,6: f6,...y}=this.s(cf,x); this.g(y);
 				this.T_D32(f1,x => this.save_number(`${cf}.w6.f1`,x));
 				this.T_D32(f2,x => this.save_number(`${cf}.w6.f2`,x));
 				this.T_VW_2(f4,this.V_BinaryTimestamp);
-				this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}`);
-				this.save_string(`${cf}.w6.f6`,f6);
+				{
+					let x=f6;
+					if(x[0]!=="param_arr") debugger;
+					let [t1,[v]]=x;
+					let [t2,a]=v;
+					let [t3,u]=a;
+					this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}:${t3}`);
+					this.save_string(`${cf}.w6.f6`,u);
+				}
 				return;
 			}
 			debugger;
@@ -2874,25 +2882,35 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @template T @arg {T_VSR<T>} x @arg {(x:T)=>void} f */
-	T_VSR(x,f) {x; f;}
+	/** @private @template T @arg {T_VSR<T>} x */
+	T_VSR(x) {
+		this.codegen_typedef_bin("T_VSR",x);
+		let vv=this.T_PArr(x);
+		if(vv===null) {debugger; return null;}
+		let v2=vv;
+		if(v2[0]!=="raw") {debugger; return null;}
+		let v3=v2[1];
+		let [a,b]=v3;
+		if(a!=="string") {debugger; return null;}
+		return b;
+	}
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
 		const {77: a}=this.s(cf,x);
-		this.T_VSR(a,x => this.save_string(`${cf}.f77`,x));
+		this.t(this.T_VSR(a),x => this.save_string(`${cf}.f77`,x));
 	}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {
 		const cf="P_aadc_guidelines_state_entity_key";
 		const {2: a}=this.s(cf,x);
-		this.T_VSR(a,x => this.save_string(`${cf}.a`,x));
+		this.t(this.T_VSR(a),x => this.save_string(`${cf}.a`,x));
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
 		const {2: a}=this.s(cf,x);
-		this.T_VSR(a,x => this.videoId(x));
+		this.t(this.T_VSR(a),x => this.videoId(x));
 	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
@@ -2954,7 +2972,7 @@ class HandleTypes extends ServiceMethods {
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
 		const {2: a}=this.s(cf,x);
-		this.T_VSR(a,x => this.channelId(x));
+		this.t(this.T_VSR(a),x => this.channelId(x));
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
@@ -3030,7 +3048,7 @@ class HandleTypes extends ServiceMethods {
 		const {1: a,...y}=this.s(cf,x);
 		this.T_VW_2(a,x => {
 			const {1: f1,...y}=x; this.g(y);
-			this.T_VSR(f1,x => {
+			this.t(this.T_VSR(f1),x => {
 				if(this.LP_dislike.includes(x)) return;
 				this.LP_dislike.push(x);
 				x; debugger;
@@ -3079,14 +3097,15 @@ class HandleTypes extends ServiceMethods {
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
 		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
-		this.T_VSR(f2,x => {
-			x; debugger;
+		this.t(this.T_VSR(f2),x => {
+			if(x!=="FEwhat_to_watch") debugger;
 		});
-		this.T_VSR(f3,x => {
-			x; debugger;
+		this.t(this.T_VSR(f3),x => {
+			x;
+			debugger;
 		});
-		this.T_VSR(f35,x => {
-			x; debugger;
+		this.t(this.T_VSR(f35),x => {
+			if(x!=="browse-feedFEwhat_to_watch") debugger;
 		});
 	}
 	/** @private @arg {PR_continuation_request_browse_token} x */

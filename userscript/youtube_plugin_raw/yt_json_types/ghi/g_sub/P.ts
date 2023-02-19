@@ -85,7 +85,15 @@ type P_remove_like_params={
 	5: T_VW_2<V_ShortTimestamp>;
 };
 type P_dislike_params={
-	1: T_VW_2<{1: T_VSR<D_VideoId>;}>;
+	1: T_VW_2<{1: T_VSR<D_VideoId>;}|{
+		1: T_VW_2<{
+			10: T_D32<70>;
+			14: [
+				"data_fixed64",
+				V_Bigint<5290090427792780129n>
+			];
+		}>;
+	}>;
 	2: T_D32<0>;
 	4: T_VW_2<V_ShortTimestamp>;
 };
@@ -108,7 +116,6 @@ type P_unsubscribe_params={
 	2: T_VSR<D_VideoId>;
 	3: T_D32<0>;
 };
-type T_VA_2<T,U>=[T,U];
 type P_continuation_request_watch_next_token={
 	2: T_VW_2<{
 		2: T_VSR<D_VideoId>;
