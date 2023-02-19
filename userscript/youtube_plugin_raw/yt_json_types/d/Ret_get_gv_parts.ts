@@ -14,7 +14,7 @@ type G_Gv_0=
 	|"p5qs7"
 	;
 ;
-// cSpell:ignoreRegExp /rr1.sn-5ualdn[lsz][0-9a-z].googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
+// cSpell:ignoreRegExp /rr1.sn-5ua(ldn[lsz][0-9a-z]|ezn[67elryz][0-9a-z]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	``,
