@@ -66,7 +66,7 @@ class HandleTypes extends ServiceMethods {
 		return as(x.map(v => `${v}`).join(".f"));
 	}
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
-	continuation_token_data_f49(cf,x) {
+	_continuation_token_data_f49(cf,x) {
 		let x1=decodeURIComponent(x);
 		let buffer=base64_url_dec.decodeByteArray(x1);
 		if(!buffer) {debugger; return;}
@@ -1075,7 +1075,7 @@ class HandleTypes extends ServiceMethods {
 				return `TYPE::T_VW_2<"${decoded_string}">`;
 			}; v_param_2_child;
 			if(otu[0]==="child") {
-				return this.convert_arr_to_obj([otu]);
+				return this.tr_arr_to_obj([otu]);
 			}
 			/** @arg {V_ParamObjData_2} otu */
 			let v_param_2_D32=(otu) => {
@@ -1083,7 +1083,7 @@ class HandleTypes extends ServiceMethods {
 				return `TYPE::T_D32<${otu[1]}>`;
 			}; v_param_2_D32;
 			if(otu[0]==="data32") {
-				return this.convert_arr_to_obj([otu]);
+				return this.tr_arr_to_obj([otu]);
 			}
 			/** @arg {V_ParamObjData_2} otu */
 			let v_param_2_FD32=(otu) => {
@@ -1091,7 +1091,7 @@ class HandleTypes extends ServiceMethods {
 				return `TYPE::T_FD32<${otu[1]}>`;
 			}; v_param_2_FD32;
 			if(otu[0]==="data_fixed32") {
-				return this.convert_arr_to_obj([otu]);
+				return this.tr_arr_to_obj([otu]);
 			}
 			/** @arg {V_ParamObjData_2} otu */
 			let v_param_2_FD64=(otu) => {
@@ -1099,7 +1099,7 @@ class HandleTypes extends ServiceMethods {
 				return `TYPE::T_FD64<${otu[1]}>`;
 			}; v_param_2_FD64;
 			if(otu[0]==="data_fixed64") {
-				return this.convert_arr_to_obj([otu]);
+				return this.tr_arr_to_obj([otu]);
 			}
 			/** @arg {V_RawBox} otu */
 			let v_param_2_raw=(otu) => {
@@ -1132,7 +1132,7 @@ class HandleTypes extends ServiceMethods {
 				return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 			};
 			if(otu[0]==="data64") {
-				return this.convert_arr_to_obj([otu]);
+				return this.tr_arr_to_obj([otu]);
 			}
 			if(otu.length===2&&typeof otu[0]==="string") {
 				switch(otu[0]) {
@@ -1291,11 +1291,11 @@ class HandleTypes extends ServiceMethods {
 		return [y,ret];
 	}
 	/** @type {string[]} */
-	continuation_logged_str=[];
+	_continuation_logged_str=[];
 	/** @private @arg {P_ParamParse} cf @arg {D_ProtobufObj[]} x */
 	decode_binary_arr(cf,x) {
 		if(x.length===0) debugger;
-		let bin_obj=this.convert_arr_to_obj(x);
+		let bin_obj=this.tr_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
 		try {
 			this.binary_result(cf,bin_obj);
@@ -2591,6 +2591,50 @@ class HandleTypes extends ServiceMethods {
 		x;
 		debugger;
 	}
+	/** @type {([type:"number",cf:string,key:string,value:number])[]} */
+	log_buffer=[];
+	/** @type {Promise<null>|null} */
+	loading_promise=null;
+	load_moment_js_if_not_loaded() {
+		if(this.loading_promise!==null) return this.loading_promise;
+		if(this.is_moment_js_loading) return null;
+		let s=document.createElement("script");
+		s.src="https://momentjs.com/downloads/moment.min.js";
+		this.is_moment_js_loading=true;
+		this.loading_promise=new Promise((a) => {
+			s.onload=() => {
+				this.is_moment_js_loaded=true;
+				this.loading_promise=null;
+				a(null);
+			};
+			document.head.append(s);
+		});
+		return this.loading_promise;
+	}
+	async run_logger() {
+		if(this.log_buffer.length===0) return;
+		for(let log of this.log_buffer) {
+			let [type,cf,name,value]=log;
+			if(type!=="number") continue;
+			if(value>=0b101111101010000010100101011110011001110101100111000) {
+				let lp=this.load_moment_js_if_not_loaded();
+				if(lp!==null) await lp;
+				let moment=require("moment");
+				let exp_m_from_now=moment(value*1000).fromNow();
+				console.log(cf,name,`[number] [moment] [${exp_m_from_now}]`);
+			}
+			console.log(cf,name,value);
+		}
+	}
+	/** @type {null|Promise<void>} */
+	imm_wait_promise=null;
+	immediate_run_logger() {
+		if(this.imm_wait_promise) return;
+		let wait_promise=Promise.resolve().then(this.run_logger.bind(this)).then(() => {
+			this.imm_wait_promise=null;
+		});
+		this.imm_wait_promise=wait_promise;
+	}
 	/** @template {number} T @arg {T} t @arg {{1:T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
 	is_tp_xx(x,t) {return x[1][0]==="param_arr"&&x[1][1][0][1]===t;}
 	/** @template {number} T @arg {T} t @arg {{2:T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
@@ -2600,8 +2644,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="V_BinaryTimestamp";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		this.T_D32(f1,x => {
-			if(x<=0b101111101010000010100101000011011011011111011111011) return;
-			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f1] --\n\n[0b${(x).toString(2)}]`);
+			this.log_buffer.push(["number",`max_gen:${cf}_gen`,"f1",x]);
+			this.immediate_run_logger();
 		});
 		this.T_FD32(f2,x => {
 			if(x<=0b1010111011010101010000001011) return;
@@ -2614,7 +2658,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	decode_binary_object_log_info(cf,x) {
-		this.continuation_logged_str.push(cf);
+		this._continuation_logged_str.push(cf);
 		const n_cf=`P_${cf.replaceAll(".","_")}`;
 		this.codegen_typedef_bin(n_cf,x,false);
 		let str_arr=[""];
@@ -2810,7 +2854,7 @@ class HandleTypes extends ServiceMethods {
 				this.P_trending_bp(u);
 			} break;
 			default: {
-				if(this.continuation_logged_str.includes(cf)) break;
+				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
 				debugger;
 			} break;
@@ -3064,7 +3108,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @arg {D_ProtobufObj[]} x */
-	convert_arr_to_obj(x) {
+	tr_arr_to_obj(x) {
 		if(!x) {debugger; return null;}
 		/** @private @type {V_ParamObj_2} */
 		let res_obj={};
@@ -3083,7 +3127,7 @@ class HandleTypes extends ServiceMethods {
 						add_obj(id,["raw_child",a,b,["string",decoded_string]]);
 						continue;
 					}
-					add_obj(id,[n,a,this.convert_arr_to_obj(b)]);
+					add_obj(id,[n,a,this.tr_arr_to_obj(b)]);
 				} break;
 				case "data32": {
 					let [n,id,a]=v;
@@ -3107,7 +3151,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case "group": {
 					let [n,id,a]=v;
-					let res=this.convert_arr_to_obj(a);
+					let res=this.tr_arr_to_obj(a);
 					if(res) {
 						add_obj(id,[n,res]);
 					} else {
@@ -3120,7 +3164,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case "struct": {
 					let [n,id,a]=v;
-					let res=this.convert_arr_to_obj(a);
+					let res=this.tr_arr_to_obj(a);
 					if(res) {
 						add_obj(id,[n,res]);
 					} else {
@@ -3136,11 +3180,11 @@ class HandleTypes extends ServiceMethods {
 		return res_obj;
 	}
 	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
-	convert_value_item_to_param_item(x) {
+	tr_to_param_item(x) {
 		if(typeof x==='string') return {0: ["param_arr",[["raw",["string",x]]]]};
 		if(typeof x==="number") return {0: ["param_arr",[["raw",["number",x]]]]};
 		if(x instanceof Map) {
-			let x1=this.convert_map_to_obj(x);
+			let x1=this.tr_map_to_obj(x);
 			if(!x1) {debugger; return null;}
 			return {0: ["param_arr",[["raw",["V_ParamMapType",x]]]]};
 		}
@@ -3148,7 +3192,7 @@ class HandleTypes extends ServiceMethods {
 			if(x[0]==="bigint") return {0: ["param_arr",[["raw",["bigint",x[2]]]]]};
 			if(x[0]==="group") {
 				const [,r]=x;
-				let vr=this.convert_arr_to_obj(r);
+				let vr=this.tr_arr_to_obj(r);
 				if(!vr) {debugger; return null;}
 				return vr;
 			}
@@ -3161,7 +3205,7 @@ class HandleTypes extends ServiceMethods {
 		return null;
 	}
 	/** @arg {V_ParamMapType} x @returns {V_ParamObj_2|null} */
-	convert_map_to_obj(x) {
+	tr_map_to_obj(x) {
 		/** @template T @arg {T[]} x */
 		function first(x) {
 			if(x.length!==1) return null;
@@ -3191,7 +3235,7 @@ class HandleTypes extends ServiceMethods {
 				/** @template T @arg {T|null} x @returns {x is T} */
 				function is_not_null(x) {return x!==null;}
 				let v1=value.map(x => {
-					let r=this.convert_value_item_to_param_item(x);
+					let r=this.tr_to_param_item(x);
 					if(r===null) {debugger; return null;}
 					return r;
 				}).filter(is_not_null);
@@ -3200,7 +3244,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			let v2=first(value);
 			if(v2===null) {debugger; continue;}
-			let v3=this.convert_value_item_to_param_item(v2);
+			let v3=this.tr_to_param_item(v2);
 			if(v3===null) {debugger; continue;}
 			t.push(v3);
 		}

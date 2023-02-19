@@ -5,7 +5,9 @@
 			"ESNext",
 			"DOM",
 		],
-		"types": [],
+		"types": [
+			"moment",
+		],
 		"module": "ESNext",
 		"moduleResolution": "NodeNext",
 		"outDir": "./build",

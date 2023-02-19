@@ -2834,20 +2834,20 @@ class ServiceMethods extends ServiceData {
 		/** @private @type {DecodeReturn|null} */
 		let res=null;
 		switch(target[0]) {
-			case "account": res=this.convert_account(target,x); break;
-			case "att": res=this.convert_res_att(target,x); break;
-			case "browse": res=this.convert_browse(target,x); break;
-			case "like": res=this.convert_like(target,x); break;
-			case "live_chat": res=this.convert_live_chat(target,x); break;
-			case "music": res=this.convert_music(target,x); break;
-			case "notification": res=this.convert_notification(target,x); break;
-			case "reel": res=this.convert_reel(target,x); break;
-			case "subscription": res=this.convert_subscription(target,x); break;
-			case "playlist": res=this.convert_playlist(target,x); break;
-			case "share": res=this.convert_share(target,x); break;
-			case "pdg": res=this.convert_pdg(target,x); break;
+			case "account": res=this.decode_return_account(target,x); break;
+			case "att": res=this.decode_return_res_att(target,x); break;
+			case "browse": res=this.decode_return_browse(target,x); break;
+			case "like": res=this.decode_return_like(target,x); break;
+			case "live_chat": res=this.decode_return_live_chat(target,x); break;
+			case "music": res=this.decode_return_music(target,x); break;
+			case "notification": res=this.decode_return_notification(target,x); break;
+			case "reel": res=this.decode_return_reel(target,x); break;
+			case "subscription": res=this.decode_return_subscription(target,x); break;
+			case "playlist": res=this.decode_return_playlist(target,x); break;
+			case "share": res=this.decode_return_share(target,x); break;
+			case "pdg": res=this.decode_return_pdg(target,x); break;
 		}
-		switch(target.length) {case 1: res=this.convert_length_1(target,x); break;}
+		switch(target.length) {case 1: res=this.decode_return_length_1(target,x); break;}
 		if(res) return res;
 		console.log("[log_get_res_data]",target,x);
 		{debugger;}
@@ -2857,7 +2857,7 @@ class ServiceMethods extends ServiceData {
 		};
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
-	convert_like(target,x) {
+	decode_return_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break; case "dislike": return {
 				type: `${target[0]}.${target[1]}`,
@@ -2884,7 +2884,7 @@ class ServiceMethods extends ServiceData {
 		return this.parser.get_url_type(path_parts);
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
-	convert_length_1(target,x) {
+	decode_return_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
 			case "browse": return {
@@ -2946,7 +2946,7 @@ class ServiceMethods extends ServiceData {
 		return null;
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
-	convert_reel(target,x) {
+	decode_return_reel(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
 			case "reel_item_watch": return {
@@ -2962,7 +2962,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
-	convert_notification(target,x) {
+	decode_return_notification(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
 			case "get_notification_menu": return {
@@ -2988,7 +2988,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
-	convert_live_chat(target,x) {
+	decode_return_live_chat(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
 			case "get_live_chat_replay": return {
@@ -3005,7 +3005,7 @@ class ServiceMethods extends ServiceData {
 		return null;
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
-	convert_res_att(target,x) {
+	decode_return_res_att(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
 			case "get": return {
@@ -3022,7 +3022,7 @@ class ServiceMethods extends ServiceData {
 		return null;
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
-	convert_account(target,x) {
+	decode_return_account(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
 			case "account_menu": return {
@@ -3044,7 +3044,7 @@ class ServiceMethods extends ServiceData {
 		return null;
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
-	convert_pdg(t,x) {
+	decode_return_pdg(t,x) {
 		switch(t[1]) {
 			case "get_pdg_buy_flow": return {
 				type: `${t[0]}.${t[1]}`,
@@ -3055,7 +3055,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
-	convert_music(t,x) {
+	decode_return_music(t,x) {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
 				type: `${t[0]}.${t[1]}`,
@@ -3066,7 +3066,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
-	convert_share(t,x) {
+	decode_return_share(t,x) {
 		switch(t[1]) {
 			case "get_share_panel": return {
 				type: `${t[0]}.${t[1]}`,
@@ -3077,7 +3077,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
-	convert_playlist(t,x) {
+	decode_return_playlist(t,x) {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
 				type: `${t[0]}.${t[1]}`,
@@ -3088,7 +3088,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
-	convert_subscription(t,x) {
+	decode_return_subscription(t,x) {
 		switch(t[1]) {
 			case "subscribe": return {
 				type: `${t[0]}.${t[1]}`,
@@ -3104,7 +3104,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
-	convert_browse(t,x) {
+	decode_return_browse(t,x) {
 		switch(t.length) {
 			case 2: switch(t[1]) {
 				case "edit_playlist": return {
