@@ -22,7 +22,7 @@ type D_UiTargetId=
 //#region String data
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
 type D_TargetIdStr=
-	|Extract<D_Menu,{targetId:any}>["targetId"]
+	|Extract<D_Menu,{targetId: any;}>["targetId"]
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
 	|AD_UpdateEngagementPanel['targetId']
@@ -2791,8 +2791,7 @@ type D_TopbarMenuButton={
 type D_TopicLink={
 	title: G_Text;
 	thumbnailDetails: D_Thumbnail;
-	// ChannelNavigationEndpointWebCommandMetadata
-	endpoint: GE_Browse;
+	endpoint: E_VE3611;
 	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
 	trackingParams: string;
 };

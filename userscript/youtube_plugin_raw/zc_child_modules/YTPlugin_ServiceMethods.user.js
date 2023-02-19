@@ -5899,7 +5899,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(thumbnailDetails);
 		this.G_Text(title);
 		this.trackingParams(trackingParams);
-		debugger;
+		x: {const x=endpoint; if(this.is_TE_VE(x,3611)) {this.E_VE3611(x); break x;}; debugger;}
 		if(callToActionIcon.iconType!=="CHEVRON_RIGHT") debugger;
 	}
 	/** @private @arg {R_InfoRow} x */

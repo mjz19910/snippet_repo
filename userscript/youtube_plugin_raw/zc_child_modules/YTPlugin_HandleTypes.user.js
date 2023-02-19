@@ -2933,7 +2933,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {1: {}={},2: {},...y}=this.s(cf,x);
+		const {1: {}={},2: {},3: {},5: {}={},6: {}={},9: {}={},13: {}={},14: {}={},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_unsubscribe_params} x */
@@ -2958,7 +2958,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
-		const {1: {},4: {},5: {}={},6: {},7: {},...y}=this.s(cf,x); this.g(y);
+		const {1: {},4: {},5: {}={},6: {},7: {}={},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_remove_like_params} x */

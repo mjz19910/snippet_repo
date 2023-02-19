@@ -64,7 +64,7 @@ type P_like_params={
 	4: T_D32<0>;
 	5?: T_D32<1>;
 	6: T_VW_2<V_ShortTimestamp>;
-	7: T_D32<1>;
+	7?: T_D32<1>;
 };
 type P_playability_status_context_params={
 	1: T_D32<1>;
@@ -122,7 +122,8 @@ type P_continuation_request_watch_next_token={
 		2: T_VSR<D_VideoId>;
 	}>;
 	3: T_D32<6>;
-	6: T_VW_2<{
+	5?: {_tag: "not_done";};
+	6?: T_VW_2<{
 		4: T_VW_2<{
 			4: T_VSR<D_VideoId>;
 			6: T_D32<0>;
@@ -130,6 +131,9 @@ type P_continuation_request_watch_next_token={
 		}>;
 		8: T_VSR<"comments-section">;
 	}>;
+	9?: {_tag: "not_done";};
+	13?: {_tag: "not_done";};
+	14?: {_tag: "not_done";};
 };
 type P_entity_key_normal={
 	2: T_VSR<`RD${string}`>;
