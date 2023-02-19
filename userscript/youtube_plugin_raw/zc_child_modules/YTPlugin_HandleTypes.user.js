@@ -3252,6 +3252,12 @@ class HandleTypes extends ServiceMethods {
 			if(target!=="TARGET_NEW_WINDOW") debugger;
 			return;
 		}
+		if("grwOpenInOverride" in u) {
+			let x=this.ws("grwOpenInOverride",u);
+			this.save_string(`${cf}.grwOpenInOverride`,x);
+			this.save_enum("GRW_OPEN_IN_OVERRIDE",x);
+			return;
+		}
 		this.g(u);
 	}
 	/** @private @arg {P_player_state_entity_key} x */

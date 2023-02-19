@@ -61,6 +61,7 @@ export namespace Gen {
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Browse";}
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Next";}
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Watch";}
+		|{n: Prelude.CF_H_a; t: Types.CF_H_a_; v: "DE_VE83769_Url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DD_Streaming";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AboutThisAd";}

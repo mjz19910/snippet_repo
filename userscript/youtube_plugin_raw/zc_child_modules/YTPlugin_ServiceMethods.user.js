@@ -1594,17 +1594,10 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {A_ChangeEngagementPanelVisibility} x */
 	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
-	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
-	w(cf,k,x,excl=[]) {
-		this.k(cf,x);
-		let ka=this.get_keys_of(x);
-		let keys=this.filter_out_keys(ka,excl);
-		if(keys.length!==1) debugger;
-		let hk=keys[0];
-		if(hk!==k) {debugger; throw new Error();}
-		let r=x[hk];
-		return r;
-	}
+	/** @protected @arg {CF_M_w} cf @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
+	w(cf,k,x) {this.k(cf,x); return this.ws(k,x);}
+	/** @protected @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
+	ws(k,x) {if(x[k]===void 0) debugger; return x[k];}
 	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(cf,k,x),`${cf}.${k}`);}
 	/** @protected @arg {D_EndscreenElement_EP} x */
