@@ -3006,12 +3006,10 @@ class HandleTypes extends ServiceMethods {
 					if(x===null) {debugger; return;}
 					let {10: b,14: c,...y}=x; this.g(y);
 				} break;
-				case "raw_child": {
+				case "raw_child": /*D_VideoId*/{
 					let [,,,[t,x]]=a;
 					if(t!=="string") debugger;
-					if(this.LP_dislike.includes(x)) return;
-					this.LP_dislike.push(x);
-					x; debugger;
+					this.videoId(x);
 				} break;
 			}
 		});
