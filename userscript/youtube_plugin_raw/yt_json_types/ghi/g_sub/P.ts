@@ -84,8 +84,8 @@ type P_remove_like_params={
 	}>;
 	3: T_D32<0>;
 	5: T_VW_2<{
-		1: T_D32<1676518936>;
-		2: T_D32<441847181>;
+		1: T_D32<number>;
+		2: T_D32<number>;
 	}>;
 };
 type P_dislike_params={
