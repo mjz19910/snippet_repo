@@ -2413,11 +2413,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16]} x */
 	G_PR_TrackingObj_f16(x) {x;}
-	/** @protected @arg {Extract<G_PR_TrackingObj,{1:any}>} x */
-	G_PR_TrackingObj_t1(x) {
-		const cf="G_PR_TrackingObj_t1";
-		this.codegen_typedef_bin("G_PR_TrackingObj",x);
-		{
+	/** @protected @arg {G_PR_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
+	G_PR_TrackingObj(x,flags) {
+		const cf="G_PR_TrackingObj";
+		switch(flags.type) {
+			default: debugger; break;
+			case "click_tracking": break;
+			case "tracking": break;
+		}
+		if(1 in x) {
 			const {1: f1}=this.s(cf,x);
 			if(f1[0]!=="data32") {debugger; return;}
 			this.save_number(`${cf}.f1`,f1[1]);
@@ -2518,27 +2522,14 @@ class HandleTypes extends ServiceMethods {
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
-		x;
-		debugger;
-	}
-	/** @protected @arg {G_PR_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
-	G_PR_TrackingObj(x,flags) {
-		const cf="G_PR_TrackingObj";
-		if(1 in x) return this.G_PR_TrackingObj_t1(x);
-		switch(flags.type) {
-			default: debugger; break;
-			case "click_tracking": break;
-			case "tracking": break;
-		}
-		this.codegen_typedef_bin("G_PR_TrackingObj",x);
-		const {4: f4,...u}=this.s(cf,x);
-		// this.V_BinaryTimestamp(f4);
-		if(6 in u) {
-			const {6: f6,...y}=u; this.g(y);
-			if(f6[0]!=="raw") debugger;
+		if(4 in x) {
+			const {4: f4,...u}=this.s(cf,x);
+			// this.V_BinaryTimestamp(f4);
 			return;
 		}
-		this.g(u);
+		this.codegen_typedef_bin("G_PR_TrackingObj",x);
+		x;
+		debugger;
 	}
 	/** @template {number} T @arg {T} t @arg {{1:T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
 	is_tp_xx(x,t) {return x[1][1]===t;}
