@@ -560,6 +560,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_watch_playlist_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_ShareEntityService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj:click_tracking";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj:tracking";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RB_TrackingObj_t1";}
