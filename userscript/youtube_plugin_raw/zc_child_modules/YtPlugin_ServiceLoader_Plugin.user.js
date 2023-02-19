@@ -27,7 +27,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
-	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
+	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
 		//#region 
 		this.codegen=new CodegenService(x);

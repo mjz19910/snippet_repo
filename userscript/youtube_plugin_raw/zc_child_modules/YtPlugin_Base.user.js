@@ -695,7 +695,7 @@ class R_HandleRichGrid_Base {
 	class_name="HandleRichGridRenderer";
 	/** @readonly */
 	entry="richGridRenderer";
-	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
+	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {this.rendererContentItemArray=new HandleRendererContentItemArray(x);}
 	/** @handler @public @arg {string} path @arg {Todo_D_RichGrid} renderer */
 	richGridRenderer(path,renderer) {
@@ -1852,7 +1852,7 @@ function yt_plugin_base_main() {
 	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
 	setTimeout(() => {window.yt_plugin?.get_data_saver().num_bitmap_console();},4000);
 	const log_enabled_page_type_change=false;
-	/** @private @type {ResolverT<ServiceLoader,ServiceOptions>} */
+	/** @private @type {ServiceResolverBox<ServiceLoader,ServiceOptions>} */
 	const resolver_value={value: null};
 	const services=new ServiceLoader(resolver_value);
 	const yt_handlers=services.yt_handlers;
@@ -2075,7 +2075,7 @@ class ApiBase {
 /** @private @template T_ServiceLoader,T_ServiceFlags */
 class BaseServicePrivate extends ApiBase {
 	#x;
-	/** @constructor @public @arg {ResolverT<T_ServiceLoader,T_ServiceFlags>} x */
+	/** @constructor @public @arg {ServiceResolverBox<T_ServiceLoader,T_ServiceFlags>} x */
 	constructor(x) {
 		super();
 		this.#x=x;
@@ -2363,7 +2363,7 @@ class YtHandlers extends BaseService {
 		}
 		return true;
 	}
-	/** @constructor @public @arg {ResolverT<ServiceLoader,ServiceOptions>} res */
+	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader,ServiceOptions>} res */
 	constructor(res) {
 		super(res);
 		this.filter_handler_debug=false;
@@ -2583,7 +2583,7 @@ class YtObjectVisitor {
 }
 /** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class IterateApiResultBase extends BaseService {
-	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x @arg {YtObjectVisitor} obj_visitor */
+	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader, ServiceOptions>} x @arg {YtObjectVisitor} obj_visitor */
 	constructor(x,obj_visitor) {
 		super(x);
 		this.obj_visitor=obj_visitor;
@@ -2665,7 +2665,7 @@ class CsiService extends BaseService {
 	}
 	/** @private @type {{[x: T_RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
-	/** @constructor @public @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
+	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		this.data={
@@ -3002,7 +3002,7 @@ class YtPlugin extends BaseService {
 	get indexed_db() {return this.x.get("indexed_db");}
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
-	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
+	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		YtPlugin.do_init(this);

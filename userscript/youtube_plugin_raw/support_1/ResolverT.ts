@@ -1,1 +1,0 @@
-type ResolverT<T,U>={value: import("../zc_child_modules/YtPlugin_Base.user.js").ServiceResolver<T,U>|null;};

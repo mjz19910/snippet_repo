@@ -1,1 +1,0 @@
-type AsyncPluginEventDetail={handle_types: typeof import("../zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js").ServiceLoader["prototype"]["handle_types"];};

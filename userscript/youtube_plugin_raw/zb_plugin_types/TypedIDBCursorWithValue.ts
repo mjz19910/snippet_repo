@@ -1,1 +1,0 @@
-interface TypedIDBCursorWithValue<T extends {}> extends IDBCursorWithValue {value: T;}

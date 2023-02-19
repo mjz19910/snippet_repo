@@ -2,7 +2,7 @@ interface YtdAppElementI extends HTMLElement {
 	/** @type {HTMLStyleElement|undefined} */
 	ui_plugin_style_element?: HTMLStyleElement;
 	/** @type {VolumeRange|undefined} */
-	volume_range?: import("../zc_child_modules/YtPlugin_Base.user.js").VolumeRange;
+	volume_range?: VolumeRange;
 	/** @type {boolean|undefined} */
 	app_is_visible?: boolean;
 	/** @type {ReturnType<typeof setInterval>|undefined} */
