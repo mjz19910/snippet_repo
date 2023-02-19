@@ -212,7 +212,7 @@ class IndexedDBService extends BaseService {
 								}
 							} break;
 							case "update_id": {
-								console.log("update sync cache item",item);
+								if(this.log_db_actions) console.log("update sync cache item",item);
 								try {
 									if(tx.error) {
 										debugger;
