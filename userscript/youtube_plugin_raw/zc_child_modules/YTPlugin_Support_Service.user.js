@@ -1877,11 +1877,26 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				const find_key=`boxed_id:str:${key}`;
 				/** @arg {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} v @returns {v is {key: typeof find_key}} */
 				let fk=v => v.key===find_key;
-				const box=boxed.find(v => v.key===find_key);
+				let box=boxed.find(v => v.key===find_key);
 				if(box) {
 					if(!fk(box)) continue;
 					switch(arr[0]) {
 						case "many": {
+							/** @type {Omit<Pick<typeof box,"key"|"type"|"id">,"id">&{id:(typeof box)["value"]}} */
+							let {...box_v1}=as_any(box);
+							if(!("value" in box_v1)) {
+								box_v1;
+								let ks=split_string_once(box_v1.key,":");
+								let ks2=split_string_once(ks[1],":");
+								box={
+									key: box_v1.key,
+									base: "boxed_id",
+									type: ks2[0],
+									id: ks2[1],
+									value: box_v1.id,
+								};
+								await this.put_and_wait("boxed_id",box);
+							}
 							let from_db=box.value[1];
 							if(from_db[0]!=="many") continue;
 							for(let src_item of arr[1]) {
@@ -1897,13 +1912,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 					return;
 				}
-				this.indexed_db.put("boxed_id",{
+				await this.put_and_wait("boxed_id",{
 					key: find_key,
 					base: "boxed_id",
 					type: "str",
 					id: key,
 					value: ["many_str",arr],
-				},3);
+				});
 			}
 		}
 	}
@@ -1925,7 +1940,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				value: to_load_v1.id,
 			};
 			await this.put_and_wait("boxed_id",to_load);
-			return;
 		}
 		for(let item of to_load.value[1][1]) {
 			if(item instanceof Array) {
