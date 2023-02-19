@@ -2488,6 +2488,34 @@ class HandleTypes extends ServiceMethods {
 		let handle_f3=x => {this.T_D32(x,x => this.save_number(`${cf}.f3`,x));};
 		/** @arg {Extract<G_PR_TrackingObj,{6:any}>[6]} x */
 		let handle_f6=x => {
+			if(x[0]!=="param_arr") debugger;
+			const [,[a,...y1]]=x; this.ceq(y1.length,0);
+			const [t]=a;
+			switch(t) {
+				case "child": {
+					const [,,b]=a;
+					{
+						const {5: a,...y2}=b; this.g(y2);
+						this.T_FD32(a,x => {
+							x; debugger;
+						});
+					}
+				} break;
+				case "raw_child": {
+					const [,,n,b]=a; if(n!==null) debugger;
+					{
+						const [,a]=b;
+						switch(a) {
+							default: debugger; break;
+							case "external": break;
+							case "list_other": break;
+							case "related": break;
+							case "related-auto": break;
+							case "watch": break;
+						}
+					}
+				} break;
+			}
 			x; debugger;
 		};
 		// this.T_VW_Bigint(a,this.a_primitive_bigint);// {9:any}
