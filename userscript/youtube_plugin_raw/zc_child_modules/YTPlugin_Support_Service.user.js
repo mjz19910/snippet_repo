@@ -1708,35 +1708,45 @@ class BitmapResult {
 	}
 }
 class StoreData {
-	seen_string_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-	};
-	seen_number_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-	};
-	seen_keys_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-	};
+	/** @type {StoreDescription<boolean>} */
 	seen_bool_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
 		data: [],
 		new_data: [],
+		type: "unknown",
 	};
+	/** @type {StoreDescription<string>} */
+	seen_string_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+		type: "string",
+	};
+	/** @type {StoreDescription<string>} */
+	seen_keys_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+		type: "string",
+	};
+	/** @type {StoreDescription<number>} */
+	seen_number_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+		type: "unknown",
+	};
+	/** @type {StoreDescription<number>} */
 	seen_ve_num_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
 		data: [],
 		new_data: [],
+		type: "unknown",
 	};
 	/** @returns {StoreDescription<boolean>} */
 	get_boolean_store() {return this.seen_bool_obj;}
@@ -1752,9 +1762,9 @@ class StoreData {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
 		let changed=[];
 		if(this.seen_bool_obj.new_data.length>0) changed.push("bool");
-		if(this.seen_string_obj.new_data.length>0) changed.push("string");
 		if(this.seen_keys_obj.new_data.length>0) changed.push("keys");
 		if(this.seen_number_obj.new_data.length>0) changed.push("number");
+		if(this.seen_string_obj.new_data.length>0) changed.push("string");
 		if(this.seen_ve_num_obj.new_data.length>0) changed.push("ve");
 		return changed;
 	}
@@ -2067,6 +2077,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
 		let p=store.data[idx];
+		if(store.type!=="string") return;
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
@@ -2077,6 +2088,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
 				let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
 				console.log(` --------- [${ns}] [store["${k}"][${bitmap_src_idx}]] --------- `);
+				if(index_map.length===0) continue;
 				console.log(index_map.map(e => `"${e}"`).join(","));
 				console.log(bitmap);
 			}
@@ -2090,11 +2102,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			});
 			if(linear_map) {
 				console.log(` --------- [${ns}] [${k}] --------- `);
+				if(bitmap_src.length===0) return;
 				console.log(bitmap_src.join(","));
 				return;
 			}
 			let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
 			console.log(` --------- [${ns}] [${k}] --------- `);
+			if(index_map.length===0) return;
 			console.log(index_map.join(","));
 			console.log(bitmap);
 		}
