@@ -1027,7 +1027,7 @@ class HandleTypes extends ServiceMethods {
 					let kk=this.get_keys_of(x);
 					if(this.eq_keys(kk,[1,2,3])) {
 						/** @type {V_BinaryTimestamp} */
-						let bts={...x,1: f1,2: f2,3: f3}; bts;
+						let bts={...x,1: ["param_arr",[f1]],2: ["param_arr",[f2]],3: ["param_arr",[f3]]}; bts;
 						return `TYPE::T_VW_2<V_BinaryTimestamp>`;
 					}
 				}; v_param_2_maybe_binary_ts;
@@ -1046,7 +1046,7 @@ class HandleTypes extends ServiceMethods {
 					let kk=this.get_keys_of(x);
 					if(this.eq_keys(kk,[1,2,3])) {
 						/** @type {V_ShortTimestamp} */
-						let bts={...x,1: f1,2: f2}; bts;
+						let bts={...x,1: ["param_arr",[f1]],2: ["param_arr",[f2]]}; bts;
 						return `TYPE::T_VW_2<V_ShortTimestamp>`;
 					}
 				}; v_param_2_maybe_binary_ts;
@@ -1129,7 +1129,7 @@ class HandleTypes extends ServiceMethods {
 					default: debugger; break;
 					case "string": raw_json=`["string","${x1[1]}"]`; break;
 				}
-				return `TYPE::["${otu[0]}",${gen_json_binary_arr},${obj_json},${raw_json}]`;
+				return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 			};
 			if(otu[0]==="data64") {
 				return this.convert_arr_to_obj([otu]);
@@ -2384,22 +2384,22 @@ class HandleTypes extends ServiceMethods {
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
 		if(2 in x&&!(3 in x)&&!(1 in x)) {
-			const {2: [,f2],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f2.BinaryVe@base`,f2);
+			const {2: f2,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f2,x => this.save_number(`${cf}.f2.BinaryVe@base`,x));
 			return;
 		}
 		if(1 in x) {
-			const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f1`,f1);
-			this.save_number(`${cf}.f2.BinaryVe@f1`,f2);
-			this.BinaryVe(f2);
+			const {1: f1,2: f2,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.f2.BinaryVe@f1`,x));
+			this.T_D32(f2,x => this.BinaryVe(x));
 			return;
 		}
 		if(3 in x) {
-			const {2: [,f2],3: [,f3],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.f2.BinaryVe@f3`,f2);
-			this.BinaryVe(f2);
-			this.save_number(`${cf}.f3`,f3);
+			const {2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f2,x => this.save_number(`${cf}.f2.BinaryVe@f2`,x));
+			this.T_D32(f2,x => this.BinaryVe(x));
+			this.T_D32(f3,x => this.save_number(`${cf}.f3`,x));
 			return;
 		}
 		this.codegen_typedef_bin(cf,x,false);
@@ -2416,20 +2416,17 @@ class HandleTypes extends ServiceMethods {
 		if(x.length!==1) return null;
 		return x[0];
 	}
-	/** @protected @template T @template U @arg {T_PArr<T,U>} x @returns {[T,U]|null} */
+	/** @protected @template T @arg {T_PArr<T>} x @returns {T|null} */
 	T_PArr(x) {
 		if(x[0]!=="param_arr") {debugger; return null;}
 		if(x.length!==2) debugger;
-		let v=this.T_VW(x[1]);
-		if(!v) {debugger; return null;}
-		if(v[0]!=="child") {debugger; return null;}
-		return [v[3],v[2]];
+		return this.T_VW(x[1]);
 	}
 	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16][2]} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
 		const {1: f1}=this.s(cf,x);
-		this.save_number(`${cf}.f1`,f1[1]);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @protected @arg {G_PR_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
 	G_PR_TrackingObj(x,flags) {
@@ -2441,14 +2438,14 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(1 in x) {
 			const {1: f1}=this.s(cf,x);
-			if(f1[0]!=="data32") {debugger; return;}
-			this.save_number(`${cf}.f1`,f1[1]);
+			this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 		}
 		if(19 in x) {
 			if(11 in x) {
-				const {1: [,f1],2: [,f2],4: [,,f4],3: f3,6: f6,11: f11,19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.w19.f1`,f1);
-				this.save_number(`${cf}.w19.f2`,f2);
+				const {1: f1,2: f2,4: f4,3: f3,6: f6,11: f11,19: f19,...y}=this.s(cf,x); this.g(y);
+				this.T_D32(f1,x => this.save_number(`${cf}.w19.f1`,x));
+				this.T_D32(f2,x => this.save_number(`${cf}.w19.f1`,x));
+				this.T_D32(f2,x => this.save_number(`${cf}.w19.f2`,x));
 				this.t(f3,([t,x]) => this.ceq(t,"data32")&&this.save_number(`${cf}.w19.f3`,x));
 				this.V_BinaryTimestamp(f4);
 				if(t19!=="child") debugger;
@@ -2456,9 +2453,9 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			if(9 in x&&6 in x&&3 in x) {
-				const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],6: f6,9: [,,f9],19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.w19.f1`,f1);
-				this.save_number(`${cf}.w19.f2`,f2);
+				const {1: f1,2: f2,3: f3,4: f4,6: f6,9: f9,19: f19,...y}=this.s(cf,x); this.g(y);
+				this.T_D32(f1,x => this.save_number(`${cf}.w19.f1`,x));
+				this.T_D32(f2,x => this.save_number(`${cf}.w19.f2`,x));
 				this.save_number(`${cf}.w19.f3`,f3);
 				this.V_BinaryTimestamp(f4);
 				this.a_primitive_bigint(f9);
@@ -2467,9 +2464,9 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			if(9 in x) {
-				const {1: [,f1],2: [,f2],4: [,,f4],6: f6,9: [,,f9],19: [t19,,f19],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.w19.f1`,f1);
-				this.save_number(`${cf}.w19.f2`,f2);
+				const {1: f1,2: f2,4: f4,6: f6,9: f9,19: f19,...y}=this.s(cf,x); this.g(y);
+				this.T_D32(f1,x => this.save_number(`${cf}.w19.f1`,x));
+				this.T_D32(f2,x => this.save_number(`${cf}.w19.f2`,x));
 				this.V_BinaryTimestamp(f4);
 				this.a_primitive_bigint(f9);
 				if(t19!=="child") debugger;
@@ -2480,35 +2477,35 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(16 in x) {
-			const {1: [,f1],2: [,f2],4: [,,f4],16: f16,...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.n3.f1`,f1);
-			this.save_number(`${cf}.n3.f2`,f2);
+			const {1: f1,2: f2,4: f4,16: f16,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f1,x => this.save_number(`${cf}.n3.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.n3.f2`,x));
 			this.V_BinaryTimestamp(f4);
 			if(f16[0]!=="child") {debugger; return;}
 			this.PR_TrackingObj_f16(f16[2]);
 			return;
 		}
 		if(9 in x) {
-			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],9: [,,f9],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.w9.f1`,f1);
-			this.save_number(`${cf}.w9.f2`,f2);
+			const {1: f1,2: f2,3: f3,4: f4,9: f9,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f1,x => this.save_number(`${cf}.w9.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.w9.f2`,x));
 			this.save_number(`${cf}.w9.f3`,f3);
 			this.V_BinaryTimestamp(f4);
 			this.a_primitive_bigint(f9);
 			return;
 		}
 		if(8 in x) {
-			const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],8: f8,...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.w3.f1`,f1);
-			this.save_number(`${cf}.w9.f2`,f2);
+			const {1: f1,2: f2,3: f3,4: f4,8: f8,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f1,x => this.save_number(`${cf}.w3.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.w9.f2`,x));
 			this.save_number(`${cf}.w3.f3`,f3);
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
 		if(6 in x&&3 in x) {
-			const {1: [,f1],2: [,f2],3: f3,4: [,,f4],6: [t1,[t2,f6]],7: m7,...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.w6.f1`,f1);
-			this.save_number(`${cf}.w6.f2`,f2);
+			const {1: f1,2: f2,3: f3,4: f4,6: [t1,[t2,f6]],7: m7,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f1,x => this.save_number(`${cf}.w6.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.w6.f2`,x));
 			this.V_BinaryTimestamp(f4);
 			this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}`);
 			this.save_string(`${cf}.w6.f6`,f6);
@@ -2523,17 +2520,18 @@ class HandleTypes extends ServiceMethods {
 				const {4: f4,6: f6,...y}=this.s(cf,x); this.g(y);
 				let xr=this.T_PArr(f6);
 				if(!xr) return;
-				let [f6w,f6o]=xr;
-				let [f6t,f6v]=f6w;
+				let [f6w,,f6o,f6p]=xr;
+				let [f6t,f6v]=f6p;
+				if(f6w!=="raw_child") debugger;
 				if(f6t!=="string") debugger;
 				if(f6v!=="external") debugger;
 				if(f6o!==null) debugger;
 				return;
 			}
 			if(4 in x&&2 in x) {
-				const {1: [,f1],2: [,f2],4: [,,f4],6: [t1,[t2,f6]],...y}=this.s(cf,x); this.g(y);
-				this.save_number(`${cf}.w6.f1`,f1);
-				this.save_number(`${cf}.w6.f2`,f2);
+				const {1: f1,2: f2,4: f4,6: [t1,[t2,f6]],...y}=this.s(cf,x); this.g(y);
+				this.T_D32(f1,x => this.save_number(`${cf}.w6.f1`,x));
+				this.T_D32(f2,x => this.save_number(`${cf}.w6.f2`,x));
 				this.V_BinaryTimestamp(f4);
 				this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}`);
 				this.save_string(`${cf}.w6.f6`,f6);
@@ -2548,9 +2546,9 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(4 in x&&2 in x) {
-			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.n3.f1`,f1);
-			this.save_number(`${cf}.n3.f2`,f2);
+			const {1: f1,2: f2,4: f4,...y}=this.s(cf,x); this.g(y);
+			this.T_D32(f1,x => this.save_number(`${cf}.n3.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.n3.f2`,x));
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
@@ -2570,7 +2568,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
-		const {1: [,f1],2: [,f2],3: [,f3],...y}=this.s(cf,x); this.g(y);
+		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="number") debugger;
 		if(typeof f2==="number"&&f2>0b1010111011010101010000001011) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
