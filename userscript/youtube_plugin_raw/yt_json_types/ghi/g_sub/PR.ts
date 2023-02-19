@@ -29,6 +29,12 @@ type PR_TrackingObj_6w4w={
 	2: T_D32<5531>;
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VSR<"watch">;
+}|{
+	1: T_D32<332>;
+	2: T_D32<6180>;
+	3: T_D32<0>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	6: T_VSR<"related">;
 };
 type PR_TrackingObj_7w={
 	1: T_D32<332>;
