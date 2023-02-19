@@ -2495,21 +2495,16 @@ class HandleTypes extends ServiceMethods {
 		{const k=16; if(k in y) {this.y(`${cf}:omit_f${k}`,k,y,x => x); return;} }
 		{
 			const k=3;
-			if(k in y) {
-				{
-					const k=8;
-					/** @type {`${cf}:omit_f${k}`} */
-					const cf2=`${cf}:omit_f${k}`;
-					if(k in y) {
-						const {3: f3,8: a,...y1}=this.s(cf2,y); this.g(y1);
-						this.T_D32(f3,x => this.save_number(cf2,x));
-						return;
-					}
-				}
-				this.y(`${cf}:omit_f${k}`,k,y,x => {this.T_D32(x,x => x);}); return;
-			}
+			const k2=8;
+			/** @type {`${cf}:omit_f${k}`} */
+			const cf1=`${cf}:omit_f${k}`;
+			/** @type {`${cf}:omit_f${k2}`} */
+			const cf2=`${cf}:omit_f${k2}`;
+			if(k in y&&k2 in y) {const {3: f3,8: a,...y1}=this.s(cf2,y); this.g(y1); this.T_D32(f3,x => this.save_number(cf2,x)); return;}
+			if(k in y) {this.y(cf1,k,y,x => {this.T_D32(x,x => x);}); return;}
+			if(k2 in y) {this.y(cf2,k2,y,x => {this.T_VW_Bigint(x,x => x);}); return;}
 		}
-		this.codegen_typedef_bin(cf,x,false);
+		this.codegen_typedef_bin(`${cf}:omit`,y,false);
 	}
 	/** @arg {"G_PR_TrackingObj"} cf @arg {P_RT_TK_f6} x */
 	H_TrackingObj_f6(cf,x) {
