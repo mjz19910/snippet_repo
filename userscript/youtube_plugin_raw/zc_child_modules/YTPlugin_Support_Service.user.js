@@ -1806,6 +1806,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.#idle_id=requestIdleCallback(() => {
 			this.#idle_id=null;
 			this.load_database();
+			this.is_ready=true;
 		});
 	}
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
