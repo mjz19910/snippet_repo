@@ -2406,26 +2406,37 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
-	/** @protected @template T @arg {T_VW_2<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)|null} */
+	/** @protected @template T @arg {T_VW_2<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
 	T_VW_2(x,f) {
 		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
 		function assume_ret(_x,_ret_ex) {}
 		/** @returns {FT extends null?T:U} */
 		function ret_ex() {throw new Error();}
-		if(x[0]!=="param_arr") {debugger; return null;}
-		if(x[1].length!==1) {debugger; return null;}
-		let [v]=x[1];
-		if(v[0]!=="child") {debugger; return null;}
-		let ret;
-		if(f===null) {
-			ret=v[2];
-			assume_ret(ret,ret_ex);
-			return ret;
-		} else {
-			ret=f.call(this,v[2]);
-			assume_ret(ret,ret_ex);
-			return ret;
+		let ret=null;
+		/** @type {[["child", Uint8Array, T]]|null} */
+		let pa=null;
+		/** @type {["child", Uint8Array, T]|null} */
+		let v=null;
+		if(x[0]==="param_arr") {
+			pa=x[1];
 		}
+		if(pa&&pa.length===1) {
+			[v]=pa;
+		}
+		if(v&&v[0]==="child") {
+			if(f===null) {
+				ret=v[2];
+				assume_ret(ret,ret_ex);
+				return ret;
+			} else {
+				ret=f.call(this,v[2]);
+				assume_ret(ret,ret_ex);
+				return ret;
+			}
+		}
+		assume_ret(ret,ret_ex);
+		debugger;
+		return ret;
 	}
 	/** @protected @template T @arg {T_VW<T>} x */
 	T_VW(x) {
