@@ -1639,10 +1639,13 @@ class ServiceMethods extends ServiceData {
 				debugger;
 			}
 			if(value===void 0) {debugger; continue;}
-			res[k]??=["raw",["array",[]]];
+			res[k]??=["param_arr",[["raw",["array",[]]]]];
 			let cv=res[k];
-			if(cv[0]!=="raw"||cv[1][0]!=="array") {debugger; continue;}
-			const t=cv[1][1];
+			let ca=cv[1][0];
+			if(cv[0]!=="param_arr") {debugger; continue;}
+			if(ca[0]!=="raw") {debugger; continue;}
+			if(ca[1][0]!=="array") {debugger; continue;}
+			const t=ca[1][1];
 			if(value.length===0) {
 				t.push({});
 				continue;
@@ -1681,43 +1684,43 @@ class ServiceMethods extends ServiceData {
 							debugger;
 							continue;
 						}
-						res_obj[id]??=[];
-						res_obj[id].push(["raw",["string",decoded_string]]);
+						res_obj[id]??=["param_arr",[]];
+						res_obj[id][1].push(["raw",["string",decoded_string]]);
 						continue;
 					}
-					res_obj[id]??=[]; res_obj[id].push([n,a,this.convert_arr_to_obj(b)]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,a,this.convert_arr_to_obj(b)]);
 				} break;
 				case "data32": {
 					let [n,id,a]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,a]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,a]);
 				} break;
 				case "data64": {
 					let [n,id,a,b]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,a,b]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,a,b]);
 				} break;
 				case "data_fixed32": {
 					let [n,id,a]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,a]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,a]);
 				} break;
 				case "data_fixed64": {
 					let [n,id,a]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,a]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,a]);
 				} break;
 				case "error": {
 					let [n,id]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,id]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,id]);
 				} break;
 				case "group": {
 					let [n,id,a]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,this.convert_arr_to_obj(a)]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,this.convert_arr_to_obj(a)]);
 				} break;
 				case "info": {
 					let [n,id,a]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,a]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,a]);
 				} break;
 				case "struct": {
 					let [n,id,a]=v;
-					res_obj[id]??=[]; res_obj[id].push([n,this.convert_arr_to_obj(a)]);
+					res_obj[id]??=["param_arr",[]]; res_obj[id][1].push([n,this.convert_arr_to_obj(a)]);
 				} break;
 			}
 		}
