@@ -2772,12 +2772,6 @@ class HandleTypes extends ServiceMethods {
 		const {2: a}=this.s(cf,x);
 		a; debugger;
 	}
-	/** @private @arg {P_dislike_params} x */
-	P_dislike_params(x) {
-		const cf="P_dislike_params";
-		const {1: a}=this.s(cf,x);
-		a; debugger;
-	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
@@ -2787,6 +2781,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
+		const {1: a,3: f3,5: f5}=this.s(cf,x);
+		a; f3; f5;
+	}
+	/** @private @arg {P_dislike_params} x */
+	P_dislike_params(x) {
+		const cf="P_dislike_params";
 		const {1: a}=this.s(cf,x);
 		a; debugger;
 	}
