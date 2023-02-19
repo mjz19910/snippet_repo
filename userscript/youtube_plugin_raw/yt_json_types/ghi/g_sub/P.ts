@@ -50,20 +50,20 @@ type P_logging_context_serialized_context_data={
 	};
 };
 type P_like_params={
-	1: {
-		1: {
+	1: T_VW_2<{
+		1: T_VW_2<{
 			8: T_FD32<1382109803>;
 			9: T_FD32<2126714>;
 			14: T_D32<115>;
-		};
-	};
+		}>|T_VSR<"waVYW4mmfWk">;
+	}>;
 	4: T_D32<0>;
 	5: T_D32<1>;
-	6: {
+	7: T_D32<1>;
+	6: T_VW_2<{
 		1: T_D32<1676517982>;
 		2: T_D32<685626069>;
-	};
-	7: T_D32<1>;
+	}>;
 };
 type P_playability_status_context_params={
 	1: T_D32<1>;
@@ -147,9 +147,9 @@ type P_watch_playlist_params={
 	7: T_D32<1>;
 	12: T_VSR<"z6EQlZaB7v8">;
 	13: T_D32<0>;
-	27: {
+	27: T_VW_2<{
 		1: T_D32<1>;
-	};
+	}>;
 };
 type P_load_markers_entity_key={
 	2: T_VSR<"HEATSEEKER">;
@@ -280,19 +280,14 @@ type P_get_pdg_buy_flow_params={
 		3: T_D32<1>;
 	};
 };
+type T_FD64<T extends bigint>=["data_fixed64",T];
 type PD_continuation_params={
 	3: {
 		4: T_FD32<20988979>;
 		8: T_FD32<1162761290>;
-		9: [
-			"data_fixed64",
-			V_Bigint<4914312580592780609n>
-		];
+		9: T_FD64<4914312580592780609n>;
 		10: T_FD32<1415786570>;
-		12: [
-			"data_fixed64",
-			V_Bigint<5938077997913429358n>
-		];
+		12: T_FD64<5938077997913429358n>;
 		13: T_FD32<1481922630>;
 		14: T_FD32<2000180812>;
 	};
@@ -309,20 +304,20 @@ type PD_continuation_params={
 };
 
 type PR_continuation_params={
-	0x94d81d4: PD_continuation_params
+	0x94d81d4: PD_continuation_params;
 };
 type P_create_comment_params={
-	2: T_VSR<"mUK-j5bKk0Q">,
+	2: T_VSR<"mUK-j5bKk0Q">;
 	5: {
-		1: T_D32<0>
-	},
-	10: T_D32<7>
+		1: T_D32<0>;
+	};
+	10: T_D32<7>;
 };
 type P_aadc_guidelines_state_entity_key={
-	2: T_VSR<"183848276973">,
-	4: T_D32<281>,
-	5: T_D32<1>
+	2: T_VSR<"183848276973">;
+	4: T_D32<281>;
+	5: T_D32<1>;
 };
 type P_trending_bp={
-	77: T_VSR<"FEexplore">
+	77: T_VSR<"FEexplore">;
 };

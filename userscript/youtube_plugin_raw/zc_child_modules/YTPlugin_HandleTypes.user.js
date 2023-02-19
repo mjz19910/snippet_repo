@@ -1048,10 +1048,10 @@ class HandleTypes extends ServiceMethods {
 								}
 							}
 							console.log("maybe_handle_bin.do_V_BinaryTimestamp",obj);
-							return `TYPE::T_VW_2<${this.typedef_json_replace_bin(s,"vw.bin_ts",obj)}>`;
+							return `TYPE::T_VW_2<${this.gen_typedef_bin_json(s,obj)}>`;
 						}
 						console.log("maybe_handle_bin.do_obj",obj);
-						return `TYPE::T_VW_2<${this.typedef_json_replace_bin(s,"vw",obj)}>`;
+						return `TYPE::T_VW_2<${this.gen_typedef_bin_json(s,obj)}>`;
 					}
 					let decoded_string=this._decoder.decode(binary_arr);
 					if(binary_arr[0]===0) {
@@ -1071,6 +1071,12 @@ class HandleTypes extends ServiceMethods {
 			if(otu[0]==="data_fixed32") {
 				if(otu.length===2) {
 					return `TYPE::T_FD32<${otu[1]}>`;
+				}
+				return this.convert_arr_to_obj([otu]);
+			}
+			if(otu[0]==="data_fixed64") {
+				if(otu.length===2) {
+					return `TYPE::T_FD64<${otu[1]}n>`;
 				}
 				return this.convert_arr_to_obj([otu]);
 			}
