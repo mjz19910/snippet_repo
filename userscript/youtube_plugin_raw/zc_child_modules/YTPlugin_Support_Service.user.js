@@ -2104,7 +2104,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			console.log(`store [${ns}] [${k}] %o`,x);
 		}
 		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return;}
+		if(idx<0) {debugger; return false;}
 		this.show_strings_bitmap(ns,idx,store);
 		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
 		return true;
