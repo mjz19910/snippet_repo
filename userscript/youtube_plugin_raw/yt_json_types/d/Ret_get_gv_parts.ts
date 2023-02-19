@@ -21,7 +21,6 @@ type PT_DigDomain=[
 	`
 
 	`,
-	"rr1.sn-5ualdnl7.googlevideo.com.",
 	"rr1.sn-5uaeznzy.googlevideo.com.",
 	"rr1.sn-5ualdnl7.googlevideo.com.",
 ];
