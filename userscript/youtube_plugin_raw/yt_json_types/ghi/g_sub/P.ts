@@ -164,6 +164,7 @@ type P_create_backstage_post_params={
 	1: T_VSR<`UC${string}`>;
 	2: T_D32<1>;
 };
+type PG_subscription_state_key=P_subscription_state_key
 type P_subscription_state_key={
 	2: T_VSR<`UC${string}`>;
 	4: T_D32<51>;

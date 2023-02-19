@@ -2742,9 +2742,9 @@ class HandleTypes extends ServiceMethods {
 				this.P_create_backstage_post_params(u);
 			} break;
 			case "subscription_state.key": {
-				/** @type {P_subscription_state_key} */
+				/** @type {PG_subscription_state_key} */
 				let u=as_any(x);
-				this.P_subscription_state_key(u);
+				this.PG_subscription_state_key(u);
 			} break;
 			case "shorts.source.bp": {
 				/** @type {P_shorts_source_bp} */
@@ -2894,7 +2894,7 @@ class HandleTypes extends ServiceMethods {
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_subscription_state_key} x */
-	P_subscription_state_key(x) {
+	PG_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
 		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.channelId(x));
