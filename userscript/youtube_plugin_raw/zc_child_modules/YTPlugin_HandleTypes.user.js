@@ -523,7 +523,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(rssUrl);
 		this.a_primitive_str(keywords);
 		if(ownerUrls.length!==1) debugger;
-		let ur=this.parse_with_url_parse(ownerUrls[0]);
+		let ur=this.tr_url_to_obj(ownerUrls[0]);
 		this.ceq(this.str_starts_with_rx("/@",ur.pathname),true);
 		this.a_primitive_str(channelUrl);
 		this.a_primitive_str(vanityChannelUrl);
@@ -911,7 +911,7 @@ class HandleTypes extends ServiceMethods {
 	getInfoForUrl(x,k) {
 		switch(k) {
 			case "https://www.youtube.com/redirect": {
-				let parsed_url=this.parse_with_url_parse(x);
+				let parsed_url=this.tr_url_to_obj(x);
 				if("_tag" in parsed_url) throw new Error();
 				let parsed_params=this.parse_url_search_params(parsed_url.search);
 				if(!("q" in parsed_params)) {debugger; throw new Error();}
@@ -1693,7 +1693,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
 		const cf="RE_D_VE3832_PreconnectUrl";
-		let up=this.parse_with_url_parse(x);
+		let up=this.tr_url_to_obj(x);
 		if(up.pathname!=="/generate_204") debugger;
 		const hn=up.host;
 		this.on_googlevideo_host(hn);

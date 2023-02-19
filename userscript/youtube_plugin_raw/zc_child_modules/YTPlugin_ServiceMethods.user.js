@@ -92,6 +92,8 @@ class ServiceMethods extends ServiceData {
 	str_starts_with_rx_in_arr(x,sw) {
 		return this.str_starts_with(x[1],sw);
 	}
+	/** @public @template {string} T @arg {[T]} x @template {string} U @arg {U} needle @returns {x is [T extends `${infer B}${infer R}`?`${B}${Some<R>}${string}${U}`:`${string}${U}`]} */
+	str_ends_with_arr(x,needle) {return this.str_starts_with(x[0],needle);}
 	/** @public @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {return this.wn("TR_ItemSection_2",x,"itemSectionRenderer");}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
@@ -280,12 +282,9 @@ class ServiceMethods extends ServiceData {
 		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.videoId(videoId);
 	}
-	/** @arg {DE_VE83769_Url_1} x */
-	DE_VE83769_Url_1(x) {
-		const cf="DE_VE83769_Url_1";
-		const {url,target,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(target!=="TARGET_NEW_WINDOW") debugger;
-		let x1=this.parse_with_url_parse(url);
+	/** @arg {GU_VE83769_Url_External} x */
+	GU_VE83769_Url_External(x) {
+		let x1=this.tr_url_to_obj(x);
 		if(x1.hostname!=="googleads.g.doubleclick.net") debugger;
 		if(x1.pathname!=="/aclk") debugger;
 		let s_map=Object.fromEntries(x1.searchParams.entries());
@@ -293,13 +292,76 @@ class ServiceMethods extends ServiceData {
 			/** @type {DE_VE83769_Url_Shape} */
 			let x2=as(s_map);
 			const {sa,ai,ae,num,cid,sig,client,rf,adurl,...y}=x2; this.g(y);
-			let u1=this.parse_with_url_parse(adurl);
+			let u1=this.tr_url_to_obj(adurl);
 			if(u1.hostname!=="plantagreenhouses.ca") debugger;
 			if(u1.pathname!=="/") debugger;
-			/** @type {DE_VE83769_Url_1$d$ad_url} */
+			/** @type {DE_VE83769_Url_SearchObj} */
 			let x3=as(Object.fromEntries(u1.searchParams.entries()));
 			const {gclid,...y1}=x3; this.g(y1);
 		}
+	}
+	/** @arg {(DU_InternalUrl|DU_ChannelUrl)["url"]} x */
+	GU_VE83769_Url_1(x) {
+		x: {
+			/** @type {DU_InternalUrl["url"]} */
+			let va=as(x);
+			let [p,r]=split_string_once(va,"://"); this.ceq(p,"https");
+			let [h,u]=split_string_once(r,"/"); this.ceq(h,"www.youtube.com");
+			switch(u) {
+				default: {
+					let [x1,x2,x3]=split_string(u,"/"); this.ceq(x1,"channel"); this.channelId(x2);
+					this.ceq(x3,"join");
+				} break x;
+				case "t/creative_commons": return;
+			}
+		}
+		/** @type {["",typeof x]} */
+		let xa=["",x];
+		if(this.str_starts_with_rx_in_arr(xa,"https://www.youtube.com/channel/UC")&&this.str_ends_with(xa[1],"/join")) {
+			let [,...xu]=xa;
+			if(this.str_ends_with_arr(xu,"/join")) {
+				xu;
+			}
+			return;
+		}
+		x;
+		if(this.str_starts_with(x,"https://www.youtube.com/channel/UC")) {
+			let r=this.tr_url_to_obj(x);
+			r.pathname;
+			return;
+		}
+		if(this.str_starts_with(x,"https://www.youtube.com/channel/UC")) {
+			let r=this.tr_url_to_obj(x);
+			r.pathname;
+			return;
+		}
+		x;
+		{
+			/** @type {DU_ChannelUrl["url"]} */
+			let va=x;
+			let [p,r]=split_string_once(va,"://"); this.ceq(p,"https");
+			let [h,u]=split_string_once(r,"/"); this.ceq(h,"www.youtube.com");
+			let v=split_string_once(u,"/");
+			if(v.length!==1) debugger;
+		}
+	}
+	/** @arg {DU_VE83769_Url} x */
+	DU_VE83769_Url(x) {
+		const cf="DU_VE83769_Url";
+		if("target" in x&&!("nofollow" in x)) {
+			const {url,target,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			return this.GU_VE83769_Url_External(url);
+		}
+		if("target" in x) {
+			const {url,target,nofollow,...y}=x; this.g(y);
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			this.ceq(nofollow,true);
+			return;
+		}
+		const {nofollow,url,...y}=x; this.g(y);
+		this.ceq(nofollow,true);
+		return this.GU_VE83769_Url_1(url);
 	}
 	text_decoder=new TextDecoder();
 	/**
@@ -1029,10 +1091,11 @@ class ServiceMethods extends ServiceData {
 	D_Button_NavEP(x) {
 		const cf="D_Button_NavEP";
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("browseEndpoint" in x) {debugger; return;}
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
+		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-		if("createCommentReplyDialogEndpoint" in x) return;
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {M_YpcGetOffers} x */
@@ -1791,24 +1854,30 @@ class ServiceMethods extends ServiceData {
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @protected @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
+	DU_UrlParse(x) {
+		if(x.host!=="www.youtube.com") debugger;
+		if(x.pathname!=="/pagead/paralleladinteraction") debugger;
+		let pa=x.search.split("?")[1].split("&"); pa;
+		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
+	}
+	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]["baseUrl"]} x */
+	DU_Url(x) {
+		this.DU_UrlParse(this.tr_url_to_obj(x));
+		(x => {
+			if(x.host!=="www.youtube.com") debugger;
+			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
+			let pa1=this.split_str(x.search,"?");
+			let pa=this.split_str(pa1[1],"&"); pa;
+			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
+		})(this.tr_url_to_obj(x));
+	}
+	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]} x */
+	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
 	/** @protected @arg {E_VE83769_Url} x */
 	E_VE83769_Url(x) {
-		const cf="E_VE83769_Url";
-		if("loggingUrls" in x) {
-			const {clickTrackingParams,loggingUrls,commandMetadata,urlEndpoint,...y}=this.s(cf,x); this.g(y);
-			this.clickTrackingParams(clickTrackingParams);
-			this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
-				let x2=this.parse_with_url_parse(x);
-				if(x2.host!=="www.youtube.com") debugger;
-				if(x2.pathname!=="/pagead/paralleladinteraction") debugger;
-				let pa=x2.search.split("?")[1].split("&"); pa;
-				let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x2.search); this.g(y);
-			}));
-			this.M_VE83769(commandMetadata);
-			this.DE_VE83769_Url_1(urlEndpoint);
-			return;
-		}
-		const [a,b,y]=this.TE_Endpoint_3(cf,"urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_VE83769_Url(b);
+		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
+		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
 	/** @protected @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
@@ -2027,7 +2096,7 @@ class ServiceMethods extends ServiceData {
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
-	/** @private @arg {DU_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @private @arg {DU_VE83769_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_VE83769_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x)) {
@@ -2035,7 +2104,7 @@ class ServiceMethods extends ServiceData {
 			let arg_x=as(x);
 			return this.GU_YoutubeUrlRedirect(arg_x);
 		}
-		let sp=this.parse_with_url_parse(x);
+		let sp=this.tr_url_to_obj(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
 		this.GU_VE83769_Url(sp.href);
 	}
@@ -2048,7 +2117,7 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		let up=this.parse_with_url_parse(x);
+		let up=this.tr_url_to_obj(x);
 		switch(up.host) {
 			case "music.youtube.com": return this.handle_yt_music_url(up.href);
 			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
@@ -2097,7 +2166,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.cg.codegen_str(cf,x);
 	}
-	/** @private @arg {DU_Url} x */
+	/** @private @arg {DU_VE83769_Url} x */
 	DE_VE83769_Url(x) {
 		const cf="DE_VE83769_Url";
 		const {url,...u}=this.s(cf,x);/*#destructure_later*/
@@ -2887,7 +2956,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {D_ApiUrlFormat} x */
 	decode_url(x) {
-		const res_parse=this.parse_with_url_parse(x);
+		const res_parse=this.tr_url_to_obj(x);
 		if("_tag" in res_parse) {
 			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
@@ -4094,7 +4163,7 @@ class ServiceMethods extends ServiceData {
 		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.B_Hack(pingingEndpoint);
 		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
-			let pr=this.parse_with_url_parse(x);
+			let pr=this.tr_url_to_obj(x);
 			switch(pr.host) {
 				case "pagead2.googlesyndication.com": {
 					if(pr.pathname!=="/pcs/activeview") debugger;
@@ -6747,7 +6816,7 @@ class ServiceMethods extends ServiceData {
 			get_with_pathname(cx,pname) {return ServiceMethods.is_url_with_pathname(cx,pname);}
 		}
 		const cf="D_RadioShareUrl";
-		let up=this.parse_with_url_parse(b);
+		let up=this.tr_url_to_obj(b);
 		{
 			let obj=new UrlParseHelper(up);
 			if(obj.get_with_pathname(up,"/watch")) {

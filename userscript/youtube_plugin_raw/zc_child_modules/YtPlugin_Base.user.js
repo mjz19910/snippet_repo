@@ -2198,7 +2198,7 @@ class BaseService extends BaseServicePrivate {
 		return as(r);
 	}
 	/** @protected @template {`https://${string}`|`http://${string}`} T @arg {T} str @returns {UrlParse<T>} */
-	parse_with_url_parse(str) {
+	tr_url_to_obj(str) {
 		let s=new URL(str);
 		/** @private @type {any} */
 		let a=s;
@@ -2220,7 +2220,7 @@ class BaseService extends BaseServicePrivate {
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
-	/** @protected @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is Extract<T,`${string}${U}`>} */
+	/** @protected @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is (T extends `${infer B}${infer R}`?`${B}${Some<R>}${string}${U}`:`${string}${U}`)} */
 	str_ends_with(str,ends_str) {return str.endsWith(ends_str);}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_rx(needle,str) {return str.startsWith(needle);}
@@ -2413,7 +2413,7 @@ class YtHandlers extends BaseService {
 		let api_url=as(parsed_url.href);
 		let ht=this.x.get("handle_types");
 		let url_type=ht.decode_url(api_url);
-		const res_parse=this.parse_with_url_parse(api_url);
+		const res_parse=this.tr_url_to_obj(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
 			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {return split_string_once(ss1,"youtubei/v1/")[1];} else {return ss1;}

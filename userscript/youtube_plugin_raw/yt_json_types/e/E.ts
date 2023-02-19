@@ -26,7 +26,7 @@ type E_SignalService_SubscribeButton=TE_Endpoint_3<"signalServiceEndpoint",G_Cli
 type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,M_Feedback>;
 type E_VE83769_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,M_VE83769>;
-type DE_VE83769_Url_1$d$ad_url={gclid: string;};
+type DE_VE83769_Url_SearchObj={gclid: string;};
 type DE_VE83769_Url_1$d$ad_url2={
 	utm_term: "";
 	utm_campaign: "DISPLAY campaign for \"web development\" landing page";
@@ -60,11 +60,11 @@ type DE_VE83769_Url_1={
 	target: "TARGET_NEW_WINDOW";
 };
 
-type E_VE83769_Url=TE_Endpoint_3<"urlEndpoint",DU_Url,M_VE83769>|{
+type E_VE83769_Url={
 	clickTrackingParams: string;
-	loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/paralleladinteraction?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`>[];
+	loggingUrls?: T_BaseUrl<`https://www.youtube.com/pagead/paralleladinteraction?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`>[];
 	commandMetadata: M_VE83769;
-	urlEndpoint: DE_VE83769_Url_1;
+	urlEndpoint: DU_VE83769_Url;
 };
 type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>|{
 	watchEndpoint: DE_VE3832_Watch;
