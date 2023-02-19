@@ -1,16 +1,17 @@
 function do_dig() {
-	printf "."
+	printf "\r.\e[2C"
 	echo $$ >/tmp/dig_res.pid.$a2
-	find /tmp/ -maxdepth 1 -name 'dig_res.'$a2'.*' | xargs -rn 1 bash -c 'echo -n >"$0"'
+	find /tmp/ -maxdepth 1 -name 'dig_res.'$a2'.*' | xargs -r truncate -s 0
 	echo $$ >/tmp/dig_res.pid.$a2
-	printf "%s\0" rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -0rn35 -P30 zsh -c '. ./dig.zsh child '$a2' "$@"'
+	printf "%s\0" rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com | stdbuf -i0 -o0 -e0 xargs -0rn35 -P100 zsh -c '. ./dig.zsh child '$a2' "$@"'
 	list=(/tmp/dig_res.$a2.*)
 	TF_2=$(mktemp /tmp/dig_res.out.$1.XXX)
 	cat $list >> $TF_2
 	if ((`wc -l <$TF_2` != 0)); then
 		foo=$(<$TF_2)
-		printf "[$a2]\n%s\n" $foo
+		printf "\n[$a2]\n%s\n" $foo
 	fi
+	printf "\r \e[2C"
 }
 function run() {
 	pushd -q $SOURCE_DIR
@@ -31,7 +32,10 @@ function run_child() {
 	if ((${#@} == 0)); then
 		return 0
 	fi
-	echo "run_child" "$a1" "$@"
+	if ((${#@} > 10)); then
+		sleep $(shuf -i0-1 -n1).$(shuf -i0-9 -n1)
+	fi
+	printf "\r\e[1C${@[1][12]}${@[1][14,-18]}"
 	stdbuf -oL -eL dig @1.1.1.2 +time=40 +noall +answer +https "$@" >>"$TF"
 }
 ssd() {
