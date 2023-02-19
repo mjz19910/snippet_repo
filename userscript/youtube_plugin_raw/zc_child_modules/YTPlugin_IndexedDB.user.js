@@ -196,6 +196,9 @@ class IndexedDBService extends BaseService {
 					} else {
 						switch(item.type) {
 							default: debugger; break;
+							case "str": {
+
+							} break;
 							case "video_id:normal": {
 								let cv=cursor_value;
 								if(cursor_value.type!==item.type) {

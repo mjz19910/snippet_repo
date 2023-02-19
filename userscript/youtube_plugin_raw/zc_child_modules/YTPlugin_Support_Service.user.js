@@ -1795,9 +1795,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	get_store_keys(key) {
 		return this.get_data_store().get_string_store().data.find(e => e[0]===key);
 	}
-	/** @private @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
-	save_key_objs={};
-	do_save_keys_obj=false;
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */
@@ -1812,21 +1809,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	#get_keys_store() {return this.#data_store.get_keys_store();}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
-		if(!x) return;
-		let ki=k;
-		if(this.do_save_keys_obj) {
-			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
-				arr: [],
-				/** @private @arg {{}} o */
-				set(o) {this.arr.push(o);}
-			};
-			this.save_key_objs[ki]?.set(x);
-		}
-		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
-		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
+		if(!x) {debugger; return;}
+		if(typeof x!=="object") return this.save_string(`${k}.type`,typeof x);
+		if(x instanceof Array) return this.save_string(`${k}.type`,"array");
 		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
-		return this.save_to_store_2("keys",k,keys.join(),store);
+		return this.save_to_store("keys",k,keys.join(),store);
 	}
 	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
@@ -2078,7 +2066,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @type {[DB_NS_TypeStr,string,string|number|boolean|(string|number|boolean)[]][]} */
 	stored_log_messages=[];
 	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {T|T[]} x @arg {StoreDescription<T>} store */
-	save_to_store_2(ns,k,x,store) {
+	save_to_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
@@ -2109,13 +2097,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	save_number_impl(k,x) {
 		if(x===void 0) {debugger; return;}
 		let store=this.#get_number_store();
-		return this.save_to_store_2("number",k,x,store);
+		return this.save_to_store("number",k,x,store);
 	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
 	save_string_impl(k,x) {
 		if(x===void 0) {debugger; return;}
 		let store=this.#get_string_store();
-		return this.save_to_store_2("string",k,x,store);
+		return this.save_to_store("string",k,x,store);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
@@ -2277,12 +2265,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {string} k @arg {boolean} x */
 	save_boolean_impl(k,x) {
 		let store=this.#data_store.get_boolean_store();
-		return this.save_to_store_2("boolean",k,x,store);
+		return this.save_to_store("boolean",k,x,store);
 	}
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
 		let store=this.#data_store.get_root_visual_elements_store();
-		return this.save_to_store_2("root_visual_element","ve_element",x,store);
+		return this.save_to_store("root_visual_element","ve_element",x,store);
 	}
 }
 class Support_VE extends ServiceMethods {
