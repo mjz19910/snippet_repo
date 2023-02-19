@@ -197,7 +197,12 @@ class IndexedDBService extends BaseService {
 						switch(item.type) {
 							default: debugger; break;
 							case "str": {
-
+								try {
+									await this.update(obj_store,item);
+									this.committed_data.push(item);
+								} catch(e) {
+									console.log("update str_store failed",e);
+								}
 							} break;
 							case "video_id:normal": {
 								let cv=cursor_value;
