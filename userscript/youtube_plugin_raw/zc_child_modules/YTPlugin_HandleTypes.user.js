@@ -2505,7 +2505,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(6 in x) {
-			if(1 in x) {
+			if(2 in x) {
 				const {1: [,f1],2: [,f2],4: [,,f4],6: [t1,[t2,f6]],...y}=this.s(cf,x); this.g(y);
 				this.save_number(`${cf}.w6.f1`,f1);
 				this.save_number(`${cf}.w6.f2`,f2);
