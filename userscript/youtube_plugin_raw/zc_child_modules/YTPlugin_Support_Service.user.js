@@ -1894,6 +1894,67 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 	}
 	log_load_database=false;
+	/** @arg {T_IdBox<B_IdSrcStr, "str", string>} to_load @arg {StoreDescription<string>} ss */
+	async _load_str_type(to_load,ss) {
+		/** @type {string[][]} */
+		let str_arr=[];
+		for(let item of to_load.id[1][1]) {
+			if(item instanceof Array) {
+				let res=[];
+				for(let val of item) {
+					if(typeof val!=="string") continue;
+					res.push(val);
+				}
+				str_arr.push(res);
+				continue;
+			}
+			if(typeof item!=="string") continue;
+			str_arr.push([item]);
+		}
+		let k_parts=this.split_box_type(to_load.key);
+		if(k_parts[0]!=="str") debugger;
+		// save database to local
+		for(let from_db of str_arr) {
+			let local_data=ss.data.find(v => v[0]===k_parts[1]);
+			if(!local_data) {
+				if(from_db.length!==1) {debugger; continue;}
+				ss.data.push([k_parts[1],["one",from_db]]);
+				continue;
+			}
+			switch(local_data[1][0]) {
+				case "many": {
+					let mv=local_data[1][1];
+					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
+					local_data[1][1].push(from_db);
+				} break;
+				case "one": {
+					if(from_db.length!==1) {debugger; continue;}
+					if(local_data[1][1].includes(from_db[0])) continue;
+					local_data[1][1].push(from_db[0]);
+				}
+			}
+		}
+		// save local to database
+		for(let from_db of str_arr) {
+			let local_data=ss.data.find(v => v[0]===k_parts[1]);
+			if(local_data) {
+				let ck=local_data[1];
+				if(from_db.length===1) {
+					if(ck[0]==="many") continue;
+					if(ck[1].includes(from_db[0])) continue;
+					ck[1].push(from_db[0]);
+				} else {
+					if(ck[0]==="one") continue;
+					let mv=ck[1];
+					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
+					mv.push(from_db);
+				}
+				continue;
+			}
+			ss.data.push([k_parts[1],["one",from_db]]);
+			debugger;
+		}
+	}
 	async do_boxed_update_from_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id");
 		if(this.log_load_database) console.log("load_database all boxed",boxed);
@@ -1909,72 +1970,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		} else {
 			let store=this.#data_store;
 			let ss=store.get_string_store();
-			// let changed_data=false;
 			for(let to_load of boxed) {
 				switch(to_load.type) {
 					case "num": {
 						debugger;
 					} break;
-					case "str": {
-						/** @type {string[][]} */
-						let str_arr=[];
-						for(let item of to_load.id[1][1]) {
-							if(item instanceof Array) {
-								let res=[];
-								for(let val of item) {
-									if(typeof val!=="string") continue;
-									res.push(val);
-								}
-								str_arr.push(res);
-								continue;
-							}
-							if(typeof item!=="string") continue;
-							str_arr.push([item]);
-						}
-						let k_parts=this.split_box_type(to_load.key);
-						if(k_parts[0]!=="str") debugger;
-						// save database to local
-						for(let from_db of str_arr) {
-							let local_data=ss.data.find(v => v[0]===k_parts[1]);
-							if(!local_data) {
-								if(from_db.length!==1) {debugger; continue;}
-								ss.data.push([k_parts[1],["one",from_db]]);
-								continue;
-							}
-							switch(local_data[1][0]) {
-								case "many": {
-									let mv=local_data[1][1];
-									if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
-									local_data[1][1].push(from_db);
-								} break;
-								case "one": {
-									if(from_db.length!==1) {debugger; continue;}
-									if(local_data[1][1].includes(from_db[0])) continue;
-									local_data[1][1].push(from_db[0]);
-								}
-							}
-						}
-						// save local to database
-						for(let from_db of str_arr) {
-							let local_data=ss.data.find(v => v[0]===k_parts[1]);
-							if(local_data) {
-								let ck=local_data[1];
-								if(from_db.length===1) {
-									if(ck[0]==="many") continue;
-									if(ck[1].includes(from_db[0])) continue;
-									ck[1].push(from_db[0]);
-								} else {
-									if(ck[0]==="one") continue;
-									let mv=ck[1];
-									if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
-									mv.push(from_db);
-								}
-								continue;
-							}
-							ss.data.push([k_parts[1],["one",from_db]]);
-							debugger;
-						}
-					}
+					case "str": this._load_str_type(to_load,ss);
 				}
 			}
 			this.export_db_data(ss,boxed);
