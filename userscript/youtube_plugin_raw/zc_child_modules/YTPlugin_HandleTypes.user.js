@@ -1017,9 +1017,180 @@ class HandleTypes extends ServiceMethods {
 	typedef_cache=[];
 	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {unknown} obj @returns {unknown} */
 	typedef_json_replace_bin(s,key,obj) {
+		let to=typeof obj;
+		switch(to) {
+			default: {
+				throw new Error("New type from typeof obj");
+			}
+			case "undefined": {
+				if(typeof obj!=="undefined") break;
+				return obj;
+			}
+			case "symbol": {
+				if(typeof obj!=="symbol") break;
+				return obj;
+			}
+			case "string": {
+				if(typeof obj!=="string") break;
+				return obj;
+			}
+			case "object": {
+				if(typeof obj!=="object") break;
+				if(obj instanceof Array) {
+					if(obj.length===1) {
+						if(typeof obj[0]==="number") {
+							return `TYPE::T_VW<${obj[0]}>`;
+						}
+						return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}>`;
+					}
+					/** @type {D_ProtobufObj|V_ParamObj_2[number]} */
+					let otu=as(obj);
+					/** @arg {V_ParamObj_2} x */
+					let v_param_2_maybe_binary_ts=(x) => {
+						if(!(1 in x&&2 in x&&3 in x)) return null;
+						if(x[1][1].length!==1) return null;
+						if(x[2][1].length!==1) return null;
+						if(x[3][1].length!==1) return null;
+						let f1=x[1][1][0];
+						let f2=x[2][1][0];
+						let f3=x[3][1][0];
+						if(f1[0]==="data32"&&f2[0]==="data_fixed32"&&f3[0]==="data_fixed32") {
+							let kk=this.get_keys_of(x);
+							if(this.eq_keys(kk,[1,2,3])) {
+								/** @type {V_BinaryTimestamp} */
+								let bts={...x,1: f1,2: f2,3: f3}; bts;
+								return `TYPE::T_VW_2<V_BinaryTimestamp>`;
+							}
+						}; v_param_2_maybe_binary_ts;
+						let gen_json=this.gen_typedef_bin_json(s,x);
+						console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
+						return `TYPE::T_VW_2<${gen_json}>`;
+					};
+					/** @arg {V_ParamObj_2} x */
+					let v_param_2_maybe_short_ts=(x) => {
+						if(!(1 in x&&2 in x&&3 in x)) return null;
+						if(x[1][1].length!==1) return null;
+						if(x[2][1].length!==1) return null;
+						let f1=x[1][1][0];
+						let f2=x[2][1][0];
+						if(f1[0]==="data32"&&f2[0]==="data32") {
+							let kk=this.get_keys_of(x);
+							if(this.eq_keys(kk,[1,2,3])) {
+								/** @type {V_ShortTimestamp} */
+								let bts={...x,1: f1,2: f2}; bts;
+								return `TYPE::T_VW_2<V_ShortTimestamp>`;
+							}
+						}; v_param_2_maybe_binary_ts;
+						let gen_json=this.gen_typedef_bin_json(s,x);
+						console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
+						return `TYPE::T_VW_2<${gen_json}>`;
+					};
+					/** @arg {V_ParamObjData_2} otu */
+					let v_param_2_child=(otu) => {
+						if(otu[0]!=="child") return null;
+						const [,binary_arr,obj]=otu;
+						if(obj!==null) {
+							let bin_ts=v_param_2_maybe_binary_ts(obj);
+							if(bin_ts) return bin_ts;
+							bin_ts=v_param_2_maybe_short_ts(obj);
+							if(bin_ts) return bin_ts;
+							let gen_json=this.gen_typedef_bin_json(s,obj);
+							console.log("maybe_handle_bin.do_obj",obj,gen_json);
+							return `TYPE::T_VW_2<${gen_json}>`;
+						}
+						let decoded_string=this._decoder.decode(binary_arr);
+						if(binary_arr[0]===0) {
+							console.log("[maybe_handle_bin.do_maybe_string]",decoded_string);
+							return otu;
+						}
+						return `TYPE::T_VW_2<"${decoded_string}">`;
+					}; v_param_2_child;
+					if(otu[0]==="child") {
+						return this.convert_arr_to_obj([otu]);
+					}
+					/** @arg {V_ParamObjData_2} otu */
+					let v_param_2_D32=(otu) => {
+						if(otu[0]!=="data32") return null;
+						return `TYPE::T_D32<${otu[1]}>`;
+					}; v_param_2_D32;
+					if(otu[0]==="data32") {
+						return this.convert_arr_to_obj([otu]);
+					}
+					/** @arg {V_ParamObjData_2} otu */
+					let v_param_2_FD32=(otu) => {
+						if(otu[0]!=="data_fixed32") return null;
+						return `TYPE::T_FD32<${otu[1]}>`;
+					}; v_param_2_FD32;
+					if(otu[0]==="data_fixed32") {
+						return this.convert_arr_to_obj([otu]);
+					}
+					/** @arg {V_ParamObjData_2} otu */
+					let v_param_2_FD64=(otu) => {
+						if(otu[0]!=="data_fixed64") return null;
+						return `TYPE::T_FD64<${otu[1]}>`;
+					}; v_param_2_FD64;
+					if(otu[0]==="data_fixed64") {
+						return this.convert_arr_to_obj([otu]);
+					}
+					/** @arg {V_RawBox} otu */
+					let v_param_2_raw=(otu) => {
+						switch(otu[1][0]) {
+							case "string": return `TYPE::T_VSR<"${otu[1][1]}">`;
+							case "bigint": return `TYPE::T_VW_Bigint<${otu[1][1]}n>`;
+						}
+						return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
+					}; v_param_2_raw;
+					/** @arg {V_ParamObjData_2} otu */
+					let v_param_2_D64=(otu) => {
+						if(otu[0]!=="data64") return null;
+						return `TYPE::T_VW_Bigint<${otu[2]}n>`;
+					}; v_param_2_D64;
+					if(otu[0]==="data64") {
+						return this.convert_arr_to_obj([otu]);
+					}
+					if(otu.length===2&&typeof otu[0]==="string") {
+						let ca=otu[1];
+						if(typeof ca==='object') {
+							let gen_json=this.gen_typedef_bin_json(s,ca);
+							return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
+						}
+						return `TYPE::T_VA_2<"${otu[0]}",${this.typedef_json_replace_bin(s,"0",ca)}>`;
+					}
+					/** @type {(D_ProtobufObj|V_ParamObj_2[number])[]} */
+					let ota=obj;
+					if(ota[0][0]==="child") {
+						debugger;
+						let otr=[];
+						for(let item of ota) {
+							otr.push(item);
+						}
+						return otr;
+					}
+					console.log("[maybe_handle_bin.do_handle_arr]",obj);
+					return obj;
+				}
+				if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
+				return obj;
+			}
+			case "number": {
+				if(typeof obj!=="number") break;
+				return obj;
+			}
+			case "function": {
+				if(typeof obj!=="function") break;
+				debugger;
+				return obj;
+			}
+			case "boolean": {
+				if(typeof obj!=="boolean") break;
+				return obj;
+			}
+			case "bigint": {
+				if(typeof obj!==to) break;
+				return `TYPE::V_Bigint<${obj}n>`;
+			}
+		}
 		if(obj===null||obj===void 0) return obj;
-		if(typeof obj==="bigint") return `TYPE::V_Bigint<${obj}n>`;
-		if(typeof obj==="boolean") return obj;
 		if(typeof obj==="function") {
 			debugger;
 			return obj;
@@ -1028,142 +1199,6 @@ class HandleTypes extends ServiceMethods {
 		if(typeof obj==="symbol") return obj;
 		if(typeof obj==="string") return this.cg.typedef_json_replace_string(obj,key);
 		if(typeof obj!=="object") return obj;
-		if(obj instanceof Array) {
-			if(obj.length===1) {
-				if(typeof obj[0]==="number") {
-					return `TYPE::T_VW<${obj[0]}>`;
-				}
-				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}>`;
-			}
-			/** @type {D_ProtobufObj|V_ParamObj_2[number]} */
-			let otu=as(obj);
-			/** @arg {V_ParamObj_2} x */
-			let v_param_2_maybe_binary_ts=(x) => {
-				if(!(1 in x&&2 in x&&3 in x)) return null;
-				if(x[1][1].length!==1) return null;
-				if(x[2][1].length!==1) return null;
-				if(x[3][1].length!==1) return null;
-				let f1=x[1][1][0];
-				let f2=x[2][1][0];
-				let f3=x[3][1][0];
-				if(f1[0]==="data32"&&f2[0]==="data_fixed32"&&f3[0]==="data_fixed32") {
-					let kk=this.get_keys_of(x);
-					if(this.eq_keys(kk,[1,2,3])) {
-						/** @type {V_BinaryTimestamp} */
-						let bts={...x,1: f1,2: f2,3: f3}; bts;
-						return `TYPE::T_VW_2<V_BinaryTimestamp>`;
-					}
-				}; v_param_2_maybe_binary_ts;
-				let gen_json=this.gen_typedef_bin_json(s,x);
-				console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
-				return `TYPE::T_VW_2<${gen_json}>`;
-			};
-			/** @arg {V_ParamObj_2} x */
-			let v_param_2_maybe_short_ts=(x) => {
-				if(!(1 in x&&2 in x&&3 in x)) return null;
-				if(x[1][1].length!==1) return null;
-				if(x[2][1].length!==1) return null;
-				let f1=x[1][1][0];
-				let f2=x[2][1][0];
-				if(f1[0]==="data32"&&f2[0]==="data32") {
-					let kk=this.get_keys_of(x);
-					if(this.eq_keys(kk,[1,2,3])) {
-						/** @type {V_ShortTimestamp} */
-						let bts={...x,1: f1,2: f2}; bts;
-						return `TYPE::T_VW_2<V_ShortTimestamp>`;
-					}
-				}; v_param_2_maybe_binary_ts;
-				let gen_json=this.gen_typedef_bin_json(s,x);
-				console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
-				return `TYPE::T_VW_2<${gen_json}>`;
-			};
-			/** @arg {V_ParamObjData_2} otu */
-			let v_param_2_child=(otu) => {
-				if(otu[0]!=="child") return null;
-				const [,binary_arr,obj]=otu;
-				if(obj!==null) {
-					let bin_ts=v_param_2_maybe_binary_ts(obj);
-					if(bin_ts) return bin_ts;
-					bin_ts=v_param_2_maybe_short_ts(obj);
-					if(bin_ts) return bin_ts;
-					let gen_json=this.gen_typedef_bin_json(s,obj);
-					console.log("maybe_handle_bin.do_obj",obj,gen_json);
-					return `TYPE::T_VW_2<${gen_json}>`;
-				}
-				let decoded_string=this._decoder.decode(binary_arr);
-				if(binary_arr[0]===0) {
-					console.log("[maybe_handle_bin.do_maybe_string]",decoded_string);
-					return otu;
-				}
-				return `TYPE::T_VW_2<"${decoded_string}">`;
-			}; v_param_2_child;
-			if(otu[0]==="child") {
-				return this.convert_arr_to_obj([otu]);
-			}
-			/** @arg {V_ParamObjData_2} otu */
-			let v_param_2_D32=(otu) => {
-				if(otu[0]!=="data32") return null;
-				return `TYPE::T_D32<${otu[1]}>`;
-			}; v_param_2_D32;
-			if(otu[0]==="data32") {
-				return this.convert_arr_to_obj([otu]);
-			}
-			/** @arg {V_ParamObjData_2} otu */
-			let v_param_2_FD32=(otu) => {
-				if(otu[0]!=="data_fixed32") return null;
-				return `TYPE::T_FD32<${otu[1]}>`;
-			}; v_param_2_FD32;
-			if(otu[0]==="data_fixed32") {
-				return this.convert_arr_to_obj([otu]);
-			}
-			/** @arg {V_ParamObjData_2} otu */
-			let v_param_2_FD64=(otu) => {
-				if(otu[0]!=="data_fixed64") return null;
-				return `TYPE::T_FD64<${otu[1]}>`;
-			}; v_param_2_FD64;
-			if(otu[0]==="data_fixed64") {
-				return this.convert_arr_to_obj([otu]);
-			}
-			/** @arg {V_RawBox} otu */
-			let v_param_2_raw=(otu) => {
-				switch(otu[1][0]) {
-					case "string": return `TYPE::T_VSR<"${otu[1][1]}">`;
-					case "bigint": return `TYPE::T_VW_Bigint<${otu[1][1]}n>`;
-				}
-				return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
-			}; v_param_2_raw;
-			/** @arg {V_ParamObjData_2} otu */
-			let v_param_2_D64=(otu) => {
-				if(otu[0]!=="data64") return null;
-				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
-			}; v_param_2_D64;
-			if(otu[0]==="data64") {
-				return this.convert_arr_to_obj([otu]);
-			}
-			if(otu.length===2&&typeof otu[0]==="string") {
-				let ca=otu[1];
-				if(typeof ca==='object') {
-					let gen_json=this.gen_typedef_bin_json(s,ca);
-					return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
-				}
-				return `TYPE::T_VA_2<"${otu[0]}",${this.typedef_json_replace_bin(s,"0",ca)}>`;
-			}
-			/** @type {(D_ProtobufObj|V_ParamObj_2[number])[]} */
-			let ota=obj;
-			if(ota[0][0]==="child") {
-				debugger;
-				let otr=[];
-				for(let item of ota) {
-					otr.push(item);
-				}
-				return otr;
-			}
-			console.log("[maybe_handle_bin.do_handle_arr]",obj);
-			return obj;
-		}
-		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
-		s;
-		return obj;
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {object} x @returns {string} */
 	gen_typedef_bin_json(s,x) {
