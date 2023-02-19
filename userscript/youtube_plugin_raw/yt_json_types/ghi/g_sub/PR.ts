@@ -45,16 +45,18 @@ type PR_TrackingObj_9w={
 	4: T_VW_2<V_BinaryTimestamp>;
 	9: T_VW_Bigint<bigint>;
 };
+type G_PR_TrackingObj_f16={
+	1: T_D32<41>;
+	2: T_D32<6075>;
+	3: T_D32<0>;
+	4: T_VW_2<V_BinaryTimestamp>;
+};
+
 type PR_TrackingObj_16w3n={
 	1: T_D32<0>;
 	2: T_D32<13188>;
 	4: T_VW_2<V_BinaryTimestamp>;
-	16: T_VW_2<{
-		1: T_D32<41>;
-		2: T_D32<6075>;
-		3: T_D32<0>;
-		4: T_VW_2<V_BinaryTimestamp>;
-	}>;
+	16: T_VW_2<G_PR_TrackingObj_f16>;
 };
 type PR_TrackingObj_19w11w={
 	1: T_D32<416>;
