@@ -1820,7 +1820,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	get_data_store() {return this.#data_store;}
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
-	#onDataChange() {
+	/** @private */
+	onDataChange() {
 		if(this.#idle_id!==null) return;
 		this.is_ready=false;
 		this.#idle_id=requestIdleCallback(async () => {
@@ -2088,7 +2089,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
-		this.#onDataChange();
+		this.onDataChange();
 		if(!this.is_ready) {
 			this.stored_log_messages.push([ns,`store [${ns}] [${k}] %o`,x]);
 			return;
