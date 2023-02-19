@@ -1139,6 +1139,10 @@ class HandleTypes extends ServiceMethods {
 						debugger;
 						let ca=otu[1];
 						if(typeof ca==='object') {
+							if(ca.length===1) {
+								let gen_json=this.gen_typedef_bin_json(s,ca[0]);
+								return `TYPE::T_VA_2<"${otu[0]}",T_VW<${gen_json}>>`;
+							}
 							let gen_json=this.gen_typedef_bin_json(s,ca);
 							return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
 						}
