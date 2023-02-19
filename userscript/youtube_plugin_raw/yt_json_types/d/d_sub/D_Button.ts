@@ -28,6 +28,7 @@ type Some_A<T extends string,A extends any[]=[]>=
 	:A
 	:A;
 ;
+type DU_UrlParams={ai:string;sigh:string;cid:string;ad_mt:"[AD_MT]";acvw: "[VIEWABILITY]";gv: "[GOOGLE_VIEWABILITY]";nb: "[NB]";label: "video_click_to_advertiser_site";};
 
 
 
