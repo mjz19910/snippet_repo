@@ -2092,7 +2092,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.onDataChange();
 		if(!this.is_ready) {
 			this.stored_log_messages.push([ns,`store [${ns}] [${k}] %o`,x]);
-			return;
+			return false;
 		} else {
 			for(const msg of this.stored_log_messages) {
 				const [log_ns,log_msg,x]=msg;
