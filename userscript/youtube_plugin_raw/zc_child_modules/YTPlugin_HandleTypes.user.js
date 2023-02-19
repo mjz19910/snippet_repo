@@ -2426,7 +2426,7 @@ class HandleTypes extends ServiceMethods {
 		return x[0];
 	}
 	/** @protected @template T @arg {T_PArr<T>} x @returns {T|null} */
-	T_PArr(x) {
+	T_RawChild(x) {
 		if(x[0]!=="param_arr") {debugger; return null;}
 		if(x.length!==2) debugger;
 		return this.T_VW(x[1]);
@@ -2439,7 +2439,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
 	T_VW_Bigint(x) {
-		let x1=this.T_PArr(x);
+		let x1=this.T_RawChild(x);
 		if(!x1) {debugger; return null;}
 		if(x1[0]!=="data64") {debugger; return null;}
 		return x1[2];
@@ -2486,7 +2486,15 @@ class HandleTypes extends ServiceMethods {
 		this.m(f3).t(this.T_D32_v).t_cf(`${cf}.f3`,(cf,x) => {
 			this.save_number(cf,x); switch(x) {case 0: case 1: case 4: }
 		});
+		this.m(f4).t(this.VW_BinaryTimestamp);
+		this.m(f6).t(this.TV_Str).t_cf(`${cf}.f6`,(cf,x) => {
+			this.save_string(cf,x);
+			switch(x) {
+				case "watch": break;
+			}
+		});
 		this.m(f8).t(this.T_VW_Bigint);
+		this.t(f16,this.VW_BinaryTimestamp);
 		if(this.is_empty_obj(y)) return;
 		this.codegen_typedef_bin(cf,x,false);
 	}
@@ -2814,9 +2822,9 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @template T @arg {T_VSR<T>} x */
-	T_VSR(x) {
-		let vv=this.T_PArr(x);
+	/** @private @template T @arg {TV_Str<T>} x */
+	TV_Str(x) {
+		let vv=this.T_RawChild(x);
 		if(vv===null) {debugger; return null;}
 		let v2=vv;
 		if(v2[0]!=="raw_child") {this.codegen_typedef_bin("T_VSR",x); return null;}
@@ -2829,20 +2837,20 @@ class HandleTypes extends ServiceMethods {
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
 		const {77: a}=this.s(cf,x);
-		this.t(this.T_VSR(a),x => this.save_string(`${cf}.f77`,x));
+		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
 	}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {
 		const cf="P_aadc_guidelines_state_entity_key";
 		const {2: a,...y}=this.s(cf,x);
-		this.t(this.T_VSR(a),x => this.save_string(`${cf}.a`,x));
+		this.t(this.TV_Str(a),x => this.save_string(`${cf}.a`,x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
 		const {2: a,...y}=this.s(cf,x);
-		this.t(this.T_VSR(a),x => this.videoId(x));
+		this.t(this.TV_Str(a),x => this.videoId(x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {PD_continuation_params} x */
@@ -2904,7 +2912,7 @@ class HandleTypes extends ServiceMethods {
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
 		const {2: a,4: f4,5: {},...y}=this.s(cf,x); this.g(y);
-		this.t(this.T_VSR(a),x => this.channelId(x));
+		this.t(this.TV_Str(a),x => this.channelId(x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
@@ -2959,7 +2967,7 @@ class HandleTypes extends ServiceMethods {
 	P_subscribe_button_entity_key(x) {
 		const cf="P_subscribe_button_entity_key";
 		const {2: a,4: b,5: c,...y}=this.s(cf,x);
-		this.t(this.T_VSR(a),this.channelId);
+		this.t(this.TV_Str(a),this.channelId);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_like_params} x */
@@ -3042,14 +3050,14 @@ class HandleTypes extends ServiceMethods {
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
 		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
-		this.t(this.T_VSR(f2),x => {
+		this.t(this.TV_Str(f2),x => {
 			if(x!=="FEwhat_to_watch") debugger;
 		});
-		this.t(this.T_VSR(f3),x => {
+		this.t(this.TV_Str(f3),x => {
 			x;
 			debugger;
 		});
-		this.t(this.T_VSR(f35),x => {
+		this.t(this.TV_Str(f35),x => {
 			if(x!=="browse-feedFEwhat_to_watch") debugger;
 		});
 	}
@@ -3087,7 +3095,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {number} T @template U @arg {T_FD32<T>} x @arg {(this:void,x:T)=>U} f */
 	T_FD32(x,f) {
-		let x1=this.T_PArr(x);
+		let x1=this.T_RawChild(x);
 		if(!x1) {debugger; return null;}
 		let [t,u]=x1;
 		if(t!=="data_fixed32") {debugger; return null;}
