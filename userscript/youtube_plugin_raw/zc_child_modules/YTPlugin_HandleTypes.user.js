@@ -242,7 +242,7 @@ class HandleTypes extends ServiceMethods {
 				let moment=require("moment");
 				switch(size) {
 					case "milliseconds": {
-						let exp_m_from_now=moment(this.client_now).diff(value/1000)/1000;
+						let exp_m_from_now=moment(value/1000).diff(this.client_now)/1000;
 						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
 					} break;
 				}
