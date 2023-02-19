@@ -2143,6 +2143,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
 		debugger;
+		let f=true;
+		if(f) return;
 		let p=store.data[idx];
 		if(store.type!=="string") return;
 		if(!p) return;
