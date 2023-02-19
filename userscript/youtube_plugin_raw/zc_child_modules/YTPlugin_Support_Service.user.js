@@ -1830,9 +1830,18 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			this.is_ready=true;
 			for(const msg of this.stored_changes) {
 				const [,log_msg,x]=msg;
-				console.log(`delayed:${log_msg}`,x);
-				let idx=this.stored_changes.indexOf(msg);
-				this.stored_changes.splice(idx,1);
+				switch(x[0]) {
+					case "arr": {
+						console.log(`delayed:${log_msg}`,x[1]);
+						let idx=this.stored_changes.indexOf(msg);
+						this.stored_changes.splice(idx,1);
+					} break;
+					case "one": {
+						console.log(`delayed:${log_msg}`,x[1]);
+						let idx=this.stored_changes.indexOf(msg);
+						this.stored_changes.splice(idx,1);
+					} break;
+				}
 			}
 		});
 	}
@@ -2053,12 +2062,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		store.index.set(key,idx);
 		return data[idx];
 	}
-	/** @private @template T @arg {["one",T]|make_arr_t<T>} x @arg {[string, ["arr", T[]] | ["many", T[][]]]} data_item */
+	/** @private @template T @arg {make_one_t<T>|make_arr_t<T>} x @arg {[string,make_arr_t<T>|make_many_t<T>]} data_item */
 	save_to_data_item(x,data_item) {
 		let target=data_item[1];
 		if(x[0]==="arr") {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
 	}
-	/** @private @template T @arg {["one",T]} x @arg {["arr", T[]] | ["many", T[][]]} target */
+	/** @private @template T @arg {make_one_t<T>} x @arg {make_arr_t<T>|make_many_t<T>} target */
 	add_one_to_data_arr(x,target) {
 		if(target[0]==="arr") {if(!target[1].includes(x[1])) return target[1].push(x[1]);} else if(target[0]==="many") {
 			let res=target[1].find(([e,...r]) => !r.length&&e===x);
@@ -2066,7 +2075,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		return -1;
 	}
-	/** @private @template T @arg {make_arr_t<T>} x @arg {[string, ["arr", T[]] | ["many", T[][]]]} item */
+	/** @private @template T @arg {make_arr_t<T>} x @arg {[string,make_arr_t<T>|make_many_t<T>]} item */
 	add_many_to_data_item(x,item) {
 		let target=item[1];
 		if(target[0]==="arr") {
@@ -2089,7 +2098,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
 	/** @type {[DB_NS_TypeStr,string,["one",string|number|boolean]|["arr",(string|number|boolean)[]]][]} */
 	stored_changes=[];
-	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {["one",T]|['arr',T[]]} x @arg {StoreDescription<T>} store */
+	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {make_one_t<T>|['arr',T[]]} x @arg {StoreDescription<T>} store */
 	save_to_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
