@@ -36,10 +36,6 @@ function init_module() {
 }
 //#endregion
 //#region HandleTypes
-// [new_fexp_expected]
-ECatcherService.known_experiments.push(...[
-	[24476774],
-].flat());
 class HandleTypes extends ServiceMethods {
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
 	T_D32(x,f) {

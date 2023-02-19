@@ -104,6 +104,10 @@ class ECatcherService extends BaseService {
 	/** @private @arg {NonNullable<this["data"]["client"]>} client */
 	update_client(client) {this.data.client=client;}
 }
+// [new_fexp_expected]
+ECatcherService.known_experiments.push(...[
+	[24476774],
+].flat());
 export_(exports => {
 	exports.ECatcherService=ECatcherService;
 	exports.__module_loaded__=true;
