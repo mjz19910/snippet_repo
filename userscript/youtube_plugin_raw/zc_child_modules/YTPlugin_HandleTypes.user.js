@@ -2707,20 +2707,22 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
 		const cf="P_tracking_params";
-		const {1: f1,2: f2,3: f3,4: f4,6: f6,8: f8,16: f16,...y}=x;
-		this.m(f1).t(this.T_D32_v).t_cf(`${cf}.f1`,this.save_number);
-		this.m(f2).t(this.T_D32_v).t_cf(`${cf}.f2`,this.save_number);
-		this.m(f3).t(this.T_D32_v).t_cf(`${cf}.f3`,(cf,x) => {
+		const {1: f1,2: f2,3: f3,4: f4,6: f6,8: f8,16: f16,...y}=x,t=this;
+		/** @template {number} T @arg {"f1"|"f2"} k @arg {T_D32<T>} v */
+		let r=(k,v) => {t.mt_cf(t.mt(this.m(v),this.T_D32_v),`${cf}.${k}`,(cf,x) => this.tn_cf(cf,x,this.save_number));};
+		r("f1",f1);
+		r("f2",f2);
+		t.mt_cf(t.mt(this.m(f3),x => this.t(x,this.T_D32_v)),`${cf}.f3`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
 			this.save_number(cf,x); switch(x) {case 0: case 1: case 4: }
-		});
-		this.m(f4).t(this.VW_BinaryTimestamp);
-		this.m(f6).t(this.TV_Str).t_cf(`${cf}.f6`,(cf,x) => {
+		}));
+		t.mt(this.m(f4),this.VW_BinaryTimestamp);
+		t.mt_cf(t.mt(this.m(f6),x => this.t(x,this.TV_Str)),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
 			this.save_string(cf,x);
 			switch(x) {
 				case "watch": break;
 			}
-		});
-		this.m(f8).t(this.T_VW_Bigint);
+		}));
+		t.mt(this.m(f8),x => this.t(x,this.T_VW_Bigint));
 		this.t(f16,this.VW_BinaryTimestamp);
 		if(this.is_empty_obj(y)) return;
 		this.codegen_typedef_bin(cf,x,false);
