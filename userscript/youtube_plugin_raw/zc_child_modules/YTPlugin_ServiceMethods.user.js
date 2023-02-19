@@ -1496,11 +1496,17 @@ class ServiceMethods extends ServiceData {
 			case "playlist-browse-action-menu": break;
 			case "watch-related-menu-button": break;
 		}
-		x;
 	}
 	/** @private @arg {D_Menu_WithTargetId} x */
 	D_Menu_WithTargetId(x) {
 		const cf="D_Menu_WithTargetId";
+		switch(x.targetId) {
+			case "browse-video-menu-button": {} break;
+			case "playlist-browse-action-menu": break;
+			case "watch-related-menu-button": {
+				x;
+			} break;
+		}
 		if("loggingDirectives" in x) {
 			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(menuPopupAccessibility,this.D_Label);

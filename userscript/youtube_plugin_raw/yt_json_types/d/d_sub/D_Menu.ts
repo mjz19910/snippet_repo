@@ -59,11 +59,6 @@ type D_Menu_WithTargetId=|{
 	loggingDirectives: D_LoggingDirectives;
 	targetId: "browse-video-menu-button";
 }|{
-	items: R_MenuServiceItem[];
-	trackingParams: string;
-	accessibility: TD_Accessibility<"Action menu">;
-	targetId: "watch-related-menu-button";
-}|{
 	items: (R_MenuNavigationItem|R_MenuServiceItem)[];
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
