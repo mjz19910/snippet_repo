@@ -1098,7 +1098,7 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {{popup:R_MenuPopup;popupType:"DROPDOWN";}|Popup_GetAccountMenu|T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {{popup:TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>;popupType:"DROPDOWN";}|{popup:R_MenuPopup;popupType:"DROPDOWN";}|Popup_GetAccountMenu|T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
@@ -1119,7 +1119,14 @@ class ServiceMethods extends ServiceData {
 						if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 						return a;
 					}
-					this.R_MenuPopup(ax.popup);
+					let x1=ax.popup;
+					if("menuPopupRenderer" in x1) {this.R_MenuPopup(x1); break;}
+					let mp=x1.multiPageMenuRenderer;
+					switch(mp.style) {
+						default: debugger; break;
+						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": break;
+						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": break;
+					}
 				} break;
 			}
 		}
