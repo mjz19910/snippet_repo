@@ -1016,23 +1016,17 @@ class HandleTypes extends ServiceMethods {
 			/** @arg {V_ParamObj_2} x */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
-				if(x[1][1].length!==1) return null;
-				if(x[2][1].length!==1) return null;
-				if(x[3][1].length!==1) return null;
-				let f1=x[1][1][0];
-				let f2=x[2][1][0];
-				let f3=x[3][1][0];
-				if(f1[0]==="data32"&&f2[0]==="data_fixed32"&&f3[0]==="data_fixed32") {
-					let kk=this.get_keys_of(x);
-					if(this.eq_keys(kk,[1,2,3])) {
-						/** @type {V_BinaryTimestamp} */
-						let bts={...x,1: ["param_arr",[f1]],2: ["param_arr",[f2]],3: ["param_arr",[f3]]}; bts;
-						return `TYPE::T_VW_2<V_BinaryTimestamp>`;
-					}
+				let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
+				let kk=this.get_keys_of(x);
+				/** @type {V_BinaryTimestamp} */
+				if(f1&&f2&&f3&&f1[0]==="data32"&&f2[0]==="data_fixed32"&&f3[0]==="data_fixed32"&&this.eq_keys(kk,[1,2,3])) {
+					return `TYPE::T_VW_2<V_BinaryTimestamp>`;
 				}; v_param_2_maybe_binary_ts;
 				let gen_json=this.gen_typedef_bin_json(s,x);
 				console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
 				return `TYPE::T_VW_2<${gen_json}>`;
+				/** @arg {V_ParamObj_2[number]} x */
+				function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 			};
 			/** @arg {V_ParamObj_2} x */
 			let v_param_2_maybe_short_ts=(x) => {
