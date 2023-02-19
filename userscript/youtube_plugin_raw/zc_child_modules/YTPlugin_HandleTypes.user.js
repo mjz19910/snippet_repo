@@ -2445,7 +2445,7 @@ class HandleTypes extends ServiceMethods {
 		return f.call(this,x1[2]);
 	}
 	/** @protected @arg {G_PR_TrackingObj} x */
-	G_PR_TrackingObj_1(x) {
+	H_TrackingObj(x) {
 		const cf="H_TrackingObj";
 		const {1: {}={},2: {}={},3: f3,4: {},6: f6,7: {}={},8: f8,9: {}={},11: {}={},16: {}={},19: {}={},...y}=x; this.g(y);
 		this.t(f3,x => this.TK_D32(cf,x,"f3"));
@@ -2454,7 +2454,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
-	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
+	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
@@ -2516,7 +2516,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_Typed_TrackingObj";
 		const {type,v: z}=x; this.k(cf,z);
 		switch(type) {
-			case "click_tracking": return this.G_PR_TrackingObj_1(z);
+			case "click_tracking": return this.H_TrackingObj(z);
 			case "tracking": return this.P_tracking_params(z);
 		}
 	}
