@@ -59,11 +59,11 @@ type P_like_params={
 	}>;
 	4: T_D32<0>;
 	5: T_D32<1>;
-	7: T_D32<1>;
 	6: T_VW_2<{
 		1: T_D32<1676517982>;
 		2: T_D32<685626069>;
 	}>;
+	7: T_D32<1>;
 };
 type P_playability_status_context_params={
 	1: T_D32<1>;

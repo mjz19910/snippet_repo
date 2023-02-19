@@ -2778,6 +2778,12 @@ class HandleTypes extends ServiceMethods {
 		const {1: a}=this.s(cf,x);
 		a; debugger;
 	}
+	/** @private @arg {P_like_params} x */
+	P_like_params(x) {
+		const cf="P_like_params";
+		const {1: a,4: f4,5: f5,6: f6,7: f7}=this.s(cf,x);
+		a; f4; f5; f6; f7;
+	}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
@@ -2795,12 +2801,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_playability_status_context_params";
 		const {1: f1}=this.s(cf,x);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
-	}
-	/** @private @arg {P_like_params} x */
-	P_like_params(x) {
-		const cf="P_like_params";
-		const {1: a}=this.s(cf,x);
-		a; debugger;
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
