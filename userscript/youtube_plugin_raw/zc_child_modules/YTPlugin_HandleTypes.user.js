@@ -2462,33 +2462,19 @@ class HandleTypes extends ServiceMethods {
 		if(x1[0]!=="data64") {debugger; return null;}
 		return f.call(this,x1[2]);
 	}
-	/** @protected @arg {G_PR_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
-	G_PR_TrackingObj(x,flags) {
-		const cf="G_PR_TrackingObj";
-		switch(flags.type) {
-			default: debugger; break;
-			case "click_tracking": break;
-			case "tracking": break;
-		}
-		if(9 in x&&19 in x&&3 in x) {
-			x;
-		}
-		/** @type {G_PR_TrackingObj[]} */
-		const m1=[];
-		m1.push(x);
-		/** @arg {{tag:Extract<G_PR_TrackingObj,{1:any}>[1],id:T_D32<number>,timestamp_utc:T_VW_2<V_BinaryTimestamp>}} x */
+	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
+	G_PR_TrackingObj(x) {
+		const cf="G_PR_TrackingObj"; x;
+		/** @arg {{tag:Extract<G_PR_TrackingObj,{1:any}>[1],id:T_D32<number>}} x */
 		let handle_binary_ts=x => {
 			this.T_D32(x.tag,x => this.save_number(`${cf}.tag`,x));
 			this.T_D32(x.id,x => this.save_number(`${cf}.id`,x));
-			h_ts(x.timestamp_utc);
-		};
+		}; handle_binary_ts;
 		/** @arg {T_VW_2<V_BinaryTimestamp>} x */
-		let h_ts=x => {
-			this.T_VW_2(x,this.V_BinaryTimestamp);
-		};
+		let h_ts=x => {this.T_VW_2(x,this.V_BinaryTimestamp);}; h_ts;
 		/** @arg {Extract<G_PR_TrackingObj,{3:any}>[3]} x */
-		let handle_f3=x => {this.T_D32(x,x => this.save_number(`${cf}.f3`,x));};
-		/** @arg {Extract<G_PR_TrackingObj,{6:any}>[6]} x */
+		let handle_f3=x => {this.T_D32(x,x => this.save_number(`${cf}.f3`,x));}; handle_f3;
+		/** @arg {NonNullable<G_PR_TrackingObj[6]>} x */
 		let handle_f6=x => {
 			if(x[0]!=="param_arr") debugger;
 			const [,[a,...y1]]=x; this.ceq(y1.length,0);
@@ -2520,64 +2506,10 @@ class HandleTypes extends ServiceMethods {
 					}
 				} break;
 			}
-		};
-		// this.T_VW_Bigint(a,this.a_primitive_bigint);// {9:any}
-		let m2=[];
-		/** @type {(PR_TrackingObj_4w2n|PR_TrackingObj_6w4w2n)[]} */
-		let r2=[];
-		for(const v of m1) {if(1 in v) m2.push(v); else r2.push(v);}
-		{
-			let t=this;
-			for(const c of m1) {
-				if(8 in c) {
-					this.y(`${cf}:omit`,8,c,x => {
-						this.T_VW_Bigint(x,x => {
-							this.a_primitive_bigint(x);
-						});
-					});
-					continue;
-				}
-				if(9 in c) {
-					this.y(`${cf}:omit`,9,c,x => {
-						this.T_VW_Bigint(x,x => {
-							this.a_primitive_bigint(x);
-						});
-					});
-					continue;
-				}
-				if(19 in c) {w19.push(c); continue;}
-				c;
-				debugger;
-			}
-			for(const o_f19 of w19) {
-				const {19: u,...y}=o_f19; this.g(y); const [,[[,,a]]]=u;
-				this.RB_Obj_f19(a);
-			}
-			for(const v of e) {
-				/** @type {{}} */
-				let r=v; this.g(r);
-			}
-			if(n.length!==0) debugger;
-		}
-		{
-			/** @type {null[]} */
-			let n=[];
-			/** @type {Record<string,never>[]} */
-			let e=[];
-			let m3=[]; {let mc=r2; for(const v of mc) {if(4 in v) {const {4: c,...y}=v; h_ts(c); if(this.is_not_empty_obj(y)) m3.push(y); else e.push(y);} else n.push(v);} }
-			for(const v of m3) {
-				if(6 in v) {
-					const {6: a,...y}=v; this.g(y);
-					this.t(this.T_VSR(a),x => {
-						switch(x) {
-							default: debugger; break;
-							case "external": break;
-						}
-					});
-					continue;
-				}
-				debugger;
-			}
+		}; handle_f6;
+		switch(x.type) {
+			case "click_tracking": break;
+			case "tracking": break;
 		}
 	}
 	/** @type {([type:"number",cf:string,key:string,size:"milliseconds",value:number])[]} */
@@ -2680,13 +2612,13 @@ class HandleTypes extends ServiceMethods {
 		switch(cf) {
 			case "params.click_tracking": {
 				/** @type {G_PR_TrackingObj} */
-				let u=as_any(x);
-				this.G_PR_TrackingObj(u,{type: "click_tracking"});
+				let v=as_any(x);
+				this.G_PR_TrackingObj({type: "click_tracking",v});
 			} break;
 			case "params.tracking": {
 				/** @type {P_tracking_params} */
-				let u=as_any(x);
-				this.G_PR_TrackingObj(u,{type: "tracking"});
+				let v=as_any(x);
+				this.G_PR_TrackingObj({type: "tracking",v});
 			} break;
 			case "reel.player_params": {
 				/** @type {P_reel_player_params} */
