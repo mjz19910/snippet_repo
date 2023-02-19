@@ -2816,23 +2816,20 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_aadc_guidelines_state_entity_key";
 		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.save_string(`${cf}.a`,x));
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
 		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.videoId(x));
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
 		const {3: a,...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
@@ -2856,8 +2853,7 @@ class HandleTypes extends ServiceMethods {
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
@@ -2869,116 +2865,100 @@ class HandleTypes extends ServiceMethods {
 	P_transcript_track_selection_entity_key(x) {
 		const cf="P_transcript_track_selection_entity_key";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
 		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.channelId(x));
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_load_markers_entity_key} x */
 	P_load_markers_entity_key(x) {
 		const cf="P_load_markers_entity_key";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_playlist_loop_state_entity_key} x */
 	P_playlist_loop_state_entity_key(x) {
 		const cf="P_playlist_loop_state_entity_key";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_entity_key_normal} x */
 	P_entity_key_normal(x) {
 		const cf="P_entity_key_normal";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		const {1: {}={},2: {},...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {
 		const cf="P_subscribe_button_entity_key";
-		const {2: a,...y}=this.s(cf,x);
+		const {2: a,4: b,5: c,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),this.channelId);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
-		const {1: a,4: f4,5: f5,6: f6,7: f7}=this.s(cf,x);
-		a; f4; f5; f6; f7;
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
-		const {1: a,3: f3,5: f5}=this.s(cf,x);
-		a; f3; f5;
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @type {string[]} */
 	LP_dislike=[];
 	/** @private @arg {P_dislike_params} x */
 	P_dislike_params(x) {
 		const cf="P_dislike_params";
-		const {1: a,...y}=this.s(cf,x);
+		const {1: a,2: b,4: c,...y}=this.s(cf,x);
 		this.T_VW_2(a,x => {
 			const {1: f1,...y}=x; this.g(y);
 			if(f1[0]!=="param_arr") {debugger; return;}
@@ -2999,49 +2979,45 @@ class HandleTypes extends ServiceMethods {
 				} break;
 			}
 		});
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
-		console.log("[P_dislike_params.next_key]",k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_entity_key} x */
 	P_entity_key(x) {
 		const cf="P_entity_key";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
 		const cf="P_playability_status_context_params";
-		const {1: f1}=this.s(cf,x);
+		const {1: f1,...y}=this.s(cf,x);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
-		const {1: f1}=this.s(cf,x);
+		const {1: f1,...y}=this.s(cf,x);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
 		const {...y}=this.s(cf,x);
-		let k=this.get_keys_of_2(y)[0];
-		console.log(`[${cf}.next_key]`,k);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {PD_continuation_request_browse_token} x */
 	PD_continuation_request_browse_token(x) {
