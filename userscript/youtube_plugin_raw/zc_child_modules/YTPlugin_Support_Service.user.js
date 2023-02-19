@@ -2028,8 +2028,24 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					let [,vi]=item;
 					/** @type {make_arr_t<boolean>|null} */
 					let uv_arr=null;
+					/** @type {make_many_t<boolean>|null} */
+					let uv_many=null;
 					switch(vi[0]) {
 						default: debugger; break;
+						case "many": {
+							for(let u of vi[1]) {
+								let pa=[];
+								for(let v of u) {
+									if(typeof v!=="boolean") continue;
+									pa.push(v);
+								}
+								if(uv_many) {
+									uv_many[1].push(pa);
+									continue;
+								}
+								uv_many=["many",[pa]];
+							}
+						} break;
 						case "arr": {
 							for(let v of vi[1]) {
 								if(typeof v!=="boolean") continue;
@@ -2048,6 +2064,15 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 							type: store.content,
 							id: item[0],
 							value: uv_arr,
+						});
+					}
+					if(uv_many) {
+						await this.put_and_wait("boxed_id",{
+							key: `boxed_id:${store.content}:${item[0]}`,
+							base: "boxed_id",
+							type: store.content,
+							id: item[0],
+							value: uv_many,
 						});
 					}
 				} break;
