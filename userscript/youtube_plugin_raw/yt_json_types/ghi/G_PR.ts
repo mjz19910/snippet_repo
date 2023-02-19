@@ -10,7 +10,7 @@ type G_PR_TrackingObj=
 ;
 type G_PR_TrackingObj_3=PR_TrackingObj_3w8n|PR_TrackingObj_3w8w;
 type G_PR_TrackingObj_4=PR_TrackingObj_4w2n|PR_TrackingObj_4w2w;
-type G_PR_TrackingObj_6=PR_TrackingObj_6w4w2n|PR_TrackingObj_6w4w;
+type G_PR_TrackingObj_6=PR_TrackingObj_6w4w2n|PR_TrackingObj_6w4w|PR_TrackingObj_6w3w;
 type G_PR_TrackingObj_16=PR_TrackingObj_16w3n;
 type G_PR_TrackingObj_19=PR_TrackingObj_19w3n|PR_TrackingObj_19w3w|PR_TrackingObj_19w11w|{
 	1: T_D32<489>;
