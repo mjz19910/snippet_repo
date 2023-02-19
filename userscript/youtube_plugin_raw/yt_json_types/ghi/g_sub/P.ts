@@ -80,9 +80,7 @@ type P_entity_key={
 	5: T_D32<1>;
 };
 type P_remove_like_params={
-	1: T_VW_2<{
-		1: T_VSR<D_VideoId>;
-	}>;
+	1: T_VW_2<{1: T_VSR<D_VideoId>;}>;
 	3: T_D32<0>;
 	5: T_VW_2<V_ShortTimestamp>;
 };
