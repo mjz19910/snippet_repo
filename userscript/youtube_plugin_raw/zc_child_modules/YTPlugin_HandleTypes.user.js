@@ -2462,7 +2462,7 @@ class HandleTypes extends ServiceMethods {
 				this.RB_Obj_f19(f19);
 				return;
 			}
-			debugger;
+			x===""; debugger;
 			return;
 		}
 		if(16 in x) {
@@ -2513,21 +2513,16 @@ class HandleTypes extends ServiceMethods {
 			this.save_string(`${cf}.w6.f6`,f6);
 			return;
 		}
-		if(1 in x&&2 in x&&!(3 in x)&&4 in x) {
+		if(3 in x) {
+			const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
+			debugger;
+			return;
+		}
+		if(4 in x&&2 in x) {
 			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
 			this.save_number(`${cf}.n3.f1`,f1);
 			this.save_number(`${cf}.n3.f2`,f2);
 			this.V_BinaryTimestamp(f4);
-			return;
-		}
-		if(1 in x&&2 in x&&3 in x) {
-			const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
-			debugger;
-			// this.T_D32(f1,x => this.save_number(`${cf}.w3.f1`,x));
-			// this.T_D32(f2,x => this.save_number(`${cf}.w3.f2`,x));
-			// this.T_D32(f3,x => this.save_number(`${cf}.w3.f3`,x));
-			if(f4[0]!=="child") debugger;
-			this.V_BinaryTimestamp(f4[2]);
 			return;
 		}
 		if(4 in x) {

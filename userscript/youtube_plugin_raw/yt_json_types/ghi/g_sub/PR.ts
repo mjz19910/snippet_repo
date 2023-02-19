@@ -1,9 +1,9 @@
-type PR_TrackingObj_16n3n={
+type PR_TrackingObj_4w2w={
 	1: T_D32<0>;
 	2: T_D32<13188>;
 	4: T_VW_2<V_BinaryTimestamp>;
 };
-type PR_TrackingObj_4w={4: T_VW_2<V_BinaryTimestamp>;};
+type PR_TrackingObj_4w2n={4: T_VW_2<V_BinaryTimestamp>;};
 type PR_TrackingObj_3w8w={
 	1: T_D32<332>;
 	2: T_D32<6180>;
