@@ -17,11 +17,45 @@ type G_Gv_0=
 // cSpell:ignoreRegExp /rr1.sn-5ualdn[lsz][0-9a-z].googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
+	``,
 	// dig results
 	`
-
+	rr1.sn-5uaezn6l.googlevideo.com. 1800 IN A      173.194.29.55
+	rr1.sn-5uaezn6s.googlevideo.com. 1800 IN A      173.194.29.71
+	rr1.sn-5uaezn7e.googlevideo.com. 1800 IN A      74.125.6.102
+	rr1.sn-5uaezne6.googlevideo.com. 1800 IN A      173.194.11.102
+	rr1.sn-5uaezned.googlevideo.com. 1800 IN A      173.194.11.134
+	rr1.sn-5uaeznek.googlevideo.com. 1800 IN A      173.194.11.161
+	rr1.sn-5uaeznel.googlevideo.com. 1800 IN A      172.217.128.166
+	rr1.sn-5uaezner.googlevideo.com. 1800 IN A      173.194.11.198
+	rr1.sn-5uaeznes.googlevideo.com. 1800 IN A      172.217.128.198
+	rr1.sn-5uaezney.googlevideo.com. 1800 IN A      173.194.29.129
+	rr1.sn-5uaeznez.googlevideo.com. 1800 IN A      173.194.11.70
+	rr1.sn-5uaeznl6.googlevideo.com. 1800 IN A      172.217.142.134
+	rr1.sn-5uaeznld.googlevideo.com. 1800 IN A      172.217.142.166
+	rr1.sn-5uaeznle.googlevideo.com. 1800 IN A      172.217.142.6
+	rr1.sn-5uaeznlk.googlevideo.com. 1800 IN A      173.194.147.134
+	rr1.sn-5uaeznll.googlevideo.com. 1800 IN A      172.217.142.38
+	rr1.sn-5uaeznlr.googlevideo.com. 1800 IN A      173.194.147.166
+	rr1.sn-5uaeznls.googlevideo.com. 1800 IN A      172.217.142.70
+	rr1.sn-5uaeznly.googlevideo.com. 1800 IN A      172.217.147.6
+	rr1.sn-5uaeznlz.googlevideo.com. 1800 IN A      172.217.142.102
+	rr1.sn-5uaeznr6.googlevideo.com. 1800 IN A      173.194.186.6
+	rr1.sn-5uaeznrr.googlevideo.com. 1800 IN A      172.217.128.102
+	rr1.sn-5uaeznry.googlevideo.com. 1800 IN A      173.194.144.38
+	rr1.sn-5uaeznrz.googlevideo.com. 1800 IN A      74.125.7.70
+	rr1.sn-5uaezny6.googlevideo.com. 1800 IN A      173.194.144.102
+	rr1.sn-5uaeznys.googlevideo.com. 1800 IN A      173.194.144.134
+	rr1.sn-5uaeznyy.googlevideo.com. 1800 IN A      74.125.6.70
+	rr1.sn-5uaeznyz.googlevideo.com. 1800 IN A      173.194.144.70
+	rr1.sn-5uaeznz6.googlevideo.com. 1800 IN A      173.194.142.215
+	rr1.sn-5uaeznzd.googlevideo.com. 1800 IN A      173.194.142.231
+	rr1.sn-5uaeznzr.googlevideo.com. 1800 IN A      173.194.17.19
+	rr1.sn-5uaeznzy.googlevideo.com. 1400 IN A      173.194.147.83
+	rr1.sn-5uaeznzz.googlevideo.com. 1800 IN A      173.194.142.199
 	`,
 	"rr1.sn-5uaeznzy.googlevideo.com.",
+	"rr1.sn-5uaeznes.googlevideo.com.",
 	"rr1.sn-5ualdnl7.googlevideo.com.",
 ];
 type PT_TypeS=[
@@ -30,13 +64,21 @@ type PT_TypeS=[
 	gen_g2_t1<"a5mek">,
 	gen_g2_t1<"hp57k">,
 	gen_g3_t2<"n",[
-		...gen_a3_t2<["4","8"],"v7",["s","z"]>,
-		...gen_a2_t2<"x5",["s7","7y"]>,
+		gen_a3_t2<["4","8"],"v7",["s","z"]>,
+		gen_a2_t2<"x5",["s7","7y"]>,
 	]>,
 	gen_g3_raw<"o","097z">,
 	gen_g3_t2<"p",[gen_g3_or<"p5q",["ls","s7"]>]>,
 ];
 type PT_TypeArr=[
+	["5uaez",[
+		"6l","6s",
+		"7e",
+		"e6","ed","ek","el","er","es","ey","ez",
+		"l6","ld","le","lk","ll","lr","ls","ly","lz",
+		"r6","rr","ry","rz",
+		"y6","ys","yy","yz","z6","zd","zr","zy","zz"
+	]],// hit
 	["5uald",["l7","ll","lr","ls","s6","sd","se","sk","sl","sr","ss","sy","sz","z7","ze"]],// hit
 	["9gv7l",["es","ez","le","s7"]],// hit
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
@@ -60,6 +102,12 @@ type G_Gv_1_List=[
 	"s7","s6","sd","se","sk","sl","sr","ss","sy","sz",
 	"y6","z7",
 	"zd","ze","zk","zl","zr","zs","zy",
+];
+type G_Gv_1_List_0=[
+	"6","7","d","e","k","l","r","s","y","z",
+];
+type G_Gv_1_List_1=[
+	"6","7","d","e","k","l","r","s","y","z",
 ];
 // end ["p5qs7","zy"],
 type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`;
