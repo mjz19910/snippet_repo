@@ -1640,13 +1640,14 @@ class HandleTypes extends ServiceMethods {
 		this.D_GoogleVideoHostPartition("url",ap);
 		const gen_cf="js_gen_case:log_googlevideo_host";
 		let ap_z=ap.partition;
+		// cSpell:ignoreRegExp /"\d[a-z]{4}"/
 		switch(ap_z) {
 			default: {
 				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,ap.partition);
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 			}; break;
-			case "a5mek": case "hp57k": case "nx5s7": case "nx57y": case "p5qls": case "p5qs7":
+			case "5uald": case "a5mek": case "hp57k": case "nx5s7": case "nx57y": case "p5qls": case "p5qs7":
 		}
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x)) return;
