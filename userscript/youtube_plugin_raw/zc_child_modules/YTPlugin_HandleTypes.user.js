@@ -2478,23 +2478,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {G_PR_TrackingObj} x @arg {H_TrackingObj} h */
 	G_PR_TrackingObj_1(x,h) {
-		const {1: {}={},2: {}={},3: {}={},4: {},6: f6,7: {}={},8: f8,9: {}={},11: {}={},16: {}={},19: {}={},...y}=x; this.g(y);
+		const {1: {}={},2: {}={},3: f3,4: {},6: f6,7: {}={},8: f8,9: {}={},11: {}={},16: {}={},19: {}={},...y}=x; this.g(y);
+		this.t(f3,h.handle_f3);
 		this.t(f6,h.handle_f6);
 		f8;
 	}
+	/** @arg {VW_BinaryTimestamp} x */
+	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
+	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
 	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
 	P_Typed_TrackingObj(x) {
-		const cf="P_Typed_TrackingObj"; x;
-		/** @arg {{tag:Extract<G_PR_TrackingObj,{1:any}>[1],id:T_D32<number>}} x */
-		let handle_binary_ts=x => {
-			this.T_D32(x.tag,x => this.save_number(`${cf}.tag`,x));
-			this.T_D32(x.id,x => this.save_number(`${cf}.id`,x));
-		}; handle_binary_ts;
-		/** @arg {T_VW_2<V_BinaryTimestamp>} x */
-		let h_ts=x => {this.T_VW_2(x,this.V_BinaryTimestamp);}; h_ts;
-		/** @arg {Extract<G_PR_TrackingObj,{3:any}>[3]} x */
-		let handle_f3=x => {this.T_D32(x,x => this.save_number(`${cf}.f3`,x));}; handle_f3;
-		/** @arg {NonNullable<G_PR_TrackingObj[6]>} x */
+		const cf="P_Typed_TrackingObj"; this.k(cf,x);
+		/** @type {H_TrackingObj["handle_f6"]} */
 		let handle_f6=x => {
 			if(x[0]!=="param_arr") debugger;
 			const [,[a,...y1]]=x; this.ceq(y1.length,0);
@@ -2530,6 +2525,11 @@ class HandleTypes extends ServiceMethods {
 		switch(x.type) {
 			case "click_tracking": {
 				const {v: z}=x; this.G_PR_TrackingObj_1(z,{
+					t: this,
+					num(x,k) {this.t.TK_D32(cf,x,k);},
+					h_tagged_2(x) {this.num(x.tag,"tag"); this.num(x.id,"id");},
+					handle_timestamp(x) {this.t.VW_BinaryTimestamp(x);},
+					handle_f3(x) {this.num(x,"f3");},
 					handle_f6,
 				});
 			} break;

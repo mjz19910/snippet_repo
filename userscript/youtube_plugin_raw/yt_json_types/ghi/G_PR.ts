@@ -2,7 +2,7 @@ type D_TrackingObj_f16={
 	1: T_D32<41>;
 	2: T_D32<6075>;
 	3: T_D32<0>;
-	4: T_VW_2<V_BinaryTimestamp>;
+	4: VW_BinaryTimestamp;
 };
 type D_TrackingObj_f19={
 	1: T_D32<16>;
@@ -10,12 +10,22 @@ type D_TrackingObj_f19={
 };
 type D_TrackingObj_f6={5: T_FD32<0>;};
 type T_Base64Str=string;
+type P_RT_TK_f1=T_D32<0>;
+
+type P_RT_TK_f2=T_D32<13188>;
+
+type P_RT_TK_f6=T_VSR<"external"|"list_other"|"related"|"related-auto"|"watch">|T_PArr<["child",Uint8Array,D_TrackingObj_f6]>;
+
+type VW_BinaryTimestamp=T_VW_2<V_BinaryTimestamp>;
+
+type P_RT_TK_f3=T_D32<0>;
+
 type G_PR_TrackingObj={
-	1?: T_D32<0>;
-	2?: T_D32<13188>;
-	3?: T_D32<0>;
-	4: T_VW_2<V_BinaryTimestamp>;
-	6?: T_VSR<"external"|"list_other"|"related"|"related-auto"|"watch">|T_PArr<["child",Uint8Array,D_TrackingObj_f6]>;
+	1?: P_RT_TK_f1;
+	2?: P_RT_TK_f2;
+	3?: P_RT_TK_f3;
+	4: VW_BinaryTimestamp;
+	6?: P_RT_TK_f6;
 	7?: T_VSR<T_Base64Str>;
 	8?: T_VW_Bigint<101551873087600536n>;
 	9?: T_VW_Bigint<bigint>;

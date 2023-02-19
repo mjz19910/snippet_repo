@@ -12,7 +12,7 @@ type P_ad_layout_ad_serving_data_entry={
 	5: T_D32<2>;
 	6: T_D32<8>;
 	7: T_D32<4>;
-	9: T_VW_2<V_BinaryTimestamp>;
+	9: VW_BinaryTimestamp;
 	10: T_VW_2<{
 		1: T_D32<5>;
 		6: T_D32<1>;
@@ -23,7 +23,7 @@ type P_ad_layout_ad_serving_data_entry={
 };
 
 type P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry={
-	1: T_VW_2<V_BinaryTimestamp>;
+	1: VW_BinaryTimestamp;
 	3: {
 		1: T_D32<5>;
 		6: T_D32<1>;
