@@ -1127,6 +1127,7 @@ class HandleTypes extends ServiceMethods {
 				let raw_json="{}";
 				switch(raw_value[0]) {
 					default: debugger; break;
+					case "string": raw_json="";
 				}
 				return `TYPE::["${otu[0]}",${gen_json_binary_arr},${obj_json},${raw_json}>`;
 			};

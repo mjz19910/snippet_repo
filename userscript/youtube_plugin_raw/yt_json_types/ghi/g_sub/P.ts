@@ -13,11 +13,11 @@ type P_ad_layout_ad_serving_data_entry={
 	6: T_D32<8>;
 	7: T_D32<4>;
 	9: T_VW_2<V_BinaryTimestamp>;
-	10: {
+	10: T_VW_2<{
 		1: T_D32<5>;
 		6: T_D32<1>;
 		11: T_D32<2>;
-	};
+	}>;
 	13: T_D32<1>;
 	14: T_D32<37>;
 };
