@@ -1902,11 +1902,19 @@ class ServiceMethods extends ServiceData {
 			case "play-next": value; break;
 			case "browse_id:VL": {
 				const {type,id,raw_id}=value;
-				this.indexed_db_put("browse_id",{key: `browse_id:VL:${id}`,type,id,raw_id});
+				this.indexed_db_put("browse_id",{
+					key: `browse_id:VL:${id}`,
+					base: "browse_id",
+					type,id,raw_id
+				});
 			} break;
 			case "playlist:2:RDCM": {
 				const {id,raw_id}=value;
-				this.indexed_db_put("playlist_id",{key: `playlist_id:RDCM:${id}`,type: "playlist_id:RDCM",id,raw_id});
+				this.indexed_db_put("playlist_id",{
+					key: `playlist_id:RDCM:${id}`,
+					base: "playlist_id",
+					type: "playlist_id:RDCM",id,raw_id
+				});
 				if(!this.str_starts_with_rx("UC",id)) debugger;
 				this.D_ChannelId(id);
 			} break;
@@ -1915,6 +1923,8 @@ class ServiceMethods extends ServiceData {
 				const oo={
 					/** @type {`playlist_id:self:${typeof id}`} */
 					key: `playlist_id:self:${id}`,
+					/** @type {"playlist_id"} */
+					base: "playlist_id",
 					/** @type {"playlist_id:self"} */
 					type: "playlist_id:self",
 					id,
@@ -1925,7 +1935,7 @@ class ServiceMethods extends ServiceData {
 			case "playlist:4:UU": case "playlist:3:PL": {
 				const {type,id,raw_id}=value;
 				let type_2=split_string(type,":")[2];
-				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,type: `playlist_id`,base_type: type_2,id,raw_id});
+				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,base: "playlist_id",type: `playlist_id:${type_2}`,id,raw_id});
 				let is_critical=this.get_playlist_url_info_critical(value);
 				this.log_playlist_id(value,is_critical);
 			} break;
@@ -2703,7 +2713,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {string} x */
 	videoId(x) {
 		this.a_primitive_str(x);
-		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,type: "video_id:normal",v: x});
+		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,base: "video_id",type: "video_id:normal",v: x});
 	}
 	/** @type {any[]} */
 	log_list=[];
@@ -2763,7 +2773,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_ChannelId"; this.k(cf,raw_id);
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
-			this.indexed_db_put("channel_id",{key: `channel_id:UC:${id}`,type: "channel_id:UC",id,raw_id});
+			this.indexed_db_put("channel_id",{key: `channel_id:UC:${id}`,base: "channel_id",type: "channel_id:UC",id,raw_id});
 			if(raw_id.length===24) return;
 			console.log("[channelId.length]",raw_id.length);
 			return;

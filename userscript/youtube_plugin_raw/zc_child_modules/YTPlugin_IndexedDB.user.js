@@ -235,17 +235,13 @@ class IndexedDBService extends BaseService {
 							} break cursor_loop;
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
-							case "playlist_id": {
+							case "playlist_id:PL": 
+							case "playlist_id:RD": 
+							case "playlist_id:RDMM": 
+							case "playlist_id:UU": {
 								if(cursor_value.type!==item.type) {
 									debugger;
 									continue for_loop;
-								}
-								switch(item.base_type) {
-									default: debugger; break;
-									case "PL": break;
-									case "RD": break;
-									case "RDMM": break;
-									case "UU": break;
 								}
 								this.committed_data.push(item);
 							} break;
