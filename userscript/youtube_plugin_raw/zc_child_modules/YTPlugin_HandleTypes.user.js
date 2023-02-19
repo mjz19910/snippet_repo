@@ -2508,7 +2508,9 @@ class HandleTypes extends ServiceMethods {
 			}
 		}; handle_f6;
 		switch(x.type) {
-			case "click_tracking": break;
+			case "click_tracking": {
+				const {v: {1: {}={},2: {}={},3: {}={},4: {},6: {}={},8: {}={},9: {}={},11: {}={},16: {}={},19: {}={},...y}}=x; this.g(y);
+			} break;
 			case "tracking": break;
 		}
 	}
@@ -2957,7 +2959,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(this.T_VSR(a),this.channelId);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
-		console.log("[P_dislike_params.next_key]",k);
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
