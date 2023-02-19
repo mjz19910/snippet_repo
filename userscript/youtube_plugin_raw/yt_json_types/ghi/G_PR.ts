@@ -14,7 +14,7 @@ type P_RT_TK_f1=T_D32<0>;
 
 type P_RT_TK_f2=T_D32<13188>;
 
-type P_RT_TK_f6=T_VSR<"external"|"list_other"|"related"|"related-auto"|"watch">|T_PArr<["child",Uint8Array,D_TrackingObj_f6]>;
+type H_TrackingObj_f6=T_VSR<"external"|"list_other"|"related"|"related-auto"|"watch">|T_PArr<["child",Uint8Array,D_TrackingObj_f6]>;
 
 type VW_BinaryTimestamp=T_VW_2<V_BinaryTimestamp>;
 
@@ -25,7 +25,7 @@ type G_PR_TrackingObj={
 	2?: P_RT_TK_f2;
 	3?: P_RT_TK_f3;
 	4: VW_BinaryTimestamp;
-	6?: P_RT_TK_f6;
+	6?: H_TrackingObj_f6;
 	7?: T_VSR<T_Base64Str>;
 	8?: T_VW_Bigint<101551873087600536n>;
 	9?: T_VW_Bigint<bigint>;

@@ -2476,7 +2476,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.codegen_typedef_bin(`${cf}:omit`,y,false);
 	}
-	/** @arg {"H_TrackingObj_f6"} cf @arg {P_RT_TK_f6} x */
+	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="param_arr") debugger;
 		const [,[a,...y1]]=x; this.ceq(y1.length,0);
