@@ -53,7 +53,7 @@ class ServiceLoader {
 		this.x_EventInput=new Support_EventInput(x);
 		this.x_VE37414=new Support_VE37414(x);
 		this.x_VE=new Support_VE(x);
-		this.x_gen_typedef=new TypedefGenerator(x);
+		this.gen_code=new TypedefGenerator(x);
 	}
 }
 
