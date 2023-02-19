@@ -2591,7 +2591,7 @@ class HandleTypes extends ServiceMethods {
 		x;
 		debugger;
 	}
-	/** @type {([type:"number",cf:string,key:string,value:number])[]} */
+	/** @type {([type:"number",cf:string,key:string,size:"milliseconds",value:number])[]} */
 	log_buffer=[];
 	/** @type {Promise<null>|null} */
 	loading_promise=null;
@@ -2614,14 +2614,18 @@ class HandleTypes extends ServiceMethods {
 	async run_logger() {
 		if(this.log_buffer.length===0) return;
 		for(let log of this.log_buffer) {
-			let [type,cf,name,value]=log;
+			let [type,cf,name,size,value]=log;
 			if(type!=="number") continue;
 			if(value>=0b101111101010000010100101011110011001110101100111000) {
 				let lp=this.load_moment_js_if_not_loaded();
 				if(lp!==null) await lp;
 				let moment=require("moment");
-				let exp_m_from_now=moment(value*1000).fromNow();
-				console.log(cf,name,`[number] [moment] [${exp_m_from_now}]`);
+				switch(size) {
+					case "milliseconds": {
+						let exp_m_from_now=moment(value/1000).fromNow();
+						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now}]`);
+					} break;
+				}
 			}
 			console.log(cf,name,value);
 		}
@@ -2642,9 +2646,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
-		const {1: timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
-		this.T_D32(timestamp_milli_utc,x => {
-			this.log_buffer.push(["number",`max_gen:${cf}_gen`,"f1",x]);
+		const {1: request_timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
+		this.T_D32(request_timestamp_milli_utc,x => {
+			this.log_buffer.push(["number",`max_gen:${cf}_gen`,"f1","milliseconds",x]);
 			this.immediate_run_logger();
 		});
 		this.T_FD32(f2,x => {
