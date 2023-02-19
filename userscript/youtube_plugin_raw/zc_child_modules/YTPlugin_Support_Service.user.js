@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase}=require("./YtPlugin_Base.user");
+const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,as_any}=require("./YtPlugin_Base.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
 const __module_name__="mod$SupportService";
@@ -1912,8 +1912,19 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	async _load_str_type(to_load,ss) {
 		/** @type {string[][]} */
 		let str_arr=[];
-		if(!("value" in to_load)) {
-			debugger;
+		/** @type {Omit<Pick<typeof to_load,"key"|"type"|"id">,"id">&{id:(typeof to_load)["value"]}} */
+		let {...to_load_v1}=as_any(to_load);
+		if(!("value" in to_load_v1)) {
+			to_load_v1;
+			let ks=split_string(to_load_v1.key,":");
+			to_load={
+				key: to_load_v1.key,
+				base: "boxed_id",
+				type: "str",
+				id: required(ks.pop()),
+				value: to_load_v1.id,
+			};
+			await this.put_and_wait("boxed_id",to_load);
 			return;
 		}
 		for(let item of to_load.value[1][1]) {
@@ -2087,15 +2098,19 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	expected_id=0;
 	/** @arg {number} id */
-	async put_update_id(id) {
-		this.indexed_db.put("boxed_id",{
+	put_update_id(id) {
+		return this.put_and_wait("boxed_id",{
 			key: "boxed_id:update_id",
 			base: "boxed_id",
 			type: "update_id",
 			id,
-		},3);
+		});
+	}
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @returns {Promise<void>|void} */
+	put_and_wait(key,value) {
+		this.indexed_db.put(key,value,3);
 		let wait_close=this.indexed_db.open_db_promise;
-		if(wait_close) await wait_close;
+		if(wait_close) return wait_close;
 	}
 	async save_database() {
 		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
