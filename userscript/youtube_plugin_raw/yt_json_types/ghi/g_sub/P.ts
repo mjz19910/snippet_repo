@@ -59,7 +59,7 @@ type P_like_params={
 			8: T_FD32<1382109803>;
 			9: T_FD32<2126714>;
 			14: T_D32<115>;
-		}>|T_VSR<"waVYW4mmfWk">;
+		}>|T_VSR<D_VideoId>;
 	}>;
 	4: T_D32<0>;
 	5: T_D32<1>;
@@ -85,7 +85,7 @@ type P_remove_like_params={
 	5: T_VW_2<V_ShortTimestamp>;
 };
 type P_dislike_params={
-	1: T_VW_2<{1: T_VSR<"waVYW4mmfWk">;}>;
+	1: T_VW_2<{1: T_VSR<D_VideoId>;}>;
 	2: T_D32<0>;
 	4: T_VW_2<V_ShortTimestamp>;
 };
@@ -95,40 +95,68 @@ type P_subscribe_button_entity_key={
 	5: T_D32<1>;
 };
 type P_subscribe_params={
-	2: {
+	2: T_VW_2<{
 		1: T_D32<3>;
-	};
+	}>;
 	3: T_D32<0>;
 	4: T_VSR<D_VideoId>;
 };
 type P_unsubscribe_params={
-	1: {
+	1: T_VW_2<{
 		1: T_D32<3>;
-	};
+	}>;
 	2: T_VSR<D_VideoId>;
 	3: T_D32<0>;
 };
 type P_continuation_request_watch_next_token={
-	2: {
-		2: T_VSR<"z6EQlZaB7v8">;
-	};
+	2: T_VW_2<{
+		2: T_VSR<D_VideoId>;
+	}>;
 	3: T_D32<6>;
-	6: {
-		4: {
-			4: T_VSR<"z6EQlZaB7v8">;
+	6: T_VW_2<{
+		4: T_VW_2<{
+			4: T_VSR<D_VideoId>;
 			6: T_D32<0>;
 			15: T_D32<2>;
-		};
+		}>;
 		8: T_VSR<"comments-section">;
-	};
+	}>;
+}|{
+	2: T_VW_2<{
+		2: T_VSR<D_VideoId>;
+		4: T_VSR<`RD${string}`>;
+		6: T_VW_2<{}>;
+		7: T_D32<29>;
+		25: T_D32<0>;
+		28: T_D32<3>;
+		36: T_VW_2<{
+			5: T_VW_Bigint<18446744073709551615n>;
+			8: T_D32<0>;
+		}>;
+	}>;
+	3: T_D32<11>;
+	9: T_VW_2<{
+		1: T_VW_2<{
+			2: T_VSR<`PL${string}`>;
+			3: T_D32<25>;
+		}>;
+		3: T_D32<0>;
+	}>;
+	13: T_VW_2<{
+		5: T_FD32<1684366694>;
+		12: T_FD64<8392569429487543156n>;
+	}>;
+	14: T_VW_2<{
+		1: T_D32<0>;
+	}>;
 };
 type P_entity_key_normal={
-	2: T_VSR<"RDz6EQlZaB7v8">;
+	2: T_VSR<`RD${string}`>;
 	4: T_D32<354>;
 	5: T_D32<1>;
 };
 type P_playlist_loop_state_entity_key={
-	2: T_VSR<"RDz6EQlZaB7v8">;
+	2: T_VSR<`RD${string}`>;
 	4: T_D32<354>;
 	5: T_D32<1>;
 };
@@ -271,7 +299,6 @@ type P_get_pdg_buy_flow_params={
 		3: T_D32<1>;
 	};
 };
-type T_FD64<T extends bigint>=["data_fixed64",T];
 type PD_continuation_params={
 	3: {
 		4: T_FD32<20988979>;
