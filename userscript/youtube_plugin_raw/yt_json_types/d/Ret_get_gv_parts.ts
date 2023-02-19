@@ -17,12 +17,13 @@ type G_Gv_0=
 // cSpell:ignoreRegExp /rr1.sn-5ualdn[lsz][0-9a-z].googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
-	"rr1.sn-5ualdnl7.googlevideo.com.",
-	"rr1.sn-5uaeznzy.googlevideo.com.",
 	// dig results
 	`
 
-	`
+	`,
+	"rr1.sn-5ualdnl7.googlevideo.com.",
+	"rr1.sn-5uaeznzy.googlevideo.com.",
+	"rr1.sn-5ualdnl7.googlevideo.com.",
 ];
 type PT_TypeS=[
 	gen_g2_t1<"5uald">,
