@@ -997,6 +997,10 @@ type D_TextRun=|{
 	text: "https://youtu.be/XdnRkI5EM-k";
 	navigationEndpoint: E_Watch;
 }|{
+	text: `@${string}`;
+	navigationEndpoint: E_VE3611;
+	loggingDirectives: D_LoggingDirectives;
+}|{
 	text: "Original sound";
 	navigationEndpoint: E_VE6827;
 }|{
@@ -1004,14 +1008,13 @@ type D_TextRun=|{
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;
 }|{
-	text: `@${string}`;
-	navigationEndpoint: E_VE3611;
-	loggingDirectives: D_LoggingDirectives;
-}|{
 	text: "#lockpicking";
 	bold: true;
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;
+}|{
+	text: "Get YouTube Premium",
+	navigationEndpoint: E_VE11487;
 }|{
 	text: string;
 	bold: boolean;

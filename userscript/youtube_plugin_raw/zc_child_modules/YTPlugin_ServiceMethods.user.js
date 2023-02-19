@@ -2409,6 +2409,7 @@ class ServiceMethods extends ServiceData {
 					if(this.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
 					if(this.is_TE_VE(x2,5754)) {this.E_VE5754(x2); break x;}
 					if(this.is_TE_VE(x2,6827)) {this.E_VE6827(x2); break x;}
+					if(this.is_TE_VE(x2,11487)) {this.E_VE11487(x2); break x;}
 					debugger; x2;
 					break x;
 				}
