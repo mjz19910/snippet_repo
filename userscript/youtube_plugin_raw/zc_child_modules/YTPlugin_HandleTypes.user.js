@@ -1114,6 +1114,22 @@ class HandleTypes extends ServiceMethods {
 				if(otu[0]!=="data64") return null;
 				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 			}; v_param_2_D64;
+			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj_2 | null, raw_value: V_RawValue]} x */
+			let v_param_2_raw_child=(x) => {
+				let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
+				let obj_json;
+				if(x[2]===null) {
+					obj_json="null";
+				} else {
+					obj_json=this.gen_typedef_bin_json(s,x[1]);
+				}
+				let raw_value=x[3];
+				let raw_json="{}";
+				switch(raw_value[0]) {
+					default: debugger; break;
+				}
+				return `TYPE::["${otu[0]}",${gen_json_binary_arr},${obj_json},${raw_json}>`;
+			};
 			if(otu[0]==="data64") {
 				return this.convert_arr_to_obj([otu]);
 			}
@@ -1127,8 +1143,15 @@ class HandleTypes extends ServiceMethods {
 				let ca=otu[1];
 				if(typeof ca==='object') {
 					if(ca.length===1) {
-						let gen_json=this.gen_typedef_bin_json(s,ca[0]);
-						return `TYPE::T_VA_2<"${otu[0]}",T_VW<${gen_json}>>`;
+						let cv=ca[0];
+						switch(cv[0]) {
+							default: debugger; break;
+							case "child": return v_param_2_child(cv);
+							case "data32": return v_param_2_D32(cv);
+							case "data64": return v_param_2_D64(cv);
+							case "raw_child": return v_param_2_raw_child(cv);
+						}
+						return otu;
 					}
 					let gen_json=this.gen_typedef_bin_json(s,ca);
 					return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
@@ -1155,6 +1178,7 @@ class HandleTypes extends ServiceMethods {
 			return obj;
 		}
 		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
+		console.log("[maybe_handle_bin.do_handle_obj]",obj);
 		return obj;
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {unknown} obj @returns {string|symbol|number|boolean|undefined|object|null} */
