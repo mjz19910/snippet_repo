@@ -2094,13 +2094,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			this.stored_log_messages.push([ns,`store [${ns}] [${k}] %o`,x]);
 			return false;
 		} else {
-			for(const msg of this.stored_log_messages) {
-				const [log_ns,log_msg,x]=msg;
-				if(log_ns!==ns) continue;
-				console.log(`delayed ${log_msg}`,x);
-				let idx=this.stored_log_messages.indexOf(msg);
-				this.stored_log_messages.splice(idx,1);
-			}
 			console.log(`store [${ns}] [${k}] %o`,x);
 		}
 		let idx=store.data.indexOf(store_item);
