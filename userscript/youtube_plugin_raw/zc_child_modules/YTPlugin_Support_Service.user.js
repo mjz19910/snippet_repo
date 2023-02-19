@@ -1714,7 +1714,8 @@ class StoreData {
 		index: new Map,
 		data: [],
 		new_data: [],
-		type: "unknown",
+		content: "boolean",
+		type: "boolean",
 	};
 	/** @type {StoreDescription<number>} */
 	seen_number_obj={
@@ -1722,7 +1723,8 @@ class StoreData {
 		index: new Map,
 		data: [],
 		new_data: [],
-		type: "unknown",
+		content: "number",
+		type: "number",
 	};
 	/** @type {StoreDescription<number>} */
 	seen_ve_num_obj={
@@ -1730,7 +1732,8 @@ class StoreData {
 		index: new Map,
 		data: [],
 		new_data: [],
-		type: "unknown",
+		content: "root_visual_element",
+		type: "number",
 	};
 	/** @type {StoreDescription<string>} */
 	seen_string_obj={
@@ -1738,6 +1741,7 @@ class StoreData {
 		index: new Map,
 		data: [],
 		new_data: [],
+		content: "string",
 		type: "string",
 	};
 	/** @type {StoreDescription<string>} */
@@ -1746,6 +1750,7 @@ class StoreData {
 		index: new Map,
 		data: [],
 		new_data: [],
+		content: "keys",
 		type: "string",
 	};
 	/** @returns {StoreDescription<boolean>} */
