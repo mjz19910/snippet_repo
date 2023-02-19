@@ -2395,7 +2395,7 @@ class HandleTypes extends ServiceMethods {
 			this.T_D32(f2,x => this.BinaryVe(x));
 			return;
 		}
-		if(3 in x) {
+		if(3 in x) /*binary_ve*/ {
 			const {2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 			this.T_D32(f2,x => this.save_number(`${cf}.f2.BinaryVe@f2`,x));
 			this.T_D32(f2,x => this.BinaryVe(x));
@@ -2570,15 +2570,18 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			return;
 		}
-		if(3 in x) {
+		if(3 in x)/*tracking*/ {
 			const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
-			debugger;
+			this.T_D32(f1,x => this.save_number(`${cf}.3w8n.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.3w8n.f2`,x));
+			this.T_D32(f3,x => this.save_number(`${cf}.3w8n.f3`,x));
+			this.T_VW_2(f4,this.V_BinaryTimestamp);
 			return;
 		}
 		if(4 in x&&2 in x) {
 			const {1: f1,2: f2,4: f4,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number(`${cf}.n3.f1`,x));
-			this.T_D32(f2,x => this.save_number(`${cf}.n3.f2`,x));
+			this.T_D32(f1,x => this.save_number(`${cf}.4w2w.f1`,x));
+			this.T_D32(f2,x => this.save_number(`${cf}.4w2w.f2`,x));
 			this.T_VW_2(f4,this.V_BinaryTimestamp);
 			return;
 		}
