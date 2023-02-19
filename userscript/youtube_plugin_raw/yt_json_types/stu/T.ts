@@ -11,7 +11,7 @@ type MonadRet<T>=Monad<T>|Monad<null>;
 type Monad<T>={
 	type: "s";
 	x: T;
-	c: HandleTypes;
+	c: import("../../zc_child_modules/YTPlugin_ServiceMethods.user.js").ServiceMethods;
 	t<U>(f: (x: NonNullable<T>) => U): MonadRet<U>;
 	t_cf<T_CF,U>(cf: T_CF,f: (cf: T_CF,x: NonNullable<T>) => U): MonadRet<U>;
 };

@@ -2704,27 +2704,6 @@ class HandleTypes extends ServiceMethods {
 	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
 	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
-	/** @template T @arg {T} x @returns {Monad<T>} */
-	m(x) {return this.some(x);}
-	/** @template T @arg {T} x @returns {Monad<T>} */
-	some(x) {
-		return {
-			type: "s",
-			x,
-			c: this,
-			/** @arg {(x:NonNullable<T>)=>U} f @template U */
-			t(f) {
-				if(this.x==null) return this.c.some(null);
-				let v=f.call(this.c,this.x);
-				return this.c.some(v);
-			},
-			t_cf(cf,f) {
-				if(this.x==null) return this.c.some(null);
-				let v=f.call(this.c,cf,this.x);
-				return this.c.some(v);
-			}
-		};
-	}
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
 		const cf="P_tracking_params";
@@ -3252,7 +3231,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {P_player_state_entity_key} x */
-	P_player_state_entity_key(x) {x;}
+	P_player_state_entity_key(x) {x;this.m;}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {x;}
 	//#endregion binary

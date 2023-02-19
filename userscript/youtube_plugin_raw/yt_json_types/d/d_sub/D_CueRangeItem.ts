@@ -1,6 +1,6 @@
 type D_CueRangeItem={
-	startCardActiveMs: "0";
-	endCardActiveMs: "5000";
+	startCardActiveMs: `${number}`;
+	endCardActiveMs: `${number}`;
 	teaserDurationMs: "6000";
 	iconAfterTeaserMs: "5000";
 };

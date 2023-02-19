@@ -2902,6 +2902,27 @@ class ServiceMethods extends ServiceData {
 		this.k(cf,x);
 		return x;
 	}
+	/** @template T @arg {T} x @returns {Monad<T>} */
+	m(x) {return this.some(x);}
+	/** @template T @arg {T} x @returns {Monad<T>} */
+	some(x) {
+		return {
+			type: "s",
+			x,
+			c: this,
+			/** @arg {(x:NonNullable<T>)=>U} f @template U */
+			t(f) {
+				if(this.x==null) return this.c.some(null);
+				let v=f.call(this.c,this.x);
+				return this.c.some(v);
+			},
+			t_cf(cf,f) {
+				if(this.x==null) return this.c.some(null);
+				let v=f.call(this.c,cf,this.x);
+				return this.c.some(v);
+			}
+		};
+	}
 	/** @template T @template {T_OpenPopup_Dialog<T>} U @arg {U} x @returns {[true,U["popup"]]|[false,U["popupType"]]} */
 	unpack_popup_dialog(x) {
 		if(x.popupType!=="DIALOG") return [false,x.popupType];
