@@ -3234,6 +3234,16 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_ypc_get_offers_params(u);
 			} break;
+			case "macro_marker_repeat_state.entity_key": {
+				/** @type {P_macro_marker_repeat_state_entity_key} */
+				let u=as_any(x);
+				this.P_macro_marker_repeat_state_entity_key(u);
+			} break;
+			case "player_state.entity_key": {
+				/** @type {P_player_state_entity_key} */
+				let u=as_any(x);
+				this.P_player_state_entity_key(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3241,6 +3251,10 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_player_state_entity_key} x */
+	P_player_state_entity_key(x) {x;}
+	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
+	P_macro_marker_repeat_state_entity_key(x) {x;}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns

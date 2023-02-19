@@ -343,3 +343,8 @@ type P_macro_marker_repeat_state_entity_key={
 	4: T_D32<329>,
 	5: T_D32<1>
 };
+type P_player_state_entity_key={
+	2: TV_Str<"/youtube/app/watch/player_state">,
+	4: T_D32<323>,
+	5: T_D32<1>
+};
