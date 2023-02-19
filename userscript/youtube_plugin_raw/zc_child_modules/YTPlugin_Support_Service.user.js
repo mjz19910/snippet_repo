@@ -1975,6 +1975,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				type: "update_id",
 				id: this.expected_id,
 			},3);
+			let wait_close=this.indexed_db.open_db_promise;
+			if(wait_close) {
+				await wait_close;
+			}
 		}
 	}
 	#get_string_store() {return this.#data_store.get_string_store();}
