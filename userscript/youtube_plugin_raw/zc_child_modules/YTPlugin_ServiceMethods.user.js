@@ -345,24 +345,6 @@ class ServiceMethods extends ServiceData {
 			if(v.length!==1) debugger;
 		}
 	}
-	/** @arg {DU_VE83769_Url} x */
-	DU_VE83769_Url(x) {
-		const cf="DU_VE83769_Url";
-		if("target" in x&&!("nofollow" in x)) {
-			const {url,target,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			return this.GU_VE83769_Url_External(url);
-		}
-		if("target" in x) {
-			const {url,target,nofollow,...y}=x; this.g(y);
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			this.ceq(nofollow,true);
-			return;
-		}
-		const {nofollow,url,...y}=x; this.g(y);
-		this.ceq(nofollow,true);
-		return this.GU_VE83769_Url_1(url);
-	}
 	text_decoder=new TextDecoder();
 	/**
 	 * @protected @template T_Data,T_Meta
@@ -2099,7 +2081,7 @@ class ServiceMethods extends ServiceData {
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
-	/** @protected @arg {DU_VE83769_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @protected @arg {DE_VE83769_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_VE83769_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x)) {

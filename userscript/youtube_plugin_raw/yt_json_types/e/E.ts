@@ -64,7 +64,7 @@ type E_VE83769_Url={
 	clickTrackingParams: string;
 	loggingUrls?: T_BaseUrl<`https://www.youtube.com/pagead/paralleladinteraction?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`>[];
 	commandMetadata: M_VE83769;
-	urlEndpoint: DU_VE83769_Url;
+	urlEndpoint: DE_VE83769_Url;
 };
 type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>|{
 	watchEndpoint: DE_VE3832_Watch;

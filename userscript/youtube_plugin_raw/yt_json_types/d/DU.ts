@@ -9,7 +9,17 @@ type DU_ChannelUrl={
 	url: `https://www.youtube.com/${string}`;
 	nofollow: true;
 };
-type DU_VE83769_Url=DU_InternalUrl|DU_RedirectUrl|DU_ExternalUrl|DU_ChannelUrl;
+type DE_VE83769_Url=
+	|DU_InternalUrl
+	|DU_RedirectUrl
+	|DU_ExternalUrl
+	|DU_ChannelUrl
+	|{
+		url: `https://support.google.com/youtube?${string}`;
+		grwOpenInOverride: "GRW_OPEN_IN_OVERRIDE_USE_PREFERRED_APP_NO_PROMPT";
+	}
+	;
+;
 type DU_MutationDelete={type: T_MutType<"DELETE">; entityKey: string; options: O_DU_Persistence;};
 type DU_MutationReplace={type: T_MutType<"REPLACE">; entityKey: string; payload: G_EY_Entity;};
 //#endregion

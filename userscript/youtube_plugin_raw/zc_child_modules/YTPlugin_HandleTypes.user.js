@@ -3231,7 +3231,7 @@ class HandleTypes extends ServiceMethods {
 		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
 		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
-	/** @private @arg {DU_VE83769_Url} x */
+	/** @private @arg {DE_VE83769_Url} x */
 	DE_VE83769_Url(x) {
 		const cf="DE_VE83769_Url";
 		const {url,...u}=this.s(cf,x);/*#destructure_later*/
