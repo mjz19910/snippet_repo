@@ -2524,7 +2524,20 @@ class HandleTypes extends ServiceMethods {
 		let r2=[];
 		for(const v of m1) {if(1 in v) m2.push(v); else r2.push(v);}
 		{
-
+			let t=this;
+			/** @template {{}} T */
+			class OnePropertyObjArray {
+				/** @type {T[]} */
+				arr=[];
+				/** @arg {T} v */
+				push(v) {
+					if(t.get_keys_of(v).length!==1) debugger;
+					this.arr.push(v);
+				}
+				get length() {return this.arr.length;}
+				[Symbol.iterator]() {return this.arr[Symbol.iterator]();}
+			}
+			OnePropertyObjArray;
 			let n={
 				/** @type {null[]} */
 				arr: [],
@@ -2539,11 +2552,26 @@ class HandleTypes extends ServiceMethods {
 			let e=[];
 			let m3=[]; {let mc=m2; for(const v of mc) {if(2 in v) {const {1: a,2: b,4: c,...y}=v; handle_binary_ts({tag: a,id: b,timestamp_utc: c}); if(this.is_not_empty_obj(y)) m3.push(y); else e.push(y);} else n.push(v);} }
 			let m4=[],r4=[];
-			{let mc=m3; for(const c of mc) {if(3 in c) {const {3: a,...y}=c; handle_f3(a); if(this.is_not_empty_obj(y)) m4.push(y); else e.push(y);} else r4.push(c);} }
-			let m5=[]; {let mc=m4,ac=[],rc=[]; for(const c of mc) {if(6 in c) {const {6: a,...y}=c; handle_f6(a); if(this.is_not_empty_obj(y)) ac.push(y); else e.push(y);} else rc.push(c);} for(const v of [...ac,...rc]) m5.push(v);}
-			let d6=[]; {let mc=m5; d6.push(...mc);}
+			{
+				let mc=m3; for(const c of mc) {if(3 in c) {const {3: a,...y}=c; handle_f3(a); if(this.is_not_empty_obj(y)) m4.push(y); else e.push(y);} else r4.push(c);}
+				for(const a of r4) {
+					a;
+				}
+			}
+			let m5=[];
+			{
+				let mc=m4,ac=[],rc=[]; for(const c of mc) {if(6 in c) {const {6: a,...y}=c; handle_f6(a); if(this.is_not_empty_obj(y)) ac.push(y); else e.push(y);} else rc.push(c);} for(const v of [...ac,...rc]) m5.push(v);
+				for(const a of m5) {
+					a;
+				}
+			}
+			let p6=[];
 			let w9=[]; {let mc=r4; for(const c of mc) {if(6 in c) {const {6: a,...y}=c; handle_f6(a); if(this.is_not_empty_obj(y)) w9.push(y); else e.push(y);} else n.push(c);} }
-			let w19=[]; {let mc=w9; for(const c of mc) {if(9 in c) {const {9: a,...y}=c; if(this.is_not_empty_obj(y)) w19.push(y); else e.push(y);} else d6.push(c);} }
+			let w19=[]; {let mc=w9; for(const c of mc) {if(9 in c) {const {9: a,...y}=c; if(this.is_not_empty_obj(y)) w19.push(y); else e.push(y);} else p6.push(c);} }
+			{let mc=p6; for(const c of mc) {if(11 in c) {const {11: a,...y}=c; if(this.is_not_empty_obj(y)) w19.push(y); else e.push(y);} else p6.push(c);} }
+			/** @type {OnePropertyObjArray<(typeof m5)[number]>} */
+			let d6=new OnePropertyObjArray();
+			for(const c of m5) d6.push(c);
 			w19;
 			for(const c of d6) {
 				if(8 in c) {
@@ -2559,17 +2587,6 @@ class HandleTypes extends ServiceMethods {
 						this.T_VW_Bigint(x,x => {
 							this.a_primitive_bigint(x);
 						});
-					});
-					continue;
-				}
-				if(11 in c) {
-					const {11: a,19: b,...y}=c; this.g(y);
-					let s=this.T_VSR(a);
-					this.t(s,x => {
-						switch(x) {
-							default: debugger; break;
-							case "FEwhat_to_watch": break;
-						}
 					});
 					continue;
 				}
