@@ -1127,7 +1127,7 @@ class HandleTypes extends ServiceMethods {
 				let raw_json="{}";
 				switch(x1[0]) {
 					default: return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`; break;
-					case "string": return `TYPE:T_VSW<"${x1[1]}">`;
+					case "string": return `TYPE::T_VSR<"${x1[1]}">`;
 				}
 			};
 			if(otu[0]==="data64") {
@@ -2529,10 +2529,14 @@ class HandleTypes extends ServiceMethods {
 			/** @type {Record<string,never>[]} */
 			let e=[];
 			let m3=[]; {let mc=m2; for(const v of mc) {if(2 in v) {const {1: a,2: b,4: c,...y}=v; handle_binary_ts({tag: a,id: b,timestamp_utc: c}); if(this.is_not_empty_obj(y)) m3.push(y); else e.push(y);} else n.push(v);} }
-			let m4=[]; {let mc=m3,ac=[],rc=[]; for(const c of mc) {if(3 in c) {const {3: a,...y}=c; handle_f3(a); if(this.is_not_empty_obj(y)) ac.push(y); else e.push(y);} else rc.push(c);} for(const v of [...ac,...rc]) m4.push(v);}
+			let m4=[],r4=[];
+			{let mc=m3; for(const c of mc) {if(3 in c) {const {3: a,...y}=c; handle_f3(a); if(this.is_not_empty_obj(y)) m4.push(y); else e.push(y);} else r4.push(c);} }
 			let m5=[]; {let mc=m4,ac=[],rc=[]; for(const c of mc) {if(6 in c) {const {6: a,...y}=c; handle_f6(a); if(this.is_not_empty_obj(y)) ac.push(y); else e.push(y);} else rc.push(c);} for(const v of [...ac,...rc]) m5.push(v);}
-			let m6=[]; {let mc=m5; for(const c of mc) {if(9 in c) {const {9: a,...y}=c; if(this.is_not_empty_obj(y)) n.push(y); else e.push(y);} else m6.push(c);} }
-			for(const c of m6) {
+			let d6=[]; {let mc=m5; for(const c of mc) {if(9 in c) {const {9: a,...y}=c; if(this.is_not_empty_obj(y)) n.push(y); else e.push(y);} else d6.push(c);} }
+			let w9=[]; {let mc=r4; for(const c of mc) {if(6 in c) {const {6: a,...y}=c; handle_f6(a); if(this.is_not_empty_obj(y)) w9.push(y); else e.push(y);} else n.push(c);} }
+			let w19=[]; {let mc=w9; for(const c of mc) {if(9 in c) {const {9: a,...y}=c; if(this.is_not_empty_obj(y)) w19.push(y); else e.push(y);} else d6.push(c);} }
+			w19;
+			for(const c of d6) {
 				if(8 in c) {
 					this.y(`${cf}:omit`,8,c,x => {
 						this.T_VW_Bigint(x,x => {
@@ -2552,12 +2556,12 @@ class HandleTypes extends ServiceMethods {
 					});
 					continue;
 				}
-				if(19 in c) {
-					const {19: b,...y}=c; this.g(y);
-					this.T_VW_2(b,this.RB_Obj_f19);
-					continue;
-				}
+				if(19 in c) w19.push(c);
 				debugger;
+			}
+			for(const o_f19 of w19) {
+				const {19: u,...y}=o_f19; this.g(y); const [,[[,,a]]]=u;
+				this.RB_Obj_f19(a);
 			}
 			for(const v of e) {
 				/** @type {{}} */

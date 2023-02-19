@@ -10,7 +10,7 @@ type G_PR_TrackingObj=
 		1: T_D32<0>,
 		2: T_D32<13187>,
 		4: T_VW_2<V_BinaryTimestamp>,
-		6: ["raw_child",T_Uint8Array<8>,null,["string","autoplay"]],
+		6: T_VSR<"autoplay">,
 		9: T_VW_Bigint<4348958335366330930n>,
 		19: T_VW_2<{
 			1: T_D32<16>,
