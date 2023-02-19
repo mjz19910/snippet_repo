@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	YTPlugin Support Service
 // @namespace	https://github.com/mjz19910/
-// @version	0.1.1
+// @version	0.1.2
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2023
@@ -631,21 +631,25 @@ class Support_RS_Player extends ServiceMethods {
 	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
 	/** @private @arg {R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	/** @arg {`${number}`} x */
+	_bd=x => this.mb(this.parse_number_template,this.m(x));
+	/** @arg {`${number}`} x */
+	_pn=x => this.mb(this.a_primitive_num,this._bd(x));
+	/** @arg {string} cf @arg {M_Optional<number>} x */
+	_ns=(cf,x) => this.mb(x => this.save_number(cf,x),x);
+	/** @arg {string} cf @arg {string} k @arg {`${number}`} x */
+	_ns_cf(cf,k,x) {this._ns(`${cf}.${k}`,this._bd(x));}
+	get ns() {return this._ns.bind(this);}
+	get bd() {return this._bd.bind(this);}
+	get pn() {return this._pn.bind(this);}
+	get nsf() {return this._ns_cf.bind(this);}
 	/** @private @arg {D_CueRangeItem} x */
 	D_CueRangeItem(x) {
 		const cf="D_CueRangeItem";
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
-		/** @arg {`${number}`} x */
-		let bd=x => this.mb(this.parse_number_template,this.m(x));
-		/** @arg {M_Optional<number>} x */
-		let nm=x => this.mb(this.a_primitive_num,x);
-		/** @arg {`${number}`} x */
-		let pn=x => nm(bd(x));
-		pn(startCardActiveMs); pn(endCardActiveMs); bd(teaserDurationMs);
-		/** @arg {string} cf @arg {M_Optional<number>} x */
-		let ns=(cf,x) => this.mb(x => this.save_number(cf,x),x);
-		ns(`${cf}.teaserDurationMs`,bd(teaserDurationMs));
-		ns(`${cf}.iconAfterTeaserMs`,bd(iconAfterTeaserMs));
+		let {pn,nsf,exact_arr: a}=this;
+		this.z([startCardActiveMs,endCardActiveMs],pn);
+		this.z([a("teaserDurationMs",teaserDurationMs),a("iconAfterTeaserMs",endCardActiveMs)],x => nsf(cf,x[0],x[1]));
 	}
 	/** @private @arg {D_SimpleCardTeaser} x */
 	D_SimpleCardTeaser(x) {
