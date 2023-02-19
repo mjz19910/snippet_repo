@@ -2474,16 +2474,17 @@ class HandleTypes extends ServiceMethods {
 		if(x1[0]!=="data64") {debugger; return null;}
 		return f.call(this,x1[2]);
 	}
-	/** @protected @arg {G_PR_TrackingObj} x @arg {H_TrackingObj} h */
-	G_PR_TrackingObj_1(x,h) {
+	/** @protected @arg {G_PR_TrackingObj} x */
+	G_PR_TrackingObj_1(x) {
+		const cf="G_PR_TrackingObj";
 		const {1: {}={},2: {}={},3: f3,4: {},6: f6,7: {}={},8: f8,9: {}={},11: {}={},16: {}={},19: {}={},...y}=x; this.g(y);
-		this.t(f3,h.handle_f3);
-		this.t(f6,h.handle_f6);
+		this.t(f3,x => this.TK_D32(cf,x,"f3"));
+		this.t_cf(cf,f6,this.H_TrackingObj_f6);
 		f8;
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
-	/** @arg {"P_Typed_TrackingObj"} cf @arg {T_D32<number>} x @arg {H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
+	/** @arg {"G_PR_TrackingObj"} cf @arg {T_D32<number>} x @arg {H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
@@ -2504,58 +2505,47 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(y);
 	}
+	/** @arg {"G_PR_TrackingObj"} cf @arg {P_RT_TK_f6} x */
+	H_TrackingObj_f6(cf,x) {
+		if(x[0]!=="param_arr") debugger;
+		const [,[a,...y1]]=x; this.ceq(y1.length,0);
+		const [t]=a;
+		switch(t) {
+			default: debugger; break;
+			case "child": {
+				const [,,b]=a;
+				{
+					const {5: a,...y2}=b; this.g(y2);
+					this.T_FD32(a,x => {
+						x; debugger;
+					});
+				}
+			} break;
+			case "raw_child": {
+				const [,,n,b]=a; if(n!==null) debugger;
+				{
+					const [,a]=b;
+					this.save_string(`${cf}.f6.str`,a);
+					switch(a) {
+						default: this.save_string(`${cf}.f6.str.default`,a); break;
+						case "external": break;
+						case "list_other": break;
+						case "related": break;
+						case "related-auto": break;
+						case "watch": break;
+					}
+				}
+			} break;
+		}
+	}
+	/** @arg {"G_PR_TrackingObj"} cf @arg {{tag: P_RT_TK_f1,id: P_RT_TK_f2;}} x */
+	P_Tag_TrackingObj(cf,x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");}
 	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
 	P_Typed_TrackingObj(x) {
-		const cf="P_Typed_TrackingObj"; this.k(cf,x);
-		/** @type {H_TrackingObj["handle_f6"]} */
-		let handle_f6=x => {
-			if(x[0]!=="param_arr") debugger;
-			const [,[a,...y1]]=x; this.ceq(y1.length,0);
-			const [t]=a;
-			switch(t) {
-				default: debugger; break;
-				case "child": {
-					const [,,b]=a;
-					{
-						const {5: a,...y2}=b; this.g(y2);
-						this.T_FD32(a,x => {
-							x; debugger;
-						});
-					}
-				} break;
-				case "raw_child": {
-					const [,,n,b]=a; if(n!==null) debugger;
-					{
-						const [,a]=b;
-						this.save_string(`${cf}.f6.str`,a);
-						switch(a) {
-							default: this.save_string(`${cf}.f6.str.default`,a); break;
-							case "external": break;
-							case "list_other": break;
-							case "related": break;
-							case "related-auto": break;
-							case "watch": break;
-						}
-					}
-				} break;
-			}
-		};
-		/** @type {H_TrackingObj} */
-		const handlers={
-			t: this,
-			/** @this {HandleTypes} */
-			TK_D32(x,k) {this.TK_D32(cf,x,k);},
-			/** @this {HandleTypes} */
-			h_tagged_2(x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");},
-			/** @this {HandleTypes} */
-			handle_timestamp(x) {this.VW_BinaryTimestamp(x);},
-			/** @this {HandleTypes} */
-			handle_f3(x) {this.TK_D32(cf,x,"f3");},
-			handle_f6,
-		};
-		const {type,v: z}=x;
+		const cf="P_Typed_TrackingObj";
+		const {type,v: z}=x; this.k(cf,z);
 		switch(type) {
-			case "click_tracking": return this.G_PR_TrackingObj_1(z,handlers);
+			case "click_tracking": return this.G_PR_TrackingObj_1(z);
 			case "tracking": return this.P_tracking_params(z);
 		}
 	}
