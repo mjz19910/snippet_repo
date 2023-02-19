@@ -2613,10 +2613,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	async run_logger() {
 		if(this.log_buffer.length===0) return;
+		let ms_set=new Set;
 		for(let log of this.log_buffer) {
 			let [type,cf,name,size,value]=log;
 			if(type!=="number") continue;
+			if(ms_set.has(value)) continue;
 			if(value>=0b101111101010000010100101011110011001110101100111000) {
+				ms_set.add(value);
 				let lp=this.load_moment_js_if_not_loaded();
 				if(lp!==null) await lp;
 				let moment=require("moment");
