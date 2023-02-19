@@ -43,6 +43,22 @@ function split_string_once_ex_v2(s,d=as(","),_wa) {
 	let q=r;
 	return as(q);
 }
+/** @template {{}} T */
+class OnePropertyObjArray {
+	/** @arg {ApiBase} cls */
+	constructor(cls) {
+		this.cls=cls;
+	}
+	/** @type {T[]} */
+	arr=[];
+	/** @arg {T} v */
+	push(v) {
+		if(this.cls.get_keys_of(v).length!==1) debugger;
+		this.arr.push(v);
+	}
+	get length() {return this.arr.length;}
+	[Symbol.iterator]() {return this.arr[Symbol.iterator]();}
+}
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -2326,22 +2342,6 @@ class Support_VE37414 extends ServiceMethods {
 		if(rootVe!==37414) debugger;
 		return `VE${rootVe}`;
 	}
-}
-/** @template {{}} T */
-class OnePropertyObjArray {
-	/** @arg {ApiBase} cls */
-	constructor(cls) {
-		this.cls=cls;
-	}
-	/** @type {T[]} */
-	arr=[];
-	/** @arg {T} v */
-	push(v) {
-		if(this.cls.get_keys_of(v).length!==1) debugger;
-		this.arr.push(v);
-	}
-	get length() {return this.arr.length;}
-	[Symbol.iterator]() {return this.arr[Symbol.iterator]();}
 }
 export_(exports => {
 	exports.TypedefGenerator=TypedefGenerator;
