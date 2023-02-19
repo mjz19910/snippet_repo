@@ -635,6 +635,8 @@ class Support_RS_Player extends ServiceMethods {
 	D_CueRangeItem(x) {
 		const cf="D_CueRangeItem";
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
+		this.mb.bind(this,this.parse_number_template);
+		this.mt(this.mt(this.m(startCardActiveMs),this.parse_number_template),this.a_primitive_num);
 		let v=this.mc(this.parse_number_template).m(this.a_primitive_num);
 		v.r(startCardActiveMs);
 		this.m(startCardActiveMs).t(this.parse_number_template).t(this.a_primitive_num);

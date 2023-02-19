@@ -2902,17 +2902,23 @@ class ServiceMethods extends ServiceData {
 		this.k(cf,x);
 		return x;
 	}
-	/** @template T @arg {T} x @returns {Monad<T>} */
+	/** @template T @arg {T} x @returns {M_Optional<T>} */
 	m(x) {return this.some(x);}
-	/** @template T @arg {T} x @returns {Monad<T>} */
+	/** @template T @arg {T} x @returns {M_Optional<T>} */
 	some(x) {return {type: "s",x};}
-	/** @arg {(x:T)=>U} f @template T @arg {Monad<T>} m @template U @returns {Monad<U>|None} */
+	/** @arg {(x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>} */
 	mt(m,f) {
 		if(m.type==="n") return {type: "n"};
 		let v=f.call(this,m.x);
 		return this.some(v);
 	}
-	/** @template {string} T_CF @arg {T_CF} cf @arg {(cf:T_CF,x:T)=>U} f @template T @arg {Monad<T>} m @template U @returns {Monad<U>|None} */
+	/** @arg {(x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>} */
+	mb(f,m) {
+		if(m.type==="n") return {type: "n"};
+		let v=f.call(this,m.x);
+		return this.some(v);
+	}
+	/** @template {string} T_CF @arg {T_CF} cf @arg {(cf:T_CF,x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>|None} */
 	mt_cf(m,cf,f) {
 		if(m.type=="n") return {type: "n"};
 		let v=f.call(this,cf,m.x);

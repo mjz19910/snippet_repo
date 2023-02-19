@@ -7,7 +7,7 @@ type T_ObjGetNumKey_1<T extends {},KM>={[U in keyof T as T_GetKeyMap<T,U,KM>]: U
 type T_ObjGetNumKey<T extends {},KM>=`${Extract<keyof T_ObjGetNumKey_1<T,KM>,string>}`;
 //#endregion
 type MonadFn<U,A extends any[]>=(...s: A) => U;
-type Monad<T>=Some<T>|None;
+type M_Optional<T>=Some<T>|None;
 type Some<T>={
 	type: "s";
 	x: T;
