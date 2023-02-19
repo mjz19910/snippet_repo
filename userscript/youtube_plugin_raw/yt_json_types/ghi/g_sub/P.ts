@@ -108,6 +108,7 @@ type P_unsubscribe_params={
 	2: T_VSR<D_VideoId>;
 	3: T_D32<0>;
 };
+type T_VA_2<T,U>=[T,U];
 type P_continuation_request_watch_next_token={
 	2: T_VW_2<{
 		2: T_VSR<D_VideoId>;

@@ -1020,7 +1020,10 @@ class HandleTypes extends ServiceMethods {
 		if(obj===null||obj===void 0) return obj;
 		if(typeof obj==="bigint") return `TYPE::V_Bigint<${obj}n>`;
 		if(typeof obj==="boolean") return obj;
-		if(typeof obj==="function") return obj;
+		if(typeof obj==="function") {
+			debugger;
+			return obj;
+		}
 		if(typeof obj==="number") return obj;
 		if(typeof obj==="symbol") return obj;
 		if(typeof obj==="string") return this.cg.typedef_json_replace_string(obj,key);
@@ -1136,6 +1139,14 @@ class HandleTypes extends ServiceMethods {
 			}; v_param_2_D64;
 			if(otu[0]==="data64") {
 				return this.convert_arr_to_obj([otu]);
+			}
+			if(otu.length===2&&typeof otu[0]==="string") {
+				let ca=otu[1];
+				if(typeof ca==='object') {
+					let gen_json=this.gen_typedef_bin_json(s,ca);
+					return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
+				}
+				return `TYPE::T_VA_2<"${otu[0]}",${this.typedef_json_replace_bin(s,"0",ca)}>`;
 			}
 			/** @type {(D_ProtobufObj|V_ParamObj_2[number])[]} */
 			let ota=obj;
