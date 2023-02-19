@@ -1097,7 +1097,7 @@ class ServiceMethods extends ServiceData {
 			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.b_cls.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {M_YpcGetOffers} x */
@@ -1386,7 +1386,7 @@ class ServiceMethods extends ServiceData {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.b_cls.E_VE83769_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
@@ -1630,7 +1630,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_EndscreenElement_EP"; this.ks(cf,x);
 		if("browseEndpoint" in x) return this.E_VE3611(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.b_cls.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	log_enabled_playlist_id=false;
@@ -1882,11 +1882,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]} x */
 	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
-	/** @protected @arg {E_VE83769_Url} x */
-	E_VE83769_Url(x) {
-		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
-		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
-	}
 	/** @protected @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @protected @arg {E_SignalService_SendPost} x */
@@ -2104,7 +2099,7 @@ class ServiceMethods extends ServiceData {
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
-	/** @private @arg {DU_VE83769_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @protected @arg {DU_VE83769_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_VE83769_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x)) {
@@ -2174,29 +2169,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.cg.codegen_str(cf,x);
 	}
-	/** @private @arg {DU_VE83769_Url} x */
-	DE_VE83769_Url(x) {
-		const cf="DE_VE83769_Url";
-		const {url,...u}=this.s(cf,x);/*#destructure_later*/
-		this.GM_E_VE83769_Url_TargetUrlType(url);
-		if("nofollow" in u&&"target" in u) {
-			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("nofollow" in u) {
-			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("target" in u) {
-			const {target,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			return;
-		}
-		this.g(u);
-	}
 	/** @private @arg {M_VE3611|M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
@@ -2224,7 +2196,7 @@ class ServiceMethods extends ServiceData {
 	M_VE23462(x) {this.T_WCM("M_VE83769",x,this.GM_VE23462);}
 	/** @private @arg {M_VE42352} x */
 	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
-	/** @private @arg {M_VE83769} x */
+	/** @protected @arg {M_VE83769} x */
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
 	/** @private @arg {M_VE96368} x */
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
@@ -2500,7 +2472,7 @@ class ServiceMethods extends ServiceData {
 					break x;
 				}
 				if("watchEndpoint" in x2) {this.E_Watch(x2); break x;}
-				if("urlEndpoint" in x2) {this.E_VE83769_Url(x2); break x;}
+				if("urlEndpoint" in x2) {this.b_cls.E_VE83769_Url(x2); break x;}
 				debugger;
 			}
 			return;
@@ -5123,7 +5095,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(description);
 		this.G_Text(websiteText);
 		this.R_Button(actionButton);
-		this.E_VE83769_Url(navigationEndpoint);
+		this.b_cls.E_VE83769_Url(navigationEndpoint);
 		this.z(impressionCommands,this.D_ImpressionCommand);
 		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.R_Menu(menu);
@@ -5621,7 +5593,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		if(!this.str_starts_with(price,"CA$")) debugger;
 		if(!onClickCommand.urlEndpoint) debugger;
-		this.E_VE83769_Url(onClickCommand);
+		this.b_cls.E_VE83769_Url(onClickCommand);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {DC_RelatedChip} x */
@@ -6214,7 +6186,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(vendorName);
 		this.trackingParams(trackingParams);
 		this.a_primitive_str(buttonText);
-		this.E_VE83769_Url(buttonCommand);
+		this.b_cls.E_VE83769_Url(buttonCommand);
 		this.a_primitive_str(accessibilityTitle);
 		this.a_primitive_str(buttonAccessibilityText);
 		this.a_primitive_str(fromVendorText);
@@ -6779,7 +6751,7 @@ class ServiceMethods extends ServiceData {
 		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
 		if("browseEndpoint" in x) {debugger; return;}
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.b_cls.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
@@ -7603,7 +7575,7 @@ class ServiceMethods extends ServiceData {
 	D_PrimaryLinkItem(x) {
 		const cf="D_PrimaryLinkItem";
 		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_VE83769_Url(navigationEndpoint);
+		this.b_cls.E_VE83769_Url(navigationEndpoint);
 		this.D_Thumbnail(icon);
 		this.G_Text(title);
 	}

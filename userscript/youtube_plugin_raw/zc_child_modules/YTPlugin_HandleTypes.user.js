@@ -3226,6 +3226,34 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @public @arg {E_VE83769_Url} x */
+	E_VE83769_Url(x) {
+		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
+		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
+	}
+	/** @private @arg {DU_VE83769_Url} x */
+	DE_VE83769_Url(x) {
+		const cf="DE_VE83769_Url";
+		const {url,...u}=this.s(cf,x);/*#destructure_later*/
+		this.GM_E_VE83769_Url_TargetUrlType(url);
+		if("nofollow" in u&&"target" in u) {
+			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("nofollow" in u) {
+			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("target" in u) {
+			const {target,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			return;
+		}
+		this.g(u);
+	}
 	/** @private @arg {P_player_state_entity_key} x */
 	P_player_state_entity_key(x) {x;}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
