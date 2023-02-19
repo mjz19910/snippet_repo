@@ -2952,6 +2952,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {D_ProtobufObj[]} x */
 	convert_arr_to_obj(x) {
+		if(!x) {debugger; return null;}
 		debugger;
 		/** @private @type {V_ParamObj_2} */
 		let res_obj={};
@@ -2994,7 +2995,12 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case "group": {
 					let [n,id,a]=v;
-					add_obj(id,[n,this.convert_arr_to_obj(a)]);
+					let res=this.convert_arr_to_obj(a);
+					if(res) {
+						add_obj(id,[n,res]);
+					} else {
+						debugger;
+					}
 				} break;
 				case "info": {
 					let [n,id,a]=v;
@@ -3002,7 +3008,12 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case "struct": {
 					let [n,id,a]=v;
-					add_obj(id,[n,this.convert_arr_to_obj(a)]);
+					let res=this.convert_arr_to_obj(a);
+					if(res) {
+						add_obj(id,[n,res]);
+					} else {
+						debugger;
+					}
 				} break;
 			}
 		}
