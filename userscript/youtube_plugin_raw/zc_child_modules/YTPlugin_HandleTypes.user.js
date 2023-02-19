@@ -2476,9 +2476,15 @@ class HandleTypes extends ServiceMethods {
 		if(x1[0]!=="data64") {debugger; return null;}
 		return f.call(this,x1[2]);
 	}
+	/** @protected @arg {G_PR_TrackingObj} x @arg {H_TrackingObj} h */
+	G_PR_TrackingObj_1(x,h) {
+		const {1: {}={},2: {}={},3: {}={},4: {},6: f6,7: {}={},8: f8,9: {}={},11: {}={},16: {}={},19: {}={},...y}=x; this.g(y);
+		this.t(f6,h.handle_f6);
+		f8;
+	}
 	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
-	G_PR_TrackingObj(x) {
-		const cf="G_PR_TrackingObj"; x;
+	P_Typed_TrackingObj(x) {
+		const cf="P_Typed_TrackingObj"; x;
 		/** @arg {{tag:Extract<G_PR_TrackingObj,{1:any}>[1],id:T_D32<number>}} x */
 		let handle_binary_ts=x => {
 			this.T_D32(x.tag,x => this.save_number(`${cf}.tag`,x));
@@ -2520,10 +2526,12 @@ class HandleTypes extends ServiceMethods {
 					}
 				} break;
 			}
-		}; handle_f6;
+		};
 		switch(x.type) {
 			case "click_tracking": {
-				const {v: {1: {}={},2: {}={},3: {}={},4: {},6: {}={},8: {}={},9: {}={},11: {}={},16: {}={},19: {}={},...y}}=x; this.g(y);
+				const {v: z}=x; this.G_PR_TrackingObj_1(z,{
+					handle_f6,
+				});
 			} break;
 			case "tracking": break;
 		}
@@ -2629,12 +2637,12 @@ class HandleTypes extends ServiceMethods {
 			case "params.click_tracking": {
 				/** @type {G_PR_TrackingObj} */
 				let v=as_any(x);
-				this.G_PR_TrackingObj({type: "click_tracking",v});
+				this.P_Typed_TrackingObj({type: "click_tracking",v});
 			} break;
 			case "params.tracking": {
 				/** @type {P_tracking_params} */
 				let v=as_any(x);
-				this.G_PR_TrackingObj({type: "tracking",v});
+				this.P_Typed_TrackingObj({type: "tracking",v});
 			} break;
 			case "reel.player_params": {
 				/** @type {P_reel_player_params} */
