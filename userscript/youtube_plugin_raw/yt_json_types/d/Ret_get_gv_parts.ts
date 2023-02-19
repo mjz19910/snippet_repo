@@ -15,6 +15,7 @@ type G_Gv_0=
 ;
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
+	"rr1.sn-5ualdnl7.googlevideo.com.",
 	"rr1.sn-9gv7enls.googlevideo.com.",
 	"rr1.sn-9gv7ene6.googlevideo.com.",
 	"rr1.sn-9gv7ened.googlevideo.com.",
