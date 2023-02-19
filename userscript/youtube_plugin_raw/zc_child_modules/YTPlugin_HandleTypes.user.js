@@ -1001,19 +1001,19 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {object|null} obj @returns {string|object|null} */
-	typedef_json_replace_bin_obj(s,key,obj) {
+	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {object|null} x @returns {string|object|null} */
+	typedef_json_replace_bin_obj(s,key,x) {
 		key;
-		if(obj===null) return obj;
-		if(obj instanceof Array) {
-			if(obj.length===1) {
-				if(typeof obj[0]==="number") {
-					return `TYPE::T_VW<${obj[0]}>`;
+		if(x===null) return x;
+		if(x instanceof Array) {
+			if(x.length===1) {
+				if(typeof x[0]==="number") {
+					return `TYPE::T_VW<${x[0]}>`;
 				}
-				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}>`;
+				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,x[0])}>`;
 			}
 			/** @type {D_ProtobufObj|V_ParamObj_2[number]} */
-			let otu=as(obj);
+			let x3=as(x);
 			/** @arg {V_ParamObj_2} x */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
@@ -1064,7 +1064,6 @@ class HandleTypes extends ServiceMethods {
 					bin_ts=v_param_2_maybe_short_ts(obj);
 					if(bin_ts) return bin_ts;
 					let gen_json=this.gen_typedef_bin_json(s,obj);
-					console.log("maybe_handle_bin.do_obj",obj,gen_json);
 					return `TYPE::T_VW_2<${gen_json}>`;
 				}
 				let decoded_string=this._decoder.decode(binary_arr);
@@ -1074,32 +1073,32 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_VW_2<"${decoded_string}">`;
 			}; v_param_2_child;
-			if(otu[0]==="child") {
-				return this.tr_arr_to_obj([otu]);
+			if(x3[0]==="child") {
+				return this.tr_arr_to_obj([x3]);
 			}
 			/** @arg {V_ParamObjData_2} otu */
 			let v_param_2_D32=(otu) => {
 				if(otu[0]!=="data32") return null;
 				return `TYPE::T_D32<${otu[1]}>`;
 			}; v_param_2_D32;
-			if(otu[0]==="data32") {
-				return this.tr_arr_to_obj([otu]);
+			if(x3[0]==="data32") {
+				return this.tr_arr_to_obj([x3]);
 			}
 			/** @arg {V_ParamObjData_2} otu */
 			let v_param_2_FD32=(otu) => {
 				if(otu[0]!=="data_fixed32") return null;
 				return `TYPE::T_FD32<${otu[1]}>`;
 			}; v_param_2_FD32;
-			if(otu[0]==="data_fixed32") {
-				return this.tr_arr_to_obj([otu]);
+			if(x3[0]==="data_fixed32") {
+				return this.tr_arr_to_obj([x3]);
 			}
 			/** @arg {V_ParamObjData_2} otu */
 			let v_param_2_FD64=(otu) => {
 				if(otu[0]!=="data_fixed64") return null;
 				return `TYPE::T_FD64<${otu[1]}>`;
 			}; v_param_2_FD64;
-			if(otu[0]==="data_fixed64") {
-				return this.tr_arr_to_obj([otu]);
+			if(x3[0]==="data_fixed64") {
+				return this.tr_arr_to_obj([x3]);
 			}
 			/** @arg {V_RawBox} otu */
 			let v_param_2_raw=(otu) => {
@@ -1130,17 +1129,17 @@ class HandleTypes extends ServiceMethods {
 					case "string": return `TYPE::T_VSR<"${x1[1]}">`;
 				}
 			};
-			if(otu[0]==="data64") {
-				return this.tr_arr_to_obj([otu]);
+			if(x3[0]==="data64") {
+				return this.tr_arr_to_obj([x3]);
 			}
-			if(otu.length===2&&typeof otu[0]==="string") {
-				switch(otu[0]) {
+			if(x3.length===2&&typeof x3[0]==="string") {
+				switch(x3[0]) {
 					case "error": break;
 					case "param_arr": {
 
 					} break;
 				}
-				let ca=otu[1];
+				let ca=x3[1];
 				if(typeof ca==='object') {
 					if(ca.length===1) {
 						let cv=ca[0];
@@ -1152,35 +1151,47 @@ class HandleTypes extends ServiceMethods {
 							case "raw_child": return v_param_2_raw_child(cv);
 							case "data_fixed64": return cv;
 						}
-						return otu;
+						return x3;
 					}
 					let gen_json=this.gen_typedef_bin_json(s,ca);
-					return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
+					return `TYPE::T_VA_2<"${x3[0]}",${gen_json}>`;
 				}
 				let rep_obj=this.typedef_json_replace_bin(s,"0",ca);
 				if(typeof rep_obj!=="object") {
 					let gen_json=this.gen_typedef_bin_json(s,{v: rep_obj});
-					return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
+					return `TYPE::T_VA_2<"${x3[0]}",${gen_json}>`;
 				}
 				let gen_json=this.gen_typedef_bin_json(s,{v: rep_obj});
-				return `TYPE::T_VA_2<"${otu[0]}",${gen_json}>`;
+				return `TYPE::T_VA_2<"${x3[0]}",${gen_json}>`;
 			}
 			/** @type {(D_ProtobufObj|V_ParamObj_2[number])[]} */
-			let ota=obj;
-			if(ota[0][0]==="child") {
+			let x_t1=x;
+			if(x_t1[0][0]==="child") {
 				debugger;
 				let otr=[];
-				for(let item of ota) {
+				for(let item of x_t1) {
 					otr.push(item);
 				}
 				return otr;
 			}
-			console.log("[maybe_handle_bin.do_handle_arr]",obj);
-			return obj;
+			console.log("[maybe_handle_bin.do_handle_arr]",x);
+			return x;
 		}
-		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
-		console.log("[maybe_handle_bin.do_handle_obj]",obj);
-		return obj;
+		if(x instanceof Uint8Array) return `TYPE::T_Uint8Array<${x.length}>`;
+		/** @type {(`${number}`|string)[]} */
+		let keys=Object.keys(x);
+		let kn=keys.map(e => {
+			/** @arg {string} _x @returns {asserts _x is `${number}`} */
+			function assume_numeric_template(_x) {}
+			assume_numeric_template(e);
+			return this.parse_number_template(e);
+		});
+		if(kn.every(x => !Number.isNaN(x))) {
+			return x;
+		}
+		if("message" in x) return x;
+		console.log("[maybe_handle_bin.keys.string_like]",keys);
+		return x;
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {unknown} obj @returns {string|symbol|number|boolean|undefined|object|null} */
 	typedef_json_replace_bin(s,key,obj) {
@@ -1300,9 +1311,12 @@ class HandleTypes extends ServiceMethods {
 		try {
 			this.binary_result(cf,bin_obj);
 		} catch(e) {
-			console.log("[binary_result_obj]",bin_obj);
-			console.log("[binary_result_error]");
-			console.log(e);
+			if(e instanceof Error) {
+				this.codegen_typedef_bin(`${cf}.err`,{message: e.message},false);
+				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,bin_obj,false);
+			} else {
+				debugger;
+			}
 		}
 	}
 	/** @private @arg {string} x */
@@ -2452,7 +2466,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
-		const {1: f1}=this.s(cf,x);
+		const {1: f1,2: {},3: {},4: {},...y}=this.s(cf,x); this.g(y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @protected @template {bigint} T @template U @arg {T_VW_Bigint<T>} x @arg {(this:this,x:T)=>U} f */
@@ -2840,43 +2854,43 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
 		const cf="P_get_pdg_buy_flow_params";
-		const {1: f1}=this.s(cf,x);
-		f1; debugger;
+		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
-		const {1: f1}=this.s(cf,x);
-		f1; debugger;
+		const {1: f1,5: {},...y}=this.s(cf,x); this.g(y);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {...y}=this.s(cf,x);
+		const {3: {},5: {},8: {},12: {},15: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
 		const cf="P_transcript_track_selection_serialized_params";
-		const {1: f1}=this.s(cf,x);
-		f1; debugger;
+		const {1: f1,2: {},3: {},6: {},7: {},8: {},...y}=this.s(cf,x); this.g(y);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_transcript_track_selection_entity_key} x */
 	P_transcript_track_selection_entity_key(x) {
 		const cf="P_transcript_track_selection_entity_key";
-		const {...y}=this.s(cf,x);
+		const {2: {},4: {},5: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
-		const {...y}=this.s(cf,x);
+		const {1: {},2: {},3: {},5: {},6: {},7: {},8: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
-		const {...y}=this.s(cf,x);
+		const {94: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_subscription_state_key} x */
@@ -2889,31 +2903,31 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
-		const {...y}=this.s(cf,x);
+		const {1: {},2: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_load_markers_entity_key} x */
 	P_load_markers_entity_key(x) {
 		const cf="P_load_markers_entity_key";
-		const {...y}=this.s(cf,x);
+		const {2: {},4: {},5: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
-		const {...y}=this.s(cf,x);
+		const {2: {},3: {},7: {},12: {},13: {},27: {}={},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_playlist_loop_state_entity_key} x */
 	P_playlist_loop_state_entity_key(x) {
 		const cf="P_playlist_loop_state_entity_key";
-		const {...y}=this.s(cf,x);
+		const {2: {},4: {},5: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_entity_key_normal} x */
 	P_entity_key_normal(x) {
 		const cf="P_entity_key_normal";
-		const {...y}=this.s(cf,x);
+		const {2: {},4: {},5: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
@@ -2925,13 +2939,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
-		const {...y}=this.s(cf,x);
+		const {1: {},2: {},3: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
-		const {...y}=this.s(cf,x);
+		const {2: {},3: {},4: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_subscribe_button_entity_key} x */
@@ -2944,13 +2958,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
-		const {...y}=this.s(cf,x);
+		const {1: {},4: {},5: {}={},6: {},7: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
-		const {...y}=this.s(cf,x);
+		const {1: {},3: {},5: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @type {string[]} */
@@ -2984,7 +2998,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_entity_key} x */
 	P_entity_key(x) {
 		const cf="P_entity_key";
-		const {...y}=this.s(cf,x);
+		const {2: {},4: {},5: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_playability_status_context_params} x */
@@ -2997,7 +3011,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data";
-		const {...y}=this.s(cf,x);
+		const {1: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_reel_params} x */
@@ -3010,13 +3024,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
-		const {...y}=this.s(cf,x);
+		const {4: {},5: {},6: {},7: {},9: {},10: {},13: {},14: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
-		const {...y}=this.s(cf,x);
+		const {1: {},3: {},4: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {PD_continuation_request_browse_token} x */
@@ -3037,13 +3051,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PR_continuation_request_browse_token} x */
 	PR_continuation_request_browse_token(x) {
 		const cf="PR_continuation_request_browse_token";
-		const {0x4c82a9c: a}=this.s(cf,x);
+		const {0x4c82a9c: a,...y}=this.s(cf,x); this.g(y);
 		this.PD_continuation_request_browse_token(a);
 	}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {
 		const cf="P_create_playlist_params";
-		const {1: f1}=this.s(cf,x);
+		const {1: f1,...y}=this.s(cf,x); this.g(y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */

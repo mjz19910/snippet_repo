@@ -62,7 +62,7 @@ type P_like_params={
 		}>|T_VSR<D_VideoId>;
 	}>;
 	4: T_D32<0>;
-	5: T_D32<1>;
+	5?: T_D32<1>;
 	6: T_VW_2<V_ShortTimestamp>;
 	7: T_D32<1>;
 };
@@ -147,7 +147,7 @@ type P_watch_playlist_params={
 	7: T_D32<1>;
 	12: T_VSR<"z6EQlZaB7v8">;
 	13: T_D32<0>;
-	27: T_VW_2<{
+	27?: T_VW_2<{
 		1: T_D32<1>;
 	}>;
 };
