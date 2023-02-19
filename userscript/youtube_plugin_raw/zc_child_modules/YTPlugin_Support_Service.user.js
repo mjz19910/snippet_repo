@@ -635,14 +635,17 @@ class Support_RS_Player extends ServiceMethods {
 	D_CueRangeItem(x) {
 		const cf="D_CueRangeItem";
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
-		this.mb.bind(this,this.parse_number_template);
-		this.mt(this.mt(this.m(startCardActiveMs),this.parse_number_template),this.a_primitive_num);
-		let v=this.mc(this.parse_number_template).m(this.a_primitive_num);
-		v.r(startCardActiveMs);
-		this.m(startCardActiveMs).t(this.parse_number_template).t(this.a_primitive_num);
-		this.m(endCardActiveMs).t(this.parse_number_template).t(this.a_primitive_num);
-		if(teaserDurationMs!=="6000") debugger;
-		if(iconAfterTeaserMs!=="5000") debugger;
+		/** @arg {`${number}`} x */
+		let bd=x => this.mb(this.parse_number_template,this.m(x));
+		/** @arg {M_Optional<number>} x */
+		let nm=x => this.mb(this.a_primitive_num,x);
+		/** @arg {`${number}`} x */
+		let pn=x => nm(bd(x));
+		pn(startCardActiveMs); pn(endCardActiveMs); bd(teaserDurationMs);
+		/** @arg {string} cf @arg {M_Optional<number>} x */
+		let ns=(cf,x) => this.mb(x => this.save_number(cf,x),x);
+		ns(`${cf}.teaserDurationMs`,bd(teaserDurationMs));
+		ns(`${cf}.iconAfterTeaserMs`,bd(iconAfterTeaserMs));
 	}
 	/** @private @arg {D_SimpleCardTeaser} x */
 	D_SimpleCardTeaser(x) {
