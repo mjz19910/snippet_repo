@@ -1,10 +1,20 @@
-type StoreDescription<T>={
-	new_data: [string,make_one_t<T>|make_arr_t<T>][];
-	data: [string,make_arr_t<T>|make_many_t<T>][];
+type StoreContentStr="number"|"keys"|"boolean"|"root_visual_element"|"string";
+type StoreDescription<T,C_Ty extends StoreContentStr>={
+	new_data: [string,make_item_group<T>][];
+	data: [string,make_item_group<T>][];
 	index: Map<string,number>;
-	content: "number"|"keys"|"boolean"|"root_visual_element"|"string";
+	content: C_Ty;
 	type: T extends number? "number":T extends string? "string":T extends boolean? "boolean":T extends string? "string":"unknown";
 };
+type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>;
+type G_StoreDescriptions=
+	|StoreDescription<boolean,"boolean">
+	|StoreDescription<number,"number">
+	|StoreDescription<number,"root_visual_element">
+	|StoreDescription<string,"string">
+	|StoreDescription<string,"keys">
+	;
+;
 type make_one_t<T>=["one",T];
 type make_arr_t<T>=["arr",T[]];
 type make_many_t<T>=["many",T[][]];

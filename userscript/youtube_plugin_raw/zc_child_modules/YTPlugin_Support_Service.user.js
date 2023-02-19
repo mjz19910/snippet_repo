@@ -1724,7 +1724,7 @@ class BitmapResult {
 	}
 }
 class StoreData {
-	/** @type {StoreDescription<boolean>} */
+	/** @type {StoreDescription<boolean,"boolean">} */
 	seen_bool_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
@@ -1733,7 +1733,7 @@ class StoreData {
 		content: "boolean",
 		type: "boolean",
 	};
-	/** @type {StoreDescription<number>} */
+	/** @type {StoreDescription<number,"number">} */
 	seen_number_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
@@ -1742,7 +1742,7 @@ class StoreData {
 		content: "number",
 		type: "number",
 	};
-	/** @type {StoreDescription<number>} */
+	/** @type {StoreDescription<number,"root_visual_element">} */
 	seen_ve_num_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
@@ -1751,7 +1751,7 @@ class StoreData {
 		content: "root_visual_element",
 		type: "number",
 	};
-	/** @type {StoreDescription<string>} */
+	/** @type {StoreDescription<string,"string">} */
 	seen_string_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
@@ -1760,7 +1760,7 @@ class StoreData {
 		content: "string",
 		type: "string",
 	};
-	/** @type {StoreDescription<string>} */
+	/** @type {StoreDescription<string,"keys">} */
 	seen_keys_obj={
 		/** @type {Map<string,number>} */
 		index: new Map,
@@ -1769,15 +1769,10 @@ class StoreData {
 		content: "keys",
 		type: "string",
 	};
-	/** @returns {StoreDescription<boolean>} */
 	get_boolean_store() {return this.seen_bool_obj;}
-	/** @returns {StoreDescription<number>} */
 	get_number_store() {return this.seen_number_obj;}
-	/** @returns {StoreDescription<number>} */
 	get_root_visual_elements_store() {return this.seen_ve_num_obj;}
-	/** @returns {StoreDescription<string>} */
 	get_string_store() {return this.seen_string_obj;}
-	/** @returns {StoreDescription<string>} */
 	get_keys_store() {return this.seen_keys_obj;}
 	get_changed_stores() {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
@@ -1868,9 +1863,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
-	/** @arg {StoreDescription<string>} ss @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
+	/** @arg {G_StoreDescriptions} ss @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
 	async export_db_data(ss,boxed) {
 		if(ss.data.length>0) {
+			if(ss.type!=="string") {debugger; return;}
 			for(let sd of ss.data) {
 				const [key,arr]=sd;
 				/** @type {`boxed_id:str:${string}`} */
@@ -1923,7 +1919,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 	}
 	log_load_database=false;
-	/** @arg {T_IdBox<B_IdSrcStr,string, "str", string>} to_load @arg {StoreDescription<string>} ss */
+	/** @arg {T_IdBox<B_IdSrcStr,string,"str",string>} to_load @arg {Extract<G_StoreDescriptions,{type:"string"}>} ss */
 	async _load_str_type(to_load,ss) {
 		/** @type {string[][]} */
 		let str_arr=[];
@@ -1983,11 +1979,11 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			if(local_data) {
 				let ck=local_data[1];
 				if(from_db.length===1) {
-					if(ck[0]==="many") continue;
+					if(ck[0]!=="arr") continue;
 					if(ck[1].includes(from_db[0])) continue;
 					ck[1].push(from_db[0]);
 				} else {
-					if(ck[0]==="arr") continue;
+					if(ck[0]!=="many") continue;
 					let mv=ck[1];
 					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
 					mv.push(from_db);
@@ -1998,7 +1994,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @template {boolean|string|number} T @arg {IDBBoxedType[]} boxed @arg {StoreDescription<T>} store @arg {[string, make_arr_t<T> | make_many_t<T>]} item */
+	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} boxed @arg {T} store @arg {T["data"][number]} item */
 	async push_store_item_to_database(store,boxed,item) {
 		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
 		let s_box=[];
@@ -2108,7 +2104,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @template {boolean|string|number} T @arg {StoreDescription<T>} store */
+	/** @template {G_StoreDescriptions} T @arg {T} store */
 	async push_store_to_database(store) {
 		/** @type {IDBBoxedType[]} */
 		let boxed=await this.indexed_db.getAll("boxed_id");
@@ -2233,24 +2229,47 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			continue;
 		}
 	}
+	/** @template T @arg {make_item_group<any>} x @arg {T} v @returns {asserts x is make_item_group<T>} */
+	is_group_with_type(x,v) {x; v;}
 	#get_string_store() {return this.#data_store.get_string_store();}
-	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
+	/** @private @arg {string} k @arg {G_StoreDescriptions['data'][number][1]} x @arg {G_StoreDescriptions} store @returns {[G_StoreDescriptions["type"],any]} */
 	add_to_index(k,x,store) {
-		/** @private @type {StoreDescription<T>['data'][number]} */
-		let p=[k,x];
-		let nk=store.data.push(p)-1;
-		store.index.set(k,nk);
-		return p;
+		switch(store.type) {
+			case "boolean": {
+				this.is_group_with_type(x,true);
+				/** @type {[typeof k,typeof x]} */
+				let p=[k,x];
+				let nk=store.data.push(p)-1;
+				store.index.set(k,nk);
+				return [store.type,p];
+			}
+			case "number": {
+				this.is_group_with_type(x,1);
+				/** @type {[typeof k,typeof x]} */
+				let p=[k,x];
+				let nk=store.data.push(p)-1;
+				store.index.set(k,nk);
+				return [store.type,p];
+			}
+			case "string": {
+				this.is_group_with_type(x,"");
+				/** @type {[typeof k,typeof x]} */
+				let p=[k,x];
+				let nk=store.data.push(p)-1;
+				store.index.set(k,nk);
+				return [store.type,p];
+			}
+		}
 	}
-	/** @private @template T @arg {string} key @arg {StoreDescription<T>} store */
+	/** @private @template {G_StoreDescriptions} T @arg {string} key @arg {T} store @returns {[T["type"],any]} */
 	get_seen_string_item_store(key,store) {
 		const {index,data}=store;
 		let idx=index.get(key);
-		if(idx) return data[idx];
+		if(idx) return [store.type,data[idx]];
 		idx=data.findIndex(e => e[0]===key);
 		if(idx<0) return this.add_to_index(key,["arr",[]],store);
 		store.index.set(key,idx);
-		return data[idx];
+		return [store.type,data[idx]];
 	}
 	/** @private @template T @arg {make_one_t<T>|make_arr_t<T>} x @arg {[string,make_arr_t<T>|make_many_t<T>]} data_item */
 	save_to_data_item(x,data_item) {
