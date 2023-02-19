@@ -2015,6 +2015,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					/** @type {make_arr_t<boolean>|null} */
 					let uv_arr=null;
 					switch(vi[0]) {
+						default: debugger; break;
 						case "arr": {
 							for(let v of vi[1]) {
 								if(typeof v!=="boolean") continue;
@@ -2035,8 +2036,36 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 							value: uv_arr,
 						},3);
 					}
-				}
+				} break;
+				case "keys": {
+					let [,vi]=item;
+					/** @type {make_arr_t<string>|null} */
+					let uv_arr=null;
+					switch(vi[0]) {
+						default: debugger; break;
+						case "arr": {
+							for(let v of vi[1]) {
+								if(typeof v!=="string") continue;
+								if(uv_arr) {
+									uv_arr[1].push(v);
+									continue;
+								}
+								uv_arr=["arr",[v]];
+							}
+						}
+					}
+					if(uv_arr) {
+						this.indexed_db.put("boxed_id",{
+							key: `boxed_id:${store.content}:${item[0]}`,
+							base: "boxed_id",
+							type: store.content,
+							id: item[0],
+							value: uv_arr,
+						},3);
+					}
+				} break;
 			}
+			if(store.content!=="boolean") debugger;
 			debugger;
 		}
 	}

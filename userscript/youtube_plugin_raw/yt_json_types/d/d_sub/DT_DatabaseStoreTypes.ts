@@ -77,6 +77,12 @@ type G_BoxedIdObj=T_IdBox<B_IdSrcNum,string>|T_IdBox<B_IdSrcStr,string>|{
 	type: "boolean";
 	id: string;
 	value: make_arr_t<boolean>|make_many_t<boolean>;
+}|{
+	key: `boxed_id:keys:${string}`;
+	base: "boxed_id";
+	type: "keys";
+	id: string;
+	value: make_arr_t<string>|make_many_t<string>;
 };
 type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${T_IdType}`;
