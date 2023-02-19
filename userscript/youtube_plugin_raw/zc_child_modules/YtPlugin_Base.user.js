@@ -2120,6 +2120,8 @@ class BaseServicePrivate extends ApiBase {
 	}
 	/** @protected @arg {string} k @arg {number|number[]} x */
 	save_number(k,x) {return this.local_seen_db.save_number_impl(k,x);}
+	/** @protected @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
+	save_enum(ns,s) {return this.local_seen_db.save_enum_impl(ns,s);}
 }
 /** @private @template T_ServiceLoader,T_ServiceFlags @extends {BaseServicePrivate<ServiceLoader,ServiceOptions>} */
 class BaseService extends BaseServicePrivate {
@@ -2226,23 +2228,6 @@ class BaseService extends BaseServicePrivate {
 	str_starts_with_rx(needle,str) {return str.startsWith(needle);}
 	/** @protected */
 	get TODO_true() {return true;}
-	/** @protected @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
-	save_enum(ns,s) {
-		/** @private @type {"_"|"-"} */
-		let sep;
-		let ns_name="ENUM";
-		if(s.includes("-")) {
-			sep="-";
-			ns_name="ELEMENT";
-		} else {sep="_";}
-		let no_ns=split_string_once(s,ns);
-		if(!no_ns[1]) throw new Error();
-		let nn=split_string_once(no_ns[1],sep);
-		if(!nn[1]) throw new Error();
-		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
-		let no_ns_part=nn[1];
-		this.save_string(`${ns_name}::${ns}`,no_ns_part);
-	}
 	/** @protected @template {string} T @template {string} Sep @template {`${T}${Sep}${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
 	save_enum_with_sep(enum_base,enum_str,sep) {
 		const ns_name="ELEMENT";

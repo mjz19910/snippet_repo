@@ -2105,6 +2105,23 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let store=this.#get_string_store();
 		return this.save_to_store("string",k,x,store);
 	}
+	/** @api @public @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
+	save_enum_impl(ns,s) {
+		/** @private @type {"_"|"-"} */
+		let sep;
+		let ns_name="ENUM";
+		if(s.includes("-")) {
+			sep="-";
+			ns_name="ELEMENT";
+		} else {sep="_";}
+		let no_ns=split_string_once(s,ns);
+		if(!no_ns[1]) throw new Error();
+		let nn=split_string_once(no_ns[1],sep);
+		if(!nn[1]) throw new Error();
+		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
+		let no_ns_part=nn[1];
+		this.save_string(`${ns_name}::${ns}`,no_ns_part);
+	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
 		let p=store.data[idx];
