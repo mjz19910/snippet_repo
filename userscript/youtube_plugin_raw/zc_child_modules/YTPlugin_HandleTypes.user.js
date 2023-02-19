@@ -2540,24 +2540,23 @@ class HandleTypes extends ServiceMethods {
 				} break;
 			}
 		};
-		switch(x.type) {
-			case "click_tracking": {
-				const {v: z}=x; this.G_PR_TrackingObj_1(z,{
-					t: this,
-					/** @this {HandleTypes} */
-					TK_D32(x,k) {this.TK_D32(cf,x,k);},
-					/** @this {HandleTypes} */
-					h_tagged_2(x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");},
-					/** @this {HandleTypes} */
-					handle_timestamp(x) {this.VW_BinaryTimestamp(x);},
-					/** @this {HandleTypes} */
-					handle_f3(x) {this.TK_D32(cf,x,"f3");},
-					handle_f6,
-				});
-			} break;
-			case "tracking": {
-				const {v: z}=x; this.P_tracking_params(z);
-			} break;
+		/** @type {H_TrackingObj} */
+		const handlers={
+			t: this,
+			/** @this {HandleTypes} */
+			TK_D32(x,k) {this.TK_D32(cf,x,k);},
+			/** @this {HandleTypes} */
+			h_tagged_2(x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");},
+			/** @this {HandleTypes} */
+			handle_timestamp(x) {this.VW_BinaryTimestamp(x);},
+			/** @this {HandleTypes} */
+			handle_f3(x) {this.TK_D32(cf,x,"f3");},
+			handle_f6,
+		};
+		const {type,v: z}=x;
+		switch(type) {
+			case "click_tracking": return this.G_PR_TrackingObj_1(z,handlers);
+			case "tracking": return this.P_tracking_params(z);
 		}
 	}
 	/** @type {([type:"number",cf:string,key:string,size:"milliseconds",value:number])[]} */
