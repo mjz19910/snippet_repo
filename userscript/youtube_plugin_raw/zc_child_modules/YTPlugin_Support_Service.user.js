@@ -1814,6 +1814,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(x instanceof Array) return this.save_string_one(`${k}.type`,"array");
 		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
+		let store_item=this.get_seen_string_item_store(k,store);
+		/** @type {["arr",string[]]} */
+		let x2=["arr",keys];
+		let store_index=this.save_to_data_item(x2,store_item);
+		if(store_index<0) return false;
+		store.new_data.push([k,x2]);
 		return this.save_to_store("keys",k,["arr",keys],store);
 	}
 	#data_store=new StoreData;
@@ -1829,19 +1835,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			await this.load_database();
 			this.is_ready=true;
 			for(const msg of this.stored_changes) {
-				const [,log_msg,x]=msg;
-				switch(x[0]) {
-					case "arr": {
-						console.log(`delayed:${log_msg}`,x[1]);
-						let idx=this.stored_changes.indexOf(msg);
-						this.stored_changes.splice(idx,1);
-					} break;
-					case "one": {
-						console.log(`delayed:${log_msg}`,x[1]);
-						let idx=this.stored_changes.indexOf(msg);
-						this.stored_changes.splice(idx,1);
-					} break;
+				switch(msg[0]) {
+					default: debugger; break;
+					case "string": {
+						this.save_string(msg[1],msg[2]);
+					}
 				}
+				let idx=this.stored_changes.indexOf(msg);
+				this.stored_changes.splice(idx,1);
 			}
 		});
 	}
@@ -2070,13 +2071,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @private @template T @arg {make_one_t<T>} x @arg {make_arr_t<T>|make_many_t<T>} target */
 	add_one_to_data_arr(x,target) {
 		if(target[0]==="arr") {if(!target[1].includes(x[1])) return target[1].push(x[1]);} else if(target[0]==="many") {
-			let res=target[1].find(([e,...r]) => !r.length&&e===x);
+			let res=target[1].find(([e,...r]) => !r.length&&e===x[1]);
 			if(!res) return target[1].push([x[1]]);
 		}
 		return -1;
 	}
 	/** @private @template T @arg {make_arr_t<T>} x @arg {[string,make_arr_t<T>|make_many_t<T>]} item */
-	add_many_to_data_item(x,item) {
+	add_many_to_data_item([xt,x],item) {
+		if(xt!=="arr") {debugger; return false;}
 		let target=item[1];
 		if(target[0]==="arr") {
 			let inner=target[1].map(e => [e]);
@@ -2091,12 +2093,11 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 			return true;
 		});
-		if(!found) return target[1].push(x[1]);
+		if(!found) return target[1].push(x);
 		return -1;
 	}
 	is_ready=false;
-	/** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
-	/** @type {[DB_NS_TypeStr,string,["one",string|number|boolean]|["arr",(string|number|boolean)[]]][]} */
+	/** @type {StoredChangesItem[]} */
 	stored_changes=[];
 	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {make_one_t<T>|['arr',T[]]} x @arg {StoreDescription<T>} store */
 	save_to_store(ns,k,x,store) {
@@ -2106,10 +2107,34 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		store.new_data.push([k,x]);
 		this.onDataChange();
 		if(!this.is_ready) {
-			this.stored_changes.push([ns,k,x]);
+			switch(store.content) {
+				default: debugger; break;
+				case "boolean": {
+					if(typeof x[1]!=="boolean") break;
+					if(x[0]==="arr") break;
+					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
+				} break;
+				case "string":
+				case "keys": {
+					if(typeof x[1]!=="string") break;
+					if(x[0]==="arr") break;
+					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
+				} break;
+				case "root_visual_element":
+				case "number": {
+					if(typeof x[1]!=="number") break;
+					if(x[0]==="arr") break;
+					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
+				} break;
+			}
 			return false;
 		} else {
-			console.log(`store [${ns}] [${k}] %o`,x);
+			switch(x[0]) {
+				case "arr": break;
+				case "one": {
+					console.log(`store [${ns}] [${k}] %o`,x[1]);
+				} break;
+			}
 		}
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return false;}

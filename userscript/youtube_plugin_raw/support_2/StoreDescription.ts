@@ -8,3 +8,11 @@ type StoreDescription<T>={
 type make_one_t<T>=["one",T];
 type make_arr_t<T>=["arr",T[]];
 type make_many_t<T>=["many",T[][]];
+type DB_NS_TypeStr="root_visual_element"|"boolean"|"string"|"number"|"keys";
+/** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
+type StoredChangesItem=
+	["number"|"root_visual_element",string,["one",number]|["arr",number[]]]
+	|["keys"|"string",string,["one",string]|["arr",string[]]]
+	|["boolean",string,["one",boolean]|["arr",boolean[]]]
+	;
+;
