@@ -821,6 +821,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "G_PR_TrackingObj:omit";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f16";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f3";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f6";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f8";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_Item";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateText";}

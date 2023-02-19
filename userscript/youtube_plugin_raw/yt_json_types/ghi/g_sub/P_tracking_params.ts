@@ -1,4 +1,10 @@
-type P_tracking_params={
+type P_tracking_params=|{
+	1: T_D32<330>;
+	2: T_D32<6180>;
+	3: T_D32<0>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	8: T_VW_Bigint<609041300728480271n>
+}|{
 	1: T_D32<0>;
 	2: T_D32<13188>;
 	4: VW_BinaryTimestamp;
