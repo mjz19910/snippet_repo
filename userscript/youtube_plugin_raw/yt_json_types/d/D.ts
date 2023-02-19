@@ -976,25 +976,19 @@ type D_Emoji={
 	searchTerms: ["rolling"];
 	image: D_Thumbnail;
 };
-type D_TextRun=|{
-	text: string;
-}|{
-	text: string;
-	strikethrough: true;
-}|{
-	text: string;
-	italics: true;
-}|{
+type D_VE3611_TextRun=|{
 	text: string;
 	navigationEndpoint: E_VE3611;
 }|{
 	text: `@${string}`;
 	navigationEndpoint: E_VE3611;
 	loggingDirectives: D_LoggingDirectives;
-}|{
+};
+type D_VE5754_TextRun={
 	text: "Watch Later";
 	navigationEndpoint: E_VE5754;
-}|{
+};
+type D_VE6827_TextRun={
 	text: "Original sound";
 	navigationEndpoint: E_VE6827;
 }|{
@@ -1006,12 +1000,31 @@ type D_TextRun=|{
 	bold: true;
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;
-}|{
-	text: "Get YouTube Premium",
+};
+type D_VE11487_TextRun={
+	text: "Get YouTube Premium";
 	navigationEndpoint: E_VE11487;
-}|{
+};
+type D_VE83769_TextRun={
 	text: "https://www.deviantart.com/zianu/art/...";
 	navigationEndpoint: E_VE83769_Url;
+};
+type D_VE_TextRun=
+	|D_VE3611_TextRun
+	|D_VE5754_TextRun
+	|D_VE6827_TextRun
+	|D_VE11487_TextRun
+	|D_VE83769_TextRun
+	;
+;
+type D_TextRun=|D_VE_TextRun|{
+	text: string;
+}|{
+	text: string;
+	strikethrough: true;
+}|{
+	text: string;
+	italics: true;
 }|{
 	text: "https://youtu.be/XdnRkI5EM-k";
 	navigationEndpoint: E_Watch;
