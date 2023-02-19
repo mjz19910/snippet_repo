@@ -3215,6 +3215,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_player_state_entity_key(u);
 			} break;
+			case "notification.record_interactions": {
+				/** @type {P_notification_record_interactions} */
+				let u=as_any(x);
+				this.P_notification_record_interactions(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3222,6 +3227,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_notification_record_interactions} x */
+	P_notification_record_interactions(x) {x;}
 	/** @public @arg {E_VE83769_Url} x */
 	E_VE83769_Url(x) {
 		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);

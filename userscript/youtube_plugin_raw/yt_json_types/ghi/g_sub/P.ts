@@ -348,3 +348,16 @@ type P_player_state_entity_key={
 	4: T_D32<323>,
 	5: T_D32<1>
 };
+type P_notification_record_interactions={
+	2: T_VW_2<{
+		1: T_D32<2>,
+		14: T_VW_2<{
+			1: T_VW_2<{
+				1: T_D32<1676825106923816>,
+				2: T_D32<6>
+			}>,
+			2: TV_Str<"sZ-4VzlYyLcGMIys">
+		}>
+	}>,
+	5: T_D32<183848276973>
+};

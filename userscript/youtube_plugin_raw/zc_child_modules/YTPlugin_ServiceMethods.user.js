@@ -1445,53 +1445,45 @@ class ServiceMethods extends ServiceData {
 	/** @arg {D_Menu_WithItems} x */
 	D_Menu_WithItems(x) {
 		const cf="D_Menu_WithItems";
-		if("flexibleItems" in x) {
-			const {trackingParams,topLevelButtons,items,accessibility,flexibleItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			this.z(items,x => {
-				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-				x;
-				debugger;
-			});
-			this.z(flexibleItems,this.R_MenuFlexibleItem);
-			this.z(topLevelButtons,x => {
-				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			return;
-		}
-		if("topLevelButtons" in x) {
-			const {trackingParams,topLevelButtons,items,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			this.z(items,x => {
-				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-				x;
-				debugger;
-			});
-			this.z(topLevelButtons,x => {
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			return;
-		}
-		if("items" in x&&"accessibility" in x) {
-			const {trackingParams,items,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			this.D_Accessibility(accessibility);
-			this.z(items,x => {
-				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-				debugger;
-			});
-			return;
-		}
-		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {trackingParams,items,...u}=this.s(cf,x);
 		this.trackingParams(trackingParams);
 		this.z(items,x => {
 			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 			debugger;
 		});
+		if("flexibleItems" in u) {
+			const {topLevelButtons,accessibility,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
+			this.z(topLevelButtons,x => {
+				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			this.D_Accessibility(accessibility);
+			this.z(flexibleItems,this.R_MenuFlexibleItem);
+			return;
+		}
+		if("topLevelButtons" in u) {
+			const {topLevelButtons,accessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			this.z(topLevelButtons,x => {
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			return;
+		}
+		if("loggingDirectives" in u) {
+			const {accessibility,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("accessibility" in u) {
+			const {accessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			return;
+		}
+		this.g(u);
 	}
 	/** @private @arg {D_Menu_WithTargetId["targetId"]} x */
 	D_Menu_TargetId(x) {
