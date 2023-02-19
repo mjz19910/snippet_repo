@@ -1828,6 +1828,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			this.#idle_id=null;
 			await this.load_database();
 			this.is_ready=true;
+			for(const msg of this.stored_log_messages) {
+				const [ns,log_msg,x]=msg;
+				console.log(`delayed [${ns}] ${log_msg}`,x);
+				let idx=this.stored_log_messages.indexOf(msg);
+				this.stored_log_messages.splice(idx,1);
+			}
 		});
 	}
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
