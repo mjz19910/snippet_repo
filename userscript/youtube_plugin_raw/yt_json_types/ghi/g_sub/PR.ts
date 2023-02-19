@@ -20,9 +20,10 @@ type PR_TrackingObj_3w8n={
 	3: T_D32<26>;
 	4: T_VW_2<V_BinaryTimestamp>;
 };
+type T_PArr<T,U=null>=["param_arr",T_Uint8Array<8>,U,T];
 type PR_TrackingObj_6w4w2n={
 	4: T_VW_2<V_BinaryTimestamp>;
-	6: ["param_arr",T_Uint8Array<8>,null,["string","external"]];
+	6: T_PArr<["string","external"]>;
 };
 type PR_TrackingObj_6w4w={
 	1: T_D32<411>;

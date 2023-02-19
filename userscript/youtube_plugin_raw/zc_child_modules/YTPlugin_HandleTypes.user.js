@@ -2411,6 +2411,11 @@ class HandleTypes extends ServiceMethods {
 		if(x[0]!=="child") {debugger; return null;}
 		return f.call(this,x[2]);
 	}
+	/** @protected @template T @template U @arg {T_PArr<T,U>} x @returns {[T,U]} */
+	T_PArr(x) {
+		if(x[0]!=="param_arr") {debugger; throw new Error("E");}
+		return [x[3],x[2]];
+	}
 	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16][2]} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
@@ -2505,16 +2510,21 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(6 in x) {
-			if(2 in x) {
+			if(4 in x&&!(2 in x)) {
+				const {4: f4,6: f6,...y}=this.s(cf,x); this.g(y);
+				let [[f6t,f6v],f6o]=this.T_PArr(f6);
+				if(f6t!=="string") debugger;
+				if(f6v!=="external") debugger;
+				if(f6o!==null) debugger;
+				return;
+			}
+			if(4 in x&&2 in x) {
 				const {1: [,f1],2: [,f2],4: [,,f4],6: [t1,[t2,f6]],...y}=this.s(cf,x); this.g(y);
 				this.save_number(`${cf}.w6.f1`,f1);
 				this.save_number(`${cf}.w6.f2`,f2);
 				this.V_BinaryTimestamp(f4);
 				this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}`);
 				this.save_string(`${cf}.w6.f6`,f6);
-				return;
-			}
-			if(4 in x) {
 				return;
 			}
 			debugger;
