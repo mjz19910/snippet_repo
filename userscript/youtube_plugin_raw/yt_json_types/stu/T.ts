@@ -6,6 +6,15 @@ type T_MakeNumFieldFmt<T,U extends keyof T,V extends number,W,L>=`f${T_Extract_D
 type T_ObjGetNumKey_1<T extends {},KM>={[U in keyof T as T_GetKeyMap<T,U,KM>]: U;};
 type T_ObjGetNumKey<T extends {},KM>=`${Extract<keyof T_ObjGetNumKey_1<T,KM>,string>}`;
 //#endregion
+type MonadFn<U,A extends any[]>=(...s: A) => U;
+type MonadRet<T>=Monad<T>|Monad<null>;
+type Monad<T>={
+	type: "s";
+	x: T;
+	c: HandleTypes;
+	t<U>(f: (x: NonNullable<T>) => U): MonadRet<U>;
+	t_cf<T_CF,U>(cf: T_CF,f: (cf: T_CF,x: NonNullable<T>) => U): MonadRet<U>;
+};
 
 //#region Template strings
 type T_MixPlaylistStr=`RD${string}`;

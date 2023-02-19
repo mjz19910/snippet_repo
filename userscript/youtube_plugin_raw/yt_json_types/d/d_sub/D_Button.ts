@@ -13,7 +13,7 @@ type D_Button_style=
 	;
 ;
 type W_Some_r=Some_A<W_Some_s>;
-type W_Some_f=Some<W_Some_s>;
+type W_Some_f=T_Str_Some<W_Some_s>;
 type W_Some_s=`https://www.youtube.com/channel/UC${string}/join`|`https://www.youtube.com/${string}`;
 type W_Some_e="https://www.youtube.com/channel/UC";
 type Some_t1<S extends string>=[T_Split<S,""> extends [any,...infer L]? L["length"]:0];
@@ -32,7 +32,7 @@ type DU_UrlParams={ai:string;sigh:string;cid:string;ad_mt:"[AD_MT]";acvw: "[VIEW
 
 
 
-type Some<T extends string>=Some_t<T>[0] extends 0? "":T extends `${infer S}${infer E}`? `${S}${Some<E>}`:T;
+type T_Str_Some<T extends string>=Some_t<T>[0] extends 0? "":T extends `${infer S}${infer E}`? `${S}${T_Str_Some<E>}`:T;
 type D_Button_targetId=
 	|"sponsorships-button"
 	|"create-clip-button-action-bar"
