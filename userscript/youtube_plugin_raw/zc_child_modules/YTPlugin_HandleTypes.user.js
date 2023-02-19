@@ -2492,6 +2492,7 @@ class HandleTypes extends ServiceMethods {
 			const [,[a,...y1]]=x; this.ceq(y1.length,0);
 			const [t]=a;
 			switch(t) {
+				default: debugger; break;
 				case "child": {
 					const [,,b]=a;
 					{
@@ -2517,7 +2518,6 @@ class HandleTypes extends ServiceMethods {
 					}
 				} break;
 			}
-			x; debugger;
 		};
 		// this.T_VW_Bigint(a,this.a_primitive_bigint);// {9:any}
 		let m2=[];
