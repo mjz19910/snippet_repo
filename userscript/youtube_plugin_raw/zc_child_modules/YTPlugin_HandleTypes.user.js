@@ -2412,11 +2412,11 @@ class HandleTypes extends ServiceMethods {
 		return f.call(this,x[2]);
 	}
 	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16]} x */
-	RB_TrackingObj_f16(x) {x;}
+	G_PR_TrackingObj_f16(x) {x;}
 	/** @protected @arg {Extract<G_PR_TrackingObj,{1:any}>} x */
-	RB_TrackingObj_t1(x) {
-		const cf="RB_TrackingObj_t1";
-		this.codegen_typedef_bin("RB_TrackingObj",x);
+	G_PR_TrackingObj_t1(x) {
+		const cf="G_PR_TrackingObj_t1";
+		this.codegen_typedef_bin("G_PR_TrackingObj",x);
 		{
 			const {1: f1}=this.s(cf,x);
 			if(f1[0]!=="data32") {debugger; return;}
@@ -2461,7 +2461,7 @@ class HandleTypes extends ServiceMethods {
 			this.save_number(`${cf}.n3.f1`,f1);
 			this.save_number(`${cf}.n3.f2`,f2);
 			this.V_BinaryTimestamp(f4);
-			this.RB_TrackingObj_f16(f16);
+			this.G_PR_TrackingObj_f16(f16);
 			return;
 		}
 		if(9 in x) {
@@ -2522,15 +2522,15 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @protected @arg {G_PR_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
-	RB_TrackingObj(x,flags) {
-		const cf="RB_TrackingObj";
-		if(1 in x) return this.RB_TrackingObj_t1(x);
+	G_PR_TrackingObj(x,flags) {
+		const cf="G_PR_TrackingObj";
+		if(1 in x) return this.G_PR_TrackingObj_t1(x);
 		switch(flags.type) {
 			default: debugger; break;
 			case "click_tracking": break;
 			case "tracking": break;
 		}
-		this.codegen_typedef_bin("RB_TrackingObj",x);
+		this.codegen_typedef_bin("G_PR_TrackingObj",x);
 		const {4: f4,...u}=this.s(cf,x);
 		// this.V_BinaryTimestamp(f4);
 		if(6 in u) {
@@ -2581,12 +2581,12 @@ class HandleTypes extends ServiceMethods {
 			case "params.click_tracking": {
 				/** @type {G_PR_TrackingObj} */
 				let u=as_any(x);
-				this.RB_TrackingObj(u,{type: "click_tracking"});
+				this.G_PR_TrackingObj(u,{type: "click_tracking"});
 			} break;
 			case "params.tracking": {
 				/** @type {P_tracking_params} */
 				let u=as_any(x);
-				this.RB_TrackingObj(u,{type: "tracking"});
+				this.G_PR_TrackingObj(u,{type: "tracking"});
 			} break;
 			case "reel.player_params": {
 				/** @type {P_reel_player_params} */
