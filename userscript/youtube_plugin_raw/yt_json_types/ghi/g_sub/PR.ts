@@ -1,4 +1,4 @@
-type PR_TrackingObj_w16n3={
+type PR_TrackingObj_16wn3={
 	1: T_D32<0>;
 	2: T_D32<13188>;
 	4: T_VW_2<V_BinaryTimestamp>;
@@ -10,13 +10,13 @@ type PR_TrackingObj_w16n3={
 	}>;
 };
 
-type PR_TrackingObj_n16n3={
+type PR_TrackingObj_16n3n={
 	1: T_D32<0>;
 	2: T_D32<13188>;
 	4: T_VW_2<V_BinaryTimestamp>;
 };
-type PR_TrackingObj_w4={4: T_VW_2<V_BinaryTimestamp>;};
-type PR_TrackingObj_w3={
+type PR_TrackingObj_4w={4: T_VW_2<V_BinaryTimestamp>;};
+type PR_TrackingObj_3w={
 	1: T_D32<416>;
 	2: T_D32<76764>;
 	3: T_D32<26>;
@@ -28,17 +28,17 @@ type PR_TrackingObj_w3={
 	4: T_VW_2<V_BinaryTimestamp>;
 	8: T_VW_Bigint<101551873087600536n>;
 };
-type PR_TrackingObj_w6n1={
+type PR_TrackingObj_6w1n={
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VW_R<"string","external">;
 };
-type PR_TrackingObj_w6w2={
+type PR_TrackingObj_6w2w={
 	1: T_D32<411>;
 	2: T_D32<5531>;
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VSR<"watch">;
 };
-type PR_TrackingObj_w19w11={
+type PR_TrackingObj_19w11w={
 	1: T_D32<416>;
 	2: T_D32<6236>;
 	3?: T_D32<10>;
@@ -52,7 +52,7 @@ type PR_TrackingObj_w19w11={
 		3: T_D32<158>;
 	}>;
 };
-type PR_TrackingObj_w6w3={
+type PR_TrackingObj_6w3w={
 	1: T_D32<332>;
 	2: T_D32<6180>;
 	3: T_D32<0>;
@@ -60,14 +60,14 @@ type PR_TrackingObj_w6w3={
 	6: T_VSR<"related">;
 	7?: T_VSR<"bdBCMs1uuj0e1L0L">;
 };
-type PR_TrackingObj_w9={
+type PR_TrackingObj_9w={
 	1: T_D32<370>;
 	2: T_D32<21965>;
 	3: T_D32<1>;
 	4: T_VW_2<V_BinaryTimestamp>;
 	9: T_VW_Bigint<bigint>;
 };
-type PR_TrackingObj_w19n3={
+type PR_TrackingObj_19wn3={
 	1: T_D32<0>;
 	2: T_D32<13187>;
 	4: T_VW_2<V_BinaryTimestamp>;
@@ -78,7 +78,7 @@ type PR_TrackingObj_w19n3={
 		2: T_D32<3832>;
 	}>;
 };
-type PR_TrackingObj_w19w3={
+type PR_TrackingObj_19w3w={
 	1: T_D32<332>;
 	2: T_D32<6180>;
 	3: T_D32<0>;
