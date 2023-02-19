@@ -1839,7 +1839,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					default: debugger; break;
 					case "string": {
 						this.save_string(msg[1],msg[2]);
-					}
+					} break;
+					case "number": {
+						this.save_number(msg[1],msg[2]);
+					} break;
 				}
 				let idx=this.stored_changes.indexOf(msg);
 				this.stored_changes.splice(idx,1);
