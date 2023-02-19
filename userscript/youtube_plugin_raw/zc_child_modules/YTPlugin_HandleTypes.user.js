@@ -1209,7 +1209,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {object} x @returns {string} */
 	gen_typedef_bin_json(s,x) {
-		console.log('gen json',x);
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,s),"\t");
 		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
@@ -2447,15 +2446,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {G_PR_TrackingObj} x */
 	G_PR_TrackingObj_1(x) {
-		const cf="G_PR_TrackingObj";
+		const cf="H_TrackingObj";
 		const {1: {}={},2: {}={},3: f3,4: {},6: f6,7: {}={},8: f8,9: {}={},11: {}={},16: {}={},19: {}={},...y}=x; this.g(y);
 		this.t(f3,x => this.TK_D32(cf,x,"f3"));
-		this.t_cf(cf,f6,this.H_TrackingObj_f6);
+		this.t_cf(`${cf}_f6`,f6,this.H_TrackingObj_f6);
 		f8;
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
-	/** @arg {"G_PR_TrackingObj"} cf @arg {T_D32<number>} x @arg {H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
+	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
@@ -2477,7 +2476,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.codegen_typedef_bin(`${cf}:omit`,y,false);
 	}
-	/** @arg {"G_PR_TrackingObj"} cf @arg {P_RT_TK_f6} x */
+	/** @arg {"H_TrackingObj_f6"} cf @arg {P_RT_TK_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="param_arr") debugger;
 		const [,[a,...y1]]=x; this.ceq(y1.length,0);
@@ -2510,7 +2509,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @arg {"G_PR_TrackingObj"} cf @arg {{tag: P_RT_TK_f1,id: P_RT_TK_f2;}} x */
+	/** @arg {"H_TrackingObj"} cf @arg {{tag: P_RT_TK_f1,id: P_RT_TK_f2;}} x */
 	P_Tag_TrackingObj(cf,x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");}
 	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
 	P_Typed_TrackingObj(x) {
