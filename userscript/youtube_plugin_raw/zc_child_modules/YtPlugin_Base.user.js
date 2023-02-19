@@ -63,6 +63,8 @@ const path_map={
 	["./YTPlugin_IndexedDB.user"]: ["mod","IndexedDBService"],
 	/** @type {["mod","ParserService"]} */
 	["./YTPlugin_Parser_Service.user"]: ["mod","ParserService"],
+	/** @type {["sys","moment"]} */
+	["moment"]: ["sys","moment"],
 };
 /** @template {keyof typeof path_map} T @arg {T} x */
 function require(x) {
@@ -73,6 +75,9 @@ function require(x) {
 	if(loc[0]==="raw") {
 		let imp=M[loc[1]];
 		return imp;
+	}
+	if(loc[0]==="sys") {
+		return window[loc[1]];
 	}
 	let imp=M[`${loc[0]}$${loc[1]}`];
 	if(!imp) {debugger; throw new Error("missing require path map");}
