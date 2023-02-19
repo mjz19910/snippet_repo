@@ -87,9 +87,9 @@ type P_remove_like_params={
 	5: T_VW_2<V_ShortTimestamp>;
 };
 type P_dislike_params={
-	1: {
-		1: T_VSR<D_VideoId>;
-	};
+	1: T_VW_2<{
+		1: T_VSR<"waVYW4mmfWk">;
+	}>;
 	2: T_D32<0>;
 	4: T_VW_2<V_ShortTimestamp>;
 };
