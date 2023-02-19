@@ -3231,7 +3231,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {P_player_state_entity_key} x */
-	P_player_state_entity_key(x) {x;this.m;}
+	P_player_state_entity_key(x) {x;}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {x;}
 	//#endregion binary

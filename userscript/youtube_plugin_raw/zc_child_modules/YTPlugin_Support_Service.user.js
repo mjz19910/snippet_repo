@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last, ApiBase}=require("./YtPlugin_Base.user");
+const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase, as_any}=require("./YtPlugin_Base.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
 const __module_name__="mod$SupportService";
@@ -631,15 +631,46 @@ class Support_RS_Player extends ServiceMethods {
 	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
 	/** @private @arg {R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	/**
+	 * @template T2,U1
+	 * @template {(x: NonNullable<T2>) => U1} FuncType
+	 * @template {((x: NonNullable<any>) => any)[]} ArrType
+	 * @arg {FuncType} func @arg {ArrType} arr
+	 */
+	mc(func,arr=as_any([])) {
+		let t=this;
+		return {
+			arr: [...arr,func],
+			/** @template {(x: NonNullable<any>) => any} U @arg {U} fn */
+			mc(fn) {
+				return t.mc(fn,this.arr);
+			},
+			/** @template T @template U @arg {T} v @returns {["T",Monad<T>]|["U",Monad<U>]|["V",Monad<MonadRet<U>>]} */
+			r(v) {
+				let arr=this.arr;
+				let m=t.m(v);
+				if(arr.length>0) {
+					let f=arr.shift();
+					if(!f) return ["T",m];
+					let q=m.t(f);
+					let rr=this.r(q);
+					switch(rr[0]) {
+						case "T": return ["V",rr[1]];
+						case "U": return rr;
+						case "V": return rr;
+					}
+				}
+				return ["T",m];
+			},
+		};
+	}
 	/** @private @arg {D_CueRangeItem} x */
 	D_CueRangeItem(x) {
 		const cf="D_CueRangeItem";
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
+		this.mc(this.parse_number_template);
 		this.m(startCardActiveMs).t(this.parse_number_template).t(this.a_primitive_num);
-		this.a_primitive_num(this.parse_number_template(startCardActiveMs));
-		this.a_primitive_num(this.parse_number_template(endCardActiveMs));
-		if(startCardActiveMs!=="0") debugger;
-		if(endCardActiveMs!=="5000") debugger;
+		this.m(endCardActiveMs).t(this.parse_number_template).t(this.a_primitive_num);
 		if(teaserDurationMs!=="6000") debugger;
 		if(iconAfterTeaserMs!=="5000") debugger;
 	}
