@@ -1,5 +1,3 @@
-import {ServiceLoader as ServiceLoader_} from "./zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js";
-
 export {};
 declare global {
 	interface Window {
@@ -18,5 +16,4 @@ declare global {
 	}
 	var required: typeof import("./zc_child_modules/YtPlugin_Base.user.js").required;
 	var require: typeof import("./zc_child_modules/YtPlugin_Base.user.js").require;
-	var ServiceLoader: typeof ServiceLoader;
 }
