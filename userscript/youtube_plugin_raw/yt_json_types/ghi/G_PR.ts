@@ -1,26 +1,23 @@
-type G_PR_TrackingObj=
-	|G_PR_TrackingObj_3
-	|G_PR_TrackingObj_4
-	|G_PR_TrackingObj_6
-	|PR_TrackingObj_7w
-	|PR_TrackingObj_9w
-	|G_PR_TrackingObj_16
-	|G_PR_TrackingObj_19
-	|{
-		1: T_D32<0>,
-		2: T_D32<13187>,
-		4: T_VW_2<V_BinaryTimestamp>,
-		6: T_VSR<"autoplay">,
-		9: T_VW_Bigint<4348958335366330930n>,
-		19: T_VW_2<{
-			1: T_D32<16>,
-			2: T_D32<3832>;
-		}>;
-	}
-	;
-;
-type G_PR_TrackingObj_3=PR_TrackingObj_3w8n|PR_TrackingObj_3w8w;
-type G_PR_TrackingObj_4=PR_TrackingObj_4w2n|PR_TrackingObj_4w2w;
-type G_PR_TrackingObj_6=PR_TrackingObj_6w4w2n|PR_TrackingObj_6w4w|PR_TrackingObj_6w3w;
-type G_PR_TrackingObj_16=PR_TrackingObj_16w3n;
-type G_PR_TrackingObj_19=PR_TrackingObj_19w3n|PR_TrackingObj_19w3w|PR_TrackingObj_19w11w;
+type G_PR_TrackingObj=G_PR_TrackingObj_4;
+type D_TrackingObj_f16={
+	1: T_D32<41>;
+	2: T_D32<6075>;
+	3: T_D32<0>;
+	4: T_VW_2<V_BinaryTimestamp>;
+};
+type D_TrackingObj_f19={
+	1: T_D32<16>;
+	2: T_D32<3832>;
+};
+type G_PR_TrackingObj_4={
+	1?: T_D32<0>;
+	2?: T_D32<13188>;
+	3?: T_D32<0>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	6?: T_VSR<"external">;
+	8?: T_VW_Bigint<101551873087600536n>;
+	9?: T_VW_Bigint<bigint>;
+	11?: T_VSR<"FEwhat_to_watch">;
+	16?: T_VW_2<D_TrackingObj_f16>;
+	19?: T_VW_2<D_TrackingObj_f19>;
+};

@@ -2053,7 +2053,7 @@ class ApiBase {
 		let ret_val=as_any;
 		return ret_val;
 	}
-	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
+	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {debugger;}
 		let rq=Object.keys(obj).map(v => {

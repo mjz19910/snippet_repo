@@ -9,3 +9,4 @@ type T_VW_Bigint<T>=T_PArr<["data64",number[],T]>;
 type T_FD32<T>=T_PArr<["data_fixed32",T]>;
 type T_FD64<T extends bigint>=T_PArr<["data_fixed64",T]>;
 type T_D32<T extends number>=T_PArr<["data32",T]>;
+type T_Uint8Array<_len extends number>=Uint8Array;

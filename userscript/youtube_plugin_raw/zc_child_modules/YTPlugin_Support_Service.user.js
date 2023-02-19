@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last}=require("./YtPlugin_Base.user");
+const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last, ApiBase}=require("./YtPlugin_Base.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
 const __module_name__="mod$SupportService";
@@ -2279,9 +2279,26 @@ class Support_VE37414 extends ServiceMethods {
 		return `VE${rootVe}`;
 	}
 }
+/** @template {{}} T */
+class OnePropertyObjArray {
+	/** @arg {ApiBase} cls */
+	constructor(cls) {
+		this.cls=cls;
+	}
+	/** @type {T[]} */
+	arr=[];
+	/** @arg {T} v */
+	push(v) {
+		if(this.cls.get_keys_of(v).length!==1) debugger;
+		this.arr.push(v);
+	}
+	get length() {return this.arr.length;}
+	[Symbol.iterator]() {return this.arr[Symbol.iterator]();}
+}
 export_(exports => {
 	exports.TypedefGenerator=TypedefGenerator;
 	exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;
+	exports.OnePropertyObjArray=OnePropertyObjArray;
 });
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
