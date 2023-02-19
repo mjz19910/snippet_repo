@@ -2518,10 +2518,23 @@ class HandleTypes extends ServiceMethods {
 			if(u3&&8 in u3) {
 				return;
 			}
-			if(u3&&7 in u3) {
-				let {7: a}=u3; a;
+			if(u3&&6 in u3) {
+				let {6: a}=u3; a;
 				return;
 			}
+			if(u3&&4 in u3) {
+				let {4: a,...y}=u3; a;
+				u3=y;
+			}
+			if(u3&&3 in u3) {
+				let {3: a,...y}=u3; a;
+				u3=y;
+			}
+			if(u3&&2 in u3) {
+				let {2: a,...y}=u3; a;
+				u3=y;
+			}
+			if(u3!==null) return this.g(u3);
 			u3;
 			return;
 		}
