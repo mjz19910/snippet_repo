@@ -1,4 +1,4 @@
-// cSpell:ignoreRegExp /"\duald"/
+// cSpell:ignoreRegExp /"\dualdn?"/
 type G_Gv_0=
 	|"5uald"
 	|"9gv7e"
@@ -13,34 +13,44 @@ type G_Gv_0=
 	|"p5qs7"
 	;
 ;
+// cSpell:ignoreRegExp /rr1.sn-5ualdn[lsz][0-9a-z].googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	"rr1.sn-5ualdnl7.googlevideo.com.",
-	"rr1.sn-9gv7enls.googlevideo.com.",
-	"rr1.sn-9gv7ene6.googlevideo.com.",
-	"rr1.sn-9gv7ened.googlevideo.com.",
-	"rr1.sn-9gv7enek.googlevideo.com.",
-	"rr1.sn-9gv7lnes.googlevideo.com.",
-	"rr1.sn-n8v7znlk.googlevideo.com.",
-	"rr1.sn-n8v7znsd.googlevideo.com.",
+	// dig results
+	`
+
+	`
 ];
+// gen_3
+type gen_g3_t2t1<T,U extends any[]>=gen_g3_t2<T,gen_g3_t2<"n",U>>;
+// gen_3_arr
+type gen_g3_raw<T,U>=["gen_3",T,["raw",U]];
+// gen_3_arr
+type gen_g3_t2<U,T extends any[]>=["gen_3",U,["arr",T]];
+// gen_2_raw
+type gen_g2_t1<T>=["gen_2",["raw",T]];
+// gen_3
+type gen_g3_or<T,U>=["gen_3",T,["or",U]];
+// gen_3_gen_2_raw
+type gen_g3_a3<T,U,V>=["gen_3",T,["gen2",U,V]];
+type seq_t3<T,U,V>=["seq",T,U,V];
+type gen_a3_t2<T extends [string,string],U,V extends [string,string]>=[["seq",T[0],U,V[0]],["seq",T[1],U,V[1]]];
+type gen_a2_t2<T,U extends [string,string]>=[["seq",T,U[0]],["seq",T,U[1]]];
 type PT_TypeS=[
-	["gen",null,["raw",["gen2","9gv7",["l","e"]]]],
-	["gen",null,["raw","a5mek"]],
-	["gen",null,["raw","hp57k"]],
-	["gen","n",["arr",[
-		["gen","4",["gen2","v7","s"]],
-		["gen","8",["gen2","v7","z"]],
-		["gen","x5",["arr",[
-			["or",["s7","7y"]]
-		]]],
-	]]],
-	["gen","o",["raw","097z"]],
-	["gen","p",["arr",[
-		["gen","p5q",["or",["ls","s7"]]]
-	]]],
+	gen_g2_t1<"5uald">,
+	gen_g3_t2<"9gv7",["l","e"]>,
+	gen_g2_t1<"a5mek">,
+	gen_g2_t1<"hp57k">,
+	gen_g3_t2<"n",[
+		...gen_a3_t2<["4","8"],"v7",["s","z"]>,
+		...gen_a2_t2<"x5",["s7","7y"]>,
+	]>,
+	gen_g3_raw<"o","097z">,
+	gen_g3_t2<"p",[gen_g3_or<"p5q",["ls","s7"]>]>,
 ];
 type PT_TypeArr=[
+	["5uald",["l7","ll","lr","ls","s6","sd","se","sk","sl","sr","ss","sy","sz","z7","ze"]],// hit
 	["9gv7l",["es","ez","le","s7"]],// hit
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],// hit
