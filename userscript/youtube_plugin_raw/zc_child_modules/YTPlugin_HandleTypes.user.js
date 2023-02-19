@@ -2902,20 +2902,25 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {
 		const cf="P_aadc_guidelines_state_entity_key";
-		const {2: a,...y}=this.s(cf,x); this.g(y);
+		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.save_string(`${cf}.a`,x));
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
-		const {2: a,...y}=this.s(cf,x); this.g(y);
+		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.videoId(x));
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
-		const {3: a,...y}=this.s(cf,x); this.g(y);
-		a; debugger;
+		const {3: a,...y}=this.s(cf,x);
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
@@ -2938,7 +2943,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {3: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
 	}
@@ -2958,27 +2963,29 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
-		const {1: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
-		const {94: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
-		const {...y}=this.s(cf,x);
+		const {2: a,...y}=this.s(cf,x);
 		this.t(this.T_VSR(a),x => this.channelId(x));
+		let k=this.get_keys_of_2(y)[0];
+		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
-		const {1: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
 	}
@@ -3100,7 +3107,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data";
-		const {1: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
 	}
@@ -3113,14 +3120,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
-		const {4: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
-		const {1: a}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
 		let k=this.get_keys_of_2(y)[0];
 		console.log(`[${cf}.next_key]`,k);
 	}
