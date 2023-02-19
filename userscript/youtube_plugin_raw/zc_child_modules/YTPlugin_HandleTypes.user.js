@@ -1001,8 +1001,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @api @public @arg {JsonReplacerState} s @arg {string} k @arg {object|null} x @returns {string|object|null} */
-	typedef_json_replace_bin_obj(s,k,x) {
+	/** @api @public @arg {JsonReplacerState} s @arg {object|null} x @returns {string|object|null} */
+	typedef_json_replace_bin_obj(s,x) {
 		if(x===null) return x;
 		if(x instanceof Array) {
 			if(x.length===1) {
@@ -1113,18 +1113,22 @@ class HandleTypes extends ServiceMethods {
 				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 			}; v_param_2_D64;
 			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj_2 | null, raw_value: V_RawValue]} x */
-			let v_param_2_raw_child=(x) => {
+			let v_param_rc_def=(x) => {
 				let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
 				let obj_json;
+				let raw_json="{}";
 				if(x[2]===null) {
 					obj_json="null";
 				} else {
 					obj_json=this.gen_typedef_bin_json(s,x[1]);
 				}
+				return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
+			};
+			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj_2 | null, raw_value: V_RawValue]} x */
+			let v_param_2_raw_child=(x) => {
 				let x1=x[3];
-				let raw_json="{}";
 				switch(x1[0]) {
-					default: return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`; break;
+					default: return v_param_rc_def(x);
 					case "string": return `TYPE::T_VSR<"${x1[1]}">`;
 				}
 			};
@@ -1143,12 +1147,14 @@ class HandleTypes extends ServiceMethods {
 					if(ca.length===1) {
 						let cv=ca[0];
 						switch(cv[0]) {
-							default: debugger; break;
+							default: cv[0]===""; debugger; break;
 							case "child": return v_param_2_child(cv);
 							case "data32": return v_param_2_D32(cv);
 							case "data64": return v_param_2_D64(cv);
 							case "raw_child": return v_param_2_raw_child(cv);
-							case "data_fixed64": return cv;
+							case "data_fixed32": case "data_fixed64":
+							case "struct": case "raw": case "group":
+							case "error": case "info": return cv;
 						}
 						return x3;
 					}
@@ -1200,7 +1206,7 @@ class HandleTypes extends ServiceMethods {
 			case "undefined": return x;
 			case "symbol": return x;
 			case "string": return x;
-			case "object": return this.typedef_json_replace_bin_obj(s,k,x);
+			case "object": return this.typedef_json_replace_bin_obj(s,x);
 			case "number": return x;
 			case "function": return x;
 			case "boolean": return x;
