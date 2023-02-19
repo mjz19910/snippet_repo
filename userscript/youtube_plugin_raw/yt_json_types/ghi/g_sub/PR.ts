@@ -3,7 +3,10 @@ type PR_TrackingObj_4w2w={
 	2: T_D32<13188>;
 	4: T_VW_2<V_BinaryTimestamp>;
 };
-type PR_TrackingObj_4w2n={4: T_VW_2<V_BinaryTimestamp>;};
+type T_Uint8Array<_len extends number>=Uint8Array;
+type PR_TrackingObj_4w2n={
+	4: T_VW_2<V_BinaryTimestamp>;
+};
 type PR_TrackingObj_3w8w={
 	1: T_D32<332>;
 	2: T_D32<6180>;
@@ -17,11 +20,11 @@ type PR_TrackingObj_3w8n={
 	3: T_D32<26>;
 	4: T_VW_2<V_BinaryTimestamp>;
 };
-type PR_TrackingObj_6w1n={
+type PR_TrackingObj_6w4w2n={
 	4: T_VW_2<V_BinaryTimestamp>;
-	6: T_VW_R<"string","external">;
+	6: ["param_arr",T_Uint8Array<8>,null,["string","external"]];
 };
-type PR_TrackingObj_6w2w={
+type PR_TrackingObj_6w4w={
 	1: T_D32<411>;
 	2: T_D32<5531>;
 	4: T_VW_2<V_BinaryTimestamp>;
