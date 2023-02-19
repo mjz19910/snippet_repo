@@ -1139,16 +1139,17 @@ class HandleTypes extends ServiceMethods {
 				let ca=x3[1];
 				if(typeof ca==='object') {
 					if(ca.length===1) {
-						let cv=ca[0];
-						switch(cv[0]) {
-							default: cv[0]===""; debugger; break;
-							case "child": return v_param_2_child(cv);
-							case "data32": return v_param_2_D32(cv);
-							case "data64": return v_param_2_D64(cv);
-							case "raw_child": return v_param_2_raw_child(cv);
-							case "data_fixed32": case "data_fixed64":
+						let x1=ca[0];
+						switch(x1[0]) {
+							default: x1[0]===""; debugger; break;
+							case "child": return v_param_2_child(x1);
+							case "data32": return v_param_2_D32(x1);
+							case "data64": return v_param_2_D64(x1);
+							case "raw_child": return v_param_2_raw_child(x1);
+							case "data_fixed32": return `TYPE::T_FD32<${x1[1]}>`;
+							case "data_fixed64": return `TYPE::T_FD64<${x1[1]}n>`;
 							case "struct": case "raw": case "group":
-							case "error": case "info": return cv;
+							case "error": case "info": return x1;
 						}
 						return x3;
 					}
