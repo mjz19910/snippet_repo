@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any}=require("./YtPlugin_Base.user");
+const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState}=require("./YtPlugin_Base.user");
 const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 const {TypedefGenerator}=require("./YTPlugin_Support_Service.user");
@@ -45,20 +45,6 @@ const generate_typedef={value: null};
 function raw_template(x) {
 	if(x.raw.length>1) {debugger;}
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
-}
-class JsonReplacerState {
-	/** @constructor @public @arg {string} gen_name @arg {string[]} keys @arg {boolean} is_root */
-	constructor(gen_name,keys,is_root) {
-		this.object_count=0;
-		this.gen_name=gen_name;
-		this.key_keep_arr=keys;
-		this.is_root=is_root;
-		this.k1="";
-		/** @api @public @type {unknown[]} */
-		this.object_store=[];
-		/** @api @public @type {Map<unknown,[number,string]>} */
-		this.parent_map=new Map;
-	}
 }
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {}
@@ -1017,25 +1003,26 @@ class HandleTypes extends ServiceMethods {
 	typedef_cache=[];
 	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {unknown} obj @returns {unknown} */
 	typedef_json_replace_bin(s,key,obj) {
+		s.next_key(key,obj);
 		let to=typeof obj;
 		switch(to) {
 			default: {
 				throw new Error("New type from typeof obj");
 			}
 			case "undefined": {
-				if(typeof obj!=="undefined") break;
+				if(typeof obj!=="undefined") throw new Error("Unreachable");
 				return obj;
 			}
 			case "symbol": {
-				if(typeof obj!=="symbol") break;
+				if(typeof obj!=="symbol") throw new Error("Unreachable");
 				return obj;
 			}
 			case "string": {
-				if(typeof obj!=="string") break;
+				if(typeof obj!=="string") throw new Error("Unreachable");
 				return obj;
 			}
 			case "object": {
-				if(typeof obj!=="object") break;
+				if(typeof obj!=="object") throw new Error("Unreachable");
 				if(obj instanceof Array) {
 					if(obj.length===1) {
 						if(typeof obj[0]==="number") {
@@ -1173,16 +1160,16 @@ class HandleTypes extends ServiceMethods {
 				return obj;
 			}
 			case "number": {
-				if(typeof obj!=="number") break;
+				if(typeof obj!=="number") throw new Error("Unreachable");
 				return obj;
 			}
 			case "function": {
-				if(typeof obj!=="function") break;
+				if(typeof obj!=="function") throw new Error("Unreachable");
 				debugger;
 				return obj;
 			}
 			case "boolean": {
-				if(typeof obj!=="boolean") break;
+				if(typeof obj!=="boolean") throw new Error("Unreachable");
 				return obj;
 			}
 			case "bigint": {
@@ -1190,15 +1177,8 @@ class HandleTypes extends ServiceMethods {
 				return `TYPE::V_Bigint<${obj}n>`;
 			}
 		}
-		if(obj===null||obj===void 0) return obj;
-		if(typeof obj==="function") {
-			debugger;
-			return obj;
-		}
-		if(typeof obj==="number") return obj;
-		if(typeof obj==="symbol") return obj;
-		if(typeof obj==="string") return this.cg.typedef_json_replace_string(obj,key);
-		if(typeof obj!=="object") return obj;
+		debugger;
+		return obj;
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {object} x @returns {string} */
 	gen_typedef_bin_json(s,x) {
@@ -1224,10 +1204,14 @@ class HandleTypes extends ServiceMethods {
 	gen_typedef_bin(s,cf,x) {
 		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)};\n`;
 	}
+	text_decoder=new TextDecoder();
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
 	codegen_typedef_bin(cf,x,do_break=true) {
 		/** @private @type {JsonReplacerState} */
-		let s=new JsonReplacerState(cf,[],true);
+		let s=new JsonReplacerState({
+			text_decoder: this.text_decoder,
+			cf,keys: [],is_root: true
+		});
 		let res_str=this.gen_typedef_bin(s,cf,x);
 		if(res_str) {
 			if(!this.typedef_cache.includes(res_str)) {

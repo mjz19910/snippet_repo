@@ -228,7 +228,10 @@ class CodegenService extends BaseService {
 		let o2=xv[k];
 		if(o2==null) return;
 		let keys=Object.keys(x).concat(Object.keys(o2));
-		let s=new JsonReplacerState(cf,keys,true);
+		let s=new JsonReplacerState({
+			text_decoder: this.text_decoder,
+			cf,keys,is_root: true,
+		});
 		let new_typedef=this.codegen_typedef_base(s,cf,x);
 		if(ret_val) return new_typedef;
 		if(new_typedef) {
@@ -299,7 +302,10 @@ class CodegenService extends BaseService {
 	/** @api @public @arg {string} cf @arg {object} x1 */
 	get_codegen_name_obj(cf,x1) {
 		let keys=this.get_keys_of(x1);
-		let s=new JsonReplacerState(cf,keys,true);
+		let s=new JsonReplacerState({
+			text_decoder: this.text_decoder,
+			cf,keys,is_root: true,
+		});
 		/** @type {{}} */
 		let x2=x1;
 		/** @type {{[x:string]:unknown;}} */
@@ -618,7 +624,7 @@ class CodegenService extends BaseService {
 		if(k1==="storyboards") return "TYPE::G_PlayerStoryboards";
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(s,r,x,keys);
-		if(s.key_keep_arr.includes(s.k1)) return x;
+		if(s.key_keep_arr.includes(s.cur_key)) return x;
 		{
 			/** @type {Partial<Popup_ConfirmDialog>} */
 			let xt=x;
@@ -633,9 +639,10 @@ class CodegenService extends BaseService {
 		{debugger;}
 		return null;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} o */
-	typedef_json_replacer(state,k1,o) {
-		state.k1=k1;
+	/** @private @arg {JsonReplacerState} s @arg {string} k1 @arg {unknown} o */
+	typedef_json_replacer(s,k1,o) {
+		s.cur_key=k1;
+		s.next_key(k1,o);
 		if(o===null||o===void 0) return o;
 		if(typeof o==="bigint") return `TYPE::V_Bigint<${o}n>`;
 		if(typeof o==="boolean") return o;
@@ -646,11 +653,11 @@ class CodegenService extends BaseService {
 		if(typeof o!=="object") return o;
 		/** @private @type {{[U in string]?:unknown}} */
 		let x=o;
-		let res_type=this.typedef_json_replace_object(state,x,k1);
+		let res_type=this.typedef_json_replace_object(s,x,k1);
 		if(res_type!==null) return res_type;
-		if(state.key_keep_arr.includes(k1)) return x;
-		state.object_count++;
-		if(state.object_count<3) return x;
+		if(s.key_keep_arr.includes(k1)) return x;
+		s.object_count++;
+		if(s.object_count<3) return x;
 		return {};
 	}
 	/** @private @arg {JsonReplacerState} s @arg {string} cf @arg {object} x */

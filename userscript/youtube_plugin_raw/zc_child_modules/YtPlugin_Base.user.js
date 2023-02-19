@@ -3096,15 +3096,20 @@ class ParentWalker {
 	}
 }
 class JsonReplacerState {
-	/** @constructor @public @arg {string} cf @arg {string[]} keys @arg {boolean} is_root */
-	constructor(cf,keys,is_root) {
+	/** @constructor @public @arg {JsonReplacerArgs} args */
+	constructor(args) {
 		this.object_count=0;
+		this.cur_cf=args.cf;
+		this.key_keep_arr=args.keys;
+		this.is_root=args.is_root;
+		/** @api @public @type {unknown[]} */
+		this.object_store=[];
+		/** @api @public @type {Map<unknown,[number,string]>} */
+		this.parent_map=new Map;
+		this.text_decoder=args.text_decoder;
 		/** @type {string[]} */
 		this.cf_stack=[];
-		this.cur_cf=cf;
-		this.key_keep_arr=keys;
-		this.is_root=is_root;
-		this.k1="";
+		this.cur_key="";
 		/** @api @public @type {unknown[]} */
 		this.object_store=[];
 		/** @api @public @type {Map<unknown,[number,string]>} */
@@ -3121,6 +3126,30 @@ class JsonReplacerState {
 	/** @arg {unknown} x */
 	get_parent_walker(x) {
 		return new ParentWalker(this,x);
+	}
+	/** @arg {string} key @arg {unknown} obj */
+	next_key(key,obj) {
+		let s=this;
+		let x=obj;
+		if(!s.object_store.includes(x)) {
+			s.object_store.push(x);
+			let mi=s.object_store.indexOf(x);
+			s.parent_map.set(x,[mi,key]);
+		}
+	}
+	/** @arg {object|null} obj */
+	next_key_obj(obj) {
+		let s=this;
+		let x=obj;
+		if(x instanceof Uint8Array) return;
+		if(x===null) return;
+		let mi=s.object_store.indexOf(x);
+		let xi=Object.entries(x);
+		for(let [k_in,val] of xi) {
+			if(s.object_store.includes(val)) continue;
+			s.object_store.push(val);
+			s.parent_map.set(val,[mi,k_in]);
+		}
 	}
 }
 export_(exports => {exports.JsonReplacerState=JsonReplacerState;});
