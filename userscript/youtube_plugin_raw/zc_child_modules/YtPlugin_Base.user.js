@@ -2120,8 +2120,8 @@ class BaseServicePrivate extends ApiBase {
 	}
 	/** @protected @arg {string} k @arg {number|number[]} x */
 	save_number(k,x) {return this.local_seen_db.save_number_impl(k,x);}
-	/** @protected @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
-	save_enum(ns,s) {return this.local_seen_db.save_enum_impl(ns,s);}
+	/** @protected @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} k */
+	save_enum(cf,ns,k) {return this.local_seen_db.save_enum_impl(cf,ns,k);}
 }
 /** @private @template T_ServiceLoader,T_ServiceFlags @extends {BaseServicePrivate<ServiceLoader,ServiceOptions>} */
 class BaseService extends BaseServicePrivate {

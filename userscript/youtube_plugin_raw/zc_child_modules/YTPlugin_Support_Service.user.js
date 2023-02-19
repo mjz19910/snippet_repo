@@ -1973,16 +1973,33 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	expected_id=0;
 	async load_database() {
 		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		if(!update_id) {
+			this.indexed_db.put("boxed_id",{
+				key: "boxed_id:update_id",
+				type: "update_id",
+				id: 1,
+			},3);
+			let wait_close=this.indexed_db.open_db_promise;
+			if(wait_close) await wait_close;
+			this.expected_id=1;
+		} else {
+			this.expected_id++;
+			this.indexed_db.put("boxed_id",{
+				key: "boxed_id:update_id",
+				type: "update_id",
+				id: this.expected_id,
+			},3);
+			update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		}
 		for(;;) {
 			if(!update_id) {
 				this.indexed_db.put("boxed_id",{
 					key: "boxed_id:update_id",
 					type: "update_id",
-					id: 1,
+					id: 0,
 				},3);
 				let wait_close=this.indexed_db.open_db_promise;
 				if(wait_close) await wait_close;
-				this.expected_id=1;
 				update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
 				continue;
 			}
@@ -2105,8 +2122,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let store=this.#get_string_store();
 		return this.save_to_store("string",k,x,store);
 	}
-	/** @api @public @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
-	save_enum_impl(ns,s) {
+	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
+	save_enum_impl(cf,ns,s) {
+		cf;
 		/** @private @type {"_"|"-"} */
 		let sep;
 		let ns_name="ENUM";

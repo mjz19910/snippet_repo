@@ -2765,7 +2765,8 @@ type D_TimestampWithNanos={
 	nanos: number;
 };
 type T_Id<T>={id: T;};
-type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
+type D_ToggleButtonIdData=T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;
+type R_ToggleButtonIdData={toggleButtonIdData: D_ToggleButtonIdData;};
 type T_SizeType<T>={sizeType: T;};
 type D_ToggleMenuServiceItem={
 	defaultText: G_Text;

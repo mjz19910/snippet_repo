@@ -37,7 +37,7 @@ type D_ToggleButton=
 		toggledTooltip: "Unlike";
 		toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
 		accessibilityData: TD_Accessibility<"like this video along with 7,468 other people">;
-		toggleButtonSupportedData: D_ToggleButtonIdData;
+		toggleButtonSupportedData: R_ToggleButtonIdData;
 		targetId: "watch-like";
 	}
 	|{
@@ -79,7 +79,7 @@ type D_ToggleButton=
 		toggledTooltip: "I dislike this";
 		toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
 		accessibilityData: TD_Accessibility<"Dislike this video">;
-		toggleButtonSupportedData: D_ToggleButtonIdData;
+		toggleButtonSupportedData: R_ToggleButtonIdData;
 		targetId: "watch-dislike";
 	}
 	;

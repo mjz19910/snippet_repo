@@ -175,7 +175,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
 		const {token,request,...y}=this.s(cf,x);
-		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
+		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": this.params("continuation_request.browse.token",token); break;
@@ -1210,8 +1210,13 @@ class ServiceMethods extends ServiceData {
 		}
 		return a;
 	}
+	/** @protected @arg {R_ToggleButtonIdData} x */
+	R_ToggleButtonIdData(x) {this.y("R_ToggleButtonIdData","toggleButtonIdData",x,this.D_ToggleButtonIdData);}
 	/** @protected @arg {D_ToggleButtonIdData} x */
-	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
+	D_ToggleButtonIdData(x) {
+		const cf="D_ToggleButtonIdData";
+		this.T_Id(x,x => this.save_enum(cf,"TOGGLE_BUTTON_ID_TYPE",x));
+	}
 	/** @private @arg {D_UnifiedSharePanel} x */
 	D_UnifiedSharePanel(x) {
 		const cf="D_UnifiedSharePanel";
@@ -1254,7 +1259,7 @@ class ServiceMethods extends ServiceData {
 		else if("style" in x) cf="D_Button:style";
 		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(hint,this.R_Hint);
-		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
+		this.t(iconPosition,x => this.save_enum(cf,"BUTTON_ICON_POSITION_TYPE",x));
 		this.t(targetId,this.D_Button_targetId);
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
@@ -2620,6 +2625,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @api @public @arg {D_TargetIdStr} x */
 	parse_target_id(x) {
+		const cf="D_TargetIdStr";
 		if(this.is_yt_uuid(x)) return;
 		if(this.str_starts_with_rx("browse-feed",x)) {
 			if(this.str_starts_with(x,"browse-feedUC")) {
@@ -2628,13 +2634,13 @@ class ServiceMethods extends ServiceData {
 			console.log("[target_id.browse_feed]","browse-feed",split_string_once(x,"browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
 		}
-		if(this.str_starts_with_rx("comment-replies-item",x)) {return this.save_enum("comment-replies-item",x);}
-		if(this.str_starts_with(x,"engagement-panel")) {return this.save_enum("engagement-panel",x);}
-		if(this.str_starts_with(x,"comments")) {return this.save_enum("comments",x);}
-		if(this.str_starts_with(x,"library")) {return this.save_enum("library",x);}
-		if(this.str_starts_with(x,"watch")) {return this.save_enum("watch",x);}
-		if(this.str_starts_with(x,"shopping_panel")) {return this.save_enum("shopping_panel",x);}
-		if(this.str_starts_with(x,"clip")) {return this.save_enum("clip",x);}
+		if(this.str_starts_with_rx("comment-replies-item",x)) {return this.save_enum(cf,"comment-replies-item",x);}
+		if(this.str_starts_with(x,"engagement-panel")) {return this.save_enum(cf,"engagement-panel",x);}
+		if(this.str_starts_with(x,"comments")) {return this.save_enum(cf,"comments",x);}
+		if(this.str_starts_with(x,"library")) {return this.save_enum(cf,"library",x);}
+		if(this.str_starts_with(x,"watch")) {return this.save_enum(cf,"watch",x);}
+		if(this.str_starts_with(x,"shopping_panel")) {return this.save_enum(cf,"shopping_panel",x);}
+		if(this.str_starts_with(x,"clip")) {return this.save_enum(cf,"clip",x);}
 		this.save_string("target_id",x);
 	}
 	/** @private @type {string[]} */
@@ -3618,7 +3624,7 @@ class ServiceMethods extends ServiceData {
 	D_PlaylistLoopButtonState(x) {
 		const cf="D_PlaylistLoopButtonState";
 		const {state,button,...y}=this.s(cf,x); this.g(y);
-		this.save_enum("PLAYLIST_LOOP_STATE",state);
+		this.save_enum(cf,"PLAYLIST_LOOP_STATE",state);
 		this.R_Button(button);
 	}
 	/** @private @arg {R_NotificationText} x */
@@ -3797,7 +3803,7 @@ class ServiceMethods extends ServiceData {
 				this.add_string_to_map(cf2,"defaultTooltip",defaultTooltip);
 				this.add_string_to_map(cf2,"toggledTooltip",toggledTooltip);
 				this.add_string_to_map(cf2,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
-				this.D_ToggleButtonIdData(toggleButtonSupportedData);
+				this.R_ToggleButtonIdData(toggleButtonSupportedData);
 				if(targetId!=="watch-like") debugger;
 				return;
 			}
@@ -3825,7 +3831,7 @@ class ServiceMethods extends ServiceData {
 			this.D_Label(accessibility);
 			this.add_string_to_map(cf1,"defaultTooltip",defaultTooltip);
 			this.add_string_to_map(cf1,"toggledTooltip",toggledTooltip);
-			this.D_ToggleButtonIdData(toggleButtonSupportedData);
+			this.R_ToggleButtonIdData(toggleButtonSupportedData);
 			if(targetId!=="watch-dislike") debugger;
 			return;
 		}
@@ -3873,7 +3879,7 @@ class ServiceMethods extends ServiceData {
 	DC_UpdateToggleButtonState(x) {
 		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_bool(a);
-		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
+		this.save_enum(cf,"TOGGLE_BUTTON_ID_TYPE",b);
 	}
 	/** @private @arg {C_Loop} x */
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
@@ -4980,7 +4986,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.D_ClientMessages(clientMessages);
 		this.a_primitive_bool(isReplay);
-		this.save_enum("LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
+		this.save_enum(cf,"LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
 		this.R_ToggleButton(showHideButton);
 	}
 	/** @private @arg {R_TopbarLogo} x */
@@ -4993,7 +4999,7 @@ class ServiceMethods extends ServiceData {
 	DC_AdsControlFlowOpportunityReceived(x) {
 		const cf="DC_AdsControlFlowOpportunityReceived";
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
+		this.save_enum(cf,"OPPORTUNITY_TYPE",opportunityType);
 		this.tz(adSlotAndLayoutMetadata,(this.D_AdSlotAndLayoutItem));
 		this._primitive_of(isInitialLoad,"boolean");
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
@@ -5027,7 +5033,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {MG_AdLayout['layoutType']} x */
 	MG_AdLayout_layoutType(x) {
-		this.save_enum("LAYOUT_TYPE",x);
+		const cf="MG_AdLayout_layoutType";
+		this.save_enum(cf,"LAYOUT_TYPE",x);
 		switch(x) {
 			default: break;
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
@@ -5059,9 +5066,9 @@ class ServiceMethods extends ServiceData {
 	D_ClickLocationTarget(x) {
 		const cf="D_ClickLocationTarget";
 		const {location,code,behaviorType,...y}=this.s(cf,x); this.g(y);
-		this.save_enum("PROMOTED_SPARKLES_CLICK_LOCATION",location);
+		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_LOCATION",location);
 		this.save_number(`${cf}.code`,code);
-		this.save_enum("PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
+		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
 	/** @private @arg {D_EmptyMap} x */
 	D_EmptyMap(x) {
@@ -5312,7 +5319,7 @@ class ServiceMethods extends ServiceData {
 			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID": break;
 			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT": break;
 		}
-		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
+		this.save_enum(cf,"FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @private @arg {CD_Next} x */
 	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
@@ -5367,7 +5374,7 @@ class ServiceMethods extends ServiceData {
 		const {trigger,continuationEndpoint,ghostCards,button,...y}=this.s(cf,x); this.g(y);
 		this.t(trigger,x => {
 			this.ceq(x,"CONTINUATION_TRIGGER_ON_ITEM_SHOWN");
-			this.save_enum("CONTINUATION_TRIGGER",x);
+			this.save_enum(`${cf}.trigger`,"CONTINUATION_TRIGGER",x);
 		});
 		this.t(continuationEndpoint,this.GE_Continuation);
 		this.t(ghostCards,this.R_GhostGrid);
@@ -5792,7 +5799,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
-		this.save_enum("BADGE_STYLE_TYPE",x.style);
+		this.save_enum(cf,"BADGE_STYLE_TYPE",x.style);
 		let ia=this.strings_map.get(x.style);
 		if(!ia) this.strings_map.set(x.style,ia=[]);
 		switch(x.style) {
@@ -5843,7 +5850,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @template {DC_ReloadContinuationItems} T @arg {"DC_ReloadContinuationItems"} cf @arg {T} x */
 	DC_ReloadContinuationItems_Omit(cf,x) {
 		const {slot,...y}=this.s(cf,x);
-		this.save_enum("RELOAD_CONTINUATION_SLOT",x.slot);
+		this.save_enum(cf,"RELOAD_CONTINUATION_SLOT",x.slot);
 		return y;
 	}
 	/** @private @arg {DC_Generic_CTP} x */

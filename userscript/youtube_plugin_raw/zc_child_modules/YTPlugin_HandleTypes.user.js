@@ -3255,8 +3255,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("grwOpenInOverride" in u) {
 			let x=this.ws("grwOpenInOverride",u);
-			this.save_string(`${cf}.grwOpenInOverride`,x);
-			this.save_enum("GRW_OPEN_IN_OVERRIDE",x);
+			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
 			return;
 		}
 		this.g(u);
