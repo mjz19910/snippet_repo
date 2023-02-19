@@ -612,9 +612,10 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_Card";
 		const {teaser,content,cueRanges,icon,trackingParams,cardId,feature,...y}=this.s(cf,x); this.g(y);
 		this.R_SimpleCardTeaser(teaser);
-		this.t_cf(`${cf}:content`,content,(cf,x) => {
+		this.t_cf(`${cf}$content`,content,(cf,x) => {
 			if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
-			cf; debugger;
+			if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
+			this.codegen_typedef(cf,x,false);
 		});
 		this.z(cueRanges,this.D_CueRangeItem);
 		this.trackingParams(trackingParams);
@@ -623,6 +624,10 @@ class Support_RS_Player extends ServiceMethods {
 			if(x!=="cards") debugger;
 		});
 	}
+	/** @private @arg {R_PlaylistInfoCardContent} x */
+	R_PlaylistInfoCardContent(x) {this.H_("playlistInfoCardContentRenderer",x,this.D_PlaylistInfoCardContent);}
+	/** @private @arg {D_PlaylistInfoCardContent} x */
+	D_PlaylistInfoCardContent(x) {x;}
 	/** @private @arg {R_CollaboratorInfoCardContent} x */
 	R_CollaboratorInfoCardContent(x) {this.H_("collaboratorInfoCardContentRenderer",x,this.D_CollaboratorInfoCardContent);}
 	/** @private @arg {D_CollaboratorInfoCardContent} x */
