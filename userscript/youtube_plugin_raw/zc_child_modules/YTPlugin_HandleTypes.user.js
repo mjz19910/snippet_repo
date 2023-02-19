@@ -2411,8 +2411,12 @@ class HandleTypes extends ServiceMethods {
 		if(x[0]!=="child") {debugger; return null;}
 		return f.call(this,x[2]);
 	}
-	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16]} x */
-	G_PR_TrackingObj_f16(x) {x;}
+	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16][2]} x */
+	PR_TrackingObj_f16(x) {
+		const cf="G_PR_TrackingObj_f16";
+		const {1: f1}=this.s(cf,x);
+		this.save_number(`${cf}.f1`,f1[1]);
+	}
 	/** @protected @arg {G_PR_TrackingObj} x @arg {{type:"tracking"|"click_tracking"}} flags */
 	G_PR_TrackingObj(x,flags) {
 		const cf="G_PR_TrackingObj";
@@ -2465,7 +2469,8 @@ class HandleTypes extends ServiceMethods {
 			this.save_number(`${cf}.n3.f1`,f1);
 			this.save_number(`${cf}.n3.f2`,f2);
 			this.V_BinaryTimestamp(f4);
-			this.G_PR_TrackingObj_f16(f16);
+			if(f16[0]!=="child") {debugger; return;}
+			this.PR_TrackingObj_f16(f16[2]);
 			return;
 		}
 		if(9 in x) {

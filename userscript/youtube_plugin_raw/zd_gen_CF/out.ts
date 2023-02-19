@@ -514,6 +514,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj:click_tracking";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj:tracking";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj_f16";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj_t1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Text";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_ResultsItem";}
