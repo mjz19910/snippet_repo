@@ -523,7 +523,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "O_DU_Persistence";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "PD_continuation_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "PD_continuation_request_browse_token";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "PR_continuation_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "PR_continuation_request_browse_token";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_aadc_guidelines_state_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ad_layout_ad_serving_data_entry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";}

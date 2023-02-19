@@ -28,12 +28,14 @@ type P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry={
 	4: T_D32<2>;
 };
 type P_create_playlist_params={1: T_D32<4>;};
-type P_continuation_request_browse_token={
-	0x4c82a9c: {
-		2: T_VSR<"FEwhat_to_watch">;
-		3: T_VSR<string>;
-		35: T_VSR<"browse-feedFEwhat_to_watch">;
-	};
+type PD_continuation_request_browse_token={
+	2: T_VSR<"FEwhat_to_watch">;
+	3: T_VSR<string>;
+	35: T_VSR<"browse-feedFEwhat_to_watch">;
+};
+
+type PR_continuation_request_browse_token={
+	0x4c82a9c: PD_continuation_request_browse_token;
 };
 type P_reel_player_params={
 	30: T_D32<1>;

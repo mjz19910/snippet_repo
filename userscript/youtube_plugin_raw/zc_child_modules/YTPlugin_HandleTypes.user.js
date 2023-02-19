@@ -2469,9 +2469,9 @@ class HandleTypes extends ServiceMethods {
 				this.P_create_playlist_params(u);
 			} break;
 			case "continuation_request.browse.token": {
-				/** @type {P_continuation_request_browse_token} */
+				/** @type {PR_continuation_request_browse_token} */
 				let u=as_any(x);
-				this.P_continuation_request_browse_token(u);
+				this.PR_continuation_request_browse_token(u);
 			} break;
 			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
 				/** @type {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} */
@@ -2631,7 +2631,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @template T @arg {T_VSR<T>} x @arg {(x:T)=>void} f */
-	T_VSR(x,f) {x;f;}
+	T_VSR(x,f) {x; f;}
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
@@ -2668,121 +2668,121 @@ class HandleTypes extends ServiceMethods {
 	P_get_pdg_buy_flow_params(x) {
 		const cf="P_get_pdg_buy_flow_params";
 		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		f1; debugger;
 	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
 		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		f1; debugger;
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {3: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
 		const cf="P_transcript_track_selection_serialized_params";
 		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		f1; debugger;
 	}
 	/** @private @arg {P_transcript_track_selection_entity_key} x */
 	P_transcript_track_selection_entity_key(x) {
 		const cf="P_transcript_track_selection_entity_key";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {94: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		this.T_VSR(a,x => this.channelId(x));
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_load_markers_entity_key} x */
 	P_load_markers_entity_key(x) {
 		const cf="P_load_markers_entity_key";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {5: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_playlist_loop_state_entity_key} x */
 	P_playlist_loop_state_entity_key(x) {
 		const cf="P_playlist_loop_state_entity_key";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_entity_key_normal} x */
 	P_entity_key_normal(x) {
 		const cf="P_entity_key_normal";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {
 		const cf="P_subscribe_button_entity_key";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_dislike_params} x */
 	P_dislike_params(x) {
 		const cf="P_dislike_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_entity_key} x */
 	P_entity_key(x) {
 		const cf="P_entity_key";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {2: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
@@ -2793,14 +2793,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
@@ -2811,20 +2811,34 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {4: a}=this.s(cf,x);
+		a; debugger;
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		const {1: a}=this.s(cf,x);
+		a; debugger;
 	}
-	/** @private @arg {P_continuation_request_browse_token} x */
-	P_continuation_request_browse_token(x) {
-		const cf="P_continuation_request_browse_token";
-		const {1: f1}=this.s(cf,x);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	/** @private @arg {PD_continuation_request_browse_token} x */
+	PD_continuation_request_browse_token(x) {
+		const cf="PD_continuation_request_browse_token";
+		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
+		this.T_VSR(f2,x => {
+			x; debugger;
+		});
+		this.T_VSR(f3,x => {
+			x; debugger;
+		});
+		this.T_VSR(f35,x => {
+			x; debugger;
+		});
+	}
+	/** @private @arg {PR_continuation_request_browse_token} x */
+	PR_continuation_request_browse_token(x) {
+		const cf="PR_continuation_request_browse_token";
+		const {0x4c82a9c: a}=this.s(cf,x);
+		this.PD_continuation_request_browse_token(a);
 	}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {
