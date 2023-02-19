@@ -560,6 +560,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscribe_button_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscribe_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscription_state_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_tracking_params:omit_f8";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_transcript_track_selection_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_transcript_track_selection_serialized_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_trending_bp";}

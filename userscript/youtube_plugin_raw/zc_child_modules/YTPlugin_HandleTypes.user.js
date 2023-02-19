@@ -2491,10 +2491,24 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_tracking_params";
 		const {1: {},2: {},4: {},...y}=x;
 		if(this.is_empty_obj(y)) return;
-		{const k=3; if(k in y) {this.y(`${cf}:omit_f${k}`,k,y,x => x); return;} }
 		{const k=6; if(k in y) {this.y(`${cf}:omit_f${k}`,k,y,x => x); return;} }
-		{const k=8; if(k in y) {this.y(`${cf}:omit_f${k}`,k,y,x => x); return;} }
 		{const k=16; if(k in y) {this.y(`${cf}:omit_f${k}`,k,y,x => x); return;} }
+		{
+			const k=3;
+			if(k in y) {
+				{
+					const k=8;
+					/** @type {`${cf}:omit_f${k}`} */
+					const cf2=`${cf}:omit_f${k}`;
+					if(k in y) {
+						const {3: f3,8: a,...y1}=this.s(cf2,y); this.g(y1);
+						this.T_D32(f3,x => this.save_number(cf2,x));
+						return;
+					}
+				}
+				this.y(`${cf}:omit_f${k}`,k,y,x => {this.T_D32(x,x => x);}); return;
+			}
+		}
 		this.codegen_typedef_bin(cf,x,false);
 	}
 	/** @arg {"G_PR_TrackingObj"} cf @arg {P_RT_TK_f6} x */
