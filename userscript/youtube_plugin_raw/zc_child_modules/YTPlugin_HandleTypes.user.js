@@ -2642,8 +2642,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
-		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
-		this.T_D32(f1,x => {
+		const {1: timestamp_utc,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
+		this.T_D32(timestamp_utc,x => {
 			this.log_buffer.push(["number",`max_gen:${cf}_gen`,"f1",x]);
 			this.immediate_run_logger();
 		});
