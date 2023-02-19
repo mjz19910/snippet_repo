@@ -2028,13 +2028,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						}
 					}
 					if(uv_arr) {
-						this.indexed_db.put("boxed_id",{
+						await this.put_and_wait("boxed_id",{
 							key: `boxed_id:${store.content}:${item[0]}`,
 							base: "boxed_id",
 							type: store.content,
 							id: item[0],
 							value: uv_arr,
-						},3);
+						});
 					}
 				} break;
 				case "keys": {
