@@ -988,18 +988,12 @@ type D_TextRun=|{
 	text: string;
 	navigationEndpoint: E_VE3611;
 }|{
-	text: "Watch Later";
-	navigationEndpoint: E_VE5754;
-}|{
-	text: "https://www.deviantart.com/zianu/art/...";
-	navigationEndpoint: E_VE83769_Url;
-}|{
-	text: "https://youtu.be/XdnRkI5EM-k";
-	navigationEndpoint: E_Watch;
-}|{
 	text: `@${string}`;
 	navigationEndpoint: E_VE3611;
 	loggingDirectives: D_LoggingDirectives;
+}|{
+	text: "Watch Later";
+	navigationEndpoint: E_VE5754;
 }|{
 	text: "Original sound";
 	navigationEndpoint: E_VE6827;
@@ -1015,6 +1009,12 @@ type D_TextRun=|{
 }|{
 	text: "Get YouTube Premium",
 	navigationEndpoint: E_VE11487;
+}|{
+	text: "https://www.deviantart.com/zianu/art/...";
+	navigationEndpoint: E_VE83769_Url;
+}|{
+	text: "https://youtu.be/XdnRkI5EM-k";
+	navigationEndpoint: E_Watch;
 }|{
 	text: string;
 	bold: boolean;
