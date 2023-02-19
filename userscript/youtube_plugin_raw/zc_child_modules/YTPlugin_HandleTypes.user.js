@@ -2471,174 +2471,79 @@ class HandleTypes extends ServiceMethods {
 			case "click_tracking": break;
 			case "tracking": break;
 		}
-		if(1 in x) {
-			const {1: f1}=this.s(cf,x);
-			this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
-		}
-		if(1 in x) {
-			const {1: a,...u1}=this.s(cf,x);
-			this.T_D32(a,x => this.save_number(`${cf}.w19.f1`,x));
-			let ua=[],u19n=null;
-			if(19 in u1) {
-				const {19: a,...u2}=u1;
-				const [,b]=a,[c]=b,[,,d]=c;
-				this.RB_Obj_f19(d);
-				ua[0]=u2; u19n=u2;
-			} else {
-				ua[1]=u1;
-			}
-			if(u19n&&11 in u19n) {
-				const {11: a,...u1}=u19n; u1;
-				u19n=u1;
-			}
-			if(u19n&&9 in u19n) {
-				const {9: a,...u1}=u19n;
-				u19n=u1;
-			}
-			if(u19n&&6 in u19n) {
-				const {6: a,...u1}=u19n;
-				u19n=u1;
-			}
-			if(u19n&&4 in u19n) {
-				const {4: a,...u1}=u19n;
-				u19n=u1;
-			}
-			let u4=null;
-			if(u19n&&2 in u19n) {
-				const {2: a,...u1}=u19n;
-				if(3 in u1) u4=u1; else u19n=u1;
-			}
-			if(u4) {
-				debugger;
-			}
-			x: {
-				if(u19n!==null) {this.g(u19n); break x;}
-				if(u19n===null) break x;
-				debugger;
-			}
-			if(u3&&9 in u3) {
-				let {9: a,...y}=u3; a;
-				this.T_VW_Bigint(a,this.a_primitive_bigint);
-				ua[0]=y;
-			}
-			if(u3&&8 in u3) {
-				let {8: a,...y}=u3; a;
-				ua[1]=y;
-			}
-			if(u3&&6 in u3) {
-				let {6: a,...y}=u3; a;
-				ua[2]=y;
-			}
-			if(u3&&4 in u3) {
-				let {4: a,...y}=u3; a;
-				this.T_VW_2(a,this.V_BinaryTimestamp);
-				ua[3]=y;
-			}
-			if(u3&&3 in u3) {
-				let {3: a,...y}=u3; a;
-				this.T_D32(a,x => this.save_number(`${cf}.w19.f3`,x));
-				ua[4]=y;
-			}
-			if(u3&&2 in u3) {
-				let {2: a,...y}=u3; a;
-				this.T_D32(a,x => this.save_number(`${cf}.w19.f2`,x));
-				ua[5]=y;
-			}
-			ua;
-			return;
-		}
-		if(16 in x) {
-			const {1: f1,2: f2,4: f4,16: f16,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number(`${cf}.n3.f1`,x));
-			this.T_D32(f2,x => this.save_number(`${cf}.n3.f2`,x));
-			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			return;
-		}
-		if(9 in x) {
-			const {1: f1,2: f2,3: f3,4: f4,9: f9,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number(`${cf}.w9.f1`,x));
-			this.T_D32(f2,x => this.save_number(`${cf}.w9.f2`,x));
-			this.T_D32(f3,x => this.save_number(`${cf}.w9.f3`,x));
-			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			this.T_VW_Bigint(f9,this.a_primitive_bigint);
-			return;
-		}
-		if(8 in x) {
-			const {1: f1,2: f2,3: f3,4: f4,8: f8,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number(`${cf}.w3.f1`,x));
-			this.T_D32(f2,x => this.save_number(`${cf}.w9.f2`,x));
-			this.T_D32(f3,x => this.save_number(`${cf}.w3.f3`,x));
-			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			return;
-		}
-		if(6 in x&&3 in x) {
-			const {1: f1,2: f2,3: f3,4: f4,6: f6,7: m7,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number(`${cf}.w6.f1`,x));
-			this.T_D32(f2,x => this.save_number(`${cf}.w6.f2`,x));
-			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			this.t(this.T_VSR(f6),x => {
-				this.save_string(`${cf}.w6.f6`,x);
-				x;
-			});
-			this.save_string(`${cf}.w6.f6.type`,`${f6[0]}:${f6[1][0][0]}:${f6[1][0][1][0]}`);
-			this.t(m7,x => this.t(this.T_VSR(x),x => this.save_b64_binary(`${cf}.f7`,x)));
-			return;
-		}
-		if(6 in x) {
-			if(4 in x&&!(2 in x)) {
-				const {4: f4,6: f6,...y}=this.s(cf,x); this.g(y);
-				let xr=this.T_PArr(f6);
-				if(!xr) return;
-				let [f6w,,f6o,f6p]=xr;
-				let [f6t,f6v]=f6p;
-				if(f6w!=="raw_child") debugger;
-				if(f6t!=="string") debugger;
-				if(f6v!=="external") debugger;
-				if(f6o!==null) debugger;
-				return;
-			}
-			if(4 in x&&2 in x) {
-				const {1: f1,2: f2,4: f4,6: f6,...y}=this.s(cf,x); this.g(y);
-				this.T_D32(f1,x => this.save_number(`${cf}.w6.f1`,x));
-				this.T_D32(f2,x => this.save_number(`${cf}.w6.f2`,x));
-				this.T_VW_2(f4,this.V_BinaryTimestamp);
-				{
-					let x=f6;
-					if(x[0]!=="param_arr") debugger;
-					let [t1,[v]]=x;
-					let [t2,,,a]=v;
-					let [t3,u]=a;
-					this.save_string(`${cf}.w6.f6.type`,`${t1}:${t2}:${t3}`);
-					this.save_string(`${cf}.w6.f6`,u);
+		/** @type {G_PR_TrackingObj[]} */
+		const m1=[];
+		m1.push(x);
+		/** @arg {{tag:Extract<G_PR_TrackingObj,{1:any}>[1],id:T_D32<number>,timestamp_utc:T_VW_2<V_BinaryTimestamp>}} x */
+		let handle_binary_ts=x => {
+			this.T_D32(x.tag,x => this.save_number(`${cf}.tag`,x));
+			this.T_D32(x.id,x => this.save_number(`${cf}.id`,x));
+			h_ts(x.timestamp_utc);
+		};
+		/** @arg {T_VW_2<V_BinaryTimestamp>} x */
+		let h_ts=x => {
+			this.T_VW_2(x,this.V_BinaryTimestamp);
+		};
+		/** @arg {Extract<G_PR_TrackingObj,{3:any}>[3]} x */
+		let handle_f3=x => {this.T_D32(x,x => this.save_number(`${cf}.f3`,x));};
+		/** @arg {Extract<G_PR_TrackingObj,{6:any}>[6]} x */
+		let handle_f6=x => {
+			x; debugger;
+		};
+		// this.T_VW_Bigint(a,this.a_primitive_bigint);// {9:any}
+		let m2=[];
+		/** @type {(PR_TrackingObj_4w2n|PR_TrackingObj_6w4w2n)[]} */
+		let r2=[];
+		for(const v of m1) {if(1 in v) m2.push(v); else r2.push(v);}
+		{
+			/** @type {null[]} */
+			let n=[];
+			/** @type {Record<string,never>[]} */
+			let e=[];
+			let m3=[]; {let mc=m2; for(const v of mc) {if(2 in v) {const {1: a,2: b,4: c,...y}=v; handle_binary_ts({tag: a,id: b,timestamp_utc: c}); if(this.is_not_empty_obj(y)) m3.push(y); else e.push(y);} else n.push(v);} }
+			let m4=[]; {let mc=m3,ac=[],rc=[]; for(const c of mc) {if(3 in c) {const {3: a,...y}=c; handle_f3(a); if(this.is_not_empty_obj(y)) ac.push(y); else e.push(y);} else rc.push(c);} for(const v of [...ac,...rc]) m4.push(v);}
+			let m5=[]; {let mc=m4,ac=[],rc=[]; for(const c of mc) {if(6 in c) {const {6: a,...y}=c; handle_f6(a); if(this.is_not_empty_obj(y)) ac.push(y); else e.push(y);} else rc.push(c);} for(const v of [...ac,...rc]) m5.push(v);}
+			for(const c of m5) {
+				if(8 in c) {
+					debugger;
+					continue;
 				}
-				return;
+				if(9 in c) {
+					debugger;
+					continue;
+				}
+				if(11 in c) {
+					debugger;
+					continue;
+				}
+				debugger;
 			}
-			debugger;
-			return;
+			for(const v of e) {
+				/** @type {{}} */
+				let r=v; this.g(r);
+			}
+			if(n.length!==0) debugger;
 		}
-		if(3 in x)/*tracking*/ {
-			const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number(`${cf}.3w8n.f1`,x));
-			this.T_D32(f2,x => this.save_number(`${cf}.3w8n.f2`,x));
-			this.T_D32(f3,x => this.save_number(`${cf}.3w8n.f3`,x));
-			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			return;
+		{
+			/** @type {null[]} */
+			let n=[];
+			/** @type {Record<string,never>[]} */
+			let e=[];
+			let m3=[]; {let mc=r2; for(const v of mc) {if(4 in v) {const {4: c,...y}=v; h_ts(c); if(this.is_not_empty_obj(y)) m3.push(y); else e.push(y);} else n.push(v);} }
+			for(const v of m3) {
+				if(6 in v) {
+					const {6: a,...y}=v; this.g(y);
+					this.t(this.T_VSR(a),x => {
+						switch(x) {
+							default: debugger; break;
+							case "external": break;
+						}
+					});
+					continue;
+				}
+				debugger;
+			}
 		}
-		if(4 in x&&2 in x) {
-			const {1: f1,2: f2,4: f4,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number(`${cf}.4w2w.f1`,x));
-			this.T_D32(f2,x => this.save_number(`${cf}.4w2w.f2`,x));
-			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			return;
-		}
-		if(4 in x) {
-			const {4: f4,...y}=this.s(cf,x); this.g(y);
-			// 			this.T_VW_2(f4,this.V_BinaryTimestamp);
-			return;
-		}
-		this.codegen_typedef_bin("G_PR_TrackingObj",x);
-		x;
-		debugger;
 	}
 	/** @type {([type:"number",cf:string,key:string,size:"milliseconds",value:number])[]} */
 	log_buffer=[];

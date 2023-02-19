@@ -1090,6 +1090,8 @@ class ServiceMethods extends ServiceData {
 	D_MenuPopup(x) {this.y("D_MenuPopup","items",x,x => this.z(x,this.R_MenuServiceItem));}
 	/** @template {T extends infer U?{} extends U? never:U:never} R @template {{}} T @arg {T} x @returns {x is R} */
 	is_not_empty_obj(x) {return this.get_keys_of(x).length>0;}
+	/** @template {T extends infer U?{} extends U? U:never:never} R @template {{}} T @arg {T} x @arg {R|null} _x @returns {x is R} */
+	is_empty_obj(x,_x=null) {return this.get_keys_of(x).length===0;}
 	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf,x) {
 		/** @type {TA_OpenPopup<unknown>} */
