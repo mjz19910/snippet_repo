@@ -2513,14 +2513,16 @@ class HandleTypes extends ServiceMethods {
 				debugger;
 			}
 			if(u3&&9 in u3) {
-				return;
+				let {9: a,...y}=u3; a;
+				u3=y;
 			}
 			if(u3&&8 in u3) {
-				return;
+				let {8: a,...y}=u3; a;
+				u3=y;
 			}
 			if(u3&&6 in u3) {
-				let {6: a}=u3; a;
-				return;
+				let {6: a,...y}=u3; a;
+				u3=y;
 			}
 			if(u3&&4 in u3) {
 				let {4: a,...y}=u3; a;
