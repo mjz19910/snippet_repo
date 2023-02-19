@@ -14,7 +14,6 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState}=require("./YtPlugin_Base.user");
-const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
 //#region module setup
