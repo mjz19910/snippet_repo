@@ -2418,8 +2418,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.codegen_typedef_bin(cf,x,false);
 	}
-	/** @protected @arg {P_tracking_params} x */
-	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
 	/** @protected @template T @arg {T_VW_2<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
 	T_VW_2(x,f) {
 		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
@@ -2487,6 +2485,25 @@ class HandleTypes extends ServiceMethods {
 	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
 	/** @arg {"P_Typed_TrackingObj"} cf @arg {T_D32<number>} x @arg {H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
+	/** @arg {P_tracking_params} x */
+	P_tracking_params(x) {
+		const cf="P_tracking_params";
+		const {1: {},2: {},4: {},...y}=x;
+		if(this.is_empty_obj(y)) return;
+		if(3 in y) {
+			this.y(`${cf}:omit_f3`,3,y,x => x);
+			return;
+		}
+		if(8 in y) {
+			this.y(`${cf}:omit_f8`,8,y,x => x);
+			return;
+		}
+		if(16 in y) {
+			this.y(`${cf}:omit_f16`,16,y,x => x);
+			return;
+		}
+		this.g(y);
+	}
 	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
 	P_Typed_TrackingObj(x) {
 		const cf="P_Typed_TrackingObj"; this.k(cf,x);
@@ -2534,7 +2551,9 @@ class HandleTypes extends ServiceMethods {
 					handle_f6,
 				});
 			} break;
-			case "tracking": break;
+			case "tracking": {
+				const {v: z}=x; this.P_tracking_params(z);
+			} break;
 		}
 	}
 	/** @type {([type:"number",cf:string,key:string,size:"milliseconds",value:number])[]} */
