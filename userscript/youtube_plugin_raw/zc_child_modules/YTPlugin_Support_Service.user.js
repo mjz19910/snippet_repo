@@ -1967,14 +1967,24 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	expected_id=0;
 	async load_database() {
 		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
-		if(!update_id) {
-			this.indexed_db.put("boxed_id",{
-				key: "boxed_id:update_id",
-				type: "update_id",
-				id: 1,
-			},3);
-			this.expected_id=1;
-		} else {
+		for(;;) {
+			if(!update_id) {
+				this.indexed_db.put("boxed_id",{
+					key: "boxed_id:update_id",
+					type: "update_id",
+					id: 1,
+				},3);
+				let wait_close=this.indexed_db.open_db_promise;
+				if(wait_close) await wait_close;
+				this.expected_id=1;
+				update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+				continue;
+			}
+			if(update_id.id===this.expected_id) {
+				let wait_close=this.indexed_db.open_db_promise;
+				if(wait_close) await wait_close;
+				break;
+			}
 			if(update_id.id!==this.expected_id) {
 				await this.do_boxed_update_from_database();
 				this.indexed_db.put("boxed_id",{
@@ -1982,7 +1992,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					type: "update_id",
 					id: this.expected_id,
 				},3);
-				return;
+				continue;
 			}
 			this.expected_id++;
 			this.indexed_db.put("boxed_id",{
@@ -1990,10 +2000,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				type: "update_id",
 				id: this.expected_id,
 			},3);
-			let wait_close=this.indexed_db.open_db_promise;
-			if(wait_close) {
-				await wait_close;
-			}
+			update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+			continue;
 		}
 	}
 	#get_string_store() {return this.#data_store.get_string_store();}
