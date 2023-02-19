@@ -1501,51 +1501,61 @@ class ServiceMethods extends ServiceData {
 	D_Menu_WithTargetId(x) {
 		const cf="D_Menu_WithTargetId";
 		switch(x.targetId) {
-			case "browse-video-menu-button": {} break;
-			case "playlist-browse-action-menu": break;
+			default: this.codegen_typedef(cf,x,false); break;
+			case "browse-video-menu-button": {
+				if("loggingDirectives" in x) {
+					const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					this.t(menuPopupAccessibility,this.D_Label);
+					this.tz(items,this.G_MenuItem);
+					if(trackingParams) this.trackingParams(trackingParams);
+					this.t(accessibility,this.D_Accessibility);
+					this.tz(flexibleItems,this.R_MenuFlexibleItem);
+					this.tz(topLevelButtons,this.D_Menu_Button);
+					this.D_Menu_TargetId(targetId);
+					return;
+				}
+				const {items,trackingParams,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.trackingParams(trackingParams);
+				this.z(items,x => {
+					if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+					debugger;
+				});
+				this.D_Accessibility(accessibility);
+				this.D_Menu_TargetId(targetId);
+			} break;
+			case "playlist-browse-action-menu": {
+				if("topLevelButtons" in x) {
+					const {trackingParams,topLevelButtons,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					this.trackingParams(trackingParams);
+					this.z(topLevelButtons,x => {
+						if("buttonRenderer" in x) return this.R_Button(x);
+						debugger;
+					});
+					this.z(items,x => {
+						if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+						if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+						debugger;
+					});
+					this.D_Accessibility(accessibility);
+					switch(targetId) {
+						default: debugger; break;
+					}
+					this.D_Menu_TargetId(targetId);
+					return;
+				}
+			} break;
 			case "watch-related-menu-button": {
+				const {items,trackingParams,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.trackingParams(trackingParams);
+				this.z(items,x => {
+					if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+					debugger;
+				});
+				this.D_Accessibility(accessibility);
+				this.D_Menu_TargetId(targetId);
 				x;
 			} break;
 		}
-		if("loggingDirectives" in x) {
-			const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(menuPopupAccessibility,this.D_Label);
-			this.tz(items,this.G_MenuItem);
-			if(trackingParams) this.trackingParams(trackingParams);
-			this.t(accessibility,this.D_Accessibility);
-			this.tz(flexibleItems,this.R_MenuFlexibleItem);
-			this.tz(topLevelButtons,this.D_Menu_Button);
-			this.D_Menu_TargetId(targetId);
-			return;
-		}
-		if("topLevelButtons" in x) {
-			const {trackingParams,topLevelButtons,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			this.z(topLevelButtons,x => {
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			this.z(items,x => {
-				if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-				if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-				debugger;
-			});
-			this.D_Accessibility(accessibility);
-			switch(targetId) {
-				default: debugger; break;
-			}
-			this.D_Menu_TargetId(targetId);
-			return;
-		}
-		const {trackingParams,items,accessibility,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.z(items,x => {
-			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-			debugger;
-		});
-		this.D_Accessibility(accessibility);
-		this.D_Menu_TargetId(targetId);
 	}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
