@@ -2790,198 +2790,13 @@ class HandleTypes extends ServiceMethods {
 			case "tracking": return this.P_tracking_params(z);
 		}
 	}
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
-	binary_result(cf,x) {
-		switch(cf) {
-			case "params.click_tracking": {
-				/** @type {G_PR_TrackingObj} */
-				let v=as_any(x);
-				this.P_Typed_TrackingObj({type: "click_tracking",v});
-			} break;
-			case "params.tracking": {
-				/** @type {P_tracking_params} */
-				let v=as_any(x);
-				this.P_Typed_TrackingObj({type: "tracking",v});
-			} break;
-			case "reel.player_params": {
-				/** @type {P_reel_player_params} */
-				let u=as_any(x);
-				this.P_reel_player_params(u);
-			} break;
-			case "create_playlist.params": {
-				/** @type {P_create_playlist_params} */
-				let u=as_any(x);
-				this.P_create_playlist_params(u);
-			} break;
-			case "continuation_request.browse.token": {
-				/** @type {PR_continuation_request_browse_token} */
-				let u=as_any(x);
-				this.PR_continuation_request_browse_token(u);
-			} break;
-			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
-				/** @type {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} */
-				let u=as_any(x);
-				this.P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(u);
-			} break;
-			case "ad_layout.ad_serving_data_entry": {
-				/** @type {P_ad_layout_ad_serving_data_entry} */
-				let u=as_any(x);
-				this.P_ad_layout_ad_serving_data_entry(u);
-			} break;
-			case "reel.params": {
-				/** @type {P_reel_params} */
-				let u=as_any(x);
-				this.P_reel_params(u);
-			} break;
-			case "logging_context.serialized_context_data": {
-				/** @type {P_logging_context_serialized_context_data} */
-				let u=as_any(x);
-				this.P_logging_context_serialized_context_data(u);
-			} break;
-			case "like.params": {
-				/** @type {P_like_params} */
-				let u=as_any(x);
-				this.P_like_params(u);
-			} break;
-			case "playability_status.context_params": {
-				/** @type {P_playability_status_context_params} */
-				let u=as_any(x);
-				this.P_playability_status_context_params(u);
-			} break;
-			case "entity.key": {
-				/** @type {P_entity_key} */
-				let u=as_any(x);
-				this.P_entity_key(u);
-			} break;
-			case "remove_like.params": {
-				/** @type {P_remove_like_params} */
-				let u=as_any(x);
-				this.P_remove_like_params(u);
-			} break;
-			case "dislike.params": {
-				/** @type {P_dislike_params} */
-				let u=as_any(x);
-				this.P_dislike_params(u);
-			} break;
-			case "subscribe_button.entity_key": {
-				/** @type {P_subscribe_button_entity_key} */
-				let u=as_any(x);
-				this.P_subscribe_button_entity_key(u);
-			} break;
-			case "subscribe.params": {
-				/** @type {P_subscribe_params} */
-				let u=as_any(x);
-				this.P_subscribe_params(u);
-			} break;
-			case "unsubscribe.params": {
-				/** @type {P_unsubscribe_params} */
-				let u=as_any(x);
-				this.P_unsubscribe_params(u);
-			} break;
-			case "continuation_request.watch_next.token": {
-				/** @type {P_continuation_request_watch_next_token} */
-				let u=as_any(x);
-				this.P_continuation_request_watch_next_token(u);
-			} break;
-			case "entity_key.normal": {
-				/** @type {P_entity_key_normal} */
-				let u=as_any(x);
-				this.P_entity_key_normal(u);
-			} break;
-			case "watch_playlist.params": {
-				/** @type {P_watch_playlist_params} */
-				let u=as_any(x);
-				this.P_watch_playlist_params(u);
-			} break;
-			case "playlist_loop_state.entity.key": {
-				/** @type {P_playlist_loop_state_entity_key} */
-				let u=as_any(x);
-				this.P_playlist_loop_state_entity_key(u);
-			} break;
-			case "load_markers.entity_key": {
-				/** @type {P_load_markers_entity_key} */
-				let u=as_any(x);
-				this.P_load_markers_entity_key(u);
-			} break;
-			case "create_backstage_post.params": {
-				/** @type {P_create_backstage_post_params} */
-				let u=as_any(x);
-				this.P_create_backstage_post_params(u);
-			} break;
-			case "subscription_state.key": {
-				/** @type {PG_subscription_state_key} */
-				let u=as_any(x);
-				this.PG_subscription_state_key(u);
-			} break;
-			case "shorts.source.bp": {
-				/** @type {P_shorts_source_bp} */
-				let u=as_any(x);
-				this.P_shorts_source_bp(u);
-			} break;
-			case "get_transcript.params": {
-				/** @type {P_get_transcript_params} */
-				let u=as_any(x);
-				this.P_get_transcript_params(u);
-			} break;
-			case "transcript_track_selection.entity.key": {
-				/** @type {P_transcript_track_selection_entity_key} */
-				let u=as_any(x);
-				this.P_transcript_track_selection_entity_key(u);
-			} break;
-			case "transcript_track_selection.serialized_params": {
-				/** @type {P_transcript_track_selection_serialized_params} */
-				let u=as_any(x);
-				this.P_transcript_track_selection_serialized_params(u);
-			} break;
-			case "continuation_request.reel_watch_sequence.token": {
-				/** @type {P_continuation_request_reel_watch_sequence_token} */
-				let u=as_any(x);
-				this.P_continuation_request_reel_watch_sequence_token(u);
-			} break;
-			case "reel.sequence_params": {
-				/** @type {P_reel_sequence_params} */
-				let u=as_any(x);
-				this.P_reel_sequence_params(u);
-			} break;
-			case "get_pdg_buy_flow.params": {
-				/** @type {P_get_pdg_buy_flow_params} */
-				let u=as_any(x);
-				this.P_get_pdg_buy_flow_params(u);
-			} break;
-			case "continuation.params": {
-				/** @type {PR_continuation_params} */
-				let u=as_any(x);
-				this.PR_continuation_params(u);
-			} break;
-			case "create_comment.params": {
-				/** @type {P_create_comment_params} */
-				let u=as_any(x);
-				this.P_create_comment_params(u);
-			} break;
-			case "aadc_guidelines_state.entity_key": {
-				/** @type {P_aadc_guidelines_state_entity_key} */
-				let u=as_any(x);
-				this.P_aadc_guidelines_state_entity_key(u);
-			} break;
-			case "trending.bp": {
-				/** @type {P_trending_bp} */
-				let u=as_any(x);
-				this.P_trending_bp(u);
-			} break;
-			case "ypc_get_offers.params": {
-				/** @type {P_ypc_get_offers_params} */
-				let u=as_any(x);
-				this.P_ypc_get_offers_params(u);
-			} break;
-			default: {
-				if(this._continuation_logged_str.includes(cf)) break;
-				this.decode_binary_object_log_info(cf,x);
-				debugger;
-			} break;
-		}
-	}
+	//#region get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
 	/** @private @arg {P_ypc_get_offers_params} x */
-	P_ypc_get_offers_params(x) {x;}
+	P_ypc_get_offers_params(x) {
+		const cf="P_ypc_get_offers_params";
+		const {1: a,3: {},5: {},...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
@@ -3186,7 +3001,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
-		const {4: {},5: {},6: {},7: {},9: {},10: {},13: {},14: {},...y}=this.s(cf,x); this.g(y);
+		const {4: {},5: {}={},6: {},7: {},9: {},10: {},13: {},14: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
@@ -3234,6 +3049,197 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		debugger;
+	}
+	//#endregion
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
+	binary_result(cf,x) {
+		switch(cf) {
+			case "params.click_tracking": {
+				/** @type {G_PR_TrackingObj} */
+				let v=as_any(x);
+				this.P_Typed_TrackingObj({type: "click_tracking",v});
+			} break;
+			case "params.tracking": {
+				/** @type {P_tracking_params} */
+				let v=as_any(x);
+				this.P_Typed_TrackingObj({type: "tracking",v});
+			} break;
+			case "reel.player_params": {
+				/** @type {P_reel_player_params} */
+				let u=as_any(x);
+				this.P_reel_player_params(u);
+			} break;
+			case "create_playlist.params": {
+				/** @type {P_create_playlist_params} */
+				let u=as_any(x);
+				this.P_create_playlist_params(u);
+			} break;
+			case "continuation_request.browse.token": {
+				/** @type {PR_continuation_request_browse_token} */
+				let u=as_any(x);
+				this.PR_continuation_request_browse_token(u);
+			} break;
+			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
+				/** @type {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} */
+				let u=as_any(x);
+				this.P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(u);
+			} break;
+			case "ad_layout.ad_serving_data_entry": {
+				/** @type {P_ad_layout_ad_serving_data_entry} */
+				let u=as_any(x);
+				this.P_ad_layout_ad_serving_data_entry(u);
+			} break;
+			case "reel.params": {
+				/** @type {P_reel_params} */
+				let u=as_any(x);
+				this.P_reel_params(u);
+			} break;
+			case "logging_context.serialized_context_data": {
+				/** @type {P_logging_context_serialized_context_data} */
+				let u=as_any(x);
+				this.P_logging_context_serialized_context_data(u);
+			} break;
+			case "like.params": {
+				/** @type {P_like_params} */
+				let u=as_any(x);
+				this.P_like_params(u);
+			} break;
+			case "playability_status.context_params": {
+				/** @type {P_playability_status_context_params} */
+				let u=as_any(x);
+				this.P_playability_status_context_params(u);
+			} break;
+			case "entity.key": {
+				/** @type {P_entity_key} */
+				let u=as_any(x);
+				this.P_entity_key(u);
+			} break;
+			case "remove_like.params": {
+				/** @type {P_remove_like_params} */
+				let u=as_any(x);
+				this.P_remove_like_params(u);
+			} break;
+			case "dislike.params": {
+				/** @type {P_dislike_params} */
+				let u=as_any(x);
+				this.P_dislike_params(u);
+			} break;
+			case "subscribe_button.entity_key": {
+				/** @type {P_subscribe_button_entity_key} */
+				let u=as_any(x);
+				this.P_subscribe_button_entity_key(u);
+			} break;
+			case "subscribe.params": {
+				/** @type {P_subscribe_params} */
+				let u=as_any(x);
+				this.P_subscribe_params(u);
+			} break;
+			case "unsubscribe.params": {
+				/** @type {P_unsubscribe_params} */
+				let u=as_any(x);
+				this.P_unsubscribe_params(u);
+			} break;
+			case "continuation_request.watch_next.token": {
+				/** @type {P_continuation_request_watch_next_token} */
+				let u=as_any(x);
+				this.P_continuation_request_watch_next_token(u);
+			} break;
+			case "entity_key.normal": {
+				/** @type {P_entity_key_normal} */
+				let u=as_any(x);
+				this.P_entity_key_normal(u);
+			} break;
+			case "watch_playlist.params": {
+				/** @type {P_watch_playlist_params} */
+				let u=as_any(x);
+				this.P_watch_playlist_params(u);
+			} break;
+			case "playlist_loop_state.entity.key": {
+				/** @type {P_playlist_loop_state_entity_key} */
+				let u=as_any(x);
+				this.P_playlist_loop_state_entity_key(u);
+			} break;
+			case "load_markers.entity_key": {
+				/** @type {P_load_markers_entity_key} */
+				let u=as_any(x);
+				this.P_load_markers_entity_key(u);
+			} break;
+			case "create_backstage_post.params": {
+				/** @type {P_create_backstage_post_params} */
+				let u=as_any(x);
+				this.P_create_backstage_post_params(u);
+			} break;
+			case "subscription_state.key": {
+				/** @type {PG_subscription_state_key} */
+				let u=as_any(x);
+				this.PG_subscription_state_key(u);
+			} break;
+			case "shorts.source.bp": {
+				/** @type {P_shorts_source_bp} */
+				let u=as_any(x);
+				this.P_shorts_source_bp(u);
+			} break;
+			case "get_transcript.params": {
+				/** @type {P_get_transcript_params} */
+				let u=as_any(x);
+				this.P_get_transcript_params(u);
+			} break;
+			case "transcript_track_selection.entity.key": {
+				/** @type {P_transcript_track_selection_entity_key} */
+				let u=as_any(x);
+				this.P_transcript_track_selection_entity_key(u);
+			} break;
+			case "transcript_track_selection.serialized_params": {
+				/** @type {P_transcript_track_selection_serialized_params} */
+				let u=as_any(x);
+				this.P_transcript_track_selection_serialized_params(u);
+			} break;
+			case "continuation_request.reel_watch_sequence.token": {
+				/** @type {P_continuation_request_reel_watch_sequence_token} */
+				let u=as_any(x);
+				this.P_continuation_request_reel_watch_sequence_token(u);
+			} break;
+			case "reel.sequence_params": {
+				/** @type {P_reel_sequence_params} */
+				let u=as_any(x);
+				this.P_reel_sequence_params(u);
+			} break;
+			case "get_pdg_buy_flow.params": {
+				/** @type {P_get_pdg_buy_flow_params} */
+				let u=as_any(x);
+				this.P_get_pdg_buy_flow_params(u);
+			} break;
+			case "continuation.params": {
+				/** @type {PR_continuation_params} */
+				let u=as_any(x);
+				this.PR_continuation_params(u);
+			} break;
+			case "create_comment.params": {
+				/** @type {P_create_comment_params} */
+				let u=as_any(x);
+				this.P_create_comment_params(u);
+			} break;
+			case "aadc_guidelines_state.entity_key": {
+				/** @type {P_aadc_guidelines_state_entity_key} */
+				let u=as_any(x);
+				this.P_aadc_guidelines_state_entity_key(u);
+			} break;
+			case "trending.bp": {
+				/** @type {P_trending_bp} */
+				let u=as_any(x);
+				this.P_trending_bp(u);
+			} break;
+			case "ypc_get_offers.params": {
+				/** @type {P_ypc_get_offers_params} */
+				let u=as_any(x);
+				this.P_ypc_get_offers_params(u);
+			} break;
+			default: {
+				if(this._continuation_logged_str.includes(cf)) break;
+				this.decode_binary_object_log_info(cf,x);
+				debugger;
+			} break;
+		}
 	}
 	//#endregion binary
 	//#endregion

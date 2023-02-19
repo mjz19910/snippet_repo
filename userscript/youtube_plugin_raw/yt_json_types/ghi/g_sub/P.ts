@@ -9,7 +9,7 @@ type V_ShortTimestamp={
 };
 type P_ad_layout_ad_serving_data_entry={
 	4: T_D32<3>;
-	5: T_D32<2>;
+	5?: T_D32<2>;
 	6: T_D32<8>;
 	7: T_D32<4>;
 	9: VW_BinaryTimestamp;
@@ -337,4 +337,9 @@ type P_ypc_get_offers_params={
 		}>;
 		9: T_D32<2>;
 	}>;
+};
+type P_macro_marker_repeat_state_entity_key={
+	2: TV_Str<"repeat_state">,
+	4: T_D32<329>,
+	5: T_D32<1>
 };

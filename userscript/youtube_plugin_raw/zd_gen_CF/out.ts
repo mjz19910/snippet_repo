@@ -566,6 +566,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_trending_bp";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_unsubscribe_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_watch_playlist_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ypc_get_offers_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_ShareEntityService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RCA_RelevantStateTags";}
