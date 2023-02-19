@@ -230,6 +230,7 @@ class IndexedDBService extends BaseService {
 									await this.update(obj_store,item);
 								} catch(e) {
 									console.log("update sync failed",e);
+									throw e;
 								}
 							} break cursor_loop;
 							// not a dynamic value
@@ -259,6 +260,7 @@ class IndexedDBService extends BaseService {
 			}
 		} catch(e) {
 			console.log("db error",e);
+			throw e;
 		} finally {
 			this.database_open=false;
 			if(this.log_db_actions) console.log("close db");

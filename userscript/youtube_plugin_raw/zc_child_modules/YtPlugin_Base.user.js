@@ -377,7 +377,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					window.yt_plugin?.get_save_db().save_string("body_element",["arr",fut_data]);
+					window.yt_plugin?.save_db.save_string("body_element",["arr",fut_data]);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -1850,7 +1850,7 @@ class ServiceResolver {
 //#region main
 function yt_plugin_base_main() {
 	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
-	setTimeout(() => {window.yt_plugin?.get_data_saver().num_bitmap_console();},4000);
+	setTimeout(() => {window.yt_plugin?.save_db.num_bitmap_console();},4000);
 	const log_enabled_page_type_change=false;
 	/** @private @type {ServiceResolverBox<ServiceLoader,ServiceOptions>} */
 	const resolver_value={value: null};
@@ -2104,7 +2104,7 @@ class BaseServicePrivate extends ApiBase {
 		} while(ps!==s);
 		return s;
 	}
-	/** @protected @this {BaseServicePrivate<ServiceLoader,{}>} */
+	/** @public @this {BaseServicePrivate<ServiceLoader,{}>} */
 	get save_db() {return this.x.get("save_db");}
 	/** @arg {string} x */
 	trim_brackets(x) {
@@ -3020,8 +3020,6 @@ class YtPlugin extends BaseService {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
-	get_save_db() {return this.save_db;}
-	get_data_saver() {return this.save_db;}
 }
 function h_detect_firefox() {
 	let ua=navigator.userAgent;
