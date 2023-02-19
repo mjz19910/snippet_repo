@@ -1600,15 +1600,15 @@ class ServiceMethods extends ServiceData {
 	playlistId(x) {this.parse_playlist_id(x);}
 	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
 	convert_value_item_to_param_item(x) {
-		if(typeof x==='string') return {0: ["raw",["string",x]]};
-		if(typeof x==="number") return {0: ["raw",["number",x]]};
+		if(typeof x==='string') return {0: ["param_arr",[["raw",["string",x]]]]};
+		if(typeof x==="number") return {0: ["param_arr",[["raw",["number",x]]]]};
 		if(x instanceof Map) {
 			let x1=this.convert_map_to_obj(x);
 			if(!x1) {debugger; return null;}
-			return {0: ["raw",["V_ParamMapType",x]]};
+			return {0: ["param_arr",[["raw",["V_ParamMapType",x]]]]};
 		}
 		if(x instanceof Array) {
-			if(x[0]==="bigint") return {0: ["raw",["bigint",x[2]]]};
+			if(x[0]==="bigint") return {0: ["param_arr",[["raw",["bigint",x[2]]]]]};
 			if(x[0]==="group") {
 				const [,r]=x;
 				let vr=this.convert_arr_to_obj(r);
@@ -1619,7 +1619,7 @@ class ServiceMethods extends ServiceData {
 			x==="";
 			return null;
 		}
-		if(x instanceof Uint8Array) return {0: ["raw",["binary",x]]};
+		if(x instanceof Uint8Array) return {0: ["param_arr",[["raw",["binary",x]]]]};
 		x==="";
 		return null;
 	}
@@ -1681,42 +1681,43 @@ class ServiceMethods extends ServiceData {
 							debugger;
 							continue;
 						}
-						res_obj[id]=["raw",["string",decoded_string]];
+						res_obj[id]??=[];
+						res_obj[id].push(["raw",["string",decoded_string]]);
 						continue;
 					}
-					res_obj[id]=[n,a,this.convert_arr_to_obj(b)];
+					res_obj[id]??=[]; res_obj[id].push([n,a,this.convert_arr_to_obj(b)]);
 				} break;
 				case "data32": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,a];
+					res_obj[id]??=[]; res_obj[id].push([n,a]);
 				} break;
 				case "data64": {
 					let [n,id,a,b]=v;
-					res_obj[id]=[n,a,b];
+					res_obj[id]??=[]; res_obj[id].push([n,a,b]);
 				} break;
 				case "data_fixed32": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,a];
+					res_obj[id]??=[]; res_obj[id].push([n,a]);
 				} break;
 				case "data_fixed64": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,a];
+					res_obj[id]??=[]; res_obj[id].push([n,a]);
 				} break;
 				case "error": {
 					let [n,id]=v;
-					res_obj[id]=[n,id];
+					res_obj[id]??=[]; res_obj[id].push([n,id]);
 				} break;
 				case "group": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,this.convert_arr_to_obj(a)];
+					res_obj[id]??=[]; res_obj[id].push([n,this.convert_arr_to_obj(a)]);
 				} break;
 				case "info": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,a];
+					res_obj[id]??=[]; res_obj[id].push([n,a]);
 				} break;
 				case "struct": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,this.convert_arr_to_obj(a)];
+					res_obj[id]??=[]; res_obj[id].push([n,this.convert_arr_to_obj(a)]);
 				} break;
 			}
 		}
