@@ -1854,11 +1854,18 @@ class ServiceMethods extends ServiceData {
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @protected @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	/** @arg {{ai:string;sigh:string;cid:string;ad_mt:"[AD_MT]";acvw: "[VIEWABILITY]";gv: "[GOOGLE_VIEWABILITY]";nb: "[NB]";label: "video_click_to_advertiser_site";}} x */
+	DU_UrlParams(x) {
+		const cf="DU_UrlParams";
+		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
+	}
 	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
 	DU_UrlParse(x) {
 		if(x.host!=="www.youtube.com") debugger;
 		if(x.pathname!=="/pagead/paralleladinteraction") debugger;
-		let pa=x.search.split("?")[1].split("&"); pa;
+		let obj=this.parse_url_search_params(x.search);
+		this.DU_UrlParams(obj);
+		let {...u}=obj; u;
 		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
 	}
 	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]["baseUrl"]} x */
