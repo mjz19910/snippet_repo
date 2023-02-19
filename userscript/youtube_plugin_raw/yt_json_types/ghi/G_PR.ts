@@ -6,6 +6,17 @@ type G_PR_TrackingObj=
 	|PR_TrackingObj_9w
 	|G_PR_TrackingObj_16
 	|G_PR_TrackingObj_19
+	|{
+		1: T_D32<0>,
+		2: T_D32<13187>,
+		4: T_VW_2<V_BinaryTimestamp>,
+		6: ["raw_child",T_Uint8Array<8>,null,["string","autoplay"]],
+		9: T_VW_Bigint<4348958335366330930n>,
+		19: T_VW_2<{
+			1: T_D32<16>,
+			2: T_D32<3832>;
+		}>;
+	}
 	;
 ;
 type G_PR_TrackingObj_3=PR_TrackingObj_3w8n|PR_TrackingObj_3w8w;
