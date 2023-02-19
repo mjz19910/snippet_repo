@@ -1882,7 +1882,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					if(!fk(box)) continue;
 					switch(arr[0]) {
 						case "many": {
-							let from_db=box.id[1];
+							let from_db=box.value[1];
 							if(from_db[0]!=="many") continue;
 							for(let src_item of arr[1]) {
 								let has=from_db[1].find(v => this.eq_keys(v,src_item));
@@ -1900,17 +1900,18 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				this.indexed_db.put("boxed_id",{
 					key: find_key,
 					type: "str",
-					id: ["many_str",arr],
+					id: key,
+					value: ["many_str",arr],
 				},3);
 			}
 		}
 	}
 	log_load_database=false;
-	/** @arg {T_IdBox<B_IdSrcStr, "str", string>} to_load @arg {StoreDescription<string>} ss */
+	/** @arg {T_IdBox<B_IdSrcStr,string, "str", string>} to_load @arg {StoreDescription<string>} ss */
 	async _load_str_type(to_load,ss) {
 		/** @type {string[][]} */
 		let str_arr=[];
-		for(let item of to_load.id[1][1]) {
+		for(let item of to_load.value[1][1]) {
 			if(item instanceof Array) {
 				let res=[];
 				for(let val of item) {
@@ -1969,22 +1970,33 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	/** @template T @arg {StoreDescription<T>} store @arg {[string, make_arr_t<T> | make_many_t<T>]} item */
 	async push_store_item_to_database(store,item) {
-		/** @type {(T_IdBox<B_IdSrcNum,"num",number> | T_IdBox<B_IdSrcStr,"str",string>)[]} */
+		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
+		let s_box=[];
+		/** @type {(T_IdBox<B_IdSrcNum,string,"num",number>|T_IdBox<B_IdSrcStr,string,"str",string>)[]} */
 		let i_box=[];
 		let boxed=await this.indexed_db.getAll("boxed_id"); boxed; store; item;
 		for(let box of boxed) {
 			switch(box.type) {
-				case "str": if(store.content==="string"||store.content==="keys") i_box.push(box); break;
+				case "str": if(store.content==="string"||store.content==="keys") s_box.push(box); break;
 				case "num": if(store.content==="number") i_box.push(box); break;
 			}
 		}
-		for(let box of i_box) {
-			if(box.id[0]==="many_num"&&store.content==="number") {
-				debugger;
+		let found=false;
+		for(let box of s_box) {
+			if(box.id===item[0]) {
+				found=true;
+				let [,box_b]=box.value;
+				let [,item_b]=item;
+				let [item_c]=item_b; let [box_c]=box_b;
+				if(item_c!==box_c) {
+					debugger;
+				}
 			}
+		}
+		if(!found) {
+			box.value;
 			debugger;
 		}
-		debugger;
 	}
 	/** @template T @arg {StoreDescription<T>} store */
 	async push_store_to_database(store) {
