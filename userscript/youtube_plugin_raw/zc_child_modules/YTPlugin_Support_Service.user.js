@@ -1716,22 +1716,6 @@ class StoreData {
 		new_data: [],
 		type: "unknown",
 	};
-	/** @type {StoreDescription<string>} */
-	seen_string_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-		type: "string",
-	};
-	/** @type {StoreDescription<string>} */
-	seen_keys_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-		type: "string",
-	};
 	/** @type {StoreDescription<number>} */
 	seen_number_obj={
 		/** @type {Map<string,number>} */
@@ -1748,16 +1732,32 @@ class StoreData {
 		new_data: [],
 		type: "unknown",
 	};
+	/** @type {StoreDescription<string>} */
+	seen_string_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+		type: "string",
+	};
+	/** @type {StoreDescription<string>} */
+	seen_keys_obj={
+		/** @type {Map<string,number>} */
+		index: new Map,
+		data: [],
+		new_data: [],
+		type: "string",
+	};
 	/** @returns {StoreDescription<boolean>} */
 	get_boolean_store() {return this.seen_bool_obj;}
-	/** @returns {StoreDescription<string>} */
-	get_string_store() {return this.seen_string_obj;}
-	/** @returns {StoreDescription<string>} */
-	get_keys_store() {return this.seen_keys_obj;}
 	/** @returns {StoreDescription<number>} */
 	get_number_store() {return this.seen_number_obj;}
 	/** @returns {StoreDescription<number>} */
 	get_root_visual_elements_store() {return this.seen_ve_num_obj;}
+	/** @returns {StoreDescription<string>} */
+	get_string_store() {return this.seen_string_obj;}
+	/** @returns {StoreDescription<string>} */
+	get_keys_store() {return this.seen_keys_obj;}
 	get_changed_stores() {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
 		let changed=[];
