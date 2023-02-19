@@ -1803,9 +1803,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	#idle_id=null;
 	#onDataChange() {
 		if(this.#idle_id!==null) return;
-		this.#idle_id=requestIdleCallback(() => {
+		this.#idle_id=requestIdleCallback(async () => {
 			this.#idle_id=null;
-			this.load_database();
+			await this.load_database();
 			this.is_ready=true;
 		});
 	}
