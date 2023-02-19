@@ -1863,10 +1863,8 @@ class ServiceMethods extends ServiceData {
 	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
 	DU_UrlParse(x) {
 		const cf="DU_UrlParse";
-		if(x.host!=="www.youtube.com") debugger;
 		this.save_string(`${cf}.host`,x.host);
-		if(x.pathname!=="/pagead/paralleladinteraction") debugger;
-		this.save_string(`${cf}.pathname`,x.pathname);
+		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
 		this.DU_UrlParams(this.parse_url_search_params(x.search));
 	}
 	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]["baseUrl"]} x */
