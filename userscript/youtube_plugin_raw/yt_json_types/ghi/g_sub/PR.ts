@@ -1,15 +1,3 @@
-type PR_TrackingObj_16w3n={
-	1: T_D32<0>;
-	2: T_D32<13188>;
-	4: T_VW_2<V_BinaryTimestamp>;
-	16: T_VW_2<{
-		1: T_D32<41>;
-		2: T_D32<6075>;
-		3: T_D32<0>;
-		4: T_VW_2<V_BinaryTimestamp>;
-	}>;
-};
-
 type PR_TrackingObj_16n3n={
 	1: T_D32<0>;
 	2: T_D32<13188>;
@@ -38,20 +26,6 @@ type PR_TrackingObj_6w2w={
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VSR<"watch">;
 };
-type PR_TrackingObj_19w11w={
-	1: T_D32<416>;
-	2: T_D32<6236>;
-	3?: T_D32<10>;
-	4: T_VW_2<V_BinaryTimestamp>;
-	6: T_VW_2<{
-		5: T_FD32<number>;
-	}>;
-	11: T_VSR<"FEwhat_to_watch">;
-	19: T_VW_2<{
-		2: T_D32<3854>;
-		3: T_D32<158>;
-	}>;
-};
 type PR_TrackingObj_6w3w={
 	1: T_D32<332>;
 	2: T_D32<6180>;
@@ -66,6 +40,31 @@ type PR_TrackingObj_9w={
 	3: T_D32<1>;
 	4: T_VW_2<V_BinaryTimestamp>;
 	9: T_VW_Bigint<bigint>;
+};
+type PR_TrackingObj_16w3n={
+	1: T_D32<0>;
+	2: T_D32<13188>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	16: T_VW_2<{
+		1: T_D32<41>;
+		2: T_D32<6075>;
+		3: T_D32<0>;
+		4: T_VW_2<V_BinaryTimestamp>;
+	}>;
+};
+type PR_TrackingObj_19w11w={
+	1: T_D32<416>;
+	2: T_D32<6236>;
+	3?: T_D32<10>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	6: T_VW_2<{
+		5: T_FD32<number>;
+	}>;
+	11: T_VSR<"FEwhat_to_watch">;
+	19: T_VW_2<{
+		2: T_D32<3854>;
+		3: T_D32<158>;
+	}>;
 };
 type PR_TrackingObj_19w3n={
 	1: T_D32<0>;
