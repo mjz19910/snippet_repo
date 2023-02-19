@@ -177,6 +177,7 @@ type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type D_EngagementPanelTargetId=
 	|"engagement-panel-error-corrections"
+	|"engagement-panel-macro-markers-problem-walkthroughs"
 	|SI_VE76278_EngagementPanel["targetId"]
 	|SI_VE126250_EngagementPanel["targetId"]
 	|"engagement-panel-clip-view"

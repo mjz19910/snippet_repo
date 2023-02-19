@@ -5,6 +5,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.visibility";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "DE_SignalNavigation.signal";}
+		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_EngagementPanelTargetId:AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_GuideEntry_TargetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_RichMetadata";}

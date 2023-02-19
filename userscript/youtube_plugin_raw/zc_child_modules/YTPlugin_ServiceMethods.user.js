@@ -92,7 +92,7 @@ class ServiceMethods extends ServiceData {
 	str_starts_with_rx_in_arr(x,sw) {
 		return this.str_starts_with(x[1],sw);
 	}
-	/** @public @template {string} T @arg {[T]} x @template {string} U @arg {U} needle @returns {x is [T extends `${infer B}${infer R}`?`${B}${Some<R>}${string}${U}`:`${string}${U}`]} */
+	/** @public @template {string} T @arg {[T]} x @template {string} U @arg {U} needle @returns {x is [T extends `${infer B}${infer R}`?`${B}${T_Str_Some<R>}${string}${U}`:`${string}${U}`]} */
 	str_ends_with_arr(x,needle) {return this.str_starts_with(x[0],needle);}
 	/** @public @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {return this.wn("TR_ItemSection_2",x,"itemSectionRenderer");}
@@ -857,10 +857,11 @@ class ServiceMethods extends ServiceData {
 	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(x));}
 	/** @protected @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
-	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf @arg {D_EngagementPanelTargetId} x */
-	D_EngagementPanelTargetId(cf,x) {
+	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf2 @arg {D_EngagementPanelTargetId} x */
+	D_EngagementPanelTargetId(cf2,x) {
+		const cf1="D_EngagementPanelTargetId";
 		switch(x) {
-			default: x===""; this.cg.codegen_case(`${cf}.targetId`,x); break;
+			default: x===""; this.cg.codegen_case(`${cf1}:${cf2}.targetId`,x); break;
 			case "engagement-panel-clip-create":
 			case "engagement-panel-clip-view":
 			case "engagement-panel-comments-section":
@@ -869,6 +870,7 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-macro-markers-description-chapters":
 			case "engagement-panel-searchable-transcript":
 			case "engagement-panel-structured-description":
+			case "engagement-panel-macro-markers-problem-walkthroughs":
 		}
 	}
 	/** @protected @arg {RA_Notification} x */
