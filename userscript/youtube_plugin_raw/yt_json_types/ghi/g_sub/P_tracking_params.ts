@@ -42,13 +42,18 @@ type P_tracking_params={
 	3: T_D32<3>;
 	4: VW_BinaryTimestamp;
 }|{
-	1: T_D32<175>,
-	2: T_D32<62457>,
-	3: T_D32<3>,
-	4: VW_BinaryTimestamp
+	1: T_D32<175>;
+	2: T_D32<62457>;
+	3: T_D32<3>;
+	4: VW_BinaryTimestamp;
 }|{
-	1: T_D32<249>,
-	2: T_D32<62457>,
-	3: T_D32<4>,
-	4: VW_BinaryTimestamp
+	1: T_D32<249>;
+	2: T_D32<62457>;
+	3: T_D32<4>;
+	4: VW_BinaryTimestamp;
+}|{
+	1: T_D32<359>;
+	2: T_D32<5531>;
+	4: T_VW_2<V_BinaryTimestamp>;
+	6: T_VSR<"watch">;
 };
