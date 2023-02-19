@@ -1266,7 +1266,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(do_break) {debugger;}
 	}
-	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:T_VW<{}>;}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
+	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f) {
 		if(!x) {debugger; return null;}
 		this.k(cf,x);
@@ -1280,7 +1280,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/**
 	 * @protected
-	 * @template V @template {PropertyKey} K @template {{[U in K]:T_VW<{}>;}} T
+	 * @template V @template {PropertyKey} K @template {{[U in K]:[T];}} T
 	 * @arg {K} k @arg {CF_H_a} cf @arg {T} x @arg {(this:this,x:T[K][0])=>V} f
 	 * @returns {[y,ret]}
 	 */
@@ -2406,10 +2406,26 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {const cf="P_tracking_params"; this.k(cf,x);}
-	/** @protected @template T @arg {T_VW_2<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	/** @protected @template T @arg {T_VW_2<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)|null} */
 	T_VW_2(x,f) {
-		if(x[0]!=="child") {debugger; return null;}
-		return f.call(this,x[2]);
+		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
+		function assume_ret(_x,_ret_ex) {}
+		/** @returns {FT extends null?T:U} */
+		function ret_ex() {throw new Error();}
+		if(x[0]!=="param_arr") {debugger; return null;}
+		if(x[1].length!==1) {debugger; return null;}
+		let [v]=x[1];
+		if(v[0]!=="child") {debugger; return null;}
+		let ret;
+		if(f===null) {
+			ret=v[2];
+			assume_ret(ret,ret_ex);
+			return ret;
+		} else {
+			ret=f.call(this,v[2]);
+			assume_ret(ret,ret_ex);
+			return ret;
+		}
 	}
 	/** @protected @template T @arg {T_VW<T>} x */
 	T_VW(x) {
@@ -2422,9 +2438,10 @@ class HandleTypes extends ServiceMethods {
 		if(x.length!==2) debugger;
 		return this.T_VW(x[1]);
 	}
-	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16][2]} x */
-	PR_TrackingObj_f16(x) {
+	/** @protected @arg {Extract<G_PR_TrackingObj,{16:any}>[16]} vw */
+	PR_TrackingObj_f16(vw) {
 		const cf="G_PR_TrackingObj_f16";
+		let x=this.T_VW_2(vw,null);
 		const {1: f1}=this.s(cf,x);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
