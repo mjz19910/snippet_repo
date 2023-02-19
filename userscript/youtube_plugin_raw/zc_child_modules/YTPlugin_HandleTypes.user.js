@@ -2618,21 +2618,25 @@ class HandleTypes extends ServiceMethods {
 			let [type,cf,name,size,value]=log;
 			if(type!=="number") continue;
 			if(ms_set.has(value)) continue;
-			if(value>=0b101111101010000010100101011110011001110101100111000) {
+			if(value>=0b101111101010000000000000000000000000000000000000000) {
 				ms_set.add(value);
 				let lp=this.load_moment_js_if_not_loaded();
 				if(lp!==null) await lp;
 				let moment=require("moment");
 				switch(size) {
 					case "milliseconds": {
-						let exp_m_from_now=moment(value/1000).fromNow();
-						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now}]`);
+						let exp_m_from_now=moment(this.client_now).diff(value/1000)/1000;
+						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
 					} break;
 				}
+				continue;
 			}
 			console.log(cf,name,value);
 		}
 	}
+	/** @type {number} */
+	static client_now=Date.now();
+	client_now=HandleTypes.client_now;
 	/** @type {null|Promise<void>} */
 	imm_wait_promise=null;
 	immediate_run_logger() {
