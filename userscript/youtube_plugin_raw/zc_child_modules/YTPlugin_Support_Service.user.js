@@ -176,9 +176,9 @@ class Support_RS_Player extends ServiceMethods {
 			this.handle_types.D_TimedTextApi(rx);
 		}
 		this.G_Text(name);
-		this.save_string(`${cf}.vssId`,vssId);
-		this.save_string(`${cf}.languageCode`,languageCode);
-		this.t(kind,x => this.save_string(`${cf}.kind`,x));
+		this.save_string_one(`${cf}.vssId`,vssId);
+		this.save_string_one(`${cf}.languageCode`,languageCode);
+		this.t(kind,x => this.save_string_one(`${cf}.kind`,x));
 		if(isTranslatable!==true) debugger;
 	}
 	/** @private @arg {D_AudioTrackItem} x */
@@ -234,9 +234,9 @@ class Support_RS_Player extends ServiceMethods {
 	D_HeartbeatParams(x) {
 		const cf="D_HeartbeatParams";
 		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
+		this.save_string_one(`${cf}.intervalMilliseconds`,intervalMilliseconds);
 		this.ceq(softFailOnError,false);
-		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
+		this.save_string_one(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
 	/** @private @arg {D_Miniplayer} x */
 	D_Miniplayer(x) {
@@ -437,7 +437,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.a_primitive_str(program);
 		let interpreterUrl=this.UrlWrappedValueT(interpreterSafeUrl);
 		this.a_primitive_str(interpreterUrl);
-		this.save_number(`${cf}.serverEnvironment`,serverEnvironment);
+		this.save_number_one(`${cf}.serverEnvironment`,serverEnvironment);
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
@@ -457,8 +457,8 @@ class Support_RS_Player extends ServiceMethods {
 		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
 		this.parser.parse_url(cf,iframeUrl);
 		this.parser.parse_url(cf,flashUrl);
-		this.save_number(`${cf}.width`,width);
-		this.save_number(`${cf}.height`,height);
+		this.save_number_one(`${cf}.width`,width);
+		this.save_number_one(`${cf}.height`,height);
 		this.parser.parse_url(cf,flashSecureUrl);
 	}
 	/** @private @arg {D_VideoCategory} x */
@@ -567,7 +567,7 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {D_FormatFps} x */
 	D_FormatFps(x) {
 		const cf="D_FormatFps";
-		this.save_number(cf,x);
+		this.save_number_one(cf,x);
 	}
 	/** @private @arg {D_Range} x */
 	D_Range(x) {
@@ -620,7 +620,7 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_AudioTrack";
 		const {displayName,id,audioIsDefault,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(displayName);
-		this.save_string(`${cf}.id`,id);
+		this.save_string_one(`${cf}.id`,id);
 		this.ceq(audioIsDefault,false);
 	}
 	/** @private @arg {D_Card} x */
@@ -657,7 +657,7 @@ class Support_RS_Player extends ServiceMethods {
 	/** @arg {`${number}`} x */
 	_pn=x => this.mb(this.a_primitive_num,this._bd(x));
 	/** @arg {string} cf @arg {M_Optional<number>} x */
-	_ns=(cf,x) => this.mb(x => this.save_number(cf,x),x);
+	_ns=(cf,x) => this.mb(x => this.save_number_one(cf,x),x);
 	/** @arg {string} cf @arg {string} k @arg {`${number}`} x */
 	_ns_cf(cf,k,x) {this._ns(`${cf}.${k}`,this._bd(x));}
 	get ns() {return this._ns.bind(this);}
@@ -686,9 +686,9 @@ class Support_RS_Player extends ServiceMethods {
 	D_LearningResource(x) {
 		const cf="D_LearningResource";
 		const {learningResourceType,educationalLevel,educationalLevelCountry,...y}=this.s(cf,x); this.g(y);
-		this.save_string("D_LearningResource.learningResourceType",learningResourceType);
-		educationalLevel&&this.save_string("D_LearningResource.educationalLevel",educationalLevel);
-		educationalLevelCountry&&this.save_string("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
+		this.save_string_arr("D_LearningResource.learningResourceType",learningResourceType);
+		educationalLevel&&this.save_string_arr("D_LearningResource.educationalLevel",educationalLevel);
+		educationalLevelCountry&&this.save_string_one("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
 	}
 }
 class Support_RS_WatchPage extends ServiceMethods {
@@ -752,7 +752,7 @@ class Support_RS_Page_Browse extends ServiceMethods {
 				case 3854: {
 					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 					this._primitive_of(expirationTime,"number");
-					this.save_number(`${cf}.rootVe`,rootVe);
+					this.save_number_one(`${cf}.rootVe`,rootVe);
 				} break;
 				default: debugger; break;
 			}
@@ -951,7 +951,7 @@ class Support_GenericApi extends ServiceMethods {
 			return;
 		}
 		/** @private @arg {{type:string}} x */
-		let g=x => {return this.save_string("need_api_type",x.type);};
+		let g=x => {return this.save_string_one("need_api_type",x.type);};
 		switch(x.type) {case "_Generic": return g(x);}
 		/** @private */
 		this._current_response_type=x.type;
@@ -1686,7 +1686,7 @@ class Support_EventInput extends ServiceMethods {
 				debugger;
 			}
 			this.trackingParams(trackingParams);
-			this.save_string(`${cf2}.title`,title);
+			this.save_string_one(`${cf2}.title`,title);
 		}
 	}
 	/** @private @arg {D_Tab_History} x */
@@ -1810,11 +1810,11 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
 		if(!x) {debugger; return;}
-		if(typeof x!=="object") return this.save_string(`${k}.type`,typeof x);
-		if(x instanceof Array) return this.save_string(`${k}.type`,"array");
+		if(typeof x!=="object") return this.save_string_one(`${k}.type`,typeof x);
+		if(x instanceof Array) return this.save_string_one(`${k}.type`,"array");
 		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
-		return this.save_to_store("keys",k,keys.join(),store);
+		return this.save_to_store("keys",k,["arr",keys],store);
 	}
 	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
@@ -1828,11 +1828,11 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			this.#idle_id=null;
 			await this.load_database();
 			this.is_ready=true;
-			for(const msg of this.stored_log_messages) {
-				const [ns,log_msg,x]=msg;
-				console.log(`delayed [${ns}] ${log_msg}`,x);
-				let idx=this.stored_log_messages.indexOf(msg);
-				this.stored_log_messages.splice(idx,1);
+			for(const msg of this.stored_changes) {
+				const [,log_msg,x]=msg;
+				console.log(`delayed:${log_msg}`,x);
+				let idx=this.stored_changes.indexOf(msg);
+				this.stored_changes.splice(idx,1);
 			}
 		});
 	}
@@ -1875,7 +1875,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 								}
 							}
 						} break;
-						case "one": {
+						case "arr": {
 							debugger;
 						} break;
 					}
@@ -1914,7 +1914,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			let local_data=ss.data.find(v => v[0]===k_parts[1]);
 			if(!local_data) {
 				if(from_db.length!==1) {debugger; continue;}
-				ss.data.push([k_parts[1],["one",from_db]]);
+				ss.data.push([k_parts[1],["arr",from_db]]);
 				continue;
 			}
 			switch(local_data[1][0]) {
@@ -1923,7 +1923,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
 					local_data[1][1].push(from_db);
 				} break;
-				case "one": {
+				case "arr": {
 					if(from_db.length!==1) {debugger; continue;}
 					if(local_data[1][1].includes(from_db[0])) continue;
 					local_data[1][1].push(from_db[0]);
@@ -1940,14 +1940,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					if(ck[1].includes(from_db[0])) continue;
 					ck[1].push(from_db[0]);
 				} else {
-					if(ck[0]==="one") continue;
+					if(ck[0]==="arr") continue;
 					let mv=ck[1];
 					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
 					mv.push(from_db);
 				}
 				continue;
 			}
-			ss.data.push([k_parts[1],["one",from_db]]);
+			ss.data.push([k_parts[1],["arr",from_db]]);
 			debugger;
 		}
 	}
@@ -2049,27 +2049,27 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let idx=index.get(key);
 		if(idx) return data[idx];
 		idx=data.findIndex(e => e[0]===key);
-		if(idx<0) return this.add_to_index(key,["one",[]],store);
+		if(idx<0) return this.add_to_index(key,["arr",[]],store);
 		store.index.set(key,idx);
 		return data[idx];
 	}
-	/** @private @template T @arg {T|T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} data_item */
+	/** @private @template T @arg {["one",T]|make_arr_t<T>} x @arg {[string, ["arr", T[]] | ["many", T[][]]]} data_item */
 	save_to_data_item(x,data_item) {
 		let target=data_item[1];
-		if(x instanceof Array) {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
+		if(x[0]==="arr") {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
 	}
-	/** @private @template T @arg {T} x @arg {["one", T[]] | ["many", T[][]]} target */
+	/** @private @template T @arg {["one",T]} x @arg {["arr", T[]] | ["many", T[][]]} target */
 	add_one_to_data_arr(x,target) {
-		if(target[0]==="one") {if(!target[1].includes(x)) return target[1].push(x);} else if(target[0]==="many") {
+		if(target[0]==="arr") {if(!target[1].includes(x[1])) return target[1].push(x[1]);} else if(target[0]==="many") {
 			let res=target[1].find(([e,...r]) => !r.length&&e===x);
-			if(!res) return target[1].push([x]);
+			if(!res) return target[1].push([x[1]]);
 		}
 		return -1;
 	}
-	/** @private @template T @arg {T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} item */
+	/** @private @template T @arg {make_arr_t<T>} x @arg {[string, ["arr", T[]] | ["many", T[][]]]} item */
 	add_many_to_data_item(x,item) {
 		let target=item[1];
-		if(target[0]==="one") {
+		if(target[0]==="arr") {
 			let inner=target[1].map(e => [e]);
 			target=["many",inner];
 			item[1]=target;
@@ -2082,14 +2082,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 			return true;
 		});
-		if(!found) return target[1].push(x);
+		if(!found) return target[1].push(x[1]);
 		return -1;
 	}
 	is_ready=false;
 	/** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
-	/** @type {[DB_NS_TypeStr,string,string|number|boolean|(string|number|boolean)[]][]} */
-	stored_log_messages=[];
-	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {T|T[]} x @arg {StoreDescription<T>} store */
+	/** @type {[DB_NS_TypeStr,string,["one",string|number|boolean]|["arr",(string|number|boolean)[]]][]} */
+	stored_changes=[];
+	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {["one",T]|['arr',T[]]} x @arg {StoreDescription<T>} store */
 	save_to_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
@@ -2097,7 +2097,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		store.new_data.push([k,x]);
 		this.onDataChange();
 		if(!this.is_ready) {
-			this.stored_log_messages.push([ns,`store [${ns}] [${k}] %o`,x]);
+			this.stored_changes.push([ns,k,x]);
 			return false;
 		} else {
 			console.log(`store [${ns}] [${k}] %o`,x);
@@ -2110,15 +2110,15 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	#get_number_store() {return this.#data_store.get_number_store();}
 	do_random_breakpoint=false;
-	/** @api @public @arg {string} k @arg {number|number[]} x */
-	save_number_impl(k,x) {
-		if(x===void 0) {debugger; return;}
+	/** @api @public @arg {string} k @arg {["one",number]|make_arr_t<number>} x */
+	save_number(k,x) {
+		if(x===void 0) {debugger; return false;}
 		let store=this.#get_number_store();
 		return this.save_to_store("number",k,x,store);
 	}
-	/** @api @public @arg {string} k @arg {string|string[]} x */
-	save_string_impl(k,x) {
-		if(x===void 0) {debugger; return;}
+	/** @api @public @arg {string} k @arg {["one",string]|make_arr_t<string>} x */
+	save_string(k,x) {
+		if(x===void 0) {debugger; return false;}
 		let store=this.#get_string_store();
 		return this.save_to_store("string",k,x,store);
 	}
@@ -2138,7 +2138,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(!nn[1]) throw new Error();
 		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
-		this.save_string(`${ns_name}::${ns}`,no_ns_part);
+		this.save_string_one(`${ns_name}::${ns}`,no_ns_part);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
@@ -2196,9 +2196,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let g1=gg[1];
 		if(g1[0]==="many") return;
 		let sr=g1[1].slice().sort((a,b) => a-b);
-		this.save_number("arr.P_tracking_params.f1",sr);
+		this.save_number_arr("arr.P_tracking_params.f1",sr);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
-		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		this.save_string_one("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
 		this.#get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
 	}
 	/** @private @template T @arg {T[]} bitmap_src */
@@ -2297,8 +2297,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let bitmap_rle=this.rle_enc(bitmap);
 		return new BitmapResult(map_arr,bitmap_rle);
 	}
-	/** @api @public @arg {string} k @arg {boolean} x */
-	save_boolean_impl(k,x) {
+	/** @api @public @arg {string} k @arg {["one",boolean]} x */
+	save_boolean(k,x) {
 		let store=this.#data_store.get_boolean_store();
 		return this.save_to_store("boolean",k,x,store);
 	}

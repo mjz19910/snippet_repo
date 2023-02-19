@@ -67,5 +67,5 @@ type G_BoxedIdObj=T_IdBox<B_IdSrcNum>|T_IdBox<B_IdSrcStr>|{
 type T_IdBox<SV extends G_IdSrc,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${string}`;
 	type: T;
-	id: [`many_${T}`,["one",V[]]|["many",V[][]]];
+	id: [`many_${T}`,["arr",V[]]|["many",V[][]]];
 };

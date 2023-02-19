@@ -41,7 +41,7 @@ class ServiceLoader {
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
-		this.local_seen_db=new LocalStorageSeenDatabase(x);
+		this.save_db=new LocalStorageSeenDatabase(x);
 		this.yt_plugin=new YtPlugin(x);
 		this.modify_env=new ModifyEnv(x);
 		this.x_RS_Player=new Support_RS_Player(x);

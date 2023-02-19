@@ -47,7 +47,7 @@ class ParserService extends BaseService {
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
 		let vns=split_string(vv[1]," ")[1];
-		this.save_string("mime-type",vv[0]);
+		this.save_string_one("mime-type",vv[0]);
 		let v1=split_string(vns,"=")[1];
 		let codec_type_raw=this.extract_inner(v1,"\"");
 		if(this.str_has_sep(codec_type_raw,".")) {
@@ -128,7 +128,7 @@ class ParserService extends BaseService {
 				/** @private @type {D_ApiStatsAdsStr} */
 				let sp=as(a[1]);
 				let {...v}=this.parse_url_search_params(sp);
-				this.x.get("local_seen_db").save_keys_impl(`[${cf}.ads]`,v);
+				this.save_db.save_keys_impl(`[${cf}.ads]`,v);
 				// spell:disable-next
 				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}/*!*/=v; this.g(y);
 			} break;
@@ -212,11 +212,11 @@ class ParserService extends BaseService {
 		if(xx instanceof Array) {return xx.map(mapper);} else {return xx;}
 	}
 	/** @unused_api @protected @arg {string[]} x */
-	report$params(x) {this.save_string("report.params.path",x.join("$"));}
+	report$params(x) {this.save_string_one("report.params.path",x.join("$"));}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_number(path,x[1]);
-		this.save_string(path,`${x[2]}n`);
+		this.save_number_one(path,x[1]);
+		this.save_string_one(path,`${x[2]}n`);
 	}
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
 	to_param_obj(x) {
@@ -380,7 +380,7 @@ class ParserService extends BaseService {
 		let su1=split_string_once(su,"/");
 		if(su1.length===1) {
 			let [pt0]=su1;
-			this.save_string(`ve_6827.part[0]`,`${pt0}`);
+			this.save_string_one(`ve_6827.part[0]`,`${pt0}`);
 			switch(pt0) {
 				case "reporthistory": return;
 				default: debugger; return;
@@ -389,7 +389,7 @@ class ParserService extends BaseService {
 		switch(su1[0]) {
 			case "feed": {
 				let [pt]=split_string_once(su1[1],"?");
-				this.save_string(cf,`${su1[0]}/${pt}`);
+				this.save_string_one(cf,`${su1[0]}/${pt}`);
 				switch(pt) {
 					case "trending": break;
 					case "library": break;

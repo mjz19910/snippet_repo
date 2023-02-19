@@ -125,7 +125,8 @@ class IndexedDBService extends BaseService {
 		if(!value) {debugger; return;}
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
-		if(cache?.includes(cache_key)) return;
+		if(cache===void 0) this.cached_data.set(key,cache=[]);
+		if(cache.includes(cache_key)) return;
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
 		if(this.open_db_promise) return;

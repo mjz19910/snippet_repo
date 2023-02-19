@@ -377,7 +377,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					window.yt_plugin?.get_local_seen_db().save_string_impl("body_element",fut_data);
+					window.yt_plugin?.get_save_db().save_string("body_element",["arr",fut_data]);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2105,23 +2105,41 @@ class BaseServicePrivate extends ApiBase {
 		return s;
 	}
 	/** @protected @this {BaseServicePrivate<ServiceLoader,{}>} */
-	get local_seen_db() {
-		return this.x.get("local_seen_db");
-	}
-	/** @protected @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {return this.local_seen_db.save_string_impl(k,x);}
-	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean(k,x) {return this.local_seen_db.save_boolean_impl(k,x);}
+	get save_db() {return this.x.get("save_db");}
 	/** @arg {string} x */
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */
 		let y=as(x);
-		return this.local_seen_db.unwrap_brackets(y);
+		return this.save_db.unwrap_brackets(y);
 	}
-	/** @protected @arg {string} k @arg {number|number[]} x */
-	save_number(k,x) {return this.local_seen_db.save_number_impl(k,x);}
+	/** @arg {string} k @arg {{}} x */
+	save_keys(k,x) {this.save_db.save_keys_impl(k,x);}
+	/** @protected @arg {string} k @arg {string} x */
+	save_string_one(k,x) {return this.save_db.save_string(k,["one",x]);}
+	/** @protected @arg {string} k @arg {string[]} x */
+	save_string_arr(k,x) {return this.save_db.save_string(k,["arr",x]);}
+	/** @protected @arg {string} k @arg {boolean} x */
+	save_boolean_one(k,x) {return this.save_db.save_boolean(k,["one",x]);}
+	/** @protected @arg {string} k @arg {number} x */
+	save_number_one(k,x) {return this.save_db.save_number(k,["one",x]);}
+	/** @protected @arg {string} k @arg {number[]} x */
+	save_number_arr(k,x) {return this.save_db.save_number(k,["arr",this.tag_num_like(x)]);}
+	/** @protected @arg {string} k @arg {Uint8Array} x */
+	save_number_bin(k,x) {return this.save_db.save_number(k,["arr",this.tag_num_like(x)]);}
+	/** @arg {number[]|Uint8Array} a */
+	tag_num_like(a) {
+		let r=[];
+		let ty;
+		if(a instanceof Uint8Array) {
+			ty=`__type__\0uint8\0array\0\0`;
+		} else {
+			ty="__type__\0number\0array\0\0";
+		}
+		for(let v of ty) r.push(v.charCodeAt(0));
+		return [...r,...a];
+	}
 	/** @protected @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} k */
-	save_enum(cf,ns,k) {return this.local_seen_db.save_enum_impl(cf,ns,k);}
+	save_enum(cf,ns,k) {return this.save_db.save_enum_impl(cf,ns,k);}
 }
 /** @private @template T_ServiceLoader,T_ServiceFlags @extends {BaseServicePrivate<ServiceLoader,ServiceOptions>} */
 class BaseService extends BaseServicePrivate {
@@ -2236,8 +2254,8 @@ class BaseService extends BaseServicePrivate {
 		let n2=n1[1];
 		if(sep!=="") {
 			let sd=this.drop_separator(n1[1],sep);
-			this.save_string(`${ns_name}::${enum_base}`,sd);
-		} else {this.save_string(`${ns_name}::${enum_base}`,n2);}
+			this.save_string_one(`${ns_name}::${enum_base}`,sd);
+		} else {this.save_string_one(`${ns_name}::${enum_base}`,n2);}
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]} */
 	drop_separator(x,sep) {
@@ -2627,14 +2645,14 @@ class CsiService extends BaseService {
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
 		this.decode_rid_section(x);
-		this.save_string("rid_key",x.key);
+		this.save_string_one("rid_key",x.key);
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_section(x) {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
 			let section_id=section[0].toLowerCase();
-			this.save_string("section_id",section_id);
+			this.save_string_one("section_id",section_id);
 		} else {debugger;}
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} param */
@@ -2688,7 +2706,7 @@ class CsiService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "c": {
-					this.save_string(`CsiService.${param.key}`,param.value);
+					this.save_string_one(`CsiService.${param.key}`,param.value);
 					this.data[param.key]=param.value;
 				} continue;
 				case "cver": this.data[param.key]=param.value; continue;
@@ -3002,8 +3020,8 @@ class YtPlugin extends BaseService {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
-	get_local_seen_db() {return this.local_seen_db;}
-	get_data_saver() {return this.local_seen_db;}
+	get_save_db() {return this.save_db;}
+	get_data_saver() {return this.save_db;}
 }
 function h_detect_firefox() {
 	let ua=navigator.userAgent;
