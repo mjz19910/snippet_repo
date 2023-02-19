@@ -329,9 +329,15 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	async update(store,data) {
-		let success=await this.await_success(store.put(data));
-		if(this.log_all_events) console.log("IDBRequest: success",success);
-		this.committed_data.push(data);
+		let req=store.put(data);
+		try {
+			let success=await this.await_success(req);
+			if(this.log_all_events) console.log("IDBRequest: success",success);
+			this.committed_data.push(data);
+		} catch(e) {
+			console.log("update failed",e,req.error);
+			throw e;
+		}
 	}
 	/** @template T @arg {IDBRequest<T>} request @returns {Promise<Event>} */
 	await_success(request) {

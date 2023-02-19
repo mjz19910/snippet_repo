@@ -1,4 +1,6 @@
+// cSpell:ignoreRegExp /"\duald"/
 type G_Gv_0=
+	|"5uald"
 	|"9gv7e"
 	|"9gv7l"
 	|"a5mek"
