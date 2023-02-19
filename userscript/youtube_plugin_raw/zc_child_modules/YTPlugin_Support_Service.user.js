@@ -1826,7 +1826,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
-		return this.save_to_store_2("save_keys",k,keys.join(),store);
+		return this.save_to_store_2("keys",k,keys.join(),store);
 	}
 	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
@@ -1834,6 +1834,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	#idle_id=null;
 	#onDataChange() {
 		if(this.#idle_id!==null) return;
+		this.is_ready=false;
 		this.#idle_id=requestIdleCallback(async () => {
 			this.#idle_id=null;
 			await this.load_database();
@@ -2073,17 +2074,27 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return -1;
 	}
 	is_ready=false;
-	/** @public @template T @arg {string} ns @arg {string} k @arg {T|T[]} x @arg {StoreDescription<T>} store */
+	/** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
+	/** @type {[DB_NS_TypeStr,string,string|number|boolean|(string|number|boolean)[]][]} */
+	stored_log_messages=[];
+	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {T|T[]} x @arg {StoreDescription<T>} store */
 	save_to_store_2(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
+		this.#onDataChange();
 		if(!this.is_ready) {
-			this.#onDataChange();
+			this.stored_log_messages.push([ns,`store [${ns}] [${k}] %o`,x]);
 			return;
+		} else {
+			for(const msg of this.stored_log_messages) {
+				const [log_ns,log_msg,x]=msg;
+				if(log_ns!==ns) continue;
+				console.log(`delayed ${log_msg}`,x);
+			}
+			console.log(`store [${ns}] [${k}] %o`,x);
 		}
-		console.log(`store [${ns}] [${k}] %o`,x);
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(ns,idx,store);
@@ -2096,13 +2107,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	save_number_impl(k,x) {
 		if(x===void 0) {debugger; return;}
 		let store=this.#get_number_store();
-		return this.save_to_store_2("save_number",k,x,store);
+		return this.save_to_store_2("number",k,x,store);
 	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
 	save_string_impl(k,x) {
 		if(x===void 0) {debugger; return;}
 		let store=this.#get_string_store();
-		return this.save_to_store_2("save_string",k,x,store);
+		return this.save_to_store_2("string",k,x,store);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T>} store */
 	show_strings_bitmap(ns,idx,store) {
@@ -2269,8 +2280,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
 		let store=this.#data_store.get_root_visual_elements_store();
-		const k="root_visual_element";
-		return this.save_to_store_2(k,k,x,store);
+		return this.save_to_store_2("root_visual_element","ve_element",x,store);
 	}
 }
 class Support_VE extends ServiceMethods {
