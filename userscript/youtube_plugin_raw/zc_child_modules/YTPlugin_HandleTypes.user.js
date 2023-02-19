@@ -1047,11 +1047,26 @@ class HandleTypes extends ServiceMethods {
 									return `TYPE::T_VW_2<V_BinaryTimestamp>`;
 								}
 							}
-							console.log("maybe_handle_bin.do_V_BinaryTimestamp",obj);
-							return `TYPE::T_VW_2<${this.gen_typedef_bin_json(s,obj)}>`;
+							let gen_json=this.gen_typedef_bin_json(s,obj);
+							console.log("maybe_handle_bin.do_V_BinaryTimestamp",obj,gen_json);
+							return `TYPE::T_VW_2<${gen_json}>`;
 						}
-						console.log("maybe_handle_bin.do_obj",obj);
-						return `TYPE::T_VW_2<${this.gen_typedef_bin_json(s,obj)}>`;
+						if(1 in obj&&2 in obj) {
+							if(obj[1][0]==="data32"&&obj[2][0]==="data32") {
+								let kk=this.get_keys_of(obj);
+								if(this.eq_keys(kk,[1,2])) {
+									/** @type {V_ShortTimestamp} */
+									let bts={...obj,1: obj[1],2: obj[2]}; bts;
+									return `TYPE::T_VW_2<V_ShortTimestamp>`;
+								}
+							}
+							let gen_json=this.gen_typedef_bin_json(s,obj);
+							console.log("maybe_handle_bin.do_V_ShortTimestamp",obj,gen_json);
+							return `TYPE::T_VW_2<${gen_json}>`;
+						}
+						let gen_json=this.gen_typedef_bin_json(s,obj);
+						console.log("maybe_handle_bin.do_obj",obj,gen_json);
+						return `TYPE::T_VW_2<${gen_json}>`;
 					}
 					let decoded_string=this._decoder.decode(binary_arr);
 					if(binary_arr[0]===0) {

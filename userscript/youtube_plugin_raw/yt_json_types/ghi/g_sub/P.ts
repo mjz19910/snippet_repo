@@ -3,6 +3,10 @@ type V_BinaryTimestamp={
 	2: T_FD32<number>;
 	3: T_FD32<number>;
 };
+type V_ShortTimestamp={
+	1: T_D32<number>;
+	2: T_D32<number>;
+};
 type P_ad_layout_ad_serving_data_entry={
 	4: T_D32<3>;
 	5: T_D32<2>;
@@ -59,10 +63,7 @@ type P_like_params={
 	}>;
 	4: T_D32<0>;
 	5: T_D32<1>;
-	6: T_VW_2<{
-		1: T_D32<1676517982>;
-		2: T_D32<685626069>;
-	}>;
+	6: T_VW_2<V_ShortTimestamp>;
 	7: T_D32<1>;
 };
 type P_playability_status_context_params={
@@ -83,20 +84,14 @@ type P_remove_like_params={
 		1: T_VSR<D_VideoId>;
 	}>;
 	3: T_D32<0>;
-	5: T_VW_2<{
-		1: T_D32<number>;
-		2: T_D32<number>;
-	}>;
+	5: T_VW_2<V_ShortTimestamp>;
 };
 type P_dislike_params={
 	1: {
 		1: T_VSR<D_VideoId>;
 	};
 	2: T_D32<0>;
-	4: {
-		1: T_D32<number>;
-		2: T_D32<number>;
-	};
+	4: T_VW_2<V_ShortTimestamp>;
 };
 type P_subscribe_button_entity_key={
 	2: T_VSR<`UC${string}`>;
