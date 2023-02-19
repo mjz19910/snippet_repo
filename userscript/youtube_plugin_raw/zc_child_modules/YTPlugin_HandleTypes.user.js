@@ -2485,6 +2485,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
+	/** @arg {"P_Typed_TrackingObj"} cf @arg {T_D32<number>} x @arg {H_TrackingObj_NumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
 	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
 	P_Typed_TrackingObj(x) {
