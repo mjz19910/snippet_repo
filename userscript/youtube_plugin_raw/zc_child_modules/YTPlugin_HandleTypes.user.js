@@ -234,8 +234,8 @@ class HandleTypes extends ServiceMethods {
 			let [type,cf,name,size,value]=log;
 			if(type!=="number") continue;
 			if(ms_set.has(value)) continue;
-			// `moment(x/1000).fromNow()` -> "36 years ago"
-			if(value>=0b1111000000000000000000000000000000000000000000000) {
+			// `moment(x/1000).toString()` -> "Sun Feb 19 2023 12:32:55 GMT-0700"
+			if(value>=0b101111101_010001_0010_100111_001_11110110110_000000000000) {
 				ms_set.add(value);
 				let lp=this.load_moment_js_if_not_loaded();
 				if(lp!==null) await lp;
