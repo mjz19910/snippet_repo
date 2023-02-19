@@ -215,7 +215,7 @@ class ParserService extends BaseService {
 	report$params(x) {this.save_string_one("report.params.path",x.join("$"));}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_number_one(path,x[1]);
+		this.save_number_arr(path,x[1]);
 		this.save_string_one(path,`${x[2]}n`);
 	}
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */

@@ -2305,7 +2305,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
 		let store=this.#data_store.get_root_visual_elements_store();
-		return this.save_to_store("root_visual_element","ve_element",x,store);
+		return this.save_to_store("root_visual_element","ve_element",["one",x],store);
 	}
 }
 class Support_VE extends ServiceMethods {
