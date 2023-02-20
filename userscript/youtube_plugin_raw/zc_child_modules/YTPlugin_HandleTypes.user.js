@@ -1899,14 +1899,14 @@ class HandleTypes extends ServiceMethods {
 		let m3=split_string_once(m2,"---");
 		let [,mi]=m3;
 		/** @type {D_GoogleVideoHostPartition} */
-		let ap=this.get_gv_parts(mi);
-		this.D_GoogleVideoHostPartition("url",ap);
+		let host_partition=this.get_host_partition(mi);
+		this.D_GoogleVideoHostPartition("url",host_partition);
 		const gen_cf="js_gen_case:log_googlevideo_host";
-		let ap_z=ap.partition;
+		let ap_z=host_partition.partition;
 		// cSpell:ignoreRegExp /"5u[a-z]{3}"/
 		switch(ap_z) {
 			default: {
-				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,ap.partition);
+				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,host_partition.partition);
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 			}; break;
@@ -1919,7 +1919,8 @@ class HandleTypes extends ServiceMethods {
 			case "p5qls":
 			case "p5qs7":
 		}
-		let selector_parts=split_string(ap.selector,"");
+		this.save_string_one("googlevideo_host.selector",host_partition.selector);
+		let selector_parts=split_string(host_partition.selector,"");
 		switch(selector_parts[0]) {
 			default: debugger; {
 				switch(selector_parts[0]) {
@@ -1970,7 +1971,7 @@ class HandleTypes extends ServiceMethods {
 			case "1": case "2": case "3": case "4": case "5":
 		}
 		let [,mi]=ss2;
-		let ap=this.get_gv_parts(mi);
+		let ap=this.get_host_partition(mi);
 		this.D_GoogleVideoHostPartition(cf,ap);
 		switch(ap.partition) {
 			default: {
@@ -2283,7 +2284,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string_one(`${cf}.key`,key);
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {D_GoogleVideoHostPartition} */
-	get_gv_parts(x) {
+	get_host_partition(x) {
 		let parts=this.get_gv_parts_impl(x);
 		return as_any({
 			partition: parts[0],
@@ -2341,7 +2342,7 @@ class HandleTypes extends ServiceMethods {
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
 			/** @type {D_GoogleVideoHostPartition} */
-			let ap=this.get_gv_parts(mi);
+			let ap=this.get_host_partition(mi);
 			this.D_GoogleVideoHostPartition(cf1,ap);
 			switch(ap.partition) {
 				default: {
