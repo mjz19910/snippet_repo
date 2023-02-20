@@ -1270,7 +1270,7 @@ class HandleTypes extends ServiceMethods {
 		};
 		let gen_json=this.gen_typedef_bin_json(s,x);
 		console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
-		return `TYPE::T_VW<${gen_json},"json">`;
+		return `TYPE::T_VW_BinTs<${gen_json},"json">`;
 		/** @arg {V_ParamObj[number]} x */
 		function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 	}
@@ -1303,14 +1303,14 @@ class HandleTypes extends ServiceMethods {
 			let short_ts=this.replace_bin_short_ts(s,obj);
 			if(short_ts) return short_ts;
 			let gen_json=this.gen_typedef_bin_json(s,obj);
-			return `TYPE::T_VW<${gen_json},"json">`;
+			return `TYPE::T_VW_Child<${gen_json},"json">`;
 		}
 		let decoded_string=this._decoder.decode(binary_arr);
 		if(binary_arr[0]===0) {
 			console.log("[maybe_handle_bin.do_maybe_string]",x,decoded_string);
 			return null;
 		}
-		return `TYPE::T_VW<"${decoded_string}","string">`;
+		return `TYPE::T_VW_Child<"${decoded_string}","string">`;
 	};
 	/** @arg {V_ParamItem} otu @returns {RetParam_D32} */
 	v_param_2_D32(otu) {

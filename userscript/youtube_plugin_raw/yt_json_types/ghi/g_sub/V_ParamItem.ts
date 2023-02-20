@@ -34,9 +34,15 @@ type V_ParamItemFiltered=
 type RetParam_child=
 	|RetParam_BinaryTimestamp
 	|RetParam_ShortTimestamp
+	|`TYPE::T_VW_Child<${string},"json">`
+	|`TYPE::T_VW_Child<${string},"string">`
 	;
 ;
-type RetParam_BinaryTimestamp="TYPE::T_VW<V_BinaryTimestamp>";
+type RetParam_BinaryTimestamp=
+	|"TYPE::T_VW<V_BinaryTimestamp>"
+	|`TYPE::T_VW_BinTs<${string},"json">`
+	;
+;
 type RetParam_D32=`TYPE::T_D32<${number}>`;
 type RetParam_FD32=`TYPE::T_FD32<${number}>`;
 type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
