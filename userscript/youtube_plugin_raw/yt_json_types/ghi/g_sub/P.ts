@@ -363,3 +363,9 @@ type P_get_report_form_params={
 	25: TV_Str<"shopping">;
 	26: T_D32<14>;
 };
+type P_notification_opt_out={
+	2: T_D32<1>;
+	3: TV_Str<"-qS20kHjg9QLg2bMA89bVA">;
+	4: T_D32<19>;
+	7: TV_Str<"dSHPtnZr2BdhZ8ss">;
+};

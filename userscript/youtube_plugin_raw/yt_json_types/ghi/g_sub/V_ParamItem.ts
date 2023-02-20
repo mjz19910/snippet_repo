@@ -54,13 +54,13 @@ type RetParam_VW_R=
 	;
 ;
 type RetParam_raw=
-	|RetParam_TV_Str
+	|`TYPE::T_VW_Str<"${string}">`
 	|RetParam_VW_Bigint
 	|RetParam_VW_R
 	;
 ;
 type RetParam_raw_child=
-	|RetParam_TV_Str
+	|`TYPE::T_RC_Str<"${string}">`
 	|`TYPE::["raw_child",${Ret_gen_json},${Ret_gen_json},${Ret_gen_json}]`
 	;
 ;

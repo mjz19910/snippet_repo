@@ -1332,7 +1332,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {JsonReplacerState} s @arg {V_RawBox} otu @returns {RetParam_raw} */
 	v_param_2_raw(s,otu) {
 		switch(otu[1][0]) {
-			case "string": return `TYPE::TV_Str<"${otu[1][1]}">`;
+			case "string": return `TYPE::T_VW_Str<"${otu[1][1]}">`;
 			case "bigint": return `TYPE::T_VW_Bigint<${otu[1][1]}n>`;
 			case "number": return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
 		}
@@ -1361,7 +1361,7 @@ class HandleTypes extends ServiceMethods {
 		let x1=x[3];
 		switch(x1[0]) {
 			default: return this.v_param_rc_def(s,x);
-			case "string": return `TYPE::TV_Str<"${x1[1]}">`;
+			case "string": return `TYPE::T_RC_Str<"${x1[1]}">`;
 		}
 	};
 	/** @arg {JsonReplacerState} s @arg {V_ParamItem} x @returns {V_ParamItemFiltered|null} */
@@ -1384,6 +1384,12 @@ class HandleTypes extends ServiceMethods {
 		let x3=x;
 		let ca=x3[1];
 		let res=[];
+		if(ca.length===1) {
+			let x1=ca[0];
+			switch(x1[0]) {
+				case "child": break;
+			}
+		}
 		for(let x1 of ca) {
 			res.push(this.v_param_item(s,x1));
 		}
