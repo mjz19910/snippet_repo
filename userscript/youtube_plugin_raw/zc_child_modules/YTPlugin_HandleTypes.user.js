@@ -67,7 +67,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_ProtobufObj[]} x */
 	tr_arr_to_obj(x) {
 		if(!x) {debugger; return null;}
-		/** @private @type {V_ParamObj_2} */
+		/** @private @type {V_ParamObj} */
 		let res_obj={};
 		/** @arg {number} id @arg {V_ParamItem} obj */
 		const add_obj=(id,obj) => {
@@ -136,7 +136,7 @@ class HandleTypes extends ServiceMethods {
 		return this.convert_map_to_obj(x1);*/
 		return res_obj;
 	}
-	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
+	/** @arg {V_ParamMapValue} x @returns {V_ParamObj|null} */
 	tr_to_param_item(x) {
 		if(typeof x==='string') return {0: ["param_arr",[["raw",["string",x]]]]};
 		if(typeof x==="number") return {0: ["param_arr",[["raw",["number",x]]]]};
@@ -161,14 +161,14 @@ class HandleTypes extends ServiceMethods {
 		x==="";
 		return null;
 	}
-	/** @arg {V_ParamMapType} x @returns {V_ParamObj_2|null} */
+	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
 	tr_map_to_obj(x) {
 		/** @template T @arg {T[]} x */
 		function first(x) {
 			if(x.length!==1) return null;
 			return x[0];
 		}
-		/** @type {V_ParamObj_2} */
+		/** @type {V_ParamObj} */
 		let res={};
 		debugger;
 		for(let k of x.keys()) {
@@ -286,7 +286,7 @@ class HandleTypes extends ServiceMethods {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(x).toString(2)}]`);
 		});
 	}
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	decode_binary_object_log_info(cf,x) {
 		this._continuation_logged_str.push(cf);
 		const n_cf=`P_${cf.replaceAll(".","_")}`;
@@ -1271,9 +1271,9 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,x[0])}>`;
 			}
-			/** @type {D_ProtobufObj|V_ParamObj_2[number]} */
+			/** @type {D_ProtobufObj|V_ParamObj[number]} */
 			let x3=as(x);
-			/** @arg {V_ParamObj_2} x */
+			/** @arg {V_ParamObj} x */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
@@ -1285,10 +1285,10 @@ class HandleTypes extends ServiceMethods {
 				let gen_json=this.gen_typedef_bin_json(s,x);
 				console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
 				return `TYPE::T_VW_2<${gen_json}>`;
-				/** @arg {V_ParamObj_2[number]} x */
+				/** @arg {V_ParamObj[number]} x */
 				function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 			};
-			/** @arg {V_ParamObj_2} x */
+			/** @arg {V_ParamObj} x */
 			let v_param_2_maybe_short_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				if(x[1][1].length!==1) return null;
@@ -1366,7 +1366,7 @@ class HandleTypes extends ServiceMethods {
 				if(otu[0]!=="data64") return null;
 				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 			}; v_param_2_D64;
-			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj_2 | null, raw_value: V_RawValue]} x */
+			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj | null, raw_value: V_RawValue]} x */
 			let v_param_rc_def=(x) => {
 				let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
 				let obj_json;
@@ -1378,7 +1378,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 			};
-			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj_2 | null, raw_value: V_RawValue]} x */
+			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj | null, raw_value: V_RawValue]} x */
 			let v_param_2_raw_child=(x) => {
 				let x1=x[3];
 				switch(x1[0]) {
@@ -1428,7 +1428,7 @@ class HandleTypes extends ServiceMethods {
 				let gen_json=this.gen_typedef_bin_json(s,{v: rep_obj});
 				return `TYPE::T_VA_2<"${x3[0]}",${gen_json}>`;
 			}
-			/** @type {(D_ProtobufObj|V_ParamObj_2[number])[]} */
+			/** @type {(D_ProtobufObj|V_ParamObj[number])[]} */
 			let x_t1=x;
 			if(x_t1[0][0]==="child") {
 				debugger;
@@ -3060,7 +3060,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	//#endregion
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	binary_result(cf,x) {
 		switch(cf) {
 			case "params.click_tracking": {
