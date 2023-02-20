@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,as_any}=require("./YtPlugin_Base.user");
+const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,as_any,ApiBase2}=require("./YtPlugin_Base.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
 const __module_name__="mod$SupportService";
@@ -1724,7 +1724,7 @@ class BitmapResult {
 	}
 }
 /** @template T @template {StoreContentStr} U @implements {StoreDescription<T,U>} */
-class StoreDescription_C {
+class StoreDescription_C extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	index=new Map;
 	/** @type {[string, make_item_group<T>][]} */
@@ -1733,6 +1733,7 @@ class StoreDescription_C {
 	new_data=[];
 	/** @arg {StoreGetType<T>} type @arg {U} content */
 	constructor(type,content) {
+		super();
 		this.type=type;
 		this.content=content;
 	}
@@ -1745,10 +1746,89 @@ class StoreDescription_C {
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
 		if(this.includes_key(k)) {
-			debugger;
+			let idx=this.index.get(k);
+			if(idx===void 0) throw new Error();
+			let iv=this.data[idx]; iv;
 		} else {
 			this.push_new_data(k,x);
 		}
+	}
+	/** @this {StoreDescription_C<string,"keys">} @arg {string} k @arg {{}} obj */
+	save_keys(k,obj) {
+		this.save_data(`${k}.type`,["one",typeof obj]);
+		if(typeof obj!=="object") return;
+		if(obj instanceof Array) {
+			this.save_data(`${k}.instance`,["one","array"]);
+			return;
+		}
+		let keys=this.get_keys_of(obj);
+		let store_item=this.get_seen_string_item_store(k);
+		/** @type {["arr",string[]]} */
+		let x=["arr",keys];
+		let store_index=this.save_to_data_item(x,store_item);
+		if(store_index<0) return false;
+		return this.save_data(k,x);
+	}
+	/** @private @arg {make_item_group<T>} x @arg {[string,make_item_group<T>]} item */
+	save_to_data_item(x,item) {
+		let target=item[1];
+		if(x[0]==="many") throw new Error("Unable to add many to something");
+		if(x[0]==="arr") {return this.add_many_to_data_item(x,item);}
+		if(x[0]==="one") {return this.add_one_to_data_arr(x,target);}
+		return -1;
+	}
+	/** @private @arg {make_one_t<T>} x @arg {make_item_group<T>} target_x */
+	add_one_to_data_arr(x,target_x) {
+		if(target_x[0]==="arr") {
+			if(!target_x[1].includes(x[1])) return target_x[1].push(x[1]);
+			return -1;
+		}
+		if(target_x[0]==="many") {
+			let res=target_x[1].find(([e,...r]) => !r.length&&e===x[1]);
+			if(!res) return target_x[1].push([x[1]]);
+			return -1;
+		}
+		return -1;
+	}
+	/** @private @template T @arg {make_arr_t<T>} x @arg {[string,make_item_group<T>]} item */
+	add_many_to_data_item([xt,x],item) {
+		if(xt!=="arr") {debugger; return -1;;}
+		let target=item[1];
+		if(target[0]==="arr") {
+			let inner=target[1].map(e => [e]);
+			target=["many",inner];
+			item[1]=target;
+		}
+		if(target[0]==="one") {debugger; return -1;}
+		let found=target[1].find(e => {
+			if(e.length!==x.length) return false;
+			for(let i=0;i<e.length;i++) {
+				let c=e[i]; let o=x[i];
+				if(c!==o) return false;
+			}
+			return true;
+		});
+		if(!found) return target[1].push(x);
+		return -1;
+	}
+	/** @arg {string} k */
+	get_seen_string_item_store(k) {
+		const {index,data}=this;
+		let idx=index.get(k);
+		if(idx) return data[idx];
+		idx=data.findIndex(e => e[0]===k);
+		if(idx<0) return this.add_to_index(k,["arr",[]]);
+		index.set(k,idx);
+		return data[idx];
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
+	add_to_index(k,x) {
+		/** @type {[typeof k,typeof x]} */
+		let p=[k,x];
+		debugger;
+		let nk=this.data.push(p)-1;
+		this.index.set(k,nk);
+		return p;
 	}
 	/** @arg {string} k */
 	includes_key(k) {
@@ -1796,20 +1876,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return s3;
 	}
 	#get_keys_store() {return this.#data_store.seen_keys_obj;}
+	/** @api @public @arg {string} k @arg {["one",boolean]} x */
+	save_boolean(k,x) {return this.#data_store.seen_bool_obj.save_data(k,x);}
+	/** @api @public @arg {number} x */
+	save_root_visual_element(x) {return this.#data_store.seen_ve_num_obj.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
 		if(!x) {debugger; return;}
-		if(typeof x!=="object") return this.save_string_one(`${k}.type`,typeof x);
-		if(x instanceof Array) return this.save_string_one(`${k}.type`,"array");
-		let store=this.#get_keys_store();
-		let keys=this.get_keys_of(x);
-		let store_item=this.get_seen_string_item_store(k,store);
-		/** @type {["arr",string[]]} */
-		let x2=["arr",keys];
-		let store_index=this.save_to_data_item(x2,store_item);
-		if(store_index<0) return false;
-		store.new_data.push([k,x2]);
-		return this.save_to_str_store("keys",k,["arr",keys],store);
+		return this.#data_store.seen_bool_obj.save_data(k,x);
 	}
 	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
@@ -2027,6 +2101,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(found) return;
 		switch(store.content) {
 			default: debugger; break;
+			case "number": {
+				let [,vi]=item;
+				switch(vi[0]) {
+					default: debugger; break;
+				}
+			} break;
 			case "boolean": {
 				let [,vi]=item;
 				/** @type {make_arr_t<boolean>|null} */
@@ -2244,7 +2324,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	/** @template T @arg {make_item_group<any>} x @arg {T} v @returns {asserts x is make_item_group<T>} */
 	is_group_with_type(x,v) {x; v;}
-	#get_string_store() {return this.#data_store.get_string_store();}
+	#get_string_store() {return this.#data_store.seen_string_obj;}
 	/** @private @arg {string} k @arg {G_StoreDescriptions['data'][number][1]} x @arg {G_StoreDescriptions} store @returns {[G_StoreDescriptions["type"],any]} */
 	add_to_index(k,x,store) {
 		switch(store.type) {
@@ -2362,7 +2442,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
 		return true;
 	}
-	#get_number_store() {return this.#data_store.get_number_store();}
+	#get_number_store() {return this.#data_store.seen_number_obj;}
 	do_random_breakpoint=false;
 	/** @api @public @arg {"string"|"keys"} ns @arg {string} k @arg {make_item_group<string>} x @arg {G_StoreStringDescription} store */
 	save_to_str_store(ns,k,x,store) {
@@ -2485,7 +2565,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let gg=this.get_data_store().get_number_store().data.find(e => e[0]==="P_tracking_params.f1");
+		let gg=this.get_data_store().seen_number_obj.data.find(e => e[0]==="P_tracking_params.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]!=="arr") return;
@@ -2535,7 +2615,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	bitmap_console_todo_1() {
 		let yt_plugin={ds: this,};
-		let gg=yt_plugin.ds.get_data_store().get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=yt_plugin.ds.get_data_store().seen_number_obj.data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1][0]!=="arr") return;
 		gg[1][1].sort((a,b) => a-b);
@@ -2590,16 +2670,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
 		let bitmap_rle=this.rle_enc(bitmap);
 		return new BitmapResult(map_arr,bitmap_rle);
-	}
-	/** @api @public @arg {string} k @arg {["one",boolean]} x */
-	save_boolean(k,x) {
-		let store=this.#data_store.get_boolean_store();
-		return store.save_data(k,x);
-	}
-	/** @api @public @arg {number} x */
-	save_root_visual_element(x) {
-		let store=this.#data_store.get_root_visual_elements_store();
-		return store.save_data("ve_element",["one",x]);
 	}
 }
 class Support_VE extends ServiceMethods {

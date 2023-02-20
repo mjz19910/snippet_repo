@@ -1976,7 +1976,26 @@ const general_service_state={
 	/** @private @type {"non_member"|null} */
 	premium_membership: null,
 };
-class ApiBase {
+class ApiBase2 {
+	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
+	get_keys_of(obj) {
+		if(!obj) {debugger;}
+		let rq=Object.keys(obj).map(v => {
+			/** @returns {number|string} */
+			function mk() {return parseInt(v,10);}
+			/** @type {string|number} */
+			let pn=mk();
+			if(Number.isNaN(pn)) return v;
+			if(pn!=v) return v;
+			return pn;
+		});
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
+	}
+}
+export_(exports => {exports.ApiBase2=ApiBase2;});
+class ApiBase extends ApiBase2 {
 	/** @protected @template {any[]} T @arg {T} a */
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
@@ -2052,22 +2071,6 @@ class ApiBase {
 		/** @type {TP_KeyofSearchParams<T>} */
 		let ret_val=as_any;
 		return ret_val;
-	}
-	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
-	get_keys_of(obj) {
-		if(!obj) {debugger;}
-		let rq=Object.keys(obj).map(v => {
-			/** @returns {number|string} */
-			function mk() {return parseInt(v,10);}
-			/** @type {string|number} */
-			let pn=mk();
-			if(Number.isNaN(pn)) return v;
-			if(pn!=v) return v;
-			return pn;
-		});
-		/** @private @type {any} */
-		let ra=rq;
-		return ra;
 	}
 }
 //#endregion

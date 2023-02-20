@@ -150,6 +150,12 @@ class IndexedDBService extends BaseService {
 		this.database_open=true;
 		let typed_db=new TypedIndexedDb;
 		const tx=this.transaction(db,key,"readwrite");
+		tx.oncomplete=function(event) {
+			console.log("tx complete",event);
+		}
+		tx.onerror=function(event) {
+			console.log("tx error",event,tx.error);
+		}
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {

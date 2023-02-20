@@ -93,13 +93,6 @@ export class Snippet_0_tmp {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
 	}
-	/** @protected @template {{}} T @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
-	g(x) {
-		let keys=this.get_keys_of(x);
-		if(!keys.length) return;
-		console.log("[empty_object] [%s]",keys.join());
-		debugger;
-	}
 	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
 	z(x,f) {
 		if(x===void 0) {debugger; return [[],[]];}
@@ -115,16 +108,6 @@ export class Snippet_0_tmp {
 			if(u!==void 0) {c.push(u);} else if(u===void 0) {v.push(u);} else {throw new Error();}
 		}
 		return [c,v];
-	}
-	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
-	w1(x,f) {
-		const {contents: a,...y}=x; this.g(y);
-		this.z(a,f);
-	}
-	/** @protected @template {{}} T @arg {{items:T[]}} x @arg {(this:this,x:T)=>void} f */
-	w2(x,f) {
-		const {items: a,...y}=x; this.g(y);
-		this.z(a,f);
 	}
 	/** @protected @template {{}} T @arg {{contents:T}} x @arg {(this:this,x:T)=>void} f */
 	w3(x,f) {f.call(this,x.contents);}
@@ -202,21 +185,8 @@ export class Snippet_0_tmp {
 	}
 	//#region dispatch_in_progress
 	//#endregion
-	/** @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
-	get_keys_of(obj) {
-		if(!obj) {debugger;}
-		let rq=Object.keys(obj);
-		/** @private @type {any} */
-		let ra=rq;
-		return ra;
-	}
 	/** @public @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @returns {T[SI]} */
-	w(x) {
-		let keys=this.get_keys_of(x);
-		let k=keys[0];
-		let r=x[k];
-		return r;
-	}
+	w(x) {throw new Error(x+"");}
 	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	H$R_(x,f) {f.call(this,this.w(x));}
 }
@@ -225,14 +195,6 @@ class ND extends Snippet_0_tmp {
 	uppercase_first(x) {return x[0].toUpperCase()+x.slice(1);}
 	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	H_(x,f) {f.call(this,this.w(x));}
-	/** @protected @arg {D_AlertWithButton} x */
-	D_AlertWithButton(x) {
-		const {type,text,dismissButton,...y}=x; this.g(y); // ! #destructure
-		switch(type) {
-			case "INFO": break;
-			default: debugger;
-		}
-	}
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
 	c1(f) {return x => f.call(this,x);}
 	/** @protected @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
@@ -244,22 +206,6 @@ class ND extends Snippet_0_tmp {
 		const {commands,...y}=x;
 		let ca=this.z(commands,f);
 		return [y,ca];
-	}
-	/** @protected @template T @arg {T_Results<T>} x @arg {(this:this,x:T)=>void} f */
-	ResultsTemplate(x,f) {
-		const {results,...y}=x; this.g(y); // ! #destructure
-		f.call(this,results);
-	}
-	/** @private @template T @arg {TD_ContinuationItem_CE<T>} x */
-	T$ContinuationItemData(x) {
-		const {trigger,...y}=x;
-		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
-		return y;
-	}
-	/** @protected @template T @arg {TR_ContinuationItem_CE<T>} x */
-	R_T$ContinuationItem(x) {
-		const {continuationItemRenderer,...y}=x; this.g(y);
-		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
 	}
 	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(needle,str) {return str.startsWith(needle);}
@@ -312,10 +258,5 @@ class ND extends Snippet_0_tmp {
 	}
 	/** @template {{}} T @arg {T} x */
 	sd(x) {return x;}
-	/** @protected @template {string} T @arg {T_StyleType<T>} x @arg {(this:this,x:T)=>void} f */
-	ChipCloudStyle(x,f) {
-		const {styleType,...y}=x; this.g(y); // ! #destructure
-		f.call(this,styleType);
-	}
 }
 new ND;
