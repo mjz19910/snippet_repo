@@ -36,7 +36,7 @@ function dig_batch() {
 }
 function run_child() {
 	a1=$1
-	TF=$(mktemp $TMP_DIR/dig_res.$1.XXX)
+	TF=$(mktemp $TMP_DIR/out.dig_batch.$1.XXX)
 	shift
 	if ((${#@} == 0)); then
 		return 0
