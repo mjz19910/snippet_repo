@@ -263,6 +263,7 @@ type RS_Page_Browse={
 };
 type R_ChannelMetadata=R_Channel_MD;
 type GU_VE3611_2=
+	|`/@${string}/about`
 	|`/@${string}/channels`
 	|`/@${string}/playlists`
 	|`/@${string}/search?query=${string}`
