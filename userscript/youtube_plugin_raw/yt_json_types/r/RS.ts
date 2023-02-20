@@ -325,6 +325,21 @@ type RS_Page_Channel=
 	|RS_Page_Channel_2
 	|RS_Page_Channel_3
 	|RS_Page_Channel_4
+	|{
+		page: "channel";
+		endpoint: E_VE3611;
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			header: R_C4TabbedHeader;
+			metadata: R_ChannelMetadata;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+			microformat: R_MicroformatData;
+		};
+		url: "/@SBMowingShorts/featured";
+		expirationTime: 1676921525597;
+	}
 	;
 ;
 type RS_Page_Playlist={
