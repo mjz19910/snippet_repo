@@ -1876,6 +1876,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.#data_store.seen_bool_obj.save_data(k,x);}
+	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
+	save_number(k,x) {this.#data_store.seen_number_obj.save_data(k,x);}
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {return this.#data_store.seen_ve_num_obj.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
@@ -2405,41 +2407,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	is_ready=false;
 	/** @type {StoredChangesItem[]} */
 	stored_changes=[];
-	/** @public @template {G_StoreNumDescription} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {U["new_data"][number][1]} x @arg {U} store */
-	save_num_to_store(ns,k,x,store) {
-		let store_item=this.get_seen_string_item_store(k,store);
-		let store_index=this.save_to_data_item(x,store_item);
-		if(store_index<0) return false;
-		store.push_new_data(k,x);
-		this.onDataChange();
-		if(!this.is_ready) {
-			switch(store.content) {
-				default: debugger; break;
-				case "root_visual_element":
-				case "number": {
-					if(x[0]!=="many") break;
-					if(typeof x[1]!=="number") break;
-					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
-				} break;
-			}
-			return false;
-		} else {
-			switch(x[0]) {
-				case "arr": break;
-				case "one": {
-					console.log(`store [${ns}] [${k}] %o`,x[1]);
-				} break;
-			}
-		}
-		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return false;}
-		// this.show_strings_bitmap(ns,idx,store);
-		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
-		return true;
-	}
-	#get_number_store() {return this.#data_store.seen_number_obj;}
 	do_random_breakpoint=false;
-	/** @api @public @arg {"string"|"keys"} ns @arg {string} k @arg {make_item_group<string>} x @arg {G_StoreStringDescription} store */
+	/** @api @private @arg {"string"|"keys"} ns @arg {string} k @arg {make_item_group<string>} x @arg {G_StoreStringDescription} store */
 	save_to_str_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
@@ -2470,12 +2439,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.show_strings_bitmap(ns,idx,store);
 		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
 		return true;
-	}
-	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
-	save_number(k,x) {
-		if(x===void 0) {debugger; return false;}
-		let store=this.#get_number_store();
-		return this.save_num_to_store("number",k,x,store);
 	}
 	/** @api @public @arg {string} k @arg {make_item_group<string>} x */
 	save_string(k,x) {
