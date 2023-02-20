@@ -1642,7 +1642,7 @@ class ServiceMethods extends ServiceData {
 		/** @type {`${typeof rk}[${f}]`} */
 		let k=`${rk}[${JSON.stringify(f)}]`;
 		this.save_string_one(rk,f);
-		let s_url_data=this.save_db.get_data_store().get_number_store().data.find(e => e[0]===k);
+		let s_url_data=this.save_db.data_store.numbers_store.data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_number_one(k,1); return;}
 		let wd=s_url_data[1];
 		if(wd[0]!=="arr") {debugger; return;}

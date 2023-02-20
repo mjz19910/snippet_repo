@@ -1797,30 +1797,30 @@ class StoreData {
 	constructor(data_update_callback) {
 		this.data_update_callback=data_update_callback;
 		/** @type {StoreDescription_C<boolean,"boolean">} */
-		this.seen_bool_obj=new StoreDescription_C("boolean","boolean",data_update_callback);
+		this.bool_store=new StoreDescription_C("boolean","boolean",data_update_callback);
 		/** @type {StoreDescription_C<number,"number">} */
-		this.seen_number_obj=new StoreDescription_C("number","number",data_update_callback);
+		this.numbers_store=new StoreDescription_C("number","number",data_update_callback);
 		/** @type {StoreDescription_C<number,"root_visual_element">} */
-		this.seen_ve_num_obj=new StoreDescription_C("number","root_visual_element",data_update_callback);
+		this.ve_store=new StoreDescription_C("number","root_visual_element",data_update_callback);
 		/** @type {StoreDescription_C<string,"string">} */
-		this.seen_string_obj=new StoreDescription_C("string","string",data_update_callback);
+		this.string_store=new StoreDescription_C("string","string",data_update_callback);
 		/** @type {StoreDescription_C<string,"keys">} */
-		this.seen_keys_obj=new StoreDescription_C("string","keys",data_update_callback);
+		this.keys_store=new StoreDescription_C("string","keys",data_update_callback);
 	}
 	get_changed_stores() {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
 		let changed=[];
-		if(this.seen_bool_obj.new_data.length>0) changed.push("bool");
-		if(this.seen_keys_obj.new_data.length>0) changed.push("keys");
-		if(this.seen_number_obj.new_data.length>0) changed.push("number");
-		if(this.seen_string_obj.new_data.length>0) changed.push("string");
-		if(this.seen_ve_num_obj.new_data.length>0) changed.push("ve");
+		if(this.bool_store.new_data.length>0) changed.push("bool");
+		if(this.keys_store.new_data.length>0) changed.push("keys");
+		if(this.numbers_store.new_data.length>0) changed.push("number");
+		if(this.string_store.new_data.length>0) changed.push("string");
+		if(this.ve_store.new_data.length>0) changed.push("ve");
 		return changed;
 	}
 }
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
-	get_store_keys(key) {return this.data_store.seen_string_obj.data.find(e => e[0]===key);}
+	get_store_keys(key) {return this.data_store.string_store.data.find(e => e[0]===key);}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */
@@ -1836,15 +1836,15 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.onDataChange();
 	});
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
-	save_boolean(k,x) {return this.data_store.seen_bool_obj.save_data(k,x);}
+	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
-	save_number(k,x) {this.data_store.seen_number_obj.save_data(k,x);}
+	save_number(k,x) {this.data_store.numbers_store.save_data(k,x);}
 	/** @api @public @arg {number} x */
-	save_root_visual_element(x) {return this.data_store.seen_ve_num_obj.save_data("ve_element",["one",x]);}
+	save_root_visual_element(x) {return this.data_store.ve_store.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
-	save_keys_impl(k,x) {return this.data_store.seen_keys_obj.save_keys(k,x);}
+	save_keys_impl(k,x) {return this.data_store.keys_store.save_keys(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<string>} x */
-	save_string(k,x) {this.data_store.seen_string_obj.save_data(k,x);}
+	save_string(k,x) {this.data_store.string_store.save_data(k,x);}
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	onDataChange() {
@@ -2166,17 +2166,17 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let changes=store.get_changed_stores();
 		for(let changed of changes) {
 			if(changed==="string") {
-				let ss=store.seen_string_obj;
+				let ss=store.string_store;
 				await this.push_store_to_database(ss);
 				continue;
 			}
 			if(changed==="keys") {
-				let ks=store.seen_keys_obj;
+				let ks=store.keys_store;
 				await this.push_store_to_database(ks);
 				continue;
 			}
 			if(changed==="number") {
-				let ns=store.seen_number_obj;
+				let ns=store.numbers_store;
 				await this.push_store_to_database(ns);
 				continue;
 			}
@@ -2187,7 +2187,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
 		if(this.log_load_database) console.log("load_database all boxed",boxed);
 		let store=this.data_store;
-		let ss=store.seen_string_obj;
+		let ss=store.string_store;
 		if(boxed.length===0) {
 			let changes=store.get_changed_stores();
 			for(let changed of changes) {
@@ -2364,7 +2364,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let gg=this.data_store.seen_number_obj.data.find(e => e[0]==="P_tracking_params.f1");
+		let gg=this.data_store.numbers_store.data.find(e => e[0]==="P_tracking_params.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]!=="arr") return;
@@ -2372,7 +2372,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.save_number_arr("arr.P_tracking_params.f1",sr);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
 		this.save_string_one("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.data_store.seen_string_obj.data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
+		this.data_store.string_store.data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
 	}
 	/** @private @template T @arg {T[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
@@ -2414,7 +2414,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	bitmap_console_todo_1() {
 		let yt_plugin={ds: this,};
-		let gg=yt_plugin.ds.data_store.seen_number_obj.data.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=yt_plugin.ds.data_store.numbers_store.data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1][0]!=="arr") return;
 		gg[1][1].sort((a,b) => a-b);
