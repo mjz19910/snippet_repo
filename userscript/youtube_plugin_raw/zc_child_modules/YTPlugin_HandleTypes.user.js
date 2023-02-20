@@ -1293,7 +1293,7 @@ class HandleTypes extends ServiceMethods {
 		console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
 		return null;
 	};
-	/** @arg {JsonReplacerState} s @arg {V_ParamItem} x @returns {RetParam_child|RetParam_VW_2|null} */
+	/** @arg {JsonReplacerState} s @arg {V_ParamItem} x @returns {RetParam_child|RetParam_VW_2} */
 	v_param_2_child(s,x) {
 		if(x[0]!=="child") throw new Error();
 		const [,binary_arr,obj]=x;
