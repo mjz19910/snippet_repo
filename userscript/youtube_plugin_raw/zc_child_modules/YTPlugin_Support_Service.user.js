@@ -1881,9 +1881,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {return this.#data_store.seen_ve_num_obj.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
-	save_keys_impl(k,x) {
-		return this.#data_store.seen_keys_obj.save_keys(k,x);
-	}
+	save_keys_impl(k,x) {return this.#data_store.seen_keys_obj.save_keys(k,x);}
 	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
 	/** @no_mod @type {number|null|Nullable<{}>} */
