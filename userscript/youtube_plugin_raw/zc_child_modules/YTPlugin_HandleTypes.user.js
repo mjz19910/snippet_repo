@@ -1398,9 +1398,9 @@ class HandleTypes extends ServiceMethods {
 				case "data32": return this.v_param_2_D32(x2);
 				case "raw_child": {
 					let x3=x2[3];
-					debugger;
 					if(x2[2]===null) {
 						switch(x3[1]) {
+							default: break;
 							case "string": return `TYPE::TV_Str<"${x2[1]}">`;
 						}
 					}
