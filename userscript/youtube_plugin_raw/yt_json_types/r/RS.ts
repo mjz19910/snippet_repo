@@ -262,6 +262,9 @@ type RS_Page_Browse={
 	expirationTime: number;
 };
 type R_ChannelMetadata=R_Channel_MD;
+type GU_VE3611_2=`/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`|`/@${string}/search`|`/@${string}/search?query=${string}`;
+type GU_VE3611_3=`/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`|`/@${string}/community`|`/@${string}/channels`|`/@${string}/about`|`/@${string}/search?query=${string}`;
+
 type RS_Page_Channel={
 	page: "channel";
 	endpoint: E_VE3611;
@@ -278,11 +281,11 @@ type RS_Page_Channel={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
-	url: `/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`|`/@${string}/search`|`/@${string}/search?query=${string}`;
+	url: GU_VE3611_2;
 	expirationTime: number;
 }|{
 	rootVe: 3611;
-	url: `/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`|`/@${string}/community`|`/@${string}/channels`|`/@${string}/about`|`/@${string}/search?query=${string}`;
+	url: GU_VE3611_3;
 	endpoint: E_VE3611;
 	page: "channel";
 	response: RS_Channel;
