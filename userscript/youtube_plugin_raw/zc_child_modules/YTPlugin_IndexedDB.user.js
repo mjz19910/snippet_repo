@@ -147,9 +147,6 @@ class IndexedDBService extends BaseService {
 	*/
 	open_transaction(db,key,mode,complete_cb) {
 		const tx=this.transaction(db,key,mode);
-		tx.oncomplete=function() {
-			throw new Error("Failed (transaction complete not handled)");
-		};
 		tx.onerror=function(event) {
 			console.log("tx error",event,tx.error);
 			complete_cb();
