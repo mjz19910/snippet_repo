@@ -2038,7 +2038,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with(x,"MP")) {
 			let x1=split_string_once(x,"MP")[1];
 			let x2=split_string_once(x1,"_");
-			this.save_string_arr("param_2c_MP.0",x2[0]);
+			this.save_string("param_2c_MP.0",x2[0]);
 			return;
 		}
 		{debugger;}
