@@ -284,20 +284,24 @@ type GU_VE3611_3=
 	|`/@${string}`
 	;
 ;
-type RS_Page_Channel={
+type RS_Page_Channel_1={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
 	url: `/@${string}`;
 	previousCsn: string;
 	expirationTime: number;
-}|{
+};
+
+type RS_Page_Channel_2={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
 	url: GU_VE3611_2;
 	expirationTime: number;
-}|{
+};
+
+type RS_Page_Channel_3={
 	rootVe: 3611;
 	url: GU_VE3611_3;
 	endpoint: E_VE3611;
@@ -305,7 +309,9 @@ type RS_Page_Channel={
 	response: RS_Channel;
 	expirationTime: number;
 	csn?: string;
-}|{
+};
+
+type RS_Page_Channel_4={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
@@ -314,6 +320,13 @@ type RS_Page_Channel={
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
+type RS_Page_Channel=
+	|RS_Page_Channel_1
+	|RS_Page_Channel_2
+	|RS_Page_Channel_3
+	|RS_Page_Channel_4
+	;
+;
 type RS_Page_Playlist={
 	page: "playlist";
 	endpoint: E_VE5754;
