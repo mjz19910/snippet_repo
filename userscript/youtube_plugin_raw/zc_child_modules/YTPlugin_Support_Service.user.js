@@ -1875,7 +1875,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return s3;
 	}
 	data_store=new StoreData;
-	get_data_store() {return this.data_store;}
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.data_store.seen_bool_obj.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
