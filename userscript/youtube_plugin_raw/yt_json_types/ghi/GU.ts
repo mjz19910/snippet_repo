@@ -3,6 +3,7 @@ type GU_VE3611_Url=
 	|`/@${string}`
 	|`/channel/UC${string}`
 	|`/source/${string}/shorts?bp=${string}`
+	|`/c/${string}`
 	;
 ;
 // cspell:ignore RDCMUC
