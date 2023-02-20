@@ -2899,7 +2899,7 @@ class HandleTypes extends ServiceMethods {
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
 		debugger;
-		const {1: {}={},3: {},5: {},8: {}={},12: {},15: {},...y}=this.s(cf,x); this.g(y);
+		const {1: {}={},3: {},5: {},8: {}={},12: {}={},15: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */

@@ -214,7 +214,7 @@ type P_continuation_request_reel_watch_sequence_token={
 		3: T_D32<12>;
 	}>;
 	8?: T_VW<{}>;
-	12: TV_Str<"RDSH">;
+	12?: TV_Str<"RDSH">;
 	15: T_VW<{
 		1: T_D32<10>,
 		3: T_D32<9>,
