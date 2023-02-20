@@ -3,28 +3,21 @@ type D_UrlFormat=
 	|"/upload"
 	|"android-app://com.google.android.youtube/http/youtube.com/premium"
 	|`/@${string}`
-	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
 	|`/@${string}${ChannelSubUrlFormat}`
-	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/api/stats/ads?${string}`
 	|`/channel/UC${string}`
 	|`/embed/${string}`
 	|`/feed/${D_BrowseEndpointPages}`
-	|`/feed/${D_BrowseEndpointPages}`
 	|`/feed/trending?${string}`
 	|`/feed/trending?bp=${string}`
 	|`/gaming`
 	|`/playlist?${D_PlaylistUrlParams}`
-	|`/playlist?${string}`
 	|`/premium`
 	|`/reporthistory`
-	|`/results?${string}`
 	|`/results?search_query=${string}`
 	|`/shorts/${string}`
-	|`/shorts/${string}`
 	|`/v/${string}?version=3&autohide=1`
-	|`/watch?${D_WatchUrlStr}`
 	|`/watch?${string}`
 	|S_YtUrlHttp_Watch
 	|`https://www.youtube.com/pagead/adview?${string}`

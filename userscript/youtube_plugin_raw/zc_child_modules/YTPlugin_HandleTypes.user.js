@@ -2511,7 +2511,7 @@ class HandleTypes extends ServiceMethods {
 					case "/videoplayback": {
 						let vp_search=x.search;
 						let {...pp}=this.parse_url_search_params(vp_search);
-						this.D_VideoPlaybackShape(pp);
+						this.D_VideoPlaybackShape(as_any(pp));
 					} break;
 					case "/initplayback": {
 						debugger;

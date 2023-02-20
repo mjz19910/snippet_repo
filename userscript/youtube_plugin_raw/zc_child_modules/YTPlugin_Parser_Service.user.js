@@ -85,10 +85,8 @@ class ParserService extends BaseService {
 		if(!this.eq_keys(this.get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
-	/** @private @arg {Extract<NS_DP_Parse.ParseUrlStr_2,[`@${string}`,any]>[1]} xb */
-	parse_channel_section_url(xb) {
-		if(xb==="") return;
-		let x=split_string_once(xb,"/")[1];
+	/** @private @arg {Extract<NS_DP_Parse.ParseUrlStr_2,[`@${string}`,any]>[1]} x */
+	parse_channel_section_url(x) {
 		if(!this.str_is_search(x)) {return this.parse_channel_section(["channel",x]);}
 		let a=split_string(x,"?");
 		switch(a[0]) {
