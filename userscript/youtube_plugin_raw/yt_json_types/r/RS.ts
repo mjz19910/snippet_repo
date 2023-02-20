@@ -265,6 +265,7 @@ type R_ChannelMetadata=R_Channel_MD;
 type GU_VE3611_2=
 	|`/@${string}/about`
 	|`/@${string}/channels`
+	|`/@${string}/featured`
 	|`/@${string}/playlists`
 	|`/@${string}/search?query=${string}`
 	|`/@${string}/search`

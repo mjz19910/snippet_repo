@@ -1466,7 +1466,7 @@ class Support_EventInput extends ServiceMethods {
 					}
 					switch(f3) {
 						default: f3===""; debugger; break;
-						case "search": case "shorts":
+						case "search": case "shorts": case "featured":
 						case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
 					}
 				}
@@ -1501,7 +1501,7 @@ class Support_EventInput extends ServiceMethods {
 				page: h_d.page,
 				endpoint: h_d.endpoint,
 				response: h_d.response,
-				url: h_url,
+				url: x => h_url(x),
 				expirationTime: h_et,
 			};
 			const {rootVe,csn,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
@@ -1515,7 +1515,7 @@ class Support_EventInput extends ServiceMethods {
 				page: h_d.page,
 				endpoint: h_d.endpoint,
 				response: h_d.response,
-				url: h_url,
+				url: x => h_url(x),
 				expirationTime: h_et,
 			};
 			const {csn,graftedVes,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
@@ -1528,7 +1528,8 @@ class Support_EventInput extends ServiceMethods {
 			page: h_d.page,
 			endpoint: h_d.endpoint,
 			response: h_d.response,
-			url: h_url,
+			/** @arg {GU_VE3611_2} x */
+			url: x => h_url(x),
 			expirationTime: h_et,
 		};
 		const {...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
