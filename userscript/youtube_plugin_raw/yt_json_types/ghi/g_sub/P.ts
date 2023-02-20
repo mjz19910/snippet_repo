@@ -84,13 +84,11 @@ type P_remove_like_params={
 	3: T_D32<0>;
 	5: T_VW_2<V_ShortTimestamp>;
 };
+type P_dislike_params_f1={
+	1: TV_Str<D_VideoId>|T_VW_2<{}>;
+};
 type P_dislike_params={
-	1: T_VW_2<{1: TV_Str<D_VideoId>;}|{
-		1: T_VW_2<{
-			10: T_D32<70>;
-			14: T_FD64<5290090427792780129n>;
-		}>;
-	}>;
+	1: T_VW_2<P_dislike_params_f1>;
 	2: T_D32<0>;
 	4: T_VW_2<V_ShortTimestamp>;
 };

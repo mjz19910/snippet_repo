@@ -2934,9 +2934,9 @@ class HandleTypes extends ServiceMethods {
 			switch(a[0]) {
 				default: debugger; break;
 				case "child": {
-					let [,,x]=a;
-					if(x===null) {debugger; return;}
-					let {10: b,14: c,...y}=x; this.g(y);
+					let [,bin,]=a;
+					let video_id=this.text_decoder.decode(bin);
+					this.videoId(video_id);
 				} break;
 				case "raw_child": /*D_VideoId*/{
 					let [,,,[t,x]]=a;
