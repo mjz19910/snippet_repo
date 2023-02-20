@@ -1571,7 +1571,10 @@ class HandleTypes extends ServiceMethods {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return null;}
 		let reader=new MyReader(buffer);
-		return reader.try_read_any();
+		let protobuf_arr=reader.try_read_any();
+		if(protobuf_arr===null) return null;
+		if(protobuf_arr.find(e => e[0]==="error")) return null;
+		return protobuf_arr;
 	}
 	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {

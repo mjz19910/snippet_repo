@@ -1443,16 +1443,22 @@ class ServiceMethods extends ServiceData {
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @arg {Record<string,never>} x @returns {x is {}} */
+	decay_obj(x) {x; return true;}
 	/** @arg {D_Menu_WithItems} x */
 	D_Menu_WithItems(x) {
 		const cf="D_Menu_WithItems";
-		const {trackingParams,items,...u}=this.s(cf,x);
-		this.trackingParams(trackingParams);
+		const {items,...u_}=this.s(cf,x);
+		if(!this.is_not_empty_obj(u_)) return this.g(u_);
 		this.z(items,x => {
 			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 			debugger;
 		});
+		const {trackingParams,...u2}=u_;
+		this.trackingParams(trackingParams);
+		if(!this.is_not_empty_obj(u2)) return this.g(u2);
+		let u=u2;
 		if("flexibleItems" in u) {
 			const {topLevelButtons,accessibility,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
 			this.z(topLevelButtons,x => {
