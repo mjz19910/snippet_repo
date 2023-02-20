@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,as_any, make_iterator}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,as_any,make_iterator}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -194,20 +194,15 @@ class IndexedDBService extends BaseService {
 			for_loop: for(let item of d_cache) {
 				let cursor_req=typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key));
 				cursor_loop: for(let i=0;;i++) {
-					const [settled]=await Promise.allSettled([this.get_async_result(cursor_req)]);
-					if(settled.status==="rejected") {
-						console.log("openCursor failed",settled.reason);
-						break for_loop;
-					}
+					const cur_cursor=await this.get_async_result(cursor_req);
 					if(is_tx_complete) {
-						console.log("tx closed and still iterating");
+						console.log("cursor_loop_is_tx_complete_1");
 						break for_loop;
 					}
-					const cur_cursor=settled.value;
 					if(cur_cursor===null) {
 						if(this.log_db_actions) console.log("update sync cache item",item);
 						if(is_tx_complete) {
-							console.log("cursor_loop_is_tx_complete_1");
+							console.log("cursor_loop_is_tx_complete_2");
 							break cursor_loop;
 						}
 						try {
@@ -395,8 +390,14 @@ class IndexedDBService extends BaseService {
 	/** @template T @arg {IDBRequest<T>} request @returns {Promise<Event>} */
 	await_success(request) {
 		return new Promise(function(accept,reject) {
-			request.onsuccess=accept;
-			request.onerror=reject;
+			request.onsuccess=(value) => {
+				console.log("await_success result",value);
+				accept(value);
+			};
+			request.onerror=(event) => {
+				console.log("await_success error",event);
+				reject(event);
+			};
 		});
 	}
 	/**
