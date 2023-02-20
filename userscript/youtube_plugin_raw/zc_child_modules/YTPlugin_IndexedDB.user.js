@@ -141,16 +141,12 @@ class IndexedDBService extends BaseService {
 		db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
 		return db_req;
 	}
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
-	async open_database(key,version) {
-		if(this.log_db_actions) console.log("open db");
-		this.database_opening=true;
-		let db=await this.get_async_result(this.get_db_request(version));
-		this.database_opening=false;
-		this.database_open=true;
-		let typed_db=new TypedIndexedDb;
-		const tx=this.transaction(db,key,"readwrite");
-		let is_tx_complete=false;
+	/** 
+	 * @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode 
+	 * @arg {()=>void} complete_cb
+	*/
+	open_transaction(db,key,mode,complete_cb) {
+		const tx=this.transaction(db,key,mode);
 		/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 		function assert_assume_is(x,y) {if(x!==y) throw new Error();}
 		tx.oncomplete=function(event) {
@@ -178,30 +174,54 @@ class IndexedDBService extends BaseService {
 				mode,
 				error,
 			},[...make_iterator(objectStoreNames)]);
-			is_tx_complete=true;
+			complete_cb();
 		};
 		tx.onerror=function(event) {
 			console.log("tx error",event,tx.error);
-			is_tx_complete=true;
+			complete_cb();
 		};
 		tx.onabort=function(event) {
 			console.log("tx abort",event,tx.error);
-			is_tx_complete=true;
+			complete_cb();
 		};
+		return tx;
+	}
+	/** @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode */
+	open_transaction_scope(db,key,mode) {
+		const tx=this.open_transaction(db,key,mode,() => {
+			scope.is_tx_complete=true;
+		});
+		let scope={
+			tx,
+			is_tx_complete: false,
+		};
+		return scope;
+	}
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
+	async open_database(key,version) {
+		if(this.log_db_actions) console.log("open db");
+		this.database_opening=true;
+		let db=await this.get_async_result(this.get_db_request(version));
+		this.database_opening=false;
+		this.database_open=true;
+		let typed_db=new TypedIndexedDb;
+		const tx_scope=this.open_transaction_scope(db,key,"readwrite");
+		let tx=tx_scope.tx;
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {
 			for_loop: for(let item of d_cache) {
+				if(this.committed_data.includes(item)) continue;
 				let cursor_req=typed_db.openCursor(obj_store,TypedIDBValidKeyS.only(item.key));
 				cursor_loop: for(let i=0;;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
-					if(is_tx_complete) {
+					if(tx_scope.is_tx_complete) {
 						console.log("cursor_loop_is_tx_complete_1");
 						break for_loop;
 					}
 					if(cur_cursor===null) {
 						if(this.log_db_actions) console.log("update sync cache item",item);
-						if(is_tx_complete) {
+						if(tx_scope.is_tx_complete) {
 							console.log("cursor_loop_is_tx_complete_2");
 							break cursor_loop;
 						}
@@ -377,13 +397,20 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	async update(store,data) {
-		let req=store.put(data);
+		let req;
+		try {
+			req=store.put(data);
+		} catch(e) {
+			console.log("update_failed_put_request",e);
+			throw e;
+		}
 		try {
 			let success=await this.await_success(req);
 			if(this.log_all_events) console.log("IDBRequest: success",success);
 			this.committed_data.push(data);
 		} catch(e) {
-			console.log("update_failed_2",e,req.error);
+			console.log("update_failed_put_result",e,req.error);
+			if(req.error!==null) throw req.error;
 			throw e;
 		}
 	}
@@ -391,7 +418,6 @@ class IndexedDBService extends BaseService {
 	await_success(request) {
 		return new Promise(function(accept,reject) {
 			request.onsuccess=(value) => {
-				console.log("await_success result",value);
 				accept(value);
 			};
 			request.onerror=(event) => {
