@@ -83,7 +83,6 @@ function dig_user {
 	echo $TMP_DIR/dig_res.t.*(N) | xargs -r rm
 	z1=({{0..9},{a..z}})
 	z=$(gen_z_get)
-	echo "\eD\eD"
 	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' ''
 	list=($TMP_DIR/dig_res.t.*)
 	cat $list >>"$RESULT_FILE"
