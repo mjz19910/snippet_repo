@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,as_any}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,as_any, make_iterator}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -151,8 +151,11 @@ class IndexedDBService extends BaseService {
 		let typed_db=new TypedIndexedDb;
 		const tx=this.transaction(db,key,"readwrite");
 		let is_tx_complete=false;
+		/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
+		function assert_assume_is(x,y) {if(x!==y) throw new Error();}
 		tx.oncomplete=function(event) {
 			const {type,timeStamp,target}=event;
+			assert_assume_is(target,this);
 			// these are deprecated
 			let dep_obj={
 				srcElement: null,
@@ -167,10 +170,15 @@ class IndexedDBService extends BaseService {
 				currentTarget: null,
 			}; null_after_dispatch;
 			if(event.target!==event.currentTarget) debugger;
+			const {mode,error,objectStoreNames}=target;
 			console.log("tx complete",{
 				type,
 				timeStamp,
-			},"target",target);
+			},"target",{
+				mode,
+				error,
+				objectStoreNames:[...make_iterator(objectStoreNames)],
+			});
 			is_tx_complete=true;
 		};
 		tx.onerror=function(event) {
