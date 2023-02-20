@@ -1,5 +1,6 @@
 type CF_0_NewTarget=GenNs_AllNames;
 type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map";
+type CF_RS_Page_Type1=T_ExtractImport<"CF_RS_Page_Type1">|"CF_RS_Page_Type1";
 type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen";
 type CF_D_ChipCloudChip_Omit=T_ExtractImport<"CF_D_ChipCloudChip_Omit">|"CF_D_ChipCloudChip_Omit";
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji";

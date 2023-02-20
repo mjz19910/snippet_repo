@@ -1,3 +1,3 @@
 type T_MakeHandlers<T>={
-	[U in keyof T]: () => void;
+	[U in keyof T]?: (x: T[U]) => void;
 };

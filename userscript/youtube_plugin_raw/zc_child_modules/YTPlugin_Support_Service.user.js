@@ -1443,8 +1443,9 @@ class Support_EventInput extends ServiceMethods {
 		this.a_primitive_str(url);
 		return y;
 	}
-	/** @template {string} T_CF @arg {T_CF} cf @arg {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} x @arg {{}} handlers */
+	/** @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x @arg {T_MakeHandlers<T>} handlers */
 	RS_Page_Type1(cf,x,handlers) {
+		const {url,endpoint,page,response,...u}=this.s(cf,x);/*#destructure_done*/
 		handlers;
 	}
 	/** @private @arg {RS_Page_Channel} x */

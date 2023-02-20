@@ -834,6 +834,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_Description";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_Title";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_TitleData";}
+		|{n: Prelude.CF_RS_Page_Type1; t: Types.CF_RS_Page_Type1_; v: "RS_Page_Channel";}
+		|{n: Prelude.CF_RS_Page_Type1; t: Types.CF_RS_Page_Type1_; v: "R_PageTypeBrowse_Response";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_ConfirmDialog";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_FancyDismissibleDialog";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_GetAccountMenu";}
