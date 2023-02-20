@@ -79,6 +79,7 @@ function dig_user_run {
 		fi
 		return 0
 	fi
+	touch /tmp/dig_term_lock
 	echo $TMP_DIR/dig_res.t.*(N) | xargs -r rm
 	z1=({{0..9},{a..z}})
 	z=$(gen_z_get)
@@ -93,15 +94,22 @@ function dig_user_run {
 }
 function dig_user {
 	pushd -q $S_DIR
-	eval '{dig_user_run "$@";} always {popd -q}';
+	eval '{dig_user_run "$@";} always {popd -q}'
 }
 function dig_user_child {
-	arg_num_1=${#1};
+	arg_num_1=${#1}
 	n=$arg_num_1
-	((n = n + 8 + 2));
+	((n = n + 8 + 2))
 	printf "\e7""\e[H\e[500C\e[0K\e[${n}D [start]:$1""\e8"
 	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+	(
+		unset foo
+		exec {foo}</tmp/dig_term_lock
+		flock -e $foo
+		((n = n + arg_num_1 + 9))
+		printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
+	)
 	printf "."
 	dig @8.8.4.4 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
