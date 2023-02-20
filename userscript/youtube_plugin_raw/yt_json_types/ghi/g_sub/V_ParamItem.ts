@@ -1,7 +1,5 @@
 type Ret_gen_json=string;
-
 type V_ParamItem_RawChild=[type: "raw_child",binary_arr: Uint8Array,obj: V_ParamObj|null,raw_value: V_RawValue];
-
 type V_ParamItem=
 	|[type: "child",binary_arr: Uint8Array,obj: V_ParamObj|null]
 	|[type: "data_fixed32",value: number]
