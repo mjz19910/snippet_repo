@@ -171,7 +171,7 @@ class IndexedDBService extends BaseService {
 			}; null_after_dispatch;
 			if(event.target!==event.currentTarget) debugger;
 			const {mode,error,objectStoreNames}=target;
-			console.log("tx complete\nevent:%o\ntarget:%o\nobjectStoreNames:%o\n",{
+			console.log("-- [tx_complete] --\nevent:%o\ntarget:%o\nobjectStoreNames:%o\n",{
 				type,
 				timeStamp,
 			},{
