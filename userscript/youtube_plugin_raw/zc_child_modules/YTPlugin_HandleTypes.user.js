@@ -1919,6 +1919,23 @@ class HandleTypes extends ServiceMethods {
 			case "p5qls":
 			case "p5qs7":
 		}
+		let selector_parts=split_string(ap.selector,"");
+		switch(selector_parts[0]) {
+			default: debugger; {
+				switch(selector_parts[0]) {
+				}
+			} break;
+			case "7": case "e": case "l": case "s": {
+				switch(selector_parts[1]) {
+					default: debugger; {
+						switch(selector_parts[1]) {
+						}
+					} break;
+					case "6": case "d": case "e": case "k":
+					case "l": case "s": case "y": case "z":
+				}
+			}
+		}
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x)) return;
 			this.logged_hosts.push(x);
