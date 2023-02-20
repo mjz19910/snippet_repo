@@ -22,6 +22,7 @@ type D_UrlFormat=
 	|`http://www.youtube.com/watch?${string}`
 	|`https://support.google.com/youtube/answer/${number}`
 	|`https://www.youtube.com/watch?${string}`
+	|NonNullable<D_Channel_MD["channelConversionUrl"]>
 	|D_Youtube_Streaming_ProbeUrl
 	|D_ExternalUrlFormat
 	|GU_VE6827_Url

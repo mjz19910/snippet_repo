@@ -1085,6 +1085,7 @@ type D_Channel_MD={
 	androidAppindexingLink: string;
 	iosAppindexingLink: string;
 	vanityChannelUrl: `http://www.youtube.com/@${string}`;
+	channelConversionUrl?: `https://www.youtube.com/pagead/viewthroughconversion/962985656/?${string}`;
 };
 type D_Chapter={
 	title: G_Text;

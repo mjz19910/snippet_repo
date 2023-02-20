@@ -767,7 +767,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
-		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,facebookProfileId,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,facebookProfileId,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...u}=this.s(cf,x);
 		this.t(facebookProfileId,this.a_primitive_str);
 		this.a_primitive_str(title);
 		this.a_primitive_str(description);
@@ -785,6 +785,8 @@ class HandleTypes extends ServiceMethods {
 		this.ceq(this.str_starts_with_rx("/@",ur.pathname),true);
 		this.a_primitive_str(channelUrl);
 		this.a_primitive_str(vanityChannelUrl);
+		const {channelConversionUrl,...y}=u; this.g(y);/*#destructure_done*/
+		this.t_cf(`${cf}.channelConversionUrl`,channelConversionUrl,(cf,x) => this.parser.parse_url(cf,x));
 	}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
@@ -3400,7 +3402,7 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(channelHandleText);
 		this.G_Text(videosCountText);
 		const {visitTracking,...y}=u; this.g(y);
-		this.t(visitTracking,this.D_RemarketingPing)
+		this.t(visitTracking,this.D_RemarketingPing);
 	}
 	/** @private @arg {D_RemarketingPing} x */
 	D_RemarketingPing(x) {x;}
