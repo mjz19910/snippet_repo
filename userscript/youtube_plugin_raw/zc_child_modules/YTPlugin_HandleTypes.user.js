@@ -321,7 +321,7 @@ class HandleTypes extends ServiceMethods {
 		let vv=this.T_RawChild(x);
 		if(vv===null) {debugger; return null;}
 		let v2=vv;
-		if(v2[0]!=="raw_child") {this.codegen_typedef_bin("TV_Str",x); return null;}
+		if(v2[0]!=="raw_child") return null;
 		let v3=v2[3];
 		let [a,b]=v3;
 		if(a!=="string") {debugger; return null;}
@@ -2742,9 +2742,9 @@ class HandleTypes extends ServiceMethods {
 		/** @returns {FT extends null?T:U} */
 		function ret_ex() {throw new Error();}
 		let ret=null;
-		/** @type {[["child", Uint8Array, T]]|null} */
+		/** @type {T_VW<T>[1]|null} */
 		let pa=null;
-		/** @type {["child", Uint8Array, T]|null} */
+		/** @type {T_VW<T>[1][0]|null} */
 		let v=null;
 		if(x[0]==="param_arr") pa=x[1];
 		if(pa&&pa.length===1) [v]=pa;
