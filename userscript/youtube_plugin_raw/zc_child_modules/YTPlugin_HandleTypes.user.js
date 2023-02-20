@@ -1362,7 +1362,7 @@ class HandleTypes extends ServiceMethods {
 			case "string": return `TYPE::T_RC_Str<"${x1[1]}">`;
 		}
 	};
-	/** @arg {JsonReplacerState} s @arg {V_ParamItem} x @returns {V_ParamItemFiltered|null} */
+	/** @arg {JsonReplacerState} s @arg {V_ParamItem} x @returns {V_ParamItemFiltered} */
 	v_param_item(s,x) {
 		switch(x[0]) {
 			default: x[0]===""; debugger; return x;
