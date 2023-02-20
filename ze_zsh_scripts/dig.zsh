@@ -10,7 +10,6 @@ function dig_final {
 }
 function dig_main() {
 	pushd -q $S_DIR
-	a2="$1"
 	eval '{dig_main-run "$@";} always {popd -q}'
 }
 function dig_batch() {
@@ -18,6 +17,7 @@ function dig_batch() {
 }
 
 function dig_main-run() {
+	a2="$1"
 	RESULT_FILE="$TMP_DIR/result.dig_batch.$a2"
 	if [[ -f "$TMP_DIR/result.dig_batch.$a2" ]]; then
 		if (($(wc -l <"$RESULT_FILE") != 0)); then
