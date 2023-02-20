@@ -23,23 +23,19 @@ type V_ParamItemFiltered=
 	|[type: "raw",obj: V_RawValue]
 	|[type: "struct",value: V_ParamObj]
 	|`TYPE::T_D32<${string}>`
-	|`TYPE::T_FD32<${number}>`
-	|`TYPE::T_FD64<${bigint}n>`
+	|Ret_v_param_2_FD32
+	|Ret_v_param_2_FD64
 	|`TYPE::T_VW_Bigint<${string}n>`
-	|Ret_v_param_2_child
+	|"TYPE::T_VW_2<V_BinaryTimestamp>"
+	|RetParam_VW_2
 	|Ret_v_param_2_raw_child
 	;
 ;
-type Ret_v_param_2_child=Ret_v_param_2_maybe_binary_ts;
-type Ret_v_param_2_maybe_binary_ts=
-	|"TYPE::T_VW_2<V_BinaryTimestamp>"
-	|`TYPE::T_VW_2<${Ret_gen_json}>`
-	;
+type Ret_v_param_2_FD32=`TYPE::T_FD32<${number}>`;
+type Ret_v_param_2_FD64=`TYPE::T_FD64<${bigint}n>`;
+type RetParam_VW_2=`TYPE::T_VW_2<${Ret_gen_json}>`;
+type Ret_v_param_2_short_ts="TYPE::T_VW_2<V_ShortTimestamp>";
 ;
-type Ret_v_param_2_maybe_short_ts=
-	|"TYPE::T_VW_2<V_ShortTimestamp>"
-	|`TYPE::T_VW_2<${Ret_gen_json}>`
-	;
 ;
 type Ret_v_param_2_D32=`TYPE::T_D32<${string}>`;
 type Ret_v_param_2_raw_child=

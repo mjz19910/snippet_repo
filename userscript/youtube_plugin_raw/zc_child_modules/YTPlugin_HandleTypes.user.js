@@ -1273,7 +1273,10 @@ class HandleTypes extends ServiceMethods {
 			}
 			/** @type {D_ProtobufObj|V_ParamObj[number]} */
 			let x3=as(x);
-			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_maybe_binary_ts} */
+			switch(x3[0]) {
+				case "child": case "data32": case "data_fixed32": return this.tr_arr_to_obj([x3]);
+			}
+			/** @arg {V_ParamObj} x @returns {RetParam_VW_2|null} */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
@@ -1288,7 +1291,7 @@ class HandleTypes extends ServiceMethods {
 				/** @arg {V_ParamObj[number]} x */
 				function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 			};
-			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_maybe_short_ts} */
+			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_short_ts|null} */
 			let v_param_2_maybe_short_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				if(x[1][1].length!==1) return null;
@@ -1302,12 +1305,12 @@ class HandleTypes extends ServiceMethods {
 						let bts={...x,1: ["param_arr",[f1]],2: ["param_arr",[f2]]}; bts;
 						return `TYPE::T_VW_2<V_ShortTimestamp>`;
 					}
-				}; v_param_2_maybe_binary_ts;
+				}
 				let gen_json=this.gen_typedef_bin_json(s,x);
 				console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
-				return `TYPE::T_VW_2<${gen_json}>`;
+				return null;
 			};
-			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_child} */
+			/** @arg {V_ParamItem} otu @returns {RetParam_VW_2|null} */
 			let v_param_2_child=(otu) => {
 				if(otu[0]!=="child") return null;
 				const [,binary_arr,obj]=otu;
@@ -1325,31 +1328,22 @@ class HandleTypes extends ServiceMethods {
 					return null;
 				}
 				return `TYPE::T_VW_2<"${decoded_string}">`;
-			}; v_param_2_child;
-			if(x3[0]==="child") {
-				return this.tr_arr_to_obj([x3]);
-			}
+			};
 			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_D32} */
 			let v_param_2_D32=(otu) => {
-				if(otu[0]!=="data32") return null;
+				if(otu[0]!=="data32") throw new Error();
 				return `TYPE::T_D32<${otu[1]}>`;
 			}; v_param_2_D32;
-			if(x3[0]==="data32") {
-				return this.tr_arr_to_obj([x3]);
-			}
-			/** @arg {V_ParamItem} otu */
+			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_FD32} */
 			let v_param_2_FD32=(otu) => {
-				if(otu[0]!=="data_fixed32") return null;
+				if(otu[0]!=="data_fixed32") throw new Error();
 				return `TYPE::T_FD32<${otu[1]}>`;
 			}; v_param_2_FD32;
-			if(x3[0]==="data_fixed32") {
-				return this.tr_arr_to_obj([x3]);
-			}
-			/** @arg {V_ParamItem} otu */
+			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_FD64} */
 			let v_param_2_FD64=(otu) => {
-				if(otu[0]!=="data_fixed64") return null;
-				return `TYPE::T_FD64<${otu[1]}>`;
-			}; v_param_2_FD64;
+				if(otu[0]!=="data_fixed64") throw new Error();
+				return `TYPE::T_FD64<${otu[1]}n>`;
+			};
 			if(x3[0]==="data_fixed64") {
 				return this.tr_arr_to_obj([x3]);
 			}
@@ -1386,7 +1380,7 @@ class HandleTypes extends ServiceMethods {
 					case "string": return `TYPE::TV_Str<"${x1[1]}">`;
 				}
 			};
-			/** @arg {V_ParamItem} x @returns {V_ParamItemFiltered} */
+			/** @arg {V_ParamItem} x @returns {V_ParamItemFiltered|null} */
 			let v_param_item=x => {
 				switch(x[0]) {
 					default: x[0]===""; debugger; return x;
@@ -1394,8 +1388,8 @@ class HandleTypes extends ServiceMethods {
 					case "data32": return v_param_2_D32(x);
 					case "data64": return v_param_2_D64(x);
 					case "raw_child": return v_param_2_raw_child(x);
-					case "data_fixed32": return `TYPE::T_FD32<${x[1]}>`;
-					case "data_fixed64": return `TYPE::T_FD64<${x[1]}n>`;
+					case "data_fixed32": return v_param_2_FD32(x);
+					case "data_fixed64": return v_param_2_FD64(x);
 					case "struct": case "raw": case "group":
 					case "error": case "info": return x;
 				}
