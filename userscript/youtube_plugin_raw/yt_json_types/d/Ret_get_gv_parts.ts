@@ -33,14 +33,17 @@ type PT_DigDomain=[
 	"rr1.sn-5uaeznzy.googlevideo.com.",
 	"rr1.sn-qxoedne7.googlevideo.com.",
 ];
-type PT_TypeS=[
-	gen_g2_t1<"qxo7r">,
-	gen_g2_t1<"qxoed">,
+type PT_TypeS_NoRep=[
 	gen_g2_t1<"5uaez">,
 	gen_g2_t1<"5uald">,
-	gen_g3_t2<"9gv7",["l","e"]>,
 	gen_g2_t1<"a5mek">,
 	gen_g2_t1<"hp57k">,
+	gen_g2_t1<"qxo7r">,
+	gen_g2_t1<"qxoed">,
+
+];
+type PT_TypeS=[
+	gen_g3_t2<"9gv7",["l","e"]>,
 	gen_g3_t2<"n",[
 		gen_a3_t2<["4","8"],"v7",["s","z"]>,
 		gen_a2_t2<"x5",["s7","7y"]>,
