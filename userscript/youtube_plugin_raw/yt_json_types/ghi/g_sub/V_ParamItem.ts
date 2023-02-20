@@ -30,24 +30,18 @@ type V_ParamItemFiltered=
 	|Ret_v_param_2_raw_child
 	;
 ;
-type Ret_v_param_2_child=
-	|Ret_v_param_2_maybe_binary_ts
-	|null
-	;
-;
+type Ret_v_param_2_child=Ret_v_param_2_maybe_binary_ts;
 type Ret_v_param_2_maybe_binary_ts=
 	|"TYPE::T_VW_2<V_BinaryTimestamp>"
 	|`TYPE::T_VW_2<${Ret_gen_json}>`
-	|null
 	;
 ;
 type Ret_v_param_2_maybe_short_ts=
 	|"TYPE::T_VW_2<V_ShortTimestamp>"
 	|`TYPE::T_VW_2<${Ret_gen_json}>`
-	|null
 	;
 ;
-type Ret_v_param_2_D32=`TYPE::T_D32<${string}>`|null;
+type Ret_v_param_2_D32=`TYPE::T_D32<${string}>`;
 type Ret_v_param_2_raw_child=
 	|`TYPE::TV_Str<"${string}">`
 	|`TYPE::["raw_child",${Ret_gen_json},${Ret_gen_json},${Ret_gen_json}]`
