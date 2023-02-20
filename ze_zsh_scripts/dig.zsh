@@ -101,8 +101,7 @@ function dig_user_child {
 	printf "."
 	dig @1.1.1.1 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
-		printf "\n"
-		cat $TF
+		printf "!"
 	fi
 }
 case $MODE in
