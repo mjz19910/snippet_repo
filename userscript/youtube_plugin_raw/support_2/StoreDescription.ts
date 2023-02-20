@@ -18,8 +18,8 @@ type make_many_t<T>=["many",T[][]];
 type DB_NS_TypeStr="root_visual_element"|"boolean"|"string"|"number"|"keys";
 /** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
 type StoredChangesItem=
-	["number"|"root_visual_element",string,["one",number]|["arr",number[]]]
-	|["keys"|"string",string,["one",string]|["arr",string[]]]
-	|["boolean",string,["one",boolean]|["arr",boolean[]]]
+	|["number"|"root_visual_element",string,make_item_group<number>]
+	|["keys"|"string",string,make_item_group<string>]
+	|["boolean",string,make_item_group<boolean>]
 	;
 ;
