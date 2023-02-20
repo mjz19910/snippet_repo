@@ -13,7 +13,7 @@ type P_ad_layout_ad_serving_data_entry={
 	6: T_D32<8>;
 	7: T_D32<4>;
 	9: VW_BinaryTimestamp;
-	10: T_VW_2<{
+	10: T_VW<{
 		1: T_D32<5>;
 		6: T_D32<1>;
 		11: T_D32<2>;
@@ -24,7 +24,7 @@ type P_ad_layout_ad_serving_data_entry={
 
 type P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry={
 	1: VW_BinaryTimestamp;
-	3: T_VW_2<{
+	3: T_VW<{
 		1: T_D32<5>;
 		6: T_D32<1>;
 		11: T_D32<2>;
@@ -39,7 +39,7 @@ type PD_continuation_request_browse_token={
 };
 
 type PR_continuation_request_browse_token={
-	0x4c82a9c: T_VW_2<PD_continuation_request_browse_token>;
+	0x4c82a9c: T_VW<PD_continuation_request_browse_token>;
 };
 type P_reel_player_params={
 	30: T_D32<1>;
@@ -54,8 +54,8 @@ type P_logging_context_serialized_context_data={
 	};
 };
 type P_like_params={
-	1: T_VW_2<{
-		1: T_VW_2<{
+	1: T_VW<{
+		1: T_VW<{
 			8: T_FD32<1382109803>;
 			9: T_FD32<2126714>;
 			14: T_D32<115>;
@@ -63,7 +63,7 @@ type P_like_params={
 	}>;
 	4: T_D32<0>;
 	5?: T_D32<1>;
-	6: T_VW_2<V_ShortTimestamp>;
+	6: T_VW<V_ShortTimestamp>;
 	7?: T_D32<1>;
 };
 type P_playability_status_context_params={
@@ -80,17 +80,17 @@ type P_entity_key={
 	5: T_D32<1>;
 };
 type P_remove_like_params={
-	1: T_VW_2<{1: TV_Str<D_VideoId>;}>;
+	1: T_VW<{1: TV_Str<D_VideoId>;}>;
 	3: T_D32<0>;
-	5: T_VW_2<V_ShortTimestamp>;
+	5: T_VW<V_ShortTimestamp>;
 };
 type P_dislike_params_f1={
-	1: TV_Str<D_VideoId>|T_VW_2<{}>;
+	1: TV_Str<D_VideoId>|T_VW<{}>;
 };
 type P_dislike_params={
-	1: T_VW_2<P_dislike_params_f1>;
+	1: T_VW<P_dislike_params_f1>;
 	2: T_D32<0>;
-	4: T_VW_2<V_ShortTimestamp>;
+	4: T_VW<V_ShortTimestamp>;
 };
 type P_subscribe_button_entity_key={
 	2: TV_Str<`UC${string}`>;
@@ -98,14 +98,14 @@ type P_subscribe_button_entity_key={
 	5: T_D32<1>;
 };
 type P_subscribe_params={
-	2: T_VW_2<{
+	2: T_VW<{
 		1: T_D32<3>;
 	}>;
 	3: T_D32<0>;
 	4: TV_Str<D_VideoId>;
 };
 type P_unsubscribe_params={
-	1: T_VW_2<{
+	1: T_VW<{
 		1: T_D32<3>;
 	}>;
 	2: TV_Str<D_VideoId>;
@@ -113,13 +113,13 @@ type P_unsubscribe_params={
 };
 type P_continuation_request_watch_next_token={
 	1?: {_tag: "not_done";};
-	2: T_VW_2<{
+	2: T_VW<{
 		2: TV_Str<D_VideoId>;
 	}>;
 	3: T_D32<6>;
 	5?: {_tag: "not_done";};
-	6?: T_VW_2<{
-		4: T_VW_2<{
+	6?: T_VW<{
+		4: T_VW<{
 			4: TV_Str<D_VideoId>;
 			6: T_D32<0>;
 			15: T_D32<2>;
@@ -146,7 +146,7 @@ type P_watch_playlist_params={
 	7: T_D32<1>;
 	12: TV_Str<"z6EQlZaB7v8">;
 	13: T_D32<0>;
-	27?: T_VW_2<{
+	27?: T_VW<{
 		1: T_D32<1>;
 	}>;
 };
@@ -322,15 +322,15 @@ type P_trending_bp={
 };
 
 type P_ypc_get_offers_params={
-	1: T_VW_2<{
+	1: T_VW<{
 		1: T_D32<3>;
 		2: TV_Str<`UC${string}`>;
 	}>;
 	3: T_D32<3>;
-	5: T_VW_2<{
+	5: T_VW<{
 		1: TV_Str<"32KKwgF67Ho">;
 		3: T_D32<1>;
-		5: T_VW_2<{
+		5: T_VW<{
 			1: TV_Str<"32KKwgF67Ho">;
 		}>;
 		9: T_D32<2>;
@@ -347,10 +347,10 @@ type P_player_state_entity_key={
 	5: T_D32<1>;
 };
 type P_notification_record_interactions={
-	2: T_VW_2<{
+	2: T_VW<{
 		1: T_D32<2>,
-		14: T_VW_2<{
-			1: T_VW_2<{
+		14: T_VW<{
+			1: T_VW<{
 				1: T_D32<1676825106923816>,
 				2: T_D32<6>;
 			}>,

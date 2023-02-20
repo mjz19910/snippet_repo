@@ -36,16 +36,16 @@ type RetParam_child=
 	|RetParam_ShortTimestamp
 	;
 ;
-type RetParam_BinaryTimestamp="TYPE::T_VW_2<V_BinaryTimestamp>";
+type RetParam_BinaryTimestamp="TYPE::T_VW<V_BinaryTimestamp>";
 type RetParam_D32=`TYPE::T_D32<${number}>`;
 type RetParam_FD32=`TYPE::T_FD32<${number}>`;
 type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
-type RetParam_ShortTimestamp="TYPE::T_VW_2<V_ShortTimestamp>";
+type RetParam_ShortTimestamp="TYPE::T_VW<V_ShortTimestamp>";
 type RetParam_TV_Str=`TYPE::TV_Str<"${string}">`;
 type RetParam_VW_Bigint=`TYPE::T_VW_Bigint<${bigint}n>`;
 type RetParam_VW_2=
-	|`TYPE::T_VW_2<${Ret_gen_json},"json">`
-	|`TYPE::T_VW_2<${string},"string">`
+	|`TYPE::T_VW<${Ret_gen_json},"json">`
+	|`TYPE::T_VW<${string},"string">`
 	;
 ;
 type RetParam_VW_R=

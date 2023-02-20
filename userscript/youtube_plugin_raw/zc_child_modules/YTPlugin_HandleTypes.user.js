@@ -1268,11 +1268,11 @@ class HandleTypes extends ServiceMethods {
 		let kk=this.get_keys_of(x);
 		/** @type {V_BinaryTimestamp} */
 		if(f1&&f2&&f3&&f1[0]==="data32"&&f2[0]==="data_fixed32"&&f3[0]==="data_fixed32"&&this.eq_keys(kk,[1,2,3])) {
-			return `TYPE::T_VW_2<V_BinaryTimestamp>`;
+			return `TYPE::T_VW<V_BinaryTimestamp>`;
 		};
 		let gen_json=this.gen_typedef_bin_json(s,x);
 		console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
-		return `TYPE::T_VW_2<${gen_json},"json">`;
+		return `TYPE::T_VW<${gen_json},"json">`;
 		/** @arg {V_ParamObj[number]} x */
 		function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 	}
@@ -1288,7 +1288,7 @@ class HandleTypes extends ServiceMethods {
 			if(this.eq_keys(kk,[1,2,3])) {
 				/** @type {V_ShortTimestamp} */
 				let bts={...x,1: ["param_arr",[f1]],2: ["param_arr",[f2]]}; bts;
-				return `TYPE::T_VW_2<V_ShortTimestamp>`;
+				return `TYPE::T_VW<V_ShortTimestamp>`;
 			}
 		}
 		let gen_json=this.gen_typedef_bin_json(s,x);
@@ -1305,14 +1305,14 @@ class HandleTypes extends ServiceMethods {
 			let short_ts=this.replace_bin_short_ts(s,obj);
 			if(short_ts) return short_ts;
 			let gen_json=this.gen_typedef_bin_json(s,obj);
-			return `TYPE::T_VW_2<${gen_json},"json">`;
+			return `TYPE::T_VW<${gen_json},"json">`;
 		}
 		let decoded_string=this._decoder.decode(binary_arr);
 		if(binary_arr[0]===0) {
 			console.log("[maybe_handle_bin.do_maybe_string]",x,decoded_string);
 			return null;
 		}
-		return `TYPE::T_VW_2<"${decoded_string}","string">`;
+		return `TYPE::T_VW<"${decoded_string}","string">`;
 	};
 	/** @arg {V_ParamItem} otu @returns {RetParam_D32} */
 	v_param_2_D32(otu) {
@@ -2679,8 +2679,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.codegen_typedef_bin(cf,x,false);
 	}
-	/** @protected @template T @arg {T_VW_2<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
-	T_VW_2(x,f) {
+	/** @protected @template T @arg {T_VW<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
+	T_VW(x,f) {
 		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
 		function assume_ret(_x,_ret_ex) {}
 		/** @returns {FT extends null?T:U} */
@@ -2729,7 +2729,7 @@ class HandleTypes extends ServiceMethods {
 		f8;
 	}
 	/** @arg {VW_BinaryTimestamp} x */
-	VW_BinaryTimestamp(x) {this.T_VW_2(x,this.V_BinaryTimestamp);}
+	VW_BinaryTimestamp(x) {this.T_VW(x,this.V_BinaryTimestamp);}
 	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number_one(`${cf}.${k}`,x));}
 	/** @arg {P_tracking_params} x */
@@ -2955,7 +2955,7 @@ class HandleTypes extends ServiceMethods {
 	P_dislike_params(x) {
 		const cf="P_dislike_params";
 		const {1: a,2: b,4: c,...y}=this.s(cf,x);
-		this.T_VW_2(a,x => {
+		this.T_VW(a,x => {
 			const {1: f1,...y}=x; this.g(y);
 			if(f1[0]!=="param_arr") {debugger; return;}
 			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
@@ -3032,7 +3032,7 @@ class HandleTypes extends ServiceMethods {
 	PR_continuation_request_browse_token(x) {
 		const cf="PR_continuation_request_browse_token";
 		const {0x4c82a9c: a,...y}=this.s(cf,x); this.g(y);
-		this.T_VW_2(a,this.PD_continuation_request_browse_token);
+		this.T_VW(a,this.PD_continuation_request_browse_token);
 	}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {
