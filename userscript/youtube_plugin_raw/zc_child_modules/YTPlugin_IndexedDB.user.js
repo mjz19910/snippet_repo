@@ -172,18 +172,19 @@ class IndexedDBService extends BaseService {
 		return scope;
 	}
 	/** @arg {IDBTransaction} tx @returns {Promise<Event>} */
-	async await_complete(tx) {
+	await_complete(tx) {
 		return new Promise(function(accept,reject) {
 			tx.addEventListener("abort",reject);
 			tx.addEventListener("error",reject);
 			tx.addEventListener("complete",accept);
 		});
 	}
-	/** @arg {IDBTransaction} tx @arg {Event} event */
-	handle_transaction_complete(tx,event) {
+	/** @arg {IDBTransactionScope} scope @arg {Event} event */
+	handle_transaction_complete(scope,event) {
 		if(event.type!=="complete") throw new Error();
 		const {type,timeStamp,target}=event;
-		this.assert_assume_is(target,tx);
+		this.assert_assume_is(target,scope.tx);
+		scope.is_tx_complete=true;
 		// these are deprecated
 		let dep_obj={
 			srcElement: null,
@@ -249,8 +250,7 @@ class IndexedDBService extends BaseService {
 								tx=scope.tx;
 								obj_store=typed_db.objectStore(tx,key);
 								let complete_event=await this.await_complete(tx);
-								this.handle_transaction_complete(tx,complete_event);
-								scope.is_tx_complete=true;
+								this.handle_transaction_complete(scope,complete_event);
 							}
 						}
 						break cursor_loop;
@@ -335,7 +335,7 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			let complete_event=await this.await_complete(tx);
-			this.handle_transaction_complete(tx,complete_event);
+			this.handle_transaction_complete(tx_scope,complete_event);
 			tx_scope.is_tx_complete=true;
 		} catch(e) {
 			console.log("db error",e);

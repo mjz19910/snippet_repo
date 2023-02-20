@@ -39,6 +39,10 @@ type DT_DatabaseStoreTypes={
 	playlist_id: Extract<IDBBoxedType,{base: "playlist_id";}>;
 	browse_id: Extract<IDBBoxedType,{base: "browse_id";}>;
 };
+type IDBTransactionScope={
+	tx: IDBTransaction;
+	is_tx_complete: boolean;
+};
 type G_PlaylistIdObj={
 	key: `playlist_id:RDCM:UC${string}`;
 	base: "playlist_id";
