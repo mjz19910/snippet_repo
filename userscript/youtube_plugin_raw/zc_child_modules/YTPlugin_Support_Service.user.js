@@ -2232,7 +2232,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			case "number": {
 				this.is_group_with_type(x,1);
 				/** @type {[typeof k,typeof x]} */
-				let p=[k,x];debugger;
+				let p=[k,x];
 				let nk=store.data.push(p)-1;
 				store.index.set(k,nk);
 				return [store.type,p];
@@ -2240,7 +2240,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			case "string": {
 				this.is_group_with_type(x,"");
 				/** @type {[typeof k,typeof x]} */
-				let p=[k,x];debugger;
+				let p=[k,x];
 				let nk=store.data.push(p)-1;
 				store.index.set(k,nk);
 				return [store.type,p];
@@ -2434,7 +2434,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		debugger;
 		let f=true;
 		if(f) return;
-		let p=store.data[idx];debugger;
+		let p=store.data[idx];
 		if(store.type!=="string") return;
 		if(!p) return;
 		let k=p[0];
