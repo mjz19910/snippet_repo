@@ -2780,38 +2780,42 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
-		const cf="H_TrackingObj";
+		const cf="H_TrackingObj",t=this;
 		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,...y}=x; this.g(y);
 		this.t(f1,x => this.TK_D32(cf,x,"tag"));
 		this.t(f2,x => this.TK_D32(cf,x,"id"));
 		this.t(f3,x => this.TK_D32(cf,x,"f3"));
 		this.VW_BinaryTimestamp(f4);
 		this.t_cf(`${cf}_f6`,f6,this.H_TrackingObj_f6);
-		this.t(this.t(f7,x => this.TV_Str(x)),x => x);
+		t.t(t.t(f7,x => this.TV_Str(x)),x => t.save_string(`${cf}.f7`,x));
+		t.ms_t(f8,t.T_VW_Bigint);
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW(x,this.V_BinaryTimestamp);}
 	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<H_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number_one(`${cf}.${k}`,x));}
+	/** @template T @arg {T} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U>} */
+	ms(x,y) {return this.mt(this.m(x),y);}
+	/** @template {{}} T @arg {T|undefined} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
+	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
 		const cf="P_tracking_params";
 		const {1: f1,2: f2,3: f3,4: f4,6: f6,8: f8,16: f16,...y}=x,t=this;
 		/** @template {number} T @arg {"f1"|"f2"} k @arg {T_D32<T>} v */
-		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),t.T_D32_v),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
-		r("f1",f1);
-		r("f2",f2);
-		t.mt_cf(t.mt(t.m(f3),x => t.t(x,t.T_D32_v)),`${cf}.f3`,(cf,x) => t.tn_cf(cf,x,(cf,x) => {
+		let r=(k,v) => {t.mt_cf(t.ms(v,t.T_D32_v),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
+		r("f1",f1); r("f2",f2);
+		t.mt_cf(t.ms_t(f3,t.T_D32_v),`${cf}.f3`,(cf,x) => t.tn_cf(cf,x,(cf,x) => {
 			this.save_number_one(cf,x); switch(x) {case 0: case 1: case 4: }
 		}));
-		t.mt(t.m(f4),this.VW_BinaryTimestamp);
-		t.mt_cf(t.mt(t.m(f6),x => this.t(x,this.TV_Str)),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
+		t.ms(f4,this.VW_BinaryTimestamp);
+		t.mt_cf(t.ms(f6,x => this.t(x,this.TV_Str)),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
 			this.save_string(cf,x);
 			switch(x) {
 				case "watch": break;
 			}
 		}));
-		t.mt(t.m(f8),x => this.t(x,this.T_VW_Bigint));
+		t.ms(f8,x => this.t(x,this.T_VW_Bigint));
 		this.t(f16,this.VW_BinaryTimestamp);
 		if(this.is_empty_obj(y)) return;
 		this.codegen_typedef_bin(cf,x,false);
@@ -3113,7 +3117,7 @@ class HandleTypes extends ServiceMethods {
 		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
 		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
 		r("f30",f30); r("f57",f57); r("f71",f71);
-		t.mt(t.m(f72),x => this.t(x,this.T_VW_Bigint));
+		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
 	}
 	//#endregion
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
