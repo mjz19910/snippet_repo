@@ -1395,8 +1395,6 @@ class HandleTypes extends ServiceMethods {
 				case "child": case "data32": case "data_fixed32":
 				case "data64": case "data_fixed64": return this.tr_arr_to_obj([x3]);
 			}
-			//#region v_param_2
-			//#endregion
 			if(x3.length===2&&typeof x3[0]==="string") {
 				switch(x3[0]) {
 					case "error": break;
@@ -2696,21 +2694,17 @@ class HandleTypes extends ServiceMethods {
 		let pa=null;
 		/** @type {["child", Uint8Array, T]|null} */
 		let v=null;
-		if(x[0]==="param_arr") {
-			pa=x[1];
-		}
-		if(pa&&pa.length===1) {
-			[v]=pa;
-		}
+		if(x[0]==="param_arr") pa=x[1];
+		if(pa&&pa.length===1) [v]=pa;
 		if(v&&v[0]==="child") {
 			if(f===null) {
-				ret=v[2];
-				assume_ret(ret,ret_ex);
-				return ret;
+				let t_ret=v[2];
+				assume_ret(t_ret,ret_ex);
+				return t_ret;
 			} else {
-				ret=f.call(this,v[2]);
-				assume_ret(ret,ret_ex);
-				return ret;
+				let u_ret=f.call(this,v[2]);
+				assume_ret(u_ret,ret_ex);
+				return u_ret;
 			}
 		}
 		assume_ret(ret,ret_ex);
