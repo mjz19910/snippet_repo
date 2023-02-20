@@ -93,15 +93,19 @@ function dig_user_run {
 }
 function dig_user {
 	pushd -q $S_DIR
-	dig_user_run "$@"
-	popd -q
+	eval '{dig_user_run "$@";} always {popd -q}';
 }
 function dig_user_child {
-	printf "\e7""\e[H\e[2K\r$1 \r""\e8"
+	arg_num_1=${#1};
+	n=$arg_num_1
+	((n = n + 8 + 2));
+	printf "\e7""\e[H\e[500C\e[0K\e[${n}D [start]:$1""\e8"
 	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+	((n = n + arg_num_1 + 9));
+	printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
 	printf "."
-	dig @1.1.1.1 +time=3 +https +noall +answer "$@" >$TF
+	dig @8.8.4.4 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
 		printf "!"
 	fi
