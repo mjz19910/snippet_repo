@@ -1453,6 +1453,10 @@ class HandleTypes extends ServiceMethods {
 			return x;
 		}
 		if("message" in x) return x;
+		if("type" in x&&"v" in x&&keys.length===2) {
+			console.log("[maybe_handle_bin.keys.typed_obj]",x.type,x.v);
+			return x;
+		}
 		console.log("[maybe_handle_bin.keys.string_like]",keys);
 		debugger;
 		return x;
