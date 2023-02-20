@@ -2092,7 +2092,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @template {G_StoreDescriptions} T @arg {T} store */
 	async push_store_to_database(store) {
 		/** @type {IDBBoxedType[]} */
-		let boxed=await this.indexed_db.getAll("boxed_id");
+		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
 		for(let item of store.data) {
 			await this.push_store_item_to_database(store,boxed,item);
 		}
@@ -2120,7 +2120,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 	}
 	async do_boxed_update_from_database() {
-		let boxed=await this.indexed_db.getAll("boxed_id");
+		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
 		if(this.log_load_database) console.log("load_database all boxed",boxed);
 		if(boxed.length===0) {
 			let store=this.#data_store;
@@ -2161,25 +2161,26 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let wait_close=this.indexed_db.open_db_promise;
 		if(wait_close) return wait_close;
 	}
+	get_update_id() {return this.indexed_db.get("boxed_id","boxed_id:update_id",this.indexed_db_version);}
 	async save_database() {
-		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		let update_id=await this.get_update_id();
 		if(!update_id) throw new Error("Update id not saved when loading database");
 		this.expected_id++;
 		await this.put_update_id(this.expected_id);
-		update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		update_id=await this.get_update_id();
 		if(!update_id) throw new Error("Update id not saved when updating");
 		if(update_id.id!==this.expected_id) {
 			await this.put_update_id(this.expected_id);
 			let wait_close=this.indexed_db.open_db_promise;
 			if(wait_close) await wait_close;
 		}
-		update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		update_id=await this.get_update_id();
 		if(!update_id) throw new Error("Update id not saved when updating");
 		if(update_id.id!==this.expected_id) throw new Error("Conflicting access, update_id still not the expected id");
 		await this.do_boxed_push_to_database();
 	}
 	async load_database() {
-		let update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+		let update_id=await this.get_update_id();
 		if(!update_id) {
 			await this.put_update_id(1);
 			let wait_close=this.indexed_db.open_db_promise;
@@ -2188,14 +2189,14 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		} else {
 			this.expected_id++;
 			await this.put_update_id(this.expected_id);
-			update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+			update_id=await this.get_update_id();
 		}
 		for(;;) {
 			if(!update_id) {
 				await this.put_update_id(0);
 				let wait_close=this.indexed_db.open_db_promise;
 				if(wait_close) await wait_close;
-				update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+				update_id=await this.get_update_id();
 				continue;
 			}
 			if(update_id.id===this.expected_id) {
@@ -2210,7 +2211,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 			this.expected_id++;
 			await this.put_update_id(this.expected_id);
-			update_id=await this.indexed_db.get("boxed_id","boxed_id:update_id");
+			update_id=await this.get_update_id();
 			continue;
 		}
 	}

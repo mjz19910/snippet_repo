@@ -135,13 +135,17 @@ class IndexedDBService extends BaseService {
 			.catch(err => console.log("open_database error",err))
 			.then(() => this.open_db_promise=null);
 	}
+	/** @arg {number} version */
+	get_db_request(version) {
+		let db_req=indexedDB.open("yt_plugin",version);
+		db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
+		return db_req;
+	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
 		this.database_opening=true;
-		let db_req=indexedDB.open("yt_plugin",version);
-		db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
-		let db=await this.get_async_result(db_req);
+		let db=await this.get_async_result(this.get_db_request(version));
 		this.database_opening=false;
 		this.database_open=true;
 		let typed_db=new TypedIndexedDb;
@@ -262,10 +266,10 @@ class IndexedDBService extends BaseService {
 			if(this.log_db_actions) console.log("close db");
 		}
 	}
-	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key */
-	async get(key,store_key) {
+	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key @arg {number} version */
+	async get(key,store_key,version) {
 		let typed_db=new TypedIndexedDb;
-		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
+		let db=await this.get_async_result(this.get_db_request(version));
 		const tx=this.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
 		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
@@ -275,8 +279,8 @@ class IndexedDBService extends BaseService {
 	get_all_waiting_keys=[];
 	/** @type {([keyof DT_DatabaseStoreTypes,Promise<DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes][]>])[]} */
 	waiting_promises=[];
-	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key */
-	async getAll(key) {
+	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {number} version */
+	async getAll(key,version) {
 		if(this.open_db_promise) {
 			await this.open_db_promise;
 		}
@@ -286,17 +290,17 @@ class IndexedDBService extends BaseService {
 			let res=await waiter[1];
 			return res;
 		}
-		let promise=this.getAllImpl(key);
+		let promise=this.getAllImpl(key,version);
 		this.waiting_promises.push([key,promise]);
 		await promise;
 		let idx=this.waiting_promises.findIndex(x => x[0]===key);
 		if(idx>0) this.waiting_promises.splice(idx,1);
 		return promise;
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key */
-	async getAllImpl(key) {
+	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {number} version */
+	async getAllImpl(key,version) {
 		let typed_db=new TypedIndexedDb;
-		let db=await this.get_async_result(indexedDB.open("yt_plugin",3));
+		let db=await this.get_async_result(this.get_db_request(version));
 		const tx=this.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
@@ -424,7 +428,7 @@ class IndexedDBService extends BaseService {
 	async database_diff(version) {
 		let typed_db=new TypedIndexedDb;
 		let ret={};
-		ret.db=await this.get_async_result(indexedDB.open("yt_plugin",version));
+		ret.db=await this.get_async_result(this.get_db_request(version));
 		let tx=this.transaction(ret.db,"video_id","readonly");
 		ret.store=typed_db.objectStore(tx,"video_id");
 		ret.store_data=await this.get_async_result(typed_db.getAll(ret.store));
