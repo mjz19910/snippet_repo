@@ -9,9 +9,9 @@ function run_dig_main_impl() {
 		return 0
 	fi
 	printf "\r.\e[2C"
-	echo $$ >"$TMP_DIR/out.dig_batch.$a2.pid"
 	printf "%s\0" $TMP_DIR/out.dig_batch.$a2.*(N) | xargs -0r rm
-	echo $$ >$TMP_DIR/pid.dig_batch.$a2
+	PID_FILE="$TMP_DIR/pid.dig_batch.$a2"
+	echo $$ >"$PID_FILE"
 	printf "%s\0" rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com |
 		stdbuf -i0 -o0 -e0 xargs -0rn35 -P100 zsh -c '. ./dig.zsh run_child '$a2' "$@"'
 	list=($TMP_DIR/out.dig_batch.$a2.*)
@@ -20,7 +20,9 @@ function run_dig_main_impl() {
 		foo=$(<"$RESULT_FILE")
 		printf "\n[$a2]\n%s\n" "$foo"
 	fi
+	rm "$list"
 	printf "\r \e[2C"
+	rm "$PID_FILE"
 }
 function run_dig_main() {
 	pushd -q $S_DIR
@@ -116,7 +118,7 @@ function dig_user_child {
 	((n = n + arg_num_1 + 9))
 	lock_printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
 	lock_printf "."
-	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
+	dig @162.159.8.55 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
 		lock_printf "!"
 	fi
