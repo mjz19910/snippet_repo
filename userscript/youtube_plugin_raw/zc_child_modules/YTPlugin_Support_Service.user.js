@@ -1505,7 +1505,7 @@ class Support_EventInput extends ServiceMethods {
 		}
 		if("expirationTime" in x) return this.g(this.RS_Page_Type1(cf,x,{
 			page: x => this.ceq(x,"channel"),
-			endpoint: this.E_VE3611,
+			endpoint: x => this.E_VE3611(x),
 			response: x => this.bc.RS_Channel(x),
 			url: x => {
 				let sp=split_string(x,"/");
