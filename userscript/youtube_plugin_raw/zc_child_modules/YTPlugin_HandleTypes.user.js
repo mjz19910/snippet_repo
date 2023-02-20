@@ -3099,11 +3099,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params"; let t=this;
-		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x);
-		this.T_D32(f30,x => this.save_number_one(`${cf}.f30`,x));
-		t.t(t.mt(t.m(f57),t.T_D32_v),x => this.save_number_one(`${cf}.f57`,x));
-		this.T_D32(f71,x => this.save_number_one(`${cf}.f71`,x));
-		this.T_D32(f72,x => this.save_number_one(`${cf}.f72`,x));
+		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.g(y);
+		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
+		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
+		r("f30",f30); r("f57",f57); r("f71",f71);
+		t.mt(t.m(f72),x => this.t(x,this.T_VW_Bigint));
 		debugger;
 	}
 	//#endregion

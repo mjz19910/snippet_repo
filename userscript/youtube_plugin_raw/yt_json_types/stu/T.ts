@@ -2,9 +2,9 @@
 type T_GetKeyMap<T,U extends keyof T,KM>=Extract<KM[Extract<keyof KM,U>],string>|T_MakeNumFieldFmt<T,U,Extract<U,number>,keyof KM,T_D32<number>|undefined>;
 type T_Extract_D32_Keys<T,U extends keyof T,Y extends number,L>=T[U] extends L? Y:never;
 type T_OmitKeyMapKeys<Y extends number>=Exclude<Y,keyof KM_TrackingObj>;
-type T_MakeNumFieldFmt<T,U extends keyof T,V extends number,W,L>=`f${T_Extract_D32_Keys<T,U,Exclude<V,W>,L>}`;
+type T_MakeNumFieldFmt<T,U extends keyof T=keyof T,V extends number=Extract<U,number>,W=never,L=T_D32<number>|undefined>=`f${T_Extract_D32_Keys<T,U,Exclude<V,W>,L>}`;
 type T_ObjGetNumKey_1<T extends {},KM>={[U in keyof T as T_GetKeyMap<T,U,KM>]: U;};
-type T_ObjGetNumKey<T extends {},KM>=`${Extract<keyof T_ObjGetNumKey_1<T,KM>,string>}`;
+type T_ObjGetNumKey<T extends {},KM={}>=`${Extract<keyof T_ObjGetNumKey_1<T,KM>,string>}`;
 //#endregion
 type MonadFn<U,A extends any[]>=(...s: A) => U;
 type M_Optional<T>=Some<T>|None;
