@@ -51,7 +51,7 @@ type RetParam_VW_2=
 	;
 ;
 type RetParam_VW_R=
-	|`TYPE::T_VW_R<"${"number"}",${number}>`
+	|`TYPE::T_VW_R<"number",${number}>`
 	|`TYPE::T_VW_R<"${"array"|"binary"|"V_ParamMapType"}",${string}>`
 	;
 ;
