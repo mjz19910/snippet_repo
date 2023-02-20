@@ -1413,6 +1413,8 @@ class HandleTypes extends ServiceMethods {
 					case "error": debugger; break;
 				}
 			}
+			let fx=x[0];
+			console.log("[maybe_handle_bin.do_fx]",fx);
 			/** @type {(D_ProtobufObj|V_ParamObj[number])[]} */
 			let x_t1=x;
 			if(x_t1[0][0]==="child") {
