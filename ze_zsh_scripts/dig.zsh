@@ -6,7 +6,7 @@ function do_dig() {
 	printf "%s\0" "rr1.sn-"$a2"n"{{0..9},{a..z}}{{0..9},{a..z}}".googlevideo.com" |
 		stdbuf -i0 -o0 -e0 xargs -0rn35 -P100 zsh -c '. ./dig.zsh run_child '$a2' "$@"'
 	list=("/tmp/out.dig_batch.$a2."*)
-	TF_2=$(mktemp "/tmp/result.dig_batch.$1.XXX")
+	TF_2="/tmp/result.dig_batch.$a2"
 	cat $list >>"$TF_2"
 	if (($(wc -l <"$TF_2") != 0)); then
 		foo=$(<"$TF_2")
