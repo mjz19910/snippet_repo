@@ -64,7 +64,7 @@ type D_BrowseIdStr=
 	|GU_VE5754_Id
 	|`UC${string}`
 	|`SP${D_Settings_Id}`
-	|`MP${"TRt"|"REb"|"LYt"}_${string}`
+	|`MP${string}_${string}`
 	;
 ;
 type WatchUrlFormat=

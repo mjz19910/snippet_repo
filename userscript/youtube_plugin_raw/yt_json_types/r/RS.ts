@@ -282,7 +282,7 @@ type RS_Page_Channel={
 	expirationTime: number;
 }|{
 	rootVe: 3611;
-	url: `/@${string}`|`/@${string}/videos`|`/@${string}/playlists`|`/@${string}/community`|`/@${string}/channels`|`/@${string}/about`|`/@${string}/search?query=${string}`;
+	url: `/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`|`/@${string}/community`|`/@${string}/channels`|`/@${string}/about`|`/@${string}/search?query=${string}`;
 	endpoint: E_VE3611;
 	page: "channel";
 	response: RS_Channel;

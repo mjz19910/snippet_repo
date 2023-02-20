@@ -1457,7 +1457,7 @@ class Support_EventInput extends ServiceMethods {
 						}
 						switch(f3) {
 							default: debugger; break;
-							case "videos": case "playlists": case "community": case "channels":
+							case "videos": case "playlists": case "community": case "channels": case "shorts":
 						}
 					}
 				}
