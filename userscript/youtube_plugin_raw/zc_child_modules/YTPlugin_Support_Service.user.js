@@ -1731,11 +1731,12 @@ class StoreDescription_C extends ApiBase2 {
 	data=[];
 	/** @type {[string, make_item_group<T>][]} */
 	new_data=[];
-	/** @arg {StoreGetType<T>} type @arg {U} content */
-	constructor(type,content) {
+	/** @arg {StoreGetType<T>} type @arg {U} content @arg {()=>void} data_update_callback */
+	constructor(type,content,data_update_callback) {
 		super();
 		this.type=type;
 		this.content=content;
+		this.data_update_callback=data_update_callback;
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	push_new_data(k,x) {
@@ -1763,54 +1764,9 @@ class StoreDescription_C extends ApiBase2 {
 			return;
 		}
 		let keys=this.get_keys_of(obj);
-		let store_item=this.get_seen_string_item_store(k);
 		/** @type {make_arr_t<string>} */
 		let x=["arr",keys];
-		let store_index=this.save_to_data_item(x,store_item);
-		if(store_index<0) return false;
 		return this.save_data(k,x);
-	}
-	/** @private @arg {make_item_group<T>} x @arg {[string,make_item_group<T>]} item */
-	save_to_data_item(x,item) {
-		let target=item[1];
-		if(x[0]==="many") throw new Error("Unable to add many to something");
-		if(x[0]==="arr") {return this.add_many_to_data_item(x,item);}
-		if(x[0]==="one") {return this.add_one_to_data_arr(x,target);}
-		return -1;
-	}
-	/** @private @arg {make_one_t<T>} x @arg {make_item_group<T>} target_x */
-	add_one_to_data_arr(x,target_x) {
-		if(target_x[0]==="arr") {
-			if(!target_x[1].includes(x[1])) return target_x[1].push(x[1]);
-			return -1;
-		}
-		if(target_x[0]==="many") {
-			let res=target_x[1].find(([e,...r]) => !r.length&&e===x[1]);
-			if(!res) return target_x[1].push([x[1]]);
-			return -1;
-		}
-		return -1;
-	}
-	/** @private @template T @arg {make_arr_t<T>} x @arg {[string,make_item_group<T>]} item */
-	add_many_to_data_item([xt,x],item) {
-		if(xt!=="arr") {debugger; return -1;;}
-		let target=item[1];
-		if(target[0]==="arr") {
-			let inner=target[1].map(e => [e]);
-			target=["many",inner];
-			item[1]=target;
-		}
-		if(target[0]==="one") {debugger; return -1;}
-		let found=target[1].find(e => {
-			if(e.length!==x.length) return false;
-			for(let i=0;i<e.length;i++) {
-				let c=e[i]; let o=x[i];
-				if(c!==o) return false;
-			}
-			return true;
-		});
-		if(!found) return target[1].push(x);
-		return -1;
 	}
 	/** @arg {string} k */
 	get_seen_string_item_store(k) {
@@ -1837,16 +1793,20 @@ class StoreDescription_C extends ApiBase2 {
 	}
 }
 class StoreData {
-	/** @type {StoreDescription_C<boolean,"boolean">} */
-	seen_bool_obj=new StoreDescription_C("boolean","boolean");
-	/** @type {StoreDescription_C<number,"number">} */
-	seen_number_obj=new StoreDescription_C("number","number");
-	/** @type {StoreDescription_C<number,"root_visual_element">} */
-	seen_ve_num_obj=new StoreDescription_C("number","root_visual_element");
-	/** @type {StoreDescription_C<string,"string">} */
-	seen_string_obj=new StoreDescription_C("string","string");
-	/** @type {StoreDescription_C<string,"keys">} */
-	seen_keys_obj=new StoreDescription_C("string","keys");
+	/** @arg {()=>void} data_update_callback */
+	constructor(data_update_callback) {
+		this.data_update_callback=data_update_callback;
+		/** @type {StoreDescription_C<boolean,"boolean">} */
+		this.seen_bool_obj=new StoreDescription_C("boolean","boolean",data_update_callback);
+		/** @type {StoreDescription_C<number,"number">} */
+		this.seen_number_obj=new StoreDescription_C("number","number",data_update_callback);
+		/** @type {StoreDescription_C<number,"root_visual_element">} */
+		this.seen_ve_num_obj=new StoreDescription_C("number","root_visual_element",data_update_callback);
+		/** @type {StoreDescription_C<string,"string">} */
+		this.seen_string_obj=new StoreDescription_C("string","string",data_update_callback);
+		/** @type {StoreDescription_C<string,"keys">} */
+		this.seen_keys_obj=new StoreDescription_C("string","keys",data_update_callback);
+	}
 	get_changed_stores() {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
 		let changed=[];
@@ -1872,7 +1832,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	data_store=new StoreData;
+	data_store=new StoreData(() => {
+		this.onDataChange();
+	});
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.data_store.seen_bool_obj.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
@@ -1885,7 +1847,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	save_string(k,x) {this.data_store.seen_string_obj.save_data(k,x);}
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
-	/** @private */
 	onDataChange() {
 		if(this.#idle_id!==null) return;
 		this.is_ready=false;
@@ -2320,124 +2281,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	/** @template T @arg {make_item_group<any>} x @arg {T} v @returns {asserts x is make_item_group<T>} */
 	is_group_with_type(x,v) {x; v;}
-	/** @private @arg {string} k @arg {G_StoreDescriptions['data'][number][1]} x @arg {G_StoreDescriptions} store @returns {[G_StoreDescriptions["type"],any]} */
-	add_to_index(k,x,store) {
-		switch(store.type) {
-			case "boolean": {
-				this.is_group_with_type(x,true);
-				/** @type {[typeof k,typeof x]} */
-				let p=[k,x];
-				debugger;
-				let nk=store.data.push(p)-1;
-				store.index.set(k,nk);
-				return [store.type,p];
-			}
-			case "number": {
-				this.is_group_with_type(x,1);
-				/** @type {[typeof k,typeof x]} */
-				let p=[k,x];
-				let nk=store.data.push(p)-1;
-				store.index.set(k,nk);
-				return [store.type,p];
-			}
-			case "string": {
-				this.is_group_with_type(x,"");
-				/** @type {[typeof k,typeof x]} */
-				let p=[k,x];
-				let nk=store.data.push(p)-1;
-				store.index.set(k,nk);
-				return [store.type,p];
-			}
-		}
-	}
-	/** @private @template {G_StoreDescriptions} T @arg {string} key @arg {T} store @returns {[T["type"],any]} */
-	get_seen_string_item_store(key,store) {
-		const {index,data}=store;
-		let idx=index.get(key);
-		if(idx) return [store.type,data[idx]];
-		idx=data.findIndex(e => e[0]===key);
-		if(idx<0) return this.add_to_index(key,["arr",[]],store);
-		store.index.set(key,idx);
-		return [store.type,data[idx]];
-	}
-	/** @private @template {string|number|boolean} T @arg {make_item_group<T>} x @arg {[string,make_item_group<T>]} data_item */
-	save_to_data_item(x,data_item) {
-		let target=data_item[1];
-		if(x[0]==="many") throw new Error("Unable to add many to something");
-		if(x[0]==="arr") {return this.add_many_to_data_item(x,data_item);}
-		if(x[0]==="one") {return this.add_one_to_data_arr(x,target);}
-		return -1;
-	}
-	/** @private @template T @arg {make_one_t<T>} x @arg {make_item_group<T>} target */
-	add_one_to_data_arr(x,target) {
-		if(target[0]==="arr") {
-			if(!target[1].includes(x[1])) return target[1].push(x[1]);
-			return -1;
-		}
-		if(target[0]==="many") {
-			let res=target[1].find(([e,...r]) => !r.length&&e===x[1]);
-			if(!res) return target[1].push([x[1]]);
-			return -1;
-		}
-		return -1;
-	}
-	/** @private @template T @arg {make_arr_t<T>} x @arg {[string,make_item_group<T>]} item */
-	add_many_to_data_item([xt,x],item) {
-		if(xt!=="arr") {debugger; return -1;;}
-		let target=item[1];
-		if(target[0]==="arr") {
-			let inner=target[1].map(e => [e]);
-			target=["many",inner];
-			item[1]=target;
-		}
-		if(target[0]==="one") {debugger; return -1;}
-		let found=target[1].find(e => {
-			if(e.length!==x.length) return false;
-			for(let i=0;i<e.length;i++) {
-				let c=e[i]; let o=x[i];
-				if(c!==o) return false;
-			}
-			return true;
-		});
-		if(!found) return target[1].push(x);
-		return -1;
-	}
 	is_ready=false;
 	/** @type {StoredChangesItem[]} */
 	stored_changes=[];
 	do_random_breakpoint=false;
-	/** @api @private @arg {"string"|"keys"} ns @arg {string} k @arg {make_item_group<string>} x @arg {G_StoreStringDescription} store */
-	save_to_str_store(ns,k,x,store) {
-		let store_item=this.get_seen_string_item_store(k,store);
-		let store_index=this.save_to_data_item(x,store_item);
-		if(store_index<0) return false;
-		store.new_data.push([k,x]);
-		this.onDataChange();
-		if(!this.is_ready) {
-			switch(store.content) {
-				default: debugger; break;
-				case "string":
-				case "keys": {
-					if(x[0]!=="many") break;
-					if(typeof x[1]!=="string") break;
-					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
-				} break;
-			}
-			return false;
-		} else {
-			switch(x[0]) {
-				case "arr": break;
-				case "one": {
-					console.log(`store [${ns}] [${k}] %o`,x[1]);
-				} break;
-			}
-		}
-		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return false;}
-		this.show_strings_bitmap(ns,idx,store);
-		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
-		return true;
-	}
 	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum_impl(cf,ns,s) {
 		cf;
@@ -2523,7 +2370,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.save_number_arr("arr.P_tracking_params.f1",sr);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
 		this.save_string_one("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.#get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
+		this.data_store.seen_string_obj.data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
 	}
 	/** @private @template T @arg {T[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
