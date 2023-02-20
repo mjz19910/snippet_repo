@@ -1295,7 +1295,7 @@ class HandleTypes extends ServiceMethods {
 	};
 	/** @arg {JsonReplacerState} s @arg {V_ParamItem} x @returns {RetParam_child|RetParam_VW_2|null} */
 	v_param_2_child(s,x) {
-		if(x[0]!=="child") return null;
+		if(x[0]!=="child") throw new Error();
 		const [,binary_arr,obj]=x;
 		if(obj!==null) {
 			let bin_ts=this.replace_bin_binary_ts(s,obj);
@@ -1311,7 +1311,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		}
 		return `TYPE::T_VW_Child<"${decoded_string}","string">`;
-	};
+	}
 	/** @arg {V_ParamItem} otu @returns {RetParam_D32} */
 	v_param_2_D32(otu) {
 		if(otu[0]!=="data32") throw new Error();
@@ -1404,6 +1404,7 @@ class HandleTypes extends ServiceMethods {
 					}
 					debugger;
 				} break;
+				case "child": break;
 			}
 		}
 		for(let x2 of x1) {
@@ -1421,9 +1422,9 @@ class HandleTypes extends ServiceMethods {
 		if(x instanceof Array) {
 			if(x.length===1) {
 				if(typeof x[0]==="number") {
-					return `TYPE::T_VW<${x[0]}>`;
+					return `TYPE::T_Tuple_1<${x[0]}>`;
 				}
-				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,x[0])}>`;
+				return `TYPE::T_Tuple_1<${this.gen_typedef_bin_json(s,x[0])}>`;
 			}
 			/** @type {D_ProtobufObj|V_ParamObj[number]} */
 			let x3=as(x);
