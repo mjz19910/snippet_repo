@@ -35,4 +35,8 @@ type Ret_v_param_2_maybe_binary_ts=
 	|null
 	;
 ;
-type Ret_v_param_2_maybe_short_ts=null;
+type Ret_v_param_2_maybe_short_ts=
+	|"TYPE::T_VW_2<V_ShortTimestamp>"
+	|null
+	;
+;
