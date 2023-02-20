@@ -2003,6 +2003,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		if(!found) {
 			switch(store.content) {
+				default: debugger; break;
 				case "boolean": {
 					let [,vi]=item;
 					/** @type {make_arr_t<boolean>|null} */
@@ -2083,8 +2084,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 				} break;
 			}
-			if(store.content!=="boolean") debugger;
-			debugger;
 		}
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store */
