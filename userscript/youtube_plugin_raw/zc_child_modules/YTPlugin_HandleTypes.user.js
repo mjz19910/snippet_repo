@@ -2785,7 +2785,9 @@ class HandleTypes extends ServiceMethods {
 		this.t(f1,x => this.TK_D32(cf,x,"tag"));
 		this.t(f2,x => this.TK_D32(cf,x,"id"));
 		this.t(f3,x => this.TK_D32(cf,x,"f3"));
+		this.VW_BinaryTimestamp(f4);
 		this.t_cf(`${cf}_f6`,f6,this.H_TrackingObj_f6);
+		this.t(this.t(f7,x => this.TV_Str(x)),x => x);
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW(x,this.V_BinaryTimestamp);}
