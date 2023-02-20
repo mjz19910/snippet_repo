@@ -1655,7 +1655,7 @@ class HandleTypes extends ServiceMethods {
 		const [sec,id]=x; if(sec!=="shorts") debugger;
 		this.indexed_db_put("video_id",{
 			key: `video_id:shorts:${id}`,
-			base:"video_id",
+			base: "video_id",
 			type: "video_id:shorts",v: id
 		});
 	}
@@ -1910,7 +1910,14 @@ class HandleTypes extends ServiceMethods {
 				if(gen.has) break;
 				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 			}; break;
-			case "5uald": case "a5mek": case "hp57k": case "nx5s7": case "nx57y": case "p5qls": case "p5qs7":
+			case "5uald":
+			case "a5mek":
+			case "hp57k":
+			case "hp57y":
+			case "nx5s7":
+			case "nx57y":
+			case "p5qls":
+			case "p5qs7":
 		}
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x)) return;

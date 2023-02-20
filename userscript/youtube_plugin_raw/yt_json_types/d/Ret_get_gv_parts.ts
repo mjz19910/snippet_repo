@@ -6,6 +6,7 @@ type G_Gv_0=
 	|"9gv7l"
 	|"a5mek"
 	|"hp57k"
+	|"hp57y"
 	|"n4v7s"
 	|"nx5s7"
 	|"nx57y"
