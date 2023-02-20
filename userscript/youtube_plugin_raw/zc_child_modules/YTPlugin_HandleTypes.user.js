@@ -1274,8 +1274,10 @@ class HandleTypes extends ServiceMethods {
 			/** @type {D_ProtobufObj|V_ParamObj[number]} */
 			let x3=as(x);
 			switch(x3[0]) {
-				case "child": case "data32": case "data_fixed32": return this.tr_arr_to_obj([x3]);
+				case "child": case "data32": case "data_fixed32":
+				case "data64": case "data_fixed64": return this.tr_arr_to_obj([x3]);
 			}
+			//#region v_param_2
 			/** @arg {V_ParamObj} x @returns {RetParam_VW_2|null} */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
@@ -1338,28 +1340,27 @@ class HandleTypes extends ServiceMethods {
 			let v_param_2_FD32=(otu) => {
 				if(otu[0]!=="data_fixed32") throw new Error();
 				return `TYPE::T_FD32<${otu[1]}>`;
-			}; v_param_2_FD32;
+			};
 			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_FD64} */
 			let v_param_2_FD64=(otu) => {
 				if(otu[0]!=="data_fixed64") throw new Error();
 				return `TYPE::T_FD64<${otu[1]}n>`;
 			};
-			if(x3[0]==="data_fixed64") {
-				return this.tr_arr_to_obj([x3]);
-			}
-			/** @arg {V_RawBox} otu */
+			/** @arg {V_RawBox} otu @returns {Ret_v_param_2_raw} */
 			let v_param_2_raw=(otu) => {
 				switch(otu[1][0]) {
 					case "string": return `TYPE::TV_Str<"${otu[1][1]}">`;
 					case "bigint": return `TYPE::T_VW_Bigint<${otu[1][1]}n>`;
+					case "number": return `TYPE::number`;
 				}
-				return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
-			}; v_param_2_raw;
+				let obj_json=this.gen_typedef_bin_json(s,otu[1][1]);
+				return `TYPE::T_VW_R<"${otu[1][0]}",${obj_json}>`;
+			};
 			/** @arg {V_ParamItem} otu @returns {`TYPE::T_VW_Bigint<${bigint}n>`|null} */
 			let v_param_2_D64=(otu) => {
 				if(otu[0]!=="data64") return null;
 				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
-			}; v_param_2_D64;
+			};
 			/** @arg {V_ParamItem_RawChild} x @returns {Ret_v_param_2_raw_child} */
 			let v_param_rc_def=(x) => {
 				let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
@@ -1390,13 +1391,12 @@ class HandleTypes extends ServiceMethods {
 					case "raw_child": return v_param_2_raw_child(x);
 					case "data_fixed32": return v_param_2_FD32(x);
 					case "data_fixed64": return v_param_2_FD64(x);
-					case "struct": case "raw": case "group":
+					case "raw": return v_param_2_raw(x);
+					case "struct": case "group":
 					case "error": case "info": return x;
 				}
 			};
-			if(x3[0]==="data64") {
-				return this.tr_arr_to_obj([x3]);
-			}
+			//#endregion
 			if(x3.length===2&&typeof x3[0]==="string") {
 				switch(x3[0]) {
 					case "error": break;
