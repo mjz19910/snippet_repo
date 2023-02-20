@@ -1826,7 +1826,6 @@ class StoreDescription_C extends ApiBase2 {
 	add_to_index(k,x) {
 		/** @type {[typeof k,typeof x]} */
 		let p=[k,x];
-		debugger;
 		let nk=this.data.push(p)-1;
 		this.index.set(k,nk);
 		return p;
