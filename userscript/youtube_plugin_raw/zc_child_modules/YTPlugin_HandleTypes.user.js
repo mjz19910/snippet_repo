@@ -310,7 +310,7 @@ class HandleTypes extends ServiceMethods {
 		if(x.length!==1) return null;
 		return x[0];
 	}
-	/** @protected @template T @arg {T_PArr<T>} x @returns {T|null} */
+	/** @protected @template T @arg {T_PArr_1<[T]>} x @returns {T|null} */
 	T_RawChild(x) {
 		if(x[0]!=="param_arr") {debugger; return null;}
 		if(x.length!==2) debugger;

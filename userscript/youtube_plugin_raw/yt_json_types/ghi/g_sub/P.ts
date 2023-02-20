@@ -229,7 +229,7 @@ type P_continuation_request_reel_watch_sequence_token={
 				1: T_D32<13>,2: T_D32<2>;
 			}],
 			6: [{
-				1: [{
+				1: T_PArr_R<[{
 					1: T_D32<100>,
 					2: T_D32<1>;
 				},{
@@ -265,7 +265,7 @@ type P_continuation_request_reel_watch_sequence_token={
 				},{
 					1: T_D32<970>,
 					2: T_D32<1>;
-				}];
+				}]>;
 			}],
 			7: [{
 				1: [{1: T_D32<887>;},{
