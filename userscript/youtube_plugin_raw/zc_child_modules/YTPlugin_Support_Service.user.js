@@ -1739,10 +1739,26 @@ class StoreDescription_C {
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	push_new_data(k,x) {
 		this.new_data.push([k,x]);
+		let new_len=this.data.push([k,x]);
+		this.index.set(k,new_len-1);
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
+	save_data(k,x) {
+		if(this.includes_key(k)) {
+			debugger;
+		} else {
+			this.push_new_data(k,x);
+		}
+	}
+	/** @arg {string} k */
+	includes_key(k) {
+		let idx=this.index.get(k);
+		if(idx!==void 0) return true;
+		return false;
 	}
 }
 class StoreData {
-	/** @type {StoreDescription<boolean,"boolean">} */
+	/** @type {StoreDescription_C<boolean,"boolean">} */
 	seen_bool_obj=new StoreDescription_C("boolean","boolean");
 	/** @type {StoreDescription<number,"number">} */
 	seen_number_obj=new StoreDescription_C("number","number");
@@ -2321,37 +2337,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	is_ready=false;
 	/** @type {StoredChangesItem[]} */
 	stored_changes=[];
-	/** @public @template {StoreDescription<boolean,"boolean">} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {U["new_data"][number][1]} x @arg {U} store */
-	save_bool_to_store(ns,k,x,store) {
-		let store_item=this.get_seen_string_item_store(k,store);
-		let store_index=this.save_to_data_item(x,store_item);
-		if(store_index<0) return false;
-		store.push_new_data(k,x);
-		this.onDataChange();
-		if(!this.is_ready) {
-			switch(store.content) {
-				default: debugger; break;
-				case "boolean": {
-					if(x[0]==="arr") break;
-					if(typeof x[1]!=="boolean") break;
-					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
-				} break;
-			}
-			return false;
-		} else {
-			switch(x[0]) {
-				case "arr": break;
-				case "one": {
-					console.log(`store [${ns}] [${k}] %o`,x[1]);
-				} break;
-			}
-		}
-		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return false;}
-		// this.show_strings_bitmap(ns,idx,store);
-		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
-		return true;
-	}
 	/** @public @template {G_StoreNumDescription} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {U["new_data"][number][1]} x @arg {U} store */
 	save_num_to_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
@@ -2616,7 +2601,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {
 		let store=this.#data_store.get_boolean_store();
-		return this.save_bool_to_store("boolean",k,x,store);
+		return store.save_data(k,x);
 	}
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
