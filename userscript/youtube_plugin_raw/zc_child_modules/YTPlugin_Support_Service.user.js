@@ -1726,7 +1726,7 @@ class BitmapResult {
 /** @template T @template {StoreContentStr} U @implements {StoreDescription<T,U>} */
 class StoreDescription_C extends ApiBase2 {
 	/** @type {Map<string,number>} */
-	index=new Map;
+	key_index=new Map;
 	/** @type {[string, make_item_group<T>][]} */
 	data=[];
 	/** @type {[string, make_item_group<T>][]} */
@@ -1741,12 +1741,12 @@ class StoreDescription_C extends ApiBase2 {
 	push_new_data(k,x) {
 		this.new_data.push([k,x]);
 		let new_len=this.data.push([k,x]);
-		this.index.set(k,new_len-1);
+		this.key_index.set(k,new_len-1);
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
 		if(this.includes_key(k)) {
-			let idx=this.index.get(k);
+			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
 			let iv=this.data[idx]; iv;
 		} else {
@@ -1814,25 +1814,24 @@ class StoreDescription_C extends ApiBase2 {
 	}
 	/** @arg {string} k */
 	get_seen_string_item_store(k) {
-		const {index,data}=this;
-		let idx=index.get(k);
-		if(idx) return data[idx];
-		idx=data.findIndex(e => e[0]===k);
+		let idx=this.key_index.get(k);
+		if(idx) return this.data[idx];
+		idx=this.data.findIndex(e => e[0]===k);
 		if(idx<0) return this.add_to_index(k,["arr",[]]);
-		index.set(k,idx);
-		return data[idx];
+		this.key_index.set(k,idx);
+		return this.data[idx];
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	add_to_index(k,x) {
 		/** @type {[typeof k,typeof x]} */
 		let p=[k,x];
 		let nk=this.data.push(p)-1;
-		this.index.set(k,nk);
+		this.key_index.set(k,nk);
 		return p;
 	}
 	/** @arg {string} k */
 	includes_key(k) {
-		let idx=this.index.get(k);
+		let idx=this.key_index.get(k);
 		if(idx!==void 0) return true;
 		return false;
 	}
