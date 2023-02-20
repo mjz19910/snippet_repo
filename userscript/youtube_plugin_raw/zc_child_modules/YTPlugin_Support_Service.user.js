@@ -1846,60 +1846,62 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
+	/** @arg {`boxed_id:str:${string}`} find_key @arg {IDBBoxedType} box @arg {make_item_group<string>} item_group */
+	async export_store_item_with_found_box(find_key,box,item_group) {
+		/** @arg {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} v @returns {v is {key: typeof find_key}} */
+		let fk=v => v.key===find_key;
+		if(!fk(box)) return;
+		switch(item_group[0]) {
+			case "many": {
+				/** @type {Omit<Pick<typeof box,"key"|"type"|"id">,"id">&{id:(typeof box)["value"]}} */
+				let {...box_v1}=as_any(box);
+				if(!("value" in box_v1)) {
+					box_v1;
+					let ks=split_string_once(box_v1.key,":");
+					let ks2=split_string_once(ks[1],":");
+					box={
+						key: box_v1.key,
+						base: "boxed_id",
+						type: ks2[0],
+						id: ks2[1],
+						value: box_v1.id,
+					};
+					await this.put_box(box);
+				}
+				let from_db=box.value[1];
+				if(from_db[0]!=="many") return;
+				for(let src_item of item_group[1]) {
+					let has=from_db[1].find(v => this.eq_keys(v,src_item));
+					if(has===null) {
+						debugger;
+					}
+				}
+			} break;
+			case "arr": {
+				debugger;
+			} break;
+		}
+	}
+	/** @arg {[string, make_item_group<string>]} sd @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
+	async export_store_item(sd,boxed) {
+		const [key,arr]=sd;
+		/** @type {`boxed_id:str:${string}`} */
+		const find_key=`boxed_id:str:${key}`;
+		let box=boxed.find(v => v.key===find_key);
+		if(box) return this.export_store_item_with_found_box(find_key,box,arr);
+		await this.put_box({
+			key: find_key,
+			base: "boxed_id",
+			type: "str",
+			id: key,
+			value: ["many_str",arr],
+		});
+	}
 	/** @arg {G_StoreDescriptions} ss @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
 	async export_db_data(ss,boxed) {
-		if(ss.data.length>0) {
-			if(ss.type!=="string") {debugger; return;}
-			for(let sd of ss.data) {
-				const [key,arr]=sd;
-				/** @type {`boxed_id:str:${string}`} */
-				const find_key=`boxed_id:str:${key}`;
-				/** @arg {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} v @returns {v is {key: typeof find_key}} */
-				let fk=v => v.key===find_key;
-				let box=boxed.find(v => v.key===find_key);
-				if(box) {
-					if(!fk(box)) continue;
-					switch(arr[0]) {
-						case "many": {
-							/** @type {Omit<Pick<typeof box,"key"|"type"|"id">,"id">&{id:(typeof box)["value"]}} */
-							let {...box_v1}=as_any(box);
-							if(!("value" in box_v1)) {
-								box_v1;
-								let ks=split_string_once(box_v1.key,":");
-								let ks2=split_string_once(ks[1],":");
-								box={
-									key: box_v1.key,
-									base: "boxed_id",
-									type: ks2[0],
-									id: ks2[1],
-									value: box_v1.id,
-								};
-								await this.put_box(box);
-							}
-							let from_db=box.value[1];
-							if(from_db[0]!=="many") continue;
-							for(let src_item of arr[1]) {
-								let has=from_db[1].find(v => this.eq_keys(v,src_item));
-								if(has===null) {
-									debugger;
-								}
-							}
-						} break;
-						case "arr": {
-							debugger;
-						} break;
-					}
-					return;
-				}
-				await this.put_box({
-					key: find_key,
-					base: "boxed_id",
-					type: "str",
-					id: key,
-					value: ["many_str",arr],
-				});
-			}
-		}
+		if(ss.data.length<=0) return;
+		if(ss.type!=="string") {debugger; return;}
+		for(let sd of ss.data) this.export_store_item(sd,boxed);
 	}
 	log_load_database=false;
 	/** @arg {T_IdBox<B_IdSrcStr,string,"str",string>} to_load @arg {Extract<G_StoreDescriptions,{type:"string"}>} ss */
