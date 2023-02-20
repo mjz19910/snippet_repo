@@ -670,8 +670,6 @@ class HandleTypes extends ServiceMethods {
 	R_GuideDownloadsEntry(x) {this.H_("guideDownloadsEntryRenderer",x,this.D_GuideDownloadsEntry);}
 	/** @private @arg {R_GuideCollapsibleEntry} x */
 	R_GuideCollapsibleEntry(x) {this.H_("guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
-	/** @private @arg {R_GuideEntryData} x */
-	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
 	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
 	R_GuideCollapsibleSectionEntry(x) {this.H_("guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
 	/** @private @arg {R_GuideEntry} x */
@@ -1399,9 +1397,9 @@ class HandleTypes extends ServiceMethods {
 				case "raw_child": {
 					let x3=x2[3];
 					if(x2[2]===null) {
-						switch(x3[1]) {
+						switch(x3[0]) {
 							default: break;
-							case "string": return `TYPE::TV_Str<"${x2[1]}">`;
+							case "string": return `TYPE::TV_Str<"${x3[1]}">`;
 						}
 					}
 					debugger;
@@ -1726,11 +1724,38 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
-	/** @private @arg {D_GuideEntryData} x */
-	D_GuideEntryData(x) {
-		const cf="D_GuideEntryData";
-		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parse_guide_entry_id(guideEntryId);
+	/** @public @arg {E_VE83769_Url} x */
+	E_VE83769_Url(x) {
+		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
+		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
+	}
+	/** @private @arg {DE_VE83769_Url} x */
+	DE_VE83769_Url(x) {
+		const cf="DE_VE83769_Url";
+		const {url,...u}=this.s(cf,x);/*#destructure_later*/
+		this.GM_E_VE83769_Url_TargetUrlType(url);
+		if("nofollow" in u&&"target" in u) {
+			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("nofollow" in u) {
+			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("target" in u) {
+			const {target,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			return;
+		}
+		if("grwOpenInOverride" in u) {
+			let x=this.ws("grwOpenInOverride",u);
+			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
+			return;
+		}
+		this.g(u);
 	}
 	/** @type {D_GuideEntry_IconType_Obj} */
 	D_GuideEntry_IconType={
@@ -1812,12 +1837,19 @@ class HandleTypes extends ServiceMethods {
 				break x;
 			}
 			if("signalServiceEndpoint" in x) {
-				x.clickTrackingParams;
-				x.commandMetadata;
+				debugger;
 				break x;
 			}
 			x==="";
 		}
+	}
+	/** @private @arg {R_GuideEntryData} x */
+	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
+	/** @private @arg {D_GuideEntryData} x */
+	D_GuideEntryData(x) {
+		const cf="D_GuideEntryData";
+		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.parse_guide_entry_id(guideEntryId);
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf1,x) {
@@ -3286,39 +3318,6 @@ class HandleTypes extends ServiceMethods {
 	P_get_report_form_params(x) {x;}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {x;}
-	/** @public @arg {E_VE83769_Url} x */
-	E_VE83769_Url(x) {
-		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
-		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
-	}
-	/** @private @arg {DE_VE83769_Url} x */
-	DE_VE83769_Url(x) {
-		const cf="DE_VE83769_Url";
-		const {url,...u}=this.s(cf,x);/*#destructure_later*/
-		this.GM_E_VE83769_Url_TargetUrlType(url);
-		if("nofollow" in u&&"target" in u) {
-			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("nofollow" in u) {
-			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("target" in u) {
-			const {target,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			return;
-		}
-		if("grwOpenInOverride" in u) {
-			let x=this.ws("grwOpenInOverride",u);
-			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
-			return;
-		}
-		this.g(u);
-	}
 	/** @private @arg {P_player_state_entity_key} x */
 	P_player_state_entity_key(x) {x;}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
