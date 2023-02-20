@@ -1381,22 +1381,25 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {JsonReplacerState} s @arg {["param_arr", V_ParamItem[]]} x */
 	v_param_arr(s,x) {
-		let ca=x[1];
+		let x1=x[1];
 		let res=[];
-		if(ca.length===1) {
-			let x1=ca[0];
-			switch(x1[0]) {
+		if(x1.length===1) {
+			let x2=x1[0];
+			switch(x2[0]) {
 				default: debugger; break;
 				case "raw": {
-					let x2=x1[1];
-					switch(x2[0]) {
-						case "string": return `TYPE::TV_Str<"${x1[1]}">`;
+					let x3=x2[1];
+					switch(x3[0]) {
+						default: debugger; break;
+						case "string": return `TYPE::TV_Str<"${x2[1]}">`;
 					}
-				}
+					debugger;
+				} break;
+				case "data32": this.v_param_2_D32(x2);
 			}
 		}
-		for(let x1 of ca) {
-			res.push(this.v_param_item(s,x1));
+		for(let x2 of x1) {
+			res.push(this.v_param_item(s,x2));
 		}
 		if(res.length===1) return res;
 		if(res.every(v => typeof v==="string")) return res;
