@@ -1289,7 +1289,7 @@ class HandleTypes extends ServiceMethods {
 				};
 				let gen_json=this.gen_typedef_bin_json(s,x);
 				console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
-				return `TYPE::T_VW_2<${gen_json}>`;
+				return `TYPE::T_VW_2<${gen_json},"json">`;
 				/** @arg {V_ParamObj[number]} x */
 				function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 			};
