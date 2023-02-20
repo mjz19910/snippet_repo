@@ -1425,7 +1425,8 @@ class Support_EventInput extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** 
-	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x @arg {T_MakeHandlers<T>} handlers
+	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x
+	 * @arg {T_MakeHandlers<T>} handlers
 	 * @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>}
 	 */
 	RS_Page_Type1(cf,x,handlers) {
@@ -1443,61 +1444,95 @@ class Support_EventInput extends ServiceMethods {
 	/** @private @arg {RS_Page_Channel} x */
 	RS_Page_Channel(x) {
 		const cf="RS_Page_Channel";
-		let {...u1}=this.RS_Page_Type1(cf,x,{
-			page: x => this.ceq(x,"channel"),
-			endpoint: x => {
-				if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-				debugger;
-			},
-			response: x => this.bc.RS_Channel(x),
-			url: url => {
-				let sp=split_string(url,"/");
-				switch(sp.length) {
-					default: debugger; break;
-					case 2: {
-						if(!sp[1].startsWith("@")) debugger;
-						if(sp[0]!=="") debugger;
-					} break;
-					case 3: {
-						let [f1,f2,f3]=sp;
-						if(f1!=="") debugger;
-						if(!f2.startsWith("@")) debugger;
-						if(this.str_is_search(f3)) {
-							let [p,s]=split_string_once(f3,"?");
-							if(p!=="search") debugger;
-							let {query,...y}=this.parse_url_search_params(s); this.g(y);
-							this.a_primitive_str(query);
-							return;
-						}
-						switch(f3) {
-							default: f3===""; debugger; break;
-							case "search": case "shorts":
-							case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
-						}
+		/** @arg {RS_Page_Channel["url"]} url */
+		const h_url=url => {
+			let sp=split_string(url,"/");
+			switch(sp.length) {
+				default: debugger; break;
+				case 2: {
+					if(!sp[1].startsWith("@")) debugger;
+					if(sp[0]!=="") debugger;
+				} break;
+				case 3: {
+					let [f1,f2,f3]=sp;
+					if(f1!=="") debugger;
+					if(!f2.startsWith("@")) debugger;
+					if(this.str_is_search(f3)) {
+						let [p,s]=split_string_once(f3,"?");
+						if(p!=="search") debugger;
+						let {query,...y}=this.parse_url_search_params(s); this.g(y);
+						this.a_primitive_str(query);
+						return;
+					}
+					switch(f3) {
+						default: f3===""; debugger; break;
+						case "search": case "shorts":
+						case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
 					}
 				}
-			},
-			expirationTime: x => this.a_primitive_num(x),
-		});
-		if(!this.is_not_empty_obj(u1)) return this.g(u1);
-		if("rootVe" in u1) {
-			const {rootVe,csn,...y}=u1; this.g(y);
+			}
+		};
+		/** @arg {(typeof x)["endpoint"]} x */
+		let h_ep=x => {
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			debugger;
+		};
+		/** @arg {(typeof x)["response"]} x */
+		let h_rs=x => this.bc.RS_Channel(x);
+		/** @arg {(typeof x)["expirationTime"]} x */
+		let h_et=x => this.a_primitive_num(x);
+		/** @type {T_MakeHandlers<typeof x>} */
+		const h_d={
+			page: x => this.ceq(x,"channel"),
+			endpoint: h_ep,
+			response: h_rs,
+		};
+		if(!this.is_EP_Val(x,3611)) debugger;
+		if("previousCsn" in x) {
+			/** @type {T_MakeHandlers<typeof x>} */
+			const handlers={...h_d,url: h_url,expirationTime: h_et};
+			let {previousCsn,...u1}=this.RS_Page_Type1(cf,x,handlers); this.g(u1);
+			this.D_VeCsn(previousCsn,true);
+			return;
+		}
+		if("rootVe" in x) {
+			/** @type {T_MakeHandlers<typeof x>} */
+			const handlers={
+				page: h_d.page,
+				endpoint: h_d.endpoint,
+				response: h_d.response,
+				url: h_url,
+				expirationTime: h_et,
+			};
+			const {rootVe,csn,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
 			if(rootVe!==3611) debugger;
 			this.t(csn,this.D_VeCsn);
 			return;
 		}
-		if("csn" in u1) {
-			const {csn,graftedVes,...y}=u1; this.g(y);
-			this.D_VeCsn(csn);
+		if("csn" in x) {
+			/** @type {T_MakeHandlers<typeof x>} */
+			const handlers={
+				page: h_d.page,
+				endpoint: h_d.endpoint,
+				response: h_d.response,
+				url: h_url,
+				expirationTime: h_et,
+			};
+			const {csn,graftedVes,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
+			this.t(csn,this.D_VeCsn);
 			this.z(graftedVes,this.D_GraftedVeItem);
 			return;
 		}
-		if("previousCsn" in u1) {
-			const {previousCsn,...y}=u1; this.g(y);
-			this.D_VeCsn(previousCsn,true);
-			return;
-		}
-		this.g(u1);
+		/** @type {T_MakeHandlers<typeof x>} */
+		const handlers={
+			page: h_d.page,
+			endpoint: h_d.endpoint,
+			response: h_d.response,
+			url: h_url,
+			expirationTime: h_et,
+		};
+		const {...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
+		if(this.is_not_empty_obj(y)) debugger;
 	}
 	/** @private @arg {G_RS_Page_Playlist} x */
 	G_RS_Page_Playlist(x) {
