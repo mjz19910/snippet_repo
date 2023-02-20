@@ -98,6 +98,33 @@ function dig_user {
 	pushd -q $S_DIR
 	eval '{dig_user_run "$@";} always {popd -q}'
 }
+function dig_final-run {
+	a2=${1}"n__"
+	export TMP_TAG=f
+	RESULT_FILE="$TMP_DIR/result.dig.$TMP_TAG.$a2"
+	if [[ -f "$RESULT_FILE" ]]; then
+		if (($(wc -l <"$RESULT_FILE") != 0)); then
+			foo=$(<"$RESULT_FILE")
+			printf "[$a2]\n%s\n" "$foo"
+		fi
+		return 0
+	fi
+	touch /tmp/dig_term_lock
+	echo $TMP_DIR/dig_res.$TMP_TAG.*(N) | xargs -r rm
+	z=$(get_abc_opt)
+	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' ''
+	list=($TMP_DIR/dig_res.$TMP_TAG.*)
+	cat $list >>"$RESULT_FILE"
+	if (($(wc -l <"$RESULT_FILE") != 0)); then
+		foo=$(<"$RESULT_FILE")
+		printf "\n[$a2]\n%s\n" "$foo"
+	fi
+	rm $list
+}
+function dig_final {
+	pushd -q $S_DIR
+	eval '{dig_final-run "$@";} always {popd -q}'
+}
 function lock_printf {
 	(
 		unset foo
@@ -125,9 +152,9 @@ function dig_user_child {
 	TERM_RETURN_NUM_LINE_LEN=6
 	PADDING_LEN=2
 	SPACE_CHAR=1
-	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN))
-	printf "\e7\e[H\e["${cn}"C [dns]:$1 \n\e8"
-	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
+	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + {#TMP_TAG} + 1))
+	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
+	TF=$(mktemp $TMP_DIR/dig_res.$TMP_TAG.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
 	printf "."
 	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
