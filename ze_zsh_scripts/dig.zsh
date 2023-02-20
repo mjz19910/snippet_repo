@@ -1,16 +1,17 @@
 function do_dig() {
 	printf "\r.\e[2C"
-	echo $$ >/tmp/out.dig_batch.$a2.pid
-	find /tmp/ -maxdepth 1 -name 'out.dig_batch.'$a2'.*' | xargs -r truncate -s 0
-	echo $$ >/tmp/out.dig_batch_pid.$a2
-	printf "%s\0" rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com |
+	echo $$ >"/tmp/out.dig_batch.$a2.pid"
+	printf "%s\0" "/tmp/out.dig_batch.$a2."* | xargs -0r truncate -s 0
+	echo $$ >/tmp/pid.dig_batch.$a2
+	printf "%s\0" "rr1.sn-"$a2"n"{{0..9},{a..z}}{{0..9},{a..z}}".googlevideo.com" |
 		stdbuf -i0 -o0 -e0 xargs -0rn35 -P100 zsh -c '. ./dig.zsh run_child '$a2' "$@"'
-	list=(/tmp/dig_res.$a2.*)
-	TF_2=$(mktemp /tmp/dig_res.out.$1.XXX)
-	cat $list >>$TF_2
-	if (($(wc -l <$TF_2) != 0)); then
-		foo=$(<$TF_2)
-		printf "\n[$a2]\n%s\n" $foo
+	list=("/tmp/out.dig_batch.$a2."*)
+	TF_2=$(mktemp "/tmp/result.dig_batch.$1.XXX")
+	cat $list >>"$TF_2"
+	if (($(wc -l <"$TF_2") != 0)); then
+		foo=$(<"$TF_2")
+		printf "\n[$a2]\n%s\n" "$foo"
+		rm "$TF_2"
 	fi
 	printf "\r \e[2C"
 }
