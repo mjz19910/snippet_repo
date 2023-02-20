@@ -103,8 +103,8 @@ function dig_user_child {
 	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
 	((n = n + arg_num_1 + 9));
-	printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
 	printf "."
+	printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
 	dig @8.8.4.4 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
 		printf "!"
