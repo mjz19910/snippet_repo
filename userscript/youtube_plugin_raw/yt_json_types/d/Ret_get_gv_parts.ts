@@ -1,4 +1,4 @@
-// cSpell:ignoreRegExp /"(\dualdn?|5uaez)"/
+// cSpell:ignoreRegExp /"(\dualdn?|5uaez|qxoed)"/
 type G_Gv_0=
 	|"5uaez"
 	|"5uald"
@@ -13,6 +13,7 @@ type G_Gv_0=
 	|"o097z"
 	|"p5qls"
 	|"p5qs7"
+	|"qxoed"
 	;
 ;
 // cSpell:ignoreRegExp /rr1.sn-5ua(ldn[lsz][0-9a-z]|ezn[67elryz][0-9a-z]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
