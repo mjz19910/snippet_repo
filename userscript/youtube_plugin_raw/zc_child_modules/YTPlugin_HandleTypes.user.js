@@ -1391,11 +1391,21 @@ class HandleTypes extends ServiceMethods {
 					let x3=x2[1];
 					switch(x3[0]) {
 						default: debugger; break;
-						case "string": return `TYPE::TV_Str<"${x2[1]}">`;
+						case "string": return `TYPE::TV_Str_R<"${x2[1]}">`;
 					}
 					debugger;
 				} break;
-				case "data32": this.v_param_2_D32(x2);
+				case "data32": return this.v_param_2_D32(x2);
+				case "raw_child": {
+					let x3=x2[3];
+					debugger;
+					if(x2[2]===null) {
+						switch(x3[1]) {
+							case "string": return `TYPE::TV_Str<"${x2[1]}">`;
+						}
+					}
+					debugger;
+				} break;
 			}
 		}
 		for(let x2 of x1) {
