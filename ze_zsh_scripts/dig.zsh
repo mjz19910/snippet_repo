@@ -1,5 +1,8 @@
 TMP_DIR="/dev/shm/";
 function do_dig() {
+	if [[ "$TMP_DIR/result.dig_batch.$a2" -e ]]; then
+		return 0
+	fi
 	printf "\r.\e[2C"
 	echo $$ >"$TMP_DIR/out.dig_batch.$a2.pid"
 	printf "%s\0" "$TMP_DIR/out.dig_batch.$a2."* | xargs -0r truncate -s 0
@@ -12,7 +15,6 @@ function do_dig() {
 	if (($(wc -l <"$TF_2") != 0)); then
 		foo=$(<"$TF_2")
 		printf "\n[$a2]\n%s\n" "$foo"
-		rm "$TF_2"
 	fi
 	printf "\r \e[2C"
 }
