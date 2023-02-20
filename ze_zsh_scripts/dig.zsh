@@ -96,24 +96,29 @@ function dig_user {
 	pushd -q $S_DIR
 	eval '{dig_user_run "$@";} always {popd -q}'
 }
-function dig_user_child {
-	arg_num_1=${#1}
-	n=$arg_num_1
-	((n = n + 8 + 2))
-	printf "\e7""\e[H\e[500C\e[0K\e[${n}D [start]:$1""\e8"
-	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
-	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+function lock_printf {
 	(
 		unset foo
 		exec {foo}</tmp/dig_term_lock
 		flock -e $foo
-		((n = n + arg_num_1 + 9))
-		printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
+		sleep 0.01
+		printf $@
+		exec {foo}<&-
 	)
-	printf "."
+}
+function dig_user_child {
+	arg_num_1=${#1}
+	n=$arg_num_1
+	((n = n + 8 + 2))
+	lock_printf "\e7""\e[H\e[500C\e[0K\e[${n}D [start]:$1""\e8"
+	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
+	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+	((n = n + arg_num_1 + 9))
+	lock_printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
+	lock_printf "."
 	dig @8.8.4.4 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
-		printf "!"
+		lock_printf "!"
 	fi
 }
 case $MODE in
