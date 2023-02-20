@@ -1381,13 +1381,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {JsonReplacerState} s @arg {["param_arr", V_ParamItem[]]} x */
 	v_param_arr(s,x) {
-		let x3=x;
-		let ca=x3[1];
+		let ca=x[1];
 		let res=[];
 		if(ca.length===1) {
 			let x1=ca[0];
 			switch(x1[0]) {
-				case "child": break;
+				default: debugger; break;
+				case "raw": {
+					let x2=x1[1];
+					switch(x2[0]) {
+						case "string": return `TYPE::TV_Str<"${x1[1]}">`;
+					}
+				}
 			}
 		}
 		for(let x1 of ca) {
