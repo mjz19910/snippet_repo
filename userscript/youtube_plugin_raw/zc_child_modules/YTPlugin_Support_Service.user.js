@@ -1869,7 +1869,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					await this.put_box(box);
 				}
 				let from_db=box.value[1];
-				if(from_db[0]!=="many") return;
+				if(from_db[0]!=="many") {debugger; return;}
 				for(let src_item of item_group[1]) {
 					let has=from_db[1].find(v => this.eq_keys(v,src_item));
 					if(has===null) {
