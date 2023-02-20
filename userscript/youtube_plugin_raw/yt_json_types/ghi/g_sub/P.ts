@@ -37,10 +37,7 @@ type PD_continuation_request_browse_token={
 	3: TV_Str<string>;
 	35: TV_Str<"browse-feedFEwhat_to_watch">;
 };
-
-type PR_continuation_request_browse_token={
-	0x4c82a9c: T_VW<PD_continuation_request_browse_token>;
-};
+type PR_continuation_request_browse_token={0x4c82a9c: T_VW<PD_continuation_request_browse_token>;};
 type P_reel_player_params={
 	30: T_D32<1>;
 	71: T_D32<15>;
