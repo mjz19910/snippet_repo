@@ -3244,6 +3244,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_notification_record_interactions(u);
 			} break;
+			case "get_report_form.params": {
+				/** @type {P_get_report_form_params} */
+				let u=as_any(x);
+				this.P_get_report_form_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3251,6 +3256,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_get_report_form_params} x */
+	P_get_report_form_params(x) {x;}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {x;}
 	/** @public @arg {E_VE83769_Url} x */

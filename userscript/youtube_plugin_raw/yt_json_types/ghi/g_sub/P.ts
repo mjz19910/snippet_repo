@@ -339,12 +339,12 @@ type P_ypc_get_offers_params={
 type P_macro_marker_repeat_state_entity_key={
 	2: TV_Str<"repeat_state">,
 	4: T_D32<329>,
-	5: T_D32<1>
+	5: T_D32<1>;
 };
 type P_player_state_entity_key={
 	2: TV_Str<"/youtube/app/watch/player_state">,
 	4: T_D32<323>,
-	5: T_D32<1>
+	5: T_D32<1>;
 };
 type P_notification_record_interactions={
 	2: T_VW_2<{
@@ -352,10 +352,14 @@ type P_notification_record_interactions={
 		14: T_VW_2<{
 			1: T_VW_2<{
 				1: T_D32<1676825106923816>,
-				2: T_D32<6>
+				2: T_D32<6>;
 			}>,
-			2: TV_Str<"sZ-4VzlYyLcGMIys">
-		}>
+			2: TV_Str<"sZ-4VzlYyLcGMIys">;
+		}>;
 	}>,
-	5: T_D32<183848276973>
+	5: T_D32<183848276973>;
+};
+type P_get_report_form_params={
+	25: TV_Str<"shopping">;
+	26: T_D32<14>;
 };
