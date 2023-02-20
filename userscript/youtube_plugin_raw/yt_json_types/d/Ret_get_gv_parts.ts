@@ -40,7 +40,6 @@ type PT_TypeS_NoRep=[
 	gen_g2_t1<"hp57k">,
 	gen_g2_t1<"qxo7r">,
 	gen_g2_t1<"qxoed">,
-
 ];
 type PT_TypeS=[
 	gen_g3_t2<"9gv7",["l","e"]>,
