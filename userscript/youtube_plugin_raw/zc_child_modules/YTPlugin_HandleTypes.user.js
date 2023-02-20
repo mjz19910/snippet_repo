@@ -243,6 +243,7 @@ class HandleTypes extends ServiceMethods {
 				switch(size) {
 					case "milliseconds": {
 						let exp_m_from_now=moment(value/1000).diff(this.client_now)/1000;
+						if(exp_m_from_now < -3 &&exp_m_from_now < 3) break;
 						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
 					} break;
 				}
