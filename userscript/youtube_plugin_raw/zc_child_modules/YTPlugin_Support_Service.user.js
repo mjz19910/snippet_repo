@@ -2271,28 +2271,37 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		store.index.set(key,idx);
 		return [store.type,data[idx]];
 	}
-	/** @private @template T @arg {make_one_t<T>|make_arr_t<T>} x @arg {[string,make_arr_t<T>|make_many_t<T>]} data_item */
+	/** @private @template {string|number|boolean} T @arg {make_item_group<T>} x @arg {[string,make_item_group<T>]} data_item */
 	save_to_data_item(x,data_item) {
 		let target=data_item[1];
-		if(x[0]==="arr") {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
+		if(x[0]==="many") throw new Error("Unable to add many to something");
+		if(x[0]==="arr") {return this.add_many_to_data_item(x,data_item);}
+		if(x[0]==="one") {return this.add_one_to_data_arr(x,target);}
+		return -1;
 	}
-	/** @private @template T @arg {make_one_t<T>} x @arg {make_arr_t<T>|make_many_t<T>} target */
+	/** @private @template T @arg {make_one_t<T>} x @arg {make_item_group<T>} target */
 	add_one_to_data_arr(x,target) {
-		if(target[0]==="arr") {if(!target[1].includes(x[1])) return target[1].push(x[1]);} else if(target[0]==="many") {
+		if(target[0]==="arr") {
+			if(!target[1].includes(x[1])) return target[1].push(x[1]);
+			return -1;
+		}
+		if(target[0]==="many") {
 			let res=target[1].find(([e,...r]) => !r.length&&e===x[1]);
 			if(!res) return target[1].push([x[1]]);
+			return -1;
 		}
 		return -1;
 	}
-	/** @private @template T @arg {make_arr_t<T>} x @arg {[string,make_arr_t<T>|make_many_t<T>]} item */
+	/** @private @template T @arg {make_arr_t<T>} x @arg {[string,make_item_group<T>]} item */
 	add_many_to_data_item([xt,x],item) {
-		if(xt!=="arr") {debugger; return false;}
+		if(xt!=="arr") {debugger; return -1;;}
 		let target=item[1];
 		if(target[0]==="arr") {
 			let inner=target[1].map(e => [e]);
 			target=["many",inner];
 			item[1]=target;
 		}
+		if(target[0]==="one") {debugger; return -1;}
 		let found=target[1].find(e => {
 			if(e.length!==x.length) return false;
 			for(let i=0;i<e.length;i++) {
@@ -2307,7 +2316,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	is_ready=false;
 	/** @type {StoredChangesItem[]} */
 	stored_changes=[];
-	/** @public @template {string|number|boolean} T @arg {DB_NS_TypeStr} ns @arg {string} k @arg {make_one_t<T>|['arr',T[]]} x @arg {StoreDescription<T>} store */
+	/** @public @template {U["new_data"][1]} T @template {G_StoreDescriptions} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {make_item_group<T>} x @arg {U} store */
 	save_to_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
