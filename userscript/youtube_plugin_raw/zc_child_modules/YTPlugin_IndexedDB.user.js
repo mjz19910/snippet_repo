@@ -336,10 +336,7 @@ class IndexedDBService extends BaseService {
 			}
 			let complete_event=await this.await_complete(tx);
 			this.handle_transaction_complete(tx,complete_event);
-			{
-				let event=complete_event;
-				tx_scope.is_tx_complete=true;
-			}
+			tx_scope.is_tx_complete=true;
 		} catch(e) {
 			console.log("db error",e);
 			throw e;
