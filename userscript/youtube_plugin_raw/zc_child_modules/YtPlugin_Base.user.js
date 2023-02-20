@@ -3151,6 +3151,7 @@ class JsonReplacerState {
 			s.object_store.push(x);
 			let mi=s.object_store.indexOf(x);
 			s.parent_map.set(x,[mi,key]);
+			if(mi>30) debugger;
 		}
 	}
 	/** @arg {object|null} obj */
