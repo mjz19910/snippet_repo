@@ -103,7 +103,7 @@ function lock_printf {
 		unset foo
 		exec {foo}</tmp/dig_term_lock
 		flock -e $foo
-		sleep 0.01
+		sleep 0.04
 		printf $@
 		exec {foo}<&-
 	)
