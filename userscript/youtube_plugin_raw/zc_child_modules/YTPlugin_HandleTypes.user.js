@@ -2898,7 +2898,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {3: {},5: {},8: {},12: {},15: {},...y}=this.s(cf,x); this.g(y);
+		debugger;
+		const {1: {}={},3: {},5: {},8: {}={},12: {},15: {},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
@@ -3104,7 +3105,6 @@ class HandleTypes extends ServiceMethods {
 		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
 		r("f30",f30); r("f57",f57); r("f71",f71);
 		t.mt(t.m(f72),x => this.t(x,this.T_VW_Bigint));
-		debugger;
 	}
 	//#endregion
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
