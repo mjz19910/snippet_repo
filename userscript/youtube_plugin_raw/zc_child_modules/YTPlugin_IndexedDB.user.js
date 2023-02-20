@@ -325,6 +325,13 @@ class IndexedDBService extends BaseService {
 								}
 								this.committed_data.push(item);
 							} break;
+							case "channel_id:UC": {
+								if(cursor_value.type!==item.type) {
+									debugger;
+									continue for_loop;
+								}
+								this.committed_data.push(item);
+							} break;
 						};
 					}
 					try {
