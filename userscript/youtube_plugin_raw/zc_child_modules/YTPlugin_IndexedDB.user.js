@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,as_any,make_iterator}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,as_any}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -197,14 +197,16 @@ class IndexedDBService extends BaseService {
 			currentTarget: null,
 		}; null_after_dispatch;
 		if(event.target!==event.currentTarget) debugger;
-		const {mode,error,objectStoreNames}=target;
-		console.log("-- [tx_complete] --\nevent:%o\ntarget:%o\nobjectStoreNames:%o\n",{
-			type,
-			timeStamp,
-		},{
-			mode,
-			error,
-		},[...make_iterator(objectStoreNames)]);
+		const {mode,error}=target;
+		if(error!==null||mode!=="readwrite") {
+			console.log("-- [tx_complete] --\nevent:%o\ntarget:%o\n",{
+				type,
+				timeStamp,
+			},{
+				mode,
+				error,
+			});
+		}
 	}
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
