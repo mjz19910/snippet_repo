@@ -3080,9 +3080,9 @@ class HandleTypes extends ServiceMethods {
 			if(this.params_to_decode.includes(x)) return;
 			this.params_to_decode.push(x);
 		});
-		this.t(this.TV_Str(f35),x => {
+		this.t(f35,x => this.t(this.TV_Str(x),x => {
 			if(x!=="browse-feedFEwhat_to_watch") debugger;
-		});
+		}));
 	}
 	/** @private @arg {PR_continuation_request_browse_token} x */
 	PR_continuation_request_browse_token(x) {
