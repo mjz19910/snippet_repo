@@ -978,6 +978,10 @@ type D_VE3611_TextRun=|{
 type D_VE5754_TextRun={
 	text: "Watch Later";
 	navigationEndpoint: E_VE5754;
+}|{
+	text: "Language hacking (Jakt)";
+	navigationEndpoint: E_VE5754;
+	loggingDirectives: D_LoggingDirectives;
 };
 type D_VE6827_TextRun={
 	text: "Original sound";

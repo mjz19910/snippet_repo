@@ -256,6 +256,8 @@ class HandleTypes extends ServiceMethods {
 	/** @type {number} */
 	static client_now=Date.now();
 	client_now=HandleTypes.client_now;
+	/** @type {number|null} */
+	request_start_time=null;
 	/** @type {null|Promise<void>} */
 	imm_wait_promise=null;
 	immediate_run_logger() {
@@ -3405,6 +3407,70 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(videosCountText);
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
+	}
+	/** @public @arg {D_TextRun} x */
+	D_TextRun(x) {
+		const cf="R_TextRun";
+		const {text,...u}=this.s(cf,x);/*#destructure_done*/
+		this.a_primitive_str(text);
+		if("strikethrough" in u) {
+			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
+			if(strikethrough!==true) debugger;
+			return;
+		}
+		if("italics" in u) {
+			const {italics,...y}=u; this.g(y);/*#destructure_done*/
+			if(italics!==true) debugger;
+			return;
+		}
+		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
+			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
+			let h=() => {
+				let x2=navigationEndpoint;
+				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
+				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
+				debugger;
+			};
+			h();
+			this.D_LoggingDirectives(loggingDirectives);
+			if("bold" in y) {
+				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
+				this.ceq(bold,true);
+				return;
+			}
+			this.g(y);
+			return;
+		}
+		if("navigationEndpoint" in u) {
+			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
+			x: {
+				let x2=navigationEndpoint;
+				if("browseEndpoint" in x2) {
+					if(this.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
+					if(this.is_TE_VE(x2,5754)) {this.E_VE5754(x2); break x;}
+					if(this.is_TE_VE(x2,6827)) {this.E_VE6827(x2); break x;}
+					if(this.is_TE_VE(x2,11487)) {this.E_VE11487(x2); break x;}
+					debugger; x2;
+					break x;
+				}
+				if("watchEndpoint" in x2) {this.E_Watch(x2); break x;}
+				if("urlEndpoint" in x2) {this.bc.E_VE83769_Url(x2); break x;}
+				debugger;
+			}
+			return;
+		}
+		if("bold" in u) {
+			const {bold,...y}=u; this.g(y);/*#destructure_done*/
+			this.a_primitive_bool(bold);
+			return;
+		}
+		if("emoji" in u) {
+			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Emoji(emoji);
+			return;
+		}
+		this.g(u);
 	}
 	/** @private @arg {D_RemarketingPing} x */
 	D_RemarketingPing(x) {x;}
