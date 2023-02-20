@@ -69,7 +69,7 @@ else
 fi
 function get_abc_opt {
 	IFS=,
-	z1=({{0..9},{a..z}})
+	local z1=({{0..9},{a..z}})
 	echo "${z1[*]}"
 }
 function dig_user_run {
