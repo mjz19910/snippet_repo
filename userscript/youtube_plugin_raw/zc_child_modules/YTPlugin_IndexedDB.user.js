@@ -397,7 +397,7 @@ class IndexedDBService extends BaseService {
 		try {
 			req=store.put(data);
 		} catch(e) {
-			console.log("update_failed_put_request",e);
+			if(this.log_all_events) console.log("[update_failed_put_request]",e);
 			throw e;
 		}
 		try {

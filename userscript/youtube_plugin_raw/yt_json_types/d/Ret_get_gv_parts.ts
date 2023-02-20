@@ -86,7 +86,7 @@ type G_Gv_1_List_1=[
 	"6","7","d","e","k","l","r","s","y","z",
 ];
 // end ["p5qs7","zy"],
-type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`;
+type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|"d6"|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`;
 type D_GoogleVideoHostPartition={
 	partition: G_Gv_0,
 	selector: G_Gv_1,

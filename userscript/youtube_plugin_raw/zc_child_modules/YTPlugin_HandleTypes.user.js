@@ -244,7 +244,7 @@ class HandleTypes extends ServiceMethods {
 					case "milliseconds": {
 						let exp_m_from_now=moment(value/1000).diff(this.client_now)/1000;
 						// skip time that is now
-						if(exp_m_from_now > -5 &&exp_m_from_now < 5) break;
+						if(exp_m_from_now>-5&&exp_m_from_now<5) break;
 						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
 					} break;
 				}
@@ -1927,9 +1927,10 @@ class HandleTypes extends ServiceMethods {
 		switch(selector_parts[0]) {
 			default: debugger; {
 				switch(selector_parts[0]) {
+					case "": break;
 				}
 			} break;
-			case "7": case "e": case "l": case "s": {
+			case "7": case "d": case "e": case "l": case "s": {
 				switch(selector_parts[1]) {
 					default: debugger; {
 						switch(selector_parts[1]) {
@@ -1994,11 +1995,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
 		let ss6=this.join_string(ss5,"");
-		/** @type {G_Gv_1|"lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`} */
+		/** @type {G_Gv_1} */
 		let s6=as_any(ss6);
 		console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`);
 		switch(s6) {
 			default: s6===""; debugger; break;
+			case "d6":
 			case "lk":
 			case "sd": case "se": case "sk": case "sl": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
