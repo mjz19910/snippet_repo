@@ -1339,8 +1339,8 @@ class HandleTypes extends ServiceMethods {
 		let obj_json=this.gen_typedef_bin_json(s,otu[1][1]);
 		return `TYPE::T_VW_R<"${otu[1][0]}",${obj_json}>`;
 	};
-	/** @arg {JsonReplacerState} s @arg {V_ParamItem} otu @returns {`TYPE::T_VW_Bigint<${bigint}n>`|null} */
-	v_param_2_D64(s,otu) {
+	/** @arg {V_ParamItem} otu @returns {`TYPE::T_VW_Bigint<${bigint}n>`|null} */
+	v_param_2_D64(otu) {
 		if(otu[0]!=="data64") return null;
 		return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 	};
@@ -1372,7 +1372,7 @@ class HandleTypes extends ServiceMethods {
 			case "data_fixed32": return this.v_param_2_FD32(x);
 			case "data_fixed64": return this.v_param_2_FD64(x);
 			case "data32": return this.v_param_2_D32(x);
-			case "data64": return this.v_param_2_D64(s,x);
+			case "data64": return this.v_param_2_D64(x);
 			case "raw_child": return this.v_param_2_raw_child(s,x);
 			case "raw": return this.v_param_2_raw(s,x);
 			case "struct": case "group":
