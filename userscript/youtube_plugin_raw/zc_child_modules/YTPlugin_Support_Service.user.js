@@ -1424,15 +1424,6 @@ class Support_EventInput extends ServiceMethods {
 		console.log("pt",x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {"RS_Page_Channel"} cf @template {RS_Page_Channel} T @arg {T} x */
-	RS_Page_Channel_Omit(cf,x) {
-		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
-		if(page!=="channel") debugger;
-		{let x=endpoint; if(this.is_TE_VE(x,3611)) this.E_VE3611(x); else debugger;}
-		this.bc.RS_Channel(response);
-		this.a_primitive_str(url);
-		return y;
-	}
 	/** 
 	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x @arg {T_MakeHandlers<T>} handlers
 	 * @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>}
@@ -1454,7 +1445,10 @@ class Support_EventInput extends ServiceMethods {
 		const cf="RS_Page_Channel";
 		let {...u1}=this.RS_Page_Type1(cf,x,{
 			page: x => this.ceq(x,"channel"),
-			endpoint: x => this.E_VE3611(x),
+			endpoint: x => {
+				if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+				debugger;
+			},
 			response: x => this.bc.RS_Channel(x),
 			url: url => {
 				let sp=split_string(url,"/");
@@ -1482,68 +1476,28 @@ class Support_EventInput extends ServiceMethods {
 						}
 					}
 				}
-			}
+			},
+			expirationTime: x => this.a_primitive_num(x),
 		});
 		if(!this.is_not_empty_obj(u1)) return this.g(u1);
-		if("rootVe" in x) {
-			this.E_VE3611(endpoint);
-			this.bc.RS_Channel(response);
-			const {rootVe,expirationTime,csn,...y}=u; this.g(y);
-			this._primitive_of(expirationTime,"number");
+		if("rootVe" in u1) {
+			const {rootVe,csn,...y}=u1; this.g(y);
 			if(rootVe!==3611) debugger;
 			this.t(csn,this.D_VeCsn);
 			return;
 		}
-		if("csn" in x) {
-			const {...u}=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			const {csn,expirationTime,graftedVes,...y}=u; this.g(y);
+		if("csn" in u1) {
+			const {csn,graftedVes,...y}=u1; this.g(y);
 			this.D_VeCsn(csn);
 			this.z(graftedVes,this.D_GraftedVeItem);
-			this._primitive_of(expirationTime,"number");
 			return;
 		}
-		if("expirationTime" in x&&"previousCsn" in x) {
-			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			const {previousCsn,expirationTime,...y}=u; this.g(y);
+		if("previousCsn" in u1) {
+			const {previousCsn,...y}=u1; this.g(y);
 			this.D_VeCsn(previousCsn,true);
-			this._primitive_of(expirationTime,"number");
 			return;
 		}
-		if("expirationTime" in x) return this.g(this.RS_Page_Type1(cf,x,{
-			page: x => this.ceq(x,"channel"),
-			endpoint: x => this.E_VE3611(x),
-			response: x => this.bc.RS_Channel(x),
-			/** @arg {GU_VE3611_2} x */
-			url: x => {
-				let sp=split_string(x,"/");
-				switch(sp.length) {
-					default: debugger; break;
-					case 2: {
-						if(!sp[1].startsWith("@")) debugger;
-						if(sp[0]!=="") debugger;
-					} break;
-					case 3: {
-						let [f1,f2,f3]=sp;
-						if(f1!=="") debugger;
-						if(!f2.startsWith("@")) debugger;
-						if(this.str_is_search(f3)) {
-							let [p,s]=split_string_once(f3,"?");
-							if(p!=="search") debugger;
-							let {query,...y}=this.parse_url_search_params(s); this.g(y);
-							this.a_primitive_str(query);
-							return;
-						}
-						switch(f3) {
-							default: f3===""; debugger; break;
-							case "about": case "shorts": case "videos": case "playlists": case "search": case "channels":
-						}
-					}
-				}
-			},
-			expirationTime: x => this._primitive_of(x,"number"),
-		}));
-		const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-		this.g(u);
+		this.g(u1);
 	}
 	/** @private @arg {G_RS_Page_Playlist} x */
 	G_RS_Page_Playlist(x) {
