@@ -2805,18 +2805,11 @@ class HandleTypes extends ServiceMethods {
 		/** @template {number} T @arg {"f1"|"f2"} k @arg {T_D32<T>} v */
 		let r=(k,v) => {t.mt_cf(t.ms(v,t.T_D32_v),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
 		r("f1",f1); r("f2",f2);
-		t.mt_cf(t.ms_t(f3,t.T_D32_v),`${cf}.f3`,(cf,x) => t.tn_cf(cf,x,(cf,x) => {
-			this.save_number_one(cf,x); switch(x) {case 0: case 1: case 4: }
-		}));
-		t.ms(f4,this.VW_BinaryTimestamp);
-		t.mt_cf(t.ms(f6,x => this.t(x,this.TV_Str)),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
-			this.save_string(cf,x);
-			switch(x) {
-				case "watch": break;
-			}
-		}));
-		t.ms(f8,x => this.t(x,this.T_VW_Bigint));
-		this.t(f16,this.VW_BinaryTimestamp);
+		t.mt_cf(t.ms_t(f3,t.T_D32_v),`${cf}.f3`,(cf,x) => t.tn_cf(cf,x,this.save_number_one));
+		t.ms(f4,t.VW_BinaryTimestamp);
+		t.mt_cf(t.ms_t(f6,t.TV_Str),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,t.save_string));
+		t.ms_t(f8,t.T_VW_Bigint);
+		t.t(f16,t.VW_BinaryTimestamp);
 		if(this.is_empty_obj(y)) return;
 		this.codegen_typedef_bin(cf,x,false);
 	}
