@@ -2287,7 +2287,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	do_random_breakpoint=false;
 	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum_impl(cf,ns,s) {
-		cf;
 		/** @private @type {"_"|"-"} */
 		let sep;
 		let ns_name="ENUM";
