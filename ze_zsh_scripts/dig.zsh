@@ -69,8 +69,7 @@ function gen_z_get {
 	IFS=,
 	echo "${z1[*]}"
 }
-function dig_user {
-	pushd -q $S_DIR
+function dig_user_run {
 	a2=${1}"__n"${2}"_"
 	RESULT_FILE="$TMP_DIR/result.dig_user.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
@@ -91,6 +90,11 @@ function dig_user {
 		printf "\n[$a2]\n%s\n" "$foo"
 	fi
 	rm $list
+
+}
+function dig_user {
+	pushd -q $S_DIR
+	dig_user_run "$@"
 	popd -q
 }
 function dig_user_child {
