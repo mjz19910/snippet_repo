@@ -9,9 +9,9 @@ type D_TrackingObj_f19={
 	2: T_D32<3832>;
 };
 type T_Base64Str=string;
-type P_RT_TK_f1=T_D32<0>;
+type H_TrackingObj_Tag=T_D32<0>;
 
-type P_RT_TK_f2=T_D32<13188>;
+type H_TrackingObj_Id=T_D32<13188>;
 
 type H_TrackingObj_f6_Str="external"|"list_other"|"related"|"related-auto"|"watch";
 
@@ -19,12 +19,12 @@ type H_TrackingObj_f6=T_VW<{_tag: never;}>|TV_Str<H_TrackingObj_f6_Str>;
 
 type VW_BinaryTimestamp=T_VW<V_BinaryTimestamp>;
 
-type P_RT_TK_f3=T_D32<0>;
+type H_TrackingObj_f3=T_D32<0>;
 
-type G_PR_TrackingObj={
-	1?: P_RT_TK_f1;
-	2?: P_RT_TK_f2;
-	3?: P_RT_TK_f3;
+type H_TrackingObj={
+	1?: H_TrackingObj_Tag;
+	2?: H_TrackingObj_Id;
+	3?: H_TrackingObj_f3;
 	4: VW_BinaryTimestamp;
 	6?: H_TrackingObj_f6;
 	7?: TV_Str<T_Base64Str>;

@@ -2778,7 +2778,7 @@ class HandleTypes extends ServiceMethods {
 		if(x1[0]!=="data64") {debugger; return null;}
 		return x1[2];
 	}
-	/** @protected @arg {G_PR_TrackingObj} x */
+	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
 		const cf="H_TrackingObj";
 		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,...y}=x; this.g(y);
@@ -2790,7 +2790,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW(x,this.V_BinaryTimestamp);}
-	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<G_PR_TrackingObj,KM_TrackingObj>} k */
+	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<H_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number_one(`${cf}.${k}`,x));}
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
@@ -2842,9 +2842,9 @@ class HandleTypes extends ServiceMethods {
 			case "watch": break;
 		}
 	}
-	/** @arg {"H_TrackingObj"} cf @arg {{tag: P_RT_TK_f1,id: P_RT_TK_f2;}} x */
+	/** @arg {"H_TrackingObj"} cf @arg {{tag: H_TrackingObj_Tag,id: H_TrackingObj_Id;}} x */
 	P_Tag_TrackingObj(cf,x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");}
-	/** @protected @arg {{type:"click_tracking",v:G_PR_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
+	/** @protected @arg {{type:"click_tracking",v:H_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
 	P_Typed_TrackingObj(x) {
 		const cf="P_Typed_TrackingObj";
 		const {type,v: z}=x; this.k(cf,z);
@@ -3119,7 +3119,7 @@ class HandleTypes extends ServiceMethods {
 	binary_result(cf,x) {
 		switch(cf) {
 			case "params.click_tracking": {
-				/** @type {G_PR_TrackingObj} */
+				/** @type {H_TrackingObj} */
 				let v=as_any(x);
 				this.P_Typed_TrackingObj({type: "click_tracking",v});
 			} break;
