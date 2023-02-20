@@ -2782,12 +2782,12 @@ class HandleTypes extends ServiceMethods {
 	H_TrackingObj(x) {
 		const cf="H_TrackingObj",t=this;
 		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,...y}=x; this.g(y);
-		this.t(f1,x => this.TK_D32(cf,x,"tag"));
-		this.t(f2,x => this.TK_D32(cf,x,"id"));
-		this.t(f3,x => this.TK_D32(cf,x,"f3"));
-		this.VW_BinaryTimestamp(f4);
-		this.t_cf(`${cf}_f6`,f6,this.H_TrackingObj_f6);
-		t.t(t.t(f7,this.TV_Str),x => t.save_string(`${cf}.f7`,x));
+		t.t(f1,x => t.TK_D32(cf,x,"tag"));
+		t.t(f2,x => t.TK_D32(cf,x,"id"));
+		t.t(f3,x => t.TK_D32(cf,x,"f3"));
+		t.VW_BinaryTimestamp(f4);
+		t.t_cf(`${cf}_f6`,f6,t.H_TrackingObj_f6);
+		t.t(t.t(f7,t.TV_Str),x => t.save_string(`${cf}.f7`,x));
 		t.ms_t(f8,t.T_VW_Bigint);
 	}
 	/** @arg {VW_BinaryTimestamp} x */
@@ -2798,6 +2798,8 @@ class HandleTypes extends ServiceMethods {
 	ms(x,y) {return this.mt(this.m(x),y);}
 	/** @template {{}} T @arg {T|undefined} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
 	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
+	/** @template {{}} T @arg {M_Optional<T|null>} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
+	mt_t(x,y) {return this.mt(x,x => this.t(x,y));}
 	/** @arg {P_tracking_params} x */
 	P_tracking_params(x) {
 		const cf="P_tracking_params";
