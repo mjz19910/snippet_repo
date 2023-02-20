@@ -43,6 +43,7 @@ type RetParam_D32=`TYPE::T_D32<${number}>`;
 type RetParam_FD32=`TYPE::T_FD32<${number}>`;
 type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
 type RetParam_ShortTimestamp="TYPE::T_VW_2<V_ShortTimestamp>";
+type RetParam_TV_Str=`TYPE::TV_Str<"${string}">`;
 type RetParam_VW_Bigint=`TYPE::T_VW_Bigint<${bigint}n>`;
 type RetParam_VW_2=
 	|`TYPE::T_VW_2<${Ret_gen_json},"json">`
@@ -50,15 +51,16 @@ type RetParam_VW_2=
 	;
 ;
 
+
 type RetParam_raw=
-	|`TYPE::TV_Str<"${string}">`
+	|RetParam_TV_Str
 	|RetParam_VW_Bigint
 	|`TYPE::T_VW_R<"${"number"}",${number}>`
 	|`TYPE::T_VW_R<"${"array"|"binary"|"V_ParamMapType"}",${string}>`
 	;
 ;
 type RetParam_raw_child=
-	|`TYPE::TV_Str<"${string}">`
+	|RetParam_TV_Str
 	|`TYPE::["raw_child",${Ret_gen_json},${Ret_gen_json},${Ret_gen_json}]`
 	;
 ;
