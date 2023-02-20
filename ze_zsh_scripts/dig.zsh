@@ -69,6 +69,7 @@ else
 fi
 function get_abc_opt {
 	IFS=,
+	z1=({{0..9},{a..z}})
 	echo "${z1[*]}"
 }
 function dig_user_run {
@@ -83,7 +84,6 @@ function dig_user_run {
 	fi
 	touch /tmp/dig_term_lock
 	echo $TMP_DIR/dig_res.t.*(N) | xargs -r rm
-	z1=({{0..9},{a..z}})
 	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' ''
 	list=($TMP_DIR/dig_res.t.*)
