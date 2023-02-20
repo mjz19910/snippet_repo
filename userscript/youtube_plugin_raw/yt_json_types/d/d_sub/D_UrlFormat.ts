@@ -10,7 +10,6 @@ type D_UrlFormat=
 	|`/embed/${string}`
 	|`/feed/${D_BrowseEndpointPages}`
 	|`/feed/trending?${string}`
-	|`/feed/trending?bp=${string}`
 	|`/gaming`
 	|`/playlist?${D_PlaylistUrlParams}`
 	|`/premium`
