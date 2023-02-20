@@ -2333,6 +2333,12 @@ class ServiceMethods extends ServiceData {
 		switch(a1[0]) {
 			default: switch(a1[0]) {
 			} debugger; break;
+			case "c": {
+				if(a1.length!==2) debugger;
+				let [,y1]=a1;
+				let a2=split_string_once(y1,"/");
+				if(a2.length===2) debugger;
+			} break;
 			case "gaming": if(a1.length!==1) debugger; break;
 			case "channel": {
 				let [,y1]=a1;
