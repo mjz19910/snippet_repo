@@ -295,11 +295,6 @@ type RS_Page_Channel={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
-	url: string;
-}|{
-	page: "channel";
-	endpoint: E_VE3611;
-	response: RS_Channel;
 	url: GU_VE3611_2;
 	expirationTime: number;
 }|{

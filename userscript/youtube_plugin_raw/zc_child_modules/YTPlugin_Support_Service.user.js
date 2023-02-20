@@ -1433,7 +1433,10 @@ class Support_EventInput extends ServiceMethods {
 		this.a_primitive_str(url);
 		return y;
 	}
-	/** @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x @arg {T_MakeHandlers<T>} handlers */
+	/** 
+	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x @arg {T_MakeHandlers<T>} handlers
+	 * @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>}
+	 */
 	RS_Page_Type1(cf,x,handlers) {
 		const {page: a,endpoint: b,response: c,url: d,expirationTime: e,...u}=this.s(cf,x);/*#destructure_done*/
 		handlers.page?.(a);
@@ -1441,14 +1444,16 @@ class Support_EventInput extends ServiceMethods {
 		handlers.response?.(c);
 		handlers.url?.(d);
 		handlers.expirationTime?.(e);
+		/** @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>|null} */
+		function wx() {return null;}
+		this.assert_is_omit_key(u,wx);
 		return u;
 	}
 	/** @private @arg {RS_Page_Channel} x */
 	RS_Page_Channel(x) {
 		const cf="RS_Page_Channel";
-		if("rootVe" in x) {
-			const {url,endpoint,page,response,...u}=this.s(cf,x);/*#destructure_done*/
-			{
+		let {...u1}=this.RS_Page_Type1(cf,x,{
+			url: url => {
 				let sp=split_string(url,"/");
 				switch(sp.length) {
 					default: debugger; break;
@@ -1473,6 +1478,11 @@ class Support_EventInput extends ServiceMethods {
 						}
 					}
 				}
+			}
+		});
+		if(!this.is_not_empty_obj(u1)) return this.g(u1);
+		if("rootVe" in x) {
+			{
 			}
 			this.E_VE3611(endpoint);
 			this.bc.RS_Channel(response);

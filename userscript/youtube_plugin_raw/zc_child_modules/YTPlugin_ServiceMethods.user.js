@@ -111,13 +111,10 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 		}
 	}
-	/** @arg {O2} tx @template {{}} T @template {{}} O2 @arg {O2} o2 @template {T_DistributedKeyof<T>} K @arg {T} x @arg {{}} o2 @returns {asserts tx is T_OmitKey<T,Exclude<K,T_DistributedKeyof<O2>>>} */
-	assert_is_omit_key(x,o2,tx) {
-		/** @typedef {[K,O2]} T_IN_ARGS */
-		/** @type {T_IN_ARGS} */
-		let u; tx;
-		function u1() {u;}
-		/**/u1; x; o2;
+	/** @template {{}} T @arg {{}} x @arg {()=>T|null} wx @returns {asserts x is T} */
+	assert_is_omit_key(x,wx) {
+		function u1() {x; wx;}
+		u1;
 	}
 	/** @type {Map<string,[string,string[]][]>} */
 	strings_map=new Map;
