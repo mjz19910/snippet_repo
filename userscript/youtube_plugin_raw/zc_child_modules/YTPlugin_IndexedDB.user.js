@@ -210,7 +210,6 @@ class IndexedDBService extends BaseService {
 							break cursor_loop;
 						}
 						update_loop: while(true) {
-							let prev_tx=tx_scope.tx;
 							try {
 								await this.update(obj_store,item);
 								break update_loop;
@@ -218,10 +217,7 @@ class IndexedDBService extends BaseService {
 								let scope=this.open_transaction_scope(db,key,"readwrite");
 								tx=scope.tx;
 								obj_store=typed_db.objectStore(tx,key);
-								let complete_event=await this.await_complete(tx);
-								console.log(complete_event);
 							}
-							tx_scope.tx=prev_tx;
 						}
 						break cursor_loop;
 					}
