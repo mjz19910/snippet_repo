@@ -1,4 +1,22 @@
 TMP_DIR="/tmp"
+
+function dig_user {
+	pushd -q $S_DIR
+	eval '{dig_user-run "$@";} always {popd -q}'
+}
+function dig_final {
+	pushd -q $S_DIR
+	eval '{dig_final-run "$@";} always {popd -q}'
+}
+function dig_main() {
+	pushd -q $S_DIR
+	a2="$1"
+	eval '{dig_main-run "$@";} always {popd -q}'
+}
+function dig_batch() {
+	dig_main "$@"
+}
+
 function dig_main-run() {
 	RESULT_FILE="$TMP_DIR/result.dig_batch.$a2"
 	if [[ -f "$TMP_DIR/result.dig_batch.$a2" ]]; then
@@ -23,18 +41,6 @@ function dig_main-run() {
 	rm "$list"
 	printf "\r \e[2C"
 	rm "$PID_FILE"
-}
-function dig_main() {
-	pushd -q $S_DIR
-	a2="$1"
-	dig_main-run "$a2"
-	popd -q
-}
-function dig_batch() {
-	pushd -q $S_DIR
-	a2="$1"
-	dig_main-run "$a2"
-	popd -q
 }
 function run_child() {
 	a1=$1
@@ -97,10 +103,6 @@ function dig_user-run {
 	fi
 	rm $list
 }
-function dig_user {
-	pushd -q $S_DIR
-	eval '{dig_user-run "$@";} always {popd -q}'
-}
 function dig_final-run {
 	a2=${1}"n__"
 	export TMP_TAG=final
@@ -124,10 +126,6 @@ function dig_final-run {
 		printf "\n[$a2]\n%s\n" "$foo"
 	fi
 	rm $list
-}
-function dig_final {
-	pushd -q $S_DIR
-	eval '{dig_final-run "$@";} always {popd -q}'
 }
 function lock_printf {
 	(
@@ -184,5 +182,5 @@ function dig_final-child {
 		printf "!${1[14]}"
 	fi
 }
-$MODE "$@"
+$MODE $0 "$@"
 
