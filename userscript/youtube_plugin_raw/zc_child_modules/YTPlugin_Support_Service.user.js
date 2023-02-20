@@ -1891,7 +1891,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 					return;
 				}
-				await this.put_boxed_id();
 				await this.put_and_wait("boxed_id",{
 					key: find_key,
 					base: "boxed_id",
@@ -2155,20 +2154,22 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 	}
 	expected_id=0;
-	/** @arg {number} id */
-	put_update_id(id) {
-		return this.put_and_wait("boxed_id",{
-			key: "boxed_id:update_id",
-			base: "boxed_id",
-			type: "update_id",
-			id,
-		});
-	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @returns {Promise<void>|void} */
 	put_and_wait(key,value) {
 		this.indexed_db.put(key,value,3);
 		let wait_close=this.indexed_db.open_db_promise;
 		if(wait_close) return wait_close;
+	}
+	/** @arg {G_BoxedIdObj} x */
+	put_box(x) {return this.put_and_wait("boxed_id",x);}
+	/** @arg {number} id */
+	put_update_id(id) {
+		return this.put_box({
+			key: "boxed_id:update_id",
+			base: "boxed_id",
+			type: "update_id",
+			id,
+		});
 	}
 	get_update_id() {return this.indexed_db.get("boxed_id","boxed_id:update_id",this.indexed_db_version);}
 	async save_database() {
