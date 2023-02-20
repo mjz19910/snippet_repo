@@ -1312,7 +1312,7 @@ class HandleTypes extends ServiceMethods {
 				console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
 				return null;
 			};
-			/** @arg {V_ParamItem} otu @returns {RetParam_VW_2|null} */
+			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_child|RetParam_VW_2|null} */
 			let v_param_2_child=(otu) => {
 				if(otu[0]!=="child") return null;
 				const [,binary_arr,obj]=otu;
@@ -1322,14 +1322,14 @@ class HandleTypes extends ServiceMethods {
 					let short_ts=v_param_2_maybe_short_ts(obj);
 					if(short_ts) return short_ts;
 					let gen_json=this.gen_typedef_bin_json(s,obj);
-					return `TYPE::T_VW_2<${gen_json}>`;
+					return `TYPE::T_VW_2<${gen_json},"json">`;
 				}
 				let decoded_string=this._decoder.decode(binary_arr);
 				if(binary_arr[0]===0) {
 					console.log("[maybe_handle_bin.do_maybe_string]",otu,decoded_string);
 					return null;
 				}
-				return `TYPE::T_VW_2<"${decoded_string}">`;
+				return `TYPE::T_VW_2<"${decoded_string}","string">`;
 			};
 			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_D32} */
 			let v_param_2_D32=(otu) => {
@@ -1351,7 +1351,7 @@ class HandleTypes extends ServiceMethods {
 				switch(otu[1][0]) {
 					case "string": return `TYPE::TV_Str<"${otu[1][1]}">`;
 					case "bigint": return `TYPE::T_VW_Bigint<${otu[1][1]}n>`;
-					case "number": return `TYPE::number`;
+					case "number": return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
 				}
 				let obj_json=this.gen_typedef_bin_json(s,otu[1][1]);
 				return `TYPE::T_VW_R<"${otu[1][0]}",${obj_json}>`;

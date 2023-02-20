@@ -24,8 +24,9 @@ type V_ParamItemFiltered=
 	|[type: "info",value: number]
 	|[type: "raw",obj: V_RawValue]
 	|[type: "struct",value: V_ParamObj]
-	|`TYPE::T_D32<${string}>`
-	|`TYPE::T_VW_Bigint<${string}n>`
+	|`TYPE::T_D32<${number}>`
+	|`TYPE::T_VW_Bigint<${bigint}n>`
+	|Ret_v_param_2_child
 	|Ret_v_param_2_FD32
 	|Ret_v_param_2_FD64
 	|Ret_v_param_2_maybe_binary_ts
@@ -36,14 +37,24 @@ type V_ParamItemFiltered=
 ;
 type Ret_v_param_2_FD32=`TYPE::T_FD32<${number}>`;
 type Ret_v_param_2_FD64=`TYPE::T_FD64<${bigint}n>`;
-type RetParam_VW_2=`TYPE::T_VW_2<${Ret_gen_json},"json">`;
+type RetParam_VW_2=
+	|`TYPE::T_VW_2<${Ret_gen_json},"json">`
+	|`TYPE::T_VW_2<${string},"string">`
+	;
+;
 type Ret_v_param_2_short_ts="TYPE::T_VW_2<V_ShortTimestamp>";
 type Ret_v_param_2_D32=`TYPE::T_D32<${string}>`;
 type Ret_v_param_2_raw=
 	|`TYPE::TV_Str<"${string}">`
 	|`TYPE::T_VW_Bigint<${bigint}n>`
-	|`TYPE::T_VW_R<"${"number"|"array"|"binary"|"V_ParamMapType"}",${string}>`;
+	|`TYPE::T_VW_R<"${"number"}",${number}>`
+	|`TYPE::T_VW_R<"${"array"|"binary"|"V_ParamMapType"}",${string}>`
+	;
 ;
+type Ret_v_param_2_child=
+	|Ret_v_param_2_maybe_binary_ts
+	|Ret_v_param_2_short_ts
+	;
 ;
 type Ret_v_param_2_raw_child=
 	|`TYPE::TV_Str<"${string}">`
