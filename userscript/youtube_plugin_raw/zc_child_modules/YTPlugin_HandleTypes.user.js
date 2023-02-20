@@ -1389,6 +1389,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(res.length===1) return res;
 		if(res.every(v => typeof v==="string")) return res;
+		if(res.every(v => typeof v!=="string"&&v[0]==="group")) return res;
 		debugger;
 		return res;
 	}
