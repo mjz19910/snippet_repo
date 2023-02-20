@@ -1308,7 +1308,7 @@ class HandleTypes extends ServiceMethods {
 		let decoded_string=this._decoder.decode(binary_arr);
 		if(binary_arr[0]===0) {
 			console.log("[maybe_handle_bin.do_maybe_string]",x,decoded_string);
-			return null;
+			throw new Error();
 		}
 		return `TYPE::T_VW_Child<"${decoded_string}","string">`;
 	}
@@ -1337,9 +1337,8 @@ class HandleTypes extends ServiceMethods {
 		let obj_json=this.gen_typedef_bin_json(s,otu[1][1]);
 		return `TYPE::T_VW_R<"${otu[1][0]}",${obj_json}>`;
 	};
-	/** @arg {V_ParamItem} otu @returns {`TYPE::T_VW_Bigint<${bigint}n>`|null} */
+	/** @arg {[type: "data64", raw_number: number[], value: bigint]} otu @returns {`TYPE::T_VW_Bigint<${bigint}n>`|null} */
 	v_param_2_D64(otu) {
-		if(otu[0]!=="data64") return null;
 		return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 	};
 	/** @arg {JsonReplacerState} s @arg {V_ParamItem_RawChild} x @returns {RetParam_raw_child} */
