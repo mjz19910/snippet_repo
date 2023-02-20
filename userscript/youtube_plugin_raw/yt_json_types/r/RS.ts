@@ -262,9 +262,27 @@ type RS_Page_Browse={
 	expirationTime: number;
 };
 type R_ChannelMetadata=R_Channel_MD;
-type GU_VE3611_2=`/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`|`/@${string}/search`|`/@${string}/search?query=${string}`;
-type GU_VE3611_3=`/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`|`/@${string}/community`|`/@${string}/channels`|`/@${string}/about`|`/@${string}/search?query=${string}`;
-
+type GU_VE3611_2=
+	|`/@${string}/channels`
+	|`/@${string}/playlists`
+	|`/@${string}/search?query=${string}`
+	|`/@${string}/search`
+	|`/@${string}/shorts`
+	|`/@${string}/videos`
+	|`/@${string}`
+	;
+;
+type GU_VE3611_3=
+	|`/@${string}/about`
+	|`/@${string}/channels`
+	|`/@${string}/community`
+	|`/@${string}/playlists`
+	|`/@${string}/search?query=${string}`
+	|`/@${string}/shorts`
+	|`/@${string}/videos`
+	|`/@${string}`
+	;
+;
 type RS_Page_Channel={
 	page: "channel";
 	endpoint: E_VE3611;

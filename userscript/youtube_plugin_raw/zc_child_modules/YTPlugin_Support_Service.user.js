@@ -1501,6 +1501,7 @@ class Support_EventInput extends ServiceMethods {
 			page: x => this.ceq(x,"channel"),
 			endpoint: x => this.E_VE3611(x),
 			response: x => this.bc.RS_Channel(x),
+			/** @arg {GU_VE3611_2} x */
 			url: x => {
 				let sp=split_string(x,"/");
 				switch(sp.length) {
