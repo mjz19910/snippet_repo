@@ -6555,23 +6555,25 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_RichMetadata} x */
 	R_RichMetadata(x) {this.H_("richMetadataRenderer",x,this.D_RichMetadata);}
+	/** @private @arg {D_RichMetadata_BoxArt} x */
+	D_RichMetadata_BoxArt(x) {
+		const cf="D_RichMetadata_BoxArt";
+		const {style: {},thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(thumbnail);
+		this.G_Text(title);
+		this.t(subtitle,this.G_Text);
+		this.G_Text(callToAction);
+		this.T_Icon(`${cf}:icon`,callToActionIcon);
+		if(this.is_TE_VE(endpoint,3611)) this.E_VE3611(endpoint);
+		else debugger;
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {D_RichMetadata} x */
 	D_RichMetadata(x) {
 		const cf="D_RichMetadata";
 		switch(x.style) {
 			default: this.cg.codegen_case_key(cf,x,"style","break"); break;
-			case "RICH_METADATA_RENDERER_STYLE_BOX_ART": {
-				const cf="D_RichMetadata_BoxArt";
-				const {style: {},thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.D_Thumbnail(thumbnail);
-				this.G_Text(title);
-				this.t(subtitle,this.G_Text);
-				this.G_Text(callToAction);
-				this.T_Icon(`${cf}:icon`,callToActionIcon);
-				if(!endpoint.browseEndpoint) debugger;
-				debugger;
-				this.trackingParams(trackingParams);
-			} break;
+			case "RICH_METADATA_RENDERER_STYLE_BOX_ART": return this.D_RichMetadata_BoxArt(x);
 			case "RICH_METADATA_RENDERER_STYLE_TOPIC": {
 				const cf="D_RichMetadata_Topic";
 				const {style: {},thumbnail,title,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6579,8 +6581,8 @@ class ServiceMethods extends ServiceData {
 				this.G_Text(title);
 				this.G_Text(callToAction);
 				this.T_Icon(`${cf}:icon`,callToActionIcon);
-				if(!endpoint.browseEndpoint) debugger;
-				debugger;
+				if(this.is_TE_VE(endpoint,3611)) {debugger; this.E_VE3611(endpoint);}
+				else debugger;
 				this.trackingParams(trackingParams);
 			} break;
 		}
