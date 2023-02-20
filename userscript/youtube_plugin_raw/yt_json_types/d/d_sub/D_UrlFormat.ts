@@ -8,7 +8,7 @@ type D_UrlFormat=
 	|D_ApiPathFormat_1
 	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/api/stats/ads?${string}`
-	|`/channel/UC${string}`
+	|GU_VE3611_Url
 	|`/feed/${D_BrowseEndpointPages}`
 	|`/feed/trending?${string}`
 	|`/gaming`
