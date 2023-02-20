@@ -1763,7 +1763,7 @@ class StoreDescription_C extends ApiBase2 {
 		}
 		let keys=this.get_keys_of(obj);
 		let store_item=this.get_seen_string_item_store(k);
-		/** @type {["arr",string[]]} */
+		/** @type {make_arr_t<string>} */
 		let x=["arr",keys];
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
