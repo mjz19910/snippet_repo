@@ -1278,7 +1278,7 @@ class HandleTypes extends ServiceMethods {
 				case "data64": case "data_fixed64": return this.tr_arr_to_obj([x3]);
 			}
 			//#region v_param_2
-			/** @arg {V_ParamObj} x @returns {RetParam_VW_2|null} */
+			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_maybe_binary_ts|null} */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
@@ -1286,7 +1286,7 @@ class HandleTypes extends ServiceMethods {
 				/** @type {V_BinaryTimestamp} */
 				if(f1&&f2&&f3&&f1[0]==="data32"&&f2[0]==="data_fixed32"&&f3[0]==="data_fixed32"&&this.eq_keys(kk,[1,2,3])) {
 					return `TYPE::T_VW_2<V_BinaryTimestamp>`;
-				}; v_param_2_maybe_binary_ts;
+				};
 				let gen_json=this.gen_typedef_bin_json(s,x);
 				console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
 				return `TYPE::T_VW_2<${gen_json}>`;

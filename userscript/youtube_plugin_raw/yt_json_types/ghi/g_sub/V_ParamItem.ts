@@ -16,8 +16,9 @@ type V_ParamItem=
 	|V_ParamItem_RawChild
 	;
 ;
+type Ret_v_param_2_maybe_binary_ts="TYPE::T_VW_2<V_BinaryTimestamp>";
+
 type V_ParamItemFiltered=
-	|"TYPE::T_VW_2<V_BinaryTimestamp>"
 	|[type: "error",location: number]
 	|[type: "group",value: V_ParamObj]
 	|[type: "info",value: number]
@@ -27,6 +28,7 @@ type V_ParamItemFiltered=
 	|`TYPE::T_VW_Bigint<${string}n>`
 	|Ret_v_param_2_FD32
 	|Ret_v_param_2_FD64
+	|Ret_v_param_2_maybe_binary_ts
 	|Ret_v_param_2_raw
 	|Ret_v_param_2_raw_child
 	|RetParam_VW_2
