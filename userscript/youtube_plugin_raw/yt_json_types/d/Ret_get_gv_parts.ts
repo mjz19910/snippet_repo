@@ -16,16 +16,22 @@ type G_Gv_0=
 	|"qxoed"
 	;
 ;
-// cSpell:ignoreRegExp /rr1.sn-5ua(ldn[lsz][0-9a-z]|ezn[67elryz][0-9a-z]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
+// cSpell:ignoreRegExp /rr1.sn-(qxoed[n][e7][7ek]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	``,
 	// dig results
 	`
+	rr1.sn-qxoedne7.googlevideo.com. 1800 IN A      74.125.161.38
+	rr1.sn-qxoednee.googlevideo.com. 1800 IN A      74.125.9.6
+	rr1.sn-qxoedn7k.googlevideo.com. 1800 IN A      74.125.159.198
 	`,
 	"rr1.sn-5uaeznzy.googlevideo.com.",
+	"rr1.sn-qxoedne7.googlevideo.com.",
 ];
 type PT_TypeS=[
+	gen_g2_t1<"qxoed">,
+	gen_g2_t1<"5uaez">,
 	gen_g2_t1<"5uald">,
 	gen_g3_t2<"9gv7",["l","e"]>,
 	gen_g2_t1<"a5mek">,
