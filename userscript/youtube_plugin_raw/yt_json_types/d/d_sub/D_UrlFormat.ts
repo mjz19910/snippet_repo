@@ -9,7 +9,6 @@ type D_UrlFormat=
 	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/api/stats/ads?${string}`
 	|`/channel/UC${string}`
-	|`/channel/UC${string}`
 	|`/feed/${D_BrowseEndpointPages}`
 	|`/feed/trending?${string}`
 	|`/gaming`
