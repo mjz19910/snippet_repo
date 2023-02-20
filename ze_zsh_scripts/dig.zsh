@@ -4,7 +4,7 @@ function do_dig() {
 	if [[ -f "$TMP_DIR/result.dig_batch.$a2" ]]; then
 		if (($(wc -l <"$RESULT_FILE") != 0)); then
 			foo=$(<"$RESULT_FILE")
-			printf "\n[$a2]\n%s\n" "$foo"
+			printf "[$a2]\n%s\n" "$foo"
 		fi
 		return 0
 	fi
@@ -42,10 +42,13 @@ function run_child() {
 		return 0
 	fi
 	if ((${#@} > 10)); then
+		printf "\r \e[2C"
 		sleep $(shuf -i0-1 -n1).$(shuf -i0-9 -n1)
 	fi
 	eval 'printf "\r\e[1C${@[1][12]}${@[1][14,-18]}"'
+	printf "\r.\e[2C"
 	stdbuf -oL -eL dig "@1.1.1.2" +time=40 +noall +answer +https "$@" >>"$TF"
+	printf "\r!\e[2C"
 }
 ssd() {
 	S_DIR=$(dirname $1)
