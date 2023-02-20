@@ -6581,7 +6581,7 @@ class ServiceMethods extends ServiceData {
 				this.G_Text(title);
 				this.G_Text(callToAction);
 				this.T_Icon(`${cf}:icon`,callToActionIcon);
-				if(this.is_TE_VE(endpoint,3611)) {debugger; this.E_VE3611(endpoint);}
+				if(this.is_TE_VE(endpoint,3611)) this.E_VE3611(endpoint);
 				else debugger;
 				this.trackingParams(trackingParams);
 			} break;
