@@ -50,8 +50,6 @@ type RetParam_VW_2=
 	|`TYPE::T_VW_2<${string},"string">`
 	;
 ;
-
-
 type RetParam_raw=
 	|RetParam_TV_Str
 	|RetParam_VW_Bigint
