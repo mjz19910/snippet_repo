@@ -844,6 +844,7 @@ class ServiceMethods extends ServiceData {
 		const cf1="D_EngagementPanelTargetId";
 		switch(x) {
 			default: x===""; this.cg.codegen_case(`${cf1}:${cf2}.targetId`,x); break;
+			case "shopping_panel_for_entry_point_5":
 			case "engagement-panel-clip-create":
 			case "engagement-panel-clip-view":
 			case "engagement-panel-comments-section":
