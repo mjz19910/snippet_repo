@@ -1419,11 +1419,7 @@ class HandleTypes extends ServiceMethods {
 			let x_t1=x;
 			if(x_t1[0][0]==="child") {
 				debugger;
-				let otr=[];
-				for(let item of x_t1) {
-					otr.push(item);
-				}
-				return otr;
+				return x_t1;
 			}
 			console.log("[maybe_handle_bin.do_handle_arr]",x);
 			return x;
