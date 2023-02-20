@@ -15,13 +15,15 @@ type V_ParamItem=
 	;
 ;
 type V_ParamItemFiltered=
-	|`TYPE::T_FD32<${number}>`
-	|`TYPE::T_FD64<${bigint}n>`
-	|[type: "raw",obj: V_RawValue]
 	|[type: "error",location: number]
 	|[type: "group",value: V_ParamObj]
 	|[type: "info",value: number]
+	|[type: "raw",obj: V_RawValue]
 	|[type: "struct",value: V_ParamObj]
+	|`TYPE::T_FD32<${number}>`
+	|`TYPE::T_FD64<${bigint}n>`
+	|Ret_v_param_2_child
+	|Ret_v_param_2_D32
 	;
 ;
 type Ret_v_param_2_child=
@@ -37,6 +39,8 @@ type Ret_v_param_2_maybe_binary_ts=
 ;
 type Ret_v_param_2_maybe_short_ts=
 	|"TYPE::T_VW_2<V_ShortTimestamp>"
+	|`TYPE::T_VW_2<${Ret_gen_json}>`
 	|null
 	;
 ;
+type Ret_v_param_2_D32=`TYPE::T_D32<${string}>`|null;

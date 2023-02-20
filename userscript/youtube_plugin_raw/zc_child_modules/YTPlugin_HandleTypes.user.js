@@ -1321,15 +1321,15 @@ class HandleTypes extends ServiceMethods {
 				}
 				let decoded_string=this._decoder.decode(binary_arr);
 				if(binary_arr[0]===0) {
-					console.log("[maybe_handle_bin.do_maybe_string]",decoded_string);
-					return otu;
+					console.log("[maybe_handle_bin.do_maybe_string]",otu,decoded_string);
+					return null;
 				}
 				return `TYPE::T_VW_2<"${decoded_string}">`;
 			}; v_param_2_child;
 			if(x3[0]==="child") {
 				return this.tr_arr_to_obj([x3]);
 			}
-			/** @arg {V_ParamItem} otu */
+			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_D32} */
 			let v_param_2_D32=(otu) => {
 				if(otu[0]!=="data32") return null;
 				return `TYPE::T_D32<${otu[1]}>`;
