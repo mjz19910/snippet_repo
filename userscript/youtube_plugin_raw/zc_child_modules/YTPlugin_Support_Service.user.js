@@ -1253,62 +1253,53 @@ class Support_EventInput extends ServiceMethods {
 
 			return;
 		}
-		if(this.is_EP_Val(x,3854)) {
-			this.RS_Page_Type1(cf,x,{
-				/** @arg {R_VE3854_PageType_Browse_Response["url"]} x */
-				url(x) {
-					switch(x) {
-						default: x===""; debugger; switch(x) {
-							case "/":
-						} break;
+		if(this.is_EP_Val(x,3854)) return this.g(this.RS_Page_Type1(cf,x,{
+			/** @arg {R_VE3854_PageType_Browse_Response["url"]} x */
+			url(x) {
+				switch(x) {
+					default: x===""; debugger; switch(x) {
 						case "/":
-					}
+					} break;
+					case "/":
 				}
-			});
-			return;
-		}
-		if(this.is_EP_Val(x,6827)) {
-			this.RS_Page_Type1(cf,x,{
-				/** @arg {R_VE6827_PageType_Browse_Response["url"]} url */
-				url: (url) => {
-					if(this.str_is_search(url)) {
-						let up=split_string_once(url,"?");
-						switch(up[0]) {
-							default: up[0]===""; debugger; switch(up[0]) {
-								case "/":
-							} break;
-							case "/feed/trending": {
-								let {bp,...y}=this.parse_url_search_params(up[1]); this.g(y);
-								this.params("trending.bp",bp);
-							}
+			}
+		}));
+		if(this.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
+			/** @arg {R_VE6827_PageType_Browse_Response["url"]} url */
+			url: (url) => {
+				if(this.str_is_search(url)) {
+					let up=split_string_once(url,"?");
+					switch(up[0]) {
+						default: up[0]===""; debugger; switch(up[0]) {
+							case "/":
+						} break;
+						case "/feed/trending": {
+							let {bp,...y}=this.parse_url_search_params(up[1]); this.g(y);
+							this.params("trending.bp",bp);
 						}
-						return;
 					}
-					switch(url) {
-						default: url===""; debugger; switch(url) {
-							case "/":
-						} break;
-						case "/feed/history":
-						case "/feed/library":
-					}
+					return;
 				}
-			});
-			return;
-		}
-		if(this.is_EP_Val(x,96368)) {
-			this.RS_Page_Type1(cf,x,{
-				/** @arg {R_VE96368_PageType_Browse_Response["url"]} url */
-				url(url) {
-					switch(url) {
-						default: url===""; debugger; switch(url) {
-							case "/":
-						} break;
-						case "/feed/subscriptions":
-					}
+				switch(url) {
+					default: url===""; debugger; switch(url) {
+						case "/":
+					} break;
+					case "/feed/history":
+					case "/feed/library":
 				}
-			});
-			return;
-		}
+			}
+		}));
+		if(this.is_EP_Val(x,96368)) return this.g(this.RS_Page_Type1(cf,x,{
+			/** @arg {R_VE96368_PageType_Browse_Response["url"]} url */
+			url(url) {
+				switch(url) {
+					default: url===""; debugger; switch(url) {
+						case "/":
+					} break;
+					case "/feed/subscriptions":
+				}
+			}
+		}));
 		debugger;
 	}
 	/** @private @arg {R_PageTypeBrowse} x */
@@ -1445,8 +1436,12 @@ class Support_EventInput extends ServiceMethods {
 	}
 	/** @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x @arg {T_MakeHandlers<T>} handlers */
 	RS_Page_Type1(cf,x,handlers) {
-		const {page,endpoint,response,url,expirationTime,...u}=this.s(cf,x);/*#destructure_done*/
-		handlers;
+		const {page: a,endpoint: b,response: c,url: d,expirationTime: e,...u}=this.s(cf,x);/*#destructure_done*/
+		handlers.page?.(a);
+		handlers.endpoint?.(b);
+		handlers.response?.(c);
+		handlers.url?.(d);
+		handlers.expirationTime?.(e);
 		return u;
 	}
 	/** @private @arg {RS_Page_Channel} x */
