@@ -33,4 +33,13 @@ type H_TrackingObj={
 	11?: TV_Str<"FEwhat_to_watch">;
 	16?: T_VW<D_TrackingObj_f16>;
 	19?: T_VW<D_TrackingObj_f19>;
+	21: T_VW<{
+		6: T_FD32<1315653944>;
+		10: [
+			T_FD32<826690645>,
+			T_D32<114>,
+			T_D32<84>,
+		],
+		14: T_FD64<4715926796601679684n>;
+	}>;
 };

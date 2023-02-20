@@ -2781,7 +2781,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
 		const cf="H_TrackingObj",t=this;
-		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,...y}=x; this.g(y);
+		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,21: f21,...y}=x; this.g(y);
 		t.t(f1,x => t.TK_D32(cf,x,"tag"));
 		t.t(f2,x => t.TK_D32(cf,x,"id"));
 		t.t(f3,x => t.TK_D32(cf,x,"f3"));
