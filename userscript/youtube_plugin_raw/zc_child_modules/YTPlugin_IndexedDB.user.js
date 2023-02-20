@@ -152,13 +152,31 @@ class IndexedDBService extends BaseService {
 		const tx=this.transaction(db,key,"readwrite");
 		let is_tx_complete=false;
 		tx.oncomplete=function(event) {
-			console.log("tx complete",event);
+			const {type,timeStamp,target}=event;
+			// these are deprecated
+			let dep_obj={
+				srcElement: null,
+				returnValue: null,
+			}; dep_obj;
+			// these are not on the ts interface for Event
+			let not_ts={
+				originalTarget: null,
+				explicitOriginalTarget: null,
+			}; not_ts;
+			let null_after_dispatch={
+				currentTarget: null,
+			}; null_after_dispatch;
+			if(event.target!==event.currentTarget) debugger;
+			console.log("tx complete",{
+				type,
+				timeStamp,
+			},"target",target);
 			is_tx_complete=true;
-		}
+		};
 		tx.onerror=function(event) {
 			console.log("tx error",event,tx.error);
 			is_tx_complete=true;
-		}
+		};
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {
@@ -252,9 +270,9 @@ class IndexedDBService extends BaseService {
 							} break cursor_loop;
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
-							case "playlist_id:PL": 
-							case "playlist_id:RD": 
-							case "playlist_id:RDMM": 
+							case "playlist_id:PL":
+							case "playlist_id:RD":
+							case "playlist_id:RDMM":
 							case "playlist_id:UU": {
 								if(cursor_value.type!==item.type) {
 									debugger;
