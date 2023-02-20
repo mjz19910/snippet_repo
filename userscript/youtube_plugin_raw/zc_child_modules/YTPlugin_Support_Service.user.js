@@ -1453,6 +1453,9 @@ class Support_EventInput extends ServiceMethods {
 	RS_Page_Channel(x) {
 		const cf="RS_Page_Channel";
 		let {...u1}=this.RS_Page_Type1(cf,x,{
+			page: x => this.ceq(x,"channel"),
+			endpoint: x => this.E_VE3611(x),
+			response: x => this.bc.RS_Channel(x),
 			url: url => {
 				let sp=split_string(url,"/");
 				switch(sp.length) {
@@ -1474,6 +1477,7 @@ class Support_EventInput extends ServiceMethods {
 						}
 						switch(f3) {
 							default: f3===""; debugger; break;
+							case "search": case "shorts":
 							case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
 						}
 					}
@@ -1482,8 +1486,6 @@ class Support_EventInput extends ServiceMethods {
 		});
 		if(!this.is_not_empty_obj(u1)) return this.g(u1);
 		if("rootVe" in x) {
-			{
-			}
 			this.E_VE3611(endpoint);
 			this.bc.RS_Channel(response);
 			const {rootVe,expirationTime,csn,...y}=u; this.g(y);

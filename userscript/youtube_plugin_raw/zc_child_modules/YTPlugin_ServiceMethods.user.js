@@ -179,11 +179,10 @@ class ServiceMethods extends ServiceData {
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": this.params("continuation_request.reel_watch_sequence.token",token); break;
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": this.params("continuation_request.watch_next.token",token); break;
 		};
-		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
-		function gu() {return y;}
-		let u=gu();
-		this.assert_is_omit_key(x,y,u);
-		return u;
+		/** @returns {T_OmitKey<T,"token"|"request">|null} */
+		function gu() {return null;}
+		this.assert_is_omit_key(y,gu);
+		return y;
 	}
 	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
 	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
