@@ -1,3 +1,4 @@
+START_PATH=$0
 TMP_DIR="/tmp"
 
 function dig_user {
@@ -158,7 +159,7 @@ function dig_user-child {
 	printf "."
 	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
-		printf "!${1[14]}"
+		eval 'printf "!${1[14]}"'
 	fi
 }
 function dig_final-child {
@@ -176,12 +177,11 @@ function dig_final-child {
 	printf "."
 	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
-		printf "!${1[14]}"
+		eval 'printf "!${1[14]}"'
 	fi
 }
 
 function print-usage {
-	echo "$1 dig_main [section]"
+	echo "$START_PATH dig_main [section]"
 }
-
-$MODE $0 "$@"
+$MODE "$@"
