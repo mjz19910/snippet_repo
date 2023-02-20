@@ -171,13 +171,13 @@ class IndexedDBService extends BaseService {
 			}; null_after_dispatch;
 			if(event.target!==event.currentTarget) debugger;
 			const {mode,error,objectStoreNames}=target;
-			console.log("tx complete",{
+			console.log("tx complete\nevent:%o\ntarget:%o\nobjectStoreNames:%o\n",{
 				type,
 				timeStamp,
-			},"target",{
+			},{
 				mode,
 				error,
-			},"objectStoreNames",[...make_iterator(objectStoreNames)]);
+			},[...make_iterator(objectStoreNames)]);
 			is_tx_complete=true;
 		};
 		tx.onerror=function(event) {
