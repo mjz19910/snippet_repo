@@ -118,7 +118,7 @@ function dig_user_child {
 	((n = n + arg_num_1 + 9))
 	lock_printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8"
 	lock_printf "."
-	dig @162.159.8.55 +time=3 +https +noall +answer "$@" >$TF
+	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
 		lock_printf "!"
 	fi
