@@ -158,7 +158,6 @@ type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
 type D_RadioPlaylistStr<T extends string>=`RD${T}`;
 type D_SD_UrlTypes=`page_type_${YTNavigateFinishDetail["pageType"]}`|UrlTypes;
 type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
-type D_YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
@@ -2858,7 +2857,7 @@ type D_UrlAndElapsedMediaTime<T>={
 	baseUrl: T;
 	elapsedMediaTimeSeconds: number;
 };
-type YTExternalUrl=T_SplitOnce<T_SplitOnce<D_YTExternalEncUrl,"]">[1]," ">[1];
+type D_YTExternalUrl="https://m.youtube.com/premium";
 type D_UrlInfoPlaylist={_tag: "playlist"; type: D_UrlInfoItemType; id: string;};
 type D_UrlInfoVideo={_tag: "video"; id: string;};
 type D_UrlVideoReferral={_tag: "video-referral"; id: string;};

@@ -13,9 +13,9 @@ type D_UrlFormat=
 	|`/feed/trending?${string}`
 	|`/gaming`
 	|`/playlist?${D_PlaylistUrlParams}`
-	|`/premium`
-	|`/reporthistory`
-	|`/results?search_query=${string}`
+	|GU_VE11487_Url
+	|GU_VE6827_Url
+	|D_ResultsPageUrl
 	|`/shorts/${string}`
 	|`/v/${string}?version=3&autohide=1`
 	|`/watch?${string}`
@@ -37,6 +37,6 @@ type D_UrlFormat=
 	|NonNullable<D_Channel_MD["channelConversionUrl"]>
 	|NonNullable<D_FormatItem["url"]>
 	|TP_ParseUrlSearchParams<D_FormatItem_signatureCipher>["url"]
-	|YTExternalUrl
+	|D_YTExternalUrl
 	;
 ;

@@ -353,7 +353,7 @@ type RS_Page_Search={
 	page: "search";
 	endpoint: E_VE4724_Search;
 	response: RS_Search;
-	url: `/results?search_query=${string}`;
+	url: D_ResultsPageUrl;
 };
 //#endregion
 //#region Response with {rootVe:number}

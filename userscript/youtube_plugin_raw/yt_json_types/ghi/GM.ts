@@ -31,7 +31,7 @@ type GM_VE3854={
 	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE4724={
-	url: `/results?search_query=${string}`;
+	url: D_ResultsPageUrl;
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
