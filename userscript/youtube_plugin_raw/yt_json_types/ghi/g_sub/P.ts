@@ -24,11 +24,11 @@ type P_ad_layout_ad_serving_data_entry={
 
 type P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry={
 	1: VW_BinaryTimestamp;
-	3: {
+	3: T_VW_2<{
 		1: T_D32<5>;
 		6: T_D32<1>;
 		11: T_D32<2>;
-	};
+	}>;
 	4: T_D32<2>;
 };
 type P_create_playlist_params={1: T_D32<4>;};
@@ -39,7 +39,7 @@ type PD_continuation_request_browse_token={
 };
 
 type PR_continuation_request_browse_token={
-	0x4c82a9c: PD_continuation_request_browse_token;
+	0x4c82a9c: T_VW_2<PD_continuation_request_browse_token>;
 };
 type P_reel_player_params={
 	30: T_D32<1>;

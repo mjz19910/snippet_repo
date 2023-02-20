@@ -1,4 +1,4 @@
-type T_VW<T>=[T];
+type T_Tuple_1<T>=[T];
 type T_PArr<T>=["param_arr",[T]];
 type T_VW_2<T,_tag=never>=T_PArr<["child",Uint8Array,T]>;
 type T_VA_2<T,U>=[T,U];

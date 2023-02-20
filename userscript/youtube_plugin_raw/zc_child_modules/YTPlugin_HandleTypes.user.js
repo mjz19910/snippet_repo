@@ -305,8 +305,8 @@ class HandleTypes extends ServiceMethods {
 		console.log(`-- [binary_gen_case:${cf}] --\n${str_arr.join("\n")}`);
 		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
-	/** @protected @template T @arg {T_VW<T>} x */
-	T_VW(x) {
+	/** @protected @template T @arg {[T]} x */
+	unwrap_tuple_1(x) {
 		if(x.length!==1) return null;
 		return x[0];
 	}
@@ -314,7 +314,7 @@ class HandleTypes extends ServiceMethods {
 	T_RawChild(x) {
 		if(x[0]!=="param_arr") {debugger; return null;}
 		if(x.length!==2) debugger;
-		return this.T_VW(x[1]);
+		return this.unwrap_tuple_1(x[1]);
 	}
 	/** @private @template T @arg {TV_Str<T>} x */
 	TV_Str(x) {
@@ -3032,7 +3032,7 @@ class HandleTypes extends ServiceMethods {
 	PR_continuation_request_browse_token(x) {
 		const cf="PR_continuation_request_browse_token";
 		const {0x4c82a9c: a,...y}=this.s(cf,x); this.g(y);
-		this.PD_continuation_request_browse_token(a);
+		this.T_VW_2(a,this.PD_continuation_request_browse_token);
 	}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {
