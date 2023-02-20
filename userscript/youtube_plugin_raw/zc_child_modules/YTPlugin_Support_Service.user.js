@@ -2001,89 +2001,88 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				}
 			}
 		}
-		if(!found) {
-			switch(store.content) {
-				default: debugger; break;
-				case "boolean": {
-					let [,vi]=item;
-					/** @type {make_arr_t<boolean>|null} */
-					let uv_arr=null;
-					/** @type {make_many_t<boolean>|null} */
-					let uv_many=null;
-					switch(vi[0]) {
-						default: debugger; break;
-						case "many": {
-							for(let u of vi[1]) {
-								let pa=[];
-								for(let v of u) {
-									if(typeof v!=="boolean") continue;
-									pa.push(v);
-								}
-								if(uv_many) {
-									uv_many[1].push(pa);
-									continue;
-								}
-								uv_many=["many",[pa]];
-							}
-						} break;
-						case "arr": {
-							for(let v of vi[1]) {
+		if(found) return;
+		switch(store.content) {
+			default: debugger; break;
+			case "boolean": {
+				let [,vi]=item;
+				/** @type {make_arr_t<boolean>|null} */
+				let uv_arr=null;
+				/** @type {make_many_t<boolean>|null} */
+				let uv_many=null;
+				switch(vi[0]) {
+					default: debugger; break;
+					case "many": {
+						for(let u of vi[1]) {
+							let pa=[];
+							for(let v of u) {
 								if(typeof v!=="boolean") continue;
-								if(uv_arr) {
-									uv_arr[1].push(v);
-									continue;
-								}
-								uv_arr=["arr",[v]];
+								pa.push(v);
 							}
+							if(uv_many) {
+								uv_many[1].push(pa);
+								continue;
+							}
+							uv_many=["many",[pa]];
+						}
+					} break;
+					case "arr": {
+						for(let v of vi[1]) {
+							if(typeof v!=="boolean") continue;
+							if(uv_arr) {
+								uv_arr[1].push(v);
+								continue;
+							}
+							uv_arr=["arr",[v]];
 						}
 					}
-					if(uv_arr) {
-						await this.put_and_wait("boxed_id",{
-							key: `boxed_id:${store.content}:${item[0]}`,
-							base: "boxed_id",
-							type: store.content,
-							id: item[0],
-							value: uv_arr,
-						});
-					}
-					if(uv_many) {
-						await this.put_and_wait("boxed_id",{
-							key: `boxed_id:${store.content}:${item[0]}`,
-							base: "boxed_id",
-							type: store.content,
-							id: item[0],
-							value: uv_many,
-						});
-					}
-				} break;
-				case "keys": {
-					let [,vi]=item;
-					/** @type {make_arr_t<string>|null} */
-					let uv_arr=null;
-					switch(vi[0]) {
-						default: debugger; break;
-						case "arr": {
-							for(let v of vi[1]) {
-								if(typeof v!=="string") continue;
-								if(uv_arr) {
-									uv_arr[1].push(v);
-									continue;
-								}
-								uv_arr=["arr",[v]];
+				}
+				if(uv_arr) {
+					await this.put_and_wait("boxed_id",{
+						key: `boxed_id:${store.content}:${item[0]}`,
+						base: "boxed_id",
+						type: store.content,
+						id: item[0],
+						value: uv_arr,
+					});
+				}
+				if(uv_many) {
+					await this.put_and_wait("boxed_id",{
+						key: `boxed_id:${store.content}:${item[0]}`,
+						base: "boxed_id",
+						type: store.content,
+						id: item[0],
+						value: uv_many,
+					});
+				}
+			} break;
+			case "keys": {
+				let [,vi]=item;
+				/** @type {make_arr_t<string>|null} */
+				let uv_arr=null;
+				switch(vi[0]) {
+					default: debugger; break;
+					case "arr": {
+						for(let v of vi[1]) {
+							if(typeof v!=="string") continue;
+							if(uv_arr) {
+								uv_arr[1].push(v);
+								continue;
 							}
+							uv_arr=["arr",[v]];
 						}
 					}
-					if(uv_arr) {
-						await this.put_and_wait("boxed_id",{
-							key: `boxed_id:${store.content}:${item[0]}`,
-							base: "boxed_id",
-							type: store.content,
-							id: item[0],
-							value: uv_arr,
-						});
-					}
-				} break;
-			}
+				}
+				if(uv_arr) {
+					await this.put_and_wait("boxed_id",{
+						key: `boxed_id:${store.content}:${item[0]}`,
+						base: "boxed_id",
+						type: store.content,
+						id: item[0],
+						value: uv_arr,
+					});
+				}
+			} break;
 		}
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store */
