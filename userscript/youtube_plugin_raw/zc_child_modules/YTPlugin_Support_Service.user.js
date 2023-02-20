@@ -1891,6 +1891,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 					return;
 				}
+				await this.put_boxed_id();
 				await this.put_and_wait("boxed_id",{
 					key: find_key,
 					base: "boxed_id",
@@ -2042,23 +2043,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 				}
 				if(uv_arr) {
-					await this.put_and_wait("boxed_id",{
-						key: `boxed_id:${store.content}:${item[0]}`,
-						base: "boxed_id",
-						type: store.content,
-						id: item[0],
-						value: uv_arr,
-					});
+					await this.put_boxed_id(store.content,item[0],uv_arr);
 				}
 				if(uv_many) {
 					await this.put_boxed_id(store.content,item[0],uv_many);
-					await this.put_and_wait("boxed_id",{
-						key: `boxed_id:${store.content}:${item[0]}`,
-						base: "boxed_id",
-						type: store.content,
-						id: item[0],
-						value: uv_many,
-					});
 				}
 			} break;
 			case "keys": {
@@ -2084,9 +2072,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @arg {["keys",string,make_arr_t<string>]|["boolean",string,make_many_t<boolean>]} args */
+	/** @arg {["keys",string,make_arr_t<string>|make_many_t<string>]|["boolean",string,make_arr_t<boolean>|make_many_t<boolean>]} args */
 	put_boxed_id(...args) {
 		switch(args[0]) {
+			default: debugger; break;
 			case "boolean": {
 				let [a,b,value]=args;
 				return this.put_and_wait("boxed_id",{

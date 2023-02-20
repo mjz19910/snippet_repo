@@ -9,7 +9,7 @@ type StoreDescription<T,C_Ty extends StoreContentStr>={
 };
 type StoreGetType<T>=T extends number? "number":T extends string? "string":T extends boolean? "boolean":T extends string? "string":"unknown";
 type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>;
-type G_StoreDescriptions=|StoreDescription<boolean,"boolean">|G_StoreNumDescription|G_StoreStringDescription;
+type G_StoreDescriptions=StoreDescription<boolean,"boolean">|G_StoreNumDescription|G_StoreStringDescription;
 type G_StoreNumDescription=StoreDescription<number,"number">|StoreDescription<number,"root_visual_element">;
 type G_StoreStringDescription=StoreDescription<string,"string">|StoreDescription<string,"keys">;
 type make_one_t<T>=["one",T];
