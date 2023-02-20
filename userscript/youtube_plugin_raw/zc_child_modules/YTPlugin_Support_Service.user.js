@@ -1939,7 +1939,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		for(let from_db of str_arr) {
 			let local_data=ss.data.find(v => v[0]===k_parts[1]);
 			if(!local_data) {
-				if(from_db.length!==1) {debugger; continue;}
 				ss.data.push([k_parts[1],["arr",from_db]]);
 				continue;
 			}
@@ -1950,7 +1949,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					local_data[1][1].push(from_db);
 				} break;
 				case "arr": {
-					if(from_db.length!==1) {debugger; continue;}
+					if(from_db.length!==1) {console.log("not eq",from_db,local_data[1][1]); continue;}
 					if(local_data[1][1].includes(from_db[0])) continue;
 					local_data[1][1].push(from_db[0]);
 				}
@@ -1979,6 +1978,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} boxed @arg {T} store @arg {T["data"][number]} item */
 	async push_store_item_to_database(store,boxed,item) {
+		let do_update=false;
 		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
 		let s_box=[];
 		/** @type {(T_IdBox<B_IdSrcNum,string,"num",number>|T_IdBox<B_IdSrcStr,string,"str",string>)[]} */
@@ -1990,9 +1990,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 		}
 		let found=false;
+		let found_box=null;
 		for(let box of s_box) {
 			if(box.id===item[0]) {
-				found=true;
+				found=true; found_box=box;
 				let [,box_b]=box.value;
 				let [,item_b]=item;
 				let [item_c]=item_b; let [box_c]=box_b;
@@ -2000,6 +2001,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					debugger;
 				}
 			}
+		}
+		if(do_update&&found_box) {
+			await this.put_and_wait("boxed_id",found_box);
 		}
 		if(found) return;
 		switch(store.content) {

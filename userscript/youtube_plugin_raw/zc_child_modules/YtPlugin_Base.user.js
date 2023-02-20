@@ -377,7 +377,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					window.yt_plugin?.save_db.save_string("body_element",["arr",fut_data]);
+					window.yt_plugin?.save_string_arr("body_element",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2112,11 +2112,11 @@ class BaseServicePrivate extends ApiBase {
 		let y=as(x);
 		return this.save_db.unwrap_brackets(y);
 	}
-	/** @arg {string} k @arg {{}} x */
+	/** @public @arg {string} k @arg {{}} x */
 	save_keys(k,x) {this.save_db.save_keys_impl(k,x);}
 	/** @protected @arg {string} k @arg {string} x */
 	save_string_one(k,x) {return this.save_db.save_string(k,["one",x]);}
-	/** @protected @arg {string} k @arg {string[]} x */
+	/** @public @arg {string} k @arg {string[]} x */
 	save_string_arr(k,x) {return this.save_db.save_string(k,["arr",x]);}
 	/** @protected @arg {string} k @arg {boolean} x */
 	save_boolean_one(k,x) {return this.save_db.save_boolean(k,["one",x]);}
