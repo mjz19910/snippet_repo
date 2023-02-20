@@ -74,6 +74,7 @@ type PT_TypeArr=[
 	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],// hit
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
 	["qxoed",["7k","e7","ee",]],// hit
+	["qxo7r",["7k","7r","7y",]],// hit
 	// 
 ];
 type G_Gv_1_List=[
