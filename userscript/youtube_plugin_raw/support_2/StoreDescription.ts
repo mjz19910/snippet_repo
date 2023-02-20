@@ -5,12 +5,18 @@ type StoreDescription<T,C_Ty extends StoreContentStr>={
 	index: Map<string,number>;
 	content: C_Ty;
 	type: T extends number? "number":T extends string? "string":T extends boolean? "boolean":T extends string? "string":"unknown";
+	push_new_data(k: string,g: make_item_group<T>): void;
+	save_g(g: make_item_group<T>): void;
 };
 type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>;
 type G_StoreDescriptions=
 	|StoreDescription<boolean,"boolean">
 	|StoreDescription<number,"number">
 	|StoreDescription<number,"root_visual_element">
+	|G_StoreStringDescription
+	;
+;
+type G_StoreStringDescription=
 	|StoreDescription<string,"string">
 	|StoreDescription<string,"keys">
 	;

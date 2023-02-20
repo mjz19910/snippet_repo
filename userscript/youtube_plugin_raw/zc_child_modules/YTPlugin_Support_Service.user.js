@@ -1815,7 +1815,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let store_index=this.save_to_data_item(x2,store_item);
 		if(store_index<0) return false;
 		store.new_data.push([k,x2]);
-		return this.save_to_store("keys",k,["arr",keys],store);
+		return this.save_to_str_store("keys",k,["arr",keys],store);
 	}
 	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
@@ -2316,31 +2316,34 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	is_ready=false;
 	/** @type {StoredChangesItem[]} */
 	stored_changes=[];
-	/** @public @template {U["new_data"][1]} T @template {G_StoreDescriptions} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {make_item_group<T>} x @arg {U} store */
+	/** @public @template {G_StoreDescriptions} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {U["new_data"][number][1]} x @arg {U} store */
 	save_to_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
+		switch(store.type) {
+			case "boolean": store.push_new_data(k,x);
+		}
 		store.new_data.push([k,x]);
 		this.onDataChange();
 		if(!this.is_ready) {
 			switch(store.content) {
 				default: debugger; break;
 				case "boolean": {
-					if(typeof x[1]!=="boolean") break;
 					if(x[0]==="arr") break;
+					if(typeof x[1]!=="boolean") break;
 					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
 				} break;
 				case "string":
 				case "keys": {
-					if(typeof x[1]!=="string") break;
 					if(x[0]==="arr") break;
+					if(typeof x[1]!=="string") break;
 					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
 				} break;
 				case "root_visual_element":
 				case "number": {
-					if(typeof x[1]!=="number") break;
 					if(x[0]==="arr") break;
+					if(typeof x[1]!=="number") break;
 					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
 				} break;
 			}
@@ -2361,6 +2364,38 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	#get_number_store() {return this.#data_store.get_number_store();}
 	do_random_breakpoint=false;
+	/** @api @public @arg {"string"|"keys"} ns @arg {string} k @arg {["one",string]|make_arr_t<string>} x @arg {G_StoreStringDescription} store */
+	save_to_str_store(ns,k,x,store) {
+		let store_item=this.get_seen_string_item_store(k,store);
+		let store_index=this.save_to_data_item(x,store_item);
+		if(store_index<0) return false;
+		store.new_data.push([k,x]);
+		this.onDataChange();
+		if(!this.is_ready) {
+			switch(store.content) {
+				default: debugger; break;
+				case "string":
+				case "keys": {
+					if(x[0]==="arr") break;
+					if(typeof x[1]!=="string") break;
+					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
+				} break;
+			}
+			return false;
+		} else {
+			switch(x[0]) {
+				case "arr": break;
+				case "one": {
+					console.log(`store [${ns}] [${k}] %o`,x[1]);
+				} break;
+			}
+		}
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return false;}
+		this.show_strings_bitmap(ns,idx,store);
+		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
+		return true;
+	}
 	/** @api @public @arg {string} k @arg {["one",number]|make_arr_t<number>} x */
 	save_number(k,x) {
 		if(x===void 0) {debugger; return false;}
@@ -2371,7 +2406,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	save_string(k,x) {
 		if(x===void 0) {debugger; return false;}
 		let store=this.#get_string_store();
-		return this.save_to_store("string",k,x,store);
+		return this.save_to_str_store("string",k,x,store);
 	}
 	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum_impl(cf,ns,s) {
