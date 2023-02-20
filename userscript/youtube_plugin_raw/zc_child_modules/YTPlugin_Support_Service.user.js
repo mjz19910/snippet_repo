@@ -1874,16 +1874,18 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
+	data_store=new StoreData;
+	get_data_store() {return this.data_store;}
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
-	save_boolean(k,x) {return this.#data_store.seen_bool_obj.save_data(k,x);}
+	save_boolean(k,x) {return this.data_store.seen_bool_obj.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
-	save_number(k,x) {this.#data_store.seen_number_obj.save_data(k,x);}
+	save_number(k,x) {this.data_store.seen_number_obj.save_data(k,x);}
 	/** @api @public @arg {number} x */
-	save_root_visual_element(x) {return this.#data_store.seen_ve_num_obj.save_data("ve_element",["one",x]);}
+	save_root_visual_element(x) {return this.data_store.seen_ve_num_obj.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
-	save_keys_impl(k,x) {return this.#data_store.seen_keys_obj.save_keys(k,x);}
-	#data_store=new StoreData;
-	get_data_store() {return this.#data_store;}
+	save_keys_impl(k,x) {return this.data_store.seen_keys_obj.save_keys(k,x);}
+	/** @api @public @arg {string} k @arg {make_item_group<string>} x */
+	save_string(k,x) {this.data_store.seen_string_obj.save_data(k,x);}
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	/** @private */
@@ -2202,7 +2204,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 	}
 	async do_boxed_push_to_database() {
-		let store=this.#data_store;
+		let store=this.data_store;
 		let changes=store.get_changed_stores();
 		for(let changed of changes) {
 			if(changed==="string") {
@@ -2226,7 +2228,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	async do_boxed_update_from_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
 		if(this.log_load_database) console.log("load_database all boxed",boxed);
-		let store=this.#data_store;
+		let store=this.data_store;
 		let ss=store.seen_string_obj;
 		if(boxed.length===0) {
 			let changes=store.get_changed_stores();
@@ -2321,7 +2323,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	/** @template T @arg {make_item_group<any>} x @arg {T} v @returns {asserts x is make_item_group<T>} */
 	is_group_with_type(x,v) {x; v;}
-	#get_string_store() {return this.#data_store.seen_string_obj;}
 	/** @private @arg {string} k @arg {G_StoreDescriptions['data'][number][1]} x @arg {G_StoreDescriptions} store @returns {[G_StoreDescriptions["type"],any]} */
 	add_to_index(k,x,store) {
 		switch(store.type) {
@@ -2439,12 +2440,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.show_strings_bitmap(ns,idx,store);
 		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
 		return true;
-	}
-	/** @api @public @arg {string} k @arg {make_item_group<string>} x */
-	save_string(k,x) {
-		if(x===void 0) {debugger; return false;}
-		let store=this.#get_string_store();
-		return this.save_to_str_store("string",k,x,store);
 	}
 	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum_impl(cf,ns,s) {
