@@ -1846,40 +1846,46 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
 		return this.exact_arr(za,zb);
 	}
+	/** @arg {G_BoxedStr} box @arg {make_many_t<string>} item_group */
+	async store_item_many(box,item_group) {
+		/** @type {Omit<Pick<typeof box,"key"|"type"|"id">,"id">&{id:(typeof box)["value"]}} */
+		let {...box_v1}=as_any(box);
+		if(!("value" in box_v1)) {
+			box_v1;
+			let ks=split_string_once(box_v1.key,":");
+			let ks2=split_string_once(ks[1],":");
+			box={
+				key: box_v1.key,
+				base: "boxed_id",
+				type: ks2[0],
+				id: ks2[1],
+				value: box_v1.id,
+			};
+			await this.put_box(box);
+		}
+		let from_db=box.value[1];
+		if(from_db[0]!=="many") {debugger; return;}
+		for(let src_item of item_group[1]) {
+			let has=from_db[1].find(v => this.eq_keys(v,src_item));
+			if(has===null) {
+				debugger;
+			}
+		}
+	}
+	/** @arg {G_BoxedStr} box @arg {make_arr_t<string>} item_group */
+	async store_item_arr(box,item_group) {
+		box; item_group;
+	}
 	/** @arg {`boxed_id:str:${string}`} find_key @arg {IDBBoxedType} box @arg {make_item_group<string>} item_group */
 	async export_store_item_with_found_box(find_key,box,item_group) {
 		/** @arg {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} v @returns {v is {key: typeof find_key}} */
 		let fk=v => v.key===find_key;
 		if(!fk(box)) return;
 		switch(item_group[0]) {
-			case "many": {
-				/** @type {Omit<Pick<typeof box,"key"|"type"|"id">,"id">&{id:(typeof box)["value"]}} */
-				let {...box_v1}=as_any(box);
-				if(!("value" in box_v1)) {
-					box_v1;
-					let ks=split_string_once(box_v1.key,":");
-					let ks2=split_string_once(ks[1],":");
-					box={
-						key: box_v1.key,
-						base: "boxed_id",
-						type: ks2[0],
-						id: ks2[1],
-						value: box_v1.id,
-					};
-					await this.put_box(box);
-				}
-				let from_db=box.value[1];
-				if(from_db[0]!=="many") {debugger; return;}
-				for(let src_item of item_group[1]) {
-					let has=from_db[1].find(v => this.eq_keys(v,src_item));
-					if(has===null) {
-						debugger;
-					}
-				}
-			} break;
-			case "arr": {
-				debugger;
-			} break;
+			default: debugger; break;
+			case "many": return this.store_item_many(box,item_group);
+			case "arr": return this.store_item_arr(box,item_group);
+			case "one": debugger; break;
 		}
 	}
 	/** @arg {[string, make_item_group<string>]} sd @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
