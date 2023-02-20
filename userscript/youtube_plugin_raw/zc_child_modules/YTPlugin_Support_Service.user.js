@@ -1753,8 +1753,9 @@ class StoreDescription_C extends ApiBase2 {
 			this.push_new_data(k,x);
 		}
 	}
-	/** @this {StoreDescription_C<string,"keys">} @arg {string} k @arg {{}} obj */
+	/** @api @public @this {StoreDescription_C<string,"keys">} @template {{}} T @arg {string} k @arg {T|undefined} obj */
 	save_keys(k,obj) {
+		if(!obj) {debugger; return;}
 		this.save_data(`${k}.type`,["one",typeof obj]);
 		if(typeof obj!=="object") return;
 		if(obj instanceof Array) {
@@ -1840,13 +1841,13 @@ class StoreDescription_C extends ApiBase2 {
 class StoreData {
 	/** @type {StoreDescription_C<boolean,"boolean">} */
 	seen_bool_obj=new StoreDescription_C("boolean","boolean");
-	/** @type {StoreDescription<number,"number">} */
+	/** @type {StoreDescription_C<number,"number">} */
 	seen_number_obj=new StoreDescription_C("number","number");
 	/** @type {StoreDescription_C<number,"root_visual_element">} */
 	seen_ve_num_obj=new StoreDescription_C("number","root_visual_element");
-	/** @type {StoreDescription<string,"string">} */
+	/** @type {StoreDescription_C<string,"string">} */
 	seen_string_obj=new StoreDescription_C("string","string");
-	/** @type {StoreDescription<string,"keys">} */
+	/** @type {StoreDescription_C<string,"keys">} */
 	seen_keys_obj=new StoreDescription_C("string","keys");
 	get_changed_stores() {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
@@ -1875,15 +1876,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	#get_keys_store() {return this.#data_store.seen_keys_obj;}
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.#data_store.seen_bool_obj.save_data(k,x);}
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {return this.#data_store.seen_ve_num_obj.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
-		if(!x) {debugger; return;}
-		return this.#data_store.seen_bool_obj.save_data(k,x);
+		return this.#data_store.seen_keys_obj.save_keys(k,x);
 	}
 	#data_store=new StoreData;
 	get_data_store() {return this.#data_store;}
