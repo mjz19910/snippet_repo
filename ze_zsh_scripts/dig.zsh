@@ -67,7 +67,7 @@ else
 	MODE=$1
 	shift
 fi
-function gen_z_get {
+function get_abc_opt {
 	IFS=,
 	echo "${z1[*]}"
 }
@@ -84,7 +84,7 @@ function dig_user_run {
 	touch /tmp/dig_term_lock
 	echo $TMP_DIR/dig_res.t.*(N) | xargs -r rm
 	z1=({{0..9},{a..z}})
-	z=$(gen_z_get)
+	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' ''
 	list=($TMP_DIR/dig_res.t.*)
 	cat $list >>"$RESULT_FILE"
@@ -121,11 +121,11 @@ function dig_user_child {
 	arg_num_1=${#1}
 	n=$arg_num_1
 	cn=$COLUMNS
-	DNS_TAG_LEN=6;
-	TERM_RETURN_NUM_LINE_LEN=6;
+	DNS_TAG_LEN=6
+	TERM_RETURN_NUM_LINE_LEN=6
 	PADDING_LEN=2
-	SPACE_CHAR=1;
-	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR*2 + PADDING_LEN))
+	SPACE_CHAR=1
+	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN))
 	printf "\e7\e[H\e["${cn}"C [dns]:$1 \n\e8"
 	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
