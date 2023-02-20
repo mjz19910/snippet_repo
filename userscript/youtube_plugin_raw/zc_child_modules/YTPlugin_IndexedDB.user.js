@@ -147,34 +147,8 @@ class IndexedDBService extends BaseService {
 	*/
 	open_transaction(db,key,mode,complete_cb) {
 		const tx=this.transaction(db,key,mode);
-		/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
-		function assert_assume_is(x,y) {if(x!==y) throw new Error();}
-		tx.oncomplete=function(event) {
-			const {type,timeStamp,target}=event;
-			assert_assume_is(target,this);
-			// these are deprecated
-			let dep_obj={
-				srcElement: null,
-				returnValue: null,
-			}; dep_obj;
-			// these are not on the ts interface for Event
-			let not_ts={
-				originalTarget: null,
-				explicitOriginalTarget: null,
-			}; not_ts;
-			let null_after_dispatch={
-				currentTarget: null,
-			}; null_after_dispatch;
-			if(event.target!==event.currentTarget) debugger;
-			const {mode,error,objectStoreNames}=target;
-			console.log("-- [tx_complete] --\nevent:%o\ntarget:%o\nobjectStoreNames:%o\n",{
-				type,
-				timeStamp,
-			},{
-				mode,
-				error,
-			},[...make_iterator(objectStoreNames)]);
-			complete_cb();
+		tx.oncomplete=function() {
+			throw new Error("Failed (transaction complete not handled)");
 		};
 		tx.onerror=function(event) {
 			console.log("tx error",event,tx.error);
@@ -197,8 +171,18 @@ class IndexedDBService extends BaseService {
 		};
 		return scope;
 	}
+	/** @arg {IDBTransaction} tx @returns {Promise<Event>} */
+	async await_complete(tx) {
+		return new Promise(function(accept,reject) {
+			tx.addEventListener("abort",reject);
+			tx.addEventListener("error",reject);
+			tx.addEventListener("complete",accept);
+		});
+	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
+		/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
+		function assert_assume_is(x,y) {if(x!==y) throw new Error();}
 		if(this.log_db_actions) console.log("open db");
 		this.database_opening=true;
 		let db=await this.get_async_result(this.get_db_request(version));
@@ -225,7 +209,8 @@ class IndexedDBService extends BaseService {
 							console.log("cursor_loop_is_tx_complete_2");
 							break cursor_loop;
 						}
-						update_loop: while (true) {
+						update_loop: while(true) {
+							let prev_tx=tx_scope.tx;
 							try {
 								await this.update(obj_store,item);
 								break update_loop;
@@ -233,7 +218,10 @@ class IndexedDBService extends BaseService {
 								let scope=this.open_transaction_scope(db,key,"readwrite");
 								tx=scope.tx;
 								obj_store=typed_db.objectStore(tx,key);
+								let complete_event=await this.await_complete(tx);
+								console.log(complete_event);
 							}
+							tx_scope.tx=prev_tx;
 						}
 						break cursor_loop;
 					}
@@ -315,6 +303,35 @@ class IndexedDBService extends BaseService {
 						debugger;
 					}
 				}
+			}
+			let complete_event=await this.await_complete(tx);
+			{
+				let event=complete_event;
+				const {type,timeStamp,target}=event;
+				assert_assume_is(target,tx);
+				// these are deprecated
+				let dep_obj={
+					srcElement: null,
+					returnValue: null,
+				}; dep_obj;
+				// these are not on the ts interface for Event
+				let not_ts={
+					originalTarget: null,
+					explicitOriginalTarget: null,
+				}; not_ts;
+				let null_after_dispatch={
+					currentTarget: null,
+				}; null_after_dispatch;
+				if(event.target!==event.currentTarget) debugger;
+				const {mode,error,objectStoreNames}=target;
+				console.log("-- [tx_complete] --\nevent:%o\ntarget:%o\nobjectStoreNames:%o\n",{
+					type,
+					timeStamp,
+				},{
+					mode,
+					error,
+				},[...make_iterator(objectStoreNames)]);
+				tx_scope.is_tx_complete=true;
 			}
 		} catch(e) {
 			console.log("db error",e);
