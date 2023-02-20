@@ -1428,7 +1428,7 @@ class Support_EventInput extends ServiceMethods {
 	RS_Page_Channel_Omit(cf,x) {
 		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(page!=="channel") debugger;
-		debugger;
+		{let x=endpoint; if(this.is_TE_VE(x,3611)) this.E_VE3611(x); else debugger;}
 		this.bc.RS_Channel(response);
 		this.a_primitive_str(url);
 		return y;
