@@ -1384,7 +1384,7 @@ class ServiceMethods extends ServiceData {
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {R_MenuFlexibleItem} x */
+	/** @protected @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_("menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
 	D_MenuFlexibleItem(x) {
@@ -1427,7 +1427,7 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 	}
-	/** @private @arg {R_MenuServiceItem} x */
+	/** @protected @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @protected @arg {R_Menu} x */
 	R_Menu(x) {this.H_("menuRenderer",x,this.D_Menu);}
@@ -1445,53 +1445,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {Record<string,never>} x @returns {x is {}} */
 	decay_obj(x) {x; return true;}
-	/** @arg {D_Menu_WithItems} x */
-	D_Menu_WithItems(x) {
-		const cf="D_Menu_WithItems";
-		const {items,...u_}=this.s(cf,x);
-		if(!this.is_not_empty_obj(u_)) return this.g(u_);
-		this.z(items,x => {
-			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-			debugger;
-		});
-		const {trackingParams,...u2}=u_;
-		this.trackingParams(trackingParams);
-		if(!this.is_not_empty_obj(u2)) return this.g(u2);
-		let u=u2;
-		if("flexibleItems" in u) {
-			const {topLevelButtons,accessibility,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
-			this.z(topLevelButtons,x => {
-				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			this.D_Accessibility(accessibility);
-			this.z(flexibleItems,this.R_MenuFlexibleItem);
-			return;
-		}
-		if("topLevelButtons" in u) {
-			const {topLevelButtons,accessibility,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
-			this.z(topLevelButtons,x => {
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			return;
-		}
-		if("loggingDirectives" in u) {
-			const {accessibility,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
-			this.D_LoggingDirectives(loggingDirectives);
-			return;
-		}
-		if("accessibility" in u) {
-			const {accessibility,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
-			return;
-		}
-		this.g(u);
-	}
 	/** @private @arg {D_Menu_WithTargetId["targetId"]} x */
 	D_Menu_TargetId(x) {
 		switch(x) {
@@ -1565,7 +1518,7 @@ class ServiceMethods extends ServiceData {
 	D_Menu(x) {
 		const cf="D_Menu";
 		if("targetId" in x) return this.D_Menu_WithTargetId(x);
-		if("items" in x) return this.D_Menu_WithItems(x);
+		if("items" in x) return this.bc.D_Menu_WithItems(x);
 		if("topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
@@ -3395,7 +3348,7 @@ class ServiceMethods extends ServiceData {
 		this.save_number_one(rk,f);
 		this.save_number_one(k,1);
 	}
-	/** @private @arg {R_MenuNavigationItem} x */
+	/** @protected @arg {R_MenuNavigationItem} x */
 	R_MenuNavigationItem(x) {this.H_("menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
@@ -3545,7 +3498,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_PlaylistLoopButton} x */
 	R_PlaylistLoopButton(x) {this.H_("playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
-	/** @private @arg {R_SegmentedLikeDislikeButton} x */
+	/** @protected @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_("segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["Signal",T]} */
 	TE_SignalService_I_0(x) {
@@ -7409,9 +7362,9 @@ class ServiceMethods extends ServiceData {
 	/** @arg {G_RichSection} x */
 	G_RichSection(x) {
 		const cf="G_RichSection";
-		if("richShelfRenderer" in x) return this.handle_types.R_RichShelf(x);
-		if("inlineSurveyRenderer" in x) return this.handle_types.R_InlineSurvey(x);
-		if("sourcePivotHeaderRenderer" in x) return this.handle_types.R_SourcePivotHeader(x);
+		if("richShelfRenderer" in x) return this.bc.R_RichShelf(x);
+		if("inlineSurveyRenderer" in x) return this.bc.R_InlineSurvey(x);
+		if("sourcePivotHeaderRenderer" in x) return this.bc.R_SourcePivotHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RichGridContent} x */
@@ -7455,7 +7408,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {G_PlaylistPanel_Item} x */
 	G_PlaylistPanel_Item(x) {
 		const cf="G_PlaylistPanel_Item";
-		if("automixPreviewVideoRenderer" in x) return this.handle_types.R_AutomixPreviewVideo(x);
+		if("automixPreviewVideoRenderer" in x) return this.bc.R_AutomixPreviewVideo(x);
 		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
@@ -7530,7 +7483,7 @@ class ServiceMethods extends ServiceData {
 			this.tz(tags,this.a_primitive_str);
 			this.t(familySafe,x => {if(x!==true) debugger;});
 			this.tz(availableCountries,this.a_primitive_str);
-			this.z(linkAlternates,x => this.handle_types.B_HrefUrl(x));
+			this.z(linkAlternates,x => this.bc.B_HrefUrl(x));
 		}
 		{
 			const {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,ios); this.g(y);

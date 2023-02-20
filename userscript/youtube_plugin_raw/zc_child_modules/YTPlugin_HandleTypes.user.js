@@ -3329,6 +3329,53 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @arg {D_Menu_WithItems} x */
+	D_Menu_WithItems(x) {
+		const cf="D_Menu_WithItems";
+		const {items,...u_}=this.s(cf,x);
+		if(!this.is_not_empty_obj(u_)) return this.g(u_);
+		this.z(items,x => {
+			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+			debugger;
+		});
+		const {trackingParams,...u2}=u_;
+		this.trackingParams(trackingParams);
+		if(!this.is_not_empty_obj(u2)) return this.g(u2);
+		let u=u2;
+		if("flexibleItems" in u) {
+			const {topLevelButtons,accessibility,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
+			this.z(topLevelButtons,x => {
+				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			this.D_Accessibility(accessibility);
+			this.z(flexibleItems,this.R_MenuFlexibleItem);
+			return;
+		}
+		if("topLevelButtons" in u) {
+			const {topLevelButtons,accessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			this.z(topLevelButtons,x => {
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			return;
+		}
+		if("loggingDirectives" in u) {
+			const {accessibility,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("accessibility" in u) {
+			const {accessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			return;
+		}
+		this.g(u);
+	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {x;}
 	/** @private @arg {P_notification_opt_out} x */
