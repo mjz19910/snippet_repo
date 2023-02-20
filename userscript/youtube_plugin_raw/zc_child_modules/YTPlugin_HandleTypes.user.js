@@ -1340,7 +1340,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {[type: "data64", raw_number: number[], value: bigint]} otu @returns {RetParam_VW_Bigint} */
 	param_vw_bigint(otu) {
 		return `TYPE::T_VW_Bigint<${otu[2]}n>`;
-	};
+	}
 	/** @arg {JsonReplacerState} s @arg {V_ParamItem_RawChild} x @returns {RetParam_raw_child} */
 	v_param_rc_def(s,x) {
 		let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
