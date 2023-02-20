@@ -226,13 +226,13 @@ class IndexedDBService extends BaseService {
 							break cursor_loop;
 						}
 						update_loop: while (true) {
+							let update_object_store=obj_store;
 							try {
-								await this.update(obj_store,item);
+								await this.update(update_object_store,item);
 								break update_loop;
 							} catch(e) {
 								let scope=this.open_transaction_scope(db,key,"readwrite");
-								tx=scope.tx;
-								obj_store=typed_db.objectStore(tx,key);
+								update_object_store=typed_db.objectStore(scope.tx,key);
 							}
 						}
 						break cursor_loop;
