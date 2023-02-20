@@ -2006,6 +2006,7 @@ class HandleTypes extends ServiceMethods {
 			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
 			case "el": case "ee":
+			case "zk": case "zr": case "zy":
 		}
 	}
 	/** @public @arg {RS_AttLog_RC} x */
