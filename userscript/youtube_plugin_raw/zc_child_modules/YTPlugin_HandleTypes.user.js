@@ -1451,6 +1451,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("message" in x) return x;
 		console.log("[maybe_handle_bin.keys.string_like]",keys);
+		debugger;
 		return x;
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {string} k @arg {unknown} x @returns {string|symbol|number|boolean|undefined|object|null} */
