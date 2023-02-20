@@ -1445,8 +1445,9 @@ class Support_EventInput extends ServiceMethods {
 	}
 	/** @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x @arg {T_MakeHandlers<T>} handlers */
 	RS_Page_Type1(cf,x,handlers) {
-		const {url,endpoint,page,response,...u}=this.s(cf,x);/*#destructure_done*/
+		const {page,endpoint,response,url,expirationTime,...u}=this.s(cf,x);/*#destructure_done*/
 		handlers;
+		return u;
 	}
 	/** @private @arg {RS_Page_Channel} x */
 	RS_Page_Channel(x) {
@@ -1502,15 +1503,12 @@ class Support_EventInput extends ServiceMethods {
 			this._primitive_of(expirationTime,"number");
 			return;
 		}
-		if("expirationTime" in x) {
-			this.RS_Page_Type1(cf,x,{
-				page: x => this.ceq(x,""),
-			});
-			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);
-			this.E_VE3611(endpoint);
-			this.bc.RS_Channel(response);
-			{
-				let sp=split_string(url,"/");
+		if("expirationTime" in x) return this.g(this.RS_Page_Type1(cf,x,{
+			page: x => this.ceq(x,"channel"),
+			endpoint: this.E_VE3611,
+			response: x => this.bc.RS_Channel(x),
+			url: x => {
+				let sp=split_string(x,"/");
 				switch(sp.length) {
 					default: debugger; break;
 					case 2: {
@@ -1534,14 +1532,13 @@ class Support_EventInput extends ServiceMethods {
 						}
 					}
 				}
+			},
+			expirationTime: x => {
+				this._primitive_of(x,"number");
 			}
-			this._primitive_of(expirationTime,"number");
-			return;
-		}
-		{
-			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			this.g(u);
-		}
+		}));
+		const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
+		this.g(u);
 	}
 	/** @private @arg {G_RS_Page_Playlist} x */
 	G_RS_Page_Playlist(x) {
