@@ -150,11 +150,14 @@ class IndexedDBService extends BaseService {
 		this.database_open=true;
 		let typed_db=new TypedIndexedDb;
 		const tx=this.transaction(db,key,"readwrite");
+		let is_tx_complete=false;
 		tx.oncomplete=function(event) {
 			console.log("tx complete",event);
+			is_tx_complete=true;
 		}
 		tx.onerror=function(event) {
 			console.log("tx error",event,tx.error);
+			is_tx_complete=true;
 		}
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
@@ -165,6 +168,10 @@ class IndexedDBService extends BaseService {
 					const [settled]=await Promise.allSettled([this.get_async_result(cursor_req)]);
 					if(settled.status==="rejected") {
 						console.log("openCursor failed",settled.reason);
+						break for_loop;
+					}
+					if(is_tx_complete) {
+						console.log("tx closed and still iterating");
 						break for_loop;
 					}
 					const cur_cursor=settled.value;
