@@ -69,7 +69,7 @@ class HandleTypes extends ServiceMethods {
 		if(!x) {debugger; return null;}
 		/** @private @type {V_ParamObj_2} */
 		let res_obj={};
-		/** @arg {number} id @arg {V_ParamObjData_2} obj */
+		/** @arg {number} id @arg {V_ParamItem} obj */
 		const add_obj=(id,obj) => {
 			res_obj[id]??=["param_arr",[]];
 			res_obj[id][1].push(obj);
@@ -1307,7 +1307,7 @@ class HandleTypes extends ServiceMethods {
 				console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
 				return `TYPE::T_VW_2<${gen_json}>`;
 			};
-			/** @arg {V_ParamObjData_2} otu */
+			/** @arg {V_ParamItem} otu */
 			let v_param_2_child=(otu) => {
 				if(otu[0]!=="child") return null;
 				const [,binary_arr,obj]=otu;
@@ -1329,7 +1329,7 @@ class HandleTypes extends ServiceMethods {
 			if(x3[0]==="child") {
 				return this.tr_arr_to_obj([x3]);
 			}
-			/** @arg {V_ParamObjData_2} otu */
+			/** @arg {V_ParamItem} otu */
 			let v_param_2_D32=(otu) => {
 				if(otu[0]!=="data32") return null;
 				return `TYPE::T_D32<${otu[1]}>`;
@@ -1337,7 +1337,7 @@ class HandleTypes extends ServiceMethods {
 			if(x3[0]==="data32") {
 				return this.tr_arr_to_obj([x3]);
 			}
-			/** @arg {V_ParamObjData_2} otu */
+			/** @arg {V_ParamItem} otu */
 			let v_param_2_FD32=(otu) => {
 				if(otu[0]!=="data_fixed32") return null;
 				return `TYPE::T_FD32<${otu[1]}>`;
@@ -1345,7 +1345,7 @@ class HandleTypes extends ServiceMethods {
 			if(x3[0]==="data_fixed32") {
 				return this.tr_arr_to_obj([x3]);
 			}
-			/** @arg {V_ParamObjData_2} otu */
+			/** @arg {V_ParamItem} otu */
 			let v_param_2_FD64=(otu) => {
 				if(otu[0]!=="data_fixed64") return null;
 				return `TYPE::T_FD64<${otu[1]}>`;
@@ -1361,7 +1361,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
 			}; v_param_2_raw;
-			/** @arg {V_ParamObjData_2} otu */
+			/** @arg {V_ParamItem} otu */
 			let v_param_2_D64=(otu) => {
 				if(otu[0]!=="data64") return null;
 				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
@@ -1385,6 +1385,10 @@ class HandleTypes extends ServiceMethods {
 					default: return v_param_rc_def(x);
 					case "string": return `TYPE::TV_Str<"${x1[1]}">`;
 				}
+			};
+			/** @arg {V_ParamItem|V_RawBox} x */
+			let v_param_item=x => {
+				x;
 			};
 			if(x3[0]==="data64") {
 				return this.tr_arr_to_obj([x3]);

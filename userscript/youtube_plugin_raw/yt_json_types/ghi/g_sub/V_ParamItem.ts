@@ -1,5 +1,6 @@
-type V_ParamObjData_2=
+type V_ParamItem=
 	|[type: "child",binary_arr: Uint8Array,obj: V_ParamObj_2|null]
+	|[type: "raw",obj: V_RawValue]
 	|[type: "raw_child",binary_arr: Uint8Array,obj: V_ParamObj_2|null,raw_value: V_RawValue]
 	|[type: "data32",value: number]
 	|[type: "data64",raw_number: number[],value: bigint]
