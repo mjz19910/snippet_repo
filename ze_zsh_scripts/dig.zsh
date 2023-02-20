@@ -85,7 +85,7 @@ function dig_user_run {
 	echo $TMP_DIR/dig_res.t.*(N) | xargs -r rm
 	z1=({{0..9},{a..z}})
 	z=$(gen_z_get)
-	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' ''
+	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' '';
 	list=($TMP_DIR/dig_res.t.*)
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
@@ -114,7 +114,7 @@ function term_pos() {
 	unset garbage
 	read -s -d R POS_STR
 	eval 'TERM_POS=(${(s/;/)POS_STR});'
-	(( TERM_POS[2] += 1 ))
+	((TERM_POS[2] += 1))
 	printf "\e[${TERM_POS[1]};${TERM_POS[2]}f!"
 }
 function dig_user_child {
