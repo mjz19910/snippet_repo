@@ -2788,20 +2788,20 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_tracking_params";
 		const {1: f1,2: f2,3: f3,4: f4,6: f6,8: f8,16: f16,...y}=x,t=this;
 		/** @template {number} T @arg {"f1"|"f2"} k @arg {T_D32<T>} v */
-		let r=(k,v) => {t.mt_cf(t.mt(this.m(v),this.T_D32_v),`${cf}.${k}`,(cf,x) => this.tn_cf(cf,x,this.save_number_one));};
+		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),t.T_D32_v),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
 		r("f1",f1);
 		r("f2",f2);
-		t.mt_cf(t.mt(this.m(f3),x => this.t(x,this.T_D32_v)),`${cf}.f3`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
+		t.mt_cf(t.mt(t.m(f3),x => t.t(x,t.T_D32_v)),`${cf}.f3`,(cf,x) => t.tn_cf(cf,x,(cf,x) => {
 			this.save_number_one(cf,x); switch(x) {case 0: case 1: case 4: }
 		}));
-		t.mt(this.m(f4),this.VW_BinaryTimestamp);
-		t.mt_cf(t.mt(this.m(f6),x => this.t(x,this.TV_Str)),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
+		t.mt(t.m(f4),this.VW_BinaryTimestamp);
+		t.mt_cf(t.mt(t.m(f6),x => this.t(x,this.TV_Str)),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
 			this.save_string(cf,x);
 			switch(x) {
 				case "watch": break;
 			}
 		}));
-		t.mt(this.m(f8),x => this.t(x,this.T_VW_Bigint));
+		t.mt(t.m(f8),x => this.t(x,this.T_VW_Bigint));
 		this.t(f16,this.VW_BinaryTimestamp);
 		if(this.is_empty_obj(y)) return;
 		this.codegen_typedef_bin(cf,x,false);
@@ -3098,15 +3098,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
-		const cf="P_reel_player_params";
-		const {30: f30,...u}=this.s(cf,x);
+		const cf="P_reel_player_params"; let t=this;
+		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x);
 		this.T_D32(f30,x => this.save_number_one(`${cf}.f30`,x));
-		if(71 in u) {
-			const {71: f71,...y}=u; this.g(y);
-			this.T_D32(f71,x => this.save_number_one(`${cf}.f71`,x));
-			return;
-		}
-		{const k=57; if(57 in u) {const {[k]: a,...y}=u; this.g(y); return this.T_D32(a,x => this.save_number_one(`${cf}.f${k}`,x));} }
+		t.t(t.mt(t.m(f57),t.T_D32_v),x => this.save_number_one(`${cf}.f57`,x));
+		this.T_D32(f71,x => this.save_number_one(`${cf}.f71`,x));
+		this.T_D32(f72,x => this.save_number_one(`${cf}.f72`,x));
 		debugger;
 	}
 	//#endregion

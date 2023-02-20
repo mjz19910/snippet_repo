@@ -40,10 +40,9 @@ type PD_continuation_request_browse_token={
 type PR_continuation_request_browse_token={0x4c82a9c: T_VW<PD_continuation_request_browse_token>;};
 type P_reel_player_params={
 	30: T_D32<1>;
-	71: T_D32<15>;
-}|{
-	30: T_D32<1>,
-	57: T_D32<19>;
+	57?: T_D32<19>;
+	71?: T_D32<15>;
+	72?: T_VW_Bigint<13339783998227650491n>;
 };
 type P_reel_params={
 	1: T_D32<15>;
@@ -339,26 +338,26 @@ type P_ypc_get_offers_params={
 	}>;
 };
 type P_macro_marker_repeat_state_entity_key={
-	2: TV_Str<"repeat_state">,
-	4: T_D32<329>,
+	2: TV_Str<"repeat_state">;
+	4: T_D32<329>;
 	5: T_D32<1>;
 };
 type P_player_state_entity_key={
-	2: TV_Str<"/youtube/app/watch/player_state">,
-	4: T_D32<323>,
+	2: TV_Str<"/youtube/app/watch/player_state">;
+	4: T_D32<323>;
 	5: T_D32<1>;
 };
 type P_notification_record_interactions={
 	2: T_VW<{
-		1: T_D32<2>,
+		1: T_D32<2>;
 		14: T_VW<{
 			1: T_VW<{
-				1: T_D32<1676825106923816>,
+				1: T_D32<1676825106923816>;
 				2: T_D32<6>;
-			}>,
+			}>;
 			2: TV_Str<"sZ-4VzlYyLcGMIys">;
 		}>;
-	}>,
+	}>;
 	5: T_D32<183848276973>;
 };
 type P_get_report_form_params={
