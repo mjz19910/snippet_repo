@@ -1762,17 +1762,12 @@ class StoreData {
 	seen_bool_obj=new StoreDescription_C("boolean","boolean");
 	/** @type {StoreDescription<number,"number">} */
 	seen_number_obj=new StoreDescription_C("number","number");
-	/** @type {StoreDescription<number,"root_visual_element">} */
+	/** @type {StoreDescription_C<number,"root_visual_element">} */
 	seen_ve_num_obj=new StoreDescription_C("number","root_visual_element");
 	/** @type {StoreDescription<string,"string">} */
 	seen_string_obj=new StoreDescription_C("string","string");
 	/** @type {StoreDescription<string,"keys">} */
 	seen_keys_obj=new StoreDescription_C("string","keys");
-	get_boolean_store() {return this.seen_bool_obj;}
-	get_number_store() {return this.seen_number_obj;}
-	get_root_visual_elements_store() {return this.seen_ve_num_obj;}
-	get_string_store() {return this.seen_string_obj;}
-	get_keys_store() {return this.seen_keys_obj;}
 	get_changed_stores() {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
 		let changed=[];
@@ -1787,7 +1782,7 @@ class StoreData {
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
 	get_store_keys(key) {
-		return this.get_data_store().get_string_store().data.find(e => e[0]===key);
+		return this.get_data_store().seen_string_obj.data.find(e => e[0]===key);
 	}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
@@ -1800,7 +1795,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	#get_keys_store() {return this.#data_store.get_keys_store();}
+	#get_keys_store() {return this.#data_store.seen_keys_obj;}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {
 		if(!x) {debugger; return;}
@@ -2134,17 +2129,17 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let changes=store.get_changed_stores();
 		for(let changed of changes) {
 			if(changed==="string") {
-				let ss=store.get_string_store();
+				let ss=store.seen_string_obj;
 				await this.push_store_to_database(ss);
 				continue;
 			}
 			if(changed==="keys") {
-				let ks=store.get_keys_store();
+				let ks=store.seen_keys_obj;
 				await this.push_store_to_database(ks);
 				continue;
 			}
 			if(changed==="number") {
-				let ns=store.get_number_store();
+				let ns=store.seen_number_obj;
 				await this.push_store_to_database(ns);
 				continue;
 			}
@@ -2154,18 +2149,16 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	async do_boxed_update_from_database() {
 		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
 		if(this.log_load_database) console.log("load_database all boxed",boxed);
+		let store=this.#data_store;
+		let ss=store.seen_string_obj;
 		if(boxed.length===0) {
-			let store=this.#data_store;
 			let changes=store.get_changed_stores();
 			for(let changed of changes) {
 				if(changed==="string") continue;
 				debugger;
 			}
-			let ss=store.get_string_store();
 			await this.export_db_data(ss,boxed);
 		} else {
-			let store=this.#data_store;
-			let ss=store.get_string_store();
 			for(let to_load of boxed) {
 				switch(to_load.type) {
 					case "num": {
@@ -2606,7 +2599,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
 		let store=this.#data_store.get_root_visual_elements_store();
-		return this.save_num_to_store("root_visual_element","ve_element",["one",x],store);
+		return store.save_data("ve_element",["one",x]);
 	}
 }
 class Support_VE extends ServiceMethods {
