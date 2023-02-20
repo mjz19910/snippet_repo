@@ -2868,6 +2868,7 @@ class ModifyEnv extends BaseService {
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
+		let handle_types=this.x.get("handle_types");
 		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_RS_AllResponses} response_obj */
 		function fetch_filter_text_then_data_url(request,response,response_obj) {
 			try {yt_handlers.on_handle_api(request,response,response_obj);} catch(e) {
@@ -2960,6 +2961,7 @@ class ModifyEnv extends BaseService {
 				console.log("[fetch_request_init_data]",user_request,request_init);
 			}
 			if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {return original_fetch(user_request,request_init);}
+			handle_types.client_now=Date.now();
 			let ret=original_fetch(user_request,request_init);
 			let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 			return ret_1;
