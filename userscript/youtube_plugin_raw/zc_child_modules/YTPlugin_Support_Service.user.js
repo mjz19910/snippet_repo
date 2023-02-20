@@ -176,9 +176,9 @@ class Support_RS_Player extends ServiceMethods {
 			this.handle_types.D_TimedTextApi(rx);
 		}
 		this.G_Text(name);
-		this.save_string_one(`${cf}.vssId`,vssId);
-		this.save_string_one(`${cf}.languageCode`,languageCode);
-		this.t(kind,x => this.save_string_one(`${cf}.kind`,x));
+		this.save_string(`${cf}.vssId`,vssId);
+		this.save_string(`${cf}.languageCode`,languageCode);
+		this.t(kind,x => this.save_string(`${cf}.kind`,x));
 		if(isTranslatable!==true) debugger;
 	}
 	/** @private @arg {D_AudioTrackItem} x */
@@ -234,9 +234,9 @@ class Support_RS_Player extends ServiceMethods {
 	D_HeartbeatParams(x) {
 		const cf="D_HeartbeatParams";
 		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
-		this.save_string_one(`${cf}.intervalMilliseconds`,intervalMilliseconds);
+		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
 		this.ceq(softFailOnError,false);
-		this.save_string_one(`${cf}.heartbeatServerData`,heartbeatServerData);
+		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
 	/** @private @arg {D_Miniplayer} x */
 	D_Miniplayer(x) {
@@ -620,7 +620,7 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_AudioTrack";
 		const {displayName,id,audioIsDefault,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(displayName);
-		this.save_string_one(`${cf}.id`,id);
+		this.save_string(`${cf}.id`,id);
 		this.ceq(audioIsDefault,false);
 	}
 	/** @private @arg {D_Card} x */
@@ -688,7 +688,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {learningResourceType,educationalLevel,educationalLevelCountry,...y}=this.s(cf,x); this.g(y);
 		this.save_string_arr("D_LearningResource.learningResourceType",learningResourceType);
 		educationalLevel&&this.save_string_arr("D_LearningResource.educationalLevel",educationalLevel);
-		educationalLevelCountry&&this.save_string_one("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
+		educationalLevelCountry&&this.save_string("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
 	}
 }
 class Support_RS_WatchPage extends ServiceMethods {
@@ -951,7 +951,7 @@ class Support_GenericApi extends ServiceMethods {
 			return;
 		}
 		/** @private @arg {{type:string}} x */
-		let g=x => {return this.save_string_one("need_api_type",x.type);};
+		let g=x => {return this.save_string("need_api_type",x.type);};
 		switch(x.type) {case "_Generic": return g(x);}
 		/** @private */
 		this._current_response_type=x.type;
@@ -1686,7 +1686,7 @@ class Support_EventInput extends ServiceMethods {
 				debugger;
 			}
 			this.trackingParams(trackingParams);
-			this.save_string_one(`${cf2}.title`,title);
+			this.save_string(`${cf2}.title`,title);
 		}
 	}
 	/** @private @arg {D_Tab_History} x */
@@ -1843,8 +1843,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	save_root_visual_element(x) {return this.data_store.ve_store.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {return this.data_store.keys_store.save_keys(k,x);}
-	/** @api @public @arg {string} k @arg {make_item_group<string>} x */
-	save_string(k,x) {return this.data_store.string_store.save_data(k,x);}
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	onDataChange() {
@@ -1858,7 +1856,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				switch(msg[0]) {
 					default: debugger; break;
 					case "string": {
-						this.save_string(msg[1],msg[2]);
+						this.data_store.string_store.save_data(msg[1],msg[2]);
 					} break;
 					case "number": {
 						this.save_number(msg[1],msg[2]);
@@ -2301,9 +2299,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(!nn[1]) throw new Error();
 		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
-		this.save_string_one(`${ns_name}::${ns}`,no_ns_part);
-		this.save_string_one(`${cf}::enum_type`,ns_name);
-		this.save_string_one(`${cf}::enum_namespace`,ns);
+		this.save_string(`${ns_name}::${ns}`,no_ns_part);
+		this.save_string(`${cf}::enum_type`,ns_name);
+		this.save_string(`${cf}::enum_namespace`,ns);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
 	show_strings_bitmap(ns,idx,store) {
@@ -2371,7 +2369,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let sr=g1[1].slice().sort((a,b) => a-b);
 		this.save_number_arr("arr.P_tracking_params.f1",sr);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
-		this.save_string_one("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
 		this.data_store.string_store.data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
 	}
 	/** @private @template T @arg {T[]} bitmap_src */

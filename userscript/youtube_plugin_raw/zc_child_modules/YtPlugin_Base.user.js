@@ -2118,9 +2118,9 @@ class BaseServicePrivate extends ApiBase {
 	/** @public @arg {string} k @arg {{}} x */
 	save_keys(k,x) {this.save_db.save_keys_impl(k,x);}
 	/** @protected @arg {string} k @arg {string} x */
-	save_string_one(k,x) {return this.save_db.save_string(k,["one",x]);}
+	save_string(k,x) {return this.save_db.data_store.string_store.save_data(k,["one",x]);}
 	/** @public @arg {string} k @arg {string[]} x */
-	save_string_arr(k,x) {return this.save_db.save_string(k,["arr",x]);}
+	save_string_arr(k,x) {return this.save_db.data_store.string_store.save_data(k,["arr",x]);}
 	/** @protected @arg {string} k @arg {boolean} x */
 	save_boolean_one(k,x) {return this.save_db.save_boolean(k,["one",x]);}
 	/** @protected @arg {string} k @arg {number} x */
@@ -2257,8 +2257,8 @@ class BaseService extends BaseServicePrivate {
 		let n2=n1[1];
 		if(sep!=="") {
 			let sd=this.drop_separator(n1[1],sep);
-			this.save_string_one(`${ns_name}::${enum_base}`,sd);
-		} else {this.save_string_one(`${ns_name}::${enum_base}`,n2);}
+			this.save_string(`${ns_name}::${enum_base}`,sd);
+		} else {this.save_string(`${ns_name}::${enum_base}`,n2);}
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]} */
 	drop_separator(x,sep) {
@@ -2648,14 +2648,14 @@ class CsiService extends BaseService {
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
 		this.decode_rid_section(x);
-		this.save_string_one("rid_key",x.key);
+		this.save_string("rid_key",x.key);
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_section(x) {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
 			let section_id=section[0].toLowerCase();
-			this.save_string_one("section_id",section_id);
+			this.save_string("section_id",section_id);
 		} else {debugger;}
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} param */
@@ -2709,7 +2709,7 @@ class CsiService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "c": {
-					this.save_string_one(`CsiService.${param.key}`,param.value);
+					this.save_string(`CsiService.${param.key}`,param.value);
 					this.data[param.key]=param.value;
 				} continue;
 				case "cver": this.data[param.key]=param.value; continue;

@@ -713,7 +713,7 @@ class ServiceMethods extends ServiceData {
 			}
 			switch(x.targetId) {
 				case "browse-feedFEwhat_to_watch": {
-					this.save_string_one("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
+					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
 				} break;
 			}
 			return;
@@ -794,7 +794,7 @@ class ServiceMethods extends ServiceData {
 	G_ClientSignal(cf1,x) {
 		const cf2="G_ClientSignal";
 		let {actions,...y}=this.Signal_Omit(x,x => {
-			this.save_string_one(`${cf2}.${cf1}.signal`,x);
+			this.save_string(`${cf2}.${cf1}.signal`,x);
 			if(x!=="CLIENT_SIGNAL") debugger;
 		}); this.g(y);
 		this.z_cf(cf1,actions,this.G_SignalActionItem);
@@ -809,7 +809,7 @@ class ServiceMethods extends ServiceData {
 	TM_Visibility(x) {
 		const cf="TM_Visibility";
 		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string_one("Visibility.types",types);
+		this.save_string("Visibility.types",types);
 	}
 	/** @protected @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
@@ -1350,7 +1350,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_GetSurvey";
 		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if("paidDigitalGoods" in a) {debugger;}
-		this.save_string_one("GetSurvey.action",action);
+		this.save_string("GetSurvey.action",action);
 		switch(action) {
 			default: debugger; break;
 			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL":
@@ -1576,7 +1576,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {CF_T_Icon} cf @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(cf,x) {
 		const {iconType,...y}=this.s_priv(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string_one(`${cf}.iconType`,iconType);
+		this.save_string(`${cf}.iconType`,iconType);
 	}
 	/**
 	 * @arg {CF_TE_Endpoint_2} cf1
@@ -1642,7 +1642,7 @@ class ServiceMethods extends ServiceData {
 		let rk=`${user_key}.data[${idx}]`;
 		/** @type {`${typeof rk}[${f}]`} */
 		let k=`${rk}[${JSON.stringify(f)}]`;
-		this.save_string_one(rk,f);
+		this.save_string(rk,f);
 		let s_url_data=this.save_db.data_store.numbers_store.data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_number_one(k,1); return;}
 		let wd=s_url_data[1];
@@ -1857,13 +1857,13 @@ class ServiceMethods extends ServiceData {
 	DU_UrlParams(x) {
 		const cf="DU_UrlParams";
 		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
-		this.save_string_one(`${cf}.label`,x.label);
+		this.save_string(`${cf}.label`,x.label);
 	}
 	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
 	DU_UrlParse(x) {
 		const cf="DU_UrlParse";
-		this.save_string_one(`${cf}.host`,x.host);
-		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string_one(`${cf}.pathname`,x.pathname);
+		this.save_string(`${cf}.host`,x.host);
+		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
 		this.DU_UrlParams(this.parse_url_search_params(x.search));
 	}
 	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]["baseUrl"]} x */
@@ -2503,9 +2503,9 @@ class ServiceMethods extends ServiceData {
 		let emoji_parts=this.split_str(emojiId,"");
 		if(emoji_parts.length!==2) debugger;
 		this.join_string(emoji_parts,"");
-		this.save_string_one(`save://Emoji.d/emojiId`,emojiId);
-		this.save_string_one(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
-		this.save_string_one(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
+		this.save_string(`save://Emoji.d/emojiId`,emojiId);
+		this.save_string(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
+		this.save_string(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
 	}
 	/** @private @arg {D_Color} x */
 	D_Color(x) {
@@ -2625,7 +2625,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
 		this.save_number_arr(path,x[1]);
-		return this.save_string_one(path,`${x[2]}n`);
+		return this.save_string(path,`${x[2]}n`);
 	}
 	/** @protected @arg {string} x @returns {x is `${string}-0000-${string}`} */
 	is_yt_uuid(x) {
@@ -2649,7 +2649,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with(x,"watch")) {return this.save_enum(cf,"watch",x);}
 		if(this.str_starts_with(x,"shopping_panel")) {return this.save_enum(cf,"shopping_panel",x);}
 		if(this.str_starts_with(x,"clip")) {return this.save_enum(cf,"clip",x);}
-		this.save_string_one("target_id",x);
+		this.save_string("target_id",x);
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
@@ -2658,7 +2658,7 @@ class ServiceMethods extends ServiceData {
 		const cf2="targetId";
 		this.parse_target_id(x);
 		if(this.is_yt_uuid(x)) return;
-		this.save_string_one(`${cf1}.${cf2}`,x);
+		this.save_string(`${cf1}.${cf2}`,x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
 			switch(x) {
@@ -3278,7 +3278,7 @@ class ServiceMethods extends ServiceData {
 		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*#destructure_done*/
 		const is_missing_iconType=!ty_arr.includes(iconType);
 		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
-		this.save_string_one("IconType",iconType);
+		this.save_string("IconType",iconType);
 		return is_missing_iconType;
 	}
 	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
@@ -3567,8 +3567,8 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string_one(`${cf}.style`,style);
-		this.save_string_one(`${cf}.size`,size);
+		this.save_string(`${cf}.style`,style);
+		this.save_string(`${cf}.size`,size);
 		if(isDisabled!==false) debugger;
 		this.G_Text(text);
 		this.E_ShareEntityService(serviceEndpoint);
@@ -3609,7 +3609,7 @@ class ServiceMethods extends ServiceData {
 		}
 		const {hack,bucketIdentifier,...y}=this.s(cf,x); this.g(y);
 		this.ceq(hack,true);
-		this.save_string_one(`${cf}.bucketIdentifier`,bucketIdentifier);
+		this.save_string(`${cf}.bucketIdentifier`,bucketIdentifier);
 	}
 	/** @private @arg {M_NotificationOptOut} x */
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
@@ -3752,13 +3752,13 @@ class ServiceMethods extends ServiceData {
 				/** @type {`${cf1}:${k2}`} */
 				const cf2=`${cf1}:${k2}`;
 				const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf2,x);
-				this.save_string_one(`${cf2}.style`,style.styleType);
+				this.save_string(`${cf2}.style`,style.styleType);
 				this.ceq(isDisabled,false);
 				this.a_primitive_bool(isToggled);
-				this.save_string_one(`${cf2}.defaultIcon.type`,defaultIcon.iconType);
+				this.save_string(`${cf2}.defaultIcon.type`,defaultIcon.iconType);
 				this.E_PerformCommentAction(defaultServiceEndpoint/*1*/);
 				this.E_PerformCommentAction(toggledServiceEndpoint/*1*/);
-				this.save_string_one(`${cf2}.defaultIcon.type`,toggledStyle.styleType);
+				this.save_string(`${cf2}.defaultIcon.type`,toggledStyle.styleType);
 				const {size,defaultTooltip,toggledTooltip,accessibilityData,toggledAccessibilityData,...y}=u; this.g(y);/*#destructure_done*/
 				if(size.sizeType!=="SIZE_DEFAULT") debugger;
 				this.add_string_to_map(cf2,"defaultTooltip",defaultTooltip);
@@ -3768,13 +3768,13 @@ class ServiceMethods extends ServiceData {
 				return;
 			}
 			const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf1,x);
-			this.save_string_one(`${cf1}.style`,style.styleType);
+			this.save_string(`${cf1}.style`,style.styleType);
 			this.ceq(isDisabled,false);
 			this.a_primitive_bool(isToggled);
-			this.save_string_one(`${cf1}.defaultIcon.type`,defaultIcon.iconType);
+			this.save_string(`${cf1}.defaultIcon.type`,defaultIcon.iconType);
 			this.C_RepeatChapter(defaultServiceEndpoint);
 			this.C_CommandExecutor(toggledServiceEndpoint);
-			this.save_string_one(`${cf1}.defaultIcon.type`,toggledStyle.styleType);
+			this.save_string(`${cf1}.defaultIcon.type`,toggledStyle.styleType);
 			const {toggledAccessibilityData,accessibilityData,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_Accessibility(toggledAccessibilityData);
 			this.D_Accessibility(accessibilityData);
@@ -3791,13 +3791,13 @@ class ServiceMethods extends ServiceData {
 				/** @type {`${cf1}:${k2}`} */
 				const cf2=`${cf1}:${k2}`;
 				const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf2,x);
-				this.save_string_one(`${cf2}.style`,style.styleType);
+				this.save_string(`${cf2}.style`,style.styleType);
 				this.ceq(isDisabled,false);
 				this.a_primitive_bool(isToggled);
-				this.save_string_one(`${cf2}.defaultIcon.type`,defaultIcon.iconType);
+				this.save_string(`${cf2}.defaultIcon.type`,defaultIcon.iconType);
 				this.C_CommandExecutor(defaultServiceEndpoint);
 				this.E_Like(toggledServiceEndpoint);
-				this.save_string_one(`${cf2}.defaultIcon.type`,toggledStyle.styleType);
+				this.save_string(`${cf2}.defaultIcon.type`,toggledStyle.styleType);
 				const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,accessibilityData,toggleButtonSupportedData,targetId,...y}=u; this.g(y);/*#destructure_done*/
 				this.G_Text(defaultText);
 				this.G_Text(toggledText);
@@ -3820,13 +3820,13 @@ class ServiceMethods extends ServiceData {
 			/** @type {`${cf_base}:${k}`} */
 			const cf1=`${cf_base}:${k}`;
 			const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf1,x);
-			this.save_string_one(`${cf1}.style`,style.styleType);
+			this.save_string(`${cf1}.style`,style.styleType);
 			this.ceq(isDisabled,false);
 			this.a_primitive_bool(isToggled);
-			this.save_string_one(`${cf1}.defaultIcon.type`,defaultIcon.iconType);
+			this.save_string(`${cf1}.defaultIcon.type`,defaultIcon.iconType);
 			this.C_CommandExecutor(defaultServiceEndpoint);
 			this.E_Like(toggledServiceEndpoint);
-			this.save_string_one(`${cf1}.defaultIcon.type`,toggledStyle.styleType);
+			this.save_string(`${cf1}.defaultIcon.type`,toggledStyle.styleType);
 			const {accessibilityData,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_Accessibility(accessibilityData);
 			this.add_string_to_map(cf1,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
@@ -3843,13 +3843,13 @@ class ServiceMethods extends ServiceData {
 			/** @type {`${cf_base}:${k}`} */
 			const cf1=`${cf_base}:${k}`;
 			const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf1,x);
-			this.save_string_one(`${cf1}.style`,style.styleType);
+			this.save_string(`${cf1}.style`,style.styleType);
 			this.ceq(isDisabled,false);
 			this.a_primitive_bool(isToggled);
-			this.save_string_one(`${cf1}.defaultIcon.type`,defaultIcon.iconType);
+			this.save_string(`${cf1}.defaultIcon.type`,defaultIcon.iconType);
 			this.E_SignalService_SendPost(defaultServiceEndpoint);
 			this.E_SignalService_SendPost(toggledServiceEndpoint);
-			this.save_string_one(`${cf1}.defaultIcon.type`,toggledStyle.styleType);
+			this.save_string(`${cf1}.defaultIcon.type`,toggledStyle.styleType);
 			const {size,accessibility,defaultTooltip,toggledTooltip,...y}=u; this.g(y);/*#destructure_done*/
 			if(size.sizeType!=="SIZE_DEFAULT") debugger;
 			this.D_Label(accessibility);
@@ -4124,7 +4124,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
 		const cf="DC_AddToPlaylist";
-		this.save_string_one(`${cf}.listType`,x.listType);
+		this.save_string(`${cf}.listType`,x.listType);
 		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
 			let known=this.DC_AddToPlaylist_listTypes;
 			this.DC_AddToPlaylist_listTypes.push(x.listType);
@@ -4428,12 +4428,12 @@ class ServiceMethods extends ServiceData {
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
 		/** @private @type {`${typeof config["lightThemeBackgroundColor"]}`} */
 		let u=`${config.lightThemeBackgroundColor}`;
-		this.save_string_one(`${cf}.lightBackground.0`,u);
+		this.save_string(`${cf}.lightBackground.0`,u);
 		this.save_keys(`${cf}.config`,config);
 		for(let u of Object.entries(config)) {
 			if(u[0]==="animationConfig") continue;
 			if(typeof u[1]==="object") {debugger; continue;}
-			this.save_string_one(`${cf}.config.${u[0]}`,`${u[1]}`);
+			this.save_string(`${cf}.config.${u[0]}`,`${u[1]}`);
 		}
 		this.save_keys(`${cf}.config.animationConfig`,config.animationConfig);
 	}
@@ -4506,20 +4506,20 @@ class ServiceMethods extends ServiceData {
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==0) debugger;
-			this.save_string_one("dark_gradient.0",u);
+			this.save_string("dark_gradient.0",u);
 		}
 		{
 			let c=x[1];
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
-			this.save_string_one("dark_gradient.1",u);
+			this.save_string("dark_gradient.1",u);
 		}
 		{
 			let c=x[2];
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==1) debugger;
-			this.save_string_one("dark_gradient.2",u);
+			this.save_string("dark_gradient.2",u);
 		}
 	}
 	/** @private @arg {D_AutoplayContent} x */
@@ -5156,7 +5156,7 @@ class ServiceMethods extends ServiceData {
 		this.z(csiParameters,this.g);
 		this.params("instream_video_ad.player_vars",playerVars);
 		this.g(playerOverlay);
-		this.save_string_one(`${cf}.elementId`,elementId);
+		this.save_string(`${cf}.elementId`,elementId);
 		this.trackingParams(trackingParams);
 		if(legacyInfoCardVastExtension!=="") debugger;
 		this.g(sodarExtensionData);
@@ -5271,7 +5271,7 @@ class ServiceMethods extends ServiceData {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
 				if(!this.is_yt_uuid(targetId)) {
-					this.save_string_one("Body.targetId",targetId);
+					this.save_string("Body.targetId",targetId);
 					switch(targetId) {
 						default: debugger; break;
 						case "comments-section":
@@ -5284,7 +5284,7 @@ class ServiceMethods extends ServiceData {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
 				if(!this.is_yt_uuid(targetId)) {
-					this.save_string_one("Header.targetId",targetId);
+					this.save_string("Header.targetId",targetId);
 					switch(targetId) {
 						default: debugger; break;
 						case "comments-section":
@@ -5552,7 +5552,7 @@ class ServiceMethods extends ServiceData {
 	D_SubscriptionButton(x) {
 		const cf="D_SubscriptionButton";
 		const {type,subscribed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string_one("button.type",type);
+		this.save_string("button.type",type);
 		this.t(subscribed,this.a_primitive_bool);
 	}
 	/** @private @arg {D_VideoSecondaryInfo} x */
@@ -6345,7 +6345,7 @@ class ServiceMethods extends ServiceData {
 			this.z(emojiIds,x => {
 				let [channel_id,parsed_emoji]=this.parse_emoji_id(x);
 				this.D_ChannelId(channel_id);
-				this.save_string_one(`${categoryId}.emojiId`,parsed_emoji);
+				this.save_string(`${categoryId}.emojiId`,parsed_emoji);
 			});
 			this.D_ChannelId(categoryId);
 			this.trackingParams(trackingParams);
@@ -6359,7 +6359,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.G_Text(title);
 		this.z(emojiIds,x => {
-			this.save_string_one(`${categoryId}.emojiId`,x);
+			this.save_string(`${categoryId}.emojiId`,x);
 		});
 		this.trackingParams(trackingParams);
 		if(imageLoadingLazy!==true) debugger;
@@ -6635,8 +6635,8 @@ class ServiceMethods extends ServiceData {
 		this.parse_emoji_id(emojiId);
 		let [s_arr]=this.z(shortcuts,this.parse_emoji_shortcut);
 		this.z(s_arr,this.a_primitive_str);
-		this.save_string_one(`save://CustomEmoji.d/shortcuts/${emojiId}?custom=${isCustomEmoji}`,shortcuts.join(","));
-		this.save_string_one(`save://CustomEmoji.d/searchTerms/${emojiId}?custom=${isCustomEmoji}`,searchTerms.join(","));
+		this.save_string(`save://CustomEmoji.d/shortcuts/${emojiId}?custom=${isCustomEmoji}`,shortcuts.join(","));
+		this.save_string(`save://CustomEmoji.d/searchTerms/${emojiId}?custom=${isCustomEmoji}`,searchTerms.join(","));
 		this.D_EmojiImage(image);
 		this.a_primitive_bool(isCustomEmoji);
 		return y;

@@ -570,15 +570,15 @@ class HandleTypes extends ServiceMethods {
 			const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			let idp=split_string_once(identifier,"|");
 			if(idp[0]!=="track_selection_sheet_option.eml") debugger;
-			this.save_string_one("D_TemplateUpdate.identifier.id",idp[0]);
-			this.save_string_one("D_TemplateUpdate.identifier.hash",idp[1]);
+			this.save_string("D_TemplateUpdate.identifier.id",idp[0]);
+			this.save_string("D_TemplateUpdate.identifier.hash",idp[1]);
 			this.t(dependencies,dep_arr => {
 				if(dep_arr.length!==1) debugger;
 				const dep=dep_arr[0];
 				let ddp=split_string_once(dep,"|");
 				if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
-				this.save_string_one(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
-				this.save_string_one(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
+				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
+				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
 			});
 			this.a_primitive_str(a);
 		} else {
@@ -637,7 +637,7 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(startTimeText);
 		this.trackingParams(trackingParams);
 		this.D_Accessibility(accessibility);
-		this.t(targetId,x => this.save_string_one(`${cf}.targetId`,x));
+		this.t(targetId,x => this.save_string(`${cf}.targetId`,x));
 	}
 	/** @private @arg {D_TranscriptFooter} x */
 	D_TranscriptFooter(x) {this.H_("languageMenu",x,this.R_SortFilterSubMenu);}
@@ -646,21 +646,21 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_TimedTextApi";
 		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
 		this.videoId(v);
-		caps&&this.save_string_one(`${cf}.caps`,caps);
-		this.save_string_one(`${cf}.xoaf`,xoaf);
-		xoadf&&this.save_string_one(`${cf}.xoadf`,xoadf);
-		xosf&&this.save_string_one(`${cf}.xosf`,xosf);
-		this.save_string_one(`${cf}.hl`,hl);
-		this.save_string_one(`${cf}.ip`,ip);
-		this.save_string_one(`${cf}.ipbits`,ipbits);
+		caps&&this.save_string(`${cf}.caps`,caps);
+		this.save_string(`${cf}.xoaf`,xoaf);
+		xoadf&&this.save_string(`${cf}.xoadf`,xoadf);
+		xosf&&this.save_string(`${cf}.xosf`,xosf);
+		this.save_string(`${cf}.hl`,hl);
+		this.save_string(`${cf}.ip`,ip);
+		this.save_string(`${cf}.ipbits`,ipbits);
 		let e_num=this.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.a_primitive_num(e_num);
 		this.parse_signature(signature);
-		this.save_string_one(`${cf}.sparams`,sparams);
-		this.save_string_one(`${cf}.key`,key);
-		kind&&this.save_string_one(`${cf}.kind`,kind);
-		this.save_string_one(`${cf}.lang`,lang);
+		this.save_string(`${cf}.sparams`,sparams);
+		this.save_string(`${cf}.key`,key);
+		kind&&this.save_string(`${cf}.kind`,kind);
+		this.save_string(`${cf}.lang`,lang);
 	}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
@@ -1973,7 +1973,7 @@ class HandleTypes extends ServiceMethods {
 			case "p5qs7":
 			case "qxoed":
 		}
-		this.save_string_one("googlevideo_host.selector",host_partition.selector);
+		this.save_string("googlevideo_host.selector",host_partition.selector);
 		let selector_parts=split_string(host_partition.selector,"");
 		switch(selector_parts[0]) {
 			default: debugger; {
@@ -2001,8 +2001,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {"RE_D_VE3832_PreconnectUrl"|"D_VideoPlaybackShape_LS_Params"|"url"} cf @arg {D_GoogleVideoHostPartition} x */
 	D_GoogleVideoHostPartition(cf,x) {
-		this.save_string_one(`google_video.${cf}.partition`,x.partition);
-		this.save_string_one(`google_video.${cf}.selector`,x.selector);
+		this.save_string(`google_video.${cf}.partition`,x.partition);
+		this.save_string(`google_video.${cf}.selector`,x.selector);
 	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
@@ -2325,21 +2325,21 @@ class HandleTypes extends ServiceMethods {
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
 		this.save_b64_binary(`${cf}.id`,id);
-		this.save_string_one(`${cf}.source`,source);
-		this.save_string_one(`${cf}.range`,range);
+		this.save_string(`${cf}.source`,source);
+		this.save_string(`${cf}.range`,range);
 		let exp=this.parse_number_template(expire);
 		this.a_primitive_num(exp);
-		this.save_string_one(`${cf}.ip`,ip);
-		this.save_string_one(`${cf}.ms`,ms);
-		this.save_string_one(`${cf}.mm`,mm);
-		this.save_string_one(`${cf}.pl`,pl);
+		this.save_string(`${cf}.ip`,ip);
+		this.save_string(`${cf}.ms`,ms);
+		this.save_string(`${cf}.mm`,mm);
+		this.save_string(`${cf}.pl`,pl);
 		this.save_b64_binary(`${cf}.nh`,nh);
 		switch(sparams) {
 			default: this.cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
 		this.parse_signature(signature);
-		this.save_string_one(`${cf}.key`,key);
+		this.save_string(`${cf}.key`,key);
 	}
 	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {D_GoogleVideoHostPartition} */
 	get_host_partition(x) {
@@ -2367,24 +2367,24 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
-		aitags&&this.save_string_one(`${cf1}.aitags`,aitags);
+		aitags&&this.save_string(`${cf1}.aitags`,aitags);
 		this.save_b64_binary(`${cf2}.id`,id);
-		itag&&this.save_string_one(`${cf1}.itag`,itag);
-		this.save_string_one(`${cf1}.source`,source);
-		this.save_string_one(`${cf1}.requiressl`,requiressl);
+		itag&&this.save_string(`${cf1}.itag`,itag);
+		this.save_string(`${cf1}.source`,source);
+		this.save_string(`${cf1}.requiressl`,requiressl);
 		this.t(ctier,x => this.ceq("SH",x));
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
-		this.save_string_one(`${cf1}.vprv`,vprv);
-		if(xtags) this.save_string_one(`${cf1}.xtags`,xtags);
-		this.save_string_one(`${cf1}.mime`,mime);
+		this.save_string(`${cf1}.vprv`,vprv);
+		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
+		this.save_string(`${cf1}.mime`,mime);
 		this.save_b64_binary(`${cf2}.ns`,ns);
-		cnr&&this.save_string_one(`${cf1}.cnr`,cnr);
-		if(gir) this.save_string_one(`${cf1}.gir`,gir);
+		cnr&&this.save_string(`${cf1}.cnr`,cnr);
+		if(gir) this.save_string(`${cf1}.gir`,gir);
 		this.t(clen,x => {
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
 		});
-		ratebypass&&this.save_string_one(`${cf1}.ratebypass`,ratebypass);
+		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
 		let dur_=this.parse_number_template(dur);
 		this.a_primitive_num(dur_);
 		let lmt_=this.parse_number_template(lmt);
@@ -2394,8 +2394,8 @@ class HandleTypes extends ServiceMethods {
 	D_VideoPlaybackShape_LS_Params(x) {
 		const cf1="D_VideoPlaybackShape_LS_Params",cf2="video_playback.api_url"; cf2;
 		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,...y}=this.s(cf1,x); this.g(y);
-		this.save_string_one(`${cf1}.mh`,mh);
-		this.save_string_one(`${cf1}.mm`,mm);
+		this.save_string(`${cf1}.mh`,mh);
+		this.save_string(`${cf1}.mm`,mm);
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
@@ -2412,10 +2412,10 @@ class HandleTypes extends ServiceMethods {
 				case "n4v7s": case "nx57y": case "o097z": case "nx5s7": case "9gv7l":
 			}
 		}
-		this.save_string_one(`${cf1}.ms`,ms);
-		this.save_string_one(`${cf1}.mv`,mv);
-		this.save_string_one(`${cf1}.mvi`,mvi);
-		this.save_string_one(`${cf1}.pl`,pl);
+		this.save_string(`${cf1}.ms`,ms);
+		this.save_string(`${cf1}.mv`,mv);
+		this.save_string(`${cf1}.mvi`,mvi);
+		this.save_string(`${cf1}.pl`,pl);
 		{
 			let x=initcwndbps;
 			let x1=this.parse_number_template(x);
@@ -2426,16 +2426,16 @@ class HandleTypes extends ServiceMethods {
 	D_VideoPlaybackShape_Other(x) {
 		const cf1="D_VideoPlaybackShape_Other",cf2="video_playback.api_url";
 		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y1}=this.s(cf1,x);
-		this.save_string_one(`${cf1}.fvip`,fvip);
-		keepalive&&this.save_string_one(`${cf1}.keepalive`,keepalive);
-		this.save_string_one(`${cf1}.fexp`,fexp);
-		this.save_string_one(`${cf1}.c`,c);
-		txp&&this.save_string_one(`${cf1}.txp`,txp);
+		this.save_string(`${cf1}.fvip`,fvip);
+		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
+		this.save_string(`${cf1}.fexp`,fexp);
+		this.save_string(`${cf1}.c`,c);
+		txp&&this.save_string(`${cf1}.txp`,txp);
 		this.save_b64_binary(`${cf2}.n`,n);
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
 		const {gcr,mt,itag,...y}=y1; this.g(y);
-		itag&&this.save_string_one(`${cf1}.itag`,itag);
+		itag&&this.save_string(`${cf1}.itag`,itag);
 		{
 			let x=mt;
 			let x1=this.parse_number_template(x);
@@ -2488,8 +2488,8 @@ class HandleTypes extends ServiceMethods {
 		for(let k of kk_y1) {
 			set_obj(y1,uv,k);
 		}
-		this.save_string_one(`${cf1}.sparams`,sparams);
-		this.save_string_one(`${cf1}.lsparams`,lsparams);
+		this.save_string(`${cf1}.sparams`,sparams);
+		this.save_string(`${cf1}.lsparams`,lsparams);
 		this.D_VideoPlaybackShape_LS_Params(obj_lsparams);
 		this.D_VideoPlaybackShape_Other(y1);
 	}
@@ -2533,7 +2533,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="AD_AddChatItem";
 		const {item,clientId,...y}=this.s(cf,x); this.g(y);
 		this.G_ChatItem(item);
-		this.t(clientId,x => this.save_string_one(`${cf}.clientId`,x));
+		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
 	}
 	/** @private @arg {D_PdgCommentChip} x */
 	D_PdgCommentChip(x) {
@@ -2661,7 +2661,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(playButton);
 		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.playlistId(playlistId);
-		this.save_string_one(`${cf}.privacy`,privacy);
+		this.save_string(`${cf}.privacy`,privacy);
 		this.R_Button(shufflePlayButton);
 		this.trackingParams(trackingParams);
 		this.D_EditableDetails(editableDetails);
@@ -2796,7 +2796,7 @@ class HandleTypes extends ServiceMethods {
 		}));
 		t.mt(this.m(f4),this.VW_BinaryTimestamp);
 		t.mt_cf(t.mt(this.m(f6),x => this.t(x,this.TV_Str)),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,(cf,x) => {
-			this.save_string_one(cf,x);
+			this.save_string(cf,x);
 			switch(x) {
 				case "watch": break;
 			}
@@ -2819,13 +2819,13 @@ class HandleTypes extends ServiceMethods {
 			case "raw_child": const [,,,b]=a; const [,c]=b; r_str=["T",c];
 		}
 		if(!r_str) return;
-		this.save_string_one(`${cf}.str`,r_str[1]);
+		this.save_string(`${cf}.str`,r_str[1]);
 		if(r_str[0]==="U") {
-			this.save_string_one(`${cf}.str.unk`,`${r_str[0]}:${r_str[1]}`);
+			this.save_string(`${cf}.str.unk`,`${r_str[0]}:${r_str[1]}`);
 			return;
 		}
 		switch(r_str[1]) {
-			default: this.save_string_one(`${cf}.str.default`,r_str); break;
+			default: this.save_string(`${cf}.str.default`,r_str); break;
 			case "external": break;
 			case "list_other": break;
 			case "related": break;
@@ -2855,13 +2855,13 @@ class HandleTypes extends ServiceMethods {
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
 		const {77: a}=this.s(cf,x);
-		this.t(this.TV_Str(a),x => this.save_string_one(`${cf}.f77`,x));
+		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
 	}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {
 		const cf="P_aadc_guidelines_state_entity_key";
 		const {2: a,...y}=this.s(cf,x);
-		this.t(this.TV_Str(a),x => this.save_string_one(`${cf}.a`,x));
+		this.t(this.TV_Str(a),x => this.save_string(`${cf}.a`,x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_comment_params} x */
@@ -2997,7 +2997,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
-		const {1: f1,3: f3,5: {},...y}=this.s(cf,x); this.g(y);
+		const {1: f1,3: f3,4: {}={},5: {},6: {}={},...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @type {string[]} */
@@ -3069,7 +3069,10 @@ class HandleTypes extends ServiceMethods {
 		const cf="PD_continuation_request_browse_token";
 		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
 		this.t(this.TV_Str(f2),x => {
-			if(x!=="FEwhat_to_watch") debugger;
+			this.save_string(`${cf}.f2`,x);
+			switch(x) {
+				case "FEwhat_to_watch": break;
+			}
 		});
 		this.t(this.TV_Str(f3),x => {
 			x;
