@@ -1645,11 +1645,16 @@ class ServiceMethods extends ServiceData {
 		let s_url_data=this.save_db.data_store.numbers_store.data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_number_one(k,1); return;}
 		let wd=s_url_data[1];
-		if(wd[0]!=="arr") {debugger; return;}
-		let [,di]=wd;
-		if(!di.length) {this.save_number_one(k,1); return;}
-		let n=di[0]+1;
-		this.save_number_one(k,n);
+		switch(wd[0]) {
+			case "one": return this.save_number_one(k,wd[1]+1);
+			case "arr": {
+				let [,di]=wd;
+				if(!di.length) return this.save_number_one(k,1);
+				let n=di[0]+1;
+				return this.save_number_one(k,n);
+			} break;
+			case "many": throw new Error("What");
+		}
 	}
 	/** @api @public @arg {"WL"|"LL"|`UU${string}`|`PL${string}`|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`} x */
 	parse_playlist_id(x) {

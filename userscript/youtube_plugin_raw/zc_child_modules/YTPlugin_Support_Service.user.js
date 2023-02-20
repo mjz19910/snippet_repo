@@ -1838,13 +1838,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
-	save_number(k,x) {this.data_store.numbers_store.save_data(k,x);}
+	save_number(k,x) {return this.data_store.numbers_store.save_data(k,x);}
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {return this.data_store.ve_store.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys_impl(k,x) {return this.data_store.keys_store.save_keys(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<string>} x */
-	save_string(k,x) {this.data_store.string_store.save_data(k,x);}
+	save_string(k,x) {return this.data_store.string_store.save_data(k,x);}
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	onDataChange() {
