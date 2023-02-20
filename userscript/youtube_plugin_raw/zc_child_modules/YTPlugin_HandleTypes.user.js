@@ -1404,6 +1404,8 @@ class HandleTypes extends ServiceMethods {
 					debugger;
 				} break;
 				case "child": break;
+				case "data_fixed32": break;
+				case "data_fixed64": break;
 			}
 		}
 		for(let x2 of x1) {
