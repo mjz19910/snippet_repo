@@ -1,6 +1,11 @@
-TMP_DIR="/dev/shm/";
+TMP_DIR="/dev/shm/"
 function do_dig() {
-	if [[ "$TMP_DIR/result.dig_batch.$a2" -e ]]; then
+	RESULT_FILE="$TMP_DIR/result.dig_batch.$a2"
+	if [[ -f "$TMP_DIR/result.dig_batch.$a2" ]]; then
+		if (($(wc -l <"$RESULT_FILE") != 0)); then
+			foo=$(<"$RESULT_FILE")
+			printf "\n[$a2]\n%s\n" "$foo"
+		fi
 		return 0
 	fi
 	printf "\r.\e[2C"
@@ -10,10 +15,9 @@ function do_dig() {
 	printf "%s\0" "rr1.sn-"$a2"n"{{0..9},{a..z}}{{0..9},{a..z}}".googlevideo.com" |
 		stdbuf -i0 -o0 -e0 xargs -0rn35 -P100 zsh -c '. ./dig.zsh run_child '$a2' "$@"'
 	list=("$TMP_DIR/out.dig_batch.$a2."*)
-	TF_2="$TMP_DIR/result.dig_batch.$a2"
-	cat $list >>"$TF_2"
-	if (($(wc -l <"$TF_2") != 0)); then
-		foo=$(<"$TF_2")
+	cat $list >>"$RESULT_FILE"
+	if (($(wc -l <"$RESULT_FILE") != 0)); then
+		foo=$(<"$RESULT_FILE")
 		printf "\n[$a2]\n%s\n" "$foo"
 	fi
 	printf "\r \e[2C"
@@ -71,15 +75,15 @@ function dig_user {
 }
 case $MODE in
 "dig")
-	dig $1;
+	dig $1
 	;;
 "run_child")
-	run_child "$@";
+	run_child "$@"
 	;;
 "failure")
-	echo "$0 dig [section]";
+	echo "$0 dig [section]"
 	;;
 *)
-	$MODE "$@";
+	$MODE "$@"
 	;;
 esac
