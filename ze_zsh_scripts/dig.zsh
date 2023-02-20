@@ -90,7 +90,6 @@ function dig_user_run {
 		printf "\n[$a2]\n%s\n" "$foo"
 	fi
 	rm $list
-
 }
 function dig_user {
 	pushd -q $S_DIR
