@@ -1,41 +1,50 @@
 type D_UrlFormat=
-	|"/"
 	|"/channel_switcher"
 	|"/upload"
 	|"android-app://com.google.android.youtube/http/youtube.com/premium"
 	|`/@${string}`
 	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
-	|D_ApiPathFormat_1
+	|`/@${string}${ChannelSubUrlFormat}`
+	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/account${""|`_${G_AccountPageSettingsSections}`}`
 	|`/api/stats/ads?${string}`
-	|GU_VE3611_Url
+	|`/channel/UC${string}`
+	|`/embed/${string}`
+	|`/feed/${D_BrowseEndpointPages}`
 	|`/feed/${D_BrowseEndpointPages}`
 	|`/feed/trending?${string}`
+	|`/feed/trending?bp=${string}`
 	|`/gaming`
+	|`/playlist?${D_PlaylistUrlParams}`
 	|`/playlist?${string}`
 	|`/premium`
 	|`/reporthistory`
 	|`/results?${string}`
+	|`/results?search_query=${string}`
 	|`/shorts/${string}`
+	|`/shorts/${string}`
+	|`/v/${string}?version=3&autohide=1`
+	|`/watch?${D_WatchUrlStr}`
 	|`/watch?${string}`
 	|`http://www.youtube.com/watch?${string}`
 	|`https://support.google.com/youtube/answer/${number}`
+	|`https://www.youtube.com/pagead/adview?${string}`
 	|`https://www.youtube.com/watch?${string}`
-	|NonNullable<D_Channel_MD["channelConversionUrl"]>
-	|D_Youtube_Streaming_ProbeUrl
+	|D_ApiPathFormat_1
 	|D_ExternalUrlFormat
-	|GU_VE6827_Url
-	|YTExternalUrl
-	|NonNullable<D_AdaptiveFormatItem["url"]>
-	|NonNullable<D_FormatItem["url"]>
-	|TP_ParseUrlSearchParams<D_FormatItem_signatureCipher>["url"]
 	|D_MicroformatEmbed["flashSecureUrl"]
 	|D_MicroformatEmbed["flashUrl"]
 	|D_MicroformatEmbed["iframeUrl"]
-	|`/embed/${string}`
-	|`/v/${string}?version=3&autohide=1`
 	|D_PlayerMicroformat["ownerProfileUrl"]
-	|`https://www.youtube.com/pagead/adview?${string}`
+	|D_Youtube_Streaming_ProbeUrl
 	|DE_VE83769_Url_1["url"]
+	|GM_VE3854["url"]
+	|GU_VE3611_Url
+	|GU_VE6827_Url
+	|NonNullable<D_AdaptiveFormatItem["url"]>
+	|NonNullable<D_Channel_MD["channelConversionUrl"]>
+	|NonNullable<D_FormatItem["url"]>
+	|TP_ParseUrlSearchParams<D_FormatItem_signatureCipher>["url"]
+	|YTExternalUrl
 	;
 ;

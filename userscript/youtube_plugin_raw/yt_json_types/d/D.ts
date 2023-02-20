@@ -75,19 +75,6 @@ type WatchUrlFormat=
 	|`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`
 	;
 ;
-type D_UrlFormatStr_2=
-	|"/channel_switcher"
-	|`/@${string}${ChannelSubUrlFormat}`
-	|`/account${""|`_${G_AccountPageSettingsSections}`}`
-	|`/channel/UC${string}`
-	|`/feed/${D_BrowseEndpointPages}`
-	|`/feed/trending?bp=${string}`
-	|`/playlist?${D_PlaylistUrlParams}`
-	|`/results?search_query=${string}`
-	|`/shorts/${string}`
-	|`/watch?${D_WatchUrlStr}`
-	;
-;
 type D_WatchPageUrl=
 	|`/watch?v=${string}&list=RD${string}&index=${number}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1`
