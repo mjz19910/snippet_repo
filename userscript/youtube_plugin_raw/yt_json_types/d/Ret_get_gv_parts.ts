@@ -22,43 +22,8 @@ type PT_DigDomain=[
 	``,
 	// dig results
 	`
-	rr1.sn-5uaezn6l.googlevideo.com. 1800 IN A      173.194.29.55
-	rr1.sn-5uaezn6s.googlevideo.com. 1800 IN A      173.194.29.71
-	rr1.sn-5uaezn7e.googlevideo.com. 1800 IN A      74.125.6.102
-	rr1.sn-5uaezne6.googlevideo.com. 1800 IN A      173.194.11.102
-	rr1.sn-5uaezned.googlevideo.com. 1800 IN A      173.194.11.134
-	rr1.sn-5uaeznek.googlevideo.com. 1800 IN A      173.194.11.161
-	rr1.sn-5uaeznel.googlevideo.com. 1800 IN A      172.217.128.166
-	rr1.sn-5uaezner.googlevideo.com. 1800 IN A      173.194.11.198
-	rr1.sn-5uaeznes.googlevideo.com. 1800 IN A      172.217.128.198
-	rr1.sn-5uaezney.googlevideo.com. 1800 IN A      173.194.29.129
-	rr1.sn-5uaeznez.googlevideo.com. 1800 IN A      173.194.11.70
-	rr1.sn-5uaeznl6.googlevideo.com. 1800 IN A      172.217.142.134
-	rr1.sn-5uaeznld.googlevideo.com. 1800 IN A      172.217.142.166
-	rr1.sn-5uaeznle.googlevideo.com. 1800 IN A      172.217.142.6
-	rr1.sn-5uaeznlk.googlevideo.com. 1800 IN A      173.194.147.134
-	rr1.sn-5uaeznll.googlevideo.com. 1800 IN A      172.217.142.38
-	rr1.sn-5uaeznlr.googlevideo.com. 1800 IN A      173.194.147.166
-	rr1.sn-5uaeznls.googlevideo.com. 1800 IN A      172.217.142.70
-	rr1.sn-5uaeznly.googlevideo.com. 1800 IN A      172.217.147.6
-	rr1.sn-5uaeznlz.googlevideo.com. 1800 IN A      172.217.142.102
-	rr1.sn-5uaeznr6.googlevideo.com. 1800 IN A      173.194.186.6
-	rr1.sn-5uaeznrr.googlevideo.com. 1800 IN A      172.217.128.102
-	rr1.sn-5uaeznry.googlevideo.com. 1800 IN A      173.194.144.38
-	rr1.sn-5uaeznrz.googlevideo.com. 1800 IN A      74.125.7.70
-	rr1.sn-5uaezny6.googlevideo.com. 1800 IN A      173.194.144.102
-	rr1.sn-5uaeznys.googlevideo.com. 1800 IN A      173.194.144.134
-	rr1.sn-5uaeznyy.googlevideo.com. 1800 IN A      74.125.6.70
-	rr1.sn-5uaeznyz.googlevideo.com. 1800 IN A      173.194.144.70
-	rr1.sn-5uaeznz6.googlevideo.com. 1800 IN A      173.194.142.215
-	rr1.sn-5uaeznzd.googlevideo.com. 1800 IN A      173.194.142.231
-	rr1.sn-5uaeznzr.googlevideo.com. 1800 IN A      173.194.17.19
-	rr1.sn-5uaeznzy.googlevideo.com. 1400 IN A      173.194.147.83
-	rr1.sn-5uaeznzz.googlevideo.com. 1800 IN A      173.194.142.199
 	`,
 	"rr1.sn-5uaeznzy.googlevideo.com.",
-	"rr1.sn-5uaeznes.googlevideo.com.",
-	"rr1.sn-5ualdnl7.googlevideo.com.",
 ];
 type PT_TypeS=[
 	gen_g2_t1<"5uald">,
@@ -92,6 +57,7 @@ type PT_TypeArr=[
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
 	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],// hit
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
+	[""]
 	// 
 ];
 type G_Gv_1_List=[
