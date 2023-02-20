@@ -182,12 +182,6 @@ function dig_final-child {
 	fi
 }
 case $MODE in
-"dig")
-	dig_main $1
-	;;
-"run_child")
-	run_child "$@"
-	;;
 "failure")
 	echo "$0 dig [section]"
 	;;
