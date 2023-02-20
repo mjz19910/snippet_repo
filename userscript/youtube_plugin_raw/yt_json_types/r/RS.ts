@@ -272,6 +272,7 @@ type GU_VE3611_2=
 	|`/@${string}/shorts`
 	|`/@${string}/videos`
 	|`/@${string}`
+	|`/c/${string}`
 	;
 ;
 type GU_VE3611_3=

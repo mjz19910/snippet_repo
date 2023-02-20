@@ -1446,30 +1446,34 @@ class Support_EventInput extends ServiceMethods {
 		const cf="RS_Page_Channel";
 		/** @arg {RS_Page_Channel["url"]} url */
 		const h_url=url => {
-			let sp=split_string(url,"/");
-			switch(sp.length) {
-				default: debugger; break;
-				case 2: {
-					if(!sp[1].startsWith("@")) debugger;
-					if(sp[0]!=="") debugger;
-				} break;
-				case 3: {
-					let [f1,f2,f3]=sp;
-					if(f1!=="") debugger;
-					if(!f2.startsWith("@")) debugger;
-					if(this.str_is_search(f3)) {
-						let [p,s]=split_string_once(f3,"?");
-						if(p!=="search") debugger;
-						let {query,...y}=this.parse_url_search_params(s); this.g(y);
-						this.a_primitive_str(query);
-						return;
-					}
-					switch(f3) {
-						default: f3===""; debugger; break;
-						case "search": case "shorts": case "featured":
-						case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
-					}
+			let [a,u]=split_string_once(url,"/"); this.ceq(a,"");
+			let c=split_string_once(u,"/");
+			if(c.length===1) {
+				return;
+			}
+			switch(c[0]) {
+				case "c": {
+					let [d,e]=c;
+					this.ceq(d,"c");
+					let f=split_string_once(e,"/");
+					if(f.length===2) debugger;
+					return;
 				}
+			}
+			let [d,e]=c;
+			d; e;
+			if(!d.startsWith("@")) debugger;
+			if(this.str_is_search(e)) {
+				let [p,s]=split_string_once(e,"?");
+				if(p!=="search") debugger;
+				let {query,...y}=this.parse_url_search_params(s); this.g(y);
+				this.a_primitive_str(query);
+				return;
+			}
+			switch(e) {
+				default: e===""; debugger; break;
+				case "search": case "shorts": case "featured":
+				case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
 			}
 		};
 		/** @arg {(typeof x)["endpoint"]} x */
