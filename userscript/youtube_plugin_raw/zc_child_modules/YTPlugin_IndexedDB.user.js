@@ -207,7 +207,7 @@ class IndexedDBService extends BaseService {
 		let typed_db=new TypedIndexedDb;
 		const tx_scope=this.open_transaction_scope(db,key,"readwrite");
 		let tx=tx_scope.tx;
-		const obj_store=typed_db.objectStore(tx,key);
+		let obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {
 			for_loop: for(let item of d_cache) {
@@ -225,10 +225,15 @@ class IndexedDBService extends BaseService {
 							console.log("cursor_loop_is_tx_complete_2");
 							break cursor_loop;
 						}
-						try {
-							await this.update(obj_store,item);
-						} catch(e) {
-							console.log("cursor_loop_update_failed",e);
+						update_loop: while (true) {
+							try {
+								await this.update(obj_store,item);
+								break update_loop;
+							} catch(e) {
+								let scope=this.open_transaction_scope(db,key,"readwrite");
+								tx=scope.tx;
+								obj_store=typed_db.objectStore(tx,key);
+							}
 						}
 						break cursor_loop;
 					}
