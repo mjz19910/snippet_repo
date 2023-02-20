@@ -1333,7 +1333,7 @@ class HandleTypes extends ServiceMethods {
 			let v_param_2_D32=(otu) => {
 				if(otu[0]!=="data32") throw new Error();
 				return `TYPE::T_D32<${otu[1]}>`;
-			}; v_param_2_D32;
+			};
 			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_FD32} */
 			let v_param_2_FD32=(otu) => {
 				if(otu[0]!=="data_fixed32") throw new Error();
