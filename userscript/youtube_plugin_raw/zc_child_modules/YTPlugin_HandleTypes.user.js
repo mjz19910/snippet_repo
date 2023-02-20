@@ -1278,7 +1278,7 @@ class HandleTypes extends ServiceMethods {
 				case "data64": case "data_fixed64": return this.tr_arr_to_obj([x3]);
 			}
 			//#region v_param_2
-			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_maybe_binary_ts|null} */
+			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_maybe_binary_ts|RetParam_VW_2|null} */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
