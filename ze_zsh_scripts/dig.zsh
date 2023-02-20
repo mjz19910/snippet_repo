@@ -103,24 +103,33 @@ function lock_printf {
 		unset foo
 		exec {foo}</tmp/dig_term_lock
 		flock -e $foo
-		sleep 0.04
+		sleep 0.001
 		printf $@
 		exec {foo}<&-
 	)
+}
+function term_pos() {
+	echo -ne "\033[6n"
+	read -s -d\[ garbage
+	unset garbage
+	read -s -d R POS_STR
+	eval 'TERM_POS=(${(s/;/)POS_STR});'
+	(( TERM_POS[2] += 1 ))
+	printf "\e[${TERM_POS[1]};${TERM_POS[2]}f!"
 }
 function dig_user_child {
 	arg_num_1=${#1}
 	n=$arg_num_1
 	((n = n + 8 + 2))
-	lock_printf "\e7""\e[H\e[500C\e[0K\e[${n}D [start]:$1""\e8" &
+	cn=$COLUMNS
+	((cn -= 1))
+	lock_printf "\e7""\e[H\e["${cn}"C\e["${n}"D [dns]:$1\e8" &
 	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
-	((n = n + arg_num_1 + 9))
-	lock_printf "\e7""\e[H\e[500C\e[0K\e[${n}D [run]:$1""\e8" &
 	lock_printf "." &
 	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
-		lock_printf "!" &
+		printf "!"
 	fi
 }
 case $MODE in
