@@ -183,4 +183,3 @@ function dig_final-child {
 	fi
 }
 $MODE $0 "$@"
-
