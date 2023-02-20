@@ -1,5 +1,5 @@
 TMP_DIR="/tmp"
-function do_dig() {
+function run_dig_main_impl() {
 	RESULT_FILE="$TMP_DIR/result.dig_batch.$a2"
 	if [[ -f "$TMP_DIR/result.dig_batch.$a2" ]]; then
 		if (($(wc -l <"$RESULT_FILE") != 0)); then
@@ -22,16 +22,16 @@ function do_dig() {
 	fi
 	printf "\r \e[2C"
 }
-function dig() {
+function run_dig_main() {
 	pushd -q $S_DIR
 	a2="$1"
-	do_dig "$a2"
+	run_dig_main_impl "$a2"
 	popd -q
 }
-function dig_batch() {
+function run_dig_batch() {
 	pushd -q $S_DIR
 	a2="$1"
-	do_dig "$a2"
+	run_dig_main_impl "$a2"
 	popd -q
 }
 function run_child() {
@@ -70,15 +70,28 @@ function gen_z_get {
 	echo "${z1[*]}"
 }
 function dig_user {
+	pushd -q $S_DIR
 	echo $TMP_DIR/dig_res.t.*(N) | xargs -r rm
 	z1=({{0..9},{a..z}})
 	z=$(gen_z_get)
 	echo "\eD\eD"
-	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}nr{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c 'printf "\e7""\e[H\e[2K\r$1 \r""\e8";TF=`mktemp $TMP_DIR/dig_res.t.XXX`;sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1);printf ".";dig @1.1.1.1 +time=3 +https +noall +answer "$@" > $TF;if ((`wc -l <$TF` != 0)); then printf "\n";cat $TF;fi' ''
+	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' ''
+	popd -q
+}
+function dig_user_child {
+	printf "\e7""\e[H\e[2K\r$1 \r""\e8"
+	TF=$(mktemp $TMP_DIR/dig_res.t.XXX)
+	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+	printf "."
+	dig @1.1.1.1 +time=3 +https +noall +answer "$@" >$TF
+	if (($(wc -l <$TF) != 0)); then
+		printf "\n"
+		cat $TF
+	fi
 }
 case $MODE in
 "dig")
-	dig $1
+	run_dig_main $1
 	;;
 "run_child")
 	run_child "$@"
