@@ -1765,22 +1765,23 @@ type D_ExpandableVideoDescriptionBody={
 	showMoreText?: G_Text;
 	showLessText?: G_Text;
 };
+// ApiStatsAdsArgs
 // spell:ignore trackclk aclk
 type D_ExternalUrlFormat=[
+	`${"https:"}//${GV_SubDomain}.googlevideo.com/initplayback?${string}`,
 	`https://ad.doubleclick.net/ddm/trackclk/${string}`,
 	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
 	`https://music.youtube.com${"/"|""}`,
-	`${"https:"}//${GV_SubDomain}.googlevideo.com/initplayback?${string}`,
-	D_CommonConfig["url"],
 	`https://studio.youtube.com${"/"|""}`,
+	`https://support.google.com/youtube/answer/${number}`,
 	`https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273`,
 	`https://www.google.com/get/videoqualityreport/`,
 	`https://www.googleadservices.com/pagead/aclk?${string}`,
-	// ApiStatsAdsArgs
+	`https://www.gstatic.com/youtube/img/watch/yt_music_channel.jpeg`,
 	`https://www.youtube.com/api/stats/ads?${string}`,
 	`https://www.youtubekids.com${"/"|""}?source=youtube_web`,
 	`https://yt${number}.ggpht.com/${string}=s88-c-k-c0x00ffffff-no-rj`,
-	`https://www.gstatic.com/youtube/img/watch/yt_music_channel.jpeg`
+	D_CommonConfig["url"],
 ][number];
 type D_Factoid={
 	value: G_Text;

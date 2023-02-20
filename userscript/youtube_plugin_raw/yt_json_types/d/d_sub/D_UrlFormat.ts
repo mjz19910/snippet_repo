@@ -26,8 +26,7 @@ type D_UrlFormat=
 	|`/v/${string}?version=3&autohide=1`
 	|`/watch?${D_WatchUrlStr}`
 	|`/watch?${string}`
-	|`http://www.youtube.com/watch?${string}`
-	|`https://support.google.com/youtube/answer/${number}`
+	|S_YtUrlHttp_Watch
 	|`https://www.youtube.com/pagead/adview?${string}`
 	|`https://www.youtube.com/watch?${string}`
 	|D_ApiPathFormat_1

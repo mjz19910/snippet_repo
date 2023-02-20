@@ -1,3 +1,5 @@
+type S_YtUrlHttp_Watch=`http://www.youtube.com/watch?${string}`;
+
 type D_PlaylistContent={
 	title: "Watch Later";
 	contents: R_PlaylistPanelVideo[];
@@ -28,7 +30,7 @@ type D_PlaylistContent={
 	totalVideos: number;
 	ownerName: G_Text;
 	isInfinite: false;
-	playlistShareUrl: `http://www.youtube.com/watch?${string}`;
+	playlistShareUrl: S_YtUrlHttp_Watch;
 	shortBylineText: G_Text;
 	longBylineText: G_Text;
 	totalVideosText: G_Text;
@@ -50,7 +52,7 @@ type D_PlaylistContent={
 	totalVideos: number;
 	ownerName: G_Text;
 	isInfinite: false;
-	playlistShareUrl: `http://www.youtube.com/watch?${string}`;
+	playlistShareUrl: S_YtUrlHttp_Watch;
 	shortBylineText: G_Text;
 	longBylineText: G_Text;
 	totalVideosText: G_Text;
@@ -90,7 +92,7 @@ type D_PlaylistContent={
 	totalVideos: number;
 	ownerName: G_Text;
 	isInfinite: false;
-	playlistShareUrl: `http://www.youtube.com/watch?${string}`;
+	playlistShareUrl: S_YtUrlHttp_Watch;
 	continuations: CD_Next[];
 	shortBylineText: G_Text;
 	longBylineText: G_Text;
