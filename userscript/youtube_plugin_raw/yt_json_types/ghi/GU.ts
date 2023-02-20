@@ -1,4 +1,5 @@
-type GU_VE3611_Url=|"/gaming"
+type GU_VE3611_Url=
+	|"/gaming"
 	|`/@${string}`
 	|`/channel/UC${string}`
 	|`/source/${string}/shorts?bp=${string}`
