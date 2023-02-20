@@ -339,6 +339,37 @@ type R_VE6827_PageType_Browse_Response={
 	expirationTime: 1676555455508;
 };
 
+type R_VE96368_PageType_Browse_Response={
+	page: "browse";
+	endpoint: E_VE96368;
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		header: R_FeedTabbedHeader;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+		observedStateTags: {
+			stateTag: 3;
+			instruction: "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY";
+		}[];
+	};
+	url: "/feed/subscriptions";
+	expirationTime: number;
+};
+type R_VE3854_PageType_Browse_Response={
+	page: "browse";
+	endpoint: E_VE3854;
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		header: R_FeedTabbedHeader;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+		onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
+	};
+	url: "/";
+	expirationTime?: number;
+};
 type R_PageTypeBrowse={
 	endpoint: E_VE6827;
 	pageType: "browse";
@@ -349,55 +380,12 @@ type R_PageTypeBrowse={
 	endpoint: E_VE96368;
 	pageType: "browse";
 	fromHistory: false;
-	response: {
-		page: "browse";
-		endpoint: E_VE96368;
-		response: {
-			responseContext: RC_ResponseContext;
-			contents: R_TwoColumnBrowseResults;
-			header: R_FeedTabbedHeader;
-			trackingParams: string;
-			topbar: R_DesktopTopbar;
-			observedStateTags: {
-				stateTag: 3;
-				instruction: "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY";
-			}[];
-		};
-		url: "/feed/subscriptions";
-		expirationTime: number;
-	};
+	response: R_VE96368_PageType_Browse_Response;
 	navigationDoneMs: number;
 }|{
 	pageType: "browse";
 	endpoint: E_VE3854;
-	response: {
-		page: "browse";
-		endpoint: E_VE3854;
-		response: {
-			responseContext: RC_ResponseContext;
-			contents: R_TwoColumnBrowseResults;
-			header: R_FeedTabbedHeader;
-			trackingParams: string;
-			topbar: R_DesktopTopbar;
-			onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
-		};
-		url: "/";
-		expirationTime?: number;
-	}|{
-		rootVe: 3854;
-		url: "/";
-		endpoint: E_VE3854;
-		page: "browse";
-		response: {
-			responseContext: RC_ResponseContext;
-			contents: R_TwoColumnBrowseResults;
-			header: R_FeedTabbedHeader;
-			trackingParams: string;
-			topbar: R_DesktopTopbar;
-			onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
-		};
-		expirationTime: 1676534033586;
-	};
+	response: R_VE3854_PageType_Browse_Response;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

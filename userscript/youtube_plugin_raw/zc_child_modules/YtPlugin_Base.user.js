@@ -3112,7 +3112,7 @@ class ParentWalker {
 	}
 }
 class JsonReplacerState {
-	/** @constructor @public @arg {JsonReplacerArgs} args */
+	/** @constructor @public @arg {D_JsonReplacerArgs} args */
 	constructor(args) {
 		this.object_count=0;
 		this.cur_cf=args.cf;
