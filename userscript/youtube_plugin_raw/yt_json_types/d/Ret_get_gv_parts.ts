@@ -22,18 +22,19 @@ type PT_DigDomain=[
 	``,
 	// dig results
 	`
-	rr1.sn-qxoedne7.googlevideo.com. 1800 IN A      74.125.161.38
-	rr1.sn-qxoednee.googlevideo.com. 1800 IN A      74.125.9.6
-	rr1.sn-qxoedn7k.googlevideo.com. 1800 IN A      74.125.159.198
 	rr1.sn-qxo7rn7k.googlevideo.com. 1800 IN A      74.125.161.6
 	rr1.sn-qxo7rn7r.googlevideo.com. 1800 IN A      173.194.54.166
 	rr1.sn-qxo7rn7y.googlevideo.com. 1800 IN A      173.194.55.70
 	rr1.sn-qxoedn7k.googlevideo.com. 1800 IN A      74.125.159.198
+	rr1.sn-qxoedn7k.googlevideo.com. 1800 IN A      74.125.159.198
+	rr1.sn-qxoedne7.googlevideo.com. 1800 IN A      74.125.161.38
+	rr1.sn-qxoednee.googlevideo.com. 1800 IN A      74.125.9.6
 	`,
 	"rr1.sn-5uaeznzy.googlevideo.com.",
 	"rr1.sn-qxoedne7.googlevideo.com.",
 ];
 type PT_TypeS=[
+	gen_g2_t1<"qxo7r">,
 	gen_g2_t1<"qxoed">,
 	gen_g2_t1<"5uaez">,
 	gen_g2_t1<"5uald">,
