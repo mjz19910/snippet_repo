@@ -177,8 +177,7 @@ class IndexedDBService extends BaseService {
 			},"target",{
 				mode,
 				error,
-				objectStoreNames:[...make_iterator(objectStoreNames)],
-			});
+			},"objectStoreNames",[...make_iterator(objectStoreNames)]);
 			is_tx_complete=true;
 		};
 		tx.onerror=function(event) {
