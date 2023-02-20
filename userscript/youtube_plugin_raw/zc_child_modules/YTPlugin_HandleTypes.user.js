@@ -1388,6 +1388,7 @@ class HandleTypes extends ServiceMethods {
 			res.push(this.v_param_item(s,x1));
 		}
 		if(res.length===1) return res;
+		if(res.every(v => typeof v==="string")) return res;
 		debugger;
 		return res;
 	}
