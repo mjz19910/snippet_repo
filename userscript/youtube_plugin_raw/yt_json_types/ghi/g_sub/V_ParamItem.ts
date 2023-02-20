@@ -50,11 +50,15 @@ type RetParam_VW_2=
 	|`TYPE::T_VW_2<${string},"string">`
 	;
 ;
+type RetParam_VW_R=
+	|`TYPE::T_VW_R<"${"number"}",${number}>`|
+	`TYPE::T_VW_R<"${"array"|"binary"|"V_ParamMapType"}",${string}>`
+	;
+;
 type RetParam_raw=
 	|RetParam_TV_Str
 	|RetParam_VW_Bigint
-	|`TYPE::T_VW_R<"${"number"}",${number}>`
-	|`TYPE::T_VW_R<"${"array"|"binary"|"V_ParamMapType"}",${string}>`
+	|RetParam_VW_R
 	;
 ;
 type RetParam_raw_child=
