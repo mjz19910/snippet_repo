@@ -181,7 +181,7 @@ function dig_final-child {
 }
 
 function print-usage {
-	echo "$0 dig [section]"
+	echo "$1 dig_main [section]"
 }
 
 $MODE $0 "$@"
