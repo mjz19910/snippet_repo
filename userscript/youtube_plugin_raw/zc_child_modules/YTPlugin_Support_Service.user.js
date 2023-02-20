@@ -2301,7 +2301,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
 		this.save_string_one(`${ns_name}::${ns}`,no_ns_part);
-		this.save_string_one(`${cf}::namespace`,ns_name);
+		this.save_string_one(`${cf}::namespace`,ns);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
 	show_strings_bitmap(ns,idx,store) {
