@@ -2787,7 +2787,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(f3,x => this.TK_D32(cf,x,"f3"));
 		this.VW_BinaryTimestamp(f4);
 		this.t_cf(`${cf}_f6`,f6,this.H_TrackingObj_f6);
-		t.t(t.t(f7,x => this.TV_Str(x)),x => t.save_string(`${cf}.f7`,x));
+		t.t(t.t(f7,this.TV_Str),x => t.save_string(`${cf}.f7`,x));
 		t.ms_t(f8,t.T_VW_Bigint);
 	}
 	/** @arg {VW_BinaryTimestamp} x */
