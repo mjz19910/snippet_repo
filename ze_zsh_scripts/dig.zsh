@@ -113,7 +113,7 @@ function dig_final-run {
 	mkdir -p $TMP_DIR/dig/$TMP_TAG
 	echo $TMP_DIR/dig/$TMP_TAG/result.*(N) | xargs -r rm
 	z=$(get_abc_opt)
-	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user_child "$@"' ''
+	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/result.*)
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
@@ -146,6 +146,24 @@ function term_pos() {
 	printf "\e[${TERM_POS[1]};${TERM_POS[2]}f!"
 }
 function dig_user_child {
+	arg_num_1=${#1}
+	n=$arg_num_1
+	cn=$COLUMNS
+	DNS_TAG_LEN=6
+	TERM_RETURN_NUM_LINE_LEN=6
+	PADDING_LEN=2
+	SPACE_CHAR=1
+	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + ${#TMP_TAG} + 1))
+	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
+	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/result.XXX)
+	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+	printf ".${1[14]}"
+	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
+	if (($(wc -l <$TF) != 0)); then
+		printf "!${1[14]}"
+	fi
+}
+function dig_final-child {
 	arg_num_1=${#1}
 	n=$arg_num_1
 	cn=$COLUMNS
