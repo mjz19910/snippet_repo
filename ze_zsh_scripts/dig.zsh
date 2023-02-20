@@ -73,9 +73,6 @@ else
 	MODE=$1
 	shift
 fi
-function print-usage {
-	echo "$0 dig [section]"
-}
 function get_abc_opt {
 	IFS=,
 	local z1=({{0..9},{a..z}})
@@ -182,4 +179,9 @@ function dig_final-child {
 		printf "!${1[14]}"
 	fi
 }
+
+function print-usage {
+	echo "$0 dig [section]"
+}
+
 $MODE $0 "$@"
