@@ -2807,7 +2807,7 @@ class HandleTypes extends ServiceMethods {
 		r("f1",f1); r("f2",f2);
 		t.mt_cf(t.ms_t(f3,t.T_D32_v),`${cf}.f3`,(cf,x) => t.tn_cf(cf,x,this.save_number_one));
 		t.ms(f4,t.VW_BinaryTimestamp);
-		t.mt_cf(t.ms_t(f6,t.TV_Str),`${cf}.f6`,(cf,x) => this.tn_cf(cf,x,t.save_string));
+		t.mt_cf(t.ms_t(f6,t.TV_Str),`${cf}.f6`,(cf,x) => t.tn_cf(cf,x,t.save_string));
 		t.ms_t(f8,t.T_VW_Bigint);
 		t.t(f16,t.VW_BinaryTimestamp);
 		if(this.is_empty_obj(y)) return;
