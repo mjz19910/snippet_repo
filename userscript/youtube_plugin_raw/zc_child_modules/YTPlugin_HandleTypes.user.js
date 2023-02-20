@@ -1361,12 +1361,12 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
 			}; v_param_2_raw;
-			/** @arg {V_ParamItem} otu */
+			/** @arg {V_ParamItem} otu @returns {`TYPE::T_VW_Bigint<${bigint}n>`|null} */
 			let v_param_2_D64=(otu) => {
 				if(otu[0]!=="data64") return null;
 				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 			}; v_param_2_D64;
-			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj | null, raw_value: V_RawValue]} x */
+			/** @arg {V_ParamItem_RawChild} x @returns {Ret_v_param_2_raw_child} */
 			let v_param_rc_def=(x) => {
 				let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
 				let obj_json;
@@ -1378,7 +1378,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 			};
-			/** @arg {[type: "raw_child", binary_arr: Uint8Array, obj: V_ParamObj | null, raw_value: V_RawValue]} x */
+			/** @arg {V_ParamItem_RawChild} x @returns {Ret_v_param_2_raw_child} */
 			let v_param_2_raw_child=(x) => {
 				let x1=x[3];
 				switch(x1[0]) {

@@ -1,9 +1,11 @@
 type Ret_gen_json=string;
 
+type V_ParamItem_RawChild=[type: "raw_child",binary_arr: Uint8Array,obj: V_ParamObj|null,raw_value: V_RawValue];
+
 type V_ParamItem=
 	|[type: "child",binary_arr: Uint8Array,obj: V_ParamObj|null]
 	|[type: "raw",obj: V_RawValue]
-	|[type: "raw_child",binary_arr: Uint8Array,obj: V_ParamObj|null,raw_value: V_RawValue]
+	|V_ParamItem_RawChild
 	|[type: "data32",value: number]
 	|[type: "data64",raw_number: number[],value: bigint]
 	|[type: "data_fixed32",value: number]
@@ -20,10 +22,12 @@ type V_ParamItemFiltered=
 	|[type: "info",value: number]
 	|[type: "raw",obj: V_RawValue]
 	|[type: "struct",value: V_ParamObj]
+	|`TYPE::T_D32<${string}>`
 	|`TYPE::T_FD32<${number}>`
 	|`TYPE::T_FD64<${bigint}n>`
+	|`TYPE::T_VW_Bigint<${string}n>`
 	|Ret_v_param_2_child
-	|Ret_v_param_2_D32
+	|Ret_v_param_2_raw_child
 	;
 ;
 type Ret_v_param_2_child=
@@ -44,3 +48,8 @@ type Ret_v_param_2_maybe_short_ts=
 	;
 ;
 type Ret_v_param_2_D32=`TYPE::T_D32<${string}>`|null;
+type Ret_v_param_2_raw_child=
+	|`TYPE::TV_Str<"${string}">`
+	|`TYPE::["raw_child",${Ret_gen_json},${Ret_gen_json},${Ret_gen_json}]`
+	;
+;
