@@ -1461,7 +1461,6 @@ class Support_EventInput extends ServiceMethods {
 				}
 			}
 			let [d,e]=c;
-			d; e;
 			if(!d.startsWith("@")) debugger;
 			if(this.str_is_search(e)) {
 				let [p,s]=split_string_once(e,"?");
