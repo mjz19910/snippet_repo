@@ -366,3 +366,4 @@ type P_notification_opt_out={
 	4: T_D32<19>;
 	7: TV_Str<"dSHPtnZr2BdhZ8ss">;
 };
+type P_get_notification_menu_ctoken={1: T_D32<1676646338997768>;};

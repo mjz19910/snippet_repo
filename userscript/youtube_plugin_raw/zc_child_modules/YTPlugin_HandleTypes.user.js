@@ -3308,6 +3308,16 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_get_report_form_params(u);
 			} break;
+			case "notification.opt_out": {
+				/** @type {P_notification_opt_out} */
+				let u=as_any(x);
+				this.P_notification_opt_out(u);
+			} break;
+			case "get_notification_menu.ctoken": {
+				/** @type {P_get_notification_menu_ctoken} */
+				let u=as_any(x);
+				this.P_get_notification_menu_ctoken(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3315,6 +3325,10 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_get_notification_menu_ctoken} x */
+	P_get_notification_menu_ctoken(x) {x;}
+	/** @private @arg {P_notification_opt_out} x */
+	P_notification_opt_out(x) {x;}
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {x;}
 	/** @private @arg {P_notification_record_interactions} x */
