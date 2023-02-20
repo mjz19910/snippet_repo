@@ -1874,7 +1874,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 									id: ks2[1],
 									value: box_v1.id,
 								};
-								await this.put_and_wait("boxed_id",box);
+								await this.put_box(box);
 							}
 							let from_db=box.value[1];
 							if(from_db[0]!=="many") continue;
@@ -1891,7 +1891,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 					return;
 				}
-				await this.put_and_wait("boxed_id",{
+				await this.put_box({
 					key: find_key,
 					base: "boxed_id",
 					type: "str",
@@ -1918,7 +1918,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				id: required(ks.pop()),
 				value: to_load_v1.id,
 			};
-			await this.put_and_wait("boxed_id",to_load);
+			await this.put_box(to_load);
 		}
 		for(let item of to_load.value[1][1]) {
 			if(item instanceof Array) {
@@ -2003,7 +2003,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 		}
 		if(do_update&&found_box) {
-			await this.put_and_wait("boxed_id",found_box);
+			await this.put_box(found_box);
 		}
 		if(found) return;
 		switch(store.content) {
@@ -2077,7 +2077,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			default: debugger; break;
 			case "boolean": {
 				let [a,b,value]=args;
-				return this.put_and_wait("boxed_id",{
+				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
@@ -2087,7 +2087,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 			case "keys": {
 				let [a,b,value]=args;
-				return this.put_and_wait("boxed_id",{
+				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
