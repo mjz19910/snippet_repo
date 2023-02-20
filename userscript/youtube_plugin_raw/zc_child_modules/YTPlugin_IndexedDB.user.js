@@ -177,6 +177,10 @@ class IndexedDBService extends BaseService {
 			console.log("tx error",event,tx.error);
 			is_tx_complete=true;
 		};
+		tx.onabort=function(event) {
+			console.log("tx abort",event,tx.error);
+			is_tx_complete=true;
+		};
 		const obj_store=typed_db.objectStore(tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {
