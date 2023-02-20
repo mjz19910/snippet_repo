@@ -1278,7 +1278,7 @@ class HandleTypes extends ServiceMethods {
 				case "data64": case "data_fixed64": return this.tr_arr_to_obj([x3]);
 			}
 			//#region v_param_2
-			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_binary_ts|RetParam_VW_2|null} */
+			/** @arg {V_ParamObj} x @returns {RetParam_BinaryTimestamp|RetParam_VW_2|null} */
 			let v_param_2_maybe_binary_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
@@ -1293,7 +1293,7 @@ class HandleTypes extends ServiceMethods {
 				/** @arg {V_ParamObj[number]} x */
 				function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 			};
-			/** @arg {V_ParamObj} x @returns {Ret_v_param_2_short_ts|null} */
+			/** @arg {V_ParamObj} x @returns {RetParam_ShortTimestamp|null} */
 			let v_param_2_maybe_short_ts=(x) => {
 				if(!(1 in x&&2 in x&&3 in x)) return null;
 				if(x[1][1].length!==1) return null;
@@ -1312,7 +1312,7 @@ class HandleTypes extends ServiceMethods {
 				console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
 				return null;
 			};
-			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_child|RetParam_VW_2|null} */
+			/** @arg {V_ParamItem} otu @returns {RetParam_child|RetParam_VW_2|null} */
 			let v_param_2_child=(otu) => {
 				if(otu[0]!=="child") return null;
 				const [,binary_arr,obj]=otu;
@@ -1331,22 +1331,22 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_VW_2<"${decoded_string}","string">`;
 			};
-			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_D32} */
+			/** @arg {V_ParamItem} otu @returns {RetParam_D32} */
 			let v_param_2_D32=(otu) => {
 				if(otu[0]!=="data32") throw new Error();
 				return `TYPE::T_D32<${otu[1]}>`;
 			};
-			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_FD32} */
+			/** @arg {V_ParamItem} otu @returns {RetParam_FD32} */
 			let v_param_2_FD32=(otu) => {
 				if(otu[0]!=="data_fixed32") throw new Error();
 				return `TYPE::T_FD32<${otu[1]}>`;
 			};
-			/** @arg {V_ParamItem} otu @returns {Ret_v_param_2_FD64} */
+			/** @arg {V_ParamItem} otu @returns {RetParam_FD64} */
 			let v_param_2_FD64=(otu) => {
 				if(otu[0]!=="data_fixed64") throw new Error();
 				return `TYPE::T_FD64<${otu[1]}n>`;
 			};
-			/** @arg {V_RawBox} otu @returns {Ret_v_param_2_raw} */
+			/** @arg {V_RawBox} otu @returns {RetParam_raw} */
 			let v_param_2_raw=(otu) => {
 				switch(otu[1][0]) {
 					case "string": return `TYPE::TV_Str<"${otu[1][1]}">`;
@@ -1361,7 +1361,7 @@ class HandleTypes extends ServiceMethods {
 				if(otu[0]!=="data64") return null;
 				return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 			};
-			/** @arg {V_ParamItem_RawChild} x @returns {Ret_v_param_2_raw_child} */
+			/** @arg {V_ParamItem_RawChild} x @returns {RetParam_raw_child} */
 			let v_param_rc_def=(x) => {
 				let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
 				let obj_json;
@@ -1373,7 +1373,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 			};
-			/** @arg {V_ParamItem_RawChild} x @returns {Ret_v_param_2_raw_child} */
+			/** @arg {V_ParamItem_RawChild} x @returns {RetParam_raw_child} */
 			let v_param_2_raw_child=(x) => {
 				let x1=x[3];
 				switch(x1[0]) {
