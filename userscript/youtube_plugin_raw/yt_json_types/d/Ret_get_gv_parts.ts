@@ -26,7 +26,6 @@ type PT_DigDomain=[
 	rr1.sn-qxo7rn7r.googlevideo.com. 1800 IN A      173.194.54.166
 	rr1.sn-qxo7rn7y.googlevideo.com. 1800 IN A      173.194.55.70
 	rr1.sn-qxoedn7k.googlevideo.com. 1800 IN A      74.125.159.198
-	rr1.sn-qxoedn7k.googlevideo.com. 1800 IN A      74.125.159.198
 	rr1.sn-qxoedne7.googlevideo.com. 1800 IN A      74.125.161.38
 	rr1.sn-qxoednee.googlevideo.com. 1800 IN A      74.125.9.6
 	`,
@@ -74,7 +73,7 @@ type PT_TypeArr=[
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
 	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],// hit
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
-	["qxoed",[]]
+	["qxoed",["7k","e7","ee",]],// hit
 	// 
 ];
 type G_Gv_1_List=[
