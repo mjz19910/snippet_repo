@@ -206,14 +206,14 @@ class IndexedDBService extends BaseService {
 					const cur_cursor=settled.value;
 					if(cur_cursor===null) {
 						if(this.log_db_actions) console.log("update sync cache item",item);
+						if(is_tx_complete) {
+							console.log("cursor_loop_is_tx_complete_1");
+							break cursor_loop;
+						}
 						try {
-							if(tx.error) {
-								debugger;
-								throw tx.error;
-							}
 							await this.update(obj_store,item);
 						} catch(e) {
-							console.log("update failed",e);
+							console.log("cursor_loop_update_failed",e);
 						}
 						break cursor_loop;
 					}
@@ -388,7 +388,7 @@ class IndexedDBService extends BaseService {
 			if(this.log_all_events) console.log("IDBRequest: success",success);
 			this.committed_data.push(data);
 		} catch(e) {
-			console.log("update failed",e,req.error);
+			console.log("update_failed_2",e,req.error);
 			throw e;
 		}
 	}
