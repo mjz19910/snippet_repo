@@ -877,7 +877,7 @@ class Support_RS_Browse extends ServiceMethods {
 	G_BrowseHeader(x) {
 		const cf="G_BrowseHeader";
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
-		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
+		if("c4TabbedHeaderRenderer" in x) return this.bc.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.bc.R_PlaylistHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
