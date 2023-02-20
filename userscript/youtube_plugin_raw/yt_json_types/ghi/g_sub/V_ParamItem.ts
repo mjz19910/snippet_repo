@@ -27,18 +27,18 @@ type V_ParamItemFiltered=
 	|Ret_v_param_2_child
 	|Ret_v_param_2_FD32
 	|Ret_v_param_2_FD64
-	|Ret_v_param_2_maybe_binary_ts
+	|Ret_v_param_2_binary_ts
 	|Ret_v_param_2_raw
 	|Ret_v_param_2_raw_child
 	|RetParam_VW_2
 	;
 ;
 type Ret_v_param_2_child=
-	|Ret_v_param_2_maybe_binary_ts
+	|Ret_v_param_2_binary_ts
 	|Ret_v_param_2_short_ts
 	;
 ;
-type Ret_v_param_2_maybe_binary_ts="TYPE::T_VW_2<V_BinaryTimestamp>";
+type Ret_v_param_2_binary_ts="TYPE::T_VW_2<V_BinaryTimestamp>";
 type Ret_v_param_2_short_ts="TYPE::T_VW_2<V_ShortTimestamp>";
 type Ret_v_param_2_FD32=`TYPE::T_FD32<${number}>`;
 type Ret_v_param_2_FD64=`TYPE::T_FD64<${bigint}n>`;
