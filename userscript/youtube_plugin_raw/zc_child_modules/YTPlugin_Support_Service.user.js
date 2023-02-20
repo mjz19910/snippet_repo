@@ -2051,6 +2051,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					});
 				}
 				if(uv_many) {
+					await this.put_boxed_id(store.content,item[0],uv_many);
 					await this.put_and_wait("boxed_id",{
 						key: `boxed_id:${store.content}:${item[0]}`,
 						base: "boxed_id",
@@ -2078,15 +2079,34 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					}
 				}
 				if(uv_arr) {
-					await this.put_and_wait("boxed_id",{
-						key: `boxed_id:${store.content}:${item[0]}`,
-						base: "boxed_id",
-						type: store.content,
-						id: item[0],
-						value: uv_arr,
-					});
+					await this.put_boxed_id(store.content,item[0],uv_arr);
 				}
 			} break;
+		}
+	}
+	/** @arg {["keys",string,make_arr_t<string>]|["boolean",string,make_many_t<boolean>]} args */
+	put_boxed_id(...args) {
+		switch(args[0]) {
+			case "boolean": {
+				let [a,b,value]=args;
+				return this.put_and_wait("boxed_id",{
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				});
+			}
+			case "keys": {
+				let [a,b,value]=args;
+				return this.put_and_wait("boxed_id",{
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				});
+			}
 		}
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store */
