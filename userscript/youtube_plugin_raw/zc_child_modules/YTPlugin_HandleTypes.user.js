@@ -1378,7 +1378,19 @@ class HandleTypes extends ServiceMethods {
 			case "struct": case "group":
 			case "error": case "info": return x;
 		}
-	};
+	}
+	/** @arg {JsonReplacerState} s @arg {["param_arr", V_ParamItem[]]} x */
+	v_param_arr(s,x) {
+		let x3=x;
+		let ca=x3[1];
+		let res=[];
+		for(let x1 of ca) {
+			res.push(this.v_param_item(s,x1));
+		}
+		if(res.length===1) return res;
+		debugger;
+		return res;
+	}
 	/** @api @public @arg {JsonReplacerState} s @arg {object|null} x @returns {string|object|null} */
 	typedef_json_replace_bin_obj(s,x) {
 		if(x===null) return x;
@@ -1394,36 +1406,12 @@ class HandleTypes extends ServiceMethods {
 			switch(x3[0]) {
 				case "child": case "data32": case "data_fixed32":
 				case "data64": case "data_fixed64": return this.tr_arr_to_obj([x3]);
+				case "param_arr": return this.v_param_arr(s,x3);
 			}
 			if(x3.length===2&&typeof x3[0]==="string") {
 				switch(x3[0]) {
-					case "error": break;
-					case "param_arr": {
-
-					} break;
+					case "error": debugger; break;
 				}
-				let ca=x3[1];
-				if(typeof ca==='object') {
-					let res=[];
-					for(let x1 of ca) {
-						res.push(this.v_param_item(s,x1));
-					}
-					if(res.length===1) {
-						return x3;
-					}
-					let gen_json=this.gen_typedef_bin_json(s,ca);
-					return `TYPE::T_VA_2<"${x3[0]}",${gen_json}>`;
-				}
-				let rep_obj=this.typedef_json_replace_bin(s,"0",ca);
-				if(typeof rep_obj!=="object") {
-					let gen_json=this.gen_typedef_bin_json(s,{type: typeof rep_obj,v: rep_obj});
-					return `TYPE::T_VA_2<"${x3[0]}",${gen_json}>`;
-				}
-				if(rep_obj===null) {
-					return `TYPE::T_VA_2<"${x3[0]}",null>`;
-				}
-				let gen_json=this.gen_typedef_bin_json(s,{type: "object",v: rep_obj});
-				return `TYPE::T_VA_2<"${x3[0]}",${gen_json}>`;
 			}
 			/** @type {(D_ProtobufObj|V_ParamObj[number])[]} */
 			let x_t1=x;
