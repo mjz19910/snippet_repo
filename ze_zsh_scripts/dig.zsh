@@ -12,7 +12,7 @@ function do_dig() {
 	echo $$ >"$TMP_DIR/out.dig_batch.$a2.pid"
 	printf "%s\0" "$TMP_DIR/out.dig_batch.$a2."* | xargs -0r truncate -s 0
 	echo $$ >$TMP_DIR/pid.dig_batch.$a2
-	printf "%s\0" "rr1.sn-"$a2"n"{{0..9},{a..z}}{{0..9},{a..z}}".googlevideo.com" |
+	printf "%s\0" rr1.sn-${a2}n{{0..9},{a..z}}{{0..9},{a..z}}.googlevideo.com |
 		stdbuf -i0 -o0 -e0 xargs -0rn35 -P100 zsh -c '. ./dig.zsh run_child '$a2' "$@"'
 	list=("$TMP_DIR/out.dig_batch.$a2."*)
 	cat $list >>"$RESULT_FILE"
