@@ -3064,6 +3064,8 @@ class HandleTypes extends ServiceMethods {
 		const {1: f1,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
+	/** @type {string[]} */
+	params_to_decode=[];
 	/** @private @arg {PD_continuation_request_browse_token} x */
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
@@ -3075,8 +3077,8 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 		this.t(this.TV_Str(f3),x => {
-			x;
-			debugger;
+			if(this.params_to_decode.includes(x)) return;
+			this.params_to_decode.push(x);
 		});
 		this.t(this.TV_Str(f35),x => {
 			if(x!=="browse-feedFEwhat_to_watch") debugger;
