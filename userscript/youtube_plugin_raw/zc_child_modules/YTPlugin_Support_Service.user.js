@@ -2303,7 +2303,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let no_ns_part=nn[1];
 		this.save_string_one(`${ns_name}::${ns}`,no_ns_part);
 		this.save_string_one(`${cf}::enum_type`,ns_name);
-		this.save_string_one(`${cf}::namespace`,ns);
+		this.save_string_one(`${cf}::enum_namespace`,ns);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
 	show_strings_bitmap(ns,idx,store) {
