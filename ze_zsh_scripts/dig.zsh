@@ -1,4 +1,4 @@
-TMP_DIR="/dev/shm/"
+TMP_DIR="/tmp"
 function do_dig() {
 	RESULT_FILE="$TMP_DIR/result.dig_batch.$a2"
 	if [[ -f "$TMP_DIR/result.dig_batch.$a2" ]]; then
