@@ -2289,6 +2289,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	save_enum_impl(cf,ns,s) {
 		/** @private @type {"_"|"-"} */
 		let sep;
+		/** @type {"ENUM"|"ELEMENT"} */
 		let ns_name="ENUM";
 		if(s.includes("-")) {
 			sep="-";
@@ -2301,6 +2302,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
 		this.save_string_one(`${ns_name}::${ns}`,no_ns_part);
+		this.save_string_one(`${cf}::enum_type`,ns_name);
 		this.save_string_one(`${cf}::namespace`,ns);
 	}
 	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
