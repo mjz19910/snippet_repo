@@ -1723,52 +1723,35 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
+/** @template T @template {StoreContentStr} U @implements {StoreDescription<T,U>} */
+class StoreDescription_C {
+	/** @type {Map<string,number>} */
+	index=new Map;
+	/** @type {[string, make_item_group<T>][]} */
+	data=[];
+	/** @type {[string, make_item_group<T>][]} */
+	new_data=[];
+	/** @arg {StoreGetType<T>} type @arg {U} content */
+	constructor(type,content) {
+		this.type=type;
+		this.content=content;
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
+	push_new_data(k,x) {
+		this.new_data.push([k,x]);
+	}
+}
 class StoreData {
 	/** @type {StoreDescription<boolean,"boolean">} */
-	seen_bool_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-		content: "boolean",
-		type: "boolean",
-	};
+	seen_bool_obj=new StoreDescription_C("boolean","boolean");
 	/** @type {StoreDescription<number,"number">} */
-	seen_number_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-		content: "number",
-		type: "number",
-	};
+	seen_number_obj=new StoreDescription_C("number","number");
 	/** @type {StoreDescription<number,"root_visual_element">} */
-	seen_ve_num_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-		content: "root_visual_element",
-		type: "number",
-	};
+	seen_ve_num_obj=new StoreDescription_C("number","root_visual_element");
 	/** @type {StoreDescription<string,"string">} */
-	seen_string_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-		content: "string",
-		type: "string",
-	};
+	seen_string_obj=new StoreDescription_C("string","string");
 	/** @type {StoreDescription<string,"keys">} */
-	seen_keys_obj={
-		/** @type {Map<string,number>} */
-		index: new Map,
-		data: [],
-		new_data: [],
-		content: "keys",
-		type: "string",
-	};
+	seen_keys_obj=new StoreDescription_C("string","keys");
 	get_boolean_store() {return this.seen_bool_obj;}
 	get_number_store() {return this.seen_number_obj;}
 	get_root_visual_elements_store() {return this.seen_ve_num_obj;}
@@ -2316,15 +2299,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	is_ready=false;
 	/** @type {StoredChangesItem[]} */
 	stored_changes=[];
-	/** @public @template {G_StoreDescriptions} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {U["new_data"][number][1]} x @arg {U} store */
-	save_to_store(ns,k,x,store) {
+	/** @public @template {StoreDescription<boolean,"boolean">} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {U["new_data"][number][1]} x @arg {U} store */
+	save_bool_to_store(ns,k,x,store) {
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
-		switch(store.type) {
-			case "boolean": store.push_new_data(k,x);
-		}
-		store.new_data.push([k,x]);
+		store.push_new_data(k,x);
 		this.onDataChange();
 		if(!this.is_ready) {
 			switch(store.content) {
@@ -2334,12 +2314,32 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 					if(typeof x[1]!=="boolean") break;
 					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
 				} break;
-				case "string":
-				case "keys": {
-					if(x[0]==="arr") break;
-					if(typeof x[1]!=="string") break;
-					this.stored_changes.push([store.content,k,[x[0],x[1]]]);
+			}
+			return false;
+		} else {
+			switch(x[0]) {
+				case "arr": break;
+				case "one": {
+					console.log(`store [${ns}] [${k}] %o`,x[1]);
 				} break;
+			}
+		}
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return false;}
+		this.show_strings_bitmap(ns,idx,store);
+		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
+		return true;
+	}
+	/** @public @template {G_StoreNumDescription} U @arg {DB_NS_TypeStr} ns @arg {string} k @arg {U["new_data"][number][1]} x @arg {U} store */
+	save_num_to_store(ns,k,x,store) {
+		let store_item=this.get_seen_string_item_store(k,store);
+		let store_index=this.save_to_data_item(x,store_item);
+		if(store_index<0) return false;
+		store.push_new_data(k,x);
+		this.onDataChange();
+		if(!this.is_ready) {
+			switch(store.content) {
+				default: debugger; break;
 				case "root_visual_element":
 				case "number": {
 					if(x[0]==="arr") break;
@@ -2400,7 +2400,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	save_number(k,x) {
 		if(x===void 0) {debugger; return false;}
 		let store=this.#get_number_store();
-		return this.save_to_store("number",k,x,store);
+		return this.save_bool_to_store("number",k,x,store);
 	}
 	/** @api @public @arg {string} k @arg {["one",string]|make_arr_t<string>} x */
 	save_string(k,x) {
@@ -2589,12 +2589,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {
 		let store=this.#data_store.get_boolean_store();
-		return this.save_to_store("boolean",k,x,store);
+		return this.save_bool_to_store("boolean",k,x,store);
 	}
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
 		let store=this.#data_store.get_root_visual_elements_store();
-		return this.save_to_store("root_visual_element","ve_element",["one",x],store);
+		return this.save_bool_to_store("root_visual_element","ve_element",["one",x],store);
 	}
 }
 class Support_VE extends ServiceMethods {
