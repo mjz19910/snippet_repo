@@ -168,6 +168,7 @@ class IndexedDBService extends BaseService {
 		let scope={
 			tx,
 			is_tx_complete: false,
+			complete_promise: this.await_complete(tx),
 		};
 		return scope;
 	}
@@ -249,7 +250,7 @@ class IndexedDBService extends BaseService {
 								let scope=this.open_transaction_scope(db,key,"readwrite");
 								tx=scope.tx;
 								obj_store=typed_db.objectStore(tx,key);
-								let complete_event=await this.await_complete(tx);
+								let complete_event=await scope.complete_promise;
 								this.handle_transaction_complete(scope,complete_event);
 							}
 						}
@@ -334,9 +335,8 @@ class IndexedDBService extends BaseService {
 					}
 				}
 			}
-			let complete_event=await this.await_complete(tx);
+			let complete_event=await tx_scope.complete_promise;
 			this.handle_transaction_complete(tx_scope,complete_event);
-			tx_scope.is_tx_complete=true;
 		} catch(e) {
 			console.log("db error",e);
 			throw e;
