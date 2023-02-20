@@ -230,7 +230,8 @@ type P_continuation_request_reel_watch_sequence_token={
 			}],
 			6: [{
 				1: [{
-					1: T_D32<100>,2: T_D32<1>;
+					1: T_D32<100>,
+					2: T_D32<1>;
 				},{
 					1: T_D32<152>,
 					2: T_D32<1>;
