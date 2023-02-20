@@ -41,6 +41,9 @@ type PR_continuation_request_browse_token={0x4c82a9c: T_VW<PD_continuation_reque
 type P_reel_player_params={
 	30: T_D32<1>;
 	71: T_D32<15>;
+}|{
+	30: T_D32<1>,
+	57: T_D32<19>;
 };
 type P_reel_params={
 	1: T_D32<15>;

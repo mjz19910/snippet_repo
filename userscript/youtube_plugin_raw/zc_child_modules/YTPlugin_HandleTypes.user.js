@@ -3099,14 +3099,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params";
-		const {30: f30}=this.s(cf,x);
+		const {30: f30,...u}=this.s(cf,x);
 		this.T_D32(f30,x => this.save_number_one(`${cf}.f30`,x));
-		if(30 in x) {
-			const {30: f30,71: f71}=this.s(cf,x);
-			this.T_D32(f30,x => this.save_number_one(`${cf}.f30`,x));
+		if(71 in u) {
+			const {71: f71,...y}=u; this.g(y);
 			this.T_D32(f71,x => this.save_number_one(`${cf}.f71`,x));
 			return;
 		}
+		{const k=57; if(57 in u) {const {[k]: a,...y}=u; this.g(y); return this.T_D32(a,x => this.save_number_one(`${cf}.f${k}`,x));} }
 		debugger;
 	}
 	//#endregion
