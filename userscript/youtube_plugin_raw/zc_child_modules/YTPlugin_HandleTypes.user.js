@@ -1930,7 +1930,7 @@ class HandleTypes extends ServiceMethods {
 					case "": break;
 				}
 			} break;
-			case "7": case "d": case "e": case "l": case "s": {
+			case "6": case "7": case "d": case "e": case "l": case "s": case "z": {
 				switch(selector_parts[1]) {
 					default: debugger; {
 						switch(selector_parts[1]) {
@@ -2000,9 +2000,10 @@ class HandleTypes extends ServiceMethods {
 		console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`);
 		switch(s6) {
 			default: s6===""; debugger; break;
+			case "6d":
 			case "d6":
 			case "lk":
-			case "sd": case "se": case "sk": case "sl": case "ss": case "sz":
+			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
 			case "el": case "ee":
 		}

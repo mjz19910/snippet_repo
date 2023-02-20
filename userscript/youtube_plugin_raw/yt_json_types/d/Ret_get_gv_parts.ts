@@ -68,6 +68,7 @@ type PT_TypeArr=[
 	["qxo7r",["7k","7r","7y",]],// hit
 	// 
 ];
+type PList=["6d","sk","sr","zk","zr","zy"];
 type G_Gv_1_List=[
 	"6d","6k","6l","6r","6s","6y","6z",
 	"7d","7l","7s","7s","7y","7z","76",
@@ -86,7 +87,7 @@ type G_Gv_1_List_1=[
 	"6","7","d","e","k","l","r","s","y","z",
 ];
 // end ["p5qs7","zy"],
-type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|"d6"|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`;
+type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|"d6"|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`|PList[number];
 type D_GoogleVideoHostPartition={
 	partition: G_Gv_0,
 	selector: G_Gv_1,
