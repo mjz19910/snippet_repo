@@ -1533,9 +1533,7 @@ class Support_EventInput extends ServiceMethods {
 					}
 				}
 			},
-			expirationTime: x => {
-				this._primitive_of(x,"number");
-			}
+			expirationTime: x => this._primitive_of(x,"number"),
 		}));
 		const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
 		this.g(u);
