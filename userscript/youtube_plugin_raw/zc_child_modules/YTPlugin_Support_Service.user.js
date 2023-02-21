@@ -431,6 +431,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				found=true; found_box=box;
 				let [,db_container]=box.value;
 				let [,item_container]=item;
+				if(!this.is_vi_has_str(item_container)) break;
 				if(item_container[0]!==db_container[0]) {
 					switch(db_container[0]) {
 						case "arr": {
@@ -457,23 +458,23 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
 				let uv=this.uv_unpack(vi,[]);
-				if(uv.one) await this.put_boxed_id(store.content,item[0],uv.one);
-				if(uv.arr) await this.put_boxed_id(store.content,item[0],uv.arr);
-				if(uv.many) await this.put_boxed_id(store.content,item[0],uv.many);
+				if(uv.one) this.put_boxed_id(store.content,item[0],uv.one);
+				if(uv.arr) this.put_boxed_id(store.content,item[0],uv.arr);
+				if(uv.many) this.put_boxed_id(store.content,item[0],uv.many);
 			} break;
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
 				let uv=this.uv_unpack(vi,[]);
-				if(uv.one) await this.put_boxed_id(store.content,item[0],uv.one);
-				if(uv.arr) await this.put_boxed_id(store.content,item[0],uv.arr);
-				if(uv.many) await this.put_boxed_id(store.content,item[0],uv.many);
+				if(uv.one) this.put_boxed_id(store.content,item[0],uv.one);
+				if(uv.arr) this.put_boxed_id(store.content,item[0],uv.arr);
+				if(uv.many) this.put_boxed_id(store.content,item[0],uv.many);
 			} break;
 			case "keys": {
 				if(!this.is_vi_has_str(vi)) break;
 				let uv=this.uv_unpack(vi,[]);
-				if(uv.one) await this.put_boxed_id(store.content,item[0],uv.one);
-				if(uv.arr) await this.put_boxed_id(store.content,item[0],uv.arr);
-				if(uv.many) await this.put_boxed_id(store.content,item[0],uv.many);
+				if(uv.one) this.put_boxed_id(store.content,item[0],uv.one);
+				if(uv.arr) this.put_boxed_id(store.content,item[0],uv.arr);
+				if(uv.many) this.put_boxed_id(store.content,item[0],uv.many);
 			} break;
 		}
 	}
