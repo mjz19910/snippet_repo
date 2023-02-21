@@ -481,38 +481,12 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
-	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDb;}} s @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
-	async force_update(s,key,x) {
+	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
+	force_update(key,x) {
 		try {
 			this.put(key,x,3);
 		} catch(e) {
 			throw new AggregateError([e]);
-		}
-		let bp=true;
-		if(bp) return;
-		for(let scope=null;s.error_count<64;) {
-			try {
-				if(s.tx===null&&scope) {
-					let complete_event=await scope.complete_promise;
-					this.handle_transaction_complete(scope,complete_event);
-				}
-				if(s.tx===null) {
-					scope=this.open_transaction_scope(s.db,key,"readwrite");
-					s.tx=scope.tx;
-				}
-				if(s.obj_store===null) s.obj_store=s.typed_db.objectStore(s.tx,key);
-				this.put(key,x,3);
-			} catch(e) {
-				s.error_count++;
-				s.tx=null;
-				s.obj_store=null;
-				continue;
-			}
-			if(scope) {
-				let complete_event=await scope.complete_promise;
-				this.handle_transaction_complete(scope,complete_event);
-			}
-			break;
 		}
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {make_item_group<T>} y @arg {(x:T,y:T)=>boolean} eq_fn */
@@ -563,28 +537,34 @@ class IndexedDBService extends BaseService {
 		state.obj_store=typed_db.objectStore(state.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {
-			for_loop: for(let item of d_cache) {
+			for(let item of d_cache) {
+				if(tx_scope.is_tx_complete) {
+					console.log("cursor_loop_is_tx_complete_0");
+					break;
+				}
 				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
 				let cursor_req=typed_db.openCursor(state.obj_store,TypedIDBValidKeyS.only(item.key));
-				cursor_loop: for(let i=0;i<12;i++) {
-					const cur_cursor=await this.get_async_result(cursor_req);
+				for(let i=0;i<12;i++) {
 					if(tx_scope.is_tx_complete) {
 						console.log("cursor_loop_is_tx_complete_1");
-						break for_loop;
+						break;
 					}
+					const cur_cursor=await this.get_async_result(cursor_req);
+					console.log("[cursor_loop_info]",cur_cursor,item);
 					if(cur_cursor===null) {
 						if(this.log_db_actions) console.log("[update_sync_cache_item_add_to_db]",item);
 						if(tx_scope.is_tx_complete) {
 							console.log("cursor_loop_is_tx_complete_2");
-							break cursor_loop;
+							break;
 						}
-						await this.force_update(state,key,item);
+						this.force_update(key,item);
 						let idx=d_cache.indexOf(item);
 						d_cache[idx]=null;
-						break cursor_loop;
+						break;
 					}
 					const cursor_value=cur_cursor.value;
+					cur_cursor.continue();
 					if(cursor_value.key!==item.key) {
 						console.log(cursor_value.key.split(":"));
 						console.log(item.key.split(":"));
@@ -607,26 +587,27 @@ class IndexedDBService extends BaseService {
 							console.log("merge add failed",e);
 						}
 						this.committed_data.push(item);
+						break;
 					} else {
 						switch(item.type) {
 							default: debugger; break;
 							case "keys":
 							case "string": {
 								if(cursor_value.type!==item.type) {
-									await this.force_update(state,key,item);
-									continue for_loop;
+									this.force_update(key,item);
+									break;
 								}
 								if(this.eq_group(item.value,cursor_value.value,(a,b) => a===b)) {
 									this.committed_data.push(item);
 									break;
 								}
-								await this.force_update(state,key,item);
+								this.force_update(key,item);
 								this.committed_data.push(item);
 							} break;
 							case "video_id:normal": {
 								if(cursor_value.type!==item.type) {
-									await this.force_update(state,key,item);
-									continue for_loop;
+									this.force_update(key,item);
+									break;
 								}
 								if(item.v===cursor_value.v) {
 									this.committed_data.push(item);
@@ -635,9 +616,9 @@ class IndexedDBService extends BaseService {
 							case "update_id": {
 								if(this.log_db_actions) console.log("[update_sync_cache_item_update_id]",item);
 								if(item.key===cursor_value.key&&item.id===cursor_value.id) break;
-								await this.force_update(state,key,item);
+								this.force_update(key,item);
 								this.committed_data.push(item);
-							} break cursor_loop;
+							} break;
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
 							case "channel_id:UC":
@@ -648,16 +629,12 @@ class IndexedDBService extends BaseService {
 								if(cursor_value.key===item.key&&item.id===cursor_value.id) {
 									this.committed_data.push(item);
 								} else {
-									await this.force_update(state,key,item);
+									this.force_update(key,item);
 								}
 								this.committed_data.push(item);
 							} break;
-						};
-					}
-					try {
-						cur_cursor.continue();
-					} catch(e) {
-						debugger;
+						}
+						break;
 					}
 				}
 			}

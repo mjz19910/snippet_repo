@@ -1873,7 +1873,7 @@ function yt_plugin_base_main() {
 	const service_resolver=new ServiceResolver(services,new ServiceFlags);
 	export_((exports) => {exports.services=services;});
 	resolver_value.value=service_resolver;
-	services.on_resolve_services();
+	services.on_resolve_services(resolver_value.listeners,service_resolver);
 	_close_div_scope();
 	on_yt_navigate_finish.push(log_page_type_change);
 

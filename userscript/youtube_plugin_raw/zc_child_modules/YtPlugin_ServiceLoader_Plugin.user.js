@@ -54,8 +54,9 @@ class ServiceLoader {
 		this.yt_handlers=new YtHandlers(x);
 		this.yt_plugin=new YtPlugin(x);
 	}
-	on_resolve_services() {
-
+	/** @api @public @arg {((x: DefaultServiceResolver_2) => void)[]} listeners @arg {DefaultServiceResolver_2} x */
+	on_resolve_services(listeners,x) {
+		for(let handler of listeners) handler(x);
 	}
 }
 
