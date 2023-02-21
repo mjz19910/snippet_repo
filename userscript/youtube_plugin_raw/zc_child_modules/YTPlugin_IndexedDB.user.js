@@ -523,22 +523,25 @@ class IndexedDBService extends BaseService {
 		y;
 		switch(x[0]) {
 			case "arr": {
-				if(y[0]!=="arr") {
-					debugger;
-					break;
-				}
+				if(y[0]!=="arr") {debugger; break;}
 				for(let x_item of x[1]) {
 					let y_item=y[1].findIndex(y_item => eq_fn(y_item,x_item));
 					if(y_item===-1) return false;
 				}
 				return true;
 			}
-			case "many": debugger; break;
-			case "one": {
-				if(y[0]!=="one") {
-					debugger;
-					break;
+			case "many": {
+				if(y[0]!=="arr") {debugger; break;}
+				for(let x_arr of x[1]) {
+					for(let x_item of x_arr) {
+						let y_item=y[1].findIndex(y_item => eq_fn(y_item,x_item));
+						if(y_item===-1) return false;
+					}
 				}
+				return true;
+			}
+			case "one": {
+				if(y[0]!=="one") {debugger; break;}
 				return eq_fn(x[1],y[1]);
 			}
 		}
