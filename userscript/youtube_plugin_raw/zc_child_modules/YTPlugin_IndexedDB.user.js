@@ -510,15 +510,16 @@ class IndexedDBService extends BaseService {
 					case "many": {
 						let x_many=x[1]; let y_many=y[1];
 						if(x_many.length!==y_many.length) return false;
-						for(let x_idx=0;x_idx<x_many.length;x_idx++) {
-							let x_arr=x_many[x_idx]; let y_arr=y_many[x_idx];
-							let has=x_arr.every(x_item => {
-								return y_arr.findIndex(y_item => eq_fn(y_item,x_item))>0;
+						return x_many.every(x_arr => {
+							let y_arr_idx=y_many.findIndex(y_arr => {
+								if(y_arr.length!==x_arr.length) return false;
+								return x_arr.every(x_item => {
+									let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
+									return y_idx>0;
+								});
 							});
-							if(has) continue;
-							return false;
-						}
-						return true;
+							return y_arr_idx>0;
+						});
 					}
 					case "arr": {
 						for(let x_arr of x[1]) {
@@ -530,7 +531,11 @@ class IndexedDBService extends BaseService {
 						}
 						return true;
 					}
-					case "one": debugger; return false;
+					case "one": {
+						let x_many=x[1]; let y_item=y[1];
+						let x_arr_idx=x_many.findIndex(x_arr => x_arr.length===1&&eq_fn(y_item,x_arr[0]));
+						return x_arr_idx>0;
+					}
 				}
 			}
 			case "arr": {
