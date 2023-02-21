@@ -218,6 +218,22 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
+	/** @template T @arg {make_item_group<T>} x @arg {T[]} _mt */
+	uv_unpack_mt(x,_mt) {
+		/** @type {make_one_t<T>|null} */
+		let one=null;
+		/** @type {make_arr_t<T>|null} */
+		let arr=null;
+		/** @type {make_many_t<T>|null} */
+		let many=null;
+		switch(x[0]) {
+			default: debugger; break;
+			case "one": one=x; break;
+			case "many": many=x; break;
+			case "arr": arr=x; break;
+		}
+		return {one,arr,many};
+	}
 	/** @arg {number} version @arg {string} b @arg {["number",make_item_group<number>]|["string"|"keys",make_item_group<string>]|["boolean",make_item_group<boolean>]} args */
 	put_boxed_id(b,version,...args) {
 		switch(args[0]) {
@@ -266,50 +282,31 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} db_boxed @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	async push_store_item_to_database(store,db_boxed,item,version) {
-		let do_update=false;
-		/** @type {D_BoxedStrStore[]} */
-		let db_str_box=[];
-		/** @type {D_BoxedNumStore[]} */
-		let db_num_box=[]; db_num_box;
+		let [,vi]=item;
 		for(let db_box of db_boxed) {
 			switch(db_box.type) {
 				default: console.log("unable to push [type=%s]",db_box.type); break;
-				case "number": db_num_box.push(db_box); break;
-				case "string": db_str_box.push(db_box); break;
+				case "number": {
+					if(!this.is_vi_has_num(vi)) break;
+					if(!this.is_vi_has_num(db_box.value)) break;
+					let uv=this.uv_unpack(vi);
+					let db_uv=this.uv_unpack(db_box.value); db_uv;
+					if(uv.arr) uv.arr[1].sort((a,b) => a-b);
+					if(uv.many) uv.many[1].forEach(x => x.sort((a,b) => a-b));
+					debugger;
+				} break;
+				case "boolean":
+				case "string":
 				case "keys": {
-					// TODO: handle keys
+					if(this.is_vi_has_num(vi)) break;
+					if(this.is_vi_has_num(db_box.value)) break;
+					let uv=this.uv_unpack_mt(vi,["",true]); uv;
+					let db_uv=this.uv_unpack_mt(db_box.value,["",true]); db_uv;
+					debugger;
 				} break;
 				case "update_id": break;
 			}
 		}
-		let found=false;
-		let found_box=null;
-		for(let box of db_str_box) {
-			if(box.id===item[0]) {
-				found=true; found_box=box;
-				let db_container=box.value;
-				let [,item_container]=item;
-				if(!this.is_vi_has_str(item_container)) break;
-				if(item_container[0]!==db_container[0]) {
-					switch(db_container[0]) {
-						default: debugger; break;
-						case "arr": {
-							let [,db_value]=db_container;
-							if(item_container[0]==="one") {
-								let [,item_value]=item_container;
-								if(db_value.includes(item_value)) continue;
-								debugger;
-								continue;
-							}
-						}
-					}
-					debugger;
-				}
-			}
-		}
-		if(do_update&&found_box) this.put_box(found_box,version);
-		if(found) return;
-		let [,vi]=item;
 		switch(store.content) {
 			default: debugger; break;
 			case "number": {
