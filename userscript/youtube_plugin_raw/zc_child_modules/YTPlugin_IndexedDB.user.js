@@ -278,6 +278,16 @@ class IndexedDBService extends BaseService {
 					value,
 				},version);
 			}
+			case "root_visual_element": {
+				let [a,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				},version);
+			}
 		}
 	}
 	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} db_boxed @arg {T} store @arg {T["data"][number]} item @arg {number} version */
@@ -695,6 +705,7 @@ class IndexedDBService extends BaseService {
 									update_item=true; break;
 								}
 							} break;
+							case "root_visual_element":
 							case "number": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
