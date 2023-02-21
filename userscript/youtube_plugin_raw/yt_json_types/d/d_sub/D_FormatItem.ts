@@ -17,4 +17,5 @@ type D_FormatItem={
 	audioSampleRate: `${D_AudioSampleRate}`;
 	audioChannels: 2;
 	signatureCipher?: D_FormatItem_signatureCipher;
+	xtags?: string;
 };

@@ -242,7 +242,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.log_buffer.length===0) return;
 		let ms_set=new Set;
 		for(let log of this.log_buffer) {
-			let [type,cf,name,size,value]=log;
+			let [type,cf1,cf2,size,value]=log;
 			if(type!=="number") continue;
 			if(ms_set.has(value)) continue;
 			// `moment(x/1000).toString()` -> "Sun Feb 19 2023 12:32:55 GMT-0700"
@@ -253,15 +253,15 @@ class HandleTypes extends ServiceMethods {
 				let moment=require("moment");
 				switch(size) {
 					case "milliseconds": {
-						let exp_m_from_now=moment(value/1000).diff(this.client_now)/1000;
+						let exp_m_from_now=moment(value/1000).diff(moment())/1000;
 						// skip time that is now
 						if(exp_m_from_now>-5&&exp_m_from_now<5) break;
-						console.log(cf,name,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
+						console.log(`[cf1:${cf1}]`,`[cf2:${cf2}]`,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
 					} break;
 				}
 				continue;
 			}
-			console.log(cf,name,value);
+			console.log(cf1,cf2,value);
 		}
 	}
 	/** @type {number} */
@@ -287,7 +287,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="V_BinaryTimestamp";
 		const {1: request_timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		this.T_D32(request_timestamp_milli_utc,x => {
-			this.log_buffer.push(["number",`max_gen:${cf}_gen`,"f1","milliseconds",x]);
+			this.log_buffer.push(["number",`max_gen:${cf}:binary_ts_gen`,"f1","milliseconds",x]);
 			this.immediate_run_logger();
 		});
 		this.T_FD32(f2,x => {
@@ -1564,7 +1564,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ctier,x => this.ceq("SH",x));
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
-		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
+		this.t(xtags,x => this.params("video_playback_url.xtags",x));
 		this.save_string(`${cf1}.mime`,mime);
 		this.save_b64_binary(`${cf2}.ns`,ns);
 		cnr&&this.save_string(`${cf1}.cnr`,cnr);

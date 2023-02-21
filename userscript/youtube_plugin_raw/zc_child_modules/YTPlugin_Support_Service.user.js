@@ -782,7 +782,7 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {D_FormatItem} x */
 	D_FormatItem(x) {
 		const cf="D_FormatItem";
-		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,signatureCipher,...u}=this.s(cf,x);
 		this.a_primitive_num(itag);
 		this.t(url,x => this.parser.parse_url(cf,x));
 		this.a_primitive_str(mimeType);
@@ -812,6 +812,8 @@ class Support_RS_Player extends ServiceMethods {
 		});
 		this.t(audioChannels,x => {if(x!==2) debugger;});
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
+		const {xtags,...y}=u; this.g(y);
+		this.t(xtags,x => this.params("format_item.xtags",x));
 	}
 	/** @private @arg {D_UUIDString} x */
 	parse_uuid(x) {
@@ -917,7 +919,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.a_primitive_str(lastModified);
 		this.a_primitive_str(contentLength);
 		this.a_primitive_str(quality);
-		this.t(xtags,x => this.params("adaptive_format.xtags",x));
+		this.t(xtags,x => this.params("adaptive_format_item.xtags",x));
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,this.a_primitive_str);
 		if(projectionType!=="RECTANGULAR") debugger;

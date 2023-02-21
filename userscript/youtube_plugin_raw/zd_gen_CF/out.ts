@@ -1043,6 +1043,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_layout.ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format_item.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.browse.token";}
@@ -1054,6 +1055,8 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "dislike.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "format.xtags";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "format_item.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params";}
@@ -1092,6 +1095,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.serialized_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "trending.bp";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "video_playback_url.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params";}
