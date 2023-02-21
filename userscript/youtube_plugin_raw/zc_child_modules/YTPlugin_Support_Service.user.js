@@ -132,6 +132,13 @@ class StoreDescription extends ApiBase2 {
 			if(idx===void 0) throw new Error();
 			let item=this.data[idx];
 			let item_container=item[1];
+			if(item_container[0]==="many"&&x[0]==="arr") {
+				let [,item_many]=item_container;
+				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x[1]))>-1) return;
+				item_many.push(x[1]);
+				this.push_new_data(k,item_container);
+				return;
+			}
 			if(item_container[0]==="arr"&&x[0]==="arr") {
 				let [,item_arr]=item_container;
 				if(this.eq_keys(item_arr,x[1])) return;
