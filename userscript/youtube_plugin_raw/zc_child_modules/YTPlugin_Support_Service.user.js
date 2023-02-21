@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2}=require("./YtPlugin_Base.user");
+const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any}=require("./YtPlugin_Base.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
 const __module_name__="mod$SupportService";
@@ -250,7 +250,15 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	data_store=new StoreData(() => {
 		this.onDataChange();
 	});
-	idb=(()=>{return this.x.get("indexed_db");})();
+	idb=(() => {
+		if(!this.x) {
+			this.addOnServicesListener(() => {
+				this.idb=this.x.get("indexed_db");
+			});
+			return as_any({});
+		}
+		return this.x.get("indexed_db");
+	})();
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */

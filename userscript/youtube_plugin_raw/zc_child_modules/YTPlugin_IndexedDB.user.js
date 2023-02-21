@@ -50,9 +50,8 @@ class TypedIDBValidKeyS {
 		return {type: "key",key};
 	}
 }
-/** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class IndexedDBService extends BaseService {
-	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader, ServiceOptions>} x */
+	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
 		super(x);
 		/** @type {DT_DatabaseStoreKeys} */

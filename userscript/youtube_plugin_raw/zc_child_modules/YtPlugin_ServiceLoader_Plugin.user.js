@@ -27,7 +27,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
-	/** @constructor @public @arg {ServiceResolverBox<ServiceLoader, ServiceOptions>} x */
+	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
 		this.codegen=new CodegenService(x);
 		this.csi_service=new CsiService(x);
@@ -53,6 +53,9 @@ class ServiceLoader {
 		this.x_VE37414=new Support_VE37414(x);
 		this.yt_handlers=new YtHandlers(x);
 		this.yt_plugin=new YtPlugin(x);
+	}
+	on_resolve_services() {
+
 	}
 }
 

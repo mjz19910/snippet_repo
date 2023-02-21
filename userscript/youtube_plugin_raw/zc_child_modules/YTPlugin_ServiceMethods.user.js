@@ -17,12 +17,9 @@ const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as
 const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-/** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;
 	ks=this.k;
-	/** @override @returns {"unknown"|"normal"} */
-	get service_type() {return "normal";}
 	get handle_types() {return this.x.get("handle_types");}
 	/** @type {this["handle_types"]|null} */
 	_bc=null;
@@ -4102,7 +4099,6 @@ class ServiceMethods extends ServiceData {
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
 		this.z(serviceTrackingParams,x => {
-			if(!this.is_normal_service(this)) return;
 			const service_tracking=this.x.get("service_tracking");
 			service_tracking.set_service_params(x);
 		});

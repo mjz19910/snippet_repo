@@ -19,7 +19,6 @@ const __module_name__="mod$ParserService";
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 if(window.__yt_plugin_log_imports__) console.log("Load Parser Service");
-/** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;
 	/** @api @public @arg {YTNavigateFinishDetail['pageType']} x */

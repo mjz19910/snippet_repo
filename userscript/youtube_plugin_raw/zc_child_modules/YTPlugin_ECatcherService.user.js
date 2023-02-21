@@ -18,7 +18,6 @@ const __module_name__="mod$ECatcherService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-/** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	static known_experiments=[
 		[1714247],
