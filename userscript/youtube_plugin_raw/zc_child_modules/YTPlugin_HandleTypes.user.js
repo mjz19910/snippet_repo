@@ -535,7 +535,6 @@ class HandleTypes extends ServiceMethods {
 	//#endregion
 	//#region web_command_metadata
 	//#endregion
-	//#region general done
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {A_AddToGuideSection} x */
