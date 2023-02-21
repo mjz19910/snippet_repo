@@ -76,6 +76,767 @@ class TypedefGenerator extends ServiceMethods {
 		return null;
 	}
 }
+//#region SeenDatabase
+/** @private @template T */
+class BitmapResult {
+	/** @constructor @public @arg {T[]} map_arr @arg {string} bitmap */
+	constructor(map_arr,bitmap) {
+		this.map_arr=map_arr;
+		this.bitmap=bitmap;
+	}
+}
+/** @template T @template {StoreContentStr} U @implements {StoreDescription<T,U>} */
+class StoreDescription_C extends ApiBase2 {
+	/** @type {Map<string,number>} */
+	key_index=new Map;
+	/** @type {[string, make_item_group<T>][]} */
+	data=[];
+	/** @type {[string, make_item_group<T>][]} */
+	new_data=[];
+	/** @arg {StoreGetType<T>} type @arg {U} content @arg {()=>void} data_update_callback */
+	constructor(type,content,data_update_callback) {
+		super();
+		this.type=type;
+		this.content=content;
+		this.data_update_callback=data_update_callback;
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
+	push_new_data(k,x) {
+		this.new_data.push([k,x]);
+		let new_len=this.data.push([k,x]);
+		this.key_index.set(k,new_len-1);
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
+	save_data(k,x) {
+		if(this.includes_key(k)) {
+			let idx=this.key_index.get(k);
+			if(idx===void 0) throw new Error();
+			let iv=this.data[idx]; iv;
+		} else {
+			this.push_new_data(k,x);
+		}
+	}
+	/** @api @public @this {StoreDescription_C<string,"keys">} @template {{}} T @arg {string} k @arg {T|undefined} obj */
+	save_keys(k,obj) {
+		if(!obj) {debugger; return;}
+		this.save_data(`${k}.type`,["one",typeof obj]);
+		if(typeof obj!=="object") return;
+		if(obj instanceof Array) {
+			this.save_data(`${k}.instance`,["one","array"]);
+			return;
+		}
+		let keys=this.get_keys_of(obj);
+		/** @type {make_arr_t<string>} */
+		let x=["arr",keys];
+		return this.save_data(k,x);
+	}
+	/** @arg {string} k */
+	get_seen_string_item_store(k) {
+		let idx=this.key_index.get(k);
+		if(idx) return this.data[idx];
+		idx=this.data.findIndex(e => e[0]===k);
+		if(idx<0) return this.add_to_index(k,["arr",[]]);
+		this.key_index.set(k,idx);
+		return this.data[idx];
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
+	add_to_index(k,x) {
+		/** @type {[typeof k,typeof x]} */
+		let p=[k,x];
+		let nk=this.data.push(p)-1;
+		this.key_index.set(k,nk);
+		return p;
+	}
+	/** @arg {string} k */
+	includes_key(k) {
+		let idx=this.key_index.get(k);
+		if(idx!==void 0) return true;
+		return false;
+	}
+}
+class StoreData {
+	/** @arg {()=>void} data_update_callback */
+	constructor(data_update_callback) {
+		this.data_update_callback=data_update_callback;
+		/** @type {StoreDescription_C<boolean,"boolean">} */
+		this.bool_store=new StoreDescription_C("boolean","boolean",data_update_callback);
+		/** @type {StoreDescription_C<number,"number">} */
+		this.numbers_store=new StoreDescription_C("number","number",data_update_callback);
+		/** @type {StoreDescription_C<number,"root_visual_element">} */
+		this.ve_store=new StoreDescription_C("number","root_visual_element",data_update_callback);
+		/** @type {StoreDescription_C<string,"string">} */
+		this.string_store=new StoreDescription_C("string","string",data_update_callback);
+		/** @type {StoreDescription_C<string,"keys">} */
+		this.keys_store=new StoreDescription_C("string","keys",data_update_callback);
+	}
+	get_changed_stores() {
+		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
+		let changed=[];
+		if(this.bool_store.new_data.length>0) changed.push("bool");
+		if(this.keys_store.new_data.length>0) changed.push("keys");
+		if(this.numbers_store.new_data.length>0) changed.push("number");
+		if(this.string_store.new_data.length>0) changed.push("string");
+		if(this.ve_store.new_data.length>0) changed.push("ve");
+		return changed;
+	}
+}
+class LocalStorageSeenDatabase extends ServiceMethods {
+	/** @arg {string} key */
+	get_store_keys(key) {return this.data_store.string_store.data.find(e => e[0]===key);}
+	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
+	unwrap_brackets(x) {
+		/** @returns {T|null} */
+		function gn() {return null;}
+		let wv=gn();
+		let wa=split_string_once_ex(x,"[",wv);
+		let [_s1,s2]=wa;
+		let ua=split_string_once_last(s2,"]",wv);
+		let [s3,_s4]=ua;
+		return s3;
+	}
+	data_store=new StoreData(() => {
+		this.onDataChange();
+	});
+	/** @api @public @arg {string} k @arg {["one",boolean]} x */
+	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
+	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
+	save_number(k,x) {return this.data_store.numbers_store.save_data(k,x);}
+	/** @api @public @arg {number} x */
+	save_root_visual_element(x) {return this.data_store.ve_store.save_data("ve_element",["one",x]);}
+	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
+	save_keys_impl(k,x) {return this.data_store.keys_store.save_keys(k,x);}
+	/** @no_mod @type {number|null|Nullable<{}>} */
+	#idle_id=null;
+	onDataChange() {
+		if(this.#idle_id!==null) return;
+		this.is_ready=false;
+		this.#idle_id=requestIdleCallback(async () => {
+			this.#idle_id=null;
+			await this.load_database();
+			this.is_ready=true;
+			for(const msg of this.stored_changes) {
+				switch(msg[0]) {
+					default: debugger; break;
+					case "string": {
+						this.data_store.string_store.save_data(msg[1],msg[2]);
+					} break;
+					case "number": {
+						this.save_number(msg[1],msg[2]);
+					} break;
+				}
+				let idx=this.stored_changes.indexOf(msg);
+				this.stored_changes.splice(idx,1);
+			}
+			this.is_ready=false;
+			await this.save_database();
+			this.is_ready=true;
+		});
+	}
+	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
+	split_box_type(k) {
+		/** @returns {`${A}:${B}`|null} */
+		function gn() {return null;}
+		let wv=gn();
+		let wa=split_string_once_ex(k,":",wv);
+		if(wa.length===2) {
+			wa;
+		}
+		/** @type {`${A}:${B}`} */
+		let z1=wa[1];
+		/** @returns {[A,B]|null} */
+		function gb_a() {return null;}
+		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
+		return this.exact_arr(za,zb);
+	}
+	/** @arg {G_BoxedStr} box @arg {make_many_t<string>} item_group */
+	async store_item_many(box,item_group) {
+		/** @type {Omit<Pick<typeof box,"key"|"type"|"id">,"id">&{id:(typeof box)["value"]}} */
+		let {...box_v1}=as_any(box);
+		if(!("value" in box_v1)) {
+			box_v1;
+			let ks=split_string_once(box_v1.key,":");
+			let ks2=split_string_once(ks[1],":");
+			box={
+				key: box_v1.key,
+				base: "boxed_id",
+				type: ks2[0],
+				id: ks2[1],
+				value: box_v1.id,
+			};
+			await this.put_box(box);
+		}
+		let from_db=box.value[1];
+		if(from_db[0]!=="many") {debugger; return;}
+		for(let src_item of item_group[1]) {
+			let has=from_db[1].find(v => this.eq_keys(v,src_item));
+			if(has===null) {
+				debugger;
+			}
+		}
+	}
+	/** @arg {G_BoxedStr} box @arg {make_arr_t<string>} item_group */
+	async store_item_arr(box,item_group) {
+		box; item_group;
+	}
+	/** @arg {`boxed_id:str:${string}`} find_key @arg {IDBBoxedType} box @arg {make_item_group<string>} item_group */
+	async export_store_item_with_found_box(find_key,box,item_group) {
+		/** @arg {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} v @returns {v is {key: typeof find_key}} */
+		let fk=v => v.key===find_key;
+		if(!fk(box)) return;
+		switch(item_group[0]) {
+			default: debugger; break;
+			case "many": return this.store_item_many(box,item_group);
+			case "arr": return this.store_item_arr(box,item_group);
+			case "one": debugger; break;
+		}
+	}
+	/** @arg {[string, make_item_group<string>]} sd @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
+	async export_store_item(sd,boxed) {
+		const [key,arr]=sd;
+		/** @type {`boxed_id:str:${string}`} */
+		const find_key=`boxed_id:str:${key}`;
+		let box=boxed.find(v => v.key===find_key);
+		if(box) return this.export_store_item_with_found_box(find_key,box,arr);
+		await this.put_box({
+			key: find_key,
+			base: "boxed_id",
+			type: "str",
+			id: key,
+			value: ["many_str",arr],
+		});
+	}
+	/** @arg {G_StoreDescriptions} ss @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
+	async export_db_data(ss,boxed) {
+		if(ss.data.length<=0) return;
+		if(ss.type!=="string") {debugger; return;}
+		for(let sd of ss.data) this.export_store_item(sd,boxed);
+	}
+	log_load_database=false;
+	/** @arg {T_IdBox<B_IdSrcStr,string,"str",string>} to_load @arg {Extract<G_StoreDescriptions,{type:"string"}>} ss */
+	async _load_str_type(to_load,ss) {
+		/** @type {string[][]} */
+		let str_arr=[];
+		/** @type {Omit<Pick<typeof to_load,"key"|"type"|"id">,"id">&{id:(typeof to_load)["value"]}} */
+		let {...to_load_v1}=as_any(to_load);
+		if(!("value" in to_load_v1)) {
+			to_load_v1;
+			let ks=split_string(to_load_v1.key,":");
+			to_load={
+				key: to_load_v1.key,
+				base: "boxed_id",
+				type: ks[1],
+				id: required(ks.pop()),
+				value: to_load_v1.id,
+			};
+			await this.put_box(to_load);
+		}
+		for(let item of to_load.value[1][1]) {
+			if(item instanceof Array) {
+				let res=[];
+				for(let val of item) {
+					if(typeof val!=="string") continue;
+					res.push(val);
+				}
+				str_arr.push(res);
+				continue;
+			}
+			if(typeof item!=="string") continue;
+			str_arr.push([item]);
+		}
+		let k_parts=this.split_box_type(to_load.key);
+		if(k_parts[0]!=="str") debugger;
+		// save database to local
+		for(let from_db of str_arr) {
+			let local_data=ss.data.find(v => v[0]===k_parts[1]);
+			if(!local_data) {
+				ss.data.push([k_parts[1],["arr",from_db]]);
+				continue;
+			}
+			switch(local_data[1][0]) {
+				case "many": {
+					let mv=local_data[1][1];
+					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
+					local_data[1][1].push(from_db);
+				} break;
+				case "arr": {
+					if(from_db.length!==1) {console.log("not eq",from_db,local_data[1][1]); continue;}
+					if(local_data[1][1].includes(from_db[0])) continue;
+					local_data[1][1].push(from_db[0]);
+				}
+			}
+		}
+		// save local to database
+		for(let from_db of str_arr) {
+			let local_data=ss.data.find(v => v[0]===k_parts[1]);
+			if(local_data) {
+				let ck=local_data[1];
+				if(from_db.length===1) {
+					if(ck[0]!=="arr") continue;
+					if(ck[1].includes(from_db[0])) continue;
+					ck[1].push(from_db[0]);
+				} else {
+					if(ck[0]!=="many") continue;
+					let mv=ck[1];
+					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
+					mv.push(from_db);
+				}
+				continue;
+			}
+			ss.data.push([k_parts[1],["arr",from_db]]);
+			debugger;
+		}
+	}
+	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} boxed @arg {T} store @arg {T["data"][number]} item */
+	async push_store_item_to_database(store,boxed,item) {
+		let do_update=false;
+		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
+		let s_box=[];
+		/** @type {(T_IdBox<B_IdSrcNum,string,"num",number>|T_IdBox<B_IdSrcStr,string,"str",string>)[]} */
+		let i_box=[];
+		for(let box of boxed) {
+			switch(box.type) {
+				case "str": if(store.content==="string"||store.content==="keys") s_box.push(box); break;
+				case "num": if(store.content==="number") i_box.push(box); break;
+			}
+		}
+		let found=false;
+		let found_box=null;
+		for(let box of s_box) {
+			if(box.id===item[0]) {
+				found=true; found_box=box;
+				let [,box_b]=box.value;
+				let [,item_b]=item;
+				let [item_c]=item_b; let [box_c]=box_b;
+				if(item_c!==box_c) {
+					debugger;
+				}
+			}
+		}
+		if(do_update&&found_box) {
+			await this.put_box(found_box);
+		}
+		if(found) return;
+		switch(store.content) {
+			default: debugger; break;
+			case "number": {
+				let [,vi]=item;
+				switch(vi[0]) {
+					default: debugger; break;
+				}
+			} break;
+			case "boolean": {
+				let [,vi]=item;
+				/** @type {make_arr_t<boolean>|null} */
+				let uv_arr=null;
+				/** @type {make_many_t<boolean>|null} */
+				let uv_many=null;
+				switch(vi[0]) {
+					default: debugger; break;
+					case "many": {
+						for(let u of vi[1]) {
+							let pa=[];
+							for(let v of u) {
+								if(typeof v!=="boolean") continue;
+								pa.push(v);
+							}
+							if(uv_many) {
+								uv_many[1].push(pa);
+								continue;
+							}
+							uv_many=["many",[pa]];
+						}
+					} break;
+					case "arr": {
+						for(let v of vi[1]) {
+							if(typeof v!=="boolean") continue;
+							if(uv_arr) {
+								uv_arr[1].push(v);
+								continue;
+							}
+							uv_arr=["arr",[v]];
+						}
+					}
+				}
+				if(uv_arr) {
+					await this.put_boxed_id(store.content,item[0],uv_arr);
+				}
+				if(uv_many) {
+					await this.put_boxed_id(store.content,item[0],uv_many);
+				}
+			} break;
+			case "keys": {
+				let [,vi]=item;
+				/** @type {make_arr_t<string>|null} */
+				let uv_arr=null;
+				switch(vi[0]) {
+					default: debugger; break;
+					case "arr": {
+						for(let v of vi[1]) {
+							if(typeof v!=="string") continue;
+							if(uv_arr) {
+								uv_arr[1].push(v);
+								continue;
+							}
+							uv_arr=["arr",[v]];
+						}
+					}
+				}
+				if(uv_arr) {
+					await this.put_boxed_id(store.content,item[0],uv_arr);
+				}
+			} break;
+		}
+	}
+	/** @arg {["keys",string,make_arr_t<string>|make_many_t<string>]|["boolean",string,make_arr_t<boolean>|make_many_t<boolean>]} args */
+	put_boxed_id(...args) {
+		switch(args[0]) {
+			default: debugger; break;
+			case "boolean": {
+				let [a,b,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				});
+			}
+			case "keys": {
+				let [a,b,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				});
+			}
+		}
+	}
+	/** @template {G_StoreDescriptions} T @arg {T} store */
+	async push_store_to_database(store) {
+		/** @type {IDBBoxedType[]} */
+		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
+		for(let item of store.data) {
+			await this.push_store_item_to_database(store,boxed,item);
+		}
+	}
+	async do_boxed_push_to_database() {
+		let store=this.data_store;
+		let changes=store.get_changed_stores();
+		for(let changed of changes) {
+			if(changed==="string") {
+				let ss=store.string_store;
+				await this.push_store_to_database(ss);
+				continue;
+			}
+			if(changed==="keys") {
+				let ks=store.keys_store;
+				await this.push_store_to_database(ks);
+				continue;
+			}
+			if(changed==="number") {
+				let ns=store.numbers_store;
+				await this.push_store_to_database(ns);
+				continue;
+			}
+			debugger;
+		}
+	}
+	async do_boxed_update_from_database() {
+		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
+		if(this.log_load_database) console.log("load_database all boxed",boxed);
+		let store=this.data_store;
+		let ss=store.string_store;
+		if(boxed.length===0) {
+			let changes=store.get_changed_stores();
+			for(let changed of changes) {
+				if(changed==="string") continue;
+				debugger;
+			}
+			await this.export_db_data(ss,boxed);
+		} else {
+			for(let to_load of boxed) {
+				switch(to_load.type) {
+					case "num": {
+						debugger;
+					} break;
+					case "str": this._load_str_type(to_load,ss);
+				}
+			}
+			await this.export_db_data(ss,boxed);
+		}
+	}
+	expected_id=0;
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @returns {Promise<void>|void} */
+	put_and_wait(key,value) {
+		this.indexed_db.put(key,value,3);
+		let wait_close=this.indexed_db.open_db_promise;
+		if(wait_close) return wait_close;
+	}
+	/** @arg {G_BoxedIdObj} x */
+	put_box(x) {return this.put_and_wait("boxed_id",x);}
+	/** @arg {number} id */
+	put_update_id(id) {
+		return this.put_box({
+			key: "boxed_id:update_id",
+			base: "boxed_id",
+			type: "update_id",
+			id,
+		});
+	}
+	get_update_id() {return this.indexed_db.get("boxed_id","boxed_id:update_id",this.indexed_db_version);}
+	async save_database() {
+		let update_id=await this.get_update_id();
+		if(!update_id) throw new Error("Update id not saved when loading database");
+		this.expected_id++;
+		await this.put_update_id(this.expected_id);
+		update_id=await this.get_update_id();
+		if(!update_id) throw new Error("Update id not saved when updating");
+		if(update_id.id!==this.expected_id) {
+			await this.put_update_id(this.expected_id);
+			let wait_close=this.indexed_db.open_db_promise;
+			if(wait_close) await wait_close;
+		}
+		update_id=await this.get_update_id();
+		if(!update_id) throw new Error("Update id not saved when updating");
+		if(update_id.id!==this.expected_id) throw new Error("Conflicting access, update_id still not the expected id");
+		await this.do_boxed_push_to_database();
+	}
+	async load_database() {
+		let update_id=await this.get_update_id();
+		if(!update_id) {
+			await this.put_update_id(1);
+			let wait_close=this.indexed_db.open_db_promise;
+			if(wait_close) await wait_close;
+			this.expected_id=1;
+		} else {
+			this.expected_id++;
+			await this.put_update_id(this.expected_id);
+			update_id=await this.get_update_id();
+		}
+		for(;;) {
+			if(!update_id) {
+				await this.put_update_id(0);
+				let wait_close=this.indexed_db.open_db_promise;
+				if(wait_close) await wait_close;
+				update_id=await this.get_update_id();
+				continue;
+			}
+			if(update_id.id===this.expected_id) {
+				let wait_close=this.indexed_db.open_db_promise;
+				if(wait_close) await wait_close;
+				break;
+			}
+			if(update_id.id!==this.expected_id) {
+				await this.do_boxed_update_from_database();
+				await this.put_update_id(this.expected_id);
+				continue;
+			}
+			this.expected_id++;
+			await this.put_update_id(this.expected_id);
+			update_id=await this.get_update_id();
+			continue;
+		}
+	}
+	/** @template T @arg {make_item_group<any>} x @arg {T} v @returns {asserts x is make_item_group<T>} */
+	is_group_with_type(x,v) {x; v;}
+	is_ready=false;
+	/** @type {StoredChangesItem[]} */
+	stored_changes=[];
+	do_random_breakpoint=false;
+	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
+	save_enum_impl(cf,ns,s) {
+		/** @private @type {"_"|"-"} */
+		let sep;
+		/** @type {"ENUM"|"ELEMENT"} */
+		let ns_name="ENUM";
+		if(s.includes("-")) {
+			sep="-";
+			ns_name="ELEMENT";
+		} else {sep="_";}
+		let no_ns=split_string_once(s,ns);
+		if(!no_ns[1]) throw new Error();
+		let nn=split_string_once(no_ns[1],sep);
+		if(!nn[1]) throw new Error();
+		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
+		let no_ns_part=nn[1];
+		this.save_string(`${ns_name}::${ns}`,no_ns_part);
+		this.save_string(`${cf}::enum_type`,ns_name);
+		this.save_string(`${cf}::enum_namespace`,ns);
+	}
+	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
+	show_strings_bitmap(ns,idx,store) {
+		debugger;
+		let f=true;
+		if(f) return;
+		let p=store.data[idx];
+		if(store.type!=="string") return;
+		if(!p) return;
+		let k=p[0];
+		let cur=p[1];
+		switch(cur[0]) {
+			default: debugger; break;
+			case "one": debugger; break;
+			case "many": {
+				let src_data=cur[1];
+				let max_len=src_data.map(e => e.length).reduce((a,b) => Math.max(a,b));
+				for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++) {
+					let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
+					let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
+					console.log(` --------- [${ns}] [store["${k}"][${bitmap_src_idx}]] --------- `);
+					if(index_map.length===0) continue;
+					console.log(index_map.map(e => `"${e}"`).join(","));
+					console.log(bitmap);
+				}
+
+			} break;
+			case "arr": {
+				let bitmap_src=cur[1];
+				if(bitmap_src.length===0) return;
+				let linear_map=bitmap_src.every(e => {
+					if(typeof e!=="string") return false;
+					return !e.includes(",");
+				});
+				if(linear_map) {
+					console.log(` --------- [${ns}] [${k}] --------- `);
+					if(bitmap_src.length===0) return;
+					console.log(bitmap_src.join(","));
+					return;
+				}
+				let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
+				console.log(` --------- [${ns}] [${k}] --------- `);
+				if(index_map.length===0) return;
+				console.log(index_map.join(","));
+				console.log(bitmap);
+			} break;
+		}
+	}
+	/** @private @arg {string} x */
+	rle_enc(x) {
+		let rle=x.replaceAll(/(1+)|(0+)/g,(v,c1,c2) => {
+			let rle=c1?.length??c2?.length;
+			if(rle<4) return "!"+v[0]+":"+v.length;
+			if(c1?.length!==void 0) return "!"+c1[0]+":"+c1.length;
+			if(c2?.length!==void 0) return "!"+c2[0]+":"+c2.length;
+			return ["!",c1?.length,"$",c2?.length,":"]+"";
+		}).split("!").slice(1);
+		return rle.join("!");
+	}
+	num_bitmap_console() {
+		let gg=this.data_store.numbers_store.data.find(e => e[0]==="P_tracking_params.f1");
+		if(!gg) return;
+		let g1=gg[1];
+		if(g1[0]!=="arr") return;
+		let sr=g1[1].slice().sort((a,b) => a-b);
+		this.save_number_arr("arr.P_tracking_params.f1",sr);
+		let bm=this.generate_bitmap_num(g1[1]).bitmap;
+		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		this.data_store.string_store.data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
+	}
+	/** @private @template T @arg {T[]} bitmap_src */
+	generate_bitmap(bitmap_src) {
+		let map_arr=[...new Set([...bitmap_src.map(e => {
+			if(typeof e!=="string") return [];
+			return e.split(",");
+		}).flat()])];
+		let bitmap="\n"+bitmap_src.map(e => {
+			if(typeof e!=="string") return [];
+			return e.split(",").map(e => map_arr.indexOf(e));
+		}).map(e => {
+			let ta=new Array(map_arr.length).fill(0);
+			for(let x of e) ta[x]=1;
+			let bs=ta.join("");
+			return bs;
+		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
+		return new BitmapResult(map_arr,bitmap);
+	}
+	/** @private @arg {number[]} src */
+	generate_bitmap_num_raw(src) {
+		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
+		let zz=map_arr.at(-1)??0;
+		let ta=new Array(zz+1).fill(0);
+		src.forEach(e => {ta[e]=1;});
+		let bs=ta.join("");
+		return new BitmapResult(map_arr,bs);
+	}
+	/** @private @arg {number[]} src */
+	generate_bitmap_num_raw_fill(src,fill_value=0) {
+		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
+		let zz=map_arr.at(-1)??0;
+		let ta=new Array(zz+1).fill(fill_value);
+		/** @private @type {0|1} */
+		let replace_value;
+		if(fill_value===0) {replace_value=1;} else {replace_value=0;}
+		src.forEach(e => {ta[e]=replace_value;});
+		let bs=ta.join("");
+		return new BitmapResult(map_arr,bs);
+	}
+	bitmap_console_todo_1() {
+		let yt_plugin={ds: this,};
+		let gg=yt_plugin.ds.data_store.numbers_store.data.find(e => e[0]==="tracking.trackingParams.f1");
+		if(!gg) return;
+		if(gg[1][0]!=="arr") return;
+		gg[1][1].sort((a,b) => a-b);
+		let g1=gg[1];
+		/** @private @arg {string} str */
+		function find_one_set_bit(str) {
+			let rx=/(?<=0)1{1}(?=0)/g;
+			/** @private @type {[number,string][]} */
+			let r=[];
+			for(;;) {
+				let rr=rx.exec(str);
+				if(rr===null) return r;
+				r.push([rx.lastIndex,rr[0]]);
+			}
+		}
+		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1[1],1).bitmap;
+		let mm=find_one_set_bit(bm);
+		/** @private @arg {string} bm */
+		function unset_bits(bm) {
+			let mu=bm.split("");
+			for(let u of mm) {
+				let [k,v]=u;
+				let cx=k-1;
+				let off=0;
+				if(v.length===2) off=0;
+				if(v.length===1) off=1;
+				for(let i=cx-1;i<k+v.length-2;i++) {
+					let ui=i+off;
+					let log_clear=false;
+					if(log_clear) console.log("clear",ui,"of",mu[ui]);
+					mu[ui]="0";
+				}
+			}
+			return mu;
+		}
+		/** @private @arg {string[]} s */
+		function swap_mask(s) {return s.map(e => e==="0"? "1":"0").join("");}
+		let mu=unset_bits(bm);
+		new Map(mm);
+		yt_plugin.ds.rle_enc(mu.join(""));
+		let mc=swap_mask(mu);
+		mm=find_one_set_bit(mc);
+		mu=unset_bits(mc);
+		let mu_=swap_mask(mu);
+		let mx=mu_;
+		let rle_x=yt_plugin.ds.rle_enc(mx);
+		console.log(rle_x.split("!"));
+	}
+	console_code_2() {"0:0!1:1".split("!").map(e => e.split(":").map(e => parseInt(e,10))).map((e,i) => [...e,i]).sort(([,a],[,b]) => a-b).map(([a,b,i]) => `${b}$${i}$${a}`);}
+	/** @private @arg {number[]} bitmap_src */
+	generate_bitmap_num(bitmap_src) {
+		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
+		let bitmap_rle=this.rle_enc(bitmap);
+		return new BitmapResult(map_arr,bitmap_rle);
+	}
+}
+export_(exports => {
+	exports.TypedefGenerator=TypedefGenerator;
+	exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;
+	exports.OnePropertyObjArray=OnePropertyObjArray;
+});
+//#endregion
 class Support_RS_Player extends ServiceMethods {
 	//#region dup
 	/** @arg {`${string}.${string}`} x */
@@ -1728,761 +2489,6 @@ class Support_EventInput extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 }
-//#region SeenDatabase
-/** @private @template T */
-class BitmapResult {
-	/** @constructor @public @arg {T[]} map_arr @arg {string} bitmap */
-	constructor(map_arr,bitmap) {
-		this.map_arr=map_arr;
-		this.bitmap=bitmap;
-	}
-}
-/** @template T @template {StoreContentStr} U @implements {StoreDescription<T,U>} */
-class StoreDescription_C extends ApiBase2 {
-	/** @type {Map<string,number>} */
-	key_index=new Map;
-	/** @type {[string, make_item_group<T>][]} */
-	data=[];
-	/** @type {[string, make_item_group<T>][]} */
-	new_data=[];
-	/** @arg {StoreGetType<T>} type @arg {U} content @arg {()=>void} data_update_callback */
-	constructor(type,content,data_update_callback) {
-		super();
-		this.type=type;
-		this.content=content;
-		this.data_update_callback=data_update_callback;
-	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
-	push_new_data(k,x) {
-		this.new_data.push([k,x]);
-		let new_len=this.data.push([k,x]);
-		this.key_index.set(k,new_len-1);
-	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
-	save_data(k,x) {
-		if(this.includes_key(k)) {
-			let idx=this.key_index.get(k);
-			if(idx===void 0) throw new Error();
-			let iv=this.data[idx]; iv;
-		} else {
-			this.push_new_data(k,x);
-		}
-	}
-	/** @api @public @this {StoreDescription_C<string,"keys">} @template {{}} T @arg {string} k @arg {T|undefined} obj */
-	save_keys(k,obj) {
-		if(!obj) {debugger; return;}
-		this.save_data(`${k}.type`,["one",typeof obj]);
-		if(typeof obj!=="object") return;
-		if(obj instanceof Array) {
-			this.save_data(`${k}.instance`,["one","array"]);
-			return;
-		}
-		let keys=this.get_keys_of(obj);
-		/** @type {make_arr_t<string>} */
-		let x=["arr",keys];
-		return this.save_data(k,x);
-	}
-	/** @arg {string} k */
-	get_seen_string_item_store(k) {
-		let idx=this.key_index.get(k);
-		if(idx) return this.data[idx];
-		idx=this.data.findIndex(e => e[0]===k);
-		if(idx<0) return this.add_to_index(k,["arr",[]]);
-		this.key_index.set(k,idx);
-		return this.data[idx];
-	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
-	add_to_index(k,x) {
-		/** @type {[typeof k,typeof x]} */
-		let p=[k,x];
-		let nk=this.data.push(p)-1;
-		this.key_index.set(k,nk);
-		return p;
-	}
-	/** @arg {string} k */
-	includes_key(k) {
-		let idx=this.key_index.get(k);
-		if(idx!==void 0) return true;
-		return false;
-	}
-}
-class StoreData {
-	/** @arg {()=>void} data_update_callback */
-	constructor(data_update_callback) {
-		this.data_update_callback=data_update_callback;
-		/** @type {StoreDescription_C<boolean,"boolean">} */
-		this.bool_store=new StoreDescription_C("boolean","boolean",data_update_callback);
-		/** @type {StoreDescription_C<number,"number">} */
-		this.numbers_store=new StoreDescription_C("number","number",data_update_callback);
-		/** @type {StoreDescription_C<number,"root_visual_element">} */
-		this.ve_store=new StoreDescription_C("number","root_visual_element",data_update_callback);
-		/** @type {StoreDescription_C<string,"string">} */
-		this.string_store=new StoreDescription_C("string","string",data_update_callback);
-		/** @type {StoreDescription_C<string,"keys">} */
-		this.keys_store=new StoreDescription_C("string","keys",data_update_callback);
-	}
-	get_changed_stores() {
-		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
-		let changed=[];
-		if(this.bool_store.new_data.length>0) changed.push("bool");
-		if(this.keys_store.new_data.length>0) changed.push("keys");
-		if(this.numbers_store.new_data.length>0) changed.push("number");
-		if(this.string_store.new_data.length>0) changed.push("string");
-		if(this.ve_store.new_data.length>0) changed.push("ve");
-		return changed;
-	}
-}
-class LocalStorageSeenDatabase extends ServiceMethods {
-	/** @arg {string} key */
-	get_store_keys(key) {return this.data_store.string_store.data.find(e => e[0]===key);}
-	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
-	unwrap_brackets(x) {
-		/** @returns {T|null} */
-		function gn() {return null;}
-		let wv=gn();
-		let wa=split_string_once_ex(x,"[",wv);
-		let [_s1,s2]=wa;
-		let ua=split_string_once_last(s2,"]",wv);
-		let [s3,_s4]=ua;
-		return s3;
-	}
-	data_store=new StoreData(() => {
-		this.onDataChange();
-	});
-	/** @api @public @arg {string} k @arg {["one",boolean]} x */
-	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
-	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
-	save_number(k,x) {return this.data_store.numbers_store.save_data(k,x);}
-	/** @api @public @arg {number} x */
-	save_root_visual_element(x) {return this.data_store.ve_store.save_data("ve_element",["one",x]);}
-	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
-	save_keys_impl(k,x) {return this.data_store.keys_store.save_keys(k,x);}
-	/** @no_mod @type {number|null|Nullable<{}>} */
-	#idle_id=null;
-	onDataChange() {
-		if(this.#idle_id!==null) return;
-		this.is_ready=false;
-		this.#idle_id=requestIdleCallback(async () => {
-			this.#idle_id=null;
-			await this.load_database();
-			this.is_ready=true;
-			for(const msg of this.stored_changes) {
-				switch(msg[0]) {
-					default: debugger; break;
-					case "string": {
-						this.data_store.string_store.save_data(msg[1],msg[2]);
-					} break;
-					case "number": {
-						this.save_number(msg[1],msg[2]);
-					} break;
-				}
-				let idx=this.stored_changes.indexOf(msg);
-				this.stored_changes.splice(idx,1);
-			}
-			this.is_ready=false;
-			await this.save_database();
-			this.is_ready=true;
-		});
-	}
-	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
-	split_box_type(k) {
-		/** @returns {`${A}:${B}`|null} */
-		function gn() {return null;}
-		let wv=gn();
-		let wa=split_string_once_ex(k,":",wv);
-		if(wa.length===2) {
-			wa;
-		}
-		/** @type {`${A}:${B}`} */
-		let z1=wa[1];
-		/** @returns {[A,B]|null} */
-		function gb_a() {return null;}
-		let [za,zb]=split_string_once_ex_v2(z1,":",gb_a());
-		return this.exact_arr(za,zb);
-	}
-	/** @arg {G_BoxedStr} box @arg {make_many_t<string>} item_group */
-	async store_item_many(box,item_group) {
-		/** @type {Omit<Pick<typeof box,"key"|"type"|"id">,"id">&{id:(typeof box)["value"]}} */
-		let {...box_v1}=as_any(box);
-		if(!("value" in box_v1)) {
-			box_v1;
-			let ks=split_string_once(box_v1.key,":");
-			let ks2=split_string_once(ks[1],":");
-			box={
-				key: box_v1.key,
-				base: "boxed_id",
-				type: ks2[0],
-				id: ks2[1],
-				value: box_v1.id,
-			};
-			await this.put_box(box);
-		}
-		let from_db=box.value[1];
-		if(from_db[0]!=="many") {debugger; return;}
-		for(let src_item of item_group[1]) {
-			let has=from_db[1].find(v => this.eq_keys(v,src_item));
-			if(has===null) {
-				debugger;
-			}
-		}
-	}
-	/** @arg {G_BoxedStr} box @arg {make_arr_t<string>} item_group */
-	async store_item_arr(box,item_group) {
-		box; item_group;
-	}
-	/** @arg {`boxed_id:str:${string}`} find_key @arg {IDBBoxedType} box @arg {make_item_group<string>} item_group */
-	async export_store_item_with_found_box(find_key,box,item_group) {
-		/** @arg {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} v @returns {v is {key: typeof find_key}} */
-		let fk=v => v.key===find_key;
-		if(!fk(box)) return;
-		switch(item_group[0]) {
-			default: debugger; break;
-			case "many": return this.store_item_many(box,item_group);
-			case "arr": return this.store_item_arr(box,item_group);
-			case "one": debugger; break;
-		}
-	}
-	/** @arg {[string, make_item_group<string>]} sd @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
-	async export_store_item(sd,boxed) {
-		const [key,arr]=sd;
-		/** @type {`boxed_id:str:${string}`} */
-		const find_key=`boxed_id:str:${key}`;
-		let box=boxed.find(v => v.key===find_key);
-		if(box) return this.export_store_item_with_found_box(find_key,box,arr);
-		await this.put_box({
-			key: find_key,
-			base: "boxed_id",
-			type: "str",
-			id: key,
-			value: ["many_str",arr],
-		});
-	}
-	/** @arg {G_StoreDescriptions} ss @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
-	async export_db_data(ss,boxed) {
-		if(ss.data.length<=0) return;
-		if(ss.type!=="string") {debugger; return;}
-		for(let sd of ss.data) this.export_store_item(sd,boxed);
-	}
-	log_load_database=false;
-	/** @arg {T_IdBox<B_IdSrcStr,string,"str",string>} to_load @arg {Extract<G_StoreDescriptions,{type:"string"}>} ss */
-	async _load_str_type(to_load,ss) {
-		/** @type {string[][]} */
-		let str_arr=[];
-		/** @type {Omit<Pick<typeof to_load,"key"|"type"|"id">,"id">&{id:(typeof to_load)["value"]}} */
-		let {...to_load_v1}=as_any(to_load);
-		if(!("value" in to_load_v1)) {
-			to_load_v1;
-			let ks=split_string(to_load_v1.key,":");
-			to_load={
-				key: to_load_v1.key,
-				base: "boxed_id",
-				type: ks[1],
-				id: required(ks.pop()),
-				value: to_load_v1.id,
-			};
-			await this.put_box(to_load);
-		}
-		for(let item of to_load.value[1][1]) {
-			if(item instanceof Array) {
-				let res=[];
-				for(let val of item) {
-					if(typeof val!=="string") continue;
-					res.push(val);
-				}
-				str_arr.push(res);
-				continue;
-			}
-			if(typeof item!=="string") continue;
-			str_arr.push([item]);
-		}
-		let k_parts=this.split_box_type(to_load.key);
-		if(k_parts[0]!=="str") debugger;
-		// save database to local
-		for(let from_db of str_arr) {
-			let local_data=ss.data.find(v => v[0]===k_parts[1]);
-			if(!local_data) {
-				ss.data.push([k_parts[1],["arr",from_db]]);
-				continue;
-			}
-			switch(local_data[1][0]) {
-				case "many": {
-					let mv=local_data[1][1];
-					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
-					local_data[1][1].push(from_db);
-				} break;
-				case "arr": {
-					if(from_db.length!==1) {console.log("not eq",from_db,local_data[1][1]); continue;}
-					if(local_data[1][1].includes(from_db[0])) continue;
-					local_data[1][1].push(from_db[0]);
-				}
-			}
-		}
-		// save local to database
-		for(let from_db of str_arr) {
-			let local_data=ss.data.find(v => v[0]===k_parts[1]);
-			if(local_data) {
-				let ck=local_data[1];
-				if(from_db.length===1) {
-					if(ck[0]!=="arr") continue;
-					if(ck[1].includes(from_db[0])) continue;
-					ck[1].push(from_db[0]);
-				} else {
-					if(ck[0]!=="many") continue;
-					let mv=ck[1];
-					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
-					mv.push(from_db);
-				}
-				continue;
-			}
-			ss.data.push([k_parts[1],["arr",from_db]]);
-			debugger;
-		}
-	}
-	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} boxed @arg {T} store @arg {T["data"][number]} item */
-	async push_store_item_to_database(store,boxed,item) {
-		let do_update=false;
-		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
-		let s_box=[];
-		/** @type {(T_IdBox<B_IdSrcNum,string,"num",number>|T_IdBox<B_IdSrcStr,string,"str",string>)[]} */
-		let i_box=[];
-		for(let box of boxed) {
-			switch(box.type) {
-				case "str": if(store.content==="string"||store.content==="keys") s_box.push(box); break;
-				case "num": if(store.content==="number") i_box.push(box); break;
-			}
-		}
-		let found=false;
-		let found_box=null;
-		for(let box of s_box) {
-			if(box.id===item[0]) {
-				found=true; found_box=box;
-				let [,box_b]=box.value;
-				let [,item_b]=item;
-				let [item_c]=item_b; let [box_c]=box_b;
-				if(item_c!==box_c) {
-					debugger;
-				}
-			}
-		}
-		if(do_update&&found_box) {
-			await this.put_box(found_box);
-		}
-		if(found) return;
-		switch(store.content) {
-			default: debugger; break;
-			case "number": {
-				let [,vi]=item;
-				switch(vi[0]) {
-					default: debugger; break;
-				}
-			} break;
-			case "boolean": {
-				let [,vi]=item;
-				/** @type {make_arr_t<boolean>|null} */
-				let uv_arr=null;
-				/** @type {make_many_t<boolean>|null} */
-				let uv_many=null;
-				switch(vi[0]) {
-					default: debugger; break;
-					case "many": {
-						for(let u of vi[1]) {
-							let pa=[];
-							for(let v of u) {
-								if(typeof v!=="boolean") continue;
-								pa.push(v);
-							}
-							if(uv_many) {
-								uv_many[1].push(pa);
-								continue;
-							}
-							uv_many=["many",[pa]];
-						}
-					} break;
-					case "arr": {
-						for(let v of vi[1]) {
-							if(typeof v!=="boolean") continue;
-							if(uv_arr) {
-								uv_arr[1].push(v);
-								continue;
-							}
-							uv_arr=["arr",[v]];
-						}
-					}
-				}
-				if(uv_arr) {
-					await this.put_boxed_id(store.content,item[0],uv_arr);
-				}
-				if(uv_many) {
-					await this.put_boxed_id(store.content,item[0],uv_many);
-				}
-			} break;
-			case "keys": {
-				let [,vi]=item;
-				/** @type {make_arr_t<string>|null} */
-				let uv_arr=null;
-				switch(vi[0]) {
-					default: debugger; break;
-					case "arr": {
-						for(let v of vi[1]) {
-							if(typeof v!=="string") continue;
-							if(uv_arr) {
-								uv_arr[1].push(v);
-								continue;
-							}
-							uv_arr=["arr",[v]];
-						}
-					}
-				}
-				if(uv_arr) {
-					await this.put_boxed_id(store.content,item[0],uv_arr);
-				}
-			} break;
-		}
-	}
-	/** @arg {["keys",string,make_arr_t<string>|make_many_t<string>]|["boolean",string,make_arr_t<boolean>|make_many_t<boolean>]} args */
-	put_boxed_id(...args) {
-		switch(args[0]) {
-			default: debugger; break;
-			case "boolean": {
-				let [a,b,value]=args;
-				return this.put_box({
-					key: `boxed_id:${a}:${b}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
-					value,
-				});
-			}
-			case "keys": {
-				let [a,b,value]=args;
-				return this.put_box({
-					key: `boxed_id:${a}:${b}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
-					value,
-				});
-			}
-		}
-	}
-	/** @template {G_StoreDescriptions} T @arg {T} store */
-	async push_store_to_database(store) {
-		/** @type {IDBBoxedType[]} */
-		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
-		for(let item of store.data) {
-			await this.push_store_item_to_database(store,boxed,item);
-		}
-	}
-	async do_boxed_push_to_database() {
-		let store=this.data_store;
-		let changes=store.get_changed_stores();
-		for(let changed of changes) {
-			if(changed==="string") {
-				let ss=store.string_store;
-				await this.push_store_to_database(ss);
-				continue;
-			}
-			if(changed==="keys") {
-				let ks=store.keys_store;
-				await this.push_store_to_database(ks);
-				continue;
-			}
-			if(changed==="number") {
-				let ns=store.numbers_store;
-				await this.push_store_to_database(ns);
-				continue;
-			}
-			debugger;
-		}
-	}
-	async do_boxed_update_from_database() {
-		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
-		if(this.log_load_database) console.log("load_database all boxed",boxed);
-		let store=this.data_store;
-		let ss=store.string_store;
-		if(boxed.length===0) {
-			let changes=store.get_changed_stores();
-			for(let changed of changes) {
-				if(changed==="string") continue;
-				debugger;
-			}
-			await this.export_db_data(ss,boxed);
-		} else {
-			for(let to_load of boxed) {
-				switch(to_load.type) {
-					case "num": {
-						debugger;
-					} break;
-					case "str": this._load_str_type(to_load,ss);
-				}
-			}
-			await this.export_db_data(ss,boxed);
-		}
-	}
-	expected_id=0;
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @returns {Promise<void>|void} */
-	put_and_wait(key,value) {
-		this.indexed_db.put(key,value,3);
-		let wait_close=this.indexed_db.open_db_promise;
-		if(wait_close) return wait_close;
-	}
-	/** @arg {G_BoxedIdObj} x */
-	put_box(x) {return this.put_and_wait("boxed_id",x);}
-	/** @arg {number} id */
-	put_update_id(id) {
-		return this.put_box({
-			key: "boxed_id:update_id",
-			base: "boxed_id",
-			type: "update_id",
-			id,
-		});
-	}
-	get_update_id() {return this.indexed_db.get("boxed_id","boxed_id:update_id",this.indexed_db_version);}
-	async save_database() {
-		let update_id=await this.get_update_id();
-		if(!update_id) throw new Error("Update id not saved when loading database");
-		this.expected_id++;
-		await this.put_update_id(this.expected_id);
-		update_id=await this.get_update_id();
-		if(!update_id) throw new Error("Update id not saved when updating");
-		if(update_id.id!==this.expected_id) {
-			await this.put_update_id(this.expected_id);
-			let wait_close=this.indexed_db.open_db_promise;
-			if(wait_close) await wait_close;
-		}
-		update_id=await this.get_update_id();
-		if(!update_id) throw new Error("Update id not saved when updating");
-		if(update_id.id!==this.expected_id) throw new Error("Conflicting access, update_id still not the expected id");
-		await this.do_boxed_push_to_database();
-	}
-	async load_database() {
-		let update_id=await this.get_update_id();
-		if(!update_id) {
-			await this.put_update_id(1);
-			let wait_close=this.indexed_db.open_db_promise;
-			if(wait_close) await wait_close;
-			this.expected_id=1;
-		} else {
-			this.expected_id++;
-			await this.put_update_id(this.expected_id);
-			update_id=await this.get_update_id();
-		}
-		for(;;) {
-			if(!update_id) {
-				await this.put_update_id(0);
-				let wait_close=this.indexed_db.open_db_promise;
-				if(wait_close) await wait_close;
-				update_id=await this.get_update_id();
-				continue;
-			}
-			if(update_id.id===this.expected_id) {
-				let wait_close=this.indexed_db.open_db_promise;
-				if(wait_close) await wait_close;
-				break;
-			}
-			if(update_id.id!==this.expected_id) {
-				await this.do_boxed_update_from_database();
-				await this.put_update_id(this.expected_id);
-				continue;
-			}
-			this.expected_id++;
-			await this.put_update_id(this.expected_id);
-			update_id=await this.get_update_id();
-			continue;
-		}
-	}
-	/** @template T @arg {make_item_group<any>} x @arg {T} v @returns {asserts x is make_item_group<T>} */
-	is_group_with_type(x,v) {x; v;}
-	is_ready=false;
-	/** @type {StoredChangesItem[]} */
-	stored_changes=[];
-	do_random_breakpoint=false;
-	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
-	save_enum_impl(cf,ns,s) {
-		/** @private @type {"_"|"-"} */
-		let sep;
-		/** @type {"ENUM"|"ELEMENT"} */
-		let ns_name="ENUM";
-		if(s.includes("-")) {
-			sep="-";
-			ns_name="ELEMENT";
-		} else {sep="_";}
-		let no_ns=split_string_once(s,ns);
-		if(!no_ns[1]) throw new Error();
-		let nn=split_string_once(no_ns[1],sep);
-		if(!nn[1]) throw new Error();
-		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
-		let no_ns_part=nn[1];
-		this.save_string(`${ns_name}::${ns}`,no_ns_part);
-		this.save_string(`${cf}::enum_type`,ns_name);
-		this.save_string(`${cf}::enum_namespace`,ns);
-	}
-	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
-	show_strings_bitmap(ns,idx,store) {
-		debugger;
-		let f=true;
-		if(f) return;
-		let p=store.data[idx];
-		if(store.type!=="string") return;
-		if(!p) return;
-		let k=p[0];
-		let cur=p[1];
-		switch(cur[0]) {
-			default: debugger; break;
-			case "one": debugger; break;
-			case "many": {
-				let src_data=cur[1];
-				let max_len=src_data.map(e => e.length).reduce((a,b) => Math.max(a,b));
-				for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++) {
-					let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
-					let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
-					console.log(` --------- [${ns}] [store["${k}"][${bitmap_src_idx}]] --------- `);
-					if(index_map.length===0) continue;
-					console.log(index_map.map(e => `"${e}"`).join(","));
-					console.log(bitmap);
-				}
-
-			} break;
-			case "arr": {
-				let bitmap_src=cur[1];
-				if(bitmap_src.length===0) return;
-				let linear_map=bitmap_src.every(e => {
-					if(typeof e!=="string") return false;
-					return !e.includes(",");
-				});
-				if(linear_map) {
-					console.log(` --------- [${ns}] [${k}] --------- `);
-					if(bitmap_src.length===0) return;
-					console.log(bitmap_src.join(","));
-					return;
-				}
-				let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
-				console.log(` --------- [${ns}] [${k}] --------- `);
-				if(index_map.length===0) return;
-				console.log(index_map.join(","));
-				console.log(bitmap);
-			} break;
-		}
-	}
-	/** @private @arg {string} x */
-	rle_enc(x) {
-		let rle=x.replaceAll(/(1+)|(0+)/g,(v,c1,c2) => {
-			let rle=c1?.length??c2?.length;
-			if(rle<4) return "!"+v[0]+":"+v.length;
-			if(c1?.length!==void 0) return "!"+c1[0]+":"+c1.length;
-			if(c2?.length!==void 0) return "!"+c2[0]+":"+c2.length;
-			return ["!",c1?.length,"$",c2?.length,":"]+"";
-		}).split("!").slice(1);
-		return rle.join("!");
-	}
-	num_bitmap_console() {
-		let gg=this.data_store.numbers_store.data.find(e => e[0]==="P_tracking_params.f1");
-		if(!gg) return;
-		let g1=gg[1];
-		if(g1[0]!=="arr") return;
-		let sr=g1[1].slice().sort((a,b) => a-b);
-		this.save_number_arr("arr.P_tracking_params.f1",sr);
-		let bm=this.generate_bitmap_num(g1[1]).bitmap;
-		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.data_store.string_store.data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
-	}
-	/** @private @template T @arg {T[]} bitmap_src */
-	generate_bitmap(bitmap_src) {
-		let map_arr=[...new Set([...bitmap_src.map(e => {
-			if(typeof e!=="string") return [];
-			return e.split(",");
-		}).flat()])];
-		let bitmap="\n"+bitmap_src.map(e => {
-			if(typeof e!=="string") return [];
-			return e.split(",").map(e => map_arr.indexOf(e));
-		}).map(e => {
-			let ta=new Array(map_arr.length).fill(0);
-			for(let x of e) ta[x]=1;
-			let bs=ta.join("");
-			return bs;
-		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
-		return new BitmapResult(map_arr,bitmap);
-	}
-	/** @private @arg {number[]} src */
-	generate_bitmap_num_raw(src) {
-		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
-		let zz=map_arr.at(-1)??0;
-		let ta=new Array(zz+1).fill(0);
-		src.forEach(e => {ta[e]=1;});
-		let bs=ta.join("");
-		return new BitmapResult(map_arr,bs);
-	}
-	/** @private @arg {number[]} src */
-	generate_bitmap_num_raw_fill(src,fill_value=0) {
-		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
-		let zz=map_arr.at(-1)??0;
-		let ta=new Array(zz+1).fill(fill_value);
-		/** @private @type {0|1} */
-		let replace_value;
-		if(fill_value===0) {replace_value=1;} else {replace_value=0;}
-		src.forEach(e => {ta[e]=replace_value;});
-		let bs=ta.join("");
-		return new BitmapResult(map_arr,bs);
-	}
-	bitmap_console_todo_1() {
-		let yt_plugin={ds: this,};
-		let gg=yt_plugin.ds.data_store.numbers_store.data.find(e => e[0]==="tracking.trackingParams.f1");
-		if(!gg) return;
-		if(gg[1][0]!=="arr") return;
-		gg[1][1].sort((a,b) => a-b);
-		let g1=gg[1];
-		/** @private @arg {string} str */
-		function find_one_set_bit(str) {
-			let rx=/(?<=0)1{1}(?=0)/g;
-			/** @private @type {[number,string][]} */
-			let r=[];
-			for(;;) {
-				let rr=rx.exec(str);
-				if(rr===null) return r;
-				r.push([rx.lastIndex,rr[0]]);
-			}
-		}
-		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1[1],1).bitmap;
-		let mm=find_one_set_bit(bm);
-		/** @private @arg {string} bm */
-		function unset_bits(bm) {
-			let mu=bm.split("");
-			for(let u of mm) {
-				let [k,v]=u;
-				let cx=k-1;
-				let off=0;
-				if(v.length===2) off=0;
-				if(v.length===1) off=1;
-				for(let i=cx-1;i<k+v.length-2;i++) {
-					let ui=i+off;
-					let log_clear=false;
-					if(log_clear) console.log("clear",ui,"of",mu[ui]);
-					mu[ui]="0";
-				}
-			}
-			return mu;
-		}
-		/** @private @arg {string[]} s */
-		function swap_mask(s) {return s.map(e => e==="0"? "1":"0").join("");}
-		let mu=unset_bits(bm);
-		new Map(mm);
-		yt_plugin.ds.rle_enc(mu.join(""));
-		let mc=swap_mask(mu);
-		mm=find_one_set_bit(mc);
-		mu=unset_bits(mc);
-		let mu_=swap_mask(mu);
-		let mx=mu_;
-		let rle_x=yt_plugin.ds.rle_enc(mx);
-		console.log(rle_x.split("!"));
-	}
-	console_code_2() {"0:0!1:1".split("!").map(e => e.split(":").map(e => parseInt(e,10))).map((e,i) => [...e,i]).sort(([,a],[,b]) => a-b).map(([a,b,i]) => `${b}$${i}$${a}`);}
-	/** @private @arg {number[]} bitmap_src */
-	generate_bitmap_num(bitmap_src) {
-		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
-		let bitmap_rle=this.rle_enc(bitmap);
-		return new BitmapResult(map_arr,bitmap_rle);
-	}
-}
 class Support_VE extends ServiceMethods {
 	/** @public @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
@@ -2554,11 +2560,10 @@ class Support_VE37414 extends ServiceMethods {
 		return `VE${rootVe}`;
 	}
 }
-export_(exports => {
-	exports.TypedefGenerator=TypedefGenerator;
-	exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;
-	exports.OnePropertyObjArray=OnePropertyObjArray;
-});
+class Support_Renderer extends ServiceMethods {
+	/** @public @arg {R_SettingsSidebar} x */
+	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
+}
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
 	exports.Support_RS_WatchPage=Support_RS_WatchPage;

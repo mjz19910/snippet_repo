@@ -545,8 +545,6 @@ class HandleTypes extends ServiceMethods {
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	//#region Renderer methods
-	/** @public @arg {R_SettingsSidebar} x */
-	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
 	/** @public @arg {R_PlaylistSidebar} x */
 	R_PlaylistSidebar(x) {this.H_("playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
