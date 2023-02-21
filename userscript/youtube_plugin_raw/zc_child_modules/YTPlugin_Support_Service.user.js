@@ -18,6 +18,7 @@ const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 const __module_name__="mod$SupportService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+//#region SeenDatabase & non support exports
 /** @private @arg {WA|null} _wa @template {[string,string]} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_v2<WA,S,D>} */
 function split_string_once_ex_v2(s,d=as(","),_wa) {
 	if(s==="") {
@@ -76,7 +77,6 @@ class TypedefGenerator extends ServiceMethods {
 		return null;
 	}
 }
-//#region SeenDatabase
 /** @private @template T */
 class BitmapResult {
 	/** @constructor @public @arg {T[]} map_arr @arg {string} bitmap */
