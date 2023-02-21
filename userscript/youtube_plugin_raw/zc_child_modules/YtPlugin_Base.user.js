@@ -1993,6 +1993,15 @@ class ApiBase2 {
 		let ra=rq;
 		return ra;
 	}
+	/** @protected @template {string|number|boolean} U @template {U[]} T @arg {T} src @arg {T} target */
+	eq_keys(src,target) {
+		if(src.length!==target.length) return false;
+		for(let i=0;i<src.length;i++) {
+			let a=src[i];
+			if(!target.includes(a)) return false;
+		}
+		return true;
+	}
 }
 export_(exports => {exports.ApiBase2=ApiBase2;});
 class ApiBase extends ApiBase2 {
@@ -2044,15 +2053,6 @@ class ApiBase extends ApiBase2 {
 		/** @private @type {Partial<U|B>} */
 		let id=cd;
 		return id;
-	}
-	/** @protected @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
-	eq_keys(src,target) {
-		if(src.length!==target.length) return false;
-		for(let i=0;i<src.length;i++) {
-			let a=src[i];
-			if(!target.includes(a)) return false;
-		}
-		return true;
 	}
 	/** @protected @template {string} T @arg {T} t @returns {TP_ParseUrlSearchParams<T>} */
 	parse_url_search_params(t) {

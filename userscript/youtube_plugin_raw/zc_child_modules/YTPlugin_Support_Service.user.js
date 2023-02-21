@@ -85,8 +85,8 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
-/** @template T @template {StoreContentStr} U @implements {StoreDescription<T,U>} */
-class StoreDescription_C extends ApiBase2 {
+/** @template {string|number|boolean} T @template {StoreContentStr} U */
+class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	key_index=new Map;
 	/** @type {[string, make_item_group<T>][]} */
@@ -101,24 +101,49 @@ class StoreDescription_C extends ApiBase2 {
 		this.data_update_callback=data_update_callback;
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
-	push_new_data(k,x) {
-		this.new_data.push([k,x]);
+	add_data_to_index(k,x) {
 		let new_len=this.data.push([k,x]);
 		this.key_index.set(k,new_len-1);
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
+	push_new_data(k,x) {
+		this.new_data.push([k,x]);
+		this.add_data_to_index(k,x);
 		this.data_update_callback();
+	}
+	/** @arg {T_BoxedStore<T,B_BoxedStoreTypeofToType[T_GetTypeof<T>]>} item */
+	load_data(item) {
+		switch(item.type) {
+			case "number":
+			case "keys":
+			case "boolean": break;
+			default: throw new Error();
+		}
+		let {id: k,value: x}=item;
+		if(this.includes_key(item.id)) {
+			return;
+		}
+		this.add_data_to_index(k,x);
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
-			let iv=this.data[idx];
+			let item=this.data[idx];
+			let item_container=item[1];
+			if(item_container[0]==="arr"&&x[0]==="arr") {
+				let [,item_arr]=item_container;
+				if(this.eq_keys(item_arr,x[1])) return;
+				this.push_new_data(k,["many",[item_container[1],x[1]]]);
+				return;
+			}
 			debugger;
-		} else {
-			this.push_new_data(k,x);
+			return;
 		}
+		this.push_new_data(k,x);
 	}
-	/** @api @public @this {StoreDescription_C<string,"keys">} @template {{}} T @arg {string} k @arg {T|undefined} obj */
+	/** @api @public @this {StoreDescription<string,"keys">} @template {{}} T @arg {string} k @arg {T|undefined} obj */
 	save_keys(k,obj) {
 		if(!obj) {debugger; return;}
 		this.save_data(`${k}.type`,["one",typeof obj]);
@@ -156,20 +181,21 @@ class StoreDescription_C extends ApiBase2 {
 		return false;
 	}
 }
+export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
 		this.data_update_callback=data_update_callback;
-		/** @type {StoreDescription_C<boolean,"boolean">} */
-		this.bool_store=new StoreDescription_C("boolean","boolean",data_update_callback);
-		/** @type {StoreDescription_C<number,"number">} */
-		this.numbers_store=new StoreDescription_C("number","number",data_update_callback);
-		/** @type {StoreDescription_C<number,"root_visual_element">} */
-		this.ve_store=new StoreDescription_C("number","root_visual_element",data_update_callback);
-		/** @type {StoreDescription_C<string,"string">} */
-		this.string_store=new StoreDescription_C("string","string",data_update_callback);
-		/** @type {StoreDescription_C<string,"keys">} */
-		this.keys_store=new StoreDescription_C("string","keys",data_update_callback);
+		/** @type {StoreDescription<boolean,"boolean">} */
+		this.bool_store=new StoreDescription("boolean","boolean",data_update_callback);
+		/** @type {StoreDescription<number,"number">} */
+		this.numbers_store=new StoreDescription("number","number",data_update_callback);
+		/** @type {StoreDescription<number,"root_visual_element">} */
+		this.ve_store=new StoreDescription("number","root_visual_element",data_update_callback);
+		/** @type {StoreDescription<string,"string">} */
+		this.string_store=new StoreDescription("string","string",data_update_callback);
+		/** @type {StoreDescription<string,"keys">} */
+		this.keys_store=new StoreDescription("string","keys",data_update_callback);
 	}
 	get_changed_stores() {
 		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
@@ -182,6 +208,7 @@ class StoreData {
 		return changed;
 	}
 }
+export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
 	get_store_keys(key) {return this.data_store.string_store.data.find(e => e[0]===key);}
@@ -286,7 +313,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.save_string(`${cf}::enum_type`,ns_name);
 		this.save_string(`${cf}::enum_namespace`,ns);
 	}
-	/** @public @template T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
+	/** @public @template {string|number} T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
 	show_strings_bitmap(ns,idx,store) {
 		debugger;
 		let f=true;

@@ -138,7 +138,7 @@ class IndexedDBService extends BaseService {
 		if(box&&box.key!=="boxed_id:update_id") return null;
 		return box;
 	}
-	/** @public @arg {I_StoreData} store @arg {number} version */
+	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
 		let update_id=await this.get_update_id(version);
 		if(!update_id) {
@@ -146,24 +146,29 @@ class IndexedDBService extends BaseService {
 			update_id=this.put_update_id(this.expected_id,version);
 		}
 		if(update_id.id!==this.expected_id) {
-			this.load_store_from_database(version);
+			this.load_store_from_database(store,version);
 			this.expected_id=update_id.id;
 		}
 		this.expected_id++;
 		this.put_update_id(this.expected_id,version);
 		await this.do_boxed_push_to_database(store,version);
 	}
-	/** @arg {number} version */
-	async load_store_from_database(version) {
+	/** @arg {StoreData} store @arg {number} version */
+	async load_store_from_database(store,version) {
 		/** @type {IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of boxed) {
-			this.load_store(item);
+			this.load_store(store,item);
 		}
 	}
-	/** @arg {IDBBoxedType} item */
-	load_store(item) {
-		item; debugger;
+	/** @arg {StoreData} store @arg {IDBBoxedType} item */
+	load_store(store,item) {
+		switch(item.type) {
+			default: debugger; break;
+			case "boolean": return store.bool_store.load_data(item);
+			case "keys": return store.keys_store.load_data(item);
+			case "number": return store.numbers_store.load_data(item);
+		}
 	}
 	/** @public @arg {number} version */
 	async load_database(version) {
@@ -299,7 +304,7 @@ class IndexedDBService extends BaseService {
 			} break;
 		}
 	}
-	/** @arg {I_StoreData} store @arg {number} version */
+	/** @arg {StoreData} store @arg {number} version */
 	async do_boxed_push_to_database(store,version) {
 		let changes=store.get_changed_stores();
 		for(let changed of changes) {

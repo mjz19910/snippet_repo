@@ -166,17 +166,6 @@ export class Snippet_0_tmp {
 		}
 		return ok_e;
 	}
-	/** @template {string} C @template {string} U @template {T_Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {T_Split<C,","> extends U[]?C:never} arg1 */
-	has_keys(ok_3,arg1) {return this.eq_keys(ok_3,arg1.split(","));}
-	/** @private @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
-	eq_keys(src,target) {
-		if(src.length!==target.length) return false;
-		for(let i=0;i<src.length;i++) {
-			let a=src[i];
-			if(!target.includes(a)) return false;
-		}
-		return true;
-	}
 	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
