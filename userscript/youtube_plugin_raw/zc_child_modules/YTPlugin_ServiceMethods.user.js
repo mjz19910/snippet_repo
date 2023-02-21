@@ -7305,9 +7305,9 @@ class ServiceMethods extends ServiceData {
 	/** @arg {G_RichSection} x */
 	G_RichSection(x) {
 		const cf="G_RichSection";
-		if("richShelfRenderer" in x) return this.bc.R_RichShelf(x);
-		if("inlineSurveyRenderer" in x) return this.bc.R_InlineSurvey(x);
-		if("sourcePivotHeaderRenderer" in x) return this.bc.R_SourcePivotHeader(x);
+		if("richShelfRenderer" in x) return this.xr.R_RichShelf(x);
+		if("inlineSurveyRenderer" in x) return this.xr.R_InlineSurvey(x);
+		if("sourcePivotHeaderRenderer" in x) return this.xr.R_SourcePivotHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RichGridContent} x */
