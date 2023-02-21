@@ -2293,7 +2293,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
-		const {1: f1,...y}=this.s(cf,x);
+		const {1: f1,3: {}={},5: {}={},6: {}={},...y}=this.s(cf,x); this.g(y);
 		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}

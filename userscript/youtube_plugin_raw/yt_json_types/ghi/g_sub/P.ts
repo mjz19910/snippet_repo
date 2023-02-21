@@ -46,6 +46,9 @@ type P_reel_player_params={
 };
 type P_reel_params={
 	1: T_D32<15>;
+	3?: {};
+	5?: {};
+	6?: {};
 };
 type P_logging_context_serialized_context_data={
 	1: {
@@ -91,7 +94,9 @@ type P_dislike_params_f1={
 type P_dislike_params={
 	1: T_VW<P_dislike_params_f1>;
 	2: T_D32<0>;
+	3?: {};
 	4: T_VW<V_ShortTimestamp>;
+	5?: {};
 };
 type P_subscribe_button_entity_key={
 	2: TV_Str<`UC${string}`>;
