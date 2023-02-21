@@ -3244,7 +3244,7 @@ class Support_Renderer extends ServiceMethods {
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_ChatItem} x */
+	/** @public @arg {G_ChatItem} x */
 	G_ChatItem(x) {
 		const cf="G_ChatItem";
 		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
