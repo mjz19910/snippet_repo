@@ -241,14 +241,15 @@ class IndexedDBService extends BaseService {
 	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} db_boxed @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	async push_store_item_to_database(store,db_boxed,item,version) {
 		let do_update=false;
-		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
+		/** @type {D_BoxedStrStore[]} */
 		let db_str_box=[];
-		/** @type {(T_IdBox<B_IdSrcNum,string,"num",number>|T_IdBox<B_IdSrcStr,string,"str",string>)[]} */
-		let db_num_box=[];
+		/** @type {D_BoxedNumStore[]} */
+		let db_num_box=[]; db_num_box;
 		for(let db_box of db_boxed) {
 			switch(db_box.type) {
-				case "str": if(store.content==="string"||store.content==="keys") db_str_box.push(db_box); break;
-				case "num": if(store.content==="number") db_num_box.push(db_box); break;
+				default: debugger; break;
+				case "number": db_num_box.push(db_box); break;
+				case "string": db_str_box.push(db_box); break;
 			}
 		}
 		let found=false;
@@ -476,6 +477,22 @@ class IndexedDBService extends BaseService {
 			break;
 		}
 	}
+	/** @template T @arg {make_item_group<T>} x @arg {make_item_group<T>} y @arg {(x:T,y:T)=>boolean} eq_fn */
+	eq_group(x,y,eq_fn) {
+		y;
+		switch(x[0]) {
+			case "arr": debugger; break;
+			case "many": debugger; break;
+			case "one": {
+				if(y[0]!=="one") {
+					debugger;
+					break;
+				}
+				return eq_fn(x[1],y[1]);
+			}
+		}
+		return false;
+	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
@@ -542,7 +559,15 @@ class IndexedDBService extends BaseService {
 						switch(item.type) {
 							default: debugger; break;
 							case "keys":
-							case "str": {
+							case "string": {
+								if(cursor_value.type!==item.type) {
+									await this.force_update(state,key,item);
+									continue for_loop;
+								}
+								if(this.eq_group(item.value,cursor_value.value,(a,b) => a===b)) {
+									this.committed_data.push(item);
+									break;
+								}
 								await this.force_update(state,key,item);
 								this.committed_data.push(item);
 							} break;

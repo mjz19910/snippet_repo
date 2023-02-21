@@ -76,8 +76,6 @@ type B_IdSrcStr={
 	type: string;
 };
 type G_IdSrc=B_IdSrcNum|B_IdSrcStr;
-type G_BoxedNum=T_IdBox<B_IdSrcNum,string>;
-type G_BoxedStr=T_IdBox<B_IdSrcStr,string>;
 type D_BoxedUpdateId={
 	key: "boxed_id:update_id";
 	type: "update_id";
@@ -98,8 +96,9 @@ type T_BoxedStore<T,T_Type extends string>={
 };
 type D_BoxedBoolStore=T_BoxedStore<boolean,"boolean">;
 type D_BoxedKeysStore=T_BoxedStore<string,"keys">;
+type D_BoxedStrStore=T_BoxedStore<string,"string">;
 type D_BoxedNumStore=T_BoxedStore<number,"number">;
-type G_BoxedIdObj=G_BoxedNum|G_BoxedStr|D_BoxedUpdateId|D_BoxedNumStore|D_BoxedBoolStore|D_BoxedKeysStore;
+type G_BoxedIdObj=D_BoxedUpdateId|D_BoxedStrStore|D_BoxedNumStore|D_BoxedBoolStore|D_BoxedKeysStore;
 type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${T_IdType}`;
 	base: "boxed_id";
