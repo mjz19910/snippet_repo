@@ -296,9 +296,7 @@ class IndexedDBService extends BaseService {
 								this.committed_data.push(item);
 							} break;
 							case "video_id:normal": {
-								let cv=cursor_value;
 								if(cursor_value.type!==item.type) {
-									cv.type=item.type;
 									await this.force_update(state,key,item);
 									continue for_loop;
 								}
