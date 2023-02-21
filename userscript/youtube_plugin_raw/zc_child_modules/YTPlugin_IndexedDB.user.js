@@ -520,10 +520,10 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {make_item_group<T>} y @arg {(x:T,y:T)=>boolean} eq_fn */
 	eq_group(x,y,eq_fn) {
-		y;
 		switch(x[0]) {
 			case "arr": {
 				if(y[0]!=="arr") {debugger; break;}
+				if(x[1].length!==y[1].length) return false;
 				for(let x_item of x[1]) {
 					let y_item=y[1].findIndex(y_item => eq_fn(y_item,x_item));
 					if(y_item===-1) return false;
@@ -533,6 +533,7 @@ class IndexedDBService extends BaseService {
 			case "many": {
 				if(y[0]!=="arr") {debugger; break;}
 				for(let x_arr of x[1]) {
+					if(x_arr.length!==y[1].length) return false;
 					for(let x_item of x_arr) {
 						let y_item=y[1].findIndex(y_item => eq_fn(y_item,x_item));
 						if(y_item===-1) return false;
