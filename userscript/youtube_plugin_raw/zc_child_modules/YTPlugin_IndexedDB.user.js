@@ -284,6 +284,9 @@ class IndexedDBService extends BaseService {
 	async push_store_item_to_database(store,db_boxed,item,version) {
 		let [key,vi]=item;
 		for(let db_box of db_boxed) {
+			if(db_box.type==="keys") {
+
+			}
 			switch(db_box.type) {
 				default: console.log("unable to push [type=%s]",db_box.type); break;
 				case "number": {
@@ -292,8 +295,6 @@ class IndexedDBService extends BaseService {
 					if(!this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value); db_uv;
-					if(uv.arr) uv.arr[1].sort((a,b) => b-a);
-					if(uv.many) uv.many[1].forEach(x => x.sort((a,b) => b-a));
 					if(db_uv.one&&uv.one) if(uv.one[1]===db_uv.one[1]) return;
 					if(uv.many&&db_uv.arr) break;
 					debugger;
@@ -320,8 +321,14 @@ class IndexedDBService extends BaseService {
 				if(!this.is_vi_has_num(vi)) break;
 				let uv=this.uv_unpack(vi);
 				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
-				if(uv.arr) this.put_boxed_id(item[0],version,store.content,uv.arr);
-				if(uv.many) this.put_boxed_id(item[0],version,store.content,uv.many);
+				if(uv.arr) {
+					uv.arr[1].sort((a,b) => b-a);
+					this.put_boxed_id(item[0],version,store.content,uv.arr);
+				}
+				if(uv.many) {
+					uv.many[1].forEach(x => x.sort((a,b) => b-a));
+					this.put_boxed_id(item[0],version,store.content,uv.many);
+				}
 			} break;
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
