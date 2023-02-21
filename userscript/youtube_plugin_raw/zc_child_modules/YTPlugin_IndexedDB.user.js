@@ -168,7 +168,7 @@ class IndexedDBService extends BaseService {
 			} break;
 			case "boolean": return store.bool_store.load_data(item);
 			case "keys": return store.keys_store.load_data(item);
-			case "number": return store.numbers_store.load_data(item);
+			case "number": return store.number_store.load_data(item);
 			case "string": return store.string_store.load_data(item);
 			case "update_id": break;
 		}
@@ -351,7 +351,7 @@ class IndexedDBService extends BaseService {
 				continue;
 			}
 			if(changed==="number") {
-				let ns=store.numbers_store;
+				let ns=store.number_store;
 				await this.push_store_to_database(ns,version);
 				continue;
 			}

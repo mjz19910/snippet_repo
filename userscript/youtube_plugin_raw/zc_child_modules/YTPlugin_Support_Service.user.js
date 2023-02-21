@@ -203,7 +203,7 @@ class StoreData {
 		/** @type {StoreDescription<boolean,"boolean">} */
 		this.bool_store=new StoreDescription("boolean","boolean",data_update_callback);
 		/** @type {StoreDescription<number,"number">} */
-		this.numbers_store=new StoreDescription("number","number",data_update_callback);
+		this.number_store=new StoreDescription("number","number",data_update_callback);
 		/** @type {StoreDescription<number,"root_visual_element">} */
 		this.ve_store=new StoreDescription("number","root_visual_element",data_update_callback);
 		/** @type {StoreDescription<string,"string">} */
@@ -216,7 +216,7 @@ class StoreData {
 		let changed=[];
 		if(this.bool_store.new_data.length>0) changed.push("bool");
 		if(this.keys_store.new_data.length>0) changed.push("keys");
-		if(this.numbers_store.new_data.length>0) changed.push("number");
+		if(this.number_store.new_data.length>0) changed.push("number");
 		if(this.string_store.new_data.length>0) changed.push("string");
 		if(this.ve_store.new_data.length>0) changed.push("ve");
 		return changed;
@@ -252,7 +252,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
-	save_number(k,x) {return this.data_store.numbers_store.save_data(k,x);}
+	save_number(k,x) {return this.data_store.number_store.save_data(k,x);}
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {return this.data_store.ve_store.save_data("ve_element",["one",x]);}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
@@ -377,7 +377,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let gg=this.data_store.numbers_store.data.find(e => e[0]==="P_tracking_params.f1");
+		let gg=this.data_store.number_store.data.find(e => e[0]==="P_tracking_params.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]!=="arr") return;
@@ -427,7 +427,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	bitmap_console_todo_1() {
 		let yt_plugin={ds: this,};
-		let gg=yt_plugin.ds.data_store.numbers_store.data.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=yt_plugin.ds.data_store.number_store.data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1][0]!=="arr") return;
 		gg[1][1].sort((a,b) => a-b);
