@@ -307,13 +307,17 @@ class IndexedDBService extends BaseService {
 					if(!this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value); db_uv;
-					if(uv.one&&db_uv.one) if(uv.one[1]===db_uv.one[1]) return;
+					if(uv.one&&db_uv.one) {
+						if(uv.one[1]===db_uv.one[1]) return;
+						break;
+					}
+					if(uv.one&&db_uv.arr) break;
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
 						break;
 					}
+					if(uv.arr&&db_uv.one) break;
 					if(uv.many&&db_uv.arr) break;
-					if(uv.one&&db_uv.arr) break;
 					debugger;
 				} break;
 				case "boolean":
@@ -329,6 +333,7 @@ class IndexedDBService extends BaseService {
 						break;
 					}
 					if(uv.one&&db_uv.arr) break;
+					if(uv.arr&&db_uv.one) break;
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
 						break;
