@@ -577,7 +577,6 @@ class IndexedDBService extends BaseService {
 						d_cache[idx]=null;
 						break;
 					}
-					console.log("[cursor_loop_found]",cur_cursor,item);
 					const cursor_value=cur_cursor.value;
 					cur_cursor.continue();
 					if(cursor_value.key!==item.key) {
