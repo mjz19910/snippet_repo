@@ -36,8 +36,11 @@ function init_module() {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	//#region data members
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
+	//#endregion
+	//#region Template
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
 	T_D32(x,f) {
 		if(!x) {debugger; return;}
