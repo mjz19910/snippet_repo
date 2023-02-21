@@ -986,6 +986,14 @@ class HandleTypes extends ServiceMethods {
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
 	}
+	/** @private @arg {R_GuideEntryData} x */
+	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
+	/** @private @arg {D_GuideEntryData} x */
+	D_GuideEntryData(x) {
+		const cf="D_GuideEntryData";
+		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.parse_guide_entry_id(guideEntryId);
+	}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_SubscribeButton} x */
@@ -1996,14 +2004,6 @@ class HandleTypes extends ServiceMethods {
 			}
 			x===""; debugger;
 		}
-	}
-	/** @private @arg {R_GuideEntryData} x */
-	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
-	/** @private @arg {D_GuideEntryData} x */
-	D_GuideEntryData(x) {
-		const cf="D_GuideEntryData";
-		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parse_guide_entry_id(guideEntryId);
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf1,x) {
