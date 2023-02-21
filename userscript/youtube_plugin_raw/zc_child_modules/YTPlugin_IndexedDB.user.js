@@ -299,7 +299,7 @@ class IndexedDBService extends BaseService {
 								let cv=cursor_value;
 								if(cursor_value.type!==item.type) {
 									cv.type=item.type;
-									await this.force_update(state,key,cv);
+									await this.force_update(state,key,item);
 									continue for_loop;
 								}
 								if(item.v===cursor_value.v) {
