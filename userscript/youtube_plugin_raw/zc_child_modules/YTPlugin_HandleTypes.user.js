@@ -712,6 +712,70 @@ class HandleTypes extends ServiceMethods {
 		}
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<D_GuideEntry,{targetId:any;}>|D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
+	D_GuideEntry_WithTargetId(cf,x) {
+		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+		{
+			let x2=navigationEndpoint;
+			if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+			if(this.is_TE_VE(x2,42352)) return this.E_VE42352(x2);
+			debugger;
+		}
+		if(icon.iconType!=="VIDEO_LIBRARY_WHITE") debugger;
+		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
+		this.D_GuideEntry_TargetId(targetId);
+		if(isPrimary!==true) debugger;
+	}
+	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry} x */
+	D_GuideEntry_WithIcon(cf1,x) {
+		const cf2="D_GuideEntry_WithIcon";
+		if("entryData" in x) {
+			if("icon" in x) {
+				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
+				this.E_VE5754(navigationEndpoint);
+				switch(icon.iconType) {
+					default: icon===""; this.codegen_typedef(cf1,x); break;
+					case "LIKES_PLAYLIST": case "PLAYLISTS":
+				}
+				return this.R_GuideEntryData(entryData);
+			}
+			const {...u}=this.D_GuideEntry_Omit(cf1,x);
+			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=this.s(cf2,u); this.g(y);/*#destructure_done*/
+			this.R_GuideEntryData(entryData);
+			if(!navigationEndpoint.browseEndpoint) debugger;
+			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
+			this.D_Thumbnail(thumbnail);
+			this.D_LiveBroadcastingBadge(badges);
+			return;
+		}
+		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
+		if("isPrimary" in x) return this.D_GuideEntry_WithPrimary(cf1,x);
+		if("serviceEndpoint" in x) {
+			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf1,x); this.g(y);
+			this.D_Accessibility(accessibility);
+			this.G_Text(formattedTitle);
+			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithIcon:icon",icon,this.D_GuideEntry_IconType.WithIcon);
+			if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithIcon,this.D_GuideEntry_MissingIconType);
+			/** @type {`${cf2}.SE_Signal`} */
+			const cf3=`${cf2}.SE_Signal`;
+			let [a,b]=this.T_SE_Signal(cf3,serviceEndpoint);
+			this.M_SendPost(a);
+			/** @type {`${cf3}.data`} */
+			const cf4=`${cf3}.data`;
+			this.G_ClientSignal(cf4,b);
+			this.trackingParams(trackingParams);
+			return;
+		}
+		if("icon" in x&&"trackingParams" in x&&"formattedTitle" in x&&"accessibility" in x) {
+			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf1,x); this.g(y);
+			this.D_Accessibility(accessibility);
+			this.trackingParams(trackingParams);
+			this.G_Text(formattedTitle);
+			this.D_Accessibility(accessibility);
+			return;
+		}
+		this.codegen_typedef(cf1,x);
+	}
 	/** @private @arg {R_GuideEntryData} x */
 	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
 	/** @private @arg {D_GuideEntryData} x */
@@ -1838,20 +1902,6 @@ class HandleTypes extends ServiceMethods {
 			case "library-guide-item":
 		}
 	}
-	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<D_GuideEntry,{targetId:any;}>|D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
-	D_GuideEntry_WithTargetId(cf,x) {
-		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
-		{
-			let x2=navigationEndpoint;
-			if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-			if(this.is_TE_VE(x2,42352)) return this.E_VE42352(x2);
-			debugger;
-		}
-		if(icon.iconType!=="VIDEO_LIBRARY_WHITE") debugger;
-		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
-		this.D_GuideEntry_TargetId(targetId);
-		if(isPrimary!==true) debugger;
-	}
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,id]=x; if(sec!=="shorts") debugger;
@@ -2027,56 +2077,6 @@ class HandleTypes extends ServiceMethods {
 			}
 			x===""; debugger;
 		}
-	}
-	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry} x */
-	D_GuideEntry_WithIcon(cf1,x) {
-		const cf2="D_GuideEntry_WithIcon";
-		if("entryData" in x) {
-			if("icon" in x) {
-				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
-				this.E_VE5754(navigationEndpoint);
-				switch(icon.iconType) {
-					default: icon===""; this.codegen_typedef(cf1,x); break;
-					case "LIKES_PLAYLIST": case "PLAYLISTS":
-				}
-				return this.R_GuideEntryData(entryData);
-			}
-			const {...u}=this.D_GuideEntry_Omit(cf1,x);
-			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=this.s(cf2,u); this.g(y);/*#destructure_done*/
-			this.R_GuideEntryData(entryData);
-			if(!navigationEndpoint.browseEndpoint) debugger;
-			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
-			this.D_Thumbnail(thumbnail);
-			this.D_LiveBroadcastingBadge(badges);
-			return;
-		}
-		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
-		if("isPrimary" in x) return this.D_GuideEntry_WithPrimary(cf1,x);
-		if("serviceEndpoint" in x) {
-			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf1,x); this.g(y);
-			this.D_Accessibility(accessibility);
-			this.G_Text(formattedTitle);
-			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithIcon:icon",icon,this.D_GuideEntry_IconType.WithIcon);
-			if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithIcon,this.D_GuideEntry_MissingIconType);
-			/** @type {`${cf2}.SE_Signal`} */
-			const cf3=`${cf2}.SE_Signal`;
-			let [a,b]=this.T_SE_Signal(cf3,serviceEndpoint);
-			this.M_SendPost(a);
-			/** @type {`${cf3}.data`} */
-			const cf4=`${cf3}.data`;
-			this.G_ClientSignal(cf4,b);
-			this.trackingParams(trackingParams);
-			return;
-		}
-		if("icon" in x&&"trackingParams" in x&&"formattedTitle" in x&&"accessibility" in x) {
-			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf1,x); this.g(y);
-			this.D_Accessibility(accessibility);
-			this.trackingParams(trackingParams);
-			this.G_Text(formattedTitle);
-			this.D_Accessibility(accessibility);
-			return;
-		}
-		this.codegen_typedef(cf1,x);
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
