@@ -248,6 +248,8 @@ class HandleTypes extends ServiceMethods {
 			// `moment(x/1000).toString()` -> "Sun Feb 19 2023 12:32:55 GMT-0700"
 			if(value>=0b101111101_010001_0010_100111_001_11110110110_000000000000) {
 				ms_set.add(value);
+				let skip=true;
+				if(skip) break;
 				let lp=this.load_moment_js_if_not_loaded();
 				if(lp!==null) await lp;
 				let moment=require("moment");
