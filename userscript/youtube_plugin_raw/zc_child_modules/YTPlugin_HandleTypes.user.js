@@ -855,6 +855,137 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
+	/** @public @arg {R_PlaylistHeader} x */
+	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
+	/** @private @arg {D_PlaylistHeader} x */
+	D_PlaylistHeader(x) {
+		const cf="D_PlaylistHeader";
+		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x);
+		this.R_Button(playButton);
+		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
+		this.playlistId(playlistId);
+		this.save_string(`${cf}.privacy`,privacy);
+		this.R_Button(shufflePlayButton);
+		this.trackingParams(trackingParams);
+		this.D_EditableDetails(editableDetails);
+		this.t(editorEndpoint,this.E_PlaylistEditor);
+		this.a_primitive_bool(isEditable);
+		this.E_VE3611(ownerEndpoint);
+		this.z(serviceEndpoints,x => {
+			if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
+			if("deletePlaylistEndpoint" in x) return this.E_PlaylistDelete(x);
+			this.codegen_typedef("EF_PlaylistHeader",x,false);
+		});
+		this.R_Menu(moreActionsMenu);
+		this.G_Text(title);
+		this.G_Text(numVideosText);
+		this.t(descriptionTapText,this.G_Text);
+		this.g(descriptionText);
+		this.TA_OpenPopup("A_FancyDismissibleDialog",onDescriptionTap);
+		this.D_CanShare(shareData);
+		this.z(stats,this.G_Text);
+		this.z(briefStats,this.G_Text);
+		this.z(byline,this.R_PlaylistByline);
+		this.G_Text(ownerText);
+		this.G_Text(viewCountText);
+		this.R_CinematicContainer(cinematicContainer);
+		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
+		this.t(shareButton,this.R_Button);
+		this.t(titleForm,this.R_InlineForm);
+		this.t(descriptionForm,this.R_InlineForm);
+		this.t(privacyForm,this.R_DropdownFormField);
+	}
+	/** @public @arg {R_InlineForm} x */
+	R_InlineForm(x) {this.H_("inlineFormRenderer",x,this.D_InlineForm);}
+	/** @public @arg {D_InlineForm} x */
+	D_InlineForm(x) {
+		const cf="D_InlineForm";
+		const {formField,editButton,saveButton,cancelButton,textDisplayed,style,...y}=this.s(cf,x); this.g(y);
+		this.R_TextInputFormField(formField);
+		this.R_Button(editButton);
+		this.R_Button(saveButton);
+		this.R_Button(cancelButton);
+		this.G_Text(textDisplayed);
+		this.cq(style,"INLINE_FORM_STYLE_TITLE");
+		this.save_enum(cf,"INLINE_FORM_STYLE",style);
+	}
+	/** @public @arg {R_TextInputFormField} x */
+	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
+	/** @public @arg {D_TextInputFormField} x */
+	D_TextInputFormField(x) {
+		const cf="D_TextInputFormField";
+		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(label);
+		this.cq(maxCharacterLimit,150);
+		this.a_primitive_str(placeholderText);
+		this.cq(validValueRegexp,"[^<>]*");
+		this.G_Text(invalidValueErrorMessage);
+		this.cq(required,true);
+	}
+	/** @public @arg {R_DropdownFormField} x */
+	R_DropdownFormField(x) {this.H_("dropdownFormFieldRenderer",x,this.D_DropdownFormField);}
+	/** @public @arg {D_DropdownFormField} x */
+	D_DropdownFormField(x) {
+		const cf="D_DropdownFormField";
+		const {dropdown,key,onChange,...y}=this.s(cf,x); this.g(y);
+		this.R_Dropdown(dropdown);
+		this.cq(key,"playlistEditEndpoint.actions.0.playlistPrivacy");
+		let kp=split_string(key,".");
+		this.cq(kp[0],"playlistEditEndpoint");
+		this.E_PlaylistEdit(onChange);
+	}
+	/** @public @arg {R_Dropdown} x */
+	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
+	/** @public @arg {D_Dropdown} x */
+	D_Dropdown(x) {
+		const cf="D_Dropdown";
+		const {entries,label,...y}=this.s(cf,x); this.g(y);
+		this.z(entries,x => {
+			if("privacyDropdownItemRenderer" in x) return this.R_PrivacyDropdownItem(x);
+			debugger;
+		});
+		this.a_primitive_str(label);
+	}
+	/** @public @arg {R_PrivacyDropdownItem} x */
+	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
+	/** @public @arg {D_PrivacyDropdownItem} x */
+	D_PrivacyDropdownItem(x) {
+		const cf="D_PrivacyDropdownItem";
+		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(label);
+		this.T_Icon(cf,icon);
+		this.G_Text(description);
+		switch(int32Value) {
+			default: debugger; break;
+			case 1: break;
+		}
+		this.cq(isSelected,false);
+		this.D_Label(accessibility);
+	}
+	/** @public @arg {R_C4TabbedHeader} x */
+	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
+	/** @private @arg {D_C4TabbedHeader} x */
+	D_C4TabbedHeader(x) {
+		const cf="D_C4TabbedHeader";
+		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.s(cf,x);
+		this.D_ChannelId(channelId);
+		this.a_primitive_str(title);
+		this.E_VE3611(navigationEndpoint);
+		this.D_Thumbnail(avatar);
+		this.D_Thumbnail(banner);
+		this.tz(badges,this.RMD_Badge);
+		this.R_ChannelHeaderLinks(headerLinks);
+		this.R_SubscribeButton(subscribeButton);
+		this.G_Text(subscriberCountText);
+		this.D_Thumbnail(tvBanner);
+		this.D_Thumbnail(mobileBanner);
+		this.trackingParams(trackingParams);
+		this.t(sponsorButton,this.R_Button);
+		this.G_Text(channelHandleText);
+		this.G_Text(videosCountText);
+		const {visitTracking,...y}=u; this.g(y);
+		this.t(visitTracking,this.D_RemarketingPing);
+	}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_SubscribeButton} x */
@@ -2674,137 +2805,6 @@ class HandleTypes extends ServiceMethods {
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
 	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
-	/** @public @arg {R_PlaylistHeader} x */
-	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @private @arg {D_PlaylistHeader} x */
-	D_PlaylistHeader(x) {
-		const cf="D_PlaylistHeader";
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x);
-		this.R_Button(playButton);
-		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
-		this.playlistId(playlistId);
-		this.save_string(`${cf}.privacy`,privacy);
-		this.R_Button(shufflePlayButton);
-		this.trackingParams(trackingParams);
-		this.D_EditableDetails(editableDetails);
-		this.t(editorEndpoint,this.E_PlaylistEditor);
-		this.a_primitive_bool(isEditable);
-		this.E_VE3611(ownerEndpoint);
-		this.z(serviceEndpoints,x => {
-			if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
-			if("deletePlaylistEndpoint" in x) return this.E_PlaylistDelete(x);
-			this.codegen_typedef("EF_PlaylistHeader",x,false);
-		});
-		this.R_Menu(moreActionsMenu);
-		this.G_Text(title);
-		this.G_Text(numVideosText);
-		this.t(descriptionTapText,this.G_Text);
-		this.g(descriptionText);
-		this.TA_OpenPopup("A_FancyDismissibleDialog",onDescriptionTap);
-		this.D_CanShare(shareData);
-		this.z(stats,this.G_Text);
-		this.z(briefStats,this.G_Text);
-		this.z(byline,this.R_PlaylistByline);
-		this.G_Text(ownerText);
-		this.G_Text(viewCountText);
-		this.R_CinematicContainer(cinematicContainer);
-		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
-		this.t(shareButton,this.R_Button);
-		this.t(titleForm,this.R_InlineForm);
-		this.t(descriptionForm,this.R_InlineForm);
-		this.t(privacyForm,this.R_DropdownFormField);
-	}
-	/** @public @arg {R_InlineForm} x */
-	R_InlineForm(x) {this.H_("inlineFormRenderer",x,this.D_InlineForm);}
-	/** @public @arg {D_InlineForm} x */
-	D_InlineForm(x) {
-		const cf="D_InlineForm";
-		const {formField,editButton,saveButton,cancelButton,textDisplayed,style,...y}=this.s(cf,x); this.g(y);
-		this.R_TextInputFormField(formField);
-		this.R_Button(editButton);
-		this.R_Button(saveButton);
-		this.R_Button(cancelButton);
-		this.G_Text(textDisplayed);
-		this.cq(style,"INLINE_FORM_STYLE_TITLE");
-		this.save_enum(cf,"INLINE_FORM_STYLE",style);
-	}
-	/** @public @arg {R_TextInputFormField} x */
-	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
-	/** @public @arg {D_TextInputFormField} x */
-	D_TextInputFormField(x) {
-		const cf="D_TextInputFormField";
-		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(label);
-		this.cq(maxCharacterLimit,150);
-		this.a_primitive_str(placeholderText);
-		this.cq(validValueRegexp,"[^<>]*");
-		this.G_Text(invalidValueErrorMessage);
-		this.cq(required,true);
-	}
-	/** @public @arg {R_DropdownFormField} x */
-	R_DropdownFormField(x) {this.H_("dropdownFormFieldRenderer",x,this.D_DropdownFormField);}
-	/** @public @arg {D_DropdownFormField} x */
-	D_DropdownFormField(x) {
-		const cf="D_DropdownFormField";
-		const {dropdown,key,onChange,...y}=this.s(cf,x); this.g(y);
-		this.R_Dropdown(dropdown);
-		this.cq(key,"playlistEditEndpoint.actions.0.playlistPrivacy");
-		let kp=split_string(key,".");
-		this.cq(kp[0],"playlistEditEndpoint");
-		this.E_PlaylistEdit(onChange);
-	}
-	/** @public @arg {R_Dropdown} x */
-	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
-	/** @public @arg {D_Dropdown} x */
-	D_Dropdown(x) {
-		const cf="D_Dropdown";
-		const {entries,label,...y}=this.s(cf,x); this.g(y);
-		this.z(entries,x => {
-			if("privacyDropdownItemRenderer" in x) return this.R_PrivacyDropdownItem(x);
-			debugger;
-		});
-		this.a_primitive_str(label);
-	}
-	/** @public @arg {R_PrivacyDropdownItem} x */
-	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
-	/** @public @arg {D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x) {
-		const cf="D_PrivacyDropdownItem";
-		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(label);
-		this.T_Icon(cf,icon);
-		this.G_Text(description);
-		switch(int32Value) {
-			default: debugger; break;
-			case 1: break;
-		}
-		this.cq(isSelected,false);
-		this.D_Label(accessibility);
-	}
-	/** @public @arg {R_C4TabbedHeader} x */
-	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
-	/** @private @arg {D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x) {
-		const cf="D_C4TabbedHeader";
-		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.s(cf,x);
-		this.D_ChannelId(channelId);
-		this.a_primitive_str(title);
-		this.E_VE3611(navigationEndpoint);
-		this.D_Thumbnail(avatar);
-		this.D_Thumbnail(banner);
-		this.tz(badges,this.RMD_Badge);
-		this.R_ChannelHeaderLinks(headerLinks);
-		this.R_SubscribeButton(subscribeButton);
-		this.G_Text(subscriberCountText);
-		this.D_Thumbnail(tvBanner);
-		this.D_Thumbnail(mobileBanner);
-		this.trackingParams(trackingParams);
-		this.t(sponsorButton,this.R_Button);
-		this.G_Text(channelHandleText);
-		this.G_Text(videosCountText);
-		const {visitTracking,...y}=u; this.g(y);
-		this.t(visitTracking,this.D_RemarketingPing);
-	}
 	//#region binary
 	/** @public @arg {BinaryVe} x */
 	BinaryVe(x) {
