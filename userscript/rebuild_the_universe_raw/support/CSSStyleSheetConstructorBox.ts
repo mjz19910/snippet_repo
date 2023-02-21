@@ -1,4 +1,4 @@
-import {StackVMImpl} from "../rebuild_the_universe.user.js";
+import {rebuild_the_universe_plugin} from "../rebuild_the_universe.user.js";
 import {Box} from "./Box.js";
 import {BoxTemplate} from "./BoxTemplate.js";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
@@ -10,7 +10,7 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",t
 	readonly instance_type="CSSStyleSheet";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	readonly args_type: [options?: CSSStyleSheetInit|undefined]=[];
-	on_get(_vm: StackVMImpl,key: string) {console.log("get","CSSStyleSheetConstructorBox",key);}
+	on_get(_vm: InstanceType<typeof rebuild_the_universe_plugin["StackVMImpl"]>,key: string) {console.log("get","CSSStyleSheetConstructorBox",key);}
 	factory(...arr: Box[]) {
 		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {

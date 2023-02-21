@@ -3753,7 +3753,7 @@ function make_group_from_item(arr_2d,key,value) {
 }
 
 
-/** @type {import("../rebuild_the_universe_raw/rebuild_the_universe.user").AutoBuyImplR} */
+/** @type {InstanceType<import("../rebuild_the_universe_raw/rebuild_the_universe.user")["rebuild_the_universe_plugin"]["AutoBuyImplR"]>} */
 let g_auto_buy;
 /** @type {{value:string[]}} */
 let src_arr={value: []};

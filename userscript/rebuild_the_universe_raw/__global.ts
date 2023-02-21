@@ -1,9 +1,9 @@
-import {AutoBuyImplR, DocumentWriteListImpl} from "./rebuild_the_universe.user";
+import {rebuild_the_universe_plugin} from "./rebuild_the_universe.user";
 
 
 declare global {
 	interface Window {
-		document_write_list: DocumentWriteListImpl;
+		document_write_list: InstanceType<typeof rebuild_the_universe_plugin.DocumentWriteListImpl>;
 		g_do_load: () => void;
 		g_page_content: {request_content: string; cur: string;};
 	}
@@ -15,7 +15,7 @@ declare global {interface Window {g_mut_observers: any[];}}
 declare global {interface Window {mute(): void;}}
 
 // AutoBuyImplR
-declare global {interface Window {g_auto_buy: AutoBuyImplR;}}
+declare global {interface Window {g_auto_buy: InstanceType<typeof rebuild_the_universe_plugin.AutoBuyImplR>;}}
 
 interface GoogleAdList {
 	op: any;
