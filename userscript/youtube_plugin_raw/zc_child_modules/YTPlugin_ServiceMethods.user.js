@@ -5789,7 +5789,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.t(titleText,this.G_Text);
 		this.t(commentsCount,this.G_Text);
-		if(showSeparator!==true) debugger;
+		this.t(showSeparator,x => this.ceq(x,true));
 		this.tz(customEmojis,this.D_CustomEmoji);
 		this.t(unicodeEmojisUrl,x => this.parser.parse_url(cf,x));
 		this.t(loggingDirectives,this.D_LoggingDirectives);
