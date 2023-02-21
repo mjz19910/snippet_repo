@@ -40,6 +40,23 @@ class HandleTypes extends ServiceMethods {
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
 	//#endregion
+	//#region remote service plugins
+	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
+	indexed_db_createDatabaseSchema(service,old_version,db) {
+		if(old_version<1) {
+			service.create_store("video_id",db);
+			service.create_store("hashtag_id",db);
+			service.create_store("boxed_id",db);
+		}
+		if(old_version<2) {
+			service.create_store("channel_id",db);
+			service.create_store("playlist_id",db);
+		}
+		if(old_version<3) {
+			service.create_store("browse_id",db);
+		}
+	}
+	//#endregion
 	//#region Template
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
 	T_D32(x,f) {
@@ -404,21 +421,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.parser.parse_url(cf,x);
 		return u3;
-	}
-	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
-	indexed_db_createDatabaseSchema(service,old_version,db) {
-		if(old_version<1) {
-			service.create_store("video_id",db);
-			service.create_store("hashtag_id",db);
-			service.create_store("boxed_id",db);
-		}
-		if(old_version<2) {
-			service.create_store("channel_id",db);
-			service.create_store("playlist_id",db);
-		}
-		if(old_version<3) {
-			service.create_store("browse_id",db);
-		}
 	}
 	//#region templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
