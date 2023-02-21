@@ -234,7 +234,7 @@ type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${in
 type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: DecodeUriComponent<C>;}:T;
 
 type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
-type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
+type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? string extends V? {[U in string]?: string;}:TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
 type UriDecodeMap={
 	"%5B": "[";
 	"%5D": "]";

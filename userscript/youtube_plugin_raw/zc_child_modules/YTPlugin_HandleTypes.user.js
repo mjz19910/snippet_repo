@@ -3472,7 +3472,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
-	/** @type {Map<number,{}>} */
+	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
 	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
 	cq(a,b) {if(a!==b) debugger;}
@@ -3484,9 +3484,11 @@ class HandleTypes extends ServiceMethods {
 		let [r,...p]=split_string(tr.pathname,"/"); t.cq(r,"");
 		t.cq(p[0],"pagead"); t.cq(p[1],"viewthroughconversion");
 		let np=this.parse_number_template(p[2]);
-		if(!this.view_conversion_info.has(np)) {
-
-		}
+		if(this.view_conversion_info.has(np)) return;
+		let sp=this.parse_url_search_params(tr.search);
+		let kk=this.get_keys_of(sp);
+		console.log(`[${cf}]`,"[keys]",kk.join());
+		this.view_conversion_info.set(np,sp);
 	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {x;}
