@@ -427,13 +427,18 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			} break;
 			case "boolean": {
 				let [,vi]=item;
+				/** @type {make_one_t<boolean>|null} */
+				let uv_one=null;
 				/** @type {make_arr_t<boolean>|null} */
 				let uv_arr=null;
 				/** @type {make_many_t<boolean>|null} */
 				let uv_many=null;
 				switch(vi[0]) {
 					default: debugger; break;
-					case "one": break;
+					case "one": {
+						if(typeof vi[1]!=="boolean") break;
+						uv_one=vi;
+					} break;
 					case "many": {
 						for(let u of vi[1]) {
 							let pa=[];
@@ -459,12 +464,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 						}
 					}
 				}
-				if(uv_arr) {
-					await this.put_boxed_id(store.content,item[0],uv_arr);
-				}
-				if(uv_many) {
-					await this.put_boxed_id(store.content,item[0],uv_many);
-				}
+				if(uv_one) await this.put_boxed_id(store.content,item[0],uv_one);
+				if(uv_arr) await this.put_boxed_id(store.content,item[0],uv_arr);
+				if(uv_many) await this.put_boxed_id(store.content,item[0],uv_many);
 			} break;
 			case "keys": {
 				let [,vi]=item;
