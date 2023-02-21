@@ -296,6 +296,7 @@ class IndexedDBService extends BaseService {
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value); db_uv;
 					if(db_uv.one&&uv.one) if(uv.one[1]===db_uv.one[1]) return;
+					if(uv.many&&db_uv.arr) break;
 					debugger;
 				} break;
 				case "boolean":
