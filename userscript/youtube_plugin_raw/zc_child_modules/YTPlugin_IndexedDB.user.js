@@ -234,7 +234,7 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @arg {string} b @arg {["number",make_item_group<number>]|["string"|"keys",make_item_group<string>]|["boolean",make_item_group<boolean>]} args */
+	/** @arg {number} version @arg {string} b @arg {["root_visual_element"|"number",make_item_group<number>]|["string"|"keys",make_item_group<string>]|["boolean",make_item_group<boolean>]} args */
 	put_boxed_id(b,version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();
@@ -339,6 +339,7 @@ class IndexedDBService extends BaseService {
 		}
 		switch(store.content) {
 			default: debugger; break;
+			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
 				let uv=this.uv_unpack(vi);
