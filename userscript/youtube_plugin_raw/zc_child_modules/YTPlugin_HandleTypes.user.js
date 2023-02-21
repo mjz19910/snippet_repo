@@ -689,6 +689,37 @@ class HandleTypes extends ServiceMethods {
 	R_GuideCollapsibleSectionEntry(x) {this.H_("guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
 	/** @private @arg {R_GuideEntry} x */
 	R_GuideEntry(x) {this.H_("guideEntryRenderer",x,this.D_GuideEntry);}
+	/** @private @arg {D_GuideEntry} x */
+	D_GuideEntry(x) {
+		const cf="D_GuideEntry";
+		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf,x);
+		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
+		if("presentationStyle" in x) {
+			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.E_VE3611(navigationEndpoint);
+			this.D_Thumbnail(thumbnail);
+			this.D_LiveBroadcastingBadge(badges);
+			this.trackingParams(trackingParams);
+			this.G_Text(formattedTitle);
+			this.D_Accessibility(accessibility);
+			this.R_GuideEntryData(entryData);
+			switch(presentationStyle) {
+				case "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT":
+				case "GUIDE_ENTRY_PRESENTATION_STYLE_NONE": break;
+				default: console.log(`[D_GuideEntry_PresentationType]\n\n\ncase"${presentationStyle}":`); break;
+			}
+			return;
+		}
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {R_GuideEntryData} x */
+	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
+	/** @private @arg {D_GuideEntryData} x */
+	D_GuideEntryData(x) {
+		const cf="D_GuideEntryData";
+		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.parse_guide_entry_id(guideEntryId);
+	}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("guideSectionRenderer",x,this.D_GuideSection);}
 	/** @public @arg {R_ResourceStatusInResponseCheck} x */
@@ -985,14 +1016,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(videosCountText);
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
-	}
-	/** @private @arg {R_GuideEntryData} x */
-	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
-	/** @private @arg {D_GuideEntryData} x */
-	D_GuideEntryData(x) {
-		const cf="D_GuideEntryData";
-		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parse_guide_entry_id(guideEntryId);
 	}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
@@ -2054,29 +2077,6 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		this.codegen_typedef(cf1,x);
-	}
-	/** @private @arg {D_GuideEntry} x */
-	D_GuideEntry(x) {
-		const cf="D_GuideEntry";
-		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf,x);
-		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
-		if("presentationStyle" in x) {
-			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.E_VE3611(navigationEndpoint);
-			this.D_Thumbnail(thumbnail);
-			this.D_LiveBroadcastingBadge(badges);
-			this.trackingParams(trackingParams);
-			this.G_Text(formattedTitle);
-			this.D_Accessibility(accessibility);
-			this.R_GuideEntryData(entryData);
-			switch(presentationStyle) {
-				case "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT":
-				case "GUIDE_ENTRY_PRESENTATION_STYLE_NONE": break;
-				default: console.log(`[D_GuideEntry_PresentationType]\n\n\ncase"${presentationStyle}":`); break;
-			}
-			return;
-		}
-		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
