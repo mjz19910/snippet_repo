@@ -295,8 +295,13 @@ class IndexedDBService extends BaseService {
 					if(!this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value); db_uv;
-					if(db_uv.one&&uv.one) if(uv.one[1]===db_uv.one[1]) return;
+					if(uv.one&&db_uv.one) if(uv.one[1]===db_uv.one[1]) return;
+					if(uv.arr&&db_uv.arr) {
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
+						break;
+					}
 					if(uv.many&&db_uv.arr) break;
+					if(uv.one&&db_uv.arr) break;
 					debugger;
 				} break;
 				case "boolean":
@@ -307,8 +312,15 @@ class IndexedDBService extends BaseService {
 					if(this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack_mt(vi,["",true]); uv;
 					let db_uv=this.uv_unpack_mt(db_box.value,["",true]); db_uv;
-					if(db_uv.one&&uv.one) if(uv.one[1]===db_uv.one[1]) return;
-					if(db_uv.arr&&uv.arr) if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
+					if(uv.one&&db_uv.one) {
+						if(uv.one[1]===db_uv.one[1]) return;
+						break;
+					}
+					if(uv.arr&&db_uv.arr) {
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
+						break;
+					}
+					if(uv.one&&db_uv.arr) break;
 					if(uv.many&&db_uv.arr) break;
 					if(uv.arr&&db_uv.many) break;
 					debugger;
@@ -320,7 +332,10 @@ class IndexedDBService extends BaseService {
 			if(!this.is_vi_has_str(vi)) break x;
 			let uv=this.uv_unpack(vi);
 			uv?.arr?.[1].sort();
-			uv?.many?.[1].sort().forEach(x => x.sort());
+			if(uv.many) {
+				uv.many[1].forEach(x => x.sort());
+				uv.many[1].sort();
+			}
 		}
 		switch(store.content) {
 			default: debugger; break;
@@ -334,6 +349,7 @@ class IndexedDBService extends BaseService {
 				}
 				if(uv.many) {
 					uv.many[1].forEach(x => x.sort((a,b) => b-a));
+					uv.many[1].sort((a,b) => b[0]-a[0]);
 					this.put_boxed_id(item[0],version,store.content,uv.many);
 				}
 			} break;
@@ -373,7 +389,17 @@ class IndexedDBService extends BaseService {
 				await this.push_store_to_database(ns,version);
 				continue;
 			}
-			debugger;
+			if(changed==="ve") {
+				let vs=store.ve_store;
+				await this.push_store_to_database(vs,version);
+				continue;
+			}
+			if(changed==="bool") {
+				let vs=store.bool_store;
+				await this.push_store_to_database(vs,version);
+				continue;
+			}
+			throw new Error("More changes to handle");
 		}
 	}
 	/** @arg {make_item_group<any>} x @returns {x is make_item_group<string>} */
