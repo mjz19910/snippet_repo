@@ -24,6 +24,8 @@ function h_detect_firefox() {
 }
 const is_firefox=h_detect_firefox(); is_firefox;
 class TypedIndexedDb {
+	/** @arg {IDBDatabase} db @arg {keyof DT_DatabaseStoreTypes} storeNames @arg {IDBTransactionMode} mode */
+	transaction(db,storeNames,mode) {return db.transaction(storeNames,mode);}
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes[K]>} obj_store @arg {TypedIDBValidKey<DT_DatabaseStoreTypes[K]["key"]>|TypedIDBKeyRange<DT_DatabaseStoreTypes[K]["key"]>} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes[K]>|null>} */
 	openCursor(obj_store,query,direction) {
 		if(query) {
@@ -46,6 +48,7 @@ class TypedIndexedDb {
 	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
 	put(store,value) {return store.put(value);}
 }
+export_(exports => exports.TypedIndexedDb=TypedIndexedDb);
 class TypedIDBValidKeyS {
 	/** @template {IDBValidKey} T @arg {T} key @returns {TypedIDBValidKey<T>} */
 	static only(key) {
@@ -383,7 +386,7 @@ class IndexedDBService extends BaseService {
 	async deleteImpl(key,query,version) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(this.get_db_request(version));
-		let s=this.open_transaction_scope(db,key,"readwrite");
+		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
 		let obj_store=typed_db.objectStore(s.tx,key);
 		await this.get_async_result(obj_store.delete(query));
 		s; query;
@@ -415,11 +418,12 @@ class IndexedDBService extends BaseService {
 		return db_req;
 	}
 	/**
+	 * @arg {TypedIndexedDb} typed_db
 	 * @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode
 	 * @arg {()=>void} complete_cb
 	*/
-	open_transaction(db,key,mode,complete_cb) {
-		const tx=this.transaction(db,key,mode);
+	open_transaction(typed_db,db,key,mode,complete_cb) {
+		const tx=typed_db.transaction(db,key,mode);
 		tx.onerror=function(event) {
 			console.log("tx error",event,tx.error);
 			complete_cb();
@@ -430,17 +434,20 @@ class IndexedDBService extends BaseService {
 		};
 		return tx;
 	}
-	/** @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode @returns {TypedIDBTransactionScope} */
-	open_transaction_scope(db,key,mode) {
-		const tx=this.open_transaction(db,key,mode,() => {
-			scope.is_tx_complete=true;
+	/** @arg {TypedIndexedDb} typed_db @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode @returns {TypedIDBTransactionScope} */
+	open_transaction_scope(typed_db,db,key,mode) {
+		const tx=this.open_transaction(typed_db,db,key,mode,() => {
+			s.is_tx_complete=true;
 		});
-		let scope={
-			tx,
+		let s={
+			error_count: 0,
+			db,tx,typed_db,
+			/** @type {TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null} */
+			obj_store: null,
 			is_tx_complete: false,
 			complete_promise: this.await_complete(tx),
 		};
-		return scope;
+		return s;
 	}
 	/** @arg {IDBTransaction} tx @returns {Promise<Event>} */
 	await_complete(tx) {
@@ -532,7 +539,7 @@ class IndexedDBService extends BaseService {
 		this.database_opening=false;
 		this.database_open=true;
 		let typed_db=new TypedIndexedDb;
-		let tx_scope=this.open_transaction_scope(db,key,"readwrite");
+		let tx_scope=this.open_transaction_scope(typed_db,db,key,"readwrite");
 		let s={
 			error_count: 0,
 			db,tx: tx_scope.tx,typed_db,
@@ -668,7 +675,7 @@ class IndexedDBService extends BaseService {
 	async get(key,store_key,version) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(this.get_db_request(version));
-		const tx=this.transaction(db,key,"readonly");
+		const tx=typed_db.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
 		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
 		return result;
@@ -681,7 +688,7 @@ class IndexedDBService extends BaseService {
 	async getAll(key,version) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(this.get_db_request(version));
-		const tx=this.transaction(db,key,"readonly");
+		const tx=typed_db.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
 		return result;
@@ -795,14 +802,12 @@ class IndexedDBService extends BaseService {
 		}
 		return diff_arr;
 	}
-	/** @arg {IDBDatabase} db @arg {keyof DT_DatabaseStoreTypes} storeNames @arg {IDBTransactionMode} mode */
-	transaction(db,storeNames,mode) {return db.transaction(storeNames,mode);}
 	/** @arg {number} version */
 	async database_diff(version) {
 		let typed_db=new TypedIndexedDb;
 		let ret={};
 		ret.db=await this.get_async_result(this.get_db_request(version));
-		let tx=this.transaction(ret.db,"video_id","readonly");
+		let tx=typed_db.transaction(ret.db,"video_id","readonly");
 		ret.store=typed_db.objectStore(tx,"video_id");
 		ret.store_data=await this.get_async_result(typed_db.getAll(ret.store));
 		ret.store_diff=this.get_diff_by_key(this.database_diff_keys,ret.store_data);

@@ -14,6 +14,5 @@ declare global {
 		delete(name: string): void;
 		entries(): IterableIterator<[string,string]>;
 	}
-	var required: typeof import("./zc_child_modules/YtPlugin_Base.user.js").required;
 	var require: typeof import("./zc_child_modules/YtPlugin_Base.user.js").require;
 }

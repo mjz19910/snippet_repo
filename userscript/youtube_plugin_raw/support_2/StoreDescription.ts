@@ -1,6 +1,4 @@
 type StoreContentStr="number"|"keys"|"boolean"|"root_visual_element"|"string";
-type StoreData=import("../zc_child_modules/YTPlugin_Support_Service.user.js").StoreData;
-type StoreDescription_Imp<T,C_Ty extends StoreContentStr>=import("../zc_child_modules/YTPlugin_Support_Service.user.js").StoreDescription<T,C_Ty>;
 type StoreGetType<T>=T extends number? "number":T extends string? "string":T extends boolean? "boolean":T extends string? "string":"unknown";
 type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>;
 type G_StoreDescriptions=StoreDescription_Imp<boolean,"boolean">|G_StoreNumDescription|G_StoreStringDescription;

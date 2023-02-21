@@ -89,7 +89,6 @@ function non_null(x) {
 	return x;
 }
 export_(exports => {
-	exports.required=required;
 	exports.non_null=non_null;
 	exports.require=require;
 },{global: true});

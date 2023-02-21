@@ -48,6 +48,8 @@ type TypedIDBTransactionScope={
 	tx: IDBTransaction;
 	is_tx_complete: boolean;
 	complete_promise: Promise<Event>;
+	db: IDBDatabase,
+	typed_db: TypedIndexedDb,
 };
 type G_PlaylistIdObj={
 	key: `playlist_id:RDCM:UC${string}`;
