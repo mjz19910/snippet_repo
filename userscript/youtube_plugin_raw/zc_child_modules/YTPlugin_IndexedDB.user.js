@@ -282,26 +282,33 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} db_boxed @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	async push_store_item_to_database(store,db_boxed,item,version) {
-		let [,vi]=item;
+		let [key,vi]=item;
 		for(let db_box of db_boxed) {
 			switch(db_box.type) {
 				default: console.log("unable to push [type=%s]",db_box.type); break;
 				case "number": {
+					if(db_box.id!==key) continue;
 					if(!this.is_vi_has_num(vi)) break;
 					if(!this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value); db_uv;
-					if(uv.arr) uv.arr[1].sort((a,b) => a-b);
-					if(uv.many) uv.many[1].forEach(x => x.sort((a,b) => a-b));
+					if(uv.arr) uv.arr[1].sort((a,b) => b-a);
+					if(uv.many) uv.many[1].forEach(x => x.sort((a,b) => b-a));
+					if(db_uv.one&&uv.one) if(uv.one[1]===db_uv.one[1]) return;
+					if(uv.many&&db_uv.arr) break;
 					debugger;
 				} break;
 				case "boolean":
 				case "string":
 				case "keys": {
+					if(db_box.id!==key) continue;
 					if(this.is_vi_has_num(vi)) break;
 					if(this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack_mt(vi,["",true]); uv;
 					let db_uv=this.uv_unpack_mt(db_box.value,["",true]); db_uv;
+					if(db_uv.one&&uv.one) if(uv.one[1]===db_uv.one[1]) return;
+					if(db_uv.arr&&uv.arr) if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
+					if(uv.many&&db_uv.arr) break;
 					debugger;
 				} break;
 				case "update_id": break;
