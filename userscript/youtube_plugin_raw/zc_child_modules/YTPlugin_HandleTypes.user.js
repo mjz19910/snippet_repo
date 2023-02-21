@@ -36,6 +36,8 @@ function init_module() {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
+	cq(a,b) {if(a!==b) debugger;}
 	//#region data members
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
@@ -3488,8 +3490,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
-	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
-	cq(a,b) {if(a!==b) debugger;}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {x;}
 	/** @private @arg {P_notification_opt_out} x */
