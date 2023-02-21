@@ -287,7 +287,7 @@ class IndexedDBService extends BaseService {
 		for(let box of db_str_box) {
 			if(box.id===item[0]) {
 				found=true; found_box=box;
-				let [,db_container]=box.value;
+				let db_container=box.value;
 				let [,item_container]=item;
 				if(!this.is_vi_has_str(item_container)) break;
 				if(item_container[0]!==db_container[0]) {
