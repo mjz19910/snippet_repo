@@ -11,6 +11,10 @@ type DC_RepeatChapter={
 	repeatStateEntityKey: string;
 };
 type DC_ReloadContinuationItems={
+	targetId: SI_VE76278_EngagementPanel["targetId"];
+	continuationItems: R_CommentThread[];
+	slot: "RELOAD_CONTINUATION_SLOT_BODY";
+}|{
 	targetId: "64063a76-0000-2c8b-9801-f4f5e8090f44";
 	continuationItems: R_RichItem[];
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
@@ -31,7 +35,7 @@ type DC_ReloadContinuationItems={
 	continuationItems: R_FeedFilterChipBar[];
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 }|{
-	targetId: "engagement-panel-comments-section";
+	targetId: SI_VE76278_EngagementPanel["targetId"];
 	continuationItems: R_CommentsHeader[];
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 };

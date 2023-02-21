@@ -209,7 +209,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.a_primitive_bool(isToggled);
 	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "toggled">} x */
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -589,7 +589,7 @@ class ServiceMethods extends ServiceData {
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "untoggled">} x */
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -598,7 +598,7 @@ class ServiceMethods extends ServiceData {
 		if(tooltip!=="Watch Later") debugger;
 		this.E_PlaylistEdit(serviceEndpoint);
 	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "toggled">} x */
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
 		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -606,7 +606,7 @@ class ServiceMethods extends ServiceData {
 		this.T_Icon(`${cf}:icon`,icon);
 		if(tooltip!=="Added") debugger;
 	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "untoggled">} x */
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x) {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2502,7 +2502,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @protected @arg {CF_T_WCM} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"])=>U} f
-	 * @returns {[U,Omit<T, "webCommandMetadata">]}
+	 * @returns {[U,Omit<T,"webCommandMetadata">]}
 	 * */
 	T_WCM(cf,x,f) {
 		const {webCommandMetadata: a,...y}=this.s(`T_WCM:${cf}`,x);
@@ -2818,7 +2818,7 @@ class ServiceMethods extends ServiceData {
 	/** @typedef {G_ResponseTypes} DecodeReturn */
 	/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {DecodeReturn|null} */
 	decode_input(url_type,x) {
-		/** @private @type {T_Split<UrlTypes, ".">} */
+		/** @private @type {T_Split<UrlTypes,".">} */
 		let target=split_string(url_type,".");
 		/** @private @type {DecodeReturn|null} */
 		let res=null;
@@ -4478,7 +4478,7 @@ class ServiceMethods extends ServiceData {
 	/**
 	 * @private
 	 * @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]["itemSectionRenderer"]} x
-	 * @arg {[R_ContinuationItem[], "comment-item-section", "engagement-panel-comments-section"][]} u1
+	 * @arg {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} u1
 	 * @arg {R_Message[]} u2
 	 */
 	GD_RC_SectionList_p2_ItemSection(x,u1,u2) {

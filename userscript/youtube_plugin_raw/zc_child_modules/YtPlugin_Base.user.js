@@ -1806,7 +1806,7 @@ class AudioGainController {
 }
 /** @private @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
-/** @private @template {string} T @template {{}} U @template {T_Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
+/** @private @template {string} T @template {{}} U @template {T_Split<T,",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str) {
 	/** @private @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");

@@ -2105,14 +2105,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {
 		const cf="P_aadc_guidelines_state_entity_key";
-		const {2: a,...y}=this.s(cf,x);
+		const {2: a,4: {},5: {},...y}=this.s(cf,x);
 		this.t(this.TV_Str(a),x => this.save_string(`${cf}.a`,x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
-		const {2: a,...y}=this.s(cf,x);
+		const {2: a,5: {},10: {},...y}=this.s(cf,x);
 		this.t(this.TV_Str(a),x => this.videoId(x));
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
