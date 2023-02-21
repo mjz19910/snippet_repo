@@ -483,6 +483,16 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	put_boxed_id(...args) {
 		switch(args[0]) {
 			default: debugger; break;
+			case "number": {
+				let [a,b,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				});
+			} break;
 			case "boolean": {
 				let [a,b,value]=args;
 				return this.put_box({

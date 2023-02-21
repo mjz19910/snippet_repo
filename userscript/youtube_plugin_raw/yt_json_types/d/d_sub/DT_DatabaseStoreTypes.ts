@@ -84,21 +84,17 @@ type D_BoxedUpdateId={
 	base: "boxed_id";
 	id: number;
 };
-type D_BoxedBoolStore={
-	key: `boxed_id:boolean:${string}`;
+type T_BoxedStore<T,T_Type extends string>={
+	key: `boxed_id:${T_Type}:${string}`;
 	base: "boxed_id";
-	type: "boolean";
+	type: T_Type;
 	id: string;
-	value: make_item_group<boolean>;
+	value: make_item_group<T>;
 };
-type D_BoxedKeysStore={
-	key: `boxed_id:keys:${string}`;
-	base: "boxed_id";
-	type: "keys";
-	id: string;
-	value: make_item_group<string>;
-};
-type G_BoxedIdObj=G_BoxedNum|G_BoxedStr|D_BoxedUpdateId|D_BoxedBoolStore|D_BoxedKeysStore;
+type D_BoxedBoolStore=T_BoxedStore<boolean,"boolean">;
+type D_BoxedKeysStore=T_BoxedStore<string,"keys">;
+type D_BoxedNumStore=T_BoxedStore<number,"number">;
+type G_BoxedIdObj=G_BoxedNum|G_BoxedStr|D_BoxedUpdateId|D_BoxedNumStore|D_BoxedBoolStore|D_BoxedKeysStore;
 type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${T_IdType}`;
 	base: "boxed_id";
