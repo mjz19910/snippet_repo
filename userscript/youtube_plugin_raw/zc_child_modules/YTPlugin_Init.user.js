@@ -28,5 +28,6 @@ x: {
 		console.log("missing SupportService");
 		break x;
 	}
+	console=typeof window==="undefined"? console:(() => window.console)();
 	yt_plugin_base_main();
 }

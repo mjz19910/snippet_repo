@@ -24,16 +24,7 @@ if(window.__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
-//#region module init
-function init_module() {
-	//#region exports
-	export_((exports) => {exports.HandleTypes=HandleTypes;});
-	//#endregion
-	//#region Start main
-	console=typeof window==="undefined"? console:(() => window.console)();
-	//#endregion
-}
-//#endregion
+function init_module() {export_((exports) => {exports.HandleTypes=HandleTypes;});}
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
 	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
