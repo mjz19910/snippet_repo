@@ -86,7 +86,7 @@ type D_BoxedUpdateId={
 };
 type B_BoxedStoreTypeofToType={
 	string: "keys"|"string";
-	number: "number";
+	number: "number"|"root_visual_element";
 	boolean: "boolean";
 };
 type T_BoxedStore<T,T_Type extends string>={
