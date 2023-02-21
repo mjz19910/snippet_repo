@@ -5171,9 +5171,10 @@ class ServiceMethods extends ServiceData {
 				if(!this.is_yt_uuid(targetId)) {
 					this.save_string("Body.targetId",targetId);
 					switch(targetId) {
-						default: debugger; break;
-						case "comments-section":
+						default: targetId===""; debugger; break;
 						case "browse-feedFEwhat_to_watch":
+						case "comments-section":
+						case "engagement-panel-comments-section":
 					}
 				}
 				this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
@@ -5184,7 +5185,7 @@ class ServiceMethods extends ServiceData {
 				if(!this.is_yt_uuid(targetId)) {
 					this.save_string("Header.targetId",targetId);
 					switch(targetId) {
-						default: debugger; break;
+						default: targetId===""; debugger; break;
 						case "comments-section":
 						case "engagement-panel-comments-section":
 					}
