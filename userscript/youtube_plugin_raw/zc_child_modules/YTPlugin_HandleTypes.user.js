@@ -687,6 +687,20 @@ class HandleTypes extends ServiceMethods {
 	R_GuideCollapsibleEntry(x) {this.H_("guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
 	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
 	R_GuideCollapsibleSectionEntry(x) {this.H_("guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
+	/** @type {D_GuideEntry_IconType_Obj} */
+	D_GuideEntry_IconType={
+		WithNavEP: [
+			"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
+			"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
+			"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
+			"ADD_CIRCLE",
+		],
+		WithIcon: [
+			"HELP","FEEDBACK",
+		]
+	};
+	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
+	D_GuideEntry_MissingIconType=[];
 	/** @private @arg {R_GuideEntry} x */
 	R_GuideEntry(x) {this.H_("guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {D_GuideEntry} x */
@@ -775,6 +789,96 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		this.codegen_typedef(cf1,x);
+	}
+	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {CF_D_GuideEntry} cf @arg {T} x */
+	D_GuideEntry_Omit(cf,x) {
+		const {accessibility,formattedTitle,trackingParams,...y}=this.s(cf,x);
+		this.D_Accessibility(accessibility);
+		this.G_Text(formattedTitle);
+		this.trackingParams(trackingParams);
+		return y;
+	}
+	/** @arg {Extract<D_GuideEntry,{targetId:any;}>["targetId"]} x */
+	D_GuideEntry_TargetId(x) {
+		const cf="D_GuideEntry_TargetId";
+		switch(x) {
+			default: this.cg.codegen_case(cf,x); break;
+			case "downloads-guide-item":
+			case "library-guide-item":
+		}
+	}
+	/** @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithNavEP} x */
+	D_GuideEntry_WithNavEP(cf1,x) {
+		const cf2="D_GuideEntry_WithNavEP";
+		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf1,x);
+		if("isPrimary" in x) {
+			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
+			if(!navigationEndpoint.browseEndpoint) debugger;
+			if(this.is_TE_VE(navigationEndpoint,3854)) {
+				this.E_VE3854(navigationEndpoint);
+			} else if(this.is_TE_VE(navigationEndpoint,96368)) {
+				this.E_VE96368(navigationEndpoint);
+			} else {
+				debugger;
+			}
+			switch(icon.iconType) {
+				case "SUBSCRIPTIONS": break;
+				case "WHAT_TO_WATCH": break;
+				default: debugger; break;
+			}
+			if(isPrimary!==true) debugger;
+			return;
+		}
+		const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
+		x: {
+			let x2=navigationEndpoint;
+			if("browseEndpoint" in x2) {
+				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
+				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
+				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,11487)) return this.E_VE11487(x2);
+				if(this.is_TE_VE(x2,23462)) return this.E_VE23462(x2);
+				x2; debugger;
+				break x;
+			}
+			if("urlEndpoint" in x2) {
+				this.E_VE83769_Url(x2);
+				break x;
+			}
+			debugger;
+		}
+		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType.WithNavEP);
+		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
+		{
+			let x2=navigationEndpoint;
+			if("urlEndpoint" in x2) return this.E_VE83769_Url(x2);
+			if("browseEndpoint" in x2) {
+				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
+				x2; debugger;
+				return;
+			};
+		}
+	}
+	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithPrimary} x */
+	D_GuideEntry_WithPrimary(cf1,x) {
+		/** @type {`${cf1}_WithPrimary`} */
+		const cf2=`${cf1}_WithPrimary`;
+		const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);
+		if(icon.iconType!=="TAB_SHORTS") debugger;
+		if(isPrimary!==true) debugger;
+		x: {
+			let x=serviceEndpoint;
+			if("reelWatchEndpoint" in x) {
+				this.x.get("x_VE37414").E_ReelWatch(x);
+				break x;
+			}
+			if("signalServiceEndpoint" in x) {
+				debugger;
+				break x;
+			}
+			x===""; debugger;
+		}
 	}
 	/** @private @arg {R_GuideEntryData} x */
 	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
@@ -1885,23 +1989,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.t(formattedTitle,this.G_Text);
 	}
-	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {CF_D_GuideEntry} cf @arg {T} x */
-	D_GuideEntry_Omit(cf,x) {
-		const {accessibility,formattedTitle,trackingParams,...y}=this.s(cf,x);
-		this.D_Accessibility(accessibility);
-		this.G_Text(formattedTitle);
-		this.trackingParams(trackingParams);
-		return y;
-	}
-	/** @arg {Extract<D_GuideEntry,{targetId:any;}>["targetId"]} x */
-	D_GuideEntry_TargetId(x) {
-		const cf="D_GuideEntry_TargetId";
-		switch(x) {
-			default: this.cg.codegen_case(cf,x); break;
-			case "downloads-guide-item":
-			case "library-guide-item":
-		}
-	}
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,id]=x; if(sec!=="shorts") debugger;
@@ -1990,93 +2077,6 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		this.g(u);
-	}
-	/** @type {D_GuideEntry_IconType_Obj} */
-	D_GuideEntry_IconType={
-		WithNavEP: [
-			"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
-			"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
-			"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
-			"ADD_CIRCLE",
-		],
-		WithIcon: [
-			"HELP","FEEDBACK",
-		]
-	};
-	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
-	D_GuideEntry_MissingIconType=[];
-	/** @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithNavEP} x */
-	D_GuideEntry_WithNavEP(cf1,x) {
-		const cf2="D_GuideEntry_WithNavEP";
-		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf1,x);
-		if("isPrimary" in x) {
-			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
-			if(!navigationEndpoint.browseEndpoint) debugger;
-			if(this.is_TE_VE(navigationEndpoint,3854)) {
-				this.E_VE3854(navigationEndpoint);
-			} else if(this.is_TE_VE(navigationEndpoint,96368)) {
-				this.E_VE96368(navigationEndpoint);
-			} else {
-				debugger;
-			}
-			switch(icon.iconType) {
-				case "SUBSCRIPTIONS": break;
-				case "WHAT_TO_WATCH": break;
-				default: debugger; break;
-			}
-			if(isPrimary!==true) debugger;
-			return;
-		}
-		const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
-		x: {
-			let x2=navigationEndpoint;
-			if("browseEndpoint" in x2) {
-				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
-				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
-				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-				if(this.is_TE_VE(x2,11487)) return this.E_VE11487(x2);
-				if(this.is_TE_VE(x2,23462)) return this.E_VE23462(x2);
-				x2; debugger;
-				break x;
-			}
-			if("urlEndpoint" in x2) {
-				this.E_VE83769_Url(x2);
-				break x;
-			}
-			debugger;
-		}
-		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType.WithNavEP);
-		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
-		{
-			let x2=navigationEndpoint;
-			if("urlEndpoint" in x2) return this.E_VE83769_Url(x2);
-			if("browseEndpoint" in x2) {
-				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
-				x2; debugger;
-				return;
-			};
-		}
-	}
-	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithPrimary} x */
-	D_GuideEntry_WithPrimary(cf1,x) {
-		/** @type {`${cf1}_WithPrimary`} */
-		const cf2=`${cf1}_WithPrimary`;
-		const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);
-		if(icon.iconType!=="TAB_SHORTS") debugger;
-		if(isPrimary!==true) debugger;
-		x: {
-			let x=serviceEndpoint;
-			if("reelWatchEndpoint" in x) {
-				this.x.get("x_VE37414").E_ReelWatch(x);
-				break x;
-			}
-			if("signalServiceEndpoint" in x) {
-				debugger;
-				break x;
-			}
-			x===""; debugger;
-		}
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
