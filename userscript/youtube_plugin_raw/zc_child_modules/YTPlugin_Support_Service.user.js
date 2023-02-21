@@ -121,9 +121,13 @@ class StoreDescription extends ApiBase2 {
 		}
 		let {id: k,value: x}=item;
 		if(this.includes_key(item.id)) {
+			let nd_item=this.new_data.findIndex(v => v[0]===item.id); nd_item;
+			debugger;
 			return;
 		}
 		this.add_data_to_index(k,x);
+		let nd_item=this.new_data.findIndex(v => v[0]===item.id); nd_item;
+		debugger;
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
@@ -261,29 +265,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.is_ready=false;
 		this.#idle_id=requestIdleCallback(async () => {
 			const version=this.indexed_db_version;
-			this.#idle_id=null;
 			try {
 				await this.indexed_db.load_database(version);
 			} catch(err) {
 				console.log("load_database failed",err);
 				return;
 			}
-			this.is_ready=true;
-			for(const msg of this.stored_changes) {
-				switch(msg[0]) {
-					default: debugger; break;
-					case "string": {
-						this.data_store.string_store.save_data(msg[1],msg[2]);
-					} break;
-					case "number": {
-						this.save_number(msg[1],msg[2]);
-					} break;
-				}
-				let idx=this.stored_changes.indexOf(msg);
-				this.stored_changes.splice(idx,1);
-			}
-			this.is_ready=false;
-
 			try {
 				await this.indexed_db.save_database(this.data_store,version);
 			} catch(err) {
@@ -291,6 +278,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				return;
 			}
 			this.is_ready=true;
+			this.#idle_id=null;
 		});
 	}
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
@@ -311,8 +299,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	log_load_database=false;
 	expected_id=0;
-	/** @private @type {StoredChangesItem[]} */
-	stored_changes=[];
 	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum_impl(cf,ns,s) {
 		/** @private @type {"_"|"-"} */

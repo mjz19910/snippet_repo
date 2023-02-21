@@ -145,13 +145,11 @@ class IndexedDBService extends BaseService {
 			this.expected_id=0;
 			update_id=this.put_update_id(this.expected_id,version);
 		}
-		if(update_id.id!==this.expected_id) {
-			this.load_store_from_database(store,version);
-			this.expected_id=update_id.id;
-		}
+		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
 		this.expected_id++;
-		this.put_update_id(this.expected_id,version);
+		this.load_store_from_database(store,version);
 		await this.do_boxed_push_to_database(store,version);
+		this.put_update_id(this.expected_id,version);
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
