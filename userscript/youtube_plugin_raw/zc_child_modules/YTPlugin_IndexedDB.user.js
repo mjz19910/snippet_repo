@@ -43,6 +43,8 @@ class TypedIndexedDb {
 	get(store,key) {return store.get(key);}
 	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
 	getAll(store) {return store.getAll();}
+	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
+	put(store,value) {return store.put(value);}
 }
 class TypedIDBValidKeyS {
 	/** @template {IDBValidKey} T @arg {T} key @returns {TypedIDBValidKey<T>} */
@@ -484,7 +486,7 @@ class IndexedDBService extends BaseService {
 	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
 	force_update(key,x) {
 		try {
-			this.put(key,x,3);
+			return this.put(key,x,3);
 		} catch(e) {
 			throw new AggregateError([e]);
 		}
@@ -528,13 +530,13 @@ class IndexedDBService extends BaseService {
 		this.database_open=true;
 		let typed_db=new TypedIndexedDb;
 		let tx_scope=this.open_transaction_scope(db,key,"readwrite");
-		let state={
+		let s={
 			error_count: 0,
 			db,tx: tx_scope.tx,typed_db,
 			/** @type {TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null} */
 			obj_store: null,
 		};
-		state.obj_store=typed_db.objectStore(state.tx,key);
+		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		try {
 			for(let item of d_cache) {
@@ -544,7 +546,7 @@ class IndexedDBService extends BaseService {
 				}
 				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
-				let cursor_req=typed_db.openCursor(state.obj_store,TypedIDBValidKeyS.only(item.key));
+				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
 				for(let i=0;i<12;i++) {
 					if(tx_scope.is_tx_complete) {
 						console.log("cursor_loop_is_tx_complete_1");
@@ -557,7 +559,9 @@ class IndexedDBService extends BaseService {
 							console.log("cursor_loop_is_tx_complete_2");
 							break;
 						}
-						this.force_update(key,item);
+						let put_req=typed_db.put(s.obj_store,item);
+						let valid_key=await this.get_async_result(put_req);
+						console.log("[idb_valid_key]",valid_key);
 						let idx=d_cache.indexOf(item);
 						d_cache[idx]=null;
 						break;
@@ -577,12 +581,12 @@ class IndexedDBService extends BaseService {
 						console.log("[obj_merge_new]",item);
 						console.log("[obj_merge_cur]",cursor_value);
 						try {
-							await this.get_async_result(state.obj_store.delete(item.key));
+							await this.get_async_result(s.obj_store.delete(item.key));
 						} catch(e) {
 							console.log("merge delete failed",e);
 						}
 						try {
-							await this.add_data_to_store(state.obj_store,item);
+							await this.add_data_to_store(s.obj_store,item);
 						} catch(e) {
 							console.log("merge add failed",e);
 						}
