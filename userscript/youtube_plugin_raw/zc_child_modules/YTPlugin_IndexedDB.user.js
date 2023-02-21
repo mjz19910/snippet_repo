@@ -177,7 +177,7 @@ class IndexedDBService extends BaseService {
 		}
 		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
 		this.expected_id++;
-		await this.do_boxed_push_to_database(store,version);
+		await this.save_store_to_database(store,version);
 		this.put_update_id(this.expected_id,version);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
@@ -332,7 +332,7 @@ class IndexedDBService extends BaseService {
 		}
 	}
 	/** @arg {StoreData} store @arg {number} version */
-	async do_boxed_push_to_database(store,version) {
+	async save_store_to_database(store,version) {
 		let changes=store.get_changed_stores();
 		for(let changed of changes) {
 			if(changed==="string") {
