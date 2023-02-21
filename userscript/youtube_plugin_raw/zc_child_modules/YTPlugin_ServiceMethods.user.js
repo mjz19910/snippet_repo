@@ -890,10 +890,7 @@ class ServiceMethods extends ServiceData {
 		return [un_prefix,other];
 	}
 	/** @protected @arg {D_ImpressionCap} x */
-	D_ImpressionCap(x) {
-		const cf="D_ImpressionCap";
-		if(this.w(`Other:${cf}`,"impressionCap",x)!=="1") debugger;
-	}
+	D_ImpressionCap(x) {this.ceq(this.w("D_ImpressionCap","impressionCap",x),"1");}
 	/** @protected @arg {D_Hint} x */
 	D_Hint(x) {
 		const cf="D_Hint";

@@ -780,6 +780,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ToggleButton.state";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_BinaryTimestamp";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "XP_EntityPayload_Any";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "D_ImpressionCap";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_SendPost";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_AdditionalDataItem";}
