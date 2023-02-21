@@ -1488,8 +1488,6 @@ class HandleTypes extends ServiceMethods {
 	RC_PlaylistPanel(x) {this.H_("playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
-	//#region pause
-	//#endregion
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
