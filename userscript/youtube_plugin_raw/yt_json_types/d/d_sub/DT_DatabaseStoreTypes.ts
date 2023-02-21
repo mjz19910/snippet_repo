@@ -83,14 +83,14 @@ type D_BoxedBoolStore={
 	base: "boxed_id";
 	type: "boolean";
 	id: string;
-	value: make_arr_t<boolean>|make_many_t<boolean>;
+	value: make_item_group<boolean>;
 };
 type D_BoxedKeysStore={
 	key: `boxed_id:keys:${string}`;
 	base: "boxed_id";
 	type: "keys";
 	id: string;
-	value: make_arr_t<string>|make_many_t<string>;
+	value: make_item_group<string>;
 };
 type G_BoxedIdObj=G_BoxedNum|G_BoxedStr|D_BoxedUpdateId|D_BoxedBoolStore|D_BoxedKeysStore;
 type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={

@@ -387,6 +387,47 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			debugger;
 		}
 	}
+	/** @template T @arg {make_item_group<T>} x @arg {T[]} _ta */
+	uv_unpack(x,_ta) {
+		/** @type {make_one_t<T>|null} */
+		let one=null;
+		/** @type {make_arr_t<T>|null} */
+		let arr=null;
+		/** @type {make_many_t<T>|null} */
+		let many=null;
+		switch(x[0]) {
+			default: debugger; break;
+			case "one": one=x; break;
+			case "many": many=x; break;
+			case "arr": arr=x; break;
+		}
+		return {one,arr,many};
+	}
+	/** @arg {make_item_group<any>} x @returns {x is make_item_group<string>} */
+	is_vi_has_str(x) {return this.is_vi_typeof_check(x,"string");}
+	/** @arg {make_item_group<any>} x @returns {x is make_item_group<number>} */
+	is_vi_has_num(x) {return this.is_vi_typeof_check(x,"number");}
+	/** @arg {make_item_group<any>} x @returns {x is make_item_group<boolean>} */
+	is_vi_has_bool(x) {return this.is_vi_typeof_check(x,"boolean");}
+	/** @template T @arg {make_item_group<T>} x @returns {boolean} @arg {T_GetTypeof<T>} ty */
+	is_vi_typeof_check(x,ty) {
+		switch(x[0]) {
+			default: debugger; throw new Error();
+			case "one": return typeof x[1]===ty;
+			case "arr": {
+				let x_arr=x[1];
+				if(x_arr.length===0) return true;
+				return typeof x_arr[0]===ty;
+			}
+			case "many": {
+				let x_many=x[1];
+				if(x_many.length===0) return true;
+				let x_arr=x_many[0];
+				if(x_arr.length===0) return true;
+				return typeof x_arr[0]===ty;
+			}
+		}
+	}
 	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} boxed @arg {T} store @arg {T["data"][number]} item */
 	async push_store_item_to_database(store,boxed,item) {
 		let do_update=false;
@@ -417,81 +458,27 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			await this.put_box(found_box);
 		}
 		if(found) return;
+		let [,vi]=item;
 		switch(store.content) {
 			default: debugger; break;
 			case "number": {
-				let [,vi]=item;
-				switch(vi[0]) {
-					default: debugger; break;
-				}
+				let uv=this.uv_unpack(vi,[true,1,""]);
+				if(uv.one) await this.put_boxed_id(store.content,item[0],uv.one);
+				if(uv.arr) await this.put_boxed_id(store.content,item[0],uv.arr);
+				if(uv.many) await this.put_boxed_id(store.content,item[0],uv.many);
 			} break;
 			case "boolean": {
-				let [,vi]=item;
-				/** @type {make_one_t<boolean>|null} */
-				let uv_one=null;
-				/** @type {make_arr_t<boolean>|null} */
-				let uv_arr=null;
-				/** @type {make_many_t<boolean>|null} */
-				let uv_many=null;
-				switch(vi[0]) {
-					default: debugger; break;
-					case "one": {
-						if(typeof vi[1]!=="boolean") break;
-						uv_one=vi;
-					} break;
-					case "many": {
-						for(let u of vi[1]) {
-							let pa=[];
-							for(let v of u) {
-								if(typeof v!=="boolean") continue;
-								pa.push(v);
-							}
-							if(uv_many) {
-								uv_many[1].push(pa);
-								continue;
-							}
-							uv_many=["many",[pa]];
-						}
-					} break;
-					case "arr": {
-						for(let v of vi[1]) {
-							if(typeof v!=="boolean") continue;
-							if(uv_arr) {
-								uv_arr[1].push(v);
-								continue;
-							}
-							uv_arr=["arr",[v]];
-						}
-					}
-				}
-				if(uv_one) await this.put_boxed_id(store.content,item[0],uv_one);
-				if(uv_arr) await this.put_boxed_id(store.content,item[0],uv_arr);
-				if(uv_many) await this.put_boxed_id(store.content,item[0],uv_many);
 			} break;
 			case "keys": {
-				let [,vi]=item;
-				/** @type {make_arr_t<string>|null} */
-				let uv_arr=null;
-				switch(vi[0]) {
-					default: debugger; break;
-					case "arr": {
-						for(let v of vi[1]) {
-							if(typeof v!=="string") continue;
-							if(uv_arr) {
-								uv_arr[1].push(v);
-								continue;
-							}
-							uv_arr=["arr",[v]];
-						}
-					}
-				}
-				if(uv_arr) {
-					await this.put_boxed_id(store.content,item[0],uv_arr);
-				}
+				if(!this.is_vi_has_str(vi)) break;
+				let uv=this.uv_unpack(vi,[]);
+				if(uv.one) await this.put_boxed_id(store.content,item[0],uv.one);
+				if(uv.arr) await this.put_boxed_id(store.content,item[0],uv.arr);
+				if(uv.many) await this.put_boxed_id(store.content,item[0],uv.many);
 			} break;
 		}
 	}
-	/** @arg {["keys",string,make_arr_t<string>|make_many_t<string>]|["boolean",string,make_arr_t<boolean>|make_many_t<boolean>]} args */
+	/** @arg {["keys",string,make_item_group<string>]|["boolean",string,make_item_group<boolean>]} args */
 	put_boxed_id(...args) {
 		switch(args[0]) {
 			default: debugger; break;
