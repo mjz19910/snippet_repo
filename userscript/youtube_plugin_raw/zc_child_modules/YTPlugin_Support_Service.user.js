@@ -113,12 +113,6 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @arg {T_BoxedStore<T,B_BoxedStoreTypeofToType[T_GetTypeof<T>]>} item */
 	load_data(item) {
-		switch(item.type) {
-			case "number":
-			case "keys":
-			case "boolean": break;
-			default: throw new Error();
-		}
 		let {id: k,value: x}=item;
 		let idx=this.new_data.findIndex(v => v[0]===item.id);
 		if(idx<0) return;
