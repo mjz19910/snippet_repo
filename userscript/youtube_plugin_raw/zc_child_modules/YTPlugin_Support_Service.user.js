@@ -552,17 +552,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @private */
 	async load_database() {
 		let update_id=await this.get_update_id();
-		if(!update_id) {
-			await this.put_update_id(1);
-			let wait_close=this.indexed_db.open_db_promise;
-			if(wait_close) await wait_close;
-			this.expected_id=1;
-		} else {
-			this.expected_id++;
-			await this.put_update_id(this.expected_id);
-			update_id=await this.get_update_id();
-		}
-		await this.put_update_id(0);
+		if(!update_id) this.expected_id=0;
+		this.put_update_id(this.expected_id);
 	}
 	/** @private @type {StoredChangesItem[]} */
 	stored_changes=[];
