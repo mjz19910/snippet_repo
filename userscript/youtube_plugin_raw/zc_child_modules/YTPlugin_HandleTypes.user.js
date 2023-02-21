@@ -2040,21 +2040,6 @@ class HandleTypes extends ServiceMethods {
 	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
 	/** @template {{}} T @arg {M_Optional<T|null>} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
 	mt_t(x,y) {return this.mt(x,x => this.t(x,y));}
-	/** @arg {P_tracking_params} x */
-	P_tracking_params(x) {
-		const cf="P_tracking_params";
-		const {1: f1,2: f2,3: f3,4: f4,6: f6,8: f8,16: f16,...y}=x,t=this;
-		/** @template {number} T @arg {"f1"|"f2"} k @arg {T_D32<T>} v */
-		let r=(k,v) => {t.mt_cf(t.ms(v,t.T_D32_v),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
-		r("f1",f1); r("f2",f2);
-		t.mt_cf(t.ms_t(f3,t.T_D32_v),`${cf}.f3`,(cf,x) => t.tn_cf(cf,x,this.save_number_one));
-		t.ms(f4,t.VW_BinaryTimestamp);
-		t.mt_cf(t.ms_t(f6,t.TV_Str),`${cf}.f6`,(cf,x) => t.tn_cf(cf,x,t.save_string));
-		t.ms_t(f8,t.T_VW_Bigint);
-		t.t(f16,t.VW_BinaryTimestamp);
-		if(this.is_empty_obj(y)) return;
-		this.codegen_typedef_bin(cf,x,false);
-	}
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="param_arr") debugger;
@@ -2084,13 +2069,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {"H_TrackingObj"} cf @arg {{tag: H_TrackingObj_Tag,id: H_TrackingObj_Id;}} x */
 	P_Tag_TrackingObj(cf,x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");}
-	/** @protected @arg {{type:"click_tracking",v:H_TrackingObj}|{type:"tracking",v:P_tracking_params}} x */
+	/** @protected @arg {{type:"click_tracking",v:H_TrackingObj}|{type:"tracking",v:H_TrackingObj}} x */
 	P_Typed_TrackingObj(x) {
 		const cf="P_Typed_TrackingObj";
 		const {type,v: z}=x; this.k(cf,z);
 		switch(type) {
 			case "click_tracking": return this.H_TrackingObj(z);
-			case "tracking": return this.P_tracking_params(z);
+			case "tracking": return this.H_TrackingObj(z);
 		}
 	}
 	//#region get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
@@ -2364,7 +2349,7 @@ class HandleTypes extends ServiceMethods {
 				this.P_Typed_TrackingObj({type: "click_tracking",v});
 			} break;
 			case "params.tracking": {
-				/** @type {P_tracking_params} */
+				/** @type {H_TrackingObj} */
 				let v=as_any(x);
 				this.P_Typed_TrackingObj({type: "tracking",v});
 			} break;
