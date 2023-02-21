@@ -1674,7 +1674,7 @@ class Support_EventInput extends ServiceMethods {
 			return;
 		}
 		if(this.is_EP_Val(x,3854)) {
-			let {...u}=this.RS_Page_Type1(cf,x,{
+			let u=this.RS_Page_Type1(cf,x,{
 				page: x => this.ceq(x,"browse"),
 				endpoint: x => this.E_VE3854(x),
 				response: x => this.x.get("x_RS_Browse").RS_Browse(x),

@@ -5969,28 +5969,23 @@ class ServiceMethods extends ServiceData {
 		this.D_Accessibility(accessibility);
 		return y;
 	}
+	/** @private @arg {D_ChannelThumbnailWithLink["navigationEndpoint"]} x */
+	D_ChannelThumbnail_NavEP(x) {
+		const cf="D_ChannelThumbnail_navigationEndpoint";
+		if("browseEndpoint" in x) return this.E_VE3611(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {D_ChannelThumbnailWithLink} x */
 	D_ChannelThumbnailWithLink(x) {
 		const cf="D_ChannelThumbnailWithLink";
 		if("title" in x) {
 			const {title,navigationEndpoint,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
-			x: {
-				const x2=navigationEndpoint;
-				if(!x2) break x;
-				const cf="D_ChannelThumbnail_navigationEndpoint";
-				if("browseEndpoint" in x2) {debugger; break x;}
-				x2===""; this.codegen_typedef(cf,x);
-			}
+			this.D_ChannelThumbnail_NavEP(navigationEndpoint);
 			this.a_primitive_str(title);
 			return;
 		}
 		let {navigationEndpoint,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
-		x: {
-			const x2=navigationEndpoint;
-			const cf="D_ChannelThumbnail_navigationEndpoint";
-			if("browseEndpoint" in x2) {this.E_VE3611(x2); break x;}
-			x2===""; this.codegen_typedef(cf,x);
-		}
+		this.D_ChannelThumbnail_NavEP(navigationEndpoint);
 	}
 	/** @private @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {

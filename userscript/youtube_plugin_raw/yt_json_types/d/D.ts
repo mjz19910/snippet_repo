@@ -625,7 +625,7 @@ type D_ChannelOptions={
 };
 type D_ChannelThumbnailWithLink={
 	thumbnail: D_Thumbnail;
-	navigationEndpoint: null;
+	navigationEndpoint: E_VE3611;
 	accessibility: D_Accessibility;
 	title: string;
 }|{
