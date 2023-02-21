@@ -1257,13 +1257,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {B_HrefUrl} x */
 	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
-	/** @private @arg {D_SettingsSidebar} x */
-	D_SettingsSidebar(x) {
-		const cf="D_SettingsSidebar";
-		const {title,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.z(items,this.R_CompactLink);
-	}
 	/** @private @arg {D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x) {
 		const cf="D_PdgBuyFlow";

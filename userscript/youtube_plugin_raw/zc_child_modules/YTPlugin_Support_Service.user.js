@@ -1663,7 +1663,7 @@ class Support_RS_Browse extends ServiceMethods {
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar";
-		if("settingsSidebarRenderer" in x) return this.bc.R_SettingsSidebar(x);
+		if("settingsSidebarRenderer" in x) return this.xr.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.bc.R_PlaylistSidebar(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
@@ -2415,7 +2415,7 @@ class Support_EventInput extends ServiceMethods {
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(trackingParams);
 		this.tz(onResponseReceivedEndpoints,(this.g));
-		this.bc.R_SettingsSidebar(sidebar);
+		this.xr.R_SettingsSidebar(sidebar);
 	}
 	/** @private @arg {D_Tab_WhatToWatch} x */
 	D_Tab_WhatToWatch(x) {
@@ -2565,9 +2565,16 @@ function export_Renderer(_class) {
 	export_(exports => {exports.Support_Renderer=_class;});
 }
 class Support_Renderer extends ServiceMethods {
+	static {export_Renderer(this);}
 	/** @public @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
-	static {export_Renderer(this);}
+	/** @private @arg {D_SettingsSidebar} x */
+	D_SettingsSidebar(x) {
+		const cf="D_SettingsSidebar";
+		const {title,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.z(items,this.R_CompactLink);
+	}
 }
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
