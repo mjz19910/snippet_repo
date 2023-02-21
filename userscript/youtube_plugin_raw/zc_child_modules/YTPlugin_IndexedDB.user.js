@@ -483,10 +483,13 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
-	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
-	force_update(key,x) {
+	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDb;}} s @arg {DT_DatabaseStoreTypes[U]} value */
+	async force_update(s,value) {
+		if(!s.obj_store) throw new Error("No object store");
 		try {
-			return this.put(key,x,3);
+			let put_req=s.typed_db.put(s.obj_store,value);
+			let ret=await this.get_async_result(put_req);
+			return ret;
 		} catch(e) {
 			throw new AggregateError([e]);
 		}
@@ -593,50 +596,59 @@ class IndexedDBService extends BaseService {
 						this.committed_data.push(item);
 						break;
 					} else {
-						switch(item.type) {
-							default: debugger; break;
+						let update_item=false;
+						/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
+						let item_nt=item;
+						switch(item_nt.type) {
+							default: item_nt===""; debugger; break;
+							case "hashtag_id": break;
+							case "boolean": {
+								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+									update_item=true; break;
+								}
+							} break;
+							case "number": {
+								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+									update_item=true; break;
+								}
+							} break;
 							case "keys":
 							case "string": {
-								if(cursor_value.type!==item.type) {
-									this.force_update(key,item);
-									break;
+								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+									update_item=true; break;
 								}
-								if(this.eq_group(item.value,cursor_value.value,(a,b) => a===b)) {
-									this.committed_data.push(item);
-									break;
-								}
-								this.force_update(key,item);
-								this.committed_data.push(item);
 							} break;
+							case "video_id:shorts":
 							case "video_id:normal": {
-								if(cursor_value.type!==item.type) {
-									this.force_update(key,item);
-									break;
-								}
-								if(item.v===cursor_value.v) {
-									this.committed_data.push(item);
-								}
+								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+								if(item_nt.v!==cursor_value.v) update_item=true;
 							} break;
 							case "update_id": {
 								if(this.log_db_actions) console.log("[update_sync_cache_item_update_id]",item);
-								if(item.key===cursor_value.key&&item.id===cursor_value.id) break;
-								this.force_update(key,item);
-								this.committed_data.push(item);
+								if(item_nt.key===cursor_value.key&&item_nt.id===cursor_value.id) break;
+								update_item=true;
 							} break;
 							// not a dynamic value
-							case "playlist_id:self": this.committed_data.push(item); break;
+							case "playlist_id:self": break;
+							case "browse_id:VL":
 							case "channel_id:UC":
 							case "playlist_id:PL":
 							case "playlist_id:RD":
 							case "playlist_id:RDMM":
+							case "playlist_id:RDCM":
 							case "playlist_id:UU": {
-								if(cursor_value.key===item.key&&item.id===cursor_value.id) {
-									this.committed_data.push(item);
-								} else {
-									this.force_update(key,item);
-								}
-								this.committed_data.push(item);
+								if(cursor_value.key===item_nt.key&&item_nt.id===cursor_value.id) break;
+								update_item=true;
 							} break;
+						}
+						if(update_item) {
+							await this.force_update(s,item);
+							this.committed_data.push(item);
+						} else {
+							this.committed_data.push(item);
 						}
 						break;
 					}
