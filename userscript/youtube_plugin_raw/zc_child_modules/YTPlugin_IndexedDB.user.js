@@ -363,12 +363,12 @@ class IndexedDBService extends BaseService {
 				let uv=this.uv_unpack(vi);
 				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
 				if(uv.arr) {
-					uv.arr[1].sort((a,b) => b-a);
+					uv.arr[1].sort((a,b) => a-b);
 					this.put_boxed_id(item[0],version,store.content,uv.arr);
 				}
 				if(uv.many) {
-					uv.many[1].forEach(x => x.sort((a,b) => b-a));
-					uv.many[1].sort((a,b) => b[0]-a[0]);
+					uv.many[1].forEach(x => x.sort((a,b) => a-b));
+					uv.many[1].sort((a,b) => a[0]-b[0]);
 					this.put_boxed_id(item[0],version,store.content,uv.many);
 				}
 			} break;
