@@ -2595,7 +2595,7 @@ class Support_Renderer extends ServiceMethods {
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
 	}
-	/** @private @arg {R_PdgBuyFlow} x */
+	/** @public @arg {R_PdgBuyFlow} x */
 	R_PdgBuyFlow(x) {this.H_("pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
 	/** @private @arg {R_SuperVodBuyFlowContent} x */
 	R_SuperVodBuyFlowContent(x) {this.H_("superVodBuyFlowContentRenderer",x,this.D_SuperVodBuyFlowContent);}
@@ -2636,7 +2636,7 @@ class Support_Renderer extends ServiceMethods {
 			this.a_primitive_str(a);
 		}
 	}
-	/** @private @arg {R_Transcript} x */
+	/** @public @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
@@ -2645,7 +2645,7 @@ class Support_Renderer extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.R_TranscriptSearchPanel(a);
 	}
-	/** @private @arg {R_TwoColumnSearchResults} x */
+	/** @public @arg {R_TwoColumnSearchResults} x */
 	R_TwoColumnSearchResults(x) {this.H_("twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("primaryContents",x,this.R_SectionList);}
@@ -2734,7 +2734,7 @@ class Support_Renderer extends ServiceMethods {
 	};
 	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
 	D_GuideEntry_MissingIconType=[];
-	/** @private @arg {R_GuideEntry} x */
+	/** @public @arg {R_GuideEntry} x */
 	R_GuideEntry(x) {this.H_("guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {
@@ -2925,7 +2925,7 @@ class Support_Renderer extends ServiceMethods {
 	R_GuideSection(x) {this.H_("guideSectionRenderer",x,this.D_GuideSection);}
 	/** @public @arg {R_ResourceStatusInResponseCheck} x */
 	R_ResourceStatusInResponseCheck(x) {this.H_("resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
-	/** @private @arg {R_ReportFormModal} x */
+	/** @public @arg {R_ReportFormModal} x */
 	R_ReportFormModal(x) {this.H_("reportFormModalRenderer",x,this.g);}
 	/** @arg {R_RichShelf} x */
 	R_RichShelf(x) {this.H_("richShelfRenderer",x,this.D_RichShelf);}
@@ -2939,11 +2939,11 @@ class Support_Renderer extends ServiceMethods {
 	R_Channel_MD(x) {this.H_("channelMetadataRenderer",x,this.D_Channel_MD);}
 	/** @public @arg {R_Playlist_MD} x */
 	R_Playlist_MD(x) {this.H_("playlistMetadataRenderer",x,this.D_Playlist_MD);}
-	/** @private @arg {R_ChannelSwitcherPage} x */
+	/** @public @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {R_PlaylistVideoThumbnail} x */
 	R_PlaylistVideoThumbnail(x) {this.H_("playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
-	/** @private @arg {R_Message} x */
+	/** @public @arg {R_Message} x */
 	R_Message(x) {this.H_("messageRenderer",x,this.g);}
 	/** @private @arg {D_LiveBroadcastingBadge} x */
 	D_LiveBroadcastingBadge(x) {
@@ -2951,13 +2951,13 @@ class Support_Renderer extends ServiceMethods {
 		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_bool(liveBroadcasting);
 	}
-	/** @private @arg {R_LiveChatParticipantsList} x */
+	/** @public @arg {R_LiveChatParticipantsList} x */
 	R_LiveChatParticipantsList(x) {this.H_("liveChatParticipantsListRenderer",x,this.g);}
-	/** @private @arg {R_LiveChatTicker} x */
+	/** @public @arg {R_LiveChatTicker} x */
 	R_LiveChatTicker(x) {this.H_("liveChatTickerRenderer",x,this.g);}
-	/** @private @arg {R_LiveChatItemList} x */
+	/** @public @arg {R_LiveChatItemList} x */
 	R_LiveChatItemList(x) {this.H_("liveChatItemListRenderer",x,this.g);}
-	/** @private @arg {R_LiveChatMessageInput} x */
+	/** @public @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("liveChatMessageInputRenderer",x,this.g);}
 	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
 	R_LiveChatViewerEngagementMessage(x) {this.H_("liveChatViewerEngagementMessageRenderer",x,this.D_LiveChatViewerEngagementMessage);}
@@ -2986,7 +2986,7 @@ class Support_Renderer extends ServiceMethods {
 		this.G_Text(message);
 		console.log(`${cf}.id`,id);
 	}
-	/** @private @arg {D_LiveChatEmoji} x */
+	/** @public @arg {D_LiveChatEmoji} x */
 	D_LiveChatEmoji(x) {
 		const cf="D_LiveChatEmoji";
 		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);
@@ -3055,7 +3055,7 @@ class Support_Renderer extends ServiceMethods {
 	R_ExpandableSurveyResponse(x) {this.H_("expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
 	/** @arg {R_AutomixPreviewVideo} x */
 	R_AutomixPreviewVideo(x) {this.H_("automixPreviewVideoRenderer",x,this.g);}
-	/** @private @arg {D_AttBgChallenge} x */
+	/** @public @arg {D_AttBgChallenge} x */
 	D_AttBgChallenge(x) {
 		const cf="D_AttBgChallenge";
 		const {interpreterUrl,interpreterHash,program,globalName,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3251,6 +3251,196 @@ class Support_Renderer extends ServiceMethods {
 		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
 		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
 		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {D_PdgBuyFlow} x */
+	D_PdgBuyFlow(x) {
+		const cf="D_PdgBuyFlow";
+		const {header,content,trackingParams,onCloseCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_PdgBuyFlowHeader(header);
+		this.z(content,x => {
+			if(!x.superVodBuyFlowContentRenderer) debugger;
+			return this.R_SuperVodBuyFlowContent(x);
+		});
+		this.trackingParams(trackingParams);
+		if("getSurveyCommand" in onCloseCommand) return this.C_GetSurvey(onCloseCommand);
+		{debugger;}
+	}
+	/** @private @arg {D_PlaylistSidebar} x */
+	D_PlaylistSidebar(x) {
+		const cf="D_PlaylistSidebar";
+		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(items,this.G_PlaylistSidebarItem);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
+	D_PlaylistSidebarSecondaryInfo(x) {this.H_("videoOwner",x,this.R_VideoOwner);}
+	/** @private @arg {D_PdgBuyFlowHeader} x */
+	D_PdgBuyFlowHeader(x) {
+		const cf="D_PdgBuyFlowHeader";
+		const {text,helpButton,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		this.R_Button(helpButton);
+		this.R_Button(dismissButton);
+	}
+	/** @private @arg {D_SuperVodBuyFlowContent} x */
+	D_SuperVodBuyFlowContent(x) {
+		const cf="D_SuperVodBuyFlowContent";
+		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z([description,disclaimerText],this.G_Text);
+		this.R_Button(buyButton);
+		this.trackingParams(trackingParams);
+		this.R_PdgCommentPreview(commentPreview);
+		this.R_PdgColorSlider(colorSlider);
+		console.log("defaultPriceTier",defaultPriceTier);
+		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+	}
+	/** @private @arg {D_PdgColorSlider} x */
+	D_PdgColorSlider(x) {
+		const cf="D_PdgColorSlider";
+		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(notches,this.D_NotchesItem);
+		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.G_Text(maxTierValue);
+		this.G_Text(minTierValue);
+	}
+	/** @private @arg {D_NotchesItem} x */
+	D_NotchesItem(x) {
+		const cf="NotchesItem";
+		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(linearGradientCssStyle) {debugger;}
+		if(knobColorArgb!==4280191205) debugger;
+		this.E_YpcGetCart(purchaseCommand);
+		this.G_Text(tierValue);
+	}
+	/** @private @arg {D_GuideCollapsibleEntry} x */
+	D_GuideCollapsibleEntry(x) {
+		const cf="D_GuideCollapsibleEntry";
+		const {expanderItem,expandableItems,collapserItem,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_GuideEntry(expanderItem);
+		this.z(expandableItems,x => {
+			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
+		});
+		this.R_GuideEntry(collapserItem);
+	}
+	/** @private @arg {D_GuideDownloadsEntry} x */
+	D_GuideDownloadsEntry(x) {
+		const cf="D_GuideDownloadsEntry";
+		const {alwaysShow,entryRenderer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(alwaysShow!==false) debugger;
+		if(!entryRenderer.guideEntryRenderer) debugger;
+		this.R_GuideEntry(entryRenderer);
+	}
+	/** @private @arg {D_GuideSubscriptionsSection} x */
+	D_GuideSubscriptionsSection(x) {
+		const cf="D_GuideSubscriptionsSection";
+		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(sort!=="CHANNEL_ACTIVITY") debugger;
+		this.z(items,x => {
+			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
+			if("guideCollapsibleEntryRenderer" in x) return this.G_GuideSectionItem(x);
+			let ua=this.get_keys_of(x);
+			if(ua.length>0) console.log("[G_GuideSubscriptionsSectionItem.key]",ua);
+		});
+		this.trackingParams(trackingParams);
+		this.t(formattedTitle,this.G_Text);
+		if(!this.eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
+	}
+	/** @private @arg {D_GuideSection} x */
+	D_GuideSection(x) {
+		const cf="D_GuideSection";
+		const {items,trackingParams,formattedTitle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(items,this.G_GuideSectionItem);
+		this.trackingParams(trackingParams);
+		this.t(formattedTitle,this.G_Text);
+	}
+	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
+	D_GuideCollapsibleSectionEntry(x) {
+		const cf="D_GuideCollapsibleSectionEntry";
+		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_GuideEntry(headerEntry);
+		this.T_Icon("D_Guide_ExpandIcon",expanderIcon);
+		this.T_Icon("D_Guide_CollapseIcon",collapserIcon);
+		this.z(sectionItems,this.G_GuideSectionItem);
+		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
+		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
+		if(handlerDatas.length!==2) debugger;
+	}
+	/** @private @arg {D_ResourceStatusInResponseCheck} x */
+	D_ResourceStatusInResponseCheck(x) {
+		const cf="D_ResourceStatusInResponseCheckData";
+		const {serverBuildLabel,resourceStatuses: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(serverBuildLabel);
+		this.z(a,this.D_ElementResourceStatus);
+	}
+	/** @private @arg {D_ElementResourceStatus} x */
+	D_ElementResourceStatus(x) {
+		const cf="D_ElementResourceStatus";
+		const {identifier,status,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
+		this.a_primitive_str(identifier);
+	}
+	/** @private @arg {D_PlaylistVideoThumbnail} x */
+	D_PlaylistVideoThumbnail(x) {
+		const cf="D_PlaylistVideoThumbnail";
+		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(thumbnail);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_Playlist_MD} x */
+	D_Playlist_MD(x) {
+		const cf="D_Playlist_MD";
+		const {title,iosAppindexingLink,androidAppindexingLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(title);
+		this.a_primitive_str(iosAppindexingLink);
+		this.a_primitive_str(androidAppindexingLink);
+	}
+	/** @private @arg {D_PdgCommentPreview} x */
+	D_PdgCommentPreview(x) {
+		const cf="D_PdgCommentPreview";
+		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.D_Thumbnail(authorThumbnail);
+		this.G_Text(authorText);
+		this.z(commentOptionRenderers,this.R_PdgCommentOption);
+		this.G_Text(defaultCommentText);
+		this.R_Button(editButton);
+		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+	}
+	/** @private @arg {D_PdgCommentOption} x */
+	D_PdgCommentOption(x) {
+		const cf="D_PdgCommentOption";
+		const {commentText,chipRenderer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(commentText);
+		this.R_PdgCommentChip(chipRenderer);
+	}
+	/** @private @arg {D_PdgCommentChip} x */
+	D_PdgCommentChip(x) {
+		const cf="D_PdgCommentChip";
+		const {chipText,chipColorPalette,chipIcon,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(chipText);
+		this.D_ChipColorPalette(chipColorPalette);
+		if(chipIcon.iconType!=="FILL_DOLLAR_SIGN_HEART_12") debugger;
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_RemarketingPing} x */
+	D_RemarketingPing(x) {
+		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
+		let tr=t.tr_url_to_obj(remarketingPing);
+		t.cq(tr.host,"www.youtube.com");
+		let [r,...p]=split_string(tr.pathname,"/"); t.cq(r,"");
+		t.cq(p[0],"pagead"); t.cq(p[1],"viewthroughconversion");
+		let np=this.parse_number_template(p[2]);
+		if(this.view_conversion_info.has(np)) return;
+		let sp=this.parse_url_search_params(tr.search);
+		let kk=this.get_keys_of(sp);
+		console.log(`[${cf}]`,"[keys]",kk.join());
+		this.view_conversion_info.set(np,sp);
+	}
+	/** @private @arg {D_WatchNextTabbedResults} x */
+	D_WatchNextTabbedResults(x) {
+		const cf="D_WatchNextTabbedResults";
+		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
 	}
 }
 export_(exports => {

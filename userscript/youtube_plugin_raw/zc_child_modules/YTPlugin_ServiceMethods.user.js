@@ -49,6 +49,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @returns {true} */
 	true_() {return true;}
+	/** @protected @template T @template {T} U @arg {T} a @arg {U} b */
+	cq(a,b) {if(a!==b) debugger;}
 	/** @public @arg {string} x @arg {boolean} is_prev */
 	D_VeCsn(x,is_prev=false) {
 		let csn_dec=atob(x);
