@@ -141,8 +141,8 @@ class IndexedDBService extends BaseService {
 		db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
 		return db_req;
 	}
-	/** 
-	 * @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode 
+	/**
+	 * @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode
 	 * @arg {()=>void} complete_cb
 	*/
 	open_transaction(db,key,mode,complete_cb) {
@@ -212,7 +212,11 @@ class IndexedDBService extends BaseService {
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
 	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDb;}} s @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
 	async force_update(s,key,x) {
-		this.put(key,x,3);
+		try {
+			this.put(key,x,3);
+		} catch(e) {
+			throw new AggregateError([e]);
+		}
 		let bp=true;
 		if(bp) return;
 		for(let scope=null;s.error_count<64;) {
