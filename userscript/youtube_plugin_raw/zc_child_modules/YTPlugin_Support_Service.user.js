@@ -353,83 +353,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	async export_db_data(ss,boxed) {
 		if(ss.data.length<=0) return;
 		if(ss.type!=="string") {debugger; return;}
-		for(let sd of ss.data) this.export_store_item(sd,boxed);
+		for(let sd of ss.data) {
+			console.log("[will_export]",sd);
+			this.export_store_item(sd,boxed);
+		}
 	}
 	log_load_database=false;
-	/** @arg {T_IdBox<B_IdSrcStr,string,"str",string>} to_load @arg {Extract<G_StoreDescriptions,{type:"string"}>} ss */
-	async _load_str_type(to_load,ss) {
-		/** @type {string[][]} */
-		let str_arr=[];
-		/** @type {Omit<Pick<typeof to_load,"key"|"type"|"id">,"id">&{id:(typeof to_load)["value"]}} */
-		let {...to_load_v1}=as_any(to_load);
-		if(!("value" in to_load_v1)) {
-			to_load_v1;
-			let ks=split_string(to_load_v1.key,":");
-			to_load={
-				key: to_load_v1.key,
-				base: "boxed_id",
-				type: ks[1],
-				id: required(ks.pop()),
-				value: to_load_v1.id,
-			};
-			await this.put_box(to_load);
-		}
-		for(let item of to_load.value[1][1]) {
-			if(item instanceof Array) {
-				let res=[];
-				for(let val of item) {
-					if(typeof val!=="string") continue;
-					res.push(val);
-				}
-				str_arr.push(res);
-				continue;
-			}
-			if(typeof item!=="string") continue;
-			str_arr.push([item]);
-		}
-		let k_parts=this.split_box_type(to_load.key);
-		if(k_parts[0]!=="str") debugger;
-		// save database to local
-		for(let from_db of str_arr) {
-			let local_data=ss.data.find(v => v[0]===k_parts[1]);
-			if(!local_data) {
-				ss.data.push([k_parts[1],["arr",from_db]]);
-				continue;
-			}
-			switch(local_data[1][0]) {
-				case "many": {
-					let mv=local_data[1][1];
-					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
-					local_data[1][1].push(from_db);
-				} break;
-				case "arr": {
-					if(from_db.length!==1) {console.log("not eq",from_db,local_data[1][1]); continue;}
-					if(local_data[1][1].includes(from_db[0])) continue;
-					local_data[1][1].push(from_db[0]);
-				}
-			}
-		}
-		// save local to database
-		for(let from_db of str_arr) {
-			let local_data=ss.data.find(v => v[0]===k_parts[1]);
-			if(local_data) {
-				let ck=local_data[1];
-				if(from_db.length===1) {
-					if(ck[0]!=="arr") continue;
-					if(ck[1].includes(from_db[0])) continue;
-					ck[1].push(from_db[0]);
-				} else {
-					if(ck[0]!=="many") continue;
-					let mv=ck[1];
-					if(mv.findIndex(v => this.eq_keys(v,from_db))>=0) continue;
-					mv.push(from_db);
-				}
-				continue;
-			}
-			ss.data.push([k_parts[1],["arr",from_db]]);
-			debugger;
-		}
-	}
 	/** @template T @arg {make_item_group<T>} x @arg {T[]} _ta */
 	uv_unpack(x,_ta) {
 		/** @type {make_one_t<T>|null} */
@@ -583,30 +512,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			debugger;
 		}
 	}
-	async do_boxed_update_from_database() {
-		let boxed=await this.indexed_db.getAll("boxed_id",this.indexed_db_version);
-		if(this.log_load_database) console.log("load_database all boxed",boxed);
-		let store=this.data_store;
-		let ss=store.string_store;
-		if(boxed.length===0) {
-			let changes=store.get_changed_stores();
-			for(let changed of changes) {
-				if(changed==="string") continue;
-				debugger;
-			}
-			await this.export_db_data(ss,boxed);
-		} else {
-			for(let to_load of boxed) {
-				switch(to_load.type) {
-					case "num": {
-						debugger;
-					} break;
-					case "str": this._load_str_type(to_load,ss);
-				}
-			}
-			await this.export_db_data(ss,boxed);
-		}
-	}
 	expected_id=0;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @returns {Promise<void>|void} */
 	put_and_wait(key,value) {
@@ -669,7 +574,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				break;
 			}
 			if(update_id.id!==this.expected_id) {
-				await this.do_boxed_update_from_database();
 				await this.put_update_id(this.expected_id);
 				continue;
 			}

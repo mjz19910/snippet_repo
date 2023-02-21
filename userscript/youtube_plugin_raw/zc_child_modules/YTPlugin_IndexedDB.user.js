@@ -269,7 +269,7 @@ class IndexedDBService extends BaseService {
 						break for_loop;
 					}
 					if(cur_cursor===null) {
-						if(this.log_db_actions) console.log("update sync cache item",item);
+						if(this.log_db_actions) console.log("[update_sync_cache_item_add_to_db]",item);
 						if(tx_scope.is_tx_complete) {
 							console.log("cursor_loop_is_tx_complete_2");
 							break cursor_loop;
@@ -320,8 +320,10 @@ class IndexedDBService extends BaseService {
 								}
 							} break;
 							case "update_id": {
-								if(this.log_db_actions) console.log("update sync cache item",item);
+								if(this.log_db_actions) console.log("[update_sync_cache_item_update_id]",item);
+								if(item.key===cursor_value.key&&item.id===cursor_value.id) break;
 								await this.force_update(state,key,item);
+								this.committed_data.push(item);
 							} break cursor_loop;
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
