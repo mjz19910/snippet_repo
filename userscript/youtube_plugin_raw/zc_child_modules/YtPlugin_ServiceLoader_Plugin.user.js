@@ -17,7 +17,7 @@ const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
 const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
 const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 const {ParserService}=require("./YTPlugin_Parser_Service.user");
-const {LocalStorageSeenDatabase, Support_RS_Player, Support_RS_WatchPage, Support_RS_Watch, Support_RS_Page_Browse, Support_RS_Browse, Support_GenericApi, Support_EventInput, Support_VE37414, Support_VE, TypedefGenerator}=require("./YTPlugin_Support_Service.user");
+const {LocalStorageSeenDatabase, Support_RS_Player, Support_RS_WatchPage, Support_RS_Watch, Support_RS_Page_Browse, Support_RS_Browse, Support_GenericApi, Support_EventInput, Support_VE37414, Support_VE, TypedefGenerator, Support_Renderer}=require("./YTPlugin_Support_Service.user");
 
 // ==/UserScript==
 const __module_name__="mod$ServiceLoaderPlugin";
@@ -54,6 +54,7 @@ class ServiceLoader {
 		this.x_VE37414=new Support_VE37414(x);
 		this.x_VE=new Support_VE(x);
 		this.gen_code=new TypedefGenerator(x);
+		this.x_Renderer=new Support_Renderer(x);
 	}
 }
 

@@ -21,20 +21,31 @@ function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;
 	ks=this.k;
-	/** @type {this["handle_types"]|null} */
-	_bc=null;
 	/** @override @returns {"unknown"|"normal"} */
 	get service_type() {return "normal";}
-	get handle_types() {
-		return this.x.get("handle_types");
-	}
+	get handle_types() {return this.x.get("handle_types");}
+	/** @type {this["handle_types"]|null} */
+	_bc=null;
 	get bc() {
 		if(this._bc) return this._bc;
 		this._bc=this.handle_types;
 		return this._bc;
 	}
-	get indexed_db() {
-		return this.x.get("indexed_db");
+	get x_Renderer() {return this.x.get("x_Renderer");}
+	/** @type {this["x_Renderer"]|null} */
+	_xr=null;
+	get xr() {
+		if(this._xr) return this._xr;
+		this._xr=this.x_Renderer;
+		return this._xr;
+	}
+	get indexed_db() {return this.x.get("indexed_db");}
+	/** @type {this["indexed_db"]|null} */
+	_ix=null;
+	get ix() {
+		if(this._ix) return this._ix;
+		this._ix=this.indexed_db;
+		return this._ix;
 	}
 	/** @protected @returns {true} */
 	true_() {return true;}
