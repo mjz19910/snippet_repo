@@ -250,6 +250,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	data_store=new StoreData(() => {
 		this.onDataChange();
 	});
+	idb=(()=>{return this.indexed_db;})();
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
@@ -266,13 +267,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.#idle_id=requestIdleCallback(async () => {
 			const version=this.indexed_db_version;
 			try {
-				await this.indexed_db.load_database(this.data_store,version);
+				await this.idb.load_database(this.data_store,version);
 			} catch(err) {
 				console.log("load_database failed",err);
 				return;
 			}
 			try {
-				await this.indexed_db.save_database(this.data_store,version);
+				await this.idb.save_database(this.data_store,version);
 			} catch(err) {
 				console.log("save_database failed",err);
 				return;
