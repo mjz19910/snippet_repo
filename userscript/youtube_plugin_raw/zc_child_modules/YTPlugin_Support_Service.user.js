@@ -250,7 +250,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	data_store=new StoreData(() => {
 		this.onDataChange();
 	});
-	idb=(()=>{return this.indexed_db;})();
+	idb=(()=>{return this.x.get("indexed_db");})();
 	/** @api @public @arg {string} k @arg {["one",boolean]} x */
 	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
 	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
