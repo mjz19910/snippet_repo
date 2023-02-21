@@ -359,6 +359,11 @@ class HandleTypes extends ServiceMethods {
 		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number_arr(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
+	cg_mismatch_set=new Set();
+	/** @type {[string,string][]} */
+	cg_mismatch_list=[];
+	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
+	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
 	//#endregion
 	//#region moved data methods
 	/** @private @arg {D_RemarketingPing} x */
@@ -1185,6 +1190,8 @@ class HandleTypes extends ServiceMethods {
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
 	}
+	//#endregion
+	//#region CD & AU & C & DC
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_SubscribeButton} x */
@@ -1217,15 +1224,8 @@ class HandleTypes extends ServiceMethods {
 		if(timeoutMs!==60000) debugger;
 		this.params("timed_continuation.data",continuation);
 	}
-	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
-	D_PlaylistSidebarSecondaryInfo(x) {this.H_("videoOwner",x,this.R_VideoOwner);}
-	cg_mismatch_set=new Set();
-	/** @type {[string,string][]} */
-	cg_mismatch_list=[];
-	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
-	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
-	//#region Grouped Endpoints
-	//#region E_ (Endpoints)
+	//#endregion
+	//#region E & M & GM & DE
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {M_YpcGetCart} x */
@@ -1241,6 +1241,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {DE_YpcGetCart} x */
 	DE_YpcGetCart(x) {this.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
+	//#endregion
+	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
+	D_PlaylistSidebarSecondaryInfo(x) {this.H_("videoOwner",x,this.R_VideoOwner);}
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x) {
 		const cf="D_Microformat_Other";
