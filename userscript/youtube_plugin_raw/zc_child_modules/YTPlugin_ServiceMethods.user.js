@@ -7351,7 +7351,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {G_PlaylistPanel_Item} x */
 	G_PlaylistPanel_Item(x) {
 		const cf="G_PlaylistPanel_Item";
-		if("automixPreviewVideoRenderer" in x) return this.bc.R_AutomixPreviewVideo(x);
+		if("automixPreviewVideoRenderer" in x) return this.xr.R_AutomixPreviewVideo(x);
 		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
