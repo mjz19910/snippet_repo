@@ -256,7 +256,7 @@ class HandleTypes extends ServiceMethods {
 						let exp_m_from_now=moment(value/1000).diff(moment())/1000;
 						// skip time that is now
 						if(exp_m_from_now>-5&&exp_m_from_now<5) break;
-						console.log(`[cf1:${cf1}]`,`[cf2:${cf2}]`,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
+						console.log(`[run_logger_moment] [cf1:${cf1}]`,`[cf2:${cf2}]`,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
 					} break;
 				}
 				continue;
