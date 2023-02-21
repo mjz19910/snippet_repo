@@ -169,6 +169,7 @@ class IndexedDBService extends BaseService {
 			case "boolean": return store.bool_store.load_data(item);
 			case "keys": return store.keys_store.load_data(item);
 			case "number": return store.numbers_store.load_data(item);
+			case "string": return store.string_store.load_data(item);
 			case "update_id": break;
 		}
 	}

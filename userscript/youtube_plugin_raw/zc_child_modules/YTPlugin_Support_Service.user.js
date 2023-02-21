@@ -120,14 +120,10 @@ class StoreDescription extends ApiBase2 {
 			default: throw new Error();
 		}
 		let {id: k,value: x}=item;
-		if(this.includes_key(item.id)) {
-			let nd_item=this.new_data.findIndex(v => v[0]===item.id); nd_item;
-			debugger;
-			return;
-		}
+		let idx=this.new_data.findIndex(v => v[0]===item.id);
+		if(idx<0) return;
+		this.new_data.splice(idx);
 		this.add_data_to_index(k,x);
-		let nd_item=this.new_data.findIndex(v => v[0]===item.id); nd_item;
-		debugger;
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
