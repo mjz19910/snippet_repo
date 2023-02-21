@@ -275,6 +275,7 @@ class ParserService extends BaseService {
 	/** @api @public @arg {CF_L_TP_Params} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {
 		if(x===void 0) {debugger; return;}
+		if(this.str_starts_with_rx("type://",x)) {x; return;}
 		if(this.str_starts_with_rx("https://",x)) {return this.parse_full_url(root,x);}
 		if(this.str_starts_with_rx("http://",x)) {return this.parse_full_url(root,x);}
 		if(this.str_starts_with_rx("android-app://",x)) {return;}

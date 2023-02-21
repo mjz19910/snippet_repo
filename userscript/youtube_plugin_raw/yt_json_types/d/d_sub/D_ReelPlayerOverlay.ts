@@ -7,10 +7,11 @@ type D_ReelPlayerOverlay={
 	subscribeButtonRenderer: R_SubscribeButton;
 	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
 	viewCommentsButton: R_Button;
+	videoInteractions?: {};
 	trackingParams: string;
 	shareButton: R_Button;
 	pivotButton: R_PivotButton;
-	badge: RMD_Badge;
+	badge?: RMD_Badge;
 };
 type D_ReelPlayerOverlay_Gen={
 	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";

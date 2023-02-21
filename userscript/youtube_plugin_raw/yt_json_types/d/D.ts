@@ -530,7 +530,7 @@ type D_CommentSimplebox={
 	trackingParams: string;
 	avatarSize: "SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT";
 	emojiButton: R_Button;
-	emojiPicker: R_EmojiPicker;
+	emojiPicker?: R_EmojiPicker;
 	aadcGuidelinesStateEntityKey: string;
 };
 type D_ConfirmDialog={
@@ -1648,14 +1648,14 @@ type D_CommentsEntryPointHeader_contentRenderer=D_CommentsEntryPointHeader["cont
 type D_CommentsHeader={
 	countText?: G_Text;
 	createRenderer: R_CommentSimplebox;
-	sortMenu: R_SortFilterSubMenu;
+	sortMenu?: R_SortFilterSubMenu;
 	trackingParams: string;
-	titleText: G_Text;
-	commentsCount: G_Text;
-	showSeparator: true;
-	customEmojis: D_CustomEmoji[];
-	unicodeEmojisUrl: string;
-	loggingDirectives: D_LoggingDirectives;
+	titleText?: G_Text;
+	commentsCount?: G_Text;
+	showSeparator?: true;
+	customEmojis?: D_CustomEmoji[];
+	unicodeEmojisUrl?: `type://unicodeEmojisUrl.v/${string}`;
+	loggingDirectives?: D_LoggingDirectives;
 };
 type D_CommentsHeaderContent={
 	continuationItems: [

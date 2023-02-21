@@ -13,6 +13,7 @@ type D_UrlFormat=
 	|`/feed/trending?${string}`
 	|`/gaming`
 	|`/playlist?${D_PlaylistUrlParams}`
+	|NonNullable<D_CommentsHeader["unicodeEmojisUrl"]>
 	|GU_VE11487_Url
 	|GU_VE6827_Url
 	|D_ResultsPageUrl

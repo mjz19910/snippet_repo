@@ -1009,21 +1009,20 @@ class ServiceMethods extends ServiceData {
 			this.trackingParams(trackingParams);
 			return;
 		}
-		const {style,trackingParams,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,viewCommentsButton,shareButton,nextItemButton,prevItemButton,badge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.trackingParams(trackingParams);
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(likeButton,this.R_LikeButton);
 		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
 		this.t(menu,this.R_Menu);
-		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
-		this.t(pivotButton,this.R_PivotButton);
 		this.t(nextItemButton,this.R_Button);
 		this.t(prevItemButton,this.R_Button);
-		this.t(badge,this.RMD_Badge);
-		this.t(shareButton,this.R_Button);
+		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.t(viewCommentsButton,this.R_Button);
+		this.t(videoInteractions,this.g);
 		this.trackingParams(trackingParams);
+		this.t(shareButton,this.R_Button);
+		this.t(pivotButton,this.R_PivotButton);
+		this.t(badge,this.RMD_Badge);
 	}
 	/** @private @arg {R_ReelPlayerHeader} x */
 	R_ReelPlayerHeader(x) {this.H_("reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
@@ -5786,14 +5785,14 @@ class ServiceMethods extends ServiceData {
 		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(countText,this.G_Text);
 		this.R_CommentSimplebox(createRenderer);
-		this.R_SortFilterSubMenu(sortMenu);
+		this.t(sortMenu,this.R_SortFilterSubMenu);
 		this.trackingParams(trackingParams);
-		this.G_Text(titleText);
-		this.G_Text(commentsCount);
+		this.t(titleText,this.G_Text);
+		this.t(commentsCount,this.G_Text);
 		if(showSeparator!==true) debugger;
-		this.z(customEmojis,this.D_CustomEmoji);
-		this.parser.parse_url(cf,as(unicodeEmojisUrl));
-		this.D_LoggingDirectives(loggingDirectives);
+		this.tz(customEmojis,this.D_CustomEmoji);
+		this.t(unicodeEmojisUrl,x => this.parser.parse_url(cf,x));
+		this.t(loggingDirectives,this.D_LoggingDirectives);
 	}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
 	R_HotkeyDialogSectionOption(x) {this.H_("hotkeyDialogSectionOptionRenderer",x,this.D_HotkeyDialogSectionOption);}
@@ -6333,7 +6332,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);
-		this.R_EmojiPicker(emojiPicker);
+		this.t(emojiPicker,this.R_EmojiPicker);
 		this.trackingParams(trackingParams);
 		this.R_Button(emojiButton);
 	}
