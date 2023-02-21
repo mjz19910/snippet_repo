@@ -934,7 +934,7 @@ class Support_RS_Player extends ServiceMethods {
 			let x1=split_string_once(x,"?");
 			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
 			let {...rx}=this.parse_url_search_params(x1[1]);
-			this.bc.D_TimedTextApi(rx);
+			this.xr.D_TimedTextApi(rx);
 		}
 		this.G_Text(name);
 		this.save_string(`${cf}.vssId`,vssId);
@@ -1638,8 +1638,8 @@ class Support_RS_Browse extends ServiceMethods {
 	G_BrowseHeader(x) {
 		const cf="G_BrowseHeader";
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
-		if("c4TabbedHeaderRenderer" in x) return this.bc.R_C4TabbedHeader(x);
-		if("playlistHeaderRenderer" in x) return this.bc.R_PlaylistHeader(x);
+		if("c4TabbedHeaderRenderer" in x) return this.xr.R_C4TabbedHeader(x);
+		if("playlistHeaderRenderer" in x) return this.xr.R_PlaylistHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_MusicThumbnail} x */
@@ -1656,15 +1656,15 @@ class Support_RS_Browse extends ServiceMethods {
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
 		const cf="G_Browse_MD";
-		if("channelMetadataRenderer" in x) return this.bc.R_Channel_MD(x);
-		if("playlistMetadataRenderer" in x) return this.bc.R_Playlist_MD(x);
+		if("channelMetadataRenderer" in x) return this.xr.R_Channel_MD(x);
+		if("playlistMetadataRenderer" in x) return this.xr.R_Playlist_MD(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar";
 		if("settingsSidebarRenderer" in x) return this.xr.R_SettingsSidebar(x);
-		if("playlistSidebarRenderer" in x) return this.bc.R_PlaylistSidebar(x);
+		if("playlistSidebarRenderer" in x) return this.xr.R_PlaylistSidebar(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
@@ -2399,13 +2399,13 @@ class Support_EventInput extends ServiceMethods {
 		const cf="RS_Playlist";
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_TwoColumnBrowseResults(contents);
-		this.bc.R_PlaylistHeader(header);
+		this.xr.R_PlaylistHeader(header);
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
-		this.bc.R_Playlist_MD(metadata);
+		this.xr.R_Playlist_MD(metadata);
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(trackingParams);
 		this.R_Microformat(microformat);
-		this.bc.R_PlaylistSidebar(sidebar);
+		this.xr.R_PlaylistSidebar(sidebar);
 	}
 	/** @private @arg {RS_Settings} x */
 	RS_Settings(x) {
@@ -2566,6 +2566,10 @@ function export_Renderer(_class) {
 }
 class Support_Renderer extends ServiceMethods {
 	static {export_Renderer(this);}
+	//#region data members
+	/** @type {Map<number,object>} */
+	view_conversion_info=new Map;
+	//#endregion
 	/** @public @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
 	/** @private @arg {D_SettingsSidebar} x */
@@ -2704,7 +2708,7 @@ class Support_Renderer extends ServiceMethods {
 		let e_num=this.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.a_primitive_num(e_num);
-		this.parse_signature(signature);
+		this.bc.parse_signature(signature);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.key`,key);
 		kind&&this.save_string(`${cf}.kind`,kind);
@@ -2875,7 +2879,7 @@ class Support_Renderer extends ServiceMethods {
 				break x;
 			}
 			if("urlEndpoint" in x2) {
-				this.E_VE83769_Url(x2);
+				this.bc.E_VE83769_Url(x2);
 				break x;
 			}
 			debugger;
@@ -2884,7 +2888,7 @@ class Support_Renderer extends ServiceMethods {
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
 		{
 			let x2=navigationEndpoint;
-			if("urlEndpoint" in x2) return this.E_VE83769_Url(x2);
+			if("urlEndpoint" in x2) return this.bc.E_VE83769_Url(x2);
 			if("browseEndpoint" in x2) {
 				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
 				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
@@ -2929,10 +2933,55 @@ class Support_Renderer extends ServiceMethods {
 	R_ReportFormModal(x) {this.H_("reportFormModalRenderer",x,this.g);}
 	/** @arg {R_RichShelf} x */
 	R_RichShelf(x) {this.H_("richShelfRenderer",x,this.D_RichShelf);}
+	/** @private @arg {D_RichShelf} x */
+	D_RichShelf(x) {
+		const cf="D_RichShelf";
+		/** @type {T_UnionToPartial<D_RichShelf>} */
+		let pt=x;
+		const {icon,title,contents,trackingParams,menu,showMoreButton,rowIndex,...y}=this.s(cf,pt); this.g(y);
+		if(icon) {
+			switch(icon.iconType) {
+				default: this.cg.codegen_case(`${cf}.icon`,icon.iconType); break;
+				case "YOUTUBE_SHORTS_BRAND_24": break;
+			}
+		}
+		this.G_Text(title);
+		this.z(contents,this.R_RichItem);
+		this.trackingParams(trackingParams);
+		this.R_Menu(menu);
+		this.R_Button(showMoreButton);
+		switch(rowIndex) {
+			default: this.cg.codegen_case(`${cf}.rowIndex`,rowIndex); break;
+			case 2: case 4: break;
+		}
+	}
 	/** @arg {R_RatingSurveyOption} x */
 	R_RatingSurveyOption(x) {this.H_("ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
+	/** @private @arg {D_RatingSurveyOption} x */
+	D_RatingSurveyOption(x) {
+		const cf="D_ExpandableSurveyResponse";
+		const {responseText,defaultStateIcon,onStateIcon,followUpCommand,responseEndpoint,trackingParams,checked,selected,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(responseText);
+		if(defaultStateIcon.iconType!=="STAR_BORDER") debugger;
+		if(onStateIcon.iconType!=="STAR") debugger;
+		this.bc.C_FollowUp(followUpCommand);
+		this.g(responseEndpoint);
+		this.trackingParams(trackingParams);
+		this.a_primitive_bool(checked);
+		this.a_primitive_bool(selected);
+	}
 	/** @arg {R_RatingSurvey} x */
 	R_RatingSurvey(x) {this.H_("ratingSurveyRenderer",x,this.D_RatingSurvey);}
+	/** @private @arg {D_RatingSurvey} x */
+	D_RatingSurvey(x) {
+		const cf="D_ExpandableSurveyResponse";
+		const {ratings,trackingParams,notSureButton,undoButton,notSureEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(ratings,x => this.xr.R_RatingSurveyOption(x));
+		this.trackingParams(trackingParams);
+		this.R_Button(notSureButton);
+		this.R_Button(undoButton);
+		this.g(notSureEndpoint);
+	}
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
 	R_PlaylistSidebarSecondaryInfo(x) {this.H_("playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
 	/** @public @arg {R_Channel_MD} x */
@@ -3039,12 +3088,47 @@ class Support_Renderer extends ServiceMethods {
 	R_PdgCommentOption(x) {this.H_("pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
 	/** @arg {R_InlineSurvey} x */
 	R_InlineSurvey(x) {this.H_("inlineSurveyRenderer",x,this.D_InlineSurvey);}
+	/** @private @arg {D_InlineSurvey} x */
+	D_InlineSurvey(x) {
+		const cf="D_InlineSurvey";
+		const {dismissalEndpoint,title,subtitle,inlineContent,response,trackingParams,dismissalText,impressionEndpoints,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.codegen_typedef(`${cf}.dismissalEndpoint`,dismissalEndpoint);
+		this.G_Text(title);
+		this.G_Text(subtitle);
+		this.R_CompactVideo(inlineContent);
+		this.xr.R_ExpandableSurveyResponse(response);
+		this.trackingParams(trackingParams);
+		this.G_Text(dismissalText);
+		this.z(impressionEndpoints,this.g);
+	}
 	/** @arg {R_SourcePivotHeader} x */
 	R_SourcePivotHeader(x) {this.H_("sourcePivotHeaderRenderer",x,this.D_SourcePivotHeader);}
+	/** @private @arg {D_SourcePivotHeader} x */
+	D_SourcePivotHeader(x) {
+		const cf="D_SourcePivotHeader";
+		const {headerInformation,buttonRow,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xr.R_ProfilePageHeaderInformationViewModel(headerInformation);
+		this.xr.R_ProfilePageHeaderButtonRowViewModel(buttonRow);
+		this.trackingParams(trackingParams);
+	}
 	/** @arg {R_ProfilePageHeaderInformationViewModel} x */
 	R_ProfilePageHeaderInformationViewModel(x) {this.H_("profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
+	/** @private @arg {D_ProfilePageHeaderInformation} x */
+	D_ProfilePageHeaderInformation(x) {
+		const cf="D_ProfilePageHeaderInformation";
+		const {title,metadata,thumbnail,alignment,onTap,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xr.R_ProfilePageHeaderTitleViewModel(title);
+		this.xr.R_ProfilePageHeaderMetadataViewModel(metadata);
+		this.xr.R_ProfilePageHeaderThumbnailViewModel(thumbnail);
+		if(alignment!=="a") debugger;
+		this.C_Innertube(onTap);
+	}
 	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
+	/** @private @arg {D_ProfilePageHeaderTitle} x */
+	D_ProfilePageHeaderTitle(x) {this.y("D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
+	/** @private @arg {D_ProfilePageHeaderTitle_Content} x */
+	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,this.a_primitive_str);}
 	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
 	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("profilePageHeaderThumbnailViewModel",x,this.g);}
 	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
@@ -3053,6 +3137,14 @@ class Support_Renderer extends ServiceMethods {
 	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("profilePageHeaderButtonRowViewModel",x,this.g);}
 	/** @arg {R_ExpandableSurveyResponse} x */
 	R_ExpandableSurveyResponse(x) {this.H_("expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
+	/** @private @arg {D_ExpandableSurveyResponse} x */
+	D_ExpandableSurveyResponse(x) {
+		const cf="D_ExpandableSurveyResponse";
+		const {options,submitButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xr.R_RatingSurvey(options);
+		this.R_Button(submitButton);
+		this.trackingParams(trackingParams);
+	}
 	/** @arg {R_AutomixPreviewVideo} x */
 	R_AutomixPreviewVideo(x) {this.H_("automixPreviewVideoRenderer",x,this.g);}
 	/** @public @arg {D_AttBgChallenge} x */
@@ -3218,6 +3310,13 @@ class Support_Renderer extends ServiceMethods {
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
 	}
+	/** @private @arg {G_ChannelSwitcherContent} x */
+	G_ChannelSwitcherContent(x) {
+		const cf="G_ChannelSwitcherContent";
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("accountItem" in x) return this.bc.A_AccountItem(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @public @arg {G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x) {
 		const cf="G_PlaylistSidebarItem";
@@ -3292,14 +3391,14 @@ class Support_Renderer extends ServiceMethods {
 		this.R_PdgCommentPreview(commentPreview);
 		this.R_PdgColorSlider(colorSlider);
 		console.log("defaultPriceTier",defaultPriceTier);
-		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.bc.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {D_PdgColorSlider} x */
 	D_PdgColorSlider(x) {
 		const cf="D_PdgColorSlider";
 		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(notches,this.D_NotchesItem);
-		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.bc.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 		this.G_Text(maxTierValue);
 		this.G_Text(minTierValue);
 	}
@@ -3309,7 +3408,7 @@ class Support_Renderer extends ServiceMethods {
 		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(linearGradientCssStyle) {debugger;}
 		if(knobColorArgb!==4280191205) debugger;
-		this.E_YpcGetCart(purchaseCommand);
+		this.bc.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
@@ -3404,7 +3503,7 @@ class Support_Renderer extends ServiceMethods {
 		this.z(commentOptionRenderers,this.R_PdgCommentOption);
 		this.G_Text(defaultCommentText);
 		this.R_Button(editButton);
-		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.bc.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {D_PdgCommentOption} x */
 	D_PdgCommentOption(x) {

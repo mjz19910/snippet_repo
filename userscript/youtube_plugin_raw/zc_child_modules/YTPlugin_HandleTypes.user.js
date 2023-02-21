@@ -29,10 +29,6 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
-	//#region data members
-	/** @type {Map<number,object>} */
-	view_conversion_info=new Map;
-	//#endregion
 	//#region remote service plugins
 	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
 	indexed_db_createDatabaseSchema(service,old_version,db) {
@@ -450,13 +446,6 @@ class HandleTypes extends ServiceMethods {
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_ChannelSwitcherContent} x */
-	G_ChannelSwitcherContent(x) {
-		const cf="G_ChannelSwitcherContent";
-		if("buttonRenderer" in x) return this.R_Button(x);
-		if("accountItem" in x) return this.A_AccountItem(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	//#endregion
 	//#region helpers
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
@@ -488,7 +477,7 @@ class HandleTypes extends ServiceMethods {
 	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
-	/** @private @arg {A_AccountItem} x */
+	/** @public @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	//#region Renderer methods
@@ -528,13 +517,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region E & M & GM & DE
-	/** @private @arg {E_YpcGetCart} x */
+	/** @public @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
-	/** @private @arg {DE_SuperThanksSelectedTier} x */
+	/** @public @arg {DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x) {
 		const cf="DE_SuperThanksSelectedTier";
 		const {index,key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1519,94 +1508,6 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.G_Text(accountByline);
 		this.G_Text(channelHandle);
-	}
-	/** @arg {D_InlineSurvey} x */
-	D_InlineSurvey(x) {
-		const cf="D_InlineSurvey";
-		const {dismissalEndpoint,title,subtitle,inlineContent,response,trackingParams,dismissalText,impressionEndpoints,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.codegen_typedef(`${cf}.dismissalEndpoint`,dismissalEndpoint);
-		this.G_Text(title);
-		this.G_Text(subtitle);
-		this.R_CompactVideo(inlineContent);
-		this.xr.R_ExpandableSurveyResponse(response);
-		this.trackingParams(trackingParams);
-		this.G_Text(dismissalText);
-		this.z(impressionEndpoints,this.g);
-	}
-	/** @arg {D_RichShelf} x */
-	D_RichShelf(x) {
-		const cf="D_RichShelf";
-		/** @type {T_UnionToPartial<D_RichShelf>} */
-		let pt=x;
-		const {icon,title,contents,trackingParams,menu,showMoreButton,rowIndex,...y}=this.s(cf,pt); this.g(y);
-		if(icon) {
-			switch(icon.iconType) {
-				default: this.cg.codegen_case(`${cf}.icon`,icon.iconType); break;
-				case "YOUTUBE_SHORTS_BRAND_24": break;
-			}
-		}
-		this.G_Text(title);
-		this.z(contents,this.R_RichItem);
-		this.trackingParams(trackingParams);
-		this.R_Menu(menu);
-		this.R_Button(showMoreButton);
-		switch(rowIndex) {
-			default: this.cg.codegen_case(`${cf}.rowIndex`,rowIndex); break;
-			case 2: case 4: break;
-		}
-	}
-	/** @arg {D_ProfilePageHeaderTitle_Content} x */
-	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,this.a_primitive_str);}
-	/** @arg {D_ProfilePageHeaderTitle} x */
-	D_ProfilePageHeaderTitle(x) {this.y("D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
-	/** @arg {D_SourcePivotHeader} x */
-	D_SourcePivotHeader(x) {
-		const cf="D_SourcePivotHeader";
-		const {headerInformation,buttonRow,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.R_ProfilePageHeaderInformationViewModel(headerInformation);
-		this.xr.R_ProfilePageHeaderButtonRowViewModel(buttonRow);
-		this.trackingParams(trackingParams);
-	}
-	/** @arg {D_ProfilePageHeaderInformation} x */
-	D_ProfilePageHeaderInformation(x) {
-		const cf="D_ProfilePageHeaderInformation";
-		const {title,metadata,thumbnail,alignment,onTap,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.R_ProfilePageHeaderTitleViewModel(title);
-		this.xr.R_ProfilePageHeaderMetadataViewModel(metadata);
-		this.xr.R_ProfilePageHeaderThumbnailViewModel(thumbnail);
-		if(alignment!=="a") debugger;
-		this.C_Innertube(onTap);
-	}
-	/** @arg {D_ExpandableSurveyResponse} x */
-	D_ExpandableSurveyResponse(x) {
-		const cf="D_ExpandableSurveyResponse";
-		const {options,submitButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.R_RatingSurvey(options);
-		this.R_Button(submitButton);
-		this.trackingParams(trackingParams);
-	}
-	/** @arg {D_RatingSurvey} x */
-	D_RatingSurvey(x) {
-		const cf="D_ExpandableSurveyResponse";
-		const {ratings,trackingParams,notSureButton,undoButton,notSureEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(ratings,x => this.xr.R_RatingSurveyOption(x));
-		this.trackingParams(trackingParams);
-		this.R_Button(notSureButton);
-		this.R_Button(undoButton);
-		this.g(notSureEndpoint);
-	}
-	/** @arg {D_RatingSurveyOption} x */
-	D_RatingSurveyOption(x) {
-		const cf="D_ExpandableSurveyResponse";
-		const {responseText,defaultStateIcon,onStateIcon,followUpCommand,responseEndpoint,trackingParams,checked,selected,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(responseText);
-		if(defaultStateIcon.iconType!=="STAR_BORDER") debugger;
-		if(onStateIcon.iconType!=="STAR") debugger;
-		this.C_FollowUp(followUpCommand);
-		this.g(responseEndpoint);
-		this.trackingParams(trackingParams);
-		this.a_primitive_bool(checked);
-		this.a_primitive_bool(selected);
 	}
 	/** @arg {S_VideoGoodPutShape} x */
 	S_VideoGoodPutShape(x) {
