@@ -120,20 +120,247 @@ class IndexedDBService extends BaseService {
 	log_db_actions=false;
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value @arg {number} version */
+	expected_id=0;
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {T} */
+	put_box(x,version) {return this.put("boxed_id",x,version);}
+	/** @arg {number} id @arg {number} version @returns {D_BoxedUpdateId} */
+	put_update_id(id,version) {
+		return this.put_box({
+			key: "boxed_id:update_id",
+			base: "boxed_id",
+			type: "update_id",
+			id,
+		},version);
+	}
+	/** @private @arg {number} version */
+	async get_update_id(version) {
+		let box=await this.get("boxed_id","boxed_id:update_id",version);
+		if(box&&box.key!=="boxed_id:update_id") return null;
+		return box;
+	}
+	/** @public @arg {I_StoreData} store @arg {number} version */
+	async save_database(store,version) {
+		let update_id=await this.get_update_id(version);
+		if(!update_id) {
+			this.expected_id=0;
+			update_id=this.put_update_id(this.expected_id,version);
+		}
+		if(update_id.id!==this.expected_id) {
+			this.load_store_from_database(version);
+			this.expected_id=update_id.id;
+		}
+		this.expected_id++;
+		this.put_update_id(this.expected_id,version);
+		await this.do_boxed_push_to_database(store,version);
+	}
+	/** @arg {number} version */
+	async load_store_from_database(version) {
+		/** @type {IDBBoxedType[]} */
+		let boxed=await this.getAll("boxed_id",version);
+		for(let item of boxed) {
+			this.load_store(item);
+		}
+	}
+	/** @arg {IDBBoxedType} item */
+	load_store(item) {
+		item; debugger;
+	}
+	/** @public @arg {number} version */
+	async load_database(version) {
+		let update_id=await this.get_update_id(version);
+		if(!update_id) this.expected_id=0;
+		else this.expected_id=update_id.id;
+		this.expected_id++;
+		this.put_update_id(this.expected_id,version);
+	}
+	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
+	async push_store_to_database(store,version) {
+		/** @type {IDBBoxedType[]} */
+		let boxed=await this.getAll("boxed_id",version);
+		for(let item of store.data) {
+			await this.push_store_item_to_database(store,boxed,item,version);
+		}
+	}
+	/** @template T @arg {make_item_group<T>} x */
+	uv_unpack(x) {
+		/** @type {make_one_t<T>|null} */
+		let one=null;
+		/** @type {make_arr_t<T>|null} */
+		let arr=null;
+		/** @type {make_many_t<T>|null} */
+		let many=null;
+		switch(x[0]) {
+			default: debugger; break;
+			case "one": one=x; break;
+			case "many": many=x; break;
+			case "arr": arr=x; break;
+		}
+		return {one,arr,many};
+	}
+	/** @arg {number} version @arg {string} b @arg {["number",make_item_group<number>]|["keys",make_item_group<string>]|["boolean",make_item_group<boolean>]} args */
+	put_boxed_id(b,version,...args) {
+		switch(args[0]) {
+			default: debugger; throw new Error();
+			case "number": {
+				let [a,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				},version);
+			}
+			case "boolean": {
+				let [a,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				},version);
+			}
+			case "keys": {
+				let [a,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				},version);
+			}
+		}
+	}
+	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} db_boxed @arg {T} store @arg {T["data"][number]} item @arg {number} version */
+	async push_store_item_to_database(store,db_boxed,item,version) {
+		let do_update=false;
+		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
+		let db_str_box=[];
+		/** @type {(T_IdBox<B_IdSrcNum,string,"num",number>|T_IdBox<B_IdSrcStr,string,"str",string>)[]} */
+		let db_num_box=[];
+		for(let db_box of db_boxed) {
+			switch(db_box.type) {
+				case "str": if(store.content==="string"||store.content==="keys") db_str_box.push(db_box); break;
+				case "num": if(store.content==="number") db_num_box.push(db_box); break;
+			}
+		}
+		let found=false;
+		let found_box=null;
+		for(let box of db_str_box) {
+			if(box.id===item[0]) {
+				found=true; found_box=box;
+				let [,db_container]=box.value;
+				let [,item_container]=item;
+				if(!this.is_vi_has_str(item_container)) break;
+				if(item_container[0]!==db_container[0]) {
+					switch(db_container[0]) {
+						default: debugger; break;
+						case "arr": {
+							let [,db_value]=db_container;
+							if(item_container[0]==="one") {
+								let [,item_value]=item_container;
+								if(db_value.includes(item_value)) continue;
+								debugger;
+								continue;
+							}
+						}
+					}
+					debugger;
+				}
+			}
+		}
+		if(do_update&&found_box) this.put_box(found_box,version);
+		if(found) return;
+		let [,vi]=item;
+		switch(store.content) {
+			default: debugger; break;
+			case "number": {
+				if(!this.is_vi_has_num(vi)) break;
+				let uv=this.uv_unpack(vi);
+				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
+				if(uv.arr) this.put_boxed_id(item[0],version,store.content,uv.arr);
+				if(uv.many) this.put_boxed_id(item[0],version,store.content,uv.many);
+			} break;
+			case "boolean": {
+				if(!this.is_vi_has_bool(vi)) break;
+				let uv=this.uv_unpack(vi);
+				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
+				if(uv.arr) this.put_boxed_id(item[0],version,store.content,uv.arr);
+				if(uv.many) this.put_boxed_id(item[0],version,store.content,uv.many);
+			} break;
+			case "keys": {
+				if(!this.is_vi_has_str(vi)) break;
+				let uv=this.uv_unpack(vi);
+				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
+				if(uv.arr) this.put_boxed_id(item[0],version,store.content,uv.arr);
+				if(uv.many) this.put_boxed_id(item[0],version,store.content,uv.many);
+			} break;
+		}
+	}
+	/** @arg {I_StoreData} store @arg {number} version */
+	async do_boxed_push_to_database(store,version) {
+		let changes=store.get_changed_stores();
+		for(let changed of changes) {
+			if(changed==="string") {
+				let ss=store.string_store;
+				await this.push_store_to_database(ss,version);
+				continue;
+			}
+			if(changed==="keys") {
+				let ks=store.keys_store;
+				await this.push_store_to_database(ks,version);
+				continue;
+			}
+			if(changed==="number") {
+				let ns=store.numbers_store;
+				await this.push_store_to_database(ns,version);
+				continue;
+			}
+			debugger;
+		}
+	}
+	/** @arg {make_item_group<any>} x @returns {x is make_item_group<string>} */
+	is_vi_has_str(x) {return this.is_vi_typeof_check(x,"string");}
+	/** @arg {make_item_group<any>} x @returns {x is make_item_group<number>} */
+	is_vi_has_num(x) {return this.is_vi_typeof_check(x,"number");}
+	/** @arg {make_item_group<any>} x @returns {x is make_item_group<boolean>} */
+	is_vi_has_bool(x) {return this.is_vi_typeof_check(x,"boolean");}
+	/** @template T @arg {make_item_group<T>} x @returns {boolean} @arg {T_GetTypeof<T>} ty */
+	is_vi_typeof_check(x,ty) {
+		switch(x[0]) {
+			default: debugger; throw new Error();
+			case "one": return typeof x[1]===ty;
+			case "arr": {
+				let x_arr=x[1];
+				if(x_arr.length===0) return true;
+				return typeof x_arr[0]===ty;
+			}
+			case "many": {
+				let x_many=x[1];
+				if(x_many.length===0) return true;
+				let x_arr=x_many[0];
+				if(x_arr.length===0) return true;
+				return typeof x_arr[0]===ty;
+			}
+		}
+	}
+	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	put(key,value,version) {
-		if(!value) {debugger; return;}
+		if(!value) {debugger; return value;}
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
 		if(cache===void 0) this.cached_data.set(key,cache=[]);
-		if(cache.includes(cache_key)) return;
+		if(cache.includes(cache_key)) return value;
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
-		if(this.open_db_promise) return;
+		if(this.open_db_promise) return value;
 		this.open_db_promise=this.open_database(key,version);
 		this.open_db_promise
 			.catch(err => console.log("open_database error",err))
 			.then(() => this.open_db_promise=null);
+		return value;
 	}
 	/** @arg {number} version */
 	get_db_request(version) {
@@ -377,30 +604,11 @@ class IndexedDBService extends BaseService {
 	waiting_promises=[];
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {number} version */
 	async getAll(key,version) {
-		if(this.open_db_promise) {
-			await this.open_db_promise;
-		}
-		let waiter_idx=this.waiting_promises.findIndex(x => x[0]===key);
-		if(waiter_idx>-1) {
-			let waiter=this.waiting_promises[waiter_idx];
-			let res=await waiter[1];
-			return res;
-		}
-		let promise=this.getAllImpl(key,version);
-		this.waiting_promises.push([key,promise]);
-		await promise;
-		let idx=this.waiting_promises.findIndex(x => x[0]===key);
-		if(idx>0) this.waiting_promises.splice(idx,1);
-		return promise;
-	}
-	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {number} version */
-	async getAllImpl(key,version) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(this.get_db_request(version));
 		const tx=this.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
-		db.close();
 		return result;
 	}
 	log_cache_push=false;

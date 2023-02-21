@@ -102,3 +102,11 @@ type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]
 	id: T_IdType;
 	value: [`many_${T}`,make_item_group<V>];
 };
+interface I_StoreData {
+	bool_store: StoreDescription<boolean,"boolean">;
+	numbers_store: StoreDescription<number,"number">;
+	ve_store: StoreDescription<number,"root_visual_element">;
+	string_store: StoreDescription<string,"string">;
+	keys_store: StoreDescription<string,"keys">;
+	get_changed_stores(): ("bool"|"string"|"keys"|"number"|"ve")[];
+}
