@@ -522,11 +522,12 @@ class IndexedDBService extends BaseService {
 						});
 					}
 					case "arr": {
-						for(let x_arr of x[1]) {
-							if(x_arr.length!==y[1].length) return false;
+						let x_many=x[1]; let y_arr=y[1];
+						for(let x_arr of x_many) {
+							if(x_arr.length!==y_arr.length) return false;
 							for(let x_item of x_arr) {
-								let y_item=y[1].findIndex(y_item => eq_fn(y_item,x_item));
-								if(y_item===-1) return false;
+								let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
+								if(y_idx===-1) return false;
 							}
 						}
 						return true;
@@ -539,36 +540,48 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			case "arr": {
+				let x_arr=x[1];
 				switch(y[0]) {
 					case "many": {
-						let x_arr=x[1]; let y_many=y[1];
-						let y_arr_idx=y_many.findIndex(y_arr => x_arr.every(x_item => {
+						let y_arr_idx=y[1].findIndex(y_arr => x_arr.every(x_item => {
 							let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
 							return y_idx>0;
 						}));
 						return y_arr_idx>0;
 					}
 					case "arr": {
-						let x_arr=x[1]; let y_arr=y[1];
-						if(x_arr.length!==y_arr.length) return false;
-						for(let x_item of x_arr) {
-							let y_idx=y[1].findIndex(y_item => eq_fn(y_item,x_item));
-							if(y_idx===-1) return false;
-						}
-						return true;
+						let y_arr=y[1]; if(x_arr.length!==y_arr.length) return false;
+						return x_arr.every(x_item => {
+							let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
+							return y_idx>0;
+						});
 					}
 					case "one": {
-						let x_idx=x[1].findIndex(x_item => eq_fn(x_item,y[1]));
+						let x_idx=x_arr.findIndex(x_item => eq_fn(x_item,y[1]));
 						return x_idx>0;
 					}
 				}
 			}
 			case "one": {
-				if(y[0]!=="one") {debugger; break;}
-				return eq_fn(x[1],y[1]);
+				let x_item=x[1];
+				switch(y[0]) {
+					case "many": {
+						let y_arr_idx=y[1].findIndex(y_arr => {
+							let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
+							return y_idx>0;
+						});
+						return y_arr_idx>0;
+					}
+					case "arr": {
+						let y_arr=y[1]; if(y_arr.length!==1) return false;
+						let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
+						return y_idx>0;
+					}
+					case "one": return eq_fn(x[1],y[1]);
+				}
 			}
+			default: throw new Error();
 		}
-		return false;
 	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
