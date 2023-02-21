@@ -3713,6 +3713,7 @@ class ServiceMethods extends ServiceData {
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("addUpcomingEventReminderEndpoint" in x) return this.handle_types.E_AddUpcomingEventReminder(x);
 		x===""; debugger;
 	}
 	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
@@ -3722,6 +3723,7 @@ class ServiceMethods extends ServiceData {
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
+		if("removeUpcomingEventReminderEndpoint" in x) return this.handle_types.E_RemoveUpcomingEventReminder(x);
 		x===""; debugger;
 	}
 	/** @private @arg {D_ToggleButton} x */

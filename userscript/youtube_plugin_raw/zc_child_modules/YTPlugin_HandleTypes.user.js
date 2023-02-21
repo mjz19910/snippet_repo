@@ -1797,24 +1797,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {CD_Invalidation} x */
 	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
-	/** @protected @arg {Extract<D_ToggleButton,{defaultServiceEndpoint:any}>["defaultServiceEndpoint"]} x */
-	D_Button_DefServiceEP(x) {
-		const cf="D_Button_DefServiceEP";
-		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
-		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("performCommentActionEndpoint" in x) return this.E_PerformCommentAction(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @protected @arg {Extract<D_ToggleButton,{toggledServiceEndpoint:any}>["toggledServiceEndpoint"]} x */
-	D_Button_ToggledServiceEP(x) {
-		const cf="D_Button_ToggledServiceEP";
-		if("likeEndpoint" in x) return this.E_Like(x);
-		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("performCommentActionEndpoint" in x) return;
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @arg {string} cf @arg {string} sig_str */
 	validate_sig(cf,sig_str) {
 		if(sig_str.match(/^[0-9A-F]+$/)===null) debugger;
@@ -2619,6 +2601,10 @@ class HandleTypes extends ServiceMethods {
 	P_player_state_entity_key(x) {x;}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {x;}
+	/** @public @arg {E_AddUpcomingEventReminder} x */
+	E_AddUpcomingEventReminder(x) {x;}
+	/** @public @arg {E_RemoveUpcomingEventReminder} x */
+	E_RemoveUpcomingEventReminder(x) {x;}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns
