@@ -2738,7 +2738,7 @@ class HandleTypes extends ServiceMethods {
 		this.cq(maxCharacterLimit,150);
 		this.a_primitive_str(placeholderText);
 		this.cq(validValueRegexp,"[^<>]*");
-		invalidValueErrorMessage;
+		this.G_Text(invalidValueErrorMessage);
 		this.cq(required,true);
 	}
 	/** @public @arg {R_DropdownFormField} x */
