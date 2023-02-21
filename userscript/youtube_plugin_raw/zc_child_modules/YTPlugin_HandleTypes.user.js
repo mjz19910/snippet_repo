@@ -1575,7 +1575,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ctier,x => this.ceq("SH",x));
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
-		this.t(xtags,x => this.params("video_playback_url.xtags",x));
+		this.t(xtags,x => this.save_string(`${cf1}.xtags`,x));
 		this.save_string(`${cf1}.mime`,mime);
 		this.save_b64_binary(`${cf2}.ns`,ns);
 		cnr&&this.save_string(`${cf1}.cnr`,cnr);
