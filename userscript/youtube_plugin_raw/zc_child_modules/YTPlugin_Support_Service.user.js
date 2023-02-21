@@ -216,7 +216,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			try {
 				await this.load_database();
 			} catch(err) {
-				console.log("load database failed",err);
+				console.log("load_database failed",err);
 				return;
 			}
 			this.is_ready=true;
@@ -234,7 +234,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				this.stored_changes.splice(idx,1);
 			}
 			this.is_ready=false;
-			await this.save_database();
+
+			try {
+				await this.save_database();
+			} catch(err) {
+				console.log("save_database failed",err);
+				return;
+			}
 			this.is_ready=true;
 		});
 	}
