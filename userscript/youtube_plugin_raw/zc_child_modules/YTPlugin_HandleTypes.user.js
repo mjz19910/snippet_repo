@@ -36,6 +36,8 @@ function init_module() {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	/** @type {Map<number,object>} */
+	view_conversion_info=new Map;
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
 	T_D32(x,f) {
 		if(!x) {debugger; return;}
@@ -346,6 +348,20 @@ class HandleTypes extends ServiceMethods {
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
 	//#endregion
+	/** @private @arg {D_RemarketingPing} x */
+	D_RemarketingPing(x) {
+		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
+		let tr=t.tr_url_to_obj(remarketingPing);
+		t.cq(tr.host,"www.youtube.com");
+		let [r,...p]=split_string(tr.pathname,"/"); t.cq(r,"");
+		t.cq(p[0],"pagead"); t.cq(p[1],"viewthroughconversion");
+		let np=this.parse_number_template(p[2]);
+		if(this.view_conversion_info.has(np)) return;
+		let sp=this.parse_url_search_params(tr.search);
+		let kk=this.get_keys_of(sp);
+		console.log(`[${cf}]`,"[keys]",kk.join());
+		this.view_conversion_info.set(np,sp);
+	}
 	/** @private @arg {D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
@@ -3472,24 +3488,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
-	/** @type {Map<number,object>} */
-	view_conversion_info=new Map;
 	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
 	cq(a,b) {if(a!==b) debugger;}
-	/** @private @arg {D_RemarketingPing} x */
-	D_RemarketingPing(x) {
-		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
-		let tr=t.tr_url_to_obj(remarketingPing);
-		t.cq(tr.host,"www.youtube.com");
-		let [r,...p]=split_string(tr.pathname,"/"); t.cq(r,"");
-		t.cq(p[0],"pagead"); t.cq(p[1],"viewthroughconversion");
-		let np=this.parse_number_template(p[2]);
-		if(this.view_conversion_info.has(np)) return;
-		let sp=this.parse_url_search_params(tr.search);
-		let kk=this.get_keys_of(sp);
-		console.log(`[${cf}]`,"[keys]",kk.join());
-		this.view_conversion_info.set(np,sp);
-	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {x;}
 	/** @private @arg {P_notification_opt_out} x */
