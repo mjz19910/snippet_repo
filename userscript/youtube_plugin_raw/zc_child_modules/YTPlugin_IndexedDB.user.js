@@ -157,7 +157,7 @@ class IndexedDBService extends BaseService {
 		};
 		return tx;
 	}
-	/** @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode */
+	/** @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode @returns {TypedIDBTransactionScope} */
 	open_transaction_scope(db,key,mode) {
 		const tx=this.open_transaction(db,key,mode,() => {
 			scope.is_tx_complete=true;
@@ -177,7 +177,7 @@ class IndexedDBService extends BaseService {
 			tx.addEventListener("complete",accept);
 		});
 	}
-	/** @arg {IDBTransactionScope} scope @arg {Event} event */
+	/** @arg {TypedIDBTransactionScope} scope @arg {Event} event */
 	handle_transaction_complete(scope,event) {
 		if(event.type!=="complete") throw new Error();
 		const {type,timeStamp,target}=event;
@@ -210,22 +210,31 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
-	/** @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction;obj_store;typed_db;}} update_state @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
-	async force_update(update_state,key,x) {
-		let s=update_state;
-		update_loop: while(true) {
-			if(s.error_count>64) break update_loop;
+	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDb;}} s @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
+	async force_update(s,key,x) {
+		for(let scope=null;s.error_count<64;) {
 			try {
-				await this.update(s.obj_store,x);
-				break update_loop;
+				if(s.tx===null&&scope) {
+					let complete_event=await scope.complete_promise;
+					this.handle_transaction_complete(scope,complete_event);
+				}
+				if(s.tx===null) {
+					scope=this.open_transaction_scope(s.db,key,"readwrite");
+					s.tx=scope.tx;
+				}
+				if(s.obj_store===null) s.obj_store=s.typed_db.objectStore(s.tx,key);
+				this.put(key,x,3);
 			} catch(e) {
 				s.error_count++;
-				let scope=this.open_transaction_scope(s.db,key,"readwrite");
-				s.tx=scope.tx;
-				s.obj_store=s.typed_db.objectStore(s.tx,key);
+				s.tx=null;
+				s.obj_store=null;
+				continue;
+			}
+			if(scope) {
 				let complete_event=await scope.complete_promise;
 				this.handle_transaction_complete(scope,complete_event);
 			}
+			break;
 		}
 	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
@@ -262,6 +271,8 @@ class IndexedDBService extends BaseService {
 							break cursor_loop;
 						}
 						await this.force_update(state,key,item);
+						let idx=d_cache.indexOf(item);
+						d_cache.splice(idx,1);
 						break cursor_loop;
 					}
 					const cursor_value=cur_cursor.value;
@@ -310,15 +321,16 @@ class IndexedDBService extends BaseService {
 							} break cursor_loop;
 							// not a dynamic value
 							case "playlist_id:self": this.committed_data.push(item); break;
+							case "channel_id:UC":
 							case "playlist_id:PL":
 							case "playlist_id:RD":
 							case "playlist_id:RDMM":
 							case "playlist_id:UU": {
-								await this.force_update(state,key,item);
-								this.committed_data.push(item);
-							} break;
-							case "channel_id:UC": {
-								await this.force_update(state,key,item);
+								if(cursor_value.key===item.key&&item.id===cursor_value.id) {
+									this.committed_data.push(item);
+								} else {
+									await this.force_update(state,key,item);
+								}
 								this.committed_data.push(item);
 							} break;
 						};
@@ -412,25 +424,6 @@ class IndexedDBService extends BaseService {
 		let ra=rq;
 		return ra;
 	}
-	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
-	async update(store,data) {
-		let req;
-		try {
-			req=store.put(data);
-		} catch(e) {
-			if(this.log_all_events) console.log("[update_failed_put_request]",e);
-			throw e;
-		}
-		try {
-			let success=await this.await_success(req);
-			if(this.log_all_events) console.log("IDBRequest: success",success);
-			this.committed_data.push(data);
-		} catch(e) {
-			console.log("update_failed_put_result",e,req.error);
-			if(req.error!==null) throw req.error;
-			throw e;
-		}
-	}
 	/** @template T @arg {IDBRequest<T>} request @returns {Promise<Event>} */
 	await_success(request) {
 		return new Promise(function(accept,reject) {
@@ -477,6 +470,7 @@ class IndexedDBService extends BaseService {
 	database_diff_keys=new Set;
 	/** @template T @arg {IDBRequest<T>} req @returns {Promise<["success",T]|["error",Event,DOMException]>} */
 	async get_async_result_impl(req) {
+		if(req.readyState==="done") return ["success",req.result];
 		/** @type {[Event,DOMException]|null} */
 		let error_event=null;
 		try {

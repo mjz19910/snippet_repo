@@ -292,14 +292,23 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			await this.put_box(box);
 		}
 	}
-	/** @arg {G_BoxedStr} box @arg {make_one_t<string>} item_group */
-	async store_item_one(box,item_group) {
+	/** @arg {G_BoxedStr} box @arg {make_one_t<string>} item */
+	async store_item_one(box,item) {
 		let from_db=box.value[1];
-		if(from_db[0]!=="one") {debugger; return;}
-		if(from_db[1]!==item_group[1]) {
-			let new_arr=[from_db[1],item_group[1]];
-			box.value[1]=["arr",new_arr];
-			await this.put_box(box);
+		switch(from_db[0]) {
+			case "arr": {
+				let db_arr=from_db[1]; let item_value=item[1];
+				if(db_arr.includes(item_value)) break;
+				db_arr.push(item_value);
+				await this.put_box(box);
+			} break;
+			case "one": {
+				if(from_db[1]!==item[1]) {
+					let new_arr=[from_db[1],item[1]];
+					box.value[1]=["arr",new_arr];
+					await this.put_box(box);
+				}
+			}
 		}
 	}
 	/** @arg {`boxed_id:str:${string}`} find_key @arg {IDBBoxedType} box @arg {make_item_group<string>} item_group */
