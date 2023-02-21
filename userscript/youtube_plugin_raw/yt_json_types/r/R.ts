@@ -359,16 +359,17 @@ type R_VE96368_PageType_Browse_Response={
 type R_VE3854_PageType_Browse_Response={
 	page: "browse";
 	endpoint: E_VE3854;
-	response: {
-		responseContext: RC_ResponseContext;
-		contents: R_TwoColumnBrowseResults;
-		header: R_FeedTabbedHeader;
-		trackingParams: string;
-		topbar: R_DesktopTopbar;
-		onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
-	};
+	response: RS_Browse;
 	url: "/";
 	expirationTime?: number;
+}|{
+	page: "browse";
+	endpoint: E_VE3854;
+	response: RS_Browse;
+	url: "/";
+	expirationTime: 1676995057316;
+	graftedVes: D_GraftedVeItem[];
+	csn: string;
 };
 type R_PageTypeBrowse={
 	endpoint: E_VE6827;

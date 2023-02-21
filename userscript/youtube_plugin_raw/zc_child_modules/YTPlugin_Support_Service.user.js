@@ -1655,27 +1655,46 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
 		if("rootVe" in x) {
+			debugger;
 			switch(x.rootVe) {
 				case 3854: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); y;/*#destructure_done*/
 					switch(url) {
+						default: debugger; switch(url) {
+							case "/":
+						} break;
+						case "/feed/trending?bp=6gQJRkVleHBsb3Jl":
+						case "/feed/subscriptions":
+						case "/feed/library":
+						case "/feed/history":
 						case "/":
 					}
 				} break;
 			}
 			return;
 		}
-		if(this.is_EP_Val(x,3854)) return this.g(this.RS_Page_Type1(cf,x,{
-			/** @arg {R_VE3854_PageType_Browse_Response["url"]} x */
-			url(x) {
-				switch(x) {
-					default: x===""; debugger; switch(x) {
+		if(this.is_EP_Val(x,3854)) {
+			let {...u}=this.RS_Page_Type1(cf,x,{
+				page: x => this.ceq(x,"browse"),
+				endpoint: x => this.E_VE3854(x),
+				response: x => this.x.get("x_RS_Browse").RS_Browse(x),
+				/** @arg {R_VE3854_PageType_Browse_Response["url"]} x */
+				url(x) {
+					switch(x) {
+						default: x===""; debugger; switch(x) {
+							case "/":
+						} break;
 						case "/":
-					} break;
-					case "/":
-				}
-			}
-		}));
+					}
+				},
+				expirationTime: x => this.t(x,this.a_primitive_num),
+			});
+			if(this.is_empty_obj(u)) return;
+			const {graftedVes,csn,...y}=u; this.g(y);
+			this.z(graftedVes,this.D_GraftedVeItem);
+			this.D_VeCsn(csn);
+			return;
+		}
 		if(this.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
 			/** @arg {R_VE6827_PageType_Browse_Response["url"]} url */
 			url: (url) => {

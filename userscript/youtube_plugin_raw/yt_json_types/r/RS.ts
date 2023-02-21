@@ -133,8 +133,9 @@ type RS_Player={
 	annotations?: R_PlayerAnnotationsExpanded[];
 	cacheMetadata?: D_IsCacheHit;
 };
-type RS_Playlist=Record<"contents",R_TwoColumnBrowseResults>&{
+type RS_Playlist={
 	responseContext: RC_ResponseContext;
+	contents: R_TwoColumnBrowseResults;
 	header: R_PlaylistHeader;
 	alerts?: R_AlertWithButton[];
 	metadata: R_Playlist_MD;
