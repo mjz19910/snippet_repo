@@ -315,6 +315,13 @@ class IndexedDBService extends BaseService {
 				case "update_id": break;
 			}
 		}
+		x: if(store.content==="keys") {
+			if(!this.is_vi_has_str(vi)) break x;
+			let uv=this.uv_unpack(vi);
+			uv?.arr?.[1].sort();
+			uv?.many?.[1].sort().forEach(x => x.sort());
+
+		}
 		switch(store.content) {
 			default: debugger; break;
 			case "number": {
