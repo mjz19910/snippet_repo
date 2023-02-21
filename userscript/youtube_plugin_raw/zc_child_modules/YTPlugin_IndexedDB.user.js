@@ -262,7 +262,7 @@ class IndexedDBService extends BaseService {
 				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
 				let cursor_req=typed_db.openCursor(state.obj_store,TypedIDBValidKeyS.only(item.key));
-				cursor_loop: for(let i=0;;i++) {
+				cursor_loop: for(let i=0;i<12;i++) {
 					const cur_cursor=await this.get_async_result(cursor_req);
 					if(tx_scope.is_tx_complete) {
 						console.log("cursor_loop_is_tx_complete_1");

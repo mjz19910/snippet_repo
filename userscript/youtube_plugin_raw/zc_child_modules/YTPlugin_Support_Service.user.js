@@ -281,15 +281,26 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {G_BoxedStr} box @arg {make_arr_t<string>} item_group */
 	async store_item_arr(box,item_group) {
 		let from_db=box.value[1];
-		if(from_db[0]!=="arr") {debugger; return;}
-		let from_db_arr=from_db[1];
-		let from_item_arr=item_group[1];
-		if(!this.eq_keys(from_db_arr,from_item_arr)) {
-			for(let new_item of from_item_arr) {
-				if(from_db_arr.includes(new_item)) continue;
-				from_db_arr.push(new_item);
-			}
-			await this.put_box(box);
+		switch(from_db[0]) {
+			case "one": {
+				if(item_group[1].length===1) {
+					if(item_group[1][0]===from_db[1]) break;
+					debugger;
+				}
+				debugger;
+			} break;
+			case "arr": {
+				let from_db_arr=from_db[1];
+				let from_item_arr=item_group[1];
+				if(!this.eq_keys(from_db_arr,from_item_arr)) {
+					for(let new_item of from_item_arr) {
+						if(from_db_arr.includes(new_item)) continue;
+						from_db_arr.push(new_item);
+					}
+					await this.put_box(box);
+				}
+			} break;
+			case "many": debugger; break;
 		}
 	}
 	/** @arg {G_BoxedStr} box @arg {make_one_t<string>} item */
