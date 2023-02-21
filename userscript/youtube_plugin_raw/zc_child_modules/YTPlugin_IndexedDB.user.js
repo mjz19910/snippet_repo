@@ -158,16 +158,29 @@ class IndexedDBService extends BaseService {
 		/** @type {IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of boxed) {
-			this.load_store(store,item);
+			this.load_store(store,item,version);
 		}
 	}
-	/** @arg {StoreData} store @arg {IDBBoxedType} item */
-	load_store(store,item) {
+	/** @type {IDBBoxedType["type"][]} */
+	valid_types=["boolean","keys","number"];
+	/** @arg {StoreData} store @arg {IDBBoxedType} item @arg {number} version */
+	load_store(store,item,version) {
 		switch(item.type) {
-			default: debugger; break;
+			default: {
+				if(!this.valid_types.includes(item.type)) {
+					/** @type {string} */
+					let bad_type=item.type;
+					if(bad_type==="str") {
+						this.delete("boxed_id",item.key,version);
+						return;
+					}
+					debugger;
+				}
+			} break;
 			case "boolean": return store.bool_store.load_data(item);
 			case "keys": return store.keys_store.load_data(item);
 			case "number": return store.numbers_store.load_data(item);
+			case "update_id": break;
 		}
 	}
 	/** @public @arg {number} version */
@@ -202,7 +215,7 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @arg {string} b @arg {["number",make_item_group<number>]|["keys",make_item_group<string>]|["boolean",make_item_group<boolean>]} args */
+	/** @arg {number} version @arg {string} b @arg {["number",make_item_group<number>]|["string"|"keys",make_item_group<string>]|["boolean",make_item_group<boolean>]} args */
 	put_boxed_id(b,version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();
@@ -217,6 +230,16 @@ class IndexedDBService extends BaseService {
 				},version);
 			}
 			case "boolean": {
+				let [a,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				},version);
+			}
+			case "string": {
 				let [a,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
@@ -247,9 +270,13 @@ class IndexedDBService extends BaseService {
 		let db_num_box=[]; db_num_box;
 		for(let db_box of db_boxed) {
 			switch(db_box.type) {
-				default: debugger; break;
+				default: console.log("unable to push [type=%s]",db_box.type); break;
 				case "number": db_num_box.push(db_box); break;
 				case "string": db_str_box.push(db_box); break;
+				case "keys": {
+					// TODO: handle keys
+				} break;
+				case "update_id": break;
 			}
 		}
 		let found=false;
@@ -296,6 +323,7 @@ class IndexedDBService extends BaseService {
 				if(uv.arr) this.put_boxed_id(item[0],version,store.content,uv.arr);
 				if(uv.many) this.put_boxed_id(item[0],version,store.content,uv.many);
 			} break;
+			case "string":
 			case "keys": {
 				if(!this.is_vi_has_str(vi)) break;
 				let uv=this.uv_unpack(vi);
@@ -351,6 +379,19 @@ class IndexedDBService extends BaseService {
 				return typeof x_arr[0]===ty;
 			}
 		}
+	}
+	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {string} query @arg {number} version */
+	async deleteImpl(key,query,version) {
+		let typed_db=new TypedIndexedDb;
+		let db=await this.get_async_result(this.get_db_request(version));
+		let s=this.open_transaction_scope(db,key,"readwrite");
+		let obj_store=typed_db.objectStore(s.tx,key);
+		await this.get_async_result(obj_store.delete(query));
+		s; query;
+	}
+	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {number} version @arg {string} query */
+	delete(key,query,version) {
+		this.deleteImpl(key,query,version).catch(e => console.log("delete error",e)).then(() => {});
 	}
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	put(key,value,version) {
@@ -481,7 +522,17 @@ class IndexedDBService extends BaseService {
 	eq_group(x,y,eq_fn) {
 		y;
 		switch(x[0]) {
-			case "arr": debugger; break;
+			case "arr": {
+				if(y[0]!=="arr") {
+					debugger;
+					break;
+				}
+				for(let x_item of x[1]) {
+					let y_item=y[1].findIndex(y_item => eq_fn(y_item,x_item));
+					if(y_item===-1) return false;
+				}
+				return true;
+			}
 			case "many": debugger; break;
 			case "one": {
 				if(y[0]!=="one") {

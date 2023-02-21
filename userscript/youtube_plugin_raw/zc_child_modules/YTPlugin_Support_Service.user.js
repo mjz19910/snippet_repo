@@ -138,6 +138,12 @@ class StoreDescription extends ApiBase2 {
 				this.push_new_data(k,["many",[item_container[1],x[1]]]);
 				return;
 			}
+			if(item_container[0]==="one"&&x[0]==="one") {
+				let [,item_value]=item_container;
+				if(item_value===x[1]) return;
+				this.push_new_data(k,["arr",[item_container[1],x[1]]]);
+				return;
+			}
 			debugger;
 			return;
 		}
