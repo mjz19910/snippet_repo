@@ -328,13 +328,14 @@ class IndexedDBService extends BaseService {
 						if(uv.one[1]===db_uv.one[1]) return;
 						break;
 					}
+					if(uv.one&&db_uv.arr) break;
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
 						break;
 					}
-					if(uv.one&&db_uv.arr) break;
-					if(uv.many&&db_uv.arr) break;
 					if(uv.arr&&db_uv.many) break;
+					if(uv.many&&db_uv.arr) break;
+					if(uv.many&&db_uv.many) break;
 					debugger;
 				} break;
 				case "update_id": break;
