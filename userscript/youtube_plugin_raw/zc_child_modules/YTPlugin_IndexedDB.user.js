@@ -138,19 +138,6 @@ class IndexedDBService extends BaseService {
 		if(box&&box.key!=="boxed_id:update_id") return null;
 		return box;
 	}
-	/** @public @arg {StoreData} store @arg {number} version */
-	async save_database(store,version) {
-		let update_id=await this.get_update_id(version);
-		if(!update_id) {
-			this.expected_id=0;
-			update_id=this.put_update_id(this.expected_id,version);
-		}
-		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
-		this.expected_id++;
-		this.load_store_from_database(store,version);
-		await this.do_boxed_push_to_database(store,version);
-		this.put_update_id(this.expected_id,version);
-	}
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
 		/** @type {IDBBoxedType[]} */
@@ -181,11 +168,24 @@ class IndexedDBService extends BaseService {
 			case "update_id": break;
 		}
 	}
-	/** @public @arg {number} version */
-	async load_database(version) {
+	/** @public @arg {StoreData} store @arg {number} version */
+	async save_database(store,version) {
+		let update_id=await this.get_update_id(version);
+		if(!update_id) {
+			this.expected_id=0;
+			update_id=this.put_update_id(this.expected_id,version);
+		}
+		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
+		this.expected_id++;
+		await this.do_boxed_push_to_database(store,version);
+		this.put_update_id(this.expected_id,version);
+	}
+	/** @public @arg {StoreData} store @arg {number} version */
+	async load_database(store,version) {
 		let update_id=await this.get_update_id(version);
 		if(!update_id) this.expected_id=0;
 		else this.expected_id=update_id.id;
+		this.load_store_from_database(store,version);
 		this.expected_id++;
 		this.put_update_id(this.expected_id,version);
 	}

@@ -266,7 +266,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.#idle_id=requestIdleCallback(async () => {
 			const version=this.indexed_db_version;
 			try {
-				await this.indexed_db.load_database(version);
+				await this.indexed_db.load_database(this.data_store,version);
 			} catch(err) {
 				console.log("load_database failed",err);
 				return;
