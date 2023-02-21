@@ -40,6 +40,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_RadioShareUrl";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeKidsUrl";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "GU_YoutubeUrlRedirect";}
+		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibility";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibilityData";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:defaultText";}
@@ -1031,6 +1032,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetCart";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetOffers";}
 		|{n: Prelude.CF_T_WCM_Unpack; t: Types.CF_T_WCM_Unpack_; v: "MG_Survey_CMD";}
+		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton";}
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:accessibility";}
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:accessibilityData";}
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:defaultText:style";}
