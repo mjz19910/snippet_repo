@@ -2097,7 +2097,7 @@ class Support_EventInput extends ServiceMethods {
 		console.log("pt",x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** 
+	/**
 	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x
 	 * @arg {T_MakeHandlers<T>} handlers
 	 * @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>}
