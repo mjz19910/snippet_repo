@@ -105,6 +105,7 @@ class StoreDescription_C extends ApiBase2 {
 		this.new_data.push([k,x]);
 		let new_len=this.data.push([k,x]);
 		this.key_index.set(k,new_len-1);
+		this.data_update_callback();
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
