@@ -247,6 +247,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopWatchAds";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DisplayAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Dropdown";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DropdownFormField";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DynamicReadaheadConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EY_Offlineability";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ElementResourceStatus";}
@@ -298,6 +299,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ImpressionCommand";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InFeedAdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InfoRow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineForm";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InstreamVideoAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InvalidationId";}
@@ -972,6 +974,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_MixIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PaidContentOverlay";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PrivacyDropdownItem";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PromotedSparklesWeb:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ReelMultimixAttributionLabel";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_BoxArt:icon";}

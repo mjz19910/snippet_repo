@@ -24,7 +24,6 @@ if(window.__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
-function init_module() {export_((exports) => {exports.HandleTypes=HandleTypes;});}
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
 	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
@@ -361,6 +360,7 @@ class HandleTypes extends ServiceMethods {
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
 	//#endregion
+	//#region moved data methods
 	/** @private @arg {D_RemarketingPing} x */
 	D_RemarketingPing(x) {
 		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
@@ -415,6 +415,7 @@ class HandleTypes extends ServiceMethods {
 		this.parser.parse_url(cf,x);
 		return u3;
 	}
+	//#endregion
 	//#region templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD_(cf,k,x) {
@@ -526,6 +527,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.w(cf,"page",x));}
 	//#endregion
+	//#region Action methods
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {A_AddToGuideSection} x */
@@ -536,6 +538,8 @@ class HandleTypes extends ServiceMethods {
 	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
+	//#endregion
+	//#region Renderer methods
 	/** @public @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
 	/** @public @arg {R_PlaylistSidebar} x */
@@ -2711,9 +2715,96 @@ class HandleTypes extends ServiceMethods {
 		this.t(privacyForm,this.R_DropdownFormField);
 	}
 	/** @public @arg {R_InlineForm} x */
-	R_InlineForm(x) {x;}
+	R_InlineForm(x) {this.H_("inlineFormRenderer",x,this.D_InlineForm);}
+	/** @public @arg {D_InlineForm} x */
+	D_InlineForm(x) {
+		const cf="D_InlineForm";
+		const {formField,editButton,saveButton,cancelButton,textDisplayed,style,...y}=this.s(cf,x); this.g(y);
+		this.R_TextInputFormField(formField);
+		this.R_Button(editButton);
+		this.R_Button(saveButton);
+		this.R_Button(cancelButton);
+		this.G_Text(textDisplayed);
+		this.cq(style,"INLINE_FORM_STYLE_TITLE");
+		this.save_enum(cf,"INLINE_FORM_STYLE",style);
+	}
+	/** @public @arg {R_TextInputFormField} x */
+	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
+	/** @public @arg {D_TextInputFormField} x */
+	D_TextInputFormField(x) {
+		const cf="D_TextInputFormField";
+		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(label);
+		this.cq(maxCharacterLimit,150);
+		this.a_primitive_str(placeholderText);
+		this.cq(validValueRegexp,"[^<>]*");
+		invalidValueErrorMessage;
+		this.cq(required,true);
+	}
 	/** @public @arg {R_DropdownFormField} x */
-	R_DropdownFormField(x) {x;}
+	R_DropdownFormField(x) {this.H_("dropdownFormFieldRenderer",x,this.D_DropdownFormField);}
+	/** @public @arg {D_DropdownFormField} x */
+	D_DropdownFormField(x) {
+		const cf="D_DropdownFormField";
+		const {dropdown,key,onChange,...y}=this.s(cf,x); this.g(y);
+		this.R_Dropdown(dropdown);
+		this.cq(key,"playlistEditEndpoint.actions.0.playlistPrivacy");
+		let kp=split_string(key,".");
+		this.cq(kp[0],"playlistEditEndpoint");
+		this.E_PlaylistEdit(onChange);
+	}
+	/** @public @arg {R_Dropdown} x */
+	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
+	/** @public @arg {D_Dropdown} x */
+	D_Dropdown(x) {
+		const cf="D_Dropdown";
+		const {entries,label,...y}=this.s(cf,x); this.g(y);
+		this.z(entries,x => {
+			if("privacyDropdownItemRenderer" in x) return this.R_PrivacyDropdownItem(x);
+			debugger;
+		});
+		this.a_primitive_str(label);
+	}
+	/** @public @arg {R_PrivacyDropdownItem} x */
+	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
+	/** @public @arg {D_PrivacyDropdownItem} x */
+	D_PrivacyDropdownItem(x) {
+		const cf="D_PrivacyDropdownItem";
+		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(label);
+		this.T_Icon(cf,icon);
+		this.G_Text(description);
+		switch(int32Value) {
+			default: debugger; break;
+			case 1: break;
+		}
+		this.cq(isSelected,false);
+		this.D_Label(accessibility);
+	}
+	/** @public @arg {R_C4TabbedHeader} x */
+	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
+	/** @private @arg {D_C4TabbedHeader} x */
+	D_C4TabbedHeader(x) {
+		const cf="D_C4TabbedHeader";
+		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.s(cf,x);
+		this.D_ChannelId(channelId);
+		this.a_primitive_str(title);
+		this.E_VE3611(navigationEndpoint);
+		this.D_Thumbnail(avatar);
+		this.D_Thumbnail(banner);
+		this.tz(badges,this.RMD_Badge);
+		this.R_ChannelHeaderLinks(headerLinks);
+		this.R_SubscribeButton(subscribeButton);
+		this.G_Text(subscriberCountText);
+		this.D_Thumbnail(tvBanner);
+		this.D_Thumbnail(mobileBanner);
+		this.trackingParams(trackingParams);
+		this.t(sponsorButton,this.R_Button);
+		this.G_Text(channelHandleText);
+		this.G_Text(videosCountText);
+		const {visitTracking,...y}=u; this.g(y);
+		this.t(visitTracking,this.D_RemarketingPing);
+	}
 	//#region binary
 	/** @public @arg {BinaryVe} x */
 	BinaryVe(x) {
@@ -3393,30 +3484,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
-	/** @public @arg {R_C4TabbedHeader} x */
-	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
-	/** @private @arg {D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x) {
-		const cf="D_C4TabbedHeader";
-		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.s(cf,x);
-		this.D_ChannelId(channelId);
-		this.a_primitive_str(title);
-		this.E_VE3611(navigationEndpoint);
-		this.D_Thumbnail(avatar);
-		this.D_Thumbnail(banner);
-		this.tz(badges,this.RMD_Badge);
-		this.R_ChannelHeaderLinks(headerLinks);
-		this.R_SubscribeButton(subscribeButton);
-		this.G_Text(subscriberCountText);
-		this.D_Thumbnail(tvBanner);
-		this.D_Thumbnail(mobileBanner);
-		this.trackingParams(trackingParams);
-		this.t(sponsorButton,this.R_Button);
-		this.G_Text(channelHandleText);
-		this.G_Text(videosCountText);
-		const {visitTracking,...y}=u; this.g(y);
-		this.t(visitTracking,this.D_RemarketingPing);
-	}
 	/** @public @arg {D_TextRun} x */
 	D_TextRun(x) {
 		const cf="R_TextRun";
@@ -3501,6 +3568,4 @@ class HandleTypes extends ServiceMethods {
 	//#endregion
 }
 //#endregion
-init_module();
-//#endregion
-//#endregion
+export_((exports) => {exports.HandleTypes=HandleTypes;});
