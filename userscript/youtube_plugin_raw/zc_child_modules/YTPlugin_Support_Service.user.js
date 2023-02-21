@@ -278,6 +278,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {G_BoxedStr} box @arg {make_arr_t<string>} item_group */
 	async store_item_arr(box,item_group) {
 		box; item_group;
+		debugger;
+	}
+	/** @arg {G_BoxedStr} box @arg {make_one_t<string>} item_group */
+	async store_item_one(box,item_group) {
+		box; item_group;
+		debugger;
 	}
 	/** @arg {`boxed_id:str:${string}`} find_key @arg {IDBBoxedType} box @arg {make_item_group<string>} item_group */
 	async export_store_item_with_found_box(find_key,box,item_group) {
@@ -288,7 +294,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			default: debugger; break;
 			case "many": return this.store_item_many(box,item_group);
 			case "arr": return this.store_item_arr(box,item_group);
-			case "one": debugger; break;
+			case "one": return this.store_item_one(box,item_group);
 		}
 	}
 	/** @arg {[string, make_item_group<string>]} sd @arg {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} boxed */
