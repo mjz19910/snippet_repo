@@ -572,7 +572,7 @@ class IndexedDBService extends BaseService {
 						}
 						let put_req=typed_db.put(s.obj_store,item);
 						let valid_key=await this.get_async_result(put_req);
-						console.log("[idb_valid_key]",valid_key);
+						void valid_key;
 						let idx=d_cache.indexOf(item);
 						d_cache[idx]=null;
 						break;
