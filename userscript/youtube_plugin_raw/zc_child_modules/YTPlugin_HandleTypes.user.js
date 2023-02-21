@@ -533,8 +533,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
 	//#endregion
-	//#region web_command_metadata
-	//#endregion
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {A_AddToGuideSection} x */
