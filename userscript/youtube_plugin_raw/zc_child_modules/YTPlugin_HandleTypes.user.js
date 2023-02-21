@@ -1340,53 +1340,72 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`google_video.${cf}.partition`,x.partition);
 		this.save_string(`google_video.${cf}.selector`,x.selector);
 	}
+	/** @private @arg {`rr${number}---sn-${string}n${string}`} x */
+	get_google_host_parts_for_part_1(x) {
+		let parts_1=split_string(x,"---");
+		if(!this.str_starts_with(parts_1[0],"rr")) return null;
+		let part_2=split_string_once(parts_1[0],"rr")[1];
+		let p=this.get_host_partition(parts_1[1]);
+		return {
+			/** @type {["rr",`${number}`,"---","sn","-",G_Gv_0,"n",G_Gv_1]} */
+			parts: ["rr",part_2,"---",...p.parts],
+			partitioned: p,
+		};
+	}
+	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
+	get_google_host_parts(x) {
+		let parsed_url_obj=this.tr_url_to_obj(x);
+		const host=parsed_url_obj.host;
+		let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
+		if(empty_1!=="") debugger; if(y.length!==0) debugger;
+		let host_parts_2=this.get_google_host_parts_for_part_1(host_parts_1);
+		if(!host_parts_2) {
+			return {
+				host,
+				path: parsed_url_obj.pathname,
+				/** @type {[null,"googlevideo","com"]} */
+				parts: [null,"googlevideo","com"],
+				partitioned: null,
+			};
+		}
+		let dec_parts=host_parts_2.parts;
+		return {
+			host,
+			path: parsed_url_obj.pathname,
+			/** @type {[typeof dec_parts,"googlevideo","com"]} */
+			parts: [dec_parts,"googlevideo","com"],
+			partitioned: host_parts_2.partitioned,
+		};
+	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
 		const cf="RE_D_VE3832_PreconnectUrl";
-		let up=this.tr_url_to_obj(x);
-		if(up.pathname!=="/generate_204") debugger;
-		const hn=up.host;
-		this.on_googlevideo_host(hn);
-		let [ux,u1,...y]=split_string(hn,".googlevideo.com");
-		if(y.length!==0) debugger;
-		if(u1!=="") debugger;
-		/** @type {`rr${1}---sn-${"nx57y"}n7z`} */
-		let utx=as_any(ux);
-		let ss2=split_string(utx,"---");
-		if(!this.str_starts_with(ss2[0],"rr")) debugger;
-		let ss3=split_string_once(ss2[0],"rr")[1];
+		let parts=this.get_google_host_parts(x);
+		if(parts.path!=="/generate_204") debugger;
+		this.on_googlevideo_host(parts.host);
+		if(!parts.parts[0]) {debugger; return;}
 		/** @type {`${1|2|3|4|5}`} */
-		let s3_t=as_any(ss3);
-		switch(s3_t) {
-			default: s3_t===""; debugger; break;
+		let num_part=as(parts.parts[0][1]);
+		switch(num_part) {
+			default: num_part===""; debugger; break;
 			case "1": case "2": case "3": case "4": case "5":
 		}
-		let [,mi]=ss2;
-		let ap=this.get_host_partition(mi);
-		this.D_GoogleVideoHostPartition(cf,ap);
-		switch(ap.partition) {
+		let [,s1,s2,s3,s4,/*s5*/partition,s6,selector]=parts.parts[0];
+		let p=parts.partitioned;
+		if(!p) {debugger; return;}
+		this.D_GoogleVideoHostPartition(cf,p);
+		console.log(`[google_video_preconnect] ["https-parts://[rr][${s1}][${s2}][${s3}][${s4}][${partition}[${s6}][${selector}][.][googlevideo][.][com]"]`);
+		switch(p.partition) {
 			default: {
-				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,mi);
+				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,p.partition);
 				if(gen.has) break;
 				console.log(`-- [js_gen_case:${cf}.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				debugger;
 			}; break;
 			case "nx57y": case "nx5s7":
 		}
-		let ss4=split_string_once(ss2[1],"sn-nx")[1];
-		x: {
-			if(this.str_starts_with_rx("5s7n",ss4)) break x;
-			if(this.str_starts_with_rx("57yn",ss4)) break x;
-			debugger;
-			return;
-		}
-		let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
-		let ss6=this.join_string(ss5,"");
-		/** @type {G_Gv_1} */
-		let s6=as_any(ss6);
-		console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`);
-		switch(s6) {
-			default: s6===""; debugger; break;
+		switch(p.selector) {
+			default: p.selector===""; debugger; break;
 			case "6d":
 			case "d6":
 			case "lk":
@@ -1541,24 +1560,25 @@ class HandleTypes extends ServiceMethods {
 		this.parse_signature(signature);
 		this.save_string(`${cf}.key`,key);
 	}
-	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {D_GoogleVideoHostPartition} */
+	/** @private @arg {`sn-${string}n${string}`} x @returns {D_GoogleVideoHostPartition} */
 	get_host_partition(x) {
 		let parts=this.get_gv_parts_impl(x);
-		return as_any({
-			partition: parts[0],
-			selector: parts[1],
-		});
+		return {
+			parts,
+			partition: parts[2],
+			selector: parts[4],
+		};
 	}
-	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
+	/** @private @arg {`sn-${string}n${string}`} x @returns {["sn","-",G_Gv_0,"n",G_Gv_1]} */
 	get_gv_parts_impl(x) {
 		let ss=split_string(x,"-")[1];
 		let idx=5;
 		let r1=ss.slice(0,idx);
 		let r2=ss.slice(idx+1);
-		/** @type {any} */
-		let rt=[r1,r2];
 		if(ss[idx]!=="n") debugger;
-		return rt;
+		this.assert_assume_is_type(r1,/**@returns {G_Gv_0} */() => {throw new Error();});
+		this.assert_assume_is_type(r2,/**@returns {G_Gv_1} */() => {throw new Error();});
+		return ["sn","-",r1,"n",r2];
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
@@ -2567,6 +2587,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_get_notification_menu_ctoken(u);
 			} break;
+			case "format_item.xtags": {
+				/** @type {P_format_item_xtags} */
+				let u=as_any(x);
+				this.P_format_item_xtags(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2574,6 +2599,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_format_item_xtags} x */
+	P_format_item_xtags(x) {x;}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {x;}
 	/** @private @arg {P_notification_opt_out} x */

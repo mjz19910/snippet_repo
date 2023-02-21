@@ -441,6 +441,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TemplateUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TextHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TextInputFormField";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TextRun";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Thumbnail";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayEndorsement";}

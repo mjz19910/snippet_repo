@@ -2149,69 +2149,13 @@ class BaseServicePrivate extends ApiBase {
 	save_enum(cf,ns,k) {return this.save_db.save_enum_impl(cf,ns,k);}
 }
 class BaseService extends BaseServicePrivate {
+	/** @protected */
+	_decoder=new TextDecoder("utf-8",{fatal: false});
 	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
 	split_str(x,s=as(",")) {
 		if(!x) {debugger;}
 		let r=x.split(s);
 		return as(r);
-	}
-	/** @protected @arg {string} x */
-	create_param_map(x) {
-		let res_e=this._decode_b64_url_proto_obj(x);
-		if(!res_e) return null;
-		if(res_e.find(e => e[0]==="error")) {return null;}
-		return this.make_param_map(res_e);
-	}
-	/** @protected @arg {D_ProtobufObj[]} res_e */
-	make_param_map(res_e) {
-		/** @private @type {V_ParamMapType} */
-		let ret_map=new Map();
-		/** @private @arg {number} key @arg {V_ParamMapValue} value */
-		let do_set=(key,value) => {
-			if(ret_map.has(key)) {
-				let v=ret_map.get(key);
-				v?.push(value);
-			} else {ret_map.set(key,[value]);}
-		};
-		for(let param of res_e) {
-			switch(param[0]) {
-				case "data_fixed64": do_set(param[1],["bigint",[],param[2]]); break;
-				case "data_fixed32":
-				case "data32": do_set(param[1],param[2]); break;
-				case "child": {
-					const [,,u8_bin_arr,bin_arr]=param;
-					x: if(bin_arr) {
-						let err=bin_arr.find(e => e[0]==="error");
-						if(err) break x;
-						let p_map=this.make_param_map(bin_arr);
-						if(String.fromCharCode(...u8_bin_arr.slice(0,4)).match(/[\w-]{4}/)) break x;
-						if(p_map===null&&u8_bin_arr[0]===0) {
-							debugger;
-							break;
-						}
-						if(!p_map) {
-							do_set(param[1],["failed",bin_arr]);
-							break;
-						}
-						do_set(param[1],p_map);
-						break;
-					}
-					if(u8_bin_arr[0]===0) {
-						do_set(param[1],u8_bin_arr);
-						break;
-					}
-					let decoder=new TextDecoder();
-					do_set(param[1],decoder.decode(u8_bin_arr));
-				} break;
-				case "data64": do_set(param[1],["bigint",param[2],param[3]]); break;
-				case "group": do_set(param[1],['group',param[2]]); break;
-				case "info": debugger; break;
-				case "struct": debugger; break;
-				case "error": return null;
-				default: debugger; break;
-			}
-		}
-		return ret_map;
 	}
 	/** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x,s) {

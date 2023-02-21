@@ -402,3 +402,9 @@ type P_notification_opt_out={
 	7: TV_Str<"dSHPtnZr2BdhZ8ss">;
 };
 type P_get_notification_menu_ctoken={1: T_D32<1676646338997768>;};
+type P_format_item_xtags={
+	1: T_VW<{
+		1: TV_Str<"heaudio">;
+		2: TV_Str<"true">;
+	}>;
+};

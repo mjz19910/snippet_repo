@@ -89,6 +89,7 @@ type G_Gv_1_List_1=[
 // end ["p5qs7","zy"],
 type G_Gv_1="lk"|`s${"d"|"e"|"k"|"l"|"s"|"z"}`|"d6"|`7${"6"|"d"|"s"|"y"|"z"}`|`e${"l"|"e"}`|PList[number];
 type D_GoogleVideoHostPartition={
+	parts: ["sn","-",G_Gv_0,"n",G_Gv_1],
 	partition: G_Gv_0,
 	selector: G_Gv_1,
 };

@@ -228,7 +228,7 @@ class CodegenService extends BaseService {
 		if(o2==null) return;
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		let s=new JsonReplacerState({
-			text_decoder: this.text_decoder,
+			text_decoder: this._decoder,
 			cf,keys,is_root: true,
 		});
 		let new_typedef=this.codegen_typedef_base(s,cf,x);
@@ -302,7 +302,7 @@ class CodegenService extends BaseService {
 	get_codegen_name_obj(cf,x1) {
 		let keys=this.get_keys_of(x1);
 		let s=new JsonReplacerState({
-			text_decoder: this.text_decoder,
+			text_decoder: this._decoder,
 			cf,keys,is_root: true,
 		});
 		/** @type {{}} */
@@ -430,7 +430,6 @@ class CodegenService extends BaseService {
 	as$TR_MP_Menu=x => as(x);
 	/** @arg {{}} x @returns {T_Signal<string>} */
 	as$T_Signal=x => as(x);
-	text_decoder=new TextDecoder();
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} s @arg {{[U in string|number]: unknown}|Uint8Array} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(s,x,k1) {
@@ -441,7 +440,7 @@ class CodegenService extends BaseService {
 		}
 		let mi=s.object_store.indexOf(x);
 		if(x instanceof Uint8Array) {
-			let res=this.text_decoder.decode(x);
+			let res=this._decoder.decode(x);
 			return `TYPE::V_Uint8Array<"${res}">`;
 		}
 		let xi=Object.entries(x);

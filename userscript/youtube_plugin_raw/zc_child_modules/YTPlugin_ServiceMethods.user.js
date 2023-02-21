@@ -1634,8 +1634,63 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {SD_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
-	/** @protected */
-	_decoder=new TextDecoder();
+	/** @protected @arg {string} x */
+	create_param_map(x) {
+		let res_e=this._decode_b64_url_proto_obj(x);
+		if(!res_e) return null;
+		if(res_e.find(e => e[0]==="error")) {return null;}
+		return this.make_param_map(res_e);
+	}
+	/** @protected @arg {D_ProtobufObj[]} res_e */
+	make_param_map(res_e) {
+		/** @private @type {V_ParamMapType} */
+		let ret_map=new Map();
+		/** @private @arg {number} key @arg {V_ParamMapValue} value */
+		let do_set=(key,value) => {
+			if(ret_map.has(key)) {
+				let v=ret_map.get(key);
+				v?.push(value);
+			} else {ret_map.set(key,[value]);}
+		};
+		for(let param of res_e) {
+			switch(param[0]) {
+				case "data_fixed64": do_set(param[1],["bigint",[],param[2]]); break;
+				case "data_fixed32":
+				case "data32": do_set(param[1],param[2]); break;
+				case "child": {
+					const [,,u8_bin_arr,bin_arr]=param;
+					x: if(bin_arr) {
+						let err=bin_arr.find(e => e[0]==="error");
+						if(err) break x;
+						let p_map=this.make_param_map(bin_arr);
+						if(String.fromCharCode(...u8_bin_arr.slice(0,4)).match(/[\w-]{4}/)) break x;
+						if(p_map===null&&u8_bin_arr[0]===0) {
+							debugger;
+							break;
+						}
+						if(!p_map) {
+							do_set(param[1],["failed",bin_arr]);
+							break;
+						}
+						do_set(param[1],p_map);
+						break;
+					}
+					if(u8_bin_arr[0]===0) {
+						do_set(param[1],u8_bin_arr);
+						break;
+					}
+					do_set(param[1],this._decoder.decode(u8_bin_arr));
+				} break;
+				case "data64": do_set(param[1],["bigint",param[2],param[3]]); break;
+				case "group": do_set(param[1],['group',param[2]]); break;
+				case "info": debugger; break;
+				case "struct": debugger; break;
+				case "error": return null;
+				default: debugger; break;
+			}
+		}
+		return ret_map;
+	}
 	/** @protected @arg {E_VE83769_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
 	/** @protected @arg {B_Hack} x */
