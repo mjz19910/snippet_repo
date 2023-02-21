@@ -10,6 +10,10 @@ type D_PlaylistInfoCardContent={
 
 type R_PlaylistInfoCardContent={playlistInfoCardContentRenderer: D_PlaylistInfoCardContent;};
 
+type R_SimpleCardButton={
+	simpleCardButtonRenderer: {};
+};
+
 type R_SimpleCardContent={
 	simpleCardContentRenderer: {
 		image: D_Thumbnail;
