@@ -13,8 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState}=require("./YtPlugin_Base.user");
-const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
+const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState}=require("./YtPlugin_Base.user"); const {ECatcherService}=require("./YTPlugin_ECatcherService.user"); const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 
 //#region module setup
 const __module_name__="mod$HandleTypes";
@@ -24,6 +23,10 @@ if(window.__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
+// [new_fexp_expected]
+ECatcherService.known_experiments.push(...[
+	[24476774,24481213],
+].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
 	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
