@@ -300,6 +300,7 @@ class IndexedDBService extends BaseService {
 			}
 			switch(db_box.type) {
 				default: console.log("unable to push [type=%s]",db_box.type); break;
+				case "root_visual_element":
 				case "number": {
 					if(db_box.id!==key) continue;
 					if(!this.is_vi_has_num(vi)) break;
