@@ -411,28 +411,38 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			}
 		}
 	}
-	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} boxed @arg {T} store @arg {T["data"][number]} item */
-	async push_store_item_to_database(store,boxed,item) {
+	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} db_boxed @arg {T} store @arg {T["data"][number]} item */
+	async push_store_item_to_database(store,db_boxed,item) {
 		let do_update=false;
 		/** @type {T_IdBox<B_IdSrcStr,string,"str",string>[]} */
-		let s_box=[];
+		let db_str_box=[];
 		/** @type {(T_IdBox<B_IdSrcNum,string,"num",number>|T_IdBox<B_IdSrcStr,string,"str",string>)[]} */
-		let i_box=[];
-		for(let box of boxed) {
-			switch(box.type) {
-				case "str": if(store.content==="string"||store.content==="keys") s_box.push(box); break;
-				case "num": if(store.content==="number") i_box.push(box); break;
+		let db_num_box=[];
+		for(let db_box of db_boxed) {
+			switch(db_box.type) {
+				case "str": if(store.content==="string"||store.content==="keys") db_str_box.push(db_box); break;
+				case "num": if(store.content==="number") db_num_box.push(db_box); break;
 			}
 		}
 		let found=false;
 		let found_box=null;
-		for(let box of s_box) {
+		for(let box of db_str_box) {
 			if(box.id===item[0]) {
 				found=true; found_box=box;
-				let [,box_b]=box.value;
-				let [,item_b]=item;
-				let [item_c]=item_b; let [box_c]=box_b;
-				if(item_c!==box_c) {
+				let [,db_container]=box.value;
+				let [,item_container]=item;
+				if(item_container[0]!==db_container[0]) {
+					switch(db_container[0]) {
+						case "arr": {
+							let [,db_value]=db_container;
+							if(item_container[0]==="one") {
+								let [,item_value]=item_container;
+								if(db_value.includes(item_value)) continue;
+								debugger;
+								continue;
+							}
+						}
+					}
 					debugger;
 				}
 			}
