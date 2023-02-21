@@ -453,7 +453,7 @@ type D_AlertWithButton={
 	text: G_Text;
 	dismissButton: R_Button;
 };
-type D_RemarketingPing={remarketingPing: `https://www.youtube.com/pagead/viewthroughconversion/962985656/?${string}`;};
+type D_RemarketingPing={remarketingPing: `https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`;};
 
 type D_C4TabbedHeader={
 	channelId: `UC${string}`;

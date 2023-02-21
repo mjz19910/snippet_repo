@@ -397,6 +397,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReloadContinuationData";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RemarketingPing";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ResourceStatusInResponseCheckData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichGrid";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichItem";}

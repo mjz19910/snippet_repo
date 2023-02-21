@@ -3472,8 +3472,22 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
+	/** @type {Map<number,{}>} */
+	view_conversion_info=new Map;
+	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
+	cq(a,b) {if(a!==b) debugger;}
 	/** @private @arg {D_RemarketingPing} x */
-	D_RemarketingPing(x) {x;}
+	D_RemarketingPing(x) {
+		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
+		let tr=t.tr_url_to_obj(remarketingPing);
+		t.cq(tr.host,"www.youtube.com");
+		let [r,...p]=split_string(tr.pathname,"/"); t.cq(r,"");
+		t.cq(p[0],"pagead"); t.cq(p[1],"viewthroughconversion");
+		let np=this.parse_number_template(p[2]);
+		if(!this.view_conversion_info.has(np)) {
+
+		}
+	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {x;}
 	/** @private @arg {P_notification_opt_out} x */
