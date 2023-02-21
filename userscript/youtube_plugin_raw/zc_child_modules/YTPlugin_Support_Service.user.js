@@ -1044,7 +1044,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.t_cf(`${cf}$content`,content,(cf,x) => {
 			if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
 			if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
-			this.codegen_typedef(cf,x,false);
+			this.codegen_typedef(cf,x);
 		});
 		this.z(cueRanges,this.D_CueRangeItem);
 		this.trackingParams(trackingParams);

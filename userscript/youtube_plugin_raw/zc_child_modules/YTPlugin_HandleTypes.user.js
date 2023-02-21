@@ -1396,7 +1396,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_GoogleVideoHostPartition(cf,p);
 		/** @type {G_Gv_0} */
 		let p_type=partition;
-		console.log(`[google_video_preconnect] ["https-parts://[rr][${s1}][${s2}][${s3}][${s4}][${partition}[${s6}][${selector}][.][googlevideo][.][com]"]`);
+		console.log(`[google_video_preconnect] ["https-parts://[rr][${s1}][${s2}][${s3}][${s4}][${partition}][${s6}][${selector}][.][googlevideo][.][com]"]`);
 		// cSpell:ignoreRegExp /"(vgqsk)"/
 		switch(p_type) {
 			default: {

@@ -5992,7 +5992,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_Video_Owner";
 		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(thumbnail);
-		debugger;
+		this.E_VE3611(navigationEndpoint);
 		this.D_Accessibility(accessibility);
 		this.a_primitive_str(title);
 	}
