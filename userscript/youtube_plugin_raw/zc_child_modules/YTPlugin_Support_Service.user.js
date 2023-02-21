@@ -112,7 +112,8 @@ class StoreDescription_C extends ApiBase2 {
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
-			let iv=this.data[idx]; iv;
+			let iv=this.data[idx];
+			debugger;
 		} else {
 			this.push_new_data(k,x);
 		}
