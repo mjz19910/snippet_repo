@@ -213,7 +213,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.is_ready=false;
 		this.#idle_id=requestIdleCallback(async () => {
 			this.#idle_id=null;
-			await this.load_database();
+			try {
+				await this.load_database();
+			} catch(err) {
+				console.log("load database failed",err);
+				return;
+			}
 			this.is_ready=true;
 			for(const msg of this.stored_changes) {
 				switch(msg[0]) {
@@ -520,7 +525,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(wait_close) return wait_close;
 	}
 	/** @arg {G_BoxedIdObj} x */
-	put_box(x) {return this.put_and_wait("boxed_id",x);}
+	put_box(x) {this.indexed_db.put("boxed_id",x,3);}
 	/** @arg {number} id */
 	put_update_id(id) {
 		return this.put_box({
@@ -530,24 +535,15 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			id,
 		});
 	}
+	/** @private */
 	get_update_id() {return this.indexed_db.get("boxed_id","boxed_id:update_id",this.indexed_db_version);}
+	/** @private */
 	async save_database() {
-		let update_id=await this.get_update_id();
-		if(!update_id) throw new Error("Update id not saved when loading database");
 		this.expected_id++;
-		await this.put_update_id(this.expected_id);
-		update_id=await this.get_update_id();
-		if(!update_id) throw new Error("Update id not saved when updating");
-		if(update_id.id!==this.expected_id) {
-			await this.put_update_id(this.expected_id);
-			let wait_close=this.indexed_db.open_db_promise;
-			if(wait_close) await wait_close;
-		}
-		update_id=await this.get_update_id();
-		if(!update_id) throw new Error("Update id not saved when updating");
-		if(update_id.id!==this.expected_id) throw new Error("Conflicting access, update_id still not the expected id");
+		this.put_update_id(this.expected_id);
 		await this.do_boxed_push_to_database();
 	}
+	/** @private */
 	async load_database() {
 		let update_id=await this.get_update_id();
 		if(!update_id) {
@@ -560,35 +556,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			await this.put_update_id(this.expected_id);
 			update_id=await this.get_update_id();
 		}
-		for(;;) {
-			if(!update_id) {
-				await this.put_update_id(0);
-				let wait_close=this.indexed_db.open_db_promise;
-				if(wait_close) await wait_close;
-				update_id=await this.get_update_id();
-				continue;
-			}
-			if(update_id.id===this.expected_id) {
-				let wait_close=this.indexed_db.open_db_promise;
-				if(wait_close) await wait_close;
-				break;
-			}
-			if(update_id.id!==this.expected_id) {
-				await this.put_update_id(this.expected_id);
-				continue;
-			}
-			this.expected_id++;
-			await this.put_update_id(this.expected_id);
-			update_id=await this.get_update_id();
-			continue;
-		}
+		await this.put_update_id(0);
 	}
-	/** @template T @arg {make_item_group<any>} x @arg {T} v @returns {asserts x is make_item_group<T>} */
-	is_group_with_type(x,v) {x; v;}
-	is_ready=false;
-	/** @type {StoredChangesItem[]} */
+	/** @private @type {StoredChangesItem[]} */
 	stored_changes=[];
-	do_random_breakpoint=false;
 	/** @api @public @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum_impl(cf,ns,s) {
 		/** @private @type {"_"|"-"} */
