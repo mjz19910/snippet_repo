@@ -2845,7 +2845,7 @@ class ServiceMethods extends ServiceData {
 			data: x,
 		};
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["like",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break; case "dislike": return {
@@ -2872,7 +2872,7 @@ class ServiceMethods extends ServiceData {
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.parser.get_url_type(path_parts);
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
@@ -2934,7 +2934,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["reel",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_reel(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -2950,7 +2950,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["notification",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_notification(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -2976,7 +2976,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["live_chat",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_live_chat(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2993,7 +2993,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["att",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_res_att(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -3010,7 +3010,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["account",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_account(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -3032,7 +3032,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["pdg",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_pdg(t,x) {
 		switch(t[1]) {
 			case "get_pdg_buy_flow": return {
@@ -3043,7 +3043,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["music",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_music(t,x) {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
@@ -3054,7 +3054,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["share",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_share(t,x) {
 		switch(t[1]) {
 			case "get_share_panel": return {
@@ -3065,7 +3065,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["playlist",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_playlist(t,x) {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
@@ -3076,7 +3076,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["subscription",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_subscription(t,x) {
 		switch(t[1]) {
 			case "subscribe": return {
@@ -3092,7 +3092,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes,".">,["browse",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_browse(t,x) {
 		switch(t.length) {
 			case 2: switch(t[1]) {
@@ -5594,7 +5594,7 @@ class ServiceMethods extends ServiceData {
 		if(horizontalScrollable!==false) debugger;
 		this.z([nextButton,previousButton],this.R_Button);
 	}
-	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
+	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any,"comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
 		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
@@ -6839,7 +6839,7 @@ class ServiceMethods extends ServiceData {
 			case "PRIVACY_PUBLIC":
 		}
 	}
-	/** @protected @template CT,T,U @template {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {[VU["itemSectionRenderer"],Omit<VU, "itemSectionRenderer">]} */
+	/** @protected @template CT,T,U @template {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {[VU["itemSectionRenderer"],Omit<VU,"itemSectionRenderer">]} */
 	TR_ItemSection(x) {
 		const cf="TR_ItemSection";
 		const {itemSectionRenderer: a,...y}=this.s(cf,x);/*#destructure_done*/

@@ -73,7 +73,7 @@ export class Snippet_0_tmp {
 	generate_typedef(x,r=null) {x; r;}
 	/** @public @template {[string,null,string]} T @template {`${T[0]}-${string}-${T[2]}`} U @arg {T} ns_arr @arg {U} s */
 	save_enum_path(ns_arr,s) {
-		// ["", "-artists-row-state-id"]
+		// ["","-artists-row-state-id"]
 		let n1=this.split_string_once(s,ns_arr[0]);
 		if(!n1[1]) throw new Error();
 		let n2=this.drop_separator(n1[1],"-");
@@ -190,7 +190,7 @@ class ND extends Snippet_0_tmp {
 	ItemsTemplate(x,f) {this.z(this.w(x),f);}
 	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
 	ContentsArrayTemplate(x,f) {this.z(this.w(x),f);}
-	/** @protected @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
+	/** @protected @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C,"commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
 	CommandsTemplate$Omit(x,f) {
 		const {commands,...y}=x;
 		let ca=this.z(commands,f);
