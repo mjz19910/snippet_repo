@@ -434,6 +434,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				if(!this.is_vi_has_str(item_container)) break;
 				if(item_container[0]!==db_container[0]) {
 					switch(db_container[0]) {
+						default: debugger; break;
 						case "arr": {
 							let [,db_value]=db_container;
 							if(item_container[0]==="one") {
