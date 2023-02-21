@@ -462,12 +462,18 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		switch(store.content) {
 			default: debugger; break;
 			case "number": {
-				let uv=this.uv_unpack(vi,[true,1,""]);
+				if(!this.is_vi_has_num(vi)) break;
+				let uv=this.uv_unpack(vi,[]);
 				if(uv.one) await this.put_boxed_id(store.content,item[0],uv.one);
 				if(uv.arr) await this.put_boxed_id(store.content,item[0],uv.arr);
 				if(uv.many) await this.put_boxed_id(store.content,item[0],uv.many);
 			} break;
 			case "boolean": {
+				if(!this.is_vi_has_bool(vi)) break;
+				let uv=this.uv_unpack(vi,[]);
+				if(uv.one) await this.put_boxed_id(store.content,item[0],uv.one);
+				if(uv.arr) await this.put_boxed_id(store.content,item[0],uv.arr);
+				if(uv.many) await this.put_boxed_id(store.content,item[0],uv.many);
 			} break;
 			case "keys": {
 				if(!this.is_vi_has_str(vi)) break;
@@ -478,7 +484,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @arg {["keys",string,make_item_group<string>]|["boolean",string,make_item_group<boolean>]} args */
+	/** @arg {["number",string,make_item_group<number>]|["keys",string,make_item_group<string>]|["boolean",string,make_item_group<boolean>]} args */
 	put_boxed_id(...args) {
 		switch(args[0]) {
 			default: debugger; break;
