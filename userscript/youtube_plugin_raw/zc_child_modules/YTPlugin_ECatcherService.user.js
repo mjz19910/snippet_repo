@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService.user.js
 // ==/UserScript==
 
-const {do_export,BaseService, is_firefox}=require("./YtPlugin_Base.user");
+const {do_export,BaseService}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$ECatcherService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -60,24 +60,12 @@ class ECatcherService extends BaseService {
 			this.seen_new_expected.push(e);
 			new_expected.push(e);
 		});
-		if(new_expected.length>0) {
-			if(is_firefox) {
-				this.log_new_experiments(new_expected);
-				return;
-			}
-			let fexp_log_val;
-			if(new_expected.length>1) {fexp_log_val=new_expected;} else {fexp_log_val=new_expected[0];}
-			if(fexp_log_val instanceof Array) {
-				this.log_new_experiments(fexp_log_val);
-				return;
-			}
-			this.log_new_experiments(fexp_log_val,"[%o]");
-		}
+		if(new_expected.length>0) this.log_new_experiments(new_expected);
 	}
-	/** @arg {[number|number[],string?]} experiments_arr_log_args */
+	/** @arg {[number[]]} experiments_arr_log_args */
 	log_new_experiments(...experiments_arr_log_args) {
-		let [arg,tags=""]=experiments_arr_log_args;
-		console.log(`[new_fexp_expected]${tags}`,arg);
+		let [arg]=experiments_arr_log_args;
+		console.log(`[new_fexp_expected] [%s]`,arg.join());
 		this.data.expected_client_values.fexp;
 	}
 	/** @api @public @arg {RC_ECatcher_SPs["params"]} params */
