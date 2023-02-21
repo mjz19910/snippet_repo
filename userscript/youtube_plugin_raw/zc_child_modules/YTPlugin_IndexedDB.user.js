@@ -505,15 +505,6 @@ class IndexedDBService extends BaseService {
 	/** @template T @arg {make_item_group<T>} x @arg {make_item_group<T>} y @arg {(x:T,y:T)=>boolean} eq_fn */
 	eq_group(x,y,eq_fn) {
 		switch(x[0]) {
-			case "arr": {
-				if(y[0]!=="arr") {debugger; break;}
-				if(x[1].length!==y[1].length) return false;
-				for(let x_item of x[1]) {
-					let y_item=y[1].findIndex(y_item => eq_fn(y_item,x_item));
-					if(y_item===-1) return false;
-				}
-				return true;
-			}
 			case "many": {
 				switch(y[0]) {
 					case "many": {
@@ -521,10 +512,11 @@ class IndexedDBService extends BaseService {
 						if(x_many.length!==y_many.length) return false;
 						for(let x_idx=0;x_idx<x_many.length;x_idx++) {
 							let x_arr=x_many[x_idx]; let y_arr=y_many[x_idx];
-							for(let x_item of x_arr) {
-								let y_item=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
-								if(y_item===-1) return false;
-							}
+							let has=x_arr.every(x_item => {
+								return y_arr.findIndex(y_item => eq_fn(y_item,x_item))>0;
+							});
+							if(has) continue;
+							return false;
 						}
 						return true;
 					}
@@ -539,6 +531,31 @@ class IndexedDBService extends BaseService {
 						return true;
 					}
 					case "one": debugger; return false;
+				}
+			}
+			case "arr": {
+				switch(y[0]) {
+					case "many": {
+						let x_arr=x[1]; let y_many=y[1];
+						let y_arr_idx=y_many.findIndex(y_arr => x_arr.every(x_item => {
+							let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
+							return y_idx>0;
+						}));
+						return y_arr_idx>0;
+					}
+					case "arr": {
+						let x_arr=x[1]; let y_arr=y[1];
+						if(x_arr.length!==y_arr.length) return false;
+						for(let x_item of x_arr) {
+							let y_idx=y[1].findIndex(y_item => eq_fn(y_item,x_item));
+							if(y_idx===-1) return false;
+						}
+						return true;
+					}
+					case "one": {
+						let x_idx=x[1].findIndex(x_item => eq_fn(x_item,y[1]));
+						return x_idx>0;
+					}
 				}
 			}
 			case "one": {
