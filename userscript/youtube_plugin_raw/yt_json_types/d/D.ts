@@ -1412,7 +1412,7 @@ type D_AttBgChallenge={
 	program: string;
 	globalName: "trayride";
 };
-type D_AudioSampleRate=44100|48000;
+type D_AudioSampleRate=22050|44100|48000;
 type D_AudioTrackItem={
 	captionTrackIndices: number[];
 }|{

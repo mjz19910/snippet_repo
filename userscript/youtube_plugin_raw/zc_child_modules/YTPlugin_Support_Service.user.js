@@ -779,6 +779,13 @@ class Support_RS_Player extends ServiceMethods {
 		if(watchTimeWindowSeconds!==180) debugger;
 		if(refractorySeconds!==2592000) debugger;
 	}
+	/** @private @arg {`${D_AudioSampleRate}`} x */
+	D_AudioSampleRate(x) {
+		switch(x) {
+			default: debugger; break;
+			case "22050": case "44100": case "48000":
+		}
+	}
 	/** @private @arg {D_FormatItem} x */
 	D_FormatItem(x) {
 		const cf="D_FormatItem";
@@ -804,12 +811,7 @@ class Support_RS_Player extends ServiceMethods {
 			}
 		});
 		this.a_primitive_str(approxDurationMs);
-		this.t(audioSampleRate,x => {
-			switch(x) {
-				default: debugger; break;
-				case "44100": case "48000":
-			}
-		});
+		this.t(audioSampleRate,this.D_AudioSampleRate);
 		this.t(audioChannels,x => {if(x!==2) debugger;});
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 		const {xtags,...y}=u; this.g(y);
@@ -934,12 +936,7 @@ class Support_RS_Player extends ServiceMethods {
 			}
 		});
 		this.a_primitive_str(approxDurationMs);
-		this.t(audioSampleRate,x => {
-			switch(x) {
-				default: debugger; break;
-				case "44100": case "48000":
-			}
-		});
+		this.t(audioSampleRate,this.D_AudioSampleRate);
 		this.t(audioChannels,x => {
 			if(x!==2) debugger;
 		});
