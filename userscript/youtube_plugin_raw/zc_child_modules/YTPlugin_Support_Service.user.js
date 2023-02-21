@@ -433,6 +433,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				let uv_many=null;
 				switch(vi[0]) {
 					default: debugger; break;
+					case "one": break;
 					case "many": {
 						for(let u of vi[1]) {
 							let pa=[];

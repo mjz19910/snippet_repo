@@ -3144,34 +3144,36 @@ function get_exports() {return exports;}
 
 if(typeof exports==="object") {
 	let exports=get_exports();
-	exports.AutoBuyImplR=AutoBuyImplR;
-	exports.DocumentWriteListImpl=DocumentWriteListImpl;
-	exports.instruction_descriptor_arr=instruction_descriptor_arr;
+	exports.rebuild_the_universe_plugin={
+		AutoBuyImplR: AutoBuyImplR,
+		DocumentWriteListImpl: DocumentWriteListImpl,
+		instruction_descriptor_arr: instruction_descriptor_arr,
 
-	// instructions
-	exports.InstructionAppendImpl=InstructionAppendImpl;
-	exports.InstructionBreakpointImpl=InstructionBreakpointImpl;
-	exports.InstructionCallImpl=InstructionCallImpl;
-	exports.InstructionCastImpl=InstructionCastImpl;
-	exports.InstructionConstructImpl=InstructionConstructImpl;
-	exports.InstructionDropImpl=InstructionDropImpl;
-	exports.InstructionDupImpl=InstructionDupImpl;
-	exports.InstructionGetImpl=InstructionGetImpl;
-	exports.InstructionHaltImpl=InstructionHaltImpl;
-	exports.InstructionJeImpl=InstructionJeImpl;
-	exports.InstructionJmpImpl=InstructionJmpImpl;
-	exports.InstructionModifyOpImpl=InstructionModifyOpImpl;
-	exports.InstructionNopImpl=InstructionNopImpl;
-	exports.InstructionPeekImpl=InstructionPeekImpl;
-	exports.InstructionPushWindowObjectImpl=InstructionPushWindowObjectImpl;
-	exports.InstructionPushImpl=InstructionPushImpl;
-	exports.InstructionReturnImpl=InstructionReturnImpl;
-	exports.InstructionBlockTraceImpl=InstructionBlockTraceImpl;
-	exports.InstructionVMCallImpl=InstructionVMCallImpl;
-	exports.InstructionPushArgsImpl=InstructionPushArgsImpl;
-	exports.InstructionVMPushIPImpl=InstructionVMPushIPImpl;
-	exports.InstructionPushVMObjImpl=InstructionPushVMObjImpl;
-	exports.InstructionVMReturnImpl=InstructionVMReturnImpl;
-	exports.UnimplementedInstruction=UnimplementedInstruction;
-	exports.StackVMImpl=StackVMImpl;
+		// instructions
+		InstructionAppendImpl: InstructionAppendImpl,
+		InstructionBreakpointImpl: InstructionBreakpointImpl,
+		InstructionCallImpl: InstructionCallImpl,
+		InstructionCastImpl: InstructionCastImpl,
+		InstructionConstructImpl: InstructionConstructImpl,
+		InstructionDropImpl: InstructionDropImpl,
+		InstructionDupImpl: InstructionDupImpl,
+		InstructionGetImpl: InstructionGetImpl,
+		InstructionHaltImpl: InstructionHaltImpl,
+		InstructionJeImpl: InstructionJeImpl,
+		InstructionJmpImpl: InstructionJmpImpl,
+		InstructionModifyOpImpl: InstructionModifyOpImpl,
+		InstructionNopImpl: InstructionNopImpl,
+		InstructionPeekImpl: InstructionPeekImpl,
+		InstructionPushWindowObjectImpl: InstructionPushWindowObjectImpl,
+		InstructionPushImpl: InstructionPushImpl,
+		InstructionReturnImpl: InstructionReturnImpl,
+		InstructionBlockTraceImpl: InstructionBlockTraceImpl,
+		InstructionVMCallImpl: InstructionVMCallImpl,
+		InstructionPushArgsImpl: InstructionPushArgsImpl,
+		InstructionVMPushIPImpl: InstructionVMPushIPImpl,
+		InstructionPushVMObjImpl: InstructionPushVMObjImpl,
+		InstructionVMReturnImpl: InstructionVMReturnImpl,
+		UnimplementedInstruction: UnimplementedInstruction,
+		StackVMImpl: StackVMImpl,
+	};
 }
