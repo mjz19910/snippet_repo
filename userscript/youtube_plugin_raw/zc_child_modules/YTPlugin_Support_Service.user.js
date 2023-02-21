@@ -3218,6 +3218,40 @@ class Support_Renderer extends ServiceMethods {
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
 	}
+	/** @public @arg {G_PlaylistSidebarItem} x */
+	G_PlaylistSidebarItem(x) {
+		const cf="G_PlaylistSidebarItem";
+		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
+		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_NextContents} x */
+	G_NextContents(x) {
+		const cf="G_NextContents";
+		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
+		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
+		x===""; this.codegen_typedef(cf,x);
+		x===0;
+	}
+	/** @public @arg {G_GuideSectionItem} x */
+	G_GuideSectionItem(x) {
+		const cf="G_GuideSectionItem";
+		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
+		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
+		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
+		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
+		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
+		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {G_ChatItem} x */
+	G_ChatItem(x) {
+		const cf="G_ChatItem";
+		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
+		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
+		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 }
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;

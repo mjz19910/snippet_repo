@@ -441,32 +441,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
-	/** @private @arg {G_PlaylistSidebarItem} x */
-	G_PlaylistSidebarItem(x) {
-		const cf="G_PlaylistSidebarItem";
-		if("playlistSidebarPrimaryInfoRenderer" in x) return this.xr.R_PlaylistSidebarPrimaryInfo(x);
-		if("playlistSidebarSecondaryInfoRenderer" in x) return this.xr.R_PlaylistSidebarSecondaryInfo(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_NextContents} x */
-	G_NextContents(x) {
-		const cf="G_NextContents";
-		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
-		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.xr.R_SingleColumnMusicWatchNextResults(x);
-		x===""; this.codegen_typedef(cf,x);
-		x===0;
-	}
-	/** @private @arg {G_GuideSectionItem} x */
-	G_GuideSectionItem(x) {
-		const cf="G_GuideSectionItem";
-		if("guideEntryRenderer" in x) return this.xr.R_GuideEntry(x);
-		if("guideCollapsibleSectionEntryRenderer" in x) return this.xr.R_GuideCollapsibleSectionEntry(x);
-		if("guideDownloadsEntryRenderer" in x) return this.xr.R_GuideDownloadsEntry(x);
-		if("guideCollapsibleEntryRenderer" in x) return this.xr.R_GuideCollapsibleEntry(x);
-		if("guideSubscriptionsSectionRenderer" in x) return this.xr.R_GuideSubscriptionsSection(x);
-		if("guideSectionRenderer" in x) return this.xr.R_GuideSection(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {G_RS_Subscribe_Action} x */
 	G_RS_Subscribe_Action(x) {
 		const cf="RS_Subscribe_ActionItem";
@@ -503,14 +477,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("accountItem" in x) return this.A_AccountItem(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_ChatItem} x */
-	G_ChatItem(x) {
-		const cf="G_ChatItem";
-		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
-		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
-		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	//#endregion
