@@ -527,7 +527,7 @@ class HandleTypes extends ServiceMethods {
 		return x[k];
 	}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
-	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
+	zy(cf,k,x,f) {return this.z(this.w(cf,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */

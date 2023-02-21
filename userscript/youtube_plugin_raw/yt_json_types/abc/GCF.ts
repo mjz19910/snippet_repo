@@ -18,5 +18,15 @@ type GCF_s=
 	|Ret_get_auto_type_name
 	;
 ;
-type GCF_w=CF_T_Commands|CF_T_Signal|CF_M_y|CF_TR_MultiPageMenu|CF_T_Items|CF_T_Items_TP|CF_TA_Page;
+type GCF_w=
+	|CF_M_y
+	|CF_M_zy
+	|CF_T_Commands
+	|CF_T_Items
+	|CF_T_Items_TP
+	|CF_T_Signal
+	|CF_TA_Page
+	|CF_TR_MultiPageMenu
+	;
+;
 type pt_xt=(R_FancyDismissibleDialog|{}) extends infer T? T extends infer U? {} extends U? never:U:never:never;
