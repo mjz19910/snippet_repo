@@ -60,7 +60,7 @@ class IndexedDBService extends BaseService {
 		for(let key of keys) {
 			/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
 			function create_cache_index(s,k,v) {s[k]=v;}
-			/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,DT_DatabaseStoreTypes[R][]]}} s @arg {R} k @arg {[R,DT_DatabaseStoreTypes[R][]]} v */
+			/** @template {keyof DT_DatabaseStoreTypes} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {T_CacheInfoType<R>} v */
 			function create_cache(s,k,v) {s[k]=v;}
 			create_cache_index(this.store_cache_index,key,[key,new Map]);
 			create_cache(this.store_cache,key,[key,[]]);
@@ -68,15 +68,15 @@ class IndexedDBService extends BaseService {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @private @type {{[R in keyof DT_DatabaseStoreTypes]?: [R,Map<string,number>]}} */
+	/** @private @type {StoreCacheIndex} */
 	store_cache_index={};
-	/** @private @type {{[R in keyof DT_DatabaseStoreTypes]?: [R,DT_DatabaseStoreTypes[R][]]}} */
+	/** @private @type {StoreCacheType} */
 	store_cache={};
 	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
 	get_data_cache(key) {
-		/** @type {{[R in T]?: [R,DT_DatabaseStoreTypes[R][]]}} */
+		/** @type {T_StoreCacheType<T>} */
 		let sk_ac=this.store_cache;
-		/** @type {[T,DT_DatabaseStoreTypes[T][]]|undefined} */
+		/** @type {T_CacheInfoType<T>|undefined} */
 		let cache_info=as(this.store_cache[key]);
 		cache_info??=[key,[]];
 		sk_ac[key]=cache_info;
@@ -101,7 +101,7 @@ class IndexedDBService extends BaseService {
 	/** @arg {AG_DatabaseStoreDescription["key"]} key */
 	check_size(key) {
 		let d_cache=this.get_data_cache(key);
-		/** @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} */
+		/** @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]|null)[]} */
 		let arr=d_cache[1];
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
@@ -212,6 +212,9 @@ class IndexedDBService extends BaseService {
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
 	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDb;}} s @arg {keyof DT_DatabaseStoreTypes} key @arg {any} x */
 	async force_update(s,key,x) {
+		this.put(key,x,3);
+		let bp=true;
+		if(bp) return;
 		for(let scope=null;s.error_count<64;) {
 			try {
 				if(s.tx===null&&scope) {
@@ -256,6 +259,7 @@ class IndexedDBService extends BaseService {
 		let [,d_cache]=this.get_data_cache(key);
 		try {
 			for_loop: for(let item of d_cache) {
+				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
 				let cursor_req=typed_db.openCursor(state.obj_store,TypedIDBValidKeyS.only(item.key));
 				cursor_loop: for(let i=0;;i++) {
@@ -272,7 +276,7 @@ class IndexedDBService extends BaseService {
 						}
 						await this.force_update(state,key,item);
 						let idx=d_cache.indexOf(item);
-						d_cache.splice(idx,1);
+						d_cache[idx]=null;
 						break cursor_loop;
 					}
 					const cursor_value=cur_cursor.value;

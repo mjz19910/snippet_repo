@@ -39,6 +39,11 @@ type DT_DatabaseStoreTypes={
 	playlist_id: Extract<IDBBoxedType,{base: "playlist_id";}>;
 	browse_id: Extract<IDBBoxedType,{base: "browse_id";}>;
 };
+type T_StoreCacheType<T extends keyof DT_DatabaseStoreTypes>={[R in T]?: T_CacheInfoType<R>};
+type T_StoreCacheIndex<T extends keyof DT_DatabaseStoreTypes>={[R in T]?: [R,Map<string,number>]};
+type StoreCacheType=T_StoreCacheType<keyof DT_DatabaseStoreTypes>;
+type StoreCacheIndex=T_StoreCacheIndex<keyof DT_DatabaseStoreTypes>;
+type T_CacheInfoType<T extends keyof DT_DatabaseStoreTypes>=[T,(DT_DatabaseStoreTypes[T]|null)[]];
 type TypedIDBTransactionScope={
 	tx: IDBTransaction;
 	is_tx_complete: boolean;
