@@ -3731,17 +3731,35 @@ class ServiceMethods extends ServiceData {
 		this.save_string(`${cf}.style`,style.styleType);
 		this.ceq(isDisabled,false);
 		this.a_primitive_bool(isToggled);
-		this.save_string(`${cf}.defaultIcon.type`,defaultIcon.iconType);
+		x: {
+			let x2=defaultIcon;
+			if(!x2) {debugger; break x;}
+			this.save_string(`${cf}.defaultIcon.type`,x2.iconType);
+		}
 		this.D_ToggleButton_SrvEP(defaultServiceEndpoint);
 		this.D_ToggleButton_ToggledSrvEP(toggledServiceEndpoint);
-		this.save_string(`${cf}.defaultIcon.type`,toggledStyle.styleType);
+		x: {
+			let x2=toggledStyle;
+			if(!x2) {debugger; break x;}
+			this.save_string(`${cf}.toggledStyle.styleType`,x2.styleType);
+		}
 		const {size,defaultTooltip,toggledTooltip,accessibilityData,toggledAccessibilityData,...u2}=u;/*#destructure_done*/
-		if(size.sizeType!=="SIZE_DEFAULT") debugger;
+		x: {
+			let x2=size;
+			if(!x2) {debugger; break x;}
+			if(x2.sizeType!=="SIZE_DEFAULT") debugger;
+		}
 		this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
 		this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
 		this.D_Accessibility(accessibilityData);
 		this.D_Accessibility(toggledAccessibilityData);
-		const {...y}=u2; this.g(y);
+		const {accessibility,defaultText,targetId,toggledText,toggleButtonSupportedData,...y}=u2; this.g(y);
+		this.D_Label(accessibility);
+		this.G_Text(defaultText);
+		switch(targetId) {
+			default: debugger; break;
+			case "watch-dislike": case "watch-like":
+		}
 	}
 	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {
