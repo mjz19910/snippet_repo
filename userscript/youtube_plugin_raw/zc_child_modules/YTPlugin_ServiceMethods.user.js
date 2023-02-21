@@ -7106,10 +7106,9 @@ class ServiceMethods extends ServiceData {
 	R_ElementUpdate(x) {this.H_("updates",x,x => this.z(x,this.D_ElementUpdate));}
 	/** @private @arg {D_ElementUpdate} x */
 	D_ElementUpdate(x) {
-		const cls_=this.x.get("handle_types");
 		const cf="D_ElementUpdate";
-		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
-		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
+		if("templateUpdate" in x) return this.xr.R_TemplateUpdate(x);
+		if("resourceStatusInResponseCheck" in x) return this.xr.R_ResourceStatusInResponseCheck(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @arg {D_FrameworkUpdates} x */
