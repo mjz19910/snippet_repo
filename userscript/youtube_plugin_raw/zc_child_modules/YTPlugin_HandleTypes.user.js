@@ -253,10 +253,19 @@ class HandleTypes extends ServiceMethods {
 				let moment=require("moment");
 				switch(size) {
 					case "milliseconds": {
-						let exp_m_from_now=moment(value/1000).diff(moment())/1000;
+						let as_moment=moment(value/1000);
+						let now_moment=moment(); let load_moment=moment(this.client_now);
+						let diff_from_load_time=as_moment.diff(load_moment)/1000;
+						let diff_from_now=as_moment.diff(now_moment)/1000;
 						// skip time that is now
-						if(exp_m_from_now>-5&&exp_m_from_now<5) break;
-						console.log(`[run_logger_moment] [cf1:${cf1}]`,`[cf2:${cf2}]`,`[type:${type}] [size:${size}] [moment.js] [${exp_m_from_now} seconds ago]`);
+						if(diff_from_now>-5&&diff_from_now<5) break;
+						// skip time that is close to first load
+						if(diff_from_load_time>-5&&diff_from_load_time<5) break;
+						console.group("[run_logger_moment] [moment.js]");
+						console.log(`[cf1:${cf1}]`,`[cf2:${cf2}]`,`[type:${type}] [size:${size}]`);
+						console.log(`[from_load:${diff_from_load_time}] [${as_moment.from(load_moment)}]`);
+						console.log(`[from_now:${diff_from_now}] [${as_moment.from(now_moment)}]`);
+						console.groupEnd();
 					} break;
 				}
 				continue;
