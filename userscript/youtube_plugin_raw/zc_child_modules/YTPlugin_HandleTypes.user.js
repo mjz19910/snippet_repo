@@ -1890,6 +1890,22 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
+	/** @private @arg {D_TextRun_NavEP_1} x */
+	D_TextRun_NavEP_1(x) {
+		const cf="D_TextRun_NavEP_1"; this.k(cf,x);
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
+			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
+			x===""; debugger;
+			return;
+		}
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.bc.E_VE83769_Url(x);
+		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_ReelWatch(x);
+		x===""; debugger;
+	}
 	/** @public @arg {D_TextRun} x */
 	D_TextRun(x) {
 		const cf="R_TextRun";
@@ -1926,20 +1942,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("navigationEndpoint" in u) {
 			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
-			x: {
-				let x2=navigationEndpoint;
-				if("browseEndpoint" in x2) {
-					if(this.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
-					if(this.is_TE_VE(x2,5754)) {this.E_VE5754(x2); break x;}
-					if(this.is_TE_VE(x2,6827)) {this.E_VE6827(x2); break x;}
-					if(this.is_TE_VE(x2,11487)) {this.E_VE11487(x2); break x;}
-					debugger; x2;
-					break x;
-				}
-				if("watchEndpoint" in x2) {this.E_Watch(x2); break x;}
-				if("urlEndpoint" in x2) {this.bc.E_VE83769_Url(x2); break x;}
-				debugger;
-			}
+			this.D_TextRun_NavEP_1(navigationEndpoint);
 			return;
 		}
 		if("bold" in u) {

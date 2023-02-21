@@ -1012,6 +1012,7 @@ type D_VE_TextRun=
 	|D_VE83769_TextRun
 	;
 ;
+type D_TextRun_NavEP_1=E_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_VE83769_Url;
 type D_TextRun=|D_VE_TextRun|{
 	text: string;
 }|{
@@ -1020,6 +1021,9 @@ type D_TextRun=|D_VE_TextRun|{
 }|{
 	text: string;
 	italics: true;
+}|{
+	text: "https://www.youtube.com/shorts/noUaYO...";
+	navigationEndpoint: E_ReelWatch;
 }|{
 	text: "https://youtu.be/XdnRkI5EM-k";
 	navigationEndpoint: E_Watch;
