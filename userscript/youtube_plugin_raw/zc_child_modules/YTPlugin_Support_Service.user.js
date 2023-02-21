@@ -2560,9 +2560,14 @@ class Support_VE37414 extends ServiceMethods {
 		return `VE${rootVe}`;
 	}
 }
+/** @arg {typeof Support_Renderer} _class */
+function export_Renderer(_class) {
+	export_(exports => {exports.Support_Renderer=_class;});
+}
 class Support_Renderer extends ServiceMethods {
 	/** @public @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
+	static {export_Renderer(this);}
 }
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
