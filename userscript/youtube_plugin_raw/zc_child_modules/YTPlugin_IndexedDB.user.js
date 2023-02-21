@@ -320,7 +320,6 @@ class IndexedDBService extends BaseService {
 			let uv=this.uv_unpack(vi);
 			uv?.arr?.[1].sort();
 			uv?.many?.[1].sort().forEach(x => x.sort());
-
 		}
 		switch(store.content) {
 			default: debugger; break;
