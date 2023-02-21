@@ -1908,7 +1908,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {D_TextRun} x */
 	D_TextRun(x) {
-		const cf="R_TextRun";
+		const cf="D_TextRun";
 		const {text,...u}=this.s(cf,x);/*#destructure_done*/
 		this.a_primitive_str(text);
 		if("strikethrough" in u) {
