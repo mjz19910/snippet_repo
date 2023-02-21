@@ -519,8 +519,6 @@ class HandleTypes extends ServiceMethods {
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
 	static {this.prototype.minimal_handler_member_2({});}
-	// /** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(this:this,x:T[K])=>U)=>U} */
-	// H_=super.H_;
 	//#endregion
 	//#region member functions
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
