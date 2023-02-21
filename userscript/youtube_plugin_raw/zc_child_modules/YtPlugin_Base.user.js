@@ -2300,6 +2300,22 @@ class BaseService extends BaseServicePrivate {
 		}
 		return [c,v];
 	}
+	/** @protected @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]} @arg {T} _ex */
+	z_ty(x,f,_ex) {
+		if(x===void 0) {debugger; return [[],[]];}
+		if(!x.entries) {debugger; return [[],[]];}
+		/** @private @type {any[]} */
+		let c=[];
+		/** @private @type {any[]} */
+		let v=[];
+		for(let it of x.entries()) {
+			const [i,a]=it;
+			if(a===void 0) {debugger; continue;}
+			let u=f.call(this,a,i);
+			if(u!==void 0) {c.push(u);} else if(u===void 0) {v.push(u);} else {throw new Error();}
+		}
+		return [c,v];
+	}
 	/** @private @type {string[]} */
 	logged_keys=[];
 	/** @protected @template {{}} T @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */

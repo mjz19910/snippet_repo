@@ -2780,15 +2780,28 @@ class ServiceMethods extends ServiceData {
 		this.k(cf,x);
 		return x;
 	}
-	/** @template T @arg {T} x @returns {M_Optional<T>} */
+	/** @template T @arg {any} x @arg {()=>T} _ty @returns {asserts x is T} */
+	assert_assume_is_type(x,_ty) {x;}
+	/** @template T @arg {T} x @returns {Some<T>} */
 	m(x) {return this.some(x);}
-	/** @template T @arg {T} x @returns {M_Optional<T>} */
+	/** @template T @arg {T} x @returns {Some<T>} */
 	some(x) {return {type: "s",x};}
-	/** @arg {(x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>} */
+	/** @template T @arg {Some<T>} x @returns {T} */
+	mu(x) {return x.x;}
+	/** @arg {(x:T)=>U} f @template T @template {M_Optional<T>} Opt @arg {Opt} m @template U @returns {Opt extends None?None:Some<U>} */
 	mt(m,f) {
-		if(m.type==="n") return {type: "n"};
+		/** @returns {Opt extends None?None:Some<U>} */
+		function mr() {throw new Error();}
+		if(m.type==="n") {
+			/** @type {None} */
+			let ret={type: "n"};
+			this.assert_assume_is_type(ret,mr);
+			return ret;
+		}
 		let v=f.call(this,m.x);
-		return this.some(v);
+		let ret=this.some(v);
+		this.assert_assume_is_type(ret,mr);
+		return ret;
 	}
 	/** @arg {(x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>} */
 	mb(f,m) {
@@ -5161,6 +5174,11 @@ class ServiceMethods extends ServiceData {
 		this.E_VE4724_Search(searchEndpoint);
 		this.R_Button(clearButton);
 	}
+	/** @private @arg {`ReloadContinuation.slot.${"body"|"header"}.targetId`} cf @arg {DC_ReloadContinuationItems["targetId"]} x */
+	DC_ReloadContinuationItem_TargetId(cf,x) {
+		if(this.is_yt_uuid(x)) return;
+		this.save_string(cf,x);
+	}
 	/** @private @arg {DC_ReloadContinuationItems} x */
 	DC_ReloadContinuationItems(x) {
 		const cf="DC_ReloadContinuationItems";
@@ -5168,35 +5186,18 @@ class ServiceMethods extends ServiceData {
 			case "RELOAD_CONTINUATION_SLOT_BODY": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
-				if(!this.is_yt_uuid(targetId)) {
-					this.save_string("Body.targetId",targetId);
-					switch(targetId) {
-						default: targetId===""; debugger; break;
-						case "browse-feedFEwhat_to_watch":
-						case "comments-section":
-						case "engagement-panel-comments-section":
-					}
-				}
+				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
 				this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
 			} break;
 			case "RELOAD_CONTINUATION_SLOT_HEADER": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
-				if(!this.is_yt_uuid(targetId)) {
-					this.save_string("Header.targetId",targetId);
-					switch(targetId) {
-						default: targetId===""; debugger; break;
-						case "comments-section":
-						case "engagement-panel-comments-section":
-					}
-				}
-				/** @type {typeof continuationItems[number][]} */
-				let iterable_items=continuationItems;
-				this.z(iterable_items,x => {
+				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.header.targetId",targetId);
+				this.mt(this.m(continuationItems),x => this.z_ty(x,x => {
 					if("commentsHeaderRenderer" in x) return this.R_CommentsHeader(x);
 					if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 					debugger;
-				});
+				},x[0]));
 			} break;
 			default: debugger; break;
 		};
