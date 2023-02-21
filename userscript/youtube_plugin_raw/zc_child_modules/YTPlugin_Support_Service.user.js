@@ -268,22 +268,39 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		let from_db=box.value[1];
 		if(from_db[0]!=="many") {debugger; return;}
+		let do_update_db=false;
 		for(let src_item of item_group[1]) {
-			let has=from_db[1].find(v => this.eq_keys(v,src_item));
-			if(has===null) {
-				debugger;
+			let has=from_db[1].findIndex(v => this.eq_keys(v,src_item));
+			if(has<0) {
+				from_db[1].push(src_item);
+				do_update_db=true;
 			}
 		}
+		if(do_update_db) await this.put_box(box);
 	}
 	/** @arg {G_BoxedStr} box @arg {make_arr_t<string>} item_group */
 	async store_item_arr(box,item_group) {
-		box; item_group;
-		debugger;
+		let from_db=box.value[1];
+		if(from_db[0]!=="arr") {debugger; return;}
+		let from_db_arr=from_db[1];
+		let from_item_arr=item_group[1];
+		if(!this.eq_keys(from_db_arr,from_item_arr)) {
+			for(let new_item of from_item_arr) {
+				if(from_db_arr.includes(new_item)) continue;
+				from_db_arr.push(new_item);
+			}
+			await this.put_box(box);
+		}
 	}
 	/** @arg {G_BoxedStr} box @arg {make_one_t<string>} item_group */
 	async store_item_one(box,item_group) {
-		box; item_group;
-		debugger;
+		let from_db=box.value[1];
+		if(from_db[0]!=="one") {debugger; return;}
+		if(from_db[1]!==item_group[1]) {
+			let new_arr=[from_db[1],item_group[1]];
+			box.value[1]=["arr",new_arr];
+			await this.put_box(box);
+		}
 	}
 	/** @arg {`boxed_id:str:${string}`} find_key @arg {IDBBoxedType} box @arg {make_item_group<string>} item_group */
 	async export_store_item_with_found_box(find_key,box,item_group) {
