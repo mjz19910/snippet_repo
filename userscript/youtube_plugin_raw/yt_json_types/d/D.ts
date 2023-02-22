@@ -1751,7 +1751,30 @@ type D_FancyDismissibleDialog={
 };
 type D_FeedTabbedHeader={title: G_Text;};
 type D_FeedbackResponseItem=D_FeedbackResponseProcessedStatus;
-type D_FeedbackResponseProcessedStatus={isProcessed: true;};
+type D_DismissalReasonText={
+	trackingParams: string;
+	text: G_Text;
+	feedbackToken: string;
+};
+type R_DismissalReasonText={dismissalReasonTextRenderer: D_DismissalReasonText;};
+type E_SubmitFeedback=T_SE_Signal<M_Feedback,T_Signal<"SUBMIT_FEEDBACK">>;
+type D_DismissalFollowUp={
+	trackingParams: string;
+	dismissalReasonsPrompt: G_Text;
+	reasons: R_DismissalReasonText[];
+	cancelButton: R_Button;
+	submitButton: R_Button;
+	submitFeedbackEndpoint: E_SubmitFeedback;
+	dismissalViewStyle: "DISMISSAL_VIEW_STYLE_COMPACT_TALL";
+};
+
+type R_DismissalFollowUp={
+	dismissalFollowUpRenderer: D_DismissalFollowUp;
+};
+type D_FeedbackResponseProcessedStatus={
+	isProcessed: true;
+	followUpDialog?: R_DismissalFollowUp|R_DismissalFollowUp;
+};
 type D_FormatColorInfo={
 	primaries?: "COLOR_PRIMARIES_BT709";
 	transferCharacteristics: "COLOR_TRANSFER_CHARACTERISTICS_BT709";

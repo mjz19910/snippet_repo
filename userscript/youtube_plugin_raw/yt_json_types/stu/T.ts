@@ -183,7 +183,7 @@ type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string
 type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
 //#endregion
 //#region T_SE
-type T_SE_Signal<T_Meta extends {webCommandMetadata: any;},T_Data>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
+type T_SE_Signal<T_Meta extends {webCommandMetadata: {};},T_Data>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
 //#endregion
 //#region T_Setting
 type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
