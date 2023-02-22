@@ -37,7 +37,7 @@ type DC_ChangeMarkersVisibility={entityKeys: string[]; isVisible: boolean;};
 type DC_CommandExecutor={commands: G_DC_CommandExecutor_CommandItem[];};
 type DC_Continuation_Browse={request: "CONTINUATION_REQUEST_TYPE_BROWSE"; token: string; command?: C_ShowReloadUi;};
 type DC_Continuation_ReelWatchSeq={request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"; token: string;};
-type DC_Continuation_WatchNext={request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT"; token: string;};
+type DC_Continuation_WatchNext={request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT"; token: string; command?: C_ShowReloadUi;};
 type DC_EntityBatchUpdate={entityBatchUpdate: DR_DC_EntityBatchUpdate;};
 type DC_Generic={continuation: string;};
 type DC_GetPdgBuyFlow=DC_Params;
@@ -57,7 +57,7 @@ type DC_SectionList_BrowseFeed_ChannelFeatured=
 	|T_DC_Content_2<`browse-feedUC${string}search`,TR_SectionListItem_3_Empty>
 	;
 ;
-type ScratchPad=DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`?R:never;
+type ScratchPad=DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`? R:never;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
 type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;

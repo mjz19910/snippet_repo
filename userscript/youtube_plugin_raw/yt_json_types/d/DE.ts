@@ -99,7 +99,7 @@ type DE_VE3832_Watch={
 	playlistSetVideoId?: string;
 	params?: string;
 	startTimeSeconds?: number;
-	continuePlayback?: false;
+	continuePlayback?: boolean;
 	loggingContext?: R_VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: R_Html5PlaybackOnesieConfig;
 	watchEndpointSupportedPrefetchConfig?: R_PrefetchHintConfig;

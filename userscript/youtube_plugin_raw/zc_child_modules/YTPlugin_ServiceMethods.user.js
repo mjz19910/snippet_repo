@@ -2145,7 +2145,7 @@ class ServiceMethods extends ServiceData {
 		this.t(playlistSetVideoId,this.a_primitive_str);
 		this.t(params,params => this.params("watch.params",params));
 		this.t(startTimeSeconds,this.a_primitive_num);
-		this.t(continuePlayback,x => this.cq(x,false));
+		this.t(continuePlayback,this.a_primitive_bool);
 		this.t(loggingContext,x => this.x.get("x_VE").R_VssLoggingContext(x));
 		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
 		this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
@@ -3602,9 +3602,9 @@ class ServiceMethods extends ServiceData {
 			if(!x2) {debugger; break x;}
 			this.save_string(`${cf}.defaultIcon.type`,x2.iconType);
 		}
-		this.G_Text(defaultText);
+		this.t(defaultText,this.G_Text);
 		this.D_ToggleButton_SrvEP(defaultServiceEndpoint);
-		this.G_Text(toggledText);
+		this.t(toggledText,this.G_Text);
 		this.D_ToggleButton_ToggledSrvEP(toggledServiceEndpoint);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
 		this.D_Label(accessibility);
