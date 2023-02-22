@@ -21,15 +21,15 @@ type D_ToggleButton={
 	defaultServiceEndpoint: E_AddUpcomingEventReminder|E_SignalService_SendPost|E_PerformCommentAction|C_RepeatChapter|C_CommandExecutor;
 	toggledText: G_Text;
 	toggledServiceEndpoint: E_RemoveUpcomingEventReminder|E_SignalService_SendPost|E_PerformCommentAction|E_Like|C_CommandExecutor;
-	trackingParams: string;
 	defaultTooltip: string;
 	toggledStyle: T_StyleType<"STYLE_COMPACT_GRAY"|"STYLE_DEFAULT_ACTIVE"|"STYLE_BLUE_TEXT">;
 	accessibility: D_Label;
+	trackingParams: string;
 	accessibilityData: D_Accessibility;
 	defaultIcon: T_Icon<"DISLIKE"|"LIKE"|"LOOP"|"SHUFFLE">;
-	size: T_SizeType<"SIZE_DEFAULT">;
+	size?: T_SizeType<"SIZE_DEFAULT">;
 	targetId: "watch-dislike"|"watch-like";
 	toggleButtonSupportedData: R_ToggleButtonIdData;
-	toggledAccessibilityData: D_Accessibility;
+	toggledAccessibilityData?: D_Accessibility;
 	toggledTooltip: string;
 };

@@ -3599,7 +3599,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf,x);
+		const {style,isToggled,isDisabled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,...u}=this.s(cf,x);
 		this.save_string(`${cf}.style`,style.styleType);
 		this.ceq(isDisabled,false);
 		this.a_primitive_bool(isToggled);
@@ -3608,30 +3608,27 @@ class ServiceMethods extends ServiceData {
 			if(!x2) {debugger; break x;}
 			this.save_string(`${cf}.defaultIcon.type`,x2.iconType);
 		}
+		this.G_Text(defaultText);
 		this.D_ToggleButton_SrvEP(defaultServiceEndpoint);
+		this.G_Text(toggledText);
 		this.D_ToggleButton_ToggledSrvEP(toggledServiceEndpoint);
+		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
+		this.D_Label(accessibility);
 		x: {
 			let x2=toggledStyle;
 			if(!x2) {debugger; break x;}
 			this.save_string(`${cf}.toggledStyle.styleType`,x2.styleType);
 		}
-		const {size,defaultTooltip,toggledTooltip,accessibilityData,toggledAccessibilityData,...u2}=u;/*#destructure_done*/
-		x: {
-			let x2=size;
-			if(!x2) {debugger; break x;}
-			if(x2.sizeType!=="SIZE_DEFAULT") debugger;
-		}
 		this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
 		this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
 		this.D_Accessibility(accessibilityData);
-		this.D_Accessibility(toggledAccessibilityData);
-		const {accessibility,defaultText,targetId,toggledText,toggleButtonSupportedData,...y}=u2; this.g(y);
-		this.D_Label(accessibility);
-		this.G_Text(defaultText);
 		switch(targetId) {
 			default: debugger; break;
 			case "watch-dislike": case "watch-like":
 		}
+		const {size,toggledAccessibilityData,...y}=u2; this.g(y);
+		this.t(size,x => this.cq(x.sizeType,"SIZE_DEFAULT"));
+		this.t(toggledAccessibilityData,this.D_Accessibility);
 	}
 	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {
