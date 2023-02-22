@@ -495,8 +495,6 @@ class HandleTypes extends ServiceMethods {
 		console.log("super_thanks_selected_tier.index",index);
 		console.log("super_thanks_selected_tier.key",key);
 	}
-	/** @private @arg {DE_YpcGetCart} x */
-	DE_YpcGetCart(x) {this.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
 	//#endregion
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x) {
@@ -1750,7 +1748,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.ht.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
 		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 		x===""; debugger;
 	}

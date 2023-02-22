@@ -569,7 +569,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {text,durationMs,navigationEndpoint,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(text);
 		if(durationMs!=="10000") debugger;
-		this.ht.E_VE83769_Url(navigationEndpoint);
+		this.xr.E_VE83769_Url(navigationEndpoint);
 		this.T_Icon(cf,icon);
 		this.trackingParams(trackingParams);
 	}
@@ -737,7 +737,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
 		this.D_TriggerCriteria(triggerCriteria);
 		this.G_Text(text);
-		this.ht.E_VE83769_Url(endpoint);
+		this.xr.E_VE83769_Url(endpoint);
 		this.trackingParams(trackingParams);
 		this.RA_Notification(snackbar);
 	}
@@ -2343,6 +2343,8 @@ class Support_Renderer extends ServiceMethods {
 		}
 		this.g(u);
 	}
+	/** @private @arg {DE_YpcGetCart} x */
+	DE_YpcGetCart(x) {this.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
 	//#endregion
 	//#region CommandMetadata methods
 	/** @private @arg {M_YpcGetCart} x */
@@ -2660,7 +2662,7 @@ class Support_Renderer extends ServiceMethods {
 				break x;
 			}
 			if("urlEndpoint" in x2) {
-				this.ht.E_VE83769_Url(x2);
+				this.xr.E_VE83769_Url(x2);
 				break x;
 			}
 			debugger;
@@ -2669,7 +2671,7 @@ class Support_Renderer extends ServiceMethods {
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
 		{
 			let x2=navigationEndpoint;
-			if("urlEndpoint" in x2) return this.ht.E_VE83769_Url(x2);
+			if("urlEndpoint" in x2) return this.xr.E_VE83769_Url(x2);
 			if("browseEndpoint" in x2) {
 				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
 				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
@@ -3237,7 +3239,7 @@ class Support_Renderer extends ServiceMethods {
 		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(linearGradientCssStyle) {debugger;}
 		if(knobColorArgb!==4280191205) debugger;
-		this.ht.E_YpcGetCart(purchaseCommand);
+		this.xr.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
