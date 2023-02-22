@@ -408,3 +408,7 @@ type P_format_item_xtags={
 		2: TV_Str<"true">;
 	}>;
 };
+type P_watch_player_params={
+	12: T_D32<1>,
+	25: T_D32<1>
+};
