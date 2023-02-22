@@ -4822,14 +4822,8 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.a_primitive_str(overrideEntityKey);
 	}
-	/** @public @arg {"MG_AdLayout"|"MG_AdLayout_DisplayTopLandscapeImage"} cf1 @arg {D_SerializedAdServingDataEntry} x */
-	D_SerializedAdServingDataEntry(cf1,x) {
-		const cf2="D_SerializedAdServingDataEntry"; this.k(cf1,x);
-		switch(cf1) {
-			default: debugger; break;
-			case "MG_AdLayout": this.H_("serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x)); break;
-		}
-	}
+	/** @public @arg {D_SerializedAdServingDataEntry} x */
+	D_SerializedAdServingDataEntry(x) {this.H_("serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x));}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("displayAdRenderer",x,this.D_DisplayAd);}
 	/** @private @arg {D_DisplayAd} x */
@@ -4982,7 +4976,7 @@ class ServiceMethods extends ServiceData {
 		this.save_b64_binary(`${cf}.layoutId`,layoutId);
 		if(!this.is_not_empty_obj(u)) return this.g(u);
 		const {adLayoutLoggingData,...y}=u; this.g(y);/*#destructure_done*/
-		this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
+		this.D_SerializedAdServingDataEntry(adLayoutLoggingData);
 	}
 	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
 	D_SerializedSlotAdServingDataEntry(x) {
@@ -5116,7 +5110,7 @@ class ServiceMethods extends ServiceData {
 	GE_Continuation(x) {
 		const cf="GE_Continuation"; this.ks(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
-		if("continuationCommand" in x) return this.C_Continuation(x);
+		if("continuationCommand" in x) return this.xr.C_Continuation(x);
 		if("getTranscriptEndpoint" in x) return this.E_GetTranscript(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
@@ -5370,7 +5364,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ChipCloudChip_navigationEndpoint} x */
 	D_ChipCloudChip_navigationEndpoint(x) {
 		const cf="D_ChipCloudChip_navigationEndpoint";
-		if("continuationCommand" in x) return this.C_Continuation(x);
+		if("continuationCommand" in x) return this.xr.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		x===""; this.codegen_typedef(cf,x);
@@ -6886,7 +6880,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(title);
 		this.a_primitive_bool(selected);
 		this.t(continuation,this.CD_Reload);
-		this.t(serviceEndpoint,this.C_Continuation);
+		this.t(serviceEndpoint,x => this.xr.C_Continuation(x));
 		this.t(accessibility,this.D_Accessibility);
 		this.trackingParams(trackingParams);
 	}
@@ -7003,7 +6997,13 @@ class ServiceMethods extends ServiceData {
 	DE_VE3611(x) {
 		const cf="DE_VE3611";
 		const {params,browseId,canonicalBaseUrl,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(params,x => this.params("ve_3611.params",x));
 		this.channelId(browseId);
+		let sp=split_string_once(canonicalBaseUrl,"/"); this.cq(sp.length,2);
+		let [e1,sr]=sp; this.cq(e1,"");
+		if(!this.str_starts_with(sr,"@")) debugger;
+		let s2=split_string_once(sr,"/"); this.cq(s2.length,1);
+		this.t(query,x => this.save_string(`${cf}.query`,x));
 	}
 	/** @public @arg {DE_VE3854} x */
 	DE_VE3854(x) {
@@ -7014,23 +7014,26 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {DE_VE6827} x */
 	DE_VE6827(x) {
 		const cf="DE_VE6827";
-		const {browseId,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {browseId,params,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(browseId) {
 			case "FEguide_builder": case "FEhashtag": case "FEhistory": case "FElibrary": case "FEsfv_audio_pivot":
 			case "FEstorefront": case "FEtrending": case "SPreport_history":
 		}
+		this.t(params,x => this.params("ve_6827.params",x));
+		this.t(query,x => this.save_string(`${cf}.query`,x));
 	}
 	/** @public @arg {DE_VE11487} x */
 	DE_VE11487(x) {
 		const cf="DE_VE11487";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(browseId!=="SPunlimited") debugger;
+		this.cq(browseId,"SPunlimited");
 	}
 	/** @public @arg {DE_VE23462} x */
 	DE_VE23462(x) {
 		const cf="DE_VE23462";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(browseId) {
+			default: debugger; break;
 			case "SPaccount_overview": case "SPaccount_notifications":
 		}
 	}
@@ -7038,13 +7041,13 @@ class ServiceMethods extends ServiceData {
 	DE_VE42352(x) {
 		const cf="DE_VE42352";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(browseId!=="FEdownloads") debugger;
+		this.cq(browseId,"FEdownloads");
 	}
 	/** @public @arg {DE_VE96368} x */
 	DE_VE96368(x) {
 		const cf="DE_VE96368";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(browseId!=="FEsubscriptions") debugger;
+		this.cq(browseId,"FEsubscriptions");
 	}
 	/** @public @arg {A_AddToToast} x */
 	A_AddToToast(x) {let [a,y]=this.TE_Endpoint_2("A_AddToToast","addToToastAction",x); this.g(y); this.AD_AddToToast(a);}

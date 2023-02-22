@@ -19,6 +19,7 @@ type GCF_s=
 	|CF_TD_Params
 	|CF_TE_Endpoint_2
 	|CF_TE_Endpoint_3
+	|CF_TE_Endpoint_Opt_3
 	|CF_TE_TrackedObj_2
 	|Ret_get_auto_type_name
 	;

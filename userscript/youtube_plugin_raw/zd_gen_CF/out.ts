@@ -1020,6 +1020,8 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.serialized_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "trending.bp";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ve_3611.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ve_6827.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params";}

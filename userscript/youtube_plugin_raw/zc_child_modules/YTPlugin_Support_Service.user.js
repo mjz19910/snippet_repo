@@ -2199,6 +2199,24 @@ class Support_VE37414 extends ServiceMethods {
 	}
 	/** @public @arg {E_VE37414_ReelWatch} x */
 	E_VE37414_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE37414_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
+	/** @private @arg {M_VE37414} x */
+	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
+	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
+	GM_VE37414(x) {
+		const cf="GM_VE37414_WC";
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			if(url==="/shorts/") break x;
+			let up=split_string_once(url,"/");
+			let [p1,p2]=up; if(p1!=="") debugger;
+			let u2=split_string_once(p2,"/");
+			let [p3,p4]=u2; if(p3!=="shorts") debugger;
+			this.videoId(p4);
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
+		this.rootVe(rootVe,37414);
+		return `VE${rootVe}`;
+	}
 }
 /** @arg {typeof Support_Renderer} _class */
 function export_Renderer(_class) {
@@ -2337,8 +2355,6 @@ class Support_Renderer extends ServiceMethods {
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_VE12924} x */
 	M_VE12924(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
-	/** @public @arg {M_VE37414} x */
-	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	//#endregion
 	//#region WebCommandMetadata methods
 	/** @private @arg {GM_YpcGetCart} x */
@@ -2350,22 +2366,6 @@ class Support_Renderer extends ServiceMethods {
 		this.cq(url,"/select_site");
 		this.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
 		this.rootVe(rootVe,12924);
-	}
-	/** @public @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
-	GM_VE37414(x) {
-		const cf="GM_VE37414_WC";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		x: {
-			if(url==="/shorts/") break x;
-			let up=split_string_once(url,"/");
-			let [p1,p2]=up; if(p1!=="") debugger;
-			let u2=split_string_once(p2,"/");
-			let [p3,p4]=u2; if(p3!=="shorts") debugger;
-			this.videoId(p4);
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
-		this.rootVe(rootVe,37414);
-		return `VE${rootVe}`;
 	}
 	//#endregion
 	//#region Renderer
