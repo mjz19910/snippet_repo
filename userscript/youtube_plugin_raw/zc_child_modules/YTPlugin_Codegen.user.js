@@ -427,7 +427,7 @@ class CodegenService extends BaseService {
 	/** @arg {{}} x @returns {T_SE_Signal<{},{}>} */
 	as_T_SE_Signal=x => as(x);
 	/** @arg {{}} x @returns {TR_MultiPageMenu<{}>} */
-	as$TR_MP_Menu=x => as(x);
+	as$TR_MultiPageMenu=x => as(x);
 	/** @arg {{}} x @returns {T_Signal<string>} */
 	as$T_Signal=x => as(x);
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
@@ -513,10 +513,10 @@ class CodegenService extends BaseService {
 			return `TYPE::${sig_type}`;
 		}
 		x: if(x.multiPageMenuRenderer) {
-			let v=this.as$TR_MP_Menu(x);
+			let v=this.as$TR_MultiPageMenu(x);
 			let sr=this.get_typedef_part(s,v.multiPageMenuRenderer);
 			if(!sr) break x;
-			return `TYPE::TR_MP_Menu<${sr}>`;
+			return `TYPE::TR_MultiPageMenu<${sr}>`;
 		}
 		if(x.webCommandMetadata) {
 			/** @type {{webCommandMetadata:{sendPost?:true;rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
