@@ -1655,18 +1655,14 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
 		if("rootVe" in x) {
-			debugger;
 			switch(x.rootVe) {
+				default: debugger; break;
 				case 3854: {
 					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); y;/*#destructure_done*/
 					switch(url) {
 						default: debugger; switch(url) {
 							case "/":
 						} break;
-						case "/feed/trending?bp=6gQJRkVleHBsb3Jl":
-						case "/feed/subscriptions":
-						case "/feed/library":
-						case "/feed/history":
 						case "/":
 					}
 				} break;

@@ -354,6 +354,13 @@ type R_VE96368_PageType_Browse_Response={
 	expirationTime: number;
 };
 type R_VE3854_PageType_Browse_Response={
+	rootVe: 3854;
+	url: "/";
+	endpoint: E_VE3854;
+	page: "browse";
+	response: RS_Browse;
+	expirationTime: number;
+}|{
 	page: "browse";
 	endpoint: E_VE3854;
 	response: RS_Browse;
@@ -364,7 +371,7 @@ type R_VE3854_PageType_Browse_Response={
 	endpoint: E_VE3854;
 	response: RS_Browse;
 	url: "/";
-	expirationTime: 1676995057316;
+	expirationTime: number;
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
