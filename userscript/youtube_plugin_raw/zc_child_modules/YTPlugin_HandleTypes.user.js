@@ -690,7 +690,7 @@ class HandleTypes extends ServiceMethods {
 	RS_ReelWatchSequence(x) {
 		const cf="RS_ReelWatchSequence";
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_ReelWatch(x)));
+		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.trackingParams(trackingParams);
 		this.t(continuationEndpoint,this.C_Continuation);
 	}
@@ -818,7 +818,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
-		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_ReelWatch(x));
+		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
 		this.t(sequenceContinuation,this.a_primitive_str);
 		this.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
@@ -1244,6 +1244,10 @@ class HandleTypes extends ServiceMethods {
 		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
 		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
+	/** @public @arg {E_AddUpcomingEventReminder} x */
+	E_AddUpcomingEventReminder(x) {x;}
+	/** @public @arg {E_RemoveUpcomingEventReminder} x */
+	E_RemoveUpcomingEventReminder(x) {x;}
 	/** @private @arg {DE_VE83769_Url} x */
 	DE_VE83769_Url(x) {
 		const cf="DE_VE83769_Url";
@@ -1911,7 +1915,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.ht.E_VE83769_Url(x);
-		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_ReelWatch(x);
+		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 		x===""; debugger;
 	}
 	/** @public @arg {D_TextRun} x */
@@ -2601,12 +2605,6 @@ class HandleTypes extends ServiceMethods {
 	P_player_state_entity_key(x) {x;}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {x;}
-	/** @public @arg {E_AddUpcomingEventReminder} x */
-	E_AddUpcomingEventReminder(x) {x;}
-	/** @public @arg {E_RemoveUpcomingEventReminder} x */
-	E_RemoveUpcomingEventReminder(x) {x;}
-	/** @public @arg {R_ActiveAccountHeader} x */
-	R_ActiveAccountHeader(x) {x;}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns

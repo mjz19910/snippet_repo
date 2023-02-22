@@ -438,7 +438,7 @@ type R_PageTypeSettings={
 type DataResponsePageType=G_RS_WatchPage|RS_Page_Channel|G_RS_Page_Playlist|G_RS_Page_Settings|RS_Page_Search|RS_Page_Browse|G_RS_Page_Shorts;
 type R_PageTypeShorts={
 	pageType: "shorts";
-	endpoint: E_ReelWatch;
+	endpoint: E_VE37414_ReelWatch;
 	response: G_RS_Page_Shorts;
 	fromHistory: boolean;
 	navigationDoneMs: number;

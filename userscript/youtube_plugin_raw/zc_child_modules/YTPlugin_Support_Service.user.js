@@ -1807,7 +1807,7 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeShorts(x) {
 		const cf="R_PageTypeShorts";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.x.get("x_VE37414").E_ReelWatch(endpoint);
+		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
@@ -2002,7 +2002,7 @@ class Support_EventInput extends ServiceMethods {
 		if("rootVe" in x) return this.RS_VE37414_Shorts(x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,previousCsn,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="shorts") debugger;
-		this.x.get("x_VE37414").E_ReelWatch(endpoint);
+		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
@@ -2044,7 +2044,7 @@ class Support_EventInput extends ServiceMethods {
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
-		this.x.get("x_VE37414").E_ReelWatch(endpoint);
+		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
@@ -2208,8 +2208,8 @@ class Support_VE37414 extends ServiceMethods {
 		}
 		this.g(x);
 	}
-	/** @public @arg {E_ReelWatch} x */
-	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
+	/** @public @arg {E_VE37414_ReelWatch} x */
+	E_VE37414_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE37414_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @public @arg {M_VE37414} x */
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @public @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
@@ -2574,7 +2574,7 @@ class Support_Renderer extends ServiceMethods {
 		x: {
 			let x=serviceEndpoint;
 			if("reelWatchEndpoint" in x) {
-				this.x.get("x_VE37414").E_ReelWatch(x);
+				this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 				break x;
 			}
 			if("signalServiceEndpoint" in x) {
@@ -2977,6 +2977,10 @@ class Support_Renderer extends ServiceMethods {
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
 	}
+	/** @public @arg {R_ActiveAccountHeader} x */
+	R_ActiveAccountHeader(x) {this.H_("activeAccountHeaderRenderer",x,this.D_ActiveAccountHeader);}
+	/** @private @arg {D_ActiveAccountHeader} x */
+	D_ActiveAccountHeader(x) {x;}
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent";

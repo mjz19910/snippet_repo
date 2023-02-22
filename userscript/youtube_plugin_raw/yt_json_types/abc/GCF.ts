@@ -1,5 +1,4 @@
 type GCF_s=
-	|CF_RS_Page_Type1
 	|CF_D_ChipCloudChip_Omit
 	|CF_D_CustomEmoji
 	|CF_D_GuideEntry
@@ -8,6 +7,7 @@ type GCF_s=
 	|CF_D_Params
 	|CF_D_ToggleButton
 	|CF_parse_identifier
+	|CF_RS_Page_Type1
 	|CF_T_GM
 	|CF_T_Icon
 	|CF_T_Items_TP
@@ -15,6 +15,7 @@ type GCF_s=
 	|CF_TA_OpenPopup
 	|CF_TD_ItemSection
 	|CF_TD_Params
+	|CF_TE_Endpoint_3
 	|Ret_get_auto_type_name
 	;
 ;

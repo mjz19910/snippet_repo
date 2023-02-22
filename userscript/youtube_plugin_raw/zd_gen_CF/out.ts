@@ -2,7 +2,6 @@ import {Prelude} from "./out_support.js"; export {Prelude};
 import {Types} from "./out_support.js"; export {Types};
 export namespace Gen {
 	export type CF_Generated=
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.visibility";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "DE_SignalNavigation.signal";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_EngagementPanelTargetId:AD_ChangeEngagementPanelVisibility.targetId";}
@@ -41,12 +40,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeKidsUrl";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "GU_YoutubeUrlRedirect";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton";}
-		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibility";}
-		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibilityData";}
-		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:defaultText";}
-		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:defaultText:style";}
-		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:toggledAccessibilityData";}
-		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:toggledAccessibilityData:size";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other:isWatched";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_With:accessibility";}
@@ -62,7 +55,6 @@ export namespace Gen {
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Browse";}
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Next";}
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Watch";}
-		|{n: Prelude.CF_H_a; t: Types.CF_H_a_; v: "DE_VE83769_Url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DD_Streaming";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AboutThisAd";}
@@ -157,7 +149,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE5754";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE6827";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE83769_Url";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE83769_Url_1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE96368";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlot";}
@@ -173,7 +164,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationDelete";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationReplace";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_UrlParams";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_VE83769_Url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AboutThisAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActiveView";}
@@ -502,7 +492,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Pinging";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Settings";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_VE83769_Url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GA_Continuation_CommentRepliesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList";}
@@ -522,11 +511,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GT_ShortsSurfaceIdentifier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Action_GetNotificationsMenu_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_ClientSignal";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj:click_tracking";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj:tracking";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj_f16";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj_t1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Text";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_ResultsItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Contents";}
@@ -546,7 +531,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_aadc_guidelines_state_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ad_layout_ad_serving_data_entry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_continuation_request_browse_token";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_continuation_request_reel_watch_sequence_token";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_continuation_request_watch_next_token";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_create_backstage_post_params";}
@@ -570,7 +554,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscribe_button_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscribe_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_subscription_state_key";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_tracking_params:omit_f8";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_transcript_track_selection_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_transcript_track_selection_serialized_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_trending_bp";}
@@ -613,7 +596,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Guide";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Next";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Browse";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Channel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Player";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Playlist";}
@@ -640,7 +622,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeWatch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_DB_EngagementPanel_Ads";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE124975_EngagementPanel";}
@@ -655,7 +636,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Settings_VE23462";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Shorts_VE37414";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Signal_GetNotificationsMenu";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Signal_Omit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "StateTag";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection_2_CommentsEntryPoint";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:AU_NotificationsUnseenCount";}
@@ -693,40 +673,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_UpdateToggleButtonState";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:E_ShowEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:E_YpcGetOfflineUpsell";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:CF_TE_Endpoint_3";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:C_GetPdgBuyFlow";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_AddToPlaylistService";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_CreateBackstagePost";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_CreateComment";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_CreatePlaylistService";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_GetNotificationMenu";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_GetReportForm";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_GetTranscript";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Like";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_NotificationOptOut";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_PlaylistDelete";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_PlaylistEdit";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_PlaylistEditor";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_RecordNotificationInteractions";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_ReelWatch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_ShareEntityService";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_SignalNavigation";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Subscribe";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_UndoFeedback";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Unsubscribe";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE11487";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE23462";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE3611";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE42352";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE4724_Search";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE5754";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE83769_Upload";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE83769_Url";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE96368";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Watch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_WatchPlaylist";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_YpcGetCart";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_YpcGetOffers";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_Opt_3:CF_TE_Endpoint_Opt_3";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_Opt_3:C_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_SignalService_I_0";}
@@ -791,12 +737,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_AdditionalDataItem";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_EY_Entity_Any:G_EY_Entity";}
-		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Other:D_ImpressionCap";}
-		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "TA_Page:AD_UpdateChannelSwitcherPage";}
-		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "TA_Page:CF_TA_Page";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Unpack:T_WCM:CF_T_WCM_Unpack";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Unpack:T_WCM:MG_Survey_CMD";}
-		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "zy:CF_M_zy";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEnclosing";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEngagementPanelTargetId";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_ToggleButtonText";}
@@ -831,12 +773,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ToggleButtonIdData";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "G_PR_TrackingObj:omit";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f16";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f3";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f6";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "P_tracking_params:omit_f8";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "R_ToggleButtonIdData";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_Item";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateText";}
@@ -911,7 +847,6 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_PlaylistEdit";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_PlaylistEditor";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_RecordNotificationInteractions";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_ReelWatch";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_ShareEntityService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_SignalNavigation";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Subscribe";}
@@ -920,6 +855,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE11487";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE23462";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE3611";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE37414_ReelWatch";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE42352";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE4724_Search";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE5754";}
@@ -934,7 +870,6 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_TrackedObj_2; t: Types.CF_TE_TrackedObj_2_; v: "AD_ReelDismissal";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "D_NotificationMenu_PopupItemMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "P_NotificationMenu_Popup";}
-		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_AccountMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_TopbarMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "TR_MultiPageMenu_Empty";}
@@ -998,7 +933,6 @@ export namespace Gen {
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_GuideEntry_WithIcon.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.U_UnseenCount.T_SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.menuRequest.T_SE_Signal";}
-		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_TopbarMenuButton.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "E_SignalService_SendPost";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "GC_Button.SE_Signal";}
@@ -1037,10 +971,6 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetOffers";}
 		|{n: Prelude.CF_T_WCM_Unpack; t: Types.CF_T_WCM_Unpack_; v: "MG_Survey_CMD";}
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton";}
-		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:accessibility";}
-		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:accessibilityData";}
-		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:defaultText:style";}
-		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:toggledAccessibilityData:size";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithIcon";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
@@ -1049,7 +979,6 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_layout.ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format_item.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation.params";}
@@ -1062,7 +991,6 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "dislike.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "format.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "format_item.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}

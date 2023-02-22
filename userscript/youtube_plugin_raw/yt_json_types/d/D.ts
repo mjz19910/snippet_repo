@@ -371,7 +371,7 @@ type D_CompactVideo=
 		publishedTimeText: G_Text;
 		viewCountText: G_Text;
 		lengthText: G_Text;
-		navigationEndpoint: E_ReelWatch;
+		navigationEndpoint: E_VE37414_ReelWatch;
 		shortBylineText: G_Text;
 		badges: RMD_Badge[];
 		channelThumbnail: D_Thumbnail;
@@ -800,7 +800,7 @@ type D_EndScreenVideo={
 	shortBylineText: G_Text;
 	lengthText?: G_Text;
 	lengthInSeconds?: number;
-	navigationEndpoint: E_Watch|E_ReelWatch;
+	navigationEndpoint: E_Watch|E_VE37414_ReelWatch;
 	trackingParams: string;
 	shortViewCountText: G_Text;
 	publishedTimeText: G_Text;
@@ -941,7 +941,7 @@ type D_Radio={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	videoCountShortText: G_Text;
 };
-type G_TextRun_Endpoint=E_VE83769_Url|GE_Browse|E_Watch|E_ReelWatch;
+type G_TextRun_Endpoint=E_VE83769_Url|GE_Browse|E_Watch|E_VE37414_ReelWatch;
 type D_WebPrefetch={navigationEndpoints: E_Watch[];};
 type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
 type D_SubFeedOption={
@@ -1012,7 +1012,7 @@ type D_VE_TextRun=
 	|D_VE83769_TextRun
 	;
 ;
-type D_TextRun_NavEP_1=E_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_VE83769_Url;
+type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_VE83769_Url;
 type D_TextRun=|D_VE_TextRun|{
 	text: string;
 }|{
@@ -1023,7 +1023,7 @@ type D_TextRun=|D_VE_TextRun|{
 	italics: true;
 }|{
 	text: "https://www.youtube.com/shorts/noUaYO...";
-	navigationEndpoint: E_ReelWatch;
+	navigationEndpoint: E_VE37414_ReelWatch;
 }|{
 	text: "https://youtu.be/XdnRkI5EM-k";
 	navigationEndpoint: E_Watch;
@@ -1168,7 +1168,7 @@ type D_GuideEntry_ShortsTab={
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
-	serviceEndpoint: T_SE_Signal<M_Empty_WCM,{}>|E_ReelWatch;
+	serviceEndpoint: T_SE_Signal<M_Empty_WCM,{}>|E_VE37414_ReelWatch;
 	isPrimary: true;
 };
 type D_GuideEntry_Subscriptions={
@@ -2472,7 +2472,7 @@ type D_ReelItem={
 	headline: G_Text;
 	thumbnail: D_Thumbnail;
 	viewCountText: G_Text;
-	navigationEndpoint: E_ReelWatch;
+	navigationEndpoint: E_VE37414_ReelWatch;
 	menu: R_Menu;
 	trackingParams: string;
 	accessibility: D_Accessibility;

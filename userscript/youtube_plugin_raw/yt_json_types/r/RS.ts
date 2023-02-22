@@ -4,7 +4,7 @@ type RS_WatchReelItem={
 	overlay: R_ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
 	trackingParams: string;
-	replacementEndpoint?: E_ReelWatch;
+	replacementEndpoint?: E_VE37414_ReelWatch;
 	sequenceContinuation?: string;
 	desktopTopbar: R_DesktopTopbar;
 	engagementPanels: R_EngagementPanelSectionList[];
@@ -179,7 +179,7 @@ type RS_Reel={
 };
 type RS_ReelWatchSequence={
 	responseContext: RC_ResponseContext;
-	entries: T_Command$<E_ReelWatch>[];
+	entries: T_Command$<E_VE37414_ReelWatch>[];
 	trackingParams: string;
 	continuationEndpoint?: C_Continuation;
 };
@@ -252,7 +252,7 @@ type RS_VE23462_Page_Settings={
 };
 type RS_Page_Shorts={
 	page: "shorts";
-	endpoint: E_ReelWatch;
+	endpoint: E_VE37414_ReelWatch;
 	response: RS_Reel;
 	playerResponse: RS_Player;
 	reelWatchSequenceResponse?: RS_ReelWatchSequence;
@@ -403,7 +403,7 @@ type RS_VE5754_Page_Playlist={
 };
 type RS_VE37414_Shorts={
 	page: "shorts";
-	endpoint: E_ReelWatch;
+	endpoint: E_VE37414_ReelWatch;
 	response: RS_Reel;
 	playerResponse: RS_Player;
 	reelWatchSequenceResponse: RS_ReelWatchSequence|undefined;

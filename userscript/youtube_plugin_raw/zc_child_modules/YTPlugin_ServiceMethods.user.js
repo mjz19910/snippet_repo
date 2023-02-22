@@ -2736,15 +2736,14 @@ class ServiceMethods extends ServiceData {
 	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
 	 * @protected
-	 * @arg {CF_TE_Endpoint_3} cf1
+	 * @arg {CF_TE_Endpoint_3} cf
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
 	 * @arg {EP_Key} k
 	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
 	 */
-	TE_Endpoint_3(cf1,k,x) {
+	TE_Endpoint_3(cf,k,x) {
 		if(!x) {debugger; return as_any(null);}
-		const cf2="TE_Endpoint_3";
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x);
 		this.clickTrackingParams(clickTrackingParams);
 		return [commandMetadata,a,y];
 	}
@@ -6530,7 +6529,7 @@ class ServiceMethods extends ServiceData {
 	MP_SystemMenu(x) {
 		const cf="MP_SystemMenu";
 		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.handle_types.R_ActiveAccountHeader(header);
+		this.xr.R_ActiveAccountHeader(header);
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
 	}
@@ -7010,7 +7009,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_CompactVideo["navigationEndpoint"]} x */
 	D_ThumbnailOverlay_NavEP(x) {
-		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_ReelWatch(x);
+		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		let k=this.get_keys_of(x);
 		k.pop()==="";
