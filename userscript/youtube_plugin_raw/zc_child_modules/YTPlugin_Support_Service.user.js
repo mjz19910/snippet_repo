@@ -2228,6 +2228,10 @@ class Support_Renderer extends ServiceMethods {
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
 	//#endregion
+	//#region Endpoint methods
+	/** @public @arg {E_VE12924_ApplicationSettings} x */
+	E_VE12924_ApplicationSettings(x) {x;}
+	//#endregion
 	//#region Action methods
 	/** @private @arg {A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
@@ -3049,6 +3053,12 @@ class Support_Renderer extends ServiceMethods {
 	D_ActiveAccountHeader(x) {
 		const cf="D_ActiveAccountHeader";
 		const {accountName,accountPhoto,settingsEndpoint,manageAccountTitle,trackingParams,channelHandle,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(accountName);
+		this.D_Thumbnail(accountPhoto);
+		this.E_VE12924_ApplicationSettings(settingsEndpoint);
+		this.G_Text(manageAccountTitle);
+		this.trackingParams(trackingParams);
+		this.G_Text(channelHandle);
 	}
 	//#endregion
 	//#region Group Union

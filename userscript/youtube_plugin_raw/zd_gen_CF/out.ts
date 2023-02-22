@@ -169,6 +169,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_UrlParams";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AboutThisAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActiveAccountHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActiveView";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdBreakService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacement";}
