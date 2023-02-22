@@ -19,10 +19,12 @@ type AD_Signal={signal: DU_SignalStr;};
 type AD_SubscribeButton={subscribed: true; channelId: `UC${string}`;};
 type AD_Title={title: G_Text;};
 type AD_ToggleButtonText={buttonId: "TOGGLE_BUTTON_ID_TYPE_LIKE"; defaultText: G_Text; toggledText: G_Text;};
+type AD_UndoFeedback=B_Hack;
 type AD_UpdateChannelSwitcherPage=T_Page<R_ChannelSwitcherPage>;
 type AD_UpdateEngagementPanel={targetId: "engagement-panel-searchable-transcript"; content: R_Transcript;};
 type AD_UpdateNotificationsUnseenCount={handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"; unseenCount: number; timeoutMs: number;};
 type AD_ViewCount={viewCount: R_VideoViewCount;};
+type AD_WatchNextContinuation=G_WatchNext;
 //#endregion
 type AD_ReelDismissal={trackingParams: string; onDismissalCompletionRenderer: RA_Notification;};
 type AD_Notification={trackingParams: string; responseText: G_Text; actionButton?: R_Button;};

@@ -19,9 +19,7 @@ type A_SendFeedback=TE_Endpoint_2<"sendFeedbackAction",AD_SendFeedback>;
 type A_SetActivePanelItem=TE_Endpoint_2<"setActivePanelItemAction",AD_SetActivePanelItem>;
 type A_ShowEngagementPanelScrim=TE_Endpoint_2<"showEngagementPanelScrimAction",AD_ShowEngagementPanelScrim>;
 type A_Signal=TE_Endpoint_2<"signalAction",AD_Signal>;
-type AD_UndoFeedback=B_Hack;
 type A_UndoFeedback=TE_Endpoint_2<"undoFeedbackAction",AD_UndoFeedback>;
-type AD_WatchNextContinuation=G_WatchNext;
 type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",AD_WatchNextContinuation>;
 //#region Actions
 type A_AddVideo={action: "ACTION_ADD_VIDEO"; addedVideoId?: string;};
