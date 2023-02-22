@@ -92,9 +92,13 @@ type T_SplitIntoGroups<S extends string,D extends string>=
 	string extends S? string[]:
 	S extends ''? []:
 	S extends `${infer T}${infer X extends D}${infer U}`? [`${T}${X}`,...T_SplitIntoGroups<U,D>]:
-	[S];
+	[S]
+	;
+;
+type T_SplitOnce_Helper<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? string extends U? never:[T,U]:[S];
+type T_SplitOnce_Helper2<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? [T,U]:[S];
 type T_SplitOnce<S extends string,D extends string>=string extends S?
-	[string]|[string,string]:S extends ''? []:S extends `${infer T}${D}${infer U}`? [T,U]:[S];
+	[string]|[string,string]:S extends ''? []:T_SplitOnce_Helper2<S,D>;
 type T_StyleType<T>={styleType: T;};
 type T_TargetIdStr<T extends string,U extends string>=`${T}-${U}`;
 type T_Text<T>={text: T;};

@@ -54,7 +54,7 @@ type P_logging_context_serialized_context_data={
 	1?: T_VW<{
 		1: T_D32<12>;
 	}>;
-	3?: TV_Str<`RD${string}`>;
+	3?: TV_Str<SD_PlaylistId>;
 };
 type P_like_params={
 	1: T_VW<{

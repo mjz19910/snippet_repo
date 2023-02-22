@@ -359,7 +359,7 @@ class ParserService extends BaseService {
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");
 		switch(y[0]) {
-			case "list": return this.x.get("handle_types").parse_playlist_id(y[1]);
+			case "list": return this.x.get("handle_types").playlistId(y[1]);
 			default: debugger;
 		}
 	}

@@ -2165,9 +2165,7 @@ class HandleTypes extends ServiceMethods {
 			const {1: f1,...y}=this.s(cf,x);
 			let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 		}));
-		t.t(t.t(f3,t.TV_Str),x => {
-			if(!this.str_starts_with(x,"RD")) debugger;
-		});
+		t.t(t.t(f3,t.TV_Str),this.playlistId);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_reel_params} x */

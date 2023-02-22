@@ -44,6 +44,7 @@ type SD_PlaylistId=
 	|`RDMM${string}`
 	|`RDGM${string}`
 	|`PL${string}`
+	|`UU${string}`
 	|"WL"
 	|"LL"
 	;
