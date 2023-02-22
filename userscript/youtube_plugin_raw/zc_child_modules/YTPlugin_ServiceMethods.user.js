@@ -6389,19 +6389,7 @@ class ServiceMethods extends ServiceData {
 		let [u]=this.z(actions,x => this.TA_OpenPopup("A_GetAccountMenu",x));
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("R_AccountMenu",x));
-		this.z(u2,x => {
-			if("showLoadingSpinner" in x) return this.MP_AccountMenu(x);
-			if("sections" in x) return this.MP_SystemMenu(x);
-			x===""; debugger;
-		});
-	}
-	/** @public @arg {MP_SystemMenu} x */
-	MP_SystemMenu(x) {
-		const cf="MP_SystemMenu";
-		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.R_ActiveAccountHeader(header);
-		this.trackingParams(trackingParams);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
+		this.z(u2,this.MP_AccountMenu);
 	}
 	/** @public @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {

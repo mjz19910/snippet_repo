@@ -533,7 +533,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
 	T_OpenPopup_Dropdown(cf,x) {
-		const {}=this.s(cf,x);
+		const {popupType,popup,beReused,...y}=this.s(cf,x); this.g(y);
+		if(popupType!=="DROPDOWN") return null;
+		return popup;
 	}
 	/** @public @arg {A_GetSystemMenu} x */
 	A_GetSystemMenu(x) {
@@ -542,7 +544,20 @@ class HandleTypes extends ServiceMethods {
 		this.Popup_DD_SystemMenu(pu);
 	}
 	/** @public @arg {Popup_DD_SystemMenu} x */
-	Popup_DD_SystemMenu(x) {x;}
+	Popup_DD_SystemMenu(x) {
+		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
+		this.t(m,this.R_SystemMenu);
+	}
+	/** @public @arg {R_SystemMenu} x */
+	R_SystemMenu(x) {this.t(this.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
+	/** @public @arg {MP_SystemMenu} x */
+	MP_SystemMenu(x) {
+		const cf="MP_SystemMenu";
+		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xr.R_ActiveAccountHeader(header);
+		this.trackingParams(trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
+	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";

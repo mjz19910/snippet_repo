@@ -851,6 +851,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "D_NotificationMenu_PopupItemMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "P_NotificationMenu_Popup";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_AccountMenu";}
+		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_SystemMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_TopbarMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "TR_MultiPageMenu_Empty";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "any";}
@@ -913,6 +914,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_T_Items; t: Types.CF_T_Items_; v: "D_ProfileColumn";}
 		|{n: Prelude.CF_T_Items_TP; t: Types.CF_T_Items_TP_; v: "R_CompactLink_Items";}
+		|{n: Prelude.CF_T_OpenPopup_Dropdown; t: Types.CF_T_OpenPopup_Dropdown_; v: "Popup_DD_SystemMenu";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_GuideEntry_WithIcon.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.U_UnseenCount.T_SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.menuRequest.T_SE_Signal";}
