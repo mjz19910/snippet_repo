@@ -602,7 +602,7 @@ type D_FusionSearchbox={
 	placeholderText: G_Text;
 	config: R_WebSearchboxConfig;
 	trackingParams: string;
-	searchEndpoint: E_VE4724_Search;
+	searchEndpoint: E_VE4724;
 	clearButton: R_Button;
 };
 type D_ChannelOptions={
@@ -724,7 +724,7 @@ type D_ChipCloudChip=
 		trackingParams: string;
 		targetId: "feed_filter_chip_bar_second_chip";
 	};
-type EG_CompactLink_1=E_VE83769_Upload|E_SignalNavigation;
+type EG_CompactLink_1=E_Upload|E_SignalNavigation;
 type D_CompactPlaylist={
 	playlistId: `PL${string}`;
 	thumbnail: D_Thumbnail;
@@ -930,7 +930,7 @@ type D_Radio={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	videoCountShortText: G_Text;
 };
-type G_TextRun_Endpoint=E_VE83769_Url|GE_Browse|E_Watch|E_VE37414_ReelWatch;
+type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch|E_VE37414_ReelWatch;
 type D_WebPrefetch={navigationEndpoints: E_Watch[];};
 type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
 type D_SubFeedOption={
@@ -991,7 +991,7 @@ type D_VE11487_TextRun={
 };
 type D_VE83769_TextRun={
 	text: "https://www.deviantart.com/zianu/art/...";
-	navigationEndpoint: E_VE83769_Url;
+	navigationEndpoint: E_Url;
 };
 type D_VE_TextRun=
 	|D_VE3611_TextRun
@@ -1001,7 +1001,7 @@ type D_VE_TextRun=
 	|D_VE83769_TextRun
 	;
 ;
-type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_VE83769_Url;
+type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_Url;
 type D_TextRun=|D_VE_TextRun|{
 	text: string;
 }|{
@@ -1121,7 +1121,7 @@ type D_MerchandiseItem={
 	vendorName: string;
 	trackingParams: string;
 	buttonText: string;
-	buttonCommand: E_VE83769_Url;
+	buttonCommand: E_Url;
 	accessibilityTitle: string;
 	buttonAccessibilityText: string;
 	fromVendorText: string;
@@ -1137,7 +1137,7 @@ type D_GuideEntry_HelpService={
 	serviceEndpoint: E_SignalService_SendPost;
 };
 type D_GuideEntry_MyVideosTab={
-	navigationEndpoint: E_VE83769_Url;
+	navigationEndpoint: E_Url;
 	icon: T_Icon<"MY_VIDEOS">;
 	trackingParams: string;
 	formattedTitle: G_Text;
@@ -1918,7 +1918,7 @@ type D_PromotedSparklesWeb={
 	description: G_Text;
 	websiteText: G_Text;
 	actionButton: R_Button;
-	navigationEndpoint: E_VE83769_Url;
+	navigationEndpoint: E_Url;
 	impressionCommands: D_ImpressionCommand[];
 	noopTapEndpoints?: E_Pinging[];
 	menu: R_Menu;
@@ -2384,7 +2384,7 @@ type D_PrefetchHintConfig={
 	playbackRelativeSecondsPrefetchCondition: -3;
 };
 type D_NavigationLinkItem={
-	navigationEndpoint: E_VE83769_Url;
+	navigationEndpoint: E_Url;
 	icon: D_Thumbnail;
 	title: G_Text;
 };
@@ -2405,7 +2405,7 @@ type D_ProductListItem={
 	accessibilityTitle: string;
 	thumbnail: D_Thumbnail;
 	price: `CA$${string}`;
-	onClickCommand: E_VE83769_Url;
+	onClickCommand: E_Url;
 	trackingParams: string;
 	loggingDirectives: D_LoggingDirectives;
 };
@@ -2552,7 +2552,7 @@ type D_SearchPyv={
 	trackingParams: string;
 };
 type D_SearchResultsTab={
-	endpoint?: E_VE4724_Search;
+	endpoint?: E_VE4724;
 	title: string;
 	selected?: boolean;
 	content: R_SectionList;
@@ -2902,7 +2902,7 @@ type D_VideoPrimaryInfo={
 type D_VideoQualityPromo={
 	triggerCriteria: D_TriggerCriteria;
 	text: G_Text;
-	endpoint: E_VE83769_Url;
+	endpoint: E_Url;
 	trackingParams: string;
 	snackbar: RA_Notification;
 };

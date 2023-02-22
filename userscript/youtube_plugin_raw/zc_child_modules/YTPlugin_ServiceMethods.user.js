@@ -1679,7 +1679,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return ret_map;
 	}
-	/** @protected @arg {E_VE83769_Upload} x */
+	/** @protected @arg {E_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
 	/** @protected @arg {B_Hack} x */
 	B_Hack(x) {
@@ -1845,7 +1845,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
-	/** @protected @arg {E_VE4724_Search} x */
+	/** @protected @arg {E_VE4724} x */
 	E_VE4724_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE4724_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_VE4724_Search(b);}
 	/** @protected @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
@@ -1870,7 +1870,7 @@ class ServiceMethods extends ServiceData {
 		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
 		this.DU_UrlParams(this.parse_url_search_params(x.search));
 	}
-	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]["baseUrl"]} x */
+	/** @protected @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
 	DU_Url(x) {
 		this.DU_UrlParse(this.tr_url_to_obj(x));
 		(x => {
@@ -1881,7 +1881,7 @@ class ServiceMethods extends ServiceData {
 			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
 		})(this.tr_url_to_obj(x));
 	}
-	/** @protected @arg {NonNullable<E_VE83769_Url["loggingUrls"]>[number]} x */
+	/** @protected @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
 	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
 	/** @protected @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
@@ -1891,7 +1891,7 @@ class ServiceMethods extends ServiceData {
 	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
-	/** @private @arg {DE_VE4724_Search} x */
+	/** @private @arg {DE_VE4724} x */
 	DE_VE4724_Search(x) {this.H_("query",x,this.a_primitive_str);}
 	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
@@ -2105,7 +2105,7 @@ class ServiceMethods extends ServiceData {
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
-	/** @protected @arg {DE_VE83769_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @protected @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_VE83769_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x)) {

@@ -23,7 +23,7 @@ type M_VE12924={webCommandMetadata: GM_VE12924;};
 type D_ActiveAccountHeader={
 	accountName: G_Text;
 	accountPhoto: D_Thumbnail;
-	settingsEndpoint: E_VE12924_ApplicationSettings;
+	settingsEndpoint: E_ApplicationSettings;
 	manageAccountTitle: G_Text;
 	trackingParams: string;
 	channelHandle: G_Text;
@@ -121,7 +121,7 @@ type RS_Next={
 type D_PaidContentOverlay={
 	text: G_Text;
 	durationMs: "10000";
-	navigationEndpoint: E_VE83769_Url;
+	navigationEndpoint: E_Url;
 	icon: T_Icon<"MONEY_HAND">;
 	trackingParams: string;
 };
@@ -349,7 +349,7 @@ type RS_Page_Playlist={
 };
 type RS_Page_Search={
 	page: "search";
-	endpoint: E_VE4724_Search;
+	endpoint: E_VE4724;
 	response: RS_Search;
 	url: D_ResultsPageUrl;
 };

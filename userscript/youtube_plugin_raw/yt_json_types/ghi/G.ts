@@ -80,7 +80,7 @@ type GC_Button=
 	|E_Feedback
 	|E_ShareEntityService
 	|E_SignalService_SendPost
-	|E_VE83769_Url
+	|E_Url
 	|TA_OpenPopup_Empty
 	;
 ;

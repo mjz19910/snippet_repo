@@ -1,1 +1,1 @@
-type D_EndscreenElement_EP=E_VE3611|E_Watch|E_VE83769_Url;
+type D_EndscreenElement_EP=E_VE3611|E_Watch|E_Url;

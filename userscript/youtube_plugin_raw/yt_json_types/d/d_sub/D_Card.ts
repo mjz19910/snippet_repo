@@ -23,7 +23,7 @@ type R_SimpleCardContent={
 		displayDomain: G_Text;
 		showLinkIcon: true;
 		callToAction: G_Text;
-		command: E_VE83769_Url;
+		command: E_Url;
 	};
 };
 type D_Card_Content=R_SimpleCardContent|R_CollaboratorInfoCardContent|R_PlaylistInfoCardContent|{

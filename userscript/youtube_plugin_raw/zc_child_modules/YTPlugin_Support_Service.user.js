@@ -2211,14 +2211,14 @@ class Support_Renderer extends ServiceMethods {
 	view_conversion_info=new Map;
 	//#endregion
 	//#region Endpoint methods
-	/** @public @arg {E_VE83769_Url} x */
+	/** @public @arg {E_Url} x */
 	E_VE83769_Url(x) {
 		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
 		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
 	/** @public @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @public @arg {E_VE12924_ApplicationSettings} x */
+	/** @public @arg {E_ApplicationSettings} x */
 	E_VE12924_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_VE12924,this.B_Hack); this.g(y);}
 	/** @private @arg {E_SubmitFeedback} x */
 	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
@@ -2299,7 +2299,7 @@ class Support_Renderer extends ServiceMethods {
 		this.t(clickTrackingParams,this.clickTrackingParams);
 	}
 	// Endpoint Data methods
-	/** @private @arg {DE_VE83769_Url} x */
+	/** @private @arg {DE_Url} x */
 	DE_VE83769_Url(x) {
 		const cf="DE_VE83769_Url";
 		const {url,...u}=this.s(cf,x);/*#destructure_later*/

@@ -557,7 +557,7 @@ class CodegenService extends BaseService {
 			return `TYPE::E_VE${ve_num}`;
 		}
 		x: if(x.urlEndpoint) {
-			/** @type {Partial<E_VE83769_Url>} */
+			/** @type {Partial<E_Url>} */
 			let xu=x;
 			if(!(xu.urlEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
 			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;

@@ -1,6 +1,6 @@
 type D_CompactLink={
 	title: G_Text;
-	navigationEndpoint: E_VE83769_Url;
+	navigationEndpoint: E_Url;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_HISTORY_MY_ACTIVITY_LINK";
 }|{
@@ -15,7 +15,7 @@ type D_CompactLink={
 }|{
 	icon: T_Icon<"CREATION_UPLOAD">;
 	title: G_Text;
-	navigationEndpoint: E_VE83769_Upload;
+	navigationEndpoint: E_Upload;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
 }|{

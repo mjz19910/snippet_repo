@@ -155,8 +155,8 @@ type GU_YTExternalUrl="https://m.youtube.com/premium";
 type GU_YtDomain="https://www.youtube.com";
 //#endregion
 //#region Extract on Url
-type GU_YoutubeUrl_1=Extract<DE_VE83769_Url['url'],`${string}www.youtube.com${string}`>;
-type GU_YoutubeKidsUrl_1=Extract<DE_VE83769_Url['url']|"https://www.youtubekids.com/?source=youtube_web",`https://www.youtubekids.com${string}`>;
+type GU_YoutubeUrl_1=Extract<DE_Url['url'],`${string}www.youtube.com${string}`>;
+type GU_YoutubeKidsUrl_1=Extract<DE_Url['url']|"https://www.youtubekids.com/?source=youtube_web",`https://www.youtubekids.com${string}`>;
 //#endregion
 //#region UrlShape objects
 type D_VideoPlaybackShape_S_Params={

@@ -23,40 +23,13 @@ type E_SignalService_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 type E_SignalService_SubscribeButton=TE_Endpoint_3<"signalServiceEndpoint",G_ClientSignal,M_SendPost>;
 type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,M_Feedback>;
-type DE_VE83769_Url_SearchObj={gclid: string;};
-type DE_VE83769_Url_1$d$ad_url2={
-	utm_term: "";
-	utm_campaign: "DISPLAY campaign for \"web development\" landing page";
-	utm_source: "adwords";
-	utm_medium: "ppc";
-	hsa_acc: `${number}`;
-	hsa_cam: `${number}`;
-	hsa_grp: `${number}`;
-	hsa_ad: `${number}`;
-	hsa_src: "d";
-	hsa_tgt: "";
-	hsa_kw: "";
-	hsa_mt: "";
-	hsa_net: "adwords";
-	hsa_ver: "3";
-	gclid: string;
+type E_Upload=TE_Endpoint_3<"uploadEndpoint",DE_Upload,M_VE83769>;
+type E_Url={
+	clickTrackingParams: string;
+	loggingUrls?: T_BaseUrl<`https://www.youtube.com/pagead/paralleladinteraction?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`>[];
+	commandMetadata: M_VE83769;
+	urlEndpoint: DE_Url;
 };
-type DE_VE83769_Url_Shape={
-	sa: "l";
-	ai: string;
-	ae: "1";
-	num: "1";
-	cid: string;
-	sig: string;
-	client: `ca-pub-${number}`;
-	rf: "3";
-	adurl: `https://plantagreenhouses.ca/?gclid=${string}`|`https://www.newdawndevelopments.com/service/custom-homes?gclid=${string}&hsa_ver=3&hsa_net=adwords&hsa_mt=&hsa_kw=&hsa_tgt=&hsa_src=d&hsa_ad=${number}&hsa_grp=${number}&hsa_cam=${number}&hsa_acc=${number}&utm_medium=ppc&utm_source=adwords&utm_campaign=DISPLAY+campaign+for+%22web+development%22+landing+page&utm_term=`;
-};
-type DE_VE83769_Url_1={
-	url: `https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`;
-	target: "TARGET_NEW_WINDOW";
-};
-
 type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>|{
 	watchEndpoint: DE_VE3832_Watch;
 	commandMetadata: M_VE3832;
