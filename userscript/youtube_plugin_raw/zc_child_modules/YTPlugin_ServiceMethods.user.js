@@ -5804,8 +5804,22 @@ class ServiceMethods extends ServiceData {
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
+		if("videoDescriptionCourseSectionRenderer" in x) return this.R_VideoDescriptionCourseSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {R_VideoDescriptionCourseSection} x */
+	R_VideoDescriptionCourseSection(x) {this.H_("videoDescriptionCourseSectionRenderer",x,this.D_VideoDescriptionCourseSection);}
+	/** @private @arg {D_VideoDescriptionCourseSection} x */
+	D_VideoDescriptionCourseSection(x) {
+		const cf="D_FeedNudge";
+		const {sectionTitle,mediaLockups,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(sectionTitle);
+		this.z(mediaLockups,this.R_StructuredDescriptionPlaylistLockup);
+	}
+	/** @private @arg {R_StructuredDescriptionPlaylistLockup} x */
+	R_StructuredDescriptionPlaylistLockup(x) {this.H_("structuredDescriptionPlaylistLockupRenderer",x,this.D_StructuredDescriptionPlaylistLockup);}
+	/** @private @arg {D_StructuredDescriptionPlaylistLockup} x */
+	D_StructuredDescriptionPlaylistLockup(x) {this.y("D_StructuredDescriptionPlaylistLockup","trackingParams",x,this.trackingParams);}
 	/** @private @arg {R_FeedNudge} x */
 	R_FeedNudge(x) {this.H_("feedNudgeRenderer",x,this.D_FeedNudge);}
 	/** @private @arg {D_FeedNudge} x */

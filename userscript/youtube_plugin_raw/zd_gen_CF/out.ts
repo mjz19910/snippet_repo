@@ -824,6 +824,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RelatedChipCloud";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_StartSeconds";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_StreamSelectionConfig";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_StructuredDescriptionPlaylistLockup";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_Survey_Watch";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
