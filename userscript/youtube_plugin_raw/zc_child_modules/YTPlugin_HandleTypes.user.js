@@ -526,11 +526,23 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_AccountMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.A_GetSystemMenu(x);
 			return null;
 		});
 		this.trackingParams(trackingParams);
 	}
+	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
+	T_OpenPopup_Dropdown(cf,x) {
+		const {}=this.s(cf,x);
+	}
+	/** @public @arg {A_GetSystemMenu} x */
+	A_GetSystemMenu(x) {
+		const cf="A_GetSystemMenu";
+		let pu=this.TA_OpenPopup(cf,x);
+		this.Popup_DD_SystemMenu(pu);
+	}
+	/** @public @arg {Popup_DD_SystemMenu} x */
+	Popup_DD_SystemMenu(x) {x;}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";

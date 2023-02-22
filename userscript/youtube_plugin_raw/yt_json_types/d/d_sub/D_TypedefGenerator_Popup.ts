@@ -1,1 +1,1 @@
-type D_TypedefGenerator_Popup=Popup_ConfirmDialog|Popup_DismissibleDialog;
+type D_TypedefGenerator_Popup=Popup_DL_ConfirmDialog|Popup_DL_DismissibleDialog;

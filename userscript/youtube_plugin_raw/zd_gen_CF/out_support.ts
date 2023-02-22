@@ -38,6 +38,7 @@ export namespace Prelude {
 		|"CF_T_Icon"
 		|"CF_T_Items_TP"
 		|"CF_T_Items"
+		|"CF_T_OpenPopup_Dropdown"
 		|"CF_T_SE_Signal_P1"
 		|"CF_T_SE_Signal"
 		|"CF_T_Signal"
@@ -95,6 +96,7 @@ export namespace Prelude {
 	export type CF_T_Icon="CF_T_Icon";
 	export type CF_T_Items_TP="CF_T_Items_TP";
 	export type CF_T_Items="CF_T_Items";
+	export type CF_T_OpenPopup_Dropdown="CF_T_OpenPopup_Dropdown";
 	export type CF_T_SE_Signal_P1="CF_T_SE_Signal_P1";
 	export type CF_T_SE_Signal="CF_T_SE_Signal";
 	export type CF_T_Signal="CF_T_Signal";
@@ -154,6 +156,7 @@ export namespace Types {
 	export type CF_T_Icon_Any_=CF_T_Icon_Any;
 	export type CF_T_Items_=CF_T_Items;
 	export type CF_T_Items_TP_=CF_T_Items_TP;
+	export type CF_T_OpenPopup_Dropdown_=CF_T_OpenPopup_Dropdown;
 	export type CF_T_SE_Signal_=CF_T_SE_Signal;
 	export type CF_T_SE_Signal_P1_=CF_T_SE_Signal_P1;
 	export type CF_T_Signal_=CF_T_Signal;

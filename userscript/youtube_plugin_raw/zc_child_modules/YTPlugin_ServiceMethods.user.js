@@ -1074,9 +1074,10 @@ class ServiceMethods extends ServiceData {
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
 	/** @protected @arg {CF_T_OpenPopup_Dialog} cf @arg {T_OpenPopup_Dialog<R_FancyDismissibleDialog>} x */
 	T_OpenPopup_Dialog(cf,x) {
-		const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(popupType!=="DIALOG") {debugger; return;}
 		this.R_FancyDismissibleDialog(popup);
+		this.t(beReused,x => this.cq(x,true));
 	}
 	/** @private @arg {R_AboutThisAd} x */
 	R_AboutThisAd(x) {this.H_("aboutThisAdRenderer",x,this.D_AboutThisAd);}
@@ -1095,12 +1096,7 @@ class ServiceMethods extends ServiceData {
 		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
 		debugger;
 	}
-	/** @template {{}} T @arg {T_OpenPopup_ReuseableDropdown<T>} x */
-	TA_on_T_OpenPopup_Dropdown_Reusable(x) {
-		if(x.beReused!==true) debugger;
-		return x.popup;
-	}
-	/** @arg {T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<{style: string;}>>} x @returns {x is Popup_GetAccountMenu} */
+	/** @arg {T_OpenPopup_Dropdown<TR_MultiPageMenu<{style: string;}>>} x @returns {x is Popup_DD_GetAccountMenu} */
 	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
 	/** @arg {R_MenuPopup} x */
 	R_MenuPopup(x) {this.H_("menuPopupRenderer",x,this.D_MenuPopup);}
@@ -1116,34 +1112,26 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {G_OpenPopup_All["openPopupAction"]|Popup_MenuPopup|{}|null|undefined} */
+		/** @type {G_OpenPopup_All["openPopupAction"]|G_Popup_All|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
 				default: debugger; break;
 				case "DIALOG": break;
 				case "DROPDOWN": {
-					if("beReused" in ax) {
-						if(this.is_D_GetAccountMenu_Popup(ax)) {
-							let pu=this.TA_on_T_OpenPopup_Dropdown_Reusable(ax);
-							let a_menu=this.TR_MultiPageMenu("any",pu);
-							if(!a_menu) return a;
-							if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
-							return a;
-						}
-						let pu=this.TA_on_T_OpenPopup_Dropdown_Reusable(ax);
-						let a_menu=this.TR_MultiPageMenu("any",pu);
-						if(!a_menu) return a;
-						if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-						return a;
-					}
 					let x1=ax.popup;
 					if("menuPopupRenderer" in x1) {this.R_MenuPopup(x1); break;}
-					let mp=x1.multiPageMenuRenderer;
+					let a_menu=x1.multiPageMenuRenderer;
+					if(!a_menu) return a;
+					if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+					let x2=ax.popup;
+					if("menuPopupRenderer" in x2) {this.R_MenuPopup(x2); break;}
+					let mp=x2.multiPageMenuRenderer;
 					switch(mp.style) {
 						default: debugger; break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": break;
+						case "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM": break;
 					}
 				} break;
 			}
@@ -1170,13 +1158,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_UnifiedSharePanel} x */
 	R_UnifiedSharePanel(x) {this.H_("unifiedSharePanelRenderer",x,this.D_UnifiedSharePanel);}
-	/** @private @arg {Popup_ShareEntityService} x */
+	/** @private @arg {Popup_DL_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
 		const cf="Popup_ShareEntityService";
 		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);
 		this.R_UnifiedSharePanel(popup);
 		if(popupType!=="DIALOG") debugger;
-		this.a_primitive_bool(beReused);
+		this.t(beReused,x => this.cq(x,true));
 	}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
@@ -6376,7 +6364,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_bool(isCustomEmoji);
 		return y;
 	}
-	/** @public @arg {Popup_GetAccountMenu} x */
+	/** @public @arg {Popup_DD_GetAccountMenu} x */
 	Popup_GetAccountMenu(x) {
 		const cf="Popup_GetAccountMenu";
 		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6476,7 +6464,7 @@ class ServiceMethods extends ServiceData {
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.D_NotificationMenuPopupMenuItem);
 	}
-	/** @public @arg {Popup_GetNotificationsMenu} x */
+	/** @public @arg {Popup_DD_GetNotificationsMenu} x */
 	G_Action_GetNotificationsMenu_Popup(x) {
 		const cf="G_Action_GetNotificationsMenu_Popup";
 		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

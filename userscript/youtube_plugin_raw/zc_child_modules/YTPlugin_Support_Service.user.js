@@ -1350,7 +1350,7 @@ class Support_RS_Browse extends ServiceMethods {
 }
 class Support_GenericApi extends ServiceMethods {
 	// //#region TODO
-	/** @private @arg {Popup_NotificationMenu} x */
+	/** @private @arg {Popup_DD_NotificationMenu} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

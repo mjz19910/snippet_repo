@@ -622,10 +622,10 @@ class CodegenService extends BaseService {
 		if(keys.length===1) return this.get_json_replace_type_len_1(s,r,x,keys);
 		if(s.key_keep_arr.includes(s.cur_key)) return x;
 		{
-			/** @type {Partial<Popup_ConfirmDialog>} */
+			/** @type {Partial<Popup_DL_ConfirmDialog>} */
 			let xt=x;
 			if(xt.popup&&xt.popupType) {
-				/** @type {Popup_ConfirmDialog} */
+				/** @type {Popup_DL_ConfirmDialog} */
 				let xr={popup: xt.popup,popupType: xt.popupType};
 				return this.x.get("gen_code").D_TypedefGenerator_Popup(xr);
 			}
