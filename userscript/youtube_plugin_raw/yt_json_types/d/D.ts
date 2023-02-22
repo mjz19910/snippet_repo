@@ -436,7 +436,7 @@ type D_ActionCompanionAd={
 	adVideoId: string;
 	impressionPings: T_BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
 	adLayoutLoggingData: D_SerializedAdServingDataEntry;
-	associatedCompositePlayerBytesLayoutId?: `${string}-0000-${string}-${string}-${string}`;
+	associatedCompositePlayerBytesLayoutId?: D_TargetIdUuid;
 };
 type D_AlertWithButton={
 	type: "INFO";

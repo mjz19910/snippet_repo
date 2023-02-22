@@ -701,6 +701,14 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {AD_AppendContinuationItems} x */
 	AD_AppendContinuationItems(x) {
 		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId);
+		if(this.is_yt_uuid_targetId(x)) {
+			this.z(x.continuationItems,x => {
+				if("richItemRenderer" in x) return this.R_RichItem(x);
+				if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+				debugger;
+			});
+			return;
+		}
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
 		if(this.starts_with_targetId(x,"browse-feed")) {
 			if(this.starts_with_targetId(x,"browse-feedUC")) {
@@ -2473,7 +2481,7 @@ class ServiceMethods extends ServiceData {
 		this.save_number_arr(path,x[1]);
 		return this.save_string(path,`${x[2]}n`);
 	}
-	/** @protected @arg {string} x @returns {x is `${string}-0000-${string}`} */
+	/** @protected @arg {string} x @returns {x is D_TargetIdUuid} */
 	is_yt_uuid(x) {
 		return x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)!==null;
 	}
@@ -3068,6 +3076,8 @@ class ServiceMethods extends ServiceData {
 	_previousCsn(x) {console.log(base64_dec.decode_str(x));}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
+	/** @protected @template {{targetId:string}} T @arg {T} x @returns {x is {targetId:D_TargetIdUuid}} */
+	is_yt_uuid_targetId(x) {return this.is_yt_uuid(x.targetId);}
 	/** @protected @template {D_GM_VeNum} T @arg {T} x @arg {T extends any?T:never} expected_x */
 	rootVe(x,expected_x) {
 		this.on_root_visual_element(x);

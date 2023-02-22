@@ -10,12 +10,13 @@ type DC_RepeatChapter={
 	endTimeMs: "60000";
 	repeatStateEntityKey: string;
 };
+type D_TargetIdUuid=`${string}-0000-${string}-${string}-${string}`;
 type DC_ReloadContinuationItems={
 	targetId: SI_VE76278_EngagementPanel["targetId"];
 	continuationItems: R_CommentThread[];
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
 }|{
-	targetId: "64063a76-0000-2c8b-9801-f4f5e8090f44";
+	targetId: D_TargetIdUuid;
 	continuationItems: R_RichItem[];
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
 }|{
@@ -31,7 +32,7 @@ type DC_ReloadContinuationItems={
 	targetId: "comments-section";
 	continuationItems: R_CommentsHeader[];
 }|{
-	targetId: "63fee7f6-0000-225f-a68a-94eb2c051234";
+	targetId: D_TargetIdUuid;
 	continuationItems: R_FeedFilterChipBar[];
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 }|{

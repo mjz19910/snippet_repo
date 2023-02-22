@@ -2240,7 +2240,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
 		const cf="P_ve_6827_params";
-		const {...y}=this.s(cf,x);
+		const {77: f77,84: f84,...y}=this.s(cf,x);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_watch_params} x */
@@ -2536,6 +2536,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_playlist_edit_params(u);
 			} break;
+			case "ve_3611.params": {
+				/** @type {P_ve_3611_params} */
+				let u=as_any(x);
+				this.P_ve_3611_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2543,6 +2548,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_ve_3611_params} x */
+	P_ve_3611_params(x) {x;}
 	/** @private @arg {P_playlist_edit_params} x */
 	P_playlist_edit_params(x) {x;}
 	//#endregion binary

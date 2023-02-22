@@ -417,8 +417,20 @@ type P_watch_params={
 	24: T_D32<1>;
 };
 type P_ve_6827_params={
-	77: TV_Str<"FEexplore">
+	77?: TV_Str<"FEexplore">;
+	84?: T_VW<{
+		5: T_D32<2>
+	},"json">
 };
 type P_playlist_edit_params={
-	1: T_D32<1>
+	1: T_D32<1>;
+};
+type P_ve_3611_params={
+	2: T_VW<{},"json">,
+	23: T_D32<0>,
+	110: T_VW<{
+		1: T_VW<{
+			6: T_VW<{},"json">;
+		},"json">;
+	},"json">;
 };

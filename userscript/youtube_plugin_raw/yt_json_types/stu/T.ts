@@ -154,6 +154,7 @@ type TB_ContinuationItemMap={
 	[x: `comment-replies-item-${string}`]: GA_Continuation_CommentRepliesItem["continuationItems"][number];
 	"watch-next-feed": G_WatchNext;
 	[x: `browse-feedUC${string}channels156`]: R_GridChannel|R_ContinuationItem;
+	[x: D_TargetIdUuid]: R_RichItem|R_ContinuationItem;
 };
 //#endregion
 //#region TD_
