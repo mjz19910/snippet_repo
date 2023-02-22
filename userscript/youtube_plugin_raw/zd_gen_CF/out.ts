@@ -313,6 +313,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatPlaceholderItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatTextMessage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatViewerEngagementMessage";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LoggingContext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LoggingDirectives";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersList";}
