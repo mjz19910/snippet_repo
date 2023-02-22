@@ -110,6 +110,7 @@ export_(exports => {
 //#region helper
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
+	if(!s) {debugger; return as_any([]);}
 	if(s==="") {
 		/** @private @type {[]} */
 		let r=[];

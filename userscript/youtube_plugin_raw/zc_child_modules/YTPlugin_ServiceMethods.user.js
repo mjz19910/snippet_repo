@@ -6999,10 +6999,12 @@ class ServiceMethods extends ServiceData {
 		const {params,browseId,canonicalBaseUrl,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(params,x => this.params("ve_3611.params",x));
 		this.channelId(browseId);
-		let sp=split_string_once(canonicalBaseUrl,"/"); this.cq(sp.length,2);
-		let [e1,sr]=sp; this.cq(e1,"");
-		if(!this.str_starts_with(sr,"@")) debugger;
-		let s2=split_string_once(sr,"/"); this.cq(s2.length,1);
+		this.t(canonicalBaseUrl,x => {
+			let sp=split_string_once(x,"/"); this.cq(sp.length,2);
+			let [e1,sr]=sp; this.cq(e1,"");
+			if(!this.str_starts_with(sr,"@")) debugger;
+			let s2=split_string_once(sr,"/"); this.cq(s2.length,1);
+		});
 		this.t(query,x => this.save_string(`${cf}.query`,x));
 	}
 	/** @public @arg {DE_VE3854} x */

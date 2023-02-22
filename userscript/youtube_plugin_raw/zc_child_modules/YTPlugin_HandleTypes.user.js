@@ -2432,6 +2432,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_watch_params(u);
 			} break;
+			case "ve_6827.params": {
+				/** @type {P_ve_6827_params} */
+				let u=as_any(x);
+				this.P_ve_6827_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2439,6 +2444,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_ve_6827_params} x */
+	P_ve_6827_params(x) {x;}
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {x;}
 	/** @private @arg {P_watch_player_params} x */

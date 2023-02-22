@@ -416,3 +416,6 @@ type P_watch_player_params={
 type P_watch_params={
 	24: T_D32<1>;
 };
+type P_ve_6827_params={
+	77: TV_Str<"FEexplore">
+};

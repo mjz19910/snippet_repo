@@ -3508,7 +3508,7 @@ class Support_Renderer extends ServiceMethods {
 		const {token,request,command,...y}=this.s(cf,x); this.g(y);
 		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
 		this.params("continuation_request.browse.token",token);
-		this.C_ShowReloadUi(command);
+		this.t(command,this.C_ShowReloadUi);
 	}
 	/** @public @arg {DC_Continuation_ReelWatchSeq} x */
 	DC_Continuation_ReelWatchSeq(x) {
