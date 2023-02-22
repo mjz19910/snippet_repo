@@ -74,12 +74,12 @@ type E_WebPlayerShareEntityService={
 };
 type E_AddUpcomingEventReminder={
 	clickTrackingParams: string;
-	commandMetadata: M_notification_add_upcoming_event_reminder;
+	commandMetadata: M_AddUpcomingEventReminder;
 	addUpcomingEventReminderEndpoint: DC_Params;
 };
 type E_RemoveUpcomingEventReminder={
 	clickTrackingParams: string;
-	commandMetadata: M_notification_remove_upcoming_event_reminder;
+	commandMetadata: M_RemoveUpcomingEventReminder;
 	removeUpcomingEventReminderEndpoint: DC_Params;
 };
 type E_PlaylistDelete={

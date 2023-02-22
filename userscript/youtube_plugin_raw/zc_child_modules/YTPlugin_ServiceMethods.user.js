@@ -375,13 +375,9 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {E_PlaylistDelete} x */
 	E_PlaylistDelete(x) {const [y]=this.TE_Endpoint_3_v2("deletePlaylistEndpoint",x,this.M_PlaylistDelete,this.DE_PlaylistDelete); this.g(y);}
 	/** @public @arg {E_AddUpcomingEventReminder} x */
-	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_notification_add_upcoming_event_reminder,x => {this.D_Params("DE_AddUpcomingEventReminder","notification_add_upcoming_event_reminder.params",x);}); this.g(y);}
-	/** @public @arg {M_notification_add_upcoming_event_reminder} x */
-	M_notification_add_upcoming_event_reminder(x) {x;}
+	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_AddUpcomingEventReminder,x => {this.D_Params("DE_AddUpcomingEventReminder","notification_add_upcoming_event_reminder.params",x);}); this.g(y);}
 	/** @public @arg {E_RemoveUpcomingEventReminder} x */
-	E_RemoveUpcomingEventReminder(x) {x;}
-	/** @protected @arg {M_PlaylistDelete} x */
-	M_PlaylistDelete(x) {x;}
+	E_RemoveUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("removeUpcomingEventReminderEndpoint",x,this.M_RemoveUpcomingEventReminder,x => {this.D_Params("DE_RemoveUpcomingEventReminder","notification_remove_upcoming_event_reminder.params",x);}); this.g(y);}
 	/** @protected @arg {DE_PlaylistDelete} x */
 	DE_PlaylistDelete(x) {x;}
 	/** @private @arg {string} x */
@@ -3595,6 +3591,39 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {E_UndoFeedback} x */
 	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
+	/** @private @arg {E_YpcGetOfflineUpsell} x */
+	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
+	/** @private @arg {E_Pinging} x */
+	E_Pinging(x) {
+		const cf="E_Pinging";
+		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.B_Hack(pingingEndpoint);
+		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
+			let pr=this.tr_url_to_obj(x);
+			switch(pr.host) {
+				case "pagead2.googlesyndication.com": {
+					if(pr.pathname!=="/pcs/activeview") debugger;
+					const {xai,sai,sig,cid,acvw,...y}=this.parse_url_search_params(pr.search); this.g(y);
+				} break;
+				case "googleads.g.doubleclick.net": {
+					if(pr.pathname!=="/pagead/interaction/") debugger;
+					let {ai,sigh,label,...y}=this.parse_url_search_params(pr.search); this.g(y);
+					if(label!=="noop_tap") debugger;
+				} break;
+				default: debugger; break;
+			};
+		}));
+	}
+	/** @protected @arg {E_CreatePlaylistService} x */
+	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
+	/** @protected @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {this.H_("performCommentActionEndpoint",x,this.g);}
+	/** @private @arg {E_GetNotificationMenu} x */
+	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
+	/** @private @arg {E_GetTranscript} x */
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
+	/** @protected @arg {E_PlaylistEditor} x */
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {DE_UndoFeedback} x */
 	DE_UndoFeedback(x) {
 		const cf="DE_UndoFeedback";
@@ -3819,8 +3848,6 @@ class ServiceMethods extends ServiceData {
 	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
 	/** @arg {A_SetActivePanelItem} x */
 	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
-	/** @private @arg {E_YpcGetOfflineUpsell} x */
-	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell.params",x);}
 	/** @arg {G_DC_Innertube} x */
@@ -4026,31 +4053,6 @@ class ServiceMethods extends ServiceData {
 			this.params("change_markers_visibility.entity.key",x);
 		});
 	}
-	/** @private @arg {E_Pinging} x */
-	E_Pinging(x) {
-		const cf="E_Pinging";
-		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.B_Hack(pingingEndpoint);
-		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
-			let pr=this.tr_url_to_obj(x);
-			switch(pr.host) {
-				case "pagead2.googlesyndication.com": {
-					if(pr.pathname!=="/pcs/activeview") debugger;
-					const {xai,sai,sig,cid,acvw,...y}=this.parse_url_search_params(pr.search); this.g(y);
-				} break;
-				case "googleads.g.doubleclick.net": {
-					if(pr.pathname!=="/pagead/interaction/") debugger;
-					let {ai,sigh,label,...y}=this.parse_url_search_params(pr.search); this.g(y);
-					if(label!=="noop_tap") debugger;
-				} break;
-				default: debugger; break;
-			};
-		}));
-	}
-	/** @protected @arg {E_CreatePlaylistService} x */
-	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
-	/** @protected @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {this.H_("performCommentActionEndpoint",x,this.g);}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist";
@@ -5175,10 +5177,6 @@ class ServiceMethods extends ServiceData {
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @private @arg {M_GetNotificationMenu} x */
 	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
-	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
-	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {GE_Continuation} x */
 	GE_Continuation(x) {
 		const cf="GE_Continuation"; this.ks(cf,x);
@@ -7486,10 +7484,20 @@ class ServiceMethods extends ServiceData {
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,this.a_primitive_bool);}
 	/** @public @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,this.a_primitive_bool);}
-	/** @protected @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {M_GetSettingsEditor} x */
 	M_GetSettingsEditor(x) {this.T_WCM("M_GetSettingsEditor",x,this.GM_GetSettingsEditor);}
+	/** @public @arg {M_AddUpcomingEventReminder} x */
+	M_AddUpcomingEventReminder(x) {this.T_WCM("M_AddUpcomingEventReminder",x,this.GM_AddUpcomingEventReminder);}
+	/** @public @arg {M_RemoveUpcomingEventReminder} x */
+	M_RemoveUpcomingEventReminder(x) {this.T_WCM("M_RemoveUpcomingEventReminder",x,this.GM_RemoveUpcomingEventReminder);}
+	/** @protected @arg {M_PlaylistDelete} x */
+	M_PlaylistDelete(x) {this.T_WCM("M_PlaylistDelete",x,this.GM_PlaylistDelete);}
+	/** @private @arg {GM_PlaylistDelete} x */
+	GM_PlaylistDelete(x) {this.T_GM("GM_PlaylistDelete",x,x => this.ceq(x,"/youtubei/v1/playlist/delete"));}
+	/** @private @arg {GM_RemoveUpcomingEventReminder} x */
+	GM_RemoveUpcomingEventReminder(x) {this.T_GM("GM_RemoveUpcomingEventReminder",x,x => this.ceq(x,"/youtubei/v1/notification/remove_upcoming_event_reminder"));}
+	/** @private @arg {GM_AddUpcomingEventReminder} x */
+	GM_AddUpcomingEventReminder(x) {this.T_GM("GM_AddUpcomingEventReminder",x,x => this.ceq(x,"/youtubei/v1/notification/add_upcoming_event_reminder"));}
 	/** @private @arg {GM_GetSettingsEditor} x */
 	GM_GetSettingsEditor(x) {this.T_GM("GM_GetSettingsEditor",x,x => this.ceq(x,"/youtubei/v1/playlist/get_settings_editor"));}
 	/** @private @arg {DE_PlaylistEditor} x */

@@ -2229,6 +2229,13 @@ class Support_Renderer extends ServiceMethods {
 	view_conversion_info=new Map;
 	//#endregion
 	//#region Endpoint methods
+	/** @public @arg {E_VE83769_Url} x */
+	E_VE83769_Url(x) {
+		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
+		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
+	}
+	/** @public @arg {E_YpcGetCart} x */
+	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @public @arg {E_VE12924_ApplicationSettings} x */
 	E_VE12924_ApplicationSettings(x) {x;}
 	//#endregion
@@ -2239,7 +2246,7 @@ class Support_Renderer extends ServiceMethods {
 	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AddChatItem} x */
 	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
-	// AU_
+	// UpdateAction methods
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	// Command methods
@@ -2307,6 +2314,43 @@ class Support_Renderer extends ServiceMethods {
 		this.params("invalidation.continuation",continuation);
 		this.t(clickTrackingParams,this.clickTrackingParams);
 	}
+	// Endpoint Data methods
+	/** @private @arg {DE_VE83769_Url} x */
+	DE_VE83769_Url(x) {
+		const cf="DE_VE83769_Url";
+		const {url,...u}=this.s(cf,x);/*#destructure_later*/
+		this.GM_E_VE83769_Url_TargetUrlType(url);
+		if("nofollow" in u&&"target" in u) {
+			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("nofollow" in u) {
+			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("target" in u) {
+			const {target,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			return;
+		}
+		if("grwOpenInOverride" in u) {
+			let x=this.ws("grwOpenInOverride",u);
+			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
+			return;
+		}
+		this.g(u);
+	}
+	//#endregion
+	//#region CommandMetadata methods
+	/** @private @arg {M_YpcGetCart} x */
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	//#endregion
+	//#region WebCommandMetadata methods
+	/** @private @arg {GM_YpcGetCart} x */
+	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
 	//#endregion
 	//#region Renderer
 	/** @public @arg {R_SettingsSidebar} x */

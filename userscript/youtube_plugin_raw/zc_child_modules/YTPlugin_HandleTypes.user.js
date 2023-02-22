@@ -488,12 +488,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region E & M & GM & DE
-	/** @public @arg {E_YpcGetCart} x */
-	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {GM_YpcGetCart} x */
-	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
 	/** @public @arg {DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x) {
 		const cf="DE_SuperThanksSelectedTier";
@@ -1197,39 +1191,6 @@ class HandleTypes extends ServiceMethods {
 				default: res[0]===""; debugger;
 			}
 		}
-	}
-	/** @public @arg {E_VE83769_Url} x */
-	E_VE83769_Url(x) {
-		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
-		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
-	}
-	/** @private @arg {DE_VE83769_Url} x */
-	DE_VE83769_Url(x) {
-		const cf="DE_VE83769_Url";
-		const {url,...u}=this.s(cf,x);/*#destructure_later*/
-		this.GM_E_VE83769_Url_TargetUrlType(url);
-		if("nofollow" in u&&"target" in u) {
-			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("nofollow" in u) {
-			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("target" in u) {
-			const {target,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			return;
-		}
-		if("grwOpenInOverride" in u) {
-			let x=this.ws("grwOpenInOverride",u);
-			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
-			return;
-		}
-		this.g(u);
 	}
 	/** @public @arg {[RE_D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {

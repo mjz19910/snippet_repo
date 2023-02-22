@@ -33,6 +33,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_AddUpcomingEventReminder";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetTranscript";}
+		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_RemoveUpcomingEventReminder";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_D_Playlist_Omit; t: Types.CF_D_Playlist_Omit_; v: "D_CompactPlaylist";}
@@ -705,6 +706,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:MC_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_AddToPlaylistService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_AddUpcomingEventReminder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_CreateBackstagePost";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_CreateComment";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_CreatePlaylist";}
@@ -719,7 +721,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetUnseenNotificationCount";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Like";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_NotificationOptOut";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_PlaylistDelete";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_RecordInteractions";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_RemoveUpcomingEventReminder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_SendPost";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_SetSetting";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Subscribe";}
@@ -882,6 +886,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_CommandExecutor";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AccountMenu";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AddToPlaylistService";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AddUpcomingEventReminder";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Browse";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreateBackstagePost";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreateComment";}
@@ -898,8 +903,10 @@ export namespace Gen {
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_LikeLike";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Next";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_NotificationOptOut";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_PlaylistDelete";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_RecordInteractions";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_RemoveLike";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_RemoveUpcomingEventReminder";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_SetSetting";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Subscribe";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_YpcGetOffers";}
@@ -945,6 +952,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "MC_Continuation";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AccountMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddUpcomingEventReminder";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateBackstagePost";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateComment";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreatePlaylist";}
@@ -959,7 +967,9 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Like";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_NotificationOptOut";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_PlaylistDelete";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_RecordInteractions";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_RemoveUpcomingEventReminder";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SendPost";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SetSetting";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Subscribe";}
@@ -1015,6 +1025,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification_add_upcoming_event_reminder.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification_remove_upcoming_event_reminder.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "params.click_tracking";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "params.tracking";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params";}
