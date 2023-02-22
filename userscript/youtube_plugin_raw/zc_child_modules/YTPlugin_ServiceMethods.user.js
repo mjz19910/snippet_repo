@@ -232,11 +232,13 @@ class ServiceMethods extends ServiceData {
 				} break;
 				case "ACTION_SET_PLAYLIST_PRIVACY": {
 					const cf="AS_PlaylistPrivacy";
-					const {action: {},...y}=this.s(cf,x); this.g(y);
+					const {action: {},playlistPrivacy,...y}=this.s(cf,x); this.g(y);
+					this.t(playlistPrivacy,x => this.save_string(`${cf}.playlistPrivacy`,x));
 				} break;
 				case "ACTION_SET_PLAYLIST_DESCRIPTION": {
 					const cf="AS_PlaylistDescription";
-					const {action: {},...y}=this.s(cf,x); this.g(y);
+					const {action: {},playlistDescription,...y}=this.s(cf,x); this.g(y);
+					this.t(playlistDescription,this.a_primitive_str);
 				} break;
 				case "ACTION_SET_PLAYLIST_NAME": {
 					const cf="AS_PlaylistName";
@@ -1197,14 +1199,15 @@ class ServiceMethods extends ServiceData {
 		this.t(style,x => {
 			switch(x) {
 				default: console.log("D_Button.style",x); break;
-				case "STYLE_MONO_TONAL_OVERLAY":
-				case "STYLE_MONO_FILLED_OVERLAY":
-				case "STYLE_PRIMARY":
-				case "STYLE_OPACITY":
-				case "STYLE_SUGGESTIVE":
-				case "STYLE_TEXT":
 				case "STYLE_BLUE_TEXT":
 				case "STYLE_DEFAULT":
+				case "STYLE_LIGHT_TEXT":
+				case "STYLE_MONO_FILLED_OVERLAY":
+				case "STYLE_MONO_TONAL_OVERLAY":
+				case "STYLE_OPACITY":
+				case "STYLE_PRIMARY":
+				case "STYLE_SUGGESTIVE":
+				case "STYLE_TEXT":
 			}
 		});
 		this.t(isDisabled,x => {if(x!==false) debugger;});

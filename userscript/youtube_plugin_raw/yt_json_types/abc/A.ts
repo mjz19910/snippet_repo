@@ -26,9 +26,9 @@ type A_AddVideo={action: "ACTION_ADD_VIDEO"; addedVideoId?: string;};
 type A_CopyFromPlaylist={action: "ACTION_COPY_FROM_PLAYLIST"; sourcePlaylistId: "WL";};
 type A_GetSurvey={action: "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL"; endpoint: D_Survey_Watch|D_PaidDigitalGoods;};
 type A_RemoveVideoByVideoId={action: "ACTION_REMOVE_VIDEO_BY_VIDEO_ID"; removedVideoId: string;};
-type AS_PlaylistDescription={action: "ACTION_SET_PLAYLIST_DESCRIPTION";};
+type AS_PlaylistDescription={action: "ACTION_SET_PLAYLIST_DESCRIPTION"; playlistDescription?: string;};
 type AS_PlaylistName={action: "ACTION_SET_PLAYLIST_NAME"; playlistName?: string;};
-type AS_PlaylistPrivacy={action: "ACTION_SET_PLAYLIST_PRIVACY";};
+type AS_PlaylistPrivacy={action: "ACTION_SET_PLAYLIST_PRIVACY"; playlistPrivacy?: "UNLISTED";};
 type AS_PlaylistVideoOrder={action: "ACTION_SET_PLAYLIST_VIDEO_ORDER";};
 type GA_Playlist=
 	|A_AddVideo

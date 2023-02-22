@@ -1585,7 +1585,7 @@ class Support_GenericApi extends ServiceMethods {
 		const cf="D_Dropdown";
 		const {entries,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,this.R_PrivacyDropdownItem);
-		if(label!=="Privacy") debugger;
+		this.t(label,x => this.cq(x,"Privacy"));
 	}
 	/** @private @arg {R_MultiPageMenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
@@ -3026,7 +3026,7 @@ class Support_Renderer extends ServiceMethods {
 		this.R_Button(editButton);
 		this.R_Button(saveButton);
 		this.R_Button(cancelButton);
-		this.G_Text(textDisplayed);
+		this.t(textDisplayed,this.G_Text);
 		this.save_enum(cf,"INLINE_FORM_STYLE",style);
 		this.t(placeholder,this.G_Text);
 	}
@@ -3069,7 +3069,7 @@ class Support_Renderer extends ServiceMethods {
 			if("privacyDropdownItemRenderer" in x) return this.R_PrivacyDropdownItem(x);
 			debugger;
 		});
-		this.a_primitive_str(label);
+		this.t(label,this.a_primitive_str);
 	}
 	/** @public @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
@@ -3082,9 +3082,9 @@ class Support_Renderer extends ServiceMethods {
 		this.G_Text(description);
 		switch(int32Value) {
 			default: debugger; break;
-			case 1: break;
+			case 0: case 1: case 2:
 		}
-		this.cq(isSelected,false);
+		this.a_primitive_bool(isSelected);
 		this.D_Label(accessibility);
 	}
 	/** @public @arg {R_C4TabbedHeader} x */

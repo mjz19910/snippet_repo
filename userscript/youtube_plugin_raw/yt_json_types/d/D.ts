@@ -1681,7 +1681,7 @@ type D_DesktopWatchAds={
 };
 type D_Dropdown_Privacy={
 	entries: R_PrivacyDropdownItem[];
-	label: "Privacy";
+	label?: "Privacy";
 };
 type D_Dropdown=D_Dropdown_Privacy;
 type D_CanDelete={canDelete: boolean;};
@@ -2307,7 +2307,7 @@ type D_InlineForm={
 	editButton: R_Button;
 	saveButton: R_Button;
 	cancelButton: R_Button;
-	textDisplayed: G_Text;
+	textDisplayed?: G_Text;
 	style: "INLINE_FORM_STYLE_TITLE"|"INLINE_FORM_STYLE_BODY_TEXT_PLACEHOLDER";
 	placeholder?: G_Text;
 };
@@ -2381,8 +2381,8 @@ type D_PrivacyDropdownItem={
 	label: G_Text;
 	icon: T_Icon<"PRIVACY_PUBLIC">;
 	description: G_Text;
-	int32Value: 1;
-	isSelected: false;
+	int32Value: 0|1|2;
+	isSelected: boolean;
 	accessibility: D_Label;
 };
 type D_ProductList={
