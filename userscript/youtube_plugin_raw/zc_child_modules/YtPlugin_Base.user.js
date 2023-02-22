@@ -2151,7 +2151,7 @@ class BaseServicePrivate extends ApiBase {
 class BaseService extends BaseServicePrivate {
 	/** @protected */
 	_decoder=new TextDecoder("utf-8",{fatal: false});
-	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
+	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {
 		if(!x) {debugger;}
 		let r=x.split(s);

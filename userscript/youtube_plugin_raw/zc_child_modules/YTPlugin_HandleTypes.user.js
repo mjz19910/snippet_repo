@@ -1557,55 +1557,56 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}
-	/** @private @arg {D_VideoPlaybackShape} uv */
-	D_VideoPlaybackShape(uv) {
-		const cf1="D_VideoPlaybackShape";
-		const {sparams}=this.s(cf1,uv);
-		/** @type {{[U in T_Split<typeof sparams>[number]]:D_VideoPlaybackShape[U]}} */
+	/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
+	y_copy_key(trg,src,k) {
+		trg[k]=src[k];
+	}
+	/** @private @template {"sparams"|"lsparams"} K @arg {(keyof D_VideoPlaybackShape)[]} key_list @arg {D_VideoPlaybackShape} x @arg {D_VideoPlaybackShape[K]} params_list @arg {K} target_src_key */
+	extract_sparams(key_list,x,params_list,target_src_key) {
+		/** @type {{[U in T_Split<typeof params_list>[number]]:D_VideoPlaybackShape[U&keyof D_VideoPlaybackShape]}} */
 		let obj_sparams=as({});
-		let kk_x=this.get_keys_of(uv);
-		let idx=kk_x.indexOf("sparams");
+		let kk_x=key_list;
+		let idx=kk_x.indexOf(target_src_key);
 		kk_x.splice(idx,1);
-		let kk_sparams=this.split_str(sparams);
-		/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
-		function set_obj(trg,src,k) {
-			trg[k]=src[k];
-		}
+		let kk_sparams=this.split_str(params_list);
 		/** @type {any} */
-		let xa=uv;
+		let xa=x;
 		/** @type {typeof obj_sparams} */
 		let xt=xa;
 		for(let k of kk_sparams) {
-			set_obj(obj_sparams,xt,k);
+			this.y_copy_key(obj_sparams,xt,k);
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
 		}
-		this.D_VideoPlaybackShape_S_Params(obj_sparams);
-		const {lsparams}=uv;
-		idx=kk_x.indexOf("lsparams");
-		kk_x.splice(idx,1);
-		let kk_lsparams=this.split_str(lsparams);
-		/** @type {{[U in T_Split<typeof lsparams>[number]]:D_VideoPlaybackShape[U]}} */
-		let obj_lsparams=as({});
-		/** @type {typeof obj_lsparams} */
-		let xt1=xa;
-		for(let k of kk_lsparams) {
-			set_obj(obj_lsparams,xt1,k);
-			let idx=kk_x.indexOf(k);
-			kk_x.splice(idx,1);
-		}
+		return obj_sparams;
+	}
+	/** @private @arg {"D_VideoPlaybackShape"} cf @arg {D_VideoPlaybackShape} uv */
+	extract_shape_params(cf,uv) {
+		const {sparams,lsparams}=this.s(cf,uv);
+		this.save_string(`${cf}.sparams`,sparams);
+		this.save_string(`${cf}.lsparams`,lsparams);
+		let kk_x=this.get_keys_of(uv);
+		let s_params_obj=this.extract_sparams(kk_x,uv,sparams,"sparams");
+		let ls_params_obj=this.extract_sparams(kk_x,uv,lsparams,"lsparams");
 		/** @typedef {"sparams"|"lsparams"|keyof D_VideoPlaybackShape_S_Params|keyof D_VideoPlaybackShape_LS_Params} OmitY1Keys */
 		/** @type {Omit<typeof uv,OmitY1Keys>} */
 		let y1=as({});
 		/** @type {Exclude<(typeof kk_x)[number],OmitY1Keys>[]} */
 		let kk_y1=as(kk_x);
-		for(let k of kk_y1) {
-			set_obj(y1,uv,k);
-		}
-		this.save_string(`${cf1}.sparams`,sparams);
-		this.save_string(`${cf1}.lsparams`,lsparams);
-		this.D_VideoPlaybackShape_LS_Params(obj_lsparams);
-		this.D_VideoPlaybackShape_Other(y1);
+		for(let k of kk_y1) this.y_copy_key(y1,uv,k);
+		return {
+			s: s_params_obj,
+			ls: ls_params_obj,
+			y: y1,
+		};
+	}
+	/** @private @arg {D_VideoPlaybackShape} uv */
+	D_VideoPlaybackShape(uv) {
+		const cf1="D_VideoPlaybackShape";
+		const {s,ls,y}=this.extract_shape_params(cf1,uv);
+		this.D_VideoPlaybackShape_S_Params(s);
+		this.D_VideoPlaybackShape_LS_Params(ls);
+		this.D_VideoPlaybackShape_Other(y);
 	}
 	/** @api @public @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
