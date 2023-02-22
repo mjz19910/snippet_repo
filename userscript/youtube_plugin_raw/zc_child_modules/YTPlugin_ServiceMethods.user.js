@@ -3528,12 +3528,6 @@ class ServiceMethods extends ServiceData {
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
 	/** @protected @arg {R_ToggleButton} x */
 	R_ToggleButton(x) {this.H_("toggleButtonRenderer",x,this.D_ToggleButton);}
-	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"trackingParams">[number]>:never} */
-	D_ToggleButton_Omit(cf,x,z=null) {
-		const {trackingParams,...y}=this.s(cf,x); z=y;
-		this.trackingParams(trackingParams);
-		return z;
-	}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @protected @arg {C_CommandExecutor} x */
