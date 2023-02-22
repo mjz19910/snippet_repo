@@ -3550,7 +3550,7 @@ class ServiceMethods extends ServiceData {
 		this.params("notification.opt_out",no_uri_b);
 		this.params("notification.record_interactions",c);
 	}
-	/** @private @arg {DE_UserFeedback} x */
+	/** @private @arg {G_DE_UserFeedback} x */
 	DE_UserFeedback(x) {
 		const cf="DE_UserFeedback";
 		if("additionalDatas" in x) {

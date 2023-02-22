@@ -65,13 +65,8 @@ type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_VE
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_YpcGetOffers>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
-type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",DE_UserFeedback,M_UserFeedback>;
-type E_Unsubscribe={
-	clickTrackingParams: string;
-	commandMetadata: M_Unsubscribe;
-	unsubscribeEndpoint: DE_Unsubscribe;
-};
-type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
+type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",G_DE_UserFeedback,M_UserFeedback>;
+type E_Unsubscribe=TE_Endpoint_3<"unsubscribeEndpoint",DE_Unsubscribe,M_Unsubscribe>;
 type E_WebPlayerShareEntityService={
 	clickTrackingParams: string;
 	commandMetadata: M_GetWebPlayerSharePanel;
