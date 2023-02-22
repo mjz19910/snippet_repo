@@ -160,8 +160,10 @@ class StoreDescription extends ApiBase2 {
 	/** @api @public @this {StoreDescription<string,"keys">} @template {{}} T @arg {string} k @arg {T|undefined} obj */
 	save_keys(k,obj) {
 		if(!obj) {debugger; return;}
-		this.save_data(`${k}.type`,["one",typeof obj]);
-		if(typeof obj!=="object") return;
+		if(typeof obj!=="object") {
+			this.save_data(`${k}.type`,["one",typeof obj]);
+			return;
+		}
 		if(obj instanceof Array) {
 			this.save_data(`${k}.instance`,["one","array"]);
 			return;
