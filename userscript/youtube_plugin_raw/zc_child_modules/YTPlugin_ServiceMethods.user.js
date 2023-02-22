@@ -1116,7 +1116,7 @@ class ServiceMethods extends ServiceData {
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		/** @type {{popup:TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>;popupType:"DROPDOWN";}|{popup:R_MenuPopup;popupType:"DROPDOWN";}|Popup_GetAccountMenu|T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
+		/** @type {{popup:TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>;popupType:"DROPDOWN";}|{popup:R_MenuPopup;popupType:"DROPDOWN";}|Popup_SystemMenu|Popup_GetAccountMenu|T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<MP_NotificationsMenu>>|Popup_DismissibleDialog|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
@@ -1147,37 +1147,6 @@ class ServiceMethods extends ServiceData {
 					}
 				} break;
 			}
-		}
-		if("popupType" in a&&"popup" in a) {
-			switch(a.popupType) {
-				case "DIALOG": {
-					/** @type {R_FancyDismissibleDialog|{}|null|undefined} */
-					let pt=a.popup;
-					x: if(pt) {
-						if(!this.is_not_empty_obj(pt)) break x;
-						this.h_pt(pt);
-					}
-				} return a;
-				case "DROPDOWN": {
-					/** @type {Partial<TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>>|{}|string|number|bigint|null|undefined} */
-					let mpt=a.popup;
-					if(typeof mpt!=="object") break;
-					if(mpt===null) break;
-					if(!("multiPageMenuRenderer" in mpt)) break;
-					if(!mpt.multiPageMenuRenderer) break;
-					let mpr=mpt.multiPageMenuRenderer;
-					switch(mpr.style) {
-						default: {
-							console.log("dropdown popup multiPageMenuRenderer",mpt.multiPageMenuRenderer);
-						} break;
-						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": return a;
-						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": return a;
-					}
-				}
-					return a;
-			}
-		} else {
-			debugger;
 		}
 		return a;
 	}
