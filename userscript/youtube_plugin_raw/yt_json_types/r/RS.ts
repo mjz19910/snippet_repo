@@ -34,14 +34,6 @@ type D_ActiveAccountHeader={
 	channelHandle: G_Text;
 };
 type R_ActiveAccountHeader={activeAccountHeaderRenderer: D_ActiveAccountHeader;};
-type Popup_AccountMenu={
-	header: R_ActiveAccountHeader;
-	sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];
-	trackingParams: string;
-	style: "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM";
-};
-type D_AccountMenuPopup=TR_MultiPageMenu<Popup_AccountMenu>;
-type AD_AccountMenuPopup=T_OpenPopup_Dropdown<D_AccountMenuPopup>;
 type RS_AccountMenu={
 	responseContext: RC_ResponseContext;
 	actions: A_AccountMenuPopup[];

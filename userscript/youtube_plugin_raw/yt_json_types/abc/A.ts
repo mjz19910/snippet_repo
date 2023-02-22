@@ -7,7 +7,7 @@ type TA_OpenPopup<T_Action>=TE_Endpoint_2<"openPopupAction",T_Action>;
 //#endregion
 //#region Actions 
 type A_AccountItem=TE_Endpoint_1<"accountItem",AD_AccountItem>;
-type A_AccountMenuPopup=TA_OpenPopup<AD_AccountMenuPopup>;
+type A_AccountMenuPopup=TA_OpenPopup<Popup_AccountMenu>;
 type A_AddChatItem=TE_Endpoint_2<"addChatItemAction",AD_AddChatItem>;
 type A_AddToGuideSection=TE_Endpoint_2<"addToGuideSectionAction",AD_AddToGuideSection>;
 type A_AddVideo={action: "ACTION_ADD_VIDEO"; addedVideoId?: string;};
