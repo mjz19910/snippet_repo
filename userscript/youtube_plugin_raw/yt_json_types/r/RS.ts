@@ -41,14 +41,8 @@ type Popup_AccountMenu={
 	trackingParams: string;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM";
 };
-type Popup_AccountMenu_tmp={
-	popup: TR_MultiPageMenu<Popup_AccountMenu>;
-	popupType: "DROPDOWN";
-};
 type D_AccountMenuPopup=TR_MultiPageMenu<Popup_AccountMenu>;
-
 type AD_AccountMenuPopup=T_OpenPopup_Dropdown<D_AccountMenuPopup>;
-
 type RS_AccountMenu={
 	responseContext: RC_ResponseContext;
 	actions: A_AccountMenuPopup[];
