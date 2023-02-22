@@ -4911,20 +4911,6 @@ class ServiceMethods extends ServiceData {
 			case "MG_AdLayout": this.H_("serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x)); break;
 		}
 	}
-	/** @private @arg {MG_AdLayout['layoutType']} x */
-	MG_AdLayout_layoutType(x) {
-		const cf="MG_AdLayout_layoutType";
-		this.save_enum(cf,"LAYOUT_TYPE",x);
-		switch(x) {
-			default: break;
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
-			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE":
-		}
-	}
-	/** @private @arg {MG_AdLayout["layoutId"]} x */
-	MG_AdLayout_LayoutId(x) {
-		this.save_b64_binary("AdLayout.layoutId",x);
-	}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("displayAdRenderer",x,this.D_DisplayAd);}
 	/** @private @arg {D_DisplayAd} x */
@@ -5072,21 +5058,12 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout";
-		switch(x.layoutType) {
-			default: debugger; break;
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": {
-				const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.MG_AdLayout_layoutType(layoutType);
-				this.MG_AdLayout_LayoutId(layoutId);
-			} break;
-			case "LAYOUT_TYPE_DISPLAY_SQUARE_IMAGE":
-			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
-				const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.MG_AdLayout_layoutType(layoutType);
-				this.MG_AdLayout_LayoutId(layoutId);
-				this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
-			}
-		}
+		const {layoutType,layoutId,...u}=this.s(cf,x);/*#destructure_later*/
+		this.save_enum(`${cf}.layoutType`,"LAYOUT_TYPE",layoutType);
+		this.save_b64_binary(`${cf}.layoutId`,layoutId);
+		if(!this.is_not_empty_obj(u)) return this.g(u);
+		const {adLayoutLoggingData,...y}=u; this.g(y);/*#destructure_done*/
+		this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
 	}
 	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
 	D_SerializedSlotAdServingDataEntry(x) {
