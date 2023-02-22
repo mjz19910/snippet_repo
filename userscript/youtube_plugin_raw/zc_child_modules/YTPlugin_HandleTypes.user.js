@@ -1301,6 +1301,7 @@ class HandleTypes extends ServiceMethods {
 			}; break;
 			case "5uald":
 			case "a5mek":
+			case "ab5l6":
 			case "hp57k":
 			case "hp57y":
 			case "nx5s7":
