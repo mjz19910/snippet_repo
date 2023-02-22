@@ -1096,7 +1096,7 @@ class HandleTypes extends ServiceMethods {
 	codegen_typedef_bin(cf,x,do_break=true) {
 		/** @private @type {JsonReplacerState} */
 		let s=new JsonReplacerState({
-			text_decoder: this.text_decoder,
+			text_decoder: this._decoder,
 			cf,keys: [],is_root: true
 		});
 		let res_str=this.gen_typedef_bin(s,cf,x);
@@ -1244,10 +1244,6 @@ class HandleTypes extends ServiceMethods {
 		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
 		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
-	/** @public @arg {E_AddUpcomingEventReminder} x */
-	E_AddUpcomingEventReminder(x) {x;}
-	/** @public @arg {E_RemoveUpcomingEventReminder} x */
-	E_RemoveUpcomingEventReminder(x) {x;}
 	/** @private @arg {DE_VE83769_Url} x */
 	DE_VE83769_Url(x) {
 		const cf="DE_VE83769_Url";
@@ -2274,7 +2270,7 @@ class HandleTypes extends ServiceMethods {
 				default: debugger; break;
 				case "child": {
 					let [,bin,]=a;
-					let video_id=this.text_decoder.decode(bin);
+					let video_id=this._decoder.decode(bin);
 					this.videoId(video_id);
 				} break;
 				case "raw_child": /*D_VideoId*/{

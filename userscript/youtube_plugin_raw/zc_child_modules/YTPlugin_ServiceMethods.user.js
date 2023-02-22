@@ -351,30 +351,35 @@ class ServiceMethods extends ServiceData {
 			if(v.length!==1) debugger;
 		}
 	}
-	text_decoder=new TextDecoder();
 	/**
-	 * @protected @template T_Data,T_Meta
-	 * @template {Extract<keyof T_Endpoint,EPL>} EP_Key @template {TE_Endpoint_3<EPL,T_Data,T_Meta>} T_Endpoint @arg {T_Endpoint} x
+	 * @protected @template R_D,R_M
+	 * @template {Extract<keyof T_Endpoint,EPL>} EP_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
 	 * @arg {EP_Key} k
+	 * @arg {(x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(x:T_Endpoint[EP_Key])=>R_D} f2
+	 * @returns {[typeof y,R_M,R_D]}
 	 */
-	TE_Endpoint_3_v2(k,x) {
+	TE_Endpoint_3_v2(k,x,f1,f2) {
 		let keys=this.get_keys_of(x);
 		let s=new JsonReplacerState({
-			text_decoder: this.text_decoder,
-			cf: k,keys,is_root: true
+			text_decoder: this._decoder,
+			cf: k,keys,is_root: true,
 		});
 		let cf=this.cg.get_auto_type_name(s,x);
 		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
 		this.clickTrackingParams(clickTrackingParams);
-		a;
+		const r1=f1(commandMetadata),r2=f2(a);
+		return [y,r1,r2];
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @protected @arg {E_PlaylistDelete} x */
-	E_PlaylistDelete(x) {
-		this.TE_Endpoint_3_v2("deletePlaylistEndpoint",x);
-		const [a,b,y]=this.TE_Endpoint_3("E_PlaylistDelete","deletePlaylistEndpoint",x); this.g(y); this.M_PlaylistDelete(a); this.DE_PlaylistDelete(b);
-	}
+	E_PlaylistDelete(x) {const [y]=this.TE_Endpoint_3_v2("deletePlaylistEndpoint",x,this.M_PlaylistDelete,this.DE_PlaylistDelete); this.g(y);}
+	/** @public @arg {E_AddUpcomingEventReminder} x */
+	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_notification_add_upcoming_event_reminder,x => {this.D_Params("",x);}); this.g(y);}
+	/** @public @arg {M_notification_add_upcoming_event_reminder} x */
+	M_notification_add_upcoming_event_reminder(x) {x;}
+	/** @public @arg {E_RemoveUpcomingEventReminder} x */
+	E_RemoveUpcomingEventReminder(x) {x;}
 	/** @protected @arg {M_PlaylistDelete} x */
 	M_PlaylistDelete(x) {x;}
 	/** @protected @arg {DE_PlaylistDelete} x */

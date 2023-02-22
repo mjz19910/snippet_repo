@@ -1,4 +1,3 @@
-type E_PerformCommentAction={performCommentActionEndpoint: {};};
 type D_Button_DefServiceEP=C_CommandExecutor|E_PerformCommentAction;
 type GM_notification_add_upcoming_event_reminder={
 	sendPost: true;
@@ -6,11 +5,6 @@ type GM_notification_add_upcoming_event_reminder={
 };
 
 type M_notification_add_upcoming_event_reminder={webCommandMetadata: GM_notification_add_upcoming_event_reminder;};
-type E_AddUpcomingEventReminder={
-	clickTrackingParams: string;
-	commandMetadata: M_notification_add_upcoming_event_reminder;
-	addUpcomingEventReminderEndpoint: DC_Params;
-};
 type GM_notification_remove_upcoming_event_reminder={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/remove_upcoming_event_reminder";
@@ -18,11 +12,6 @@ type GM_notification_remove_upcoming_event_reminder={
 
 type M_notification_remove_upcoming_event_reminder={webCommandMetadata: GM_notification_remove_upcoming_event_reminder;};
 
-type E_RemoveUpcomingEventReminder={
-	clickTrackingParams: string;
-	commandMetadata: M_notification_remove_upcoming_event_reminder;
-	removeUpcomingEventReminderEndpoint: DC_Params;
-};
 
 type D_ToggleButton={
 	style: T_StyleType<"STYLE_COMPACT_GRAY"|"STYLE_TEXT"|"STYLE_GREY_TEXT"|"STYLE_DEFAULT_ACTIVE">;

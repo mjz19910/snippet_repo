@@ -20,11 +20,6 @@ type GM_VE12924={
 	rootVe: 12924;
 };
 type M_VE12924={webCommandMetadata: GM_VE12924;};
-type E_VE12924_ApplicationSettings={
-	clickTrackingParams: string;
-	commandMetadata: M_VE12924;
-	applicationSettingsEndpoint: B_Hack;
-};
 type D_ActiveAccountHeader={
 	accountName: G_Text;
 	accountPhoto: D_Thumbnail;

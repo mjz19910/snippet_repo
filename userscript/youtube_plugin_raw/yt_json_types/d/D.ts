@@ -1917,11 +1917,6 @@ type D_ClickLocationTarget={
 	code: 31;
 	behaviorType: "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE_OPEN_AD";
 };
-type E_Pinging={
-	clickTrackingParams: string;
-	loggingUrls: T_BaseUrl<`https://pagead2.googlesyndication.com/pcs/activeview?xai=${string}&sai=${string}&sig=${string}&cid=${string}&acvw=[VIEWABILITY]`|`https://googleads.g.doubleclick.net/pagead/interaction/?ai=${string}&sigh=${string}&label=noop_tap`>[];
-	pingingEndpoint: B_Hack;
-};
 type D_EmptyMap={emptyMap: true;};
 type D_ActiveView={
 	viewableCommands: E_Pinging[];

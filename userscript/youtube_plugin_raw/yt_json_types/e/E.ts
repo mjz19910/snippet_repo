@@ -15,8 +15,6 @@ type E_NotificationOptOut=TE_Endpoint_3<"notificationOptOutEndpoint",DE_Notifica
 type E_PlaylistEdit=TE_Endpoint_3<"playlistEditEndpoint",DE_PlaylistEdit,M_EditPlaylist>;
 type E_PlaylistEditor=TE_Endpoint_3<"playlistEditorEndpoint",DE_PlaylistEditor,M_GetSettingsEditor>;
 type E_RecordNotificationInteractions=TE_Endpoint_3<"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions,M_RecordInteractions>;
-type E_VE37414_ReelWatch=TE_Endpoint_3<"reelWatchEndpoint",DE_ReelWatch,TM_Gen<GM_VE37414>>;
-type E_VE4724_Search=TE_Endpoint_3<"searchEndpoint",DE_VE4724_Search,M_VE4724>;
 type E_SetSetting=TE_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
 type E_ShareEntityService=TE_Endpoint_3<"shareEntityServiceEndpoint",DE_ShareEntityService,M_GetSharePanel>;
 type E_ShowEngagementPanel=TE_Endpoint_2<"showEngagementPanelEndpoint",DE_ShowEngagementPanel>;
@@ -25,7 +23,6 @@ type E_SignalService_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 type E_SignalService_SubscribeButton=TE_Endpoint_3<"signalServiceEndpoint",G_ClientSignal,M_SendPost>;
 type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,M_Feedback>;
-type E_VE83769_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,M_VE83769>;
 type DE_VE83769_Url_SearchObj={gclid: string;};
 type DE_VE83769_Url_1$d$ad_url2={
 	utm_term: "";
@@ -60,12 +57,6 @@ type DE_VE83769_Url_1={
 	target: "TARGET_NEW_WINDOW";
 };
 
-type E_VE83769_Url={
-	clickTrackingParams: string;
-	loggingUrls?: T_BaseUrl<`https://www.youtube.com/pagead/paralleladinteraction?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`>[];
-	commandMetadata: M_VE83769;
-	urlEndpoint: DE_VE83769_Url;
-};
 type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>|{
 	watchEndpoint: DE_VE3832_Watch;
 	commandMetadata: M_VE3832;
@@ -86,6 +77,36 @@ type E_WebPlayerShareEntityService={
 	commandMetadata: M_GetWebPlayerSharePanel;
 	webPlayerShareEntityServiceEndpoint: DE_WebPlayerShareEntityService;
 };
+type E_AddUpcomingEventReminder={
+	clickTrackingParams: string;
+	commandMetadata: M_notification_add_upcoming_event_reminder;
+	addUpcomingEventReminderEndpoint: DC_Params;
+};
+type E_RemoveUpcomingEventReminder={
+	clickTrackingParams: string;
+	commandMetadata: M_notification_remove_upcoming_event_reminder;
+	removeUpcomingEventReminderEndpoint: DC_Params;
+};
+type E_PlaylistDelete={
+	clickTrackingParams: string;
+	commandMetadata: M_PlaylistDelete;
+	deletePlaylistEndpoint: DE_PlaylistDelete;
+};
+type E_Pinging={
+	clickTrackingParams: string;
+	loggingUrls: T_BaseUrl<`https://pagead2.googlesyndication.com/pcs/activeview?xai=${string}&sai=${string}&sig=${string}&cid=${string}&acvw=[VIEWABILITY]`|`https://googleads.g.doubleclick.net/pagead/interaction/?ai=${string}&sigh=${string}&label=noop_tap`>[];
+	pingingEndpoint: B_Hack;
+};
+type E_AdFeedback={
+	clickTrackingParams: string;
+	loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`>[];
+	adFeedbackEndpoint: DE_AdFeedback;
+};
+type E_MuteAd={
+	clickTrackingParams: string;
+	muteAdEndpoint: DE_MuteAd;
+};
+type E_PerformCommentAction={performCommentActionEndpoint: {};};
 //#endregion
 type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 type E_Page=YTNavigateFinishDetail['endpoint'];

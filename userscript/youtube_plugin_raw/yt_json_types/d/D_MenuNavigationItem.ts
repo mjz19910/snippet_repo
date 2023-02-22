@@ -8,10 +8,6 @@ type DE_MuteAd={
 	actions: A_HideEnclosing[];
 };
 
-type E_MuteAd={
-	clickTrackingParams: string;
-	muteAdEndpoint: DE_MuteAd;
-};
 
 type D_AdFeedback={
 	title: G_Text;
@@ -25,11 +21,6 @@ type D_AdFeedback={
 
 type R_AdFeedback={adFeedbackRenderer: D_AdFeedback;};
 type DE_AdFeedback={content: R_AdFeedback;};
-type E_AdFeedback={
-	clickTrackingParams: string;
-	loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`>[];
-	adFeedbackEndpoint: DE_AdFeedback;
-};
 type D_MenuNavigationItem={
 	text: G_Text;
 	icon?: T_Icon<"INFO"|"FEEDBACK">;
