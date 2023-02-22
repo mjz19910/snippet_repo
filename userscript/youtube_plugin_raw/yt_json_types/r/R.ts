@@ -145,7 +145,6 @@ type R_MusicShelf={musicShelfRenderer: D_MusicShelf;};
 type R_MusicShelfDivider={musicShelfDividerRenderer: D_MusicShelfDivider;};
 type R_MusicThumbnail={musicThumbnailRenderer: D_MusicThumbnail;};
 type R_Notification={notificationRenderer: D_Notification;};
-type RA_NotificationMulti={notificationMultiActionRenderer: {};};
 type R_NotificationText={notificationTextRenderer: D_NotificationText;};
 type R_NotificationTopbarButton={notificationTopbarButtonRenderer: D_NotificationTopbarButton;};
 type R_Page={trackingParams: string; contents: R_TwoColumnBrowseResults[];};
@@ -446,8 +445,9 @@ type R_PageTypeShorts={
 };
 //#endregion
 //#region RA_
-type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
 type RA_Notification={notificationActionRenderer: AD_Notification;};
+type RA_NotificationMulti={notificationMultiActionRenderer: {};};
+type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
 //#endregion
 //#region RC_
 //#region Continuation Renderer
