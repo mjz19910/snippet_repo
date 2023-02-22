@@ -1092,20 +1092,6 @@ type D_CommentsEntryPointTeaser={
 	teaserContent: G_Text;
 	trackingParams: string;
 };
-type D_GridVideo={
-	badges: {}[];
-	channelThumbnail: D_Thumbnail;
-	menu: R_Menu;
-	navigationEndpoint: {};
-	shortBylineText: G_Text;
-	shortViewCountText: G_Text;
-	thumbnail: D_Thumbnail;
-	thumbnailOverlay: G_ThumbnailOverlayItem[];
-	title: G_Text;
-	trackingParams: string;
-	videoId: string;
-	viewCountText: G_Text;
-};
 type D_GuideEntry_PresentationNewContent={
 	navigationEndpoint: E_VE3611;
 	thumbnail: D_Thumbnail;
@@ -2644,12 +2630,6 @@ type D_SettingsSwitch={
 	text: G_Text;
 	thumbnail?: D_Thumbnail;
 	trackingParams: string;
-};
-type D_Shelf=Record<"content",G_ShelfItem>&{
-	title: {};
-	trackingParams: string;
-	menu?: {};
-	subscribeButton?: {};
 };
 type D_SimpleMenuHeader={
 	title: G_Text;

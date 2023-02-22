@@ -338,22 +338,33 @@ type G_SectionItem=
 ;
 type G_SettingsEndpointPages=`/account${""|`_${G_AccountPageSettingsSections}`}`;
 type G_SettingsOptionItem=
-	R_ChannelOptions|
-	R_SettingsSwitch|
-	R_SettingsCheckbox|
-	R_SettingsRadioOption|
-	R_CopyLink;
-type G_ShelfItem={gridRenderer: R_Grid;};
+	|R_ChannelOptions
+	|R_SettingsSwitch
+	|R_SettingsCheckbox
+	|R_SettingsRadioOption
+	|R_CopyLink
+	;
+;
 type G_ShortsSurfaceIdentifier_ValidTag=
 	|"engagement-panel-structured-description"
 	|"shorts-comments-panel"
 	;
 ;
+type D_StructuredDescriptionPlaylistLockup={trackingParams: string;};
+type R_StructuredDescriptionPlaylistLockup={
+	structuredDescriptionPlaylistLockupRenderer: D_StructuredDescriptionPlaylistLockup;
+};
+type D_VideoDescriptionCourseSection={
+	sectionTitle: G_Text;
+	mediaLockups: R_StructuredDescriptionPlaylistLockup[];
+};
+type R_VideoDescriptionCourseSection={videoDescriptionCourseSectionRenderer: D_VideoDescriptionCourseSection;};
 type G_StructuredDescriptionContentItem=
 	|R_ExpandableVideoDescriptionBody
 	|R_HorizontalCardList
 	|R_VideoDescriptionHeader
 	|R_VideoDescriptionMusicSection
+	|R_VideoDescriptionCourseSection
 	;
 ;
 type G_ThumbnailOverlayItem=
