@@ -25,7 +25,7 @@ type DE_VE5754=DE_VE<GU_VE5754_Id>|{
 type DE_VE6827={
 	browseId: GU_VE6827_Id;
 	params?: string;
-	query?: ""
+	query?: "";
 };
 type DE_VE11487=DE_VE<"SPunlimited">;
 type DE_VE23462=DE_VE<GU_VE23462_Id>;
@@ -43,6 +43,44 @@ type DE_YpcGetCart={transactionParams: string;};
 type DE_SuperThanksSelectedTier={key: string; index: number;};
 type DE_UndoFeedback={undoToken: string; actions: A_UndoFeedback[];};
 type DE_Upload=B_Hack;
+type DE_PlaylistDelete={playlistId: SD_PlaylistId;};
+type C_FilterChipTransform={clickTrackingParams: string; filterChipTransformCommand: D_ChipUniqueId;};
+type D_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
+type D_SerializedContextData={serializedContextData: string;};
+type DE_AddToPlaylistService={videoId: string;};
+type DE_AdFeedback={content: R_AdFeedback;};
+type DE_CreateBackstagePost={createBackstagePostParams: string;};
+type DE_CreateComment={createCommentParams: string;};
+type DE_Feedback_ActionItem=C_FilterChipTransform|A_ReplaceEnclosing;
+type DE_Feedback={feedbackToken: string; uiActions?: D_HideEnclosingContainer; actions?: DE_Feedback_ActionItem[];};
+type DE_GetNotificationMenu={ctoken: string;};
+type DE_Like=DE_LikeIndifferent|DE_LikeLike|DE_LikeDislike;
+type DE_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string;};
+type DE_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};
+type DE_LikeLike={status: "LIKE"; target: D_LikeApi; actions?: C_MusicLibraryStatusUpdate[]; likeParams?: string;};
+type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
+type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId?: "WL"; params?: string;};
+type DE_PlaylistEditor={playlistId: SD_PlaylistId;};
+type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
+type DE_ShareEntityService={serializedShareEntity: string; commands: A_ShareEntityService[];};
+type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
+type DE_SignalNavigation=T_Signal<"CHANNEL_SWITCHER"|"LIVE_CONTROL_ROOM">;
+type DE_VE4724={query: string;};
+type DE_VE83769_Url_SearchObj={gclid: string;};
+type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
+//#endregion
+//#region Only params
+type DE_GetReportForm=DC_Params;
+type DE_GetTranscript=DC_Params;
+type DE_YpcGetOffers=DC_Params;
+type DE_YpcGetOfflineUpsell=DC_Params;
+//#endregion
+//#endregion
+//#region Unions
+type DE_MutationItem=DU_MutationReplace|DU_MutationDelete;
+type G_DE_UserFeedback=DE_AdditionalDatas|DE_BucketIdentifier;
+//#endregion
+//#region Long Objects
 type DE_Url=
 	|DU_InternalUrl
 	|DU_RedirectUrl
@@ -54,7 +92,6 @@ type DE_Url=
 	}
 	;
 ;
-type DE_PlaylistDelete={playlistId: SD_PlaylistId;};
 type DE_VE3832_Watch={
 	videoId: string;
 	playlistId?: SD_PlaylistId;
@@ -71,30 +108,6 @@ type DE_VE3832_Watch={
 	nofollow?: boolean;
 	playerExtraUrlParams?: G_ExtraUrlParamItem[];
 };
-type DE_AddToPlaylistService={videoId: string;};
-type DE_CreateBackstagePost={createBackstagePostParams: string;};
-type DE_CreateComment={createCommentParams: string;};
-type D_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
-type C_FilterChipTransform={clickTrackingParams: string; filterChipTransformCommand: D_ChipUniqueId;};
-type DE_Feedback_ActionItem=C_FilterChipTransform|A_ReplaceEnclosing;
-type DE_Feedback={feedbackToken: string; uiActions?: D_HideEnclosingContainer; actions?: DE_Feedback_ActionItem[];};
-type DE_GetNotificationMenu={ctoken: string;};
-type DE_Like=DE_LikeIndifferent|DE_LikeLike|DE_LikeDislike;
-type DE_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string;};
-type DE_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};
-type DE_LikeLike={status: "LIKE"; target: D_LikeApi; actions?: C_MusicLibraryStatusUpdate[]; likeParams?: string;};
-type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
-type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId?: "WL"; params?: string;};
-type DE_PlaylistEditor={playlistId: SD_PlaylistId;};
-type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
-type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
-type D_SerializedContextData={serializedContextData: string;};
-type DE_VE4724={query: string;};
-type DE_ShareEntityService={serializedShareEntity: string; commands: A_ShareEntityService[];};
-type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
-type DE_SignalNavigation=T_Signal<"CHANNEL_SWITCHER"|"LIVE_CONTROL_ROOM">;
-type DE_AdFeedback={content: R_AdFeedback;};
-type DE_VE83769_Url_SearchObj={gclid: string;};
 type D_LoggingContext={
 	vssLoggingContext: D_SerializedContextData;
 	qoeLoggingContext: D_SerializedContextData;
@@ -142,15 +155,4 @@ type DE_VE83769_Url_1={
 	url: `https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`;
 	target: "TARGET_NEW_WINDOW";
 };
-//#endregion
-//#region Only params
-type DE_GetReportForm=DC_Params;
-type DE_GetTranscript=DC_Params;
-type DE_YpcGetOffers=DC_Params;
-type DE_YpcGetOfflineUpsell=DC_Params;
-//#endregion
-//#endregion
-//#region Unions
-type DE_MutationItem=DU_MutationReplace|DU_MutationDelete;
-type G_DE_UserFeedback=DE_AdditionalDatas|DE_BucketIdentifier;
 //#endregion
