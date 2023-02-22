@@ -70,9 +70,36 @@ type G_Popup_All=
 //#endregion
 //#region MultiPageMenu
 type R_AccountMenu=TR_MultiPageMenu<MP_AccountMenu>;
-type R_GetNotificationsMenu=TR_MultiPageMenu<D_NotificationMenuPopupMenuItem>;
-type R_NotificationMenu=TR_MultiPageMenu<D_PopupItemMenu>;
+type R_GetNotificationsMenu=TR_MultiPageMenu<D_GetNotificationMenu>;
+type R_NotificationMenu=TR_MultiPageMenu<D_NotificationMenu>;
 type R_SystemMenu=TR_MultiPageMenu<MP_SystemMenu>;
 type R_TopbarMenu=TR_MultiPageMenu<D_TopbarMenu>;
 type R_NotificationsMenu=TR_MultiPageMenu<MP_NotificationsMenu>;
+//#endregion
+//#region MultiPageMenu Renderer Data
+type MP_AccountMenu={trackingParams: string; style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT"; showLoadingSpinner: true;};
+type MP_SystemMenu={
+	header: R_ActiveAccountHeader;
+	sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];
+	trackingParams: string;
+	style: "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM";
+};
+//#endregion
+//#region Popup Renderer Data
+type D_GetNotificationMenu={
+	trackingParams: string;
+	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
+	showLoadingSpinner: true;
+};
+type D_NotificationMenu={
+	header: R_SimpleMenuHeader;
+	sections: D_NotificationMenu_Popup_SectionItem[];
+	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
+	trackingParams: string;
+};
+type D_TopbarMenu={
+	sections: [TR_MultiPageMenuSection<R_CompactLink>];
+	trackingParams: string;
+	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
+};
 //#endregion

@@ -80,13 +80,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(cf,"items",x);}
-	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
+	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_TrackedItems<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
 		this.trackingParams(trackingParams);
 		return this.w(cf,"items",y);
 	}
-	/** @public @template T @arg {TR_MP_MenuSection<T>} x */
+	/** @public @template T @arg {TR_MultiPageMenuSection<T>} x */
 	TR_MP_MenuSection(x) {return this.wn("TR_MP_MenuSection",x,"multiPageMenuSectionRenderer");}
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {
@@ -1126,11 +1126,7 @@ class ServiceMethods extends ServiceData {
 					if("menuPopupRenderer" in x1) {this.R_MenuPopup(x1); break;}
 					let a_menu=x1.multiPageMenuRenderer;
 					if(!a_menu) return a;
-					if(a_menu.style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-					let x2=ax.popup;
-					if("menuPopupRenderer" in x2) {this.R_MenuPopup(x2); break;}
-					let mp=x2.multiPageMenuRenderer;
-					switch(mp.style) {
+					switch(a_menu.style) {
 						default: debugger; break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": break;
@@ -2728,12 +2724,10 @@ class ServiceMethods extends ServiceData {
 		this.assert_assume_is_type(ret,mr);
 		return ret;
 	}
-	/** @arg {(x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>} */
-	mb(f,m) {
-		if(m.type==="n") return {type: "n"};
-		let v=f.call(this,m.x);
-		return this.some(v);
-	}
+	/** @arg {(x:T)=>U} f @template {{}} T @template {M_Optional<T[]>} Opt @arg {Opt} m @template U */
+	mz(m,f) {return this.mt(m,x => this.z(x,f));}
+	/** @arg {(x:T)=>U} f @template T @template {M_Optional<T>} Opt @arg {Opt} m @template U */
+	mb(f,m) {return this.mt(m,f);}
 	/** @template {string} T_CF @arg {T_CF} cf @arg {(cf:T_CF,x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>|None} */
 	mt_cf(m,cf,f) {
 		if(m.type=="n") return {type: "n"};
@@ -5014,7 +5008,7 @@ class ServiceMethods extends ServiceData {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
 				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.header.targetId",targetId);
-				this.mt(this.m(continuationItems),x => this.z_ty(x,x => {
+				this.t(continuationItems,x => this.z_ty(x,x => {
 					if("commentsHeaderRenderer" in x) return this.R_CommentsHeader(x);
 					if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 					debugger;
@@ -6386,11 +6380,15 @@ class ServiceMethods extends ServiceData {
 		const cf="S_GetAccountMenu";
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		let [u]=this.z(actions,x => this.TA_OpenPopup("A_GetAccountMenu",x));
+		let [u]=this.z(actions,this.A_GetAccountMenu);
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
-		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("R_AccountMenu",x));
+		let [u2]=this.z(u1,this.R_AccountMenu);
 		this.z(u2,this.MP_AccountMenu);
 	}
+	/** @private @arg {R_AccountMenu} x */
+	R_AccountMenu(x) {return this.TR_MultiPageMenu("R_AccountMenu",x);}
+	/** @public @arg {A_GetAccountMenu} x */
+	A_GetAccountMenu(x) {return this.TA_OpenPopup("A_GetAccountMenu",x);}
 	/** @public @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {
 		const cf="MP_AccountMenu";
@@ -6435,7 +6433,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(tooltip);
 		return y;
 	}
-	/** @public @arg {D_NotificationMenuPopupMenuItem} x */
+	/** @public @arg {D_GetNotificationMenu} x */
 	D_NotificationMenuPopupMenuItem(x) {
 		const cf="D_NotificationMenuPopupMenuItem";
 		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6451,7 +6449,7 @@ class ServiceMethods extends ServiceData {
 		/** @type {[(A_GetNotificationsMenu["openPopupAction"])[], never[]]} */
 		let [u]=this.z(actions,x => this.TA_OpenPopup("G_Action_GetNotificationsMenu",x));
 		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
-		/** @type {[D_NotificationMenuPopupMenuItem[], never[]]} */
+		/** @type {[D_GetNotificationMenu[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.D_NotificationMenuPopupMenuItem);
 	}

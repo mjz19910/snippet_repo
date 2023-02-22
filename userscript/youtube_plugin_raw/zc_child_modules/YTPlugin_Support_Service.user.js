@@ -1541,7 +1541,7 @@ class Support_GenericApi extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 		return null;
 	}
-	/** @private @arg {D_PopupItemMenu} x */
+	/** @private @arg {D_NotificationMenu} x */
 	D_NotificationMenu_PopupItem(x) {
 		const cf="D_NotificationMenu_PopupItem";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

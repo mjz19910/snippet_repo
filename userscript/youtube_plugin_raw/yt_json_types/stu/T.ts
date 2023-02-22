@@ -26,7 +26,7 @@ type T_Item<T>={item: T;};
 type T_Menu<T>={menu: T;};
 type T_Page<T>={page: T;};
 type T_Items<T>={items: T[];};
-type T_Items_TP<T>={trackingParams: string; items: T[];};
+type T_TrackedItems<T>={trackingParams: string; items: T[];};
 type T_Actions<T>={actions: T[];};
 type T_AnyObjectOrEmpty<T extends {}>={}|T;
 type T_Autoplay<T>={autoplay: T;};
@@ -205,7 +205,7 @@ type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
 //#region TR_
 type TR_SectionListItem_3_Empty=TR_ItemSection_3<{},{},{}>;
-type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
+type TR_MultiPageMenuSection<T>={multiPageMenuSectionRenderer: T_TrackedItems<T>;};
 type TR_ContinuationItem_CE<T>={continuationItemRenderer: TD_ContinuationItem_CE<T>;};
 type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
 type TD_ItemSection_1<T_ContentType>={trackingParams: string; contents: T_ContentType[];};

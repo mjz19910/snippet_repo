@@ -2007,7 +2007,7 @@ type D_MP_MenuStyle={style: DE_MP_MenuStyle;};
 type D_MP_Menu_Section={
 	notification_menu: R_MP_MenuNotificationSection;
 	account_section_list: R_AccountSectionList;
-	page_menu: TR_MP_MenuSection<R_CompactLink>;
+	page_menu: TR_MultiPageMenuSection<R_CompactLink>;
 };
 type D_MP_Menu_Sections_Items=D_MP_Menu_Section[keyof D_MP_Menu_Section];
 type D_MacroMarkersList={
@@ -2135,17 +2135,6 @@ type D_NotchesItem={
 	knobColorArgb: 4280191205;
 	purchaseCommand: E_YpcGetCart;
 	tierValue: G_Text;
-};
-type D_NotificationMenuPopupMenuItem={
-	trackingParams: string;
-	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
-	showLoadingSpinner: true;
-};
-type D_PopupItemMenu={
-	header: R_SimpleMenuHeader;
-	sections: D_NotificationMenu_Popup_SectionItem[];
-	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
-	trackingParams: string;
 };
 type D_NotificationMenu_Popup_SectionItem=R_MP_MenuNotificationSection;
 type D_NotificationText={
@@ -2753,11 +2742,6 @@ type D_TopbarLogo={
 	endpoint: E_VE3854;
 	trackingParams: string;
 	overrideEntityKey: string;
-};
-type D_TopbarMenu={
-	sections: [TR_MP_MenuSection<R_CompactLink>];
-	trackingParams: string;
-	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 };
 type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
