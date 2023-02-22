@@ -618,7 +618,7 @@ class ServiceMethods extends ServiceData {
 		this.M_SendPost(wc);
 		this.G_ClientSignal(cf1,s);
 	}
-	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<P_ClientSignal>>} x */
+	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<Popup_ClientSignal>>} x */
 	S_Client_Popup(x) {
 		const cf="S_Client_Popup";
 		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -760,7 +760,7 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
-	/** @private @arg {P_ClientSignal["popup"]} x */
+	/** @private @arg {Popup_ClientSignal["popup"]} x */
 	S_Client_HandlePopup(x) {
 		const cf="S_Client_HandlePopup";
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);

@@ -1,10 +1,14 @@
 //#region Templates
+//#region Action Templates
+type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
+type TA_OpenPopup<T_Action>=TE_Endpoint_2<"openPopupAction",T_Action>;
+//#endregion
 //#region TR_MultiPage Templates
 type TR_MultiPageMenu_Empty=TR_MultiPageMenu<{}>;
 type TR_MultiPageMenu<T>={multiPageMenuRenderer: T;};
 //#endregion
 //#region T_OpenPopup
-type T_MenuPopup<T>=T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<T>>;
+type T_MenuPopup_RD<T>=T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<T>>;
 type T_OpenPopup_Dialog<T>={popup: T; popupType: "DIALOG";};
 type T_OpenPopup_Dropdown<T>={popupType: "DROPDOWN"; popup: T;};
 type T_OpenPopup_ReuseableDialog<T>={popup: T; popupType: "DIALOG"; beReused: boolean;};
@@ -13,8 +17,20 @@ type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
 type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
 //#endregion
 //#endregion
+//#region Actions
+type A_GetSystemMenu=TA_OpenPopup<Popup_SystemMenu>;
+type A_ConfirmDialog=TA_OpenPopup<Popup_ConfirmDialog>;
+type A_ShareEntityService=TA_OpenPopup<Popup_ShareEntityService>;
+type A_FancyDismissibleDialog=TA_OpenPopup<Popup_DismissibleDialog>;
+type A_GetAccountMenu=TA_OpenPopup<Popup_GetAccountMenu>;
+type A_GetNotificationsMenu=TA_OpenPopup<Popup_GetNotificationsMenu>;
+type A_ClientSignal=TA_OpenPopup<Popup_ClientSignal>;
+type A_NotificationMenuPopup=TA_OpenPopup<Popup_NotificationMenu>;
+type A_NotificationToast=TA_OpenPopup<Popup_NotificationToast>;
+type A_PdgBuyFlow=TA_OpenPopup<R_PdgBuyFlow>;
+//#endregion
 //#region Popup_
-type Popup_AccountMenu=T_OpenPopup_Dropdown<R_SystemMenu>;
+type Popup_SystemMenu=T_OpenPopup_Dropdown<R_SystemMenu>;
 type Popup_ConfirmDialog=T_OpenPopup_Dialog<R_ConfirmDialog>;
 type Popup_DismissibleDialog=T_OpenPopup_Dialog<R_FancyDismissibleDialog>;
 type Popup_GetAccountMenu=T_OpenPopup_ReuseableDropdown<R_AccountMenu>;

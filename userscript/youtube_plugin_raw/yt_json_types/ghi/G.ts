@@ -239,7 +239,7 @@ type G_ClientSignal_Item=
 	|A_Signal
 	|C_AddToPlaylist
 	|E_ShowEngagementPanel
-	|OP_ClientSignal
+	|A_ClientSignal
 	;
 ;
 type G_RichSection=R_RichShelf|R_InlineSurvey|R_SourcePivotHeader;

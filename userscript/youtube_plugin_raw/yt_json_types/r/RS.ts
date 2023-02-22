@@ -36,7 +36,7 @@ type D_ActiveAccountHeader={
 type R_ActiveAccountHeader={activeAccountHeaderRenderer: D_ActiveAccountHeader;};
 type RS_AccountMenu={
 	responseContext: RC_ResponseContext;
-	actions: A_AccountMenuPopup[];
+	actions: A_GetSystemMenu[];
 	trackingParams: string;
 };
 type RS_AccountsList={
