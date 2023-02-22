@@ -26,6 +26,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
 	[24476774,24481213,4957635],
+	[24474438,24478762,39323074],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
