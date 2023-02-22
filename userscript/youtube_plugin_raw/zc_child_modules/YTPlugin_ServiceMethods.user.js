@@ -1529,19 +1529,23 @@ class ServiceMethods extends ServiceData {
 			if(this.str_starts_with_rx("RDMM",raw_id)) {
 				let [,id]=split_string_once(raw_id,"RDMM");
 				this.G_UrlInfoItem({type: "playlist:2:RDMM",id,raw_id});
+				// 4 [RDMM] + 11 [VideoId]
+				if(raw_id.length===15) return;
 				console.log("[playlistId.radio_my_mix.length]",raw_id.length);
 				return;
 			}
 			let [,id]=split_string_once(raw_id,"RD");
 			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id});
 			// 2 [RD] + 11 [VideoId]
-			if(raw_id.length!==13) console.log("[playlistId.radio.length]",raw_id.length);
+			if(raw_id.length===13) return;
+			console.log("[playlistId.radio.length]",raw_id.length);
 			return;
 		}
 		if(this.str_starts_with_rx("PL",raw_id)) {
 			let [,id]=split_string_once(raw_id,"PL");
 			this.G_UrlInfoItem({type: "playlist:3:PL",id,raw_id});
 			this.save_next_char("playlistId.PL",split_string_once(raw_id,"PL")[1]);
+			// 2 [PL] + 32 [PlaylistId]
 			if(raw_id.length===34) return;
 			console.log("[playlistId.playlist.length]",raw_id.length);
 			return;
@@ -1550,6 +1554,7 @@ class ServiceMethods extends ServiceData {
 			let [,id]=split_string_once(raw_id,"UU");
 			this.save_next_char("playlistId.UU",id);
 			this.G_UrlInfoItem({type: "playlist:4:UU",id,raw_id});
+			// 2 [UU] + 2 [UC]? + 22 [ChannelId]
 			if(raw_id.length===26) return;
 			console.log("[playlistId.uploads_playlist.length]",raw_id.length);
 			return;
@@ -2655,7 +2660,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {string} x */
 	trackingParams(x) {this.params("params.tracking",x);}
 	/** @protected @arg {string} cf @arg {{}} x */
-	codegen_typedef(cf,x,do_break=false) {
+	codegen_typedef(cf,x,do_break=true) {
 		this.cg.codegen_typedef(cf,x,do_break,false);
 	}
 	/** @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
@@ -4171,17 +4176,30 @@ class ServiceMethods extends ServiceData {
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(backgroundImageConfig,this.D_ThumbnailsList);
 		this.D_GradientColorConfig(gradientColorConfig);
-		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
-		/** @private @type {`${typeof config["lightThemeBackgroundColor"]}`} */
-		let u=`${config.lightThemeBackgroundColor}`;
-		this.save_string(`${cf}.lightBackground.0`,u);
-		this.save_keys(`${cf}.config`,config);
-		for(let u of Object.entries(config)) {
-			if(u[0]==="animationConfig") continue;
-			if(typeof u[1]==="object") {debugger; continue;}
-			this.save_string(`${cf}.config.${u[0]}`,`${u[1]}`);
-		}
-		this.save_keys(`${cf}.config.animationConfig`,config.animationConfig);
+		this.t(presentationStyle,x => this.cq(x,"CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED"));
+		this.D_CinematicConfig(config);
+	}
+	/** @private @arg {D_CinematicContainer["config"]} x */
+	D_CinematicConfig(x) {
+		const cf="D_CinematicConfig";
+		const {lightThemeBackgroundColor,darkThemeBackgroundColor,animationConfig,colorSourceSizeMultiplier,applyClientImageBlur,bottomColorSourceHeightMultiplier,maxBottomColorSourceHeight,colorSourceWidthMultiplier,colorSourceHeightMultiplier,blurStrength,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.save_number_one(`${cf}.lightBackground.color`,lightThemeBackgroundColor);
+		this.save_number_one(`${cf}.darkBackground.color`,darkThemeBackgroundColor);
+		this.t(x.animationConfig,x => {
+			const cf="D_CinematicAnimationConfig";
+			const {minImageUpdateIntervalMs,crossfadeDurationMs,crossfadeStartOffset,maxFrameRate,...y}=this.s(cf,x); this.g(y);
+			this.save_number_one(`${cf}.minImageUpdateIntervalMs`,minImageUpdateIntervalMs);
+			this.save_number_one(`${cf}.crossfadeDurationMs`,crossfadeDurationMs);
+			this.save_number_one(`${cf}.crossfadeStartOffset`,crossfadeStartOffset);
+			this.save_number_one(`${cf}.maxFrameRate`,maxFrameRate);
+		});
+		this.save_number_one(`${cf}.colorSourceSizeMultiplier`,colorSourceSizeMultiplier);
+		this.t(applyClientImageBlur,x => this.cq(x,true));
+		this.t(bottomColorSourceHeightMultiplier,x => this.save_number_one(`${cf}.bottomColorSourceHeightMultiplier`,x));
+		this.t(maxBottomColorSourceHeight,x => this.save_number_one(`${cf}.maxBottomColorSourceHeight`,x));
+		this.t(colorSourceWidthMultiplier,x => this.save_number_one(`${cf}.colorSourceWidthMultiplier`,x));
+		this.t(colorSourceHeightMultiplier,x => this.save_number_one(`${cf}.colorSourceHeightMultiplier`,x));
+		this.t(blurStrength,x => this.save_number_one(`${cf}.blurStrength`,x));
 	}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {

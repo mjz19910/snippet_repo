@@ -1529,7 +1529,7 @@ type D_CinematicContainer={
 	config: {
 		lightThemeBackgroundColor: 4278190080;
 		darkThemeBackgroundColor: 4278190080;
-		animationConfig: {
+		animationConfig?: {
 			minImageUpdateIntervalMs: 5000;
 			crossfadeDurationMs: 5000;
 			crossfadeStartOffset: 1;
@@ -1537,11 +1537,11 @@ type D_CinematicContainer={
 		};
 		colorSourceSizeMultiplier: 1.4;
 		applyClientImageBlur: true;
-		bottomColorSourceHeightMultiplier: 0.67000002;
-		maxBottomColorSourceHeight: 260;
-		colorSourceWidthMultiplier: 1.5;
-		colorSourceHeightMultiplier: 2;
-		blurStrength: 5;
+		bottomColorSourceHeightMultiplier?: 0.67000002;
+		maxBottomColorSourceHeight?: 260;
+		colorSourceWidthMultiplier?: 1.5;
+		colorSourceHeightMultiplier?: 2;
+		blurStrength?: 5;
 	};
 };
 type D_ClientForecastingAd={impressionUrls: T_BaseUrl<`https://www.youtube.com/api/stats/ads?${D_ApiStatsAdsStr}`>[];};

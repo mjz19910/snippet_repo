@@ -215,6 +215,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip_WithNav";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip_WithSelection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipUniqueId";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CinematicAnimationConfig";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CinematicConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CinematicContainer";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClickLocationTarget";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClientForecastingAd";}
