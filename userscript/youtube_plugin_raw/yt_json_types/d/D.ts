@@ -1767,13 +1767,10 @@ type D_DismissalFollowUp={
 	submitFeedbackEndpoint: E_SubmitFeedback;
 	dismissalViewStyle: "DISMISSAL_VIEW_STYLE_COMPACT_TALL";
 };
-
-type R_DismissalFollowUp={
-	dismissalFollowUpRenderer: D_DismissalFollowUp;
-};
+type R_DismissalFollowUp={dismissalFollowUpRenderer: D_DismissalFollowUp;};
 type D_FeedbackResponseProcessedStatus={
 	isProcessed: true;
-	followUpDialog?: R_DismissalFollowUp|R_DismissalFollowUp;
+	followUpDialog?: R_DismissalFollowUp;
 };
 type D_FormatColorInfo={
 	primaries?: "COLOR_PRIMARIES_BT709";
