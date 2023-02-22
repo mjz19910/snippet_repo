@@ -1646,14 +1646,6 @@ class Support_GenericApi extends ServiceMethods {
 	}
 }
 class Support_EventInput extends ServiceMethods {
-	/** @private @arg {E_Settings} x */
-	E_Settings(x) {
-		const cf="E_Settings";
-		if(!("settingsEndpoint" in x)) {debugger; return;}
-		const {_tag,settingsEndpoint,...y}=this.s(cf,x); this.g(y);
-		if(_tag!=="E_Settings") debugger;
-		this.g(settingsEndpoint);
-	}
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
 	/** @private @arg {R_PageTypeBrowse["response"]} x */
