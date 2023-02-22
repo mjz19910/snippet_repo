@@ -2228,6 +2228,37 @@ class Support_Renderer extends ServiceMethods {
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
 	//#endregion
+	//#region Action methods
+	/** @private @arg {A_AddToGuideSection} x */
+	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
+	/** @private @arg {A_ReplayChatItem} x */
+	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
+	// AU_
+	/** @private @arg {AU_SubscribeButton} x */
+	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
+	// C_
+	/** @private @arg {C_RunAttestation} x */
+	C_RunAttestation(x) {this.H_("runAttestationCommand",x,this.D_RunAttestation);}
+	//#endregion
+	//#region ActionData methods
+	/** @private @arg {AD_AddToGuideSection} x */
+	AD_AddToGuideSection(x) {
+		const cf="AD_AddToGuideSection";
+		const {handlerData,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(handlerData) {
+			case "GUIDE_ACTION_ADD_TO_PLAYLISTS": break;
+			case "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS": break;
+		}
+		this.z(items,x => this.xr.R_GuideEntry(x));
+	}
+	/** @private @arg {AD_SubscribeButton} x */
+	AD_SubscribeButton(x) {
+		const cf="AD_SubscribeButton";
+		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(subscribed);
+		this.D_ChannelId(channelId);
+	}
+	//#endregion
 	//#region Renderer
 	/** @public @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
@@ -2975,6 +3006,7 @@ class Support_Renderer extends ServiceMethods {
 		const {accountName,accountPhoto,settingsEndpoint,manageAccountTitle,trackingParams,channelHandle,...y}=this.s(cf,x); this.g(y);
 	}
 	//#endregion
+	//#region Group Union
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent";
@@ -3047,6 +3079,8 @@ class Support_Renderer extends ServiceMethods {
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	//#endregion
+	//#region Data methods
 	/** @private @arg {D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x) {
 		const cf="D_PdgBuyFlow";
@@ -3237,6 +3271,7 @@ class Support_Renderer extends ServiceMethods {
 		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
 	}
+	//#endregion
 }
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;

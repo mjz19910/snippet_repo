@@ -452,12 +452,8 @@ class HandleTypes extends ServiceMethods {
 	//#region Action methods
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
-	/** @private @arg {A_AddToGuideSection} x */
-	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
 	/** @private @arg {A_AddChatItem} x */
 	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
-	/** @private @arg {A_ReplayChatItem} x */
-	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @public @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
@@ -466,14 +462,10 @@ class HandleTypes extends ServiceMethods {
 	//#region CD & AU & C & DC
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
-	/** @private @arg {AU_SubscribeButton} x */
-	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
 	AU_ChannelSwitcherPage(x) {this.H_("updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
-	/** @private @arg {C_RunAttestation} x */
-	C_RunAttestation(x) {this.H_("runAttestationCommand",x,this.D_RunAttestation);}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @arg {C_FollowUp} x */
@@ -1443,23 +1435,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,x => this.xr.R_ChannelSwitcherPage(x));}
-	/** @private @arg {AD_AddToGuideSection} x */
-	AD_AddToGuideSection(x) {
-		const cf="AD_AddToGuideSection";
-		const {handlerData,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(handlerData) {
-			case "GUIDE_ACTION_ADD_TO_PLAYLISTS": break;
-			case "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS": break;
-		}
-		this.z(items,x => this.xr.R_GuideEntry(x));
-	}
-	/** @private @arg {AD_SubscribeButton} x */
-	AD_SubscribeButton(x) {
-		const cf="AD_SubscribeButton";
-		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(subscribed);
-		this.D_ChannelId(channelId);
-	}
 	/** @public @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";
@@ -1487,13 +1462,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(participantsList,x => this.xr.R_LiveChatParticipantsList(x));
 		this.t(popoutMessage,x => this.xr.R_Message(x));
 		this.t(viewerName,this.a_primitive_str);
-	}
-	/** @private @arg {D_RunAttestation} x */
-	D_RunAttestation(x) {
-		const cf="D_RunAttestation";
-		const {ids,engagementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(ids,this.D_ExternalChannelId);
-		if(engagementType!=="ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
 	}
 	/** @private @arg {D_ExternalChannelId} x */
 	D_ExternalChannelId(x) {
