@@ -1120,7 +1120,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 	RS_VE3832_Page_Watch(x) {
 		const cf="R_WatchPage_VE3832"; this.k(cf,x);
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(rootVe!==3832) debugger;
+		this.rootVe(rootVe,3832);
 		let wp_params=this.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		this.E_Watch(endpoint);
@@ -1938,7 +1938,7 @@ class Support_EventInput extends ServiceMethods {
 				expirationTime: h_et,
 			};
 			const {rootVe,csn,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
-			if(rootVe!==3611) debugger;
+			this.rootVe(rootVe,3611);
 			this.t(csn,this.D_VeCsn);
 			return;
 		}
@@ -2035,13 +2035,13 @@ class Support_EventInput extends ServiceMethods {
 		debugger;
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
-		if(rootVe!==23462) debugger;
+		this.rootVe(rootVe,23462);
 	}
 	/** @private @arg {RS_VE37414_Shorts} x */
 	RS_VE37414_Shorts(x) {
 		const cf="Shorts_VE37414";
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(rootVe!==37414) debugger;
+		this.rootVe(rootVe,37414);
 		if(page!=="shorts") debugger;
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
@@ -2214,7 +2214,7 @@ class Support_VE37414 extends ServiceMethods {
 			this.videoId(p4);
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
-		if(rootVe!==37414) debugger;
+		this.rootVe(rootVe,37414);
 		return `VE${rootVe}`;
 	}
 }
@@ -2365,8 +2365,7 @@ class Support_Renderer extends ServiceMethods {
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
 		this.cq(url,"/select_site");
 		this.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
-		this.cq(rootVe,12924);
-		this.rootVe(rootVe);
+		this.rootVe(rootVe,12924);
 	}
 	//#endregion
 	//#region Renderer

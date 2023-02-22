@@ -174,14 +174,6 @@ class ParserService extends BaseService {
 	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
-	/** @console_api @public @arg {string} x */
-	create_param_map_dbg(x) {
-		{debugger;}
-		let res_e=this._decode_b64_url_proto_obj(x);
-		if(!res_e) return null;
-		if(res_e.find(e => e[0]==="error")) {return null;}
-		return this.make_param_map(res_e);
-	}
 	parse_key_index=1;
 	/** @unused_api @protected @arg {V_ParamMapType} x @arg {number[]} mk @arg {number} ta */
 	remove_key(x,mk,ta) {

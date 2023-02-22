@@ -134,6 +134,7 @@ type GM_VE=
 	|GM_VE96368
 	;
 ;
+type D_GM_VeNum=Extract<GM_All,{rootVe:any}>['rootVe'];
 type GM_PostApi=
 	|GM_SetSetting
 	|GM_AccountMenu

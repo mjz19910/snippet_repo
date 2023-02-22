@@ -412,7 +412,7 @@ class ServiceMethods extends ServiceData {
 		this.GU_VE3611_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		if(rootVe!==3611) debugger;
+		this.rootVe(rootVe,3611);
 		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_VE3832} x */
@@ -424,7 +424,7 @@ class ServiceMethods extends ServiceData {
 			if(this.str_starts_with(url,"/watch")) break x;
 			debugger;
 		}
-		if(rootVe!==3832) debugger;
+		this.rootVe(rootVe,3832);
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
 	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
@@ -435,7 +435,7 @@ class ServiceMethods extends ServiceData {
 			if(url==="/") break x;
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==3854) debugger;
+		this.rootVe(rootVe,3854);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -445,7 +445,7 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		if(rootVe!==4724) debugger;
+		this.rootVe(rootVe,4724);
 		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_VE5754} x @returns {`VE${rootVe}`} */
@@ -454,7 +454,7 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE5754_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
-		if(rootVe!==5754) debugger;
+		this.rootVe(rootVe,5754);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -465,7 +465,7 @@ class ServiceMethods extends ServiceData {
 		this.t(url,this.D_VE6827_Url);
 		this.t(sendPost,x => this.ceq(x,true));
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==6827) debugger;
+		this.rootVe(rootVe,6827);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		if("sendPost" in y) {
 			const {sendPost,...y1}=y; this.g(y1);
@@ -480,21 +480,21 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(url!=="/premium") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==11487) debugger;
+		this.rootVe(rootVe,11487);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_VE23462} x @returns {`VE${rootVe}`} */
 	GM_VE23462(x) {
-		const cf="GM_VE23462_WC";
+		const cf="GM_VE23462";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(url) {
-			default: console.log(`-- [GM_VE23462_WC] --\n\n\ncase "${url}":`); break;
+			default: console.log(`-- [${cf}] --\n\n\ncase "${url}":`); break;
 			case "/account": break;
 			case "/account_notifications": break;
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		if(rootVe!==23462) debugger;
+		this.rootVe(rootVe,23462);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -504,7 +504,7 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE42352_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==42352) debugger;
+		this.rootVe(rootVe,42352);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -514,7 +514,7 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE83769_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		if(rootVe!==83769) debugger;
+		this.rootVe(rootVe,83769);
 	}
 	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
 	GM_VE96368(x) {
@@ -522,7 +522,7 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(url!=="/feed/subscriptions") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==96368) debugger;
+		this.rootVe(rootVe,96368);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -3157,8 +3157,11 @@ class ServiceMethods extends ServiceData {
 	_previousCsn(x) {console.log(base64_dec.decode_str(x));}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
-	/** @protected @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
-	rootVe(x) {this.on_root_visual_element(x);}
+	/** @protected @template {D_GM_VeNum} T @arg {T} x @arg {T extends any?T:never} expected_x */
+	rootVe(x,expected_x) {
+		this.on_root_visual_element(x);
+		this.cq(x,expected_x);
+	}
 	/** @protected @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
