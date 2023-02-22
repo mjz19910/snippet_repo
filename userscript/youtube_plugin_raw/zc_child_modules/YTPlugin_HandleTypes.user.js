@@ -968,6 +968,10 @@ class HandleTypes extends ServiceMethods {
 				case "child": {
 					let x3=x2[2]; x3;
 					if(x3===null) {debugger; break;}
+					let bin_ts=this.replace_bin_binary_ts(s,x3);
+					if(bin_ts) return bin_ts;
+					let short_ts=this.replace_bin_short_ts(s,x3);
+					if(short_ts) return short_ts;
 					let gen_json=this.gen_typedef_bin_json(s,x3);
 					return `TYPE::T_VW<${gen_json},"json">`;
 				}
