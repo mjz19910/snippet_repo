@@ -2242,8 +2242,6 @@ class Support_Renderer extends ServiceMethods {
 	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
 	/** @private @arg {T_Signal<"SUBMIT_FEEDBACK">} x */
 	DE_SubmitFeedback(x) {this.cq(this.T_Signal("DE_SubmitFeedback",x),"SUBMIT_FEEDBACK");}
-	/** @private @arg {M_VE12924} x */
-	M_VE12924(x) {x;}
 	//#endregion
 	//#region Action methods
 	/** @private @arg {A_AddToGuideSection} x */
@@ -2355,10 +2353,21 @@ class Support_Renderer extends ServiceMethods {
 	//#region CommandMetadata methods
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {M_VE12924} x */
+	M_VE12924(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
 	//#endregion
 	//#region WebCommandMetadata methods
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
+	/** @private @arg {GM_VE12924} x */
+	GM_VE12924(x) {
+		const cf="GM_VE12924";
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
+		this.cq(url,"/select_site");
+		this.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
+		this.cq(rootVe,12924);
+		this.rootVe(rootVe);
+	}
 	//#endregion
 	//#region Renderer
 	/** @public @arg {R_SettingsSidebar} x */

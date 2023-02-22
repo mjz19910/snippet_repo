@@ -504,6 +504,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList_p2";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE12924";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE37414_WC";}
@@ -730,6 +731,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Subscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_UserFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE12924";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE37414";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE3832";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE42352";}
@@ -977,6 +979,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Subscribe";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Unsubscribe";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_UserFeedback";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE12924";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE37414";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE42352";}

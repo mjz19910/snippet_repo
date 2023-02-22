@@ -1757,7 +1757,8 @@ type D_DismissalReasonText={
 	feedbackToken: string;
 };
 type R_DismissalReasonText={dismissalReasonTextRenderer: D_DismissalReasonText;};
-type E_SubmitFeedback=T_SE_Signal<M_Feedback,T_Signal<"SUBMIT_FEEDBACK">>;
+type DE_SubmitFeedback=T_Signal<"SUBMIT_FEEDBACK">;
+type E_SubmitFeedback=T_SE_Signal<M_Feedback,DE_SubmitFeedback>;
 type D_DismissalFollowUp={
 	trackingParams: string;
 	dismissalReasonsPrompt: G_Text;

@@ -117,7 +117,7 @@ type GM_YpcGetOffers=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_offers">;
 type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
 //#endregion
 //#endregion
-//#region GM_WC
+//#region GM_VE
 type GM_VE=
 	|GM_VE3611
 	|GM_VE3832
@@ -126,6 +126,7 @@ type GM_VE=
 	|GM_VE5754
 	|GM_VE6827
 	|GM_VE11487
+	|GM_VE12924
 	|GM_VE23462
 	|GM_VE37414
 	|GM_VE42352
