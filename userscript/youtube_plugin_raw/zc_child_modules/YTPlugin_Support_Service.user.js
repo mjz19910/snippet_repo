@@ -949,7 +949,7 @@ class Support_RS_Player extends ServiceMethods {
 	R_Card(x) {this.H_("cardRenderer",x,this.D_Card);}
 	/** @private @arg {R_InfoCardIcon} x */
 	R_InfoCardIcon(x) {this.H_("infoCardIconRenderer",x,this.D_InfoCardIcon);}
-	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {D_FormatItem_signatureCipher} x */
+	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {D_FormatItem_SignatureCipher_SP} x */
 	D_Format_signatureCipher(cf,x) {
 		/** @type {`${cf}:signatureCipher`} */
 		const cf1=`${cf}:signatureCipher`;
