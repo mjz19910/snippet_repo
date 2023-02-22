@@ -34,21 +34,13 @@ type DE_VE96368=DE_VE<"FEsubscriptions">;
 //#endregion
 //#region DE_
 //#region Objects
-type DE_Subscribe={params: string; channelIds: D_ChannelId[];};
-type DE_Unsubscribe={params: string; channelIds: `UC${string}`[];};
-type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
-type DE_BucketIdentifier={bucketIdentifier: "live_chat"; hack: true;};
-type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
-type DE_YpcGetCart={transactionParams: string;};
-type DE_SuperThanksSelectedTier={key: string; index: number;};
-type DE_UndoFeedback={undoToken: string; actions: A_UndoFeedback[];};
-type DE_Upload=B_Hack;
-type DE_PlaylistDelete={playlistId: SD_PlaylistId;};
 type C_FilterChipTransform={clickTrackingParams: string; filterChipTransformCommand: D_ChipUniqueId;};
 type D_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
 type D_SerializedContextData={serializedContextData: string;};
+type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
 type DE_AddToPlaylistService={videoId: string;};
 type DE_AdFeedback={content: R_AdFeedback;};
+type DE_BucketIdentifier={bucketIdentifier: "live_chat"; hack: true;};
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type DE_CreateComment={createCommentParams: string;};
 type DE_Feedback_ActionItem=C_FilterChipTransform|A_ReplaceEnclosing;
@@ -59,15 +51,23 @@ type DE_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string
 type DE_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};
 type DE_LikeLike={status: "LIKE"; target: D_LikeApi; actions?: C_MusicLibraryStatusUpdate[]; likeParams?: string;};
 type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
+type DE_PlaylistDelete={playlistId: SD_PlaylistId;};
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId?: "WL"; params?: string;};
 type DE_PlaylistEditor={playlistId: SD_PlaylistId;};
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
 type DE_ShareEntityService={serializedShareEntity: string; commands: A_ShareEntityService[];};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type DE_SignalNavigation=T_Signal<"CHANNEL_SWITCHER"|"LIVE_CONTROL_ROOM">;
+type DE_Subscribe={params: string; channelIds: D_ChannelId[];};
+type DE_SuperThanksSelectedTier={key: string; index: number;};
+type DE_UndoFeedback={undoToken: string; actions: A_UndoFeedback[];};
+type DE_Unsubscribe={params: string; channelIds: `UC${string}`[];};
+type DE_Upload=B_Hack;
 type DE_VE4724={query: string;};
 type DE_VE83769_Url_SearchObj={gclid: string;};
+type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
 type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
+type DE_YpcGetCart={transactionParams: string;};
 //#endregion
 //#region Only params
 type DE_GetReportForm=DC_Params;
