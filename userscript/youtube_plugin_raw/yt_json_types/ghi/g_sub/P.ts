@@ -412,3 +412,6 @@ type P_watch_player_params={
 	12: T_D32<1>,
 	25: T_D32<1>
 };
+type P_watch_params={
+	24: T_D32<1>
+};
