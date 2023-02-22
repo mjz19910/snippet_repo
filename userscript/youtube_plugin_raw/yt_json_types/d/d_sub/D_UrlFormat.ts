@@ -24,12 +24,12 @@ type D_UrlFormat=
 	|`https://www.youtube.com/pagead/adview?${string}`
 	|`https://www.youtube.com/watch?${string}`
 	|D_ApiPathFormat_1
-	|D_ExternalUrlFormat
+	|GU_ExternalUrl
 	|D_MicroformatEmbed["flashSecureUrl"]
 	|D_MicroformatEmbed["flashUrl"]
 	|D_MicroformatEmbed["iframeUrl"]
 	|D_PlayerMicroformat["ownerProfileUrl"]
-	|D_Youtube_Streaming_ProbeUrl
+	|GU_GoodPut_ProbeUrl
 	|DE_VE83769_Url_1["url"]
 	|GM_VE3854["url"]
 	|GU_VE3611_Url
@@ -38,6 +38,6 @@ type D_UrlFormat=
 	|NonNullable<D_Channel_MD["channelConversionUrl"]>
 	|NonNullable<D_FormatItem["url"]>
 	|TP_ParseUrlSearchParams<D_FormatItem_signatureCipher>["url"]
-	|D_YTExternalUrl
+	|GU_YTExternalUrl
 	;
 ;

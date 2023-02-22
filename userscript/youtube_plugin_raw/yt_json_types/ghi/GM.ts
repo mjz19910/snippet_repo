@@ -35,7 +35,6 @@ type GM_VE4724={
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
-type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|`PL${string}`}`;
 
 type GM_VE5754={
 	url: GU_VE5754_Url;

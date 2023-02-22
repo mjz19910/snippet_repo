@@ -1621,7 +1621,9 @@ class HandleTypes extends ServiceMethods {
 						this.D_VideoPlaybackShape(as_any(pp));
 					} break;
 					case "/initplayback": {
-						debugger;
+						let ip_search=x.search;
+						let {...pp}=this.parse_url_search_params(ip_search);
+						pp;
 					} break;
 					case "/videogoodput": {
 						let pp=this.parse_url_search_params(x.search);
@@ -1631,7 +1633,7 @@ class HandleTypes extends ServiceMethods {
 			} return;
 			default:
 		}
-		/** @private @type {D_UrlFormat|D_ExternalUrlFormat} */
+		/** @private @type {D_UrlFormat|GU_ExternalUrl} */
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}

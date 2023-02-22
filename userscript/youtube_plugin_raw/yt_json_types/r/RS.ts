@@ -283,30 +283,6 @@ type RS_Page_Browse={
 	expirationTime: number;
 };
 type R_ChannelMetadata=R_Channel_MD;
-type GU_VE3611_2=
-	|`/@${string}/about`
-	|`/@${string}/channels`
-	|`/@${string}/featured`
-	|`/@${string}/playlists`
-	|`/@${string}/search?query=${string}`
-	|`/@${string}/search`
-	|`/@${string}/shorts`
-	|`/@${string}/videos`
-	|`/@${string}`
-	|`/c/${string}`
-	;
-;
-type GU_VE3611_3=
-	|`/@${string}/about`
-	|`/@${string}/channels`
-	|`/@${string}/community`
-	|`/@${string}/playlists`
-	|`/@${string}/search?query=${string}`
-	|`/@${string}/shorts`
-	|`/@${string}/videos`
-	|`/@${string}`
-	;
-;
 type RS_Page_Channel_1={
 	page: "channel";
 	endpoint: E_VE3611;

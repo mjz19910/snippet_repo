@@ -1,5 +1,4 @@
 // cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
-type D_FormatItem_url=`https://rr${number}---sn-${string}n${string}.googlevideo.com/videoplayback?${D_VideoPlayback_SearchParams}`;
 type D_AudioTrack={
 	displayName: string;
 	id: string;

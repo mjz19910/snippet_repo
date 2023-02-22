@@ -28,9 +28,6 @@ type Some_A<T extends string,A extends any[]=[]>=
 	:A
 	:A;
 ;
-type DU_UrlParams={ai:string;sigh:string;cid:string;ad_mt:"[AD_MT]";acvw: "[VIEWABILITY]";gv: "[GOOGLE_VIEWABILITY]";nb: "[NB]";label: "video_click_to_advertiser_site";};
-
-
 
 type T_Str_Some<T extends string>=Some_t<T>[0] extends 0? "":T extends `${infer S}${infer E}`? `${S}${T_Str_Some<E>}`:T;
 type D_Button_targetId=

@@ -172,7 +172,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
-	/** @private @arg {D_EX_YoutubeKidsUrl} x */
+	/** @private @arg {GU_YoutubeKidsUrl_1} x */
 	D_YoutubeKidsUrl(x) {
 		const cf="D_YoutubeKidsUrl";
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
@@ -6658,7 +6658,7 @@ class ServiceMethods extends ServiceData {
 		this.R_Menu(menu);
 		return y;
 	}
-	/** @public @arg {D_RadioShareUrl} b */
+	/** @public @arg {GU_RadioShareUrl} b */
 	D_RadioShareUrl(b) {
 		/** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
 		class UrlParseHelper {

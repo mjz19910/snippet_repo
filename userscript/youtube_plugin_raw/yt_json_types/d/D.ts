@@ -1,7 +1,3 @@
-//#region Extract on Url
-type D_EX_YoutubeUrl=Extract<DE_VE83769_Url['url'],`${string}www.youtube.com${string}`>;
-type D_EX_YoutubeKidsUrl=Extract<DE_VE83769_Url['url']|"https://www.youtubekids.com/?source=youtube_web",`https://www.youtubekids.com${string}`>;
-//#endregion
 //#region String data, ie `D_${string}`
 type D_EndpointLikeEndings="Endpoint"|"Command"|"Action"|"Renderer";
 //#endregion
@@ -50,13 +46,6 @@ type SD_PlaylistId=
 	|`PL${string}`
 	|"WL"
 	|"LL"
-	;
-;
-type D_RadioShareUrl=
-	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`
-	|`https://www.youtube.com/playlist?list=PL${string}`
-	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=PL${string}`
-	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RD${string}`
 	;
 ;
 type D_BrowseIdStr=
@@ -293,7 +282,7 @@ type D_CompactRadio={
 	trackingParams: string;
 	thumbnailText: G_Text;
 	videoCountShortText: G_Text;
-	shareUrl: D_RadioShareUrl;
+	shareUrl: GU_RadioShareUrl;
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
@@ -1496,13 +1485,8 @@ type D_TimedTextApi={
 };
 // D_TimedTextApi["signature"]
 type D_TimedTextApi_Req=Required<D_TimedTextApi>;
-type D_CaptionTrackItem_BaseUrl=
-	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi_Req["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xosf=${D_TimedTextApi_Req["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi_Req["kind"]}&lang=${D_TimedTextApi["lang"]}`
-	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi_Req["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xoadf=${D_TimedTextApi_Req["xoadf"]}&xosf=${D_TimedTextApi_Req["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi_Req["kind"]}&lang=${D_TimedTextApi["lang"]}`
-	;
-
 type D_CaptionTrackItem={
-	baseUrl: D_CaptionTrackItem_BaseUrl;
+	baseUrl: GU_CaptionTrackItem_BaseUrl;
 	name: G_Text;
 	vssId: "a.en"|".en";
 	languageCode: "en";
@@ -1648,7 +1632,7 @@ type D_CommentsHeaderContent={
 		R_CommentsHeader
 	];
 };
-type D_CommonConfig={url: `https://rr5---sn-nx57ynsd.googlevideo.com/initplayback?${string}`;};
+type D_CommonConfig={url: GU_InitPlaybackUrl;};
 type D_CompactLinkStyle=[
 	`${"COMPACT_LINK_STYLE_TYPE"}_${[
 		"SETTINGS_SIDEBAR",
@@ -1754,24 +1738,6 @@ type D_ExpandableVideoDescriptionBody={
 	showMoreText?: G_Text;
 	showLessText?: G_Text;
 };
-// ApiStatsAdsArgs
-// spell:ignore trackclk aclk
-type D_ExternalUrlFormat=[
-	`${"https:"}//${GV_SubDomain}.googlevideo.com/initplayback?${string}`,
-	`https://ad.doubleclick.net/ddm/trackclk/${string}`,
-	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
-	`https://music.youtube.com${"/"|""}`,
-	`https://studio.youtube.com${"/"|""}`,
-	`https://support.google.com/youtube/answer/${number}`,
-	`https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273`,
-	`https://www.google.com/get/videoqualityreport/`,
-	`https://www.googleadservices.com/pagead/aclk?${string}`,
-	`https://www.gstatic.com/youtube/img/watch/yt_music_channel.jpeg`,
-	`https://www.youtube.com/api/stats/ads?${string}`,
-	`https://www.youtubekids.com${"/"|""}?source=youtube_web`,
-	`https://yt${number}.ggpht.com/${string}=s88-c-k-c0x00ffffff-no-rj`,
-	D_CommonConfig["url"],
-][number];
 type D_Factoid={
 	value: G_Text;
 	label: G_Text;
@@ -2845,7 +2811,6 @@ type D_UrlAndElapsedMediaTime<T>={
 	baseUrl: T;
 	elapsedMediaTimeSeconds: number;
 };
-type D_YTExternalUrl="https://m.youtube.com/premium";
 type D_UrlInfoPlaylist={_tag: "playlist"; type: D_UrlInfoItemType; id: string;};
 type D_UrlInfoVideo={_tag: "video"; id: string;};
 type D_UrlVideoReferral={_tag: "video-referral"; id: string;};
@@ -3061,9 +3026,7 @@ type D_GuideEntry_IconType_Obj={
 	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
 //#endregion
-type D_UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};
 type D_VideoId=string;
-type D_Youtube_Streaming_ProbeUrl=`https://rr${number}---sn-${string}n${string}.googlevideo.com/videogoodput?id=${string}&source=${string}&range=${string}&expire=${number}&ip=${D_VideoPlaybackShape["ip"]}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${D_TimedTextApi["signature"]}&key=${string}`;
 type D_Playlist_MD={
 	title: string;
 	androidAppindexingLink: string;
@@ -3079,7 +3042,7 @@ type DD_Streaming={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: D_AdaptiveFormatItem[];
 	formats: D_FormatItem[];
-	probeUrl?: D_Youtube_Streaming_ProbeUrl;
+	probeUrl?: GU_GoodPut_ProbeUrl;
 };
 type DMD_AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;

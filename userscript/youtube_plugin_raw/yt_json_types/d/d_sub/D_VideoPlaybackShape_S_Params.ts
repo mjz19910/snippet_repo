@@ -1,7 +1,7 @@
 type D_VideoPlaybackShape_S_Params={
 	expire: `${T_UnixTime_In6Hours<number>}`;
 	ei: string;
-	ip: `${number}.${number}.${number}.${number}`;
+	ip: D_IpFormat;
 	id: string;
 	itag?: D_VideoPlayback_Itag;
 	aitags?: "133,134,135,136,137,160,242,243,244,247,248,278,394,395,396,397,398,399";

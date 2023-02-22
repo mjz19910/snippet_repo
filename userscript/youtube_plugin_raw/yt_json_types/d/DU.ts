@@ -1,3 +1,15 @@
+//#region Parsed Url Objects
+type DU_UrlParams={
+	ai: string;
+	sigh: string;
+	cid: string;
+	ad_mt: "[AD_MT]";
+	acvw: "[VIEWABILITY]";
+	gv: "[GOOGLE_VIEWABILITY]";
+	nb: "[NB]";
+	label: "video_click_to_advertiser_site";
+};
+//#endregion
 //#region Discriminated Unions
 type DU_ExternalUrl={url: GU_VE83769_Url_External; target: "TARGET_NEW_WINDOW";};
 type DU_RedirectUrl={url: `https://www.youtube.com/redirect?${string}`; target: "TARGET_NEW_WINDOW"; nofollow: true;};
