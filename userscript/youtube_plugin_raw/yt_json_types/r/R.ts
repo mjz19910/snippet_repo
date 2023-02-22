@@ -135,7 +135,6 @@ type R_MetadataRow={metadataRowRenderer: D_MetadataRow;};
 type R_MicroformatData={microformatDataRenderer: D_Microformat;};
 type R_Miniplayer={miniplayerRenderer: D_Miniplayer;};
 type R_MovingThumbnail={movingThumbnailRenderer: D_MovingThumbnail;};
-type R_MP_MenuNotificationSection={multiPageMenuNotificationSectionRenderer: D_MP_MenuNotificationSection;};
 type R_MultiMarkersPlayerBar={multiMarkersPlayerBarRenderer: D_MultiMarkersPlayerBar;};
 type R_MusicCarouselShelf={musicCarouselShelfRenderer: D_MusicCarouselShelf;};
 type R_MusicHeader={musicHeaderRenderer: {};};

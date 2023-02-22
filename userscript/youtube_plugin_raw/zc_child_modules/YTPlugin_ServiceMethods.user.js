@@ -1075,13 +1075,6 @@ class ServiceMethods extends ServiceData {
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
-	/** @protected @arg {CF_T_OpenPopup_Dialog} cf @arg {T_OpenPopup_Dialog<R_FancyDismissibleDialog>} x */
-	T_OpenPopup_Dialog(cf,x) {
-		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(popupType!=="DIALOG") {debugger; return;}
-		this.R_FancyDismissibleDialog(popup);
-		this.t(beReused,x => this.cq(x,true));
-	}
 	/** @private @arg {R_AboutThisAd} x */
 	R_AboutThisAd(x) {this.H_("aboutThisAdRenderer",x,this.D_AboutThisAd);}
 	/** @private @arg {D_AboutThisAd} x */
@@ -2709,24 +2702,11 @@ class ServiceMethods extends ServiceData {
 	some(x) {return {type: "s",x};}
 	/** @template T @arg {Some<T>} x @returns {T} */
 	mu(x) {return x.x;}
-	/** @arg {(x:T)=>U} f @template T @template {M_Optional<T>} Opt @arg {Opt} m @template U @returns {Opt extends None?None:Some<U>} */
-	mt(m,f) {
-		/** @returns {Opt extends None?None:Some<U>} */
-		function mr() {throw new Error();}
-		if(m.type==="n") {
-			/** @type {None} */
-			let ret={type: "n"};
-			this.assert_assume_is_type(ret,mr);
-			return ret;
-		}
-		let v=f.call(this,m.x);
-		let ret=this.some(v);
-		this.assert_assume_is_type(ret,mr);
-		return ret;
-	}
-	/** @arg {(x:T)=>U} f @template {{}} T @template {M_Optional<T[]>} Opt @arg {Opt} m @template U */
+	/** @arg {(x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U>} */
+	mt(m,f) {return this.some(f.call(this,m.x));}
+	/** @arg {(x:T)=>U} f @template {{}} T @template {Some<T[]>} Opt @arg {Opt} m @template U */
 	mz(m,f) {return this.mt(m,x => this.z(x,f));}
-	/** @arg {(x:T)=>U} f @template T @template {M_Optional<T>} Opt @arg {Opt} m @template U */
+	/** @arg {(x:T)=>U} f @template T @arg {Some<T>} m @template U */
 	mb(f,m) {return this.mt(m,f);}
 	/** @template {string} T_CF @arg {T_CF} cf @arg {(cf:T_CF,x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>|None} */
 	mt_cf(m,cf,f) {

@@ -1071,7 +1071,7 @@ class Support_RS_Player extends ServiceMethods {
 	_bd=x => this.mb(this.parse_number_template,this.m(x));
 	/** @arg {`${number}`} x */
 	_pn=x => this.mb(this.a_primitive_num,this._bd(x));
-	/** @arg {string} cf @arg {M_Optional<number>} x */
+	/** @arg {string} cf @arg {Some<number>} x */
 	_ns=(cf,x) => this.mb(x => this.save_number_one(cf,x),x);
 	/** @arg {string} cf @arg {string} k @arg {`${number}`} x */
 	_ns_cf(cf,k,x) {this._ns(`${cf}.${k}`,this._bd(x));}
@@ -1353,8 +1353,9 @@ class Support_GenericApi extends ServiceMethods {
 	/** @private @arg {Popup_DD_NotificationMenu} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
-		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {popupType: a,popup: b,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(a!=="DROPDOWN") {this.codegen_typedef(cf,x); return null;}
+		this.t(beReused,x => this.cq(x,true));
 		return b;
 	}
 	//#endregion
@@ -1534,7 +1535,7 @@ class Support_GenericApi extends ServiceMethods {
 	R_PlaylistAddToOption(x) {this.H_("playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
+	/** @private @arg {R_MultiPageMenuNotificationSection} x */
 	D_NotificationMenu_Popup_SectionItem(x) {
 		const cf="D_NotificationMenu_Popup_SectionItem";
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
@@ -1599,9 +1600,9 @@ class Support_GenericApi extends ServiceMethods {
 		this.z(entries,this.R_PrivacyDropdownItem);
 		if(label!=="Privacy") debugger;
 	}
-	/** @private @arg {R_MP_MenuNotificationSection} x */
+	/** @private @arg {R_MultiPageMenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
-	/** @private @arg {D_MP_MenuNotificationSection} x */
+	/** @private @arg {D_MultiPageMenuNotificationSection} x */
 	D_MP_MenuNotificationSection(x) {
 		const cf="D_MP_MenuNotificationSection";
 		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3002,7 +3003,7 @@ class Support_Renderer extends ServiceMethods {
 		this.G_Text(numVideosText);
 		this.t(descriptionTapText,this.G_Text);
 		this.g(descriptionText);
-		this.TA_OpenPopup("A_FancyDismissibleDialog",onDescriptionTap);
+		this.A_FancyDismissibleDialog(onDescriptionTap);
 		this.D_CanShare(shareData);
 		this.z(stats,this.G_Text);
 		this.z(briefStats,this.G_Text);
@@ -3015,6 +3016,19 @@ class Support_Renderer extends ServiceMethods {
 		this.t(titleForm,this.R_InlineForm);
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
+	}
+	/** @private @arg {A_FancyDismissibleDialog} x */
+	A_FancyDismissibleDialog(x) {
+		let dl=this.TA_OpenPopup("A_FancyDismissibleDialog",x);
+		let pu=this.Popup_DL_DismissibleDialog(dl);
+		this.R_FancyDismissibleDialog(pu);
+	}
+	/** @protected @arg {Popup_DL_DismissibleDialog} x */
+	Popup_DL_DismissibleDialog(x) {
+		const {popup,popupType,beReused,...y}=this.s("Popup_DL_DismissibleDialog",x); this.g(y);/*#destructure_done*/
+		this.cq(popupType,"DIALOG");
+		this.t(beReused,x => this.cq(x,true));
+		return popup;
 	}
 	/** @public @arg {R_InlineForm} x */
 	R_InlineForm(x) {this.H_("inlineFormRenderer",x,this.D_InlineForm);}

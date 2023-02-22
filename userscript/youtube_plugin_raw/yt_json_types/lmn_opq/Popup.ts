@@ -93,7 +93,7 @@ type D_GetNotificationMenu={
 };
 type D_NotificationMenu={
 	header: R_SimpleMenuHeader;
-	sections: D_NotificationMenu_Popup_SectionItem[];
+	sections: R_MultiPageMenuNotificationSection[];
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
 	trackingParams: string;
 };
@@ -103,3 +103,5 @@ type D_TopbarMenu={
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 };
 //#endregion
+type R_MultiPageMenuNotificationSection={multiPageMenuNotificationSectionRenderer: D_MultiPageMenuNotificationSection;};
+type D_MultiPageMenuNotificationSection=T_TrackedItems<GR_MP_MenuNotificationSection_Item>;

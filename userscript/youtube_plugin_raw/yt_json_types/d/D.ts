@@ -2002,10 +2002,9 @@ type D_LiveChatViewerEngagementMessage={
 	trackingParams: string;
 };
 type D_LoggingUrl={baseUrl: string;};
-type D_MP_MenuNotificationSection={trackingParams: string; items: GR_MP_MenuNotificationSection_Item[];};
 type D_MP_MenuStyle={style: DE_MP_MenuStyle;};
 type D_MP_Menu_Section={
-	notification_menu: R_MP_MenuNotificationSection;
+	notification_menu: R_MultiPageMenuNotificationSection;
 	account_section_list: R_AccountSectionList;
 	page_menu: TR_MultiPageMenuSection<R_CompactLink>;
 };
@@ -2136,7 +2135,6 @@ type D_NotchesItem={
 	purchaseCommand: E_YpcGetCart;
 	tierValue: G_Text;
 };
-type D_NotificationMenu_Popup_SectionItem=R_MP_MenuNotificationSection;
 type D_NotificationText={
 	successResponseText: G_Text;
 	undoText: G_Text;

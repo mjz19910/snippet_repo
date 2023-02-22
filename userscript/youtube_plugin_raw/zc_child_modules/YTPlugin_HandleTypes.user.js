@@ -1922,7 +1922,7 @@ class HandleTypes extends ServiceMethods {
 	ms(x,y) {return this.mt(this.m(x),y);}
 	/** @template {{}} T @arg {T|undefined} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
 	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
-	/** @template {{}} T @arg {M_Optional<T|null>} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
+	/** @template {{}} T @arg {Some<T|null>} x @template U @arg {(x:T)=>U} y @returns {Some<U|null>} */
 	mt_t(x,y) {return this.mt(x,x => this.t(x,y));}
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
