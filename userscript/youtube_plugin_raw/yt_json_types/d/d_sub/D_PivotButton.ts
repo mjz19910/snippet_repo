@@ -1,5 +1,3 @@
-type AD_AddToToast={item: R_NotificationText;};
-
 type A_AddToToast={
 	clickTrackingParams: string;
 	addToToastAction: AD_AddToToast;
