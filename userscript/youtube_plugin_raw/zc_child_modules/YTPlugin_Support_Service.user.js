@@ -1649,8 +1649,10 @@ class Support_EventInput extends ServiceMethods {
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {
 		const cf="E_Settings";
-		const {_tag,...y}=this.s(cf,x); this.g(y);
+		if(!("settingsEndpoint" in x)) {debugger; return;}
+		const {_tag,settingsEndpoint,...y}=this.s(cf,x); this.g(y);
 		if(_tag!=="E_Settings") debugger;
+		this.g(settingsEndpoint);
 	}
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
@@ -1798,7 +1800,12 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeSettings(x) {
 		const cf="R_PageTypeSettings";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Settings(endpoint);
+		x: {
+			let x2=endpoint;
+			if("browseEndpoint" in x2) {this.E_VE23462(x2); break x;}
+			if("settingsEndpoint" in x2) {this.E_Settings(x2); break x;}
+			x2===""; debugger;
+		}
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");

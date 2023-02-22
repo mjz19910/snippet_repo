@@ -340,7 +340,7 @@ class ServiceMethods extends ServiceData {
 	 * @protected @template R_D,R_M
 	 * @template {Extract<keyof T_Endpoint,EPL>} EP_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
 	 * @arg {EP_Key} k
-	 * @arg {(x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(x:T_Endpoint[EP_Key])=>R_D} f2
+	 * @arg {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[EP_Key])=>R_D} f2
 	 * @returns {[typeof y,R_M,R_D]}
 	 */
 	TE_Endpoint_3_v2(k,x,f1,f2) {
@@ -352,7 +352,7 @@ class ServiceMethods extends ServiceData {
 		let cf=this.cg.get_auto_type_name(s,x);
 		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
 		this.clickTrackingParams(clickTrackingParams);
-		const r1=f1(commandMetadata),r2=f2(a);
+		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
 		return [y,r1,r2];
 	}
 	/** @protected @arg {E_PlaylistEdit} x */

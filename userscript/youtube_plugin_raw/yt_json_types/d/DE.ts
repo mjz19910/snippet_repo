@@ -39,6 +39,7 @@ type D_SerializedContextData={serializedContextData: string;};
 type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
 type DE_AddToPlaylistService={videoId: string;};
 type DE_AdFeedback={content: R_AdFeedback;};
+type DE_Settings={browseId: "SPaccount_overview";};
 type DE_BucketIdentifier={bucketIdentifier: "live_chat"; hack: true;};
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type DE_CreateComment={createCommentParams: string;};
