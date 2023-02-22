@@ -13,7 +13,6 @@ type D_MultiPageMenuSection={
 	items: R_CompactLink[];
 	trackingParams: string;
 };
-
 type R_MultiPageMenuSection={multiPageMenuSectionRenderer: D_MultiPageMenuSection;};
 type GM_VE12924={
 	url: "/select_site";
