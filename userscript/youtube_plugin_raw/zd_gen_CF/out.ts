@@ -558,13 +558,20 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_dislike_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_entity_key_normal";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_format_item_xtags";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_get_notification_menu_ctoken";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_get_pdg_buy_flow_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_get_report_form_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_get_transcript_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_like_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_load_markers_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_logging_context_serialized_context_data";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_logging_context_serialized_context_data.f1";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_macro_marker_repeat_state_entity_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_notification_opt_out";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_notification_record_interactions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_playability_status_context_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_player_state_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_playlist_loop_state_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_reel_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_reel_player_params";}
@@ -578,6 +585,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_transcript_track_selection_serialized_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_trending_bp";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_unsubscribe_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ve_6827_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_watch_params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_watch_player_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_watch_playlist_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_ypc_get_offers_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_DL_DismissibleDialog";}

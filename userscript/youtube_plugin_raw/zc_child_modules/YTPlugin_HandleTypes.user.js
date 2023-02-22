@@ -2228,6 +2228,66 @@ class HandleTypes extends ServiceMethods {
 		r("f30",f30); r("f57",f57); r("f71",f71);
 		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
 	}
+	/** @private @arg {P_ve_6827_params} x */
+	P_ve_6827_params(x) {
+		const cf="P_ve_6827_params";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_watch_params} x */
+	P_watch_params(x) {
+		const cf="P_watch_params";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_watch_player_params} x */
+	P_watch_player_params(x) {
+		const cf="P_watch_player_params";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_format_item_xtags} x */
+	P_format_item_xtags(x) {
+		const cf="P_format_item_xtags";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_get_notification_menu_ctoken} x */
+	P_get_notification_menu_ctoken(x) {
+		const cf="P_get_notification_menu_ctoken";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_notification_opt_out} x */
+	P_notification_opt_out(x) {
+		const cf="P_notification_opt_out";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_get_report_form_params} x */
+	P_get_report_form_params(x) {
+		const cf="P_get_report_form_params";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_notification_record_interactions} x */
+	P_notification_record_interactions(x) {
+		const cf="P_notification_record_interactions";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_player_state_entity_key} x */
+	P_player_state_entity_key(x) {
+		const cf="P_player_state_entity_key";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
+	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
+	P_macro_marker_repeat_state_entity_key(x) {
+		const cf="P_macro_marker_repeat_state_entity_key";
+		const {...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+	}
 	//#endregion
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	binary_result(cf,x) {
@@ -2462,6 +2522,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_ve_6827_params(u);
 			} break;
+			case "playlist_edit.params": {
+				/** @type {P_playlist_edit_params} */
+				let u=as_any(x);
+				this.P_playlist_edit_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2469,26 +2534,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {P_ve_6827_params} x */
-	P_ve_6827_params(x) {x;}
-	/** @private @arg {P_watch_params} x */
-	P_watch_params(x) {x;}
-	/** @private @arg {P_watch_player_params} x */
-	P_watch_player_params(x) {x;}
-	/** @private @arg {P_format_item_xtags} x */
-	P_format_item_xtags(x) {x;}
-	/** @private @arg {P_get_notification_menu_ctoken} x */
-	P_get_notification_menu_ctoken(x) {x;}
-	/** @private @arg {P_notification_opt_out} x */
-	P_notification_opt_out(x) {x;}
-	/** @private @arg {P_get_report_form_params} x */
-	P_get_report_form_params(x) {x;}
-	/** @private @arg {P_notification_record_interactions} x */
-	P_notification_record_interactions(x) {x;}
-	/** @private @arg {P_player_state_entity_key} x */
-	P_player_state_entity_key(x) {x;}
-	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
-	P_macro_marker_repeat_state_entity_key(x) {x;}
+	/** @private @arg {P_playlist_edit_params} x */
+	P_playlist_edit_params(x) {x;}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns

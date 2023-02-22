@@ -419,3 +419,6 @@ type P_watch_params={
 type P_ve_6827_params={
 	77: TV_Str<"FEexplore">
 };
+type P_playlist_edit_params={
+	1: T_D32<1>
+};
