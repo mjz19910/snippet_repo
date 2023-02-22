@@ -227,23 +227,77 @@ type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V i
 
 type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
 type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? string extends V? {[U in string]?: string;}:TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
-type UriDecodeMap={
+type Map_UriDecode={
+	"%20": " ";
+	"%22": '"';
+	"%25": "%";
+	"%3C": "<";
+	"%3E": ">";
 	"%5B": "[";
+	"%5C": "\\";
 	"%5D": "]";
-	"%3D": "=";
-	"%26": "&";
+	"%5E": "^";
+	"%60": "`";
+	"%7B": "{";
+	"%7C": "|";
+	"%7D": "}";
+	// Reserved Characters
+	// ;/?:@&=+$,#
+	"%3B": ";";
+	"%2F": "/";
 	"%3F": "?";
+	"%3A": ":";
+	"%40": "@";
+	"%26": "&";
+	"%3D": "=";
+	"%2B": "+";
+	"%24": "$";
+	"%2C": ",";
+	"%23": "#";
 };
-type DecodeUriComponent_2<T extends string>=T_Replace<T,"%3D","=">;
-type DecodeUriComponent_3<T extends string>=DecodeUriComponent_2<T_Replace<T,"%26","&">>;
-type DecodeUriComponent_4<T extends string>=DecodeUriComponent_3<T_Replace<T,"%24","$">>;
-type DecodeUriComponent_5<T extends string>=DecodeUriComponent_4<T_Replace<T,"%5B","[">>;
-type DecodeUriComponent_6<T extends string>=DecodeUriComponent_5<T_Replace<T,"%5D","]">>;
-type DecodeUriComponent_all_1<T extends string>=[{[U in keyof UriDecodeMap]: T extends `${U}${string}`? UriDecodeMap[U]:never}[keyof UriDecodeMap]] extends [never]? T:{[U in keyof UriDecodeMap]: T extends `${U}${string}`? UriDecodeMap[U]:never}[keyof UriDecodeMap];
-type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof UriDecodeMap}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`? `${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`? `${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
-type DecodeUriComponent<T extends string>=DecodeUriComponent_6<T>;
+type DecodeUriComponent_all_1<T extends string>=T extends ""? T:[{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode]] extends [never]? T:{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode];
+type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof Map_UriDecode}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`? `${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`? `${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
+type DecodeUriComponent<T extends string>=Join<DecodeUriComponentEach_Init<T_Split<T,"%">>,"">;
 type Do_Dec=DecodeUriComponent<"%5Bab%5D%5Bab%5D">;
+type TMP_UrP1=T_Split<D_FormatItem_SignatureCipher_SP,"&">[2];
+type DoDec3=T_Split<T_Split<TMP_UrP1,"=">[1],"%">;
+type DecodeUriComponentEach<T extends string[]>=
+	T extends []? []:
+	T extends [infer F extends string]? [DecodeUriComponent_all<`%${F}`>]:
+	T extends [infer F extends string,...infer R extends string[]]? DecodeUriComponentEach<R> extends infer R2 extends string[]? [DecodeUriComponent_all<`%${F}`>,...R2]:never:T;
+type DecodeUriComponentEach_Init<T extends string[]>=T extends [infer S,...infer R extends string[]]? [S,...DecodeUriComponentEach<R>]:T;
+type DoDec4=Join<DecodeUriComponentEach_Init<DoDec3>,"">;
 type DoDec2=DecodeUriComponent_all_1<"=">;
+type T_EncodeUriComponent<T extends string>=T;
+type Map_UriComponentEncode={
+	// not alphanumeric
+	" ": "%20";
+	'"': "%22";
+	"%": "%25";
+	"<": "%3C";
+	">": "%3E";
+	"[": "%5B";
+	"\\": "%5C";
+	"]": "%5D";
+	"^": "%5E";
+	"`": "%60";
+	"{": "%7B";
+	"|": "%7C";
+	"}": "%7D";
+	// Reserved Characters
+	// ;/?:@&=+$,#
+	";": "%3B";
+	"/": "%2F";
+	"?": "%3F";
+	":": "%3A";
+	"@": "%40";
+	"&": "%26";
+	"=": "%3D";
+	"+": "%2B";
+	"$": "%24";
+	",": "%2C";
+	"#": "%23";
+};
 type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
