@@ -588,8 +588,8 @@ class Support_RS_Player extends ServiceMethods {
 			let x=baseUrl;
 			let x1=split_string_once(x,"?");
 			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
-			let {...rx}=this.parse_url_search_params(x1[1]);
-			this.xr.D_TimedTextApi(rx);
+			let rx=this.parse_url_search_params(x1[1]);
+			this.xr.D_TimedTextApi(as_any(rx));
 		}
 		this.G_Text(name);
 		this.save_string(`${cf}.vssId`,vssId);

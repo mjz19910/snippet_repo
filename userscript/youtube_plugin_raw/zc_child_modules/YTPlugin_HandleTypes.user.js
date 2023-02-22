@@ -1344,9 +1344,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x) {
 		const cf="D_FeedbackResponseProcessedStatus";
-		const {isProcessed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {isProcessed,followUpDialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this._primitive_of(isProcessed,"boolean");
+		this.t(followUpDialog,this.R_DismissalFollowUp)
 	}
+	/** @private @arg {R_DismissalFollowUp} x */
+	R_DismissalFollowUp(x) {x;}
 	/** @private @arg {AU_EngagementPanel} x */
 	AU_EngagementPanel(x) {
 		const cf="AU_EngagementPanel";
