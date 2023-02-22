@@ -643,7 +643,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.trackingParams(trackingParams);
-		this.t(continuationEndpoint,this.C_Continuation);
+		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
 	}
 	/** @public @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {

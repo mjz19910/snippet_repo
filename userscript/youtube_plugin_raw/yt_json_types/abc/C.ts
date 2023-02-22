@@ -13,6 +13,7 @@ type C_ChangeMarkersVisibility=TE_Endpoint_2<"changeMarkersVisibilityCommand",DC
 type C_CommandExecutor=TE_Endpoint_2<"commandExecutorCommand",DC_CommandExecutor>;
 type C_EngagementPanelHeaderShowNavigationButton=TE_Endpoint_2<"engagementPanelHeaderShowNavigationButtonCommand",DC_EngagementPanelHeaderShowNavigationButton>;
 type C_EntityUpdate=TE_Endpoint_2<"entityUpdateCommand",DC_EntityBatchUpdate>;
+type C_FilterChipTransform=TE_Endpoint_2<"filterChipTransformCommand",DC_ChipUniqueId>;
 type C_FollowUp=TE_Endpoint_2<"addFollowUpSurveyCommand",DC_AddFollowUpSurvey>;
 type C_GetPdgBuyFlow=TE_Endpoint_3<"getPdgBuyFlowCommand",DC_GetPdgBuyFlow,M_GetPdgBuyFlow>;
 type C_GetSurvey=TE_Endpoint_3<"getSurveyCommand",A_GetSurvey,M_GetSurvey>;

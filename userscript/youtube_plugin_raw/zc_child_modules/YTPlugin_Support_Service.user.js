@@ -3437,6 +3437,102 @@ class Support_Renderer extends ServiceMethods {
 		this.t(followUpDialog,this.R_DismissalFollowUp);
 	}
 	//#endregion
+	//#region new
+	/** @template {C_Continuation} BT @template {BT["continuationCommand"]["request"]} T @arg {BT} x @arg {T} t @returns {x is {continuationCommand:{request:T}}} */
+	is_C_Continuation_one(x,t) {return x.continuationCommand.request===t;}
+	/** @public @arg {C_Continuation} x */
+	C_Continuation(x) {
+		if(this.is_C_Continuation_one(x,"CONTINUATION_REQUEST_TYPE_BROWSE")) {
+			const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
+			this.t(a,this.M_Browse);
+			this.DC_Continuation_Browse(b);
+			return;
+		}
+		if(this.is_C_Continuation_one(x,"CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE")) {
+			const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
+			this.t(a,this.M_Next);
+			this.DC_Continuation_ReelWatchSeq(b);
+			return;
+		}
+		if(this.is_C_Continuation_one(x,"CONTINUATION_REQUEST_TYPE_WATCH_NEXT")) {
+			const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
+			this.t(a,this.M_Next);
+			this.DC_Continuation_WatchNext(b);
+			return;
+		}
+		debugger;
+	}
+	/** @public @arg {DC_Continuation} x */
+	DC_Continuation(x) {
+		if("continuationCommand" in x) debugger;
+		const cf="DC_Continuation";
+		switch(x.request) {
+			default: debugger; break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
+		}
+	}
+	/** @private @arg {C_ShowReloadUi} x */
+	C_ShowReloadUi(x) {
+		const cf="C_ShowReloadUi";
+		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
+		this.clickTrackingParams(clickTrackingParams);
+		this.DC_ShowReloadUi(a);
+	}
+	/** @private @arg {DC_ShowReloadUi} x */
+	DC_ShowReloadUi(x) {this.y("DC_ShowReloadUi","targetId",x,this.D_UiTargetId);}
+	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
+	DC_Continuation_Omit(cf,x) {
+		const {token,request,...y}=this.s(cf,x);
+		switch(request) {
+			default: debugger; break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": this.params("continuation_request.browse.token",token); break;
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": this.params("continuation_request.reel_watch_sequence.token",token); break;
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": this.params("continuation_request.watch_next.token",token); break;
+		};
+		/** @returns {T_OmitKey<T,"token"|"request">|null} */
+		function gu() {return null;}
+		this.assert_is_omit_key(y,gu);
+		return y;
+	}
+	/** @public @arg {DC_Continuation_Browse} x */
+	DC_Continuation_Browse(x) {
+		const cf="DC_Continuation_Browse";
+		const {token,request,command,...y}=this.s(cf,x); this.g(y);
+		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
+		this.params("continuation_request.browse.token",token);
+		this.C_ShowReloadUi(command);
+	}
+	/** @public @arg {DC_Continuation_ReelWatchSeq} x */
+	DC_Continuation_ReelWatchSeq(x) {
+		const cf="DC_Continuation_ReelWatchSeq";
+		const {token,request,...y}=this.s(cf,x); this.g(y);
+		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
+		this.params("continuation_request.reel_watch_sequence.token",token);
+	}
+	/** @public @arg {DC_Continuation_WatchNext} x */
+	DC_Continuation_WatchNext(x) {
+		const cf="DC_Continuation_WatchNext";
+		const {token,request,...y}=this.s(cf,x); this.g(y);
+		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
+		this.params("continuation_request.watch_next.token",token);
+	}
+	/** @protected @arg {M_Browse} x */
+	M_Browse(x) {this.T_WCM("M_Browse",x,x => this.GM_Browse(x));}
+	/** @protected @arg {M_Next} x */
+	M_Next(x) {this.T_WCM("M_Next",x,x => this.GM_Next(x));}
+	/** @private @arg {GM_Browse} x */
+	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
+	/** @private @arg {GM_Next} x */
+	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
+	//#endregion
 }
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;

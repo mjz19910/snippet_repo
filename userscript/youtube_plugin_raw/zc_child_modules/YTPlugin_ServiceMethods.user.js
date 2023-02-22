@@ -179,21 +179,6 @@ class ServiceMethods extends ServiceData {
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
 		this.cg.codegen_str(cf,x);
 	}
-	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
-	DC_Continuation_Omit(cf,x) {
-		const {token,request,...y}=this.s(cf,x);
-		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
-		switch(request) {
-			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": this.params("continuation_request.browse.token",token); break;
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": this.params("continuation_request.reel_watch_sequence.token",token); break;
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": this.params("continuation_request.watch_next.token",token); break;
-		};
-		/** @returns {T_OmitKey<T,"token"|"request">|null} */
-		function gu() {return null;}
-		this.assert_is_omit_key(y,gu);
-		return y;
-	}
 	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
 	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
@@ -548,10 +533,6 @@ class ServiceMethods extends ServiceData {
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @private @arg {GM_GetSharePanel} x */
 	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
-	/** @private @arg {GM_Next} x */
-	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
-	/** @private @arg {GM_Browse} x */
-	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @arg {GM_RemoveLike} x */
@@ -1091,10 +1072,9 @@ class ServiceMethods extends ServiceData {
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
-	/** @protected @arg {CF_T_OpenPopup_Dialog} cf1 @arg {T_OpenPopup_Dialog<R_FancyDismissibleDialog>} x */
-	T_OpenPopup_Dialog(cf1,x) {
-		const cf2="T_OpenPopup_Dialog";
-		const {popup,popupType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
+	/** @protected @arg {CF_T_OpenPopup_Dialog} cf @arg {T_OpenPopup_Dialog<R_FancyDismissibleDialog>} x */
+	T_OpenPopup_Dialog(cf,x) {
+		const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(popupType!=="DIALOG") {debugger; return;}
 		this.R_FancyDismissibleDialog(popup);
 	}
@@ -1276,39 +1256,6 @@ class ServiceMethods extends ServiceData {
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 	}
-	/** @private @arg {MC_Continuation} x */
-	MC_Continuation(x) {
-		this.T_WCM("MC_Continuation",x,x => {
-			switch(x.apiUrl) {
-				default: debugger; break;
-				case "/youtubei/v1/browse": this.GM_Browse(x); break;
-				case "/youtubei/v1/next": this.GM_Next(x); break;
-			}
-		});
-	}
-	/** @private @arg {DC_Continuation} x */
-	DC_Continuation(x) {
-		if("continuationCommand" in x) debugger;
-		const cf="DC_Continuation";
-		switch(x.request) {
-			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
-			}
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
-			}
-		}
-	}
-	/** @protected @arg {C_Continuation} x */
-	C_Continuation(x) {
-		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-		this.t(a,this.MC_Continuation);
-		this.DC_Continuation(b);
-	}
 	/** @protected @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
 	T_SE_Signal(cf,x) {
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1361,7 +1308,7 @@ class ServiceMethods extends ServiceData {
 	GC_Button(x) {
 		const cf="GC_Button";
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("continuationCommand" in x) return this.C_Continuation(x);
+		if("continuationCommand" in x) return this.xr.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
@@ -1528,32 +1475,30 @@ class ServiceMethods extends ServiceData {
 		this.save_string(`${cf}.iconType`,iconType);
 	}
 	/**
-	 * @arg {CF_TE_Endpoint_2} cf1
+	 * @arg {CF_TE_Endpoint_2} cf
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
 	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
 	 * */
-	TE_Endpoint_2(cf1,k,x) {
-		const cf2="TE_Endpoint_2";
-		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+	TE_Endpoint_2(cf,k,x) {
+		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
 		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
 		this.clickTrackingParams(clickTrackingParams);
 		return [endpoint,y];
 	}
 	/**
-	 * @arg {CF_TE_TrackedObj_2} cf1
+	 * @arg {CF_TE_TrackedObj_2} cf
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
 	 * @returns {[T_EP[EP_Key],Omit<T_EP,"trackingParams"|EP_Key>]}
 	 * */
-	TE_TrackedObj_2(cf1,x,k) {
-		const cf2="TE_TrackedObj_2";
-		const {trackingParams,[k]: endpoint,...y}=this.s(`${cf2}:${cf1}`,x);
+	TE_TrackedObj_2(cf,x,k) {
+		const {trackingParams,[k]: endpoint,...y}=this.s(cf,x);
 		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
 		this.trackingParams(trackingParams);
 		return [endpoint,y];
 	}
 	/** @protected @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
-		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
+		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
 		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
 		this.clickTrackingParams(clickTrackingParams);
 		return [commandMetadata,endpoint,y];
@@ -2526,7 +2471,7 @@ class ServiceMethods extends ServiceData {
 	 * @returns {[U,Omit<T,"webCommandMetadata">]}
 	 * */
 	T_WCM(cf,x,f) {
-		const {webCommandMetadata: a,...y}=this.s(`T_WCM:${cf}`,x);
+		const {webCommandMetadata: a,...y}=this.s(cf,x);
 		let ret=f.call(this,a);
 		return [ret,y];
 	}
@@ -3391,13 +3336,6 @@ class ServiceMethods extends ServiceData {
 	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {E_Subscribe} x */
 	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
-	/** @private @arg {C_ShowReloadUi} x */
-	C_ShowReloadUi(x) {
-		const cf="C_ShowReloadUi";
-		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.DC_ShowReloadUi(a);
-	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
@@ -3448,12 +3386,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
-	/** @private @arg {DC_ShowReloadUi} x */
-	DC_ShowReloadUi(x) {
-		const cf="DC_ShowReloadUi";
-		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
-		this.D_UiTargetId(targetId);
-	}
 	/** @type {D_UiTargetId[]} */
 	reload_ui_target_id_arr=[];
 	/** @arg {D_UiTargetId} x */
@@ -3545,7 +3477,7 @@ class ServiceMethods extends ServiceData {
 	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
-	/** @private @arg {D_ChipUniqueId} x */
+	/** @private @arg {DC_ChipUniqueId} x */
 	D_ChipUniqueId(x) {
 		const cf="D_ChipUniqueId";
 		const {chipUniqueId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -4892,7 +4824,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {"MG_AdLayout"|"MG_AdLayout_DisplayTopLandscapeImage"} cf1 @arg {D_SerializedAdServingDataEntry} x */
 	D_SerializedAdServingDataEntry(cf1,x) {
-		const cf2="D_SerializedAdServingDataEntry"; this.k(`${cf2}:${cf1}`,x);
+		const cf2="D_SerializedAdServingDataEntry"; this.k(cf1,x);
 		switch(cf1) {
 			default: debugger; break;
 			case "MG_AdLayout": this.H_("serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x)); break;

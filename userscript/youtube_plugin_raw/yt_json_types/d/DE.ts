@@ -34,8 +34,7 @@ type DE_VE96368=DE_VE<"FEsubscriptions">;
 //#endregion
 //#region DE_
 //#region Objects
-type C_FilterChipTransform={clickTrackingParams: string; filterChipTransformCommand: D_ChipUniqueId;};
-type D_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
+type DC_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
 type D_SerializedContextData={serializedContextData: string;};
 type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
 type DE_AddToPlaylistService={videoId: string;};
