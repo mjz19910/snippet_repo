@@ -2237,7 +2237,13 @@ class Support_Renderer extends ServiceMethods {
 	/** @public @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @public @arg {E_VE12924_ApplicationSettings} x */
-	E_VE12924_ApplicationSettings(x) {x;}
+	E_VE12924_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_VE12924,this.B_Hack); this.g(y);}
+	/** @private @arg {E_SubmitFeedback} x */
+	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
+	/** @private @arg {T_Signal<"SUBMIT_FEEDBACK">} x */
+	DE_SubmitFeedback(x) {this.cq(this.T_Signal("DE_SubmitFeedback",x),"SUBMIT_FEEDBACK");}
+	/** @private @arg {M_VE12924} x */
+	M_VE12924(x) {x;}
 	//#endregion
 	//#region Action methods
 	/** @private @arg {A_AddToGuideSection} x */
@@ -3106,6 +3112,24 @@ class Support_Renderer extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.G_Text(channelHandle);
 	}
+	/** @private @arg {R_DismissalFollowUp} x */
+	R_DismissalFollowUp(x) {this.H_("dismissalFollowUpRenderer",x,this.D_DismissalFollowUp);}
+	/** @private @arg {D_DismissalFollowUp} x */
+	D_DismissalFollowUp(x) {
+		const cf="D_DismissalFollowUp";
+		const {trackingParams,dismissalReasonsPrompt,reasons,cancelButton,submitButton,submitFeedbackEndpoint,dismissalViewStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.G_Text(dismissalReasonsPrompt);
+		this.z(reasons,this.R_DismissalReasonText);
+		this.R_Button(cancelButton);
+		this.R_Button(submitButton);
+		this.E_SubmitFeedback(submitFeedbackEndpoint);
+		this.cq(dismissalViewStyle,"DISMISSAL_VIEW_STYLE_COMPACT_TALL");
+	}
+	/** @private @arg {R_DismissalReasonText} x */
+	R_DismissalReasonText(x) {this.H_("dismissalReasonTextRenderer",x,this.D_DismissalReasonText);}
+	/** @private @arg {D_DismissalReasonText} x */
+	D_DismissalReasonText(x) {x;}
 	//#endregion
 	//#region Group Union
 	/** @private @arg {G_ChannelSwitcherContent} x */
@@ -3372,8 +3396,6 @@ class Support_Renderer extends ServiceMethods {
 		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
 	}
-	//#endregion
-	//#region New Data methods
 	/** @public @arg {D_ExternalChannelId} x */
 	D_ExternalChannelId(x) {
 		const cf="D_ExternalChannelId";
@@ -3396,6 +3418,15 @@ class Support_Renderer extends ServiceMethods {
 		const {ids,engagementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(ids,this.D_ExternalChannelId);
 		if(engagementType!=="ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
+	}
+	//#endregion
+	//#region New Data methods
+	/** @public @arg {D_FeedbackResponseProcessedStatus} x */
+	D_FeedbackResponseProcessedStatus(x) {
+		const cf="D_FeedbackResponseProcessedStatus";
+		const {isProcessed,followUpDialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this._primitive_of(isProcessed,"boolean");
+		this.t(followUpDialog,this.R_DismissalFollowUp);
 	}
 	//#endregion
 }

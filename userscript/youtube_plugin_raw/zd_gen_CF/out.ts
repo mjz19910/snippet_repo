@@ -241,6 +241,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DecoratedPlayerBar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopTopbar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopWatchAds";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DismissalFollowUp";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DisplayAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Dropdown";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DropdownFormField";}
@@ -949,6 +950,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "E_SignalService_SendPost";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "GC_Button.SE_Signal";}
 		|{n: Prelude.CF_T_Signal; t: Types.CF_T_Signal_; v: "DE_SignalNavigation";}
+		|{n: Prelude.CF_T_Signal; t: Types.CF_T_Signal_; v: "DE_SubmitFeedback";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "MC_Continuation";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AccountMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}

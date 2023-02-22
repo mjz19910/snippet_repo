@@ -784,7 +784,7 @@ class HandleTypes extends ServiceMethods {
 	RS_Feedback(x) {
 		const cf="RS_Feedback";
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(feedbackResponses,this.D_FeedbackResponseProcessedStatus);
+		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
 	}
 	/** @public @arg {P_ParamParse} cf @arg {string} x */
 	decode_binary_obj(cf,x) {
@@ -1341,15 +1341,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
-	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
-	D_FeedbackResponseProcessedStatus(x) {
-		const cf="D_FeedbackResponseProcessedStatus";
-		const {isProcessed,followUpDialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._primitive_of(isProcessed,"boolean");
-		this.t(followUpDialog,this.R_DismissalFollowUp)
-	}
-	/** @private @arg {R_DismissalFollowUp} x */
-	R_DismissalFollowUp(x) {x;}
 	/** @private @arg {AU_EngagementPanel} x */
 	AU_EngagementPanel(x) {
 		const cf="AU_EngagementPanel";

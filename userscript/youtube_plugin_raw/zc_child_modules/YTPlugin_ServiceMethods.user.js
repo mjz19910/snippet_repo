@@ -3642,7 +3642,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {this.save_b64_binary("undo_token",x);}
-	/** @private @arg {M_Feedback} x */
+	/** @public @arg {M_Feedback} x */
 	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
