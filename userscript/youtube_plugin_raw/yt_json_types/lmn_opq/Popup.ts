@@ -4,4 +4,4 @@ type Popup_NotificationMenu=T_OpenPopup_Dropdown<R_PopupItemMenu>;
 type Popup_NotificationToast=T_OpenPopup_Toast<RA_Notification>;
 type Popup_GetNotificationsMenu=T_OpenPopup_ReuseableDropdown<P_NotificationMenu_Popup>;
 type Popup_ShareEntityService=T_OpenPopup_ReuseableDialog<R_UnifiedSharePanel>;
-type Popup_GetAccountMenu=T_OpenPopup_ReuseableDropdown<R_AccountMenu_2>;
+type Popup_GetAccountMenu=T_OpenPopup_ReuseableDropdown<R_AccountMenu>;

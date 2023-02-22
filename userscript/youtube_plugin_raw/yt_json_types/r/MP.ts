@@ -6,5 +6,5 @@ type TR_MultiPageMenu<T>={multiPageMenuRenderer: T;};
 type R_TopbarMenu=TR_MultiPageMenu<D_TopbarMenu>;
 type R_PopupItemMenu=TR_MultiPageMenu<D_PopupItemMenu>;
 type T_MenuPopup<T>=T_OpenPopup_ReuseableDropdown<TR_MultiPageMenu<T>>;
-type R_AccountMenu_2=TR_MultiPageMenu<MP_AccountMenu>;
+type R_AccountMenu=TR_MultiPageMenu<MP_AccountMenu>;
 //#endregion

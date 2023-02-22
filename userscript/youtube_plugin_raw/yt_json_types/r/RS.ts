@@ -9,9 +9,49 @@ type RS_WatchReelItem={
 	desktopTopbar: R_DesktopTopbar;
 	engagementPanels: R_EngagementPanelSectionList[];
 };
+type D_MultiPageMenuSection={
+	items: R_CompactLink[];
+	trackingParams: string;
+};
+
+type R_MultiPageMenuSection={multiPageMenuSectionRenderer: D_MultiPageMenuSection;};
+type GM_VE12924={
+	url: "/select_site";
+	webPageType: "WEB_PAGE_TYPE_SETTINGS";
+	rootVe: 12924;
+};
+type M_VE12924={webCommandMetadata: GM_VE12924;};
+type E_VE12924_ApplicationSettings={
+	clickTrackingParams: string;
+	commandMetadata: M_VE12924;
+	applicationSettingsEndpoint: B_Hack;
+};
+type D_ActiveAccountHeader={
+	accountName: G_Text;
+	accountPhoto: D_Thumbnail;
+	settingsEndpoint: E_VE12924_ApplicationSettings;
+	manageAccountTitle: G_Text;
+	trackingParams: string;
+	channelHandle: G_Text;
+};
+type R_ActiveAccountHeader={activeAccountHeaderRenderer: D_ActiveAccountHeader;};
+type Popup_AccountMenu={
+	header: R_ActiveAccountHeader;
+	sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];
+	trackingParams: string;
+	style: "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM";
+};
+type Popup_AccountMenu_tmp={
+	popup: TR_MultiPageMenu<Popup_AccountMenu>;
+	popupType: "DROPDOWN";
+};
+type D_AccountMenuPopup=TR_MultiPageMenu<Popup_AccountMenu>;
+
+type AD_AccountMenuPopup=T_OpenPopup_Dropdown<D_AccountMenuPopup>;
+
 type RS_AccountMenu={
 	responseContext: RC_ResponseContext;
-	actions: TA_OpenPopup_Empty[];
+	actions: A_AccountMenuPopup[];
 	trackingParams: string;
 };
 type RS_AccountsList={
