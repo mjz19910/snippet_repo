@@ -764,6 +764,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_ConfirmDialog";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_FancyDismissibleDialog";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_GetAccountMenu";}
+		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "A_GetSystemMenu";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "DE_ShareEntityService";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "G_Action_GetNotificationsMenu";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "RSG_NotificationMenu_Action";}

@@ -2263,7 +2263,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @private @type {string[]} */
 	logged_keys=[];
-	/** @protected @template {{}} T @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
+	/** @protected @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	g(x) {
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);

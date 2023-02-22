@@ -750,12 +750,15 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
 		const cf="S_VoiceSearchPopup_Dialog";
-		const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {popup,popupType,...y}=this.s(cf,x);/*#destructure_done*/
 		this.S_Client_HandlePopup(popup);
 		switch(popupType) {
 			default: debugger; break;
 			case "TOAST": case "TOP_ALIGNED_DIALOG": case "DIALOG":
 		}
+		if(this.is_empty_obj(y)) return this.g(y);
+		const {beReused,...y1}=y; this.g(y1);
+		this.t(beReused,x => this.cq(x,true));
 	}
 	/** @private @arg {A_SendFeedback} x */
 	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
