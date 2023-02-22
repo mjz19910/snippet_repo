@@ -2238,7 +2238,7 @@ class Support_Renderer extends ServiceMethods {
 	// AU_
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
-	// C_
+	// Command methods
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.H_("runAttestationCommand",x,this.D_RunAttestation);}
 	//#endregion
@@ -2274,7 +2274,7 @@ class Support_Renderer extends ServiceMethods {
 		this.xr.G_ChatItem(item);
 		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
 	}
-	// CommandData
+	// CommandData Data methods
 	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
 	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(path,x));}
 	/** @private @arg {DC_PlayerSeek} x */
@@ -2286,13 +2286,23 @@ class Support_Renderer extends ServiceMethods {
 		this.params("live_chat_replay.continuation",continuation);
 		this.a_primitive_num(timeUntilLastMessageMsec);
 	}
-	// ContinuationData
+	// ContinuationData Renderer methods
 	/** @private @arg {CD_PlayerSeek} x */
 	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
 	/** @private @arg {CD_LiveChatReplay} x */
 	CD_LiveChatReplay(x) {this.y("CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
 	/** @private @arg {CD_Invalidation} x */
 	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
+	// ContinuationData Data methods
+	/** @private @arg {DC_Invalidation} x */
+	DC_Invalidation(x) {
+		const cf="DC_Invalidation";
+		const {invalidationId,timeoutMs,continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_InvalidationId(invalidationId);
+		if(timeoutMs!==10000) debugger;
+		this.params("invalidation.continuation",continuation);
+		this.t(clickTrackingParams,this.clickTrackingParams);
+	}
 	//#endregion
 	//#region Renderer
 	/** @public @arg {R_SettingsSidebar} x */
@@ -3313,6 +3323,23 @@ class Support_Renderer extends ServiceMethods {
 		const cf="D_ExternalChannelId";
 		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_ChannelId(externalChannelId);
+	}
+	/** @private @arg {D_InvalidationId} x */
+	D_InvalidationId(x) {
+		const cf="D_InvalidationId";
+		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(objectSource);
+		console.log(`[${cf}.objectId]`,objectId);
+		console.log(`[${cf}.topic]`,topic);
+		if(subscribeToGcmTopics!==true) debugger;
+		console.log(`[${cf}.protoCreationTimestampMs]`,protoCreationTimestampMs);
+	}
+	/** @private @arg {D_RunAttestation} x */
+	D_RunAttestation(x) {
+		const cf="D_RunAttestation";
+		const {ids,engagementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(ids,this.D_ExternalChannelId);
+		if(engagementType!=="ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
 	}
 	//#endregion
 }

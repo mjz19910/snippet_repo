@@ -1426,7 +1426,7 @@ class HandleTypes extends ServiceMethods {
 	RS_Subscribe(x) {
 		const cf="RS_Subscribe";
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,this.G_RS_Subscribe_Action);
+		this.z(actions,x => this.xr.G_RS_Subscribe_Action(x));
 		this.g(newNotificationButton);
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
@@ -1448,9 +1448,9 @@ class HandleTypes extends ServiceMethods {
 	DC_LiveChat(x) {
 		const cf="DC_LiveChat";
 		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(continuations,this.G_LiveChatContinuationItem);
+		this.z(continuations,x => this.xr.G_LiveChatContinuationItem(x));
 		this.t(actionPanel,x => this.xr.R_LiveChatMessageInput(x));
-		this.tz(actions,this.G_LiveChatContinuationActions);
+		this.tz(actions,x => this.xr.G_LiveChatContinuationActions(x));
 		this.t(clientMessages,this.D_ClientMessages);
 		this.tz(emojis,x => this.xr.D_LiveChatEmoji(x));
 		this.t(header,this.R_LiveChatHeader);
@@ -1675,25 +1675,6 @@ class HandleTypes extends ServiceMethods {
 		/** @private @type {D_UrlFormat|D_ExternalUrlFormat} */
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
-	}
-	/** @private @arg {DC_Invalidation} x */
-	DC_Invalidation(x) {
-		const cf="DC_Invalidation";
-		const {invalidationId,timeoutMs,continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
-		this.D_InvalidationId(invalidationId);
-		if(timeoutMs!==10000) debugger;
-		this.params("invalidation.continuation",continuation);
-		this.t(clickTrackingParams,this.clickTrackingParams);
-	}
-	/** @private @arg {D_InvalidationId} x */
-	D_InvalidationId(x) {
-		const cf="D_InvalidationId";
-		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(objectSource);
-		console.log(`[${cf}.objectId]`,objectId);
-		console.log(`[${cf}.topic]`,topic);
-		if(subscribeToGcmTopics!==true) debugger;
-		console.log(`[${cf}.protoCreationTimestampMs]`,protoCreationTimestampMs);
 	}
 	/** @arg {string} cf @arg {string} sig_str */
 	validate_sig(cf,sig_str) {
