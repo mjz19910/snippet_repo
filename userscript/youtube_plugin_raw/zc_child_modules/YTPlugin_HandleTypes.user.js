@@ -427,37 +427,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
-	/** @private @arg {G_RS_Subscribe_Action} x */
-	G_RS_Subscribe_Action(x) {
-		const cf="RS_Subscribe_ActionItem";
-		if("openPopupAction" in x) {
-			/** @type {`${typeof cf}_Action`} */
-			const cf1=`${cf}_Action`;
-			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
-			this.clickTrackingParams(clickTrackingParams);
-			console.log(`[${cf}.openPopupAction]`,openPopupAction);
-			return;
-		}
-		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
-		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
-		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_LiveChatContinuationItem} x */
-	G_LiveChatContinuationItem(x) {
-		const cf="G_LiveChatContinuationItem";
-		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
-		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
-		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_RA_LiveChatContinuationActions} x */
-	G_LiveChatContinuationActions(x) {
-		const cf="G_LiveChatContinuationActions";
-		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
-		if("addChatItemAction" in x) return this.A_AddChatItem(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	//#endregion
 	//#region helpers
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */

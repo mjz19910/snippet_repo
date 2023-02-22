@@ -2228,6 +2228,7 @@ class Support_Renderer extends ServiceMethods {
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
 	//#endregion
+	//#region Renderer
 	/** @public @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
 	/** @private @arg {D_SettingsSidebar} x */
@@ -2969,7 +2970,11 @@ class Support_Renderer extends ServiceMethods {
 	/** @public @arg {R_ActiveAccountHeader} x */
 	R_ActiveAccountHeader(x) {this.H_("activeAccountHeaderRenderer",x,this.D_ActiveAccountHeader);}
 	/** @private @arg {D_ActiveAccountHeader} x */
-	D_ActiveAccountHeader(x) {x;}
+	D_ActiveAccountHeader(x) {
+		const cf="D_ActiveAccountHeader";
+		const {accountName,accountPhoto,settingsEndpoint,manageAccountTitle,trackingParams,channelHandle,...y}=this.s(cf,x); this.g(y);
+	}
+	//#endregion
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent";
@@ -3009,6 +3014,37 @@ class Support_Renderer extends ServiceMethods {
 		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
 		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
 		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_RS_Subscribe_Action} x */
+	G_RS_Subscribe_Action(x) {
+		const cf="RS_Subscribe_ActionItem";
+		if("openPopupAction" in x) {
+			/** @type {`${typeof cf}_Action`} */
+			const cf1=`${cf}_Action`;
+			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
+			this.clickTrackingParams(clickTrackingParams);
+			console.log(`[${cf}.openPopupAction]`,openPopupAction);
+			return;
+		}
+		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
+		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
+		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_LiveChatContinuationItem} x */
+	G_LiveChatContinuationItem(x) {
+		const cf="G_LiveChatContinuationItem";
+		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
+		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
+		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_RA_LiveChatContinuationActions} x */
+	G_LiveChatContinuationActions(x) {
+		const cf="G_LiveChatContinuationActions";
+		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
+		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_PdgBuyFlow} x */
