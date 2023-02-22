@@ -2480,9 +2480,7 @@ class Support_Renderer extends ServiceMethods {
 			const cf3=`${cf2}.SE_Signal`;
 			let [a,b]=this.T_SE_Signal(cf3,serviceEndpoint);
 			this.M_SendPost(a);
-			/** @type {`${cf3}.data`} */
-			const cf4=`${cf3}.data`;
-			this.G_ClientSignal(cf4,b);
+			this.G_ClientSignal(b);
 			this.trackingParams(trackingParams);
 			return;
 		}

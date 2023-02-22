@@ -521,6 +521,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE96368_WC_browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GT_ShortsSurfaceIdentifier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Action_GetNotificationsMenu_Popup";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_ClientSignal";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj:click_tracking";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_PR_TrackingObj:tracking";}

@@ -613,10 +613,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Accessibility(accessibility);
 		this.T_Icon(`${cf}:icon`,icon);
 		if(tooltip!=="Add to queue") debugger;
-		let [wc,s]=this.T_SE_Signal(cf,serviceEndpoint);
-		const cf1="D_ToggleButton_ServiceEP.data";
-		this.M_SendPost(wc);
-		this.G_ClientSignal(cf1,s);
+		this.E_SignalService_SendPost(serviceEndpoint);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<Popup_ClientSignal>>} x */
 	S_Client_Popup(x) {
@@ -784,32 +781,22 @@ class ServiceMethods extends ServiceData {
 	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
-	/** @arg {string} cf1 @arg {G_ClientSignal["actions"][number]} x */
-	G_SignalActionItem(cf1,x) {
-		/** @type {`G_SignalActionItem:${cf1}`} */
-		const cf2=`G_SignalActionItem:${cf1}`; this.k(cf2,x);
-		/** @type {G_ClientSignal_Item} */
+	/** @arg {G_ClientSignal_Item} x */
+	G_ClientSignal_Item(x) {
+		const cf="G_ClientSignal_Item"; this.k(cf,x);
 		if("openPopupAction" in x) return this.S_Client_Popup(x);
 		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
 		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
 		if("signalAction" in x) return this.A_Signal(x);
 		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
-		this.codegen_typedef(cf2,x);
+		this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {string} cf1 @arg {G_ClientSignal} x */
-	G_ClientSignal(cf1,x) {
-		const cf2="G_ClientSignal";
-		let {actions,...y}=this.Signal_Omit(x,x => {
-			this.save_string(`${cf2}.${cf1}.signal`,x);
-			if(x!=="CLIENT_SIGNAL") debugger;
-		}); this.g(y);
-		this.z_cf(cf1,actions,this.G_SignalActionItem);
-	}
-	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:T["signal"])=>void} f @returns {Omit<T,"signal">} */
-	Signal_Omit(x,f) {
-		const cf="Signal_Omit";
-		const {signal,...y}=this.s(cf,x); f(signal);
-		return y;
+	/** @protected @arg {G_ClientSignal} x */
+	G_ClientSignal(x) {
+		const cf="G_ClientSignal";
+		let {signal,actions,...y}=this.s(cf,x); this.g(y);
+		this.save_string(`${cf}.signal`,signal);
+		this.z(actions,this.G_ClientSignal_Item);
 	}
 	/** @private @arg {TM_Visibility} x */
 	TM_Visibility(x) {
@@ -1898,7 +1885,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @protected @arg {E_SignalService_SendPost} x */
-	E_SignalService_SendPost(x) {const cf="E_SignalService_SendPost",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
+	E_SignalService_SendPost(x) {const [a,b]=this.T_SE_Signal("E_SignalService_SendPost",x); this.M_SendPost(a); this.G_ClientSignal(b);}
 	/** @private @arg {DE_YpcGetOffers} x */
 	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
 	/** @private @arg {E_YpcGetOffers} x */
@@ -3374,20 +3361,12 @@ class ServiceMethods extends ServiceData {
 		this.D_MenuNavigationItem_Endpoint(navigationEndpoint);
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @arg {["Signal",Extract<RD_MenuServiceItem["serviceEndpoint"],{signalServiceEndpoint:any}>["signalServiceEndpoint"]]} x */
-	RD_MenuServiceItem_ServiceInfo(x) {
-		const cf="RD_MenuServiceItem_ServiceInfo";
-		switch(x[0]) {
-			case "Signal": return this.G_ClientSignal(cf,x[1]);
-			default: debugger; break;
-		}
-	}
 	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
 	RD_MenuServiceItem_Omit(cf,x) {
 		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
 		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
-		this.t(res,this.RD_MenuServiceItem_ServiceInfo);
+		this.t(res,([t,x]) => (this.cq(t,"Signal"),this.G_ClientSignal(x)));
 		this.trackingParams(trackingParams);
 		return y;
 	}
