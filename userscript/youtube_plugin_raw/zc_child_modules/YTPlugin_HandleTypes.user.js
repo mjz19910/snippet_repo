@@ -452,8 +452,6 @@ class HandleTypes extends ServiceMethods {
 	//#region Action methods
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
-	/** @private @arg {A_AddChatItem} x */
-	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
 	/** @public @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
@@ -1463,12 +1461,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(popoutMessage,x => this.xr.R_Message(x));
 		this.t(viewerName,this.a_primitive_str);
 	}
-	/** @private @arg {D_ExternalChannelId} x */
-	D_ExternalChannelId(x) {
-		const cf="D_ExternalChannelId";
-		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_ChannelId(externalChannelId);
-	}
 	/** @private @arg {AD_AccountItem} x */
 	AD_AccountItem(x) {
 		const cf="AD_AccountItem";
@@ -1684,35 +1676,6 @@ class HandleTypes extends ServiceMethods {
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
-	/** @private @arg {AD_ReplayChatItem} x */
-	AD_ReplayChatItem(x) {
-		const cf="AD_ReplayChatItem";
-		const {actions,videoOffsetTimeMsec,...y}=this.s(cf,x); this.g(y);
-		this.z(actions,this.A_AddChatItem);
-		this.a_primitive_str(videoOffsetTimeMsec);
-	}
-	/** @private @arg {AD_AddChatItem} x */
-	AD_AddChatItem(x) {
-		const cf="AD_AddChatItem";
-		const {item,clientId,...y}=this.s(cf,x); this.g(y);
-		this.xr.G_ChatItem(item);
-		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
-	}
-	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
-	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(path,x));}
-	/** @private @arg {DC_PlayerSeek} x */
-	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}
-	/** @private @arg {CD_PlayerSeek} x */
-	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
-	/** @private @arg {DC_LiveChatReplay} x */
-	DC_LiveChatReplay(x) {
-		const cf="DC_LiveChatReplay";
-		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
-		this.params("live_chat_replay.continuation",continuation);
-		this.a_primitive_num(timeUntilLastMessageMsec);
-	}
-	/** @private @arg {CD_LiveChatReplay} x */
-	CD_LiveChatReplay(x) {this.y("CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
 	/** @private @arg {DC_Invalidation} x */
 	DC_Invalidation(x) {
 		const cf="DC_Invalidation";
@@ -1732,8 +1695,6 @@ class HandleTypes extends ServiceMethods {
 		if(subscribeToGcmTopics!==true) debugger;
 		console.log(`[${cf}.protoCreationTimestampMs]`,protoCreationTimestampMs);
 	}
-	/** @private @arg {CD_Invalidation} x */
-	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
 	/** @arg {string} cf @arg {string} sig_str */
 	validate_sig(cf,sig_str) {
 		if(sig_str.match(/^[0-9A-F]+$/)===null) debugger;

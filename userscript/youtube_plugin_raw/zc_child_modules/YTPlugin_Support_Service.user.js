@@ -2233,6 +2233,8 @@ class Support_Renderer extends ServiceMethods {
 	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
+	/** @private @arg {A_AddChatItem} x */
+	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
 	// AU_
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
@@ -2258,6 +2260,39 @@ class Support_Renderer extends ServiceMethods {
 		this.a_primitive_bool(subscribed);
 		this.D_ChannelId(channelId);
 	}
+	/** @private @arg {AD_ReplayChatItem} x */
+	AD_ReplayChatItem(x) {
+		const cf="AD_ReplayChatItem";
+		const {actions,videoOffsetTimeMsec,...y}=this.s(cf,x); this.g(y);
+		this.z(actions,this.A_AddChatItem);
+		this.a_primitive_str(videoOffsetTimeMsec);
+	}
+	/** @private @arg {AD_AddChatItem} x */
+	AD_AddChatItem(x) {
+		const cf="AD_AddChatItem";
+		const {item,clientId,...y}=this.s(cf,x); this.g(y);
+		this.xr.G_ChatItem(item);
+		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
+	}
+	// CommandData
+	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
+	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(path,x));}
+	/** @private @arg {DC_PlayerSeek} x */
+	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}
+	/** @private @arg {DC_LiveChatReplay} x */
+	DC_LiveChatReplay(x) {
+		const cf="DC_LiveChatReplay";
+		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
+		this.params("live_chat_replay.continuation",continuation);
+		this.a_primitive_num(timeUntilLastMessageMsec);
+	}
+	// ContinuationData
+	/** @private @arg {CD_PlayerSeek} x */
+	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
+	/** @private @arg {CD_LiveChatReplay} x */
+	CD_LiveChatReplay(x) {this.y("CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
+	/** @private @arg {CD_Invalidation} x */
+	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
 	//#endregion
 	//#region Renderer
 	/** @public @arg {R_SettingsSidebar} x */
@@ -3270,6 +3305,14 @@ class Support_Renderer extends ServiceMethods {
 		const cf="D_WatchNextTabbedResults";
 		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
+	}
+	//#endregion
+	//#region New Data methods
+	/** @public @arg {D_ExternalChannelId} x */
+	D_ExternalChannelId(x) {
+		const cf="D_ExternalChannelId";
+		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_ChannelId(externalChannelId);
 	}
 	//#endregion
 }
