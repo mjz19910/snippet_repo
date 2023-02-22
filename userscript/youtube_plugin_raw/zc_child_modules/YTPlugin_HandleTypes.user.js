@@ -855,7 +855,7 @@ class HandleTypes extends ServiceMethods {
 		let gen_json=this.gen_typedef_bin_json(s,x);
 		console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
 		return `TYPE::T_VW_BinTs<${gen_json},"json">`;
-		/** @arg {V_ParamObj[number]} x */
+		/** @arg {V_ParamArrBox} x */
 		function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 	}
 	/** @arg {JsonReplacerState} s @arg {V_ParamObj} x @returns {RetParam_ShortTimestamp|null} */
@@ -1011,7 +1011,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_Tuple_1<${this.gen_typedef_bin_json(s,x[0])}>`;
 			}
-			/** @type {D_ProtobufObj|V_ParamObj[number]} */
+			/** @type {D_ProtobufObj|V_ParamArrBox} */
 			let x3=as(x);
 			switch(x3[0]) {
 				case "child": case "data32": case "data_fixed32":
@@ -1025,7 +1025,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			let fx=x[0];
 			console.log("[maybe_handle_bin.do_fx]",fx);
-			/** @type {(D_ProtobufObj|V_ParamObj[number])[]} */
+			/** @type {(D_ProtobufObj|V_ParamArrBox)[]} */
 			let x_t1=x;
 			if(x_t1[0][0]==="child") {
 				debugger;
@@ -1043,9 +1043,7 @@ class HandleTypes extends ServiceMethods {
 			assume_numeric_template(e);
 			return this.parse_number_template(e);
 		});
-		if(kn.every(x => !Number.isNaN(x))) {
-			return x;
-		}
+		if(kn.every(x => !Number.isNaN(x))) return x;
 		if("message" in x) return x;
 		if("type" in x&&"v" in x&&keys.length===2) {
 			console.log("[maybe_handle_bin.keys.typed_obj]",x.type,x.v);
