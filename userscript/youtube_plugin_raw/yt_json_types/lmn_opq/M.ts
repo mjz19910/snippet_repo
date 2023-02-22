@@ -65,7 +65,7 @@ type MP_NotificationsMenu={
 
 //#endregion
 type MP_AccountMenu={trackingParams: string; style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT"; showLoadingSpinner: true;};
-type MP_AccountMenu_2={
+type MP_SystemMenu={
 	header: R_ActiveAccountHeader;
 	sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];
 	trackingParams: string;

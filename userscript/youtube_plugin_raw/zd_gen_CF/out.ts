@@ -532,6 +532,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_SystemMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_ResolveUrlCommand";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3854";}
@@ -933,6 +934,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "D_NotificationMenu_PopupItemMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "P_NotificationMenu_Popup";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "Popup_GetAccountMenu";}
+		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_AccountMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "R_TopbarMenu";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "TR_MultiPageMenu_Empty";}
 		|{n: Prelude.CF_TR_MultiPageMenu; t: Types.CF_TR_MultiPageMenu_; v: "any";}

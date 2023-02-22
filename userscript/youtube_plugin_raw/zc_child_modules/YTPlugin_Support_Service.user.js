@@ -512,8 +512,8 @@ class Support_RS_Player extends ServiceMethods {
 		this.t(heartbeatParams,this.D_HeartbeatParams);
 		this.tz(playerAds,this.R_DesktopWatchAds);
 		this.t(playbackTracking,this.D_PlaybackTracking);
-		this.t(videoDetails,x => this.bc.D_VideoDetails(x));
-		this.t(playerConfig,x => this.bc.D_PlayerConfig(x));
+		this.t(videoDetails,x => this.ht.D_VideoDetails(x));
+		this.t(playerConfig,x => this.ht.D_PlayerConfig(x));
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
@@ -567,7 +567,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {text,durationMs,navigationEndpoint,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(text);
 		if(durationMs!=="10000") debugger;
-		this.bc.E_VE83769_Url(navigationEndpoint);
+		this.ht.E_VE83769_Url(navigationEndpoint);
 		this.T_Icon(cf,icon);
 		this.trackingParams(trackingParams);
 	}
@@ -735,7 +735,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
 		this.D_TriggerCriteria(triggerCriteria);
 		this.G_Text(text);
-		this.bc.E_VE83769_Url(endpoint);
+		this.ht.E_VE83769_Url(endpoint);
 		this.trackingParams(trackingParams);
 		this.RA_Notification(snackbar);
 	}
@@ -1119,10 +1119,10 @@ class Support_RS_WatchPage extends ServiceMethods {
 		const cf="R_WatchPage_VE3832"; this.k(cf,x);
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==3832) debugger;
-		let wp_params=this.bc.D_WatchPageUrl(cf,url);
+		let wp_params=this.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		this.E_Watch(endpoint);
-		if(preconnect!==void 0) this.bc.parse_preconnect_arr(preconnect);
+		if(preconnect!==void 0) this.ht.parse_preconnect_arr(preconnect);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.t(csn,x => this.D_VeCsn(x));
@@ -1134,7 +1134,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 		this.E_Watch(endpoint);
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
-		let wp_params=this.bc.D_WatchPageUrl(cf,url);
+		let wp_params=this.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => this.D_VeCsn(x,true));
 	}
@@ -1385,40 +1385,40 @@ class Support_GenericApi extends ServiceMethods {
 			if(x.type==="get_transcript") break x;
 		}
 		switch(x.type) {
-			case "account.account_menu": return this.bc.RS_AccountMenu(x.data);
-			case "account.accounts_list": return this.bc.RS_AccountsList(x.data);
-			case "account.set_setting": return this.bc.RS_SetSetting(x.data);
-			case "att.get": return this.bc.RS_AttGet(x.data);
-			case "att.log": return this.bc.RS_AttLog_RC(x.data);
+			case "account.account_menu": return this.ht.RS_AccountMenu(x.data);
+			case "account.accounts_list": return this.ht.RS_AccountsList(x.data);
+			case "account.set_setting": return this.ht.RS_SetSetting(x.data);
+			case "att.get": return this.ht.RS_AttGet(x.data);
+			case "att.log": return this.ht.RS_AttLog_RC(x.data);
 			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
 			case "browse": return this.x.get("x_RS_Browse").RS_Browse(x.data);
-			case "feedback": return this.bc.RS_Feedback(x.data);
-			case "get_transcript": return this.bc.RSG_Transcript(x.data);
-			case "get_survey": return this.bc.RSG_Survey(x.data);
-			case "getAccountSwitcherEndpoint": return this.bc.REG_AccountSwitcher(x.data);
-			case "getDatasyncIdsEndpoint": return this.bc.REG_DatasyncIds(x.data);
-			case "guide": return this.bc.RS_Guide(x.data);
-			case "like.like": return this.bc.RSL_Like(x.data);
-			case "like.dislike": return this.bc.RSL_Dislike(x.data);
-			case "like.removelike": return this.bc.RSL_RemoveLike(x.data);
-			case "live_chat.get_live_chat_replay": return this.bc.RS_GetLiveChat(x.data);
-			case "live_chat.get_live_chat": return this.bc.RS_GetLiveChat(x.data);
-			case "music.get_search_suggestions": return this.bc.RSG_SearchSuggestions(x.data);
-			case "next": return this.bc.RS_Next(x.data);
+			case "feedback": return this.ht.RS_Feedback(x.data);
+			case "get_transcript": return this.ht.RSG_Transcript(x.data);
+			case "get_survey": return this.ht.RSG_Survey(x.data);
+			case "getAccountSwitcherEndpoint": return this.ht.REG_AccountSwitcher(x.data);
+			case "getDatasyncIdsEndpoint": return this.ht.REG_DatasyncIds(x.data);
+			case "guide": return this.ht.RS_Guide(x.data);
+			case "like.like": return this.ht.RSL_Like(x.data);
+			case "like.dislike": return this.ht.RSL_Dislike(x.data);
+			case "like.removelike": return this.ht.RSL_RemoveLike(x.data);
+			case "live_chat.get_live_chat_replay": return this.ht.RS_GetLiveChat(x.data);
+			case "live_chat.get_live_chat": return this.ht.RS_GetLiveChat(x.data);
+			case "music.get_search_suggestions": return this.ht.RSG_SearchSuggestions(x.data);
+			case "next": return this.ht.RS_Next(x.data);
 			case "notification.get_notification_menu": return this.RSG_NotificationMenu(x.data);
 			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
 			case "notification.record_interactions": return this.RS_Success(x.data);
 			case "player": return this.x.get("x_RS_Player").RS_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.bc.RSW_ReelItem(x.data);
-			case "reel.reel_watch_sequence": return this.bc.RS_ReelWatchSequence(x.data);
-			case "share.get_share_panel": return this.bc.RSG_SharePanel(x.data);
-			case "subscription.subscribe": return this.bc.RS_Subscribe(x.data);
-			case "subscription.unsubscribe": return this.bc.RS_Unsubscribe(x.data);
-			case "search": return this.bc.RS_Search(x.data);
-			case "updated_metadata": return this.bc.RSU_M(x.data);
-			case "pdg.get_pdg_buy_flow": return this.bc.RSG_PdgBuyFlow(x.data);
+			case "reel.reel_item_watch": return this.ht.RSW_ReelItem(x.data);
+			case "reel.reel_watch_sequence": return this.ht.RS_ReelWatchSequence(x.data);
+			case "share.get_share_panel": return this.ht.RSG_SharePanel(x.data);
+			case "subscription.subscribe": return this.ht.RS_Subscribe(x.data);
+			case "subscription.unsubscribe": return this.ht.RS_Unsubscribe(x.data);
+			case "search": return this.ht.RS_Search(x.data);
+			case "updated_metadata": return this.ht.RSU_M(x.data);
+			case "pdg.get_pdg_buy_flow": return this.ht.RSG_PdgBuyFlow(x.data);
 			default: debugger; return g(x);
 		}
 	}
@@ -1909,7 +1909,7 @@ class Support_EventInput extends ServiceMethods {
 			debugger;
 		};
 		/** @arg {(typeof x)["response"]} x */
-		let h_rs=x => this.bc.RS_Channel(x);
+		let h_rs=x => this.ht.RS_Channel(x);
 		/** @arg {(typeof x)["expirationTime"]} x */
 		let h_et=x => this.a_primitive_num(x);
 		/** @type {T_MakeHandlers<typeof x>} */
@@ -2003,11 +2003,11 @@ class Support_EventInput extends ServiceMethods {
 		this.x.get("x_VE37414").E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
-		this.t(reelWatchSequenceResponse,x => this.bc.RS_ReelWatchSequence(x));
+		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		this.t(previousCsn,x => this.D_VeCsn(x,true));
-		this.t(cachedReelWatchSequenceResponse,x => this.bc.RS_ReelWatchSequence(x));
+		this.t(cachedReelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 	}
 	/** @private @arg {RS_Page_Search} x */
 	RS_Page_Search(x) {
@@ -2015,7 +2015,7 @@ class Support_EventInput extends ServiceMethods {
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="search") debugger;
 		this.E_VE4724_Search(endpoint);
-		this.bc.RS_Search(response);
+		this.ht.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
@@ -2044,11 +2044,11 @@ class Support_EventInput extends ServiceMethods {
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_VE37414").E_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.t(reelWatchSequenceResponse,x => this.bc.RS_ReelWatchSequence(x));
+		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
-		this.bc.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
+		this.ht.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
 	/** @private @arg {RS_Reel} x */
 	RS_Reel(x) {
@@ -2088,7 +2088,7 @@ class Support_EventInput extends ServiceMethods {
 	D_Tab_WhatToWatch(x) {
 		const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s("D_Tab_WhatToWatch",x); this.g(y);
 		this.ceq(selected,true);
-		this.bc.R_RichGrid(content);
+		this.ht.R_RichGrid(content);
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_Tab_Library} x */
@@ -2114,7 +2114,7 @@ class Support_EventInput extends ServiceMethods {
 			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
 			const cf2=`${cf}_${"R_MusicQueue"}`;
 			const {content,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
-			this.bc.R_MusicQueue(content);
+			this.ht.R_MusicQueue(content);
 			this.trackingParams(trackingParams);
 			return;
 		}
@@ -2375,7 +2375,7 @@ class Support_Renderer extends ServiceMethods {
 		let e_num=this.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.a_primitive_num(e_num);
-		this.bc.parse_signature(signature);
+		this.ht.parse_signature(signature);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.key`,key);
 		kind&&this.save_string(`${cf}.kind`,kind);
@@ -2546,7 +2546,7 @@ class Support_Renderer extends ServiceMethods {
 				break x;
 			}
 			if("urlEndpoint" in x2) {
-				this.bc.E_VE83769_Url(x2);
+				this.ht.E_VE83769_Url(x2);
 				break x;
 			}
 			debugger;
@@ -2555,7 +2555,7 @@ class Support_Renderer extends ServiceMethods {
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
 		{
 			let x2=navigationEndpoint;
-			if("urlEndpoint" in x2) return this.bc.E_VE83769_Url(x2);
+			if("urlEndpoint" in x2) return this.ht.E_VE83769_Url(x2);
 			if("browseEndpoint" in x2) {
 				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
 				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
@@ -2631,7 +2631,7 @@ class Support_Renderer extends ServiceMethods {
 		this.G_Text(responseText);
 		if(defaultStateIcon.iconType!=="STAR_BORDER") debugger;
 		if(onStateIcon.iconType!=="STAR") debugger;
-		this.bc.C_FollowUp(followUpCommand);
+		this.ht.C_FollowUp(followUpCommand);
 		this.g(responseEndpoint);
 		this.trackingParams(trackingParams);
 		this.a_primitive_bool(checked);
@@ -2981,7 +2981,7 @@ class Support_Renderer extends ServiceMethods {
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.R_Button(x);
-		if("accountItem" in x) return this.bc.A_AccountItem(x);
+		if("accountItem" in x) return this.ht.A_AccountItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_PlaylistSidebarItem} x */
@@ -3058,14 +3058,14 @@ class Support_Renderer extends ServiceMethods {
 		this.R_PdgCommentPreview(commentPreview);
 		this.R_PdgColorSlider(colorSlider);
 		console.log("defaultPriceTier",defaultPriceTier);
-		this.bc.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {D_PdgColorSlider} x */
 	D_PdgColorSlider(x) {
 		const cf="D_PdgColorSlider";
 		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(notches,this.D_NotchesItem);
-		this.bc.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 		this.G_Text(maxTierValue);
 		this.G_Text(minTierValue);
 	}
@@ -3075,7 +3075,7 @@ class Support_Renderer extends ServiceMethods {
 		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(linearGradientCssStyle) {debugger;}
 		if(knobColorArgb!==4280191205) debugger;
-		this.bc.E_YpcGetCart(purchaseCommand);
+		this.ht.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
@@ -3170,7 +3170,7 @@ class Support_Renderer extends ServiceMethods {
 		this.z(commentOptionRenderers,this.R_PdgCommentOption);
 		this.G_Text(defaultCommentText);
 		this.R_Button(editButton);
-		this.bc.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {D_PdgCommentOption} x */
 	D_PdgCommentOption(x) {

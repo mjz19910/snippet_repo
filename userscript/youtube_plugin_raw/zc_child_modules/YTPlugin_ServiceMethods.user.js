@@ -22,11 +22,11 @@ class ServiceMethods extends ServiceData {
 	ks=this.k;
 	get handle_types() {return this.x.get("handle_types");}
 	/** @type {this["handle_types"]|null} */
-	_bc=null;
-	get bc() {
-		if(this._bc) return this._bc;
-		this._bc=this.handle_types;
-		return this._bc;
+	_ht=null;
+	get ht() {
+		if(this._ht) return this._ht;
+		this._ht=this.handle_types;
+		return this._ht;
 	}
 	get x_Renderer() {return this.x.get("x_Renderer");}
 	/** @type {this["x_Renderer"]|null} */
@@ -1082,7 +1082,7 @@ class ServiceMethods extends ServiceData {
 			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.bc.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.ht.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {M_YpcGetOffers} x */
@@ -1376,7 +1376,7 @@ class ServiceMethods extends ServiceData {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
-		if("urlEndpoint" in x) return this.bc.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.ht.E_VE83769_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
@@ -1520,7 +1520,7 @@ class ServiceMethods extends ServiceData {
 	D_Menu(x) {
 		const cf="D_Menu";
 		if("targetId" in x) return this.D_Menu_WithTargetId(x);
-		if("items" in x) return this.bc.D_Menu_WithItems(x);
+		if("items" in x) return this.ht.D_Menu_WithItems(x);
 		if("topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
@@ -1583,7 +1583,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_EndscreenElement_EP"; this.ks(cf,x);
 		if("browseEndpoint" in x) return this.E_VE3611(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.bc.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.ht.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	log_enabled_playlist_id=false;
@@ -2447,7 +2447,7 @@ class ServiceMethods extends ServiceData {
 		if(!x) {debugger; return;}
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(simpleText,this.a_primitive_str);
-		this.tz(runs,x => this.bc.D_TextRun(x));
+		this.tz(runs,x => this.ht.D_TextRun(x));
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @protected @arg {D_Emoji} x */
@@ -4997,7 +4997,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(description);
 		this.G_Text(websiteText);
 		this.R_Button(actionButton);
-		this.bc.E_VE83769_Url(navigationEndpoint);
+		this.ht.E_VE83769_Url(navigationEndpoint);
 		this.z(impressionCommands,this.D_ImpressionCommand);
 		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.R_Menu(menu);
@@ -5484,7 +5484,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		if(!this.str_starts_with(price,"CA$")) debugger;
 		if(!onClickCommand.urlEndpoint) debugger;
-		this.bc.E_VE83769_Url(onClickCommand);
+		this.ht.E_VE83769_Url(onClickCommand);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {DC_RelatedChip} x */
@@ -6086,7 +6086,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(vendorName);
 		this.trackingParams(trackingParams);
 		this.a_primitive_str(buttonText);
-		this.bc.E_VE83769_Url(buttonCommand);
+		this.ht.E_VE83769_Url(buttonCommand);
 		this.a_primitive_str(accessibilityTitle);
 		this.a_primitive_str(buttonAccessibilityText);
 		this.a_primitive_str(fromVendorText);
@@ -6563,8 +6563,20 @@ class ServiceMethods extends ServiceData {
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		let [u]=this.z(actions,x => this.TA_OpenPopup("A_GetAccountMenu",x));
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
-		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("Popup_GetAccountMenu",x));
-		this.z(u2,this.MP_AccountMenu);
+		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("R_AccountMenu",x));
+		this.z(u2,x => {
+			if("showLoadingSpinner" in x) return this.MP_AccountMenu(x);
+			if("sections" in x) return this.MP_SystemMenu(x);
+			x===""; debugger;
+		});
+	}
+	/** @public @arg {MP_SystemMenu} x */
+	MP_SystemMenu(x) {
+		const cf="MP_SystemMenu";
+		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.handle_types.R_ActiveAccountHeader(header);
+		this.trackingParams(trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
 	}
 	/** @public @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {
@@ -6653,7 +6665,7 @@ class ServiceMethods extends ServiceData {
 		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
 		if("browseEndpoint" in x) {debugger; return;}
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
-		if("urlEndpoint" in x) return this.bc.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.ht.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
@@ -7424,7 +7436,7 @@ class ServiceMethods extends ServiceData {
 			this.tz(tags,this.a_primitive_str);
 			this.t(familySafe,x => {if(x!==true) debugger;});
 			this.tz(availableCountries,this.a_primitive_str);
-			this.z(linkAlternates,x => this.bc.B_HrefUrl(x));
+			this.z(linkAlternates,x => this.ht.B_HrefUrl(x));
 		}
 		{
 			const {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,ios); this.g(y);
@@ -7454,7 +7466,7 @@ class ServiceMethods extends ServiceData {
 	D_PrimaryLinkItem(x) {
 		const cf="D_PrimaryLinkItem";
 		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.bc.E_VE83769_Url(navigationEndpoint);
+		this.ht.E_VE83769_Url(navigationEndpoint);
 		this.D_Thumbnail(icon);
 		this.G_Text(title);
 	}

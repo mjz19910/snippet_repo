@@ -1910,7 +1910,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.bc.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.ht.E_VE83769_Url(x);
 		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_ReelWatch(x);
 		x===""; debugger;
 	}
@@ -2605,6 +2605,8 @@ class HandleTypes extends ServiceMethods {
 	E_AddUpcomingEventReminder(x) {x;}
 	/** @public @arg {E_RemoveUpcomingEventReminder} x */
 	E_RemoveUpcomingEventReminder(x) {x;}
+	/** @public @arg {R_ActiveAccountHeader} x */
+	R_ActiveAccountHeader(x) {x;}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns
