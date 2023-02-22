@@ -51,9 +51,10 @@ type P_reel_params={
 	6?: {};
 };
 type P_logging_context_serialized_context_data={
-	1: {
+	1?: T_VW<{
 		1: T_D32<12>;
-	};
+	}>;
+	3?: TV_Str<`RD${string}`>;
 };
 type P_like_params={
 	1: T_VW<{
@@ -410,8 +411,8 @@ type P_format_item_xtags={
 };
 type P_watch_player_params={
 	12: T_D32<1>,
-	25: T_D32<1>
+	25: T_D32<1>;
 };
 type P_watch_params={
-	24: T_D32<1>
+	24: T_D32<1>;
 };

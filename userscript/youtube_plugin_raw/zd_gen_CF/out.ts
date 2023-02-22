@@ -556,6 +556,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_like_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_load_markers_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_logging_context_serialized_context_data";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_logging_context_serialized_context_data.f1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_playability_status_context_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_playlist_loop_state_entity_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "P_reel_params";}

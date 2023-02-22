@@ -2132,8 +2132,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
-		const cf="P_logging_context_serialized_context_data";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		const cf="P_logging_context_serialized_context_data",t=this;
+		const {1: f1,3: f3,...y}=this.s(cf,x); this.g(y);
+		this.t_cf(`${cf}.f1`,f1,(cf,x) => this.T_VW(x,x => {
+			const {1: f1,...y}=this.s(cf,x);
+			let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		}));
+		t.t(t.t(f3,t.TV_Str),x => {
+			if(!this.str_starts_with(x,"RD")) debugger;
+		});
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_reel_params} x */
