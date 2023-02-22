@@ -106,6 +106,7 @@ type DE_VE4724_Search={query: string;};
 type DE_ShareEntityService={serializedShareEntity: string; commands: A_ShareEntityService[];};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type DE_SignalNavigation=T_Signal<"CHANNEL_SWITCHER"|"LIVE_CONTROL_ROOM">;
+type DE_AdFeedback={content: R_AdFeedback;};
 //#endregion
 //#region Only params
 type DE_GetReportForm=DC_Params;

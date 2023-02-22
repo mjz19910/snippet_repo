@@ -30,6 +30,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlayerOverlayAutoplay";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlaylistSidebarPrimaryInfo";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_Radio";}
+		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_AddUpcomingEventReminder";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetTranscript";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
@@ -142,8 +143,10 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE11487";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE23462";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3611";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE37414_ReelWatch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:playlistSetVideoId:params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:videoId";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3854";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE42352";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE5754";}
@@ -1009,6 +1012,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_radio.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification_add_upcoming_event_reminder.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "params.click_tracking";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "params.tracking";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params";}

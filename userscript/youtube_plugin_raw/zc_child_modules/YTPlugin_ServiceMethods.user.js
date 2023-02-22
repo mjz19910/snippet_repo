@@ -375,7 +375,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {E_PlaylistDelete} x */
 	E_PlaylistDelete(x) {const [y]=this.TE_Endpoint_3_v2("deletePlaylistEndpoint",x,this.M_PlaylistDelete,this.DE_PlaylistDelete); this.g(y);}
 	/** @public @arg {E_AddUpcomingEventReminder} x */
-	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_notification_add_upcoming_event_reminder,x => {this.D_Params("",x);}); this.g(y);}
+	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_notification_add_upcoming_event_reminder,x => {this.D_Params("DE_AddUpcomingEventReminder","notification_add_upcoming_event_reminder.params",x);}); this.g(y);}
 	/** @public @arg {M_notification_add_upcoming_event_reminder} x */
 	M_notification_add_upcoming_event_reminder(x) {x;}
 	/** @public @arg {E_RemoveUpcomingEventReminder} x */
@@ -2238,42 +2238,20 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
-		// const cf="DE_VE3832_Watch";
-		if("playlistSetVideoId" in x) {
-			if("params" in x) {
-				const cf="DE_VE3832:playlistSetVideoId:params";
-				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.a_primitive_num(index);
-				this.a_primitive_str(playlistSetVideoId);
-				this.params("watch.params",params);
-				this.a_primitive_num(startTimeSeconds);
-				if(continuePlayback!==false) debugger;
-				this.x.get("x_VE").R_VssLoggingContext(loggingContext);
-				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
-				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-				this.playerParams("watch.player_params",playerParams);
-				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
-				this._primitive_of(nofollow,"boolean");
-				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
-				return;
-			}
-			x==="";
-			this.g(x);
-			return;
-		}
-		if("watchEndpointSupportedPrefetchConfig" in x) return;
-		if("watchEndpointSupportedOnesieConfig" in x) return;
-		if("playlistId" in x) return;
-		if("params" in x) return;
-		if("startTimeSeconds" in x) return;
-		if("videoId" in x) {
-			const cf="DE_VE3832:videoId";
-			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.videoId(videoId);
-			return;
-		}
-		x==="";
-		this.g(x);
+		const cf="DE_VE3832_Watch";
+		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(index,this.a_primitive_num);
+		this.t(playlistSetVideoId,this.a_primitive_str);
+		this.t(params,params => this.params("watch.params",params));
+		this.t(startTimeSeconds,this.a_primitive_num);
+		this.t(continuePlayback,x => this.cq(x,false));
+		this.t(loggingContext,x => this.x.get("x_VE").R_VssLoggingContext(x));
+		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
+		this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
+		this.t(playerParams,x => this.playerParams("watch.player_params",x));
+		this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
+		this.t(nofollow,this.a_primitive_bool);
+		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
 	}
 	/** @private @arg {DE_CreateComment} x */
 	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","create_comment.params","createCommentParams",x);}

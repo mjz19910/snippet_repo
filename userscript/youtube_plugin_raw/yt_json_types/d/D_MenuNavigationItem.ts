@@ -20,7 +20,6 @@ type D_AdFeedback={
 };
 
 type R_AdFeedback={adFeedbackRenderer: D_AdFeedback;};
-type DE_AdFeedback={content: R_AdFeedback;};
 type D_MenuNavigationItem={
 	text: G_Text;
 	icon?: T_Icon<"INFO"|"FEEDBACK">;
