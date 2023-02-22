@@ -221,26 +221,27 @@ class ServiceMethods extends ServiceData {
 					const {action: {},removedVideoId,...y}=this.s(cf,x); this.g(y);
 					this.videoId(removedVideoId);
 				} break;
-				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": {
-					const cf="A_SetPlaylistVideoOrder";
-					const {action: {},...y}=this.s(cf,x); this.g(y);
-				} break;
 				case "ACTION_COPY_FROM_PLAYLIST": {
-					const cf="A_COPY_FROM_PLAYLIST";
+					const cf="A_CopyFromPlaylist";
 					const {action: {},sourcePlaylistId,...y}=this.s(cf,x); this.g(y);
 					this.playlistId(sourcePlaylistId);
 				} break;
+				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": {
+					const cf="AS_PlaylistVideoOrder";
+					const {action: {},...y}=this.s(cf,x); this.g(y);
+				} break;
 				case "ACTION_SET_PLAYLIST_PRIVACY": {
-					const cf="A_SET_PLAYLIST_PRIVACY";
+					const cf="AS_PlaylistPrivacy";
 					const {action: {},...y}=this.s(cf,x); this.g(y);
 				} break;
 				case "ACTION_SET_PLAYLIST_DESCRIPTION": {
-					const cf="A_SET_PLAYLIST_DESCRIPTION";
+					const cf="AS_PlaylistDescription";
 					const {action: {},...y}=this.s(cf,x); this.g(y);
 				} break;
 				case "ACTION_SET_PLAYLIST_NAME": {
-					const cf="A_SET_PLAYLIST_NAME";
-					const {action: {},...y}=this.s(cf,x); this.g(y);
+					const cf="AS_PlaylistName";
+					const {action: {},playlistName,...y}=this.s(cf,x); this.g(y);
+					this.t(playlistName,this.a_primitive_str);
 				} break;
 				default: debugger; break;
 			}

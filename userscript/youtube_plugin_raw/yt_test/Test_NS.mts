@@ -26,6 +26,7 @@ export namespace Test {
 					case "PL": console.log("some_more",xa.slice(2,4)); break;
 					case "RD": console.log("some_more",xa.slice(2,4)); break;
 					case "WL": break;
+					case "UU": break;
 					default: v===""; debugger; console.log("some",v); console.log("all",xa); break;
 				}
 			}
@@ -42,10 +43,11 @@ export namespace Test {
 			let r2=await ExcludePrefix<"RDMM">()(r,"RDMM");
 			let r3=await ExcludePrefix<"RD">()(r2,"RD");
 			let r4=await ExcludePrefix<"PL">()(r3,"PL");
-			switch(r4) {
+			let r5=await ExcludePrefix<"UU">()(r4,"UU");
+			switch(r5) {
 				case "LL": break;
 				case "WL": break;
-				default: r4===""; debugger; break;
+				default: r5===""; debugger; break;
 			}
 		}
 	}

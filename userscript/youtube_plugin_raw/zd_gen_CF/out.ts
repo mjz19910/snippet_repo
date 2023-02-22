@@ -86,12 +86,17 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SubscribeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_UpdateEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_UpdateNotificationsUnseenCount";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AS_PlaylistDescription";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AS_PlaylistName";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AS_PlaylistPrivacy";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AS_PlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AU_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AU_ToggleButtonTextData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_AddVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_BrowseFeed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_COPY_FROM_PLAYLIST";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_CommentsSectionContinuation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_CopyFromPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_RemoveVideoByVideoId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_SET_PLAYLIST_DESCRIPTION";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_SET_PLAYLIST_NAME";}

@@ -1526,7 +1526,7 @@ class Support_GenericApi extends ServiceMethods {
 		const cf="D_AddToPlaylistCreate";
 		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_CompactLink(openCreateLink);
-		this.R_TextInputFormField(nameInput);
+		this.xr.R_TextInputFormField(nameInput);
 		this.R_Dropdown(privacyInput);
 		this.R_Button(createAction);
 		this.E_CreatePlaylistService(serviceEndpoint);
@@ -1577,19 +1577,6 @@ class Support_GenericApi extends ServiceMethods {
 		const {title,buttons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.z(buttons,this.R_Button);
-	}
-	/** @private @arg {R_TextInputFormField} x */
-	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
-	/** @private @arg {D_TextInputFormField} x */
-	D_TextInputFormField(x) {
-		const cf="D_TextInputFormField";
-		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(label);
-		if(maxCharacterLimit!==150) debugger;
-		this.a_primitive_str(placeholderText);
-		if(validValueRegexp!=="[^<>]*") debugger;
-		this.G_Text(invalidValueErrorMessage);
-		this.ceq(required,true);
 	}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
@@ -3034,27 +3021,31 @@ class Support_Renderer extends ServiceMethods {
 	/** @public @arg {D_InlineForm} x */
 	D_InlineForm(x) {
 		const cf="D_InlineForm";
-		const {formField,editButton,saveButton,cancelButton,textDisplayed,style,...y}=this.s(cf,x); this.g(y);
+		const {formField,editButton,saveButton,cancelButton,textDisplayed,style,placeholder,...y}=this.s(cf,x); this.g(y);
 		this.R_TextInputFormField(formField);
 		this.R_Button(editButton);
 		this.R_Button(saveButton);
 		this.R_Button(cancelButton);
 		this.G_Text(textDisplayed);
-		this.cq(style,"INLINE_FORM_STYLE_TITLE");
 		this.save_enum(cf,"INLINE_FORM_STYLE",style);
+		this.t(placeholder,this.G_Text);
 	}
 	/** @public @arg {R_TextInputFormField} x */
 	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @public @arg {D_TextInputFormField} x */
 	D_TextInputFormField(x) {
 		const cf="D_TextInputFormField";
-		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);
+		const {label,value,maxCharacterLimit,key,onChange,placeholderText,validValueRegexp,invalidValueErrorMessage,isMultiline,required,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(label);
-		this.cq(maxCharacterLimit,150);
-		this.a_primitive_str(placeholderText);
+		this.t(value,this.a_primitive_str);
+		this.save_number_one(`${cf}.maxCharacterLimit`,maxCharacterLimit);
+		this.t(key,x => this.save_string(`${cf}.key`,x));
+		this.t(onChange,this.E_PlaylistEdit);
+		this.t(placeholderText,this.a_primitive_str);
 		this.cq(validValueRegexp,"[^<>]*");
 		this.G_Text(invalidValueErrorMessage);
-		this.cq(required,true);
+		this.t(isMultiline,x => this.cq(x,true));
+		this.t(required,x => this.cq(x,true));
 	}
 	/** @public @arg {R_DropdownFormField} x */
 	R_DropdownFormField(x) {this.H_("dropdownFormFieldRenderer",x,this.D_DropdownFormField);}

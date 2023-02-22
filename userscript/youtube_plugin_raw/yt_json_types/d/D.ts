@@ -2308,7 +2308,8 @@ type D_InlineForm={
 	saveButton: R_Button;
 	cancelButton: R_Button;
 	textDisplayed: G_Text;
-	style: "INLINE_FORM_STYLE_TITLE";
+	style: "INLINE_FORM_STYLE_TITLE"|"INLINE_FORM_STYLE_BODY_TEXT_PLACEHOLDER";
+	placeholder?: G_Text;
 };
 type R_InlineForm={inlineFormRenderer: D_InlineForm;};
 type D_DropdownFormField={
@@ -2628,11 +2629,15 @@ type D_TemplatedText={
 };
 type D_TextInputFormField={
 	label: G_Text;
-	maxCharacterLimit: 150;
-	placeholderText: string;
+	value?: string;
+	maxCharacterLimit: 150|5000;
+	key?: `playlistEditEndpoint.actions.0.${"playlistName"|"playlistDescription"}`;
+	onChange?: E_PlaylistEdit;
+	placeholderText?: string;
 	validValueRegexp: "[^<>]*";
 	invalidValueErrorMessage: G_Text;
-	required: true;
+	isMultiline?: true;
+	required?: true;
 };
 type D_ThemeBackgroundVars={
 	lightThemeBackgroundColor: TP_Color<0xffffff,"0xffffff">;
