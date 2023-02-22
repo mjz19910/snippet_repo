@@ -234,13 +234,13 @@ type RS_UpdateMetadata={
 
 type RS_Page_Settings={
 	page: "settings";
-	endpoint: GE_Browse;
+	endpoint: E_VE23462;
 	response: RS_Settings;
 	url: string;
 };
 type RS_VE23462_Page_Settings={
 	page: "settings";
-	endpoint: GE_Browse;
+	endpoint: E_VE23462;
 	response: RS_Settings;
 	url: string;
 	rootVe: 23462;

@@ -1795,10 +1795,10 @@ class Support_EventInput extends ServiceMethods {
 		x: {
 			let x2=endpoint;
 			if("browseEndpoint" in x2) {this.E_VE23462(x2); break x;}
-			if("settingsEndpoint" in x2) {this.E_Settings(x2); break x;}
 			x2===""; debugger;
 		}
-		this.DataResponsePageType(response);
+		if(response.page!=="settings") debugger;
+		this.G_RS_Page_Settings(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
@@ -1992,7 +1992,7 @@ class Support_EventInput extends ServiceMethods {
 		if("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="settings") debugger;
-		debugger;
+		this.E_VE23462(endpoint);
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 	}
@@ -2032,7 +2032,7 @@ class Support_EventInput extends ServiceMethods {
 		const cf="Settings_VE23462";
 		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="settings") debugger;
-		debugger;
+		this.E_VE23462(endpoint);
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 		this.rootVe(rootVe,23462);

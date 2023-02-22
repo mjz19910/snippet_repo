@@ -34,8 +34,26 @@ type GU_VE6827_Url=
 	;
 ;
 type GU_VE11487_Url="/premium";
-type GU_VE23462_Url="/account"|"/account_notifications";
-type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";
+type GU_VE23462_Url=
+	|"/account_advanced"
+	|"/account_billing"
+	|"/account_notifications"
+	|"/account_playback"
+	|"/account_privacy"
+	|"/account_sharing"
+	|"/account"
+	;
+;
+type GU_VE23462_Id=
+	|"SPaccount_advanced"
+	|"SPaccount_billing"
+	|"SPaccount_notifications"
+	|"SPaccount_overview"
+	|"SPaccount_playback"
+	|"SPaccount_privacy"
+	|"SPaccount_sharing"
+	;
+;
 type GU_VE37414_Url="/shorts/"|`/shorts/${string}`;
 type GU_VE42352_Url="/feed/downloads";
 type GU_VE83769_Url=

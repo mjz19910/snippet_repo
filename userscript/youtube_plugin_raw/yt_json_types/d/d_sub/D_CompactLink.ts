@@ -9,7 +9,7 @@ type D_CompactLink={
 	trackingParams: string;
 }|{
 	title: G_Text;
-	navigationEndpoint: GE_Browse;
+	navigationEndpoint: E_VE23462;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR";
 }|{

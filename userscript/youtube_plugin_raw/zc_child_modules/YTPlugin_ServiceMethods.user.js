@@ -469,14 +469,25 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
+	/** @type {string[]} */
+	gm_ve_urls=[];
 	/** @private @arg {GM_VE23462} x @returns {`VE${rootVe}`} */
 	GM_VE23462(x) {
 		const cf="GM_VE23462";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(url) {
-			default: console.log(`-- [${cf}] --\n\n\ncase "${url}":`); break;
-			case "/account": break;
-			case "/account_notifications": break;
+			default: {
+				if(this.gm_ve_urls.includes(url)) break;
+				this.gm_ve_urls.push(url);
+				console.log(`-- [${cf}] --\n\n${this.gm_ve_urls.map(e => `case "${e}":`).join("\n")}`);
+			} break;
+			case "/account_advanced":
+			case "/account_billing":
+			case "/account_notifications":
+			case "/account_playback":
+			case "/account_privacy":
+			case "/account_sharing":
+			case "/account":
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 		this.rootVe(rootVe,23462);
@@ -6454,7 +6465,11 @@ class ServiceMethods extends ServiceData {
 	D_CompactLink_NavEndpoint(x) {
 		const cf="D_CompactLink_NavEndpoint";
 		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
-		if("browseEndpoint" in x) {debugger; return;}
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
+			debugger;
+			return;
+		}
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
 		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
 		x===""; this.codegen_typedef(cf,x);
@@ -6956,12 +6971,19 @@ class ServiceMethods extends ServiceData {
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.cq(browseId,"SPunlimited");
 	}
+	/** @type {string[]} */
+	de_browse_ids=[];
 	/** @public @arg {DE_VE23462} x */
 	DE_VE23462(x) {
 		const cf="DE_VE23462";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(browseId) {
-			default: debugger; break;
+			default: {
+				if(this.de_browse_ids.includes(browseId)) break;
+				this.de_browse_ids.push(browseId);
+				console.log(`-- [${cf}.browseId] --\n\n${this.de_browse_ids.map(e => `case "${e}": `).join("")}`);
+			} break;
+			case "SPaccount_playback": case "SPaccount_privacy": case "SPaccount_sharing": case "SPaccount_billing": case "SPaccount_advanced":
 			case "SPaccount_overview": case "SPaccount_notifications":
 		}
 	}
