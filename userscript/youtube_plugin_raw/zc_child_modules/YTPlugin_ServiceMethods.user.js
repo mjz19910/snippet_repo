@@ -1347,7 +1347,7 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
 	}
-	/** @private @arg {DC_GetSurvey} x */
+	/** @private @arg {A_GetSurvey} x */
 	DC_GetSurvey(x) {
 		const cf="D_GetSurvey";
 		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

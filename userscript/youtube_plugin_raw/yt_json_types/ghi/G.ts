@@ -69,21 +69,6 @@ type GA_FormatItagNum=
 	|400|401
 	;
 ;
-type A_CopyFromPlaylist={
-	action: "ACTION_COPY_FROM_PLAYLIST";
-	sourcePlaylistId: "WL";
-};
-
-type GA_Playlist=
-	|A_AddVideo
-	|A_RemoveVideoByVideoId
-	|A_SetPlaylistVideoOrder
-	|A_CopyFromPlaylist
-	|{action: "ACTION_SET_PLAYLIST_PRIVACY";}
-	|{action: "ACTION_SET_PLAYLIST_DESCRIPTION";}
-	|{action: "ACTION_SET_PLAYLIST_NAME";}
-	;
-;
 type GC_Button=
 	|A_ChangeEngagementPanelVisibility
 	|C_CommandExecutor

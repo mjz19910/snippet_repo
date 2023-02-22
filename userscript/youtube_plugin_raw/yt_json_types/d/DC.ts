@@ -79,13 +79,6 @@ type DC_EngagementPanelHeaderShowNavigationButton={
 	targetId: "engagement-panel-macro-markers-description-chapters";
 	navigationButton: R_Button;
 };
-type DC_GetSurvey={
-	endpoint: D_Survey_Watch;
-	action: "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
-}|{
-	endpoint: D_PaidDigitalGoods;
-	action: "FOR_D_PaidDigitalGoods";
-};
 type DC_Continuation_Omit_Return<T>=
 	Omit<T,"token"|"request"> extends infer y?
 	|["BROWSE",y]

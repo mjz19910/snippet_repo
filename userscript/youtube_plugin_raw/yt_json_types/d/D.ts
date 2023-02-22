@@ -1317,10 +1317,6 @@ type D_AboutThisAd={
 type D_Accessibility={accessibilityData: D_Label;};
 type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;
 type D_AccountSettingIdList=[407];
-type A_RemoveVideoByVideoId={
-	action: "ACTION_REMOVE_VIDEO_BY_VIDEO_ID";
-	removedVideoId: string;
-};
 type D_AdBreakService={
 	prefetchMilliseconds: "10000";
 	getAdBreakUrl: string;
