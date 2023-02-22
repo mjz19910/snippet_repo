@@ -2192,6 +2192,7 @@ class Support_VE37414 extends ServiceMethods {
 	/** @private @arg {D_LoggingContext} x */
 	D_LoggingContext(x) {
 		if(!x) {debugger; return;}
+		const cf="D_LoggingContext";
 		const {vssLoggingContext,qoeLoggingContext,...y}=this.s(cf,x); this.g(y);
 		this.x.get("x_VE").D_VssLoggingContext(vssLoggingContext);
 		this.D_QoeLoggingContext(qoeLoggingContext);
