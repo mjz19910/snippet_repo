@@ -452,7 +452,7 @@ type D_C4TabbedHeader={
 	avatar: D_Thumbnail;
 	banner: D_Thumbnail;
 	badges?: RMD_Badge[];
-	headerLinks: R_ChannelHeaderLinks;
+	headerLinks?: R_ChannelHeaderLinks;
 	subscribeButton: R_SubscribeButton;
 	subscriberCountText: G_Text;
 	tvBanner: D_Thumbnail;

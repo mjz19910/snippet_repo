@@ -1197,6 +1197,9 @@ class ServiceMethods extends ServiceData {
 		this.t(targetId,this.D_Button_targetId);
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
+			this.save_string(`${cf}.style`,x);
+			let skip=true;
+			if(skip) return;
 			switch(x) {
 				default: console.log("D_Button.style",x); break;
 				case "STYLE_BLUE_TEXT":

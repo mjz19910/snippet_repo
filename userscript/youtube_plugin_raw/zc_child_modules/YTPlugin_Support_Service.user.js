@@ -3099,7 +3099,7 @@ class Support_Renderer extends ServiceMethods {
 		this.D_Thumbnail(avatar);
 		this.D_Thumbnail(banner);
 		this.tz(badges,this.RMD_Badge);
-		this.R_ChannelHeaderLinks(headerLinks);
+		this.t(headerLinks,this.R_ChannelHeaderLinks);
 		this.R_SubscribeButton(subscribeButton);
 		this.G_Text(subscriberCountText);
 		this.D_Thumbnail(tvBanner);

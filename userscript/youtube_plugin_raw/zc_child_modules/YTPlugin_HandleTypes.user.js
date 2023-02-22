@@ -965,7 +965,12 @@ class HandleTypes extends ServiceMethods {
 					}
 					debugger;
 				} break;
-				case "child": break;
+				case "child": {
+					let x3=x2[2]; x3;
+					if(x3===null) {debugger; break;}
+					let gen_json=this.gen_typedef_bin_json(s,x3);
+					return `TYPE::T_VW<${gen_json},"json">`;
+				}
 				case "data_fixed32": break;
 				case "data_fixed64": break;
 			}
