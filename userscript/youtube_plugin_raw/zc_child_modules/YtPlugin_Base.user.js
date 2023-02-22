@@ -3030,7 +3030,7 @@ function sizeof_js(obj) {
 //#endregion
 //#region HandleTypesSupport
 class ServiceData extends BaseService {
-	/** @protected @type {GA_FormatItagArr} */
+	/** @protected @type {GA_FormatItagNum[]} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
 	/** @protected @type {QualArr} */
 	format_quality_label_arr=[

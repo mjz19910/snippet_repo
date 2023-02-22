@@ -61,13 +61,14 @@ type GE_ResponseReceived=
 	|E_SignalService_SendPost
 	;
 ;
-type GA_FormatItagArr=[
-	18,
-	133,134,135,136,137,140,160,
-	242,243,244,247,248,249,250,251,278,298,299,
-	302,303,308,315,394,395,396,397,398,399,
-	400,401,
-];
+type GA_FormatItagNum=
+	|18
+	|133|134|135|136|137|140|160
+	|242|243|244|247|248|249|250|251|278|298|299
+	|302|303|308|315|394|395|396|397|398|399
+	|400|401
+	;
+;
 type A_CopyFromPlaylist={
 	action: "ACTION_COPY_FROM_PLAYLIST";
 	sourcePlaylistId: "WL";
@@ -131,14 +132,15 @@ type RSB_EditPlaylist={
 };
 type G_CardList_StyleType="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION";
 type G_AccountItemSection=R_AccountItem|R_CompactLink;
-type G_AccountPageSettingsSections=[
-	"advanced",
-	"billing",
-	"notifications",
-	"privacy",
-	"sharing",
-	"playback",
-][number];
+type G_AccountPageSettingsSections=
+	|"advanced"
+	|"billing"
+	|"notifications"
+	|"privacy"
+	|"sharing"
+	|"playback"
+	;
+;
 type G_Actions=
 	|A_AddToGuideSection
 	|A_GetMultiPageMenu
@@ -167,36 +169,37 @@ type G_ChatItem=
 	|R_LiveChatViewerEngagementMessage
 	;
 ;
-type G_CodecType=[
-	G_CodecTypeStr,
-	T_SplitOnce<G_GenericCodecType,".">[0]
-][number];
-type G_CodecTypeStr=[
-	"opus",
-	"vp9"
-][number];
+type G_CodecType=
+	|G_CodecTypeStr
+	|T_SplitOnce<G_GenericCodecType,".">[0]
+	;
+;
+type G_CodecTypeStr="opus"|"vp9";
 type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
 type G_ExtraUrlParamItem={key: "inline";};
 type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;
-type G_FormatQuality=[
-	"hd2160","hd1440","hd1080","hd720",
-	"large","medium","small","tiny",
-][number];
-type G_GenericCodecType=[
-	S_acv1_codec,
-	"mp4a.40.2",
+type G_FormatQuality=
+	|"hd2160"|"hd1440"|"hd1080"|"hd720"
+	|"large"|"medium"|"small"|"tiny"
+	;
+;
+type G_GenericCodecType=
+	|S_acv1_codec
+	|"mp4a.40.2"
 	// av1 profile=0 level_id=08M bit_depth=8-bit
-	"av01.0.08M.08"
-][number];
+	|"av01.0.08M.08"
+	;
+;
 type G_GuideItem=R_GuideSection|R_GuideSubscriptionsSection;
-type G_GuideSectionItem=[
-	R_GuideCollapsibleEntry,
-	R_GuideCollapsibleSectionEntry,
-	R_GuideDownloadsEntry,
-	R_GuideEntry,
-	R_GuideSection,
-	R_GuideSubscriptionsSection,
-][number];
+type G_GuideSectionItem=
+	|R_GuideCollapsibleEntry
+	|R_GuideCollapsibleSectionEntry
+	|R_GuideDownloadsEntry
+	|R_GuideEntry
+	|R_GuideSection
+	|R_GuideSubscriptionsSection
+	;
+;
 type G_GuideSubscriptionsSectionItem=
 	|R_GuideEntry
 	|R_GuideCollapsibleEntry
@@ -205,13 +208,14 @@ type G_GuideSubscriptionsSectionItem=
 type G_HexNibbleStr=T_Split<"abcdef0123456789","">[number];
 type G_ItemSectionItems=R_CompactRadio|R_ContinuationItem|R_CompactVideo|R_CompactPlaylist|R_AdSlot;
 type G_MenuItem=R_MenuServiceItem|R_ToggleMenuServiceItem|R_MenuNavigationItem;
-type G_MimeTypeFormat=[
-	`video/mp4; codecs="${S_acv1_codec}"`,
-	`video/mp4; codecs="av01.0.08M.08"`,
-	`video/webm; codecs="vp9"`,
-	`audio/mp4; codecs="mp4a.40.2"`,
-	`audio/webm; codecs="opus"`,
-][number];
+type G_MimeTypeFormat=
+	|`video/mp4; codecs="${S_acv1_codec}"`
+	|`video/mp4; codecs="av01.0.08M.08"`
+	|`video/webm; codecs="vp9"`
+	|`audio/mp4; codecs="mp4a.40.2"`
+	|`audio/webm; codecs="opus"`
+	;
+;
 type G_PopupItem=
 	|R_ConfirmDialog
 	|TR_MultiPageMenu_Empty
@@ -222,11 +226,13 @@ type G_PopupItem=
 	;
 ;
 type G_ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;
-type GC_EngagementPanelSectionShow=A_ChangeEngagementPanelVisibility|
-	A_ShowEngagementPanelScrim|
-	C_ScrollToEngagementPanel;
+type GC_EngagementPanelSectionShow=
+	|A_ChangeEngagementPanelVisibility
+	|A_ShowEngagementPanelScrim
+	|C_ScrollToEngagementPanel
+	;
+;
 type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
-
 type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
 type G_ClientSignal_Item=
 	|A_SendFeedback
@@ -266,13 +272,14 @@ type G_AdditionalDataItem=
 	|T_UserFeedbackEndpointProductSpecificValueData<"video_id",string>
 	;
 ;
-type GRC_ServiceTrackingParams=[
-	RC_Csi_SPs,
-	RC_ECatcher_SPs,
-	RC_GFeedback_SPs,
-	RC_GoogleHelp_SPs,
-	SP_GuidedHelp_SPs,
-][number];
+type GRC_ServiceTrackingParams=
+	|RC_Csi_SPs
+	|RC_ECatcher_SPs
+	|RC_GFeedback_SPs
+	|RC_GoogleHelp_SPs
+	|SP_GuidedHelp_SPs
+	;
+;
 type G_ResponseActions=
 	TA_OpenPopup_Empty|
 	AU_NotificationsUnseenCount|
@@ -320,14 +327,15 @@ type G_ResponseTypes=
 type G_RichGridContent=R_RichItem|R_ContinuationItem;
 type G_RichItemContent=R_AdSlot|R_Video|R_Radio|R_FeedNudge;
 type G_SecondaryContents=R_ProfileColumn|R_BrowseFeedActions;
-type G_SectionItem=[
-	R_RichItem,
-	R_RichSection,
-	R_CommentsHeader,
-	R_CommentThread,
-	R_CompactVideo,
-	R_ContinuationItem,
-][number];
+type G_SectionItem=
+	|R_RichItem
+	|R_RichSection
+	|R_CommentsHeader
+	|R_CommentThread
+	|R_CompactVideo
+	|R_ContinuationItem
+	;
+;
 type G_SettingsEndpointPages=`/account${""|`_${G_AccountPageSettingsSections}`}`;
 type G_SettingsOptionItem=
 	R_ChannelOptions|
@@ -341,16 +349,13 @@ type G_ShortsSurfaceIdentifier_ValidTag=
 	|"shorts-comments-panel"
 	;
 ;
-type G_StructuredDescriptionContentItem=[
-	R_ExpandableVideoDescriptionBody,
-	R_HorizontalCardList,
-	R_VideoDescriptionHeader,
-	R_VideoDescriptionMusicSection,
-][number];
-
-
-type R_ThumbnailOverlayInlineUnplayable={thumbnailOverlayInlineUnplayableRenderer: D_ThumbnailOverlayInlineUnplayable;};
-
+type G_StructuredDescriptionContentItem=
+	|R_ExpandableVideoDescriptionBody
+	|R_HorizontalCardList
+	|R_VideoDescriptionHeader
+	|R_VideoDescriptionMusicSection
+	;
+;
 type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayBottomPanel
 	|R_ThumbnailOverlayHoverText
@@ -468,9 +473,9 @@ type Ret_get_auto_type_name=
 ;
 type Ret_json_auto_replace_1=Capitalize<Ret_json_auto_raw>|"{}";
 type Ret_json_auto_raw=
-|"prefetchHintConfig"
-|"openPopupAction"
-|"metadataBadgeRenderer"
-|keyof R_TwoColumnBrowseResults
-|"browseEndpoint"
-;
+	|"prefetchHintConfig"
+	|"openPopupAction"
+	|"metadataBadgeRenderer"
+	|keyof R_TwoColumnBrowseResults
+	|"browseEndpoint"
+	;
