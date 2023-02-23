@@ -1420,7 +1420,7 @@ class Support_GenericApi extends ServiceMethods {
 			case "subscription.subscribe": return this.ht.RS_Subscribe(x.data);
 			case "subscription.unsubscribe": return this.ht.RS_Unsubscribe(x.data);
 			case "search": return this.ht.RS_Search(x.data);
-			case "updated_metadata": return this.ht.RSU_M(x.data);
+			case "updated_metadata": return this.ht.RS_UpdateMetadata(x.data);
 			case "pdg.get_pdg_buy_flow": return this.ht.RSG_PdgBuyFlow(x.data);
 			default: debugger; return g(x);
 		}

@@ -539,6 +539,16 @@ class HandleTypes extends ServiceMethods {
 	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
 	/** @private @arg {D_StructuredDescriptionContent} x */
 	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	/** @public @arg {R_SystemMenu} x */
+	R_SystemMenu(x) {this.t(this.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
+	/** @public @arg {MP_SystemMenu} x */
+	MP_SystemMenu(x) {
+		const cf="MP_SystemMenu";
+		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xr.R_ActiveAccountHeader(header);
+		this.trackingParams(trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
+	}
 	//#endregion
 	//#region G
 	/** @public @arg {G_SI_DB_EngagementPanel} x */
@@ -910,7 +920,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(u);
 	}
 	//#endregion
-	//#region RS
+	//#region RS & RSG
 	/** @public @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";
@@ -921,26 +931,19 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 	}
-	/** @public @arg {A_GetSystemMenu} x */
-	A_GetSystemMenu(x) {
-		const cf="A_GetSystemMenu";
-		let pu=this.TA_OpenPopup(cf,x);
-		this.Popup_DD_SystemMenu(pu);
-	}
-	/** @public @arg {Popup_DD_SystemMenu} x */
-	Popup_DD_SystemMenu(x) {
-		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
-		this.t(m,this.R_SystemMenu);
-	}
-	/** @public @arg {R_SystemMenu} x */
-	R_SystemMenu(x) {this.t(this.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
-	/** @public @arg {MP_SystemMenu} x */
-	MP_SystemMenu(x) {
-		const cf="MP_SystemMenu";
-		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.R_ActiveAccountHeader(header);
-		this.trackingParams(trackingParams);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
+	/** @public @arg {RS_UpdateMetadata} x */
+	RS_UpdateMetadata(x) {
+		const cf="RS_UpdateMetadata";
+		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.CD_TimedContinuation(continuation);
+		this.z(actions,x => {
+			if("updateViewershipAction" in x) return this.AU_Viewership(x);
+			if("updateToggleButtonTextAction" in x) return this.AU_ToggleButtonText(x);
+			if("updateDateTextAction" in x) return this.AU_DateText(x);
+			if("updateTitleAction" in x) return this.AU_Title(x);
+			if("updateDescriptionAction" in x) return this.AU_Description(x);
+			console.log(x);
+		});
 	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
@@ -958,23 +961,22 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
+	//#endregion
+	//#region A
+	/** @public @arg {A_GetSystemMenu} x */
+	A_GetSystemMenu(x) {
+		const cf="A_GetSystemMenu";
+		let pu=this.TA_OpenPopup(cf,x);
+		this.Popup_DD_SystemMenu(pu);
+	}
+	/** @public @arg {Popup_DD_SystemMenu} x */
+	Popup_DD_SystemMenu(x) {
+		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
+		this.t(m,this.R_SystemMenu);
+	}
 	ignore_incorrect_name_set=new Set([
 		"D_CommonConfig",
 	]);
-	/** @public @arg {RS_UpdateMetadata} x */
-	RSU_M(x) {
-		const cf="RSU_M";
-		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.CD_TimedContinuation(continuation);
-		this.z(actions,x => {
-			if("updateViewershipAction" in x) return this.AU_Viewership(x);
-			if("updateToggleButtonTextAction" in x) return this.AU_ToggleButtonText(x);
-			if("updateDateTextAction" in x) return this.AU_DateText(x);
-			if("updateTitleAction" in x) return this.AU_Title(x);
-			if("updateDescriptionAction" in x) return this.AU_Description(x);
-			console.log(x);
-		});
-	}
 	/** @private @arg {AU_Description} x */
 	AU_Description(x) {
 		const cf="AU_Description";
