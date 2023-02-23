@@ -218,7 +218,7 @@ class ParserService extends BaseService {
 	log_enabled_playlist_id=false;
 	/** @private @arg {CF_L_TP_Params} root @arg {Extract<D_UrlFormat,`https://${string}`|`http://${string}`>} x */
 	parse_full_url(root,x) {
-		let r=this.tr_url_to_obj(x);
+		let r=this._convert_url_to_obj(x);
 		switch(r.host) {
 			case "ad.doubleclick.net": return;
 			case "www.googleadservices.com": return;

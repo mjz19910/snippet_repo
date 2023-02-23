@@ -2165,7 +2165,7 @@ class BaseService extends BaseServicePrivate {
 		return as(r);
 	}
 	/** @protected @template {`https://${string}`|`http://${string}`} T @arg {T} str @returns {UrlParse<T>} */
-	tr_url_to_obj(str) {
+	_convert_url_to_obj(str) {
 		let s=new URL(str);
 		/** @private @type {any} */
 		let a=s;
@@ -2374,7 +2374,7 @@ class YtHandlers extends BaseService {
 		let api_url=as(parsed_url.href);
 		let ht=this.x.get("handle_types");
 		let url_type=ht.decode_url(api_url);
-		const res_parse=this.tr_url_to_obj(api_url);
+		const res_parse=this._convert_url_to_obj(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
 			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {return split_string_once(ss1,"youtubei/v1/")[1];} else {return ss1;}

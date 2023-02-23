@@ -1,5 +1,5 @@
 type D_ToggleButton={
-	style: T_StyleType<"STYLE_COMPACT_GRAY"|"STYLE_TEXT"|"STYLE_GREY_TEXT"|"STYLE_DEFAULT_ACTIVE">;
+	style?: T_StyleType<"STYLE_COMPACT_GRAY"|"STYLE_TEXT"|"STYLE_GREY_TEXT"|"STYLE_DEFAULT_ACTIVE">;
 	isToggled: boolean;
 	isDisabled: false;
 	defaultText?: G_Text;

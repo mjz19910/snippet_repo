@@ -2914,7 +2914,7 @@ class Support_Renderer extends ServiceMethods {
 		this.a_primitive_str(rssUrl);
 		this.a_primitive_str(keywords);
 		if(ownerUrls.length!==1) debugger;
-		let ur=this.tr_url_to_obj(ownerUrls[0]);
+		let ur=this._convert_url_to_obj(ownerUrls[0]);
 		this.ceq(this.str_starts_with_rx("/@",ur.pathname),true);
 		this.a_primitive_str(channelUrl);
 		this.a_primitive_str(vanityChannelUrl);
@@ -3503,7 +3503,7 @@ class Support_Renderer extends ServiceMethods {
 	/** @private @arg {D_RemarketingPing} x */
 	D_RemarketingPing(x) {
 		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
-		let tr=t.tr_url_to_obj(remarketingPing);
+		let tr=t._convert_url_to_obj(remarketingPing);
 		t.cq(tr.host,"www.youtube.com");
 		let [r,...p]=split_string(tr.pathname,"/"); t.cq(r,"");
 		t.cq(p[0],"pagead"); t.cq(p[1],"viewthroughconversion");

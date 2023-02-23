@@ -327,11 +327,11 @@ type PD_continuation_params={
 		3: T_D32<2>;
 		4: T_D32<0>;
 	}>;
-	15: T_D32<1>;
+	15?: T_D32<1>;
 };
 
 type PR_continuation_params={
-	0x94d81d4: PD_continuation_params;
+	0x94d81d4: T_VW<PD_continuation_params>;
 };
 type P_create_comment_params={
 	2: TV_Str<"mUK-j5bKk0Q">;

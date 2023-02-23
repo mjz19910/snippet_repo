@@ -284,7 +284,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {GU_VE83769_Url_External} x */
 	GU_VE83769_Url_External(x) {
-		let x1=this.tr_url_to_obj(x);
+		let x1=this._convert_url_to_obj(x);
 		if(x1.hostname!=="googleads.g.doubleclick.net") debugger;
 		if(x1.pathname!=="/aclk") debugger;
 		let s_map=Object.fromEntries(x1.searchParams.entries());
@@ -292,7 +292,7 @@ class ServiceMethods extends ServiceData {
 			/** @type {DE_VE83769_Url_Shape} */
 			let x2=as(s_map);
 			const {sa,ai,ae,num,cid,sig,client,rf,adurl,...y}=x2; this.g(y);
-			let u1=this.tr_url_to_obj(adurl);
+			let u1=this._convert_url_to_obj(adurl);
 			if(u1.hostname!=="plantagreenhouses.ca") debugger;
 			if(u1.pathname!=="/") debugger;
 			/** @type {DE_VE83769_Url_SearchObj} */
@@ -326,12 +326,12 @@ class ServiceMethods extends ServiceData {
 		}
 		x;
 		if(this.str_starts_with(x,"https://www.youtube.com/channel/UC")) {
-			let r=this.tr_url_to_obj(x);
+			let r=this._convert_url_to_obj(x);
 			r.pathname;
 			return;
 		}
 		if(this.str_starts_with(x,"https://www.youtube.com/channel/UC")) {
-			let r=this.tr_url_to_obj(x);
+			let r=this._convert_url_to_obj(x);
 			r.pathname;
 			return;
 		}
@@ -1858,14 +1858,14 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
 	DU_Url(x) {
-		this.DU_UrlParse(this.tr_url_to_obj(x));
+		this.DU_UrlParse(this._convert_url_to_obj(x));
 		(x => {
 			if(x.host!=="www.youtube.com") debugger;
 			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
 			let pa1=this.split_str(x.search,"?");
 			let pa=this.split_str(pa1[1],"&"); pa;
 			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
-		})(this.tr_url_to_obj(x));
+		})(this._convert_url_to_obj(x));
 	}
 	/** @protected @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
 	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
@@ -2083,7 +2083,7 @@ class ServiceMethods extends ServiceData {
 			let arg_x=as(x);
 			return this.GU_YoutubeUrlRedirect(arg_x);
 		}
-		let sp=this.tr_url_to_obj(x);
+		let sp=this._convert_url_to_obj(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
 		this.GU_VE83769_Url(sp.href);
 	}
@@ -2096,7 +2096,7 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		let up=this.tr_url_to_obj(x);
+		let up=this._convert_url_to_obj(x);
 		switch(up.host) {
 			case "music.youtube.com": return this.handle_yt_music_url(up.href);
 			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
@@ -2834,7 +2834,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {D_ApiUrlFormat} x */
 	decode_url(x) {
-		const res_parse=this.tr_url_to_obj(x);
+		const res_parse=this._convert_url_to_obj(x);
 		if("_tag" in res_parse) {
 			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
@@ -3527,7 +3527,7 @@ class ServiceMethods extends ServiceData {
 		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.B_Hack(pingingEndpoint);
 		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
-			let pr=this.tr_url_to_obj(x);
+			let pr=this._convert_url_to_obj(x);
 			switch(pr.host) {
 				case "pagead2.googlesyndication.com": {
 					if(pr.pathname!=="/pcs/activeview") debugger;
@@ -3642,9 +3642,9 @@ class ServiceMethods extends ServiceData {
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
 		const {style,isToggled,isDisabled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,...u}=this.s(cf,x);
-		this.save_string(`${cf}.style`,style.styleType);
-		this.ceq(isDisabled,false);
+		this.t(style,x => this.save_string(`${cf}.style`,x.styleType));
 		this.a_primitive_bool(isToggled);
+		this.cq(isDisabled,false);
 		x: {
 			let x2=defaultIcon;
 			if(!x2) {debugger; break x;}
@@ -3656,6 +3656,7 @@ class ServiceMethods extends ServiceData {
 		this.D_ToggleButton_ToggledSrvEP(toggledServiceEndpoint);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
 		this.t(accessibility,this.D_Label);
+		this.trackingParams(trackingParams);
 		x: {
 			let x2=toggledStyle;
 			if(!x2) {debugger; break x;}
@@ -6476,7 +6477,7 @@ class ServiceMethods extends ServiceData {
 			get_with_pathname(cx,pname) {return ServiceMethods.is_url_with_pathname(cx,pname);}
 		}
 		const cf="D_RadioShareUrl";
-		let up=this.tr_url_to_obj(b);
+		let up=this._convert_url_to_obj(b);
 		{
 			let obj=new UrlParseHelper(up);
 			if(obj.get_with_pathname(up,"/watch")) {

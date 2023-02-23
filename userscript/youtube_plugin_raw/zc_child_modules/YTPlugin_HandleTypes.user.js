@@ -1148,7 +1148,7 @@ class HandleTypes extends ServiceMethods {
 	getInfoForUrl(x,k) {
 		switch(k) {
 			case "https://www.youtube.com/redirect": {
-				let parsed_url=this.tr_url_to_obj(x);
+				let parsed_url=this._convert_url_to_obj(x);
 				if("_tag" in parsed_url) throw new Error();
 				let parsed_params=this.parse_url_search_params(parsed_url.search);
 				if(!("q" in parsed_params)) {debugger; throw new Error();}
@@ -1647,7 +1647,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
-		let pu=this.tr_url_to_obj(x);
+		let pu=this._convert_url_to_obj(x);
 		let parts=this.get_google_host_parts(pu);
 		if(parts.path!=="/generate_204") debugger;
 		this.D_GoogleVideoHostPartitionRet(parts);
@@ -1977,13 +1977,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
-		const {3: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: {},8: {},14: {},15: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
 		const cf="PR_continuation_params";
 		const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.PD_continuation_params(n);
+		this.T_VW(n,this.PD_continuation_params);
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
