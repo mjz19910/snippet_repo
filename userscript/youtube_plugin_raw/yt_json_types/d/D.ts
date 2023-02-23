@@ -2888,7 +2888,7 @@ type D_VideoSecondaryInfo={
 	showMoreText: G_Text;
 	showLessText: G_Text;
 	trackingParams: string;
-	defaultExpanded: false;
+	defaultExpanded: boolean;
 	descriptionCollapsedLines: number;
 	showMoreCommand?: C_CommandExecutor;
 	showLessCommand?: A_ChangeEngagementPanelVisibility;

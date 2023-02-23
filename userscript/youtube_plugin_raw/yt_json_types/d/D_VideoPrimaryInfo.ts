@@ -7,7 +7,7 @@ type D_VideoPrimaryInfo={
 	superTitleLink?: G_Text;
 	badges?: RMD_Badge[];
 	dateText: G_Text;
-	relativeDateText: G_Text;
+	relativeDateText?: G_Text;
 };
 type GM_UpdatedMetadata={
 	sendPost: true;

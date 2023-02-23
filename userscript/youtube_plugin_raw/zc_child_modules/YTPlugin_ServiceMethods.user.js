@@ -5237,7 +5237,7 @@ class ServiceMethods extends ServiceData {
 		this.t(superTitleLink,this.G_Text);
 		this.tz(badges,this.RMD_Badge);
 		this.G_Text(dateText);
-		this.G_Text(relativeDateText);
+		this.t(relativeDateText,this.G_Text);
 	}
 	/** @private @arg {E_UpdatedMetadata} x */
 	E_UpdatedMetadata(x) {const [y]=this.TE_Endpoint_3_v2("updatedMetadataEndpoint",x,this.M_UpdatedMetadata,this.D_VideoId); this.g(y);}
@@ -5282,7 +5282,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(showMoreText);
 		this.G_Text(showLessText);
 		this.R_VideoOwner(owner);
-		this.ceq(defaultExpanded,false);
+		this.a_primitive_bool(defaultExpanded);
 		this.a_primitive_num(descriptionCollapsedLines);
 		this.t(showMoreCommand,this.C_Executor);
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
