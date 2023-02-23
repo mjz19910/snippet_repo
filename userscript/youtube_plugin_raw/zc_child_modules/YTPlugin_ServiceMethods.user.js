@@ -1882,7 +1882,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DE_Search";
 		const {query,params,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(query);
-		this.params("search.params",params);
+		this.t(params,x => this.params("search.params",x));
 	}
 	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
@@ -6912,8 +6912,19 @@ class ServiceMethods extends ServiceData {
 		this.t(canonicalBaseUrl,x => {
 			let sp=split_string_once(x,"/"); this.cq(sp.length,2);
 			let [e1,sr]=sp; this.cq(e1,"");
-			if(!this.str_starts_with(sr,"@")) debugger;
-			let s2=split_string_once(sr,"/"); this.cq(s2.length,1);
+			let s2=split_string_once(sr,"/");
+			if(s2.length===1) {
+				let [p]=s2;
+				let s3=split_string_once(p,"@"); this.cq(s3[0],"");
+				this.cq(s3.length,2);
+				return;
+			}
+			switch(s2[0]) {
+				default: debugger; return;
+				case "channel":
+			}
+			let [,v3]=s2;
+			this.channelId(v3);
 		});
 		this.t(query,x => this.save_string(`${cf}.query`,x));
 	}

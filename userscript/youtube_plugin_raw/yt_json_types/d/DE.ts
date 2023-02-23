@@ -16,7 +16,16 @@ type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",
 //#endregion
 //#region DE_VE
 type DE_VE<T>={browseId: T;};
-type DE_VE3611={params?: string; browseId: `UC${string}`; canonicalBaseUrl?: `/@${string}`; query?: string;};
+type DE_VE3611_BaseUrl=
+	|`/@${string}`
+	|`/channel/UC${string}`
+	;
+;
+type DE_VE3611={
+	params?: string; browseId: `UC${string}`;
+	canonicalBaseUrl?: DE_VE3611_BaseUrl;
+	query?: string;
+};
 type DE_VE3854=DE_VE<"FEwhat_to_watch">;
 type DE_VE5754=DE_VE<GU_VE5754_Id>|{
 	browseId: `VLPL${string}`;
