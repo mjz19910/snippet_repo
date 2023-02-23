@@ -737,18 +737,19 @@ class IndexedDBService extends BaseService {
 								if(item_nt.key===cursor_value.key&&item_nt.id===cursor_value.id) break;
 								update_item=true;
 							} break;
-							// not a dynamic value
-							case "playlist_id:self": break;
 							case "browse_id:VL":
 							case "channel_id:UC":
 							case "playlist_id:PL":
 							case "playlist_id:RD":
-							case "playlist_id:RDMM":
 							case "playlist_id:RDCM":
+							case "playlist_id:RDGM":
+							case "playlist_id:RDMM":
 							case "playlist_id:UU": {
 								if(cursor_value.key===item_nt.key&&item_nt.id===cursor_value.id) break;
 								update_item=true;
 							} break;
+							// not a dynamic value
+							case "playlist_id:self": break;
 						}
 						if(update_item) {
 							await this.force_update(s,item);

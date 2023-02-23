@@ -17,7 +17,7 @@ function generate_ts_make_tmp_git_repo {
 		generate_ts_after_tmp_git_repo
 		pushd "$TMP_DIR/$DEST_DIR"
 		npm i --silent --no-progress
-		popd "$TMP_DIR/$DEST_DIR"
+		popd
 		popd
 	fi
 	popd

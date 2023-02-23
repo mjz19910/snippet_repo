@@ -77,6 +77,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddChatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ChangeEngagementPanelVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Description";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Notification";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ReplayChatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SendFeedback";}
@@ -737,6 +738,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Unpack:T_WCM:MG_Survey_CMD";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEnclosing";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEngagementPanelTargetId";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_Description";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_ToggleButtonText";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_Viewership";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_ViewershipData";}

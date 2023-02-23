@@ -25,8 +25,9 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
-	[24476774,24481213,4957635],
-	[24474438,24478762,39323074],
+	[24409417,24466859,24474437,24477147,24477317],// 3
+	[24476774,24481213,4957635],// 1
+	[24474438,24478762,39323074],// 2
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
@@ -593,10 +594,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AU_Description} x */
 	AU_Description(x) {
-		this.y("UA_Description","updateDescriptionAction",x,x => {
-			this.save_keys(`[UA_DescriptionData]`,x);
-			this.G_Text(x.description);
-		});
+		const cf="AU_Description";
+		this.y(cf,"updateDescriptionAction",x,this.AD_Description);
+	}
+	/** @private @arg {AD_Description} x */
+	AD_Description(x) {
+		const cf="AD_Description";
+		const {description,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(description);
 	}
 	/** @private @arg {AU_Title} x */
 	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
