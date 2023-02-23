@@ -945,6 +945,54 @@ class HandleTypes extends ServiceMethods {
 			console.log(x);
 		});
 	}
+	/** @public @arg {RS_Search} x */
+	RS_Search(x) {
+		const cf="RS_Search";
+		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(estimatedResults);
+		this.xr.R_TwoColumnSearchResults(contents);
+		this.trackingParams(trackingParams);
+		this.R_DesktopTopbar(topbar);
+		this.z(refinements,this.a_primitive_str);
+		this.z(onResponseReceivedCommands,x => {
+			if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
+		});
+		this.targetId(cf,targetId);
+	}
+	/** @public @arg {RS_ReelWatchSequence} x */
+	RS_ReelWatchSequence(x) {
+		const cf="RS_ReelWatchSequence";
+		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
+		this.trackingParams(trackingParams);
+		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
+	}
+	/** @public @arg {RS_GetLiveChat} x */
+	RS_GetLiveChat(x) {
+		const cf="RS_GetLiveChat";
+		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.RC_LiveChat(a1);
+		this.t_cf(cf,a2,this.trackingParams);
+	}
+	/** @private @arg {string} x */
+	RS_Next_ContextParams(x) {this.params("next.queue_context.params",x);}
+	/** @public @arg {RS_Next} x */
+	RS_Next(x) {
+		const cf="RS_Next";
+		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(contents,x => this.xr.G_NextContents(x));
+		this.t(currentVideoEndpoint,this.E_Watch);
+		this.trackingParams(trackingParams);
+		this.t(playerOverlays,this.R_PlayerOverlay);
+		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived(cf,a));
+		this.tz(engagementPanels,this.R_EngagementPanelSectionList);
+		this.t(topbar,this.R_DesktopTopbar);
+		this.tz(pageVisualEffects,this.R_CinematicContainer);
+		this.t(frameworkUpdates,this.D_FrameworkUpdates);
+		this.t(videoReporting,x => this.xr.R_ReportFormModal(x));
+		this.t(queueContextParams,this.RS_Next_ContextParams);
+		this.t(continuationContents,this.RC_PlaylistPanel);
+	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
@@ -960,63 +1008,6 @@ class HandleTypes extends ServiceMethods {
 		pu.pdgBuyFlowRenderer;
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
-	}
-	//#endregion
-	//#region A
-	/** @public @arg {A_GetSystemMenu} x */
-	A_GetSystemMenu(x) {
-		const cf="A_GetSystemMenu";
-		let pu=this.TA_OpenPopup(cf,x);
-		this.Popup_DD_SystemMenu(pu);
-	}
-	/** @public @arg {Popup_DD_SystemMenu} x */
-	Popup_DD_SystemMenu(x) {
-		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
-		this.t(m,this.R_SystemMenu);
-	}
-	ignore_incorrect_name_set=new Set([
-		"D_CommonConfig",
-	]);
-	/** @private @arg {AU_Description} x */
-	AU_Description(x) {
-		const cf="AU_Description";
-		this.y(cf,"updateDescriptionAction",x,this.AD_Description);
-	}
-	/** @private @arg {AD_Description} x */
-	AD_Description(x) {
-		const cf="AD_Description";
-		const {description,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(description);
-	}
-	/** @private @arg {AU_Title} x */
-	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
-	/** @private @arg {AU_DateText} x */
-	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));}
-	/** @private @arg {AU_ToggleButtonText} x */
-	AU_ToggleButtonText(x) {
-		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
-			const cf="AU_ToggleButtonTextData";
-			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
-			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
-			this.G_Text(defaultText);
-			this.G_Text(toggledText);
-		});
-	}
-	/** @private @arg {AU_Viewership} x */
-	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.y("AU_ViewershipData","viewCount",x,this.R_VideoViewCount));}
-	/** @public @arg {RS_Search} x */
-	RS_Search(x) {
-		const cf="RS_Search";
-		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(estimatedResults);
-		this.xr.R_TwoColumnSearchResults(contents);
-		this.trackingParams(trackingParams);
-		this.R_DesktopTopbar(topbar);
-		this.z(refinements,this.a_primitive_str);
-		this.z(onResponseReceivedCommands,x => {
-			if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		});
-		this.targetId(cf,targetId);
 	}
 	/** @public @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
@@ -1054,40 +1045,41 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		}));
 	}
-	/** @public @arg {RS_ReelWatchSequence} x */
-	RS_ReelWatchSequence(x) {
-		const cf="RS_ReelWatchSequence";
-		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
-		this.trackingParams(trackingParams);
-		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
+	//#endregion
+	//#region A & AU
+	/** @private @arg {A_GetSystemMenu} x */
+	A_GetSystemMenu(x) {
+		const cf="A_GetSystemMenu";
+		let pu=this.TA_OpenPopup(cf,x);
+		this.Popup_DD_SystemMenu(pu);
 	}
-	/** @public @arg {RS_GetLiveChat} x */
-	RS_GetLiveChat(x) {
-		const cf="RS_GetLiveChat";
-		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_LiveChat(a1);
-		this.t_cf(cf,a2,this.trackingParams);
+	/** @private @arg {AU_Description} x */
+	AU_Description(x) {
+		const cf="AU_Description";
+		this.y(cf,"updateDescriptionAction",x,this.AD_Description);
 	}
-	/** @private @arg {string} x */
-	RS_Next_ContextParams(x) {this.params("next.queue_context.params",x);}
-	/** @public @arg {RS_Next} x */
-	RS_Next(x) {
-		const cf="RS_Next";
-		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(contents,x => this.xr.G_NextContents(x));
-		this.t(currentVideoEndpoint,this.E_Watch);
-		this.trackingParams(trackingParams);
-		this.t(playerOverlays,this.R_PlayerOverlay);
-		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived(cf,a));
-		this.tz(engagementPanels,this.R_EngagementPanelSectionList);
-		this.t(topbar,this.R_DesktopTopbar);
-		this.tz(pageVisualEffects,this.R_CinematicContainer);
-		this.t(frameworkUpdates,this.D_FrameworkUpdates);
-		this.t(videoReporting,x => this.xr.R_ReportFormModal(x));
-		this.t(queueContextParams,this.RS_Next_ContextParams);
-		this.t(continuationContents,this.RC_PlaylistPanel);
+	/** @private @arg {AD_Description} x */
+	AD_Description(x) {
+		const cf="AD_Description";
+		const {description,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(description);
 	}
+	/** @private @arg {AU_Title} x */
+	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
+	/** @private @arg {AU_DateText} x */
+	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));}
+	/** @private @arg {AU_ToggleButtonText} x */
+	AU_ToggleButtonText(x) {
+		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
+			const cf="AU_ToggleButtonTextData";
+			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
+			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
+			this.G_Text(defaultText);
+			this.G_Text(toggledText);
+		});
+	}
+	/** @private @arg {AU_Viewership} x */
+	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.y("AU_ViewershipData","viewCount",x,this.R_VideoViewCount));}
 	/** @private @arg {RC_PlaylistPanel} x */
 	RC_PlaylistPanel(x) {this.H_("playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
@@ -1192,6 +1184,11 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_Feedback";
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
+	}
+	/** @private @arg {Popup_DD_SystemMenu} x */
+	Popup_DD_SystemMenu(x) {
+		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
+		this.t(m,this.R_SystemMenu);
 	}
 	/** @public @arg {P_ParamParse} cf @arg {string} x */
 	decode_binary_obj(cf,x) {

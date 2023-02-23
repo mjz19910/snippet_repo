@@ -635,6 +635,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Subscribe_ActionItem_Action";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Success";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_UpdateMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_Obj_f19";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeBrowse";}
