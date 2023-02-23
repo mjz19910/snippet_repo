@@ -1030,6 +1030,39 @@ class HandleTypes extends ServiceMethods {
 		this.t(queueContextParams,this.RS_Next_ContextParams);
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
+	/** @public @arg {RS_AccountsList} x */
+	RS_AccountsList(x) {
+		const cf="RS_AccountsList";
+		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(selectText);
+		this.z(actions,this.AU_ChannelSwitcherPage);
+	}
+	/** @public @arg {RS_SetSetting} x */
+	RS_SetSetting(x) {
+		const cf="RS_SetSetting";
+		const {responseContext: {},settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(settingItemId!=="407") debugger;
+	}
+	/** @public @arg {RS_Feedback} x */
+	RS_Feedback(x) {
+		const cf="RS_Feedback";
+		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
+	}
+	/** @public @arg {RS_AttGet} x */
+	RS_AttGet(x) {
+		const cf="RS_AttGet";
+		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(challenge);
+		this.xr.D_AttBgChallenge(bgChallenge);
+	}
+	/** @public @arg {RS_Guide} x */
+	RS_Guide(x) {
+		const cf="RS_Guide";
+		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(items,x => this.xr.G_GuideSectionItem(x));
+		this.trackingParams(trackingParams);
+	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
@@ -1050,6 +1083,15 @@ class HandleTypes extends ServiceMethods {
 	RSG_SearchSuggestions(x) {
 		const cf="RSG_SearchSuggestions";
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+	}
+	/** @public @arg {RSG_Transcript} x */
+	RSG_Transcript(x) {
+		const cf="RSG_Transcript";
+		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(actions,a => {
+			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
+		});
 		this.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSL_Like} x */
@@ -1081,6 +1123,31 @@ class HandleTypes extends ServiceMethods {
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		}));
+	}
+	/** @public @arg {REG_DatasyncIds} x */
+	REG_DatasyncIds(x) {
+		const cf="REG_DatasyncIds";
+		const {responseContext: {},datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(datasyncIds,this.a_primitive_str);
+	}
+	/** @public @arg {REG_AccountSwitcher} x */
+	REG_AccountSwitcher(x) {
+		const cf="REG_AccountSwitcher";
+		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(selectText);
+		this.z(actions,this.A_GetMultiPageMenu);
+	}
+	/** @public @arg {RS_WatchReelItem} x */
+	RSW_ReelItem(x) {
+		const cf="RSW_ReelItem";
+		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_ReelPlayerOverlay(overlay);
+		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
+		this.trackingParams(trackingParams);
+		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
+		this.t(sequenceContinuation,this.a_primitive_str);
+		this.R_DesktopTopbar(desktopTopbar);
+		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 	}
 	//#endregion
 	//#region A & AU
@@ -1117,6 +1184,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AU_Viewership} x */
 	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.y("AU_ViewershipData","viewCount",x,this.R_VideoViewCount));}
+	/** @private @arg {AU_EngagementPanel} x */
+	AU_EngagementPanel(x) {
+		const cf="AU_EngagementPanel";
+		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
+		this.clickTrackingParams(clickTrackingParams);
+	}
+	/** @private @arg {AD_UpdateEngagementPanel} x */
+	AD_UpdateEngagementPanel(x) {
+		const cf="AD_UpdateEngagementPanel";
+		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xr.R_Transcript(content);
+		if(targetId!=="engagement-panel-searchable-transcript") debugger;
+	}
 	//#endregion
 	//#region Continuation [RC]
 	/** @private @arg {RC_PlaylistPanel} x */
@@ -1171,57 +1252,6 @@ class HandleTypes extends ServiceMethods {
 				return this.x;
 			}
 		})(x);
-	}
-	/** @private @arg {AD_UpdateEngagementPanel} x */
-	AD_UpdateEngagementPanel(x) {
-		const cf="AD_UpdateEngagementPanel";
-		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.R_Transcript(content);
-		if(targetId!=="engagement-panel-searchable-transcript") debugger;
-	}
-	/** @public @arg {REG_DatasyncIds} x */
-	REG_DatasyncIds(x) {
-		const cf="REG_DatasyncIds";
-		const {responseContext: {},datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(datasyncIds,this.a_primitive_str);
-	}
-	/** @public @arg {REG_AccountSwitcher} x */
-	REG_AccountSwitcher(x) {
-		const cf="REG_AccountSwitcher";
-		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(selectText);
-		this.z(actions,this.A_GetMultiPageMenu);
-	}
-	/** @public @arg {RS_AccountsList} x */
-	RS_AccountsList(x) {
-		const cf="RS_AccountsList";
-		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(selectText);
-		this.z(actions,this.AU_ChannelSwitcherPage);
-	}
-	/** @public @arg {RS_WatchReelItem} x */
-	RSW_ReelItem(x) {
-		const cf="RSW_ReelItem";
-		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_ReelPlayerOverlay(overlay);
-		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
-		this.trackingParams(trackingParams);
-		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
-		this.t(sequenceContinuation,this.a_primitive_str);
-		this.R_DesktopTopbar(desktopTopbar);
-		this.z(engagementPanels,this.R_EngagementPanelSectionList);
-	}
-	/** @public @arg {RS_SetSetting} x */
-	RS_SetSetting(x) {
-		const cf="RS_SetSetting";
-		const {responseContext: {},settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(settingItemId!=="407") debugger;
-	}
-	/** @public @arg {RS_Feedback} x */
-	RS_Feedback(x) {
-		const cf="RS_Feedback";
-		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
 	}
 	/** @private @arg {Popup_DD_SystemMenu} x */
 	Popup_DD_SystemMenu(x) {
@@ -1565,29 +1595,6 @@ class HandleTypes extends ServiceMethods {
 		if(protobuf_arr.find(e => e[0]==="error")) return null;
 		return protobuf_arr;
 	}
-	/** @public @arg {RSG_Transcript} x */
-	RSG_Transcript(x) {
-		const cf="RSG_Transcript";
-		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,a => {
-			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
-		});
-		this.trackingParams(trackingParams);
-	}
-	/** @public @arg {RS_AttGet} x */
-	RS_AttGet(x) {
-		const cf="RS_AttGet";
-		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(challenge);
-		this.xr.D_AttBgChallenge(bgChallenge);
-	}
-	/** @public @arg {RS_Guide} x */
-	RS_Guide(x) {
-		const cf="RS_Guide";
-		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(items,x => this.xr.G_GuideSectionItem(x));
-		this.trackingParams(trackingParams);
-	}
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,id]=x; if(sec!=="shorts") debugger;
@@ -1790,13 +1797,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
-	/** @private @arg {AU_EngagementPanel} x */
-	AU_EngagementPanel(x) {
-		const cf="AU_EngagementPanel";
-		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
-		this.clickTrackingParams(clickTrackingParams);
-	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
 	/** @public @arg {RS_Channel} x */
