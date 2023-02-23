@@ -4523,7 +4523,7 @@ class ServiceMethods extends ServiceData {
 		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
 		this.R_EngagementPanelTitleHeader(header);
-		this.R_StructuredDescriptionContent(content);
+		this.ht.R_StructuredDescriptionContent(content);
 		if(targetId!=="engagement-panel-structured-description") debugger;
 		this.targetId(cf,targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -4562,7 +4562,7 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		if("targetId" in x) return this.G_SI_DB_EngagementPanel(x);
+		if("targetId" in x) return this.ht.G_SI_DB_EngagementPanel(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_ThumbnailsList} x */
@@ -4730,8 +4730,6 @@ class ServiceMethods extends ServiceData {
 		this.R_Button(a11ySkipNavigationButton);
 		this.R_Button(voiceSearchButton);
 	}
-	/** @private @arg {R_StructuredDescriptionContent} x */
-	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
 	/** @private @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_("productListRenderer",x,this.D_ProductList);}
 	/** @private @arg {M_SetSetting} x */
@@ -5100,8 +5098,6 @@ class ServiceMethods extends ServiceData {
 	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
 	/** @private @arg {R_ChipCloud} x */
 	R_ChipCloud(x) {this.H_("chipCloudRenderer",x,this.D_ChipCloud);}
-	/** @private @arg {D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
 	/** @private @arg {R_WebSearchboxConfig} x */
 	R_WebSearchboxConfig(x) {this.H_("webSearchboxConfig",x,this.D_WebSearchboxConfig);}
 	/** @private @arg {R_BrowserMediaSessionRenderer} x */
@@ -5215,46 +5211,13 @@ class ServiceMethods extends ServiceData {
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {SI_DB_EngagementPanel_Ads} x */
+	/** @public @arg {SI_DB_EngagementPanel_Ads} x */
 	SI_DB_EngagementPanel_Ads(x) {
 		const cf="SI_DB_EngagementPanel_Ads";
 		const {content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_AdsEngagementPanelContent(content);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.D_LoggingDirectives(loggingDirectives);
-	}
-	/** @private @arg {G_SI_DB_EngagementPanel} x */
-	G_SI_DB_EngagementPanel(x) {
-		const cf="DB_SI_EngagementPanel";
-		switch(x.targetId) {
-			default: x===""; debugger; break;
-			case "engagement-panel-ads": return this.SI_DB_EngagementPanel_Ads(x);
-			case "engagement-panel-clip-create": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
-				this.R_EngagementPanelTitleHeader(header);
-				this.R_ClipSection(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
-			} break;
-			case "engagement-panel-macro-markers-description-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
-				this.R_EngagementPanelTitleHeader(header);
-				this.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-			} break;
-			case "engagement-panel-macro-markers-auto-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
-				this.R_EngagementPanelTitleHeader(header);
-				this.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-			} break;
-		}
 	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,{itemSectionRenderer:any}>} x */
 	G_WatchResultItem_ItemSectionGroup(x) {
@@ -5636,11 +5599,9 @@ class ServiceMethods extends ServiceData {
 	R_CompactPlaylist(x) {this.H_("compactPlaylistRenderer",x,this.D_CompactPlaylist);}
 	/** @private @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_("compactRadioRenderer",x,this.D_CompactRadio);}
-	/** @private @arg {R_MacroMarkersList} x */
-	R_MacroMarkersList(x) {this.H_("macroMarkersListRenderer",x,this.D_MacroMarkersList);}
-	/** @private @arg {R_EngagementPanelTitleHeader} x */
+	/** @public @arg {R_EngagementPanelTitleHeader} x */
 	R_EngagementPanelTitleHeader(x) {this.H_("engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
-	/** @private @arg {R_ClipSection} x */
+	/** @public @arg {R_ClipSection} x */
 	R_ClipSection(x) {this.H_("clipSectionRenderer",x,this.D_ClipSection);}
 	/** @private @arg {R_AdsEngagementPanelContent} x */
 	R_AdsEngagementPanelContent(x) {this.H_("adsEngagementPanelContentRenderer",x,this.B_Hack);}
@@ -5670,17 +5631,7 @@ class ServiceMethods extends ServiceData {
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_StructuredDescriptionContentItem} x */
-	G_StructuredDescriptionContentItem(x) {
-		const cf="G_StructuredDescriptionContentItem";
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
-		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
-		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		if("videoDescriptionCourseSectionRenderer" in x) return this.R_VideoDescriptionCourseSection(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {R_VideoDescriptionCourseSection} x */
+	/** @protected @arg {R_VideoDescriptionCourseSection} x */
 	R_VideoDescriptionCourseSection(x) {this.H_("videoDescriptionCourseSectionRenderer",x,this.D_VideoDescriptionCourseSection);}
 	/** @private @arg {D_VideoDescriptionCourseSection} x */
 	D_VideoDescriptionCourseSection(x) {
@@ -5904,14 +5855,6 @@ class ServiceMethods extends ServiceData {
 		let u1=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","comments-section">`,u); if(!u1) return;
 		this.ItemSection_3_CommentItemSection(u1);
 	}
-	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
-	G_EngagementPanelSectionShowCommands(x) {
-		const cf="G_EngagementPanelSectionShowCommands";
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
-		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @template {{}} T @arg {[TD_ItemSection_2<T,"comments-entry-point">]} x @arg {(this:this,x:T)=>void} f */
 	TD_ItemSection_2_CommentsEntryPoint([x],f) {
 		const cf="TD_ItemSection_2_CommentsEntryPoint";
@@ -5965,59 +5908,6 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(fromVendorText);
 		this.a_primitive_str(additionalFeesText);
 		if(regionFormat!=="REGIONAL_FORMAT_EU") debugger;
-	}
-	/** @public @arg {R_MacroMarkersListItem} x */
-	R_MacroMarkersListItem(x) {this.H_("macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
-	/** @private @arg {D_MacroMarkersListItem} x */
-	D_MacroMarkersListItem(x) {
-		const cf="D_MacroMarkersListItem";
-		if("playerStateEntityKey" in x) {
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
-			this.G_Text(title);
-			this.G_Text(timeDescription);
-			this.D_Thumbnail(thumbnail);
-			this.E_Watch(onTap);
-			this.trackingParams(trackingParams);
-			this.R_Button(shareButton);
-			this.t(repeatButton,this.R_ToggleButton);
-			this.params("macro_marker_repeat_state.entity_key",a);
-			this.t(endRepeatCommand,this.C_CommandExecutor);
-			this.params("player_state.entity_key",b);
-			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-			this.a_primitive_str(timeDescriptionA11yLabel);
-			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
-			this.t_cf(cf,darkColorPalette,this.D_DarkColorPalette);
-			return;
-		}
-		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		this.G_Text(timeDescription);
-		this.D_Thumbnail(thumbnail);
-		this.E_Watch(onTap);
-		this.trackingParams(trackingParams);
-		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
-	}
-	/** @private @arg {D_MacroMarkersList} x */
-	D_MacroMarkersList(x) {
-		const cf="D_MacroMarkersList";
-		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x => {
-			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
-			if("macroMarkersInfoItemRenderer" in x) return this.R_MacroMarkersInfoItem(x);
-			debugger;
-		});
-		this.G_Text(syncButtonLabel);
-		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {R_MacroMarkersInfoItem} x */
-	R_MacroMarkersInfoItem(x) {this.H_("macroMarkersInfoItemRenderer",x,this.D_MacroMarkersInfoItem);}
-	/** @private @arg {D_MacroMarkersInfoItem} x */
-	D_MacroMarkersInfoItem(x) {
-		const cf="D_MacroMarkersList";
-		const {infoText,menu,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(infoText);
-		this.R_Menu(menu);
 	}
 	/** @private @arg {D_EngagementPanelTitleHeader} x */
 	D_EngagementPanelTitleHeader(x) {
@@ -6231,17 +6121,15 @@ class ServiceMethods extends ServiceData {
 	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
 	/** @private @arg {R_CommentThread} x */
 	R_CommentThread(x) {this.H_("commentThreadRenderer",x,this.D_CommentThread);}
-	/** @private @arg {R_VideoDescriptionMusicSection} x */
+	/** @protected @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
-	/** @private @arg {R_VideoDescriptionHeader} x */
+	/** @protected @arg {R_VideoDescriptionHeader} x */
 	R_VideoDescriptionHeader(x) {this.H_("videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
-	/** @private @arg {R_HorizontalCardList} x */
-	R_HorizontalCardList(x) {this.H_("horizontalCardListRenderer",x,this.D_HorizontalCardList);}
-	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
+	/** @protected @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ClipSection} x */
 	D_ClipSection(x) {this.H_("contents",x,x => this.z(x,this.R_ClipCreation));}
-	/** @private @arg {A_ShowEngagementPanelScrim} x */
+	/** @protected @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
 	/** @private @arg {G_EngagementPanelMenu} x */
 	G_EngagementPanelMenu(x) {
@@ -6290,21 +6178,6 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.G_Text(title);
 		this.R_Button(navigationButton);
-	}
-	/** @private @arg {D_HorizontalCardList} x */
-	D_HorizontalCardList(x) {
-		const cf="D_HorizontalCardList";
-		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(cards,this.R_MacroMarkersListItem);
-		this.trackingParams(trackingParams);
-		this.R_RichListHeader(header);
-		x: {
-			let x1=style;
-			if("styleType" in x1) {this.ceq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
-			if("type" in x1) {this.ceq(x1.type,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
-			this.ceq(x1+"1",x1+"");
-		}
-		this.ceq(centerItems,false);
 	}
 	/** @private @arg {D_VideoDescriptionHeader} x */
 	D_VideoDescriptionHeader(x) {

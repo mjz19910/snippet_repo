@@ -48,35 +48,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	//#endregion
-	//#region Template
-	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
-	T_D32(x,f) {
-		if(!x) {debugger; return;}
-		if(x[0]!=="param_arr") {debugger; return;}
-		let pa=x[1];
-		if(pa.length!==1) {debugger; return;}
-		let [v]=pa;
-		if(v[0]!=="data32") {debugger; return;}
-		f(v[1]);
-	}
-	/** @private @template {number} T @arg {T_D32<T>} x */
-	T_D32_v(x) {
-		if(!x) return null;
-		if(x[0]!=="param_arr") return null;
-		let pa=x[1];
-		if(pa.length!==1) return null;
-		let [v]=pa;
-		if(v[0]!=="data32") return null;
-		return v[1];
-	}
-	/** @private @template {number} T @template U @arg {T_FD32<T>} x @arg {(this:void,x:T)=>U} f */
-	T_FD32(x,f) {
-		let x1=this.T_RawChild(x);
-		if(!x1) {debugger; return null;}
-		let [t,u]=x1;
-		if(t!=="data_fixed32") {debugger; return null;}
-		return f(u);
-	}
+	//#region other
 	/** @arg {D_ProtobufObj[]} x */
 	tr_arr_to_obj(x) {
 		if(!x) {debugger; return null;}
@@ -336,23 +308,6 @@ class HandleTypes extends ServiceMethods {
 		if(x.length!==1) return null;
 		return x[0];
 	}
-	/** @protected @template T @arg {T_PArr_1<[T]>} x @returns {T|null} */
-	T_RawChild(x) {
-		if(x[0]!=="param_arr") {debugger; return null;}
-		if(x.length!==2) debugger;
-		return this.unwrap_tuple_1(x[1]);
-	}
-	/** @private @template T @arg {TV_Str<T>} x */
-	TV_Str(x) {
-		let vv=this.T_RawChild(x);
-		if(vv===null) {debugger; return null;}
-		let v2=vv;
-		if(v2[0]!=="raw_child") return null;
-		let v3=v2[3];
-		let [a,b]=v3;
-		if(a!=="string") {debugger; return null;}
-		return b;
-	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
@@ -374,6 +329,66 @@ class HandleTypes extends ServiceMethods {
 	cg_mismatch_list=[];
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
 	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
+	//#endregion
+	//#region Renderer & Binary Templates
+	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
+	T_D32(x,f) {
+		if(!x) {debugger; return;}
+		if(x[0]!=="param_arr") {debugger; return;}
+		let pa=x[1];
+		if(pa.length!==1) {debugger; return;}
+		let [v]=pa;
+		if(v[0]!=="data32") {debugger; return;}
+		f(v[1]);
+	}
+	/** @private @template {number} T @arg {T_D32<T>} x */
+	T_D32_v(x) {
+		if(!x) return null;
+		if(x[0]!=="param_arr") return null;
+		let pa=x[1];
+		if(pa.length!==1) return null;
+		let [v]=pa;
+		if(v[0]!=="data32") return null;
+		return v[1];
+	}
+	/** @private @template {number} T @template U @arg {T_FD32<T>} x @arg {(this:void,x:T)=>U} f */
+	T_FD32(x,f) {
+		let x1=this.T_RawChild(x);
+		if(!x1) {debugger; return null;}
+		let [t,u]=x1;
+		if(t!=="data_fixed32") {debugger; return null;}
+		return f(u);
+	}
+	/** @protected @template T @arg {T_PArr_1<[T]>} x @returns {T|null} */
+	T_RawChild(x) {
+		if(x[0]!=="param_arr") {debugger; return null;}
+		if(x.length!==2) debugger;
+		return this.unwrap_tuple_1(x[1]);
+	}
+	/** @private @template T @arg {TV_Str<T>} x */
+	TV_Str(x) {
+		let vv=this.T_RawChild(x);
+		if(vv===null) {debugger; return null;}
+		let v2=vv;
+		if(v2[0]!=="raw_child") return null;
+		let v3=v2[3];
+		let [a,b]=v3;
+		if(a!=="string") {debugger; return null;}
+		return b;
+	}
+	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
+	T_OpenPopup_Dropdown(cf,x) {
+		const {popupType,popup,beReused,...y}=this.s(cf,x); this.g(y);
+		if(popupType!=="DROPDOWN") return null;
+		return popup;
+	}
+	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
+	T_Command_TP(x,f) {
+		const cf="T_Command_TP";
+		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		f.call(this,a);
+	}
 	//#endregion
 	//#region moved data methods
 	/** @public @arg {D_WebPlayerConfig} x */
@@ -411,22 +426,13 @@ class HandleTypes extends ServiceMethods {
 		return u3;
 	}
 	//#endregion
-	//#region templates
+	//#region Renderer Data Templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD_(cf,k,x) {
 		this.k(cf,x);
 		let kx=this.get_keys_of(x);
 		if(kx.length!==1) debugger;
 		if(kx[0]!==k) debugger;
-	}
-	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x */
-	H_Get(cf,k,x) {return this.wn(cf,x,k);}
-	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
-	T_Command_TP(x,f) {
-		const cf="T_Command_TP";
-		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		f.call(this,a);
 	}
 	//#endregion
 	//#region helpers
@@ -457,6 +463,135 @@ class HandleTypes extends ServiceMethods {
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	//#region Renderer methods
+	/** @public @arg {R_MacroMarkersListItem} x */
+	R_MacroMarkersListItem(x) {this.H_("macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
+	/** @private @arg {D_MacroMarkersListItem} x */
+	D_MacroMarkersListItem(x) {
+		const cf="D_MacroMarkersListItem";
+		if("playerStateEntityKey" in x) {
+			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
+			this.G_Text(title);
+			this.G_Text(timeDescription);
+			this.D_Thumbnail(thumbnail);
+			this.E_Watch(onTap);
+			this.trackingParams(trackingParams);
+			this.R_Button(shareButton);
+			this.t(repeatButton,this.R_ToggleButton);
+			this.params("macro_marker_repeat_state.entity_key",a);
+			this.t(endRepeatCommand,this.C_CommandExecutor);
+			this.params("player_state.entity_key",b);
+			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+			this.a_primitive_str(timeDescriptionA11yLabel);
+			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
+			this.t_cf(cf,darkColorPalette,this.D_DarkColorPalette);
+			return;
+		}
+		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.G_Text(timeDescription);
+		this.D_Thumbnail(thumbnail);
+		this.E_Watch(onTap);
+		this.trackingParams(trackingParams);
+		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
+	}
+	/** @private @arg {R_MacroMarkersInfoItem} x */
+	R_MacroMarkersInfoItem(x) {this.H_("macroMarkersInfoItemRenderer",x,this.D_MacroMarkersInfoItem);}
+	/** @private @arg {D_MacroMarkersInfoItem} x */
+	D_MacroMarkersInfoItem(x) {
+		const cf="D_MacroMarkersList";
+		const {infoText,menu,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(infoText);
+		this.R_Menu(menu);
+	}
+	/** @private @arg {R_MacroMarkersList} x */
+	R_MacroMarkersList(x) {this.H_("macroMarkersListRenderer",x,this.D_MacroMarkersList);}
+	/** @private @arg {D_MacroMarkersList} x */
+	D_MacroMarkersList(x) {
+		const cf="D_MacroMarkersList";
+		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,x => {
+			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
+			if("macroMarkersInfoItemRenderer" in x) return this.R_MacroMarkersInfoItem(x);
+			debugger;
+		});
+		this.G_Text(syncButtonLabel);
+		this.trackingParams(trackingParams);
+	}
+	/** @public @arg {R_HorizontalCardList} x */
+	R_HorizontalCardList(x) {this.H_("horizontalCardListRenderer",x,this.D_HorizontalCardList);}
+	/** @private @arg {D_HorizontalCardList} x */
+	D_HorizontalCardList(x) {
+		const cf="D_HorizontalCardList";
+		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(cards,this.R_MacroMarkersListItem);
+		this.trackingParams(trackingParams);
+		this.R_RichListHeader(header);
+		x: {
+			let x1=style;
+			if("styleType" in x1) {this.ceq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
+			if("type" in x1) {this.ceq(x1.type,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
+			this.ceq(x1+"1",x1+"");
+		}
+		this.ceq(centerItems,false);
+	}
+	/** @public @arg {R_StructuredDescriptionContent} x */
+	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	//#endregion
+	//#region G
+	/** @public @arg {G_SI_DB_EngagementPanel} x */
+	G_SI_DB_EngagementPanel(x) {
+		const cf="DB_SI_EngagementPanel";
+		switch(x.targetId) {
+			default: x===""; debugger; break;
+			case "engagement-panel-ads": return this.SI_DB_EngagementPanel_Ads(x);
+			case "engagement-panel-clip-create": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_ClipSection(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
+			} break;
+			case "engagement-panel-macro-markers-description-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-macro-markers-auto-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+		}
+	}
+	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
+	G_EngagementPanelSectionShowCommands(x) {
+		const cf="G_EngagementPanelSectionShowCommands";
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
+		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_StructuredDescriptionContentItem} x */
+	G_StructuredDescriptionContentItem(x) {
+		const cf="G_StructuredDescriptionContentItem";
+		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
+		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
+		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
+		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
+		if("videoDescriptionCourseSectionRenderer" in x) return this.R_VideoDescriptionCourseSection(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	//#endregion
 	//#region CD & AU & C & DC
 	/** @private @arg {CD_TimedContinuation} x */
@@ -497,6 +632,11 @@ class HandleTypes extends ServiceMethods {
 		console.log("super_thanks_selected_tier.key",key);
 	}
 	//#endregion
+	//#region B
+	/** @public @arg {B_HrefUrl} x */
+	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
+	//#endregion
+	//#region D
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x) {
 		const cf="D_Microformat_Other";
@@ -510,18 +650,267 @@ class HandleTypes extends ServiceMethods {
 		this.tz(availableCountries,this.a_primitive_str);
 		this.z(linkAlternates,this.B_HrefUrl);
 	}
-	/** @public @arg {B_HrefUrl} x */
-	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
-	/** @type {NonNullable<D_Button["icon"]>["iconType"][]} */
-	Button_iconType=[
-		"SHORTS_COMMENT",
-	];
-	expected_button_iconTypes_ex=[
-		"",
-		"DELETE",
-	];
-	/** @type {string[]} */
-	Button_missing_iconType=[];
+	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
+	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
+	/** @protected @arg {D_MenuServiceItem<{}>} x */
+	D_MenuServiceItem(x) {
+		const cf="D_MenuServiceItem";
+		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		this.g(serviceEndpoint);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {"RE_D_VE3832_PreconnectUrl"|"D_VideoPlaybackShape_LS_Params"|"url"} cf @arg {D_GoogleVideoHostPartition} x */
+	D_GoogleVideoHostPartition(cf,x) {
+		this.save_string(`google_video.${cf}.partition`,x.partition);
+		this.save_string(`google_video.${cf}.selector`,x.selector);
+	}
+	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
+	D_VideoPlaybackShape_S_Params(x) {
+		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
+		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
+		this.a_primitive_str(expire);
+		this.a_primitive_str(ei);
+		this.a_primitive_str(ip);
+		aitags&&this.save_string(`${cf1}.aitags`,aitags);
+		this.save_b64_binary(`${cf2}.id`,id);
+		itag&&this.save_string(`${cf1}.itag`,itag);
+		this.save_string(`${cf1}.source`,source);
+		this.save_string(`${cf1}.requiressl`,requiressl);
+		this.t(ctier,x => this.ceq("SH",x));
+		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
+		this.save_string(`${cf1}.vprv`,vprv);
+		this.t(xtags,x => this.save_string(`${cf1}.xtags`,x));
+		this.save_string(`${cf1}.mime`,mime);
+		this.save_b64_binary(`${cf2}.ns`,ns);
+		cnr&&this.save_string(`${cf1}.cnr`,cnr);
+		if(gir) this.save_string(`${cf1}.gir`,gir);
+		this.t(clen,x => {
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		});
+		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
+		let dur_=this.parse_number_template(dur);
+		this.a_primitive_num(dur_);
+		let lmt_=this.parse_number_template(lmt);
+		this.a_primitive_num(lmt_);
+	}
+	/** @private @arg {D_VideoPlaybackShape_LS_Params} x */
+	D_VideoPlaybackShape_LS_Params(x) {
+		const cf1="D_VideoPlaybackShape_LS_Params",cf2="video_playback.api_url"; cf2;
+		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,...y}=this.s(cf1,x); this.g(y);
+		this.save_string(`${cf1}.mh`,mh);
+		this.save_string(`${cf1}.mm`,mm);
+		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
+		let mn_arr=split_string(mn);
+		for(let mi of mn_arr) {
+			/** @type {D_GoogleVideoHostPartition} */
+			let ap=this.get_host_partition(mi);
+			this.D_GoogleVideoHostPartition(cf1,ap);
+			switch(ap.partition) {
+				default: {
+					let {partition: x}=ap;
+					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
+					if(gen.has) break;
+					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+				}; break;
+				case "n4v7s": case "nx57y": case "o097z": case "nx5s7": case "9gv7l":
+			}
+		}
+		this.save_string(`${cf1}.ms`,ms);
+		this.save_string(`${cf1}.mv`,mv);
+		this.save_string(`${cf1}.mvi`,mvi);
+		this.save_string(`${cf1}.pl`,pl);
+		{
+			let x=initcwndbps;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
+	}
+	/** @private @arg {D_VideoPlaybackShape_Other} x */
+	D_VideoPlaybackShape_Other(x) {
+		const cf1="D_VideoPlaybackShape_Other",cf2="video_playback.api_url";
+		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y1}=this.s(cf1,x);
+		this.save_string(`${cf1}.fvip`,fvip);
+		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
+		this.save_string(`${cf1}.fexp`,fexp);
+		this.save_string(`${cf1}.c`,c);
+		txp&&this.save_string(`${cf1}.txp`,txp);
+		this.save_b64_binary(`${cf2}.n`,n);
+		this.save_b64_binary(`${cf2}.lsig`,lsig);
+		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
+		const {gcr,mt,itag,...y}=y1; this.g(y);
+		itag&&this.save_string(`${cf1}.itag`,itag);
+		{
+			let x=mt;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
+		this.t(gcr,x => this.ceq(x,"ca"));
+	}
+	/** @private @arg {D_VideoPlaybackShape} uv */
+	D_VideoPlaybackShape(uv) {
+		const cf1="D_VideoPlaybackShape";
+		const {s,ls,y}=this.extract_shape_params(cf1,uv);
+		this.D_VideoPlaybackShape_S_Params(s);
+		this.D_VideoPlaybackShape_LS_Params(ls);
+		this.D_VideoPlaybackShape_Other(y);
+	}
+	/** @public @arg {D_PlayerConfig} x */
+	D_PlayerConfig(x) {
+		const cf="D_PlayerConfig";
+		const {audioConfig,playbackStartConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
+		this.xr.D_AudioConfig(audioConfig);
+		this.t(playbackStartConfig,this.D_StartSeconds);
+		this.D_StreamSelectionConfig(streamSelectionConfig);
+		this.xr.R_DynamicReadaheadConfig(mediaCommonConfig);
+		this.D_WebPlayerConfig(webPlayerConfig);
+	}
+	/** @public @arg {D_VideoDetails} x */
+	D_VideoDetails(x) {
+		const cf="D_VideoDetails";
+		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,...y}=this.s(cf,x); this.g(y);
+		this.videoId(videoId);
+		this.a_primitive_str(title);
+		let num=this.parse_number_template(lengthSeconds);
+		this.a_primitive_num(num);
+		this.tz(keywords,this.a_primitive_str);
+		this.channelId(channelId);
+		this.a_primitive_bool(isOwnerViewing);
+		this.ceq(isOwnerViewing,false);
+		this.a_primitive_str(shortDescription);
+		this.ceq(isCrawlable,true);
+		this.D_Thumbnail(thumbnail);
+		this.a_primitive_bool(allowRatings);
+		this.t(viewCount,x => {
+			let num=this.parse_number_template(x);
+			this.a_primitive_num(num);
+		});
+		this.a_primitive_str(author);
+		this.ceq(isPrivate,false);
+		this.ceq(isUnpluggedCorpus,false);
+		this.ceq(isLiveContent,false);
+	}
+	/** @public @arg {D_StartSeconds} x */
+	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
+	/** @public @arg {D_StreamSelectionConfig} x */
+	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
+	/** @arg {D_Menu_WithItems} x */
+	D_Menu_WithItems(x) {
+		const cf="D_Menu_WithItems";
+		const {items,...u_}=this.s(cf,x);
+		if(!this.is_not_empty_obj(u_)) return this.g(u_);
+		this.z(items,x => {
+			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+			debugger;
+		});
+		const {trackingParams,...u2}=u_;
+		this.trackingParams(trackingParams);
+		if(!this.is_not_empty_obj(u2)) return this.g(u2);
+		let u=u2;
+		if("flexibleItems" in u) {
+			const {topLevelButtons,accessibility,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
+			this.z(topLevelButtons,x => {
+				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			this.D_Accessibility(accessibility);
+			this.z(flexibleItems,this.R_MenuFlexibleItem);
+			return;
+		}
+		if("topLevelButtons" in u) {
+			const {topLevelButtons,accessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			this.z(topLevelButtons,x => {
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			return;
+		}
+		if("loggingDirectives" in u) {
+			const {accessibility,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("accessibility" in u) {
+			const {accessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
+			return;
+		}
+		this.g(u);
+	}
+	/** @private @arg {D_TextRun_NavEP_1} x */
+	D_TextRun_NavEP_1(x) {
+		const cf="D_TextRun_NavEP_1"; this.k(cf,x);
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
+			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
+			x===""; debugger;
+			return;
+		}
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
+		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
+		x===""; debugger;
+	}
+	/** @public @arg {D_TextRun} x */
+	D_TextRun(x) {
+		const cf="D_TextRun";
+		const {text,...u}=this.s(cf,x);/*#destructure_done*/
+		this.a_primitive_str(text);
+		if("strikethrough" in u) {
+			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
+			if(strikethrough!==true) debugger;
+			return;
+		}
+		if("italics" in u) {
+			const {italics,...y}=u; this.g(y);/*#destructure_done*/
+			if(italics!==true) debugger;
+			return;
+		}
+		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
+			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
+			let h=() => {
+				let x2=navigationEndpoint;
+				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
+				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
+				debugger;
+			};
+			h();
+			this.D_LoggingDirectives(loggingDirectives);
+			if("bold" in y) {
+				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
+				this.ceq(bold,true);
+				return;
+			}
+			this.g(y);
+			return;
+		}
+		if("navigationEndpoint" in u) {
+			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_TextRun_NavEP_1(navigationEndpoint);
+			return;
+		}
+		if("bold" in u) {
+			const {bold,...y}=u; this.g(y);/*#destructure_done*/
+			this.a_primitive_bool(bold);
+			return;
+		}
+		if("emoji" in u) {
+			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Emoji(emoji);
+			return;
+		}
+		this.g(u);
+	}
+	//#endregion
+	//#region RS
 	/** @public @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";
@@ -531,12 +920,6 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		});
 		this.trackingParams(trackingParams);
-	}
-	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
-	T_OpenPopup_Dropdown(cf,x) {
-		const {popupType,popup,beReused,...y}=this.s(cf,x); this.g(y);
-		if(popupType!=="DROPDOWN") return null;
-		return popup;
 	}
 	/** @public @arg {A_GetSystemMenu} x */
 	A_GetSystemMenu(x) {
@@ -709,16 +1092,6 @@ class HandleTypes extends ServiceMethods {
 	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
-	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
-	/** @protected @arg {D_MenuServiceItem<{}>} x */
-	D_MenuServiceItem(x) {
-		const cf="D_MenuServiceItem";
-		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		this.g(serviceEndpoint);
-		this.trackingParams(trackingParams);
-	}
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
 	make_str_tag(x,tag) {
 		/** @template T */
@@ -1297,11 +1670,6 @@ class HandleTypes extends ServiceMethods {
 			Promise.resolve().then(() => this.logged_hosts.length=0);
 		}
 	}
-	/** @private @arg {"RE_D_VE3832_PreconnectUrl"|"D_VideoPlaybackShape_LS_Params"|"url"} cf @arg {D_GoogleVideoHostPartition} x */
-	D_GoogleVideoHostPartition(cf,x) {
-		this.save_string(`google_video.${cf}.partition`,x.partition);
-		this.save_string(`google_video.${cf}.selector`,x.selector);
-	}
 	/** @private @arg {`rr${number}---sn-${string}n${string}`} x */
 	get_google_host_parts_for_part_1(x) {
 		let parts_1=split_string(x,"---");
@@ -1512,89 +1880,6 @@ class HandleTypes extends ServiceMethods {
 		this.assert_assume_is_type(r2,/**@returns {G_Gv_1} */() => {throw new Error();});
 		return ["sn","-",r1,"n",r2];
 	}
-	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
-	D_VideoPlaybackShape_S_Params(x) {
-		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
-		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
-		this.a_primitive_str(expire);
-		this.a_primitive_str(ei);
-		this.a_primitive_str(ip);
-		aitags&&this.save_string(`${cf1}.aitags`,aitags);
-		this.save_b64_binary(`${cf2}.id`,id);
-		itag&&this.save_string(`${cf1}.itag`,itag);
-		this.save_string(`${cf1}.source`,source);
-		this.save_string(`${cf1}.requiressl`,requiressl);
-		this.t(ctier,x => this.ceq("SH",x));
-		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
-		this.save_string(`${cf1}.vprv`,vprv);
-		this.t(xtags,x => this.save_string(`${cf1}.xtags`,x));
-		this.save_string(`${cf1}.mime`,mime);
-		this.save_b64_binary(`${cf2}.ns`,ns);
-		cnr&&this.save_string(`${cf1}.cnr`,cnr);
-		if(gir) this.save_string(`${cf1}.gir`,gir);
-		this.t(clen,x => {
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		});
-		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
-		let dur_=this.parse_number_template(dur);
-		this.a_primitive_num(dur_);
-		let lmt_=this.parse_number_template(lmt);
-		this.a_primitive_num(lmt_);
-	}
-	/** @private @arg {D_VideoPlaybackShape_LS_Params} x */
-	D_VideoPlaybackShape_LS_Params(x) {
-		const cf1="D_VideoPlaybackShape_LS_Params",cf2="video_playback.api_url"; cf2;
-		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,...y}=this.s(cf1,x); this.g(y);
-		this.save_string(`${cf1}.mh`,mh);
-		this.save_string(`${cf1}.mm`,mm);
-		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
-		let mn_arr=split_string(mn);
-		for(let mi of mn_arr) {
-			/** @type {D_GoogleVideoHostPartition} */
-			let ap=this.get_host_partition(mi);
-			this.D_GoogleVideoHostPartition(cf1,ap);
-			switch(ap.partition) {
-				default: {
-					let {partition: x}=ap;
-					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
-					if(gen.has) break;
-					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
-				}; break;
-				case "n4v7s": case "nx57y": case "o097z": case "nx5s7": case "9gv7l":
-			}
-		}
-		this.save_string(`${cf1}.ms`,ms);
-		this.save_string(`${cf1}.mv`,mv);
-		this.save_string(`${cf1}.mvi`,mvi);
-		this.save_string(`${cf1}.pl`,pl);
-		{
-			let x=initcwndbps;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		}
-	}
-	/** @private @arg {D_VideoPlaybackShape_Other} x */
-	D_VideoPlaybackShape_Other(x) {
-		const cf1="D_VideoPlaybackShape_Other",cf2="video_playback.api_url";
-		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y1}=this.s(cf1,x);
-		this.save_string(`${cf1}.fvip`,fvip);
-		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
-		this.save_string(`${cf1}.fexp`,fexp);
-		this.save_string(`${cf1}.c`,c);
-		txp&&this.save_string(`${cf1}.txp`,txp);
-		this.save_b64_binary(`${cf2}.n`,n);
-		this.save_b64_binary(`${cf2}.lsig`,lsig);
-		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
-		const {gcr,mt,itag,...y}=y1; this.g(y);
-		itag&&this.save_string(`${cf1}.itag`,itag);
-		{
-			let x=mt;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
-		}
-		this.t(gcr,x => this.ceq(x,"ca"));
-	}
 	/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
 	y_copy_key(trg,src,k) {
 		trg[k]=src[k];
@@ -1637,14 +1922,6 @@ class HandleTypes extends ServiceMethods {
 			ls: ls_params_obj,
 			y: y1,
 		};
-	}
-	/** @private @arg {D_VideoPlaybackShape} uv */
-	D_VideoPlaybackShape(uv) {
-		const cf1="D_VideoPlaybackShape";
-		const {s,ls,y}=this.extract_shape_params(cf1,uv);
-		this.D_VideoPlaybackShape_S_Params(s);
-		this.D_VideoPlaybackShape_LS_Params(ls);
-		this.D_VideoPlaybackShape_Other(y);
 	}
 	/** @api @public @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
@@ -1690,159 +1967,6 @@ class HandleTypes extends ServiceMethods {
 		let [sig_0,sig_1]=split_string_once(x,".");
 		this.validate_sig("sig.0",sig_0);
 		this.validate_sig("sig.1",sig_1);
-	}
-	/** @public @arg {D_PlayerConfig} x */
-	D_PlayerConfig(x) {
-		const cf="D_PlayerConfig";
-		const {audioConfig,playbackStartConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
-		this.xr.D_AudioConfig(audioConfig);
-		this.t(playbackStartConfig,this.D_StartSeconds);
-		this.D_StreamSelectionConfig(streamSelectionConfig);
-		this.xr.R_DynamicReadaheadConfig(mediaCommonConfig);
-		this.D_WebPlayerConfig(webPlayerConfig);
-	}
-	/** @public @arg {D_VideoDetails} x */
-	D_VideoDetails(x) {
-		const cf="D_VideoDetails";
-		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,...y}=this.s(cf,x); this.g(y);
-		this.videoId(videoId);
-		this.a_primitive_str(title);
-		let num=this.parse_number_template(lengthSeconds);
-		this.a_primitive_num(num);
-		this.tz(keywords,this.a_primitive_str);
-		this.channelId(channelId);
-		this.a_primitive_bool(isOwnerViewing);
-		this.ceq(isOwnerViewing,false);
-		this.a_primitive_str(shortDescription);
-		this.ceq(isCrawlable,true);
-		this.D_Thumbnail(thumbnail);
-		this.a_primitive_bool(allowRatings);
-		this.t(viewCount,x => {
-			let num=this.parse_number_template(x);
-			this.a_primitive_num(num);
-		});
-		this.a_primitive_str(author);
-		this.ceq(isPrivate,false);
-		this.ceq(isUnpluggedCorpus,false);
-		this.ceq(isLiveContent,false);
-	}
-	/** @public @arg {D_StartSeconds} x */
-	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
-	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
-	/** @arg {D_Menu_WithItems} x */
-	D_Menu_WithItems(x) {
-		const cf="D_Menu_WithItems";
-		const {items,...u_}=this.s(cf,x);
-		if(!this.is_not_empty_obj(u_)) return this.g(u_);
-		this.z(items,x => {
-			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-			debugger;
-		});
-		const {trackingParams,...u2}=u_;
-		this.trackingParams(trackingParams);
-		if(!this.is_not_empty_obj(u2)) return this.g(u2);
-		let u=u2;
-		if("flexibleItems" in u) {
-			const {topLevelButtons,accessibility,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
-			this.z(topLevelButtons,x => {
-				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			this.D_Accessibility(accessibility);
-			this.z(flexibleItems,this.R_MenuFlexibleItem);
-			return;
-		}
-		if("topLevelButtons" in u) {
-			const {topLevelButtons,accessibility,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
-			this.z(topLevelButtons,x => {
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			return;
-		}
-		if("loggingDirectives" in u) {
-			const {accessibility,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
-			this.D_LoggingDirectives(loggingDirectives);
-			return;
-		}
-		if("accessibility" in u) {
-			const {accessibility,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
-			return;
-		}
-		this.g(u);
-	}
-	/** @private @arg {D_TextRun_NavEP_1} x */
-	D_TextRun_NavEP_1(x) {
-		const cf="D_TextRun_NavEP_1"; this.k(cf,x);
-		if("browseEndpoint" in x) {
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-			if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
-			x===""; debugger;
-			return;
-		}
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
-		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
-		x===""; debugger;
-	}
-	/** @public @arg {D_TextRun} x */
-	D_TextRun(x) {
-		const cf="D_TextRun";
-		const {text,...u}=this.s(cf,x);/*#destructure_done*/
-		this.a_primitive_str(text);
-		if("strikethrough" in u) {
-			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
-			if(strikethrough!==true) debugger;
-			return;
-		}
-		if("italics" in u) {
-			const {italics,...y}=u; this.g(y);/*#destructure_done*/
-			if(italics!==true) debugger;
-			return;
-		}
-		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
-			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
-			let h=() => {
-				let x2=navigationEndpoint;
-				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
-				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
-				debugger;
-			};
-			h();
-			this.D_LoggingDirectives(loggingDirectives);
-			if("bold" in y) {
-				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
-				this.ceq(bold,true);
-				return;
-			}
-			this.g(y);
-			return;
-		}
-		if("navigationEndpoint" in u) {
-			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_TextRun_NavEP_1(navigationEndpoint);
-			return;
-		}
-		if("bold" in u) {
-			const {bold,...y}=u; this.g(y);/*#destructure_done*/
-			this.a_primitive_bool(bold);
-			return;
-		}
-		if("emoji" in u) {
-			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Emoji(emoji);
-			return;
-		}
-		this.g(u);
 	}
 	//#region binary
 	/** @public @arg {BinaryVe} x */
