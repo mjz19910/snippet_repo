@@ -654,12 +654,14 @@ class Support_RS_Player extends ServiceMethods {
 	D_DesktopWatchAds(x) {
 		const cf="D_DesktopWatchAds";
 		const {gutParams,playerAdParams,showCompanion,showInstream,useGut,...y}=this.s(cf,x);
-		let params_tag=this.B_TagObj(gutParams);
+		/** @arg {true} x */
+		const expect_true=x => this.cq(x,true);
+		let params_tag=this.t(gutParams,this.B_TagObj);
 		// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
-		if(params_tag!=="\\4061\\ytpwmpu") debugger;
-		this.ceq(showCompanion,true);
-		this.ceq(showInstream,true);
-		this.ceq(useGut,true);
+		this.t(params_tag,x => this.cq(x,"\\4061\\ytpwmpu"));
+		this.t(showCompanion,expect_true);
+		this.t(showInstream,expect_true);
+		this.t(useGut,expect_true);
 		let ka=this.get_keys_of(y);
 		if(ka.length>0) {
 			console.log(`[${cf}.next_key] [${ka.shift()}]`);

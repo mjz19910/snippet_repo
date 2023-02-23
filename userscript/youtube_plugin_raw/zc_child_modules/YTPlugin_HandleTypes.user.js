@@ -726,6 +726,7 @@ class HandleTypes extends ServiceMethods {
 			case "ab5l6":
 			case "hp57k":
 			case "hp57y":
+			case "n4v7s":
 			case "nx5s7":
 			case "nx57y":
 			case "o097z":
@@ -2317,39 +2318,36 @@ class HandleTypes extends ServiceMethods {
 			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
 			return;
 		}
-		const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		if(f2[1].length!==1) debugger;
-		let f2w=f2[1][0];
-		switch(f2w[0]) {
-			default: debugger; break;
-			case "child": {
-				let f2_v=this._decoder.decode(f2w[1]);
-				this.save_string(`${cf}.f2`,f2_v);
-				if(this.str_starts_with(f2_v,"UC")) {this.channelId(f2_v); break;}
-				console.log("[P_EntityKey.child.f2]",f2_v);
-			} break;
-			case "raw_child": {
-				if(f2w[3][0]!=="string") {debugger; break;}
-				let f2_v=f2w[3][1];
-				if(this.str_starts_with(f2_v,"RD")) {this.playlistId(f2_v); break;}
-				if(this.str_starts_with(f2_v,"UC")) {this.channelId(f2_v); break;}
-				switch(f2_v) {
-					default: {
-						debugger;
-						switch(f2_v) {
-							case "":
-						}
-					} break;
-					case "AUTO_CHAPTERS":
-					case ".transcript.track.selection.key": break;
-					case "/youtube/app/watch/player_state": break;
-					case "183848276973": break;
-					case "HEATSEEKER": break;
-					case "repeat_state": break;
-					case "topbar": break;
-				}
-			} break;
+		if(this.is_T_D32_at(x,246)) {
+			const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(f2,x => {
+				let {1: f2_f1,...y1}=x; this.g(y1);
+				this.t(this.TV_Str(f2_f1),x => this.save_string(`${cf}.f2.f1`,x));
+			});
+			this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
+			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
+			return;
 		}
+		const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(f2),x => {
+			if(this.str_starts_with(x,"RD")) return this.playlistId(x);
+			if(this.str_starts_with(x,"UC")) return this.channelId(x);
+			switch(x) {
+				default: {
+					debugger;
+					switch(x) {
+						case "":
+					}
+				} break;
+				case "AUTO_CHAPTERS":
+				case ".transcript.track.selection.key": break;
+				case "/youtube/app/watch/player_state": break;
+				case "183848276973": break;
+				case "HEATSEEKER": break;
+				case "repeat_state": break;
+				case "topbar": break;
+			}
+		});
 		this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
 		this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
 	}

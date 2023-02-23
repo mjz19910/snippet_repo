@@ -1674,11 +1674,11 @@ type D_ProtobufObj=
 	|[type: "error",fieldId: number];
 type D_DesktopWatchAds={
 	// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
-	gutParams: B_TagObj<"\\4061\\ytpwmpu">;
+	gutParams?: B_TagObj<"\\4061\\ytpwmpu">;
 	playerAdParams: D_PlayerAdParams;
-	showCompanion: true;
-	showInstream: true;
-	useGut: true;
+	showCompanion?: true;
+	showInstream?: true;
+	useGut?: true;
 };
 type D_Dropdown_Privacy={
 	entries: R_PrivacyDropdownItem[];
