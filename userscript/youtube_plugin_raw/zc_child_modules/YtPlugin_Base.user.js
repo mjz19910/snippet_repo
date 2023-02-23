@@ -2267,6 +2267,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]} @arg {T} _ex */
 	z_ty(x,f,_ex) {return this.z(x,f);}
+	// takes undefined (as None), returns undefined (as None)
 	/** @protected @template {string} CF @arg {CF} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:CF,x:T)=>void} f */
 	tz_cf(cf,x,f) {if(x===void 0) return; return this.z_cf(cf,x,f);}
 	// takes (undefined | non-array) (as None), returns undefined (as None)
