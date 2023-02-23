@@ -438,7 +438,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE5754} x @returns {`VE${rootVe}`} */
 	GM_VE5754(x) {
-		const cf="GM_VE5754_WC";
+		const cf="GM_VE5754";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE5754_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
@@ -464,7 +464,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE11487} x @returns {`VE${rootVe}`} */
 	GM_VE11487(x) {
-		const cf="GM_VE11487_WC";
+		const cf="GM_VE11487";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(url!=="/premium") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
@@ -499,7 +499,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE42352} x @returns {`VE${rootVe}`} */
 	GM_VE42352(x) {
-		const cf="GM_VE42352_WC";
+		const cf="GM_VE42352";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE42352_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
@@ -509,7 +509,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE83769} x */
 	GM_VE83769(x) {
-		const cf="GM_VE83769_WC";
+		const cf="GM_VE83769";
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE83769_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
@@ -517,7 +517,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
 	GM_VE96368(x) {
-		const cf="GM_VE96368_WC_browse";
+		const cf="GM_VE96368";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(url!=="/feed/subscriptions") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;

@@ -2190,7 +2190,7 @@ class Support_VE37414 extends ServiceMethods {
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
 	GM_VE37414(x) {
-		const cf="GM_VE37414_WC";
+		const cf="GM_VE37414";
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		x: {
 			if(url==="/shorts/") break x;
