@@ -1977,7 +1977,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
-		const {3: {},8: {},14: {},15: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: {},8: {},11: {}={},14: {},15: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
