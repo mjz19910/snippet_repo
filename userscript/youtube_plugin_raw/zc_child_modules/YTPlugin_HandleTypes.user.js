@@ -500,92 +500,6 @@ class HandleTypes extends ServiceMethods {
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	//#region Renderer methods
-	/** @public @arg {R_MacroMarkersListItem} x */
-	R_MacroMarkersListItem(x) {this.H_("macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
-	/** @private @arg {D_MacroMarkersListItem} x */
-	D_MacroMarkersListItem(x) {
-		const cf="D_MacroMarkersListItem";
-		if("playerStateEntityKey" in x) {
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
-			this.G_Text(title);
-			this.G_Text(timeDescription);
-			this.D_Thumbnail(thumbnail);
-			this.E_Watch(onTap);
-			this.trackingParams(trackingParams);
-			this.R_Button(shareButton);
-			this.t(repeatButton,this.R_ToggleButton);
-			this.params("macro_marker_repeat_state.entity_key",a);
-			this.t(endRepeatCommand,this.C_CommandExecutor);
-			this.params("player_state.entity_key",b);
-			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-			this.a_primitive_str(timeDescriptionA11yLabel);
-			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
-			this.t_cf(cf,darkColorPalette,this.D_DarkColorPalette);
-			return;
-		}
-		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		this.G_Text(timeDescription);
-		this.D_Thumbnail(thumbnail);
-		this.E_Watch(onTap);
-		this.trackingParams(trackingParams);
-		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
-	}
-	/** @private @arg {R_MacroMarkersInfoItem} x */
-	R_MacroMarkersInfoItem(x) {this.H_("macroMarkersInfoItemRenderer",x,this.D_MacroMarkersInfoItem);}
-	/** @private @arg {D_MacroMarkersInfoItem} x */
-	D_MacroMarkersInfoItem(x) {
-		const cf="D_MacroMarkersList";
-		const {infoText,menu,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(infoText);
-		this.R_Menu(menu);
-	}
-	/** @private @arg {R_MacroMarkersList} x */
-	R_MacroMarkersList(x) {this.H_("macroMarkersListRenderer",x,this.D_MacroMarkersList);}
-	/** @private @arg {D_MacroMarkersList} x */
-	D_MacroMarkersList(x) {
-		const cf="D_MacroMarkersList";
-		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x => {
-			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
-			if("macroMarkersInfoItemRenderer" in x) return this.R_MacroMarkersInfoItem(x);
-			debugger;
-		});
-		this.G_Text(syncButtonLabel);
-		this.trackingParams(trackingParams);
-	}
-	/** @public @arg {R_HorizontalCardList} x */
-	R_HorizontalCardList(x) {this.H_("horizontalCardListRenderer",x,this.D_HorizontalCardList);}
-	/** @private @arg {D_HorizontalCardList} x */
-	D_HorizontalCardList(x) {
-		const cf="D_HorizontalCardList";
-		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(cards,this.R_MacroMarkersListItem);
-		this.trackingParams(trackingParams);
-		this.R_RichListHeader(header);
-		x: {
-			let x1=style;
-			if("styleType" in x1) {this.ceq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
-			if("type" in x1) {this.ceq(x1.type,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
-			this.ceq(x1+"1",x1+"");
-		}
-		this.ceq(centerItems,false);
-	}
-	/** @public @arg {R_StructuredDescriptionContent} x */
-	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
-	/** @private @arg {D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
-	/** @public @arg {R_SystemMenu} x */
-	R_SystemMenu(x) {this.t(this.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
-	/** @public @arg {MP_SystemMenu} x */
-	MP_SystemMenu(x) {
-		const cf="MP_SystemMenu";
-		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.R_ActiveAccountHeader(header);
-		this.trackingParams(trackingParams);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
-	}
 	//#endregion
 	//#region G
 	/** @public @arg {G_SI_DB_EngagementPanel} x */
@@ -2286,18 +2200,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {this.P_EntityKey("P_aadc_guidelines_state_entity_key",x);}
-	/** @private @arg {P_transcript_track_selection_entity_key} x */
-	P_transcript_track_selection_entity_key(x) {this.P_EntityKey("P_transcript_track_selection_entity_key",x);}
-	/** @private @arg {P_load_markers_entity_key} x */
-	P_load_markers_entity_key(x) {this.P_EntityKey("P_load_markers_entity_key",x);}
-	/** @private @arg {P_playlist_loop_state_entity_key} x */
-	P_playlist_loop_state_entity_key(x) {this.P_EntityKey("P_playlist_loop_state_entity_key",x);}
-	/** @private @arg {P_entity_key_normal} x */
-	P_entity_key_normal(x) {this.P_EntityKey("P_entity_key_normal",x);}
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {this.P_EntityKey("P_subscribe_button_entity_key",x);}
-	/** @private @arg {P_entity_key} x */
-	P_entity_key(x) {this.P_EntityKey("P_entity_key",x);}
 	/** @private @arg {P_player_state_entity_key} x */
 	P_player_state_entity_key(x) {this.P_EntityKey("P_player_state_entity_key",x);}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
@@ -2333,6 +2237,7 @@ class HandleTypes extends ServiceMethods {
 						case "":
 					}
 				} break;
+				case "KEY_MOMENTS":
 				case "AUTO_CHAPTERS":
 				case ".transcript.track.selection.key": break;
 				case "/youtube/app/watch/player_state": break;
@@ -2414,11 +2319,6 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_playability_status_context_params(u);
 			} break;
-			case "entity.key": {
-				/** @type {P_entity_key} */
-				let u=as_any(x);
-				this.P_entity_key(u);
-			} break;
 			case "remove_like.params": {
 				/** @type {P_remove_like_params} */
 				let u=as_any(x);
@@ -2429,7 +2329,7 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_dislike_params(u);
 			} break;
-			case "subscribe_button.entity_key": {
+			case "subscribe_button.entity.key": {
 				/** @type {P_subscribe_button_entity_key} */
 				let u=as_any(x);
 				this.P_subscribe_button_entity_key(u);
@@ -2449,25 +2349,10 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_continuation_request_watch_next_token(u);
 			} break;
-			case "entity_key.normal": {
-				/** @type {P_entity_key_normal} */
-				let u=as_any(x);
-				this.P_entity_key_normal(u);
-			} break;
 			case "watch_playlist.params": {
 				/** @type {P_watch_playlist_params} */
 				let u=as_any(x);
 				this.P_watch_playlist_params(u);
-			} break;
-			case "playlist_loop_state.entity.key": {
-				/** @type {P_playlist_loop_state_entity_key} */
-				let u=as_any(x);
-				this.P_playlist_loop_state_entity_key(u);
-			} break;
-			case "load_markers.entity_key": {
-				/** @type {P_load_markers_entity_key} */
-				let u=as_any(x);
-				this.P_load_markers_entity_key(u);
 			} break;
 			case "create_backstage_post.params": {
 				/** @type {P_create_backstage_post_params} */
@@ -2488,11 +2373,6 @@ class HandleTypes extends ServiceMethods {
 				/** @type {P_get_transcript_params} */
 				let u=as_any(x);
 				this.P_get_transcript_params(u);
-			} break;
-			case "transcript_track_selection.entity.key": {
-				/** @type {P_transcript_track_selection_entity_key} */
-				let u=as_any(x);
-				this.P_transcript_track_selection_entity_key(u);
 			} break;
 			case "transcript_track_selection.serialized_params": {
 				/** @type {P_transcript_track_selection_serialized_params} */
@@ -2524,7 +2404,7 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_create_comment_params(u);
 			} break;
-			case "aadc_guidelines_state.entity_key": {
+			case "aadc_guidelines_state.entity.key": {
 				/** @type {P_aadc_guidelines_state_entity_key} */
 				let u=as_any(x);
 				this.P_aadc_guidelines_state_entity_key(u);
@@ -2539,12 +2419,12 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_ypc_get_offers_params(u);
 			} break;
-			case "macro_marker_repeat_state.entity_key": {
+			case "macro_marker_repeat_state.entity.key": {
 				/** @type {P_macro_marker_repeat_state_entity_key} */
 				let u=as_any(x);
 				this.P_macro_marker_repeat_state_entity_key(u);
 			} break;
-			case "player_state.entity_key": {
+			case "player_state.entity.key": {
 				/** @type {P_player_state_entity_key} */
 				let u=as_any(x);
 				this.P_player_state_entity_key(u);
@@ -2598,6 +2478,31 @@ class HandleTypes extends ServiceMethods {
 				/** @type {P_ve_3611_params} */
 				let u=as_any(x);
 				this.P_ve_3611_params(u);
+			} break;
+			case "entity.key": {
+				/** @type {P_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_entity_key",u);
+			} break;
+			case "playlist_loop_state.entity.key": {
+				/** @type {P_playlist_loop_state_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_playlist_loop_state_entity_key",u);
+			} break;
+			case "load_markers.entity.key": {
+				/** @type {P_load_markers_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_load_markers_entity_key",u);
+			} break;
+			case "transcript_track_selection.entity.key": {
+				/** @type {P_transcript_track_selection_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_transcript_track_selection_entity_key",u);
+			} break;
+			case "change_markers_visibility.entity.key": {
+				/** @type {P_change_markers_visibility_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_change_markers_visibility_entity_key",u);
 			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;

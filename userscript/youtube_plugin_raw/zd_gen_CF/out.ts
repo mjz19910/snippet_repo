@@ -941,7 +941,7 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE126250_Identifier";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE76278_Identifier";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_layout.ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format_item.xtags";}
@@ -955,7 +955,6 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_playlist.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "dislike.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "format_item.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}
@@ -965,9 +964,9 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "invalidation.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "live_chat_replay.continuation";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "logging_context.serialized_context_data";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_markers_list.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.queue_context.params";}
@@ -980,7 +979,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "params.tracking";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_seek.continuation";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playlist_edit.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playlist_loop_state.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params";}
@@ -990,7 +989,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "remove_like.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "shorts.source.bp";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe_button.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe_button.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscription_state.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.entity.key";}

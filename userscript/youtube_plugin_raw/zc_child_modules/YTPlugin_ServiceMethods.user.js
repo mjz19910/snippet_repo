@@ -1682,7 +1682,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_SubscribeButton_SubscribedPrefix";
 		const {buttonText,entityKey,...y}=this.s(cf,x); this.g(y);
 		this.t(buttonText,this.G_Text);
-		this.t(entityKey,x => this.params("subscribe_button.entity_key",x));
+		this.t(entityKey,x => this.params("subscribe_button.entity.key",x));
 	}
 	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
 	D_SubscribeButton_UnsubscribedPrefix(x) {
@@ -3727,7 +3727,7 @@ class ServiceMethods extends ServiceData {
 	DU_MutationReplace(x) {
 		const cf="DU_MutationReplace";
 		const {entityKey,type,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params("entity_key.normal",entityKey);
+		this.params("entity.key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		let pr=this.G_EY_Entity(payload);
 		if(!pr) return;
@@ -3887,7 +3887,7 @@ class ServiceMethods extends ServiceData {
 	DU_MutationDelete(x) {
 		const cf="DU_MutationDelete";
 		const {entityKey,type,options,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params("entity_key.normal",entityKey);
+		this.params("entity.key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE") debugger;
 		this.tf(this.O_DU_Persistence)(options);
 	}
@@ -4669,7 +4669,7 @@ class ServiceMethods extends ServiceData {
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
 	/** @private @arg {string} x */
-	DC_Load_EntityKey(x) {this.params("load_markers.entity_key",x);}
+	DC_Load_EntityKey(x) {this.params("load_markers.entity.key",x);}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar";
@@ -6089,7 +6089,7 @@ class ServiceMethods extends ServiceData {
 		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_Button(submitButton);
 		this.R_Button(cancelButton);
-		this.params("aadc_guidelines_state.entity_key",aadcGuidelinesStateEntityKey);
+		this.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);

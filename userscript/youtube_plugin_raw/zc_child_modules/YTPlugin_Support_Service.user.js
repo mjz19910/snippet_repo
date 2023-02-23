@@ -2380,18 +2380,80 @@ class Support_Renderer extends ServiceMethods {
 	}
 	/** @public @arg {R_PdgBuyFlow} x */
 	R_PdgBuyFlow(x) {this.H_("pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
+	/** @private @arg {D_PdgBuyFlow} x */
+	D_PdgBuyFlow(x) {
+		const cf="D_PdgBuyFlow";
+		const {header,content,trackingParams,onCloseCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_PdgBuyFlowHeader(header);
+		this.z(content,x => {
+			if(!x.superVodBuyFlowContentRenderer) debugger;
+			return this.R_SuperVodBuyFlowContent(x);
+		});
+		this.trackingParams(trackingParams);
+		if("getSurveyCommand" in onCloseCommand) return this.C_GetSurvey(onCloseCommand);
+		{debugger;}
+	}
 	/** @private @arg {R_SuperVodBuyFlowContent} x */
 	R_SuperVodBuyFlowContent(x) {this.H_("superVodBuyFlowContentRenderer",x,this.D_SuperVodBuyFlowContent);}
+	/** @private @arg {D_SuperVodBuyFlowContent} x */
+	D_SuperVodBuyFlowContent(x) {
+		const cf="D_SuperVodBuyFlowContent";
+		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z([description,disclaimerText],this.G_Text);
+		this.R_Button(buyButton);
+		this.trackingParams(trackingParams);
+		this.R_PdgCommentPreview(commentPreview);
+		this.R_PdgColorSlider(colorSlider);
+		console.log("defaultPriceTier",defaultPriceTier);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+	}
 	/** @private @arg {R_PdgColorSlider} x */
 	R_PdgColorSlider(x) {this.H_("pdgColorSliderRenderer",x,this.D_PdgColorSlider);}
+	/** @private @arg {D_PdgColorSlider} x */
+	D_PdgColorSlider(x) {
+		const cf="D_PdgColorSlider";
+		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(notches,this.D_NotchesItem);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.G_Text(maxTierValue);
+		this.G_Text(minTierValue);
+	}
 	/** @private @arg {R_PdgCommentPreview} x */
 	R_PdgCommentPreview(x) {this.H_("pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
+	/** @private @arg {D_PdgCommentPreview} x */
+	D_PdgCommentPreview(x) {
+		const cf="D_PdgCommentPreview";
+		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.D_Thumbnail(authorThumbnail);
+		this.G_Text(authorText);
+		this.z(commentOptionRenderers,this.R_PdgCommentOption);
+		this.G_Text(defaultCommentText);
+		this.R_Button(editButton);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+	}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
+	/** @private @arg {D_PdgBuyFlowHeader} x */
+	D_PdgBuyFlowHeader(x) {
+		const cf="D_PdgBuyFlowHeader";
+		const {text,helpButton,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		this.R_Button(helpButton);
+		this.R_Button(dismissButton);
+	}
 	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
 	R_SingleColumnMusicWatchNextResults(x) {this.H_("singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
 	/** @private @arg {R_Tabbed} x */
 	R_Tabbed(x) {this.H_("tabbedRenderer",x,this.R_WatchNextTabbedResults);}
+	/** @private @arg {R_WatchNextTabbedResults} x */
+	R_WatchNextTabbedResults(x) {this.H_("watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
+	/** @private @arg {D_WatchNextTabbedResults} x */
+	D_WatchNextTabbedResults(x) {
+		const cf="D_WatchNextTabbedResults";
+		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
+	}
 	/** @public @arg {R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_("templateUpdate",x,this.D_TemplateUpdate);}
 	/** @private @arg {D_TemplateUpdate} x */
@@ -2493,8 +2555,6 @@ class Support_Renderer extends ServiceMethods {
 		kind&&this.save_string(`${cf}.kind`,kind);
 		this.save_string(`${cf}.lang`,lang);
 	}
-	/** @private @arg {R_WatchNextTabbedResults} x */
-	R_WatchNextTabbedResults(x) {this.H_("watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
 	/** @private @arg {R_GuideDownloadsEntry} x */
@@ -3131,10 +3191,102 @@ class Support_Renderer extends ServiceMethods {
 		this.E_SubmitFeedback(submitFeedbackEndpoint);
 		this.cq(dismissalViewStyle,"DISMISSAL_VIEW_STYLE_COMPACT_TALL");
 	}
+	/** @public @arg {R_MacroMarkersListItem} x */
+	R_MacroMarkersListItem(x) {this.H_("macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
+	/** @private @arg {D_MacroMarkersListItem} x */
+	D_MacroMarkersListItem(x) {
+		const cf="D_MacroMarkersListItem";
+		if("playerStateEntityKey" in x) {
+			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
+			this.G_Text(title);
+			this.G_Text(timeDescription);
+			this.D_Thumbnail(thumbnail);
+			this.E_Watch(onTap);
+			this.trackingParams(trackingParams);
+			this.R_Button(shareButton);
+			this.t(repeatButton,this.R_ToggleButton);
+			this.params("macro_marker_repeat_state.entity.key",a);
+			this.t(endRepeatCommand,this.C_CommandExecutor);
+			this.params("player_state.entity.key",b);
+			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+			this.a_primitive_str(timeDescriptionA11yLabel);
+			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
+			this.t_cf(cf,darkColorPalette,this.D_DarkColorPalette);
+			return;
+		}
+		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.G_Text(timeDescription);
+		this.D_Thumbnail(thumbnail);
+		this.E_Watch(onTap);
+		this.trackingParams(trackingParams);
+		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
+	}
+	/** @private @arg {R_MacroMarkersInfoItem} x */
+	R_MacroMarkersInfoItem(x) {this.H_("macroMarkersInfoItemRenderer",x,this.D_MacroMarkersInfoItem);}
+	/** @private @arg {D_MacroMarkersInfoItem} x */
+	D_MacroMarkersInfoItem(x) {
+		const cf="D_MacroMarkersList";
+		const {infoText,menu,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(infoText);
+		this.R_Menu(menu);
+	}
+	/** @private @arg {R_MacroMarkersList} x */
+	R_MacroMarkersList(x) {this.H_("macroMarkersListRenderer",x,this.D_MacroMarkersList);}
+	/** @private @arg {D_MacroMarkersList} x */
+	D_MacroMarkersList(x) {
+		const cf="D_MacroMarkersList";
+		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,x => {
+			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
+			if("macroMarkersInfoItemRenderer" in x) return this.R_MacroMarkersInfoItem(x);
+			debugger;
+		});
+		this.G_Text(syncButtonLabel);
+		this.trackingParams(trackingParams);
+	}
+	/** @public @arg {R_HorizontalCardList} x */
+	R_HorizontalCardList(x) {this.H_("horizontalCardListRenderer",x,this.D_HorizontalCardList);}
+	/** @private @arg {D_HorizontalCardList} x */
+	D_HorizontalCardList(x) {
+		const cf="D_HorizontalCardList";
+		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(cards,this.R_MacroMarkersListItem);
+		this.trackingParams(trackingParams);
+		this.R_RichListHeader(header);
+		x: {
+			let x1=style;
+			if("styleType" in x1) {this.ceq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
+			if("type" in x1) {this.ceq(x1.type,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
+			this.ceq(x1+"1",x1+"");
+		}
+		this.ceq(centerItems,false);
+	}
+	/** @public @arg {R_StructuredDescriptionContent} x */
+	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	/** @public @arg {R_SystemMenu} x */
+	R_SystemMenu(x) {this.t(this.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
+	/** @public @arg {MP_SystemMenu} x */
+	MP_SystemMenu(x) {
+		const cf="MP_SystemMenu";
+		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xr.R_ActiveAccountHeader(header);
+		this.trackingParams(trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
+	}
 	/** @private @arg {R_DismissalReasonText} x */
 	R_DismissalReasonText(x) {this.H_("dismissalReasonTextRenderer",x,this.D_DismissalReasonText);}
 	/** @private @arg {D_DismissalReasonText} x */
-	D_DismissalReasonText(x) {x;}
+	D_DismissalReasonText(x) {
+		const cf="D_DismissalReasonText";
+		const {trackingParams,text,feedbackToken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.G_Text(text);
+		this.params("feedbackToken",feedbackToken);
+	}
 	//#endregion
 	//#region Group Union
 	/** @private @arg {G_ChannelSwitcherContent} x */
@@ -3211,19 +3363,6 @@ class Support_Renderer extends ServiceMethods {
 	}
 	//#endregion
 	//#region Data methods
-	/** @private @arg {D_PdgBuyFlow} x */
-	D_PdgBuyFlow(x) {
-		const cf="D_PdgBuyFlow";
-		const {header,content,trackingParams,onCloseCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_PdgBuyFlowHeader(header);
-		this.z(content,x => {
-			if(!x.superVodBuyFlowContentRenderer) debugger;
-			return this.R_SuperVodBuyFlowContent(x);
-		});
-		this.trackingParams(trackingParams);
-		if("getSurveyCommand" in onCloseCommand) return this.C_GetSurvey(onCloseCommand);
-		{debugger;}
-	}
 	/** @private @arg {D_PlaylistSidebar} x */
 	D_PlaylistSidebar(x) {
 		const cf="D_PlaylistSidebar";
@@ -3233,35 +3372,6 @@ class Support_Renderer extends ServiceMethods {
 	}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
 	D_PlaylistSidebarSecondaryInfo(x) {this.H_("videoOwner",x,this.R_VideoOwner);}
-	/** @private @arg {D_PdgBuyFlowHeader} x */
-	D_PdgBuyFlowHeader(x) {
-		const cf="D_PdgBuyFlowHeader";
-		const {text,helpButton,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		this.R_Button(helpButton);
-		this.R_Button(dismissButton);
-	}
-	/** @private @arg {D_SuperVodBuyFlowContent} x */
-	D_SuperVodBuyFlowContent(x) {
-		const cf="D_SuperVodBuyFlowContent";
-		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z([description,disclaimerText],this.G_Text);
-		this.R_Button(buyButton);
-		this.trackingParams(trackingParams);
-		this.R_PdgCommentPreview(commentPreview);
-		this.R_PdgColorSlider(colorSlider);
-		console.log("defaultPriceTier",defaultPriceTier);
-		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
-	}
-	/** @private @arg {D_PdgColorSlider} x */
-	D_PdgColorSlider(x) {
-		const cf="D_PdgColorSlider";
-		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(notches,this.D_NotchesItem);
-		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
-		this.G_Text(maxTierValue);
-		this.G_Text(minTierValue);
-	}
 	/** @private @arg {D_NotchesItem} x */
 	D_NotchesItem(x) {
 		const cf="NotchesItem";
@@ -3353,18 +3463,6 @@ class Support_Renderer extends ServiceMethods {
 		this.a_primitive_str(iosAppindexingLink);
 		this.a_primitive_str(androidAppindexingLink);
 	}
-	/** @private @arg {D_PdgCommentPreview} x */
-	D_PdgCommentPreview(x) {
-		const cf="D_PdgCommentPreview";
-		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.D_Thumbnail(authorThumbnail);
-		this.G_Text(authorText);
-		this.z(commentOptionRenderers,this.R_PdgCommentOption);
-		this.G_Text(defaultCommentText);
-		this.R_Button(editButton);
-		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
-	}
 	/** @private @arg {D_PdgCommentOption} x */
 	D_PdgCommentOption(x) {
 		const cf="D_PdgCommentOption";
@@ -3394,12 +3492,6 @@ class Support_Renderer extends ServiceMethods {
 		let kk=this.get_keys_of(sp);
 		console.log(`[${cf}]`,"[keys]",kk.join());
 		this.view_conversion_info.set(np,sp);
-	}
-	/** @private @arg {D_WatchNextTabbedResults} x */
-	D_WatchNextTabbedResults(x) {
-		const cf="D_WatchNextTabbedResults";
-		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
 	}
 	/** @public @arg {D_ExternalChannelId} x */
 	D_ExternalChannelId(x) {

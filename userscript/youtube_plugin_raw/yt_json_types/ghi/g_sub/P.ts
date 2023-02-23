@@ -1,3 +1,80 @@
+type P_entity_key={
+	2: T_VW<{1: TV_Str<D_VideoId>;}>;
+	4: T_D32<246>;
+	5: T_D32<1>;
+}|{
+	2: TV_Str<`RD${string}`>;
+	4: T_D32<354>;
+	5: T_D32<1>;
+}|{
+	2: TV_Str<"topbar">;
+	4: T_D32<245>;
+	5: T_D32<1>;
+}|{
+	2: TV_Str<D_VideoId>;
+	4: T_D32<341>;
+	5: T_D32<1>;
+};
+type P_subscribe_button_entity_key={
+	2: TV_Str<`UC${string}`>;
+	4: T_D32<51>;
+	5: T_D32<1>;
+};
+type P_load_markers_entity_key={
+	2: TV_Str<"HEATSEEKER"|"AUTO_CHAPTERS">;
+	4: T_D32<274>;
+	5: T_D32<1>;
+};
+type P_playlist_loop_state_entity_key={
+	2: TV_Str<`RD${string}`>;
+	4: T_D32<354>;
+	5: T_D32<1>;
+};
+type P_transcript_track_selection_entity_key={
+	2: TV_Str<".transcript.track.selection.key">;
+	4: T_D32<315>;
+	5: T_D32<1>;
+};
+type P_aadc_guidelines_state_entity_key={
+	2: TV_Str<"183848276973">;
+	4: T_D32<281>;
+	5: T_D32<1>;
+};
+type P_macro_marker_repeat_state_entity_key={
+	2: TV_Str<"repeat_state">;
+	4: T_D32<329>;
+	5: T_D32<1>;
+};
+type P_player_state_entity_key={
+	2: TV_Str<"/youtube/app/watch/player_state">;
+	4: T_D32<323>;
+	5: T_D32<1>;
+};
+type P_EntityKey=
+	|P_aadc_guidelines_state_entity_key
+	|P_change_markers_visibility_entity_key
+	|P_entity_key
+	|P_load_markers_entity_key
+	|P_macro_marker_repeat_state_entity_key
+	|P_player_state_entity_key
+	|P_playlist_loop_state_entity_key
+	|P_subscribe_button_entity_key
+	|P_transcript_track_selection_entity_key
+	;
+;
+type CF_P_EntityKey=
+	|"P_aadc_guidelines_state_entity_key"
+	|"P_change_markers_visibility_entity_key"
+	|"P_entity_key_normal"
+	|"P_entity_key"
+	|"P_load_markers_entity_key"
+	|"P_macro_marker_repeat_state_entity_key"
+	|"P_player_state_entity_key"
+	|"P_playlist_loop_state_entity_key"
+	|"P_subscribe_button_entity_key"
+	|"P_transcript_track_selection_entity_key"
+	;
+;
 type V_BinaryTimestamp={
 	1: T_D32<number>;
 	2: T_FD32<number>;
@@ -75,11 +152,6 @@ type P_playability_status_context_params={
 		1: T_D32<2>;
 	};
 };
-type P_entity_key={
-	2: T_VW<{1: TV_Str<D_VideoId>;}>;
-	4: T_D32<246>;
-	5: T_D32<1>;
-};
 type P_remove_like_params={
 	1: T_VW<{1: TV_Str<D_VideoId>;}>;
 	3: T_D32<0>;
@@ -96,11 +168,6 @@ type P_dislike_params={
 	3?: {};
 	4: T_VW<V_ShortTimestamp>;
 	5?: {};
-};
-type P_subscribe_button_entity_key={
-	2: TV_Str<`UC${string}`>;
-	4: T_D32<51>;
-	5: T_D32<1>;
 };
 type P_subscribe_params={
 	2: T_VW<{
@@ -135,24 +202,6 @@ type P_continuation_request_watch_next_token={
 	13?: {_tag: "not_done";};
 	14?: {_tag: "not_done";};
 };
-type P_entity_key_normal={
-	2: TV_Str<`RD${string}`>;
-	4: T_D32<354>;
-	5: T_D32<1>;
-}|{
-	2: TV_Str<"topbar">;
-	4: T_D32<245>;
-	5: T_D32<1>;
-}|{
-	2: TV_Str<D_VideoId>;
-	4: T_D32<341>;
-	5: T_D32<1>;
-};
-type P_playlist_loop_state_entity_key={
-	2: TV_Str<`RD${string}`>;
-	4: T_D32<354>;
-	5: T_D32<1>;
-};
 type P_watch_playlist_params={
 	2: T_D32<1>;
 	3: T_D32<1>;
@@ -162,11 +211,6 @@ type P_watch_playlist_params={
 	27?: T_VW<{
 		1: T_D32<1>;
 	}>;
-};
-type P_load_markers_entity_key={
-	2: TV_Str<"HEATSEEKER"|"AUTO_CHAPTERS">;
-	4: T_D32<274>;
-	5: T_D32<1>;
 };
 type P_create_backstage_post_params={
 	1: TV_Str<`UC${string}`>;
@@ -198,11 +242,6 @@ type P_get_transcript_params={
 	6: T_D32<1>;
 	7: T_D32<1>;
 	8: T_D32<1>;
-};
-type P_transcript_track_selection_entity_key={
-	2: TV_Str<".transcript.track.selection.key">;
-	4: T_D32<315>;
-	5: T_D32<1>;
 };
 type P_transcript_track_selection_serialized_params={
 	1: TV_Str<string>;
@@ -308,11 +347,6 @@ type P_create_comment_params={
 	};
 	10: T_D32<7>;
 };
-type P_aadc_guidelines_state_entity_key={
-	2: TV_Str<"183848276973">;
-	4: T_D32<281>;
-	5: T_D32<1>;
-};
 type P_trending_bp={
 	77: TV_Str<"FEexplore">;
 };
@@ -332,40 +366,6 @@ type P_ypc_get_offers_params={
 		9: T_D32<2>;
 	}>;
 };
-type P_macro_marker_repeat_state_entity_key={
-	2: TV_Str<"repeat_state">;
-	4: T_D32<329>;
-	5: T_D32<1>;
-};
-type P_player_state_entity_key={
-	2: TV_Str<"/youtube/app/watch/player_state">;
-	4: T_D32<323>;
-	5: T_D32<1>;
-};
-type P_EntityKey=
-	|P_aadc_guidelines_state_entity_key
-	|P_entity_key_normal
-	|P_entity_key
-	|P_load_markers_entity_key
-	|P_macro_marker_repeat_state_entity_key
-	|P_player_state_entity_key
-	|P_playlist_loop_state_entity_key
-	|P_subscribe_button_entity_key
-	|P_transcript_track_selection_entity_key
-	;
-;
-type CF_P_EntityKey=
-	|"P_aadc_guidelines_state_entity_key"
-	|"P_entity_key_normal"
-	|"P_entity_key"
-	|"P_load_markers_entity_key"
-	|"P_macro_marker_repeat_state_entity_key"
-	|"P_player_state_entity_key"
-	|"P_playlist_loop_state_entity_key"
-	|"P_subscribe_button_entity_key"
-	|"P_transcript_track_selection_entity_key"
-	;
-;
 type P_notification_record_interactions={
 	2: T_VW<{
 		1: T_D32<2>;
@@ -427,6 +427,7 @@ type P_watch_params={
 			3: T_D32<1>;
 		}>;
 	}>;
+	56?: TV_Str<D_VideoId>;
 };
 type P_ve_6827_params={
 	77?: TV_Str<"FEexplore">;
@@ -449,4 +450,9 @@ type P_ve_3611_params={
 			6: T_VW<{}>;
 		}>;
 	}>;
+};
+type P_change_markers_visibility_entity_key={
+	2: TV_Str<"KEY_MOMENTS">,
+	4: T_D32<274>,
+	5: T_D32<1>;
 };
