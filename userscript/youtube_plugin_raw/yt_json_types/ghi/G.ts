@@ -375,6 +375,8 @@ type G_PlaylistUrlInfo={
 }|{
 	type: "playlist:2:RDCM"; id: `UC${string}`; raw_id: `RDCMUC${string}`;
 }|{
+	type: "playlist:2:RDGM"; id: string; raw_id: `RDGM${string}`;
+}|{
 	type: "playlist:2:RD"; id: string; raw_id: `RD${string}`;
 }|{
 	type: "playlist:3:PL"; id: string; raw_id: `PL${string}`;

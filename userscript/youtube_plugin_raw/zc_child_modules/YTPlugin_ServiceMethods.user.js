@@ -1549,6 +1549,12 @@ class ServiceMethods extends ServiceData {
 				console.log("[playlistId.radio_my_mix.length]",raw_id.length);
 				return;
 			}
+			if(this.str_starts_with_rx("RDGM",raw_id)) {
+				let [,id]=split_string_once(raw_id,"RDGM");
+				this.G_UrlInfoItem({type: "playlist:2:RDGM",id,raw_id});
+				console.log("[playlistId.radio_global_mix.length]",raw_id.length);
+				return;
+			}
 			let [,id]=split_string_once(raw_id,"RD");
 			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id});
 			// 2 [RD] + 11 [VideoId]
@@ -1897,6 +1903,14 @@ class ServiceMethods extends ServiceData {
 				});
 				if(!this.str_starts_with_rx("UC",id)) debugger;
 				this.D_ChannelId(id);
+			} break;
+			case "playlist:2:RDGM": {
+				const {id,raw_id}=value;
+				this.indexed_db_put("playlist_id",{
+					key: `playlist_id:RDGM:${id}`,
+					base: "playlist_id",
+					type: "playlist_id:RDGM",id,raw_id
+				});
 			} break;
 			case "playlist:1:LL": case "playlist:1:WL": {
 				const {id}=value;

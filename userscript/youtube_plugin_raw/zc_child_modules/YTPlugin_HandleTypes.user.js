@@ -2246,13 +2246,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {...y}=this.s(cf,x);
+		const {24: f24,...y}=this.s(cf,x);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
-		const {...y}=this.s(cf,x);
+		const {12: f12,25: f25,...y}=this.s(cf,x);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_format_item_xtags} x */
