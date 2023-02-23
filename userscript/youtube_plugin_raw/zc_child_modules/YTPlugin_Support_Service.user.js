@@ -240,6 +240,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return s3;
 	}
 	data_store=new StoreData(() => this.onDataChange());
+	/** @type {IndexedDBService} */
 	idb=(() => {
 		if(!this.x) {
 			this.addOnServicesListener(() => {
