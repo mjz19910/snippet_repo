@@ -2333,7 +2333,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {
 		const cf="P_macro_marker_repeat_state_entity_key";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		switch(this.TV_Str(f2)) {
+			default: debugger; break;
+			case "repeat_state":
+		}
+		this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
+		this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
 	}
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
