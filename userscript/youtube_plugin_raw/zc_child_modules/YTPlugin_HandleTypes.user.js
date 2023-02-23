@@ -643,11 +643,12 @@ class HandleTypes extends ServiceMethods {
 			case "p5qs7":
 			case "qxoed":
 		}
+		/** @type {G_Gv_1} */
 		switch(selector) {
 			default: selector===""; debugger; break;
 			case "6d":
 			case "d6":
-			case "l7": case "lk":
+			case "l7": case "lk": case "lr":
 			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
 			case "el": case "ee":
