@@ -707,10 +707,11 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {"RE_D_VE3832_PreconnectUrl"|"D_VideoPlaybackShape_LS_Params"|"url"} cf @arg {D_GoogleVideoHostPartition} x */
-	D_GoogleVideoHostPartition(cf,x) {
-		this.save_string(`google_video.${cf}.partition`,x.partition);
-		this.save_string(`google_video.${cf}.selector`,x.selector);
+	/** @private @arg {D_GoogleVideoHostPartition} x */
+	D_GoogleVideoHostPartition(x) {
+		// const cf="D_GoogleVideoHostPartition";
+		this.save_string(`google_video.partition`,x.partition);
+		this.save_string(`google_video.selector`,x.selector);
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
@@ -753,7 +754,7 @@ class HandleTypes extends ServiceMethods {
 		for(let mi of mn_arr) {
 			/** @type {D_GoogleVideoHostPartition} */
 			let ap=this.get_host_partition(mi);
-			this.D_GoogleVideoHostPartition(cf1,ap);
+			this.D_GoogleVideoHostPartition(ap);
 			switch(ap.partition) {
 				default: {
 					let {partition: x}=ap;
@@ -1659,23 +1660,27 @@ class HandleTypes extends ServiceMethods {
 	/** @type {string[]} */
 	logged_hosts=[];
 	log_googlevideo_host=false;
-	/** @private @arg {RE_D_GoogleVideoUrl_Hostname} x */
-	on_googlevideo_host(x) {
-		let url_parts=split_string_once(x,".");
+	/** @private @arg {D_GoogleVideoHostPartitionRet} x */
+	D_GoogleVideoHostPartitionRet(x) {
+		const cf="google_video";
+		let p=x.partitioned;
+		this.D_GoogleVideoHostPartition(p);
+		let url_parts=split_string_once(x.host,".");
 		let [m2]=url_parts;
-		let m3=split_string_once(m2,"---");
-		let [,mi]=m3;
-		/** @type {D_GoogleVideoHostPartition} */
-		let host_partition=this.get_host_partition(mi);
-		this.D_GoogleVideoHostPartition("url",host_partition);
-		const gen_cf="js_gen_case:log_googlevideo_host";
+		const s2="---";
+		let m3=split_string_once(m2,s2);
+		let host_partition=p;
+		const {partition,selector}=host_partition;
+		this.save_string(`${cf}.partition`,partition);
+		this.save_string(`${cf}.selector`,selector);
 		let ap_z=host_partition.partition;
 		// cSpell:ignoreRegExp /"(5u|qx)[a-z]{3}"/
 		switch(ap_z) {
 			default: {
-				let gen=this.cg.codegen_case_cache(`${gen_cf}:host_partition`,host_partition.partition);
+				let gen=this.cg.codegen_case_cache(`g_case:${cf}:host_partition`,host_partition.partition);
 				if(gen.has) break;
-				console.log(`-- [${gen_cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+				debugger;
 			}; break;
 			case "5uald":
 			case "a5mek":
@@ -1688,7 +1693,6 @@ class HandleTypes extends ServiceMethods {
 			case "p5qs7":
 			case "qxoed":
 		}
-		this.save_string("googlevideo_host.selector",host_partition.selector);
 		switch(host_partition.selector) {
 			default: host_partition.selector===""; debugger; break;
 			case "6d":
@@ -1700,9 +1704,10 @@ class HandleTypes extends ServiceMethods {
 			case "zk": case "zr": case "zy":
 		}
 		if(this.log_googlevideo_host) {
-			if(this.logged_hosts.includes(x)) return;
-			this.logged_hosts.push(x);
-			console.log("[googlevideo_host] [%s]",x);
+			if(this.logged_hosts.includes(x.host)) return;
+			this.logged_hosts.push(x.host);
+			let [s1,s2,s3,s4,s5,partition,s7,selector,s8,s9,s10,s11,...py]=x.parts; this.eq_keys(py,[]);
+			console.log(`[google_video_host] ["https-parts://[${s1}][${s2}][${s3}][${s4}][${s5}][${partition}][${s7}][${selector}][${s8}][${s9}][${s10}][${s11}]"]`);
 			Promise.resolve().then(() => this.logged_hosts.length=0);
 		}
 	}
@@ -1718,77 +1723,30 @@ class HandleTypes extends ServiceMethods {
 			partitioned: p,
 		};
 	}
-	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
+	/** @private @arg {UrlParse<RE_D_VE3832_PreconnectUrl>} x @returns {D_GoogleVideoHostPartitionRet} */
 	get_google_host_parts(x) {
-		let parsed_url_obj=this.tr_url_to_obj(x);
-		const host=parsed_url_obj.host;
+		const host=x.host;
 		let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
 		if(empty_1!=="") debugger; if(y.length!==0) debugger;
+		let parts_1=split_string(host_parts_1,"---");
+		if(!this.str_starts_with(parts_1[0],"rr")) throw new Error("google_video host does not match /rr\\d\\..+/");
+		let part_2=split_string_once(parts_1[0],"rr")[1];
+		let partitioned=this.get_host_partition(parts_1[1]);
 		let host_parts_2=this.get_google_host_parts_for_part_1(host_parts_1);
-		if(!host_parts_2) {
-			return {
-				host,
-				path: parsed_url_obj.pathname,
-				/** @type {[null,"googlevideo","com"]} */
-				parts: [null,"googlevideo","com"],
-				partitioned: null,
-			};
-		}
-		let dec_parts=host_parts_2.parts;
+		if(!host_parts_2) throw new Error("Failed to get google_video host parts");
 		return {
 			host,
-			path: parsed_url_obj.pathname,
-			/** @type {[typeof dec_parts,"googlevideo","com"]} */
-			parts: [dec_parts,"googlevideo","com"],
-			partitioned: host_parts_2.partitioned,
+			path: x.pathname,
+			parts: ["rr",part_2,"---",...partitioned.parts,".","googlevideo",".","com"],
+			partitioned,
 		};
 	}
-	log_google_video_preconnect=false;
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
-		const cf="RE_D_VE3832_PreconnectUrl";
-		let parts=this.get_google_host_parts(x);
+		let pu=this.tr_url_to_obj(x);
+		let parts=this.get_google_host_parts(pu);
 		if(parts.path!=="/generate_204") debugger;
-		this.on_googlevideo_host(parts.host);
-		if(!parts.parts[0]) {debugger; return;}
-		/** @type {`${1|2|3|4|5}`} */
-		let num_part=as(parts.parts[0][1]);
-		switch(num_part) {
-			default: num_part===""; debugger; break;
-			case "1": case "2": case "3": case "4": case "5":
-		}
-		let [,s1,s2,s3,s4,/*s5*/partition,s6,selector]=parts.parts[0];
-		let p=parts.partitioned;
-		if(!p) {debugger; return;}
-		this.D_GoogleVideoHostPartition(cf,p);
-		/** @type {G_Gv_0} */
-		let p_type=partition;
-		if(this.log_google_video_preconnect) {
-			console.log(`[google_video_preconnect] ["https-parts://[rr][${s1}][${s2}][${s3}][${s4}][${partition}][${s6}][${selector}][.][googlevideo][.][com]"]`);
-		}
-		// cSpell:ignoreRegExp /"(vgqsk)"/
-		switch(p_type) {
-			default: {
-				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,p_type);
-				if(gen.has) break;
-				console.log(`-- [js_gen_case:${cf}.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
-				debugger;
-			}; break;
-			case "9gv7e":
-			case "nx5s7":
-			case "nx57y":
-			case "vgqsk":
-		}
-		switch(p.selector) {
-			default: p.selector===""; debugger; break;
-			case "6d":
-			case "d6":
-			case "lk":
-			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
-			case "76": case "7d": case "7s": case "7y": case "7z":
-			case "el": case "ee":
-			case "zk": case "zr": case "zy":
-		}
+		this.D_GoogleVideoHostPartitionRet(parts);
 	}
 	/** @public @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
@@ -1959,7 +1917,8 @@ class HandleTypes extends ServiceMethods {
 	on_google_video_url(x) {
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
 		let s_host=split_string_once(x.host,".");
-		this.on_googlevideo_host(x.host);
+		let p_ret=this.get_google_host_parts(x);
+		this.D_GoogleVideoHostPartitionRet(p_ret);
 		switch(s_host[1]) {
 			case "googlevideo.com": {
 				switch(x.pathname) {
