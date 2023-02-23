@@ -1157,6 +1157,11 @@ class HandleTypes extends ServiceMethods {
 		let pu=this.TA_OpenPopup(cf,x);
 		this.Popup_DD_SystemMenu(pu);
 	}
+	/** @private @arg {Popup_DD_SystemMenu} x */
+	Popup_DD_SystemMenu(x) {
+		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
+		this.t(m,this.R_SystemMenu);
+	}
 	/** @private @arg {AU_Description} x */
 	AU_Description(x) {
 		const cf="AU_Description";
@@ -1252,11 +1257,6 @@ class HandleTypes extends ServiceMethods {
 				return this.x;
 			}
 		})(x);
-	}
-	/** @private @arg {Popup_DD_SystemMenu} x */
-	Popup_DD_SystemMenu(x) {
-		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
-		this.t(m,this.R_SystemMenu);
 	}
 	/** @public @arg {P_ParamParse} cf @arg {string} x */
 	decode_binary_obj(cf,x) {
