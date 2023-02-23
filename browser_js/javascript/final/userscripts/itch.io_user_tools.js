@@ -20,6 +20,7 @@
 		ne.innerHTML='<div data-label="custom_btn" class="action_btn"><span class="full_label">Hide</span></div>'
 		if(!ne.firstChild||!(ne.firstChild instanceof HTMLElement)) return;
 		let child_element=ne.firstChild;
+		child_element.setAttribute("mode","h");
 		child_element.onclick=function(){
 			let tools=document.getElementById('user_tools');
 			if(!tools) return;
@@ -34,7 +35,6 @@
 				child_element.setAttribute("mode","h");
 			}
 		}
-		child_element.setAttribute("mode","h");
 		e.appendChild(ne)
 	})
 	// Your code here...
