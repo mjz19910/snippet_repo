@@ -1543,6 +1543,7 @@ class ServiceMethods extends ServiceData {
 			}
 			if(this.str_starts_with_rx("RDMM",raw_id)) {
 				let [,id]=split_string_once(raw_id,"RDMM");
+				this.save_next_char("playlistId.radio_my_mix",id);
 				this.G_UrlInfoItem({type: "playlist:2:RDMM",id,raw_id});
 				// 4 [RDMM] + 11 [VideoId]
 				if(raw_id.length===15) return;
@@ -1552,11 +1553,15 @@ class ServiceMethods extends ServiceData {
 			if(this.str_starts_with_rx("RDGM",raw_id)) {
 				let [,id]=split_string_once(raw_id,"RDGM");
 				this.G_UrlInfoItem({type: "playlist:2:RDGM",id,raw_id});
+				this.save_next_char("playlistId.radio_global_mix",id);
+				// 4 [RDGM] + 37 [unknown]
+				if(raw_id.length===41) return;
 				console.log("[playlistId.radio_global_mix.length]",raw_id.length);
 				return;
 			}
 			let [,id]=split_string_once(raw_id,"RD");
 			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id});
+			this.save_next_char("playlistId.radio",id);
 			// 2 [RD] + 11 [VideoId]
 			if(raw_id.length===13) return;
 			console.log("[playlistId.radio.length]",raw_id.length);
@@ -1565,7 +1570,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx("PL",raw_id)) {
 			let [,id]=split_string_once(raw_id,"PL");
 			this.G_UrlInfoItem({type: "playlist:3:PL",id,raw_id});
-			this.save_next_char("playlistId.PL",split_string_once(raw_id,"PL")[1]);
+			this.save_next_char("playlistId.playlist",id);
 			// 2 [PL] + 32 [PlaylistId]
 			if(raw_id.length===34) return;
 			console.log("[playlistId.playlist.length]",raw_id.length);
@@ -1573,13 +1578,15 @@ class ServiceMethods extends ServiceData {
 		}
 		if(this.str_starts_with_rx("UU",raw_id)) {
 			let [,id]=split_string_once(raw_id,"UU");
-			this.save_next_char("playlistId.UU",id);
+			this.save_next_char("playlistId.uploads_playlist",id);
 			this.G_UrlInfoItem({type: "playlist:4:UU",id,raw_id});
 			// 2 [UU] + 2 [UC]? + 22 [ChannelId]
 			if(raw_id.length===26) return;
 			console.log("[playlistId.uploads_playlist.length]",raw_id.length);
 			return;
 		}
+		this.save_next_char("playlistId.raw_id.0",raw_id);
+		this.save_next_char(`playlistId.raw_id.${raw_id[0]}.1`,raw_id,1);
 		switch(raw_id) {
 			default: {
 				this.save_next_char("playlistId.other",raw_id[0]);
