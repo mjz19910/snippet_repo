@@ -709,9 +709,39 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_GoogleVideoHostPartition} x */
 	D_GoogleVideoHostPartition(x) {
-		// const cf="D_GoogleVideoHostPartition";
-		this.save_string(`google_video.partition`,x.partition);
-		this.save_string(`google_video.selector`,x.selector);
+		const cf="google_video";
+		const {partition,selector}=x;
+		this.save_string(`${cf}.partition`,partition);
+		this.save_string(`${cf}.selector`,selector);
+		// cSpell:ignoreRegExp /"(5u|qx)[a-z]{3}"/
+		switch(partition) {
+			default: {
+				let gen=this.cg.codegen_case_cache(`g_case:${cf}:host_partition`,partition);
+				if(gen.has) break;
+				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+				debugger;
+			}; break;
+			case "5uald":
+			case "a5mek":
+			case "ab5l6":
+			case "hp57k":
+			case "hp57y":
+			case "nx5s7":
+			case "nx57y":
+			case "p5qls":
+			case "p5qs7":
+			case "qxoed":
+		}
+		switch(selector) {
+			default: selector===""; debugger; break;
+			case "6d":
+			case "d6":
+			case "lk":
+			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
+			case "76": case "7d": case "7s": case "7y": case "7z":
+			case "el": case "ee":
+			case "zk": case "zr": case "zy":
+		}
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
@@ -1660,49 +1690,10 @@ class HandleTypes extends ServiceMethods {
 	/** @type {string[]} */
 	logged_hosts=[];
 	log_googlevideo_host=false;
-	/** @private @arg {D_GoogleVideoHostPartitionRet} x */
+	/** @private @template {D_GoogleVideoPathname} T @arg {D_GoogleVideoHostPartitionRet<T>} x */
 	D_GoogleVideoHostPartitionRet(x) {
-		const cf="google_video";
 		let p=x.partitioned;
 		this.D_GoogleVideoHostPartition(p);
-		let url_parts=split_string_once(x.host,".");
-		let [m2]=url_parts;
-		const s2="---";
-		let m3=split_string_once(m2,s2);
-		let host_partition=p;
-		const {partition,selector}=host_partition;
-		this.save_string(`${cf}.partition`,partition);
-		this.save_string(`${cf}.selector`,selector);
-		let ap_z=host_partition.partition;
-		// cSpell:ignoreRegExp /"(5u|qx)[a-z]{3}"/
-		switch(ap_z) {
-			default: {
-				let gen=this.cg.codegen_case_cache(`g_case:${cf}:host_partition`,host_partition.partition);
-				if(gen.has) break;
-				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
-				debugger;
-			}; break;
-			case "5uald":
-			case "a5mek":
-			case "ab5l6":
-			case "hp57k":
-			case "hp57y":
-			case "nx5s7":
-			case "nx57y":
-			case "p5qls":
-			case "p5qs7":
-			case "qxoed":
-		}
-		switch(host_partition.selector) {
-			default: host_partition.selector===""; debugger; break;
-			case "6d":
-			case "d6":
-			case "lk":
-			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
-			case "76": case "7d": case "7s": case "7y": case "7z":
-			case "el": case "ee":
-			case "zk": case "zr": case "zy":
-		}
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x.host)) return;
 			this.logged_hosts.push(x.host);
@@ -1723,7 +1714,7 @@ class HandleTypes extends ServiceMethods {
 			partitioned: p,
 		};
 	}
-	/** @private @arg {UrlParse<RE_D_VE3832_PreconnectUrl>} x @returns {D_GoogleVideoHostPartitionRet} */
+	/** @private @template {UrlParse<RE_D_GoogleVideoUrl>} T @arg {T} x @returns {D_GoogleVideoHostPartitionRet<T["pathname"]>} */
 	get_google_host_parts(x) {
 		const host=x.host;
 		let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
@@ -1913,6 +1904,10 @@ class HandleTypes extends ServiceMethods {
 			y: y1,
 		};
 	}
+	/** @arg {D_InitPlayback} x */
+	D_InitPlayback(x) {
+		this.save_keys("D_InitPlayback",x);
+	}
 	/** @api @public @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
@@ -1930,7 +1925,7 @@ class HandleTypes extends ServiceMethods {
 					case "/initplayback": {
 						let ip_search=x.search;
 						let {...pp}=this.parse_url_search_params(ip_search);
-						pp;
+						this.D_InitPlayback(pp);
 					} break;
 					case "/videogoodput": {
 						let pp=this.parse_url_search_params(x.search);

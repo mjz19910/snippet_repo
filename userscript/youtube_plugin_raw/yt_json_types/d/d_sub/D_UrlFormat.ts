@@ -37,7 +37,6 @@ type D_UrlFormat=
 	|NonNullable<D_AdaptiveFormatItem["url"]>
 	|NonNullable<D_Channel_MD["channelConversionUrl"]>
 	|NonNullable<D_FormatItem["url"]>
-	|TP_ParseUrlSearchParams<D_FormatItem_SignatureCipher_SP>["url"]
 	|GU_YTExternalUrl
 	;
 ;
