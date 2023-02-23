@@ -5,6 +5,7 @@ type D_VideoPrimaryInfo={
 	trackingParams: string;
 	updatedMetadataEndpoint?: E_UpdatedMetadata;
 	superTitleLink?: G_Text;
+	superTitleIcon?: T_Icon<"LOCATION_PIN">;
 	badges?: RMD_Badge[];
 	dateText: G_Text;
 	relativeDateText?: G_Text;

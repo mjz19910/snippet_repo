@@ -874,6 +874,7 @@ export namespace Gen {
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_1:icon";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2:icon";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_TopbarLogo:iconImage";}
+		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_VideoPrimaryInfo";}
 		|{n: "CF_T_Icon_Any"; t: CF_T_Icon_Any; v: "D_GuideEntry_Icon";}
 		|{n: "CF_T_Icon_Any"; t: CF_T_Icon_Any; v: "D_GuideEntry_WithIcon:icon";}
 		|{n: "CF_T_Icon_Any"; t: CF_T_Icon_Any; v: "D_GuideEntry_WithNavEP:icon";}

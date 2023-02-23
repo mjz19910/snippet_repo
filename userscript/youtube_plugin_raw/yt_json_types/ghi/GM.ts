@@ -12,7 +12,6 @@ type M_ResolveUrlCommand={
 };
 //#endregion
 //#region WebCommandMetadata like {rootVe:number;}
-
 type GM_VE3611={
 	url: GU_VE3611_Url;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
@@ -30,12 +29,11 @@ type GM_VE3854={
 	rootVe: 3854;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE4724={
+type GM_Search={
 	url: D_ResultsPageUrl;
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
-
 type GM_VE5754={
 	url: GU_VE5754_Url;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
@@ -49,7 +47,6 @@ type GM_VE6827={
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };
-
 type GM_VE11487={
 	url: GU_VE11487_Url;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
@@ -119,10 +116,11 @@ type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
 //#endregion
 //#region GM_VE
 type GM_VE=
+	|GM_Search
+	|GM_Url
 	|GM_VE3611
 	|GM_VE3832
 	|GM_VE3854
-	|GM_VE4724
 	|GM_VE5754
 	|GM_VE6827
 	|GM_VE11487
@@ -130,11 +128,10 @@ type GM_VE=
 	|GM_VE23462
 	|GM_VE37414
 	|GM_VE42352
-	|GM_Url
 	|GM_VE96368
 	;
 ;
-type D_GM_VeNum=Extract<GM_All,{rootVe:any}>['rootVe'];
+type D_GM_VeNum=GM_VE['rootVe'];
 type GM_PostApi=
 	|GM_SetSetting
 	|GM_AccountMenu
@@ -163,8 +160,4 @@ type GM_PostApi=
 	|GM_YpcGetCart
 	;
 ;
-type GM_All=[
-	GM_VE,
-	GM_PostApi
-][number];
 //#endregion

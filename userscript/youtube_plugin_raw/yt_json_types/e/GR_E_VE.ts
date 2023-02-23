@@ -4,7 +4,7 @@ type TE_VE_In=TE_Endpoint_3<"browseEndpoint",any,TM_VE<number>>;
 //#region E_VE
 type E_VE3611=TE_Endpoint_3<"browseEndpoint",DE_VE3611,M_VE3611>;
 type E_VE3854=TE_Endpoint_3<"browseEndpoint",DE_VE3854,M_VE3854>;
-type E_VE4724=TE_Endpoint_3<"searchEndpoint",DE_VE4724,M_VE4724>;
+type E_Search=TE_Endpoint_3<"searchEndpoint",DE_Search,M_Search>;
 type E_VE5754=TE_Endpoint_3<"browseEndpoint",DE_VE5754,M_VE5754>;
 type E_VE6827=TE_Endpoint_3<"browseEndpoint",DE_VE6827,M_VE6827>;
 type E_VE11487=TE_Endpoint_3<"browseEndpoint",DE_VE11487,M_VE11487>;

@@ -422,7 +422,7 @@ type R_PageTypePlaylist={
 };
 type R_PageTypeSearch={
 	pageType: "search";
-	endpoint: E_VE4724;
+	endpoint: E_Search;
 	response: RS_Page_Search;
 	fromHistory: boolean;
 	navigationDoneMs: number;

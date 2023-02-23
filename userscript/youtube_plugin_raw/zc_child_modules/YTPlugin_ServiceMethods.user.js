@@ -433,7 +433,7 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE4724} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_Search} x @returns {`VE${rootVe}`} */
 	GM_VE4724(x) {
 		const cf="GM_VE4724";
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1831,7 +1831,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
-	/** @protected @arg {E_VE4724} x */
+	/** @protected @arg {E_Search} x */
 	E_VE4724_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE4724_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_VE4724_Search(b);}
 	/** @protected @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
@@ -1877,7 +1877,7 @@ class ServiceMethods extends ServiceData {
 	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
-	/** @private @arg {DE_VE4724} x */
+	/** @private @arg {DE_Search} x */
 	DE_VE4724_Search(x) {this.H_("query",x,this.a_primitive_str);}
 	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
@@ -2161,7 +2161,7 @@ class ServiceMethods extends ServiceData {
 		this.GM_VE3854(a);
 		this.t(b,this.M_ResolveUrlCommand);
 	}
-	/** @private @arg {M_VE4724} x */
+	/** @private @arg {M_Search} x */
 	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724);}
 	/** @private @arg {M_VE5754} x */
 	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754);}
@@ -3089,7 +3089,7 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {if(x!==true) debugger;}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
-	/** @private @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
+	/** @private @arg {D_GM_VeNum} x */
 	on_root_visual_element(x) {this.save_db.data_store.ve_store.save_data("ve_element",["one",x]);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
@@ -5090,13 +5090,14 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
 		const cf="D_VideoPrimaryInfo";
-		const {title,viewCount,videoActions,trackingParams,updatedMetadataEndpoint,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {title,viewCount,videoActions,trackingParams,updatedMetadataEndpoint,superTitleLink,superTitleIcon,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.R_VideoViewCount(viewCount);
 		this.R_Menu(videoActions);
 		this.trackingParams(trackingParams);
 		this.t(updatedMetadataEndpoint,this.E_UpdatedMetadata);
 		this.t(superTitleLink,this.G_Text);
+		this.t(superTitleIcon,x => this.T_Icon(cf,x));
 		this.tz(badges,this.RMD_Badge);
 		this.G_Text(dateText);
 		this.t(relativeDateText,this.G_Text);

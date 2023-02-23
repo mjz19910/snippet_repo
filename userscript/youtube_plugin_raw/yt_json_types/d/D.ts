@@ -604,7 +604,7 @@ type D_FusionSearchbox={
 	placeholderText: G_Text;
 	config: R_WebSearchboxConfig;
 	trackingParams: string;
-	searchEndpoint: E_VE4724;
+	searchEndpoint: E_Search;
 	clearButton: R_Button;
 };
 type D_ChannelOptions={
@@ -961,6 +961,10 @@ type D_Emoji={
 type D_VE3611_TextRun=|{
 	text: string;
 	navigationEndpoint: E_VE3611;
+}|{
+	text: string;
+	navigationEndpoint: E_Search;
+	loggingDirectives: D_LoggingDirectives;
 }|{
 	text: "https://teespring.com/stores/numberphile";
 	navigationEndpoint: E_Url;
@@ -2548,7 +2552,7 @@ type D_SearchPyv={
 	trackingParams: string;
 };
 type D_SearchResultsTab={
-	endpoint?: E_VE4724;
+	endpoint?: E_Search;
 	title: string;
 	selected?: boolean;
 	content: R_SectionList;
