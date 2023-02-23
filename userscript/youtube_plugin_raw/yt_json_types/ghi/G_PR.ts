@@ -15,7 +15,9 @@ type H_TrackingObj_Id=T_D32<13188>;
 
 type H_TrackingObj_f6_Str="external"|"list_other"|"related"|"related-auto"|"watch";
 
-type H_TrackingObj_f6=T_VW<never,never>|TV_Str<H_TrackingObj_f6_Str>;
+type H_TrackingObj_f6_Str_2="ni-push-u-sub";
+
+type H_TrackingObj_f6=T_VW<never,never>|TV_Str<H_TrackingObj_f6_Str>|TV_Str_CS<H_TrackingObj_f6_Str_2>;
 
 type VW_BinaryTimestamp=T_VW<V_BinaryTimestamp,never>;
 
