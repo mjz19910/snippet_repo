@@ -5087,6 +5087,20 @@ class ServiceMethods extends ServiceData {
 	R_MerchandiseShelf(x) {this.H_("merchandiseShelfRenderer",x,this.D_MerchandiseShelf);}
 	/** @private @arg {R_VideoPrimaryInfo} x */
 	R_VideoPrimaryInfo(x) {this.H_("videoPrimaryInfoRenderer",x,this.D_VideoPrimaryInfo);}
+	/** @private @arg {D_VideoPrimaryInfo} x */
+	D_VideoPrimaryInfo(x) {
+		const cf="D_VideoPrimaryInfo";
+		const {title,viewCount,videoActions,trackingParams,updatedMetadataEndpoint,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.R_VideoViewCount(viewCount);
+		this.R_Menu(videoActions);
+		this.trackingParams(trackingParams);
+		this.t(updatedMetadataEndpoint,this.E_UpdatedMetadata);
+		this.t(superTitleLink,this.G_Text);
+		this.tz(badges,this.RMD_Badge);
+		this.G_Text(dateText);
+		this.t(relativeDateText,this.G_Text);
+	}
 	/** @private @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
 	/** @private @arg {R_ChipCloud} x */
@@ -5236,20 +5250,6 @@ class ServiceMethods extends ServiceData {
 		this.t(shortViewCount,this.G_Text);
 		this.t(extraShortViewCount,this.G_Text);
 		this.t(isLive,this.a_primitive_bool);
-	}
-	/** @private @arg {D_VideoPrimaryInfo} x */
-	D_VideoPrimaryInfo(x) {
-		const cf="D_VideoPrimaryInfo";
-		const {title,viewCount,videoActions,trackingParams,updatedMetadataEndpoint,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.R_VideoViewCount(viewCount);
-		this.R_Menu(videoActions);
-		this.trackingParams(trackingParams);
-		this.t(updatedMetadataEndpoint,this.E_UpdatedMetadata);
-		this.t(superTitleLink,this.G_Text);
-		this.tz(badges,this.RMD_Badge);
-		this.G_Text(dateText);
-		this.t(relativeDateText,this.G_Text);
 	}
 	/** @private @arg {E_UpdatedMetadata} x */
 	E_UpdatedMetadata(x) {const [y]=this.TE_Endpoint_3_v2("updatedMetadataEndpoint",x,this.M_UpdatedMetadata,this.D_VideoId); this.g(y);}
