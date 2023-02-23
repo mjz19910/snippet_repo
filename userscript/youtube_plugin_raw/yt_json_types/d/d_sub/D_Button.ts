@@ -1,6 +1,6 @@
 type DC_ShowReelsCommentsOverlay={engagementPanel: R_EngagementPanelSectionList;};
 type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsOverlayCommand: DC_ShowReelsCommentsOverlay;};
-type D_Button_NavEP=E_VE23462|E_ShareEntityService|E_Url|E_Watch;
+type D_Button_NavEP=E_VE23462|E_ShareEntityService|E_Url|E_Watch|A_FancyDismissibleDialog;
 type D_Button_style=
 	|"STYLE_BLUE_TEXT"
 	|"STYLE_DEFAULT"

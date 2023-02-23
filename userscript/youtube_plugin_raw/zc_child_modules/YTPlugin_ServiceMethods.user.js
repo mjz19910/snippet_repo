@@ -1082,7 +1082,8 @@ class ServiceMethods extends ServiceData {
 			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {M_YpcGetOffers} x */
@@ -1271,7 +1272,7 @@ class ServiceMethods extends ServiceData {
 		if("continuationCommand" in x) return this.xr.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
-		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
@@ -1476,7 +1477,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_EndscreenElement_EP"; this.ks(cf,x);
 		if("browseEndpoint" in x) return this.E_VE3611(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	log_enabled_playlist_id=false;
@@ -4869,7 +4870,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(description);
 		this.G_Text(websiteText);
 		this.R_Button(actionButton);
-		this.xr.E_VE83769_Url(navigationEndpoint);
+		this.xr.E_Url(navigationEndpoint);
 		this.z(impressionCommands,this.D_ImpressionCommand);
 		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.R_Menu(menu);
@@ -5308,7 +5309,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		if(!this.str_starts_with(price,"CA$")) debugger;
 		if(!onClickCommand.urlEndpoint) debugger;
-		this.xr.E_VE83769_Url(onClickCommand);
+		this.xr.E_Url(onClickCommand);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {DC_RelatedChip} x */
@@ -5890,7 +5891,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(vendorName);
 		this.trackingParams(trackingParams);
 		this.a_primitive_str(buttonText);
-		this.xr.E_VE83769_Url(buttonCommand);
+		this.xr.E_Url(buttonCommand);
 		this.a_primitive_str(accessibilityTitle);
 		this.a_primitive_str(buttonAccessibilityText);
 		this.a_primitive_str(fromVendorText);
@@ -6408,7 +6409,7 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
-		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
@@ -7227,7 +7228,7 @@ class ServiceMethods extends ServiceData {
 	D_PrimaryLinkItem(x) {
 		const cf="D_PrimaryLinkItem";
 		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.xr.E_VE83769_Url(navigationEndpoint);
+		this.xr.E_Url(navigationEndpoint);
 		this.D_Thumbnail(icon);
 		this.G_Text(title);
 	}

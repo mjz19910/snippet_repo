@@ -833,7 +833,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.xr.E_VE83769_Url(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 		x===""; debugger;
 	}
@@ -2189,7 +2189,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
 		const cf="P_get_report_form_params";
-		const {25: f25,26: f26,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {25: f25,26: f26,28: f28,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {

@@ -559,7 +559,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {text,durationMs,navigationEndpoint,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(text);
 		if(durationMs!=="10000") debugger;
-		this.xr.E_VE83769_Url(navigationEndpoint);
+		this.xr.E_Url(navigationEndpoint);
 		this.T_Icon(cf,icon);
 		this.trackingParams(trackingParams);
 	}
@@ -729,7 +729,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
 		this.D_TriggerCriteria(triggerCriteria);
 		this.G_Text(text);
-		this.xr.E_VE83769_Url(endpoint);
+		this.xr.E_Url(endpoint);
 		this.trackingParams(trackingParams);
 		this.RA_Notification(snackbar);
 	}
@@ -2210,7 +2210,7 @@ class Support_Renderer extends ServiceMethods {
 	//#endregion
 	//#region Endpoint methods
 	/** @public @arg {E_Url} x */
-	E_VE83769_Url(x) {
+	E_Url(x) {
 		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
 		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
@@ -2716,7 +2716,7 @@ class Support_Renderer extends ServiceMethods {
 				break x;
 			}
 			if("urlEndpoint" in x2) {
-				this.xr.E_VE83769_Url(x2);
+				this.xr.E_Url(x2);
 				break x;
 			}
 			debugger;
@@ -2725,7 +2725,7 @@ class Support_Renderer extends ServiceMethods {
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
 		{
 			let x2=navigationEndpoint;
-			if("urlEndpoint" in x2) return this.xr.E_VE83769_Url(x2);
+			if("urlEndpoint" in x2) return this.xr.E_Url(x2);
 			if("browseEndpoint" in x2) {
 				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
 				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
@@ -3056,7 +3056,7 @@ class Support_Renderer extends ServiceMethods {
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
 	}
-	/** @private @arg {A_FancyDismissibleDialog} x */
+	/** @public @arg {A_FancyDismissibleDialog} x */
 	A_FancyDismissibleDialog(x) {
 		let dl=this.TA_OpenPopup("A_FancyDismissibleDialog",x);
 		let pu=this.Popup_DL_DismissibleDialog(dl);
