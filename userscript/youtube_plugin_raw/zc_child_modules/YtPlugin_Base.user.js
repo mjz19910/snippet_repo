@@ -2240,15 +2240,11 @@ class BaseService extends BaseServicePrivate {
 		if(this.logged_keys.includes(jk)) return;
 		this.logged_keys.push(jk);
 		console.log("[empty_object] [%s]",jk);
-		{debugger;}
+		debugger;
 	}
 	//#region short names
 	/** @protected @name iterate_obj @arg {{}|undefined} x @arg {(this:this,k:string,v: {})=>void} f */
-	v(x,f) {
-		if(x===void 0) return;
-		let arr=Object.entries(x);
-		this.z(arr,e => f.call(this,e[0],e[1]));
-	}
+	v(x,f) {if(x===void 0) return; this.z(Object.entries(x),e => f.call(this,e[0],e[1]));}
 	/** @protected @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
 	z(x,f) {
 		if(x===void 0||!x.entries) {debugger; return [[],[]];}
