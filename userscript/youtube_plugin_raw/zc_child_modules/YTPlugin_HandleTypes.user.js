@@ -637,7 +637,7 @@ class HandleTypes extends ServiceMethods {
 			default: selector===""; debugger; break;
 			case "6d":
 			case "d6":
-			case "lk":
+			case "l7": case "lk":
 			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
 			case "el": case "ee":
@@ -700,10 +700,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.mv`,mv);
 		this.save_string(`${cf1}.mvi`,mvi);
 		this.save_string(`${cf1}.pl`,pl);
-		{
-			let x=initcwndbps;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
+		x: {
+			let x2=initcwndbps;
+			if(!x2) break x;
+			let x3=this.parse_number_template(x2);
+			this.a_primitive_num(x3);
 		}
 	}
 	/** @private @arg {D_VideoPlaybackShape_Other} x */
@@ -741,7 +742,7 @@ class HandleTypes extends ServiceMethods {
 		const {audioConfig,playbackStartConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
 		this.xr.D_AudioConfig(audioConfig);
 		this.t(playbackStartConfig,this.D_StartSeconds);
-		this.D_StreamSelectionConfig(streamSelectionConfig);
+		this.t(streamSelectionConfig,this.D_StreamSelectionConfig);
 		this.xr.R_DynamicReadaheadConfig(mediaCommonConfig);
 		this.D_WebPlayerConfig(webPlayerConfig);
 	}
@@ -2272,6 +2273,7 @@ class HandleTypes extends ServiceMethods {
 						case "":
 					}
 				} break;
+				case "DESCRIPTION_CHAPTERS":
 				case "KEY_MOMENTS":
 				case "AUTO_CHAPTERS":
 				case ".transcript.track.selection.key": break;

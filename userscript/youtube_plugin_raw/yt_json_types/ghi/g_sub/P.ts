@@ -21,7 +21,7 @@ type P_subscribe_button_entity_key={
 	5: T_D32<1>;
 };
 type P_load_markers_entity_key={
-	2: TV_Str<"HEATSEEKER"|"AUTO_CHAPTERS">;
+	2: TV_Str<"HEATSEEKER"|"AUTO_CHAPTERS"|"DESCRIPTION_CHAPTERS">;
 	4: T_D32<274>;
 	5: T_D32<1>;
 };
