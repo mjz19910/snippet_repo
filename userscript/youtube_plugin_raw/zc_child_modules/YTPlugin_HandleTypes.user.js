@@ -298,7 +298,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
-		const {1: request_timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
+		const {1: request_timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(request_timestamp_milli_utc,x => {
 			this.log_buffer.push(["number",`max_gen:${cf}:binary_ts_gen`,"f1","milliseconds",x]);
 			this.immediate_run_logger();
@@ -1895,7 +1895,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
-		const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
+		const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
 	}
 	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
@@ -1908,7 +1908,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
 		const cf="H_TrackingObj",t=this;
-		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,21: f21,...y}=x; this.g(y);
+		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		t.t(f1,x => t.TK_D32(cf,x,"tag"));
 		t.t(f2,x => t.TK_D32(cf,x,"id"));
 		t.t(f3,x => t.TK_D32(cf,x,"f3"));
@@ -1983,7 +1983,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
-		const {77: a}=this.s(cf,x);
+		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
 	}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
@@ -2006,7 +2006,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
 		const cf="PR_continuation_params";
-		const {0x94d81d4: n}=this.s(cf,x);
+		const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.PD_continuation_params(n);
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
@@ -2094,8 +2094,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {
 		const cf="P_subscribe_button_entity_key";
-		const {2: a,4: b,5: c,...y}=this.s(cf,x);
-		this.t(this.TV_Str(a),this.channelId); this.h_gen_keys(cf,x,y);
+		const {2: a,4: b,5: c,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(a),this.channelId);
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
@@ -2115,7 +2115,7 @@ class HandleTypes extends ServiceMethods {
 		const {1: a,3: {}={},2: c,4: d,5: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_VW(a,x => {
 			const cf="P_dislike_params.f1";
-			const {1: f1,...y}=x; this.h_gen_keys(cf,x,y);
+			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 			if(f1[0]!=="param_arr") {debugger; return;}
 			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
 			switch(a[0]) {
@@ -2258,6 +2258,16 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {
 		const cf="P_macro_marker_repeat_state_entity_key";
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
+	/** @private @arg {P_ve_3611_params} x */
+	P_ve_3611_params(x) {
+		const cf="P_ve_3611_params";
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
+	/** @private @arg {P_playlist_edit_params} x */
+	P_playlist_edit_params(x) {
+		const cf="P_playlist_edit_params";
 		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	//#endregion
@@ -2511,10 +2521,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {P_ve_3611_params} x */
-	P_ve_3611_params(x) {x;}
-	/** @private @arg {P_playlist_edit_params} x */
-	P_playlist_edit_params(x) {x;}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns

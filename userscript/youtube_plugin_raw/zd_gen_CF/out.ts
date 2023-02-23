@@ -525,6 +525,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_ResultsItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Contents";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "H_TrackingObj";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_SystemMenu";}
