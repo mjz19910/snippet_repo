@@ -1019,7 +1019,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.t(subscribersText,this.G_Text);
 		this.t(hovercardButton,this.R_SubscribeButton);
 		this.trackingParams(trackingParams);
-		this.t(isSubscribe,x => this.ceq(x,true));
+		this.t(isSubscribe,this.a_primitive_bool);
 		this.a_primitive_str(id);
 		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 	}

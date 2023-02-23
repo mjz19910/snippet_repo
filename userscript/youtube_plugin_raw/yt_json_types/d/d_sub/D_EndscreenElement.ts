@@ -17,7 +17,7 @@ type D_EndscreenElement={
 	subscribersText?: G_Text;
 	hovercardButton?: R_SubscribeButton;
 	trackingParams: string;
-	isSubscribe?: true;
+	isSubscribe?: boolean;
 	id: string;
 	thumbnailOverlays?: G_ThumbnailOverlayItem[];
 };
