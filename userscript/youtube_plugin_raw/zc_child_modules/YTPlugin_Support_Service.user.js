@@ -106,6 +106,27 @@ class StoreDescription extends ApiBase2 {
 		if(cur_idx>=0) {
 			let [,val]=this.data[cur_idx];
 			switch(val[0]) {
+				case "one": switch(x[0]) {
+					case "one": {
+						let [,v1]=val;
+						if(v1===x[1]) break;
+						this.data[cur_idx]=[k,["arr",[v1,x[1]]]];
+					} break;
+					case "arr": {
+						let [,v1]=val;
+						let has=x[1].includes(v1);
+						if(has) break;
+						x[1].push(v1);
+						this.data[cur_idx]=[k,x];
+					} break;
+					case "many": {
+						let [,v1]=val;
+						let has=x[1].findIndex(x => x.length===1&&x[0]===v1);
+						if(has>-1) break;
+						debugger;
+						this.data[cur_idx]=[k,x];
+					} break;
+				} break;
 				case "arr": switch(x[0]) {
 					case "arr": {
 						let [,v1]=val;
@@ -123,22 +144,6 @@ class StoreDescription extends ApiBase2 {
 					} break;
 				} break;
 				case "many": debugger; break;
-				case "one": switch(x[0]) {
-					case "arr": {
-						let [,v1]=val;
-						let has=x[1].includes(v1);
-						if(has) break;
-						x[1].push(v1);
-						this.data[cur_idx]=[k,x];
-					} break;
-					case "many": {
-						let [,v1]=val;
-						let has=x[1].findIndex(x => x.length===1&&x[0]===v1);
-						if(has>-1) break;
-						debugger;
-						this.data[cur_idx]=[k,x];
-					} break;
-				} break;
 			}
 			return;
 		}
