@@ -1433,7 +1433,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		return res;
 	}
-	/** @api @public @arg {JsonReplacerState} s @arg {object|null} x @returns {string|object|null} */
+	/** @private @arg {JsonReplacerState} s @arg {object|null} x @returns {string|object|null} */
 	typedef_json_replace_bin_obj(s,x) {
 		if(x===null) return x;
 		if(x instanceof Array) {
@@ -1485,7 +1485,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		return x;
 	}
-	/** @api @public @arg {JsonReplacerState} s @arg {string} k @arg {unknown} x @returns {string|symbol|number|boolean|undefined|object|null} */
+	/** @private @arg {JsonReplacerState} s @arg {string} k @arg {unknown} x @returns {string|symbol|number|boolean|undefined|object|null} */
 	typedef_json_replace_bin(s,k,x) {
 		s.next_key(k,x);
 		switch(typeof x) {
@@ -1500,7 +1500,7 @@ class HandleTypes extends ServiceMethods {
 			case "bigint": return `TYPE::V_Bigint<${x}n>`;
 		}
 	}
-	/** @api @public @arg {JsonReplacerState} s @arg {object} x @returns {Ret_gen_json} */
+	/** @private @arg {JsonReplacerState} s @arg {object} x @returns {Ret_gen_json} */
 	gen_typedef_bin_json(s,x) {
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,s),"\t");
 		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
@@ -1520,7 +1520,7 @@ class HandleTypes extends ServiceMethods {
 		json_res=json_res.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
 		return json_res;
 	}
-	/** @api @public @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
+	/** @private @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
 	gen_typedef_bin(s,cf,x) {
 		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)};\n`;
 	}
@@ -1689,23 +1689,15 @@ class HandleTypes extends ServiceMethods {
 			case "qxoed":
 		}
 		this.save_string("googlevideo_host.selector",host_partition.selector);
-		let selector_parts=split_string(host_partition.selector,"");
-		switch(selector_parts[0]) {
-			default: debugger; {
-				switch(selector_parts[0]) {
-					case "": break;
-				}
-			} break;
-			case "6": case "7": case "d": case "e": case "l": case "s": case "z": {
-				switch(selector_parts[1]) {
-					default: debugger; {
-						switch(selector_parts[1]) {
-						}
-					} break;
-					case "6": case "d": case "e": case "k":
-					case "l": case "s": case "y": case "z":
-				}
-			}
+		switch(host_partition.selector) {
+			default: host_partition.selector===""; debugger; break;
+			case "6d":
+			case "d6":
+			case "lk":
+			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
+			case "76": case "7d": case "7s": case "7y": case "7z":
+			case "el": case "ee":
+			case "zk": case "zr": case "zy":
 		}
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x)) return;
@@ -1751,6 +1743,7 @@ class HandleTypes extends ServiceMethods {
 			partitioned: host_parts_2.partitioned,
 		};
 	}
+	log_google_video_preconnect=false;
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
 		const cf="RE_D_VE3832_PreconnectUrl";
@@ -1770,7 +1763,9 @@ class HandleTypes extends ServiceMethods {
 		this.D_GoogleVideoHostPartition(cf,p);
 		/** @type {G_Gv_0} */
 		let p_type=partition;
-		console.log(`[google_video_preconnect] ["https-parts://[rr][${s1}][${s2}][${s3}][${s4}][${partition}][${s6}][${selector}][.][googlevideo][.][com]"]`);
+		if(this.log_google_video_preconnect) {
+			console.log(`[google_video_preconnect] ["https-parts://[rr][${s1}][${s2}][${s3}][${s4}][${partition}][${s6}][${selector}][.][googlevideo][.][com]"]`);
+		}
 		// cSpell:ignoreRegExp /"(vgqsk)"/
 		switch(p_type) {
 			default: {
