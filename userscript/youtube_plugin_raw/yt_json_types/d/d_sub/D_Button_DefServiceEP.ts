@@ -1,0 +1,1 @@
+type D_Button_DefServiceEP=C_CommandExecutor|E_PerformCommentAction;

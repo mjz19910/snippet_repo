@@ -3666,18 +3666,18 @@ class ServiceMethods extends ServiceData {
 		this.t(toggledText,this.G_Text);
 		this.D_ToggleButton_ToggledSrvEP(toggledServiceEndpoint);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
-		this.D_Label(accessibility);
+		this.t(accessibility,this.D_Label);
 		x: {
 			let x2=toggledStyle;
 			if(!x2) {debugger; break x;}
 			this.save_string(`${cf}.toggledStyle.styleType`,x2.styleType);
 		}
-		this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
-		this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
+		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
+		this.t(toggledTooltip,x => this.add_string_to_map(cf,"toggledTooltip",x));
 		this.D_Accessibility(accessibilityData);
 		switch(targetId) {
 			default: debugger; break;
-			case "watch-dislike": case "watch-like":
+			case void 0: case "watch-dislike": case "watch-like":
 		}
 		const {size,toggledAccessibilityData,...y}=u2; this.g(y);
 		this.t(size,x => this.cq(x.sizeType,"SIZE_DEFAULT"));

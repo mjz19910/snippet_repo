@@ -2288,17 +2288,17 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
 		const cf="P_ve_6827_params";
-		const {77: f77,84: f84,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {77: f77,84: f84,93: f93,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {24: f24,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,7: f7,24: f24,27: f27,39: f39,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
-		const {12: f12,25: f25,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {8: f8,9: f9,12: f12,25: f25,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_format_item_xtags} x */
 	P_format_item_xtags(x) {

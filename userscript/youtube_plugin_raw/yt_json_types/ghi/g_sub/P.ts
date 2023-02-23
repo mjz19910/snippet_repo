@@ -422,21 +422,27 @@ type P_format_item_xtags={
 	}>;
 };
 type P_watch_player_params={
-	12: T_D32<1>;
-	25: T_D32<1>;
+	8?: T_D32<1>;
+	9?: T_D32<1>;
+	12?: T_D32<1>;
+	25?: T_D32<1>;
 };
 type P_watch_params={
-	2: T_D32<1>;
-	3: T_D32<1>;
-	24: T_D32<1>;
-	27: T_VW<{
-		1: T_D32<1>;
-	}>;
+	2?: T_D32<1>;
+	3?: T_D32<1>;
+	7?: T_D32<2>;
+	24?: T_D32<1>;
+	27?: T_VW<{1: T_D32<1>;}>;
+	39?: T_D32<637>;
 };
 type P_ve_6827_params={
 	77?: TV_Str<"FEexplore">;
 	84?: T_VW<{
 		5: T_D32<2>;
+	}>;
+	93?: T_VW<{
+		1: TV_Str<"bigbusiness">,
+		3: T_D32<1>;
 	}>;
 };
 type P_playlist_edit_params={
