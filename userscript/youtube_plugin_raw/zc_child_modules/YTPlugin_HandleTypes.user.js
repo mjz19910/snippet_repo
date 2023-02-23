@@ -365,12 +365,6 @@ class HandleTypes extends ServiceMethods {
 		if(x.length!==2) debugger;
 		return this.unwrap_tuple_1(x[1]);
 	}
-	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
-	T_OpenPopup_Dropdown(cf,x) {
-		const {popupType,popup,beReused,...y}=this.s(cf,x); this.g(y);
-		if(popupType!=="DROPDOWN") return null;
-		return popup;
-	}
 	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
@@ -521,7 +515,7 @@ class HandleTypes extends ServiceMethods {
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
-				this.R_MacroMarkersList(content);
+				this.xr.R_MacroMarkersList(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
@@ -529,7 +523,7 @@ class HandleTypes extends ServiceMethods {
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
-				this.R_MacroMarkersList(content);
+				this.xr.R_MacroMarkersList(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
@@ -541,16 +535,6 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @public @arg {G_StructuredDescriptionContentItem} x */
-	G_StructuredDescriptionContentItem(x) {
-		const cf="G_StructuredDescriptionContentItem";
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
-		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
-		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		if("videoDescriptionCourseSectionRenderer" in x) return this.R_VideoDescriptionCourseSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	//#endregion
@@ -910,7 +894,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_AccountMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.A_GetSystemMenu(x);
+			if("openPopupAction" in x) return this.xr.A_GetSystemMenu(x);
 			return null;
 		});
 		this.trackingParams(trackingParams);
@@ -1098,17 +1082,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region A & AU
-	/** @private @arg {A_GetSystemMenu} x */
-	A_GetSystemMenu(x) {
-		const cf="A_GetSystemMenu";
-		let pu=this.TA_OpenPopup(cf,x);
-		this.Popup_DD_SystemMenu(pu);
-	}
-	/** @private @arg {Popup_DD_SystemMenu} x */
-	Popup_DD_SystemMenu(x) {
-		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
-		this.t(m,this.R_SystemMenu);
-	}
 	/** @private @arg {AU_Description} x */
 	AU_Description(x) {
 		const cf="AU_Description";
@@ -2166,7 +2139,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {2: f2,3: f3,7: f7,24: f24,27: f27,33: {}={},39: f39,40: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,7: f7,24: f24,27: f27,33: {}={},39: f39,40: {}={},56: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {

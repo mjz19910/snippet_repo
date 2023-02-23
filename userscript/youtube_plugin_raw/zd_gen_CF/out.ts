@@ -244,6 +244,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopTopbar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopWatchAds";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DismissalFollowUp";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DismissalReasonText";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DisplayAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Dropdown";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DropdownFormField";}
@@ -955,6 +956,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_playlist.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "dislike.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "feedbackToken";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "format_item.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}

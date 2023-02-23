@@ -3232,7 +3232,7 @@ class Support_Renderer extends ServiceMethods {
 		this.G_Text(infoText);
 		this.R_Menu(menu);
 	}
-	/** @private @arg {R_MacroMarkersList} x */
+	/** @public @arg {R_MacroMarkersList} x */
 	R_MacroMarkersList(x) {this.H_("macroMarkersListRenderer",x,this.D_MacroMarkersList);}
 	/** @private @arg {D_MacroMarkersList} x */
 	D_MacroMarkersList(x) {
@@ -3267,6 +3267,27 @@ class Support_Renderer extends ServiceMethods {
 	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
 	/** @private @arg {D_StructuredDescriptionContent} x */
 	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	/** @private @arg {G_StructuredDescriptionContentItem} x */
+	G_StructuredDescriptionContentItem(x) {
+		const cf="G_StructuredDescriptionContentItem";
+		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
+		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
+		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
+		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
+		if("videoDescriptionCourseSectionRenderer" in x) return this.R_VideoDescriptionCourseSection(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {A_GetSystemMenu} x */
+	A_GetSystemMenu(x) {
+		const cf="A_GetSystemMenu";
+		let pu=this.TA_OpenPopup(cf,x);
+		this.Popup_DD_SystemMenu(pu);
+	}
+	/** @private @arg {Popup_DD_SystemMenu} x */
+	Popup_DD_SystemMenu(x) {
+		let m=this.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
+		this.t(m,this.R_SystemMenu);
+	}
 	/** @public @arg {R_SystemMenu} x */
 	R_SystemMenu(x) {this.t(this.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
 	/** @public @arg {MP_SystemMenu} x */

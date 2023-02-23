@@ -112,6 +112,12 @@ class ServiceMethods extends ServiceData {
 	T_Commands(cf,x,f) {this.z(this.w(cf,"commands",x),f);}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
+	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
+	T_OpenPopup_Dropdown(cf,x) {
+		const {popupType,popup,beReused,...y}=this.s(cf,x); this.g(y);
+		if(popupType!=="DROPDOWN") return null;
+		return popup;
+	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
 	str_is_uri(x) {return x.includes(":");}
 	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
@@ -4505,7 +4511,7 @@ class ServiceMethods extends ServiceData {
 		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
 		this.R_EngagementPanelTitleHeader(header);
-		this.ht.R_StructuredDescriptionContent(content);
+		this.xr.R_StructuredDescriptionContent(content);
 		if(targetId!=="engagement-panel-structured-description") debugger;
 		this.targetId(cf,targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
