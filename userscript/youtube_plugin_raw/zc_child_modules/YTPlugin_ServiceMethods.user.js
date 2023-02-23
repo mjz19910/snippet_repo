@@ -5037,10 +5037,16 @@ class ServiceMethods extends ServiceData {
 		const cf="DC_ReloadContinuationItems";
 		switch(x.slot) {
 			case "RELOAD_CONTINUATION_SLOT_BODY": {
-				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
+				if("continuationItems" in x) {
+					const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
+					this.targetId(cf,targetId);
+					this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
+					this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
+					return;
+				}
+				const {targetId,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
 				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
-				this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
 			} break;
 			case "RELOAD_CONTINUATION_SLOT_HEADER": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);

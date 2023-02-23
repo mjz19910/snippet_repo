@@ -95,7 +95,7 @@ type G_Gv_1=
 	|`e${"l"|"e"}`
 	|`l${"7"|"k"}`
 	|`s${"d"|"e"|"k"|"l"|"r"|"s"|"z"}`
-	|`z${"k"|"r"|"y"}`
+	|`z${"e"|"k"|"r"|"y"}`
 	;
 ;
 type D_GoogleVideoHostPartition={
