@@ -1,6 +1,8 @@
 type T_Tuple_1<T>=[T];
 type T_PArr_1<T extends [any]>=["param_arr",T];
 type T_PArr_R<T extends any[]>=["param_arr",T];
+type T_VW_Child<T,_tag=never>=T;
+type T_VW_BinTs<T,_tag=never>=T;
 type T_VW<T,U extends string|null=null,_tag=never>=T_PArr_1<[["child",Uint8Array,T,U]]>;
 type T_VA_2<T,U>=[T,U];
 type T_VW_3<Type,T>=[Type,T];

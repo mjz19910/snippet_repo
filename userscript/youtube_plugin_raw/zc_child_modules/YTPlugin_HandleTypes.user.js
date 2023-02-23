@@ -1968,7 +1968,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {string} cf @arg {{}} x @arg {{}} y */
 	h_gen_keys(cf,x,y) {
 		let u=this.get_keys_of_2(y); if(u.length>0) {
-			let is_new=this.codegen_typedef_bin(cf,x);
+			let is_new=this.codegen_typedef_bin(cf,x,false);
 			if(is_new) {
 				let k=u.join(); console.log(`[${cf}.next_key]`,k);
 			}
