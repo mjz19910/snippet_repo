@@ -1814,7 +1814,7 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypeSearch(x) {
 		const cf="R_PageTypeSearch";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_VE4724_Search(endpoint);
+		this.E_Search(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
@@ -2048,7 +2048,7 @@ class Support_EventInput extends ServiceMethods {
 		const cf="RS_SearchPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="search") debugger;
-		this.E_VE4724_Search(endpoint);
+		this.E_Search(endpoint);
 		this.ht.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;

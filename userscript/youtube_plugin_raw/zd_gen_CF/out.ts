@@ -500,6 +500,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "GA_Continuation_CommentRepliesItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GD_RC_SectionList";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GD_RC_SectionList_p2";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "GM_Search";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GM_Url";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GM_VE11487";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GM_VE12924";}
@@ -796,6 +797,7 @@ export namespace Gen {
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_PlaylistEdit";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_PlaylistEditor";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_RecordNotificationInteractions";}
+		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_Search";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_ShareEntityService";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_SignalNavigation";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_Subscribe";}
@@ -912,6 +914,7 @@ export namespace Gen {
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_PlaylistDelete";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_RecordInteractions";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_RemoveUpcomingEventReminder";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Search";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_SendPost";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_SetSetting";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Subscribe";}

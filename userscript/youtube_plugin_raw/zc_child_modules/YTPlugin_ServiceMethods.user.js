@@ -434,8 +434,8 @@ class ServiceMethods extends ServiceData {
 		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_Search} x @returns {`VE${rootVe}`} */
-	GM_VE4724(x) {
-		const cf="GM_VE4724";
+	GM_Search(x) {
+		const cf="GM_Search";
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
@@ -1832,7 +1832,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
 	/** @protected @arg {E_Search} x */
-	E_VE4724_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE4724_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_VE4724_Search(b);}
+	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
 	/** @protected @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
 	/** @protected @arg {E_VE6827} x */
@@ -1878,7 +1878,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
 	/** @private @arg {DE_Search} x */
-	DE_VE4724_Search(x) {this.H_("query",x,this.a_primitive_str);}
+	DE_Search(x) {this.H_("query",x,this.a_primitive_str);}
 	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
 		if(x.type==="playlist:1:LL") return false;
@@ -2162,7 +2162,7 @@ class ServiceMethods extends ServiceData {
 		this.t(b,this.M_ResolveUrlCommand);
 	}
 	/** @private @arg {M_Search} x */
-	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724);}
+	M_Search(x) {this.T_WCM("M_Search",x,this.GM_Search);}
 	/** @private @arg {M_VE5754} x */
 	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754);}
 	/** @private @arg {M_VE6827} x */
@@ -5025,7 +5025,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(trackingParams);
-		this.E_VE4724_Search(searchEndpoint);
+		this.E_Search(searchEndpoint);
 		this.R_Button(clearButton);
 	}
 	/** @private @arg {`ReloadContinuation.slot.${"body"|"header"}.targetId`} cf @arg {DC_ReloadContinuationItems["targetId"]} x */

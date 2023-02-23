@@ -838,7 +838,7 @@ class HandleTypes extends ServiceMethods {
 		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 		x===""; debugger;
 	}
-	/** @public @arg {E_VE3611|E_VE5754|E_VE6827|E_Url} x */
+	/** @public @arg {Extract<D_TextRun,{navigationEndpoint:any;loggingDirectives:any}>["navigationEndpoint"]} x */
 	D_TextRun_NavEP_2(x) {
 		if("browseEndpoint" in x) {
 			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
@@ -848,7 +848,8 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
-		debugger;
+		if("searchEndpoint" in x) return this.E_Search(x);
+		x===""; debugger;
 	}
 	/** @public @arg {D_TextRun} x */
 	D_TextRun(x) {
