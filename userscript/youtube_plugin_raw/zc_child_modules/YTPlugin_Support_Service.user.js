@@ -2222,13 +2222,13 @@ class Support_Renderer extends ServiceMethods {
 	//#region Endpoint methods
 	/** @public @arg {E_Url} x */
 	E_Url(x) {
-		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y);
-		this.M_VE83769(a); this.DE_VE83769_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
+		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y);
+		this.M_Url(a); this.DE_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
 	/** @public @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @public @arg {E_ApplicationSettings} x */
-	E_VE12924_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_VE12924,this.B_Hack); this.g(y);}
+	E_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.B_Hack); this.g(y);}
 	/** @private @arg {E_SubmitFeedback} x */
 	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
 	//#endregion
@@ -2314,7 +2314,7 @@ class Support_Renderer extends ServiceMethods {
 	}
 	// Endpoint Data methods
 	/** @private @arg {DE_Url} x */
-	DE_VE83769_Url(x) {
+	DE_Url(x) {
 		const cf="DE_VE83769_Url";
 		const {url,...u}=this.s(cf,x);/*#destructure_later*/
 		this.GM_E_VE83769_Url_TargetUrlType(url);
@@ -2350,7 +2350,7 @@ class Support_Renderer extends ServiceMethods {
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_VE12924} x */
-	M_VE12924(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
+	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
 	//#endregion
 	//#region WebCommandMetadata methods
 	/** @private @arg {GM_YpcGetCart} x */
@@ -3188,7 +3188,7 @@ class Support_Renderer extends ServiceMethods {
 		const {accountName,accountPhoto,settingsEndpoint,manageAccountTitle,trackingParams,channelHandle,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(accountName);
 		this.D_Thumbnail(accountPhoto);
-		this.E_VE12924_ApplicationSettings(settingsEndpoint);
+		this.E_ApplicationSettings(settingsEndpoint);
 		this.G_Text(manageAccountTitle);
 		this.trackingParams(trackingParams);
 		this.G_Text(channelHandle);

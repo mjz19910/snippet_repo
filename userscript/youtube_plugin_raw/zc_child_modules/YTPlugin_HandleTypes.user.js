@@ -839,6 +839,18 @@ class HandleTypes extends ServiceMethods {
 		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
 		x===""; debugger;
 	}
+	/** @public @arg {E_VE3611|E_VE5754|E_VE6827|E_Url} x */
+	D_TextRun_NavEP_2(x) {
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
+			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			debugger;
+			return;
+		}
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		debugger;
+	}
 	/** @public @arg {D_TextRun} x */
 	D_TextRun(x) {
 		const cf="D_TextRun";
@@ -856,14 +868,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
 			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
-			let h=() => {
-				let x2=navigationEndpoint;
-				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
-				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
-				debugger;
-			};
-			h();
+			this.D_TextRun_NavEP_2(navigationEndpoint);
 			this.D_LoggingDirectives(loggingDirectives);
 			if("bold" in y) {
 				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/

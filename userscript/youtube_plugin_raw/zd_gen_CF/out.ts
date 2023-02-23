@@ -500,6 +500,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "GA_Continuation_CommentRepliesItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GD_RC_SectionList";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GD_RC_SectionList_p2";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "GM_Url";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GM_VE11487";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GM_VE12924";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "GM_VE23462";}
@@ -800,6 +801,7 @@ export namespace Gen {
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_Subscribe";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_UndoFeedback";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_Unsubscribe";}
+		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_Url";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_VE11487";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_VE23462";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_VE3611";}
@@ -914,13 +916,17 @@ export namespace Gen {
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Subscribe";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Unsubscribe";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_UpdatedMetadata";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Url";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_UserFeedback";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE11487";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE12924";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE23462";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE37414";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE3832";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE42352";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE4724";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE5754";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE6827";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE83769";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE96368";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_YpcGetCart";}

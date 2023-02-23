@@ -10,7 +10,7 @@ type M_VE11487=TM_Gen<GM_VE11487>;
 type M_VE23462=TM_Gen<GM_VE23462>;
 type M_VE37414=TM_Gen<GM_VE37414>;
 type M_VE42352=TM_Gen<GM_VE42352>;
-type M_VE83769=TM_Gen<GM_VE83769>;
+type M_Url=TM_Gen<GM_Url>;
 type M_VE96368=TM_Gen<GM_VE96368>;
 //#endregion
 //#region M_

@@ -513,11 +513,11 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE83769} x */
-	GM_VE83769(x) {
-		const cf="GM_VE83769";
+	/** @private @arg {GM_Url} x */
+	GM_Url(x) {
+		const cf="GM_Url";
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GU_VE83769_Url(url);
+		this.GU_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		this.rootVe(rootVe,83769);
 	}
@@ -1664,7 +1664,7 @@ class ServiceMethods extends ServiceData {
 		return ret_map;
 	}
 	/** @protected @arg {E_Upload} x */
-	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
+	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_Url(a); this.B_Hack(b);}
 	/** @protected @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack";
@@ -2083,10 +2083,10 @@ class ServiceMethods extends ServiceData {
 		}
 		let sp=this._convert_url_to_obj(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
-		this.GU_VE83769_Url(sp.href);
+		this.GU_Url(sp.href);
 	}
 	/** @private @arg {GU_VE83769_Url} x */
-	GU_VE83769_Url(x) {
+	GU_Url(x) {
 		if(this.str_starts_with_rx("/",x)) {
 			switch(x) {
 				default: x===""; debugger; break;
@@ -2163,15 +2163,15 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {M_VE5754} x */
 	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754);}
 	/** @private @arg {M_VE6827} x */
-	M_VE6827(x) {this.T_WCM("M_VE83769",x,this.GM_VE6827);}
+	M_VE6827(x) {this.T_WCM("M_VE6827",x,this.GM_VE6827);}
 	/** @private @arg {M_VE11487} x */
-	M_VE11487(x) {this.T_WCM("M_VE83769",x,this.GM_VE11487);}
+	M_VE11487(x) {this.T_WCM("M_VE11487",x,this.GM_VE11487);}
 	/** @private @arg {M_VE23462} x */
-	M_VE23462(x) {this.T_WCM("M_VE83769",x,this.GM_VE23462);}
+	M_VE23462(x) {this.T_WCM("M_VE23462",x,this.GM_VE23462);}
 	/** @private @arg {M_VE42352} x */
 	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
-	/** @protected @arg {M_VE83769} x */
-	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
+	/** @protected @arg {M_Url} x */
+	M_Url(x) {this.T_WCM("M_Url",x,this.GM_Url);}
 	/** @private @arg {M_VE96368} x */
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
 	/** @private @arg {M_ResolveUrlCommand} x */
@@ -2249,7 +2249,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @protected @arg {E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
+	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_Url(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {GU_VE6827_Url} x */
 	D_VE6827_Url(x) {
 		let [f,...pf]=split_string(x,"/"); if(f!=="") debugger;

@@ -73,7 +73,7 @@ type GM_VE42352={
 	rootVe: 42352;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE83769={
+type GM_Url={
 	url: GU_VE83769_Url;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
@@ -130,7 +130,7 @@ type GM_VE=
 	|GM_VE23462
 	|GM_VE37414
 	|GM_VE42352
-	|GM_VE83769
+	|GM_Url
 	|GM_VE96368
 	;
 ;

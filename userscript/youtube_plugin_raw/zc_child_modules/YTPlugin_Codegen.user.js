@@ -561,7 +561,8 @@ class CodegenService extends BaseService {
 			let xu=x;
 			if(!(xu.urlEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
 			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
-			return `TYPE::E_VE${ve_num}_Url`;
+			if(ve_num!==83769) break x;
+			return `TYPE::E_Url`;
 		}
 		/** @private @type {G_Text} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::G_Text";

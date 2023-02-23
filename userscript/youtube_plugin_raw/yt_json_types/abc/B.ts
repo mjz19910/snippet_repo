@@ -22,6 +22,6 @@ type B_VEMap={
 	11487: {CommandMetadata: M_VE11487;};
 	23462: {CommandMetadata: M_VE23462;};
 	37414: {CommandMetadata: M_VE37414;};
-	83769: {CommandMetadata: M_VE83769;};
+	83769: {CommandMetadata: M_Url;};
 	96368: {CommandMetadata: M_VE96368;};
 };

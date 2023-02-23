@@ -962,6 +962,10 @@ type D_VE3611_TextRun=|{
 	text: string;
 	navigationEndpoint: E_VE3611;
 }|{
+	text: "https://teespring.com/stores/numberphile";
+	navigationEndpoint: E_Url;
+	loggingDirectives: D_LoggingDirectives;
+}|{
 	text: `@${string}`;
 	navigationEndpoint: E_VE3611;
 	loggingDirectives: D_LoggingDirectives;
