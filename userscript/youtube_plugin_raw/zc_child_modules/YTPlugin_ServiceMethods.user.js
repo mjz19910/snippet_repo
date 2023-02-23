@@ -1442,7 +1442,6 @@ class ServiceMethods extends ServiceData {
 	 * */
 	TE_Endpoint_2(cf,k,x) {
 		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
-		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
 		this.clickTrackingParams(clickTrackingParams);
 		return [endpoint,y];
 	}
@@ -1453,7 +1452,6 @@ class ServiceMethods extends ServiceData {
 	 * */
 	TE_TrackedObj_2(cf,x,k) {
 		const {trackingParams,[k]: endpoint,...y}=this.s(cf,x);
-		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
 		this.trackingParams(trackingParams);
 		return [endpoint,y];
 	}

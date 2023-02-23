@@ -4,7 +4,10 @@ type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[
 //#endregion
 //#region Endpoint Actions 
 type A_AccountItem=TE_Endpoint_1<"accountItem",AD_AccountItem>;
-type A_AddChatItem=TE_Endpoint_2<"addChatItemAction",AD_AddChatItem>;
+type A_AddChatItem={
+	clickTrackingParams?: string;
+	addChatItemAction: AD_AddChatItem;
+};
 type A_AddToGuideSection=TE_Endpoint_2<"addToGuideSectionAction",AD_AddToGuideSection>;
 type A_AddToToast=TE_Endpoint_2<"addToToastAction",AD_AddToToast>;
 type A_AppendContinuationItems=TE_Endpoint_2<"appendContinuationItemsAction",AD_AppendContinuationItems>;

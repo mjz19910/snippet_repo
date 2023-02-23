@@ -2238,7 +2238,12 @@ class Support_Renderer extends ServiceMethods {
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AddChatItem} x */
-	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
+	A_AddChatItem(x) {
+		const cf="A_AddChatItem";
+		const {clickTrackingParams,addChatItemAction,...y}=this.s(cf,x); this.g(y);
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.AD_AddChatItem(addChatItemAction);
+	}
 	// UpdateAction methods
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
