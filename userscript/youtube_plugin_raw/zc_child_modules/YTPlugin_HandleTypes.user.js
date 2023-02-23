@@ -1641,7 +1641,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {UrlParse<RE_D_GoogleVideoUrl>} T @arg {T} x @returns {D_GoogleVideoHostPartitionRet<T["pathname"]>} */
 	get_google_host_parts(x) {
-		const host=x.host;
+		/** @type {`${"r"|"rr"}${number}---sn-${string}n${string}.googlevideo.com`} */
+		const host=as_any(x.host);
 		if(!this.str_starts_with(host,"rr")) {
 			let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
 			if(empty_1!=="") debugger; if(y.length!==0) debugger;
