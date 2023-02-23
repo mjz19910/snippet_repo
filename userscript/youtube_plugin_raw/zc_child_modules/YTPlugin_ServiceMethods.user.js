@@ -1580,6 +1580,8 @@ class ServiceMethods extends ServiceData {
 			let [,id]=split_string_once(raw_id,"PL");
 			this.G_UrlInfoItem({type: "playlist:3:PL",id,raw_id});
 			this.save_next_char("playlistId.playlist",id);
+			// 2 [PL] + 16 [PlaylistId]
+			if(raw_id.length===18) return;
 			// 2 [PL] + 32 [PlaylistId]
 			if(raw_id.length===34) return;
 			console.log("[playlistId.playlist.length]",raw_id.length);
@@ -1883,6 +1885,7 @@ class ServiceMethods extends ServiceData {
 		if(x.type==="playlist:1:WL") return false;
 		switch(x.id.length) {
 			case 11: return false;
+			case 16: return false;
 			case 24: return false;
 			case 32: return false;
 			default: debugger; return true;
