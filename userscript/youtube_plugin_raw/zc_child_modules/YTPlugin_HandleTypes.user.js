@@ -365,17 +365,6 @@ class HandleTypes extends ServiceMethods {
 		if(x.length!==2) debugger;
 		return this.unwrap_tuple_1(x[1]);
 	}
-	/** @private @template T @arg {TV_Str<T>} x */
-	TV_Str(x) {
-		let vv=this.T_RawChild(x);
-		if(vv===null) {debugger; return null;}
-		let v2=vv;
-		if(v2[0]!=="raw_child") return null;
-		let v3=v2[3];
-		let [a,b]=v3;
-		if(a!=="string") {debugger; return null;}
-		return b;
-	}
 	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
 	T_OpenPopup_Dropdown(cf,x) {
 		const {popupType,popup,beReused,...y}=this.s(cf,x); this.g(y);
@@ -425,6 +414,17 @@ class HandleTypes extends ServiceMethods {
 		if(!x1) {debugger; return null;}
 		if(x1[0]!=="data64") {debugger; return null;}
 		return x1[2];
+	}
+	/** @private @template T @arg {TV_Str<T>} x */
+	TV_Str(x) {
+		let vv=this.T_RawChild(x);
+		if(vv===null) {debugger; return null;}
+		let v2=vv;
+		if(v2[0]!=="raw_child") return null;
+		let v3=v2[3];
+		let [a,b]=v3;
+		if(a!=="string") {debugger; return null;}
+		return b;
 	}
 	//#endregion
 	//#region moved data methods
