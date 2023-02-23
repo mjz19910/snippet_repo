@@ -120,19 +120,23 @@ class StoreDescription extends ApiBase2 {
 						this.data[cur_idx]=[k,x];
 					} break;
 					case "many": {
-						let [,v1]=val;
+						let [,v1]=val; let [,xa]=x;
 						let has=x[1].findIndex(x => x.length===1&&x[0]===v1);
 						if(has>-1) break;
-						debugger;
+						xa.push([v1]);
 						this.data[cur_idx]=[k,x];
 					} break;
 				} break;
 				case "arr": switch(x[0]) {
+					case "one": {
+						let [,v1]=val;
+						if(v1.includes(x[1])) break;
+						v1.push(x[1]);
+					} break;
 					case "arr": {
 						let [,v1]=val;
 						let is_eq=x[1].every(x => v1.includes(x));
 						if(is_eq) break;
-						debugger;
 						this.data[cur_idx]=[k,["many",[v1,x[1]]]];
 					} break;
 					case "many": {
@@ -143,7 +147,35 @@ class StoreDescription extends ApiBase2 {
 						this.data[cur_idx]=[k,x];
 					} break;
 				} break;
-				case "many": debugger; break;
+				case "many": switch(x[0]) {
+					case "one": {
+						let [,v1]=val; let [,xa]=x;
+						let has=v1.findIndex(v1_a => v1_a.length===1&&v1_a[0]===xa);
+						if(has>-1) break;
+						v1.push([xa]);
+					} break;
+					case "arr": {
+						let [,v1]=val; let [,xa]=x;
+						let has=v1.findIndex(x => x.every(xv => xa.includes(xv)));
+						if(has>-1) break;
+						v1.push(xa);
+					} break;
+					case "many": {
+						let [,v1]=val; let [,xa]=x;
+						let has=v1.findIndex(x => x.every(xv => xa.some(xi => xi.includes(xv))));
+						if(has>-1) break;
+						for(let xa_c of xa) {
+							let includes_val=false;
+							for(let v1_c of v1) {
+								if(xa_c.length!==v1_c.length) continue;
+								let has_at=xa_c.every(nv => v1_c.includes(nv));
+								if(has_at) includes_val=true;
+							}
+							if(includes_val) continue;
+							v1.push(xa_c);
+						}
+					} break;
+				} break;
 			}
 			return;
 		}

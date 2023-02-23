@@ -2440,6 +2440,10 @@ class YtHandlers extends BaseService {
 		} catch(e) {
 			console.log("plugin error");
 			console.log(e);
+			debugger;
+			try {
+				this.x.get("x_EventInput").YTNavigateFinishDetail(detail);
+			} catch {}
 		}
 	}
 }
