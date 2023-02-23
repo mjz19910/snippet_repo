@@ -25,6 +25,9 @@ type DC_ReloadContinuationItems={
 	continuationItems: G_SectionItem[];
 }|{
 	targetId: "comments-section";
+	slot: "RELOAD_CONTINUATION_SLOT_BODY";
+}|{
+	targetId: "comments-section";
 	continuationItems: R_CommentThread[];
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
 }|{
