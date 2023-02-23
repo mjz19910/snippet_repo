@@ -1,6 +1,6 @@
 type D_FormatItem={
 	itag: number;
-	url: D_FormatItem_url;
+	url: GU_VideoPlaybackUrl;
 	mimeType: "video/mp4; codecs=\"avc1.42001E, mp4a.40.2\"";
 	bitrate: number;
 	width: number;

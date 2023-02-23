@@ -6,7 +6,7 @@ type D_AudioTrack={
 };
 type D_AdaptiveFormatItem={
 	itag: number;
-	url?: D_FormatItem_url;
+	url?: GU_VideoPlaybackUrl;
 	mimeType: G_MimeTypeFormat;
 	bitrate: number;
 	width?: number;

@@ -25,9 +25,10 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
-	[24409417,24466859,24474437,24477147,24477317],// 3
-	[24476774,24481213,4957635],// 1
-	[24474438,24478762,39323074],// 2
+	[24409417,24466859,24474437,24477147,24477317],
+	[24476774,24481213,4957635],
+	[24474438,24478762,39323074],
+	[24470280],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
@@ -1638,29 +1639,27 @@ class HandleTypes extends ServiceMethods {
 			Promise.resolve().then(() => this.logged_hosts.length=0);
 		}
 	}
-	/** @private @arg {`rr${number}---sn-${string}n${string}`} x */
-	get_google_host_parts_for_part_1(x) {
-		let parts_1=split_string(x,"---");
-		if(!this.str_starts_with(parts_1[0],"rr")) return null;
-		let part_2=split_string_once(parts_1[0],"rr")[1];
-		let p=this.get_host_partition(parts_1[1]);
-		return {
-			/** @type {["rr",`${number}`,"---","sn","-",G_Gv_0,"n",G_Gv_1]} */
-			parts: ["rr",part_2,"---",...p.parts],
-			partitioned: p,
-		};
-	}
 	/** @private @template {UrlParse<RE_D_GoogleVideoUrl>} T @arg {T} x @returns {D_GoogleVideoHostPartitionRet<T["pathname"]>} */
 	get_google_host_parts(x) {
 		const host=x.host;
+		if(!this.str_starts_with(host,"rr")) {
+			let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
+			if(empty_1!=="") debugger; if(y.length!==0) debugger;
+			let parts_1=split_string(host_parts_1,"---");
+			let part_2=split_string_once(parts_1[0],"r")[1];
+			let partitioned=this.get_host_partition(parts_1[1]);
+			return {
+				host,
+				path: x.pathname,
+				parts: ["r",part_2,"---",...partitioned.parts,".","googlevideo",".","com"],
+				partitioned,
+			};
+		}
 		let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
 		if(empty_1!=="") debugger; if(y.length!==0) debugger;
 		let parts_1=split_string(host_parts_1,"---");
-		if(!this.str_starts_with(parts_1[0],"rr")) throw new Error("google_video host does not match /rr\\d\\..+/");
 		let part_2=split_string_once(parts_1[0],"rr")[1];
 		let partitioned=this.get_host_partition(parts_1[1]);
-		let host_parts_2=this.get_google_host_parts_for_part_1(host_parts_1);
-		if(!host_parts_2) throw new Error("Failed to get google_video host parts");
 		return {
 			host,
 			path: x.pathname,

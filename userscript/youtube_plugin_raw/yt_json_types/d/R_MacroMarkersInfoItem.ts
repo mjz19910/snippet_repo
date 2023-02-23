@@ -8,6 +8,11 @@ type D_GoogleVideoHostPartitionRet<T extends D_GoogleVideoPathname>={
 	path: T;
 	parts: ["rr",`${number}`,"---","sn","-",G_Gv_0,"n",G_Gv_1,".","googlevideo",".","com"];
 	partitioned: D_GoogleVideoHostPartition;
+}|{
+	host: `r${number}---sn-${string}n${string}.googlevideo.com`;
+	path: T;
+	parts: ["r",`${number}`,"---","sn","-",G_Gv_0,"n",G_Gv_1,".","googlevideo",".","com"];
+	partitioned: D_GoogleVideoHostPartition;
 };
 type D_GoogleVideoPathname=UrlParse<RE_D_GoogleVideoUrl>["pathname"];
 type D_InitPlayback={

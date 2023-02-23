@@ -106,7 +106,7 @@ type G_SettingItemIdEnum=
 	|"EMAIL_CREATOR_NEWSLETTER"
 	;
 ;
-type GV_SubDomain=`rr${number}---sn-${string}n${string}`;
+type GV_SubDomain=`rr${number}---sn-${string}n${string}`|`r${number}---sn-${string}n${string}`;
 type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;
 type RSB_EditPlaylist={
 	responseContext: RC_ResponseContext;
