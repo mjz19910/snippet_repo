@@ -1414,7 +1414,7 @@ class Support_GenericApi extends ServiceMethods {
 			case "notification.record_interactions": return this.RS_Success(x.data);
 			case "player": return this.x.get("x_RS_Player").RS_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.ht.RSW_ReelItem(x.data);
+			case "reel.reel_item_watch": return this.ht.RS_WatchReelItem(x.data);
 			case "reel.reel_watch_sequence": return this.ht.RS_ReelWatchSequence(x.data);
 			case "share.get_share_panel": return this.ht.RSG_SharePanel(x.data);
 			case "subscription.subscribe": return this.ht.RS_Subscribe(x.data);

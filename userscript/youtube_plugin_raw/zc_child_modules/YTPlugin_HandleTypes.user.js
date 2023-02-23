@@ -957,7 +957,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(u);
 	}
 	//#endregion
-	//#region RS & RSG & RSL
+	//#region RS & RSG & RSL & REG & RSW
 	/** @public @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";
@@ -1063,6 +1063,18 @@ class HandleTypes extends ServiceMethods {
 		this.z(items,x => this.xr.G_GuideSectionItem(x));
 		this.trackingParams(trackingParams);
 	}
+	/** @public @arg {RS_WatchReelItem} x */
+	RS_WatchReelItem(x) {
+		const cf="RS_WatchReelItem";
+		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_ReelPlayerOverlay(overlay);
+		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
+		this.trackingParams(trackingParams);
+		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
+		this.t(sequenceContinuation,this.a_primitive_str);
+		this.R_DesktopTopbar(desktopTopbar);
+		this.z(engagementPanels,this.R_EngagementPanelSectionList);
+	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
@@ -1136,18 +1148,6 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(selectText);
 		this.z(actions,this.A_GetMultiPageMenu);
-	}
-	/** @public @arg {RS_WatchReelItem} x */
-	RSW_ReelItem(x) {
-		const cf="RSW_ReelItem";
-		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_ReelPlayerOverlay(overlay);
-		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
-		this.trackingParams(trackingParams);
-		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
-		this.t(sequenceContinuation,this.a_primitive_str);
-		this.R_DesktopTopbar(desktopTopbar);
-		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 	}
 	//#endregion
 	//#region A & AU
