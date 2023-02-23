@@ -75,7 +75,8 @@ class HandleTypes extends ServiceMethods {
 						add_obj(id,["child_str",a,null,["string",decoded_string]]);
 						continue;
 					}
-					add_obj(id,[n,a,c]);
+					let decoded_string=this._decoder.decode(a);
+					add_obj(id,[n,a,c,["string",decoded_string]]);
 				} break;
 				case "data32": {
 					let [n,id,a]=v;
@@ -359,7 +360,7 @@ class HandleTypes extends ServiceMethods {
 		if(t!=="data_fixed32") {debugger; return null;}
 		return f(u);
 	}
-	/** @protected @template T @arg {T_PArr_1<[T]>} x @returns {T|null} */
+	/** @protected @template {V_ParamItem} T @arg {T_PArr_1<[T]>} x @returns {T|null} */
 	T_RawChild(x) {
 		if(x[0]!=="param_arr") {debugger; return null;}
 		if(x.length!==2) debugger;
@@ -374,16 +375,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @protected @template T @arg {T_VW<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
+	/** @protected @template T @arg {T_VW<T,any>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
 	T_VW(x,f) {
 		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
 		function assume_ret(_x,_ret_ex) {}
 		/** @returns {FT extends null?T:U} */
 		function ret_ex() {throw new Error();}
 		let ret=null;
-		/** @type {T_VW<T>[1]|null} */
+		/** @type {T_VW<T,any>[1]|null} */
 		let pa=null;
-		/** @type {T_VW<T>[1][0]|null} */
+		/** @type {T_VW<T,any>[1][0]|null} */
 		let v=null;
 		if(x[0]==="param_arr") pa=x[1];
 		if(pa&&pa.length===1) [v]=pa;
@@ -409,7 +410,7 @@ class HandleTypes extends ServiceMethods {
 		if(x1[0]!=="data64") {debugger; return null;}
 		return x1[2];
 	}
-	/** @private @template T @arg {TV_Str<T>} x */
+	/** @private @template {string} T @arg {TV_Str<T>} x */
 	TV_Str(x) {
 		let vv=this.T_RawChild(x);
 		if(vv===null) {debugger; return null;}
@@ -1243,12 +1244,17 @@ class HandleTypes extends ServiceMethods {
 	v_param_2_D32(otu) {
 		if(otu[0]!=="data32") throw new Error();
 		return `TYPE::T_D32<${otu[1]}>`;
-	};
+	}
+	/** @arg {V_ParamItem} x @returns {RetParam_D64} */
+	v_param_2_D64(x) {
+		if(x[0]!=="data64") throw new Error();
+		return `TYPE::T_D64<${x[2]}>`;
+	}
 	/** @arg {V_ParamItem} otu @returns {RetParam_FD32} */
 	v_param_2_FD32(otu) {
 		if(otu[0]!=="data_fixed32") throw new Error();
 		return `TYPE::T_FD32<${otu[1]}>`;
-	};
+	}
 	/** @arg {V_ParamItem} otu @returns {RetParam_FD64} */
 	v_param_2_FD64(otu) {
 		if(otu[0]!=="data_fixed64") throw new Error();
@@ -1302,6 +1308,7 @@ class HandleTypes extends ServiceMethods {
 			case "struct": case "group":
 			case "error": case "info": return x;
 			case "child_str": return x;
+			case "param_arr": return x;
 		}
 	}
 	/** @arg {JsonReplacerState} s @arg {["param_arr", V_ParamItem[]]} x */
@@ -1311,7 +1318,7 @@ class HandleTypes extends ServiceMethods {
 		if(x1.length===1) {
 			let x2=x1[0];
 			switch(x2[0]) {
-				default: debugger; break;
+				default: x2[0]===""; debugger; break;
 				case "raw": {
 					let x3=x2[1];
 					switch(x3[0]) {
@@ -1321,12 +1328,23 @@ class HandleTypes extends ServiceMethods {
 					debugger;
 				} break;
 				case "data32": return this.v_param_2_D32(x2);
+				case "data64": return this.v_param_2_D64(x2);
 				case "raw_child": {
 					let x3=x2[3];
 					if(x2[2]===null) {
 						switch(x3[0]) {
 							default: break;
 							case "string": return `TYPE::TV_Str<"${x3[1]}">`;
+						}
+					}
+					debugger;
+				} break;
+				case "child_str": {
+					let x3=x2[3];
+					if(x2[2]===null) {
+						switch(x3[0]) {
+							default: break;
+							case "string": return `TYPE::TV_Str_CS<"${x3[1]}">`;
 						}
 					}
 					debugger;
@@ -1343,6 +1361,11 @@ class HandleTypes extends ServiceMethods {
 				}
 				case "data_fixed32": break;
 				case "data_fixed64": break;
+				case "error": throw new Error("Found error in input stream");
+				case "group":
+				case "struct":
+				case "info": break;
+				case "param_arr": debugger; break;
 			}
 		}
 		for(let x2 of x1) {
@@ -2053,8 +2076,9 @@ class HandleTypes extends ServiceMethods {
 					this.videoId(video_id);
 				} break;
 				case "raw_child": /*D_VideoId*/{
-					let [,,,[t,x]]=a;
-					if(t!=="string") debugger;
+					let [,,,tb]=a;
+					if(tb[0]!=="string") {debugger; break;}
+					let [,x]=tb;
 					this.videoId(x);
 				} break;
 			}

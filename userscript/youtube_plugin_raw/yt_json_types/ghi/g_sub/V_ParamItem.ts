@@ -1,7 +1,7 @@
 type Ret_gen_json=string;
 type V_ParamItem_RawChild=[type: "raw_child",binary_arr: Uint8Array,obj: null,raw_value: V_RawValue];
 type V_ParamItem_ChildStr=[type: "child_str",binary_arr: Uint8Array,obj: null,raw_value: V_RawValue];
-type V_ParamItem_Child=[type: "child",binary_arr: Uint8Array,obj: V_ParamObj];
+type V_ParamItem_Child=[type: "child",binary_arr: Uint8Array,obj: V_ParamObj,raw_value: V_RawValue];
 
 type V_ParamItem=
 	|V_ParamItem_Child
@@ -14,6 +14,7 @@ type V_ParamItem=
 	|[type: "info",value: number]
 	|[type: "raw",obj: V_RawValue]
 	|[type: "struct",value: V_ParamObj]
+	|V_ParamArrBox
 	|V_ParamItem_ChildStr
 	|V_ParamItem_RawChild
 	;
@@ -22,9 +23,9 @@ type V_ParamItemFiltered=
 	|[type: "error",location: number]
 	|[type: "group",value: V_ParamObj]
 	|[type: "info",value: number]
+	|[type: "param_arr",items: V_ParamItem[]]
 	|[type: "raw",obj: V_RawValue]
 	|[type: "struct",value: V_ParamObj]
-	|V_ParamItem_ChildStr
 	|RetParam_BinaryTimestamp
 	|RetParam_child
 	|RetParam_D32
@@ -34,6 +35,7 @@ type V_ParamItemFiltered=
 	|RetParam_raw_child
 	|RetParam_VW_2
 	|RetParam_VW_Bigint
+	|V_ParamItem_ChildStr
 	;
 ;
 type RetParam_child=
@@ -49,6 +51,7 @@ type RetParam_BinaryTimestamp=
 	;
 ;
 type RetParam_D32=`TYPE::T_D32<${number}>`;
+type RetParam_D64=`TYPE::T_D64<${bigint}>`;
 type RetParam_FD32=`TYPE::T_FD32<${number}>`;
 type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
 type RetParam_ShortTimestamp="TYPE::T_VW<V_ShortTimestamp>";
