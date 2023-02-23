@@ -2010,11 +2010,6 @@ type D_MP_Menu_Section={
 	page_menu: TR_MultiPageMenuSection<R_CompactLink>;
 };
 type D_MP_Menu_Sections_Items=D_MP_Menu_Section[keyof D_MP_Menu_Section];
-type D_MacroMarkersList={
-	contents: R_MacroMarkersListItem[];
-	syncButtonLabel: G_Text;
-	trackingParams: string;
-};
 type D_VideoLike_richThumbnail=R_MovingThumbnail;
 type D_MenuServiceIcon={icon: T_Icon<"FLAG">;};
 type D_MenuServiceIconTypeStr=[

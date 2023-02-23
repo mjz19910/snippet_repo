@@ -6002,9 +6002,22 @@ class ServiceMethods extends ServiceData {
 	D_MacroMarkersList(x) {
 		const cf="D_MacroMarkersList";
 		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.R_MacroMarkersListItem);
+		this.z(contents,x => {
+			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
+			if("macroMarkersInfoItemRenderer" in x) return this.R_MacroMarkersInfoItem(x);
+			debugger;
+		});
 		this.G_Text(syncButtonLabel);
 		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {R_MacroMarkersInfoItem} x */
+	R_MacroMarkersInfoItem(x) {this.H_("macroMarkersInfoItemRenderer",x,this.D_MacroMarkersInfoItem);}
+	/** @private @arg {D_MacroMarkersInfoItem} x */
+	D_MacroMarkersInfoItem(x) {
+		const cf="D_MacroMarkersList";
+		const {infoText,menu,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(infoText);
+		this.R_Menu(menu);
 	}
 	/** @private @arg {D_EngagementPanelTitleHeader} x */
 	D_EngagementPanelTitleHeader(x) {
