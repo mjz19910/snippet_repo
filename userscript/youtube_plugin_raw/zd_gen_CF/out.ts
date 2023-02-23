@@ -530,6 +530,8 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "NotchesItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "O_DU_Persistence";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_1";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_request_browse_token";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_request_browse_token";}

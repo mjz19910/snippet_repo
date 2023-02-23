@@ -308,7 +308,7 @@ type P_get_pdg_buy_flow_params={
 		3: T_D32<1>;
 	};
 };
-type PD_continuation_params={
+type PD_continuation_params_1={
 	3: T_VW<{
 		4: T_FD32<20988979>;
 		8: T_FD32<1162761290>;
@@ -328,9 +328,24 @@ type PD_continuation_params={
 	15?: T_D32<1>;
 };
 
-type PR_continuation_params={
-	0x94d81d4: T_VW<PD_continuation_params>;
+type PD_continuation_params_2={
+	3: TV_Str<string>;
+	6: T_D32<1>;
+	16: T_VW<{
+		1: T_D32<4>;
+		3: T_D32<2>;
+		4: T_D32<0>;
+	}>;
+	17: T_D32<1>;
+	20: T_D32<1677145213699204>;
+	21: T_D32<0>;
+	22: T_VW<{}>;
 };
+type PR_continuation_params=
+	|{0x94d81d4: T_VW<PD_continuation_params_1>;}
+	|{0x722607a: T_VW<PD_continuation_params_2>;}
+	;
+;
 type P_create_comment_params={
 	2: TV_Str<"mUK-j5bKk0Q">;
 	5: {

@@ -1411,6 +1411,28 @@ class HandleTypes extends ServiceMethods {
 			return x;
 		}
 		if(x instanceof Uint8Array) return `TYPE::T_Uint8Array<${x.length}>`;
+		if(s.is_root&&s.cur_key==="") {
+			/** @type {{}} */
+			let xt=x;
+			/** @type {{[U in string|number]: unknown}} */
+			let xa=xt;
+			/** @type {{[U in string|number]: unknown}} */
+			let fx={};
+			let fk=Object.keys(x);
+			for(let kk of fk) {
+				if(kk.match(/^\d+$/)) {
+					let num=parseInt(kk,10);
+					if(num>=256) {
+						fx[`0x${num.toString(16)}`]=xa[kk];
+						continue;
+					}
+					fx[kk]=xa[kk];
+					continue;
+				}
+				fx[kk]=xa[kk];
+			}
+			return fx;
+		}
 		/** @type {(`${number}`|string)[]} */
 		let keys=Object.keys(x);
 		let kn=keys.map(e => {
@@ -1974,10 +1996,15 @@ class HandleTypes extends ServiceMethods {
 		const {2: a,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.videoId(x));
 	}
-	/** @private @arg {PD_continuation_params} x */
+	/** @private @arg {PD_continuation_params_1} x */
 	PD_continuation_params_1(x) {
-		const cf="PD_continuation_params";
+		const cf="PD_continuation_params_1";
 		const {3: f3,8: f8,11: f11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
+	/** @private @arg {PD_continuation_params_2} x */
+	PD_continuation_params_2(x) {
+		const cf="PD_continuation_params_2";
+		const {3: f3,6: f6,16: f11,17: f14,20: f15,21: f21,22: f22,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
@@ -1988,12 +2015,11 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(0x722607a in x) {
-			this.h_gen_keys(cf,x,x);
-			// const {0x722607a: n,...y}=this.s(cf,x);
-			// this.T_VW(n,this.PD_continuation_params_2);
+			const {0x722607a: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(n,this.PD_continuation_params_2);
 			return;
 		}
-		debugger;
+		this.h_gen_keys(cf,x,x);
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
