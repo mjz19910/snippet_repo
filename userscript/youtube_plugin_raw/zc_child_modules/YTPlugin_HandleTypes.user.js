@@ -330,7 +330,7 @@ class HandleTypes extends ServiceMethods {
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
 	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
 	//#endregion
-	//#region Renderer & Binary Templates
+	//#region Renderer Templates & Binary Templates; T & TV
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
 	T_D32(x,f) {
 		if(!x) {debugger; return;}
