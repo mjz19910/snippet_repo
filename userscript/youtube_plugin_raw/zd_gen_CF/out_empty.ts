@@ -1,3 +1,2 @@
-import {Prelude} from "./out_support.js"; export {Prelude};
-import {Types} from "./out_support.js"; export {Types};
+import {GenNS} from "./out_support.js"; export {GenNS};
 export namespace Gen {export type CF_Generated=never;}

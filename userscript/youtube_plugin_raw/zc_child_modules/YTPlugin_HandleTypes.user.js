@@ -2477,6 +2477,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_EntityKey("P_change_markers_visibility_entity_key",u);
 			} break;
+			case "macro_markers_list.entity.key": {
+				/** @type {P_macro_markers_list_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_macro_markers_list_entity_key",u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
