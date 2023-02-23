@@ -51,13 +51,18 @@ type P_player_state_entity_key={
 	5: T_D32<1>;
 };
 type P_macro_markers_list_entity_key={
-	2: TV_Str<"KEY_MOMENTS">,
-	4: T_D32<274>,
+	2: TV_Str<"KEY_MOMENTS">;
+	4: T_D32<274>;
 	5: T_D32<1>;
 };
 type P_view_count_entity_key={
-	2: TV_Str<D_VideoIdStr>,
-	4: T_D32<194>,
+	2: TV_Str<D_VideoIdStr>;
+	4: T_D32<194>;
+	5: T_D32<1>;
+};
+type P_change_markers_visibility_entity_key={
+	2: TV_Str<"KEY_MOMENTS">;
+	4: T_D32<274>;
 	5: T_D32<1>;
 };
 type P_EntityKey=
@@ -113,7 +118,7 @@ type PD_continuation_request_browse_token={
 	3: TV_Str<string>;
 	35?: TV_Str<"browse-feedFEwhat_to_watch">;
 };
-type PR_continuation_request_browse_token={0x4c82a9c: T_VW<PD_continuation_request_browse_token,never>;};
+type PR_continuation_request_browse_token={0x4c82a9c: T_VW<PD_continuation_request_browse_token>;};
 type P_reel_player_params={
 	30: T_D32<1>;
 	57?: T_D32<19>;
@@ -394,106 +399,7 @@ type P_notification_record_interactions={
 type P_get_report_form_params={
 	25: TV_Str<"shopping">;
 	26: T_D32<14>;
-	28?: T_VW<{
-		1: T_PArr_R<[
-			T_VW_Child<{
-				1: T_VW<{
-					1: [
-						T_VW_Child<{
-							1: TV_Str<"Spring">;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<",">;
-						}>,
-						T_VW_Child<{
-							1: T_VW<{4: T_D32<10>;}>;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<"SB Mowing Classic Tee Classic Tee">;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<",">;
-						}>,
-						T_VW_Child<{
-							1: T_VW<{
-								4: T_D32<10>;
-							}>;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<"CA$33.80">;
-						}>
-					];
-				}>,
-				// cspell:disable-next
-				3: TV_Str<"BSavyAAAAAACAgICwDwAAAcCNtwEAIAA4AYIBEHlvdXR1YmUtc2hvcHBpbmeyARN5b3V0dWJlLXNob3BwaW5nLTFw4BLM-OyVpMaDzHc">;
-			}>,
-			T_VW_Child<{
-				1: T_VW<{
-					1: [
-						T_VW_Child<{
-							1: TV_Str<"Spring">;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<",">;
-						}>,
-						T_VW_Child<{
-							1: T_VW<{
-								4: T_D32<10>;
-							}>;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<"SB Mowing Hat Trucker Hat">;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<",">;
-						}>,
-						T_VW_Child<{
-							1: T_VW<{
-								4: T_D32<10>;
-							}>;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<"CA$40.56">;
-						}>
-					];
-				}>,
-				// cspell:disable-next
-				3: TV_Str<"Bxsi1AAAAAACAgICwDwAAAcCNtwEAIAA4AYIBEHlvdXR1YmUtc2hvcHBpbmeyARN5b3V0dWJlLXNob3BwaW5nLTFw4BKZr_r3perA9MkB">;
-			}>,
-			T_VW_Child<{
-				1: T_VW<{
-					1: [
-						T_VW_Child<{
-							1: TV_Str<"Spring">;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<",">;
-						}>,
-						T_VW_Child<{
-							1: T_VW<{
-								4: T_D32<10>;
-							}>;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<"SB Mowing Black Hoodie Classic Pullover Hoodie">;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<",">;
-						}>,
-						T_VW_Child<{
-							1: T_VW<{
-								4: T_D32<10>;
-							}>;
-						}>,
-						T_VW_Child<{
-							1: TV_Str<"CA$54.09">;
-						}>
-					];
-				}>,
-				3: TV_Str<"BAfNoAAAAAACAgICwDwAAAcCNtwEAIAA4AYIBEHlvdXR1YmUtc2hvcHBpbmeyARN5b3V0dWJlLXNob3BwaW5nLTFw4BL984LnoNPw1ys">;
-			}>
-		]>;
-	}>;
+	28?: T_VW<{1: T_PArr_R<P_get_report_form_params_Arr1>;}>;
 };
 type P_notification_opt_out={
 	2: T_D32<1>;
@@ -563,8 +469,9 @@ type P_ve_3611_params={
 		}>;
 	}>;
 };
-type P_change_markers_visibility_entity_key={
-	2: TV_Str<"KEY_MOMENTS">,
-	4: T_D32<274>,
-	5: T_D32<1>;
+type P_search_params={
+	2: T_VW<{
+		23: T_D32<1>;
+		24: TV_Str<"ChIJZ2jHc-2kw0cRpwJzeGY6i8E">;
+	}>;
 };

@@ -134,6 +134,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_GetNotificationMenu";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_NotificationOptOut";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_RecordNotificationInteractions";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "DE_Search";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_ShareEntityService";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_Subscribe";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_SuperThanksSelectedTier";}
@@ -989,6 +990,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "reel.sequence_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "reload.continuation";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "remove_like.params";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "search.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "shorts.source.bp";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "subscribe.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "subscribe_button.entity.key";}

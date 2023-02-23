@@ -1878,7 +1878,12 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
 	/** @private @arg {DE_Search} x */
-	DE_Search(x) {this.H_("query",x,this.a_primitive_str);}
+	DE_Search(x) {
+		const cf="DE_Search";
+		const {query,params,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(query);
+		this.params("search.params",params);
+	}
 	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
 		if(x.type==="playlist:1:LL") return false;
