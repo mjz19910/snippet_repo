@@ -2257,7 +2257,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {2: f2,3: f3,7: f7,24: f24,27: f27,39: f39,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,7: f7,24: f24,27: f27,33: {}={},39: f39,40: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
@@ -2277,7 +2277,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_notification_opt_out} x */
 	P_notification_opt_out(x) {
 		const cf="P_notification_opt_out";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: {},3: {},4: {},7: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
@@ -2287,7 +2287,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
 		const cf="P_notification_record_interactions";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {this.P_EntityKey("P_aadc_guidelines_state_entity_key",x);}
@@ -2323,8 +2323,10 @@ class HandleTypes extends ServiceMethods {
 		switch(f2w[0]) {
 			default: debugger; break;
 			case "child": {
-				let {1: f2_f1,...y1}=f2w[2]; this.g(y1);
-				this.t(this.TV_Str(f2_f1),x => this.save_string(`${cf}.f2.f1`,x));
+				let f2_v=this._decoder.decode(f2w[1]);
+				this.save_string(`${cf}.f2`,f2_v);
+				if(this.str_starts_with(f2_v,"UC")) {this.channelId(f2_v); break;}
+				console.log("[P_EntityKey.child.f2]",f2_v);
 			} break;
 			case "raw_child": {
 				if(f2w[3][0]!=="string") {debugger; break;}
