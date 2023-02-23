@@ -2,6 +2,7 @@ type CF_0_NewTarget=GenNs_AllNames;
 type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map";
 type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen";
 type CF_D_ChipCloudChip_Omit=T_ExtractImport<"CF_D_ChipCloudChip_Omit">|"CF_D_ChipCloudChip_Omit";
+type CF_P_EntityKey=T_ExtractImport<"CF_P_EntityKey">|"CF_P_EntityKey";
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji";
 type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|"CF_D_GuideEntry";
 type CF_D_Link=T_ExtractImport<"CF_D_Link">|"CF_D_Link";

@@ -68,20 +68,6 @@ type P_EntityKey=
 	|P_transcript_track_selection_entity_key
 	;
 ;
-type CF_P_EntityKey=
-	|"P_aadc_guidelines_state_entity_key"
-	|"P_change_markers_visibility_entity_key"
-	|"P_entity_key_normal"
-	|"P_entity_key"
-	|"P_load_markers_entity_key"
-	|"P_macro_marker_repeat_state_entity_key"
-	|"P_macro_markers_list_entity_key"
-	|"P_player_state_entity_key"
-	|"P_playlist_loop_state_entity_key"
-	|"P_subscribe_button_entity_key"
-	|"P_transcript_track_selection_entity_key"
-	;
-;
 type V_BinaryTimestamp={
 	1: T_D32<number>;
 	2: T_FD32<number>;

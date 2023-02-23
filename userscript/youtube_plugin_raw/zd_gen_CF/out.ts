@@ -713,6 +713,16 @@ export namespace Gen {
 		|{n: "CF_M_y"; t: CF_M_y; v: "UA_DateTextData";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "UA_Title";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "UA_TitleData";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_aadc_guidelines_state_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_change_markers_visibility_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_load_markers_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_macro_marker_repeat_state_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_macro_markers_list_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_player_state_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_playlist_loop_state_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_subscribe_button_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_transcript_track_selection_entity_key";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "RS_Page_Channel";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "R_PageTypeBrowse_Response";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_ConfirmDialog";}
