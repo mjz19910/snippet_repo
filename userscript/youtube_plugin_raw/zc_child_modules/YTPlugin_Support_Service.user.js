@@ -563,6 +563,28 @@ class Support_RS_Player extends ServiceMethods {
 		this.T_Icon(cf,icon);
 		this.trackingParams(trackingParams);
 	}
+	/** @private @arg {D_PlayabilityStatus} x */
+	D_PlayabilityStatus(x) {
+		const cf="D_PlayabilityStatus";
+		const {status,reason,playableInEmbed,liveStreamability,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
+		if(status!=="OK") debugger;
+		this.t(reason,x => this.cq(x,"We're experiencing technical difficulties."));
+		this.a_primitive_bool(playableInEmbed);
+		this.t(liveStreamability,this.R_LiveStreamability);
+		this.t(offlineability,this.R_Button);
+		this.t(miniplayer,this.R_Miniplayer);
+		let ctx=atob(contextParams);
+		this.params("playability_status.context_params",ctx);
+	}
+	/** @private @arg {R_LiveStreamability} x */
+	R_LiveStreamability(x) {this.H_("liveStreamabilityRenderer",x,this.D_LiveStreamability);}
+	/** @private @arg {D_LiveStreamability} x */
+	D_LiveStreamability(x) {
+		const cf="D_PlayabilityStatus";
+		const {videoId,pollDelayMs,...y}=this.s(cf,x); this.g(y);
+		this.videoId(videoId);
+		this.cq(pollDelayMs,"15000");
+	}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {
 		const cf="G_PlayerStoryboards"; this.k(cf,x);
@@ -616,17 +638,6 @@ class Support_RS_Player extends ServiceMethods {
 		this.z(elements,this.R_EndscreenElement);
 		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {D_PlayabilityStatus} x */
-	D_PlayabilityStatus(x) {
-		const cf="D_PlayabilityStatus";
-		const {status,playableInEmbed,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
-		if(status!=="OK") debugger;
-		this.a_primitive_bool(playableInEmbed);
-		this.t(offlineability,this.R_Button);
-		this.t(miniplayer,this.R_Miniplayer);
-		let ctx=atob(contextParams);
-		this.params("playability_status.context_params",ctx);
 	}
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
 	D_PlayerAnnotationsExpanded(x) {

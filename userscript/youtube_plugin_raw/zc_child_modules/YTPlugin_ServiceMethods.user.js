@@ -2606,8 +2606,13 @@ class ServiceMethods extends ServiceData {
 		this._primitive_of(x,"number");
 		if(Number.isNaN(x)) debugger;
 	}
+	/** @private @type {D_VideoIdStr[]} x */
+	video_id_list=[];
 	/** @protected @arg {D_VideoIdStr} x */
-	videoId(x) {this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,base: "video_id",type: "video_id:normal",v: x});}
+	videoId(x) {
+		if(this.video_id_list.includes(x)) return;
+		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,base: "video_id",type: "video_id:normal",v: x});
+	}
 	/** @type {any[]} */
 	log_list=[];
 	/** @arg {string} path @arg {string} cf2 @arg {number} key_index @arg {any} entry */
@@ -4202,7 +4207,7 @@ class ServiceMethods extends ServiceData {
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(backgroundImageConfig,this.D_ThumbnailsList);
 		this.D_GradientColorConfig(gradientColorConfig);
-		this.t(presentationStyle,x => this.cq(x,"CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED"));
+		this.t(presentationStyle,x => this.save_enum(cf,"CINEMATIC_CONTAINER_PRESENTATION_STYLE",x));
 		this.D_CinematicConfig(config);
 	}
 	/** @private @arg {D_CinematicContainer["config"]} x */
@@ -6123,9 +6128,21 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(publishDate);
 		this.z(factoid,x => {
 			if("factoidRenderer" in x) return this.R_Factoid(x);
+			if("viewCountFactoidRenderer" in x) return this.R_ViewCountFactoid(x);
+			x===""; debugger;
 		});
 		this.E_VE3611(channelNavigationEndpoint);
 		this.D_Thumbnail(channelThumbnail);
+	}
+	/** @private @arg {R_ViewCountFactoid} x */
+	R_ViewCountFactoid(x) {this.H_("viewCountFactoidRenderer",x,this.D_ViewCountFactoid);}
+	/** @private @arg {D_ViewCountFactoid} x */
+	D_ViewCountFactoid(x) {
+		const cf="D_ViewCountFactoid";
+		const {viewCountEntityKey,factoid,viewCountType,...y}=this.s(cf,x); this.g(y);
+		this.params("view_count.entity.key",viewCountEntityKey);
+		this.R_Factoid(factoid);
+		this.save_enum(cf,"VIEW_COUNT_FACTOID_TYPE",viewCountType);
 	}
 	/** @protected @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}

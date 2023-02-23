@@ -2181,9 +2181,16 @@ type D_PdgCommentOption={
 	commentText: G_Text;
 	chipRenderer: R_PdgCommentChip;
 };
+type D_LiveStreamability={
+	videoId: D_VideoIdStr;
+	pollDelayMs: "15000";
+};
+type R_LiveStreamability={liveStreamabilityRenderer: D_LiveStreamability;};
 type D_PlayabilityStatus={
 	status: "OK";
+	reason?: "We're experiencing technical difficulties.";
 	playableInEmbed: boolean;
+	liveStreamability?: R_LiveStreamability;
 	offlineability?: R_Button;
 	miniplayer?: R_Miniplayer;
 	contextParams: string;

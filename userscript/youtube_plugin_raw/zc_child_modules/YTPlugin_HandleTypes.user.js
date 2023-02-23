@@ -2244,8 +2244,9 @@ class HandleTypes extends ServiceMethods {
 	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
 	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
 	P_EntityKey(cf,x) {
-		if(this.is_T_D32_at(x,341)) {
+		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
 			const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.t(this.TV_Str(f2),this.videoId);
 			this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
 			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
 			return;
@@ -2542,6 +2543,11 @@ class HandleTypes extends ServiceMethods {
 				/** @type {P_macro_markers_list_entity_key} */
 				let u=as_any(x);
 				this.P_EntityKey("P_macro_markers_list_entity_key",u);
+			} break;
+			case "view_count.entity.key": {
+				/** @type {P_view_count_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_view_count_entity_key",u);
 			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;

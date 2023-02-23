@@ -479,6 +479,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoSecondaryInfo";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoViewCount";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Video_Owner";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_ViewCountFactoid";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VoiceSearchDialog";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VssLoggingContext";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_WatchEndpointMusicConfig";}
@@ -726,6 +727,7 @@ export namespace Gen {
 		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_playlist_loop_state_entity_key";}
 		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_subscribe_button_entity_key";}
 		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_transcript_track_selection_entity_key";}
+		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_view_count_entity_key";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "RS_Page_Channel";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "R_PageTypeBrowse_Response";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_ConfirmDialog";}
@@ -988,6 +990,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "unsubscribe.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ve_3611.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ve_6827.params";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "view_count.entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch.player_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch_playlist.params";}

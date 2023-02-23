@@ -55,6 +55,11 @@ type P_macro_markers_list_entity_key={
 	4: T_D32<274>,
 	5: T_D32<1>;
 };
+type P_view_count_entity_key={
+	2: TV_Str<D_VideoIdStr>,
+	4: T_D32<194>,
+	5: T_D32<1>;
+};
 type P_EntityKey=
 	|P_aadc_guidelines_state_entity_key
 	|P_change_markers_visibility_entity_key
@@ -66,6 +71,7 @@ type P_EntityKey=
 	|P_playlist_loop_state_entity_key
 	|P_subscribe_button_entity_key
 	|P_transcript_track_selection_entity_key
+	|P_view_count_entity_key
 	;
 ;
 type V_BinaryTimestamp={
