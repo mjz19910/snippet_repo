@@ -104,7 +104,7 @@ class StoreDescription extends ApiBase2 {
 	add_data_to_index(k,x) {
 		let cur_idx=this.data.findIndex(v => v[0]===k);
 		if(cur_idx>=0) {
-			let [,val]=this.data[cur_idx]; val;
+			let [,val]=this.data[cur_idx];
 			switch(val[0]) {
 				case "arr": switch(x[0]) {
 					case "arr": {
@@ -115,10 +115,10 @@ class StoreDescription extends ApiBase2 {
 						this.data[cur_idx]=[k,["many",[v1,x[1]]]];
 					} break;
 					case "many": {
-						let [,v1]=val;
+						let [,v1]=val; let [,xa]=x;
 						let has=x[1].findIndex(x => x.every(xv => v1.includes(xv)));
 						if(has>-1) break;
-						debugger;
+						xa.push(v1);
 						this.data[cur_idx]=[k,x];
 					} break;
 				} break;
