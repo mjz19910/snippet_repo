@@ -4771,7 +4771,7 @@ class ServiceMethods extends ServiceData {
 		this.R_LiveChatHeader(header);
 		this.trackingParams(trackingParams);
 		this.D_ClientMessages(clientMessages);
-		this.a_primitive_bool(isReplay);
+		this.t(isReplay,this.a_primitive_bool);
 		this.save_enum(cf,"LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
 		this.R_ToggleButton(showHideButton);
 	}
@@ -6113,6 +6113,18 @@ class ServiceMethods extends ServiceData {
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
 	/** @protected @arg {R_VideoDescriptionHeader} x */
 	R_VideoDescriptionHeader(x) {this.H_("videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
+	/** @private @arg {D_VideoDescriptionHeader} x */
+	D_VideoDescriptionHeader(x) {
+		const cf="D_VideoDescriptionHeader";
+		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.G_Text(channel);
+		this.G_Text(views);
+		this.G_Text(publishDate);
+		this.z(factoid,this.R_Factoid);
+		this.E_VE3611(channelNavigationEndpoint);
+		this.D_Thumbnail(channelThumbnail);
+	}
 	/** @protected @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ClipSection} x */
@@ -6166,18 +6178,6 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.G_Text(title);
 		this.R_Button(navigationButton);
-	}
-	/** @private @arg {D_VideoDescriptionHeader} x */
-	D_VideoDescriptionHeader(x) {
-		const cf="D_VideoDescriptionHeader";
-		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.G_Text(channel);
-		this.G_Text(views);
-		this.G_Text(publishDate);
-		this.z(factoid,this.R_Factoid);
-		this.E_VE3611(channelNavigationEndpoint);
-		this.D_Thumbnail(channelThumbnail);
 	}
 	/** @public @arg {R_Factoid} x */
 	R_Factoid(x) {this.H_("factoidRenderer",x,this.D_Factoid);}

@@ -10,7 +10,7 @@ type D_LiveChat={
 	header: R_LiveChatHeader;
 	trackingParams: string;
 	clientMessages: D_ClientMessages;
-	isReplay: boolean;
+	isReplay?: boolean;
 	initialDisplayState: "LIVE_CHAT_DISPLAY_STATE_EXPANDED";
 	showHideButton: R_ToggleButton;
 };
