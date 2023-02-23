@@ -125,7 +125,7 @@ class ParserService extends BaseService {
 				/** @private @type {D_ApiStatsAdsStr} */
 				let sp=as(a[1]);
 				let {...v}=this.parse_url_search_params(sp);
-				this.save_db.save_keys_impl(`[${cf}.ads]`,v);
+				this.save_db.data_store.keys_store.save_keys(`[${cf}.ads]`,v);
 				// spell:disable-next
 				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}/*!*/=v; this.g(y);
 			} break;

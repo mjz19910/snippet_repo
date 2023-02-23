@@ -679,7 +679,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "engagement-panel-macro-markers-auto-chapters":
 		}
-		this.save_number_one(`${cf}.itemIndex`,itemIndex);
+		this.save_number(`${cf}.itemIndex`,itemIndex);
 	}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
@@ -1492,15 +1492,15 @@ class ServiceMethods extends ServiceData {
 		let k=`${rk}[${JSON.stringify(f)}]`;
 		this.save_string(rk,f);
 		let s_url_data=this.save_db.data_store.number_store.data.find(e => e[0]===k);
-		if(!s_url_data) {this.save_number_one(k,1); return;}
+		if(!s_url_data) {this.save_number(k,1); return;}
 		let wd=s_url_data[1];
 		switch(wd[0]) {
-			case "one": return this.save_number_one(k,wd[1]+1);
+			case "one": return this.save_number(k,wd[1]+1);
 			case "arr": {
 				let [,di]=wd;
-				if(!di.length) return this.save_number_one(k,1);
+				if(!di.length) return this.save_number(k,1);
 				let n=di[0]+1;
-				return this.save_number_one(k,n);
+				return this.save_number(k,n);
 			}
 			case "many": throw new Error("What");
 		}
@@ -2441,10 +2441,10 @@ class ServiceMethods extends ServiceData {
 		if(!x) return;
 		const cf2=`${cf1}_p_tc`;
 		let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-		this.save_number_one(`${cf2}_r`,r);
-		this.save_number_one(`${cf2}_g`,g);
-		this.save_number_one(`${cf2}_b`,b);
-		this.save_number_one(`${cf2}_a`,a);
+		this.save_number(`${cf2}_r`,r);
+		this.save_number(`${cf2}_g`,g);
+		this.save_number(`${cf2}_b`,b);
+		this.save_number(`${cf2}_a`,a);
 	}
 	/** @protected @arg {"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"|"D_Thumbnail"} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
@@ -3098,7 +3098,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @private @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
-	on_root_visual_element(x) {this.save_db.save_root_visual_element(x);}
+	on_root_visual_element(x) {this.save_db.data_store.ve_store.save_data("ve_element",["one",x]);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */
@@ -3202,7 +3202,7 @@ class ServiceMethods extends ServiceData {
 		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
 	}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
-	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number_one("resume_playback.percentDurationWatched",x));}
+	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
 	D_ThumbnailOverlayTimeStatus(x) {
 		const cf="D_ThumbnailOverlayTimeStatus";
@@ -3271,8 +3271,8 @@ class ServiceMethods extends ServiceData {
 		let rk=`${key}.data[${idx}]`;
 		/** @type {`${typeof rk}=${typeof f}`} */
 		let k=`${rk}=${f}`;
-		this.save_number_one(rk,f);
-		this.save_number_one(k,1);
+		this.save_number(rk,f);
+		this.save_number(k,1);
 	}
 	/** @protected @arg {R_MenuNavigationItem} x */
 	R_MenuNavigationItem(x) {this.H_("menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
@@ -3574,9 +3574,9 @@ class ServiceMethods extends ServiceData {
 	save_b64_binary(cf,x) {
 		this.t(base64_url_dec.decodeByteArray(x),x => {
 			if(x[0]===0) {
-				this.save_number_one(`${cf}.bytes.1`,x[1]);
+				this.save_number(`${cf}.bytes.1`,x[1]);
 			}
-			this.save_number_one(`${cf}.bytes.0`,x[0]);
+			this.save_number(`${cf}.bytes.0`,x[0]);
 		});
 	}
 	/** @private @arg {string} x */
@@ -3823,7 +3823,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DS_EY_TranscriptTrackSelection";
 		const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
 		this.params("transcript_track_selection.entity.key",key);
-		if(selectedTrackIndex!==0) debugger;
+		this.save_number(`${cf}.selectedTrackIndex`,selectedTrackIndex);
 		this.params("transcript_track_selection.serialized_params",serializedParams);
 	}
 	/** @private @arg {DS_EY_Subscription} x */
@@ -4026,7 +4026,7 @@ class ServiceMethods extends ServiceData {
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(visitorData);
 		if(sessionIndex!==0) debugger;
-		this.save_db.save_root_visual_element(rootVisualElementType);
+		this.on_root_visual_element(rootVisualElementType);
 	}
 	/** @private @arg {RC_WR_ContextExtension} x */
 	RC_WR_ContextExtension(x) {
@@ -4228,23 +4228,23 @@ class ServiceMethods extends ServiceData {
 	D_CinematicConfig(x) {
 		const cf="D_CinematicConfig";
 		const {lightThemeBackgroundColor,darkThemeBackgroundColor,animationConfig,colorSourceSizeMultiplier,applyClientImageBlur,bottomColorSourceHeightMultiplier,maxBottomColorSourceHeight,colorSourceWidthMultiplier,colorSourceHeightMultiplier,blurStrength,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_number_one(`${cf}.lightBackground.color`,lightThemeBackgroundColor);
-		this.save_number_one(`${cf}.darkBackground.color`,darkThemeBackgroundColor);
+		this.save_number(`${cf}.lightBackground.color`,lightThemeBackgroundColor);
+		this.save_number(`${cf}.darkBackground.color`,darkThemeBackgroundColor);
 		this.t(x.animationConfig,x => {
 			const cf="D_CinematicAnimationConfig";
 			const {minImageUpdateIntervalMs,crossfadeDurationMs,crossfadeStartOffset,maxFrameRate,...y}=this.s(cf,x); this.g(y);
-			this.save_number_one(`${cf}.minImageUpdateIntervalMs`,minImageUpdateIntervalMs);
-			this.save_number_one(`${cf}.crossfadeDurationMs`,crossfadeDurationMs);
-			this.save_number_one(`${cf}.crossfadeStartOffset`,crossfadeStartOffset);
-			this.save_number_one(`${cf}.maxFrameRate`,maxFrameRate);
+			this.save_number(`${cf}.minImageUpdateIntervalMs`,minImageUpdateIntervalMs);
+			this.save_number(`${cf}.crossfadeDurationMs`,crossfadeDurationMs);
+			this.save_number(`${cf}.crossfadeStartOffset`,crossfadeStartOffset);
+			this.save_number(`${cf}.maxFrameRate`,maxFrameRate);
 		});
-		this.save_number_one(`${cf}.colorSourceSizeMultiplier`,colorSourceSizeMultiplier);
+		this.save_number(`${cf}.colorSourceSizeMultiplier`,colorSourceSizeMultiplier);
 		this.t(applyClientImageBlur,x => this.cq(x,true));
-		this.t(bottomColorSourceHeightMultiplier,x => this.save_number_one(`${cf}.bottomColorSourceHeightMultiplier`,x));
-		this.t(maxBottomColorSourceHeight,x => this.save_number_one(`${cf}.maxBottomColorSourceHeight`,x));
-		this.t(colorSourceWidthMultiplier,x => this.save_number_one(`${cf}.colorSourceWidthMultiplier`,x));
-		this.t(colorSourceHeightMultiplier,x => this.save_number_one(`${cf}.colorSourceHeightMultiplier`,x));
-		this.t(blurStrength,x => this.save_number_one(`${cf}.blurStrength`,x));
+		this.t(bottomColorSourceHeightMultiplier,x => this.save_number(`${cf}.bottomColorSourceHeightMultiplier`,x));
+		this.t(maxBottomColorSourceHeight,x => this.save_number(`${cf}.maxBottomColorSourceHeight`,x));
+		this.t(colorSourceWidthMultiplier,x => this.save_number(`${cf}.colorSourceWidthMultiplier`,x));
+		this.t(colorSourceHeightMultiplier,x => this.save_number(`${cf}.colorSourceHeightMultiplier`,x));
+		this.t(blurStrength,x => this.save_number(`${cf}.blurStrength`,x));
 	}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {
@@ -4378,7 +4378,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(playlistId);
 		this.a_primitive_num(currentIndex);
 		// this.parser.parse_url(cf,playlistShareUrl);
-		this.save_number_one("Playlist.localCurrentIndex",localCurrentIndex);
+		this.save_number("Playlist.localCurrentIndex",localCurrentIndex);
 		this.R_Menu(playlistButtons);
 		this._primitive_of(isInfinite,"boolean");
 		this._primitive_of(isCourse,"boolean");
@@ -4852,7 +4852,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_ClickLocationTarget";
 		const {location,code,behaviorType,...y}=this.s(cf,x); this.g(y);
 		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_LOCATION",location);
-		this.save_number_one(`${cf}.code`,code);
+		this.save_number(`${cf}.code`,code);
 		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
 	/** @private @arg {D_EmptyMap} x */
@@ -4999,7 +4999,7 @@ class ServiceMethods extends ServiceData {
 			let sid=split_string(slotId,":");
 			let n=(BigInt(sid[0]));
 			n/=1000n;
-			this.save_number_one("AdSlot.slotId[0]",Number(n));
+			this.save_number("AdSlot.slotId[0]",Number(n));
 			this.save_number_arr("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		}
 		switch(slotPhysicalPosition) {
@@ -5888,7 +5888,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DMD_RowContainer";
 		const {rows,collapsedItemCount,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(rows,this.DMD_RowItem);
-		this.save_number_one(`${cf}.coll_item_count`,collapsedItemCount);
+		this.save_number(`${cf}.coll_item_count`,collapsedItemCount);
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_MerchandiseItem} x */

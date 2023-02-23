@@ -2121,19 +2121,19 @@ class BaseServicePrivate extends ApiBase {
 		return this.save_db.unwrap_brackets(y);
 	}
 	/** @public @arg {string} k @arg {{}} x */
-	save_keys(k,x) {this.save_db.save_keys_impl(k,x);}
+	save_keys(k,x) {this.save_db.data_store.keys_store.save_keys(k,x);}
 	/** @protected @arg {string} k @arg {string} x */
 	save_string(k,x) {return this.save_db.data_store.string_store.save_data(k,["one",x]);}
 	/** @public @arg {string} k @arg {string[]} x */
 	save_string_arr(k,x) {return this.save_db.data_store.string_store.save_data(k,["arr",x]);}
 	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean_one(k,x) {return this.save_db.save_boolean(k,["one",x]);}
+	save_boolean_one(k,x) {return this.save_db.data_store.bool_store.save_data(k,["one",x]);}
 	/** @protected @arg {string} k @arg {number} x */
-	save_number_one(k,x) {return this.save_db.save_number(k,["one",x]);}
+	save_number(k,x) {return this.save_db.data_store.number_store.save_data(k,["one",x]);}
 	/** @protected @arg {string} k @arg {number[]} x */
-	save_number_arr(k,x) {return this.save_db.save_number(k,["arr",this.tag_num_like(x)]);}
+	save_number_arr(k,x) {return this.save_db.data_store.number_store.save_data(k,["arr",this.tag_num_like(x)]);}
 	/** @protected @arg {string} k @arg {Uint8Array} x */
-	save_number_bin(k,x) {return this.save_db.save_number(k,["arr",this.tag_num_like(x)]);}
+	save_number_bin(k,x) {return this.save_db.data_store.number_store.save_data(k,["arr",this.tag_num_like(x)]);}
 	/** @arg {number[]|Uint8Array} a */
 	tag_num_like(a) {
 		let r=[];

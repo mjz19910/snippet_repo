@@ -320,7 +320,7 @@ class HandleTypes extends ServiceMethods {
 		let buffer=base64_url_dec.decodeByteArray(x1);
 		if(!buffer) {debugger; return;}
 		let c_pos=0;
-		for(;c_pos<6;c_pos++) this.save_number_one(`${cf}.${c_pos}`,buffer[c_pos]);
+		for(;c_pos<6;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
 		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number_arr(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
@@ -1942,7 +1942,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {string} cf @arg {string} sig_str */
 	validate_sig(cf,sig_str) {
 		if(sig_str.match(/^[0-9A-F]+$/)===null) debugger;
-		this.save_number_one(cf,sig_str.length);
+		this.save_number(cf,sig_str.length);
 		switch(sig_str.length) {
 			default: debugger; break;
 			case 38: case 40:
@@ -1968,17 +1968,17 @@ class HandleTypes extends ServiceMethods {
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(f1,x => this.T_D32(x,x => this.save_number_one(`${cf}.f1`,x)));
-		this.T_D32(f2,x => this.save_number_one(`${cf}.BinaryVe`,x));
+		this.t(f1,x => this.T_D32(x,x => this.save_number(`${cf}.f1`,x)));
+		this.T_D32(f2,x => this.save_number(`${cf}.BinaryVe`,x));
 		this.T_D32(f2,x => this.BinaryVe(x));
-		this.t(f3,x => this.T_D32(x,x => this.save_number_one(`${cf}.f3`,x)));
+		this.t(f3,x => this.T_D32(x,x => this.save_number(`${cf}.f3`,x)));
 		this.codegen_typedef_bin(cf,x,false);
 	}
 	/** @protected @arg {D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
 		const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
@@ -1995,7 +1995,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW(x,this.V_BinaryTimestamp);}
 	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<H_TrackingObj,KM_TrackingObj>} k */
-	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number_one(`${cf}.${k}`,x));}
+	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
 	/** @template T @arg {T} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U>} */
 	ms(x,y) {return this.mt(this.m(x),y);}
 	/** @template {{}} T @arg {T|undefined} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
@@ -2217,7 +2217,7 @@ class HandleTypes extends ServiceMethods {
 	P_playability_status_context_params(x) {
 		const cf="P_playability_status_context_params";
 		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
@@ -2232,7 +2232,7 @@ class HandleTypes extends ServiceMethods {
 	P_reel_params(x) {
 		const cf="P_reel_params";
 		const {1: f1,3: {}={},5: {}={},6: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
@@ -2274,14 +2274,14 @@ class HandleTypes extends ServiceMethods {
 	P_create_playlist_params(x) {
 		const cf="P_create_playlist_params";
 		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params"; let t=this;
 		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
-		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
+		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number));};
 		r("f30",f30); r("f57",f57); r("f71",f71);
 		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
 	}

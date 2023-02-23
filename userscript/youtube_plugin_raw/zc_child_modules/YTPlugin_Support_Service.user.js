@@ -239,9 +239,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	data_store=new StoreData(() => {
-		this.onDataChange();
-	});
+	data_store=new StoreData(() => this.onDataChange());
 	idb=(() => {
 		if(!this.x) {
 			this.addOnServicesListener(() => {
@@ -251,14 +249,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		return this.x.get("indexed_db");
 	})();
-	/** @api @public @arg {string} k @arg {["one",boolean]} x */
-	save_boolean(k,x) {return this.data_store.bool_store.save_data(k,x);}
-	/** @api @public @arg {string} k @arg {make_item_group<number>} x */
-	save_number(k,x) {return this.data_store.number_store.save_data(k,x);}
-	/** @api @public @arg {number} x */
-	save_root_visual_element(x) {return this.data_store.ve_store.save_data("ve_element",["one",x]);}
-	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
-	save_keys_impl(k,x) {return this.data_store.keys_store.save_keys(k,x);}
 	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	onDataChange() {
@@ -857,7 +847,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.a_primitive_str(program);
 		let interpreterUrl=this.UrlWrappedValueT(interpreterSafeUrl);
 		this.a_primitive_str(interpreterUrl);
-		this.save_number_one(`${cf}.serverEnvironment`,serverEnvironment);
+		this.save_number(`${cf}.serverEnvironment`,serverEnvironment);
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
@@ -877,8 +867,8 @@ class Support_RS_Player extends ServiceMethods {
 		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
 		this.parser.parse_url(cf,iframeUrl);
 		this.parser.parse_url(cf,flashUrl);
-		this.save_number_one(`${cf}.width`,width);
-		this.save_number_one(`${cf}.height`,height);
+		this.save_number(`${cf}.width`,width);
+		this.save_number(`${cf}.height`,height);
 		this.parser.parse_url(cf,flashSecureUrl);
 	}
 	/** @private @arg {D_VideoCategory} x */
@@ -958,7 +948,7 @@ class Support_RS_Player extends ServiceMethods {
 			default: debugger; break;
 			case "sig": break;
 		}
-		this.parser.parse_url(cf1,url);
+		this.parser.parse_url(cf1,as_any(url));
 	}
 	/** @private @arg {D_FormatColorInfo} x */
 	D_FormatColorInfo(x) {
@@ -982,7 +972,7 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {D_FormatFps} x */
 	D_FormatFps(x) {
 		const cf="D_FormatFps";
-		this.save_number_one(cf,x);
+		this.save_number(cf,x);
 	}
 	/** @private @arg {D_Range} x */
 	D_Range(x) {
@@ -1072,7 +1062,7 @@ class Support_RS_Player extends ServiceMethods {
 	/** @arg {`${number}`} x */
 	_pn=x => this.mb(this.a_primitive_num,this._bd(x));
 	/** @arg {string} cf @arg {Some<number>} x */
-	_ns=(cf,x) => this.mb(x => this.save_number_one(cf,x),x);
+	_ns=(cf,x) => this.mb(x => this.save_number(cf,x),x);
 	/** @arg {string} cf @arg {string} k @arg {`${number}`} x */
 	_ns_cf(cf,k,x) {this._ns(`${cf}.${k}`,this._bd(x));}
 	get ns() {return this._ns.bind(this);}
@@ -1167,7 +1157,7 @@ class Support_RS_Page_Browse extends ServiceMethods {
 				case 3854: {
 					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 					this._primitive_of(expirationTime,"number");
-					this.save_number_one(`${cf}.rootVe`,rootVe);
+					this.save_number(`${cf}.rootVe`,rootVe);
 				} break;
 				default: debugger; break;
 			}
@@ -3038,7 +3028,7 @@ class Support_Renderer extends ServiceMethods {
 		const {label,value,maxCharacterLimit,key,onChange,placeholderText,validValueRegexp,invalidValueErrorMessage,isMultiline,required,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(label);
 		this.t(value,this.a_primitive_str);
-		this.save_number_one(`${cf}.maxCharacterLimit`,maxCharacterLimit);
+		this.save_number(`${cf}.maxCharacterLimit`,maxCharacterLimit);
 		this.t(key,x => this.save_string(`${cf}.key`,x));
 		this.t(onChange,this.E_PlaylistEdit);
 		this.t(placeholderText,this.a_primitive_str);
