@@ -3618,9 +3618,9 @@ class ServiceMethods extends ServiceData {
 		const cf="DC_RepeatChapter";
 		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @private @arg {D_ToggleButton["defaultServiceEndpoint"]} x */
-	D_ToggleButton_SrvEP(x) {
-		const cf="D_ToggleButton_SrvEP"; this.k(cf,x);
+	/** @private @arg {D_ToggleButton_DefaultSrvEP} x */
+	D_ToggleButton_DefaultSrvEP(x) {
+		const cf="D_ToggleButton_DefaultSrvEP"; this.k(cf,x);
 		if("performCommentActionEndpoint" in x) return this.E_PerformCommentAction(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
@@ -3628,9 +3628,9 @@ class ServiceMethods extends ServiceData {
 		if("addUpcomingEventReminderEndpoint" in x) return this.handle_types.E_AddUpcomingEventReminder(x);
 		x===""; debugger;
 	}
-	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
+	/** @private @arg {D_ToggleButton_ToggledSrvEP} x */
 	D_ToggleButton_ToggledSrvEP(x) {
-		const cf="D_ToggleButton_SrvEP"; this.k(cf,x);
+		const cf="D_ToggleButton_ToggledSrvEP"; this.k(cf,x);
 		if("performCommentActionEndpoint" in x) return this.E_PerformCommentAction(x);
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
@@ -3643,32 +3643,26 @@ class ServiceMethods extends ServiceData {
 		const cf="D_ToggleButton";
 		const {style,isToggled,isDisabled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,...u}=this.s(cf,x);
 		this.t(style,x => this.save_string(`${cf}.style`,x.styleType));
-		this.a_primitive_bool(isToggled);
+		this.t(isToggled,this.a_primitive_bool);
 		this.cq(isDisabled,false);
-		x: {
-			let x2=defaultIcon;
-			if(!x2) {debugger; break x;}
-			this.save_string(`${cf}.defaultIcon.type`,x2.iconType);
-		}
+		this.t(defaultIcon,x => this.save_string(`${cf}.defaultIcon.type`,x.iconType));
 		this.t(defaultText,this.G_Text);
-		this.D_ToggleButton_SrvEP(defaultServiceEndpoint);
+		this.t(defaultServiceEndpoint,this.D_ToggleButton_DefaultSrvEP);
 		this.t(toggledText,this.G_Text);
-		this.D_ToggleButton_ToggledSrvEP(toggledServiceEndpoint);
+		this.t(toggledServiceEndpoint,this.D_ToggleButton_ToggledSrvEP);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
 		this.t(accessibility,this.D_Label);
 		this.trackingParams(trackingParams);
-		x: {
-			let x2=toggledStyle;
-			if(!x2) {debugger; break x;}
-			this.save_string(`${cf}.toggledStyle.styleType`,x2.styleType);
-		}
+		this.t(toggledStyle,x => this.save_string(`${cf}.toggledStyle.type`,x.styleType));
 		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
 		this.t(toggledTooltip,x => this.add_string_to_map(cf,"toggledTooltip",x));
-		this.D_Accessibility(accessibilityData);
-		switch(targetId) {
-			default: debugger; break;
-			case void 0: case "watch-dislike": case "watch-like":
-		}
+		this.t(accessibilityData,this.D_Accessibility);
+		this.t(targetId,x => {
+			switch(x) {
+				default: debugger; break;
+				case "watch-dislike": case "watch-like":
+			}
+		});
 		const {size,toggledAccessibilityData,...y}=u2; this.g(y);
 		this.t(size,x => this.cq(x.sizeType,"SIZE_DEFAULT"));
 		this.t(toggledAccessibilityData,this.D_Accessibility);
