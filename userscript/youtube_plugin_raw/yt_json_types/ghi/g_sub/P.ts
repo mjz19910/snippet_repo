@@ -470,8 +470,9 @@ type P_ve_3611_params={
 	}>;
 };
 type P_search_params={
-	2: T_VW<{
-		23: T_D32<1>;
-		24: TV_Str<"ChIJZ2jHc-2kw0cRpwJzeGY6i8E">;
-	}>;
+	2: T_VW<PF_23n24n>;
+};
+type PF_23n24n={
+	23: T_D32<1>;
+	24: TV_Str<string>;
 };

@@ -537,6 +537,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_request_browse_token";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PF_23n24n";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_request_browse_token";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_ad_layout_ad_serving_data_entry";}
@@ -564,6 +565,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_reel_player_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_reel_sequence_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_remove_like_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_search_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_shorts_source_bp";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_subscribe_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_subscription_state_key";}
@@ -980,6 +982,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "notification_remove_upcoming_event_reminder.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "params.click_tracking";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "params.tracking";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "pf_23n24n.bin_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "playability_status.context_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "player_seek.continuation";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "player_state.entity.key";}

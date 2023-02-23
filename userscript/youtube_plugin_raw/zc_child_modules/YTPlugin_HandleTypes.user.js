@@ -2558,12 +2558,30 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_EntityKey("P_view_count_entity_key",u);
 			} break;
+			case "search.params": {
+				/** @type {P_search_params} */
+				let u=as_any(x);
+				this.P_search_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
 				debugger;
 			} break;
 		}
+	}
+	/** @private @arg {P_search_params} x */
+	P_search_params(x) {
+		const cf="P_search_params";
+		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PF_23n24n);
+	}
+	/** @private @arg {PF_23n24n} x */
+	PF_23n24n(x) {
+		const cf="PF_23n24n";
+		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(a,x => this.cq(x,1));
+		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
 	}
 	//#endregion binary
 	//#endregion
