@@ -373,9 +373,19 @@ type G_PlaylistUrlInfo={
 }|{
 	type: "playlist:2:RDMM"; id: string; raw_id: `RDMM${string}`;
 }|{
-	type: "playlist:2:RDCM"; id: `UC${string}`; raw_id: `RDCMUC${string}`;
+	type: "playlist:2:RDCM:UC"; id: `UC${string}`; raw_id: `RDCMUC${string}`;
+	id_info: {
+		type: "UC";
+		id: string;
+		raw_id: `UC${string}`;
+	};
 }|{
-	type: "playlist:2:RDGM"; id: string; raw_id: `RDGM${string}`;
+	type: "playlist:2:RDGM:EM"; id: `EM${string}`; raw_id: `RDGMEM${string}`;
+	id_info: {
+		type: "EM";
+		id: string;
+		raw_id: `EM${string}`;
+	};
 }|{
 	type: "playlist:2:RD"; id: string; raw_id: `RD${string}`;
 }|{

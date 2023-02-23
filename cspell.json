@@ -261,6 +261,7 @@
       "RDCM",
       "RDCMUC",
       "RDGM",
+      "RDGMEM",
       "RDMM",
       "RDSH",
       "Readahead",

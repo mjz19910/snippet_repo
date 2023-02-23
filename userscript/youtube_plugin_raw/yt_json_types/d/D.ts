@@ -38,7 +38,7 @@ type D_TargetIdStr=
 	;
 ;
 type D_PlaylistSelfId="WL"|"LL";
-type D_PlaylistIdTypeBase="RDMM"|"RDGM"|"RD"|"PL"|"UU";
+type D_PlaylistIdTypeBase="RDMM"|"RD"|"PL"|"UU";
 type SD_PlaylistId=
 	|`RD${string}`
 	|`RDMM${string}`

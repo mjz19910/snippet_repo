@@ -52,11 +52,27 @@ type TypedIDBTransactionScope={
 	typed_db: TypedIndexedDb,
 };
 type G_PlaylistIdObj={
-	key: `playlist_id:RDCM:UC${string}`;
+	key: `playlist_id:RDCM:UC:${string}`;
 	base: "playlist_id";
 	type: "playlist_id:RDCM";
 	id: `UC${string}`;
 	raw_id: `RDCMUC${string}`;
+	id_info: {
+		type: "UC";
+		id: string;
+		raw_id: `UC${string}`;
+	};
+}|{
+	key: `playlist_id:RDGM:EM:${string}`;
+	base: "playlist_id";
+	type: "playlist_id:RDGM";
+	id: `EM${string}`;
+	raw_id: `RDGMEM${string}`;
+	id_info: {
+		type: "EM";
+		id: string;
+		raw_id: `EM${string}`;
+	};
 }|{
 	key: `playlist_id:self:${D_PlaylistSelfId}`;
 	base: "playlist_id";

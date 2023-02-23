@@ -1509,15 +1509,27 @@ class ServiceMethods extends ServiceData {
 	playlistId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
 		if(this.str_starts_with_rx("RD",raw_id)) {
-			if(this.str_starts_with_rx("RDCMUC",raw_id)) {
-				let [,id]=split_string_once(raw_id,"RDCM");
-				this.channelId(id);
-				let channel_id=split_string_once(id,"UC")[1];
-				this.save_next_char("playlistId.RDCM.UC",channel_id);
-				this.G_UrlInfoItem({type: "playlist:2:RDCM",id,raw_id});
-				// 4 [RDCM] + 2 [UC] + 22 [ChannelId]
-				if(raw_id.length===28) return;
-				console.log("[playlistId.radio_channel_mix.length]",raw_id.length);
+			if(this.str_starts_with_rx("RDCM",raw_id)) {
+				if(this.str_starts_with_rx("RDCMUC",raw_id)) {
+					let [,id]=split_string_once(raw_id,"RDCM");
+					this.channelId(id);
+					let channel_id=split_string_once(id,"UC")[1];
+					this.save_next_char("playlistId.RDCM.UC",channel_id);
+					this.G_UrlInfoItem({
+						type: "playlist:2:RDCM:UC",
+						id_info: {
+							type: "UC",
+							id: channel_id,
+							raw_id: id,
+						},
+						id,raw_id,
+					});
+					// 4 [RDCM] + 2 [UC] + 22 [ChannelId]
+					if(raw_id.length===28) return;
+					console.log("[playlistId.radio_channel_mix.length]",raw_id.length);
+					return;
+				}
+				debugger;
 				return;
 			}
 			if(this.str_starts_with_rx("RDMM",raw_id)) {
@@ -1530,12 +1542,25 @@ class ServiceMethods extends ServiceData {
 				return;
 			}
 			if(this.str_starts_with_rx("RDGM",raw_id)) {
-				let [,id]=split_string_once(raw_id,"RDGM");
-				this.G_UrlInfoItem({type: "playlist:2:RDGM",id,raw_id});
-				this.save_next_char("playlistId.radio_global_mix",id);
-				// 4 [RDGM] + 37 [unknown]
-				if(raw_id.length===41) return;
-				console.log("[playlistId.radio_global_mix.length]",raw_id.length);
+				if(this.str_starts_with_rx("RDGMEM",raw_id)) {
+					let [,id]=split_string_once(raw_id,"RDGM");
+					let em_id=split_string_once(id,"EM")[1];
+					this.G_UrlInfoItem({
+						type: "playlist:2:RDGM:EM",
+						id_info: {
+							type: "EM",
+							id: em_id,
+							raw_id: id,
+						},
+						id,raw_id,
+					});
+					this.save_next_char("playlistId.radio_global_mix.EM",em_id);
+					// 4 [RDGM] + 2 [EM] + 35 [unknown]
+					if(raw_id.length===41) return;
+					console.log("[playlistId.radio_global_mix.length]",raw_id.length);
+					return;
+				}
+				debugger;
 				return;
 			}
 			let [,id]=split_string_once(raw_id,"RD");
@@ -1880,22 +1905,26 @@ class ServiceMethods extends ServiceData {
 					type,id,raw_id
 				});
 			} break;
-			case "playlist:2:RDCM": {
-				const {id,raw_id}=value;
+			case "playlist:2:RDCM:UC": {
+				const {id,id_info,raw_id}=value;
 				this.indexed_db_put("playlist_id",{
-					key: `playlist_id:RDCM:${id}`,
+					key: `playlist_id:RDCM:UC:${id_info.id}`,
 					base: "playlist_id",
-					type: "playlist_id:RDCM",id,raw_id
+					type: "playlist_id:RDCM",
+					id_info,
+					id,raw_id,
 				});
 				if(!this.str_starts_with_rx("UC",id)) debugger;
 				this.D_ChannelId(id);
 			} break;
-			case "playlist:2:RDGM": {
-				const {id,raw_id}=value;
+			case "playlist:2:RDGM:EM": {
+				const {id,id_info,raw_id}=value;
 				this.indexed_db_put("playlist_id",{
-					key: `playlist_id:RDGM:${id}`,
+					key: `playlist_id:RDGM:EM:${id_info.id}`,
 					base: "playlist_id",
-					type: "playlist_id:RDGM",id,raw_id
+					type: "playlist_id:RDGM",
+					id_info,
+					id,raw_id,
 				});
 			} break;
 			case "playlist:1:LL": case "playlist:1:WL": {
