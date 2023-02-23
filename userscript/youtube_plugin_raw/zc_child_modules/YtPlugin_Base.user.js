@@ -2267,6 +2267,11 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]} @arg {T} _ex */
 	z_ty(x,f,_ex) {return this.z(x,f);}
+	/** @protected @template {string} CF @arg {CF} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:CF,x:T)=>void} f */
+	tz_cf(cf,x,f) {if(x===void 0) return; return this.z_cf(cf,x,f);}
+	// takes (undefined | non-array) (as None), returns undefined (as None)
+	/** @protected @template {string} CF @arg {CF} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:CF,x:U,i:number)=>void} f  */
+	z_cf(cf,x,f) {if(x===void 0||!x.entries) {debugger; return;} return this.z(x,(x,i) => f.call(this,cf,x,i));}
 	/** @protected @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	g(x) {this.on_empty_object(x);}
 	/** @public @template {{}} T @arg {({} extends T?T_DistributedKeysOf<T> extends []?T:never:never)|null|undefined} x */
@@ -2285,11 +2290,6 @@ class BaseService extends BaseServicePrivate {
 	// takes undefined (as None), returns undefined (as None)
 	/** @private @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	tv(f,x) {if(!x) return; return f.call(this,x);}
-	/** @protected @template {string} CF @arg {CF} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:CF,x:T)=>void} f */
-	tz_cf(cf,x,f) {if(x===void 0) return; return this.z_cf(cf,x,f);}
-	// takes (undefined | non-array) (as None), returns undefined (as None)
-	/** @protected @template {string} CF @arg {CF} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:CF,x:U,i:number)=>void} f  */
-	z_cf(cf,x,f) {if(x===void 0||!x.entries) {debugger; return;} return this.z(x,(x,i) => f.call(this,cf,x,i));}
 	// closes over x, returns t map fn
 	/** @protected @template Z @template {{}} Y @arg {(this:this,y:Y)=>Z} x @returns {(y:Y|undefined)=>Z|undefined} */
 	tf=x => y => this.tv(x,y);
