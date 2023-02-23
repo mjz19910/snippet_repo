@@ -1,3 +1,4 @@
+//@ts-nocheck
 delete sz
 delete err_n
 function main() {

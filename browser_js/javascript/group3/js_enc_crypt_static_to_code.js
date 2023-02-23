@@ -1,3 +1,4 @@
+//@ts-nocheck
 function init() {
 	let imp_str=function x() {
 		let ret=[];
