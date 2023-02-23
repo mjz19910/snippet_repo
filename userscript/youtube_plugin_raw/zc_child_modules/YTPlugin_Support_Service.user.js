@@ -102,6 +102,46 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	add_data_to_index(k,x) {
+		let cur_idx=this.data.findIndex(v => v[0]===k);
+		if(cur_idx>=0) {
+			let [,val]=this.data[cur_idx]; val;
+			switch(val[0]) {
+				case "arr": switch(x[0]) {
+					case "arr": {
+						let [,v1]=val;
+						let is_eq=x[1].every(x => v1.includes(x));
+						if(is_eq) break;
+						debugger;
+						this.data[cur_idx]=[k,["many",[v1,x[1]]]];
+					} break;
+					case "many": {
+						let [,v1]=val;
+						let has=x[1].findIndex(x => x.every(xv => v1.includes(xv)));
+						if(has>-1) break;
+						debugger;
+						this.data[cur_idx]=[k,x];
+					} break;
+				} break;
+				case "many": debugger; break;
+				case "one": switch(x[0]) {
+					case "arr": {
+						let [,v1]=val;
+						let has=x[1].includes(v1);
+						if(has) break;
+						debugger;
+						this.data[cur_idx]=[k,x];
+					} break;
+					case "many": {
+						let [,v1]=val;
+						let has=x[1].findIndex(x => x.length===1&&x[0]===v1);
+						if(has>-1) break;
+						debugger;
+						this.data[cur_idx]=[k,x];
+					} break;
+				} break;
+			}
+			return;
+		}
 		let new_len=this.data.push([k,x]);
 		this.key_index.set(k,new_len-1);
 	}
