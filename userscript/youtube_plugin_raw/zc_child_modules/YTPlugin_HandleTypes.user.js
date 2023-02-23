@@ -622,6 +622,7 @@ class HandleTypes extends ServiceMethods {
 				debugger;
 			}; break;
 			case "5uald":
+			case "9gv7e":
 			case "a5mek":
 			case "ab5l6":
 			case "hp57k":
@@ -684,9 +685,7 @@ class HandleTypes extends ServiceMethods {
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
-			/** @type {D_GoogleVideoHostPartition} */
 			let ap=this.get_host_partition(mi);
-			this.D_GoogleVideoHostPartition(ap);
 			switch(ap.partition) {
 				default: {
 					let {partition: x}=ap;
@@ -1634,8 +1633,6 @@ class HandleTypes extends ServiceMethods {
 	log_googlevideo_host=false;
 	/** @private @template {D_GoogleVideoPathname} T @arg {D_GoogleVideoHostPartitionRet<T>} x */
 	D_GoogleVideoHostPartitionRet(x) {
-		let p=x.partitioned;
-		this.D_GoogleVideoHostPartition(p);
 		if(this.log_googlevideo_host) {
 			if(this.logged_hosts.includes(x.host)) return;
 			this.logged_hosts.push(x.host);
@@ -1785,11 +1782,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {`sn-${string}n${string}`} x @returns {D_GoogleVideoHostPartition} */
 	get_host_partition(x) {
 		let parts=this.get_gv_parts_impl(x);
-		return {
+		let partition={
 			parts,
 			partition: parts[2],
 			selector: parts[4],
 		};
+		this.D_GoogleVideoHostPartition(partition);
+		return partition;
 	}
 	/** @private @arg {`sn-${string}n${string}`} x @returns {["sn","-",G_Gv_0,"n",G_Gv_1]} */
 	get_gv_parts_impl(x) {
