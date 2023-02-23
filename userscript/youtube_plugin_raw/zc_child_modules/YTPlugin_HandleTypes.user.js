@@ -920,7 +920,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(u);
 	}
 	//#endregion
-	//#region RS & RSG
+	//#region RS & RSG & RSL
 	/** @public @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";
