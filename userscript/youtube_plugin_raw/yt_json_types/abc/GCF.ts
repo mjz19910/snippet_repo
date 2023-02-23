@@ -10,6 +10,7 @@ type GCF_s=
 	|CF_RS_Page_Type1
 	|CF_T_GM
 	|CF_T_Icon
+	|CF_T_Icon_Any
 	|CF_T_Items_TP
 	|CF_T_OpenPopup_Dialog
 	|CF_T_OpenPopup_Dropdown

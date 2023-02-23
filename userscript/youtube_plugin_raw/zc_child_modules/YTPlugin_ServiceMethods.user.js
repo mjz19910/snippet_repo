@@ -1446,7 +1446,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {CF_T_Icon} cf @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(cf,x) {
-		const {iconType,...y}=this.s_priv(cf,x); this.g(y);/*#destructure_done*/
+		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_string(`${cf}.iconType`,iconType);
 	}
 	/**
@@ -3149,12 +3149,11 @@ class ServiceMethods extends ServiceData {
 		return mp;
 	}
 	icon_types_map=this.make_icon_types_map();
-	/** @protected @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
-	T_Icon_AnyOf(cf1,x,ty_arr) {
-		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*#destructure_done*/
+	/** @protected @arg {CF_T_Icon_Any} cf @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
+	T_Icon_AnyOf(cf,x,ty_arr) {
+		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		const is_missing_iconType=!ty_arr.includes(iconType);
-		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
+		if(is_missing_iconType) {console.log(`[missing_icon.${cf}]`,iconType);}
 		this.save_string("IconType",iconType);
 		return is_missing_iconType;
 	}
