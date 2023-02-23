@@ -1084,7 +1084,7 @@ class HandleTypes extends ServiceMethods {
 	gen_typedef_bin(s,cf,x) {
 		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)};\n`;
 	}
-	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
+	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] */
 	codegen_typedef_bin(cf,x,do_break=true) {
 		/** @private @type {JsonReplacerState} */
 		let s=new JsonReplacerState({
@@ -1092,13 +1092,16 @@ class HandleTypes extends ServiceMethods {
 			cf,keys: [],is_root: true
 		});
 		let res_str=this.gen_typedef_bin(s,cf,x);
+		let is_new=false;
 		if(res_str) {
 			if(!this.typedef_cache.includes(res_str)) {
 				this.typedef_cache.push(res_str);
 				console.log(res_str);
+				is_new=true;
 			}
 		}
 		if(do_break) {debugger;}
+		return is_new;
 	}
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f) {
@@ -1854,25 +1857,11 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {RB_Obj_f19} x @name V_VeDescObj */
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
-		if(2 in x&&!(3 in x)&&!(1 in x)) {
-			const {2: f2,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f2,x => this.save_number_one(`${cf}.f2.BinaryVe@base`,x));
-			return;
-		}
-		if(1 in x) {
-			const {1: f1,2: f2,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
-			this.T_D32(f2,x => this.save_number_one(`${cf}.f2.BinaryVe@f1`,x));
-			this.T_D32(f2,x => this.BinaryVe(x));
-			return;
-		}
-		if(3 in x) /*binary_ve*/ {
-			const {2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
-			this.T_D32(f2,x => this.save_number_one(`${cf}.f2.BinaryVe@f2`,x));
-			this.T_D32(f2,x => this.BinaryVe(x));
-			this.T_D32(f3,x => this.save_number_one(`${cf}.f3`,x));
-			return;
-		}
+		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(f1,x => this.T_D32(x,x => this.save_number_one(`${cf}.f1`,x)));
+		this.T_D32(f2,x => this.save_number_one(`${cf}.BinaryVe`,x));
+		this.T_D32(f2,x => this.BinaryVe(x));
+		this.t(f3,x => this.T_D32(x,x => this.save_number_one(`${cf}.f3`,x)));
 		this.codegen_typedef_bin(cf,x,false);
 	}
 	/** @protected @template T @arg {T_VW<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
@@ -1976,12 +1965,20 @@ class HandleTypes extends ServiceMethods {
 			case "tracking": return this.H_TrackingObj(z);
 		}
 	}
+	/** @arg {string} cf @arg {{}} x @arg {{}} y */
+	h_gen_keys(cf,x,y) {
+		let u=this.get_keys_of_2(y); if(u.length>0) {
+			let is_new=this.codegen_typedef_bin(cf,x);
+			if(is_new) {
+				let k=u.join(); console.log(`[${cf}.next_key]`,k);
+			}
+		}
+	}
 	//#region get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
 		const cf="P_ypc_get_offers_params";
-		const {1: a,3: {},5: {},...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: a,3: {},5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
@@ -1992,22 +1989,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
 	P_aadc_guidelines_state_entity_key(x) {
 		const cf="P_aadc_guidelines_state_entity_key";
-		const {2: a,4: {},5: {},...y}=this.s(cf,x);
+		const {2: a,4: {},5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.save_string(`${cf}.a`,x));
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
-		const {2: a,5: {},10: {},...y}=this.s(cf,x);
+		const {2: a,5: {},10: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.videoId(x));
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
-		const {3: a,...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {3: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
@@ -2018,128 +2012,110 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
 		const cf="P_get_pdg_buy_flow_params";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
-		const {1: f1,5: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {1: {}={},3: {},5: {},8: {}={},12: {}={},15: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: {}={},3: {},5: {},8: {}={},12: {}={},15: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
 		const cf="P_transcript_track_selection_serialized_params";
-		const {1: f1,2: f2,3: f3,6: {},7: {},8: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,2: f2,3: f3,6: {},7: {},8: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_transcript_track_selection_entity_key} x */
 	P_transcript_track_selection_entity_key(x) {
 		const cf="P_transcript_track_selection_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
-		const {1: f1,2: f2,3: f3,5: {},6: {},7: {},8: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,2: f2,3: f3,5: {},6: {},7: {},8: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
-		const {94: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {94: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	PG_subscription_state_key=this.P_subscription_state_key;
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
-		const {2: a,4: f4,5: {},...y}=this.s(cf,x); this.g(y);
+		const {2: a,4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.channelId(x));
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
-		const {1: f1,2: f2,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_load_markers_entity_key} x */
 	P_load_markers_entity_key(x) {
 		const cf="P_load_markers_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
-		const {2: {},3: f3,7: {},12: {},13: {},27: f7,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {2: {},3: f3,7: {},12: {},13: {},27: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_playlist_loop_state_entity_key} x */
 	P_playlist_loop_state_entity_key(x) {
 		const cf="P_playlist_loop_state_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_entity_key_normal} x */
 	P_entity_key_normal(x) {
 		const cf="P_entity_key_normal";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {1: f1,2: f2,3: f3,5: f5,6: f6,9: f9,13: f13,14: f4,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,2: f2,3: f3,5: f5,6: f6,9: f9,13: f13,14: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
-		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
-		const {2: {},3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {2: {},3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_subscribe_button_entity_key} x */
 	P_subscribe_button_entity_key(x) {
 		const cf="P_subscribe_button_entity_key";
 		const {2: a,4: b,5: c,...y}=this.s(cf,x);
-		this.t(this.TV_Str(a),this.channelId);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		this.t(this.TV_Str(a),this.channelId); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
-		const {1: f1,4: f4,5: f5,6: {},7: f7,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,4: f4,5: f5,6: {},7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
-		const {1: f1,3: f3,4: {}={},5: {},6: {}={},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,3: f3,4: {}={},5: {},6: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @type {string[]} */
 	LP_dislike=[];
 	/** @private @arg {P_dislike_params} x */
 	P_dislike_params(x) {
 		const cf="P_dislike_params";
-		const {1: a,3: {}={},2: c,4: d,5: {}={},...y}=this.s(cf,x); this.g(y);
+		const {1: a,3: {}={},2: c,4: d,5: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_VW(a,x => {
-			const {1: f1,...y}=x; this.g(y);
+			const cf="P_dislike_params.f1";
+			const {1: f1,...y}=x; this.h_gen_keys(cf,x,y);
 			if(f1[0]!=="param_arr") {debugger; return;}
 			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
 			switch(a[0]) {
@@ -2156,57 +2132,49 @@ class HandleTypes extends ServiceMethods {
 				} break;
 			}
 		});
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_entity_key} x */
 	P_entity_key(x) {
 		const cf="P_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
 		const cf="P_playability_status_context_params";
-		const {1: f1,2: f2,...y}=this.s(cf,x); this.g(y);
+		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data",t=this;
-		const {1: f1,3: f3,...y}=this.s(cf,x); this.g(y);
+		const {1: f1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t_cf(`${cf}.f1`,f1,(cf,x) => this.T_VW(x,x => {
-			const {1: f1,...y}=this.s(cf,x);
-			let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		}));
 		t.t(t.t(f3,t.TV_Str),this.playlistId);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
-		const {1: f1,3: {}={},5: {}={},6: {}={},...y}=this.s(cf,x); this.g(y);
+		const {1: f1,3: {}={},5: {}={},6: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
-		const {4: {},5: {}={},6: {},7: {},9: {},10: {},13: {},14: {},...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {4: {},5: {}={},6: {},7: {},9: {},10: {},13: {},14: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
-		const {1: f1,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {1: f1,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @type {string[]} */
 	params_to_decode=[];
 	/** @private @arg {PD_continuation_request_browse_token} x */
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
-		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
+		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(f2),x => {
 			this.save_string(`${cf}.f2`,x);
 			switch(x) {
@@ -2224,19 +2192,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PR_continuation_request_browse_token} x */
 	PR_continuation_request_browse_token(x) {
 		const cf="PR_continuation_request_browse_token";
-		const {0x4c82a9c: a,...y}=this.s(cf,x); this.g(y);
+		const {0x4c82a9c: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_VW(a,this.PD_continuation_request_browse_token);
 	}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {
 		const cf="P_create_playlist_params";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
 	}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params"; let t=this;
-		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.g(y);
+		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
 		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number_one));};
 		r("f30",f30); r("f57",f57); r("f71",f71);
@@ -2245,62 +2213,52 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
 		const cf="P_ve_6827_params";
-		const {77: f77,84: f84,...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {77: f77,84: f84,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {24: f24,...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {24: f24,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
-		const {12: f12,25: f25,...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {12: f12,25: f25,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_format_item_xtags} x */
 	P_format_item_xtags(x) {
 		const cf="P_format_item_xtags";
-		const {...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {
 		const cf="P_get_notification_menu_ctoken";
-		const {...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_notification_opt_out} x */
 	P_notification_opt_out(x) {
 		const cf="P_notification_opt_out";
-		const {...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
 		const cf="P_get_report_form_params";
-		const {...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
 		const cf="P_notification_record_interactions";
-		const {...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_player_state_entity_key} x */
 	P_player_state_entity_key(x) {
 		const cf="P_player_state_entity_key";
-		const {...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {
 		const cf="P_macro_marker_repeat_state_entity_key";
-		const {...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_key]`,k);}
+		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	//#endregion
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */

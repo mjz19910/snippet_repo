@@ -1246,7 +1246,7 @@ class Support_RS_Browse extends ServiceMethods {
 					if(e==="header") return false;
 					return true;
 				}).join();
-				if(jk==="header,trackingParams,onResponseReceivedActions") break x;
+				if(jk==="trackingParams,onResponseReceivedActions") break x;
 				if("header" in x) {
 					console.log(`-- [RS_Browse.tag_3] --\n\nif(jk==="${jk}") break x;`);
 					break x;
