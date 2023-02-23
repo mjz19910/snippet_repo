@@ -3306,7 +3306,7 @@ class Support_Renderer extends ServiceMethods {
 		const {trackingParams,text,feedbackToken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		this.G_Text(text);
-		this.params("feedbackToken",feedbackToken);
+		this.save_b64_binary(`${cf}.feedbackToken`,feedbackToken);
 	}
 	//#endregion
 	//#region Group Union

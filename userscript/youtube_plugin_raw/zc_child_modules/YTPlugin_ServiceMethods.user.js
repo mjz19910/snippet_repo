@@ -3321,7 +3321,7 @@ class ServiceMethods extends ServiceData {
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
 		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
-		this.save_b64_binary("feedbackToken",feedbackToken);
+		this.save_b64_binary("DE_Feedback.feedbackToken",feedbackToken);
 		this.t(uiActions,this.D_HideEnclosingContainer);
 		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
 	}
