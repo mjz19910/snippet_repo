@@ -6121,7 +6121,9 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(channel);
 		this.G_Text(views);
 		this.G_Text(publishDate);
-		this.z(factoid,this.R_Factoid);
+		this.z(factoid,x => {
+			if("factoidRenderer" in x) return this.R_Factoid(x);
+		});
 		this.E_VE3611(channelNavigationEndpoint);
 		this.D_Thumbnail(channelThumbnail);
 	}

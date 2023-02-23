@@ -2821,13 +2821,19 @@ type D_UrlInfoVideo={_tag: "video"; id: string;};
 type D_UrlVideoReferral={_tag: "video-referral"; id: string;};
 type D_UrlPlayNext={_tag: "play-next"; value: string;};
 type D_UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};
+type R_ViewCountFactoid={
+	viewCountFactoidRenderer: {
+		viewCountEntityKey: string;
+		factoid: R_Factoid;
+		viewCountType: "VIEW_COUNT_FACTOID_TYPE_CONCURRENT_VIEWERS";
+	};
+};
 type D_VideoDescriptionHeader={
 	title: G_Text;
 	channel: G_Text;
 	views: G_Text;
 	publishDate: G_Text;
-	factoid: R_Factoid[];
-	// ChannelNavigationEndpointWebCommandMetadata
+	factoid: (R_Factoid|R_ViewCountFactoid)[];
 	channelNavigationEndpoint: E_VE3611;
 	channelThumbnail: D_Thumbnail;
 };
