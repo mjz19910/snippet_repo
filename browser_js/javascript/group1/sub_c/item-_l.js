@@ -1,3 +1,4 @@
+//@ts-nocheck
 //cspell:words tvaf	txin txout
 ib=document.getElementById("a")
 txin=document.getElementById("in")

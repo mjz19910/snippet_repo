@@ -1,3 +1,4 @@
+//@ts-nocheck
 // cspell:words mlay mlayjson tetr
 function bulkPrestige() {
 	var jv

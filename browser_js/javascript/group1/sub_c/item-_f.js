@@ -1,3 +1,4 @@
+//@ts-nocheck
 x: if(location.href==="https://mrredshark77.github.io/incremental-merge/") {
 	y: {
 		let do_si_update_block=false

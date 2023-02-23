@@ -1,3 +1,4 @@
+//@ts-nocheck
 var z=function(fn,cbfn,ex) {
 	fn.dl=500
 	var wt=function(a) {

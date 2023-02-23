@@ -1,3 +1,4 @@
+//@ts-nocheck
 function sub_c_item_j_x() {
 	var fmstr=t.toString()
 	var fms2=fmstr.slice(0,fstr.indexOf("{}"[0]))

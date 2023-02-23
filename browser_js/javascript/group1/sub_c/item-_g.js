@@ -1,3 +1,4 @@
+//@ts-nocheck
 // this makes a index.html${i++} file every save... :${"()"[0]}
 {
 	function exclude_from(arr,remove_seq_vec) {

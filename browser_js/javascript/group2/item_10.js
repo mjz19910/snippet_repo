@@ -1,3 +1,4 @@
+//@ts-nocheck
 //spell:ignore riker testkit
 class RustParser {
 	static merge_tok(state,str) {

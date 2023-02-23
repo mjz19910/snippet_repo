@@ -1,3 +1,4 @@
+//@ts-nocheck
 if(window.__cint) {
 	clearTimeout(window.__cint)
 }

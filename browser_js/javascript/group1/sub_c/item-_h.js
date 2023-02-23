@@ -1,3 +1,4 @@
+//@ts-nocheck
 __cur={}
 __cur.f=function() {
 	debug=debug

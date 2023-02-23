@@ -3,6 +3,7 @@
 v1 (old): snippet_repo/javascript/final/items/item9_v1.js
 v2 (cur): snippet_repo/javascript/group1/sub_a/item-_9.js
 */
+//@ts-nocheck
 
 /** @arg {any[]} stats */
 function log_stats(stats) {

@@ -9,7 +9,6 @@ function main() {
 			this.p=Promise.resolve(void 0);
 			this.start();
 			this.p.then(this.reset.bind(this));
-
 		}
 		run=false;
 		/** @type {(() => void)|null} */
