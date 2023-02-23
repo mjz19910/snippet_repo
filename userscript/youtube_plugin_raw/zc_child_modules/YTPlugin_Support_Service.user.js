@@ -128,7 +128,7 @@ class StoreDescription extends ApiBase2 {
 						let [,v1]=val;
 						let has=x[1].includes(v1);
 						if(has) break;
-						debugger;
+						x[1].push(v1);
 						this.data[cur_idx]=[k,x];
 					} break;
 					case "many": {
