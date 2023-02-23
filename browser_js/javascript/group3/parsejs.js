@@ -1,3 +1,4 @@
+//@ts-nocheck
 if(typeof exports!="undefined") {
 	v8=require("v8")
 	util=require("util")

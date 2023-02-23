@@ -795,7 +795,6 @@ if(typeof exports=="undefined") {
 	window.parser=new parsejs();
 	window.parser.parse(window.code,window.parser.state,0);
 	window.parser.state.tok;
-	window.$;
 } else {
 	exports.parsejs=parsejs;
 }

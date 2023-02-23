@@ -1,3 +1,4 @@
+//@ts-nocheck
 //cspell:words objsx oneloop yuid
 objs={}
 bad=[HTMLDivElement,HTMLHeadElement,HTMLElement,Document,HTMLHtmlElement,HTMLAllCollection,HTMLCollection,HTMLBodyElement,HTMLAnchorElement,StyleSheetList]

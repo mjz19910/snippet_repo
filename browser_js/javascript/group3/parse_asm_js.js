@@ -1,3 +1,4 @@
+//@ts-nocheck
 //cspell:words getargs idents keyword_handlers gethandler mclass fnbody parama parast parsebody parsebracket expectraw notreg charexpr gimuy jsonlike eatnext sethandler tryblock tryobj
 if(typeof exports!="undefined") {
 	v8=require("v8")
