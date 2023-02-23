@@ -361,6 +361,14 @@ class HandleTypes extends ServiceMethods {
 		if(t!=="data_fixed32") {debugger; return null;}
 		return f(u);
 	}
+	/** @private @template {bigint} T @template U @arg {T_FD64<T>} x @arg {(this:void,x:T)=>U} f */
+	T_FD64(x,f) {
+		let x1=this.T_RawChild(x);
+		if(!x1) {debugger; return null;}
+		let [t,u]=x1;
+		if(t!=="data_fixed64") {debugger; return null;}
+		return f(u);
+	}
 	/** @protected @template {V_ParamItem} T @arg {T_PArr_1<[T]>} x @returns {T|null} */
 	T_RawChild(x) {
 		if(x[0]!=="param_arr") {debugger; return null;}
@@ -2563,12 +2571,34 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_search_params(u);
 			} break;
+			case "pf_23n24n.bin_params": {
+				/** @type {P_bin_params_1} */
+				let u=as_any(x);
+				this.P_bin_params_1(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
 				debugger;
 			} break;
 		}
+	}
+	/** @private @arg {P_bin_params_1} x */
+	P_bin_params_1(x) {
+		const cf="P_bin_params_1";
+		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(a,x => {
+			const cf="P_bin_params_1.f1";
+			const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_FD64(a,x => {
+				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
+				this.save_number(`${cf}.f1.first_byte`,iv_fb);
+			});
+			this.T_FD64(b,x => {
+				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
+				this.save_number(`${cf}.f2.first_byte`,iv_fb);
+			});
+		});
 	}
 	/** @private @arg {P_search_params} x */
 	P_search_params(x) {
