@@ -1193,34 +1193,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
-		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
-		let cf="D_Button";
-		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
-		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
-		else if("command" in x) cf="D_Button:command";
-		else if("style" in x) cf="D_Button:style";
+		const cf="D_Button";
 		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(hint,this.R_Hint);
 		this.t(iconPosition,x => this.save_enum(cf,"BUTTON_ICON_POSITION_TYPE",x));
 		this.t(targetId,this.D_Button_targetId);
 		this.t(serviceEndpoint,this.D_Button_SE);
-		this.t(style,x => {
-			this.save_string(`${cf}.style`,x);
-			let skip=true;
-			if(skip) return;
-			switch(x) {
-				default: console.log("D_Button.style",x); break;
-				case "STYLE_BLUE_TEXT":
-				case "STYLE_DEFAULT":
-				case "STYLE_LIGHT_TEXT":
-				case "STYLE_MONO_FILLED_OVERLAY":
-				case "STYLE_MONO_TONAL_OVERLAY":
-				case "STYLE_OPACITY":
-				case "STYLE_PRIMARY":
-				case "STYLE_SUGGESTIVE":
-				case "STYLE_TEXT":
-			}
-		});
+		this.t(style,x => this.save_string(`${cf}.style`,x));
 		this.t(isDisabled,x => {if(x!==false) debugger;});
 		this.t(text,this.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
