@@ -1977,7 +1977,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
-		const {3: {},8: {},11: {}={},14: {},15: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: {},8: {},11: f11,14: {},15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
@@ -1993,33 +1993,33 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
-		const {1: f1,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {1: {}={},3: {},5: {},8: {}={},12: {}={},15: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,3: f3,5: f5,8: f8,12: f12,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
 		const cf="P_transcript_track_selection_serialized_params";
-		const {1: f1,2: f2,3: f3,6: {},7: {},8: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,2: f2,3: f3,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
-		const {1: f1,2: f2,3: f3,5: {},6: {},7: {},8: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,2: f2,3: f3,5: f5,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
-		const {94: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	PG_subscription_state_key=this.P_subscription_state_key;
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
-		const {2: a,4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.channelId(x));
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
@@ -2030,7 +2030,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
-		const {2: {},3: f3,7: {},12: {},13: {},27: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,7: f7,12: f12,13: f13,27: f27,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
@@ -2045,24 +2045,24 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
-		const {2: {},3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
-		const {1: f1,4: f4,5: f5,6: {},7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,4: f4,5: f5,6: f6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
-		const {1: f1,3: f3,4: {}={},5: {},6: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,3: f3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @type {string[]} */
 	LP_dislike=[];
 	/** @private @arg {P_dislike_params} x */
 	P_dislike_params(x) {
 		const cf="P_dislike_params";
-		const {1: a,3: {}={},2: c,4: d,5: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: a,3: f3,2: c,4: d,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_VW(a,x => {
 			const cf="P_dislike_params.f1";
 			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
@@ -2102,13 +2102,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
-		const {1: f1,3: {}={},5: {}={},6: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,3: f3,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
-		const {4: {},5: {}={},6: {},7: {},9: {},10: {},13: {},14: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {4: f4,5: f5,6: f6,7: f7,9: f9,10: f10,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
@@ -2164,12 +2164,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {2: f2,3: f3,7: f7,24: f24,27: f27,33: {}={},39: f39,40: {}={},56: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,7: f7,24: f24,27: f27,33: f33,39: f39,40: f40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
-		const {8: f8,9: f9,12: f12,25: f25,40: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {8: f8,9: f9,12: f12,25: f25,40: f40,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_format_item_xtags} x */
 	P_format_item_xtags(x) {
