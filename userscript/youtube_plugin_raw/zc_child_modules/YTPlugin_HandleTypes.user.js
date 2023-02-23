@@ -69,7 +69,13 @@ class HandleTypes extends ServiceMethods {
 						add_obj(id,["raw_child",a,b,["string",decoded_string]]);
 						continue;
 					}
-					add_obj(id,[n,a,this.tr_arr_to_obj(b)]);
+					let c=this.tr_arr_to_obj(b);
+					if(c===null) {
+						let decoded_string=this._decoder.decode(a);
+						add_obj(id,["child_str",a,null,["string",decoded_string]]);
+						continue;
+					}
+					add_obj(id,[n,a,c]);
 				} break;
 				case "data32": {
 					let [n,id,a]=v;
@@ -87,18 +93,11 @@ class HandleTypes extends ServiceMethods {
 					let [n,id,a]=v;
 					add_obj(id,[n,a]);
 				} break;
-				case "error": {
-					let [n,id]=v;
-					add_obj(id,[n,id]);
-				} break;
 				case "group": {
 					let [n,id,a]=v;
 					let res=this.tr_arr_to_obj(a);
-					if(res) {
-						add_obj(id,[n,res]);
-					} else {
-						debugger;
-					}
+					if(res===null) return null;
+					add_obj(id,[n,res]);
 				} break;
 				case "info": {
 					let [n,id,a]=v;
@@ -113,6 +112,7 @@ class HandleTypes extends ServiceMethods {
 						debugger;
 					}
 				} break;
+				case "error": return null;
 			}
 		}
 		/*
@@ -1301,6 +1301,7 @@ class HandleTypes extends ServiceMethods {
 			case "raw": return this.v_param_2_raw(s,x);
 			case "struct": case "group":
 			case "error": case "info": return x;
+			case "child_str": return x;
 		}
 	}
 	/** @arg {JsonReplacerState} s @arg {["param_arr", V_ParamItem[]]} x */

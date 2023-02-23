@@ -749,19 +749,16 @@ class CodegenService extends BaseService {
 			}
 			assert_not_ends_with(type_name,"Action");
 		}
-		x: {
+		{
 			const ed="Command";
 			let split_val=split_string_once(type_name,ed);
 			if(split_val.length!==1) {
-				debugger;
-				// 	let real_val=split_val[0];
-				// 	return `C_${real_val}`;
-				assert_not_ends_with(type_name,ed);
-				break x;
+				let real_val=split_val[0];
+				return `C_${real_val}`;
 			}
 			assert_not_ends_with(type_name,ed);
 		}
-		x: {
+		{
 			const ed="Endpoint";
 			let split_val=split_string_once(type_name,ed);
 			if(split_val.length!==1) {
@@ -776,7 +773,7 @@ class CodegenService extends BaseService {
 			}
 			assert_not_ends_with(type_name,ed);
 		}
-		x: {
+		{
 			const ed="Renderer";
 			let split_val=split_string_once(type_name,ed);
 			if(split_val.length!==1) {

@@ -477,6 +477,7 @@ type Ret_get_auto_type_name=
 	|`D_${"PrefetchHintConfig"}`
 	|"R_TwoColumnBrowseResults"
 	|"GE_Browse"
+	|`C_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Command`>,"Command">[0]}`
 	;
 ;
 type Ret_json_auto_replace_1=Capitalize<Ret_json_auto_raw>|"{}";
@@ -486,4 +487,5 @@ type Ret_json_auto_raw=
 	|"metadataBadgeRenderer"
 	|keyof R_TwoColumnBrowseResults
 	|"browseEndpoint"
+	|"innertubeCommand"
 	;
