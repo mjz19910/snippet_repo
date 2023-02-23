@@ -389,6 +389,43 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
+	/** @template {{}} T @arg {T} x @arg {keyof T} k */
+	T_EP_In(x,k) {return x[k];}
+	/** @protected @template T @arg {T_VW<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
+	T_VW(x,f) {
+		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
+		function assume_ret(_x,_ret_ex) {}
+		/** @returns {FT extends null?T:U} */
+		function ret_ex() {throw new Error();}
+		let ret=null;
+		/** @type {T_VW<T>[1]|null} */
+		let pa=null;
+		/** @type {T_VW<T>[1][0]|null} */
+		let v=null;
+		if(x[0]==="param_arr") pa=x[1];
+		if(pa&&pa.length===1) [v]=pa;
+		if(v&&v[0]==="child") {
+			if(f===null) {
+				let t_ret=v[2];
+				assume_ret(t_ret,ret_ex);
+				return t_ret;
+			} else {
+				let u_ret=f.call(this,v[2]);
+				assume_ret(u_ret,ret_ex);
+				return u_ret;
+			}
+		}
+		assume_ret(ret,ret_ex);
+		debugger;
+		return ret;
+	}
+	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
+	T_VW_Bigint(x) {
+		let x1=this.T_RawChild(x);
+		if(!x1) {debugger; return null;}
+		if(x1[0]!=="data64") {debugger; return null;}
+		return x1[2];
+	}
 	//#endregion
 	//#region moved data methods
 	/** @public @arg {D_WebPlayerConfig} x */
@@ -1080,12 +1117,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AU_Viewership} x */
 	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.y("AU_ViewershipData","viewCount",x,this.R_VideoViewCount));}
+	//#endregion
+	//#region Continuation [RC]
 	/** @private @arg {RC_PlaylistPanel} x */
 	RC_PlaylistPanel(x) {this.H_("playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
-	/** @template {{}} T @arg {T} x @arg {keyof T} k */
-	T_EP_In(x,k) {return x[k];}
+	//#endregion
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
 	make_str_tag(x,tag) {
 		/** @template T */
@@ -1987,46 +2025,11 @@ class HandleTypes extends ServiceMethods {
 		this.t(f3,x => this.T_D32(x,x => this.save_number_one(`${cf}.f3`,x)));
 		this.codegen_typedef_bin(cf,x,false);
 	}
-	/** @protected @template T @arg {T_VW<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
-	T_VW(x,f) {
-		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
-		function assume_ret(_x,_ret_ex) {}
-		/** @returns {FT extends null?T:U} */
-		function ret_ex() {throw new Error();}
-		let ret=null;
-		/** @type {T_VW<T>[1]|null} */
-		let pa=null;
-		/** @type {T_VW<T>[1][0]|null} */
-		let v=null;
-		if(x[0]==="param_arr") pa=x[1];
-		if(pa&&pa.length===1) [v]=pa;
-		if(v&&v[0]==="child") {
-			if(f===null) {
-				let t_ret=v[2];
-				assume_ret(t_ret,ret_ex);
-				return t_ret;
-			} else {
-				let u_ret=f.call(this,v[2]);
-				assume_ret(u_ret,ret_ex);
-				return u_ret;
-			}
-		}
-		assume_ret(ret,ret_ex);
-		debugger;
-		return ret;
-	}
 	/** @protected @arg {D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
 		const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number_one(`${cf}.f1`,x));
-	}
-	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
-	T_VW_Bigint(x) {
-		let x1=this.T_RawChild(x);
-		if(!x1) {debugger; return null;}
-		if(x1[0]!=="data64") {debugger; return null;}
-		return x1[2];
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
