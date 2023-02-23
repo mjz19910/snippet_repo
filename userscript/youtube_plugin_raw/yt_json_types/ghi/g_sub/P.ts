@@ -76,9 +76,7 @@ type P_playability_status_context_params={
 	};
 };
 type P_entity_key={
-	2: {
-		1: TV_Str<D_VideoId>;
-	};
+	2: T_VW<{1: TV_Str<D_VideoId>;}>;
 	4: T_D32<246>;
 	5: T_D32<1>;
 };
@@ -391,6 +389,30 @@ type P_player_state_entity_key={
 	4: T_D32<323>;
 	5: T_D32<1>;
 };
+type P_EntityKey=
+	|P_aadc_guidelines_state_entity_key
+	|P_entity_key_normal
+	|P_entity_key
+	|P_load_markers_entity_key
+	|P_macro_marker_repeat_state_entity_key
+	|P_player_state_entity_key
+	|P_playlist_loop_state_entity_key
+	|P_subscribe_button_entity_key
+	|P_transcript_track_selection_entity_key
+	;
+;
+type CF_P_EntityKey=
+	|"P_aadc_guidelines_state_entity_key"
+	|"P_entity_key_normal"
+	|"P_entity_key"
+	|"P_load_markers_entity_key"
+	|"P_macro_marker_repeat_state_entity_key"
+	|"P_player_state_entity_key"
+	|"P_playlist_loop_state_entity_key"
+	|"P_subscribe_button_entity_key"
+	|"P_transcript_track_selection_entity_key"
+	;
+;
 type P_notification_record_interactions={
 	2: T_VW<{
 		1: T_D32<2>;

@@ -728,6 +728,7 @@ class HandleTypes extends ServiceMethods {
 			case "hp57y":
 			case "nx5s7":
 			case "nx57y":
+			case "o097z":
 			case "p5qls":
 			case "p5qs7":
 			case "qxoed":
@@ -2061,12 +2062,6 @@ class HandleTypes extends ServiceMethods {
 		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
 	}
-	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
-	P_aadc_guidelines_state_entity_key(x) {
-		const cf="P_aadc_guidelines_state_entity_key";
-		const {2: a,4: {},5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(a),x => this.save_string(`${cf}.a`,x));
-	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
@@ -2104,11 +2099,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_transcript_track_selection_serialized_params";
 		const {1: f1,2: f2,3: f3,6: {},7: {},8: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
-	/** @private @arg {P_transcript_track_selection_entity_key} x */
-	P_transcript_track_selection_entity_key(x) {
-		const cf="P_transcript_track_selection_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
@@ -2131,25 +2121,10 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_create_backstage_post_params";
 		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
-	/** @private @arg {P_load_markers_entity_key} x */
-	P_load_markers_entity_key(x) {
-		const cf="P_load_markers_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
 		const {2: {},3: f3,7: {},12: {},13: {},27: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @private @arg {P_playlist_loop_state_entity_key} x */
-	P_playlist_loop_state_entity_key(x) {
-		const cf="P_playlist_loop_state_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @private @arg {P_entity_key_normal} x */
-	P_entity_key_normal(x) {
-		const cf="P_entity_key_normal";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
@@ -2165,12 +2140,6 @@ class HandleTypes extends ServiceMethods {
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
 		const {2: {},3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @private @arg {P_subscribe_button_entity_key} x */
-	P_subscribe_button_entity_key(x) {
-		const cf="P_subscribe_button_entity_key";
-		const {2: a,4: b,5: c,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(a),this.channelId);
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
@@ -2207,11 +2176,6 @@ class HandleTypes extends ServiceMethods {
 				} break;
 			}
 		});
-	}
-	/** @private @arg {P_entity_key} x */
-	P_entity_key(x) {
-		const cf="P_entity_key";
-		const {2: {},4: f4,5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
@@ -2325,18 +2289,52 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_notification_record_interactions";
 		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
+	P_aadc_guidelines_state_entity_key(x) {this.P_EntityKey("P_aadc_guidelines_state_entity_key",x);}
+	/** @private @arg {P_transcript_track_selection_entity_key} x */
+	P_transcript_track_selection_entity_key(x) {this.P_EntityKey("P_transcript_track_selection_entity_key",x);}
+	/** @private @arg {P_load_markers_entity_key} x */
+	P_load_markers_entity_key(x) {this.P_EntityKey("P_load_markers_entity_key",x);}
+	/** @private @arg {P_playlist_loop_state_entity_key} x */
+	P_playlist_loop_state_entity_key(x) {this.P_EntityKey("P_playlist_loop_state_entity_key",x);}
+	/** @private @arg {P_entity_key_normal} x */
+	P_entity_key_normal(x) {this.P_EntityKey("P_entity_key_normal",x);}
+	/** @private @arg {P_subscribe_button_entity_key} x */
+	P_subscribe_button_entity_key(x) {this.P_EntityKey("P_subscribe_button_entity_key",x);}
+	/** @private @arg {P_entity_key} x */
+	P_entity_key(x) {this.P_EntityKey("P_entity_key",x);}
 	/** @private @arg {P_player_state_entity_key} x */
-	P_player_state_entity_key(x) {
-		const cf="P_player_state_entity_key";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
+	P_player_state_entity_key(x) {this.P_EntityKey("P_player_state_entity_key",x);}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
-	P_macro_marker_repeat_state_entity_key(x) {
-		const cf="P_macro_marker_repeat_state_entity_key";
+	P_macro_marker_repeat_state_entity_key(x) {this.P_EntityKey("P_macro_marker_repeat_state_entity_key",x);}
+	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
+	P_EntityKey(cf,x) {
 		const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		switch(this.TV_Str(f2)) {
+		if(f2[1].length!==1) debugger;
+		let f2w=f2[1][0];
+		switch(f2w[0]) {
 			default: debugger; break;
-			case "repeat_state":
+			case "child": {
+				let {1: f2_f1,...y1}=f2w[2]; this.g(y1);
+				this.t(this.TV_Str(f2_f1),x => this.save_string(`${cf}.f2.f1`,x));
+			} break;
+			case "raw_child": {
+				if(f2w[3][0]!=="string") {debugger; break;}
+				let f2_v=f2w[3][1];
+				switch(f2_v) {
+					default: {
+						debugger;
+						switch(f2_v) {
+							case "":
+						}
+					} break;
+					case ".transcript.track.selection.key": break;
+					case "/youtube/app/watch/player_state": break;
+					case "183848276973": break;
+					case "HEATSEEKER": break;
+					case "repeat_state": break;
+				}
+			} break;
 		}
 		this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
 		this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
