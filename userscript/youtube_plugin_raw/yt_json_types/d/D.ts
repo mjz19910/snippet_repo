@@ -124,6 +124,7 @@ type D_VideoCategory=
 	|"Gaming"
 	|"Howto & Style"
 	|"Music"
+	|"News & Politics"
 	|"Nonprofits & Activism"
 	|"People & Blogs"
 	|"Pets & Animals"

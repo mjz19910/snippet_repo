@@ -139,6 +139,14 @@ type P_entity_key_normal={
 	2: TV_Str<`RD${string}`>;
 	4: T_D32<354>;
 	5: T_D32<1>;
+}|{
+	2: TV_Str<"topbar">;
+	4: T_D32<245>;
+	5: T_D32<1>;
+}|{
+	2: TV_Str<D_VideoId>;
+	4: T_D32<341>;
+	5: T_D32<1>;
 };
 type P_playlist_loop_state_entity_key={
 	2: TV_Str<`RD${string}`>;
@@ -156,7 +164,7 @@ type P_watch_playlist_params={
 	}>;
 };
 type P_load_markers_entity_key={
-	2: TV_Str<"HEATSEEKER">;
+	2: TV_Str<"HEATSEEKER"|"AUTO_CHAPTERS">;
 	4: T_D32<274>;
 	5: T_D32<1>;
 };
@@ -204,56 +212,6 @@ type P_transcript_track_selection_serialized_params={
 	7: T_D32<1>;
 	8: T_D32<0>;
 };
-type P_reel_watch_sequence_Arr1=[
-	{
-		1: T_D32<100>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<152>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<220>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<400>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<902>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<960>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<965>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<966>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<967>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<968>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<969>;
-		2: T_D32<1>;
-	},
-	{
-		1: T_D32<970>;
-		2: T_D32<1>;
-	}
-];
 type P_continuation_request_reel_watch_sequence_token={
 	1?: TV_Str<"3y9Wm0IfGGs">;
 	3: T_VW<{
@@ -284,10 +242,7 @@ type P_continuation_request_reel_watch_sequence_token={
 				1: T_PArr_R<P_reel_watch_sequence_Arr1>;
 			}>;
 			7: T_VW<{
-				1: T_PArr_R<[
-					{1: T_D32<887>;},
-					{1: T_D32<563>;},
-				]>;
+				1: T_PArr_R<P_reel_watch_sequence_Arr2>;
 			}>;
 			8: T_VW<{
 				1: T_VW<{1: T_D32<203>;}>;
@@ -312,9 +267,7 @@ type P_continuation_request_reel_watch_sequence_token={
 };
 type P_reel_sequence_params={
 	1: TV_Str<string>;
-	5: {
-		3: T_D32<12>;
-	};
+	5: T_VW<{3: T_D32<12>;}>;
 };
 type P_get_pdg_buy_flow_params={
 	1: {
@@ -324,7 +277,7 @@ type P_get_pdg_buy_flow_params={
 	};
 };
 type PD_continuation_params={
-	3: {
+	3: T_VW<{
 		4: T_FD32<20988979>;
 		8: T_FD32<1162761290>;
 		9: T_FD64<4914312580592780609n>;
@@ -332,16 +285,16 @@ type PD_continuation_params={
 		12: T_FD64<5938077997913429358n>;
 		13: T_FD32<1481922630>;
 		14: T_FD32<2000180812>;
-	};
+	}>;
 	8: T_D32<1>;
-	11: {
+	11: T_VW<{
 		2: T_D32<1030000>;
-	};
-	14: {
+	}>;
+	14: T_VW<{
 		1: T_D32<4>;
 		3: T_D32<2>;
 		4: T_D32<0>;
-	};
+	}>;
 	15: T_D32<1>;
 };
 
@@ -463,7 +416,7 @@ type P_ve_6827_params={
 		5: T_D32<2>;
 	}>;
 	93?: T_VW<{
-		1: TV_Str<"bigbusiness">,
+		1: TV_Str<"bigbusiness">;
 		3: T_D32<1>;
 	}>;
 };

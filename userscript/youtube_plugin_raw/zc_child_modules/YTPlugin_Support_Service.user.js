@@ -879,6 +879,7 @@ class Support_RS_Player extends ServiceMethods {
 				}
 				debugger;
 			} break;
+			case "News & Politics":
 			case "Nonprofits & Activism":
 			case "Travel & Events": case "Sports": case "Education": case "Pets & Animals":
 			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
@@ -1033,7 +1034,7 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_Card";
 		const {teaser,content,cueRanges,icon,trackingParams,cardId,feature,...y}=this.s(cf,x); this.g(y);
 		this.R_SimpleCardTeaser(teaser);
-		this.t_cf(`${cf}$content`,content,(cf,x) => {
+		this.t_cf(`D_Card$content`,content,(cf,x) => {
 			if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
 			if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
 			this.codegen_typedef(cf,x);

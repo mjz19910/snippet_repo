@@ -2307,8 +2307,16 @@ class HandleTypes extends ServiceMethods {
 	P_player_state_entity_key(x) {this.P_EntityKey("P_player_state_entity_key",x);}
 	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
 	P_macro_marker_repeat_state_entity_key(x) {this.P_EntityKey("P_macro_marker_repeat_state_entity_key",x);}
+	/** @arg {P_EntityKey} x @template {number} T @arg {T} t @returns {x is {4:T_D32<T>;}} */
+	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
 	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
 	P_EntityKey(cf,x) {
+		if(this.is_T_D32_at(x,341)) {
+			const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
+			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
+			return;
+		}
 		const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		if(f2[1].length!==1) debugger;
 		let f2w=f2[1][0];
@@ -2321,6 +2329,8 @@ class HandleTypes extends ServiceMethods {
 			case "raw_child": {
 				if(f2w[3][0]!=="string") {debugger; break;}
 				let f2_v=f2w[3][1];
+				if(this.str_starts_with(f2_v,"RD")) {this.playlistId(f2_v); break;}
+				if(this.str_starts_with(f2_v,"UC")) {this.channelId(f2_v); break;}
 				switch(f2_v) {
 					default: {
 						debugger;
@@ -2328,11 +2338,13 @@ class HandleTypes extends ServiceMethods {
 							case "":
 						}
 					} break;
+					case "AUTO_CHAPTERS":
 					case ".transcript.track.selection.key": break;
 					case "/youtube/app/watch/player_state": break;
 					case "183848276973": break;
 					case "HEATSEEKER": break;
 					case "repeat_state": break;
+					case "topbar": break;
 				}
 			} break;
 		}
