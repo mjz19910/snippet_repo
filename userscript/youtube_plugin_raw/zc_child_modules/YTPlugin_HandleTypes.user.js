@@ -2085,7 +2085,7 @@ class HandleTypes extends ServiceMethods {
 					let video_id=this._decoder.decode(bin);
 					this.videoId(video_id);
 				} break;
-				case "raw_child": /*D_VideoId*/{
+				case "raw_child": /*D_VideoIdStr*/{
 					let [,,,tb]=a;
 					if(tb[0]!=="string") {debugger; break;}
 					let [,x]=tb;

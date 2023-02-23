@@ -1470,7 +1470,7 @@ type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: boolean;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_TimedTextApi={
-	v: D_VideoId;
+	v: D_VideoIdStr;
 	caps?: "asr";
 	xoaf: `${5}`;
 	xoadf?: string;
@@ -2873,16 +2873,6 @@ type TD_VideoOwner={
 	subscriberCountText: G_Text;
 	trackingParams: string;
 };
-type D_VideoPrimaryInfo={
-	title: G_Text;
-	viewCount: R_VideoViewCount;
-	videoActions: R_Menu;
-	trackingParams: string;
-	superTitleLink?: G_Text;
-	badges?: RMD_Badge[];
-	dateText: G_Text;
-	relativeDateText: G_Text;
-};
 type D_VideoQualityPromo={
 	triggerCriteria: D_TriggerCriteria;
 	text: G_Text;
@@ -3031,7 +3021,7 @@ type D_GuideEntry_IconType_Obj={
 	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
 //#endregion
-type D_VideoId=string;
+type D_VideoIdStr=string;
 type D_Playlist_MD={
 	title: string;
 	androidAppindexingLink: string;

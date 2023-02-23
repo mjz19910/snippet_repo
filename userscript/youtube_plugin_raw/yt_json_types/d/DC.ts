@@ -114,16 +114,16 @@ type DC_AddToPlaylist=
 		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
 		onCreateListCommand: E_CreatePlaylistService;
 		openMiniplayer: boolean;
-		videoId: D_VideoId;
-		videoIds: D_VideoId[];
+		videoId: D_VideoIdStr;
+		videoIds: D_VideoIdStr[];
 	}
 	|{
 		openMiniplayer: false;
 		openListPanel: true;
-		videoId: D_VideoId;
+		videoId: D_VideoIdStr;
 		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
 		onCreateListCommand: E_CreatePlaylistService;
-		videoIds: D_VideoId[];
+		videoIds: D_VideoIdStr[];
 	}
 	;
 ;

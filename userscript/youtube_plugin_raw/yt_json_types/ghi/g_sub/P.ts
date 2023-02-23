@@ -1,5 +1,5 @@
 type P_entity_key={
-	2: T_VW<{1: TV_Str<D_VideoId>;}>;
+	2: T_VW<{1: TV_Str<D_VideoIdStr>;}>;
 	4: T_D32<246>;
 	5: T_D32<1>;
 }|{
@@ -11,7 +11,7 @@ type P_entity_key={
 	4: T_D32<245>;
 	5: T_D32<1>;
 }|{
-	2: TV_Str<D_VideoId>;
+	2: TV_Str<D_VideoIdStr>;
 	4: T_D32<341>;
 	5: T_D32<1>;
 };
@@ -132,7 +132,7 @@ type P_like_params={
 			8: T_FD32<1382109803>;
 			9: T_FD32<2126714>;
 			14: T_D32<115>;
-		}>|TV_Str<D_VideoId>;
+		}>|TV_Str<D_VideoIdStr>;
 	}>;
 	4: T_D32<0>;
 	5?: T_D32<1>;
@@ -146,14 +146,14 @@ type P_playability_status_context_params={
 	};
 };
 type P_remove_like_params={
-	1: T_VW<{1: TV_Str<D_VideoId>;}>;
+	1: T_VW<{1: TV_Str<D_VideoIdStr>;}>;
 	3: T_D32<0>;
 	4?: T_D32<1>;
 	5: T_VW<V_ShortTimestamp>;
 	6?: T_D32<1>;
 };
 type P_dislike_params_f1={
-	1: TV_Str<D_VideoId>|T_VW<{}>;
+	1: TV_Str<D_VideoIdStr>|T_VW<{}>;
 };
 type P_dislike_params={
 	1: T_VW<P_dislike_params_f1>;
@@ -167,25 +167,25 @@ type P_subscribe_params={
 		1: T_D32<3>;
 	}>;
 	3: T_D32<0>;
-	4: TV_Str<D_VideoId>;
+	4: TV_Str<D_VideoIdStr>;
 };
 type P_unsubscribe_params={
 	1: T_VW<{
 		1: T_D32<3>;
 	}>;
-	2: TV_Str<D_VideoId>;
+	2: TV_Str<D_VideoIdStr>;
 	3: T_D32<0>;
 };
 type P_continuation_request_watch_next_token={
 	1?: {_tag: "not_done";};
 	2: T_VW<{
-		2: TV_Str<D_VideoId>;
+		2: TV_Str<D_VideoIdStr>;
 	}>;
 	3: T_D32<6>;
 	5?: {_tag: "not_done";};
 	6?: T_VW<{
 		4: T_VW<{
-			4: TV_Str<D_VideoId>;
+			4: TV_Str<D_VideoIdStr>;
 			6: T_D32<0>;
 			15: T_D32<2>;
 		}>;
@@ -518,7 +518,7 @@ type P_watch_params={
 			3: T_D32<1>;
 		}>;
 	}>;
-	56?: TV_Str<D_VideoId>;
+	56?: TV_Str<D_VideoIdStr>;
 };
 type P_ve_6827_params={
 	77?: TV_Str<"FEexplore">;

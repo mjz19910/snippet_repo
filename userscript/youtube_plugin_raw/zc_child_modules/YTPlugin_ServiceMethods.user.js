@@ -2492,12 +2492,12 @@ class ServiceMethods extends ServiceData {
 		return ra;
 	}
 	/**
-	 * @protected @arg {CF_T_WCM} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"])=>U} f
+	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
 	 * @returns {[U,Omit<T,"webCommandMetadata">]}
 	 * */
 	T_WCM(cf,x,f) {
 		const {webCommandMetadata: a,...y}=this.s(cf,x);
-		let ret=f.call(this,a);
+		let ret=f.call(this,a,`G${cf}`);
 		return [ret,y];
 	}
 	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
@@ -2606,11 +2606,8 @@ class ServiceMethods extends ServiceData {
 		this._primitive_of(x,"number");
 		if(Number.isNaN(x)) debugger;
 	}
-	/** @protected @arg {string} x */
-	videoId(x) {
-		this.a_primitive_str(x);
-		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,base: "video_id",type: "video_id:normal",v: x});
-	}
+	/** @protected @arg {D_VideoIdStr} x */
+	videoId(x) {this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,base: "video_id",type: "video_id:normal",v: x});}
 	/** @type {any[]} */
 	log_list=[];
 	/** @arg {string} path @arg {string} cf2 @arg {number} key_index @arg {any} entry */
@@ -5231,16 +5228,23 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
 		const cf="D_VideoPrimaryInfo";
-		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {title,viewCount,videoActions,trackingParams,updatedMetadataEndpoint,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
-		this.trackingParams(trackingParams);
 		this.R_VideoViewCount(viewCount);
 		this.R_Menu(videoActions);
+		this.trackingParams(trackingParams);
+		this.t(updatedMetadataEndpoint,this.E_UpdatedMetadata);
 		this.t(superTitleLink,this.G_Text);
 		this.tz(badges,this.RMD_Badge);
 		this.G_Text(dateText);
 		this.G_Text(relativeDateText);
 	}
+	/** @private @arg {E_UpdatedMetadata} x */
+	E_UpdatedMetadata(x) {const [y]=this.TE_Endpoint_3_v2("updatedMetadataEndpoint",x,this.M_UpdatedMetadata,this.D_VideoId); this.g(y);}
+	/** @private @arg {M_UpdatedMetadata} x */
+	M_UpdatedMetadata(x) {this.T_WCM("M_UpdatedMetadata",x,(x,cf) => this.T_GM(cf,x,x => this.cq(x,"/youtubei/v1/updated_metadata")));}
+	/** @private @arg {D_VideoId} x */
+	D_VideoId(x) {this.y("D_VideoId","videoId",x,this.videoId);}
 	/** @public @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {D_VideoOwner} x */

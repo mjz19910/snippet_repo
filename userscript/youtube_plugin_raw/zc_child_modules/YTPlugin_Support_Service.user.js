@@ -3640,9 +3640,9 @@ class Support_Renderer extends ServiceMethods {
 	/** @protected @arg {M_Next} x */
 	M_Next(x) {this.T_WCM("M_Next",x,x => this.GM_Next(x));}
 	/** @private @arg {GM_Browse} x */
-	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
+	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.cq(x,"/youtubei/v1/browse"));}
 	/** @private @arg {GM_Next} x */
-	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
+	GM_Next(x) {this.T_GM("GM_Next",x,x => this.cq(x,"/youtubei/v1/next"));}
 	//#endregion
 }
 export_(exports => {

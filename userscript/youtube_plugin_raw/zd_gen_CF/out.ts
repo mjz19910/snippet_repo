@@ -707,6 +707,7 @@ export namespace Gen {
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_ThumbnailOverlayResumePlayback";}
+		|{n: "CF_M_y"; t: CF_M_y; v: "D_VideoId";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "R_ToggleButtonIdData";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "T_Item";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "UA_DateText";}
@@ -843,6 +844,7 @@ export namespace Gen {
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_RemoveUpcomingEventReminder";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_SetSetting";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_Subscribe";}
+		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_UpdatedMetadata";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_YpcGetOffers";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "DMD_Badge_LiveNow";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "DMD_Badge_MediumGray";}
@@ -907,6 +909,7 @@ export namespace Gen {
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_SetSetting";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Subscribe";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Unsubscribe";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_UpdatedMetadata";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_UserFeedback";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE12924";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_VE37414";}
