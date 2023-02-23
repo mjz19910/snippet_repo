@@ -1960,7 +1960,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
 		const cf="P_ypc_get_offers_params";
-		const {1: a,3: {},5: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: a,3: f3,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
@@ -1971,19 +1971,29 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
-		const {2: a,5: {},10: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: a,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.videoId(x));
 	}
 	/** @private @arg {PD_continuation_params} x */
-	PD_continuation_params(x) {
+	PD_continuation_params_1(x) {
 		const cf="PD_continuation_params";
-		const {3: {},8: {},11: f11,14: {},15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: f3,8: f8,11: f11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {PR_continuation_params} x */
 	PR_continuation_params(x) {
 		const cf="PR_continuation_params";
-		const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_VW(n,this.PD_continuation_params);
+		if(0x94d81d4 in x) {
+			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(n,this.PD_continuation_params_1);
+			return;
+		}
+		if(0x722607a in x) {
+			this.h_gen_keys(cf,x,x);
+			// const {0x722607a: n,...y}=this.s(cf,x);
+			// this.T_VW(n,this.PD_continuation_params_2);
+			return;
+		}
+		debugger;
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
@@ -2184,7 +2194,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_notification_opt_out} x */
 	P_notification_opt_out(x) {
 		const cf="P_notification_opt_out";
-		const {2: {},3: {},4: {},7: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,4: f4,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
