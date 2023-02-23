@@ -10,7 +10,7 @@ type MonadFn<U,A extends any[]>=(...s: A) => U;
 type M_Optional<T>=Some<T>|None;
 type Some<T>={
 	type: "s";
-	x: T;
+	v: T;
 };
 type None={type: "n";};
 

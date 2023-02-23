@@ -401,6 +401,12 @@ type P_watch_player_params={
 	9?: T_D32<1>;
 	12?: T_D32<1>;
 	25?: T_D32<1>;
+	40?: T_VW<{
+		1: T_VW<{
+			2: T_D32<2>;
+			3: T_D32<1>;
+		}>;
+	}>;
 };
 type P_watch_params={
 	2?: T_D32<1>;

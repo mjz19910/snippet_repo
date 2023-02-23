@@ -2223,6 +2223,26 @@ class BaseService extends BaseServicePrivate {
 		let rq=l1_pk.concat(l2_pk);
 		return rq;
 	}
+	/** @protected @template {{}} T @arg {T} x */
+	is_empty_object(x) {
+		let keys=this.get_keys_of(x);
+		if(!keys.length) return true;
+		return false;
+	}
+	/** @private @type {string[]} */
+	logged_keys=[];
+	/** @private @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
+	on_empty_object(x) {
+		if(!x) {debugger; return;}
+		let keys=this.get_keys_of(x);
+		if(!keys.length) return;
+		let jk=keys.join();
+		if(this.logged_keys.includes(jk)) return;
+		this.logged_keys.push(jk);
+		console.log("[empty_object] [%s]",jk);
+		{debugger;}
+	}
+	//#region short names
 	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(this:this,k:string,v: {})=>void} fn */
 	v(obj,fn) {
 		if(obj===void 0) return;
@@ -2231,8 +2251,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
 	z(x,f) {
-		if(x===void 0) {debugger; return [[],[]];}
-		if(!x.entries) {debugger; return [[],[]];}
+		if(x===void 0||!x.entries) {debugger; return [[],[]];}
 		/** @private @type {any[]} */
 		let c=[];
 		/** @private @type {any[]} */
@@ -2241,7 +2260,8 @@ class BaseService extends BaseServicePrivate {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
 			let u=f.call(this,a,i);
-			if(u!==void 0) {c.push(u);} else if(u===void 0) {v.push(u);} else {throw new Error();}
+			if(u!=null) {c.push(u); continue;}
+			v.push(u);
 		}
 		return [c,v];
 	}
@@ -2261,66 +2281,50 @@ class BaseService extends BaseServicePrivate {
 		}
 		return [c,v];
 	}
-	/** @private @type {string[]} */
-	logged_keys=[];
 	/** @protected @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
-	g(x) {
-		if(!x) {debugger; return;}
-		let keys=this.get_keys_of(x);
-		if(!keys.length) return;
-		let jk=keys.join();
-		if(this.logged_keys.includes(jk)) return;
-		this.logged_keys.push(jk);
-		console.log("[empty_object] [%s]",jk);
-		{debugger;}
-	}
-	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|null} */
-	t(x,f) {if(!x) return null; return f.call(this,x);}
+	g(x) {this.on_empty_object(x);}
 	/** @public @template {{}} T @arg {({} extends T?T_DistributedKeysOf<T> extends []?T:never:never)|null|undefined} x */
 	tg(x) {this.t(x,this.g);}
+	// takes nullish (as None), returns null (as None)
+	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f */
+	t(x,f) {if(!x) return null; return f.call(this,x);}
 	/** @protected @template U @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>U} f */
-	tz(x,f) {
-		if(!x) return null;
-		return this.z(x,f);
-	}
-	/** @protected @template {string} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
-	t_cf(cf,x,f) {
-		if(x===void 0) return;
-		f.call(this,cf,x);
-	}
-	/** @protected @template {string} CF_T @arg {CF_T} cf @template {{}} T @arg {T|null} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
-	tn_cf(cf,x,f) {
-		if(x===null) return;
-		f.call(this,cf,x);
-	}
-	/** @protected @template {string} CF @arg {CF} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:CF,x:T)=>void} f */
-	tz_cf(cf,x,f) {
-		if(x===void 0) return;
-		this.z_cf(cf,x,f);
-	}
-	/** @protected @template {string} CF @arg {CF} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:CF,x:U,i:number)=>void} f  */
-	z_cf(cf,x,f) {
-		if(x===void 0) {debugger; return;}
-		if(!x.entries) debugger;
-		for(let it of x.entries()) {
-			const [i,a]=it;
-			if(a===void 0) {debugger; continue;}
-			f.call(this,cf,a,i);
-		}
-	}
+	tz(x,f) {if(x==null) return null; return this.z(x,f);}
+	// takes undefined (as None), returns null (as None)
+	/** @protected @template {string} CF_T @arg {CF_T} cf @template T @template U @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>U} f */
+	t_cf(cf,x,f) {if(x===void 0) return null; return f.call(this,cf,x);}
+	// takes undefined (as None), returns undefined (as None)
 	/** @private @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
-	t_ex(f,x) {if(!x) return; return f.call(this,x);}
-	/** @protected @template U @template {{}} T @arg {(this:this,x:T)=>U} f */
-	tf(f) {
-		/** @param {T|undefined} x @returns {U|undefined} */
-		return x => this.t_ex(f,x);
-	}
-	/** @protected @template {{}} T @arg {T} x */
-	is_empty_object(x) {
-		let keys=this.get_keys_of(x);
-		if(!keys.length) return true;
-		return false;
-	}
+	tv(f,x) {if(!x) return; return f.call(this,x);}
+	/** @protected @template {string} CF @arg {CF} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:CF,x:T)=>void} f */
+	tz_cf(cf,x,f) {if(x===void 0) return; return this.z_cf(cf,x,f);}
+	// takes null (as None), returns undefined (as None)
+	/** @protected @template {string} CF_T @arg {CF_T} cf @template {{}} T @arg {T|null} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
+	tn_cf(cf,x,f) {if(x===null) return; f.call(this,cf,x);}
+	/** @protected @template {string} CF @arg {CF} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:CF,x:U,i:number)=>void} f  */
+	z_cf(cf,x,f) {if(x===void 0||!x.entries) {debugger; return;} return this.z(x,(x,i) => f.call(this,cf,x,i));}
+	/** @protected @template Z @template {{}} Y @arg {(this:this,x:Y)=>Z} x @returns {(x:Y|undefined)=>Z|undefined} */
+	tf=x => y => this.tv(x,y);
+	/** @template T @arg {T} x @returns {Some<T>} */
+	m(x) {return this.some(x);}
+	/** @template T @arg {T} x @returns {Some<T>} */
+	some(x) {return {type: "s",v: x};}
+	/** @template T @arg {Some<T>} x @returns {T} */
+	mu(x) {return x.v;}
+	/** @arg {(x:T)=>U} y @template T @arg {Some<T>} x @template U @returns {Some<U>} */
+	mt(x,y) {return this.m(y.call(this,x.v));}
+	/** @arg {(x:T)=>U} y @template {{}} T @template {Some<T[]>} Opt @arg {Opt} x @template U */
+	mz(x,y) {return this.mt(x,x => this.z(x,y));}
+	/** @arg {(x:T)=>U} f @template T @arg {Some<T>} m @template U */
+	mb(f,m) {return this.mt(m,f);}
+	/** @template T @arg {T} x @template U @arg {(x:T)=>U} y @returns {Some<U>} */
+	ms(x,y) {return this.mt(this.m(x),y);}
+	/** @template {{}} T @arg {T|undefined} x @template U @arg {(x:T)=>U} y @returns {Some<U|null>} */
+	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
+	/** @template {{}} T @arg {Some<T|null>} x @template U @arg {(x:T)=>U} y @returns {Some<U|null>} */
+	mt_t(x,y) {return this.mt(x,x => this.t(x,y));}
+	/** @template {string} T_CF @arg {T_CF} cf @arg {(cf:T_CF,x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U|null>} */
+	mt_cf(m,cf,f) {return this.mt(m,x => this.t_cf(cf,x,f));}
 }
 class YtHandlers extends BaseService {
 	/** @api @public @arg {{}} item */

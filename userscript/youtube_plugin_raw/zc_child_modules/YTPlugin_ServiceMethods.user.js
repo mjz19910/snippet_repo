@@ -2765,24 +2765,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @template T @arg {any} x @arg {()=>T} _ty @returns {asserts x is T} */
 	assert_assume_is_type(x,_ty) {x;}
-	/** @template T @arg {T} x @returns {Some<T>} */
-	m(x) {return this.some(x);}
-	/** @template T @arg {T} x @returns {Some<T>} */
-	some(x) {return {type: "s",x};}
-	/** @template T @arg {Some<T>} x @returns {T} */
-	mu(x) {return x.x;}
-	/** @arg {(x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U>} */
-	mt(m,f) {return this.some(f.call(this,m.x));}
-	/** @arg {(x:T)=>U} f @template {{}} T @template {Some<T[]>} Opt @arg {Opt} m @template U */
-	mz(m,f) {return this.mt(m,x => this.z(x,f));}
-	/** @arg {(x:T)=>U} f @template T @arg {Some<T>} m @template U */
-	mb(f,m) {return this.mt(m,f);}
-	/** @template {string} T_CF @arg {T_CF} cf @arg {(cf:T_CF,x:T)=>U} f @template T @arg {M_Optional<T>} m @template U @returns {M_Optional<U>|None} */
-	mt_cf(m,cf,f) {
-		if(m.type=="n") return {type: "n"};
-		let v=f.call(this,cf,m.x);
-		return this.some(v);
-	}
 	/** @template T @template {T_OpenPopup_Dialog<T>} U @arg {U} x @returns {[true,U["popup"]]|[false,U["popupType"]]} */
 	unpack_popup_dialog(x) {
 		if(x.popupType!=="DIALOG") return [false,x.popupType];

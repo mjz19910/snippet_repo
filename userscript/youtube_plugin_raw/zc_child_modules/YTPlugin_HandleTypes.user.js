@@ -1998,12 +1998,6 @@ class HandleTypes extends ServiceMethods {
 	VW_BinaryTimestamp(x) {this.T_VW(x,this.V_BinaryTimestamp);}
 	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<H_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.T_D32(x,x => this.save_number(`${cf}.${k}`,x));}
-	/** @template T @arg {T} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U>} */
-	ms(x,y) {return this.mt(this.m(x),y);}
-	/** @template {{}} T @arg {T|undefined} x @template U @arg {(x:T)=>U} y @returns {M_Optional<U|null>} */
-	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
-	/** @template {{}} T @arg {Some<T|null>} x @template U @arg {(x:T)=>U} y @returns {Some<U|null>} */
-	mt_t(x,y) {return this.mt(x,x => this.t(x,y));}
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="param_arr") debugger;
@@ -2263,17 +2257,17 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
-		const {8: f8,9: f9,12: f12,25: f25,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {8: f8,9: f9,12: f12,25: f25,40: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_format_item_xtags} x */
 	P_format_item_xtags(x) {
 		const cf="P_format_item_xtags";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {
 		const cf="P_get_notification_menu_ctoken";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_notification_opt_out} x */
 	P_notification_opt_out(x) {
@@ -2283,7 +2277,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
 		const cf="P_get_report_form_params";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {25: f25,26: f26,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
@@ -2354,12 +2348,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
 		const cf="P_ve_3611_params";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,23: f23,110: f110,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_playlist_edit_params} x */
 	P_playlist_edit_params(x) {
 		const cf="P_playlist_edit_params";
-		const {...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	//#endregion
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
