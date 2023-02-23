@@ -3644,7 +3644,7 @@ class ServiceMethods extends ServiceData {
 		const {style,isToggled,isDisabled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,...u}=this.s(cf,x);
 		this.t(style,x => this.save_string(`${cf}.style`,x.styleType));
 		this.t(isToggled,this.a_primitive_bool);
-		this.cq(isDisabled,false);
+		this.t(isDisabled,x => this.cq(x,false));
 		this.t(defaultIcon,x => this.save_string(`${cf}.defaultIcon.type`,x.iconType));
 		this.t(defaultText,this.G_Text);
 		this.t(defaultServiceEndpoint,this.D_ToggleButton_DefaultSrvEP);
