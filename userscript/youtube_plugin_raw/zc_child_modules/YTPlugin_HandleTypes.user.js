@@ -1482,6 +1482,8 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case "data32": return this.v_param_2_D32(x2);
 				case "data64": return this.v_param_2_D64(x2);
+				case "data_fixed32": return this.v_param_2_FD32(x2);
+				case "data_fixed64": return this.v_param_2_FD64(x2);
 				case "raw_child": {
 					let x3=x2[3];
 					if(x2[2]===null) {
@@ -1512,12 +1514,10 @@ class HandleTypes extends ServiceMethods {
 					let gen_json=this.gen_typedef_bin_json(s,x3);
 					return `TYPE::T_VW<${gen_json},"json">`;
 				}
-				case "data_fixed32": break;
-				case "data_fixed64": break;
 				case "error": throw new Error("Found error in input stream");
 				case "group":
 				case "struct":
-				case "info": break;
+				case "info": debugger; break;
 				case "param_arr": debugger; break;
 			}
 		}

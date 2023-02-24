@@ -483,9 +483,16 @@ type P_bin_params_1={
 	}>;
 };
 type P_notification_add_upcoming_event_reminder_params={
-	1: T_VW<{14: T_VW<T_FD64<6427857484411717751n>>;}>,
+	1: T_VW<{14: T_VW<T_FD64<6427857484411717751n>>;}>;
 	6: T_VW<{
-		1: T_D32<0>,
+		1: T_D32<0>;
+		2: T_D32<0>;
+	}>;
+};
+type P_notification_remove_upcoming_event_reminder_params={
+	1: T_VW<{14: T_FD64<6427857484411717751n>;}>;
+	6: T_VW<{
+		1: T_D32<0>;
 		2: T_D32<0>;
 	}>;
 };
