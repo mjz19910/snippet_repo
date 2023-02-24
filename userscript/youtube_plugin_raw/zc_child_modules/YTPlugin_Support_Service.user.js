@@ -644,23 +644,37 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
 		const cf="D_PlayabilityStatus";
-		const {status,reason,playableInEmbed,liveStreamability,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
-		if(status!=="OK") debugger;
-		this.t(reason,x => this.cq(x,"We're experiencing technical difficulties."));
-		this.a_primitive_bool(playableInEmbed);
-		this.t(liveStreamability,this.R_LiveStreamability);
-		this.t(offlineability,this.R_Button);
-		this.t(miniplayer,this.R_Miniplayer);
-		let ctx=atob(contextParams);
-		this.params("playability_status.context_params",ctx);
+		switch(x.status) {
+			default: debugger; break;
+			case "LIVE_STREAM_OFFLINE": {
+				const {status: {},reason,playableInEmbed,liveStreamability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
+				this.cq(reason,"This live event will begin in a few moments.");
+				this.a_primitive_bool(playableInEmbed);
+				this.t(liveStreamability,this.R_LiveStreamability);
+				this.t(miniplayer,this.R_Miniplayer);
+				let ctx=atob(contextParams);
+				this.params("playability_status.context_params",ctx);
+			} break;
+			case "OK": {
+				const {status,reason,playableInEmbed,liveStreamability,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
+				this.t(reason,x => this.cq(x,"We're experiencing technical difficulties."));
+				this.a_primitive_bool(playableInEmbed);
+				this.t(liveStreamability,this.R_LiveStreamability);
+				this.t(offlineability,this.R_Button);
+				this.t(miniplayer,this.R_Miniplayer);
+				let ctx=atob(contextParams);
+				this.params("playability_status.context_params",ctx);
+			} break;
+		}
 	}
 	/** @private @arg {R_LiveStreamability} x */
 	R_LiveStreamability(x) {this.H_("liveStreamabilityRenderer",x,this.D_LiveStreamability);}
 	/** @private @arg {D_LiveStreamability} x */
 	D_LiveStreamability(x) {
-		const cf="D_PlayabilityStatus";
-		const {videoId,pollDelayMs,...y}=this.s(cf,x); this.g(y);
+		const cf="D_LiveStreamability";
+		const {videoId,broadcastId,pollDelayMs,...y}=this.s(cf,x); this.g(y);
 		this.videoId(videoId);
+		this.t(broadcastId,x => this.cq(x,"1"));
 		this.cq(pollDelayMs,"15000");
 	}
 	/** @private @arg {G_PlayerStoryboards} x */
@@ -832,11 +846,13 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
 		const cf="DD_Streaming";
-		const {expiresInSeconds,adaptiveFormats,formats,probeUrl,...y}=this.s(cf,x); this.g(y);
+		const {expiresInSeconds,adaptiveFormats,formats,probeUrl,dashManifestUrl,hlsManifestUrl,...y}=this.s(cf,x); this.g(y);
 		this.parse_number_template(expiresInSeconds);
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
 		this.z(formats,this.D_FormatItem);
 		this.t(probeUrl,x => this.parser.parse_url(cf,x));
+		this.t(dashManifestUrl,this.a_primitive_str);
+		this.t(hlsManifestUrl,this.a_primitive_str);
 	}
 	/** @private @arg {D_AdPlacementConfig} x */
 	D_AdPlacementConfig(x) {

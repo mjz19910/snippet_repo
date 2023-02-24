@@ -318,6 +318,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LiveChatPlaceholderItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LiveChatTextMessage";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LiveChatViewerEngagementMessage";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_LiveStreamability";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LoggingContext";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LoggingDirectives";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_MP_MenuNotificationSection";}
