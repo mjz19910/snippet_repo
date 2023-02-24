@@ -19,6 +19,7 @@ const __module_name__="mod$ECatcherService";
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 class ECatcherService extends BaseService {
+	/** @type {number[]} */
 	static known_experiments=[
 		[1714247],
 		[4957635,9405964],
@@ -40,7 +41,6 @@ class ECatcherService extends BaseService {
 		[24612269,24613467,24613789,24614043,24615363,24615479,24615664,24615733],
 		[39321826,39321827,39322504,39322574,39322870,39322873,39322953,39322980,39322983,39323013,39323016,39323020,39323023,39323074,39323074,39323117,39323120],
 		[45686551],
-		,
 	].flat();
 	data={
 		/** @private @type {{name:RC_ECatcherClientName['value'];fexp:number[];version:RC_SomeVer<RC_CsiVarTypes["cver"]>}|null} */
