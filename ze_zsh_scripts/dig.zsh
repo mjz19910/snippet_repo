@@ -81,7 +81,8 @@ function get_abc_opt {
 }
 function dig_user-run {
 	a2=${1}"__n"${2}"_"
-	RESULT_FILE="$TMP_DIR/result.dig_user.$a2"
+	export TMP_TAG=user
+	RESULT_FILE="$TMP_DIR/dig/$TMP_TAG/out/result.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
 		if (($(wc -l <"$RESULT_FILE") != 0)); then
 			foo=$(<"$RESULT_FILE")
@@ -90,10 +91,11 @@ function dig_user-run {
 		return 0
 	fi
 	touch /tmp/dig_term_lock
-	echo $TMP_DIR/dig_res.t.*(N) | xargs -r rm
+	mkdir -p $TMP_DIR/dig/$TMP_TAG/tmp $TMP_DIR/dig/$TMP_TAG/out
+	echo $TMP_DIR/dig/$TMP_TAG/tmp/result.*(N) | xargs -r rm
 	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user-child "$@"' ''
-	list=($TMP_DIR/dig_res.t.*)
+	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
@@ -104,7 +106,7 @@ function dig_user-run {
 function dig_final-run {
 	a2=${1}"n__"
 	export TMP_TAG=final
-	RESULT_FILE="$TMP_DIR/result.dig.$TMP_TAG.$a2"
+	RESULT_FILE="$TMP_DIR/dig/$TMP_TAG/out/result.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
 		if (($(wc -l <"$RESULT_FILE") != 0)); then
 			foo=$(<"$RESULT_FILE")
@@ -113,11 +115,11 @@ function dig_final-run {
 		return 0
 	fi
 	touch /tmp/dig_term_lock
-	mkdir -p $TMP_DIR/dig/$TMP_TAG
-	echo $TMP_DIR/dig/$TMP_TAG/result.*(N) | xargs -r rm
+	mkdir -p $TMP_DIR/dig/$TMP_TAG/tmp $TMP_DIR/dig/$TMP_TAG/out
+	echo $TMP_DIR/dig/$TMP_TAG/tmp/result.*(N) | xargs -r rm
 	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
-	list=($TMP_DIR/dig/$TMP_TAG/result.*)
+	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
@@ -154,12 +156,12 @@ function dig_user-child {
 	SPACE_CHAR=1
 	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + ${#TMP_TAG} + 1))
 	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
-	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/result.XXX)
+	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/tmp/result.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
 	printf "."
 	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
 	if (($(wc -l <$TF) != 0)); then
-		eval 'printf "!${1[14]}"'
+		eval 'printf "![${1[11,12]}:${1[14,15]}]"'
 	fi
 }
 function dig_final-child {
@@ -172,7 +174,7 @@ function dig_final-child {
 	SPACE_CHAR=1
 	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + ${#TMP_TAG} + 1))
 	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
-	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/result.XXX)
+	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/tmp/result.XXX)
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
 	printf "."
 	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
