@@ -32,8 +32,6 @@ type PT_DigDomain=[
 	"rr1.sn-ab5sznzz.googlevideo.com.",
 ];
 type PT_TypeS_NoRep=[
-	gen_g2_t1<"5uaez">,
-	gen_g2_t1<"5uald">,
 	gen_g2_t1<"hp57k">,
 ];
 type PT_TypeS=[
