@@ -471,7 +471,11 @@ class IndexedDBService extends BaseService {
 		if(this.open_db_promise) return value;
 		this.open_db_promise=this.open_database(key,version);
 		this.open_db_promise
-			.catch(err => console.log("open_database error",err))
+			.catch(() => {
+				requestIdleCallback(() => {
+					this.put(key,value,version);
+				});
+			})
 			.then(() => this.open_db_promise=null);
 		return value;
 	}
@@ -838,7 +842,7 @@ class IndexedDBService extends BaseService {
 			let complete_event=await tx_scope.complete_promise;
 			this.handle_transaction_complete(tx_scope,complete_event);
 		} catch(e) {
-			console.log("db error",e);
+			if(this.log_db_actions) console.log("db error",e);
 			throw e;
 		} finally {
 			this.database_open=false;
