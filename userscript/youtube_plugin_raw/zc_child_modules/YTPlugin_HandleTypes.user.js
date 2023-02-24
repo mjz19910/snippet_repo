@@ -802,7 +802,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
-		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
+		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,ufph,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
@@ -820,6 +820,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ctier,x => this.ceq("SH",x));
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
+		this.t(ufph,x => this.cq(x,"1"));
 		this.t(live,x => this.cq(x,"1"));
 		this.t(hang,x => this.cq(x,"1"));
 		this.t(noclen,x => this.cq(x,"1"));
@@ -2210,6 +2211,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.h_gen_keys(cf,x,x);
 	}
+	/** @private @arg {P_invalidation_continuation} x */
+	P_invalidation_continuation(x) {this.PR_continuation_params("P_invalidation_continuation",x);}
+	/** @private @arg {P_timed_continuation_data} x */
+	P_timed_continuation_data(x) {this.PR_continuation_params("P_timed_continuation_data",x);}
 	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
 	/** @private @arg {P_ypc_get_offers_params} x */
@@ -2879,10 +2884,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {P_invalidation_continuation} x */
-	P_invalidation_continuation(x) {this.PR_continuation_params("P_invalidation_continuation",x);}
-	/** @private @arg {P_timed_continuation_data} x */
-	P_timed_continuation_data(x) {this.PR_continuation_params("P_timed_continuation_data",x);}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {x;}
 	//#endregion
