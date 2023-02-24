@@ -637,7 +637,7 @@ class HandleTypes extends ServiceMethods {
 				debugger;
 			}; break;
 			case "5uald":
-			case "9gv7e":
+			case "9gv7e": case "9gv7l":
 			case "a5mek": case "a5mse": case "ab5l6": case "ab5sz":
 			case "hp57k": case "hp57y":
 			case "n4v7s": case "nx5s7": case "nx57y":
@@ -650,10 +650,10 @@ class HandleTypes extends ServiceMethods {
 		switch(selector) {
 			default: selector===""; debugger; break;
 			case "6d": case "6l":
-			case "d6": case "dy": case "dz":
-			case "l7": case "lk": case "lr":
-			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
+			case "d6": case "dy": case "dz":
+			case "l7": case "lk": case "lr": case "ls":
+			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "el": case "ee": case "ey":
 			case "ze": case "zk": case "zr": case "zy":
 		}
