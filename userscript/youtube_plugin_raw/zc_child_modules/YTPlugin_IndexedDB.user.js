@@ -777,6 +777,7 @@ class IndexedDBService extends BaseService {
 							case "boolean": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+									this.update_group(cursor_value.value,item_nt.value);
 									update_item=true; break;
 								}
 							} break;
@@ -784,6 +785,7 @@ class IndexedDBService extends BaseService {
 							case "number": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+									this.update_group(cursor_value.value,item_nt.value);
 									update_item=true; break;
 								}
 							} break;
