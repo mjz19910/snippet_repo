@@ -503,6 +503,128 @@ class HandleTypes extends ServiceMethods {
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	//#region Renderer methods
+	/** @public @arg {R_VideoSecondaryInfo} x */
+	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
+	/** @private @arg {D_VideoSecondaryInfo} x */
+	D_VideoSecondaryInfo(x) {
+		const cf="D_VideoSecondaryInfo";
+		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,attributedDescription,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.t(description,this.G_Text);
+		this.R_SubscribeButton(subscribeButton);
+		this.RMD_RowContainer(metadataRowContainer);
+		this.G_Text(showMoreText);
+		this.G_Text(showLessText);
+		this.R_VideoOwner(owner);
+		this.a_primitive_bool(defaultExpanded);
+		this.a_primitive_num(descriptionCollapsedLines);
+		this.t(showMoreCommand,this.C_Executor);
+		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
+		this.t(attributedDescription,this.D_AttributedDescription);
+	}
+	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
+	T_Attachment(cf,x) {
+		const {startIndex,length,...y}=this.s(cf,x);
+		this.a_primitive_num(startIndex);
+		this.a_primitive_num(length);
+		return y;
+	}
+	/** @private @arg {D_CommandRunItem} x */
+	D_CommandRunItem(x) {
+		const cf="D_CommandRunItem";
+		const {onTap,loggingDirectives,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
+		this.C_Innertube(onTap);
+		this.t(loggingDirectives,this.D_LoggingDirectives);
+	}
+	/** @private @arg {D_StyleRunItem} x */
+	D_StyleRunItem(x) {
+		const cf="D_StyleRunItem";
+		const {fontColor,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
+		this.save_number(`${cf}.fontColor`,fontColor);
+	}
+	/** @private @arg {D_AttributedDescription} x */
+	D_AttributedDescription(x) {
+		const cf="D_VideoSecondaryInfo";
+		const {content,commandRuns,styleRuns,attachmentRuns,decorationRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(content);
+		this.z(commandRuns,this.D_CommandRunItem);
+		this.z(styleRuns,this.D_StyleRunItem);
+		this.tz(attachmentRuns,this.R_AttachmentElement);
+		this.tz(decorationRuns,this.R_TextDecorator);
+	}
+	/** @private @arg {R_AttachmentElement} x */
+	R_AttachmentElement(x) {
+		const cf="D_VideoSecondaryInfo";
+		const {element,alignment,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
+		this.D_AttachmentElement(element);
+		this.save_enum(cf,"ALIGNMENT",alignment);
+	}
+	/** @private @arg {R_TextDecorator} x */
+	R_TextDecorator(x) {this.H_("textDecorator",x,this.R_HighlightTextDecorator);}
+	/** @private @arg {R_HighlightTextDecorator} x */
+	R_HighlightTextDecorator(x) {this.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
+	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
+	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
+	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
+	D_ExpandableVideoDescriptionBody(x) {
+		const cf="D_ExpandableVideoDescriptionBody";
+		const {descriptionBodyText,showMoreText,showLessText,attributedDescriptionBodyText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(descriptionBodyText,this.G_Text);
+		this.t(showMoreText,this.G_Text);
+		this.t(showLessText,this.G_Text);
+		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
+	}
+	/** @private @arg {D_HighlightTextDecorator} x */
+	D_HighlightTextDecorator(x) {
+		const cf="D_HighlightTextDecorator";
+		const {backgroundColor,backgroundCornerRadius,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
+		this.save_number(`${cf}.backgroundColor`,backgroundColor);
+		this.cq(backgroundCornerRadius,8);
+	}
+	/** @private @arg {D_AttachmentElement} x */
+	D_AttachmentElement(x) {
+		const cf="D_AttachmentElement";
+		const {type,properties,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_ImageType(type);
+		this.R_LayoutProperties(properties);
+	}
+	/** @private @arg {R_LayoutProperties} x */
+	R_LayoutProperties(x) {this.H_("layoutProperties",x,this.D_LayoutProperties);}
+	/** @private @arg {D_LayoutProperties} x */
+	D_LayoutProperties(x) {
+		const cf="D_LayoutProperties";
+		const {height,width,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(height) {
+			this.cq(height.unit,"DIMENSION_UNIT_POINT");
+			this.cq(height.value,10);
+		} else debugger;
+		if(width) {
+			this.cq(width.unit,"DIMENSION_UNIT_POINT");
+			this.cq(width.value,14);
+		} else debugger;
+	}
+	/** @private @arg {D_ImageType} x */
+	D_ImageType(x) {this.H_("imageType",x,this.D_Image);}
+	/** @private @arg {D_Image} x */
+	D_Image(x) {this.H_("image",x,this.D_Sources);}
+	/** @private @arg {D_Sources} x */
+	D_Sources(x) {
+		this.H_("sources",x,x => this.z(x,x => {
+			const {url,...y}=this.s("D_Sources.sources[]",x); this.g(y);
+			this.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
+		}));
+	}
+	/** @public @arg {R_BackgroundPromo} x */
+	R_BackgroundPromo(x) {this.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
+	/** @public @arg {D_BackgroundPromo} x */
+	D_BackgroundPromo(x) {
+		const cf="D_LayoutProperties";
+		const {title,bodyText,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.G_Text(bodyText);
+		this.T_Icon(cf,icon);
+		this.trackingParams(trackingParams);
+	}
 	//#endregion
 	//#region G
 	/** @public @arg {G_SI_DB_EngagementPanel} x */
@@ -545,6 +667,23 @@ class HandleTypes extends ServiceMethods {
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {C_Innertube} x */
+	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
+	/** @private @arg {G_DC_Innertube} x */
+	G_DC_Innertube(x) {
+		const cf="G_DC_Innertube"; this.k(cf,x);
+		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
+		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			debugger;
+			return;
+		}
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		debugger;
 	}
 	//#endregion
 	//#region CD & AU & C & DC
@@ -2661,145 +2800,6 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	//#endregion
-	/** @public @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
-	/** @private @arg {D_VideoSecondaryInfo} x */
-	D_VideoSecondaryInfo(x) {
-		const cf="D_VideoSecondaryInfo";
-		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,attributedDescription,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.t(description,this.G_Text);
-		this.R_SubscribeButton(subscribeButton);
-		this.RMD_RowContainer(metadataRowContainer);
-		this.G_Text(showMoreText);
-		this.G_Text(showLessText);
-		this.R_VideoOwner(owner);
-		this.a_primitive_bool(defaultExpanded);
-		this.a_primitive_num(descriptionCollapsedLines);
-		this.t(showMoreCommand,this.C_Executor);
-		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
-		this.t(attributedDescription,this.D_AttributedDescription);
-	}
-	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
-	T_Attachment(cf,x) {
-		const {startIndex,length,...y}=this.s(cf,x);
-		this.a_primitive_num(startIndex);
-		this.a_primitive_num(length);
-		return y;
-	}
-	/** @private @arg {D_CommandRunItem} x */
-	D_CommandRunItem(x) {
-		const cf="D_CommandRunItem";
-		const {onTap,loggingDirectives,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
-		this.C_Innertube(onTap);
-		this.t(loggingDirectives,this.D_LoggingDirectives);
-	}
-	/** @private @arg {D_StyleRunItem} x */
-	D_StyleRunItem(x) {
-		const cf="D_StyleRunItem";
-		const {fontColor,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
-		this.save_number(`${cf}.fontColor`,fontColor);
-	}
-	/** @private @arg {D_AttributedDescription} x */
-	D_AttributedDescription(x) {
-		const cf="D_VideoSecondaryInfo";
-		const {content,commandRuns,styleRuns,attachmentRuns,decorationRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(content);
-		this.z(commandRuns,this.D_CommandRunItem);
-		this.z(styleRuns,this.D_StyleRunItem);
-		this.tz(attachmentRuns,this.R_AttachmentElement);
-		this.tz(decorationRuns,this.R_TextDecorator);
-	}
-	/** @private @arg {R_AttachmentElement} x */
-	R_AttachmentElement(x) {
-		const cf="D_VideoSecondaryInfo";
-		const {element,alignment,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
-		this.D_AttachmentElement(element);
-		this.save_enum(cf,"ALIGNMENT",alignment);
-	}
-	/** @private @arg {R_TextDecorator} x */
-	R_TextDecorator(x) {this.H_("textDecorator",x,this.R_HighlightTextDecorator);}
-	/** @private @arg {R_HighlightTextDecorator} x */
-	R_HighlightTextDecorator(x) {this.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
-	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
-	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
-	D_ExpandableVideoDescriptionBody(x) {
-		const cf="D_ExpandableVideoDescriptionBody";
-		const {descriptionBodyText,showMoreText,showLessText,attributedDescriptionBodyText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(descriptionBodyText,this.G_Text);
-		this.t(showMoreText,this.G_Text);
-		this.t(showLessText,this.G_Text);
-		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
-	}
-	/** @private @arg {D_HighlightTextDecorator} x */
-	D_HighlightTextDecorator(x) {
-		const cf="D_HighlightTextDecorator";
-		const {backgroundColor,backgroundCornerRadius,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
-		this.save_number(`${cf}.backgroundColor`,backgroundColor);
-		this.cq(backgroundCornerRadius,8);
-	}
-	/** @private @arg {D_AttachmentElement} x */
-	D_AttachmentElement(x) {
-		const cf="D_AttachmentElement";
-		const {type,properties,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_ImageType(type);
-		this.R_LayoutProperties(properties);
-	}
-	/** @private @arg {R_LayoutProperties} x */
-	R_LayoutProperties(x) {this.H_("layoutProperties",x,this.D_LayoutProperties);}
-	/** @private @arg {D_LayoutProperties} x */
-	D_LayoutProperties(x) {
-		const cf="D_LayoutProperties";
-		const {height,width,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(height) {
-			this.cq(height.unit,"DIMENSION_UNIT_POINT");
-			this.cq(height.value,10);
-		} else debugger;
-		if(width) {
-			this.cq(width.unit,"DIMENSION_UNIT_POINT");
-			this.cq(width.value,14);
-		} else debugger;
-	}
-	/** @private @arg {D_ImageType} x */
-	D_ImageType(x) {this.H_("imageType",x,this.D_Image);}
-	/** @private @arg {D_Image} x */
-	D_Image(x) {this.H_("image",x,this.D_Sources);}
-	/** @private @arg {D_Sources} x */
-	D_Sources(x) {
-		this.H_("sources",x,x => this.z(x,x => {
-			const {url,...y}=this.s("D_Sources.sources[]",x); this.g(y);
-			this.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
-		}));
-	}
-	/** @public @arg {C_Innertube} x */
-	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
-	/** @arg {G_DC_Innertube} x */
-	G_DC_Innertube(x) {
-		const cf="G_DC_Innertube"; this.k(cf,x);
-		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
-		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("urlEndpoint" in x) return this.xr.E_Url(x);
-		if("browseEndpoint" in x) {
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-			debugger;
-			return;
-		}
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		debugger;
-	}
-	/** @public @arg {R_BackgroundPromo} x */
-	R_BackgroundPromo(x) {this.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
-	/** @public @arg {D_BackgroundPromo} x */
-	D_BackgroundPromo(x) {
-		const cf="D_LayoutProperties";
-		const {title,bodyText,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.G_Text(bodyText);
-		this.T_Icon(cf,icon);
-		this.trackingParams(trackingParams);
-	}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns
