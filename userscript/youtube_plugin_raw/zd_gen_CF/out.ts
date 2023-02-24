@@ -99,6 +99,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "B_Hack";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "B_TagObj";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "CF_H_a";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "CF_T_Attachment";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "C_Executor";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "C_GetSurvey";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "C_ScrollToEngagementPanel";}
@@ -181,6 +182,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AddToPlaylistCreate";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AlertWithButton";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AttBgChallenge";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_AttachmentElement";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AudioConfig";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AudioTrack";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AudioTrackItem";}
@@ -833,6 +835,10 @@ export namespace Gen {
 		|{n: "CF_TR_MultiPageMenu"; t: CF_TR_MultiPageMenu; v: "R_SystemMenu";}
 		|{n: "CF_TR_MultiPageMenu"; t: CF_TR_MultiPageMenu; v: "R_TopbarMenu";}
 		|{n: "CF_TR_MultiPageMenu"; t: CF_TR_MultiPageMenu; v: "TR_MultiPageMenu_Empty";}
+		|{n: "CF_T_Attachment"; t: CF_T_Attachment; v: "D_CommandRunItem";}
+		|{n: "CF_T_Attachment"; t: CF_T_Attachment; v: "D_HighlightTextDecorator";}
+		|{n: "CF_T_Attachment"; t: CF_T_Attachment; v: "D_StyleRunItem";}
+		|{n: "CF_T_Attachment"; t: CF_T_Attachment; v: "D_VideoSecondaryInfo";}
 		|{n: "CF_T_Commands"; t: CF_T_Commands; v: "DC_CommandExecutor";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_AccountMenu";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_AddToPlaylistService";}

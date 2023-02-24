@@ -2645,21 +2645,24 @@ class HandleTypes extends ServiceMethods {
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 		this.t(attributedDescription,this.D_AttributedDescription);
 	}
+	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
+	T_Attachment(cf,x) {
+		const {startIndex,length,...y}=this.s(cf,x);
+		this.a_primitive_num(startIndex);
+		this.a_primitive_num(length);
+		return y;
+	}
 	/** @private @arg {D_CommandRunItem} x */
 	D_CommandRunItem(x) {
 		const cf="D_CommandRunItem";
-		const {startIndex,length,onTap,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_num(startIndex);
-		this.a_primitive_num(length);
+		const {onTap,loggingDirectives,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.C_Innertube(onTap);
 		this.t(loggingDirectives,this.D_LoggingDirectives);
 	}
 	/** @private @arg {D_StyleRunItem} x */
 	D_StyleRunItem(x) {
 		const cf="D_StyleRunItem";
-		const {startIndex,length,fontColor,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_num(startIndex);
-		this.a_primitive_num(length);
+		const {fontColor,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.save_number(`${cf}.fontColor`,fontColor);
 	}
 	/** @private @arg {D_AttributedDescription} x */
@@ -2673,9 +2676,16 @@ class HandleTypes extends ServiceMethods {
 		this.tz(decorationRuns,this.R_TextDecorator);
 	}
 	/** @private @arg {R_AttachmentElement} x */
-	R_AttachmentElement(x) {x;}
+	R_AttachmentElement(x) {
+		const cf="D_VideoSecondaryInfo";
+		const {element,alignment,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
+		this.D_AttachmentElement(element);
+		this.save_enum(cf,"ALIGNMENT",alignment);
+	}
 	/** @private @arg {R_TextDecorator} x */
-	R_TextDecorator(x) {x;}
+	R_TextDecorator(x) {this.H_("textDecorator",x,this.R_HighlightTextDecorator);}
+	/** @private @arg {R_HighlightTextDecorator} x */
+	R_HighlightTextDecorator(x) {this.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
 	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
@@ -2687,6 +2697,37 @@ class HandleTypes extends ServiceMethods {
 		this.t(showLessText,this.G_Text);
 		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
 	}
+	/** @private @arg {D_HighlightTextDecorator} x */
+	D_HighlightTextDecorator(x) {
+		const cf="D_HighlightTextDecorator";
+		const {backgroundColor,backgroundCornerRadius,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
+		this.save_number(`${cf}.backgroundColor`,backgroundColor);
+		this.cq(backgroundCornerRadius,8);
+	}
+	/** @private @arg {D_AttachmentElement} x */
+	D_AttachmentElement(x) {
+		const cf="D_AttachmentElement";
+		const {type,properties,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_ImageType(type);
+		this.R_LayoutProperties(properties);
+	}
+	/** @private @arg {R_LayoutProperties} x */
+	R_LayoutProperties(x) {this.H_("layoutProperties",x,this.D_LayoutProperties);}
+	/** @private @arg {D_LayoutProperties} x */
+	D_LayoutProperties(x) {
+		const cf="D_LayoutProperties";
+		const {height,width,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(height) {
+			this.cq(height.unit,"DIMENSION_UNIT_POINT");
+			this.cq(height.value,10);
+		} else debugger;
+		if(width) {
+			this.cq(width.unit,"DIMENSION_UNIT_POINT");
+			this.cq(width.value,14);
+		} else debugger;
+	}
+	/** @private @arg {D_ImageType} x */
+	D_ImageType(x) {x;}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns

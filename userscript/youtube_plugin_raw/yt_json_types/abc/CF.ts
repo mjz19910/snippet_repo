@@ -7,6 +7,7 @@ type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji";
 type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|"CF_D_GuideEntry";
 type CF_D_Link=T_ExtractImport<"CF_D_Link">|"CF_D_Link";
 type CF_D_Menu_Omit=T_ExtractImport<"CF_D_Menu_Omit">|"CF_D_Menu_Omit"|CF_D_Video_Handle|CF_D_Playlist_Omit;
+type CF_T_Attachment=T_ExtractImport<"CF_T_Attachment">|"CF_T_Attachment";
 type CF_D_Params=T_ExtractImport<"CF_D_Params">|"CF_D_Params";
 type CF_D_Playlist_Omit=T_ExtractImport<"CF_D_Playlist_Omit">|"CF_D_Playlist_Omit";
 type CF_D_STR=T_ExtractImport<"CF_D_STR">|"CF_D_STR";

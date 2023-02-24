@@ -194,11 +194,7 @@ type T_SE_Signal<T_Meta extends {webCommandMetadata: {};},T_Data>=TE_Endpoint_3<
 type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
 //#endregion
 //#region T_Extract
-type T_ExtractImport_<T extends (GenNs_AllNames|CF_Generated['n'])>=
-	Extract<CF_Generated,{n: T;}>["v"]
-	;
-;
-type T_ExtractImport<T extends (GenNs_AllNames|CF_Generated['n'])>=T_ExtractImport_<T>;
+type T_ExtractImport<T extends string>=Extract<CF_Generated,{n: T;}>["v"];
 type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["iconType"]>=U;
 type T_NumArrStr<T extends string>=T extends `${infer U extends number},${infer A extends number},${infer X}`? [U,A,...T_NumArrStr<X>]:T extends `${infer U extends number},${infer X}`? [U,...T_NumArrStr<X>]:T extends `${infer U extends number}`? [U]:never;
 type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''? T extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:C extends ''? `${T}`:`${T},${C}`:C extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:T;
