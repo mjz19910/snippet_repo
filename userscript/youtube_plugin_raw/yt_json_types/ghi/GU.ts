@@ -193,6 +193,9 @@ type D_VideoPlaybackShape_S_Params={
 	ctier?: "SH";
 	spc?: string;
 	vprv: "1";
+	live?: "1";
+	hang?: "1";
+	noclen?: "1";
 	xtags?: "acont=dubbed:lang=es-MX";
 	mime: "video/mp4";
 	ns: string;
@@ -200,7 +203,7 @@ type D_VideoPlaybackShape_S_Params={
 	gir?: "yes";
 	clen?: `${number}`;
 	ratebypass?: "yes";
-	dur: `${number}`;
+	dur?: `${number}`;
 	lmt: `${number}`;
 };
 //#endregion

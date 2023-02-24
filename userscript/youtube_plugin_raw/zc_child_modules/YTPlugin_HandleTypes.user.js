@@ -794,18 +794,27 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
-		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
+		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
 		aitags&&this.save_string(`${cf1}.aitags`,aitags);
-		this.save_b64_binary(`${cf2}.id`,id);
+		{
+			let idp=split_string_once(id,".");
+			switch(idp.length) {
+				case 2: this.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_string(`${cf2}.id.1`,idp[1]); break;
+				case 1: this.save_b64_binary(`${cf2}.id.0`,idp[0]); break;
+			}
+		}
 		itag&&this.save_string(`${cf1}.itag`,itag);
 		this.save_string(`${cf1}.source`,source);
 		this.save_string(`${cf1}.requiressl`,requiressl);
 		this.t(ctier,x => this.ceq("SH",x));
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
+		this.t(live,x => this.cq(x,"1"));
+		this.t(hang,x => this.cq(x,"1"));
+		this.t(noclen,x => this.cq(x,"1"));
 		this.t(xtags,x => this.save_string(`${cf1}.xtags`,x));
 		this.save_string(`${cf1}.mime`,mime);
 		this.save_b64_binary(`${cf2}.ns`,ns);
@@ -816,10 +825,14 @@ class HandleTypes extends ServiceMethods {
 			this.a_primitive_num(x1);
 		});
 		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
-		let dur_=this.parse_number_template(dur);
-		this.a_primitive_num(dur_);
-		let lmt_=this.parse_number_template(lmt);
-		this.a_primitive_num(lmt_);
+		this.t(dur,x => {
+			let dur_=this.parse_number_template(x);
+			this.a_primitive_num(dur_);
+		});
+		this.t(lmt,x => {
+			let lmt_=this.parse_number_template(x);
+			this.a_primitive_num(lmt_);
+		});
 	}
 	/** @private @arg {D_VideoPlaybackShape_LS_Params} x */
 	D_VideoPlaybackShape_LS_Params(x) {

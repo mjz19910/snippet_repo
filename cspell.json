@@ -207,6 +207,7 @@
       "noall",
       "nocheck",
       "nocheckin",
+      "noclen",
       "nodenext",
       "nofollow",
       "noframe",
