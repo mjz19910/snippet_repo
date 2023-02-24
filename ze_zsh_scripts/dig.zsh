@@ -96,7 +96,6 @@ function dig_user-run {
 	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
-	printf "%s\0" $list | xargs -0n1 -P 8000 zsh -c 'exec {f}<$1;flock -e $f;printf "*";' zsh
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
@@ -142,7 +141,6 @@ function dig_final-run {
 	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
-	printf "%s\0" $list | xargs -0n1 -P 8000 zsh -c 'exec {f}<$1;flock -e $f;printf "*";' zsh
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
