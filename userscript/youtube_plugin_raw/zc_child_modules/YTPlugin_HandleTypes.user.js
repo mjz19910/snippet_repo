@@ -29,6 +29,7 @@ ECatcherService.known_experiments.push(...[
 	[24476774,24481213,4957635],
 	[24474438,24478762,39323074],
 	[24470280],
+	[24473091],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
