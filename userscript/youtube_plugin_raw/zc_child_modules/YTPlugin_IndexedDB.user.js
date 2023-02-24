@@ -653,10 +653,12 @@ class IndexedDBService extends BaseService {
 					} break;
 					case "arr": {
 						let y_arr=item_group[1];
+						if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<=0) break;
 						x_many.push(y_arr);
 					} break;
 					case "one": {
 						let y_item=item_group[1];
+						if(x_many.findIndex(x_arr => x_arr.length===0&&x_arr[0]===y_item)<=0) break;
 						x_many.push([y_item]);
 					} break;
 				}
@@ -675,6 +677,7 @@ class IndexedDBService extends BaseService {
 					} break;
 					case "one": {
 						let y_item=item_group[1];
+						if(x_arr.includes(y_item)) break;
 						x_arr.push(y_item);
 					} break;
 				}
@@ -683,20 +686,23 @@ class IndexedDBService extends BaseService {
 				let x_item=cursor_group[1]; x_item; switch(item_group[0]) {
 					case "many": {
 						let y_many=item_group[1];
+						if(y_many.findIndex(x_arr => x_arr.length===0&&x_arr[0]===x_item)<=0) break;
 						y_many.push([x_item]);
 						return item_group;
 					}
 					case "arr": {
 						let y_arr=item_group[1];
+						if(y_arr.includes(x_item)) break;
 						y_arr.push(x_item);
 						return item_group;
 					}
 					case "one": {
 						let y_item=item_group[1];
+						if(x_item===y_item) break;
 						return ["arr",[x_item,y_item]];
 					}
 				}
-			}
+			} break;
 			default: throw new Error();
 		}
 		return cursor_group;
@@ -780,30 +786,23 @@ class IndexedDBService extends BaseService {
 							case "hashtag_id": break;
 							case "boolean": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(cursor_value.value,item_nt.value)) {
-									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
-									console.log("update",item_nt,cursor_value);
-									update_item=true; break;
-								}
+								item_nt.value=this.update_group(cursor_value.value,item_nt.value);
+								console.log("update",item_nt,cursor_value);
+								update_item=true;
 							} break;
 							case "root_visual_element":
 							case "number": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(cursor_value.value,item_nt.value)) {
-									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
-									console.log("update",item_nt,cursor_value);
-									update_item=true; break;
-								}
+								item_nt.value=this.update_group(cursor_value.value,item_nt.value);
+								console.log("update",item_nt,cursor_value);
+								update_item=true;
 							} break;
 							case "keys":
 							case "string": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(cursor_value.value,item_nt.value)) {
-									let item_val=item_nt.value; let cursor_val=cursor_value.value;
-									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
-									console.log("update",item_val,cursor_val);
-									update_item=true; break;
-								}
+								item_nt.value=this.update_group(cursor_value.value,item_nt.value);
+								console.log("update",item_nt,cursor_value);
+								update_item=true;
 							} break;
 							case "video_id:shorts":
 							case "video_id:normal": {
