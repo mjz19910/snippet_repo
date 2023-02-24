@@ -5,6 +5,8 @@ type G_Gv_0=
 	|"9gv7e"
 	|"9gv7l"
 	|"a5mek"
+	|"a5mlr"
+	|"a5mse"
 	|"ab5l6"
 	|"ab5sz"
 	|"hp57k"
@@ -32,21 +34,25 @@ type PT_DigDomain=[
 type PT_TypeS_NoRep=[
 	gen_g2_t1<"5uaez">,
 	gen_g2_t1<"5uald">,
-	gen_g2_t1<"a5mek">,
 	gen_g2_t1<"hp57k">,
 ];
 type PT_TypeS=[
-	gen_g3_t2<"qxo",[
-		"7r",
-		"ed",
-	]>,
 	gen_g3_t2<"9gv7",["l","e"]>,
+	gen_g3_t2<"a5m",[
+		"ek",
+		"lr",
+		"se",
+	]>,
 	gen_g3_t2<"n",[
 		gen_a3_t2<["4","8"],"v7",["s","z"]>,
 		gen_a2_t2<"x5",["s7","7y"]>,
 	]>,
 	gen_g3_raw<"o","097z">,
 	gen_g3_t2<"p",[gen_g3_or<"p5q",["ls","s7"]>]>,
+	gen_g3_t2<"qxo",[
+		"7r",
+		"ed",
+	]>,
 ];
 type PT_TypeArr=[
 	["5uaez",[
@@ -63,6 +69,8 @@ type PT_TypeArr=[
 		"ld","lk","ly",
 		"z6","zd","ze","zk","zl","zr","zs","zy","zz",
 	]],// hit
+	["a5mlr",["ek","l6","ll","ls","lz"]],// hit
+	["a5mse",["76","7l","7s","7z","ek","er","es","l7","le","ll"]],// hit
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],// hit
 	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],// hit
