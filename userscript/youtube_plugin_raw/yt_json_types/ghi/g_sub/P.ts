@@ -355,6 +355,7 @@ type PD_continuation_params_2={
 type PR_continuation_params=
 	|{0x94d81d4: T_VW<PD_continuation_params_1>;}
 	|{0x722607a: T_VW<PD_continuation_params_2>;}
+	|P_timed_continuation_data
 	;
 ;
 type P_create_comment_params={
@@ -483,7 +484,7 @@ type P_bin_params_1={
 	}>;
 };
 type P_notification_add_upcoming_event_reminder_params={
-	1: T_VW<{14: T_VW<T_FD64<6427857484411717751n>>;}>;
+	1: T_VW<{14: T_FD64<6427857484411717751n>;}>;
 	6: T_VW<{
 		1: T_D32<0>;
 		2: T_D32<0>;
@@ -496,3 +497,10 @@ type P_notification_remove_upcoming_event_reminder_params={
 		2: T_D32<0>;
 	}>;
 };
+type PD_timed_continuation={
+	3: T_VW<{14: T_FD64<6427857484411717751n>;}>;
+	4: T_D32<1677253347>;
+	7: T_D32<1>;
+	8: T_D32<1>;
+};
+type P_timed_continuation_data={0x6b7c87f: T_VW<PD_timed_continuation>;};

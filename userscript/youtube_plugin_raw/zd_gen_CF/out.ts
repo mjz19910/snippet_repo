@@ -547,6 +547,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_request_browse_token";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_timed_continuation";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PF_23n24n";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_request_browse_token";}
@@ -582,6 +583,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_shorts_source_bp";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_subscribe_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_subscription_state_key";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_timed_continuation_data";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_transcript_track_selection_serialized_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_trending_bp";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_unsubscribe_params";}

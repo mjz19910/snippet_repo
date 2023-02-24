@@ -783,7 +783,7 @@ class HandleTypes extends ServiceMethods {
 			case "n4v7s": case "nx5s7": case "nx57y":
 			case "o097z":
 			case "p5qls": case "p5qs7":
-			case "q4flr": case "qxoed":
+			case "q4fl6": case "q4flr": case "qxoed":
 			case "t0a7s":
 			case "vgqsk":
 		}
@@ -793,7 +793,7 @@ class HandleTypes extends ServiceMethods {
 			case "6d": case "6l":
 			case "76": case "7d": case "7k": case "7s": case "7y": case "7z":
 			case "d6": case "dy": case "dz":
-			case "el": case "ee": case "ey":
+			case "el": case "ee": case "ey": case "ez":
 			case "l7": case "lk": case "lr": case "ls":
 			case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "ze": case "zk": case "zr": case "zy":
@@ -2191,17 +2191,21 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
-	/** @private @arg {PR_continuation_params} x */
-	PR_continuation_params(x) {
-		const cf="PR_continuation_params";
-		if(0x94d81d4 in x) {
-			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_VW(n,this.PD_continuation_params_1);
+	/** @private @arg {"P_timed_continuation_data"|"PR_continuation_params"} cf @arg {PR_continuation_params} x */
+	PR_continuation_params(cf,x) {
+		if(0x6b7c87f in x) {
+			const {0x6b7c87f: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(n,this.PD_timed_continuation);
 			return;
 		}
 		if(0x722607a in x) {
 			const {0x722607a: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 			this.T_VW(n,this.PD_continuation_params_2);
+			return;
+		}
+		if(0x94d81d4 in x) {
+			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(n,this.PD_continuation_params_1);
 			return;
 		}
 		this.h_gen_keys(cf,x,x);
@@ -2563,6 +2567,11 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_notification_add_upcoming_event_reminder_params";
 		const {1: a,6: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {PD_timed_continuation} x */
+	PD_timed_continuation(x) {
+		const cf="PD_timed_continuation";
+		const {3: f3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
 	//#endregion
 	//#region binary_result()
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
@@ -2739,7 +2748,7 @@ class HandleTypes extends ServiceMethods {
 			case "continuation.params": {
 				/** @type {PR_continuation_params} */
 				let u=as_any(x);
-				this.PR_continuation_params(u);
+				this.PR_continuation_params("PR_continuation_params",u);
 			} break;
 			case "create_comment.params": {
 				/** @type {P_create_comment_params} */
@@ -2842,12 +2851,21 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_notification_remove_upcoming_event_reminder_params(u);
 			} break;
+			case "timed_continuation.data": {
+				/** @type {P_timed_continuation_data} */
+				let u=as_any(x);
+				this.P_timed_continuation_data(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
 				debugger;
 			} break;
 		}
+	}
+	/** @private @arg {P_timed_continuation_data} x */
+	P_timed_continuation_data(x) {
+		this.PR_continuation_params("P_timed_continuation_data",x);
 	}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {x;}
