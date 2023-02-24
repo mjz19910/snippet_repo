@@ -2342,6 +2342,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region binary partial
+	//#region sub_region done
 	/** @private @arg {PD_invalidation_continuation} x */
 	PD_invalidation_continuation(x) {
 		const cf="PD_invalidation_continuation";
@@ -2403,6 +2404,7 @@ class HandleTypes extends ServiceMethods {
 		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
+	//#endregion
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
@@ -2411,6 +2413,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
+	//#region sub_region done
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
 		const cf="P_ypc_get_offers_params";
@@ -2552,6 +2555,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_playlist_edit_params";
 		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	//#endregion
 	/** @private @arg {P_search_params} x */
 	P_search_params(x) {
 		const cf="P_search_params";
