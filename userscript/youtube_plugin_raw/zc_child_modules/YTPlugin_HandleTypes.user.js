@@ -2588,7 +2588,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
 	P_notification_add_upcoming_event_reminder_params(x) {
 		const cf="P_notification_add_upcoming_event_reminder_params";
-		const {1: a,6: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	//#endregion
 	/** @private @arg {PD_timed_continuation} x */
