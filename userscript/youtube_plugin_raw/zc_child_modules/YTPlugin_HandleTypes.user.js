@@ -2222,6 +2222,24 @@ class HandleTypes extends ServiceMethods {
 		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
 	}
 	//#endregion
+	//#region binary partial
+	/** @private @arg {PD_invalidation_continuation} x */
+	PD_invalidation_continuation(x) {
+		const cf="PD_invalidation_continuation";
+		const {3: f3,5: f5,6: f6,8: f8,9: f9,10: f10,11: f11,16: f16,17: f17,19: f19,20: f15,21: f21,22: f22,23: f23,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(f9,x => this.T_VW(x,x => {
+			const cf="PD_invalidation_continuation.f9";
+			const {
+				1: f1,3: f3,4: f4,9: f9,
+				10: f10,11: f11,15: f15,
+				20: f20,21: f21,22: f22,24: f24,25: f25,28: f28,29: f29,
+				30: f30,31: f31,33: f33,34: f34,
+				...y
+			}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			x;
+		}));
+	}
+	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
@@ -2238,22 +2256,6 @@ class HandleTypes extends ServiceMethods {
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
 		const {3: f3,8: f8,11: f11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @private @arg {PD_invalidation_continuation} x */
-	PD_invalidation_continuation(x) {
-		const cf="PD_invalidation_continuation";
-		const {3: f3,5: f5,6: f6,8: f8,9: f9,10: f10,11: f11,16: f16,17: f17,19: f19,20: f15,21: f21,22: f22,23: f23,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(f9,x => this.T_VW(x,x => {
-			const cf="PD_invalidation_continuation.f9";
-			const {
-				1: f1,3: f3,4: f4,9: f9,
-				10: f10,11: f11,15: f15,
-				20: f20,21: f21,22: f22,24: f24,25: f25,28: f28,29: f29,
-				30: f30,31: f31,33: f33,34: f34,
-				...y
-			}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			x;
-		}));
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
