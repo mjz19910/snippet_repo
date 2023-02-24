@@ -648,7 +648,7 @@ class HandleTypes extends ServiceMethods {
 		switch(selector) {
 			default: selector===""; debugger; break;
 			case "6d": case "6l":
-			case "d6": case "dy":
+			case "d6": case "dy": case "dz":
 			case "l7": case "lk": case "lr":
 			case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "76": case "7d": case "7s": case "7y": case "7z":
@@ -1941,7 +1941,14 @@ class HandleTypes extends ServiceMethods {
 		t.VW_BinaryTimestamp(f4);
 		t.t_cf(`${cf}_f6`,f6,t.H_TrackingObj_f6);
 		t.t(t.t(f7,t.TV_Str),x => t.save_b64_binary(`${cf}.f7`,x));
-		t.ms_t(f8,t.T_VW_Bigint);
+		t.ms_t(f8,x => {
+			let [v1]=x[1];
+			switch(v1[0]) {
+				default: debugger; break;
+				case "data32": break;
+				case "data64": break;
+			}
+		});
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.T_VW(x,this.V_BinaryTimestamp);}

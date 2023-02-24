@@ -565,11 +565,11 @@ class IndexedDBService extends BaseService {
 			throw new AggregateError([e]);
 		}
 	}
-	/** @template T @arg {make_item_group<T>} x @arg {make_item_group<T>} y @arg {(x:T,y:T)=>boolean} eq_fn */
-	eq_group(x,y,eq_fn) {
+	/** @template T @arg {make_item_group<T>} x @arg {make_item_group<T>} y */
+	eq_group(x,y) {
 		/** @arg {T[]} x_arr @arg {T[]} y_arr */
 		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
-			let y_idx=y_arr.findIndex(y_item => eq_fn(y_item,x_item));
+			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
 			return y_idx>0;
 		});
 		switch(x[0]) {
@@ -606,7 +606,7 @@ class IndexedDBService extends BaseService {
 						return find_eq_arr(x_arr,y_arr);
 					}
 					case "one": {
-						let x_idx=x_arr.findIndex(x_item => eq_fn(x_item,y[1]));
+						let x_idx=x_arr.findIndex(x_item => x_item===y[1]);
 						return x_idx>0;
 					}
 				}
@@ -616,15 +616,15 @@ class IndexedDBService extends BaseService {
 					case "many": {
 						let y_arr_idx=y[1].findIndex(y_arr => {
 							if(y_arr.length!==1) return false;
-							return eq_fn(y_arr[0],x_item);
+							return y_arr[0]===x_item;
 						});
 						return y_arr_idx>0;
 					}
 					case "arr": {
-						let y_idx=y[1].findIndex(y_item => eq_fn(y_item,x_item));
+						let y_idx=y[1].findIndex(y_item => y_item===x_item);
 						return y_idx>0;
 					}
-					case "one": return eq_fn(x[1],y[1]);
+					case "one": return x[1]===y[1];
 				}
 			}
 			default: throw new Error();
@@ -776,7 +776,7 @@ class IndexedDBService extends BaseService {
 							case "hashtag_id": break;
 							case "boolean": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+								if(!this.eq_group(item_nt.value,cursor_value.value)) {
 									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
 									console.log("update",item_nt,cursor_value);
 									update_item=true; break;
@@ -785,7 +785,7 @@ class IndexedDBService extends BaseService {
 							case "root_visual_element":
 							case "number": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+								if(!this.eq_group(item_nt.value,cursor_value.value)) {
 									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
 									console.log("update",item_nt,cursor_value);
 									update_item=true; break;
@@ -794,9 +794,10 @@ class IndexedDBService extends BaseService {
 							case "keys":
 							case "string": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+								if(!this.eq_group(item_nt.value,cursor_value.value)) {
+									let item_val=item_nt.value; let cursor_val=cursor_value.value;
 									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
-									console.log("update",item_nt,cursor_value);
+									console.log("update",item_val,cursor_val);
 									update_item=true; break;
 								}
 							} break;

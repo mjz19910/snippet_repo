@@ -30,7 +30,7 @@ type H_TrackingObj={
 	4: VW_BinaryTimestamp;
 	6?: H_TrackingObj_f6;
 	7?: TV_Str<T_Base64Str>;
-	8?: T_VW_Bigint<101551873087600536n>;
+	8?: T_VW_Bigint<101551873087600536n>|T_D32<2048687136925003>;
 	9?: T_VW_Bigint<bigint>;
 	11?: TV_Str<"FEwhat_to_watch">;
 	16?: T_VW<D_TrackingObj_f16,never>;
