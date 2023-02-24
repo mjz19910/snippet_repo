@@ -712,8 +712,16 @@ class HandleTypes extends ServiceMethods {
 	DC_Timed(x) {
 		const cf="DC_Timed";
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(timeoutMs!==60000) debugger;
+		this.D_TimeoutMs(timeoutMs);
 		this.params("timed_continuation.data",continuation);
+	}
+	/** @private @arg {D_TimeoutMs} x */
+	D_TimeoutMs(x) {
+		switch(x) {
+			default: debugger; break;
+			case 60000:
+			case 5000:
+		}
 	}
 	//#endregion
 	//#region E & M & GM & DE
