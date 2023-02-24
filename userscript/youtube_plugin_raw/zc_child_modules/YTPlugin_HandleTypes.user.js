@@ -2750,6 +2750,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			return;
 		}
+		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
 	}
 	//#endregion binary

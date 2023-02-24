@@ -170,6 +170,7 @@ type TD_Label<T>={label: T;};
 //#region TE_
 type TE_Endpoint_1<EP_Key extends string,T_Data>={[I in EP_Key]: T_Data};
 type TE_Endpoint_2<EP_Key extends string,T_Data>={clickTrackingParams: string;}&{[I in EP_Key]: T_Data};
+type TE_Endpoint_NoTrack_3<EP_Key extends string,T_Data,T_Meta>={commandMetadata: T_Meta;}&{[I in EP_Key]: T_Data};
 type TE_TrackedObj_2<EP_Key extends string,T_Data>={trackingParams: string;}&{[I in EP_Key]: T_Data};
 type TE_Endpoint_3_Helper<EP_Key extends `${string}${D_EndpointLikeEndings}`,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in EP_Key]: T_Data};
 type TE_Endpoint_3<EP_Key extends `${string}${D_EndpointLikeEndings}`,T_Data,T_Meta>={[K in keyof TE_Endpoint_3_Helper<EP_Key,T_Data,T_Meta>]: TE_Endpoint_3_Helper<EP_Key,T_Data,T_Meta>[K]};

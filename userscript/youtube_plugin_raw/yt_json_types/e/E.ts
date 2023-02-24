@@ -30,16 +30,15 @@ type E_Url={
 	commandMetadata: M_Url;
 	urlEndpoint: DE_Url;
 };
-type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>|{
-	watchEndpoint: DE_VE3832_Watch;
-	commandMetadata: M_VE3832;
-};
+type E_Unsubscribe=TE_Endpoint_3<"unsubscribeEndpoint",DE_Unsubscribe,M_Unsubscribe>;
+type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",G_DE_UserFeedback,M_UserFeedback>;
+type E_Watch_2=TE_Endpoint_NoTrack_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>;
+type E_Watch_3=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>;
+type E_Watch=E_Watch_3|E_Watch_2;
 type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_VE3832>;
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_YpcGetOffers>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
-type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",G_DE_UserFeedback,M_UserFeedback>;
-type E_Unsubscribe=TE_Endpoint_3<"unsubscribeEndpoint",DE_Unsubscribe,M_Unsubscribe>;
 type E_WebPlayerShareEntityService={
 	clickTrackingParams: string;
 	commandMetadata: M_GetWebPlayerSharePanel;
