@@ -18,8 +18,6 @@ type PT_DigDomain=[
 	``,
 	// dig results
 	`
-	rr1.sn-t0a7ln7d.googlevideo.com. 1800 IN A      209.85.225.230
-	rr1.sn-t0a7sn7d.googlevideo.com. 1800 IN A      209.85.225.198
 	`,
 	"rr1.sn-ab5sznzz.googlevideo.com.",
 ];
