@@ -3776,9 +3776,16 @@ class ServiceMethods extends ServiceData {
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell.params",x);}
 	/** @arg {G_DC_Innertube} x */
 	G_DC_Innertube(x) {
+		const cf="G_DC_Innertube"; this.k(cf,x);
 		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
 		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			debugger;
+			return;
+		}
 		debugger;
 	}
 	/** @private @arg {D_MarkersList} x */

@@ -2648,10 +2648,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CommandRunItem} x */
 	D_CommandRunItem(x) {
 		const cf="D_CommandRunItem";
-		const {startIndex,length,onTap,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {startIndex,length,onTap,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_num(startIndex);
 		this.a_primitive_num(length);
 		this.C_Innertube(onTap);
+		this.t(loggingDirectives,this.D_LoggingDirectives);
 	}
 	/** @private @arg {D_StyleRunItem} x */
 	D_StyleRunItem(x) {

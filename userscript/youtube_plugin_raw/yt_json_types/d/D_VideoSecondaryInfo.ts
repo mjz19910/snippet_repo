@@ -2,6 +2,7 @@ type D_CommandRunItem={
 	startIndex: number;
 	length: number;
 	onTap: C_Innertube;
+	loggingDirectives?: D_LoggingDirectives;
 };
 type D_StyleRunItem={
 	startIndex: number;
