@@ -2340,6 +2340,36 @@ class HandleTypes extends ServiceMethods {
 		this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
 		this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
 	}
+	/** @private @arg {P_search_params} x */
+	P_search_params(x) {
+		const cf="P_search_params";
+		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PF_23n24n);
+	}
+	/** @private @arg {PF_23n24n} x */
+	PF_23n24n(x) {
+		const cf="PF_23n24n";
+		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(a,x => this.cq(x,1));
+		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
+	}
+	/** @private @arg {P_bin_params_1} x */
+	P_bin_params_1(x) {
+		const cf="P_bin_params_1";
+		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(a,x => {
+			const cf="P_bin_params_1.f1";
+			const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_FD64(a,x => {
+				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
+				this.save_number(`${cf}.f1.first_byte`,iv_fb);
+			});
+			this.T_FD64(b,x => {
+				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
+				this.save_number(`${cf}.f2.first_byte`,iv_fb);
+			});
+		});
+	}
 	//#endregion
 	//#region binary partial
 	//#region sub_region done
@@ -2555,42 +2585,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_playlist_edit_params";
 		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
-	//#endregion
-	/** @private @arg {P_search_params} x */
-	P_search_params(x) {
-		const cf="P_search_params";
-		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_VW(f2,this.PF_23n24n);
-	}
-	/** @private @arg {PF_23n24n} x */
-	PF_23n24n(x) {
-		const cf="PF_23n24n";
-		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(a,x => this.cq(x,1));
-		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
-	}
-	/** @private @arg {P_bin_params_1} x */
-	P_bin_params_1(x) {
-		const cf="P_bin_params_1";
-		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_VW(a,x => {
-			const cf="P_bin_params_1.f1";
-			const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_FD64(a,x => {
-				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
-				this.save_number(`${cf}.f1.first_byte`,iv_fb);
-			});
-			this.T_FD64(b,x => {
-				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
-				this.save_number(`${cf}.f2.first_byte`,iv_fb);
-			});
-		});
-	}
 	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
 	P_notification_add_upcoming_event_reminder_params(x) {
 		const cf="P_notification_add_upcoming_event_reminder_params";
 		const {1: a,6: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	//#endregion
 	/** @private @arg {PD_timed_continuation} x */
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
