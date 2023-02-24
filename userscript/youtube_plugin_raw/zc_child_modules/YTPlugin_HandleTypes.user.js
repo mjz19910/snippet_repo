@@ -794,7 +794,7 @@ class HandleTypes extends ServiceMethods {
 			case "76": case "7d": case "7k": case "7s": case "7y": case "7z":
 			case "d6": case "dy": case "dz":
 			case "el": case "ee": case "ey": case "ez":
-			case "l7": case "lk": case "lr": case "ls":
+			case "l7": case "lk": case "ll": case "lr": case "ls":
 			case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "ze": case "zk": case "zr": case "zy":
 		}
@@ -2320,7 +2320,7 @@ class HandleTypes extends ServiceMethods {
 			this.immediate_run_logger();
 		});
 		this.T_D32(f2,x => {
-			if(x<=0b101011001111000000110111110011) return;
+			if(x<=0b111000100000001110010100101001) return;
 			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
 		});
 	}
