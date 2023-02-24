@@ -437,6 +437,10 @@ class HandleTypes extends ServiceMethods {
 		return b;
 	}
 	//#endregion
+	//#region is_T
+	/** @arg {P_EntityKey} x @template {number} T @arg {T} t @returns {x is {4:T_D32<T>;}} */
+	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
+	//#endregion
 	//#region moved data methods
 	/** @public @arg {D_WebPlayerConfig} x */
 	D_WebPlayerConfig(x) {
@@ -2284,6 +2288,58 @@ class HandleTypes extends ServiceMethods {
 		r("f30",f30); r("f57",f57); r("f71",f71);
 		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
 	}
+	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
+	P_aadc_guidelines_state_entity_key(x) {this.P_EntityKey("P_aadc_guidelines_state_entity_key",x);}
+	/** @private @arg {P_subscribe_button_entity_key} x */
+	P_subscribe_button_entity_key(x) {this.P_EntityKey("P_subscribe_button_entity_key",x);}
+	/** @private @arg {P_player_state_entity_key} x */
+	P_player_state_entity_key(x) {this.P_EntityKey("P_player_state_entity_key",x);}
+	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
+	P_macro_marker_repeat_state_entity_key(x) {this.P_EntityKey("P_macro_marker_repeat_state_entity_key",x);}
+	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
+	P_EntityKey(cf,x) {
+		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
+			const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.t(this.TV_Str(f2),this.videoId);
+			this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
+			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
+			return;
+		}
+		if(this.is_T_D32_at(x,246)) {
+			const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(f2,x => {
+				let {1: f2_f1,...y1}=x; this.g(y1);
+				this.t(this.TV_Str(f2_f1),x => this.save_string(`${cf}.f2.f1`,x));
+			});
+			this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
+			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
+			return;
+		}
+		const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(f2),x => {
+			if(this.str_starts_with(x,"RD")) return this.playlistId(x);
+			if(this.str_starts_with(x,"UC")) return this.channelId(x);
+			switch(x) {
+				default: {
+					debugger;
+					switch(x) {
+						case "":
+					}
+				} break;
+				case "DESCRIPTION_CHAPTERS":
+				case "KEY_MOMENTS":
+				case "AUTO_CHAPTERS":
+				case ".transcript.track.selection.key": break;
+				case "/youtube/app/watch/player_state": break;
+				case "183848276973": break;
+				case "HEATSEEKER": break;
+				case "repeat_state": break;
+				case "topbar": break;
+			}
+		});
+		this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
+		this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
+	}
 	//#endregion
 	//#region binary partial
 	/** @private @arg {PD_invalidation_continuation} x */
@@ -2485,60 +2541,6 @@ class HandleTypes extends ServiceMethods {
 	P_notification_record_interactions(x) {
 		const cf="P_notification_record_interactions";
 		const {2: f2,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @private @arg {P_aadc_guidelines_state_entity_key} x */
-	P_aadc_guidelines_state_entity_key(x) {this.P_EntityKey("P_aadc_guidelines_state_entity_key",x);}
-	/** @private @arg {P_subscribe_button_entity_key} x */
-	P_subscribe_button_entity_key(x) {this.P_EntityKey("P_subscribe_button_entity_key",x);}
-	/** @private @arg {P_player_state_entity_key} x */
-	P_player_state_entity_key(x) {this.P_EntityKey("P_player_state_entity_key",x);}
-	/** @private @arg {P_macro_marker_repeat_state_entity_key} x */
-	P_macro_marker_repeat_state_entity_key(x) {this.P_EntityKey("P_macro_marker_repeat_state_entity_key",x);}
-	/** @arg {P_EntityKey} x @template {number} T @arg {T} t @returns {x is {4:T_D32<T>;}} */
-	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
-	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
-	P_EntityKey(cf,x) {
-		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
-			const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.t(this.TV_Str(f2),this.videoId);
-			this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
-			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
-			return;
-		}
-		if(this.is_T_D32_at(x,246)) {
-			const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_VW(f2,x => {
-				let {1: f2_f1,...y1}=x; this.g(y1);
-				this.t(this.TV_Str(f2_f1),x => this.save_string(`${cf}.f2.f1`,x));
-			});
-			this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
-			this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
-			return;
-		}
-		const {2: f2,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(f2),x => {
-			if(this.str_starts_with(x,"RD")) return this.playlistId(x);
-			if(this.str_starts_with(x,"UC")) return this.channelId(x);
-			switch(x) {
-				default: {
-					debugger;
-					switch(x) {
-						case "":
-					}
-				} break;
-				case "DESCRIPTION_CHAPTERS":
-				case "KEY_MOMENTS":
-				case "AUTO_CHAPTERS":
-				case ".transcript.track.selection.key": break;
-				case "/youtube/app/watch/player_state": break;
-				case "183848276973": break;
-				case "HEATSEEKER": break;
-				case "repeat_state": break;
-				case "topbar": break;
-			}
-		});
-		this.T_D32(f4,x => this.save_number(`${cf}.f4`,x));
-		this.T_D32(f5,x => this.save_number(`${cf}.f5`,x));
 	}
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
