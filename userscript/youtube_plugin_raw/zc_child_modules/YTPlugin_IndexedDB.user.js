@@ -630,6 +630,73 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
+	/** @template T @arg {make_item_group<T>} cursor_group @arg {make_item_group<T>} item_group */
+	async update_group(cursor_group,item_group) {
+		/** @arg {T[]} x_arr @arg {T[]} y_arr */
+		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
+			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
+			return y_idx>0;
+		});
+		switch(cursor_group[0]) {
+			case "many": {
+				let x_many=cursor_group[1]; switch(item_group[0]) {
+					case "many": {
+						let y_many=item_group[1];
+						for(let y_arr of y_many) {
+							if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<=0) continue;
+							x_many.push(y_arr);
+						}
+					} break;
+					case "arr": {
+						let y_arr=item_group[1];
+						x_many.push(y_arr);
+					} break;
+					case "one": {
+						let y_item=item_group[1];
+						x_many.push([y_item]);
+					} break;
+				}
+			} break;
+			case "arr": {
+				let x_arr=cursor_group[1]; switch(item_group[0]) {
+					case "many": {
+						debugger;
+					} break;
+					case "arr": {
+						let y_arr=item_group[1];
+						for(let y_item of y_arr) {
+							if(x_arr.includes(y_item)) continue;
+							x_arr.push(y_item);
+						}
+					} break;
+					case "one": {
+						let y_item=item_group[1];
+						x_arr.push(y_item);
+					} break;
+				}
+			} break;
+			case "one": {
+				let x_item=cursor_group[1]; x_item; switch(item_group[0]) {
+					case "many": {
+						let y_many=item_group[1];
+						y_many.push([x_item]);
+						return item_group;
+					}
+					case "arr": {
+						let y_arr=item_group[1];
+						y_arr.push(x_item);
+						return item_group;
+					}
+					case "one": {
+						let y_item=item_group[1];
+						return ["arr",[x_item,y_item]];
+					}
+				}
+			} break;
+			default: throw new Error();
+		}
+		return cursor_group;
+	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
@@ -724,6 +791,7 @@ class IndexedDBService extends BaseService {
 							case "string": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
+									this.update_group(cursor_value.value,item_nt.value);
 									update_item=true; break;
 								}
 							} break;
