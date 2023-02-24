@@ -442,7 +442,7 @@ type R_PageTypeSearch={
 };
 type R_PageTypeSettings={
 	pageType: "settings";
-	endpoint: E_Settings;
+	endpoint: E_VE23462;
 	response: G_RS_Page_Settings;
 	fromHistory: boolean;
 	navigationDoneMs: number;
