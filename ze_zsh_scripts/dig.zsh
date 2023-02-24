@@ -153,6 +153,24 @@ function dig_final-run {
 	fi
 	rm $list
 }
+function dig_final-child {
+	arg_num_1=${#1}
+	n=$arg_num_1
+	cn=$COLUMNS
+	DNS_TAG_LEN=6
+	TERM_RETURN_NUM_LINE_LEN=6
+	PADDING_LEN=2
+	SPACE_CHAR=1
+	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + ${#TMP_TAG} + 1))
+	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
+	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/tmp/result.XXX)
+	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+	printf "."
+	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
+	if (($(wc -l <$TF) != 0)); then
+		eval 'printf "!${1[14]}"'
+	fi
+}
 function lock_printf {
 	(
 		unset foo
@@ -171,24 +189,6 @@ function term_pos() {
 	eval 'TERM_POS=(${(s/;/)POS_STR});'
 	((TERM_POS[2] += 1))
 	printf "\e[${TERM_POS[1]};${TERM_POS[2]}f!"
-}
-function dig_final-child {
-	arg_num_1=${#1}
-	n=$arg_num_1
-	cn=$COLUMNS
-	DNS_TAG_LEN=6
-	TERM_RETURN_NUM_LINE_LEN=6
-	PADDING_LEN=2
-	SPACE_CHAR=1
-	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + ${#TMP_TAG} + 1))
-	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
-	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/tmp/result.XXX)
-	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
-	printf "."
-	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
-	if (($(wc -l <$TF) != 0)); then
-		eval 'printf "!${1[14]}"'
-	fi
 }
 
 function print-usage {
