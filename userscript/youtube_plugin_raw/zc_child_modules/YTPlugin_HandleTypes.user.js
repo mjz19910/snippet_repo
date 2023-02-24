@@ -800,7 +800,7 @@ class HandleTypes extends ServiceMethods {
 			case "el": case "ee": case "ey": case "ez":
 			case "l7": case "lk": case "ll": case "lr": case "ls":
 			case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
-			case "ze": case "zk": case "zr": case "zy":
+			case "ze": case "zk": case "zr": case "zs": case "zy":
 		}
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
