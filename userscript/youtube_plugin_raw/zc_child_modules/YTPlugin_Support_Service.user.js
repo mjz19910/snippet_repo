@@ -849,7 +849,7 @@ class Support_RS_Player extends ServiceMethods {
 		const {expiresInSeconds,adaptiveFormats,formats,probeUrl,dashManifestUrl,hlsManifestUrl,...y}=this.s(cf,x); this.g(y);
 		this.parse_number_template(expiresInSeconds);
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
-		this.z(formats,this.D_FormatItem);
+		this.tz(formats,this.D_FormatItem);
 		this.t(probeUrl,x => this.parser.parse_url(cf,x));
 		this.t(dashManifestUrl,this.a_primitive_str);
 		this.t(hlsManifestUrl,this.a_primitive_str);
@@ -1016,10 +1016,10 @@ class Support_RS_Player extends ServiceMethods {
 		this.a_primitive_num(bitrate);
 		this.t(width,this.a_primitive_num);
 		this.t(height,this.a_primitive_num);
-		this.D_Range(initRange);
-		this.D_Range(indexRange);
-		this.a_primitive_str(lastModified);
-		this.a_primitive_str(contentLength);
+		this.t(initRange,this.D_Range);
+		this.t(indexRange,this.D_Range);
+		this.t(lastModified,this.a_primitive_str);
+		this.t(contentLength,this.a_primitive_str);
 		this.a_primitive_str(quality);
 		this.t(xtags,x => this.params("adaptive_format_item.xtags",x));
 		this.t(fps,this.D_FormatFps);
@@ -1038,7 +1038,7 @@ class Support_RS_Player extends ServiceMethods {
 				case "AUDIO_QUALITY_MEDIUM":
 			}
 		});
-		this.a_primitive_str(approxDurationMs);
+		this.t(approxDurationMs,this.a_primitive_str);
 		this.t(audioSampleRate,this.D_AudioSampleRate);
 		this.t(audioChannels,x => {
 			if(x!==2) debugger;

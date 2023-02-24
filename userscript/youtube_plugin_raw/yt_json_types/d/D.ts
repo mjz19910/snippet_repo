@@ -3052,7 +3052,7 @@ type D_LoggingDirectives_Gestures=T_Types<4>;
 type DD_Streaming={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: D_AdaptiveFormatItem[];
-	formats: D_FormatItem[];
+	formats?: D_FormatItem[];
 	probeUrl?: GU_GoodPut_ProbeUrl;
 	dashManifestUrl?: `https://manifest.googlevideo.com/api/manifest/dash/expire/${number}/ei/${string}/ip/${string}/id/${string}/source/yt_live_broadcast/requiressl/yes/hfr/all/as/fmp4_audio_clear%2Cwebm_audio_clear%2Cwebm2_audio_clear%2Cfmp4_sd_hd_clear%2Cwebm2_sd_hd_clear/vprv/1/pacing/0/keepalive/yes/fexp/${string}/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cas%2Cvprv%2Citag%2Cplaylist_type/sig/${string}`;
 	hlsManifestUrl?: `https://manifest.googlevideo.com/api/manifest/hls_variant/expire/${number}/ei/${string}/ip/${string}/id/${string}/source/yt_live_broadcast/requiressl/yes/hfr/1/maxh/${string}/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/${string}/dover/11/itag/0/playlist_type/LIVE/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cmaxh%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/${string}/file/index.m3u8`;

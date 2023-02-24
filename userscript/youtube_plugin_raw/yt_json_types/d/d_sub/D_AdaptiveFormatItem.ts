@@ -11,10 +11,10 @@ type D_AdaptiveFormatItem={
 	bitrate: number;
 	width?: number;
 	height?: number;
-	initRange: D_Range;
-	indexRange: D_Range;
-	lastModified: string;
-	contentLength: string;
+	initRange?: D_Range;
+	indexRange?: D_Range;
+	lastModified?: string;
+	contentLength?: string;
 	quality: G_FormatQuality;
 	xtags?: string;
 	fps?: D_FormatFps;
@@ -25,7 +25,7 @@ type D_AdaptiveFormatItem={
 	colorInfo?: D_FormatColorInfo;
 	highReplication?: true;
 	audioQuality?: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
-	approxDurationMs: `${number}`;
+	approxDurationMs?: `${number}`;
 	audioSampleRate?: `${D_AudioSampleRate}`;
 	audioChannels?: 2;
 	loudnessDb?: number;
