@@ -4,8 +4,9 @@ type D_UrlFormat=
 	|"android-app://com.google.android.youtube/http/youtube.com/premium"
 	|`/@${string}`
 	|`/@${string}${ChannelSubUrlFormat}`
-	|`/account`
+	|`/${string}`
 	|`/account_${G_AccountPageSettingsSections}`
+	|`/account`
 	|`/api/stats/ads?${string}`
 	|`/channel/UC${string}`
 	|`/embed/${string}`
@@ -13,30 +14,30 @@ type D_UrlFormat=
 	|`/feed/trending?${string}`
 	|`/gaming`
 	|`/playlist?${D_PlaylistUrlParams}`
-	|NonNullable<D_CommentsHeader["unicodeEmojisUrl"]>
-	|GU_VE11487_Url
-	|GU_VE6827_Url
-	|D_ResultsPageUrl
 	|`/shorts/${string}`
 	|`/v/${string}?version=3&autohide=1`
 	|`/watch?${string}`
-	|S_YtUrlHttp_Watch
 	|`https://www.youtube.com/pagead/adview?${string}`
 	|`https://www.youtube.com/watch?${string}`
 	|D_ApiPathFormat_1
-	|GU_ExternalUrl
 	|D_MicroformatEmbed["flashSecureUrl"]
 	|D_MicroformatEmbed["flashUrl"]
 	|D_MicroformatEmbed["iframeUrl"]
 	|D_PlayerMicroformat["ownerProfileUrl"]
-	|GU_GoodPut_ProbeUrl
+	|D_ResultsPageUrl
 	|DE_VE83769_Url_1["url"]
 	|GM_VE3854["url"]
+	|GU_ExternalUrl
+	|GU_GoodPut_ProbeUrl
 	|GU_VE3611_Url
 	|GU_VE6827_Url
+	|GU_VE6827_Url
+	|GU_VE11487_Url
+	|GU_YTExternalUrl
 	|NonNullable<D_AdaptiveFormatItem["url"]>
 	|NonNullable<D_Channel_MD["channelConversionUrl"]>
+	|NonNullable<D_CommentsHeader["unicodeEmojisUrl"]>
 	|NonNullable<D_FormatItem["url"]>
-	|GU_YTExternalUrl
+	|S_YtUrlHttp_Watch
 	;
 ;
