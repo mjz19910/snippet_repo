@@ -692,7 +692,7 @@ class IndexedDBService extends BaseService {
 						return ["arr",[x_item,y_item]];
 					}
 				}
-			} break;
+			}
 			default: throw new Error();
 		}
 		return cursor_group;
