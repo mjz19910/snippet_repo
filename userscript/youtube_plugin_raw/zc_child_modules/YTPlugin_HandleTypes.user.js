@@ -627,6 +627,7 @@ class HandleTypes extends ServiceMethods {
 		const {partition,selector}=x;
 		this.save_string(`${cf}.partition`,partition);
 		this.save_string(`${cf}.selector`,selector);
+		/** @type {G_Gv_0} */
 		// cSpell:ignoreRegExp /"(5u|qx)[a-z]{3}"/
 		switch(partition) {
 			default: {
@@ -643,6 +644,7 @@ class HandleTypes extends ServiceMethods {
 			case "o097z":
 			case "p5qls": case "p5qs7":
 			case "qxoed":
+			case "t0a7s":
 		}
 		/** @type {G_Gv_1} */
 		switch(selector) {

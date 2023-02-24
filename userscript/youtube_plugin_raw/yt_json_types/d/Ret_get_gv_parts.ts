@@ -16,6 +16,7 @@ type G_Gv_0=
 	|"p5qls"
 	|"p5qs7"
 	|"qxoed"
+	|"t0a7s"
 	|"vgqsk"
 	;
 ;
