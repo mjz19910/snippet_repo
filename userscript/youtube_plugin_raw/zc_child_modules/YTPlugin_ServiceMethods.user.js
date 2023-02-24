@@ -3529,7 +3529,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {E_UndoFeedback} x */
 	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
-	/** @private @arg {E_YpcGetOfflineUpsell} x */
+	/** @protected @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_Pinging} x */
 	E_Pinging(x) {
@@ -3766,28 +3766,12 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(startMillis);
 		if(durationMillis!=="10000") debugger;
 		this.D_Thumbnail(thumbnailDetails);
-		this.C_Innertube(onActive);
+		this.ht.C_Innertube(onActive);
 	}
-	/** @protected @arg {C_Innertube} x */
-	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
 	/** @arg {A_SetActivePanelItem} x */
 	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell.params",x);}
-	/** @arg {G_DC_Innertube} x */
-	G_DC_Innertube(x) {
-		const cf="G_DC_Innertube"; this.k(cf,x);
-		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
-		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("urlEndpoint" in x) return this.xr.E_Url(x);
-		if("browseEndpoint" in x) {
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-			debugger;
-			return;
-		}
-		debugger;
-	}
 	/** @private @arg {D_MarkersList} x */
 	D_MarkersList(x) {
 		const cf="D_MarkersList";
@@ -3795,7 +3779,7 @@ class ServiceMethods extends ServiceData {
 		if(markerType!=="MARKER_TYPE_TIMESTAMPS") debugger;
 		this.z(markers,this.D_MarkerItem);
 		this.G_Text(headerTitle);
-		this.C_Innertube(onTap);
+		this.ht.C_Innertube(onTap);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {D_EY_Offlineability} x */
@@ -3804,7 +3788,7 @@ class ServiceMethods extends ServiceData {
 		if("command" in x) {
 			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,x); this.g(y);
 			this.params("entity.key",key);
-			this.C_Innertube(command);
+			this.ht.C_Innertube(command);
 			switch(addToOfflineButtonState) {
 				default: debugger; break;
 				case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN":
