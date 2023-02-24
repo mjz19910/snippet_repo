@@ -96,7 +96,7 @@ function dig_user-run {
 	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
-	printf "%s\0" "$list" | xargs -0n1 zsh -c 'exec {f}<$1;flock -e $f' zsh
+	printf "%s\0" $list | xargs -0n1 -P 8000 zsh -c 'exec {f}<$1;flock -e $f;printf "*";' zsh
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
@@ -115,18 +115,15 @@ function dig_user-child {
 	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + ${#TMP_TAG} + 1))
 	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
 	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/tmp/result.XXX)
-	# sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
+	exec 4>>$TF
+	flock -e 4
+	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
 	printf "."
-	(
-		exec 4>>$TF
-		flock -e 4
-		dig @1.1.1.2 +time=3 +https +noall +answer "$@" >&4
-		if (($(wc -l <$TF) != 0)); then
-			eval 'printf "![${1[11,12]}:${1[14,15]}]"'
-		fi
-		exec 4<&-
-	) &
-	disown
+	dig @1.1.1.2 +time=20 +tries=2 +https +noall +answer "$@" >&4
+	if [[ -f "$TF" ]] && (($(wc -l <$TF) != 0)); then
+		eval 'printf "![${1[11,12]}:${1[14,15]}]"'
+	fi
+	exec 4<&-
 }
 function dig_final-run {
 	a2=${1}"n__"
@@ -145,7 +142,7 @@ function dig_final-run {
 	z=$(get_abc_opt)
 	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
-	printf "%s\0" "$list" | xargs -0n1 zsh -c 'exec {f}<$1;flock -e $f' zsh
+	printf "%s\0" $list | xargs -0n1 -P 8000 zsh -c 'exec {f}<$1;flock -e $f;printf "*";' zsh
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
@@ -164,12 +161,15 @@ function dig_final-child {
 	((cn -= n + DNS_TAG_LEN + TERM_RETURN_NUM_LINE_LEN + SPACE_CHAR * 2 + PADDING_LEN + ${#TMP_TAG} + 1))
 	printf "\e7\e[H\e["${cn}"C [dns.$TMP_TAG]:$1 \n\e8"
 	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/tmp/result.XXX)
+	exec 4>>$TF
+	flock -e 4
 	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
 	printf "."
-	dig @1.1.1.2 +time=3 +https +noall +answer "$@" >$TF
-	if (($(wc -l <$TF) != 0)); then
+	dig @1.1.1.2 +time=20 +tries=2 +https +noall +answer "$@" >&4
+	if [[ -f "$TF" ]] && (($(wc -l <$TF) != 0)); then
 		eval 'printf "!${1[14]}"'
 	fi
+	exec 4<&-
 }
 function lock_printf {
 	(
