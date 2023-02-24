@@ -7,17 +7,38 @@ type G_Gv_0=
 	|"n4v7s"|"nx5s7"|"nx57y"
 	|"o097z"
 	|"p5qls"|"p5qs7"
-	|"qxo7r"|"qxoed"
+	|"q4flr"|"qxo7r"|"qxoed"
 	|"t0a7l"|"t0a7s"
 	|"vgqsk"
 	;
 ;
-// cSpell:ignoreRegExp /rr1.sn-((ab5sz)[n][67elsz][67deklrsyz]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
+// cSpell:ignoreRegExp /rr1.sn-((q4flr|ab5sz)[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	``,
 	// dig results
 	`
+	rr1.sn-q4flrn"7k",.googlevideo.com. 1800 IN A      209.85.165.70
+	rr1.sn-q4flrn"7r",.googlevideo.com. 1800 IN A      209.85.165.102
+	rr1.sn-q4flrn"7y",.googlevideo.com. 1800 IN A      209.85.165.134
+	rr1.sn-q4flrn"e6",.googlevideo.com. 1800 IN A      173.194.191.230
+	rr1.sn-q4flrn"e7",.googlevideo.com. 1800 IN A      209.85.165.166
+	rr1.sn-q4flrn"ee",.googlevideo.com. 1800 IN A      209.85.165.198
+	rr1.sn-q4flrn"ek",.googlevideo.com. 1800 IN A      173.194.143.134
+	rr1.sn-q4flrn"el",.googlevideo.com. 1800 IN A      209.85.165.230
+	rr1.sn-q4flrn"er",.googlevideo.com. 1800 IN A      172.217.131.6
+	rr1.sn-q4flrn"es",.googlevideo.com. 1800 IN A      173.194.191.166
+	rr1.sn-q4flrn"ey",.googlevideo.com. 1800 IN A      172.217.131.38
+	rr1.sn-q4flrn"ez",.googlevideo.com. 1800 IN A      173.194.191.198
+	rr1.sn-q4flrn"l6",.googlevideo.com. 1800 IN A      173.194.24.38
+	rr1.sn-q4flrn"l7",.googlevideo.com. 1800 IN A      172.217.131.70
+	rr1.sn-q4flrn"ld",.googlevideo.com. 1800 IN A      173.194.24.70
+	rr1.sn-q4flrn"le",.googlevideo.com. 1800 IN A      172.217.131.102
+	rr1.sn-q4flrn"lz",.googlevideo.com. 1800 IN A      74.125.3.134
+	rr1.sn-q4flrn"sd",.googlevideo.com. 1800 IN A      74.125.3.6
+	rr1.sn-q4flrn"sk",.googlevideo.com. 1800 IN A      173.194.24.134
+	rr1.sn-q4flrn"sl",.googlevideo.com. 1800 IN A      173.194.57.70
+	rr1.sn-q4flrn"ss",.googlevideo.com. 1800 IN A      173.194.57.102
 	`,
 	"rr1.sn-ab5sznzz.googlevideo.com.",
 ];
@@ -68,6 +89,13 @@ type PT_TypeArr=[
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
 	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],// hit
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
+	["q4flr",[
+		"7k","7r","7y",
+		"e6","e7","ee","ek","el","er","es","ey","ez",
+		"l6","l7","ld","le","lz",
+		"sd","sk","sl","ss",
+	]],
+	["q4fze",["7e","7l","7s","ee"]],
 	["qxo7r",["7k","7r","7y",]],// hit
 	["qxoed",["7k","e7","ee",]],// hit
 	["t0a7l",["7d","ee"]],// hit

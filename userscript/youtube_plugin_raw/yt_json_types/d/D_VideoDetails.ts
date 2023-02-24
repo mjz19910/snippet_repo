@@ -18,5 +18,5 @@ type D_VideoDetails={
 	isPrivate: false;
 	isUnpluggedCorpus: false;
 	latencyClass?: "MDE_STREAM_OPTIMIZATIONS_RENDERER_LATENCY_NORMAL";
-	isLiveContent: false;
+	isLiveContent: boolean;
 };

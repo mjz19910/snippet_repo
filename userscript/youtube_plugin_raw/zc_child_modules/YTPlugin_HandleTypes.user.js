@@ -775,7 +775,7 @@ class HandleTypes extends ServiceMethods {
 			case "n4v7s": case "nx5s7": case "nx57y":
 			case "o097z":
 			case "p5qls": case "p5qs7":
-			case "qxoed":
+			case "q4flr": case "qxoed":
 			case "t0a7s":
 			case "vgqsk":
 		}
@@ -897,12 +897,21 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
 		const cf="D_PlayerConfig";
-		const {audioConfig,playbackStartConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
+		const {audioConfig,playbackStartConfig,streamSelectionConfig,livePlayerConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
 		this.xr.D_AudioConfig(audioConfig);
 		this.t(playbackStartConfig,this.D_StartSeconds);
 		this.t(streamSelectionConfig,this.D_StreamSelectionConfig);
+		this.t(livePlayerConfig,this.D_LivePlayerConfig);
 		this.xr.R_DynamicReadaheadConfig(mediaCommonConfig);
 		this.D_WebPlayerConfig(webPlayerConfig);
+	}
+	/** @private @arg {D_LivePlayerConfig} x */
+	D_LivePlayerConfig(x) {
+		const cf="D_LivePlayerConfig";
+		const {liveReadaheadSeconds,hasSubfragmentedFmp4,isLiveHeadPlayable,...y}=this.s(cf,x); this.g(y);
+		this.cq(liveReadaheadSeconds,1.6);
+		this.cq(hasSubfragmentedFmp4,true);
+		this.cq(isLiveHeadPlayable,true);
 	}
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
@@ -929,7 +938,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(author);
 		this.ceq(isPrivate,false);
 		this.ceq(isUnpluggedCorpus,false);
-		this.ceq(isLiveContent,false);
+		this.a_primitive_bool(isLiveContent);
 	}
 	/** @public @arg {D_StartSeconds} x */
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
@@ -2299,7 +2308,7 @@ class HandleTypes extends ServiceMethods {
 			this.immediate_run_logger();
 		});
 		this.T_D32(f2,x => {
-			if(x<=0b101000100101110101100010111110) return;
+			if(x<=0b101011001111000000110111110011) return;
 			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
 		});
 	}
