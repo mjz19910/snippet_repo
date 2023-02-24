@@ -630,8 +630,8 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
-	/** @template T @arg {make_item_group<T>} cursor_group @arg {make_item_group<T>} item_group */
-	async update_group(cursor_group,item_group) {
+	/** @template T @arg {make_item_group<T>} cursor_group @arg {make_item_group<T>} item_group @returns {make_item_group<T>} */
+	update_group(cursor_group,item_group) {
 		/** @arg {T[]} x_arr @arg {T[]} y_arr */
 		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
 			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
@@ -777,7 +777,8 @@ class IndexedDBService extends BaseService {
 							case "boolean": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
-									this.update_group(cursor_value.value,item_nt.value);
+									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
+									console.log("update",item_nt,cursor_value);
 									update_item=true; break;
 								}
 							} break;
@@ -785,7 +786,8 @@ class IndexedDBService extends BaseService {
 							case "number": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
-									this.update_group(cursor_value.value,item_nt.value);
+									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
+									console.log("update",item_nt,cursor_value);
 									update_item=true; break;
 								}
 							} break;
@@ -793,7 +795,8 @@ class IndexedDBService extends BaseService {
 							case "string": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 								if(!this.eq_group(item_nt.value,cursor_value.value,(a,b) => a===b)) {
-									this.update_group(cursor_value.value,item_nt.value);
+									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
+									console.log("update",item_nt,cursor_value);
 									update_item=true; break;
 								}
 							} break;
