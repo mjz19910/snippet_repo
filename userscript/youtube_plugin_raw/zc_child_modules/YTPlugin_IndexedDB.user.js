@@ -780,7 +780,7 @@ class IndexedDBService extends BaseService {
 							case "hashtag_id": break;
 							case "boolean": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(item_nt.value,cursor_value.value)) {
+								if(!this.eq_group(cursor_value.value,item_nt.value)) {
 									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
 									console.log("update",item_nt,cursor_value);
 									update_item=true; break;
@@ -789,7 +789,7 @@ class IndexedDBService extends BaseService {
 							case "root_visual_element":
 							case "number": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(item_nt.value,cursor_value.value)) {
+								if(!this.eq_group(cursor_value.value,item_nt.value)) {
 									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
 									console.log("update",item_nt,cursor_value);
 									update_item=true; break;
@@ -798,7 +798,7 @@ class IndexedDBService extends BaseService {
 							case "keys":
 							case "string": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								if(!this.eq_group(item_nt.value,cursor_value.value)) {
+								if(!this.eq_group(cursor_value.value,item_nt.value)) {
 									let item_val=item_nt.value; let cursor_val=cursor_value.value;
 									item_nt.value=this.update_group(cursor_value.value,item_nt.value);
 									console.log("update",item_val,cursor_val);
