@@ -49,6 +49,7 @@ type PT_TypeArr=[
 		"y6","ys","yy","yz","z6","zd","zr","zy","zz",
 	]],// hit
 	["5uald",["l7","ll","lr","ls","s6","sd","se","sk","sl","sr","ss","sy","sz","z7","ze"]],// hit
+	["9gv7e",["e6","ed","ek","ls"]],// hit
 	["9gv7l",["es","ez","le","s7"]],// hit
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["a5mlr",["ek","l6","ll","ls","lz"]],// hit
