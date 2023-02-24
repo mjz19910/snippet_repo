@@ -68,6 +68,7 @@ export namespace Gen {
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "D_FormatItem:signatureCipher";}
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "D_ImpressionCommand:LoggingUrlItem";}
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "D_PlayerMicroformat";}
+		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "GU_Url";}
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "RS_Page_Watch";}
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "R_WatchPage_VE3832";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_AccountItem";}

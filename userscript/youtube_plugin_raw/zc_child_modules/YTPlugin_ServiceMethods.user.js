@@ -2095,15 +2095,8 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
 		this.GU_Url(sp.href);
 	}
-	/** @private @arg {GU_VE83769_Url} x */
-	GU_Url(x) {
-		if(this.str_starts_with_rx("/",x)) {
-			switch(x) {
-				default: x===""; debugger; break;
-				case "/upload": break;
-			}
-			return;
-		}
+	/** @private @arg {Extract<GU_VE83769_Url,`https://${string}`>} x */
+	GU_Url_Obj(x) {
 		let up=this._convert_url_to_obj(x);
 		switch(up.host) {
 			case "music.youtube.com": return this.handle_yt_music_url(up.href);
@@ -2116,8 +2109,26 @@ class ServiceMethods extends ServiceData {
 			case "www.googleadservices.com": return;
 			case "googleads.g.doubleclick.net": return;
 			case "support.google.com": return;
+			case "youtube.com": return;
 			default: debugger; break;
 		}
+	}
+	/** @private @arg {GU_VE83769_Url} x */
+	GU_Url(x) {
+		if(this.str_starts_with_rx("/",x)) {
+			switch(x) {
+				default: x===""; debugger; break;
+				case "/upload": break;
+			}
+			return;
+		}
+		if(this.str_starts_with_rx("https://www.youtube.com/redirect?",x)) return;
+		if(this.str_starts_with_rx("https://youtube.com",x)) {
+			let up=this._convert_url_to_obj(x);
+			this.parser.parse_url("GU_Url",up.pathname);
+			return;
+		}
+		this.GU_Url_Obj(x);
 		const hn_yt_studio="https://studio.youtube.com";
 		const hn_yt_music="https://music.youtube.com";
 		const hn_yt_kids="https://www.youtubekids.com";
@@ -2126,6 +2137,12 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx(hn_yt_music,x)) return;
 		if(this.str_starts_with_rx(hn_yt_kids,x)) return;
 		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
+		if(this.str_starts_with_rx("https://www.google.com",x)) return;
+		if(this.str_starts_with_rx("https://myactivity.google.com",x)) return;
+		if(this.str_starts_with_rx("https://support.google.com",x)) return;
+		if(this.str_starts_with_rx("https://www.googleadservices.com",x)) return;
+		if(this.str_starts_with_rx("https://googleads.g.doubleclick.net",x)) return;
+		x;
 	}
 	/** @protected @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
