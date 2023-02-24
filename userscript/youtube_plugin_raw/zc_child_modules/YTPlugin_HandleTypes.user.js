@@ -2727,7 +2727,15 @@ class HandleTypes extends ServiceMethods {
 		} else debugger;
 	}
 	/** @private @arg {D_ImageType} x */
-	D_ImageType(x) {x;}
+	D_ImageType(x) {this.H_("imageType",x,this.D_Image);}
+	/** @private @arg {D_Image} x */
+	D_Image(x) {this.H_("image",x,this.D_Sources);}
+	/** @private @arg {D_Sources} x */
+	D_Sources(x) {
+		this.H_("sources",x,x => this.z(x,x => {
+			console.log("D_Sources.sources[]",x);
+		}));
+	}
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns

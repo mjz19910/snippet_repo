@@ -300,6 +300,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_InlineSurvey";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_InstreamVideoAd";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_InvalidationId";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_LayoutProperties";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LearningResource";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LightColorPalette:D_MacroMarkersListItem:light";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_LightColorPalette:D_PlaylistPanelVideo:light";}
