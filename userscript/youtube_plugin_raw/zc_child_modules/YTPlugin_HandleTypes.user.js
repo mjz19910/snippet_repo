@@ -2045,6 +2045,15 @@ class HandleTypes extends ServiceMethods {
 		this.validate_sig("sig.0",sig_0);
 		this.validate_sig("sig.1",sig_1);
 	}
+	/** @api @public @arg {CF_L_TP_Params} cf @arg {`/${string}`} x */
+	parse_url_alt(cf,x) {
+		cf;
+		let s=split_string_once(x,"/"); this.cq(s[0],"");
+		let [,v]=s;
+		let s2=split_string_once(v,"/");
+		if(s2.length===1) return;
+		debugger;
+	}
 	//#endregion
 	//#region binary
 	//#region binary done

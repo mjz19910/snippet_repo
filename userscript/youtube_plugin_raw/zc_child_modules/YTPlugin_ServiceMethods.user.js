@@ -2125,7 +2125,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx("https://www.youtube.com/redirect?",x)) return;
 		if(this.str_starts_with_rx("https://youtube.com",x)) {
 			let up=this._convert_url_to_obj(x);
-			this.parser.parse_url("GU_Url",up.pathname);
+			this.ht.parse_url_alt("GU_Url",up.pathname);
 			return;
 		}
 		this.GU_Url_Obj(x);
