@@ -2733,7 +2733,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Sources} x */
 	D_Sources(x) {
 		this.H_("sources",x,x => this.z(x,x => {
-			console.log("D_Sources.sources[]",x);
+			const {url,...y}=this.s("D_Sources.sources[]",x); this.g(y);
+			this.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
 		}));
 	}
 	/** @public @arg {C_Innertube} x */
