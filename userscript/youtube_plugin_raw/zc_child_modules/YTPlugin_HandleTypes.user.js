@@ -2234,6 +2234,56 @@ class HandleTypes extends ServiceMethods {
 			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
 		});
 	}
+	/** @private @arg {P_logging_context_serialized_context_data} x */
+	P_logging_context_serialized_context_data(x) {
+		const cf="P_logging_context_serialized_context_data",t=this;
+		const {1: f1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t_cf(`${cf}.f1`,f1,(cf,x) => this.T_VW(x,x => {
+			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		}));
+		t.t(t.t(f3,t.TV_Str),this.playlistId);
+	}
+	/** @type {string[]} */
+	params_to_decode=[];
+	/** @private @arg {PD_continuation_request_browse_token} x */
+	PD_continuation_request_browse_token(x) {
+		const cf="PD_continuation_request_browse_token";
+		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(f2),x => {
+			this.save_string(`${cf}.f2`,x);
+			switch(x) {
+				case "FEwhat_to_watch": break;
+			}
+		});
+		this.t(this.TV_Str(f3),x => {
+			if(this.params_to_decode.includes(x)) return;
+			this.params_to_decode.push(x);
+		});
+		this.t(f35,x => this.t(this.TV_Str(x),x => {
+			if(x!=="browse-feedFEwhat_to_watch") debugger;
+		}));
+	}
+	/** @private @arg {PR_continuation_request_browse_token} x */
+	PR_continuation_request_browse_token(x) {
+		const cf="PR_continuation_request_browse_token";
+		const {0x4c82a9c: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(a,this.PD_continuation_request_browse_token);
+	}
+	/** @private @arg {P_create_playlist_params} x */
+	P_create_playlist_params(x) {
+		const cf="P_create_playlist_params";
+		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
+	/** @private @arg {P_reel_player_params} x */
+	P_reel_player_params(x) {
+		const cf="P_reel_player_params"; let t=this;
+		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
+		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number));};
+		r("f30",f30); r("f57",f57); r("f71",f71);
+		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
+	}
 	//#endregion
 	//#region binary partial
 	/** @private @arg {PD_invalidation_continuation} x */
@@ -2290,6 +2340,18 @@ class HandleTypes extends ServiceMethods {
 		if(f3) debugger;
 		this.T_VW(f4,this.V_ShortTimestamp);
 		if(f5) debugger;
+	}
+	/** @private @arg {P_playability_status_context_params} x */
+	P_playability_status_context_params(x) {
+		const cf="P_playability_status_context_params";
+		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+	}
+	/** @private @arg {P_reel_params} x */
+	P_reel_params(x) {
+		const cf="P_reel_params";
+		const {1: f1,3: f3,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
 	}
 	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
@@ -2374,27 +2436,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_remove_like_params";
 		const {1: f1,3: f3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
-	/** @private @arg {P_playability_status_context_params} x */
-	P_playability_status_context_params(x) {
-		const cf="P_playability_status_context_params";
-		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
-	}
-	/** @private @arg {P_logging_context_serialized_context_data} x */
-	P_logging_context_serialized_context_data(x) {
-		const cf="P_logging_context_serialized_context_data",t=this;
-		const {1: f1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t_cf(`${cf}.f1`,f1,(cf,x) => this.T_VW(x,x => {
-			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		}));
-		t.t(t.t(f3,t.TV_Str),this.playlistId);
-	}
-	/** @private @arg {P_reel_params} x */
-	P_reel_params(x) {
-		const cf="P_reel_params";
-		const {1: f1,3: f3,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
-	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
@@ -2404,47 +2445,6 @@ class HandleTypes extends ServiceMethods {
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
 		const {1: f1,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @type {string[]} */
-	params_to_decode=[];
-	/** @private @arg {PD_continuation_request_browse_token} x */
-	PD_continuation_request_browse_token(x) {
-		const cf="PD_continuation_request_browse_token";
-		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(f2),x => {
-			this.save_string(`${cf}.f2`,x);
-			switch(x) {
-				case "FEwhat_to_watch": break;
-			}
-		});
-		this.t(this.TV_Str(f3),x => {
-			if(this.params_to_decode.includes(x)) return;
-			this.params_to_decode.push(x);
-		});
-		this.t(f35,x => this.t(this.TV_Str(x),x => {
-			if(x!=="browse-feedFEwhat_to_watch") debugger;
-		}));
-	}
-	/** @private @arg {PR_continuation_request_browse_token} x */
-	PR_continuation_request_browse_token(x) {
-		const cf="PR_continuation_request_browse_token";
-		const {0x4c82a9c: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_VW(a,this.PD_continuation_request_browse_token);
-	}
-	/** @private @arg {P_create_playlist_params} x */
-	P_create_playlist_params(x) {
-		const cf="P_create_playlist_params";
-		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
-	}
-	/** @private @arg {P_reel_player_params} x */
-	P_reel_player_params(x) {
-		const cf="P_reel_player_params"; let t=this;
-		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
-		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number));};
-		r("f30",f30); r("f57",f57); r("f71",f71);
-		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
 	}
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
