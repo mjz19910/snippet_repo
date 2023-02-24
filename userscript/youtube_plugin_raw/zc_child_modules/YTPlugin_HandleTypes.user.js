@@ -2221,6 +2221,19 @@ class HandleTypes extends ServiceMethods {
 		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
 	}
+	/** @private @arg {V_ShortTimestamp} x */
+	V_ShortTimestamp(x) {
+		const cf="V_ShortTimestamp";
+		const {1: request_timestamp_milli_utc,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(request_timestamp_milli_utc,x => {
+			this.log_buffer.push(["number",`max_gen:V_ShortTimestamp:binary_ts_gen`,"f1","milliseconds",x]);
+			this.immediate_run_logger();
+		});
+		this.T_D32(f2,x => {
+			if(x<=0b111000100000001110010100101001) return;
+			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
+		});
+	}
 	//#endregion
 	//#region binary partial
 	/** @private @arg {PD_invalidation_continuation} x */
@@ -2238,6 +2251,13 @@ class HandleTypes extends ServiceMethods {
 			}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 			x;
 		}));
+	}
+	PG_subscription_state_key=this.P_subscription_state_key;
+	/** @private @arg {P_subscription_state_key} x */
+	P_subscription_state_key(x) {
+		const cf="P_subscription_state_key";
+		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(a),x => this.channelId(x));
 	}
 	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
@@ -2287,13 +2307,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_shorts_source_bp";
 		const {94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
-	PG_subscription_state_key=this.P_subscription_state_key;
-	/** @private @arg {P_subscription_state_key} x */
-	P_subscription_state_key(x) {
-		const cf="P_subscription_state_key";
-		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(a),x => this.channelId(x));
-	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
@@ -2328,19 +2341,6 @@ class HandleTypes extends ServiceMethods {
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
 		const {1: f1,3: f3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @private @arg {V_ShortTimestamp} x */
-	V_ShortTimestamp(x) {
-		const cf="V_ShortTimestamp";
-		const {1: request_timestamp_milli_utc,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(request_timestamp_milli_utc,x => {
-			this.log_buffer.push(["number",`max_gen:V_ShortTimestamp:binary_ts_gen`,"f1","milliseconds",x]);
-			this.immediate_run_logger();
-		});
-		this.T_D32(f2,x => {
-			if(x<=0b111000100000001110010100101001) return;
-			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
-		});
 	}
 	/** @type {string[]} */
 	LP_dislike=[];
