@@ -332,6 +332,13 @@ class HandleTypes extends ServiceMethods {
 	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
 	//#endregion
 	//#region Renderer Templates & Binary Templates; T & TV
+	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
+	T_Attachment(cf,x) {
+		const {startIndex,length,...y}=this.s(cf,x);
+		this.a_primitive_num(startIndex);
+		this.a_primitive_num(length);
+		return y;
+	}
 	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
 	T_D32(x,f) {
 		if(!x) {debugger; return;}
@@ -521,13 +528,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(showMoreCommand,this.C_Executor);
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 		this.t(attributedDescription,this.D_AttributedDescription);
-	}
-	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
-	T_Attachment(cf,x) {
-		const {startIndex,length,...y}=this.s(cf,x);
-		this.a_primitive_num(startIndex);
-		this.a_primitive_num(length);
-		return y;
 	}
 	/** @private @arg {D_CommandRunItem} x */
 	D_CommandRunItem(x) {
