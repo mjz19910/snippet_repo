@@ -2669,11 +2669,11 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(content);
 		this.z(commandRuns,this.D_CommandRunItem);
 		this.z(styleRuns,this.D_StyleRunItem);
-		this.tz(attachmentRuns,this.D_AttachmentRunItem);
+		this.tz(attachmentRuns,this.R_AttachmentElement);
 		this.tz(decorationRuns,this.R_TextDecorator);
 	}
 	/** @private @arg {R_AttachmentElement} x */
-	D_AttachmentRunItem(x) {x;}
+	R_AttachmentElement(x) {x;}
 	/** @private @arg {R_TextDecorator} x */
 	R_TextDecorator(x) {x;}
 	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
