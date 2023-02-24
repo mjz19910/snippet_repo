@@ -12,7 +12,7 @@ type G_Gv_0=
 	|"vgqsk"
 	;
 ;
-// cSpell:ignoreRegExp /rr1.sn-((qxoed|ab5sz)[n][7lez][67deklrsyz]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
+// cSpell:ignoreRegExp /rr1.sn-((vgqsk|qxoed|ab5sz)[n][67elsz][67deklrsyz]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	``,
@@ -67,7 +67,15 @@ type PT_TypeArr=[
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
 	["qxo7r",["7k","7r","7y",]],// hit
 	["qxoed",["7k","e7","ee",]],// hit
-	["t0a7l",["7d"]],
+	["t0a7l",["7d","ee"]],// hit
+	["t0a7s",["7d"]],// hit
+	["vgqsk",[
+		"6s","6z","66",
+		"e6","ed","ek","es","ez",
+		"ld","lk","ll","lr","ls","ly","lz",
+		"s7","se","sk",
+		"z7","ze","zl","zs","zz",
+	]],// hit
 	// 
 ];
 type G_Gv_1_List=[
