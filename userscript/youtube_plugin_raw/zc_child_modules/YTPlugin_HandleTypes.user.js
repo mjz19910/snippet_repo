@@ -30,6 +30,7 @@ ECatcherService.known_experiments.push(...[
 	[24474438,24478762,39323074],
 	[24470280],
 	[24473091],
+	[24477512],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
@@ -2314,6 +2315,19 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_playlist_edit_params";
 		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {P_search_params} x */
+	P_search_params(x) {
+		const cf="P_search_params";
+		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PF_23n24n);
+	}
+	/** @private @arg {PF_23n24n} x */
+	PF_23n24n(x) {
+		const cf="PF_23n24n";
+		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(a,x => this.cq(x,1));
+		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
+	}
 	//#endregion
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	binary_result(cf,x) {
@@ -2602,18 +2616,59 @@ class HandleTypes extends ServiceMethods {
 			});
 		});
 	}
-	/** @private @arg {P_search_params} x */
-	P_search_params(x) {
-		const cf="P_search_params";
-		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_VW(f2,this.PF_23n24n);
+	/** @public @arg {R_VideoSecondaryInfo} x */
+	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
+	/** @private @arg {D_VideoSecondaryInfo} x */
+	D_VideoSecondaryInfo(x) {
+		const cf="D_VideoSecondaryInfo";
+		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,attributedDescription,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.t(description,this.G_Text);
+		this.R_SubscribeButton(subscribeButton);
+		this.RMD_RowContainer(metadataRowContainer);
+		this.G_Text(showMoreText);
+		this.G_Text(showLessText);
+		this.R_VideoOwner(owner);
+		this.a_primitive_bool(defaultExpanded);
+		this.a_primitive_num(descriptionCollapsedLines);
+		this.t(showMoreCommand,this.C_Executor);
+		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
+		this.t(attributedDescription,this.D_AttributedDescription);
 	}
-	/** @private @arg {PF_23n24n} x */
-	PF_23n24n(x) {
-		const cf="PF_23n24n";
-		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_D32(a,x => this.cq(x,1));
-		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
+	/** @private @arg {D_CommandRunItem} x */
+	D_CommandRunItem(x) {
+		const cf="D_CommandRunItem";
+		const {startIndex,length,onTap,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_num(startIndex);
+		this.a_primitive_num(length);
+		this.C_Innertube(onTap);
+	}
+	/** @private @arg {D_StyleRunItem} x */
+	D_StyleRunItem(x) {
+		const cf="D_StyleRunItem";
+		const {startIndex,length,fontColor,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_num(startIndex);
+		this.a_primitive_num(length);
+		this.save_number(`${cf}.fontColor`,fontColor);
+	}
+	/** @private @arg {D_AttributedDescription} x */
+	D_AttributedDescription(x) {
+		const cf="D_VideoSecondaryInfo";
+		const {content,commandRuns,styleRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(content);
+		this.z(commandRuns,this.D_CommandRunItem);
+		this.z(styleRuns,this.D_StyleRunItem);
+	}
+	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
+	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
+	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
+	D_ExpandableVideoDescriptionBody(x) {
+		const cf="D_ExpandableVideoDescriptionBody";
+		const {descriptionBodyText,showMoreText,showLessText,attributedDescriptionBodyText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(descriptionBodyText,this.G_Text);
+		this.t(showMoreText,this.G_Text);
+		this.t(showLessText,this.G_Text);
+		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
 	}
 	//#endregion binary
 	//#endregion

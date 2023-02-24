@@ -4282,7 +4282,7 @@ class ServiceMethods extends ServiceData {
 		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
-		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
+		if("videoSecondaryInfoRenderer" in x) return this.ht.R_VideoSecondaryInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {RG_Watch_ItemSection} x */
@@ -5107,8 +5107,6 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(dateText);
 		this.t(relativeDateText,this.G_Text);
 	}
-	/** @private @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
 	/** @private @arg {R_ChipCloud} x */
 	R_ChipCloud(x) {this.H_("chipCloudRenderer",x,this.D_ChipCloud);}
 	/** @private @arg {R_WebSearchboxConfig} x */
@@ -5288,22 +5286,6 @@ class ServiceMethods extends ServiceData {
 		const {type,subscribed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_string("button.type",type);
 		this.t(subscribed,this.a_primitive_bool);
-	}
-	/** @private @arg {D_VideoSecondaryInfo} x */
-	D_VideoSecondaryInfo(x) {
-		const cf="D_VideoSecondaryInfo";
-		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.t(description,this.G_Text);
-		this.R_SubscribeButton(subscribeButton);
-		this.RMD_RowContainer(metadataRowContainer);
-		this.G_Text(showMoreText);
-		this.G_Text(showLessText);
-		this.R_VideoOwner(owner);
-		this.a_primitive_bool(defaultExpanded);
-		this.a_primitive_num(descriptionCollapsedLines);
-		this.t(showMoreCommand,this.C_Executor);
-		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {D_MerchandiseShelf} x */
 	D_MerchandiseShelf(x) {
@@ -5587,7 +5569,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DC_Generic_CTP} x */
 	D_CD_Next(x) {this.DC_Generic_CTP("next.continuation",x);}
-	/** @private @arg {RMD_RowContainer} x */
+	/** @protected @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {R_MerchandiseItem} x */
 	R_MerchandiseItem(x) {this.H_("merchandiseItemRenderer",x,this.D_MerchandiseItem);}
@@ -6157,8 +6139,6 @@ class ServiceMethods extends ServiceData {
 		this.R_Factoid(factoid);
 		this.save_enum(cf,"VIEW_COUNT_FACTOID_TYPE",viewCountType);
 	}
-	/** @protected @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ClipSection} x */
 	D_ClipSection(x) {this.H_("contents",x,x => this.z(x,this.R_ClipCreation));}
 	/** @protected @arg {A_ShowEngagementPanelScrim} x */
@@ -6192,14 +6172,6 @@ class ServiceMethods extends ServiceData {
 		if(renderingPriority!=="RENDERING_PRIORITY_UNKNOWN") debugger;
 		this.ceq(isModeratedElqComment,false);
 		this.D_LoggingDirectives(loggingDirectives);
-	}
-	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
-	D_ExpandableVideoDescriptionBody(x) {
-		const cf="D_ExpandableVideoDescriptionBody";
-		const {descriptionBodyText,showMoreText,showLessText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(descriptionBodyText,this.G_Text);
-		this.t(showMoreText,this.G_Text);
-		this.t(showLessText,this.G_Text);
 	}
 	/** @public @arg {R_RichListHeader} x */
 	R_RichListHeader(x) {this.H_("richListHeaderRenderer",x,this.D_RichListHeader);}

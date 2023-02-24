@@ -3364,7 +3364,7 @@ class Support_Renderer extends ServiceMethods {
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x) {
 		const cf="G_StructuredDescriptionContentItem";
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
+		if("expandableVideoDescriptionBodyRenderer" in x) return this.ht.R_ExpandableVideoDescriptionBody(x);
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
