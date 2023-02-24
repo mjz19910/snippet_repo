@@ -5,6 +5,7 @@ export namespace Gen {
 		|{n: "CF_D_CaseGen"; t: CF_D_CaseGen; v: "DE_SignalNavigation.signal";}
 		|{n: "CF_D_CaseGen"; t: CF_D_CaseGen; v: "D_EngagementPanelTargetId:AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: "CF_D_CaseGen"; t: CF_D_CaseGen; v: "D_GuideEntry_TargetId";}
+		|{n: "CF_D_CaseGen"; t: CF_D_CaseGen; v: "D_PlayabilityStatus.reason";}
 		|{n: "CF_D_CaseGen"; t: CF_D_CaseGen; v: "D_ReelPlayerOverlay";}
 		|{n: "CF_D_CaseGen"; t: CF_D_CaseGen; v: "D_RichMetadata";}
 		|{n: "CF_D_CaseGen"; t: CF_D_CaseGen; v: "D_RichShelf.icon";}
@@ -547,6 +548,8 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_request_browse_token";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_invalidation_continuation";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_invalidation_continuation.f9";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_timed_continuation";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PF_23n24n";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_params";}
@@ -567,6 +570,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_get_pdg_buy_flow_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_get_report_form_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_get_transcript_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_invalidation_continuation";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_like_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_logging_context_serialized_context_data";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_logging_context_serialized_context_data.f1";}

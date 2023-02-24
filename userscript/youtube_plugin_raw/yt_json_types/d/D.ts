@@ -2196,9 +2196,14 @@ type D_LiveStreamability={
 	pollDelayMs: `${15000}`;
 };
 type R_LiveStreamability={liveStreamabilityRenderer: D_LiveStreamability;};
+type D_PlayabilityOkReason=
+	|"This live event has ended."
+	|"We're experiencing technical difficulties."
+	;
+;
 type D_PlayabilityStatus={
 	status: "OK";
-	reason?: "We're experiencing technical difficulties.";
+	reason?: D_PlayabilityOkReason;
 	playableInEmbed: boolean;
 	liveStreamability?: R_LiveStreamability;
 	offlineability?: R_Button;

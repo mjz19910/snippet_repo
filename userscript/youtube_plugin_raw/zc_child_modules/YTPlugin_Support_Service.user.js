@@ -657,7 +657,13 @@ class Support_RS_Player extends ServiceMethods {
 			} break;
 			case "OK": {
 				const {status,reason,playableInEmbed,liveStreamability,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
-				this.t(reason,x => this.cq(x,"We're experiencing technical difficulties."));
+				this.t(reason,x => {
+					switch(x) {
+						default: this.cg.codegen_case(`${cf}.reason`,x); break;
+						case "We're experiencing technical difficulties.":
+						case "This live event has ended.":
+					}
+				});
 				this.a_primitive_bool(playableInEmbed);
 				this.t(liveStreamability,this.R_LiveStreamability);
 				this.t(offlineability,this.R_Button);

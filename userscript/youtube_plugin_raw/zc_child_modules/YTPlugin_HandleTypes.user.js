@@ -785,7 +785,7 @@ class HandleTypes extends ServiceMethods {
 			case "p5qls": case "p5qs7":
 			case "q4fl6": case "q4flr": case "qxoed":
 			case "t0a7s":
-			case "vgqsk":
+			case "vgqsk": case "vgqsr":
 		}
 		/** @type {G_Gv_1} */
 		switch(selector) {
@@ -1733,7 +1733,7 @@ class HandleTypes extends ServiceMethods {
 			this.binary_result(cf,bin_obj);
 		} catch(e) {
 			if(e instanceof Error) {
-				this.codegen_typedef_bin(`${cf}.err`,{message: e.message},false);
+				console.log("binary_result err",e);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,bin_obj,false);
 			} else {
 				debugger;
@@ -2121,7 +2121,7 @@ class HandleTypes extends ServiceMethods {
 		t.t(f1,x => t.TK_D32(cf,x,"tag"));
 		t.t(f2,x => t.TK_D32(cf,x,"id"));
 		t.t(f3,x => t.TK_D32(cf,x,"f3"));
-		t.VW_BinaryTimestamp(f4);
+		t.t(f4,t.VW_BinaryTimestamp);
 		t.t_cf(`${cf}_f6`,f6,t.H_TrackingObj_f6);
 		t.t(t.t(f7,t.TV_Str),x => t.save_b64_binary(`${cf}.f7`,x));
 		t.ms_t(f8,x => {
@@ -2191,7 +2191,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
-	/** @private @arg {"P_timed_continuation_data"|"PR_continuation_params"} cf @arg {PR_continuation_params} x */
+	/** @private @arg {"P_invalidation_continuation"|"P_timed_continuation_data"|"PR_continuation_params"} cf @arg {PR_continuation_params} x */
 	PR_continuation_params(cf,x) {
 		if(0x6b7c87f in x) {
 			const {0x6b7c87f: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
@@ -2200,12 +2200,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(0x722607a in x) {
 			const {0x722607a: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_VW(n,this.PD_continuation_params_2);
+			this.T_VW(n,this.PD_invalidation_continuation);
 			return;
 		}
 		if(0x94d81d4 in x) {
 			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_VW(n,this.PD_continuation_params_1);
+			this.T_VW(n,this.PD_continuation_params);
 			return;
 		}
 		this.h_gen_keys(cf,x,x);
@@ -2229,15 +2229,26 @@ class HandleTypes extends ServiceMethods {
 		const {2: a,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.videoId(x));
 	}
-	/** @private @arg {PD_continuation_params_1} x */
-	PD_continuation_params_1(x) {
-		const cf="PD_continuation_params_1";
+	/** @private @arg {PD_continuation_params} x */
+	PD_continuation_params(x) {
+		const cf="PD_continuation_params";
 		const {3: f3,8: f8,11: f11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
-	/** @private @arg {PD_continuation_params_2} x */
-	PD_continuation_params_2(x) {
-		const cf="PD_continuation_params_2";
-		const {3: f3,6: f6,16: f11,17: f14,20: f15,21: f21,22: f22,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	/** @private @arg {PD_invalidation_continuation} x */
+	PD_invalidation_continuation(x) {
+		const cf="PD_invalidation_continuation";
+		const {3: f3,5: f5,6: f6,8: f8,9: f9,10: f10,11: f11,16: f16,17: f17,19: f19,20: f15,21: f21,22: f22,23: f23,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(f9,x => this.T_VW(x,x => {
+			const cf="PD_invalidation_continuation.f9";
+			const {
+				1: f1,3: f3,4: f4,9: f9,
+				10: f10,11: f11,15: f15,
+				20: f20,21: f21,22: f22,24: f24,25: f25,28: f28,29: f29,
+				30: f30,31: f31,33: f33,34: f34,
+				...y
+			}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			x;
+		}));
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
@@ -2856,6 +2867,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_timed_continuation_data(u);
 			} break;
+			case "invalidation.continuation": {
+				/** @type {P_invalidation_continuation} */
+				let u=as_any(x);
+				this.P_invalidation_continuation(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2863,10 +2879,10 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_invalidation_continuation} x */
+	P_invalidation_continuation(x) {this.PR_continuation_params("P_invalidation_continuation",x);}
 	/** @private @arg {P_timed_continuation_data} x */
-	P_timed_continuation_data(x) {
-		this.PR_continuation_params("P_timed_continuation_data",x);
-	}
+	P_timed_continuation_data(x) {this.PR_continuation_params("P_timed_continuation_data",x);}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {x;}
 	//#endregion

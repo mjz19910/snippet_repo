@@ -319,7 +319,7 @@ type P_get_pdg_buy_flow_params={
 		3: T_D32<1>;
 	};
 };
-type PD_continuation_params_1={
+type PD_continuation_params={
 	3: T_VW<{
 		4: T_FD32<20988979>;
 		8: T_FD32<1162761290>;
@@ -339,22 +339,32 @@ type PD_continuation_params_1={
 	15?: T_D32<1>;
 };
 
-type PD_continuation_params_2={
+type PD_invalidation_continuation={
 	3: TV_Str<string>;
+	5?: T_D32<1677254540586556>;
 	6: T_D32<1>;
+	8?: T_D32<2>;
+	9?: T_VW<PD_invalidation_continuation_f9>;
+	10?: T_D32<1677254541354670>;
+	11?: T_D32<1677243317743918>;
 	16: T_VW<{
+		1: T_D32<4>;
+		3: T_D32<1>;
+	}|{
 		1: T_D32<4>;
 		3: T_D32<2>;
 		4: T_D32<0>;
 	}>;
-	17: T_D32<1>;
+	17: T_D32<0|1>;
+	19?: T_VW<{1: T_D32<0>;}>;
 	20: T_D32<1677145213699204>;
 	21: T_D32<0>;
 	22: T_VW<{}>;
+	23?: T_VW<{1: T_D32<10>;}>;
 };
 type PR_continuation_params=
-	|{0x94d81d4: T_VW<PD_continuation_params_1>;}
-	|{0x722607a: T_VW<PD_continuation_params_2>;}
+	|{0x94d81d4: T_VW<PD_continuation_params>;}
+	|{0x722607a: T_VW<PD_invalidation_continuation>;}
 	|P_timed_continuation_data
 	;
 ;
@@ -504,3 +514,46 @@ type PD_timed_continuation={
 	8: T_D32<1>;
 };
 type P_timed_continuation_data={0x6b7c87f: T_VW<PD_timed_continuation>;};
+type PD_invalidation_continuation_f9={
+	1: T_D32<0>;
+	3: T_D32<0>;
+	4: T_D32<0>;
+	9: T_VW<{
+		2: T_D32<0>;
+		3: T_D32<0>;
+		4: T_D32<0>;
+	}>;
+	10: T_D32<1677254540012668>;
+	11: T_D32<3>;
+	15: T_D32<0>;
+	20: T_VW<{
+		1: T_VW<{
+			1: T_D32<1616677026>;
+			2: T_D32<541311000>;
+		}>;
+		2: T_VW<{
+			1: T_D32<1677254540>;
+			2: T_D32<12668127>;
+		}>;
+		3: T_VW<{1: T_D32<300>;}>;
+		4: T_D32<0>;
+	}>;
+	21: T_VW<{
+		2: T_D32<0>;
+		3: T_VW<{1: T_D32<1>;}>;
+		4: T_VW<{1: T_D32<1>;}>;
+	}>;
+	22: T_D32<0>;
+	24: T_D32<0>;
+	25: T_D32<1677254540012668>;
+	28: T_VW<{
+		1: T_D32<1677254540>;
+		2: T_D32<12668127>;
+	}>;
+	29: T_D32<0>;
+	30: T_D32<0>;
+	31: T_D32<0>;
+	33: T_D32<0>;
+	34: T_D32<0>;
+};
+type P_invalidation_continuation={0x722607a: T_VW<PD_invalidation_continuation>;};
