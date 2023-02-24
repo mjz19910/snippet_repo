@@ -2361,6 +2361,28 @@ class HandleTypes extends ServiceMethods {
 		this.T_D32(a,x => this.cq(x,1));
 		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
 	}
+	/** @private @arg {P_bin_params_1} x */
+	P_bin_params_1(x) {
+		const cf="P_bin_params_1";
+		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(a,x => {
+			const cf="P_bin_params_1.f1";
+			const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_FD64(a,x => {
+				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
+				this.save_number(`${cf}.f1.first_byte`,iv_fb);
+			});
+			this.T_FD64(b,x => {
+				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
+				this.save_number(`${cf}.f2.first_byte`,iv_fb);
+			});
+		});
+	}
+	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
+	P_notification_add_upcoming_event_reminder_params(x) {
+		const cf="P_notification_add_upcoming_event_reminder_params";
+		const {1: a,6: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
 	//#endregion
 	//#region binary_result()
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
@@ -2639,28 +2661,6 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	//#endregion
-	/** @private @arg {P_bin_params_1} x */
-	P_bin_params_1(x) {
-		const cf="P_bin_params_1";
-		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_VW(a,x => {
-			const cf="P_bin_params_1.f1";
-			const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_FD64(a,x => {
-				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
-				this.save_number(`${cf}.f1.first_byte`,iv_fb);
-			});
-			this.T_FD64(b,x => {
-				let iv_fb=parseInt(x.toString(16).slice(0,2),16);
-				this.save_number(`${cf}.f2.first_byte`,iv_fb);
-			});
-		});
-	}
-	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
-	P_notification_add_upcoming_event_reminder_params(x) {
-		const cf="P_notification_add_upcoming_event_reminder_params";
-		const {1: a,6: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
 	/** @public @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
 	/** @private @arg {D_VideoSecondaryInfo} x */
