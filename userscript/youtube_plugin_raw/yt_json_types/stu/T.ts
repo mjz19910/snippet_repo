@@ -168,14 +168,16 @@ type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={targetId: T
 type TD_Label<T>={label: T;};
 //#endregion
 //#region TE_
-type TE_Endpoint_1<EP_Key extends string,T_Data>={[I in EP_Key]: T_Data};
-type TE_Endpoint_2<EP_Key extends string,T_Data>={clickTrackingParams: string;}&{[I in EP_Key]: T_Data};
-type TE_Endpoint_NoTrack_3<EP_Key extends string,T_Data,T_Meta>={commandMetadata: T_Meta;}&{[I in EP_Key]: T_Data};
-type TE_TrackedObj_2<EP_Key extends string,T_Data>={trackingParams: string;}&{[I in EP_Key]: T_Data};
-type TE_Endpoint_3_Helper<EP_Key extends `${string}${D_EndpointLikeEndings}`,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in EP_Key]: T_Data};
-type TE_Endpoint_3<EP_Key extends `${string}${D_EndpointLikeEndings}`,T_Data,T_Meta>={[K in keyof TE_Endpoint_3_Helper<EP_Key,T_Data,T_Meta>]: TE_Endpoint_3_Helper<EP_Key,T_Data,T_Meta>[K]};
+type EP_Key=`${string}${D_EndpointLikeEndings}`;
+type TE_Endpoint_1<T_Key extends EP_Key,T_Data>={[I in T_Key]: T_Data};
+type TE_EndpointImpl_2<T_Key extends EP_Key,T_Data>={clickTrackingParams: string;}&{[I in T_Key]: T_Data};
+type TE_Endpoint_2<T_Key extends EP_Key,T_Data>={[K in keyof TE_EndpointImpl_2<T_Key,T_Data>]: TE_EndpointImpl_2<T_Key,T_Data>[K]};
+type TE_Endpoint_NoTrack_3<T_Key extends EP_Key,T_Data,T_Meta>={commandMetadata: T_Meta;}&{[I in T_Key]: T_Data};
+type TE_TrackedObj_2<T_Key extends EP_Key,T_Data>={trackingParams: string;}&{[I in T_Key]: T_Data};
+type TE_Endpoint_3_Helper<T_Key extends EP_Key,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in T_Key]: T_Data};
+type TE_Endpoint_3<T_Key extends EP_Key,T_Data,T_Meta>={[K in keyof TE_Endpoint_3_Helper<T_Key,T_Data,T_Meta>]: TE_Endpoint_3_Helper<T_Key,T_Data,T_Meta>[K]};
 type TE_Endpoint_Opt_1<T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta|undefined;};
-type TE_Endpoint_Opt_3<EP_Key extends string,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata?: T_Meta;}&{[I in EP_Key]: T_Data};
+type TE_Endpoint_Opt_3<T_Key extends EP_Key,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata?: T_Meta;}&{[I in T_Key]: T_Data};
 type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint_3<"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>,M_SetSetting>;
 //#endregion
 //#region TM_

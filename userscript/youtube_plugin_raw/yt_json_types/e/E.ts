@@ -36,26 +36,10 @@ type E_Url={
 	commandMetadata: M_Url;
 	urlEndpoint: DE_Url;
 };
-type E_WebPlayerShareEntityService={
-	clickTrackingParams: string;
-	commandMetadata: M_GetWebPlayerSharePanel;
-	webPlayerShareEntityServiceEndpoint: DE_WebPlayerShareEntityService;
-};
-type E_AddUpcomingEventReminder={
-	clickTrackingParams: string;
-	commandMetadata: M_AddUpcomingEventReminder;
-	addUpcomingEventReminderEndpoint: DC_Params;
-};
-type E_RemoveUpcomingEventReminder={
-	clickTrackingParams: string;
-	commandMetadata: M_RemoveUpcomingEventReminder;
-	removeUpcomingEventReminderEndpoint: DC_Params;
-};
-type E_PlaylistDelete={
-	clickTrackingParams: string;
-	commandMetadata: M_PlaylistDelete;
-	deletePlaylistEndpoint: DE_PlaylistDelete;
-};
+type E_WebPlayerShareEntityService=TE_Endpoint_3<"webPlayerShareEntityServiceEndpoint",DE_WebPlayerShareEntityService,M_GetWebPlayerSharePanel>;
+type E_AddUpcomingEventReminder=TE_Endpoint_3<"addUpcomingEventReminderEndpoint",DC_Params,M_AddUpcomingEventReminder>;
+type E_RemoveUpcomingEventReminder=TE_Endpoint_3<"removeUpcomingEventReminderEndpoint",DC_Params,M_RemoveUpcomingEventReminder>;
+type E_PlaylistDelete=TE_Endpoint_3<"deletePlaylistEndpoint",DE_PlaylistDelete,M_PlaylistDelete>;
 type E_Pinging={
 	clickTrackingParams: string;
 	loggingUrls: T_BaseUrl<`https://pagead2.googlesyndication.com/pcs/activeview?xai=${string}&sai=${string}&sig=${string}&cid=${string}&acvw=[VIEWABILITY]`|`https://googleads.g.doubleclick.net/pagead/interaction/?ai=${string}&sigh=${string}&label=noop_tap`>[];
@@ -66,10 +50,7 @@ type E_AdFeedback={
 	loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`>[];
 	adFeedbackEndpoint: DE_AdFeedback;
 };
-type E_MuteAd={
-	clickTrackingParams: string;
-	muteAdEndpoint: DE_MuteAd;
-};
+type E_MuteAd=TE_Endpoint_2<"muteAdEndpoint",DE_MuteAd>;
 type E_PerformCommentAction={performCommentActionEndpoint: {};};
 //#endregion
 type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
