@@ -54,9 +54,9 @@ type PT_TypeArr=[
 		"ld","lk","ly",
 		"z6","zd","ze","zk","zl","zr","zs","zy","zz",
 	]],// hit
+	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["a5mlr",["ek","l6","ll","ls","lz"]],// hit
 	["a5mse",["76","7l","7s","7z","ek","er","es","l7","le","ll"]],// hit
-	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],// hit
 	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],// hit
 	["n8v7z",["lk","lr","ly","s6","s7","sd","se","sk","sl","sr","ss","sy","sz","z7","ze","zl"]],// hit
@@ -65,8 +65,8 @@ type PT_TypeArr=[
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
 	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],// hit
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
-	["qxoed",["7k","e7","ee",]],// hit
 	["qxo7r",["7k","7r","7y",]],// hit
+	["qxoed",["7k","e7","ee",]],// hit
 	// 
 ];
 type G_Gv_1_List=[
