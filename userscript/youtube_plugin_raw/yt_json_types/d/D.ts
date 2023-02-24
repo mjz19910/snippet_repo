@@ -2110,9 +2110,9 @@ type D_MovingThumbnail_Thumbnails={
 	}[];
 	logAsMovingThumbnail: true;
 };
-type T_Key<T>={key: T;};
+type TG_Key<T>={key: T;};
 type D_MultiMarkersPlayerBar={
-	visibleOnLoad: T_Key<"DESCRIPTION_CHAPTERS"|"">;
+	visibleOnLoad: TG_Key<"DESCRIPTION_CHAPTERS"|"">;
 	markersMap: [R_DescriptionChaptersItem,R_HeatSeekerItem];
 };
 type D_MusicCarouselShelf=Record<"contents",{}[]>&{

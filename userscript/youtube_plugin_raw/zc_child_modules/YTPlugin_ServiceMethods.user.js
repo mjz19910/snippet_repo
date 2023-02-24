@@ -347,9 +347,9 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @protected @template R_D,R_M
-	 * @template {Extract<keyof T_Endpoint,EPL>} EP_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
-	 * @arg {EP_Key} k
-	 * @arg {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[EP_Key])=>R_D} f2
+	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @arg {T_Key} k
+	 * @arg {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
 	 * @returns {[typeof y,R_M,R_D]}
 	 */
 	TE_Endpoint_3_v2(k,x,f1,f2) {
@@ -1437,8 +1437,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @arg {CF_TE_Endpoint_2} cf
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
-	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
+	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
+	 * @returns {[T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|T_Key>]}
 	 * */
 	TE_Endpoint_2(cf,k,x) {
 		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
@@ -1447,15 +1447,15 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @arg {CF_TE_TrackedObj_2} cf
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
-	 * @returns {[T_EP[EP_Key],Omit<T_EP,"trackingParams"|EP_Key>]}
+	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
+	 * @returns {[T_EP[T_Key],Omit<T_EP,"trackingParams"|T_Key>]}
 	 * */
 	TE_TrackedObj_2(cf,x,k) {
 		const {trackingParams,[k]: endpoint,...y}=this.s(cf,x);
 		this.trackingParams(trackingParams);
 		return [endpoint,y];
 	}
-	/** @protected @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
+	/** @protected @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} T_Key @template {TE_Endpoint_Opt_3<T_Key,any,any>} T_EP @arg {T_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
 		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
@@ -2696,9 +2696,9 @@ class ServiceMethods extends ServiceData {
 	/**
 	 * @protected
 	 * @arg {CF_TE_Endpoint_3} cf
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
-	 * @arg {EP_Key} k
-	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
+	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
+	 * @arg {T_Key} k
+	 * @returns {[T_EP['commandMetadata'],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]}
 	 */
 	TE_Endpoint_3(cf,k,x) {
 		if(!x) {debugger; return as_any(null);}
