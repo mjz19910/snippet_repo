@@ -1008,7 +1008,7 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {
 		const cf="D_AdaptiveFormatItem";
-		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,xtags,fps,qualityLabel,projectionType,audioTrack,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,xtags,fps,qualityLabel,projectionType,targetDurationSec,maxDvrDurationSec,audioTrack,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
 		this.t(audioTrack,this.D_AudioTrack);
 		this.a_primitive_num(itag);
 		this.t(url,x => this.parser.parse_url(cf,x));
@@ -1025,6 +1025,9 @@ class Support_RS_Player extends ServiceMethods {
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,this.a_primitive_str);
 		if(projectionType!=="RECTANGULAR") debugger;
+		this.t(targetDurationSec,x => this.cq(x,1));
+		this.t(maxDvrDurationSec,x => this.cq(x,43200));
+		maxDvrDurationSec;
 		this.t(averageBitrate,this.a_primitive_num);
 		this.t(colorInfo,this.D_FormatColorInfo);
 		this.t(highReplication,x => {if(x!==true) debugger;});
