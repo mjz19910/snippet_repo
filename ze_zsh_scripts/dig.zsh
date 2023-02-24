@@ -121,7 +121,7 @@ function dig_user-child {
 		exec 4>>$TF
 		flock -e 4
 		dig @1.1.1.2 +time=3 +https +noall +answer "$@" >&4
-		if (($(wc -l <&4) != 0)); then
+		if (($(wc -l <$TF) != 0)); then
 			eval 'printf "![${1[11,12]}:${1[14,15]}]"'
 		fi
 		exec 4<&-
