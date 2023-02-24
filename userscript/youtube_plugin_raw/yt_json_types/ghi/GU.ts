@@ -56,9 +56,14 @@ type GU_VE23462_Id=
 ;
 type GU_VE37414_Url="/shorts/"|`/shorts/${string}`;
 type GU_VE42352_Url="/feed/downloads";
+type GU_VE83769_Url_Internal=
+	|"/upload"
+	|`https://youtube.com/${string}`
+	;
+;
 type GU_VE83769_Url=
 	|GU_VE83769_Url_Internal
-	|GU_YoutubeUrlRedirect
+	|GU_VE83769_Url_Redirect
 	|GU_VE83769_Url_External
 	|`https://support.google.com/youtube/answer/${number}`
 	;
@@ -79,12 +84,11 @@ type GU_YoutubeUrlRedirect_Event=
 	|"product_shelf"
 	|"video_description"
 	;
-type GU_YoutubeUrlRedirect=
+type GU_VE83769_Url_Redirect=
 	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}&v=${string}`
 	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}`
 	;
 ;
-type GU_VE83769_Url_Internal="/upload";
 type D_StrOnlyLen<T extends number,U extends string>=T_Split<U,"">['length'] extends T? U:never;
 type GU_VE83769_Url_External=
 	|"https://music.youtube.com"

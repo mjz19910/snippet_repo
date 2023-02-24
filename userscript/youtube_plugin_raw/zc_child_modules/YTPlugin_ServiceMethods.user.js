@@ -2079,7 +2079,7 @@ class ServiceMethods extends ServiceData {
 		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
 		debugger;
 	}
-	/** @private @arg {GU_YoutubeUrlRedirect|`https://www.youtube.com/${string}`} x */
+	/** @private @arg {GU_VE83769_Url_Redirect|`https://www.youtube.com/${string}`} x */
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
@@ -2087,7 +2087,7 @@ class ServiceMethods extends ServiceData {
 	GM_E_VE83769_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x)) {
-			/** @type {GU_YoutubeUrlRedirect} */
+			/** @type {GU_VE83769_Url_Redirect} */
 			let arg_x=as(x);
 			return this.GU_YoutubeUrlRedirect(arg_x);
 		}
@@ -2129,7 +2129,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
-	/** @private @arg {GU_YoutubeUrlRedirect} x */
+	/** @private @arg {GU_VE83769_Url_Redirect} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect";
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
