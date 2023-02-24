@@ -8,7 +8,7 @@ type G_Gv_0=
 	|"o097z"
 	|"p5qls"|"p5qs7"
 	|"qxo7r"|"qxoed"
-	|"t0a7s"
+	|"t0a7l"|"t0a7s"
 	|"vgqsk"
 	;
 ;
@@ -18,6 +18,8 @@ type PT_DigDomain=[
 	``,
 	// dig results
 	`
+	rr1.sn-t0a7ln7d.googlevideo.com. 1800 IN A      209.85.225.230
+	rr1.sn-t0a7sn7d.googlevideo.com. 1800 IN A      209.85.225.198
 	`,
 	"rr1.sn-ab5sznzz.googlevideo.com.",
 ];
@@ -67,6 +69,7 @@ type PT_TypeArr=[
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
 	["qxo7r",["7k","7r","7y",]],// hit
 	["qxoed",["7k","e7","ee",]],// hit
+	["t0a7l",["7d"]],
 	// 
 ];
 type G_Gv_1_List=[
