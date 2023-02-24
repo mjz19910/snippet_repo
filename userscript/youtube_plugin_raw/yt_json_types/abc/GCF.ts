@@ -9,6 +9,7 @@ type GCF_s=
 	|CF_P_EntityKey
 	|CF_parse_identifier
 	|CF_RS_Page_Type1
+	|CF_T_Attachment
 	|CF_T_GM
 	|CF_T_Icon
 	|CF_T_Icon_Any
@@ -38,4 +39,4 @@ type GCF_w=
 	|CF_TR_MultiPageMenu
 	;
 ;
-type pt_xt=(R_FancyDismissibleDialog|{}) extends infer T? T extends infer U? {} extends U? never:U:never:never;
+type GCF_D_Menu=CF_D_Video_Handle|CF_D_Playlist_Omit;
