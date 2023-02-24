@@ -1653,7 +1653,9 @@ class ServiceMethods extends ServiceData {
 						do_set(param[1],u8_bin_arr);
 						break;
 					}
-					do_set(param[1],this._decoder.decode(u8_bin_arr));
+					let dec=this._decoder.decode(u8_bin_arr);
+					if(dec===null) {debugger; break;}
+					do_set(param[1],dec);
 				} break;
 				case "data64": do_set(param[1],["bigint",param[2],param[3]]); break;
 				case "group": do_set(param[1],['group',param[2]]); break;

@@ -2149,9 +2149,20 @@ class BaseServicePrivate extends ApiBase {
 	/** @protected @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} k */
 	save_enum(cf,ns,k) {return this.save_db.save_enum_impl(cf,ns,k);}
 }
+class TextDecoderExt {
+	decoder=new TextDecoder("utf-8",{fatal: false});
+	/** @arg {BufferSource} buffer */
+	decode(buffer) {
+		try {
+			return this.decoder.decode(buffer);
+		} catch {
+			return null;
+		}
+	}
+}
 class BaseService extends BaseServicePrivate {
 	/** @protected */
-	_decoder=new TextDecoder("utf-8",{fatal: false});
+	_decoder=new TextDecoderExt;
 	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {
 		if(!x) {debugger;}

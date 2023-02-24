@@ -1,5 +1,5 @@
 type D_JsonReplacerArgs={
-	text_decoder: TextDecoder;
+	text_decoder: TextDecoderExt;
 	cf: string;
 	keys: string[];
 	is_root: boolean;

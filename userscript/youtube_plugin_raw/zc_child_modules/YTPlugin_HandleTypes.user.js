@@ -69,16 +69,19 @@ class HandleTypes extends ServiceMethods {
 					let [n,id,a,b]=v;
 					if(b===null) {
 						let decoded_string=this._decoder.decode(a);
+						if(decoded_string===null) {debugger; continue;}
 						add_obj(id,["raw_child",a,b,["string",decoded_string]]);
 						continue;
 					}
 					let c=this.tr_arr_to_obj(b);
 					if(c===null) {
 						let decoded_string=this._decoder.decode(a);
+						if(decoded_string===null) {debugger; continue;}
 						add_obj(id,["child_str",a,null,["string",decoded_string]]);
 						continue;
 					}
 					let decoded_string=this._decoder.decode(a);
+					if(decoded_string===null) {debugger; continue;}
 					add_obj(id,[n,a,c,["string",decoded_string]]);
 				} break;
 				case "data32": {
@@ -1958,7 +1961,12 @@ class HandleTypes extends ServiceMethods {
 		switch(t) {
 			default: debugger; break;
 			case "child_str": {const [,,,b]=a; const [,c]=b; r_str=["2",c];} break;
-			case "child": {const [,b]=a; let c=this._decoder.decode(b); r_str=["unknown",c];} break;
+			case "child": {
+				const [,b]=a;
+				let c=this._decoder.decode(b);
+				if(!c) {debugger; break;}
+				r_str=["unknown",c];
+			} break;
 			case "raw_child": {const [,,,b]=a; const [,c]=b; r_str=["1",c];} break;
 		}
 		if(!r_str) return;
@@ -2128,6 +2136,7 @@ class HandleTypes extends ServiceMethods {
 				case "child": {
 					let [,bin,]=a;
 					let video_id=this._decoder.decode(bin);
+					if(video_id==null) {debugger; break;}
 					this.videoId(video_id);
 				} break;
 				case "raw_child": /*D_VideoIdStr*/{
