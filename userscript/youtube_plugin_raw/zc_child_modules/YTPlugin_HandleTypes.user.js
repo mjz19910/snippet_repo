@@ -907,18 +907,20 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
 		const cf="D_VideoDetails";
-		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,...y}=this.s(cf,x); this.g(y);
+		const {videoId,title,lengthSeconds,isLive,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,isLiveDvrEnabled,thumbnail,liveChunkReadahead,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,...y}=this.s(cf,x); this.g(y);
 		this.videoId(videoId);
 		this.a_primitive_str(title);
-		let num=this.parse_number_template(lengthSeconds);
-		this.a_primitive_num(num);
+		this.a_primitive_num(this.parse_number_template(lengthSeconds));
+		this.t(isLive,x => this.cq(x,true));
 		this.tz(keywords,this.a_primitive_str);
 		this.channelId(channelId);
 		this.a_primitive_bool(isOwnerViewing);
 		this.ceq(isOwnerViewing,false);
 		this.a_primitive_str(shortDescription);
 		this.ceq(isCrawlable,true);
+		this.t(isLiveDvrEnabled,x => this.cq(x,true));
 		this.D_Thumbnail(thumbnail);
+		this.t(liveChunkReadahead,x => this.cq(x,2));
 		this.a_primitive_bool(allowRatings);
 		this.t(viewCount,x => {
 			let num=this.parse_number_template(x);

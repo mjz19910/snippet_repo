@@ -744,7 +744,7 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_HeartbeatParams";
 		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
 		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
-		this.ceq(softFailOnError,false);
+		this.a_primitive_bool(softFailOnError);
 		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
 	/** @private @arg {D_Miniplayer} x */
