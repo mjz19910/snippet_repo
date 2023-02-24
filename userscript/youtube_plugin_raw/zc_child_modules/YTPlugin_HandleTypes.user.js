@@ -924,7 +924,7 @@ class HandleTypes extends ServiceMethods {
 		const {liveReadaheadSeconds,hasSubfragmentedFmp4,isLiveHeadPlayable,...y}=this.s(cf,x); this.g(y);
 		this.cq(liveReadaheadSeconds,1.6);
 		this.cq(hasSubfragmentedFmp4,true);
-		this.cq(isLiveHeadPlayable,true);
+		this.t(isLiveHeadPlayable,x => this.cq(x,true));
 	}
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
