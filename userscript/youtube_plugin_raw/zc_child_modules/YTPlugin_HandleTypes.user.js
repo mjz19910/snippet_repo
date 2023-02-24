@@ -2215,6 +2215,12 @@ class HandleTypes extends ServiceMethods {
 	P_invalidation_continuation(x) {this.PR_continuation_params("P_invalidation_continuation",x);}
 	/** @private @arg {P_timed_continuation_data} x */
 	P_timed_continuation_data(x) {this.PR_continuation_params("P_timed_continuation_data",x);}
+	/** @private @arg {P_trending_bp} x */
+	P_trending_bp(x) {
+		const cf="P_trending_bp";
+		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
+	}
 	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
 	/** @private @arg {P_ypc_get_offers_params} x */
@@ -2222,17 +2228,11 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_ypc_get_offers_params";
 		const {1: a,3: f3,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
-	/** @private @arg {P_trending_bp} x */
-	P_trending_bp(x) {
-		const cf="P_trending_bp";
-		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
-	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
-		const {2: a,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(a),x => this.videoId(x));
+		const {2: f2,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(f2),x => this.videoId(x));
 	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
