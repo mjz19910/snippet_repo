@@ -2527,6 +2527,44 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	binary_result(cf,x) {
 		switch(cf) {
+			//#region entity.key
+			case "entity.key": {
+				/** @type {P_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_entity_key",u);
+			} break;
+			case "playlist_loop_state.entity.key": {
+				/** @type {P_playlist_loop_state_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_playlist_loop_state_entity_key",u);
+			} break;
+			case "load_markers.entity.key": {
+				/** @type {P_load_markers_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_load_markers_entity_key",u);
+			} break;
+			case "transcript_track_selection.entity.key": {
+				/** @type {P_transcript_track_selection_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_transcript_track_selection_entity_key",u);
+			} break;
+			case "change_markers_visibility.entity.key": {
+				/** @type {P_change_markers_visibility_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_change_markers_visibility_entity_key",u);
+			} break;
+			case "macro_markers_list.entity.key": {
+				/** @type {P_macro_markers_list_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_macro_markers_list_entity_key",u);
+			} break;
+			case "view_count.entity.key": {
+				/** @type {P_view_count_entity_key} */
+				let u=as_any(x);
+				this.P_EntityKey("P_view_count_entity_key",u);
+			} break;
+			//#endregion
+			//#region done
 			case "params.click_tracking": {
 				/** @type {H_TrackingObj} */
 				let v=as_any(x);
@@ -2742,41 +2780,6 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_ve_3611_params(u);
 			} break;
-			case "entity.key": {
-				/** @type {P_entity_key} */
-				let u=as_any(x);
-				this.P_EntityKey("P_entity_key",u);
-			} break;
-			case "playlist_loop_state.entity.key": {
-				/** @type {P_playlist_loop_state_entity_key} */
-				let u=as_any(x);
-				this.P_EntityKey("P_playlist_loop_state_entity_key",u);
-			} break;
-			case "load_markers.entity.key": {
-				/** @type {P_load_markers_entity_key} */
-				let u=as_any(x);
-				this.P_EntityKey("P_load_markers_entity_key",u);
-			} break;
-			case "transcript_track_selection.entity.key": {
-				/** @type {P_transcript_track_selection_entity_key} */
-				let u=as_any(x);
-				this.P_EntityKey("P_transcript_track_selection_entity_key",u);
-			} break;
-			case "change_markers_visibility.entity.key": {
-				/** @type {P_change_markers_visibility_entity_key} */
-				let u=as_any(x);
-				this.P_EntityKey("P_change_markers_visibility_entity_key",u);
-			} break;
-			case "macro_markers_list.entity.key": {
-				/** @type {P_macro_markers_list_entity_key} */
-				let u=as_any(x);
-				this.P_EntityKey("P_macro_markers_list_entity_key",u);
-			} break;
-			case "view_count.entity.key": {
-				/** @type {P_view_count_entity_key} */
-				let u=as_any(x);
-				this.P_EntityKey("P_view_count_entity_key",u);
-			} break;
 			case "search.params": {
 				/** @type {P_search_params} */
 				let u=as_any(x);
@@ -2792,6 +2795,12 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_notification_add_upcoming_event_reminder_params(u);
 			} break;
+			//#endregion
+			case "notification_remove_upcoming_event_reminder.params": {
+				/** @type {P_notification_remove_upcoming_event_reminder_params} */
+				let u=as_any(x);
+				this.P_notification_remove_upcoming_event_reminder_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2799,6 +2808,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
+	P_notification_remove_upcoming_event_reminder_params(x) {x;}
 	//#endregion
 	//#endregion binary
 	//#endregion
