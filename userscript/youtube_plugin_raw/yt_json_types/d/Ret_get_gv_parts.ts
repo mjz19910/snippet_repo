@@ -12,7 +12,7 @@ type G_Gv_0=
 	|"vgqsk"
 	;
 ;
-// cSpell:ignoreRegExp /rr1.sn-((vgqsk|qxoed|ab5sz)[n][67elsz][67deklrsyz]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
+// cSpell:ignoreRegExp /rr1.sn-((ab5sz)[n][67elsz][67deklrsyz]).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	``,
@@ -22,7 +22,6 @@ type PT_DigDomain=[
 	"rr1.sn-ab5sznzz.googlevideo.com.",
 ];
 type PT_TypeS_NoRep=[
-	gen_g2_t1<"hp57k">,
 ];
 type PT_TypeS=[
 	gen_g3_t2<"5ua",[
@@ -31,6 +30,7 @@ type PT_TypeS=[
 	]>,
 	gen_g3_t2<"9gv7",["l","e"]>,
 	gen_g3_t2<"a5m",["ek","lr","se"]>,
+	gen_g3_t2<"hp57",["k","y"]>,
 	gen_g3_t2<"n",[
 		gen_a3_t2<["4","8"],"v7",["s","z"]>,
 		gen_a2_t2<"x5",["s7","7y"]>,
@@ -54,11 +54,13 @@ type PT_TypeArr=[
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["a5mlr",["ek","l6","ll","ls","lz"]],// hit
 	["a5mse",["76","7l","7s","7z","ek","er","es","l7","le","ll"]],// hit
+	["ab5l6",["dr","dy","k6","kd","r6","rd","rk","rl","rr","rs","rz"]],// hit
 	["ab5sz",[
 		"ld","lk","ly",
 		"z6","zd","ze","zk","zl","zr","zs","zy","zz",
 	]],// hit
 	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],// hit
+	["hp57y",["7r","7y","e7","ee","l6","lr","ly","s7","se","sl","ss"]],// hit
 	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],// hit
 	["n8v7z",["lk","lr","ly","s6","s7","sd","se","sk","sl","sr","ss","sy","sz","z7","ze","zl"]],// hit
 	["nx5s7",["7d","7s","7y","7z","76","ee","el"]],// hit
@@ -71,7 +73,7 @@ type PT_TypeArr=[
 	["t0a7l",["7d","ee"]],// hit
 	["t0a7s",["7d"]],// hit
 	["vgqsk",[
-		"6s","6z","66",
+		"66","6s","6z",
 		"e6","ed","ek","es","ez",
 		"ld","lk","ll","lr","ls","ly","lz",
 		"s7","se","sk",
@@ -96,7 +98,6 @@ type G_Gv_1_List_0=[
 type G_Gv_1_List_1=[
 	"6","7","d","e","k","l","r","s","y","z",
 ];
-// end ["p5qs7","zy"],
 type G_Gv_1=
 	|`6${"d"|"l"}`
 	|`7${"6"|"d"|"k"|"s"|"y"|"z"}`
