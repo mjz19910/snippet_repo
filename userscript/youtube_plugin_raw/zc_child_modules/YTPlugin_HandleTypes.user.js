@@ -25,13 +25,6 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
-	[24409417,24466859,24474437,24477147,24477317],
-	[24476774,24481213,4957635],
-	[24474438,24478762,39323074],
-	[24470280],
-	[24473091],
-	[24477512],
-	[23848211],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
@@ -628,7 +621,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf}.partition`,partition);
 		this.save_string(`${cf}.selector`,selector);
 		/** @type {G_Gv_0} */
-		// cSpell:ignoreRegExp /"(5u|qx)[a-z]{3}"/
+		// cSpell:ignoreRegExp /"(5u|qx|vg)[a-z]{3}"/
 		switch(partition) {
 			default: {
 				let gen=this.cg.codegen_case_cache(`g_case:${cf}:host_partition`,partition);
@@ -645,12 +638,13 @@ class HandleTypes extends ServiceMethods {
 			case "p5qls": case "p5qs7":
 			case "qxoed":
 			case "t0a7s":
+			case "vgqsk":
 		}
 		/** @type {G_Gv_1} */
 		switch(selector) {
 			default: selector===""; debugger; break;
 			case "6d": case "6l":
-			case "76": case "7d": case "7s": case "7y": case "7z":
+			case "76": case "7d": case "7k": case "7s": case "7y": case "7z":
 			case "d6": case "dy": case "dz":
 			case "el": case "ee": case "ey":
 			case "l7": case "lk": case "lr": case "ls":
