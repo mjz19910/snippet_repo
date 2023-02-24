@@ -19,4 +19,5 @@ type D_VideoDetails={
 	isUnpluggedCorpus: false;
 	latencyClass?: "MDE_STREAM_OPTIMIZATIONS_RENDERER_LATENCY_NORMAL";
 	isLiveContent: boolean;
+	isPostLiveDvr?: true;
 };

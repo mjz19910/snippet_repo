@@ -446,7 +446,7 @@ class HandleTypes extends ServiceMethods {
 	D_WebPlayerConfig(x) {
 		const cf="D_WebPlayerConfig";
 		const {useCobaltTvosDash,webPlayerActionsPorting,...y}=this.s(cf,x); this.g(y);
-		this.ceq(useCobaltTvosDash,true);
+		this.cq(useCobaltTvosDash,true);
 		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
 	}
 	/** @public @arg {D_WebPlayerActionsPorting} x */
@@ -821,7 +821,7 @@ class HandleTypes extends ServiceMethods {
 		itag&&this.save_string(`${cf1}.itag`,itag);
 		this.save_string(`${cf1}.source`,source);
 		this.save_string(`${cf1}.requiressl`,requiressl);
-		this.t(ctier,x => this.ceq("SH",x));
+		this.t(ctier,x => this.cq("SH",x));
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
 		this.t(ufph,x => this.cq(x,"1"));
@@ -897,7 +897,7 @@ class HandleTypes extends ServiceMethods {
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
 		}
-		this.t(gcr,x => this.ceq(x,"ca"));
+		this.t(gcr,x => this.cq(x,"ca"));
 	}
 	/** @private @arg {D_VideoPlaybackShape} uv */
 	D_VideoPlaybackShape(uv) {
@@ -929,7 +929,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
 		const cf="D_VideoDetails";
-		const {videoId,title,lengthSeconds,isLive,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,isLiveDvrEnabled,thumbnail,liveChunkReadahead,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,...y}=this.s(cf,x); this.g(y);
+		const {videoId,title,lengthSeconds,isLive,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,isLiveDvrEnabled,thumbnail,liveChunkReadahead,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,isPostLiveDvr,...y}=this.s(cf,x); this.g(y);
 		this.videoId(videoId);
 		this.a_primitive_str(title);
 		this.a_primitive_num(this.parse_number_template(lengthSeconds));
@@ -937,9 +937,9 @@ class HandleTypes extends ServiceMethods {
 		this.tz(keywords,this.a_primitive_str);
 		this.channelId(channelId);
 		this.a_primitive_bool(isOwnerViewing);
-		this.ceq(isOwnerViewing,false);
+		this.cq(isOwnerViewing,false);
 		this.a_primitive_str(shortDescription);
-		this.ceq(isCrawlable,true);
+		this.cq(isCrawlable,true);
 		this.t(isLiveDvrEnabled,x => this.cq(x,true));
 		this.D_Thumbnail(thumbnail);
 		this.t(liveChunkReadahead,x => this.cq(x,2));
@@ -949,9 +949,10 @@ class HandleTypes extends ServiceMethods {
 			this.a_primitive_num(num);
 		});
 		this.a_primitive_str(author);
-		this.ceq(isPrivate,false);
-		this.ceq(isUnpluggedCorpus,false);
+		this.cq(isPrivate,false);
+		this.cq(isUnpluggedCorpus,false);
 		this.a_primitive_bool(isLiveContent);
+		this.t(isPostLiveDvr,x => this.cq(x,true));
 	}
 	/** @public @arg {D_StartSeconds} x */
 	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
@@ -1054,7 +1055,7 @@ class HandleTypes extends ServiceMethods {
 			this.D_LoggingDirectives(loggingDirectives);
 			if("bold" in y) {
 				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
-				this.ceq(bold,true);
+				this.cq(bold,true);
 				return;
 			}
 			this.g(y);
@@ -2145,7 +2146,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="param_arr") debugger;
-		let [,[a,...y1]]=x; this.ceq(y1.length,0);
+		let [,[a,...y1]]=x; this.cq(y1.length,0);
 		const [t]=a;
 		/** @type {["1",H_TrackingObj_f6_Str]|["2",H_TrackingObj_f6_Str_2]|["unknown",string]|null} */
 		let r_str=null;
@@ -2406,7 +2407,7 @@ class HandleTypes extends ServiceMethods {
 			const cf="P_dislike_params.f1";
 			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 			if(f1[0]!=="param_arr") {debugger; return;}
-			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
+			let [,[a,...y1]]=f1; this.cq(y1.length,0);
 			switch(a[0]) {
 				default: debugger; break;
 				case "child": {
