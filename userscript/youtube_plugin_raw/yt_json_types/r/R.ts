@@ -352,6 +352,13 @@ type R_VE96368_PageType_Browse_Response={
 	expirationTime: number;
 };
 type R_VE3854_PageType_Browse_Response={
+	page: "browse";
+	endpoint: E_VE3854;
+	response: RS_Browse;
+	url: "/";
+	previousCsn: string;
+	expirationTime: number;
+}|{
 	rootVe: 3854;
 	url: "/";
 	endpoint: E_VE3854;
@@ -373,6 +380,12 @@ type R_VE3854_PageType_Browse_Response={
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
+type R_PageType_Browse_Response=
+	|R_VE3854_PageType_Browse_Response
+	|R_VE6827_PageType_Browse_Response
+	|R_VE96368_PageType_Browse_Response
+	;
+;
 type R_PageTypeBrowse={
 	endpoint: E_VE6827;
 	pageType: "browse";

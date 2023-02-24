@@ -1717,7 +1717,7 @@ class Support_GenericApi extends ServiceMethods {
 class Support_EventInput extends ServiceMethods {
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
-	/** @private @arg {R_PageTypeBrowse["response"]} x */
+	/** @private @arg {R_PageType_Browse_Response} x */
 	R_PageTypeBrowse_Response(x) {
 		const cf="R_PageTypeBrowse_Response";
 		if("rootVe" in x) {
@@ -1736,7 +1736,7 @@ class Support_EventInput extends ServiceMethods {
 			return;
 		}
 		if(this.is_EP_Val(x,3854)) {
-			let u=this.RS_Page_Type1(cf,x,{
+			let {...u}=this.RS_Page_Type1(cf,x,{
 				page: x => this.ceq(x,"browse"),
 				endpoint: x => this.E_VE3854(x),
 				response: x => this.x.get("x_RS_Browse").RS_Browse(x),
@@ -1752,6 +1752,11 @@ class Support_EventInput extends ServiceMethods {
 				expirationTime: x => this.t(x,this.a_primitive_num),
 			});
 			if(this.is_empty_obj(u)) return;
+			if("previousCsn" in u) {
+				const {previousCsn,...y}=u; this.g(y);
+				this.D_VeCsn(previousCsn,true);
+				return;
+			}
 			const {graftedVes,csn,...y}=u; this.g(y);
 			this.z(graftedVes,this.D_GraftedVeItem);
 			this.D_VeCsn(csn);
