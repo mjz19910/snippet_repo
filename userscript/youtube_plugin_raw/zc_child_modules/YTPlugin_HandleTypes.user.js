@@ -2665,11 +2665,17 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_AttributedDescription} x */
 	D_AttributedDescription(x) {
 		const cf="D_VideoSecondaryInfo";
-		const {content,commandRuns,styleRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {content,commandRuns,styleRuns,attachmentRuns,decorationRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(content);
 		this.z(commandRuns,this.D_CommandRunItem);
 		this.z(styleRuns,this.D_StyleRunItem);
+		this.tz(attachmentRuns,this.D_AttachmentRunItem);
+		this.tz(decorationRuns,this.R_TextDecorator);
 	}
+	/** @private @arg {R_AttachmentElement} x */
+	D_AttachmentRunItem(x) {x;}
+	/** @private @arg {R_TextDecorator} x */
+	R_TextDecorator(x) {x;}
 	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */

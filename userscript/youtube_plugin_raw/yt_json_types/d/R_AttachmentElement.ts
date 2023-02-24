@@ -17,7 +17,7 @@ type D_AttachmentElement={
 	type: D_ImageType;
 	properties: R_LayoutProperties;
 };
-type D_AttachmentRunItem={
+type R_AttachmentElement={
 	startIndex: number;
 	length: number;
 	element: D_AttachmentElement;
