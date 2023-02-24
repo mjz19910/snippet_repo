@@ -1144,6 +1144,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
 	//#endregion
+	//#region Misc
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
 	make_str_tag(x,tag) {
 		/** @template T */
@@ -1390,6 +1391,8 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		return res;
 	}
+	//#endregion
+	//#region codegen_typedef_bin
 	/** @private @arg {JsonReplacerState} s @arg {object|null} x @returns {string|object|null} */
 	typedef_json_replace_bin_obj(s,x) {
 		if(x===null) return x;
@@ -1522,6 +1525,8 @@ class HandleTypes extends ServiceMethods {
 		if(do_break) {debugger;}
 		return is_new;
 	}
+	//#endregion
+	//#region More misc
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f) {
 		if(!x) {debugger; return null;}
@@ -1901,7 +1906,9 @@ class HandleTypes extends ServiceMethods {
 		this.validate_sig("sig.0",sig_0);
 		this.validate_sig("sig.1",sig_1);
 	}
+	//#endregion
 	//#region binary
+	//#region binary done
 	/** @public @arg {BinaryVe} x */
 	BinaryVe(x) {
 		switch(x) {
@@ -2004,7 +2011,23 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
-	//#region get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
+	/** @private @arg {PR_continuation_params} x */
+	PR_continuation_params(x) {
+		const cf="PR_continuation_params";
+		if(0x94d81d4 in x) {
+			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(n,this.PD_continuation_params_1);
+			return;
+		}
+		if(0x722607a in x) {
+			const {0x722607a: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			this.T_VW(n,this.PD_continuation_params_2);
+			return;
+		}
+		this.h_gen_keys(cf,x,x);
+	}
+	//#endregion
+	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
 		const cf="P_ypc_get_offers_params";
@@ -2031,21 +2054,6 @@ class HandleTypes extends ServiceMethods {
 	PD_continuation_params_2(x) {
 		const cf="PD_continuation_params_2";
 		const {3: f3,6: f6,16: f11,17: f14,20: f15,21: f21,22: f22,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @private @arg {PR_continuation_params} x */
-	PR_continuation_params(x) {
-		const cf="PR_continuation_params";
-		if(0x94d81d4 in x) {
-			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_VW(n,this.PD_continuation_params_1);
-			return;
-		}
-		if(0x722607a in x) {
-			const {0x722607a: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			this.T_VW(n,this.PD_continuation_params_2);
-			return;
-		}
-		this.h_gen_keys(cf,x,x);
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
@@ -2119,12 +2127,25 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_remove_like_params";
 		const {1: f1,3: f3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {V_ShortTimestamp} x */
+	V_ShortTimestamp(x) {
+		const cf="V_ShortTimestamp";
+		const {1: request_timestamp_milli_utc,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(request_timestamp_milli_utc,x => {
+			this.log_buffer.push(["number",`max_gen:V_ShortTimestamp:binary_ts_gen`,"f1","milliseconds",x]);
+			this.immediate_run_logger();
+		});
+		this.T_D32(f2,x => {
+			if(x<=0b01) return;
+			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
+		});
+	}
 	/** @type {string[]} */
 	LP_dislike=[];
 	/** @private @arg {P_dislike_params} x */
 	P_dislike_params(x) {
 		const cf="P_dislike_params";
-		const {1: a,3: f3,2: c,4: d,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: a,2: f2,3: f3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_VW(a,x => {
 			const cf="P_dislike_params.f1";
 			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
@@ -2146,6 +2167,10 @@ class HandleTypes extends ServiceMethods {
 				} break;
 			}
 		});
+		this.T_D32(f2,x => this.save_number(`${cf}.f2`,x));
+		if(f3) debugger;
+		this.T_VW(f4,this.V_ShortTimestamp);
+		if(f5) debugger;
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
@@ -2337,6 +2362,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
 	}
 	//#endregion
+	//#region binary_result()
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	binary_result(cf,x) {
 		switch(cf) {
@@ -2612,6 +2638,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	//#endregion
 	/** @private @arg {P_bin_params_1} x */
 	P_bin_params_1(x) {
 		const cf="P_bin_params_1";

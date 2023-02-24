@@ -681,6 +681,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "T_UrlWrappedValue";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "ToggleButton.state";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "V_BinaryTimestamp";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "V_ShortTimestamp";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "XP_EntityPayload_Any";}
 		|{n: "CF_M_w"; t: CF_M_w; v: "D_ImpressionCap";}
 		|{n: "CF_M_w"; t: CF_M_w; v: "GM_SendPost";}
