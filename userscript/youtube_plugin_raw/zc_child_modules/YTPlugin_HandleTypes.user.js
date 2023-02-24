@@ -2259,6 +2259,38 @@ class HandleTypes extends ServiceMethods {
 		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(a),x => this.channelId(x));
 	}
+	/** @type {string[]} */
+	LP_dislike=[];
+	/** @private @arg {P_dislike_params} x */
+	P_dislike_params(x) {
+		const cf="P_dislike_params";
+		const {1: f1,2: f2,3: f3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f1,x => {
+			const cf="P_dislike_params.f1";
+			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			if(f1[0]!=="param_arr") {debugger; return;}
+			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
+			switch(a[0]) {
+				default: debugger; break;
+				case "child": {
+					let [,bin,]=a;
+					let video_id=this._decoder.decode(bin);
+					if(video_id==null) {debugger; break;}
+					this.videoId(video_id);
+				} break;
+				case "raw_child": /*D_VideoIdStr*/{
+					let [,,,tb]=a;
+					if(tb[0]!=="string") {debugger; break;}
+					let [,x]=tb;
+					this.videoId(x);
+				} break;
+			}
+		});
+		this.T_D32(f2,x => this.save_number(`${cf}.f2`,x));
+		if(f3) debugger;
+		this.T_VW(f4,this.V_ShortTimestamp);
+		if(f5) debugger;
+	}
 	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
 	/** @private @arg {P_ypc_get_offers_params} x */
@@ -2341,38 +2373,6 @@ class HandleTypes extends ServiceMethods {
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
 		const {1: f1,3: f3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-	}
-	/** @type {string[]} */
-	LP_dislike=[];
-	/** @private @arg {P_dislike_params} x */
-	P_dislike_params(x) {
-		const cf="P_dislike_params";
-		const {1: f1,2: f2,3: f3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.T_VW(f1,x => {
-			const cf="P_dislike_params.f1";
-			const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-			if(f1[0]!=="param_arr") {debugger; return;}
-			let [,[a,...y1]]=f1; this.ceq(y1.length,0);
-			switch(a[0]) {
-				default: debugger; break;
-				case "child": {
-					let [,bin,]=a;
-					let video_id=this._decoder.decode(bin);
-					if(video_id==null) {debugger; break;}
-					this.videoId(video_id);
-				} break;
-				case "raw_child": /*D_VideoIdStr*/{
-					let [,,,tb]=a;
-					if(tb[0]!=="string") {debugger; break;}
-					let [,x]=tb;
-					this.videoId(x);
-				} break;
-			}
-		});
-		this.T_D32(f2,x => this.save_number(`${cf}.f2`,x));
-		if(f3) debugger;
-		this.T_VW(f4,this.V_ShortTimestamp);
-		if(f5) debugger;
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
