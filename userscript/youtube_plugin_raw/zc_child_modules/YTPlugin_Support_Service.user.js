@@ -1534,7 +1534,7 @@ class Support_GenericApi extends ServiceMethods {
 		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
 		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
 		let [u3]=this.z(u2,x => this.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
-		this.z(u3,this.D_NotificationMenu_PopupItem);
+		this.z(u3,this.D_NotificationMenu);
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {RSM_ChannelPreference} x */
@@ -1617,19 +1617,19 @@ class Support_GenericApi extends ServiceMethods {
 	R_PlaylistAddToOption(x) {this.H_("playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {R_MultiPageMenuNotificationSection} x */
-	D_NotificationMenu_Popup_SectionItem(x) {
-		const cf="D_NotificationMenu_Popup_SectionItem";
+	/** @private @arg {D_NotificationMenu_SectionItem} x */
+	D_NotificationMenu_SectionItem(x) {
+		const cf="D_NotificationMenu_SectionItem";
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
+		if("backgroundPromoRenderer" in x) return this.ht.R_BackgroundPromo(x);
 		x===""; this.codegen_typedef(cf,x);
-		return null;
 	}
 	/** @private @arg {D_NotificationMenu} x */
-	D_NotificationMenu_PopupItem(x) {
-		const cf="D_NotificationMenu_PopupItem";
+	D_NotificationMenu(x) {
+		const cf="D_NotificationMenu";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this._R_SimpleMenuHeader(header);
-		this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
+		this.z(sections,this.D_NotificationMenu_SectionItem);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		this.trackingParams(trackingParams);
 	}
@@ -3057,7 +3057,7 @@ class Support_Renderer extends ServiceMethods {
 		this.xr.R_ProfilePageHeaderMetadataViewModel(metadata);
 		this.xr.R_ProfilePageHeaderThumbnailViewModel(thumbnail);
 		if(alignment!=="a") debugger;
-		this.C_Innertube(onTap);
+		this.ht.C_Innertube(onTap);
 	}
 	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}

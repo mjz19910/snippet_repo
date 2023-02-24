@@ -91,9 +91,17 @@ type D_GetNotificationMenu={
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
 	showLoadingSpinner: true;
 };
+type D_BackgroundPromo={
+	title: G_Text;
+	bodyText: G_Text;
+	icon: T_Icon<"NOTIFICATIONS">;
+	trackingParams: string;
+};
+type R_BackgroundPromo={backgroundPromoRenderer: D_BackgroundPromo;};
+type D_NotificationMenu_SectionItem=R_MultiPageMenuNotificationSection|R_BackgroundPromo;
 type D_NotificationMenu={
 	header: R_SimpleMenuHeader;
-	sections: R_MultiPageMenuNotificationSection[];
+	sections: D_NotificationMenu_SectionItem[];
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
 	trackingParams: string;
 };

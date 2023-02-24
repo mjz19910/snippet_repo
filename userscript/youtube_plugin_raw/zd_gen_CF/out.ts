@@ -346,6 +346,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_MusicShelf";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_MusicThumbnail";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Notification";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_NotificationMenu";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_NotificationMenuPopupMenuItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_NotificationMenu_Popup";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_NotificationMenu_PopupItem";}
@@ -565,6 +566,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_like_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_logging_context_serialized_context_data";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_logging_context_serialized_context_data.f1";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_notification_add_upcoming_event_reminder_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_notification_opt_out";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_notification_record_interactions";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_playability_status_context_params";}
@@ -880,6 +882,7 @@ export namespace Gen {
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_Guide_CollapseIcon";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_Guide_ExpandIcon";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_Icon_Search";}
+		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_LayoutProperties";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_MixIcon";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_PaidContentOverlay";}
 		|{n: "CF_T_Icon"; t: CF_T_Icon; v: "D_PrivacyDropdownItem";}

@@ -383,16 +383,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @protected @template T @arg {T_VW<T,any>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
+	/** @protected @template T @arg {T_VW<T>} x @template U @template {((this:this,x:T)=>U)|null} FT @arg {FT} f @returns {(FT extends null?T:U)} */
 	T_VW(x,f) {
 		/** @template T @arg {any} _x @arg {()=>T} _ret_ex @returns {asserts _x is T} */
 		function assume_ret(_x,_ret_ex) {}
 		/** @returns {FT extends null?T:U} */
 		function ret_ex() {throw new Error();}
 		let ret=null;
-		/** @type {T_VW<T,any>[1]|null} */
+		/** @type {T_VW<T>[1]|null} */
 		let pa=null;
-		/** @type {T_VW<T,any>[1][0]|null} */
+		/** @type {T_VW<T>[1][0]|null} */
 		let v=null;
 		if(x[0]==="param_arr") pa=x[1];
 		if(pa&&pa.length===1) [v]=pa;
@@ -2600,6 +2600,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_bin_params_1(u);
 			} break;
+			case "notification_add_upcoming_event_reminder.params": {
+				/** @type {P_notification_add_upcoming_event_reminder_params} */
+				let u=as_any(x);
+				this.P_notification_add_upcoming_event_reminder_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2623,6 +2628,11 @@ class HandleTypes extends ServiceMethods {
 				this.save_number(`${cf}.f2.first_byte`,iv_fb);
 			});
 		});
+	}
+	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
+	P_notification_add_upcoming_event_reminder_params(x) {
+		const cf="P_notification_add_upcoming_event_reminder_params";
+		const {1: a,6: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @public @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
@@ -2751,6 +2761,17 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
+	}
+	/** @public @arg {R_BackgroundPromo} x */
+	R_BackgroundPromo(x) {this.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
+	/** @public @arg {D_BackgroundPromo} x */
+	D_BackgroundPromo(x) {
+		const cf="D_LayoutProperties";
+		const {title,bodyText,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.G_Text(bodyText);
+		this.T_Icon(cf,icon);
+		this.trackingParams(trackingParams);
 	}
 	//#endregion binary
 	//#endregion
