@@ -25,6 +25,9 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
+	[24466371,24468724,24478150,24481771,24482558,24484079,24484158,24485239],
+	[24486982],
+	[24482828],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
@@ -35,12 +38,8 @@ class HandleTypes extends ServiceMethods {
 			service.create_store("video_id",db);
 			service.create_store("hashtag_id",db);
 			service.create_store("boxed_id",db);
-		}
-		if(old_version<2) {
 			service.create_store("channel_id",db);
 			service.create_store("playlist_id",db);
-		}
-		if(old_version<3) {
 			service.create_store("browse_id",db);
 		}
 	}
