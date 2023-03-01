@@ -4229,7 +4229,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_CinematicContainer["config"]} x */
 	D_CinematicConfig(x) {
 		const cf="D_CinematicConfig";
-		const {lightThemeBackgroundColor,darkThemeBackgroundColor,animationConfig,colorSourceSizeMultiplier,applyClientImageBlur,bottomColorSourceHeightMultiplier,maxBottomColorSourceHeight,colorSourceWidthMultiplier,colorSourceHeightMultiplier,blurStrength,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {lightThemeBackgroundColor,darkThemeBackgroundColor,animationConfig,colorSourceSizeMultiplier,applyClientImageBlur,bottomColorSourceHeightMultiplier,maxBottomColorSourceHeight,colorSourceWidthMultiplier,colorSourceHeightMultiplier,blurStrength,...u}=this.s(cf,x);
 		this.save_number(`${cf}.lightBackground.color`,lightThemeBackgroundColor);
 		this.save_number(`${cf}.darkBackground.color`,darkThemeBackgroundColor);
 		this.t(x.animationConfig,x => {
@@ -4247,6 +4247,8 @@ class ServiceMethods extends ServiceData {
 		this.t(colorSourceWidthMultiplier,x => this.save_number(`${cf}.colorSourceWidthMultiplier`,x));
 		this.t(colorSourceHeightMultiplier,x => this.save_number(`${cf}.colorSourceHeightMultiplier`,x));
 		this.t(blurStrength,x => this.save_number(`${cf}.blurStrength`,x));
+		const {watchFullscreenConfig,...y}=u; this.g(y);/*#destructure_done*/
+		this.t(watchFullscreenConfig,this.g);
 	}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {
@@ -5892,7 +5894,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_MerchandiseItem} x */
 	D_MerchandiseItem(x) {
 		const cf="D_MerchandiseItem";
-		const {thumbnail,description,title,price,vendorName,trackingParams,buttonText,buttonCommand,accessibilityTitle,buttonAccessibilityText,fromVendorText,additionalFeesText,regionFormat,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {thumbnail,description,title,price,vendorName,trackingParams,buttonText,buttonCommand,accessibilityTitle,buttonAccessibilityText,fromVendorText,additionalFeesText,regionFormat,...u}=this.s(cf,x);
 		this.D_Thumbnail(thumbnail);
 		this.a_primitive_str(description);
 		this.a_primitive_str(title);
@@ -5906,6 +5908,8 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(fromVendorText);
 		this.a_primitive_str(additionalFeesText);
 		if(regionFormat!=="REGIONAL_FORMAT_EU") debugger;
+		const {showOpenInNewIcon,...y}=u; this.g(y);/*#destructure_done*/
+		this.t(showOpenInNewIcon,x => this.cq(x,true));
 	}
 	/** @private @arg {D_EngagementPanelTitleHeader} x */
 	D_EngagementPanelTitleHeader(x) {

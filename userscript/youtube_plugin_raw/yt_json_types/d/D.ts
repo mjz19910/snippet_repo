@@ -1137,6 +1137,7 @@ type D_MerchandiseItem={
 	fromVendorText: string;
 	additionalFeesText: string;
 	regionFormat: "REGIONAL_FORMAT_EU";
+	showOpenInNewIcon?: true;
 };
 //#region D_GuideEntry
 type D_GuideEntry_HelpService={
@@ -1531,27 +1532,29 @@ type D_ChannelSwitcherPage=Record<"contents",G_ChannelSwitcherContent[]>&{
 type ChannelUrlFormat=[
 	`/@${string}`,
 ][number];
+type D_CinematicConfig={
+	lightThemeBackgroundColor: 4278190080;
+	darkThemeBackgroundColor: 4278190080;
+	animationConfig?: {
+		minImageUpdateIntervalMs: 5000;
+		crossfadeDurationMs: 5000;
+		crossfadeStartOffset: 1;
+		maxFrameRate: 30;
+	};
+	colorSourceSizeMultiplier: 1.4;
+	applyClientImageBlur: true;
+	bottomColorSourceHeightMultiplier?: 0.67000002;
+	maxBottomColorSourceHeight?: 260;
+	colorSourceWidthMultiplier?: 1.5;
+	colorSourceHeightMultiplier?: 2;
+	blurStrength?: 5;
+	watchFullscreenConfig?: {};
+};
 type D_CinematicContainer={
 	backgroundImageConfig?: D_ThumbnailsList;
 	gradientColorConfig: D_GradientColorConfig;
 	presentationStyle?: "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED";
-	config: {
-		lightThemeBackgroundColor: 4278190080;
-		darkThemeBackgroundColor: 4278190080;
-		animationConfig?: {
-			minImageUpdateIntervalMs: 5000;
-			crossfadeDurationMs: 5000;
-			crossfadeStartOffset: 1;
-			maxFrameRate: 30;
-		};
-		colorSourceSizeMultiplier: 1.4;
-		applyClientImageBlur: true;
-		bottomColorSourceHeightMultiplier?: 0.67000002;
-		maxBottomColorSourceHeight?: 260;
-		colorSourceWidthMultiplier?: 1.5;
-		colorSourceHeightMultiplier?: 2;
-		blurStrength?: 5;
-	};
+	config: D_CinematicConfig;
 };
 type D_ClientForecastingAd={impressionUrls: T_BaseUrl<`https://www.youtube.com/api/stats/ads?${D_ApiStatsAdsStr}`>[];};
 type D_ClientMessages={
