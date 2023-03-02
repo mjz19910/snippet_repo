@@ -111,6 +111,7 @@ class StoreDescription extends ApiBase2 {
 		}
 		let new_len=this.data.push([k,x]);
 		this.key_index.set(k,new_len-1);
+		this.data_update_callback();
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	add_new_data_to_index(k,x) {
@@ -126,7 +127,6 @@ class StoreDescription extends ApiBase2 {
 	push_new_data(k,x) {
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
-		this.data_update_callback();
 	}
 	/** @arg {T_BoxedStore<T,B_BoxedStoreTypeofToType[T_GetTypeof<T>]>} item */
 	load_data(item) {
