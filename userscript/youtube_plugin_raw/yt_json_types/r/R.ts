@@ -348,6 +348,24 @@ type R_VE6827_PageType_Browse_Response={
 };
 
 type R_VE96368_PageType_Browse_Response={
+	rootVe: 96368;
+	url: "/feed/subscriptions";
+	endpoint: E_VE96368;
+	page: "browse";
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		header: R_FeedTabbedHeader;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+		observedStateTags: {
+			stateTag: 3;
+			instruction: "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY";
+		}[];
+		cacheMetadata: D_IsCacheHit;
+	};
+	expirationTime: number;
+}|{
 	page: "browse";
 	endpoint: E_VE96368;
 	response: {
