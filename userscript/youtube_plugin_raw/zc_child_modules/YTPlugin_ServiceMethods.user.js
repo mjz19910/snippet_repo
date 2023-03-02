@@ -1112,7 +1112,7 @@ class ServiceMethods extends ServiceData {
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
-	/** @private @arg {R_AboutThisAd} x */
+	/** @public @arg {R_AboutThisAd} x */
 	R_AboutThisAd(x) {this.H_("aboutThisAdRenderer",x,this.D_AboutThisAd);}
 	/** @private @arg {D_AboutThisAd} x */
 	D_AboutThisAd(x) {
@@ -3345,7 +3345,7 @@ class ServiceMethods extends ServiceData {
 				case "FEEDBACK": case "INFO":
 			}
 		}
-		this.D_MenuNavigationItem_Endpoint(navigationEndpoint);
+		this.ht.D_MenuNavigationItem_Endpoint(navigationEndpoint);
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
@@ -3399,11 +3399,6 @@ class ServiceMethods extends ServiceData {
 	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
-	/** @private @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
-	D_MenuNavigationItem_Endpoint(x) {
-		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
-		if("openPopupAction" in x) return this.T_OpenPopup_Dialog(x);
-	}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
@@ -3500,7 +3495,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {E_NotificationOptOut} x */
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
-	/** @private @arg {E_UserFeedback} x */
+	/** @public @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}

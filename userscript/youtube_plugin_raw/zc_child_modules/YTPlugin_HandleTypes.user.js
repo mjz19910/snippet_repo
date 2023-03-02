@@ -3138,6 +3138,25 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GM_CreateCommentReply} x */
 	GM_CreateCommentReply(x) {this.T_GM("GM_CreateCommentReply",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment_reply"));}
+	/** @public @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
+	D_MenuNavigationItem_Endpoint(x) {
+		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
+		if("openPopupAction" in x) return this.A_AboutThisAd(x);
+		debugger;
+	}
+	/** @private @arg {A_AboutThisAd} x */
+	A_AboutThisAd(x) {
+		let p1=this.TA_OpenPopup("A_AboutThisAd",x);
+		this.Popup_DL_AboutThisAd(p1);
+	}
+	/** @private @arg {Popup_DL_AboutThisAd} x */
+	Popup_DL_AboutThisAd(x) {
+		const cf="Popup_DL_AboutThisAd";
+		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);
+		this.R_AboutThisAd(popup);
+		this.cq(popupType,"DIALOG");
+		this.t(beReused,x => this.cq(x,true));
+	}
 	//#endregion
 	//#endregion binary
 	//#endregion

@@ -605,6 +605,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_watch_player_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_watch_playlist_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_ypc_get_offers_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_DL_AboutThisAd";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_DL_DismissibleDialog";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_GetAccountMenu";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_ShareEntityService";}
@@ -765,6 +766,7 @@ export namespace Gen {
 		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_view_count_entity_key";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "RS_Page_Channel";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "R_PageTypeBrowse_Response";}
+		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_AboutThisAd";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_ConfirmDialog";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_FancyDismissibleDialog";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_GetAccountMenu";}
