@@ -187,6 +187,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
+		this.update_gas+=1000;
 		/** @type {IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of store.data) {
