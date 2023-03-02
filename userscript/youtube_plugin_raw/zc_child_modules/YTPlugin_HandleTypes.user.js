@@ -2273,7 +2273,7 @@ class HandleTypes extends ServiceMethods {
 			this.immediate_run_logger();
 		});
 		this.T_D32(f2,x => {
-			if(x<=0b111010110000001110111101100010) return;
+			if(x<=0b111011000001001000110011111001) return;
 			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
 		});
 	}
