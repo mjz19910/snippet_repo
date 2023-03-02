@@ -833,15 +833,15 @@ class HandleTypes extends ServiceMethods {
 				this.selector.cache.push(selector);
 				selector===""; debugger;
 			} break;
-			case "6 ": case "6 ": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6 ": case "6 ": case "6 ": case "6z":
-			case "7 ": case "76": case "7 ": case "7d": case "7 ": case "7k": case "7l": case "7r": case "7s": case "7y": case "7z":
-			case "d ": case "d6": case "d ": case "d ": case "d ": case "d ": case "d ": case "d ": case "d ": case "dy": case "dz":
-			case "e ": case "e6": case "e7": case "e ": case "ee": case "ek": case "el": case "e ": case "es": case "ey": case "ez":
-			case "k ": case "k ": case "k ": case "kd": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ":
-			case "l ": case "l ": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "l ":
-			case "r ": case "r ": case "r ": case "r ": case "r ": case "r ": case "rl": case "r ": case "r ": case "r ": case "r ":
-			case "s ": case "s ": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz": case "s ":
-			case "z ": case "z ": case "z7": case "zd": case "ze": case "zk": case "z ": case "zr": case "zs": case "zy": case "zz":
+			case "6 ": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6 ": case "6 ": case "6 ": case "6z":
+			case "76": case "7 ": case "7d": case "7 ": case "7k": case "7l": case "7r": case "7s": case "7y": case "7z":
+			case "d6": case "d ": case "d ": case "d ": case "d ": case "d ": case "d ": case "d ": case "dy": case "dz":
+			case "e6": case "e7": case "e ": case "ee": case "ek": case "el": case "e ": case "es": case "ey": case "ez":
+			case "k ": case "k ": case "kd": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ":
+			case "l ": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "l ":
+			case "r ": case "r ": case "r ": case "r ": case "r ": case "rl": case "r ": case "r ": case "r ": case "r ":
+			case "s ": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz": case "s ":
+			case "z ": case "z7": case "zd": case "ze": case "zk": case "z ": case "zr": case "zs": case "zy": case "zz":
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
 				break;
 		}
