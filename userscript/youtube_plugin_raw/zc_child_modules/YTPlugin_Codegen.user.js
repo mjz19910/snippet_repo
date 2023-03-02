@@ -42,11 +42,10 @@ class CodegenService extends BaseService {
 		/** @private @type {string[]} */
 		let ret_arr=[];
 		ret_arr.push(`const cf="${t_name}";`);
-		ret_arr.push("this.save_keys(`[${cf}]`,x)");
 		ret_arr.push(`const {${keys.join()},...y}=this.s(cf,x); this.g(y);`);
 		for(let k of keys) {
-			if(k=="trackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
-			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
+			if(k=="trackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
+			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
 			if(k=="responseContext") {ret_arr.push(`this.RC$ResponseContext(${k});`); continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {this.generate_code_for_string(ret_arr,k,x2); continue;}
@@ -171,6 +170,25 @@ class CodegenService extends BaseService {
 		let code_with_padding=this.#codegen_padding(trimmed_code);
 		return `\n${code_with_padding}`;
 	}
+	/** @no_mod @arg {`A$R_Test`|`${string}Renderer`} t_name */
+	codegen_get_renderer_name(t_name) {
+		let np_arr=split_string(t_name,"$");
+		switch(np_arr.length) {
+			case 1: {
+				let tc_name=np_arr[np_arr.length-1];
+				let np_arr_2=split_string_once(tc_name,"Renderer");
+				if(np_arr_2[1]!=="") debugger;
+				return np_arr_2[0];
+			}
+			case 2: {
+				let tc_name=np_arr[1];
+				let np_arr_2=split_string_once(tc_name,"R_");
+				if(np_arr_2.length!==2) {console.log("[np_arr_2]",np_arr_2); debugger; return null;}
+				if(np_arr_2[0]!=="") debugger;
+				return np_arr_2[1];
+			}
+		}
+	}
 	/** @no_mod @arg {unknown} x @arg {string|null} r_name */
 	#codegen_renderer(x,r_name=null) {
 		if(typeof x!=='object') return null;
@@ -181,22 +199,17 @@ class CodegenService extends BaseService {
 		if(r_name) k=r_name;
 		if(k===null) return null;
 		console.log("gen renderer for",x);
-		/** @type {`A$R_Test`} */
+		/** @type {`A$R_Test`|`${string}Renderer`} */
 		let t_name=as_any(this.uppercase_first(k));
 		let keys=Object.keys(x);
 		if(keys.length===1) {
 			if(keys[0].endsWith("Renderer")) {
-				let np_arr=split_string(t_name,"$");
-				let tc_name=np_arr[np_arr.length-1];
-				let np_arr_2=split_string_once(tc_name,"R_");
-				if(np_arr_2.length===1) {debugger; return null;}
-				if(np_arr_2[0]!=="") debugger;
-				let name=np_arr_2[1];
+				let name=this.codegen_get_renderer_name(t_name);
 				// /** @private @arg {$1} x */
 				// $1(x) {this.H_("$1","$2",x,this.$3);}
 				let self_code=`
 				d1!/** @private @arg {R_${name}} x @generated {${t_name}} */
-				d1!R_${name}(x) {this.H_("R_${name}","${keys[0]}",x,this.D_${name});}\n`;
+				d1!R_${name}(x) {this.H_("${keys[0]}",x,this.D_${name});}\n`;
 				req_names.push(keys[0]);
 				return this.#codegen_renderer_finalize(req_names,self_code,keys,x);
 			}

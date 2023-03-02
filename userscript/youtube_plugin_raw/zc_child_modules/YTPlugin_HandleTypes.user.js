@@ -3122,6 +3122,20 @@ class HandleTypes extends ServiceMethods {
 	M_CreateCommentReply(x) {x;}
 	/** @private @arg {DE_CreateCommentReply} x */
 	DE_CreateCommentReply(x) {x;}
+	/** @public @arg {R_VideoInfoCardContent} x @generated {VideoInfoCardContentRenderer} */
+	R_VideoInfoCardContent(x) {this.H_("videoInfoCardContentRenderer",x,this.D_VideoInfoCardContent);}
+	/** @private @arg {D_VideoInfoCardContent} x */
+	D_VideoInfoCardContent(x) {
+		const cf="D_VideoInfoCardContent";
+		const {videoThumbnail,lengthString,videoTitle,channelName,viewCountText,action,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(videoThumbnail);
+		this.G_Text(lengthString);
+		this.G_Text(videoTitle);
+		this.G_Text(channelName);
+		this.G_Text(viewCountText);
+		this.E_Watch(action);
+		this.trackingParams(trackingParams);
+	}
 	//#endregion
 	//#endregion binary
 	//#endregion

@@ -486,6 +486,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoDescriptionHeader";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoDescriptionMusicSection";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoDetails";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoInfoCardContent";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoOwner";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoOwner:1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_VideoPlaybackShape";}
