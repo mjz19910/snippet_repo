@@ -2188,18 +2188,18 @@ class HandleTypes extends ServiceMethods {
 		if(x[0]!=="param_arr") debugger;
 		let [,[a,...y1]]=x; this.cq(y1.length,0);
 		const [t]=a;
-		/** @type {["1",H_TrackingObj_f6_Str]|["2",H_TrackingObj_f6_Str_2]|["unknown",string]|null} */
+		/** @type {["raw_str",H_TrackingObj_f6_Str]|["child_str",H_TrackingObj_f6_Str_2]|["unknown",string]|null} */
 		let r_str=null;
 		switch(t) {
 			default: debugger; break;
-			case "child_str": {const [,,,b]=a; const [,c]=b; r_str=["2",c];} break;
+			case "child_str": {const [,,,b]=a; const [,c]=b; r_str=["child_str",c];} break;
 			case "child": {
 				const [,b]=a;
 				let c=this._decoder.decode(b);
 				if(!c) {debugger; break;}
 				r_str=["unknown",c];
 			} break;
-			case "raw_child": {const [,,,b]=a; const [,c]=b; r_str=["1",c];} break;
+			case "raw_child": {const [,,,b]=a; const [,c]=b; r_str=["raw_str",c];} break;
 		}
 		if(!r_str) return;
 		this.save_string(`${cf}.str`,r_str[1]);
@@ -2209,12 +2209,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		switch(r_str[1]) {
 			default: this.save_string_arr(`${cf}.str.default`,r_str); break;
-			case "ni-push-u-sub": break;
-			case "external": break;
-			case "list_other": break;
-			case "related": break;
-			case "related-auto": break;
-			case "watch": break;
+			case "ni-push-u-sub":
+			case "external":
+			case "list_other":
+			case "related":
+			case "related-auto":
+			case "watch":
 		}
 	}
 	/** @arg {"H_TrackingObj"} cf @arg {{tag: H_TrackingObj_Tag,id: H_TrackingObj_Id;}} x */
