@@ -26,8 +26,10 @@ export_(exports => {exports.__is_module_flag__=true;});
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
 	[24466371,24468724,24478150,24481771,24482558,24484079,24484158,24485239],
+	[24478802,24485791],
 	[24486982],
 	[24482828],
+	[24482557],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
@@ -2413,6 +2415,10 @@ class HandleTypes extends ServiceMethods {
 					let [,bin,]=a;
 					let video_id=this._decoder.decode(bin);
 					if(video_id==null) {debugger; break;}
+					this.videoId(video_id);
+				} break;
+				case "child_str": {
+					let [,,,[,video_id]]=a;
 					this.videoId(video_id);
 				} break;
 				case "raw_child": /*D_VideoIdStr*/{

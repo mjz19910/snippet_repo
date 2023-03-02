@@ -164,7 +164,7 @@ type P_remove_like_params={
 	6?: T_D32<1>;
 };
 type P_dislike_params_f1={
-	1: TV_Str<D_VideoIdStr>|T_VW<{}>;
+	1: TV_Str<D_VideoIdStr>|T_VW<{}>|TV_Str_CS<D_VideoIdStr>;
 };
 type P_dislike_params={
 	1: T_VW<P_dislike_params_f1>;
