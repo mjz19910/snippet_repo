@@ -3577,8 +3577,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
-	/** @protected @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {this.H_("performCommentActionEndpoint",x,this.g);}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
@@ -3654,7 +3652,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ToggleButton_DefaultSrvEP} x */
 	D_ToggleButton_DefaultSrvEP(x) {
 		const cf="D_ToggleButton_DefaultSrvEP"; this.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.E_PerformCommentAction(x);
+		if("performCommentActionEndpoint" in x) return this.ht.E_PerformCommentAction(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
@@ -3664,7 +3662,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ToggleButton_ToggledSrvEP} x */
 	D_ToggleButton_ToggledSrvEP(x) {
 		const cf="D_ToggleButton_ToggledSrvEP"; this.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.E_PerformCommentAction(x);
+		if("performCommentActionEndpoint" in x) return this.ht.E_PerformCommentAction(x);
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);

@@ -3036,6 +3036,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {R_AuthorCommentBadge} x */
 	R_AuthorCommentBadge(x) {x;}
+	/** @public @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
+	/** @public @arg {M_PerformCommentAction} x */
+	M_PerformCommentAction(x) {x;}
+	/** @public @arg {DE_PerformCommentAction} x */
+	DE_PerformCommentAction(x) {x;}
 	//#endregion
 	//#endregion binary
 	//#endregion
