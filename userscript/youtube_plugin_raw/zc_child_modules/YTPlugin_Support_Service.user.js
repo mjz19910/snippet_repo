@@ -1007,17 +1007,20 @@ class Support_RS_Player extends ServiceMethods {
 		const {primaries,transferCharacteristics,matrixCoefficients,...y}=this.s(cf,x); this.g(y);
 		switch(primaries) {
 			default: debugger; break;
-			case void 0:
 			case "COLOR_PRIMARIES_BT709":
+			case "COLOR_PRIMARIES_BT2020":
+			case void 0:
 		}
 		switch(transferCharacteristics) {
 			default: debugger; break;
+			case "COLOR_TRANSFER_CHARACTERISTICS_ARIB_STD_B67":
 			case "COLOR_TRANSFER_CHARACTERISTICS_BT709":
 		}
 		switch(matrixCoefficients) {
 			default: debugger; break;
-			case void 0:
 			case "COLOR_MATRIX_COEFFICIENTS_BT709":
+			case "COLOR_MATRIX_COEFFICIENTS_BT2020_NCL":
+			case void 0:
 		}
 	}
 	/** @private @arg {D_FormatFps} x */

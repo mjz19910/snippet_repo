@@ -835,7 +835,7 @@ class HandleTypes extends ServiceMethods {
 			case "6 ": case "6d": case "6l": case "6z":
 			case "7 ": case "76": case "7d": case "7k": case "7r": case "7s": case "7y": case "7z":
 			case "d ": case "d6": case "dy": case "dz":
-			case "e ": case "e6": case "e7": case "ee": case "ek": case "el": case "ey": case "ez":
+			case "e ": case "e6": case "e7": case "ee": case "es": case "ek": case "el": case "ey": case "ez":
 			case "l ": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly":
 			case "r ": case "rl":
 			case "s ": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":

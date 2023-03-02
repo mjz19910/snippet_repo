@@ -1777,9 +1777,9 @@ type D_FeedbackResponseProcessedStatus={
 	followUpDialog?: R_DismissalFollowUp;
 };
 type D_FormatColorInfo={
-	primaries?: "COLOR_PRIMARIES_BT709";
-	transferCharacteristics: "COLOR_TRANSFER_CHARACTERISTICS_BT709";
-	matrixCoefficients?: "COLOR_MATRIX_COEFFICIENTS_BT709";
+	primaries?: "COLOR_PRIMARIES_BT709"|"COLOR_PRIMARIES_BT2020";
+	transferCharacteristics: "COLOR_TRANSFER_CHARACTERISTICS_BT709"|"COLOR_TRANSFER_CHARACTERISTICS_ARIB_STD_B67";
+	matrixCoefficients?: "COLOR_MATRIX_COEFFICIENTS_BT709"|"COLOR_MATRIX_COEFFICIENTS_BT2020_NCL";
 };
 type G_GetAccountMenuItem=MP_NotificationsMenu|MP_AccountMenu;
 type D_GhostGrid={rows: number;};
