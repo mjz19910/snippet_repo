@@ -235,16 +235,6 @@ class StoreData {
 		/** @type {StoreDescription<string,"keys">} */
 		this.keys_store=new StoreDescription("string","keys",data_update_callback);
 	}
-	get_changed_stores() {
-		/** @type {("bool"|"string"|"keys"|"number"|"ve")[]} */
-		let changed=[];
-		if(this.bool_store.new_data.length>0) changed.push("bool");
-		if(this.keys_store.new_data.length>0) changed.push("keys");
-		if(this.number_store.new_data.length>0) changed.push("number");
-		if(this.string_store.new_data.length>0) changed.push("string");
-		if(this.ve_store.new_data.length>0) changed.push("ve");
-		return changed;
-	}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
