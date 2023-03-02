@@ -12,10 +12,15 @@ type T_Base64Str=string;
 type H_TrackingObj_Tag=T_D32<0|330|523>;
 type H_TrackingObj_Id=T_D32<13188>;
 type H_TrackingObj_f6_Str=
+	|"cards"
+	|"endscreen"
 	|"external"
+	|"iv-endscreen"
 	|"list_other"
-	|"related"
 	|"related-auto"
+	|"related"
+	|"rellist"
+	|"shortswatch"
 	|"watch"
 	;
 ;
