@@ -147,25 +147,13 @@ class IndexedDBService extends BaseService {
 		/** @type {IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of boxed) {
-			this.load_store(store,item,version);
+			this.load_store(store,item);
 		}
 	}
-	/** @type {IDBBoxedType["type"][]} */
-	valid_types=["boolean","keys","number"];
-	/** @arg {StoreData} store @arg {IDBBoxedType} item @arg {number} version */
-	load_store(store,item,version) {
+	/** @arg {StoreData} store @arg {IDBBoxedType} item */
+	load_store(store,item) {
 		switch(item.type) {
-			default: {
-				if(!this.valid_types.includes(item.type)) {
-					/** @type {string} */
-					let bad_type=item.type;
-					if(bad_type==="str") {
-						this.delete("boxed_id",item.key,version);
-						return;
-					}
-					debugger;
-				}
-			} break;
+			default: debugger; break;
 			case "boolean": return store.bool_store.load_data(item);
 			case "keys": return store.keys_store.load_data(item);
 			case "number": return store.number_store.load_data(item);
@@ -391,35 +379,16 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async save_store_to_database(store,version) {
-		let changes=store.get_changed_stores();
-		for(let changed of changes) {
-			if(changed==="string") {
-				let ss=store.string_store;
-				await this.push_store_to_database(ss,version);
-				continue;
-			}
-			if(changed==="keys") {
-				let ks=store.keys_store;
-				await this.push_store_to_database(ks,version);
-				continue;
-			}
-			if(changed==="number") {
-				let ns=store.number_store;
-				await this.push_store_to_database(ns,version);
-				continue;
-			}
-			if(changed==="ve") {
-				let vs=store.ve_store;
-				await this.push_store_to_database(vs,version);
-				continue;
-			}
-			if(changed==="bool") {
-				let vs=store.bool_store;
-				await this.push_store_to_database(vs,version);
-				continue;
-			}
-			throw new Error("More changes to handle");
-		}
+		let ss=store.string_store;
+		await this.push_store_to_database(ss,version);
+		let ks=store.keys_store;
+		await this.push_store_to_database(ks,version);
+		let ns=store.number_store;
+		await this.push_store_to_database(ns,version);
+		let vs=store.ve_store;
+		await this.push_store_to_database(vs,version);
+		let bs=store.bool_store;
+		await this.push_store_to_database(bs,version);
 	}
 	/** @arg {make_item_group<any>} x @returns {x is make_item_group<string>} */
 	is_vi_has_str(x) {return this.is_vi_typeof_check(x,"string");}
