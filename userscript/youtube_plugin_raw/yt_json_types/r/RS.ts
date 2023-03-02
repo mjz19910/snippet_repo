@@ -341,11 +341,26 @@ type RS_Page_Channel=
 	}
 	;
 ;
-type RS_Page_Playlist={
+type RS_Page_Playlist_R={
 	page: "playlist";
 	endpoint: E_VE5754;
 	response: RS_Playlist;
-	url: string;
+	url: "/playlist?list=WL";
+};
+type RS_Page_Playlist={
+	page: "playlist";
+	endpoint: E_VE5754;
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		header: R_PlaylistHeader;
+		metadata: R_Playlist_MD;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+		microformat: R_MicroformatData;
+		sidebar: R_PlaylistSidebar;
+	};
+	url: "/playlist?list=WL";
 };
 type RS_Page_Search={
 	page: "search";

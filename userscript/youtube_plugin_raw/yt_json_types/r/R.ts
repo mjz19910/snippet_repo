@@ -298,6 +298,19 @@ type R_PageTypeWatch={
 	navigationDoneMs: number;
 };
 type R_VE6827_PageType_Browse_Response={
+	rootVe: 6827;
+	url: "/feed/library";
+	endpoint: E_VE6827;
+	page: "browse";
+	response: {
+		responseContext: RC_ResponseContext;
+		contents: R_TwoColumnBrowseResults;
+		header: R_FeedTabbedHeader;
+		trackingParams: string;
+		topbar: R_DesktopTopbar;
+	};
+	expirationTime: number;
+}|{
 	page: "browse";
 	endpoint: E_VE6827;
 	response: {
@@ -307,8 +320,8 @@ type R_VE6827_PageType_Browse_Response={
 		trackingParams: string;
 		topbar: R_DesktopTopbar;
 	};
-	url: "/feed/trending?bp=6gQJRkVleHBsb3Jl";
-	expirationTime: 1676762653957;
+	url: `/feed/trending?bp=${string}`;
+	expirationTime: number;
 }|{
 	page: "browse";
 	endpoint: E_VE6827;
@@ -320,7 +333,7 @@ type R_VE6827_PageType_Browse_Response={
 		topbar: R_DesktopTopbar;
 	};
 	url: "/feed/library";
-	expirationTime: 1676555594925;
+	expirationTime: number;
 }|{
 	page: "browse";
 	endpoint: E_VE6827;
@@ -331,7 +344,7 @@ type R_VE6827_PageType_Browse_Response={
 		topbar: R_DesktopTopbar;
 	};
 	url: "/feed/history";
-	expirationTime: 1676555455508;
+	expirationTime: number;
 };
 
 type R_VE96368_PageType_Browse_Response={
@@ -416,22 +429,8 @@ type R_PageTypePlaylist={
 	endpoint: E_VE5754;
 	pageType: "playlist";
 	fromHistory: false;
-	response: {
-		page: "playlist";
-		endpoint: E_VE5754;
-		response: {
-			responseContext: RC_ResponseContext;
-			contents: R_TwoColumnBrowseResults;
-			header: R_PlaylistHeader;
-			metadata: R_Playlist_MD;
-			trackingParams: string;
-			topbar: R_DesktopTopbar;
-			microformat: R_MicroformatData;
-			sidebar: R_PlaylistSidebar;
-		};
-		url: "/playlist?list=WL";
-	};
-	navigationDoneMs: 1676555876221;
+	response: RS_Page_Playlist;
+	navigationDoneMs: number;
 };
 type R_PageTypeSearch={
 	pageType: "search";
