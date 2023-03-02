@@ -53,22 +53,16 @@ type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;}
 type DC_Reload=DC_Generic_CTP;
 type DC_ResetChannelUnreadCount={channelId: `UC${string}`;};
 type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["targetId"];};
-type DC_SectionList_BrowseFeed_ChannelFeatured=
-	|T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>
-	|T_DC_Content_2<`browse-feedUC${string}search`,TR_SectionListItem_3_Empty>
-	;
-;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
 type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
 type DC_SectionList_TargetId=Extract<GD_RC_SectionList,{targetId: any;}>["targetId"];
 type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"comment-item-section",SI_VE76278_EngagementPanel["targetId"]>>;
 type DC_ShowReloadUi={targetId: D_UiTargetId;};
-type D_TimeoutMs=5000|60000;
 type DC_Timed={continuation: string; timeoutMs: D_TimeoutMs;};
 type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION"; toggled: false;};
-type DR_DC_EntityBatchUpdate={mutations: DE_MutationItem[]; timestamp?: D_TimestampWithNanos;};
 //#endregion
+type DR_DC_EntityBatchUpdate={mutations: DE_MutationItem[]; timestamp?: D_TimestampWithNanos;};
 type CP_Tracking={clickTrackingParams: string;};
 type CR_ContinuationItemsFor<T,U,V extends {continuationItems: any;}>={
 	slot: U;

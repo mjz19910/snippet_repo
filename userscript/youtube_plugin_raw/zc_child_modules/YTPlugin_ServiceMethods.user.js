@@ -6568,14 +6568,14 @@ class ServiceMethods extends ServiceData {
 		this.params("get_notification_menu.ctoken",ctoken);
 	}
 	/** @typedef {"featured"|"search"} S_BrowseFeedEnd  */
-	/** @private @arg {DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,string]|[1,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,S_BrowseFeedEnd]]} */
+	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,string]|[1,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,S_BrowseFeedEnd]]} */
 	is_browse_feedUC(x) {
 		if(this.str_starts_with_rx("browse-feed",x.targetId)) {
 			let ss=split_string(x.targetId,"browse-feed");
 			if(ss.length!==2) return [false,null];
 			if(!this.str_starts_with_rx_in_arr(ss,"UC")) return [false,null];
 			let sa=ss[1];
-			/** @type {DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`?R:never} */
+			/** @type {G_DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`?R:never} */
 			let ll=as(sa.slice(24));
 			if(!this.str_starts_with_rx("UC",sa)) return [false,null];
 			let [cid,fe]=split_string_once(sa,ll); if(fe!=="") debugger;
@@ -6583,7 +6583,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return [false,null];
 	}
-	/** @private @arg {DC_SectionList_BrowseFeed_ChannelFeatured} x */
+	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
 	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
 		let b_info=this.is_browse_feedUC(x);
 		if(!b_info[0]) {
