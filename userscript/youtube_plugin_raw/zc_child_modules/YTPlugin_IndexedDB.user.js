@@ -689,9 +689,17 @@ class IndexedDBService extends BaseService {
 		}
 		return [false,null];
 	}
+	/** @type {number|null} */
+	more_gas_interval=null;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
+		if(this.update_gas<2000&&this.more_gas_interval===null) {
+			this.more_gas_interval=setTimeout(() => {
+				this.more_gas_interval=null;
+				this.update_gas=10000;
+			},400);
+		}
 		this.database_opening=true;
 		let db=await this.get_async_result(this.get_db_request(version));
 		this.database_opening=false;
