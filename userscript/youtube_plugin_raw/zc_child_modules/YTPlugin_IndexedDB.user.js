@@ -321,9 +321,6 @@ class IndexedDBService extends BaseService {
 	async push_store_item_to_database(store,db_boxed,item,version) {
 		let [key,vi]=item;
 		for(let db_box of db_boxed) {
-			if(db_box.type==="keys") {
-
-			}
 			switch(db_box.type) {
 				default: console.log("unable to push [type=%s]",db_box.type); break;
 				case "root_visual_element":
@@ -335,38 +332,70 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value); db_uv;
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) return;
+						debugger;
 						break;
 					}
-					if(uv.one&&db_uv.arr) break;
+					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
+						debugger;
 						break;
 					}
-					if(uv.arr&&db_uv.one) break;
-					if(uv.many&&db_uv.arr) break;
+					if(uv.arr&&db_uv.one) {debugger; break;}
+					if(uv.many&&db_uv.arr) {debugger; break;}
 					debugger;
 				} break;
-				case "boolean":
+				case "boolean": {
+					if(db_box.id!==key) continue;
+					if(!this.is_vi_has_bool(vi)) break;
+					let uv=this.uv_unpack(vi);
+					let db_uv=this.uv_unpack(db_box.value);
+					if(uv.one&&db_uv.one) {
+						if(this.eq_group(uv.one,db_uv.one)) return;
+						debugger;
+						break;
+					}
+					if(uv.one&&db_uv.arr) {debugger; break;}
+					if(uv.arr&&db_uv.one) {debugger; break;}
+					if(uv.arr&&db_uv.arr) {
+						if(this.eq_group(uv.arr,db_uv.arr)) return;
+						debugger;
+						break;
+					}
+					if(uv.arr&&db_uv.many) {debugger; break;}
+					if(uv.many&&db_uv.arr) {debugger; break;}
+					if(uv.many&&db_uv.many) {
+						if(this.eq_group(uv.many,db_uv.many)) return;
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.many);
+						break;
+					}
+					debugger;
+				} break;
 				case "string":
 				case "keys": {
 					if(db_box.id!==key) continue;
-					if(this.is_vi_has_num(vi)) break;
-					if(this.is_vi_has_num(db_box.value)) break;
-					let uv=this.uv_unpack_mt(vi,["",true]); uv;
-					let db_uv=this.uv_unpack_mt(db_box.value,["",true]); db_uv;
+					if(!this.is_vi_has_str(vi)) break;
+					let uv=this.uv_unpack(vi);
+					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) return;
+						debugger;
 						break;
 					}
-					if(uv.one&&db_uv.arr) break;
-					if(uv.arr&&db_uv.one) break;
+					if(uv.one&&db_uv.arr) {debugger; break;}
+					if(uv.arr&&db_uv.one) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
+						if(this.eq_group(uv.arr,db_uv.arr)) return;
+						debugger;
 						break;
 					}
-					if(uv.arr&&db_uv.many) break;
-					if(uv.many&&db_uv.arr) break;
-					if(uv.many&&db_uv.many) break;
+					if(uv.arr&&db_uv.many) {debugger; break;}
+					if(uv.many&&db_uv.arr) {debugger; break;}
+					if(uv.many&&db_uv.many) {
+						if(this.eq_group(uv.many,db_uv.many)) return;
+						this.put_boxed_id(item[0],version,db_box.type,uv.many);
+						break;
+					}
 					debugger;
 				} break;
 				case "save_id":
