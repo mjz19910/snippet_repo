@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	YTPlugin IndexedDb Service
+// @name	YTPlugin IndexedDB Service
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.2
 // @description	try to take over the world!
@@ -333,16 +333,16 @@ class IndexedDBService extends BaseService {
 					if(!this.is_vi_has_num(vi)) break;
 					if(!this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack(vi);
-					let db_uv=this.uv_unpack(db_box.value); db_uv;
+					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) break;
-						debugger;
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						debugger;
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.one) {debugger; break;}
@@ -356,14 +356,14 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(this.eq_group(uv.one,db_uv.one)) break;
-						debugger;
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						debugger;
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
@@ -383,14 +383,14 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) break;
-						debugger;
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						debugger;
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
