@@ -556,8 +556,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_VideoSecondaryInfo";
 		const {content,commandRuns,styleRuns,attachmentRuns,decorationRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(content);
-		this.z(commandRuns,this.D_CommandRunItem);
-		this.z(styleRuns,this.D_StyleRunItem);
+		this.tz(commandRuns,this.D_CommandRunItem);
+		this.tz(styleRuns,this.D_StyleRunItem);
 		this.tz(attachmentRuns,this.R_AttachmentElement);
 		this.tz(decorationRuns,this.R_TextDecorator);
 	}

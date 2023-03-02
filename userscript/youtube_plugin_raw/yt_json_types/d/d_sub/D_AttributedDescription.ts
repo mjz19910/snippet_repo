@@ -13,8 +13,8 @@ type D_StyleRunItem={
 };
 type D_AttributedDescription={
 	content: string;
-	commandRuns: D_CommandRunItem[];
-	styleRuns: D_StyleRunItem[];
+	commandRuns?: D_CommandRunItem[];
+	styleRuns?: D_StyleRunItem[];
 	attachmentRuns?: R_AttachmentElement[];
 	decorationRuns?: R_TextDecorator[];
 };

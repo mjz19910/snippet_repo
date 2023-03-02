@@ -190,11 +190,10 @@ class IndexedDBService extends BaseService {
 		this.update_gas+=1000;
 		/** @type {IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
-		for(let item of store.data) {
-			try {
-				await this.push_store_item_to_database(store,boxed,item,version);
-			} catch(e) {
-				console.log("[push_store_to_database.iter.err]",e);
+		let results=await Promise.allSettled(store.data.map(item => this.push_store_item_to_database(store,boxed,item,version)));
+		for(let result of results) {
+			if(result.status==="rejected") {
+				console.log("[push_store_to_database.iter.err]",result.reason);
 			}
 		}
 	}
