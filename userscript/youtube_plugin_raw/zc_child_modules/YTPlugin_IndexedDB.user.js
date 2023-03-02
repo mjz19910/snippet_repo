@@ -171,8 +171,8 @@ class IndexedDBService extends BaseService {
 			update_id=await this.put_update_id(this.expected_id,version);
 		}
 		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
-		this.expected_id++;
 		await this.save_store_to_database(store,version);
+		this.expected_id++;
 		await this.put_update_id(this.expected_id,version);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
