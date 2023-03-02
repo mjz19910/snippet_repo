@@ -321,11 +321,10 @@ class IndexedDBService extends BaseService {
 	async push_store_item_to_database(store,db_boxed,item,version) {
 		let [key,vi]=item;
 		let has_db_box=false;
-		for(let db_box of db_boxed) {
+		box_loop: for(let db_box of db_boxed) {
 			if(!("id" in db_box)) continue;
 			if(db_box.base!=="boxed_id") continue;
 			if(db_box.id!==key) continue;
-			has_db_box=true;
 			switch(db_box.type) {
 				default: db_box===""; console.log("[db_push_fail]",db_box); break;
 				case "root_visual_element":
@@ -335,22 +334,19 @@ class IndexedDBService extends BaseService {
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
-						if(uv.one[1]===db_uv.one[1]) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.one);
-						break;
+						if(uv.one[1]===db_uv.one[1]) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.arr);
-						break;
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						await this.put_boxed_id(key,version,db_box.type,uv.arr);
-						break;
+						break box_loop;
 					}
-					if(uv.many&&db_uv.arr) {debugger; break;}
+					if(uv.many&&db_uv.arr) break box_loop;
 					debugger;
 				} break;
 				case "boolean": {
@@ -359,29 +355,26 @@ class IndexedDBService extends BaseService {
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
-						if(this.eq_group(uv.one,db_uv.one)) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.one);
-						break;
+						if(this.eq_group(uv.one,db_uv.one)) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						await this.put_boxed_id(key,version,db_box.type,uv.arr); break;
+						break box_loop;
 					}
 					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.arr);
-						break;
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
-					if(uv.many&&db_uv.arr) {debugger; break;}
+					if(uv.many&&db_uv.arr) break box_loop;
 					if(uv.many&&db_uv.many) {
 						let db_m=db_uv.many[1];
 						let uv_m=uv.many[1];
 						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
-						if(has) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.many);
-						break;
+						if(has) {has_db_box=true; break;}
+						break box_loop;
 					}
 					debugger;
 				} break;
@@ -390,30 +383,26 @@ class IndexedDBService extends BaseService {
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
-						if(uv.one[1]===db_uv.one[1]) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.one);
-						break;
+						if(uv.one[1]===db_uv.one[1]) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						await this.put_boxed_id(key,version,db_box.type,uv.arr);
-						break;
+						break box_loop;
 					}
 					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.arr);
-						break;
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
-					if(uv.many&&db_uv.arr) await this.put_boxed_id(item[0],version,db_box.type,uv.many);
+					if(uv.many&&db_uv.arr) break box_loop;
 					if(uv.many&&db_uv.many) {
 						let db_m=db_uv.many[1];
 						let uv_m=uv.many[1];
 						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
-						if(has) break;
-						await this.put_boxed_id(item[0],version,db_box.type,uv.many);
-						break;
+						if(has) {has_db_box=true; break;}
+						break box_loop;
 					}
 					debugger;
 				} break;
@@ -422,30 +411,26 @@ class IndexedDBService extends BaseService {
 					let uv=this.uv_unpack_mt(vi,["",0]);
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
-						if(uv.one[1]===db_uv.one[1]) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.one);
-						break;
+						if(uv.one[1]===db_uv.one[1]) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						await this.put_boxed_id(key,version,db_box.type,uv.arr);
-						break;
+						break box_loop;
 					}
 					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						await this.put_boxed_id(key,version,db_box.type,uv.arr);
-						break;
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
+						break box_loop;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
-					if(uv.many&&db_uv.arr) await this.put_boxed_id(item[0],version,db_box.type,uv.many);
+					if(uv.many&&db_uv.arr) break box_loop;
 					if(uv.many&&db_uv.many) {
 						let db_m=db_uv.many[1];
 						let uv_m=uv.many[1];
 						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
-						if(has) break;
-						await this.put_boxed_id(item[0],version,db_box.type,uv.many);
-						break;
+						if(has) {has_db_box=true; break;}
+						break box_loop;
 					}
 					debugger;
 				} break;
