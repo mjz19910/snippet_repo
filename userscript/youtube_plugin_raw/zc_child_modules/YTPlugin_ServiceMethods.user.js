@@ -6339,7 +6339,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(tooltip);
 		return y;
 	}
-	/** @public @arg {D_GetNotificationMenu} x */
+	/** @public @arg {MP_GetNotificationMenu} x */
 	D_NotificationMenuPopupMenuItem(x) {
 		const cf="D_NotificationMenuPopupMenuItem";
 		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6355,7 +6355,7 @@ class ServiceMethods extends ServiceData {
 		/** @type {[(A_GetNotificationsMenu["openPopupAction"])[], never[]]} */
 		let [u]=this.z(actions,x => this.TA_OpenPopup("G_Action_GetNotificationsMenu",x));
 		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
-		/** @type {[D_GetNotificationMenu[], never[]]} */
+		/** @type {[MP_GetNotificationMenu[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.D_NotificationMenuPopupMenuItem);
 	}
@@ -6425,7 +6425,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.cg.make_codegen_group(cf,x);
 	}
-	/** @private @arg {D_TopbarMenu} x */
+	/** @private @arg {MP_TopbarMenu} x */
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem";
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

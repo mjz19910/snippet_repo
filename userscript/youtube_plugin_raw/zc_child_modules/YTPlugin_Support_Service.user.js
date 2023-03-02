@@ -1603,7 +1603,7 @@ class Support_GenericApi extends ServiceMethods {
 		if("backgroundPromoRenderer" in x) return this.ht.R_BackgroundPromo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {D_NotificationMenu} x */
+	/** @private @arg {MP_NotificationMenu} x */
 	D_NotificationMenu(x) {
 		const cf="D_NotificationMenu";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

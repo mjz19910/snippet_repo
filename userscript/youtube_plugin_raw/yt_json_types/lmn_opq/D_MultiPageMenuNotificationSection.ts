@@ -1,0 +1,1 @@
+type D_MultiPageMenuNotificationSection=T_TrackedItems<GR_MP_MenuNotificationSection_Item>;
