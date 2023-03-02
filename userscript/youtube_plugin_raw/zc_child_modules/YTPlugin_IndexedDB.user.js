@@ -132,7 +132,7 @@ class IndexedDBService extends BaseService {
 		switch(mode) {
 			case "load": {
 				return this.put_box({
-					key: `boxed_id:${mode}_id`,
+					key: `boxed_id:a:${mode}_id`,
 					type: `${mode}_id`,
 					base: "boxed_id",
 					id,
@@ -140,25 +140,26 @@ class IndexedDBService extends BaseService {
 			}
 			case "save": {
 				return this.put_box({
-					key: `boxed_id:${mode}_id`,
+					key: `boxed_id:a:${mode}_id`,
 					type: `${mode}_id`,
 					base: "boxed_id",
 					id,
 				},version);
 			}
+			default: throw new Error();
 		}
 	}
 	/** @private @template {"load"|"save"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedUpdateId|null>} */
 	async get_id_box(key,version) {
 		switch(key) {
 			case "load": {
-				const t_key="boxed_id:load_id";
+				const t_key="boxed_id:a:load_id";
 				let box=await this.get("boxed_id",t_key,version);
 				if(box&&box.key!==t_key) return null;
 				return box;
 			}
 			case "save": {
-				const t_key="boxed_id:save_id";
+				const t_key="boxed_id:a:save_id";
 				let box=await this.get("boxed_id",t_key,version);
 				if(box&&box.key!==t_key) return null;
 				return box;
