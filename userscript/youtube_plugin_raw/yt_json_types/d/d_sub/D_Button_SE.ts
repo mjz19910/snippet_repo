@@ -8,8 +8,3 @@ type D_Button_SE=
 	|E_YpcGetOffers
 	;
 ;
-type E_CreateCommentReply={
-	clickTrackingParams: string;
-	commandMetadata: {};
-	createCommentReplyEndpoint: {};
-};

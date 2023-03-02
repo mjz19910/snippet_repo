@@ -3114,6 +3114,12 @@ class HandleTypes extends ServiceMethods {
 		this.R_EmojiPicker(emojiPicker);
 		this.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
 	}
+	/** @public @arg {E_CreateCommentReply} x */
+	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
+	/** @private @arg {M_CreateCommentReply} x */
+	M_CreateCommentReply(x) {x;}
+	/** @private @arg {DE_CreateCommentReply} x */
+	DE_CreateCommentReply(x) {x;}
 	//#endregion
 	//#endregion binary
 	//#endregion
