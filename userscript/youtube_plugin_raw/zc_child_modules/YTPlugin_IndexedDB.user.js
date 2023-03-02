@@ -128,7 +128,7 @@ class IndexedDBService extends BaseService {
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	/** @arg {"load"|"save"} mode @arg {number} id @arg {number} version @returns {Promise<D_BoxedUpdateId>} */
-	put_update_id(mode,id,version) {
+	put_id_box(mode,id,version) {
 		switch(mode) {
 			case "load": {
 				return this.put_box({
@@ -197,12 +197,12 @@ class IndexedDBService extends BaseService {
 		let save_id=await this.get_id_box("save",version);
 		if(!save_id) {
 			this.expected_save_id=0;
-			save_id=await this.put_update_id("save",this.expected_save_id,version);
+			save_id=await this.put_id_box("save",this.expected_save_id,version);
 		}
 		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
-		await this.put_update_id("save",this.expected_save_id,version);
+		await this.put_id_box("save",this.expected_save_id,version);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
@@ -210,12 +210,12 @@ class IndexedDBService extends BaseService {
 		let load_id=await this.get_id_box("load",version);
 		if(!load_id) {
 			this.expected_load_id=0;
-			load_id=await this.put_update_id("load",this.expected_load_id,version);
+			load_id=await this.put_id_box("load",this.expected_load_id,version);
 		}
-		if(load_id.id!==this.expected_save_id) this.expected_save_id=load_id.id;
+		if(load_id.id!==this.expected_load_id) this.expected_load_id=load_id.id;
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
-		await this.put_update_id("load",this.expected_load_id,version);
+		await this.put_id_box("load",this.expected_load_id,version);
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
