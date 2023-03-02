@@ -18,6 +18,7 @@ type G_DC_Innertube=
 	|A_SetActivePanelItem
 	|E_Url
 	|E_VE3611
+	|E_VE5754
 	|E_VE6827
 	|E_Watch
 	|E_YpcGetOfflineUpsell
