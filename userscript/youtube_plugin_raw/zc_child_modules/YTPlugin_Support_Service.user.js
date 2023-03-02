@@ -60,6 +60,7 @@ class OnePropertyObjArray {
 	get length() {return this.arr.length;}
 	[Symbol.iterator]() {return this.arr[Symbol.iterator]();}
 }
+export_(exports => {exports.OnePropertyObjArray=OnePropertyObjArray;});
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -77,6 +78,7 @@ class TypedefGenerator extends ServiceMethods {
 		return null;
 	}
 }
+export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 /** @private @template T */
 class BitmapResult {
 	/** @constructor @public @arg {T[]} map_arr @arg {string} bitmap */
@@ -500,11 +502,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return new BitmapResult(map_arr,bitmap_rle);
 	}
 }
-export_(exports => {
-	exports.TypedefGenerator=TypedefGenerator;
-	exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;
-	exports.OnePropertyObjArray=OnePropertyObjArray;
-});
+export_(exports => {exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;});
 //#endregion
 class Support_RS_Player extends ServiceMethods {
 	//#region dup
@@ -1159,6 +1157,7 @@ class Support_RS_Player extends ServiceMethods {
 		educationalLevelCountry&&this.save_string("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
 	}
 }
+export_(exports => {exports.Support_RS_Player=Support_RS_Player;});
 class Support_RS_WatchPage extends ServiceMethods {
 	/** @public @arg {G_RS_WatchPage} x */
 	RS_WatchPage(x) {
@@ -1194,6 +1193,7 @@ class Support_RS_WatchPage extends ServiceMethods {
 		this.t(previousCsn,x => this.D_VeCsn(x,true));
 	}
 }
+export_(exports => {exports.Support_RS_WatchPage=Support_RS_WatchPage;});
 class Support_RS_Watch extends ServiceMethods {
 	/** @public @arg {RS_Watch} x */
 	RS_Watch(x) {
@@ -1211,6 +1211,7 @@ class Support_RS_Watch extends ServiceMethods {
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 }
+export_(exports => {exports.Support_RS_Watch=Support_RS_Watch;});
 class Support_RS_Page_Browse extends ServiceMethods {
 	/** @public @arg {RS_Page_Browse} x */
 	RS_Page_Browse(x) {
@@ -1245,6 +1246,7 @@ class Support_RS_Page_Browse extends ServiceMethods {
 		return y;
 	}
 }
+export_(exports => {exports.Support_RS_Page_Browse=Support_RS_Page_Browse;});
 class Support_RS_Browse extends ServiceMethods {
 	/** @public @arg {RS_Browse} x */
 	RS_Browse(x) {
@@ -1401,6 +1403,7 @@ class Support_RS_Browse extends ServiceMethods {
 	/** @private @arg {RC_SectionList} x */
 	RC_SectionList(x) {this.H_("sectionListContinuation",x,this.GD_RC_SectionList);}
 }
+export_(exports => {exports.Support_RS_Browse=Support_RS_Browse;});
 class Support_GenericApi extends ServiceMethods {
 	// //#region TODO
 	/** @private @arg {Popup_DD_NotificationMenu} x */
@@ -1685,6 +1688,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.parse_number_template(notificationId);
 	}
 }
+export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
 class Support_EventInput extends ServiceMethods {
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
@@ -2203,6 +2207,7 @@ class Support_EventInput extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 }
+export_(exports => {exports.Support_EventInput=Support_EventInput;});
 class Support_VE extends ServiceMethods {
 	/** @public @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
@@ -2213,6 +2218,7 @@ class Support_VE extends ServiceMethods {
 		this.params("logging_context.serialized_context_data",serializedContextData);
 	}
 }
+export_(exports => {exports.Support_VE=Support_VE;});
 class Support_VE37414 extends ServiceMethods {
 	/** @private @arg {D_SerializedContextData} x */
 	D_QoeLoggingContext(x) {
@@ -2263,12 +2269,8 @@ class Support_VE37414 extends ServiceMethods {
 		return `VE${rootVe}`;
 	}
 }
-/** @arg {typeof Support_Renderer} _class */
-function export_Renderer(_class) {
-	export_(exports => {exports.Support_Renderer=_class;});
-}
+export_(exports => {exports.Support_VE37414=Support_VE37414;});
 class Support_Renderer extends ServiceMethods {
-	static {export_Renderer(this);}
 	//#region data members
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
@@ -3715,14 +3717,4 @@ class Support_Renderer extends ServiceMethods {
 	GM_Next(x) {this.T_GM("GM_Next",x,x => this.cq(x,"/youtubei/v1/next"));}
 	//#endregion
 }
-export_(exports => {
-	exports.Support_RS_Player=Support_RS_Player;
-	exports.Support_RS_WatchPage=Support_RS_WatchPage;
-	exports.Support_RS_Watch=Support_RS_Watch;
-	exports.Support_RS_Page_Browse=Support_RS_Page_Browse;
-	exports.Support_RS_Browse=Support_RS_Browse;
-	exports.Support_GenericApi=Support_GenericApi;
-	exports.Support_EventInput=Support_EventInput;
-	exports.Support_VE37414=Support_VE37414;
-	exports.Support_VE=Support_VE;
-});
+export_(exports => {exports.Support_Renderer=Support_Renderer;});
