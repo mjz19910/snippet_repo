@@ -420,8 +420,8 @@ class IndexedDBService extends BaseService {
 				} break;
 			}
 		}
-		console.log("[has_db_box]",has_db_box);
 		if(has_db_box===true) return;
+		console.log("[no_db_box]",has_db_box,item);
 		switch(store.content) {
 			default: debugger; break;
 			case "boolean": {
@@ -667,8 +667,8 @@ class IndexedDBService extends BaseService {
 	gas_calc=false;
 	update_gas=10000;
 	/** 
-	 * @template T @arg {make_item_group<T>} x_group @arg {make_item_group<T>} y_group
-	 * @returns {[true,make_item_group<T>]|[false,null]}
+	 * @template {make_item_group<any>} T @arg {T} x_group @arg {T} y_group
+	 * @returns {[true,T]|[false,null]}
 	 */
 	update_group(x_group,y_group) {
 		/** @arg {T[]} x_arr @arg {T[]} y_arr */
@@ -761,7 +761,7 @@ class IndexedDBService extends BaseService {
 					case "one": {
 						let y_item=y_group[1];
 						if(x_item===y_item) break;
-						return [true,["arr",[x_item,y_item]]];
+						return as_any([true,["arr",[x_item,y_item]]]);
 					}
 				}
 			} break;
@@ -853,37 +853,31 @@ class IndexedDBService extends BaseService {
 					let update_item=false;
 					/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
 					let item_nt=item;
-					/** @arg {make_item_group<string|boolean|number>} x @returns {make_item_group<string|boolean|number>} */
-					let decay_value=x => {return x;};
-					/** @arg {make_item_group<string|boolean|number>} x @returns {asserts x is make_item_group<string>|make_item_group<boolean>|make_item_group<number>} */
-					let assert_upgrade=x => {x;};
-					/** @template {DT_DatabaseValue} T @arg {T} x @arg {T} y */
+					/** @template {DT_DatabaseValue} T @arg {T} x @arg {T} y @returns {T["value"]} */
 					let do_update=(x,y) => {
 						let pre_update=[structuredClone(x),structuredClone(y)];
-						let group_info=this.update_group(decay_value(y.value),x.value);
-						if(!group_info[0]) return;
-						let ret=group_info[1];
-						assert_upgrade(ret);
-						x.value=ret;
+						let group_info=this.update_group(y.value,x.value);
+						if(!group_info[0]) return x.value;
 						console.log("update",...pre_update);
 						update_item=true;
+						return group_info[1];
 					};
 					switch(item_nt.type) {
 						default: item_nt===""; debugger; break;
 						case "hashtag_id": break;
 						case "boolean": {
 							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							do_update(item_nt,cursor_value);
+							item_nt.value=do_update(item_nt,cursor_value);
 						} break;
 						case "root_visual_element":
 						case "number": {
 							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							do_update(item_nt,cursor_value);
+							item_nt.value=do_update(item_nt,cursor_value);
 						} break;
 						case "keys":
 						case "string": {
 							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							do_update(item_nt,cursor_value);
+							item_nt.value=do_update(item_nt,cursor_value);
 						} break;
 						case "video_id:shorts":
 						case "video_id:normal": {
