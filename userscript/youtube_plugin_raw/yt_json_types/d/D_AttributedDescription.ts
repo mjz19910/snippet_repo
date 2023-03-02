@@ -8,6 +8,8 @@ type D_StyleRunItem={
 	startIndex: number;
 	length: number;
 	fontColor: number;
+	fontName?: string;
+	weight?: number;
 };
 type D_AttributedDescription={
 	content: string;

@@ -546,8 +546,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_StyleRunItem} x */
 	D_StyleRunItem(x) {
 		const cf="D_StyleRunItem";
-		const {fontColor,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
+		const {fontColor,fontName,weight,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.save_number(`${cf}.fontColor`,fontColor);
+		this.t(fontName,x => this.save_string("style.font_name",x));
+		this.t(weight,x => this.save_number("style.weight",x));
 	}
 	/** @private @arg {D_AttributedDescription} x */
 	D_AttributedDescription(x) {
