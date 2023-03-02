@@ -319,6 +319,8 @@ class IndexedDBService extends BaseService {
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	push_store_item_to_database(store,item,version) {
 		let [,vi]=item;
+		if(this.cache_weak_set.has(vi)) return null;
+		this.cache_weak_set.add(vi);
 		switch(store.content) {
 			default: debugger; break;
 			case "boolean": {
