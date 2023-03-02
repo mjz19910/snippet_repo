@@ -768,8 +768,10 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @type {string[]} */
-	selector_cache=[];
+	/** @type {{cache:string[];new_:string[]}} */
+	selector={cache: [],new_: []};
+	/** @type {{cache:string[];new_:string[]}} */
+	partition={cache: [],new_: []};
 	/** @private @arg {D_GoogleVideoHostPartition} x */
 	D_GoogleVideoHostPartition(x) {
 		const cf="google_video";
@@ -780,6 +782,8 @@ class HandleTypes extends ServiceMethods {
 		// cSpell:ignoreRegExp /"(5u|qx|vg)[a-z]{3}"/
 		switch(partition) {
 			default: {
+				if(!this.partition.new_.includes(partition)) this.partition.new_.push(partition);
+				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
 				let gen=this.cg.codegen_case_cache(`g_case:${cf}:host_partition`,partition);
 				if(gen.has) break;
 				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
@@ -812,12 +816,15 @@ class HandleTypes extends ServiceMethods {
 			case "t0a7s":
 			case "vgqsk":
 			case "vgqsr":
+				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
+				break;
 		}
 		/** @type {G_Gv_1} */
 		switch(selector) {
 			default: {
-				if(this.selector_cache.includes(selector)) break;
-				this.selector_cache.push(selector);
+				if(!this.selector.new_.includes(selector)) this.selector.new_.push(selector);
+				if(this.selector.cache.includes(selector)) break;
+				this.selector.cache.push(selector);
 				selector===""; debugger;
 			} break;
 			case "6d": case "6l": case "6z":
@@ -827,8 +834,8 @@ class HandleTypes extends ServiceMethods {
 			case "l7": case "lk": case "ll": case "lr": case "ls": case "ly":
 			case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "z7": case "zd": case "ze": case "zk": case "zr": case "zs": case "zy": {
-				if(this.selector_cache.includes(selector)) break;
-				this.selector_cache.push(selector);
+				if(this.selector.cache.includes(selector)) break;
+				this.selector.cache.push(selector);
 			} break;
 		}
 	}
