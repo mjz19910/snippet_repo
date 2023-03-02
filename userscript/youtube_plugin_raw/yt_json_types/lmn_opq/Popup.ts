@@ -1,4 +1,13 @@
+//#region Strings
+type S_MenuStyle=T_MP_SG<"ACCOUNT"|"CREATION"|"NOTIFICATIONS"|"SYSTEM">;
+//#endregion
 //#region Templates
+//#region String Templates
+type T_MP_SG<T extends string>=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",T>;
+//#endregion
+//#region Menu Templates
+type T_LoadingMenu<T_Style extends S_MenuStyle>={trackingParams: string; style: T_Style; showLoadingSpinner: true;};
+type T_BaseMenu<T_Style extends S_MenuStyle>={trackingParams: string; style: T_Style;};
 //#region Action Templates
 type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
 type TA_OpenPopup<T_Action>=TE_Endpoint_2<"openPopupAction",T_Action>;
@@ -88,12 +97,8 @@ type R_SystemMenu=TR_MultiPageMenu<MP_SystemMenu>;
 type R_TopbarMenu=TR_MultiPageMenu<MP_TopbarMenu>;
 //#endregion
 //#region MultiPageMenu Renderer Data
-type T_MP_SG<T extends string>=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",T>;
-type S_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE","NOTIFICATIONS"|"ACCOUNT"|"CREATION">;
-type T_LoadingMenu<T_Style extends S_MenuStyle>={trackingParams: string; style: T_Style; showLoadingSpinner: true;};
-type T_BaseMenu<T_Style extends S_MenuStyle>={trackingParams: string; style: T_Style;};
 type MP_AccountMenu=T_LoadingMenu<"MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT">;
-type MP_SystemMenu={trackingParams: string; style: T_MP_SG<"SYSTEM">; header: R_ActiveAccountHeader; sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];};
+type MP_SystemMenu=T_BaseMenu<T_MP_SG<"SYSTEM">>&{header: R_ActiveAccountHeader; sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];};
 type MP_GetNotificationMenu=T_LoadingMenu<T_MP_SG<"NOTIFICATIONS">>;
 type MP_NotificationMenu=T_BaseMenu<T_MP_SG<"NOTIFICATIONS">>&{header: R_SimpleMenuHeader; sections: D_NotificationMenu_SectionItem[];};
 type MP_TopbarMenu=T_BaseMenu<T_MP_SG<"CREATION">>&{sections: [TR_MultiPageMenuSection<R_CompactLink>];};
