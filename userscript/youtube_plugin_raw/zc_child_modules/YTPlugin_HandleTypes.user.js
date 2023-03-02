@@ -768,6 +768,8 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.trackingParams(trackingParams);
 	}
+	/** @type {string[]} */
+	selector_cache=[];
 	/** @private @arg {D_GoogleVideoHostPartition} x */
 	D_GoogleVideoHostPartition(x) {
 		const cf="google_video";
@@ -813,14 +815,18 @@ class HandleTypes extends ServiceMethods {
 		}
 		/** @type {G_Gv_1} */
 		switch(selector) {
-			default: selector===""; debugger; break;
+			default: {
+				if(this.selector_cache.includes(selector)) break;
+				this.selector_cache.push(selector);
+				selector===""; debugger;
+			} break;
 			case "6d": case "6l":
 			case "76": case "7d": case "7k": case "7s": case "7y": case "7z":
 			case "d6": case "dy": case "dz":
 			case "el": case "ee": case "ey": case "ez":
 			case "l7": case "lk": case "ll": case "lr": case "ls":
 			case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
-			case "zd": case "ze": case "zk": case "zr": case "zs": case "zy":
+			case "z7": case "zd": case "ze": case "zk": case "zr": case "zs": case "zy":
 		}
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
