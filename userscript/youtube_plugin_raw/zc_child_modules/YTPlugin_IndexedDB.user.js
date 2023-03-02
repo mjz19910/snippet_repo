@@ -324,12 +324,12 @@ class IndexedDBService extends BaseService {
 		for(let db_box of db_boxed) {
 			if(!("id" in db_box)) continue;
 			if(db_box.base!=="boxed_id") continue;
-			if(db_box.id===key) has_db_box=true;
+			if(db_box.id!==key) continue;
+			has_db_box=true;
 			switch(db_box.type) {
 				default: db_box===""; console.log("[db_push_fail]",db_box); break;
 				case "root_visual_element":
 				case "number": {
-					if(db_box.id!==key) continue;
 					if(!this.is_vi_has_num(vi)) break;
 					if(!this.is_vi_has_num(db_box.value)) break;
 					let uv=this.uv_unpack(vi);
@@ -387,7 +387,6 @@ class IndexedDBService extends BaseService {
 				} break;
 				case "string":
 				case "keys": {
-					if(db_box.id!==key) continue;
 					if(!this.is_vi_has_str(vi)) break;
 					let uv=this.uv_unpack(vi);
 					let db_uv=this.uv_unpack(db_box.value);
@@ -419,9 +418,6 @@ class IndexedDBService extends BaseService {
 					}
 					debugger;
 				} break;
-				case "save_id":
-				case "load_id":
-				case "update_id": break;
 			}
 		}
 		if(has_db_box===true) return;
