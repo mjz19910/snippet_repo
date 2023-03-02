@@ -393,7 +393,7 @@ type G_PlaylistUrlInfo={
 }|{
 	type: "playlist:4:UU"; id: string; raw_id: `UU${string}`;
 };
-type G_ChannelUrlInfo={
+type D_ChannelUrlInfo={
 	type: "channel_id:UC";
 	id: string;
 	raw_id: `UC${string}`;
@@ -420,21 +420,39 @@ type D_BrowseIdUrlInfo={
 	raw_id: `VLPL${string}`;
 };
 
-type G_UrlInfo=G_PlaylistUrlInfo|D_VideoUrlInfo|D_VideoReferralUrlInfo|D_PlayNextUrlInfo|G_ChannelUrlInfo|D_BrowseIdUrlInfo;
-type G_WatchNext=R_CompactVideo|R_ContinuationItem;
-type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
-	R_EndScreenVideo;
-type G_YtWatchUrl=[
-	D_PlayerParamsUrl,
-	D_WatchPlaylistUrlFormat,
-][number];
+type G_UrlInfo=
+	|D_BrowseIdUrlInfo
+	|D_PlayNextUrlInfo
+	|D_VideoReferralUrlInfo
+	|D_VideoUrlInfo
+	|D_ChannelUrlInfo
+	|G_PlaylistUrlInfo
+	;
+;
+type G_WatchNext=
+	|R_CompactPlaylist
+	|R_CompactVideo
+	|R_ContinuationItem
+	;
+;
+type G_WatchNextEndScreenItem=
+	|R_EndScreenPlaylist
+	|R_EndScreenVideo
+	;
+;
+type G_YtWatchUrl=
+	|D_PlayerParamsUrl
+	|D_WatchPlaylistUrlFormat
+	;
+;
 type G_PlaylistSidebarItem=R_PlaylistSidebarPrimaryInfo|R_PlaylistSidebarSecondaryInfo;
-type G_AdPlacementRendererItem=[
-	R_AdBreakService,
-	R_ClientForecastingAd,
-	R_InstreamVideoAd,
-	R_LinearAdSequence,
-][number];
+type G_AdPlacementRendererItem=
+	|R_AdBreakService
+	|R_ClientForecastingAd
+	|R_InstreamVideoAd
+	|R_LinearAdSequence
+	;
+;
 type GR_MP_MenuNotificationSection_Item=R_Notification|R_ContinuationItem;
 type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;
 type G_RendererContentItem=
