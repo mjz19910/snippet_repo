@@ -21,6 +21,7 @@ export namespace Gen {
 		|{n: "CF_D_CustomEmoji"; t: CF_D_CustomEmoji; v: "D_CustomEmoji";}
 		|{n: "CF_D_CustomEmoji"; t: CF_D_CustomEmoji; v: "D_LiveChatEmoji";}
 		|{n: "CF_D_GuideEntry"; t: CF_D_GuideEntry; v: "D_GuideEntry";}
+		|{n: "CF_D_GuideEntry"; t: CF_D_GuideEntry; v: "D_GuideEntry_WithIcon";}
 		|{n: "CF_D_GuideEntry"; t: CF_D_GuideEntry; v: "D_GuideEntry_WithPrimary";}
 		|{n: "CF_D_Link"; t: CF_D_Link; v: "D_CompactLink";}
 		|{n: "CF_D_Link"; t: CF_D_Link; v: "D_CompactLink.Styled";}
@@ -871,6 +872,7 @@ export namespace Gen {
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_Browse";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_CreateBackstagePost";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_CreateComment";}
+		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_CreateCommentReply";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_CreatePlaylist";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_Dislike";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_EditPlaylist";}

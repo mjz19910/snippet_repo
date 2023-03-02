@@ -1149,8 +1149,24 @@ class ServiceMethods extends ServiceData {
 		let ax=xp.openPopupAction;
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
-				default: debugger; break;
-				case "DIALOG": break;
+				default: debugger; ax===""; break;
+				case "DIALOG": {
+					let x1=ax.popup;
+					if("confirmDialogRenderer" in x1) {this.R_ConfirmDialog(x1); break;}
+					if("unifiedSharePanelRenderer" in x1) {this.R_UnifiedSharePanel(x1); break;}
+					if("fancyDismissibleDialogRenderer" in x1) {this.R_FancyDismissibleDialog(x1); break;}
+					debugger;
+				} break;
+				case "TOAST": {
+					let x1=ax.popup;
+					if("notificationActionRenderer" in x1) {this.RA_Notification(x1); break;}
+					debugger;
+				} break;
+				case "TOP_ALIGNED_DIALOG": {
+					let x1=ax.popup;
+					if("voiceSearchDialogRenderer" in x1) {this.R_VoiceSearchDialog(x1); break;}
+					debugger;
+				} break;
 				case "DROPDOWN": {
 					let x1=ax.popup;
 					if("menuPopupRenderer" in x1) {this.R_MenuPopup(x1); break;}

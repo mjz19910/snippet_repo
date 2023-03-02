@@ -2695,6 +2695,16 @@ class Support_Renderer extends ServiceMethods {
 			}
 			return;
 		}
+		if("entryData" in x) {
+			const {navigationEndpoint,thumbnail,trackingParams,formattedTitle,accessibility,entryData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.E_VE3611(navigationEndpoint);
+			this.D_Thumbnail(thumbnail);
+			this.trackingParams(trackingParams);
+			this.G_Text(formattedTitle);
+			this.D_Accessibility(accessibility);
+			this.R_GuideEntryData(entryData);
+			return;
+		}
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<D_GuideEntry,{targetId:any;}>|D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
@@ -2716,7 +2726,7 @@ class Support_Renderer extends ServiceMethods {
 		const cf2="D_GuideEntry_WithIcon";
 		if("entryData" in x) {
 			if("icon" in x) {
-				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
+				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);
 				this.E_VE5754(navigationEndpoint);
 				switch(icon.iconType) {
 					default: icon===""; this.codegen_typedef(cf1,x); break;
@@ -2724,13 +2734,19 @@ class Support_Renderer extends ServiceMethods {
 				}
 				return this.R_GuideEntryData(entryData);
 			}
-			const {...u}=this.D_GuideEntry_Omit(cf1,x);
-			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=this.s(cf2,u); this.g(y);/*#destructure_done*/
+			if("presentationStyle" in x) {
+				const {entryData,presentationStyle,navigationEndpoint,thumbnail,badges,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);/*#destructure_done*/
+				this.R_GuideEntryData(entryData);
+				if(!navigationEndpoint.browseEndpoint) debugger;
+				if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
+				this.D_Thumbnail(thumbnail);
+				this.D_LiveBroadcastingBadge(badges);
+				return;
+			}
+			const {entryData,navigationEndpoint,thumbnail,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);/*#destructure_done*/
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			this.D_Thumbnail(thumbnail);
-			this.D_LiveBroadcastingBadge(badges);
 			return;
 		}
 		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
