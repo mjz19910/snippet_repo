@@ -358,7 +358,7 @@ class IndexedDBService extends BaseService {
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
-						if(this.eq_group(uv.arr,db_uv.arr)) return;
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
 						debugger;
 						break;
 					}
@@ -385,14 +385,17 @@ class IndexedDBService extends BaseService {
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
-						if(this.eq_group(uv.arr,db_uv.arr)) return;
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) return;
 						debugger;
 						break;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
 					if(uv.many&&db_uv.arr) {debugger; break;}
 					if(uv.many&&db_uv.many) {
-						if(this.eq_group(uv.many,db_uv.many)) return;
+						let db_m=db_uv.many[1];
+						let uv_m=uv.many[1];
+						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
+						if(has) return;
 						this.put_boxed_id(item[0],version,db_box.type,uv.many);
 						break;
 					}
