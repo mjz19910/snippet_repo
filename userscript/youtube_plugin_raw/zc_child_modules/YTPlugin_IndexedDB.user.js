@@ -438,9 +438,9 @@ class IndexedDBService extends BaseService {
 		}
 		if(has_db_box===true) return;
 		console.log("[no_db_box]",has_db_box,item);
-		requestIdleCallback(() => {
-			this.save_db;
-			setTimeout(() => this.save_db.onDataChange());
+		requestIdleCallback(async () => {
+			await this.load_database(this.save_db.data_store,version);
+			await this.save_database(this.save_db.data_store,version);
 		});
 		switch(store.content) {
 			default: debugger; break;
@@ -689,7 +689,7 @@ class IndexedDBService extends BaseService {
 	}
 	gas_calc=false;
 	update_gas=10000;
-	/** 
+	/**
 	 * @template {make_item_group<any>} T @arg {T} x_group @arg {T} y_group
 	 * @returns {[true,T]|[false,null]}
 	 */
