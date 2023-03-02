@@ -1143,7 +1143,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_ReelWatchSequence";
 		const {responseContext: {},entries,prevEntries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
-		this.z(prevEntries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
+		this.tz(prevEntries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.trackingParams(trackingParams);
 		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
 	}
