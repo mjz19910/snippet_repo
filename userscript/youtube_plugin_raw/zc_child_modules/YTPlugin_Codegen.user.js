@@ -736,9 +736,9 @@ class CodegenService extends BaseService {
 			let at=u.openPopupAction;
 			switch(at.popupType) {
 				case "DIALOG": {
-					let sr=this.get_typedef_part(s,at.popup);
-					debugger;
-					return `TA_OpenPopup<T_OpenPopup_Dialog<${sr}>>`;
+					/** @type {string} */
+					let t_name=this.get_auto_type_name(s,at.popup);
+					return `TA_OpenPopup<T_OpenPopup_Dialog<${t_name}>>`;
 				}
 				case "TOAST": {
 					let sr=this.get_typedef_part(s,at.popup);
