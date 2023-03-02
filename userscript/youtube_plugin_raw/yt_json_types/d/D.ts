@@ -493,26 +493,6 @@ type D_ClipCreation={
 	externalVideoId: string;
 	publicityLabelIcon: `PRIVACY_${D_PlaylistAddToOption['privacy']}`;
 };
-type D_Comment={
-	authorText: G_Text;
-	authorThumbnail: D_Thumbnail;
-	authorEndpoint: GE_Browse;
-	contentText: G_Text;
-	publishedTimeText: G_Text;
-	isLiked: boolean;
-	actionMenu: R_Menu;
-	commentId: `${string}.${string}`;
-	actionButtons: R_CommentActionButtons;
-	authorIsChannelOwner: boolean;
-	currentUserReplyThumbnail: D_Thumbnail;
-	voteStatus: "INDIFFERENT";
-	trackingParams: string;
-	voteCount?: G_Text;
-	expandButton: R_Button;
-	collapseButton: R_Button;
-	replyCount?: number;
-	loggingDirectives: D_LoggingDirectives;
-};
 type D_CommentSimplebox={
 	submitButton: R_Button;
 	cancelButton: R_Button;

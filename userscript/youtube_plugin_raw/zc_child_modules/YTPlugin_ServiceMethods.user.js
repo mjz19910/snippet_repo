@@ -5494,12 +5494,16 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
 		const cf="D_Comment";
-		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,collapseButton,replyCount,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,collapseButton,replyCount,authorCommentBadge,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(authorText);
 		this.D_Thumbnail(authorThumbnail);
 		this.R_CommentActionButtons(actionButtons);
 		this.R_Menu(actionMenu);
-		debugger;
+		x: {
+			let x2=authorEndpoint;
+			if(this.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
+			debugger;
+		}
 		this.a_primitive_bool(authorIsChannelOwner);
 		this.a_primitive_str(commentId);
 		this.G_Text(contentText);
@@ -5512,6 +5516,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.R_Button(collapseButton);
 		this.t(replyCount,this.a_primitive_num);
+		this.t(authorCommentBadge,x => this.ht.R_AuthorCommentBadge(x));
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,G_CommentRepliesItem>} x */

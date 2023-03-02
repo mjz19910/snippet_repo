@@ -3034,6 +3034,8 @@ class HandleTypes extends ServiceMethods {
 			x===""; this.codegen_typedef(cf,x);
 		});
 	}
+	/** @public @arg {R_AuthorCommentBadge} x */
+	R_AuthorCommentBadge(x) {x;}
 	//#endregion
 	//#endregion binary
 	//#endregion
