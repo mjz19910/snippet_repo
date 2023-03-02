@@ -683,6 +683,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
 			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
 			debugger;
 			return;
