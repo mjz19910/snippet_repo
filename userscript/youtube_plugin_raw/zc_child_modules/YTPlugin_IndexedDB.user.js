@@ -438,6 +438,10 @@ class IndexedDBService extends BaseService {
 		}
 		if(has_db_box===true) return;
 		console.log("[no_db_box]",has_db_box,item);
+		requestIdleCallback(() => {
+			this.save_db;
+			setTimeout(() => this.save_db.onDataChange());
+		});
 		switch(store.content) {
 			default: debugger; break;
 			case "boolean": {

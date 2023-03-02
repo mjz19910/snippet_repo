@@ -262,16 +262,13 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}
 		return this.x.get("indexed_db");
 	})();
-	/** @no_mod @type {number|null|Nullable<{}>} */
+	/** @no_mod @type {number|null} */
 	#idle_id=null;
 	onDataChange() {
 		if(this.#idle_id!==null) return;
 		this.is_ready=false;
 		this.#idle_id=requestIdleCallback(async () => {
 			const version=this.indexed_db_version;
-			await new Promise(function(a) {
-				setTimeout(a,100);
-			});
 			try {
 				await this.idb.load_database(this.data_store,version);
 			} catch(err) {
