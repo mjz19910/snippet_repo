@@ -2997,7 +2997,6 @@ class HandleTypes extends ServiceMethods {
 				case "Custom emoji":
 				case "YouTube":
 			}
-			if(tooltip!=="YouTube") debugger;
 			this.D_Accessibility(accessibility);
 			return;
 		}
