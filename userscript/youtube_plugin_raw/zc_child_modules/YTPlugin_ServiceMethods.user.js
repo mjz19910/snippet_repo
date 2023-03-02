@@ -1204,7 +1204,9 @@ class ServiceMethods extends ServiceData {
 		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
 		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
 		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
-		x===""; this.codegen_typedef(cf,x);
+		let gen_name=this.get_codegen_name(cf,x);
+		if(!gen_name) {debugger; return;}
+		x===""; this.codegen_typedef(gen_name,x);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
