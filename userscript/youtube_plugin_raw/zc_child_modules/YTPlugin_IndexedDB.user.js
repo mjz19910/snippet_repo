@@ -189,28 +189,29 @@ class IndexedDBService extends BaseService {
 		}
 	}
 	expected_save_id=0;
+	expected_load_id=0;
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
 		this.update_gas+=1000;
-		let update_id=await this.get_id_box("save",version);
-		if(!update_id) {
+		let save_id=await this.get_id_box("save",version);
+		if(!save_id) {
 			this.expected_save_id=0;
-			update_id=await this.put_update_id("save",this.expected_save_id,version);
+			save_id=await this.put_update_id("save",this.expected_save_id,version);
 		}
-		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
+		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
 		await this.save_store_to_database(store,version);
-		this.expected_id++;
+		this.expected_save_id++;
 		await this.put_update_id("save",this.expected_save_id,version);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
 		this.update_gas+=1000;
 		let update_id=await this.get_id_box("load",version);
-		if(!update_id) this.expected_id=0;
-		else this.expected_id=update_id.id;
+		if(!update_id) this.expected_load_id=0;
+		else this.expected_load_id=update_id.id;
 		await this.load_store_from_database(store,version);
-		this.expected_id++;
-		await this.put_update_id("load",this.expected_id,version);
+		this.expected_load_id++;
+		await this.put_update_id("load",this.expected_load_id,version);
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
