@@ -1,6 +1,6 @@
 type D_EmojiPicker={
 	id: "emoji";
-	categories: R_EmojiPickerCategory[];
+	categories: (R_EmojiPickerCategory|R_EmojiPickerUpsellCategory)[];
 	categoryButtons: R_EmojiPickerCategoryButton[];
 	searchPlaceholderText: G_Text;
 	searchNoResultsText: G_Text;

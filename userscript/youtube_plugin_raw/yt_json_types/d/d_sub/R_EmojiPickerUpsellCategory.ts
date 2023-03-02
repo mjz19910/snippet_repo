@@ -1,0 +1,1 @@
+type R_EmojiPickerUpsellCategory={emojiPickerUpsellCategoryRenderer: D_EmojiPickerUpsellCategory;};

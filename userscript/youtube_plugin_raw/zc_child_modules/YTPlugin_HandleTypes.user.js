@@ -2919,6 +2919,57 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {x;}
+	/** @public @arg {R_EmojiPicker} x */
+	R_EmojiPicker(x) {this.H_("emojiPickerRenderer",x,this.D_EmojiPicker);}
+	/** @private @arg {D_EmojiPicker} x */
+	D_EmojiPicker(x) {
+		const cf="D_EmojiPicker";
+		const {id,categories,categoryButtons,searchPlaceholderText,searchNoResultsText,pickSkinToneText,trackingParams,clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel,...y}=this.s(cf,x); this.g(y);
+		if(id!=="emoji") debugger;
+		this.z(categories,x => {
+			if("emojiPickerCategoryRenderer" in x) return this.R_EmojiPickerCategory(x);
+			x.emojiPickerUpsellCategoryRenderer;
+		});
+		this.z(categoryButtons,this.R_EmojiPickerCategoryButton);
+		this.G_Text(searchPlaceholderText);
+		this.G_Text(searchNoResultsText);
+		this.G_Text(pickSkinToneText);
+		this.z([clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel],this.a_primitive_str);
+	}
+	/** @private @arg {R_EmojiPickerCategory} x */
+	R_EmojiPickerCategory(x) {this.H_("emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
+	/** @private @arg {D_EmojiPickerCategory} x */
+	D_EmojiPickerCategory(x) {
+		if(x.categoryType==="CATEGORY_TYPE_GLOBAL") {
+			const cf="D_EmojiPickerCategory:Global";
+			const {categoryId,title,emojiIds,trackingParams,categoryType,...y}=this.s(cf,x); this.g(y);
+			if(!this.str_starts_with(categoryId,"UC")) debugger;
+			this.G_Text(title);
+			this.z(emojiIds,x => {
+				let [channel_id,parsed_emoji]=this.parse_emoji_id(x);
+				this.D_ChannelId(channel_id);
+				this.save_string(`${categoryId}.emojiId`,parsed_emoji);
+			});
+			this.D_ChannelId(categoryId);
+			this.trackingParams(trackingParams);
+			return;
+		}
+		const cf="D_EmojiPickerCategory";
+		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "people": case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.G_Text(title);
+		this.z(emojiIds,x => {
+			this.save_string(`${categoryId}.emojiId`,x);
+		});
+		this.trackingParams(trackingParams);
+		if(imageLoadingLazy!==true) debugger;
+		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
+	}
+	/** @private @arg {R_EmojiPickerCategoryButton} x */
+	R_EmojiPickerCategoryButton(x) {this.H_("emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
 	//#endregion
 	//#endregion binary
 	//#endregion
