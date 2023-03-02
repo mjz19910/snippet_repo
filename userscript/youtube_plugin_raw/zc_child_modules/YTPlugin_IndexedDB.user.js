@@ -754,28 +754,35 @@ class IndexedDBService extends BaseService {
 						let update_item=false;
 						/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
 						let item_nt=item;
+						/** @arg {make_item_group<string|boolean|number>} x @returns {make_item_group<string|boolean|number>} */
+						let decay_value=x => {return x;};
+						/** @arg {make_item_group<string|boolean|number>} x @returns {asserts x is make_item_group<string>|make_item_group<boolean>|make_item_group<number>} */
+						let assert_upgrade=x => {x;};
+						/** @template {DT_DatabaseValue} T @arg {T} x @arg {T} y */
+						let do_update=(x,y) => {
+							let pre_update=[structuredClone(x),structuredClone(y)];
+							let ret=this.update_group(decay_value(y.value),x.value);
+							assert_upgrade(ret);
+							x.value=ret;
+							console.log("update",...pre_update);
+							update_item=true;
+						};
 						switch(item_nt.type) {
 							default: item_nt===""; debugger; break;
 							case "hashtag_id": break;
 							case "boolean": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								item_nt.value=this.update_group(cursor_value.value,item_nt.value);
-								console.log("update",item_nt,cursor_value);
-								update_item=true;
+								do_update(item_nt,cursor_value);
 							} break;
 							case "root_visual_element":
 							case "number": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								item_nt.value=this.update_group(cursor_value.value,item_nt.value);
-								console.log("update",item_nt,cursor_value);
-								update_item=true;
+								do_update(item_nt,cursor_value);
 							} break;
 							case "keys":
 							case "string": {
 								if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-								item_nt.value=this.update_group(cursor_value.value,item_nt.value);
-								console.log("update",item_nt,cursor_value);
-								update_item=true;
+								do_update(item_nt,cursor_value);
 							} break;
 							case "video_id:shorts":
 							case "video_id:normal": {
