@@ -3036,15 +3036,41 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @public @arg {R_AuthorCommentBadge} x */
-	R_AuthorCommentBadge(x) {x;}
+	R_AuthorCommentBadge(x) {this.H_("authorCommentBadgeRenderer",x,this.D_AuthorCommentBadge);}
+	/** @public @arg {D_AuthorCommentBadge} x */
+	D_AuthorCommentBadge(x) {
+		const cf="D_AuthorCommentBadge";
+		const {icon,color,authorText,authorEndpoint,iconTooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
 	/** @public @arg {E_PerformCommentAction} x */
 	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
 	/** @public @arg {M_PerformCommentAction} x */
-	M_PerformCommentAction(x) {x;}
+	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
+	/** @public @arg {GM_PerformCommentAction} x */
+	GM_PerformCommentAction(x) {this.T_GM("GM_PerformCommentAction",x,x => this.ceq(x,"/youtubei/v1/comment/perform_comment_action"));}
 	/** @public @arg {DE_PerformCommentAction} x */
-	DE_PerformCommentAction(x) {x;}
+	DE_PerformCommentAction(x) {
+		const cf="DE_PerformCommentAction";
+		const {action,clientActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		console.log(`${cf}.action`,action);
+		this.z(clientActions,this.A_UpdateCommentVote);
+	}
+	/** @public @arg {A_UpdateCommentVote} x */
+	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
+	/** @public @arg {AD_UpdateCommentVote} x */
+	AD_UpdateCommentVote(x) {
+		const cf="AD_UpdateCommentVote";
+		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(voteCount);
+		this.save_string(`${cf}.voteStatus`,voteStatus);
+		switch(voteStatus) {
+			case "LIKE":
+		}
+	}
 	/** @public @arg {E_CreateCommentReplyDialog} x */
-	E_CreateCommentReplyDialog(x) {x;}
+	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.g);}
+	/** @public @arg {M_CreateCommentReplyDialog} x */
+	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.g);}
 	//#endregion
 	//#endregion binary
 	//#endregion

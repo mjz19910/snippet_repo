@@ -84,6 +84,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_ShowEngagementPanelScrim";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_Signal";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_SubscribeButton";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "AD_UpdateCommentVote";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_UpdateEngagementPanel";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_UpdateNotificationsUnseenCount";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AS_PlaylistDescription";}
@@ -136,6 +137,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_Feedback";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_GetNotificationMenu";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_NotificationOptOut";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "DE_PerformCommentAction";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_RecordNotificationInteractions";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_Search";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_ShareEntityService";}
@@ -188,6 +190,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AudioConfig";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AudioTrack";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AudioTrackItem";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_AuthorCommentBadge";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AutoplayContent";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AutoplaySetItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_AutoplaySwitchButton";}
@@ -787,6 +790,7 @@ export namespace Gen {
 		|{n: "CF_TE_Endpoint_2"; t: CF_TE_Endpoint_2; v: "A_ShowEngagementPanelScrim";}
 		|{n: "CF_TE_Endpoint_2"; t: CF_TE_Endpoint_2; v: "A_Signal";}
 		|{n: "CF_TE_Endpoint_2"; t: CF_TE_Endpoint_2; v: "A_UndoFeedback";}
+		|{n: "CF_TE_Endpoint_2"; t: CF_TE_Endpoint_2; v: "A_UpdateCommentVote";}
 		|{n: "CF_TE_Endpoint_2"; t: CF_TE_Endpoint_2; v: "C_AddToPlaylist";}
 		|{n: "CF_TE_Endpoint_2"; t: CF_TE_Endpoint_2; v: "C_AdsControlFlowOpportunityReceived";}
 		|{n: "CF_TE_Endpoint_2"; t: CF_TE_Endpoint_2; v: "C_ChangeKeyedMarkersVisibility";}
@@ -811,6 +815,7 @@ export namespace Gen {
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_AddToPlaylistService";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_CreateBackstagePost";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_CreateComment";}
+		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_CreateCommentReplyDialog";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_CreatePlaylistService";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_GetNotificationMenu";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_GetReportForm";}
@@ -873,6 +878,7 @@ export namespace Gen {
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_LikeLike";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_Next";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_NotificationOptOut";}
+		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_PerformCommentAction";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_PlaylistDelete";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_RecordInteractions";}
 		|{n: "CF_T_GM"; t: CF_T_GM; v: "GM_RemoveLike";}
@@ -926,6 +932,7 @@ export namespace Gen {
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Browse";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreateBackstagePost";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreateComment";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreateCommentReplyDialog";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreatePlaylist";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_EditPlaylist";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Feedback";}
@@ -939,6 +946,7 @@ export namespace Gen {
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Like";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Next";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_NotificationOptOut";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_PerformCommentAction";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_PlaylistDelete";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_RecordInteractions";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_RemoveUpcomingEventReminder";}
