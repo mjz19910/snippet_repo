@@ -709,7 +709,6 @@ class IndexedDBService extends BaseService {
 				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,cursor_value);
 				let idx=d_cache.indexOf(item);
 				d_cache[idx]=null;
-				cur_cursor.continue();
 				if(cursor_value.key!==item.key) {
 					console.log(cursor_value.key.split(":"));
 					console.log(item.key.split(":"));
