@@ -127,20 +127,44 @@ class IndexedDBService extends BaseService {
 	expected_id=0;
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
-	/** @arg {number} id @arg {number} version @returns {Promise<D_BoxedUpdateId>} */
-	put_update_id(id,version) {
-		return this.put_box({
-			key: "boxed_id:update_id",
-			base: "boxed_id",
-			type: "update_id",
-			id,
-		},version);
+	/** @arg {"load"|"save"} mode @arg {number} id @arg {number} version @returns {Promise<D_BoxedUpdateId>} */
+	put_update_id(mode,id,version) {
+		switch(mode) {
+			case "load": {
+				return this.put_box({
+					key: `boxed_id:${mode}_id`,
+					type: `${mode}_id`,
+					base: "boxed_id",
+					id,
+				},version);
+			}
+			case "save": {
+				return this.put_box({
+					key: `boxed_id:${mode}_id`,
+					type: `${mode}_id`,
+					base: "boxed_id",
+					id,
+				},version);
+			}
+		}
 	}
-	/** @private @arg {number} version */
-	async get_update_id(version) {
-		let box=await this.get("boxed_id","boxed_id:update_id",version);
-		if(box&&box.key!=="boxed_id:update_id") return null;
-		return box;
+	/** @private @template {"load"|"save"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedUpdateId|null>} */
+	async get_id_box(key,version) {
+		switch(key) {
+			case "load": {
+				const t_key="boxed_id:load_id";
+				let box=await this.get("boxed_id",t_key,version);
+				if(box&&box.key!==t_key) return null;
+				return box;
+			}
+			case "save": {
+				const t_key="boxed_id:save_id";
+				let box=await this.get("boxed_id",t_key,version);
+				if(box&&box.key!==t_key) return null;
+				return box;
+			}
+			default: throw new Error();
+		}
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
@@ -162,28 +186,29 @@ class IndexedDBService extends BaseService {
 			case "update_id": break;
 		}
 	}
+	expected_save_id=0;
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
 		this.update_gas+=1000;
-		let update_id=await this.get_update_id(version);
+		let update_id=await this.get_id_box("save",version);
 		if(!update_id) {
-			this.expected_id=0;
-			update_id=await this.put_update_id(this.expected_id,version);
+			this.expected_save_id=0;
+			update_id=await this.put_update_id("save",this.expected_save_id,version);
 		}
 		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
 		await this.save_store_to_database(store,version);
 		this.expected_id++;
-		await this.put_update_id(this.expected_id,version);
+		await this.put_update_id("save",this.expected_save_id,version);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
 		this.update_gas+=1000;
-		let update_id=await this.get_update_id(version);
+		let update_id=await this.get_id_box("load",version);
 		if(!update_id) this.expected_id=0;
 		else this.expected_id=update_id.id;
 		await this.load_store_from_database(store,version);
 		this.expected_id++;
-		await this.put_update_id(this.expected_id,version);
+		await this.put_update_id("load",this.expected_id,version);
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
@@ -833,8 +858,10 @@ class IndexedDBService extends BaseService {
 							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 							if(item_nt.v!==cursor_value.v) update_item=true;
 						} break;
+						case "save_id":
+						case "load_id":
 						case "update_id": {
-							if(this.log_db_actions) console.log("[update_sync_cache_item_update_id]",item);
+							if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
 							if(item_nt.key===cursor_value.key&&item_nt.id===cursor_value.id) break;
 							update_item=true;
 						} break;
@@ -868,7 +895,10 @@ class IndexedDBService extends BaseService {
 			if(this.log_db_actions) console.log("close db");
 		}
 	}
-	/** @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key @arg {number} version */
+	/**
+	 * @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key @arg {number} version
+	 * @returns {Promise<DT_DatabaseStoreTypes[K]|null>}
+	 * */
 	async get(key,store_key,version) {
 		let typed_db=new TypedIndexedDb;
 		let db=await this.get_async_result(this.get_db_request(version));

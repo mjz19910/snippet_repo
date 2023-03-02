@@ -100,6 +100,16 @@ type D_BoxedUpdateId={
 	type: "update_id";
 	base: "boxed_id";
 	id: number;
+}|{
+	key: "boxed_id:load_id";
+	type: "load_id";
+	base: "boxed_id";
+	id: number;
+}|{
+	key: "boxed_id:save_id";
+	type: "save_id";
+	base: "boxed_id";
+	id: number;
 };
 type B_BoxedStoreTypeofToType={
 	string: "keys"|"string";
