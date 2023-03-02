@@ -345,7 +345,10 @@ class IndexedDBService extends BaseService {
 						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
 						break;
 					}
-					if(uv.arr&&db_uv.one) {debugger; break;}
+					if(uv.arr&&db_uv.one) {
+						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr); break;
+					}
 					if(uv.many&&db_uv.arr) {debugger; break;}
 					debugger;
 				} break;
@@ -360,7 +363,10 @@ class IndexedDBService extends BaseService {
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
-					if(uv.arr&&db_uv.one) {debugger; break;}
+					if(uv.arr&&db_uv.one) {
+						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr); break;
+					}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
 						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
@@ -387,7 +393,10 @@ class IndexedDBService extends BaseService {
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
-					if(uv.arr&&db_uv.one) {debugger; break;}
+					if(uv.arr&&db_uv.one) {
+						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
+						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr); break;
+					}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
 						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
