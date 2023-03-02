@@ -406,46 +406,21 @@ class IndexedDBService extends BaseService {
 				case "update_id": break;
 			}
 		}
-		x: if(store.content==="keys") {
-			if(!this.is_vi_has_str(vi)) break x;
-			let uv=this.uv_unpack(vi);
-			uv?.arr?.[1].sort();
-			if(uv.many) {
-				uv.many[1].forEach(x => x.sort());
-				uv.many[1].sort();
-			}
-		}
 		switch(store.content) {
 			default: debugger; break;
 			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
-				let uv=this.uv_unpack(vi);
-				if(uv.one) await this.put_boxed_id(item[0],version,store.content,uv.one);
-				if(uv.arr) {
-					uv.arr[1].sort((a,b) => a-b);
-					await this.put_boxed_id(item[0],version,store.content,uv.arr);
-				}
-				if(uv.many) {
-					uv.many[1].forEach(x => x.sort((a,b) => a-b));
-					uv.many[1].sort((a,b) => a[0]-b[0]);
-					await this.put_boxed_id(item[0],version,store.content,uv.many);
-				}
+				await this.put_boxed_id(item[0],version,store.content,vi);
 			} break;
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
-				let uv=this.uv_unpack(vi);
-				if(uv.one) await this.put_boxed_id(item[0],version,store.content,uv.one);
-				if(uv.arr) await this.put_boxed_id(item[0],version,store.content,uv.arr);
-				if(uv.many) await this.put_boxed_id(item[0],version,store.content,uv.many);
+				await this.put_boxed_id(item[0],version,store.content,vi);
 			} break;
 			case "string":
 			case "keys": {
 				if(!this.is_vi_has_str(vi)) break;
-				let uv=this.uv_unpack(vi);
-				if(uv.one) await this.put_boxed_id(item[0],version,store.content,uv.one);
-				if(uv.arr) await this.put_boxed_id(item[0],version,store.content,uv.arr);
-				if(uv.many) await this.put_boxed_id(item[0],version,store.content,uv.many);
+				await this.put_boxed_id(item[0],version,store.content,vi);
 			} break;
 		}
 	}
