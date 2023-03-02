@@ -44,7 +44,6 @@ type DE_VE96368=DE_VE<"FEsubscriptions">;
 //#region DE_
 //#region Objects
 type D_SerializedContextData={serializedContextData: string;};
-type DC_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
 type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
 type DE_AddToPlaylistService={videoId: string;};
 type DE_AdFeedback={content: R_AdFeedback;};

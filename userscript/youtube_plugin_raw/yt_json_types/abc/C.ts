@@ -34,6 +34,7 @@ type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC
 //#region Command Data
 type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
 type DC_ChangeMarkersVisibility={entityKeys: string[]; isVisible: boolean;};
+type DC_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
 type DC_CommandExecutor={commands: G_DC_CommandExecutor_CommandItem[];};
 type DC_Continuation_Browse={request: "CONTINUATION_REQUEST_TYPE_BROWSE"; token: string; command?: C_ShowReloadUi;};
 type DC_Continuation_ReelWatchSeq={request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"; token: string;};
@@ -57,7 +58,6 @@ type DC_SectionList_BrowseFeed_ChannelFeatured=
 	|T_DC_Content_2<`browse-feedUC${string}search`,TR_SectionListItem_3_Empty>
 	;
 ;
-type ScratchPad=DC_SectionList_BrowseFeed_ChannelFeatured["targetId"] extends `${"browse-feedUC"}${string}${infer R}`? R:never;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
 type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
