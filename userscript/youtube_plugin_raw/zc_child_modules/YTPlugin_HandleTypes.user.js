@@ -781,17 +781,34 @@ class HandleTypes extends ServiceMethods {
 				if(gen.has) break;
 				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				debugger;
+				switch(partition) {
+				}
 			}; break;
+			case "5uaez":
 			case "5uald":
-			case "9gv7e": case "9gv7l":
-			case "a5mek": case "a5mse": case "ab5l6": case "ab5sz":
-			case "hp57k": case "hp57y":
-			case "n4v7s": case "nx5s7": case "nx57y":
+			case "9gv7e": 
+			case "9gv7l":
+			case "a5mek": 
+			case "a5mlr":
+			case "a5mse": 
+			case "ab5l6": 
+			case "ab5sz":
+			case "hp57k": 
+			case "hp57y":
+			case "n4v7s": 
+			case "nx5s7": 
+			case "nx57y":
 			case "o097z":
-			case "p5qls": case "p5qs7":
-			case "q4fl6": case "q4flr": case "qxoed":
+			case "p5qls": 
+			case "p5qs7":
+			case "q4fl6": 
+			case "q4flr": 
+			case "qxo7r":
+			case "qxoed":
+			case "t0a7l":
 			case "t0a7s":
-			case "vgqsk": case "vgqsr":
+			case "vgqsk": 
+			case "vgqsr":
 		}
 		/** @type {G_Gv_1} */
 		switch(selector) {
