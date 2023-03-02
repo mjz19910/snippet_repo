@@ -121,7 +121,7 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBRequest: success",success);
 		this.committed_data.push(data);
 	}
-	log_db_actions=true;
+	log_db_actions=false;
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
@@ -679,6 +679,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
+		console.log(d_cache.filter(e => e!==null));
 		try {
 			for(let item of d_cache) {
 				if(tx_scope.is_tx_complete) {
@@ -814,7 +815,7 @@ class IndexedDBService extends BaseService {
 		let index_val=obj.key;
 		let idx=c_index.get(index_val);
 		if(idx!==void 0) {
-			d_cache[1][idx]=obj;
+			if(d_cache[1][idx]!==null) d_cache[1][idx]=obj;
 			return;
 		}
 		idx=d_cache[1].push(as(obj))-1;
