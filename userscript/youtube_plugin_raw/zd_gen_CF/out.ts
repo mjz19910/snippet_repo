@@ -724,6 +724,7 @@ export namespace Gen {
 		|{n: "CF_M_y"; t: CF_M_y; v: "DC_PlayerSeek";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "DC_ShowReelsCommentsOverlay";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "DC_ShowReloadUi";}
+		|{n: "CF_M_y"; t: CF_M_y; v: "DE_CreateCommentReply";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "DE_PlaylistEditor";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "DE_VE5754";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_CanShare";}
@@ -937,6 +938,7 @@ export namespace Gen {
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_Browse";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreateBackstagePost";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreateComment";}
+		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreateCommentReply";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreateCommentReplyDialog";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_CreatePlaylist";}
 		|{n: "CF_T_WCM"; t: CF_T_WCM; v: "M_EditPlaylist";}
@@ -995,6 +997,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "create_backstage_post.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "create_comment.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "create_playlist.params";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "create_reply.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "dislike.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "feedbackToken";}

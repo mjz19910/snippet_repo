@@ -3119,10 +3119,10 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {E_CreateCommentReply} x */
 	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
 	/** @private @arg {M_CreateCommentReply} x */
-	M_CreateCommentReply(x) {x;}
+	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
 	/** @private @arg {DE_CreateCommentReply} x */
-	DE_CreateCommentReply(x) {x;}
-	/** @public @arg {R_VideoInfoCardContent} x @generated {VideoInfoCardContentRenderer} */
+	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.params("create_reply.params",x));}
+	/** @public @arg {R_VideoInfoCardContent} x */
 	R_VideoInfoCardContent(x) {this.H_("videoInfoCardContentRenderer",x,this.D_VideoInfoCardContent);}
 	/** @private @arg {D_VideoInfoCardContent} x */
 	D_VideoInfoCardContent(x) {
@@ -3136,6 +3136,8 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(action);
 		this.trackingParams(trackingParams);
 	}
+	/** @private @arg {GM_CreateCommentReply} x */
+	GM_CreateCommentReply(x) {x;}
 	//#endregion
 	//#endregion binary
 	//#endregion
