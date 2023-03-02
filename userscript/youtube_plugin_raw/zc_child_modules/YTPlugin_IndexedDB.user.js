@@ -708,7 +708,7 @@ class IndexedDBService extends BaseService {
 					await this.get_async_result(put_req);
 					let idx=d_cache.indexOf(item);
 					d_cache[idx]=null;
-					break;
+					continue;
 				}
 				const cursor_value=cur_cursor.value;
 				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,cursor_value);
