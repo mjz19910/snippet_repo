@@ -1090,6 +1090,8 @@ class ServiceMethods extends ServiceData {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
+		x.createCommentReplyDialogEndpoint;
+		if("createCommentReplyDialogEndpoint" in x) return this.ht.E_CreateCommentReplyDialog(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {M_YpcGetOffers} x */

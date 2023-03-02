@@ -3042,6 +3042,8 @@ class HandleTypes extends ServiceMethods {
 	M_PerformCommentAction(x) {x;}
 	/** @public @arg {DE_PerformCommentAction} x */
 	DE_PerformCommentAction(x) {x;}
+	/** @public @arg {E_CreateCommentReplyDialog} x */
+	E_CreateCommentReplyDialog(x) {x;}
 	//#endregion
 	//#endregion binary
 	//#endregion

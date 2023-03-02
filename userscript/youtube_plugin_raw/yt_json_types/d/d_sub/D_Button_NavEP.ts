@@ -4,5 +4,6 @@ type D_Button_NavEP=
 	|E_Url
 	|E_VE23462
 	|E_Watch
+	|E_CreateCommentReplyDialog
 	;
 ;
