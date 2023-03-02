@@ -3172,6 +3172,14 @@ class HandleTypes extends ServiceMethods {
 			this.t(beReused,x => this.cq(x,true));
 		}
 	}
+	/** @public @arg {G_WatchNext} x */
+	G_WatchNext(x) {
+		const cf="G_WatchNext";
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	//#endregion
 	//#endregion binary
 	//#endregion

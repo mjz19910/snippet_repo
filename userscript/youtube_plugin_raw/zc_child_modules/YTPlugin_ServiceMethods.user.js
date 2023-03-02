@@ -5490,7 +5490,7 @@ class ServiceMethods extends ServiceData {
 		const cf="A_WatchNext";
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.G_WatchNext);
+		this.z(continuationItems,x => this.ht.G_WatchNext(x));
 	}
 	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
 	A_CommentsSectionContinuation(x) {
@@ -5636,7 +5636,7 @@ class ServiceMethods extends ServiceData {
 	R_NotificationTopbarButton(x) {this.H_("notificationTopbarButtonRenderer",x,this.D_NotificationTopbarButton);}
 	/** @private @arg {R_CommentsEntryPointHeader} x */
 	R_CommentsEntryPointHeader(x) {this.H_("commentsEntryPointHeaderRenderer",x,this.D_CommentsEntryPointHeader);}
-	/** @private @arg {R_CompactPlaylist} x */
+	/** @protected @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("compactPlaylistRenderer",x,this.D_CompactPlaylist);}
 	/** @private @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_("compactRadioRenderer",x,this.D_CompactRadio);}
@@ -5665,13 +5665,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
 	R_HotkeyDialogSectionOption(x) {this.H_("hotkeyDialogSectionOptionRenderer",x,this.D_HotkeyDialogSectionOption);}
-	/** @private @arg {G_WatchNext} x */
-	G_WatchNext(x) {
-		const cf="G_WatchNext";
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @protected @arg {R_VideoDescriptionCourseSection} x */
 	R_VideoDescriptionCourseSection(x) {this.H_("videoDescriptionCourseSectionRenderer",x,this.D_VideoDescriptionCourseSection);}
 	/** @private @arg {D_VideoDescriptionCourseSection} x */
