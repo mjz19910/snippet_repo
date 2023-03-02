@@ -244,7 +244,7 @@ class CodegenService extends BaseService {
 	missing_codegen_types=new Map;
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef(cf,x,do_break,ret_val) {
-		let res=this.codegen_typedef_impl(cf,x,true);
+		let res=this.codegen_typedef_impl(cf,x);
 		if(ret_val) return res;
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);
