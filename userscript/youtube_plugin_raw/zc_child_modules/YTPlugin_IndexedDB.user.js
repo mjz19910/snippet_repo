@@ -732,8 +732,8 @@ class IndexedDBService extends BaseService {
 					break;
 				}
 				const cur_cursor=await this.get_async_result(cursor_req);
-				if(this.log_db_actions) console.log("[db_cursor]",cur_cursor);
 				if(cur_cursor===null) {
+					if(this.log_db_actions) console.log("[db_cursor.done]",cur_cursor);
 					if(this.log_db_actions) console.log("[update_sync_cache_item_add_to_db]",item);
 					if(tx_scope.is_tx_complete) {
 						console.log("cursor_loop_is_tx_complete_2");
@@ -747,6 +747,7 @@ class IndexedDBService extends BaseService {
 					break;
 				}
 				const cursor_value=cur_cursor.value;
+				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,cursor_value);
 				cur_cursor.continue();
 				if(cursor_value.key!==item.key) {
 					console.log(cursor_value.key.split(":"));
