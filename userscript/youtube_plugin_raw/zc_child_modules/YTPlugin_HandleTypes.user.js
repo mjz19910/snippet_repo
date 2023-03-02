@@ -799,6 +799,7 @@ class HandleTypes extends ServiceMethods {
 			case "5uald":
 			case "9gv7e":
 			case "9gv7l":
+			case "9gv7z":
 			case "a5mek":
 			case "a5mlr":
 			case "a5mse":
@@ -831,13 +832,14 @@ class HandleTypes extends ServiceMethods {
 				this.selector.cache.push(selector);
 				selector===""; debugger;
 			} break;
-			case "6d": case "6l": case "6z":
-			case "76": case "7d": case "7k": case "7s": case "7y": case "7z":
-			case "d6": case "dy": case "dz":
-			case "e6": case "e7": case "el": case "ee": case "ey": case "ez":
-			case "l7": case "ld": case "lk": case "ll": case "lr": case "ls": case "ly":
-			case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
-			case "z7": case "zd": case "ze": case "zk": case "zr": case "zs": case "zy":
+			case "6 ": case "6d": case "6l": case "6z":
+			case "7 ": case "76": case "7d": case "7k": case "7r": case "7s": case "7y": case "7z":
+			case "d ": case "d6": case "dy": case "dz":
+			case "e ": case "e6": case "e7": case "ee": case "ek": case "el": case "ey": case "ez":
+			case "l ": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly":
+			case "r ": case "rl":
+			case "s ": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
+			case "z ": case "z7": case "zd": case "ze": case "zk": case "zr": case "zs": case "zy":
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
 				break;
 		}
