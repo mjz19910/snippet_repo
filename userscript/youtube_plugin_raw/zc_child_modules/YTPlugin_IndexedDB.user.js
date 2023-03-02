@@ -857,31 +857,22 @@ class IndexedDBService extends BaseService {
 					let update_item=false;
 					/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
 					let item_nt=item;
-					/** @template {DT_DatabaseValue} T @arg {T} x @arg {T} y @returns {T["value"]} */
-					let do_update=(x,y) => {
-						let pre_update=[structuredClone(x),structuredClone(y)];
-						let group_info=this.update_group(y.value,x.value);
-						if(!group_info[0]) return x.value;
-						console.log("update",...pre_update);
-						update_item=true;
-						return group_info[1];
-					};
 					switch(item_nt.type) {
 						default: item_nt===""; debugger; break;
 						case "hashtag_id": break;
 						case "boolean": {
 							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							item_nt.value=do_update(item_nt,cursor_value);
+							update_item=true;
 						} break;
 						case "root_visual_element":
 						case "number": {
 							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							item_nt.value=do_update(item_nt,cursor_value);
+							update_item=true;
 						} break;
 						case "keys":
 						case "string": {
 							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							item_nt.value=do_update(item_nt,cursor_value);
+							update_item=true;
 						} break;
 						case "video_id:shorts":
 						case "video_id:normal": {
