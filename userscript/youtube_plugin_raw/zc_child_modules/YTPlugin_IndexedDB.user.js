@@ -804,7 +804,7 @@ class IndexedDBService extends BaseService {
 	log_cache_push=false;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @arg {DT_DatabaseStoreTypes[T]} obj */
 	push_waiting_obj(key,obj) {
-		let d_cache=this.get_data_cache(key);
+		let [,d_cache]=this.get_data_cache(key);
 		/** @type {{[R in T]?: [R,Map<string,number>]}} */
 		let sk_ac=this.store_cache_index;
 		/** @type {[T,Map<string,number>]|undefined} */
@@ -815,10 +815,10 @@ class IndexedDBService extends BaseService {
 		let index_val=obj.key;
 		let idx=c_index.get(index_val);
 		if(idx!==void 0) {
-			if(d_cache[1][idx]!==null) d_cache[1][idx]=obj;
+			if(d_cache[idx]!==null) d_cache[idx]=obj;
 			return;
 		}
-		idx=d_cache[1].push(as(obj))-1;
+		idx=d_cache.push(as(obj))-1;
 		c_index.set(index_val,idx);
 		if(this.log_cache_push) console.log("push wait",key,index_val,idx,obj);
 	}
