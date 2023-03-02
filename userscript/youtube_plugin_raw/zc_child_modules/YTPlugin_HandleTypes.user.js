@@ -820,7 +820,7 @@ class HandleTypes extends ServiceMethods {
 				this.selector_cache.push(selector);
 				selector===""; debugger;
 			} break;
-			case "6d": case "6l":
+			case "6d": case "6l": case "6z":
 			case "76": case "7d": case "7k": case "7s": case "7y": case "7z":
 			case "d6": case "dy": case "dz":
 			case "el": case "ee": case "ey": case "ez":
@@ -3012,6 +3012,18 @@ class HandleTypes extends ServiceMethods {
 			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
 		}
 		this.D_Accessibility(accessibility);
+	}
+	/** @public @arg {TA_Continuation<"engagement-panel-comments-section", G_CommentsSection>} x */
+	A_CommentsSectionContinuation_2(x) {
+		const cf="A_CommentsSectionContinuation";
+		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.targetId(cf,targetId);
+		this.z(continuationItems,x => {
+			const cf="G_CommentsSection";
+			if("commentThreadRenderer" in x) return this.R_CommentThread(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			x===""; this.codegen_typedef(cf,x);
+		});
 	}
 	//#endregion
 	//#endregion binary

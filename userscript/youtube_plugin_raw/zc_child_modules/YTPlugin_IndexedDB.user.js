@@ -440,13 +440,7 @@ class IndexedDBService extends BaseService {
 		if(this.open_db_promise) return value;
 		this.open_db_promise=this.open_database(key,version);
 		this.open_db_promise
-			.catch(e => {
-				console.log("open_db error",e);
-				requestIdleCallback(() => {
-					console.log("retry put");
-					this.put(key,value,version);
-				});
-			})
+			.catch(e => console.log("open_db error",e))
 			.then(() => this.open_db_promise=null);
 		return value;
 	}
@@ -605,6 +599,7 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
+	update_gas=10000;
 	/** 
 	 * @template T @arg {make_item_group<T>} x_group @arg {make_item_group<T>} y_group
 	 * @returns {[true,make_item_group<T>]|[false,null]}
@@ -612,6 +607,8 @@ class IndexedDBService extends BaseService {
 	update_group(x_group,y_group) {
 		/** @arg {T[]} x_arr @arg {T[]} y_arr */
 		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
+			if(this.update_gas<=0) throw new Error("Out of gas");
+			this.update_gas--;
 			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
 			return y_idx>0;
 		});

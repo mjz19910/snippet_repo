@@ -155,6 +155,7 @@ type TB_ContinuationItemMap={
 	"watch-next-feed": G_WatchNext;
 	[x: `browse-feedUC${string}channels156`]: R_GridChannel|R_ContinuationItem;
 	[x: D_TargetIdUuid]: R_RichItem|R_ContinuationItem;
+	"engagement-panel-comments-section": R_CommentThread|R_ContinuationItem;
 };
 //#endregion
 //#region TD_

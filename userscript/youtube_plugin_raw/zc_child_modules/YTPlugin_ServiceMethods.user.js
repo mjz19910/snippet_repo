@@ -739,6 +739,7 @@ class ServiceMethods extends ServiceData {
 		switch(x.targetId) {
 			case "comments-section": this.A_CommentsSectionContinuation(x); break;
 			case "watch-next-feed": this.A_WatchNext(x); break;
+			case "engagement-panel-comments-section": this.ht.A_CommentsSectionContinuation_2(x); break;
 			default: x===0; debugger;
 		}
 	}
@@ -6037,7 +6038,7 @@ class ServiceMethods extends ServiceData {
 	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {M_GetUnseenNotificationCount} x */
 	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
-	/** @private @arg {R_CommentThread} x */
+	/** @protected @arg {R_CommentThread} x */
 	R_CommentThread(x) {this.H_("commentThreadRenderer",x,this.D_CommentThread);}
 	/** @protected @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
