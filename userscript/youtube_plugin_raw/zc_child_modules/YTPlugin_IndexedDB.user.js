@@ -336,18 +336,19 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) break;
-						this.put_boxed_id(key,version,db_box.type,uv.one);
+						await this.put_boxed_id(key,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						this.put_boxed_id(key,version,db_box.type,uv.arr);
+						await this.put_boxed_id(key,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						this.put_boxed_id(key,version,db_box.type,uv.arr); break;
+						await this.put_boxed_id(key,version,db_box.type,uv.arr);
+						break;
 					}
 					if(uv.many&&db_uv.arr) {debugger; break;}
 					debugger;
@@ -359,17 +360,17 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(this.eq_group(uv.one,db_uv.one)) break;
-						this.put_boxed_id(key,version,db_box.type,uv.one);
+						await this.put_boxed_id(key,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						this.put_boxed_id(key,version,db_box.type,uv.arr); break;
+						await this.put_boxed_id(key,version,db_box.type,uv.arr); break;
 					}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						this.put_boxed_id(key,version,db_box.type,uv.arr);
+						await this.put_boxed_id(key,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
@@ -379,7 +380,7 @@ class IndexedDBService extends BaseService {
 						let uv_m=uv.many[1];
 						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
 						if(has) break;
-						this.put_boxed_id(key,version,db_box.type,uv.many);
+						await this.put_boxed_id(key,version,db_box.type,uv.many);
 						break;
 					}
 					debugger;
@@ -392,27 +393,28 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) break;
-						this.put_boxed_id(key,version,db_box.type,uv.one);
+						await this.put_boxed_id(key,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						this.put_boxed_id(key,version,db_box.type,uv.arr); break;
+						await this.put_boxed_id(key,version,db_box.type,uv.arr);
+						break;
 					}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						this.put_boxed_id(key,version,db_box.type,uv.arr);
+						await this.put_boxed_id(key,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
-					if(uv.many&&db_uv.arr) {debugger; break;}
+					if(uv.many&&db_uv.arr) await this.put_boxed_id(item[0],version,db_box.type,uv.many);
 					if(uv.many&&db_uv.many) {
 						let db_m=db_uv.many[1];
 						let uv_m=uv.many[1];
 						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
 						if(has) break;
-						this.put_boxed_id(item[0],version,db_box.type,uv.many);
+						await this.put_boxed_id(item[0],version,db_box.type,uv.many);
 						break;
 					}
 					debugger;
