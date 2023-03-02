@@ -220,9 +220,7 @@ class IndexedDBService extends BaseService {
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
 		this.update_gas+=1000;
-		/** @type {IDBBoxedType[]} */
-		let boxed=await this.getAll("boxed_id",version);
-		let results=await Promise.allSettled(store.data.map(item => this.push_store_item_to_database(store,boxed,item,version)));
+		let results=await Promise.allSettled(store.data.map(item => this.push_store_item_to_database(store,item,version)));
 		for(let result of results) {
 			if(result.status==="rejected") {
 				console.log("[push_store_to_database.iter.err]",result.reason);
@@ -317,131 +315,9 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
-	/** @template {G_StoreDescriptions} T @arg {IDBBoxedType[]} db_boxed @arg {T} store @arg {T["data"][number]} item @arg {number} version */
-	async push_store_item_to_database(store,db_boxed,item,version) {
-		let [key,vi]=item;
-		let has_db_box=false;
-		box_loop: for(let db_box of db_boxed) {
-			if(!("id" in db_box)) continue;
-			if(db_box.base!=="boxed_id") continue;
-			if(db_box.id!==key) continue;
-			switch(db_box.type) {
-				default: db_box===""; console.log("[db_push_fail]",db_box); break;
-				case "root_visual_element":
-				case "number": {
-					if(!this.is_vi_has_num(vi)) break;
-					if(!this.is_vi_has_num(db_box.value)) break;
-					let uv=this.uv_unpack(vi);
-					let db_uv=this.uv_unpack(db_box.value);
-					if(uv.one&&db_uv.one) {
-						if(uv.one[1]===db_uv.one[1]) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.one&&db_uv.arr) {debugger; break;}
-					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.arr&&db_uv.one) {
-						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						break box_loop;
-					}
-					if(uv.many&&db_uv.arr) break box_loop;
-					debugger;
-				} break;
-				case "boolean": {
-					if(db_box.id!==key) continue;
-					if(!this.is_vi_has_bool(vi)) break;
-					let uv=this.uv_unpack(vi);
-					let db_uv=this.uv_unpack(db_box.value);
-					if(uv.one&&db_uv.one) {
-						if(this.eq_group(uv.one,db_uv.one)) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.one&&db_uv.arr) {debugger; break;}
-					if(uv.arr&&db_uv.one) {
-						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						break box_loop;
-					}
-					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.arr&&db_uv.many) {debugger; break;}
-					if(uv.many&&db_uv.arr) break box_loop;
-					if(uv.many&&db_uv.many) {
-						let db_m=db_uv.many[1];
-						let uv_m=uv.many[1];
-						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
-						if(has) {has_db_box=true; break;}
-						break box_loop;
-					}
-					debugger;
-				} break;
-				case "string": {
-					if(!this.is_vi_has_str(vi)) break;
-					let uv=this.uv_unpack(vi);
-					let db_uv=this.uv_unpack(db_box.value);
-					if(uv.one&&db_uv.one) {
-						if(uv.one[1]===db_uv.one[1]) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.one&&db_uv.arr) {debugger; break;}
-					if(uv.arr&&db_uv.one) {
-						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						break box_loop;
-					}
-					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.arr&&db_uv.many) {debugger; break;}
-					if(uv.many&&db_uv.arr) break box_loop;
-					if(uv.many&&db_uv.many) {
-						let db_m=db_uv.many[1];
-						let uv_m=uv.many[1];
-						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
-						if(has) {has_db_box=true; break;}
-						break box_loop;
-					}
-					debugger;
-				} break;
-				case "keys": {
-					if(this.is_vi_has_bool(vi)) break;
-					let uv=this.uv_unpack_mt(vi,["",0]);
-					let db_uv=this.uv_unpack(db_box.value);
-					if(uv.one&&db_uv.one) {
-						if(uv.one[1]===db_uv.one[1]) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.one&&db_uv.arr) {debugger; break;}
-					if(uv.arr&&db_uv.one) {
-						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						break box_loop;
-					}
-					if(uv.arr&&db_uv.arr) {
-						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) {has_db_box=true; break;}
-						break box_loop;
-					}
-					if(uv.arr&&db_uv.many) {debugger; break;}
-					if(uv.many&&db_uv.arr) break box_loop;
-					if(uv.many&&db_uv.many) {
-						let db_m=db_uv.many[1];
-						let uv_m=uv.many[1];
-						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
-						if(has) {has_db_box=true; break;}
-						break box_loop;
-					}
-					debugger;
-				} break;
-			}
-		}
-		if(has_db_box===true) return;
-		console.log("[no_db_box]",has_db_box,item);
-		requestIdleCallback(async () => {
-			await this.load_database(this.save_db.data_store,version);
-			await this.save_database(this.save_db.data_store,version);
-		});
+	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
+	async push_store_item_to_database(store,item,version) {
+		let [,vi]=item;
 		switch(store.content) {
 			default: debugger; break;
 			case "boolean": {
@@ -910,6 +786,8 @@ class IndexedDBService extends BaseService {
 					} else {
 						this.committed_data.push(item);
 					}
+					let idx=d_cache.indexOf(item);
+					d_cache[idx]=null;
 					break;
 				}
 			}
