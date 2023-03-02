@@ -115,7 +115,7 @@ class IndexedDBService extends BaseService {
 		debugger;
 		this.is_broken=true;
 	}
-	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
+	/** @public @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	async add_data_to_store(store,data) {
 		let success=await this.await_success(store.add(data));
 		if(this.log_all_events) console.log("IDBRequest: success",success);
@@ -700,8 +700,7 @@ class IndexedDBService extends BaseService {
 						break;
 					}
 					let put_req=typed_db.put(s.obj_store,item);
-					let valid_key=await this.get_async_result(put_req);
-					void valid_key;
+					await this.get_async_result(put_req);
 					let idx=d_cache.indexOf(item);
 					d_cache[idx]=null;
 					break;
@@ -716,78 +715,57 @@ class IndexedDBService extends BaseService {
 					console.log(item.key.split(":"));
 					debugger;
 				}
-				let value_keys=this.get_keys_of_2(item);
-				let cursor_keys=this.get_keys_of_2(cursor_value);
-				if(!this.eq_keys(value_keys,cursor_keys)) {
-					console.log("[database_needs_obj_merge]");
-					console.log("[obj_merge_new]",item);
-					console.log("[obj_merge_cur]",cursor_value);
-					try {
-						await this.get_async_result(s.obj_store.delete(item.key));
-					} catch(e) {
-						console.log("merge delete failed",e);
-					}
-					try {
-						await this.add_data_to_store(s.obj_store,item);
-					} catch(e) {
-						console.log("merge add failed",e);
-					}
+				let update_item=false;
+				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
+				let item_nt=item;
+				switch(item_nt.type) {
+					default: item_nt===""; debugger; break;
+					case "hashtag_id": break;
+					case "boolean": {
+						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+						update_item=true;
+					} break;
+					case "root_visual_element":
+					case "number": {
+						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+						update_item=true;
+					} break;
+					case "keys":
+					case "string": {
+						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+						update_item=true;
+					} break;
+					case "video_id:shorts":
+					case "video_id:normal": {
+						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+						if(item_nt.v!==cursor_value.v) update_item=true;
+					} break;
+					case "save_id":
+					case "load_id":
+					case "update_id": {
+						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
+						if(item_nt.key===cursor_value.key&&item_nt.id===cursor_value.id) break;
+						update_item=true;
+					} break;
+					case "browse_id:VL":
+					case "channel_id:UC":
+					case "playlist_id:PL":
+					case "playlist_id:RD":
+					case "playlist_id:RDCM":
+					case "playlist_id:RDGM":
+					case "playlist_id:RDMM":
+					case "playlist_id:UU": {
+						if(cursor_value.key===item_nt.key&&item_nt.id===cursor_value.id) break;
+						update_item=true;
+					} break;
+					// not a dynamic value
+					case "playlist_id:self": break;
+				}
+				if(update_item) {
+					await this.force_update(s,item);
 					this.committed_data.push(item);
-					break;
 				} else {
-					let update_item=false;
-					/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
-					let item_nt=item;
-					switch(item_nt.type) {
-						default: item_nt===""; debugger; break;
-						case "hashtag_id": break;
-						case "boolean": {
-							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							update_item=true;
-						} break;
-						case "root_visual_element":
-						case "number": {
-							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							update_item=true;
-						} break;
-						case "keys":
-						case "string": {
-							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							update_item=true;
-						} break;
-						case "video_id:shorts":
-						case "video_id:normal": {
-							if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-							if(item_nt.v!==cursor_value.v) update_item=true;
-						} break;
-						case "save_id":
-						case "load_id":
-						case "update_id": {
-							if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
-							if(item_nt.key===cursor_value.key&&item_nt.id===cursor_value.id) break;
-							update_item=true;
-						} break;
-						case "browse_id:VL":
-						case "channel_id:UC":
-						case "playlist_id:PL":
-						case "playlist_id:RD":
-						case "playlist_id:RDCM":
-						case "playlist_id:RDGM":
-						case "playlist_id:RDMM":
-						case "playlist_id:UU": {
-							if(cursor_value.key===item_nt.key&&item_nt.id===cursor_value.id) break;
-							update_item=true;
-						} break;
-						// not a dynamic value
-						case "playlist_id:self": break;
-					}
-					if(update_item) {
-						await this.force_update(s,item);
-						this.committed_data.push(item);
-					} else {
-						this.committed_data.push(item);
-					}
-					break;
+					this.committed_data.push(item);
 				}
 			}
 			let complete_event=await tx_scope.complete_promise;
