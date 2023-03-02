@@ -535,7 +535,7 @@ class CodegenService extends BaseService {
 			}
 			/** @type {M_SendPost} */
 			if(this.eq_keys(this.get_keys_of(v.webCommandMetadata),["sendPost"])) return "TYPE::M_SendPost";
-			debugger;
+			return x;
 		}
 		x: if(x.accessibilityData) {
 			/** @type {{accessibilityData?:Partial<D_Label>}} */
