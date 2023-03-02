@@ -218,33 +218,33 @@ class CodegenService extends BaseService {
 		let arr_items=JSON.stringify(arr,null,"\t");
 		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
 	}
-	/** @api @public @arg {string} cf @arg {object} x  @arg {boolean} [ret_val] @returns {string|null|void} */
-	codegen_typedef_impl(cf,x,ret_val) {
+	/** @api @public @arg {string} cf @arg {object} x */
+	codegen_typedef_impl(cf,x) {
 		let k=this.get_name_from_keys(x);
-		if(k===null) return;
+		if(k===null) return null;
 		/** @type {{[U in typeof k]?: unknown}} */
 		let xv=x;
 		let o2=xv[k];
-		if(o2==null) return;
+		if(o2==null) return null;
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		let s=new JsonReplacerState({
 			text_decoder: this._decoder,
 			cf,keys,is_root: true,
 		});
 		let new_typedef=this.codegen_typedef_base(s,cf,x);
-		if(ret_val) return new_typedef;
 		if(new_typedef) {
 			if(!this.typedef_cache.includes(new_typedef)) {
 				this.typedef_cache.push(new_typedef);
 				console.log(new_typedef);
 			}
 		}
+		return new_typedef;
 	}
 	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef(cf,x,do_break,ret_val) {
-		let res=this.codegen_typedef_impl(cf,x,ret_val);
+		let res=this.codegen_typedef_impl(cf,x,true);
 		if(ret_val) return res;
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);

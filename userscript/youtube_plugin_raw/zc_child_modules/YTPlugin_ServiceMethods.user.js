@@ -1206,7 +1206,7 @@ class ServiceMethods extends ServiceData {
 		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
 		let gen_name=this.get_codegen_name(cf,x);
 		if(!gen_name) {debugger; return;}
-		x===""; this.codegen_typedef(gen_name,x);
+		x===""; this.codegen_typedef(`${cf}$${gen_name}`,x,true);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
