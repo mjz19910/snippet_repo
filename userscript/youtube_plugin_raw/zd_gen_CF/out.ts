@@ -431,6 +431,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SortFilterSubMenu_WithTargetId.MenuItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SourcePivotHeader";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Sources.sources[]";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_SponsorCommentBadge";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_StyleRunItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SubFeedOption";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SubFeedSelector";}

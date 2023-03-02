@@ -3079,7 +3079,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {M_CreateCommentReplyDialog} x */
 	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.g);}
 	/** @public @arg {R_SponsorCommentBadge} x */
-	R_SponsorCommentBadge(x) {this.H_("R_SponsorCommentBadge",x,this.D_SponsorCommentBadge);}
+	R_SponsorCommentBadge(x) {this.H_("sponsorCommentBadgeRenderer",x,this.D_SponsorCommentBadge);}
 	/** @public @arg {D_SponsorCommentBadge} x */
 	D_SponsorCommentBadge(x) {
 		const cf="D_SponsorCommentBadge";

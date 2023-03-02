@@ -125,9 +125,9 @@ class IndexedDBService extends BaseService {
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {T} */
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
-	/** @arg {number} id @arg {number} version @returns {D_BoxedUpdateId} */
+	/** @arg {number} id @arg {number} version @returns {Promise<D_BoxedUpdateId>} */
 	put_update_id(id,version) {
 		return this.put_box({
 			key: "boxed_id:update_id",
@@ -167,7 +167,7 @@ class IndexedDBService extends BaseService {
 		let update_id=await this.get_update_id(version);
 		if(!update_id) {
 			this.expected_id=0;
-			update_id=this.put_update_id(this.expected_id,version);
+			update_id=await this.put_update_id(this.expected_id,version);
 		}
 		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
 		this.expected_id++;
@@ -429,7 +429,7 @@ class IndexedDBService extends BaseService {
 		this.deleteImpl(key,query,version).catch(e => console.log("delete error",e)).then(() => {});
 	}
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
-	put(key,value,version) {
+	async put(key,value,version) {
 		if(!value) {debugger; return value;}
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
@@ -439,9 +439,7 @@ class IndexedDBService extends BaseService {
 		this.check_size(key);
 		if(this.open_db_promise) return value;
 		this.open_db_promise=this.open_database(key,version);
-		this.open_db_promise
-			.catch(e => console.log("open_db error",e))
-			.then(() => this.open_db_promise=null);
+		await this.open_db_promise;
 		return value;
 	}
 	/** @arg {number} version */
