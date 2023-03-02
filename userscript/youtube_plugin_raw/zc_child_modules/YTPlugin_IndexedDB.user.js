@@ -191,7 +191,11 @@ class IndexedDBService extends BaseService {
 		/** @type {IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of store.data) {
-			await this.push_store_item_to_database(store,boxed,item,version);
+			try {
+				await this.push_store_item_to_database(store,boxed,item,version);
+			} catch(e) {
+				console.log("[push_store_to_database.iter.err]",e);
+			}
 		}
 	}
 	/** @template T @arg {make_item_group<T>} x */
