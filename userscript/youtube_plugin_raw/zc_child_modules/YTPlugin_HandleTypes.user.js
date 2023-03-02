@@ -3044,27 +3044,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {R_AuthorCommentBadge} x */
 	R_AuthorCommentBadge(x) {this.H_("authorCommentBadgeRenderer",x,this.D_AuthorCommentBadge);}
-	/** @public @arg {D_AuthorCommentBadge} x */
+	/** @private @arg {D_AuthorCommentBadge} x */
 	D_AuthorCommentBadge(x) {
 		const cf="D_AuthorCommentBadge";
 		const {icon,color,authorText,authorEndpoint,iconTooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
 	/** @public @arg {E_PerformCommentAction} x */
 	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
-	/** @public @arg {M_PerformCommentAction} x */
+	/** @private @arg {M_PerformCommentAction} x */
 	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
-	/** @public @arg {GM_PerformCommentAction} x */
+	/** @private @arg {GM_PerformCommentAction} x */
 	GM_PerformCommentAction(x) {this.T_GM("GM_PerformCommentAction",x,x => this.ceq(x,"/youtubei/v1/comment/perform_comment_action"));}
-	/** @public @arg {DE_PerformCommentAction} x */
+	/** @private @arg {DE_PerformCommentAction} x */
 	DE_PerformCommentAction(x) {
 		const cf="DE_PerformCommentAction";
 		const {action,clientActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params("perform_comment.action",action);
 		this.z(clientActions,this.A_UpdateCommentVote);
 	}
-	/** @public @arg {A_UpdateCommentVote} x */
+	/** @private @arg {A_UpdateCommentVote} x */
 	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
-	/** @public @arg {AD_UpdateCommentVote} x */
+	/** @private @arg {AD_UpdateCommentVote} x */
 	AD_UpdateCommentVote(x) {
 		const cf="AD_UpdateCommentVote";
 		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3075,17 +3075,43 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @public @arg {E_CreateCommentReplyDialog} x */
-	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.g);}
-	/** @public @arg {M_CreateCommentReplyDialog} x */
-	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.g);}
+	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
+	/** @private @arg {M_CreateCommentReplyDialog} x */
+	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
+	/** @private @arg {GM_CreateCommentReplyDialog} x */
+	GM_CreateCommentReplyDialog(x) {this.D_IgnoreNavigation(x);}
 	/** @public @arg {R_SponsorCommentBadge} x */
 	R_SponsorCommentBadge(x) {this.H_("sponsorCommentBadgeRenderer",x,this.D_SponsorCommentBadge);}
-	/** @public @arg {D_SponsorCommentBadge} x */
+	/** @private @arg {D_SponsorCommentBadge} x */
 	D_SponsorCommentBadge(x) {
 		const cf="D_SponsorCommentBadge";
 		const {customBadge,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(customBadge);
 		this.a_primitive_str(tooltip);
+	}
+	/** @private @arg {D_IgnoreNavigation} x */
+	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.cq(x,true));}
+	/** @private @arg {DE_CreateCommentReplyDialog} x */
+	DE_CreateCommentReplyDialog(x) {
+		const cf="DE_CreateCommentReplyDialog";
+		const {dialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_CommentReplyDialog(dialog);
+	}
+	/** @private @arg {R_CommentReplyDialog} x */
+	R_CommentReplyDialog(x) {this.H_("commentReplyDialogRenderer",x,this.D_CommentReplyDialog);}
+	/** @private @arg {D_CommentReplyDialog} x */
+	D_CommentReplyDialog(x) {
+		const cf="D_CommentReplyDialog";
+		const {replyButton,cancelButton,authorThumbnail,editableText,placeholderText,errorMessage,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_Button(replyButton);
+		this.R_Button(cancelButton);
+		this.D_Thumbnail(authorThumbnail);
+		this.G_Text(editableText);
+		this.G_Text(placeholderText);
+		this.G_Text(errorMessage);
+		this.R_Button(emojiButton);
+		this.R_EmojiPicker(emojiPicker);
+		this.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
 	}
 	//#endregion
 	//#endregion binary

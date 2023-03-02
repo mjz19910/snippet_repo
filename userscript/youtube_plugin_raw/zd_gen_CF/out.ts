@@ -134,6 +134,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "DC_UpdateToggleButtonState";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DD_Streaming";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_AddToPlaylistService";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "DE_CreateCommentReplyDialog";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_Feedback";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_GetNotificationMenu";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_NotificationOptOut";}
@@ -226,6 +227,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Comment";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_CommentActionButtons";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_CommentReplies";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_CommentReplyDialog";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_CommentSimplebox";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_CommentThread";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_CommentsEntryPointHeader";}
@@ -725,6 +727,7 @@ export namespace Gen {
 		|{n: "CF_M_y"; t: CF_M_y; v: "DE_VE5754";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_CanShare";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_EditableDetails";}
+		|{n: "CF_M_y"; t: CF_M_y; v: "D_IgnoreNavigation";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_InfoCardIcon";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_MenuPopup";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "D_PlaylistByline";}

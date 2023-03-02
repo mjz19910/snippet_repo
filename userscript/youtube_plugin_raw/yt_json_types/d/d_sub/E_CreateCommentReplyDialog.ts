@@ -1,6 +1,6 @@
-type M_CreateCommentReplyDialog={webCommandMetadata: {};};
+type DE_CreateCommentReplyDialog=T_Dialog<R_CommentReplyDialog>;
 type E_CreateCommentReplyDialog={
 	clickTrackingParams: string;
 	commandMetadata: M_CreateCommentReplyDialog;
-	createCommentReplyDialogEndpoint: {};
+	createCommentReplyDialogEndpoint: DE_CreateCommentReplyDialog;
 };
