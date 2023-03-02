@@ -1094,7 +1094,7 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_Card_Content"; this.k(cf,x);
 		if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
 		if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
-		this.codegen_typedef(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Card} x */
 	D_Card(x) {
