@@ -2718,6 +2718,7 @@ class ServiceMethods extends ServiceData {
 			return ret;
 		} catch(e) {
 			console.log("failed to put",key,value,e);
+			return null;
 		}
 	}
 	/** @protected @arg {D_ChannelId} x */
