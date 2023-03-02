@@ -2274,19 +2274,12 @@ class HandleTypes extends ServiceMethods {
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
 		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(f2),x => {
-			this.save_string(`${cf}.f2`,x);
-			switch(x) {
-				case "FEwhat_to_watch": break;
-			}
-		});
+		this.t(this.TV_Str(f2),x => this.save_string(`${cf}.f2`,x));
 		this.t(this.TV_Str(f3),x => {
 			if(this.params_to_decode.includes(x)) return;
 			this.params_to_decode.push(x);
 		});
-		this.t(f35,x => this.t(this.TV_Str(x),x => {
-			if(x!=="browse-feedFEwhat_to_watch") debugger;
-		}));
+		this.t(f35,x => this.t(this.TV_Str(x),x => this.save_string(`${cf}.f35`,x)));
 	}
 	/** @private @arg {PR_continuation_request_browse_token} x */
 	PR_continuation_request_browse_token(x) {
