@@ -121,7 +121,7 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBRequest: success",success);
 		this.committed_data.push(data);
 	}
-	log_db_actions=false;
+	log_db_actions=true;
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
@@ -440,8 +440,10 @@ class IndexedDBService extends BaseService {
 		if(this.open_db_promise) return value;
 		this.open_db_promise=this.open_database(key,version);
 		this.open_db_promise
-			.catch(() => {
+			.catch(e => {
+				console.log("open_db error",e);
 				requestIdleCallback(() => {
+					console.log("retry put");
 					this.put(key,value,version);
 				});
 			})

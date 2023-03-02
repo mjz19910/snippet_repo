@@ -2992,6 +2992,11 @@ class HandleTypes extends ServiceMethods {
 			const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
 			this.D_ChannelId(categoryId);
 			this.T_Icon(`${cf}:icon`,icon);
+			switch(tooltip) {
+				default: debugger; break;
+				case "Custom emoji":
+				case "YouTube":
+			}
 			if(tooltip!=="YouTube") debugger;
 			this.D_Accessibility(accessibility);
 			return;
