@@ -189,9 +189,7 @@ type P_unsubscribe_params={
 };
 type P_continuation_request_watch_next_token={
 	1?: {_tag: "not_done";};
-	2: T_VW<{
-		2: TV_Str<D_VideoIdStr>;
-	}>;
+	2: T_VW<{2: TV_Str<D_VideoIdStr>;}>;
 	3: T_D32<6>;
 	5?: {_tag: "not_done";};
 	6?: T_VW<{
@@ -580,4 +578,12 @@ type P_perform_comment_action={
 	21: T_D32<12>;
 	23: TV_Str<`UC${string}`>;
 	30: T_D32<0>;
+};
+type P_create_reply_params={
+	2: TV_Str<D_VideoIdStr>;
+	4: TV_Str<string>;
+	5: T_VW<{1: T_D32<0>;}>;
+	10: T_D32<7>;
+	14: TV_Str<`${string}.${string}`>;
+	29: T_D32<0>;
 };
