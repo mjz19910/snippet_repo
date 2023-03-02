@@ -50,11 +50,16 @@ class ServiceMethods extends ServiceData {
 	cq(a,b) {if(a!==b) debugger;}
 	/** @public @arg {string} x @arg {boolean} is_prev */
 	D_VeCsn(x,is_prev=false) {
-		let csn_dec=atob(x);
-		if(is_prev) {
-			console.log("[prev_csn_dec]",csn_dec);
-		} else {
-			console.log("[csn_dec]",csn_dec);
+		try {
+			let csn_dec=atob(x);
+			if(is_prev) {
+				console.log("[prev_csn_dec]",csn_dec);
+			} else {
+				console.log("[csn_dec]",csn_dec);
+			}
+		} catch(e) {
+			console.log("[D_VeCsn_err]",e);
+			console.log("-- [data] --",x);
 		}
 	}
 	/** @private @arg {string} cf @arg {object} x1 */
