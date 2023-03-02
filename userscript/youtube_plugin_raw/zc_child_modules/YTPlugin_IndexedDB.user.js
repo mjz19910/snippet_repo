@@ -604,76 +604,83 @@ class IndexedDBService extends BaseService {
 		}
 	}
 	/** 
-	 * @template T @arg {make_item_group<T>} cursor_group @arg {make_item_group<T>} item_group
+	 * @template T @arg {make_item_group<T>} x_group @arg {make_item_group<T>} y_group
 	 * @returns {[true,make_item_group<T>]|[false,null]}
 	 */
-	update_group(cursor_group,item_group) {
+	update_group(x_group,y_group) {
 		/** @arg {T[]} x_arr @arg {T[]} y_arr */
 		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
 			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
 			return y_idx>0;
 		});
-		switch(cursor_group[0]) {
+		let changed=false;
+		switch(x_group[0]) {
 			case "many": {
-				let x_many=cursor_group[1]; switch(item_group[0]) {
+				let x_many=x_group[1]; switch(y_group[0]) {
 					case "many": {
-						let y_many=item_group[1];
+						let y_many=y_group[1];
 						for(let y_arr of y_many) {
 							if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<=0) continue;
-							x_many.push(y_arr);
+							changed=true; x_many.push(y_arr);
 						}
+						if(changed) return [true,x_group];
 					} break;
 					case "arr": {
-						let y_arr=item_group[1];
+						let y_arr=y_group[1];
 						if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<=0) break;
 						x_many.push(y_arr);
-					} break;
+						return [true,x_group];
+					}
 					case "one": {
-						let y_item=item_group[1];
+						let y_item=y_group[1];
 						if(x_many.findIndex(x_arr => x_arr.length===0&&x_arr[0]===y_item)<=0) break;
 						x_many.push([y_item]);
-					} break;
+						return [true,x_group];
+					}
 				}
 			} break;
 			case "arr": {
-				let x_arr=cursor_group[1]; switch(item_group[0]) {
+				let x_arr=x_group[1]; switch(y_group[0]) {
 					case "many": {
-						let y_many=item_group[1];
+						let y_many=y_group[1];
 						for(let y_arr of y_many) {
 							if(find_eq_arr(x_arr,y_arr)) continue;
-							y_many.push(x_arr);
+							changed=true; y_many.push(x_arr);
 						}
+						if(changed) return [true,y_group];
 					} break;
 					case "arr": {
-						let y_arr=item_group[1];
+						let y_arr=y_group[1];
 						for(let y_item of y_arr) {
 							if(x_arr.includes(y_item)) continue;
-							x_arr.push(y_item);
+							changed=true; x_arr.push(y_item);
 						}
+						if(changed) return [true,x_group];
 					} break;
 					case "one": {
-						let y_item=item_group[1];
+						let y_item=y_group[1];
 						if(x_arr.includes(y_item)) break;
 						x_arr.push(y_item);
-					} break;
+						return [true,x_group];
+					}
 				}
 			} break;
 			case "one": {
-				let x_item=cursor_group[1]; x_item; switch(item_group[0]) {
+				let x_item=x_group[1]; switch(y_group[0]) {
 					case "many": {
-						let y_many=item_group[1];
+						let y_many=y_group[1];
 						if(y_many.findIndex(x_arr => x_arr.length===0&&x_arr[0]===x_item)<=0) break;
 						y_many.push([x_item]);
-						return [true,item_group];
+						return [true,y_group];
 					}
 					case "arr": {
-						let y_arr=item_group[1];
+						let y_arr=y_group[1];
 						if(y_arr.includes(x_item)) break;
 						y_arr.push(x_item);
-						return [true,item_group];
+						return [true,y_group];
 					}
 					case "one": {
-						let y_item=item_group[1];
+						let y_item=y_group[1];
 						if(x_item===y_item) break;
 						return [true,["arr",[x_item,y_item]]];
 					}
