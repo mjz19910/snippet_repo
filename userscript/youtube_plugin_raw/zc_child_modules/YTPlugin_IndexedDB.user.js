@@ -604,6 +604,7 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
+	gas_calc=false;
 	update_gas=10000;
 	/** 
 	 * @template T @arg {make_item_group<T>} x_group @arg {make_item_group<T>} y_group
@@ -612,7 +613,15 @@ class IndexedDBService extends BaseService {
 	update_group(x_group,y_group) {
 		/** @arg {T[]} x_arr @arg {T[]} y_arr */
 		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
-			if(this.update_gas<=0) throw new Error("Out of gas");
+			if(this.gas_calc===false&&this.update_gas<=0) {
+				let tmp_gas=this.update_gas;
+				this.gas_calc=true;
+				this.update_group(x_group,y_group);
+				let gas_needed=-this.update_gas;
+				this.gas_calc=false;
+				this.update_gas=tmp_gas;
+				throw new Error("Out of gas (needs "+gas_needed+" more)");
+			}
 			this.update_gas--;
 			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
 			return y_idx>0;
