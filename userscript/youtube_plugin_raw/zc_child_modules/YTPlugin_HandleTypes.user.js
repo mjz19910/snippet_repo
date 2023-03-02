@@ -3141,21 +3141,25 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
 	D_MenuNavigationItem_Endpoint(x) {
 		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
-		if("openPopupAction" in x) return this.A_AboutThisAd(x);
+		if("openPopupAction" in x) return this.GA_MenuNavigationPopup(x);
 		debugger;
 	}
-	/** @private @arg {A_AboutThisAd} x */
-	A_AboutThisAd(x) {
-		let p1=this.TA_OpenPopup("A_AboutThisAd",x);
-		this.Popup_DL_AboutThisAd(p1);
-	}
-	/** @private @arg {Popup_DL_AboutThisAd} x */
-	Popup_DL_AboutThisAd(x) {
-		const cf="Popup_DL_AboutThisAd";
-		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);
-		this.R_AboutThisAd(popup);
-		this.cq(popupType,"DIALOG");
-		this.t(beReused,x => this.cq(x,true));
+	/** @private @arg {GA_MenuNavigationPopup} x */
+	GA_MenuNavigationPopup(x) {
+		const cf="GA_MenuNavigationPopup";
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(clickTrackingParams);
+		{
+			const {popup,popupType,beReused,...y}=this.s("Popup_DL_MenuNavigation",a); this.g(y);
+			x: {
+				let x2=popup; this.k("G_MenuNavigationPopup",x2);
+				if("aboutThisAdRenderer" in x2) {this.R_AboutThisAd(x2); break x;}
+				if("fancyDismissibleDialogRenderer" in x2) {this.R_FancyDismissibleDialog(x2); break x;}
+				debugger;
+			}
+			this.cq(popupType,"DIALOG");
+			this.t(beReused,x => this.cq(x,true));
+		}
 	}
 	//#endregion
 	//#endregion binary

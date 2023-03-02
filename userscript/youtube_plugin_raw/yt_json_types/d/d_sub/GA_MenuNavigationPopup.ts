@@ -1,0 +1,1 @@
+type GA_MenuNavigationPopup=A_FancyDismissibleDialog|A_AboutThisAd;

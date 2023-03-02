@@ -607,6 +607,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_ypc_get_offers_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_DL_AboutThisAd";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_DL_DismissibleDialog";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_DL_MenuNavigation";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_GetAccountMenu";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "Popup_ShareEntityService";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "RCA_RelevantStateTags";}
@@ -772,6 +773,7 @@ export namespace Gen {
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_GetAccountMenu";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_GetSystemMenu";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "DE_ShareEntityService";}
+		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "GA_MenuNavigationPopup";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "G_Action_GetNotificationsMenu";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "RSG_NotificationMenu_Action";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "RSM_ChannelPreference";}
