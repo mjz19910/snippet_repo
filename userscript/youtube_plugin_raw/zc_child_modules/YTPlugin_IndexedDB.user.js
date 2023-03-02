@@ -420,16 +420,17 @@ class IndexedDBService extends BaseService {
 				} break;
 			}
 		}
+		console.log("[has_db_box]",has_db_box);
 		if(has_db_box===true) return;
 		switch(store.content) {
 			default: debugger; break;
+			case "boolean": {
+				if(!this.is_vi_has_bool(vi)) break;
+				await this.put_boxed_id(item[0],version,store.content,vi);
+			} break;
 			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
-				await this.put_boxed_id(item[0],version,store.content,vi);
-			} break;
-			case "boolean": {
-				if(!this.is_vi_has_bool(vi)) break;
 				await this.put_boxed_id(item[0],version,store.content,vi);
 			} break;
 			case "string":
@@ -709,7 +710,7 @@ class IndexedDBService extends BaseService {
 						let y_item=y_group[1];
 						for(let x_arr of x_many) {
 							if(x_arr.length!==1) continue;
-							if(x_arr[0]!==y_item) continue;
+							if(x_arr[0]===y_item) continue;
 							x_many.push([y_item]);
 							return [true,x_group];
 						}
