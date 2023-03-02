@@ -603,7 +603,10 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
-	/** @template T @arg {make_item_group<T>} cursor_group @arg {make_item_group<T>} item_group @returns {make_item_group<T>} */
+	/** 
+	 * @template T @arg {make_item_group<T>} cursor_group @arg {make_item_group<T>} item_group
+	 * @returns {[true,make_item_group<T>]|[false,null]}
+	 */
 	update_group(cursor_group,item_group) {
 		/** @arg {T[]} x_arr @arg {T[]} y_arr */
 		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
@@ -661,24 +664,24 @@ class IndexedDBService extends BaseService {
 						let y_many=item_group[1];
 						if(y_many.findIndex(x_arr => x_arr.length===0&&x_arr[0]===x_item)<=0) break;
 						y_many.push([x_item]);
-						return item_group;
+						return [true,item_group];
 					}
 					case "arr": {
 						let y_arr=item_group[1];
 						if(y_arr.includes(x_item)) break;
 						y_arr.push(x_item);
-						return item_group;
+						return [true,item_group];
 					}
 					case "one": {
 						let y_item=item_group[1];
 						if(x_item===y_item) break;
-						return ["arr",[x_item,y_item]];
+						return [true,["arr",[x_item,y_item]]];
 					}
 				}
 			} break;
 			default: throw new Error();
 		}
-		return cursor_group;
+		return [false,null];
 	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
@@ -761,7 +764,9 @@ class IndexedDBService extends BaseService {
 						/** @template {DT_DatabaseValue} T @arg {T} x @arg {T} y */
 						let do_update=(x,y) => {
 							let pre_update=[structuredClone(x),structuredClone(y)];
-							let ret=this.update_group(decay_value(y.value),x.value);
+							let group_info=this.update_group(decay_value(y.value),x.value);
+							if(!group_info[0]) return;
+							let ret=group_info[1];
 							assert_upgrade(ret);
 							x.value=ret;
 							console.log("update",...pre_update);
