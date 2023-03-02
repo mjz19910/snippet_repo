@@ -1218,7 +1218,7 @@ class ServiceMethods extends ServiceData {
 		this.t(targetId,this.D_Button_targetId);
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => this.save_string(`${cf}.style`,x));
-		this.t(isDisabled,x => {if(x!==false) debugger;});
+		this.t(isDisabled,this.a_primitive_bool);
 		this.t(text,this.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
 		this.t(navigationEndpoint,this.D_Button_NavEP);

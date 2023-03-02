@@ -832,8 +832,8 @@ class HandleTypes extends ServiceMethods {
 			case "6d": case "6l": case "6z":
 			case "76": case "7d": case "7k": case "7s": case "7y": case "7z":
 			case "d6": case "dy": case "dz":
-			case "el": case "ee": case "ey": case "ez":
-			case "l7": case "lk": case "ll": case "lr": case "ls": case "ly":
+			case "e6": case "e7": case "el": case "ee": case "ey": case "ez":
+			case "l7": case "ld": case "lk": case "ll": case "lr": case "ls": case "ly":
 			case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz":
 			case "z7": case "zd": case "ze": case "zk": case "zr": case "zs": case "zy":
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
@@ -3107,7 +3107,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(replyButton);
 		this.R_Button(cancelButton);
 		this.D_Thumbnail(authorThumbnail);
-		this.G_Text(editableText);
+		this.t(editableText,this.G_Text);
 		this.G_Text(placeholderText);
 		this.G_Text(errorMessage);
 		this.R_Button(emojiButton);

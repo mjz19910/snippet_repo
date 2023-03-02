@@ -2,7 +2,7 @@ type D_CommentReplyDialog={
 	replyButton: R_Button;
 	cancelButton: R_Button;
 	authorThumbnail: D_Thumbnail;
-	editableText: G_Text;
+	editableText?: G_Text;
 	placeholderText: G_Text;
 	errorMessage: G_Text;
 	emojiButton: R_Button;

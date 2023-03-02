@@ -41,7 +41,7 @@ type D_Button_targetId=
 type D_Button={
 	style?: D_Button_style;
 	size?: "SIZE_DEFAULT";
-	isDisabled?: false;
+	isDisabled?: boolean;
 	serviceEndpoint?: D_Button_SE;
 	text?: G_Text;
 	icon?: T_Icon<"SHORTS_COMMENT">;

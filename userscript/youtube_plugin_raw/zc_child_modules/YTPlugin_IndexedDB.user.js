@@ -630,7 +630,6 @@ class IndexedDBService extends BaseService {
 			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
 			return y_idx>0;
 		});
-		let changed=false;
 		switch(x_group[0]) {
 			case "many": {
 				let x_many=x_group[1]; switch(y_group[0]) {
@@ -638,21 +637,27 @@ class IndexedDBService extends BaseService {
 						let y_many=y_group[1];
 						for(let y_arr of y_many) {
 							if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<=0) continue;
-							changed=true; x_many.push(y_arr);
+							x_many.push(y_arr);
+							return [true,x_group];
 						}
-						if(changed) return [true,x_group];
 					} break;
 					case "arr": {
 						let y_arr=y_group[1];
-						if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<=0) break;
-						x_many.push(y_arr);
-						return [true,x_group];
-					}
+						for(let x_arr of x_many) {
+							if(x_arr.length!==y_arr.length) continue;
+							if(find_eq_arr(x_arr,y_arr)) continue;
+							x_many.push(y_arr);
+							return [true,x_group];
+						}
+					} break;
 					case "one": {
 						let y_item=y_group[1];
-						if(x_many.findIndex(x_arr => x_arr.length===0&&x_arr[0]===y_item)<=0) break;
-						x_many.push([y_item]);
-						return [true,x_group];
+						for(let x_arr of x_many) {
+							if(x_arr.length!==1) continue;
+							if(x_arr[0]!==y_item) continue;
+							x_many.push([y_item]);
+							return [true,x_group];
+						}
 					}
 				}
 			} break;
@@ -663,17 +668,17 @@ class IndexedDBService extends BaseService {
 						for(let y_arr of y_many) {
 							if(x_arr.length!==y_arr.length) continue;
 							if(find_eq_arr(x_arr,y_arr)) continue;
-							changed=true; y_many.push(x_arr);
+							y_many.push(x_arr);
+							return [true,y_group];
 						}
-						if(changed) return [true,y_group];
 					} break;
 					case "arr": {
 						let y_arr=y_group[1];
 						for(let y_item of y_arr) {
 							if(x_arr.includes(y_item)) continue;
-							changed=true; x_arr.push(y_item);
+							x_arr.push(y_item);
+							return [true,x_group];
 						}
-						if(changed) return [true,x_group];
 					} break;
 					case "one": {
 						let y_item=y_group[1];
@@ -687,7 +692,7 @@ class IndexedDBService extends BaseService {
 				let x_item=x_group[1]; switch(y_group[0]) {
 					case "many": {
 						let y_many=y_group[1];
-						if(y_many.findIndex(x_arr => x_arr.length===0&&x_arr[0]===x_item)<=0) break;
+						if(y_many.findIndex(x_arr => x_arr.length===1&&x_arr[0]===x_item)<=0) break;
 						y_many.push([x_item]);
 						return [true,y_group];
 					}
