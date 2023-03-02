@@ -124,7 +124,7 @@ type T_BoxedStore<T,T_Type extends string>={
 	value: make_item_group<T>;
 };
 type D_BoxedBoolStore=T_BoxedStore<boolean,"boolean">;
-type D_BoxedKeysStore=T_BoxedStore<string,"keys">;
+type D_BoxedKeysStore=T_BoxedStore<number|string,"keys">;
 type D_BoxedStrStore=T_BoxedStore<string,"string">;
 type D_BoxedNumStore=T_BoxedStore<number,"number">;
 type G_BoxedIdObj=D_BoxedUpdateId|T_BoxedStore<number,"root_visual_element">|D_BoxedStrStore|D_BoxedNumStore|D_BoxedBoolStore|D_BoxedKeysStore;

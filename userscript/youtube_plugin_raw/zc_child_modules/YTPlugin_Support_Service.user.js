@@ -130,7 +130,7 @@ class StoreDescription extends ApiBase2 {
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
 	}
-	/** @arg {T_BoxedStore<T,B_BoxedStoreTypeofToType[T_GetTypeof<T>]>} item */
+	/** @arg {T_BoxedStore<T,this["content"]>} item */
 	load_data(item) {
 		let {id: k,value: x}=item;
 		this.add_data_to_index(k,x);
@@ -232,7 +232,7 @@ class StoreData {
 		this.ve_store=new StoreDescription("number","root_visual_element",data_update_callback);
 		/** @type {StoreDescription<string,"string">} */
 		this.string_store=new StoreDescription("string","string",data_update_callback);
-		/** @type {StoreDescription<string,"keys">} */
+		/** @type {StoreDescription<number|string,"keys">} */
 		this.keys_store=new StoreDescription("string","keys",data_update_callback);
 	}
 }

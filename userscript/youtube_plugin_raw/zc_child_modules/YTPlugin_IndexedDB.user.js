@@ -127,21 +127,21 @@ class IndexedDBService extends BaseService {
 	expected_id=0;
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
-	/** @arg {"load"|"save"} mode @arg {number} id @arg {number} version @returns {Promise<D_BoxedUpdateId>} */
+	/** @arg {"load_id"|"save_id"} mode @arg {number} id @arg {number} version @returns {Promise<D_BoxedUpdateId>} */
 	put_id_box(mode,id,version) {
 		switch(mode) {
-			case "load": {
+			case "load_id": {
 				return this.put_box({
-					key: `boxed_id:a:${mode}_id`,
-					type: `${mode}_id`,
+					key: `boxed_id:a:${mode}`,
+					type: mode,
 					base: "boxed_id",
 					id,
 				},version);
 			}
-			case "save": {
+			case "save_id": {
 				return this.put_box({
-					key: `boxed_id:a:${mode}_id`,
-					type: `${mode}_id`,
+					key: `boxed_id:a:${mode}`,
+					type: mode,
 					base: "boxed_id",
 					id,
 				},version);
@@ -149,16 +149,16 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
-	/** @private @template {"load"|"save"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedUpdateId|null>} */
+	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedUpdateId|null>} */
 	async get_id_box(key,version) {
 		switch(key) {
-			case "load": {
+			case "load_id": {
 				const t_key="boxed_id:a:load_id";
 				let box=await this.get("boxed_id",t_key,version);
 				if(box&&box.key!==t_key) return null;
 				return box;
 			}
-			case "save": {
+			case "save_id": {
 				const t_key="boxed_id:a:save_id";
 				let box=await this.get("boxed_id",t_key,version);
 				if(box&&box.key!==t_key) return null;
@@ -194,28 +194,28 @@ class IndexedDBService extends BaseService {
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
 		this.update_gas+=1000;
-		let save_id=await this.get_id_box("save",version);
+		let save_id=await this.get_id_box("save_id",version);
 		if(!save_id) {
 			this.expected_save_id=0;
-			save_id=await this.put_id_box("save",this.expected_save_id,version);
+			save_id=await this.put_id_box("save_id",this.expected_save_id,version);
 		}
 		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
-		await this.put_id_box("save",this.expected_save_id,version);
+		await this.put_id_box("save_id",this.expected_save_id,version);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
 		this.update_gas+=1000;
-		let load_id=await this.get_id_box("load",version);
+		let load_id=await this.get_id_box("load_id",version);
 		if(!load_id) {
 			this.expected_load_id=0;
-			load_id=await this.put_id_box("load",this.expected_load_id,version);
+			load_id=await this.put_id_box("load_id",this.expected_load_id,version);
 		}
 		if(load_id.id!==this.expected_load_id) this.expected_load_id=load_id.id;
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
-		await this.put_id_box("load",this.expected_load_id,version);
+		await this.put_id_box("load_id",this.expected_load_id,version);
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
@@ -261,7 +261,7 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @arg {string} b @arg {["root_visual_element"|"number",make_item_group<number>]|["string"|"keys",make_item_group<string>]|["boolean",make_item_group<boolean>]} args */
+	/** @arg {number} version @arg {string} b @arg {["root_visual_element"|"number",make_item_group<number>]|["string",make_item_group<string>]|["keys",make_item_group<string|number>]|["boolean",make_item_group<boolean>]} args */
 	put_boxed_id(b,version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();
@@ -385,10 +385,41 @@ class IndexedDBService extends BaseService {
 					}
 					debugger;
 				} break;
-				case "string":
-				case "keys": {
+				case "string": {
 					if(!this.is_vi_has_str(vi)) break;
 					let uv=this.uv_unpack(vi);
+					let db_uv=this.uv_unpack(db_box.value);
+					if(uv.one&&db_uv.one) {
+						if(uv.one[1]===db_uv.one[1]) break;
+						await this.put_boxed_id(key,version,db_box.type,uv.one);
+						break;
+					}
+					if(uv.one&&db_uv.arr) {debugger; break;}
+					if(uv.arr&&db_uv.one) {
+						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
+						await this.put_boxed_id(key,version,db_box.type,uv.arr);
+						break;
+					}
+					if(uv.arr&&db_uv.arr) {
+						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
+						await this.put_boxed_id(key,version,db_box.type,uv.arr);
+						break;
+					}
+					if(uv.arr&&db_uv.many) {debugger; break;}
+					if(uv.many&&db_uv.arr) await this.put_boxed_id(item[0],version,db_box.type,uv.many);
+					if(uv.many&&db_uv.many) {
+						let db_m=db_uv.many[1];
+						let uv_m=uv.many[1];
+						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
+						if(has) break;
+						await this.put_boxed_id(item[0],version,db_box.type,uv.many);
+						break;
+					}
+					debugger;
+				} break;
+				case "keys": {
+					if(this.is_vi_has_bool(vi)) break;
+					let uv=this.uv_unpack_mt(vi,["",0]);
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) break;
@@ -433,9 +464,12 @@ class IndexedDBService extends BaseService {
 				if(!this.is_vi_has_num(vi)) break;
 				await this.put_boxed_id(item[0],version,store.content,vi);
 			} break;
-			case "string":
-			case "keys": {
+			case "string": {
 				if(!this.is_vi_has_str(vi)) break;
+				await this.put_boxed_id(item[0],version,store.content,vi);
+			} break;
+			case "keys": {
+				if(this.is_vi_has_bool(vi)) break;
 				await this.put_boxed_id(item[0],version,store.content,vi);
 			} break;
 		}
