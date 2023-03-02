@@ -567,3 +567,15 @@ type PD_invalidation_continuation_f9={
 	34: T_D32<0>;
 };
 type P_invalidation_continuation={0x722607a: T_VW<PD_invalidation_continuation>;};
+type P_perform_comment_action={
+	1: T_D32<5>;
+	2: T_D32<2>;
+	3: TV_Str<`${string}.${string}`>;
+	5: TV_Str<D_VideoIdStr>;
+	6: T_D32<1>;
+	7: T_D32<0>;
+	9: TV_Str<`${bigint}`>;
+	21: T_D32<12>;
+	23: TV_Str<`UC${string}`>;
+	30: T_D32<0>;
+};

@@ -2920,6 +2920,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_invalidation_continuation(u);
 			} break;
+			case "perform_comment.action": {
+				/** @type {P_perform_comment_action} */
+				let u=as_any(x);
+				this.P_perform_comment_action(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -2927,6 +2932,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_perform_comment_action} x */
+	P_perform_comment_action(x) {x;}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {x;}
 	/** @public @arg {R_EmojiPicker} x */
@@ -3052,7 +3059,7 @@ class HandleTypes extends ServiceMethods {
 	DE_PerformCommentAction(x) {
 		const cf="DE_PerformCommentAction";
 		const {action,clientActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		console.log(`${cf}.action`,action);
+		this.params("perform_comment.action",action);
 		this.z(clientActions,this.A_UpdateCommentVote);
 	}
 	/** @public @arg {A_UpdateCommentVote} x */
@@ -3061,7 +3068,7 @@ class HandleTypes extends ServiceMethods {
 	AD_UpdateCommentVote(x) {
 		const cf="AD_UpdateCommentVote";
 		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(voteCount);
+		this.t(voteCount,this.G_Text);
 		this.save_string(`${cf}.voteStatus`,voteStatus);
 		switch(voteStatus) {
 			case "LIKE":
@@ -3071,6 +3078,15 @@ class HandleTypes extends ServiceMethods {
 	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.g);}
 	/** @public @arg {M_CreateCommentReplyDialog} x */
 	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.g);}
+	/** @public @arg {R_SponsorCommentBadge} x */
+	R_SponsorCommentBadge(x) {this.H_("R_SponsorCommentBadge",x,this.D_SponsorCommentBadge);}
+	/** @public @arg {D_SponsorCommentBadge} x */
+	D_SponsorCommentBadge(x) {
+		const cf="D_SponsorCommentBadge";
+		const {customBadge,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(customBadge);
+		this.a_primitive_str(tooltip);
+	}
 	//#endregion
 	//#endregion binary
 	//#endregion

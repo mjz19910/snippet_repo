@@ -5494,7 +5494,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
 		const cf="D_Comment";
-		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,collapseButton,replyCount,authorCommentBadge,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,collapseButton,sponsorCommentBadge,replyCount,authorCommentBadge,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(authorText);
 		this.D_Thumbnail(authorThumbnail);
 		this.R_CommentActionButtons(actionButtons);
@@ -5515,6 +5515,8 @@ class ServiceMethods extends ServiceData {
 		this.ceq(voteStatus,"INDIFFERENT");
 		this.trackingParams(trackingParams);
 		this.R_Button(collapseButton);
+		sponsorCommentBadge;
+		this.t(sponsorCommentBadge,x => this.ht.R_SponsorCommentBadge(x));
 		this.t(replyCount,this.a_primitive_num);
 		this.t(authorCommentBadge,x => this.ht.R_AuthorCommentBadge(x));
 		this.D_LoggingDirectives(loggingDirectives);

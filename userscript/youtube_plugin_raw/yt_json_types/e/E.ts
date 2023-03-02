@@ -53,7 +53,7 @@ type GM_PerformCommentAction={
 };
 type M_PerformCommentAction=TM_Gen<GM_PerformCommentAction>;
 type AD_UpdateCommentVote={
-	voteCount: G_Text;
+	voteCount?: G_Text;
 	voteStatus: "LIKE";
 };
 type A_UpdateCommentVote={

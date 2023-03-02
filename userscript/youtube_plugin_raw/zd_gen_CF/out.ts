@@ -1015,6 +1015,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "notification_remove_upcoming_event_reminder.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "params.click_tracking";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "params.tracking";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "perform_comment.action";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "pf_23n24n.bin_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "playability_status.context_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "player_seek.continuation";}

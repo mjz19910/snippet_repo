@@ -15,6 +15,7 @@ type D_Comment={
 	voteCount?: G_Text;
 	expandButton: R_Button;
 	collapseButton: R_Button;
+	sponsorCommentBadge?: R_SponsorCommentBadge;
 	replyCount?: number;
 	authorCommentBadge?: R_AuthorCommentBadge;
 	loggingDirectives: D_LoggingDirectives;
