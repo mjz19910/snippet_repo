@@ -172,16 +172,16 @@ class IndexedDBService extends BaseService {
 		if(update_id.id!==this.expected_id) this.expected_id=update_id.id;
 		this.expected_id++;
 		await this.save_store_to_database(store,version);
-		this.put_update_id(this.expected_id,version);
+		await this.put_update_id(this.expected_id,version);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
 		let update_id=await this.get_update_id(version);
 		if(!update_id) this.expected_id=0;
 		else this.expected_id=update_id.id;
-		this.load_store_from_database(store,version);
+		await this.load_store_from_database(store,version);
 		this.expected_id++;
-		this.put_update_id(this.expected_id,version);
+		await this.put_update_id(this.expected_id,version);
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
@@ -349,31 +349,31 @@ class IndexedDBService extends BaseService {
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
 				let uv=this.uv_unpack(vi);
-				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
+				if(uv.one) await this.put_boxed_id(item[0],version,store.content,uv.one);
 				if(uv.arr) {
 					uv.arr[1].sort((a,b) => a-b);
-					this.put_boxed_id(item[0],version,store.content,uv.arr);
+					await this.put_boxed_id(item[0],version,store.content,uv.arr);
 				}
 				if(uv.many) {
 					uv.many[1].forEach(x => x.sort((a,b) => a-b));
 					uv.many[1].sort((a,b) => a[0]-b[0]);
-					this.put_boxed_id(item[0],version,store.content,uv.many);
+					await this.put_boxed_id(item[0],version,store.content,uv.many);
 				}
 			} break;
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
 				let uv=this.uv_unpack(vi);
-				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
-				if(uv.arr) this.put_boxed_id(item[0],version,store.content,uv.arr);
-				if(uv.many) this.put_boxed_id(item[0],version,store.content,uv.many);
+				if(uv.one) await this.put_boxed_id(item[0],version,store.content,uv.one);
+				if(uv.arr) await this.put_boxed_id(item[0],version,store.content,uv.arr);
+				if(uv.many) await this.put_boxed_id(item[0],version,store.content,uv.many);
 			} break;
 			case "string":
 			case "keys": {
 				if(!this.is_vi_has_str(vi)) break;
 				let uv=this.uv_unpack(vi);
-				if(uv.one) this.put_boxed_id(item[0],version,store.content,uv.one);
-				if(uv.arr) this.put_boxed_id(item[0],version,store.content,uv.arr);
-				if(uv.many) this.put_boxed_id(item[0],version,store.content,uv.many);
+				if(uv.one) await this.put_boxed_id(item[0],version,store.content,uv.one);
+				if(uv.arr) await this.put_boxed_id(item[0],version,store.content,uv.arr);
+				if(uv.many) await this.put_boxed_id(item[0],version,store.content,uv.many);
 			} break;
 		}
 	}
@@ -437,9 +437,13 @@ class IndexedDBService extends BaseService {
 		if(cache.includes(cache_key)) return value;
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
-		if(this.open_db_promise) return value;
+		if(this.open_db_promise) {
+			await this.open_db_promise;
+			return value;
+		}
 		this.open_db_promise=this.open_database(key,version);
 		await this.open_db_promise;
+		this.open_db_promise=null;
 		return value;
 	}
 	/** @arg {number} version */
