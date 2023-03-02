@@ -164,6 +164,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
+		this.update_gas+=1000;
 		let update_id=await this.get_update_id(version);
 		if(!update_id) {
 			this.expected_id=0;
@@ -176,6 +177,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
+		this.update_gas+=1000;
 		let update_id=await this.get_update_id(version);
 		if(!update_id) this.expected_id=0;
 		else this.expected_id=update_id.id;
