@@ -636,7 +636,7 @@ class IndexedDBService extends BaseService {
 					case "many": {
 						let y_many=y_group[1];
 						for(let y_arr of y_many) {
-							if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<=0) continue;
+							if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<0) continue;
 							x_many.push(y_arr);
 							return [true,x_group];
 						}
@@ -692,7 +692,7 @@ class IndexedDBService extends BaseService {
 				let x_item=x_group[1]; switch(y_group[0]) {
 					case "many": {
 						let y_many=y_group[1];
-						if(y_many.findIndex(x_arr => x_arr.length===1&&x_arr[0]===x_item)<=0) break;
+						if(y_many.findIndex(x_arr => x_arr.length===1&&x_arr[0]===x_item)<0) break;
 						y_many.push([x_item]);
 						return [true,y_group];
 					}
