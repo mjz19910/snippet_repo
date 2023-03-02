@@ -687,7 +687,6 @@ class IndexedDBService extends BaseService {
 				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
-
 				if(tx_scope.is_tx_complete) {
 					console.log("cursor_loop_is_tx_complete_1");
 					break;
@@ -709,6 +708,8 @@ class IndexedDBService extends BaseService {
 				}
 				const cursor_value=cur_cursor.value;
 				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,cursor_value);
+				let idx=d_cache.indexOf(item);
+				d_cache[idx]=null;
 				cur_cursor.continue();
 				if(cursor_value.key!==item.key) {
 					console.log(cursor_value.key.split(":"));
@@ -786,8 +787,6 @@ class IndexedDBService extends BaseService {
 					} else {
 						this.committed_data.push(item);
 					}
-					let idx=d_cache.indexOf(item);
-					d_cache[idx]=null;
 					break;
 				}
 			}
