@@ -198,6 +198,7 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
+		if(k==="rid_key") debugger;
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
@@ -272,6 +273,12 @@ class StoreDescription extends ApiBase2 {
 		let idx=this.key_index.get(k);
 		if(idx!==void 0) return true;
 		return false;
+	}
+	/** @arg {string} key */
+	index_get(key) {
+		let idx=this.key_index.get(key);
+		if(idx===void 0) return null;
+		return this.data[idx];
 	}
 }
 export_(exports => {exports.StoreDescription=StoreDescription;});

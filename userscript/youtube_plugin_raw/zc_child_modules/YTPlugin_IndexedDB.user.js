@@ -666,7 +666,11 @@ class IndexedDBService extends BaseService {
 			case "arr": {
 				let x_arr=cursor_group[1]; switch(item_group[0]) {
 					case "many": {
-						debugger;
+						let y_many=item_group[1];
+						for(let y_arr of y_many) {
+							if(find_eq_arr(x_arr,y_arr)) continue;
+							y_many.push(x_arr);
+						}
 					} break;
 					case "arr": {
 						let y_arr=item_group[1];
