@@ -1089,16 +1089,19 @@ class Support_RS_Player extends ServiceMethods {
 		this.save_string(`${cf}.id`,id);
 		this.ceq(audioIsDefault,false);
 	}
+	/** @private @arg {D_Card_Content} x */
+	D_Card_Content(x) {
+		const cf="D_Card_Content"; this.k(cf,x);
+		if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
+		if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
+		this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {D_Card} x */
 	D_Card(x) {
 		const cf="D_Card";
 		const {teaser,content,cueRanges,icon,trackingParams,cardId,feature,...y}=this.s(cf,x); this.g(y);
 		this.R_SimpleCardTeaser(teaser);
-		this.t_cf(`D_Card$content`,content,(cf,x) => {
-			if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
-			if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
-			this.codegen_typedef(cf,x);
-		});
+		this.t(content,this.D_Card_Content);
 		this.z(cueRanges,this.D_CueRangeItem);
 		this.trackingParams(trackingParams);
 		this.t(cardId,this.a_primitive_str);
