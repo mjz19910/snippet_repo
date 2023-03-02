@@ -387,12 +387,19 @@ class IndexedDBService extends BaseService {
 		let db=await this.get_async_result(this.get_db_request(version));
 		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
 		let obj_store=typed_db.objectStore(s.tx,key);
-		await this.get_async_result(obj_store.delete(query));
-		s; query;
+		return this.get_async_result(obj_store.delete(query));
 	}
 	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {number} version @arg {string} query */
 	delete(key,query,version) {
 		this.deleteImpl(key,query,version).catch(e => console.log("delete error",e)).then(() => {});
+	}
+	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
+	async direct_put(key,value,version) {
+		let typed_db=new TypedIndexedDB;
+		let db=await this.get_async_result(this.get_db_request(version));
+		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
+		let obj_store=typed_db.objectStore(s.tx,key);
+		return this.get_async_result(obj_store.put(value));
 	}
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
