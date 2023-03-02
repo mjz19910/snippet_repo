@@ -1,1 +1,0 @@
-type M_RemoveUpcomingEventReminder={webCommandMetadata: GM_RemoveUpcomingEventReminder;};

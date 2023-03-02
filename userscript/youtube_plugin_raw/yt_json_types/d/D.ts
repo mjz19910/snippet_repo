@@ -1643,6 +1643,7 @@ type D_CustomEmoji={
 	searchTerms: string[];
 	image: D_EmojiImage;
 	isCustomEmoji: boolean;
+	isLocked?: true;
 };
 type D_DarkColorPalette={
 	primaryTitleColor: number;

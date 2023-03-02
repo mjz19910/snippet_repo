@@ -6216,7 +6216,10 @@ class ServiceMethods extends ServiceData {
 		this.z(thumbnails,this.D_ThumbnailItem);
 	}
 	/** @private @arg {D_CustomEmoji} x */
-	D_CustomEmoji(x) {this.g(this.D_CustomEmoji_Omit("D_CustomEmoji",x));}
+	D_CustomEmoji(x) {
+		let {isLocked,...y}=this.D_CustomEmoji_Omit("D_CustomEmoji",x); this.g(y);
+		this.t(isLocked,x => this.cq(x,true));
+	}
 	/** @public @template {D_CustomEmoji|D_LiveChatEmoji} T @arg {CF_D_CustomEmoji} cf @arg {T} x */
 	D_CustomEmoji_Omit(cf,x) {
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.s(cf,x);

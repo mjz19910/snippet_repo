@@ -39,7 +39,28 @@ type E_Url={
 type E_WebPlayerShareEntityService=TE_Endpoint_3<"webPlayerShareEntityServiceEndpoint",DE_WebPlayerShareEntityService,M_GetWebPlayerSharePanel>;
 type E_AddUpcomingEventReminder=TE_Endpoint_3<"addUpcomingEventReminderEndpoint",DC_Params,M_AddUpcomingEventReminder>;
 type E_RemoveUpcomingEventReminder=TE_Endpoint_3<"removeUpcomingEventReminderEndpoint",DC_Params,M_RemoveUpcomingEventReminder>;
+type M_RemoveUpcomingEventReminder=TM_Gen<GM_RemoveUpcomingEventReminder>;
+type GM_RemoveUpcomingEventReminder={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/notification/remove_upcoming_event_reminder";
+};
+type M_PlaylistDelete=TM_Gen<GM_PlaylistDelete>;
+type GM_PlaylistDelete={sendPost: true; apiUrl: "/youtubei/v1/playlist/delete";};
 type E_PlaylistDelete=TE_Endpoint_3<"deletePlaylistEndpoint",DE_PlaylistDelete,M_PlaylistDelete>;
+type GM_PerformCommentAction={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/comment/perform_comment_action";
+};
+type M_PerformCommentAction=TM_Gen<GM_PerformCommentAction>;
+type AD_UpdateCommentVote={
+	voteCount: G_Text;
+	voteStatus: "LIKE";
+};
+type A_UpdateCommentVote={
+	clickTrackingParams: string;
+	updateCommentVoteAction: AD_UpdateCommentVote;
+};
+type E_PerformCommentAction=TE_Endpoint_3<"performCommentActionEndpoint",DE_PerformCommentAction,M_PerformCommentAction>;
 type E_Pinging={
 	clickTrackingParams: string;
 	loggingUrls: T_BaseUrl<`https://pagead2.googlesyndication.com/pcs/activeview?xai=${string}&sai=${string}&sig=${string}&cid=${string}&acvw=[VIEWABILITY]`|`https://googleads.g.doubleclick.net/pagead/interaction/?ai=${string}&sigh=${string}&label=noop_tap`>[];
@@ -51,7 +72,6 @@ type E_AdFeedback={
 	adFeedbackEndpoint: DE_AdFeedback;
 };
 type E_MuteAd=TE_Endpoint_2<"muteAdEndpoint",DE_MuteAd>;
-type E_PerformCommentAction={performCommentActionEndpoint: {};};
 //#endregion
 type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 type E_Page=YTNavigateFinishDetail['endpoint'];
