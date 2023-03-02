@@ -169,9 +169,9 @@ type P_dislike_params_f1={
 type P_dislike_params={
 	1: T_VW<P_dislike_params_f1>;
 	2: T_D32<0>;
-	3?: {};
+	3?: T_D32<1>;
 	4: T_VW<V_ShortTimestamp>;
-	5?: {};
+	5?: T_D32<1>;
 };
 type P_subscribe_params={
 	2: T_VW<{

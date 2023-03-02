@@ -2430,9 +2430,9 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 		this.T_D32(f2,x => this.save_number(`${cf}.f2`,x));
-		if(f3) debugger;
+		this.t(f3,x => this.T_D32(x,x => this.save_number(`${cf}.f3`,x)));
 		this.T_VW(f4,this.V_ShortTimestamp);
-		if(f5) debugger;
+		this.t(f5,x => this.T_D32(x,x => this.save_number(`${cf}.f5`,x)));
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
