@@ -2970,6 +2970,43 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
 	R_EmojiPickerCategoryButton(x) {this.H_("emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
+	/** @private @arg {D_EmojiPickerCategoryButton} x */
+	D_EmojiPickerCategoryButton(x) {
+		if("targetId" in x) {
+			const cf="D_EmojiPickerCategoryButton:targetId";
+			const {categoryId,icon,tooltip,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
+			switch(categoryId) {
+				default: debugger; break;
+				case "people":
+			}
+			this.T_Icon(`${cf}:icon`,icon);
+			if(tooltip!=="People") debugger;
+			this.D_Accessibility(accessibility);
+			if(targetId!=="emoji-picker-category-button-people") debugger;
+			return;
+		}
+		if(this.is_D_EmojiPickerCategoryButton_ForChannel(x)) {
+			const cf="D_EmojiPickerCategoryButton:ForChannel";
+			const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+			this.D_ChannelId(categoryId);
+			this.T_Icon(`${cf}:icon`,icon);
+			if(tooltip!=="YouTube") debugger;
+			this.D_Accessibility(accessibility);
+			return;
+		}
+		const cf="D_EmojiPickerCategoryButton";
+		const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.T_Icon(`${cf}:icon`,icon);
+		switch(tooltip) {
+			default: debugger; break;
+			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
+		}
+		this.D_Accessibility(accessibility);
+	}
 	//#endregion
 	//#endregion binary
 	//#endregion
