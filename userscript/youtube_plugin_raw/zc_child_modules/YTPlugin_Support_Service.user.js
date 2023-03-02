@@ -131,14 +131,10 @@ class StoreDescription extends ApiBase2 {
 	/** @arg {T_BoxedStore<T,B_BoxedStoreTypeofToType[T_GetTypeof<T>]>} item */
 	load_data(item) {
 		let {id: k,value: x}=item;
-		let idx=this.new_data.findIndex(v => v[0]===item.id);
-		if(idx<0) return;
-		this.new_data.splice(idx);
 		this.add_data_to_index(k,x);
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	save_data(k,x) {
-		if(k==="rid_key") debugger;
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
