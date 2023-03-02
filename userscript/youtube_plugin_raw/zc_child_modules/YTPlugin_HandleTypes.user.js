@@ -27,10 +27,11 @@ export_(exports => {exports.__is_module_flag__=true;});
 ECatcherService.known_experiments.push(...[
 	[24466371,24468724,24478150,24481771,24482558,24484079,24484158,24485239],
 	[24478802,24485791],
-	[24486982],
-	[24482828],
 	[24482557],
+	[24482828],
+	[24482876],
 	[24482877],
+	[24486982],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
@@ -2578,7 +2579,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {2: f2,3: f3,7: f7,24: f24,27: f27,33: f33,39: f39,40: f40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: f2,3: f3,7: f7,15: f15,24: f24,27: f27,33: f33,36: f36,39: f39,40: f40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
