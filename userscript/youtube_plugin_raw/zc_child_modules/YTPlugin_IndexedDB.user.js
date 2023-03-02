@@ -381,12 +381,16 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
+	/** @arg {TypedIndexedDB} typed_db @arg {keyof DT_DatabaseStoreTypes} key @arg {number} version */
+	async open_rw_object_store(typed_db,key,version) {
+		let db=await this.get_async_result(this.get_db_request(version));
+		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
+		return typed_db.objectStore(s.tx,key);
+	}
 	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {string} query @arg {number} version */
 	async deleteImpl(key,query,version) {
 		let typed_db=new TypedIndexedDB;
-		let db=await this.get_async_result(this.get_db_request(version));
-		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
-		let obj_store=typed_db.objectStore(s.tx,key);
+		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.delete(query));
 	}
 	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {number} version @arg {string} query */
@@ -396,9 +400,7 @@ class IndexedDBService extends BaseService {
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async direct_put(key,value,version) {
 		let typed_db=new TypedIndexedDB;
-		let db=await this.get_async_result(this.get_db_request(version));
-		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
-		let obj_store=typed_db.objectStore(s.tx,key);
+		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
