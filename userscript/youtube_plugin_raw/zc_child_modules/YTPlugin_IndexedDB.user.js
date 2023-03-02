@@ -316,28 +316,29 @@ class IndexedDBService extends BaseService {
 		}
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
-	async push_store_item_to_database(store,item,version) {
+	push_store_item_to_database(store,item,version) {
 		let [,vi]=item;
 		switch(store.content) {
 			default: debugger; break;
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
-				await this.put_boxed_id(item[0],version,store.content,vi);
-			} break;
+				return this.put_boxed_id(item[0],version,store.content,vi);
+			}
 			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
-				await this.put_boxed_id(item[0],version,store.content,vi);
-			} break;
+				return this.put_boxed_id(item[0],version,store.content,vi);
+			}
 			case "string": {
 				if(!this.is_vi_has_str(vi)) break;
-				await this.put_boxed_id(item[0],version,store.content,vi);
-			} break;
+				return this.put_boxed_id(item[0],version,store.content,vi);
+			}
 			case "keys": {
 				if(this.is_vi_has_bool(vi)) break;
-				await this.put_boxed_id(item[0],version,store.content,vi);
-			} break;
+				return this.put_boxed_id(item[0],version,store.content,vi);
+			}
 		}
+		return null;
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async save_store_to_database(store,version) {

@@ -223,7 +223,6 @@ export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
-		this.data_update_callback=data_update_callback;
 		/** @type {StoreDescription<boolean,"boolean">} */
 		this.bool_store=new StoreDescription("boolean","boolean",data_update_callback);
 		/** @type {StoreDescription<number,"number">} */
@@ -264,16 +263,20 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	})();
 	/** @no_mod @type {number|null} */
 	#idle_id=null;
+	loaded_database=false;
 	onDataChange() {
 		if(this.#idle_id!==null) return;
 		this.is_ready=false;
 		this.#idle_id=requestIdleCallback(async () => {
 			const version=this.indexed_db_version;
-			try {
-				await this.idb.load_database(this.data_store,version);
-			} catch(err) {
-				console.log("load_database failed",err);
-				return;
+			if(!this.loaded_database) {
+				try {
+					await this.idb.load_database(this.data_store,version);
+					this.loaded_database=true;
+				} catch(err) {
+					console.log("load_database failed",err);
+					return;
+				}
 			}
 			try {
 				await this.idb.save_database(this.data_store,version);
