@@ -1193,6 +1193,14 @@ type D_GuideEntry_WhatToWatch={
 type D_GuideEntry=
 	|never
 	|{
+		navigationEndpoint: E_VE3611;
+		thumbnail: D_Thumbnail;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"Vsauce2">;
+		entryData: R_GuideEntryData;
+	}
+	|{
 		icon: T_Icon<"FEEDBACK">;
 		trackingParams: string;
 		formattedTitle: G_Text;

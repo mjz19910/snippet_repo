@@ -3137,7 +3137,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {GM_CreateCommentReply} x */
-	GM_CreateCommentReply(x) {x;}
+	GM_CreateCommentReply(x) {this.T_GM("GM_CreateCommentReply",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment_reply"));}
 	//#endregion
 	//#endregion binary
 	//#endregion
