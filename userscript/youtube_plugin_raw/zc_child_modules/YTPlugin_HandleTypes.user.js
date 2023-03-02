@@ -819,6 +819,7 @@ class HandleTypes extends ServiceMethods {
 			case "qxoed":
 			case "t0a7l":
 			case "t0a7s":
+			case "tt1el":
 			case "vgqsk":
 			case "vgqsr":
 				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
