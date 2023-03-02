@@ -382,7 +382,7 @@ class HandleTypes extends ServiceMethods {
 		if(x.length!==2) debugger;
 		return this.unwrap_tuple_1(x[1]);
 	}
-	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template T @arg {T_Command_TP<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
 		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1141,8 +1141,9 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
 		const cf="RS_ReelWatchSequence";
-		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext: {},entries,prevEntries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
+		this.z(prevEntries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.trackingParams(trackingParams);
 		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
 	}

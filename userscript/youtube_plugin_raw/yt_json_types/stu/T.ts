@@ -34,7 +34,7 @@ type T_BaseUrl<T extends string>={
 	baseUrl: T;
 	elapsedMediaTimeSeconds?: number;
 };
-type T_Command$<T>={
+type T_Command_TP<T>={
 	command: T;
 	trackingParams: string;
 };

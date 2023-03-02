@@ -174,7 +174,8 @@ type RS_Reel={
 };
 type RS_ReelWatchSequence={
 	responseContext: RC_ResponseContext;
-	entries: T_Command$<E_VE37414_ReelWatch>[];
+	entries: T_Command_TP<E_VE37414_ReelWatch>[];
+	prevEntries: T_Command_TP<E_VE37414_ReelWatch>[];
 	trackingParams: string;
 	continuationEndpoint?: C_Continuation;
 };

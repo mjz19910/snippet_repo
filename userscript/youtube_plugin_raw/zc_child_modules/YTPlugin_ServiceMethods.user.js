@@ -5685,9 +5685,9 @@ class ServiceMethods extends ServiceData {
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=u;
-		this.G_Text(ownerText);
+		this.t(ownerText,this.G_Text);
 		if(showActionMenu!==false) debugger;
-		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
+		this.t(channelThumbnailSupportedRenderers,this.R_ChannelThumbnailWithLink);
 		return y;
 	}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
@@ -6745,8 +6745,8 @@ class ServiceMethods extends ServiceData {
 		this.videoId(videoId);
 		this.D_ThumbnailOverlay_NavEP(navigationEndpoint);
 		this.D_Thumbnail(thumbnail);
-		this.G_Text(longBylineText);
-		this.G_Text(shortBylineText);
+		this.t(longBylineText,this.G_Text);
+		this.t(shortBylineText,this.G_Text);
 		return y;
 	}
 	/** @private @arg {D_Video} x */
