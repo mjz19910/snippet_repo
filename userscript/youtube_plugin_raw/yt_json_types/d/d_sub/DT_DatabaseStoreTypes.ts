@@ -50,7 +50,7 @@ type TypedIDBTransactionScope={
 	is_tx_complete: boolean;
 	complete_promise: Promise<Event>;
 	db: IDBDatabase,
-	typed_db: TypedIndexedDb,
+	typed_db: TypedIndexedDB,
 };
 type G_PlaylistIdObj={
 	key: `playlist_id:RDCM:UC:${string}`;

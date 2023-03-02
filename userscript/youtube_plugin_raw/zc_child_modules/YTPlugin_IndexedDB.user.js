@@ -23,7 +23,7 @@ function h_detect_firefox() {
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
 }
 const is_firefox=h_detect_firefox(); is_firefox;
-class TypedIndexedDb {
+class TypedIndexedDB {
 	/** @arg {IDBDatabase} db @arg {keyof DT_DatabaseStoreTypes} storeNames @arg {IDBTransactionMode} mode */
 	transaction(db,storeNames,mode) {return db.transaction(storeNames,mode);}
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes[K]>} obj_store @arg {TypedIDBValidKey<DT_DatabaseStoreTypes[K]["key"]>|TypedIDBKeyRange<DT_DatabaseStoreTypes[K]["key"]>} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes[K]>|null>} */
@@ -48,7 +48,7 @@ class TypedIndexedDb {
 	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
 	put(store,value) {return store.put(value);}
 }
-export_(exports => exports.TypedIndexedDb=TypedIndexedDb);
+export_(exports => exports.TypedIndexedDB=TypedIndexedDB);
 class TypedIDBValidKeyS {
 	/** @template {IDBValidKey} T @arg {T} key @returns {TypedIDBValidKey<T>} */
 	static only(key) {
@@ -336,18 +336,18 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) break;
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.one);
+						this.put_boxed_id(key,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
+						this.put_boxed_id(key,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr); break;
+						this.put_boxed_id(key,version,db_box.type,uv.arr); break;
 					}
 					if(uv.many&&db_uv.arr) {debugger; break;}
 					debugger;
@@ -359,24 +359,27 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(this.eq_group(uv.one,db_uv.one)) break;
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.one);
+						this.put_boxed_id(key,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr); break;
+						this.put_boxed_id(key,version,db_box.type,uv.arr); break;
 					}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
+						this.put_boxed_id(key,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
 					if(uv.many&&db_uv.arr) {debugger; break;}
 					if(uv.many&&db_uv.many) {
-						if(this.eq_group(uv.many,db_uv.many)) break;
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.many);
+						let db_m=db_uv.many[1];
+						let uv_m=uv.many[1];
+						let has=uv_m.every(uv_arr => db_m.findIndex(db_uv_arr => this.eq_keys(uv_arr,db_uv_arr))!==-1);
+						if(has) break;
+						this.put_boxed_id(key,version,db_box.type,uv.many);
 						break;
 					}
 					debugger;
@@ -389,17 +392,17 @@ class IndexedDBService extends BaseService {
 					let db_uv=this.uv_unpack(db_box.value);
 					if(uv.one&&db_uv.one) {
 						if(uv.one[1]===db_uv.one[1]) break;
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.one);
+						this.put_boxed_id(key,version,db_box.type,uv.one);
 						break;
 					}
 					if(uv.one&&db_uv.arr) {debugger; break;}
 					if(uv.arr&&db_uv.one) {
 						if(!uv.arr[1].includes(db_uv.one[1])) uv.arr[1].push(db_uv.one[1]);
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr); break;
+						this.put_boxed_id(key,version,db_box.type,uv.arr); break;
 					}
 					if(uv.arr&&db_uv.arr) {
 						if(this.eq_keys(uv.arr[1],db_uv.arr[1])) break;
-						this.put_boxed_id(db_box.id,version,db_box.type,uv.arr);
+						this.put_boxed_id(key,version,db_box.type,uv.arr);
 						break;
 					}
 					if(uv.arr&&db_uv.many) {debugger; break;}
@@ -478,7 +481,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {string} query @arg {number} version */
 	async deleteImpl(key,query,version) {
-		let typed_db=new TypedIndexedDb;
+		let typed_db=new TypedIndexedDB;
 		let db=await this.get_async_result(this.get_db_request(version));
 		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
 		let obj_store=typed_db.objectStore(s.tx,key);
@@ -514,7 +517,7 @@ class IndexedDBService extends BaseService {
 		return db_req;
 	}
 	/**
-	 * @arg {TypedIndexedDb} typed_db
+	 * @arg {TypedIndexedDB} typed_db
 	 * @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode
 	 * @arg {()=>void} complete_cb
 	*/
@@ -530,7 +533,7 @@ class IndexedDBService extends BaseService {
 		};
 		return tx;
 	}
-	/** @arg {TypedIndexedDb} typed_db @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode @returns {TypedIDBTransactionScope} */
+	/** @arg {TypedIndexedDB} typed_db @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode @returns {TypedIDBTransactionScope} */
 	open_transaction_scope(typed_db,db,key,mode) {
 		const tx=this.open_transaction(typed_db,db,key,mode,() => {
 			s.is_tx_complete=true;
@@ -586,7 +589,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
-	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDb;}} s @arg {DT_DatabaseStoreTypes[U]} value */
+	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDB;}} s @arg {DT_DatabaseStoreTypes[U]} value */
 	async force_update(s,value) {
 		if(!s.obj_store) throw new Error("No object store");
 		try {
@@ -782,7 +785,7 @@ class IndexedDBService extends BaseService {
 		let db=await this.get_async_result(this.get_db_request(version));
 		this.database_opening=false;
 		this.database_open=true;
-		let typed_db=new TypedIndexedDb;
+		let typed_db=new TypedIndexedDB;
 		let tx_scope=this.open_transaction_scope(typed_db,db,key,"readwrite");
 		let s={
 			error_count: 0,
@@ -930,7 +933,7 @@ class IndexedDBService extends BaseService {
 	 * @returns {Promise<DT_DatabaseStoreTypes[K]|null>}
 	 * */
 	async get(key,store_key,version) {
-		let typed_db=new TypedIndexedDb;
+		let typed_db=new TypedIndexedDB;
 		let db=await this.get_async_result(this.get_db_request(version));
 		const tx=typed_db.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
@@ -943,7 +946,7 @@ class IndexedDBService extends BaseService {
 	waiting_promises=[];
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {number} version */
 	async getAll(key,version) {
-		let typed_db=new TypedIndexedDb;
+		let typed_db=new TypedIndexedDB;
 		let db=await this.get_async_result(this.get_db_request(version));
 		const tx=typed_db.transaction(db,key,"readonly");
 		const obj_store=typed_db.objectStore(tx,key);
@@ -1001,7 +1004,7 @@ class IndexedDBService extends BaseService {
 	 * @arg {IDBDatabase} db
 	 */
 	async transfer_store(tx,key,db) {
-		let typed_db=new TypedIndexedDb;
+		let typed_db=new TypedIndexedDB;
 		const src_obj_store=typed_db.objectStore(tx,key);
 		/** @private @type {IDBRequest<T[]>} */
 		let get_all_video_id_req=src_obj_store.getAll();
@@ -1061,7 +1064,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version */
 	async database_diff(version) {
-		let typed_db=new TypedIndexedDb;
+		let typed_db=new TypedIndexedDB;
 		let ret={};
 		ret.db=await this.get_async_result(this.get_db_request(version));
 		let tx=typed_db.transaction(ret.db,"video_id","readonly");
