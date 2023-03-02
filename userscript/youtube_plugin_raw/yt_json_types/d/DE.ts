@@ -64,6 +64,7 @@ type DE_PlaylistDelete={playlistId: SD_PlaylistId;};
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId?: "WL"; params?: string;};
 type DE_PlaylistEditor={playlistId: SD_PlaylistId;};
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
+type DE_Search={params?: string; query: string;};
 type DE_Settings={browseId: "SPaccount_overview";};
 type DE_ShareEntityService={serializedShareEntity: string; commands: A_ShareEntityService[];};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
@@ -73,10 +74,6 @@ type DE_SuperThanksSelectedTier={key: string; index: number;};
 type DE_UndoFeedback={undoToken: string; actions: A_UndoFeedback[];};
 type DE_Unsubscribe={params: string; channelIds: `UC${string}`[];};
 type DE_Upload=B_Hack;
-type DE_Search={
-	query: string;
-	params?: string;
-};
 type DE_VE83769_Url_SearchObj={gclid: string;};
 type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
 type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
