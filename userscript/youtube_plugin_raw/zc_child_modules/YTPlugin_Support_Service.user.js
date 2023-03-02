@@ -247,7 +247,7 @@ class StoreData {
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
-	get_store_keys(key) {return this.data_store.string_store.data.find(e => e[0]===key);}
+	get_store_keys(key) {return this.data_store.string_store.index_get(key);}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */
