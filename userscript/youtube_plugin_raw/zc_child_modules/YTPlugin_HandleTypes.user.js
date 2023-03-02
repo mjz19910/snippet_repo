@@ -2940,7 +2940,6 @@ class HandleTypes extends ServiceMethods {
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
-				cf==="_level_2_0._level_2_1";
 				debugger;
 			} break;
 		}
