@@ -104,13 +104,27 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
 	add_data_to_index(k,x) {
-		if(this.key_index.has(k)) throw new Error("Already in index");
+		let idx=this.key_index.get(k);
+		if(idx!==void 0) {
+			this.data[idx]=[k,x];
+			return;
+		}
 		let new_len=this.data.push([k,x]);
 		this.key_index.set(k,new_len-1);
 	}
 	/** @arg {string} k @arg {make_item_group<T>} x */
+	add_new_data_to_index(k,x) {
+		let idx=this.new_key_index.get(k);
+		if(idx!==void 0) {
+			this.new_data[idx]=[k,x];
+			return;
+		}
+		let new_len=this.new_data.push([k,x]);
+		this.new_key_index.set(k,new_len-1);
+	}
+	/** @arg {string} k @arg {make_item_group<T>} x */
 	push_new_data(k,x) {
-		this.new_data.push([k,x]);
+		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
 		this.data_update_callback();
 	}
