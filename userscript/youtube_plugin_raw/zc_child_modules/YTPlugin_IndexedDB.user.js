@@ -102,11 +102,12 @@ class IndexedDBService extends BaseService {
 	committed_data=[];
 	/** @type {Map<keyof DT_DatabaseStoreTypes,string[]>} */
 	cached_data=new Map;
+	cache_weak_set=new WeakSet;
 	/** @arg {AG_DatabaseStoreDescription["key"]} key */
 	check_size(key) {
-		let d_cache=this.get_data_cache(key);
+		let [,d_cache]=this.get_data_cache(key);
 		/** @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]|null)[]} */
-		let arr=d_cache[1];
+		let arr=d_cache;
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
 	is_broken=false;
@@ -815,7 +816,13 @@ class IndexedDBService extends BaseService {
 		let index_val=obj.key;
 		let idx=c_index.get(index_val);
 		if(idx!==void 0) {
-			if(d_cache[idx]!==null) d_cache[idx]=obj;
+			if(!this.cache_weak_set.has(obj)) {
+				this.cache_weak_set.add(obj);
+				d_cache[idx]=obj;
+			}
+			else {
+				if(d_cache[idx]!==null) d_cache[idx]=obj;
+			}
 			return;
 		}
 		idx=d_cache.push(as(obj))-1;
