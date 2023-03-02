@@ -183,6 +183,8 @@ class IndexedDBService extends BaseService {
 			case "number": return store.number_store.load_data(item);
 			case "root_visual_element": return store.ve_store.load_data(item);
 			case "string": return store.string_store.load_data(item);
+			case "save_id":
+			case "load_id":
 			case "update_id": break;
 		}
 	}
@@ -362,6 +364,8 @@ class IndexedDBService extends BaseService {
 					if(uv.many&&db_uv.many) break;
 					debugger;
 				} break;
+				case "save_id":
+				case "load_id":
 				case "update_id": break;
 			}
 		}
