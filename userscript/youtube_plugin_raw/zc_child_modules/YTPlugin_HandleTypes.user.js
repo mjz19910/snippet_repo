@@ -996,31 +996,32 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_Menu_WithItems} x */
 	D_Menu_WithItems(x) {
 		const cf="D_Menu_WithItems";
-		const {items,...u_}=this.s(cf,x);
-		if(!this.is_not_empty_obj(u_)) return this.g(u_);
+		const {items,...u1}=this.s(cf,x);
+		if(!this.is_not_empty_obj(u1)) return this.g(u1);
 		this.z(items,x => {
 			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 			debugger;
 		});
-		const {trackingParams,...u2}=u_;
+		const {trackingParams,...u2}=u1;
 		this.trackingParams(trackingParams);
 		if(!this.is_not_empty_obj(u2)) return this.g(u2);
-		let u=u2;
+		const {accessibility,...u3}=u2;
+		this.D_Accessibility(accessibility);
+		if(!this.is_not_empty_obj(u3)) return this.g(u3);
+		let u=u3;
 		if("flexibleItems" in u) {
-			const {topLevelButtons,accessibility,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
+			const {topLevelButtons,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
 			this.z(topLevelButtons,x => {
 				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
 				if("buttonRenderer" in x) return this.R_Button(x);
 				debugger;
 			});
-			this.D_Accessibility(accessibility);
 			this.z(flexibleItems,this.R_MenuFlexibleItem);
 			return;
 		}
 		if("topLevelButtons" in u) {
-			const {topLevelButtons,accessibility,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
+			const {topLevelButtons,...y}=u; this.g(y);/*#destructure_done*/
 			this.z(topLevelButtons,x => {
 				if("buttonRenderer" in x) return this.R_Button(x);
 				debugger;
@@ -1028,14 +1029,13 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if("loggingDirectives" in u) {
-			const {accessibility,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
+			const {loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_LoggingDirectives(loggingDirectives);
 			return;
 		}
-		if("accessibility" in u) {
-			const {accessibility,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
+		if("menuPopupAccessibility" in u) {
+			const {menuPopupAccessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Label(menuPopupAccessibility);
 			return;
 		}
 		this.g(u);

@@ -16,6 +16,11 @@ type D_Menu_old={
 };
 type D_Menu_WithItems={
 	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	menuPopupAccessibility: TD_Label<"List of menu actions">;
+}|{
+	items: R_MenuServiceItem[];
 }|{
 	items: R_MenuServiceItem[];
 	trackingParams: string;
