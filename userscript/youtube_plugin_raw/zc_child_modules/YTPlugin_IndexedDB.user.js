@@ -671,28 +671,13 @@ class IndexedDBService extends BaseService {
 	 * @returns {[true,T]|[false,null]}
 	 */
 	update_group(x_group,y_group) {
-		/** @arg {T[]} x_arr @arg {T[]} y_arr */
-		let find_eq_arr=(x_arr,y_arr) => x_arr.every(x_item => {
-			if(this.gas_calc===false&&this.update_gas<=0) {
-				let tmp_gas=this.update_gas;
-				this.gas_calc=true;
-				this.update_group(x_group,y_group);
-				let gas_needed=-this.update_gas;
-				this.gas_calc=false;
-				this.update_gas=tmp_gas;
-				throw new Error("Out of gas (needs "+gas_needed+" more)");
-			}
-			this.update_gas--;
-			let y_idx=y_arr.findIndex(y_item => y_item===x_item);
-			return y_idx>0;
-		});
 		switch(x_group[0]) {
 			case "many": {
 				let x_many=x_group[1]; switch(y_group[0]) {
 					case "many": {
 						let y_many=y_group[1];
 						for(let y_arr of y_many) {
-							if(x_many.findIndex(x_arr => find_eq_arr(x_arr,y_arr))<0) continue;
+							if(x_many.findIndex(x_arr => this.eq_keys(x_arr,y_arr))<0) continue;
 							x_many.push(y_arr);
 							return [true,x_group];
 						}
@@ -701,7 +686,7 @@ class IndexedDBService extends BaseService {
 						let y_arr=y_group[1];
 						for(let x_arr of x_many) {
 							if(x_arr.length!==y_arr.length) continue;
-							if(find_eq_arr(x_arr,y_arr)) continue;
+							if(this.eq_keys(x_arr,y_arr)) continue;
 							x_many.push(y_arr);
 							return [true,x_group];
 						}
@@ -723,7 +708,7 @@ class IndexedDBService extends BaseService {
 						let y_many=y_group[1];
 						for(let y_arr of y_many) {
 							if(x_arr.length!==y_arr.length) continue;
-							if(find_eq_arr(x_arr,y_arr)) continue;
+							if(this.eq_keys(x_arr,y_arr)) continue;
 							y_many.push(x_arr);
 							return [true,y_group];
 						}
