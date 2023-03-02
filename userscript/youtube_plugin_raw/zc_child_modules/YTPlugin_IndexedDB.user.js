@@ -643,6 +643,7 @@ class IndexedDBService extends BaseService {
 					case "many": {
 						let y_many=y_group[1];
 						for(let y_arr of y_many) {
+							if(x_arr.length!==y_arr.length) continue;
 							if(find_eq_arr(x_arr,y_arr)) continue;
 							changed=true; y_many.push(x_arr);
 						}
