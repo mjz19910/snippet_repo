@@ -682,7 +682,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
-		console.log(d_cache.filter(e => e!==null));
+		console.log("start",d_cache.filter(e => e!==null));
 		try {
 			for(let item of d_cache) {
 				if(tx_scope.is_tx_complete) {
@@ -772,6 +772,7 @@ class IndexedDBService extends BaseService {
 					this.committed_data.push(item);
 				}
 			}
+			console.log("end",d_cache.filter(e => e!==null));
 			let complete_event=await tx_scope.complete_promise;
 			this.handle_transaction_complete(tx_scope,complete_event);
 		} finally {
