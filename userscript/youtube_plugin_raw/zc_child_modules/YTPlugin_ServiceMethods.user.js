@@ -6017,10 +6017,6 @@ class ServiceMethods extends ServiceData {
 		if(x[2]!=="comments-section") debugger;
 		this.z(x[0],this.R_ContinuationItem);
 	}
-	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: `UC${string}`}} */
-	is_D_EmojiPickerCategoryButton_ForChannel(x) {
-		return this.str_starts_with(x.categoryId,"UC");
-	}
 	/** @public @arg {R_CommentSimplebox} x */
 	R_CommentSimplebox(x) {this.H_("commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @private @arg {D_CommentSimplebox} x */
