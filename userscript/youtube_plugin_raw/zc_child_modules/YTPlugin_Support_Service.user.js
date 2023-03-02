@@ -2883,7 +2883,7 @@ class Support_Renderer extends ServiceMethods {
 		if(defaultStateIcon.iconType!=="STAR_BORDER") debugger;
 		if(onStateIcon.iconType!=="STAR") debugger;
 		this.ht.C_FollowUp(followUpCommand);
-		this.g(responseEndpoint);
+		this.E_Feedback(responseEndpoint);
 		this.trackingParams(trackingParams);
 		this.a_primitive_bool(checked);
 		this.a_primitive_bool(selected);

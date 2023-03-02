@@ -2461,7 +2461,7 @@ type D_RatingSurveyOption={
 	defaultStateIcon: T_Icon<"STAR_BORDER">;
 	onStateIcon: T_Icon<"STAR">;
 	followUpCommand: C_FollowUp;
-	responseEndpoint: {};
+	responseEndpoint: E_Feedback;
 	trackingParams: string;
 	checked: boolean;
 	selected: boolean;
