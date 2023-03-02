@@ -470,8 +470,8 @@ type GD_RC_SectionList=
 ;
 type Ret_get_auto_type_name=
 	|"RMD_Badge"
-	|`T_OpenPopup_Dialog<${string}>`
-	|`T_OpenPopup_Toast<${string}>`
+	|`TA_OpenPopup<T_OpenPopup_Dialog<${string}>>`
+	|`TA_OpenPopup<T_OpenPopup_Toast<${string}>>`
 	|"A_OpenPopup"
 	|"{}"
 	|`D_${"PrefetchHintConfig"}`

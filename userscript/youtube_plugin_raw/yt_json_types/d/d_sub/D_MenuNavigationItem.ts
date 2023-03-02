@@ -3,10 +3,11 @@ type D_ReasonItem={
 	endpoint: E_Pinging;
 };
 
+type AD_AboutThisAd=T_OpenPopup_Dialog<R_AboutThisAd>;
 type D_MenuNavigationItem={
 	text: G_Text;
 	icon?: T_Icon<"INFO"|"FEEDBACK">;
-	navigationEndpoint: E_UserFeedback|T_OpenPopup_Dialog<R_AboutThisAd>|E_AdFeedback;
+	navigationEndpoint: E_UserFeedback|A_AboutThisAd|E_AdFeedback;
 	trackingParams: string;
 	accessibility?: TD_Accessibility<"Send feedback">;
 };

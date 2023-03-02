@@ -3402,7 +3402,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
 	D_MenuNavigationItem_Endpoint(x) {
 		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
-		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+		if("openPopupAction" in x) return this.T_OpenPopup_Dialog(x);
 	}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}

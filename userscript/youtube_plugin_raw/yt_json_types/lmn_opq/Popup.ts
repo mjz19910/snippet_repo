@@ -16,6 +16,7 @@ type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;
 //#endregion
 //#endregion
 //#region Actions
+type A_AboutThisAd=TA_OpenPopup<AD_AboutThisAd>;
 type A_ClientSignal=TA_OpenPopup<Popup_ClientSignal>;
 type A_ConfirmDialog=TA_OpenPopup<Popup_DL_ConfirmDialog>;
 type A_FancyDismissibleDialog=TA_OpenPopup<Popup_DL_DismissibleDialog>;
@@ -27,16 +28,17 @@ type A_NotificationToast=TA_OpenPopup<Popup_NotificationToast>;
 type A_PdgBuyFlow=TA_OpenPopup<R_PdgBuyFlow>;
 type A_ShareEntityService=TA_OpenPopup<Popup_DL_ShareEntityService>;
 type G_OpenPopup_All=
-	|A_GetSystemMenu
+	|A_AboutThisAd
+	|A_ClientSignal
 	|A_ConfirmDialog
-	|A_ShareEntityService
 	|A_FancyDismissibleDialog
 	|A_GetAccountMenu
 	|A_GetNotificationsMenu
-	|A_ClientSignal
+	|A_GetSystemMenu
 	|A_NotificationMenuPopup
 	|A_NotificationToast
 	|A_PdgBuyFlow
+	|A_ShareEntityService
 	;
 ;
 //#endregion
