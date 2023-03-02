@@ -2209,11 +2209,16 @@ class HandleTypes extends ServiceMethods {
 		}
 		switch(r_str[1]) {
 			default: this.save_string_arr(`${cf}.str.default`,r_str); break;
-			case "ni-push-u-sub":
+			case "cards":
+			case "endscreen":
 			case "external":
+			case "iv-endscreen":
 			case "list_other":
-			case "related":
+			case "ni-push-u-sub":
 			case "related-auto":
+			case "related":
+			case "rellist":
+			case "shortswatch":
 			case "watch":
 		}
 	}
