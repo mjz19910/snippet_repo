@@ -51,7 +51,7 @@ type RetParam_BinaryTimestamp=
 	;
 ;
 type RetParam_D32=`TYPE::T_D32<${number}>`;
-type RetParam_D64=`TYPE::T_D64<${bigint}>`;
+type RetParam_D64=`TYPE::T_D64<${bigint}n>`;
 type RetParam_FD32=`TYPE::T_FD32<${number}>`;
 type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
 type RetParam_ShortTimestamp="TYPE::T_VW<V_ShortTimestamp>";

@@ -1459,7 +1459,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {V_ParamItem} x @returns {RetParam_D64} */
 	v_param_2_D64(x) {
 		if(x[0]!=="data64") throw new Error();
-		return `TYPE::T_D64<${x[2]}>`;
+		return `TYPE::T_D64<${x[2]}n>`;
 	}
 	/** @arg {V_ParamItem} otu @returns {RetParam_FD32} */
 	v_param_2_FD32(otu) {
@@ -2556,7 +2556,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
 		const cf="P_ve_6827_params";
-		const {77: f77,84: f84,93: f93,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {77: f77,84: f84,93: f93,94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {

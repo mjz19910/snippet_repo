@@ -467,6 +467,16 @@ type P_ve_6827_params={
 		1: TV_Str<"bigbusiness">;
 		3: T_D32<1>;
 	}>;
+	94?: T_VW<{
+		1: T_VW<{
+			2: T_VW_BinTs<{
+				1: TV_Str<"xzrEJV3rzU4">;
+				2: TV_Str<"xzrEJV3rzU4">;
+				3: TV_Str<"xzrEJV3rzU4">;
+			}>;
+		}>;
+		5: T_D64<1259646283376989624n>;
+	}>;
 };
 type P_playlist_edit_params={
 	1: T_D32<1>;
