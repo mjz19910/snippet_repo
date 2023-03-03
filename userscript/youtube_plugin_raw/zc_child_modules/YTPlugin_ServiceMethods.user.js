@@ -1523,7 +1523,7 @@ class ServiceMethods extends ServiceData {
 		/** @type {`${typeof rk}[${f}]`} */
 		let k=`${rk}[${JSON.stringify(f)}]`;
 		this.save_string(rk,f);
-		let s_url_data=this.save_db.data_store.number_store.data.find(e => e[0]===k);
+		let s_url_data=this.save_db.data_store.get_number_store().data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_number(k,1); return;}
 		let wd=s_url_data[1];
 		switch(wd[0]) {
@@ -3148,7 +3148,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @private @arg {D_GM_VeNum} x */
-	on_root_visual_element(x) {this.save_db.data_store.ve_store.save_data("ve_element",["one",x]);}
+	on_root_visual_element(x) {this.save_db.data_store.stores.get("ve_store").save_data("ve_element",["one",x]);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */
