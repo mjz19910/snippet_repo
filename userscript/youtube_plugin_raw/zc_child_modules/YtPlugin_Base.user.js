@@ -2306,21 +2306,38 @@ class BaseService extends BaseServicePrivate {
 	some(x) {return {type: "s",v: x};}
 	/** @template T @arg {T} x @returns {Some<T>} */
 	m(x) {return this.some(x);}
+	/** @template T @arg {Some<T>} x */
+	mw(x) {
+		/** @template ST @template {this} CU */
+		class SomeEx {
+			/** @arg {CU} cls @arg {Some<ST>} x */
+			constructor(cls,x) {
+				this.cls=cls;
+				this.some=x;
+			}
+			/** @arg {(this:this["cls"],x:ST)=>U} f @template U */
+			mc(f) {
+				let s=f.call(this.cls,this.some.v);
+				return new SomeEx(this.cls,this.cls.m(s));
+			}
+		}
+		return new SomeEx(this,x);
+	}
 	/** @template T @arg {Some<T>} x @returns {T} */
 	mu(x) {return x.v;}
-	/** @arg {(x:T)=>U} y @template T @arg {Some<T>} x @template U @returns {Some<U>} */
+	/** @arg {(this:this,x:T)=>U} y @template T @arg {Some<T>} x @template U @returns {Some<U>} */
 	mt(x,y) {return this.m(y.call(this,x.v));}
-	/** @arg {(x:T)=>U} y @template {{}} T @template {Some<T[]>} Opt @arg {Opt} x @template U */
+	/** @arg {(this:this,x:T)=>U} y @template {{}} T @template {Some<T[]>} Opt @arg {Opt} x @template U */
 	mz(x,y) {return this.mt(x,x => this.z(x,y));}
-	/** @arg {(x:T)=>U} f @template T @arg {Some<T>} m @template U */
+	/** @arg {(this:this,x:T)=>U} f @template T @arg {Some<T>} m @template U */
 	mb(f,m) {return this.mt(m,f);}
-	/** @template T @arg {T} x @template U @arg {(x:T)=>U} y @returns {Some<U>} */
+	/** @template T @arg {T} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U>} */
 	ms(x,y) {return this.mt(this.m(x),y);}
-	/** @template {{}} T @arg {T|undefined} x @template U @arg {(x:T)=>U} y @returns {Some<U|null>} */
+	/** @template {{}} T @arg {T|undefined} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U|null>} */
 	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
-	/** @template {{}} T @arg {Some<T|null>} x @template U @arg {(x:T)=>U} y @returns {Some<U|null>} */
+	/** @template {{}} T @arg {Some<T|null>} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U|null>} */
 	mt_t(x,y) {return this.mt(x,x => this.t(x,y));}
-	/** @template {string} T_CF @arg {T_CF} cf @arg {(cf:T_CF,x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U|null>} */
+	/** @template {string} T_CF @arg {T_CF} cf @arg {(this:this,cf:T_CF,x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U|null>} */
 	mt_cf(m,cf,f) {return this.mt(m,x => this.t_cf(cf,x,f));}
 	//#endregion
 }

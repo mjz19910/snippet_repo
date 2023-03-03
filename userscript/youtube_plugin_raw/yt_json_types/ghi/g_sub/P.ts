@@ -136,13 +136,10 @@ type P_logging_context_serialized_context_data={
 	1?: T_VW<{1: T_D32<12>;}>;
 	3?: TV_Str<SD_PlaylistId>;
 };
+type T_VW_tag<_T>=T_VW<{}>;
 type P_like_params={
 	1: T_VW<{
-		1: T_VW<{
-			8: T_FD32<1382109803>;
-			9: T_FD32<2126714>;
-			14: T_D32<115>;
-		}>|TV_Str<D_VideoIdStr>;
+		1: T_VW_tag<D_VideoIdStr>|TV_Str<D_VideoIdStr>;
 	}>;
 	4: T_D32<0>;
 	5?: T_D32<1>;
@@ -307,13 +304,12 @@ type P_reel_sequence_params={
 	1: TV_Str<string>;
 	5: T_VW<{3: T_D32<12>;}>;
 };
-type P_get_pdg_buy_flow_params={
-	1: {
-		1: TV_Str<string>;
-		2: TV_Str<`UC${string}`>;
-		3: T_D32<1>;
-	};
+type PX_buy_flow_params={
+	1: TV_Str<string>;
+	2: TV_Str<`UC${string}`>;
+	3: T_D32<1>;
 };
+type P_get_pdg_buy_flow_params={1: T_VW<PX_buy_flow_params>;};
 type PD_continuation_params={
 	3: T_VW<{
 		4: T_FD32<20988979>;
