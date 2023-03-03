@@ -2595,14 +2595,19 @@ class HandleTypes extends ServiceMethods {
 		const cf="PX_watch_next_token_info";
 		const {2: {},4: {}={},6: {}={},7: {}={},25: {}={},28: {}={},36: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {PX_watch_next_token_item} x */
+	PX_watch_next_token_item(x) {
+		const cf="PX_watch_next_token_item";
+		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		console.log(v1);
+		v3&&console.log(v3);
+	}
 	/** @private @arg {PX_watch_next_token_3_f1} x */
 	PX_watch_next_token_3_f1(x) {
 		const cf="PX_watch_next_token_3.f1";
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		let n1=v1[1];
-		for(let [,,u1] of n1) {
-			this.codegen_typedef_bin(`${cf}.f1.rep`,u1);
-		}
+		for(let [,,u1] of n1) this.PX_watch_next_token_item(u1);
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 	}
 	/** @private @arg {PX_watch_next_token_3} x */
