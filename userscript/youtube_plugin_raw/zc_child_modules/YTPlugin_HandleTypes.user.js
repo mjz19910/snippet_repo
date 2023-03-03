@@ -2575,7 +2575,7 @@ class HandleTypes extends ServiceMethods {
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(this.TV_Str(f2));
+		this.t(this.TV_Str(f2),x => this.videoId(x));
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
