@@ -20,7 +20,8 @@ namespace GV_Parts_NS {
 		t
 		u
 		x
-		`>,"\n\t\t">
+		`>,`
+		`>
 		;
 	;
 	export type G_GV_Base=
