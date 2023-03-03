@@ -379,20 +379,21 @@ type P_create_comment_params={
 	10: T_D32<7>;
 };
 type P_trending_bp={77: TV_Str<"FEexplore">;};
+type P_ypc_get_offers_params_f1={
+	1: T_D32<3>;
+	2: TV_Str<`UC${string}`>;
+};
+type P_ypc_get_offers_params_f5_f1={1: TV_Str<"32KKwgF67Ho">;};
+type P_ypc_get_offers_params_f5={
+	1: TV_Str<"32KKwgF67Ho">;
+	3: T_D32<1>;
+	5: T_VW<P_ypc_get_offers_params_f5_f1>;
+	9: T_D32<2>;
+};
 type P_ypc_get_offers_params={
-	1: T_VW<{
-		1: T_D32<3>;
-		2: TV_Str<`UC${string}`>;
-	}>;
+	1: T_VW<P_ypc_get_offers_params_f1>;
 	3: T_D32<3>;
-	5: T_VW<{
-		1: TV_Str<"32KKwgF67Ho">;
-		3: T_D32<1>;
-		5: T_VW<{
-			1: TV_Str<"32KKwgF67Ho">;
-		}>;
-		9: T_D32<2>;
-	}>;
+	5: T_VW<P_ypc_get_offers_params_f5>;
 };
 type P_notification_record_interactions={
 	2: T_VW<{
