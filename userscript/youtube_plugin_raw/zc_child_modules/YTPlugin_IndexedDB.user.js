@@ -194,7 +194,6 @@ class IndexedDBService extends BaseService {
 	expected_load_id=0;
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
-		this.update_gas+=1000;
 		let save_id=await this.get_id_box("save_id",version);
 		if(!save_id) {
 			this.expected_save_id=0;
@@ -207,7 +206,6 @@ class IndexedDBService extends BaseService {
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
-		this.update_gas+=1000;
 		let load_id=await this.get_id_box("load_id",version);
 		if(!load_id) {
 			this.expected_load_id=0;
@@ -220,7 +218,6 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
-		this.update_gas+=1000;
 		let results=await Promise.allSettled(store.data.map(item => this.push_store_item_to_database(store,item,version)));
 		for(let result of results) {
 			if(result.status==="rejected") {
@@ -511,19 +508,9 @@ class IndexedDBService extends BaseService {
 			throw new AggregateError([e]);
 		}
 	}
-	gas_calc=false;
-	update_gas=10000;
-	/** @type {number|null} */
-	more_gas_interval=null;
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
-		if(this.update_gas<2000&&this.more_gas_interval===null) {
-			this.more_gas_interval=setTimeout(() => {
-				this.more_gas_interval=null;
-				this.update_gas=10000;
-			},400);
-		}
 		this.database_opening=true;
 		let db=await this.get_async_result(this.get_db_request(version));
 		this.database_opening=false;
