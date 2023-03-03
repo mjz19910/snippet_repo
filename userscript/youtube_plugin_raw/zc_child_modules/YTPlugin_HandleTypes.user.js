@@ -711,7 +711,7 @@ class HandleTypes extends ServiceMethods {
 		const {partition,selector}=x;
 		this.save_string(`${cf}.partition`,partition);
 		this.save_string(`${cf}.selector`,selector);
-		/** @type {G_Gv_0} */
+		/** @type {G_GV_0} */
 		// cSpell:ignoreRegExp /"(5u|qx|vg)[a-z]{3}"/
 		switch(partition) {
 			default: {
@@ -754,7 +754,7 @@ class HandleTypes extends ServiceMethods {
 				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
 				break;
 		}
-		/** @type {G_Gv_1} */
+		/** @type {G_GV_1} */
 		switch(selector) {
 			default: {
 				if(!this.selector.new_.includes(selector)) this.selector.new_.push(selector);
@@ -1946,15 +1946,15 @@ class HandleTypes extends ServiceMethods {
 		this.D_GoogleVideoHostPartition(partition);
 		return partition;
 	}
-	/** @private @arg {`sn-${string}n${string}`} x @returns {["sn","-",G_Gv_0,"n",G_Gv_1]} */
+	/** @private @arg {`sn-${string}n${string}`} x @returns {["sn","-",G_GV_0,"n",G_GV_1]} */
 	get_gv_parts_impl(x) {
 		let ss=split_string(x,"-")[1];
 		let idx=5;
 		let r1=ss.slice(0,idx);
 		let r2=ss.slice(idx+1);
 		if(ss[idx]!=="n") debugger;
-		this.assert_assume_is_type(r1,/**@returns {G_Gv_0} */() => {throw new Error();});
-		this.assert_assume_is_type(r2,/**@returns {G_Gv_1} */() => {throw new Error();});
+		this.assert_assume_is_type(r1,/**@returns {G_GV_0} */() => {throw new Error();});
+		this.assert_assume_is_type(r2,/**@returns {G_GV_1} */() => {throw new Error();});
 		return ["sn","-",r1,"n",r2];
 	}
 	/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */

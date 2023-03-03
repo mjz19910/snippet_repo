@@ -1,23 +1,26 @@
-// cSpell:ignoreRegExp /"(\dualdn?|5u[a]e[z]|qx[o]e[d]|vg[q]s[rk])"/
-type G_GV_Base=
-	|"5ua" // 2 * 3 + 1 [B] + 1 [S] = 8
-	|"9gv" // 3 * 3 + 1 [B] + 1 [S] = 11
-	|"a5m" // 3 * 3 + 1 [B] + 1 [S] = 11
-	|"ab5" // 2 * 3 + 1 [B] = 7
-	|"hp5" // 2 * 3 + 1 [B] + 1 [S] = 8
-	|"n4v" // 1 * 3 + 1 [B] + 1 [S] = 5
-	|"n8v" // 1 * 3 + 1 [B] + 1 [S] = 5
-	|"nx5" // 2 * 3 + 1 [B] = 7
-	|"o09" // 1 * 3 + 1 [B] + 1 [S] = 5
-	|"p5q" // 2 * 3 + 1 [B] + 1 [S] = 8
-	|"q4f" // 3 * 3 + 1 [B] + 1 [S] = 11
-	|"qxo" // 2 * 3 + 1 [B] + 1 [S] = 8
-	|"t0a" // 2 * 3 + 1 [B] = 7
-	|"tt1" // 2 * 3 + 1 [B] = 7
-	|"vgq" // 2 * 3 + 1 [B] = 7
+// cSpell:ignoreRegExp /"(\dualdn?|5u[a]e[z]|qx[o]e[d]|vg[q]s[rk]|vg[q]s)"/
+namespace GV_Parts_NS {
+	export const done_func=(num: number) => (num*2)/*[GV_0]*/+num/*[TypeArr]*/+1/*[B]*/+2/*[S]*/;
+	export type G_GV_Base=
+		|"5ua" // done_func(2) = 9
+		|"9gv" // done_func(3) = 12
+		|"a5m" // done_func(3) = 12
+		|"ab5" // done_func(2) = 9
+		|"hp5" // done_func(2) = 9
+		|"n4v" // done_func(1) = 6
+		|"n8v" // done_func(1) = 6
+		|"nx5" // done_func(2) = 9
+		|"o09" // done_func(1) = 6
+		|"p5q" // done_func(2) = 9
+		|"q4f" // done_func(3) = 12
+		|"qxo" // done_func(2) = 9
+		|"t0a" // done_func(2) = 9
+		|"tt1" // done_func(2) = 9
+		|"vgq" // done_func(2) = 9
+		;
 	;
-;
-type G_Gv_0=
+}
+type G_GV_0=
 	|"5uaez" // 2 [dig_final] [dig_user@5ua:[6,7,e,l,r,y]]
 	|"5uald" // 2 [dig_final] [dig_user@5ua:[l,s,z]]
 	|"9gv7e" // 2 [dig_final] [dig_user@9gv:[e,l]]
@@ -59,19 +62,21 @@ type PT_DigDomain=[
 type PT_TypeS_NoRep=[
 ];
 type PT_TypeS=[
-	gen_g3_t2<"5ua",[
-		"ez",
-		"ld",
-	]>,
-	gen_g3_t2<"9gv7",["e","l","z"]>,
-	gen_g3_t2<"a5m",["ek","lr","se"]>,
-	gen_g3_t2<"hp57",["k","y"]>,
-	gen_g3_t2<"n4v",["7s","7z"]>,
-	gen_g2_t1<"n8v7z">,
-	gen_g2_t1<"o097z">,
-	gen_g3_t2<"p5q",["ls","s7"]>,
-	gen_g3_t2<"q4f",["l6","lr","ze",]>,
-	gen_g3_t2<"qxo",["7r","ed"]>,
+	["5ua",gen_g3_t2<"5ua",["ez","ld"]>],
+	["9gv",gen_g3_t2<"9gv7",["e","l","z"]>],
+	["a5m",gen_g3_t2<"a5m",["ek","lr","se"]>],
+	["ab5",gen_g3_t2<"ab5",["l6","sz"]>],
+	["hp5",gen_g3_t2<"hp57",["k","y"]>],
+	["n4v",gen_g3_t2<"n4v",["7s","7z"]>],
+	["n8v",gen_g2_t1<"n8v7z">],
+	["nx5",gen_g3_t2<"nx5",["s7","7y"]>],
+	["o09",gen_g2_t1<"o097z">],
+	["p5q",gen_g3_t2<"p5q",["ls","s7"]>],
+	["q4f",gen_g3_t2<"q4f",["l6","lr","ze"]>],
+	["qxo",gen_g3_t2<"qxo",["7r","ed"]>],
+	["t0a",gen_g3_t2<"t0a7",["l","s"]>],
+	["tt1",gen_g3_t2<"tt1e",["7","l"]>],
+	["vgq",gen_g3_t2<"vgqs",["k","r"]>],
 ];
 type PT_TypeArr=[
 	["5uaez",[
@@ -220,7 +225,7 @@ type PT_TypeArr=[
 		"z6","z7","zd","zk","zs","zz",
 	]],
 ];
-type G_Gv_1_List=[
+type G_GV_1_List=[
 	"6d","6k","6l","6r","6s","6y","6z",
 	"7d","7l","7s","7s","7y","7z","76",
 	"d6","dd","de","dk","dl","dr","ds","ds","dy","dz",
@@ -231,7 +236,7 @@ type G_Gv_1_List=[
 	"y6","z7",
 	"zd","ze","zk","zl","zr","zs","zy",
 ];
-type G_Gv_1_List_0=[
+type G_GV_1_List_0=[
 	"6",
 	"7",
 	"d",
@@ -243,10 +248,10 @@ type G_Gv_1_List_0=[
 	"y",
 	"z",
 ];
-type G_Gv_1_List_1=[
+type G_GV_1_List_1=[
 	/*     */"6","7","d","e","k","l","r","s","y","z",
 ];
-type G_Gv_1=
+type G_GV_1=
 	|`6${" "|" "|"d"|" "|" "|" "|"l"|" "|" "|"z"|" "}`
 	|`7${"6"|" "|"d"|" "|"k"|"r"|"l"|"s"|"y"|"z"|" "}`
 	|`d${"6"|" "|" "|" "|" "|" "|" "|"s"|"y"|"z"|" "}`
@@ -259,7 +264,7 @@ type G_Gv_1=
 	;
 ;
 type D_GoogleVideoHostPartition={
-	parts: ["sn","-",G_Gv_0,"n",G_Gv_1],
-	partition: G_Gv_0,
-	selector: G_Gv_1,
+	parts: ["sn","-",G_GV_0,"n",G_GV_1],
+	partition: G_GV_0,
+	selector: G_GV_1,
 };

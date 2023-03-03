@@ -6,12 +6,12 @@ type R_MacroMarkersInfoItem={macroMarkersInfoItemRenderer: D_MacroMarkersInfoIte
 type D_GoogleVideoHostPartitionRet<T extends D_GoogleVideoPathname>={
 	host: `rr${number}---sn-${string}n${string}.googlevideo.com`;
 	path: T;
-	parts: ["rr",`${number}`,"---","sn","-",G_Gv_0,"n",G_Gv_1,".","googlevideo",".","com"];
+	parts: ["rr",`${number}`,"---","sn","-",G_GV_0,"n",G_GV_1,".","googlevideo",".","com"];
 	partitioned: D_GoogleVideoHostPartition;
 }|{
 	host: `r${number}---sn-${string}n${string}.googlevideo.com`;
 	path: T;
-	parts: ["r",`${number}`,"---","sn","-",G_Gv_0,"n",G_Gv_1,".","googlevideo",".","com"];
+	parts: ["r",`${number}`,"---","sn","-",G_GV_0,"n",G_GV_1,".","googlevideo",".","com"];
 	partitioned: D_GoogleVideoHostPartition;
 };
 type D_GoogleVideoPathname=UrlParse<RE_D_GoogleVideoUrl>["pathname"];
