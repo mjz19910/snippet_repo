@@ -515,14 +515,16 @@ type P_ve_6827_params={
 type P_playlist_edit_params={
 	1: T_D32<1>;
 };
+type P_ve_3611_params_1={
+	1: T_VW<P_ve_3611_params_2>;
+};
+type P_ve_3611_params_2={
+	6: T_VW<{}>;
+};
 type P_ve_3611_params={
-	2: T_VW<{}>;
-	23: T_D32<0>;
-	110: T_VW<{
-		1: T_VW<{
-			6: T_VW<{}>;
-		}>;
-	}>;
+	2?: T_VW<{}>;
+	23?: T_D32<0>;
+	110: T_VW<P_ve_3611_params_1>;
 };
 type P_search_params={
 	2: T_VW<PF_23n24n>;
