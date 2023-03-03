@@ -68,6 +68,22 @@ namespace GV_Parts_NS {
 		`>
 		;
 	;
+	export type G_GV_idx4=
+		T_Split<T_StringTrim<`
+		6
+		7
+		d
+		e
+		k
+		l
+		r
+		s
+		y
+		z
+		`>,`
+		`>
+		;
+	;
 }
 type G_GV_0=
 	|"5uaez" // 2 [dig_final] [dig_user@5ua:[6,7,e,l,r,y]]
