@@ -2599,8 +2599,8 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_item(x) {
 		const cf="PX_watch_next_token_item";
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(v1);
-		v3&&console.log(v3);
+		console.log(`${cf}.f1`,v1[1][0]);
+		v3&&this.T_D32(v3,x => console.log(`${cf}.f3`,x));
 	}
 	/** @private @arg {PX_watch_next_token_3_f1} x */
 	PX_watch_next_token_3_f1(x) {
