@@ -2630,17 +2630,17 @@ class HandleTypes extends ServiceMethods {
 		this.T_D32(v2,x => this.save_number(`${cf}.f2`,x));
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 	}
-	/** @private @arg {P_continuation_request_watch_next_token[2][1][0][2]} x */
-	PX_watch_next_token_f2(x) {
-		const cf="PX_watch_next_token_f2";
-		const {2: v2,4: {},6: f6,7: {},25: {},28: {},36: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	/** @private @arg {PX_watch_next_token_info} x */
+	PX_watch_next_token_info(x) {
+		const cf="PX_watch_next_token_info";
+		const {2: v2,4: {},6: f6,7: {}={},25: {},28: {},36: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
 		const {1: v1,2: v2,3: v3,5: f5,6: f6,13: f13,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		v1&&this.T_D32(v1,x => this.save_number(`${cf}.f1`,x));
-		this.T_VW(v2,this.PX_watch_next_token_f2);
+		this.T_VW(v2,this.PX_watch_next_token_info);
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 	}
 	/** @private @template {string} T @arg {TV_Str<T>|TW_TagStr<T>} x */
