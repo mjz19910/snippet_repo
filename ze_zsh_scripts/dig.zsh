@@ -99,7 +99,8 @@ function dig_user-run {
 	mkdir -p $TMP_DIR/dig/$TMP_TAG/tmp $TMP_DIR/dig/$TMP_TAG/out
 	echo $TMP_DIR/dig/$TMP_TAG/tmp/result.*(N) | xargs -r rm
 	z=$(get_abc_opt)
-	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user-child "$@"' ''
+	gz=$(get_google_opt)
+	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$gz}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
