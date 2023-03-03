@@ -2719,7 +2719,6 @@ class ServiceMethods extends ServiceData {
 			let ret=await this.indexed_db.put(key,value,this.indexed_db_version);
 			return ret;
 		} catch(e) {
-			console.log("failed to put",key,value,e);
 			return null;
 		}
 	}
