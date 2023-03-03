@@ -208,6 +208,7 @@ type PX_watch_next_token_2={
 };
 type PX_watch_next_token_1={
 	4: T_VW<PX_watch_next_token_2>;
+	6?: T_D32<1>;
 	8: TV_Str<"comments-section">;
 };
 type PX_watch_next_token_4={
@@ -447,12 +448,11 @@ type P_notification_opt_out={
 	7: TV_Str<"dSHPtnZr2BdhZ8ss">;
 };
 type P_get_notification_menu_ctoken={1: T_D32<1676646338997768>;};
-type P_format_item_xtags={
-	1: T_VW<{
-		1: TV_Str<"heaudio">;
-		2: TV_Str<"true">;
-	}>;
+type P_format_item_xtags_f1={
+	1: TV_Str<"heaudio">;
+	2: TV_Str<`${true}`>;
 };
+type P_format_item_xtags={1: T_VW<P_format_item_xtags_f1>;};
 type P_watch_player_params={
 	8?: T_D32<1>;
 	9?: T_D32<1>;
@@ -530,11 +530,13 @@ type PF_23n24n={
 	23: T_D32<1>;
 	24: TV_Str<string>;
 };
+type P_bin_params_1_f1={
+	1: T_FD64<5171158136908114023n>;
+	2: T_FD64<13946304882864751271n>;
+};
+
 type P_bin_params_1={
-	1: T_VW<{
-		1: T_FD64<5171158136908114023n>;
-		2: T_FD64<13946304882864751271n>;
-	}>;
+	1: T_VW<P_bin_params_1_f1>;
 };
 type P_notification_add_upcoming_event_reminder_params={
 	1: T_VW<{14: T_FD64<6427857484411717751n>;}>;

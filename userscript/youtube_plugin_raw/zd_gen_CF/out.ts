@@ -574,6 +574,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_bin";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token.f9";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_1";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_3";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_3.f1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_4";}
@@ -594,6 +595,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_dislike_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_dislike_params.f1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_format_item_xtags";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_format_item_xtags.f1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_get_notification_menu_ctoken";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_get_pdg_buy_flow_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_get_report_form_params";}
