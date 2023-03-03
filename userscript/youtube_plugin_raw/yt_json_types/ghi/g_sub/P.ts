@@ -207,9 +207,13 @@ type P_continuation_request_watch_next_token={
 		}>;
 		8: TV_Str<"comments-section">;
 	}>;
+	9?: T_VW<{}>;
 	13?: T_VW<{
 		5: T_FD32<1684366694>;
 		12: T_FD64<8392569429487543156n>;
+	}>;
+	14?: T_VW<{
+		1: T_D32<0>;
 	}>;
 };
 type P_watch_playlist_params={

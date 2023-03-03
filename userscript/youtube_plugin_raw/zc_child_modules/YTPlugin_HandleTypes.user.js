@@ -2638,7 +2638,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {1: v1,2: v2,3: v3,5: f5,6: f6,13: f13,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2,3: v3,5: f5,6: f6,9: f9,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		v1&&this.T_D32(v1,x => this.save_number(`${cf}.f1`,x));
 		this.T_VW(v2,this.PX_watch_next_token_info);
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
