@@ -2152,10 +2152,10 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {RB_Obj_f19} x @name V_VeDescObj */
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19";
-		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,2: binary_ve,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(f1,x => this.T_D32(x,x => this.save_number(`${cf}.f1`,x)));
-		this.T_D32(f2,x => this.save_number(`${cf}.BinaryVe`,x));
-		this.T_D32(f2,x => this.BinaryVe(x));
+		this.T_D32(binary_ve,x => this.save_number(`${cf}.BinaryVe`,x));
+		this.T_D32(binary_ve,x => this.BinaryVe(x));
 		this.t(f3,x => this.T_D32(x,x => this.save_number(`${cf}.f3`,x)));
 		this.codegen_typedef_bin(cf,x,false);
 	}
@@ -2164,13 +2164,14 @@ class HandleTypes extends ServiceMethods {
 		const cf="G_PR_TrackingObj_f16";
 		const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		this.T_D32(f2,x => this.save_number(`${cf}.f2`,x));
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
 		const cf="H_TrackingObj",t=this;
-		const {1: f1,2: f2,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		t.t(f1,x => t.TK_D32(cf,x,"tag"));
-		t.t(f2,x => t.TK_D32(cf,x,"id"));
+		const {1: obj_tag,2: obj_id,3: f3,4: f4,6: f6,7: f7,8: f8,9: f9,11: f11,16: f16,19: f19,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		t.t(obj_tag,x => t.TK_D32(cf,x,"tag"));
+		t.t(obj_id,x => t.TK_D32(cf,x,"id"));
 		t.t(f3,x => t.TK_D32(cf,x,"f3"));
 		t.t(f4,t.VW_BinaryTimestamp);
 		t.t_cf(`${cf}_f6`,f6,t.H_TrackingObj_f6);
@@ -2279,12 +2280,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_ShortTimestamp} x */
 	V_ShortTimestamp(x) {
 		const cf="V_ShortTimestamp";
-		const {1: request_timestamp_milli_utc,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: request_timestamp_milli_utc,2: nanoseconds_ts,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(request_timestamp_milli_utc,x => {
 			this.log_buffer.push(["number",`max_gen:V_ShortTimestamp:binary_ts_gen`,"f1","milliseconds",x]);
 			this.immediate_run_logger();
 		});
-		this.T_D32(f2,x => {
+		this.T_D32(nanoseconds_ts,x => {
 			if(x<=0b111011001010010001111110101000) return;
 			console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${(x).toString(2)}]`);
 		});
@@ -2303,13 +2304,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PD_continuation_request_browse_token} x */
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
-		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.t(this.TV_Str(f2),x => this.save_string(`${cf}.f2`,x));
-		this.t(this.TV_Str(f3),x => {
+		const {2: browse_id,3: target_params,35: target_id,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.t(this.TV_Str(browse_id),x => this.save_string(`${cf}.f2`,x));
+		this.t(this.TV_Str(target_params),x => {
 			if(this.params_to_decode.includes(x)) return;
 			this.params_to_decode.push(x);
 		});
-		this.t(f35,x => this.t(this.TV_Str(x),x => this.save_string(`${cf}.f35`,x)));
+		this.t(target_id,x => this.t(this.TV_Str(x),x => this.save_string(`${cf}.f35`,x)));
 	}
 	/** @private @arg {PR_continuation_request_browse_token} x */
 	PR_continuation_request_browse_token(x) {
