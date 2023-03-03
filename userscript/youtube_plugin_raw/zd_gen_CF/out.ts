@@ -553,12 +553,16 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "NotchesItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "O_DU_Persistence";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params.f11";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params.f14";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params.f3";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_request_browse_token";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_invalidation_continuation";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_invalidation_continuation.f9";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_timed_continuation";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_timed_continuation_f3";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_watch_bin";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PF_23n24n";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PK_f1";}

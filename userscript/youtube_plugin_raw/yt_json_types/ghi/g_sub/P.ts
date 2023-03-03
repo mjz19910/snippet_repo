@@ -325,26 +325,28 @@ type PX_buy_flow_params={
 	3: T_D32<1>;
 };
 type P_get_pdg_buy_flow_params={1: T_VW<PX_buy_flow_params>;};
+type PD_continuation_params_f3={
+	4: T_FD32<20988979>;
+	8: T_FD32<1162761290>;
+	9: T_FD64<4914312580592780609n>;
+	10: T_FD32<1415786570>;
+	12: T_FD64<5938077997913429358n>;
+	13: T_FD32<1481922630>;
+	14: T_FD32<2000180812>;
+};
+type PD_continuation_params_f14={
+	1: T_D32<4>;
+	3: T_D32<2>;
+	4: T_D32<0>;
+};
+type PD_continuation_params_f11={2: T_D32<1030000>;};
 type PD_continuation_params={
-	3: T_VW<{
-		4: T_FD32<20988979>;
-		8: T_FD32<1162761290>;
-		9: T_FD64<4914312580592780609n>;
-		10: T_FD32<1415786570>;
-		12: T_FD64<5938077997913429358n>;
-		13: T_FD32<1481922630>;
-		14: T_FD32<2000180812>;
-	}>;
+	3: T_VW<PD_continuation_params_f3>;
 	8: T_D32<1>;
-	11?: T_VW<{2: T_D32<1030000>;}>;
-	14: T_VW<{
-		1: T_D32<4>;
-		3: T_D32<2>;
-		4: T_D32<0>;
-	}>;
+	11?: T_VW<PD_continuation_params_f11>;
+	14: T_VW<PD_continuation_params_f14>;
 	15?: T_D32<1>;
 };
-
 type PD_invalidation_continuation={
 	3: TV_Str<string>;
 	5?: T_D32<1677254540586556>;
@@ -524,8 +526,9 @@ type P_notification_remove_upcoming_event_reminder_params={
 		2: T_D32<0>;
 	}>;
 };
+type PD_timed_continuation_f3={14: T_FD64<6427857484411717751n>;};
 type PD_timed_continuation={
-	3: T_VW<{14: T_FD64<6427857484411717751n>;}>;
+	3: T_VW<PD_timed_continuation_f3>;
 	4: T_D32<1677253347>;
 	7: T_D32<1>;
 	8: T_D32<1>;

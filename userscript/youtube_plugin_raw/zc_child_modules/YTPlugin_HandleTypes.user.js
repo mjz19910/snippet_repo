@@ -2532,14 +2532,30 @@ class HandleTypes extends ServiceMethods {
 		const {2: v2,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.t(this.TV_Str(v2),this.videoId);
 	}
-	/** @private @arg {{2: T_D32<1030000>;}} x */
-	PK_f2_d32(x) {x; debugger;}
+	/** @private @arg {PD_continuation_params_f3} x */
+	PD_continuation_params_f3(x) {
+		const cf="PD_continuation_params.f3";
+		const {4: v4,8: {},9: {},10: {},12: {},13: {},14: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
+	/** @private @arg {PD_continuation_params_f11} x */
+	PD_continuation_params_f11(x) {
+		const cf="PD_continuation_params.f11";
+		const {2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
+	/** @private @arg {PD_continuation_params_f14} x */
+	PD_continuation_params_f14(x) {
+		const cf="PD_continuation_params.f14";
+		const {1: v1,3: {},4: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
 		const {3: v3,8: f8,11: v11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.codegen_typedef_bin(`${cf}.f3`,this.T_VW_m(v3));
-		v11&&this.T_VW(v11,this.PK_f2_d32);
+		this.PD_continuation_params_f3(this.T_VW_m(v3));
+		this.T_D32(f8,x => this.save_number(`${cf}.f8`,x));
+		v11&&this.T_VW(v11,this.PD_continuation_params_f11);
+		this.PD_continuation_params_f14(this.T_VW_m(f14));
+		f15&&this.T_D32(f15,x => this.save_number(`${cf}.f15`,x));
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
@@ -2792,11 +2808,17 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	//#endregion
+	/** @private @arg {PD_timed_continuation_f3} x */
+	PD_timed_continuation_f3(x) {
+		const cf="PD_timed_continuation_f3";
+		const {14: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_FD64(r,x => console.log(`${cf}.f14`,x));
+	}
 	/** @private @arg {PD_timed_continuation} x */
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.codegen_typedef_bin(`${cf}.f3`,this.T_VW_m(v3));
+		this.PD_timed_continuation_f3(this.T_VW_m(v3));
 	}
 	//#endregion
 	//#region binary_result()
