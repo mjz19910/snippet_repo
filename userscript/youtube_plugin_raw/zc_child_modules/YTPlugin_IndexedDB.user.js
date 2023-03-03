@@ -664,8 +664,7 @@ class IndexedDBService extends BaseService {
 			if(!this.cache_weak_set.has(obj)) {
 				this.cache_weak_set.add(obj);
 				d_cache[idx]=obj;
-			}
-			else {
+			} else {
 				if(d_cache[idx]!==null) d_cache[idx]=obj;
 			}
 			return;
