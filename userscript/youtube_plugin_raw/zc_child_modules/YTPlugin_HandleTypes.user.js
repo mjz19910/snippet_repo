@@ -2642,7 +2642,7 @@ class HandleTypes extends ServiceMethods {
 		v1&&this.T_D32(v1,x => this.save_number(`${cf}.f1`,x));
 		this.T_VW(v2,this.PX_watch_next_token_info);
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
-		f5&&console.log(`${cf}.f5`,this.TV_Str(f5));
+		f5&&this.a_primitive_str(this.TV_Str(f5));
 		f6&&console.log(`${cf}.f6`,this.T_VW_m(f6));
 		f9&&console.log(`${cf}.f9`,this.T_VW_m(f9));
 		f13&&console.log(`${cf}.f13`,this.T_VW_m(f13));

@@ -1068,6 +1068,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "view_count.entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch.player_params";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch_next_token.f5.binary_token";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch_playlist.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ypc_get_cart.transaction_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ypc_get_offers.params";}
