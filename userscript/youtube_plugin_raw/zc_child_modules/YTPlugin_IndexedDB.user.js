@@ -128,28 +128,6 @@ class IndexedDBService extends BaseService {
 	expected_id=0;
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
-	/** @arg {"load_id"|"save_id"} mode @arg {number} id @arg {number} version @returns {Promise<D_BoxedUpdateId>} */
-	put_id_box(mode,id,version) {
-		switch(mode) {
-			case "load_id": {
-				return this.put_box({
-					key: `boxed_id:a:${mode}`,
-					type: mode,
-					base: "boxed_id",
-					id,
-				},version);
-			}
-			case "save_id": {
-				return this.put_box({
-					key: `boxed_id:a:${mode}`,
-					type: mode,
-					base: "boxed_id",
-					id,
-				},version);
-			}
-			default: throw new Error();
-		}
-	}
 	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedUpdateId|null>} */
 	async get_id_box(key,version) {
 		switch(key) {
@@ -212,19 +190,21 @@ class IndexedDBService extends BaseService {
 		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
-		await this.put_id_box("save_id",this.expected_save_id,version);
+		await this.put_boxed_id(version,"save_id",this.expected_save_id);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
 		let load_id=await this.get_id_box("load_id",version);
 		if(!load_id) {
 			this.expected_load_id=0;
-			load_id=await this.put_id_box("load_id",this.expected_load_id,version);
+			await this.put_boxed_id(version,"load_id",this.expected_load_id);
+			load_id=await this.get_id_box("load_id",version);
+			if(!load_id) throw new Error();
 		}
 		if(load_id.id!==this.expected_load_id) this.expected_load_id=load_id.id;
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
-		await this.put_id_box("load_id",this.expected_load_id,version);
+		await this.put_boxed_id(version,"load_id",this.expected_load_id);
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
@@ -613,7 +593,6 @@ class IndexedDBService extends BaseService {
 				let item_nt=item;
 				switch(item_nt.type) {
 					default: item_nt===""; debugger; break;
-					case "hashtag_id": break;
 					case "boolean": {
 						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
 						update_item=true;
@@ -652,7 +631,8 @@ class IndexedDBService extends BaseService {
 						update_item=true;
 					} break;
 					// not a dynamic value
-					case "playlist_id:self": break;
+					case "playlist_id:self":
+					case "hashtag_id": break;
 				}
 				if(update_item) {
 					await this.force_update(s,item);
