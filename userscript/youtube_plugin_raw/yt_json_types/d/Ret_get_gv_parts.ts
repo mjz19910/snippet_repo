@@ -5,11 +5,11 @@ type G_Gv_0=
 	|"9gv7e" // 2 [dig_final] [dig_user@9gv:[e,l]]
 	|"9gv7l" // 2 [dig_final] [dig_user@9gv:[e,l,s]]
 	|"9gv7z" // 2 [dig_final] [dig_user@9gv:[7]]
-	|"a5mek" // 2 [dig_final] [dig_user@a5m]
-	|"a5mlr" // 2 [dig_final] [dig_user@a5m]
-	|"a5mse" // 2 [dig_final] [dig_user@a5m]
-	|"ab5l6" // 2 [dig_final] [dig_user@ab5]
-	|"ab5sz" // 2 [dig_final] [dig_user@ab5]
+	|"a5mek" // 2 [dig_final] [dig_user@a5m:[6,d,s,z]]
+	|"a5mlr" // 2 [dig_final] [dig_user@a5m:[e,l]]
+	|"a5mse" // 2 [dig_final] [dig_user@a5m:[7,e,l]]
+	|"ab5l6" // 2 [dig_final] [dig_user@ab5:[d,k,r]]
+	|"ab5sz" // 2 [dig_final] [dig_user@ab5:[l,z]]
 	|"hp57k" // 2 [dig_final] [dig_user@hp5:[6,d,k]]
 	|"hp57y" // 2 [dig_final] [dig_user@hp5:[7,e,l,s]]
 	|"n4v7s" // 2 [dig_final] [dig_user@n4v:[e,l,s]]
@@ -73,10 +73,26 @@ type PT_TypeArr=[
 	["9gv7e",["e6","ed","ek","ls"]],
 	["9gv7l",["es","ez","le","s7"]],
 	["9gv7z",["76","7e"]],
-	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],
-	["a5mlr",["ek","l6","ll","ls","lz"]],
-	["a5mse",["76","7l","7s","7z","ek","er","es","l7","le","ll"]],
-	["ab5l6",["dr","dy","k6","kd","r6","rd","rk","rl","rr","rs","rz"]],
+	["a5mek",[
+		"6d","6k","6l","6r","6s","6z",
+		"d6","de","dl","ds","dz",
+		"sd","sy",
+		"zk","zl","zr","zs",
+	]],
+	["a5mlr",[
+		"ek",
+		"l6","ll","ls","lz",
+	]],
+	["a5mse",[
+		"76","7l","7s","7z",
+		"ek","er","es",
+		"l7","le","ll",
+	]],
+	["ab5l6",[
+		"dr","dy",
+		"k6","kd",
+		"r6","rd","rk","rl","rr","rs","rz",
+	]],
 	["ab5sz",[
 		"ld","lk","ly",
 		"z6","zd","ze","zk","zl","zr","zs","zy","zz",
