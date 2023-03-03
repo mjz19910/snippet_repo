@@ -2495,7 +2495,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
 		const cf="P_ypc_get_offers_params";
-		const {1: a,3: f3,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: f1,3: f3,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
