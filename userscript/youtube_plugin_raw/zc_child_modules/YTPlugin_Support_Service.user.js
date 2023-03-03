@@ -2447,8 +2447,6 @@ class Support_Renderer extends ServiceMethods {
 	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
 	//#endregion
 	//#region WebCommandMetadata methods
-	/** @private @arg {GM_YpcGetCart} x */
-	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
 	/** @private @arg {GM_VE12924} x */
 	GM_VE12924(x) {
 		const cf="GM_VE12924";
@@ -2457,6 +2455,14 @@ class Support_Renderer extends ServiceMethods {
 		this.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
 		this.rootVe(rootVe,12924);
 	}
+	/** @private @arg {GM_YpcGetCart} x */
+	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
+	/** @private @arg {GM_Browse} x */
+	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.cq(x,"/youtubei/v1/browse"));}
+	/** @private @arg {GM_Next} x */
+	GM_Next(x) {this.T_GM("GM_Next",x,x => this.cq(x,"/youtubei/v1/next"));}
+	/** @private @arg {GM_PerformCommentAction} x */
+	GM_PerformCommentAction(x) {this.T_GM("GM_PerformCommentAction",x,x => this.ceq(x,"/youtubei/v1/comment/perform_comment_action"));}
 	//#endregion
 	//#region Renderer
 	/** @public @arg {R_SettingsSidebar} x */
@@ -3436,6 +3442,7 @@ class Support_Renderer extends ServiceMethods {
 	}
 	//#endregion
 	//#region Group Union
+	//#region G_
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent";
@@ -3456,7 +3463,6 @@ class Support_Renderer extends ServiceMethods {
 		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
 		x===""; this.codegen_typedef(cf,x);
-		x===0;
 	}
 	/** @public @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
@@ -3508,6 +3514,40 @@ class Support_Renderer extends ServiceMethods {
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @public @arg {G_WatchNext} x */
+	G_WatchNext(x) {
+		const cf="G_WatchNext";
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_MenuNavigationItem_NavEP} x */
+	G_MenuNavigationItem_NavEP(x) {
+		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
+		if("openPopupAction" in x) return this.GA_MenuNavigationPopup(x);
+		debugger;
+	}
+	//#endregion
+	//#region GA_
+	/** @private @arg {GA_MenuNavigationPopup} x */
+	GA_MenuNavigationPopup(x) {
+		const cf="GA_MenuNavigationPopup";
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(clickTrackingParams);
+		{
+			const {popup,popupType,beReused,...y}=this.s("Popup_DL_MenuNavigation",a); this.g(y);
+			x: {
+				let x2=popup; this.k("G_MenuNavigationPopup",x2);
+				if("aboutThisAdRenderer" in x2) {this.R_AboutThisAd(x2); break x;}
+				if("fancyDismissibleDialogRenderer" in x2) {this.R_FancyDismissibleDialog(x2); break x;}
+				debugger;
+			}
+			this.cq(popupType,"DIALOG");
+			this.t(beReused,x => this.cq(x,true));
+		}
+	}
+	//#endregion
 	//#endregion
 	//#region Data methods
 	/** @private @arg {D_PlaylistSidebar} x */
@@ -3765,10 +3805,203 @@ class Support_Renderer extends ServiceMethods {
 	M_Browse(x) {this.T_WCM("M_Browse",x,x => this.GM_Browse(x));}
 	/** @protected @arg {M_Next} x */
 	M_Next(x) {this.T_WCM("M_Next",x,x => this.GM_Next(x));}
-	/** @private @arg {GM_Browse} x */
-	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.cq(x,"/youtubei/v1/browse"));}
-	/** @private @arg {GM_Next} x */
-	GM_Next(x) {this.T_GM("GM_Next",x,x => this.cq(x,"/youtubei/v1/next"));}
+	/** @public @arg {R_EmojiPicker} x */
+	R_EmojiPicker(x) {this.H_("emojiPickerRenderer",x,this.D_EmojiPicker);}
+	/** @private @arg {D_EmojiPicker} x */
+	D_EmojiPicker(x) {
+		const cf="D_EmojiPicker";
+		const {id,categories,categoryButtons,searchPlaceholderText,searchNoResultsText,pickSkinToneText,trackingParams,clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel,...y}=this.s(cf,x); this.g(y);
+		if(id!=="emoji") debugger;
+		this.z(categories,x => {
+			if("emojiPickerCategoryRenderer" in x) return this.R_EmojiPickerCategory(x);
+			x.emojiPickerUpsellCategoryRenderer;
+		});
+		this.z(categoryButtons,this.R_EmojiPickerCategoryButton);
+		this.G_Text(searchPlaceholderText);
+		this.G_Text(searchNoResultsText);
+		this.G_Text(pickSkinToneText);
+		this.z([clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel],this.a_primitive_str);
+	}
+	/** @private @arg {R_EmojiPickerCategory} x */
+	R_EmojiPickerCategory(x) {this.H_("emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
+	/** @private @arg {D_EmojiPickerCategory} x */
+	D_EmojiPickerCategory(x) {
+		if(x.categoryType==="CATEGORY_TYPE_GLOBAL") {
+			const cf="D_EmojiPickerCategory:Global";
+			const {categoryId,title,emojiIds,trackingParams,categoryType,...y}=this.s(cf,x); this.g(y);
+			if(!this.str_starts_with(categoryId,"UC")) debugger;
+			this.G_Text(title);
+			this.z(emojiIds,x => {
+				let [channel_id,parsed_emoji]=this.parse_emoji_id(x);
+				this.D_ChannelId(channel_id);
+				this.save_string(`${categoryId}.emojiId`,parsed_emoji);
+			});
+			this.D_ChannelId(categoryId);
+			this.trackingParams(trackingParams);
+			return;
+		}
+		const cf="D_EmojiPickerCategory";
+		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "people": case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.G_Text(title);
+		this.z(emojiIds,x => {
+			this.save_string(`${categoryId}.emojiId`,x);
+		});
+		this.trackingParams(trackingParams);
+		if(imageLoadingLazy!==true) debugger;
+		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
+	}
+	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: `UC${string}`}} */
+	is_D_EmojiPickerCategoryButton_ForChannel(x) {return this.str_starts_with(x.categoryId,"UC");}
+	/** @private @arg {R_EmojiPickerCategoryButton} x */
+	R_EmojiPickerCategoryButton(x) {this.H_("emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
+	/** @private @arg {D_EmojiPickerCategoryButton} x */
+	D_EmojiPickerCategoryButton(x) {
+		if("targetId" in x) {
+			const cf="D_EmojiPickerCategoryButton:targetId";
+			const {categoryId,icon,tooltip,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
+			switch(categoryId) {
+				default: debugger; break;
+				case "people":
+			}
+			this.T_Icon(`${cf}:icon`,icon);
+			if(tooltip!=="People") debugger;
+			this.D_Accessibility(accessibility);
+			if(targetId!=="emoji-picker-category-button-people") debugger;
+			return;
+		}
+		if(this.is_D_EmojiPickerCategoryButton_ForChannel(x)) {
+			const cf="D_EmojiPickerCategoryButton:ForChannel";
+			const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+			this.D_ChannelId(categoryId);
+			this.T_Icon(`${cf}:icon`,icon);
+			switch(tooltip) {
+				default: debugger; break;
+				case "Custom emoji":
+				case "YouTube":
+			}
+			this.D_Accessibility(accessibility);
+			return;
+		}
+		const cf="D_EmojiPickerCategoryButton";
+		const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.T_Icon(`${cf}:icon`,icon);
+		switch(tooltip) {
+			default: debugger; break;
+			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
+		}
+		this.D_Accessibility(accessibility);
+	}
+	/** @public @arg {TA_Continuation<"engagement-panel-comments-section", G_CommentsSection>} x */
+	A_CommentsSectionContinuation_2(x) {
+		const cf="A_CommentsSectionContinuation";
+		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.targetId(cf,targetId);
+		this.z(continuationItems,x => {
+			const cf="G_CommentsSection";
+			if("commentThreadRenderer" in x) return this.R_CommentThread(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			x===""; this.codegen_typedef(cf,x);
+		});
+	}
+	/** @public @arg {R_AuthorCommentBadge} x */
+	R_AuthorCommentBadge(x) {this.H_("authorCommentBadgeRenderer",x,this.D_AuthorCommentBadge);}
+	/** @private @arg {D_AuthorCommentBadge} x */
+	D_AuthorCommentBadge(x) {
+		const cf="D_AuthorCommentBadge";
+		const {icon,color,authorText,authorEndpoint,iconTooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
+	/** @private @arg {M_PerformCommentAction} x */
+	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
+	/** @private @arg {DE_PerformCommentAction} x */
+	DE_PerformCommentAction(x) {
+		const cf="DE_PerformCommentAction";
+		const {action,clientActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params("perform_comment.action",action);
+		this.z(clientActions,this.A_UpdateCommentVote);
+	}
+	/** @private @arg {A_UpdateCommentVote} x */
+	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
+	/** @private @arg {AD_UpdateCommentVote} x */
+	AD_UpdateCommentVote(x) {
+		const cf="AD_UpdateCommentVote";
+		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(voteCount,this.G_Text);
+		this.save_string(`${cf}.voteStatus`,voteStatus);
+		switch(voteStatus) {
+			case "LIKE":
+		}
+	}
+	/** @public @arg {E_CreateCommentReplyDialog} x */
+	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
+	/** @private @arg {M_CreateCommentReplyDialog} x */
+	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
+	/** @private @arg {GM_CreateCommentReply} x */
+	GM_CreateCommentReply(x) {this.T_GM("GM_CreateCommentReply",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment_reply"));}
+	/** @private @arg {GM_CreateCommentReplyDialog} x */
+	GM_CreateCommentReplyDialog(x) {this.D_IgnoreNavigation(x);}
+	/** @public @arg {R_SponsorCommentBadge} x */
+	R_SponsorCommentBadge(x) {this.H_("sponsorCommentBadgeRenderer",x,this.D_SponsorCommentBadge);}
+	/** @private @arg {D_SponsorCommentBadge} x */
+	D_SponsorCommentBadge(x) {
+		const cf="D_SponsorCommentBadge";
+		const {customBadge,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(customBadge);
+		this.a_primitive_str(tooltip);
+	}
+	/** @private @arg {D_IgnoreNavigation} x */
+	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.cq(x,true));}
+	/** @private @arg {DE_CreateCommentReplyDialog} x */
+	DE_CreateCommentReplyDialog(x) {
+		const cf="DE_CreateCommentReplyDialog";
+		const {dialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_CommentReplyDialog(dialog);
+	}
+	/** @private @arg {R_CommentReplyDialog} x */
+	R_CommentReplyDialog(x) {this.H_("commentReplyDialogRenderer",x,this.D_CommentReplyDialog);}
+	/** @private @arg {D_CommentReplyDialog} x */
+	D_CommentReplyDialog(x) {
+		const cf="D_CommentReplyDialog";
+		const {replyButton,cancelButton,authorThumbnail,editableText,placeholderText,errorMessage,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_Button(replyButton);
+		this.R_Button(cancelButton);
+		this.D_Thumbnail(authorThumbnail);
+		this.t(editableText,this.G_Text);
+		this.G_Text(placeholderText);
+		this.G_Text(errorMessage);
+		this.R_Button(emojiButton);
+		this.R_EmojiPicker(emojiPicker);
+		this.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
+	}
+	/** @public @arg {E_CreateCommentReply} x */
+	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
+	/** @private @arg {M_CreateCommentReply} x */
+	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
+	/** @private @arg {DE_CreateCommentReply} x */
+	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.params("create_reply.params",x));}
+	/** @public @arg {R_VideoInfoCardContent} x */
+	R_VideoInfoCardContent(x) {this.H_("videoInfoCardContentRenderer",x,this.D_VideoInfoCardContent);}
+	/** @private @arg {D_VideoInfoCardContent} x */
+	D_VideoInfoCardContent(x) {
+		const cf="D_VideoInfoCardContent";
+		const {videoThumbnail,lengthString,videoTitle,channelName,viewCountText,action,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(videoThumbnail);
+		this.G_Text(lengthString);
+		this.G_Text(videoTitle);
+		this.G_Text(channelName);
+		this.G_Text(viewCountText);
+		this.E_Watch(action);
+		this.trackingParams(trackingParams);
+	}
 	//#endregion
 }
 export_(exports => {exports.Support_Renderer=Support_Renderer;});
