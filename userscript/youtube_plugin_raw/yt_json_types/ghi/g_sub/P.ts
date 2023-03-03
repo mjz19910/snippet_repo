@@ -176,7 +176,7 @@ type P_unsubscribe_params={
 	1: T_VW<{
 		1: T_D32<3>;
 	}>;
-	2: TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;
+	2?: TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;
 	3: T_D32<0>;
 };
 type PX_watch_next_token_info={

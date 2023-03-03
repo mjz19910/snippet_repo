@@ -7,7 +7,7 @@ type D_VideoDetails={
 	channelId: `UC${string}`;
 	isOwnerViewing: false;
 	shortDescription: string;
-	isCrawlable: true;
+	isCrawlable: boolean;
 	isLiveDvrEnabled?: true;
 	thumbnail: D_Thumbnail;
 	liveChunkReadahead?: 2;

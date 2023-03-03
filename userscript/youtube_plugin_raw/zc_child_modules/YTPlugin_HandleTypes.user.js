@@ -764,7 +764,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "6 ": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6 ": case "6 ": case "6 ": case "6z":
 			case "76": case "7 ": case "7d": case "7 ": case "7k": case "7l": case "7r": case "7s": case "7y": case "7z":
-			case "d6": case "d ": case "d ": case "d ": case "d ": case "d ": case "d ": case "d ": case "dy": case "dz":
+			case "d6": case "d ": case "d ": case "d ": case "d ": case "d ": case "d ": case "ds": case "dy": case "dz":
 			case "e6": case "e7": case "e ": case "ee": case "ek": case "el": case "e ": case "es": case "ey": case "ez":
 			case "k ": case "k ": case "kd": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ":
 			case "l6": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "l ":
@@ -911,7 +911,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_bool(isOwnerViewing);
 		this.cq(isOwnerViewing,false);
 		this.a_primitive_str(shortDescription);
-		this.cq(isCrawlable,true);
+		this.a_primitive_bool(isCrawlable);
 		this.t(isLiveDvrEnabled,x => this.cq(x,true));
 		this.D_Thumbnail(thumbnail);
 		this.t(liveChunkReadahead,x => this.cq(x,2));
@@ -2636,7 +2636,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_unsubscribe_params";
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.PK_f1(this.T_VW(v1));
-		this.t(this.TV_Str_ex(v2),this.videoId);
+		this.t(v2,x => this.videoId(this.TV_Str_ex(x)));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_subscribe_params} x */
