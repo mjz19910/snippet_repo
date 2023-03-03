@@ -45,14 +45,14 @@ type PT_TypeS=[
 		"ez",
 		"ld",
 	]>,
-	gen_g3_t2<"9gv7",["l","e"]>,
+	gen_g3_t2<"9gv7",["e","l","z"]>,
 	gen_g3_t2<"a5m",["ek","lr","se"]>,
 	gen_g3_t2<"hp57",["k","y"]>,
 	gen_g3_t2<"n",[
 		gen_a3_t2<["4","8"],"v7",["s","z"]>,
 		gen_a2_t2<"x5",["s7","7y"]>,
 	]>,
-	gen_g3_raw<"o","097z">,
+	gen_g2_t1<"o097z">,
 	gen_g3_t2<"p",[gen_g3_or<"p5q",["ls","s7"]>]>,
 	gen_g3_t2<"qxo",["7r","ed"]>,
 ];
