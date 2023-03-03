@@ -2488,6 +2488,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_reel_params";
 		const {1: f1,3: f3,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		if(f3) debugger;
+		if(f5) debugger;
+		if(f6) debugger;
 	}
 	//#endregion
 	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)

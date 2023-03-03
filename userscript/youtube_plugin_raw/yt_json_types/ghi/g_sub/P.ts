@@ -132,9 +132,7 @@ type P_reel_params={
 	6?: {};
 };
 type P_logging_context_serialized_context_data={
-	1?: T_VW<{
-		1: T_D32<12>;
-	}>;
+	1?: T_VW<{1: T_D32<12>;}>;
 	3?: TV_Str<SD_PlaylistId>;
 };
 type P_like_params={
@@ -152,9 +150,7 @@ type P_like_params={
 };
 type P_playability_status_context_params={
 	1: T_D32<1>;
-	2: {
-		1: T_D32<2>;
-	};
+	2: T_VW<{1: T_D32<2>;}>;
 };
 type P_remove_like_params={
 	1: T_VW<{1: TV_Str<D_VideoIdStr>;}>;
