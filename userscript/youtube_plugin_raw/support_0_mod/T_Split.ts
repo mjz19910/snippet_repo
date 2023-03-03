@@ -28,3 +28,7 @@ type T_Split<S extends string,D extends string=",">=
 	T_Split_Helper<S,D>:T_Split_Helper<S,D>
 	;
 ;
+type T_StringWhitespace=" "|"\n"|"\t";
+type T_StringTrimStart<T extends string>=T extends `${T_StringWhitespace}${infer P}`? T_StringTrimStart<P>:T;
+type T_StringTrimEnd<T extends string>=T extends `${infer P}${T_StringWhitespace}`? T_StringTrimEnd<P>:T;
+type T_StringTrim<T extends string>=T_StringTrimEnd<T_StringTrimStart<T>>;

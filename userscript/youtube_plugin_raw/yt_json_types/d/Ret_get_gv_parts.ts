@@ -8,23 +8,19 @@ namespace GV_Parts_NS {
 		|"q"|"t"|"v"
 		;
 	;
-	export type G_GV_idx1=T_Split<`
-	u
-	g
-	5
-	b
-	p
-	4
-	8
-	x
-	0
-	5
-	4
-	x
-	0
-	t
-	g
-	`,"\n\t">
+	export type G_GV_idx1=
+		T_Split<T_StringTrim<`
+		0
+		4
+		5
+		8
+		b
+		g
+		p
+		t
+		u
+		x
+		`>,"\n">
 		;
 	;
 	export type G_GV_Base=
