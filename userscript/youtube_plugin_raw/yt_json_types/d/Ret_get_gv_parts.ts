@@ -24,6 +24,21 @@ namespace GV_Parts_NS {
 		`>
 		;
 	;
+	export type G_GV_idx2=
+		T_Split<T_StringTrim<`
+		1
+		5
+		9
+		a
+		f
+		m
+		o
+		q
+		v
+		`>,`
+		`>
+		;
+	;
 	export type G_GV_Base=
 		|"5ua" // done_func(2) = 9
 		|"9gv" // done_func(3) = 12
