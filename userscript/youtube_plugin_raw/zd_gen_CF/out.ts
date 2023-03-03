@@ -573,8 +573,12 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_ad_data_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_bin";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token.f9";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_3";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_3.f1";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_4";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_5";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_6";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_f2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_item";}

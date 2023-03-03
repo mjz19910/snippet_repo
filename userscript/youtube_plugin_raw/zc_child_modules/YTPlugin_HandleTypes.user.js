@@ -2581,23 +2581,43 @@ class HandleTypes extends ServiceMethods {
 		}
 		v3&&this.T_D32(v3,x => this.save_number(`${cf}.f3`,x));
 	}
-	/** @private @arg {PX_watch_next_token_3_f1} x */
-	PX_watch_next_token_3_f1(x) {
-		const cf="PX_watch_next_token_3.f1";
-		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+	/** @private @arg {PX_watch_next_token_6} x */
+	PX_watch_next_token_6(x) {
+		const cf="PX_watch_next_token_6";
+		const {1: v1,3: v3,4: v4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		let n1=v1[1];
 		for(let [,,u1] of n1) this.PX_watch_next_token_item(u1);
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
+		v4&&this.save_string(`${cf}.f4`,this.TV_Str(v4));
 	}
 	/** @private @arg {PX_watch_next_token_3} x */
 	PX_watch_next_token_3(x) {
 		const cf="PX_watch_next_token_3";
 		const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		let [,,n1]=v1[1][0];
-		this.PX_watch_next_token_3_f1(n1);
+		this.PX_watch_next_token_6(this.T_VW_m(v1));
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 		this.save_string(`${cf}.f4`,this.TV_Str(v4));
 		this.save_number(`${cf}.f5`,this.T_D32_m(v5));
+	}
+	/** @private @arg {PX_watch_next_token_1} x */
+	PX_watch_next_token_1(x) {
+		const cf="PX_watch_next_token_1";
+		const {4: a,8: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		console.log(`${cf}.f4`,this.T_RawChild(a));
+		console.log(`${cf}.f8`,this.T_RawChild(b));
+	}
+	/** @private @arg {PX_watch_next_token_4} x */
+	PX_watch_next_token_4(x) {
+		const cf="PX_watch_next_token_4";
+		const {5: a,12: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		console.log(`${cf}.f5`,this.T_RawChild(a));
+		console.log(`${cf}.f12`,this.T_RawChild(b));
+	}
+	/** @private @arg {PX_watch_next_token_5} x */
+	PX_watch_next_token_5(x) {
+		const cf="PX_watch_next_token_5";
+		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(a,x => this.save_number(`${cf}.f1`,x));
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
@@ -2607,20 +2627,13 @@ class HandleTypes extends ServiceMethods {
 		this.T_VW(v2,this.PX_watch_next_token_info);
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 		f5&&this.a_primitive_str(this.TV_Str(f5));
-		f6&&console.log(`${cf}.f6`,this.T_VW_m(f6));
+		f6&&this.PX_watch_next_token_1(this.T_VW_m(f6));
 		f9&&this.PX_watch_next_token_3(this.T_VW_m(f9));
-		f13&&console.log(`${cf}.f13`,this.T_VW_m(f13));
-		f14&&console.log(`${cf}.f14`,this.T_VW_m(f14));
+		f13&&this.PX_watch_next_token_4(this.T_VW_m(f13));
+		f14&&this.PX_watch_next_token_5(this.T_VW_m(f14));
 	}
 	/** @private @template {string} T @arg {TV_Str<T>|TW_TagStr<T>} x */
-	TV_Str_ex(x) {
-		let v2=x[1][0];
-		if(v2===null) {debugger; return null;}
-		let v3=v2[3];
-		let [a,b]=v3;
-		if(a!=="string") {debugger; return null;}
-		return b;
-	}
+	TV_Str_ex(x) {return x[1][0][3][1];}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";

@@ -194,14 +194,9 @@ type PX_watch_next_token_info={
 type PX_watch_next_token_item={
 	1: T_D32<number>|T_D64<bigint>;
 	3?: T_D32<1>;
-	4?: TV_Str<"/m/0jxy">;
-};
-type PX_watch_next_token_3_f1={
-	1: T_PArr_R<T_Param_Child<PX_watch_next_token_item,["string",string]>[]>;
-	3: T_D32<2>;
 };
 type PX_watch_next_token_3={
-	1: T_PArr_R<[T_Param_Child<PX_watch_next_token_3_f1,["string",string]>]>;
+	1: T_VW<PX_watch_next_token_6>;
 	3: T_D32<0>;
 	4: TV_Str<"Watched">;
 	5: T_D32<19>;
@@ -220,6 +215,11 @@ type PX_watch_next_token_4={
 	12: T_FD64<8392569429487543156n>;
 };
 type PX_watch_next_token_5={1: T_D32<0>;};
+type PX_watch_next_token_6={
+	1: T_PArr_R<T_Param_Child<PX_watch_next_token_item,["string",string]>[]>;
+	3: T_D32<2>;
+	4?: TV_Str<"/m/0jxy">;
+};
 type P_continuation_request_watch_next_token={
 	1?: T_D32<20>;
 	2: T_VW<PX_watch_next_token_info>;
