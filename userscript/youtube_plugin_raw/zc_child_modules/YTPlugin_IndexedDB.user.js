@@ -271,7 +271,7 @@ class IndexedDBService extends BaseService {
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();
-			case "number": {
+			case "bigint": {
 				let [a,b,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
@@ -282,6 +282,16 @@ class IndexedDBService extends BaseService {
 				},version);
 			}
 			case "boolean": {
+				let [a,b,value]=args;
+				return this.put_box({
+					key: `boxed_id:${a}:${b}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				},version);
+			}
+			case "number": {
 				let [a,b,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
