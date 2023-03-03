@@ -157,12 +157,11 @@ class ServiceMethods extends ServiceData {
 	D_YtStudio_Url(b) {
 		const cf="D_YtStudio_Url";
 		if(!this.str_is_uri(b)) {debugger; return;}
+		if(!this.str_starts_with(b,"https://studio.youtube.com")) {debugger; return;}
 		let x=split_string(split_string_once(b,"//")[1],"/");
-		if(x[0]!=="studio.youtube.com") {debugger; return;}
 		if(x.length===1) return;
 		switch(x.length) {
 			case 2: {if(x[1]!=="") debugger;} break;
-			case 3: {if(!this.str_starts_with_rx("UC",x[2])) {debugger; return;} } break;
 			case 4: {
 				if(x[1]!=="channel") {debugger; return;}
 				if(x[2]==="UC") {
@@ -177,7 +176,7 @@ class ServiceMethods extends ServiceData {
 				if(!this.str_starts_with_rx("UC",v2)) {debugger; return;}
 				switch(v3) {
 					default: this.cg.codegen_case(cf,v3); break;
-					case "videos": break;
+					case "livestreaming": break;
 				}
 
 			} break;
