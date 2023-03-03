@@ -137,8 +137,9 @@ type P_logging_context_serialized_context_data={
 	1?: T_VW<{1: T_D32<12>;}>;
 	3?: TV_Str<SD_PlaylistId>;
 };
+type TW_Str<T extends string>=TV_Str_CS<T>|TW_TagStr<T>|TV_Str<T>;
 type P_like_params={
-	1: T_VW<{1: TW_TagStr<D_VideoIdStr>|TV_Str<D_VideoIdStr>;}>;
+	1: T_VW<{1: TW_Str<D_VideoIdStr>;}>;
 	4: T_D32<0>;
 	5?: T_D32<1>;
 	6: T_VW<V_ShortTimestamp>;

@@ -2428,10 +2428,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
-		const {1: v1,3: d3,5: f5,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,5: g5,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
-		if(d3) debugger;
-		if(f5) debugger;
+		v3&&this.VW_BinaryTimestamp(v3);
+		g5&&this.g(this.T_VW(g5));
 		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
 	}
 	//#endregion
@@ -2669,24 +2669,23 @@ class HandleTypes extends ServiceMethods {
 		this.PK_f1(this.T_VW(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
+	/** @private @template {string} T @arg {TW_Str<T>} x */
+	TW_Str(x) {
+		let x2=x[1][0];
+		switch(x2[0]) {
+			default: debugger; throw new Error();
+			case "v_child_str":
+			case "v_child":
+			case "v_raw_child": return x2[3][1];
+		}
+	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
 		const {1: v1,4: f4,5: f5,6: f6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		let m1=this.mw(this.m(v1));
-		let v1_v1=m1.mc(this.T_VW).mc(this.PT_f1).some.v;
-		let v1_v1i=v1_v1[1][0];
-		switch(v1_v1i[0]) {
-			default: debugger; break;
-			case "v_child": {
-				let x2=v1_v1i[3][1];
-				this.videoId(x2);
-			} break;
-			case "v_raw_child": {
-				let x2=v1_v1i[3][1];
-				this.videoId(x2);
-			} break;
-		}
+		let v1_v1_str=m1.mc(this.T_VW).mc(this.PT_f1).mc(this.TW_Str).some.v;
+		this.videoId(v1_v1_str);
 	}
 	/** @private @arg {{1:TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;}} x */
 	PK_f1_str(x) {
