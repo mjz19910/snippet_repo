@@ -1,4 +1,22 @@
-// cSpell:ignoreRegExp /"(\dualdn?|5uae[z]|qxoe[d]|vgqs[rk])"/
+// cSpell:ignoreRegExp /"(\dualdn?|5u[a]e[z]|qx[o]e[d]|vg[q]s[rk])"/
+type G_GV_Base=
+	|"5ua" // 2 * 3 + 1 + 1 [S] = 8
+	|"9gv" // 3 * 3 + 1 [B] + 1 [S] = 11
+	|"a5m" // 3 * 3 + 1 [B] + 1 [S] = 11
+	|"ab5" // 2 * 3 + 1 [B] = 7
+	|"hp5" // 2 * 3 + 1 [B] + 1 [S] = 8
+	|"n4v" // 1 * 3 + 1 [B] + 1 [S] = 5
+	|"n8v" // 1 * 3 + 1 [B] + 1 [S] = 5
+	|"nx5" // 2 * 3 + 1 [B] = 7
+	|"o09" // 1 * 3 + 1 [B] + 1 [S] = 5
+	|"p5q" // 2 * 3 + 1 [B] + 1 [S] = 8
+	|"q4f" // 3 * 3 + 1 [B] + 1 [S] = 11
+	|"qxo" // 2 * 3 + 1 [B] + 1 [S] = 8
+	|"t0a" // 2 * 3 + 1 [B] = 7
+	|"tt1" // 2 * 3 + 1 [B] = 7
+	|"vgq" // 2 * 3 + 1 [B] = 7
+	;
+;
 type G_Gv_0=
 	|"5uaez" // 2 [dig_final] [dig_user@5ua:[6,7,e,l,r,y]]
 	|"5uald" // 2 [dig_final] [dig_user@5ua:[l,s,z]]
@@ -48,12 +66,11 @@ type PT_TypeS=[
 	gen_g3_t2<"9gv7",["e","l","z"]>,
 	gen_g3_t2<"a5m",["ek","lr","se"]>,
 	gen_g3_t2<"hp57",["k","y"]>,
-	gen_g3_t2<"n",[
-		gen_a3_t2<["4","8"],"v7",["s","z"]>,
-		gen_a2_t2<"x5",["s7","7y"]>,
-	]>,
+	gen_g3_t2<"n4v",["7s","7z"]>,
+	gen_g2_t1<"n8v7z">,
 	gen_g2_t1<"o097z">,
-	gen_g3_t2<"p",[gen_g3_or<"p5q",["ls","s7"]>]>,
+	gen_g3_t2<"p5q",["ls","s7"]>,
+	gen_g3_t2<"q4f",["l6","lr","ze",]>,
 	gen_g3_t2<"qxo",["7r","ed"]>,
 ];
 type PT_TypeArr=[
