@@ -2813,8 +2813,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
 		const cf="P_ve_3611_params";
-		const {2: g2,23: f23,110: f110,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.g(this.T_VW(g2));
+		const {2: v2,23: f23,110: f110,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		v2&&this.g(this.T_VW(v2));
 	}
 	/** @private @arg {P_playlist_edit_params} x */
 	P_playlist_edit_params(x) {
