@@ -368,15 +368,10 @@ type PR_continuation_params=
 ;
 type P_create_comment_params={
 	2: TV_Str<"mUK-j5bKk0Q">;
-	5: {
-		1: T_D32<0>;
-	};
+	5: T_VW<{1: T_D32<0>;}>;
 	10: T_D32<7>;
 };
-type P_trending_bp={
-	77: TV_Str<"FEexplore">;
-};
-
+type P_trending_bp={77: TV_Str<"FEexplore">;};
 type P_ypc_get_offers_params={
 	1: T_VW<{
 		1: T_D32<3>;
