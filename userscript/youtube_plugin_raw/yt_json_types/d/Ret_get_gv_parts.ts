@@ -146,7 +146,11 @@ type PT_TypeArr=[
 		"rl","rr",
 		"y6",
 	]],
-	["p5qs7",["6d","sk","sr","zk","zr","zy"]],
+	["p5qs7",[
+		"6d",
+		"sk","sr",
+		"zk","zr","zy",
+	]],
 	["q4fl6",[
 		"66","6d","6s","6z",
 		"lz",
