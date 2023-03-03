@@ -593,20 +593,12 @@ class IndexedDBService extends BaseService {
 				let item_nt=item;
 				switch(item_nt.type) {
 					default: item_nt===""; debugger; break;
-					case "boolean": {
-						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-						update_item=true;
-					} break;
-					case "root_visual_element":
-					case "number": {
-						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-						update_item=true;
-					} break;
+					case "bigint":
+					case "boolean":
 					case "keys":
-					case "string": {
-						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
-						update_item=true;
-					} break;
+					case "number":
+					case "root_visual_element":
+					case "string": update_item=true; break;
 					case "video_id:shorts":
 					case "video_id:normal": {
 						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
