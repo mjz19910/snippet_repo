@@ -4,7 +4,7 @@ type G_Gv_0=
 	|"5uald" // 2
 	|"9gv7e" // 2
 	|"9gv7l" // 2
-	|"9gv7z" // 1 !dig_user!
+	|"9gv7z" // 2 [dig_final] [dig_user@9gv]
 	|"a5mek" // 2
 	|"a5mlr" // 2
 	|"a5mse" // 2
