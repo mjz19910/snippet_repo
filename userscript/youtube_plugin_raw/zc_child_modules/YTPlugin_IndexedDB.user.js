@@ -174,6 +174,7 @@ class IndexedDBService extends BaseService {
 			case "number": return store.stores.get("number_store").load_data(item);
 			case "root_visual_element": return store.stores.get("ve_store").load_data(item);
 			case "string": return store.stores.get("string_store").load_data(item);
+			case "bigint": return store.stores.get("bigint_store").load_data(item);
 		}
 	}
 	expected_save_id=0;

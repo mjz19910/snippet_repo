@@ -223,6 +223,7 @@ export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
 	/** @arg {StoreDataArgs} args */
 	add_store(args) {let [key,store]=args; this.stores.set(key,store);}
+	/** @type {Map<StoreDataArgs[0],any>} */
 	stores=new Map;
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
