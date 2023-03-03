@@ -2497,8 +2497,18 @@ class HandleTypes extends ServiceMethods {
 		this.channelId(this.TV_Str(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
+	/** @temporary @api @override @public @template {{}} T @arg {CF_M_s|string} cf @arg {T} x */
+	s(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
 	/** @private @arg {TX_sequence_info} x */
-	TX_sequence_info(x) {x; debugger;}
+	TX_sequence_info(x) {
+		const cf="TX_sequence_info";
+		const {3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_number(`${cf}.f3`,this.T_D32(f3));
+	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
