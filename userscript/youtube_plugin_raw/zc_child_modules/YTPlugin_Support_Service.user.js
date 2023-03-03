@@ -221,10 +221,13 @@ class StoreDescription extends ApiBase2 {
 }
 export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
+	/** @arg {["bool_store",StoreDescription<boolean,"boolean">]|["number_store",StoreDescription<number,"number">]} args */
+	add_store(...args) {let [key,store]=args; this.stores.set(key,store);}
+	stores=new Map;
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
 		/** @type {StoreDescription<boolean,"boolean">} */
-		this.bool_store=new StoreDescription("boolean","boolean",data_update_callback);
+		this.add_store("bool_store",new StoreDescription("boolean","boolean",data_update_callback));
 		/** @type {StoreDescription<number,"number">} */
 		this.number_store=new StoreDescription("number","number",data_update_callback);
 		/** @type {StoreDescription<bigint,"bigint">} */

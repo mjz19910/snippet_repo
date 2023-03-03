@@ -205,7 +205,9 @@ class IndexedDBService extends BaseService {
 		let save_id=await this.get_id_box("save_id",version);
 		if(!save_id) {
 			this.expected_save_id=0;
-			save_id=await this.put_id_box("save_id",this.expected_save_id,version);
+			await this.put_boxed_id(version,"save_id",this.expected_save_id);
+			save_id=await this.get_id_box("save_id",version);
+			if(!save_id) throw new Error();
 		}
 		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
 		await this.save_store_to_database(store,version);
@@ -265,12 +267,12 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @arg {string} b @arg {["root_visual_element"|"number",make_item_group<number>]|["string",make_item_group<string>]|["keys",make_item_group<string|number>]|["boolean",make_item_group<boolean>]} args */
-	put_boxed_id(b,version,...args) {
+	/** @arg {number} version @arg {["load_id"|"save_id",number]|["root_visual_element"|"number",string,make_item_group<number>]|["string",string,make_item_group<string>]|["keys",string,make_item_group<string|number>]|["boolean",string,make_item_group<boolean>]} args */
+	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();
 			case "number": {
-				let [a,value]=args;
+				let [a,b,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
@@ -280,7 +282,7 @@ class IndexedDBService extends BaseService {
 				},version);
 			}
 			case "boolean": {
-				let [a,value]=args;
+				let [a,b,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
@@ -290,7 +292,7 @@ class IndexedDBService extends BaseService {
 				},version);
 			}
 			case "string": {
-				let [a,value]=args;
+				let [a,b,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
@@ -300,7 +302,7 @@ class IndexedDBService extends BaseService {
 				},version);
 			}
 			case "keys": {
-				let [a,value]=args;
+				let [a,b,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
@@ -310,13 +312,31 @@ class IndexedDBService extends BaseService {
 				},version);
 			}
 			case "root_visual_element": {
-				let [a,value]=args;
+				let [a,b,value]=args;
 				return this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
+				},version);
+			}
+			case "load_id": {
+				let [mode,id]=args;
+				return this.put_box({
+					key: `boxed_id:a:${mode}`,
+					type: mode,
+					base: "boxed_id",
+					id,
+				},version);
+			}
+			case "save_id": {
+				let [mode,id]=args;
+				return this.put_box({
+					key: `boxed_id:a:${mode}`,
+					type: mode,
+					base: "boxed_id",
+					id,
 				},version);
 			}
 		}
@@ -330,20 +350,20 @@ class IndexedDBService extends BaseService {
 			default: debugger; break;
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
-				return this.put_boxed_id(item[0],version,store.content,vi);
+				return this.put_boxed_id(version,store.content,item[0],vi);
 			}
 			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
-				return this.put_boxed_id(item[0],version,store.content,vi);
+				return this.put_boxed_id(version,store.content,item[0],vi);
 			}
 			case "string": {
 				if(!this.is_vi_has_str(vi)) break;
-				return this.put_boxed_id(item[0],version,store.content,vi);
+				return this.put_boxed_id(version,store.content,item[0],vi);
 			}
 			case "keys": {
 				if(this.is_vi_has_bool(vi)) break;
-				return this.put_boxed_id(item[0],version,store.content,vi);
+				return this.put_boxed_id(version,store.content,item[0],vi);
 			}
 		}
 		return null;
@@ -358,7 +378,7 @@ class IndexedDBService extends BaseService {
 		await this.push_store_to_database(ns,version);
 		let vs=store.ve_store;
 		await this.push_store_to_database(vs,version);
-		let bs=store.bool_store;
+		let bs=store.stores.get("bool_store");
 		await this.push_store_to_database(bs,version);
 	}
 	/** @arg {make_item_group<any>} x @returns {x is make_item_group<string>} */
