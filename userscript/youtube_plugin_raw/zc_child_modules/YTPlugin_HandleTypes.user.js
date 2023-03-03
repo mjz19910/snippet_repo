@@ -2595,13 +2595,21 @@ class HandleTypes extends ServiceMethods {
 		const cf="PX_watch_next_token_info";
 		const {2: {},4: {}={},6: {}={},7: {}={},25: {}={},28: {}={},36: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {PX_watch_next_token_3_f1} x */
+	PX_watch_next_token_3_f1(x) {
+		const cf="PX_watch_next_token_3.f1";
+		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		let n1=v1[1];
+		for(let [,,u1] of n1) {
+			this.codegen_typedef_bin(`${cf}.f1.rep`,u1);
+		}
+	}
 	/** @private @arg {PX_watch_next_token_3} x */
 	PX_watch_next_token_3(x) {
 		const cf="PX_watch_next_token_3";
 		const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		for(let v1_i of v1[1]) {
-			this.codegen_typedef_bin(`${cf}.f1.rep`,v1_i);
-		}
+		let [,,n1]=v1[1][0];
+		this.PX_watch_next_token_3_f1(n1);
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 		this.save_string(`${cf}.f4`,this.TV_Str(v4));
 		this.save_number(`${cf}.f5`,this.T_D32_m(v5));

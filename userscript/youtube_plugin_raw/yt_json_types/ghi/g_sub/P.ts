@@ -191,11 +191,16 @@ type PX_watch_next_token_info={
 		8: T_D32<0>;
 	}>;
 };
+type PX_watch_next_token_item={
+	1: T_D32<number>|T_D64<bigint>;
+	3?: T_D32<1>;
+};
+type PX_watch_next_token_3_f1={
+	1: T_PArr_R<T_Param_Child<PX_watch_next_token_item,["string",string]>[]>;
+	3: T_D32<2>;
+};
 type PX_watch_next_token_3={
-	1: T_PArr_R<{
-		1: T_D32<number>|T_D64<bigint>;
-		3?: T_D32<1>;
-	}[]>;
+	1: T_PArr_R<[T_Param_Child<PX_watch_next_token_3_f1,["string",string]>]>;
 	3: T_D32<0>;
 	4: TV_Str<"Watched">;
 	5: T_D32<19>;
