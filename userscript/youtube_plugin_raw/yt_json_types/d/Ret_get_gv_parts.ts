@@ -9,18 +9,19 @@ type G_Gv_0=
 	|"a5mlr" // 2 [dig_final] [dig_user@a5m]
 	|"a5mse" // 2 [dig_final] [dig_user@a5m]
 	|"ab5l6" // 2 [dig_final] [dig_user@ab5]
-	|"ab5sz" // 3 [dig_final] [dig_user@ab5] [dns.domain]
-	|"hp57k" // 2 [dig_final] [dig_user@hp5]
-	|"hp57y" // 2 [dig_final] [dig_user@hp5]
-	|"n4v7s" // 2 [dig_final] [dig_user@n4v]
-	|"nx5s7" // 2 [dig_final] [dig_user@nx5]
-	|"nx57y" // 2 [dig_final] [dig_user@nx5]
-	|"o097z" // 2 [dig_final] [dig_user@o09]
-	|"p5qls" // 2 [dig_final] [dig_user@p5q]
-	|"p5qs7" // 2 [dig_final] [dig_user@p5q]
-	|"q4fl6" // 2 [dig_final] [dig_user@q4f]
-	|"q4flr" // 2 [dig_final] [dig_user@q4f]
-	|"q4fze"
+	|"ab5sz" // 2 [dig_final] [dig_user@ab5]
+	|"hp57k" // 2 [dig_final] [dig_user@hp5:[6,d,k]]
+	|"hp57y" // 2 [dig_final] [dig_user@hp5:[7,e,l,s]]
+	|"n4v7s" // 2 [dig_final] [dig_user@n4v:[e,l,s]]
+	|"n8v7z" // 2 [dig_final] [dig_user@n8v:[l,s,z]]
+	|"nx5s7" // 2 [dig_final] [dig_user@nx5:[7,e]]
+	|"nx57y" // 2 [dig_final] [dig_user@nx5:[l,s]]
+	|"o097z" // 2 [dig_final] [dig_user@o09:[s,z]]
+	|"p5qls" // 2 [dig_final] [dig_user@p5q:[6,7,d,r,y]]
+	|"p5qs7" // 2 [dig_final] [dig_user@p5q:[6,s,z]]
+	|"q4fl6" // 2 [dig_final] [dig_user@q4f:[6,l,s,z]]
+	|"q4flr" // 2 [dig_final] [dig_user@q4f:[7,e,l,s]]
+	|"q4fze" // 2 [dig_final] [dig_user@q4f:[7,e]]
 	|"qxo7r" // 2 [dig_final] [dig_user@qxo:[7]]
 	|"qxoed" // 2 [dig_final] [dig_user@qxo:[7,e]]
 	|"t0a7l" // 2 [dig_final] [dig_user@t0a:[7,e]]
@@ -34,11 +35,8 @@ type G_Gv_0=
 // cSpell:ignoreRegExp /rr1.sn-((q4fl[r])[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
-	``,
 	// dig results
-	`
-	`,
-	"rr1.sn-ab5sznzz.googlevideo.com.",
+	``,
 ];
 type PT_TypeS_NoRep=[
 ];
@@ -83,14 +81,46 @@ type PT_TypeArr=[
 		"ld","lk","ly",
 		"z6","zd","ze","zk","zl","zr","zs","zy","zz",
 	]],
-	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],
-	["hp57y",["7r","7y","e7","ee","l6","lr","ly","s7","se","sl","ss"]],
-	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],
-	["n8v7z",["lk","lr","ly","s6","s7","sd","se","sk","sl","sr","ss","sy","sz","z7","ze","zl"]],
-	["nx5s7",["7d","7s","7y","7z","76","ee","el"]],
-	["nx57y",["lk","sd","se","sk","sl","ss","sz"]],
-	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
-	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],
+	["hp57k",[
+		"6r","6y",
+		"d6","dd","dk","dr","ds","dy","dz",
+		"k7",
+	]],
+	["hp57y",[
+		"7r","7y",
+		"e7","ee",
+		"l6","lr","ly",
+		"s7","se","sl","ss",
+	]],
+	["n4v7s",[
+		"ee","ey",
+		"l7","ll","lr","ls","ly",
+		"s7","se",
+	]],
+	["n8v7z",[
+		"lk","lr","ly",
+		"s6","s7","sd","se","sk","sl","sr","ss","sy","sz",
+		"z7","ze","zl",
+	]],
+	["nx5s7",[
+		"7d","7s","7y","7z","76",
+		"ee","el",
+	]],
+	["nx57y",[
+		"lk",
+		"sd","se","sk","sl","ss","sz",
+	]],
+	["o097z",[
+		"sd","se","sk","sl","sr","ss","sz",
+		"z7","zd","ze","zk","zr",
+	]],
+	["p5qls",[
+		"6l",
+		"7d","7l","7s","76",
+		"d6","dd","dk","dr","dz",
+		"rl","rr",
+		"y6",
+	]],
 	["p5qs7",["6d","sk","sr","zk","zr","zy"]],
 	["q4fl6",[
 		"66","6d","6s","6z",
