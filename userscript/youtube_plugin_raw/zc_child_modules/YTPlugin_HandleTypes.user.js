@@ -2704,13 +2704,36 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_ve_6827_params";
 		const {77: f77,84: f84,93: f93,94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {PX_watch_bin} x */
+	PX_watch_bin(x) {
+		const cf="PX_watch_bin";
+		const {2: v2,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_string(`${cf}.f2`,this.TV_Str(v2));
+		this.T_D32(v3,x => console.log(`${cf}.v3`,"0b"+x.toString(2)));
+		this.T_D32(v4,x => console.log(`${cf}.f4`,"0b"+x.toString(2)));
+		this.T_D32(v5,x => this.save_number(`${cf}.f5`,x));
+	}
+	/** @private @arg {PR_watch_bin} x */
+	PR_watch_bin(x) {
+		const cf="PR_watch_bin";
+		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.PD_watch_bin(this.T_VW_m(r));
+	}
+	/** @private @arg {PD_watch_bin} x */
+	PD_watch_bin(x) {
+		const cf="PD_watch_bin";
+		const {2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(v2,x => this.save_number(`${cf}.f2`,x));
+		this.T_D32(v3,x => this.save_number(`${cf}.f3`,x));
+	}
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: f40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: v40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		v2&&this.T_D32(v2,x => this.save_number(`${cf}.f2`,x));
 		v3&&this.save_number(`${cf}.f3`,this.T_D32_m(v3));
-		v33&&this.codegen_typedef_bin(`${cf}.f33`,this.T_VW_m(v33));
+		v33&&this.PX_watch_bin(this.T_VW_m(v33));
+		v40&&this.PR_watch_bin(this.T_VW_m(v40));
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
