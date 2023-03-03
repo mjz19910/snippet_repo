@@ -564,6 +564,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_continuation_request_browse_token";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PT_f1";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_ad_data_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_ad_layout_ad_serving_data_entry";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_bin_params_1";}

@@ -2684,12 +2684,20 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_ad_layout_ad_serving_data_entry";
 		const {4: f4,5: f5,6: f6,7: f7,9: f9,10: f10,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @arg {PX_ad_data_info} x */
+	PX_ad_data_info(x) {
+		const cf="PX_ad_data_info";
+		const {1: v1,6: f6,11: f11,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_number(`${cf}.f1`,this.T_D32_m(v1));
+		this.save_number(`${cf}.f6`,this.T_D32_m(f6));
+		this.save_number(`${cf}.f11`,this.T_D32_m(f11));
+	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
 		const {1: v1,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.VW_BinaryTimestamp(v1);
-		this.codegen_typedef_bin(`${cf}.f3`,this.T_VW_m(v3));
+		this.PX_ad_data_info(this.T_VW_m(v3));
 	}
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
