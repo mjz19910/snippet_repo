@@ -349,8 +349,6 @@ class HandleTypes extends ServiceMethods {
 	T_FD64(x) {return this.T_RawChild(x)[1];}
 	/** @protected @template T @arg {T_VW<T>} x */
 	T_VW(x) {return this.T_RawChild(x)[2];}
-	/** @protected @template T @arg {T_VW<T>} x */
-	T_VW_m(x) {return this.T_RawChild(x)[2];}
 	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
 	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
 	/** @private @template {string} T @arg {TV_Str<T>} x */
@@ -372,6 +370,8 @@ class HandleTypes extends ServiceMethods {
 	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
 	/** @arg {T_D32<number>|T_D64<bigint>} x @returns {x is T_D32<number>;} */
 	is_T_D32(x) {return x[1][0][0]==="v_data32";}
+	/** @arg {T_VW<any>|TV_Str<string>} x @returns {x is T_VW<any>;} */
+	is_T_VW(x) {return x[1][0][0]==="v_child";}
 	//#endregion
 	//#region moved data methods
 	/** @public @arg {D_WebPlayerConfig} x */
@@ -1510,7 +1510,7 @@ class HandleTypes extends ServiceMethods {
 					let short_ts=this.replace_bin_short_ts(s,x3);
 					if(short_ts) return short_ts;
 					let gen_json=this.gen_typedef_bin_json(s,x3);
-					return `TYPE::T_VW<${gen_json},"json">`;
+					return `TYPE::T_VW_J<${gen_json}>`;
 				}
 				case "v_error": throw new Error("Found error in input stream");
 				case "v_group":
@@ -2473,10 +2473,14 @@ class HandleTypes extends ServiceMethods {
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
 		const {3: v3,8: f8,11: v11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.PD_continuation_params_f3(this.T_VW_m(v3));
+		if(this.is_T_VW(v3)) {
+			this.PD_continuation_params_f3(this.T_VW(v3));
+		} else {
+			this.params(`${cf}.f3`,this.TV_Str(v3));
+		}
 		this.save_number(`${cf}.f8`,this.T_D32(f8));
 		v11&&this.PD_continuation_params_f11(this.T_VW(v11));
-		this.PD_continuation_params_f14(this.T_VW_m(f14));
+		this.PD_continuation_params_f14(this.T_VW(f14));
 		f15&&this.save_number(`${cf}.f15`,this.T_D32(f15));
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
@@ -2486,7 +2490,13 @@ class HandleTypes extends ServiceMethods {
 		this.PX_buy_flow_params(this.T_VW(v1));
 	}
 	/** @private @arg {PX_buy_flow_params} x */
-	PX_buy_flow_params(x) {x; debugger;}
+	PX_buy_flow_params(x) {
+		const cf="PX_buy_flow_params";
+		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.videoId(this.TV_Str(v1));
+		this.channelId(this.TV_Str(v2));
+		this.save_number(`${cf}.f3`,this.T_D32(v3));
+	}
 	/** @private @arg {TX_sequence_info} x */
 	TX_sequence_info(x) {x; debugger;}
 	/** @private @arg {P_reel_sequence_params} x */
@@ -2494,7 +2504,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_reel_sequence_params";
 		const {1: v1,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		console.log(this.TV_Str(v1));
-		this.TX_sequence_info(this.T_VW_m(f5));
+		this.TX_sequence_info(this.T_VW(f5));
 	}
 	/** @private @arg {PX_watch_sequence_info} x */
 	PX_watch_sequence_info(x) {
@@ -2510,7 +2520,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_continuation_request_reel_watch_sequence_token";
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		v1&&console.log(this.TV_Str(v1));
-		this.PX_watch_sequence_info(this.T_VW_m(v3));
+		this.PX_watch_sequence_info(this.T_VW(v3));
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
@@ -2576,7 +2586,7 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_3(x) {
 		const cf="PX_watch_next_token_3";
 		const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.PX_watch_next_token_6(this.T_VW_m(v1));
+		this.PX_watch_next_token_6(this.T_VW(v1));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 		this.save_string(`${cf}.f4`,this.TV_Str(v4));
 		this.save_number(`${cf}.f5`,this.T_D32(v5));
@@ -2585,7 +2595,7 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_1(x) {
 		const cf="PX_watch_next_token_1";
 		const {4: v4,6: v6,8: v8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.PX_watch_next_token_2(this.T_VW_m(v4));
+		this.PX_watch_next_token_2(this.T_VW(v4));
 		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
 		let i8=this.TV_Str(v8);
 		switch(i8) {
@@ -2624,10 +2634,10 @@ class HandleTypes extends ServiceMethods {
 		this.PX_watch_next_token_info(this.T_VW(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 		f5&&this.a_primitive_str(this.TV_Str(f5));
-		f6&&this.PX_watch_next_token_1(this.T_VW_m(f6));
-		f9&&this.PX_watch_next_token_3(this.T_VW_m(f9));
-		f13&&this.PX_watch_next_token_4(this.T_VW_m(f13));
-		f14&&this.PX_watch_next_token_5(this.T_VW_m(f14));
+		f6&&this.PX_watch_next_token_1(this.T_VW(f6));
+		f9&&this.PX_watch_next_token_3(this.T_VW(f9));
+		f13&&this.PX_watch_next_token_4(this.T_VW(f13));
+		f14&&this.PX_watch_next_token_5(this.T_VW(f14));
 	}
 	/** @private @template {string} T @arg {TV_Str<T>|TW_TagStr<T>} x */
 	TV_Str_ex(x) {return x[1][0][3][1];}
@@ -2651,7 +2661,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_like_params";
 		const {1: v1,4: f4,5: f5,6: f6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		let m1=this.mw(this.m(v1));
-		let v1_v1=m1.mc(this.T_VW_m).mc(this.PT_f1).some.v;
+		let v1_v1=m1.mc(this.T_VW).mc(this.PT_f1).some.v;
 		let v1_v1i=v1_v1[1][0];
 		switch(v1_v1i[0]) {
 			default: debugger; break;
@@ -2707,7 +2717,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
 		const {1: v1,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.VW_BinaryTimestamp(v1);
-		this.PX_ad_data_info(this.T_VW_m(v3));
+		this.PX_ad_data_info(this.T_VW(v3));
 	}
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
@@ -2727,7 +2737,7 @@ class HandleTypes extends ServiceMethods {
 	PR_watch_bin(x) {
 		const cf="PR_watch_bin";
 		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.PD_watch_bin(this.T_VW_m(r));
+		this.PD_watch_bin(this.T_VW(r));
 	}
 	/** @private @arg {PD_watch_bin} x */
 	PD_watch_bin(x) {
@@ -2742,8 +2752,8 @@ class HandleTypes extends ServiceMethods {
 		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: v40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		v2&&this.save_number(`${cf}.f2`,this.T_D32(v2));
 		v3&&this.save_number(`${cf}.f3`,this.T_D32(v3));
-		v33&&this.PX_watch_bin(this.T_VW_m(v33));
-		v40&&this.PR_watch_bin(this.T_VW_m(v40));
+		v33&&this.PX_watch_bin(this.T_VW(v33));
+		v40&&this.PR_watch_bin(this.T_VW(v40));
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
@@ -2817,7 +2827,7 @@ class HandleTypes extends ServiceMethods {
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.PD_timed_continuation_f3(this.T_VW_m(v3));
+		this.PD_timed_continuation_f3(this.T_VW(v3));
 	}
 	//#endregion
 	//#region binary_result()
@@ -3127,6 +3137,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_PX_watch_next_token_2_f37(u);
 			} break;
+			case "PD_continuation_params.f3": {
+				/** @type {P_f3_PD_continuation_params} */
+				let u=as_any(x);
+				this.P_f3_PD_continuation_params(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3134,6 +3149,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_f3_PD_continuation_params} x */
+	P_f3_PD_continuation_params(x) {x;}
 	/** @private @arg {P_PX_watch_next_token_2_f37} x */
 	P_PX_watch_next_token_2_f37(x) {x;}
 	/** @private @arg {P_create_reply_params} x */

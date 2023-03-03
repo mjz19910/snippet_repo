@@ -346,7 +346,7 @@ type P_reel_sequence_params={
 	5: T_VW<TX_sequence_info>;
 };
 type PX_buy_flow_params={
-	1: TV_Str<string>;
+	1: TV_Str<D_VideoIdStr>;
 	2: TV_Str<`UC${string}`>;
 	3: T_D32<1>;
 };
@@ -367,7 +367,7 @@ type PD_continuation_params_f14={
 };
 type PD_continuation_params_f11={2: T_D32<1030000>;};
 type PD_continuation_params={
-	3: T_VW<PD_continuation_params_f3>;
+	3: T_VW<PD_continuation_params_f3>|TV_Str<string>;
 	8: T_D32<1>;
 	11?: T_VW<PD_continuation_params_f11>;
 	14: T_VW<PD_continuation_params_f14>;
@@ -628,4 +628,20 @@ type P_PX_watch_next_token_2_f37={
 	10: TV_Str<string>;
 	15: T_D32<2>;
 	20: T_D32<2>;
+};
+type T_VW_J<T,_U="json">=T_VW<T>;
+type P_f3_PD_continuation_params={
+	1: T_VW<{
+		5: T_VW<{
+			1: TV_Str<`UC${string}`>;
+			2: TV_Str<D_VideoIdStr>;
+		}>;
+	}>;
+	3: T_VW<{
+		0x2e6ea8d: T_VW<{
+			1: TV_Str<D_VideoIdStr>;
+		}>;
+	}>;
+	4: T_D32<1>;
+	6: T_D32<0>;
 };

@@ -571,6 +571,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PR_watch_bin";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PT_f1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_ad_data_info";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_buy_flow_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_bin";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token.f9";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_1";}
@@ -1013,6 +1014,7 @@ export namespace Gen {
 		|{n: "CF_onMissingIcon"; t: CF_onMissingIcon; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: "CF_parse_identifier"; t: CF_parse_identifier; v: "SI_VE126250_Identifier";}
 		|{n: "CF_parse_identifier"; t: CF_parse_identifier; v: "SI_VE76278_Identifier";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "PD_continuation_params.f3";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "PX_watch_next_token_2.f37";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "aadc_guidelines_state.entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ad_layout.ad_serving_data_entry";}
