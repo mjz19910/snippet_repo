@@ -400,7 +400,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let gg=this.data_store.number_store.data.find(e => e[0]==="P_tracking_params.f1");
+		let gg=this.data_store.get_number_store().data.find(e => e[0]==="P_tracking_params.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]!=="arr") return;
@@ -408,7 +408,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.save_number_arr("arr.P_tracking_params.f1",sr);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
 		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.data_store.string_store.data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
+		this.data_store.get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
 	}
 	/** @private @template T @arg {T[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
@@ -450,7 +450,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 	}
 	bitmap_console_todo_1() {
 		let yt_plugin={ds: this,};
-		let gg=yt_plugin.ds.data_store.number_store.data.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=yt_plugin.ds.data_store.get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1][0]!=="arr") return;
 		gg[1][1].sort((a,b) => a-b);
