@@ -1,31 +1,39 @@
 type Ret_gen_json=string;
-type V_ParamItem_RawChild=[type: "raw_child",binary_arr: Uint8Array,obj: null,raw_value: V_RawValue];
-type V_ParamItem_ChildStr=[type: "child_str",binary_arr: Uint8Array,obj: null,raw_value: V_RawValue];
-type V_ParamItem_Child=[type: "child",binary_arr: Uint8Array,obj: V_ParamObj,raw_value: V_RawValue];
-
-type V_ParamItem=
-	|V_ParamItem_Child
-	|[type: "data_fixed32",value: number]
-	|[type: "data_fixed64",value: bigint]
-	|[type: "data32",value: number]
-	|[type: "data64",raw_number: number[],value: bigint]
-	|[type: "error",location: number]
-	|[type: "group",value: V_ParamObj]
-	|[type: "info",value: number]
-	|[type: "raw",obj: V_RawValue]
-	|[type: "struct",value: V_ParamObj]
+type V_Param_D32=[type: "v_data32",value: number];
+type V_Param_D64=[type: "v_data64",raw_number: number[],value: bigint];
+type V_Param_Error=[type: "v_error",location: number];
+type V_Param_FD32=[type: "v_data_fixed32",value: number];
+type V_Param_FD64=[type: "v_data_fixed64",value: bigint];
+type V_Param_Group=[type: "v_group",value: V_ParamObj];
+type V_Param_Info=[type: "v_info",value: number];
+type V_Param_Raw=[type: "v_raw",obj: V_RawValue];
+type V_Param_Struct=[type: "v_struct",value: V_ParamObj];
+type V_Param_Child=T_Param_Child<V_ParamObj,V_RawValue>;
+type V_Param_ChildStr=[type: "v_child_str",binary_arr: Uint8Array,obj: null,raw_value: V_RawValue];
+type V_Param_RawChild=[type: "v_raw_child",binary_arr: Uint8Array,obj: null,raw_value: V_RawValue];
+type V_Param=
+	|V_Param_Child
+	|V_Param_FD32
+	|V_Param_FD64
+	|V_Param_D32
+	|V_Param_D64
+	|V_Param_Error
+	|V_Param_Group
+	|V_Param_Info
+	|V_Param_Raw
+	|V_Param_Struct
 	|V_ParamArrBox
-	|V_ParamItem_ChildStr
-	|V_ParamItem_RawChild
+	|V_Param_ChildStr
+	|V_Param_RawChild
 	;
 ;
 type V_ParamItemFiltered=
-	|[type: "error",location: number]
-	|[type: "group",value: V_ParamObj]
-	|[type: "info",value: number]
-	|[type: "param_arr",items: V_ParamItem[]]
-	|[type: "raw",obj: V_RawValue]
-	|[type: "struct",value: V_ParamObj]
+	|[type: "f_error",location: number]
+	|[type: "f_group",value: V_ParamObj]
+	|[type: "f_info",value: number]
+	|[type: "f_param_arr",items: V_Param[]]
+	|[type: "f_raw",obj: V_RawValue]
+	|[type: "f_struct",value: V_ParamObj]
 	|RetParam_BinaryTimestamp
 	|RetParam_child
 	|RetParam_D32
@@ -35,7 +43,7 @@ type V_ParamItemFiltered=
 	|RetParam_raw_child
 	|RetParam_VW_2
 	|RetParam_VW_Bigint
-	|V_ParamItem_ChildStr
+	|V_Param_ChildStr
 	;
 ;
 type RetParam_child=
