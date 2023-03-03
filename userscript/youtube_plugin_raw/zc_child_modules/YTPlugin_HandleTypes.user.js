@@ -275,16 +275,16 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
-		const {1: request_timestamp_milli_utc,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: request_timestamp_milli_utc,2: microseconds_ts,3: nanoseconds_ts,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(request_timestamp_milli_utc,x => {
 			this.log_buffer.push(["number",`max_gen:${cf}:binary_ts_gen`,"f1","milliseconds",x]);
 			this.immediate_run_logger();
 		});
-		this.T_FD32(f2,x => {
+		this.T_FD32(microseconds_ts,x => {
 			if(x<=0b1010111011010101010000001011) return;
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(x).toString(2)}]`);
 		});
-		this.T_FD32(f3,x => {
+		this.T_FD32(nanoseconds_ts,x => {
 			if(x<=0b11111111000011111010011111000000) return;
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(x).toString(2)}]`);
 		});
@@ -2476,11 +2476,18 @@ class HandleTypes extends ServiceMethods {
 		this.T_VW(f4,this.V_ShortTimestamp);
 		this.t(f5,x => this.T_D32(x,x => this.save_number(`${cf}.f5`,x)));
 	}
+	/** @private @arg {PK_f1} x */
+	PK_f1(x) {
+		const cf="PK_f1";
+		const {1: f1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_D32(f1,x => this.save_number(`${cf}.data`,x));
+	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
 		const cf="P_playability_status_context_params";
 		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_D32(f1,x => this.save_number(`${cf}.f1`,x));
+		this.T_VW(f2,this.PK_f1);
 	}
 	//#endregion
 	/** @private @arg {P_reel_params} x */
@@ -2530,11 +2537,13 @@ class HandleTypes extends ServiceMethods {
 	P_transcript_track_selection_serialized_params(x) {
 		const cf="P_transcript_track_selection_serialized_params";
 		const {1: f1,2: f2,3: f3,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
 		const {1: f1,2: f2,3: f3,5: f5,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
@@ -2545,26 +2554,31 @@ class HandleTypes extends ServiceMethods {
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
 		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
 		const {2: f2,3: f3,7: f7,12: f12,13: f13,27: f27,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
 		const {1: f1,2: f2,3: f3,5: f5,6: f6,9: f9,13: f13,14: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
 		const {2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
@@ -2595,6 +2609,7 @@ class HandleTypes extends ServiceMethods {
 	P_watch_params(x) {
 		const cf="P_watch_params";
 		const {2: f2,3: f3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: f33,36: f36,39: f39,40: f40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
@@ -2615,6 +2630,7 @@ class HandleTypes extends ServiceMethods {
 	P_notification_opt_out(x) {
 		const cf="P_notification_opt_out";
 		const {2: f2,3: f3,4: f4,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
@@ -2625,6 +2641,7 @@ class HandleTypes extends ServiceMethods {
 	P_notification_record_interactions(x) {
 		const cf="P_notification_record_interactions";
 		const {2: f2,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.T_VW(f2,this.PK_f1);
 	}
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {

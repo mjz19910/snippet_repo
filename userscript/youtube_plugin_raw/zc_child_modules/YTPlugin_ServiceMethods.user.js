@@ -1587,9 +1587,11 @@ class ServiceMethods extends ServiceData {
 						id,raw_id,
 					});
 					this.save_next_char("playlistId.radio_global_mix.EM",em_id);
+					// 4 [RDGM] + 2 [EM] + 22 [ChannelId]
+					if(em_id.length===22) return;
 					// 4 [RDGM] + 2 [EM] + 35 [unknown]
-					if(raw_id.length===41) return;
-					console.log("[playlistId.radio_global_mix.length]",raw_id.length);
+					if(em_id.length===35) return;
+					console.log("[playlistId.radio_global_mix.length]",raw_id.length-em_id.length,em_id.length,raw_id);
 					return;
 				}
 				debugger;
