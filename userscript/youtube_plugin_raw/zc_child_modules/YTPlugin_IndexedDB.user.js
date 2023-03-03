@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,as_any}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -178,6 +178,17 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {IDBBoxedType} item */
 	load_store(store,item) {
+		if(!("value" in item)) return;
+		let [,d_cache]=this.get_data_cache("boxed_id");
+		this.cache_weak_set.add(item.value);
+		let c_index=this.get_cache_index("boxed_id");
+		let idx=c_index.get(item.key);
+		if(idx===void 0) {
+			idx=d_cache.push(null)-1;
+			c_index.set(item.key,idx);
+		} else {
+			d_cache[idx]=null;
+		}
 		switch(item.type) {
 			default: debugger; break;
 			case "boolean": return store.bool_store.load_data(item);
@@ -185,9 +196,6 @@ class IndexedDBService extends BaseService {
 			case "number": return store.number_store.load_data(item);
 			case "root_visual_element": return store.ve_store.load_data(item);
 			case "string": return store.string_store.load_data(item);
-			case "save_id":
-			case "load_id":
-			case "update_id": break;
 		}
 	}
 	expected_save_id=0;
@@ -648,16 +656,21 @@ class IndexedDBService extends BaseService {
 		return result;
 	}
 	log_cache_push=false;
+	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @returns {Map<string,number>} */
+	get_cache_index(key) {
+		/** @type {[T,Map<string,number>]|undefined} */
+		let c_index=this.store_cache_index[key];
+		if(c_index) return c_index[1];
+		c_index=[key,new Map];
+		/** @type {{[R in T]?: [R,Map<string,number>]}} */
+		let sk_ac=this.store_cache_index;
+		sk_ac[key]=c_index;
+		return c_index[1];
+	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @arg {DT_DatabaseStoreTypes[T]} obj */
 	push_waiting_obj(key,obj) {
 		let [,d_cache]=this.get_data_cache(key);
-		/** @type {{[R in T]?: [R,Map<string,number>]}} */
-		let sk_ac=this.store_cache_index;
-		/** @type {[T,Map<string,number>]|undefined} */
-		let cache_index_info=as_any(this.store_cache_index[key]);
-		cache_index_info??=[key,new Map];
-		sk_ac[key]=cache_index_info;
-		let c_index=cache_index_info[1];
+		let c_index=this.get_cache_index(key);
 		let index_val=obj.key;
 		let idx=c_index.get(index_val);
 		if(idx!==void 0) {
@@ -669,7 +682,7 @@ class IndexedDBService extends BaseService {
 			}
 			return;
 		}
-		idx=d_cache.push(as(obj))-1;
+		idx=d_cache.push(obj)-1;
 		c_index.set(index_val,idx);
 		if(this.log_cache_push) console.log("push wait",key,index_val,idx,obj);
 	}
