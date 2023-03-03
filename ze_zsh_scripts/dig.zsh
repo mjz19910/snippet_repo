@@ -18,14 +18,18 @@ function dig_batch() {
 	dig_main "$@"
 }
 
+function read_result() {
+	if [ "$DIG_SILENT" != "true" ] && (($(wc -l <"$2") != 0)); then
+		foo=$(<"$2")
+		printf "$1\n%s\n" "$foo"
+	fi
+}
+
 function dig_main-run() {
 	a2="$1"
 	RESULT_FILE="$TMP_DIR/result.dig_batch.$a2"
-	if [[ -f "$TMP_DIR/result.dig_batch.$a2" ]]; then
-		if (($(wc -l <"$RESULT_FILE") != 0)); then
-			foo=$(<"$RESULT_FILE")
-			printf "[$a2]\n%s\n" "$foo"
-		fi
+	if [[ -f "$RESULT_FILE" ]]; then
+		read_result "[$a2]" "$RESULT_FILE"
 		return 0
 	fi
 	printf "\r.\e[2C"
@@ -36,13 +40,18 @@ function dig_main-run() {
 		stdbuf -i0 -o0 -e0 xargs -0rn35 -P100 zsh -c '. ./dig.zsh run_child '$a2' "$@"'
 	list=($TMP_DIR/out.dig_batch.$a2.*)
 	cat $list >>"$RESULT_FILE"
-	if (($(wc -l <"$RESULT_FILE") != 0)); then
-		foo=$(<"$RESULT_FILE")
-		printf "\n[$a2]\n%s\n" "$foo"
-	fi
+	read_result_after_dig "$a2" "$RESULT_FILE"
 	rm "$list"
 	printf "\r \e[2C"
 	rm "$PID_FILE"
+}
+function read_result_after_dig {
+	if [ "$DIG_SILENT" != "true" ] && (($(wc -l <"$2") != 0)); then
+		foo=$(<"$2")
+		printf "\n[$1]\n%s\n" "$foo"
+	else
+		printf "\n"
+	fi
 }
 function run_child() {
 	a1=$1
@@ -90,10 +99,7 @@ function dig_user-run {
 	export TMP_TAG=user
 	RESULT_FILE="$TMP_DIR/dig/$TMP_TAG/out/result.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
-		if (($(wc -l <"$RESULT_FILE") != 0)); then
-			foo=$(<"$RESULT_FILE")
-			printf "[$a2]\n%s\n" "$foo"
-		fi
+		read_result "[$a2]" "$RESULT_FILE"
 		return 0
 	fi
 	touch /tmp/dig_term_lock
@@ -104,10 +110,7 @@ function dig_user-run {
 	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$gz}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
-	if (($(wc -l <"$RESULT_FILE") != 0)); then
-		foo=$(<"$RESULT_FILE")
-		printf "\n[$a2]\n%s\n" "$foo"
-	fi
+	read_result_after_dig "$a2" "$RESULT_FILE"
 	rm $list
 }
 function dig_user-child {
@@ -136,10 +139,7 @@ function dig_final-run {
 	export TMP_TAG=final
 	RESULT_FILE="$TMP_DIR/dig/$TMP_TAG/out/result.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
-		if [ "$DIG_SILENT" != "true" ] && (($(wc -l <"$RESULT_FILE") != 0)); then
-			foo=$(<"$RESULT_FILE")
-			printf "[$a2]\n%s\n" "$foo"
-		fi
+		read_result "[$a2]" "$RESULT_FILE"
 		return 0
 	fi
 	touch /tmp/dig_term_lock
@@ -149,12 +149,7 @@ function dig_final-run {
 	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn4 -P50 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
-	if [ "$DIG_SILENT" != "true" ] && (($(wc -l <"$RESULT_FILE") != 0)); then
-		foo=$(<"$RESULT_FILE")
-		printf "\n[$a2]\n%s\n" "$foo"
-	else
-		printf "\n"
-	fi
+	read_result_after_dig "$a2" "$RESULT_FILE"
 	rm $list
 }
 function dig_final-child {
