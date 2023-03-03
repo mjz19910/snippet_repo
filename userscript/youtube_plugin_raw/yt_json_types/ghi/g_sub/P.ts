@@ -342,7 +342,7 @@ type P_continuation_request_reel_watch_sequence_token={
 };
 type TX_sequence_info={3: T_D32<12>;};
 type P_reel_sequence_params={
-	1: TV_Str<string>;
+	1: TV_Str<D_VideoIdStr>;
 	5: T_VW<TX_sequence_info>;
 };
 type PX_buy_flow_params={

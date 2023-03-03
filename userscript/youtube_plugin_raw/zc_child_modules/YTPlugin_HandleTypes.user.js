@@ -354,7 +354,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @template {string} T @arg {TV_Str<T>} x */
 	TV_Str(x) {return this.T_RawChild(x)[3][1];}
 	/** @protected @template T @arg {T_PArr_1<[T]>} x */
-	T_RawChild(x) {return x[1][0];}
+	T_RawChild(x) {
+		if(x===void 0) debugger;
+		return x[1][0];
+	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
 	/** @protected @template T @arg {T_Command_TP<T>} x @arg {(this:this,x:T)=>void} f */
@@ -2513,7 +2516,7 @@ class HandleTypes extends ServiceMethods {
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
 		const {1: v1,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(this.TV_Str(v1));
+		this.videoId(this.TV_Str(v1));
 		this.TX_sequence_info(this.T_VW(f5));
 	}
 	/** @private @arg {PX_watch_sequence_info} x */

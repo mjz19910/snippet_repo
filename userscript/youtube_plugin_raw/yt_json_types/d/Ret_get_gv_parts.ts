@@ -1,6 +1,31 @@
 // cSpell:ignoreRegExp /"(\dualdn?|5u[a]e[z]|qx[o]e[d]|vg[q]s[rk]|vg[q]s)"/
 namespace GV_Parts_NS {
 	export const done_func=(num: number) => (num*2)/*[GV_0]*/+num/*[TypeArr]*/+1/*[B]*/+2/*[S]*/;
+	export type G_GV_idx0=
+		|"5"|"9"
+		|"a"
+		|"h"|"n"|"o"|"p"
+		|"q"|"t"|"v"
+		;
+	;
+	export type G_GV_idx1=T_Split<`
+	u
+	g
+	5
+	b
+	p
+	4
+	8
+	x
+	0
+	5
+	4
+	x
+	0
+	t
+	g`,"\n\t">
+		;
+	;
 	export type G_GV_Base=
 		|"5ua" // done_func(2) = 9
 		|"9gv" // done_func(3) = 12
