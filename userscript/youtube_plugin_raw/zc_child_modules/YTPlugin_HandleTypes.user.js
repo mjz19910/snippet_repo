@@ -2635,6 +2635,17 @@ class HandleTypes extends ServiceMethods {
 		const cf="PX_watch_next_token_info";
 		const {2: {},4: {}={},6: {}={},7: {}={},25: {}={},28: {}={},36: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
+	/** @private @arg {PX_watch_next_token_3} x */
+	PX_watch_next_token_3(x) {
+		const cf="PX_watch_next_token_3";
+		const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		for(let v1_i of v1[1]) {
+			this.codegen_typedef_bin(`${cf}.f1.rep`,v1_i);
+		}
+		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
+		this.save_string(`${cf}.f4`,this.TV_Str(v4));
+		this.save_number(`${cf}.f5`,this.T_D32_m(v5));
+	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
@@ -2644,17 +2655,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 		f5&&this.a_primitive_str(this.TV_Str(f5));
 		f6&&console.log(`${cf}.f6`,this.T_VW_m(f6));
-		if(f9) {
-			let x2=this.T_VW_m(f9);
-			{
-				const cf="PX_watch_next_token.f9";
-				const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x2); this.h_gen_keys(cf,x2,y);
-				this.codegen_typedef_bin(`${cf}.f1`,this.T_VW_m(v1));
-				this.save_number(`${cf}.f3`,this.T_D32_m(v3));
-				this.save_string(`${cf}.f4`,this.TV_Str(v4));
-				this.save_number(`${cf}.f5`,this.T_D32_m(v5));
-			}
-		}
+		f9&&this.PX_watch_next_token_3(this.T_VW_m(f9));
 		f13&&console.log(`${cf}.f13`,this.T_VW_m(f13));
 		f14&&console.log(`${cf}.f14`,this.T_VW_m(f14));
 	}

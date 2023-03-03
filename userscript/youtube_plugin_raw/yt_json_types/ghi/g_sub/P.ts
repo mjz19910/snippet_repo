@@ -138,9 +138,7 @@ type P_logging_context_serialized_context_data={
 	3?: TV_Str<SD_PlaylistId>;
 };
 type P_like_params={
-	1: T_VW<{
-		1: TW_TagStr<D_VideoIdStr>|TV_Str<D_VideoIdStr>;
-	}>;
+	1: T_VW<{1: TW_TagStr<D_VideoIdStr>|TV_Str<D_VideoIdStr>;}>;
 	4: T_D32<0>;
 	5?: T_D32<1>;
 	6: T_VW<V_ShortTimestamp>;
@@ -193,32 +191,38 @@ type PX_watch_next_token_info={
 		8: T_D32<0>;
 	}>;
 };
+type PX_watch_next_token_3={
+	1: T_PArr_R<{
+		1: T_D32<number>|T_D64<bigint>;
+		3?: T_D32<1>;
+	}[]>;
+	3: T_D32<0>;
+	4: TV_Str<"Watched">;
+	5: T_D32<19>;
+};
+type PX_watch_next_token_2={
+	4: TV_Str<D_VideoIdStr>;
+	6: T_D32<0>;
+	15: T_D32<2>;
+};
+type PX_watch_next_token_1={
+	4: T_VW<PX_watch_next_token_2>;
+	8: TV_Str<"comments-section">;
+};
+type PX_watch_next_token_4={
+	5: T_FD32<1684366694>;
+	12: T_FD64<8392569429487543156n>;
+};
+type PX_watch_next_token_5={1: T_D32<0>;};
 type P_continuation_request_watch_next_token={
 	1?: T_D32<20>;
 	2: T_VW<PX_watch_next_token_info>;
 	3: T_D32<0|6>;
 	5?: TV_Str<string>;
-	6?: T_VW<{
-		4: T_VW<{
-			4: TV_Str<D_VideoIdStr>;
-			6: T_D32<0>;
-			15: T_D32<2>;
-		}>;
-		8: TV_Str<"comments-section">;
-	}>;
-	9?: T_VW<{
-		1: T_VW<{}>;
-		3: T_D32<0>;
-		4: TV_Str<"Watched">;
-		5: T_D32<19>;
-	}>;
-	13?: T_VW<{
-		5: T_FD32<1684366694>;
-		12: T_FD64<8392569429487543156n>;
-	}>;
-	14?: T_VW<{
-		1: T_D32<0>;
-	}>;
+	6?: T_VW<PX_watch_next_token_1>;
+	9?: T_VW<PX_watch_next_token_3>;
+	13?: T_VW<PX_watch_next_token_4>;
+	14?: T_VW<PX_watch_next_token_5>;
 };
 type P_watch_playlist_params={
 	2: T_D32<1>;
