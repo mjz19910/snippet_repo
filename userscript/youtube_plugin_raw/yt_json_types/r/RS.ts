@@ -338,7 +338,7 @@ type RS_Page_Channel=
 			microformat: R_MicroformatData;
 		};
 		url: "/@SBMowingShorts/featured";
-		expirationTime: 1676921525597;
+		expirationTime: number;
 	}
 	;
 ;

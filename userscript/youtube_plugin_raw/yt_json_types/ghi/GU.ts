@@ -131,6 +131,7 @@ type GU_VE3611_3=
 	|`/@${string}/shorts`
 	|`/@${string}/videos`
 	|`/@${string}`
+	|`/channel/UC${string}`
 	;
 ;
 //#region Url Templates

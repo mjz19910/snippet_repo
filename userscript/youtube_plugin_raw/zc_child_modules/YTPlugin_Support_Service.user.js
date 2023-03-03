@@ -1955,19 +1955,31 @@ class Support_EventInput extends ServiceMethods {
 					return;
 				}
 			}
-			let [d,e]=c;
-			if(!d.startsWith("@")) debugger;
-			if(this.str_is_search(e)) {
-				let [p,s]=split_string_once(e,"?");
-				if(p!=="search") debugger;
-				let {query,...y}=this.parse_url_search_params(s); this.g(y);
-				this.a_primitive_str(query);
-				return;
-			}
-			switch(e) {
-				default: e===""; debugger; break;
-				case "search": case "shorts": case "featured":
-				case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
+			switch(c[0]) {
+				default: {
+					let [d,e]=c;
+					if(!d.startsWith("@")) debugger;
+					if(this.str_is_search(e)) {
+						let [p,s]=split_string_once(e,"?");
+						if(p!=="search") debugger;
+						let {query,...y}=this.parse_url_search_params(s); this.g(y);
+						this.a_primitive_str(query);
+						return;
+					}
+					switch(e) {
+						default: e===""; debugger; break;
+						case "search": case "shorts": case "featured":
+						case "about": case "videos": case "playlists": case "community": case "channels": case "shorts":
+					}
+
+				} break;
+				case "channel": {
+					let [,e]=c;
+					if(!this.str_starts_with(e,"UC")) {debugger; break;}
+					if(this.str_is_search(e)) {debugger; break;}
+					let p=split_string_once(e,"/"); this.cq(p.length,1);
+					this.channelId(p[0]);
+				} break;
 			}
 		};
 		/** @arg {(typeof x)["endpoint"]} x */
