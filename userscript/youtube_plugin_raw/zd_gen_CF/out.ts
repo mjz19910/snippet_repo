@@ -1013,6 +1013,7 @@ export namespace Gen {
 		|{n: "CF_onMissingIcon"; t: CF_onMissingIcon; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: "CF_parse_identifier"; t: CF_parse_identifier; v: "SI_VE126250_Identifier";}
 		|{n: "CF_parse_identifier"; t: CF_parse_identifier; v: "SI_VE76278_Identifier";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "PX_watch_next_token_2.f37";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "aadc_guidelines_state.entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ad_layout.ad_serving_data_entry";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}

@@ -26,11 +26,13 @@ export_(exports => {exports.__is_module_flag__=true;});
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
 	[24466371,24468724,24478150,24481771,24482558,24484079,24484158,24485239],
-	[24478802,24485791],
+	[24478802],
+	[24482080],
 	[24482557],
 	[24482828],
 	[24482876],
 	[24482877],
+	[24485791],
 	[24486982],
 	[24487104],
 ].flat());
@@ -2590,24 +2592,31 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_1} x */
 	PX_watch_next_token_1(x) {
 		const cf="PX_watch_next_token_1";
-		const {4: a,8: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.PX_watch_next_token_2(this.T_VW_m(a));
-		console.log(`${cf}.f8`,this.TV_Str(b));
+		const {4: v4,6: v6,8: v8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.PX_watch_next_token_2(this.T_VW_m(v4));
+		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
+		let i8=this.TV_Str(v8);
+		switch(i8) {
+			default: console.log(`${cf}.f8`,i8); break;
+			case "engagement-panel-comments-section":
+			case "comments-section":
+		}
 	}
 	/** @private @arg {PX_watch_next_token_2} x */
 	PX_watch_next_token_2(x) {
 		const cf="PX_watch_next_token_2";
-		const {4: a,6: b,15: c,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {4: a,6: b,15: c,37: f37,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.videoId(this.TV_Str(a));
-		console.log(`${cf}.f6`,this.T_D32(b));
-		console.log(`${cf}.f15`,this.T_D32(c));
+		this.save_number(`${cf}.f6`,this.T_D32(b));
+		this.save_number(`${cf}.f15`,this.T_D32(c));
+		f37&&this.params(`${cf}.f37`,this.TV_Str(f37));
 	}
 	/** @private @arg {PX_watch_next_token_4} x */
 	PX_watch_next_token_4(x) {
 		const cf="PX_watch_next_token_4";
 		const {5: a,12: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f5`,this.T_FD32(a));
-		console.log(`${cf}.f12`,this.T_RawChild(b));
+		console.log(`${cf}.f5`,this.T_FD32(a).toString(2));
+		console.log(`${cf}.f12`,this.T_FD64(b).toString(2));
 	}
 	/** @private @arg {PX_watch_next_token_5} x */
 	PX_watch_next_token_5(x) {

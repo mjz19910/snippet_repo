@@ -205,11 +205,12 @@ type PX_watch_next_token_2={
 	4: TV_Str<D_VideoIdStr>;
 	6: T_D32<0>;
 	15: T_D32<2>;
+	37?: TV_Str<string>;
 };
 type PX_watch_next_token_1={
 	4: T_VW<PX_watch_next_token_2>;
 	6?: T_D32<1>;
-	8: TV_Str<"comments-section">;
+	8: TV_Str<"comments-section"|"engagement-panel-comments-section">;
 };
 type PX_watch_next_token_4={
 	5: T_FD32<1684366694>;
