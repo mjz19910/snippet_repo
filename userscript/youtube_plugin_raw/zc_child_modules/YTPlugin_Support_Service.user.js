@@ -245,10 +245,10 @@ class StoreData {
 		this.add_store(["string_store",string_store]);
 		this.add_store(["ve_store",ve_store]);
 	}
-	/** @type {StoreDescription<string,"string">} */
-	get string_store() {return this.stores.get("string_store");}
-	/** @type {StoreDescription<number,"number">} */
-	get number_store() {return this.stores.get("number_store");}
+	/** @returns {StoreDescription<string,"string">} */
+	get_string_store() {return this.stores.get("string_store");}
+	/** @returns {StoreDescription<number,"number">} */
+	get_number_store() {return this.stores.get("number_store");}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
