@@ -2578,8 +2578,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {1: d1,2: f2,3: f3,5: f5,6: f6,9: f9,13: f13,14: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		if(d1) debugger;
+		const {1: v1,2: f2,3: f3,5: f5,6: f6,9: f9,13: f13,14: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		v1&&this.T_D32(v1,x => this.save_number(`${cf}.f1`,x));
 		this.T_VW(f2,this.PK_f2);
 	}
 	/** @private @arg {P_unsubscribe_params} x */
@@ -2614,8 +2614,23 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {{1:TV_Str<D_VideoIdStr>;}} x */
-	PK_f1_str(x) {x; debugger;}
+	/** @private @arg {{1:TV_Str<D_VideoIdStr>|T_VW_tag<D_VideoIdStr>;}} x */
+	PK_f1_str(x) {
+		let m1=this.mw(this.m(x));
+		let v1_v1=m1.mc(this.PT_f1).some.v;
+		let v1_v1i=v1_v1[1][0];
+		switch(v1_v1i[0]) {
+			default: debugger; break;
+			case "child": {
+				let x2=v1_v1i[3][1];
+				this.videoId(x2);
+			} break;
+			case "raw_child": {
+				let x2=v1_v1i[3][1];
+				this.videoId(x2);
+			} break;
+		}
+	}
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
