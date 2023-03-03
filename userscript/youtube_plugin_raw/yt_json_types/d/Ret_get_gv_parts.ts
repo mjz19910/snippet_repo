@@ -39,24 +39,6 @@ namespace GV_Parts_NS {
 		`>
 		;
 	;
-	export type G_GV_Base=
-		|"5ua" // done_func(2) = 9
-		|"9gv" // done_func(3) = 12
-		|"a5m" // done_func(3) = 12
-		|"ab5" // done_func(2) = 9
-		|"hp5" // done_func(2) = 9
-		|"n4v" // done_func(1) = 6
-		|"n8v" // done_func(1) = 6
-		|"nx5" // done_func(2) = 9
-		|"o09" // done_func(1) = 6
-		|"p5q" // done_func(2) = 9
-		|"q4f" // done_func(3) = 12
-		|"qxo" // done_func(2) = 9
-		|"t0a" // done_func(2) = 9
-		|"tt1" // done_func(2) = 9
-		|"vgq" // done_func(2) = 9
-		;
-	;
 	export type G_GV_idx3=
 		T_Split<T_StringTrim<`
 		7
@@ -82,6 +64,24 @@ namespace GV_Parts_NS {
 		z
 		`>,`
 		`>
+		;
+	;
+	export type G_GV_Base=
+		|"5ua" // done_func(2) = 9
+		|"9gv" // done_func(3) = 12
+		|"a5m" // done_func(3) = 12
+		|"ab5" // done_func(2) = 9
+		|"hp5" // done_func(2) = 9
+		|"n4v" // done_func(1) = 6
+		|"n8v" // done_func(1) = 6
+		|"nx5" // done_func(2) = 9
+		|"o09" // done_func(1) = 6
+		|"p5q" // done_func(2) = 9
+		|"q4f" // done_func(3) = 12
+		|"qxo" // done_func(2) = 9
+		|"t0a" // done_func(2) = 9
+		|"tt1" // done_func(2) = 9
+		|"vgq" // done_func(2) = 9
 		;
 	;
 }
