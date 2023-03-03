@@ -2830,7 +2830,7 @@ class HandleTypes extends ServiceMethods {
 		console.log(cf,"f1","f14",this.T_FD64(x2_f14));
 	}
 	//#endregion
-	/** @private @arg {PD_timed_continuation_f3} x */
+	/** @private @arg {PD_event_info} x */
 	PD_timed_continuation_f3(x) {
 		const cf="PD_timed_continuation_f3";
 		const {14: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);

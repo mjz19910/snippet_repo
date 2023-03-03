@@ -537,27 +537,25 @@ type P_bin_params_1_f1={
 	1: T_FD64<5171158136908114023n>;
 	2: T_FD64<13946304882864751271n>;
 };
-
 type P_bin_params_1={
 	1: T_VW<P_bin_params_1_f1>;
 };
+type PX_upcoming_event_reminder_info={
+	1: T_D32<0>;
+	2: T_D32<0>;
+};
+
 type P_notification_add_upcoming_event_reminder_params={
-	1: T_VW<{14: T_FD64<6427857484411717751n>;}>;
-	6: T_VW<{
-		1: T_D32<0>;
-		2: T_D32<0>;
-	}>;
+	1: T_VW<PD_event_info>;
+	6: T_VW<PX_upcoming_event_reminder_info>;
 };
 type P_notification_remove_upcoming_event_reminder_params={
-	1: T_VW<{14: T_FD64<6427857484411717751n>;}>;
-	6: T_VW<{
-		1: T_D32<0>;
-		2: T_D32<0>;
-	}>;
+	1: T_VW<PD_event_info>;
+	6: T_VW<PX_upcoming_event_reminder_info>;
 };
-type PD_timed_continuation_f3={14: T_FD64<6427857484411717751n>;};
+type PD_event_info={14: T_FD64<6427857484411717751n>;};
 type PD_timed_continuation={
-	3: T_VW<PD_timed_continuation_f3>;
+	3: T_VW<PD_event_info>;
 	4: T_D32<1677253347>;
 	7: T_D32<1>;
 	8: T_D32<1>;
