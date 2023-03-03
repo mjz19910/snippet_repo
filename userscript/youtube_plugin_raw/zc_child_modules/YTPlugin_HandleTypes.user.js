@@ -2603,6 +2603,7 @@ class HandleTypes extends ServiceMethods {
 		for(let [,,u1] of n1) {
 			this.codegen_typedef_bin(`${cf}.f1.rep`,u1);
 		}
+		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
 	}
 	/** @private @arg {PX_watch_next_token_3} x */
 	PX_watch_next_token_3(x) {
