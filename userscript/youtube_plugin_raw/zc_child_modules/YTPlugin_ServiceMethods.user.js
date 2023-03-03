@@ -1557,8 +1557,8 @@ class ServiceMethods extends ServiceData {
 						id,raw_id,
 					});
 					// 4 [RDCM] + 2 [UC] + 22 [ChannelId]
-					if(raw_id.length===28) return;
-					console.log("[playlistId.radio_channel_mix.length]",raw_id.length);
+					if(channel_id.length===22) return;
+					console.log("[playlistId.radio_channel_mix.length]",raw_id.length-channel_id.length,channel_id.length,raw_id);
 					return;
 				}
 				debugger;
