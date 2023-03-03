@@ -533,7 +533,15 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
-		console.log("[d_cache_nonnull]",d_cache.filter(e => e!==null));
+		let no_null_cache=d_cache.filter(e=>e!==null&&!(e.type==="load_id"||e.type==="save_id"));
+		if(no_null_cache.length===1) {
+			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
+		} else if(no_null_cache.length===2) {
+			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
+			console.log("[d_cache_nonnull.1]",no_null_cache[1]);
+		} else if(no_null_cache.length>0) {
+			console.log("[d_cache_nonnull.arr]",no_null_cache);
+		}
 		try {
 			for(let item of d_cache) {
 				if(tx_scope.is_tx_complete) {
