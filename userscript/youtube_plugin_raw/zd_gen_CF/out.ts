@@ -427,6 +427,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SerializedSlotAdServingDataEntry";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SettingsSidebar";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_ShowEngagementPanel";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_SimpleCardContent";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SimpleCardTeaser";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SimpleMenuHeader";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_SortFilterSubMenu";}

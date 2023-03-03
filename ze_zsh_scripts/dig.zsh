@@ -97,7 +97,7 @@ function get_google_opt {
 function dig_user-run {
 	a2=${1}"__n"${2}"_"
 	export TMP_TAG=user
-	JOB_NUMBER=90
+	JOB_NUMBER=100
 	RESULT_FILE="$TMP_DIR/dig/$TMP_TAG/out/result.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
 		read_result "[$a2]" "$RESULT_FILE"

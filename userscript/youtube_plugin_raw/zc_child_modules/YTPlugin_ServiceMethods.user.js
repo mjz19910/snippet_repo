@@ -739,7 +739,7 @@ class ServiceMethods extends ServiceData {
 		switch(x.targetId) {
 			case "comments-section": this.A_CommentsSectionContinuation(x); break;
 			case "watch-next-feed": this.A_WatchNext(x); break;
-			case "engagement-panel-comments-section": this.ht.A_CommentsSectionContinuation_2(x); break;
+			case "engagement-panel-comments-section": this.xr.A_CommentsSectionContinuation_2(x); break;
 			default: x===0; debugger;
 		}
 	}
@@ -1091,7 +1091,7 @@ class ServiceMethods extends ServiceData {
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
 		x.createCommentReplyDialogEndpoint;
-		if("createCommentReplyDialogEndpoint" in x) return this.ht.E_CreateCommentReplyDialog(x);
+		if("createCommentReplyDialogEndpoint" in x) return this.xr.E_CreateCommentReplyDialog(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {M_YpcGetOffers} x */
@@ -1220,7 +1220,7 @@ class ServiceMethods extends ServiceData {
 		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
 		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
 		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
-		if("createCommentReplyEndpoint" in x) return this.ht.E_CreateCommentReply(x);
+		if("createCommentReplyEndpoint" in x) return this.xr.E_CreateCommentReply(x);
 		let gen_name=this.get_codegen_name(cf,x);
 		if(!gen_name) {debugger; return;}
 		x===""; this.codegen_typedef(`${cf}$${gen_name}`,x,true);
@@ -3338,7 +3338,7 @@ class ServiceMethods extends ServiceData {
 				case "FEEDBACK": case "INFO":
 			}
 		}
-		this.ht.D_MenuNavigationItem_Endpoint(navigationEndpoint);
+		this.xr.G_MenuNavigationItem_NavEP(navigationEndpoint);
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
@@ -3675,7 +3675,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ToggleButton_DefaultSrvEP} x */
 	D_ToggleButton_DefaultSrvEP(x) {
 		const cf="D_ToggleButton_DefaultSrvEP"; this.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.ht.E_PerformCommentAction(x);
+		if("performCommentActionEndpoint" in x) return this.xr.E_PerformCommentAction(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
@@ -3685,7 +3685,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ToggleButton_ToggledSrvEP} x */
 	D_ToggleButton_ToggledSrvEP(x) {
 		const cf="D_ToggleButton_ToggledSrvEP"; this.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.ht.E_PerformCommentAction(x);
+		if("performCommentActionEndpoint" in x) return this.xr.E_PerformCommentAction(x);
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
@@ -5483,7 +5483,7 @@ class ServiceMethods extends ServiceData {
 		const cf="A_WatchNext";
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,x => this.ht.G_WatchNext(x));
+		this.z(continuationItems,x => this.xr.G_WatchNext(x));
 	}
 	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
 	A_CommentsSectionContinuation(x) {
@@ -5537,9 +5537,9 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.R_Button(collapseButton);
 		sponsorCommentBadge;
-		this.t(sponsorCommentBadge,x => this.ht.R_SponsorCommentBadge(x));
+		this.t(sponsorCommentBadge,x => this.xr.R_SponsorCommentBadge(x));
 		this.t(replyCount,this.a_primitive_num);
-		this.t(authorCommentBadge,x => this.ht.R_AuthorCommentBadge(x));
+		this.t(authorCommentBadge,x => this.xr.R_AuthorCommentBadge(x));
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,G_CommentRepliesItem>} x */
@@ -6051,7 +6051,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);
-		this.t(emojiPicker,x => this.ht.R_EmojiPicker(x));
+		this.t(emojiPicker,x => this.xr.R_EmojiPicker(x));
 		this.trackingParams(trackingParams);
 		this.R_Button(emojiButton);
 	}

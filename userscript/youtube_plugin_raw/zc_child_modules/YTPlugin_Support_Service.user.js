@@ -1103,8 +1103,8 @@ class Support_RS_Player extends ServiceMethods {
 		const cf="D_Card_Content"; this.k(cf,x);
 		if("collaboratorInfoCardContentRenderer" in x) return this.R_CollaboratorInfoCardContent(x);
 		if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
-		if("simpleCardContentRenderer" in x) return this.ht.GEN("R_SimpleCardContent",x);
-		if("videoInfoCardContentRenderer" in x) return this.ht.R_VideoInfoCardContent(x);
+		if("simpleCardContentRenderer" in x) return this.xr.R_SimpleCardContent(x);
+		if("videoInfoCardContentRenderer" in x) return this.xr.R_VideoInfoCardContent(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Card} x */
@@ -4002,6 +4002,23 @@ class Support_Renderer extends ServiceMethods {
 		this.E_Watch(action);
 		this.trackingParams(trackingParams);
 	}
+	/** @public @arg {R_SimpleCardContent} x */
+	R_SimpleCardContent(x) {this.H_("simpleCardContentRenderer",x,this.D_SimpleCardContent);}
+	/** @private @arg {D_SimpleCardContent} x */
+	D_SimpleCardContent(x) {
+		const cf="D_SimpleCardContent";
+		const {image,title,actionButton,trackingParams,displayDomain,showLinkIcon,callToAction,command,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(image);
+		this.G_Text(title);
+		this.R_SimpleCardButton(actionButton);
+		this.trackingParams(trackingParams);
+		displayDomain;
+		showLinkIcon;
+		callToAction;
+		command;
+	}
+	/** @private @arg {R_SimpleCardButton} x */
+	R_SimpleCardButton(x) {this.H_("simpleCardButtonRenderer",x,this.g);}
 	//#endregion
 }
 export_(exports => {exports.Support_Renderer=Support_Renderer;});
