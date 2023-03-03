@@ -1621,8 +1621,15 @@ class HandleTypes extends ServiceMethods {
 			/** @type {D_ProtobufObj|V_ParamArrBox} */
 			let x3=as(x);
 			switch(x3[0]) {
-				case "child": case "data32": case "data_fixed32":
-				case "data64": case "data_fixed64": return this.tr_arr_to_obj([x3]);
+				case "data32": case "data_fixed32": case "data_fixed64": {
+					if(x3.length!==3) {debugger; return null;}
+					return this.tr_arr_to_obj([x3]);
+				}
+				case "data64":
+				case "child": {
+					if(x3.length!==4) {debugger; return null;}
+					return this.tr_arr_to_obj([x3]);
+				}
 				case "param_arr": return this.v_param_arr(s,x3);
 			}
 			if(x3.length===2&&typeof x3[0]==="string") {
