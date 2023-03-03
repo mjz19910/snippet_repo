@@ -310,7 +310,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @template T @arg {[T]} x */
 	unwrap_tuple_1(x) {
-		if(x.length!==1) return null;
+		if(x.length!==1) debugger;
 		return x[0];
 	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
@@ -379,9 +379,9 @@ class HandleTypes extends ServiceMethods {
 		if(t!=="data_fixed64") {debugger; return null;}
 		return f(u);
 	}
-	/** @protected @template {V_ParamItem} T @arg {T_PArr_1<[T]>} x @returns {T|null} */
+	/** @protected @template {V_ParamItem} T @arg {T_PArr_1<[T]>} x @returns {T} */
 	T_RawChild(x) {
-		if(x[0]!=="param_arr") {debugger; return null;}
+		if(x[0]!=="param_arr") debugger;
 		if(x.length!==2) debugger;
 		return this.unwrap_tuple_1(x[1]);
 	}
@@ -424,13 +424,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {string} T @arg {TV_Str<T>} x */
 	TV_Str(x) {
-		let vv=this.T_RawChild(x);
-		if(vv===null) {debugger; return null;}
-		let v2=vv;
-		if(v2[0]!=="raw_child") return null;
+		let v2=this.T_RawChild(x);
+		if(v2[0]!=="raw_child") debugger;
 		let v3=v2[3];
 		let [a,b]=v3;
-		if(a!=="string") {debugger; return null;}
+		if(a!=="string") debugger;
 		return b;
 	}
 	//#endregion
@@ -2564,7 +2562,7 @@ class HandleTypes extends ServiceMethods {
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
 		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(this.TV_Str(f1));
+		this.channelId(this.TV_Str(f1));
 		this.T_D32(f2,x => this.save_number(`${cf}.f2`,x));
 	}
 	/** @private @arg {P_watch_playlist_params} x */
