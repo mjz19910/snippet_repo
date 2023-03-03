@@ -1,6 +1,6 @@
 // cSpell:ignoreRegExp /"(\dualdn?|5u[a]e[z]|qx[o]e[d]|vg[q]s[rk])"/
 type G_GV_Base=
-	|"5ua" // 2 * 3 + 1 + 1 [S] = 8
+	|"5ua" // 2 * 3 + 1 [B] + 1 [S] = 8
 	|"9gv" // 3 * 3 + 1 [B] + 1 [S] = 11
 	|"a5m" // 3 * 3 + 1 [B] + 1 [S] = 11
 	|"ab5" // 2 * 3 + 1 [B] = 7
