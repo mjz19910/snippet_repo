@@ -32,7 +32,7 @@ type G_Gv_0=
 	|"vgqsr" // 2 [dig_final] [dig_user@vgq:[e,l,s,z]]
 	;
 ;
-// cSpell:ignoreRegExp /rr1.sn-((q4fl[r])[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
+// cSpell:ignoreRegExp /rr1.sn-\w+?\.googlevideo\.com\. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	// dig results
