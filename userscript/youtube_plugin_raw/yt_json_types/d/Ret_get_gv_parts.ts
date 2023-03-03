@@ -1,18 +1,35 @@
-// cSpell:ignoreRegExp /"(\dualdn?|5uaez|qxoed|vgqs[rk])"/
+// cSpell:ignoreRegExp /"(\dualdn?|5uae[z]|qxoe[d]|vgqs[rk])"/
 type G_Gv_0=
-	|"5uaez"|"5uald"
-	|"9gv7e"|"9gv7l"|"9gv7z"
-	|"a5mek"|"a5mlr"|"a5mse"|"ab5l6"|"ab5sz"
-	|"hp57k"|"hp57y"
-	|"n4v7s"|"nx5s7"|"nx57y"
-	|"o097z"
-	|"p5qls"|"p5qs7"
-	|"q4fl6"|"q4flr"|"qxo7r"|"qxoed"
-	|"t0a7l"|"t0a7s"|"tt1el"
-	|"vgqsk"|"vgqsr"
+	|"5uaez" // 2
+	|"5uald" // 2
+	|"9gv7e" // 2
+	|"9gv7l" // 2
+	|"9gv7z" // 1 !dig_user!
+	|"a5mek" // 2
+	|"a5mlr" // 2
+	|"a5mse" // 2
+	|"ab5l6" // 2
+	|"ab5sz" // 3
+	|"hp57k" // 2
+	|"hp57y" // 2
+	|"n4v7s" // 2
+	|"nx5s7" // 2
+	|"nx57y" // 2
+	|"o097z" // 2
+	|"p5qls" // 2
+	|"p5qs7" // 2
+	|"q4fl6" // 2
+	|"q4flr" // 2
+	|"qxo7r" // 2
+	|"qxoed" // 2
+	|"t0a7l" // 2
+	|"t0a7s" // 2
+	|"tt1el" // 1 !dig_user!
+	|"vgqsk" // 2
+	|"vgqsr" // 1 !dig_user!
 	;
 ;
-// cSpell:ignoreRegExp /rr1.sn-((q4flr|ab5sz)[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
+// cSpell:ignoreRegExp /rr1.sn-((q4fl[r])[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
 // cSpell:ignoreRegExp /sn-\w+?\.googlevideo\.com.?"/
 type PT_DigDomain=[
 	``,
@@ -51,6 +68,7 @@ type PT_TypeArr=[
 	["5uald",["l7","ll","lr","ls","s6","sd","se","sk","sl","sr","ss","sy","sz","z7","ze"]],// hit
 	["9gv7e",["e6","ed","ek","ls"]],// hit
 	["9gv7l",["es","ez","le","s7"]],// hit
+	["9gv7z",["76","7e"]],
 	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
 	["a5mlr",["ek","l6","ll","ls","lz"]],// hit
 	["a5mse",["76","7l","7s","7z","ek","er","es","l7","le","ll"]],// hit

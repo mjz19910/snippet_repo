@@ -79,6 +79,11 @@ function get_abc_opt {
 	local z1=({{0..9},{a..z}})
 	echo "${z1[*]}"
 }
+function get_google_opt {
+	IFS=,
+	local z1=({6,7,d,e,k,l,r,s,y,z})
+	echo "${z1[*]}"
+}
 function dig_user-run {
 	a2=${1}"__n"${2}"_"
 	export TMP_TAG=user
@@ -138,8 +143,8 @@ function dig_final-run {
 	touch /tmp/dig_term_lock
 	mkdir -p $TMP_DIR/dig/$TMP_TAG/tmp $TMP_DIR/dig/$TMP_TAG/out
 	echo $TMP_DIR/dig/$TMP_TAG/tmp/result.*(N) | xargs -r rm
-	z=$(get_abc_opt)
-	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
+	z=$(get_google_opt)
+	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn4 -P50 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
 	if (($(wc -l <"$RESULT_FILE") != 0)); then
@@ -161,11 +166,10 @@ function dig_final-child {
 	TF=$(mktemp $TMP_DIR/dig/$TMP_TAG/tmp/result.XXX)
 	exec 4>>$TF
 	flock -e 4
-	sleep $(shuf -i0-2 -n1).$(shuf -i0-9 -n1)
 	printf "."
 	dig @1.1.1.2 +time=20 +tries=2 +https +noall +answer "$@" >&4
 	if [[ -f "$TF" ]] && (($(wc -l <$TF) != 0)); then
-		eval 'printf "!${1[14]}"'
+		eval 'printf "![${1[14,15]}]"'
 	fi
 	exec 4<&-
 }
