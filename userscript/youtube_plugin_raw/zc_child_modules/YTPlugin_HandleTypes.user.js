@@ -310,7 +310,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @template T @arg {[T]} x */
 	unwrap_tuple_1(x) {
-		if(x.length!==1) debugger;
+		if(x.length!==1) return null;
 		return x[0];
 	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
@@ -379,9 +379,9 @@ class HandleTypes extends ServiceMethods {
 		if(t!=="data_fixed64") {debugger; return null;}
 		return f(u);
 	}
-	/** @protected @template {V_ParamItem} T @arg {T_PArr_1<[T]>} x @returns {T} */
+	/** @protected @template {V_ParamItem} T @arg {T_PArr_1<[T]>} x @returns {T|null} */
 	T_RawChild(x) {
-		if(x[0]!=="param_arr") debugger;
+		if(x[0]!=="param_arr") {debugger; return null;}
 		if(x.length!==2) debugger;
 		return this.unwrap_tuple_1(x[1]);
 	}
@@ -424,11 +424,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {string} T @arg {TV_Str<T>} x */
 	TV_Str(x) {
-		let v2=this.T_RawChild(x);
-		if(v2[0]!=="raw_child") debugger;
+		let vv=this.T_RawChild(x);
+		if(vv===null) {debugger; return null;}
+		let v2=vv;
+		if(v2[0]!=="raw_child") return null;
 		let v3=v2[3];
 		let [a,b]=v3;
-		if(a!=="string") debugger;
+		if(a!=="string") {debugger; return null;}
 		return b;
 	}
 	//#endregion
@@ -2562,7 +2564,7 @@ class HandleTypes extends ServiceMethods {
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
 		const {1: f1,2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.channelId(this.TV_Str(f1));
+		this.t(this.TV_Str(f1),this.channelId);
 		this.T_D32(f2,x => this.save_number(`${cf}.f2`,x));
 	}
 	/** @private @arg {P_watch_playlist_params} x */
@@ -2580,12 +2582,21 @@ class HandleTypes extends ServiceMethods {
 		v1&&this.T_D32(v1,x => this.save_number(`${cf}.f1`,x));
 		this.T_VW(f2,this.PK_f2);
 	}
+	/** @private @template {string} T @arg {TV_Str<T>|TW_TagStr<T>} x */
+	TV_Str_ex(x) {
+		let v2=x[1][0];
+		if(v2===null) {debugger; return null;}
+		let v3=v2[3];
+		let [a,b]=v3;
+		if(a!=="string") {debugger; return null;}
+		return b;
+	}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
 		const {1: v1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.T_VW(v1,this.PK_f1);
-		this.t(this.TV_Str(f2),x => this.videoId(x));
+		this.t(this.TV_Str_ex(f2),x => this.videoId(x));
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
@@ -2612,7 +2623,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {{1:TV_Str<D_VideoIdStr>|T_VW_tag<D_VideoIdStr>;}} x */
+	/** @private @arg {{1:TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;}} x */
 	PK_f1_str(x) {
 		let m1=this.mw(this.m(x));
 		let v1_v1=m1.mc(this.PT_f1).some.v;

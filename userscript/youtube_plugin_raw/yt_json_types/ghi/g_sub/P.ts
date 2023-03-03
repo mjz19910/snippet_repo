@@ -136,10 +136,10 @@ type P_logging_context_serialized_context_data={
 	1?: T_VW<{1: T_D32<12>;}>;
 	3?: TV_Str<SD_PlaylistId>;
 };
-type T_VW_tag<_T>=T_VW<{}>;
+type TW_TagStr<T extends string>=T_PArr_1<[["child",Uint8Array,{},["string",T]]]>;
 type P_like_params={
 	1: T_VW<{
-		1: T_VW_tag<D_VideoIdStr>|TV_Str<D_VideoIdStr>;
+		1: TW_TagStr<D_VideoIdStr>|TV_Str<D_VideoIdStr>;
 	}>;
 	4: T_D32<0>;
 	5?: T_D32<1>;
@@ -151,7 +151,7 @@ type P_playability_status_context_params={
 	2: T_VW<{1: T_D32<2>;}>;
 };
 type P_remove_like_params={
-	1: T_VW<{1: TV_Str<D_VideoIdStr>|T_VW_tag<D_VideoIdStr>;}>;
+	1: T_VW<{1: TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;}>;
 	3: T_D32<0>;
 	4?: T_D32<1>;
 	5: T_VW<V_ShortTimestamp>;
@@ -178,7 +178,7 @@ type P_unsubscribe_params={
 	1: T_VW<{
 		1: T_D32<3>;
 	}>;
-	2: TV_Str<D_VideoIdStr>;
+	2: TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;
 	3: T_D32<0>;
 };
 type P_continuation_request_watch_next_token={
