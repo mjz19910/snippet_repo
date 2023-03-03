@@ -314,14 +314,15 @@ type P_reel_watch_sequence_data={
 type P_continuation_request_reel_watch_sequence_token={
 	1?: TV_Str<"3y9Wm0IfGGs">;
 	3: T_VW<PX_watch_sequence_info>;
-	5: T_VW<{3: T_D32<12>;}>;
+	5: T_VW<TX_sequence_info>;
 	8?: T_VW<{}>;
 	12?: TV_Str<"RDSH">;
 	15: T_VW<P_reel_watch_sequence_data>;
 };
+type TX_sequence_info={3: T_D32<12>;};
 type P_reel_sequence_params={
 	1: TV_Str<string>;
-	5: T_VW<{3: T_D32<12>;}>;
+	5: T_VW<TX_sequence_info>;
 };
 type PX_buy_flow_params={
 	1: TV_Str<string>;

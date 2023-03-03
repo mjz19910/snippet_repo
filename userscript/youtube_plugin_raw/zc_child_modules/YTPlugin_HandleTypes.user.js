@@ -2565,18 +2565,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {PX_buy_flow_params} x */
 	PX_buy_flow_params(x) {x; debugger;}
+	/** @private @arg {TX_sequence_info} x */
+	TX_sequence_info(x) {x; debugger;}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
 		const {1: v1,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		console.log(this.TV_Str(v1));
+		this.TX_sequence_info(this.T_VW_m(f5));
+	}
+	/** @private @arg {PX_watch_sequence_info} x */
+	PX_watch_sequence_info(x) {
+		const cf="P_continuation_request_reel_watch_sequence_token";
+		const {1: v1,3: v3,4: v4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		console.log(this.TV_Str(v1));
+		this.save_number(`${cf}.f3`,this.T_D32_m(v3));
+		this.save_number(`${cf}.f4`,this.T_D32_m(v4));
+		this.t(this.T_VW_Bigint(f6),x => console.log(`${cf}.f6`,x));
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token";
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		v1&&console.log(this.TV_Str(v1));
-		this.codegen_typedef_bin(`${cf}.f3`,this.T_VW_m(v3));
+		this.PX_watch_sequence_info(this.T_VW_m(v3));
 	}
 	/** @private @template {number} T @arg {T_D32<T>} x */
 	T_D32_m(x) {
