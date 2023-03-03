@@ -218,7 +218,7 @@ type PX_watch_next_token_4={
 };
 type PX_watch_next_token_5={1: T_D32<0>;};
 type PX_watch_next_token_6={
-	1: T_PArr_R<T_Param_Child<PX_watch_next_token_item,["string",string]>[]>;
+	1: T_VA<PX_watch_next_token_item>;
 	3: T_D32<2>;
 	4?: TV_Str<"/m/0jxy">;
 };
@@ -623,4 +623,9 @@ type P_create_reply_params={
 	10: T_D32<7>;
 	14: TV_Str<`${string}.${string}`>;
 	29: T_D32<0>;
+};
+type P_PX_watch_next_token_2_f37={
+	10: TV_Str<string>;
+	15: T_D32<2>;
+	20: T_D32<2>;
 };

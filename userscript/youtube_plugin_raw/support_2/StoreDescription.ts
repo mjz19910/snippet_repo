@@ -1,5 +1,5 @@
-type StoreContentStr="number"|"keys"|"boolean"|"root_visual_element"|"string";
-type StoreGetType<T>=T extends number? "number":T extends string? "string":T extends boolean? "boolean":T extends string? "string":"unknown";
+type StoreContentStr="number"|"keys"|"boolean"|"root_visual_element"|"string"|"bigint";
+type StoreGetType<T>=T extends bigint? "bigint":T extends number? "number":T extends string? "string":T extends boolean? "boolean":T extends string? "string":"unknown";
 type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>;
 type G_StoreDescriptions=StoreDescription_Imp<boolean,"boolean">|G_StoreNumDescription|G_StoreStringDescription;
 type G_StoreNumDescription=StoreDescription_Imp<number,"number">|StoreDescription_Imp<number,"root_visual_element">;

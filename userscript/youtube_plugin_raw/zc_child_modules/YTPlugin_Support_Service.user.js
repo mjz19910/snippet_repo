@@ -87,7 +87,7 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
-/** @template {string|number|boolean} T @template {StoreContentStr} U */
+/** @template {string|number|bigint|boolean} T @template {StoreContentStr} U */
 class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	key_index=new Map;
@@ -227,6 +227,8 @@ class StoreData {
 		this.bool_store=new StoreDescription("boolean","boolean",data_update_callback);
 		/** @type {StoreDescription<number,"number">} */
 		this.number_store=new StoreDescription("number","number",data_update_callback);
+		/** @type {StoreDescription<bigint,"bigint">} */
+		this.bigint_store=new StoreDescription("bigint","bigint",data_update_callback);
 		/** @type {StoreDescription<number,"root_visual_element">} */
 		this.ve_store=new StoreDescription("number","root_visual_element",data_update_callback);
 		/** @type {StoreDescription<string,"string">} */
@@ -1120,21 +1122,15 @@ class Support_RS_Player extends ServiceMethods {
 	_bd=x => this.mb(this.parse_number_template,this.m(x));
 	/** @arg {`${number}`} x */
 	_pn=x => this.mb(this.a_primitive_num,this._bd(x));
-	/** @arg {string} cf @arg {Some<number>} x */
-	_ns=(cf,x) => this.mb(x => this.save_number(cf,x),x);
-	/** @arg {string} cf @arg {string} k @arg {`${number}`} x */
-	_ns_cf(cf,k,x) {this._ns(`${cf}.${k}`,this._bd(x));}
-	get ns() {return this._ns.bind(this);}
 	get bd() {return this._bd.bind(this);}
 	get pn() {return this._pn.bind(this);}
-	get nsf() {return this._ns_cf.bind(this);}
 	/** @private @arg {D_CueRangeItem} x */
 	D_CueRangeItem(x) {
-		const cf="D_CueRangeItem";
+		const cf="D_CueRangeItem",t=this;
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
-		let {pn,nsf,exact_arr: a}=this;
-		this.z([startCardActiveMs,endCardActiveMs],pn);
-		this.z([a("teaserDurationMs",teaserDurationMs),a("iconAfterTeaserMs",endCardActiveMs)],x => nsf(cf,x[0],x[1]));
+		this.z([startCardActiveMs,endCardActiveMs],t.pn);
+		this.save_number(`${cf}.teaserDurationMs`,this.parse_number_template(teaserDurationMs));
+		this.save_number(`${cf}.endCardActiveMs`,this.parse_number_template(endCardActiveMs));
 	}
 	/** @private @arg {D_SimpleCardTeaser} x */
 	D_SimpleCardTeaser(x) {

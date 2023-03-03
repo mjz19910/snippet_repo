@@ -1998,7 +1998,7 @@ class ApiBase2 {
 		let ra=rq;
 		return ra;
 	}
-	/** @protected @template {string|number|boolean} U @template {U[]} T @arg {T} src @arg {T} target */
+	/** @protected @template {string|number|bigint|boolean} U @template {U[]} T @arg {T} src @arg {T} target */
 	eq_keys(src,target) {
 		if(src.length!==target.length) return false;
 		for(let i=0;i<src.length;i++) {
@@ -2130,6 +2130,8 @@ class BaseServicePrivate extends ApiBase {
 	save_boolean_one(k,x) {return this.save_db.data_store.bool_store.save_data(k,["one",x]);}
 	/** @protected @arg {string} k @arg {number} x */
 	save_number(k,x) {return this.save_db.data_store.number_store.save_data(k,["one",x]);}
+	/** @protected @arg {string} k @arg {bigint} x */
+	save_bigint(k,x) {return this.save_db.data_store.bigint_store.save_data(k,["one",x]);}
 	/** @protected @arg {string} k @arg {number[]} x */
 	save_number_arr(k,x) {return this.save_db.data_store.number_store.save_data(k,["arr",this.tag_num_like(x)]);}
 	/** @protected @arg {string} k @arg {Uint8Array} x */

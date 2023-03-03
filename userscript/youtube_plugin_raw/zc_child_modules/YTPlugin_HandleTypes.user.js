@@ -2605,8 +2605,8 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_4(x) {
 		const cf="PX_watch_next_token_4";
 		const {5: a,12: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f5`,this.T_FD32(a).toString(2));
-		console.log(`${cf}.f12`,this.T_FD64(b).toString(2));
+		this.save_number(`${cf}.f5`,this.T_FD32(a));
+		this.save_bigint(`${cf}.f12`,this.T_FD64(b));
 	}
 	/** @private @arg {PX_watch_next_token_5} x */
 	PX_watch_next_token_5(x) {
@@ -3087,8 +3087,6 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_bin_params_1(u);
 			} break;
-			//#endregion
-			//#region done
 			case "notification_add_upcoming_event_reminder.params": {
 				/** @type {P_notification_add_upcoming_event_reminder_params} */
 				let u=as_any(x);
@@ -3114,12 +3112,19 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_perform_comment_action(u);
 			} break;
+			//#endregion
+			//#region done
 			case "create_reply.params": {
 				/** @type {P_create_reply_params} */
 				let u=as_any(x);
 				this.P_create_reply_params(u);
 			} break;
 			//#endregion
+			case "PX_watch_next_token_2.f37": {
+				/** @type {P_PX_watch_next_token_2_f37} */
+				let u=as_any(x);
+				this.P_PX_watch_next_token_2_f37(u);
+			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3127,6 +3132,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_PX_watch_next_token_2_f37} x */
+	P_PX_watch_next_token_2_f37(x) {x;}
 	/** @private @arg {P_create_reply_params} x */
 	P_create_reply_params(x) {x;}
 	/** @private @arg {P_perform_comment_action} x */
