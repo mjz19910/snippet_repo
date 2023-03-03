@@ -343,34 +343,28 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_num(length);
 		return y;
 	}
-	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:void,x:T)=>void} f */
-	T_D32(x,f) {
-		let [v]=x[1];
-		f(v[1]);
-	}
+	/** @private @template {number} T @arg {T_D32<T>} x @arg {(this:this,x:T)=>void} f */
+	T_D32(x,f) {f.call(this,this.T_RawChild(x)[1]);}
 	/** @private @template {number} T @arg {T_D32<T>} x */
-	T_D32_v(x) {
-		let [v]=x[1];
-		return v[1];
-	}
-	/** @private @template {number} T @template U @arg {T_FD32<T>} x @arg {(this:void,x:T)=>U} f */
-	T_FD32(x,f) {
-		let x1=this.T_RawChild(x);
-		if(!x1) {debugger; return null;}
-		let [,u]=x1;
-		return f(u);
-	}
-	/** @private @template {bigint} T @template U @arg {T_FD64<T>} x @arg {(this:void,x:T)=>U} f */
-	T_FD64(x,f) {
-		let x1=this.T_RawChild(x);
-		if(!x1) {debugger; return null;}
-		let [,u]=x1;
-		return f(u);
-	}
-	/** @protected @template {V_Param} T @arg {T_PArr_1<[T]>} x */
-	T_RawChild(x) {
-		return x[1][0];
-	}
+	T_D32_v(x) {return this.T_RawChild(x)[1];}
+	/** @private @template {bigint} T @template U @arg {T_D64<T>} x @arg {(this:this,x:T)=>U} f */
+	T_D64(x,f) {return f.call(this,this.T_RawChild(x)[2]);}
+	/** @private @template {number} T @template U @arg {T_FD32<T>} x @arg {(this:this,x:T)=>U} f */
+	T_FD32(x,f) {return f.call(this,this.T_RawChild(x)[1]);}
+	/** @private @template{bigint} T @template U @arg {T_FD64<T>} x @arg {(this:this,x:T)=>U} f */
+	T_FD64(x,f) {return f.call(this,this.T_RawChild(x)[1]);}
+	/** @protected @template T @arg {T_VW<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	T_VW(x,f) {return f.call(this,this.T_RawChild(x)[2]);}
+	/** @protected @template T @arg {T_VW<T>} x */
+	T_VW_m(x) {return this.T_RawChild(x)[2];}
+	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
+	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
+	/** @private @template {string} T @arg {TV_Str<T>} x */
+	TV_Str(x) {return this.T_RawChild(x)[3][1];}
+	/** @protected @template T @arg {T_PArr_1<[T]>} x */
+	T_RawChild(x) {return x[1][0];}
+	/** @template {{}} T @arg {T} x @arg {keyof T} k */
+	T_EP_In(x,k) {return x[k];}
 	/** @protected @template T @arg {T_Command_TP<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
@@ -378,31 +372,12 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
-	/** @template {{}} T @arg {T} x @arg {keyof T} k */
-	T_EP_In(x,k) {return x[k];}
-	/** @protected @template T @arg {T_VW<T>} x @template U @arg {(this:this,x:T)=>U} f */
-	T_VW(x,f) {
-		let [v]=x[1];
-		return f.call(this,v[2]);
-	}
-	/** @protected @template T @arg {T_VW<T>} x */
-	T_VW_m(x) {
-		let [v]=x[1];
-		return v[2];
-	}
-	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
-	T_VW_Bigint(x) {
-		return this.T_RawChild(x)[2];
-	}
-	/** @private @template {string} T @arg {TV_Str<T>} x */
-	TV_Str(x) {
-		let [,b]=this.T_RawChild(x)[3];
-		return b;
-	}
 	//#endregion
 	//#region is_T
 	/** @arg {P_EntityKey} x @template {number} T @arg {T} t @returns {x is {4:T_D32<T>;}} */
 	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
+	/** @arg {T_D32<number>|T_D64<bigint>} x @returns {x is T_D32<number>;} */
+	is_T_D32(x) {return x[1][0][0]==="v_data32";}
 	//#endregion
 	//#region moved data methods
 	/** @public @arg {D_WebPlayerConfig} x */
@@ -2599,7 +2574,11 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_item(x) {
 		const cf="PX_watch_next_token_item";
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f1`,v1[1][0]);
+		if(this.is_T_D32(v1)) {
+			this.T_D32(v1,this.a_primitive_num);
+		} else {
+			this.T_D64(v1,this.a_primitive_bigint);
+		}
 		v3&&this.T_D32(v3,x => this.save_number(`${cf}.f3`,x));
 	}
 	/** @private @arg {PX_watch_next_token_3_f1} x */
