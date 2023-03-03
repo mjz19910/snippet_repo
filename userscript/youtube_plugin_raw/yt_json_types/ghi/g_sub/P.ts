@@ -206,12 +206,10 @@ type P_continuation_request_watch_next_token={
 		}>;
 		8: TV_Str<"comments-section">;
 	}>;
-	9?: {_tag: "not_done";};
 	13?: T_VW<{
 		5: T_FD32<1684366694>;
 		12: T_FD64<8392569429487543156n>;
 	}>;
-	14?: {_tag: "not_done";};
 };
 type P_watch_playlist_params={
 	2: T_D32<1>;
@@ -262,58 +260,64 @@ type P_transcript_track_selection_serialized_params={
 	7: T_D32<1>;
 	8: T_D32<0>;
 };
-type P_continuation_request_reel_watch_sequence_token={
-	1?: TV_Str<"3y9Wm0IfGGs">;
-	3: T_VW<{
-		1: TV_Str<"BzYDxLH-tdw">;
-		3: T_D32<9>;
-		4: T_D32<2>;
-		6: T_VW_Bigint<3301578248956209656n>;
-	}>;
-	5: T_VW<{3: T_D32<12>;}>;
-	8?: T_VW<{}>;
-	12?: TV_Str<"RDSH">;
-	15: T_VW<{
-		1: T_D32<10>;
-		3: T_D32<9>;
+type PX_watch_sequence_info={
+	1: TV_Str<"BzYDxLH-tdw">;
+	3: T_D32<9>;
+	4: T_D32<2>;
+	6: T_VW_Bigint<3301578248956209656n>;
+};
+type P_reel_watch_sequence_data={
+	1: T_D32<10>;
+	3: T_D32<9>;
+	6: T_VW<{
+		1: TV_Str<"Xjj5aTpUDW4">;
+		2: T_VW<{
+			6: T_D32<26>;
+		}>;
+		3: T_VW<{
+			1: T_D32<1667425221>;
+			2: T_D32<148262000>;
+		}>;
+		4: T_VW<{
+			1: T_D32<1669909742>;
+		}>;
+		5: T_VW<{
+			1: T_D32<13>;
+			2: T_D32<2>;
+		}>;
 		6: T_VW<{
-			1: TV_Str<"Xjj5aTpUDW4">;
-			2: T_VW<{6: T_D32<26>;}>;
-			3: T_VW<{
-				1: T_D32<1667425221>;
-				2: T_D32<148262000>;
-			}>;
-			4: T_VW<{1: T_D32<1669909742>;}>;
-			5: T_VW<{
-				1: T_D32<13>;
-				2: T_D32<2>;
-			}>;
-			6: T_VW<{
-				1: T_PArr_R<P_reel_watch_sequence_Arr1>;
-			}>;
-			7: T_VW<{
-				1: T_PArr_R<P_reel_watch_sequence_Arr2>;
-			}>;
-			8: T_VW<{
-				1: T_VW<{1: T_D32<203>;}>;
-				2: T_D32<2>;
-			}>;
-			9: T_VW<{
-				1: T_VW<{1: T_D32<205>;}>;
-				2: T_D32<2>;
-			}>;
-			10: T_VW<{
-				1: T_VW<{1: T_D32<203>;}>;
-				2: T_D32<2>;
-			}>;
-			11: T_VW<{
-				2: T_VW<{
-					1: T_D32<1>;
-					2: T_D32<1>;
-				}>;
+			1: T_PArr_R<P_reel_watch_sequence_Arr1>;
+		}>;
+		7: T_VW<{
+			1: T_PArr_R<P_reel_watch_sequence_Arr2>;
+		}>;
+		8: T_VW<{
+			1: T_VW<{1: T_D32<203>;}>;
+			2: T_D32<2>;
+		}>;
+		9: T_VW<{
+			1: T_VW<{1: T_D32<205>;}>;
+			2: T_D32<2>;
+		}>;
+		10: T_VW<{
+			1: T_VW<{1: T_D32<203>;}>;
+			2: T_D32<2>;
+		}>;
+		11: T_VW<{
+			2: T_VW<{
+				1: T_D32<1>;
+				2: T_D32<1>;
 			}>;
 		}>;
 	}>;
+};
+type P_continuation_request_reel_watch_sequence_token={
+	1?: TV_Str<"3y9Wm0IfGGs">;
+	3: T_VW<PX_watch_sequence_info>;
+	5: T_VW<{3: T_D32<12>;}>;
+	8?: T_VW<{}>;
+	12?: TV_Str<"RDSH">;
+	15: T_VW<P_reel_watch_sequence_data>;
 };
 type P_reel_sequence_params={
 	1: TV_Str<string>;
