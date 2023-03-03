@@ -26,8 +26,8 @@ type G_Gv_0=
 	|"t0a7s" // 2 [dig_final] [dig_user@t0a]
 	|"tt1e7" // 2 [dig_final] [dig_user@tt1:[7,l]]
 	|"tt1el" // 2 [dig_final] [dig_user@tt1:[7,e]]
-	|"vgqsk" // 2 [dig_final] [dig_user@vgq]
-	|"vgqsr" // 2 [dig_final] [dig_user@vgq]
+	|"vgqsk" // 2 [dig_final] [dig_user@vgq:[6,e,l,s,z]]
+	|"vgqsr" // 2 [dig_final] [dig_user@vgq:[e,l,s,z]]
 	;
 ;
 // cSpell:ignoreRegExp /rr1.sn-((q4fl[r])[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
@@ -121,7 +121,7 @@ type PT_TypeArr=[
 		"e6","ed","ek","es","ez",
 		"l6","ld","lk","ll","ls","lz",
 		"s6","sd","sr","sy",
-		"z6","z7","zd","zk","zs","zz"
+		"z6","z7","zd","zk","zs","zz",
 	]],
 ];
 type G_Gv_1_List=[
