@@ -152,6 +152,8 @@ function dig_final-run {
 	if [ "$DIG_SILENT" != "true" ] && (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
 		printf "\n[$a2]\n%s\n" "$foo"
+	else
+		printf "\n"
 	fi
 	rm $list
 }
