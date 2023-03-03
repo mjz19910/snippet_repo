@@ -439,6 +439,8 @@ type P_watch_params={
 	2?: T_D32<1>;
 	3?: T_D32<1>;
 	7?: T_D32<2>;
+	12?: TV_Str<"B_5o9nETAPE">;
+	13?: T_D32<0>;
 	15?: TV_Str<`${string}.${string}`>;
 	24?: T_D32<1>;
 	27?: T_VW<{1: T_D32<1>;}>;
