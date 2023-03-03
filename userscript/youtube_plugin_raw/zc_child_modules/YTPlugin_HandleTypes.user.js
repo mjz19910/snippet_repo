@@ -2633,7 +2633,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_info} x */
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
-		const {2: v2,4: {},6: f6,7: {}={},25: {},28: {},36: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: {},4: {}={},6: {}={},7: {}={},25: {}={},28: {}={},36: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {

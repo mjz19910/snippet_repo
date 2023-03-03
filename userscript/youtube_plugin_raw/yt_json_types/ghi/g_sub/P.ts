@@ -184,12 +184,12 @@ type P_unsubscribe_params={
 };
 type PX_watch_next_token_info={
 	2: TV_Str<D_VideoIdStr>;
-	4: TV_Str<"RDB_5o9nETAPE">;
-	6: T_VW<{}>;
+	4?: TV_Str<"RDB_5o9nETAPE">;
+	6?: T_VW<{}>;
 	7?: T_D32<18>;
-	25: T_D32<0>;
-	28: T_D32<3>;
-	36: T_VW<{
+	25?: T_D32<0>;
+	28?: T_D32<3>;
+	36?: T_VW<{
 		5: T_D64<18446744073709551615n>;
 		8: T_D32<0>;
 	}>;
