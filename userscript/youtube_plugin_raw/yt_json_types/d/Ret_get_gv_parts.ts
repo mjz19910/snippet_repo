@@ -24,7 +24,7 @@ type G_Gv_0=
 	|"qxoed" // 2 [dig_final]
 	|"t0a7l" // 2 [dig_final]
 	|"t0a7s" // 2 [dig_final]
-	|"tt1el" // 1 ![dig_final]
+	|"tt1el" // 2 [dig_final]
 	|"vgqsk" // 2 [dig_final]
 	|"vgqsr" // 1 ![dig_final]
 	;
@@ -110,6 +110,12 @@ type PT_TypeArr=[
 		"ld","lk","ll","lr","ls","ly","lz",
 		"s7","se","sk",
 		"z7","ze","zl","zs","zz",
+	]],
+	["vgqsr",[
+		"e6","ed","ek","es","ez",
+		"l6","ld","lk","ll","ls","lz",
+		"s6","sd","sr","sy",
+		"z6","z7","zd","zk","zs","zz"
 	]],
 ];
 type G_Gv_1_List=[

@@ -1,5 +1,6 @@
 START_PATH=$0
 TMP_DIR="/tmp"
+DIG_SILENT=false
 
 function dig_user {
 	pushd -q $S_DIR
@@ -135,7 +136,7 @@ function dig_final-run {
 	export TMP_TAG=final
 	RESULT_FILE="$TMP_DIR/dig/$TMP_TAG/out/result.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
-		if (($(wc -l <"$RESULT_FILE") != 0)); then
+		if [ "$DIG_SILENT" != "true" ] && (($(wc -l <"$RESULT_FILE") != 0)); then
 			foo=$(<"$RESULT_FILE")
 			printf "[$a2]\n%s\n" "$foo"
 		fi
@@ -148,7 +149,7 @@ function dig_final-run {
 	eval 'printf "%s\0" rr1.sn-'$1n{$z}{$z}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn4 -P50 zsh -c '. ./dig.zsh dig_final-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
-	if (($(wc -l <"$RESULT_FILE") != 0)); then
+	if [ "$DIG_SILENT" != "true" ] && (($(wc -l <"$RESULT_FILE") != 0)); then
 		foo=$(<"$RESULT_FILE")
 		printf "\n[$a2]\n%s\n" "$foo"
 	fi
@@ -169,7 +170,7 @@ function dig_final-child {
 	flock -e 4
 	printf "."
 	dig @1.1.1.2 +time=20 +tries=2 +https +noall +answer "$@" >&4
-	if [[ -f "$TF" ]] && (($(wc -l <$TF) != 0)); then
+	if [ -f "$TF" ] && (($(wc -l <$TF) != 0)); then
 		eval 'printf "![${1[14,15]}]"'
 	fi
 	exec 4<&-
@@ -192,6 +193,14 @@ function term_pos() {
 	eval 'TERM_POS=(${(s/;/)POS_STR});'
 	((TERM_POS[2] += 1))
 	printf "\e[${TERM_POS[1]};${TERM_POS[2]}f!"
+}
+function gen_type_arr() {
+	a1=$1
+	a2=${1}"n__"
+	DIG_SILENT=true
+	dig_final $a1
+	echo "[$a2]"
+	sort -n <$RESULT_FILE | tail -n +2 | cut -d '.' -f 2 | cut -d - -f 2 | cut -c 7,8 | perl -pe 's/(.+)/"$1",/g'
 }
 
 function print-usage {
