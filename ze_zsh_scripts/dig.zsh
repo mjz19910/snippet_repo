@@ -97,6 +97,7 @@ function get_google_opt {
 function dig_user-run {
 	a2=${1}"__n"${2}"_"
 	export TMP_TAG=user
+	JOB_NUMBER=70
 	RESULT_FILE="$TMP_DIR/dig/$TMP_TAG/out/result.$a2"
 	if [[ -f "$RESULT_FILE" ]]; then
 		read_result "[$a2]" "$RESULT_FILE"
@@ -107,7 +108,7 @@ function dig_user-run {
 	echo $TMP_DIR/dig/$TMP_TAG/tmp/result.*(N) | xargs -r rm
 	z=$(get_abc_opt)
 	gz=$(get_google_opt)
-	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$gz}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P60 zsh -c '. ./dig.zsh dig_user-child "$@"' ''
+	eval 'printf "%s\0" rr1.sn-'$1{$z}{$z}n${2}{$gz}'.googlevideo.com' | stdbuf -i0 -o0 -e0 xargs -0rn32 -P"$JOB_NUMBER" zsh -c '. ./dig.zsh dig_user-child "$@"' ''
 	list=($TMP_DIR/dig/$TMP_TAG/tmp/result.*)
 	cat $list >>"$RESULT_FILE"
 	read_result_after_dig "$a2" "$RESULT_FILE"

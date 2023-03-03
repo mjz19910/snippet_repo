@@ -1,10 +1,10 @@
 // cSpell:ignoreRegExp /"(\dualdn?|5uae[z]|qxoe[d]|vgqs[rk])"/
 type G_Gv_0=
-	|"5uaez" // 2 [dig_final]
-	|"5uald" // 2 [dig_final]
-	|"9gv7e" // 2 [dig_final]
-	|"9gv7l" // 2 [dig_final]
-	|"9gv7z" // 2 [dig_final] [dig_user@9gv]
+	|"5uaez" // 2 [dig_final] [dig_user@5ua:[6,7,e,l,r,y]]
+	|"5uald" // 2 [dig_final] [dig_user@5ua:[l,s,z]]
+	|"9gv7e" // 2 [dig_final] [dig_user@9gv:[e,l]]
+	|"9gv7l" // 2 [dig_final] [dig_user@9gv:[e,l,s]]
+	|"9gv7z" // 2 [dig_final] [dig_user@9gv:[7]]
 	|"a5mek" // 2 [dig_final]
 	|"a5mlr" // 2 [dig_final]
 	|"a5mse" // 2 [dig_final]
@@ -26,7 +26,7 @@ type G_Gv_0=
 	|"t0a7s" // 2 [dig_final]
 	|"tt1el" // 2 [dig_final]
 	|"vgqsk" // 2 [dig_final]
-	|"vgqsr" // 1 ![dig_final]
+	|"vgqsr" // 2 [dig_final]
 	;
 ;
 // cSpell:ignoreRegExp /rr1.sn-((q4fl[r])[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
@@ -65,7 +65,11 @@ type PT_TypeArr=[
 		"r6","rr","ry","rz",
 		"y6","ys","yy","yz","z6","zd","zr","zy","zz",
 	]],
-	["5uald",["l7","ll","lr","ls","s6","sd","se","sk","sl","sr","ss","sy","sz","z7","ze"]],
+	["5uald",[
+		"l7","ll","lr","ls",
+		"s6","sd","se","sk","sl","sr","ss","sy","sz",
+		"z7","ze",
+	]],
 	["9gv7e",["e6","ed","ek","ls"]],
 	["9gv7l",["es","ez","le","s7"]],
 	["9gv7z",["76","7e"]],
