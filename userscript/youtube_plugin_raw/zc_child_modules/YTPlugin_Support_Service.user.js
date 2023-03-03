@@ -221,29 +221,39 @@ class StoreDescription extends ApiBase2 {
 }
 export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
-	/** @arg {["bool_store",StoreDescription<boolean,"boolean">]|["number_store",StoreDescription<number,"number">]} args */
-	add_store(...args) {let [key,store]=args; this.stores.set(key,store);}
+	/** @arg {StoreDataArgs} args */
+	add_store(args) {let [key,store]=args; this.stores.set(key,store);}
 	stores=new Map;
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
-		/** @type {StoreDescription<boolean,"boolean">} */
-		this.add_store("bool_store",new StoreDescription("boolean","boolean",data_update_callback));
-		/** @type {StoreDescription<number,"number">} */
-		this.number_store=new StoreDescription("number","number",data_update_callback);
 		/** @type {StoreDescription<bigint,"bigint">} */
-		this.bigint_store=new StoreDescription("bigint","bigint",data_update_callback);
-		/** @type {StoreDescription<number,"root_visual_element">} */
-		this.ve_store=new StoreDescription("number","root_visual_element",data_update_callback);
-		/** @type {StoreDescription<string,"string">} */
-		this.string_store=new StoreDescription("string","string",data_update_callback);
+		let bigint_store=new StoreDescription("bigint","bigint",data_update_callback);
+		/** @type {StoreDescription<boolean,"boolean">} */
+		let bool_store=new StoreDescription("boolean","boolean",data_update_callback);
 		/** @type {StoreDescription<number|string,"keys">} */
-		this.keys_store=new StoreDescription("string","keys",data_update_callback);
+		let keys_store=new StoreDescription("string","keys",data_update_callback);
+		/** @type {StoreDescription<number,"number">} */
+		let number_store=new StoreDescription("number","number",data_update_callback);
+		/** @type {StoreDescription<string,"string">} */
+		let string_store=new StoreDescription("string","string",data_update_callback);
+		/** @type {StoreDescription<number,"root_visual_element">} */
+		let ve_store=new StoreDescription("number","root_visual_element",data_update_callback);
+		this.add_store(["bigint_store",bigint_store]);
+		this.add_store(["bool_store",bool_store]);
+		this.add_store(["keys_store",keys_store]);
+		this.add_store(["number_store",number_store]);
+		this.add_store(["string_store",string_store]);
+		this.add_store(["ve_store",ve_store]);
 	}
+	/** @type {StoreDescription<string,"string">} */
+	get string_store() {return this.stores.get("string_store");}
+	/** @type {StoreDescription<number,"number">} */
+	get number_store() {return this.stores.get("number_store");}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
-	get_store_keys(key) {return this.data_store.string_store.index_get(key);}
+	get_store_keys(key) {return this.data_store.stores.get("string_store").index_get(key);}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */

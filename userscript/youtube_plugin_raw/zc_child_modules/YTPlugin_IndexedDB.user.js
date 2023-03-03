@@ -191,11 +191,11 @@ class IndexedDBService extends BaseService {
 		}
 		switch(item.type) {
 			default: debugger; break;
-			case "boolean": return store.bool_store.load_data(item);
-			case "keys": return store.keys_store.load_data(item);
-			case "number": return store.number_store.load_data(item);
-			case "root_visual_element": return store.ve_store.load_data(item);
-			case "string": return store.string_store.load_data(item);
+			case "boolean": return store.stores.get("bool_store").load_data(item);
+			case "keys": return store.stores.get("keys_store").load_data(item);
+			case "number": return store.stores.get("number_store").load_data(item);
+			case "root_visual_element": return store.stores.get("ve_store").load_data(item);
+			case "string": return store.stores.get("string_store").load_data(item);
 		}
 	}
 	expected_save_id=0;
@@ -370,16 +370,10 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async save_store_to_database(store,version) {
-		let ss=store.string_store;
-		await this.push_store_to_database(ss,version);
-		let ks=store.keys_store;
-		await this.push_store_to_database(ks,version);
-		let ns=store.number_store;
-		await this.push_store_to_database(ns,version);
-		let vs=store.ve_store;
-		await this.push_store_to_database(vs,version);
-		let bs=store.stores.get("bool_store");
-		await this.push_store_to_database(bs,version);
+		let s_values=store.stores.values();
+		for(let store of s_values) {
+			await this.push_store_to_database(store,version);
+		}
 	}
 	/** @arg {make_item_group<any>} x @returns {x is make_item_group<string>} */
 	is_vi_has_str(x) {return this.is_vi_typeof_check(x,"string");}
@@ -553,7 +547,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
-		let no_null_cache=d_cache.filter(e=>e!==null&&!(e.type==="load_id"||e.type==="save_id"));
+		let no_null_cache=d_cache.filter(e => e!==null&&!(e.type==="load_id"||e.type==="save_id"));
 		if(no_null_cache.length===1) {
 			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
 		} else if(no_null_cache.length===2) {
