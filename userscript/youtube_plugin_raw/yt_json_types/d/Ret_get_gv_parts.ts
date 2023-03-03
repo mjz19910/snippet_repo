@@ -1,32 +1,32 @@
 // cSpell:ignoreRegExp /"(\dualdn?|5uae[z]|qxoe[d]|vgqs[rk])"/
 type G_Gv_0=
-	|"5uaez" // 2
-	|"5uald" // 2
-	|"9gv7e" // 2
-	|"9gv7l" // 2
+	|"5uaez" // 2 [dig_final]
+	|"5uald" // 2 [dig_final]
+	|"9gv7e" // 2 [dig_final]
+	|"9gv7l" // 2 [dig_final]
 	|"9gv7z" // 2 [dig_final] [dig_user@9gv]
-	|"a5mek" // 2
-	|"a5mlr" // 2
-	|"a5mse" // 2
-	|"ab5l6" // 2
-	|"ab5sz" // 3
-	|"hp57k" // 2
-	|"hp57y" // 2
-	|"n4v7s" // 2
-	|"nx5s7" // 2
-	|"nx57y" // 2
-	|"o097z" // 2
-	|"p5qls" // 2
-	|"p5qs7" // 2
-	|"q4fl6" // 2
-	|"q4flr" // 2
-	|"qxo7r" // 2
-	|"qxoed" // 2
-	|"t0a7l" // 2
-	|"t0a7s" // 2
-	|"tt1el" // 1 !dig_user!
-	|"vgqsk" // 2
-	|"vgqsr" // 1 !dig_user!
+	|"a5mek" // 2 [dig_final]
+	|"a5mlr" // 2 [dig_final]
+	|"a5mse" // 2 [dig_final]
+	|"ab5l6" // 2 [dig_final]
+	|"ab5sz" // 3 [dig_final] [dns.domain]
+	|"hp57k" // 2 [dig_final]
+	|"hp57y" // 2 [dig_final]
+	|"n4v7s" // 2 [dig_final]
+	|"nx5s7" // 2 [dig_final]
+	|"nx57y" // 2 [dig_final]
+	|"o097z" // 2 [dig_final]
+	|"p5qls" // 2 [dig_final]
+	|"p5qs7" // 2 [dig_final]
+	|"q4fl6" // 2 [dig_final]
+	|"q4flr" // 2 [dig_final]
+	|"qxo7r" // 2 [dig_final]
+	|"qxoed" // 2 [dig_final]
+	|"t0a7l" // 2 [dig_final]
+	|"t0a7s" // 2 [dig_final]
+	|"tt1el" // 1 ![dig_final]
+	|"vgqsk" // 2 [dig_final]
+	|"vgqsr" // 1 ![dig_final]
 	;
 ;
 // cSpell:ignoreRegExp /rr1.sn-((q4fl[r])[n]"?[67elsz][67deklrsyz]"?,?).googlevideo.com. \d+ IN A\s+\d+\.\d+\.\d+\.\d+/
@@ -64,28 +64,28 @@ type PT_TypeArr=[
 		"l6","ld","le","lk","ll","lr","ls","ly","lz",
 		"r6","rr","ry","rz",
 		"y6","ys","yy","yz","z6","zd","zr","zy","zz",
-	]],// hit
-	["5uald",["l7","ll","lr","ls","s6","sd","se","sk","sl","sr","ss","sy","sz","z7","ze"]],// hit
-	["9gv7e",["e6","ed","ek","ls"]],// hit
-	["9gv7l",["es","ez","le","s7"]],// hit
+	]],
+	["5uald",["l7","ll","lr","ls","s6","sd","se","sk","sl","sr","ss","sy","sz","z7","ze"]],
+	["9gv7e",["e6","ed","ek","ls"]],
+	["9gv7l",["es","ez","le","s7"]],
 	["9gv7z",["76","7e"]],
-	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],// hit
-	["a5mlr",["ek","l6","ll","ls","lz"]],// hit
-	["a5mse",["76","7l","7s","7z","ek","er","es","l7","le","ll"]],// hit
-	["ab5l6",["dr","dy","k6","kd","r6","rd","rk","rl","rr","rs","rz"]],// hit
+	["a5mek",["6d","6k","6l","6r","6s","6z","d6","de","dl","ds","dz","sd","sy","zk","zl","zr","zs"]],
+	["a5mlr",["ek","l6","ll","ls","lz"]],
+	["a5mse",["76","7l","7s","7z","ek","er","es","l7","le","ll"]],
+	["ab5l6",["dr","dy","k6","kd","r6","rd","rk","rl","rr","rs","rz"]],
 	["ab5sz",[
 		"ld","lk","ly",
 		"z6","zd","ze","zk","zl","zr","zs","zy","zz",
-	]],// hit
-	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],// hit
-	["hp57y",["7r","7y","e7","ee","l6","lr","ly","s7","se","sl","ss"]],// hit
-	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],// hit
-	["n8v7z",["lk","lr","ly","s6","s7","sd","se","sk","sl","sr","ss","sy","sz","z7","ze","zl"]],// hit
-	["nx5s7",["7d","7s","7y","7z","76","ee","el"]],// hit
-	["nx57y",["lk","sd","se","sk","sl","ss","sz"]],// hit
+	]],
+	["hp57k",["6r","6y","d6","dd","dk","dr","ds","dy","dz","k7"]],
+	["hp57y",["7r","7y","e7","ee","l6","lr","ly","s7","se","sl","ss"]],
+	["n4v7s",["ee","ey","l7","ll","lr","ls","ly","s7","se"]],
+	["n8v7z",["lk","lr","ly","s6","s7","sd","se","sk","sl","sr","ss","sy","sz","z7","ze","zl"]],
+	["nx5s7",["7d","7s","7y","7z","76","ee","el"]],
+	["nx57y",["lk","sd","se","sk","sl","ss","sz"]],
 	["o097z",["sd","se","sk","sl","sr","ss","sz","z7","zd","ze","zk","zr"]],
-	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],// hit
-	["p5qs7",["6d","sk","sr","zk","zr","zy"]],// hit
+	["p5qls",["6l","7d","7l","7s","76","d6","dd","dk","dr","dz","rl","rr","y6"]],
+	["p5qs7",["6d","sk","sr","zk","zr","zy"]],
 	["q4fl6",[
 		"66","6d","6s","6z",
 		"lz",
@@ -99,18 +99,18 @@ type PT_TypeArr=[
 		"sd","sk","sl","ss",
 	]],
 	["q4fze",["7e","7l","7s","ee"]],
-	["qxo7r",["7k","7r","7y",]],// hit
-	["qxoed",["7k","e7","ee",]],// hit
-	["t0a7l",["7d","ee"]],// hit
-	["t0a7s",["7d"]],// hit
+	["qxo7r",["7k","7r","7y",]],
+	["qxoed",["7k","e7","ee",]],
+	["t0a7l",["7d","ee"]],
+	["t0a7s",["7d"]],
+	["tt1el",["7l","el"]],
 	["vgqsk",[
 		"66","6s","6z",
 		"e6","ed","ek","es","ez",
 		"ld","lk","ll","lr","ls","ly","lz",
 		"s7","se","sk",
 		"z7","ze","zl","zs","zz",
-	]],// hit
-	// 
+	]],
 ];
 type G_Gv_1_List=[
 	"6d","6k","6l","6r","6s","6y","6z",
