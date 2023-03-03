@@ -4012,10 +4012,11 @@ class Support_Renderer extends ServiceMethods {
 		this.G_Text(title);
 		this.R_SimpleCardButton(actionButton);
 		this.trackingParams(trackingParams);
-		displayDomain;
-		showLinkIcon;
-		callToAction;
-		command;
+		this.G_Text(displayDomain);
+		this.cq(showLinkIcon,true);
+		this.G_Text(callToAction);
+		if(command.urlEndpoint) this.E_Url(command);
+		else debugger;
 	}
 	/** @private @arg {R_SimpleCardButton} x */
 	R_SimpleCardButton(x) {this.H_("simpleCardButtonRenderer",x,this.g);}
