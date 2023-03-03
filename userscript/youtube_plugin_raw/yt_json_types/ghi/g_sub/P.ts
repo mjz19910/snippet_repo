@@ -207,6 +207,7 @@ type P_continuation_request_watch_next_token={
 		8: TV_Str<"comments-section">;
 	}>;
 	9?: T_VW<{
+		1: T_VW<{}>;
 		3: T_D32<0>;
 		4: TV_Str<"Watched">;
 		5: T_D32<19>;
