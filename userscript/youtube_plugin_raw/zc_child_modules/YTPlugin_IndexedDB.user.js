@@ -267,7 +267,7 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @arg {["load_id"|"save_id",number]|["root_visual_element"|"number",string,make_item_group<number>]|["string",string,make_item_group<string>]|["keys",string,make_item_group<string|number>]|["boolean",string,make_item_group<boolean>]} args */
+	/** @arg {number} version @arg {["bigint",string,make_item_group<bigint>]|["load_id"|"save_id",number]|["root_visual_element"|"number",string,make_item_group<number>]|["string",string,make_item_group<string>]|["keys",string,make_item_group<string|number>]|["boolean",string,make_item_group<boolean>]} args */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();
@@ -348,6 +348,10 @@ class IndexedDBService extends BaseService {
 		this.cache_weak_set.add(vi);
 		switch(store.content) {
 			default: debugger; break;
+			case "bigint": {
+				if(!this.is_vi_has_bigint(vi)) break;
+				return this.put_boxed_id(version,store.content,item[0],vi);
+			}
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
 				return this.put_boxed_id(version,store.content,item[0],vi);
@@ -362,7 +366,7 @@ class IndexedDBService extends BaseService {
 				return this.put_boxed_id(version,store.content,item[0],vi);
 			}
 			case "keys": {
-				if(this.is_vi_has_bool(vi)) break;
+				if(!(this.is_vi_has_str(vi)||this.is_vi_has_num(vi))) break;
 				return this.put_boxed_id(version,store.content,item[0],vi);
 			}
 		}
@@ -381,6 +385,8 @@ class IndexedDBService extends BaseService {
 	is_vi_has_num(x) {return this.is_vi_typeof_check(x,"number");}
 	/** @arg {make_item_group<any>} x @returns {x is make_item_group<boolean>} */
 	is_vi_has_bool(x) {return this.is_vi_typeof_check(x,"boolean");}
+	/** @arg {make_item_group<any>} x @returns {x is make_item_group<bigint>} */
+	is_vi_has_bigint(x) {return this.is_vi_typeof_check(x,"bigint");}
 	/** @template T @arg {make_item_group<T>} x @returns {boolean} @arg {T_GetTypeof<T>} ty */
 	is_vi_typeof_check(x,ty) {
 		switch(x[0]) {
