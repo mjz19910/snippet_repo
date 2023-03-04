@@ -280,53 +280,53 @@ class IndexedDBService extends BaseService {
 			default: args[0]===""; switch((args[0])) {
 			} debugger; throw new Error();
 			case "video_id": {
-				let [a,value]=args;
+				let [tag,value]=args;
 				/** @type {Extract<G_BoxedIdObj,{value:typeof value}>} */
 				let nb={
 					type: "boxed_id",
-					tag: a,
-					key: `boxed_id:${a}:${value.info_arr[0].raw_id}`,
+					tag,
+					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
 					value,
 				};
 				let promise=this.put_box(nb,version);
-				return {args: [a,value],promise};
+				return {args,promise};
 			}
 			case "user_id": {
-				let [a,value]=args;
+				let [tag,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: a,
-					key: `boxed_id:${a}:${value.info_arr[0].raw_id}`,
+					tag,
+					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
 					value,
 				},version);
 				return {args,promise};
 			}
 			case "play_next": {
-				let [a,value]=args;
+				let [tag,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: a,
-					key: `boxed_id:${a}:${value.value}`,
+					tag,
+					key: `boxed_id:${tag}:${value.value}`,
 					value,
 				},version);
 				return {args,promise};
 			}
 			case "playlist_id": {
-				let [a,value]=args;
+				let [tag,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: a,
-					key: `boxed_id:${a}:${value.info_arr[0].raw_id}`,
+					tag,
+					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
 					value,
 				},version);
 				return {args,promise};
 			}
 			case "hashtag_id": {
-				let [a,value]=args;
+				let [tag,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: a,
-					key: `boxed_id:${a}:${value.hashtag}`,
+					tag,
+					key: `boxed_id:${tag}:${value.hashtag}`,
 					value,
 				},version);
 				return {args,promise};
@@ -338,8 +338,8 @@ class IndexedDBService extends BaseService {
 				let [a,b,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: `${a}:${b}`,
-					key: `boxed_id:${a}:${b}:${value.info_arr[1].id}`,
+					tag: `${tag}:${b}`,
+					key: `boxed_id:${tag}:${b}:${value.info_arr[1].id}`,
 					value,
 				},version);
 				return {args,promise};
@@ -355,11 +355,11 @@ class IndexedDBService extends BaseService {
 				return {args,promise};
 			}
 			case "video_time": {
-				let [a,value]=args;
+				let [tag,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: a,
-					key: `boxed_id:${a}:${value.raw_value}`,
+					tag,
+					key: `boxed_id:${tag}:${value.raw_value}`,
 					value,
 				},version);
 				return {args,promise};
@@ -367,7 +367,7 @@ class IndexedDBService extends BaseService {
 			case "bigint": {
 				let [a,b,value]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${a}:${b}`,
+					key: `boxed_id:${tag}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
@@ -378,7 +378,7 @@ class IndexedDBService extends BaseService {
 			case "boolean": {
 				let [a,b,value]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${a}:${b}`,
+					key: `boxed_id:${tag}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
@@ -389,7 +389,7 @@ class IndexedDBService extends BaseService {
 			case "number": {
 				let [a,b,value]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${a}:${b}`,
+					key: `boxed_id:${tag}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
@@ -400,7 +400,7 @@ class IndexedDBService extends BaseService {
 			case "string": {
 				let [a,b,value]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${a}:${b}`,
+					key: `boxed_id:${tag}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
@@ -411,7 +411,7 @@ class IndexedDBService extends BaseService {
 			case "keys": {
 				let [a,b,value]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${a}:${b}`,
+					key: `boxed_id:${tag}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
@@ -422,7 +422,7 @@ class IndexedDBService extends BaseService {
 			case "root_visual_element": {
 				let [a,b,value]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${a}:${b}`,
+					key: `boxed_id:${tag}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
