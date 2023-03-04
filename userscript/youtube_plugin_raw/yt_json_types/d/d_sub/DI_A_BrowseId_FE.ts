@@ -1,1 +1,5 @@
-type DI_BrowseId_FE=T_UrlInfo_Join<"browse_id",["FE"],D_BrowseEndpointPages>;
+type DI_BrowseId_FE={
+	type: "browse_id";
+	tag: "FE";
+	info_arr: [{raw_id: G_BrowseIdStr_FE;}];
+};

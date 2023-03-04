@@ -1780,18 +1780,6 @@ class HandleTypes extends ServiceMethods {
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
 		this.videoId(raw_id);
 	}
-	/** @protected @arg {string} x @returns {GU_BrowseId|null} */
-	decode_browse_id(x) {
-		if(this.str_starts_with(x,"FE")) {
-			switch(x) {
-				case "FEcomment_shorts_web_top_level":
-				case "FEwhat_to_watch":
-				case "FEexplore": return x;
-				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}:`); return null;
-			}
-		}
-		return null;
-	}
 	/** @private @type {string[]} */
 	cache_playlist_index=[];
 	log_start_radio=false;
@@ -1842,7 +1830,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo({type: "raw",tag: "start_radio",info_arr: [{start_radio}]});
+				this.DI_AGR_UrlInfo({type: "raw_key",key: "start_radio",info_arr: [{start_radio}]});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(this.is_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -3199,7 +3187,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "channel_id": {
 				debugger;
-				this.DI_G_NoKey({type: "channel_id",tag: "",type_parts: ["channel_id"],raw_id});
 			} break;
 			case "video_id": {
 				debugger;
@@ -3219,8 +3206,8 @@ class HandleTypes extends ServiceMethods {
 	DI_G_BrowseId(x) {
 		switch(x.tag) {
 			case "FE": {
-				let box_res=this.put_boxed_id(x.type,x.tag,x);
-				this.execute_promise_def((async () => (await box_res).ret)());
+				let async_p=this.indexed_db.put_boxed_id_async(this.indexed_db_version,x.type,x.tag,x);
+				this.execute_promise_def((async () => (await async_p).ret)());
 			} break;
 		}
 	}
@@ -3247,7 +3234,6 @@ class HandleTypes extends ServiceMethods {
 				let box_res=this.put_boxed_id(value.type,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "playlist_id": this.G_PlaylistUrlInfo(value); break;
 			case "hashtag_id": {
 				let box_res=this.put_boxed_id(value.type,value);
 				this.execute_promise_def((async () => (await box_res).ret)());

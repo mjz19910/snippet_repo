@@ -1,1 +1,1 @@
-type G_BrowseIdStr_FE=T_FeedEntry<D_BrowseEndpointPages>;
+type G_BrowseIdStr_FE=`FE${D_BrowseEndpointPages}`;

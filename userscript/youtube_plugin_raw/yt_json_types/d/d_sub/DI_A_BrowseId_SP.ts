@@ -1,1 +1,5 @@
-type DI_BrowseId_SP=T_UrlInfo_Join<"browse_id",["SP"],G_BrowseIdStr_SP_Inner>;
+type DI_BrowseId_SP={
+	type: "browse_id";
+	tag: "SP";
+	info_arr: [{raw_id: `SP${G_BrowseIdStr_SP_Inner}`;}];
+};

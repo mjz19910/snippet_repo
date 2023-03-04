@@ -262,7 +262,7 @@ class IndexedDBService extends BaseService {
 		/** @arg {typeof ret} x @returns {asserts x is T_PutAwaitPromise<Y_PutBoxedRet>} */
 		function assert_assume_is(x) {x;}
 		assert_assume_is(ret);
-		/** @arg {T_PutAwaitPromise<Y_PutBoxedRet>} */
+		/** @type {T_PutAwaitPromise<Y_PutBoxedRet>} */
 		let r2=ret;
 		/** @arg {typeof r2} x @returns {asserts x is Extract<typeof r2,{args:T}>} */
 		function assert_assume_is_2(x) {x;}
@@ -274,55 +274,24 @@ class IndexedDBService extends BaseService {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
 			} debugger; throw new Error();
-			case "video_referral": {
+			case "video_id": {
 				let [a,value]=args;
-				let promise=this.put_box({
+				/** @type {Extract<G_BoxedIdObj,{value:typeof value}>} */
+				let nb={
 					type: "boxed_id",
 					tag: a,
-					key: `boxed_id:${a}:${value.raw_id}`,
-					value: value,
-				},version);
-				return {args,promise};
-			}
-			case "video": {
-				let [a,value]=args;
-				switch(value.tag) {
-					case null: {
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: a,
-							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
-							value,
-						},version);
-						return {args: [a,value],promise};
-					}
-					case "normal": {
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: a,
-							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
-							value,
-						},version);
-						return {args: [a,value],promise};
-					}
-					case "short": {
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: a,
-							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
-							value,
-						},version);
-						return {args: [a,value],promise};
-					}
-				}
+					key: `boxed_id:${a}:${value.info_arr[0].raw_id}`,
+					value,
+				};
+				let promise=this.put_box(nb,version);
+				return {args: [a,value],promise};
 			}
 			case "user_id": {
 				let [a,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
-					extra: "any",
-					key: `boxed_id:${a}:${value.raw_id}`,
+					key: `boxed_id:${a}:${value.info_arr[0].raw_id}`,
 					value,
 				},version);
 				return {args,promise};

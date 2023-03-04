@@ -1,1 +1,5 @@
-type DI_BrowseId_MP=T_UrlInfo_Join<"browse_id",["MP"],`${string}_${string}`>;
+type DI_BrowseId_MP={
+	type: "browse_id";
+	tag: "MP";
+	info_arr: [{raw_id: `MP${string}_${string}`;}];
+};

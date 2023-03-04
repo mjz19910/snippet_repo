@@ -7,9 +7,15 @@ type Y_PutBoxedArgs=
 	|["root_visual_element",string,make_item_group<number>]
 	|["save_id",number]
 	|["string",string,make_item_group<string>]
-	|["browse_id","FE",null]
+	|["video_id",DI_VideoId]
+	|["browse_id", "FE", DI_BrowseId_FE]
 	|["video_time",DI_VideoTime]
 	|["playlist_id",DI_G_Playlist]
+	|["channel_id",DI_ChannelUrl]
+	|["play_next",DI_PlayNext]
+	|["hashtag_id",DI_HashtagId]
+	|["user_id",DI_UserId]
+	|["browse_id",DI_G_BrowseId]
 	;
 ;
 async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
