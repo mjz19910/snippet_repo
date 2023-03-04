@@ -3177,56 +3177,13 @@ class HandleTypes extends ServiceMethods {
 	G_PlaylistUrlInfo(x) {
 		/** @template T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
-		switch(x.tag) {
-			default: {
-				switch(get_tag(x)) {
-					case "":
-				}
-				debugger; return;
-			}
-			case null: {
-				if(x.id==="LL") {
-					let box_res=this.put_boxed_id(x.type,x);
-					console.log(box_res);
-					// this.execute_promise_def((async () => (await box_res).ret)());
-				} else if(x.id==="WL") {
-					let box_res=this.put_boxed_id(x.type,x);
-					console.log(box_res);
-					// this.execute_promise_def((async () => (await box_res).ret)());
-				} else {
-					debugger;
-				}
-			} return;
-			case "PL": {
-				if(!this.is_UrlInfoPart1(x,"PL")) throw 1;
-				let box_res=this.put_boxed_id(x.type,x);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} return;
-			case "RD": {
-				let box_res=this.put_boxed_id(x.type,x);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} return;
-			case "RDCM": {
-				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				let box_res=this.put_boxed_id(x.type,x);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} return;
-			case "RDGM": {
-				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				let box_res=this.put_boxed_id(x.type,x);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} return;
-			case "RDMM": {
-				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				let box_res=this.put_boxed_id(x.type,x);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} return;
-			case "UU": {
-				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				let box_res=this.put_boxed_id(x.type,x);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} return;
-		}
+		get_tag;
+		/** @type {[(typeof x)["type"],typeof x]} */
+		let a_tmp=[x.type,x];
+		/** @type {Y_PutBoxedArgs} */
+		let args=a_tmp;
+		let box_res=this.put_boxed_id(...args);
+		this.execute_promise_def((async () => (await box_res).ret)());
 	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {

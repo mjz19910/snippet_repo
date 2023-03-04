@@ -7,8 +7,9 @@ type Y_PutBoxedArgs=
 	|["root_visual_element",string,make_item_group<number>]
 	|["save_id",number]
 	|["string",string,make_item_group<string>]
-	|["browse_id", "FE", null]
-	|["video_time", DI_VideoTime]
+	|["browse_id","FE",null]
+	|["video_time",DI_VideoTime]
+	|["playlist_id",DI_G_Playlist]
 	;
 ;
 async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
@@ -17,13 +18,13 @@ async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
 	let t=new idb_cls.IndexedDBService(dr);
 	switch(args[0]) {
 		default: throw new Error();
-		case "video_id": {
+		case "video_time": {
 			let [a,value]=args;
 			let ret=t.put_box({
 				type: "boxed_id",
 				tag: a,
-				key: `boxed_id:${a}:${value.info_arr[0].raw_id}`,
-				value: value,
+				key: `boxed_id:${a}:${value.raw_value}`,
+				value,
 			},version);
 			return {args,ret};
 		}

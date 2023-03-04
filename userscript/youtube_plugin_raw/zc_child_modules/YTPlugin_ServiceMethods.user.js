@@ -1486,8 +1486,6 @@ class ServiceMethods extends ServiceData {
 			case "many": throw new Error("What");
 		}
 	}
-	/** @private @arg {DI_R_PlaylistId} x */
-	DI_R_PlaylistId(x) {this.ht.DI_AGR_UrlInfo(x);}
 	/** @protected @arg {GU_PlaylistId} x */
 	GU_PlaylistId(x) {this.D_RawUrlFromTag("raw","playlist_id",x);}
 	/** @api @public @arg {D_BrowseIdStr} x */
@@ -1501,12 +1499,9 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {SD_PlaylistId} raw_id */
 	playlistId(raw_id) {this.GU_PlaylistId(raw_id);}
 	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
-	guideEntryId(x) {this.ht.DI_AGR_UrlInfo({type: "raw",tag: "guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
+	guideEntryId(x) {this.D_RawUrlFromTag("raw","guide_entry_id",x);}
 	/** @protected @arg {DU_ChannelId} raw_id */
-	channelId(raw_id) {
-		if(raw_id===void 0) {debugger; return;}
-		this.ht.DI_AGR_UrlInfo({type: "raw",tag: "channel_id",type_parts: ["raw","channel_id"],raw_id});
-	}
+	channelId(raw_id) {this.D_RawUrlFromTag("raw","channel_id",raw_id);}
 	/** @protected @arg {D_UserIdStr} x */
 	userId(x) {this.ht.DI_G_NoKey({type: "user_id",raw_id: x});}
 	/** @protected @arg {string} x */
