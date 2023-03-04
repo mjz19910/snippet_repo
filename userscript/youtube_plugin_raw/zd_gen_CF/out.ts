@@ -1079,6 +1079,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "unsubscribe.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ve_3611.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "ve_6827.params";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "video.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "view_count.entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "watch.player_params";}
