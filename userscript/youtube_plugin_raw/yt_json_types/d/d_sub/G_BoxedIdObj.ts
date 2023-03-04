@@ -45,5 +45,12 @@ type G_BoxedIdObj=
 		key: `boxed_id:video:short:${string}`;
 		value: D_InfoVideoIdShorts;
 	}
+	|{
+		type: "boxed_id",
+		tag: string,
+		extra: "any";
+		key: `boxed_id:${string}:${string}`,
+		value: G_UrlInfo,
+	}
 	;
 ;

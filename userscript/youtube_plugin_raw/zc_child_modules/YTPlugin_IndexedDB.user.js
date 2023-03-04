@@ -302,6 +302,7 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
+					extra: "any",
 					key: `boxed_id:${a}:${value.raw_id}`,
 					value,
 				},version);
@@ -312,6 +313,7 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
+					extra: "any",
 					key: `boxed_id:${a}:${value.value}`,
 					value,
 				},version);
@@ -324,6 +326,7 @@ class IndexedDBService extends BaseService {
 						let ret=this.put_box({
 							type: "boxed_id",
 							tag: a,
+							extra: "any",
 							key: `boxed_id:${a}:${value.type_parts[1]}`,
 							value,
 						},version);
@@ -333,6 +336,7 @@ class IndexedDBService extends BaseService {
 						let ret=this.put_box({
 							type: "boxed_id",
 							tag: a,
+							extra: "any",
 							key: `boxed_id:${a}:${value.type_parts[1]}:${value.type_parts[2]}`,
 							value,
 						},version);
@@ -345,6 +349,7 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
+					extra: "any",
 					key: `boxed_id:${a}:${value.hashtag}`,
 					value,
 				},version);
@@ -355,7 +360,8 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
-					key: `boxed_id:${a}:${value.raw_value}`,
+					extra: "any",
+					key: `boxed_id:${a}:${value.raw_id}`,
 					value,
 				},version);
 				return {args,ret};
@@ -365,7 +371,8 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
-					key: `boxed_id:${a}:${value.raw_value}`,
+					extra: "any",
+					key: `boxed_id:${a}:${value.raw_id}`,
 					value,
 				},version);
 				return {args,ret};
@@ -774,6 +781,7 @@ class IndexedDBService extends BaseService {
 					if(!("type" in item_db_nt)) break x;
 					switch(item_nt.type) {
 						default: get_type(item_nt)===""; debugger; break;
+						case "boxed_id":
 						case "bigint":
 						case "boolean":
 						case "keys":
@@ -789,6 +797,7 @@ class IndexedDBService extends BaseService {
 						case "load_id":
 						case "update_id": {
 							if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
+							if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
 							if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
 							update_item=true;
 						} break;
