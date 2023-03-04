@@ -3295,22 +3295,22 @@ class HandleTypes extends ServiceMethods {
 		switch(ret.type) {
 			case "browse_id":
 				assert_assume_is_type(ret,ret.type);
-				return ret; break;
+				return ret;
 			case "channel_id":
 				assert_assume_is_type(ret,ret.type);
-				return ret; break;
+				return ret;
 			case "guide_entry_id":
 				assert_assume_is_type(ret,ret.type);
-				return ret; break;
+				return ret;
 			case "key":
 				assert_assume_is_type(ret,ret.type);
-				return ret; break;
+				return ret;
 			case "playlist_id":
 				assert_assume_is_type(ret,ret.type);
-				return ret; break;
+				return ret;
 			case "video_id":
 				assert_assume_is_type(ret,ret.type);
-				return ret; break;
+				return ret;
 		}
 	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
@@ -3325,14 +3325,14 @@ class HandleTypes extends ServiceMethods {
 			case "channel_id": {
 				let px=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=["channel_id","UC",px];
+				let args=["channel_id","UC",{...px,tag: "UC",info_arr: [{raw_id},{id}]}];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "video_id": {
-				const {tag,info_arr}=x;
+				let px=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=[tag,{type: tag,info_arr}];
+				let args=[px.type,null,{...px,info_arr: x.info_arr}];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
@@ -3340,8 +3340,8 @@ class HandleTypes extends ServiceMethods {
 				const {info_arr: [{raw_id}]}=x;
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,"UC",any]>} */
+					let args=["channel_id","UC",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
