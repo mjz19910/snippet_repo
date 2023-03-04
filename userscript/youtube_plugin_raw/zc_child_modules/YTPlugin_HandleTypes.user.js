@@ -2657,7 +2657,7 @@ class HandleTypes extends ServiceMethods {
 		this.videoId(this.TV_Str(a));
 		this.save_number(`${cf}.f6`,this.T_D32(b));
 		this.save_number(`${cf}.f15`,this.T_D32(c));
-		f37&&this.params(`${cf}.f37`,this.TV_Str(f37));
+		f37&&this.save_string(`${cf}.f37`,this.TV_Str(f37));
 	}
 	/** @private @arg {PX_watch_next_token_4} x */
 	PX_watch_next_token_4(x) {
@@ -2885,7 +2885,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_PX_watch_next_token_2_f37";
 		const {10: r,15: f15,20: f20,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.save_string(`${cf}.f10`,this.TV_Str(r));
-		debugger;
 	}
 	/** @private @arg {P_create_reply_params} x */
 	P_create_reply_params(x) {

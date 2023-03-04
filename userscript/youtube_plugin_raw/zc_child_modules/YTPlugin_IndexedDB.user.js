@@ -525,6 +525,7 @@ class IndexedDBService extends BaseService {
 			return {type: "ok",req: tdb.put(store,value)};
 		} catch(e) {
 			console.log("failed to start put request",e);
+			debugger;
 			return {type: "err",err: e};
 		}
 	}
