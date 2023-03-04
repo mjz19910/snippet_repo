@@ -1,14 +1,11 @@
-type D_BrowseIdInfo_VL_PL={
-	type: "browse_id";
-	tag: "VL";
-	type_parts: ["browse_id","VL","PL"];
-	raw_id: GU_VE5754_PlaylistBrowseId;
-}|{
+type D_BrowseIdInfo_VL_UU={
 	type: "browse_id";
 	tag: "VL";
 	type_parts: ["browse_id","VL","UU"];
 	raw_id: `VLUU${string}`;
-}|{
+};
+
+type D_BrowseIdInfo_VL_Self={
 	type: "browse_id";
 	tag: "VL";
 	type_parts: ["browse_id","VL"];
@@ -18,6 +15,12 @@ type D_BrowseIdInfo_VL_PL={
 	tag: "VL";
 	type_parts: ["browse_id","VL"];
 	raw_id: "VLWL";
+};
+type D_BrowseIdInfo_VL_PL={
+	type: "browse_id";
+	tag: "VL";
+	type_parts: ["browse_id","VL","PL"];
+	raw_id: GU_VE5754_PlaylistBrowseId;
 };
 type D_BrowseIdInfo_FE={
 	type: "browse_id";
@@ -37,4 +40,12 @@ type D_BrowseIdInfo_MP={
 	type_parts: ["browse_id","MP"];
 	raw_id: `MP${string}_${string}`;
 };
-type D_BrowseIdInfo=D_BrowseIdInfo_VL_PL|D_BrowseIdInfo_FE|D_BrowseIdInfo_SP|D_BrowseIdInfo_MP;
+type D_BrowseIdInfo=
+	|D_BrowseIdInfo_FE
+	|D_BrowseIdInfo_MP
+	|D_BrowseIdInfo_SP
+	|D_BrowseIdInfo_VL_PL
+	|D_BrowseIdInfo_VL_Self
+	|D_BrowseIdInfo_VL_UU
+	;
+;

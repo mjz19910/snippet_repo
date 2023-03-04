@@ -650,7 +650,7 @@ class HandleTypes extends ServiceMethods {
 	DC_ResetChannelUnreadCount(x) {
 		const cf="DC_ResetChannelUnreadCount";
 		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_ChannelId(channelId);
+		this.channelId(channelId);
 	}
 	/** @private @arg {DC_Timed} x */
 	DC_Timed(x) {
@@ -1778,7 +1778,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
-		this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video","short"],raw_id});
+		this.G_RawUrlInfo({type: "raw",tag: "video",type_parts: ["raw","video","short"],raw_id});
 	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
@@ -1803,7 +1803,7 @@ class HandleTypes extends ServiceMethods {
 		/** @arg {typeof x2} x @returns {typeof y2|null} */
 		const px_x2=(x) => {
 			const {v,...y}=x;
-			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: v});
+			this.G_RawUrlInfo({type: "raw",tag: "video",type_parts: ["raw","video"],raw_id: v});
 			if(this.is_empty_obj(y)) return null;
 			let y2=y;
 			return y2;
@@ -1825,7 +1825,7 @@ class HandleTypes extends ServiceMethods {
 		x: if("list" in x3) {
 			lx: {
 				const {list,...y2}=x3;
-				this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id: list});
+				this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id: list});
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
 					this.save_string("video_url.info.playnext",playnext);
@@ -1845,7 +1845,7 @@ class HandleTypes extends ServiceMethods {
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(this.is_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
-				this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_referral"],raw_id: rv});
+				this.G_RawUrlInfo({type: "raw",tag: "video_referral",type_parts: ["raw","video_referral"],raw_id: rv});
 				this.g(y4);
 			}
 			return;
@@ -3229,9 +3229,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {G_RawUrlInfo} x */
 	G_RawUrlInfo(x) {
-		switch(x.type_parts[1]) {
+		/** @template T @arg {{tag:T}} x */
+		function get_tag(x) {return x.tag;}
+		if(!("tag" in x)) {
+			return;
+		}
+		switch(x.tag) {
 			default: {
-				switch((x.type_parts[1])) {
+				switch(get_tag(x)) {
 					case "": break;
 				}
 			} break;
@@ -3239,17 +3244,17 @@ class HandleTypes extends ServiceMethods {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				let {raw_id}=x;
 				if(raw_id==="LL") {
-					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id});
+					this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id});
 				} else if(raw_id==="WL") {
-					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id});
+					this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id});
 				} else if(this.str_starts_with(raw_id,"RD")) {
-					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","RD"],raw_id});
+					this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","RD"],raw_id});
 				} else if(this.str_starts_with(raw_id,"PL")) {
-					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","PL"],raw_id});
+					this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","PL"],raw_id});
 				} else if(this.str_starts_with(raw_id,"UU")) {
-					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","UU"],raw_id});
+					this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","UU"],raw_id});
 				} else if(this.str_starts_with(raw_id,"UC")) {
-					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","channel_id"],raw_id});
+					this.G_RawUrlInfo({type: "raw",tag: "channel_id",type_parts: ["raw","channel_id"],raw_id});
 				} else {
 					raw_id==="";
 					debugger;
@@ -3320,7 +3325,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				{
 					const k="UC"; if(this.str_starts_with(raw_id,k)) {
-						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","channel_id"],raw_id});
+						this.G_RawUrlInfo({type: "raw",tag: "channel_id",type_parts: ["raw","channel_id"],raw_id});
 						return;
 					}
 				}
@@ -3346,11 +3351,11 @@ class HandleTypes extends ServiceMethods {
 					}
 					let {raw_id}=x;
 					if(this.str_starts_with(raw_id,"RD")) {
-						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","RD"],raw_id});
+						this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","RD"],raw_id});
 					} else if(this.str_starts_with(raw_id,"PL")) {
-						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","PL"],raw_id});
+						this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","PL"],raw_id});
 					} else if(this.str_starts_with(raw_id,"UU")) {
-						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","UU"],raw_id});
+						this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","UU"],raw_id});
 					} else {
 						raw_id==="";
 						debugger;

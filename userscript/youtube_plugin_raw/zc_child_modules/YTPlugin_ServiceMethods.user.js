@@ -268,7 +268,7 @@ class ServiceMethods extends ServiceData {
 	DE_Unsubscribe(x) {
 		const cf="DE_Unsubscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.D_ChannelId);
+		this.z(channelIds,this.channelId);
 		this.params("unsubscribe.params",params);
 	}
 	/** @private @arg {DE_ShareEntityService} x */
@@ -704,7 +704,7 @@ class ServiceMethods extends ServiceData {
 			if(this.starts_with_targetId(x,"browse-feedUC")) {
 				const cp0=split_string(x.targetId,"browse-feed")[1];
 				let cp=split_string(cp0,"channels");
-				this.D_ChannelId(cp[0]);
+				this.channelId(cp[0]);
 				if(cp[1]!=="156") debugger;
 				return;
 			}
@@ -1489,7 +1489,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {SD_PlaylistId} raw_id */
 	playlistId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id});
+		this.ht.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -1642,7 +1642,7 @@ class ServiceMethods extends ServiceData {
 		this.t(buttonText,this.G_Text);
 		this.t(subscribed,this.a_primitive_bool);
 		this.t(type,x => this.ceq(x,"FREE"));
-		this.t(channelId,this.D_ChannelId);
+		this.t(channelId,this.channelId);
 		if(trackingParams) this.trackingParams(trackingParams);
 		this.t(showPreferences,this.a_primitive_bool);
 		let [p1,o1]=this.unwrap_prefix(y1,"subscribed");
@@ -1758,11 +1758,11 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {GU_PlaylistId} x */
 	GU_PlaylistId(x) {
-		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id: x});
+		this.ht.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id: x});
 	}
 	/** @api @public @arg {D_BrowseIdStr} x */
 	browseId(x) {
-		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","browse_id"],raw_id: x});
+		this.ht.G_RawUrlInfo({type: "raw",tag: "browse_id",type_parts: ["raw","browse_id"],raw_id: x});
 	}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {this.browseId(x);}
@@ -2356,7 +2356,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","video","normal"],raw_id: x});
+		this.ht.G_RawUrlInfo({type: "raw",tag: "video",type_parts: ["raw","video","normal"],raw_id: x});
 	}
 	/** @type {any[]} */
 	log_list=[];
@@ -2413,16 +2413,14 @@ class ServiceMethods extends ServiceData {
 		let ret=this.indexed_db.put_boxed_id_async(this.indexed_db_version,...args);
 		return ret;
 	}
-	/** @protected @arg {D_ChannelIdStr} x */
-	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */
 	userId(x) {this.ht.G_UrlInfo({type: "user_id",raw_id: x});}
 	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
 	guideEntryId(x) {this.ht.G_RawUrlInfo({type: "raw",tag: "guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
 	/** @protected @arg {D_ChannelIdStr} raw_id */
-	D_ChannelId(raw_id) {
+	channelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","channel_id"],raw_id});
+		this.ht.G_RawUrlInfo({type: "raw",tag: "channel_id",type_parts: ["raw","channel_id"],raw_id});
 	}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {
@@ -3117,7 +3115,7 @@ class ServiceMethods extends ServiceData {
 	DE_Subscribe(x) {
 		const cf="DE_Subscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.D_ChannelId);
+		this.z(channelIds,this.channelId);
 		this.params("subscribe.params",params);
 	}
 	/** @private @arg {M_Subscribe} x */
@@ -6307,7 +6305,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "featured": case "search":
 		}
-		this.D_ChannelId(channelId);
+		this.channelId(channelId);
 	}
 	/** @private @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {

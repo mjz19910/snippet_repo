@@ -770,7 +770,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.t(description,this.G_Text);
 		this.a_primitive_str(lengthSeconds);
 		this.parser.parse_url(cf,ownerProfileUrl);
-		this.D_ChannelId(externalChannelId);
+		this.channelId(externalChannelId);
 		this.a_primitive_bool(isFamilySafe);
 		this.z(availableCountries,this.a_primitive_str);
 		this.a_primitive_bool(isUnlisted);
@@ -1424,7 +1424,7 @@ class Support_RS_Browse extends ServiceMethods {
 	DC_ResetChannelUnreadCount(x) {
 		const cf="DC_ResetChannelUnreadCount";
 		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_ChannelId(channelId);
+		this.channelId(channelId);
 	}
 	/** @private @arg {GA_ResponseReceived} x */
 	GA_ResponseReceived(x) {
@@ -1566,7 +1566,7 @@ class Support_GenericApi extends ServiceMethods {
 		this.z(u1,this.RA_Notification);
 		this.trackingParams(trackingParams);
 		this.R_EntityBatchUpdate(frameworkUpdates);
-		this.D_ChannelId(channelId);
+		this.channelId(channelId);
 		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
 	/** @private @arg {RS_Success} x */
@@ -2400,7 +2400,7 @@ class Support_Renderer extends ServiceMethods {
 		const cf="AD_SubscribeButton";
 		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_bool(subscribed);
-		this.D_ChannelId(channelId);
+		this.channelId(channelId);
 	}
 	/** @private @arg {AD_ReplayChatItem} x */
 	AD_ReplayChatItem(x) {
@@ -3328,7 +3328,7 @@ class Support_Renderer extends ServiceMethods {
 	D_C4TabbedHeader(x) {
 		const cf="D_C4TabbedHeader";
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.s(cf,x);
-		this.D_ChannelId(channelId);
+		this.channelId(channelId);
 		this.a_primitive_str(title);
 		this.E_VE3611(navigationEndpoint);
 		this.D_Thumbnail(avatar);
@@ -3734,7 +3734,7 @@ class Support_Renderer extends ServiceMethods {
 	D_ExternalChannelId(x) {
 		const cf="D_ExternalChannelId";
 		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_ChannelId(externalChannelId);
+		this.channelId(externalChannelId);
 	}
 	/** @private @arg {D_InvalidationId} x */
 	D_InvalidationId(x) {
@@ -3883,10 +3883,10 @@ class Support_Renderer extends ServiceMethods {
 			this.G_Text(title);
 			this.z(emojiIds,x => {
 				let [channel_id,parsed_emoji]=this.parse_emoji_id(x);
-				this.D_ChannelId(channel_id);
+				this.channelId(channel_id);
 				this.save_string(`${categoryId}.emojiId`,parsed_emoji);
 			});
-			this.D_ChannelId(categoryId);
+			this.channelId(categoryId);
 			this.trackingParams(trackingParams);
 			return;
 		}
@@ -3926,7 +3926,7 @@ class Support_Renderer extends ServiceMethods {
 		if(this.is_D_EmojiPickerCategoryButton_ForChannel(x)) {
 			const cf="D_EmojiPickerCategoryButton:ForChannel";
 			const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
-			this.D_ChannelId(categoryId);
+			this.channelId(categoryId);
 			this.T_Icon(`${cf}:icon`,icon);
 			switch(tooltip) {
 				default: debugger; break;
