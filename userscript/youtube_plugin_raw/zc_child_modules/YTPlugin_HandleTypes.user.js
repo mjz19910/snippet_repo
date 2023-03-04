@@ -3242,7 +3242,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "channel_id": {
 				debugger;
-				this.G_UrlInfo({type: "channel_id",tag: "",type_parts: ["channel_id"],raw_id});
+				this.DI_G_NoKey({type: "channel_id",tag: "",type_parts: ["channel_id"],raw_id});
 			} break;
 			case "video_id": {
 				debugger;
@@ -3258,8 +3258,17 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @arg {DI_G_BrowseId} x */
+	DI_G_BrowseId(x) {
+		switch(x.tag) {
+			case "FE": {
+				let box_res=this.put_boxed_id(x.type,x.tag,x);
+				this.execute_promise_def((async () => (await box_res).ret)());
+			} break;
+		}
+	}
 	/** @public @arg {DI_G_NoKey} value */
-	G_UrlInfo(value) {
+	DI_G_NoKey(value) {
 		/** @template T @arg {{type:T}} x */
 		function get_type(x) {return x.type;}
 		switch(value.type) {
@@ -3268,12 +3277,7 @@ class HandleTypes extends ServiceMethods {
 				let box_res=this.put_boxed_id(value.type,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "browse_id": {
-				/** @type {DI_G_BrowseId} */
-				let v2=value;
-				let box_res=this.put_boxed_id(v2.type,v2);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} break;
+			case "browse_id": return this.DI_G_BrowseId(value);
 			case "video_id": {
 				let box_res=this.put_boxed_id(value.type,value);
 				this.execute_promise_def((async () => (await box_res).ret)());

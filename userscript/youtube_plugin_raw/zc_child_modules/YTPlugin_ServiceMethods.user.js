@@ -1486,10 +1486,12 @@ class ServiceMethods extends ServiceData {
 			case "many": throw new Error("What");
 		}
 	}
+	/** @private @arg {DI_R_PlaylistId} x */
+	DI_R_PlaylistId(x) {this.ht.G_RawUrlInfo(x);}
 	/** @public @arg {SD_PlaylistId} raw_id */
 	playlistId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		this.ht.G_RawUrlInfo({type: "raw",type_parts: {r: "raw",a: "playlist_id"},raw_id});
+		this.DI_R_PlaylistId({type: "raw",tag: "playlist_id",info_arr: [{raw_id}]});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -1999,7 +2001,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,hashtag,...u]=p;
 				if(u.length===0) {
-					this.ht.G_UrlInfo({type: "hashtag_id",hashtag});
+					this.ht.DI_G_NoKey({type: "hashtag_id",hashtag});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -2414,7 +2416,7 @@ class ServiceMethods extends ServiceData {
 		return ret;
 	}
 	/** @protected @arg {D_UserIdStr} x */
-	userId(x) {this.ht.G_UrlInfo({type: "user_id",raw_id: x});}
+	userId(x) {this.ht.DI_G_NoKey({type: "user_id",raw_id: x});}
 	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
 	guideEntryId(x) {this.ht.G_RawUrlInfo({type: "raw",tag: "guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
 	/** @protected @arg {D_ChannelIdStr} raw_id */
