@@ -334,11 +334,11 @@ class IndexedDBService extends BaseService {
 				if(args.length===2) {
 					return;
 				}
-				let [tag,b,value]=args;
+				let [tag,id,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: `${tag}:${b}`,
-					key: `boxed_id:${tag}:${b}:${value.info_arr[1].id}`,
+					tag: `${tag}:${id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
 				},version);
 				return {args,promise};
@@ -379,57 +379,67 @@ class IndexedDBService extends BaseService {
 				return {args,promise};
 			}
 			case "boolean": {
-				let [tag,b,value]=args;
+				let [tag,id,container]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${tag}:${b}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
-					value,
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
 				},version);
 				return {args,promise};
 			}
 			case "number": {
-				let [tag,b,value]=args;
+				let [tag,id,container]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${tag}:${b}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
-					value,
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
 				},version);
 				return {args,promise};
 			}
 			case "string": {
-				let [tag,b,value]=args;
+				let [tag,id,container]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${tag}:${b}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
-					value,
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
 				},version);
 				return {args,promise};
 			}
 			case "keys": {
-				let [tag,b,value]=args;
+				let [tag,id,container]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${tag}:${b}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
-					value,
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
 				},version);
 				return {args,promise};
 			}
 			case "root_visual_element": {
-				let [tag,b,value]=args;
+				let [tag,id,container]=args;
 				let promise=this.put_box({
-					key: `boxed_id:${tag}:${b}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
-					value,
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
 				},version);
 				return {args,promise};
 			}
@@ -454,7 +464,6 @@ class IndexedDBService extends BaseService {
 				return {args,promise};
 			}
 		}
-		throw new Error();
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	async push_store_item_to_database(store,item,version) {
@@ -767,13 +776,7 @@ class IndexedDBService extends BaseService {
 					if(!("type" in item_db_nt)) break x;
 					switch(item_nt.type) {
 						default: get_type(item_nt)===""; debugger; break;
-						case "boxed_id":
-						case "bigint":
-						case "boolean":
-						case "keys":
-						case "number":
-						case "root_visual_element":
-						case "string": update_item=true; break;
+						case "boxed_id": update_item=true; break;
 						case "video_id": {
 							if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
 							if(!this.eq_keys(item_db_nt.type_parts,item_nt.type_parts)) {update_item=true; break;}
