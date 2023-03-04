@@ -1502,8 +1502,8 @@ class ServiceMethods extends ServiceData {
 	guideEntryId(x) {this.D_RawUrlFromTag("raw","guide_entry_id",x);}
 	/** @protected @arg {DU_ChannelId} raw_id */
 	channelId(raw_id) {this.D_RawUrlFromTag("raw","channel_id",raw_id);}
-	/** @protected @arg {D_UserIdStr} x */
-	userId(x) {this.ht.DI_G_NoKey({type: "user_id",raw_id: x});}
+	/** @protected @arg {D_UserIdStr} raw_id */
+	userId(raw_id) {this.ht.DI_G_NoKey({type: "user_id",info_arr: [{raw_id}]});}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
 		let res_e=this._decode_b64_url_proto_obj(x);
