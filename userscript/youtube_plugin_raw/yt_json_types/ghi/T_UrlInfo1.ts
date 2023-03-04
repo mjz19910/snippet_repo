@@ -1,5 +1,4 @@
-type T_UrlInfo1<T,U>={
-	type: T;
-	type_parts: {r: T};
-	info_arr: [{id: U;}];
+type T_UrlInfo1<T_Type,T_RawStr>={
+	type: T_Type;
+	info_arr: [{raw_id: T_RawStr;}];
 };
