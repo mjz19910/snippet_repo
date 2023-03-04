@@ -649,13 +649,6 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs_2} T @arg {T} args */
-	put_boxed_id_2(version,...args) {
-		switch(args[0]) {
-			default: args[0]===""; switch((args[0])) {
-			} debugger; throw new Error();
-		}
-	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	async push_store_item_to_database(store,item,version) {
 		let [v_key,vi]=item;
