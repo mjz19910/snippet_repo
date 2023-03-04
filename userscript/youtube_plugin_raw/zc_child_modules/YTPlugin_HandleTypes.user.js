@@ -353,6 +353,8 @@ class HandleTypes extends ServiceMethods {
 	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
 	/** @private @template {string} T @arg {TV_Str<T>} x */
 	TV_Str(x) {return this.T_RawChild(x)[3][1];}
+	/** @protected @template T @template {string} Str @arg {T_VW<T>|TV_Str_CS<Str>} x */
+	T_PArr_1(x) {return x[1];}
 	/** @protected @template T @arg {T_PArr_1<[T]>} x */
 	T_RawChild(x) {
 		if(x===void 0) debugger;
@@ -2869,12 +2871,15 @@ class HandleTypes extends ServiceMethods {
 	P_notification_add_upcoming_event_reminder_params(x) {
 		const cf="P_notification_add_upcoming_event_reminder_params";
 		const {1: v1,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		let u1=this.T_VW(v1);
-		if(u1) {
-			const {14: x2_f14,...y2}=this.T_VW(v1); this.g(y2);
-			this.save_bigint(`${cf}.f1.f14`,this.T_FD64(x2_f14));
-		} else {
-			debugger;
+		let u1=this.T_PArr_1(v1)[0];
+		switch(u1[0]) {
+			case "v_child": {
+				const {14: x2_f14,...y2}=u1[2]; this.g(y2);
+				this.save_bigint(`${cf}.f1.f14`,this.T_FD64(x2_f14));
+			} break;
+			case "v_child_str": {
+				this.save_string(`${cf}.f1`,u1[3][1]);
+			} break;
 		}
 	}
 	//#endregion

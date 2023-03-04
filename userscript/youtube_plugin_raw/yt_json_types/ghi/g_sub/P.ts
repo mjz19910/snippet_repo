@@ -546,7 +546,7 @@ type PX_upcoming_event_reminder_info={
 	2: T_D32<0>;
 };
 type P_notification_add_upcoming_event_reminder_params={
-	1: T_VW<PD_event_info>;
+	1: T_VW<PD_event_info>|TV_Str_CS<"PEcy1vYHb8A">;
 	6: T_VW<PX_upcoming_event_reminder_info>;
 };
 type P_notification_remove_upcoming_event_reminder_params={
