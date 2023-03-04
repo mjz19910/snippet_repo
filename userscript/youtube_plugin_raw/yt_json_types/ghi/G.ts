@@ -428,6 +428,10 @@ type D_VideoIdNormal={
 	type: "video:normal";
 	v: string;
 };
+type D_VideoIdShorts={
+	type: "video:short";
+	v: string;
+};
 type G_UrlInfo=
 	|D_BrowseIdUrlInfo
 	|D_PlayNextUrlInfo
@@ -437,10 +441,8 @@ type G_UrlInfo=
 	|G_PlaylistUrlInfo
 	|D_UserIdInfo
 	|D_VideoIdNormal
-	|{
-		type: "video:short";
-		v: string;
-	};
+	|D_VideoIdShorts
+	|{type: "hashtag",hashtag: string;}
 	;
 ;
 type G_WatchNext=

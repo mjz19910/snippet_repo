@@ -1887,12 +1887,21 @@ class ServiceMethods extends ServiceData {
 		function get_type(x) {return x.type;}
 		switch(value.type) {
 			default: get_type(value)===""; debugger; break;
+			case "hashtag": {
+				let {hashtag}=value;
+				let promise=this.indexed_db_put("hashtag_id",{
+					type: "hashtag_id",
+					key: `hashtag_id:${hashtag}`,
+					hashtag,
+				});
+				this.default_executor(promise);
+			} break;
 			case "video:normal": {
 				let {v}=value;
 				let promise=this.indexed_db_put("video_id",{
-					key: `video_id:normal:${v}`,
 					base: "video_id",
 					type: "video_id:normal",
+					key: `video_id:normal:${v}`,
 					v,
 				});
 				this.default_executor(promise);
@@ -2322,10 +2331,9 @@ class ServiceMethods extends ServiceData {
 				}
 			} break;
 			case "hashtag": {
-				let [,ht,...u]=p;
+				let [,hashtag,...u]=p;
 				if(u.length===0) {
-					let promise=this.indexed_db_put("hashtag_id",{key: `hashtag_id:${ht}`,type: "hashtag_id",hashtag: ht});
-					this.default_executor(promise);
+					this.G_UrlInfo({type: "hashtag",hashtag});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
