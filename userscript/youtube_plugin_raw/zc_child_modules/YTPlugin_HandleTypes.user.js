@@ -3245,11 +3245,23 @@ class HandleTypes extends ServiceMethods {
 					case "": break;
 				}
 			} break;
-			case "video_referral": debugger; break;
-			case "channel_id": debugger; break;
-			case "video": debugger; break;
+			case "video_referral": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				x;
+				debugger;
+			} break;
+			case "channel_id": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				x;
+				debugger;
+			} break;
+			case "video": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				x;
+				debugger;
+			} break;
 			case "browse_id": {
-				if(!this.is_UrlInfoPart1(x,"browse_id")) throw 1;
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				let {raw_id}=x;
 				if(raw_id==="VLLL") {debugger; return;}
 				if(raw_id==="VLWL") {debugger; return;}
@@ -3263,7 +3275,7 @@ class HandleTypes extends ServiceMethods {
 				debugger;
 			} break;
 			case "playlist_id": {
-				if(!this.is_UrlInfoPart1(x,"playlist_id")) throw 1;
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				let {raw_id}=x;
 				if(raw_id==="LL") {debugger; return;}
 				if(raw_id==="WL") {debugger; return;}
