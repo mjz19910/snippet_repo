@@ -2407,7 +2407,7 @@ class ServiceMethods extends ServiceData {
 				if(this.str_is_search(y1)) debugger;
 				let a2=split_string_once(y1,"/");
 				if(a2.length!==1) debugger;
-				console.log(`${cf}.a2`,a2);
+				console.log(`${cf}.user.a2`,a2);
 			} break;
 			case "c": {
 				if(a1.length!==2) debugger;
