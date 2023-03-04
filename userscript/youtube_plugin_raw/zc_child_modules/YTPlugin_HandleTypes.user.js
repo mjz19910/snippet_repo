@@ -2208,8 +2208,8 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
-	/** @private @arg {"P_invalidation_continuation"|"P_timed_continuation_data"|"PR_continuation_params"} cf @arg {PR_continuation_params} x */
-	PR_continuation_params(cf,x) {
+	/** @private @arg {"P_invalidation_continuation"|"P_timed_continuation_data"|"PR_continuation_params"} [cf] @arg {PR_continuation_params} x */
+	PR_continuation_params(x,cf="PR_continuation_params") {
 		if(0x6b7c87f in x) {
 			const {0x6b7c87f: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 			this.PD_timed_continuation(this.T_VW(n));
@@ -2228,9 +2228,9 @@ class HandleTypes extends ServiceMethods {
 		this.h_gen_keys(cf,x,x);
 	}
 	/** @private @arg {P_invalidation_continuation} x */
-	P_invalidation_continuation(x) {this.PR_continuation_params("P_invalidation_continuation",x);}
+	P_invalidation_continuation(x) {this.PR_continuation_params(x,"P_invalidation_continuation");}
 	/** @private @arg {P_timed_continuation_data} x */
-	P_timed_continuation_data(x) {this.PR_continuation_params("P_timed_continuation_data",x);}
+	P_timed_continuation_data(x) {this.PR_continuation_params(x,"P_timed_continuation_data");}
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
@@ -2966,7 +2966,7 @@ class HandleTypes extends ServiceMethods {
 			case "continuation_request.browse.token": this.PR_continuation_request_browse_token(as_any(x)); break;
 			case "continuation_request.reel_watch_sequence.token": this.P_continuation_request_reel_watch_sequence_token(as_any(x)); break;
 			case "continuation_request.watch_next.token": this.P_continuation_request_watch_next_token(as_any(x)); break;
-			case "continuation.params": this.PR_continuation_params("PR_continuation_params",as_any(x)); break;
+			case "continuation.params": this.PR_continuation_params(as_any(x)); break;
 			case "create_backstage_post.params": this.P_create_backstage_post_params(as_any(x)); break;
 			case "create_comment.params": this.P_create_comment_params(as_any(x)); break;
 			case "create_playlist.params": this.P_create_playlist_params(as_any(x)); break;
