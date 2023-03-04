@@ -8,7 +8,7 @@ type Y_PutBoxedArgs=
 	|["save_id",number]
 	|["string",string,make_item_group<string>]
 	|["video_id",DI_VideoId]
-	|["browse_id", "FE", DI_BrowseId_FE]
+	|["browse_id","FE",DI_BrowseId_FE]
 	|["video_time",DI_VideoTime]
 	|["playlist_id",DI_G_Playlist]
 	|["channel_id",DI_ChannelUrl]
@@ -16,6 +16,7 @@ type Y_PutBoxedArgs=
 	|["hashtag_id",DI_HashtagId]
 	|["user_id",DI_UserId]
 	|["browse_id",DI_G_BrowseId]
+	|["browse_id","FE",{type: "browse_id",tag: "FE",info_arr: [{raw_id: G_BrowseIdStr_FE;},{id: D_BrowseEndpointPages;}];}]
 	;
 ;
 async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {

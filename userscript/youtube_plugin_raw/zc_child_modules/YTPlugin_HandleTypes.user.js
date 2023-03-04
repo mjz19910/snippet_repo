@@ -3218,38 +3218,37 @@ class HandleTypes extends ServiceMethods {
 				}
 				if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"FE"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "FE",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
 				}
 				if(this.str_starts_with(raw_id,"SP")) {
 					let [,id]=split_string_once(raw_id,"SP");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"SP"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "SP",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
 				}
 				if(this.str_starts_with(raw_id,"MP")) {
 					let [,id]=split_string_once(raw_id,"MP");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"MP"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "MP",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
 				}
 				if(this.str_starts_with(raw_id,"VL")) {
 					let [,id]=split_string_once(raw_id,"VL");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"VL"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "VL",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
 				}
-				let box_res=this.put_boxed_id(...args);
-				this.execute_promise_def((async () => (await box_res).ret)());
+				debugger;
 			} break;
 			case "playlist_id": {
 				const {info_arr: [{raw_id}]}=x;

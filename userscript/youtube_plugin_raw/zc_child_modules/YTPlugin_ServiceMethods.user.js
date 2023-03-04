@@ -1515,8 +1515,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {DU_ChannelId} raw_id */
 	channelId(raw_id) {
-		if(this.id_cache.has(x)) return;
-		this.id_cache.add(x);
+		if(this.id_cache.has(raw_id)) return;
+		this.id_cache.add(raw_id);
 		this.ht.D_RawUrlFromTag("raw","channel_id",raw_id);
 	}
 	/** @protected @arg {D_UserIdStr} raw_id */
