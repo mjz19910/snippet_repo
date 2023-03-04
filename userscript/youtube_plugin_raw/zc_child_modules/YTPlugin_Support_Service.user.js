@@ -2177,7 +2177,7 @@ class Support_EventInput extends ServiceMethods {
 	RS_Reel(x) {
 		const cf="RS_Reel";
 		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_ReelPlayerOverlay(overlay);
+		this.ht.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
 		this.R_DesktopTopbar(desktopTopbar);
@@ -2305,7 +2305,7 @@ class Support_VE37414 extends ServiceMethods {
 		this.t(videoId,this.videoId);
 		this.params("reel.player_params",playerParams);
 		this.t(thumbnail,this.D_Thumbnail);
-		this.R_ReelPlayerOverlay(overlay);
+		this.ht.R_ReelPlayerOverlay(overlay);
 		this.params("reel.params",params);
 		this.t(loggingContext,this.D_LoggingContext);
 		this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
@@ -4065,6 +4065,55 @@ class Support_Renderer extends ServiceMethods {
 	}
 	/** @private @arg {R_SimpleCardButton} x */
 	R_SimpleCardButton(x) {this.H_("simpleCardButtonRenderer",x,this.g);}
+	/** @use_import D_ReelPlayerOverlay @public @arg {R_ReelPlayerHeader} x */
+	R_ReelPlayerHeader(x) {this.H_("reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
+	/** @private @arg {D_ReelPlayerHeader} x */
+	D_ReelPlayerHeader(x) {
+		const cf="D_ReelPlayerHeader";
+		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(reelTitleText);
+		this.G_Text(timestampText);
+		this.E_VE3611(channelNavigationEndpoint);
+		this.G_Text(channelTitleText);
+		this.D_Thumbnail(channelThumbnail);
+		this.trackingParams(trackingParams);
+		this.D_Accessibility(accessibility);
+	}
+	/** @use_import D_ReelPlayerOverlay @public @arg {R_ReelMultimixAttributionLabel} x */
+	R_ReelMultimixAttributionLabel(x) {this.H_("reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
+	/** @private @arg {D_ReelMultimixAttributionLabel} x */
+	D_ReelMultimixAttributionLabel(x) {
+		const cf="D_ReelMultimixAttributionLabel";
+		const {icon,title,command,a11yLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.T_Icon(cf,icon);
+		this.G_Text(title);
+		if(!command.watchEndpoint) debugger;
+		this.E_Watch(command);
+		this.a_primitive_str(a11yLabel);
+		this.trackingParams(trackingParams);
+	}
+	/** @use_import D_ReelPlayerOverlay @public @arg {R_PivotButton} x */
+	R_PivotButton(x) {this.H_("pivotButtonRenderer",x,this.D_PivotButton);}
+	/** @private @arg {D_PivotButton} x */
+	D_PivotButton(x) {
+		const cf="D_PivotButton";
+		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,backgroundColor,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(thumbnail,this.D_Thumbnail);
+		this.t(onClickCommand,x => {
+			if("addToToastAction" in x) return this.A_AddToToast(x);
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			x;
+		});
+		if(trackingParams) this.trackingParams(trackingParams);
+		this.t(contentDescription,this.G_Text);
+		this.t(soundAttributionTitle,this.G_Text);
+		this.t(backgroundColor,x => {
+			switch(x) {
+				default: debugger; break;
+				case "THEME_ATTRIBUTE_OVERLAY_BACKGROUND_MEDIUM":
+			}
+		});
+	}
 	//#endregion
 }
 export_(exports => {exports.Support_Renderer=Support_Renderer;});

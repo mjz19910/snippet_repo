@@ -963,69 +963,10 @@ class ServiceMethods extends ServiceData {
 	R_LikeButton(x) {this.H_("likeButtonRenderer",x,this.D_LikeButton);}
 	/** @protected @arg {R_Hint} x */
 	R_Hint(x) {this.H_("hintRenderer",x,this.D_Hint);}
-	/** @protected @arg {R_ReelPlayerOverlay} x */
-	R_ReelPlayerOverlay(x) {this.H_("reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
 	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x */
 	wg(_l,x) {
 		/** @arg {typeof x} y */
 		return y => this.cq(x,y);
-	}
-	/** @private @arg {D_ReelPlayerOverlay} x */
-	D_ReelPlayerOverlay(x) {
-		const cf="D_ReelPlayerOverlay";
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,...u}=this.s(cf,x);/*#destructure_partial*/
-		this.t(likeButton,this.R_LikeButton);
-		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
-		this.t(menu,this.R_Menu);
-		this.t(nextItemButton,this.R_Button);
-		this.t(prevItemButton,this.R_Button);
-		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.t(viewCommentsButton,this.R_Button);
-		this.t(videoInteractions,this.g);
-		const {trackingParams,reelPlayerNavigationModel,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=u; this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		{const x2=reelPlayerNavigationModel; this.t(x2,this.wg(x2,"REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
-		this.t(shareButton,this.R_Button);
-		this.t(pivotButton,this.R_PivotButton);
-		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
-		this.t(badge,this.RMD_Badge);
-	}
-	/** @private @arg {R_ReelPlayerHeader} x */
-	R_ReelPlayerHeader(x) {this.H_("reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
-	/** @private @arg {D_ReelPlayerHeader} x */
-	D_ReelPlayerHeader(x) {
-		const cf="D_ReelPlayerHeader";
-		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(reelTitleText);
-		this.G_Text(timestampText);
-		this.E_VE3611(channelNavigationEndpoint);
-		this.G_Text(channelTitleText);
-		this.D_Thumbnail(channelThumbnail);
-		this.trackingParams(trackingParams);
-		this.D_Accessibility(accessibility);
-	}
-	/** @private @arg {R_PivotButton} x */
-	R_PivotButton(x) {this.H_("pivotButtonRenderer",x,this.D_PivotButton);}
-	/** @private @arg {D_PivotButton} x */
-	D_PivotButton(x) {
-		const cf="D_PivotButton";
-		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,backgroundColor,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(thumbnail,this.D_Thumbnail);
-		this.t(onClickCommand,x => {
-			if("addToToastAction" in x) return this.A_AddToToast(x);
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			x;
-		});
-		if(trackingParams) this.trackingParams(trackingParams);
-		this.t(contentDescription,this.G_Text);
-		this.t(soundAttributionTitle,this.G_Text);
-		this.t(backgroundColor,x => {
-			switch(x) {
-				default: debugger; break;
-				case "THEME_ATTRIBUTE_OVERLAY_BACKGROUND_MEDIUM":
-			}
-		});
 	}
 	/** @protected @arg {R_Button} x */
 	R_Button(x) {this.H_("buttonRenderer",x,this.D_Button);}
@@ -1828,19 +1769,6 @@ class ServiceMethods extends ServiceData {
 			if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 			debugger;
 		});
-	}
-	/** @private @arg {R_ReelMultimixAttributionLabel} x */
-	R_ReelMultimixAttributionLabel(x) {this.H_("reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
-	/** @private @arg {D_ReelMultimixAttributionLabel} x */
-	D_ReelMultimixAttributionLabel(x) {
-		const cf="D_ReelMultimixAttributionLabel";
-		const {icon,title,command,a11yLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.T_Icon(cf,icon);
-		this.G_Text(title);
-		if(!command.watchEndpoint) debugger;
-		this.E_Watch(command);
-		this.a_primitive_str(a11yLabel);
-		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
 	R_WatchEndpointMusicConfig(x) {this.H_("watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}

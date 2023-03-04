@@ -2307,7 +2307,7 @@ class BaseService extends BaseServicePrivate {
 	/** @public @template {{}} T @arg {({} extends T?T_DistributedKeysOf<T> extends []?T:never:never)|null|undefined} x */
 	tg(x) {this.t(x,this.g);}
 	// takes nullish (as None), returns null (as None)
-	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f */
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f */
 	t(x,f) {if(x==null) return null; return f.call(this,x);}
 	/** @protected @template U @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>U} f */
 	tz(x,f) {if(x==null) return null; return this.z(x,f);}
