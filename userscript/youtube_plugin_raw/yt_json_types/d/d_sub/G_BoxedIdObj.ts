@@ -41,5 +41,11 @@ type G_BoxedIdObj=
 		key: `boxed_id:browse_id:FE:${D_BrowseEndpointPages}`;
 		value: DI_BrowseId_FE;
 	}
+	|{
+		type: "boxed_id";
+		tag: "channel_id:UC";
+		key: `boxed_id:channel_id:UC:${string}`;
+		value: DI_ChannelUrl;
+	}
 	;
 ;
