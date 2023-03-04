@@ -10,10 +10,20 @@ type GU_VE3611_Url=
 type DU_RadioId_MyMix=`RDMM${string}`;
 type DU_RadioId=`RD${string}`;
 type DU_RadioId_ChannelMix=`RDCM${DU_ChannelId}`;
-type GU_RadioId=DU_RadioId|DU_RadioId_MyMix|DU_RadioId_ChannelMix;
+type DU_Playlist_UserUploads=`UU${string}`;
+type DU_PlaylistId=`PL${string}`;
 // cspell:ignore RDCMUC
-type GU_PlaylistId="WL"|"LL"|GU_PlaylistUserUploadsId|D_PlaylistIdStr|GU_RadioId;
-type GU_VE5754_BrowseId="VLWL"|"VLLL"|GU_VE5754_PlaylistBrowseId;
+type GU_PlaylistId=
+	|"WL"|"LL"
+	|DU_Playlist_UserUploads
+	|DU_PlaylistId
+	|DU_RadioId
+	|DU_RadioId_MyMix
+	|DU_RadioId_ChannelMix
+	;
+;
+type DU_BrowseId_Playlist=`VL${DU_PlaylistId}`;
+type GU_VE5754_BrowseId="VLWL"|"VLLL"|DU_BrowseId_Playlist;
 type GU_VE6827_Id=
 	|"FEguide_builder"
 	|"FEhashtag"

@@ -39,12 +39,11 @@ type D_TargetIdStr=
 ;
 type D_PlaylistSelfId="WL"|"LL";
 type D_PlaylistIdTypeBase="RDMM"|"RD"|"PL"|"UU";
-type GU_PlaylistUserUploadsId=`UU${string}`;
 type SD_PlaylistId=
 	|`RD${string}`
 	|`RDMM${string}`
 	|`RDGM${string}`
-	|GU_PlaylistUserUploadsId
+	|DU_Playlist_UserUploads
 	|GU_PlaylistId
 	|"WL"
 	|"LL"
@@ -1291,7 +1290,7 @@ type D_GuideEntry=
 	;
 ;
 //#endregion
-type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|D_PlaylistIdStr;};
+type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|DU_PlaylistId;};
 // COMPLETED: #13
 type D_FeedNudge={
 	lightIconImage: D_Thumbnail;

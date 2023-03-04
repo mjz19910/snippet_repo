@@ -28,7 +28,7 @@ type DE_VE3611={
 };
 type DE_VE3854=DE_VE<"FEwhat_to_watch">;
 type DE_VE5754=DE_VE<GU_VE5754_BrowseId>|{
-	browseId: GU_VE5754_PlaylistBrowseId;
+	browseId: DU_BrowseId_Playlist;
 	canonicalBaseUrl: `/playlist?list=PL${string}`;
 };
 type DE_VE6827={
