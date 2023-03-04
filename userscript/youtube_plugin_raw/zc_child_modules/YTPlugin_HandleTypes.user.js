@@ -1764,12 +1764,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
-		const [sec,id]=x; if(sec!=="shorts") debugger;
-		this.indexed_db_put("video_id",{
-			key: `video_id:shorts:${id}`,
-			base: "video_id",
-			type: "video_id:shorts",v: id
-		});
+		const [sec,v]=x; if(sec!=="shorts") debugger;
+		this.G_UrlInfo({type: "video:short",v});
 	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
@@ -1795,9 +1791,9 @@ class HandleTypes extends ServiceMethods {
 			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
-				case "v": this.G_UrlInfoItem({type: "video",id: res[1]}); break;
+				case "v": this.G_UrlInfo({type: "video",id: res[1]}); break;
 				case "list": this.parse_guide_entry_id(res[1]); break;
-				case "rv": this.G_UrlInfoItem({type: "video-referral",id: res[1]}); break;
+				case "rv": this.G_UrlInfo({type: "video-referral",id: res[1]}); break;
 				case "pp": {
 					if(root==="R_WatchPage_VE3832") {
 						const [,playerParams]=res;
@@ -1812,8 +1808,8 @@ class HandleTypes extends ServiceMethods {
 					this.cache_playlist_index.push(res[1]);
 					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
 				} break;
-				case "t": this.G_UrlInfoItem({type: "video-referral",id: res[1]}); break;
-				case "playnext": this.G_UrlInfoItem({type: "play-next",value: res[1]}); break;
+				case "t": this.G_UrlInfo({type: "video-referral",id: res[1]}); break;
+				case "playnext": this.G_UrlInfo({type: "play-next",value: res[1]}); break;
 				default: res[0]===""; debugger;
 			}
 		}

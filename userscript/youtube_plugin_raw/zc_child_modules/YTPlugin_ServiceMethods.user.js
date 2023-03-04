@@ -1506,7 +1506,7 @@ class ServiceMethods extends ServiceData {
 					this.channelId(id);
 					let channel_id=split_string_once(id,"UC")[1];
 					this.save_next_char("playlistId.RDCM.UC",channel_id);
-					this.G_UrlInfoItem({
+					this.G_UrlInfo({
 						type: "playlist:2:RDCM:UC",
 						id_info: {
 							type: "UC",
@@ -1526,7 +1526,7 @@ class ServiceMethods extends ServiceData {
 			if(this.str_starts_with_rx("RDMM",raw_id)) {
 				let [,id]=split_string_once(raw_id,"RDMM");
 				this.save_next_char("playlistId.radio_my_mix",id);
-				this.G_UrlInfoItem({type: "playlist:2:RDMM",id,raw_id});
+				this.G_UrlInfo({type: "playlist:2:RDMM",id,raw_id});
 				// 4 [RDMM] + 11 [VideoId]
 				if(raw_id.length===15) return;
 				console.log("[playlistId.radio_my_mix.length]",raw_id.length);
@@ -1536,7 +1536,7 @@ class ServiceMethods extends ServiceData {
 				if(this.str_starts_with_rx("RDGMEM",raw_id)) {
 					let [,id]=split_string_once(raw_id,"RDGM");
 					let em_id=split_string_once(id,"EM")[1];
-					this.G_UrlInfoItem({
+					this.G_UrlInfo({
 						type: "playlist:2:RDGM:EM",
 						id_info: {
 							type: "EM",
@@ -1557,7 +1557,7 @@ class ServiceMethods extends ServiceData {
 				return;
 			}
 			let [,id]=split_string_once(raw_id,"RD");
-			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id});
+			this.G_UrlInfo({type: "playlist:2:RD",id,raw_id});
 			this.save_next_char("playlistId.radio",id);
 			// 2 [RD] + 11 [VideoId]
 			if(raw_id.length===13) return;
@@ -1566,7 +1566,7 @@ class ServiceMethods extends ServiceData {
 		}
 		if(this.str_starts_with_rx("PL",raw_id)) {
 			let [,id]=split_string_once(raw_id,"PL");
-			this.G_UrlInfoItem({type: "playlist:3:PL",id,raw_id});
+			this.G_UrlInfo({type: "playlist:3:PL",id,raw_id});
 			this.save_next_char("playlistId.playlist",id);
 			// 2 [PL] + 16 [PlaylistId]
 			if(raw_id.length===18) return;
@@ -1578,7 +1578,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx("UU",raw_id)) {
 			let [,id]=split_string_once(raw_id,"UU");
 			this.save_next_char("playlistId.uploads_playlist",id);
-			this.G_UrlInfoItem({type: "playlist:4:UU",id,raw_id});
+			this.G_UrlInfo({type: "playlist:4:UU",id,raw_id});
 			// 2 [UU] + 2 [UC]? + 22 [ChannelId]
 			if(raw_id.length===26) return;
 			console.log("[playlistId.uploads_playlist.length]",raw_id.length);
@@ -1592,8 +1592,8 @@ class ServiceMethods extends ServiceData {
 				console.log("[maybe_parse_id] [playlistId_new_id]",raw_id);
 				raw_id===""; debugger;
 			} break;
-			case "LL": return this.G_UrlInfoItem({type: "playlist:1:LL",id: raw_id});
-			case "WL": return this.G_UrlInfoItem({type: "playlist:1:WL",id: raw_id});
+			case "LL": return this.G_UrlInfo({type: "playlist:1:LL",id: raw_id});
+			case "WL": return this.G_UrlInfo({type: "playlist:1:WL",id: raw_id});
 		}
 	}
 	/** @protected @arg {string} x */
@@ -1873,76 +1873,114 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return true;
 		}
 	}
+	/** @template T @arg {Promise<T>} x */
+	default_executor(x) {
+		x.then(x => {
+			console.log("[promise_resolved_with]",x);
+		},x => {
+			console.log("[promise_rejected_with]",x);
+		});
+	}
 	/** @public @arg {G_UrlInfo} value */
-	G_UrlInfoItem(value) {
+	G_UrlInfo(value) {
+		/** @template T @arg {{type:T}} x */
+		function get_type(x) {return x.type;}
 		switch(value.type) {
-			default: value===""; debugger; break;
+			default: get_type(value)===""; debugger; break;
+			case "video:normal": {
+				let {v}=value;
+				let promise=this.indexed_db_put("video_id",{
+					key: `video_id:normal:${v}`,
+					base: "video_id",
+					type: "video_id:normal",
+					v,
+				});
+				this.default_executor(promise);
+			} break;
+			case "video:short": {
+				let {v}=value;
+				let promise=this.indexed_db_put("video_id",{
+					key: `video_id:shorts:${v}`,
+					base: "video_id",
+					type: "video_id:shorts",
+					v,
+				});
+				this.default_executor(promise);
+			} break;
 			case "user_id": {
 				let {raw_id}=value;
-				this.indexed_db_put("user_id",{
+				let promise=this.indexed_db_put("user_id",{
 					key: `user_id:${raw_id}`,
 					type: "user_id",
 					id: raw_id,
 				});
+				this.default_executor(promise);
 			} break;
 			case "channel_id:UC": {
 				let {raw_id,id}=value;
-				this.indexed_db_put("channel_id",{
+				let promise=this.indexed_db_put("channel_id",{
 					key: `channel_id:UC:${id}`,
 					base: "channel_id",
 					type: "channel_id:UC",
 					id,raw_id,
 				});
+				this.default_executor(promise);
 			} break;
 			case "play-next": value; break;
 			case "browse_id:VL": {
 				const {type,id,raw_id}=value;
-				this.indexed_db_put("browse_id",{
+				let promise=this.indexed_db_put("browse_id",{
 					key: `browse_id:VL:${id}`,
 					base: "browse_id",
 					type,id,raw_id
 				});
+				this.default_executor(promise);
 			} break;
 			case "playlist:2:RDCM:UC": {
 				const {id,id_info,raw_id}=value;
-				this.indexed_db_put("playlist_id",{
+				let promise=this.indexed_db_put("playlist_id",{
 					key: `playlist_id:RDCM:UC:${id_info.id}`,
 					base: "playlist_id",
 					type: "playlist_id:RDCM",
 					id_info,
 					id,raw_id,
 				});
+				this.default_executor(promise);
 				if(!this.str_starts_with_rx("UC",id)) debugger;
 				this.D_ChannelId(id);
 			} break;
 			case "playlist:2:RDGM:EM": {
 				const {id,id_info,raw_id}=value;
-				this.indexed_db_put("playlist_id",{
+				let promise=this.indexed_db_put("playlist_id",{
 					key: `playlist_id:RDGM:EM:${id_info.id}`,
 					base: "playlist_id",
 					type: "playlist_id:RDGM",
 					id_info,
 					id,raw_id,
 				});
+				this.default_executor(promise);
 			} break;
 			case "playlist:1:LL": case "playlist:1:WL": {
 				const {id}=value;
-				const oo={
-					/** @type {`playlist_id:self:${typeof id}`} */
-					key: `playlist_id:self:${id}`,
-					/** @type {"playlist_id"} */
+				let promise=this.indexed_db_put("playlist_id",{
 					base: "playlist_id",
-					/** @type {"playlist_id:self"} */
 					type: "playlist_id:self",
+					key: `playlist_id:self:${id}`,
 					id,
-				};
-				this.indexed_db_put("playlist_id",oo);
+				});
+				this.default_executor(promise);
 			} break;
 			case "playlist:2:RDMM": case "playlist:2:RD":
 			case "playlist:4:UU": case "playlist:3:PL": {
 				const {type,id,raw_id}=value;
 				let type_2=split_string(type,":")[2];
-				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,base: "playlist_id",type: `playlist_id:${type_2}`,id,raw_id});
+				let promise=this.indexed_db_put("playlist_id",{
+					base: "playlist_id",
+					type: `playlist_id:${type_2}`,
+					key: `playlist_id:${type_2}:${id}`,
+					id,raw_id,
+				});
+				this.default_executor(promise);
 				let is_critical=this.get_playlist_url_info_critical(value);
 				this.log_playlist_id(value,is_critical);
 			} break;
@@ -1953,7 +1991,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {`VLPL${string}`} x */
 	DU_VE5754_BrowseId_VL(x) {
 		const [a,id]=split_string_once(x,"VL"); if(a!=="") debugger;
-		this.G_UrlInfoItem({type: "browse_id:VL",id,raw_id: x});
+		this.G_UrlInfo({type: "browse_id:VL",id,raw_id: x});
 		this.parse_guide_entry_id(id);
 	}
 	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} raw_id @returns {void} */
@@ -2286,7 +2324,8 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,ht,...u]=p;
 				if(u.length===0) {
-					this.indexed_db_put("hashtag_id",{key: `hashtag_id:${ht}`,type: "hashtag_id",hashtag: ht});
+					let promise=this.indexed_db_put("hashtag_id",{key: `hashtag_id:${ht}`,type: "hashtag_id",hashtag: ht});
+					this.default_executor(promise);
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -2625,7 +2664,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,base: "video_id",type: "video_id:normal",v: x});
+		this.G_UrlInfo({type: "video:normal",v: x});
 	}
 	/** @type {any[]} */
 	log_list=[];
@@ -2678,14 +2717,14 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_ChannelIdStr} x */
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */
-	userId(x) {this.G_UrlInfoItem({type: "user_id",raw_id: x});}
+	userId(x) {this.G_UrlInfo({type: "user_id",raw_id: x});}
 	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
 		const cf="D_ChannelId"; this.k(cf,raw_id);
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			let [,user_id]=split_string_once(raw_id,"UC");
-			this.G_UrlInfoItem({type: "channel_id:UC",id: user_id,raw_id});
+			this.G_UrlInfo({type: "channel_id:UC",id: user_id,raw_id});
 			this.userId(user_id);
 			if(raw_id.length===24) return;
 			console.log("[channelId.length]",raw_id.length);

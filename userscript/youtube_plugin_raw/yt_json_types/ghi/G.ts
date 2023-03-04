@@ -424,6 +424,10 @@ type D_UserIdInfo={
 	type: "user_id";
 	raw_id: D_UserIdStr;
 };
+type D_VideoIdNormal={
+	type: "video:normal";
+	v: string;
+};
 type G_UrlInfo=
 	|D_BrowseIdUrlInfo
 	|D_PlayNextUrlInfo
@@ -432,6 +436,11 @@ type G_UrlInfo=
 	|D_ChannelUrlInfo
 	|G_PlaylistUrlInfo
 	|D_UserIdInfo
+	|D_VideoIdNormal
+	|{
+		type: "video:short";
+		v: string;
+	};
 	;
 ;
 type G_WatchNext=
