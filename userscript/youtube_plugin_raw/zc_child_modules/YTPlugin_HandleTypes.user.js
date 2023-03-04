@@ -3266,11 +3266,7 @@ class HandleTypes extends ServiceMethods {
 			//"channel_id" | "browse_id" | "video_referral" | "video_time"
 			case "video_time": {
 				let {raw_value}=value;
-				let promise=this.indexed_db_put("boxed_id",{
-					type: "boxed_id:video_time",
-					key: `boxed_id:video_time:${raw_value}`,
-					value: raw_value,
-				});
+				let promise=this.put_boxed_id("video_time",raw_value);
 				this.execute_promise_def(promise);
 			} break;
 			case "video_referral": {

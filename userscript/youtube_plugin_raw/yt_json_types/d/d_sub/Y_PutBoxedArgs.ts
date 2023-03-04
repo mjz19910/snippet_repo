@@ -5,5 +5,6 @@ type Y_PutBoxedArgs=
 	|["string",string,make_item_group<string>]
 	|["keys",string,make_item_group<string|number>]
 	|["boolean",string,make_item_group<boolean>]
+	|["video_time",`${number}s`]
 	;
 ;

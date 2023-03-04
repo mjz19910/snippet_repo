@@ -248,87 +248,95 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @arg {Y_PutBoxedArgs} args */
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();
 			case "bigint": {
 				let [a,b,value]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
+				return {args,ret};
 			}
 			case "boolean": {
 				let [a,b,value]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
+				return {args,ret};
 			}
 			case "number": {
 				let [a,b,value]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
+				return {args,ret};
 			}
 			case "string": {
 				let [a,b,value]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
+				return {args,ret};
 			}
 			case "keys": {
 				let [a,b,value]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
+				return {args,ret};
 			}
 			case "root_visual_element": {
 				let [a,b,value]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
+				return {args,ret};
 			}
 			case "load_id": {
 				let [mode,id]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:a:${mode}`,
 					type: mode,
 					base: "boxed_id",
 					id,
 				},version);
+				return {args,ret};
 			}
 			case "save_id": {
 				let [mode,id]=args;
-				return this.put_box({
+				let ret=this.put_box({
 					key: `boxed_id:a:${mode}`,
 					type: mode,
 					base: "boxed_id",
 					id,
 				},version);
+				return {args,ret};
 			}
 		}
 	}
