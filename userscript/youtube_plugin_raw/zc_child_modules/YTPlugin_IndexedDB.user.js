@@ -266,6 +266,67 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version @template {Y_PutBoxedArgs_3} T @arg {T} args */
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
+	/** @arg {number} version @template {["browse_id", "FE", DI_BrowseId_FE] | ["browse_id", "SP", DI_BrowseId_SP] | ["browse_id", "MP", DI_BrowseId_MP] | ["browse_id", "VL", DI_BrowseId_VL]} T @arg {T} args */
+	put_boxed_pl(version,...args) {
+		switch(args[1]) {
+			default: args[1]===""; throw new Error("Unreachable");
+			case "MP": {
+				let [tag,id,value]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag: `${tag}:${id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}:_:${value.info_arr[3].id}`,
+					value,
+				},version);
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
+			}
+			case "FE": {
+				let [tag,id,value]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag: `${tag}:${id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+					value,
+				},version);
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
+			}
+			case "VL": {
+				let [type,tag,value]=args;
+				switch(value.tag) {
+					case "VL:LL": break;
+					case "VL:PL": break;
+					case "VL:WL": break;
+				};
+				const {info_arr: [{raw_id}]}=value;
+				let [,id]=split_string_once(raw_id,"VL");
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag: `${type}:${tag}`,
+					key: `boxed_id:${type}:${tag}:${id}`,
+					value,
+				},version);
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
+			}
+			case "SP": {
+				let [tag,id,value]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag: `${tag}:${id}`,
+					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
+					value,
+				},version);
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
+			}
+		}
+	}
 	/** @arg {number} version @template {Y_PutBoxedArgs_3} T @arg {T} args */
 	put_boxed_id_3(version,...args) {
 		switch(args[0]) {
@@ -316,59 +377,7 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "browse_id": {
-				switch(args[1]) {
-					default: args[1]===""; throw new Error("Unreachable");
-					case "MP": {
-						let [tag,id,value]=args;
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}:_:${value.info_arr[3].id}`,
-							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
-					}
-					case "FE": {
-						let [tag,id,value]=args;
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
-					}
-					case "VL": {
-						let [type,tag,value]=args;
-						const {info_arr: [{raw_id}]}=value;
-						let [,id]=split_string_once(raw_id,"VL");
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${type}:${tag}`,
-							key: `boxed_id:${type}:${tag}:${id}`,
-							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
-					}
-					case "SP": {
-						let [tag,id,value]=args;
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
-							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
-					}
-				}
+				this.put_boxed_pl(version,...args);
 			} throw new Error("Unreachable");
 			case "channel_id": {
 				let [tag,value]=args;
