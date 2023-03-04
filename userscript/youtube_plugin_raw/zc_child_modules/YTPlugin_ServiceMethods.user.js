@@ -1874,7 +1874,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @template T @arg {Promise<T>} x */
-	default_executor(x) {
+	execute_promise_def(x) {
 		x.then(x => {
 			console.log("[promise_resolved_with]",x);
 		},x => {
@@ -1894,7 +1894,7 @@ class ServiceMethods extends ServiceData {
 					key: `hashtag_id:${hashtag}`,
 					hashtag,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "video:normal": {
 				let {v}=value;
@@ -1904,7 +1904,7 @@ class ServiceMethods extends ServiceData {
 					key: `video_id:normal:${v}`,
 					v,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "video:short": {
 				let {v}=value;
@@ -1914,7 +1914,7 @@ class ServiceMethods extends ServiceData {
 					type_parts: ["video_id","shorts"],
 					v,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "user_id": {
 				let {raw_id}=value;
@@ -1923,7 +1923,7 @@ class ServiceMethods extends ServiceData {
 					type: "user_id",
 					id: raw_id,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "channel_id:UC": {
 				let {raw_id,id}=value;
@@ -1933,7 +1933,7 @@ class ServiceMethods extends ServiceData {
 					type_parts: "channel_id:UC",
 					id,raw_id,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "play-next": value; break;
 			case "browse_id:VL": {
@@ -1943,7 +1943,7 @@ class ServiceMethods extends ServiceData {
 					base: "browse_id",
 					type_parts: type,id,raw_id
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "playlist:2:RDCM:UC": {
 				const {id,id_info,raw_id}=value;
@@ -1954,7 +1954,7 @@ class ServiceMethods extends ServiceData {
 					id_info,
 					id,raw_id,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 				if(!this.str_starts_with_rx("UC",id)) debugger;
 				this.D_ChannelId(id);
 			} break;
@@ -1967,7 +1967,7 @@ class ServiceMethods extends ServiceData {
 					info_arr: [{type: "RDGM"},{type: "EM",id: id_info.id}],
 					id,raw_id,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "playlist:1:LL": case "playlist:1:WL": {
 				const {id}=value;
@@ -1977,7 +1977,7 @@ class ServiceMethods extends ServiceData {
 					key: `playlist_id:self:${id}`,
 					id,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 			} break;
 			case "playlist:2:RDMM": case "playlist:2:RD":
 			case "playlist:4:UU": case "playlist:3:PL": {
@@ -1989,7 +1989,7 @@ class ServiceMethods extends ServiceData {
 					key: `playlist_id:${type_2}:${id}`,
 					id,raw_id,
 				});
-				this.default_executor(promise);
+				this.execute_promise_def(promise);
 				let is_critical=this.get_playlist_url_info_critical(value);
 				this.log_playlist_id(value,is_critical);
 			} break;
@@ -3898,6 +3898,7 @@ class ServiceMethods extends ServiceData {
 	XP_EntityPayload(p) {
 		const [ty,k,x]=p;
 		switch(ty) {
+			default: debugger; break;
 			case "offlineabilityEntity": this.D_EY_Offlineability(x); break;
 			case "subscriptionStateEntity": this.DS_EY_Subscription(x); break;
 			case "playlistLoopStateEntity": this.DS_EY_PlaylistLoop(x); break;
@@ -3922,6 +3923,7 @@ class ServiceMethods extends ServiceData {
 		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
 		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
 		{const cn="superThanksSelectedTierEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="subscriptionNotificationStateEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
 		/** @returns {[]|[string]} */
 		const get_kl=() => {return this.get_keys_of(x);};
 		let kl=get_kl();

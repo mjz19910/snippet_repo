@@ -203,7 +203,7 @@ type RS_Settings={
 type RS_Subscribe={
 	responseContext: RC_ResponseContext;
 	actions: G_RS_Subscribe_Action[];
-	newNotificationButton: {};
+	newNotificationButton: R_SubscriptionNotificationToggleButton;
 	trackingParams: string;
 	frameworkUpdates: D_FrameworkUpdates;
 };

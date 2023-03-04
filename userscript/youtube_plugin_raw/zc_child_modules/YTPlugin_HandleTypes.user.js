@@ -1915,7 +1915,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_Subscribe";
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => this.xr.G_RS_Subscribe_Action(x));
-		this.g(newNotificationButton);
+		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}

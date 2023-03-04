@@ -19,6 +19,12 @@ type G_EY_Entity=
 	|S_EY_Subscription
 	|S_EY_TranscriptSearchBox
 	|{superThanksSelectedTierEntity: {};}
+	|{
+		subscriptionNotificationStateEntity: {
+			key: string;
+			state: "SUBSCRIPTION_NOTIFICATION_STATE_OCCASIONAL";
+		};
+	}
 	;
 ;
 

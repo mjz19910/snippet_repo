@@ -21,7 +21,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 if(window.__yt_plugin_log_imports__) console.log("Load Parser Service");
 class ParserService extends BaseService {
 	log_playlist_parse=false;
-	/** @api @public @arg {G_NavFinishDetail['pageType']} x */
+	/** @api @public @arg {S_PageTypeStr} x */
 	parse_page_type(x) {
 		switch(x) {
 			default: debugger; break;
