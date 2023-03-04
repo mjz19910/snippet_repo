@@ -2407,7 +2407,12 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
 	indexed_db_put(key,value) {return this.indexed_db.put(key,value,this.indexed_db_version);}
 	/** @template {Y_PutBoxedArgs} T @arg {T} args */
-	put_boxed_id(...args) {return this.indexed_db.put_boxed_id(this.indexed_db_version,...args);}
+	put_boxed_id(...args) {
+		/** @type {ReturnType<this["indexed_db"]["put_boxed_id"]>} */
+		let v2; function u2() {v2;} u2;
+		let ret=this.indexed_db.put_boxed_id(this.indexed_db_version,...args);
+		return ret;
+	}
 	/** @protected @arg {D_ChannelIdStr} x */
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */

@@ -250,7 +250,7 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {Y_PutBoxedRet} */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
@@ -260,8 +260,8 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
-					key: `boxed_id:${a}:${value.id}`,
-					value: value.id,
+					key: `boxed_id:${a}:${value.raw_id}`,
+					value: value,
 				},version);
 				return {args,ret};
 			}
@@ -275,7 +275,7 @@ class IndexedDBService extends BaseService {
 							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
 							value,
 						},version);
-						return {args,ret};
+						return {args: [a,value],ret};
 					}
 					case "normal": {
 						let ret=this.put_box({
@@ -284,7 +284,7 @@ class IndexedDBService extends BaseService {
 							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
 							value,
 						},version);
-						return {args,ret};
+						return {args: [a,value],ret};
 					}
 					case "short": {
 						let ret=this.put_box({
@@ -293,7 +293,7 @@ class IndexedDBService extends BaseService {
 							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
 							value,
 						},version);
-						return {args,ret};
+						return {args: [a,value],ret};
 					}
 				}
 			}
@@ -322,25 +322,89 @@ class IndexedDBService extends BaseService {
 			case "playlist_id": {
 				let [a,value]=args;
 				switch(value.type_parts.length) {
-					case 2: {
-						let ret=this.put_box({
-							type: "boxed_id",
-							tag: a,
-							extra: "any",
-							key: `boxed_id:${a}:${value.type_parts[1]}`,
-							value,
-						},version);
-						return {args,ret};
-					}
 					case 3: {
-						let ret=this.put_box({
-							type: "boxed_id",
-							tag: a,
-							extra: "any",
-							key: `boxed_id:${a}:${value.type_parts[1]}:${value.type_parts[2]}`,
-							value,
-						},version);
-						return {args,ret};
+						if(!this.is_UrlInfo_len(value,value.type_parts.length)) throw 1;
+						if(this.is_UrlInfoPartAt(value,1,"RDCM")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}:${value.type_parts[2]}:${value.info_arr[1].id}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						} else if(this.is_UrlInfoPartAt(value,1,"RDGM")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						}
+						this.g(value);
+						throw 1;
+					}
+					case 2: {
+						if(!this.is_UrlInfo_len(value,value.type_parts.length)) throw 1;
+						if(this.is_UrlInfoPartAt(value,1,"LL")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						} else if(this.is_UrlInfoPartAt(value,1,"PL")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						} else if(this.is_UrlInfoPartAt(value,1,"RD")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						} else if(this.is_UrlInfoPartAt(value,1,"RDMM")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						} else if(this.is_UrlInfoPartAt(value,1,"UU")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						} else if(this.is_UrlInfoPartAt(value,1,"WL")) {
+							let ret=this.put_box({
+								type: "boxed_id",
+								tag: a,
+								extra: "any",
+								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								value,
+							},version);
+							return {args: [a,value],ret};
+						}
+						this.g(value);
+						throw 1;
 					}
 				}
 			}

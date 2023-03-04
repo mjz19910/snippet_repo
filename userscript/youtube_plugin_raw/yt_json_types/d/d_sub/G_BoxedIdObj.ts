@@ -20,7 +20,7 @@ type G_BoxedIdObj=
 		type: "boxed_id";
 		tag: "video_referral";
 		key: `boxed_id:video_referral:${string}`;
-		value: string;
+		value: D_VideoReferralUrlInfo;
 	}
 	|{
 		type: "boxed_id";
