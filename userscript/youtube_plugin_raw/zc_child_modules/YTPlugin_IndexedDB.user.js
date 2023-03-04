@@ -920,9 +920,24 @@ class IndexedDBService extends BaseService {
 							update_item=true;
 						} break;
 						// non-dynamic values
-						case "hashtag_id":
-						case "playlist_id:self":
-						case "user_id": break;
+						case "hashtag_id": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.hashtag===item_db_nt.hashtag) break;
+							update_item=true;
+						} break;
+						case "playlist_id:self": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.id===item_db_nt.id) break;
+							update_item=true;
+						} break;
+						case "user_id": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.id===item_db_nt.id) break;
+							update_item=true;
+						} break;
 					}
 				} else {
 					if("type" in item_db_nt) break x;
