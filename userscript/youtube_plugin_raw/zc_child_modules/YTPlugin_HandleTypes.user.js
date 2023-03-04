@@ -3390,6 +3390,17 @@ class HandleTypes extends ServiceMethods {
 			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",type,id);
 		}
 	}
+	/** @public @arg {R_VideoDescriptionMusicSection} x */
+	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
+	/** @private @arg {D_VideoDescriptionMusicSection} x */
+	D_VideoDescriptionMusicSection(x) {
+		const cf="D_VideoDescriptionMusicSection";
+		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(sectionTitle);
+		this.z(carouselLockups,this.R_CarouselLockup);
+		this.R_TopicLink(topicLink);
+		this.G_Text(premiumUpsellLink);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x */

@@ -2417,6 +2417,8 @@ class ServiceMethods extends ServiceData {
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */
 	userId(x) {this.ht.G_UrlInfo({type: "user_id",raw_id: x});}
+	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
+	guideEntryId(x) {this.ht.G_RawUrlInfo({type:"raw",tag:"guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
 	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
@@ -5752,8 +5754,6 @@ class ServiceMethods extends ServiceData {
 	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
 	/** @protected @arg {R_CommentThread} x */
 	R_CommentThread(x) {this.H_("commentThreadRenderer",x,this.D_CommentThread);}
-	/** @protected @arg {R_VideoDescriptionMusicSection} x */
-	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
 	/** @protected @arg {R_VideoDescriptionHeader} x */
 	R_VideoDescriptionHeader(x) {this.H_("videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
 	/** @private @arg {D_VideoDescriptionHeader} x */
@@ -5840,15 +5840,6 @@ class ServiceMethods extends ServiceData {
 	R_TopicLink(x) {this.H_("topicLinkRenderer",x,this.D_TopicLink);}
 	/** @public @arg {R_CarouselLockup} x */
 	R_CarouselLockup(x) {this.H_("carouselLockupRenderer",x,this.D_CarouselLockup);}
-	/** @private @arg {D_VideoDescriptionMusicSection} x */
-	D_VideoDescriptionMusicSection(x) {
-		const cf="D_VideoDescriptionMusicSection";
-		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(sectionTitle);
-		this.z(carouselLockups,this.R_CarouselLockup);
-		this.R_TopicLink(topicLink);
-		this.G_Text(premiumUpsellLink);
-	}
 	/** @private @arg {R_RichMetadata} x */
 	R_RichMetadata(x) {this.H_("richMetadataRenderer",x,this.D_RichMetadata);}
 	/** @private @arg {D_RichMetadata_BoxArt} x */

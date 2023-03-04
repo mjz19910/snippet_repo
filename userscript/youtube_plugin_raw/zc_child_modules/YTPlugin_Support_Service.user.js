@@ -2931,7 +2931,7 @@ class Support_Renderer extends ServiceMethods {
 	D_GuideEntryData(x) {
 		const cf="D_GuideEntryData";
 		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parse_guide_entry_id(guideEntryId);
+		this.guideEntryId(guideEntryId);
 	}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("guideSectionRenderer",x,this.D_GuideSection);}
@@ -3455,7 +3455,7 @@ class Support_Renderer extends ServiceMethods {
 		if("expandableVideoDescriptionBodyRenderer" in x) return this.ht.R_ExpandableVideoDescriptionBody(x);
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
+		if("videoDescriptionMusicSectionRenderer" in x) return this.ht.R_VideoDescriptionMusicSection(x);
 		if("videoDescriptionCourseSectionRenderer" in x) return this.R_VideoDescriptionCourseSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
