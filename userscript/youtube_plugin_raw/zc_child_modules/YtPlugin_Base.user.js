@@ -218,11 +218,11 @@ class CustomEventTarget {
 	}
 	/** @api @public @arg {CustomEventType} event */
 	dispatchEvent(event) {
-		if(event.type==="plugin-activate") {debugger; return;}
 		let msg_arr=this._events[event.type];
 		if(!msg_arr) return;
 		for(let i=0;i<msg_arr.length;i++) {
-			let cur=msg_arr[i];
+			/** @type {(this: CustomEventTarget, event: CustomEventType) => void} */
+			let cur=as(msg_arr[i]);
 			cur.call(this,event);
 		}
 	}

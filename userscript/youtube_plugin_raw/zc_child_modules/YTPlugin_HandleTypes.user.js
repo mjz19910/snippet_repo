@@ -2874,6 +2874,24 @@ class HandleTypes extends ServiceMethods {
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.PD_timed_continuation_f3(this.T_VW(v3));
 	}
+	/** @private @arg {P_f3_PD_continuation_params} x */
+	P_f3_PD_continuation_params(x) {
+		const cf="P_f3_PD_continuation_params";
+		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		console.log(`${cf}.f1`,this.T_VW(r));
+	}
+	/** @private @arg {P_PX_watch_next_token_2_f37} x */
+	P_PX_watch_next_token_2_f37(x) {
+		const cf="P_PX_watch_next_token_2_f37";
+		const {10: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		console.log(`${cf}.f10`,this.TV_Str(r));
+	}
+	/** @private @arg {P_create_reply_params} x */
+	P_create_reply_params(x) {x;}
+	/** @private @arg {P_perform_comment_action} x */
+	P_perform_comment_action(x) {x;}
+	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
+	P_notification_remove_upcoming_event_reminder_params(x) {x;}
 	//#endregion
 	//#region binary_result()
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
@@ -3194,16 +3212,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {P_f3_PD_continuation_params} x */
-	P_f3_PD_continuation_params(x) {x;}
-	/** @private @arg {P_PX_watch_next_token_2_f37} x */
-	P_PX_watch_next_token_2_f37(x) {x;}
-	/** @private @arg {P_create_reply_params} x */
-	P_create_reply_params(x) {x;}
-	/** @private @arg {P_perform_comment_action} x */
-	P_perform_comment_action(x) {x;}
-	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
-	P_notification_remove_upcoming_event_reminder_params(x) {x;}
 	//#endregion
 	//#endregion binary
 	//#endregion

@@ -66,6 +66,7 @@ type GU_VE83769_Url=
 	|GU_VE83769_Url_Redirect
 	|GU_VE83769_Url_External
 	|`https://support.google.com/youtube/answer/${number}`
+	|`https://myaccount.google.com/u/${number}/b/${bigint}/?${string}`
 	;
 ;
 type GU_VE96368_Url="/feed/subscriptions";

@@ -2163,19 +2163,22 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {Extract<GU_VE83769_Url,`https://${string}`>} x */
 	GU_Url_Obj(x) {
 		let up=this._convert_url_to_obj(x);
+		/** @template {string} T @arg {{host:T}} u */
+		function get_host(u) {return u.host;}
 		switch(up.host) {
+			case "googleads.g.doubleclick.net": return;
 			case "music.youtube.com": return this.handle_yt_music_url(up.href);
-			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
-			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
-			case "tv.youtube.com": return;
-			case "www.youtube.com": return this.GU_FullYoutubeUrl(up.href);
+			case "myaccount.google.com": return;
 			case "myactivity.google.com": return;
+			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
+			case "support.google.com": return;
+			case "tv.youtube.com": return;
 			case "www.google.com": return;
 			case "www.googleadservices.com": return;
-			case "googleads.g.doubleclick.net": return;
-			case "support.google.com": return;
+			case "www.youtube.com": return this.GU_FullYoutubeUrl(up.href);
+			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "youtube.com": return;
-			default: debugger; break;
+			default: get_host(up)===""; debugger; break;
 		}
 	}
 	/** @private @arg {GU_VE83769_Url} x */
