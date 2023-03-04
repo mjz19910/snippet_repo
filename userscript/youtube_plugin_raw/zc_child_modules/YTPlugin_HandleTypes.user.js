@@ -3347,9 +3347,17 @@ class HandleTypes extends ServiceMethods {
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
-				let px=this.make_DI_AGR_UrlInfo(x);
-				console.log(px);
-				debugger;
+				const z=this.make_DI_AGR_UrlInfo(x);
+				switch(z.tag) {
+					default: console.log("todo",z.type,z.tag); break;
+					case "FE": {
+						const {type,tag}=z;
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=[type,tag,z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} break;
+				}
 			} break;
 			case "playlist_id": {
 				let px=this.make_DI_AGR_UrlInfo(x);
