@@ -335,7 +335,7 @@ class IndexedDBService extends BaseService {
 				if(args.length===2) {
 					return;
 				}
-				let [a,b,value]=args;
+				let [tag,b,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${b}`,
