@@ -1,10 +1,12 @@
 type I_BoxedRadio_RD_MM={
+	type: "playlist_id";
+	type_parts: ["playlist_id","RD","MM"];
 	key: `playlist_id:RD:MM:${string}`;
-	base: "playlist_id";
-	type: `playlist_id:RD:MM`;
-	info: {
+	info_arr: [{
 		type: "RD";
-		id: `MM${string}`;
 		raw_id: `RDMM${string}`;
-	};
+	},{
+		type: "MM";
+		id: string;
+	}];
 };

@@ -1,7 +1,6 @@
 type I_BoxedRadio_RD={
+	type: "playlist_id";
+	type_parts: ["playlist_id","RD"];
 	key: `playlist_id:RD:${string}`;
-	base: "playlist_id";
-	type: `playlist_id:RD`;
-	id: string;
 	raw_id: `RD${string}`;
 };
