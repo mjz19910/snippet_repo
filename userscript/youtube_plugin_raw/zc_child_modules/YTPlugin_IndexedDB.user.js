@@ -262,6 +262,7 @@ class IndexedDBService extends BaseService {
 		let out=this.put_boxed_id(version,...args);
 		if(!out) {debugger; return null;}
 		let rx=await out.promise;
+		if(rx===null) return null;
 		let ret={args: out.args,ret: rx};
 		/** @arg {typeof ret} x @returns {asserts x is T_PutAwaitPromise<Y_PutBoxedRet>} */
 		function assert_assume_is(x) {x;}
