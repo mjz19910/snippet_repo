@@ -380,16 +380,44 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "playlist_id": {
-				let [tag,id,value]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				switch(args[1]) {
+					case "LL": {
+						let [,,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: "playlist_id:LL",
+							key: "boxed_id:playlist_id:LL",
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+					case "WL": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+					case "PL": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+				}
 			}
 			case "hashtag_id": {
 				let [tag,,value]=args;
