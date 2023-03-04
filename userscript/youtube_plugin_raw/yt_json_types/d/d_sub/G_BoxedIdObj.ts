@@ -44,11 +44,6 @@ type G_BoxedIdObj=
 	}
 	|{
 		type: "boxed_id";
-		tag: `browse_id:${string}`;
-		key: `boxed_id:browse_id:${string}:${string}`;
-	}
-	|{
-		type: "boxed_id";
 		tag: "browse_id:SP";
 		key: `boxed_id:browse_id:SP:${string}`;
 		value: DI_BrowseId_SP;
@@ -58,6 +53,12 @@ type G_BoxedIdObj=
 		tag: "playlist_id:LL";
 		key: "boxed_id:playlist_id:LL";
 		value: DI_Playlist_LL;
+	}
+	|{
+		type: "boxed_id";
+		tag: "playlist_id:WL";
+		key: "boxed_id:playlist_id:WL";
+		value: DI_Playlist_WL;
 	}
 	;
 ;
