@@ -44,6 +44,16 @@ type G_RawPlaylistUrlInfo=
 		type_parts: ["raw","browse_id","VL"];
 		raw_id: GU_VE5754_BrowseId;
 	}
+	|{
+		type: "raw";
+		type_parts: ["raw","playlist_id","PL"];
+		raw_id: G_PlaylistUrlInfo_PL["raw_id"];
+	}
+	|{
+		type: "raw";
+		type_parts: ["raw","playlist_id",G_PlaylistUrlInfo_UU["raw_id"]];
+		raw_id: G_PlaylistUrlInfo_UU["raw_id"];
+	}
 	;
 ;
 type G_RawUrlInfo=

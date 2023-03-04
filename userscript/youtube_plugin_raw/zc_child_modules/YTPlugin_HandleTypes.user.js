@@ -3293,17 +3293,36 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "playlist_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				if(x.raw_id==="LL") {
-					let {raw_id,type_parts: [,...type_parts]}=x;
-					this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
-					return;
+				if(this.is_UrlInfo_len(x,2)) {
+					if(x.raw_id==="LL") {
+						let {raw_id,type_parts: [,...type_parts]}=x;
+						this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
+						return;
+					}
+					if(x.raw_id==="WL") {
+						let {raw_id,type_parts: [,...type_parts]}=x;
+						this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
+						return;
+					}
+					let {raw_id}=x;
+					if(this.str_starts_with(raw_id,"RD")) {
+						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","RD"],raw_id});
+					} else if(this.str_starts_with(raw_id,"PL")) {
+						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","PL"],raw_id});
+					} else if(this.str_starts_with(raw_id,"UU")) {
+						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","UU"],raw_id});
+					} else {
+						raw_id==="";
+						debugger;
+					}
+				} else if(this.is_UrlInfoPartAt(x,2,"PL")) {
+					let {raw_id}=x;
+					raw_id;
+				} else if(this.is_UrlInfoPartAt(x,2,"RD")) {
+					let {raw_id}=x;
+					if(this.str_starts_with(raw_id,"RD")) {}
+					raw_id;
 				}
-				if(x.raw_id==="WL") {
-					let {raw_id,type_parts: [,...type_parts]}=x;
-					this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
-					return;
-				}
-				x.type_parts;
 				debugger;
 			} break;
 		}

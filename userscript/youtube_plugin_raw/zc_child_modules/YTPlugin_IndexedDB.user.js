@@ -426,6 +426,17 @@ class IndexedDBService extends BaseService {
 						this.g(value);
 						throw 1;
 					}
+					case 1: {
+						if(!this.is_UrlInfo_len(value,value.type_parts.length)) throw 1;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: a,
+							extra: "any",
+							key: `boxed_id:${a}:${value.id}`,
+							value,
+						},version);
+						return {args,promise};
+					}
 				}
 			}
 			case "hashtag_id": {
