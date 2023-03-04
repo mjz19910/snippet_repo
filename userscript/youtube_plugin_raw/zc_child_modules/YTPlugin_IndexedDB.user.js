@@ -126,7 +126,7 @@ class IndexedDBService extends BaseService {
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedUpdateId|null>} */
 	async get_id_box(key,version) {
@@ -419,8 +419,8 @@ class IndexedDBService extends BaseService {
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
-	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
-	async put(key,value,version) {
+	/** @private @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
+	async putImpl(key,value,version) {
 		if(!value) {debugger; return value;}
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
@@ -436,6 +436,21 @@ class IndexedDBService extends BaseService {
 		await this.open_db_promise;
 		this.open_db_promise=null;
 		return value;
+	}
+	log_failed=true;
+	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
+	async put(key,value,version) {
+		try {
+			let ret=await this.putImpl(key,value,version);
+			return ret;
+		} catch(e) {
+			if(this.log_failed) {
+				console.log("failed to put",e);
+				setTimeout(() => this.log_failed=true,5000);
+			}
+			this.log_failed=false;
+			return null;
+		}
 	}
 	/** @arg {number} version */
 	get_db_request(version) {

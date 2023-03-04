@@ -2763,21 +2763,8 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {string} x */
 	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
-	log_failed=true;
 	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
-	async indexed_db_put(key,value) {
-		try {
-			let ret=await this.indexed_db.put(key,value,this.indexed_db_version);
-			return ret;
-		} catch(e) {
-			if(this.log_failed) {
-				console.log("failed to put",e);
-				setTimeout(() => this.log_failed=true,5000);
-			}
-			this.log_failed=false;
-			return null;
-		}
-	}
+	indexed_db_put(key,value) {return this.indexed_db.put(key,value,this.indexed_db_version);}
 	/** @protected @arg {D_ChannelIdStr} x */
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */
