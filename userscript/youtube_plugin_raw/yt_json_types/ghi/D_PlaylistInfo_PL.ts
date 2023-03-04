@@ -1,6 +1,1 @@
-type D_PlaylistInfo_PL={
-	type: "playlist_id";
-	tag: "PL";
-	type_parts: ["playlist_id","PL"];
-	raw_id: `PL${string}`;
-};
+type D_PlaylistInfo_PL=T_UrlInfo_Join<"playlist_id",["PL"],string>;

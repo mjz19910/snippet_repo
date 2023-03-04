@@ -1,5 +1,1 @@
-type D_VideoReferralUrlInfo={
-	type: "video_referral";
-	type_parts: ["video_referral"];
-	raw_id: string;
-};
+type D_VideoReferralUrlInfo=T_UrlInfo1<"video_referral",string>;

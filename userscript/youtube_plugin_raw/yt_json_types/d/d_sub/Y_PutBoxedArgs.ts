@@ -108,13 +108,13 @@ type Y_PutBoxedRet={
 		value: D_PlaylistInfo_RD_CM_UC;
 	}>;
 }|{
-	args: ["playlist_id",D_PlaylistInfo_RD_GM];
+	args: ["playlist_id",D_PlaylistInfo_RD_GM_EM];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RDGM";
-		value: D_PlaylistInfo_RD_GM;
+		value: D_PlaylistInfo_RD_GM_EM;
 	}>;
 }|{
 	args: ["playlist_id",D_PlaylistInfo_RD_MM];

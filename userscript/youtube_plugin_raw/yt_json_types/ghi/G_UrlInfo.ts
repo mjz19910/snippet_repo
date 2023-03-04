@@ -12,7 +12,7 @@ type G_UrlInfo=
 	|D_PlaylistInfo_WL
 	|D_PlaylistInfo_RD
 	|D_PlaylistInfo_RD_CM_UC
-	|D_PlaylistInfo_RD_GM
+	|D_PlaylistInfo_RD_GM_EM
 	|D_PlaylistInfo_RD_MM
 	|D_PlaylistInfo_UU
 	|D_PlayNextUrlInfo

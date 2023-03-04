@@ -1,6 +1,1 @@
-type D_VideoIdNormal={
-	type: "video";
-	tag: "normal";
-	type_parts: ["video","normal"];
-	raw_id: string;
-};
+type D_VideoIdNormal=T_UrlInfo2<"video","normal",string>;

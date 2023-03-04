@@ -1,6 +1,1 @@
-type D_PlaylistInfo_WL={
-	type: "playlist_id";
-	tag: null;
-	type_parts: ["playlist_id"];
-	id: "WL";
-};
+type D_PlaylistInfo_WL=T_UrlInfo1<"playlist_id","WL">;
