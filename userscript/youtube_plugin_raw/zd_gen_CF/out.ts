@@ -1074,6 +1074,7 @@ export namespace Gen {
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "subscribe_button.entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "subscription_state.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "timed_continuation.data";}
+		|{n: "P_ParamParse"; t: P_ParamParse; v: "transcript.params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "transcript_track_selection.entity.key";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "transcript_track_selection.serialized_params";}
 		|{n: "P_ParamParse"; t: P_ParamParse; v: "trending.bp";}
