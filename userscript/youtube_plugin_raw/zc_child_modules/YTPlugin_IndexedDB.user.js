@@ -188,7 +188,7 @@ class IndexedDBService extends BaseService {
 			this.expected_save_id=0;
 			await this.put_boxed_id_async(version,"save_id",this.expected_save_id);
 			save_id=await this.get_id_box("save_id",version);
-			if(!save_id) throw new Error();
+			if(!save_id) throw new Error("null on get");
 		}
 		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
 		await this.save_store_to_database(store,version);
