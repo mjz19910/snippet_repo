@@ -193,6 +193,7 @@ type D_VideoPlaybackShape_S_Params={
 	source: "youtube";
 	requiressl: "yes";
 	ctier?: "SH";
+	gcr?: "ca";
 	spc?: string;
 	vprv: "1";
 	ufph?: "1";

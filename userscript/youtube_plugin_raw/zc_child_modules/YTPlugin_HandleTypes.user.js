@@ -269,7 +269,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
-		const {1: request_timestamp_milli_utc,2: microseconds_ts,3: nanoseconds_ts,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: request_timestamp_milli_utc,2: microseconds_ts,3: nanoseconds_ts}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.log_buffer.push(["number",`max_gen:${cf}:binary_ts_gen`,"f1","milliseconds",this.T_D32(request_timestamp_milli_utc)]);
 		this.immediate_run_logger();
 		let mts=this.T_FD32(microseconds_ts);
@@ -815,7 +815,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
-		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,spc,vprv,ufph,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
+		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,gcr,spc,vprv,ufph,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
@@ -830,13 +830,15 @@ class HandleTypes extends ServiceMethods {
 		itag&&this.save_string(`${cf1}.itag`,itag);
 		this.save_string(`${cf1}.source`,source);
 		this.save_string(`${cf1}.requiressl`,requiressl);
-		this.t(ctier,x => this.cq("SH",x));
+		this.t(ctier,x => this.save_string(`${cf1}.ctier`,x));
+		gcr&&this.save_string(`${cf1}.gcr`,gcr);
 		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
-		this.t(ufph,x => this.cq(x,"1"));
-		this.t(live,x => this.cq(x,"1"));
-		this.t(hang,x => this.cq(x,"1"));
-		this.t(noclen,x => this.cq(x,"1"));
+		this.save_string(`${cf1}.vprv`,vprv);
+		this.t(ufph,x => this.save_string(`${cf1}.ufph`,x));
+		this.t(live,x => this.save_string(`${cf1}.live`,x));
+		this.t(hang,x => this.save_string(`${cf1}.hang`,x));
+		this.t(noclen,x => this.save_string(`${cf1}.noclen`,x));
 		this.t(xtags,x => this.save_string(`${cf1}.xtags`,x));
 		this.save_string(`${cf1}.mime`,mime);
 		this.save_b64_binary(`${cf2}.ns`,ns);
@@ -2111,7 +2113,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {RB_Obj_f19} x @name V_VeDescObj */
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19",t=this;
-		const {1: obj_tag,2: binary_ve,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: obj_tag,2: binary_ve,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.t(obj_tag,x => t.save_number(`${cf}.tag`,t.T_D32(x)));
 		t.save_number(`${cf}.BinaryVe`,this.T_D32(binary_ve));
 		t.BinaryVe(t.T_D32(binary_ve));
@@ -2121,15 +2123,16 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
-		const {1: v_tag,2: v_id,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v_tag,2: v_id,3: v3,4: f4}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v_tag));
 		this.save_number(`${cf}.f2`,this.T_D32(v_id));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		f4;
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
 		const cf="H_TrackingObj",t=this;
-		const {1: obj_tag,2: obj_id,3: v3,4: f4,6: f6,7: f7,8: f8,9: f9,11: v11,16: f16,19: f19,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: obj_tag,2: obj_id,3: v3,4: f4,6: f6,7: f7,8: f8,9: f9,11: v11,16: f16,19: f19,21: f21}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.t(obj_tag,x => t.TK_D32(cf,x,"tag"));
 		t.t(obj_id,x => t.TK_D32(cf,x,"id"));
 		t.t(v3,x => t.TK_D32(cf,x,"f3"));
@@ -2144,6 +2147,7 @@ class HandleTypes extends ServiceMethods {
 				case "v_data64": break;
 			}
 		});
+		f9;
 	}
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.V_BinaryTimestamp(this.T_VW(x));}
@@ -2211,17 +2215,17 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {"P_invalidation_continuation"|"P_timed_continuation_data"|"PR_continuation_params"} [cf] @arg {PR_continuation_params} x */
 	PR_continuation_params(x,cf="PR_continuation_params") {
 		if(0x6b7c87f in x) {
-			const {0x6b7c87f: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			const {0x6b7c87f: n}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.PD_timed_continuation(this.T_VW(n));
 			return;
 		}
 		if(0x722607a in x) {
-			const {0x722607a: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			const {0x722607a: n}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.PD_invalidation_continuation(this.T_VW(n));
 			return;
 		}
 		if(0x94d81d4 in x) {
-			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			const {0x94d81d4: n}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.PD_continuation_params(this.T_VW(n));
 			return;
 		}
@@ -2234,13 +2238,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_trending_bp} x */
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
-		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {77: a}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
 	}
 	/** @private @arg {V_ShortTimestamp} x */
 	V_ShortTimestamp(x) {
 		const cf="V_ShortTimestamp";
-		const {1: request_timestamp_milli_utc,2: nanoseconds_ts,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: request_timestamp_milli_utc,2: nanoseconds_ts}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.log_buffer.push(["number",`max_gen:V_ShortTimestamp:binary_ts_gen`,"f1","milliseconds",this.T_D32(request_timestamp_milli_utc)]);
 		this.immediate_run_logger();
 		let x2=this.T_D32(nanoseconds_ts);
@@ -2250,7 +2254,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data",t=this;
-		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.PK_f1(this.T_VW(v1));
 		t.t(t.t(v3,t.TV_Str),this.playlistId);
 	}
@@ -2259,7 +2263,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PD_continuation_request_browse_token} x */
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
-		const {2: browse_id,3: target_params,35: target_id,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: browse_id,3: target_params,35: target_id}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(browse_id),x => this.save_string(`${cf}.f2`,x));
 		this.t(this.TV_Str(target_params),x => {
 			if(this.params_to_decode.includes(x)) return;
@@ -2270,19 +2274,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PR_continuation_request_browse_token} x */
 	PR_continuation_request_browse_token(x) {
 		const cf="PR_continuation_request_browse_token";
-		const {0x4c82a9c: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {0x4c82a9c: a}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PD_continuation_request_browse_token(this.T_VW(a));
 	}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {
 		const cf="P_create_playlist_params";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params"; let t=this;
-		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {30: f30,57: f57,71: f71,72: f72}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
 		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number));};
 		r("f30",f30); r("f57",f57); r("f71",f71);
@@ -2291,21 +2295,21 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
 	P_EntityKey(cf,x) {
 		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
-			const {2: video_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			const {2: video_id,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.t(this.TV_Str(video_id),this.videoId);
 			this.save_number(`${cf}.f4`,this.T_D32(f4));
 			this.save_number(`${cf}.f5`,this.T_D32(f5));
 			return;
 		}
 		if(this.is_T_D32_at(x,246)) {
-			const {2: wrapped_str,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+			const {2: wrapped_str,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 			const {1: f2_f1,...y1}=this.T_VW(wrapped_str); this.g(y1);
 			this.t(this.TV_Str(f2_f1),x => this.save_string(`${cf}.f2.f1`,x));
 			this.save_number(`${cf}.f4`,this.T_D32(f4));
 			this.save_number(`${cf}.f5`,this.T_D32(f5));
 			return;
 		}
-		const {2: entity_target_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: entity_target_id,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(entity_target_id),x => {
 			if(this.str_starts_with(x,"RD")) return this.playlistId(x);
 			if(this.str_starts_with(x,"UC")) return this.channelId(x);
@@ -2333,20 +2337,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_search_params} x */
 	P_search_params(x) {
 		const cf="P_search_params";
-		const {2: pf_value,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: pf_value}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PF_23n24n(this.T_VW(pf_value));
 	}
 	/** @private @arg {PF_23n24n} x */
 	PF_23n24n(x) {
 		const cf="PF_23n24n";
-		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {23: a,24: b}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.cq(this.T_D32(a),1);
 		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
 	}
 	/** @private @arg {P_bin_params_1_f1} x */
 	P_bin_params_1_f1(x) {
 		const cf="P_bin_params_1.f1";
-		const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: a,2: b}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let iv_fa=parseInt(this.T_FD64(a).toString(16).slice(0,2),16);
 		this.save_number(`${cf}.f1.first_byte`,iv_fa);
 		let iv_fb=parseInt(this.T_FD64(b).toString(16).slice(0,2),16);
@@ -2355,7 +2359,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_bin_params_1} x */
 	P_bin_params_1(x) {
 		const cf="P_bin_params_1";
-		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: a}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_bin_params_1_f1(this.T_VW(a));
 	}
 	//#endregion
@@ -2380,7 +2384,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PD_invalidation_continuation} x */
 	PD_invalidation_continuation(x) {
 		const cf="PD_invalidation_continuation";
-		const {3: v3,5: f5,6: f6,8: f8,9: f9,10: f10,11: v11,16: f16,17: f17,19: f19,20: f15,21: f21,22: v22,23: f23,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: v3,5: f5,6: f6,8: f8,9: f9,10: f10,11: v11,16: f16,17: f17,19: f19,20: f15,21: f21,22: v22,23: f23}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_string(`${cf}.f3`,this.TV_Str(v3));
 		this.t(f9,x => this.PD_invalidation_continuation_f9(this.T_VW(x)));
 		v11&&console.log("f11",this.T_D32(v11));
@@ -2390,7 +2394,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_subscription_state_key} x */
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
-		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: a,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(a),x => this.channelId(x));
 	}
 	/** @type {string[]} */
@@ -2398,7 +2402,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_dislike_params_f1} x */
 	P_dislike_params_f1(x) {
 		const cf="P_dislike_params.f1";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(v1[0]!=="v_param_arr") {debugger; return;}
 		let [,[a,...y1]]=v1; this.cq(y1.length,0);
 		switch(a[0]) {
@@ -2424,7 +2428,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_dislike_params} x */
 	P_dislike_params(x) {
 		const cf="P_dislike_params";
-		const {1: v1,2: v2,3: v3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2,3: v3,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_dislike_params_f1(this.T_VW(v1));
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 		this.t(v3,x => this.save_number(`${cf}.f3`,this.T_D32(x)));
@@ -2434,19 +2438,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PK_f1} x */
 	PK_f1(x) {
 		const cf="PK_f1";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.data`,this.T_D32(v1));
 	}
 	/** @protected @template T @arg {{1:T}} x */
 	PT_f1(x) {
 		const cf="PT_f1";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		return v1;
 	}
 	/** @private @arg {P_playability_status_context_params} x */
 	P_playability_status_context_params(x) {
 		const cf="P_playability_status_context_params";
-		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 		this.PK_f1(this.T_VW(v2));
 	}
@@ -2454,7 +2458,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
-		const {1: v1,3: v3,5: g5,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,5: g5,6: v6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 		v3&&this.VW_BinaryTimestamp(v3);
 		g5&&this.g(this.T_VW(g5));
@@ -2473,35 +2477,35 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
 		const cf="P_ypc_get_offers_params";
-		const {1: v1,3: v3,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_ypc_get_offers_params_f1(this.T_VW(v1));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
-		const {2: v2,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,5: f5,10: f10}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(v2),this.videoId);
 	}
 	/** @private @arg {PD_continuation_params_f3} x */
 	PD_continuation_params_f3(x) {
 		const cf="PD_continuation_params.f3";
-		const {4: v4,8: {},9: {},10: {},12: {},13: {},14: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {4: v4,8: {},9: {},10: {},12: {},13: {},14: {}}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 	}
 	/** @private @arg {PD_continuation_params_f11} x */
 	PD_continuation_params_f11(x) {
 		const cf="PD_continuation_params.f11";
-		const {2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 	}
 	/** @private @arg {PD_continuation_params_f14} x */
 	PD_continuation_params_f14(x) {
 		const cf="PD_continuation_params.f14";
-		const {1: v1,3: {},4: {},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: {},4: {}}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 	}
 	/** @private @arg {PD_continuation_params} x */
 	PD_continuation_params(x) {
 		const cf="PD_continuation_params";
-		const {3: v3,8: f8,11: v11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: v3,8: f8,11: v11,14: f14,15: f15}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(this.is_T_VW(v3)) {
 			this.PD_continuation_params_f3(this.T_VW(v3));
 		} else {
@@ -2515,13 +2519,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
 		const cf="P_get_pdg_buy_flow_params";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_buy_flow_params(this.T_VW(v1));
 	}
 	/** @private @arg {PX_buy_flow_params} x */
 	PX_buy_flow_params(x) {
 		const cf="PX_buy_flow_params";
-		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.videoId(this.TV_Str(v1));
 		this.channelId(this.TV_Str(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
@@ -2535,20 +2539,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {TX_sequence_info} x */
 	TX_sequence_info(x) {
 		const cf="TX_sequence_info";
-		const {3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: f3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f3`,this.T_D32(f3));
 	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
-		const {1: v1,3: v3,5: f5,8: f8,12: f12,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,5: f5,8: f8,12: f12}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.videoId(this.TV_Str(v1));
 		this.TX_sequence_info(this.T_VW(f5));
 	}
 	/** @private @arg {PX_watch_sequence_info} x */
 	PX_watch_sequence_info(x) {
 		const cf="PX_watch_sequence_info",t=this;
-		const {1: v1,3: v3,4: v4,6: f6,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,4: v4,6: f6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.videoId(t.TV_Str(v1));
 		t.save_number(`${cf}.f3`,t.T_D32(v3));
 		t.save_number(`${cf}.f4`,t.T_D32(v4));
@@ -2557,7 +2561,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token",t=this;
-		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&t.videoId(t.TV_Str(v1));
 		t.PX_watch_sequence_info(t.T_VW(v3));
 	}
@@ -2590,32 +2594,32 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
 		const cf="P_shorts_source_bp";
-		const {94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {94: f94}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
-		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(v1),this.channelId);
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
-		const {2: v2,3: v3,7: f7,12: f12,13: f13,27: f27,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,3: v3,7: f7,12: f12,13: f13,27: f27}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {PX_watch_next_token_info} x */
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
-		const {2: v2,4: f4,6: f6,7: f7,25: f25,28: f28,36: f36,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,4: f4,6: f6,7: f7,25: f25,28: f28,36: f36}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.videoId(this.TV_Str(v2));
 	}
 	/** @private @arg {PX_watch_next_token_item} x */
 	PX_watch_next_token_item(x) {
 		const cf="PX_watch_next_token_item";
-		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(this.is_T_D32(v1)) {
 			this.a_primitive_num(this.T_D32(v1));
 		} else {
@@ -2626,7 +2630,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_6} x */
 	PX_watch_next_token_6(x) {
 		const cf="PX_watch_next_token_6";
-		const {1: v1,3: v3,4: v4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,4: v4}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let n1=v1[1];
 		for(let [,,u1] of n1) this.PX_watch_next_token_item(u1);
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
@@ -2635,7 +2639,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_3} x */
 	PX_watch_next_token_3(x) {
 		const cf="PX_watch_next_token_3";
-		const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,4: v4,5: v5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_watch_next_token_6(this.T_VW(v1));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 		this.save_string(`${cf}.f4`,this.TV_Str(v4));
@@ -2644,7 +2648,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_1} x */
 	PX_watch_next_token_1(x) {
 		const cf="PX_watch_next_token_1";
-		const {4: v4,6: v6,8: v8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {4: v4,6: v6,8: v8}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_watch_next_token_2(this.T_VW(v4));
 		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
 		let i8=this.TV_Str(v8);
@@ -2657,7 +2661,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_2} x */
 	PX_watch_next_token_2(x) {
 		const cf="PX_watch_next_token_2";
-		const {4: a,6: b,15: c,37: f37,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {4: a,6: b,15: c,37: f37}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.videoId(this.TV_Str(a));
 		this.save_number(`${cf}.f6`,this.T_D32(b));
 		this.save_number(`${cf}.f15`,this.T_D32(c));
@@ -2666,20 +2670,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_4} x */
 	PX_watch_next_token_4(x) {
 		const cf="PX_watch_next_token_4";
-		const {5: a,12: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {5: a,12: b}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f5`,this.T_FD32(a));
 		this.save_bigint(`${cf}.f12`,this.T_FD64(b));
 	}
 	/** @private @arg {PX_watch_next_token_5} x */
 	PX_watch_next_token_5(x) {
 		const cf="PX_watch_next_token_5";
-		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: a}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(a));
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
-		const {1: v1,2: v2,3: v3,5: f5,6: f6,9: f9,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2,3: v3,5: f5,6: f6,9: f9,13: f13,14: f14}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.save_number(`${cf}.f1`,this.T_D32(v1));
 		this.PX_watch_next_token_info(this.T_VW(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
@@ -2694,7 +2698,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
-		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1(this.T_VW(v1));
 		this.t(v2,x => this.videoId(this.TV_Str_ex(x)));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
@@ -2702,7 +2706,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
-		const {2: v2,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,3: v3,4: f4}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1(this.T_VW(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
@@ -2719,7 +2723,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {
 		const cf="P_like_params";
-		const {1: v1,4: f4,5: f5,6: f6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,4: f4,5: f5,6: f6,7: f7}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let m1=this.mw(this.m(v1));
 		let v1_v1_str=m1.mc(this.T_VW).mc(this.PT_f1).mc(this.TW_Str).some.v;
 		this.videoId(v1_v1_str);
@@ -2744,19 +2748,21 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_remove_like_params} x */
 	P_remove_like_params(x) {
 		const cf="P_remove_like_params";
-		const {1: v1,3: v3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,4: f4,5: f5,6: f6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1_str(this.T_VW(v1));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {
 		const cf="P_ad_layout_ad_serving_data_entry";
-		const {4: f4,5: f5,6: f6,7: f7,9: f9,10: f10,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {4: f4,5: f5,6: f6,7: f7,9: f9,10: f10,13: f13,14: f14}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
+		f4;
+		f5;
 	}
 	/** @arg {PX_ad_data_info} x */
 	PX_ad_data_info(x) {
 		const cf="PX_ad_data_info";
-		const {1: v1,6: f6,11: f11,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,6: f6,11: f11}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 		this.save_number(`${cf}.f6`,this.T_D32(f6));
 		this.save_number(`${cf}.f11`,this.T_D32(f11));
@@ -2764,19 +2770,23 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
-		const {1: v1,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,3: v3,4: f4}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.VW_BinaryTimestamp(v1);
 		this.PX_ad_data_info(this.T_VW(v3));
 	}
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
 		const cf="P_ve_6827_params";
-		const {77: f77,84: f84,93: f93,94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {77: f77,84: f84,93: f93,94: f94}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
+		f77;
+		f84;
+		f93;
+		f94;
 	}
 	/** @private @arg {PX_watch_bin} x */
 	PX_watch_bin(x) {
 		const cf="PX_watch_bin";
-		const {2: v2,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,3: v3,4: v4,5: v5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_string(`${cf}.f2`,this.TV_Str(v2));
 		this.save_string(`${cf}.v3`,"0b"+this.T_D32(v3).toString(2));
 		this.save_string(`${cf}.f4`,"0b"+this.T_D32(v4).toString(2));
@@ -2785,83 +2795,90 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PR_watch_bin} x */
 	PR_watch_bin(x) {
 		const cf="PR_watch_bin";
-		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: r}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PD_watch_bin(this.T_VW(r));
 	}
 	/** @private @arg {PD_watch_bin} x */
 	PD_watch_bin(x) {
 		const cf="PD_watch_bin";
-		const {2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
-		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: v40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: v40,56: f56}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v2&&this.save_number(`${cf}.f2`,this.T_D32(v2));
 		v3&&this.save_number(`${cf}.f3`,this.T_D32(v3));
+		f7;
 		v33&&this.PX_watch_bin(this.T_VW(v33));
 		v40&&this.PR_watch_bin(this.T_VW(v40));
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
-		const {8: f8,9: f9,12: f12,25: f25,40: f40,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {8: f8,9: f9,12: f12,25: f25,40: f40}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
+		f8;
 	}
 	/** @private @arg {P_format_item_xtags_f1} x */
 	P_format_item_xtags_f1(x) {
 		const cf="P_format_item_xtags.f1";
-		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		console.log(this.TV_Str(v1));
 		this.cq(this.TV_Str(v2),"true");
 	}
 	/** @private @arg {P_format_item_xtags} x */
 	P_format_item_xtags(x) {
 		const cf="P_format_item_xtags";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_format_item_xtags_f1(this.T_VW(v1));
 	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
 	P_get_notification_menu_ctoken(x) {
 		const cf="P_get_notification_menu_ctoken";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_notification_opt_out} x */
 	P_notification_opt_out(x) {
 		const cf="P_notification_opt_out";
-		const {2: v2,3: v3,4: f4,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,3: v3,4: f4,7: f7}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 		this.save_string(`${cf}.f3`,this.TV_Str(v3));
+		f4;
+		f7;
 	}
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
 		const cf="P_get_report_form_params";
-		const {25: f25,26: f26,28: f28,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {25: f25,26: f26,28: f28}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
+		f25;
+		f26;
+		f28;
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
 		const cf="P_notification_record_interactions";
-		const {2: v2,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1(this.T_VW(v2));
 	}
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
 		const cf="P_ve_3611_params";
-		const {2: v2,23: f23,110: f110,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,23: f23,110: f110}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v2&&this.g(this.T_VW(v2));
 	}
 	/** @private @arg {P_playlist_edit_params} x */
 	P_playlist_edit_params(x) {
 		const cf="P_playlist_edit_params";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
 	P_notification_add_upcoming_event_reminder_params(x) {
 		const cf="P_notification_add_upcoming_event_reminder_params";
-		const {1: v1,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,6: f6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let u1=this.T_PArr_1(v1)[0];
 		switch(u1[0]) {
 			case "v_child": {
@@ -2877,65 +2894,77 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PD_event_info} x */
 	PD_timed_continuation_f3(x) {
 		const cf="PD_timed_continuation_f3";
-		const {14: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {14: r}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_bigint(`${cf}.f14`,this.T_FD64(r));
 	}
 	/** @private @arg {PD_timed_continuation} x */
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
-		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {3: v3,4: f4,7: f7,8: f8}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PD_timed_continuation_f3(this.T_VW(v3));
 	}
 	/** @private @arg {P_f3_PD_continuation_params} x */
 	P_f3_PD_continuation_params(x) {
 		const cf="P_f3_PD_continuation_params";
-		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: r}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.T_VW(r);
 	}
 	/** @private @arg {P_PX_watch_next_token_2_f37} x */
 	P_PX_watch_next_token_2_f37(x) {
 		const cf="P_PX_watch_next_token_2_f37";
-		const {10: r,15: f15,20: f20,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {10: r,15: f15,20: f20}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_string(`${cf}.f10`,this.TV_Str(r));
+		f15;
+		f20;
 	}
 	/** @private @arg {P_create_reply_params} x */
 	P_create_reply_params(x) {
 		const cf="P_create_reply_params";
-		const {2: r,4: f4,5: f5,10: f10,14: f14,29: f29,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: r,4: f4,5: f5,10: f10,14: f14,29: f29}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_string(`${cf}.f2`,this.TV_Str(r));
-		debugger;
+		f4;
+		f5;
+		f10;
+		f14;
+		f29;
 	}
 	/** @private @arg {P_perform_comment_action} x */
 	P_perform_comment_action(x) {
 		const cf="P_perform_comment_action";
-		const {1: v1,2: v2,3: f3,5: f5,6: f10,7: f14,9: f29,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2,3: f3,5: f5,6: f6,7: f7,9: f9,21: f21}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
+		f3;
+		f5;
+		f6;
+		f7;
+		f9;
+		f21;
 	}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {
 		const cf="P_notification_remove_upcoming_event_reminder_params";
-		const {1: v1,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,6: v6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PD_event_info(this.T_VW(v1));
 		this.PX_upcoming_event_reminder_info(this.T_VW(v6));
 	}
 	/** @private @arg {PD_event_info} x */
 	PD_event_info(x) {
 		const cf="PD_event_info";
-		const {14: v14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {14: v14}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_bigint(`${cf}.f14`,this.T_FD64(v14));
 	}
 	/** @private @arg {PX_upcoming_event_reminder_info} x */
 	PX_upcoming_event_reminder_info(x) {
 		const cf="PX_upcoming_event_reminder_info";
-		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_transcript_params} x */
 	P_transcript_params(x) {
 		const cf="P_transcript_params";
-		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {1: v1,2: v2,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_string(`${cf}.f1`,this.TV_Str(v1));
 		this.save_string(`${cf}.f2`,this.TV_Str(v2));
 		this.g(this.T_VW(v3));
