@@ -8,6 +8,5 @@ type G_RawUrlInfo=
 	|D_RawInfinitePlaylistInfo
 	|D_RawPlaylistId
 	|D_RawVideoId
-	|D_RawVideoId_AltReferral
 	;
 ;
