@@ -558,6 +558,17 @@ class IndexedDBService extends BaseService {
 			throw new AggregateError([e],"async error");
 		}
 	}
+	/** @type {string[][]} */
+	delayed_log_messages=[];
+	/** @type {number|null} */
+	delayed_log_idle_request_id=null;
+	/** @arg {string[]} args */
+	delayed_log(...args) {
+		this.delayed_log_messages.push(args);
+		this.delayed_log_idle_request_id=requestIdleCallback(() => {
+			this.delayed_log_idle_request_id=null;
+		});
+	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");

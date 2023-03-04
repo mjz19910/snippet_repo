@@ -1873,12 +1873,32 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return true;
 		}
 	}
+	/** @arg {`promise_rejected_with.errors.${number}`} cf @arg {unknown} x */
+	log_error_sub(cf,x) {
+		console.log(`[log_error_next_info.${cf}]`,x);
+		if(x instanceof AggregateError) {
+			for(let i=0;i<x.errors.length;i++) {
+				let c=x.errors[i];
+				console.log(`[log_error_next_info.${cf}]`,c);
+			}
+		}
+	}
+	/** @arg {"promise_rejected_with"} cf @arg {unknown} x */
+	log_error(cf,x) {
+		console.log(`[log_error_info.${cf}]`,x);
+		if(x instanceof AggregateError) {
+			for(let i=0;i<x.errors.length;i++) {
+				let c=x.errors[i];
+				this.log_error_sub(`${cf}.errors.${i}`,c);
+			}
+		}
+	}
 	/** @template T @arg {Promise<T>} x */
 	execute_promise_def(x) {
 		x.then(x => {
 			console.log("[promise_resolved_with]",x);
 		},x => {
-			console.log("[promise_rejected_with]",x);
+			this.log_error("promise_rejected_with",x);
 		});
 	}
 	/** @public @arg {G_UrlInfo} value */
