@@ -3325,7 +3325,7 @@ class HandleTypes extends ServiceMethods {
 			case "channel_id": {
 				let px=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=["channel_id","UC",{...px,tag: "UC",info_arr: [{raw_id},{id}]}];
+				let args=["channel_id","UC",{...px,tag: "UC",info_arr: [{raw_id: "UC"},{id: ""}]}];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
