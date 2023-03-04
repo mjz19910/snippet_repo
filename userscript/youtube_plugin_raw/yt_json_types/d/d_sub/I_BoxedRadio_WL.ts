@@ -1,5 +1,1 @@
-type I_BoxedRadio_WL={
-	type: "playlist_id";
-	key: "playlist_id:LL";
-	info_arr: [{raw_id: "WL";}];
-};
+type I_BoxedRadio_WL=TI_BoxedRadio1<"playlist_id","WL">;
