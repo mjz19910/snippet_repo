@@ -3288,16 +3288,20 @@ class HandleTypes extends ServiceMethods {
 			case "browse_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				let {raw_id}=x;
-				if(raw_id==="VLLL") {debugger; return;}
-				if(raw_id==="VLWL") {debugger; return;}
-				if(this.str_starts_with(raw_id,"VLPL")) {debugger; return;}
-				if(this.str_starts_with(raw_id,"VLUU")) {
-					let [a,id]=split_string_once(raw_id,"VL"); this.cq(a,"");
-					id;
-					debugger;
-					return;
+				if(this.str_starts_with(raw_id,"FE")) {
+					return this.G_UrlInfo({type: "browse_id",tag: "FE",type_parts: ["browse_id","FE"],raw_id});
 				}
-				debugger;
+				{
+					const k="SP"; if(this.str_starts_with(raw_id,k)) {
+						return this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k],raw_id});
+					}
+				}
+				{
+					const k="VL"; if(this.str_starts_with(raw_id,k)) {
+						return this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k],raw_id});
+					}
+				}
+				raw_id==="";
 			} break;
 			case "playlist_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;

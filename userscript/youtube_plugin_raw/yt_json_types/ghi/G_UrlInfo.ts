@@ -1,30 +1,3 @@
-type D_UrlInfo_Video={
-	type: "video";
-	tag: null;
-	type_parts: ["video"];
-	raw_id: string;
-};
-type D_InfoHashtagId={
-	type: "hashtag_id";
-	hashtag: string;
-};
-type D_InfoVideoTime={
-	type: "video_time";
-	raw_value: `${number}s`;
-};
-type D_PlaylistInfo_LL={
-	type: "playlist_id";
-	tag: null;
-	type_parts: ["playlist_id"];
-	id: "LL";
-};
-type D_PlaylistInfo_WL={
-	type: "playlist_id";
-	tag: null;
-	type_parts: ["playlist_id"];
-	id: "WL";
-};
-
 type G_UrlInfo=
 	|D_BrowseIdUrlInfo
 	|D_PlayNextUrlInfo
@@ -39,10 +12,8 @@ type G_UrlInfo=
 	|D_InfoVideoTime
 	|D_PlaylistInfo_LL
 	|D_PlaylistInfo_WL
-	;
-;
-type G_UrlInfoSrc=
-	|{type: "playlist_id",id: GU_PlaylistId;}
-	|{type: "browse_id",id: string;}
+	|{type: "browse_id",tag: "FE",type_parts: ["browse_id","FE"],raw_id: G_BrowseIdStr_FE;}
+	|{type: "browse_id",tag: "SP",type_parts: ["browse_id","SP"],raw_id: G_BrowseIdStr_SP;}
+	|{type: "browse_id",tag: "k",type_parts: ["browse_id","k"],raw_id: "raw_id";}
 	;
 ;

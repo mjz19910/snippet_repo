@@ -50,7 +50,7 @@ type SD_PlaylistId=
 	;
 ;
 type D_BrowseIdStr=
-	|`FE${D_BrowseEndpointPages}`
+	|T_FeedEntry<D_BrowseEndpointPages>
 	|GU_VE5754_BrowseId
 	|`UC${string}`
 	|`SP${D_Settings_Id}`
@@ -157,7 +157,7 @@ type D_SD_UrlTypes=`page_type_${S_PageTypeStr}`|UrlTypes;
 type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
-type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
+type D_FE_SectionId=T_FeedEntry<"trending"|"history"|"library"|"storefront"|"guide_builder">;
 type D_EngagementPanelTargetId=
 	|"engagement-panel-clip-view"
 	|"engagement-panel-error-corrections"
