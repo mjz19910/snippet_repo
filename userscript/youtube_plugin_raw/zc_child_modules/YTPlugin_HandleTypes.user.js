@@ -3389,7 +3389,7 @@ class HandleTypes extends ServiceMethods {
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
-				/** @type {D_BrowseIdInfo} */
+				/** @type {DIG_BrowseIdInfo} */
 				let v2=value;
 				let box_res=this.put_boxed_id(v2.type,v2);
 				this.execute_promise_def((async () => (await box_res).ret)());

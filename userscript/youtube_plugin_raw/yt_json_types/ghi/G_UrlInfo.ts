@@ -1,5 +1,5 @@
 type G_UrlInfo=
-	|D_BrowseIdInfo
+	|DIG_BrowseIdInfo
 	|D_ChannelUrlInfo
 	|D_InfoHashtagId
 	|D_InfoVideoTime

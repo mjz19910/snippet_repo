@@ -7,7 +7,7 @@ type Y_PutBoxedArgs=
 	|["root_visual_element",string,make_item_group<number>]
 	|["save_id",number]
 	|["string",string,make_item_group<string>]
-	|["browse_id",D_BrowseIdInfo]
+	|["browse_id",DIG_BrowseIdInfo]
 	|MakeInfoBoxArgs<G_UrlInfo>
 	;
 ;
@@ -144,13 +144,13 @@ type Y_PutBoxedRet={
 		value: D_InfoHashtagId;
 	}>;
 }|{
-	args: ["browse_id",D_BrowseIdInfo];
+	args: ["browse_id",DIG_BrowseIdInfo];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "browse_id";
 		extra: "any";
 		key: `boxed_id:browse_id:VLPL${string}`;
-		value: D_BrowseIdInfo;
+		value: DIG_BrowseIdInfo;
 	}>;
 }|{
 	args: ["channel_id",D_ChannelUrlInfo];

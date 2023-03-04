@@ -1,1 +1,0 @@
-type D_BrowseIdInfo_FE=T_UrlInfoPartial<"browse_id",["FE"],G_BrowseIdStr_FE>;
