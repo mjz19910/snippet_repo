@@ -642,7 +642,7 @@ type P_f3_PD_continuation_params={
 	4: T_D32<1>;
 	6: T_D32<0>;
 };
-type P_video_params={
+type P_transcript_params={
 	1: TV_Str<"asr">;
 	2: TV_Str<"en">;
 	3: T_VW_J<{}>;

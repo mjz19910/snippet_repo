@@ -2901,7 +2901,33 @@ class HandleTypes extends ServiceMethods {
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
-	P_notification_remove_upcoming_event_reminder_params(x) {x;}
+	P_notification_remove_upcoming_event_reminder_params(x) {
+		const cf="P_notification_remove_upcoming_event_reminder_params";
+		const {1: v1,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.PD_event_info(this.T_VW(v1));
+		this.PX_upcoming_event_reminder_info(this.T_VW(v6));
+	}
+	/** @private @arg {PD_event_info} x */
+	PD_event_info(x) {
+		const cf="PD_event_info";
+		const {14: v14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_bigint(`${cf}.f14`,this.T_FD64(v14));
+	}
+	/** @private @arg {PX_upcoming_event_reminder_info} x */
+	PX_upcoming_event_reminder_info(x) {
+		const cf="PX_upcoming_event_reminder_info";
+		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_number(`${cf}.f2`,this.T_D32(v2));
+	}
+	/** @private @arg {P_transcript_params} x */
+	P_transcript_params(x) {
+		const cf="P_transcript_params";
+		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_string(`${cf}.f1`,this.TV_Str(v1));
+		this.save_string(`${cf}.f2`,this.TV_Str(v2));
+		this.g(this.T_VW(v3));
+	}
 	//#endregion
 	//#region binary_result()
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
@@ -3214,6 +3240,11 @@ class HandleTypes extends ServiceMethods {
 				/** @type {P_f3_PD_continuation_params} */
 				let u=as_any(x);
 				this.P_f3_PD_continuation_params(u);
+			} break;
+			case "transcript.params": {
+				/** @type {P_transcript_params} */
+				let u=as_any(x);
+				this.P_transcript_params(u);
 			} break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
