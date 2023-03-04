@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,as_any}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -264,11 +264,8 @@ class IndexedDBService extends BaseService {
 		let rx=await out.promise;
 		if(rx===null) return null;
 		let ret={args: out.args,ret: rx};
-		/** @arg {typeof ret} x @returns {asserts x is T_PutAwaitPromise<Y_PutBoxedRet>} */
-		function assert_assume_is(x) {x;}
-		assert_assume_is(ret);
 		/** @type {T_PutAwaitPromise<Y_PutBoxedRet>} */
-		let r2=ret;
+		let r2=as_any(ret);
 		/** @arg {typeof r2} x @returns {asserts x is Extract<typeof r2,{args:T}>} */
 		function assert_assume_is_2(x) {x;}
 		assert_assume_is_2(r2);
