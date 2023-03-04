@@ -2775,6 +2775,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			let [,user_id]=split_string_once(raw_id,"UC");
 			this.G_UrlInfoItem({type: "channel_id:UC",id: user_id,raw_id});
+			this.userId(user_id);
 			if(raw_id.length===24) return;
 			console.log("[channelId.length]",raw_id.length);
 			return;
