@@ -371,9 +371,9 @@ class HandleTypes extends ServiceMethods {
 	//#region is_T
 	/** @arg {P_EntityKey} x @template {number} T @arg {T} t @returns {x is {4:T_D32<T>;}} */
 	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
-	/** @arg {T_D32<number>|T_D64<bigint>} x @returns {x is T_D32<number>;} */
+	/** @arg {T_D32<number>|T_D64<bigint>} x @returns {x is T_D32<number>} */
 	is_T_D32(x) {return x[1][0][0]==="v_data32";}
-	/** @arg {T_VW<any>|TV_Str<string>} x @returns {x is T_VW<any>;} */
+	/** @arg {T_VW<any>|TV_Str<string>} x @returns {x is T_VW<any>} */
 	is_T_VW(x) {return x[1][0][0]==="v_child";}
 	//#endregion
 	//#region moved data methods
@@ -777,6 +777,45 @@ class HandleTypes extends ServiceMethods {
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
 				break;
 		}
+	}
+	/** @type {Map<string,Intl.RelativeTimeFormat>} */
+	rtf_lang=new Map;
+	/** @arg {string} lang */
+	get_rtf_lang(lang) {
+		let rtf_val=this.rtf_lang.get(lang);
+		if(rtf_val) return rtf_val;
+		const rtf=new Intl.RelativeTimeFormat(lang,{numeric: "auto"});
+		this.rtf_lang.set(lang,rtf);
+		return rtf;
+	}
+	/**
+	 * @arg {Date|number} date
+	 * adapted from https://gist.github.com/LewisJEllis/9ad1f35d102de8eee78f6bd081d486ad
+	 */
+	getRelativeTimeString(date,lang=navigator.language) {
+		// Allow dates or times to be passed
+		const timeMs=typeof date==="number"? date:date.getTime();
+
+		// Get the amount of seconds between the given date and now
+		const deltaSeconds=Math.round((timeMs-Date.now())/1000);
+
+		// Array representing one minute, hour, day, week, month, etc in seconds
+		const cutoffs=[60,3600,86400,86400*7,86400*30,86400*365,Infinity];
+
+		// Array equivalent to the above but in the string representation of the units
+		/** @type {Intl.RelativeTimeFormatUnit[]} */
+		const units=["second","minute","hour","day","week","month","year"];
+
+		// Grab the ideal cutoff unit
+		const unitIndex=cutoffs.findIndex(cutoff => cutoff>Math.abs(deltaSeconds));
+
+		// Get the divisor to divide from the seconds. E.g. if our unit is "day" our divisor
+		// is one day in seconds, so we can divide our seconds by this to get the # of days
+		const divisor=unitIndex? cutoffs[unitIndex-1]:1;
+
+		// Intl.RelativeTimeFormat do its magic
+		const rtf=this.get_rtf_lang(lang);
+		return rtf.format(Math.floor(deltaSeconds/divisor),units[unitIndex]);
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x) {

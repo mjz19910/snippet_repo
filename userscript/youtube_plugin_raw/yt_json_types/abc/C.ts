@@ -26,7 +26,10 @@ type C_RelatedChip=TE_Endpoint_2<"relatedChipCommand",DC_RelatedChip>;
 type C_ReloadContinuationItems=TE_Endpoint_2<"reloadContinuationItemsCommand",DC_ReloadContinuationItems>;
 type C_RepeatChapter=TE_Endpoint_2<"repeatChapterCommand",DC_RepeatChapter>;
 type C_ResetChannelUnreadCount=TE_Endpoint_2<"resetChannelUnreadCountCommand",DC_ResetChannelUnreadCount>;
-type C_RunAttestation={runAttestationCommand: D_RunAttestation;};
+type C_RunAttestation={
+	clickTrackingParams?: string;
+	runAttestationCommand: D_RunAttestation;
+};
 type C_ScrollToEngagementPanel=TE_Endpoint_2<"scrollToEngagementPanelCommand",DC_ScrollToEngagementPanel>;
 type C_ShowReloadUi=TE_Endpoint_2<"showReloadUiCommand",DC_ShowReloadUi>;
 type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC_UpdateToggleButtonState>;
