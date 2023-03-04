@@ -3207,7 +3207,7 @@ class HandleTypes extends ServiceMethods {
 		switch(x.tag) {
 			case "FE": {
 				let async_p=this.indexed_db.put_boxed_id_async(this.indexed_db_version,x.type,x.tag,x);
-				this.execute_promise_def((async () => (await async_p).ret)());
+				this.execute_promise_def(async_p);
 			} break;
 		}
 	}
