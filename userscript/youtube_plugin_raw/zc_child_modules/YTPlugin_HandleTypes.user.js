@@ -2572,16 +2572,16 @@ class HandleTypes extends ServiceMethods {
 	P_transcript_track_selection_serialized_params(x) {
 		const cf="P_transcript_track_selection_serialized_params";
 		const {1: v1,2: v2,3: v3,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(this.TV_Str(v1));
-		console.log(this.TV_Str(v2));
+		this.videoId(this.TV_Str(v1));
+		this.params("video.params",this.TV_Str(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
 		const {1: v1,2: v2,3: v3,5: f5,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(this.TV_Str(v1));
-		console.log(this.TV_Str(v2));
+		this.videoId(this.TV_Str(v1));
+		this.params("video.params",this.TV_Str(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_shorts_source_bp} x */

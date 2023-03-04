@@ -124,7 +124,7 @@ type P_reel_player_params={
 	30: T_D32<1>;
 	57?: T_D32<19>;
 	71?: T_D32<15>;
-	72?: T_VW_Bigint<13339783998227650491n>;
+	72?: T_VW_Bigint<bigint>;
 };
 type P_reel_params={
 	1: T_D32<15>;
@@ -188,7 +188,7 @@ type PX_watch_next_token_info={
 	25?: T_D32<0>;
 	28?: T_D32<3>;
 	36?: T_VW<{
-		5: T_D64<18446744073709551615n>;
+		5: T_D64<bigint>;
 		8: T_D32<0>;
 	}>;
 };
@@ -214,8 +214,8 @@ type PX_watch_next_token_1={
 	8: TV_Str<"comments-section"|"engagement-panel-comments-section">;
 };
 type PX_watch_next_token_4={
-	5: T_FD32<1684366694>;
-	12: T_FD64<8392569429487543156n>;
+	5: T_FD32<number>;
+	12: T_FD64<bigint>;
 };
 type PX_watch_next_token_5={1: T_D32<0>;};
 type PX_watch_next_token_6={
@@ -237,7 +237,7 @@ type P_watch_playlist_params={
 	2: T_D32<1>;
 	3: T_D32<1>;
 	7: T_D32<1>;
-	12: TV_Str<"z6EQlZaB7v8">;
+	12: TV_Str<D_VideoIdStr>;
 	13: T_D32<0>;
 	27?: T_VW<{
 		1: T_D32<1>;
@@ -262,11 +262,11 @@ type P_shorts_source_bp={
 				3: TV_Str<string>;
 			};
 		};
-		5: T_VW_Bigint<1879003204532078215n>;
+		5: T_VW_Bigint<bigint>;
 	};
 };
 type P_get_transcript_params={
-	1: TV_Str<string>;
+	1: TV_Str<D_VideoIdStr>;
 	2: TV_Str<string>;
 	3: T_D32<1>;
 	5: TV_Str<"engagement-panel-searchable-transcript-search-panel">;
@@ -275,7 +275,7 @@ type P_get_transcript_params={
 	8: T_D32<1>;
 };
 type P_transcript_track_selection_serialized_params={
-	1: TV_Str<string>;
+	1: TV_Str<D_VideoIdStr>;
 	2: TV_Str<string>;
 	3: T_D32<1>;
 	6: T_D32<0>;
@@ -283,25 +283,25 @@ type P_transcript_track_selection_serialized_params={
 	8: T_D32<0>;
 };
 type PX_watch_sequence_info={
-	1: TV_Str<"BzYDxLH-tdw">;
+	1: TV_Str<string>;
 	3: T_D32<9>;
 	4: T_D32<2>;
-	6: T_VW_Bigint<3301578248956209656n>;
+	6: T_VW_Bigint<bigint>;
 };
 type P_reel_watch_sequence_data={
 	1: T_D32<10>;
 	3: T_D32<9>;
 	6: T_VW<{
-		1: TV_Str<"Xjj5aTpUDW4">;
+		1: TV_Str<string>;
 		2: T_VW<{
 			6: T_D32<26>;
 		}>;
 		3: T_VW<{
-			1: T_D32<1667425221>;
-			2: T_D32<148262000>;
+			1: T_D32<number>;
+			2: T_D32<number>;
 		}>;
 		4: T_VW<{
-			1: T_D32<1669909742>;
+			1: T_D32<number>;
 		}>;
 		5: T_VW<{
 			1: T_D32<13>;
@@ -353,20 +353,20 @@ type PX_buy_flow_params={
 };
 type P_get_pdg_buy_flow_params={1: T_VW<PX_buy_flow_params>;};
 type PD_continuation_params_f3={
-	4: T_FD32<20988979>;
-	8: T_FD32<1162761290>;
-	9: T_FD64<4914312580592780609n>;
-	10: T_FD32<1415786570>;
-	12: T_FD64<5938077997913429358n>;
-	13: T_FD32<1481922630>;
-	14: T_FD32<2000180812>;
+	4: T_FD32<number>;
+	8: T_FD32<number>;
+	9: T_FD64<bigint>;
+	10: T_FD32<number>;
+	12: T_FD64<bigint>;
+	13: T_FD32<number>;
+	14: T_FD32<number>;
 };
 type PD_continuation_params_f14={
 	1: T_D32<4>;
 	3: T_D32<2>;
 	4: T_D32<0>;
 };
-type PD_continuation_params_f11={2: T_D32<1030000>;};
+type PD_continuation_params_f11={2: T_D32<number>;};
 type PD_continuation_params={
 	3: T_VW<PD_continuation_params_f3>|TV_Str<string>;
 	8: T_D32<1>;
@@ -376,12 +376,12 @@ type PD_continuation_params={
 };
 type PD_invalidation_continuation={
 	3: TV_Str<string>;
-	5?: T_D32<1677254540586556>;
+	5?: T_D32<number>;
 	6: T_D32<1>;
 	8?: T_D32<2>;
 	9?: T_VW<PD_invalidation_continuation_f9>;
-	10?: T_D32<1677254541354670>;
-	11?: T_D32<1677243317743918>;
+	10?: T_D32<number>;
+	11?: T_D32<number>;
 	16: T_VW<{
 		1: T_D32<4>;
 		3: T_D32<1>;
@@ -392,7 +392,7 @@ type PD_invalidation_continuation={
 	}>;
 	17: T_D32<0|1>;
 	19?: T_VW<{1: T_D32<0>;}>;
-	20: T_D32<1677145213699204>;
+	20: T_D32<number>;
 	21: T_D32<0>;
 	22: T_VW<{}>;
 	23?: T_VW<{1: T_D32<10>;}>;
@@ -404,7 +404,7 @@ type PR_continuation_params=
 	;
 ;
 type P_create_comment_params={
-	2: TV_Str<"mUK-j5bKk0Q">;
+	2: TV_Str<D_VideoIdStr>;
 	5: T_VW<{1: T_D32<0>;}>;
 	10: T_D32<7>;
 };
@@ -413,9 +413,9 @@ type P_ypc_get_offers_params_f1={
 	1: T_D32<3>;
 	2: TV_Str<`UC${string}`>;
 };
-type P_ypc_get_offers_params_f5_f1={1: TV_Str<"32KKwgF67Ho">;};
+type P_ypc_get_offers_params_f5_f1={1: TV_Str<D_VideoIdStr>;};
 type P_ypc_get_offers_params_f5={
-	1: TV_Str<"32KKwgF67Ho">;
+	1: TV_Str<D_VideoIdStr>;
 	3: T_D32<1>;
 	5: T_VW<P_ypc_get_offers_params_f5_f1>;
 	9: T_D32<2>;
@@ -430,13 +430,13 @@ type P_notification_record_interactions={
 		1: T_D32<2>;
 		14: T_VW<{
 			1: T_VW<{
-				1: T_D32<1676825106923816>;
+				1: T_D32<number>;
 				2: T_D32<6>;
 			}>;
-			2: TV_Str<"sZ-4VzlYyLcGMIys">;
+			2: TV_Str<string>;
 		}>;
 	}>;
-	5: T_D32<183848276973>;
+	5: T_D32<number>;
 };
 type P_get_report_form_params={
 	25: TV_Str<"shopping">;
@@ -445,11 +445,11 @@ type P_get_report_form_params={
 };
 type P_notification_opt_out={
 	2: T_D32<1>;
-	3: TV_Str<"-qS20kHjg9QLg2bMA89bVA">;
+	3: TV_Str<string>;
 	4: T_D32<19>;
-	7: TV_Str<"dSHPtnZr2BdhZ8ss">;
+	7: TV_Str<string>;
 };
-type P_get_notification_menu_ctoken={1: T_D32<1676646338997768>;};
+type P_get_notification_menu_ctoken={1: T_D32<number>;};
 type P_format_item_xtags_f1={
 	1: TV_Str<"heaudio">;
 	2: TV_Str<`${true}`>;
@@ -469,8 +469,8 @@ type P_watch_player_params={
 };
 type PX_watch_bin={
 	2: TV_Str<string>;
-	3: T_D32<9458436>;
-	4: T_D32<1677102179415814>;
+	3: T_D32<number>;
+	4: T_D32<number>;
 	5: T_D32<248>;
 };
 type PD_watch_bin={
@@ -510,7 +510,7 @@ type P_ve_6827_params={
 				3: TV_Str<"xzrEJV3rzU4">;
 			}>;
 		}>;
-		5: T_D64<1259646283376989624n>;
+		5: T_D64<bigint>;
 	}>;
 };
 type P_playlist_edit_params={
@@ -535,8 +535,8 @@ type PF_23n24n={
 	24: TV_Str<string>;
 };
 type P_bin_params_1_f1={
-	1: T_FD64<5171158136908114023n>;
-	2: T_FD64<13946304882864751271n>;
+	1: T_FD64<bigint>;
+	2: T_FD64<bigint>;
 };
 type P_bin_params_1={
 	1: T_VW<P_bin_params_1_f1>;
@@ -553,10 +553,10 @@ type P_notification_remove_upcoming_event_reminder_params={
 	1: T_VW<PD_event_info>;
 	6: T_VW<PX_upcoming_event_reminder_info>;
 };
-type PD_event_info={14: T_FD64<6427857484411717751n>;};
+type PD_event_info={14: T_FD64<bigint>;};
 type PD_timed_continuation={
 	3: T_VW<PD_event_info>;
-	4: T_D32<1677253347>;
+	4: T_D32<number>;
 	7: T_D32<1>;
 	8: T_D32<1>;
 };
@@ -570,17 +570,17 @@ type PD_invalidation_continuation_f9={
 		3: T_D32<0>;
 		4: T_D32<0>;
 	}>;
-	10: T_D32<1677254540012668>;
+	10: T_D32<number>;
 	11: T_D32<3>;
 	15: T_D32<0>;
 	20: T_VW<{
 		1: T_VW<{
-			1: T_D32<1616677026>;
-			2: T_D32<541311000>;
+			1: T_D32<number>;
+			2: T_D32<number>;
 		}>;
 		2: T_VW<{
-			1: T_D32<1677254540>;
-			2: T_D32<12668127>;
+			1: T_D32<number>;
+			2: T_D32<number>;
 		}>;
 		3: T_VW<{1: T_D32<300>;}>;
 		4: T_D32<0>;
@@ -592,10 +592,10 @@ type PD_invalidation_continuation_f9={
 	}>;
 	22: T_D32<0>;
 	24: T_D32<0>;
-	25: T_D32<1677254540012668>;
+	25: T_D32<number>;
 	28: T_VW<{
-		1: T_D32<1677254540>;
-		2: T_D32<12668127>;
+		1: T_D32<number>;
+		2: T_D32<number>;
 	}>;
 	29: T_D32<0>;
 	30: T_D32<0>;
