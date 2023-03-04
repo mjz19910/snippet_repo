@@ -3325,7 +3325,7 @@ class HandleTypes extends ServiceMethods {
 			case "channel_id": {
 				let px=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=["channel_id","UC",{...px,tag: "UC",info_arr: [{raw_id: "UC"},{id: ""}]}];
+				let args=["channel_id","UC",px];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
@@ -3337,68 +3337,13 @@ class HandleTypes extends ServiceMethods {
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
-				const {info_arr: [{raw_id}]}=x;
-				if(this.str_starts_with(raw_id,"UC")) {
-					let [,id]=split_string_once(raw_id,"UC");
-					/** @type {Extract<Y_PutBoxedArgs,[any,"UC",any]>} */
-					let args=["channel_id","UC",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
-					let box_res=this.put_boxed_id(...args);
-					this.execute_promise_def((async () => (await box_res).ret)());
-					return;
-				}
-				if(this.str_starts_with(raw_id,"FE")) {
-					let [,id]=split_string_once(raw_id,"FE");
-					/** @type {Extract<Y_PutBoxedArgs,[any,any,DI_BrowseId_FE]>} */
-					let args=["browse_id","FE",{type: "browse_id",tag: "FE",info_arr: [{raw_id},{id}]}];
-					let box_res=this.put_boxed_id_3(...args);
-					this.execute_promise_def((async () => {
-						let res=await box_res;
-						console.log(res);
-						debugger;
-					})());
-					return;
-				}
-				if(this.str_starts_with(raw_id,"SP")) {
-					let [,id]=split_string_once(raw_id,"SP");
-					/** @type {Extract<Y_PutBoxedArgs,[any,any,{tag:"SP"}]>} */
-					let args=["browse_id","SP",{type: "browse_id",tag: "SP",info_arr: [{raw_id},{id}]}];
-					let box_res=this.put_boxed_id_3(...args);
-					this.execute_promise_def((async () => {
-						let res=await box_res;
-						console.log(res);
-						debugger;
-					})());
-					return;
-				}
-				if(this.str_starts_with(raw_id,"MP")) {
-					let [,id]=split_string_once(raw_id,"MP");
-					/** @type {Extract<Y_PutBoxedArgs,[any,any,{tag:"MP"}]>} */
-					let args=["browse_id","MP",{type: "browse_id",tag: "MP",info_arr: [{raw_id},{id}]}];
-					let box_res=this.put_boxed_id(...args);
-					this.execute_promise_def((async () => (await box_res).ret)());
-					return;
-				}
-				if(this.str_starts_with(raw_id,"VL")) {
-					let [,id]=split_string_once(raw_id,"VL");
-					/** @type {Extract<Y_PutBoxedArgs,[any,any,{tag:"VL"}]>} */
-					let args=["browse_id","VL",{type: "browse_id",tag: "VL",info_arr: [{raw_id},{id}]}];
-					let box_res=this.put_boxed_id(...args);
-					this.execute_promise_def((async () => (await box_res).ret)());
-				}
+				let px=this.make_DI_AGR_UrlInfo(x);
+				console.log(px);
 				debugger;
 			} break;
 			case "playlist_id": {
-				const {info_arr: [{raw_id}]}=x;
-				if(this.str_starts_with(raw_id,"PL")) {
-					/** @type {GU_PlaylistId} */
-					let r2=raw_id; r2;
-					let [,id]=split_string_once(raw_id,"PL");
-					/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],"PL",...any]>} */
-					let args=[x.tag,"PL",{type: x.tag,tag: "PL",info_arr: [{raw_id,id}]}];
-					let box_res=this.put_boxed_id(...args);
-					this.execute_promise_def((async () => (await box_res).ret)());
-					return;
-				}
+				let px=this.make_DI_AGR_UrlInfo(x);
+				console.log(px);
 				debugger;
 			} break;
 		}
@@ -3407,7 +3352,7 @@ class HandleTypes extends ServiceMethods {
 	DI_G_BrowseId(x) {
 		switch(x.tag) {
 			case "FE": {
-				let async_p=this.indexed_db.put_boxed_id_async_2(this.indexed_db_version,x.type,x.tag,x);
+				let async_p=this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,x.type,x.tag,x);
 				this.execute_promise_def(async_p);
 			} break;
 		}
@@ -3419,37 +3364,41 @@ class HandleTypes extends ServiceMethods {
 		switch(value.type) {
 			default: get_type(value)===""; debugger; break;
 			case "video_time": {
-				let box_res=this.put_boxed_id(value.type,value);
+				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": return this.DI_G_BrowseId(value);
 			case "video_id": {
-				let box_res=this.put_boxed_id(value.type,value);
+				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "channel_id": {
-				let box_res=this.put_boxed_id(value.type,value);
+				let box_res=this.put_boxed_id(value.type,"UC",value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "play_next": {
-				let box_res=this.put_boxed_id(value.type,value);
+				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "hashtag_id": {
-				let box_res=this.put_boxed_id(value.type,value);
+				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "user_id": {
-				let box_res=this.put_boxed_id(value.type,value);
+				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "channel_id": {
-				let box_res=this.put_boxed_id(value.type,value);
+				let box_res=this.put_boxed_id(value.type,"UC",value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
-				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => (await box_res).ret)());
+				switch(value.tag) {
+					case "FE": {
+						let box_res=this.put_boxed_id(value.type,value.tag,value);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					}
+				}
 			} break;
 		}
 	}

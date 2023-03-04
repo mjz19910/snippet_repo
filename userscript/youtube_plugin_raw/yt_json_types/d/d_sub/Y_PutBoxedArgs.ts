@@ -26,7 +26,7 @@ type Y_PutBoxedArgs=
 	|["keys",null,[string,make_item_group<string|number>]]
 	|["load_id",null,number]
 	|["number",null,[string,make_item_group<number>]]
-	|["play_next",DI_PlayNext]
+	|["play_next",null,DI_PlayNext]
 	|["root_visual_element",null,[string,make_item_group<number>]]
 	|["save_id",null,number]
 	|["string",null,[string,make_item_group<string>]]
