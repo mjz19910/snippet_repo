@@ -3332,9 +3332,9 @@ class HandleTypes extends ServiceMethods {
 				}
 			} break;
 			case "channel_id": {
-				let px=this.make_DI_AGR_UrlInfo(x);
+				let x2=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=["channel_id","UC",px];
+				let args=["channel_id","UC",x2];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
