@@ -3302,6 +3302,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(!ret) {debugger; throw new Error();}
 		switch(ret.type) {
+			default: debugger; throw new Error();
 			case "browse_id":
 				assert_assume_is_type(ret,ret.type);
 				return ret;
