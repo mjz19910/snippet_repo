@@ -3245,10 +3245,6 @@ class HandleTypes extends ServiceMethods {
 					case "": break;
 				}
 			} break;
-			/*
-			case "video": this.videoId(value.id); break;
-			case "video_referral": this.videoId(value.id); break;
-			*/
 			case "video_referral": debugger; break;
 			case "channel_id": debugger; break;
 			case "video": debugger; break;
