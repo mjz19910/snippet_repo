@@ -1,1 +1,1 @@
-type DIR_BrowseId=T_UrlInfoPartial<"raw",["browse_id"],DU_BrowseId>;
+type DIR_BrowseId=T_UrlInfoPartial<"raw",["browse_id"],GU_BrowseId>;

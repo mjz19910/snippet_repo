@@ -49,7 +49,7 @@ type SD_PlaylistId=
 	|"LL"
 	;
 ;
-type DU_BrowseId=
+type GU_BrowseId=
 	|T_FeedEntry<D_BrowseEndpointPages>
 	|GU_VE5754_BrowseId
 	|`UC${string}`

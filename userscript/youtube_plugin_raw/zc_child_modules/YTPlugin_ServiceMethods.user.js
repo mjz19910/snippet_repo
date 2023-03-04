@@ -1488,7 +1488,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {GU_PlaylistId} x */
 	GU_PlaylistId(x) {this.D_RawUrlFromTag("raw","playlist_id",x);}
-	/** @api @public @arg {DU_BrowseId} x */
+	/** @api @public @arg {GU_BrowseId} x */
 	browseId(x) {this.D_RawUrlFromTag("raw","browse_id",x);}
 	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
 	D_RawUrlFromTag(type,tag,x) {
