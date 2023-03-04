@@ -297,28 +297,53 @@ class IndexedDBService extends BaseService {
 			case "VL": {
 				let [type,tag,value]=args;
 				switch(value.tag) {
-					case "VL:LL": break;
-					case "VL:PL": break;
-					case "VL:WL": break;
+					case "VL:LL": {
+						const {info_arr: [{raw_id}]}=value;
+						let [,id]=split_string_once(raw_id,"VL");
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${type}:${tag}`,
+							key: `boxed_id:${type}:${tag}:${id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+					case "VL:PL": {
+						const {info_arr: [{raw_id}]}=value;
+						let [,id]=split_string_once(raw_id,"VL");
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${type}:${tag}`,
+							key: `boxed_id:${type}:${tag}:${id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+					case "VL:WL": {
+						const {info_arr: [{raw_id}]}=value;
+						let [,id]=split_string_once(raw_id,"VL");
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${type}:${tag}`,
+							key: `boxed_id:${type}:${tag}:${id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
 				};
-				const {info_arr: [{raw_id}]}=value;
-				let [,id]=split_string_once(raw_id,"VL");
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag: `${type}:${tag}`,
-					key: `boxed_id:${type}:${tag}:${id}`,
-					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
 			}
 			case "SP": {
 				let [tag,id,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
 				},version);
 				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
@@ -376,15 +401,13 @@ class IndexedDBService extends BaseService {
 				let ret={args,promise: as_any(promise)};
 				return ret;
 			}
-			case "browse_id": {
-				this.put_boxed_pl(version,...args);
-			} throw new Error("Unreachable");
+			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "channel_id": {
-				let [tag,value]=args;
+				let [tag,id,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:UC:${value.info_arr[1].id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
 				},version);
 				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
@@ -392,7 +415,7 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "video_time": {
-				let [tag,value]=args;
+				let [tag,,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
@@ -407,7 +430,7 @@ class IndexedDBService extends BaseService {
 				let [tag,id,[type,container]]=args;
 				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
 				let value={
-					type: id,
+					type,
 					info_arr: [container]
 				};
 				let promise=this.put_box({
@@ -427,7 +450,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${id}`,
 					value: {
-						type: id,
+						type,
 						info_arr: [container]
 					},
 				},version);
@@ -442,7 +465,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${id}`,
 					value: {
-						type: id,
+						type,
 						info_arr: [container]
 					},
 				},version);
@@ -457,7 +480,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${id}`,
 					value: {
-						type: id,
+						type,
 						info_arr: [container]
 					},
 				},version);
@@ -472,7 +495,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${id}`,
 					value: {
-						type: id,
+						type,
 						info_arr: [container]
 					},
 				},version);
@@ -487,7 +510,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${id}`,
 					value: {
-						type: id,
+						type,
 						info_arr: [container]
 					},
 				},version);
@@ -496,7 +519,7 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "load_id": {
-				let [mode,id]=args;
+				let [mode,,id]=args;
 				let promise=this.put_box({
 					key: `boxed_id:a:${mode}`,
 					type: mode,
@@ -508,7 +531,7 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "save_id": {
-				let [mode,id]=args;
+				let [mode,,id]=args;
 				let promise=this.put_box({
 					key: `boxed_id:a:${mode}`,
 					type: mode,
@@ -635,35 +658,35 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	async push_store_item_to_database(store,item,version) {
-		let [,vi]=item;
+		let [v_key,vi]=item;
 		if(this.cache_weak_set.has(vi)) return {item,err: true};
 		this.cache_weak_set.add(vi);
 		switch(store.content) {
 			default: debugger; break;
 			case "bigint": {
 				if(!this.is_vi_has_bigint(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
 				return ret;
 			}
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
 				return ret;
 			}
 			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
 				return ret;
 			}
 			case "string": {
 				if(!this.is_vi_has_str(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
 				return ret;
 			}
 			case "keys": {
 				if(!(this.is_vi_has_str(vi)||this.is_vi_has_num(vi))) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
 				return ret;
 			}
 		}

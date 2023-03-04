@@ -42,5 +42,16 @@ type G_BoxedIdObj=
 		key: `boxed_id:browse_id:VL:PL${string}`;
 		value: DI_BrowseId_VL;
 	}
+	|{
+		type: "boxed_id";
+		tag: `browse_id:${string}`;
+		key: `boxed_id:browse_id:${string}:${string}`;
+	}
+	|{
+		type: "boxed_id";
+		tag: "browse_id:SP";
+		key: `boxed_id:browse_id:SP:${string}`;
+		value: DI_BrowseId_SP;
+	}
 	;
 ;
