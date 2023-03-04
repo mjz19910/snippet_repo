@@ -1,20 +1,19 @@
 type G_UrlInfo=
-	|DIG_BrowseIdInfo
-	|D_ChannelUrlInfo
-	|D_InfoHashtagId
-	|D_InfoVideoTime
-	|D_PlaylistInfo_LL
-	|D_PlaylistInfo_LL
-	|D_PlaylistInfo_PL
-	|D_PlaylistInfo_RD
-	|D_PlaylistInfo_UU
-	|D_PlaylistInfo_WL
-	|D_PlaylistInfo_RD
-	|D_PlaylistInfo_RD_CM_UC
-	|D_PlaylistInfo_RD_GM_EM
-	|D_PlaylistInfo_RD_MM
-	|D_PlaylistInfo_UU
-	|D_PlayNextUrlInfo
+	|DIG_BrowseId
+	|DI_ChannelUrl
+	|DI_HashtagId
+	|DI_VideoTime
+	|DI_Playlist_LL
+	|DI_Playlist_PL
+	|DI_Playlist_RD
+	|DI_Playlist_UU
+	|DI_Playlist_WL
+	|DI_Playlist_RD
+	|DI_Playlist_RD_CM_UC
+	|DI_Playlist_RD_GM_EM
+	|DI_Playlist_RD_MM
+	|DI_Playlist_UU
+	|DI_PlayNext
 	|DI_VideoId
 	|DI_UserId
 	;

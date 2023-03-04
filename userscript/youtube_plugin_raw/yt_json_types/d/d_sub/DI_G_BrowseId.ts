@@ -1,7 +1,7 @@
-type DIG_BrowseIdInfo=
+type DIG_BrowseId=
 	|DI_BrowseId_FE
 	|DI_BrowseId_MP
 	|DI_BrowseId_SP
-	|DIG_BrowseId_VL
+	|DI_G_BrowseId_VL
 	;
 ;

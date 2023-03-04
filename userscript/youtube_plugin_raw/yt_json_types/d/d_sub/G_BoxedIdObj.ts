@@ -26,7 +26,7 @@ type G_BoxedIdObj=
 		type: "boxed_id";
 		tag: "video_time";
 		key: `boxed_id:video_time:${number}s`;
-		value: D_InfoVideoTime;
+		value: DI_VideoTime;
 	}
 	|{
 		tag: "video";

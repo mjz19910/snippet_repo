@@ -1,1 +1,0 @@
-type D_PlaylistInfo_PL=T_UrlInfo_Join<"playlist_id",["PL"],string>;

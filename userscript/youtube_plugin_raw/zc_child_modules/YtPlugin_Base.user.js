@@ -2184,12 +2184,12 @@ class TextDecoderExt {
 }
 class BaseService extends BaseServicePrivate {
 	/**
-	 * @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} T @arg {T} x
+	 * @template {Extract<DI_GR_UrlInfo|G_UrlInfo,{type_parts:any}>} T @arg {T} x
 	 * @template {keyof T["type_parts"]} K @arg {K} k
 	 * @template {T["type_parts"][K]} V @arg {V} v @returns {x is Extract<T,{type_parts:{[U in K]:V}}>}
 	 * */
 	is_UrlInfoPartAt(x,k,v) {return k in x.type_parts&&x.type_parts[k]===v;}
-	/** @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} O @arg {O} x @returns {x is Extract<O,{type_parts:{a:T}}>} @template {Extract<O,{type_parts:{a:any}}>["type_parts"]["a"]} T @arg {T} t */
+	/** @template {Extract<DI_GR_UrlInfo|G_UrlInfo,{type_parts:any}>} O @arg {O} x @returns {x is Extract<O,{type_parts:{a:T}}>} @template {Extract<O,{type_parts:{a:any}}>["type_parts"]["a"]} T @arg {T} t */
 	is_UrlInfoPart1(x,t) {
 		if("a" in x.type_parts) return x.type_parts.a===t;
 		return false;

@@ -3227,7 +3227,7 @@ class HandleTypes extends ServiceMethods {
 			} return;
 		}
 	}
-	/** @public @arg {G_RawUrlInfo} x */
+	/** @public @arg {DI_GR_UrlInfo} x */
 	G_RawUrlInfo(x) {
 		/** @template T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
@@ -3389,7 +3389,7 @@ class HandleTypes extends ServiceMethods {
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
-				/** @type {DIG_BrowseIdInfo} */
+				/** @type {DIG_BrowseId} */
 				let v2=value;
 				let box_res=this.put_boxed_id(v2.type,v2);
 				this.execute_promise_def((async () => (await box_res).ret)());

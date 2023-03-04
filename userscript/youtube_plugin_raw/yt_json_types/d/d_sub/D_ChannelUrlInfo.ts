@@ -1,4 +1,4 @@
-type D_ChannelUrlInfo={
+type DI_ChannelUrl={
 	type: "channel_id";
 	type_parts: ["channel_id","UC"];
 	id: string;

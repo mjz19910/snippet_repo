@@ -1,4 +1,4 @@
-type D_InfoHashtagId={
+type DI_HashtagId={
 	type: "hashtag_id";
 	hashtag: string;
 };

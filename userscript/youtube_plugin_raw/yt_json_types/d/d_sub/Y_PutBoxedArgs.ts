@@ -7,7 +7,7 @@ type Y_PutBoxedArgs=
 	|["root_visual_element",string,make_item_group<number>]
 	|["save_id",number]
 	|["string",string,make_item_group<string>]
-	|["browse_id",DIG_BrowseIdInfo]
+	|["browse_id",DIG_BrowseId]
 	|MakeInfoBoxArgs<G_UrlInfo>
 	;
 ;
@@ -72,102 +72,102 @@ type Y_PutBoxedRet={
 		value: DI_UserId;
 	}>;
 }|{
-	args: ["play_next",D_PlayNextUrlInfo];
+	args: ["play_next",DI_PlayNext];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "play_next";
 		extra: "any";
 		key: "boxed_id:play_next:1";
-		value: D_PlayNextUrlInfo;
+		value: DI_PlayNext;
 	}>;
 }|{
-	args: ["playlist_id",D_PlaylistInfo_PL];
+	args: ["playlist_id",DI_Playlist_PL];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:PL";
-		value: D_PlaylistInfo_PL;
+		value: DI_Playlist_PL;
 	}>;
 }|{
-	args: ["playlist_id",D_PlaylistInfo_RD];
+	args: ["playlist_id",DI_Playlist_RD];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RD";
-		value: D_PlaylistInfo_RD;
+		value: DI_Playlist_RD;
 	}>;
 }|{
-	args: ["playlist_id",D_PlaylistInfo_RD_CM_UC];
+	args: ["playlist_id",DI_Playlist_RD_CM_UC];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: `boxed_id:playlist_id:RDCM:UC:${string}`;
-		value: D_PlaylistInfo_RD_CM_UC;
+		value: DI_Playlist_RD_CM_UC;
 	}>;
 }|{
-	args: ["playlist_id",D_PlaylistInfo_RD_GM_EM];
+	args: ["playlist_id",DI_Playlist_RD_GM_EM];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RDGM";
-		value: D_PlaylistInfo_RD_GM_EM;
+		value: DI_Playlist_RD_GM_EM;
 	}>;
 }|{
-	args: ["playlist_id",D_PlaylistInfo_RD_MM];
+	args: ["playlist_id",DI_Playlist_RD_MM];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RDMM";
-		value: D_PlaylistInfo_RD_MM;
+		value: DI_Playlist_RD_MM;
 	}>;
 }|{
-	args: ["playlist_id",D_PlaylistInfo_UU];
+	args: ["playlist_id",DI_Playlist_UU];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:UU";
-		value: D_PlaylistInfo_UU;
+		value: DI_Playlist_UU;
 	}>;
 }|{
-	args: ["hashtag_id",D_InfoHashtagId];
+	args: ["hashtag_id",DI_HashtagId];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "hashtag_id";
 		extra: "any";
 		key: `boxed_id:hashtag_id:${string}`;
-		value: D_InfoHashtagId;
+		value: DI_HashtagId;
 	}>;
 }|{
-	args: ["browse_id",DIG_BrowseIdInfo];
+	args: ["browse_id",DIG_BrowseId];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "browse_id";
 		extra: "any";
 		key: `boxed_id:browse_id:VLPL${string}`;
-		value: DIG_BrowseIdInfo;
+		value: DIG_BrowseId;
 	}>;
 }|{
-	args: ["channel_id",D_ChannelUrlInfo];
+	args: ["channel_id",DI_ChannelUrl];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "channel_id";
 		extra: "any";
 		key: `boxed_id:channel_id:UC${string}`;
-		value: D_ChannelUrlInfo;
+		value: DI_ChannelUrl;
 	}>;
 }|{
-	args: ["video_time",D_InfoVideoTime];
+	args: ["video_time",DI_VideoTime];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "video_time";
 		key: `boxed_id:video_time:${number}s`;
-		value: D_InfoVideoTime;
+		value: DI_VideoTime;
 	}>;
 }|{
 	args: ["bigint",string,make_item_group<bigint>];
@@ -243,7 +243,7 @@ type Y_PutBoxedRet={
 type YScratch=Exclude<Y_PutBoxedRet,{args: ["boolean"|"bigint"|"load_id"|"save_id"|"number"|"keys"|"root_visual_element"|"string",...any];}>;
 type BScratch=Extract<G_BoxedIdObj,{type: "boxed_id";}>;
 type MakeInfoBoxArgs<T extends {type: any;}>=T extends infer R extends T? [R["type"],R]:never;
-type MakeRawInfoBoxArgs<T extends G_RawUrlInfo>=
+type MakeRawInfoBoxArgs<T extends DI_GR_UrlInfo>=
 	T extends infer R extends T?
 	R["type_parts"] extends infer A extends R["type_parts"]?
 	A extends ["raw",...infer A2]?

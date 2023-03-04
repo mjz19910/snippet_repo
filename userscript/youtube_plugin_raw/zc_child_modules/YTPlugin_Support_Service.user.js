@@ -1155,9 +1155,9 @@ class Support_RS_Player extends ServiceMethods {
 		});
 	}
 	/** @private @arg {R_PlaylistInfoCardContent} x */
-	R_PlaylistInfoCardContent(x) {this.H_("playlistInfoCardContentRenderer",x,this.D_PlaylistInfoCardContent);}
+	R_PlaylistInfoCardContent(x) {this.H_("playlistInfoCardContentRenderer",x,this.DI_PlaylistCardContent);}
 	/** @private @arg {D_PlaylistInfoCardContent} x */
-	D_PlaylistInfoCardContent(x) {x;}
+	DI_PlaylistCardContent(x) {x;}
 	/** @private @arg {R_CollaboratorInfoCardContent} x */
 	R_CollaboratorInfoCardContent(x) {this.H_("collaboratorInfoCardContentRenderer",x,this.D_CollaboratorInfoCardContent);}
 	/** @private @arg {D_CollaboratorInfoCardContent} x */
