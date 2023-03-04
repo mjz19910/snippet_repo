@@ -910,7 +910,7 @@ class IndexedDBService extends BaseService {
 						case "playlist_id:RDMM": {
 							if(item_db_nt.type!==item_nt.type) break;
 							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.type===item_db_nt.key) break;
+							if(item_nt.info.id===item_db_nt.info.id) break;
 							update_item=true;
 						} break;
 						case "playlist_id:UU": {
