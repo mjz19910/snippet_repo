@@ -87,24 +87,24 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
-/** @template {string|number|bigint|boolean} T @template {StoreContentStr} U */
+/** @template {string|number|bigint|boolean} CLS_T @template {StoreContentStr} U */
 class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	key_index=new Map;
 	/** @type {Map<string,number>} */
 	new_key_index=new Map;
-	/** @type {[string, make_item_group<T>][]} */
+	/** @type {[string, make_item_group<CLS_T>][]} */
 	data=[];
-	/** @type {[string, make_item_group<T>][]} */
+	/** @type {[string, make_item_group<CLS_T>][]} */
 	new_data=[];
-	/** @arg {StoreGetType<T>} type @arg {U} content @arg {()=>void} data_update_callback */
+	/** @arg {StoreGetType<CLS_T>} type @arg {U} content @arg {()=>void} data_update_callback */
 	constructor(type,content,data_update_callback) {
 		super();
 		this.type=type;
 		this.content=content;
 		this.data_update_callback=data_update_callback;
 	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
+	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
 	add_data_to_index(k,x) {
 		let idx=this.key_index.get(k);
 		if(idx!==void 0) {
@@ -115,7 +115,7 @@ class StoreDescription extends ApiBase2 {
 		this.key_index.set(k,new_len-1);
 		this.data_update_callback();
 	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
+	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
 	add_new_data_to_index(k,x) {
 		let idx=this.new_key_index.get(k);
 		if(idx!==void 0) {
@@ -125,17 +125,37 @@ class StoreDescription extends ApiBase2 {
 		let new_len=this.new_data.push([k,x]);
 		this.new_key_index.set(k,new_len-1);
 	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
+	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
 	push_new_data(k,x) {
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
 	}
-	/** @arg {T_BoxedStore<T,this["content"]>} item */
+	/** @arg {T_BoxedStore<CLS_T,this["content"]>} item */
 	load_data(item) {
 		let {id: k,value: x}=item;
 		this.add_data_to_index(k,x);
 	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
+	/** @template {make_item_group<CLS_T>} R @arg {R} x @returns {R} */
+	clone_container(x) {
+		switch(x[0]) {
+			case "arr": {
+				/** @type {typeof x} */
+				let x_clone=structuredClone(x);
+				return x_clone;
+			}
+			case "many": {
+				/** @type {typeof x} */
+				let x_clone=structuredClone(x);
+				return x_clone;
+			}
+		}
+	}
+	/** @template {make_item_group<CLS_T>} T @arg {T} x @template {make_item_group<CLS_T>} U @arg {(x:T)=>U} prepare */
+	clone_and_then(x,prepare) {
+		let x1=this.clone_container(x);
+		return prepare(x1);
+	}
+	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
 	save_data(k,x) {
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
@@ -145,27 +165,29 @@ class StoreDescription extends ApiBase2 {
 			if(item_container[0]==="many"&&x[0]==="arr") {
 				let [,item_many]=item_container;
 				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x[1]))>-1) return;
-				item_many.push(x[1]);
-				this.push_new_data(k,item_container);
-				return;
-			}
-			if(item_container[0]==="arr"&&x[0]==="arr") {
-				let [,item_arr]=item_container;
-				if(this.eq_keys(item_arr,x[1])) return;
-				this.push_new_data(k,["many",[item_container[1],x[1]]]);
+				let new_container=this.clone_and_then(item_container,x1 => (x1[1].push(x[1]),x1));
+				this.push_new_data(k,new_container);
 				return;
 			}
 			if(item_container[0]==="arr"&&x[0]==="one") {
 				let [,item_arr]=item_container;
 				if(item_arr.includes(x[1])) return;
-				item_arr.push(x[1]);
-				this.push_new_data(k,item_container);
+				let new_container=this.clone_and_then(item_container,x1 => (x1[1].push(x[1]),x1));
+				this.push_new_data(k,new_container);
+				return;
+			}
+			if(item_container[0]==="arr"&&x[0]==="arr") {
+				let [,item_arr]=item_container;
+				if(this.eq_keys(item_arr,x[1])) return;
+				let new_container=this.clone_and_then(item_container,x1 => ["many",[x1[1],x[1]]]);
+				this.push_new_data(k,new_container);
 				return;
 			}
 			if(item_container[0]==="one"&&x[0]==="one") {
 				let [,item_value]=item_container;
 				if(item_value===x[1]) return;
-				this.push_new_data(k,["arr",[item_container[1],x[1]]]);
+				let new_container=this.clone_and_then(item_container,x1 => ["arr",[x1[1],x[1]]]);
+				this.push_new_data(k,new_container);
 				return;
 			}
 			debugger;
@@ -198,7 +220,7 @@ class StoreDescription extends ApiBase2 {
 		this.key_index.set(k,idx);
 		return this.data[idx];
 	}
-	/** @arg {string} k @arg {make_item_group<T>} x */
+	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
 	add_to_index(k,x) {
 		/** @type {[typeof k,typeof x]} */
 		let p=[k,x];
