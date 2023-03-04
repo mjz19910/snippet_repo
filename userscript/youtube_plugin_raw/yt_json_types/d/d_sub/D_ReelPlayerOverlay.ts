@@ -9,8 +9,10 @@ type D_ReelPlayerOverlay={
 	viewCommentsButton: R_Button;
 	videoInteractions?: {};
 	trackingParams: string;
+	reelPlayerNavigationModel?: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
 	shareButton: R_Button;
 	pivotButton: R_PivotButton;
 	multimixAttributionLabel?: R_ReelMultimixAttributionLabel;
 	badge?: RMD_Badge;
 };
+type NoInfer<T>=T extends infer NoInferT? NoInferT:never;

@@ -965,10 +965,15 @@ class ServiceMethods extends ServiceData {
 	R_Hint(x) {this.H_("hintRenderer",x,this.D_Hint);}
 	/** @protected @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
+	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x */
+	wg(_l,x) {
+		/** @arg {typeof x} y */
+		return y => this.cq(x,y);
+	}
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,...u}=this.s(cf,x);/*#destructure_partial*/
 		this.t(likeButton,this.R_LikeButton);
 		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
 		this.t(menu,this.R_Menu);
@@ -978,7 +983,9 @@ class ServiceMethods extends ServiceData {
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.t(viewCommentsButton,this.R_Button);
 		this.t(videoInteractions,this.g);
+		const {trackingParams,reelPlayerNavigationModel,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=u; this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
+		{const x2=reelPlayerNavigationModel; this.t(x2,this.wg(x2,"REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
 		this.t(shareButton,this.R_Button);
 		this.t(pivotButton,this.R_PivotButton);
 		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
