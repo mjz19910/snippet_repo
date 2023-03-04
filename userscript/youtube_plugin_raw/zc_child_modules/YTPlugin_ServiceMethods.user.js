@@ -1502,7 +1502,7 @@ class ServiceMethods extends ServiceData {
 	playlistId(raw_id) {this.GU_PlaylistId(raw_id);}
 	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
 	guideEntryId(x) {this.ht.DI_AGR_UrlInfo({type: "raw",tag: "guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
-	/** @protected @arg {D_ChannelIdStr} raw_id */
+	/** @protected @arg {DU_ChannelId} raw_id */
 	channelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
 		this.ht.DI_AGR_UrlInfo({type: "raw",tag: "channel_id",type_parts: ["raw","channel_id"],raw_id});

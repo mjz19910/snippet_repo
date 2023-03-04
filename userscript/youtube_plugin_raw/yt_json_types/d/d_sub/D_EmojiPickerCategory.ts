@@ -1,5 +1,5 @@
 type D_EmojiPickerCategory={
-	categoryId: D_ChannelIdStr;
+	categoryId: DU_ChannelId;
 	title: G_Text;
 	emojiIds: `UC${string}/${string}`[];
 	trackingParams: string;

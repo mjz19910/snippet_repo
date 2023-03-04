@@ -7,9 +7,12 @@ type GU_VE3611_Url=
 	|`/user/${string}`
 	;
 ;
-type D_InfinitePlaylistIdStr=`RD${string}`|`RDMM${string}`|`RDCMUC${string}`;
+type DU_RadioId_MyMix=`RDMM${string}`;
+type DU_RadioId=`RD${string}`;
+type DU_RadioId_ChannelMix=`RDCM${DU_ChannelId}`;
+type GU_RadioId=DU_RadioId|DU_RadioId_MyMix|DU_RadioId_ChannelMix;
 // cspell:ignore RDCMUC
-type GU_PlaylistId="WL"|"LL"|GU_PlaylistUserUploadsId|D_PlaylistIdStr|D_InfinitePlaylistIdStr;
+type GU_PlaylistId="WL"|"LL"|GU_PlaylistUserUploadsId|D_PlaylistIdStr|GU_RadioId;
 type GU_VE5754_BrowseId="VLWL"|"VLLL"|GU_VE5754_PlaylistBrowseId;
 type GU_VE6827_Id=
 	|"FEguide_builder"
