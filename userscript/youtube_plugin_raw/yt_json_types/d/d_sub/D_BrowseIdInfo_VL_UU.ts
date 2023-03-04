@@ -1,6 +1,5 @@
 type DI_BrowseId_VL_UU={
 	type: "browse_id";
-	tag: "VL";
-	type_parts: ["browse_id","VL","UU"];
-	raw_id: `VLUU${string}`;
+	tag: "VL:UU";
+	info_arr: [{raw_id: `VLUU${string}`;}];
 };
