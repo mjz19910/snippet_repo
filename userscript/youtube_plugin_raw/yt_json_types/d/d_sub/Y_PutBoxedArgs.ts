@@ -4,14 +4,28 @@ type DI_BrowseId_VL={
 	info_arr: [
 		{raw_id: GU_VE5754_BrowseId;},
 		{
-			tag: "PL";
-			value: DI_Playlist_PL;
-		}|{
 			tag: "WL";
 			value: DI_Playlist_WL;
-		}|{
+		}
+	];
+}|{
+	type: "browse_id";
+	tag: "VL";
+	info_arr: [
+		{raw_id: GU_VE5754_BrowseId;},
+		{
 			tag: "LL";
 			value: DI_Playlist_LL;
+		}
+	];
+}|{
+	type: "browse_id";
+	tag: "VL";
+	info_arr: [
+		{raw_id: GU_VE5754_BrowseId;},
+		{
+			tag: "PL";
+			value: DI_Playlist_PL;
 		}
 	];
 };

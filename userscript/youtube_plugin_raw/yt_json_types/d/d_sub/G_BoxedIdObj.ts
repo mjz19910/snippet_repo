@@ -24,5 +24,23 @@ type G_BoxedIdObj=
 	|D_BoxedVEStore
 	|D_BoxedVideoId
 	|D_BoxedVideoTime
+	|{
+		type: "boxed_id";
+		tag: "browse_id:VL";
+		key: "boxed_id:browse_id:VL:LL";
+		value: DI_BrowseId_VL;
+	}
+	|{
+		type: "boxed_id";
+		tag: "browse_id:VL";
+		key: "boxed_id:browse_id:VL:PL";
+		value: DI_BrowseId_VL;
+	}
+	|{
+		type: "boxed_id";
+		tag: "browse_id:VL";
+		key: `boxed_id:browse_id:VL:PL${string}`;
+		value: DI_BrowseId_VL;
+	}
 	;
 ;

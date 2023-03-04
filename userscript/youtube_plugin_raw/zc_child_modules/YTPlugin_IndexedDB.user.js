@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,as_any}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,as_any,split_string_once}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -158,6 +158,7 @@ class IndexedDBService extends BaseService {
 	load_store(store,item) {
 		if(!("type" in item)) return;
 		if(item.type!=="boxed_id") return;
+		if(!("value" in item)) return;
 		let [,d_cache]=this.get_data_cache("boxed_id");
 		this.cache_weak_set.add(item.value);
 		let c_index=this.get_cache_index("boxed_id");
@@ -169,7 +170,7 @@ class IndexedDBService extends BaseService {
 			d_cache[idx]=null;
 		}
 		switch(item.tag) {
-			default: debugger; break;
+			default: item.tag==="browse_id:FE"; debugger; break;
 			case "boolean": return store.get_store("bool_store").load_data(item);
 			case "keys": return store.get_store("keys_store").load_data(item);
 			case "number": return store.get_store("number_store").load_data(item);
@@ -303,7 +304,7 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "hashtag_id": {
-				let [tag,value]=args;
+				let [tag,,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
@@ -316,12 +317,39 @@ class IndexedDBService extends BaseService {
 			}
 			case "browse_id": {
 				switch(args[1]) {
+					default: args[1]===""; throw new Error("Unreachable");
+					case "MP": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}:_:${value.info_arr[3].id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
 					case "FE": {
 						let [tag,id,value]=args;
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+					case "VL": {
+						let [type,tag,value]=args;
+						const {info_arr: [{raw_id}]}=value;
+						let [,id]=split_string_once(raw_id,"VL");
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${type}:${tag}`,
+							key: `boxed_id:${type}:${tag}:${id}`,
 							value,
 						},version);
 						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
@@ -341,7 +369,7 @@ class IndexedDBService extends BaseService {
 						return ret;
 					}
 				}
-			}
+			} throw new Error("Unreachable");
 			case "channel_id": {
 				let [tag,value]=args;
 				let promise=this.put_box({
