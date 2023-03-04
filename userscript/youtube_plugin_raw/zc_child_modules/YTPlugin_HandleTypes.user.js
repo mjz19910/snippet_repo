@@ -752,6 +752,7 @@ class HandleTypes extends ServiceMethods {
 			case "qxoed":
 			case "t0a7l":
 			case "t0a7s":
+			case "tt1e7":
 			case "tt1el":
 			case "vgqsk":
 			case "vgqsr":
