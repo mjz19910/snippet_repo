@@ -3297,7 +3297,29 @@ class HandleTypes extends ServiceMethods {
 					}
 				}
 				{
-					const k="VL"; if(this.str_starts_with(raw_id,k)) {
+					const k="VL";
+					if(this.str_starts_with(raw_id,k)) {
+						if(raw_id==="VLLL") return;
+						if(raw_id==="VLWL") return;
+						if(this.str_starts_with(raw_id,"VLPL")) {
+							this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k,"PL"],raw_id});
+							return;
+						}
+						if(this.str_starts_with(raw_id,"VLUU")) {
+							this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k,"UU"],raw_id});
+							return;
+						}
+						raw_id;
+					}
+				}
+				{
+					const k="UC"; if(this.str_starts_with(raw_id,k)) {
+						this.G_RawUrlInfo({type: "raw",type_parts: ["raw","channel_id"],raw_id});
+						return;
+					}
+				}
+				{
+					const k="MP"; if(this.str_starts_with(raw_id,k)) {
 						return this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k],raw_id});
 					}
 				}
@@ -3354,7 +3376,9 @@ class HandleTypes extends ServiceMethods {
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
-				let box_res=this.put_boxed_id(value.type,value);
+				/** @type {D_BrowseIdInfo} */
+				let v2=value;
+				let box_res=this.put_boxed_id(v2.type,v2);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "channel_id": {
