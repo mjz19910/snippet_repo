@@ -2374,7 +2374,7 @@ class Support_Renderer extends ServiceMethods {
 	}
 	// UpdateAction methods
 	/** @private @arg {AU_SubscribeButton} x */
-	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
+	AU_SubscribeButton(x) {this.TE_Endpoint_2_opt_v2("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	// Command methods
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.TE_Endpoint_2_opt_v2("runAttestationCommand",x,this.D_RunAttestation);}
