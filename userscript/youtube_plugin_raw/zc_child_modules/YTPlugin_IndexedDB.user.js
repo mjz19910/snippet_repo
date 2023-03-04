@@ -516,15 +516,30 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
+	/**
+	 * @arg {TypedIndexedDB} tdb @template {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
+	 * @returns {{type:"err";err:unknown}|{type:"ok";req:IDBRequest<IDBValidKey>}}
+	 * */
+	start_put_request(tdb,store,value) {
+		try {
+			return {type: "ok",req: tdb.put(store,value)};
+		} catch(e) {
+			console.log("failed to start put request",e);
+			return {type: "err",err: e};
+		}
+	}
 	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDB;}} s @arg {DT_DatabaseStoreTypes[U]} value */
 	async force_update(s,value) {
 		if(!s.obj_store) throw new Error("No object store");
+		let put_req=this.start_put_request(s.typed_db,s.obj_store,value);
+		if(put_req.type==="err") {
+			throw new AggregateError([put_req.err],"start error");
+		}
 		try {
-			let put_req=s.typed_db.put(s.obj_store,value);
-			let ret=await this.get_async_result(put_req);
+			let ret=await this.get_async_result(put_req.req);
 			return ret;
 		} catch(e) {
-			throw new AggregateError([e]);
+			throw new AggregateError([e],"async error");
 		}
 	}
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
