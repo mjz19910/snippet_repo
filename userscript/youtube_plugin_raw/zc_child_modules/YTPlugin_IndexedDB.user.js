@@ -288,7 +288,7 @@ class IndexedDBService extends BaseService {
 						let ret=this.put_box({
 							type: "boxed_id",
 							tag: a,
-							key: `boxed_id:${a}:${value.raw_id}`,
+							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
 							value,
 						},version);
 						return {args,ret};

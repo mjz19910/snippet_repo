@@ -164,42 +164,6 @@ type D_BoxedNumberStore=T_BoxedStore<number,"number">;
 type D_BoxedVEStore=T_BoxedStore<number,"root_visual_element">;
 type D_BoxedBigintStore=T_BoxedStore<bigint,"bigint">;
 type G_BoxedVideoId=I_BoxedVideoId|I_BoxedVideoIdS;
-type G_BoxedIdObj=
-	|D_BoxedUpdateId
-	|D_BoxedVEStore
-	|D_BoxedStringStore
-	|D_BoxedNumberStore
-	|D_BoxedBooleanStore
-	|D_BoxedKeysStore
-	|D_BoxedBigintStore
-	|{
-		key: `boxed_id:video_time:${number}s`;
-	}
-	|{
-		type: "boxed_id";
-		tag: "video_referral";
-		key: `boxed_id:video_referral:${string}`;
-		value: string;
-	}
-	|{
-		type: "boxed_id",
-		tag: "video_time",
-		key: `boxed_id:video_time:${number}s`;
-		value: D_InfoVideoTime;
-	}
-	|{
-		tag: "video",
-		key: `boxed_id:video:null:${string}`;
-		value: D_UrlInfo_Video;
-	}
-	|{
-		type: "boxed_id",
-		tag: "video",
-		key: `boxed_id:video:normal:${string}`,
-		value: D_VideoIdNormal;
-	}
-	;
-;
 type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
 	key: `boxed_id:${T}:${T_IdType}`;
 	base: "boxed_id";
