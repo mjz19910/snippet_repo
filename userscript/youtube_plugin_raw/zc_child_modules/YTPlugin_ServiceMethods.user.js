@@ -2091,7 +2091,7 @@ class ServiceMethods extends ServiceData {
 		switch(x) {default: debugger; return false;}
 	}
 	/** @api @public @arg {D_BrowseIdStr} x */
-	parse_browse_id(x) {
+	browseId(x) {
 		if(this.str_starts_with(x,"FE")) {
 			let page=split_string_once(x,"FE")[1];
 			let known_page=this.parse_known_page(page);
@@ -2131,8 +2131,6 @@ class ServiceMethods extends ServiceData {
 		}
 		{debugger;}
 	}
-	/** @protected @arg {D_BrowseIdStr} x */
-	browseId(x) {this.parse_browse_id(x);}
 	/** @private @arg {DE_VE5754} x */
 	DE_VE5754(x) {
 		const cf="DE_VE5754";

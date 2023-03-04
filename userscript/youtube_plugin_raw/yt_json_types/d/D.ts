@@ -98,12 +98,13 @@ type D_ContextTypeStr=
 	;
 ;
 type D_Settings_Id=
-	|"account"
 	|"account_advanced"
+	|"account_downloads"
 	|"account_overview"
+	|"account_playback"
+	|"account"
 	|"report_history"
 	|"unlimited"
-	|"account_downloads"
 	;
 ;
 type D_UrlInfoItemType=
