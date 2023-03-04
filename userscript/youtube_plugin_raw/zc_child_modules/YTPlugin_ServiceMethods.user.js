@@ -2410,7 +2410,7 @@ class ServiceMethods extends ServiceData {
 	put_boxed_id(...args) {
 		/** @type {ReturnType<this["indexed_db"]["put_boxed_id"]>} */
 		let v2; function u2() {v2;} u2;
-		let ret=this.indexed_db.put_boxed_id(this.indexed_db_version,...args);
+		let ret=this.indexed_db.put_boxed_id_async(this.indexed_db_version,...args);
 		return ret;
 	}
 	/** @protected @arg {D_ChannelIdStr} x */

@@ -24,6 +24,8 @@ type G_UrlInfo=
 	|D_InfoVideoIdShorts
 	|D_InfoHashtagId
 	|D_InfoVideoTime
+	|{type: "playlist_id",type_parts: ["playlist_id"],id: "LL";}
+	|{type: "playlist_id",type_parts: ["playlist_id"],id: "WL";}
 	;
 ;
 type G_UrlInfoSrc=

@@ -3293,9 +3293,17 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "playlist_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				let {raw_id}=x;
-				if(raw_id==="LL") {debugger; return;}
-				if(raw_id==="WL") {debugger; return;}
+				if(x.raw_id==="LL") {
+					let {raw_id,type_parts: [,...type_parts]}=x;
+					this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
+					return;
+				}
+				if(x.raw_id==="WL") {
+					let {raw_id,type_parts: [,...type_parts]}=x;
+					this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
+					return;
+				}
+				x.type_parts;
 				debugger;
 			} break;
 		}
@@ -3308,56 +3316,56 @@ class HandleTypes extends ServiceMethods {
 			default: get_type(value)===""; debugger; break;
 			case "video_time": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "video_referral": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "channel_id": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "play_next": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "playlist_id": this.G_PlaylistUrlInfo(value); break;
 			case "hashtag_id": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "video": {
 				switch(value.tag) {
 					case null: {
 						let box_res=this.put_boxed_id(value.type,value);
-						this.execute_promise_def((async () => box_res.ret)());
+						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
 					case "normal": {
 						let box_res=this.put_boxed_id(value.type,value);
-						this.execute_promise_def((async () => box_res.ret)());
+						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
 					case "short": {
 						let box_res=this.put_boxed_id(value.type,value);
-						this.execute_promise_def((async () => box_res.ret)());
+						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
 				}
 			} break;
 			case "user_id": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "channel_id": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
 				let box_res=this.put_boxed_id(value.type,value);
-				this.execute_promise_def((async () => box_res.ret)());
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 		}
 	}
