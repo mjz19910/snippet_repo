@@ -1734,8 +1734,9 @@ export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
 class Support_EventInput extends ServiceMethods {
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
-	/** @private @arg {R_PageType_Browse_Response} x */
-	R_PageTypeBrowse_Response(x) {
+	//#region Renderer & Group
+	/** @private @arg {G_ResponseBrowse} x */
+	G_ResponseBrowse(x) {
 		const cf="R_PageTypeBrowse_Response";
 		if("rootVe" in x) {
 			switch(x.rootVe) {
@@ -1775,7 +1776,7 @@ class Support_EventInput extends ServiceMethods {
 				page: x => this.ceq(x,"browse"),
 				endpoint: x => this.E_VE3854(x),
 				response: x => this.x.get("x_RS_Browse").RS_Browse(x),
-				/** @arg {R_VE3854_PageType_Browse_Response["url"]} x */
+				/** @arg {RS_VE3854_BrowsePage["url"]} x */
 				url(x) {
 					switch(x) {
 						default: x===""; debugger; switch(x) {
@@ -1798,7 +1799,7 @@ class Support_EventInput extends ServiceMethods {
 			return;
 		}
 		if(this.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
-			/** @arg {R_VE6827_PageType_Browse_Response["url"]} url */
+			/** @arg {RS_VE6827_BrowsePage["url"]} url */
 			url: (url) => {
 				if(this.str_is_search(url)) {
 					let up=split_string_once(url,"?");
@@ -1823,7 +1824,7 @@ class Support_EventInput extends ServiceMethods {
 			}
 		}));
 		if(this.is_EP_Val(x,96368)) return this.g(this.RS_Page_Type1(cf,x,{
-			/** @arg {R_VE96368_PageType_Browse_Response["url"]} url */
+			/** @arg {RS_VE96368_BrowsePage["url"]} url */
 			url(url) {
 				switch(url) {
 					default: url===""; debugger; switch(url) {
@@ -1835,13 +1836,14 @@ class Support_EventInput extends ServiceMethods {
 		}));
 		debugger;
 	}
-	/** @private @arg {R_PageTypeBrowse} x */
-	R_PageTypeBrowse(x) {
+	//#endregion
+	/** @private @arg {NavFinishDetail_Browse} x */
+	NavFinishDetail_Browse(x) {
 		const cf="R_PageTypeBrowse";
 		if(this.is_EP_Val(x,3854)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.E_VE3854(endpoint);
-			this.R_PageTypeBrowse_Response(response);
+			this.G_ResponseBrowse(response);
 			if(pageType!=="browse") debugger;
 			this._primitive_of(fromHistory,"boolean");
 			this.a_primitive_num(navigationDoneMs);
@@ -1849,7 +1851,7 @@ class Support_EventInput extends ServiceMethods {
 		}
 		if(this.is_EP_Val(x,6827)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.R_PageTypeBrowse_Response(response);
+			this.G_ResponseBrowse(response);
 			this.E_VE6827(endpoint);
 			if(pageType!=="browse") debugger;
 			this._primitive_of(fromHistory,"boolean");
@@ -1858,7 +1860,7 @@ class Support_EventInput extends ServiceMethods {
 		}
 		if(this.is_EP_Val(x,96368)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.R_PageTypeBrowse_Response(response);
+			this.G_ResponseBrowse(response);
 			this.E_VE96368(endpoint);
 			if(pageType!=="browse") debugger;
 			this._primitive_of(fromHistory,"boolean");
@@ -1867,8 +1869,8 @@ class Support_EventInput extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {R_PageTypeChannel} x */
-	R_PageTypeChannel(x) {
+	/** @private @arg {NavFinishDetail_Channel} x */
+	NavFinishDetail_Channel(x) {
 		const cf="R_PageTypeChannel";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.DataResponsePageType(response);
@@ -1877,8 +1879,8 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {R_PageTypePlaylist} x */
-	R_PageTypePlaylist(x) {
+	/** @private @arg {NavFinishDetail_Playlist} x */
+	NavFinishDetail_Playlist(x) {
 		const cf="R_PageTypePlaylist";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.E_VE5754(endpoint);
@@ -1887,8 +1889,8 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {R_PageTypeSearch} x */
-	R_PageTypeSearch(x) {
+	/** @private @arg {NavFinishDetail_Search} x */
+	NavFinishDetail_Search(x) {
 		const cf="R_PageTypeSearch";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.E_Search(endpoint);
@@ -1897,8 +1899,8 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {R_PageTypeSettings} x */
-	R_PageTypeSettings(x) {
+	/** @private @arg {NavFinishDetail_Settings} x */
+	NavFinishDetail_Settings(x) {
 		const cf="R_PageTypeSettings";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		x: {
@@ -1912,8 +1914,8 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {R_PageTypeShorts} x */
-	R_PageTypeShorts(x) {
+	/** @private @arg {NavFinishDetail_Shorts} x */
+	NavFinishDetail_Shorts(x) {
 		const cf="R_PageTypeShorts";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
@@ -1922,8 +1924,8 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {R_PageTypeWatch} x */
-	R_PageTypeWatch(x) {
+	/** @private @arg {NavFinishDetail_Watch} x */
+	NavFinishDetail_Watch(x) {
 		const cf="R_PageTypeWatch";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.E_Watch(endpoint);
@@ -1932,21 +1934,23 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
-	/** @public @arg {YTNavigateFinishDetail} x */
+	//#region Event handlers
+	/** @public @arg {G_NavFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail"; this.k(cf,x);
 		switch(x.pageType) {
 			default: debugger; break;
-			case "browse": return this.R_PageTypeBrowse(x);
-			case "channel": return this.R_PageTypeChannel(x);
-			case "playlist": return this.R_PageTypePlaylist(x);
-			case "search": return this.R_PageTypeSearch(x);
-			case "settings": return this.R_PageTypeSettings(x);
-			case "shorts": return this.R_PageTypeShorts(x);
-			case "watch": return this.R_PageTypeWatch(x);
+			case "browse": return this.NavFinishDetail_Browse(x);
+			case "channel": return this.NavFinishDetail_Channel(x);
+			case "playlist": return this.NavFinishDetail_Playlist(x);
+			case "search": return this.NavFinishDetail_Search(x);
+			case "settings": return this.NavFinishDetail_Settings(x);
+			case "shorts": return this.NavFinishDetail_Shorts(x);
+			case "watch": return this.NavFinishDetail_Watch(x);
 		}
 	}
-	/** @private @arg {DataResponsePageType} x */
+	//#endregion
+	/** @private @arg {G_RS_ByPageType} x */
 	DataResponsePageType(x) {
 		const cf="DataResponsePageType";
 		this.RC_ResponseContext(x.response.responseContext);
@@ -1963,6 +1967,7 @@ class Support_EventInput extends ServiceMethods {
 		console.log("pt",x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	//#endregion
 	/**
 	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x
 	 * @arg {T_MakeHandlers<T>} handlers
@@ -1980,10 +1985,10 @@ class Support_EventInput extends ServiceMethods {
 		this.assert_is_omit_key(u,wx);
 		return u;
 	}
-	/** @private @arg {RS_Page_Channel} x */
+	/** @private @arg {RS_ChannelPage} x */
 	RS_Page_Channel(x) {
 		const cf="RS_Page_Channel";
-		/** @arg {RS_Page_Channel["url"]} url */
+		/** @arg {RS_ChannelPage["url"]} url */
 		const h_url=url => {
 			let [a,u]=split_string_once(url,"/"); this.ceq(a,"");
 			let c=split_string_once(u,"/");
@@ -2107,7 +2112,7 @@ class Support_EventInput extends ServiceMethods {
 		}
 		this.g(y);
 	}
-	/** @private @arg {G_RS_Page_Settings} x */
+	/** @private @arg {G_RS_SettingsPage} x */
 	G_RS_Page_Settings(x) {
 		const cf="R_SettingsPage";
 		if("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
@@ -2117,7 +2122,7 @@ class Support_EventInput extends ServiceMethods {
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 	}
-	/** @private @arg {G_RS_Page_Shorts} x */
+	/** @private @arg {G_RS_ShortsPage} x */
 	G_RS_Page_Shorts(x) {
 		const cf="RS_ShortsPage";
 		if("rootVe" in x) return this.RS_VE37414_Shorts(x);
@@ -2132,7 +2137,7 @@ class Support_EventInput extends ServiceMethods {
 		this.t(previousCsn,x => this.D_VeCsn(x,true));
 		this.t(cachedReelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 	}
-	/** @private @arg {RS_Page_Search} x */
+	/** @private @arg {RS_SearchPage} x */
 	RS_Page_Search(x) {
 		const cf="RS_SearchPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2177,7 +2182,7 @@ class Support_EventInput extends ServiceMethods {
 	RS_Reel(x) {
 		const cf="RS_Reel";
 		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.ht.R_ReelPlayerOverlay(overlay);
+		this.xr.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
 		this.R_DesktopTopbar(desktopTopbar);
@@ -2305,7 +2310,7 @@ class Support_VE37414 extends ServiceMethods {
 		this.t(videoId,this.videoId);
 		this.params("reel.player_params",playerParams);
 		this.t(thumbnail,this.D_Thumbnail);
-		this.ht.R_ReelPlayerOverlay(overlay);
+		this.xr.R_ReelPlayerOverlay(overlay);
 		this.params("reel.params",params);
 		this.t(loggingContext,this.D_LoggingContext);
 		this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
@@ -4065,6 +4070,29 @@ class Support_Renderer extends ServiceMethods {
 	}
 	/** @private @arg {R_SimpleCardButton} x */
 	R_SimpleCardButton(x) {this.H_("simpleCardButtonRenderer",x,this.g);}
+	/** @public @arg {R_ReelPlayerOverlay} x */
+	R_ReelPlayerOverlay(x) {this.H_("reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
+	/** @private @arg {D_ReelPlayerOverlay} x */
+	D_ReelPlayerOverlay(x) {
+		const cf="D_ReelPlayerOverlay";
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,...u}=this.s(cf,x);/*#destructure_partial*/
+		this.t(likeButton,this.R_LikeButton);
+		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
+		this.t(menu,this.R_Menu);
+		this.t(nextItemButton,this.R_Button);
+		this.t(prevItemButton,this.R_Button);
+		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.t(viewCommentsButton,this.R_Button);
+		this.t(videoInteractions,this.g);
+		const {trackingParams,reelPlayerNavigationModel,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=u; this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		{const x2=reelPlayerNavigationModel; this.t(x2,this.wg(x2,"REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
+		this.t(shareButton,this.R_Button);
+		this.t(pivotButton,this.R_PivotButton);
+		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
+		this.t(badge,this.RMD_Badge);
+	}
 	/** @use_import D_ReelPlayerOverlay @public @arg {R_ReelPlayerHeader} x */
 	R_ReelPlayerHeader(x) {this.H_("reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
 	/** @private @arg {D_ReelPlayerHeader} x */

@@ -1,5 +1,5 @@
 //#region G_RS
-type G_RS_Page_Playlist=RS_Page_Playlist|RS_VE5754_Page_Playlist;
+type G_RS_Page_Playlist=RS_PlaylistPage|RS_VE5754_Page_Playlist;
 //#endregion
 
 // all from GR_CD.ts

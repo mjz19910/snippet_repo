@@ -290,14 +290,14 @@ type R_WatchNextTabbedResults={watchNextTabbedResultsRenderer: D_WatchNextTabbed
 type R_WebSearchboxConfig={webSearchboxConfig: D_WebSearchboxConfig;};
 //#endregion
 //#region {pageType:string}
-type R_PageTypeWatch={
+type NavFinishDetail_Watch={
 	pageType: "watch";
 	endpoint: E_Watch;
 	response: G_RS_WatchPage;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
-type R_VE6827_PageType_Browse_Response={
+type RS_VE6827_BrowsePage={
 	rootVe: 6827;
 	url: "/feed/library";
 	endpoint: E_VE6827;
@@ -347,7 +347,7 @@ type R_VE6827_PageType_Browse_Response={
 	expirationTime: number;
 };
 
-type R_VE96368_PageType_Browse_Response={
+type RS_VE96368_BrowsePage={
 	rootVe: 96368;
 	url: "/feed/subscriptions";
 	endpoint: E_VE96368;
@@ -382,7 +382,7 @@ type R_VE96368_PageType_Browse_Response={
 	url: "/feed/subscriptions";
 	expirationTime: number;
 };
-type R_VE3854_PageType_Browse_Response={
+type RS_VE3854_BrowsePage={
 	page: "browse";
 	endpoint: E_VE3854;
 	response: RS_Browse;
@@ -411,67 +411,13 @@ type R_VE3854_PageType_Browse_Response={
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
-type R_PageType_Browse_Response=
-	|R_VE3854_PageType_Browse_Response
-	|R_VE6827_PageType_Browse_Response
-	|R_VE96368_PageType_Browse_Response
+type G_ResponseBrowse=
+	|RS_VE3854_BrowsePage
+	|RS_VE6827_BrowsePage
+	|RS_VE96368_BrowsePage
 	;
 ;
-type R_PageTypeBrowse={
-	endpoint: E_VE6827;
-	pageType: "browse";
-	fromHistory: boolean;
-	response: R_VE6827_PageType_Browse_Response;
-	navigationDoneMs: number;
-}|{
-	endpoint: E_VE96368;
-	pageType: "browse";
-	fromHistory: false;
-	response: R_VE96368_PageType_Browse_Response;
-	navigationDoneMs: number;
-}|{
-	pageType: "browse";
-	endpoint: E_VE3854;
-	response: R_VE3854_PageType_Browse_Response;
-	fromHistory: boolean;
-	navigationDoneMs: number;
-};
-type R_PageTypeChannel={
-	pageType: "channel";
-	endpoint: E_VE3611;
-	response: RS_Page_Channel;
-	fromHistory: boolean;
-	navigationDoneMs: number;
-};
-type R_PageTypePlaylist={
-	endpoint: E_VE5754;
-	pageType: "playlist";
-	fromHistory: false;
-	response: RS_Page_Playlist;
-	navigationDoneMs: number;
-};
-type R_PageTypeSearch={
-	pageType: "search";
-	endpoint: E_Search;
-	response: RS_Page_Search;
-	fromHistory: boolean;
-	navigationDoneMs: number;
-};
-type R_PageTypeSettings={
-	pageType: "settings";
-	endpoint: E_VE23462;
-	response: G_RS_Page_Settings;
-	fromHistory: boolean;
-	navigationDoneMs: number;
-};
-type DataResponsePageType=G_RS_WatchPage|RS_Page_Channel|G_RS_Page_Playlist|G_RS_Page_Settings|RS_Page_Search|RS_Page_Browse|G_RS_Page_Shorts;
-type R_PageTypeShorts={
-	pageType: "shorts";
-	endpoint: E_VE37414_ReelWatch;
-	response: G_RS_Page_Shorts;
-	fromHistory: boolean;
-	navigationDoneMs: number;
-};
+type G_RS_ByPageType=G_RS_WatchPage|RS_ChannelPage|G_RS_Page_Playlist|G_RS_SettingsPage|RS_SearchPage|RS_Page_Browse|G_RS_ShortsPage;
 //#endregion
 //#region RA_
 type RA_Notification={notificationActionRenderer: AD_Notification;};

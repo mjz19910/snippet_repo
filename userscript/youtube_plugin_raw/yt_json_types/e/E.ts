@@ -74,4 +74,3 @@ type E_AdFeedback={
 type E_MuteAd=TE_Endpoint_2<"muteAdEndpoint",DE_MuteAd>;
 //#endregion
 type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
-type E_Page=YTNavigateFinishDetail['endpoint'];

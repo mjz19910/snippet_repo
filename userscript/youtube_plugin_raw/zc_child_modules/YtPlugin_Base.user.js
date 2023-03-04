@@ -1420,7 +1420,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @api @public @type {YTNavigateFinishDetail} */
+	/** @api @public @type {G_NavFinishDetail} */
 	detail=as({});
 }
 /** @private @type {((event:YTNavigateFinishEvent)=>void)[]} */
@@ -1904,7 +1904,7 @@ function yt_plugin_base_main() {
 
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types,{on_yt_playlist_manager});
-	/** @private @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
+	/** @private @arg {[()=>G_NavFinishDetail["response"], object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
 	}
@@ -2442,7 +2442,7 @@ class YtHandlers extends BaseService {
 		if(res) {this.x.get("x_GenericApi").G_ResponseTypes(response,res);} else {console.log("failed to decode_input");}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
-	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
+	/** @private @arg {UrlTypes|`page_type_${G_NavFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @private @type {D_AnySaved} */
@@ -2452,9 +2452,9 @@ class YtHandlers extends BaseService {
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
-	/** @api @public @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
+	/** @api @public @arg {[()=>G_NavFinishDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args) {
-		/** @private @type {YTNavigateFinishDetail["response"]} */
+		/** @private @type {G_NavFinishDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
 		if(!("page" in ret)) {return ret;}
 		if(!ret.response) {
@@ -2482,7 +2482,7 @@ class YtHandlers extends BaseService {
 		}
 		return ret;
 	}
-	/** @api @public @arg {YTNavigateFinishDetail} detail */
+	/** @api @public @arg {G_NavFinishDetail} detail */
 	on_page_type_changed(detail) {
 		try {
 			if(this.do_initial_data_trace) console.log('ptc detail',detail);

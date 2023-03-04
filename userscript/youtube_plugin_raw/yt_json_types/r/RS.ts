@@ -320,7 +320,7 @@ type RS_Page_Channel_4={
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
-type RS_Page_Channel=
+type RS_ChannelPage=
 	|RS_Page_Channel_1
 	|RS_Page_Channel_2
 	|RS_Page_Channel_3
@@ -348,7 +348,7 @@ type RS_Page_Playlist_R={
 	response: RS_Playlist;
 	url: "/playlist?list=WL";
 };
-type RS_Page_Playlist={
+type RS_PlaylistPage={
 	page: "playlist";
 	endpoint: E_VE5754;
 	response: {
@@ -363,7 +363,7 @@ type RS_Page_Playlist={
 	};
 	url: "/playlist?list=WL";
 };
-type RS_Page_Search={
+type RS_SearchPage={
 	page: "search";
 	endpoint: E_Search;
 	response: RS_Search;

@@ -1,6 +1,6 @@
 
 type G_RS_AllResponses=RS_WatchReelItem|RS_Channel|RS_Channel|RS_Browse|RS_Channel|R_Page;
 type G_RS_Subscribe_Action=A_AddToGuideSection|TA_OpenPopup_Empty|C_RunAttestation|AU_SubscribeButton;
-type G_RS_Page_Shorts=RS_Page_Shorts|RS_VE37414_Shorts;
-type G_RS_Page_Settings=RS_Page_Settings|RS_VE23462_Page_Settings;
+type G_RS_ShortsPage=RS_Page_Shorts|RS_VE37414_Shorts;
+type G_RS_SettingsPage=RS_Page_Settings|RS_VE23462_Page_Settings;
 type G_RS_WatchPage=RS_Page_Watch|RS_VE3832_Page_Watch;

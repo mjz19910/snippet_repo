@@ -153,7 +153,7 @@ type D_UUIDString=`${string}-${string}-${string}-${string}-${string}`;
 type D_PlaylistUrlParams=`list=${SD_PlaylistId}`;
 type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
 type D_RadioPlaylistStr<T extends string>=`RD${T}`;
-type D_SD_UrlTypes=`page_type_${YTNavigateFinishDetail["pageType"]}`|UrlTypes;
+type D_SD_UrlTypes=`page_type_${S_PageTypeStr}`|UrlTypes;
 type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
