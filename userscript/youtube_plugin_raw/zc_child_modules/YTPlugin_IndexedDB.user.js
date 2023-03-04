@@ -126,7 +126,7 @@ class IndexedDBService extends BaseService {
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedLoadId|D_BoxedSaveId|null>} */
 	async get_id_box(key,version) {
@@ -257,21 +257,137 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<Extract<T_PutAwaitPromise<Y_PutBoxedRet>,{args:T}>|null>} */
+	/** @arg {{args:Y_PutBoxedArgs;promise:Promise<G_BoxedIdObj>;}} x @returns {Promise<T_PutAwaitPromise<Y_PutBoxedRet>>} */
+	async await_put_result(x) {
+		const {args,promise}=x;
+		let ret=await promise;
+		return as_any({args,ret});
+	}
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<Extract<T_PutAwaitPromise<Y_PutBoxedRet>,{args:T}>>} */
 	async put_boxed_id_async(version,...args) {
 		let out=this.put_boxed_id(version,...args);
-		if(!out) {debugger; return null;}
-		let rx=await out.promise;
-		if(rx===null) return null;
-		let ret={args: out.args,ret: rx};
-		/** @type {T_PutAwaitPromise<Y_PutBoxedRet>} */
-		let r2=as_any(ret);
-		/** @arg {typeof r2} x @returns {asserts x is Extract<typeof r2,{args:T}>} */
-		function assert_assume_is_2(x) {x;}
-		assert_assume_is_2(r2);
-		return r2;
+		const {promise}=out;
+		let ret=await promise;
+		let res={args,ret};
+		return as_any(res);
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
+	/** @arg {number} version @template {Y_PutBoxedArgs_3} T @arg {T} args @returns {Promise<Extract<T_PutAwaitPromise<Y_PutBoxedRet_3>,{args:T}>>} */
+	async put_boxed_id_async_3(version,...args) {
+		/** @type {Extract<Y_PutBoxedRet_3,{args:T}>} */
+		let out=as_any(this.put_boxed_id_3(version,...args));
+		const {promise}=out;
+		let ret=await promise;
+		let res={args,ret};
+		return as_any(res);
+	}
+	/** @arg {number} version @arg {["browse_id","FE",DI_BrowseId_FE]} args */
+	async put_boxed_id_async_1(version,...args) {
+		let out=this.put_boxed_id(version,...args); out;
+	}
+	/** @arg {number} version @template {Y_PutBoxedArgs_3} T @arg {T} args */
+	put_boxed_id_3(version,...args) {
+		switch(args[0]) {
+			default: args[0]===""; switch((args[0])) {
+			} debugger; throw new Error();
+			case "browse_id": {
+				switch(args[1]) {
+					case "FE": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${JSON.stringify(value.info_arr[1].id)}`,
+							value,
+						},version); return {args,promise};
+					}
+					case "SP": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
+							value,
+						},version); return {args,promise};
+					}
+				}
+			}
+			case "bigint": {
+				let [tag,id,container]=args;
+				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
+				let value={
+					type: id,
+					info_arr: [container]
+				};
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value,
+				},version); return {args,promise};
+			}
+			case "boolean": {
+				let [tag,id,container]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "number": {
+				let [tag,id,container]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "string": {
+				let [tag,id,container]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "keys": {
+				let [tag,id,container]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "root_visual_element": {
+				let [tag,id,container]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type: id,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+		}
+	}
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
@@ -286,7 +402,9 @@ class IndexedDBService extends BaseService {
 					value,
 				};
 				let promise=this.put_box(nb,version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "user_id": {
 				let [tag,value]=args;
@@ -296,7 +414,9 @@ class IndexedDBService extends BaseService {
 					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
 					value,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "play_next": {
 				let [tag,value]=args;
@@ -306,7 +426,9 @@ class IndexedDBService extends BaseService {
 					key: `boxed_id:${tag}:${value.value}`,
 					value,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "playlist_id": {
 				let [tag,value]=args;
@@ -316,7 +438,9 @@ class IndexedDBService extends BaseService {
 					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
 					value,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "hashtag_id": {
 				let [tag,value]=args;
@@ -326,20 +450,37 @@ class IndexedDBService extends BaseService {
 					key: `boxed_id:${tag}:${value.hashtag}`,
 					value,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "browse_id": {
-				if(args.length===2) {
-					return;
+				switch(args[1]) {
+					case "FE": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+					case "SP": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
 				}
-				let [tag,id,value]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-					value,
-				},version);
-				return {args,promise};
 			}
 			case "channel_id": {
 				let [tag,value]=args;
@@ -349,7 +490,9 @@ class IndexedDBService extends BaseService {
 					key: `boxed_id:${tag}:UC:${value.info_arr[1].id}`,
 					value,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "video_time": {
 				let [tag,value]=args;
@@ -359,7 +502,9 @@ class IndexedDBService extends BaseService {
 					key: `boxed_id:${tag}:${value.raw_value}`,
 					value,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "bigint": {
 				let [tag,id,container]=args;
@@ -374,7 +519,9 @@ class IndexedDBService extends BaseService {
 					key: `boxed_id:${tag}:${id}`,
 					value,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "boolean": {
 				let [tag,id,container]=args;
@@ -387,7 +534,9 @@ class IndexedDBService extends BaseService {
 						info_arr: [container]
 					},
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "number": {
 				let [tag,id,container]=args;
@@ -400,7 +549,9 @@ class IndexedDBService extends BaseService {
 						info_arr: [container]
 					},
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "string": {
 				let [tag,id,container]=args;
@@ -413,7 +564,9 @@ class IndexedDBService extends BaseService {
 						info_arr: [container]
 					},
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "keys": {
 				let [tag,id,container]=args;
@@ -426,7 +579,9 @@ class IndexedDBService extends BaseService {
 						info_arr: [container]
 					},
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "root_visual_element": {
 				let [tag,id,container]=args;
@@ -439,7 +594,9 @@ class IndexedDBService extends BaseService {
 						info_arr: [container]
 					},
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "load_id": {
 				let [mode,id]=args;
@@ -449,7 +606,9 @@ class IndexedDBService extends BaseService {
 					base: "boxed_id",
 					id,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "save_id": {
 				let [mode,id]=args;
@@ -459,7 +618,9 @@ class IndexedDBService extends BaseService {
 					base: "boxed_id",
 					id,
 				},version);
-				return {args,promise};
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 		}
 	}

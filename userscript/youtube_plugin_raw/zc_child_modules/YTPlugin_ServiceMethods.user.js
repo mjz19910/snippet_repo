@@ -2430,6 +2430,11 @@ class ServiceMethods extends ServiceData {
 		let {...ret}=await this.indexed_db.put_boxed_id_async(this.indexed_db_version,...args);
 		return ret;
 	}
+	/** @template {Y_PutBoxedArgs_3} T @arg {T} args */
+	async put_boxed_id_3(...args) {
+		let {...ret}=await this.indexed_db.put_boxed_id_async(this.indexed_db_version,...args);
+		return ret;
+	}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;
