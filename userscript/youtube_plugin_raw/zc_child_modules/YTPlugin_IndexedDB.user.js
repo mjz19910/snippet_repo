@@ -218,8 +218,7 @@ class IndexedDBService extends BaseService {
 				console.log("[push_store_to_database.iter.err]",result.reason);
 			} else {
 				if("err" in result.value) {
-					console.log("[push_store_to_database.iter.no_update]",result.value.item);
-				}
+				} else {}
 			}
 		}
 	}
