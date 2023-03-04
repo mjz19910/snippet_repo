@@ -2185,11 +2185,6 @@ class TextDecoderExt {
 class BaseService extends BaseServicePrivate {
 	/**
 	 * @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} T @arg {T} x
-	 * @template {number} L @arg {L} l @returns {x is Extract<T,{type_parts:{length:L}}>}
-	 * */
-	is_UrlInfo_len(x,l) {return x.type_parts.length===l;}
-	/**
-	 * @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} T @arg {T} x
 	 * @template {keyof T["type_parts"]} K @arg {K} k
 	 * @template {T["type_parts"][K]} V @arg {V} v @returns {x is Extract<T,{type_parts:{[U in K]:V}}>}
 	 * */

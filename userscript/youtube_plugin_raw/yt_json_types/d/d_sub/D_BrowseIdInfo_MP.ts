@@ -1,6 +1,1 @@
-type D_BrowseIdInfo_MP={
-	type: "browse_id";
-	tag: "MP";
-	type_parts: ["browse_id","MP"];
-	raw_id: `MP${string}_${string}`;
-};
+type D_BrowseIdInfo_MP=T_UrlInfoPartial<"browse_id",["MP"],`MP${string}_${string}`>;
