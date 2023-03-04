@@ -1930,7 +1930,7 @@ class ServiceMethods extends ServiceData {
 				let promise=this.indexed_db_put("channel_id",{
 					key: `channel_id:UC:${id}`,
 					base: "channel_id",
-					type_parts: "channel_id:UC",
+					type_parts: ["channel_id","UC"],
 					id,raw_id,
 				});
 				this.execute_promise_def(promise);

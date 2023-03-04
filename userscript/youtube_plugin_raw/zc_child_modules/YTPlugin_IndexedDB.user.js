@@ -449,7 +449,7 @@ class IndexedDBService extends BaseService {
 				setTimeout(() => this.log_failed=true,5000);
 			}
 			this.log_failed=false;
-			return null;
+			throw new AggregateError([e],"put await error");
 		}
 	}
 	/** @arg {number} version */
@@ -575,7 +575,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
-		let no_null_cache=d_cache.filter(e => e!==null&&!(e.type_parts==="load_id"||e.type_parts==="save_id"));
+		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!(e.type==="load_id"||e.type==="save_id"));
 		if(no_null_cache.length===1) {
 			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
 		} else if(no_null_cache.length===2) {
@@ -611,12 +611,12 @@ class IndexedDBService extends BaseService {
 					d_cache[idx]=null;
 					continue;
 				}
-				const cursor_value=cur_cursor.value;
-				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,cursor_value);
+				const item_db_2=cur_cursor.value;
+				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,item_db_2);
 				let idx=d_cache.indexOf(item);
 				d_cache[idx]=null;
-				if(cursor_value.key!==item.key) {
-					console.log(cursor_value.key.split(":"));
+				if(item_db_2.key!==item.key) {
+					console.log(item_db_2.key.split(":"));
 					console.log(item.key.split(":"));
 					debugger;
 				}
@@ -625,41 +625,71 @@ class IndexedDBService extends BaseService {
 				function get_type(x) {return x.type;}
 				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
 				let item_nt=item;
-				switch(item_nt.type_parts) {
-					default: get_type(item_nt)===""; debugger; break;
-					case "bigint":
-					case "boolean":
-					case "keys":
-					case "number":
-					case "root_visual_element":
-					case "string": update_item=true; break;
-					case "video_id:shorts":
-					case "video_id:normal": {
-						if(cursor_value.type_parts!==item_nt.type_parts) {update_item=true; break;}
-						if(item_nt.v!==cursor_value.v) update_item=true;
-					} break;
-					case "save_id":
-					case "load_id":
-					case "update_id": {
-						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
-						if(item_nt.key===cursor_value.key&&item_nt.id===cursor_value.id) break;
-						update_item=true;
-					} break;
-					case "browse_id:VL":
-					case "channel_id:UC":
-					case "playlist_id:PL":
-					case "playlist_id:RD":
-					case "playlist_id:RDCM":
-					case "playlist_id:RDGM":
-					case "playlist_id:RDMM":
-					case "playlist_id:UU": {
-						if(cursor_value.key===item_nt.key&&item_nt.id===cursor_value.id) break;
-						update_item=true;
-					} break;
-					// non-dynamic values
-					case "hashtag_id":
-					case "playlist_id:self":
-					case "user_id": break;
+				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
+				let item_db_nt=item_db_2;
+				x: if("type" in item_nt) {
+					if(!("type" in item_db_nt)) break x;
+					switch(item_nt.type) {
+						default: get_type(item_nt)===""; debugger; break;
+						case "bigint":
+						case "boolean":
+						case "keys":
+						case "number":
+						case "root_visual_element":
+						case "string": update_item=true; break;
+						case "video_id": {
+							if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
+							if(!this.eq_keys(item_db_nt.type_parts,item_nt.type_parts)) {update_item=true; break;}
+							if(item_nt.v!==item_db_nt.v) update_item=true;
+						} break;
+						case "save_id":
+						case "load_id":
+						case "update_id": {
+							if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
+							if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
+							update_item=true;
+						} break;
+						case "playlist_id":
+						case "playlist_id:PL":
+						case "playlist_id:RD":
+						case "playlist_id:RDCM":
+						case "playlist_id:RDMM":
+						case "playlist_id:UU": {
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							y: if("info" in item_nt) {
+								if(!("info" in item_db_nt)) break y;
+								if(item_nt.info.id!==item_db_nt.info.id) update_item=true;
+								break;
+							} else {
+								if(!("id" in item_db_nt)) break y;
+								if(item_nt.id===item_db_nt.id) break;
+								update_item=true;
+							}
+							update_item=true;
+						} break;
+						// non-dynamic values
+						case "hashtag_id":
+						case "playlist_id:self":
+						case "user_id": break;
+					}
+				} else {
+					if("type" in item_db_nt) break x;
+					switch(item_nt.base) {
+						case "browse_id": {
+							if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
+							update_item=true;
+						} break;
+						case "channel_id": {
+							if(item_nt.key===item_db_nt.key) break;
+							if(item_nt.base===item_db_nt.base) {
+								if(item_nt.id===item_db_nt.id) break;
+								if(this.eq_keys(item_nt.type_parts,item_db_nt.type_parts)) break;
+								update_item=true;
+								break;
+							}
+							update_item=true;
+						} break;
+					}
 				}
 				if(update_item) {
 					await this.force_update(s,item);
