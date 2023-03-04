@@ -157,8 +157,7 @@ class IndexedDBService extends BaseService {
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
 	load_store(store,item) {
 		if(!("type" in item)) return;
-		if(!("value" in item)) return;
-		if(item.type==="boxed_id") return;
+		if(item.type!=="boxed_id") return;
 		let [,d_cache]=this.get_data_cache("boxed_id");
 		this.cache_weak_set.add(item.value);
 		let c_index=this.get_cache_index("boxed_id");
@@ -169,7 +168,7 @@ class IndexedDBService extends BaseService {
 		} else {
 			d_cache[idx]=null;
 		}
-		switch(item.type) {
+		switch(item.tag) {
 			default: debugger; break;
 			case "boolean": return store.get_store("bool_store").load_data(item);
 			case "keys": return store.get_store("keys_store").load_data(item);
