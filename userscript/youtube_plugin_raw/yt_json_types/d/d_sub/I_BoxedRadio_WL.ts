@@ -1,6 +1,5 @@
 type I_BoxedRadio_WL={
 	type: "playlist_id";
-	type_parts: ["playlist_id"];
-	key: "playlist_id:WL";
-	info_arr: [{id: "LL";}];
+	key: "playlist_id:LL";
+	info_arr: [{raw_id: "WL";}];
 };
