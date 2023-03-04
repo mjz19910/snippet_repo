@@ -1,3 +1,16 @@
+type D_BoxedVideoTime={
+	type: "boxed_id";
+	tag: "video_time";
+	key: `boxed_id:video_time:${number}s`;
+	value: DI_VideoTime;
+};
+
+type D_BoxedVideoId={
+	key: `boxed_id:video_id:${string}`;
+	tag: "video_id";
+	value: DI_VideoId;
+};
+
 type G_BoxedIdObj=
 	|D_BoxedUpdateId
 	|D_BoxedVEStore
@@ -7,29 +20,8 @@ type G_BoxedIdObj=
 	|D_BoxedKeysStore
 	|D_BoxedBigintStore
 	|D_BoxedUpdateId
-	|{
-		type: "boxed_id";
-		tag: "hashtag_id";
-		key: `boxed_id:hashtag_id:${string}`;
-		value: string;
-	}
-	|{
-		type: "boxed_id";
-		tag: "video_time";
-		key: `boxed_id:video_time:${number}s`;
-		value: DI_VideoTime;
-	}
-	|{
-		tag: "video";
-		key: `boxed_id:video:${string}`;
-		value: DI_VideoId;
-	}
-	|{
-		type: "boxed_id",
-		tag: string,
-		extra: "any";
-		key: `boxed_id:${string}:${string}`,
-		value: G_UrlInfo,
-	}
+	|D_BoxedHashtagId
+	|D_BoxedVideoTime
+	|D_BoxedVideoId
 	;
 ;
