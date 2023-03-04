@@ -1,10 +1,12 @@
 type Y_PutBoxedArgs=
 	|["bigint",string,make_item_group<bigint>]
-	|["load_id"|"save_id",number]
-	|["root_visual_element"|"number",string,make_item_group<number>]
-	|["string",string,make_item_group<string>]
-	|["keys",string,make_item_group<string|number>]
 	|["boolean",string,make_item_group<boolean>]
+	|["keys",string,make_item_group<string|number>]
+	|["load_id",number]
+	|["number",string,make_item_group<number>]
+	|["root_visual_element",string,make_item_group<number>]
+	|["save_id",number]
+	|["string",string,make_item_group<string>]
 	|MakeInfoBoxArgs<G_UrlInfo>
 	;
 ;
@@ -147,6 +149,111 @@ type Y_PutBoxedRet={
 		extra: "any";
 		key: "boxed_id:playlist_id:WL";
 		value: G_PlaylistUrlInfo_1;
+	}|null>;
+}|{
+	args: ["hashtag_id",D_InfoHashtagId];
+	ret: Promise<{
+		type: "boxed_id";
+		tag: "hashtag_id";
+		extra: "any";
+		key: `boxed_id:hashtag_id:${string}`;
+		value: D_InfoHashtagId;
+	}|null>;
+}|{
+	args: ["browse_id",D_BrowseIdUrlInfo];
+	ret: Promise<{
+		type: "boxed_id";
+		tag: "browse_id";
+		extra: "any";
+		key: `boxed_id:browse_id:VLPL${string}`;
+		value: D_BrowseIdUrlInfo;
+	}|null>;
+}|{
+	args: ["channel_id",D_ChannelUrlInfo];
+	ret: Promise<{
+		type: "boxed_id";
+		tag: "channel_id";
+		extra: "any";
+		key: `boxed_id:channel_id:UC${string}`;
+		value: D_ChannelUrlInfo;
+	}|null>;
+}|{
+	args: ["video_time",D_InfoVideoTime];
+	ret: Promise<{
+		type: "boxed_id";
+		tag: "video_time";
+		key: `boxed_id:video_time:${number}s`;
+		value: D_InfoVideoTime;
+	}|null>;
+}|{
+	args: ["bigint",string,make_item_group<bigint>];
+	ret: Promise<{
+		key: `boxed_id:bigint:${string}`;
+		base: "boxed_id";
+		type: "bigint";
+		id: string;
+		value: make_item_group<bigint>;
+	}|null>;
+}|{
+	args: ["boolean",string,make_item_group<boolean>];
+	ret: Promise<{
+		key: `boxed_id:boolean:${string}`;
+		base: "boxed_id";
+		type: "boolean";
+		id: string;
+		value: make_item_group<boolean>;
+	}|null>;
+}|{
+	args: ["number",string,make_item_group<number>];
+	ret: Promise<{
+		key: `boxed_id:number:${string}`;
+		base: "boxed_id";
+		type: "number";
+		id: string;
+		value: make_item_group<number>;
+	}|null>;
+}|{
+	args: ["string",string,make_item_group<string>];
+	ret: Promise<{
+		key: `boxed_id:string:${string}`;
+		base: "boxed_id";
+		type: "string";
+		id: string;
+		value: make_item_group<string>;
+	}|null>;
+}|{
+	args: ["keys",string,make_item_group<string|number>];
+	ret: Promise<{
+		key: `boxed_id:keys:${string}`;
+		base: "boxed_id";
+		type: "keys";
+		id: string;
+		value: make_item_group<string|number>;
+	}|null>;
+}|{
+	args: ["root_visual_element",string,make_item_group<number>];
+	ret: Promise<{
+		key: `boxed_id:root_visual_element:${string}`;
+		base: "boxed_id";
+		type: "root_visual_element";
+		id: string;
+		value: make_item_group<number>;
+	}|null>;
+}|{
+	args: ["load_id",number];
+	ret: Promise<{
+		key: "boxed_id:a:load_id";
+		type: "load_id";
+		base: "boxed_id";
+		id: number;
+	}|null>;
+}|{
+	args: ["save_id",number];
+	ret: Promise<{
+		key: "boxed_id:a:save_id";
+		type: "save_id";
+		base: "boxed_id";
+		id: number;
 	}|null>;
 };
 type YScratch=Exclude<Y_PutBoxedRet,{args: ["boolean"|"bigint"|"load_id"|"save_id"|"number"|"keys"|"root_visual_element"|"string",...any];}>;
