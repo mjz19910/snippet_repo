@@ -1800,77 +1800,49 @@ class HandleTypes extends ServiceMethods {
 	parse_watch_page_url_url_arr(root,x) {
 		root;
 		let {...x2}=this.parse_url_search_params(x);
-		let vv=split_string(x,"&");
-		/** @type {Map<T_SplitOnce<(typeof vv)[number],"=">[0],T_SplitOnce<(typeof vv)[number],"=">[1]>} */
-		let url_obj=new Map;
-		// spell:ignore RDMM
-		for(let prop of vv) {
-			/** @private @type {T_SplitOnce<typeof prop,"=">} */
-			let res=split_string_once(prop,"=");
-			url_obj.set(res[0],res[1]);
-		}
-		/** @template {T_SplitOnce<(typeof vv)[number],"=">[0]} K @arg {K} k @returns {Extract<T_SplitOnce<(typeof vv)[number],"=">,[K,any]>[1]} */
-		function get_and_delete(k) {
-			let ret=url_obj.get(k);
-			url_obj.delete(k);
-			return ret;
-		}
-		/** @template {T_SplitOnce<(typeof vv)[number],"=">[0]} K @arg {K} k @returns {Extract<T_SplitOnce<(typeof vv)[number],"=">,[K,any]>[1]|undefined} */
-		function get_from_map(k) {
-			let ret=url_obj.get(k);
-			return ret;
-		}
-		let obj={
-			v: get_and_delete("v"),
-			pp: get_and_delete("pp"),
-			rv: get_and_delete("rv"),
-			index: get_and_delete("index"),
+		/** @arg {typeof x2} x @returns {typeof y2|null} */
+		const px_x2=(x) => {
+			const {v,...y}=x;
+			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: v});
+			if(this.is_empty_obj(y)) return null;
+			let y2=y;
+			return y2;
 		};
-		obj;
-		let url_index=get_from_map("index");
-		if(url_obj.size!==0) debugger;
-		x: if(url_index) {
-			if(this.cache_playlist_index.includes(url_index)) break x;
-			this.cache_playlist_index.push(url_index);
-			if(this.log_playlist_index) console.log("[playlist_index]",url_index);
-		}
-		/** @type {((typeof x2) extends infer V?V extends infer A?Omit<A,"v">:null:null)|null} */
-		let x3=null;
-		x: if("v" in x2) {
-			const {v,...y}=x2;
-			if(this.is_empty_obj(y)) break x;
-			x3=y;
-		} else {
-			this.g(x2);
-			return;
-		}
+		let x3=px_x2(x2);
 		if(x3===null) return;
-		if(this.is_empty_obj(x3)) return;
-		const {...x4}=x3;
-		if("pp" in x4) {
-			const {pp,...y}=x4;
+		if("pp" in x3) {
+			const {pp,...y}=x3;
+			this.playerParams("watch.player_params",pp);
 			if(this.is_empty_obj(y)) return;
 			this.g(y);
 			return;
 		}
-		if("t" in x4) {
-			const {t,...y}=x4;
+		if("t" in x3) {
+			const {t,...y}=x3;
 			if(this.is_empty_obj(y)) return;
 			this.g(y); return;
 		}
-		x: if("list" in x4) {
+		x: if("list" in x3) {
 			lx: {
-				const {list,...y2}=x4;
+				const {list,...y2}=x3;
+				this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id: list});
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
+					this.save_string("video_url.info.playnext",playnext);
 					if(this.is_empty_obj(y)) break lx;
 					this.g(y); break lx;
 				}
 				if(this.is_empty_obj(y2)) break x;
 				if("index" in y2) {
+					const {index,...y3}=y2; this.g(y3);
+					if(this.cache_playlist_index.includes(index)) break x;
+					this.cache_playlist_index.push(index);
+					if(this.log_playlist_index) console.log("[playlist_index]",index);
 					return;
 				}
 				const {start_radio,...y3}=y2;
+				this.save_string("video_url.info.start_radio",start_radio);
+				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(this.is_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
 				this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_referral"],raw_id: rv});
@@ -1878,34 +1850,6 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
-		let x5=null;
-		p4: {
-			break p4;
-		}
-		x4;
-		x5;
-		if("rv" in x2) {
-			return;
-		}
-		if("pp" in x2) {
-			const {v,pp}=x2;
-			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: v});
-			this.playerParams("watch.player_params",pp);
-			return;
-		}
-		if("list" in x2&&!("index" in x2)&&!("start_radio" in x2)) {
-			const {v,list}=x2;
-			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: v});
-			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id: list});
-			return;
-		}
-		// switch(res[0]) {
-		// 	case "list": this.GU_PlaylistId(res[1]); break;
-		// 	case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
-		// 	case "t": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_time"],raw_id: res[1]}); break;
-		// 	case "playnext": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","play_next"],raw_id: res[1]}); break;
-		// 	default: res[0]===""; debugger;
-		// }
 	}
 	/** @public @arg {[RE_D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
