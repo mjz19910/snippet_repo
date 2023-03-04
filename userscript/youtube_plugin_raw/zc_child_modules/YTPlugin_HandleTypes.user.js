@@ -3284,11 +3284,10 @@ class HandleTypes extends ServiceMethods {
 					/** @type {DI_Playlist_WL} */
 					const z={type: "playlist_id",info_arr: [{raw_id}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
-					raw_id; debugger;
+					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [{raw_id}]});
 				} else if(this.str_starts_with(raw_id,"UU")) {
-					raw_id; debugger;
+					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:UU`,info_arr: [{raw_id}]});
 				} else if(this.str_starts_with(raw_id,"RD")) {
-					raw_id; debugger;
 					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [{raw_id}]});
 				} else {
 					raw_id;
@@ -3368,13 +3367,14 @@ class HandleTypes extends ServiceMethods {
 						const args=["playlist_id","LL",{type: "playlist_id",info_arr: [{raw_id}]}];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
-					} break;
+					} return;
 					case "WL": {
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=["playlist_id","WL",{type: "playlist_id",info_arr: [{raw_id}]}];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
-					} break;
+					} return;
+					default:
 				}
 				debugger;
 			} break;
