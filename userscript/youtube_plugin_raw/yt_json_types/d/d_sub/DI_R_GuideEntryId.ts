@@ -1,1 +1,1 @@
-type DIR_GuideEntryId=T_UrlInfoPartial<"raw",["channel_id"],D_GuideEntryData["guideEntryId"]>;
+type DI_R_GuideEntryId=T_UrlInfoPartial<"raw",["guide_entry_id"],D_GuideEntryData["guideEntryId"]>;

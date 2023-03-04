@@ -3167,42 +3167,151 @@ class HandleTypes extends ServiceMethods {
 		let mo={type,tag,info_arr: [{raw_id: x}]};
 		this.ht.DI_AGR_UrlInfo(as_any(mo));
 	}
-	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
+	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x @returns {MakeRet_DI_AGR_UrlInfo<TI>} */
 	make_DI_AGR_UrlInfo(x) {
+		/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["type"]} t @returns {x is MakeRet_DI_AGR_UrlInfo<TI>} */
+		function assume_is_type(x,t) {return x.type===t;}
+		/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["type"]} t @returns {asserts x is MakeRet_DI_AGR_UrlInfo<TI>} */
+		function assert_assume_is_type(x,t) {if(!assume_is_type(x,t)) throw new Error();}
+		let ret;
 		switch(x.tag) {
 			case "channel_id": {
 				const {info_arr: [{raw_id}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
-				return {type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]};
-			}
+				/** @type {DI_ChannelId_UC} */
+				const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;
+			} break;
 			case "browse_id": {
 				const {info_arr: [{raw_id}]}=x;
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
-					return {type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]};
-				}
-				if(this.str_starts_with(raw_id,"FE")) {
+					/** @type {DI_ChannelId_UC} */
+					const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;
+				} else if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
-					return {type: "browse_id",tag: "FE",info_arr: [{raw_id},{id}]};
-				}
-				if(this.str_starts_with(raw_id,"SP")) {
+					/** @type {DI_BrowseId_FE} */
+					const z={type: "browse_id",tag: "FE",info_arr: [{raw_id},{id}]}; ret=z;
+				} else if(this.str_starts_with(raw_id,"SP")) {
 					let [,id]=split_string_once(raw_id,"SP");
-					return {type: "browse_id",tag: "SP",info_arr: [{raw_id},{id}]};
-				}
-				if(this.str_starts_with(raw_id,"MP")) {
+					/** @type {DI_BrowseId_SP} */
+					const z={type: "browse_id",tag: "SP",info_arr: [{raw_id},{id}]}; ret=z;
+				} else if(this.str_starts_with(raw_id,"MP")) {
 					let [,id]=split_string_once(raw_id,"MP");
-					return {type: "browse_id",tag: "MP",info_arr: [{raw_id},{id}]};
+					let [a1,a2]=split_string_once(id,"_");
+					/** @type {DI_BrowseId_MP} */
+					const z={type: "browse_id",tag: "MP",info_arr: [{raw_id},{id: a1},{separator: "_"},{id: a2}]}; ret=z;
+				} else if(this.str_starts_with(raw_id,"VL")) {
+					let [,id]=split_string_once(raw_id,"VL");
+					if(id==="LL") {
+						/** @type {DI_BrowseId_VL["info_arr"][1]} */
+						let itv={tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}};
+						/** @type {DI_BrowseId_VL} */
+						const z={type: "browse_id",tag: "VL",info_arr: [{raw_id},itv]}; ret=z;
+					} else if(id==="WL") {
+						/** @type {DI_BrowseId_VL["info_arr"][1]} */
+						let itv={tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}};
+						/** @type {DI_BrowseId_VL} */
+						const z={type: "browse_id",tag: "VL",info_arr: [{raw_id},itv]}; ret=z;
+					} else if(this.str_starts_with(id,"PL")) {
+						/** @type {DI_BrowseId_VL["info_arr"][1]} */
+						let itv;
+						{
+							let raw_id=id;
+							{
+								let [,id]=split_string_once(raw_id,"PL");
+								itv={tag: "PL",value: {type: "playlist_id",tag: "PL",info_arr: [{raw_id},{id}]}};
+							}
+						}
+						/** @type {DI_BrowseId_VL} */
+						const z={type: "browse_id",tag: "VL",info_arr: [{raw_id},itv]}; ret=z;
+					} else {
+						id===""; debugger; throw new Error();
+					}
+				} else {
+					raw_id===""; debugger; throw new Error();
 				}
-				if(!this.str_starts_with(raw_id,"VL")) {debugger; throw new Error();}
-				let [,id]=split_string_once(raw_id,"VL");
-				return {type: "browse_id",tag: "VL",info_arr: [{raw_id},{id}]};
-			}
-			case "guide_entry_id": break;
-			case "key:start_radio": break;
-			case "playlist_id": break;
-			case "video_id": break;
+			} break;
+			case "guide_entry_id": {
+				let {info_arr: [{raw_id}]}=x;
+				/** @type {DI_GuideEntryId} */
+				let itv;
+				if(raw_id==="LL") {
+					/** @type {DI_Playlist_LL} */
+					let value={type: "playlist_id",info_arr: [{raw_id}]};
+					/** @type {DI_BrowseId_VL} */
+					itv={type: "guide_entry_id",info_arr: [{tag: raw_id,value}]};
+				} else if(raw_id==="WL") {
+					/** @type {DI_Playlist_WL} */
+					let value={type: "playlist_id",info_arr: [{raw_id}]};
+					/** @type {DI_BrowseId_VL} */
+					itv={type: "guide_entry_id",info_arr: [{tag: raw_id,value}]};
+				} else if(this.str_starts_with(raw_id,"PL")) {
+					const tag="PL";
+					let [,id]=split_string_once(raw_id,tag);
+					/** @type {DI_Playlist_PL} */
+					let value={type: "playlist_id",tag,info_arr: [{raw_id},{id}]};
+					/** @type {DI_BrowseId_VL} */
+					itv={type: "guide_entry_id",info_arr: [{tag,value}]};
+				} else {
+					debugger; break;
+				}
+				ret=itv;
+			} break;
+			case "key:start_radio": {
+				let {tag,info_arr}=x;
+				let parts=split_string_once(tag,":");
+				{
+					let [type,tag]=parts;
+					/** @type {{type:"key";tag:"start_radio";info_arr:typeof info_arr}} */
+					const z={type,tag,info_arr}; ret=z;
+				}
+			} break;
+			case "playlist_id": {
+				let {type,tag,info_arr: [{raw_id}]}=x;
+				if(raw_id==="LL") {
+					/** @type {DI_Playlist_LL} */
+					const z={type: "playlist_id",info_arr: [{raw_id}]}; ret=z;
+				} else if(raw_id==="WL") {
+					/** @type {DI_Playlist_WL} */
+					const z={type: "playlist_id",info_arr: [{raw_id}]}; ret=z;
+				} else if(this.str_starts_with(raw_id,"PL")) {
+					raw_id; debugger;
+				} else if(this.str_starts_with(raw_id,"UU")) {
+					raw_id; debugger;
+				} else if(this.str_starts_with(raw_id,"RD")) {
+					raw_id; debugger;
+					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [{raw_id}]});
+				} else {
+					raw_id;
+				}
+			} break;
+			case "video_id": {
+				let {tag,info_arr: [{raw_id}]}=x;
+				/** @type {DI_VideoId} */
+				const z={type: tag,info_arr: [{raw_id}]}; ret=z;
+			} break;
 		}
-		debugger; throw new Error();
+		if(!ret) {debugger; throw new Error();}
+		switch(ret.type) {
+			case "browse_id":
+				assert_assume_is_type(ret,ret.type);
+				return ret; break;
+			case "channel_id":
+				assert_assume_is_type(ret,ret.type);
+				return ret; break;
+			case "guide_entry_id":
+				assert_assume_is_type(ret,ret.type);
+				return ret; break;
+			case "key":
+				assert_assume_is_type(ret,ret.type);
+				return ret; break;
+			case "playlist_id":
+				assert_assume_is_type(ret,ret.type);
+				return ret; break;
+			case "video_id":
+				assert_assume_is_type(ret,ret.type);
+				return ret; break;
+		}
 	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {
@@ -3215,10 +3324,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "channel_id": {
 				let px=this.make_DI_AGR_UrlInfo(x);
-				const {info_arr: [{raw_id}]}=x;
-				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+				let args=["channel_id","UC",px];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
