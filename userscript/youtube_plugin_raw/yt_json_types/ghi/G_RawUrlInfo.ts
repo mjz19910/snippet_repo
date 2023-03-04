@@ -46,11 +46,6 @@ type G_RawPlaylistUrlInfo=
 	}
 	;
 ;
-type G_RawUrlInfo_7={
-	type: "raw";
-	type_parts: ["raw","channel_id","UC"];
-	raw_id: D_ChannelIdStr;
-};
 type G_RawUrlInfo=
 	|G_RawUrlInfo_1
 	|G_RawUrlInfo_2
@@ -59,6 +54,5 @@ type G_RawUrlInfo=
 	|G_RawUrlInfo_5
 	|G_RawUrlInfo_6
 	|G_RawPlaylistUrlInfo
-	|G_RawUrlInfo_7
 	;
 ;

@@ -1799,6 +1799,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url_url_arr(root,x) {
 		root;
+		let {...x2}=this.parse_url_search_params(x);
 		let vv=split_string(x,"&");
 		/** @type {Map<T_SplitOnce<(typeof vv)[number],"=">[0],T_SplitOnce<(typeof vv)[number],"=">[1]>} */
 		let url_obj=new Map;
@@ -1822,6 +1823,8 @@ class HandleTypes extends ServiceMethods {
 		let obj={
 			v: get_and_delete("v"),
 			pp: get_and_delete("pp"),
+			rv: get_and_delete("rv"),
+			index: get_and_delete("index"),
 		};
 		obj;
 		let url_index=get_from_map("index");
@@ -1831,18 +1834,73 @@ class HandleTypes extends ServiceMethods {
 			this.cache_playlist_index.push(url_index);
 			if(this.log_playlist_index) console.log("[playlist_index]",url_index);
 		}
+		/** @type {((typeof x2) extends infer V?V extends infer A?Omit<A,"v">:null:null)|null} */
+		let x3=null;
+		x: if("v" in x2) {
+			const {v,...y}=x2;
+			if(this.is_empty_obj(y)) break x;
+			x3=y;
+		} else {
+			this.g(x2);
+			return;
+		}
+		if(x3===null) return;
+		if(this.is_empty_obj(x3)) return;
+		const {...x4}=x3;
+		if("pp" in x4) {
+			const {pp,...y}=x4;
+			if(this.is_empty_obj(y)) return;
+			this.g(y);
+			return;
+		}
+		if("t" in x4) {
+			const {t,...y}=x4;
+			if(this.is_empty_obj(y)) return;
+			this.g(y); return;
+		}
+		x: if("list" in x4) {
+			lx: {
+				const {list,...y2}=x4;
+				if("playnext" in y2) {
+					const {playnext,...y}=y2;
+					if(this.is_empty_obj(y)) break lx;
+					this.g(y); break lx;
+				}
+				if(this.is_empty_obj(y2)) break x;
+				if("index" in y2) {
+					return;
+				}
+				const {start_radio,...y3}=y2;
+				if(this.is_empty_obj(y3)) break x;
+				const {rv,...y4}=y3;
+				this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_referral"],raw_id: rv});
+				this.g(y4);
+			}
+			return;
+		}
+		let x5=null;
+		p4: {
+			break p4;
+		}
+		x4;
+		x5;
+		if("rv" in x2) {
+			return;
+		}
+		if("pp" in x2) {
+			const {v,pp}=x2;
+			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: v});
+			this.playerParams("watch.player_params",pp);
+			return;
+		}
+		if("list" in x2&&!("index" in x2)&&!("start_radio" in x2)) {
+			const {v,list}=x2;
+			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: v});
+			this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id: list});
+			return;
+		}
 		// switch(res[0]) {
-		// 	case "v": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: res[1]}); break;
 		// 	case "list": this.GU_PlaylistId(res[1]); break;
-		// 	case "rv": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_referral"],raw_id: res[1]}); break;
-		// 	case "pp": {
-		// 		if(root==="R_WatchPage_VE3832") {
-		// 			const [,playerParams]=res;
-		// 			this.playerParams("watch.player_params",playerParams);
-		// 		} else {
-		// 			debugger;
-		// 		}
-		// 	} break;
 		// 	case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
 		// 	case "t": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_time"],raw_id: res[1]}); break;
 		// 	case "playnext": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","play_next"],raw_id: res[1]}); break;
@@ -3247,33 +3305,33 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "video_referral": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				x;
-				debugger;
+				let {raw_id,type_parts: [,...type_parts]}=x;
+				this.G_UrlInfo({type: type_parts[0],type_parts,raw_id});
 			} break;
 			case "channel_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				x;
-				debugger;
+				let {raw_id,type_parts: [,...type_parts]}=x;
+				let [,user_id]=split_string_once(raw_id,"UC");
+				this.G_UrlInfo({type: type_parts[0],type_parts: ["channel_id","UC"],id: user_id,raw_id});
+				this.G_UrlInfo({type: "user_id",raw_id: user_id});
 			} break;
 			case "video": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				if(this.is_UrlInfo_len(x,2)) {
 					let {raw_id,type_parts: [,...type_parts]}=x;
 					this.G_UrlInfo({type: "video",tag: null,type_parts,raw_id});
+					return;
+				} else if(this.is_UrlInfoPartAt(x,2,"normal")) {
+					let {raw_id,type_parts: [,...type_parts]}=x;
+					this.G_UrlInfo({type: "video",tag: "normal",type_parts,raw_id});
+					return;
+				} else if(this.is_UrlInfoPartAt(x,2,"short")) {
+					let {raw_id,type_parts: [,...type_parts]}=x;
+					this.G_UrlInfo({type: "video",tag: "short",type_parts,raw_id});
+					return;
 				} else {
-					if(this.is_UrlInfoPartAt(x,2,"normal")) {
-						let {raw_id,type_parts: [,...type_parts]}=x;
-						this.G_UrlInfo({type: "video",tag: null,type_parts,raw_id});
-						return;
-					}
-					if(this.is_UrlInfoPartAt(x,2,"short")) {
-						let {raw_id,type_parts: [,...type_parts]}=x;
-						this.G_UrlInfo({type: "video",tag: null,type_parts,raw_id});
-						return;
-					}
+					debugger;
 				}
-				x.type_parts;
-				debugger;
 			} break;
 			case "browse_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
