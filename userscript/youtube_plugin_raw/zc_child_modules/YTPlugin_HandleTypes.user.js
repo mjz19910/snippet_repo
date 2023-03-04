@@ -1825,7 +1825,7 @@ class HandleTypes extends ServiceMethods {
 		x: if("list" in x3) {
 			lx: {
 				const {list,...y2}=x3;
-				this.G_RawUrlInfo({type: "raw",type_parts: {r: "raw",a: "playlist_id"},union: true,info_arr: [{raw_id: list},{arr: ["playlist_id"]}]});
+				this.G_RawUrlInfo({type: "raw",union: true,info_arr: [{raw_id: list}]});
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
 					this.save_string("video_url.info.playnext",playnext);
