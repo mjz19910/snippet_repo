@@ -782,7 +782,15 @@ class IndexedDBService extends BaseService {
 						case "playlist_id": {
 							if(item_db_nt.type!==item_nt.type) break;
 							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.info_arr[1].id===item_db_nt.info_arr[1].id) break;
+							y: if("id" in item_nt.info_arr[0]) {
+								if(!("id" in item_db_nt.info_arr[0])) break y;
+								return;
+							}
+							if("raw_id" in item_nt.info_arr[0]&&"raw_id" in item_db_nt.info_arr[0]) {
+								if(item_nt.info_arr[0].raw_id===item_db_nt.info_arr[0].raw_id) break;
+								update_item=true;
+								break;
+							}
 							update_item=true;
 						} break;
 						case "playlist_id:PL": {
