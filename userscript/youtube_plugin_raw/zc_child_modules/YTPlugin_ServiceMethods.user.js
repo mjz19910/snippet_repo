@@ -2114,6 +2114,7 @@ class ServiceMethods extends ServiceData {
 				case "account_advanced":
 				case "account_billing":
 				case "account_downloads":
+				case "account_notifications":
 				case "account_overview":
 				case "account_playback":
 				case "account_privacy":

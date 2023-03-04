@@ -101,6 +101,7 @@ type D_Settings_Id=
 	|"account_advanced"
 	|"account_billing"
 	|"account_downloads"
+	|"account_notifications"
 	|"account_overview"
 	|"account_playback"
 	|"account_privacy"
