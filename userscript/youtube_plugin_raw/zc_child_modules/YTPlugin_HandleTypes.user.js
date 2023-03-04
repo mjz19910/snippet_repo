@@ -3299,8 +3299,14 @@ class HandleTypes extends ServiceMethods {
 				{
 					const k="VL";
 					if(this.str_starts_with(raw_id,k)) {
-						if(raw_id==="VLLL") return;
-						if(raw_id==="VLWL") return;
+						if(raw_id==="VLLL") {
+							this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k],raw_id});
+							return;
+						}
+						if(raw_id==="VLWL") {
+							this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k],raw_id});
+							return;
+						}
 						if(this.str_starts_with(raw_id,"VLPL")) {
 							this.G_UrlInfo({type: "browse_id",tag: k,type_parts: ["browse_id",k,"PL"],raw_id});
 							return;

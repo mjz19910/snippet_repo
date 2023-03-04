@@ -8,6 +8,16 @@ type D_BrowseIdInfo_VL_PL={
 	tag: "VL";
 	type_parts: ["browse_id","VL","UU"];
 	raw_id: `VLUU${string}`;
+}|{
+	type: "browse_id";
+	tag: "VL";
+	type_parts: ["browse_id","VL"];
+	raw_id: "VLLL";
+}|{
+	type: "browse_id";
+	tag: "VL";
+	type_parts: ["browse_id","VL"];
+	raw_id: "VLWL";
 };
 type D_BrowseIdInfo_FE={
 	type: "browse_id";
