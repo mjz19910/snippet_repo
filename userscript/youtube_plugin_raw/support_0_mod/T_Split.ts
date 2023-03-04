@@ -2,7 +2,7 @@ type T_Split_Helper<S extends string,D extends string=",">=
 	string extends S? string[]:
 	S extends ''? []:
 	S extends `${infer T}${D}${infer U}${D}${infer X}`?
-	D extends ''? [T,U]:X extends ''? [T,U,""]:
+	D extends ''? [T,U,...T_Split_Helper<X,D>]:X extends ''? [T,U,""]:
 	[T,U,...T_Split_Helper<X,D>]:
 	S extends `${infer T}${D}${infer U}`?
 	[T,...T_Split_Helper<U,D>]:

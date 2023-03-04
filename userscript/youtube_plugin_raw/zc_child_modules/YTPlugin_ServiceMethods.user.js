@@ -349,25 +349,6 @@ class ServiceMethods extends ServiceData {
 			if(v.length!==1) debugger;
 		}
 	}
-	/**
-	 * @protected @template R_D,R_M
-	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
-	 * @arg {T_Key} k
-	 * @arg {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
-	 * @returns {[typeof y,R_M,R_D]}
-	 */
-	TE_Endpoint_3_v2(k,x,f1,f2) {
-		let keys=this.get_keys_of(x);
-		let s=new JsonReplacerState({
-			text_decoder: this._decoder,
-			cf: k,keys,is_root: true,
-		});
-		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
-		this.clickTrackingParams(clickTrackingParams);
-		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
-		return [y,r1,r2];
-	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @protected @arg {E_PlaylistDelete} x */
@@ -1470,6 +1451,63 @@ class ServiceMethods extends ServiceData {
 		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
 		this.clickTrackingParams(clickTrackingParams);
 		return [endpoint,y];
+	}
+	/**
+	 * @protected @template R_D
+	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_2<any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @arg {T_Key} k
+	 * @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
+	 * @returns {[typeof y,R_D]}
+	 */
+	TE_Endpoint_2_v2(k,x,f1) {
+		let keys=this.get_keys_of(x);
+		let s=new JsonReplacerState({
+			text_decoder: this._decoder,
+			cf: k,keys,is_root: true,
+		});
+		let cf=this.cg.get_auto_type_name(s,x);
+		const {clickTrackingParams,[k]: a,...y}=this.s(cf,x); y;
+		this.clickTrackingParams(clickTrackingParams);
+		const r1=f1.call(this,a);
+		return [y,r1];
+	}
+	/**
+	 * @protected @template R_D
+	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_2_Opt<any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @arg {T_Key} k
+	 * @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
+	 * @returns {[typeof y,R_D]}
+	 */
+	TE_Endpoint_2_opt_v2(k,x,f1) {
+		let keys=this.get_keys_of(x);
+		let s=new JsonReplacerState({
+			text_decoder: this._decoder,
+			cf: k,keys,is_root: true,
+		});
+		let cf=this.cg.get_auto_type_name(s,x);
+		const {clickTrackingParams: a,[k]: b,...y}=this.s(cf,x); y;
+		a&&this.clickTrackingParams(a);
+		const r1=f1.call(this,b);
+		return [y,r1];
+	}
+	/**
+	 * @protected @template R_D,R_M
+	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @arg {T_Key} k
+	 * @arg {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
+	 * @returns {[typeof y,R_M,R_D]}
+	 */
+	TE_Endpoint_3_v2(k,x,f1,f2) {
+		let keys=this.get_keys_of(x);
+		let s=new JsonReplacerState({
+			text_decoder: this._decoder,
+			cf: k,keys,is_root: true,
+		});
+		let cf=this.cg.get_auto_type_name(s,x);
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
+		this.clickTrackingParams(clickTrackingParams);
+		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
+		return [y,r1,r2];
 	}
 	/**
 	 * @arg {CF_TE_TrackedObj_2} cf

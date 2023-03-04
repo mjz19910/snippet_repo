@@ -2343,7 +2343,7 @@ class Support_Renderer extends ServiceMethods {
 	AU_SubscribeButton(x) {this.H_("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	// Command methods
 	/** @private @arg {C_RunAttestation} x */
-	C_RunAttestation(x) {this.H_("runAttestationCommand",x,this.D_RunAttestation);}
+	C_RunAttestation(x) {this.TE_Endpoint_2_opt_v2("runAttestationCommand",x,this.D_RunAttestation);}
 	//#endregion
 	//#region ActionData methods
 	/** @private @arg {AD_AddToGuideSection} x */
