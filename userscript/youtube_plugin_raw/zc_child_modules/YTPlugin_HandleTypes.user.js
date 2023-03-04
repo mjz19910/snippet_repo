@@ -2468,7 +2468,7 @@ class HandleTypes extends ServiceMethods {
 		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
 	}
 	//#endregion
-	//#region binary get keys (check for optional keys with `let {ex_key:{}}=x;` and `let {ex_key:{}={}}=x;`)
+	//#region binary get keys
 	//#region sub_region done
 	/** @private @arg {P_ypc_get_offers_params_f1} x */
 	P_ypc_get_offers_params_f1(x) {
@@ -2568,21 +2568,31 @@ class HandleTypes extends ServiceMethods {
 		v1&&console.log(this.TV_Str(v1));
 		this.PX_watch_sequence_info(this.T_VW(v3));
 	}
+	/** @arg {"P_transcript_track_selection_serialized_params"|"P_get_transcript_params"} cf @template {PE_transcript_params} T @arg {T} x */
+	PE_transcript_params(cf,x) {
+		const {1: v1,2: v2,3: v3,6: f6,7: f7,8: f8,...y}=this.s(cf,x);
+		this.videoId(this.TV_Str(v1));
+		this.params("transcript.params",this.TV_Str(v2));
+		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_number(`${cf}.f6`,this.T_D32(f6));
+		this.save_number(`${cf}.f7`,this.T_D32(f7));
+		this.save_number(`${cf}.f8`,this.T_D32(f8));
+		return y;
+	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {
 		const cf="P_transcript_track_selection_serialized_params";
-		const {1: v1,2: v2,3: v3,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.videoId(this.TV_Str(v1));
-		this.params("video.params",this.TV_Str(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		const {...y}=this.PE_transcript_params(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_transcript_params} x */
 	P_get_transcript_params(x) {
 		const cf="P_get_transcript_params";
-		const {1: v1,2: v2,3: v3,5: f5,6: f6,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.videoId(this.TV_Str(v1));
-		this.params("transcript.params",this.TV_Str(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		const {5: v5,...y}=this.PE_transcript_params(cf,x); this.h_gen_keys(cf,x,y);
+		let i5=this.TV_Str(v5);
+		switch(i5) {
+			default: debugger; break;
+			case "engagement-panel-searchable-transcript-search-panel": break;
+		}
 	}
 	/** @private @arg {P_shorts_source_bp} x */
 	P_shorts_source_bp(x) {
@@ -2606,7 +2616,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PX_watch_next_token_info} x */
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
-		const {2: {},4: {}={},6: {}={},7: {}={},25: {}={},28: {}={},36: {}={},...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		const {2: v2,4: f4,6: f6,7: f7,25: f25,28: f28,36: f36,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_number(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {PX_watch_next_token_item} x */
 	PX_watch_next_token_item(x) {

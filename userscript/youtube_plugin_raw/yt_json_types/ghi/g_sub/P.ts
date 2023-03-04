@@ -647,3 +647,18 @@ type P_transcript_params={
 	2: TV_Str<"en">;
 	3: T_VW_J<{}>;
 };
+type PE_transcript_params={
+	1: TV_Str<D_VideoIdStr>;
+	2: TV_Str<string>;
+	3: T_D32<1>;
+	6: T_D32<0>;
+	7: T_D32<1>;
+	8: T_D32<0>;
+}|{
+	1: TV_Str<D_VideoIdStr>;
+	2: TV_Str<string>;
+	3: T_D32<1>;
+	6: T_D32<1>;
+	7: T_D32<1>;
+	8: T_D32<1>;
+};
