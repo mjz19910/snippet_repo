@@ -1830,7 +1830,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo({type: "raw_key",key: "start_radio",info_arr: [{start_radio}]});
+				this.DI_AGR_UrlInfo({type: "raw",tag: "key:start_radio",info_arr: [{start_radio}]});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(this.is_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -3161,37 +3161,60 @@ class HandleTypes extends ServiceMethods {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
-	/** @public @arg {DI_G_Playlist} x */
-	G_PlaylistUrlInfo(x) {
-		/** @template T @arg {{tag:T}} x */
-		function get_tag(x) {return x.tag;}
-		get_tag;
-		/** @type {[(typeof x)["type"],typeof x]} */
-		let a_tmp=[x.type,x];
-		/** @type {Y_PutBoxedArgs} */
-		let args=a_tmp;
-		let box_res=this.put_boxed_id(...args);
-		this.execute_promise_def((async () => (await box_res).ret)());
-	}
 	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
 	D_RawUrlFromTag(type,tag,x) {
 		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["tag"];info_arr: [{raw_id: string}]}} */
 		let mo={type,tag,info_arr: [{raw_id: x}]};
 		this.ht.DI_AGR_UrlInfo(as_any(mo));
 	}
+	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
+	make_DI_AGR_UrlInfo(x) {
+		switch(x.tag) {
+			case "channel_id": {
+				const {info_arr: [{raw_id}]}=x;
+				let [,id]=split_string_once(raw_id,"UC");
+				return {type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]};
+			}
+			case "browse_id": {
+				const {info_arr: [{raw_id}]}=x;
+				if(this.str_starts_with(raw_id,"UC")) {
+					let [,id]=split_string_once(raw_id,"UC");
+					return {type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]};
+				}
+				if(this.str_starts_with(raw_id,"FE")) {
+					let [,id]=split_string_once(raw_id,"FE");
+					return {type: "browse_id",tag: "FE",info_arr: [{raw_id},{id}]};
+				}
+				if(this.str_starts_with(raw_id,"SP")) {
+					let [,id]=split_string_once(raw_id,"SP");
+					return {type: "browse_id",tag: "SP",info_arr: [{raw_id},{id}]};
+				}
+				if(this.str_starts_with(raw_id,"MP")) {
+					let [,id]=split_string_once(raw_id,"MP");
+					return {type: "browse_id",tag: "MP",info_arr: [{raw_id},{id}]};
+				}
+				if(!this.str_starts_with(raw_id,"VL")) {debugger; throw new Error();}
+				let [,id]=split_string_once(raw_id,"VL");
+				return {type: "browse_id",tag: "VL",info_arr: [{raw_id},{id}]};
+			}
+			case "guide_entry_id": break;
+			case "key:start_radio": break;
+			case "playlist_id": break;
+			case "video_id": break;
+		}
+		debugger; throw new Error();
+	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {
 		/** @template T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
-		if(!("tag" in x)) {
-			return;
-		}
 		switch(x.tag) {
 			default: {
 				switch(get_tag(x)) {
 				}
 			} break;
 			case "channel_id": {
+				let px=this.make_DI_AGR_UrlInfo(x);
 				const {info_arr: [{raw_id}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
@@ -3250,29 +3273,26 @@ class HandleTypes extends ServiceMethods {
 				}
 				if(this.str_starts_with(raw_id,"VL")) {
 					let [,id]=split_string_once(raw_id,"VL");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"VL"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "VL",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,any,{tag:"VL"}]>} */
+					let args=["browse_id","VL",{type: "browse_id",tag: "VL",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
-					return;
 				}
 				debugger;
 			} break;
 			case "playlist_id": {
 				const {info_arr: [{raw_id}]}=x;
-				let [,id]=split_string_once(raw_id,"UC");
-				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=[x.tag,{type: x.tag,tag: "UC",info_arr: [{raw_id},{id}]}];
-				let box_res=this.put_boxed_id(...args);
-				this.execute_promise_def((async () => (await box_res).ret)());
-			} break;
-			case "playlist_id": {
-				const {info_arr: [{raw_id}]}=x;
-				let [,id]=split_string_once(raw_id,"UC");
-				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=[x.tag,{type: x.tag,tag: "UC",info_arr: [{raw_id},{id}]}];
-				let box_res=this.put_boxed_id(...args);
-				this.execute_promise_def((async () => (await box_res).ret)());
+				if(this.str_starts_with(raw_id,"PL")) {
+					/** @type {GU_PlaylistId} */
+					let r2=raw_id; r2;
+					let [,id]=split_string_once(raw_id,"PL");
+					/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],"PL",...any]>} */
+					let args=[x.tag,"PL",{type: x.tag,tag: "PL",info_arr: [{raw_id,id}]}];
+					let box_res=this.put_boxed_id(...args);
+					this.execute_promise_def((async () => (await box_res).ret)());
+					return;
+				}
+				debugger;
 			} break;
 		}
 	}

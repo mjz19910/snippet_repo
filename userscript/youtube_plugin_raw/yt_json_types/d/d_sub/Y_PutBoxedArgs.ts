@@ -1,22 +1,41 @@
+type DI_BrowseId_VL={
+	type: "browse_id";
+	tag: "VL";
+	info_arr: [
+		{raw_id: GU_VE5754_BrowseId;},
+		{
+			tag: "PL";
+			value: DI_Playlist_PL;
+		}|{
+			tag: "WL";
+			value: DI_Playlist_WL;
+		}|{
+			tag: "LL";
+			value: DI_Playlist_LL;
+		}
+	];
+};
+
 type Y_PutBoxedArgs=
-	|["bigint",string,make_item_group<bigint>]
-	|["boolean",string,make_item_group<boolean>]
+	|["bigint",null,[string,make_item_group<bigint>]]
+	|["boolean",null,[string,make_item_group<boolean>]]
 	|["browse_id","FE",DI_BrowseId_FE]
 	|["browse_id","SP",DI_BrowseId_SP]
-	|["channel_id",DI_ChannelId_UC]
-	|["hashtag_id",DI_HashtagId]
-	|["keys",string,make_item_group<string|number>]
-	|["load_id",number]
-	|["number",string,make_item_group<number>]
+	|["channel_id","UC",DI_ChannelId_UC]
+	|["hashtag_id",null,DI_HashtagId]
+	|["keys",null,[string,make_item_group<string|number>]]
+	|["load_id",null,number]
+	|["number",null,[string,make_item_group<number>]]
 	|["play_next",DI_PlayNext]
-	|["playlist_id",DI_G_Playlist]
-	|["root_visual_element",string,make_item_group<number>]
-	|["save_id",number]
-	|["string",string,make_item_group<string>]
-	|["user_id",DI_UserId]
-	|["video_id",DI_VideoId]
-	|["video_time",DI_VideoTime]
-	|["browse_id","MP",{type: "browse_id",tag: "MP",info_arr: [{raw_id: string;},{id: string;}];}]
+	|["root_visual_element",null,[string,make_item_group<number>]]
+	|["save_id",null,number]
+	|["string",null,[string,make_item_group<string>]]
+	|["user_id",null,DI_UserId]
+	|["video_id",null,DI_VideoId]
+	|["video_time",null,DI_VideoTime]
+	|["browse_id","MP",DI_BrowseId_MP]
+	|["browse_id","VL",DI_BrowseId_VL]
+	|["playlist_id","PL",DI_Playlist_PL]
 	;
 ;
 type Y_PutBoxedArgs_2=Extract<Y_PutBoxedArgs,{length: 2;}>;
@@ -29,11 +48,11 @@ async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
 	switch(args[0]) {
 		default: throw new Error();
 		case "video_time": {
-			let [a,value]=args;
+			let [tag,,value]=args;
 			let ret=t.put_box({
 				type: "boxed_id",
-				tag: a,
-				key: `boxed_id:${a}:${value.raw_value}`,
+				tag,
+				key: `boxed_id:${tag}:${value.raw_value}`,
 				value,
 			},version);
 			return {args,ret};
