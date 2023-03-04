@@ -2114,11 +2114,12 @@ class ServiceMethods extends ServiceData {
 				case "account_advanced":
 				case "account_downloads":
 				case "account_overview":
+				case "account_playback":
 				case "account":
 				case "report_history":
 				case "unlimited":
 					return;
-				default: console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
+				default: switch(x1) {case "account_playback": } console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
 			}
 			console.log("new with param [param_2c_SP]",x,x1);
 			return;
