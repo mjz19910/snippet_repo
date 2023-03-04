@@ -1,4 +1,4 @@
-type I_BoxedRadio_1={
+type I_BoxedRadio_RDCM_UC={
 	key: `playlist_id:RDCM:UC:${string}`;
 	base: "playlist_id";
 	type: "playlist_id:RDCM";
