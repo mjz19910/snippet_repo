@@ -345,11 +345,11 @@ class IndexedDBService extends BaseService {
 				return {args,promise};
 			}
 			case "channel_id": {
-				let [a,value]=args;
+				let [tag,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag: `${a}:UC`,
-					key: `boxed_id:${a}:UC:${value.info_arr[1].id}`,
+					tag,
+					key: `boxed_id:${tag}:UC:${value.info_arr[1].id}`,
 					value,
 				},version);
 				return {args,promise};

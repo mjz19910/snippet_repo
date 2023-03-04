@@ -43,7 +43,7 @@ type G_BoxedIdObj=
 	}
 	|{
 		type: "boxed_id";
-		tag: "channel_id:UC";
+		tag: "channel_id";
 		key: `boxed_id:channel_id:UC:${string}`;
 		value: DI_ChannelUrl;
 	}
