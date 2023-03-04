@@ -793,47 +793,11 @@ class IndexedDBService extends BaseService {
 							}
 							update_item=true;
 						} break;
-						case "playlist_id:PL": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
-						case "playlist_id:RD": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
-						case "playlist_id:RDCM": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
-						case "playlist_id:RDMM": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.info.id===item_db_nt.info.id) break;
-							update_item=true;
-						} break;
-						case "playlist_id:UU": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
 						// non-dynamic values
 						case "hashtag_id": {
 							if(item_db_nt.type!==item_nt.type) break;
 							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 							if(item_nt.hashtag===item_db_nt.hashtag) break;
-							update_item=true;
-						} break;
-						case "playlist_id:self": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.id===item_db_nt.id) break;
 							update_item=true;
 						} break;
 						case "user_id": {
