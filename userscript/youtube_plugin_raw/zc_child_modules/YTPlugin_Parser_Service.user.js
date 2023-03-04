@@ -297,6 +297,7 @@ class ParserService extends BaseService {
 						case "embed": return this.parse_embed_url(x);
 						case "v": return this.parse_video_url(x);
 						case "c": debugger; break;
+						case "user": debugger; break;
 						default: x===""; debugger; return;
 					}
 				}

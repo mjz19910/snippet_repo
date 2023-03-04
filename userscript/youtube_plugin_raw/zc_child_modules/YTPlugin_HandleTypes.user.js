@@ -2153,10 +2153,10 @@ class HandleTypes extends ServiceMethods {
 			switch(v8[0]) {
 				default: debugger; break;
 				case "v_data32": {
-					let [,i8]=v8; console.log(`${cf}.f8`,i8);
+					let [,i8]=v8; this.save_number(`${cf}.f8`,i8);
 				} break;
 				case "v_data64": {
-					let [,,i8]=v8; console.log(`${cf}.f8`,i8);
+					let [,,i8]=v8; this.save_bigint(`${cf}.f8`,i8);
 				} break;
 			}
 		});
