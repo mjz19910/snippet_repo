@@ -343,6 +343,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Menu_WithTargetId";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_MerchandiseItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_MerchandiseShelf";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_Message";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_MetadataRow";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Microformat.ios";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Microformat.url";}

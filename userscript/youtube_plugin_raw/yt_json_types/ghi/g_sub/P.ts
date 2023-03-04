@@ -629,18 +629,21 @@ type P_PX_watch_next_token_2_f37={
 	15: T_D32<2>;
 	20: T_D32<2>;
 };
+type P_f3_PD_continuation_params_f1_data={
+	1: TV_Str<`UC${string}`>;
+	2: TV_Str<D_VideoIdStr>;
+};
+type P_f3_PD_continuation_params_f1={5: T_VW<P_f3_PD_continuation_params_f1_data>;};
+type P_f3_PD_continuation_params_data={1: TV_Str<D_VideoIdStr>;};
+type P_f3_PD_continuation_params_obj={0x2e6ea8d: T_VW<P_f3_PD_continuation_params_data>;};
 type P_f3_PD_continuation_params={
-	1: T_VW<{
-		5: T_VW<{
-			1: TV_Str<`UC${string}`>;
-			2: TV_Str<D_VideoIdStr>;
-		}>;
-	}>;
-	3: T_VW<{
-		0x2e6ea8d: T_VW<{
-			1: TV_Str<D_VideoIdStr>;
-		}>;
-	}>;
+	1: T_VW<P_f3_PD_continuation_params_f1>;
+	3: T_VW<P_f3_PD_continuation_params_obj>;
 	4: T_D32<1>;
 	6: T_D32<0>;
+};
+type P_video_params={
+	1: TV_Str<"asr">;
+	2: TV_Str<"en">;
+	3: T_VW_J<{}>;
 };

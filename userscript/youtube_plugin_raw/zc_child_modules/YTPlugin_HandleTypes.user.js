@@ -2559,7 +2559,7 @@ class HandleTypes extends ServiceMethods {
 		console.log(this.TV_Str(v1));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 		this.save_number(`${cf}.f4`,this.T_D32(v4));
-		this.t(this.T_VW_Bigint(f6),x => console.log(`${cf}.f6`,x));
+		this.t(this.T_VW_Bigint(f6),x => this.save_bigint(`${cf}.f6`,x));
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
@@ -2645,7 +2645,7 @@ class HandleTypes extends ServiceMethods {
 		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
 		let i8=this.TV_Str(v8);
 		switch(i8) {
-			default: console.log(`${cf}.f8`,i8); break;
+			default: debugger; break;
 			case "engagement-panel-comments-section":
 			case "comments-section":
 		}
@@ -2774,8 +2774,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="PX_watch_bin";
 		const {2: v2,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.save_string(`${cf}.f2`,this.TV_Str(v2));
-		console.log(`${cf}.v3`,"0b"+this.T_D32(v3).toString(2));
-		console.log(`${cf}.f4`,"0b"+this.T_D32(v4).toString(2));
+		this.save_string(`${cf}.v3`,"0b"+this.T_D32(v3).toString(2));
+		this.save_string(`${cf}.f4`,"0b"+this.T_D32(v4).toString(2));
 		this.save_number(`${cf}.f5`,this.T_D32(v5));
 	}
 	/** @private @arg {PR_watch_bin} x */
@@ -2822,7 +2822,7 @@ class HandleTypes extends ServiceMethods {
 	P_get_notification_menu_ctoken(x) {
 		const cf="P_get_notification_menu_ctoken";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f1`,this.T_D32(v1));
+		this.save_number(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_notification_opt_out} x */
 	P_notification_opt_out(x) {
@@ -2859,14 +2859,14 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_notification_add_upcoming_event_reminder_params";
 		const {1: v1,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		const {14: x2_f14,...y2}=this.T_VW(v1); this.g(y2);
-		console.log(cf,"f1","f14",this.T_FD64(x2_f14));
+		this.save_bigint(`${cf}.f1.f14`,this.T_FD64(x2_f14));
 	}
 	//#endregion
 	/** @private @arg {PD_event_info} x */
 	PD_timed_continuation_f3(x) {
 		const cf="PD_timed_continuation_f3";
 		const {14: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f14`,this.T_FD64(r));
+		this.save_bigint(`${cf}.f14`,this.T_FD64(r));
 	}
 	/** @private @arg {PD_timed_continuation} x */
 	PD_timed_continuation(x) {
@@ -2878,18 +2878,29 @@ class HandleTypes extends ServiceMethods {
 	P_f3_PD_continuation_params(x) {
 		const cf="P_f3_PD_continuation_params";
 		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f1`,this.T_VW(r));
+		this.T_VW(r);
 	}
 	/** @private @arg {P_PX_watch_next_token_2_f37} x */
 	P_PX_watch_next_token_2_f37(x) {
 		const cf="P_PX_watch_next_token_2_f37";
-		const {10: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f10`,this.TV_Str(r));
+		const {10: r,15: f15,20: f20,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_string(`${cf}.f10`,this.TV_Str(r));
+		debugger;
 	}
 	/** @private @arg {P_create_reply_params} x */
-	P_create_reply_params(x) {x;}
+	P_create_reply_params(x) {
+		const cf="P_create_reply_params";
+		const {2: r,4: f4,5: f5,10: f10,14: f14,29: f29,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_string(`${cf}.f2`,this.TV_Str(r));
+		debugger;
+	}
 	/** @private @arg {P_perform_comment_action} x */
-	P_perform_comment_action(x) {x;}
+	P_perform_comment_action(x) {
+		const cf="P_perform_comment_action";
+		const {1: v1,2: v2,3: f3,5: f5,6: f10,7: f14,9: f29,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_number(`${cf}.f2`,this.T_D32(v2));
+	}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {x;}
 	//#endregion

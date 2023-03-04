@@ -2963,7 +2963,14 @@ class Support_Renderer extends ServiceMethods {
 	/** @private @arg {R_PlaylistVideoThumbnail} x */
 	R_PlaylistVideoThumbnail(x) {this.H_("playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
 	/** @public @arg {R_Message} x */
-	R_Message(x) {this.H_("messageRenderer",x,this.g);}
+	R_Message(x) {this.H_("messageRenderer",x,this.D_Message);}
+	/** @private @arg {D_Message} x */
+	D_Message(x) {
+		const cf="D_Message";
+		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		this.trackingParams(trackingParams);
+	}
 	/** @public @arg {R_ConversationBar} x */
 	R_ConversationBar(x) {this.H_("conversationBarRenderer",x,this.R_AvailabilityMessage);}
 	/** @public @arg {R_AvailabilityMessage} x */
