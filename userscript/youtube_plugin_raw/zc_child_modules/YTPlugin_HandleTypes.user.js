@@ -741,14 +741,26 @@ class HandleTypes extends ServiceMethods {
 			case "hp57k":
 			case "hp57y":
 			case "n4v7s":
+				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
+				break;
+			case "n8v7z":
+				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
+				/*not seen yet*/ debugger; break;
 			case "nx5s7":
+				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
+				break;
 			case "nx57y":
 			case "o097z":
 			case "p5qls":
 			case "p5qs7":
 			case "q4fl6":
 			case "q4flr":
+			case "q4fze":
+				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
+				/*not seen yet*/ debugger; break;
 			case "qxo7r":
+				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
+				break;
 			case "qxoed":
 			case "t0a7l":
 			case "t0a7s":
