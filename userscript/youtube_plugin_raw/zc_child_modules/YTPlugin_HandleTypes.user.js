@@ -3212,7 +3212,7 @@ class HandleTypes extends ServiceMethods {
 						}; ret=z;
 					} else if(raw_id==="VLWL") {
 						let [,id]=split_string_once(raw_id,"VL");
-						/** @type {DI_BrowseId_VL_1} */
+						/** @type {DI_BrowseId_VL} */
 						const z={
 							type: "browse_id",tag: "VL:WL",
 							info_arr: [

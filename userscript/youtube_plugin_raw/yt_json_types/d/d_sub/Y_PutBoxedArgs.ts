@@ -1,4 +1,4 @@
-type DI_BrowseId_VL_1={
+type DI_BrowseId_VL={
 	type: "browse_id";
 	tag: "VL:WL";
 	info_arr: [
@@ -37,7 +37,7 @@ type DI_BrowseId_VL_PL_={
 		}
 	];
 };
-type DI_BrowseId_VL=DI_BrowseId_VL_1|DI_BrowseId_VL_2|DI_BrowseId_VL_PL_;
+type DI_BrowseId_VL=DI_BrowseId_VL|DI_BrowseId_VL_2|DI_BrowseId_VL_PL_;
 type Y_PutBoxedArgs=
 	|["bigint",null,[string,make_item_group<bigint>]]
 	|["boolean",null,[string,make_item_group<boolean>]]
