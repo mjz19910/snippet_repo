@@ -99,9 +99,12 @@ type D_ContextTypeStr=
 ;
 type D_Settings_Id=
 	|"account_advanced"
+	|"account_billing"
 	|"account_downloads"
 	|"account_overview"
 	|"account_playback"
+	|"account_privacy"
+	|"account_sharing"
 	|"account"
 	|"report_history"
 	|"unlimited"

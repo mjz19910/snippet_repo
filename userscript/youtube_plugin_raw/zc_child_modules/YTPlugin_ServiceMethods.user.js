@@ -2112,14 +2112,17 @@ class ServiceMethods extends ServiceData {
 			let x1=split_string_once(x,"SP")[1];
 			switch(x1) {
 				case "account_advanced":
+				case "account_billing":
 				case "account_downloads":
 				case "account_overview":
 				case "account_playback":
+				case "account_privacy":
+				case "account_sharing":
 				case "account":
 				case "report_history":
 				case "unlimited":
 					return;
-				default: switch(x1) {case "account_playback": } console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
+				default: switch(x1) {case "account_billing": } console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
 			}
 			console.log("new with param [param_2c_SP]",x,x1);
 			return;
