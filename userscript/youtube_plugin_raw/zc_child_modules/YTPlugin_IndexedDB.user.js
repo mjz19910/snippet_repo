@@ -156,7 +156,9 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
 	load_store(store,item) {
+		if(!("type" in item)) return;
 		if(!("value" in item)) return;
+		if(item.type==="boxed_id") return;
 		let [,d_cache]=this.get_data_cache("boxed_id");
 		this.cache_weak_set.add(item.value);
 		let c_index=this.get_cache_index("boxed_id");
@@ -300,7 +302,7 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
-					key: `boxed_id:${a}:${value.raw_value}`,
+					key: `boxed_id:${a}:${value.raw_id}`,
 					value,
 				},version);
 				return {args,ret};
@@ -310,27 +312,40 @@ class IndexedDBService extends BaseService {
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
-					key: `boxed_id:${a}:${value.raw_value}`,
+					key: `boxed_id:${a}:${value.value}`,
 					value,
 				},version);
 				return {args,ret};
 			}
 			case "playlist_id": {
 				let [a,value]=args;
-				let ret=this.put_box({
-					type: "boxed_id",
-					tag: a,
-					key: `boxed_id:${a}:${value.raw_value}`,
-					value,
-				},version);
-				return {args,ret};
+				switch(value.type_parts.length) {
+					case 2: {
+						let ret=this.put_box({
+							type: "boxed_id",
+							tag: a,
+							key: `boxed_id:${a}:${value.type_parts[1]}`,
+							value,
+						},version);
+						return {args,ret};
+					}
+					case 3: {
+						let ret=this.put_box({
+							type: "boxed_id",
+							tag: a,
+							key: `boxed_id:${a}:${value.type_parts[1]}:${value.type_parts[2]}`,
+							value,
+						},version);
+						return {args,ret};
+					}
+				}
 			}
 			case "hashtag_id": {
 				let [a,value]=args;
 				let ret=this.put_box({
 					type: "boxed_id",
 					tag: a,
-					key: `boxed_id:${a}:${value.raw_value}`,
+					key: `boxed_id:${a}:${value.hashtag}`,
 					value,
 				},version);
 				return {args,ret};
@@ -836,13 +851,16 @@ class IndexedDBService extends BaseService {
 		}
 	}
 	/**
-	 * @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} store_key @arg {number} version
-	 * @returns {Promise<DT_DatabaseStoreTypes[K]|null>}
+	 * @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @template {T["key"]} KA @arg {KA} store_key
+	 * @template {Extract<T,{key:KA}>} T2
+	 * @arg {number} version
+	 * @returns {Promise<T2|null>}
 	 * */
 	async get(key,store_key,version) {
 		let typed_db=new TypedIndexedDB;
 		let db=await this.get_async_result(this.get_db_request(version));
 		const tx=typed_db.transaction(db,key,"readonly");
+		/** @type {TypedIDBObjectStore<T2>} */
 		const obj_store=typed_db.objectStore(tx,key);
 		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
 		return result;

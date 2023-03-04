@@ -2183,6 +2183,13 @@ class TextDecoderExt {
 	}
 }
 class BaseService extends BaseServicePrivate {
+	/** @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} T @arg {T} x @returns {x is Extract<T,{type_parts:[any]}>} */
+	is_UrlInfo_len1(x) {return x.type_parts.length===1;}
+	/** @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} O @arg {O} x @returns {x is Extract<O,{type_parts:[any,T,...any]}>} @template {O["type_parts"][1]} T @arg {T} t */
+	is_UrlInfoPart1(x,t) {
+		if(x.type_parts.length===1) return false;
+		return x.type_parts[1]===t;
+	}
 	/** @protected */
 	_decoder=new TextDecoderExt;
 	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */

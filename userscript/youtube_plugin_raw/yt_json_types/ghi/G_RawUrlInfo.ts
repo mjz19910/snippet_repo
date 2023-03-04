@@ -6,6 +6,11 @@ type G_RawUrlInfo=
 	}
 	|{
 		type: "raw";
+		type_parts: ["raw","browse_id"];
+		raw_id: D_BrowseIdStr;
+	}
+	|{
+		type: "raw";
 		type_parts: ["raw","channel_id"];
 		raw_id: D_ChannelIdStr;
 	}

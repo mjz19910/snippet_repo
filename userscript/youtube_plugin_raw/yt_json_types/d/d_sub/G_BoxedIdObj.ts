@@ -6,8 +6,15 @@ type G_BoxedIdObj=
 	|D_BoxedBooleanStore
 	|D_BoxedKeysStore
 	|D_BoxedBigintStore
+	|D_BoxedUpdateId
 	|{
 		key: `boxed_id:video_time:${number}s`;
+	}
+	|{
+		type: "boxed_id";
+		tag: "hashtag_id";
+		key: `boxed_id:hashtag_id:${string}`;
+		value: string;
 	}
 	|{
 		type: "boxed_id";

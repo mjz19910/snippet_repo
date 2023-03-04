@@ -1821,6 +1821,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		let obj={
 			v: get_and_delete("v"),
+			pp: get_and_delete("pp"),
 		};
 		obj;
 		let url_index=get_from_map("index");
@@ -3168,11 +3169,6 @@ class HandleTypes extends ServiceMethods {
 		},x => {
 			this.log_error("promise_rejected_with",x);
 		});
-	}
-	/** @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} O @arg {O} x @returns {x is Extract<O,{type_parts:[any,T,...any]}>} @template {O["type_parts"][1]} T @arg {T} t */
-	is_UrlInfoPart1(x,t) {
-		if(x.type_parts.length===1) return false;
-		return x.type_parts[1]===t;
 	}
 	/** @public @arg {G_PlaylistUrlInfo} value */
 	G_PlaylistUrlInfo(value) {

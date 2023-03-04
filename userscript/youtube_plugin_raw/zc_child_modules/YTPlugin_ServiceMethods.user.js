@@ -1489,7 +1489,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {SD_PlaylistId} raw_id */
 	playlistId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		this.ht.G_UrlInfo(this.ht.make_G_UrlInfo({type: "playlist_id",id: raw_id}));
+		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -1758,15 +1758,15 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {GU_PlaylistId} x */
 	GU_PlaylistId(x) {
-		this.ht.G_UrlInfo(this.ht.make_G_UrlInfo({type: "playlist_id",id: x}));
+		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id: x});
+	}
+	/** @api @public @arg {D_BrowseIdStr} x */
+	browseId(x) {
+		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","browse_id"],raw_id: x});
 	}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {this.browseId(x);}
 	seen_map=new Set;
-	/** @api @public @arg {D_BrowseIdStr} x */
-	browseId(x) {
-		this.ht.G_UrlInfo(this.ht.make_G_UrlInfo({type: "browse_id",id: x}));
-	}
 	/** @private @arg {DE_VE5754} x */
 	DE_VE5754(x) {
 		const cf="DE_VE5754";
