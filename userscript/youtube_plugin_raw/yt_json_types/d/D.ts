@@ -39,11 +39,12 @@ type D_TargetIdStr=
 ;
 type D_PlaylistSelfId="WL"|"LL";
 type D_PlaylistIdTypeBase="RDMM"|"RD"|"PL"|"UU";
+type GU_PlaylistUserUploadsId=`UU${string}`;
 type SD_PlaylistId=
 	|`RD${string}`
 	|`RDMM${string}`
 	|`RDGM${string}`
-	|`UU${string}`
+	|GU_PlaylistUserUploadsId
 	|GU_PlaylistId
 	|"WL"
 	|"LL"

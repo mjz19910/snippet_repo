@@ -9,9 +9,8 @@ type GU_VE3611_Url=
 ;
 type D_InfinitePlaylistIdStr=`RD${string}`|`RDMM${string}`|`RDCMUC${string}`;
 // cspell:ignore RDCMUC
-type GU_PlaylistId=GU_PlaylistId_NoRadio|D_PlaylistIdStr|D_InfinitePlaylistIdStr;
-type GU_PlaylistId_NoRadio="WL"|"LL"|`UU${string}`;
-type GU_VE5754_BrowseId=`VL${GU_PlaylistId_NoRadio}`|GU_VE5754_PlaylistBrowseId;
+type GU_PlaylistId="WL"|"LL"|GU_PlaylistUserUploadsId|D_PlaylistIdStr|D_InfinitePlaylistIdStr;
+type GU_VE5754_BrowseId="VLWL"|"VLLL"|GU_VE5754_PlaylistBrowseId;
 type GU_VE6827_Id=
 	|"FEguide_builder"
 	|"FEhashtag"
