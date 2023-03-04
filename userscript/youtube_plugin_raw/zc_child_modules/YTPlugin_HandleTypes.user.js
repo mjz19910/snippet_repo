@@ -725,7 +725,8 @@ class HandleTypes extends ServiceMethods {
 				if(gen.has) break;
 				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				debugger;
-				switch(partition) {
+				let dbg_part=partition;
+				switch(dbg_part) {
 				}
 			}; break;
 			case "5uaez":
