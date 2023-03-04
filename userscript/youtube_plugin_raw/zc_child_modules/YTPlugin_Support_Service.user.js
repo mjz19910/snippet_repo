@@ -148,6 +148,11 @@ class StoreDescription extends ApiBase2 {
 				let x_clone=structuredClone(x);
 				return x_clone;
 			}
+			case "one": {
+				/** @type {typeof x} */
+				let x_clone=structuredClone(x);
+				return x_clone;
+			}
 		}
 	}
 	/** @template {make_item_group<CLS_T>} T @arg {T} x @template {make_item_group<CLS_T>} U @arg {(x:T)=>U} prepare */
