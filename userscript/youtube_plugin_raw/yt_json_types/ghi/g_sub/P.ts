@@ -334,7 +334,7 @@ type P_reel_watch_sequence_data={
 	}>;
 };
 type P_continuation_request_reel_watch_sequence_token={
-	1?: TV_Str<"3y9Wm0IfGGs">;
+	1?: TV_Str<D_VideoIdStr>;
 	3: T_VW<PX_watch_sequence_info>;
 	5: T_VW<TX_sequence_info>;
 	8?: T_VW<{}>;
@@ -482,7 +482,7 @@ type P_watch_params={
 	2?: T_D32<1>;
 	3?: T_D32<1>;
 	7?: T_D32<2>;
-	12?: TV_Str<"B_5o9nETAPE">;
+	12?: TV_Str<D_VideoIdStr>;
 	13?: T_D32<0>;
 	15?: TV_Str<`${string}.${string}`>;
 	24?: T_D32<1>;
@@ -505,9 +505,9 @@ type P_ve_6827_params={
 	94?: T_VW<{
 		1: T_VW<{
 			2: T_VW_BinTs<{
-				1: TV_Str<"xzrEJV3rzU4">;
-				2: TV_Str<"xzrEJV3rzU4">;
-				3: TV_Str<"xzrEJV3rzU4">;
+				1: TV_Str<D_VideoIdStr>;
+				2: TV_Str<D_VideoIdStr>;
+				3: TV_Str<D_VideoIdStr>;
 			}>;
 		}>;
 		5: T_D64<bigint>;
@@ -629,7 +629,6 @@ type P_PX_watch_next_token_2_f37={
 	15: T_D32<2>;
 	20: T_D32<2>;
 };
-type T_VW_J<T,_U="json">=T_VW<T>;
 type P_f3_PD_continuation_params={
 	1: T_VW<{
 		5: T_VW<{
