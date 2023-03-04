@@ -4,49 +4,98 @@ namespace DT_Database {
 }
 type DT_DatabaseStoreKeys=DT_Database.V_StoreKeys_;
 type I_BoxedVideoId={
+	type: "video_id";
+	type_parts: ["video_id","normal"];
 	key: `video_id:normal:${string}`;
-	type: "video_id:normal";
-	base: "video_id";
 	v: string;
 };
 type I_BoxedVideoIdS={
+	type: "video_id";
 	key: `video_id:shorts:${string}`;
-	type: "video_id:shorts";
-	base: "video_id";
+	type_parts: ["video_id","shorts"];
 	v: string;
 };
 type I_BoxedHashtagId={
-	key: `hashtag_id:${string}`;
 	type: "hashtag_id";
+	key: `hashtag_id:${string}`;
 	hashtag: string;
 };
 type I_BoxedChannelId={
 	key: `channel_id:UC:${string}`;
 	base: "channel_id";
-	type: "channel_id:UC";
+	type_parts: "channel_id:UC";
 	id: string;
 	raw_id: `UC${string}`;
 };
 type I_BoxedBrowseId={
 	key: `browse_id:VL:${string}`;
 	base: "browse_id";
-	type: "browse_id:VL";
+	type_parts: "browse_id:VL";
 	id: `PL${string}`;
 	raw_id: `VLPL${string}`;
 };
 type I_BoxedUserId={
-	key: `user_id:${string}`;
 	type: "user_id";
+	key: `user_id:${string}`;
 	id: string;
 };
+type I_BoxedRadio_1={
+	key: `playlist_id:RDCM:UC:${string}`;
+	base: "playlist_id";
+	type: "playlist_id:RDCM";
+	id: `UC${string}`;
+	raw_id: `RDCMUC${string}`;
+	id_info: {
+		type: "UC";
+		id: string;
+		raw_id: `UC${string}`;
+	};
+};
+type I_BoxedRadio_2={
+	type: "playlist_id";
+	type_parts: ["playlist_id","RDGM","EM"];
+	key: `playlist_id:RDGM:EM:${string}`;
+	id: `EM${string}`;
+	raw_id: `RDGMEM${string}`;
+	info_arr: [{type: "RDGM";},{type: "EM"; id: string;}];
+};
+type I_BoxedRadioSelf={
+	key: `playlist_id:self:${D_PlaylistSelfId}`;
+	base: "playlist_id";
+	type: "playlist_id:self";
+	id: D_PlaylistSelfId;
+};
+type I_BoxedRadioBase={
+	key: `playlist_id:${D_PlaylistIdTypeBase}:${string}`;
+	base: "playlist_id";
+	type: `playlist_id:${D_PlaylistIdTypeBase}`;
+	id: string;
+	raw_id: `${D_PlaylistIdTypeBase}${string}`;
+}|{
+	key: `playlist_id:RDMM:${string}`;
+	base: "playlist_id";
+	type: `playlist_id:RDMM`;
+	info: {
+		type: "RDMM";
+		id: string;
+		raw_id: `RDMM${string}`;
+	};
+};
 type IDBBoxedType=
-	|G_BoxedVideoId
-	|I_BoxedHashtagId
 	|G_BoxedIdObj
-	|I_BoxedChannelId
+	|G_BoxedVideoId
 	|G_PlaylistIdObj
 	|I_BoxedBrowseId
+	|I_BoxedChannelId
+	|I_BoxedHashtagId
 	|I_BoxedUserId
+	;
+;
+type G_PlaylistIdObj=
+	|I_BoxedRadio_1
+	|I_BoxedRadio_2
+	|I_BoxedRadioSelf
+	|I_BoxedRadioBase
 	;
 ;
 type DT_DatabaseStoreTypes={
@@ -70,40 +119,6 @@ type TypedIDBTransactionScope={
 	complete_promise: Promise<Event>;
 	db: IDBDatabase,
 	typed_db: TypedIndexedDB,
-};
-type G_PlaylistIdObj={
-	key: `playlist_id:RDCM:UC:${string}`;
-	base: "playlist_id";
-	type: "playlist_id:RDCM";
-	id: `UC${string}`;
-	raw_id: `RDCMUC${string}`;
-	id_info: {
-		type: "UC";
-		id: string;
-		raw_id: `UC${string}`;
-	};
-}|{
-	key: `playlist_id:RDGM:EM:${string}`;
-	base: "playlist_id";
-	type: "playlist_id:RDGM";
-	id: `EM${string}`;
-	raw_id: `RDGMEM${string}`;
-	id_info: {
-		type: "EM";
-		id: string;
-		raw_id: `EM${string}`;
-	};
-}|{
-	key: `playlist_id:self:${D_PlaylistSelfId}`;
-	base: "playlist_id";
-	type: "playlist_id:self";
-	id: D_PlaylistSelfId;
-}|{
-	key: `playlist_id:${D_PlaylistIdTypeBase}:${string}`;
-	base: "playlist_id";
-	type: `playlist_id:${D_PlaylistIdTypeBase}`;
-	id: string;
-	raw_id: `${D_PlaylistIdTypeBase}${string}`;
 };
 type B_IdSrcNum={
 	key_type: "num";

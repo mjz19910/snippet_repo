@@ -575,7 +575,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
-		let no_null_cache=d_cache.filter(e => e!==null&&!(e.type==="load_id"||e.type==="save_id"));
+		let no_null_cache=d_cache.filter(e => e!==null&&!(e.type_parts==="load_id"||e.type_parts==="save_id"));
 		if(no_null_cache.length===1) {
 			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
 		} else if(no_null_cache.length===2) {
@@ -625,7 +625,7 @@ class IndexedDBService extends BaseService {
 				function get_type(x) {return x.type;}
 				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
 				let item_nt=item;
-				switch(item_nt.type) {
+				switch(item_nt.type_parts) {
 					default: get_type(item_nt)===""; debugger; break;
 					case "bigint":
 					case "boolean":
@@ -635,7 +635,7 @@ class IndexedDBService extends BaseService {
 					case "string": update_item=true; break;
 					case "video_id:shorts":
 					case "video_id:normal": {
-						if(cursor_value.type!==item_nt.type) {update_item=true; break;}
+						if(cursor_value.type_parts!==item_nt.type_parts) {update_item=true; break;}
 						if(item_nt.v!==cursor_value.v) update_item=true;
 					} break;
 					case "save_id":

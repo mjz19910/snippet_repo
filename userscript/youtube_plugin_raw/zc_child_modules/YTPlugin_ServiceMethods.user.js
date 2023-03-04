@@ -1899,8 +1899,8 @@ class ServiceMethods extends ServiceData {
 			case "video:normal": {
 				let {v}=value;
 				let promise=this.indexed_db_put("video_id",{
-					base: "video_id",
-					type: "video_id:normal",
+					type: "video_id",
+					type_parts: ["video_id","normal"],
 					key: `video_id:normal:${v}`,
 					v,
 				});
@@ -1910,8 +1910,8 @@ class ServiceMethods extends ServiceData {
 				let {v}=value;
 				let promise=this.indexed_db_put("video_id",{
 					key: `video_id:shorts:${v}`,
-					base: "video_id",
-					type: "video_id:shorts",
+					type: "video_id",
+					type_parts: ["video_id","shorts"],
 					v,
 				});
 				this.default_executor(promise);
@@ -1930,7 +1930,7 @@ class ServiceMethods extends ServiceData {
 				let promise=this.indexed_db_put("channel_id",{
 					key: `channel_id:UC:${id}`,
 					base: "channel_id",
-					type: "channel_id:UC",
+					type_parts: "channel_id:UC",
 					id,raw_id,
 				});
 				this.default_executor(promise);
@@ -1941,7 +1941,7 @@ class ServiceMethods extends ServiceData {
 				let promise=this.indexed_db_put("browse_id",{
 					key: `browse_id:VL:${id}`,
 					base: "browse_id",
-					type,id,raw_id
+					type_parts: type,id,raw_id
 				});
 				this.default_executor(promise);
 			} break;
@@ -1962,9 +1962,9 @@ class ServiceMethods extends ServiceData {
 				const {id,id_info,raw_id}=value;
 				let promise=this.indexed_db_put("playlist_id",{
 					key: `playlist_id:RDGM:EM:${id_info.id}`,
-					base: "playlist_id",
-					type: "playlist_id:RDGM",
-					id_info,
+					type: "playlist_id",
+					type_parts: ["playlist_id","RDGM","EM"],
+					info_arr: [{type: "RDGM"},{type: "EM",id: id_info.id}],
 					id,raw_id,
 				});
 				this.default_executor(promise);
