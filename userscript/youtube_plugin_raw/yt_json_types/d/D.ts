@@ -1493,8 +1493,9 @@ type D_TimedTextApi_Req=Required<D_TimedTextApi>;
 type D_CaptionTrackItem={
 	baseUrl: GU_CaptionTrackItem_BaseUrl;
 	name: G_Text;
-	vssId: "a.en"|".en";
-	languageCode: "en";
+	vssId: "a.en"|".en"|".ar";
+	languageCode: "en"|"ar";
+	rtl?: true,
 	kind?: "asr";
 	isTranslatable: true;
 };

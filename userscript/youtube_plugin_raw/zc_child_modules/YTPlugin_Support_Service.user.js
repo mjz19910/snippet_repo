@@ -642,20 +642,21 @@ class Support_RS_Player extends ServiceMethods {
 	}
 	/** @private @arg {D_CaptionTrackItem} x */
 	D_CaptionTrackItem(x) {
-		const cf="D_CaptionTrackItem";
-		const {baseUrl,name,vssId,languageCode,kind,isTranslatable,...y}=this.s(cf,x); this.g(y);
+		const cf="D_CaptionTrackItem",t=this;
+		const {baseUrl,name,vssId,languageCode,rtl,kind,isTranslatable,...y}=t.s(cf,x); t.g(y);
 		{
 			let x=baseUrl;
 			let x1=split_string_once(x,"?");
 			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
-			let rx=this.parse_url_search_params(x1[1]);
-			this.xr.D_TimedTextApi(as_any(rx));
+			let rx=t.parse_url_search_params(x1[1]);
+			t.xr.D_TimedTextApi(as_any(rx));
 		}
-		this.G_Text(name);
-		this.save_string(`${cf}.vssId`,vssId);
-		this.save_string(`${cf}.languageCode`,languageCode);
-		this.t(kind,x => this.save_string(`${cf}.kind`,x));
+		t.G_Text(name);
+		t.save_string(`${cf}.vssId`,vssId);
+		t.save_string(`${cf}.languageCode`,languageCode);
+		t.t(kind,x => t.save_string(`${cf}.kind`,x));
 		if(isTranslatable!==true) debugger;
+		t.t(rtl,x => t.cq(x,true));
 	}
 	/** @private @arg {D_AudioTrackItem} x */
 	D_AudioTrackItem(x) {
