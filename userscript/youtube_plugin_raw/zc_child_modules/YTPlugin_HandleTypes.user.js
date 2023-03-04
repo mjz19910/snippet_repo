@@ -2547,19 +2547,19 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {PX_watch_sequence_info} x */
 	PX_watch_sequence_info(x) {
-		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {1: v1,3: v3,4: v4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.videoId(this.TV_Str(v1));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
-		this.save_number(`${cf}.f4`,this.T_D32(v4));
-		this.t(this.T_VW_Bigint(f6),x => this.save_bigint(`${cf}.f6`,x));
+		const cf="PX_watch_sequence_info",t=this;
+		const {1: v1,3: v3,4: v4,6: f6,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);
+		t.videoId(t.TV_Str(v1));
+		t.save_number(`${cf}.f3`,t.T_D32(v3));
+		t.save_number(`${cf}.f4`,t.T_D32(v4));
+		t.t(t.T_VW_Bigint(f6),x => t.save_bigint(`${cf}.f6`,x));
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
-		const cf="P_continuation_request_reel_watch_sequence_token";
-		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		v1&&console.log(this.TV_Str(v1));
-		this.PX_watch_sequence_info(this.T_VW(v3));
+		const cf="P_continuation_request_reel_watch_sequence_token",t=this;
+		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);
+		v1&&t.videoId(t.TV_Str(v1));
+		t.PX_watch_sequence_info(t.T_VW(v3));
 	}
 	/** @arg {"P_transcript_track_selection_serialized_params"|"P_get_transcript_params"} cf @template {PE_transcript_params} T @arg {T} x */
 	PE_transcript_params(cf,x) {
