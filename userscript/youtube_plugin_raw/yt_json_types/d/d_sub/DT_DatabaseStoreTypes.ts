@@ -172,6 +172,9 @@ type G_BoxedIdObj=
 	|D_BoxedBooleanStore
 	|D_BoxedKeysStore
 	|D_BoxedBigintStore
+	|{
+		key: `boxed_id:video_time:${number}s`;
+	}
 	;
 ;
 type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={

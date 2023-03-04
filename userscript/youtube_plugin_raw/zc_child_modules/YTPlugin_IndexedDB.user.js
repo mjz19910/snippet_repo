@@ -251,7 +251,18 @@ class IndexedDBService extends BaseService {
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
-			default: debugger; throw new Error();
+			default: args[0]===""; debugger; throw new Error();
+			case "video_time": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					key: `boxed_id:${a}:${value}`,
+					base: "boxed_id",
+					type: a,
+					id: b,
+					value,
+				},version);
+				return {args,ret};
+			}
 			case "bigint": {
 				let [a,b,value]=args;
 				let ret=this.put_box({
@@ -689,6 +700,8 @@ class IndexedDBService extends BaseService {
 					}
 				} else {
 					if("type" in item_db_nt) break x;
+					if(!("base" in item_nt)) break x;
+					if(!("base" in item_db_nt)) break x;
 					switch(item_nt.base) {
 						case "browse_id": {
 							if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;

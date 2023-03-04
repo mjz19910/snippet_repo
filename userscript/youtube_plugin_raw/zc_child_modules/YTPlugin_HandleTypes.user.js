@@ -1778,7 +1778,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
-		this.G_UrlInfo({type: "video",type_parts: ["video","short"],raw_id});
+		this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video","short"],raw_id});
 	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
@@ -1804,9 +1804,9 @@ class HandleTypes extends ServiceMethods {
 			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
-				case "v": this.G_UrlInfo({type: "video",type_parts: ["video"],id: res[1]}); break;
+				case "v": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: res[1]}); break;
 				case "list": this.GU_PlaylistId(res[1]); break;
-				case "rv": this.G_UrlInfo({type: "video_referral",id: res[1]}); break;
+				case "rv": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_referral"],raw_id: res[1]}); break;
 				case "pp": {
 					if(root==="R_WatchPage_VE3832") {
 						const [,playerParams]=res;
@@ -3220,7 +3220,7 @@ class HandleTypes extends ServiceMethods {
 			*/
 		}
 	}
-	/** @public @arg {Extract<G_UrlInfo,{type:"raw";}>} x */
+	/** @public @arg {G_RawUrlInfo} x */
 	G_RawUrlInfo(x) {
 		switch(x.type_parts[1]) {
 			default: {
@@ -3263,114 +3263,58 @@ class HandleTypes extends ServiceMethods {
 		function get_type(x) {return x.type;}
 		switch(value.type) {
 			default: get_type(value)===""; debugger; break;
-			//"channel_id" | "browse_id" | "video_referral" | "video_time"
 			case "video_time": {
-				let {raw_value}=value;
-				let promise=this.put_boxed_id("video_time",raw_value);
-				this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 			case "video_referral": {
-				let {hashtag}=value;
-				let promise=this.indexed_db_put("hashtag_id",{
-					type: "hashtag_id",
-					key: `hashtag_id:${hashtag}`,
-					hashtag,
-				});
-				this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 			case "browse_id": {
-				let {hashtag}=value;
-				let promise=this.indexed_db_put("hashtag_id",{
-					type: "hashtag_id",
-					key: `hashtag_id:${hashtag}`,
-					hashtag,
-				});
-				this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 			case "channel_id": {
-				let {hashtag}=value;
-				let promise=this.indexed_db_put("hashtag_id",{
-					type: "hashtag_id",
-					key: `hashtag_id:${hashtag}`,
-					hashtag,
-				});
-				this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 			case "play_next": {
-				let {hashtag}=value;
-				let promise=this.indexed_db_put("hashtag_id",{
-					type: "hashtag_id",
-					key: `hashtag_id:${hashtag}`,
-					hashtag,
-				});
-				this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
-			case "raw": this.G_RawUrlInfo(value); break;
 			case "playlist_id": this.G_PlaylistUrlInfo(value); break;
 			case "hashtag_id": {
-				let {hashtag}=value;
-				let promise=this.indexed_db_put("hashtag_id",{
-					type: "hashtag_id",
-					key: `hashtag_id:${hashtag}`,
-					hashtag,
-				});
-				this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 			case "video": {
-				if(value.type_parts.length===1) {
-					return;
-				}
-				value.type_parts[1]==="normal";
-				if("v" in value) {
-					let {v}=value; v;
-					debugger;
-					// let promise=this.indexed_db_put("video_id",{
-					// 	type: "video_id",
-					// 	type_parts: ["video_id","normal"],
-					// 	key: `video_id:normal:${v}`,
-					// 	v,
-					// });
-					// this.execute_promise_def(promise);
-					// let promise2=this.indexed_db_put("video_id",{
-					// 	key: `video_id:shorts:${v}`,
-					// 	type: "video_id",
-					// 	type_parts: ["video_id","shorts"],
-					// 	v,
-					// });
-					// this.execute_promise_def(promise2);
-				} else {
-					debugger;
+				switch(value.tag) {
+					case null: {
+						let box_res=this.put_boxed_id(value.type,value);
+						this.execute_promise_def((async () => box_res.ret)());
+					} break;
+					case "normal": {
+						let box_res=this.put_boxed_id(value.type,value);
+						this.execute_promise_def((async () => box_res.ret)());
+					} break;
+					case "short": {
+						let box_res=this.put_boxed_id(value.type,value);
+						this.execute_promise_def((async () => box_res.ret)());
+					} break;
 				}
 			} break;
 			case "user_id": {
-				let {raw_id}=value;
-				let promise=this.indexed_db_put("user_id",{
-					key: `user_id:${raw_id}`,
-					type: "user_id",
-					id: raw_id,
-				});
-				this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 			case "channel_id": {
-				let {raw_id,id}=value;
-				raw_id; id; debugger;
-				// let promise=this.indexed_db_put("channel_id",{
-				// 	key: `channel_id:UC:${id}`,
-				// 	base: "channel_id",
-				// 	type_parts: ["channel_id","UC"],
-				// 	id,raw_id,
-				// });
-				// this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 			case "browse_id": {
-				const {type,id,raw_id}=value;
-				type; raw_id; id; debugger;
-				// let promise=this.indexed_db_put("browse_id",{
-				// 	key: `browse_id:VL:${id}`,
-				// 	base: "browse_id",
-				// 	type_parts: type,id,raw_id
-				// });
-				// this.execute_promise_def(promise);
+				let box_res=this.put_boxed_id(value.type,value);
+				this.execute_promise_def((async () => box_res.ret)());
 			} break;
 		}
 	}

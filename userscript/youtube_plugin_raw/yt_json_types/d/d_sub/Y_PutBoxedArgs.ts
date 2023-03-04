@@ -5,6 +5,7 @@ type Y_PutBoxedArgs=
 	|["string",string,make_item_group<string>]
 	|["keys",string,make_item_group<string|number>]
 	|["boolean",string,make_item_group<boolean>]
-	|["video_time",`${number}s`]
+	|MakeInfoBoxArgs<G_UrlInfo>
 	;
 ;
+type MakeInfoBoxArgs<T extends {type: any;}>=T extends infer R extends T? [R["type"],R]:never;
