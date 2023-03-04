@@ -3148,7 +3148,7 @@ class HandleTypes extends ServiceMethods {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
-	/** @template {Extract<G_UrlInfo,{type_parts:any}>} O @arg {O} x @returns {x is Extract<O,{type_parts:[any,T,...any]}>} @template {O["type_parts"][1]} T @arg {T} t */
+	/** @template {Extract<G_RawUrlInfo|G_UrlInfo,{type_parts:any}>} O @arg {O} x @returns {x is Extract<O,{type_parts:[any,T,...any]}>} @template {O["type_parts"][1]} T @arg {T} t */
 	is_UrlInfoPart1(x,t) {
 		if(x.type_parts.length===1) return false;
 		return x.type_parts[1]===t;
@@ -3232,6 +3232,7 @@ class HandleTypes extends ServiceMethods {
 			case "video": this.videoId(value.id); break;
 			case "video_referral": this.videoId(value.id); break;
 			*/
+			case "video_referral": debugger; break;
 			case "channel_id": debugger; break;
 			case "video": debugger; break;
 			case "browse_id": {

@@ -11,6 +11,11 @@ type G_RawUrlInfo=
 	}
 	|{
 		type: "raw";
+		type_parts: ["raw","video_referral"];
+		raw_id: D_VideoIdStr;
+	}
+	|{
+		type: "raw";
 		type_parts: ["raw","playlist_id"];
 		raw_id: GU_PlaylistId;
 	}
