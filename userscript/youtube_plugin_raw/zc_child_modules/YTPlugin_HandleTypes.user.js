@@ -3201,18 +3201,27 @@ class HandleTypes extends ServiceMethods {
 					/** @type {DI_BrowseId_MP} */
 					const z={type: "browse_id",tag: "MP",info_arr: [{raw_id},{id: a1},{separator: "_"},{id: a2}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"VL")) {
-					let [,id]=split_string_once(raw_id,"VL");
-					if(id==="LL") {
-						/** @type {DI_BrowseId_VL["info_arr"][1]} */
-						let itv={tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}};
-						/** @type {DI_BrowseId_VL} */
-						const z={type: "browse_id",tag: "VL",info_arr: [{raw_id},itv]}; ret=z;
-					} else if(id==="WL") {
-						/** @type {DI_BrowseId_VL["info_arr"][1]} */
-						let itv={tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}};
-						/** @type {DI_BrowseId_VL} */
-						const z={type: "browse_id",tag: "VL",info_arr: [{raw_id},itv]}; ret=z;
-					} else if(this.str_starts_with(id,"PL")) {
+					if(raw_id==="VLLL") {
+						let [,id]=split_string_once(raw_id,"VL");
+						/** @type {DI_BrowseId_VL_2} */
+						const z={
+							type: "browse_id",tag: "VL:LL",info_arr: [
+								{raw_id},
+								{tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}},
+							]
+						}; ret=z;
+					} else if(raw_id==="VLWL") {
+						let [,id]=split_string_once(raw_id,"VL");
+						/** @type {DI_BrowseId_VL_1} */
+						const z={
+							type: "browse_id",tag: "VL:WL",
+							info_arr: [
+								{raw_id},
+								{tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}},
+							]
+						}; ret=z;
+					} else if(this.str_starts_with(raw_id,"VLPL")) {
+						let [,id]=split_string_once(raw_id,"VL");
 						/** @type {DI_BrowseId_VL["info_arr"][1]} */
 						let itv;
 						{
@@ -3222,10 +3231,10 @@ class HandleTypes extends ServiceMethods {
 								itv={tag: "PL",value: {type: "playlist_id",tag: "PL",info_arr: [{raw_id},{id}]}};
 							}
 						}
-						/** @type {DI_BrowseId_VL} */
-						const z={type: "browse_id",tag: "VL",info_arr: [{raw_id},itv]}; ret=z;
+						/** @type {DI_BrowseId_VL_PL_} */
+						const z={type: "browse_id",tag: "VL:PL",info_arr: [{raw_id},itv]}; ret=z;
 					} else {
-						id===""; debugger; throw new Error();
+						raw_id===""; debugger; throw new Error();
 					}
 				} else {
 					raw_id===""; debugger; throw new Error();

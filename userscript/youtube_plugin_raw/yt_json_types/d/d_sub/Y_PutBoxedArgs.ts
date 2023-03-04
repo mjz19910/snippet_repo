@@ -1,35 +1,43 @@
-type DI_BrowseId_VL={
+type DI_BrowseId_VL_1={
 	type: "browse_id";
-	tag: "VL";
+	tag: "VL:WL";
 	info_arr: [
-		{raw_id: GU_VE5754_BrowseId;},
+		{
+			raw_id: "VLWL";
+		},
 		{
 			tag: "WL";
 			value: DI_Playlist_WL;
 		}
 	];
-}|{
+};
+type DI_BrowseId_VL_2={
 	type: "browse_id";
-	tag: "VL";
+	tag: "VL:LL";
 	info_arr: [
-		{raw_id: GU_VE5754_BrowseId;},
+		{
+			raw_id: "VLLL";
+		},
 		{
 			tag: "LL";
 			value: DI_Playlist_LL;
 		}
 	];
-}|{
+};
+type DI_BrowseId_VL_PL_={
 	type: "browse_id";
-	tag: "VL";
+	tag: "VL:PL";
 	info_arr: [
-		{raw_id: GU_VE5754_BrowseId;},
+		{
+			raw_id: DU_BrowseId_Playlist;
+		},
 		{
 			tag: "PL";
 			value: DI_Playlist_PL;
 		}
 	];
 };
-
+type DI_BrowseId_VL=DI_BrowseId_VL_1|DI_BrowseId_VL_2|DI_BrowseId_VL_PL_;
 type Y_PutBoxedArgs=
 	|["bigint",null,[string,make_item_group<bigint>]]
 	|["boolean",null,[string,make_item_group<boolean>]]
