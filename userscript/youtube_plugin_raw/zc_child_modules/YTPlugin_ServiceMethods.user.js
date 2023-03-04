@@ -1490,7 +1490,7 @@ class ServiceMethods extends ServiceData {
 	GU_PlaylistId(x) {this.D_RawUrlFromTag("raw","playlist_id",x);}
 	/** @api @public @arg {DU_BrowseId} x */
 	browseId(x) {this.D_RawUrlFromTag("raw","browse_id",x);}
-	/** @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
+	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
 	D_RawUrlFromTag(type,tag,x) {
 		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["tag"];info_arr: [{raw_id: string}]}} */
 		let mo={type,tag,info_arr: [{raw_id: x}]};
