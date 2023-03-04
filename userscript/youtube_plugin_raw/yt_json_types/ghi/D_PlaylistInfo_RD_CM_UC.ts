@@ -1,12 +1,13 @@
-type D_PlaylistUrlInfo_RDCM={
+type D_PlaylistInfo_RD_CM_UC={
 	type: "playlist_id";
-	tag: "RDCM";
-	type_parts: ["playlist_id","RDCM","UC"];
+	tag: "RD";
+	type_parts: ["playlist_id","RD","CM","UC"];
 	info_arr: [
 		{
-			type: "RDCM";
+			type: "RD";
 			raw_id: `RDCMUC${string}`;
 		},
+		{type: "CM";},
 		{
 			type: "UC";
 			id: string;

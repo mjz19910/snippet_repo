@@ -10,13 +10,11 @@ type G_UrlInfo=
 	|D_PlaylistInfo_RD
 	|D_PlaylistInfo_UU
 	|D_PlaylistInfo_WL
-	|D_PlaylistInfo_WL
-	|D_PlaylistUrlInfo_PL
-	|D_PlaylistUrlInfo_RD
-	|D_PlaylistUrlInfo_RDCM
-	|D_PlaylistUrlInfo_RDGM
-	|D_PlaylistUrlInfo_RDMM
-	|D_PlaylistUrlInfo_UU
+	|D_PlaylistInfo_RD
+	|D_PlaylistInfo_RD_CM_UC
+	|D_PlaylistInfo_RD_GM
+	|D_PlaylistInfo_RD_MM
+	|D_PlaylistInfo_UU
 	|D_PlayNextUrlInfo
 	|D_UrlInfo_Video
 	|D_UserIdInfo

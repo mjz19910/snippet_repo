@@ -1,4 +1,4 @@
-type D_PlaylistUrlInfo_RDMM={
+type D_PlaylistInfo_RD_MM={
 	type: "playlist_id";
 	tag: "RDMM";
 	type_parts: ["playlist_id","RDMM"];

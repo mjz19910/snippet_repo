@@ -58,13 +58,13 @@ type G_RawPlaylistUrlInfo=
 		type: "raw";
 		tag: "playlist_id";
 		type_parts: ["raw","playlist_id","PL"];
-		raw_id: D_PlaylistUrlInfo_PL["raw_id"];
+		raw_id: D_PlaylistInfo_PL["raw_id"];
 	}
 	|{
 		type: "raw";
 		tag: "playlist_id";
 		type_parts: ["raw","playlist_id","UU"];
-		raw_id: D_PlaylistUrlInfo_UU["raw_id"];
+		raw_id: D_PlaylistInfo_UU["raw_id"];
 	}
 	;
 ;

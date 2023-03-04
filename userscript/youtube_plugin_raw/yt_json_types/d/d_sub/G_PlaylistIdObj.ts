@@ -1,4 +1,10 @@
-type G_PlaylistIdObj=I_BoxedRadio_RDCM_UC|
-	I_BoxedRadio_RDGM_EM|
-	I_BoxedRadioSelf|
-	I_BoxedRadioBase;
+type G_PlaylistIdObj=
+	|I_BoxedRadio_PL
+	|I_BoxedRadio_RD
+	|I_BoxedRadio_RD_CM_UC
+	|I_BoxedRadio_RD_GM_EM
+	|I_BoxedRadio_RD_MM
+	|I_BoxedRadio_UU
+	|I_BoxedRadioSelf
+	;
+;
