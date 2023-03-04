@@ -1,5 +1,5 @@
 type D_BoxedPlaylist_PL={
-	type: "playlist_id";
+	type: "boxed_id";
 	tag: "playlist_id:PL";
 	key: `boxed_id:playlist_id:PL:${string}`;
 };
