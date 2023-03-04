@@ -80,15 +80,6 @@ type Y_PutBoxedRet={
 		value: D_PlayNextUrlInfo;
 	}>;
 }|{
-	args: ["playlist_id",G_PlaylistUrlInfo_LL];
-	promise: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		extra: "any";
-		key: "boxed_id:playlist_id:LL";
-		value: G_PlaylistUrlInfo_LL;
-	}>;
-}|{
 	args: ["playlist_id",G_PlaylistUrlInfo_PL];
 	promise: Promise<{
 		type: "boxed_id";
@@ -141,15 +132,6 @@ type Y_PutBoxedRet={
 		extra: "any";
 		key: "boxed_id:playlist_id:UU";
 		value: G_PlaylistUrlInfo_UU;
-	}>;
-}|{
-	args: ["playlist_id",G_PlaylistUrlInfo_WL];
-	promise: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		extra: "any";
-		key: "boxed_id:playlist_id:WL";
-		value: G_PlaylistUrlInfo_WL;
 	}>;
 }|{
 	args: ["hashtag_id",D_InfoHashtagId];

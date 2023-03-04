@@ -3186,10 +3186,12 @@ class HandleTypes extends ServiceMethods {
 			case null: {
 				if(x.id==="LL") {
 					let box_res=this.put_boxed_id(x.type,x);
-					this.execute_promise_def((async () => (await box_res).ret)());
+					console.log(box_res);
+					// this.execute_promise_def((async () => (await box_res).ret)());
 				} else if(x.id==="WL") {
 					let box_res=this.put_boxed_id(x.type,x);
-					this.execute_promise_def((async () => (await box_res).ret)());
+					console.log(box_res);
+					// this.execute_promise_def((async () => (await box_res).ret)());
 				} else {
 					debugger;
 				}
@@ -3282,12 +3284,12 @@ class HandleTypes extends ServiceMethods {
 				if(this.is_UrlInfo_len(x,2)) {
 					if(x.raw_id==="LL") {
 						let {raw_id,type_parts: [,...type_parts]}=x;
-						this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
+						this.G_UrlInfo({type: "playlist_id",tag: null,type_parts,id: raw_id});
 						return;
 					}
 					if(x.raw_id==="WL") {
 						let {raw_id,type_parts: [,...type_parts]}=x;
-						this.G_UrlInfo({type: "playlist_id",type_parts,id: raw_id});
+						this.G_UrlInfo({type: "playlist_id",tag: null,type_parts,id: raw_id});
 						return;
 					}
 					let {raw_id}=x;

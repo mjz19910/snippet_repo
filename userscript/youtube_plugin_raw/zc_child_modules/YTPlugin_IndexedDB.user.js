@@ -368,25 +368,7 @@ class IndexedDBService extends BaseService {
 					}
 					case 2: {
 						if(!this.is_UrlInfo_len(value,value.type_parts.length)) throw 1;
-						if(this.is_UrlInfoPartAt(value,1,"LL")) {
-							let promise=this.put_box({
-								type: "boxed_id",
-								tag: a,
-								extra: "any",
-								key: `boxed_id:${a}:${value.type_parts[1]}`,
-								value,
-							},version);
-							return {args: [a,value],promise};
-						} else if(this.is_UrlInfoPartAt(value,1,"PL")) {
-							let promise=this.put_box({
-								type: "boxed_id",
-								tag: a,
-								extra: "any",
-								key: `boxed_id:${a}:${value.type_parts[1]}`,
-								value,
-							},version);
-							return {args: [a,value],promise};
-						} else if(this.is_UrlInfoPartAt(value,1,"RD")) {
+						if(this.is_UrlInfoPartAt(value,1,"RD")) {
 							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
@@ -413,12 +395,12 @@ class IndexedDBService extends BaseService {
 								value,
 							},version);
 							return {args: [a,value],promise};
-						} else if(this.is_UrlInfoPartAt(value,1,"WL")) {
+						} else if(this.is_UrlInfoPartAt(value,1,"PL")) {
 							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
-								key: `boxed_id:${a}:${value.type_parts[1]}`,
+								key: `boxed_id:${a}:${value.type_parts[1]}:${value.id}`,
 								value,
 							},version);
 							return {args: [a,value],promise};
@@ -901,22 +883,40 @@ class IndexedDBService extends BaseService {
 							if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
 							update_item=true;
 						} break;
-						case "playlist_id":
-						case "playlist_id:PL":
-						case "playlist_id:RD":
-						case "playlist_id:RDCM":
-						case "playlist_id:RDMM":
-						case "playlist_id:UU": {
+						case "playlist_id": {
+							if(item_db_nt.type!==item_nt.type) break;
 							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							y: if("info" in item_nt) {
-								if(!("info" in item_db_nt)) break y;
-								if(item_nt.info.id!==item_db_nt.info.id) update_item=true;
-								break;
-							} else {
-								if(!("id" in item_db_nt)) break y;
-								if(item_nt.id===item_db_nt.id) break;
-								update_item=true;
-							}
+							if(item_nt.info_arr[1].id===item_db_nt.info_arr[1].id) break;
+							update_item=true;
+						} break;
+						case "playlist_id:PL": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.id===item_db_nt.id) break;
+							update_item=true;
+						} break;
+						case "playlist_id:RD": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.id===item_db_nt.id) break;
+							update_item=true;
+						} break;
+						case "playlist_id:RDCM": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.id===item_db_nt.id) break;
+							update_item=true;
+						} break;
+						case "playlist_id:RDMM": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.type===item_db_nt.key) break;
+							update_item=true;
+						} break;
+						case "playlist_id:UU": {
+							if(item_db_nt.type!==item_nt.type) break;
+							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+							if(item_nt.id===item_db_nt.id) break;
 							update_item=true;
 						} break;
 						// non-dynamic values
