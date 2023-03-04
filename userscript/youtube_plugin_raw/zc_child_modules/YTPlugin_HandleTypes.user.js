@@ -3173,6 +3173,12 @@ class HandleTypes extends ServiceMethods {
 		let box_res=this.put_boxed_id(...args);
 		this.execute_promise_def((async () => (await box_res).ret)());
 	}
+	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
+	D_RawUrlFromTag(type,tag,x) {
+		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["tag"];info_arr: [{raw_id: string}]}} */
+		let mo={type,tag,info_arr: [{raw_id: x}]};
+		this.ht.DI_AGR_UrlInfo(as_any(mo));
+	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {
 		/** @template T @arg {{tag:T}} x */
@@ -3186,19 +3192,80 @@ class HandleTypes extends ServiceMethods {
 				}
 			} break;
 			case "channel_id": {
-				debugger;
+				const {info_arr: [{raw_id}]}=x;
+				let [,id]=split_string_once(raw_id,"UC");
+				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+				let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+				let box_res=this.put_boxed_id(...args);
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "video_id": {
-				debugger;
+				const {tag,info_arr}=x;
+				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+				let args=[tag,{type: tag,info_arr}];
+				let box_res=this.put_boxed_id(...args);
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": {
-				debugger;
+				const {info_arr: [{raw_id}]}=x;
+				if(this.str_starts_with(raw_id,"UC")) {
+					let [,id]=split_string_once(raw_id,"UC");
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					let box_res=this.put_boxed_id(...args);
+					this.execute_promise_def((async () => (await box_res).ret)());
+					return;
+				}
+				if(this.str_starts_with(raw_id,"FE")) {
+					let [,id]=split_string_once(raw_id,"FE");
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					let box_res=this.put_boxed_id(...args);
+					this.execute_promise_def((async () => (await box_res).ret)());
+					return;
+				}
+				if(this.str_starts_with(raw_id,"SP")) {
+					let [,id]=split_string_once(raw_id,"SP");
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					let box_res=this.put_boxed_id(...args);
+					this.execute_promise_def((async () => (await box_res).ret)());
+					return;
+				}
+				if(this.str_starts_with(raw_id,"MP")) {
+					let [,id]=split_string_once(raw_id,"MP");
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					let box_res=this.put_boxed_id(...args);
+					this.execute_promise_def((async () => (await box_res).ret)());
+					return;
+				}
+				if(this.str_starts_with(raw_id,"VL")) {
+					let [,id]=split_string_once(raw_id,"VL");
+					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"UC"}]>} */
+					let args=["channel_id",{type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}];
+					let box_res=this.put_boxed_id(...args);
+					this.execute_promise_def((async () => (await box_res).ret)());
+					return;
+				}
+				let box_res=this.put_boxed_id(...args);
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "playlist_id": {
-				debugger;
+				const {info_arr: [{raw_id}]}=x;
+				let [,id]=split_string_once(raw_id,"UC");
+				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+				let args=[x.tag,{type: x.tag,tag: "UC",info_arr: [{raw_id},{id}]}];
+				let box_res=this.put_boxed_id(...args);
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "playlist_id": {
-				debugger;
+				const {info_arr: [{raw_id}]}=x;
+				let [,id]=split_string_once(raw_id,"UC");
+				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+				let args=[x.tag,{type: x.tag,tag: "UC",info_arr: [{raw_id},{id}]}];
+				let box_res=this.put_boxed_id(...args);
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 		}
 	}

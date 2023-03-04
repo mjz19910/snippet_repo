@@ -1486,24 +1486,45 @@ class ServiceMethods extends ServiceData {
 			case "many": throw new Error("What");
 		}
 	}
-	/** @protected @arg {GU_PlaylistId} x */
-	GU_PlaylistId(x) {this.D_RawUrlFromTag("raw","playlist_id",x);}
-	/** @api @public @arg {GU_BrowseId} x */
-	browseId(x) {this.D_RawUrlFromTag("raw","browse_id",x);}
-	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
-	D_RawUrlFromTag(type,tag,x) {
-		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["tag"];info_arr: [{raw_id: string}]}} */
-		let mo={type,tag,info_arr: [{raw_id: x}]};
-		this.ht.DI_AGR_UrlInfo(as_any(mo));
+	/** @private @type {DU_VideoId[]} x */
+	video_id_list=[];
+	/** @type {Set<string>} */
+	id_cache=new Set;
+	/** @protected @arg {DU_VideoId} x */
+	videoId(x) {
+		if(this.video_id_list.includes(x)) return;
+		this.ht.D_RawUrlFromTag("raw","video_id",x);
 	}
-	/** @public @arg {SD_PlaylistId} raw_id */
-	playlistId(raw_id) {this.GU_PlaylistId(raw_id);}
+	/** @api @public @arg {GU_BrowseId} x */
+	browseId(x) {
+		if(this.id_cache.has(x)) return;
+		this.id_cache.add(x);
+		this.ht.D_RawUrlFromTag("raw","browse_id",x);
+	}
+	/** @public @arg {GU_PlaylistId} x */
+	playlistId(x) {
+		if(this.id_cache.has(x)) return;
+		this.id_cache.add(x);
+		this.ht.D_RawUrlFromTag("raw","playlist_id",x);
+	}
 	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
-	guideEntryId(x) {this.D_RawUrlFromTag("raw","guide_entry_id",x);}
+	guideEntryId(x) {
+		if(this.id_cache.has(x)) return;
+		this.id_cache.add(x);
+		this.ht.D_RawUrlFromTag("raw","guide_entry_id",x);
+	}
 	/** @protected @arg {DU_ChannelId} raw_id */
-	channelId(raw_id) {this.D_RawUrlFromTag("raw","channel_id",raw_id);}
+	channelId(raw_id) {
+		if(this.id_cache.has(x)) return;
+		this.id_cache.add(x);
+		this.ht.D_RawUrlFromTag("raw","channel_id",raw_id);
+	}
 	/** @protected @arg {D_UserIdStr} raw_id */
-	userId(raw_id) {this.ht.DI_G_NoKey({type: "user_id",info_arr: [{raw_id}]});}
+	userId(raw_id) {
+		if(this.id_cache.has(raw_id)) return;
+		this.id_cache.add(raw_id);
+		this.ht.DI_G_NoKey({type: "user_id",info_arr: [{raw_id}]});
+	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
 		let res_e=this._decode_b64_url_proto_obj(x);
@@ -2355,13 +2376,6 @@ class ServiceMethods extends ServiceData {
 	a_primitive_num(x) {
 		this._primitive_of(x,"number");
 		if(Number.isNaN(x)) debugger;
-	}
-	/** @private @type {DU_VideoId[]} x */
-	video_id_list=[];
-	/** @protected @arg {DU_VideoId} x */
-	videoId(x) {
-		if(this.video_id_list.includes(x)) return;
-		this.D_RawUrlFromTag("raw","video_id",x);
 	}
 	/** @type {any[]} */
 	log_list=[];
