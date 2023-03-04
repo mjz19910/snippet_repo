@@ -968,33 +968,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
-		/** @type {D_ReelPlayerOverlay_Gen} */
-		let rtx=as_any(x);
-		if("reelPlayerNavigationModel" in x) {
-			const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,badge,...y}=this.s(cf,rtx); this.g(y);/*#destructure_done*/
-			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-			this.trackingParams(trackingParams);
-			switch(reelPlayerNavigationModel) {
-				default: this.cg.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef(cf,x); break;
-				case void 0:
-				case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
-			}
-			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-			this.t(likeButton,this.R_LikeButton);
-			this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
-			this.t(menu,this.R_Menu);
-			this.t(subscribeButtonRenderer,this.R_SubscribeButton);
-			this.t(pivotButton,this.R_PivotButton);
-			this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
-			this.t(videoInteractions,this.g);
-			this.t(nextItemButton,this.R_Button);
-			this.t(prevItemButton,this.R_Button);
-			this.t(shareButton,this.R_Button);
-			this.t(viewCommentsButton,this.R_Button);
-			this.trackingParams(trackingParams);
-			return;
-		}
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(likeButton,this.R_LikeButton);
 		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
 		this.t(menu,this.R_Menu);
@@ -1007,6 +981,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.t(shareButton,this.R_Button);
 		this.t(pivotButton,this.R_PivotButton);
+		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
 		this.t(badge,this.RMD_Badge);
 	}
 	/** @private @arg {R_ReelPlayerHeader} x */
