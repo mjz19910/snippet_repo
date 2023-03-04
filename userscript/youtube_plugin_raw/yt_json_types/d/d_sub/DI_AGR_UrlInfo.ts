@@ -23,7 +23,7 @@ type DI_G_UrlInfo=
 		type: I;
 		_bad: true,
 	}:never:never;
-type GI_BrowseId=DI_BrowseId_FE|DI_BrowseId_SP|DI_BrowseId_MP|DI_BrowseId_VL_2|DI_BrowseId_VL|DI_BrowseId_VL_PL_;
+type GI_BrowseId=DI_BrowseId_FE|DI_BrowseId_SP|DI_BrowseId_MP|DI_BrowseId_VL_LL|DI_BrowseId_VL|DI_BrowseId_VL_PL;
 type MakeRet_DI_AGR_UrlInfo<T extends DI_AGR_UrlInfo>=T extends infer I extends DI_AGR_UrlInfo? Extract<DI_G_UrlInfo,{type: I["tag"];}>:never;
 type T1=MakeRet_DI_AGR_UrlInfo<DI_R_ChannelId>;
 type MK_DI_R_ChannelId=MakeRet_DI_AGR_UrlInfo<DI_R_ChannelId>;

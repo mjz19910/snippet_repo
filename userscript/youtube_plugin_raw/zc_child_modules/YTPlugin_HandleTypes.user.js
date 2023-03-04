@@ -3203,7 +3203,7 @@ class HandleTypes extends ServiceMethods {
 				} else if(this.str_starts_with(raw_id,"VL")) {
 					if(raw_id==="VLLL") {
 						let [,id]=split_string_once(raw_id,"VL");
-						/** @type {DI_BrowseId_VL_2} */
+						/** @type {DI_BrowseId_VL_LL} */
 						const z={
 							type: "browse_id",tag: "VL:LL",info_arr: [
 								{raw_id},
@@ -3231,7 +3231,7 @@ class HandleTypes extends ServiceMethods {
 								itv={tag: "PL",value: {type: "playlist_id",tag: "PL",info_arr: [{raw_id},{id}]}};
 							}
 						}
-						/** @type {DI_BrowseId_VL_PL_} */
+						/** @type {DI_BrowseId_VL_PL} */
 						const z={type: "browse_id",tag: "VL:PL",info_arr: [{raw_id},itv]}; ret=z;
 					} else {
 						raw_id===""; debugger; throw new Error();

@@ -4,6 +4,18 @@ type D_BoxedPlaylist_PL={
 	key: `boxed_id:playlist_id:PL:${string}`;
 };
 
+type D_Boxed_VL_LL={
+	type: "boxed_id";
+	tag: "browse_id:VL";
+	key: "boxed_id:browse_id:VL:LL";
+	value: DI_BrowseId_VL;
+};
+type D_Boxed_VL_PL={
+	type: "boxed_id";
+	tag: "browse_id:VL";
+	key: `boxed_id:browse_id:VL:PL${string}`;
+	value: DI_BrowseId_VL;
+};
 type G_BoxedIdObj=
 	|D_BoxedBigintStore
 	|D_BoxedBooleanStore
@@ -24,24 +36,8 @@ type G_BoxedIdObj=
 	|D_BoxedVEStore
 	|D_BoxedVideoId
 	|D_BoxedVideoTime
-	|{
-		type: "boxed_id";
-		tag: "browse_id:VL";
-		key: "boxed_id:browse_id:VL:LL";
-		value: DI_BrowseId_VL;
-	}
-	|{
-		type: "boxed_id";
-		tag: "browse_id:VL";
-		key: "boxed_id:browse_id:VL:PL";
-		value: DI_BrowseId_VL;
-	}
-	|{
-		type: "boxed_id";
-		tag: "browse_id:VL";
-		key: `boxed_id:browse_id:VL:PL${string}`;
-		value: DI_BrowseId_VL;
-	}
+	|D_Boxed_VL_LL
+	|D_Boxed_VL_PL
 	|{
 		type: "boxed_id";
 		tag: "browse_id:SP";
@@ -65,6 +61,12 @@ type G_BoxedIdObj=
 		tag: "browse_id:VL";
 		key: `boxed_id:browse_id:VL:${string}`;
 		value: DI_BrowseId_VL;
+	}
+	|{
+		type: "playlist_id";
+		tag: "playlist_id:WL";
+		key: "boxed_id:playlist_id:WL";
+		value: DI_Playlist_WL;
 	}
 	;
 ;

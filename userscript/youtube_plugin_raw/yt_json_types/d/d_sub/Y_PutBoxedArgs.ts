@@ -11,7 +11,7 @@ type DI_BrowseId_VL_WL={
 		}
 	];
 };
-type DI_BrowseId_VL_2={
+type DI_BrowseId_VL_LL={
 	type: "browse_id";
 	tag: "VL:LL";
 	info_arr: [
@@ -24,7 +24,7 @@ type DI_BrowseId_VL_2={
 		}
 	];
 };
-type DI_BrowseId_VL_PL_={
+type DI_BrowseId_VL_PL={
 	type: "browse_id";
 	tag: "VL:PL";
 	info_arr: [
@@ -37,7 +37,7 @@ type DI_BrowseId_VL_PL_={
 		}
 	];
 };
-type DI_BrowseId_VL=DI_BrowseId_VL_2|DI_BrowseId_VL_PL_;
+type DI_BrowseId_VL=DI_BrowseId_VL_WL|DI_BrowseId_VL_LL|DI_BrowseId_VL_PL;
 type Y_PutBoxedArgs=
 	|["bigint",null,[string,make_item_group<bigint>]]
 	|["boolean",null,[string,make_item_group<boolean>]]

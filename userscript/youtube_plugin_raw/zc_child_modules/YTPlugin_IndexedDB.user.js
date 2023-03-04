@@ -398,7 +398,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							key: `boxed_id:${tag}:${id}`,
 							value,
 						},version);
 						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
@@ -1007,7 +1007,7 @@ class IndexedDBService extends BaseService {
 						case "playlist_id": {
 							if(item_db_nt.type!==item_nt.type) break;
 							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.info_arr[0].raw_id===item_db_nt.info_arr[0].raw_id) break;
+							debugger;
 							update_item=true;
 						} break;
 						// non-dynamic values

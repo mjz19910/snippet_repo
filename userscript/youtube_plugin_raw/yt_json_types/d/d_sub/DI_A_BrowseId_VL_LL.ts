@@ -1,1 +1,0 @@
-type DI_BrowseId_VL_LL=T_UrlInfo_Join<"browse_id",["VL"],"LL">;
