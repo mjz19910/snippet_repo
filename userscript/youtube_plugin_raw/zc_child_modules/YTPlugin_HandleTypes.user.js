@@ -1799,32 +1799,46 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url_url_arr(root,x) {
 		let vv=split_string(x,"&");
+		/** @type {Map<string,string>} */
+		let url_obj=new Map;
 		// spell:ignore RDMM
 		for(let prop of vv) {
 			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
-			switch(res[0]) {
-				case "v": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: res[1]}); break;
-				case "list": this.GU_PlaylistId(res[1]); break;
-				case "rv": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_referral"],raw_id: res[1]}); break;
-				case "pp": {
-					if(root==="R_WatchPage_VE3832") {
-						const [,playerParams]=res;
-						this.playerParams("watch.player_params",playerParams);
-					} else {
-						debugger;
-					}
-				} break;
-				case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
-				case "index": {
-					if(this.cache_playlist_index.includes(res[1])) break;
-					this.cache_playlist_index.push(res[1]);
-					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
-				} break;
-				case "t": this.G_UrlInfo({type: "video_time",raw_value: res[1]}); break;
-				case "playnext": this.G_UrlInfo({type: "play_next",value: res[1]}); break;
-				default: res[0]===""; debugger;
-			}
+			url_obj.set(res[0],res[1]);
+		}
+		/** @arg {string} k */
+		function get_and_delete(k) {
+			let ret=url_obj.get(k);
+			url_obj.delete(k);
+			return ret;
+		}
+		let obj={
+			v: get_and_delete("v"),
+		};
+		obj;
+		if(url_obj.size!==0) debugger;
+		// switch(res[0]) {
+		// 	case "v": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video"],raw_id: res[1]}); break;
+		// 	case "list": this.GU_PlaylistId(res[1]); break;
+		// 	case "rv": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_referral"],raw_id: res[1]}); break;
+		// 	case "pp": {
+		// 		if(root==="R_WatchPage_VE3832") {
+		// 			const [,playerParams]=res;
+		// 			this.playerParams("watch.player_params",playerParams);
+		// 		} else {
+		// 			debugger;
+		// 		}
+		// 	} break;
+		// 	case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
+		// 	case "index": {
+		// 		if(this.cache_playlist_index.includes(res[1])) break;
+		// 		this.cache_playlist_index.push(res[1]);
+		// 		if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
+		// 	} break;
+		// 	case "t": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","video_time"],raw_id: res[1]}); break;
+		// 	case "playnext": this.G_RawUrlInfo({type: "raw",type_parts: ["raw","play_next"],raw_id: res[1]}); break;
+		// 	default: res[0]===""; debugger;
 		}
 	}
 	/** @public @arg {[RE_D_VE3832_PreconnectUrl]} x */

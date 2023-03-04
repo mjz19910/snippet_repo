@@ -2356,7 +2356,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.ht.G_UrlInfo({type: "raw",type_parts: ["raw","video","normal"],raw_id: x});
+		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","video","normal"],raw_id: x});
 	}
 	/** @type {any[]} */
 	log_list=[];
@@ -2415,7 +2415,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		this.ht.G_UrlInfo({type: "raw",type_parts: ["raw","channel_id","UC"],raw_id});
+		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","channel_id"],raw_id});
 	}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {
