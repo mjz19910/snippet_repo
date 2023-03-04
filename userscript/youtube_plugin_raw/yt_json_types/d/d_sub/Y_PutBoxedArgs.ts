@@ -3,7 +3,7 @@ type Y_PutBoxedArgs=
 	|["boolean",string,make_item_group<boolean>]
 	|["browse_id","FE",DI_BrowseId_FE]
 	|["browse_id","SP",DI_BrowseId_SP]
-	|["channel_id",DI_ChannelUrl]
+	|["channel_id",DI_ChannelId_UC]
 	|["hashtag_id",DI_HashtagId]
 	|["keys",string,make_item_group<string|number>]
 	|["load_id",number]
@@ -16,8 +16,10 @@ type Y_PutBoxedArgs=
 	|["user_id",DI_UserId]
 	|["video_id",DI_VideoId]
 	|["video_time",DI_VideoTime]
+	|["browse_id","MP",{type: "browse_id",tag: "MP",info_arr: [{raw_id: string;},{id: string;}];}]
 	;
 ;
+type Y_PutBoxedArgs_2=Extract<Y_PutBoxedArgs,{length: 2;}>;
 type Y_PutBoxedArgs_3=Extract<Y_PutBoxedArgs,{length: 3;}>;
 type Y_PutBoxedRet_3=Extract<Y_PutBoxedRet,{args: {length: 3;};}>;
 async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
@@ -38,12 +40,12 @@ async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
 		}
 	}
 }
-type T_PutAwaitPromise<T extends Y_PutBoxedRet>=T extends infer R extends T? {args: R["args"]; ret: Awaited<R["promise"]>;}:never;
+type T_PutAwaitPromise<T extends Y_PutBoxedRet>=T extends infer R extends T? {args: R["args"]; ret: Awaited<R["w"]>;}:never;
 type T_PutMakeAsyncImpl<N extends string,T extends {
 	info_arr: [{raw_id: Y;}];
 },Y extends string=T["info_arr"][0]["raw_id"]>={
 	key: N; args: [N,T];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: N;
 		key: `boxed_id:${N}`;
@@ -53,7 +55,7 @@ type T_PutMakeAsyncImpl<N extends string,T extends {
 type T_PutMakeAsync<N extends string,T extends {info_arr: [{raw_id: string;}];}>=T_PutMakeAsyncImpl<N,T>;
 type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	key: "video"; args: ["video",DI_VideoId];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "video";
 		key: `boxed_id:video:null:${string}`;
@@ -61,7 +63,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "user_id"; args: ["user_id",DI_UserId];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "user_id";
 		key: `boxed_id:user_id:${string}`;
@@ -69,7 +71,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "play_next"; args: ["play_next",DI_PlayNext];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "play_next";
 		key: "boxed_id:play_next:1";
@@ -77,7 +79,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "playlist_id"; args: ["playlist_id",DI_Playlist_PL];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: "boxed_id:playlist_id:PL";
@@ -85,7 +87,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "playlist_id"; args: ["playlist_id","RD",DI_A_Playlist_RD];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: "boxed_id:playlist_id:RD";
@@ -93,7 +95,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "playlist_id"; args: ["playlist_id","RD:CM:UC",DI_A_Playlist_RD_CM_UC];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: `boxed_id:playlist_id:RD:CM:UC:${string}`;
@@ -101,7 +103,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "playlist_id"; args: ["playlist_id","RD:GM:EM",DI_A_Playlist_RD_GM_EM];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: `boxed_id:playlist_id:RD:GM:EM:${string}`;
@@ -109,7 +111,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "playlist_id"; args: ["playlist_id","RD:MM",DI_A_Playlist_RD_MM];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: `boxed_id:playlist_id:RD:MM:${string}`;
@@ -117,7 +119,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "playlist_id"; args: ["playlist_id",DI_G_Playlist_UU];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: "boxed_id:playlist_id:UU";
@@ -125,7 +127,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "hashtag_id"; args: ["hashtag_id",DI_HashtagId];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "hashtag_id";
 		key: `boxed_id:hashtag_id:${string}`;
@@ -133,23 +135,23 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "browse_id"; args: ["browse_id",DI_G_BrowseId];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "browse_id";
 		key: `boxed_id:browse_id:VLPL${string}`;
 		value: DI_G_BrowseId;
 	}>;
 }|{
-	key: "channel_id"; args: ["channel_id",DI_ChannelUrl];
-	promise: Promise<{
+	key: "channel_id"; args: ["channel_id",DI_ChannelId_UC];
+	w: Promise<{
 		type: "boxed_id";
 		tag: "channel_id";
 		key: `boxed_id:channel_id:UC${string}`;
-		value: DI_ChannelUrl;
+		value: DI_ChannelId_UC;
 	}>;
 }|{
 	key: "video_time"; args: ["video_time",DI_VideoTime];
-	promise: Promise<{
+	w: Promise<{
 		type: "boxed_id";
 		tag: "video_time";
 		key: `boxed_id:video_time:${number}s`;
@@ -157,7 +159,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "bigint"; args: ["bigint",string,make_item_group<bigint>];
-	promise: Promise<{
+	w: Promise<{
 		key: `boxed_id:bigint:${string}`;
 		base: "boxed_id";
 		type: "bigint";
@@ -166,7 +168,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "boolean"; args: ["boolean",string,make_item_group<boolean>];
-	promise: Promise<{
+	w: Promise<{
 		key: `boxed_id:boolean:${string}`;
 		base: "boxed_id";
 		type: "boolean";
@@ -175,7 +177,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "number"; args: ["number",string,make_item_group<number>];
-	promise: Promise<{
+	w: Promise<{
 		key: `boxed_id:number:${string}`;
 		base: "boxed_id";
 		type: "number";
@@ -184,7 +186,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "string"; args: ["string",string,make_item_group<string>];
-	promise: Promise<{
+	w: Promise<{
 		key: `boxed_id:string:${string}`;
 		base: "boxed_id";
 		type: "string";
@@ -193,7 +195,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "keys"; args: ["keys",string,make_item_group<string|number>];
-	promise: Promise<{
+	w: Promise<{
 		key: `boxed_id:keys:${string}`;
 		base: "boxed_id";
 		type: "keys";
@@ -202,7 +204,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "root_visual_element"; args: ["root_visual_element",string,make_item_group<number>];
-	promise: Promise<{
+	w: Promise<{
 		key: `boxed_id:root_visual_element:${string}`;
 		base: "boxed_id";
 		type: "root_visual_element";
@@ -211,7 +213,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "load_id"; args: ["load_id",number];
-	promise: Promise<{
+	w: Promise<{
 		key: "boxed_id:a:load_id";
 		type: "load_id";
 		base: "boxed_id";
@@ -219,13 +221,12 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	}>;
 }|{
 	key: "save_id"; args: ["save_id",number];
-	promise: Promise<{
+	w: Promise<{
 		key: "boxed_id:a:save_id";
 		type: "save_id";
 		base: "boxed_id";
 		id: number;
 	}>;
 };
-key: "boolean"; type YScratch=Exclude<Y_PutBoxedRet,{args: ["boolean"|"bigint"|"load_id"|"save_id"|"number"|"keys"|"root_visual_element"|"string",...any];}>;
-type BScratch=Extract<G_BoxedIdObj,{type: "boxed_id";}>;
+type BScratch1=Extract<Y_PutBoxedArgs,["browse_id","FE",DI_BrowseId_FE]>;
 type MakeInfoBoxArgs<T extends {type: any;}>=T extends infer R extends T? [R["type"],R]:never;

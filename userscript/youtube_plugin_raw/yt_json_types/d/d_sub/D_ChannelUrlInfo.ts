@@ -1,4 +1,4 @@
-type DI_ChannelUrl={
+type DI_ChannelId_UC={
 	type: "channel_id";
 	tag: "UC";
 	info_arr: [

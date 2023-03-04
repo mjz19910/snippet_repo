@@ -2427,13 +2427,13 @@ class ServiceMethods extends ServiceData {
 	indexed_db_put(key,value) {return this.indexed_db.put(key,value,this.indexed_db_version);}
 	/** @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id(...args) {
-		let {...ret}=await this.indexed_db.put_boxed_id_async(this.indexed_db_version,...args);
+		let {...ret}=await this.indexed_db.put_boxed_id_async_2(this.indexed_db_version,...args);
 		return ret;
 	}
-	/** @template {Y_PutBoxedArgs_3} T @arg {T} args */
+	/** @template {Y_PutBoxedArgs_3} T @arg {T} args @returns {Promise<T_PutAwaitPromise<Extract<Y_PutBoxedRet_3,{args:T}>>>} */
 	async put_boxed_id_3(...args) {
-		let {...ret}=await this.indexed_db.put_boxed_id_async(this.indexed_db_version,...args);
-		return ret;
+		let ret=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
+		return as_any(ret);
 	}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {
