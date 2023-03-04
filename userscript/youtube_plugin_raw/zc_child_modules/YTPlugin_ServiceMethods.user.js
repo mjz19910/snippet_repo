@@ -2385,12 +2385,30 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GU_VE3611_Url} x */
 	GU_VE3611_Url(x) {
-		if(this.str_starts_with_rx("/@",x)) return;
+		const cf="GU_VE3611_Url";
+		if(this.str_starts_with_rx("/@",x)) {
+			let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
+			let a1=split_string_once(y,"/");
+			if(a1.length!==1) debugger;
+			let [x1]=a1;
+			let a2=split_string_once(x1,"@"); this.cq(a2[0],"");
+			console.log("handle",a2[1]);
+			return;
+		}
 		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
 		let a1=split_string_once(y,"/");
 		switch(a1[0]) {
 			default: switch(a1[0]) {
+				case "":
 			} debugger; break;
+			case "user": {
+				if(a1.length!==2) debugger;
+				let [,y1]=a1;
+				if(this.str_is_search(y1)) debugger;
+				let a2=split_string_once(y1,"/");
+				if(a2.length!==1) debugger;
+				console.log(`${cf}.a2`,a2);
+			} break;
 			case "c": {
 				if(a1.length!==2) debugger;
 				let [,y1]=a1;
