@@ -1489,7 +1489,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {SD_PlaylistId} raw_id */
 	playlistId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		this.ht.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id});
+		this.ht.G_RawUrlInfo({type: "raw",type_parts: {r: "raw",a: "playlist_id"},raw_id});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
