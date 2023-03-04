@@ -1,4 +1,9 @@
-type AsyncPluginEventDetail={handle_types: typeof import("./YtPlugin_ServiceLoader_Plugin.user.js").ServiceLoader["prototype"]["handle_types"];};
+type AsyncPluginEventDetail={
+	handle_types: typeof import("./YtPlugin_ServiceLoader_Plugin.user.js").ServiceLoader["prototype"]["handle_types"];
+	elements: {
+		on_yt_playlist_manager(element: HTMLElement): void;
+	};
+};
 type HandleTypes=import("./YTPlugin_HandleTypes.user.js").HandleTypes;
 type IndexedDBService=InstanceType<PluginStore["mod$IndexedDBService"]["IndexedDBService"]>;
 type ServiceResolver<T,U>=import("./YtPlugin_Base.user.js").ServiceResolver<T,U>;

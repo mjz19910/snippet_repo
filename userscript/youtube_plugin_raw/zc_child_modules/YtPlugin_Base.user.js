@@ -187,12 +187,26 @@ function make_iterator(x) {return new Iterator(x);}
 //#endregion
 //#region ui_plugin & on_${element}
 class CustomEventTarget {
-	/** @private @type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
+	/** @private @type {J_CustomEventTargetEvents} */
 	_events={};
-	/** @api @public @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
-	addEventListener(type,handler) {(this._events[type]??=[]).push(handler);}
-	/** @api @public @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
-	removeEventListener(type,handler) {
+	/** @api @public @arg {J_HandlerInfoArgs} args */
+	addEventListener(...args) {
+		let [type,handler]=args;
+		let ht1=this._events[type];
+		if(ht1) {
+			/** @type {NonNullable<J_CustomEventTargetEvents[keyof J_CustomEventTargetEvents]>[number][]} */
+			let handlers=ht1;
+			handlers.push(handler);
+		} else {
+			ht1=this._events[type]=[];
+			/** @type {NonNullable<J_CustomEventTargetEvents[keyof J_CustomEventTargetEvents]>[number][]} */
+			let handlers=ht1;
+			handlers.push(handler);
+		}
+	}
+	/** @api @public @arg {J_HandlerInfoArgs} args */
+	removeEventListener(...args) {
+		let [type,handler]=args;
 		let event_arr=this._events[type];
 		if(!event_arr) return;
 		if(event_arr.length) return;
@@ -204,6 +218,7 @@ class CustomEventTarget {
 	}
 	/** @api @public @arg {CustomEventType} event */
 	dispatchEvent(event) {
+		if(event.type==="plugin-activate") {debugger; return;}
 		let msg_arr=this._events[event.type];
 		if(!msg_arr) return;
 		for(let i=0;i<msg_arr.length;i++) {
@@ -212,6 +227,7 @@ class CustomEventTarget {
 		}
 	}
 }
+export_(exports => {exports.CustomEventTarget=CustomEventTarget;});
 class DomObserver extends CustomEventTarget {
 	/** @private @type {Set<MessagePort>} */
 	wait_ports=new Set;
@@ -331,13 +347,12 @@ function on_ytd_app(element) {
 		} else {ytd_app.app_is_visible=false;}
 	});
 }
-/** @private @arg {CustomEventType} event */
+/** @private @arg {AsyncPluginInitEvent} event */
 function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {console.log("async error",e);});}
 /** @private @type {Element|null} */
 let main_page_app=null;
-/** @private @arg {CustomEventType} event */
+/** @private @arg {AsyncPluginInitEvent} event */
 async function async_plugin_init(event) {
-	if(event.type!=="async-plugin-init") return;
 	let plugin_state={};
 	plugin_state.show_interesting_elements=true;
 	let cur_count=1;
@@ -429,7 +444,7 @@ async function async_plugin_init(event) {
 				const target_element=get_html_elements(document,"yt-playlist-manager")[0];
 				if(!target_element) break x;
 				found_element_count++;
-				on_yt_playlist_manager(target_element);
+				event.detail.elements.on_yt_playlist_manager(target_element);
 			}
 			// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 			x: {
@@ -1453,14 +1468,6 @@ function get_new_video_element_list(element_list,list_box) {
 
 /** @private @type {HTMLElement|null} */
 let yt_playlist_manager=null;
-/** @private @arg {HTMLElement} element */
-function on_yt_playlist_manager(element) {
-	const element_id="yt-playlist-manager";
-	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
-	element_map.set(element_id,element);
-	yt_playlist_manager=element;
-	window.yt_playlist_manager=element;
-}
 /** @private @type {[number, number][]} */
 let port_state_log=[];
 class MessagePortState {
@@ -1487,14 +1494,17 @@ function on_port_message(event) {
 let message_channel=new MessageChannel();
 
 function fire_observer_event() {dom_observer.notify_with_port(message_channel.port1);}
-/** @private @arg {AsyncPluginEventDetail["handle_types"]} handle_types */
-function start_message_channel_loop(handle_types) {
+/** @private @arg {AsyncPluginEventDetail["handle_types"]} handle_types @arg {AsyncPluginEventDetail["elements"]} elements */
+function start_message_channel_loop(handle_types,elements) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
-			detail: {handle_types},
+			detail: {
+				handle_types,
+				elements,
+			},
 			port: message_channel.port1,
 		});
 	}
@@ -1882,8 +1892,18 @@ function yt_plugin_base_main() {
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 	services.modify_env.modify_global_env();
 
+	// required for message_channel_loop
+	/** @private @arg {HTMLElement} element */
+	function on_yt_playlist_manager(element) {
+		const element_id="yt-playlist-manager";
+		if(is_yt_debug_enabled) console.log(`on ${element_id}`);
+		element_map.set(element_id,element);
+		yt_playlist_manager=element;
+		services.yt_plugin.yt_playlist_manager=element;
+	}
+
 	// wait for plugin requirements
-	start_message_channel_loop(services.handle_types);
+	start_message_channel_loop(services.handle_types,{on_yt_playlist_manager});
 	/** @private @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
@@ -2996,6 +3016,8 @@ class YtPlugin extends BaseService {
 		super(x);
 		YtPlugin.do_init(this);
 	}
+	/** @type {HTMLElement|null} */
+	yt_playlist_manager=null;
 	/** @api @public @template {{name:string}} T @arg {T} function_obj */
 	add_function(function_obj) {
 		if(!this.saved_function_objects) return;
