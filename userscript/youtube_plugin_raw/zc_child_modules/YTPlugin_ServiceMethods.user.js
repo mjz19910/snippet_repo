@@ -2764,15 +2764,17 @@ class ServiceMethods extends ServiceData {
 			return null;
 		}
 	}
-	/** @protected @arg {D_ChannelId} x */
+	/** @protected @arg {D_ChannelIdStr} x */
 	channelId(x) {this.D_ChannelId(x);}
-	/** @protected @arg {D_ChannelId} raw_id */
+	/** @protected @arg {D_UserIdStr} x */
+	userId(x) {x;}
+	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
 		const cf="D_ChannelId"; this.k(cf,raw_id);
 		if(this.str_starts_with_rx("UC",raw_id)) {
-			let [,id]=split_string_once(raw_id,"UC");
-			this.G_UrlInfoItem({type: "channel_id:UC",id,raw_id});
+			let [,user_id]=split_string_once(raw_id,"UC");
+			this.G_UrlInfoItem({type: "channel_id:UC",id: user_id,raw_id});
 			if(raw_id.length===24) return;
 			console.log("[channelId.length]",raw_id.length);
 			return;

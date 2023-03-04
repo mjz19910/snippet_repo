@@ -1,5 +1,5 @@
 type D_EmojiPickerUpsellCategory={
-	categoryId: D_ChannelId;
+	categoryId: D_ChannelIdStr;
 	title: G_Text;
 	upsell: G_Text;
 	emojiTooltip: "Join to unlock";

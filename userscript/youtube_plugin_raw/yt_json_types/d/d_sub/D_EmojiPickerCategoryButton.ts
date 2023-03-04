@@ -1,10 +1,10 @@
 type D_EmojiPickerCategoryButton={
-	categoryId: D_ChannelId;
+	categoryId: D_ChannelIdStr;
 	icon: T_Icon<"SPONSORSHIP_STAR">;
 	tooltip: "Custom emoji";
 	accessibility: TD_Accessibility<"Custom emoji">;
 }|{
-	categoryId: D_ChannelId;
+	categoryId: D_ChannelIdStr;
 	icon: T_Icon<"VIDEO_YOUTUBE">;
 	tooltip: "YouTube";
 	accessibility: TD_Accessibility<"YouTube">;

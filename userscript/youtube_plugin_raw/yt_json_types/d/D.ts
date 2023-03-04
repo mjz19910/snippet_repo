@@ -146,7 +146,8 @@ type D_VE6827_PageLocation=
 type D_ApiStatsAdsStr=`ver=${string}&ns=${string}&event=${string}&device=${string}&content_v=${string}&el=${string}&ei=${string}&devicever=${string}&bti=${string}&break_type=${string}&conn=${string}&cpn=${string}&lact=${string}&m_pos=${string}&mt=${string}&p_h=${string}&p_w=${string}&rwt=${string}&sdkv=${string}&slot_pos=${string}&vis=${string}&vol=${string}&wt=${string}&sli=${string}&slfs=${string}&loginael=${string}`;
 type D_ApiUrlFormat=`https://www.youtube.com${D_ApiPathFormat_1}`;
 type D_ChanLoc=`channel.${string}`;
-type D_ChannelId=`UC${string}`;
+type D_ChannelIdStr=T_ChannelIdStr<D_UserIdStr>;
+type D_UserIdStr=string;
 type T_ChannelIdStr<T extends string>=`UC${T}`;
 type D_UUIDString=`${string}-${string}-${string}-${string}-${string}`;
 type D_PlaylistUrlParams=`list=${SD_PlaylistId}`;
@@ -2253,7 +2254,7 @@ type D_PlayerMicroformat={
 	description?: G_Text;
 	lengthSeconds: `${number}`;
 	ownerProfileUrl: `http://www.youtube.com/channel/UC${string}`;
-	externalChannelId: D_ChannelId;
+	externalChannelId: D_ChannelIdStr;
 	isFamilySafe: boolean;
 	availableCountries: string[];
 	isUnlisted: boolean;
