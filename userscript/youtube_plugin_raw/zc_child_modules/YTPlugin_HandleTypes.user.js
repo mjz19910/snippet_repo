@@ -2804,7 +2804,7 @@ class HandleTypes extends ServiceMethods {
 		this.videoId(v1_v1_str);
 		f4; f5; f6; f7;
 	}
-	/** @private @arg {{1:TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;}} x */
+	/** @private @arg {{1:TV_Str<DU_VideoId>|TW_TagStr<DU_VideoId>;}} x */
 	PK_f1_str(x) {
 		let m1=this.mw(this.m(x));
 		let v1_v1=m1.mc(this.PT_f1).some.v;

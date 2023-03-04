@@ -20,4 +20,4 @@ type E_UpdatedMetadata={
 	commandMetadata: M_UpdatedMetadata|M_UpdatedMetadata;
 	updatedMetadataEndpoint: D_VideoId;
 };
-type D_VideoId={videoId: D_VideoIdStr;};
+type D_VideoId={videoId: DU_VideoId;};

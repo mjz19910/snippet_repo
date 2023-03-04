@@ -1,5 +1,5 @@
 type P_entity_key={
-	2: T_VW<{1: TV_Str<D_VideoIdStr>;}>;
+	2: T_VW<{1: TV_Str<DU_VideoId>;}>;
 	4: T_D32<246>;
 	5: T_D32<1>;
 }|{
@@ -11,7 +11,7 @@ type P_entity_key={
 	4: T_D32<245>;
 	5: T_D32<1>;
 }|{
-	2: TV_Str<D_VideoIdStr>;
+	2: TV_Str<DU_VideoId>;
 	4: T_D32<341>;
 	5: T_D32<1>;
 };
@@ -56,7 +56,7 @@ type P_macro_markers_list_entity_key={
 	5: T_D32<1>;
 };
 type P_view_count_entity_key={
-	2: TV_Str<D_VideoIdStr>;
+	2: TV_Str<DU_VideoId>;
 	4: T_D32<194>;
 	5: T_D32<1>;
 };
@@ -139,7 +139,7 @@ type P_logging_context_serialized_context_data={
 };
 type TW_Str<T extends string>=TV_Str_CS<T>|TW_TagStr<T>|TV_Str<T>;
 type P_like_params={
-	1: T_VW<{1: TW_Str<D_VideoIdStr>;}>;
+	1: T_VW<{1: TW_Str<DU_VideoId>;}>;
 	4: T_D32<0>;
 	5?: T_D32<1>;
 	6: T_VW<V_ShortTimestamp>;
@@ -150,14 +150,14 @@ type P_playability_status_context_params={
 	2: T_VW<{1: T_D32<2>;}>;
 };
 type P_remove_like_params={
-	1: T_VW<{1: TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;}>;
+	1: T_VW<{1: TV_Str<DU_VideoId>|TW_TagStr<DU_VideoId>;}>;
 	3: T_D32<0>;
 	4?: T_D32<1>;
 	5: T_VW<V_ShortTimestamp>;
 	6?: T_D32<1>;
 };
 type P_dislike_params_f1={
-	1: TV_Str<D_VideoIdStr>|T_VW<{}>|TV_Str_CS<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>|T_VW<{}>|TV_Str_CS<DU_VideoId>;
 };
 type P_dislike_params={
 	1: T_VW<P_dislike_params_f1>;
@@ -171,17 +171,17 @@ type P_subscribe_params={
 		1: T_D32<3>;
 	}>;
 	3: T_D32<0>;
-	4: TV_Str<D_VideoIdStr>;
+	4: TV_Str<DU_VideoId>;
 };
 type P_unsubscribe_params={
 	1: T_VW<{
 		1: T_D32<3>;
 	}>;
-	2?: TV_Str<D_VideoIdStr>|TW_TagStr<D_VideoIdStr>;
+	2?: TV_Str<DU_VideoId>|TW_TagStr<DU_VideoId>;
 	3: T_D32<0>;
 };
 type PX_watch_next_token_info={
-	2: TV_Str<D_VideoIdStr>;
+	2: TV_Str<DU_VideoId>;
 	4?: TV_Str<string>;
 	6?: T_VW<{}>;
 	7?: T_D32<18>;
@@ -203,7 +203,7 @@ type PX_watch_next_token_3={
 	5: T_D32<19>;
 };
 type PX_watch_next_token_2={
-	4: TV_Str<D_VideoIdStr>;
+	4: TV_Str<DU_VideoId>;
 	6: T_D32<0>;
 	15: T_D32<2>;
 	37?: TV_Str<string>;
@@ -237,7 +237,7 @@ type P_watch_playlist_params={
 	2: T_D32<1>;
 	3: T_D32<1>;
 	7: T_D32<1>;
-	12: TV_Str<D_VideoIdStr>;
+	12: TV_Str<DU_VideoId>;
 	13: T_D32<0>;
 	27?: T_VW<{
 		1: T_D32<1>;
@@ -266,7 +266,7 @@ type P_shorts_source_bp={
 	};
 };
 type P_get_transcript_params={
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	2: TV_Str<string>;
 	3: T_D32<1>;
 	5: TV_Str<"engagement-panel-searchable-transcript-search-panel">;
@@ -275,7 +275,7 @@ type P_get_transcript_params={
 	8: T_D32<1>;
 };
 type P_transcript_track_selection_serialized_params={
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	2: TV_Str<string>;
 	3: T_D32<1>;
 	6: T_D32<0>;
@@ -283,7 +283,7 @@ type P_transcript_track_selection_serialized_params={
 	8: T_D32<0>;
 };
 type PX_watch_sequence_info={
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	3: T_D32<9>;
 	4: T_D32<2>;
 	6: T_VW_Bigint<bigint>;
@@ -334,7 +334,7 @@ type P_reel_watch_sequence_data={
 	}>;
 };
 type P_continuation_request_reel_watch_sequence_token={
-	1?: TV_Str<D_VideoIdStr>;
+	1?: TV_Str<DU_VideoId>;
 	3: T_VW<PX_watch_sequence_info>;
 	5: T_VW<TX_sequence_info>;
 	8?: T_VW<{}>;
@@ -345,7 +345,7 @@ type TX_sequence_info={3: T_D32<12>;};
 // cspell:ignore BRaeiCMuKpQ
 // https://www.youtube.com/shorts/BRaeiCMuKpQ
 type P_reel_sequence_params={
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	3?: T_VW_J<{
 		1: TV_Str<"BRaeiCMuKpQ">;
 		3: T_D32<0>;
@@ -357,7 +357,7 @@ type P_reel_sequence_params={
 	12?: TV_Str<"RDSH">;
 };
 type PX_buy_flow_params={
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	2: TV_Str<`UC${string}`>;
 	3: T_D32<1>;
 };
@@ -414,7 +414,7 @@ type PR_continuation_params=
 	;
 ;
 type P_create_comment_params={
-	2: TV_Str<D_VideoIdStr>;
+	2: TV_Str<DU_VideoId>;
 	5: T_VW<{1: T_D32<0>;}>;
 	10: T_D32<7>;
 };
@@ -423,9 +423,9 @@ type P_ypc_get_offers_params_f1={
 	1: T_D32<3>;
 	2: TV_Str<`UC${string}`>;
 };
-type P_ypc_get_offers_params_f5_f1={1: TV_Str<D_VideoIdStr>;};
+type P_ypc_get_offers_params_f5_f1={1: TV_Str<DU_VideoId>;};
 type P_ypc_get_offers_params_f5={
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	3: T_D32<1>;
 	5: T_VW<P_ypc_get_offers_params_f5_f1>;
 	9: T_D32<2>;
@@ -492,7 +492,7 @@ type P_watch_params={
 	2?: T_D32<1>;
 	3?: T_D32<1>;
 	7?: T_D32<2>;
-	12?: TV_Str<D_VideoIdStr>;
+	12?: TV_Str<DU_VideoId>;
 	13?: T_D32<0>;
 	15?: TV_Str<`${string}.${string}`>;
 	24?: T_D32<1>;
@@ -501,7 +501,7 @@ type P_watch_params={
 	36?: T_VW<{24: T_D32<0>;}>;
 	39?: T_D32<637>;
 	40?: T_VW<PR_watch_bin>;
-	56?: TV_Str<D_VideoIdStr>;
+	56?: TV_Str<DU_VideoId>;
 };
 type P_ve_6827_params={
 	77?: TV_Str<"FEexplore">;
@@ -515,9 +515,9 @@ type P_ve_6827_params={
 	94?: T_VW<{
 		1: T_VW<{
 			2: T_VW_BinTs<{
-				1: TV_Str<D_VideoIdStr>;
-				2: TV_Str<D_VideoIdStr>;
-				3: TV_Str<D_VideoIdStr>;
+				1: TV_Str<DU_VideoId>;
+				2: TV_Str<DU_VideoId>;
+				3: TV_Str<DU_VideoId>;
 			}>;
 		}>;
 		5: T_D64<bigint>;
@@ -618,7 +618,7 @@ type P_perform_comment_action={
 	1: T_D32<5>;
 	2: T_D32<2>;
 	3: TV_Str<`${string}.${string}`>;
-	5: TV_Str<D_VideoIdStr>;
+	5: TV_Str<DU_VideoId>;
 	6: T_D32<1>;
 	7: T_D32<0>;
 	9: TV_Str<`${bigint}`>;
@@ -627,7 +627,7 @@ type P_perform_comment_action={
 	30: T_D32<0>;
 };
 type P_create_reply_params={
-	2: TV_Str<D_VideoIdStr>;
+	2: TV_Str<DU_VideoId>;
 	4: TV_Str<string>;
 	5: T_VW<{1: T_D32<0>;}>;
 	10: T_D32<7>;
@@ -641,10 +641,10 @@ type P_PX_watch_next_token_2_f37={
 };
 type P_f3_PD_continuation_params_f1_data={
 	1: TV_Str<`UC${string}`>;
-	2: TV_Str<D_VideoIdStr>;
+	2: TV_Str<DU_VideoId>;
 };
 type P_f3_PD_continuation_params_f1={5: T_VW<P_f3_PD_continuation_params_f1_data>;};
-type P_f3_PD_continuation_params_data={1: TV_Str<D_VideoIdStr>;};
+type P_f3_PD_continuation_params_data={1: TV_Str<DU_VideoId>;};
 type P_f3_PD_continuation_params_obj={0x2e6ea8d: T_VW<P_f3_PD_continuation_params_data>;};
 type P_f3_PD_continuation_params={
 	1: T_VW<P_f3_PD_continuation_params_f1>;
@@ -658,14 +658,14 @@ type P_transcript_params={
 	3: T_VW_J<{}>;
 };
 type PE_transcript_params={
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	2: TV_Str<string>;
 	3: T_D32<1>;
 	6: T_D32<0>;
 	7: T_D32<1>;
 	8: T_D32<0>;
 }|{
-	1: TV_Str<D_VideoIdStr>;
+	1: TV_Str<DU_VideoId>;
 	2: TV_Str<string>;
 	3: T_D32<1>;
 	6: T_D32<1>;

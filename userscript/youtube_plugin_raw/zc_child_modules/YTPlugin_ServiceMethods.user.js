@@ -2356,9 +2356,9 @@ class ServiceMethods extends ServiceData {
 		this._primitive_of(x,"number");
 		if(Number.isNaN(x)) debugger;
 	}
-	/** @private @type {D_VideoIdStr[]} x */
+	/** @private @type {DU_VideoId[]} x */
 	video_id_list=[];
-	/** @protected @arg {D_VideoIdStr} x */
+	/** @protected @arg {DU_VideoId} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
 		this.D_RawUrlFromTag("raw","video_id",x);

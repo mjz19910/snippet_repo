@@ -12,7 +12,7 @@ type DU_RadioId=`RD${string}`;
 type DU_RadioId_ChannelMix=`RDCM${DU_ChannelId}`;
 type DU_Playlist_UserUploads=`UU${string}`;
 type DU_PlaylistId=`PL${string}`;
-type DU_GuideEntryId="WL"|"LL"|`UC${string}`|DU_PlaylistId;
+type GU_GuideEntryId="WL"|"LL"|`UC${string}`|DU_PlaylistId;
 // cspell:ignore RDCMUC
 type GU_PlaylistId=
 	|"WL"|"LL"

@@ -1290,7 +1290,7 @@ type D_GuideEntry=
 	;
 ;
 //#endregion
-type D_GuideEntryData={guideEntryId: DU_GuideEntryId;};
+type D_GuideEntryData={guideEntryId: GU_GuideEntryId;};
 // COMPLETED: #13
 type D_FeedNudge={
 	lightIconImage: D_Thumbnail;
@@ -1473,7 +1473,7 @@ type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: boolean;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_TimedTextApi={
-	v: D_VideoIdStr;
+	v: DU_VideoId;
 	caps?: "asr";
 	xoaf: `${5}`;
 	xoadf?: string;
@@ -2190,7 +2190,7 @@ type D_PdgCommentOption={
 	chipRenderer: R_PdgCommentChip;
 };
 type D_LiveStreamability={
-	videoId: D_VideoIdStr;
+	videoId: DU_VideoId;
 	broadcastId?: `${1}`;
 	pollDelayMs: `${15000}`;
 };
@@ -3041,7 +3041,7 @@ type D_GuideEntry_IconType_Obj={
 	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
 //#endregion
-type D_VideoIdStr=string;
+type DU_VideoId=string;
 type D_Playlist_MD={
 	title: string;
 	androidAppindexingLink: string;
