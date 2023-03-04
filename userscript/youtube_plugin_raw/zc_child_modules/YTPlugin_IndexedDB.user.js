@@ -248,7 +248,7 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @arg {["bigint",string,make_item_group<bigint>]|["load_id"|"save_id",number]|["root_visual_element"|"number",string,make_item_group<number>]|["string",string,make_item_group<string>]|["keys",string,make_item_group<string|number>]|["boolean",string,make_item_group<boolean>]} args */
+	/** @arg {number} version @arg {Y_PutBoxedArgs} args */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: debugger; throw new Error();

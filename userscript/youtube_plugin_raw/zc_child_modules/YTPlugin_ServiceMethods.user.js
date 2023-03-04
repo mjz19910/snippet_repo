@@ -1489,112 +1489,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {SD_PlaylistId} raw_id */
 	playlistId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		if(this.str_starts_with_rx("RD",raw_id)) {
-			if(this.str_starts_with_rx("RDCM",raw_id)) {
-				if(this.str_starts_with_rx("RDCMUC",raw_id)) {
-					let [,id]=split_string_once(raw_id,"RDCM");
-					this.channelId(id);
-					let channel_id=split_string_once(id,"UC")[1];
-					this.save_next_char("playlistId.RDCM.UC",channel_id);
-					raw_id;
-					/**
-						id_info: {
-							type: "UC",
-							id: channel_id,
-							raw_id: id,
-						},*/
-					this.ht.G_UrlInfo({
-						type: "playlist_id",
-						type_parts: ["playlist_id","RDCM","UC"],
-						info_arr: [{
-							type: "RDCM",
-							raw_id: raw_id,
-						},{
-							type: "UC",
-							id: channel_id,
-							raw_id: id,
-						}],
-					});
-					// 4 [RDCM] + 2 [UC] + 22 [ChannelId]
-					if(channel_id.length===22) return;
-					console.log("[playlistId.radio_channel_mix.length]",raw_id.length-channel_id.length,channel_id.length,raw_id);
-					return;
-				}
-				debugger;
-				return;
-			}
-			if(this.str_starts_with_rx("RDMM",raw_id)) {
-				let [,id]=split_string_once(raw_id,"RDMM");
-				this.save_next_char("playlistId.radio_my_mix",id);
-				this.ht.make_G_UrlInfo({type: "playlist:RDMM",id: raw_id});
-				// 4 [RDMM] + 11 [VideoId]
-				if(raw_id.length===15) return;
-				console.log("[playlistId.radio_my_mix.length]",raw_id.length);
-				return;
-			}
-			if(this.str_starts_with_rx("RDGM",raw_id)) {
-				if(this.str_starts_with_rx("RDGMEM",raw_id)) {
-					let [,id]=split_string_once(raw_id,"RDGM");
-					let em_id=split_string_once(id,"EM")[1];
-					this.ht.G_UrlInfo({
-						type: "playlist:2:RDGM:EM",
-						id_info: {
-							type: "EM",
-							id: em_id,
-							raw_id: id,
-						},
-						id,raw_id,
-					});
-					this.save_next_char("playlistId.radio_global_mix.EM",em_id);
-					// 4 [RDGM] + 2 [EM] + 22 [ChannelId]
-					if(em_id.length===22) return;
-					// 4 [RDGM] + 2 [EM] + 35 [unknown]
-					if(em_id.length===35) return;
-					console.log("[playlistId.radio_global_mix.length]",raw_id.length-em_id.length,em_id.length,raw_id);
-					return;
-				}
-				debugger;
-				return;
-			}
-			let [,id]=split_string_once(raw_id,"RD");
-			this.ht.G_UrlInfo({type: "playlist:2:RD",id,raw_id});
-			this.save_next_char("playlistId.radio",id);
-			// 2 [RD] + 11 [VideoId]
-			if(raw_id.length===13) return;
-			console.log("[playlistId.radio.length]",raw_id.length);
-			return;
-		}
-		if(this.str_starts_with_rx("PL",raw_id)) {
-			let [,id]=split_string_once(raw_id,"PL");
-			this.ht.G_UrlInfo({type: "playlist:3:PL",id,raw_id});
-			this.save_next_char("playlistId.playlist",id);
-			// 2 [PL] + 16 [PlaylistId]
-			if(raw_id.length===18) return;
-			// 2 [PL] + 32 [PlaylistId]
-			if(raw_id.length===34) return;
-			console.log("[playlistId.playlist.length]",raw_id.length);
-			return;
-		}
-		if(this.str_starts_with_rx("UU",raw_id)) {
-			let [,id]=split_string_once(raw_id,"UU");
-			this.save_next_char("playlistId.uploads_playlist",id);
-			this.ht.G_UrlInfo({type: "playlist:4:UU",id,raw_id});
-			// 2 [UU] + 2 [UC]? + 22 [ChannelId]
-			if(raw_id.length===26) return;
-			console.log("[playlistId.uploads_playlist.length]",raw_id.length);
-			return;
-		}
-		this.save_next_char("playlistId.raw_id.0",raw_id);
-		this.save_next_char(`playlistId.raw_id.${raw_id[0]}.1`,raw_id,1);
-		switch(raw_id) {
-			default: {
-				this.save_next_char("playlistId.other",raw_id[0]);
-				console.log("[maybe_parse_id] [playlistId_new_id]",raw_id);
-				raw_id===""; debugger;
-			} break;
-			case "LL": return this.ht.G_UrlInfo({type: "playlist:1:LL",id: raw_id});
-			case "WL": return this.ht.G_UrlInfo({type: "playlist:1:WL",id: raw_id});
-		}
+		this.ht.G_UrlInfo(this.ht.make_G_UrlInfo({type: "playlist_id",id: raw_id}));
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -1863,101 +1758,14 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {GU_PlaylistId} x */
 	GU_PlaylistId(x) {
-		this.ht.G_UrlInfo({type: "playlist_id",raw_id: x});
+		this.ht.G_UrlInfo(this.ht.make_G_UrlInfo({type: "playlist_id",id: x}));
 	}
-	/** @private @arg {GU_VE5754_BrowseId} raw_id */
-	GU_VE5754_BrowseId_VL(raw_id) {this.ht.G_UrlInfo({type: "browse_id:VL",raw_id});}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
-	DU_VE5754_BrowseId_2(x) {
-		if(this.str_starts_with(x,"VL")) this.GU_VE5754_BrowseId_VL(x);
-	}
+	DU_VE5754_BrowseId_2(x) {this.browseId(x);}
 	seen_map=new Set;
-	/** @private @arg {D_BrowseEndpointPages} x */
-	parse_known_page(x) {
-		switch(x) {
-			case "comment_shorts_web_top_level":
-			case "explore":
-			case "guide_builder":
-			case "history":
-			case "library":
-			case "storefront":
-			case "subscriptions":
-			case "trending":
-			case "what_to_watch": return true;
-			default:
-		}
-		switch(x) {
-			case "music_charts":
-			case "music_explore":
-			case "music_home":
-			case "music_library_corpus_artists":
-			case "music_library_corpus_track_artists":
-			case "music_library_landing":
-			case "music_liked_albums":
-			case "music_liked_playlists":
-			case "music_liked_videos":
-			case "music_moods_and_genres_category":
-			case "music_moods_and_genres":
-			case "music_new_releases": return true;
-			default:
-		}
-		switch(x) {
-			case "hashtag": return true;
-			default:
-		}
-		switch(x) {
-			case "": return true;
-			default:
-		}
-		switch(x) {default: debugger; return false;}
-	}
 	/** @api @public @arg {D_BrowseIdStr} x */
 	browseId(x) {
-		if(this.str_starts_with(x,"FE")) {
-			let page=split_string_once(x,"FE")[1];
-			let known_page=this.parse_known_page(page);
-			if(known_page) return;
-			if(this.seen_map.has(page)) return;
-			this.seen_map.add(page);
-			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
-			return;
-		}
-		if(this.str_starts_with(x,"VL")) {
-			return this.GU_VE5754_BrowseId_VL(x);
-		}
-		if(this.str_starts_with(x,"UC")) {
-			if(x.slice(2).length===22) return;
-			console.log("new with param [param_2c_UC]",x);
-			return;
-		}
-		if(this.str_starts_with(x,"SP")) {
-			/** @private @type {D_Settings_Id} */
-			let x1=split_string_once(x,"SP")[1];
-			switch(x1) {
-				case "account_advanced":
-				case "account_billing":
-				case "account_downloads":
-				case "account_notifications":
-				case "account_overview":
-				case "account_playback":
-				case "account_privacy":
-				case "account_sharing":
-				case "account":
-				case "report_history":
-				case "unlimited":
-					return;
-				default: switch(x1) {case "account_billing": } console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
-			}
-			console.log("new with param [param_2c_SP]",x,x1);
-			return;
-		}
-		if(this.str_starts_with(x,"MP")) {
-			let x1=split_string_once(x,"MP")[1];
-			let x2=split_string_once(x1,"_");
-			this.save_string("param_2c_MP.0",x2[0]);
-			return;
-		}
-		{debugger;}
+		this.ht.G_UrlInfo(this.ht.make_G_UrlInfo({type: "browse_id",id: x}));
 	}
 	/** @private @arg {DE_VE5754} x */
 	DE_VE5754(x) {
@@ -2191,7 +1999,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,hashtag,...u]=p;
 				if(u.length===0) {
-					this.ht.G_UrlInfo({type: "hashtag",hashtag});
+					this.ht.G_UrlInfo({type: "hashtag_id",hashtag});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -2548,7 +2356,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.ht.G_UrlInfo({type: "video:normal",raw_id: x});
+		this.ht.G_UrlInfo({type: "raw",type_parts: ["raw","video","normal"],raw_id: x});
 	}
 	/** @type {any[]} */
 	log_list=[];
@@ -2598,6 +2406,8 @@ class ServiceMethods extends ServiceData {
 	indexed_db_version=3;
 	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
 	indexed_db_put(key,value) {return this.indexed_db.put(key,value,this.indexed_db_version);}
+	/** @arg {Y_PutBoxedArgs} args */
+	put_boxed_id(...args) {return this.indexed_db.put_boxed_id(this.indexed_db_version,...args);}
 	/** @protected @arg {D_ChannelIdStr} x */
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */
@@ -2605,16 +2415,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
-		const cf="D_ChannelId"; this.k(cf,raw_id);
-		if(this.str_starts_with_rx("UC",raw_id)) {
-			let [,user_id]=split_string_once(raw_id,"UC");
-			this.ht.G_UrlInfo({type: "channel_id:UC",id: user_id,raw_id});
-			this.userId(user_id);
-			if(raw_id.length===24) return;
-			console.log("[channelId.length]",raw_id.length);
-			return;
-		}
-		this.cg.codegen_str(cf,raw_id);
+		this.ht.G_UrlInfo({type: "raw",type_parts: ["raw","channel_id","UC"],raw_id});
 	}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {

@@ -3232,6 +3232,8 @@ class HandleTypes extends ServiceMethods {
 			case "video": this.videoId(value.id); break;
 			case "video_referral": this.videoId(value.id); break;
 			*/
+			case "channel_id": debugger; break;
+			case "video": debugger; break;
 			case "browse_id": {
 				if(!this.is_UrlInfoPart1(x,"browse_id")) throw 1;
 				let {raw_id}=x;
@@ -3262,11 +3264,51 @@ class HandleTypes extends ServiceMethods {
 		switch(value.type) {
 			default: get_type(value)===""; debugger; break;
 			//"channel_id" | "browse_id" | "video_referral" | "video_time"
-			case "video_time":
-			case "video_referral":
-			case "browse_id":
-			case "channel_id":
-			case "play_next": debugger; break;
+			case "video_time": {
+				let {raw_value}=value;
+				let promise=this.indexed_db_put("boxed_id",{
+					type: "boxed_id:video_time",
+					key: `boxed_id:video_time:${raw_value}`,
+					value: raw_value,
+				});
+				this.execute_promise_def(promise);
+			} break;
+			case "video_referral": {
+				let {hashtag}=value;
+				let promise=this.indexed_db_put("hashtag_id",{
+					type: "hashtag_id",
+					key: `hashtag_id:${hashtag}`,
+					hashtag,
+				});
+				this.execute_promise_def(promise);
+			} break;
+			case "browse_id": {
+				let {hashtag}=value;
+				let promise=this.indexed_db_put("hashtag_id",{
+					type: "hashtag_id",
+					key: `hashtag_id:${hashtag}`,
+					hashtag,
+				});
+				this.execute_promise_def(promise);
+			} break;
+			case "channel_id": {
+				let {hashtag}=value;
+				let promise=this.indexed_db_put("hashtag_id",{
+					type: "hashtag_id",
+					key: `hashtag_id:${hashtag}`,
+					hashtag,
+				});
+				this.execute_promise_def(promise);
+			} break;
+			case "play_next": {
+				let {hashtag}=value;
+				let promise=this.indexed_db_put("hashtag_id",{
+					type: "hashtag_id",
+					key: `hashtag_id:${hashtag}`,
+					hashtag,
+				});
+				this.execute_promise_def(promise);
+			} break;
 			case "raw": this.G_RawUrlInfo(value); break;
 			case "playlist_id": this.G_PlaylistUrlInfo(value); break;
 			case "hashtag_id": {
