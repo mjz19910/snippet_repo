@@ -3257,7 +3257,13 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "video": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				x;
+				if(this.is_UrlInfo_len(x,2)) {
+
+				} else {
+					if(this.is_UrlInfoPartAt(x,2,"")) {
+					}
+				}
+				x.type_parts;
 				debugger;
 			} break;
 			case "browse_id": {
