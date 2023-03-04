@@ -1777,8 +1777,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
-		const [sec,v]=x; if(sec!=="shorts") debugger;
-		this.G_UrlInfo({type: "video:short",v});
+		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
+		this.G_UrlInfo({type: "video",type_parts: ["video","short"],raw_id});
 	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
@@ -1804,9 +1804,9 @@ class HandleTypes extends ServiceMethods {
 			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
-				case "v": this.G_UrlInfo({type: "video",id: res[1]}); break;
-				case "list": this.parse_guide_entry_id(res[1]); break;
-				case "rv": this.G_UrlInfo({type: "video-referral",id: res[1]}); break;
+				case "v": this.G_UrlInfo({type: "video",type_parts: ["video"],id: res[1]}); break;
+				case "list": this.GU_PlaylistId(res[1]); break;
+				case "rv": this.G_UrlInfo({type: "video_referral",id: res[1]}); break;
 				case "pp": {
 					if(root==="R_WatchPage_VE3832") {
 						const [,playerParams]=res;
@@ -1821,8 +1821,8 @@ class HandleTypes extends ServiceMethods {
 					this.cache_playlist_index.push(res[1]);
 					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
 				} break;
-				case "t": this.G_UrlInfo({type: "video-referral",id: res[1]}); break;
-				case "playnext": this.G_UrlInfo({type: "play-next",value: res[1]}); break;
+				case "t": this.G_UrlInfo({type: "video_time",raw_value: res[1]}); break;
+				case "playnext": this.G_UrlInfo({type: "play_next",value: res[1]}); break;
 				default: res[0]===""; debugger;
 			}
 		}
@@ -3148,13 +3148,128 @@ class HandleTypes extends ServiceMethods {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
+	/** @template {Extract<G_UrlInfo,{type_parts:any}>} O @arg {O} x @returns {x is Extract<O,{type_parts:[any,T,...any]}>} @template {O["type_parts"][1]} T @arg {T} t */
+	is_UrlInfoPart1(x,t) {
+		if(x.type_parts.length===1) return false;
+		return x.type_parts[1]===t;
+	}
+	/** @public @arg {G_PlaylistUrlInfo} value */
+	G_PlaylistUrlInfo(value) {
+		switch(value.type_parts[1]) {
+			default: {
+				switch((value.type_parts[1])) {
+				}
+			} break;
+			case "LL": break;
+			case "PL": {
+				if(!this.is_UrlInfoPart1(value,"PL")) throw 1;
+				let {raw_id}=value;
+				let [a,id]=split_string_once(raw_id,"PL"); this.cq(a,"");
+				id;
+			} break;
+			case "RD": break;
+			case "RDCM": break;
+			case "RDGM": break;
+			case "RDMM": break;
+			case "UU": break;
+			case "WL": break;
+			/*
+			// "playlist_id:RDCM:UC"
+			let promise=this.indexed_db_put("playlist_id",{
+				key: `playlist_id:RDCM:UC:${id_info.id}`,
+				base: "playlist_id",
+				type: "playlist_id:RDCM",
+				id_info,
+				id,raw_id,
+			});
+			this.execute_promise_def(promise);
+			if(!this.str_starts_with_rx("UC",id)) debugger;
+			this.D_ChannelId(id);
+			// "playlist:2:RDGM:EM"
+			const {id,id_info,raw_id}=value;
+			let promise=this.indexed_db_put("playlist_id",{
+				key: `playlist_id:RDGM:EM:${id_info.id}`,
+				type: "playlist_id",
+				type_parts: ["playlist_id","RDGM","EM"],
+				info_arr: [{type: "RDGM"},{type: "EM",id: id_info.id}],
+				id,raw_id,
+			});
+			this.execute_promise_def(promise);
+			// case "playlist:1:LL": case "playlist:1:WL":
+			const {id}=value;
+			let promise=this.indexed_db_put("playlist_id",{
+				base: "playlist_id",
+				type: "playlist_id:self",
+				key: `playlist_id:self:${id}`,
+				id,
+			});
+			this.execute_promise_def(promise);
+			case "playlist:2:RDMM": case "playlist:2:RD":
+			case "playlist:4:UU": case "playlist:3:PL":
+			const {type,id,raw_id}=value;
+			let type_2=split_string(type,":")[2];
+			let promise=this.indexed_db_put("playlist_id",{
+				base: "playlist_id",
+				type: `playlist_id:${type_2}`,
+				key: `playlist_id:${type_2}:${id}`,
+				id,raw_id,
+			});
+			this.execute_promise_def(promise);
+			let is_critical=this.get_playlist_url_info_critical(value);
+			this.log_playlist_id(value,is_critical);
+			*/
+		}
+	}
+	/** @public @arg {Extract<G_UrlInfo,{type:"raw";}>} x */
+	G_RawUrlInfo(x) {
+		switch(x.type_parts[1]) {
+			default: {
+				switch((x.type_parts[1])) {
+					case "": break;
+				}
+			} break;
+			/*
+			case "video": this.videoId(value.id); break;
+			case "video_referral": this.videoId(value.id); break;
+			*/
+			case "browse_id": {
+				if(!this.is_UrlInfoPart1(x,"browse_id")) throw 1;
+				let {raw_id}=x;
+				if(raw_id==="VLLL") {debugger; return;}
+				if(raw_id==="VLWL") {debugger; return;}
+				if(this.str_starts_with(raw_id,"VLPL")) {debugger; return;}
+				if(this.str_starts_with(raw_id,"VLUU")) {
+					let [a,id]=split_string_once(raw_id,"VL"); this.cq(a,"");
+					id;
+					debugger;
+					return;
+				}
+				debugger;
+			} break;
+			case "playlist_id": {
+				if(!this.is_UrlInfoPart1(x,"playlist_id")) throw 1;
+				let {raw_id}=x;
+				if(raw_id==="LL") {debugger; return;}
+				if(raw_id==="WL") {debugger; return;}
+				debugger;
+			} break;
+		}
+	}
 	/** @public @arg {G_UrlInfo} value */
 	G_UrlInfo(value) {
 		/** @template T @arg {{type:T}} x */
 		function get_type(x) {return x.type;}
 		switch(value.type) {
 			default: get_type(value)===""; debugger; break;
-			case "hashtag": {
+			//"channel_id" | "browse_id" | "video_referral" | "video_time"
+			case "video_time":
+			case "video_referral":
+			case "browse_id":
+			case "channel_id":
+			case "play_next": debugger; break;
+			case "raw": this.G_RawUrlInfo(value); break;
+			case "playlist_id": this.G_PlaylistUrlInfo(value); break;
+			case "hashtag_id": {
 				let {hashtag}=value;
 				let promise=this.indexed_db_put("hashtag_id",{
 					type: "hashtag_id",
@@ -3163,25 +3278,31 @@ class HandleTypes extends ServiceMethods {
 				});
 				this.execute_promise_def(promise);
 			} break;
-			case "video:normal": {
-				let {v}=value;
-				let promise=this.indexed_db_put("video_id",{
-					type: "video_id",
-					type_parts: ["video_id","normal"],
-					key: `video_id:normal:${v}`,
-					v,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "video:short": {
-				let {v}=value;
-				let promise=this.indexed_db_put("video_id",{
-					key: `video_id:shorts:${v}`,
-					type: "video_id",
-					type_parts: ["video_id","shorts"],
-					v,
-				});
-				this.execute_promise_def(promise);
+			case "video": {
+				if(value.type_parts.length===1) {
+					return;
+				}
+				value.type_parts[1]==="normal";
+				if("v" in value) {
+					let {v}=value; v;
+					debugger;
+					// let promise=this.indexed_db_put("video_id",{
+					// 	type: "video_id",
+					// 	type_parts: ["video_id","normal"],
+					// 	key: `video_id:normal:${v}`,
+					// 	v,
+					// });
+					// this.execute_promise_def(promise);
+					// let promise2=this.indexed_db_put("video_id",{
+					// 	key: `video_id:shorts:${v}`,
+					// 	type: "video_id",
+					// 	type_parts: ["video_id","shorts"],
+					// 	v,
+					// });
+					// this.execute_promise_def(promise2);
+				} else {
+					debugger;
+				}
 			} break;
 			case "user_id": {
 				let {raw_id}=value;
@@ -3192,98 +3313,41 @@ class HandleTypes extends ServiceMethods {
 				});
 				this.execute_promise_def(promise);
 			} break;
-			case "channel_id:UC": {
+			case "channel_id": {
 				let {raw_id,id}=value;
-				let promise=this.indexed_db_put("channel_id",{
-					key: `channel_id:UC:${id}`,
-					base: "channel_id",
-					type_parts: ["channel_id","UC"],
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
+				raw_id; id; debugger;
+				// let promise=this.indexed_db_put("channel_id",{
+				// 	key: `channel_id:UC:${id}`,
+				// 	base: "channel_id",
+				// 	type_parts: ["channel_id","UC"],
+				// 	id,raw_id,
+				// });
+				// this.execute_promise_def(promise);
 			} break;
-			case "play-next": value; break;
-			case "browse_id:VL": {
+			case "browse_id": {
 				const {type,id,raw_id}=value;
-				let promise=this.indexed_db_put("browse_id",{
-					key: `browse_id:VL:${id}`,
-					base: "browse_id",
-					type_parts: type,id,raw_id
-				});
-				this.execute_promise_def(promise);
+				type; raw_id; id; debugger;
+				// let promise=this.indexed_db_put("browse_id",{
+				// 	key: `browse_id:VL:${id}`,
+				// 	base: "browse_id",
+				// 	type_parts: type,id,raw_id
+				// });
+				// this.execute_promise_def(promise);
 			} break;
-			case "playlist:2:RDCM:UC": {
-				const {id,id_info,raw_id}=value;
-				let promise=this.indexed_db_put("playlist_id",{
-					key: `playlist_id:RDCM:UC:${id_info.id}`,
-					base: "playlist_id",
-					type: "playlist_id:RDCM",
-					id_info,
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
-				if(!this.str_starts_with_rx("UC",id)) debugger;
-				this.D_ChannelId(id);
-			} break;
-			case "playlist:2:RDGM:EM": {
-				const {id,id_info,raw_id}=value;
-				let promise=this.indexed_db_put("playlist_id",{
-					key: `playlist_id:RDGM:EM:${id_info.id}`,
-					type: "playlist_id",
-					type_parts: ["playlist_id","RDGM","EM"],
-					info_arr: [{type: "RDGM"},{type: "EM",id: id_info.id}],
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "playlist:1:LL": case "playlist:1:WL": {
-				const {id}=value;
-				let promise=this.indexed_db_put("playlist_id",{
-					base: "playlist_id",
-					type: "playlist_id:self",
-					key: `playlist_id:self:${id}`,
-					id,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "playlist:2:RDMM": case "playlist:2:RD":
-			case "playlist:4:UU": case "playlist:3:PL": {
-				const {type,id,raw_id}=value;
-				let type_2=split_string(type,":")[2];
-				let promise=this.indexed_db_put("playlist_id",{
-					base: "playlist_id",
-					type: `playlist_id:${type_2}`,
-					key: `playlist_id:${type_2}:${id}`,
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
-				let is_critical=this.get_playlist_url_info_critical(value);
-				this.log_playlist_id(value,is_critical);
-			} break;
-			case "video": this.videoId(value.id); break;
-			case "video-referral": this.videoId(value.id); break;
 		}
 	}
-	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
-	get_playlist_url_info_critical(x) {
-		if(x.type==="playlist:1:LL") return false;
-		if(x.type==="playlist:1:WL") return false;
-		switch(x.id.length) {
-			case 11: return false;
-			case 16: return false;
-			case 24: return false;
-			case 32: return false;
-			default: debugger; return true;
-		}
+	/** @arg {G_UrlInfoSrc} x @returns {G_UrlInfo} */
+	make_G_UrlInfo(x) {
+		throw new AggregateError([x],"TODO");
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
 	cache_playlist_id=[];
-	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
-	log_playlist_id(x,critical=false) {
-		if(!this.cache_playlist_id.includes(x.id)) {
-			this.cache_playlist_id.push(x.id);
-			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
+	/** @public @arg {string} type @arg {string} id */
+	log_playlist_id(type,id,critical=false) {
+		if(!this.cache_playlist_id.includes(id)) {
+			this.cache_playlist_id.push(id);
+			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",type,id);
 		}
 	}
 	//#endregion

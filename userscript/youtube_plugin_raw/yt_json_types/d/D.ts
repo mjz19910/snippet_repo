@@ -51,7 +51,7 @@ type SD_PlaylistId=
 ;
 type D_BrowseIdStr=
 	|`FE${D_BrowseEndpointPages}`
-	|GU_VE5754_Id
+	|GU_VE5754_BrowseId
 	|`UC${string}`
 	|`SP${D_Settings_Id}`
 	|`MP${string}_${string}`

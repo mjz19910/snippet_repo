@@ -28,11 +28,11 @@ type I_BoxedChannelId={
 	raw_id: `UC${string}`;
 };
 type I_BoxedBrowseId={
-	key: `browse_id:VL:${string}`;
 	base: "browse_id";
-	type_parts: "browse_id:VL";
+	key: `browse_id:VL:${string}`;
+	type_parts: ["browse_id","VL"];
 	id: D_PlaylistIdStr;
-	raw_id: GU_VE5754_PlaylistBrowseId;
+	raw_id: GU_VE5754_BrowseId;
 };
 type I_BoxedUserId={
 	type: "user_id";

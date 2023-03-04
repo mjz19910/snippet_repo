@@ -1496,14 +1496,24 @@ class ServiceMethods extends ServiceData {
 					this.channelId(id);
 					let channel_id=split_string_once(id,"UC")[1];
 					this.save_next_char("playlistId.RDCM.UC",channel_id);
-					this.ht.G_UrlInfo({
-						type: "playlist:2:RDCM:UC",
+					raw_id;
+					/**
 						id_info: {
 							type: "UC",
 							id: channel_id,
 							raw_id: id,
-						},
-						id,raw_id,
+						},*/
+					this.ht.G_UrlInfo({
+						type: "playlist_id",
+						type_parts: ["playlist_id","RDCM","UC"],
+						info_arr: [{
+							type: "RDCM",
+							raw_id: raw_id,
+						},{
+							type: "UC",
+							id: channel_id,
+							raw_id: id,
+						}],
 					});
 					// 4 [RDCM] + 2 [UC] + 22 [ChannelId]
 					if(channel_id.length===22) return;
@@ -1516,7 +1526,7 @@ class ServiceMethods extends ServiceData {
 			if(this.str_starts_with_rx("RDMM",raw_id)) {
 				let [,id]=split_string_once(raw_id,"RDMM");
 				this.save_next_char("playlistId.radio_my_mix",id);
-				this.ht.G_UrlInfo({type: "playlist:2:RDMM",id,raw_id});
+				this.ht.make_G_UrlInfo({type: "playlist:RDMM",id: raw_id});
 				// 4 [RDMM] + 11 [VideoId]
 				if(raw_id.length===15) return;
 				console.log("[playlistId.radio_my_mix.length]",raw_id.length);
@@ -1851,20 +1861,12 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(query);
 		this.t(params,x => this.params("search.params",x));
 	}
-	/** @private @arg {GU_VE5754_PlaylistBrowseId} x */
-	GU_VE5754_BrowseId_VL(x) {
-		const [a,id]=split_string_once(x,"VL"); if(a!=="") debugger;
-		this.ht.G_UrlInfo({type: "browse_id:VL",id,raw_id: x});
-		this.parse_guide_entry_id(id);
+	/** @protected @arg {GU_PlaylistId} x */
+	GU_PlaylistId(x) {
+		this.ht.G_UrlInfo({type: "playlist_id",raw_id: x});
 	}
-	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} raw_id @returns {void} */
-	parse_guide_entry_id(raw_id) {
-		if(this.str_starts_with_rx("RD",raw_id)) return this.playlistId(raw_id);
-		if(this.str_starts_with_rx("UC",raw_id)) return this.channelId(raw_id);
-		if(this.str_starts_with_rx("PL",raw_id)) return this.playlistId(raw_id);
-		if(this.str_starts_with_rx("UU",raw_id)) return this.playlistId(raw_id);
-		return this.playlistId(raw_id);
-	}
+	/** @private @arg {GU_VE5754_BrowseId} raw_id */
+	GU_VE5754_BrowseId_VL(raw_id) {this.ht.G_UrlInfo({type: "browse_id:VL",raw_id});}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {
 		if(this.str_starts_with(x,"VL")) this.GU_VE5754_BrowseId_VL(x);
@@ -1920,7 +1922,9 @@ class ServiceMethods extends ServiceData {
 			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
 			return;
 		}
-		if(this.str_starts_with(x,"VL")) {return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);}
+		if(this.str_starts_with(x,"VL")) {
+			return this.GU_VE5754_BrowseId_VL(x);
+		}
 		if(this.str_starts_with(x,"UC")) {
 			if(x.slice(2).length===22) return;
 			console.log("new with param [param_2c_UC]",x);
@@ -2544,7 +2548,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.ht.G_UrlInfo({type: "video:normal",v: x});
+		this.ht.G_UrlInfo({type: "video:normal",raw_id: x});
 	}
 	/** @type {any[]} */
 	log_list=[];
