@@ -176,9 +176,8 @@ class ServiceMethods extends ServiceData {
 				if(!this.str_starts_with_rx("UC",v2)) {debugger; return;}
 				switch(v3) {
 					default: this.cg.codegen_case(cf,v3); break;
-					case "livestreaming": break;
+					case "videos": break;
 				}
-
 			} break;
 		}
 	}

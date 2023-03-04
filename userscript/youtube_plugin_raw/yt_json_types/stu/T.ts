@@ -170,6 +170,7 @@ type TD_Label<T>={label: T;};
 //#endregion
 //#region TE_
 type EP_Key=`${string}${D_EndpointLikeEndings}`;
+type TE_Endpoint_1_Generic<T_Key extends PropertyKey,T_Data>={[I in T_Key]: T_Data};
 type TE_Endpoint_1<T_Key extends EP_Key,T_Data>={[I in T_Key]: T_Data};
 type TE_EndpointImpl_2<T_Key extends EP_Key,T_Data>={clickTrackingParams: string;}&{[I in T_Key]: T_Data};
 type TE_Endpoint_2<T_Key extends EP_Key,T_Data>={[K in keyof TE_EndpointImpl_2<T_Key,T_Data>]: TE_EndpointImpl_2<T_Key,T_Data>[K]};
