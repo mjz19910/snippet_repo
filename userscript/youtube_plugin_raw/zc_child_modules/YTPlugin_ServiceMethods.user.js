@@ -2356,7 +2356,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.ht.G_RawUrlInfo({type: "raw",tag: "video",type_parts: ["raw","video","normal"],raw_id: x});
+		this.ht.G_RawUrlInfo({type: "raw",tag: "video_id",type_parts: ["raw","video_id"],raw_id: x});
 	}
 	/** @type {any[]} */
 	log_list=[];

@@ -1778,7 +1778,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
-		this.G_RawUrlInfo({type: "raw",tag: "video",type_parts: ["raw","video","short"],raw_id});
+		this.videoId(raw_id);
 	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
@@ -1803,7 +1803,7 @@ class HandleTypes extends ServiceMethods {
 		/** @arg {typeof x2} x @returns {typeof y2|null} */
 		const px_x2=(x) => {
 			const {v,...y}=x;
-			this.G_RawUrlInfo({type: "raw",tag: "video",type_parts: ["raw","video"],raw_id: v});
+			this.videoId(v);
 			if(this.is_empty_obj(y)) return null;
 			let y2=y;
 			return y2;
@@ -1825,7 +1825,7 @@ class HandleTypes extends ServiceMethods {
 		x: if("list" in x3) {
 			lx: {
 				const {list,...y2}=x3;
-				this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id: list});
+				this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id: list});
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
 					this.save_string("video_url.info.playnext",playnext);
