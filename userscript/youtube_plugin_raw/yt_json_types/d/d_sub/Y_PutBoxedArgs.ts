@@ -28,233 +28,234 @@ async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
 		}
 	}
 }
+type T_PutAwaitPromise<T extends Y_PutBoxedRet>=T extends infer R extends T? {args: R["args"]; ret: Awaited<R["promise"]>;}:never;
 type Y_PutBoxedRet={
 	args: ["video_referral",D_VideoReferralUrlInfo];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "video_referral";
 		key: `boxed_id:video_referral:${string}`;
 		value: D_VideoReferralUrlInfo;
-	}|null>;
+	}>;
 }|{
 	args: ["video",D_UrlInfo_Video];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "video";
 		key: `boxed_id:video:null:${string}`;
 		value: D_UrlInfo_Video;
-	}|null>;
+	}>;
 }|{
 	args: ["video",D_VideoIdNormal];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "video";
 		key: `boxed_id:video:normal:${string}`;
 		value: D_VideoIdNormal;
-	}|null>;
+	}>;
 }|{
 	args: ["video",D_InfoVideoIdShorts];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "video";
 		key: `boxed_id:video:short:${string}`;
 		value: D_InfoVideoIdShorts;
-	}|null>;
+	}>;
 }|{
 	args: ["user_id",D_UserIdInfo];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "user_id";
 		extra: "any";
 		key: `boxed_id:user_id:${string}`;
 		value: D_UserIdInfo;
-	}|null>;
+	}>;
 }|{
 	args: ["play_next",D_PlayNextUrlInfo];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "play_next";
 		extra: "any";
 		key: "boxed_id:play_next:1";
 		value: D_PlayNextUrlInfo;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_2];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:LL";
 		value: G_PlaylistUrlInfo_2;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_PL];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:PL";
 		value: G_PlaylistUrlInfo_PL;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_RD];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RD";
 		value: G_PlaylistUrlInfo_RD;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_RDCM];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: `boxed_id:playlist_id:RDCM:UC:${string}`;
 		value: G_PlaylistUrlInfo_RDCM;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_RDGM];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RDGM";
 		value: G_PlaylistUrlInfo_RDGM;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_RDMM];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RDMM";
 		value: G_PlaylistUrlInfo_RDMM;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_UU];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:UU";
 		value: G_PlaylistUrlInfo_UU;
-	}|null>;
+	}>;
 }|{
 	args: ["playlist_id",G_PlaylistUrlInfo_1];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:WL";
 		value: G_PlaylistUrlInfo_1;
-	}|null>;
+	}>;
 }|{
 	args: ["hashtag_id",D_InfoHashtagId];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "hashtag_id";
 		extra: "any";
 		key: `boxed_id:hashtag_id:${string}`;
 		value: D_InfoHashtagId;
-	}|null>;
+	}>;
 }|{
 	args: ["browse_id",D_BrowseIdUrlInfo];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "browse_id";
 		extra: "any";
 		key: `boxed_id:browse_id:VLPL${string}`;
 		value: D_BrowseIdUrlInfo;
-	}|null>;
+	}>;
 }|{
 	args: ["channel_id",D_ChannelUrlInfo];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "channel_id";
 		extra: "any";
 		key: `boxed_id:channel_id:UC${string}`;
 		value: D_ChannelUrlInfo;
-	}|null>;
+	}>;
 }|{
 	args: ["video_time",D_InfoVideoTime];
-	ret: Promise<{
+	promise: Promise<{
 		type: "boxed_id";
 		tag: "video_time";
 		key: `boxed_id:video_time:${number}s`;
 		value: D_InfoVideoTime;
-	}|null>;
+	}>;
 }|{
 	args: ["bigint",string,make_item_group<bigint>];
-	ret: Promise<{
+	promise: Promise<{
 		key: `boxed_id:bigint:${string}`;
 		base: "boxed_id";
 		type: "bigint";
 		id: string;
 		value: make_item_group<bigint>;
-	}|null>;
+	}>;
 }|{
 	args: ["boolean",string,make_item_group<boolean>];
-	ret: Promise<{
+	promise: Promise<{
 		key: `boxed_id:boolean:${string}`;
 		base: "boxed_id";
 		type: "boolean";
 		id: string;
 		value: make_item_group<boolean>;
-	}|null>;
+	}>;
 }|{
 	args: ["number",string,make_item_group<number>];
-	ret: Promise<{
+	promise: Promise<{
 		key: `boxed_id:number:${string}`;
 		base: "boxed_id";
 		type: "number";
 		id: string;
 		value: make_item_group<number>;
-	}|null>;
+	}>;
 }|{
 	args: ["string",string,make_item_group<string>];
-	ret: Promise<{
+	promise: Promise<{
 		key: `boxed_id:string:${string}`;
 		base: "boxed_id";
 		type: "string";
 		id: string;
 		value: make_item_group<string>;
-	}|null>;
+	}>;
 }|{
 	args: ["keys",string,make_item_group<string|number>];
-	ret: Promise<{
+	promise: Promise<{
 		key: `boxed_id:keys:${string}`;
 		base: "boxed_id";
 		type: "keys";
 		id: string;
 		value: make_item_group<string|number>;
-	}|null>;
+	}>;
 }|{
 	args: ["root_visual_element",string,make_item_group<number>];
-	ret: Promise<{
+	promise: Promise<{
 		key: `boxed_id:root_visual_element:${string}`;
 		base: "boxed_id";
 		type: "root_visual_element";
 		id: string;
 		value: make_item_group<number>;
-	}|null>;
+	}>;
 }|{
 	args: ["load_id",number];
-	ret: Promise<{
+	promise: Promise<{
 		key: "boxed_id:a:load_id";
 		type: "load_id";
 		base: "boxed_id";
 		id: number;
-	}|null>;
+	}>;
 }|{
 	args: ["save_id",number];
-	ret: Promise<{
+	promise: Promise<{
 		key: "boxed_id:a:save_id";
 		type: "save_id";
 		base: "boxed_id";
 		id: number;
-	}|null>;
+	}>;
 };
 type YScratch=Exclude<Y_PutBoxedRet,{args: ["boolean"|"bigint"|"load_id"|"save_id"|"number"|"keys"|"root_visual_element"|"string",...any];}>;
 type BScratch=Extract<G_BoxedIdObj,{type: "boxed_id";}>;

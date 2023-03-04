@@ -186,28 +186,29 @@ class IndexedDBService extends BaseService {
 		let save_id=await this.get_id_box("save_id",version);
 		if(!save_id) {
 			this.expected_save_id=0;
-			await this.put_boxed_id(version,"save_id",this.expected_save_id);
+			await this.put_boxed_id_async(version,"save_id",this.expected_save_id);
 			save_id=await this.get_id_box("save_id",version);
 			if(!save_id) throw new Error();
 		}
 		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
-		await this.put_boxed_id(version,"save_id",this.expected_save_id);
+		let sid=await this.put_boxed_id_async(version,"save_id",this.expected_save_id);
+		sid.ret;
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
 		let load_id=await this.get_id_box("load_id",version);
 		if(!load_id) {
 			this.expected_load_id=0;
-			await this.put_boxed_id(version,"load_id",this.expected_load_id);
+			await this.put_boxed_id_async(version,"load_id",this.expected_load_id);
 			load_id=await this.get_id_box("load_id",version);
 			if(!load_id) throw new Error();
 		}
 		if(load_id.id!==this.expected_load_id) this.expected_load_id=load_id.id;
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
-		await this.put_boxed_id(version,"load_id",this.expected_load_id);
+		(await this.put_boxed_id_async(version,"load_id",this.expected_load_id)).ret;
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
@@ -215,6 +216,10 @@ class IndexedDBService extends BaseService {
 		for(let result of results) {
 			if(result.status==="rejected") {
 				console.log("[push_store_to_database.iter.err]",result.reason);
+			} else {
+				if("err" in result.value) {
+					console.log("[push_store_to_database.iter.no_update]",result.value.item);
+				}
 			}
 		}
 	}
@@ -250,74 +255,89 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {Y_PutBoxedRet} */
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<Extract<T_PutAwaitPromise<Y_PutBoxedRet>,{args:T}>>} */
+	async put_boxed_id_async(version,...args) {
+		let out=this.put_boxed_id(version,...args);
+		let rx=await out.promise;
+		let ret={args: out.args,ret: rx};
+		/** @arg {typeof ret} x @returns {asserts x is T_PutAwaitPromise<Y_PutBoxedRet>} */
+		function assert_assume_is(x) {x;}
+		assert_assume_is(ret);
+		/** @arg {T_PutAwaitPromise<Y_PutBoxedRet>} */
+		let r2=ret;
+		/** @arg {typeof r2} x @returns {asserts x is Extract<typeof r2,{args:T}>} */
+		function assert_assume_is_2(x) {x;}
+		assert_assume_is_2(r2);
+		return r2;
+	}
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
 			} debugger; throw new Error();
 			case "video_referral": {
 				let [a,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
 					key: `boxed_id:${a}:${value.raw_id}`,
 					value: value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "video": {
 				let [a,value]=args;
 				switch(value.tag) {
 					case null: {
-						let ret=this.put_box({
+						let promise=this.put_box({
 							type: "boxed_id",
 							tag: a,
 							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
 							value,
 						},version);
-						return {args: [a,value],ret};
+						return {args: [a,value],promise};
 					}
 					case "normal": {
-						let ret=this.put_box({
+						let promise=this.put_box({
 							type: "boxed_id",
 							tag: a,
 							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
 							value,
 						},version);
-						return {args: [a,value],ret};
+						return {args: [a,value],promise};
 					}
 					case "short": {
-						let ret=this.put_box({
+						let promise=this.put_box({
 							type: "boxed_id",
 							tag: a,
 							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
 							value,
 						},version);
-						return {args: [a,value],ret};
+						return {args: [a,value],promise};
 					}
 				}
 			}
 			case "user_id": {
 				let [a,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
 					extra: "any",
 					key: `boxed_id:${a}:${value.raw_id}`,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "play_next": {
 				let [a,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
 					extra: "any",
 					key: `boxed_id:${a}:${value.value}`,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "playlist_id": {
 				let [a,value]=args;
@@ -325,23 +345,23 @@ class IndexedDBService extends BaseService {
 					case 3: {
 						if(!this.is_UrlInfo_len(value,value.type_parts.length)) throw 1;
 						if(this.is_UrlInfoPartAt(value,1,"RDCM")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}:${value.type_parts[2]}:${value.info_arr[1].id}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						} else if(this.is_UrlInfoPartAt(value,1,"RDGM")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						}
 						this.g(value);
 						throw 1;
@@ -349,59 +369,59 @@ class IndexedDBService extends BaseService {
 					case 2: {
 						if(!this.is_UrlInfo_len(value,value.type_parts.length)) throw 1;
 						if(this.is_UrlInfoPartAt(value,1,"LL")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						} else if(this.is_UrlInfoPartAt(value,1,"PL")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						} else if(this.is_UrlInfoPartAt(value,1,"RD")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						} else if(this.is_UrlInfoPartAt(value,1,"RDMM")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						} else if(this.is_UrlInfoPartAt(value,1,"UU")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						} else if(this.is_UrlInfoPartAt(value,1,"WL")) {
-							let ret=this.put_box({
+							let promise=this.put_box({
 								type: "boxed_id",
 								tag: a,
 								extra: "any",
 								key: `boxed_id:${a}:${value.type_parts[1]}`,
 								value,
 							},version);
-							return {args: [a,value],ret};
+							return {args: [a,value],promise};
 						}
 						this.g(value);
 						throw 1;
@@ -410,165 +430,170 @@ class IndexedDBService extends BaseService {
 			}
 			case "hashtag_id": {
 				let [a,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
 					extra: "any",
 					key: `boxed_id:${a}:${value.hashtag}`,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "browse_id": {
 				let [a,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
 					extra: "any",
 					key: `boxed_id:${a}:${value.raw_id}`,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "channel_id": {
 				let [a,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
 					extra: "any",
 					key: `boxed_id:${a}:${value.raw_id}`,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "video_time": {
 				let [a,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					type: "boxed_id",
 					tag: a,
 					key: `boxed_id:${a}:${value.raw_value}`,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "bigint": {
 				let [a,b,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "boolean": {
 				let [a,b,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "number": {
 				let [a,b,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "string": {
 				let [a,b,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "keys": {
 				let [a,b,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "root_visual_element": {
 				let [a,b,value]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:${a}:${b}`,
 					base: "boxed_id",
 					type: a,
 					id: b,
 					value,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "load_id": {
 				let [mode,id]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:a:${mode}`,
 					type: mode,
 					base: "boxed_id",
 					id,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 			case "save_id": {
 				let [mode,id]=args;
-				let ret=this.put_box({
+				let promise=this.put_box({
 					key: `boxed_id:a:${mode}`,
 					type: mode,
 					base: "boxed_id",
 					id,
 				},version);
-				return {args,ret};
+				return {args,promise};
 			}
 		}
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
-	push_store_item_to_database(store,item,version) {
+	async push_store_item_to_database(store,item,version) {
 		let [,vi]=item;
-		if(this.cache_weak_set.has(vi)) return null;
+		if(this.cache_weak_set.has(vi)) return {item,err: true};
 		this.cache_weak_set.add(vi);
 		switch(store.content) {
 			default: debugger; break;
 			case "bigint": {
 				if(!this.is_vi_has_bigint(vi)) break;
-				return this.put_boxed_id(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async(version,store.content,item[0],vi);
+				return ret;
 			}
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
-				return this.put_boxed_id(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async(version,store.content,item[0],vi);
+				return ret;
 			}
 			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
-				return this.put_boxed_id(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async(version,store.content,item[0],vi);
+				return ret;
 			}
 			case "string": {
 				if(!this.is_vi_has_str(vi)) break;
-				return this.put_boxed_id(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async(version,store.content,item[0],vi);
+				return ret;
 			}
 			case "keys": {
 				if(!(this.is_vi_has_str(vi)||this.is_vi_has_num(vi))) break;
-				return this.put_boxed_id(version,store.content,item[0],vi);
+				let ret=await this.put_boxed_id_async(version,store.content,item[0],vi);
+				return ret;
 			}
 		}
-		return null;
+		return {item,err: true};
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async save_store_to_database(store,version) {
