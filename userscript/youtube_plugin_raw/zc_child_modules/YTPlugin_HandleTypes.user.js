@@ -772,7 +772,7 @@ class HandleTypes extends ServiceMethods {
 			case "k ": case "k ": case "kd": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ":
 			case "l6": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "l ":
 			case "r ": case "r ": case "r ": case "r ": case "r ": case "rl": case "r ": case "r ": case "r ": case "r ":
-			case "s ": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz": case "s ":
+			case "s6": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sz": case "s ":
 			case "z ": case "z7": case "zd": case "ze": case "zk": case "z ": case "zr": case "zs": case "zy": case "zz":
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
 				break;
