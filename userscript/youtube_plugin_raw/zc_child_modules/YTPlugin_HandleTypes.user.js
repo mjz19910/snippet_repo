@@ -3218,24 +3218,24 @@ class HandleTypes extends ServiceMethods {
 				}
 				if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"FE"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "FE",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,any,DI_BrowseId_FE]>} */
+					let args=["browse_id","FE",{type: "browse_id",tag: "FE",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
 				}
 				if(this.str_starts_with(raw_id,"SP")) {
 					let [,id]=split_string_once(raw_id,"SP");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"SP"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "SP",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,any,{tag:"SP"}]>} */
+					let args=["browse_id","SP",{type: "browse_id",tag: "SP",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
 				}
 				if(this.str_starts_with(raw_id,"MP")) {
 					let [,id]=split_string_once(raw_id,"MP");
-					/** @type {Extract<Y_PutBoxedArgs,[any,{tag:"MP"}]>} */
-					let args=["channel_id",{type: "channel_id",tag: "MP",info_arr: [{raw_id},{id}]}];
+					/** @type {Extract<Y_PutBoxedArgs,[any,any,{tag:"MP"}]>} */
+					let args=["browse_id",{type: "browse_id",tag: "MP",info_arr: [{raw_id},{id}]}];
 					let box_res=this.put_boxed_id(...args);
 					this.execute_promise_def((async () => (await box_res).ret)());
 					return;
