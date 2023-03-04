@@ -2,7 +2,7 @@ type D_UrlInfo_Video={
 	type: "video";
 	tag: null;
 	type_parts: ["video"];
-	id: string;
+	raw_id: string;
 };
 type D_InfoHashtagId={
 	type: "hashtag_id";

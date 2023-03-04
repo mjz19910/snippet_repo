@@ -251,14 +251,116 @@ class IndexedDBService extends BaseService {
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	put_boxed_id(version,...args) {
 		switch(args[0]) {
-			default: args[0]===""; debugger; throw new Error();
+			default: args[0]===""; switch((args[0])) {
+			} debugger; throw new Error();
+			case "video_referral": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.id}`,
+					value: value.id,
+				},version);
+				return {args,ret};
+			}
+			case "video": {
+				let [a,value]=args;
+				switch(value.tag) {
+					case null: {
+						let ret=this.put_box({
+							type: "boxed_id",
+							tag: a,
+							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
+							value,
+						},version);
+						return {args,ret};
+					}
+					case "normal": {
+						let ret=this.put_box({
+							type: "boxed_id",
+							tag: a,
+							key: `boxed_id:${a}:${value.tag}:${value.raw_id}`,
+							value,
+						},version);
+						return {args,ret};
+					}
+					case "short": {
+						let ret=this.put_box({
+							type: "boxed_id",
+							tag: a,
+							key: `boxed_id:${a}:${value.raw_id}`,
+							value,
+						},version);
+						return {args,ret};
+					}
+				}
+			}
+			case "user_id": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.raw_value}`,
+					value,
+				},version);
+				return {args,ret};
+			}
+			case "play_next": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.raw_value}`,
+					value,
+				},version);
+				return {args,ret};
+			}
+			case "playlist_id": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.raw_value}`,
+					value,
+				},version);
+				return {args,ret};
+			}
+			case "hashtag_id": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.raw_value}`,
+					value,
+				},version);
+				return {args,ret};
+			}
+			case "browse_id": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.raw_value}`,
+					value,
+				},version);
+				return {args,ret};
+			}
+			case "channel_id": {
+				let [a,value]=args;
+				let ret=this.put_box({
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.raw_value}`,
+					value,
+				},version);
+				return {args,ret};
+			}
 			case "video_time": {
 				let [a,value]=args;
 				let ret=this.put_box({
-					key: `boxed_id:${a}:${value}`,
-					base: "boxed_id",
-					type: a,
-					id: b,
+					type: "boxed_id",
+					tag: a,
+					key: `boxed_id:${a}:${value.raw_value}`,
 					value,
 				},version);
 				return {args,ret};

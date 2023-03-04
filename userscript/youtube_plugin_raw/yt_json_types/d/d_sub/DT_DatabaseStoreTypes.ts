@@ -175,6 +175,29 @@ type G_BoxedIdObj=
 	|{
 		key: `boxed_id:video_time:${number}s`;
 	}
+	|{
+		type: "boxed_id";
+		tag: "video_referral";
+		key: `boxed_id:video_referral:${string}`;
+		value: string;
+	}
+	|{
+		type: "boxed_id",
+		tag: "video_time",
+		key: `boxed_id:video_time:${number}s`;
+		value: D_InfoVideoTime;
+	}
+	|{
+		tag: "video",
+		key: `boxed_id:video:null:${string}`;
+		value: D_UrlInfo_Video;
+	}
+	|{
+		type: "boxed_id",
+		tag: "video",
+		key: `boxed_id:video:normal:${string}`,
+		value: D_VideoIdNormal;
+	}
 	;
 ;
 type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
