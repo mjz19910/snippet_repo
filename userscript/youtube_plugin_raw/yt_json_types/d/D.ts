@@ -49,7 +49,7 @@ type SD_PlaylistId=
 	|"LL"
 	;
 ;
-type D_BrowseIdStr=
+type DU_BrowseId=
 	|T_FeedEntry<D_BrowseEndpointPages>
 	|GU_VE5754_BrowseId
 	|`UC${string}`
@@ -1290,7 +1290,7 @@ type D_GuideEntry=
 	;
 ;
 //#endregion
-type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|DU_PlaylistId;};
+type D_GuideEntryData={guideEntryId: DU_GuideEntryId;};
 // COMPLETED: #13
 type D_FeedNudge={
 	lightIconImage: D_Thumbnail;

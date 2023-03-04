@@ -1780,7 +1780,7 @@ class HandleTypes extends ServiceMethods {
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
 		this.videoId(raw_id);
 	}
-	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
+	/** @protected @arg {string} x @returns {DU_BrowseId|null} */
 	decode_browse_id(x) {
 		if(this.str_starts_with(x,"FE")) {
 			switch(x) {
