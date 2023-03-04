@@ -12,5 +12,8 @@ type G_UrlInfo=
 	|D_InfoVideoTime
 	|D_PlaylistInfo_LL
 	|D_PlaylistInfo_WL
+	|D_PlaylistInfo_PL
+	|D_PlaylistInfo_RD
+	|D_PlaylistInfo_UU
 	;
 ;

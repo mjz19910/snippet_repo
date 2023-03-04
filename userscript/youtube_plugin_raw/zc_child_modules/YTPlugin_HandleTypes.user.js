@@ -3362,12 +3362,17 @@ class HandleTypes extends ServiceMethods {
 					}
 				} else if(this.is_UrlInfoPartAt(x,2,"PL")) {
 					let {raw_id}=x;
-					raw_id;
+					this.G_UrlInfo({type: "playlist_id",tag: "PL",type_parts: ["playlist_id","PL"],raw_id});
 				} else if(this.is_UrlInfoPartAt(x,2,"RD")) {
 					let {raw_id}=x;
-					if(this.str_starts_with(raw_id,"RD")) {}
-					raw_id;
+					this.G_UrlInfo({type: "playlist_id",tag: "RD",type_parts: ["playlist_id","RD"],raw_id});
+					return;
+				} else if(this.is_UrlInfoPartAt(x,2,"UU")) {
+					let {raw_id}=x;
+					this.G_UrlInfo({type: "playlist_id",tag: "UU",type_parts: ["playlist_id","UU"],raw_id});
+					return;
 				}
+				x.raw_id==="";
 				debugger;
 			} break;
 		}
