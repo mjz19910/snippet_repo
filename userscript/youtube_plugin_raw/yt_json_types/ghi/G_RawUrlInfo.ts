@@ -3,37 +3,31 @@ type G_RawUrlInfo_1={
 	type_parts: ["raw","video"];
 	raw_id: D_VideoIdStr;
 };
-
 type G_RawUrlInfo_2={
 	type: "raw";
 	type_parts: ["raw","browse_id"];
 	raw_id: D_BrowseIdStr;
 };
-
 type G_RawUrlInfo_3={
 	type: "raw";
 	type_parts: ["raw","channel_id"];
 	raw_id: D_ChannelIdStr;
 };
-
 type G_RawUrlInfo_4={
 	type: "raw";
 	type_parts: ["raw","video","short"];
 	raw_id: D_VideoIdStr;
 };
-
 type G_RawUrlInfo_5={
 	type: "raw";
 	type_parts: ["raw","video","normal"];
 	raw_id: D_VideoIdStr;
 };
-
 type G_RawUrlInfo_6={
 	type: "raw";
 	type_parts: ["raw","video_referral"];
 	raw_id: D_VideoIdStr;
 };
-
 type G_RawPlaylistUrlInfo=
 	|{
 		type: "raw";
