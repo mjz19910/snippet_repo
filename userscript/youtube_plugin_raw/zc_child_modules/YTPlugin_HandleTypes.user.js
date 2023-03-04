@@ -3258,9 +3258,18 @@ class HandleTypes extends ServiceMethods {
 			case "video": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				if(this.is_UrlInfo_len(x,2)) {
-
+					let [,...kp]=x.type_parts;
+					this.put_boxed_id(...kp,x);
 				} else {
-					if(this.is_UrlInfoPartAt(x,2,"")) {
+					if(this.is_UrlInfoPartAt(x,2,"normal")) {
+						let [,...kp]=x.type_parts;
+						this.put_boxed_id(...kp,x);
+						return;
+					}
+					if(this.is_UrlInfoPartAt(x,2,"short")) {
+						let [,...kp]=x.type_parts;
+						this.put_boxed_id(...kp,x);
+						return;
 					}
 				}
 				x.type_parts;
