@@ -1,0 +1,1 @@
+type D_StoreCacheIndex=T_StoreCacheIndex<keyof DT_DatabaseStoreTypes>;

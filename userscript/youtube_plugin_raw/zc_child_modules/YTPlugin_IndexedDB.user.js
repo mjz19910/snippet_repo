@@ -72,9 +72,9 @@ class IndexedDBService extends BaseService {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @private @type {StoreCacheIndex} */
+	/** @private @type {D_StoreCacheIndex} */
 	store_cache_index={};
-	/** @private @type {StoreCacheType} */
+	/** @private @type {D_StoreCacheType} */
 	store_cache={};
 	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
 	get_data_cache(key) {
@@ -148,13 +148,13 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
-		/** @type {IDBBoxedType[]} */
+		/** @type {G_IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of boxed) {
 			this.load_store(store,item);
 		}
 	}
-	/** @arg {StoreData} store @arg {IDBBoxedType} item */
+	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
 	load_store(store,item) {
 		if(!("value" in item)) return;
 		let [,d_cache]=this.get_data_cache("boxed_id");
