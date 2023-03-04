@@ -1,4 +1,4 @@
-type G_PlaylistUrlInfo_UU={
+type D_PlaylistUrlInfo_UU={
 	type: "playlist_id";
 	tag: "UU";
 	type_parts: ["playlist_id","UU"];

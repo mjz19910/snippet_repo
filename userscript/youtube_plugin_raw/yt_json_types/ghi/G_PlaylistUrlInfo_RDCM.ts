@@ -1,4 +1,4 @@
-type G_PlaylistUrlInfo_RDCM={
+type D_PlaylistUrlInfo_RDCM={
 	type: "playlist_id";
 	tag: "RDCM";
 	type_parts: ["playlist_id","RDCM","UC"];

@@ -3242,7 +3242,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "guide_entry_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				let {raw_id}=x;
+				const {raw_id}=x;
 				if(raw_id==="LL") {
 					this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id});
 				} else if(raw_id==="WL") {
@@ -3292,7 +3292,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "browse_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
-				let {raw_id}=x;
+				const {raw_id}=x;
 				if(this.str_starts_with(raw_id,"FE")) {
 					return this.G_UrlInfo({type: "browse_id",tag: "FE",type_parts: ["browse_id","FE"],raw_id});
 				}
@@ -3339,35 +3339,33 @@ class HandleTypes extends ServiceMethods {
 			case "playlist_id": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				if(this.is_UrlInfo_len(x,2)) {
-					if(x.raw_id==="LL") {
-						let {raw_id,type_parts: [,...type_parts]}=x;
-						this.G_UrlInfo({type: "playlist_id",tag: null,type_parts,id: raw_id});
-						return;
-					}
-					if(x.raw_id==="WL") {
-						let {raw_id,type_parts: [,...type_parts]}=x;
-						this.G_UrlInfo({type: "playlist_id",tag: null,type_parts,id: raw_id});
-						return;
-					}
-					let {raw_id}=x;
+					const {raw_id}=x;
 					if(this.str_starts_with(raw_id,"RD")) {
 						this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","RD"],raw_id});
 					} else if(this.str_starts_with(raw_id,"PL")) {
 						this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","PL"],raw_id});
 					} else if(this.str_starts_with(raw_id,"UU")) {
 						this.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id","UU"],raw_id});
+					} else if(raw_id==="LL") {
+						const {type_parts: [,...type_parts]}=x;
+						this.G_UrlInfo({type: "playlist_id",tag: null,type_parts,id: raw_id});
+						return;
+					} else if(raw_id==="WL") {
+						const {type_parts: [,...type_parts]}=x;
+						this.G_UrlInfo({type: "playlist_id",tag: null,type_parts,id: raw_id});
+						return;
 					} else {
 						raw_id==="";
 						debugger;
 					}
 				} else if(this.is_UrlInfoPartAt(x,2,"PL")) {
-					let {raw_id}=x;
+					const {raw_id}=x;
 					this.G_UrlInfo({type: "playlist_id",tag: "PL",type_parts: ["playlist_id","PL"],raw_id});
 				} else if(this.is_UrlInfoPartAt(x,2,"RD")) {
-					let {raw_id}=x;
+					const {raw_id}=x;
 					this.G_UrlInfo({type: "playlist_id",tag: "RD",type_parts: ["playlist_id","RD"],raw_id});
 				} else if(this.is_UrlInfoPartAt(x,2,"UU")) {
-					let {raw_id}=x;
+					const {raw_id}=x;
 					this.G_UrlInfo({type: "playlist_id",tag: "UU",type_parts: ["playlist_id","UU"],raw_id});
 				} else {
 					x==="";

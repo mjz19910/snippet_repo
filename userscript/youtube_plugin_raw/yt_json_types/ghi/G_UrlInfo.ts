@@ -1,19 +1,26 @@
 type G_UrlInfo=
 	|D_BrowseIdInfo
-	|D_PlayNextUrlInfo
-	|D_VideoReferralUrlInfo
-	|D_UrlInfo_Video
 	|D_ChannelUrlInfo
-	|G_PlaylistUrlInfo
-	|D_UserIdInfo
-	|D_VideoIdNormal
-	|D_InfoVideoIdShorts
 	|D_InfoHashtagId
+	|D_InfoVideoIdShorts
 	|D_InfoVideoTime
 	|D_PlaylistInfo_LL
-	|D_PlaylistInfo_WL
+	|D_PlaylistInfo_LL
 	|D_PlaylistInfo_PL
 	|D_PlaylistInfo_RD
 	|D_PlaylistInfo_UU
+	|D_PlaylistInfo_WL
+	|D_PlaylistInfo_WL
+	|D_PlayNextUrlInfo
+	|D_UrlInfo_Video
+	|D_UserIdInfo
+	|D_VideoIdNormal
+	|D_VideoReferralUrlInfo
+	|D_PlaylistUrlInfo_PL
+	|D_PlaylistUrlInfo_RD
+	|D_PlaylistUrlInfo_RDCM
+	|D_PlaylistUrlInfo_RDGM
+	|D_PlaylistUrlInfo_RDMM
+	|D_PlaylistUrlInfo_UU
 	;
 ;

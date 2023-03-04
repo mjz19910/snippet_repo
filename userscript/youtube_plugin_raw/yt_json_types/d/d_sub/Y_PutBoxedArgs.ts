@@ -81,58 +81,58 @@ type Y_PutBoxedRet={
 		value: D_PlayNextUrlInfo;
 	}>;
 }|{
-	args: ["playlist_id",G_PlaylistUrlInfo_PL];
+	args: ["playlist_id",D_PlaylistUrlInfo_PL];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:PL";
-		value: G_PlaylistUrlInfo_PL;
+		value: D_PlaylistUrlInfo_PL;
 	}>;
 }|{
-	args: ["playlist_id",G_PlaylistUrlInfo_RD];
+	args: ["playlist_id",D_PlaylistUrlInfo_RD];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RD";
-		value: G_PlaylistUrlInfo_RD;
+		value: D_PlaylistUrlInfo_RD;
 	}>;
 }|{
-	args: ["playlist_id",G_PlaylistUrlInfo_RDCM];
+	args: ["playlist_id",D_PlaylistUrlInfo_RDCM];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: `boxed_id:playlist_id:RDCM:UC:${string}`;
-		value: G_PlaylistUrlInfo_RDCM;
+		value: D_PlaylistUrlInfo_RDCM;
 	}>;
 }|{
-	args: ["playlist_id",G_PlaylistUrlInfo_RDGM];
+	args: ["playlist_id",D_PlaylistUrlInfo_RDGM];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RDGM";
-		value: G_PlaylistUrlInfo_RDGM;
+		value: D_PlaylistUrlInfo_RDGM;
 	}>;
 }|{
-	args: ["playlist_id",G_PlaylistUrlInfo_RDMM];
+	args: ["playlist_id",D_PlaylistUrlInfo_RDMM];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:RDMM";
-		value: G_PlaylistUrlInfo_RDMM;
+		value: D_PlaylistUrlInfo_RDMM;
 	}>;
 }|{
-	args: ["playlist_id",G_PlaylistUrlInfo_UU];
+	args: ["playlist_id",D_PlaylistUrlInfo_UU];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		extra: "any";
 		key: "boxed_id:playlist_id:UU";
-		value: G_PlaylistUrlInfo_UU;
+		value: D_PlaylistUrlInfo_UU;
 	}>;
 }|{
 	args: ["hashtag_id",D_InfoHashtagId];
