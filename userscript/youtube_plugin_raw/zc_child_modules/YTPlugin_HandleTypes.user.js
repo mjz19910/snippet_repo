@@ -1842,7 +1842,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.G_RawUrlInfo({type: "raw",tag: "start_radio",info_arr: [{start_radio}]});
+				this.DI_AGR_UrlInfo({type: "raw",tag: "start_radio",info_arr: [{start_radio}]});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(this.is_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -3229,7 +3229,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
-	G_RawUrlInfo(x) {
+	DI_AGR_UrlInfo(x) {
 		/** @template T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		if(!("tag" in x)) {

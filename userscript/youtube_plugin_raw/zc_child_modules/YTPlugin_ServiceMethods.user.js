@@ -1487,12 +1487,28 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {DI_R_PlaylistId} x */
-	DI_R_PlaylistId(x) {this.ht.G_RawUrlInfo(x);}
-	/** @public @arg {SD_PlaylistId} raw_id */
-	playlistId(raw_id) {
-		if(raw_id===void 0) {debugger; return;}
-		this.DI_R_PlaylistId({type: "raw",tag: "playlist_id",info_arr: [{raw_id}]});
+	DI_R_PlaylistId(x) {this.ht.DI_AGR_UrlInfo(x);}
+	/** @protected @arg {GU_PlaylistId} x */
+	GU_PlaylistId(x) {this.D_RawUrlFromTag("raw","playlist_id",x);}
+	/** @api @public @arg {D_BrowseIdStr} x */
+	browseId(x) {this.D_RawUrlFromTag("raw","browse_id",x);}
+	/** @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
+	D_RawUrlFromTag(type,tag,x) {
+		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["tag"];info_arr: [{raw_id: string}]}} */
+		let mo={type,tag,info_arr: [{raw_id: x}]};
+		this.ht.DI_AGR_UrlInfo(as_any(mo));
 	}
+	/** @public @arg {SD_PlaylistId} raw_id */
+	playlistId(raw_id) {this.GU_PlaylistId(raw_id);}
+	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
+	guideEntryId(x) {this.ht.DI_AGR_UrlInfo({type: "raw",tag: "guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
+	/** @protected @arg {D_ChannelIdStr} raw_id */
+	channelId(raw_id) {
+		if(raw_id===void 0) {debugger; return;}
+		this.ht.DI_AGR_UrlInfo({type: "raw",tag: "channel_id",type_parts: ["raw","channel_id"],raw_id});
+	}
+	/** @protected @arg {D_UserIdStr} x */
+	userId(x) {this.ht.DI_G_NoKey({type: "user_id",raw_id: x});}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
 		let res_e=this._decode_b64_url_proto_obj(x);
@@ -1757,14 +1773,6 @@ class ServiceMethods extends ServiceData {
 		const {query,params,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(query);
 		this.t(params,x => this.params("search.params",x));
-	}
-	/** @protected @arg {GU_PlaylistId} x */
-	GU_PlaylistId(x) {
-		this.ht.G_RawUrlInfo({type: "raw",tag: "playlist_id",type_parts: ["raw","playlist_id"],raw_id: x});
-	}
-	/** @api @public @arg {D_BrowseIdStr} x */
-	browseId(x) {
-		this.ht.G_RawUrlInfo({type: "raw",tag: "browse_id",type_parts: ["raw","browse_id"],raw_id: x});
 	}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {this.browseId(x);}
@@ -2358,7 +2366,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.ht.G_RawUrlInfo({type: "raw",tag: "video_id",type_parts: ["raw","video_id"],raw_id: x});
+		this.D_RawUrlFromTag("raw","video_id",x);
 	}
 	/** @type {any[]} */
 	log_list=[];
@@ -2414,15 +2422,6 @@ class ServiceMethods extends ServiceData {
 		let v2; function u2() {v2;} u2;
 		let ret=this.indexed_db.put_boxed_id_async(this.indexed_db_version,...args);
 		return ret;
-	}
-	/** @protected @arg {D_UserIdStr} x */
-	userId(x) {this.ht.DI_G_NoKey({type: "user_id",raw_id: x});}
-	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
-	guideEntryId(x) {this.ht.G_RawUrlInfo({type: "raw",tag: "guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
-	/** @protected @arg {D_ChannelIdStr} raw_id */
-	channelId(raw_id) {
-		if(raw_id===void 0) {debugger; return;}
-		this.ht.G_RawUrlInfo({type: "raw",tag: "channel_id",type_parts: ["raw","channel_id"],raw_id});
 	}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {

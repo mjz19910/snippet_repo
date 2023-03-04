@@ -6,6 +6,6 @@ type DI_AGR_UrlInfo=
 	|DIR_InfinitePlaylistInfo
 	|DI_R_PlaylistId
 	|DIR_VideoId
-	|{type: "raw",tag: "start_radio",info_arr: [{start_radio: `${0|1}`;}];}
+	|{type: "raw_key",key: "start_radio",info_arr: [{start_radio: `${0|1}`;}];}
 	;
 ;

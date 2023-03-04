@@ -43,8 +43,8 @@ type SD_PlaylistId=
 	|`RD${string}`
 	|`RDMM${string}`
 	|`RDGM${string}`
-	|D_PlaylistIdStr
 	|`UU${string}`
+	|GU_PlaylistId
 	|"WL"
 	|"LL"
 	;
