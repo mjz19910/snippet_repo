@@ -8,19 +8,10 @@ type G_BoxedIdObj=
 	|D_BoxedBigintStore
 	|D_BoxedUpdateId
 	|{
-		key: `boxed_id:video_time:${number}s`;
-	}
-	|{
 		type: "boxed_id";
 		tag: "hashtag_id";
 		key: `boxed_id:hashtag_id:${string}`;
 		value: string;
-	}
-	|{
-		type: "boxed_id";
-		tag: "video_referral";
-		key: `boxed_id:video_referral:${string}`;
-		value: D_VideoReferralUrlInfo;
 	}
 	|{
 		type: "boxed_id";
@@ -32,18 +23,6 @@ type G_BoxedIdObj=
 		tag: "video";
 		key: `boxed_id:video:null:${string}`;
 		value: DI_VideoId;
-	}
-	|{
-		type: "boxed_id";
-		tag: "video";
-		key: `boxed_id:video:normal:${string}`;
-		value: D_VideoIdNormal;
-	}
-	|{
-		type: "boxed_id";
-		tag: "video";
-		key: `boxed_id:video:short:${string}`;
-		value: D_InfoVideoIdShorts;
 	}
 	|{
 		type: "boxed_id",

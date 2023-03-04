@@ -1,6 +1,4 @@
-type DI_GR_UrlInfo=
-	|DI_Playlist_PL
-	|DI_Playlist_UU
+type DI_AGR_UrlInfo=
 	|DIR_BrowseId
 	|DIR_BrowseId_VL
 	|DIR_ChannelId
