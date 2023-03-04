@@ -7,7 +7,7 @@ type Y_PutBoxedArgs=
 	|["root_visual_element",string,make_item_group<number>]
 	|["save_id",number]
 	|["string",string,make_item_group<string>]
-	|MakeInfoBoxArgs<G_UrlInfo>
+	|MakeInfoBoxArgs<DI_G_NoKey>
 	;
 ;
 async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {

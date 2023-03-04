@@ -1,1 +1,0 @@
-type G_PlaylistUrlInfo=Extract<G_UrlInfo,{type: "playlist_id";}>;
