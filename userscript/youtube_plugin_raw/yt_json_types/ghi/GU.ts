@@ -1,9 +1,10 @@
 type GU_VE3611_Url=
 	|"/gaming"
 	|`/@${string}`
+	|`/c/${string}`
 	|`/channel/UC${string}`
 	|`/source/${string}/shorts?bp=${string}`
-	|`/c/${string}`
+	|`/user/${string}`
 	;
 ;
 // cspell:ignore RDCMUC
