@@ -194,6 +194,7 @@ class IndexedDBService extends BaseService {
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
 		let sid=await this.put_boxed_id_async(version,"save_id",this.expected_save_id);
+		if(!sid) {throw new Error("null on put");}
 		sid.ret;
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
@@ -203,12 +204,14 @@ class IndexedDBService extends BaseService {
 			this.expected_load_id=0;
 			await this.put_boxed_id_async(version,"load_id",this.expected_load_id);
 			load_id=await this.get_id_box("load_id",version);
-			if(!load_id) throw new Error();
+			if(!load_id) throw new Error("null on get");
 		}
 		if(load_id.id!==this.expected_load_id) this.expected_load_id=load_id.id;
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
-		(await this.put_boxed_id_async(version,"load_id",this.expected_load_id)).ret;
+		let load_res=await this.put_boxed_id_async(version,"load_id",this.expected_load_id);
+		if(!load_res) throw new Error("null on put");
+		load_res.ret;
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
@@ -217,6 +220,7 @@ class IndexedDBService extends BaseService {
 			if(result.status==="rejected") {
 				console.log("[push_store_to_database.iter.err]",result.reason);
 			} else {
+				if(result.value===null) throw new Error("null on put");
 				if("err" in result.value) {
 				} else {}
 			}
@@ -254,9 +258,10 @@ class IndexedDBService extends BaseService {
 		}
 		return {one,arr,many};
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<Extract<T_PutAwaitPromise<Y_PutBoxedRet>,{args:T}>>} */
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<Extract<T_PutAwaitPromise<Y_PutBoxedRet>,{args:T}>|null>} */
 	async put_boxed_id_async(version,...args) {
 		let out=this.put_boxed_id(version,...args);
+		if(!out) {debugger; return null;}
 		let rx=await out.promise;
 		let ret={args: out.args,ret: rx};
 		/** @arg {typeof ret} x @returns {asserts x is T_PutAwaitPromise<Y_PutBoxedRet>} */
