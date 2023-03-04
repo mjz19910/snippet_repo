@@ -590,10 +590,12 @@ class IndexedDBService extends BaseService {
 					debugger;
 				}
 				let update_item=false;
+				/** @template T @arg {{type:T}} x */
+				function get_type(x) {return x.type;}
 				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
 				let item_nt=item;
 				switch(item_nt.type) {
-					default: item_nt===""; debugger; break;
+					default: get_type(item_nt)===""; debugger; break;
 					case "bigint":
 					case "boolean":
 					case "keys":
@@ -623,9 +625,10 @@ class IndexedDBService extends BaseService {
 						if(cursor_value.key===item_nt.key&&item_nt.id===cursor_value.id) break;
 						update_item=true;
 					} break;
-					// not a dynamic value
+					// non-dynamic values
+					case "hashtag_id":
 					case "playlist_id:self":
-					case "hashtag_id": break;
+					case "user_id": break;
 				}
 				if(update_item) {
 					await this.force_update(s,item);

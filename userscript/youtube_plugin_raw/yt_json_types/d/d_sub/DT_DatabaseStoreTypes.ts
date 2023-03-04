@@ -3,41 +3,60 @@ namespace DT_Database {
 	export type V_StoreKeys_=typeof V_StoreKeys;
 }
 type DT_DatabaseStoreKeys=DT_Database.V_StoreKeys_;
-type IDBBoxedType={
+type I_BoxedVideoId={
 	key: `video_id:normal:${string}`;
 	type: "video_id:normal";
-	base: "video_id",
+	base: "video_id";
 	v: string;
-}|{
+};
+type I_BoxedVideoIdS={
 	key: `video_id:shorts:${string}`;
 	type: "video_id:shorts";
 	base: "video_id";
 	v: string;
-}|{
+};
+type I_BoxedHashtagId={
 	key: `hashtag_id:${string}`;
 	type: "hashtag_id";
 	hashtag: string;
-}|G_BoxedIdObj|{
+};
+type I_BoxedChannelId={
 	key: `channel_id:UC:${string}`;
 	base: "channel_id";
 	type: "channel_id:UC";
 	id: string;
 	raw_id: `UC${string}`;
-}|G_PlaylistIdObj|{
+};
+type I_BoxedBrowseId={
 	key: `browse_id:VL:${string}`;
 	base: "browse_id";
 	type: "browse_id:VL";
 	id: `PL${string}`;
 	raw_id: `VLPL${string}`;
 };
-
+type I_BoxedUserId={
+	key: `user_id:${string}`;
+	type: "user_id";
+	id: string;
+};
+type IDBBoxedType=
+	|G_BoxedVideoId
+	|I_BoxedHashtagId
+	|G_BoxedIdObj
+	|I_BoxedChannelId
+	|G_PlaylistIdObj
+	|I_BoxedBrowseId
+	|I_BoxedUserId
+	;
+;
 type DT_DatabaseStoreTypes={
-	video_id: Extract<IDBBoxedType,{base: "video_id";}>;
-	hashtag_id: Extract<IDBBoxedType,{type: "hashtag_id";}>;
+	video_id: G_BoxedVideoId;
+	hashtag_id: I_BoxedHashtagId;
 	boxed_id: G_BoxedIdObj;
-	channel_id: Extract<IDBBoxedType,{base: "channel_id";}>;
-	playlist_id: Extract<IDBBoxedType,{base: "playlist_id";}>;
-	browse_id: Extract<IDBBoxedType,{base: "browse_id";}>;
+	channel_id: I_BoxedChannelId;
+	playlist_id: G_PlaylistIdObj;
+	browse_id: I_BoxedBrowseId;
+	user_id: I_BoxedUserId;
 };
 type DT_DatabaseValue=Extract<DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes],{value: any;}>;
 type T_StoreCacheType<T extends keyof DT_DatabaseStoreTypes>={[R in T]?: T_CacheInfoType<R>};
@@ -129,6 +148,7 @@ type D_BoxedStringStore=T_BoxedStore<string,"string">;
 type D_BoxedNumberStore=T_BoxedStore<number,"number">;
 type D_BoxedVEStore=T_BoxedStore<number,"root_visual_element">;
 type D_BoxedBigintStore=T_BoxedStore<bigint,"bigint">;
+type G_BoxedVideoId=I_BoxedVideoId|I_BoxedVideoIdS;
 type G_BoxedIdObj=
 	|D_BoxedUpdateId
 	|D_BoxedVEStore

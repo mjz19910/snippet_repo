@@ -420,6 +420,10 @@ type D_BrowseIdUrlInfo={
 	raw_id: `VLPL${string}`;
 };
 
+type D_UserIdInfo={
+	type: "user_id";
+	raw_id: D_UserIdStr;
+};
 type G_UrlInfo=
 	|D_BrowseIdUrlInfo
 	|D_PlayNextUrlInfo
@@ -427,6 +431,7 @@ type G_UrlInfo=
 	|D_VideoUrlInfo
 	|D_ChannelUrlInfo
 	|G_PlaylistUrlInfo
+	|D_UserIdInfo
 	;
 ;
 type G_WatchNext=

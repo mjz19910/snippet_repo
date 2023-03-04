@@ -1967,6 +1967,14 @@ class ServiceMethods extends ServiceData {
 	G_UrlInfoItem(value) {
 		switch(value.type) {
 			default: value===""; debugger; break;
+			case "user_id": {
+				let {raw_id}=value;
+				this.indexed_db_put("user_id",{
+					key: `user_id:${raw_id}`,
+					type: "user_id",
+					id: raw_id,
+				});
+			} break;
 			case "channel_id:UC": {
 				let {raw_id,id}=value;
 				this.indexed_db_put("channel_id",{
@@ -2767,7 +2775,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_ChannelIdStr} x */
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */
-	userId(x) {x;}
+	userId(x) {this.G_UrlInfoItem({type: "user_id",raw_id: x});}
 	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
