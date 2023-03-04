@@ -19,7 +19,6 @@ type D_LiveChatItemList={};
 type D_LiveChatMessageInput={};
 type D_LiveChatParticipantsList={};
 type D_LiveChatTicker={};
-type D_Message={};
 type D_ModifyChannelPreference={};
 type D_MusicResponsiveListItem={};
 type D_MusicShelfDivider={};

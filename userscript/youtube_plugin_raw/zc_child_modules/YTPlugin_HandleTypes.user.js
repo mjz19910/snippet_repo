@@ -3216,6 +3216,7 @@ class HandleTypes extends ServiceMethods {
 	//#endregion binary
 	//#endregion
 	//#region TODO_minimal_member_fns
+	/** @private @arg {minimal_handler_member} x */
 	/** @private @arg {minimal_handler_member} x ! */
 	minimal_handler_member_2(x) {x;/*!*/}
 	//#endregion

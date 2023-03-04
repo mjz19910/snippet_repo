@@ -2964,6 +2964,10 @@ class Support_Renderer extends ServiceMethods {
 	R_PlaylistVideoThumbnail(x) {this.H_("playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
 	/** @public @arg {R_Message} x */
 	R_Message(x) {this.H_("messageRenderer",x,this.g);}
+	/** @public @arg {R_ConversationBar} x */
+	R_ConversationBar(x) {this.H_("conversationBarRenderer",x,this.R_AvailabilityMessage);}
+	/** @public @arg {R_AvailabilityMessage} x */
+	R_AvailabilityMessage(x) {this.H_("availabilityMessage",x,x => this.R_Message(x));}
 	/** @private @arg {D_LiveBroadcastingBadge} x */
 	D_LiveBroadcastingBadge(x) {
 		const cf="D_LiveBroadcastingBadge";

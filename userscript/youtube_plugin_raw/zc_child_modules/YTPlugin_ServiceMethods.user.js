@@ -4220,7 +4220,11 @@ class ServiceMethods extends ServiceData {
 		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
 		this.t(playlist,a => this.T_Playlist(a,this.D_PlaylistContent));
 		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
-		this.t(conversationBar,this.R_LiveChat);
+		this.t(conversationBar,x => {
+			if("liveChatRenderer" in x) return this.R_LiveChat(x);
+			if("conversationBarRenderer" in x) return this.xr.R_ConversationBar(x);
+			debugger;
+		});
 	}
 	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {

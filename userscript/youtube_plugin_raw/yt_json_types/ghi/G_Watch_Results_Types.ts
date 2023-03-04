@@ -10,7 +10,7 @@ type D_TwoColumnWatchNextResults={
 //#region Used by data
 type G_Watch_ResultsItem={trackingParams: string; contents: G_Watch_ContentsItem[];};
 type G_Watch_SecondaryResults=G_Watch_SecondaryResults_Contents|G_Watch_SecondaryResults_Results;
-type G_ConversationBar=R_LiveChat;
+type G_ConversationBar=R_LiveChat|R_ConversationBar;
 //#endregion
 //#region Watch Secondary
 type RG_Watch_ItemSection=TR_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem,"sid-wn-chips","watch-next-feed">;
