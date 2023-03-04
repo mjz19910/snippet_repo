@@ -64,7 +64,7 @@ type G_RawGuideEntryId={
 	type: "raw";
 	tag: "guide_entry_id";
 	type_parts: ["raw","guide_entry_id"];
-	raw_id: `PL${string}`;
+	raw_id: D_GuideEntryData["guideEntryId"];
 };
 type G_RawUrlInfo=
 	|G_RawBrowseId

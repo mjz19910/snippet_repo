@@ -2418,7 +2418,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_UserIdStr} x */
 	userId(x) {this.ht.G_UrlInfo({type: "user_id",raw_id: x});}
 	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
-	guideEntryId(x) {this.ht.G_RawUrlInfo({type:"raw",tag:"guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
+	guideEntryId(x) {this.ht.G_RawUrlInfo({type: "raw",tag: "guide_entry_id",type_parts: ["raw","guide_entry_id"],raw_id: x});}
 	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}

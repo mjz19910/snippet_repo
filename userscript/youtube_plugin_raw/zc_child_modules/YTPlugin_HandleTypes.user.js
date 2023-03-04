@@ -3235,6 +3235,26 @@ class HandleTypes extends ServiceMethods {
 					case "": break;
 				}
 			} break;
+			case "guide_entry_id": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				let {raw_id}=x;
+				if(raw_id==="LL") {
+					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id});
+				} else if(raw_id==="WL") {
+					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id"],raw_id});
+				} else if(this.str_starts_with(raw_id,"RD")) {
+					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","RD"],raw_id});
+				} else if(this.str_starts_with(raw_id,"PL")) {
+					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","PL"],raw_id});
+				} else if(this.str_starts_with(raw_id,"UU")) {
+					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","playlist_id","UU"],raw_id});
+				} else if(this.str_starts_with(raw_id,"UC")) {
+					this.G_RawUrlInfo({type: "raw",type_parts: ["raw","channel_id"],raw_id});
+				} else {
+					raw_id==="";
+					debugger;
+				}
+			} break;
 			case "video_referral": {
 				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
 				let {raw_id,type_parts: [,...type_parts]}=x;
