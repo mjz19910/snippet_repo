@@ -1,0 +1,1 @@
+type G_BoxedVideoId=I_BoxedVideoId|I_BoxedVideoIdS;
