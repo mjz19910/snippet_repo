@@ -201,14 +201,14 @@ class IndexedDBService extends BaseService {
 		let load_id=await this.get_id_box("load_id",version);
 		if(!load_id) {
 			this.expected_load_id=0;
-			await this.put_boxed_id_async_3(version,"load_id",this.expected_load_id);
+			await this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
 			load_id=await this.get_id_box("load_id",version);
 			if(!load_id) throw new Error("null on get");
 		}
 		if(load_id.id!==this.expected_load_id) this.expected_load_id=load_id.id;
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
-		let load_res=await this.put_boxed_id_async_3(version,"load_id",this.expected_load_id);
+		let load_res=await this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
 		if(!load_res) throw new Error("null on put");
 		load_res.ret;
 	}
@@ -270,128 +270,16 @@ class IndexedDBService extends BaseService {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
 			} debugger; throw new Error();
-			case "browse_id": {
-				switch(args[1]) {
-					case "FE": {
-						let [tag,id,value]=args;
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
-						},version); return {args,promise};
-					}
-					case "MP": {
-						let [tag,id,value]=args;
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
-						},version); return {args,promise};
-					}
-					case "SP": {
-						let [tag,id,value]=args;
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
-						},version); return {args,promise};
-					}
-				}
-			} throw new Error("end");
-			case "bigint": {
-				let [tag,id,[type,container]]=args;
-				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
-				let value={
-					type,
-					info_arr: [container]
-				};
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${id}`,
-					value,
-				},version); return {args,promise};
-			}
-			case "boolean": {
-				let [tag,id,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${id}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
-			}
-			case "number": {
-				let [tag,id,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${id}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
-			}
-			case "string": {
-				let [tag,id,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${id}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
-			}
-			case "keys": {
-				let [tag,id,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${id}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
-			}
-			case "root_visual_element": {
-				let [tag,id,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${id}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
-			}
-		}
-	}
-	/** @arg {number} version @template {Y_PutBoxedArgs_2} T @arg {T} args */
-	put_boxed_id_2(version,...args) {
-		switch(args[0]) {
-			default: args[0]===""; switch((args[0])) {
-			} debugger; throw new Error();
 			case "video_id": {
-				let [tag,value]=args;
+				let [tag,,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
 			}
 			case "user_id": {
-				let [tag,value]=args;
+				let [tag,,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
 			}
 			case "play_next": {
-				let [tag,value]=args;
+				let [tag,,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
@@ -403,11 +291,11 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "playlist_id": {
-				let [tag,value]=args;
+				let [tag,id,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,
+					tag: `${tag}:${id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
 				},version);
 				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
@@ -594,6 +482,118 @@ class IndexedDBService extends BaseService {
 				let ret={args,promise: as_any(promise)};
 				return ret;
 			}
+			case "browse_id": {
+				switch(args[1]) {
+					case "FE": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version); return {args,promise};
+					}
+					case "MP": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version); return {args,promise};
+					}
+					case "SP": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version); return {args,promise};
+					}
+				}
+			} throw new Error("end");
+			case "bigint": {
+				let [tag,id,[type,container]]=args;
+				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
+				let value={
+					type,
+					info_arr: [container]
+				};
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value,
+				},version); return {args,promise};
+			}
+			case "boolean": {
+				let [tag,id,[type,container]]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "number": {
+				let [tag,id,[type,container]]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "string": {
+				let [tag,id,[type,container]]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "keys": {
+				let [tag,id,[type,container]]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+			case "root_visual_element": {
+				let [tag,id,[type,container]]=args;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag,
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						type,
+						info_arr: [container]
+					},
+				},version); return {args,promise};
+			}
+		}
+	}
+	/** @arg {number} version @template {Y_PutBoxedArgs_2} T @arg {T} args */
+	put_boxed_id_2(version,...args) {
+		switch(args[0]) {
+			default: args[0]===""; switch((args[0])) {
+			} debugger; throw new Error();
 		}
 	}
 	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
