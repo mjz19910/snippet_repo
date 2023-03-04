@@ -39,12 +39,12 @@ type Y_PutBoxedRet={
 		value: D_VideoReferralUrlInfo;
 	}>;
 }|{
-	args: ["video",D_UrlInfo_Video];
+	args: ["video",DI_VideoId];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "video";
 		key: `boxed_id:video:null:${string}`;
-		value: D_UrlInfo_Video;
+		value: DI_VideoId;
 	}>;
 }|{
 	args: ["video",D_VideoIdNormal];
@@ -63,13 +63,13 @@ type Y_PutBoxedRet={
 		value: D_InfoVideoIdShorts;
 	}>;
 }|{
-	args: ["user_id",D_UserIdInfo];
+	args: ["user_id",DI_UserId];
 	promise: Promise<{
 		type: "boxed_id";
 		tag: "user_id";
 		extra: "any";
 		key: `boxed_id:user_id:${string}`;
-		value: D_UserIdInfo;
+		value: DI_UserId;
 	}>;
 }|{
 	args: ["play_next",D_PlayNextUrlInfo];

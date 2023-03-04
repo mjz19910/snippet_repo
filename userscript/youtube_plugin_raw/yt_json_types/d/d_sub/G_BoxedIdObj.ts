@@ -31,7 +31,7 @@ type G_BoxedIdObj=
 	|{
 		tag: "video";
 		key: `boxed_id:video:null:${string}`;
-		value: D_UrlInfo_Video;
+		value: DI_VideoId;
 	}
 	|{
 		type: "boxed_id";

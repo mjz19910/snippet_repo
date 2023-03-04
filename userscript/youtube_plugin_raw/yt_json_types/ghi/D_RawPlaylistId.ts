@@ -1,7 +1,1 @@
-type D_RawPlaylistId={
-	type: "raw";
-	tag: "playlist_id";
-	type_parts: ["raw","playlist_id"];
-	union: true;
-	raw_id: GU_PlaylistId;
-};
+type D_RawPlaylistId=T_UrlInfoPartial<"raw",["playlist_id"],GU_PlaylistId>;

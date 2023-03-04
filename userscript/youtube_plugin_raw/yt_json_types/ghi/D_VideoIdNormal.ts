@@ -1,1 +1,0 @@
-type D_VideoIdNormal=T_UrlInfo2<"video","normal",string>;

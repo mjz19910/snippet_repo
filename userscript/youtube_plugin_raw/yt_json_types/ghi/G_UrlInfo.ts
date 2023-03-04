@@ -2,7 +2,6 @@ type G_UrlInfo=
 	|D_BrowseIdInfo
 	|D_ChannelUrlInfo
 	|D_InfoHashtagId
-	|D_InfoVideoIdShorts
 	|D_InfoVideoTime
 	|D_PlaylistInfo_LL
 	|D_PlaylistInfo_LL
@@ -16,9 +15,7 @@ type G_UrlInfo=
 	|D_PlaylistInfo_RD_MM
 	|D_PlaylistInfo_UU
 	|D_PlayNextUrlInfo
-	|D_UrlInfo_Video
-	|D_UserIdInfo
-	|D_VideoIdNormal
-	|D_VideoReferralUrlInfo
+	|DI_VideoId
+	|DI_UserId
 	;
 ;
