@@ -246,15 +246,21 @@ class StoreData {
 		this.add_store(["string_store",string_store]);
 		this.add_store(["ve_store",ve_store]);
 	}
+	/** @template {StoreDataArgs[0]} T @arg {T} key @returns {Extract<StoreDataArgs,[T,any]>[1]} */
+	get_store(key) {
+		let item=this.stores.get(key);
+		if(item===void 0) throw new Error();
+		return item;
+	}
 	/** @returns {StoreDescription<string,"string">} */
-	get_string_store() {return this.stores.get("string_store");}
+	get_string_store() {return this.get_store("string_store");}
 	/** @returns {StoreDescription<number,"number">} */
-	get_number_store() {return this.stores.get("number_store");}
+	get_number_store() {return this.get_store("number_store");}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
-	get_store_keys(key) {return this.data_store.stores.get("string_store").index_get(key);}
+	get_store_keys(key) {return this.data_store.get_store("string_store").index_get(key);}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */

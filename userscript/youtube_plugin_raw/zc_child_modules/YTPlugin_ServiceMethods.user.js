@@ -3207,7 +3207,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @private @arg {D_GM_VeNum} x */
-	on_root_visual_element(x) {this.save_db.data_store.stores.get("ve_store").save_data("ve_element",["one",x]);}
+	on_root_visual_element(x) {this.save_db.data_store.get_store("ve_store").save_data("ve_element",["one",x]);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */

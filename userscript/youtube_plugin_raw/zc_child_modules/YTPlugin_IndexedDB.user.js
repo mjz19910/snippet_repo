@@ -169,12 +169,12 @@ class IndexedDBService extends BaseService {
 		}
 		switch(item.type) {
 			default: debugger; break;
-			case "boolean": return store.stores.get("bool_store").load_data(item);
-			case "keys": return store.stores.get("keys_store").load_data(item);
-			case "number": return store.stores.get("number_store").load_data(item);
-			case "root_visual_element": return store.stores.get("ve_store").load_data(item);
-			case "string": return store.stores.get("string_store").load_data(item);
-			case "bigint": return store.stores.get("bigint_store").load_data(item);
+			case "boolean": return store.get_store("bool_store").load_data(item);
+			case "keys": return store.get_store("keys_store").load_data(item);
+			case "number": return store.get_store("number_store").load_data(item);
+			case "root_visual_element": return store.get_store("ve_store").load_data(item);
+			case "string": return store.get_store("string_store").load_data(item);
+			case "bigint": return store.get_store("bigint_store").load_data(item);
 		}
 	}
 	expected_save_id=0;
