@@ -122,7 +122,7 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBRequest: success",success);
 		this.committed_data.push(data);
 	}
-	log_db_actions=false;
+	log_db_actions=true;
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
