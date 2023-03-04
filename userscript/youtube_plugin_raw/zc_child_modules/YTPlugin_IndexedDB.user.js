@@ -170,7 +170,7 @@ class IndexedDBService extends BaseService {
 			d_cache[idx]=null;
 		}
 		switch(item.tag) {
-			default: item.tag==="browse_id:FE"; debugger; break;
+			default: item.tag==="browse_id:FE"; console.log("skip_tag",item.tag); break;
 			case "boolean": return store.get_store("bool_store").load_data(item);
 			case "keys": return store.get_store("keys_store").load_data(item);
 			case "number": return store.get_store("number_store").load_data(item);
