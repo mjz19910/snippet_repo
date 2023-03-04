@@ -419,11 +419,10 @@ type D_PlayNextUrlInfo={
 	type: "play-next";
 	value: string;
 };
-
 type D_BrowseIdUrlInfo={
 	type: "browse_id:VL";
-	id: `PL${string}`;
-	raw_id: `VLPL${string}`;
+	id: D_PlaylistIdStr;
+	raw_id: GU_VE5754_PlaylistBrowseId;
 };
 
 type D_UserIdInfo={

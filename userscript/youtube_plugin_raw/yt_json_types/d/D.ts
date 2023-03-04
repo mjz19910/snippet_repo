@@ -43,7 +43,7 @@ type SD_PlaylistId=
 	|`RD${string}`
 	|`RDMM${string}`
 	|`RDGM${string}`
-	|`PL${string}`
+	|D_PlaylistIdStr
 	|`UU${string}`
 	|"WL"
 	|"LL"
@@ -1290,7 +1290,7 @@ type D_GuideEntry=
 	;
 ;
 //#endregion
-type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|`PL${string}`;};
+type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|D_PlaylistIdStr;};
 // COMPLETED: #13
 type D_FeedNudge={
 	lightIconImage: D_Thumbnail;

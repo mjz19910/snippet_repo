@@ -1464,16 +1464,6 @@ class ServiceMethods extends ServiceData {
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	log_enabled_playlist_id=false;
-	/** @private @type {string[]} */
-	cache_playlist_id=[];
-	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
-	log_playlist_id(x,critical=false) {
-		if(!this.cache_playlist_id.includes(x.id)) {
-			this.cache_playlist_id.push(x.id);
-			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
-		}
-	}
 	/** @protected @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {
 		let f=x[idx];
@@ -1506,7 +1496,7 @@ class ServiceMethods extends ServiceData {
 					this.channelId(id);
 					let channel_id=split_string_once(id,"UC")[1];
 					this.save_next_char("playlistId.RDCM.UC",channel_id);
-					this.G_UrlInfo({
+					this.ht.G_UrlInfo({
 						type: "playlist:2:RDCM:UC",
 						id_info: {
 							type: "UC",
@@ -1526,7 +1516,7 @@ class ServiceMethods extends ServiceData {
 			if(this.str_starts_with_rx("RDMM",raw_id)) {
 				let [,id]=split_string_once(raw_id,"RDMM");
 				this.save_next_char("playlistId.radio_my_mix",id);
-				this.G_UrlInfo({type: "playlist:2:RDMM",id,raw_id});
+				this.ht.G_UrlInfo({type: "playlist:2:RDMM",id,raw_id});
 				// 4 [RDMM] + 11 [VideoId]
 				if(raw_id.length===15) return;
 				console.log("[playlistId.radio_my_mix.length]",raw_id.length);
@@ -1536,7 +1526,7 @@ class ServiceMethods extends ServiceData {
 				if(this.str_starts_with_rx("RDGMEM",raw_id)) {
 					let [,id]=split_string_once(raw_id,"RDGM");
 					let em_id=split_string_once(id,"EM")[1];
-					this.G_UrlInfo({
+					this.ht.G_UrlInfo({
 						type: "playlist:2:RDGM:EM",
 						id_info: {
 							type: "EM",
@@ -1557,7 +1547,7 @@ class ServiceMethods extends ServiceData {
 				return;
 			}
 			let [,id]=split_string_once(raw_id,"RD");
-			this.G_UrlInfo({type: "playlist:2:RD",id,raw_id});
+			this.ht.G_UrlInfo({type: "playlist:2:RD",id,raw_id});
 			this.save_next_char("playlistId.radio",id);
 			// 2 [RD] + 11 [VideoId]
 			if(raw_id.length===13) return;
@@ -1566,7 +1556,7 @@ class ServiceMethods extends ServiceData {
 		}
 		if(this.str_starts_with_rx("PL",raw_id)) {
 			let [,id]=split_string_once(raw_id,"PL");
-			this.G_UrlInfo({type: "playlist:3:PL",id,raw_id});
+			this.ht.G_UrlInfo({type: "playlist:3:PL",id,raw_id});
 			this.save_next_char("playlistId.playlist",id);
 			// 2 [PL] + 16 [PlaylistId]
 			if(raw_id.length===18) return;
@@ -1578,7 +1568,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx("UU",raw_id)) {
 			let [,id]=split_string_once(raw_id,"UU");
 			this.save_next_char("playlistId.uploads_playlist",id);
-			this.G_UrlInfo({type: "playlist:4:UU",id,raw_id});
+			this.ht.G_UrlInfo({type: "playlist:4:UU",id,raw_id});
 			// 2 [UU] + 2 [UC]? + 22 [ChannelId]
 			if(raw_id.length===26) return;
 			console.log("[playlistId.uploads_playlist.length]",raw_id.length);
@@ -1592,8 +1582,8 @@ class ServiceMethods extends ServiceData {
 				console.log("[maybe_parse_id] [playlistId_new_id]",raw_id);
 				raw_id===""; debugger;
 			} break;
-			case "LL": return this.G_UrlInfo({type: "playlist:1:LL",id: raw_id});
-			case "WL": return this.G_UrlInfo({type: "playlist:1:WL",id: raw_id});
+			case "LL": return this.ht.G_UrlInfo({type: "playlist:1:LL",id: raw_id});
+			case "WL": return this.ht.G_UrlInfo({type: "playlist:1:WL",id: raw_id});
 		}
 	}
 	/** @protected @arg {string} x */
@@ -1861,166 +1851,10 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(query);
 		this.t(params,x => this.params("search.params",x));
 	}
-	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
-	get_playlist_url_info_critical(x) {
-		if(x.type==="playlist:1:LL") return false;
-		if(x.type==="playlist:1:WL") return false;
-		switch(x.id.length) {
-			case 11: return false;
-			case 16: return false;
-			case 24: return false;
-			case 32: return false;
-			default: debugger; return true;
-		}
-	}
-	/** @arg {`promise_rejected_with.errors.${number}`} cf @arg {unknown} x */
-	log_error_sub(cf,x) {
-		console.log(`[log_error_next_info.${cf}]`,x);
-		if(x instanceof AggregateError) {
-			for(let i=0;i<x.errors.length;i++) {
-				let c=x.errors[i];
-				console.log(`[log_error_next_info.${cf}]`,c);
-			}
-		}
-	}
-	/** @arg {"promise_rejected_with"} cf @arg {unknown} x */
-	log_error(cf,x) {
-		console.log(`[log_error_info.${cf}]`,x);
-		if(x instanceof AggregateError) {
-			for(let i=0;i<x.errors.length;i++) {
-				let c=x.errors[i];
-				this.log_error_sub(`${cf}.errors.${i}`,c);
-			}
-		}
-	}
-	/** @template T @arg {Promise<T>} x */
-	execute_promise_def(x) {
-		x.then(x => {
-			console.log("[promise_resolved_with]",x);
-		},x => {
-			this.log_error("promise_rejected_with",x);
-		});
-	}
-	/** @public @arg {G_UrlInfo} value */
-	G_UrlInfo(value) {
-		/** @template T @arg {{type:T}} x */
-		function get_type(x) {return x.type;}
-		switch(value.type) {
-			default: get_type(value)===""; debugger; break;
-			case "hashtag": {
-				let {hashtag}=value;
-				let promise=this.indexed_db_put("hashtag_id",{
-					type: "hashtag_id",
-					key: `hashtag_id:${hashtag}`,
-					hashtag,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "video:normal": {
-				let {v}=value;
-				let promise=this.indexed_db_put("video_id",{
-					type: "video_id",
-					type_parts: ["video_id","normal"],
-					key: `video_id:normal:${v}`,
-					v,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "video:short": {
-				let {v}=value;
-				let promise=this.indexed_db_put("video_id",{
-					key: `video_id:shorts:${v}`,
-					type: "video_id",
-					type_parts: ["video_id","shorts"],
-					v,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "user_id": {
-				let {raw_id}=value;
-				let promise=this.indexed_db_put("user_id",{
-					key: `user_id:${raw_id}`,
-					type: "user_id",
-					id: raw_id,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "channel_id:UC": {
-				let {raw_id,id}=value;
-				let promise=this.indexed_db_put("channel_id",{
-					key: `channel_id:UC:${id}`,
-					base: "channel_id",
-					type_parts: ["channel_id","UC"],
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "play-next": value; break;
-			case "browse_id:VL": {
-				const {type,id,raw_id}=value;
-				let promise=this.indexed_db_put("browse_id",{
-					key: `browse_id:VL:${id}`,
-					base: "browse_id",
-					type_parts: type,id,raw_id
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "playlist:2:RDCM:UC": {
-				const {id,id_info,raw_id}=value;
-				let promise=this.indexed_db_put("playlist_id",{
-					key: `playlist_id:RDCM:UC:${id_info.id}`,
-					base: "playlist_id",
-					type: "playlist_id:RDCM",
-					id_info,
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
-				if(!this.str_starts_with_rx("UC",id)) debugger;
-				this.D_ChannelId(id);
-			} break;
-			case "playlist:2:RDGM:EM": {
-				const {id,id_info,raw_id}=value;
-				let promise=this.indexed_db_put("playlist_id",{
-					key: `playlist_id:RDGM:EM:${id_info.id}`,
-					type: "playlist_id",
-					type_parts: ["playlist_id","RDGM","EM"],
-					info_arr: [{type: "RDGM"},{type: "EM",id: id_info.id}],
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "playlist:1:LL": case "playlist:1:WL": {
-				const {id}=value;
-				let promise=this.indexed_db_put("playlist_id",{
-					base: "playlist_id",
-					type: "playlist_id:self",
-					key: `playlist_id:self:${id}`,
-					id,
-				});
-				this.execute_promise_def(promise);
-			} break;
-			case "playlist:2:RDMM": case "playlist:2:RD":
-			case "playlist:4:UU": case "playlist:3:PL": {
-				const {type,id,raw_id}=value;
-				let type_2=split_string(type,":")[2];
-				let promise=this.indexed_db_put("playlist_id",{
-					base: "playlist_id",
-					type: `playlist_id:${type_2}`,
-					key: `playlist_id:${type_2}:${id}`,
-					id,raw_id,
-				});
-				this.execute_promise_def(promise);
-				let is_critical=this.get_playlist_url_info_critical(value);
-				this.log_playlist_id(value,is_critical);
-			} break;
-			case "video": this.videoId(value.id); break;
-			case "video-referral": this.videoId(value.id); break;
-		}
-	}
-	/** @private @arg {`VLPL${string}`} x */
-	DU_VE5754_BrowseId_VL(x) {
+	/** @private @arg {GU_VE5754_PlaylistBrowseId} x */
+	GU_VE5754_BrowseId_VL(x) {
 		const [a,id]=split_string_once(x,"VL"); if(a!=="") debugger;
-		this.G_UrlInfo({type: "browse_id:VL",id,raw_id: x});
+		this.ht.G_UrlInfo({type: "browse_id:VL",id,raw_id: x});
 		this.parse_guide_entry_id(id);
 	}
 	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} raw_id @returns {void} */
@@ -2033,7 +1867,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {
-		if(this.str_starts_with(x,"VL")) this.DU_VE5754_BrowseId_VL(x);
+		if(this.str_starts_with(x,"VL")) this.GU_VE5754_BrowseId_VL(x);
 	}
 	seen_map=new Set;
 	/** @private @arg {D_BrowseEndpointPages} x */
@@ -2353,7 +2187,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,hashtag,...u]=p;
 				if(u.length===0) {
-					this.G_UrlInfo({type: "hashtag",hashtag});
+					this.ht.G_UrlInfo({type: "hashtag",hashtag});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -2710,7 +2544,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_VideoIdStr} x */
 	videoId(x) {
 		if(this.video_id_list.includes(x)) return;
-		this.G_UrlInfo({type: "video:normal",v: x});
+		this.ht.G_UrlInfo({type: "video:normal",v: x});
 	}
 	/** @type {any[]} */
 	log_list=[];
@@ -2763,14 +2597,14 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {D_ChannelIdStr} x */
 	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {D_UserIdStr} x */
-	userId(x) {this.G_UrlInfo({type: "user_id",raw_id: x});}
+	userId(x) {this.ht.G_UrlInfo({type: "user_id",raw_id: x});}
 	/** @protected @arg {D_ChannelIdStr} raw_id */
 	D_ChannelId(raw_id) {
 		if(raw_id===void 0) {debugger; return;}
 		const cf="D_ChannelId"; this.k(cf,raw_id);
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			let [,user_id]=split_string_once(raw_id,"UC");
-			this.G_UrlInfo({type: "channel_id:UC",id: user_id,raw_id});
+			this.ht.G_UrlInfo({type: "channel_id:UC",id: user_id,raw_id});
 			this.userId(user_id);
 			if(raw_id.length===24) return;
 			console.log("[channelId.length]",raw_id.length);

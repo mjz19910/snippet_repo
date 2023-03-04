@@ -31,8 +31,8 @@ type I_BoxedBrowseId={
 	key: `browse_id:VL:${string}`;
 	base: "browse_id";
 	type_parts: "browse_id:VL";
-	id: `PL${string}`;
-	raw_id: `VLPL${string}`;
+	id: D_PlaylistIdStr;
+	raw_id: GU_VE5754_PlaylistBrowseId;
 };
 type I_BoxedUserId={
 	type: "user_id";
