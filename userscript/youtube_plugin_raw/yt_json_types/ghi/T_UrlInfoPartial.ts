@@ -15,4 +15,6 @@ type T_UrlInfoPartial<T_Type extends string,T_PartArr extends string[],T_RawStr 
 		tag: Join<T_PartArr,":">;
 		union: true;
 		info_arr: [{raw_id: T_RawStr;}];
-	};
+	}
+	;
+;
