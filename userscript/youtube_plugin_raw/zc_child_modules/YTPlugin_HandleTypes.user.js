@@ -3172,71 +3172,57 @@ class HandleTypes extends ServiceMethods {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
-	/** @public @arg {G_PlaylistUrlInfo} value */
-	G_PlaylistUrlInfo(value) {
-		switch(value.type_parts[1]) {
+	/** @public @arg {G_PlaylistUrlInfo} x */
+	G_PlaylistUrlInfo(x) {
+		/** @template T @arg {{tag:T}} x */
+		function get_tag(x) {return x.tag;}
+		switch(x.tag) {
 			default: {
-				switch((value.type_parts[1])) {
+				switch(get_tag(x)) {
+					case "":
 				}
-			} break;
-			case "LL": break;
+				debugger; return;
+			}
+			case null: {
+				if(x.id==="LL") {
+					let box_res=this.put_boxed_id(x.type,x);
+					this.execute_promise_def((async () => (await box_res).ret)());
+				} else if(x.id==="WL") {
+					let box_res=this.put_boxed_id(x.type,x);
+					this.execute_promise_def((async () => (await box_res).ret)());
+				} else {
+					debugger;
+				}
+			} return;
 			case "PL": {
-				if(!this.is_UrlInfoPart1(value,"PL")) throw 1;
-				let {raw_id}=value;
-				let [a,id]=split_string_once(raw_id,"PL"); this.cq(a,"");
-				id;
-			} break;
-			case "RD": break;
-			case "RDCM": break;
-			case "RDGM": break;
-			case "RDMM": break;
-			case "UU": break;
-			case "WL": break;
-			/*
-			// "playlist_id:RDCM:UC"
-			let promise=this.indexed_db_put("playlist_id",{
-				key: `playlist_id:RDCM:UC:${id_info.id}`,
-				base: "playlist_id",
-				type: "playlist_id:RDCM",
-				id_info,
-				id,raw_id,
-			});
-			this.execute_promise_def(promise);
-			if(!this.str_starts_with_rx("UC",id)) debugger;
-			this.D_ChannelId(id);
-			// "playlist:2:RDGM:EM"
-			const {id,id_info,raw_id}=value;
-			let promise=this.indexed_db_put("playlist_id",{
-				key: `playlist_id:RDGM:EM:${id_info.id}`,
-				type: "playlist_id",
-				type_parts: ["playlist_id","RDGM","EM"],
-				info_arr: [{type: "RDGM"},{type: "EM",id: id_info.id}],
-				id,raw_id,
-			});
-			this.execute_promise_def(promise);
-			// case "playlist:1:LL": case "playlist:1:WL":
-			const {id}=value;
-			let promise=this.indexed_db_put("playlist_id",{
-				base: "playlist_id",
-				type: "playlist_id:self",
-				key: `playlist_id:self:${id}`,
-				id,
-			});
-			this.execute_promise_def(promise);
-			case "playlist:2:RDMM": case "playlist:2:RD":
-			case "playlist:4:UU": case "playlist:3:PL":
-			const {type,id,raw_id}=value;
-			let type_2=split_string(type,":")[2];
-			let promise=this.indexed_db_put("playlist_id",{
-				base: "playlist_id",
-				type: `playlist_id:${type_2}`,
-				key: `playlist_id:${type_2}:${id}`,
-				id,raw_id,
-			});
-			this.execute_promise_def(promise);
-			let is_critical=this.get_playlist_url_info_critical(value);
-			this.log_playlist_id(value,is_critical);
-			*/
+				if(!this.is_UrlInfoPart1(x,"PL")) throw 1;
+				let box_res=this.put_boxed_id(x.type,x);
+				this.execute_promise_def((async () => (await box_res).ret)());
+			} return;
+			case "RD": {
+				let box_res=this.put_boxed_id(x.type,x);
+				this.execute_promise_def((async () => (await box_res).ret)());
+			} return;
+			case "RDCM": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				let box_res=this.put_boxed_id(x.type,x);
+				this.execute_promise_def((async () => (await box_res).ret)());
+			} return;
+			case "RDGM": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				let box_res=this.put_boxed_id(x.type,x);
+				this.execute_promise_def((async () => (await box_res).ret)());
+			} return;
+			case "RDMM": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				let box_res=this.put_boxed_id(x.type,x);
+				this.execute_promise_def((async () => (await box_res).ret)());
+			} return;
+			case "UU": {
+				if(!this.is_UrlInfoPart1(x,x.type_parts[1])) throw 1;
+				let box_res=this.put_boxed_id(x.type,x);
+				this.execute_promise_def((async () => (await box_res).ret)());
+			} return;
 		}
 	}
 	/** @public @arg {G_RawUrlInfo} x */

@@ -12,6 +12,19 @@ type D_InfoVideoTime={
 	type: "video_time";
 	raw_value: `${number}s`;
 };
+type D_PlaylistInfo_LL={
+	type: "playlist_id";
+	tag: null;
+	type_parts: ["playlist_id"];
+	id: "LL";
+};
+type D_PlaylistInfo_WL={
+	type: "playlist_id";
+	tag: null;
+	type_parts: ["playlist_id"];
+	id: "WL";
+};
+
 type G_UrlInfo=
 	|D_BrowseIdUrlInfo
 	|D_PlayNextUrlInfo
@@ -24,8 +37,8 @@ type G_UrlInfo=
 	|D_InfoVideoIdShorts
 	|D_InfoHashtagId
 	|D_InfoVideoTime
-	|{type: "playlist_id",type_parts: ["playlist_id"],id: "LL";}
-	|{type: "playlist_id",type_parts: ["playlist_id"],id: "WL";}
+	|D_PlaylistInfo_LL
+	|D_PlaylistInfo_WL
 	;
 ;
 type G_UrlInfoSrc=
