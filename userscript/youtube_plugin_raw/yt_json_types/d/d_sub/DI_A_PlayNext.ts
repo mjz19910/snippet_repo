@@ -1,4 +1,5 @@
 type DI_PlayNext={
-	type: "play_next";
-	value: `${1}`;
+	type: "exact";
+	tag: "play_next";
+	info_arr: [{raw_id: `${1}`;}];
 };

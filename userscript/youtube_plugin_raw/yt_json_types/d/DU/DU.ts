@@ -85,6 +85,6 @@ type DU_IdCacheItem=
 	|`channel_id:${DU_Channel_Id}`
 	|`key:start_radio:${0|1}`
 	|`video_time:${number}s`
-	|`play_next:${1}`
+	|`exact:play_next:${1}`
 	;
 ;

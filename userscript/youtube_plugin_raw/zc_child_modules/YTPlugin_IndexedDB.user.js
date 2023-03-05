@@ -204,7 +204,7 @@ class IndexedDBService extends BaseService {
 			case "guide_entry_id":
 			case "hashtag_id":
 			case "key":
-			case "play_next":
+			case "exact:play_next":
 			case "playlist_id:LL":
 			case "playlist_id:RD:MM":
 			case "playlist_id:RD":
@@ -237,7 +237,7 @@ class IndexedDBService extends BaseService {
 						ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`);
 					} break;
 					case "hashtag_id": ht.id_cache.add(`${val_src.type}:${val_src.hashtag}`); break;
-					case "play_next": ht.id_cache.add(`${val_src.type}:${val_src.value}`); break;
+					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].raw_id}`); break;
 					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].value.info_arr[0].raw_id}`); break;
 					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.raw_value}`); break;
 					case "key": ht.id_cache.add(`${val_src.type}:start_radio:${val_src.info_arr[0].start_radio}`); break;
@@ -461,7 +461,7 @@ class IndexedDBService extends BaseService {
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
-			} throw new Error("Unreachable");
+			}
 			case "video_id": {
 				let [tag,,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
@@ -470,12 +470,12 @@ class IndexedDBService extends BaseService {
 				let [tag,,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
 			}
-			case "play_next": {
-				let [tag,,value]=args;
+			case "exact": {
+				let [type,tag,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${value.value}`,
+					tag: `${type}:${tag}`,
+					key: `boxed_id:${type}:${tag}:${value.info_arr[0].raw_id}`,
 					value,
 				},version); return {args,promise};
 			}
@@ -1156,17 +1156,8 @@ class IndexedDBService extends BaseService {
 					default: {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 						let info1=item_nt.value.info_arr[0]; let info2=item_db_nt.value.info_arr[0];
-						item_nt.tag==="boolean";
 						if("raw_id" in info1&&"raw_id" in info2) {
 							if(info1.raw_id!==info2.raw_id) update_item=true;
-						}
-						if(info1 instanceof Array&&info2 instanceof Array) {
-							let v1=info1[1]; let v2=info2[1];
-							if(v1 instanceof Array) {
-								let is_same=v1.every(val=>info2[1].includes(val));
-							}
-							update_item=true;
-							debugger;
 						}
 						if("tag" in info1&&"tag" in info2) {
 							if(info1.value.info_arr[0].raw_id!==info2.value.info_arr[0].raw_id) {
@@ -1185,18 +1176,72 @@ class IndexedDBService extends BaseService {
 					} break;
 					// non-dynamic values
 					case "hashtag_id": {
+						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						if(item_nt.value.hashtag===item_db_nt.value.hashtag) {update_item=true; break;}
+					} break;
+					case "key": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.value.hashtag===item_db_nt.value.hashtag) break;
+						if(item_nt.value.info_arr[0].start_radio===item_db_nt.value.info_arr[0].start_radio) {update_item=true; break;}
+					} break;
+					case "exact:play_next": {
+						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						if(item_nt.value.type!==item_db_nt.value.type) {update_item=true; break;}
+						if(item_nt.value.tag!==item_db_nt.value.tag) {update_item=true; break;}
+						if(item_nt.value.info_arr[0].raw_id!==item_db_nt.value.info_arr[0].raw_id) {update_item=true; break;}
+					} break;
+					case "video_time": {
+						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						if(item_nt.value.type===item_db_nt.value.type) break;
+						if(item_nt.value.raw_value===item_db_nt.value.raw_value) break;
 						update_item=true;
 					} break;
 					case "bigint":
 					case "boolean":
-					case "key":
 					case "keys":
 					case "number":
-					case "play_next":
-					case "video_time":
+					case "root_visual_element":
+					case "string": {
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						let info1=item_nt.value.info_arr[0]; let info2=item_db_nt.value.info_arr[0];
+						if(info1 instanceof Array&&info2 instanceof Array) {
+							let v1=info1[1]; let v2=info2[1];
+							let v1_many=null; let v2_many=null;
+							let v1_arr=null; let v2_arr=null;
+							let v1_one=null; let v2_one=null;
+							if(v1 instanceof Array) for(let item of v1) {
+								if(item instanceof Array) {
+									if(!v1_many) v1_many=[];
+									v1_many.push(item);
+								} else {
+									if(!v1_arr) v1_arr=[];
+									v1_arr.push(item);
+								}
+							}
+							if(v2 instanceof Array) for(let item of v2) {
+								if(item instanceof Array) {
+									if(!v2_many) v2_many=[];
+									v2_many.push(item);
+								} else {
+									if(!v2_arr) v2_arr=[];
+									v2_arr.push(item);
+								}
+							}
+							if(!(v1 instanceof Array)) v1_one=v1;
+							if(!(v2 instanceof Array)) v2_one=v2;
+							if(v1_one!==null&&v2_one!==null) {
+								if(v1_one===v2_one) break;
+								debugger;
+							}
+							if(v1_one!==null) debugger;
+							if(v1_many!==null) debugger;
+							if(v1_arr!==null) debugger;
+							update_item=true;
+						}
+					} break;
 				}
 				if(update_item) {
 					updated_count++;

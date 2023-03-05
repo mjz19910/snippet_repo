@@ -3578,8 +3578,8 @@ class HandleTypes extends ServiceMethods {
 				let box_res=this.put_boxed_id(value.type,"UC",value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "play_next": {
-				let box_res=this.put_boxed_id(value.type,null,value);
+			case "exact": {
+				let box_res=this.put_boxed_id(value.type,value.tag,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "hashtag_id": {
