@@ -889,6 +889,25 @@ class IndexedDBService extends BaseService {
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
 		if(this.loaded_keys.has(value.key)) {
+			x: if(value.type==="boxed_id") {
+				switch(value.tag) {
+					case "video_id": {
+						let loaded_value=this.loaded_map.get(value.key);
+						if(!loaded_value) throw new Error("Unreachable");
+						if(loaded_value.key!==value.key) break x;
+						if(loaded_value.value.info_arr[0].raw_id===value.value.info_arr[0].raw_id) return value;
+						debugger;
+					} break;
+					case "channel_id:UC":
+					case "playlist_id:RD": {
+						let loaded_value=this.loaded_map.get(value.key);
+						if(!loaded_value) throw new Error("Unreachable");
+						if(loaded_value.key!==value.key) break x;
+						if(loaded_value.value.info_arr[0].raw_id===value.value.info_arr[0].raw_id) return value;
+						debugger;
+					} break;
+				}
+			}
 			debugger;
 		}
 		try {
@@ -1178,7 +1197,7 @@ class IndexedDBService extends BaseService {
 				if(no_null_cache.length===updated_count) break x;
 				console.log("[committed_cache_num] [start=%o] [updated=%o] [committed=%o]",no_id_cache.length,updated_count,this.committed_data.length);
 				console.log("[updated_items_log]",updated_items);
-				console.log("[unchanged_items_log]",unchanged_items)
+				console.log("[unchanged_items_log]",unchanged_items);
 				debugger;
 			}
 			this.committed_data=[];

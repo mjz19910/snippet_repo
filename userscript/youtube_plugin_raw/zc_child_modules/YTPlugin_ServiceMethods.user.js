@@ -1507,11 +1507,13 @@ class ServiceMethods extends ServiceData {
 		this.id_cache.add(raw_id);
 		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
+	static_playlist_ids=["WL"];
 	/** @public @arg {SD_PlaylistId} x */
 	playlistId(x) {
 		const type="playlist_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
+		if(this.static_playlist_ids.includes(x)) return;
 		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
 	/** @protected @arg {GU_GuideEntryId} x */
