@@ -179,8 +179,9 @@ class IndexedDBService extends BaseService {
 				switch(get_tag(item)) {
 					case "":
 				}
-				this.delete(di.type,di.key,version);
 				get_tag(item)===""; console.log("skip_tag",di.tag);
+				debugger;
+				this.delete(di.type,di.key,version);
 			} break;
 			case "boolean": return store.get_store("bool_store").load_data(item);
 			case "keys": return store.get_store("keys_store").load_data(item);
