@@ -259,6 +259,8 @@ class IndexedDBService extends BaseService {
 				if(cache_val) {
 					console.log("commit from load",item.key);
 					this.committed_data.push(cache_val);
+				} else {
+					d_cache;
 				}
 			} break;
 			case "video_id": {
@@ -1243,24 +1245,29 @@ class IndexedDBService extends BaseService {
 		sk_ac[key]=c_index;
 		return c_index[1];
 	}
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @arg {DT_DatabaseStoreTypes[T]} obj */
-	push_waiting_obj(key,obj) {
-		let [,d_cache]=this.get_data_cache(key);
-		let c_index=this.get_cache_index(key);
-		let index_val=obj.key;
-		let idx=c_index.get(index_val);
+	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]} obj */
+	push_waiting_obj(type_key,obj) {
+		const {key}=obj;
+		let [,d_cache]=this.get_data_cache(type_key);
+		let c_index=this.get_cache_index(type_key);
+		let idx=this.add_to_index(d_cache,c_index,key,obj);
+		if(this.log_cache_push) console.log("push wait",type_key,key,idx,obj);
+	}
+	/** @template {keyof DT_DatabaseStoreTypes} T @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x @arg {(DT_DatabaseStoreTypes[T]|null)[]} cache_arr @arg {Map<string,number>} cache_index */
+	add_to_index(cache_arr,cache_index,key,x) {
+		let idx=cache_index.get(key);
 		if(idx!==void 0) {
-			if(!this.cache_weak_set.has(obj)) {
-				this.cache_weak_set.add(obj);
-				d_cache[idx]=obj;
-			} else if(d_cache[idx]!==null) {
-				d_cache[idx]=obj;
+			if(!this.cache_weak_set.has(x)) {
+				this.cache_weak_set.add(x);
+				cache_arr[idx]=x;
+			} else if(cache_arr[idx]!==null) {
+				cache_arr[idx]=x;
 			}
 			return;
 		}
-		idx=d_cache.push(obj)-1;
-		c_index.set(index_val,idx);
-		if(this.log_cache_push) console.log("push wait",key,index_val,idx,obj);
+		idx=cache_arr.push(x)-1;
+		cache_index.set(key,idx);
+		return idx;
 	}
 	log_all_events=false;
 	close_db_on_transaction_complete=false;
