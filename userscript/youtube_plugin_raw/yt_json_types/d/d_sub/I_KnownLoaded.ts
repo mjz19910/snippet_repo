@@ -4,7 +4,7 @@ type I_KnownLoaded=
 	|D_BX_Playlist_RD
 	|D_BX_Playlist_RD_MM
 	|D_BX_Playlist_WL
-	|D_Boxed_Browse_FE
+	|DST_Browse_FE
 	|D_Boxed_Browse_MP
 	|D_Boxed_Browse_SP
 	|D_Boxed_Browse_VL_WL
