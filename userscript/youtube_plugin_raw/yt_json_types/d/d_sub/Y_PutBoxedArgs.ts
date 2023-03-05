@@ -24,7 +24,7 @@ type Y_PutBoxedArgs=
 	|["video_id",null,DI_VideoId]
 	|["video_time",null,DI_VideoTime]
 	|["guide_entry_id",null,GI_GuideEntry_Id]
-	|["guide_entry_id","UC",DI_GuideEntryId_UC]
+	|["guide_entry_id","UC",DI_GuideEntry_UC]
 	|["playlist_id","RD",DI_A_Playlist_RD]
 	|["playlist_id","UU",DI_A_Playlist_UU]
 	|["playlist_id","RD:MM",DI_A_Playlist_RD_MM]

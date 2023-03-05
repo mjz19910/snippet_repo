@@ -464,14 +464,13 @@ class IndexedDBService extends BaseService {
 					}
 					case "UC": {
 						let iv=value.info_arr[0];
-						/** @type {D_Boxed_GuideEntry_UC} */
+						/** @type { DST_GuideEntry_UC} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
-						let iv=value.info_arr[0];
-						/** @type {D_Boxed_GuideEntry_PL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
+						/** @type {D_Boxed_GuideEntry_VL_LL} */
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}

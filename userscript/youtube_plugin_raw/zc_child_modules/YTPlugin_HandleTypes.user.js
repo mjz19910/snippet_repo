@@ -3325,7 +3325,7 @@ class HandleTypes extends ServiceMethods {
 					const z={type: "guide_entry_id",tag: "PL",info_arr: [gen_info_PL(raw_id)]}; itv=z;
 				} else if(this.str_starts_with(raw_id,"UC")) {
 					const tag="UC",[,id]=split_string_once(raw_id,tag);
-					/** @type {DI_GuideEntryId_UC} */
+					/** @type {DI_GuideEntry_UC} */
 					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [{raw_id},{id}]}]}; itv=z;
 				} else {
 					debugger; break;
