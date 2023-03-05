@@ -154,25 +154,12 @@ class IndexedDBService extends BaseService {
 	loaded_map=new Map;
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item @arg {number} version */
 	async load_store(store,item,version) {
-		if(!("type" in item)) {
-			item.base;
+		this.add_to_index(item.type,item.key,item,true);
+		if(item.type!=="boxed_id") {
+			item.type;
 			return;
 		}
-		if(item.type!=="boxed_id") return;
-		if(!("value" in item)) {
-			item==="";
-			return;
-		}
-		let [,d_cache]=this.get_data_cache("boxed_id");
 		this.cache_weak_set.add(item.value);
-		let c_index=this.get_cache_index("boxed_id");
-		let idx=c_index.get(item.key);
-		if(idx===void 0) {
-			idx=d_cache.push(null)-1;
-			c_index.set(item.key,idx);
-		} else {
-			d_cache[idx]=null;
-		}
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		/** @template {{type:keyof DT_DatabaseStoreTypes;tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
@@ -1248,13 +1235,13 @@ class IndexedDBService extends BaseService {
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]} obj */
 	push_waiting_obj(type_key,obj) {
 		const {key}=obj;
-		let [,d_cache]=this.get_data_cache(type_key);
-		let c_index=this.get_cache_index(type_key);
-		let idx=this.add_to_index(d_cache,c_index,key,obj);
+		let idx=this.add_to_index(type_key,key,obj);
 		if(this.log_cache_push) console.log("push wait",type_key,key,idx,obj);
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} T @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x @arg {(DT_DatabaseStoreTypes[T]|null)[]} cache_arr @arg {Map<string,number>} cache_index */
-	add_to_index(cache_arr,cache_index,key,x) {
+	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x @arg {(DT_DatabaseStoreTypes[T]|null)[]} cache_arr @arg {Map<string,number>} cache_index */
+	add_to_index(type_key,key,x,null_out_key=false) {
+		let [,cache_arr]=this.get_data_cache(type_key);
+		let cache_index=this.get_cache_index(type_key);
 		let idx=cache_index.get(key);
 		if(idx!==void 0) {
 			if(!this.cache_weak_set.has(x)) {
@@ -1262,6 +1249,9 @@ class IndexedDBService extends BaseService {
 				cache_arr[idx]=x;
 			} else if(cache_arr[idx]!==null) {
 				cache_arr[idx]=x;
+			}
+			if(null_out_key) {
+				cache_arr[idx]=null;
 			}
 			return;
 		}

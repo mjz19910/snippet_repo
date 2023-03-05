@@ -1,1 +1,0 @@
-type I_BoxedRadio_UU=TI_BoxedRadio<"playlist_id",["UU"],string>;

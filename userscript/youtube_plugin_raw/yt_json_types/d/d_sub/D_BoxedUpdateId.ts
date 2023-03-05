@@ -1,19 +1,18 @@
 type D_BoxedLoadId={
+	type: "boxed_id";
+	tag: "a:load_id";
 	key: "boxed_id:a:load_id";
-	type: "load_id";
-	base: "boxed_id";
-	id: number;
+	value: {raw: number;};
 };
-
 type D_BoxedSaveId={
+	type: "boxed_id";
+	tag: "a:save_id";
 	key: "boxed_id:a:save_id";
-	type: "save_id";
-	base: "boxed_id";
-	id: number;
+	value: {raw: number;};
 };
 type D_BoxedUpdateId={
+	type: "boxed_id";
+	tag: "a:update_id";
 	key: "boxed_id:a:update_id";
-	type: "update_id";
-	base: "boxed_id";
-	id: number;
+	value: {raw: number;};
 };
