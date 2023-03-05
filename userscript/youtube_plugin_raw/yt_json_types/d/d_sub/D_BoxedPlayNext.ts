@@ -10,7 +10,7 @@ type J_ResolverTypeHelpers={
 	change_state<T extends J_ResolverStateKey>(cls: J_ResolverType,state: T): asserts cls is Extract<J_ResolverType,{state: T;}>;
 };
 interface J_ResolverTypeBase {
-	reset(): void;
+	reset(): J_ResolverType_Ready;
 	get_in_init(): J_ResolverType_Init;
 	get_as_ready(): J_ResolverType_Ready;
 }

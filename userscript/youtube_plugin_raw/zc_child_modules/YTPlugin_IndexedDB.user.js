@@ -883,6 +883,7 @@ class IndexedDBService extends BaseService {
 					this.resolve=resolve;
 					this.reject=reject;
 				});
+				return this.get_as_ready();
 			},
 			/** @type {Promise<void>|null} */
 			promise: null,
@@ -892,27 +893,19 @@ class IndexedDBService extends BaseService {
 			reject: null,
 			/** @type {J_ResolverTypeBase['get_in_init']} */
 			get_in_init() {
-				/** @returns {J_ResolverType_Init} */
-				let get_any_cls=() => this;
-				let cls=get_any_cls();
-				return cls;
+				this.state="init";
+				return this;
 			},
 			/** @type {J_ResolverTypeBase['get_as_ready']} */
 			get_as_ready() {
-				/** @returns {J_ResolverType_Ready} */
-				let get_as_ready=() => {
-					/** @returns {J_ResolverType} */
-					let get_any_cls=() => this;
-					let cls=get_any_cls();
-					change_state(cls,"ready");
-					return cls;
-				};
-				let ready_cls=get_as_ready();
-				return ready_cls;
+				/** @returns {J_ResolverType} */
+				let get_any_cls=() => this;
+				let cls=get_any_cls();
+				change_state(cls,"ready");
+				return cls;
 			}
 		};
-		ret.reset();
-		ret=ret.get_as_ready();
+		ret=ret.reset();
 		return ret;
 	}
 	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
