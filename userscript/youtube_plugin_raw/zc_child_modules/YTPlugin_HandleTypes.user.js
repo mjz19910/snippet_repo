@@ -3319,7 +3319,7 @@ class HandleTypes extends ServiceMethods {
 				let parts=split_string_once(tag,":");
 				{
 					let [type,tag]=parts;
-					/** @type {{type:"key";tag:"start_radio";info_arr:typeof info_arr}} */
+					/** @type {DI_Key_StartRadio} */
 					const z={type,tag,info_arr}; ret=z;
 				}
 			} break;
@@ -3383,19 +3383,22 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "playlist_id:UU": {
 				let x2=this.make_DI_AGR_UrlInfo(x);
+				if(x2._bad) break;
 				x2; debugger;
 			} break;
 			case "playlist_id:PL": {
 				let x2=this.make_DI_AGR_UrlInfo(x);
+				if(x2._bad) break;
 				x2; debugger;
 			} break;
 			case "playlist_id:RD": {
 				let x2=this.make_DI_AGR_UrlInfo(x);
+				if(x2._bad) break;
 				x2; debugger;
 			} break;
 			case "key:start_radio": {
 				let x2=this.make_DI_AGR_UrlInfo(x);
-				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+				/** @type {Extract<Y_PutBoxedArgs,["key","start_radio",any]>} */
 				let args=["key","start_radio",x2];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());

@@ -66,7 +66,7 @@ type Y_PutBoxedArgs=
 	|["playlist_id","RD:MM",DI_A_Playlist_RD_MM]
 	|["playlist_id","RD:CM:UC",DI_A_Playlist_RD_CM_UC]
 	|["playlist_id","RD:GM:EM",DI_A_Playlist_RD_GM_EM]
-	|["key","start_radio",{}]
+	|["key","start_radio",DI_Key_StartRadio]
 	;
 ;
 type Y_PutBoxedArgs_2=Extract<Y_PutBoxedArgs,{length: 2;}>;
