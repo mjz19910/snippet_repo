@@ -446,21 +446,19 @@ class IndexedDBService extends BaseService {
 				let [tag,,value]=args;
 				switch(value.tag) {
 					case "LL": {
-						let iv=value.info_arr[0];
 						/** @type {D_Boxed_GuideEntryId_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
+						return {args,promise: this.put_box(z,version)};
+					}
+					case "WL": {
+						/** @type {D_Boxed_GuideEntryId_WL} */
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
 						let iv=value.info_arr[0];
 						/** @type {D_Boxed_GuideEntryId_PL} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
-						return {args,promise: this.put_box(z,version)};
-					}
-					case "WL": {
-						let iv=value.info_arr[0];
-						/** @type {D_Boxed_GuideEntryId_WL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
