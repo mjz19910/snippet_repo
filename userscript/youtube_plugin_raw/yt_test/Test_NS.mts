@@ -35,19 +35,22 @@ export namespace Test {
 				let v: uw=xa.slice(2,4) as uw;
 				switch(v) {
 					case "GM":
+					case "CM":
 					case "MM": console.log("some_more",xa.slice(4,6)); break;
 					default: v===""; debugger; console.log("some",v); console.log("all",xa); break;
 				}
 			}
-			let r=await ExcludePrefix<"RDGM">()(xa,"RDGM");
-			let r2=await ExcludePrefix<"RDMM">()(r,"RDMM");
-			let r3=await ExcludePrefix<"RD">()(r2,"RD");
-			let r4=await ExcludePrefix<"PL">()(r3,"PL");
-			let r5=await ExcludePrefix<"UU">()(r4,"UU");
-			switch(r5) {
+			let sd_playlist_id=xa;
+			let no_prefix_RDCMUC=await ExcludePrefix<"RDCMUC">()(sd_playlist_id,"RDCMUC");
+			let no_prefix_RDGM=await ExcludePrefix<"RDGM">()(no_prefix_RDCMUC,"RDGM");
+			let no_prefix_RDMM=await ExcludePrefix<"RDMM">()(no_prefix_RDGM,"RDMM");
+			let no_prefix_RD=await ExcludePrefix<"RD">()(no_prefix_RDMM,"RD");
+			let no_prefix_PL=await ExcludePrefix<"PL">()(no_prefix_RD,"PL");
+			let no_prefix_UU=await ExcludePrefix<"UU">()(no_prefix_PL,"UU");
+			switch(no_prefix_UU) {
 				case "LL": break;
 				case "WL": break;
-				default: r5===""; debugger; break;
+				default: no_prefix_UU===""; debugger; break;
 			}
 		}
 	}
