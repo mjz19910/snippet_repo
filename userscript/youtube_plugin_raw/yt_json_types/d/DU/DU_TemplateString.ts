@@ -17,3 +17,12 @@ type DM_Radio_ChannelId=`CM${DU_Channel_Id}`;
 type DM_Radio_GeneralId=`GM${string}`;
 type DM_Radio_MyMixId=`MM${string}`;
 //#endregion
+//#region SD
+type SD_PlaylistId=
+	|SU_PlaylistId
+	|DU_Playlist_UserUploads_Id
+	|DU_Playlist_Id
+	|GU_Radio_Id
+	;
+;
+//#endregion

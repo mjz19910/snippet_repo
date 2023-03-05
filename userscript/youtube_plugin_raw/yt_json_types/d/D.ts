@@ -37,7 +37,7 @@ type D_WatchPageUrl=
 type D_WatchPlaylistUrlFormat=
 	|`list=${SD_PlaylistId}`
 	|`list=${SD_PlaylistId}&index=${number}`
-	|`list=${YtInfinitePlaylistFormat}&start_radio=${1|0}`
+	|`list=${GU_Radio_Id}&start_radio=${1|0}`
 	;
 ;
 type D_WatchUrlStr=
