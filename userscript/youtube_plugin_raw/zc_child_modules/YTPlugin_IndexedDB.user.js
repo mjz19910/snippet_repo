@@ -908,7 +908,13 @@ class IndexedDBService extends BaseService {
 		};
 		this.db_wait_promise=s_or_f();
 		this.open_db_promise=this.open_database(key,version);
-		await this.open_db_promise;
+		try {
+			await this.open_db_promise;
+		} catch(e) {
+			resolver.reject(e);
+			throw e;
+		}
+		resolver.resolve();
 		this.open_db_promise=null;
 		this.db_wait_promise=null;
 		return value;
