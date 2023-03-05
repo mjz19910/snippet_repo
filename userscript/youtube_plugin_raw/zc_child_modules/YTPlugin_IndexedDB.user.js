@@ -1051,6 +1051,8 @@ class IndexedDBService extends BaseService {
 			console.log("[d_cache_nonnull.arr]",no_id_cache);
 		}
 		let updated_count=0;
+		let updated_items=[];
+		let unchanged_items=[];
 		try {
 			for(let item of d_cache) {
 				if(tx_scope.is_tx_complete) {
@@ -1157,8 +1159,10 @@ class IndexedDBService extends BaseService {
 				if(update_item) {
 					updated_count++;
 					await this.force_update(s,item);
+					updated_items.push(item);
 					this.committed_data.push(item);
 				} else {
+					unchanged_items.push(item);
 					this.committed_data.push(item);
 				}
 			}
@@ -1167,8 +1171,11 @@ class IndexedDBService extends BaseService {
 			this.handle_transaction_complete(tx_scope,complete_event);
 			this.database_open=false;
 			if(this.log_db_actions) console.log("close db");
-			if(no_null_cache.length>0) {
-				console.log("[committed_cache_num] [start=%o] [updated=%o] [committed=%o]",no_null_cache.length,updated_count,this.committed_data.length);
+			x: if(no_id_cache.length>0) {
+				if(no_null_cache.length===updated_count) break x;
+				console.log("[committed_cache_num] [start=%o] [updated=%o] [committed=%o]",no_id_cache.length,updated_count,this.committed_data.length);
+				console.log("[updated_items_log]",updated_items);
+				console.log("[unchanged_items_log]",unchanged_items)
 				debugger;
 			}
 			this.committed_data=[];
