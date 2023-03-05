@@ -1,1 +1,0 @@
-type G_BoxedVideoId=D_BoxedVideoId|I_BoxedVideoIdS;
