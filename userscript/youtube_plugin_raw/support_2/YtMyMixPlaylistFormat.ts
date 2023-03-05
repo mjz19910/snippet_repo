@@ -1,1 +1,0 @@
-type YtMyMixPlaylistFormat=`RDMM${string}`;
