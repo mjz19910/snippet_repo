@@ -1,4 +1,4 @@
-type D_Boxed_Playlist_WL={
+type DST_Playlist_WL={
 	type: "boxed_id";
 	tag: "playlist_id:WL";
 	key: "boxed_id:playlist_id:WL";

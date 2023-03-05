@@ -1,4 +1,4 @@
-type D_BX_KeySection={
+type DST_KeySection={
 	type: "boxed_id";
 	tag: "key";
 	id: "start_radio";

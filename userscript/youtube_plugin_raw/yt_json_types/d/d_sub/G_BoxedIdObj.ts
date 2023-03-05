@@ -1,17 +1,19 @@
 type G_BoxedIdObj=
-	|D_Boxed_Channel_UC
-	|D_Boxed_GuideEntry_LL
-	|D_Boxed_GuideEntry_PL
-	|D_Boxed_GuideEntry_WL
-	|D_Boxed_Playlist_LL
-	|D_Boxed_Playlist_PL
-	|D_Boxed_Playlist_WL
-	|D_Boxed_Video_Id
-	|D_BX_KeySection
-	|D_BX_Playlist_RD
-	|D_BX_Playlist_RD_MM
-	|D_BX_Playlist_WL
-	|G_Boxed_Browse_Id
-	|G_BoxedSimple
+	|DST_Channel_UC
+	|DST_GuideEntry_LL
+	|DST_GuideEntry_PL
+	|DST_GuideEntry_UC
+	|DST_GuideEntry_WL
+	|DST_KeySection
+	|DST_Playlist_LL
+	|DST_Playlist_PL
+	|DST_Playlist_RD
+	|DST_Playlist_RD_MM
+	|DST_Playlist_WL
+	|DST_Playlist_WL
+	|DST_Video_Id
+	|DST_Video_Id
+	|GST_Simple
+	|GST_Browse_Id
 	;
 ;

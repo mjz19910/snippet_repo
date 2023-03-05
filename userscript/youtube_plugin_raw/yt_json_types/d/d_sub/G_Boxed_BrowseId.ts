@@ -1,4 +1,4 @@
-type G_Boxed_Browse_Id=
+type GST_Browse_Id=
 	|DST_Browse_FE
 	|D_Boxed_Browse_MP
 	|D_Boxed_Browse_SP

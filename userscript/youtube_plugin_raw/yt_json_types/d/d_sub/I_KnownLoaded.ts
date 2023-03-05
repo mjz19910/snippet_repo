@@ -1,24 +1,24 @@
 type I_KnownLoaded=
-	|D_Boxed_Channel_UC
-	|D_BX_KeySection
-	|D_BX_Playlist_RD
-	|D_BX_Playlist_RD_MM
-	|D_BX_Playlist_WL
+	|DST_Channel_UC
+	|DST_KeySection
+	|DST_Playlist_RD
+	|DST_Playlist_RD_MM
+	|DST_Playlist_WL
 	|DST_Browse_FE
 	|D_Boxed_Browse_MP
 	|D_Boxed_Browse_SP
 	|D_Boxed_Browse_VL_WL
 	|D_Boxed_Browse_VL_LL
 	|D_Boxed_Browse_VL_PL
-	|D_Boxed_GuideEntry_LL
-	|D_Boxed_GuideEntry_WL
-	|D_Boxed_GuideEntry_PL
-	|D_Boxed_Playlist_LL
-	|D_Boxed_Playlist_PL
+	|DST_GuideEntry_LL
+	|DST_GuideEntry_WL
+	|DST_GuideEntry_PL
+	|DST_Playlist_LL
+	|DST_Playlist_PL
 	|D_BoxedHashtagId
 	|D_BoxedPlayNext
 	|D_Boxed_User_Id
-	|D_Boxed_Video_Id
+	|DST_Video_Id
 	|D_BoxedVideoTime
 	|D_BoxedLoadId
 	|D_BoxedSaveId
