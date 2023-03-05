@@ -215,7 +215,7 @@ class IndexedDBService extends BaseService {
 			case "browse_id:MP":
 			case "browse_id:SP":
 			case "browse_id:VL":
-			case "channel_id":
+			case "channel_id:UC":
 			case "guide_entry_id":
 			case "hashtag_id":
 			case "key":
@@ -557,7 +557,7 @@ class IndexedDBService extends BaseService {
 				let [tag,id,value]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					tag,
+					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
 				},version);
@@ -1091,7 +1091,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
-		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!(e.type==="load_id"||e.type==="save_id"));
+		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!(this.loaded_keys.has(e.key)||e.type==="load_id"||e.type==="save_id"));
 		if(no_null_cache.length===1) {
 			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
 		} else if(no_null_cache.length===2) {
@@ -1109,6 +1109,8 @@ class IndexedDBService extends BaseService {
 				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
 				if(this.loaded_keys.has(item.key)) {
+					let db_val=this.loaded_map.get(item.key);
+					if(db_val) {};
 					debugger;
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
@@ -1189,10 +1191,6 @@ class IndexedDBService extends BaseService {
 					if(!("base" in item_nt)) break x;
 					if(!("base" in item_db_nt)) break x;
 					switch(item_nt.base) {
-						case "browse_id": {
-							if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
 						case "channel_id": {
 							if(item_nt.key===item_db_nt.key) break;
 							if(item_nt.base===item_db_nt.base) {

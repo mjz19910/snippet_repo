@@ -69,7 +69,7 @@ type Y_PutBoxedArgs=
 	|["key","start_radio",DI_Key_StartRadio]
 	;
 ;
-type Y_PutBoxedArgs_2=Extract<Y_PutBoxedArgs,{length: 2;}>;
+type Y_PutBoxedArgs_n3=Exclude<Y_PutBoxedArgs,{length: 3;}>;
 type Y_PutBoxedArgs_3=Extract<Y_PutBoxedArgs,{length: 3;}>;
 type Y_PutBoxedRet_3=Extract<Y_PutBoxedRet,{args: {length: 3;};}>;
 async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
