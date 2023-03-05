@@ -1,1 +1,1 @@
-type D_BoxedBooleanStore=T_BoxedStore<boolean,"boolean">;
+type DSS_Boolean=T_BoxedStore<boolean,"boolean">;

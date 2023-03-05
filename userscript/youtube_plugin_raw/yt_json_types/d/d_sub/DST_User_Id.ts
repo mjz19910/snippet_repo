@@ -1,4 +1,4 @@
-type D_Boxed_User_Id={
+type DST__User_Id={
 	type: "boxed_id";
 	tag: "user_id";
 	key: `boxed_id:user_id:${string}`;

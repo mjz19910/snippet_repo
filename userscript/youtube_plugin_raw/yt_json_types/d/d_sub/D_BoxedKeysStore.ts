@@ -1,1 +1,1 @@
-type D_BoxedKeysStore=T_BoxedStore<number|string,"keys">;
+type DSS_Keys=T_BoxedStore<number|string,"keys">;

@@ -118,7 +118,7 @@ class IndexedDBService extends BaseService {
 	expected_id=0;
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
-	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedLoadId|D_BoxedSaveId|null>} */
+	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<DST_LoadId|DST_SaveId|null>} */
 	async get_id_box(key,version) {
 		switch(key) {
 			case "load_id": {
@@ -399,7 +399,7 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
 				let id=value.info_arr[1].info_arr[1].id;
-				/** @type {D_Boxed_Browse_VL_PL} */
+				/** @type {DST__Browse_VL_PL} */
 				const z={
 					type: "boxed_id",
 					tag: `${type}:${tag1}:${tag2}`,
@@ -412,7 +412,7 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
 				let id=value.info_arr[1].info_arr[1].id;
-				/** @type {D_Boxed_Browse_VL_UC} */
+				/** @type {DST__Browse_VL_UC} */
 				const z={
 					type: "boxed_id",
 					tag: `${type}:${tag1}:${tag2}`,

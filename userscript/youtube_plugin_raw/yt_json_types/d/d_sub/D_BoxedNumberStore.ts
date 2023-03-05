@@ -1,1 +1,1 @@
-type D_BoxedNumberStore=T_BoxedStore<number,"number">;
+type DSS_Number=T_BoxedStore<number,"number">;

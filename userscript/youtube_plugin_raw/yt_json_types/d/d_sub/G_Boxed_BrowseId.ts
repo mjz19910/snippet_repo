@@ -1,11 +1,11 @@
 type GST_Browse_Id=
 	|DST_Browse_FE
-	|D_Boxed_Browse_MP
-	|D_Boxed_Browse_SP
-	|D_Boxed_Browse_VL_WL
-	|D_Boxed_Browse_SP
-	|D_Boxed_Browse_VL_LL
-	|D_Boxed_Browse_VL_PL
-	|D_Boxed_Browse_VL_UC
+	|DST__Browse_MP
+	|DST__Browse_SP
+	|DST__Browse_VL_WL
+	|DST__Browse_SP
+	|DST__Browse_VL_LL
+	|DST__Browse_VL_PL
+	|DST__Browse_VL_UC
 	;
 ;

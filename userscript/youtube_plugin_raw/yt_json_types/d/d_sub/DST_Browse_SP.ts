@@ -1,4 +1,4 @@
-type D_Boxed_Browse_SP={
+type DST__Browse_SP={
 	type: "boxed_id";
 	tag: "browse_id:SP";
 	key: `boxed_id:browse_id:SP:${string}`;

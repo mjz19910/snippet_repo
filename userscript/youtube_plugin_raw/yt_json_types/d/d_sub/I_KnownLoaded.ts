@@ -5,23 +5,23 @@ type I_KnownLoaded=
 	|DST_Playlist_RD_MM
 	|DST_Playlist_WL
 	|DST_Browse_FE
-	|D_Boxed_Browse_MP
-	|D_Boxed_Browse_SP
-	|D_Boxed_Browse_VL_WL
-	|D_Boxed_Browse_VL_LL
-	|D_Boxed_Browse_VL_PL
+	|DST__Browse_MP
+	|DST__Browse_SP
+	|DST__Browse_VL_WL
+	|DST__Browse_VL_LL
+	|DST__Browse_VL_PL
 	|DST_GuideEntry_LL
 	|DST_GuideEntry_WL
 	|DST_GuideEntry_PL
 	|DST_Playlist_LL
 	|DST_Playlist_PL
-	|D_BoxedHashtagId
-	|D_BoxedPlayNext
-	|D_Boxed_User_Id
+	|DST_HashtagId
+	|DST_PlayNext
+	|DST__User_Id
 	|DST_Video_Id
-	|D_BoxedVideoTime
-	|D_BoxedLoadId
-	|D_BoxedSaveId
-	|D_BoxedUpdateId
+	|DST_VideoTime
+	|DST_LoadId
+	|DST_SaveId
+	|DST_UpdateId
 	;
 ;

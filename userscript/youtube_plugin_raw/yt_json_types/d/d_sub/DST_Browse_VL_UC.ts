@@ -1,4 +1,4 @@
-type D_Boxed_Browse_VL_UC={
+type DST__Browse_VL_UC={
 	type: "boxed_id";
 	tag: "browse_id:VL:UC";
 	key: `boxed_id:browse_id:VL:UC:${string}`;

@@ -1,1 +1,1 @@
-type D_BoxedBigintStore=T_BoxedStore<bigint,"bigint">;
+type DSS_Bigint=T_BoxedStore<bigint,"bigint">;
