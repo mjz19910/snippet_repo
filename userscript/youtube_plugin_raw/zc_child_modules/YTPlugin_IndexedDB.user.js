@@ -445,24 +445,37 @@ class IndexedDBService extends BaseService {
 			case "guide_entry_id": /*db*/ {
 				let [tag,,value]=args;
 				switch(value.tag) {
+					default: value===""; throw new Error();
 					case "LL": {
-						/** @type {D_Boxed_GuideEntryId_LL} */
+						/** @type {D_Boxed_GuideEntry_LL} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "WL": {
-						/** @type {D_Boxed_GuideEntryId_WL} */
+						/** @type {D_Boxed_GuideEntry_WL} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
 						let iv=value.info_arr[0];
-						/** @type {D_Boxed_GuideEntryId_PL} */
+						/** @type {D_Boxed_GuideEntry_PL} */
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
+						return {args,promise: this.put_box(z,version)};
+					}
+					case "UC": {
+						let iv=value.info_arr[0];
+						/** @type {D_Boxed_GuideEntry_UC} */
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
+						return {args,promise: this.put_box(z,version)};
+					}
+					case "VL:LL": {
+						let iv=value.info_arr[0];
+						/** @type {D_Boxed_GuideEntry_PL} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
-			} break;
+			}
 			case "video_id": {
 				let [tag,,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};

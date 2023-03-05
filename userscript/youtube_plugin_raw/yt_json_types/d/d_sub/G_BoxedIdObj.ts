@@ -1,8 +1,8 @@
 type G_BoxedIdObj=
 	|D_Boxed_Channel_UC
-	|D_Boxed_GuideEntryId_LL
-	|D_Boxed_GuideEntryId_PL
-	|D_Boxed_GuideEntryId_WL
+	|D_Boxed_GuideEntry_LL
+	|D_Boxed_GuideEntry_PL
+	|D_Boxed_GuideEntry_WL
 	|D_Boxed_Playlist_LL
 	|D_Boxed_Playlist_PL
 	|D_Boxed_Playlist_WL
