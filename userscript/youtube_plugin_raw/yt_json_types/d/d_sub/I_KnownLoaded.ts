@@ -20,5 +20,8 @@ type I_KnownLoaded=
 	|D_BoxedUserId
 	|D_Boxed_Video_Id
 	|D_BoxedVideoTime
+	|D_BoxedLoadId
+	|D_BoxedSaveId
+	|D_BoxedUpdateId
 	;
 ;

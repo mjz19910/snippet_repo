@@ -193,6 +193,9 @@ class IndexedDBService extends BaseService {
 			case "number": return store.get_store("number_store").load_data(item);
 			case "root_visual_element": return store.get_store("ve_store").load_data(item);
 			case "string": return store.get_store("string_store").load_data(item);
+			case "a:load_id":
+			case "a:save_id":
+			case "a:update_id":
 			case "browse_id:FE":
 			case "browse_id:MP":
 			case "browse_id:SP":
@@ -240,6 +243,7 @@ class IndexedDBService extends BaseService {
 					case "key": ht.id_cache.add(`${val_src.type}:start_radio:${val_src.info_arr[0].start_radio}`); break;
 					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
 					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
+					case "number": break;
 				}
 				let [,d_cache]=this.get_data_cache(item.type);
 				let cache_val=d_cache.find(v => v&&v.key===item.key);
@@ -268,7 +272,16 @@ class IndexedDBService extends BaseService {
 			save_id=await this.get_id_box("save_id",version);
 			if(!save_id) throw new Error("null on get");
 		}
-		if(save_id.id!==this.expected_save_id) this.expected_save_id=save_id.id;
+		x: if(!save_id.value) {
+			/** @type {{}} */
+			let update_sid=save_id;
+			/** @type {{id?: number}} */
+			let old_save_id=update_sid;
+			let old_id=old_save_id.id;
+			if(!old_id) break x;
+			save_id={type: "boxed_id",tag: "a:save_id",key: "boxed_id:a:save_id",value: {type: "number",raw: old_id}};
+		}
+		if(save_id.value.raw!==this.expected_save_id) this.expected_save_id=save_id.value.raw;
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
 		let save_res=await this.put_boxed_id_async_3(version,"save_id",null,this.expected_save_id);
@@ -284,7 +297,16 @@ class IndexedDBService extends BaseService {
 			load_id=await this.get_id_box("load_id",version);
 			if(!load_id) throw new Error("null on get");
 		}
-		if(load_id.id!==this.expected_load_id) this.expected_load_id=load_id.id;
+		x: if(!load_id.value) {
+			/** @type {{}} */
+			let update_sid=load_id;
+			/** @type {{id?: number}} */
+			let old_save_id=update_sid;
+			let old_id=old_save_id.id;
+			if(!old_id) break x;
+			load_id={type: "boxed_id",tag: "a:load_id",key: "boxed_id:a:load_id",value: {type: "number",raw: old_id}};
+		}
+		if(load_id.value.raw!==this.expected_load_id) this.expected_load_id=load_id.value.raw;
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
 		let load_res=await this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
