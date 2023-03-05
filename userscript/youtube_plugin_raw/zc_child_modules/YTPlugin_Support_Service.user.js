@@ -132,7 +132,8 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @arg {T_BoxedStore<CLS_T,this["content"]>} item */
 	load_data(item) {
-		let {id: k,value: x}=item;
+		let {value: ua}=item;
+		let {type: k,info_arr: [x]}=ua;
 		this.add_data_to_index(k,x);
 	}
 	/** @template {make_item_group<CLS_T>} R @arg {R} x @returns {R} */
@@ -200,7 +201,7 @@ class StoreDescription extends ApiBase2 {
 		}
 		this.push_new_data(k,x);
 	}
-	/** @api @public @this {StoreDescription<string,"keys">} @template {{}} T @arg {string} k @arg {T|undefined} obj */
+	/** @api @public @this {V_StoreKeys} @template {{}} T @arg {string} k @arg {T|undefined} obj */
 	save_keys(k,obj) {
 		if(!obj) {debugger; return;}
 		if(typeof obj!=="object") {

@@ -126,7 +126,7 @@ class IndexedDBService extends BaseService {
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<D_BoxedLoadId|D_BoxedSaveId|null>} */
 	async get_id_box(key,version) {
@@ -865,6 +865,23 @@ class IndexedDBService extends BaseService {
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
+	create_resolver() {
+		let state={
+			/** @type {null|{resolve:(value:void|PromiseLike<void>)=>void;reject:(reason?:any)=>void}} */
+			fns: null,
+		};
+		/** @type {Promise<void>} */
+		let promise=new Promise((resolve,reject) => {
+			state.fns={
+				resolve,
+				reject,
+			};
+		});
+		if(!state.fns) throw new Error("Unreachable");
+		return {promise,...state.fns};
+	}
+	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
+	db_wait_promise=null;
 	/** @private @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async putImpl(key,value,version) {
 		if(!value) {debugger; return value;}
@@ -874,13 +891,26 @@ class IndexedDBService extends BaseService {
 		if(cache.includes(cache_key)) return value;
 		this.push_waiting_obj(key,value);
 		this.check_size(key);
-		if(this.open_db_promise) {
-			await this.open_db_promise;
+		if(this.db_wait_promise) {
+			let wait_result=await this.db_wait_promise;
+			if(wait_result.type==="failure") return null;
 			return value;
 		}
+		let resolver=this.create_resolver();
+		/** @returns {Promise<{type:"success"}|{type:"failure"}>} */
+		let s_or_f=async () => {
+			try {
+				await resolver.promise;
+				return {type: "success"};
+			} catch {
+				return {type: "failure"};
+			}
+		};
+		this.db_wait_promise=s_or_f();
 		this.open_db_promise=this.open_database(key,version);
 		await this.open_db_promise;
 		this.open_db_promise=null;
+		this.db_wait_promise=null;
 		return value;
 	}
 	log_failed=true;
