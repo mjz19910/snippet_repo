@@ -135,7 +135,7 @@ type P_reel_params={
 type PK_f1={1: T_D32<2|3|12>;};
 type P_logging_context_serialized_context_data={
 	1?: T_VW<{1: T_D32<12>;}>;
-	3?: TV_Str<SD_PlaylistId>;
+	3?: TV_Str<DU_Playlist_Id>;
 };
 type P_like_params={
 	1: T_VW<{1: TW_Str<DU_VideoId>;}>;

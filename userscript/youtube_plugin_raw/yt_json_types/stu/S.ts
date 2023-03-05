@@ -11,7 +11,7 @@ type SP_GFeedbackServiceRouteParam={
 };
 type SP_GFeedbackVarMap={
 	browse_id_prefix: "";
-	browse_id: GU_BrowseId;
+	browse_id: DU_Browse_Id;
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
 	e: string;
 	has_alc_entitlement: "false";
@@ -28,7 +28,7 @@ type SP_GFeedbackVarMap={
 	premium_membership: "non_member";
 };
 type SP_GoogleHelpServiceObj={
-	browse_id: GU_BrowseId;
+	browse_id: DU_Browse_Id;
 	browse_id_prefix: "";
 };
 type SP_GuidedHelp_SPs={

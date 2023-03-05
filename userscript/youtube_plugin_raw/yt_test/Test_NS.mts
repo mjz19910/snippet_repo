@@ -15,7 +15,7 @@ export namespace Test {
 			};
 		}
 		{
-			type UU=SD_PlaylistId;
+			type UU=DU_Playlist_Id;
 			let xa: UU="LL" as UU;
 			type sw=T_SplitIntoGroups<UU,`${string}`>;
 			{

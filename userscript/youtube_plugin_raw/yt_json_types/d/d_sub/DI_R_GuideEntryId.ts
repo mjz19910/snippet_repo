@@ -1,1 +1,1 @@
-type DI_R_GuideEntryId=T_UrlInfoPartial<"raw",["guide_entry_id"],GU_GuideEntryId>;
+type DI_R_GuideEntryId=T_UrlInfoPartial<"raw",["guide_entry_id"],DU_GuideEntry_Id>;

@@ -41,8 +41,8 @@ type D_ApiStatsAdsStr=`ver=${string}&ns=${string}&event=${string}&device=${strin
 type D_ApiUrlFormat=`https://www.youtube.com${D_ApiPathFormat_1}`;
 type D_ChanLoc=`channel.${string}`;
 type D_PlayerParamsUrl=`pp=${string}`;
-type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
-type D_PlaylistUrlParams=`list=${SD_PlaylistId}`;
+type D_PlaylistUrlFormat=`/playlist?list=${DU_Playlist_Id}`;
+type D_PlaylistUrlParams=`list=${DU_Playlist_Id}`;
 type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
 type D_RadioPlaylistStr<T extends string>=`RD${T}`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
@@ -77,11 +77,11 @@ type GU_GoogleVideoUrl=
 //#endregion
 type DU_IdCacheItem=
 	|`video_id:${string}`
-	|`browse_id:${GU_BrowseId}`
-	|`playlist_id:${SD_PlaylistId}`
+	|`browse_id:${DU_Browse_Id}`
+	|`playlist_id:${DU_Playlist_Id}`
 	|`user_id:${string}`
 	|`hashtag_id:${string}`
-	|`guide_entry_id:${GU_GuideEntryId}`
+	|`guide_entry_id:${DU_GuideEntry_Id}`
 	|`channel_id:${T_IdTemplate<"UC",D_UserIdStr>}`
 	|`key:start_radio:${0|1}`
 	|`video_time:${number}s`

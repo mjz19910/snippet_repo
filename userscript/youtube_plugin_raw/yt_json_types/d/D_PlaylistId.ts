@@ -1,1 +1,1 @@
-type D_PlaylistId={playlistId: SD_PlaylistId;};
+type D_PlaylistId={playlistId: DU_Playlist_Id;};

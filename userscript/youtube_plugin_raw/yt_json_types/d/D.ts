@@ -34,8 +34,8 @@ type D_WatchPageUrl=
 	;
 ;
 type D_WatchPlaylistUrlFormat=
-	|`list=${SD_PlaylistId}`
-	|`list=${SD_PlaylistId}&index=${number}`
+	|`list=${DU_Playlist_Id}`
+	|`list=${DU_Playlist_Id}&index=${number}`
 	|`list=${T_IdTemplate<Extract<DU_PlaylistId_Base,`RD${string}`>>}&start_radio=${1|0}`
 	;
 ;
@@ -1227,7 +1227,7 @@ type D_GuideEntry=
 	;
 ;
 //#endregion
-type D_GuideEntryData={guideEntryId: GU_GuideEntryId;};
+type D_GuideEntryData={guideEntryId: DU_GuideEntry_Id;};
 // COMPLETED: #13
 type D_FeedNudge={
 	lightIconImage: D_Thumbnail;

@@ -1500,7 +1500,7 @@ class ServiceMethods extends ServiceData {
 		if(this.video_id_list.includes(x)) return;
 		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
-	/** @api @public @arg {GU_BrowseId} x */
+	/** @api @public @arg {DU_Browse_Id} x */
 	browseId(x) {
 		const type="browse_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
@@ -1508,7 +1508,7 @@ class ServiceMethods extends ServiceData {
 		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
 	static_playlist_ids=["WL"];
-	/** @public @arg {SD_PlaylistId} x */
+	/** @public @arg {DU_Playlist_Id} x */
 	playlistId(x) {
 		const type="playlist_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
@@ -1516,7 +1516,7 @@ class ServiceMethods extends ServiceData {
 		if(this.static_playlist_ids.includes(x)) return;
 		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
-	/** @protected @arg {GU_GuideEntryId} x */
+	/** @protected @arg {DU_GuideEntry_Id} x */
 	guideEntryId(x) {
 		const type="guide_entry_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;

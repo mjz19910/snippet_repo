@@ -1,11 +1,11 @@
 type DI_AGR_UrlInfo=
-	|T_UrlInfoPartial<"raw",["browse_id"],GU_BrowseId>
+	|T_UrlInfoPartial<"raw",["browse_id"],DU_Browse_Id>
 	|DI_R_ChannelId
-	|T_UrlInfoPartial<"raw",["guide_entry_id"],GU_GuideEntryId>
-	|T_UrlInfoPartial<"raw",["playlist_id"],SD_PlaylistId>
+	|T_UrlInfoPartial<"raw",["guide_entry_id"],DU_GuideEntry_Id>
+	|T_UrlInfoPartial<"raw",["playlist_id"],DU_Playlist_Id>
 	|T_UrlInfoPartial<"raw",["video_id"],DU_VideoId>
 	|{type: "raw",tag: "key:start_radio",info_arr: [{start_radio: `${0|1}`;}];}
-	|T_UrlInfoPartial<"raw",["playlist_id","RD"],Extract<SD_PlaylistId,`RD${string}`>>
+	|T_UrlInfoPartial<"raw",["playlist_id","RD"],Extract<DU_Playlist_Id,`RD${string}`>>
 	|{type: "raw",tag: "playlist_id:PL"; info_arr: [{raw_id: T_IdTemplate<"PL">;}];}
 	|{type: "raw",tag: "playlist_id:UU"; info_arr: [{raw_id: `UU${string}`;}];}
 	;
