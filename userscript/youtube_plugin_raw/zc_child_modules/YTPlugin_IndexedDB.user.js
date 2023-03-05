@@ -1138,9 +1138,23 @@ class IndexedDBService extends BaseService {
 		} else if(no_id_cache.length>0) {
 			console.log("[d_cache_nonnull.arr]",no_id_cache);
 		}
-		let updated_count=0;
-		let updated_items=[];
-		let unchanged_items=[];
+		/** @type {G_BoxedIdObj[]} */
+		let new_arr=[];
+		/** @type {G_BoxedIdObj[]} */
+		let same_arr=[];
+		/** @type {G_BoxedIdObj[]} */
+		let diff_arr=[];
+		/** @arg {G_BoxedIdObj} x @arg {"new"|"same"|"diff"} changed */
+		let commit_value=(x,changed) => {
+			switch(changed) {
+				case "new": new_arr.push(x); break;
+				case "same": same_arr.push(x); break;
+				case "diff": diff_arr.push(x); break;
+			}
+			this.committed_data.push(x);
+			let idx=d_cache.indexOf(x);
+			d_cache[idx]=null;
+		};
 		try {
 			for(let item of d_cache) {
 				if(tx_scope.is_tx_complete) {
@@ -1163,9 +1177,7 @@ class IndexedDBService extends BaseService {
 						case "video_id": {
 							if(cv.type!==c2.type) {s.tx.abort(); throw new Error("Unreachable");};
 							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
-								this.committed_data.push(item);
-								let idx=d_cache.indexOf(item);
-								d_cache[idx]=null;
+								commit_value(item,"same");
 								continue;
 							}
 						} break;
@@ -1187,9 +1199,7 @@ class IndexedDBService extends BaseService {
 					}
 					let put_req=typed_db.put(s.obj_store,item);
 					await this.get_async_result(put_req);
-					this.committed_data.push(item);
-					let idx=d_cache.indexOf(item);
-					d_cache[idx]=null;
+					commit_value(item,"new");
 					continue;
 				}
 				const item_db_2=cur_cursor.value;
@@ -1302,13 +1312,10 @@ class IndexedDBService extends BaseService {
 					} break;
 				}
 				if(update_item) {
-					updated_count++;
 					await this.force_update(s,item);
-					updated_items.push(item);
-					this.committed_data.push(item);
+					commit_value(item,"diff");
 				} else {
-					unchanged_items.push(item);
-					this.committed_data.push(item);
+					commit_value(item,"same");
 				}
 			}
 		} finally {
@@ -1316,11 +1323,16 @@ class IndexedDBService extends BaseService {
 			this.handle_transaction_complete(tx_scope,complete_event);
 			this.database_open=false;
 			if(this.log_db_actions) console.log("close db");
-			x: if(no_id_cache.length>0) {
-				if(no_null_cache.length===updated_count) break x;
-				console.log("[committed_cache_num] [start=%o] [updated=%o] [committed=%o]",no_id_cache.length,updated_count,this.committed_data.length);
-				console.log("[updated_items_log]",updated_items);
-				console.log("[unchanged_items_log]",unchanged_items);
+			if(no_id_cache.length>0) {
+				console.log(
+					"[committed_cache_num] [ init:%o] [ same:%o] [ diff:%o] [ new:%o] [ committed:%o]",
+					no_id_cache.length,
+					same_arr.length,diff_arr.length,new_arr.length,
+					this.committed_data.length
+				);
+				console.log("[db_new]",new_arr);
+				console.log("[db_same]",same_arr);
+				console.log("[db_diff]",diff_arr);
 				debugger;
 			}
 			this.committed_data=[];
