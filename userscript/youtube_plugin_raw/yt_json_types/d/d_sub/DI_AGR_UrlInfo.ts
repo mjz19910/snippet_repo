@@ -16,7 +16,7 @@ type DI_G_UrlInfo=
 	I extends "channel_id"? DI_ChannelId_UC:
 	I extends "browse_id"? GI_BrowseId:
 	I extends "guide_entry_id"? DI_GuideEntryId:
-	I extends "playlist_id"? DI_Playlist_LL|DI_Playlist_WL|DI_Playlist_PL|DI_A_Playlist_RD_CM_UC|DI_A_Playlist_RD_MM|DI_A_Playlist_RD:
+	I extends "playlist_id"? DI_G_PlaylistId:
 	I extends "video_id"? DI_VideoId:
 	I extends `key:${infer J}`? {
 		type: "key";
