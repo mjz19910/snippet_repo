@@ -249,9 +249,9 @@ class StoreDescription extends ApiBase2 {
 }
 export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
-	/** @arg {StoreDataArgs} args */
+	/** @arg {StoreDataInput} args */
 	add_store(args) {let [key,store]=args; this.stores.set(key,store);}
-	/** @type {Map<StoreDataArgs[0],StoreDescription<any,any>>} */
+	/** @type {Map<StoreDataInput[0],StoreDescription<any,any>>} */
 	stores=new Map;
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
@@ -274,7 +274,7 @@ class StoreData {
 		this.add_store(["string_store",string_store]);
 		this.add_store(["ve_store",ve_store]);
 	}
-	/** @template {StoreDataArgs[0]} T @arg {T} key @returns {Extract<StoreDataArgs,[T,any]>[1]} */
+	/** @template {StoreDataInput[0]} T @arg {T} key @returns {Extract<StoreDataInput,[T,any]>[1]} */
 	get_store(key) {
 		let item=this.stores.get(key);
 		if(item===void 0) throw new Error();
