@@ -1,4 +1,4 @@
-type DST__Browse_VL_WL={
+type DSS_Browse_VL_WL={
 	type: "boxed_id";
 	tag: "browse_id:VL";
 	key: "boxed_id:browse_id:VL:WL";

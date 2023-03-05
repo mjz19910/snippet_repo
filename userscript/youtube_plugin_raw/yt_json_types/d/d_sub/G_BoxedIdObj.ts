@@ -1,5 +1,5 @@
 type G_BoxedIdObj=
-	|DST__User_Id
+	|DSS_User_Id
 	|DST_Channel_UC
 	|DST_GuideEntry_LL
 	|DST_GuideEntry_PL
