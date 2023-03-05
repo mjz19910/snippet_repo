@@ -141,7 +141,14 @@ class IndexedDBService extends BaseService {
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
 		/** @type {G_IDBBoxedType[]} */
-		let boxed=await this.getAll("boxed_id",version);
+		let boxed;
+		try {
+			boxed=await this.getAll("boxed_id",version);
+		} catch {
+			this.has_loaded_keys=true;
+			this.on_loaded_resolver.resolve();
+			return;
+		}
 		for(let item of boxed) {
 			await this.load_store(store,item,version);
 		}
@@ -294,7 +301,9 @@ class IndexedDBService extends BaseService {
 		let load_id=await this.get_id_box("load_id",version);
 		if(!load_id) {
 			this.expected_load_id=0;
-			await this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
+			let put_promise=this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
+			this.on_loaded_resolver.resolve();
+			await put_promise;
 			load_id=await this.get_id_box("load_id",version);
 			if(!load_id) throw new Error("null on get");
 		}
@@ -843,20 +852,68 @@ class IndexedDBService extends BaseService {
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
+	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {
-		let state={
-			/** @type {null|{resolve:(value:void|PromiseLike<void>)=>void;reject:(reason?:any)=>void}} */
-			fns: null,
+		/** @type {J_ResolverTypeHelpers['assume_changed_state']} */
+		function assume_changed_state(_cls,_state) {
+			return true;
+		}
+		/** @type {J_ResolverTypeHelpers['change_state']} */
+		function change_state(cls,state) {
+			let n_cls=cls;
+			if(cls.state==="init") {
+				if(cls.state===state) return;
+				if(!assume_changed_state(n_cls,"ready")) throw new Error();
+				n_cls.state="ready";
+				return;
+			} else if(cls.state==="ready") {
+				if(cls.state===state) return;
+				if(!assume_changed_state(n_cls,"init")) throw new Error();
+				n_cls.state="init";
+				return;
+			} else {
+				cls==="";
+			}
+		}
+		/** @type {J_ResolverType_Init|J_ResolverType_Ready} */
+		let ret={
+			state: "init",
+			reset() {
+				this.promise=new Promise((resolve,reject) => {
+					this.resolve=resolve;
+					this.reject=reject;
+				});
+			},
+			/** @type {Promise<void>|null} */
+			promise: null,
+			/** @type {((value:void|PromiseLike<void>)=>void)|null} */
+			resolve: null,
+			/** @type {((reason?:any)=>void)|null} */
+			reject: null,
+			/** @type {J_ResolverTypeBase['get_in_init']} */
+			get_in_init() {
+				/** @returns {J_ResolverType_Init} */
+				let get_any_cls=() => this;
+				let cls=get_any_cls();
+				return cls;
+			},
+			/** @type {J_ResolverTypeBase['get_as_ready']} */
+			get_as_ready() {
+				/** @returns {J_ResolverType_Ready} */
+				let get_as_ready=() => {
+					/** @returns {J_ResolverType} */
+					let get_any_cls=() => this;
+					let cls=get_any_cls();
+					change_state(cls,"ready");
+					return cls;
+				};
+				let ready_cls=get_as_ready();
+				return ready_cls;
+			}
 		};
-		/** @type {Promise<void>} */
-		let promise=new Promise((resolve,reject) => {
-			state.fns={
-				resolve,
-				reject,
-			};
-		});
-		if(!state.fns) throw new Error("Unreachable");
-		return {promise,...state.fns};
+		ret.reset();
+		ret=ret.get_as_ready();
+		return ret;
 	}
 	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
 	db_wait_promise=null;
