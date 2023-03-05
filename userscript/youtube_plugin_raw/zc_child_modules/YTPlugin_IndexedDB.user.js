@@ -186,7 +186,6 @@ class IndexedDBService extends BaseService {
 			default: {
 				let di=decay_item(item);
 				switch(get_tag(item)) {
-					case "browse_id:VL:PL":
 				}
 				console.log("skip_tag",di.tag);
 				debugger;
@@ -203,17 +202,18 @@ class IndexedDBService extends BaseService {
 			case "browse_id:FE":
 			case "browse_id:MP":
 			case "browse_id:SP":
+			case "browse_id:VL:PL":
 			case "browse_id:VL":
 			case "channel_id:UC":
+			case "exact:play_next":
 			case "guide_entry_id":
 			case "hashtag_id":
 			case "key":
-			case "exact:play_next":
 			case "playlist_id:LL":
+			case "playlist_id:PL":
 			case "playlist_id:RD:MM":
 			case "playlist_id:RD":
 			case "playlist_id:WL":
-			case "playlist_id:PL":
 			case "user_id":
 			case "video_time": {
 				let val_src=item.value;
