@@ -555,7 +555,7 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "bigint": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
 				let value={
 					type,
@@ -564,7 +564,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value,
 				},version);
 				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
@@ -572,11 +572,11 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "boolean": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -587,11 +587,11 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "number": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -602,11 +602,11 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "string": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -617,11 +617,11 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "keys": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -632,11 +632,11 @@ class IndexedDBService extends BaseService {
 				return ret;
 			}
 			case "root_visual_element": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -702,7 +702,7 @@ class IndexedDBService extends BaseService {
 				}
 			} throw new Error("end");
 			case "bigint": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
 				let value={
 					type,
@@ -711,16 +711,16 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value,
 				},version); return {args,promise};
 			}
 			case "boolean": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -728,11 +728,11 @@ class IndexedDBService extends BaseService {
 				},version); return {args,promise};
 			}
 			case "number": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -740,11 +740,11 @@ class IndexedDBService extends BaseService {
 				},version); return {args,promise};
 			}
 			case "string": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -752,11 +752,11 @@ class IndexedDBService extends BaseService {
 				},version); return {args,promise};
 			}
 			case "keys": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
@@ -764,11 +764,11 @@ class IndexedDBService extends BaseService {
 				},version); return {args,promise};
 			}
 			case "root_visual_element": {
-				let [tag,id,[type,container]]=args;
+				let [tag,,[type,container]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${id}`,
+					key: `boxed_id:${tag}:${type}`,
 					value: {
 						type,
 						info_arr: [container]
