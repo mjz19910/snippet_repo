@@ -188,13 +188,14 @@ class IndexedDBService extends BaseService {
 			case "root_visual_element": return store.get_store("ve_store").load_data(item);
 			case "string": return store.get_store("string_store").load_data(item);
 			case "bigint": return store.get_store("bigint_store").load_data(item);
-			case "browse_id:FE": break;
+			case "browse_id:FE":
 			case "browse_id:MP":
 			case "browse_id:SP":
 			case "browse_id:VL":
 			case "channel_id":
 			case "guide_entry_id":
 			case "hashtag_id":
+			case "key":
 			case "play_next":
 			case "playlist_id:LL":
 			case "playlist_id:RD:MM":
