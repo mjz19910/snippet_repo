@@ -4,6 +4,7 @@ type G_BoxedIdObj=
 	|DST_GuideEntry_LL
 	|DST_GuideEntry_PL
 	|DST_GuideEntry_UC
+	|DST_GuideEntry_VL_LL
 	|DST_GuideEntry_WL
 	|DST_HashtagId
 	|DST_KeySection
