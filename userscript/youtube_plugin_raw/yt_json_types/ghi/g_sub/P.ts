@@ -219,8 +219,8 @@ type PX_watch_next_token_4={
 };
 type PX_watch_next_token_5={1: T_D32<0>;};
 type PX_watch_next_token_6={
-	1: T_VA<PX_watch_next_token_item>;
-	3: T_D32<2>;
+	1?: T_VA<PX_watch_next_token_item>;
+	3: T_D32<2|25>;
 	4?: TV_Str<"/m/0jxy">;
 };
 type P_continuation_request_watch_next_token={

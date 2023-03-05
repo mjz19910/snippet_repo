@@ -2711,8 +2711,10 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_6(x) {
 		const cf="PX_watch_next_token_6";
 		const {1: v1,3: v3,4: v4}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		let n1=v1[1];
-		for(let [,,u1] of n1) this.PX_watch_next_token_item(u1);
+		if(v1) {
+			let n1=v1[1];
+			for(let [,,u1] of n1) this.PX_watch_next_token_item(u1);
+		}
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 		v4&&this.save_string(`${cf}.f4`,this.TV_Str(v4));
 	}
@@ -3571,10 +3573,6 @@ class HandleTypes extends ServiceMethods {
 				}
 			} break;
 		}
-	}
-	/** @arg {G_UrlInfoSrc} x @returns {DI_G_NoKey} */
-	make_G_UrlInfo(x) {
-		throw new AggregateError([x],"TODO");
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */

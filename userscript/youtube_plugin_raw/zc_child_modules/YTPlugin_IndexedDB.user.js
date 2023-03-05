@@ -151,11 +151,11 @@ class IndexedDBService extends BaseService {
 		/** @type {G_IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of boxed) {
-			this.load_store(store,item,version);
+			await this.load_store(store,item,version);
 		}
 	}
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item @arg {number} version */
-	load_store(store,item,version) {
+	async load_store(store,item,version) {
 		if(!("type" in item)) return;
 		if(item.type!=="boxed_id") return;
 		if(!("value" in item)) return;
@@ -207,13 +207,27 @@ class IndexedDBService extends BaseService {
 			case "video_time": {
 				let val_src=item.value;
 				switch(val_src.type) {
-					default: this.x.get("handle_types").id_cache.add(val_src.info_arr[0].raw_id); break;
+					default: {
+						if(!val_src.info_arr) {
+							await this.delete(item.type,item.key,version);
+							return;
+						}
+						if(!val_src.info_arr[0]) {debugger; break;}
+						if(val_src.info_arr[0].raw_id===void 0) {debugger; break;}
+						this.x.get("handle_types").id_cache.add(val_src.info_arr[0].raw_id);
+					} break;
 					case "hashtag_id": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.hashtag}`); break;
 					case "play_next": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.value}`); break;
 					case "guide_entry_id": this.x.get("handle_types").id_cache.add(val_src.info_arr[0].value.info_arr[0].raw_id); break;
 					case "video_time": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.raw_value}`); break;
-					case "key": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.info_arr[0].start_radio}`);
-				};
+					case "key": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.info_arr[0].start_radio}`); break;
+				}
+				let [,d_cache]=this.get_data_cache(item.type);
+				let cache_val=d_cache.find(v => v&&v.key===item.key);
+				if(cache_val) {
+					console.log("commit from load",item.key);
+					this.committed_data.push(cache_val);
+				}
 			} break;
 		}
 	}
