@@ -62,10 +62,10 @@ type Y_PutBoxedArgs=
 	|["video_time",null,DI_VideoTime]
 	|["guide_entry_id",null,DI_GuideEntryId]
 	|["playlist_id","RD",DI_A_Playlist_RD]
-	|["playlist_id","UU",{}]
-	|["playlist_id","RD:MM",{}]
-	|["playlist_id","RD:CM:UC",{}]
-	|["playlist_id","RD:GM:EM",{}]
+	|["playlist_id","UU",DI_A_Playlist_UU]
+	|["playlist_id","RD:MM",DI_A_Playlist_RD_MM]
+	|["playlist_id","RD:CM:UC",DI_A_Playlist_RD_CM_UC]
+	|["playlist_id","RD:GM:EM",DI_A_Playlist_RD_GM_EM]
 	;
 ;
 type Y_PutBoxedArgs_2=Extract<Y_PutBoxedArgs,{length: 2;}>;

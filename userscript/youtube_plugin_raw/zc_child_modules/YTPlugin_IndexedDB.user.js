@@ -437,6 +437,30 @@ class IndexedDBService extends BaseService {
 						let ret={args,promise: as_any(promise)};
 						return ret;
 					}
+					case "RD": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
+					case "RD:MM": {
+						let [tag,id,value]=args;
+						let promise=this.put_box({
+							type: "boxed_id",
+							tag: `${tag}:${id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							value,
+						},version);
+						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+						let ret={args,promise: as_any(promise)};
+						return ret;
+					}
 				}
 			}
 			case "hashtag_id": {

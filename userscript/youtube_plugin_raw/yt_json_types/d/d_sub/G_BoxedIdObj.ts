@@ -1,32 +1,12 @@
 type G_BoxedIdObj=
-	|D_Boxed_Browse_VL_WL
-	|D_Boxed_BrowseId_SP
-	|D_Boxed_BrowseId_VL_LL
-	|D_Boxed_BrowseId_VL_PL
-	|D_Boxed_GuideEntryId_LL
-	|D_Boxed_GuideEntryId_WL
-	|D_Boxed_Playlist_LL
-	|D_Boxed_Playlist_PL
-	|D_Boxed_Playlist_WL
-	|D_Boxed_Playlist_WL
-	|D_BoxedBigintStore
-	|D_BoxedBooleanStore
-	|D_BoxedBrowseId_FE
-	|D_BoxedBrowseId_MP
-	|D_BoxedBrowseId_SP
-	|D_BoxedChannelId_UC
-	|D_BoxedHashtagId
-	|D_BoxedKeysStore
-	|D_BoxedLoadId
-	|D_BoxedNumberStore
-	|D_BoxedPlayNext
-	|D_BoxedSaveId
-	|D_BoxedStringStore
-	|D_BoxedUpdateId
-	|D_BoxedUserId
-	|D_BoxedVEStore
-	|D_BoxedVideoId
-	|D_BoxedVideoTime
-	|D_BX_Playlist_WL
+	|G_Boxed_Simple
+	|G_BoxedSimple
+	|G_Boxed_D_BX
+	|{
+		type: "boxed_id";
+		tag: "playlist_id:RD";
+		key: `boxed_id:playlist_id:RD:${string}`;
+		value: DI_A_Playlist_RD;
+	}
 	;
 ;
