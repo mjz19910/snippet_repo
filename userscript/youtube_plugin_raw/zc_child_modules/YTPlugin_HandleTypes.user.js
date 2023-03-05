@@ -3196,17 +3196,15 @@ class HandleTypes extends ServiceMethods {
 					let [,id]=split_string_once(raw_id,"RDCMUC");
 					/** @type {DI_A_Playlist_RD_CM_UC} */
 					const z={type: "playlist_id",tag: "RD:CM:UC",info_arr: [{raw_id},{id}]}; ret=z;
-					break;
-				}
-				if(this.str_starts_with(raw_id,"RDMM")) {
+				} else if(this.str_starts_with(raw_id,"RDMM")) {
 					let [,id]=split_string_once(raw_id,"RDMM");
 					/** @type {DI_A_Playlist_RD_MM} */
 					const z={type: "playlist_id",tag: "RD:MM",info_arr: [{raw_id},{id}]}; ret=z;
-					break;
+				} else {
+					let [,id]=split_string_once(raw_id,"RD");
+					/** @type {DI_A_Playlist_RD} */
+					const z={type: "playlist_id",tag: "RD",info_arr: [{raw_id},{id}]}; ret=z;
 				}
-				let [,id]=split_string_once(raw_id,"RD");
-				/** @type {DI_A_Playlist_RD} */
-				const z={type: "playlist_id",tag: "RD",info_arr: [{raw_id},{id}]}; ret=z;
 			} break;
 			case "playlist_id:UU": break;
 			case "channel_id": {
