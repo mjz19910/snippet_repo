@@ -1830,7 +1830,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo({type: "raw",tag: "key:start_radio",info_arr: [{start_radio}]});
+				this.D_RawUrlFromInfo("raw","key:start_radio",{start_radio});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(this.is_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -3161,6 +3161,12 @@ class HandleTypes extends ServiceMethods {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
+	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @template {DI_SpecialInfo} T @arg {T} x */
+	D_RawUrlFromInfo(type,tag,x) {
+		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["tag"];info_arr: [T]}} */
+		let mo={type,tag,info_arr: [x]};
+		this.ht.DI_AGR_UrlInfo(as_any(mo));
+	}
 	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["tag"]} tag @arg {string} x */
 	D_RawUrlFromTag(type,tag,x) {
 		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["tag"];info_arr: [{raw_id: string}]}} */
@@ -3192,7 +3198,9 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "playlist_id:RD": {
 				const {info_arr: [{raw_id}]}=x;
-				if(!this.str_starts_with(raw_id,"RDCMUC")) {
+				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
+					let rd_len=raw_id.length-2;
+					if(rd_len===11) break x;
 					console.log("[playlist_id_raw_make]",raw_id.length,raw_id.length-6,raw_id.slice(0,6),raw_id.slice(6));
 				}
 				if(this.str_starts_with(raw_id,"RDCMUC")) {
@@ -3387,7 +3395,10 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "key:start_radio": {
 				let x2=this.make_DI_AGR_UrlInfo(x);
-				x2; debugger;
+				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+				let args=["key","start_radio",x2];
+				let box_res=this.put_boxed_id(...args);
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "guide_entry_id": {
 				debugger;

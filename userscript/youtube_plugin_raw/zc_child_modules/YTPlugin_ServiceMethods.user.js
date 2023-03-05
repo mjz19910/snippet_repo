@@ -2084,7 +2084,7 @@ class ServiceMethods extends ServiceData {
 			if(a1.length!==1) debugger;
 			let [x1]=a1;
 			let a2=split_string_once(x1,"@"); this.cq(a2[0],"");
-			console.log("handle",a2[1]);
+			this.save_string("channel_handle",a2[1]);
 			return;
 		}
 		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;

@@ -10,6 +10,7 @@ type DI_AGR_UrlInfo=
 	|{type: "raw",tag: "playlist_id:UU"; info_arr: [{raw_id: `UU${string}`;}];}
 	;
 ;
+type DI_SpecialInfo=Exclude<DI_AGR_UrlInfo["info_arr"][0],{raw_id: any;}>;
 type DI_G_UrlInfo=
 	DI_AGR_UrlInfo["tag"] extends infer Y extends string?
 	Y extends infer I?
@@ -26,6 +27,7 @@ type DI_G_UrlInfo=
 		_bad: true,
 	}:never:never;
 type GI_BrowseId=DI_BrowseId_FE|DI_BrowseId_SP|DI_BrowseId_MP|DI_BrowseId_VL_LL|DI_BrowseId_VL|DI_BrowseId_VL_PL;
-type MakeRet_DI_AGR_UrlInfo<T extends DI_AGR_UrlInfo>=T extends infer I extends DI_AGR_UrlInfo? Extract<DI_G_UrlInfo,{type: I["tag"];}>:never;
+type MakeRet_DI_AGR_UrlInfo<T extends DI_AGR_UrlInfo>=T extends infer I extends DI_AGR_UrlInfo? I["tag"] extends "key:start_radio"?DI_Key_StartRadio:Extract<DI_G_UrlInfo,{type: I["tag"];}>:never;
+type DI_Key_StartRadio={};
 type T1=MakeRet_DI_AGR_UrlInfo<DI_R_ChannelId>;
 type MK_DI_R_ChannelId=MakeRet_DI_AGR_UrlInfo<DI_R_ChannelId>;
