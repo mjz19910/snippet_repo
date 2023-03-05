@@ -1209,12 +1209,15 @@ class IndexedDBService extends BaseService {
 					this.committed_data.push(item);
 				}
 			}
+		} finally {
 			let complete_event=await tx_scope.complete_promise;
 			this.handle_transaction_complete(tx_scope,complete_event);
-		} finally {
 			this.database_open=false;
-			if(no_null_cache.length>0) console.log("[committed_cache_num] [start=%o] [updated=%o]",no_null_cache.length,updated_count);
 			if(this.log_db_actions) console.log("close db");
+			if(no_null_cache.length>0) {
+				console.log("[committed_cache_num] [start=%o] [updated=%o]",no_null_cache.length,updated_count);
+				debugger;
+			}
 		}
 	}
 	/**
