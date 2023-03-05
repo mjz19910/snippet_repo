@@ -9,7 +9,7 @@ type G_BoxedSimple=
 	|D_BoxedSaveId
 	|D_BoxedStringStore
 	|D_BoxedUpdateId
-	|D_BoxedUserId
+	|D_Boxed_User_Id
 	|D_BoxedVEStore
 	|D_Boxed_Video_Id
 	|D_BoxedVideoTime

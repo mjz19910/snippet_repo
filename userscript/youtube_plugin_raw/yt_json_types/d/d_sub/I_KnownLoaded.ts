@@ -17,7 +17,7 @@ type I_KnownLoaded=
 	|D_Boxed_Playlist_PL
 	|D_BoxedHashtagId
 	|D_BoxedPlayNext
-	|D_BoxedUserId
+	|D_Boxed_User_Id
 	|D_Boxed_Video_Id
 	|D_BoxedVideoTime
 	|D_BoxedLoadId

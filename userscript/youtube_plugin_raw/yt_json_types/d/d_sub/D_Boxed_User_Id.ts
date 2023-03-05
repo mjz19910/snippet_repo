@@ -1,6 +1,6 @@
-type D_BoxedUserId={
+type D_Boxed_User_Id={
 	type: "boxed_id";
 	tag: "user_id";
 	key: `boxed_id:user_id:${string}`;
-	value: DI_UserId;
+	value: DI_User_Id;
 };

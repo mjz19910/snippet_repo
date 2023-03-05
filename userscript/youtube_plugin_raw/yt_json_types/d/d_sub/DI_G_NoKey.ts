@@ -3,7 +3,7 @@ type DI_G_NoKey=
 	|DI_G_BrowseId
 	|DI_HashtagId
 	|DI_PlayNext
-	|DI_UserId
+	|DI_User_Id
 	|DI_VideoId
 	|DI_VideoTime
 	;

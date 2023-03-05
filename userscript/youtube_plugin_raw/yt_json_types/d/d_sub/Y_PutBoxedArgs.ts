@@ -20,7 +20,7 @@ type Y_PutBoxedArgs=
 	|["root_visual_element",null,[string,make_item_group<number>]]
 	|["save_id",null,number]
 	|["string",null,[string,make_item_group<string>]]
-	|["user_id",null,DI_UserId]
+	|["user_id",null,DI_User_Id]
 	|["video_id",null,DI_VideoId]
 	|["video_time",null,DI_VideoTime]
 	|["guide_entry_id",null,GI_GuideEntry_Id]
