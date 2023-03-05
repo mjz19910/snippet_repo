@@ -131,7 +131,7 @@ class IndexedDBService extends BaseService {
 	db_wait_promise=null;
 	/** @type {Map<"boxed_id",string[]>} */
 	cached_data=new Map;
-	/** @private @type {Map<string, number>} */
+	/** @private @type {Map<string,number>} */
 	store_cache_index=new Map;
 	/** @type {Map<string,G_IDBBoxedType>} */
 	loaded_map=new Map;
