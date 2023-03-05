@@ -1958,10 +1958,14 @@ class ServiceMethods extends ServiceData {
 			case "LIVE_CONTROL_ROOM":
 		}
 	}
-	/** @private @arg {DE_VE3832_Watch} x */
-	DE_VE3832_Watch(x) {
+	/** @private @arg {DE_VE3832_Watch} u */
+	DE_VE3832_Watch(u) {
 		const cf="DE_VE3832_Watch";
+		/** @type {Partial<Extract<typeof u extends infer J?J extends infer I?Required<Partial<I>>:never:never,{playlistId:any}>>&Required<{videoId:any}>} */
+		let x=u;
 		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.videoId(videoId);
+		this.t(playlistId,this.playlistId);
 		this.t(index,this.a_primitive_num);
 		this.t(playlistSetVideoId,this.a_primitive_str);
 		this.t(params,params => this.params("watch.params",params));

@@ -65,11 +65,10 @@ type D_PlaylistContent={
 	videoCountText: G_Text;
 	isCourse: false;
 	nextVideoLabel: G_Text;
-}|{
+}|({
 	title: string;
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: number;
-	playlistId: SD_PlaylistId;
 	ownerName: G_Text;
 	isInfinite: boolean;
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
@@ -84,7 +83,7 @@ type D_PlaylistContent={
 	playlistButtons: R_Menu;
 	isCourse: false;
 	nextVideoLabel: G_Text;
-}|{
+}&D_PlaylistId)|{
 	title: "Videos";
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: 0;

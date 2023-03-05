@@ -1977,7 +1977,7 @@ type D_ItemSectionHeader={
 };
 type D_Label={label: string;};
 type D_Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
-type D_LikeApi={videoId: string;}|{playlistId: SD_PlaylistId;};
+type D_LikeApi={videoId: string;}|D_PlaylistId;
 type D_LiveBroadcastDetails={
 	isLiveNow: true;
 	startTimestamp: string;
@@ -2317,7 +2317,6 @@ type D_PlayerOverlayVideoDetails={
 };
 type D_PlayerStoryboardSpec={spec: string;};
 type D_PlaylistAddToOption={
-	playlistId: SD_PlaylistId;
 	title: G_Text;
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";
 	containsSelectedVideos: "NONE";
@@ -2325,7 +2324,7 @@ type D_PlaylistAddToOption={
 	addToPlaylistServiceEndpoint: E_PlaylistEdit;
 	removeFromPlaylistServiceEndpoint: E_PlaylistEdit;
 	trackingParams: string;
-};
+}&D_PlaylistId;
 type D_PlaylistByline={text: G_Text;};
 type D_InlineForm={
 	formField: R_TextInputFormField;
@@ -2345,7 +2344,6 @@ type D_DropdownFormField={
 type R_DropdownFormField={dropdownFormFieldRenderer: D_DropdownFormField;};
 
 type D_PlaylistHeader={
-	playlistId: SD_PlaylistId;
 	title: G_Text;
 	numVideosText: G_Text;
 	descriptionText: {};
@@ -2374,7 +2372,7 @@ type D_PlaylistHeader={
 	descriptionForm?: R_InlineForm;
 	// key = playlistEditEndpoint.actions.0.playlistPrivacy
 	privacyForm?: R_DropdownFormField;
-};
+}&D_PlaylistId;
 type D_PlaylistSidebar={
 	items: G_PlaylistSidebarItem[];
 	trackingParams: string;

@@ -103,7 +103,6 @@ type DE_Url=
 ;
 type DE_VE3832_Watch={
 	videoId: string;
-	playlistId?: SD_PlaylistId;
 	index?: number;
 	playlistSetVideoId?: string;
 	params?: string;
@@ -115,8 +114,22 @@ type DE_VE3832_Watch={
 	playerParams?: string;
 	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
 	nofollow?: boolean;
-	playerExtraUrlParams?: G_ExtraUrlParamItem[];
-};
+	playerExtraUrlParams?: [G_ExtraUrlParamItem];
+}|({
+	videoId: string;
+	index?: number;
+	playlistSetVideoId?: string;
+	params?: string;
+	startTimeSeconds?: number;
+	continuePlayback?: boolean;
+	loggingContext?: R_VssLoggingContext;
+	watchEndpointSupportedOnesieConfig?: R_Html5PlaybackOnesieConfig;
+	watchEndpointSupportedPrefetchConfig?: R_PrefetchHintConfig;
+	playerParams?: string;
+	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
+	nofollow?: boolean;
+	playerExtraUrlParams?: [G_ExtraUrlParamItem];
+}&D_PlaylistId);
 type D_LoggingContext={
 	vssLoggingContext: D_SerializedContextData;
 	qoeLoggingContext: D_SerializedContextData;
