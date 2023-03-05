@@ -359,6 +359,25 @@ class IndexedDBService extends BaseService {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
 			} debugger; throw new Error();
+			case "guide_entry_id": {
+				let [tag,,value]=args;
+				let iv=value.info_arr[0];
+				switch(iv.tag) {
+					case "LL": {
+						/** @type {D_Boxed_GuideEntryId_LL} */
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
+						const promise=this.put_box(z,version);
+						return {args,promise};
+					}
+					case "PL": break;
+					case "WL": {
+						/** @type {D_Boxed_GuideEntryId_WL} */
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
+						const promise=this.put_box(z,version);
+						return {args,promise};
+					}
+				}
+			} throw new Error("Unreachable");
 			case "video_id": {
 				let [tag,,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
@@ -381,6 +400,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "playlist_id": {
 				switch(args[1]) {
+					default: debugger; throw new Error();
 					case "LL": {
 						let [,,value]=args;
 						let promise=this.put_box({

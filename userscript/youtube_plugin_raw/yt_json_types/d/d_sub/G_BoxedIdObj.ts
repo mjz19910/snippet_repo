@@ -1,20 +1,20 @@
-type D_BoxedPlaylist_PL={
+type D_Boxed_GuideEntryId_LL={
 	type: "boxed_id";
-	tag: "playlist_id:PL";
-	key: `boxed_id:playlist_id:PL:${string}`;
+	tag: "guide_entry_id";
+	key: "boxed_id:guide_entry_id:LL";
+	value: {
+		type: "guide_entry_id";
+		info_arr: [TagGuideId_LL];
+	};
 };
-
-type D_Boxed_VL_LL={
+type D_Boxed_GuideEntryId_WL={
 	type: "boxed_id";
-	tag: "browse_id:VL";
-	key: "boxed_id:browse_id:VL:LL";
-	value: DI_BrowseId_VL;
-};
-type D_Boxed_VL_PL={
-	type: "boxed_id";
-	tag: "browse_id:VL";
-	key: `boxed_id:browse_id:VL:PL${string}`;
-	value: DI_BrowseId_VL;
+	tag: "guide_entry_id";
+	key: "boxed_id:guide_entry_id:WL";
+	value: {
+		type: "guide_entry_id";
+		info_arr: [TagGuideId_WL];
+	};
 };
 type G_BoxedIdObj=
 	|D_BoxedBigintStore
@@ -27,7 +27,7 @@ type G_BoxedIdObj=
 	|D_BoxedKeysStore
 	|D_BoxedLoadId
 	|D_BoxedNumberStore
-	|D_BoxedPlaylist_PL
+	|D_Boxed_Playlist_PL
 	|D_BoxedPlayNext
 	|D_BoxedSaveId
 	|D_BoxedStringStore
@@ -36,37 +36,14 @@ type G_BoxedIdObj=
 	|D_BoxedVEStore
 	|D_BoxedVideoId
 	|D_BoxedVideoTime
-	|D_Boxed_VL_LL
-	|D_Boxed_VL_PL
-	|{
-		type: "boxed_id";
-		tag: "browse_id:SP";
-		key: `boxed_id:browse_id:SP:${string}`;
-		value: DI_BrowseId_SP;
-	}
-	|{
-		type: "boxed_id";
-		tag: "playlist_id:LL";
-		key: "boxed_id:playlist_id:LL";
-		value: DI_A_Playlist_LL;
-	}
-	|{
-		type: "boxed_id";
-		tag: "playlist_id:WL";
-		key: "boxed_id:playlist_id:WL";
-		value: DI_A_Playlist_WL;
-	}
-	|{
-		type: "boxed_id";
-		tag: "browse_id:VL";
-		key: `boxed_id:browse_id:VL:${string}`;
-		value: DI_BrowseId_VL;
-	}
-	|{
-		type: "playlist_id";
-		tag: "playlist_id:WL";
-		key: "boxed_id:playlist_id:WL";
-		value: DI_A_Playlist_WL;
-	}
+	|D_Boxed_BrowseId_VL_LL
+	|D_Boxed_BrowseId_VL_PL
+	|D_Boxed_BrowseId_SP
+	|D_Boxed_Playlist_LL
+	|D_Boxed_Playlist_WL
+	|D_Boxed_VL
+	|D_Boxed_Playlist_WL
+	|D_Boxed_GuideEntryId_LL
+	|D_Boxed_GuideEntryId_WL
 	;
 ;
