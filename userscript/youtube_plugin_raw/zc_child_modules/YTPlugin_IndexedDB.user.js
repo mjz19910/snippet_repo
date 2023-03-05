@@ -314,11 +314,11 @@ class IndexedDBService extends BaseService {
 					}
 					case "VL:PL": {
 						const {info_arr: [{raw_id}]}=value;
-						let [,id]=split_string_once(raw_id,"VL");
+						let [,id]=split_string_once(raw_id,"VLPL");
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${type}:${tag}`,
-							key: `boxed_id:${type}:${tag}:${id}`,
+							key: `boxed_id:${type}:${tag}:PL:${id}`,
 							value,
 						},version);
 						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
