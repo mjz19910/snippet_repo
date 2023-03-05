@@ -137,7 +137,6 @@ type P_logging_context_serialized_context_data={
 	1?: T_VW<{1: T_D32<12>;}>;
 	3?: TV_Str<SD_PlaylistId>;
 };
-type TW_Str<T extends string>=TV_Str_CS<T>|TW_TagStr<T>|TV_Str<T>;
 type P_like_params={
 	1: T_VW<{1: TW_Str<DU_VideoId>;}>;
 	4: T_D32<0>;
@@ -533,7 +532,7 @@ type P_ve_3611_params_2={
 	6: T_VW<{}>;
 };
 type P_ve_3611_params={
-	2?: T_VW<{}>;
+	2?: TW_Str2<"community"|"">;
 	23?: T_D32<0>;
 	110: T_VW<P_ve_3611_params_1>;
 };

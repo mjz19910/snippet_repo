@@ -2952,11 +2952,24 @@ class HandleTypes extends ServiceMethods {
 		this.PK_f1(this.T_VW(v2));
 		f5;
 	}
+	/** @private @template {string} T @arg {TW_Str2<T>} x */
+	TW_Str2(x) {
+		let raw=x[1][0];
+		return raw[3][1];
+	}
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
 		const cf="P_ve_3611_params";
 		const {2: v2,23: f23,110: f110}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		v2&&this.g(this.T_VW(v2));
+		this.t(v2,x => {
+			let a=this.TW_Str2(x);
+			switch(a) {
+				default: a===""; debugger; break;
+				case "":
+				case "community":
+			}
+			a;
+		});
 		f23; f110;
 	}
 	/** @private @arg {P_playlist_edit_params} x */

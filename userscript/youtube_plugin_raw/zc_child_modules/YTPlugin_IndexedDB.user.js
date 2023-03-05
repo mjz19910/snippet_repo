@@ -972,7 +972,7 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			if(loaded_value) {
-				console.log("[change]:",value.key,value.value,'->',loaded_value.value);
+				console.log("[change]:",value.key,loaded_value.value,'->',value.value);
 			} else {
 				console.log("[create]:",value.key,value.value);
 			}
@@ -1288,6 +1288,10 @@ class IndexedDBService extends BaseService {
 							if(!(v2 instanceof Array)) v2_one=v2;
 							if(v1_one!==null&&v2_one!==null) {
 								if(v1_one===v2_one) break;
+								debugger;
+							}
+							if(v1_arr!==null&&v2_arr!==null) {
+								if(this.eq_keys(v1_arr,v2_arr)) break;
 								debugger;
 							}
 							if(v1_one!==null) debugger;
