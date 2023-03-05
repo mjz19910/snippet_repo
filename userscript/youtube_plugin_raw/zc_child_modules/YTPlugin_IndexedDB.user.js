@@ -18,6 +18,52 @@ const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
+/** @type {J_ResolverTypeHelpers['assume_changed_state']} */
+function assume_changed_state(_cls,_state) {return true;}
+/** @type {J_ResolverTypeHelpers['change_state']} */
+function change_state(cls,state) {
+	let n_cls=cls;
+	if(cls.state==="init") {
+		if(cls.state===state) return;
+		if(!assume_changed_state(n_cls,"ready")) throw new Error();
+		n_cls.state="ready";
+		return;
+	} else if(cls.state==="ready") {
+		if(cls.state===state) return;
+		if(!assume_changed_state(n_cls,"init")) throw new Error();
+		n_cls.state="init";
+		return;
+	} else {
+		cls==="";
+	}
+}
+class J_ResolverTypeImpl {
+	/** @readonly */
+	state="init";
+	/** @type {Promise<void>|null} */
+	promise=null;
+	static make() {
+		let instance=new this();
+		return instance.as_ready;
+	}
+	constructor() {
+		this.promise=new Promise((resolve,reject) => {
+			this.resolve=resolve;
+			this.reject=reject;
+		});
+	}
+	/** @type {((value:void|PromiseLike<void>)=>void)|null} */
+	resolve=null;
+	/** @type {((reason?:any)=>void)|null} */
+	reject=null;
+	get as_ready() {
+		/** @returns {J_ResolverType} */
+		let get_any_cls=() => this;
+		let cls=get_any_cls();
+		change_state(cls,"ready");
+		return cls;
+	}
+}
 function h_detect_firefox() {
 	let ua=navigator.userAgent;
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
@@ -858,59 +904,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {
-		/** @type {J_ResolverTypeHelpers['assume_changed_state']} */
-		function assume_changed_state(_cls,_state) {
-			return true;
-		}
-		/** @type {J_ResolverTypeHelpers['change_state']} */
-		function change_state(cls,state) {
-			let n_cls=cls;
-			if(cls.state==="init") {
-				if(cls.state===state) return;
-				if(!assume_changed_state(n_cls,"ready")) throw new Error();
-				n_cls.state="ready";
-				return;
-			} else if(cls.state==="ready") {
-				if(cls.state===state) return;
-				if(!assume_changed_state(n_cls,"init")) throw new Error();
-				n_cls.state="init";
-				return;
-			} else {
-				cls==="";
-			}
-		}
-		/** @type {J_ResolverType_Init|J_ResolverType_Ready} */
-		let ret={
-			state: "init",
-			reset() {
-				this.promise=new Promise((resolve,reject) => {
-					this.resolve=resolve;
-					this.reject=reject;
-				});
-				return this.get_as_ready();
-			},
-			/** @type {Promise<void>|null} */
-			promise: null,
-			/** @type {((value:void|PromiseLike<void>)=>void)|null} */
-			resolve: null,
-			/** @type {((reason?:any)=>void)|null} */
-			reject: null,
-			/** @type {J_ResolverTypeBase['get_in_init']} */
-			get_in_init() {
-				this.state="init";
-				return this;
-			},
-			/** @type {J_ResolverTypeBase['get_as_ready']} */
-			get_as_ready() {
-				/** @returns {J_ResolverType} */
-				let get_any_cls=() => this;
-				let cls=get_any_cls();
-				change_state(cls,"ready");
-				return cls;
-			}
-		};
-		ret=ret.reset();
-		return ret;
+		return J_ResolverTypeImpl.make();
 	}
 	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
 	db_wait_promise=null;
