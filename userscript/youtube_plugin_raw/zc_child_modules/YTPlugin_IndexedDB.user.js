@@ -1108,7 +1108,6 @@ class IndexedDBService extends BaseService {
 			console.log("[start_load_wait]");
 			await this.on_loaded_resolver.promise;
 			console.log("[load_wait_done]");
-			if(!this.has_loaded_keys) throw new Error("Bad state");
 		}
 		this.database_opening=true;
 		let db=await this.get_async_result(this.get_db_request(version));
