@@ -1489,9 +1489,12 @@ class ServiceMethods extends ServiceData {
 	/** @private @type {DU_VideoId[]} x */
 	video_id_list=[];
 	/** @type {Set<string>} */
-	id_cache=new Set;
+	static id_cache=new Set;
+	id_cache=ServiceMethods.id_cache;
 	/** @protected @arg {DU_VideoId} x */
 	videoId(x) {
+		if(this.id_cache.has(x)) return;
+		this.id_cache.add(x);
 		if(this.video_id_list.includes(x)) return;
 		this.ht.D_RawUrlFromTag("raw","video_id",x);
 	}

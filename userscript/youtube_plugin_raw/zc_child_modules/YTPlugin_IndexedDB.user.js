@@ -204,7 +204,17 @@ class IndexedDBService extends BaseService {
 			case "playlist_id:WL":
 			case "user_id":
 			case "video_id":
-			case "video_time":
+			case "video_time": {
+				let val_src=item.value;
+				switch(val_src.type) {
+					default: this.x.get("handle_types").id_cache.add(val_src.info_arr[0].raw_id); break;
+					case "hashtag_id": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.hashtag}`); break;
+					case "play_next": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.value}`); break;
+					case "guide_entry_id": this.x.get("handle_types").id_cache.add(val_src.info_arr[0].value.info_arr[0].raw_id); break;
+					case "video_time": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.raw_value}`); break;
+					case "key": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.info_arr[0].start_radio}`);
+				};
+			} break;
 		}
 	}
 	expected_save_id=0;
