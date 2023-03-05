@@ -1,1 +1,1 @@
-type T_CacheInfoType<T extends keyof DT_DatabaseStoreTypes>=[T,(DT_DatabaseStoreTypes[T]|null)[]];
+type T_CacheInfoType<T extends keyof DT_DatabaseStoreTypes>=(DT_DatabaseStoreTypes[T]|null)[];

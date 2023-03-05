@@ -70,9 +70,9 @@ function h_detect_firefox() {
 }
 const is_firefox=h_detect_firefox(); is_firefox;
 class TypedIndexedDB {
-	/** @arg {IDBDatabase} db @arg {keyof DT_DatabaseStoreTypes} storeNames @arg {IDBTransactionMode} mode */
+	/** @arg {IDBDatabase} db @arg {"boxed_id"} storeNames @arg {IDBTransactionMode} mode */
 	transaction(db,storeNames,mode) {return db.transaction(storeNames,mode);}
-	/** @template {keyof DT_DatabaseStoreTypes} K @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes[K]>} obj_store @arg {TypedIDBValidKey<DT_DatabaseStoreTypes[K]["key"]>|TypedIDBKeyRange<DT_DatabaseStoreTypes[K]["key"]>} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes[K]>|null>} */
+	/** @template {"boxed_id"} K @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes[K]>} obj_store @arg {TypedIDBValidKey<DT_DatabaseStoreTypes[K]["key"]>|TypedIDBKeyRange<DT_DatabaseStoreTypes[K]["key"]>} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes[K]>|null>} */
 	openCursor(obj_store,query,direction) {
 		if(query) {
 			if(query.type==="key") {
@@ -82,18 +82,18 @@ class TypedIndexedDB {
 		}
 		return obj_store.openCursor(query,direction);
 	}
-	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
+	/** @arg {IDBTransaction} tx @arg {K} key @template {"boxed_id"} K @template {DT_DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
 	objectStore(tx,key) {
 		let rq=tx.objectStore(key);
 		return as(rq);
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} key @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T|null>} */
+	/** @template {"boxed_id"} K @template {DT_DatabaseStoreTypes[K]} T @arg {T["key"]} key @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T|null>} */
 	get(store,key) {return store.get(key);}
 	/** @template {{}} T @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<T[]>} */
 	getAll(store) {return store.getAll();}
-	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
+	/** @template {"boxed_id"} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
 	put(store,value) {return store.put(value);}
-	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
+	/** @template {"boxed_id"} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
 	add(store,value) {return store.add(value);}
 }
 export_(exports => exports.TypedIndexedDB=TypedIndexedDB);
@@ -104,84 +104,61 @@ class TypedIDBValidKeyS {
 	}
 }
 class IndexedDBService extends BaseService {
-	/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
+	/** @template {"boxed_id"} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
 	create_cache_index(s,k,v) {s[k]=v;}
-	/** @template {keyof DT_DatabaseStoreTypes} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {T_CacheInfoType<R>} v */
+	/** @template {"boxed_id"} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {T_CacheInfoType<R>} v */
 	create_cache(s,k,v) {s[k]=v;}
 	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {return J_ResolverTypeImpl.make();}
 	database_opening=false;
 	database_open=false;
-	/** @type {Map<keyof DT_DatabaseStoreTypes,string[]>} */
-	cached_data=new Map;
-	cache_weak_set=new WeakSet;
 	log_db_actions=false;
 	log_all_events=false;
 	close_db_on_transaction_complete=false;
 	has_loaded_keys=false;
+	log_cache_push=false;
 	log_failed=true;
+	//#region number
 	expected_id=0;
 	expected_save_id=0;
 	expected_load_id=0;
+	/** @type {number|null} */
+	delayed_log_idle_request_id=null;
+	//#endregion
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
 	db_wait_promise=null;
-	/** @type {number|null} */
-	delayed_log_idle_request_id=null;
-	/** @private @type {D_StoreCacheIndex} */
-	store_cache_index={};
-	/** @private @type {D_StoreCacheType} */
-	store_cache={};
-	/** @private @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} */
-	committed_data=[];
-	on_loaded_resolver=J_ResolverTypeImpl.make();
-	/** @type {Set<string>} */
-	loaded_keys=new Set;
+	/** @type {Map<"boxed_id",string[]>} */
+	cached_data=new Map;
+	/** @private @type {Map<string, number>} */
+	store_cache_index=new Map;
 	/** @type {Map<string,G_IDBBoxedType>} */
 	loaded_map=new Map;
+	/** @type {Set<string>} */
+	loaded_keys=new Set;
+	/** @type {Set<string>} */
+	database_diff_keys=new Set;
+	/** @type {WeakSet<G_BoxedIdObj>} */
+	cache_weak_set=new WeakSet;
+	/** @private @type {G_BoxedIdObj[]} */
+	committed_data=[];
+	/** @private @type {T_CacheInfoType<"boxed_id">} */
+	store_cache=[];
 	/** @type {string[][]} */
 	delayed_log_messages=[];
-	/** @type {(keyof DT_DatabaseStoreTypes)[]} */
-	get_all_waiting_keys=[];
-	/** @type {([keyof DT_DatabaseStoreTypes,Promise<DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes][]>])[]} */
+	/** @type {Promise<G_BoxedIdObj[]>[]} */
 	waiting_promises=[];
-	log_cache_push=false;
-	database_diff_keys=new Set;
-	/** @constructor @public @arg {DefaultServiceResolver} x */
-	constructor(x) {
-		super(x);
-		const key="boxed_id";
-		this.create_cache_index(this.store_cache_index,key,[key,new Map]);
-		this.create_cache(this.store_cache,key,[key,[]]);
+	on_loaded_resolver=J_ResolverTypeImpl.make();
+	get_data_cache() {
+		let cache_arr=this.store_cache;
+		this.store_cache??=[];
+		cache_arr=this.store_cache;
+		return cache_arr;
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
-	get_data_cache(key) {
-		/** @type {T_StoreCacheType<T>} */
-		let sk_ac=this.store_cache;
-		/** @type {T_CacheInfoType<T>|undefined} */
-		let cache_info=as(this.store_cache[key]);
-		cache_info??=[key,[]];
-		sk_ac[key]=cache_info;
-		/** @type {TR_data_cache<T>} */
-		let sk=as([key,cache_info[1]]);
-		return sk;
-	}
-	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
-	get_data_index_cache(key) {
-		/** @type {{[R in T]?: [R,Map<string,number>]}} */
-		let sk_ac=this.store_cache_index;
-		/** @type {[T,Map<string,number>]|undefined} */
-		let cache_info=as(this.store_cache_index[key]);
-		cache_info=[key,new Map];
-		sk_ac[key]=cache_info;
-		return cache_info[1];
-	}
-	/** @arg {AG_DatabaseStoreDescription["key"]} key */
-	check_size(key) {
-		let [,d_cache]=this.get_data_cache(key);
-		/** @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]|null)[]} */
-		let arr=d_cache;
+	get_data_index_cache() {return this.store_cache_index;}
+	check_size() {
+		let arr=this.get_data_cache();
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
@@ -229,7 +206,7 @@ class IndexedDBService extends BaseService {
 		this.cache_weak_set.add(item.value);
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
-		/** @template {{type:keyof DT_DatabaseStoreTypes;tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
+		/** @template {{type:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
 		function decay_item(x) {return x;}
 		switch(item.tag) {
 			case "bigint":
@@ -292,7 +269,7 @@ class IndexedDBService extends BaseService {
 					case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
 					case "number": break;
 				}
-				let [,d_cache]=this.get_data_cache(item.type);
+				let d_cache=this.get_data_cache();
 				let cache_val=d_cache.find(v => v&&v.key===item.key);
 				if(cache_val) {
 					if(this.log_all_events) console.log("[found_during_load]",item.key);
@@ -898,25 +875,25 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
-	/** @arg {TypedIndexedDB} typed_db @arg {keyof DT_DatabaseStoreTypes} key @arg {number} version */
+	/** @arg {TypedIndexedDB} typed_db @arg {"boxed_id"} key @arg {number} version */
 	async open_rw_object_store(typed_db,key,version) {
 		let db=await this.get_async_result(this.get_db_request(version));
 		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
 		return typed_db.objectStore(s.tx,key);
 	}
-	/** @arg {keyof DT_DatabaseStoreTypes} key @arg {string} query @arg {number} version */
+	/** @arg {"boxed_id"} key @arg {string} query @arg {number} version */
 	async delete(key,query,version) {
 		let typed_db=new TypedIndexedDB;
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.delete(query));
 	}
-	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
+	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {"boxed_id"} U @arg {U} key @arg {T} value @arg {number} version */
 	async direct_put(key,value,version) {
 		let typed_db=new TypedIndexedDB;
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
-	/** @private @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
+	/** @private @template {DT_DatabaseStoreTypes[U]} T @template {"boxed_id"} U @arg {U} key @arg {T} value @arg {number} version */
 	async putImpl(key,value,version) {
 		if(!value) {debugger; return value;}
 		let cache=this.cached_data.get(key);
@@ -953,7 +930,7 @@ class IndexedDBService extends BaseService {
 		this.db_wait_promise=null;
 		return value;
 	}
-	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
+	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {"boxed_id"} U @arg {U} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
@@ -1008,7 +985,7 @@ class IndexedDBService extends BaseService {
 	}
 	/**
 	 * @arg {TypedIndexedDB} typed_db
-	 * @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode
+	 * @arg {IDBDatabase} db @template {"boxed_id"} U @arg {U} key @arg {IDBTransactionMode} mode
 	 * @arg {()=>void} complete_cb
 	*/
 	open_transaction(typed_db,db,key,mode,complete_cb) {
@@ -1023,7 +1000,7 @@ class IndexedDBService extends BaseService {
 		};
 		return tx;
 	}
-	/** @arg {TypedIndexedDB} typed_db @arg {IDBDatabase} db @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {IDBTransactionMode} mode @returns {TypedIDBTransactionScope} */
+	/** @arg {TypedIndexedDB} typed_db @arg {IDBDatabase} db @template {"boxed_id"} U @arg {U} key @arg {IDBTransactionMode} mode @returns {TypedIDBTransactionScope} */
 	open_transaction_scope(typed_db,db,key,mode) {
 		const tx=this.open_transaction(typed_db,db,key,mode,() => {
 			s.is_tx_complete=true;
@@ -1080,7 +1057,7 @@ class IndexedDBService extends BaseService {
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
 	/**
-	 * @arg {TypedIndexedDB} tdb @template {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
+	 * @arg {TypedIndexedDB} tdb @template {G_BoxedIdObj} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
 	 * @returns {{type:"err";err:unknown}|{type:"ok";req:IDBRequest<IDBValidKey>}}
 	 * */
 	start_put_request(tdb,store,value) {
@@ -1092,7 +1069,7 @@ class IndexedDBService extends BaseService {
 			return {type: "err",err: e};
 		}
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDB;}} s @arg {DT_DatabaseStoreTypes[U]} value */
+	/** @template {"boxed_id"} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDB;}} s @arg {DT_DatabaseStoreTypes[U]} value */
 	async force_update(s,value) {
 		if(!s.obj_store) throw new Error("No object store");
 		let put_req=this.start_put_request(s.typed_db,s.obj_store,value);
@@ -1113,7 +1090,7 @@ class IndexedDBService extends BaseService {
 			this.delayed_log_idle_request_id=null;
 		});
 	}
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
+	/** @api @public @template {"boxed_id"} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
 		if(!this.has_loaded_keys) {
@@ -1134,7 +1111,7 @@ class IndexedDBService extends BaseService {
 			obj_store: null,
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
-		let [,d_cache]=this.get_data_cache(key);
+		let d_cache=this.get_data_cache();
 		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.loaded_keys.has(e.key));
 		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.tag==="a:save_id"||e.tag==="a:load_id"));
 		if(no_id_cache.length===1) {
@@ -1357,7 +1334,7 @@ class IndexedDBService extends BaseService {
 		}
 	}
 	/**
-	 * @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @template {T["key"]} KA @arg {KA} store_key
+	 * @arg {K} key @template {"boxed_id"} K @template {DT_DatabaseStoreTypes[K]} T @template {T["key"]} KA @arg {KA} store_key
 	 * @template {Extract<T,{key:KA}>} T2
 	 * @arg {number} version
 	 * @returns {Promise<T2|null>}
@@ -1371,7 +1348,7 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
 		return result;
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {number} version */
+	/** @template {"boxed_id"} K @arg {K} key @arg {number} version */
 	async getAll(key,version) {
 		let typed_db=new TypedIndexedDB;
 		let db=await this.get_async_result(this.get_db_request(version));
@@ -1380,7 +1357,7 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
 		return result;
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @returns {Map<string,number>} */
+	/** @template {"boxed_id"} T @arg {T} key @returns {Map<string,number>} */
 	get_cache_index(key) {
 		/** @type {[T,Map<string,number>]|undefined} */
 		let c_index=this.store_cache_index[key];
@@ -1391,15 +1368,15 @@ class IndexedDBService extends BaseService {
 		sk_ac[key]=c_index;
 		return c_index[1];
 	}
-	/** @api @public @template {keyof DT_DatabaseStoreTypes} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]} obj */
+	/** @api @public @template {"boxed_id"} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]} obj */
 	push_waiting_obj(type_key,obj) {
 		const {key}=obj;
 		let idx=this.add_to_index(type_key,key,obj);
 		if(this.log_cache_push) console.log("push wait",type_key,key,idx,obj);
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x */
+	/** @template {"boxed_id"} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x */
 	add_to_index(type_key,key,x,null_out_key=false) {
-		let [,cache_arr]=this.get_data_cache(type_key);
+		let cache_arr=this.get_data_cache();
 		let cache_index=this.get_cache_index(type_key);
 		let idx=cache_index.get(key);
 		if(idx!==void 0) {
@@ -1439,7 +1416,7 @@ class IndexedDBService extends BaseService {
 		});
 	}
 	/**
-	 * @template {keyof DT_DatabaseStoreTypes} K
+	 * @template {"boxed_id"} K
 	 * @template {DT_DatabaseStoreTypes[K]} T
 	 * @arg {IDBTransaction} tx
 	 * @arg {K} key
@@ -1457,7 +1434,7 @@ class IndexedDBService extends BaseService {
 		dst_obj_store.createIndex(key,"key",{unique: true});
 		for(let x of video_id_result) dst_obj_store.put(x);
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {IDBDatabase} db */
+	/** @template {"boxed_id"} K @arg {K} key @arg {IDBDatabase} db */
 	create_store(key,db) {
 		let obj_store=db.createObjectStore(key,{keyPath: "key"});
 		obj_store.createIndex(key,"key",{unique: true});
