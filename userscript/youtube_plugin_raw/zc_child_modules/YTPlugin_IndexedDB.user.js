@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,as_any,split_string_once}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,split_string_once}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -155,7 +155,7 @@ class IndexedDBService extends BaseService {
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item @arg {number} version */
 	async load_store(store,item,version) {
 		if(!("type" in item)) {
-			item;
+			item.base;
 			return;
 		}
 		if(item.type!=="boxed_id") return;
@@ -347,10 +347,7 @@ class IndexedDBService extends BaseService {
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}:_:${value.info_arr[3].id}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "FE": {
 				let [tag,id,value]=args;
@@ -359,10 +356,7 @@ class IndexedDBService extends BaseService {
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "VL:LL": {
 				let [type,s_tag,value]=args;
@@ -372,10 +366,7 @@ class IndexedDBService extends BaseService {
 					tag: `${type}:${tag}`,
 					key: `boxed_id:${type}:${tag}:${id}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "VL:WL": {
 				let [type,s_tag,value]=args;
@@ -385,10 +376,7 @@ class IndexedDBService extends BaseService {
 					tag: `${type}:${tag}`,
 					key: `boxed_id:${type}:${tag}:${id}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "VL:PL": {
 				let [type,tag,value]=args;
@@ -399,10 +387,7 @@ class IndexedDBService extends BaseService {
 					tag: `${type}:${tag1}`,
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "SP": {
 				let [tag,id,value]=args;
@@ -411,10 +396,7 @@ class IndexedDBService extends BaseService {
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 		}
 	}
@@ -435,15 +417,17 @@ class IndexedDBService extends BaseService {
 					case "LL": {
 						/** @type {D_Boxed_GuideEntryId_LL} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
-						const promise=this.put_box(z,version);
-						return {args,promise};
+						return {args,promise: this.put_box(z,version)};
 					}
-					case "PL": break;
+					case "PL": {
+						/** @type {D_Boxed_GuideEntryId_PL} */
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.value.info_arr[1].id}`,value: {type: "guide_entry_id",info_arr: [iv]}};
+						return {args,promise: this.put_box(z,version)};
+					}
 					case "WL": {
 						/** @type {D_Boxed_GuideEntryId_WL} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
-						const promise=this.put_box(z,version);
-						return {args,promise};
+						return {args,promise: this.put_box(z,version)};
 					}
 				}
 			} throw new Error("Unreachable");
@@ -462,10 +446,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${value.value}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "playlist_id": {
 				switch(args[1]) {
@@ -477,10 +458,7 @@ class IndexedDBService extends BaseService {
 							tag: "playlist_id:LL",
 							key: "boxed_id:playlist_id:LL",
 							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
+						},version); return {args,promise};
 					}
 					case "WL": {
 						let [tag,id,value]=args;
@@ -489,10 +467,7 @@ class IndexedDBService extends BaseService {
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}`,
 							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
+						},version); return {args,promise};
 					}
 					case "PL": {
 						let [tag,id,value]=args;
@@ -501,10 +476,7 @@ class IndexedDBService extends BaseService {
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
+						},version); return {args,promise};
 					}
 					case "RD": {
 						let [tag,id,value]=args;
@@ -513,10 +485,7 @@ class IndexedDBService extends BaseService {
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
+						},version); return {args,promise};
 					}
 					case "RD:MM": {
 						let [tag,id,value]=args;
@@ -525,10 +494,7 @@ class IndexedDBService extends BaseService {
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
+						},version); return {args,promise};
 					}
 				}
 			}
@@ -539,10 +505,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${value.hashtag}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "channel_id": {
 				let [tag,id,value]=args;
@@ -551,10 +514,7 @@ class IndexedDBService extends BaseService {
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "video_time": {
 				let [tag,,value]=args;
@@ -563,10 +523,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${value.raw_value}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "bigint": {
 				let [tag,,[type,container]]=args;
@@ -580,10 +537,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					key: `boxed_id:${tag}:${type}`,
 					value,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "boolean": {
 				let [tag,,[type,container]]=args;
@@ -595,10 +549,7 @@ class IndexedDBService extends BaseService {
 						type,
 						info_arr: [container]
 					},
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "number": {
 				let [tag,,[type,container]]=args;
@@ -610,10 +561,7 @@ class IndexedDBService extends BaseService {
 						type,
 						info_arr: [container]
 					},
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "string": {
 				let [tag,,[type,container]]=args;
@@ -625,10 +573,7 @@ class IndexedDBService extends BaseService {
 						type,
 						info_arr: [container]
 					},
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "keys": {
 				let [tag,,[type,container]]=args;
@@ -640,10 +585,7 @@ class IndexedDBService extends BaseService {
 						type,
 						info_arr: [container]
 					},
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "root_visual_element": {
 				let [tag,,[type,container]]=args;
@@ -655,10 +597,7 @@ class IndexedDBService extends BaseService {
 						type,
 						info_arr: [container]
 					},
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "load_id": {
 				let [mode,,id]=args;
@@ -667,10 +606,7 @@ class IndexedDBService extends BaseService {
 					type: mode,
 					base: "boxed_id",
 					id,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "save_id": {
 				let [mode,,id]=args;
@@ -679,10 +615,7 @@ class IndexedDBService extends BaseService {
 					type: mode,
 					base: "boxed_id",
 					id,
-				},version);
-				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-				let ret={args,promise: as_any(promise)};
-				return ret;
+				},version); return {args,promise};
 			}
 			case "browse_id": {
 				switch(args[1]) {

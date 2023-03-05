@@ -105,180 +105,21 @@ type T_PutMakeAsyncImpl<N extends string,T extends {
 	}>;
 };
 type T_PutMakeAsync<N extends string,T extends {info_arr: [{raw_id: string;}];}>=T_PutMakeAsyncImpl<N,T>;
-type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
-	key: "video"; args: ["video",DI_VideoId];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "video";
-		key: `boxed_id:video:null:${string}`;
-		value: DI_VideoId;
-	}>;
-}|{
-	key: "user_id"; args: ["user_id",DI_UserId];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "user_id";
-		key: `boxed_id:user_id:${string}`;
-		value: DI_UserId;
-	}>;
-}|{
-	key: "play_next"; args: ["play_next",DI_PlayNext];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "play_next";
-		key: "boxed_id:play_next:1";
-		value: DI_PlayNext;
-	}>;
-}|{
-	key: "playlist_id"; args: ["playlist_id",DI_A_Playlist_PL];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		key: `boxed_id:playlist_id:PL:${string}`;
-		value: DI_A_Playlist_PL;
-	}>;
-}|{
-	key: "playlist_id"; args: ["playlist_id","RD",DI_A_Playlist_RD];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		key: "boxed_id:playlist_id:RD";
-		value: DI_A_Playlist_RD;
-	}>;
-}|{
-	key: "playlist_id"; args: ["playlist_id","RD:CM:UC",DI_A_Playlist_RD_CM_UC];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		key: `boxed_id:playlist_id:RD:CM:UC:${string}`;
-		value: DI_A_Playlist_RD_CM_UC;
-	}>;
-}|{
-	key: "playlist_id"; args: ["playlist_id","RD:GM:EM",DI_A_Playlist_RD_GM_EM];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		key: `boxed_id:playlist_id:RD:GM:EM:${string}`;
-		value: DI_A_Playlist_RD_GM_EM;
-	}>;
-}|{
-	key: "playlist_id"; args: ["playlist_id","RD:MM",DI_A_Playlist_RD_MM];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		key: `boxed_id:playlist_id:RD:MM:${string}`;
-		value: DI_A_Playlist_RD_MM;
-	}>;
-}|{
-	key: "playlist_id"; args: ["playlist_id",DI_A_Playlist_UU];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "playlist_id";
-		key: "boxed_id:playlist_id:UU";
-		value: DI_A_Playlist_UU;
-	}>;
-}|{
-	key: "hashtag_id"; args: ["hashtag_id",DI_HashtagId];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "hashtag_id";
-		key: `boxed_id:hashtag_id:${string}`;
-		value: DI_HashtagId;
-	}>;
-}|{
-	key: "browse_id"; args: ["browse_id",DI_G_BrowseId];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "browse_id";
-		key: `boxed_id:browse_id:VLPL${string}`;
-		value: DI_G_BrowseId;
-	}>;
-}|{
-	key: "channel_id"; args: ["channel_id",DI_ChannelId_UC];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "channel_id";
-		key: `boxed_id:channel_id:UC${string}`;
-		value: DI_ChannelId_UC;
-	}>;
-}|{
-	key: "video_time"; args: ["video_time",DI_VideoTime];
-	w: Promise<{
-		type: "boxed_id";
-		tag: "video_time";
-		key: `boxed_id:video_time:${number}s`;
-		value: DI_VideoTime;
-	}>;
-}|{
-	key: "bigint"; args: ["bigint",string,make_item_group<bigint>];
-	w: Promise<{
-		key: `boxed_id:bigint:${string}`;
-		base: "boxed_id";
-		type: "bigint";
-		id: string;
-		value: make_item_group<bigint>;
-	}>;
-}|{
-	key: "boolean"; args: ["boolean",string,make_item_group<boolean>];
-	w: Promise<{
-		key: `boxed_id:boolean:${string}`;
-		base: "boxed_id";
-		type: "boolean";
-		id: string;
-		value: make_item_group<boolean>;
-	}>;
-}|{
-	key: "number"; args: ["number",string,make_item_group<number>];
-	w: Promise<{
-		key: `boxed_id:number:${string}`;
-		base: "boxed_id";
-		type: "number";
-		id: string;
-		value: make_item_group<number>;
-	}>;
-}|{
-	key: "string"; args: ["string",string,make_item_group<string>];
-	w: Promise<{
-		key: `boxed_id:string:${string}`;
-		base: "boxed_id";
-		type: "string";
-		id: string;
-		value: make_item_group<string>;
-	}>;
-}|{
-	key: "keys"; args: ["keys",string,make_item_group<string|number>];
-	w: Promise<{
-		key: `boxed_id:keys:${string}`;
-		base: "boxed_id";
-		type: "keys";
-		id: string;
-		value: make_item_group<string|number>;
-	}>;
-}|{
-	key: "root_visual_element"; args: ["root_visual_element",string,make_item_group<number>];
-	w: Promise<{
-		key: `boxed_id:root_visual_element:${string}`;
-		base: "boxed_id";
-		type: "root_visual_element";
-		id: string;
-		value: make_item_group<number>;
-	}>;
-}|{
-	key: "load_id"; args: ["load_id",number];
-	w: Promise<{
-		key: "boxed_id:a:load_id";
-		type: "load_id";
-		base: "boxed_id";
-		id: number;
-	}>;
-}|{
-	key: "save_id"; args: ["save_id",number];
-	w: Promise<{
-		key: "boxed_id:a:save_id";
-		type: "save_id";
-		base: "boxed_id";
-		id: number;
-	}>;
+type Y_DI_Shape={
+	type: string;
+	info_arr: [{raw_id: string;}];
+};
+type TY_BoxedShape<T_Type extends string,T_Tag extends string,T_Value extends Y_DI_Shape>={
+	type: T_Type;
+	tag: T_Tag;
+	key: `${T_Type}:${T_Tag}`;
+	value: T_Value;
+};
+type Y_BoxedShape=TY_BoxedShape<string,string,Y_DI_Shape>;
+type Y_PutBoxedRet={
+	key: string;
+	args: [string,DI_VideoId];
+	w: Promise<Y_BoxedShape>;
 };
 type BScratch1=Extract<Y_PutBoxedArgs,["browse_id","FE",DI_BrowseId_FE]>;
 type MakeInfoBoxArgs<T extends {type: any;}>=T extends infer R extends T? [R["type"],R]:never;
