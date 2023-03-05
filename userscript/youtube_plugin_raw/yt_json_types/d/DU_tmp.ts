@@ -1,7 +1,7 @@
 type DU_UrlTypeWithPageType=`page_type_${S_PageTypeStr}`|DU_UrlType;
 type DU_UrlType=NonNullable<Ret_ParserService_GetUrlType>;
 type DU_TargetId_ShoppingPanel_EntryPoint=`shopping_panel_for_entry_point_${"5"|"22"}`;
-type DU_TargetId_2=
+type DU_TargetId=
 	|Extract<D_Menu,{targetId: any;}>["targetId"]
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']

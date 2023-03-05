@@ -2299,7 +2299,7 @@ class ServiceMethods extends ServiceData {
 	is_yt_uuid(x) {
 		return x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)!==null;
 	}
-	/** @api @public @arg {DU_TargetId_2} x */
+	/** @api @public @arg {DU_TargetId} x */
 	parse_target_id(x) {
 		const cf="D_TargetIdStr";
 		if(this.is_yt_uuid(x)) return;
@@ -2321,7 +2321,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
-	/** @protected @arg {string} cf1 @arg {DU_TargetId_2} x */
+	/** @protected @arg {string} cf1 @arg {DU_TargetId} x */
 	targetId(cf1,x) {
 		const cf2="targetId";
 		this.parse_target_id(x);
