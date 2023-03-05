@@ -189,6 +189,7 @@ class IndexedDBService extends BaseService {
 			} break;
 			default: this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 		}
+		let ht=this.x.get("handle_types");
 		switch(item.tag) {
 			default: {
 				let di=decay_item(item);
@@ -220,7 +221,6 @@ class IndexedDBService extends BaseService {
 			case "playlist_id:WL":
 			case "playlist_id:PL":
 			case "user_id":
-			case "video_id":
 			case "video_time": {
 				let val_src=item.value;
 				switch(val_src.type) {
@@ -232,13 +232,27 @@ class IndexedDBService extends BaseService {
 						}
 						if(!val_src.info_arr[0]) {debugger; break;}
 						if(val_src.info_arr[0].raw_id===void 0) {debugger; break;}
-						this.x.get("handle_types").id_cache.add(val_src.info_arr[0].raw_id);
+						if(val_src.type==="user_id") {
+							ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`);
+							break;
+						}
+						let info_arr=val_src.info_arr;
+						let len_1=null,len_2=null,o_len=null;
+						if(info_arr.length===2) len_2=info_arr;
+						else if(info_arr.length===1) len_1=info_arr;
+						else o_len=info_arr;
+						if(len_1) len_1[0].raw_id;
+						if(len_2) len_2[0].raw_id;
+						if(o_len!==null) this.g(o_len[0]);
+						ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`);
 					} break;
-					case "hashtag_id": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.hashtag}`); break;
-					case "play_next": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.value}`); break;
-					case "guide_entry_id": this.x.get("handle_types").id_cache.add(val_src.info_arr[0].value.info_arr[0].raw_id); break;
-					case "video_time": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.raw_value}`); break;
-					case "key": this.x.get("handle_types").id_cache.add(`${val_src.type}:${val_src.info_arr[0].start_radio}`); break;
+					case "hashtag_id": ht.id_cache.add(`${val_src.type}:${val_src.hashtag}`); break;
+					case "play_next": ht.id_cache.add(`${val_src.type}:${val_src.value}`); break;
+					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].value.info_arr[0].raw_id}`); break;
+					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.raw_value}`); break;
+					case "key": ht.id_cache.add(`${val_src.type}:start_radio:${val_src.info_arr[0].start_radio}`); break;
+					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
+					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
 				}
 				let [,d_cache]=this.get_data_cache(item.type);
 				let cache_val=d_cache.find(v => v&&v.key===item.key);
@@ -246,6 +260,11 @@ class IndexedDBService extends BaseService {
 					console.log("commit from load",item.key);
 					this.committed_data.push(cache_val);
 				}
+			} break;
+			case "video_id": {
+				let val_src=item.value;
+				ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`);
+				this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 			} break;
 		}
 	}
@@ -1021,14 +1040,15 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
-		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!(this.loaded_keys.has(e.key)||e.type==="load_id"||e.type==="save_id"));
-		if(no_null_cache.length===1) {
-			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
-		} else if(no_null_cache.length===2) {
-			console.log("[d_cache_nonnull.0]",no_null_cache[0]);
-			console.log("[d_cache_nonnull.1]",no_null_cache[1]);
-		} else if(no_null_cache.length>0) {
-			console.log("[d_cache_nonnull.arr]",no_null_cache);
+		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.loaded_keys.has(e.key));
+		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.type==="save_id"||e.type==="load_id"));
+		if(no_id_cache.length===1) {
+			console.log("[d_cache_nonnull.0]",no_id_cache[0]);
+		} else if(no_id_cache.length===2) {
+			console.log("[d_cache_nonnull.0]",no_id_cache[0]);
+			console.log("[d_cache_nonnull.1]",no_id_cache[1]);
+		} else if(no_id_cache.length>0) {
+			console.log("[d_cache_nonnull.arr]",no_id_cache);
 		}
 		let updated_count=0;
 		try {
@@ -1148,9 +1168,10 @@ class IndexedDBService extends BaseService {
 			this.database_open=false;
 			if(this.log_db_actions) console.log("close db");
 			if(no_null_cache.length>0) {
-				console.log("[committed_cache_num] [start=%o] [updated=%o]",no_null_cache.length,updated_count);
+				console.log("[committed_cache_num] [start=%o] [updated=%o] [committed=%o]",no_null_cache.length,updated_count,this.committed_data.length);
 				debugger;
 			}
+			this.committed_data=[];
 		}
 	}
 	/**

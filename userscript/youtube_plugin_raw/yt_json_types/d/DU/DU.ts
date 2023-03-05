@@ -25,13 +25,17 @@ type DU_TargetId=
 	;
 ;
 //#endregion
+//#region Key type
 type DU_EndpointKey=`${string}${D_EndpointLikeEndings}`;
+//#endregion
+//#region RetParam
 type RetParam_D32=`TYPE::T_D32<${number}>`;
 type RetParam_D64=`TYPE::T_D64<${bigint}n>`;
 type RetParam_FD32=`TYPE::T_FD32<${number}>`;
 type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
 type RetParam_TV_Str=`TYPE::TV_Str<"${string}">`;
 type RetParam_VW_Bigint=`TYPE::T_VW_Bigint<${bigint}n>`;
+//#endregion
 
 type D_ApiStatsAdsStr=`ver=${string}&ns=${string}&event=${string}&device=${string}&content_v=${string}&el=${string}&ei=${string}&devicever=${string}&bti=${string}&break_type=${string}&conn=${string}&cpn=${string}&lact=${string}&m_pos=${string}&mt=${string}&p_h=${string}&p_w=${string}&rwt=${string}&sdkv=${string}&slot_pos=${string}&vis=${string}&vol=${string}&wt=${string}&sli=${string}&slfs=${string}&loginael=${string}`;
 type D_ApiUrlFormat=`https://www.youtube.com${D_ApiPathFormat_1}`;
@@ -71,3 +75,16 @@ type GU_GoogleVideoUrl=
 	;
 ;
 //#endregion
+type DU_IdCacheItem=
+	|`video_id:${string}`
+	|`browse_id:${GU_BrowseId}`
+	|`playlist_id:${SD_PlaylistId}`
+	|`user_id:${string}`
+	|`hashtag_id:${string}`
+	|`guide_entry_id:${GU_GuideEntryId}`
+	|`channel_id:${DU_Channel_Id}`
+	|`key:start_radio:${0|1}`
+	|`video_time:${number}s`
+	|`play_next:${1}`
+	;
+;

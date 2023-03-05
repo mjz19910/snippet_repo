@@ -1487,47 +1487,53 @@ class ServiceMethods extends ServiceData {
 			case "many": throw new Error("What");
 		}
 	}
-	/** @private @type {DU_VideoId[]} x */
+	/** @public @type {DU_VideoId[]} x */
 	video_id_list=[];
-	/** @type {Set<string>} */
+	/** @type {Set<DU_IdCacheItem>} */
 	static id_cache=new Set;
 	id_cache=ServiceMethods.id_cache;
 	/** @protected @arg {DU_VideoId} x */
 	videoId(x) {
-		if(this.id_cache.has(x)) return;
-		this.id_cache.add(x);
+		const type="video_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
+		if(this.id_cache.has(raw_id)) return;
+		this.id_cache.add(raw_id);
 		if(this.video_id_list.includes(x)) return;
-		this.ht.D_RawUrlFromTag("raw","video_id",x);
+		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
 	/** @api @public @arg {GU_BrowseId} x */
 	browseId(x) {
-		if(this.id_cache.has(x)) return;
-		this.id_cache.add(x);
-		this.ht.D_RawUrlFromTag("raw","browse_id",x);
+		const type="browse_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
+		if(this.id_cache.has(raw_id)) return;
+		this.id_cache.add(raw_id);
+		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
 	/** @public @arg {SD_PlaylistId} x */
 	playlistId(x) {
-		if(this.id_cache.has(x)) return;
-		this.id_cache.add(x);
-		this.ht.D_RawUrlFromTag("raw","playlist_id",x);
+		const type="playlist_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
+		if(this.id_cache.has(raw_id)) return;
+		this.id_cache.add(raw_id);
+		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
-	/** @protected @arg {D_GuideEntryData["guideEntryId"]} x */
+	/** @protected @arg {GU_GuideEntryId} x */
 	guideEntryId(x) {
-		if(this.id_cache.has(x)) return;
-		this.id_cache.add(x);
-		this.ht.D_RawUrlFromTag("raw","guide_entry_id",x);
-	}
-	/** @protected @arg {DU_Channel_Id} raw_id */
-	channelId(raw_id) {
+		const type="guide_entry_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.D_RawUrlFromTag("raw","channel_id",raw_id);
+		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
-	/** @protected @arg {D_UserIdStr} raw_id */
-	userId(raw_id) {
+	/** @protected @arg {DU_Channel_Id} x */
+	channelId(x) {
+		const type="channel_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.DI_G_NoKey({type: "user_id",info_arr: [{raw_id}]});
+		this.ht.D_RawUrlFromTag("raw",type,x);
+	}
+	/** @protected @arg {D_UserIdStr} x */
+	userId(x) {
+		const type="user_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
+		if(this.id_cache.has(raw_id)) return;
+		this.id_cache.add(raw_id);
+		this.ht.DI_G_NoKey({type,info_arr: [{raw_id: x}]});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
