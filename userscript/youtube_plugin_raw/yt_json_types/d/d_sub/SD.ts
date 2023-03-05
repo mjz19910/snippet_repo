@@ -1,5 +1,5 @@
 type SD_PlaylistId=
-	|DU_PlaylistId
+	|SU_PlaylistId
 	|DU_Playlist_UserUploads
 	|DU_Playlist_PL
 	|DU_RadioId

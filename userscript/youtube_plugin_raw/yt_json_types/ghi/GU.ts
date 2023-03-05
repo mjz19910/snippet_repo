@@ -7,14 +7,6 @@ type GU_VE3611_Url=
 	|`/user/${string}`
 	;
 ;
-type DU_BrowseId_Playlist=`VL${DU_Playlist_PL}`;
-type DU_Playlist_PL=`PL${string}`;
-type DU_Playlist_UserUploads=`UU${string}`;
-type DU_PlaylistId="WL"|"LL";
-type DU_RadioId_ChannelMix=`RDCM${DU_ChannelId}`;
-type DU_RadioId_GeneralMix=`RDGM${string}`;
-type DU_RadioId_MyMix=`RDMM${string}`;
-type DU_RadioId=`RD${string}`;
 type GU_GuideEntryId="WL"|"LL"|`UC${string}`|DU_Playlist_PL;
 type GU_VE5754_BrowseId="VLWL"|"VLLL"|DU_BrowseId_Playlist;
 type GU_VE6827_Id=
