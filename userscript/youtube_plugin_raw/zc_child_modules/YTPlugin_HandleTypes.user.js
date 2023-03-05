@@ -3449,8 +3449,43 @@ class HandleTypes extends ServiceMethods {
 			case "browse_id": {
 				const z=this.make_DI_AGR_UrlInfo(x);
 				switch(z.tag) {
-					default: console.log("todo",z.type,z.tag); break;
+					default: get_tag(z)===""; debugger; break;
 					case "FE": {
+						const {type,tag}=z;
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=[type,tag,z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} break;
+					case "VL:WL": {
+						const {type,tag}=z;
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=[type,tag,z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} break;
+					case "VL:LL": {
+						const {type,tag}=z;
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=[type,tag,z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} break;
+					case "VL:PL": {
+						const {type,tag}=z;
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=[type,tag,z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} break;
+					case "SP": {
+						const {type,tag}=z;
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=[type,tag,z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} break;
+					case "MP": {
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];
