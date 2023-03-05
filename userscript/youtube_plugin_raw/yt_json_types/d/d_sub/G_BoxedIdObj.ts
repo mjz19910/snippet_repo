@@ -8,5 +8,11 @@ type G_BoxedIdObj=
 		key: `boxed_id:playlist_id:RD:${string}`;
 		value: DI_A_Playlist_RD;
 	}
+	|{
+		type: "boxed_id";
+		tag: "playlist_id:RD:MM";
+		key: `boxed_id:playlist_id:RD:MM:${string}`;
+		value: DI_A_Playlist_RD_MM;
+	}
 	;
 ;
