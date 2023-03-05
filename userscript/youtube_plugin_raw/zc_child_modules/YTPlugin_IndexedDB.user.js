@@ -104,21 +104,18 @@ class TypedIDBValidKeyS {
 	}
 }
 class IndexedDBService extends BaseService {
+	/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
+	create_cache_index(s,k,v) {s[k]=v;}
+	/** @template {keyof DT_DatabaseStoreTypes} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {T_CacheInfoType<R>} v */
+	create_cache(s,k,v) {s[k]=v;}
 	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {return J_ResolverTypeImpl.make();}
 	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
 		super(x);
-		/** @type {DT_DatabaseStoreKeys} */
-		let keys=["boxed_id"];
-		for(let key of keys) {
-			/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
-			function create_cache_index(s,k,v) {s[k]=v;}
-			/** @template {keyof DT_DatabaseStoreTypes} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {T_CacheInfoType<R>} v */
-			function create_cache(s,k,v) {s[k]=v;}
-			create_cache_index(this.store_cache_index,key,[key,new Map]);
-			create_cache(this.store_cache,key,[key,[]]);
-		}
+		const key="boxed_id";
+		this.create_cache_index(this.store_cache_index,key,[key,new Map]);
+		this.create_cache(this.store_cache,key,[key,[]]);
 	}
 	database_opening=false;
 	database_open=false;
