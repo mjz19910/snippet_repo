@@ -1,4 +1,4 @@
 type DI_VideoId={
 	type: "video_id";
-	info_arr: [{raw_id: string;}];
+	info_arr: [DIT_Item<"raw_id",string>];
 };

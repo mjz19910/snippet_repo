@@ -3254,7 +3254,7 @@ class HandleTypes extends ServiceMethods {
 				const z={type: "playlist_id",tag: "UU",info_arr: [{raw_id},{id}]}; ret=z;
 			} break;
 			case "channel_id":/*G*/{
-				const {info_arr: [{raw_id}]}=x;
+				const {info_arr: [{info_arr: [{info_arr: [raw_id]}]}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {DI_A_ChannelId_UC} */
 				const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;

@@ -139,7 +139,7 @@ class IndexedDBService extends BaseService {
 	loaded_keys=new Set;
 	/** @type {Set<string>} */
 	database_diff_keys=new Set;
-	/** @type {WeakSet<G_BoxedIdObj|G_BoxedIdObj["value"]|Extract<G_BoxedIdObj["value"],{info_arr:any}>["info_arr"][0]>} */
+	/** @type {WeakSet<G_BoxedIdObj|CacheSetItems>} */
 	cache_weak_set=new WeakSet;
 	/** @private @type {G_BoxedIdObj[]} */
 	committed_data=[];
@@ -203,7 +203,7 @@ class IndexedDBService extends BaseService {
 			item.type;
 			return;
 		}
-		this.cache_weak_set.add(item.value);
+		this.cache_weak_set.add(item.info_arr[0]);
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		/** @template {{type:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
@@ -215,8 +215,8 @@ class IndexedDBService extends BaseService {
 			case "number":
 			case "root_visual_element":
 			case "string": {
-				if(this.cache_weak_set.has(item.value.info_arr[0])) break;
-				this.cache_weak_set.add(item.value.info_arr[0]);
+				if(this.cache_weak_set.has(item.info_arr[0].info_arr[0])) break;
+				this.cache_weak_set.add(item.info_arr[0].info_arr[0]);
 			} break;
 			default: this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 		}
@@ -229,12 +229,12 @@ class IndexedDBService extends BaseService {
 				console.log("skip_tag",di.tag);
 				debugger;
 			} break;
-			case "bigint": return store.get_store("bigint_store").load_data(item);
-			case "boolean": return store.get_store("bool_store").load_data(item);
-			case "keys": return store.get_store("keys_store").load_data(item);
-			case "number": return store.get_store("number_store").load_data(item);
-			case "root_visual_element": return store.get_store("ve_store").load_data(item);
-			case "string": return store.get_store("string_store").load_data(item);
+			case "bigint": return store.get_store(item.tag).load_data(item);
+			case "boolean": return store.get_store(item.tag).load_data(item);
+			case "keys": return store.get_store(item.tag).load_data(item);
+			case "number": return store.get_store(item.tag).load_data(item);
+			case "root_visual_element": return store.get_store(item.tag).load_data(item);
+			case "string": return store.get_store(item.tag).load_data(item);
 			case "a:load_id":
 			case "a:save_id":
 			case "a:update_id":
@@ -358,7 +358,7 @@ class IndexedDBService extends BaseService {
 		let arr=null;
 		/** @type {make_many_t<T>|null} */
 		let many=null;
-		switch(x[0]) {
+		switch(x.type) {
 			default: debugger; break;
 			case "one": one=x; break;
 			case "many": many=x; break;
@@ -374,7 +374,7 @@ class IndexedDBService extends BaseService {
 		let arr=null;
 		/** @type {make_many_t<T>|null} */
 		let many=null;
-		switch(x[0]) {
+		switch(x.type) {
 			default: debugger; break;
 			case "one": one=x; break;
 			case "many": many=x; break;
@@ -608,29 +608,34 @@ class IndexedDBService extends BaseService {
 				},version); return {args,promise};
 			}
 			case "bigint": {
-				let [tag,,[type,container]]=args;
-				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
-				let value={
-					type,
-					info_arr: [container]
-				};
-				let promise=this.put_box({
+				const [tag,,[id,value]]=args;
+				const z={
+					/** @type {"boxed_id"} */
 					type: "boxed_id",
 					tag,
-					key: `boxed_id:${tag}:${type}`,
-					value,
-				},version); return {args,promise};
+					/** @type {`boxed_id:${typeof tag}:${typeof id}`} */
+					key: `boxed_id:${tag}:${id}`,
+					value: {
+						/** @type {"bigint"} */
+						type: "bigint",
+						/** @type {[{type:"store";info_arr:[make_item_group<bigint>];}]} */
+						info_arr: [{
+							/** @type {"store"} */
+							type: "store",
+							info_arr: [value],
+						}]
+					},
+				};
+
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "boolean": {
-				let [tag,,[type,container]]=args;
+				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
+					value: {type: "bigint",info_arr: [{type: "store",value}]},
 				},version); return {args,promise};
 			}
 			case "number": {

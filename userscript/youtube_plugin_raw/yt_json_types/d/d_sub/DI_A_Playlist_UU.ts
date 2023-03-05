@@ -2,7 +2,7 @@ type DI_A_Playlist_UU={
 	type: "playlist_id";
 	tag: "UU";
 	info_arr: [
-		{raw_id: `UU${string}`;},
+		DIT_Item<"raw_id",DIT_Prim<`UU${string}`>>,
 		{id: string;}
 	];
 };

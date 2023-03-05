@@ -1,4 +1,4 @@
 type DI_User_Id={
 	type: "user_id";
-	info_arr: [{raw_id: string;}];
+	info_arr: [DIT_Item<"raw_id",DIT_Prim<string>>];
 };

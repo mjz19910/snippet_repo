@@ -1,4 +1,1 @@
-type DI_HashtagId={
-	type: "hashtag_id";
-	hashtag: string;
-};
+type DI_HashtagId=DIT_Item<"hashtag_id",DIT_Item<"hashtag",DIT_Prim<string>>>;

@@ -87,24 +87,24 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
-/** @template {string|number|bigint|boolean} CLS_T @template {StoreContentStr} U */
+/** @template {StoreContentStr} CLS_K */
 class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	key_index=new Map;
 	/** @type {Map<string,number>} */
 	new_key_index=new Map;
-	/** @type {[string, make_item_group<CLS_T>][]} */
+	/** @type {[string, make_item_group<StoreTypeMap[CLS_K]>][]} */
 	data=[];
-	/** @type {[string, make_item_group<CLS_T>][]} */
+	/** @type {[string, make_item_group<StoreTypeMap[CLS_K]>][]} */
 	new_data=[];
-	/** @arg {StoreGetType<CLS_T>} type @arg {U} content @arg {()=>void} data_update_callback */
-	constructor(type,content,data_update_callback) {
+	/** @arg {CLS_K} type @arg {StoreStrMap[CLS_K]} type_arr @arg {()=>void} data_update_callback */
+	constructor(type,type_arr,data_update_callback) {
 		super();
 		this.type=type;
-		this.content=content;
+		this.type_arr=type_arr;
 		this.data_update_callback=data_update_callback;
 	}
-	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
+	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
 	add_data_to_index(k,x) {
 		let idx=this.key_index.get(k);
 		if(idx!==void 0) {
@@ -115,7 +115,7 @@ class StoreDescription extends ApiBase2 {
 		this.key_index.set(k,new_len-1);
 		this.data_update_callback();
 	}
-	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
+	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
 	add_new_data_to_index(k,x) {
 		let idx=this.new_key_index.get(k);
 		if(idx!==void 0) {
@@ -125,7 +125,7 @@ class StoreDescription extends ApiBase2 {
 		let new_len=this.new_data.push([k,x]);
 		this.new_key_index.set(k,new_len-1);
 	}
-	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
+	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
 	push_new_data(k,x) {
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
@@ -133,12 +133,12 @@ class StoreDescription extends ApiBase2 {
 	/** @arg {T_BoxedStore<CLS_T,this["content"]>} item */
 	load_data(item) {
 		let {value: ua}=item;
-		let {type: k,info_arr: [x]}=ua;
+		let {type: k,info_arr: [{value: x}]}=ua;
 		this.add_data_to_index(k,x);
 	}
-	/** @template {make_item_group<CLS_T>} R @arg {R} x @returns {R} */
+	/** @template {make_item_group<StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
 	clone_container(x) {
-		switch(x[0]) {
+		switch(x.type) {
 			case "arr": {
 				/** @type {typeof x} */
 				let x_clone=structuredClone(x);
@@ -156,43 +156,43 @@ class StoreDescription extends ApiBase2 {
 			}
 		}
 	}
-	/** @template {make_item_group<CLS_T>} T @arg {T} x @template {make_item_group<CLS_T>} U @arg {(x:T)=>U} prepare */
+	/** @template {make_item_group<StoreTypeMap[CLS_K]>} T @arg {T} x @template {make_item_group<StoreTypeMap[CLS_K]>} U @arg {(x:T)=>U} prepare */
 	clone_and_then(x,prepare) {
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
-	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
+	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
 	save_data(k,x) {
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
 			let item=this.data[idx];
 			let item_container=item[1];
-			if(item_container[0]==="many"&&x[0]==="arr") {
-				let [,item_many]=item_container;
-				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x[1]))>-1) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1[1].push(x[1]),x1));
+			if(item_container.type==="many"&&x.type==="arr") {
+				let {value: item_many}=item_container;
+				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x.value))>-1) return;
+				let new_container=this.clone_and_then(item_container,x1 => (x1.value.push(x.value),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container[0]==="arr"&&x[0]==="one") {
-				let [,item_arr]=item_container;
-				if(item_arr.includes(x[1])) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1[1].push(x[1]),x1));
+			if(item_container.type==="arr"&&x.type==="one") {
+				let {value: item_arr}=item_container;
+				if(item_arr.includes(x.value)) return;
+				let new_container=this.clone_and_then(item_container,x1 => (x1.value.push(x.value),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container[0]==="arr"&&x[0]==="arr") {
-				let [,item_arr]=item_container;
-				if(this.eq_keys(item_arr,x[1])) return;
-				let new_container=this.clone_and_then(item_container,x1 => ["many",[x1[1],x[1]]]);
+			if(item_container.type==="arr"&&x.type==="arr") {
+				let {value: item_arr}=item_container;
+				if(this.eq_keys(item_arr,x.value)) return;
+				let new_container=this.clone_and_then(item_container,x1 => ({type: "many",value: [x1.value,x.value]}));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container[0]==="one"&&x[0]==="one") {
-				let [,item_value]=item_container;
-				if(item_value===x[1]) return;
-				let new_container=this.clone_and_then(item_container,x1 => ["arr",[x1[1],x[1]]]);
+			if(item_container.type==="one"&&x.type==="one") {
+				let {value: item_value}=item_container;
+				if(item_value===x.value) return;
+				let new_container=this.clone_and_then(item_container,x1 => ({type: "arr",value: [x1.value,x.value]}));
 				this.push_new_data(k,new_container);
 				return;
 			}
@@ -205,16 +205,16 @@ class StoreDescription extends ApiBase2 {
 	save_keys(k,obj) {
 		if(!obj) {debugger; return;}
 		if(typeof obj!=="object") {
-			this.save_data(`${k}.type`,["one",typeof obj]);
+			this.save_data(`${k}.type`,{type: "one",value: typeof obj});
 			return;
 		}
 		if(obj instanceof Array) {
-			this.save_data(`${k}.instance`,["one","array"]);
+			this.save_data(`${k}.instance`,{type: "one",value: "array"});
 			return;
 		}
 		let keys=this.get_keys_of(obj);
 		/** @type {make_arr_t<string>} */
-		let x=["arr",keys];
+		let x={type: "arr",value: keys};
 		return this.save_data(k,x);
 	}
 	/** @arg {string} k */
@@ -222,11 +222,11 @@ class StoreDescription extends ApiBase2 {
 		let idx=this.key_index.get(k);
 		if(idx) return this.data[idx];
 		idx=this.data.findIndex(e => e[0]===k);
-		if(idx<0) return this.add_to_index(k,["arr",[]]);
+		if(idx<0) return this.add_to_index(k,{type: "arr",value: []});
 		this.key_index.set(k,idx);
 		return this.data[idx];
 	}
-	/** @arg {string} k @arg {make_item_group<CLS_T>} x */
+	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
 	add_to_index(k,x) {
 		/** @type {[typeof k,typeof x]} */
 		let p=[k,x];
@@ -250,31 +250,44 @@ class StoreDescription extends ApiBase2 {
 export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
 	/** @arg {StoreDataInput} args */
-	add_store(args) {let [key,store]=args; this.stores.set(key,store);}
-	/** @type {Map<StoreDataInput[0],StoreDescription<any,any>>} */
+	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
+	/** @type {Map<StoreDataInput["type"],StoreDescription<any,any,any>>} */
 	stores=new Map;
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
-		/** @type {StoreDescription<bigint,"bigint">} */
-		let bigint_store=new StoreDescription("bigint","bigint",data_update_callback);
-		/** @type {StoreDescription<boolean,"boolean">} */
-		let bool_store=new StoreDescription("boolean","boolean",data_update_callback);
-		/** @type {StoreDescription<number|string,"keys">} */
-		let keys_store=new StoreDescription("string","keys",data_update_callback);
-		/** @type {StoreDescription<number,"number">} */
-		let number_store=new StoreDescription("number","number",data_update_callback);
-		/** @type {StoreDescription<string,"string">} */
-		let string_store=new StoreDescription("string","string",data_update_callback);
-		/** @type {StoreDescription<number,"root_visual_element">} */
-		let ve_store=new StoreDescription("number","root_visual_element",data_update_callback);
-		this.add_store(["bigint_store",bigint_store]);
-		this.add_store(["bool_store",bool_store]);
-		this.add_store(["keys_store",keys_store]);
-		this.add_store(["number_store",number_store]);
-		this.add_store(["string_store",string_store]);
-		this.add_store(["ve_store",ve_store]);
+		/** @arg {StoreDataInput["type"]} type @returns {StoreDataInput} */
+		function make_store(type) {
+			switch(type) {
+				case "bigint": {
+					/** @type {StoreDescription<bigint,[""]>} */
+					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+				}
+				case "boolean": {
+					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
+					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+				}
+				case "keys": {
+					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
+					const description=new StoreDescription(["number","string"],type,data_update_callback); return {type,description};
+				}
+				case "number": {
+					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
+					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+				}
+				case "root_visual_element": {
+					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
+					const description=new StoreDescription(["number"],type,data_update_callback); return {type,description};
+				}
+				case "string": {
+					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
+					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+				}
+			}
+		}
+		const store_names_arr=["bigint","boolean","keys","number","root_visual_element","string"];
+		for(let store_name of store_names_arr) this.add_store(make_store(store_name));
 	}
-	/** @template {StoreDataInput[0]} T @arg {T} key @returns {Extract<StoreDataInput,[T,any]>[1]} */
+	/** @template {StoreDataInput["type"]} T @arg {T} key @returns {Extract<StoreDataInput,{type:T}>["description"]} */
 	get_store(key) {
 		let item=this.stores.get(key);
 		if(item===void 0) throw new Error();
@@ -382,7 +395,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let f=true;
 		if(f) return;
 		let p=store.data[idx];
-		if(store.type!=="string") return;
+		if(store.type_arr!=="string") return;
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
