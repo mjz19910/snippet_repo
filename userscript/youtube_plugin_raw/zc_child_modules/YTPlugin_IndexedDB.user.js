@@ -232,6 +232,7 @@ class IndexedDBService extends BaseService {
 				switch(val_src.type) {
 					default: {
 						if(!val_src.info_arr) {
+							console.log("[no_info_delete]",item.key);
 							await this.delete(item.type,item.key,version);
 							return;
 						}
@@ -1146,6 +1147,7 @@ class IndexedDBService extends BaseService {
 					}
 					let put_req=typed_db.put(s.obj_store,item);
 					await this.get_async_result(put_req);
+					this.committed_data.push(item);
 					let idx=d_cache.indexOf(item);
 					d_cache[idx]=null;
 					continue;
