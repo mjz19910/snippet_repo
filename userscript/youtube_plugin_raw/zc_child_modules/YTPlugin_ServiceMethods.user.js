@@ -2080,7 +2080,7 @@ class ServiceMethods extends ServiceData {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}
-	/** @protected @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
+	/** @protected @template {U["commandMetadata"]["webCommandMetadata"]["rootVe"]} T @template {TE_VE_In} U @arg {U} x @arg {T} t @returns {x is TE_VE<T>} */
 	is_TE_VE(x,t) {
 		return x.commandMetadata.webCommandMetadata.rootVe===t;
 	}
@@ -6072,13 +6072,23 @@ class ServiceMethods extends ServiceData {
 		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
 		if("browseEndpoint" in x) {
 			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
-			debugger;
-			return;
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			this.is_TE_VE(x,this.assume_type.never()); debugger; return;
 		}
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	assume_type={
+		/** @returns {never} */
+		never() {
+			let v={i: 1};
+			/** @arg {{i:number}} x @returns {asserts x is never} */
+			function assume_never(x) {x;}
+			assume_never(v);
+			return v;
+		}
+	};
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
 	D_CompactLink_Styled(cf,x) {
 		switch(x.style) {

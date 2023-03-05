@@ -1,4 +1,10 @@
 type D_CompactLink={
+	icon: T_Icon<"CREATION_POST">;
+	title: G_Text;
+	navigationEndpoint: E_VE3611;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
+}|{
 	title: G_Text;
 	navigationEndpoint: E_Url;
 	trackingParams: string;

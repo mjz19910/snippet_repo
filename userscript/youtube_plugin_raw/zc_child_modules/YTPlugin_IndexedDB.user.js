@@ -255,11 +255,10 @@ class IndexedDBService extends BaseService {
 				let [,d_cache]=this.get_data_cache(item.type);
 				let cache_val=d_cache.find(v => v&&v.key===item.key);
 				if(cache_val) {
-					console.log("commit from load",item.key);
+					console.log("[found_during_load]",item.key);
 					this.committed_data.push(cache_val);
 				} else {
-					d_cache;
-					debugger;
+					console.log("[not_found_during_load]",item.key);
 				}
 			} break;
 			case "video_id": {
@@ -968,6 +967,12 @@ class IndexedDBService extends BaseService {
 						if(loaded_value.value.info_arr[0].raw_id===value.value.info_arr[0].raw_id) return value;
 						debugger;
 					} break;
+					case "a:load_id": {
+						let loaded_value=this.loaded_map.get(value.key);
+						if(!loaded_value) throw new Error("Unreachable");
+						if(loaded_value.key!==value.key) break x;
+						if(loaded_value.value.raw===value.value.raw) return value;
+					}
 				}
 			}
 			debugger;
