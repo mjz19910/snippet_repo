@@ -1,4 +1,4 @@
-type DI_G_Playlist_UU={
+type DI_A_Playlist_UU={
 	type: "playlist_id";
 	tag: "UU";
 	info_arr: [

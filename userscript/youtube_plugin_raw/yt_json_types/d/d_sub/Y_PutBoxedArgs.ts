@@ -7,7 +7,7 @@ type DI_BrowseId_VL_WL={
 		},
 		{
 			tag: "WL";
-			value: DI_Playlist_WL;
+			value: DI_A_Playlist_WL;
 		}
 	];
 };
@@ -20,7 +20,7 @@ type DI_BrowseId_VL_LL={
 		},
 		{
 			tag: "LL";
-			value: DI_Playlist_LL;
+			value: DI_A_Playlist_LL;
 		}
 	];
 };
@@ -33,7 +33,7 @@ type DI_BrowseId_VL_PL={
 		},
 		{
 			tag: "PL";
-			value: DI_Playlist_PL;
+			value: DI_A_Playlist_PL;
 		}
 	];
 };
@@ -51,9 +51,9 @@ type Y_PutBoxedArgs=
 	|["load_id",null,number]
 	|["number",null,[string,make_item_group<number>]]
 	|["play_next",null,DI_PlayNext]
-	|["playlist_id","LL",DI_Playlist_LL]
-	|["playlist_id","PL",DI_Playlist_PL]
-	|["playlist_id","WL",DI_Playlist_WL]
+	|["playlist_id","LL",DI_A_Playlist_LL]
+	|["playlist_id","PL",DI_A_Playlist_PL]
+	|["playlist_id","WL",DI_A_Playlist_WL]
 	|["root_visual_element",null,[string,make_item_group<number>]]
 	|["save_id",null,number]
 	|["string",null,[string,make_item_group<string>]]
@@ -122,12 +122,12 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 		value: DI_PlayNext;
 	}>;
 }|{
-	key: "playlist_id"; args: ["playlist_id",DI_Playlist_PL];
+	key: "playlist_id"; args: ["playlist_id",DI_A_Playlist_PL];
 	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: "boxed_id:playlist_id:PL";
-		value: DI_Playlist_PL;
+		value: DI_A_Playlist_PL;
 	}>;
 }|{
 	key: "playlist_id"; args: ["playlist_id","RD",DI_A_Playlist_RD];
@@ -162,12 +162,12 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 		value: DI_A_Playlist_RD_MM;
 	}>;
 }|{
-	key: "playlist_id"; args: ["playlist_id",DI_G_Playlist_UU];
+	key: "playlist_id"; args: ["playlist_id",DI_A_Playlist_UU];
 	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
 		key: "boxed_id:playlist_id:UU";
-		value: DI_G_Playlist_UU;
+		value: DI_A_Playlist_UU;
 	}>;
 }|{
 	key: "hashtag_id"; args: ["hashtag_id",DI_HashtagId];

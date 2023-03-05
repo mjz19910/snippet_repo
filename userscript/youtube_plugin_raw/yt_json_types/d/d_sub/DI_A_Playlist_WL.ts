@@ -1,1 +1,1 @@
-type DI_Playlist_WL=T_UrlInfo1<"playlist_id","WL">;
+type DI_A_Playlist_WL=T_UrlInfo1<"playlist_id","WL">;

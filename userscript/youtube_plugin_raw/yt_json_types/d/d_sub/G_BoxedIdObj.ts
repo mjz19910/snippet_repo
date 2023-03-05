@@ -48,13 +48,13 @@ type G_BoxedIdObj=
 		type: "boxed_id";
 		tag: "playlist_id:LL";
 		key: "boxed_id:playlist_id:LL";
-		value: DI_Playlist_LL;
+		value: DI_A_Playlist_LL;
 	}
 	|{
 		type: "boxed_id";
 		tag: "playlist_id:WL";
 		key: "boxed_id:playlist_id:WL";
-		value: DI_Playlist_WL;
+		value: DI_A_Playlist_WL;
 	}
 	|{
 		type: "boxed_id";
@@ -66,7 +66,7 @@ type G_BoxedIdObj=
 		type: "playlist_id";
 		tag: "playlist_id:WL";
 		key: "boxed_id:playlist_id:WL";
-		value: DI_Playlist_WL;
+		value: DI_A_Playlist_WL;
 	}
 	;
 ;
