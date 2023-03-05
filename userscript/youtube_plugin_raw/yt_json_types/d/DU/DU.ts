@@ -82,7 +82,7 @@ type DU_IdCacheItem=
 	|`user_id:${string}`
 	|`hashtag_id:${string}`
 	|`guide_entry_id:${GU_GuideEntryId}`
-	|`channel_id:${DU_Channel_Id}`
+	|`channel_id:${T_IdTemplate<"UC",D_UserIdStr>}`
 	|`key:start_radio:${0|1}`
 	|`video_time:${number}s`
 	|`exact:play_next:${1}`

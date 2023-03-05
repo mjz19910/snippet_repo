@@ -24,7 +24,7 @@ type D_PlaylistContent={
 	title: "Abyss Soul Lotus OSTs";
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: number;
-	playlistId: DU_Playlist_Id;
+	playlistId: T_IdTemplate<"PL">;
 	totalVideos: number;
 	ownerName: G_Text;
 	isInfinite: false;
@@ -46,7 +46,7 @@ type D_PlaylistContent={
 	title: string;
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: number;
-	playlistId: DU_Playlist_Id;
+	playlistId: T_IdTemplate<"PL">;
 	totalVideos: number;
 	ownerName: G_Text;
 	isInfinite: false;

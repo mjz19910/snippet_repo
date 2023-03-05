@@ -36,7 +36,7 @@ type D_WatchPageUrl=
 type D_WatchPlaylistUrlFormat=
 	|`list=${SD_PlaylistId}`
 	|`list=${SD_PlaylistId}&index=${number}`
-	|`list=${GU_Radio_Id}&start_radio=${1|0}`
+	|`list=${T_IdTemplate<Extract<DU_PlaylistId_Base,`RD${string}`>>}&start_radio=${1|0}`
 	;
 ;
 type D_WatchUrlStr=
@@ -390,7 +390,7 @@ type D_AlertWithButton={
 type D_RemarketingPing={remarketingPing: `https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`;};
 
 type D_C4TabbedHeader={
-	channelId: DU_Channel_Id;
+	channelId: T_IdTemplate<"UC",D_UserIdStr>;
 	title: string;
 	navigationEndpoint: E_VE3611;
 	avatar: D_Thumbnail;
@@ -651,7 +651,7 @@ type D_ChipCloudChip=
 	};
 type EG_CompactLink_1=E_Upload|E_SignalNavigation;
 type D_CompactPlaylist={
-	playlistId: DU_Playlist_Id;
+	playlistId: T_IdTemplate<"PL">;
 	thumbnail: D_Thumbnail;
 	title: G_Text;
 	shortBylineText: G_Text;
@@ -989,7 +989,7 @@ type D_Channel_MD={
 	title: string;
 	description: string;
 	rssUrl: string;
-	externalId: DU_Channel_Id;
+	externalId: T_IdTemplate<"UC",D_UserIdStr>;
 	keywords: string;
 	ownerUrls: [`http://www.youtube.com/@${string}`];
 	avatar: D_Thumbnail;
@@ -1042,7 +1042,7 @@ type D_LiveChatTextMessage={
 	id: string;
 	authorBadges?: R_LiveChatAuthorBadge[];
 	timestampUsec: `${number}`;
-	authorExternalChannelId: DU_Channel_Id;
+	authorExternalChannelId: T_IdTemplate<"UC",D_UserIdStr>;
 	contextMenuAccessibility: D_Accessibility;
 	timestampText: G_Text;
 };
@@ -2192,7 +2192,7 @@ type D_PlayerMicroformat={
 	description?: G_Text;
 	lengthSeconds: `${number}`;
 	ownerProfileUrl: `http://www.youtube.com/channel/UC${string}`;
-	externalChannelId: DU_Channel_Id;
+	externalChannelId: T_IdTemplate<"UC",D_UserIdStr>;
 	isFamilySafe: boolean;
 	availableCountries: string[];
 	isUnlisted: boolean;

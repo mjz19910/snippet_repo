@@ -3210,6 +3210,12 @@ class HandleTypes extends ServiceMethods {
 		function assume_is_type(x,t) {return x.type===t;}
 		/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["type"]} t @returns {asserts x is MakeRet_DI_AGR_UrlInfo<TI>} */
 		function assert_assume_is_type(x,t) {if(!assume_is_type(x,t)) throw new Error();}
+		/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
+		function gen_info_PL(raw_id) {
+			const tag="PL";
+			let [,id]=split_string_once(raw_id,tag);
+			return {type: "playlist_id",tag,info_arr: [{raw_id},{id}]};
+		}
 		let ret;
 		/** @type {DI_AGR_UrlInfo} */
 		let x=u;
@@ -3219,12 +3225,7 @@ class HandleTypes extends ServiceMethods {
 					case "":
 				}
 			} break;
-			case "playlist_id:PL":/*make*/{
-				const {info_arr: [{raw_id}]}=x;
-				let [,id]=split_string_once(raw_id,"PL");
-				/** @type {DI_A_Playlist_PL} */
-				const z={type: "playlist_id",tag: "PL",info_arr: [{raw_id},{id}]}; ret=z;
-			} break;
+			case "playlist_id:PL": ret=gen_info_PL(x.info_arr[0].raw_id); break;
 			case "playlist_id:RD":/*make*/{
 				const {info_arr: [{raw_id}]}=x;
 				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
@@ -3284,32 +3285,24 @@ class HandleTypes extends ServiceMethods {
 						const z={
 							type: "browse_id",tag: "VL:LL",info_arr: [
 								{raw_id},
-								{tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}},
+								{type: "playlist_id",info_arr: [{raw_id: id}]},
 							]
 						}; ret=z;
 					} else if(raw_id==="VLWL") {
 						let [,id]=split_string_once(raw_id,"VL");
-						/** @type {DI_BrowseId_VL} */
+						/** @type {DI_BrowseId_VL_WL} */
 						const z={
 							type: "browse_id",tag: "VL:WL",
 							info_arr: [
 								{raw_id},
-								{tag: id,value: {type: "playlist_id",info_arr: [{raw_id: id}]}},
+								{type: "playlist_id",info_arr: [{raw_id: id}]},
 							]
 						}; ret=z;
 					} else if(this.str_starts_with(raw_id,"VLPL")) {
-						let [,id]=split_string_once(raw_id,"VL");
-						/** @type {DI_BrowseId_VL["info_arr"][1]} */
-						let itv;
-						{
-							let raw_id=id;
-							{
-								let [,id]=split_string_once(raw_id,"PL");
-								itv={tag: "PL",value: {type: "playlist_id",tag: "PL",info_arr: [{raw_id},{id}]}};
-							}
-						}
+						const tag="VL";
+						let [,id]=split_string_once(raw_id,tag);
 						/** @type {DI_BrowseId_VL_PL} */
-						const z={type: "browse_id",tag: "VL:PL",info_arr: [{raw_id},itv]}; ret=z;
+						const z={type: "browse_id",tag: "VL:PL",info_arr: [{raw_id},gen_info_PL(id)]}; ret=z;
 					} else {
 						raw_id===""; debugger; throw new Error();
 					}
@@ -3319,32 +3312,27 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "guide_entry_id":/*make*/{
 				let {info_arr: [{raw_id}]}=x;
-				/** @type {DI_GuideEntryId} */
+				/** @type {GI_GuideEntry_Id} */
 				let itv;
 				if(raw_id==="LL") {
 					/** @type {DI_A_Playlist_LL} */
 					let value={type: "playlist_id",info_arr: [{raw_id}]};
 					/** @type {DI_BrowseId_VL_LL} */
-					itv={type: "guide_entry_id",info_arr: [{tag: raw_id,value}]};
+					itv={type: "guide_entry_id",info_arr: [value]};
 				} else if(raw_id==="WL") {
 					/** @type {DI_A_Playlist_WL} */
 					let value={type: "playlist_id",info_arr: [{raw_id}]};
 					/** @type {DI_BrowseId_VL_WL} */
-					itv={type: "guide_entry_id",info_arr: [{tag: raw_id,value}]};
+					itv={type: "guide_entry_id",info_arr: [value]};
 				} else if(this.str_starts_with(raw_id,"PL")) {
-					const tag="PL";
-					let [,id]=split_string_once(raw_id,tag);
-					/** @type {DI_A_Playlist_PL} */
-					let value={type: "playlist_id",tag,info_arr: [{raw_id},{id}]};
-					/** @type {DI_BrowseId_VL_PL} */
-					itv={type: "guide_entry_id",info_arr: [{tag,value}]};
+					itv={type: "guide_entry_id",info_arr: [gen_info_PL(raw_id)]};
 				} else if(this.str_starts_with(raw_id,"UC")) {
 					const tag="UC";
 					let [,id]=split_string_once(raw_id,tag);
 					/** @type {DI_A_ChannelId_UC} */
 					let value={type: "channel_id",tag,info_arr: [{raw_id},{id}]};
-					/** @type {DI_BrowseId_VL} */
-					itv={type: "guide_entry_id",info_arr: [{tag,value}]};
+					/** @type {DI_GuideEntryId_UC} */
+					itv={type: "guide_entry_id",tag,info_arr: [value]};
 				} else {
 					debugger; break;
 				}

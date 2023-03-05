@@ -6,7 +6,7 @@ type DI_AGR_UrlInfo=
 	|T_UrlInfoPartial<"raw",["video_id"],DU_VideoId>
 	|{type: "raw",tag: "key:start_radio",info_arr: [{start_radio: `${0|1}`;}];}
 	|T_UrlInfoPartial<"raw",["playlist_id","RD"],Extract<SD_PlaylistId,`RD${string}`>>
-	|{type: "raw",tag: "playlist_id:PL"; info_arr: [{raw_id: DU_Playlist_Id;}];}
+	|{type: "raw",tag: "playlist_id:PL"; info_arr: [{raw_id: T_IdTemplate<"PL">;}];}
 	|{type: "raw",tag: "playlist_id:UU"; info_arr: [{raw_id: `UU${string}`;}];}
 	;
 ;
@@ -16,7 +16,7 @@ type DI_G_UrlInfo=
 	Y extends infer I?
 	I extends "channel_id"? DI_A_ChannelId_UC:
 	I extends "browse_id"? GI_BrowseId:
-	I extends "guide_entry_id"? DI_GuideEntryId:
+	I extends "guide_entry_id"? GI_GuideEntry_Id:
 	I extends "playlist_id"? DI_G_PlaylistId:
 	I extends "video_id"? DI_VideoId:
 	I extends `key:${infer J}`? {

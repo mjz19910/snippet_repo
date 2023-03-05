@@ -1523,7 +1523,7 @@ class ServiceMethods extends ServiceData {
 		this.id_cache.add(raw_id);
 		this.ht.D_RawUrlFromTag("raw",type,x);
 	}
-	/** @protected @arg {DU_Channel_Id} x */
+	/** @protected @arg {T_IdTemplate<"UC",D_UserIdStr>} x */
 	channelId(x) {
 		const type="channel_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
@@ -6303,7 +6303,7 @@ class ServiceMethods extends ServiceData {
 		this.params("get_notification_menu.ctoken",ctoken);
 	}
 	/** @typedef {"featured"|"search"} S_BrowseFeedEnd  */
-	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,DU_Channel_Id,string]|[1,`UC${string}${S_BrowseFeedEnd}`,DU_Channel_Id,S_BrowseFeedEnd]]} */
+	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,T_IdTemplate<"UC",D_UserIdStr>,string]|[1,`UC${string}${S_BrowseFeedEnd}`,T_IdTemplate<"UC",D_UserIdStr>,S_BrowseFeedEnd]]} */
 	is_browse_feedUC(x) {
 		if(this.str_starts_with_rx("browse-feed",x.targetId)) {
 			let ss=split_string(x.targetId,"browse-feed");

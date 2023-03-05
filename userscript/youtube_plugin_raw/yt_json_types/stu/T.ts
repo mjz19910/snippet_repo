@@ -106,7 +106,6 @@ type T_Types<T extends number>={types: `${T}`;};
 type T_UnionToPartial<T>=NS_UnionToPartial.UnionToPartial<T>;
 type T_UrlWrappedValue<T extends string>={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;};
 type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;
-type T_VideoListStr<T extends string>=`VL${T}`;
 type T_WCM_={
 	url?: string;
 	webPageType?: YtPageTypeEnum;

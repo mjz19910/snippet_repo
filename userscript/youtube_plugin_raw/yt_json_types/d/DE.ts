@@ -22,13 +22,13 @@ type DE_VE3611_BaseUrl=
 	;
 ;
 type DE_VE3611={
-	params?: string; browseId: DU_Channel_Id;
+	params?: string; browseId: T_IdTemplate<"UC",D_UserIdStr>;
 	canonicalBaseUrl?: DE_VE3611_BaseUrl;
 	query?: string;
 };
 type DE_VE3854=DE_VE<"FEwhat_to_watch">;
 type DE_VE5754=DE_VE<GU_VE5754_BrowseId>|{
-	browseId: DU_Browse_Playlist_Id;
+	browseId: T_IdTemplate<"VL">;
 	canonicalBaseUrl: `/playlist?list=PL${string}`;
 };
 type DE_VE6827={
@@ -68,10 +68,10 @@ type DE_Settings={browseId: "SPaccount_overview";};
 type DE_ShareEntityService={serializedShareEntity: string; commands: A_ShareEntityService[];};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type DE_SignalNavigation=T_Signal<"CHANNEL_SWITCHER"|"LIVE_CONTROL_ROOM">;
-type DE_Subscribe={params: string; channelIds: DU_Channel_Id[];};
+type DE_Subscribe={params: string; channelIds: T_IdTemplate<"UC",D_UserIdStr>[];};
 type DE_SuperThanksSelectedTier={key: string; index: number;};
 type DE_UndoFeedback={undoToken: string; actions: A_UndoFeedback[];};
-type DE_Unsubscribe={params: string; channelIds: DU_Channel_Id[];};
+type DE_Unsubscribe={params: string; channelIds: T_IdTemplate<"UC",D_UserIdStr>[];};
 type DE_Upload=B_Hack;
 type DE_VE83769_Url_SearchObj={gclid: string;};
 type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};

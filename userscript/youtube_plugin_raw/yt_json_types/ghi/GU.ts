@@ -106,7 +106,7 @@ type GU_VE83769_Url_External=
 	|`https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`
 	;
 ;
-type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|DU_Playlist_Id}`;
+type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|T_IdTemplate<"PL">}`;
 type GU_VE3611_2=
 	|`/@${string}/about`
 	|`/@${string}/channels`

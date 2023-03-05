@@ -3905,7 +3905,7 @@ class Support_Renderer extends ServiceMethods {
 		if(imageLoadingLazy!==true) debugger;
 		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
 	}
-	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: DU_Channel_Id}} */
+	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: T_IdTemplate<"UC",D_UserIdStr>}} */
 	is_D_EmojiPickerCategoryButton_ForChannel(x) {return this.str_starts_with(x.categoryId,"UC");}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
 	R_EmojiPickerCategoryButton(x) {this.H_("emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}

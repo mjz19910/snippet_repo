@@ -2,45 +2,58 @@ type DI_BrowseId_VL_WL={
 	type: "browse_id";
 	tag: "VL:WL";
 	info_arr: [
-		{
-			raw_id: "VLWL";
-		},
-		{
-			tag: "WL";
-			value: DI_A_Playlist_WL;
-		}
+		{raw_id: "VLWL";},
+		DI_A_Playlist_WL,
 	];
 };
 type DI_BrowseId_VL_LL={
 	type: "browse_id";
 	tag: "VL:LL";
 	info_arr: [
-		{
-			raw_id: "VLLL";
-		},
-		{
-			tag: "LL";
-			value: DI_A_Playlist_LL;
-		}
+		{raw_id: "VLLL";},
+		DI_A_Playlist_LL,
 	];
+};
+type DI_GuideEntry_LL={
+	type: "guide_entry_id";
+	tag: "LL";
+	info_arr: [DI_A_Playlist_LL];
+};
+
+type DI_GuideEntry_WL={
+	type: "guide_entry_id";
+	tag: "WL";
+	info_arr: [DI_A_Playlist_WL];
+};
+
+type DI_GuideEntry_PL={
+	type: "guide_entry_id";
+	tag: "PL";
+	info_arr: [DI_A_Playlist_PL];
+};
+
+type GI_GuideEntry_Id=DI_GuideEntry_LL|DI_GuideEntry_WL|DI_GuideEntry_PL|DI_GuideEntryId_UC;
+type DI_GuideEntryId_UC={
+	type: "guide_entry_id";
+	tag: "UC";
+	info_arr: [DI_A_ChannelId_UC];
 };
 type DI_BrowseId_VL_PL={
 	type: "browse_id";
 	tag: "VL:PL";
 	info_arr: [
-		{raw_id: DU_Browse_Playlist_Id;},
-		{tag: "PL"; value: DI_A_Playlist_PL;},
+		{raw_id: T_IdTemplate<"VL">;},
+		DI_A_Playlist_PL,
 	];
 };
 type DI_BrowseId_VL_UC={
 	type: "browse_id";
 	tag: "VL:UC";
 	info_arr: [
-		{raw_id: DU_Browse_Playlist_Id;},
-		{tag: "UC"; value: DI_A_ChannelId_UC;},
+		{raw_id: `VL${T_IdTemplate<"UC",D_UserIdStr>}`;},
+		DI_A_ChannelId_UC,
 	];
 };
-type DI_BrowseId_VL=DI_BrowseId_VL_WL|DI_BrowseId_VL_LL|DI_BrowseId_VL_PL|DI_BrowseId_VL_UC;
 type Y_PutBoxedArgs=
 	|["bigint",null,[string,make_item_group<bigint>]]
 	|["boolean",null,[string,make_item_group<boolean>]]
@@ -66,7 +79,8 @@ type Y_PutBoxedArgs=
 	|["user_id",null,DI_UserId]
 	|["video_id",null,DI_VideoId]
 	|["video_time",null,DI_VideoTime]
-	|["guide_entry_id",null,DI_GuideEntryId]
+	|["guide_entry_id",null,GI_GuideEntry_Id]
+	|["guide_entry_id","UC",DI_GuideEntryId_UC]
 	|["playlist_id","RD",DI_A_Playlist_RD]
 	|["playlist_id","UU",DI_A_Playlist_UU]
 	|["playlist_id","RD:MM",DI_A_Playlist_RD_MM]

@@ -1,1 +1,1 @@
-type D_ExternalChannelId={externalChannelId: DU_Channel_Id;};
+type D_ExternalChannelId={externalChannelId: T_IdTemplate<"UC",D_UserIdStr>;};
