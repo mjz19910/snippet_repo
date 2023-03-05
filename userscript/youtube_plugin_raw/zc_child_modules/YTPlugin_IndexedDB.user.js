@@ -888,6 +888,9 @@ class IndexedDBService extends BaseService {
 	log_failed=true;
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
+		if(this.loaded_keys.has(value.key)) {
+			debugger;
+		}
 		try {
 			let ret=await this.putImpl(key,value,version);
 			return ret;
