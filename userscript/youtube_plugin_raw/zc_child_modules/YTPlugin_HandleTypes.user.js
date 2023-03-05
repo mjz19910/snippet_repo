@@ -3173,10 +3173,11 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
+	log_promise_resolve_values=false;
 	/** @template T @arg {Promise<T>} x */
 	execute_promise_def(x) {
 		x.then(x => {
-			console.log("[promise_resolved_with]",x);
+			if(this.log_promise_resolve_values) console.log("[promise_resolved_with]",x);
 		},x => {
 			this.log_error("promise_rejected_with",x);
 		});

@@ -122,7 +122,7 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBRequest: success",success);
 		this.committed_data.push(data);
 	}
-	log_db_actions=true;
+	log_db_actions=false;
 	/** @type {Promise<void>|null} */
 	open_db_promise=null;
 	expected_id=0;
@@ -174,6 +174,14 @@ class IndexedDBService extends BaseService {
 		/** @template {{type:keyof DT_DatabaseStoreTypes;tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
 		function decay_item(x) {return x;}
 		switch(item.tag) {
+			case "bigint":
+			case "boolean":
+			case "keys":
+			case "number":
+			case "root_visual_element":
+			case "string":
+		}
+		switch(item.tag) {
 			default: {
 				let di=decay_item(item);
 				switch(get_tag(item)) {
@@ -183,12 +191,12 @@ class IndexedDBService extends BaseService {
 				debugger;
 				this.delete(di.type,di.key,version);
 			} break;
+			case "bigint": return store.get_store("bigint_store").load_data(item);
 			case "boolean": return store.get_store("bool_store").load_data(item);
 			case "keys": return store.get_store("keys_store").load_data(item);
 			case "number": return store.get_store("number_store").load_data(item);
 			case "root_visual_element": return store.get_store("ve_store").load_data(item);
 			case "string": return store.get_store("string_store").load_data(item);
-			case "bigint": return store.get_store("bigint_store").load_data(item);
 			case "browse_id:FE":
 			case "browse_id:MP":
 			case "browse_id:SP":
@@ -1190,6 +1198,7 @@ class IndexedDBService extends BaseService {
 			this.handle_transaction_complete(tx_scope,complete_event);
 		} finally {
 			this.database_open=false;
+			if(no_null_cache.length>0) console.log("[committed_cache_num]",no_null_cache.length);
 			if(this.log_db_actions) console.log("close db");
 		}
 	}
