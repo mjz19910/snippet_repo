@@ -1,0 +1,23 @@
+type I_KnownLoaded=
+	|D_Boxed_Channel_UC
+	|D_BX_KeySection
+	|D_BX_Playlist_RD
+	|D_BX_Playlist_RD_MM
+	|D_BX_Playlist_WL
+	|D_Boxed_Browse_FE
+	|D_Boxed_Browse_MP
+	|D_Boxed_Browse_SP
+	|D_Boxed_Browse_VL_WL
+	|D_Boxed_BrowseId_VL_LL
+	|D_Boxed_BrowseId_VL_PL
+	|D_Boxed_GuideEntryId_LL
+	|D_Boxed_GuideEntryId_WL
+	|D_Boxed_Playlist_LL
+	|D_Boxed_Playlist_PL
+	|D_BoxedHashtagId
+	|D_BoxedPlayNext
+	|D_BoxedUserId
+	|D_BoxedVideoId
+	|D_BoxedVideoTime
+	;
+;

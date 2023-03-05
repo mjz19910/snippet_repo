@@ -156,7 +156,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
-	/** @type {Map<string,{}>} */
+	/** @type {Map<string,I_KnownLoaded>} */
 	loaded_map=new Map;
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item @arg {number} version */
 	async load_store(store,item,version) {
