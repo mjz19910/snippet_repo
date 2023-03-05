@@ -46,7 +46,7 @@ type D_PlaylistContent={
 	title: string;
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: number;
-	playlistId: `PL${string}`;
+	playlistId: DU_Playlist_Id;
 	totalVideos: number;
 	ownerName: G_Text;
 	isInfinite: false;

@@ -16,7 +16,6 @@ type D_UiTargetId=
 ;
 //#endregion
 //#region String data
-type D_PlaylistIdTypeBase="RDMM"|"RD"|"PL"|"UU";
 type WatchUrlFormat=
 	|D_WatchPageUrl
 	|`/watch?${D_WatchUrlStr}`
@@ -72,15 +71,6 @@ type D_Settings_Id=
 	|"unlimited"
 	;
 ;
-type D_UrlInfoItemType=
-	|"PL"
-	|"RD"
-	|"RDCM"
-	|"RDGM"
-	|"RDMM"
-	|"UU"
-	;
-;
 type D_VideoCategory=
 	|"Autos & Vehicles"
 	|"Comedy"
@@ -109,7 +99,7 @@ type D_EngagementPanelTargetId=
 	|"engagement-panel-clip-view"
 	|"engagement-panel-error-corrections"
 	|"engagement-panel-macro-markers-problem-walkthroughs"
-	|"shopping_panel_for_entry_point_5"
+	|DU_TargetId_ShoppingPanel_EntryPoint
 	|SI_DB_EngagementPanel_ClipCreate["targetId"]
 	|SI_DB_EngagementPanel_MacroMarkers_AutoChapters["targetId"]
 	|SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters["targetId"]
@@ -661,7 +651,7 @@ type D_ChipCloudChip=
 	};
 type EG_CompactLink_1=E_Upload|E_SignalNavigation;
 type D_CompactPlaylist={
-	playlistId: `PL${string}`;
+	playlistId: DU_Playlist_Id;
 	thumbnail: D_Thumbnail;
 	title: G_Text;
 	shortBylineText: G_Text;
@@ -2789,7 +2779,7 @@ type D_UrlAndElapsedMediaTime<T>={
 	baseUrl: T;
 	elapsedMediaTimeSeconds: number;
 };
-type D_UrlInfoPlaylist={_tag: "playlist"; type: D_UrlInfoItemType; id: string;};
+type D_UrlInfoPlaylist={_tag: "playlist"; type: DU_PlaylistId_Base; id: string;};
 type D_UrlInfoVideo={_tag: "video"; id: string;};
 type D_UrlVideoReferral={_tag: "video-referral"; id: string;};
 type D_UrlPlayNext={_tag: "play-next"; value: string;};

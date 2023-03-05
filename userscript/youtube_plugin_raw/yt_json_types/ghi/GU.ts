@@ -7,25 +7,6 @@ type GU_VE3611_Url=
 	|`/user/${string}`
 	;
 ;
-type GU_BrowseId=
-	|DU_FeedBrowse_Id
-	|GU_VE5754_BrowseId
-	|DU_Channel_Id
-	|`SP${D_Settings_Id}`
-	|`MP${string}_${string}`
-	;
-;
-type GU_GuideEntryId=
-	|SU_PlaylistId
-	|DU_Channel_Id
-	|DU_Playlist_Id
-	;
-;
-type GU_VE5754_BrowseId=
-	|`VL${SU_PlaylistId}`
-	|DU_Browse_Playlist_Id
-	;
-;
 type GU_VE6827_Id=
 	|"FEguide_builder"
 	|"FEhashtag"
@@ -125,7 +106,7 @@ type GU_VE83769_Url_External=
 	|`https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`
 	;
 ;
-type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|`PL${string}`}`;
+type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|DU_Playlist_Id}`;
 type GU_VE3611_2=
 	|`/@${string}/about`
 	|`/@${string}/channels`

@@ -6,7 +6,7 @@ type DI_AGR_UrlInfo=
 	|T_UrlInfoPartial<"raw",["video_id"],DU_VideoId>
 	|{type: "raw",tag: "key:start_radio",info_arr: [{start_radio: `${0|1}`;}];}
 	|T_UrlInfoPartial<"raw",["playlist_id","RD"],Extract<SD_PlaylistId,`RD${string}`>>
-	|{type: "raw",tag: "playlist_id:PL"; info_arr: [{raw_id: `PL${string}`;}];}
+	|{type: "raw",tag: "playlist_id:PL"; info_arr: [{raw_id: DU_Playlist_Id;}];}
 	|{type: "raw",tag: "playlist_id:UU"; info_arr: [{raw_id: `UU${string}`;}];}
 	;
 ;

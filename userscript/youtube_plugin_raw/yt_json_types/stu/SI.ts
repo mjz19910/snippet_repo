@@ -42,11 +42,11 @@ type SI_VE76278_EngagementPanel={
 	loggingDirectives: D_LoggingDirectives;
 };
 type SI_VE99999_EngagementPanel={
-	panelIdentifier: "shopping_panel_for_entry_point_5";
+	panelIdentifier: DU_TargetId_ShoppingPanel_EntryPoint;
 	header: R_EngagementPanelTitleHeader;
 	content: R_ProductList;
 	veType: 99999;
-	targetId: "shopping_panel_for_entry_point_5";
+	targetId: DU_TargetId_ShoppingPanel_EntryPoint;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: D_LoggingDirectives;
 };

@@ -8,5 +8,4 @@ type SU_SignalStr=
 	|"TOGGLE_TRANSCRIPT_TIMESTAMPS"
 	;
 ;
-type SU_PlaylistId="WL"|"LL";
 //#endregion
