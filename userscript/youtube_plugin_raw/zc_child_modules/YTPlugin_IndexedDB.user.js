@@ -335,7 +335,7 @@ class IndexedDBService extends BaseService {
 	/** @arg {number} version @template {["browse_id", "FE", DI_BrowseId_FE] | ["browse_id", "SP", DI_BrowseId_SP] | ["browse_id", "MP", DI_BrowseId_MP] | ["browse_id", "VL", DI_BrowseId_VL]} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
-			default: args[1]===""; throw new Error("Unreachable");
+			default: args[1]===""; debugger; throw new Error("Unreachable");
 			case "MP": {
 				let [tag,id,value]=args;
 				let promise=this.put_box({
@@ -423,6 +423,7 @@ class IndexedDBService extends BaseService {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
 			} debugger; throw new Error();
+			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "key": {
 				let [tag,id,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${value.info_arr[0].start_radio}`,value},version)};
@@ -543,7 +544,6 @@ class IndexedDBService extends BaseService {
 				let ret={args,promise: as_any(promise)};
 				return ret;
 			}
-			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "channel_id": {
 				let [tag,id,value]=args;
 				let promise=this.put_box({
