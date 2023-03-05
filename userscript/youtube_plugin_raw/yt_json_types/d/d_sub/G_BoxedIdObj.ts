@@ -6,7 +6,6 @@ type G_BoxedIdObj=
 	|D_Boxed_Playlist_LL
 	|D_Boxed_Playlist_PL
 	|D_Boxed_Playlist_WL
-	|D_Boxed_Playlist_WL
 	|D_Boxed_Video_Id
 	|D_BX_KeySection
 	|D_BX_Playlist_RD
