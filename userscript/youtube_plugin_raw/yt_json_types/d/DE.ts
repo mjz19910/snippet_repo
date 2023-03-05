@@ -27,7 +27,7 @@ type DE_VE3611={
 	query?: string;
 };
 type DE_VE3854=DE_VE<"FEwhat_to_watch">;
-type DE_VE5754=DE_VE<GU_VE5754_BrowseId>|{
+type DE_VE5754=DE_VE<T_IdTemplate<"VL">>|{
 	browseId: T_IdTemplate<"VL">;
 	canonicalBaseUrl: `/playlist?list=PL${string}`;
 };
