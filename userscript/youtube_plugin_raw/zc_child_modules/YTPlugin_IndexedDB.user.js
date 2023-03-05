@@ -151,11 +151,11 @@ class IndexedDBService extends BaseService {
 		/** @type {G_IDBBoxedType[]} */
 		let boxed=await this.getAll("boxed_id",version);
 		for(let item of boxed) {
-			this.load_store(store,item);
+			this.load_store(store,item,version);
 		}
 	}
-	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
-	load_store(store,item) {
+	/** @arg {StoreData} store @arg {G_IDBBoxedType} item @arg {number} version */
+	load_store(store,item,version) {
 		if(!("type" in item)) return;
 		if(item.type!=="boxed_id") return;
 		if(!("value" in item)) return;
@@ -169,9 +169,18 @@ class IndexedDBService extends BaseService {
 		} else {
 			d_cache[idx]=null;
 		}
+		/** @template {string} T @arg {{tag:T}} x */
+		function get_tag(x) {return x.tag;}
+		/** @template {{type:keyof DT_DatabaseStoreTypes;tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
+		function decay_item(x) {return x;}
 		switch(item.tag) {
 			default: {
-				item.tag==="browse_id:FE"; console.log("skip_tag",item.tag);
+				let di=decay_item(item);
+				switch(get_tag(item)) {
+					case "":
+				}
+				this.delete(di.type,di.key,version);
+				get_tag(item)===""; console.log("skip_tag",di.tag);
 			} break;
 			case "boolean": return store.get_store("bool_store").load_data(item);
 			case "keys": return store.get_store("keys_store").load_data(item);
@@ -179,6 +188,21 @@ class IndexedDBService extends BaseService {
 			case "root_visual_element": return store.get_store("ve_store").load_data(item);
 			case "string": return store.get_store("string_store").load_data(item);
 			case "bigint": return store.get_store("bigint_store").load_data(item);
+			case "browse_id:FE": break;
+			case "browse_id:MP":
+			case "browse_id:SP":
+			case "browse_id:VL":
+			case "channel_id":
+			case "guide_entry_id":
+			case "hashtag_id":
+			case "play_next":
+			case "playlist_id:LL":
+			case "playlist_id:RD:MM":
+			case "playlist_id:RD":
+			case "playlist_id:WL":
+			case "user_id":
+			case "video_id":
+			case "video_time":
 		}
 	}
 	expected_save_id=0;
