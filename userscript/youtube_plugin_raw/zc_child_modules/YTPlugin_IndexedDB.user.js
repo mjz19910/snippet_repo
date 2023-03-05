@@ -154,11 +154,21 @@ class IndexedDBService extends BaseService {
 			await this.load_store(store,item,version);
 		}
 	}
+	/** @type {Set<string>} */
+	loaded_keys=new Set;
+	/** @type {Map<string,{}>} */
+	loaded_map=new Map;
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item @arg {number} version */
 	async load_store(store,item,version) {
-		if(!("type" in item)) return;
+		if(!("type" in item)) {
+			item;
+			return;
+		}
 		if(item.type!=="boxed_id") return;
-		if(!("value" in item)) return;
+		if(!("value" in item)) {
+			item==="";
+			return;
+		}
 		let [,d_cache]=this.get_data_cache("boxed_id");
 		this.cache_weak_set.add(item.value);
 		let c_index=this.get_cache_index("boxed_id");
@@ -179,7 +189,11 @@ class IndexedDBService extends BaseService {
 			case "keys":
 			case "number":
 			case "root_visual_element":
-			case "string":
+			case "string": {
+				if(this.cache_weak_set.has(item.value.info_arr[0])) break;
+				this.cache_weak_set.add(item.value.info_arr[0]);
+			} break;
+			default: this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 		}
 		switch(item.tag) {
 			default: {
@@ -210,6 +224,7 @@ class IndexedDBService extends BaseService {
 			case "playlist_id:RD:MM":
 			case "playlist_id:RD":
 			case "playlist_id:WL":
+			case "playlist_id:PL":
 			case "user_id":
 			case "video_id":
 			case "video_time": {
@@ -1093,6 +1108,9 @@ class IndexedDBService extends BaseService {
 				}
 				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
+				if(this.loaded_keys.has(item.key)) {
+					debugger;
+				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
 				if(tx_scope.is_tx_complete) {
 					console.log("cursor_loop_is_tx_complete_1");

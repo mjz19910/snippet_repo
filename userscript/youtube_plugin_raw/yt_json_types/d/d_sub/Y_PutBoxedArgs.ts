@@ -132,7 +132,7 @@ type Y_PutBoxedRet=T_PutMakeAsync<"video_id",DI_VideoId>|{
 	w: Promise<{
 		type: "boxed_id";
 		tag: "playlist_id";
-		key: "boxed_id:playlist_id:PL";
+		key: `boxed_id:playlist_id:PL:${string}`;
 		value: DI_A_Playlist_PL;
 	}>;
 }|{

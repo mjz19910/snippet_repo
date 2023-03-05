@@ -1,10 +1,6 @@
 type G_BoxedSimple=
 	|D_BoxedBigintStore
 	|D_BoxedBooleanStore
-	|D_BoxedBrowseId_FE
-	|D_BoxedBrowseId_MP
-	|D_BoxedBrowseId_SP
-	|D_BoxedChannelId_UC
 	|D_BoxedHashtagId
 	|D_BoxedKeysStore
 	|D_BoxedLoadId

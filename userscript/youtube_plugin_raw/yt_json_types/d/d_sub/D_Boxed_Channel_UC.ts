@@ -1,4 +1,4 @@
-type D_BoxedChannelId_UC={
+type D_Boxed_Channel_UC={
 	type: "boxed_id";
 	tag: "channel_id";
 	key: `boxed_id:channel_id:UC:${string}`;
