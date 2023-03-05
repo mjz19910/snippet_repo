@@ -7,8 +7,25 @@ type GU_VE3611_Url=
 	|`/user/${string}`
 	;
 ;
-type GU_GuideEntryId="WL"|"LL"|`UC${string}`|DU_Playlist_PL;
-type GU_VE5754_BrowseId="VLWL"|"VLLL"|DU_BrowseId_Playlist;
+type GU_BrowseId=
+	|T_FeedEntry<D_BrowseEndpointPages>
+	|GU_VE5754_BrowseId
+	|DU_Channel_Id
+	|`SP${D_Settings_Id}`
+	|`MP${string}_${string}`
+	;
+;
+type GU_GuideEntryId=
+	|SU_PlaylistId
+	|DU_Channel_Id
+	|DU_Playlist_Id
+	;
+;
+type GU_VE5754_BrowseId=
+	|`VL${SU_PlaylistId}`
+	|DU_Browse_Playlist_Id
+	;
+;
 type GU_VE6827_Id=
 	|"FEguide_builder"
 	|"FEhashtag"

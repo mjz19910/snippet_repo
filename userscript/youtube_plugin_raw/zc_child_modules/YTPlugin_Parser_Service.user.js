@@ -137,7 +137,7 @@ class ParserService extends BaseService {
 		if(this.str_starts_with_at_1(x,"UC")) {return;}
 		console.log("[parse_channel_url]",x);
 	}
-	/** @unused_api @protected @arg {`UC${string}`} x */
+	/** @unused_api @protected @arg {DU_Channel_Id} x */
 	parse_channel_id(x) {
 		if(this.str_starts_with_r(x,"UC")) {return;}
 		{debugger;}

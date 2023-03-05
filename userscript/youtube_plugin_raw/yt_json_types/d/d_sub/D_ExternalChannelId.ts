@@ -1,1 +1,1 @@
-type D_ExternalChannelId={externalChannelId: `UC${string}`;};
+type D_ExternalChannelId={externalChannelId: DU_Channel_Id;};

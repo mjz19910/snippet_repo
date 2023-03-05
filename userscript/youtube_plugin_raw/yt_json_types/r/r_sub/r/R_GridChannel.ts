@@ -1,5 +1,5 @@
 type D_GridChannel={
-	channelId: `UC${string}`;
+	channelId: DU_Channel_Id;
 	thumbnail: D_Thumbnail;
 	videoCountText: G_Text;
 	subscriberCountText: G_Text;

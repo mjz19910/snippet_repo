@@ -16,7 +16,7 @@ type P_entity_key={
 	5: T_D32<1>;
 };
 type P_subscribe_button_entity_key={
-	2: TV_Str<`UC${string}`>;
+	2: TV_Str<DU_Channel_Id>;
 	4: T_D32<51>;
 	5: T_D32<1>;
 };
@@ -244,12 +244,12 @@ type P_watch_playlist_params={
 	}>;
 };
 type P_create_backstage_post_params={
-	1: TV_Str<`UC${string}`>;
+	1: TV_Str<DU_Channel_Id>;
 	2: T_D32<1>;
 };
 type PG_subscription_state_key=P_subscription_state_key;
 type P_subscription_state_key={
-	2: TV_Str<`UC${string}`>;
+	2: TV_Str<DU_Channel_Id>;
 	4: T_D32<51>;
 	5: T_D32<1>;
 };
@@ -358,7 +358,7 @@ type P_reel_sequence_params={
 };
 type PX_buy_flow_params={
 	1: TV_Str<DU_VideoId>;
-	2: TV_Str<`UC${string}`>;
+	2: TV_Str<DU_Channel_Id>;
 	3: T_D32<1>;
 };
 type P_get_pdg_buy_flow_params={1: T_VW<PX_buy_flow_params>;};
@@ -421,7 +421,7 @@ type P_create_comment_params={
 type P_trending_bp={77: TV_Str<"FEexplore">;};
 type P_ypc_get_offers_params_f1={
 	1: T_D32<3>;
-	2: TV_Str<`UC${string}`>;
+	2: TV_Str<DU_Channel_Id>;
 };
 type P_ypc_get_offers_params_f5_f1={1: TV_Str<DU_VideoId>;};
 type P_ypc_get_offers_params_f5={
@@ -623,7 +623,7 @@ type P_perform_comment_action={
 	7: T_D32<0>;
 	9: TV_Str<`${bigint}`>;
 	21: T_D32<12>;
-	23: TV_Str<`UC${string}`>;
+	23: TV_Str<DU_Channel_Id>;
 	30: T_D32<0>;
 };
 type P_create_reply_params={
@@ -640,7 +640,7 @@ type P_PX_watch_next_token_2_f37={
 	20: T_D32<2>;
 };
 type P_f3_PD_continuation_params_f1_data={
-	1: TV_Str<`UC${string}`>;
+	1: TV_Str<DU_Channel_Id>;
 	2: TV_Str<DU_VideoId>;
 };
 type P_f3_PD_continuation_params_f1={5: T_VW<P_f3_PD_continuation_params_f1_data>;};

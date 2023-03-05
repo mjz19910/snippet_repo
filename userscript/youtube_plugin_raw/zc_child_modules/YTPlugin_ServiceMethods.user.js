@@ -1516,7 +1516,7 @@ class ServiceMethods extends ServiceData {
 		this.id_cache.add(x);
 		this.ht.D_RawUrlFromTag("raw","guide_entry_id",x);
 	}
-	/** @protected @arg {DU_ChannelId} raw_id */
+	/** @protected @arg {DU_Channel_Id} raw_id */
 	channelId(raw_id) {
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
@@ -2299,7 +2299,7 @@ class ServiceMethods extends ServiceData {
 	is_yt_uuid(x) {
 		return x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)!==null;
 	}
-	/** @api @public @arg {D_TargetIdStr} x */
+	/** @api @public @arg {DU_TargetId_2} x */
 	parse_target_id(x) {
 		const cf="D_TargetIdStr";
 		if(this.is_yt_uuid(x)) return;
@@ -2321,7 +2321,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
-	/** @protected @arg {string} cf1 @arg {D_TargetIdStr} x */
+	/** @protected @arg {string} cf1 @arg {DU_TargetId_2} x */
 	targetId(cf1,x) {
 		const cf2="targetId";
 		this.parse_target_id(x);
@@ -2552,9 +2552,9 @@ class ServiceMethods extends ServiceData {
 		return x.pathname===pathname;
 	}
 	/** @typedef {G_ResponseTypes} DecodeReturn */
-	/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {DecodeReturn|null} */
+	/** @public @arg {DU_UrlType} url_type @arg {{}} x @returns {DecodeReturn|null} */
 	decode_input(url_type,x) {
-		/** @private @type {T_Split<UrlTypes,".">} */
+		/** @private @type {T_Split<DU_UrlType,".">} */
 		let target=split_string(url_type,".");
 		/** @private @type {DecodeReturn|null} */
 		let res=null;
@@ -2581,7 +2581,7 @@ class ServiceMethods extends ServiceData {
 			data: x,
 		};
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["like",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["like",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break; case "dislike": return {
@@ -2608,7 +2608,7 @@ class ServiceMethods extends ServiceData {
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.parser.get_url_type(path_parts);
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
@@ -2670,7 +2670,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["reel",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["reel",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_reel(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -2686,7 +2686,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["notification",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["notification",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_notification(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -2712,7 +2712,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["live_chat",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["live_chat",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_live_chat(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2729,7 +2729,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["att",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["att",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_res_att(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2746,7 +2746,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["account",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["account",any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_account(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2768,7 +2768,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["pdg",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["pdg",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_pdg(t,x) {
 		switch(t[1]) {
 			case "get_pdg_buy_flow": return {
@@ -2779,7 +2779,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["music",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["music",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_music(t,x) {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
@@ -2790,7 +2790,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["share",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["share",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_share(t,x) {
 		switch(t[1]) {
 			case "get_share_panel": return {
@@ -2801,7 +2801,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["playlist",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["playlist",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_playlist(t,x) {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
@@ -2812,7 +2812,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["subscription",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["subscription",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_subscription(t,x) {
 		switch(t[1]) {
 			case "subscribe": return {
@@ -2828,7 +2828,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes,".">,["browse",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
+	/** @private @arg {Extract<T_Split<DU_UrlType,".">,["browse",...any]>} t @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_browse(t,x) {
 		switch(t.length) {
 			case 2: switch(t[1]) {
@@ -6284,7 +6284,7 @@ class ServiceMethods extends ServiceData {
 		this.params("get_notification_menu.ctoken",ctoken);
 	}
 	/** @typedef {"featured"|"search"} S_BrowseFeedEnd  */
-	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,string]|[1,`UC${string}${S_BrowseFeedEnd}`,`UC${string}`,S_BrowseFeedEnd]]} */
+	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,DU_Channel_Id,string]|[1,`UC${string}${S_BrowseFeedEnd}`,DU_Channel_Id,S_BrowseFeedEnd]]} */
 	is_browse_feedUC(x) {
 		if(this.str_starts_with_rx("browse-feed",x.targetId)) {
 			let ss=split_string(x.targetId,"browse-feed");

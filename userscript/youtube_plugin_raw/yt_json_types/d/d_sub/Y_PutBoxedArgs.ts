@@ -29,7 +29,7 @@ type DI_BrowseId_VL_PL={
 	tag: "VL:PL";
 	info_arr: [
 		{
-			raw_id: DU_BrowseId_Playlist;
+			raw_id: DU_Browse_Playlist_Id;
 		},
 		{
 			tag: "PL";

@@ -2432,7 +2432,7 @@ class YtHandlers extends BaseService {
 		let ss2=get_ss2();
 		if(!url_type) {
 			debugger;
-			/** @private @type {UrlTypes} */
+			/** @private @type {DU_UrlType} */
 			let url_h=as(this.join_string(split_string(ss2,"/"),"."));
 			url_type=url_h;
 		}
@@ -2442,7 +2442,7 @@ class YtHandlers extends BaseService {
 		if(res) {this.x.get("x_GenericApi").G_ResponseTypes(response,res);} else {console.log("failed to decode_input");}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
-	/** @private @arg {UrlTypes|`page_type_${G_NavFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
+	/** @private @arg {DU_UrlType|`page_type_${G_NavFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @private @type {D_AnySaved} */

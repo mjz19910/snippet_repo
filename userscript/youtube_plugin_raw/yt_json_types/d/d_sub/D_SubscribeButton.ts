@@ -22,7 +22,7 @@ type D_SubscribeButton=
 		subscribed?: boolean;
 		enabled: true;
 		type?: "FREE";
-		channelId?: DU_ChannelId;
+		channelId?: DU_Channel_Id;
 		showPreferences?: boolean;
 		trackingParams?: string;
 		serviceEndpoints?: (E_Subscribe|E_SignalService_SendPost)[];

@@ -16,42 +16,13 @@ type D_UiTargetId=
 ;
 //#endregion
 //#region String data
-type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
-type D_TargetIdStr=
-	|Extract<D_Menu,{targetId: any;}>["targetId"]
-	|A_WatchNextContinuation['targetId']
-	|AD_AppendContinuationItems['targetId']
-	|AD_UpdateEngagementPanel['targetId']
-	|D_Button_targetId
-	|D_Button_With_TargetId["targetId"]
-	|D_ChipCloudChip_tid['targetId']
-	|D_EngagementPanelSectionTargetId
-	|D_Menu_TargetId
-	|D_TargetIdStr_Template
-	|D_TranscriptSearchPanel['targetId']
-	|DC_ReloadContinuationItems["targetId"]
-	|DC_ScrollToEngagementPanel['targetId']
-	|DC_SectionList_TargetId
-	|G_SI_DB_EngagementPanel['targetId']
-	|RS_Search['targetId']
-	|TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>['targetId']
-	;
-;
 type D_PlaylistIdTypeBase="RDMM"|"RD"|"PL"|"UU";
-type GU_BrowseId=
-	|T_FeedEntry<D_BrowseEndpointPages>
-	|GU_VE5754_BrowseId
-	|`UC${string}`
-	|`SP${D_Settings_Id}`
-	|`MP${string}_${string}`
-	;
-;
 type WatchUrlFormat=
 	|D_WatchPageUrl
 	|`/watch?${D_WatchUrlStr}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
 	|`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`
-	|`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`
+	|`/watch?v=${string}&playnext=1&list=RD${DU_Radio_ChannelMode_Id}`
 	;
 ;
 type D_WatchPageUrl=
@@ -142,8 +113,6 @@ type D_UUIDString=`${string}-${string}-${string}-${string}-${string}`;
 type D_PlaylistUrlParams=`list=${SD_PlaylistId}`;
 type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
 type D_RadioPlaylistStr<T extends string>=`RD${T}`;
-type D_SD_UrlTypes=`page_type_${S_PageTypeStr}`|UrlTypes;
-type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
 type D_FE_SectionId=T_FeedEntry<"trending"|"history"|"library"|"storefront"|"guide_builder">;
@@ -442,7 +411,7 @@ type D_AlertWithButton={
 type D_RemarketingPing={remarketingPing: `https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`;};
 
 type D_C4TabbedHeader={
-	channelId: `UC${string}`;
+	channelId: DU_Channel_Id;
 	title: string;
 	navigationEndpoint: E_VE3611;
 	avatar: D_Thumbnail;
@@ -1041,7 +1010,7 @@ type D_Channel_MD={
 	title: string;
 	description: string;
 	rssUrl: string;
-	externalId: `UC${string}`;
+	externalId: DU_Channel_Id;
 	keywords: string;
 	ownerUrls: [`http://www.youtube.com/@${string}`];
 	avatar: D_Thumbnail;
@@ -1094,7 +1063,7 @@ type D_LiveChatTextMessage={
 	id: string;
 	authorBadges?: R_LiveChatAuthorBadge[];
 	timestampUsec: `${number}`;
-	authorExternalChannelId: `UC${string}`;
+	authorExternalChannelId: DU_Channel_Id;
 	contextMenuAccessibility: D_Accessibility;
 	timestampText: G_Text;
 };
@@ -1334,7 +1303,7 @@ type D_AnimationConfig={
 	crossfadeStartOffset: 1;
 	maxFrameRate: 30;
 };
-type D_AnySaved={[U in D_SD_UrlTypes]?: GD_SD_Item;};
+type D_AnySaved={[U in DU_UrlTypeWithPageType]?: GD_SD_Item;};
 type ApiFormatObj=[
 	["youtubei",[["v1",[
 	]]]]
@@ -2244,7 +2213,7 @@ type D_PlayerMicroformat={
 	description?: G_Text;
 	lengthSeconds: `${number}`;
 	ownerProfileUrl: `http://www.youtube.com/channel/UC${string}`;
-	externalChannelId: DU_ChannelId;
+	externalChannelId: DU_Channel_Id;
 	isFamilySafe: boolean;
 	availableCountries: string[];
 	isUnlisted: boolean;

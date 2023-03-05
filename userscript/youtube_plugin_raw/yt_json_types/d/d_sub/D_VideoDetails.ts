@@ -4,7 +4,7 @@ type D_VideoDetails={
 	lengthSeconds: `${number}`;
 	isLive?: true;
 	keywords?: string[];
-	channelId: `UC${string}`;
+	channelId: DU_Channel_Id;
 	isOwnerViewing: false;
 	shortDescription: string;
 	isCrawlable: boolean;

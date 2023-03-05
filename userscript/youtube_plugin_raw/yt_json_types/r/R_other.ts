@@ -99,7 +99,7 @@ type RSL_RemoveLike={
 type RSM_ChannelPreference={
 	responseContext: RC_ResponseContext;
 	actions: A_NotificationToast[];
-	channelId: `UC${string}`;
+	channelId: DU_Channel_Id;
 	newNotificationButton: R_SubscriptionNotificationToggleButton;
 	trackingParams: string;
 	frameworkUpdates: DC_EntityBatchUpdate;
