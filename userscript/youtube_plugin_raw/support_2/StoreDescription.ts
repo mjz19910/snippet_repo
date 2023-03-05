@@ -20,7 +20,6 @@ type make_one_t<T>={type: "one",value: T;};
 type make_arr_t<T>={type: "arr",value: T[];};
 type make_many_t<T>={type: "many",value: T[][];};
 type DB_NS_TypeStr="root_visual_element"|"boolean"|"string"|"number"|"keys";
-/** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
 type StoredChangesItem={
 	type: "root_visual_element";
 	tag: string;
