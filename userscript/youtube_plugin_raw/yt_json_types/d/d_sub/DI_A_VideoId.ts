@@ -1,1 +1,4 @@
-type DI_VideoId=T_UrlInfo1<"video_id",string>;
+type DI_VideoId={
+	type: "video_id";
+	info_arr: [{raw_id: string;}];
+};

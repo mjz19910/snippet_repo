@@ -506,8 +506,9 @@ class IndexedDBService extends BaseService {
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
+						value;
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value: {type: "guide_entry_id",tag: "VL:LL",info_arr: [value]}};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
@@ -901,7 +902,7 @@ class IndexedDBService extends BaseService {
 		if(cache===void 0) this.cached_data.set(key,cache=[]);
 		if(cache.includes(cache_key)) return value;
 		this.push_waiting_obj(key,value);
-		this.check_size(key);
+		this.check_size();
 		if(this.db_wait_promise) {
 			let wait_result=await this.db_wait_promise;
 			if(wait_result.type==="failure") return null;
@@ -1156,8 +1157,20 @@ class IndexedDBService extends BaseService {
 					let cv=db_val.value;
 					let c2=item2.value;
 					switch(c2.type) {
-						case "channel_id":
-						case "playlist_id":
+						case "channel_id": {
+							if(cv.type!==c2.type) throw new Error("Unreachable");
+							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
+								commit_value(item,"same");
+								continue;
+							}
+						} break;
+						case "playlist_id": {
+							if(cv.type!==c2.type) throw new Error("Unreachable");
+							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
+								commit_value(item,"same");
+								continue;
+							}
+						} break;
 						case "video_id": {
 							if(cv.type!==c2.type) throw new Error("Unreachable");
 							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {

@@ -1,1 +1,4 @@
-type DI_A_Playlist_WL=T_UrlInfo1<"playlist_id","WL">;
+type DI_A_Playlist_WL={
+	type: "playlist_id";
+	info_arr: [{raw_id: "WL";}];
+};

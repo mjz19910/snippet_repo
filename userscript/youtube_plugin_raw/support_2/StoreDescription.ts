@@ -16,14 +16,29 @@ type G_StoreDescriptions=
 	|V_StoreVE
 	;
 ;
-type make_one_t<T>=["one",T];
-type make_arr_t<T>=["arr",T[]];
-type make_many_t<T>=["many",T[][]];
+type make_one_t<T>={type: "one",value: T;};
+type make_arr_t<T>={type: "arr",value: T[];};
+type make_many_t<T>={type: "many",value: T[][];};
 type DB_NS_TypeStr="root_visual_element"|"boolean"|"string"|"number"|"keys";
 /** @typedef {"root_visual_element"|"boolean"|"string"|"number"|"keys"} DB_NS_TypeStr */
-type StoredChangesItem=
-	|["number"|"root_visual_element",string,make_item_group<number>]
-	|["keys"|"string",string,make_item_group<string>]
-	|["boolean",string,make_item_group<boolean>]
-	;
-;
+type StoredChangesItem={
+	type: "root_visual_element";
+	tag: string;
+	value: make_item_group<number>;
+}|{
+	type: "number";
+	tag: string;
+	value: make_item_group<number>;
+}|{
+	type: "string";
+	tag: string;
+	value: make_item_group<string>;
+}|{
+	type: "keys";
+	tag: string;
+	value: make_item_group<number|string>;
+}|{
+	type: "boolean";
+	tag: string;
+	value: make_item_group<boolean>;
+};

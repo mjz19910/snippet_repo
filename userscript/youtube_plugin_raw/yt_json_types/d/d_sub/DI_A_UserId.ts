@@ -1,1 +1,4 @@
-type DI_User_Id=T_UrlInfo1<"user_id",D_UserIdStr>;
+type DI_User_Id={
+	type: "user_id";
+	info_arr: [{raw_id: string;}];
+};
