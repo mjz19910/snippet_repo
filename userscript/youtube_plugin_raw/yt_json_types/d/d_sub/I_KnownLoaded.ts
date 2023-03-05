@@ -18,7 +18,7 @@ type I_KnownLoaded=
 	|D_BoxedHashtagId
 	|D_BoxedPlayNext
 	|D_BoxedUserId
-	|D_BoxedVideoId
+	|D_Boxed_Video_Id
 	|D_BoxedVideoTime
 	;
 ;

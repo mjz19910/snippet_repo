@@ -11,7 +11,7 @@ type G_BoxedSimple=
 	|D_BoxedUpdateId
 	|D_BoxedUserId
 	|D_BoxedVEStore
-	|D_BoxedVideoId
+	|D_Boxed_Video_Id
 	|D_BoxedVideoTime
 	;
 ;

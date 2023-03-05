@@ -1,4 +1,4 @@
-type G_Boxed_BrowseId=
+type G_Boxed_Browse_Id=
 	|D_Boxed_Browse_FE
 	|D_Boxed_Browse_MP
 	|D_Boxed_Browse_SP
