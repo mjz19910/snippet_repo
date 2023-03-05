@@ -332,7 +332,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version @template {Y_PutBoxedArgs_3} T @arg {T} args */
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
-	/** @arg {number} version @template {["browse_id", "FE", DI_BrowseId_FE] | ["browse_id", "SP", DI_BrowseId_SP] | ["browse_id", "MP", DI_BrowseId_MP] | ["browse_id", "VL", DI_BrowseId_VL]} T @arg {T} args */
+	/** @arg {number} version @template {Extract<Y_PutBoxedArgs_3,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
 			default: args[1]===""; debugger; throw new Error("Unreachable");
@@ -360,49 +360,45 @@ class IndexedDBService extends BaseService {
 				let ret={args,promise: as_any(promise)};
 				return ret;
 			}
-			case "VL": {
+			case "VL:LL": {
+				let [type,s_tag,value]=args;
+				let [tag,id]=split_string_once(s_tag,":");
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag: `${type}:${tag}`,
+					key: `boxed_id:${type}:${tag}:${id}`,
+					value,
+				},version);
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
+			}
+			case "VL:WL": {
+				let [type,s_tag,value]=args;
+				let [tag,id]=split_string_once(s_tag,":");
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag: `${type}:${tag}`,
+					key: `boxed_id:${type}:${tag}:${id}`,
+					value,
+				},version);
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
+			}
+			case "VL:PL": {
 				let [type,tag,value]=args;
-				switch(value.tag) {
-					case "VL:LL": {
-						const {info_arr: [{raw_id}]}=value;
-						let [,id]=split_string_once(raw_id,"VL");
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${type}:${tag}`,
-							key: `boxed_id:${type}:${tag}:${id}`,
-							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
-					}
-					case "VL:PL": {
-						const {info_arr: [{raw_id}]}=value;
-						let [,id]=split_string_once(raw_id,"VLPL");
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${type}:${tag}`,
-							key: `boxed_id:${type}:${tag}:PL:${id}`,
-							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
-					}
-					case "VL:WL": {
-						const {info_arr: [{raw_id}]}=value;
-						let [,id]=split_string_once(raw_id,"VL");
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: `${type}:${tag}`,
-							key: `boxed_id:${type}:${tag}:${id}`,
-							value,
-						},version);
-						/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
-						let ret={args,promise: as_any(promise)};
-						return ret;
-					}
-				};
+				let [tag1,tag2]=split_string_once(tag,":");
+				let id=value.info_arr[1].value.info_arr[1].id;
+				let promise=this.put_box({
+					type: "boxed_id",
+					tag: `${type}:${tag1}`,
+					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
+					value,
+				},version);
+				/** @type {{args:T;promise:Promise<Extract<Y_PutBoxedRet,{args:T}>>}} */
+				let ret={args,promise: as_any(promise)};
+				return ret;
 			}
 			case "SP": {
 				let [tag,id,value]=args;

@@ -47,7 +47,6 @@ type Y_PutBoxedArgs=
 	|["browse_id","VL:LL",DI_BrowseId_VL_LL]
 	|["browse_id","VL:PL",DI_BrowseId_VL_PL]
 	|["browse_id","VL:WL",DI_BrowseId_VL_WL]
-	|["browse_id","VL",DI_BrowseId_VL]
 	|["channel_id","UC",DI_ChannelId_UC]
 	|["hashtag_id",null,DI_HashtagId]
 	|["keys",null,[string,make_item_group<string|number>]]
