@@ -52,7 +52,7 @@ class HandleTypes extends ServiceMethods {
 		for(let v of x) {
 			switch(v[0]) {
 				default: debugger; break;
-				case "child": {
+				case "child":/*to*/{
 					let [,id,a,b]=v;
 					if(b===null) {
 						let decoded_string=this._decoder.decode(a);
@@ -71,33 +71,33 @@ class HandleTypes extends ServiceMethods {
 					if(decoded_string===null) {debugger; continue;}
 					add_obj(id,["v_child",a,c,["string",decoded_string]]);
 				} break;
-				case "data32": {
+				case "data32":/*to*/{
 					let [,id,a]=v;
 					add_obj(id,["v_data32",a]);
 				} break;
-				case "data64": {
+				case "data64":/*to*/{
 					let [,id,a,b]=v;
 					add_obj(id,["v_data64",a,b]);
 				} break;
-				case "data_fixed32": {
+				case "data_fixed32":/*to*/{
 					let [,id,a]=v;
 					add_obj(id,["v_data_fixed32",a]);
 				} break;
-				case "data_fixed64": {
+				case "data_fixed64":/*to*/{
 					let [,id,a]=v;
 					add_obj(id,["v_data_fixed64",a]);
 				} break;
-				case "group": {
+				case "group":/*to*/{
 					let [,id,a]=v;
 					let res=this.tr_arr_to_obj(a);
 					if(res===null) return null;
 					add_obj(id,["v_group",res]);
 				} break;
-				case "info": {
+				case "info":/*to*/{
 					let [,id,a]=v;
 					add_obj(id,["v_info",a]);
 				} break;
-				case "struct": {
+				case "struct":/*to*/{
 					let [,id,a]=v;
 					let res=this.tr_arr_to_obj(a);
 					if(res) {
@@ -222,7 +222,7 @@ class HandleTypes extends ServiceMethods {
 				if(lp!==null) await lp;
 				let moment=require("moment");
 				switch(size) {
-					case "milliseconds": {
+					case "milliseconds":/*rl*/{
 						let as_moment=moment(value/1000);
 						let now_moment=moment(); let load_moment=moment(this.client_now);
 						let diff_from_load_time=as_moment.diff(load_moment)/1000;
@@ -287,7 +287,7 @@ class HandleTypes extends ServiceMethods {
 		/** @arg {string} code */
 		function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
 		let pad=1;
-		ap(`case "${cf}": {`);
+		ap(`case "${cf}":/*db_gen*/{`);
 		pad+=1;
 		ap(`/** @type {${n_cf}} */`);
 		ap(`this.${n_cf}(u);`);
@@ -571,7 +571,7 @@ class HandleTypes extends ServiceMethods {
 		switch(x.targetId) {
 			default: x===""; debugger; break;
 			case "engagement-panel-ads": return this.SI_DB_EngagementPanel_Ads(x);
-			case "engagement-panel-clip-create": {
+			case "engagement-panel-clip-create":/*GE*/{
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
 				this.R_EngagementPanelTitleHeader(header);
@@ -580,7 +580,7 @@ class HandleTypes extends ServiceMethods {
 				this.D_LoggingDirectives(loggingDirectives);
 				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
 			} break;
-			case "engagement-panel-macro-markers-description-chapters": {
+			case "engagement-panel-macro-markers-description-chapters":/*GE*/{
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
@@ -588,7 +588,7 @@ class HandleTypes extends ServiceMethods {
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
-			case "engagement-panel-macro-markers-auto-chapters": {
+			case "engagement-panel-macro-markers-auto-chapters":/*GE*/{
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
@@ -1359,7 +1359,7 @@ class HandleTypes extends ServiceMethods {
 	/** @template {keyof D_UrlInfoMap} K @arg {K} k @arg {D_UrlInfoMap[K]["url"]} x @returns {D_UrlInfoMap[K]} */
 	getInfoForUrl(x,k) {
 		switch(k) {
-			case "https://www.youtube.com/redirect": {
+			case "https://www.youtube.com/redirect":/*unk*/{
 				let parsed_url=this._convert_url_to_obj(x);
 				if("_tag" in parsed_url) throw new Error();
 				let parsed_params=this.parse_url_search_params(parsed_url.search);
@@ -1518,7 +1518,7 @@ class HandleTypes extends ServiceMethods {
 			let x2=x1[0];
 			switch(x2[0]) {
 				default: x2[0]===""; debugger; break;
-				case "v_raw": {
+				case "v_raw":/*unk*/{
 					let x3=x2[1];
 					switch(x3[0]) {
 						default: debugger; break;
@@ -1530,7 +1530,7 @@ class HandleTypes extends ServiceMethods {
 				case "v_data64": return this.v_param_2_D64(x2);
 				case "v_data_fixed32": return this.v_param_2_FD32(x2);
 				case "v_data_fixed64": return this.v_param_2_FD64(x2);
-				case "v_raw_child": {
+				case "v_raw_child":/*unk*/{
 					let x3=x2[3];
 					if(x2[2]===null) {
 						switch(x3[0]) {
@@ -1540,7 +1540,7 @@ class HandleTypes extends ServiceMethods {
 					}
 					debugger;
 				} break;
-				case "v_child_str": {
+				case "v_child_str":/*unk*/{
 					let x3=x2[3];
 					if(x2[2]===null) {
 						switch(x3[0]) {
@@ -1550,7 +1550,7 @@ class HandleTypes extends ServiceMethods {
 					}
 					debugger;
 				} break;
-				case "v_child": {
+				case "v_child":/*unk*/{
 					let x3=x2[2]; x3;
 					if(x3===null) {debugger; break;}
 					let bin_ts=this.replace_bin_binary_ts(s,x3);
@@ -1591,12 +1591,12 @@ class HandleTypes extends ServiceMethods {
 			/** @type {D_ProtobufObj|V_ParamArrBox} */
 			let x3=as(x);
 			switch(x3[0]) {
-				case "data32": case "data_fixed32": case "data_fixed64": {
+				case "data32": case "data_fixed32": case "data_fixed64":/*unk*/{
 					if(x3.length!==3) {debugger; return null;}
 					return this.tr_arr_to_obj([x3]);
 				}
 				case "data64":
-				case "child": {
+				case "child":/*unk*/{
 					if(x3.length!==4) {debugger; return null;}
 					return this.tr_arr_to_obj([x3]);
 				}
@@ -2085,19 +2085,19 @@ class HandleTypes extends ServiceMethods {
 		let p_ret=this.get_google_host_parts(x);
 		this.D_GoogleVideoHostPartitionRet(p_ret);
 		switch(s_host[1]) {
-			case "googlevideo.com": {
+			case "googlevideo.com":/*unk*/{
 				switch(x.pathname) {
-					case "/videoplayback": {
+					case "/videoplayback":/*unk*/{
 						let vp_search=x.search;
 						let {...pp}=this.parse_url_search_params(vp_search);
 						this.D_VideoPlaybackShape(as_any(pp));
 					} break;
-					case "/initplayback": {
+					case "/initplayback":/*unk*/{
 						let ip_search=x.search;
 						let {...pp}=this.parse_url_search_params(ip_search);
 						this.D_InitPlayback(pp);
 					} break;
-					case "/videogoodput": {
+					case "/videogoodput":/*unk*/{
 						let pp=this.parse_url_search_params(x.search);
 						this.S_VideoGoodPutShape(pp);
 					} break;
@@ -2178,10 +2178,10 @@ class HandleTypes extends ServiceMethods {
 			let [v8]=u8[1];
 			switch(v8[0]) {
 				default: debugger; break;
-				case "v_data32": {
+				case "v_data32":/*unk*/{
 					let [,i8]=v8; this.save_number(`${cf}.f8`,i8);
 				} break;
-				case "v_data64": {
+				case "v_data64":/*unk*/{
 					let [,,i8]=v8; this.save_bigint(`${cf}.f8`,i8);
 				} break;
 			}
@@ -2211,14 +2211,14 @@ class HandleTypes extends ServiceMethods {
 		let r_str=null;
 		switch(t) {
 			default: debugger; break;
-			case "v_child_str": {const [,,,b]=a; const [,c]=b; r_str=["child_str",c];} break;
-			case "v_child": {
+			case "v_child_str":/*unk*/{const [,,,b]=a; const [,c]=b; r_str=["child_str",c];} break;
+			case "v_child":/*unk*/{
 				const [,b]=a;
 				let c=this._decoder.decode(b);
 				if(!c) {debugger; break;}
 				r_str=["unknown",c];
 			} break;
-			case "v_raw_child": {const [,,,b]=a; const [,c]=b; r_str=["raw_str",c];} break;
+			case "v_raw_child":/*unk*/{const [,,,b]=a; const [,c]=b; r_str=["raw_str",c];} break;
 		}
 		if(!r_str) return;
 		this.save_string(`${cf}.str`,r_str[1]);
@@ -2468,13 +2468,13 @@ class HandleTypes extends ServiceMethods {
 		let [,[a,...y1]]=v1; this.cq(y1.length,0);
 		switch(a[0]) {
 			default: debugger; break;
-			case "v_child": {
+			case "v_child":/*unk*/{
 				let [,bin,]=a;
 				let video_id=this._decoder.decode(bin);
 				if(video_id==null) {debugger; break;}
 				this.videoId(video_id);
 			} break;
-			case "v_child_str": {
+			case "v_child_str":/*unk*/{
 				let [,,,[,video_id]]=a;
 				this.videoId(video_id);
 			} break;
@@ -2814,11 +2814,11 @@ class HandleTypes extends ServiceMethods {
 		let v1_v1i=v1_v1[1][0];
 		switch(v1_v1i[0]) {
 			default: debugger; break;
-			case "v_child": {
+			case "v_child":/*unk*/{
 				let x2=v1_v1i[3][1];
 				this.videoId(x2);
 			} break;
-			case "v_raw_child": {
+			case "v_raw_child":/*unk*/{
 				let x2=v1_v1i[3][1];
 				this.videoId(x2);
 			} break;
@@ -2984,11 +2984,11 @@ class HandleTypes extends ServiceMethods {
 		const {1: v1,6: f6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let u1=this.T_PArr_1(v1)[0];
 		switch(u1[0]) {
-			case "v_child": {
+			case "v_child":/*unk*/{
 				const {14: x2_f14,...y2}=u1[2]; this.g(y2);
 				this.save_bigint(`${cf}.f1.f14`,this.T_FD64(x2_f14));
 			} break;
-			case "v_child_str": {
+			case "v_child_str":/*unk*/{
 				this.save_string(`${cf}.f1`,u1[3][1]);
 			} break;
 		}
@@ -3219,13 +3219,13 @@ class HandleTypes extends ServiceMethods {
 					case "":
 				}
 			} break;
-			case "playlist_id:PL": {
+			case "playlist_id:PL":/*make*/{
 				const {info_arr: [{raw_id}]}=x;
 				let [,id]=split_string_once(raw_id,"PL");
 				/** @type {DI_A_Playlist_PL} */
 				const z={type: "playlist_id",tag: "PL",info_arr: [{raw_id},{id}]}; ret=z;
 			} break;
-			case "playlist_id:RD": {
+			case "playlist_id:RD":/*make*/{
 				const {info_arr: [{raw_id}]}=x;
 				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
 					let rd_len=raw_id.length-2;
@@ -3246,19 +3246,19 @@ class HandleTypes extends ServiceMethods {
 					const z={type: "playlist_id",tag: "RD",info_arr: [{raw_id},{id}]}; ret=z;
 				}
 			} break;
-			case "playlist_id:UU": {
+			case "playlist_id:UU":/*make*/{
 				const {info_arr: [{raw_id}]}=x;
 				let [,id]=split_string_once(raw_id,"UU");
 				/** @type {DI_A_Playlist_UU} */
 				const z={type: "playlist_id",tag: "UU",info_arr: [{raw_id},{id}]}; ret=z;
 			} break;
-			case "channel_id": {
+			case "channel_id":/*G*/{
 				const {info_arr: [{raw_id}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {DI_ChannelId_UC} */
 				const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;
 			} break;
-			case "browse_id": {
+			case "browse_id":/*G*/{
 				const {info_arr: [{raw_id}]}=x;
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
@@ -3317,7 +3317,7 @@ class HandleTypes extends ServiceMethods {
 					raw_id===""; debugger; throw new Error();
 				}
 			} break;
-			case "guide_entry_id": {
+			case "guide_entry_id":/*make*/{
 				let {info_arr: [{raw_id}]}=x;
 				/** @type {DI_GuideEntryId} */
 				let itv;
@@ -3343,7 +3343,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				ret=itv;
 			} break;
-			case "key:start_radio": {
+			case "key:start_radio":/*G*/{
 				let {tag,info_arr}=x;
 				let parts=split_string_once(tag,":");
 				{
@@ -3352,7 +3352,7 @@ class HandleTypes extends ServiceMethods {
 					const z={type,tag,info_arr}; ret=z;
 				}
 			} break;
-			case "playlist_id": {
+			case "playlist_id":/*G*/{
 				let {type,tag,info_arr: [{raw_id}]}=x;
 				if(raw_id==="LL") {
 					/** @type {DI_A_Playlist_LL} */
@@ -3370,7 +3370,7 @@ class HandleTypes extends ServiceMethods {
 					raw_id===""; debugger;
 				}
 			} break;
-			case "video_id": {
+			case "video_id":/*G*/{
 				let {tag,info_arr: [{raw_id}]}=x;
 				/** @type {DI_VideoId} */
 				const z={type: tag,info_arr: [{raw_id}]}; ret=z;
@@ -3410,89 +3410,89 @@ class HandleTypes extends ServiceMethods {
 					case "":
 				}
 			} break;
-			case "playlist_id:UU": {
+			case "playlist_id:UU":/*raw*/{
 				let x2=this.make_DI_AGR_UrlInfo(x);
 				if(x2._bad) break;
 				x2; debugger;
 			} break;
-			case "playlist_id:PL": {
+			case "playlist_id:PL":/*raw*/{
 				let x2=this.make_DI_AGR_UrlInfo(x);
 				if(x2._bad) break;
 				x2; debugger;
 			} break;
-			case "playlist_id:RD": {
+			case "playlist_id:RD":/*raw*/{
 				let x2=this.make_DI_AGR_UrlInfo(x);
 				if(x2._bad) break;
 				x2; debugger;
 			} break;
-			case "key:start_radio": {
+			case "key:start_radio":/*raw*/{
 				let x2=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,["key","start_radio",any]>} */
 				let args=["key","start_radio",x2];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "guide_entry_id": {
+			case "guide_entry_id":/*raw*/{
 				let x2=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 				let args=["guide_entry_id",null,x2];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "channel_id": {
+			case "channel_id":/*raw*/{
 				let x2=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 				let args=["channel_id","UC",x2];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "video_id": {
+			case "video_id":/*raw*/{
 				let px=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 				let args=[px.type,null,{...px,info_arr: x.info_arr}];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "browse_id": {
+			case "browse_id":/*raw*/{
 				const z=this.make_DI_AGR_UrlInfo(x);
 				switch(z.tag) {
 					default: get_tag(z)===""; debugger; break;
-					case "FE": {
+					case "FE":/*raw*/{
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
-					case "VL:WL": {
+					case "VL:WL":/*raw*/{
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
-					case "VL:LL": {
+					case "VL:LL":/*raw*/{
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
-					case "VL:PL": {
+					case "VL:PL":/*raw*/{
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
-					case "SP": {
+					case "SP":/*raw*/{
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
-					case "MP": {
+					case "MP":/*raw*/{
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];
@@ -3501,19 +3501,19 @@ class HandleTypes extends ServiceMethods {
 					} break;
 				}
 			} break;
-			case "playlist_id": {
+			case "playlist_id":/*raw*/{
 				let z=this.make_DI_AGR_UrlInfo(x);
 				if(!("tag" in z)) {
 					const {info_arr: [{raw_id}]}=z;
 					switch(raw_id) {
 						default: raw_id===""; debugger; return;
-						case "LL": {
+						case "LL":/*raw*/{
 							/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 							const args=["playlist_id","LL",{type: "playlist_id",info_arr: [{raw_id}]}];
 							const box_res=this.put_boxed_id(...args);
 							this.execute_promise_def((async () => (await box_res).ret)());
 						} return;
-						case "WL": {
+						case "WL":/*raw*/{
 							/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 							const args=["playlist_id","WL",{type: "playlist_id",info_arr: [{raw_id}]}];
 							const box_res=this.put_boxed_id(...args);
@@ -3523,37 +3523,37 @@ class HandleTypes extends ServiceMethods {
 				}
 				switch(z.tag) {
 					default: get_tag(z)===""; debugger; return;
-					case "PL": {
+					case "PL":/*raw*/{
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=["playlist_id","PL",z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} return;
-					case "RD": {
+					case "RD":/*raw*/{
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=["playlist_id","RD",z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} return;
-					case "RD:CM:UC": {
+					case "RD:CM:UC":/*raw*/{
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=["playlist_id","RD:CM:UC",z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} return;
-					case "RD:GM:EM": {
+					case "RD:GM:EM":/*raw*/{
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=["playlist_id","RD:GM:EM",z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} return;
-					case "RD:MM": {
+					case "RD:MM":/*raw*/{
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=["playlist_id","RD:MM",z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} return;
-					case "UU": {
+					case "UU":/*raw*/{
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=["playlist_id","UU",z];
 						const box_res=this.put_boxed_id(...args);
@@ -3566,7 +3566,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {DI_G_BrowseId} x */
 	DI_G_BrowseId(x) {
 		switch(x.tag) {
-			case "FE": {
+			case "FE":/*GB*/{
 				let async_p=this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,x.type,x.tag,x);
 				this.execute_promise_def(async_p);
 			} break;
@@ -3578,38 +3578,38 @@ class HandleTypes extends ServiceMethods {
 		function get_type(x) {return x.type;}
 		switch(value.type) {
 			default: get_type(value)===""; debugger; break;
-			case "video_time": {
+			case "video_time":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id": return this.DI_G_BrowseId(value);
-			case "video_id": {
+			case "video_id":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "channel_id": {
+			case "channel_id":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,"UC",value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "exact": {
+			case "exact":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,value.tag,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "hashtag_id": {
+			case "hashtag_id":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "user_id": {
+			case "user_id":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "channel_id": {
+			case "channel_id":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,"UC",value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
-			case "browse_id": {
+			case "browse_id":/*GK*/{
 				switch(value.tag) {
-					case "FE": {
+					case "FE":/*GK*/{
 						let box_res=this.put_boxed_id(value.type,value.tag,value);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					}

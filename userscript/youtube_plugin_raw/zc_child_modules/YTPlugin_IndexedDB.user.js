@@ -449,7 +449,7 @@ class IndexedDBService extends BaseService {
 				let [tag,id,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${value.info_arr[0].start_radio}`,value},version)};
 			}
-			case "guide_entry_id": {
+			case "guide_entry_id": /*db*/ {
 				let [tag,,value]=args;
 				let iv=value.info_arr[0];
 				switch(iv.tag) {
