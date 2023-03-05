@@ -1,1 +1,8 @@
-type DI_Playlist_PL=T_UrlInfo_Join<"playlist_id",["PL"],string>;
+type DI_Playlist_PL={
+	type: "playlist_id";
+	tag: "PL";
+	info_arr: [
+		{raw_id: `PL${string}`;},
+		{id: string;},
+	];
+};

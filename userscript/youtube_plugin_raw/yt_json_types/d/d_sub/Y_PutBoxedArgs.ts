@@ -60,6 +60,7 @@ type Y_PutBoxedArgs=
 	|["user_id",null,DI_UserId]
 	|["video_id",null,DI_VideoId]
 	|["video_time",null,DI_VideoTime]
+	|["guide_entry_id",null,{}]
 	;
 ;
 type Y_PutBoxedArgs_2=Extract<Y_PutBoxedArgs,{length: 2;}>;

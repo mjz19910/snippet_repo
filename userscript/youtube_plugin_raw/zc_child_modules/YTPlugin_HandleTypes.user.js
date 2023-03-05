@@ -3167,14 +3167,48 @@ class HandleTypes extends ServiceMethods {
 		let mo={type,tag,info_arr: [{raw_id: x}]};
 		this.ht.DI_AGR_UrlInfo(as_any(mo));
 	}
-	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x @returns {MakeRet_DI_AGR_UrlInfo<TI>} */
-	make_DI_AGR_UrlInfo(x) {
+	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u @returns {MakeRet_DI_AGR_UrlInfo<TI>} */
+	make_DI_AGR_UrlInfo(u) {
+		/** @template T @arg {{tag:T}} x */
+		function get_tag(x) {return x.tag;}
 		/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["type"]} t @returns {x is MakeRet_DI_AGR_UrlInfo<TI>} */
 		function assume_is_type(x,t) {return x.type===t;}
 		/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["type"]} t @returns {asserts x is MakeRet_DI_AGR_UrlInfo<TI>} */
 		function assert_assume_is_type(x,t) {if(!assume_is_type(x,t)) throw new Error();}
 		let ret;
+		/** @type {DI_AGR_UrlInfo} */
+		let x=u;
 		switch(x.tag) {
+			default: {
+				switch(get_tag(x)) {
+					case "":
+				}
+			} break;
+			case "playlist_id:PL": {
+				const {info_arr: [{raw_id}]}=x;
+				let [,id]=split_string_once(raw_id,"PL");
+				/** @type {DI_Playlist_PL} */
+				const z={type: "playlist_id",tag: "PL",info_arr: [{raw_id},{id}]}; ret=z;
+			} break;
+			case "playlist_id:RD": {
+				const {info_arr: [{raw_id}]}=x;
+				if(this.str_starts_with(raw_id,"RDCMUC")) {
+					let [,id]=split_string_once(raw_id,"RDCMUC");
+					/** @type {DI_A_Playlist_RD_CM_UC} */
+					const z={type: "playlist_id",tag: "RD:CM:UC",info_arr: [{raw_id},{id}]}; ret=z;
+					break;
+				}
+				if(this.str_starts_with(raw_id,"RDMM")) {
+					let [,id]=split_string_once(raw_id,"RDMM");
+					/** @type {DI_A_Playlist_RD_MM} */
+					const z={type: "playlist_id",tag: "RD:MM",info_arr: [{raw_id},{id}]}; ret=z;
+					break;
+				}
+				let [,id]=split_string_once(raw_id,"RD");
+				/** @type {DI_A_Playlist_RD} */
+				const z={type: "playlist_id",tag: "RD",info_arr: [{raw_id},{id}]}; ret=z;
+			} break;
+			case "playlist_id:UU": break;
 			case "channel_id": {
 				const {info_arr: [{raw_id}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
@@ -3290,7 +3324,7 @@ class HandleTypes extends ServiceMethods {
 				} else if(this.str_starts_with(raw_id,"RD")) {
 					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [{raw_id}]});
 				} else {
-					raw_id;
+					raw_id===""; debugger;
 				}
 			} break;
 			case "video_id": {
@@ -3330,6 +3364,13 @@ class HandleTypes extends ServiceMethods {
 			default: {
 				switch(get_tag(x)) {
 				}
+			} break;
+			case "guide_entry_id": {
+				let x2=this.make_DI_AGR_UrlInfo(x);
+				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+				let args=["guide_entry_id",null,x2];
+				let box_res=this.put_boxed_id(...args);
+				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "channel_id": {
 				let x2=this.make_DI_AGR_UrlInfo(x);
