@@ -104,6 +104,8 @@ class TypedIDBValidKeyS {
 	}
 }
 class IndexedDBService extends BaseService {
+	/** @returns {J_ResolverType_Ready} */
+	create_resolver() {return J_ResolverTypeImpl.make();}
 	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
 		super(x);
@@ -183,7 +185,7 @@ class IndexedDBService extends BaseService {
 		}
 	}
 	has_loaded_keys=false;
-	on_loaded_resolver=this.create_resolver();
+	on_loaded_resolver=J_ResolverTypeImpl.make();
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
 		/** @type {G_IDBBoxedType[]} */
@@ -902,10 +904,6 @@ class IndexedDBService extends BaseService {
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
-	/** @returns {J_ResolverType_Ready} */
-	create_resolver() {
-		return J_ResolverTypeImpl.make();
-	}
 	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
 	db_wait_promise=null;
 	/** @private @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
@@ -922,7 +920,7 @@ class IndexedDBService extends BaseService {
 			if(wait_result.type==="failure") return null;
 			return value;
 		}
-		let resolver=this.create_resolver();
+		let resolver=J_ResolverTypeImpl.make();
 		/** @returns {Promise<{type:"success"}|{type:"failure"}>} */
 		let s_or_f=async () => {
 			try {
