@@ -31,14 +31,14 @@ type DU_PlaylistId_Base=
 type GU_BrowseId=
 	|T_IdTemplate<"FE">
 	|GU_VE5754_BrowseId
-	|T_IdTemplate<"UC",D_UserIdStr>
+	|T_IdTemplate<"UC">
 	|`SP${D_Settings_Id}`
 	|`MP${string}_${string}`
 	;
 ;
 type GU_GuideEntryId=
 	|SU_PlaylistId
-	|T_IdTemplate<"UC",D_UserIdStr>
+	|T_IdTemplate<"UC">
 	|T_IdTemplate<"PL">
 	;
 ;
