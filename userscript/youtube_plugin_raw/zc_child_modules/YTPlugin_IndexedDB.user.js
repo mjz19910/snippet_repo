@@ -1122,6 +1122,7 @@ class IndexedDBService extends BaseService {
 						case "video_id": {
 							if(cv.type!==c2.type) {s.tx.abort(); throw new Error("Unreachable");};
 							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
+								this.committed_data.push(item);
 								let idx=d_cache.indexOf(item);
 								d_cache[idx]=null;
 								continue;
