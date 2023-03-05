@@ -110,6 +110,43 @@ class IndexedDBService extends BaseService {
 	create_cache(s,k,v) {s[k]=v;}
 	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {return J_ResolverTypeImpl.make();}
+	database_opening=false;
+	database_open=false;
+	/** @type {Map<keyof DT_DatabaseStoreTypes,string[]>} */
+	cached_data=new Map;
+	cache_weak_set=new WeakSet;
+	log_db_actions=false;
+	log_all_events=false;
+	close_db_on_transaction_complete=false;
+	has_loaded_keys=false;
+	log_failed=true;
+	expected_id=0;
+	expected_save_id=0;
+	expected_load_id=0;
+	/** @type {Promise<void>|null} */
+	open_db_promise=null;
+	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
+	db_wait_promise=null;
+	/** @type {number|null} */
+	delayed_log_idle_request_id=null;
+	/** @private @type {D_StoreCacheIndex} */
+	store_cache_index={};
+	/** @private @type {D_StoreCacheType} */
+	store_cache={};
+	/** @private @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} */
+	committed_data=[];
+	on_loaded_resolver=J_ResolverTypeImpl.make();
+	/** @type {Set<string>} */
+	loaded_keys=new Set;
+	/** @type {Map<string,G_IDBBoxedType>} */
+	loaded_map=new Map;
+	/** @type {string[][]} */
+	delayed_log_messages=[];
+	/** @type {(keyof DT_DatabaseStoreTypes)[]} */
+	get_all_waiting_keys=[];
+	/** @type {([keyof DT_DatabaseStoreTypes,Promise<DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes][]>])[]} */
+	waiting_promises=[];
+	log_cache_push=false;
 	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
 		super(x);
@@ -117,12 +154,6 @@ class IndexedDBService extends BaseService {
 		this.create_cache_index(this.store_cache_index,key,[key,new Map]);
 		this.create_cache(this.store_cache,key,[key,[]]);
 	}
-	database_opening=false;
-	database_open=false;
-	/** @private @type {D_StoreCacheIndex} */
-	store_cache_index={};
-	/** @private @type {D_StoreCacheType} */
-	store_cache={};
 	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
 	get_data_cache(key) {
 		/** @type {T_StoreCacheType<T>} */
@@ -145,11 +176,6 @@ class IndexedDBService extends BaseService {
 		sk_ac[key]=cache_info;
 		return cache_info[1];
 	}
-	/** @private @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} */
-	committed_data=[];
-	/** @type {Map<keyof DT_DatabaseStoreTypes,string[]>} */
-	cached_data=new Map;
-	cache_weak_set=new WeakSet;
 	/** @arg {AG_DatabaseStoreDescription["key"]} key */
 	check_size(key) {
 		let [,d_cache]=this.get_data_cache(key);
@@ -157,10 +183,6 @@ class IndexedDBService extends BaseService {
 		let arr=d_cache;
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
-	log_db_actions=false;
-	/** @type {Promise<void>|null} */
-	open_db_promise=null;
-	expected_id=0;
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<DST_LoadId|DST_SaveId|null>} */
@@ -181,8 +203,6 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
-	has_loaded_keys=false;
-	on_loaded_resolver=J_ResolverTypeImpl.make();
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
 		/** @type {G_IDBBoxedType[]} */
@@ -198,10 +218,6 @@ class IndexedDBService extends BaseService {
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
-	/** @type {Set<string>} */
-	loaded_keys=new Set;
-	/** @type {Map<string,G_IDBBoxedType>} */
-	loaded_map=new Map;
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
 	async load_store(store,item) {
 		this.add_to_index(item.type,item.key,item,true);
@@ -291,8 +307,6 @@ class IndexedDBService extends BaseService {
 			} break;
 		}
 	}
-	expected_save_id=0;
-	expected_load_id=0;
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
 		let save_id=await this.get_id_box("save_id",version);
@@ -901,8 +915,6 @@ class IndexedDBService extends BaseService {
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
-	/** @type {Promise<{type:"success"}|{type:"failure"}>|null} */
-	db_wait_promise=null;
 	/** @private @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async putImpl(key,value,version) {
 		if(!value) {debugger; return value;}
@@ -940,7 +952,6 @@ class IndexedDBService extends BaseService {
 		this.db_wait_promise=null;
 		return value;
 	}
-	log_failed=true;
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
 		x: if(this.loaded_keys.has(value.key)) {
@@ -1094,10 +1105,6 @@ class IndexedDBService extends BaseService {
 			throw new AggregateError([e],"async error");
 		}
 	}
-	/** @type {string[][]} */
-	delayed_log_messages=[];
-	/** @type {number|null} */
-	delayed_log_idle_request_id=null;
 	/** @arg {string[]} args */
 	delayed_log(...args) {
 		this.delayed_log_messages.push(args);
@@ -1363,10 +1370,6 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.get(obj_store,store_key));
 		return result;
 	}
-	/** @type {(keyof DT_DatabaseStoreTypes)[]} */
-	get_all_waiting_keys=[];
-	/** @type {([keyof DT_DatabaseStoreTypes,Promise<DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes][]>])[]} */
-	waiting_promises=[];
 	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {number} version */
 	async getAll(key,version) {
 		let typed_db=new TypedIndexedDB;
@@ -1376,7 +1379,6 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
 		return result;
 	}
-	log_cache_push=false;
 	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key @returns {Map<string,number>} */
 	get_cache_index(key) {
 		/** @type {[T,Map<string,number>]|undefined} */
@@ -1415,8 +1417,6 @@ class IndexedDBService extends BaseService {
 		cache_index.set(key,idx);
 		return idx;
 	}
-	log_all_events=false;
-	close_db_on_transaction_complete=false;
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
 		if(!obj) {debugger;}
