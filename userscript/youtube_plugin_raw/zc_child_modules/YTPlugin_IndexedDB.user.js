@@ -469,7 +469,7 @@ class IndexedDBService extends BaseService {
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
-						/** @type {D_Boxed_GuideEntry_VL_LL} */
+						/** @type {DST_GuideEntry_VL_LL} */
 						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
