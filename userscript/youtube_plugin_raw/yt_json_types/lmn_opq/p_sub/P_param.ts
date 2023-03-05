@@ -1,6 +1,5 @@
 type P_param_category=P_LogItems extends []? never:P_LogItems[number] extends `[${string}] [${infer U}]`? U:never;
 type P_param=Extract<P_param_category,`${string}.params.${string}`>;
-type P_param_known_like=`${LP_LogItems_Str}.${P_param_known_like_paths}`;
 type P_param_known_like_paths=[
 	"f1.f1",
 	"f1",

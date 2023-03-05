@@ -14,7 +14,6 @@ type D_Button_style=
 ;
 type W_Some_r=Some_A<W_Some_s>;
 type W_Some_f=T_Str_Some<W_Some_s>;
-type W_Some_s=`https://www.youtube.com/channel/UC${string}/join`|`https://www.youtube.com/${string}`;
 type W_Some_e="https://www.youtube.com/channel/UC";
 type Some_t1<S extends string>=[T_Split<S,""> extends [any,...infer L]? L["length"]:0];
 type Some_t<T extends string>=T extends `${infer S}${infer X}`? [

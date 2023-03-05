@@ -14,7 +14,7 @@ type D_GoogleVideoHostPartitionRet<T extends D_GoogleVideoPathname>={
 	parts: ["r",`${number}`,"---","sn","-",G_GV_0,"n",G_GV_1,".","googlevideo",".","com"];
 	partitioned: D_GoogleVideoHostPartition;
 };
-type D_GoogleVideoPathname=UrlParse<RE_D_GoogleVideoUrl>["pathname"];
+type D_GoogleVideoPathname=UrlParse<GU_GoogleVideoUrl>["pathname"];
 type D_InitPlayback={
 	source: "youtube";
 	oeis: "1";

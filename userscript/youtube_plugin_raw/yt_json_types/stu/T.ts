@@ -15,7 +15,6 @@ type Some<T>={
 type None={type: "n";};
 
 //#region Template strings
-type T_MixPlaylistStr=`RD${string}`;
 //#endregion
 //#region Enum templates
 type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
@@ -56,7 +55,6 @@ type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
 type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
 type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
 type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
-type T_FeedEntry<T extends string>=`FE${T}`;
 type T_GetTypeof<T>=
 	T extends undefined? "undefined":
 	T extends number? "number":
@@ -169,7 +167,7 @@ type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={targetId: T
 type TD_Label<T>={label: T;};
 //#endregion
 //#region TE_
-type EP_Key=`${string}${D_EndpointLikeEndings}`;
+type EP_Key=DU_EndpointKey;
 type TE_Endpoint_1_Generic<T_Key extends PropertyKey,T_Data>={[I in T_Key]: T_Data};
 type TE_Endpoint_1<T_Key extends EP_Key,T_Data>={[I in T_Key]: T_Data};
 type TE_EndpointImpl_2<T_Key extends EP_Key,T_Data>={clickTrackingParams: string;}&{[I in T_Key]: T_Data};

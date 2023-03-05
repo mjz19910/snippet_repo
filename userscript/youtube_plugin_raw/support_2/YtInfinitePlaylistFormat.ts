@@ -1,1 +1,1 @@
-type YtInfinitePlaylistFormat=T_MixPlaylistStr|DU_Radio_MyMix_Id;
+type YtInfinitePlaylistFormat=GU_Radio_Id;

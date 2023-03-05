@@ -8,7 +8,7 @@ type GU_VE3611_Url=
 	;
 ;
 type GU_BrowseId=
-	|T_FeedEntry<D_BrowseEndpointPages>
+	|DU_FeedBrowse_Id
 	|GU_VE5754_BrowseId
 	|DU_Channel_Id
 	|`SP${D_Settings_Id}`

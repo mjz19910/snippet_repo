@@ -22,7 +22,7 @@ type WatchUrlFormat=
 	|`/watch?${D_WatchUrlStr}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
 	|`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`
-	|`/watch?v=${string}&playnext=1&list=RD${DU_Radio_ChannelMode_Id}`
+	|`/watch?v=${string}&playnext=1&list=RD${DM_Radio_ChannelId}`
 	;
 ;
 type D_WatchPageUrl=
@@ -104,17 +104,6 @@ type D_VE6827_PageLocation=
 	|"library"
 	;
 ;
-type D_ApiStatsAdsStr=`ver=${string}&ns=${string}&event=${string}&device=${string}&content_v=${string}&el=${string}&ei=${string}&devicever=${string}&bti=${string}&break_type=${string}&conn=${string}&cpn=${string}&lact=${string}&m_pos=${string}&mt=${string}&p_h=${string}&p_w=${string}&rwt=${string}&sdkv=${string}&slot_pos=${string}&vis=${string}&vol=${string}&wt=${string}&sli=${string}&slfs=${string}&loginael=${string}`;
-type D_ApiUrlFormat=`https://www.youtube.com${D_ApiPathFormat_1}`;
-type D_ChanLoc=`channel.${string}`;
-type D_UserIdStr=string;
-type T_ChannelIdStr<T extends string>=`UC${T}`;
-type D_UUIDString=`${string}-${string}-${string}-${string}-${string}`;
-type D_PlaylistUrlParams=`list=${SD_PlaylistId}`;
-type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
-type D_RadioPlaylistStr<T extends string>=`RD${T}`;
-type D_ResultsPageUrl=`/results?search_query=${string}`;
-type D_PlaylistUrlFormat=`/playlist?list=${SD_PlaylistId}`;
 type D_FE_SectionId=T_FeedEntry<"trending"|"history"|"library"|"storefront"|"guide_builder">;
 type D_EngagementPanelTargetId=
 	|"engagement-panel-clip-view"
@@ -3096,4 +3085,3 @@ type DT_MenuFlexibleItem={
 	menuItem: R_MenuServiceItem;
 	topLevelButton: R_Button;
 };
-type D_PlayerParamsUrl=`pp=${string}`;

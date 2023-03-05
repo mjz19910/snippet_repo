@@ -10,7 +10,6 @@ type DC_RepeatChapter={
 	endTimeMs: "60000";
 	repeatStateEntityKey: string;
 };
-type D_TargetIdUuid=`${string}-0000-${string}-${string}-${string}`;
 type DC_ReloadContinuationItems={
 	targetId: SI_VE76278_EngagementPanel["targetId"];
 	continuationItems: R_CommentThread[];

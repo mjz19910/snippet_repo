@@ -376,7 +376,7 @@ type RS_VE3832_Page_Watch={
 	url: D_WatchPageUrl;
 	endpoint: E_Watch;
 	page: "watch";
-	preconnect?: [RE_D_VE3832_PreconnectUrl];
+	preconnect?: [DU_VE3832_PreconnectUrl];
 	playerResponse: RS_Player;
 	response: RS_Watch;
 	csn?: string;

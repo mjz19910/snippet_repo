@@ -112,7 +112,6 @@ type G_SettingItemIdEnum=
 	|"EMAIL_CREATOR_NEWSLETTER"
 	;
 ;
-type GV_SubDomain=`${string}${number}---sn-${string}n${string}`;
 type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;
 type RSB_EditPlaylist={
 	responseContext: RC_ResponseContext;
@@ -327,7 +326,6 @@ type G_SectionItem=
 	|R_ContinuationItem
 	;
 ;
-type G_SettingsEndpointPages=`/account${""|`_${G_AccountPageSettingsSections}`}`;
 type G_SettingsOptionItem=
 	|R_ChannelOptions
 	|R_SettingsSwitch

@@ -1858,7 +1858,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 	}
-	/** @public @arg {[RE_D_VE3832_PreconnectUrl]} x */
+	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
 		this.RE_D_VE3832_PreconnectUrl(x[0]);
@@ -1876,7 +1876,7 @@ class HandleTypes extends ServiceMethods {
 			Promise.resolve().then(() => this.logged_hosts.length=0);
 		}
 	}
-	/** @private @template {UrlParse<RE_D_GoogleVideoUrl>} T @arg {T} x @returns {D_GoogleVideoHostPartitionRet<T["pathname"]>} */
+	/** @private @template {UrlParse<GU_GoogleVideoUrl>} T @arg {T} x @returns {D_GoogleVideoHostPartitionRet<T["pathname"]>} */
 	get_google_host_parts(x) {
 		/** @type {`${"r"|"rr"}${number}---sn-${string}n${string}.googlevideo.com`} */
 		const host=as_any(x.host);
@@ -1905,7 +1905,7 @@ class HandleTypes extends ServiceMethods {
 			partitioned,
 		};
 	}
-	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
+	/** @private @arg {DU_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x) {
 		let pu=this._convert_url_to_obj(x);
 		let parts=this.get_google_host_parts(pu);

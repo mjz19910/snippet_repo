@@ -1,5 +1,3 @@
-type S_YtUrlHttp_Watch=`http://www.youtube.com/watch?${string}`;
-
 type D_PlaylistContent={
 	title: "Watch Later";
 	contents: R_PlaylistPanelVideo[];
