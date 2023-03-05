@@ -407,7 +407,8 @@ class HandleTypes extends ServiceMethods {
 			u4;
 			if(this.is_eq_keys(u4,this.exact_arr("v","list","start_radio"))) break x;
 			if(this.is_eq_keys(u4,this.exact_arr("v","list","index"))) break x;
-			u4==="";
+			if(this.is_eq_keys(u4,this.exact_arr("v","list","index","pp"))) break x;
+			u4===""; debugger;
 		}
 		this.parser.parse_url(cf,x);
 		return u3;
@@ -1798,13 +1799,30 @@ class HandleTypes extends ServiceMethods {
 		};
 		let x3=px_x2(x2);
 		if(x3===null) return;
+		let x4=null;
 		if("pp" in x3) {
 			const {pp,...y}=x3;
 			this.playerParams("watch.player_params",pp);
 			if(this.is_empty_obj(y)) return;
-			this.g(y);
-			return;
+			x4=y;
 		}
+		let x5=null;
+		if(x4) {
+			const {list,...y}=x4;
+			this.playlistId(list);
+			x5=y;
+		}
+		x: if(x5) {
+			const {index,...y}=x5;
+			y: {
+				if(this.cache_playlist_index.includes(index)) break y;
+				this.cache_playlist_index.push(index);
+				if(this.log_playlist_index) console.log("[playlist_index]",index);
+			}
+			if(this.is_empty_obj(y)) break x;
+			this.g(y);
+		}
+		if("pp" in x3) return;
 		if("t" in x3) {
 			const {t,...y}=x3;
 			if(this.is_empty_obj(y)) return;
