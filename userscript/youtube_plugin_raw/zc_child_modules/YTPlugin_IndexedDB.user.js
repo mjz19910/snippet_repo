@@ -38,24 +38,24 @@ function change_state(cls,state) {
 	}
 }
 class J_ResolverTypeImpl {
-	/** @readonly */
-	state="init";
-	/** @type {Promise<void>|null} */
-	promise=null;
 	static make() {
 		let instance=new this();
 		return instance.as_ready;
 	}
+	/** @readonly */
+	state="init";
+	/** @type {Promise<void>|null} */
+	promise=null;
+	/** @type {((value:void|PromiseLike<void>)=>void)|null} */
+	resolve=null;
+	/** @type {((reason?:any)=>void)|null} */
+	reject=null;
 	constructor() {
 		this.promise=new Promise((resolve,reject) => {
 			this.resolve=resolve;
 			this.reject=reject;
 		});
 	}
-	/** @type {((value:void|PromiseLike<void>)=>void)|null} */
-	resolve=null;
-	/** @type {((reason?:any)=>void)|null} */
-	reject=null;
 	get as_ready() {
 		/** @returns {J_ResolverType} */
 		let get_any_cls=() => this;
@@ -147,6 +147,7 @@ class IndexedDBService extends BaseService {
 	/** @type {([keyof DT_DatabaseStoreTypes,Promise<DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes][]>])[]} */
 	waiting_promises=[];
 	log_cache_push=false;
+	database_diff_keys=new Set;
 	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
 		super(x);
@@ -1468,7 +1469,6 @@ class IndexedDBService extends BaseService {
 		if(!tx) throw new Error("No transaction");
 		this.x.get("handle_types").indexed_db_createDatabaseSchema(this,event.oldVersion,db);
 	}
-	database_diff_keys=new Set;
 	/** @template T @arg {IDBRequest<T>} req @returns {Promise<["success",T]|["error",Event,DOMException]>} */
 	async get_async_result_impl(req) {
 		if(req.readyState==="done") return ["success",req.result];
