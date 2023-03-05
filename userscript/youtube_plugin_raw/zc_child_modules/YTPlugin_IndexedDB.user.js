@@ -255,7 +255,7 @@ class IndexedDBService extends BaseService {
 				let [,d_cache]=this.get_data_cache(item.type);
 				let cache_val=d_cache.find(v => v&&v.key===item.key);
 				if(cache_val) {
-					console.log("[found_during_load]",item.key);
+					if(this.log_all_events) console.log("[found_during_load]",item.key);
 					this.committed_data.push(cache_val);
 				} else {
 					console.log("[not_found_during_load]",item.key);
@@ -1172,22 +1172,30 @@ class IndexedDBService extends BaseService {
 					let db_val=this.loaded_map.get(item.key);
 					/** @type {I_KnownLoaded|{key:string}} */
 					let item2=item;
-					if(!("tag" in item2)) {s.tx.abort(); throw new Error("Unreachable");};
-					if(!db_val) {s.tx.abort(); throw new Error("Unreachable");};
+					if(!("tag" in item2)) throw new Error("Unreachable");
+					if(!db_val) throw new Error("Unreachable");
 					let cv=db_val.value;
 					let c2=item2.value;
 					switch(c2.type) {
 						case "channel_id":
 						case "playlist_id":
 						case "video_id": {
-							if(cv.type!==c2.type) {s.tx.abort(); throw new Error("Unreachable");};
+							if(cv.type!==c2.type) throw new Error("Unreachable");
 							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
+						case "number": {
+							if(cv.type!==c2.type) throw new Error("Unreachable");
+							if(cv.raw===c2.raw) {
+								commit_value(item,"same");
+								continue;
+							}
+						}
 					}
-					console.log("[was_loaded_from_db]",db_val.value.type);
+					const {type,...y2}=db_val.value;
+					console.log("[was_loaded_from_db] [type=%s]",type,y2);
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
 				if(tx_scope.is_tx_complete) {
@@ -1323,6 +1331,9 @@ class IndexedDBService extends BaseService {
 					commit_value(item,"same");
 				}
 			}
+		} catch(e) {
+			s.tx.abort();
+			throw e;
 		} finally {
 			let complete_event=await tx_scope.complete_promise;
 			this.handle_transaction_complete(tx_scope,complete_event);
