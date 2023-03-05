@@ -155,7 +155,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
-	/** @type {Map<string,I_KnownLoaded>} */
+	/** @type {Map<string,G_IDBBoxedType>} */
 	loaded_map=new Map;
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
 	async load_store(store,item) {
@@ -444,25 +444,27 @@ class IndexedDBService extends BaseService {
 			}
 			case "guide_entry_id": /*db*/ {
 				let [tag,,value]=args;
-				let iv=value.info_arr[0];
-				switch(iv.tag) {
+				switch(value.tag) {
 					case "LL": {
+						let iv=value.info_arr[0];
 						/** @type {D_Boxed_GuideEntryId_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
+						let iv=value.info_arr[0];
 						/** @type {D_Boxed_GuideEntryId_PL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.value.info_arr[1].id}`,value: {type: "guide_entry_id",info_arr: [iv]}};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "WL": {
+						let iv=value.info_arr[0];
 						/** @type {D_Boxed_GuideEntryId_WL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value: {type: "guide_entry_id",info_arr: [iv]}};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
-			}
+			} break;
 			case "video_id": {
 				let [tag,,value]=args;
 				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
