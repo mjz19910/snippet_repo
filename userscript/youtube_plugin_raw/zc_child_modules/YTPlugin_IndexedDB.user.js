@@ -632,19 +632,19 @@ class IndexedDBService extends BaseService {
 			case "load_id": {
 				let [mode,,id]=args;
 				let promise=this.put_box({
+					type: "boxed_id",
 					key: `boxed_id:a:${mode}`,
-					type: mode,
-					base: "boxed_id",
-					id,
+					tag: `a:${mode}`,
+					value: {type: "number",raw: id},
 				},version); return {args,promise};
 			}
 			case "save_id": {
 				let [mode,,id]=args;
 				let promise=this.put_box({
+					type: "boxed_id",
 					key: `boxed_id:a:${mode}`,
-					type: mode,
-					base: "boxed_id",
-					id,
+					tag: `a:${mode}`,
+					value: {type: "number",raw: id},
 				},version); return {args,promise};
 			}
 			case "browse_id": {
@@ -1074,7 +1074,7 @@ class IndexedDBService extends BaseService {
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let [,d_cache]=this.get_data_cache(key);
 		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.loaded_keys.has(e.key));
-		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.type==="save_id"||e.type==="load_id"));
+		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.tag==="a:save_id"||e.tag==="a:load_id"));
 		if(no_id_cache.length===1) {
 			console.log("[d_cache_nonnull.0]",no_id_cache[0]);
 		} else if(no_id_cache.length===2) {
@@ -1147,47 +1147,47 @@ class IndexedDBService extends BaseService {
 					debugger;
 				}
 				let update_item=false;
-				/** @template T @arg {{type:T}} x */
-				function get_type(x) {return x.type;}
-				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
+				/** @type {G_BoxedIdObj} */
 				let item_nt=item;
-				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
+				/** @type {G_BoxedIdObj} */
 				let item_db_nt=item_db_2;
-				switch(item_nt.type) {
-					default: get_type(item_nt)===""; debugger; break;
-					case "boxed_id": update_item=true; break;
-					case "video_id": {
-						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
-						if(!this.eq_keys(item_db_nt.type_parts,item_nt.type_parts)) {update_item=true; break;}
-						if(item_nt.v!==item_db_nt.v) update_item=true;
+				switch(item_nt.tag) {
+					default: {
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						let info1=item_nt.value.info_arr[0]; let info2=item_db_nt.value.info_arr[0];
+						if("raw_id" in info1&&"raw_id" in info2) {
+							if(info1.raw_id!==info2.raw_id) update_item=true;
+						}
+						if(info1 instanceof Array&&info2 instanceof Array) {
+							update_item=true;
+							debugger;
+						}
+						if("tag" in info1&&"tag" in info2) {
+							if(info1.value.info_arr[0].raw_id!==info2.value.info_arr[0].raw_id) {
+								update_item=true;
+							}
+						}
 					} break;
-					case "save_id":
-					case "load_id":
-					case "update_id": {
+					case "a:save_id":
+					case "a:load_id":
+					case "a:update_id": {
 						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
 						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
-						if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
-						update_item=true;
-					} break;
-					case "playlist_id": {
-						if(item_db_nt.type!==item_nt.type) break;
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						debugger;
+						if(!item_db_nt.value) {update_item=true; break;}
+						if(item_nt.key===item_db_nt.key&&item_nt.value.raw===item_db_nt.value.raw) break;
 						update_item=true;
 					} break;
 					// non-dynamic values
 					case "hashtag_id": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.hashtag===item_db_nt.hashtag) break;
+						if(item_nt.value.hashtag===item_db_nt.value.hashtag) break;
 						update_item=true;
 					} break;
-					case "user_id": {
-						if(item_db_nt.type!==item_nt.type) break;
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.id===item_db_nt.id) break;
-						update_item=true;
-					} break;
+					case "number":
+					case "key":
+					case "video_time":
+					case "play_next":
 				}
 				if(update_item) {
 					updated_count++;
@@ -1260,7 +1260,7 @@ class IndexedDBService extends BaseService {
 		let idx=this.add_to_index(type_key,key,obj);
 		if(this.log_cache_push) console.log("push wait",type_key,key,idx,obj);
 	}
-	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x @arg {(DT_DatabaseStoreTypes[T]|null)[]} cache_arr @arg {Map<string,number>} cache_index */
+	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x */
 	add_to_index(type_key,key,x,null_out_key=false) {
 		let [,cache_arr]=this.get_data_cache(type_key);
 		let cache_index=this.get_cache_index(type_key);
@@ -1374,8 +1374,8 @@ class IndexedDBService extends BaseService {
 		let typed_db=new TypedIndexedDB;
 		let ret={};
 		ret.db=await this.get_async_result(this.get_db_request(version));
-		let tx=typed_db.transaction(ret.db,"video_id","readonly");
-		ret.store=typed_db.objectStore(tx,"video_id");
+		let tx=typed_db.transaction(ret.db,"boxed_id","readonly");
+		ret.store=typed_db.objectStore(tx,"boxed_id");
 		ret.store_data=await this.get_async_result(typed_db.getAll(ret.store));
 		ret.store_diff=this.get_diff_by_key(this.database_diff_keys,ret.store_data);
 		return ret;
