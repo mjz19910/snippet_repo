@@ -252,6 +252,7 @@ class IndexedDBService extends BaseService {
 					this.committed_data.push(cache_val);
 				} else {
 					d_cache;
+					debugger;
 				}
 			} break;
 			case "video_id": {
@@ -1155,10 +1156,15 @@ class IndexedDBService extends BaseService {
 					default: {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 						let info1=item_nt.value.info_arr[0]; let info2=item_db_nt.value.info_arr[0];
+						item_nt.tag==="boolean";
 						if("raw_id" in info1&&"raw_id" in info2) {
 							if(info1.raw_id!==info2.raw_id) update_item=true;
 						}
 						if(info1 instanceof Array&&info2 instanceof Array) {
+							let v1=info1[1]; let v2=info2[1];
+							if(v1 instanceof Array) {
+								let is_same=v1.every(val=>info2[1].includes(val));
+							}
 							update_item=true;
 							debugger;
 						}
@@ -1184,10 +1190,13 @@ class IndexedDBService extends BaseService {
 						if(item_nt.value.hashtag===item_db_nt.value.hashtag) break;
 						update_item=true;
 					} break;
-					case "number":
+					case "bigint":
+					case "boolean":
 					case "key":
-					case "video_time":
+					case "keys":
+					case "number":
 					case "play_next":
+					case "video_time":
 				}
 				if(update_item) {
 					updated_count++;
