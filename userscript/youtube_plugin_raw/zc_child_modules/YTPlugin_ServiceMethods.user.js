@@ -2446,7 +2446,7 @@ class ServiceMethods extends ServiceData {
 		let {...ret}=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
 		return ret;
 	}
-	/** @template {Y_PutBoxedArgs_3} T @arg {T} args @returns {Promise<T_PutAwaitPromise<Extract<Y_PutBoxedRet_3,{args:T}>>>} */
+	/** @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<T_PutAwaitPromise<Extract<Y_PutBoxedRet_3,{args:T}>>>} */
 	async put_boxed_id_3(...args) {
 		let ret=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
 		return as_any(ret);

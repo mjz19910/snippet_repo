@@ -351,9 +351,9 @@ class IndexedDBService extends BaseService {
 		let ret=await promise;
 		return {args,ret};
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs_3} T @arg {T} args */
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
-	/** @arg {number} version @template {Extract<Y_PutBoxedArgs_3,{0:"browse_id"}>} T @arg {T} args */
+	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
 			default: args[1]===""; debugger; throw new Error("Unreachable");
@@ -432,7 +432,7 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
-	/** @arg {number} version @template {Y_PutBoxedArgs_3} T @arg {T} args */
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	put_boxed_id_3(version,...args) {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
