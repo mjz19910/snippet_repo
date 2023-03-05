@@ -47,6 +47,8 @@ class TypedIndexedDB {
 	getAll(store) {return store.getAll();}
 	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
 	put(store,value) {return store.put(value);}
+	/** @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {T} value @arg {TypedIDBObjectStore<T>} store @returns {IDBRequest<IDBValidKey>} */
+	add(store,value) {return store.add(value);}
 }
 export_(exports => exports.TypedIndexedDB=TypedIndexedDB);
 class TypedIDBValidKeyS {
@@ -109,18 +111,6 @@ class IndexedDBService extends BaseService {
 		/** @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]|null)[]} */
 		let arr=d_cache;
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
-	}
-	is_broken=false;
-	trigger_bp() {
-		if(this.is_broken) return;
-		debugger;
-		this.is_broken=true;
-	}
-	/** @public @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
-	async add_data_to_store(store,data) {
-		let success=await this.await_success(store.add(data));
-		if(this.log_all_events) console.log("IDBRequest: success",success);
-		this.committed_data.push(data);
 	}
 	log_db_actions=false;
 	/** @type {Promise<void>|null} */
