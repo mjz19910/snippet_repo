@@ -383,6 +383,10 @@ class IndexedDBService extends BaseService {
 		switch(args[0]) {
 			default: args[0]===""; switch((args[0])) {
 			} debugger; throw new Error();
+			case "key": {
+				let [tag,id,value]=args;
+				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${value.info_arr[0].start_radio}`,value},version)};
+			}
 			case "guide_entry_id": {
 				let [tag,,value]=args;
 				let iv=value.info_arr[0];
