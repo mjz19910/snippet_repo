@@ -28,16 +28,19 @@ type DI_BrowseId_VL_PL={
 	type: "browse_id";
 	tag: "VL:PL";
 	info_arr: [
-		{
-			raw_id: DU_Browse_Playlist_Id;
-		},
-		{
-			tag: "PL";
-			value: DI_A_Playlist_PL;
-		}
+		{raw_id: DU_Browse_Playlist_Id;},
+		{tag: "PL"; value: DI_A_Playlist_PL;},
 	];
 };
-type DI_BrowseId_VL=DI_BrowseId_VL_WL|DI_BrowseId_VL_LL|DI_BrowseId_VL_PL;
+type DI_BrowseId_VL_UC={
+	type: "browse_id";
+	tag: "VL:UC";
+	info_arr: [
+		{raw_id: DU_Browse_Playlist_Id;},
+		{tag: "UC"; value: DI_A_ChannelId_UC;},
+	];
+};
+type DI_BrowseId_VL=DI_BrowseId_VL_WL|DI_BrowseId_VL_LL|DI_BrowseId_VL_PL|DI_BrowseId_VL_UC;
 type Y_PutBoxedArgs=
 	|["bigint",null,[string,make_item_group<bigint>]]
 	|["boolean",null,[string,make_item_group<boolean>]]
@@ -46,8 +49,9 @@ type Y_PutBoxedArgs=
 	|["browse_id","SP",DI_BrowseId_SP]
 	|["browse_id","VL:LL",DI_BrowseId_VL_LL]
 	|["browse_id","VL:PL",DI_BrowseId_VL_PL]
+	|["browse_id","VL:UC",DI_BrowseId_VL_UC]
 	|["browse_id","VL:WL",DI_BrowseId_VL_WL]
-	|["channel_id","UC",DI_ChannelId_UC]
+	|["channel_id","UC",DI_A_ChannelId_UC]
 	|["hashtag_id",null,DI_HashtagId]
 	|["keys",null,[string,make_item_group<string|number>]]
 	|["load_id",null,number]

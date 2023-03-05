@@ -1,5 +1,5 @@
 type DI_G_NoKey=
-	|DI_ChannelId_UC
+	|DI_A_ChannelId_UC
 	|DI_G_BrowseId
 	|DI_HashtagId
 	|DI_PlayNext

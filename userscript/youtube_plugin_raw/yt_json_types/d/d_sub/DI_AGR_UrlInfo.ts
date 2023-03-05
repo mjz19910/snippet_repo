@@ -14,7 +14,7 @@ type DI_SpecialInfo=Exclude<DI_AGR_UrlInfo["info_arr"][0],{raw_id: any;}>;
 type DI_G_UrlInfo=
 	DI_AGR_UrlInfo["tag"] extends infer Y extends string?
 	Y extends infer I?
-	I extends "channel_id"? DI_ChannelId_UC:
+	I extends "channel_id"? DI_A_ChannelId_UC:
 	I extends "browse_id"? GI_BrowseId:
 	I extends "guide_entry_id"? DI_GuideEntryId:
 	I extends "playlist_id"? DI_G_PlaylistId:

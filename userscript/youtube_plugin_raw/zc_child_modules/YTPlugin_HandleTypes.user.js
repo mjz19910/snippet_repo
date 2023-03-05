@@ -3255,14 +3255,14 @@ class HandleTypes extends ServiceMethods {
 			case "channel_id":/*G*/{
 				const {info_arr: [{raw_id}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
-				/** @type {DI_ChannelId_UC} */
+				/** @type {DI_A_ChannelId_UC} */
 				const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;
 			} break;
 			case "browse_id":/*G*/{
 				const {info_arr: [{raw_id}]}=x;
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
-					/** @type {DI_ChannelId_UC} */
+					/** @type {DI_A_ChannelId_UC} */
 					const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
@@ -3324,18 +3324,25 @@ class HandleTypes extends ServiceMethods {
 				if(raw_id==="LL") {
 					/** @type {DI_A_Playlist_LL} */
 					let value={type: "playlist_id",info_arr: [{raw_id}]};
-					/** @type {DI_BrowseId_VL} */
+					/** @type {DI_BrowseId_VL_LL} */
 					itv={type: "guide_entry_id",info_arr: [{tag: raw_id,value}]};
 				} else if(raw_id==="WL") {
 					/** @type {DI_A_Playlist_WL} */
 					let value={type: "playlist_id",info_arr: [{raw_id}]};
-					/** @type {DI_BrowseId_VL} */
+					/** @type {DI_BrowseId_VL_WL} */
 					itv={type: "guide_entry_id",info_arr: [{tag: raw_id,value}]};
 				} else if(this.str_starts_with(raw_id,"PL")) {
 					const tag="PL";
 					let [,id]=split_string_once(raw_id,tag);
 					/** @type {DI_A_Playlist_PL} */
 					let value={type: "playlist_id",tag,info_arr: [{raw_id},{id}]};
+					/** @type {DI_BrowseId_VL_PL} */
+					itv={type: "guide_entry_id",info_arr: [{tag,value}]};
+				} else if(this.str_starts_with(raw_id,"UC")) {
+					const tag="UC";
+					let [,id]=split_string_once(raw_id,tag);
+					/** @type {DI_A_ChannelId_UC} */
+					let value={type: "channel_id",tag,info_arr: [{raw_id},{id}]};
 					/** @type {DI_BrowseId_VL} */
 					itv={type: "guide_entry_id",info_arr: [{tag,value}]};
 				} else {
