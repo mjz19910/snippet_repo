@@ -32,7 +32,7 @@ type DI_GuideEntry_PL={
 	info_arr: [DI_A_Playlist_PL];
 };
 
-type GI_GuideEntry_Id=DI_GuideEntry_LL|DI_GuideEntry_WL|DI_GuideEntry_PL|DI_GuideEntryId_UC;
+type GI_GuideEntry_Id=DI_GuideEntry_LL|DI_GuideEntry_WL|DI_GuideEntry_PL|DI_GuideEntryId_UC|DI_BrowseId_VL_LL;
 type DI_GuideEntryId_UC={
 	type: "guide_entry_id";
 	tag: "UC";

@@ -3315,24 +3315,18 @@ class HandleTypes extends ServiceMethods {
 				/** @type {GI_GuideEntry_Id} */
 				let itv;
 				if(raw_id==="LL") {
-					/** @type {DI_A_Playlist_LL} */
-					let value={type: "playlist_id",info_arr: [{raw_id}]};
-					/** @type {DI_BrowseId_VL_LL} */
-					itv={type: "guide_entry_id",info_arr: [value]};
+					/** @type {DI_GuideEntry_LL} */
+					const z={type: "guide_entry_id",tag: "LL",info_arr: [{type: "playlist_id",info_arr: [{raw_id}]}]}; itv=z;
 				} else if(raw_id==="WL") {
-					/** @type {DI_A_Playlist_WL} */
-					let value={type: "playlist_id",info_arr: [{raw_id}]};
-					/** @type {DI_BrowseId_VL_WL} */
-					itv={type: "guide_entry_id",info_arr: [value]};
+					/** @type {DI_GuideEntry_WL} */
+					const z={type: "guide_entry_id",tag: "WL",info_arr: [{type: "playlist_id",info_arr: [{raw_id}]}]}; itv=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
-					itv={type: "guide_entry_id",info_arr: [gen_info_PL(raw_id)]};
+					/** @type {DI_GuideEntry_PL} */
+					const z={type: "guide_entry_id",tag: "PL",info_arr: [gen_info_PL(raw_id)]}; itv=z;
 				} else if(this.str_starts_with(raw_id,"UC")) {
-					const tag="UC";
-					let [,id]=split_string_once(raw_id,tag);
-					/** @type {DI_A_ChannelId_UC} */
-					let value={type: "channel_id",tag,info_arr: [{raw_id},{id}]};
+					const tag="UC",[,id]=split_string_once(raw_id,tag);
 					/** @type {DI_GuideEntryId_UC} */
-					itv={type: "guide_entry_id",tag,info_arr: [value]};
+					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [{raw_id},{id}]}]}; itv=z;
 				} else {
 					debugger; break;
 				}
@@ -3474,6 +3468,13 @@ class HandleTypes extends ServiceMethods {
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
 					case "VL:PL":/*raw*/{
+						const {type,tag}=z;
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=[type,tag,z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} break;
+					case "VL:UC":/*raw*/{
 						const {type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
 						const args=[type,tag,z];

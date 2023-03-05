@@ -21,7 +21,7 @@ type WatchUrlFormat=
 	|`/watch?${D_WatchUrlStr}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
 	|`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`
-	|`/watch?v=${string}&playnext=1&list=RD${DM_Radio_ChannelId}`
+	|`/watch?v=${string}&playnext=1&list=${DU_Playlist_Radio_Id}`
 	;
 ;
 type D_WatchPageUrl=
@@ -36,7 +36,7 @@ type D_WatchPageUrl=
 type D_WatchPlaylistUrlFormat=
 	|`list=${DU_Playlist_Id}`
 	|`list=${DU_Playlist_Id}&index=${number}`
-	|`list=${T_IdTemplate<Extract<DU_PlaylistId_Base,`RD${string}`>>}&start_radio=${1|0}`
+	|`list=${DU_Playlist_Radio_Id}&start_radio=${1|0}`
 	;
 ;
 type D_WatchUrlStr=

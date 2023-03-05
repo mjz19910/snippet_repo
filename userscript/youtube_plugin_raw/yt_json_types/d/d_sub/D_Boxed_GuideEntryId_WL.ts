@@ -4,6 +4,6 @@ type D_Boxed_GuideEntryId_WL={
 	key: "boxed_id:guide_entry_id:WL";
 	value: {
 		type: "guide_entry_id";
-		info_arr: [TagGuideId_WL];
+		info_arr: [DI_A_Playlist_WL];
 	};
 };

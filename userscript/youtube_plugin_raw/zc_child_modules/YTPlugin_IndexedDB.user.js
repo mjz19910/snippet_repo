@@ -245,7 +245,10 @@ class IndexedDBService extends BaseService {
 					} break;
 					case "hashtag_id": ht.id_cache.add(`${val_src.type}:${val_src.hashtag}`); break;
 					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].raw_id}`); break;
-					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].value.info_arr[0].raw_id}`); break;
+					case "guide_entry_id": {
+						let fv=val_src.info_arr[0];
+						ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0]}`);
+					} break;
 					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.raw_value}`); break;
 					case "key": ht.id_cache.add(`${val_src.type}:start_radio:${val_src.info_arr[0].start_radio}`); break;
 					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
