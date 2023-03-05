@@ -186,9 +186,9 @@ class IndexedDBService extends BaseService {
 			default: {
 				let di=decay_item(item);
 				switch(get_tag(item)) {
-					case "":
+					case "browse_id:VL:PL":
 				}
-				get_tag(item)===""; console.log("skip_tag",di.tag);
+				console.log("skip_tag",di.tag);
 				debugger;
 			} break;
 			case "bigint": return store.get_store("bigint_store").load_data(item);
