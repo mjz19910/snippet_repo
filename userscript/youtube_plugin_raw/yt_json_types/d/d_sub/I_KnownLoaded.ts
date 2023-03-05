@@ -12,6 +12,7 @@ type I_KnownLoaded=
 	|D_Boxed_BrowseId_VL_PL
 	|D_Boxed_GuideEntryId_LL
 	|D_Boxed_GuideEntryId_WL
+	|D_Boxed_GuideEntryId_PL
 	|D_Boxed_Playlist_LL
 	|D_Boxed_Playlist_PL
 	|D_BoxedHashtagId
