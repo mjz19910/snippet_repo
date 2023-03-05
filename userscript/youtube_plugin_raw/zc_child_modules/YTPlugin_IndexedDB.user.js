@@ -136,6 +136,8 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
+	has_loaded_keys=false;
+	on_loaded_resolver=this.create_resolver();
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
 		/** @type {G_IDBBoxedType[]} */
@@ -143,6 +145,8 @@ class IndexedDBService extends BaseService {
 		for(let item of boxed) {
 			await this.load_store(store,item,version);
 		}
+		this.has_loaded_keys=true;
+		this.on_loaded_resolver.resolve();
 	}
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
@@ -1064,6 +1068,12 @@ class IndexedDBService extends BaseService {
 	/** @api @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {number} version */
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
+		if(!this.has_loaded_keys) {
+			console.log("[start_load_wait]");
+			await this.on_loaded_resolver.promise;
+			console.log("[load_wait_done]");
+			if(!this.has_loaded_keys) throw new Error("Bad state");
+		}
 		this.database_opening=true;
 		let db=await this.get_async_result(this.get_db_request(version));
 		this.database_opening=false;
@@ -1087,6 +1097,7 @@ class IndexedDBService extends BaseService {
 		} else if(no_null_cache.length>0) {
 			console.log("[d_cache_nonnull.arr]",no_null_cache);
 		}
+		let updated_count=0;
 		try {
 			for(let item of d_cache) {
 				if(tx_scope.is_tx_complete) {
@@ -1154,46 +1165,44 @@ class IndexedDBService extends BaseService {
 				let item_nt=item;
 				/** @type {DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes]} */
 				let item_db_nt=item_db_2;
-				x: if("type" in item_nt) {
-					if(!("type" in item_db_nt)) break x;
-					switch(item_nt.type) {
-						default: get_type(item_nt)===""; debugger; break;
-						case "boxed_id": update_item=true; break;
-						case "video_id": {
-							if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
-							if(!this.eq_keys(item_db_nt.type_parts,item_nt.type_parts)) {update_item=true; break;}
-							if(item_nt.v!==item_db_nt.v) update_item=true;
-						} break;
-						case "save_id":
-						case "load_id":
-						case "update_id": {
-							if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
-							if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
-							if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
-						case "playlist_id": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							debugger;
-							update_item=true;
-						} break;
-						// non-dynamic values
-						case "hashtag_id": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.hashtag===item_db_nt.hashtag) break;
-							update_item=true;
-						} break;
-						case "user_id": {
-							if(item_db_nt.type!==item_nt.type) break;
-							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-							if(item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
-					}
+				switch(item_nt.type) {
+					default: get_type(item_nt)===""; debugger; break;
+					case "boxed_id": update_item=true; break;
+					case "video_id": {
+						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
+						if(!this.eq_keys(item_db_nt.type_parts,item_nt.type_parts)) {update_item=true; break;}
+						if(item_nt.v!==item_db_nt.v) update_item=true;
+					} break;
+					case "save_id":
+					case "load_id":
+					case "update_id": {
+						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
+						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
+						if(item_nt.key===item_db_nt.key&&item_nt.id===item_db_nt.id) break;
+						update_item=true;
+					} break;
+					case "playlist_id": {
+						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						debugger;
+						update_item=true;
+					} break;
+					// non-dynamic values
+					case "hashtag_id": {
+						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						if(item_nt.hashtag===item_db_nt.hashtag) break;
+						update_item=true;
+					} break;
+					case "user_id": {
+						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
+						if(item_nt.id===item_db_nt.id) break;
+						update_item=true;
+					} break;
 				}
 				if(update_item) {
+					updated_count++;
 					await this.force_update(s,item);
 					this.committed_data.push(item);
 				} else {
@@ -1204,7 +1213,7 @@ class IndexedDBService extends BaseService {
 			this.handle_transaction_complete(tx_scope,complete_event);
 		} finally {
 			this.database_open=false;
-			if(no_null_cache.length>0) console.log("[committed_cache_num]",no_null_cache.length);
+			if(no_null_cache.length>0) console.log("[committed_cache_num] [start=%o] [updated=%o]",no_null_cache.length,updated_count);
 			if(this.log_db_actions) console.log("close db");
 		}
 	}
