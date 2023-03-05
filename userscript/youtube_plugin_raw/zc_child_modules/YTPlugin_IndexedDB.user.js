@@ -949,7 +949,7 @@ class IndexedDBService extends BaseService {
 	log_failed=true;
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
-		if(this.loaded_keys.has(value.key)) {
+		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
 			switch(value.tag) {
 				case "video_id": {
@@ -969,7 +969,12 @@ class IndexedDBService extends BaseService {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
 					if(loaded_value.value.raw===value.value.raw) return value;
-				}
+				} break x;
+				case "a:save_id": {
+					if(!loaded_value) break;
+					if(loaded_value.key!==value.key) break;
+					if(loaded_value.value.raw===value.value.raw) return value;
+				} break x;
 			}
 			if(loaded_value) {
 				console.log("[change]:",value.key,loaded_value.value,'->',value.value);
