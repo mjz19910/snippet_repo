@@ -61,6 +61,11 @@ type Y_PutBoxedArgs=
 	|["video_id",null,DI_VideoId]
 	|["video_time",null,DI_VideoTime]
 	|["guide_entry_id",null,{}]
+	|["playlist_id","RD",DI_A_Playlist_RD]
+	|["playlist_id","UU",{}]
+	|["playlist_id","RD:MM",{}]
+	|["playlist_id","RD:CM:UC",{}]
+	|["playlist_id","RD:GM:EM",{}]
 	;
 ;
 type Y_PutBoxedArgs_2=Extract<Y_PutBoxedArgs,{length: 2;}>;

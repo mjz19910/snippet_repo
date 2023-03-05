@@ -3324,11 +3324,11 @@ class HandleTypes extends ServiceMethods {
 					/** @type {DI_A_Playlist_WL} */
 					const z={type: "playlist_id",info_arr: [{raw_id}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
-					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [{raw_id}]});
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [{raw_id}]});
 				} else if(this.str_starts_with(raw_id,"UU")) {
-					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:UU`,info_arr: [{raw_id}]});
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:UU`,info_arr: [{raw_id}]});
 				} else if(this.str_starts_with(raw_id,"RD")) {
-					this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [{raw_id}]});
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [{raw_id}]});
 				} else {
 					raw_id===""; debugger;
 				}
@@ -3365,12 +3365,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {
-		/** @template T @arg {{tag:T}} x */
+		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		switch(x.tag) {
 			default: {
 				switch(get_tag(x)) {
+					case "":
 				}
+			} break;
+			case "playlist_id:UU": {
+				let x2=this.make_DI_AGR_UrlInfo(x);
+				x2; debugger;
+			} break;
+			case "playlist_id:PL": {
+				let x2=this.make_DI_AGR_UrlInfo(x);
+				x2; debugger;
+			} break;
+			case "playlist_id:RD": {
+				let x2=this.make_DI_AGR_UrlInfo(x);
+				x2; debugger;
+			} break;
+			case "key:start_radio": {
+				let x2=this.make_DI_AGR_UrlInfo(x);
+				x2; debugger;
 			} break;
 			case "guide_entry_id": {
 				let x2=this.make_DI_AGR_UrlInfo(x);
@@ -3408,24 +3425,64 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "playlist_id": {
 				let z=this.make_DI_AGR_UrlInfo(x);
-				const {info_arr: [{raw_id}]}=z;
-				switch(raw_id) {
-					case "LL": {
-						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-						const args=["playlist_id","LL",{type: "playlist_id",info_arr: [{raw_id}]}];
-						const box_res=this.put_boxed_id(...args);
-						this.execute_promise_def((async () => (await box_res).ret)());
-					} return;
-					case "WL": {
-						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-						const args=["playlist_id","WL",{type: "playlist_id",info_arr: [{raw_id}]}];
-						const box_res=this.put_boxed_id(...args);
-						this.execute_promise_def((async () => (await box_res).ret)());
-					} return;
-					default:
+				if(!("tag" in z)) {
+					const {info_arr: [{raw_id}]}=z;
+					switch(raw_id) {
+						default: raw_id===""; debugger; return;
+						case "LL": {
+							/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+							const args=["playlist_id","LL",{type: "playlist_id",info_arr: [{raw_id}]}];
+							const box_res=this.put_boxed_id(...args);
+							this.execute_promise_def((async () => (await box_res).ret)());
+						} return;
+						case "WL": {
+							/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+							const args=["playlist_id","WL",{type: "playlist_id",info_arr: [{raw_id}]}];
+							const box_res=this.put_boxed_id(...args);
+							this.execute_promise_def((async () => (await box_res).ret)());
+						} return;
+					}
 				}
-				debugger;
-			} break;
+				switch(z.tag) {
+					default: get_tag(z)===""; debugger; return;
+					case "PL": {
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=["playlist_id","PL",z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} return;
+					case "RD": {
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=["playlist_id","RD",z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} return;
+					case "RD:CM:UC": {
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=["playlist_id","RD:CM:UC",z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} return;
+					case "RD:GM:EM": {
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=["playlist_id","RD:GM:EM",z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} return;
+					case "RD:MM": {
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=["playlist_id","RD:MM",z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} return;
+					case "UU": {
+						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
+						const args=["playlist_id","UU",z];
+						const box_res=this.put_boxed_id(...args);
+						this.execute_promise_def((async () => (await box_res).ret)());
+					} return;
+				}
+			}
 		}
 	}
 	/** @arg {DI_G_BrowseId} x */
