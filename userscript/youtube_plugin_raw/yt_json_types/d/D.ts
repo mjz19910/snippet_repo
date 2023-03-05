@@ -37,18 +37,7 @@ type D_TargetIdStr=
 	|TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>['targetId']
 	;
 ;
-type D_PlaylistSelfId="WL"|"LL";
 type D_PlaylistIdTypeBase="RDMM"|"RD"|"PL"|"UU";
-type SD_PlaylistId=
-	|`RD${string}`
-	|`RDMM${string}`
-	|`RDGM${string}`
-	|DU_Playlist_UserUploads
-	|GU_PlaylistId
-	|"WL"
-	|"LL"
-	;
-;
 type GU_BrowseId=
 	|T_FeedEntry<D_BrowseEndpointPages>
 	|GU_VE5754_BrowseId

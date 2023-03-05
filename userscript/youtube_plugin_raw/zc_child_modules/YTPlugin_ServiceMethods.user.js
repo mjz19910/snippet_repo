@@ -1504,7 +1504,7 @@ class ServiceMethods extends ServiceData {
 		this.id_cache.add(x);
 		this.ht.D_RawUrlFromTag("raw","browse_id",x);
 	}
-	/** @public @arg {GU_PlaylistId} x */
+	/** @public @arg {SD_PlaylistId} x */
 	playlistId(x) {
 		if(this.id_cache.has(x)) return;
 		this.id_cache.add(x);
