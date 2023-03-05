@@ -1117,6 +1117,8 @@ class IndexedDBService extends BaseService {
 					let cv=db_val.value;
 					let c2=item2.value;
 					switch(c2.type) {
+						case "channel_id":
+						case "playlist_id":
 						case "video_id": {
 							if(cv.type!==c2.type) {s.tx.abort(); throw new Error("Unreachable");};
 							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
