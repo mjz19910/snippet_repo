@@ -1110,8 +1110,23 @@ class IndexedDBService extends BaseService {
 				if(this.committed_data.includes(item)) continue;
 				if(this.loaded_keys.has(item.key)) {
 					let db_val=this.loaded_map.get(item.key);
-					if(db_val) {};
-					debugger;
+					/** @type {I_KnownLoaded|{key:string}} */
+					let item2=item;
+					if(!("tag" in item2)) {s.tx.abort(); throw new Error("Unreachable");};
+					if(!db_val) {s.tx.abort(); throw new Error("Unreachable");};
+					let cv=db_val.value;
+					let c2=item2.value;
+					switch(c2.type) {
+						case "video_id": {
+							if(cv.type!==c2.type) {s.tx.abort(); throw new Error("Unreachable");};
+							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
+								let idx=d_cache.indexOf(item);
+								d_cache[idx]=null;
+								continue;
+							}
+						} break;
+					}
+					console.log("[was_loaded_from_db]",db_val.value.type);
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
 				if(tx_scope.is_tx_complete) {
@@ -1183,22 +1198,6 @@ class IndexedDBService extends BaseService {
 							if(item_db_nt.type!==item_nt.type) break;
 							if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 							if(item_nt.id===item_db_nt.id) break;
-							update_item=true;
-						} break;
-					}
-				} else {
-					if("type" in item_db_nt) break x;
-					if(!("base" in item_nt)) break x;
-					if(!("base" in item_db_nt)) break x;
-					switch(item_nt.base) {
-						case "channel_id": {
-							if(item_nt.key===item_db_nt.key) break;
-							if(item_nt.base===item_db_nt.base) {
-								if(item_nt.id===item_db_nt.id) break;
-								if(this.eq_keys(item_nt.type_parts,item_db_nt.type_parts)) break;
-								update_item=true;
-								break;
-							}
 							update_item=true;
 						} break;
 					}
