@@ -1829,14 +1829,14 @@ class HandleTypes extends ServiceMethods {
 			this.g(y); return;
 		}
 		x: if("list" in x3) {
-			lx: {
+			y: {
 				const {list,...y2}=x3;
 				this.playlistId(list);
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
 					this.save_string("video_url.info.playnext",playnext);
-					if(this.is_empty_obj(y)) break lx;
-					this.g(y); break lx;
+					if(this.is_empty_obj(y)) break y;
+					this.g(y); break y;
 				}
 				if(this.is_empty_obj(y2)) break x;
 				if("index" in y2) {
