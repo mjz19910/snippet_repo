@@ -236,24 +236,11 @@ class IndexedDBService extends BaseService {
 		item=this.update_obj_schema(item);
 		if(!item.z) return;
 		this.cache_weak_set.add(item.z[0]);
+		this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		/** @template {{b:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
 		function decay_item(x) {return x;}
-		if("d" in item) {
-			switch(item.d) {
-				case "bigint":
-				case "boolean":
-				case "keys":
-				case "number":
-				case "root_visual_element":
-				case "string": {
-					if(this.cache_weak_set.has(item.z[0].z[0])) break;
-					this.cache_weak_set.add(item.z[0].z[0]);
-				} break;
-			}
-		}
-		this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 		if("d" in item) {
 			switch(item.d) {
 				default: {
@@ -271,31 +258,8 @@ class IndexedDBService extends BaseService {
 				case "string": return store.get_store(item.d).load_data(item);
 			}
 		}
-		switch(item.j) {
-			default: item===""; debugger; break;
-			case "a:load_id":
-			case "a:save_id":
-			case "a:update_id":
-			case "browse_id:FE":
-			case "browse_id:MP":
-			case "browse_id:SP":
-			case "browse_id:VL:PL":
-			case "browse_id:VL:UC":
-			case "browse_id:VL":
-			case "channel_id:UC":
-			case "exact:play_next":
-			case "guide_entry_id":
-			case "hashtag_id":
-			case "key":
-			case "playlist_id:LL":
-			case "playlist_id:PL":
-			case "playlist_id:RD:MM":
-			case "playlist_id:RD":
-			case "playlist_id:WL":
-			case "user_id":
-			case "video_time":
-			case "video_id":
-		}
+		if(this.cache_weak_set.has(item.z[0].z[0])) return;
+		this.cache_weak_set.add(item.z[0].z[0]);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
