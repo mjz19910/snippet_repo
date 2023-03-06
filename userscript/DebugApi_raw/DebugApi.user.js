@@ -2504,12 +2504,23 @@ function iterable_iterator_map(func) {
 MappedIterableIterator.prototype.map=iterable_iterator_map;
 class IterExtensions {
 	static attach_to_api() {export_(exports => {exports.IterExtensions=this;});}
+	/** @template T @arg {T} x @returns {T extends IteratorPrototype? Object:T extends IterableIteratorPrototype? IteratorPrototype:T extends IterableIterator<any>? IterableIteratorPrototype:Object} */
+	static get_prototype(x) {
+		return Object.getPrototypeOf(x);
+	}
 	static init() {
 		let iterable_map_value=new Map;
 		let iterable_map_iterator_values=iterable_map_value.values();
-		/** @type {IterableIterator<any>} */
-		let iterable_map_iterator_prototype=Object.getPrototypeOf(iterable_map_iterator_values);
+		this.init_tree(iterable_map_iterator_values);
+	}
+	/** @arg {IterableIterator<any>} iterable_map_iterator_values */
+	static init_tree(iterable_map_iterator_values) {
+		console.log("[is] [IterableIterator<any>]",iterable_map_iterator_values);
+		let iterable_map_iterator_prototype=this.get_prototype(iterable_map_iterator_values);
 		iterable_map_iterator_prototype.map=MappedIterableIterator.prototype.map;
+		let iterator_prototype=this.get_prototype(iterable_map_iterator_prototype);
+		let object_prototype=this.get_prototype(iterator_prototype);
+		if(object_prototype!==Object.prototype) debugger;
 	}
 }
 IterExtensions.attach_to_api();
@@ -2786,10 +2797,10 @@ class CompressState extends CompressStateBase {
 	}
 }
 
+// CompressionStatsCalculator -> MulCompression
 class MulCompression extends BaseCompression {
 	constructor() {
 		super();
-		this.stats_calculator=new CompressionStatsCalculator;
 		/** @type {any[]} */
 		this.compression_stats=[];
 	}
@@ -2852,21 +2863,6 @@ class MulCompression extends BaseCompression {
 			ret.push(arr[i]);
 		}
 		return this.decompress_result(arr,ret);
-	}
-	/** @arg {string[]} arr @returns {string[]} */
-	compress_array(arr) {
-		let success,res;
-		[success,res]=this.try_decompress(arr);
-		if(success) arr=res;
-		for(let i=0;i<4;i++) {
-			this.stats_calculator.calc_for_stats_index(this.compression_stats,arr,i);
-			let ls=this.compression_stats[i];
-			if(ls.length>0) {continue;}
-			break;
-		}
-		[success,res]=this.try_compress(arr);
-		if(success) return res;
-		return arr;
 	}
 }
 export_(exports => {exports.MulCompression=MulCompression;});
@@ -3166,14 +3162,26 @@ function run_modules_plugin() {
 }
 export_(exports => {exports.run_modules_plugin=new VoidCallback(run_modules_plugin,[]);});
 
-class CompressionStatsCalculator {
-	constructor() {
-		/** @type {number[]} */
-		this.hit_counts=[];
-		/** @type {string[]} */
-		this.cache=[];
-		/** @type {MulCompression} */
-		this.compressor=new MulCompression;
+// CompressionStatsCalculator -> MulCompression
+class CompressionStatsCalculator extends MulCompression {
+	/** @type {number[]} */
+	hit_counts=[];
+	/** @type {string[]} */
+	cache=[];
+	/** @arg {string[]} arr @returns {string[]} */
+	compress_array(arr) {
+		let success,res;
+		[success,res]=this.try_decompress(arr);
+		if(success) arr=res;
+		for(let i=0;i<4;i++) {
+			this.calc_for_stats_index(this.compression_stats,arr,i);
+			let ls=this.compression_stats[i];
+			if(ls.length>0) {continue;}
+			break;
+		}
+		[success,res]=this.try_compress(arr);
+		if(success) return res;
+		return arr;
 	}
 	/** @arg {string[]} arr @arg {number} calc_win */
 	sorted_comp_stats(arr,calc_win) {

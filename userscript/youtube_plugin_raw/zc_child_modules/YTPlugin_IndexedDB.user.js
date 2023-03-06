@@ -194,7 +194,7 @@ class IndexedDBService extends BaseService {
 			item.type;
 			return;
 		}
-		this.cache_weak_set.add(item.info_arr[0]);
+		this.cache_weak_set.add(item.z[0]);
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		/** @template {{type:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
@@ -206,8 +206,8 @@ class IndexedDBService extends BaseService {
 			case "number":
 			case "root_visual_element":
 			case "string": {
-				if(this.cache_weak_set.has(item.info_arr[0].info_arr[0])) break;
-				this.cache_weak_set.add(item.info_arr[0].info_arr[0]);
+				if(this.cache_weak_set.has(item.z[0].z[0])) break;
+				this.cache_weak_set.add(item.z[0].z[0]);
 			} break;
 			default: this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 		}
@@ -246,19 +246,33 @@ class IndexedDBService extends BaseService {
 			case "playlist_id:WL":
 			case "user_id":
 			case "video_time": {
-				let val_src=item.info_arr[0];
-				switch(val_src.a) {
-					default: debugger; break;
-					case "hashtag_id": ht.id_cache.add(`${val_src.a}:${val_src.z[0].z[0].info_arr[0]}`); break;
-					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
-					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].z[0].info_arr[0]}`); break;
-					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
-					case "key": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].start_radio}`); break;
-					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
-					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
-					case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
-					case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0]}`); break;
-					case "number": break;
+				let val_src=item.z[0];
+				if("type" in val_src) {
+					switch(val_src.type) {
+						default: debugger; break;
+						case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.z[0].z[0].z[0]}`); break;
+						case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0].z[0]}`); break;
+						case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0]}`); break;
+						case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0]}`); break;
+						case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0]}`); break;
+						case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0]}`); break;
+						case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0]}`); break;
+						case "number": break;
+					}
+					return;
+				}
+				if("b" in val_src) {
+					switch(val_src.b) {
+						default: debugger; break;
+						case "key": ht.id_cache.add(`${val_src.b}:${val_src.c}:${val_src.z[0].z[0]}`); break;
+					}
+					return;
+				}
+				if("a" in val_src) {
+					switch(val_src.a) {
+						default: debugger; break;
+						case "hashtag_id": ht.id_cache.add(`${val_src.a}:${val_src.z[0].z[0].z[0]}`); break;
+					}
 				}
 				let d_cache=this.cache();
 				let cache_val=d_cache.find(v => v&&v.key===item.key);
@@ -270,8 +284,8 @@ class IndexedDBService extends BaseService {
 				}
 			} break;
 			case "video_id": {
-				let val_src=item.info_arr[0];
-				ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0]}`);
+				let val_src=item.z[0];
+				ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0]}`);
 				this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 			} break;
 		}
@@ -303,7 +317,7 @@ class IndexedDBService extends BaseService {
 			load_id=await this.get_id_box("load_id",version);
 			if(!load_id) throw new Error("null on get");
 		}
-		if(load_id.info_arr[0].info_arr[0]!==this.expected_load_id) this.expected_load_id=load_id.info_arr[0].info_arr[0];
+		if(load_id.z[0].z[0]!==this.expected_load_id) this.expected_load_id=load_id.z[0].z[0];
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
 		let load_res=await this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
@@ -564,7 +578,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "hashtag_id": {
 				let [tag,,value]=args;
-				const z=this.make_box_3(tag,value.z[0].z[0].info_arr[0],value);
+				const z=this.make_box_3(tag,value.z[0].z[0].z[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "channel_id": {
