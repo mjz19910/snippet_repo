@@ -15,11 +15,9 @@ main() {
 		export F=/dev/shm/lock.pid.$$
 		touch $F
 		(
-			exec 4<>$F
+			exec 4>>$F
 			flock 4
 			pidof lzma | cut -d " " -f 1- | xargs -rP 2 -n 1 zsh -c 'echo "start_args" $@;. '$START_PATH' resume_pid $@' ''
-			exec 4>&-
-			echo done
 		)
 	}
 }
