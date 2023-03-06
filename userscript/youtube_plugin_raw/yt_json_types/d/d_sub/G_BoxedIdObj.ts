@@ -25,10 +25,3 @@ type G_BoxedIdObj=
 	|GST_DSS
 	;
 ;
-type DSS_Bigint=DSI_Item_ABD<bigint,"bigint">;
-type DSS_Bigint_2={
-	type: "boxed_id";
-	tag: "bigint";
-	key: `boxed_id:bigint:${string}`;
-	z: [{_is: "group"; type: string; z: [make_item_group<bigint>];}];
-};
