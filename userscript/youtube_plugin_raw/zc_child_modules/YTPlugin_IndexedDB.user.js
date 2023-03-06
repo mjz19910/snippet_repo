@@ -341,19 +341,33 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {T[]} _mt */
 	uv_unpack_mt(x,_mt) {
-		/** @type {make_one_t<T>|null} */
-		let one=null;
-		/** @type {make_arr_t<T>|null} */
-		let arr=null;
-		/** @type {make_many_t<T>|null} */
-		let many=null;
-		switch(x.type) {
+		const ret={}; ret.arr=null; ret.instance=null; ret.many=null; ret.one=null; ret.typeof_=null;
+		x: switch(x.type) {
 			default: debugger; break;
-			case "one": one=x; break;
-			case "many": many=x; break;
-			case "arr": arr=x; break;
+			case "one": {
+				if("special" in x) switch(x.special) {
+					case "instance": {
+						/** @type {make_one_sp_instance_name<T>} */
+						const u=x; ret.instance=u;
+					} break x;
+					case "typeof": {
+						/** @type {make_one_sp_typeof<T>} */
+						const u=x; ret.typeof_=u;
+					} break x;
+				}
+				/** @type {make_one_t<T>} */
+				const u=x; ret.one=u;
+			} break;
+			case "many": {
+				/** @type {make_many_t<T>} */
+				const u=x; ret.many=u;
+			} break;
+			case "arr": {
+				/** @type {make_arr_t<T>} */
+				const u=x; ret.arr=u;
+			} break;
 		}
-		return {one,arr,many};
+		return ret;
 	}
 	/** @arg {{args:Y_PutBoxedArgs;promise:Promise<G_BoxedIdObj>;}} x */
 	async await_put_result(x) {

@@ -23,7 +23,6 @@ type StoreStrMap={
 	root_visual_element: ["number"];
 	string: ["string"];
 };
-type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>|make_one_sp_typeof<T_GetTypeof<T>,T>;
 type V_StoreBigint=StoreDescription<"bigint">;
 type V_StoreBool=StoreDescription<"boolean">;
 type V_StoreKeys=StoreDescription<"keys">;
@@ -44,16 +43,17 @@ type make_one_t<T>={
 	info_arr: [T];
 	m1_value_39392_one: {};
 };
-type make_one_sp_typeof<T extends T_GetTypeof<U>,U>={
+type make_one_sp_typeof<T,U extends T_GetTypeof<T>=T_GetTypeof<T>>={
 	is: "item"; type: "one";
 	special: "typeof";
-	info_arr: [T];
+	info_arr: [U];
 };
-type make_one_sp_instance_name<T extends (U extends any[]? "array":"unknown"),U>={
+type make_one_sp_instance_name<U>={
 	is: "item"; type: "one";
 	special: "instance";
-	info_arr: [T];
+	info_arr: [U extends any[]? "array":"unknown"];
 };
+type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>|make_one_sp_typeof<T>|make_one_sp_instance_name<T>;
 type make_arr_t<T>={
 	is: "item";
 	type: "arr";

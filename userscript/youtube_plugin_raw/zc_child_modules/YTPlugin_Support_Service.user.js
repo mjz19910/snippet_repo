@@ -161,6 +161,11 @@ class StoreDescription extends ApiBase2 {
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
+	/** @template {make_item_group<StoreTypeMap[CLS_K]>} T @arg {T} x @template TI @template {make_arr_t<TI>} U @arg {(x:T)=>U} prepare */
+	clone_and_then_arr(x,prepare) {
+		let x1=this.clone_container(x);
+		return prepare(x1);
+	}
 	/** @template {"many"|"arr"|"one"} W @template T @arg {W extends infer I?I extends "one"?[I,T]:I extends "arr"?[I,T[]]:[I,T[][]]:never} args @returns {W extends "one"?make_one_t<T>:W extends "arr"?make_arr_t<T>:make_many_t<T>} */
 	make_item(...args) {
 		const [type,x]=args;
@@ -195,6 +200,7 @@ class StoreDescription extends ApiBase2 {
 			}
 			if(item_container.type==="arr"&&x.type==="one") {
 				let {info_arr: [item_arr]}=item_container;
+				if("special" in x) {debugger; return;}
 				if(item_arr.includes(x.info_arr[0])) return;
 				let new_container=this.clone_and_then(item_container,x1 => (x1.info_arr[0].push(x.info_arr[0]),x1));
 				this.push_new_data(k,new_container);
@@ -210,6 +216,7 @@ class StoreDescription extends ApiBase2 {
 				return;
 			}
 			if(item_container.type==="one"&&x.type==="one") {
+				if("special" in item_container||"special" in x) {debugger; return;}
 				let {m1_value_39392_one: item_value}=item_container;
 				if(item_value===x.info_arr[0]) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
@@ -258,7 +265,7 @@ class StoreDescription extends ApiBase2 {
 			return;
 		}
 		if(obj instanceof Array) {
-			this.save_data(`${k}.instance`,{is: "item",type: "one",special: "instance",m1_value_39392_arr: "array"});
+			this.save_data(`${k}.instance`,{is: "item",type: "one",special: "instance",info_arr: ["array"],m1_value_39392_arr: {}});
 			return;
 		}
 		let value=this.get_keys_of(obj);
