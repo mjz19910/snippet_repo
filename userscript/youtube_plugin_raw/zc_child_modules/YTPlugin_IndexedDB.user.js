@@ -230,13 +230,69 @@ class IndexedDBService extends BaseService {
 		}
 		return x;
 	}
+	/** @arg {G_BoxedIdObj} x */
+	store_cache_tree(x) {
+		this.loaded_keys.add(x.key);
+		this.loaded_map.set(x.key,x);
+		this.cache_weak_set.add(x);
+		this.cache_depth_1(x.z[0]);
+	}
+	/** @arg {CacheTreeDepth1} x */
+	cache_depth_1(x) {
+		this.cache_weak_set.add(x);
+		console.log("[depth_1.keys]",this.get_keys_of(x));
+		this.cache_depth_2(x.z[0]);
+	}
+	/** @arg {CacheTreeDepth2} x */
+	cache_depth_2(x) {
+		if(typeof x==="number") return;
+		console.log("[depth_2.keys]",this.get_keys_of(x));
+		this.cache_weak_set.add(x);
+		this.cache_depth_3(x.z[0]);
+	}
+	/** @arg {CacheTreeDepth3} x */
+	cache_depth_3(x) {
+		if(typeof x==="string") return;
+		if(typeof x==="number") return;
+		if(typeof x==="bigint") return;
+		if(typeof x==="boolean") return;
+		if(x instanceof Array) return this.cache_depth_3_arr(x);
+		console.log("[depth_3.keys]",this.get_keys_of(x));
+		this.cache_depth_4(x.z[0]);
+		this.cache_weak_set.add(x);
+	}
+	/** @arg {Extract<CacheTreeDepth3,any[]>} x */
+	cache_depth_3_arr(x) {
+		for(let v of x) this.cache_depth_3_iter(v);
+	}
+	/** @arg {Extract<CacheTreeDepth3,any[]>[0]} x */
+	cache_depth_3_iter(x) {
+		if(typeof x==="string") return;
+		if(typeof x==="number") return;
+		if(typeof x==="bigint") return;
+		if(typeof x==="boolean") return;
+		this.cache_depth_3_arr2(x);
+	}
+	/** @arg {Extract<CacheTreeDepth3,any[][]>[0]} x */
+	cache_depth_3_arr2(x) {
+		for(let v of x) this.cache_depth_3_iter2(v);
+	}
+	/** @arg {Extract<CacheTreeDepth3,any[][]>[0][0]} x */
+	cache_depth_3_iter2(x) {
+		if(typeof x==="string") return;
+		if(typeof x==="number") return;
+		if(typeof x==="bigint") return;
+		if(typeof x==="boolean") return;
+		debugger;
+	}
+	/** @arg {CacheTreeDepth4} x */
+	cache_depth_4(x) {x;}
 	/** @arg {StoreData} store @arg {G_BoxedIdObj} item */
 	async load_store(store,item) {
 		this.add_to_index(item.key,item,true);
 		item=this.update_obj_schema(item);
 		if(!item.z) return;
-		this.cache_weak_set.add(item.z[0]);
-		this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
+		this.store_cache_tree(item);
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		/** @template {{b:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
@@ -258,9 +314,6 @@ class IndexedDBService extends BaseService {
 				case "string": return store.get_store(item.d).load_data(item);
 			}
 		}
-		if(item.z[0].z[0]===void 0) return;
-		if(this.cache_weak_set.has(item.z[0].z[0])) return;
-		this.cache_weak_set.add(item.z[0].z[0]);
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
