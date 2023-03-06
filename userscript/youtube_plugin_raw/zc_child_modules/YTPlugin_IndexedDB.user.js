@@ -341,33 +341,27 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {T[]} _mt */
 	uv_unpack_mt(x,_mt) {
-		const ret={}; ret.arr=null; ret.instance=null; ret.many=null; ret.one=null; ret.typeof_=null;
+		const make={},nul=null;
+		/** @type {{u:make_arr_t<T>|make_instance_name_t<T>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
+		const D_holder={};
+		D_holder.u=x; make.arr=nul; make.instance_name=nul; make.many=nul; make.one=nul; make.typeof_name=nul;
 		x: switch(x.type) {
 			default: debugger; break;
 			case "one": {
 				if("special" in x) switch(x.special) {
-					case "instance": {
-						/** @type {make_one_sp_instance_name<T>} */
-						const u=x; ret.instance=u;
-					} break x;
-					case "typeof": {
-						/** @type {make_one_sp_typeof<T>} */
-						const u=x; ret.typeof_=u;
-					} break x;
+					case "instance": make[x.special]=x; break x;
+					case "typeof": make.typeof_name=x; break x;
 				}
-				/** @type {make_one_t<T>} */
-				const u=x; ret.one=u;
+				make.one=x;
 			} break;
 			case "many": {
-				/** @type {make_many_t<T>} */
-				const u=x; ret.many=u;
+				make.many=x;
 			} break;
 			case "arr": {
-				/** @type {make_arr_t<T>} */
-				const u=x; ret.arr=u;
+				make.arr=x;
 			} break;
 		}
-		return ret;
+		return make;
 	}
 	/** @arg {{args:Y_PutBoxedArgs;promise:Promise<G_BoxedIdObj>;}} x */
 	async await_put_result(x) {

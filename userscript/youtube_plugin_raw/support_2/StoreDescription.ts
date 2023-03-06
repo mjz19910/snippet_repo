@@ -39,29 +39,26 @@ type G_StoreDescriptions=
 	;
 ;
 type make_one_t<T>={
-	is: "item"; type: "one";
+	is: "item"; type: "one"; special: "one";
 	info_arr: [T];
 	m1_value_39392_one: {};
 };
-type make_one_sp_typeof<T,U extends T_GetTypeof<T>=T_GetTypeof<T>>={
-	is: "item"; type: "one";
-	special: "typeof";
+type make_typeof_name_t<T,U extends T_GetTypeof<T>=T_GetTypeof<T>>={
+	is: "item"; type: "one"; special: "typeof_name";
 	info_arr: [U];
 };
-type make_one_sp_instance_name<U>={
-	is: "item"; type: "one";
-	special: "instance";
+type make_instance_name_t<U>={
+	is: "item"; type: "one"; special: "instance_name";
 	info_arr: [U extends any[]? "array":"unknown"];
 };
-type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>|make_one_sp_typeof<T>|make_one_sp_instance_name<T>;
+type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>|make_typeof_name_t<T>|make_instance_name_t<T>;
 type make_arr_t<T>={
-	is: "item";
-	type: "arr";
+	is: "item"; type: "arr"; special: "arr";
 	info_arr: [T[]];
 	m1_value_39392_arr: {};
 };
 type make_many_t<T>={
-	is: "item"; type: "many";
+	is: "item"; type: "many"; special: "many";
 	info_arr: [T[][]];
 	m1_value_39392_many: {};
 };
