@@ -130,10 +130,10 @@ class StoreDescription extends ApiBase2 {
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
 	}
-	/** @arg {T_BoxedStore<CLS_T,this["content"]>} item */
+	/** @arg {T_BoxedStore<StoreTypeMap[CLS_K],CLS_K>} item */
 	load_data(item) {
-		let {value: ua}=item;
-		let {type: k,info_arr: [{value: x}]}=ua;
+		const x=item.info_arr[0].info_arr[0];
+		const k=item.info_arr[0].tag;
 		this.add_data_to_index(k,x);
 	}
 	/** @template {make_item_group<StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
@@ -251,7 +251,7 @@ export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
 	/** @arg {StoreDataInput} args */
 	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
-	/** @type {Map<StoreDataInput["type"],StoreDescription<any,any,any>>} */
+	/** @type {Map<StoreDataInput["type"],StoreDataInput["description"]>} */
 	stores=new Map;
 	/** @arg {()=>void} data_update_callback */
 	constructor(data_update_callback) {
@@ -259,31 +259,32 @@ class StoreData {
 		function make_store(type) {
 			switch(type) {
 				case "bigint": {
-					/** @type {StoreDescription<bigint,[""]>} */
-					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+					/** @type {StoreDescription<"bigint">} */
+					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
 				}
 				case "boolean": {
-					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
-					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+					/** @type {StoreDescription<typeof type>} */
+					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
 				}
 				case "keys": {
-					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
-					const description=new StoreDescription(["number","string"],type,data_update_callback); return {type,description};
+					/** @type {StoreDescription<typeof type>} */
+					const description=new StoreDescription(type,["number","string"],data_update_callback); return {type,description};
 				}
 				case "number": {
-					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
-					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+					/** @type {StoreDescription<typeof type>} */
+					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
 				}
 				case "root_visual_element": {
-					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
-					const description=new StoreDescription(["number"],type,data_update_callback); return {type,description};
+					/** @type {StoreDescription<typeof type>} */
+					const description=new StoreDescription(type,["number"],data_update_callback); return {type,description};
 				}
 				case "string": {
-					/** @type {StoreDescription<StoreTypeMap[typeof type],typeof type>} */
-					const description=new StoreDescription([type],type,data_update_callback); return {type,description};
+					/** @type {StoreDescription<typeof type>} */
+					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
 				}
 			}
 		}
+		/** @type {["bigint","boolean","keys","number","root_visual_element","string"]} */
 		const store_names_arr=["bigint","boolean","keys","number","root_visual_element","string"];
 		for(let store_name of store_names_arr) this.add_store(make_store(store_name));
 	}
