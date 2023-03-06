@@ -3,6 +3,6 @@ type DI_A_Playlist_UU={
 	tag: "UU";
 	info_arr: [
 		DIT_Item<"raw_id",DIT_Prim<`UU${string}`>>,
-		{id: string;}
+		DIT_Item<"id",DIT_Prim<string>>
 	];
 };

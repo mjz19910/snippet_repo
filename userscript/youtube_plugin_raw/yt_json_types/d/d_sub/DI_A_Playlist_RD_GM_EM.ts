@@ -3,6 +3,6 @@ type DI_A_Playlist_RD_GM_EM={
 	tag: "RD:GM:EM";
 	info_arr: [
 		DIT_Item<"raw_id",DIT_Prim<`RDGMEM${string}`>>,
-		{id: string;},
+		DIT_Item<"id",DIT_Prim<string>>,
 	];
 };

@@ -3,6 +3,6 @@ type DI_BrowseId_FE={
 	tag: "FE";
 	info_arr: [
 		DIT_Item<"raw_id",DIT_Prim<T_IdTemplate<"FE">>>,
-		{id: DIT_Prim<D_BrowseEndpointPages>;},
+		DIT_Item<"id",DIT_Prim<D_BrowseEndpointPages>>,
 	];
 };

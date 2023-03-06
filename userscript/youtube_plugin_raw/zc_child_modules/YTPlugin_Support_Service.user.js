@@ -203,14 +203,18 @@ class StoreDescription extends ApiBase2 {
 			if(item_container.type==="arr"&&x.type==="arr") {
 				let {value: item_arr}=item_container;
 				if(this.eq_keys(item_arr,x.value)) return;
-				let new_container=this.clone_and_then(item_container,x1 => this.make_item("many",[x1.value,x.value]));
+				let new_container=this.clone_and_then(item_container,x1 => {
+					return {_is: "item",type: "many",value: [x1.value,x.value]};
+				});
 				this.push_new_data(k,new_container);
 				return;
 			}
 			if(item_container.type==="one"&&x.type==="one") {
 				let {value: item_value}=item_container;
 				if(item_value===x.value) return;
-				let new_container=this.clone_and_then(item_container,x1 => this.make_item("many",[x1.value,x.value]));
+				let new_container=this.clone_and_then(item_container,x1 => {
+					return {_is: "item",type: "arr",value: [x1.value,x.value]};
+				});
 				this.push_new_data(k,new_container);
 				return;
 			}
@@ -223,16 +227,16 @@ class StoreDescription extends ApiBase2 {
 	save_keys(k,obj) {
 		if(!obj) {debugger; return;}
 		if(typeof obj!=="object") {
-			this.save_data(`${k}.type`,{type: "one",value: typeof obj});
+			this.save_data(`${k}.type`,{_is: "item",type: "one",value: typeof obj});
 			return;
 		}
 		if(obj instanceof Array) {
-			this.save_data(`${k}.instance`,{type: "one",value: "array"});
+			this.save_data(`${k}.instance`,{_is: "item",type: "one",value: "array"});
 			return;
 		}
-		let keys=this.get_keys_of(obj);
+		let value=this.get_keys_of(obj);
 		/** @type {make_arr_t<string>} */
-		let x={type: "arr",value: keys};
+		let x={_is: "item",type: "arr",value};
 		return this.save_data(k,x);
 	}
 	/** @arg {string} k */
@@ -240,7 +244,7 @@ class StoreDescription extends ApiBase2 {
 		let idx=this.key_index.get(k);
 		if(idx) return this.data[idx];
 		idx=this.data.findIndex(e => e[0]===k);
-		if(idx<0) return this.add_to_index(k,{type: "arr",value: []});
+		if(idx<0) return this.add_to_index(k,{_is: "item",type: "arr",value: []});
 		this.key_index.set(k,idx);
 		return this.data[idx];
 	}
@@ -532,7 +536,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				r.push([rx.lastIndex,rr[0]]);
 			}
 		}
-		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1[1],1).bitmap;
+		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1.value,1).bitmap;
 		let mm=find_one_set_bit(bm);
 		/** @private @arg {string} bm */
 		function unset_bits(bm) {

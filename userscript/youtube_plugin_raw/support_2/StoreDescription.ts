@@ -39,28 +39,28 @@ type G_StoreDescriptions=
 	|V_StoreVE
 	;
 ;
-type make_one_t<T>={_is: "item"; type: "one",value: T;};
-type make_arr_t<T>={_is: "item"; type: "arr",value: T[];};
-type make_many_t<T>={_is: "item"; type: "many",value: T[][];};
+type make_one_t<T>={_is: "item"; type: "one",info_arr: [T];};
+type make_arr_t<T>={_is: "item"; type: "arr",info_arr: [T[]];};
+type make_many_t<T>={_is: "item"; type: "many",info_arr: [T[][]];};
 type DB_NS_TypeStr="root_visual_element"|"boolean"|"string"|"number"|"keys";
 type StoredChangesItem={
 	type: "root_visual_element";
 	tag: string;
-	value: make_item_group<number>;
+	info_arr: [make_item_group<number>];
 }|{
 	type: "number";
 	tag: string;
-	value: make_item_group<number>;
+	info_arr: [make_item_group<number>];
 }|{
 	type: "string";
 	tag: string;
-	value: make_item_group<string>;
+	info_arr: [make_item_group<string>];
 }|{
 	type: "keys";
 	tag: string;
-	value: make_item_group<number|string>;
+	info_arr: [make_item_group<number|string>];
 }|{
 	type: "boolean";
 	tag: string;
-	value: make_item_group<boolean>;
+	info_arr: [make_item_group<boolean>];
 };

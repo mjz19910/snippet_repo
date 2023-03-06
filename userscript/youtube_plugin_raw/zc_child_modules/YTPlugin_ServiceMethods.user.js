@@ -1477,11 +1477,11 @@ class ServiceMethods extends ServiceData {
 		if(!s_url_data) {this.save_number(k,1); return;}
 		let wd=s_url_data[1];
 		switch(wd.type) {
-			case "one": return this.save_number(k,wd.value+1);
+			case "one": return this.save_number(k,wd.info_arr[0]+1);
 			case "arr": {
-				let {value}=wd;
-				if(!value.length) return this.save_number(k,1);
-				let n=value[0]+1;
+				let {info_arr: [v]}=wd;
+				if(!v.length) return this.save_number(k,1);
+				let n=v[0]+1;
 				return this.save_number(k,n);
 			}
 			case "many": throw new Error("What");
@@ -1535,7 +1535,7 @@ class ServiceMethods extends ServiceData {
 		const type="user_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.DI_G_NoKey({type,info_arr: []});
+		this.ht.DI_G_NoKey({type,info_arr: [{type: "raw_id",info_arr: [{_is: "primitive",type: "string",info_arr: [x]}]}]});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -2039,9 +2039,9 @@ class ServiceMethods extends ServiceData {
 				}
 			} break;
 			case "hashtag": {
-				let [,hashtag,...u]=p;
+				let [,v,...u]=p;
 				if(u.length===0) {
-					this.ht.DI_G_NoKey({type: "hashtag_id",hashtag});
+					this.ht.DI_G_NoKey({type: "hashtag_id",info_arr: [{type: "hashtag",info_arr: [{_is: "primitive",type: "string",info_arr: [v]}]}]});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -2446,7 +2446,7 @@ class ServiceMethods extends ServiceData {
 		let {...ret}=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
 		return ret;
 	}
-	/** @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<T_PutAwaitPromise<Extract<Y_PutBoxedRet_3,{args:T}>>>} */
+	/** @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<T_PutAwaitPromise<Extract<Y_PutBoxedRet,{args:T}>>>} */
 	async put_boxed_id_3(...args) {
 		let ret=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
 		return as_any(ret);
@@ -2862,7 +2862,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @private @arg {D_GM_VeNum} x */
-	on_root_visual_element(x) {this.save_db.data_store.get_store("ve_store").save_data("ve_element",["one",x]);}
+	on_root_visual_element(x) {this.save_db.data_store.get_store("root_visual_element").save_data("ve_element",{_is: "item",type: "one",info_arr: [x]});}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */

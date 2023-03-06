@@ -3207,10 +3207,12 @@ class HandleTypes extends ServiceMethods {
 	/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["type"]} t @returns {x is MakeRet_DI_AGR_UrlInfo<TI>} */
 	assume_is_type(x,t) {return x.type===t;}
 	/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
-	gen_info_PL(raw_id) {
-		const tag="PL";
-		let [,id]=split_string_once(raw_id,tag);
-		return {type: "playlist_id",tag,info_arr: [this.make_raw_id(raw_id),{id}]};
+	make_info_PL(raw_id) {return this.make_info_3("playlist_id","PL",raw_id);}
+	/** @arg {"playlist_id"}x1 @arg {"PL"} x2 @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
+	make_info_3(x1,x2,x3) {
+		x1; x2; x3;
+		let [,id]=split_string_once(x3,x2);
+		return {type: x1,tag: x2,info_arr: [this.make_raw_id(x3),this.make_id(id)]};
 	}
 	/** @template U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]} */
 	get_prim_1(x) {return x.info_arr[0];}
@@ -3218,11 +3220,11 @@ class HandleTypes extends ServiceMethods {
 	get_prim_2(x) {return this.get_prim_1(x).info_arr[0];}
 	/** @template T1 @template {{info_arr:[T1]}} V @template {DIT_Item<any,V>} U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]["info_arr"][0]["info_arr"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).info_arr[0];}
-	/** @template T @arg {T} x @returns {{_is:"primitive";type: "string";info_arr:[T]}} */
-	make_prim_str(x) {return {_is: "primitive",type: "string",info_arr: [x]};}
-	/** @template T @arg {T} x @returns {{type: "raw_id",info_arr: [{_is:"primitive";type: "string";info_arr:[T]}]}} */
-	make_raw_id(x) {return {type: "raw_id",info_arr: [this.make_prim_str(x)]};}
-	/** @template T @arg {T} x @returns {{type: "raw_id",info_arr: [T]}} */
+	/** @template T @arg {T} x @returns {DIT_Item<"raw_id",DIT_Prim<T>>} */
+	make_raw_id(x) {return this.make_raw_id_1(this.make_DIT_Prim(x));}
+	/** @template {string} T @arg {T} x @returns {DIT_Item<"id",DIT_Prim<T>>} */
+	make_id(x) {return {type: "id",info_arr: [this.make_DIT_Prim(x)]};}
+	/** @template T @arg {T} x @returns {DIT_Item<"raw_id",T>} */
 	make_raw_id_1(x) {return {type: "raw_id",info_arr: [x]};}
 	/** @template T @arg {T} x @returns {StoreGetType<T>} */
 	get_s_type(x) {
@@ -3241,25 +3243,15 @@ class HandleTypes extends ServiceMethods {
 		let ret;
 		/** @type {DI_AGR_UrlInfo} */
 		let x=u;
-		/** @type {this["get_prim_3"]} */
-		let gp3=(x) => this.get_prim_3(x);
-		/** @type {this["make_raw_id"]} */
-		let m_raw=(x) => this.make_raw_id(x);
-		/** @type {this["make_DIT_Prim"]} */
-		let make_DIT_Prim=(x) => this.make_DIT_Prim(x);
-		/** @type {this["make_raw_id_1"]} */
-		let make_raw_id_1=(x) => this.make_raw_id_1(x);
-		/** @type {this["gen_info_PL"]} */
-		let gen_info_PL=(x) => this.gen_info_PL(x);
 		switch(x.tag) {
 			default: {
 				switch(this.get_tag(x)) {
 					case "":
 				}
 			} break;
-			case "playlist_id:PL": ret=gen_info_PL(gp3(x)); break;
+			case "playlist_id:PL": ret=this.make_info_PL(this.get_prim_3(x)); break;
 			case "playlist_id:RD":/*make*/{
-				const raw_id=gp3(x);
+				const raw_id=this.get_prim_3(x);
 				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
 					let rd_len=raw_id.length-2;
 					if(rd_len===11) break x;
@@ -3268,56 +3260,56 @@ class HandleTypes extends ServiceMethods {
 				if(this.str_starts_with(raw_id,"RDCMUC")) {
 					let [,id]=split_string_once(raw_id,"RDCMUC");
 					/** @type {DI_A_Playlist_RD_CM_UC} */
-					const z={type: "playlist_id",tag: "RD:CM:UC",info_arr: [m_raw(raw_id),{id}]}; ret=z;
+					const z={type: "playlist_id",tag: "RD:CM:UC",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"RDMM")) {
 					let [,id]=split_string_once(raw_id,"RDMM");
 					/** @type {DI_A_Playlist_RD_MM} */
-					const z={type: "playlist_id",tag: "RD:MM",info_arr: [m_raw(raw_id),{id}]}; ret=z;
+					const z={type: "playlist_id",tag: "RD:MM",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else {
 					let [,id]=split_string_once(raw_id,"RD");
 					/** @type {DI_A_Playlist_RD} */
-					const z={type: "playlist_id",tag: "RD",info_arr: [m_raw(raw_id),{id}]}; ret=z;
+					const z={type: "playlist_id",tag: "RD",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				}
 			} break;
 			case "playlist_id:UU":/*make*/{
-				const raw_id=gp3(x);
+				const raw_id=this.get_prim_3(x);
 				let [,id]=split_string_once(raw_id,"UU");
 				/** @type {DI_A_Playlist_UU} */
-				const z={type: "playlist_id",tag: "UU",info_arr: [m_raw(raw_id),{id}]}; ret=z;
+				const z={type: "playlist_id",tag: "UU",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 			} break;
 			case "channel_id":/*make*/{
 				const {info_arr: [{info_arr: [{info_arr: [raw_id]}]}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {DI_A_ChannelId_UC} */
-				const z={type: "channel_id",tag: "UC",info_arr: [m_raw(raw_id),{id: make_DIT_Prim(id)}]}; ret=z;
+				const z={type: "channel_id",tag: "UC",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 			} break;
 			case "browse_id":/*make*/{
-				const raw_id=gp3(x);
+				const raw_id=this.get_prim_3(x);
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
 					/** @type {DI_A_ChannelId_UC} */
-					const z={type: "channel_id",tag: "UC",info_arr: [m_raw(raw_id),{id: make_DIT_Prim(id)}]}; ret=z;
+					const z={type: "channel_id",tag: "UC",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
 					/** @type {DI_BrowseId_FE} */
-					const z={type: "browse_id",tag: "FE",info_arr: [m_raw(raw_id),{id: make_DIT_Prim(id)}]}; ret=z;
+					const z={type: "browse_id",tag: "FE",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"SP")) {
 					let [,id]=split_string_once(raw_id,"SP");
 					/** @type {DI_BrowseId_SP} */
-					const z={type: "browse_id",tag: "SP",info_arr: [m_raw(raw_id),{id}]}; ret=z;
+					const z={type: "browse_id",tag: "SP",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"MP")) {
 					let [,id]=split_string_once(raw_id,"MP");
 					let [a1,a2]=split_string_once(id,"_");
 					/** @type {DI_BrowseId_MP} */
-					const z={type: "browse_id",tag: "MP",info_arr: [m_raw(raw_id),{id: a1},{separator: "_"},{id: a2}]}; ret=z;
+					const z={type: "browse_id",tag: "MP",info_arr: [this.make_raw_id(raw_id),this.make_id(a1),{separator: "_"},this.make_id(a2)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"VL")) {
 					if(raw_id==="VLLL") {
 						let [,id]=split_string_once(raw_id,"VL");
 						/** @type {DI_BrowseId_VL_LL} */
 						const z={
 							type: "browse_id",tag: "VL:LL",info_arr: [
-								m_raw(raw_id),
-								{type: "playlist_id",info_arr: [m_raw(id)]},
+								this.make_raw_id(raw_id),
+								{type: "playlist_id",info_arr: [this.make_raw_id(id)]},
 							]
 						}; ret=z;
 					} else if(raw_id==="VLWL") {
@@ -3326,15 +3318,15 @@ class HandleTypes extends ServiceMethods {
 						const z={
 							type: "browse_id",tag: "VL:WL",
 							info_arr: [
-								m_raw(raw_id),
-								{type: "playlist_id",info_arr: [m_raw(id)]},
+								this.make_raw_id(raw_id),
+								{type: "playlist_id",info_arr: [this.make_raw_id(id)]},
 							]
 						}; ret=z;
 					} else if(this.str_starts_with(raw_id,"VLPL")) {
 						const tag="VL";
 						let [,id]=split_string_once(raw_id,tag);
 						/** @type {DI_BrowseId_VL_PL} */
-						const z={type: "browse_id",tag: "VL:PL",info_arr: [m_raw(raw_id),gen_info_PL(id)]}; ret=z;
+						const z={type: "browse_id",tag: "VL:PL",info_arr: [this.make_raw_id(raw_id),this.make_info_PL(id)]}; ret=z;
 					} else {
 						raw_id===""; debugger; throw new Error();
 					}
@@ -3343,22 +3335,26 @@ class HandleTypes extends ServiceMethods {
 				}
 			} break;
 			case "guide_entry_id":/*make*/{
-				const raw_id=gp3(x);
+				const raw_id=this.get_prim_3(x);
 				/** @type {GI_GuideEntry_Id} */
 				let itv;
+				/** @template {"LL"|"WL"} K @arg {K} x @returns {{type:"guide_entry_id";tag:K,info_arr:[DIT_Item<"playlist_id",DIT_Item<"raw_id",DIT_Prim<K>>>]}} */
+				let mk_type_1=(x) => {
+					return {type: "guide_entry_id",tag: x,info_arr: [{type: "playlist_id",info_arr: [this.make_raw_id(x)]}]};
+				};
 				if(raw_id==="LL") {
 					/** @type {DI_GuideEntry_LL} */
-					const z={type: "guide_entry_id",tag: "LL",info_arr: [{type: "playlist_id",info_arr: [m_raw(raw_id)]}]}; itv=z;
+					const z=mk_type_1(raw_id); itv=z;
 				} else if(raw_id==="WL") {
 					/** @type {DI_GuideEntry_WL} */
-					const z={type: "guide_entry_id",tag: "WL",info_arr: [{type: "playlist_id",info_arr: [m_raw(raw_id)]}]}; itv=z;
+					const z=mk_type_1(raw_id); itv=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
 					/** @type {DI_GuideEntry_PL} */
-					const z={type: "guide_entry_id",tag: "PL",info_arr: [gen_info_PL(raw_id)]}; itv=z;
+					const z={type: "guide_entry_id",tag: "PL",info_arr: [this.make_info_PL(raw_id)]}; itv=z;
 				} else if(this.str_starts_with(raw_id,"UC")) {
 					const tag="UC",[,id]=split_string_once(raw_id,tag);
 					/** @type {DI_GuideEntry_UC} */
-					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [m_raw(raw_id),{id: make_DIT_Prim(id)}]}]}; itv=z;
+					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}]}; itv=z;
 				} else {
 					debugger; break;
 				}
@@ -3374,29 +3370,29 @@ class HandleTypes extends ServiceMethods {
 				}
 			} break;
 			case "playlist_id":/*make*/{
-				const raw_id=gp3(x),{type,tag}=x;
+				const raw_id=this.get_prim_3(x),{type,tag}=x;
 				if(raw_id==="LL") {
 					/** @type {DI_A_Playlist_LL} */
-					const z={type: "playlist_id",info_arr: [m_raw(raw_id)]}; ret=z;
+					const z={type: "playlist_id",info_arr: [this.make_raw_id(raw_id)]}; ret=z;
 				} else if(raw_id==="WL") {
 					/** @type {DI_A_Playlist_WL} */
-					const z={type: "playlist_id",info_arr: [m_raw(raw_id)]}; ret=z;
+					const z={type: "playlist_id",info_arr: [this.make_raw_id(raw_id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
 					/** @type {DI_A_Playlist_PL} */
-					const z=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [m_raw(raw_id)]}); ret=z;
-					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [m_raw(raw_id)]});
+					const z=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [this.make_raw_id(raw_id)]}); ret=z;
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [this.make_raw_id(raw_id)]});
 				} else if(this.str_starts_with(raw_id,"UU")) {
-					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:UU`,info_arr: [m_raw(raw_id)]});
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:UU`,info_arr: [this.make_raw_id(raw_id)]});
 				} else if(this.str_starts_with(raw_id,"RD")) {
-					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [m_raw(raw_id)]});
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [this.make_raw_id(raw_id)]});
 				} else {
 					raw_id===""; debugger;
 				}
 			} break;
 			case "video_id":/*make*/{
-				const raw_id=gp3(x),{tag}=x;
+				const raw_id=this.get_prim_3(x),{tag}=x;
 				/** @type {DI_VideoId} */
-				const z={type: tag,info_arr: [make_raw_id_1(raw_id)]}; ret=z;
+				const z={type: tag,info_arr: [this.make_raw_id_1(raw_id)]}; ret=z;
 			} break;
 		}
 		if(!ret) {debugger; throw new Error();}
@@ -3472,7 +3468,7 @@ class HandleTypes extends ServiceMethods {
 			case "video_id":/*raw*/{
 				let px=this.make_DI_AGR_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["tag"],...any]>} */
-				let args=[px.type,null,{...px,info_arr: [{type: "raw_id",info_arr: [x.info_arr[0].info_arr[0].info_arr[0]]}]}];
+				let args=[px.type,null,px];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;

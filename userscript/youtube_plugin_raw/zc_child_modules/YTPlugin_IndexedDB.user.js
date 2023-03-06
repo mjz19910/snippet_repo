@@ -104,10 +104,6 @@ class TypedIDBValidKeyS {
 	}
 }
 class IndexedDBService extends BaseService {
-	/** @template {"boxed_id"} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
-	create_cache_index(s,k,v) {s[k]=v;}
-	/** @template {"boxed_id"} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {DA_CacheInfoType<R>} v */
-	create_cache(s,k,v) {s[k]=v;}
 	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {return J_ResolverTypeImpl.make();}
 	database_opening=false;
@@ -193,7 +189,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
 	async load_store(store,item) {
-		this.add_to_index(item.type,item.key,item,true);
+		this.add_to_index(item.key,item,true);
 		if(item.type!=="boxed_id") {
 			item.type;
 			return;
@@ -376,7 +372,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}:_:${value.info_arr[3].id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}:_:${value.info_arr[3].info_arr[0].info_arr[0]}`,
 					info_arr: [value],
 				},version); return {args,promise};
 			}
@@ -385,7 +381,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id.info_arr[0]}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 					info_arr: [value],
 				},version); return {args,promise};
 			}
@@ -412,7 +408,7 @@ class IndexedDBService extends BaseService {
 			case "VL:PL": {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
-				let id=value.info_arr[1].info_arr[1].id;
+				let id=value.info_arr[1].info_arr[1].info_arr[0].info_arr[0];
 				/** @type {DSS_Browse_VL_PL} */
 				const z={
 					type: "boxed_id",
@@ -425,7 +421,7 @@ class IndexedDBService extends BaseService {
 			case "VL:UC": {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
-				let id=value.info_arr[1].info_arr[1].id;
+				let id=value.info_arr[1].info_arr[1].info_arr[0].info_arr[0];
 				/** @type {DSS_Browse_VL_UC} */
 				const z={
 					type: "boxed_id",
@@ -440,7 +436,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 					info_arr: [value],
 				},version); return {args,promise};
 			}
@@ -465,77 +461,59 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	put_boxed_id_3(version,...args) {
-		switch(args[0]) {
-			default: args[0]===""; switch((args[0])) {
+		const [k,,x]=args;
+		switch(k) {
+			default: k===""; switch((k)) {
 			} debugger; throw new Error();
 			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "key": {
-				let [tag,id,value]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${value.info_arr[0].start_radio}`,info_arr: [value]},version)};
+				let [tag,id]=args;
+				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${x.info_arr[0].start_radio}`,info_arr: [x]},version)};
 			}
 			case "guide_entry_id": /*db*/ {
-				let [tag,,value]=args;
-				switch(value.tag) {
-					default: value===""; throw new Error();
+				let [tag]=args;
+				switch(x.tag) {
+					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,info_arr: [value]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,info_arr: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "WL": {
 						/** @type {DST_GuideEntry_WL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,info_arr: [value]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,info_arr: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
-						let iv=value.info_arr[0];
+						let iv=x.info_arr[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,info_arr: [value]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].info_arr[0].info_arr[0]}`,info_arr: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "UC": {
-						let iv=value.info_arr[0];
+						let iv=x.info_arr[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,info_arr: [value]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].info_arr[0].info_arr[0]}`,info_arr: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
-						value;
+						x;
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,info_arr: [{type: "guide_entry_id",tag: "VL:LL",info_arr: [value]}]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,info_arr: [{type: "guide_entry_id",tag: "VL:LL",info_arr: [x]}]};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
 			}
-			case "video_id": {
-				let [tag,,value]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].info_arr[0]}`,info_arr: [value]},version)};
-			}
-			case "user_id": {
-				let [tag,,value]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].info_arr[0]}`,info_arr: [value]},version)};
-			}
-			case "exact": {
-				let [type,tag,value]=args;
-				const z=this.make_box_3(type,tag,value);
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag: `${type}:${tag}`,
-					key: `boxed_id:${type}:${tag}:${value.info_arr[0].info_arr[0].info_arr[0]}`,
-					info_arr: [value],
-				},version); return {args,promise};
-			}
+			case "video_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].info_arr[0],x),version)};
+			case "user_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].info_arr[0].info_arr[0],x),version)};
+			case "exact": return {args,promise: this.put_box(this.make_box_4(k,args[1],x.info_arr[0].info_arr[0].info_arr[0],x),version)};
 			case "playlist_id": {
 				switch(args[1]) {
 					default: debugger; throw new Error();
 					case "LL": {
-						let [,,value]=args;
-						let promise=this.put_box({
-							type: "boxed_id",
-							tag: "playlist_id:LL",
-							key: "boxed_id:playlist_id:LL",
-							info_arr: [value],
-						},version); return {args,promise};
+						let [,v,x]=args;
+						const z=this.make_box_3(`${k}:${v}`,"",x); z;
+						return {args,promise: this.put_box({type: "boxed_id",tag: "playlist_id:LL",key: "boxed_id:playlist_id:LL",info_arr: [args[2]]},version)};
 					}
 					case "WL": {
 						let [tag,id,value]=args;
@@ -551,7 +529,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -560,7 +538,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -569,7 +547,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -582,7 +560,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "channel_id": {
 				let [tag,,value]=args;
-				const z=this.make_box_4(tag,value.tag,value.info_arr[1].id.info_arr[0],value);
+				const z=this.make_box_4(tag,value.tag,value.info_arr[1].info_arr[0].info_arr[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "video_time": {
@@ -653,7 +631,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id.info_arr[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -662,7 +640,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -671,7 +649,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -790,12 +768,12 @@ class IndexedDBService extends BaseService {
 			default: debugger; throw new Error();
 			case "one": return typeof x.type===ty;
 			case "arr": {
-				let x_arr=x.value;
+				let x_arr=x.info_arr[0];
 				if(x_arr.length===0) return true;
 				return typeof x_arr[0]===ty;
 			}
 			case "many": {
-				let x_many=x.value;
+				let x_many=x.info_arr[0];
 				if(x_many.length===0) return true;
 				let x_arr=x_many[0];
 				if(x_arr.length===0) return true;
@@ -828,7 +806,7 @@ class IndexedDBService extends BaseService {
 		let cache_key=value.key;
 		if(cache===void 0) this.cached_data.set(key,cache=[]);
 		if(cache.includes(cache_key)) return value;
-		this.push_waiting_obj(key,value);
+		this.push_value(value);
 		this.check_size();
 		if(this.db_wait_promise) {
 			let wait_result=await this.db_wait_promise;
@@ -1297,16 +1275,16 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
 		return result;
 	}
-	/** @api @public @template {"boxed_id"} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]} obj */
-	push_waiting_obj(type_key,obj) {
+	/** @api @public @arg {G_BoxedIdObj} obj */
+	push_value(obj) {
 		const {key}=obj;
-		let idx=this.add_to_index(type_key,key,obj);
-		if(this.log_cache_push) console.log("push wait",type_key,key,idx,obj);
+		let idx=this.add_to_index(key,obj);
+		if(this.log_cache_push) console.log("push wait",key,idx,obj);
 	}
-	/** @template {"boxed_id"} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x */
-	add_to_index(type_key,key,x,null_out_key=false) {
+	/** @arg {G_BoxedIdObj["key"]} key @arg {G_BoxedIdObj} x */
+	add_to_index(key,x,null_out_key=false) {
 		let cache_arr=this.cache();
-		let cache_index=this.cache_index(type_key);
+		let cache_index=this.cache_index();
 		let idx=cache_index.get(key);
 		if(idx!==void 0) {
 			if(!this.cache_weak_set.has(x)) {

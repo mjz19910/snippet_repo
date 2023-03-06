@@ -3,6 +3,6 @@ type DI_A_Playlist_RD_CM_UC={
 	tag: "RD:CM:UC";
 	info_arr: [
 		DIT_Item<"raw_id",DIT_Prim<`RDCMUC${string}`>>,
-		{id: string;},
+		DIT_Item<"id",DIT_Prim<string>>,
 	];
 };

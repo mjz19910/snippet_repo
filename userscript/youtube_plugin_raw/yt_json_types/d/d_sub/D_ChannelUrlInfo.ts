@@ -2,7 +2,7 @@ type DI_A_ChannelId_UC={
 	type: "channel_id";
 	tag: "UC";
 	info_arr: [
-		{type: "raw_id",info_arr: [DIT_Prim<T_IdTemplate<"UC",D_UserIdStr>>];},
-		{id: DIT_Prim<string>;},
+		DIT_Item<"raw_id",DIT_Prim<T_IdTemplate<"UC">>>,
+		DIT_Item<"id", DIT_Prim<string>>,
 	];
 };

@@ -3,6 +3,6 @@ type DI_BrowseId_SP={
 	tag: "SP";
 	info_arr: [
 		DIT_Item<"raw_id",DIT_Prim<`SP${G_BrowseIdStr_SP_Inner}`>>,
-		{id: G_BrowseIdStr_SP_Inner;},
+		DIT_Item<"id",DIT_Prim<G_BrowseIdStr_SP_Inner>>,
 	];
 };

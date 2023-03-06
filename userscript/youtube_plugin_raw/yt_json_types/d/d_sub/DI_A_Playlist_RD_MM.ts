@@ -3,6 +3,6 @@ type DI_A_Playlist_RD_MM={
 	tag: "RD:MM";
 	info_arr: [
 		DIT_Item<"raw_id",DIT_Prim<`RDMM${string}`>>,
-		{id: string;},
+		DIT_Item<"id",DIT_Prim<string>>,
 	];
 };
