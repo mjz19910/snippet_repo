@@ -1,4 +1,4 @@
 type DI_VideoTime={
 	type: "video_time";
-	info_arr: [DIT_Prim<`${number}s`>];
+	info_arr: [DIT_Box_Typeof<`${number}s`>];
 };

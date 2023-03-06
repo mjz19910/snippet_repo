@@ -176,7 +176,7 @@ class StoreDescription extends ApiBase2 {
 			}
 			case "arr": {
 				/** @type {make_arr_t<T>} */
-				const z={is: "item",type,z: [x]}; return as_any(z);
+				const z={a: "item",b: type,z: [x]}; return as_any(z);
 			}
 			case "many": {
 				/** @type {make_many_t<T>} */
@@ -210,7 +210,7 @@ class StoreDescription extends ApiBase2 {
 				let {z: [item_arr]}=item_container;
 				if(this.eq_keys(item_arr,x.z[0])) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {is: "item",type: "many",z: [[x1.z[0],x.z[0]]]};
+					return {a: "item",b: "many",z: [[x1.z[0],x.z[0]]]};
 				});
 				this.push_new_data(k,new_container);
 				return;
@@ -219,7 +219,7 @@ class StoreDescription extends ApiBase2 {
 				const {z: [item_value]}=item_container,{z: [x_value]}=x;
 				if(item_value===x_value) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {is: "item",type: "arr",c: "arr",z: [[x1.z[0],x.z[0]]]};
+					return {a: "item",b: "arr",c: "arr",z: [[x1.z[0],x.z[0]]]};
 				});
 				this.push_new_data(k,new_container);
 				return;
@@ -273,7 +273,7 @@ class StoreDescription extends ApiBase2 {
 		}
 		let value=this.get_keys_of(obj);
 		/** @type {make_arr_t<string>} */
-		let x={is: "item",type: "arr",u: "arr",z: [value]};
+		let x={a: "item",b: "arr",u: "arr",z: [value]};
 		return this.save_data(k,x);
 	}
 	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */

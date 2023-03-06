@@ -477,7 +477,7 @@ class IndexedDBService extends BaseService {
 			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "key": {
 				let [tag,id]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${x.info_arr[0].start_radio}`,info_arr: [x]},version)};
+				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${x.z[0].start_radio}`,info_arr: [x]},version)};
 			}
 			case "guide_entry_id": /*db*/ {
 				let [tag]=args;
@@ -1166,7 +1166,7 @@ class IndexedDBService extends BaseService {
 					case "key": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.info_arr[0].info_arr[0].start_radio===item_db_nt.info_arr[0].info_arr[0].start_radio) {update_item=true; break;}
+						if(item_nt.info_arr[0].z[0].start_radio===item_db_nt.info_arr[0].z[0].start_radio) {update_item=true; break;}
 					} break;
 					case "exact:play_next": {
 						if(item_db_nt.type!==item_nt.type) break;

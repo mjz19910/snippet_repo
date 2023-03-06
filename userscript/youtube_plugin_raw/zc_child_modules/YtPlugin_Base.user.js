@@ -2143,7 +2143,7 @@ class BaseServicePrivate extends ApiBase {
 	/** @template T @arg {T} x @returns {make_one_t<T>} */
 	make_one_t(x) {const u="one"; return {a: "item",b: u,c: u,z: [x]};}
 	/** @template T @arg {T[]} x @returns {make_arr_t<T>} */
-	make_arr_t(x) {const u="arr"; return {is: "item",type: u,u,z: [x]};}
+	make_arr_t(x) {const u="arr"; return {a: "item",b: u,u,z: [x]};}
 	/** @protected @arg {string} k @arg {bigint} x */
 	save_bigint(k,x) {return this.save_db.data_store.get_store("bigint").save_data(k,this.make_one_t(x));}
 	/** @protected @arg {string} k @arg {boolean} x */
