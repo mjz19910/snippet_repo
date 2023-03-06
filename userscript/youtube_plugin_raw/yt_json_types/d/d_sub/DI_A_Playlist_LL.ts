@@ -1,4 +1,5 @@
 type DI_A_Playlist_LL={
-	type: "playlist_id";
-	z: [DIT_Item_A<"raw_id",DIT_Box_Typeof<"LL">>];
+	b: "playlist_id";
+	// ^ b = type
+	z: [DIT_Item_AB<"raw_id",DIT_Box_Typeof<"LL">>];
 };

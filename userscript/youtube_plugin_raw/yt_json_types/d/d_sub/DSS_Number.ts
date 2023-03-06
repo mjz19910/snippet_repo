@@ -1,1 +1,1 @@
-type DSS_Number=T_BoxedStore<number,"number">;
+type DSS_Number=DSI_Item_ABD<number,"number">;

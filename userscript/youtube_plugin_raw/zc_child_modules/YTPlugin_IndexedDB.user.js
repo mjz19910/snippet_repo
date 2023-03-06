@@ -190,8 +190,8 @@ class IndexedDBService extends BaseService {
 	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
 	async load_store(store,item) {
 		this.add_to_index(item.key,item,true);
-		if(item.type!=="boxed_id") {
-			item.type;
+		if(item.b!=="boxed_id") {
+			item.b;
 			return;
 		}
 		this.cache_weak_set.add(item.z[0]);
@@ -199,7 +199,7 @@ class IndexedDBService extends BaseService {
 		function get_tag(x) {return x.tag;}
 		/** @template {{type:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
 		function decay_item(x) {return x;}
-		switch(item.tag) {
+		switch(item.d) {
 			case "bigint":
 			case "boolean":
 			case "keys":
@@ -212,7 +212,7 @@ class IndexedDBService extends BaseService {
 			default: this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 		}
 		let ht=this.x.get("handle_types");
-		switch(item.tag) {
+		switch(item.d) {
 			default: {
 				let di=decay_item(item);
 				switch(get_tag(item)) {
@@ -220,12 +220,12 @@ class IndexedDBService extends BaseService {
 				console.log("skip_tag",di.tag);
 				debugger;
 			} break;
-			case "bigint": return store.get_store(item.tag).load_data(item);
-			case "boolean": return store.get_store(item.tag).load_data(item);
-			case "keys": return store.get_store(item.tag).load_data(item);
-			case "number": return store.get_store(item.tag).load_data(item);
-			case "root_visual_element": return store.get_store(item.tag).load_data(item);
-			case "string": return store.get_store(item.tag).load_data(item);
+			case "bigint": return store.get_store(item.d).load_data(item);
+			case "boolean": return store.get_store(item.d).load_data(item);
+			case "keys": return store.get_store(item.d).load_data(item);
+			case "number": return store.get_store(item.d).load_data(item);
+			case "root_visual_element": return store.get_store(item.d).load_data(item);
+			case "string": return store.get_store(item.d).load_data(item);
 			case "a:load_id":
 			case "a:save_id":
 			case "a:update_id":
@@ -248,15 +248,15 @@ class IndexedDBService extends BaseService {
 			case "video_time": {
 				let val_src=item.z[0];
 				if("type" in val_src) {
-					switch(val_src.type) {
+					switch(val_src.b) {
 						default: debugger; break;
-						case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.z[0].z[0].z[0]}`); break;
-						case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0].z[0]}`); break;
-						case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0]}`); break;
-						case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0]}`); break;
-						case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0]}`); break;
-						case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0].z[0]}`); break;
-						case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0]}`); break;
+						case "exact": ht.id_cache.add(`${val_src.b}:${val_src.tag}:${val_src.z[0].z[0].z[0]}`); break;
+						case "guide_entry_id": ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0].z[0].z[0]}`); break;
+						case "video_time": ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0]}`); break;
+						case "browse_id": ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0].z[0]}`); break;
+						case "channel_id": ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0].z[0]}`); break;
+						case "playlist_id": ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0].z[0]}`); break;
+						case "user_id": ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0]}`); break;
 						case "number": break;
 					}
 					return;
@@ -269,9 +269,9 @@ class IndexedDBService extends BaseService {
 					return;
 				}
 				if("a" in val_src) {
-					switch(val_src.a) {
+					switch(val_src.b) {
 						default: debugger; break;
-						case "hashtag_id": ht.id_cache.add(`${val_src.a}:${val_src.z[0].z[0].z[0]}`); break;
+						case "hashtag_id": ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0].z[0]}`); break;
 					}
 				}
 				let d_cache=this.cache();
@@ -285,7 +285,7 @@ class IndexedDBService extends BaseService {
 			} break;
 			case "video_id": {
 				let val_src=item.z[0];
-				ht.id_cache.add(`${val_src.type}:${val_src.z[0].z[0]}`);
+				ht.id_cache.add(`${val_src.b}:${val_src.z[0].z[0]}`);
 				this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 			} break;
 		}
@@ -455,15 +455,15 @@ class IndexedDBService extends BaseService {
 	make_box_3(tag,value_tag,value) {return {type: "boxed_id",tag,key: `boxed_id:${tag}:${value_tag}`,z: [value]};}
 	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} a3 @arg {A4} a4 @template {string} A1 @template {string} A2 @template {string} A3 @returns {{type:"boxed_id";tag:`${A1}:${A2}`;key: `boxed_id:${A1}:${A2}:${A3}`;z:[A4]}}	*/
 	make_box_4(a1,a2,a3,a4) {return {type: "boxed_id",tag: `${a1}:${a2}`,key: `boxed_id:${a1}:${a2}:${a3}`,z: [a4]};}
-	/** @template T @template {string} U @arg {make_item_group<T>} x @arg {U} tag1 @template {string} V @arg {V} tag2 @returns {T_BoxedStore_3<T,U,V>} */
+	/** @template T @template {string} U @arg {make_item_group<T>} x @arg {U} tag1 @template {string} V @arg {V} tag2 @returns {TSI_Item_ABD<T,U,V>} */
 	make_T_BoxedStore(x,tag1,tag2) {
 		return {
-			type: "boxed_id",
-			tag: tag1,
+			b: "boxed_id",
+			d: tag1,
 			key: `boxed_id:${tag1}:${tag2}`,
 			z: [{
-				type: "store",
-				tag: tag2,
+				a: "store",
+				b: tag2,
 				z: [x]
 			}]
 		};
@@ -582,11 +582,11 @@ class IndexedDBService extends BaseService {
 				/** @type {DSS_Bigint} */
 				const z={
 					/** @type {"boxed_id"} */
-					type: "boxed_id",
-					tag,
+					b: "boxed_id",
+					d: tag,
 					/** @type {`boxed_id:${typeof tag}:${typeof id}`} */
 					key: `boxed_id:${tag}:${id}`,
-					z: [{type: "store",tag: id,z: [value]}]
+					z: [{type: "store",b: id,z: [value]}]
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -667,55 +667,55 @@ class IndexedDBService extends BaseService {
 			case "bigint": {
 				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
+					b: "boxed_id",
+					d: tag,
 					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",tag: type,z: [value]}],
+					z: [{type: "store",b: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "boolean": {
 				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
+					b: "boxed_id",
+					d: tag,
 					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",tag: type,z: [value]}],
+					z: [{type: "store",b: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "number": {
 				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
+					b: "boxed_id",
+					d: tag,
 					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",tag: type,z: [value]}],
+					z: [{type: "store",b: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "string": {
 				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
+					b: "boxed_id",
+					d: tag,
 					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",tag: type,z: [value]}],
+					z: [{type: "store",b: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "keys": {
 				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
+					b: "boxed_id",
+					d: tag,
 					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",tag: type,z: [value]}],
+					z: [{type: "store",b: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "root_visual_element": {
 				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
+					b: "boxed_id",
+					d: tag,
 					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",tag: type,z: [value]}],
+					z: [{type: "store",b: type,z: [value]}],
 				},version); return {args,promise};
 			}
 		}
@@ -841,7 +841,7 @@ class IndexedDBService extends BaseService {
 	async put(key,value,version) {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
-			switch(value.tag) {
+			switch(value.d) {
 				case "video_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
@@ -1020,7 +1020,7 @@ class IndexedDBService extends BaseService {
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let d_cache=this.cache();
 		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.loaded_keys.has(e.key));
-		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.tag==="a:save_id"||e.tag==="a:load_id"));
+		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.d==="a:save_id"||e.d==="a:load_id"));
 		if(no_id_cache.length===1) {
 			console.log("[d_cache_nonnull.0]",no_id_cache[0]);
 		} else if(no_id_cache.length===2) {
@@ -1066,45 +1066,62 @@ class IndexedDBService extends BaseService {
 						continue;
 					}
 					if("tag" in c2) {
-						continue;
-					}
-					if("type" in c2) {
-						continue;
-					}
-					if("a" in c2) {
-						switch(c2.a) {
+						if(!("tag" in cv)) throw new Error("Unreachable");
+						switch(c2.b) {
 							case "channel_id": {
-								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.b!==c2.b) throw new Error("Unreachable");
 								if(cv.z[0].z[0]===c2.z[0].z[0]) {
 									commit_value(item,"same");
 									continue;
 								}
 							} break;
+						}
+						continue;
+					}
+					if("type" in c2) {
+						if(!("type" in cv)) throw new Error("Unreachable");
+						switch(c2.b) {
 							case "playlist_id": {
-								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.b!==c2.b) throw new Error("Unreachable");
 								if(cv.z[0].z[0]===c2.z[0].z[0]) {
 									commit_value(item,"same");
 									continue;
 								}
 							} break;
 							case "video_id": {
-								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.b!==c2.b) throw new Error("Unreachable");
 								if(cv.z[0].z[0]===c2.z[0].z[0]) {
 									commit_value(item,"same");
 									continue;
 								}
 							} break;
 							case "number": {
-								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.b!==c2.b) throw new Error("Unreachable");
 								if(cv.z[0]===c2.z[0]) {
 									commit_value(item,"same");
 									continue;
 								}
 							}
 						}
+						continue;
 					}
-					const {a: type,...y2}=db_val.z[0];
-					console.log("[was_loaded_from_db] [type=%s]",type,y2);
+					if("a" in c2) {
+						switch(c2.b) {
+							case "hashtag_id":
+						}
+					}
+					const i1=db_val.z[0];
+					if("a" in i1) {
+						const {b: type,...y2}=i1;
+						console.log("[was_loaded_from_db] [type=%s]",type,y2);
+					} else if("type" in i1) {
+						const {b: type,...y2}=i1;
+						console.log("[was_loaded_from_db] [type=%s]",type,y2);
+					} else {
+						const {b,c,...y2}=i1;
+						console.log("[was_loaded_from_db] [b=%s] [c=%s]",b,c,y2);
+						i1;
+					}
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
 				if(tx_scope.is_tx_complete) {
@@ -1138,7 +1155,7 @@ class IndexedDBService extends BaseService {
 				let item_nt=item;
 				/** @type {G_BoxedIdObj} */
 				let item_db_nt=item_db_2;
-				switch(item_nt.tag) {
+				switch(item_nt.d) {
 					default: {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 						let info1=item_nt.z[0].z[0]; let info2=item_db_nt.z[0].z[0];
@@ -1155,31 +1172,31 @@ class IndexedDBService extends BaseService {
 					case "a:load_id":
 					case "a:update_id": {
 						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
-						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
+						if(item_db_nt.b!==item_nt.type) {update_item=true; break;}
 						if(!item_db_nt.z[0]) {update_item=true; break;}
 						if(item_nt.key===item_db_nt.key&&item_nt.z[0].z[0]===item_db_nt.z[0].z[0]) break;
 						update_item=true;
 					} break;
 					// non-dynamic values
 					case "hashtag_id": {
-						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
+						if(item_db_nt.b!==item_nt.type) {update_item=true; break;}
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 						if(item_nt.z[0].z[0]===item_db_nt.z[0].z[0]) {update_item=true; break;}
 					} break;
 					case "key": {
-						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.b!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.z[0].z[0].start_radio===item_db_nt.z[0].z[0].start_radio) {update_item=true; break;}
+						if(item_nt.z[0].z[0].z[0]===item_db_nt.z[0].z[0].z[0]) {update_item=true; break;}
 					} break;
 					case "exact:play_next": {
-						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.b!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 						if(item_nt.z[0].type!==item_db_nt.z[0].type) {update_item=true; break;}
 						if(item_nt.z[0].tag!==item_db_nt.z[0].tag) {update_item=true; break;}
 						if(item_nt.z[0].z[0].z[0].z[0]!==item_db_nt.z[0].z[0].z[0].z[0]) {update_item=true; break;}
 					} break;
 					case "video_time": {
-						if(item_db_nt.type!==item_nt.type) break;
+						if(item_db_nt.b!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 						if(item_nt.z[0].type===item_db_nt.z[0].type) break;
 						if(item_nt.z[0].z[0].z[0]===item_db_nt.z[0].z[0].z[0]) break;

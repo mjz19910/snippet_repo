@@ -1,8 +1,9 @@
 type DI_BrowseId_VL_LL={
-	type: "browse_id";
+	b: "browse_id";
+	// ^ b = type
 	tag: "VL:LL";
 	z: [
-		DIT_Item_A<"raw_id",DIT_Box_Typeof<"VLLL">>,
+		DIT_Item_AB<"raw_id",DIT_Box_Typeof<"VLLL">>,
 		DI_A_Playlist_LL
 	];
 };

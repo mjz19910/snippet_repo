@@ -4,7 +4,7 @@ type DI_G_NoKey=
 	|DI_HashtagId
 	|DI_PlayNext
 	|DI_User_Id
-	|DI_VideoId
+	|DI_A_VideoId
 	|DI_VideoTime
 	;
 ;

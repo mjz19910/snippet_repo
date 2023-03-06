@@ -1,1 +1,1 @@
-type DSS_Boolean=T_BoxedStore<boolean,"boolean">;
+type DSS_Boolean=DSI_Item_ABD<boolean,"boolean">;

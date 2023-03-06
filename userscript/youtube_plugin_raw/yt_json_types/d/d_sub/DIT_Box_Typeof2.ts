@@ -1,8 +1,8 @@
 type DIT_Box_Typeof2<T_Type extends T_StoreTypeFromT<U>,U>={
 	a: "primitive";
-	//  ^ is @member {a}
+	// ^ a = is
 	e: T_Type;
-	//  ^ type @member {b}
+	// ^ e = type
 	z: [U];
-	//  ^ info_arr @member {z}
+	// ^ z = info_arr
 };

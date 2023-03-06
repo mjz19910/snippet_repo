@@ -25,7 +25,7 @@ type G_BoxedIdObj=
 	|GST_DSS
 	;
 ;
-type DSS_Bigint=T_BoxedStore<bigint,"bigint">;
+type DSS_Bigint=DSI_Item_ABD<bigint,"bigint">;
 type DSS_Bigint_2={
 	type: "boxed_id";
 	tag: "bigint";

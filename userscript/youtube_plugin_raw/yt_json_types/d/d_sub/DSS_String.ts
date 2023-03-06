@@ -1,1 +1,1 @@
-type DSS_String=T_BoxedStore<string,"string">;
+type DSS_String=DSI_Item_ABD<string,"string">;

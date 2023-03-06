@@ -1,5 +1,5 @@
 type G_UrlInfoSrc=
-	|{type: "playlist_id"; id: DU_Playlist_Id;}
-	|{type: "browse_id"; id: string;}
+	|{b: "playlist_id"; id: DU_Playlist_Id;}
+	|{b: "browse_id"; id: string;}
 	;
 ;

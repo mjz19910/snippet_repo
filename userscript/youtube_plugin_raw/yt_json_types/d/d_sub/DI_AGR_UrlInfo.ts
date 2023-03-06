@@ -1,7 +1,9 @@
 type DI_R_Key_StartRadio={
+	a: "R";
+	// ^ a = is
 	b: "raw";
 	c: "key:start_radio";
-	z: [DIT_Item_A<"start_radio",`${0|1}`>];
+	z: [DIT_Item_AB<"start_radio",`${0|1}`>];
 };
 
 type DI_AGR_UrlInfo=
@@ -12,11 +14,11 @@ type DI_AGR_UrlInfo=
 	|T_Info_RawId_BC_J<"raw",["video_id"],DU_VideoId>
 	|DI_R_Key_StartRadio
 	|T_Info_RawId_BC_J<"raw",["playlist_id","RD"],Extract<DU_Playlist_Id,`RD${string}`>>
-	|{b: "raw",c: "playlist_id:PL"; z: [DIT_Item_A<"raw_id",DIT_Box_Typeof<T_IdTemplate<"PL">>>];}
-	|{b: "raw",c: "playlist_id:UU"; z: [DIT_Item_A<"raw_id",DIT_Box_Typeof<`UU${string}`>>];};
+	|{b: "raw",c: "playlist_id:PL"; z: [DIT_Item_AB<"raw_id",DIT_Box_Typeof<T_IdTemplate<"PL">>>];}
+	|{b: "raw",c: "playlist_id:UU"; z: [DIT_Item_AB<"raw_id",DIT_Box_Typeof<`UU${string}`>>];};
 ;
 ;
-type DI_SpecialInfo=Exclude<DI_AGR_UrlInfo["z"][0],DIT_Item_A<"raw_id",DIT_Box_Typeof<any>>>;
+type DI_SpecialInfo=Exclude<DI_AGR_UrlInfo["z"][0],DIT_Item_AB<"raw_id",DIT_Box_Typeof<any>>>;
 type DI_G_UrlInfo=
 	DI_AGR_UrlInfo["c"] extends infer Y extends string?
 	Y extends infer I?
@@ -26,12 +28,19 @@ type DI_G_UrlInfo=
 	I extends "playlist_id"? DI_G_PlaylistId:
 	I extends "playlist_id:RD"? DI_A_Playlist_RD:
 	I extends "playlist_id:PL"? DI_A_Playlist_PL:
-	I extends "video_id"? DI_VideoId:
+	I extends "video_id"? DI_A_VideoId:
 	I extends `key:${infer J}`? {
+		a: "key:J";
+		// ^ a = is
 		b: "key";
+		// ^ b = type
 		t_j: J;
+		// ^ t_j = tag
 	}:{
+		a: "I";
+		// ^ a = is
 		t_i: I;
+		// ^ t_i = type
 	}:never:never;
 type GI_BrowseId=
 	|DI_BrowseId_FE
@@ -52,7 +61,10 @@ type MakeRet_DI_AGR_UrlInfo<T extends DI_AGR_UrlInfo>=
 	;
 ;
 type DI_Key_StartRadio={
-	b: "key"; c: "start_radio";
+	b: "key";
+	// ^ b = type
+	c: "start_radio";
+	// ^ c = key
 	z: DI_R_Key_StartRadio["z"];
 };
 type T1=MakeRet_DI_AGR_UrlInfo<DI_R_ChannelId>;
