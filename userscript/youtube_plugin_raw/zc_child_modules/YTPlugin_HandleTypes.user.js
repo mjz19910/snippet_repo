@@ -1343,14 +1343,14 @@ class HandleTypes extends ServiceMethods {
 	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
 	//#endregion
 	//#region Misc
-	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
+	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{type:T}} */
 	make_str_tag(x,tag) {
 		/** @template T */
 		class UrlEncodedTag extends String {
-			/** @arg {string} str @arg {T} tag */
-			constructor(str,tag) {
+			/** @arg {string} str @arg {T} type */
+			constructor(str,type) {
 				super(str);
-				this._tag=tag;
+				this.type=type;
 			}
 		}
 		let tagged_obj=new UrlEncodedTag(x,tag);
