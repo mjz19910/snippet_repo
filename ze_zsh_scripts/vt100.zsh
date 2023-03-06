@@ -2,6 +2,12 @@
 cursordn() {
 	printf '\e[1B'
 }
+cursorpos() { # CUP
+	printf '\e['$1';'$2'H'
+}
+hvpos() { # CUP
+	printf '\e['$1';'$2'f'
+}
 revindex() {
 	printf '\eM'
 }
