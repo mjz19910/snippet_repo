@@ -23,17 +23,12 @@ type G_BoxedIdObj=
 	|DST_VideoTime
 	|GST_Browse_Id
 	|GST_DSS
-	|{
-		type: "boxed_id";
-		tag: "bigint";
-		key: `boxed_id:bigint:${string}`;
-		info_arr: [{
-			type: "bigint";
-			info_arr: [{
-				type: "store";
-				info_arr: [make_item_group<bigint>];
-			}];
-		}];
-	}
 	;
 ;
+type DSS_Bigint=T_BoxedStore<bigint,"bigint">;
+type DSS_Bigint_2={
+	type: "boxed_id";
+	tag: "bigint";
+	key: `boxed_id:bigint:${string}`;
+	info_arr: [{_is: "group"; type: string; info_arr: [make_item_group<bigint>];}];
+};

@@ -288,21 +288,21 @@ class StoreData {
 		const store_names_arr=["bigint","boolean","keys","number","root_visual_element","string"];
 		for(let store_name of store_names_arr) this.add_store(make_store(store_name));
 	}
-	/** @template {StoreDataInput["type"]} T @arg {T} key @returns {Extract<StoreDataInput,{type:T}>["description"]} */
+	/** @template {StoreDataInput} R @template {R["type"]} T @arg {T} key @returns {Extract<R,{type:T}>["description"]} */
 	get_store(key) {
 		let item=this.stores.get(key);
 		if(item===void 0) throw new Error();
 		return item;
 	}
-	/** @returns {StoreDescription<string,"string">} */
-	get_string_store() {return this.get_store("string_store");}
-	/** @returns {StoreDescription<number,"number">} */
-	get_number_store() {return this.get_store("number_store");}
+	/** @returns {StoreDescription<"string">} */
+	get_string_store() {return this.get_store("string");}
+	/** @returns {StoreDescription<"number">} */
+	get_number_store() {return this.get_store("number");}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
 	/** @arg {string} key */
-	get_store_keys(key) {return this.data_store.get_store("string_store").index_get(key);}
+	get_store_keys(key) {return this.data_store.get_store("string").index_get(key);}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */
@@ -390,21 +390,20 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		this.save_string(`${cf}::enum_type`,ns_name);
 		this.save_string(`${cf}::enum_namespace`,ns);
 	}
-	/** @public @template {string|number} T @arg {string} ns @arg {number} idx @arg {StoreDescription<T,"string"|"keys">} store */
+	/** @public @arg {string} ns @arg {number} idx @arg {StoreDescription<"string"|"keys">} store */
 	show_strings_bitmap(ns,idx,store) {
 		debugger;
 		let f=true;
 		if(f) return;
 		let p=store.data[idx];
-		if(store.type_arr!=="string") return;
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
-		switch(cur[0]) {
+		switch(cur.type) {
 			default: debugger; break;
 			case "one": debugger; break;
 			case "many": {
-				let src_data=cur[1];
+				let src_data=cur.value;
 				let max_len=src_data.map(e => e.length).reduce((a,b) => Math.max(a,b));
 				for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++) {
 					let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
@@ -417,7 +416,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 
 			} break;
 			case "arr": {
-				let bitmap_src=cur[1];
+				let bitmap_src=cur.value;
 				if(bitmap_src.length===0) return;
 				let linear_map=bitmap_src.every(e => {
 					if(typeof e!=="string") return false;
@@ -452,12 +451,12 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let gg=this.data_store.get_number_store().data.find(e => e[0]==="P_tracking_params.f1");
 		if(!gg) return;
 		let g1=gg[1];
-		if(g1[0]!=="arr") return;
-		let sr=g1[1].slice().sort((a,b) => a-b);
+		if(g1.type!=="arr") return;
+		let sr=g1.value.slice().sort((a,b) => a-b);
 		this.save_number_arr("arr.P_tracking_params.f1",sr);
-		let bm=this.generate_bitmap_num(g1[1]).bitmap;
+		let bm=this.generate_bitmap_num(g1.value).bitmap;
 		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.data_store.get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1]?.[1];
+		this.data_store.get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1].value;
 	}
 	/** @private @template T @arg {T[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
@@ -501,8 +500,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let yt_plugin={ds: this,};
 		let gg=yt_plugin.ds.data_store.get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
-		if(gg[1][0]!=="arr") return;
-		gg[1][1].sort((a,b) => a-b);
+		if(gg[1].type!=="arr") return;
+		gg[1].value.sort((a,b) => a-b);
 		let g1=gg[1];
 		/** @private @arg {string} str */
 		function find_one_set_bit(str) {

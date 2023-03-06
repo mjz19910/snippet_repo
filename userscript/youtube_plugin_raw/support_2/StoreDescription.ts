@@ -39,9 +39,9 @@ type G_StoreDescriptions=
 	|V_StoreVE
 	;
 ;
-type make_one_t<T>={type: "one",value: T;};
-type make_arr_t<T>={type: "arr",value: T[];};
-type make_many_t<T>={type: "many",value: T[][];};
+type make_one_t<T>={_is: "item"; type: "one",value: T;};
+type make_arr_t<T>={_is: "item"; type: "arr",value: T[];};
+type make_many_t<T>={_is: "item"; type: "many",value: T[][];};
 type DB_NS_TypeStr="root_visual_element"|"boolean"|"string"|"number"|"keys";
 type StoredChangesItem={
 	type: "root_visual_element";

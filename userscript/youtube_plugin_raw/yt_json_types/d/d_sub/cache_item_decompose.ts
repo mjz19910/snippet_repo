@@ -82,24 +82,10 @@ function cache_item_decompose_3(x: ReturnType<typeof cache_item_decompose>["v"])
 		const t="a";
 		return {v: [t,s,{t: t,a}]};
 	}
-	switch(a.t) {
-		case "c": {
-			const {t,u}=a;
-			if(u!==null) {
-				if("info_arr" in u) {
-					return {v: [`${t}:a`,s,{t: "c",u}]};
-				} else {
-					u.value;
-					return {v: [`${t}:b`,s,u]};
-				}
-			}
-		} break;
-		case "d": {
-			const {t,u}=a;
-			if(u!==null) {
-				return {v: [t,s,{t,u}]};
-			}
-		} break;
+	const {t,u}=a;
+	if(u===null) return {v: ["x",s]};
+	switch(t) {
+		case "c": if("info_arr" in u) return {v: [`${t}:a`,s,{t: "c",u}]}; else return {v: [`${t}:b`,s,u]};
+		case "d": return {v: [t,s,{t,u}]};
 	}
-	return {v: ["x",s]};
 }

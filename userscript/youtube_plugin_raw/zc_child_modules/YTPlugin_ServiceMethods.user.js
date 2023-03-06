@@ -1476,12 +1476,12 @@ class ServiceMethods extends ServiceData {
 		let s_url_data=this.save_db.data_store.get_number_store().data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_number(k,1); return;}
 		let wd=s_url_data[1];
-		switch(wd[0]) {
-			case "one": return this.save_number(k,wd[1]+1);
+		switch(wd.type) {
+			case "one": return this.save_number(k,wd.value+1);
 			case "arr": {
-				let [,di]=wd;
-				if(!di.length) return this.save_number(k,1);
-				let n=di[0]+1;
+				let {value}=wd;
+				if(!value.length) return this.save_number(k,1);
+				let n=value[0]+1;
 				return this.save_number(k,n);
 			}
 			case "many": throw new Error("What");
@@ -1535,7 +1535,7 @@ class ServiceMethods extends ServiceData {
 		const type="user_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.DI_G_NoKey({type,info_arr: [{raw_id: x}]});
+		this.ht.DI_G_NoKey({type,info_arr: []});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
