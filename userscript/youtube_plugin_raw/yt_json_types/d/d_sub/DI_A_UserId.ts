@@ -1,4 +1,4 @@
 type DI_User_Id={
 	b: "user_id";
-	z: [DIT_Item_AB<"raw_id",T_BoxTypeof<string>>];
+	z: [DIT_Item_AB<"raw_id",T_PrimitiveBox<string>>];
 };

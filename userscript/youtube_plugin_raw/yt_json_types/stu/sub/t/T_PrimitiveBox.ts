@@ -1,4 +1,4 @@
-type T_BoxTypeof<T>={
+type T_PrimitiveBox<T>={
 	a: "primitive";
 	// ^ a = is
 	e: T_GetPrimitiveTag<T>;

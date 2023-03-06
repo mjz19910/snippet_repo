@@ -1,1 +1,1 @@
-type DI_HashtagId=DIT_Item_AB<"hashtag_id",DIT_Item_AB<"hashtag",T_BoxTypeof<string>>>;
+type DI_HashtagId=DIT_Item_AB<"hashtag_id",DIT_Item_AB<"hashtag",T_PrimitiveBox<string>>>;
