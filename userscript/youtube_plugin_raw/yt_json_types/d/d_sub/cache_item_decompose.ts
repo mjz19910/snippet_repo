@@ -78,7 +78,7 @@ export function cache_item_decompose(x: G_BoxedIdObj): {
 	let ret=new RetValue([a1,a2,a3],[null,b2,b3]);
 	ret.add_link(2,cache_item_decompose_2(ret.x));
 	ret.add_link(3,cache_item_decompose_3(ret.v));
-	cache_item_decompose_3(ret.v);
+	debugger;
 	return ret;
 }
 function cache_item_decompose_2(x: ReturnType<typeof cache_item_decompose>["x"]): {

@@ -163,19 +163,19 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @template {"many"|"arr"|"one"} W @template T @arg {W extends infer I?I extends "one"?[I,T]:I extends "arr"?[I,T[]]:[I,T[][]]:never} args @returns {W extends "one"?make_one_t<T>:W extends "arr"?make_arr_t<T>:make_many_t<T>} */
 	make_item(...args) {
-		const [type,value]=args;
+		const [type,x]=args;
 		switch(type) {
 			case "one": {
 				/** @type {make_one_t<T>} */
-				const z={_is: "item",type,value}; return as_any(z);
+				const z={_is: "item",type,info_arr: [x]}; return as_any(z);
 			}
 			case "arr": {
 				/** @type {make_arr_t<T>} */
-				const z={_is: "item",type,value}; return as_any(z);
+				const z={_is: "item",type,info_arr: [x]}; return as_any(z);
 			}
 			case "many": {
 				/** @type {make_many_t<T>} */
-				const z={_is: "item",type,value}; return as_any(z);
+				const z={_is: "item",type,info_arr: [x]}; return as_any(z);
 			}
 		}
 	}
