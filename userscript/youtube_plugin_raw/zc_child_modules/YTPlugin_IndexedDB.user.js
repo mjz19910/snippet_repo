@@ -316,11 +316,11 @@ class IndexedDBService extends BaseService {
 					m_any[ux.c]={c: ux.c};
 				}
 			} break;
-			case "one": make[x.c]=x; break;
-			case "many": make[x.c]=x; break;
-			case "arr": make[x.c]=x; break;
-			case "instance_name": make[x.c]=x; break;
-			case "typeof_name": make[x.c]=x; break;
+			case "one": make.one=x; break;
+			case "many": make.many=x; break;
+			case "arr": make.arr=x; break;
+			case "instance_name": make.instance_name=x; break;
+			case "typeof_name": make.typeof_name=x; break;
 		}
 		return make;
 	}
