@@ -211,7 +211,7 @@ class IndexedDBService extends BaseService {
 			/** @type {{key:DST_LoadId["key"],type:"boxed_id",tag?: "bigint",value?: {type:string,info_arr:[["one",bigint]|["arr",bigint[]]]}}} */
 			let o2=as_any(x);
 			if(!o2.value) {debugger; return x;}
-			if(o2.tag!=="bigint") {debugger; return x;}
+			if(o2.tag!=="bigint") {console.log("fix tag (tag!=='bigint')",o2.tag); return x;}
 			o2.value;
 			const {key,value}=o2;
 			let o_arr_t=value.info_arr[0];
