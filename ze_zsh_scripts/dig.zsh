@@ -2,6 +2,8 @@ START_PATH=$0
 TMP_DIR="/tmp"
 DIG_SILENT=false
 
+. "$(dirname $START_PATH)/vt100.zsh"
+
 function dig_user {
 	pushd -q $S_DIR
 	eval '{dig_user-run "$@";} always {popd -q}'
