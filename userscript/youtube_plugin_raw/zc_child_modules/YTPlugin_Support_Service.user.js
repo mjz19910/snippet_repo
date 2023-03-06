@@ -138,7 +138,8 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
 	clone_container(x) {
-		switch(x.b) {
+		switch(x.c) {
+			default: debugger; throw new Error("Unable to clone");
 			case "arr": {
 				/** @type {typeof x} */
 				let x_clone=structuredClone(x);
@@ -166,21 +167,21 @@ class StoreDescription extends ApiBase2 {
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
-	/** @template {"many"|"arr"|"one"} W @template T @arg {W extends infer I?I extends "one"?[I,T]:I extends "arr"?[I,T[]]:[I,T[][]]:never} args @returns {W extends "one"?make_one_t<T>:W extends "arr"?make_arr_t<T>:make_many_t<T>} */
+	/** @template {"many"|"arr"|"one"} W @template T @arg {W extends infer I?I extends "one"?[string,I,T]:I extends "arr"?[string,I,T[]]:[string,I,T[][]]:never} args @returns {W extends "one"?make_one_t<T>:W extends "arr"?make_arr_t<T>:make_many_t<T>} */
 	make_item(...args) {
-		const [type,x]=args;
-		switch(type) {
+		const [b,c,x]=args;
+		switch(c) {
 			case "one": {
 				/** @type {make_one_t<T>} */
-				const z={a: "item",b: type,c: "one",z: [x]}; return as_any(z);
+				const z={a: "item",b,c,z: [x]}; return as_any(z);
 			}
 			case "arr": {
 				/** @type {make_arr_t<T>} */
-				const z={a: "item",b: type,z: [x]}; return as_any(z);
+				const z={b: "item",b,c,z: [x]}; return as_any(z);
 			}
 			case "many": {
 				/** @type {make_many_t<T>} */
-				const z={is: "item",type,z: [x]}; return as_any(z);
+				const z={b: "item",b,c,z: [x]}; return as_any(z);
 			}
 		}
 	}
@@ -191,6 +192,7 @@ class StoreDescription extends ApiBase2 {
 			if(idx===void 0) throw new Error();
 			let item=this.data[idx];
 			let item_container=item[1];
+			if(!("b" in x)) {x;}
 			if(item_container.b==="many"&&x.b==="arr") {
 				let {z: [item_many]}=item_container;
 				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x.z[0]))>-1) return;
@@ -210,7 +212,7 @@ class StoreDescription extends ApiBase2 {
 				let {z: [item_arr]}=item_container;
 				if(this.eq_keys(item_arr,x.z[0])) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {a: "item",b: "many",z: [[x1.z[0],x.z[0]]]};
+					return {b: "item",b: "many",z: [[x1.z[0],x.z[0]]]};
 				});
 				this.push_new_data(k,new_container);
 				return;
@@ -219,7 +221,7 @@ class StoreDescription extends ApiBase2 {
 				const {z: [item_value]}=item_container,{z: [x_value]}=x;
 				if(item_value===x_value) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {a: "item",b: "arr",c: "arr",z: [[x1.z[0],x.z[0]]]};
+					return {b: "item",b: "arr",c: "arr",z: [[x1.z[0],x.z[0]]]};
 				});
 				this.push_new_data(k,new_container);
 				return;
@@ -273,7 +275,7 @@ class StoreDescription extends ApiBase2 {
 		}
 		let value=this.get_keys_of(obj);
 		/** @type {make_arr_t<string>} */
-		let x={a: "item",b: "arr",u: "arr",z: [value]};
+		let x={b: "item",b: "arr",u: "arr",z: [value]};
 		return this.save_data(k,x);
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */

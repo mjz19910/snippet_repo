@@ -1,4 +1,4 @@
 type make_arr_t<T>={
-	a: "item"; c: "arr";
+	a: "group_value"; b: "item"; c: "arr"; f: string;
 	z: [T[]];
 };

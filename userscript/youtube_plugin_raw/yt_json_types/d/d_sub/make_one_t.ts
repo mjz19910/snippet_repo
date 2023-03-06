@@ -1,4 +1,4 @@
 type make_one_t<T>={
-	a: "item"; c: "one";
+	a: "item"; b: string,c: "one";
 	z: [T];
 };

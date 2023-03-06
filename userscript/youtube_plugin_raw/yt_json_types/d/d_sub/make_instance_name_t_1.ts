@@ -1,4 +1,4 @@
 type make_instance_name_t_1={
-	a: "item"; c: "instance_name";
+	a: "group_value"; b: "item"; c: "instance_name"; f: string;
 	z: ["array"];
 };
