@@ -1,5 +1,5 @@
 START_PATH=$0
-. "(dirname $START_PATH)/vt100.zsh"
+. "`dirname $START_PATH`/vt100.zsh"
 
 main() {
 	printf '%s\n\n\n\n' $'\n' $'\n' $'\n' $'\n'
