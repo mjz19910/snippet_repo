@@ -1,17 +1,17 @@
 // WARNING, this is a TEMPLATE: remove the @ts-nocheck when you have removed all the placeholders
 // @ts-nocheck
 // ==UserScript==
-// @name	`${name}`
-// @namespace	`${namespace||"https://github.com/mjz19910/"}`
+// @name	{name}
+// @namespace	{namespace}
 // @version	0.1.0
 // @description	try to take over the world!
-// @author	`${author||"@mjz19910"}`
-// @copyright	`${author||"@mjz19910"}` 2023
-// @match	`${match||"https://www.youtube.com/*"}`
+// @author	@mjz19910
+// @copyright	@mjz19910 2023
+// @match	{match}
 // @grant	none
 // @run-at	document-start
-// @updateURL	`${updateURL}`
-// @downloadURL	`${downloadURL}`
+// @updateURL	{updateURL}
+// @downloadURL	{downloadURL}
 // ==/UserScript==
 
 const __template__=true;
