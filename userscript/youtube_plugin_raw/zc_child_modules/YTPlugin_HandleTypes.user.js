@@ -3532,7 +3532,7 @@ class HandleTypes extends ServiceMethods {
 			case "playlist_id":/*raw*/{
 				let z=this.make_R_UrlInfo(x);
 				if(!("tag" in z)) {
-					const raw_id=z.info_arr[0].z[0].info_arr[0];
+					const raw_id=z.info_arr[0].z[0].z[0];
 					switch(raw_id) {
 						default: raw_id===""; debugger; return;
 						case "LL":/*raw*/{
