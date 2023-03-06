@@ -258,6 +258,7 @@ class IndexedDBService extends BaseService {
 				case "string": return store.get_store(item.d).load_data(item);
 			}
 		}
+		if(item.z[0].z[0]===void 0) return;
 		if(this.cache_weak_set.has(item.z[0].z[0])) return;
 		this.cache_weak_set.add(item.z[0].z[0]);
 	}
