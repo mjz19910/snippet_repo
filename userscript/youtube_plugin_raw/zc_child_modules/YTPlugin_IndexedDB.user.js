@@ -130,7 +130,7 @@ class IndexedDBService extends BaseService {
 	/** @private @type {Map<string,number>} */
 	store_cache_index=new Map;
 	cache_index() {return this.store_cache_index;}
-	/** @type {Map<string,G_IDBBoxedType>} */
+	/** @type {Map<string,G_BoxedIdObj>} */
 	loaded_map=new Map;
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
@@ -174,7 +174,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
-		/** @type {G_IDBBoxedType[]} */
+		/** @type {G_BoxedIdObj[]} */
 		let boxed;
 		try {
 			boxed=await this.getAll("boxed_id",version);
@@ -187,7 +187,7 @@ class IndexedDBService extends BaseService {
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
-	/** @arg {StoreData} store @arg {G_IDBBoxedType} item */
+	/** @arg {StoreData} store @arg {G_BoxedIdObj} item */
 	async load_store(store,item) {
 		this.add_to_index(item.key,item,true);
 		if(item.b!=="boxed_id") {
