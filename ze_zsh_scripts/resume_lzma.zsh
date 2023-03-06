@@ -29,22 +29,23 @@ resume_pid() {
 				IFS= read -r line5 || break
 				IFS= read -r line6 || break
 				savecursor
-				printf '\e[14;0f\e[1J'
+				hvpos 14 0
+				clearbos
 				restorecursor
 				flock $lock_1
 				savecursor
-				printf '\e[4;0'f
+				hvpos 4 0
 				printf '[1]%s[1]\n' "$line1"
 				printf '[2]%s[2]\n' "$line2"
 				echo "lock_nb"
 				flock -w 0 $lock_2
 				echo "lock_res: $?"
 				if flock -w 0 $lock_2; then
-					printf '\e[12;0'f
+					hvpos 12 0
 					printf '[5.1]%s[5]\n' "$line5"
 				else
 					flock -u $lock_2
-					printf '\e[14;0'f
+					hvpos 14 0
 					printf '[5.3]%s[5]\n' "$line5"
 				fi
 				printf '[6]%s[6]\n' "$line6"
