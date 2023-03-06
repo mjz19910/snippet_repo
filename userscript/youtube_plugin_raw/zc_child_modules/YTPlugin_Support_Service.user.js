@@ -167,15 +167,15 @@ class StoreDescription extends ApiBase2 {
 		switch(type) {
 			case "one": {
 				/** @type {make_one_t<T>} */
-				const z={_is: "item",type,info_arr: [x]}; return as_any(z);
+				const z={is: "item",type,info_arr: [x]}; return as_any(z);
 			}
 			case "arr": {
 				/** @type {make_arr_t<T>} */
-				const z={_is: "item",type,info_arr: [x]}; return as_any(z);
+				const z={is: "item",type,info_arr: [x],m1_value_39392: {}}; return as_any(z);
 			}
 			case "many": {
 				/** @type {make_many_t<T>} */
-				const z={_is: "item",type,info_arr: [x]}; return as_any(z);
+				const z={is: "item",type,info_arr: [x]}; return as_any(z);
 			}
 		}
 	}
@@ -187,24 +187,24 @@ class StoreDescription extends ApiBase2 {
 			let item=this.data[idx];
 			let item_container=item[1];
 			if(item_container.type==="many"&&x.type==="arr") {
-				let {value: item_many}=item_container;
-				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x.value))>-1) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1.value.push(x.value),x1));
+				let {info_arr: [item_many]}=item_container;
+				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x.info_arr[0]))>-1) return;
+				let new_container=this.clone_and_then(item_container,x1 => (x1.info_arr[0].push(x.info_arr[0]),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
 			if(item_container.type==="arr"&&x.type==="one") {
-				let {value: item_arr}=item_container;
-				if(item_arr.includes(x.value)) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1.value.push(x.value),x1));
+				let {info_arr: [item_arr]}=item_container;
+				if(item_arr.includes(x.info_arr[0])) return;
+				let new_container=this.clone_and_then(item_container,x1 => (x1.info_arr[0].push(x.info_arr[0]),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
 			if(item_container.type==="arr"&&x.type==="arr") {
-				let {value: item_arr}=item_container;
-				if(this.eq_keys(item_arr,x.value)) return;
+				let {m1_value_39392: item_arr}=item_container;
+				if(this.eq_keys(item_arr,x.m1_value_39392)) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {_is: "item",type: "many",value: [x1.value,x.value]};
+					return {is: "item",type: "many",m1_value_39392: [x1.m1_value_39392,x.m1_value_39392]};
 				});
 				this.push_new_data(k,new_container);
 				return;
@@ -213,7 +213,7 @@ class StoreDescription extends ApiBase2 {
 				let {value: item_value}=item_container;
 				if(item_value===x.value) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {_is: "item",type: "arr",value: [x1.value,x.value]};
+					return {is: "item",type: "arr",m1_value_39392: [x1.value,x.value]};
 				});
 				this.push_new_data(k,new_container);
 				return;
@@ -227,16 +227,16 @@ class StoreDescription extends ApiBase2 {
 	save_keys(k,obj) {
 		if(!obj) {debugger; return;}
 		if(typeof obj!=="object") {
-			this.save_data(`${k}.type`,{_is: "item",type: "one",value: typeof obj});
+			this.save_data(`${k}.type`,{is: "item",type: "one",m1_value_39392: typeof obj});
 			return;
 		}
 		if(obj instanceof Array) {
-			this.save_data(`${k}.instance`,{_is: "item",type: "one",value: "array"});
+			this.save_data(`${k}.instance`,{is: "item",type: "one",m1_value_39392: "array"});
 			return;
 		}
 		let value=this.get_keys_of(obj);
 		/** @type {make_arr_t<string>} */
-		let x={_is: "item",type: "arr",value};
+		let x={is: "item",type: "arr",m1_value_39392: value};
 		return this.save_data(k,x);
 	}
 	/** @arg {string} k */
@@ -244,7 +244,7 @@ class StoreDescription extends ApiBase2 {
 		let idx=this.key_index.get(k);
 		if(idx) return this.data[idx];
 		idx=this.data.findIndex(e => e[0]===k);
-		if(idx<0) return this.add_to_index(k,{_is: "item",type: "arr",value: []});
+		if(idx<0) return this.add_to_index(k,{is: "item",type: "arr",m1_value_39392: []});
 		this.key_index.set(k,idx);
 		return this.data[idx];
 	}
@@ -438,7 +438,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 
 			} break;
 			case "arr": {
-				let bitmap_src=cur.value;
+				let bitmap_src=cur.m1_value_39392;
 				if(bitmap_src.length===0) return;
 				let linear_map=bitmap_src.every(e => {
 					if(typeof e!=="string") return false;
@@ -474,9 +474,9 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1.type!=="arr") return;
-		let sr=g1.value.slice().sort((a,b) => a-b);
+		let sr=g1.m1_value_39392.slice().sort((a,b) => a-b);
 		this.save_number_arr("arr.P_tracking_params.f1",sr);
-		let bm=this.generate_bitmap_num(g1.value).bitmap;
+		let bm=this.generate_bitmap_num(g1.m1_value_39392).bitmap;
 		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
 		this.data_store.get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1].value;
 	}
@@ -523,7 +523,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let gg=yt_plugin.ds.data_store.get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1].type!=="arr") return;
-		gg[1].value.sort((a,b) => a-b);
+		gg[1].m1_value_39392.sort((a,b) => a-b);
 		let g1=gg[1];
 		/** @private @arg {string} str */
 		function find_one_set_bit(str) {
@@ -536,7 +536,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				r.push([rx.lastIndex,rr[0]]);
 			}
 		}
-		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1.value,1).bitmap;
+		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1.m1_value_39392,1).bitmap;
 		let mm=find_one_set_bit(bm);
 		/** @private @arg {string} bm */
 		function unset_bits(bm) {
