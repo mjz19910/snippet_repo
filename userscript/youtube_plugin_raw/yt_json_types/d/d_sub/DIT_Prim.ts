@@ -3,3 +3,8 @@ type DIT_Prim<T>={
 	type: StoreGetType<T>;
 	info_arr: [T];
 };
+type DIT_Prim2<T extends StoreGetType<U>,U>={
+	_is: "primitive";
+	type: T;
+	info_arr: [U];
+};

@@ -1,5 +1,12 @@
 type StoreContentStr="number"|"keys"|"boolean"|"root_visual_element"|"string"|"bigint";
-type StoreGetType<T>=T extends bigint? "bigint":T extends number? "number":T extends string? "string":T extends boolean? "boolean":T extends string? "string":"unknown";
+type StoreGetType<T>=
+	T extends bigint? "bigint":
+	T extends boolean? "boolean":
+	T extends number? "number":
+	T extends string? "string":
+	"unknown"
+	;
+;
 type StoreTypeMap={
 	bigint: bigint;
 	boolean: boolean;

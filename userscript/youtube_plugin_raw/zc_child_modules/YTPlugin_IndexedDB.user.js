@@ -139,7 +139,7 @@ class IndexedDBService extends BaseService {
 	loaded_keys=new Set;
 	/** @type {Set<string>} */
 	database_diff_keys=new Set;
-	/** @type {WeakSet<G_BoxedIdObj|CacheSetItems>} */
+	/** @type {WeakSet<CacheSetItems>} */
 	cache_weak_set=new WeakSet;
 	/** @private @type {G_BoxedIdObj[]} */
 	committed_data=[];
