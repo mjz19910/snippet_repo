@@ -268,7 +268,7 @@ class StoreDescription extends ApiBase2 {
 		/** @type {object} */
 		let q=obj;
 		if(q instanceof Array) {
-			/** @type {make_instance_name_t_1} */
+			/** @type {make_instance_name_t<"array">} */
 			const z2=this.make_group(["array"],k,"instance_name");
 			this.save_data(`${k}.instance`,z2);
 			return;

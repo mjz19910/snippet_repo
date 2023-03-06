@@ -303,7 +303,7 @@ class IndexedDBService extends BaseService {
 	uv_unpack_mt(x,_mt) {
 		/** @type {MT_MakeSplitObj<T>} */
 		const make={},nul=null;
-		/** @type {{u:make_instance_name_t_1|make_instance_name_t_2|make_arr_t<T>|make_instance_name_t<T>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
+		/** @type {{u:make_arr_t<T>|make_instance_name_t<T>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
 		const D_holder={};
 		D_holder.u=x; make.arr=nul; make.instance_name=nul; make.many=nul; make.one=nul; make.typeof_name=nul;
 		switch(x.c) {
@@ -319,11 +319,7 @@ class IndexedDBService extends BaseService {
 			case "one": make[x.c]=x; break;
 			case "many": make[x.c]=x; break;
 			case "arr": make[x.c]=x; break;
-			case "instance_name": {
-				if("gen" in x) {make.instance_name=x; break;}
-				if(x.g==="1") make.instance_name_1=x;
-				else make.instance_name_2=x;
-			} break;
+			case "instance_name": make[x.c]=x; break;
 			case "typeof_name": make[x.c]=x; break;
 		}
 		return make;
@@ -946,29 +942,32 @@ class IndexedDBService extends BaseService {
 		let same_arr=[];
 		/** @type {G_BoxedIdObj[]} */
 		let diff_arr=[];
-		/** @arg {G_BoxedIdObj} x @arg {"new"|"same"|"diff"} changed */
+		/** @type {G_BoxedIdObj[]} */
+		let unknown_arr=[];
+		/** @arg {G_BoxedIdObj} x @arg {"new"|"same"|"diff"|"unknown"} changed */
 		let commit_value=(x,changed) => {
 			switch(changed) {
 				case "new": new_arr.push(x); break;
 				case "same": same_arr.push(x); break;
 				case "diff": diff_arr.push(x); break;
+				case "unknown": unknown_arr.push(x); break;
 			}
 			this.committed_data.push(x);
 			let idx=d_cache.indexOf(x);
 			d_cache[idx]=null;
 		};
 		try {
-			for(let item of d_cache) {
+			for(let x_value of d_cache) {
 				if(tx_scope.is_tx_complete) {
 					console.log("cursor_loop_is_tx_complete_0");
 					break;
 				}
-				if(item===null) continue;
-				if(this.committed_data.includes(item)) continue;
-				if(this.loaded_keys.has(item.key)) {
-					let db_val=this.loaded_map.get(item.key); db_val;
+				if(x_value===null) continue;
+				if(this.committed_data.includes(x_value)) continue;
+				if(this.loaded_keys.has(x_value.key)) {
+					let y_value=this.loaded_map.get(x_value.key); y_value;
 				}
-				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
+				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(x_value.key));
 				if(tx_scope.is_tx_complete) {
 					console.log("cursor_loop_is_tx_complete_1");
 					break;
@@ -976,17 +975,16 @@ class IndexedDBService extends BaseService {
 				const cur_cursor=await this.get_async_result(cursor_req);
 				if(cur_cursor===null) {
 					if(this.log_db_actions) console.log("[db_cursor.done]",cur_cursor);
-					if(this.log_db_actions) console.log("[update_sync_cache_item_add_to_db]",item);
-					let put_req=typed_db.put(s.obj_store,item);
+					if(this.log_db_actions) console.log("[update_sync_cache_item_add_to_db]",x_value);
+					let put_req=typed_db.put(s.obj_store,x_value);
 					await this.get_async_result(put_req);
-					commit_value(item,"new");
+					commit_value(x_value,"new");
 					continue;
 				}
-				const item_db_2=cur_cursor.value;
-				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,item_db_2);
-				let idx=d_cache.indexOf(item);
-				d_cache[idx]=null;
-				await this.force_update(s,item);
+				const y_value=cur_cursor.value;
+				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,y_value);
+				commit_value(x_value,"unknown");
+				await this.force_update(s,x_value);
 			}
 		} catch(e) {
 			s.tx.abort();
