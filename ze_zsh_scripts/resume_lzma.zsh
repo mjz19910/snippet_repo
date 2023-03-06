@@ -1,32 +1,13 @@
 START_PATH=$0
-# printf '\e[H\e[2J[cls]\r'
-# printf '\eM'
-# printf '\e[1B'
 main() {
-	stty -echoctl
-	ctrl_c() {
-		printf "\n\n\n\n"
-		return 1
-	}
-	trap "" SIGINT
-	printf "%s\n\n\n\n" $'\n' $'\n' $'\n' $'\n'
-	{
-		printf "%s\0" /dev/shm/lock.pid.*(N) | xargs -0 rm
-		export F=/dev/shm/lock.pid.$$
-		touch $F
-		(
-			exec 4>>$F
-			flock 4
-			pidof lzma | cut -d " " -f 1- | xargs -rP 2 -n 1 zsh -c 'echo "start_args" $@;. '$START_PATH' resume_pid $@' ''
-		)
-	}
+	printf '%s\n\n\n\n' $'\n' $'\n' $'\n' $'\n'
+	printf '\n\n\n\n'
+	pidof lzma | cut -d " " -f 1- | xargs -rP 2 -n 1 zsh -c 'echo "start_args" $@;. '$START_PATH' resume_pid $@' ''
 }
 resume_pid() {
 	sleep 0.$(shuf -i1-6 -n1)
 	echo "[resume_pid]" $@
 	kill -CONT $@
-	trap "" SIGINT
-
 	while [ "${#@}" -gt "0" ]; do
 		echo $1
 		exec {lock_1}</dev/shm/lock.1
@@ -74,12 +55,9 @@ resume_pid() {
 	done
 }
 if [ "$#" -eq 0 ]; then
-	echo echo "arg_num" "$#"
 	$mode
 else
 	mode=$1
-	echo "arg_num" "$#"
 	shift
-	echo "arg_left" $@
 	$mode $@
 fi
