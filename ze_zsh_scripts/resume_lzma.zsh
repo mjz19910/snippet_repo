@@ -19,10 +19,10 @@ main() {
 		) &
 		(
 			echo "w"
+			exec 5>>$F
 			exec 6>>/dev/shm/lock.1
 			exec 7>>/dev/shm/lock.2
 			exec 8>>/dev/shm/lock.done
-			exec 5>>$F
 			while true; do
 				flock -w 0 5 && {
 					echo "e"
