@@ -1,5 +1,5 @@
 START_PATH=$0
-. "`dirname $START_PATH`/vt100.zsh"
+. "$(dirname $START_PATH)/vt100.zsh"
 
 resume_lzma-run() {
 	printf '%s\n\n\n\n' $'\n' $'\n' $'\n' $'\n'
@@ -57,9 +57,10 @@ resume_pid() {
 		shift
 	done
 }
-if [ "$#" -eq 0 ];then
-echo "USAGE: $START_PATH resume_lzma-run"
+if [ "$#" -eq 0 ]; then
+	echo "USAGE: $START_PATH resume_lzma-run"
 elif [ "$#" -eq 1 ]; then
+	mode=$1
 	$mode
 else
 	mode=$1
