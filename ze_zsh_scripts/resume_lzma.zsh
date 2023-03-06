@@ -25,8 +25,7 @@ main() {
 			exec 8>>/dev/shm/lock.done
 			while true; do
 				flock -w 0 5 && {
-					echo "e"
-					# printf '\e[2A'
+					printf '\e[8B'
 					return
 				}
 				sleep 0.5
@@ -37,7 +36,7 @@ main() {
 				sleep 0.25
 				printf '\e[4B'
 				sleep 0.25
-				# printf '\e[2A'
+				printf '\e[8A'
 				flock -u 6
 				flock 7
 				flock -u 8
@@ -58,6 +57,8 @@ resume_pid() {
 		exec 8>>/dev/shm/lock.done
 		pv -d $1 | {
 			while IFS= read -r line; do
+				flock 8
+				echo "locked 8"
 				flock 6
 				echo "locked 6"
 				printf '%s\n' "$line"
@@ -68,6 +69,8 @@ resume_pid() {
 				printf '%s\n' "$line"
 				flock -u 7
 				echo "unlocked 7"
+				flock -u 8
+				echo "unlocked 8"
 			done
 		}
 		shift
