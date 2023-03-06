@@ -3,4 +3,6 @@
 all: ;
 
 clean:
-	make -C userscript clean
+	pwd
+	[ -f ./build ] && rm ./build || true
+	[ -f ./node_modules ] && rm ./node_modules || true
