@@ -2476,26 +2476,40 @@ class AddEventListenerExtension {
 	}
 }
 AddEventListenerExtension.attach_to_api();
-
+/** @template CLS_T,CLS_U */
+class MappedIterableIterator {
+	/** @arg {IterableIterator<CLS_T>} iterator @arg {(arg0:CLS_T)=>CLS_U} mapper */
+	constructor(iterator,mapper) {
+		/** @template T,U @this {MappedIterableIterator<T,U>} */
+		this.next=() => {
+			const result=iterator.next();
+			if(result.done===true) {
+				const {done,value}=result;
+				return {done,value: mapper(value)};
+			} else if(result.done===false) {
+				const {done,value}=result;
+				return {done,value: mapper(value)};
+			} else {
+				const {done,value}=result;
+				return {done,value: mapper(value)};
+			}
+		};
+		this[Symbol.iterator]=function() {return this;};
+	}
+}
+/** @template T,U @this {IterableIterator<T>} @arg {(arg0:T)=>U} func @returns {IterableIterator<U>} */
+function iterable_iterator_map(func) {
+	return new MappedIterableIterator(this,func);
+}
+MappedIterableIterator.prototype.map=iterable_iterator_map;
 class IterExtensions {
 	static attach_to_api() {export_(exports => {exports.IterExtensions=this;});}
 	static init() {
-		let map=new Map;
-		let val_iter=map.values();
+		let iterable_map_value=new Map;
+		let iterable_map_iterator_values=iterable_map_value.values();
 		/** @type {IterableIterator<any>} */
-		let proto=Object.getPrototypeOf(val_iter);
-		proto.map=function(/** @type {(arg0: any) => any} */ func) {
-			return {
-				iterator: this,
-				next() {
-					let iter=this.iterator.next();
-					if(iter.done) return iter;
-					iter.value=func(iter.value);
-					return iter;
-				},
-				[Symbol.iterator]() {return this;}
-			};
-		};
+		let iterable_map_iterator_prototype=Object.getPrototypeOf(iterable_map_iterator_values);
+		iterable_map_iterator_prototype.map=MappedIterableIterator.prototype.map;
 	}
 }
 IterExtensions.attach_to_api();
