@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,split_string_once}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,split_string_once,as_any}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -199,9 +199,42 @@ class IndexedDBService extends BaseService {
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
+	/** @arg {G_BoxedIdObj} x @returns {G_BoxedIdObj} */
+	update_obj_schema(x) {
+		if(!x.z) {
+			/** @type {{key:DST_LoadId["key"],tag:string,value?: {raw:number}}} */
+			let o1=as_any(x);
+			if(o1.value&&o1.value.raw&&o1.tag) {
+				const jl={b: "boxed_id",j: o1.tag,key: x.key,z: [{type: "number",z: [o1.value.raw]}]};
+				return as_any(jl);
+			}
+			/** @type {{key:DST_LoadId["key"],type:"boxed_id",tag?: "bigint",value?: {type:string,info_arr:[["one",bigint]|["arr",bigint[]]]}}} */
+			let o2=as_any(x);
+			if(!o2.value) {debugger; return x;}
+			if(o2.tag!=="bigint") {debugger; return x;}
+			o2.value;
+			const {key,value}=o2;
+			let o_arr_t=value.info_arr[0];
+			switch(o_arr_t[0]) {
+				default: debugger; return x;
+				case "one":
+				case "arr": {
+					const z1={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
+					/** @type {DSS_Bigint["z"][0]} */
+					const z2={a: "group",b: value.type,z: [as_any(z1)]};
+					/** @type {DSS_Bigint} */
+					let z={a: "boxed_store",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
+					return z;
+				}
+			}
+		}
+		return x;
+	}
 	/** @arg {StoreData} store @arg {G_BoxedIdObj} item */
 	async load_store(store,item) {
 		this.add_to_index(item.key,item,true);
+		item=this.update_obj_schema(item);
+		if(!item.z) return;
 		this.cache_weak_set.add(item.z[0]);
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
