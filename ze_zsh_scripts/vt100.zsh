@@ -1,10 +1,15 @@
-printf '\eM'
+#region cursor
 cursordn() {
 	printf '\e[1B'
 }
+revindex() {
+	printf '\eM'
+}
+#endregion
 tabset() {
 	printf '\e[H'
 }
+#region Clear screen
 # ED0
 cleareos_def() {
 	printf '\e[J'
@@ -19,3 +24,4 @@ clearbos() {
 clearscreen() {
 	printf '\e[2J'
 }
+#endregion
