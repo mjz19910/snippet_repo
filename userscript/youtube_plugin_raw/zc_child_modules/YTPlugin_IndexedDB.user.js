@@ -1133,25 +1133,6 @@ class IndexedDBService extends BaseService {
 			};
 		});
 	}
-	/**
-	 * @template {"boxed_id"} K
-	 * @template {DT_DatabaseStoreTypes[K]} T
-	 * @arg {IDBTransaction} tx
-	 * @arg {K} key
-	 * @arg {IDBDatabase} db
-	 */
-	async transfer_store(tx,key,db) {
-		let typed_db=new TypedIndexedDB;
-		const src_obj_store=typed_db.objectStore(tx,key);
-		/** @private @type {IDBRequest<T[]>} */
-		let get_all_video_id_req=src_obj_store.getAll();
-		await this.await_success(get_all_video_id_req);
-		const video_id_result=get_all_video_id_req.result;
-		db.deleteObjectStore(key);
-		const dst_obj_store=db.createObjectStore(key,{keyPath: "key"});
-		dst_obj_store.createIndex(key,"key",{unique: true});
-		for(let x of video_id_result) dst_obj_store.put(x);
-	}
 	/** @template {"boxed_id"} K @arg {K} key @arg {IDBDatabase} db */
 	create_store(key,db) {
 		let obj_store=db.createObjectStore(key,{keyPath: "key"});

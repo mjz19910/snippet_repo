@@ -1,13 +1,22 @@
-//#region HandleTypesEval
-/** @arg {TemplateStringsArray} x */
-function raw_template(x) {
-	if(x.raw.length>1) {debugger;}
-	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
+import {IndexedDBService,TypedIndexedDB} from "./YTPlugin_IndexedDB.user";
+export class IndexedDBDeadCode extends IndexedDBService {
+	/**
+	 * @template {"boxed_id"} K
+	 * @template {G_BoxedIdObj} T
+	 * @param {IDBTransaction} tx
+	 * @param {K} key
+	 * @param {IDBDatabase} db
+	 */
+	async transfer_store(tx,key,db) {
+		let typed_db=new TypedIndexedDB;
+		const src_obj_store=typed_db.objectStore(tx,key);
+		/** @private @type {IDBRequest<T[]>} */
+		let get_all_video_id_req=src_obj_store.getAll();
+		await this.await_success(get_all_video_id_req);
+		const video_id_result=get_all_video_id_req.result;
+		db.deleteObjectStore(key);
+		const dst_obj_store=db.createObjectStore(key,{keyPath: "key"});
+		dst_obj_store.createIndex(key,"key",{unique: true});
+		for(let x of video_id_result) dst_obj_store.put(x);
+	}
 }
-const handle_types_eval_code=raw_template`
-class HandleTypesEval extends ServiceMethods {}
-window.HandleTypesEval=HandleTypesEval;
-//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
-`;
-eval(handle_types_eval_code);
-//#endregion
