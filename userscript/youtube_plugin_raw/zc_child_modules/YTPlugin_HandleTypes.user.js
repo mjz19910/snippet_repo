@@ -3214,8 +3214,20 @@ class HandleTypes extends ServiceMethods {
 		function gen_info_PL(raw_id) {
 			const tag="PL";
 			let [,id]=split_string_once(raw_id,tag);
-			return {type: "playlist_id",tag,info_arr: [{raw_id},{id}]};
+			return {type: "playlist_id",tag,info_arr: [make_raw_id(raw_id),{id}]};
 		}
+		/** @template U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]} */
+		function get_prim_1(x) {return x.info_arr[0];}
+		/** @template V @template {DIT_Item<any,V>} U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]["info_arr"][0]} */
+		function get_prim_2(x) {return get_prim_1(x).info_arr[0];}
+		/** @template T1 @template {{info_arr:[T1]}} V @template {DIT_Item<any,V>} U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]["info_arr"][0]["info_arr"][0]} */
+		function get_prim_3(x) {return get_prim_2(x).info_arr[0];}
+		/** @template T @arg {T} x @returns {{_is:"primitive";type: "string";info_arr:[T]}} */
+		function make_prim_str(x) {return {_is: "primitive",type: "string",info_arr: [x]};}
+		/** @template T @arg {T} x @returns {{type: "raw_id",info_arr: [{_is:"primitive";type: "string";info_arr:[T]}]}} */
+		function make_raw_id(x) {return {type: "raw_id",info_arr: [make_prim_str(x)]};}
+		/** @template T @arg {T} x @returns {{type: "raw_id",info_arr: [T]}} */
+		function make_raw_id_1(x) {return {type: "raw_id",info_arr: [x]};}
 		let ret;
 		/** @type {DI_AGR_UrlInfo} */
 		let x=u;
@@ -3225,9 +3237,9 @@ class HandleTypes extends ServiceMethods {
 					case "":
 				}
 			} break;
-			case "playlist_id:PL": ret=gen_info_PL(x.info_arr[0].raw_id); break;
+			case "playlist_id:PL": ret=gen_info_PL(get_prim_3(x)); break;
 			case "playlist_id:RD":/*make*/{
-				const {info_arr: [{raw_id}]}=x;
+				const raw_id=get_prim_3(x);
 				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
 					let rd_len=raw_id.length-2;
 					if(rd_len===11) break x;
@@ -3236,56 +3248,56 @@ class HandleTypes extends ServiceMethods {
 				if(this.str_starts_with(raw_id,"RDCMUC")) {
 					let [,id]=split_string_once(raw_id,"RDCMUC");
 					/** @type {DI_A_Playlist_RD_CM_UC} */
-					const z={type: "playlist_id",tag: "RD:CM:UC",info_arr: [{raw_id},{id}]}; ret=z;
+					const z={type: "playlist_id",tag: "RD:CM:UC",info_arr: [make_raw_id(raw_id),{id}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"RDMM")) {
 					let [,id]=split_string_once(raw_id,"RDMM");
 					/** @type {DI_A_Playlist_RD_MM} */
-					const z={type: "playlist_id",tag: "RD:MM",info_arr: [{raw_id},{id}]}; ret=z;
+					const z={type: "playlist_id",tag: "RD:MM",info_arr: [make_raw_id(raw_id),{id}]}; ret=z;
 				} else {
 					let [,id]=split_string_once(raw_id,"RD");
 					/** @type {DI_A_Playlist_RD} */
-					const z={type: "playlist_id",tag: "RD",info_arr: [{raw_id},{id}]}; ret=z;
+					const z={type: "playlist_id",tag: "RD",info_arr: [make_raw_id(raw_id),{id}]}; ret=z;
 				}
 			} break;
 			case "playlist_id:UU":/*make*/{
-				const {info_arr: [{raw_id}]}=x;
+				const raw_id=get_prim_3(x);
 				let [,id]=split_string_once(raw_id,"UU");
 				/** @type {DI_A_Playlist_UU} */
-				const z={type: "playlist_id",tag: "UU",info_arr: [{raw_id},{id}]}; ret=z;
+				const z={type: "playlist_id",tag: "UU",info_arr: [make_raw_id(raw_id),{id}]}; ret=z;
 			} break;
-			case "channel_id":/*G*/{
+			case "channel_id":/*make*/{
 				const {info_arr: [{info_arr: [{info_arr: [raw_id]}]}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {DI_A_ChannelId_UC} */
-				const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;
+				const z={type: "channel_id",tag: "UC",info_arr: [{type: "raw_id",info_arr: [raw_id]},{id}]}; ret=z;
 			} break;
-			case "browse_id":/*G*/{
-				const {info_arr: [{raw_id}]}=x;
+			case "browse_id":/*make*/{
+				const raw_id=get_prim_3(x);
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
 					/** @type {DI_A_ChannelId_UC} */
-					const z={type: "channel_id",tag: "UC",info_arr: [{raw_id},{id}]}; ret=z;
+					const z={type: "channel_id",tag: "UC",info_arr: [make_raw_id_1(raw_id),{id}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
 					/** @type {DI_BrowseId_FE} */
-					const z={type: "browse_id",tag: "FE",info_arr: [{raw_id},{id}]}; ret=z;
+					const z={type: "browse_id",tag: "FE",info_arr: [make_raw_id(raw_id),{id}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"SP")) {
 					let [,id]=split_string_once(raw_id,"SP");
 					/** @type {DI_BrowseId_SP} */
-					const z={type: "browse_id",tag: "SP",info_arr: [{raw_id},{id}]}; ret=z;
+					const z={type: "browse_id",tag: "SP",info_arr: [make_raw_id(raw_id),{id}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"MP")) {
 					let [,id]=split_string_once(raw_id,"MP");
 					let [a1,a2]=split_string_once(id,"_");
 					/** @type {DI_BrowseId_MP} */
-					const z={type: "browse_id",tag: "MP",info_arr: [{raw_id},{id: a1},{separator: "_"},{id: a2}]}; ret=z;
+					const z={type: "browse_id",tag: "MP",info_arr: [make_raw_id(raw_id),{id: a1},{separator: "_"},{id: a2}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"VL")) {
 					if(raw_id==="VLLL") {
 						let [,id]=split_string_once(raw_id,"VL");
 						/** @type {DI_BrowseId_VL_LL} */
 						const z={
 							type: "browse_id",tag: "VL:LL",info_arr: [
-								{raw_id},
-								{type: "playlist_id",info_arr: [{raw_id: id}]},
+								make_raw_id(raw_id),
+								{type: "playlist_id",info_arr: [make_raw_id(id)]},
 							]
 						}; ret=z;
 					} else if(raw_id==="VLWL") {
@@ -3294,15 +3306,15 @@ class HandleTypes extends ServiceMethods {
 						const z={
 							type: "browse_id",tag: "VL:WL",
 							info_arr: [
-								{raw_id},
-								{type: "playlist_id",info_arr: [{raw_id: id}]},
+								make_raw_id(raw_id),
+								{type: "playlist_id",info_arr: [make_raw_id(id)]},
 							]
 						}; ret=z;
 					} else if(this.str_starts_with(raw_id,"VLPL")) {
 						const tag="VL";
 						let [,id]=split_string_once(raw_id,tag);
 						/** @type {DI_BrowseId_VL_PL} */
-						const z={type: "browse_id",tag: "VL:PL",info_arr: [{raw_id},gen_info_PL(id)]}; ret=z;
+						const z={type: "browse_id",tag: "VL:PL",info_arr: [make_raw_id(raw_id),gen_info_PL(id)]}; ret=z;
 					} else {
 						raw_id===""; debugger; throw new Error();
 					}
@@ -3311,28 +3323,28 @@ class HandleTypes extends ServiceMethods {
 				}
 			} break;
 			case "guide_entry_id":/*make*/{
-				let {info_arr: [{raw_id}]}=x;
+				const raw_id=get_prim_3(x);
 				/** @type {GI_GuideEntry_Id} */
 				let itv;
 				if(raw_id==="LL") {
 					/** @type {DI_GuideEntry_LL} */
-					const z={type: "guide_entry_id",tag: "LL",info_arr: [{type: "playlist_id",info_arr: [{raw_id}]}]}; itv=z;
+					const z={type: "guide_entry_id",tag: "LL",info_arr: [{type: "playlist_id",info_arr: [make_raw_id(raw_id)]}]}; itv=z;
 				} else if(raw_id==="WL") {
 					/** @type {DI_GuideEntry_WL} */
-					const z={type: "guide_entry_id",tag: "WL",info_arr: [{type: "playlist_id",info_arr: [{raw_id}]}]}; itv=z;
+					const z={type: "guide_entry_id",tag: "WL",info_arr: [{type: "playlist_id",info_arr: [make_raw_id(raw_id)]}]}; itv=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
 					/** @type {DI_GuideEntry_PL} */
 					const z={type: "guide_entry_id",tag: "PL",info_arr: [gen_info_PL(raw_id)]}; itv=z;
 				} else if(this.str_starts_with(raw_id,"UC")) {
 					const tag="UC",[,id]=split_string_once(raw_id,tag);
 					/** @type {DI_GuideEntry_UC} */
-					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [{raw_id},{id}]}]}; itv=z;
+					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [make_raw_id_1(raw_id),{id}]}]}; itv=z;
 				} else {
 					debugger; break;
 				}
 				ret=itv;
 			} break;
-			case "key:start_radio":/*G*/{
+			case "key:start_radio":/*make*/{
 				let {tag,info_arr}=x;
 				let parts=split_string_once(tag,":");
 				{
@@ -3341,28 +3353,30 @@ class HandleTypes extends ServiceMethods {
 					const z={type,tag,info_arr}; ret=z;
 				}
 			} break;
-			case "playlist_id":/*G*/{
-				let {type,tag,info_arr: [{raw_id}]}=x;
+			case "playlist_id":/*make*/{
+				const raw_id=get_prim_3(x),{type,tag}=x;
 				if(raw_id==="LL") {
 					/** @type {DI_A_Playlist_LL} */
-					const z={type: "playlist_id",info_arr: [{raw_id}]}; ret=z;
+					const z={type: "playlist_id",info_arr: [make_raw_id(raw_id)]}; ret=z;
 				} else if(raw_id==="WL") {
 					/** @type {DI_A_Playlist_WL} */
-					const z={type: "playlist_id",info_arr: [{raw_id}]}; ret=z;
+					const z={type: "playlist_id",info_arr: [make_raw_id(raw_id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
-					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [{raw_id}]});
+					/** @type {DI_A_Playlist_PL} */
+					const z=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [make_raw_id(raw_id)]}); ret=z;
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:PL`,info_arr: [make_raw_id(raw_id)]});
 				} else if(this.str_starts_with(raw_id,"UU")) {
-					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:UU`,info_arr: [{raw_id}]});
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:UU`,info_arr: [make_raw_id(raw_id)]});
 				} else if(this.str_starts_with(raw_id,"RD")) {
-					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [{raw_id}]});
+					ret=this.make_DI_AGR_UrlInfo({type,tag: `${tag}:RD`,info_arr: [make_raw_id(raw_id)]});
 				} else {
 					raw_id===""; debugger;
 				}
 			} break;
-			case "video_id":/*G*/{
-				let {tag,info_arr: [{raw_id}]}=x;
+			case "video_id":/*make*/{
+				const raw_id=get_prim_3(x),{tag}=x;
 				/** @type {DI_VideoId} */
-				const z={type: tag,info_arr: [{raw_id}]}; ret=z;
+				const z={type: tag,info_arr: [make_raw_id_1(raw_id)]}; ret=z;
 			} break;
 		}
 		if(!ret) {debugger; throw new Error();}

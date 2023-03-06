@@ -18,6 +18,8 @@ type DI_G_UrlInfo=
 	I extends "browse_id"? GI_BrowseId:
 	I extends "guide_entry_id"? GI_GuideEntry_Id:
 	I extends "playlist_id"? DI_G_PlaylistId:
+	I extends "playlist_id:RD"? DI_A_Playlist_RD:
+	I extends "playlist_id:PL"? DI_A_Playlist_PL:
 	I extends "video_id"? DI_VideoId:
 	I extends `key:${infer J}`? {
 		type: "key";
@@ -36,7 +38,14 @@ type GI_BrowseId=
 	|DI_BrowseId_VL_WL
 	;
 ;
-type MakeRet_DI_AGR_UrlInfo<T extends DI_AGR_UrlInfo>=T extends infer I extends DI_AGR_UrlInfo? I["tag"] extends "key:start_radio"? DI_Key_StartRadio:Extract<DI_G_UrlInfo,{type: I["tag"];}>:never;
+type MakeRet_DI_AGR_UrlInfo<T extends DI_AGR_UrlInfo>=
+	T extends infer I extends DI_AGR_UrlInfo?
+	I["tag"] extends "key:start_radio"?
+	DI_Key_StartRadio:
+	Extract<DI_G_UrlInfo,{type: I["tag"];}>:
+	never
+	;
+;
 type DI_Key_StartRadio={
 	type: "key";
 	tag: "start_radio";

@@ -7,10 +7,18 @@ export function cache_item_decompose_info_0_info_0(x: G_BoxedIdObj) {
 type A1=ReturnType<typeof cache_item_decompose_info_0_info_0>;
 type A2=Extract<A1,object>;
 type A3=Extract<A2,{type: any;}>;
+type E1=Extract<A3,{info_arr: any;}>["info_arr"][0];
 export function cache_item_decompose(x: G_BoxedIdObj): {
-	a: [A1|null,A2|null,A3|null],
-	b: [null,Exclude<A1,object>|null,{start_radio: "1"|"0";}|null];
-	e: [Extract<A3,{info_arr: any;}>["info_arr"][0]|null];
+	v: [
+		|{t: "c"; u: Extract<E1,{type: any;}>;}
+		|{t: "d"; u: string;}
+		|null
+	];
+	x: {
+		a: [A1|null,A2|null,A3|null],
+		b: [null,Exclude<A1,object>|null,{start_radio: "1"|"0";}|null];
+		e: [E1|null];
+	};
 } {
 	let a_base_2=new ApiBase2;
 	let a1=x.info_arr[0].info_arr[0];
@@ -27,13 +35,71 @@ export function cache_item_decompose(x: G_BoxedIdObj): {
 			case "type": break;
 		}
 	}
-	return cache_item_decompose_2({a: [a1,a2,a3],b: [null,b2,b3],e: [e1]});
+	let ret=cache_item_decompose_2({a: [a1,a2,a3],b: [null,b2,b3],e: [e1]});
+	cache_item_decompose_3(ret.v);
+	return ret;
 }
-function cache_item_decompose_2(x: NonNullable<ReturnType<typeof cache_item_decompose>>) {
+function cache_item_decompose_2(x: ReturnType<typeof cache_item_decompose>["x"]): ReturnType<typeof cache_item_decompose> {
 	const {e: [u]}=x;
-	let c1=null,d1=null;
-	if(u!==null&&typeof u==="object"&&"type" in u) c1=u;
-	else d1=u;
-	d1; c1;
-	return x;
+	if(u!==null&&typeof u==="object"&&"type" in u) return {v: [{t: "c",u}],x};
+	else {
+		if(typeof u==="string") {
+			return {v: [{t: "d",u}],x};
+		} else {
+			return {v: [u],x};
+		}
+	}
+}
+type CDec3_XP={t: "x"; x: ReturnType<typeof cache_item_decompose>["v"];};
+type C3_x_f0=CDec3_XP["x"][0];
+type C3_CA=Extract<C3_x_f0,{t: "c";}>["u"];
+function cache_item_decompose_3(x: ReturnType<typeof cache_item_decompose>["v"]): {
+	v: [
+		m: "a",
+		x: CDec3_XP,
+		a: {t: "a"; a: null;}
+	]|[
+		m: "c:a",
+		x: CDec3_XP,
+		c: {t: "c"; u: Extract<C3_CA,{info_arr: any;}>;},
+	]|[
+		m: "d",
+		x: CDec3_XP,
+		d: {t: "d"; u: string;},
+	]|[
+		m: "x",
+		x: CDec3_XP
+	]|[
+		m: "n",x: CDec3_XP,u: never
+	]|[
+		m: "c:b",x: CDec3_XP,u: make_item_group<bigint>,
+	];
+} {
+	if(x===null) return {v: ["x",{t: "x",x}]};
+	const s: CDec3_XP={t: "x",x};
+	const [a]=x;
+	if(a===null) {
+		const t="a";
+		return {v: [t,s,{t: t,a}]};
+	}
+	switch(a.t) {
+		case "c": {
+			const {t,u}=a;
+			if(u!==null) {
+				if("info_arr" in u) {
+					return {v: [`${t}:a`,s,{t: "c",u}]};
+				} else {
+					u.value;
+					return {v: [`${t}:b`,s,u]};
+				}
+			}
+		} break;
+		case "d": {
+			const {t,u}=a;
+			if(u!==null) {
+				return {v: [t,s,{t,u}]};
+			}
+		} break;
+	}
+	return {v: ["x",s]};
 }
