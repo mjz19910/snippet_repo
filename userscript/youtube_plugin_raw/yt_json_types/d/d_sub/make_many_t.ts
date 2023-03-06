@@ -1,4 +1,4 @@
 type make_many_t<T>={
-	a: "item"; b: "many"; c: "many";
+	a: "item"; c: "many";
 	z: [T[][]];
 };

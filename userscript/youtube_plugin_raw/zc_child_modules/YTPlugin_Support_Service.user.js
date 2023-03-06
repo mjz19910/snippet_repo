@@ -267,7 +267,7 @@ class StoreDescription extends ApiBase2 {
 		let q=obj;
 		if(q instanceof Array) {
 			/** @type {(typeof q) extends any[]?make_instance_name_t_1:never} */
-			let z={is: "item",type: "one",u: "instance_name",info_arr: ["array"]};
+			let z={is: "item",type: "one",u: "instance_name",z: ["array"]};
 			this.save_data(`${k}.instance`,z);
 			return;
 		}

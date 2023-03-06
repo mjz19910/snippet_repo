@@ -3,5 +3,5 @@ type DST_KeySection={
 	tag: "key";
 	id: "start_radio";
 	key: `boxed_id:key:start_radio:${DI_Key_StartRadio["z"][0]["start_radio"]}`;
-	info_arr: [DI_Key_StartRadio];
+	z: [DI_Key_StartRadio];
 };

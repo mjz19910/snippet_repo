@@ -4,6 +4,6 @@ type CacheSetItems=
 	|make_item_group<string|number>
 	|make_item_group<number>
 	|make_item_group<string>
-	|{type: "store"; info_arr: [make_item_group<bigint>];}
+	|{type: "store"; z: [make_item_group<bigint>];}
 	;
 ;

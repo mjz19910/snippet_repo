@@ -30,5 +30,5 @@ type DSS_Bigint_2={
 	type: "boxed_id";
 	tag: "bigint";
 	key: `boxed_id:bigint:${string}`;
-	info_arr: [{_is: "group"; type: string; info_arr: [make_item_group<bigint>];}];
+	z: [{_is: "group"; type: string; z: [make_item_group<bigint>];}];
 };

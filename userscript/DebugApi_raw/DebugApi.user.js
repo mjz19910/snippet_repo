@@ -2482,12 +2482,13 @@ class IterExtensions {
 	static init() {
 		let map=new Map;
 		let val_iter=map.values();
+		/** @type {IterableIterator<any>} */
 		let proto=Object.getPrototypeOf(val_iter);
 		proto.map=function(/** @type {(arg0: any) => any} */ func) {
 			return {
-				b: this,
+				iterator: this,
 				next() {
-					let iter=this.b.next();
+					let iter=this.iterator.next();
 					if(iter.done) return iter;
 					iter.value=func(iter.value);
 					return iter;

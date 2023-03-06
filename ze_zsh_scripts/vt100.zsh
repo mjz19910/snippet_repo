@@ -1,6 +1,12 @@
 #region cursor
+cursorup() {
+	printf '\e['$1'A'
+}
 cursordn() {
-	printf '\e[1B'
+	printf '\e['$1'B'
+}
+cursorrt() {
+	printf '\e['$1'C'
 }
 cursorpos() { # CUP
 	printf '\e['$1';'$2'H'

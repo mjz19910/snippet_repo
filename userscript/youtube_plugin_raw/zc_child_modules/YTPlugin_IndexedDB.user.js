@@ -382,7 +382,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}:_:${value.info_arr[3].z[0].info_arr[0]}`,
-					info_arr: [value],
+					z: [value],
 				},version); return {args,promise};
 			}
 			case "FE": {
@@ -391,7 +391,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-					info_arr: [value],
+					z: [value],
 				},version); return {args,promise};
 			}
 			case "VL:LL": {
@@ -401,7 +401,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag}`,
 					key: `boxed_id:${type}:${tag}:${id}`,
-					info_arr: [value],
+					z: [value],
 				},version); return {args,promise};
 			}
 			case "VL:WL": {
@@ -411,7 +411,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag}`,
 					key: `boxed_id:${type}:${tag}:${id}`,
-					info_arr: [value],
+					z: [value],
 				},version); return {args,promise};
 			}
 			case "VL:PL": {
@@ -423,7 +423,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag1}:${tag2}`,
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
-					info_arr: [value],
+					z: [value],
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -436,7 +436,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag1}:${tag2}`,
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
-					info_arr: [value],
+					z: [value],
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -446,25 +446,25 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-					info_arr: [value],
+					z: [value],
 				},version); return {args,promise};
 			}
 		}
 	}
 	/** @template T @arg {T_Tag} tag @arg {T_VTag} value_tag @arg {T} value @template {string} T_Tag @template {string} T_VTag @returns {{type:"boxed_id";tag:T_Tag;key: `boxed_id:${T_Tag}:${T_VTag}`;info_arr:[T]}}	*/
-	make_box_3(tag,value_tag,value) {return {type: "boxed_id",tag,key: `boxed_id:${tag}:${value_tag}`,info_arr: [value]};}
+	make_box_3(tag,value_tag,value) {return {type: "boxed_id",tag,key: `boxed_id:${tag}:${value_tag}`,z: [value]};}
 	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} a3 @arg {A4} a4 @template {string} A1 @template {string} A2 @template {string} A3 @returns {{type:"boxed_id";tag:`${A1}:${A2}`;key: `boxed_id:${A1}:${A2}:${A3}`;info_arr:[A4]}}	*/
-	make_box_4(a1,a2,a3,a4) {return {type: "boxed_id",tag: `${a1}:${a2}`,key: `boxed_id:${a1}:${a2}:${a3}`,info_arr: [a4]};}
+	make_box_4(a1,a2,a3,a4) {return {type: "boxed_id",tag: `${a1}:${a2}`,key: `boxed_id:${a1}:${a2}:${a3}`,z: [a4]};}
 	/** @template T @template {string} U @arg {make_item_group<T>} x @arg {U} tag1 @template {string} V @arg {V} tag2 @returns {T_BoxedStore_3<T,U,V>} */
 	make_T_BoxedStore(x,tag1,tag2) {
 		return {
 			type: "boxed_id",
 			tag: tag1,
 			key: `boxed_id:${tag1}:${tag2}`,
-			info_arr: [{
+			z: [{
 				type: "store",
 				tag: tag2,
-				info_arr: [x]
+				z: [x]
 			}]
 		};
 	}
@@ -477,7 +477,7 @@ class IndexedDBService extends BaseService {
 			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "key": {
 				let [tag,id]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${x.z[0].start_radio}`,info_arr: [x]},version)};
+				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${x.z[0].start_radio}`,z: [x]},version)};
 			}
 			case "guide_entry_id": /*db*/ {
 				let [tag]=args;
@@ -485,30 +485,30 @@ class IndexedDBService extends BaseService {
 					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,info_arr: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "WL": {
 						/** @type {DST_GuideEntry_WL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,info_arr: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
 						let iv=x.info_arr[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].info_arr[0]}`,info_arr: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].info_arr[0]}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "UC": {
 						let iv=x.info_arr[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].info_arr[0]}`,info_arr: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].info_arr[0]}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
 						x;
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,info_arr: [{type: "guide_entry_id",tag: "VL:LL",info_arr: [x]}]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${x.tag}`,z: [{type: "guide_entry_id",tag: "VL:LL",z: [x]}]};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
@@ -522,7 +522,7 @@ class IndexedDBService extends BaseService {
 					case "LL": {
 						let [,v,x]=args;
 						const z=this.make_box_3(`${k}:${v}`,"",x); z;
-						return {args,promise: this.put_box({type: "boxed_id",tag: "playlist_id:LL",key: "boxed_id:playlist_id:LL",info_arr: [args[2]]},version)};
+						return {args,promise: this.put_box({type: "boxed_id",tag: "playlist_id:LL",key: "boxed_id:playlist_id:LL",z: [args[2]]},version)};
 					}
 					case "WL": {
 						let [tag,id,value]=args;
@@ -530,7 +530,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}`,
-							info_arr: [value],
+							z: [value],
 						},version); return {args,promise};
 					}
 					case "PL": {
@@ -539,7 +539,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-							info_arr: [value],
+							z: [value],
 						},version); return {args,promise};
 					}
 					case "RD": {
@@ -548,7 +548,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-							info_arr: [value],
+							z: [value],
 						},version); return {args,promise};
 					}
 					case "RD:MM": {
@@ -557,7 +557,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-							info_arr: [value],
+							z: [value],
 						},version); return {args,promise};
 					}
 				}
@@ -586,7 +586,7 @@ class IndexedDBService extends BaseService {
 					tag,
 					/** @type {`boxed_id:${typeof tag}:${typeof id}`} */
 					key: `boxed_id:${tag}:${id}`,
-					info_arr: [{type: "store",tag: id,info_arr: [value]}]
+					z: [{type: "store",tag: id,z: [value]}]
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -621,7 +621,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `a:${mode}`,
 					key: `boxed_id:a:${mode}`,
-					info_arr: [{type: "number",info_arr: [id]}],
+					z: [{type: "number",z: [id]}],
 				},version); return {args,promise};
 			}
 			case "save_id": {
@@ -630,7 +630,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					key: `boxed_id:a:${mode}`,
 					tag: `a:${mode}`,
-					info_arr: [{type: "number",info_arr: [id]}],
+					z: [{type: "number",z: [id]}],
 				},version); return {args,promise};
 			}
 			case "browse_id": {
@@ -641,7 +641,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-							info_arr: [value],
+							z: [value],
 						},version); return {args,promise};
 					}
 					case "MP": {
@@ -650,7 +650,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-							info_arr: [value],
+							z: [value],
 						},version); return {args,promise};
 					}
 					case "SP": {
@@ -659,7 +659,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
-							info_arr: [value],
+							z: [value],
 						},version); return {args,promise};
 					}
 				}
@@ -670,7 +670,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					info_arr: [{type: "store",tag: type,info_arr: [value]}],
+					z: [{type: "store",tag: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "boolean": {
@@ -679,7 +679,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					info_arr: [{type: "store",tag: type,info_arr: [value]}],
+					z: [{type: "store",tag: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "number": {
@@ -688,7 +688,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					info_arr: [{type: "store",tag: type,info_arr: [value]}],
+					z: [{type: "store",tag: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "string": {
@@ -697,7 +697,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					info_arr: [{type: "store",tag: type,info_arr: [value]}],
+					z: [{type: "store",tag: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "keys": {
@@ -706,7 +706,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					info_arr: [{type: "store",tag: type,info_arr: [value]}],
+					z: [{type: "store",tag: type,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "root_visual_element": {
@@ -715,7 +715,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					info_arr: [{type: "store",tag: type,info_arr: [value]}],
+					z: [{type: "store",tag: type,z: [value]}],
 				},version); return {args,promise};
 			}
 		}
