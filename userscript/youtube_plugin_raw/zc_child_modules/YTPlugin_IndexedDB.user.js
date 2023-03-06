@@ -217,6 +217,7 @@ class IndexedDBService extends BaseService {
 		this.loaded_keys.add(x.key);
 		this.loaded_map.set(x.key,x);
 		this.cache_weak_set.add(x);
+		console.log("[depth_0.keys]",this.get_keys_of(x));
 		this.cache_depth_1(x.z[0]);
 	}
 	/** @arg {CacheTreeDepth1} x */
