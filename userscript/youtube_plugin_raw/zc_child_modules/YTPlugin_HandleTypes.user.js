@@ -1855,7 +1855,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {`${0|1}`} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
-		return {a: "R",b: "raw",c: "key:start_radio",z: [{a: "item:b",f: "start_radio",z: [x]}]};
+		return {a: "is:ABC",b: "raw",c: "key:start_radio",z: [{a: "item:b",f: "start_radio",z: [x]}]};
 	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
