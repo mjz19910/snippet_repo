@@ -87,24 +87,24 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
-/** @template {StoreContentStr} CLS_K */
+/** @template {GS_StoreType} CLS_K */
 class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	key_index=new Map;
 	/** @type {Map<string,number>} */
 	new_key_index=new Map;
-	/** @type {[string, make_item_group<StoreTypeMap[CLS_K]>][]} */
+	/** @type {[string, make_item_group<J_StoreTypeMap[CLS_K]>][]} */
 	data=[];
-	/** @type {[string, make_item_group<StoreTypeMap[CLS_K]>][]} */
+	/** @type {[string, make_item_group<J_StoreTypeMap[CLS_K]>][]} */
 	new_data=[];
-	/** @arg {CLS_K} type @arg {StoreStrMap[CLS_K]} type_arr @arg {()=>void} data_update_callback */
+	/** @arg {CLS_K} type @arg {J_StoreStrMap[CLS_K]} type_arr @arg {()=>void} data_update_callback */
 	constructor(type,type_arr,data_update_callback) {
 		super();
 		this.type=type;
 		this.type_arr=type_arr;
 		this.data_update_callback=data_update_callback;
 	}
-	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_data_to_index(k,x) {
 		let idx=this.key_index.get(k);
 		if(idx!==void 0) {
@@ -115,7 +115,7 @@ class StoreDescription extends ApiBase2 {
 		this.key_index.set(k,new_len-1);
 		this.data_update_callback();
 	}
-	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_new_data_to_index(k,x) {
 		let idx=this.new_key_index.get(k);
 		if(idx!==void 0) {
@@ -125,18 +125,18 @@ class StoreDescription extends ApiBase2 {
 		let new_len=this.new_data.push([k,x]);
 		this.new_key_index.set(k,new_len-1);
 	}
-	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	push_new_data(k,x) {
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
 	}
-	/** @arg {T_BoxedStore<StoreTypeMap[CLS_K],CLS_K>} item */
+	/** @arg {T_BoxedStore<J_StoreTypeMap[CLS_K],CLS_K>} item */
 	load_data(item) {
 		const x=item.info_arr[0].info_arr[0];
 		const k=item.info_arr[0].tag;
 		this.add_data_to_index(k,x);
 	}
-	/** @template {make_item_group<StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
+	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
 	clone_container(x) {
 		switch(x.b) {
 			case "arr": {
@@ -156,12 +156,12 @@ class StoreDescription extends ApiBase2 {
 			}
 		}
 	}
-	/** @template {make_item_group<StoreTypeMap[CLS_K]>} T @arg {T} x @template {make_item_group<StoreTypeMap[CLS_K]>} U @arg {(x:T)=>U} prepare */
+	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} T @arg {T} x @template {make_item_group<J_StoreTypeMap[CLS_K]>} U @arg {(x:T)=>U} prepare */
 	clone_and_then(x,prepare) {
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
-	/** @template {make_item_group<StoreTypeMap[CLS_K]>} T @arg {T} x @template TI @template {make_arr_t<TI>} U @arg {(x:T)=>U} prepare */
+	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} T @arg {T} x @template TI @template {make_arr_t<TI>} U @arg {(x:T)=>U} prepare */
 	clone_and_then_arr(x,prepare) {
 		let x1=this.clone_container(x);
 		return prepare(x1);
@@ -184,7 +184,7 @@ class StoreDescription extends ApiBase2 {
 			}
 		}
 	}
-	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	save_data(k,x) {
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
@@ -276,7 +276,7 @@ class StoreDescription extends ApiBase2 {
 		let x={a: "item",b: "arr",u: "arr",z: [value]};
 		return this.save_data(k,x);
 	}
-	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_to_index(k,x) {
 		/** @type {[typeof k,typeof x]} */
 		let p=[k,x];

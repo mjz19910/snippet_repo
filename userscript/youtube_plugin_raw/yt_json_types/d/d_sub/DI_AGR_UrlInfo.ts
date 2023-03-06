@@ -5,13 +5,13 @@ type DI_R_Key_StartRadio={
 };
 
 type DI_AGR_UrlInfo=
-	|T_UrlInfoPartial<"raw",["browse_id"],DU_Browse_Id>
+	|T_Info_RawId_BC_J<"raw",["browse_id"],DU_Browse_Id>
 	|DI_R_ChannelId
-	|T_UrlInfoPartial<"raw",["guide_entry_id"],DU_GuideEntry_Id>
-	|T_UrlInfoPartial<"raw",["playlist_id"],DU_Playlist_Id>
-	|T_UrlInfoPartial<"raw",["video_id"],DU_VideoId>
+	|T_Info_RawId_BC_J<"raw",["guide_entry_id"],DU_GuideEntry_Id>
+	|T_Info_RawId_BC_J<"raw",["playlist_id"],DU_Playlist_Id>
+	|T_Info_RawId_BC_J<"raw",["video_id"],DU_VideoId>
 	|DI_R_Key_StartRadio
-	|T_UrlInfoPartial<"raw",["playlist_id","RD"],Extract<DU_Playlist_Id,`RD${string}`>>
+	|T_Info_RawId_BC_J<"raw",["playlist_id","RD"],Extract<DU_Playlist_Id,`RD${string}`>>
 	|{b: "raw",c: "playlist_id:PL"; z: [DIT_Item_A<"raw_id",DIT_Box_Typeof<T_IdTemplate<"PL">>>];}
 	|{b: "raw",c: "playlist_id:UU"; z: [DIT_Item_A<"raw_id",DIT_Box_Typeof<`UU${string}`>>];};
 ;

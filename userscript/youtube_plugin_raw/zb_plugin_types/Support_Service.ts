@@ -1,6 +1,6 @@
 type StoreData=import("../zc_child_modules/YTPlugin_Support_Service.user.js").StoreData;
-type StoreDescription<T extends StoreContentStr>=import("../zc_child_modules/YTPlugin_Support_Service.user.js").StoreDescription<T>;
-type T_StoreDataInput<T_Type extends StoreContentStr>={
+type StoreDescription<T extends GS_StoreType>=import("../zc_child_modules/YTPlugin_Support_Service.user.js").StoreDescription<T>;
+type T_StoreDataInput<T_Type extends GS_StoreType>={
 	type: T_Type,description: StoreDescription<T_Type>;
 };
 type StoreDataInput=

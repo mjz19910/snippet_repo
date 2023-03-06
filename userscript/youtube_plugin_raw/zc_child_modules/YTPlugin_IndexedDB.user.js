@@ -310,7 +310,7 @@ class IndexedDBService extends BaseService {
 		if(!load_res) throw new Error("null on put");
 		load_res.ret;
 	}
-	/** @template {G_StoreDescriptions} T @arg {T} store @arg {number} version */
+	/** @template {G_StoreDescription} T @arg {T} store @arg {number} version */
 	async push_store_to_database(store,version) {
 		let results=await Promise.allSettled(store.data.map(item => this.push_store_item_to_database(store,item,version)));
 		for(let result of results) {
@@ -341,7 +341,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {T[]} _mt */
 	uv_unpack_mt(x,_mt) {
-		/** @type {MakeSplitObj<T>} */
+		/** @type {MT_MakeSplitObj<T>} */
 		const make={},nul=null;
 		/** @type {{u:make_arr_t<T>|make_instance_name_t<T>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
 		const D_holder={};
@@ -720,7 +720,7 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
-	/** @template {G_StoreDescriptions} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
+	/** @template {G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
 	async push_store_item_to_database(store,item,version) {
 		let [v_key,vi]=item;
 		if(this.cache_weak_set.has(vi)) return {item,err: true};

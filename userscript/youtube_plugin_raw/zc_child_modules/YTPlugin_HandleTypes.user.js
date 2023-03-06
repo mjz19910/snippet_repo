@@ -3220,13 +3220,13 @@ class HandleTypes extends ServiceMethods {
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
 	/** @template T1 @template {DIT_Item_Z<T1>} V @template {DIT_Item_A<any,V>} U @template {DIT_Item_AD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
-	/** @template T @arg {T} x @returns {DIT_Item_A<"raw_id",DIT_Box_Typeof2<StoreGetType<T>,T>>} */
+	/** @template T @arg {T} x @returns {DIT_Item_A<"raw_id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_Typeof2(x));}
-	/** @template {string} T @arg {T} x @returns {DIT_Item_A<"id",DIT_Box_Typeof2<StoreGetType<T>,T>>} */
+	/** @template {string} T @arg {T} x @returns {DIT_Item_A<"id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
 	make_id(x) {return {a: "id",z: [this.make_Typeof2(x)]};}
 	/** @template T @arg {T} x @returns {DIT_Item_A<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return {a: "raw_id",z: [x]};}
-	/** @template T @arg {T} x @returns {StoreGetType<T>} */
+	/** @template T @arg {T} x @returns {T_StoreTypeFromT<T>} */
 	get_s_type(x) {
 		switch(typeof x) {
 			case "bigint": return as("bigint");
@@ -3238,7 +3238,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
-	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<StoreGetType<T>,T>} */
+	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>} */
 	make_Typeof2(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u @returns {MakeRet_DI_AGR_UrlInfo<TI>} */
 	make_R_UrlInfo(u) {
