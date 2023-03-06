@@ -1843,7 +1843,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo(this.make_DI_R_Key_StartRadio(start_radio));
+				this.DI_AGR_UrlInfo({a: "arr",z: ["start_radio",this.parse_number_template(start_radio)]});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(!this.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -3196,15 +3196,8 @@ class HandleTypes extends ServiceMethods {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
-	/** @api @public @arg {Extract<DI_AGR_UrlInfo,{c:any}>["c"]} c @arg {string} x */
-	D_RawUrlFromTag(c,x) {
-		/** @type {DI_AGR_FromRaw} */
-		let z={a: "ABC",b: "from_raw",c,z: [{raw_id: x}]}; this.ht.DI_AGR_UrlInfo(z);
-	}
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
-	/** @template {Extract<DI_G_UrlInfo,{b:any}>} U @arg {U} x @arg {U["b"]} t @returns {x is MakeRet_DI_AGR_UrlInfo<TI>} */
-	assume_is_type_key_b(x,t) {return x.b===t;}
 	/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
 	make_info_PL(raw_id) {return this.make_info_3("playlist_id","PL",raw_id);}
 	/** @arg {"playlist_id"}x1 @arg {"PL"} x2 @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
@@ -3241,71 +3234,34 @@ class HandleTypes extends ServiceMethods {
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
 	make_BoxTypeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
-	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u @returns {MakeRet_DI_AGR_UrlInfo<TI>} */
+	make_R_UrlInfo_2(u) {
+		u;
+	}
+	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u */
 	make_R_UrlInfo(u) {
-		let ret;
-		/** @type {DI_AGR_UrlInfo} */
-		let x=u;
-		switch(x.c) {
-			default: {
-				switch(this.get_tag(x)) {
-					case "":
-				}
-			} break;
-			case "playlist_id:PL": {
-				if("a" in x) {
-					console.log(x.z[0].raw_id);
-					break;
-				}
-				ret=this.make_info_PL(x.z[0].z[0].z[0]);
-			} break;
-			case "playlist_id:RD":/*make*/{
-				const raw_id=this.get_prim_3(x);
-				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
-					let rd_len=raw_id.length-2;
-					if(rd_len===11) break x;
-					console.log("[playlist_id_raw_make]",raw_id.length,raw_id.length-6,raw_id.slice(0,6),raw_id.slice(6));
-				}
-				if(this.str_starts_with(raw_id,"RDCMUC")) {
-					let [,id]=split_string_once(raw_id,"RDCMUC");
-					/** @type {DI_A_Playlist_RD_CM_UC} */
-					const z={b: "playlist_id",c: "RD:CM:UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
-				} else if(this.str_starts_with(raw_id,"RDMM")) {
-					let [,id]=split_string_once(raw_id,"RDMM");
-					/** @type {DI_A_Playlist_RD_MM} */
-					const z={b: "playlist_id",c: "RD:MM",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
-				} else {
-					let [,id]=split_string_once(raw_id,"RD");
-					/** @type {DI_A_Playlist_RD} */
-					const z={b: "playlist_id",c: "RD",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
-				}
-			} break;
-			case "playlist_id:UU":/*make*/{
-				const raw_id=this.get_prim_3(x);
-				let [,id]=split_string_once(raw_id,"UU");
-				/** @type {DI_A_Playlist_UU} */
-				const z={b: "playlist_id",c: "UU",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
-			} break;
-			case "channel_id":/*make*/{
-				const {z: [{z: [{z: [raw_id]}]}]}=x;
-				let [,id]=split_string_once(raw_id,"UC");
-				/** @type {DI_A_ChannelId_UC} */
-				const z={b: "channel_id",c: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
-			} break;
-			case "browse_id":/*make*/{
-				const raw_id=this.get_prim_3(x);
+		const x=u.z;
+		switch(x[0]) {
+			case "browse_id": {
+				const b=x[0]; b;
+				const raw_id=x[1]; raw_id;
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
+					let z1=this.make_R_UrlInfo_2();
 					/** @type {DI_A_ChannelId_UC} */
-					const z={b: "channel_id",c: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b: "channel_id",c: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]};
+					/** @type {DI_BrowseId_UC} */
+					const r={b,c: "UC",z: [z]};
+					return r;
 				} else if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
 					/** @type {DI_BrowseId_FE} */
-					const z={b: "browse_id",c: "FE",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b,c: "FE",z: [this.make_raw_id(raw_id),this.make_id(id)]};
+					return z;
 				} else if(this.str_starts_with(raw_id,"SP")) {
 					let [,id]=split_string_once(raw_id,"SP");
 					/** @type {DI_BrowseId_SP} */
-					const z={b: "browse_id",c: "SP",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b,c: "SP",z: [this.make_raw_id(raw_id),this.make_id(id)]};
+					return z;
 				} else if(this.str_starts_with(raw_id,"MP")) {
 					let [,id]=split_string_once(raw_id,"MP");
 					let [a1,a2]=split_string_once(id,"_");
@@ -3318,7 +3274,7 @@ class HandleTypes extends ServiceMethods {
 						const z={
 							b: "browse_id",c: "VL:LL",z: [
 								this.make_raw_id(raw_id),
-								{b: "playlist_id",z: [this.make_raw_id(id)]},
+								{a: "key_value",k: "playlist_id",z: [this.make_raw_id(id)]},
 							]
 						}; ret=z;
 					} else if(raw_id==="VLWL") {
@@ -3328,7 +3284,7 @@ class HandleTypes extends ServiceMethods {
 							b: "browse_id",c: "VL:WL",
 							z: [
 								this.make_raw_id(raw_id),
-								{b: "playlist_id",z: [this.make_raw_id(id)]},
+								{a: "key_value",k: "playlist_id",z: [this.make_raw_id(id)]},
 							]
 						}; ret=z;
 					} else if(this.str_starts_with(raw_id,"VLPL")) {
@@ -3343,13 +3299,60 @@ class HandleTypes extends ServiceMethods {
 					raw_id===""; debugger; throw new Error();
 				}
 			} break;
+			case "guide_entry_id": break;
+			case "playlist_id": break;
+			case "start_radio": break;
+			case "video_id": break;
+		}
+		let xca=["playlist_id:PL"];
+		let c=xca[0];
+		switch(c) {
+			case "playlist_id:PL": return this.make_info_PL("PL");
+			case "playlist_id:RD":/*make*/{
+				const b="playlist_id"; b;
+				/** @type {(`RDCMUC${string}`|`RDMM${string}`|`RD${string}`)[]} */
+				let raw_arr=["RDCMUC","RDMM","RD"];
+				const raw_id=raw_arr[0];
+				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
+					let rd_len=raw_id.length-2;
+					if(rd_len===11) break x;
+					console.log("[playlist_id_raw_make]",raw_id.length,raw_id.length-6,raw_id.slice(0,6),raw_id.slice(6));
+				}
+				if(this.str_starts_with(raw_id,"RDCMUC")) {
+					let [,id]=split_string_once(raw_id,"RDCMUC");
+					const c="RD:CM:UC"; c; this.make_id(id);
+				} else if(this.str_starts_with(raw_id,"RDMM")) {
+					let [,id]=split_string_once(raw_id,"RDMM");
+					const c="RD:MM"; c; this.make_id(id);
+				} else {
+					let [,id]=split_string_once(raw_id,"RD");
+					const c="RD"; c; this.make_id(id);
+				}
+			} break;
+			case "playlist_id:UU":/*make*/{
+				/** @type {(`UU${string}`)[]} */
+				let raw_arr=["UU"];
+				const b="playlist_id",c="UU",raw_id=raw_arr[0],[,id]=split_string_once(raw_id,c); this.make_id(id); b;
+			} break;
+			case "channel_id":/*make*/{
+				/** @type {(`UC${string}`)[]} */
+				let raw_arr=["UC"];
+				const b="channel_id",c="UC",raw_id=raw_arr[0],[,id]=split_string_once(raw_id,c); this.make_id(id); b;
+			} break;
+			case "browse_id":/*make*/{
+				const b="browse_id"; b;
+			} break;
 			case "guide_entry_id":/*make*/{
-				const raw_id=this.get_prim_3(x);
+				const raw_id=x.z[0].z[0].z[0];
 				/** @type {GI_GuideEntry_Id} */
 				let itv;
-				/** @template {"LL"|"WL"} K @arg {K} x @returns {{type:"guide_entry_id";tag:K,info_arr:[DIT_Item_AB<"playlist_id",DIT_Item_AB<"raw_id",T_PrimitiveBox<K>>>]}} */
+				/** @template V @arg {V} x @returns {{a:"key_value";k:"playlist_id";z:[V]}} */
+				const make_key_value=(x) => {
+					return {a: "key_value",k: "playlist_id",z: [x]};
+				};
+				/** @template {"LL"|"WL"} K @arg {K} x @returns {{b:"guide_entry_id";c:K,z:[{a:"key_value",k:"playlist_id",z:[DIT_Item_AB<"raw_id",T_PrimitiveBox<K>>]}]}} */
 				let mk_type_1=(x) => {
-					return {type: "guide_entry_id",tag: x,z: [{a: "playlist_id",z: [this.make_raw_id(x)]}]};
+					return {b: "guide_entry_id",c: x,z: [make_key_value(this.make_raw_id(x))]};
 				};
 				if(raw_id==="LL") {
 					/** @type {DI_GuideEntry_LL} */
@@ -3382,32 +3385,42 @@ class HandleTypes extends ServiceMethods {
 				const raw_id=x.z[0].z[0].z[0],{b: type,c: tag}=x;
 				if(raw_id==="LL") {
 					/** @type {DI_A_Playlist_LL} */
-					const z={b: "playlist_id",z: [this.make_raw_id(raw_id)]}; ret=z;
+					const z={a: "key_value",k: "playlist_id",z: [this.make_raw_id(raw_id)]}; ret=z;
 				} else if(raw_id==="WL") {
 					/** @type {DI_A_Playlist_WL} */
-					const z={b: "playlist_id",z: [this.make_raw_id(raw_id)]}; ret=z;
+					const z={a: "key_value",k: "playlist_id",z: [this.make_raw_id(raw_id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
 					/** @type {DI_A_Playlist_PL} */
-					const z=this.make_R_UrlInfo({b: type,c: `${tag}:PL`,z: [this.make_raw_id(raw_id)]}); ret=z;
-					ret=this.make_R_UrlInfo({b: type,c: `${tag}:PL`,z: [this.make_raw_id(raw_id)]});
+					const z={b: "playlist_id",c: "PL",z: [this.make_raw_id(raw_id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"UU")) {
-					ret=this.make_R_UrlInfo({b: type,c: `${tag}:UU`,z: [this.make_raw_id(raw_id)]});
+					/** @type {DI_A_Playlist_UU} */
+					const z=this.make_R_UrlInfo({z: ["",this.make_raw_id(raw_id)]}); ret=z;
 				} else if(this.str_starts_with(raw_id,"RD")) {
-					ret=this.make_R_UrlInfo({b: type,c: `${tag}:RD`,z: [this.make_raw_id(raw_id)]});
+					/** @type {DI_A_Playlist_RD} */
+					const z=this.make_R_UrlInfo({a: "R",b: type,c: `${tag}:RD`,z: [this.make_raw_id(raw_id)]}); ret=z;
 				} else {
 					raw_id===""; debugger;
 				}
 			} break;
 			case "video_id":/*make*/{
-				const raw_id=this.get_prim_3(x),{c: tag}=x;
+				const raw_id=x.z[0].z[0].z[0],{c: tag}=x;
 				/** @type {DI_A_VideoId} */
-				const z={b: tag,z: [this.make_DIT_Item_A_RawId(raw_id)]}; ret=z;
+				const z={a: "ABZ",b: tag,z: [this.make_DIT_Item_A_RawId(raw_id)]}; ret=z;
 			} break;
 		}
 		if(!ret) {debugger; throw new Error();}
-		/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["b"]} t @returns {asserts x is MakeRet_DI_AGR_UrlInfo<TI>} */
-		let assert_assume_is_type=(x,t) => {if(!this.assume_is_type_key_b(x,t)) throw new Error();};
-		switch(ret.t_i) {
+		/** @template {Extract<DI_G_UrlInfo,{b:any}>} U @arg {U} x @arg {U["b"]} t @returns {asserts x is MakeRet_DI_AGR_UrlInfo<TI>} */
+		let assert_assume_is_type=(x,t) => {
+			if(!this.assume_is_type_key_b(x,t)) throw new Error();
+		};
+		if(!("b" in ret)) {
+			/** @template {Exclude<DI_G_UrlInfo,{b:any}>} U @arg {U} x @arg {U["a"]} t @returns {asserts x is MakeRet_DI_AGR_UrlInfo<TI>} */
+			let assert_assume_is_type=(x,t) => {
+				if(x.a!==t) throw new Error();
+			};
+			assert_assume_is_type(ret,ret.a); return ret;
+		}
+		switch(ret.b) {
 			default: debugger; throw new Error();
 			case "browse_id":
 				assert_assume_is_type(ret,ret.b);
@@ -3422,7 +3435,6 @@ class HandleTypes extends ServiceMethods {
 				assert_assume_is_type(ret,ret.b);
 				return ret;
 			case "playlist_id":
-				/** @type {DI_G_PlaylistId} */
 				assert_assume_is_type(ret,ret.b);
 				return ret;
 			case "video_id":
@@ -3432,6 +3444,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {
+		if(x.b==="from_raw") {
+			debugger;
+			return;
+		}
 		/** @template {string} T @arg {{tag:T}} x */
 		function get_tag(x) {return x.tag;}
 		switch(x.c) {
@@ -3476,13 +3492,13 @@ class HandleTypes extends ServiceMethods {
 			case "video_id":/*raw*/{
 				let px=this.make_R_UrlInfo(x);
 				/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["c"],...any]>} */
-				let args=[px.b,null,px];
+				let args=[px,null,px];
 				let box_res=this.put_boxed_id(...args);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "browse_id":/*raw*/{
 				const z=this.make_R_UrlInfo(x);
-				switch(z.tag) {
+				switch(z) {
 					default: get_tag(z)===""; debugger; break;
 					case "FE":/*raw*/{
 						const {b: type,tag}=z;
@@ -3543,13 +3559,13 @@ class HandleTypes extends ServiceMethods {
 						default: raw_id===""; debugger; return;
 						case "LL":/*raw*/{
 							/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["c"],...any]>} */
-							const args=["playlist_id","LL",{b: "playlist_id",z: [this.make_raw_id(raw_id)]}];
+							const args=["playlist_id","LL",{k: "playlist_id",z: [this.make_raw_id(raw_id)]}];
 							const box_res=this.put_boxed_id(...args);
 							this.execute_promise_def((async () => (await box_res).ret)());
 						} return;
 						case "WL":/*raw*/{
 							/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["c"],...any]>} */
-							const args=["playlist_id","WL",{b: "playlist_id",z: [this.make_raw_id(raw_id)]}];
+							const args=["playlist_id","WL",{k: "playlist_id",z: [this.make_raw_id(raw_id)]}];
 							const box_res=this.put_boxed_id(...args);
 							this.execute_promise_def((async () => (await box_res).ret)());
 						} return;

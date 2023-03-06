@@ -32,5 +32,6 @@ type DU_Playlist_Id=DU_Playlist_Static|T_IdTemplate<DU_PlaylistId_Base>;
 type DU_Playlist_Radio_Id=T_IdTemplate<Extract<DU_PlaylistId_Base,`RD${string}`>>;
 type DU_GuideEntry_Id=DU_Playlist_Static|T_IdTemplate<"UC">|T_IdTemplate<"PL">|"VLLL";
 type DU_Playlist_Static="WL"|"LL";
+type DU_StartRadio=0|1;
 //#endregion
 //#endregion

@@ -6,3 +6,8 @@ type DI_BrowseId_FE={
 		DIT_Item_AB<"id",T_PrimitiveBox<D_BrowseEndpointPages>>,
 	];
 };
+type DI_BrowseId_UC={
+	b: "browse_id";
+	c: "UC";
+	z: [DI_A_ChannelId_UC];
+};

@@ -1,5 +1,5 @@
 type DI_A_Playlist_LL={
-	b: "playlist_id";
-	// ^ b = type
+	a: "key_value";
+	k: "playlist_id";
 	z: [DIT_Item_AB<"raw_id",T_PrimitiveBox<"LL">>];
 };

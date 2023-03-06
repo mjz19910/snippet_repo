@@ -1,5 +1,5 @@
 type DI_A_VideoId={
-	a: "A";
+	a: "ABZ";
 	// ^ a = is
 	b: "video_id";
 	// ^ b = type

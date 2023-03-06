@@ -264,7 +264,7 @@ class IndexedDBService extends BaseService {
 				if("b" in val_src) {
 					switch(val_src.f) {
 						default: debugger; break;
-						case "key": ht.id_cache.add(`${val_src.b}:${val_src.c}:${val_src.z[0].z[0]}`); break;
+						case "key": ht.id_cache.add(`${val_src.k}:${val_src.c}:${val_src.z[0].z[0]}`); break;
 					}
 					return;
 				}

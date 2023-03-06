@@ -36,7 +36,7 @@ type D_WatchPageUrl=
 type D_WatchPlaylistUrlFormat=
 	|`list=${DU_Playlist_Id}`
 	|`list=${DU_Playlist_Id}&index=${number}`
-	|`list=${DU_Playlist_Radio_Id}&start_radio=${1|0}`
+	|`list=${DU_Playlist_Radio_Id}&start_radio=${DU_StartRadio}`
 	;
 ;
 type D_WatchUrlStr=
