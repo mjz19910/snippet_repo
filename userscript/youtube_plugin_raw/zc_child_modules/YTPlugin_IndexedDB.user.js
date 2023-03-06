@@ -106,7 +106,7 @@ class TypedIDBValidKeyS {
 class IndexedDBService extends BaseService {
 	/** @template {"boxed_id"} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
 	create_cache_index(s,k,v) {s[k]=v;}
-	/** @template {"boxed_id"} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {T_CacheInfoType<R>} v */
+	/** @template {"boxed_id"} R @arg {T_StoreCacheType<R>} s @arg {R} k @arg {DA_CacheInfoType<R>} v */
 	create_cache(s,k,v) {s[k]=v;}
 	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {return J_ResolverTypeImpl.make();}
@@ -133,6 +133,7 @@ class IndexedDBService extends BaseService {
 	cached_data=new Map;
 	/** @private @type {Map<string,number>} */
 	store_cache_index=new Map;
+	cache_index() {return this.store_cache_index;}
 	/** @type {Map<string,G_IDBBoxedType>} */
 	loaded_map=new Map;
 	/** @type {Set<string>} */
@@ -143,22 +144,16 @@ class IndexedDBService extends BaseService {
 	cache_weak_set=new WeakSet;
 	/** @private @type {G_BoxedIdObj[]} */
 	committed_data=[];
-	/** @private @type {T_CacheInfoType<"boxed_id">} */
+	/** @private @type {DA_CacheInfoType} */
 	store_cache=[];
+	cache() {return this.store_cache;}
 	/** @type {string[][]} */
 	delayed_log_messages=[];
 	/** @type {Promise<G_BoxedIdObj[]>[]} */
 	waiting_promises=[];
 	on_loaded_resolver=J_ResolverTypeImpl.make();
-	get_data_cache() {
-		let cache_arr=this.store_cache;
-		this.store_cache??=[];
-		cache_arr=this.store_cache;
-		return cache_arr;
-	}
-	get_data_index_cache() {return this.store_cache_index;}
 	check_size() {
-		let arr=this.get_data_cache();
+		let arr=this.cache();
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
@@ -260,23 +255,16 @@ class IndexedDBService extends BaseService {
 					default: debugger; break;
 					case "hashtag_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
 					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
-					case "guide_entry_id": {
-						let val_inner=val_src.info_arr[0];
-						switch(val_inner.type) {
-							case "browse_id": ht.id_cache.add(`${val_src.type}:${val_inner.info_arr[0].info_arr[0].info_arr[0]}`); break;
-							case "channel_id": ht.id_cache.add(`${val_src.type}:${val_inner.info_arr[0].info_arr[0]}`); break;
-							case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_inner.info_arr[0].info_arr[0].info_arr[0]}`); break;
-						}
-					} break;
+					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0].info_arr[0]}`); break;
 					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
-					case "key": ht.id_cache.add(`${val_src.type}:start_radio:${val_src.info_arr[0].start_radio}`); break;
+					case "key": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].start_radio}`); break;
 					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
-					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
+					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
 					case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
 					case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
 					case "number": break;
 				}
-				let d_cache=this.get_data_cache();
+				let d_cache=this.cache();
 				let cache_val=d_cache.find(v => v&&v.key===item.key);
 				if(cache_val) {
 					if(this.log_all_events) console.log("[found_during_load]",item.key);
@@ -655,7 +643,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					key: `boxed_id:a:${mode}`,
 					tag: `a:${mode}`,
-					value: {type: "number",raw: id},
+					info_arr: [{type: "number",info_arr: [id]}],
 				},version); return {args,promise};
 			}
 			case "browse_id": {
@@ -665,7 +653,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id.info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -690,77 +678,57 @@ class IndexedDBService extends BaseService {
 				}
 			} throw new Error("end");
 			case "bigint": {
-				let [tag,,[type,container]]=args;
-				/** @type {T_UrlInfoArr<string,make_item_group<bigint>>} */
-				let value={
-					type,
-					info_arr: [container]
-				};
+				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					info_arr: [value],
+					info_arr: [{type: "store",tag: type,info_arr: [value]}],
 				},version); return {args,promise};
 			}
 			case "boolean": {
-				let [tag,,[type,container]]=args;
+				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
+					info_arr: [{type: "store",tag: type,info_arr: [value]}],
 				},version); return {args,promise};
 			}
 			case "number": {
-				let [tag,,[type,container]]=args;
+				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
+					info_arr: [{type: "store",tag: type,info_arr: [value]}],
 				},version); return {args,promise};
 			}
 			case "string": {
-				let [tag,,[type,container]]=args;
+				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
+					info_arr: [{type: "store",tag: type,info_arr: [value]}],
 				},version); return {args,promise};
 			}
 			case "keys": {
-				let [tag,,[type,container]]=args;
+				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
+					info_arr: [{type: "store",tag: type,info_arr: [value]}],
 				},version); return {args,promise};
 			}
 			case "root_visual_element": {
-				let [tag,,[type,container]]=args;
+				let [tag,,[type,value]]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
+					info_arr: [{type: "store",tag: type,info_arr: [value]}],
 				},version); return {args,promise};
 			}
 		}
@@ -770,32 +738,32 @@ class IndexedDBService extends BaseService {
 		let [v_key,vi]=item;
 		if(this.cache_weak_set.has(vi)) return {item,err: true};
 		this.cache_weak_set.add(vi);
-		switch(store.content) {
+		switch(store.type) {
 			default: debugger; break;
 			case "bigint": {
 				if(!this.is_vi_has_bigint(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
+				let ret=await this.put_boxed_id_async_3(version,store.type,null,[v_key,vi]);
 				return ret;
 			}
 			case "boolean": {
 				if(!this.is_vi_has_bool(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
+				let ret=await this.put_boxed_id_async_3(version,store.type,null,[v_key,vi]);
 				return ret;
 			}
 			case "root_visual_element":
 			case "number": {
 				if(!this.is_vi_has_num(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
+				let ret=await this.put_boxed_id_async_3(version,store.type,null,[v_key,vi]);
 				return ret;
 			}
 			case "string": {
 				if(!this.is_vi_has_str(vi)) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
+				let ret=await this.put_boxed_id_async_3(version,store.type,null,[v_key,vi]);
 				return ret;
 			}
 			case "keys": {
 				if(!(this.is_vi_has_str(vi)||this.is_vi_has_num(vi))) break;
-				let ret=await this.put_boxed_id_async_3(version,store.content,null,[v_key,vi]);
+				let ret=await this.put_boxed_id_async_3(version,store.type,null,[v_key,vi]);
 				return ret;
 			}
 		}
@@ -818,16 +786,16 @@ class IndexedDBService extends BaseService {
 	is_vi_has_bigint(x) {return this.is_vi_typeof_check(x,"bigint");}
 	/** @template T @arg {make_item_group<T>} x @returns {boolean} @arg {T_GetTypeof<T>} ty */
 	is_vi_typeof_check(x,ty) {
-		switch(x[0]) {
+		switch(x.type) {
 			default: debugger; throw new Error();
-			case "one": return typeof x[1]===ty;
+			case "one": return typeof x.type===ty;
 			case "arr": {
-				let x_arr=x[1];
+				let x_arr=x.value;
 				if(x_arr.length===0) return true;
 				return typeof x_arr[0]===ty;
 			}
 			case "many": {
-				let x_many=x[1];
+				let x_many=x.value;
 				if(x_many.length===0) return true;
 				let x_arr=x_many[0];
 				if(x_arr.length===0) return true;
@@ -898,31 +866,31 @@ class IndexedDBService extends BaseService {
 				case "video_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.value.info_arr[0].raw_id===value.value.info_arr[0].raw_id) return value;
+					if(loaded_value.info_arr[0].info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0].info_arr[0]) return value;
 					debugger;
 				} break;
 				case "channel_id:UC":
 				case "playlist_id:RD": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.value.info_arr[0].raw_id===value.value.info_arr[0].raw_id) return value;
+					if(loaded_value.info_arr[0].info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0].info_arr[0]) return value;
 					debugger;
 				} break;
 				case "a:load_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.value.raw===value.value.raw) return value;
+					if(loaded_value.info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0]) return value;
 				} break x;
 				case "a:save_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.value.raw===value.value.raw) return value;
+					if(loaded_value.info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0]) return value;
 				} break x;
 			}
 			if(loaded_value) {
-				console.log("[change]:",value.key,loaded_value.value,'->',value.value);
+				console.log("[change]:",value.key,loaded_value.info_arr[0],'->',value.info_arr[0]);
 			} else {
-				console.log("[create]:",value.key,value.value);
+				console.log("[create]:",value.key,value.info_arr[0]);
 			}
 		}
 		try {
@@ -1071,7 +1039,7 @@ class IndexedDBService extends BaseService {
 			obj_store: null,
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
-		let d_cache=this.get_data_cache();
+		let d_cache=this.cache();
 		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.loaded_keys.has(e.key));
 		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.tag==="a:save_id"||e.tag==="a:load_id"));
 		if(no_id_cache.length===1) {
@@ -1113,39 +1081,39 @@ class IndexedDBService extends BaseService {
 					let item2=item;
 					if(!("tag" in item2)) throw new Error("Unreachable");
 					if(!db_val) throw new Error("Unreachable");
-					let cv=db_val.value;
-					let c2=item2.value;
+					let cv=db_val.info_arr[0];
+					let c2=item2.info_arr[0];
 					switch(c2.type) {
 						case "channel_id": {
 							if(cv.type!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
+							if(cv.info_arr[0].info_arr[0]===c2.info_arr[0].info_arr[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "playlist_id": {
 							if(cv.type!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
+							if(cv.info_arr[0].info_arr[0]===c2.info_arr[0].info_arr[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "video_id": {
 							if(cv.type!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].raw_id===c2.info_arr[0].raw_id) {
+							if(cv.info_arr[0].info_arr[0]===c2.info_arr[0].info_arr[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "number": {
 							if(cv.type!==c2.type) throw new Error("Unreachable");
-							if(cv.raw===c2.raw) {
+							if(cv.info_arr[0]===c2.info_arr[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						}
 					}
-					const {type,...y2}=db_val.value;
+					const {type,...y2}=db_val.info_arr[0];
 					console.log("[was_loaded_from_db] [type=%s]",type,y2);
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
@@ -1183,12 +1151,12 @@ class IndexedDBService extends BaseService {
 				switch(item_nt.tag) {
 					default: {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						let info1=item_nt.value.info_arr[0]; let info2=item_db_nt.value.info_arr[0];
+						let info1=item_nt.info_arr[0].info_arr[0]; let info2=item_db_nt.info_arr[0].info_arr[0];
 						if("raw_id" in info1&&"raw_id" in info2) {
 							if(info1.raw_id!==info2.raw_id) update_item=true;
 						}
 						if("tag" in info1&&"tag" in info2) {
-							if(info1.value.info_arr[0].raw_id!==info2.value.info_arr[0].raw_id) {
+							if(info1.info_arr[0].info_arr[0].info_arr[0]!==info2.info_arr[0].info_arr[0].info_arr[0]) {
 								update_item=true;
 							}
 						}
@@ -1198,33 +1166,33 @@ class IndexedDBService extends BaseService {
 					case "a:update_id": {
 						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
 						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
-						if(!item_db_nt.value) {update_item=true; break;}
-						if(item_nt.key===item_db_nt.key&&item_nt.value.raw===item_db_nt.value.raw) break;
+						if(!item_db_nt.info_arr[0]) {update_item=true; break;}
+						if(item_nt.key===item_db_nt.key&&item_nt.info_arr[0].info_arr[0]===item_db_nt.info_arr[0].info_arr[0]) break;
 						update_item=true;
 					} break;
 					// non-dynamic values
 					case "hashtag_id": {
 						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.value.hashtag===item_db_nt.value.hashtag) {update_item=true; break;}
+						if(item_nt.info_arr[0].info_arr[0]===item_db_nt.info_arr[0].info_arr[0]) {update_item=true; break;}
 					} break;
 					case "key": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.value.info_arr[0].start_radio===item_db_nt.value.info_arr[0].start_radio) {update_item=true; break;}
+						if(item_nt.info_arr[0].info_arr[0].start_radio===item_db_nt.info_arr[0].info_arr[0].start_radio) {update_item=true; break;}
 					} break;
 					case "exact:play_next": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.value.type!==item_db_nt.value.type) {update_item=true; break;}
-						if(item_nt.value.tag!==item_db_nt.value.tag) {update_item=true; break;}
-						if(item_nt.value.info_arr[0].raw_id!==item_db_nt.value.info_arr[0].raw_id) {update_item=true; break;}
+						if(item_nt.info_arr[0].type!==item_db_nt.info_arr[0].type) {update_item=true; break;}
+						if(item_nt.info_arr[0].tag!==item_db_nt.info_arr[0].tag) {update_item=true; break;}
+						if(item_nt.info_arr[0].info_arr[0].info_arr[0].info_arr[0]!==item_db_nt.info_arr[0].info_arr[0].info_arr[0].info_arr[0]) {update_item=true; break;}
 					} break;
 					case "video_time": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.value.type===item_db_nt.value.type) break;
-						if(item_nt.value.raw_value===item_db_nt.value.raw_value) break;
+						if(item_nt.info_arr[0].type===item_db_nt.info_arr[0].type) break;
+						if(item_nt.info_arr[0].info_arr[0].info_arr[0]===item_db_nt.info_arr[0].info_arr[0].info_arr[0]) break;
 						update_item=true;
 					} break;
 					case "bigint":
@@ -1234,7 +1202,7 @@ class IndexedDBService extends BaseService {
 					case "root_visual_element":
 					case "string": {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						let info1=item_nt.value.info_arr[0]; let info2=item_db_nt.value.info_arr[0];
+						let info1=item_nt.info_arr[0].info_arr[0]; let info2=item_db_nt.info_arr[0].info_arr[0];
 						if(info1 instanceof Array&&info2 instanceof Array) {
 							let v1=info1[1]; let v2=info2[1];
 							let v1_many=null; let v2_many=null;
@@ -1329,17 +1297,6 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
 		return result;
 	}
-	/** @template {"boxed_id"} T @arg {T} key @returns {Map<string,number>} */
-	get_cache_index(key) {
-		/** @type {[T,Map<string,number>]|undefined} */
-		let c_index=this.store_cache_index[key];
-		if(c_index) return c_index[1];
-		c_index=[key,new Map];
-		/** @type {{[R in T]?: [R,Map<string,number>]}} */
-		let sk_ac=this.store_cache_index;
-		sk_ac[key]=c_index;
-		return c_index[1];
-	}
 	/** @api @public @template {"boxed_id"} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]} obj */
 	push_waiting_obj(type_key,obj) {
 		const {key}=obj;
@@ -1348,8 +1305,8 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {"boxed_id"} T @arg {T} type_key @arg {DT_DatabaseStoreTypes[T]["key"]} key @arg {DT_DatabaseStoreTypes[T]} x */
 	add_to_index(type_key,key,x,null_out_key=false) {
-		let cache_arr=this.get_data_cache();
-		let cache_index=this.get_cache_index(type_key);
+		let cache_arr=this.cache();
+		let cache_index=this.cache_index(type_key);
 		let idx=cache_index.get(key);
 		if(idx!==void 0) {
 			if(!this.cache_weak_set.has(x)) {

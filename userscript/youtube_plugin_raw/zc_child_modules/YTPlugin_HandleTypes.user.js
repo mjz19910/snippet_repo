@@ -3289,14 +3289,14 @@ class HandleTypes extends ServiceMethods {
 				const {info_arr: [{info_arr: [{info_arr: [raw_id]}]}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {DI_A_ChannelId_UC} */
-				const z={type: "channel_id",tag: "UC",info_arr: [{type: "raw_id",info_arr: [raw_id]},{id: make_DIT_Prim(id)}]}; ret=z;
+				const z={type: "channel_id",tag: "UC",info_arr: [m_raw(raw_id),{id: make_DIT_Prim(id)}]}; ret=z;
 			} break;
 			case "browse_id":/*make*/{
 				const raw_id=gp3(x);
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
 					/** @type {DI_A_ChannelId_UC} */
-					const z={type: "channel_id",tag: "UC",info_arr: [make_raw_id_1(raw_id),{id: make_DIT_Prim(id)}]}; ret=z;
+					const z={type: "channel_id",tag: "UC",info_arr: [m_raw(raw_id),{id: make_DIT_Prim(id)}]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
 					/** @type {DI_BrowseId_FE} */
@@ -3358,7 +3358,7 @@ class HandleTypes extends ServiceMethods {
 				} else if(this.str_starts_with(raw_id,"UC")) {
 					const tag="UC",[,id]=split_string_once(raw_id,tag);
 					/** @type {DI_GuideEntry_UC} */
-					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [make_raw_id_1(raw_id),{id: make_DIT_Prim(id)}]}]}; itv=z;
+					const z={type: "guide_entry_id",tag,info_arr: [{type: "channel_id",tag,info_arr: [m_raw(raw_id),{id: make_DIT_Prim(id)}]}]}; itv=z;
 				} else {
 					debugger; break;
 				}
