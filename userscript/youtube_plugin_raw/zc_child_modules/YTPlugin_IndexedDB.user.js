@@ -255,18 +255,25 @@ class IndexedDBService extends BaseService {
 			case "playlist_id:WL":
 			case "user_id":
 			case "video_time": {
-				let val_src=item.value;
+				let val_src=item.info_arr[0];
 				switch(val_src.type) {
 					default: debugger; break;
-					case "hashtag_id": ht.id_cache.add(`${val_src.type}:${val_src.hashtag}`); break;
-					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].raw_id}`); break;
-					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].raw_id}`); break;
-					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.raw_value}`); break;
+					case "hashtag_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
+					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
+					case "guide_entry_id": {
+						let val_inner=val_src.info_arr[0];
+						switch(val_inner.type) {
+							case "browse_id": ht.id_cache.add(`${val_src.type}:${val_inner.info_arr[0].info_arr[0].info_arr[0]}`); break;
+							case "channel_id": ht.id_cache.add(`${val_src.type}:${val_inner.info_arr[0].info_arr[0]}`); break;
+							case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_inner.info_arr[0].info_arr[0].info_arr[0]}`); break;
+						}
+					} break;
+					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
 					case "key": ht.id_cache.add(`${val_src.type}:start_radio:${val_src.info_arr[0].start_radio}`); break;
-					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
-					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
-					case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
-					case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`); break;
+					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
+					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
+					case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
+					case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
 					case "number": break;
 				}
 				let d_cache=this.get_data_cache();
@@ -279,8 +286,8 @@ class IndexedDBService extends BaseService {
 				}
 			} break;
 			case "video_id": {
-				let val_src=item.value;
-				ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].raw_id}`);
+				let val_src=item.info_arr[0];
+				ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`);
 				this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 			} break;
 		}
@@ -294,16 +301,7 @@ class IndexedDBService extends BaseService {
 			save_id=await this.get_id_box("save_id",version);
 			if(!save_id) throw new Error("null on get");
 		}
-		x: if(!save_id.value) {
-			/** @type {{}} */
-			let update_sid=save_id;
-			/** @type {{id?: number}} */
-			let old_save_id=update_sid;
-			let old_id=old_save_id.id;
-			if(!old_id) break x;
-			save_id={type: "boxed_id",tag: "a:save_id",key: "boxed_id:a:save_id",value: {type: "number",raw: old_id}};
-		}
-		if(save_id.value.raw!==this.expected_save_id) this.expected_save_id=save_id.value.raw;
+		if(save_id.info_arr[0].info_arr[0]!==this.expected_save_id) this.expected_save_id=save_id.info_arr[0].info_arr[0];
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
 		let save_res=await this.put_boxed_id_async_3(version,"save_id",null,this.expected_save_id);
@@ -321,16 +319,7 @@ class IndexedDBService extends BaseService {
 			load_id=await this.get_id_box("load_id",version);
 			if(!load_id) throw new Error("null on get");
 		}
-		x: if(!load_id.value) {
-			/** @type {{}} */
-			let update_sid=load_id;
-			/** @type {{id?: number}} */
-			let old_save_id=update_sid;
-			let old_id=old_save_id.id;
-			if(!old_id) break x;
-			load_id={type: "boxed_id",tag: "a:load_id",key: "boxed_id:a:load_id",value: {type: "number",raw: old_id}};
-		}
-		if(load_id.value.raw!==this.expected_load_id) this.expected_load_id=load_id.value.raw;
+		if(load_id.info_arr[0].info_arr[0]!==this.expected_load_id) this.expected_load_id=load_id.info_arr[0].info_arr[0];
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
 		let load_res=await this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
@@ -400,7 +389,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}:_:${value.info_arr[3].id}`,
-					value,
+					info_arr: [value],
 				},version); return {args,promise};
 			}
 			case "FE": {
@@ -408,8 +397,8 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-					value,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id.info_arr[0]}`,
+					info_arr: [value],
 				},version); return {args,promise};
 			}
 			case "VL:LL": {
@@ -419,7 +408,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag}`,
 					key: `boxed_id:${type}:${tag}:${id}`,
-					value,
+					info_arr: [value],
 				},version); return {args,promise};
 			}
 			case "VL:WL": {
@@ -429,7 +418,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag}`,
 					key: `boxed_id:${type}:${tag}:${id}`,
-					value,
+					info_arr: [value],
 				},version); return {args,promise};
 			}
 			case "VL:PL": {
@@ -441,7 +430,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag1}:${tag2}`,
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
-					value,
+					info_arr: [value],
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -454,7 +443,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${type}:${tag1}:${tag2}`,
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
-					value,
+					info_arr: [value],
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -464,10 +453,27 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
 					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-					value,
+					info_arr: [value],
 				},version); return {args,promise};
 			}
 		}
+	}
+	/** @template T @arg {T_Tag} tag @arg {T_VTag} value_tag @arg {T} value @template {string} T_Tag @template {string} T_VTag @returns {{type:"boxed_id";tag:T_Tag;key: `boxed_id:${T_Tag}:${T_VTag}`;info_arr:[T]}}	*/
+	make_box_3(tag,value_tag,value) {return {type: "boxed_id",tag,key: `boxed_id:${tag}:${value_tag}`,info_arr: [value]};}
+	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} a3 @arg {A4} a4 @template {string} A1 @template {string} A2 @template {string} A3 @returns {{type:"boxed_id";tag:`${A1}:${A2}`;key: `boxed_id:${A1}:${A2}:${A3}`;info_arr:[A4]}}	*/
+	make_box_4(a1,a2,a3,a4) {return {type: "boxed_id",tag: `${a1}:${a2}`,key: `boxed_id:${a1}:${a2}:${a3}`,info_arr: [a4]};}
+	/** @template T @template {string} U @arg {make_item_group<T>} x @arg {U} tag1 @template {string} V @arg {V} tag2 @returns {T_BoxedStore_3<T,U,V>} */
+	make_T_BoxedStore(x,tag1,tag2) {
+		return {
+			type: "boxed_id",
+			tag: tag1,
+			key: `boxed_id:${tag1}:${tag2}`,
+			info_arr: [{
+				type: "store",
+				tag: tag2,
+				info_arr: [x]
+			}]
+		};
 	}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	put_boxed_id_3(version,...args) {
@@ -477,7 +483,7 @@ class IndexedDBService extends BaseService {
 			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "key": {
 				let [tag,id,value]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${value.info_arr[0].start_radio}`,value},version)};
+				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${value.info_arr[0].start_radio}`,info_arr: [value]},version)};
 			}
 			case "guide_entry_id": /*db*/ {
 				let [tag,,value]=args;
@@ -485,49 +491,50 @@ class IndexedDBService extends BaseService {
 					default: value===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,info_arr: [value]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "WL": {
 						/** @type {DST_GuideEntry_WL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,info_arr: [value]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
 						let iv=value.info_arr[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,info_arr: [value]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "UC": {
 						let iv=value.info_arr[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,value};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].id}`,info_arr: [value]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
 						value;
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,value: {type: "guide_entry_id",tag: "VL:LL",info_arr: [value]}};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${value.tag}`,info_arr: [{type: "guide_entry_id",tag: "VL:LL",info_arr: [value]}]};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
 			}
 			case "video_id": {
 				let [tag,,value]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
+				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].info_arr[0]}`,info_arr: [value]},version)};
 			}
 			case "user_id": {
 				let [tag,,value]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].raw_id}`,value},version)};
+				return {args,promise: this.put_box({type: "boxed_id",tag,key: `boxed_id:${tag}:${value.info_arr[0].info_arr[0]}`,info_arr: [value]},version)};
 			}
 			case "exact": {
 				let [type,tag,value]=args;
+				const z=this.make_box_3(type,tag,value);
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${type}:${tag}`,
-					key: `boxed_id:${type}:${tag}:${value.info_arr[0].raw_id}`,
-					value,
+					key: `boxed_id:${type}:${tag}:${value.info_arr[0].info_arr[0].info_arr[0]}`,
+					info_arr: [value],
 				},version); return {args,promise};
 			}
 			case "playlist_id": {
@@ -539,7 +546,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: "playlist_id:LL",
 							key: "boxed_id:playlist_id:LL",
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 					case "WL": {
@@ -548,7 +555,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}`,
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 					case "PL": {
@@ -557,7 +564,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 					case "RD": {
@@ -566,7 +573,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 					case "RD:MM": {
@@ -575,124 +582,71 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 				}
 			}
 			case "hashtag_id": {
 				let [tag,,value]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${value.hashtag}`,
-					value,
-				},version); return {args,promise};
+				const z=this.make_box_3(tag,value.info_arr[0].info_arr[0].info_arr[0],value);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "channel_id": {
-				let [tag,id,value]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-					value,
-				},version); return {args,promise};
+				let [tag,,value]=args;
+				const z=this.make_box_4(tag,value.tag,value.info_arr[1].id.info_arr[0],value);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "video_time": {
 				let [tag,,value]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${value.raw_value}`,
-					value,
-				},version); return {args,promise};
+				const z=this.make_box_3(tag,value.info_arr[0].info_arr[0],value);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "bigint": {
 				const [tag,,[id,value]]=args;
+				/** @type {DSS_Bigint} */
 				const z={
 					/** @type {"boxed_id"} */
 					type: "boxed_id",
 					tag,
 					/** @type {`boxed_id:${typeof tag}:${typeof id}`} */
 					key: `boxed_id:${tag}:${id}`,
-					value: {
-						/** @type {"bigint"} */
-						type: "bigint",
-						/** @type {[{type:"store";info_arr:[make_item_group<bigint>];}]} */
-						info_arr: [{
-							/** @type {"store"} */
-							type: "store",
-							info_arr: [value],
-						}]
-					},
+					info_arr: [{type: "store",tag: id,info_arr: [value]}]
 				};
-
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "boolean": {
 				let [tag,,[type,value]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${type}`,
-					value: {type: "bigint",info_arr: [{type: "store",value}]},
-				},version); return {args,promise};
+				const z=this.make_T_BoxedStore(value,tag,type);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "number": {
-				let [tag,,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
+				let [tag,,[type,value]]=args;
+				const z=this.make_T_BoxedStore(value,tag,type);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "string": {
-				let [tag,,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
+				let [tag,,[type,value]]=args;
+				const z=this.make_T_BoxedStore(value,tag,type);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "keys": {
-				let [tag,,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
+				let [tag,,[type,value]]=args;
+				const z=this.make_T_BoxedStore(value,tag,type);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "root_visual_element": {
-				let [tag,,[type,container]]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					tag,
-					key: `boxed_id:${tag}:${type}`,
-					value: {
-						type,
-						info_arr: [container]
-					},
-				},version); return {args,promise};
+				let [tag,,[type,value]]=args;
+				const z=this.make_T_BoxedStore(value,tag,type);
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "load_id": {
 				let [mode,,id]=args;
 				let promise=this.put_box({
 					type: "boxed_id",
-					key: `boxed_id:a:${mode}`,
 					tag: `a:${mode}`,
-					value: {type: "number",raw: id},
+					key: `boxed_id:a:${mode}`,
+					info_arr: [{type: "number",info_arr: [id]}],
 				},version); return {args,promise};
 			}
 			case "save_id": {
@@ -712,7 +666,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 					case "MP": {
@@ -721,7 +675,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 					case "SP": {
@@ -730,7 +684,7 @@ class IndexedDBService extends BaseService {
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
 							key: `boxed_id:${tag}:${id}:${value.info_arr[1].id}`,
-							value,
+							info_arr: [value],
 						},version); return {args,promise};
 					}
 				}
@@ -746,7 +700,7 @@ class IndexedDBService extends BaseService {
 					type: "boxed_id",
 					tag,
 					key: `boxed_id:${tag}:${type}`,
-					value,
+					info_arr: [value],
 				},version); return {args,promise};
 			}
 			case "boolean": {

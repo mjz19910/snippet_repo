@@ -161,6 +161,24 @@ class StoreDescription extends ApiBase2 {
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
+	/** @template {"many"|"arr"|"one"} W @template T @arg {W extends infer I?I extends "one"?[I,T]:I extends "arr"?[I,T[]]:[I,T[][]]:never} args @returns {W extends "one"?make_one_t<T>:W extends "arr"?make_arr_t<T>:make_many_t<T>} */
+	make_item(...args) {
+		const [type,value]=args;
+		switch(type) {
+			case "one": {
+				/** @type {make_one_t<T>} */
+				const z={_is: "item",type,value}; return as_any(z);
+			}
+			case "arr": {
+				/** @type {make_arr_t<T>} */
+				const z={_is: "item",type,value}; return as_any(z);
+			}
+			case "many": {
+				/** @type {make_many_t<T>} */
+				const z={_is: "item",type,value}; return as_any(z);
+			}
+		}
+	}
 	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
 	save_data(k,x) {
 		if(this.includes_key(k)) {
@@ -185,14 +203,14 @@ class StoreDescription extends ApiBase2 {
 			if(item_container.type==="arr"&&x.type==="arr") {
 				let {value: item_arr}=item_container;
 				if(this.eq_keys(item_arr,x.value)) return;
-				let new_container=this.clone_and_then(item_container,x1 => ({type: "many",value: [x1.value,x.value]}));
+				let new_container=this.clone_and_then(item_container,x1 => this.make_item("many",[x1.value,x.value]));
 				this.push_new_data(k,new_container);
 				return;
 			}
 			if(item_container.type==="one"&&x.type==="one") {
 				let {value: item_value}=item_container;
 				if(item_value===x.value) return;
-				let new_container=this.clone_and_then(item_container,x1 => ({type: "arr",value: [x1.value,x.value]}));
+				let new_container=this.clone_and_then(item_container,x1 => this.make_item("many",[x1.value,x.value]));
 				this.push_new_data(k,new_container);
 				return;
 			}
