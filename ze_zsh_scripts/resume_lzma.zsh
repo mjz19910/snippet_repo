@@ -20,30 +20,6 @@ main() {
 			pidof lzma | cut -d " " -f 1- | xargs -rP 2 -n 1 zsh -c 'echo "start_args" $@;. '$START_PATH' resume_pid $@' ''
 			exec 4>&-
 			echo done
-		) &
-		(
-			echo "w"
-			exec {lock_1}<>/dev/shm/lock.1
-			exec {lock_2}<>/dev/shm/lock.2
-			exec {lock_3}<>/dev/shm/lock.3
-			exec {done}</dev/shm/lock.done
-			exec {notify}</dev/shm/lock.notify
-			exec {respond}</dev/shm/lock.respond
-			while true; do
-				while false && sleep 0.02; do
-					flock -w 0 $done && break
-				done
-				flock $lock_1
-				sleep 0.02
-				flock -u $lock_1
-				flock $lock_1
-				sleep 0.02
-				flock -u $lock_1
-				flock $lock_1
-				sleep 0.02
-				flock -u $lock_1
-				sleep 0.5
-			done
 		)
 	}
 }
