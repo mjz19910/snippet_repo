@@ -10,12 +10,10 @@ tabset() {
 	printf '\e[H'
 }
 #region Clear screen
-# ED0
-cleareos_def() {
+cleareos_def() { # ED0
 	printf '\e[J'
 }
-# ED0
-cleareos_0() {
+cleareos_0() { # ED0
 	printf '\e[0J'
 }
 clearbos() {
