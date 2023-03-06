@@ -1,10 +1,11 @@
 START_PATH=$0
 . "`dirname $START_PATH`/vt100.zsh"
 
-main() {
+resume_lzma-run() {
 	printf '%s\n\n\n\n' $'\n' $'\n' $'\n' $'\n'
 	printf '\n\n\n\n'
 	pidof lzma | cut -d " " -f 1- | xargs -rP 2 -n 1 zsh -c 'echo "start_args" $@;. '$START_PATH' resume_pid $@' ''
+	echo "lzma all done"
 }
 resume_pid() {
 	sleep 0.$(shuf -i1-6 -n1)
@@ -56,7 +57,9 @@ resume_pid() {
 		shift
 	done
 }
-if [ "$#" -eq 0 ]; then
+if [ "$#" -eq 0 ];then
+echo "USAGE: $START_PATH resume_lzma-run"
+elif [ "$#" -eq 1 ]; then
 	$mode
 else
 	mode=$1
