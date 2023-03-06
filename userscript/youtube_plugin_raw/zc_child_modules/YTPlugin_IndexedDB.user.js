@@ -381,7 +381,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}:_:${value.info_arr[3].z[0].z[0]}`,
+					key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}:_:${value.z[3].z[0].z[0]}`,
 					z: [value],
 				},version); return {args,promise};
 			}
@@ -390,7 +390,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+					key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 					z: [value],
 				},version); return {args,promise};
 			}
@@ -417,7 +417,7 @@ class IndexedDBService extends BaseService {
 			case "VL:PL": {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
-				let id=value.info_arr[1].info_arr[1].z[0].z[0];
+				let id=value.z[1].z[1].z[0].z[0];
 				/** @type {DSS_Browse_VL_PL} */
 				const z={
 					type: "boxed_id",
@@ -430,7 +430,7 @@ class IndexedDBService extends BaseService {
 			case "VL:UC": {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
-				let id=value.info_arr[1].info_arr[1].z[0].z[0];
+				let id=value.z[1].z[1].z[0].z[0];
 				/** @type {DSS_Browse_VL_UC} */
 				const z={
 					type: "boxed_id",
@@ -445,15 +445,15 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+					key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 					z: [value],
 				},version); return {args,promise};
 			}
 		}
 	}
-	/** @template T @arg {T_Tag} tag @arg {T_VTag} value_tag @arg {T} value @template {string} T_Tag @template {string} T_VTag @returns {{type:"boxed_id";tag:T_Tag;key: `boxed_id:${T_Tag}:${T_VTag}`;info_arr:[T]}}	*/
+	/** @template T @arg {T_Tag} tag @arg {T_VTag} value_tag @arg {T} value @template {string} T_Tag @template {string} T_VTag @returns {{type:"boxed_id";tag:T_Tag;key: `boxed_id:${T_Tag}:${T_VTag}`;z:[T]}}	*/
 	make_box_3(tag,value_tag,value) {return {type: "boxed_id",tag,key: `boxed_id:${tag}:${value_tag}`,z: [value]};}
-	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} a3 @arg {A4} a4 @template {string} A1 @template {string} A2 @template {string} A3 @returns {{type:"boxed_id";tag:`${A1}:${A2}`;key: `boxed_id:${A1}:${A2}:${A3}`;info_arr:[A4]}}	*/
+	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} a3 @arg {A4} a4 @template {string} A1 @template {string} A2 @template {string} A3 @returns {{type:"boxed_id";tag:`${A1}:${A2}`;key: `boxed_id:${A1}:${A2}:${A3}`;z:[A4]}}	*/
 	make_box_4(a1,a2,a3,a4) {return {type: "boxed_id",tag: `${a1}:${a2}`,key: `boxed_id:${a1}:${a2}:${a3}`,z: [a4]};}
 	/** @template T @template {string} U @arg {make_item_group<T>} x @arg {U} tag1 @template {string} V @arg {V} tag2 @returns {T_BoxedStore_3<T,U,V>} */
 	make_T_BoxedStore(x,tag1,tag2) {
@@ -477,7 +477,7 @@ class IndexedDBService extends BaseService {
 			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "key": {
 				let [tag,id]=args;
-				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${x.z[0].start_radio}`,z: [x]},version)};
+				return {args,promise: this.put_box({type: "boxed_id",tag,id,key: `boxed_id:${tag}:${id}:${x.z[0].z[0]}`,z: [x]},version)};
 			}
 			case "guide_entry_id": /*db*/ {
 				let [tag]=args;
@@ -494,15 +494,15 @@ class IndexedDBService extends BaseService {
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
-						let iv=x.info_arr[0];
+						let iv=x.z[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].z[0]}`,z: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.z[1].z[0].z[0]}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "UC": {
-						let iv=x.info_arr[0];
+						let iv=x.z[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].z[0]}`,z: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.z[1].z[0].z[0]}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
@@ -513,9 +513,9 @@ class IndexedDBService extends BaseService {
 					}
 				}
 			}
-			case "video_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].z[0],x),version)};
-			case "user_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].z[0].z[0],x),version)};
-			case "exact": return {args,promise: this.put_box(this.make_box_4(k,args[1],x.info_arr[0].z[0].z[0],x),version)};
+			case "video_id": return {args,promise: this.put_box(this.make_box_3(k,x.z[0].z[0],x),version)};
+			case "user_id": return {args,promise: this.put_box(this.make_box_3(k,x.z[0].z[0].z[0],x),version)};
+			case "exact": return {args,promise: this.put_box(this.make_box_4(k,args[1],x.z[0].z[0].z[0],x),version)};
 			case "playlist_id": {
 				switch(args[1]) {
 					default: debugger; throw new Error();
@@ -538,7 +538,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 							z: [value],
 						},version); return {args,promise};
 					}
@@ -547,7 +547,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 							z: [value],
 						},version); return {args,promise};
 					}
@@ -556,7 +556,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 							z: [value],
 						},version); return {args,promise};
 					}
@@ -569,12 +569,12 @@ class IndexedDBService extends BaseService {
 			}
 			case "channel_id": {
 				let [tag,,value]=args;
-				const z=this.make_box_4(tag,value.tag,value.info_arr[1].z[0].z[0],value);
+				const z=this.make_box_4(tag,value.tag,value.z[1].z[0].z[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "video_time": {
 				let [tag,,value]=args;
-				const z=this.make_box_3(tag,value.info_arr[0].info_arr[0],value);
+				const z=this.make_box_3(tag,value.z[0].z[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "bigint": {
@@ -640,7 +640,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 							z: [value],
 						},version); return {args,promise};
 					}
@@ -649,7 +649,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 							z: [value],
 						},version); return {args,promise};
 					}
@@ -658,7 +658,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].z[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,
 							z: [value],
 						},version); return {args,promise};
 					}
@@ -773,21 +773,13 @@ class IndexedDBService extends BaseService {
 	is_vi_has_bigint(x) {return this.is_vi_typeof_check(x,"bigint");}
 	/** @template T @arg {make_item_group<T>} x @returns {boolean} @arg {T_GetTypeof<T>} ty */
 	is_vi_typeof_check(x,ty) {
-		switch(x.b) {
+		/** @arg {T} x @arg {T_GetTypeof<T>} ty */
+		function t_check_typeof(x,ty) {return typeof x===ty;}
+		switch(x.c) {
 			default: debugger; throw new Error();
-			case "one": return typeof x.b===ty;
-			case "arr": {
-				let x_arr=x.z[0];
-				if(x_arr.length===0) return true;
-				return typeof x_arr[0]===ty;
-			}
-			case "many": {
-				let x_many=x.z[0];
-				if(x_many.length===0) return true;
-				let x_arr=x_many[0];
-				if(x_arr.length===0) return true;
-				return typeof x_arr[0]===ty;
-			}
+			case "one": const z1=x.z; return t_check_typeof(z1[0],ty);
+			case "arr": const u=x.z,z2=u[0]; return z2.length===0||t_check_typeof(z2[0],ty);
+			case "many": const b=x.z,m=b[0],z3=m[0]; return m.length===0||z3.length===0||t_check_typeof(z3[0],ty);
 		}
 	}
 	/** @arg {TypedIndexedDB} typed_db @arg {"boxed_id"} key @arg {number} version */
@@ -853,31 +845,31 @@ class IndexedDBService extends BaseService {
 				case "video_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.info_arr[0].info_arr[0].z[0]===value.info_arr[0].info_arr[0].z[0]) return value;
+					if(loaded_value.z[0].z[0].z[0]===value.z[0].z[0].z[0]) return value;
 					debugger;
 				} break;
 				case "channel_id:UC":
 				case "playlist_id:RD": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.info_arr[0].info_arr[0].z[0]===value.info_arr[0].info_arr[0].z[0]) return value;
+					if(loaded_value.z[0].z[0].z[0]===value.z[0].z[0].z[0]) return value;
 					debugger;
 				} break;
 				case "a:load_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0]) return value;
+					if(loaded_value.z[0].z[0]===value.z[0].z[0]) return value;
 				} break x;
 				case "a:save_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0]) return value;
+					if(loaded_value.z[0].z[0]===value.z[0].z[0]) return value;
 				} break x;
 			}
 			if(loaded_value) {
-				console.log("[change]:",value.key,loaded_value.info_arr[0],'->',value.info_arr[0]);
+				console.log("[change]:",value.key,loaded_value.z[0],'->',value.z[0]);
 			} else {
-				console.log("[create]:",value.key,value.info_arr[0]);
+				console.log("[create]:",value.key,value.z[0]);
 			}
 		}
 		try {
@@ -1068,39 +1060,39 @@ class IndexedDBService extends BaseService {
 					let item2=item;
 					if(!("tag" in item2)) throw new Error("Unreachable");
 					if(!db_val) throw new Error("Unreachable");
-					let cv=db_val.info_arr[0];
-					let c2=item2.info_arr[0];
+					let cv=db_val.z[0];
+					let c2=item2.z[0];
 					switch(c2.a) {
 						case "channel_id": {
 							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].z[0]===c2.info_arr[0].z[0]) {
+							if(cv.z[0].z[0]===c2.z[0].z[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "playlist_id": {
 							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].z[0]===c2.info_arr[0].z[0]) {
+							if(cv.z[0].z[0]===c2.z[0].z[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "video_id": {
 							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].z[0]===c2.info_arr[0].z[0]) {
+							if(cv.z[0].z[0]===c2.z[0].z[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "number": {
 							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0]===c2.info_arr[0]) {
+							if(cv.z[0]===c2.z[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						}
 					}
-					const {a: type,...y2}=db_val.info_arr[0];
+					const {a: type,...y2}=db_val.z[0];
 					console.log("[was_loaded_from_db] [type=%s]",type,y2);
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
@@ -1138,12 +1130,12 @@ class IndexedDBService extends BaseService {
 				switch(item_nt.tag) {
 					default: {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						let info1=item_nt.info_arr[0].info_arr[0]; let info2=item_db_nt.info_arr[0].info_arr[0];
+						let info1=item_nt.z[0].z[0]; let info2=item_db_nt.z[0].z[0];
 						if("raw_id" in info1&&"raw_id" in info2) {
 							if(info1.raw_id!==info2.raw_id) update_item=true;
 						}
 						if("tag" in info1&&"tag" in info2) {
-							if(info1.info_arr[0].z[0].z[0]!==info2.info_arr[0].z[0].z[0]) {
+							if(info1.z[0].z[0].z[0]!==info2.z[0].z[0].z[0]) {
 								update_item=true;
 							}
 						}
@@ -1153,33 +1145,33 @@ class IndexedDBService extends BaseService {
 					case "a:update_id": {
 						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
 						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
-						if(!item_db_nt.info_arr[0]) {update_item=true; break;}
-						if(item_nt.key===item_db_nt.key&&item_nt.info_arr[0].info_arr[0]===item_db_nt.info_arr[0].info_arr[0]) break;
+						if(!item_db_nt.z[0]) {update_item=true; break;}
+						if(item_nt.key===item_db_nt.key&&item_nt.z[0].z[0]===item_db_nt.z[0].z[0]) break;
 						update_item=true;
 					} break;
 					// non-dynamic values
 					case "hashtag_id": {
 						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.info_arr[0].z[0]===item_db_nt.info_arr[0].z[0]) {update_item=true; break;}
+						if(item_nt.z[0].z[0]===item_db_nt.z[0].z[0]) {update_item=true; break;}
 					} break;
 					case "key": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.info_arr[0].z[0].start_radio===item_db_nt.info_arr[0].z[0].start_radio) {update_item=true; break;}
+						if(item_nt.z[0].z[0].start_radio===item_db_nt.z[0].z[0].start_radio) {update_item=true; break;}
 					} break;
 					case "exact:play_next": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.info_arr[0].type!==item_db_nt.info_arr[0].type) {update_item=true; break;}
-						if(item_nt.info_arr[0].tag!==item_db_nt.info_arr[0].tag) {update_item=true; break;}
-						if(item_nt.info_arr[0].info_arr[0].z[0].z[0]!==item_db_nt.info_arr[0].info_arr[0].z[0].z[0]) {update_item=true; break;}
+						if(item_nt.z[0].type!==item_db_nt.z[0].type) {update_item=true; break;}
+						if(item_nt.z[0].tag!==item_db_nt.z[0].tag) {update_item=true; break;}
+						if(item_nt.z[0].z[0].z[0].z[0]!==item_db_nt.z[0].z[0].z[0].z[0]) {update_item=true; break;}
 					} break;
 					case "video_time": {
 						if(item_db_nt.type!==item_nt.type) break;
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.info_arr[0].type===item_db_nt.info_arr[0].type) break;
-						if(item_nt.info_arr[0].info_arr[0].info_arr[0]===item_db_nt.info_arr[0].info_arr[0].info_arr[0]) break;
+						if(item_nt.z[0].type===item_db_nt.z[0].type) break;
+						if(item_nt.z[0].z[0].z[0]===item_db_nt.z[0].z[0].z[0]) break;
 						update_item=true;
 					} break;
 					case "bigint":
@@ -1189,7 +1181,7 @@ class IndexedDBService extends BaseService {
 					case "root_visual_element":
 					case "string": {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						let info1=item_nt.info_arr[0].info_arr[0]; let info2=item_db_nt.info_arr[0].info_arr[0];
+						let info1=item_nt.z[0].z[0]; let info2=item_db_nt.z[0].z[0];
 						if(info1 instanceof Array&&info2 instanceof Array) {
 							let v1=info1[1]; let v2=info2[1];
 							let v1_many=null; let v2_many=null;
