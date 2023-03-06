@@ -156,13 +156,13 @@ class IndexedDBService extends BaseService {
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	/** @arg {number} version @returns {Promise<DST_LoadId|null>} */
 	async get_load_id(version) {
-		const t_key="boxed_id:a:load_id";
+		const t_key="boxed_id:load_id";
 		let box=await this.get("boxed_id",t_key,version);
 		return box;
 	}
 	/** @arg {number} version @returns {Promise<DST_SaveId|null>} */
 	async get_save_id(version) {
-		const t_key="boxed_id:a:save_id";
+		const t_key="boxed_id:save_id";
 		let box=await this.get("boxed_id",t_key,version);
 		return box;
 	}
@@ -330,7 +330,7 @@ class IndexedDBService extends BaseService {
 			/** @type {{key:DST_LoadId["key"],value?: {raw:number}}} */
 			let ov=load_id;
 			if(ov.value) {
-				load_id={b: "boxed_id",j: "a:load_id",key: load_id.key,z: [{type: "number",z: [ov.value.raw]}]};
+				load_id={b: "boxed_id",j: "load_id",key: load_id.key,z: [{type: "number",z: [ov.value.raw]}]};
 			}
 		}
 		if(load_id.z[0].z[0]!==this.expected_load_id) this.expected_load_id=load_id.z[0].z[0];
@@ -633,15 +633,15 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "load_id": {
-				let [mode,,id]=args;
+				let [j,,id]=args;
 				/** @type {DST_LoadId} */
-				const z2={b: "boxed_id",j: `a:${mode}`,key: `boxed_id:a:${mode}`,z: [{type: "number",z: [id]}]};
+				const z2={b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
 				return {args,promise: this.put_box(z2,version)};
 			}
 			case "save_id": {
-				let [mode,,id]=args;
+				let [j,,id]=args;
 				/** @type {DST_SaveId} */
-				const z2={b: "boxed_id",j: `a:${mode}`,key: `boxed_id:a:${mode}`,z: [{type: "number",z: [id]}]};
+				const z2={b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
 				return {args,promise: this.put_box(z2,version)};
 			}
 			case "browse_id": {
@@ -836,7 +836,7 @@ class IndexedDBService extends BaseService {
 		this.db_wait_promise=null;
 		return value;
 	}
-	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {"boxed_id"} U @arg {U} key @arg {T} value @arg {number} version */
+	/** @api @public @template {G_BoxedIdObj} T @arg {"boxed_id"} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
 		if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
