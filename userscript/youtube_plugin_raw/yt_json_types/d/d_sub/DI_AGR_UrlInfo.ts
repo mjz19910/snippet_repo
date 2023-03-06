@@ -5,7 +5,7 @@ type DI_R_Key_StartRadio={
 	// ^ b = type
 	c: "key:start_radio";
 	// ^ c = tag
-	z: [DIT_Item_AB<"start_radio",`${0|1}`>];
+	z: [DIT_Item_AB<"start_radio",T_PrimitiveBox<0|1>>];
 };
 type DI_EX_YY=Extract<DI_AGR_UrlInfo,{c: any;}>["c"];
 type DI_AGR_UrlInfo=

@@ -1133,11 +1133,6 @@ class IndexedDBService extends BaseService {
 			};
 		});
 	}
-	/** @template {"boxed_id"} K @arg {K} key @arg {IDBDatabase} db */
-	create_store(key,db) {
-		let obj_store=db.createObjectStore(key,{keyPath: "key"});
-		obj_store.createIndex(key,"key",{unique: true});
-	}
 	/** @private @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
 		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
@@ -1145,7 +1140,7 @@ class IndexedDBService extends BaseService {
 		if(!tx) throw new Error("No transaction");
 		this.x.get("handle_types").indexed_db_createDatabaseSchema(this,event.oldVersion,db);
 	}
-	/** @template T @arg {IDBRequest<T>} req @returns {Promise<["success",T]|["error",Event,DOMException]>} */
+	/** @private @template T @arg {IDBRequest<T>} req @returns {Promise<["success",T]|["error",Event,DOMException]>} */
 	async get_async_result_impl(req) {
 		if(req.readyState==="done") return ["success",req.result];
 		/** @type {[Event,DOMException]|null} */
@@ -1159,7 +1154,7 @@ class IndexedDBService extends BaseService {
 		if(error_event!==null) return ["error",...error_event];
 		return ["success",req.result];
 	}
-	/** @template T @arg {IDBRequest<T>} req @returns {Promise<T>} */
+	/** @private @template T @arg {IDBRequest<T>} req @returns {Promise<T>} */
 	async get_async_result(req) {
 		let res=await this.get_async_result_impl(req);
 		if(res[0]==="error") {
@@ -1169,7 +1164,7 @@ class IndexedDBService extends BaseService {
 		}
 		return res[1];
 	}
-	/** @template {{key:string}} T @arg {Set<string>} key_set @arg {T[]} x */
+	/** @private @template {{key:string}} T @arg {Set<string>} key_set @arg {T[]} x */
 	get_diff_by_key(key_set,x) {
 		let diff_arr=[];
 		for(let item of x) {
@@ -1179,7 +1174,7 @@ class IndexedDBService extends BaseService {
 		}
 		return diff_arr;
 	}
-	/** @arg {number} version */
+	/** @private @arg {number} version */
 	async database_diff(version) {
 		let typed_db=new TypedIndexedDB;
 		let ret={};
