@@ -305,8 +305,6 @@ class StoreDescription extends ApiBase2 {
 }
 export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
-	/** @arg {StoreDataInput} args */
-	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
 	/** @type {Map<StoreDataInput["type"],StoreDataInput["description"]>} */
 	stores=new Map;
 	/** @arg {()=>void} data_update_callback */
@@ -344,16 +342,22 @@ class StoreData {
 		const store_names_arr=["bigint","boolean","keys","number","root_visual_element","string"];
 		for(let store_name of store_names_arr) this.add_store(make_store(store_name));
 	}
+	/** @returns {StoreDescription<"string">} */
+	get_string_store() {return this.get_store("string");}
+	/** @returns {StoreDescription<"number">} */
+	get_number_store() {return this.get_store("number");}
 	/** @template {StoreDataInput} R @template {R["type"]} T @arg {T} key @returns {Extract<R,{type:T}>["description"]} */
 	get_store(key) {
 		let item=this.stores.get(key);
 		if(item===void 0) throw new Error();
 		return item;
 	}
-	/** @returns {StoreDescription<"string">} */
-	get_string_store() {return this.get_store("string");}
-	/** @returns {StoreDescription<"number">} */
-	get_number_store() {return this.get_store("number");}
+	/** @arg {StoreDataInput} args */
+	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
+	/** @api @public @arg {D_GM_VeNum} x */
+	on_ve_element(x) {
+		this.get_store("root_visual_element").save_data("ve_element",{is: "item",type: "one",special: "one",info_arr: [x],m1_value_39392_one: {}});
+	}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {

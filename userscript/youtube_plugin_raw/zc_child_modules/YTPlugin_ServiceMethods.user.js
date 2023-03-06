@@ -1465,28 +1465,6 @@ class ServiceMethods extends ServiceData {
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {string} user_key @arg {string} x @arg {number} [idx] */
-	save_next_char(user_key,x,idx=0) {
-		let f=x[idx];
-		/** @type {`${user_key}.data[${typeof idx}]`} */
-		let rk=`${user_key}.data[${idx}]`;
-		/** @type {`${typeof rk}[${f}]`} */
-		let k=`${rk}[${JSON.stringify(f)}]`;
-		this.save_string(rk,f);
-		let s_url_data=this.save_db.data_store.get_number_store().data.find(e => e[0]===k);
-		if(!s_url_data) {this.save_number(k,1); return;}
-		let wd=s_url_data[1];
-		switch(wd.type) {
-			case "one": return this.save_number(k,wd.info_arr[0]+1);
-			case "arr": {
-				let {info_arr: [v]}=wd;
-				if(!v.length) return this.save_number(k,1);
-				let n=v[0]+1;
-				return this.save_number(k,n);
-			}
-			case "many": throw new Error("What");
-		}
-	}
 	/** @public @type {DU_VideoId[]} x */
 	video_id_list=[];
 	/** @type {Set<DU_IdCacheItem>} */
@@ -2862,7 +2840,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @private @arg {D_GM_VeNum} x */
-	on_root_visual_element(x) {this.save_db.data_store.get_store("root_visual_element").save_data("ve_element",{is: "item",type: "one",info_arr: [x],m1_value_39392_one: {}});}
+	on_root_visual_element(x) {this.save_db.data_store.on_ve_element(x);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */
@@ -6169,7 +6147,7 @@ class ServiceMethods extends ServiceData {
 						w.k=2; w.k==2&&this.playlistId(w.a);
 						return;
 					}
-					this.save_next_char("share_url.v",w.a[0]);
+					this.ht.save_next_char("share_url.v",w.a[0]);
 					this.videoId(w.a);
 					return;
 				}

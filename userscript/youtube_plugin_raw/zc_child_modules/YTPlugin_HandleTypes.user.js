@@ -3664,6 +3664,28 @@ class HandleTypes extends ServiceMethods {
 		this.R_TopicLink(topicLink);
 		this.G_Text(premiumUpsellLink);
 	}
+	/** @api @public @arg {string} user_key @arg {string} x @arg {number} [idx] */
+	save_next_char(user_key,x,idx=0) {
+		let f=x[idx];
+		/** @type {`${user_key}.data[${typeof idx}]`} */
+		let rk=`${user_key}.data[${idx}]`;
+		/** @type {`${typeof rk}[${f}]`} */
+		let k=`${rk}[${JSON.stringify(f)}]`;
+		this.save_string(rk,f);
+		let s_url_data=this.save_db.data_store.get_number_store().data.find(e => e[0]===k);
+		if(!s_url_data) {this.save_number(k,1); return;}
+		let wd=s_url_data[1];
+		switch(wd.special) {
+			default: throw new Error("What");
+			case "one": return this.save_number(k,wd.info_arr[0]+1);
+			case "arr": {
+				let {info_arr: [v]}=wd;
+				if(!v.length) return this.save_number(k,1);
+				let n=v[0]+1;
+				return this.save_number(k,n);
+			}
+		}
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x */

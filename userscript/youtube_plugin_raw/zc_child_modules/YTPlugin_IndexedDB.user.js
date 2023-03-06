@@ -341,25 +341,26 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {T[]} _mt */
 	uv_unpack_mt(x,_mt) {
+		/** @type {MakeSplitObj<T>} */
 		const make={},nul=null;
 		/** @type {{u:make_arr_t<T>|make_instance_name_t<T>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
 		const D_holder={};
 		D_holder.u=x; make.arr=nul; make.instance_name=nul; make.many=nul; make.one=nul; make.typeof_name=nul;
-		x: switch(x.type) {
-			default: debugger; break;
-			case "one": {
-				if("special" in x) switch(x.special) {
-					case "instance": make[x.special]=x; break x;
-					case "typeof": make.typeof_name=x; break x;
+		switch(x.special) {
+			default: {
+				/** @type {unknown} */
+				let ux=x;
+				if(typeof ux==="object"&&ux!==null&&"special" in ux&&typeof ux.special==="string") {
+					/** @type {{[U in string]:{special:string}|null}} */
+					let m_any=make;
+					m_any[ux.special]={special: ux.special};
 				}
-				make.one=x;
 			} break;
-			case "many": {
-				make.many=x;
-			} break;
-			case "arr": {
-				make.arr=x;
-			} break;
+			case "one": make[x.special]=x; break;
+			case "many": make[x.special]=x; break;
+			case "arr": make[x.special]=x; break;
+			case "instance_name": make[x.special]=x; break;
+			case "typeof_name": make[x.special]=x; break;
 		}
 		return make;
 	}
