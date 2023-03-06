@@ -476,7 +476,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "guide_entry_id": /*db*/ {
 				let [tag]=args;
-				switch(x.tag) {
+				switch(x.c) {
 					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
@@ -497,13 +497,13 @@ class IndexedDBService extends BaseService {
 					case "UC": {
 						let iv=x.z[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${iv.tag}:${iv.z[1].z[0].z[0]}`,z: [x]};
+						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${iv.c}:${iv.z[1].z[0].z[0]}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
 						x;
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.tag}`,z: [{type: "guide_entry_id",tag: "VL:LL",z: [x]}]};
+						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [{b: "guide_entry_id",c: "VL:LL",z: [x]}]};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
@@ -556,7 +556,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "channel_id": {
 				let [tag,,value]=args;
-				const z=this.make_box_4(tag,value.tag,value.z[1].z[0].z[0],value);
+				const z=this.make_box_4(tag,value.c,value.z[1].z[0].z[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "video_time": {

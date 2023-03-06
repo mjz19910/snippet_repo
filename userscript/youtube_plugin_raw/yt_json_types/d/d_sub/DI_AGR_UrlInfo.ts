@@ -8,9 +8,8 @@ type DI_R_Key_StartRadio={
 	z: [DIT_Item_AB<"start_radio",`${0|1}`>];
 };
 type DI_EX_YY=Extract<DI_AGR_UrlInfo,{c: any;}>["c"];
-type DU_AGR_C=Exclude<DI_AGR_UrlInfo,{a: "raw_info:ABC";}|{a: "from_raw:ABC";}>["c"];
-type DI_AGR_FromRaw={a: "from_raw:ABC"; b: "raw"; c: DU_AGR_C; z: [{raw_id: string;}];};
-type DI_AGR_RawInfo={a: "raw_info:ABC"; b: "raw"; c: DU_AGR_C; z: [{raw_id: string;}];};
+type DU_AGR_C=Exclude<DI_AGR_UrlInfo,{b: "from_raw";}>["c"];
+type DI_AGR_FromRaw={a: "ABC"; b: "from_raw"; c: DU_AGR_C; z: [{raw_id: string;}];};
 type DI_AGR_UrlInfo=
 	|T_Info_RawId_BC_J<"raw",["browse_id"],DU_Browse_Id>
 	|DI_R_ChannelId
@@ -22,7 +21,6 @@ type DI_AGR_UrlInfo=
 	|{b: "raw",c: "playlist_id:PL"; z: [DIT_Item_AB<"raw_id",DIT_Box_Typeof<T_IdTemplate<"PL">>>];}
 	|{b: "raw",c: "playlist_id:UU"; z: [DIT_Item_AB<"raw_id",DIT_Box_Typeof<`UU${string}`>>];}
 	|DI_AGR_FromRaw
-	|DI_AGR_RawInfo
 	;
 ;
 type DI_SpecialInfo={raw_id: string;};

@@ -67,7 +67,7 @@ type GU_VE83769_Url=
 	;
 ;
 type GU_VE96368_Url="/feed/subscriptions";
-type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
+type ST_EncodedURIComponent=string&{type: "EncodedURIComponent";};
 type D_UrlInfoMap={
 	["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;
 };

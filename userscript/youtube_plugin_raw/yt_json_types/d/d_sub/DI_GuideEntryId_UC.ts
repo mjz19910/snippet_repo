@@ -1,5 +1,5 @@
 type DI_GuideEntry_UC={
-	type: "guide_entry_id";
-	tag: "UC";
+	b: "guide_entry_id";
+	c: "UC";
 	z: [DI_A_ChannelId_UC];
 };

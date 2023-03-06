@@ -1,5 +1,5 @@
 type DI_GuideEntry_LL={
-	type: "guide_entry_id";
-	tag: "LL";
+	b: "guide_entry_id";
+	c: "LL";
 	z: [DI_A_Playlist_LL];
 };

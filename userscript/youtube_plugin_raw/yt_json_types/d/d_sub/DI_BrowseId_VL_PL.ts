@@ -1,6 +1,6 @@
 type DI_BrowseId_VL_PL={
-	type: "browse_id";
-	tag: "VL:PL";
+	b: "browse_id";
+	c: "VL:PL";
 	z: [
 		DIT_Item_AB<"raw_id",DIT_Box_Typeof<T_IdTemplate<"VL">>>,
 		DI_A_Playlist_PL

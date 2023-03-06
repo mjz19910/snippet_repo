@@ -2,7 +2,7 @@ import {SavedInstanceObject} from "./SavedInstanceObject";
 
 declare global {
 	type MetaTagForConstructor={
-		_tag: "for_constructor";
+		type: "for_constructor";
 		name: string;
 		constructor_meta: new () => SavedInstanceObject;
 	};

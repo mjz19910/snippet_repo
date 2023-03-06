@@ -1515,7 +1515,7 @@ class ServiceMethods extends ServiceData {
 		const type="user_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.DI_G_NoKey({type,z: [{k: "raw_id",z: [{a: "primitive",e: "string",z: [x]}]}]});
+		this.ht.DI_G_NoKey({b: type,z: [{k: "raw_id",z: [{a: "primitive",e: "string",z: [x]}]}]});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {

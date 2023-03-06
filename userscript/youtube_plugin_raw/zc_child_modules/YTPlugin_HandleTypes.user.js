@@ -3199,19 +3199,19 @@ class HandleTypes extends ServiceMethods {
 	/** @api @public @arg {Extract<DI_AGR_UrlInfo,{c:any}>["c"]} c @arg {string} x */
 	D_RawUrlFromTag(c,x) {
 		/** @type {DI_AGR_FromRaw} */
-		let z={a: "from_raw",b: "raw",c,z: [{raw_id: x}]}; this.ht.DI_AGR_UrlInfo(z);
+		let z={a: "ABC",b: "from_raw",c,z: [{raw_id: x}]}; this.ht.DI_AGR_UrlInfo(z);
 	}
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
-	/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["b"]} t @returns {x is MakeRet_DI_AGR_UrlInfo<TI>} */
-	assume_is_type(x,t) {return x.b===t;}
+	/** @template {Extract<DI_G_UrlInfo,{b:any}>} U @arg {U} x @arg {U["b"]} t @returns {x is MakeRet_DI_AGR_UrlInfo<TI>} */
+	assume_is_type_key_b(x,t) {return x.b===t;}
 	/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
 	make_info_PL(raw_id) {return this.make_info_3("playlist_id","PL",raw_id);}
 	/** @arg {"playlist_id"}x1 @arg {"PL"} x2 @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
 	make_info_3(x1,x2,x3) {
 		x1; x2; x3;
 		let [,id]=split_string_once(x3,x2);
-		return {b: x1,tag: x2,z: [this.make_raw_id(x3),this.make_id(id)]};
+		return {b: x1,c: x2,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
 	/** @template U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
 	get_prim_1(x) {return x.z[0];}
@@ -3267,54 +3267,54 @@ class HandleTypes extends ServiceMethods {
 				if(this.str_starts_with(raw_id,"RDCMUC")) {
 					let [,id]=split_string_once(raw_id,"RDCMUC");
 					/** @type {DI_A_Playlist_RD_CM_UC} */
-					const z={b: "playlist_id",tag: "RD:CM:UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b: "playlist_id",c: "RD:CM:UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"RDMM")) {
 					let [,id]=split_string_once(raw_id,"RDMM");
 					/** @type {DI_A_Playlist_RD_MM} */
-					const z={b: "playlist_id",tag: "RD:MM",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b: "playlist_id",c: "RD:MM",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else {
 					let [,id]=split_string_once(raw_id,"RD");
 					/** @type {DI_A_Playlist_RD} */
-					const z={b: "playlist_id",tag: "RD",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b: "playlist_id",c: "RD",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				}
 			} break;
 			case "playlist_id:UU":/*make*/{
 				const raw_id=this.get_prim_3(x);
 				let [,id]=split_string_once(raw_id,"UU");
 				/** @type {DI_A_Playlist_UU} */
-				const z={b: "playlist_id",tag: "UU",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+				const z={b: "playlist_id",c: "UU",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 			} break;
 			case "channel_id":/*make*/{
 				const {z: [{z: [{z: [raw_id]}]}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {DI_A_ChannelId_UC} */
-				const z={type: "channel_id",tag: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+				const z={b: "channel_id",c: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 			} break;
 			case "browse_id":/*make*/{
 				const raw_id=this.get_prim_3(x);
 				if(this.str_starts_with(raw_id,"UC")) {
 					let [,id]=split_string_once(raw_id,"UC");
 					/** @type {DI_A_ChannelId_UC} */
-					const z={type: "channel_id",tag: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b: "channel_id",c: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"FE")) {
 					let [,id]=split_string_once(raw_id,"FE");
 					/** @type {DI_BrowseId_FE} */
-					const z={b: "browse_id",tag: "FE",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b: "browse_id",c: "FE",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"SP")) {
 					let [,id]=split_string_once(raw_id,"SP");
 					/** @type {DI_BrowseId_SP} */
-					const z={b: "browse_id",tag: "SP",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
+					const z={b: "browse_id",c: "SP",z: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"MP")) {
 					let [,id]=split_string_once(raw_id,"MP");
 					let [a1,a2]=split_string_once(id,"_");
 					/** @type {DI_BrowseId_MP} */
-					const z={b: "browse_id",tag: "MP",z: [this.make_raw_id(raw_id),this.make_id(a1),{separator: "_"},this.make_id(a2)]}; ret=z;
+					const z={b: "browse_id",c: "MP",z: [this.make_raw_id(raw_id),this.make_id(a1),{separator: "_"},this.make_id(a2)]}; ret=z;
 				} else if(this.str_starts_with(raw_id,"VL")) {
 					if(raw_id==="VLLL") {
 						let [,id]=split_string_once(raw_id,"VL");
 						/** @type {DI_BrowseId_VL_LL} */
 						const z={
-							b: "browse_id",tag: "VL:LL",z: [
+							b: "browse_id",c: "VL:LL",z: [
 								this.make_raw_id(raw_id),
 								{b: "playlist_id",z: [this.make_raw_id(id)]},
 							]
@@ -3323,7 +3323,7 @@ class HandleTypes extends ServiceMethods {
 						let [,id]=split_string_once(raw_id,"VL");
 						/** @type {DI_BrowseId_VL_WL} */
 						const z={
-							type: "browse_id",tag: "VL:WL",
+							b: "browse_id",c: "VL:WL",
 							z: [
 								this.make_raw_id(raw_id),
 								{b: "playlist_id",z: [this.make_raw_id(id)]},
@@ -3333,7 +3333,7 @@ class HandleTypes extends ServiceMethods {
 						const tag="VL";
 						let [,id]=split_string_once(raw_id,tag);
 						/** @type {DI_BrowseId_VL_PL} */
-						const z={type: "browse_id",tag: "VL:PL",z: [this.make_raw_id(raw_id),this.make_info_PL(id)]}; ret=z;
+						const z={b: "browse_id",c: "VL:PL",z: [this.make_raw_id(raw_id),this.make_info_PL(id)]}; ret=z;
 					} else {
 						raw_id===""; debugger; throw new Error();
 					}
@@ -3357,11 +3357,11 @@ class HandleTypes extends ServiceMethods {
 					const z=mk_type_1(raw_id); itv=z;
 				} else if(this.str_starts_with(raw_id,"PL")) {
 					/** @type {DI_GuideEntry_PL} */
-					const z={type: "guide_entry_id",tag: "PL",z: [this.make_info_PL(raw_id)]}; itv=z;
+					const z={b: "guide_entry_id",c: "PL",z: [this.make_info_PL(raw_id)]}; itv=z;
 				} else if(this.str_starts_with(raw_id,"UC")) {
 					const tag="UC",[,id]=split_string_once(raw_id,tag);
 					/** @type {DI_GuideEntry_UC} */
-					const z={type: "guide_entry_id",tag,z: [{type: "channel_id",tag,z: [this.make_raw_id(raw_id),this.make_id(id)]}]}; itv=z;
+					const z={b: "guide_entry_id",c: tag,z: [{b: "channel_id",c: tag,z: [this.make_raw_id(raw_id),this.make_id(id)]}]}; itv=z;
 				} else {
 					debugger; break;
 				}
@@ -3404,7 +3404,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(!ret) {debugger; throw new Error();}
 		/** @template {DI_G_UrlInfo} U @arg {U} x @arg {U["b"]} t @returns {asserts x is MakeRet_DI_AGR_UrlInfo<TI>} */
-		let assert_assume_is_type=(x,t) => {if(!this.assume_is_type(x,t)) throw new Error();};
+		let assert_assume_is_type=(x,t) => {if(!this.assume_is_type_key_b(x,t)) throw new Error();};
 		switch(ret.t_i) {
 			default: debugger; throw new Error();
 			case "browse_id":
@@ -3490,7 +3490,7 @@ class HandleTypes extends ServiceMethods {
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
 					case "VL:WL":/*raw*/{
-						const {type,tag}=z;
+						const {b: type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["c"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
@@ -3504,14 +3504,14 @@ class HandleTypes extends ServiceMethods {
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
 					case "VL:PL":/*raw*/{
-						const {type,tag}=z;
+						const {b: type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["c"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
 						this.execute_promise_def((async () => (await box_res).ret)());
 					} break;
 					case "VL:UC":/*raw*/{
-						const {type,tag}=z;
+						const {b: type,tag}=z;
 						/** @type {Extract<Y_PutBoxedArgs,[(typeof x)["c"],...any]>} */
 						const args=[type,tag,z];
 						const box_res=this.put_boxed_id(...args);
@@ -3597,7 +3597,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {DI_G_BrowseId} x */
 	DI_G_BrowseId(x) {
-		switch(x.tag) {
+		switch(x.c) {
 			case "FE":/*GB*/{
 				let async_p=this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,x.b,x.tag,x);
 				this.execute_promise_def(async_p);

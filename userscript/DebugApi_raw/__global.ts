@@ -46,7 +46,7 @@ declare global {
 	}>>|null;
 }
 
-declare global {type CM<T>={tag: "cast_tag",data: T;};}
+declare global {type CM<T>={type: "cast",data: T;};}
 
 //@@iterator for NodeListOf
 declare global {interface NodeListOf<TNode extends Node> extends NodeList {[Symbol.iterator](): IterableIterator<TNode>;}}

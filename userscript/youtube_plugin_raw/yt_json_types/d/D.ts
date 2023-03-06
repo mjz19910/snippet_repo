@@ -1659,7 +1659,7 @@ type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
 	"structured-description"
 ][number]>|
 	"comment-item-section"|
-	string&{_tag: "string";};
+	string&{type: "string";};
 type D_Enum_GuideAction=T_EnumStr<"GUIDE_ACTION","ADD_TO_PLAYLISTS"|
 	"ADD_TO_SUBSCRIPTIONS"
 >;
@@ -2779,10 +2779,6 @@ type D_UrlAndElapsedMediaTime<T>={
 	baseUrl: T;
 	elapsedMediaTimeSeconds: number;
 };
-type D_UrlInfoPlaylist={_tag: "playlist"; type: DU_PlaylistId_Base; id: string;};
-type D_UrlInfoVideo={_tag: "video"; id: string;};
-type D_UrlVideoReferral={_tag: "video-referral"; id: string;};
-type D_UrlPlayNext={_tag: "play-next"; value: string;};
 type D_UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};
 type D_ViewCountFactoid={
 	viewCountEntityKey: string;
@@ -2805,7 +2801,7 @@ type D_VideoDescriptionMusicSection={
 	topicLink: R_TopicLink;
 	premiumUpsellLink: G_Text;
 };
-type D_VideoIdTagStr=string&{_tag: "YtVideoId";};
+type D_VideoIdTagStr=string&{type: "YtVideoId";};
 type D_VideoOwner={
 	thumbnail: D_Thumbnail;
 	title: G_Text;

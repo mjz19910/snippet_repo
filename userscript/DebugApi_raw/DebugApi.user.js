@@ -82,7 +82,7 @@ function add_object_with_name(name,object) {
 	/** @type {MetaTagForPrototypeOf} */
 	const instance_meta={
 		/** @type {"meta_for_prototype_of"}*/
-		_tag: "meta_for_prototype_of",
+		type: "meta_for_prototype_of",
 		name,
 		prototype_meta: Object.getPrototypeOf(object),
 	};
@@ -99,7 +99,7 @@ function add_object(constructor_,object) {
 	/** @type {MetaTagForConstructor} */
 	const instance_meta={
 		/** @type {"for_constructor"}*/
-		_tag: "for_constructor",
+		type: "for_constructor",
 		name,
 		constructor_meta: constructor_,
 	};
@@ -3940,7 +3940,7 @@ function is_record_with_T(x,k) {
 
 //#region cast_monad
 /** @template T @arg {T} x @returns {CM<T>} */
-function new_cast_monad(x) {return {tag: "cast_tag",data: x};}
+function new_cast_monad(x) {return {type: "cast_tag",data: x};}
 
 /** @template T @arg {CM<T>|null} x @returns {CM<T&{}|null>|null} */
 function cast_to_object(x) {
