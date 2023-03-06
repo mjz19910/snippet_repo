@@ -5,6 +5,12 @@ cursordn() {
 revindex() {
 	printf '\eM'
 }
+savecursor() {
+	printf '\e7'
+}
+restorecursor() {
+	printf '\e8'
+}
 #endregion
 tabset() {
 	printf '\e[H'

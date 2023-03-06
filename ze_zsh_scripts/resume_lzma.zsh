@@ -1,4 +1,6 @@
 START_PATH=$0
+. "(dirname $START_PATH)/vt100.zsh"
+
 main() {
 	printf '%s\n\n\n\n' $'\n' $'\n' $'\n' $'\n'
 	printf '\n\n\n\n'
@@ -25,11 +27,11 @@ resume_pid() {
 				IFS= read -r line4 || break
 				IFS= read -r line5 || break
 				IFS= read -r line6 || break
-				printf '\e7'
+				savecursor
 				printf '\e[14;0f\e[1J'
-				printf '\e8'
+				restorecursor
 				flock $lock_1
-				printf '\e7'
+				savecursor
 				printf '\e[4;0'f
 				printf '[1]%s[1]\n' "$line1"
 				printf '[2]%s[2]\n' "$line2"
@@ -48,7 +50,7 @@ resume_pid() {
 				flock -u $lock_1
 				sleep 0.2
 				sleep 0.5
-				printf '\e8'
+				restorecursor
 			done
 		}
 		shift
