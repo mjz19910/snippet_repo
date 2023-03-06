@@ -1513,7 +1513,7 @@ class ServiceMethods extends ServiceData {
 		const type="user_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.DI_G_NoKey({type,info_arr: [{type: "raw_id",info_arr: [{_is: "primitive",type: "string",info_arr: [x]}]}]});
+		this.ht.DI_G_NoKey({type,info_arr: [{a: "raw_id",z: [{_is: "primitive",type: "string",info_arr: [x]}]}]});
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -2019,7 +2019,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,v,...u]=p;
 				if(u.length===0) {
-					this.ht.DI_G_NoKey({type: "hashtag_id",info_arr: [{type: "hashtag",info_arr: [{_is: "primitive",type: "string",info_arr: [v]}]}]});
+					this.ht.DI_G_NoKey({a: "hashtag_id",z: [{a: "hashtag",z: [{_is: "primitive",type: "string",info_arr: [v]}]}]});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;

@@ -6,11 +6,11 @@ type DI_AGR_UrlInfo=
 	|T_UrlInfoPartial<"raw",["video_id"],DU_VideoId>
 	|{type: "raw",tag: "key:start_radio",info_arr: [{start_radio: `${0|1}`;}];}
 	|T_UrlInfoPartial<"raw",["playlist_id","RD"],Extract<DU_Playlist_Id,`RD${string}`>>
-	|{type: "raw",tag: "playlist_id:PL"; info_arr: [DIT_Item<"raw_id",DIT_Prim<T_IdTemplate<"PL">>>];}
-	|{type: "raw",tag: "playlist_id:UU"; info_arr: [DIT_Item<"raw_id",DIT_Prim<`UU${string}`>>];};
+	|{type: "raw",tag: "playlist_id:PL"; info_arr: [DIT_Item_A<"raw_id",DIT_Prim<T_IdTemplate<"PL">>>];}
+	|{type: "raw",tag: "playlist_id:UU"; info_arr: [DIT_Item_A<"raw_id",DIT_Prim<`UU${string}`>>];};
 ;
 ;
-type DI_SpecialInfo=Exclude<DI_AGR_UrlInfo["info_arr"][0],DIT_Item<"raw_id",DIT_Prim<any>>>;
+type DI_SpecialInfo=Exclude<DI_AGR_UrlInfo["info_arr"][0],DIT_Item_A<"raw_id",DIT_Prim<any>>>;
 type DI_G_UrlInfo=
 	DI_AGR_UrlInfo["tag"] extends infer Y extends string?
 	Y extends infer I?

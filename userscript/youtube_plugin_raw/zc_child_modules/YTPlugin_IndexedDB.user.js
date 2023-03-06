@@ -247,17 +247,17 @@ class IndexedDBService extends BaseService {
 			case "user_id":
 			case "video_time": {
 				let val_src=item.info_arr[0];
-				switch(val_src.type) {
+				switch(val_src.a) {
 					default: debugger; break;
-					case "hashtag_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
-					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
-					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0].info_arr[0]}`); break;
+					case "hashtag_id": ht.id_cache.add(`${val_src.a}:${val_src.z[0].z[0].info_arr[0]}`); break;
+					case "exact": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
+					case "guide_entry_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].z[0].info_arr[0]}`); break;
 					case "video_time": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
 					case "key": ht.id_cache.add(`${val_src.type}:${val_src.tag}:${val_src.info_arr[0].start_radio}`); break;
-					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
-					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
-					case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0].info_arr[0]}`); break;
-					case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`); break;
+					case "browse_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
+					case "channel_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
+					case "playlist_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0].info_arr[0]}`); break;
+					case "user_id": ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0]}`); break;
 					case "number": break;
 				}
 				let d_cache=this.cache();
@@ -271,7 +271,7 @@ class IndexedDBService extends BaseService {
 			} break;
 			case "video_id": {
 				let val_src=item.info_arr[0];
-				ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].info_arr[0]}`);
+				ht.id_cache.add(`${val_src.type}:${val_src.info_arr[0].z[0]}`);
 				this.loaded_keys.add(item.key); this.loaded_map.set(item.key,item);
 			} break;
 		}
@@ -331,7 +331,7 @@ class IndexedDBService extends BaseService {
 		let arr=null;
 		/** @type {Extract<make_item_group<T>,{type:"many"}>|null} */
 		let many=null;
-		switch(x.type) {
+		switch(x.b) {
 			default: debugger; break;
 			case "one": one=x; break;
 			case "many": many=x; break;
@@ -346,7 +346,7 @@ class IndexedDBService extends BaseService {
 		/** @type {{u:make_arr_t<T>|make_instance_name_t<T>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
 		const D_holder={};
 		D_holder.u=x; make.arr=nul; make.instance_name=nul; make.many=nul; make.one=nul; make.typeof_name=nul;
-		switch(x.special) {
+		switch(x.c) {
 			default: {
 				/** @type {unknown} */
 				let ux=x;
@@ -356,7 +356,7 @@ class IndexedDBService extends BaseService {
 					m_any[ux.special]={special: ux.special};
 				}
 			} break;
-			case "one": make[x.special]=x; break;
+			case "one": make[x.c]=x; break;
 			case "many": make[x.special]=x; break;
 			case "arr": make[x.special]=x; break;
 			case "instance_name": make[x.special]=x; break;
@@ -381,7 +381,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}:_:${value.info_arr[3].info_arr[0].info_arr[0]}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}:_:${value.info_arr[3].z[0].info_arr[0]}`,
 					info_arr: [value],
 				},version); return {args,promise};
 			}
@@ -390,7 +390,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 					info_arr: [value],
 				},version); return {args,promise};
 			}
@@ -417,7 +417,7 @@ class IndexedDBService extends BaseService {
 			case "VL:PL": {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
-				let id=value.info_arr[1].info_arr[1].info_arr[0].info_arr[0];
+				let id=value.info_arr[1].info_arr[1].z[0].info_arr[0];
 				/** @type {DSS_Browse_VL_PL} */
 				const z={
 					type: "boxed_id",
@@ -430,7 +430,7 @@ class IndexedDBService extends BaseService {
 			case "VL:UC": {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
-				let id=value.info_arr[1].info_arr[1].info_arr[0].info_arr[0];
+				let id=value.info_arr[1].info_arr[1].z[0].info_arr[0];
 				/** @type {DSS_Browse_VL_UC} */
 				const z={
 					type: "boxed_id",
@@ -445,7 +445,7 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box({
 					type: "boxed_id",
 					tag: `${tag}:${id}`,
-					key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+					key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 					info_arr: [value],
 				},version); return {args,promise};
 			}
@@ -496,13 +496,13 @@ class IndexedDBService extends BaseService {
 					case "PL": {
 						let iv=x.info_arr[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].info_arr[0].info_arr[0]}`,info_arr: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].info_arr[0]}`,info_arr: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "UC": {
 						let iv=x.info_arr[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].info_arr[0].info_arr[0]}`,info_arr: [x]};
+						const z={type: "boxed_id",tag,key: `boxed_id:${tag}:${iv.tag}:${iv.info_arr[1].z[0].info_arr[0]}`,info_arr: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
@@ -513,9 +513,9 @@ class IndexedDBService extends BaseService {
 					}
 				}
 			}
-			case "video_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].info_arr[0],x),version)};
-			case "user_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].info_arr[0].info_arr[0],x),version)};
-			case "exact": return {args,promise: this.put_box(this.make_box_4(k,args[1],x.info_arr[0].info_arr[0].info_arr[0],x),version)};
+			case "video_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].z[0],x),version)};
+			case "user_id": return {args,promise: this.put_box(this.make_box_3(k,x.info_arr[0].z[0].info_arr[0],x),version)};
+			case "exact": return {args,promise: this.put_box(this.make_box_4(k,args[1],x.info_arr[0].z[0].info_arr[0],x),version)};
 			case "playlist_id": {
 				switch(args[1]) {
 					default: debugger; throw new Error();
@@ -538,7 +538,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -547,7 +547,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -556,7 +556,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -564,12 +564,12 @@ class IndexedDBService extends BaseService {
 			}
 			case "hashtag_id": {
 				let [tag,,value]=args;
-				const z=this.make_box_3(tag,value.info_arr[0].info_arr[0].info_arr[0],value);
+				const z=this.make_box_3(tag,value.z[0].z[0].info_arr[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "channel_id": {
 				let [tag,,value]=args;
-				const z=this.make_box_4(tag,value.tag,value.info_arr[1].info_arr[0].info_arr[0],value);
+				const z=this.make_box_4(tag,value.tag,value.info_arr[1].z[0].info_arr[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "video_time": {
@@ -640,7 +640,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -649,7 +649,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -658,7 +658,7 @@ class IndexedDBService extends BaseService {
 						let promise=this.put_box({
 							type: "boxed_id",
 							tag: `${tag}:${id}`,
-							key: `boxed_id:${tag}:${id}:${value.info_arr[1].info_arr[0].info_arr[0]}`,
+							key: `boxed_id:${tag}:${id}:${value.info_arr[1].z[0].info_arr[0]}`,
 							info_arr: [value],
 						},version); return {args,promise};
 					}
@@ -773,16 +773,16 @@ class IndexedDBService extends BaseService {
 	is_vi_has_bigint(x) {return this.is_vi_typeof_check(x,"bigint");}
 	/** @template T @arg {make_item_group<T>} x @returns {boolean} @arg {T_GetTypeof<T>} ty */
 	is_vi_typeof_check(x,ty) {
-		switch(x.type) {
+		switch(x.b) {
 			default: debugger; throw new Error();
-			case "one": return typeof x.type===ty;
+			case "one": return typeof x.b===ty;
 			case "arr": {
-				let x_arr=x.info_arr[0];
+				let x_arr=x.z[0];
 				if(x_arr.length===0) return true;
 				return typeof x_arr[0]===ty;
 			}
 			case "many": {
-				let x_many=x.info_arr[0];
+				let x_many=x.z[0];
 				if(x_many.length===0) return true;
 				let x_arr=x_many[0];
 				if(x_arr.length===0) return true;
@@ -853,14 +853,14 @@ class IndexedDBService extends BaseService {
 				case "video_id": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.info_arr[0].info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0].info_arr[0]) return value;
+					if(loaded_value.info_arr[0].info_arr[0].z[0]===value.info_arr[0].info_arr[0].z[0]) return value;
 					debugger;
 				} break;
 				case "channel_id:UC":
 				case "playlist_id:RD": {
 					if(!loaded_value) break;
 					if(loaded_value.key!==value.key) break;
-					if(loaded_value.info_arr[0].info_arr[0].info_arr[0]===value.info_arr[0].info_arr[0].info_arr[0]) return value;
+					if(loaded_value.info_arr[0].info_arr[0].z[0]===value.info_arr[0].info_arr[0].z[0]) return value;
 					debugger;
 				} break;
 				case "a:load_id": {
@@ -1070,37 +1070,37 @@ class IndexedDBService extends BaseService {
 					if(!db_val) throw new Error("Unreachable");
 					let cv=db_val.info_arr[0];
 					let c2=item2.info_arr[0];
-					switch(c2.type) {
+					switch(c2.a) {
 						case "channel_id": {
-							if(cv.type!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].info_arr[0]===c2.info_arr[0].info_arr[0]) {
+							if(cv.a!==c2.type) throw new Error("Unreachable");
+							if(cv.info_arr[0].z[0]===c2.info_arr[0].z[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "playlist_id": {
-							if(cv.type!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].info_arr[0]===c2.info_arr[0].info_arr[0]) {
+							if(cv.a!==c2.type) throw new Error("Unreachable");
+							if(cv.info_arr[0].z[0]===c2.info_arr[0].z[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "video_id": {
-							if(cv.type!==c2.type) throw new Error("Unreachable");
-							if(cv.info_arr[0].info_arr[0]===c2.info_arr[0].info_arr[0]) {
+							if(cv.a!==c2.type) throw new Error("Unreachable");
+							if(cv.info_arr[0].z[0]===c2.info_arr[0].z[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						} break;
 						case "number": {
-							if(cv.type!==c2.type) throw new Error("Unreachable");
+							if(cv.a!==c2.type) throw new Error("Unreachable");
 							if(cv.info_arr[0]===c2.info_arr[0]) {
 								commit_value(item,"same");
 								continue;
 							}
 						}
 					}
-					const {type,...y2}=db_val.info_arr[0];
+					const {a: type,...y2}=db_val.info_arr[0];
 					console.log("[was_loaded_from_db] [type=%s]",type,y2);
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
@@ -1143,7 +1143,7 @@ class IndexedDBService extends BaseService {
 							if(info1.raw_id!==info2.raw_id) update_item=true;
 						}
 						if("tag" in info1&&"tag" in info2) {
-							if(info1.info_arr[0].info_arr[0].info_arr[0]!==info2.info_arr[0].info_arr[0].info_arr[0]) {
+							if(info1.info_arr[0].z[0].info_arr[0]!==info2.info_arr[0].z[0].info_arr[0]) {
 								update_item=true;
 							}
 						}
@@ -1161,7 +1161,7 @@ class IndexedDBService extends BaseService {
 					case "hashtag_id": {
 						if(item_db_nt.type!==item_nt.type) {update_item=true; break;}
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.info_arr[0].info_arr[0]===item_db_nt.info_arr[0].info_arr[0]) {update_item=true; break;}
+						if(item_nt.info_arr[0].z[0]===item_db_nt.info_arr[0].z[0]) {update_item=true; break;}
 					} break;
 					case "key": {
 						if(item_db_nt.type!==item_nt.type) break;
@@ -1173,7 +1173,7 @@ class IndexedDBService extends BaseService {
 						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
 						if(item_nt.info_arr[0].type!==item_db_nt.info_arr[0].type) {update_item=true; break;}
 						if(item_nt.info_arr[0].tag!==item_db_nt.info_arr[0].tag) {update_item=true; break;}
-						if(item_nt.info_arr[0].info_arr[0].info_arr[0].info_arr[0]!==item_db_nt.info_arr[0].info_arr[0].info_arr[0].info_arr[0]) {update_item=true; break;}
+						if(item_nt.info_arr[0].info_arr[0].z[0].info_arr[0]!==item_db_nt.info_arr[0].info_arr[0].z[0].info_arr[0]) {update_item=true; break;}
 					} break;
 					case "video_time": {
 						if(item_db_nt.type!==item_nt.type) break;

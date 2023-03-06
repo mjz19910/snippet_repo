@@ -2140,22 +2140,26 @@ class BaseServicePrivate extends ApiBase {
 		let y=as(x);
 		return this.save_db.unwrap_brackets(y);
 	}
-	/** @public @arg {string} k @arg {{}} x */
-	save_keys(k,x) {this.save_db.data_store.get_store("keys_store").save_keys(k,x);}
-	/** @protected @arg {string} k @arg {string} x */
-	save_string(k,x) {return this.save_db.data_store.get_store("string_store").save_data(k,["one",x]);}
-	/** @public @arg {string} k @arg {string[]} x */
-	save_string_arr(k,x) {return this.save_db.data_store.get_store("string_store").save_data(k,["arr",x]);}
-	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean_one(k,x) {return this.save_db.data_store.get_store("bool_store").save_data(k,["one",x]);}
-	/** @protected @arg {string} k @arg {number} x */
-	save_number(k,x) {return this.save_db.data_store.get_store("number_store").save_data(k,["one",x]);}
-	/** @protected @arg {string} k @arg {number[]} x */
-	save_number_arr(k,x) {return this.save_db.data_store.get_store("number_store").save_data(k,["arr",this.tag_num_like(x)]);}
-	/** @protected @arg {string} k @arg {Uint8Array} x */
-	save_number_bin(k,x) {return this.save_db.data_store.get_store("number_store").save_data(k,["arr",this.tag_num_like(x)]);}
+	/** @template T @arg {T} x @returns {make_one_t<T>} */
+	make_one_t(x) {const u="one"; return {a: "item",b: u,c: u,z: [x]};}
+	/** @template T @arg {T[]} x @returns {make_arr_t<T>} */
+	make_arr_t(x) {const u="arr"; return {is: "item",type: u,u,z: [x]};}
 	/** @protected @arg {string} k @arg {bigint} x */
-	save_bigint(k,x) {return this.save_db.data_store.get_store("bigint_store").save_data(k,["one",x]);}
+	save_bigint(k,x) {return this.save_db.data_store.get_store("bigint").save_data(k,this.make_one_t(x));}
+	/** @protected @arg {string} k @arg {boolean} x */
+	save_boolean_one(k,x) {return this.save_db.data_store.get_store("boolean").save_data(k,this.make_one_t(x));}
+	/** @public @arg {string} k @arg {{}} x */
+	save_keys(k,x) {this.save_db.data_store.get_store("keys").save_keys(k,x);}
+	/** @protected @arg {string} k @arg {string} x */
+	save_string(k,x) {return this.save_db.data_store.get_store("string").save_data(k,this.make_one_t(x));}
+	/** @public @arg {string} k @arg {string[]} x */
+	save_string_arr(k,x) {return this.save_db.data_store.get_store("string").save_data(k,this.make_arr_t(x));}
+	/** @protected @arg {string} k @arg {number} x */
+	save_number(k,x) {return this.save_db.data_store.get_store("number").save_data(k,this.make_one_t(x));}
+	/** @protected @arg {string} k @arg {number[]} x */
+	save_number_arr(k,x) {return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(x));}
+	/** @protected @arg {string} k @arg {Uint8Array} x */
+	save_number_bin(k,x) {return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(x));}
 	/** @arg {number[]|Uint8Array} a */
 	tag_num_like(a) {
 		let r=[];
@@ -2166,7 +2170,7 @@ class BaseServicePrivate extends ApiBase {
 			ty="__type__\0number\0array\0\0";
 		}
 		for(let v of ty) r.push(v.charCodeAt(0));
-		return [...r,...a];
+		return this.make_arr_t([...r,...a]);
 	}
 	/** @protected @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} k */
 	save_enum(cf,ns,k) {return this.save_db.save_enum_impl(cf,ns,k);}

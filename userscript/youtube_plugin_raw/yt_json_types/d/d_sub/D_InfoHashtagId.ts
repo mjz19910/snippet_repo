@@ -1,1 +1,1 @@
-type DI_HashtagId=DIT_Item<"hashtag_id",DIT_Item<"hashtag",DIT_Prim<string>>>;
+type DI_HashtagId=DIT_Item_A<"hashtag_id",DIT_Item_A<"hashtag",DIT_Prim<string>>>;

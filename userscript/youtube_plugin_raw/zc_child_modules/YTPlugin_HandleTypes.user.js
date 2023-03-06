@@ -3214,18 +3214,18 @@ class HandleTypes extends ServiceMethods {
 		let [,id]=split_string_once(x3,x2);
 		return {type: x1,tag: x2,info_arr: [this.make_raw_id(x3),this.make_id(id)]};
 	}
-	/** @template U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]} */
-	get_prim_1(x) {return x.info_arr[0];}
-	/** @template V @template {DIT_Item<any,V>} U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]["info_arr"][0]} */
-	get_prim_2(x) {return this.get_prim_1(x).info_arr[0];}
-	/** @template T1 @template {{info_arr:[T1]}} V @template {DIT_Item<any,V>} U @template {T_UrlInfo_3<any,any,U>} T @arg {T} x @returns {T["info_arr"][0]["info_arr"][0]["info_arr"][0]} */
+	/** @template U @template {DIT_Item_AD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
+	get_prim_1(x) {return x.z[0];}
+	/** @template V @template {DIT_Item_A<any,V>} U @template {DIT_Item_AD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
+	get_prim_2(x) {return this.get_prim_1(x).z[0];}
+	/** @template T1 @template {{info_arr:[T1]}} V @template {DIT_Item_A<any,V>} U @template {DIT_Item_AD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["info_arr"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).info_arr[0];}
-	/** @template T @arg {T} x @returns {DIT_Item<"raw_id",DIT_Prim<T>>} */
+	/** @template T @arg {T} x @returns {DIT_Item_A<"raw_id",DIT_Prim<T>>} */
 	make_raw_id(x) {return this.make_raw_id_1(this.make_DIT_Prim(x));}
-	/** @template {string} T @arg {T} x @returns {DIT_Item<"id",DIT_Prim<T>>} */
-	make_id(x) {return {type: "id",info_arr: [this.make_DIT_Prim(x)]};}
-	/** @template T @arg {T} x @returns {DIT_Item<"raw_id",T>} */
-	make_raw_id_1(x) {return {type: "raw_id",info_arr: [x]};}
+	/** @template {string} T @arg {T} x @returns {DIT_Item_A<"id",DIT_Prim<T>>} */
+	make_id(x) {return {a: "id",z: [this.make_DIT_Prim(x)]};}
+	/** @template T @arg {T} x @returns {DIT_Item_A<"raw_id",T>} */
+	make_raw_id_1(x) {return {a: "raw_id",z: [x]};}
 	/** @template T @arg {T} x @returns {StoreGetType<T>} */
 	get_s_type(x) {
 		switch(typeof x) {
@@ -3278,7 +3278,7 @@ class HandleTypes extends ServiceMethods {
 				const z={type: "playlist_id",tag: "UU",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
 			} break;
 			case "channel_id":/*make*/{
-				const {info_arr: [{info_arr: [{info_arr: [raw_id]}]}]}=x;
+				const {info_arr: [{z: [{info_arr: [raw_id]}]}]}=x;
 				let [,id]=split_string_once(raw_id,"UC");
 				/** @type {DI_A_ChannelId_UC} */
 				const z={type: "channel_id",tag: "UC",info_arr: [this.make_raw_id(raw_id),this.make_id(id)]}; ret=z;
@@ -3338,9 +3338,9 @@ class HandleTypes extends ServiceMethods {
 				const raw_id=this.get_prim_3(x);
 				/** @type {GI_GuideEntry_Id} */
 				let itv;
-				/** @template {"LL"|"WL"} K @arg {K} x @returns {{type:"guide_entry_id";tag:K,info_arr:[DIT_Item<"playlist_id",DIT_Item<"raw_id",DIT_Prim<K>>>]}} */
+				/** @template {"LL"|"WL"} K @arg {K} x @returns {{type:"guide_entry_id";tag:K,info_arr:[DIT_Item_A<"playlist_id",DIT_Item_A<"raw_id",DIT_Prim<K>>>]}} */
 				let mk_type_1=(x) => {
-					return {type: "guide_entry_id",tag: x,info_arr: [{type: "playlist_id",info_arr: [this.make_raw_id(x)]}]};
+					return {type: "guide_entry_id",tag: x,info_arr: [{a: "playlist_id",z: [this.make_raw_id(x)]}]};
 				};
 				if(raw_id==="LL") {
 					/** @type {DI_GuideEntry_LL} */
@@ -3530,7 +3530,7 @@ class HandleTypes extends ServiceMethods {
 			case "playlist_id":/*raw*/{
 				let z=this.make_DI_AGR_UrlInfo(x);
 				if(!("tag" in z)) {
-					const raw_id=z.info_arr[0].info_arr[0].info_arr[0];
+					const raw_id=z.info_arr[0].z[0].info_arr[0];
 					switch(raw_id) {
 						default: raw_id===""; debugger; return;
 						case "LL":/*raw*/{
@@ -3602,7 +3602,7 @@ class HandleTypes extends ServiceMethods {
 	DI_G_NoKey(value) {
 		/** @template T @arg {{type:T}} x */
 		function get_type(x) {return x.type;}
-		switch(value.type) {
+		switch(value.a) {
 			default: get_type(value)===""; debugger; break;
 			case "video_time":/*GK*/{
 				let box_res=this.put_boxed_id(value.type,null,value);
@@ -3622,7 +3622,7 @@ class HandleTypes extends ServiceMethods {
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "hashtag_id":/*GK*/{
-				let box_res=this.put_boxed_id(value.type,null,value);
+				let box_res=this.put_boxed_id(value.a,null,value);
 				this.execute_promise_def((async () => (await box_res).ret)());
 			} break;
 			case "user_id":/*GK*/{
@@ -3675,11 +3675,11 @@ class HandleTypes extends ServiceMethods {
 		let s_url_data=this.save_db.data_store.get_number_store().data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_number(k,1); return;}
 		let wd=s_url_data[1];
-		switch(wd.special) {
+		switch(wd.c) {
 			default: throw new Error("What");
-			case "one": return this.save_number(k,wd.info_arr[0]+1);
+			case "one": return this.save_number(k,wd.z[0]+1);
 			case "arr": {
-				let {info_arr: [v]}=wd;
+				let {z: [v]}=wd;
 				if(!v.length) return this.save_number(k,1);
 				let n=v[0]+1;
 				return this.save_number(k,n);

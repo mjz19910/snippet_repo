@@ -138,7 +138,7 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @template {make_item_group<StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
 	clone_container(x) {
-		switch(x.type) {
+		switch(x.b) {
 			case "arr": {
 				/** @type {typeof x} */
 				let x_clone=structuredClone(x);
@@ -172,15 +172,15 @@ class StoreDescription extends ApiBase2 {
 		switch(type) {
 			case "one": {
 				/** @type {make_one_t<T>} */
-				const z={is: "item",type,info_arr: [x],m1_value_39392_one: {}}; return as_any(z);
+				const z={a: "item",b: type,c: "one",z: [x]}; return as_any(z);
 			}
 			case "arr": {
 				/** @type {make_arr_t<T>} */
-				const z={is: "item",type,info_arr: [x],m1_value_39392_arr: {}}; return as_any(z);
+				const z={is: "item",type,z: [x]}; return as_any(z);
 			}
 			case "many": {
 				/** @type {make_many_t<T>} */
-				const z={is: "item",type,info_arr: [x],m1_value_39392_many: {}}; return as_any(z);
+				const z={is: "item",type,z: [x]}; return as_any(z);
 			}
 		}
 	}
@@ -191,36 +191,35 @@ class StoreDescription extends ApiBase2 {
 			if(idx===void 0) throw new Error();
 			let item=this.data[idx];
 			let item_container=item[1];
-			if(item_container.type==="many"&&x.type==="arr") {
-				let {info_arr: [item_many]}=item_container;
-				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x.info_arr[0]))>-1) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1.info_arr[0].push(x.info_arr[0]),x1));
+			if(item_container.b==="many"&&x.b==="arr") {
+				let {z: [item_many]}=item_container;
+				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x.z[0]))>-1) return;
+				let new_container=this.clone_and_then(item_container,x1 => (x1.z[0].push(x.z[0]),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container.type==="arr"&&x.type==="one") {
-				let {info_arr: [item_arr]}=item_container;
+			if(item_container.b==="arr"&&x.b==="one") {
+				let {z: [item_arr]}=item_container;
 				if("special" in x) {debugger; return;}
-				if(item_arr.includes(x.info_arr[0])) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1.info_arr[0].push(x.info_arr[0]),x1));
+				if(item_arr.includes(x.z[0])) return;
+				let new_container=this.clone_and_then(item_container,x1 => (x1.z[0].push(x.z[0]),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container.type==="arr"&&x.type==="arr") {
-				let {info_arr: [item_arr]}=item_container;
-				if(this.eq_keys(item_arr,x.info_arr[0])) return;
+			if(item_container.b==="arr"&&x.b==="arr") {
+				let {z: [item_arr]}=item_container;
+				if(this.eq_keys(item_arr,x.z[0])) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {is: "item",type: "many",info_arr: [[x1.info_arr[0],x.info_arr[0]]],m1_value_39392_many: {}};
+					return {is: "item",type: "many",z: [[x1.z[0],x.z[0]]]};
 				});
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container.type==="one"&&x.type==="one") {
-				if("special" in item_container||"special" in x) {debugger; return;}
-				let {m1_value_39392_one: item_value}=item_container;
-				if(item_value===x.info_arr[0]) return;
+			if(item_container.c==="one"&&x.c==="one") {
+				const {z: [item_value]}=item_container,{z: [x_value]}=x;
+				if(item_value===x_value) return;
 				let new_container=this.clone_and_then(item_container,x1 => {
-					return {is: "item",type: "arr",info_arr: [[x1.info_arr[0],x.info_arr[0]]],m1_value_39392_arr: {}};
+					return {is: "item",type: "arr",c: "arr",z: [[x1.z[0],x.z[0]]]};
 				});
 				this.push_new_data(k,new_container);
 				return;
@@ -256,31 +255,26 @@ class StoreDescription extends ApiBase2 {
 				case "bigint": throw new Error("Unable to save type");
 				case "boolean": throw new Error("Unable to save type");
 				case "function": throw new Error("Unable to save type");
-				case "number": this.save_data(`${k}.type`,{is: "item",type: "one",special: "typeof",info_arr: [zo]}); break;
+				case "number": this.save_data(`${k}.type`,{a: "item",b: "one",c: "one",z: [zo]}); break;
 				case "object": throw new Error("Unable to save type");
-				case "string": this.save_data(`${k}.type`,{is: "item",type: "one",special: "typeof",info_arr: [zo]}); break;
+				case "string": this.save_data(`${k}.type`,{a: "item",b: "one",c: "one",z: [zo]}); break;
 				case "symbol": throw new Error("Unable to save type");
 				case "undefined": throw new Error("Unable to save type");
 			}
 			return;
 		}
-		if(obj instanceof Array) {
-			this.save_data(`${k}.instance`,{is: "item",type: "one",special: "instance",info_arr: ["array"],m1_value_39392_arr: {}});
+		/** @type {object} */
+		let q=obj;
+		if(q instanceof Array) {
+			/** @type {(typeof q) extends any[]?make_instance_name_t_1:never} */
+			let z={is: "item",type: "one",u: "instance_name",info_arr: ["array"]};
+			this.save_data(`${k}.instance`,z);
 			return;
 		}
 		let value=this.get_keys_of(obj);
 		/** @type {make_arr_t<string>} */
-		let x={is: "item",type: "arr",m1_value_39392_arr: value};
+		let x={is: "item",type: "arr",u: "arr",z: [value]};
 		return this.save_data(k,x);
-	}
-	/** @arg {string} k */
-	get_seen_string_item_store(k) {
-		let idx=this.key_index.get(k);
-		if(idx) return this.data[idx];
-		idx=this.data.findIndex(e => e[0]===k);
-		if(idx<0) return this.add_to_index(k,{is: "item",type: "arr",m1_value_39392_arr: []});
-		this.key_index.set(k,idx);
-		return this.data[idx];
 	}
 	/** @arg {string} k @arg {make_item_group<StoreTypeMap[CLS_K]>} x */
 	add_to_index(k,x) {
@@ -356,7 +350,7 @@ class StoreData {
 	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
 	/** @api @public @arg {D_GM_VeNum} x */
 	on_ve_element(x) {
-		this.get_store("root_visual_element").save_data("ve_element",{is: "item",type: "one",special: "one",info_arr: [x],m1_value_39392_one: {}});
+		this.get_store("root_visual_element").save_data("ve_element",{a: "item",b: "one",c: "one",z: [x],m1_value_39392_one: {}});
 	}
 }
 export_(exports => {exports.StoreData=StoreData;});
@@ -459,7 +453,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
-		switch(cur.type) {
+		switch(cur.b) {
 			default: debugger; break;
 			case "one": debugger; break;
 			case "many": {
@@ -476,7 +470,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 
 			} break;
 			case "arr": {
-				let bitmap_src=cur.info_arr[0];
+				let bitmap_src=cur.z[0];
 				if(bitmap_src.length===0) return;
 				let linear_map=bitmap_src.every(e => {
 					if(typeof e!=="string") return false;
@@ -511,10 +505,10 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let gg=this.data_store.get_number_store().data.find(e => e[0]==="P_tracking_params.f1");
 		if(!gg) return;
 		let g1=gg[1];
-		if(g1.type!=="arr") return;
-		let sr=g1.info_arr[0].slice().sort((a,b) => a-b);
+		if(g1.b!=="arr") return;
+		let sr=g1.z[0].slice().sort((a,b) => a-b);
 		this.save_number_arr("arr.P_tracking_params.f1",sr);
-		let bm=this.generate_bitmap_num(g1.info_arr[0]).bitmap;
+		let bm=this.generate_bitmap_num(g1.z[0]).bitmap;
 		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
 		this.data_store.get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1].value;
 	}
@@ -560,8 +554,8 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let yt_plugin={ds: this,};
 		let gg=yt_plugin.ds.data_store.get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
-		if(gg[1].type!=="arr") return;
-		gg[1].info_arr[0].sort((a,b) => a-b);
+		if(gg[1].b!=="arr") return;
+		gg[1].z[0].sort((a,b) => a-b);
 		let g1=gg[1];
 		/** @private @arg {string} str */
 		function find_one_set_bit(str) {
@@ -574,7 +568,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 				r.push([rx.lastIndex,rr[0]]);
 			}
 		}
-		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1.info_arr[0],1).bitmap;
+		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1.z[0],1).bitmap;
 		let mm=find_one_set_bit(bm);
 		/** @private @arg {string} bm */
 		function unset_bits(bm) {
