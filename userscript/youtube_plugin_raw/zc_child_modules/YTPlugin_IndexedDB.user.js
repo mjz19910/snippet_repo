@@ -154,24 +154,6 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
-	/** @private @template {"load_id"|"save_id"} T @arg {T} key @arg {number} version @returns {Promise<DST_LoadId|DST_SaveId|null>} */
-	async get_id_box(key,version) {
-		switch(key) {
-			case "load_id": {
-				const t_key="boxed_id:a:load_id";
-				let box=await this.get("boxed_id",t_key,version);
-				if(box&&box.key!==t_key) return null;
-				return box;
-			}
-			case "save_id": {
-				const t_key="boxed_id:a:save_id";
-				let box=await this.get("boxed_id",t_key,version);
-				if(box&&box.key!==t_key) return null;
-				return box;
-			}
-			default: throw new Error();
-		}
-	}
 	/** @arg {number} version @returns {Promise<DST_LoadId|null>} */
 	async get_load_id(version) {
 		const t_key="boxed_id:a:load_id";
@@ -199,7 +181,7 @@ class IndexedDBService extends BaseService {
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
-	/** @arg {G_BoxedIdObj} x @returns {G_BoxedIdObj} */
+	/** @template {G_BoxedIdObj} T @arg {T} x @returns {T} */
 	update_obj_schema(x) {
 		if(!x.z) {
 			/** @type {{key:DST_LoadId["key"],tag:string,value?: {raw:number}}} */
@@ -224,7 +206,7 @@ class IndexedDBService extends BaseService {
 					const z2={a: "group",b: value.type,z: [as_any(z1)]};
 					/** @type {DSS_Bigint} */
 					let z={a: "boxed_store",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
-					return z;
+					return as_any(z);
 				}
 			}
 		}
@@ -317,13 +299,14 @@ class IndexedDBService extends BaseService {
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
-		let save_id=await this.get_id_box("save_id",version);
+		let save_id=await this.get_save_id(version);
 		if(!save_id) {
 			this.expected_save_id=0;
 			await this.put_boxed_id_async_3(version,"save_id",null,this.expected_save_id);
-			save_id=await this.get_id_box("save_id",version);
+			save_id=await this.get_save_id(version);
 			if(!save_id) throw new Error("null on get");
 		}
+		save_id=this.update_obj_schema(save_id);
 		if(save_id.z[0].z[0]!==this.expected_save_id) this.expected_save_id=save_id.z[0].z[0];
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
