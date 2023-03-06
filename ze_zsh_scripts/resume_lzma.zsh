@@ -3,7 +3,7 @@ START_PATH=$0
 
 resume_lzma-run() {
 	printf '%s\n\n\n\n' $'\n' $'\n' $'\n' $'\n'
-	printf '\n\n\n\n'
+	printf '\n\n\n'
 	pidof lzma | cut -d " " -f 1- | xargs -rP 2 -n 1 zsh -c 'echo "start_args" $@;. '$START_PATH' resume_pid $@' ''
 	echo "lzma all done"
 }
