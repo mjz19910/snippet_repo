@@ -3,6 +3,6 @@ type DI_A_Playlist_RD={
 	c: "RD";
 	z: [
 		DIT_Item_AB<"raw_id",T_PrimitiveBox<`RD${string}`>>,
-		DIT_Item_AB<"id",T_PrimitiveBox<string>>,
+		T_DI_FromObj<{id: string;}>,
 	];
 };
