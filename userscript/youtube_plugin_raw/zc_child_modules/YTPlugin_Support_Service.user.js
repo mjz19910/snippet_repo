@@ -87,7 +87,7 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
-/** @template {GS_StoreType} CLS_K */
+/** @template {keyof J_StoreTypeMap} CLS_K */
 class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	key_index=new Map;
@@ -130,7 +130,7 @@ class StoreDescription extends ApiBase2 {
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
 	}
-	/** @arg {DSI_Item_ABD<J_StoreTypeMap[CLS_K],CLS_K>} item */
+	/** @arg {DSI_Item_ABD<CLS_K,J_StoreTypeMap[CLS_K]>} item */
 	load_data(item) {
 		const x=item.z[0].z[0];
 		const k=item.z[0].b;

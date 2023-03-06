@@ -417,7 +417,7 @@ class IndexedDBService extends BaseService {
 	make_box_3(j,value_tag,x) {return {b: "boxed_id",j,key: `boxed_id:${j}:${value_tag}`,z: [x]};}
 	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} a3 @arg {A4} x @template {string} A1 @template {string} A2 @template {string} A3 @returns {{b:"boxed_id";j:`${A1}:${A2}`;key: `boxed_id:${A1}:${A2}:${A3}`;z:[A4]}}	*/
 	make_box_4(a1,a2,a3,x) {return {b: "boxed_id",j: `${a1}:${a2}`,key: `boxed_id:${a1}:${a2}:${a3}`,z: [x]};}
-	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template {DIZ_Item_AB<T_Tag2,T_Tag1>} V @arg {V} z @returns {TSI_Item_ABD2<T_Tag1,T_Tag2,V>} */
+	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DIZ_Item_AB<T_Tag2,T>} V @arg {V} z @returns {TSI_Item_ABD2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore(tag1,tag2,z) {
 		return {
 			a: "boxed_store",b: "boxed_id",d: tag1,z: [z],
@@ -568,37 +568,31 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "string": {
-				let [tag,,[type,value]]=args;
-				const z=this.make_T_BoxedStore(value,tag,type);
+				let [tag1,,[tag2,value]]=args;
+				const z=this.make_T_BoxedStore(tag1,tag2,this.DIZ_Item_AB(tag2,value));
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "keys": {
-				let [tag,,[type,value]]=args;
-				const z=this.make_T_BoxedStore(value,tag,type);
+				let [tag1,,[tag2,value]]=args;
+				const z=this.make_T_BoxedStore(tag1,tag2,this.DIZ_Item_AB(tag2,value));
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "root_visual_element": {
-				let [tag,,[type,value]]=args;
-				const z=this.make_T_BoxedStore(value,tag,type);
+				let [tag1,,[tag2,value]]=args;
+				const z=this.make_T_BoxedStore(tag1,tag2,this.DIZ_Item_AB(tag2,value));
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "load_id": {
 				let [mode,,id]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					j: `a:${mode}`,
-					key: `boxed_id:a:${mode}`,
-					z: [{type: "number",z: [id]}],
-				},version); return {args,promise};
+				/** @type {DST_LoadId} */
+				const z2={b: "boxed_id",j: `a:${mode}`,key: `boxed_id:a:${mode}`,z: [{type: "number",z: [id]}]};
+				return {args,promise: this.put_box(z2,version)};
 			}
 			case "save_id": {
 				let [mode,,id]=args;
-				let promise=this.put_box({
-					type: "boxed_id",
-					key: `boxed_id:a:${mode}`,
-					j: `a:${mode}`,
-					z: [{type: "number",z: [id]}],
-				},version); return {args,promise};
+				/** @type {DST_SaveId} */
+				const z2={b: "boxed_id",j: `a:${mode}`,key: `boxed_id:a:${mode}`,z: [{type: "number",z: [id]}]};
+				return {args,promise: this.put_box(z2,version)};
 			}
 			case "browse_id": {
 				switch(args[1]) {
@@ -612,7 +606,7 @@ class IndexedDBService extends BaseService {
 					case "MP": {
 						let [tag,id,value]=args;
 						let promise=this.put_box({
-							b: "boxed_id",j: `${tag}:${id}`,z: [value],
+							a: "K:ABJ",b: "boxed_id",j: `${tag}:${id}`,z: [value],
 							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`
 						},version); return {args,promise};
 					}
@@ -626,51 +620,51 @@ class IndexedDBService extends BaseService {
 				}
 			} throw new Error("end");
 			case "bigint": {
-				let [tag,,[type,value]]=args;
+				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					b: "boxed_id",d: tag,
-					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",b: type,z: [value]}],
+					a: "boxed_store",b: "boxed_id",d: tag1,
+					key: `boxed_id:${tag1}:${tag2}`,
+					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "boolean": {
-				let [tag,,[type,value]]=args;
+				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					b: "boxed_id",d: tag,
-					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",b: type,z: [value]}],
+					a: "boxed_store",b: "boxed_id",d: tag1,
+					key: `boxed_id:${tag1}:${tag2}`,
+					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "number": {
-				let [tag,,[type,value]]=args;
+				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					b: "boxed_id",d: tag,
-					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",b: type,z: [value]}],
+					a: "boxed_store",b: "boxed_id",d: tag1,
+					key: `boxed_id:${tag1}:${tag2}`,
+					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "string": {
-				let [tag,,[type,value]]=args;
+				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					b: "boxed_id",d: tag,
-					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",b: type,z: [value]}],
+					a: "boxed_store",b: "boxed_id",d: tag1,
+					key: `boxed_id:${tag1}:${tag2}`,
+					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "keys": {
-				let [tag,,[type,value]]=args;
+				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					b: "boxed_id",d: tag,
-					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",b: type,z: [value]}],
+					a: "boxed_store",b: "boxed_id",d: tag1,
+					key: `boxed_id:${tag1}:${tag2}`,
+					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
 			}
 			case "root_visual_element": {
-				let [tag,,[type,value]]=args;
+				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					b: "boxed_id",d: tag,
-					key: `boxed_id:${tag}:${type}`,
-					z: [{type: "store",b: type,z: [value]}],
+					a: "boxed_store",b: "boxed_id",d: tag1,
+					key: `boxed_id:${tag1}:${tag2}`,
+					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
 			}
 		}
@@ -794,39 +788,9 @@ class IndexedDBService extends BaseService {
 	}
 	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {"boxed_id"} U @arg {U} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
-		x: if(this.loaded_keys.has(value.key)) {
+		if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
-			if(!("a" in value)) {value.j;}
-			switch(value.d) {
-				case "video_id": {
-					if(!loaded_value) break;
-					if(loaded_value.key!==value.key) break;
-					if(loaded_value.z[0].z[0].z[0]===value.z[0].z[0].z[0]) return value;
-					debugger;
-				} break;
-				case "channel_id:UC":
-				case "playlist_id:RD": {
-					if(!loaded_value) break;
-					if(loaded_value.key!==value.key) break;
-					if(loaded_value.z[0].z[0].z[0]===value.z[0].z[0].z[0]) return value;
-					debugger;
-				} break;
-				case "a:load_id": {
-					if(!loaded_value) break;
-					if(loaded_value.key!==value.key) break;
-					if(loaded_value.z[0].z[0]===value.z[0].z[0]) return value;
-				} break x;
-				case "a:save_id": {
-					if(!loaded_value) break;
-					if(loaded_value.key!==value.key) break;
-					if(loaded_value.z[0].z[0]===value.z[0].z[0]) return value;
-				} break x;
-			}
-			if(loaded_value) {
-				console.log("[change]:",value.key,loaded_value.z[0],'->',value.z[0]);
-			} else {
-				console.log("[create]:",value.key,value.z[0]);
-			}
+			console.log("has loaded cache value",loaded_value,value);
 		}
 		try {
 			let ret=await this.putImpl(key,value,version);
@@ -976,15 +940,6 @@ class IndexedDBService extends BaseService {
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let d_cache=this.cache();
 		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.loaded_keys.has(e.key));
-		let no_id_cache=no_null_cache.filter(e => e!==null&&!(e.d==="a:save_id"||e.d==="a:load_id"));
-		if(no_id_cache.length===1) {
-			console.log("[d_cache_nonnull.0]",no_id_cache[0]);
-		} else if(no_id_cache.length===2) {
-			console.log("[d_cache_nonnull.0]",no_id_cache[0]);
-			console.log("[d_cache_nonnull.1]",no_id_cache[1]);
-		} else if(no_id_cache.length>0) {
-			console.log("[d_cache_nonnull.arr]",no_id_cache);
-		}
 		/** @type {G_BoxedIdObj[]} */
 		let new_arr=[];
 		/** @type {G_BoxedIdObj[]} */
@@ -1011,73 +966,7 @@ class IndexedDBService extends BaseService {
 				if(item===null) continue;
 				if(this.committed_data.includes(item)) continue;
 				if(this.loaded_keys.has(item.key)) {
-					let db_val=this.loaded_map.get(item.key);
-					/** @type {I_KnownLoaded|{key:string}} */
-					let item2=item;
-					if(!("tag" in item2)) throw new Error("Unreachable");
-					if(!db_val) throw new Error("Unreachable");
-					let cv=db_val.z[0];
-					let c2=item2.z[0];
-					if("b" in c2) {
-						continue;
-					}
-					if("tag" in c2) {
-						if(!("tag" in cv)) throw new Error("Unreachable");
-						switch(c2.b) {
-							case "channel_id": {
-								if(cv.b!==c2.b) throw new Error("Unreachable");
-								if(cv.z[0].z[0]===c2.z[0].z[0]) {
-									commit_value(item,"same");
-									continue;
-								}
-							} break;
-						}
-						continue;
-					}
-					if("type" in c2) {
-						if(!("type" in cv)) throw new Error("Unreachable");
-						switch(c2.b) {
-							case "playlist_id": {
-								if(cv.b!==c2.b) throw new Error("Unreachable");
-								if(cv.z[0].z[0]===c2.z[0].z[0]) {
-									commit_value(item,"same");
-									continue;
-								}
-							} break;
-							case "video_id": {
-								if(cv.b!==c2.b) throw new Error("Unreachable");
-								if(cv.z[0].z[0]===c2.z[0].z[0]) {
-									commit_value(item,"same");
-									continue;
-								}
-							} break;
-							case "number": {
-								if(cv.b!==c2.b) throw new Error("Unreachable");
-								if(cv.z[0]===c2.z[0]) {
-									commit_value(item,"same");
-									continue;
-								}
-							}
-						}
-						continue;
-					}
-					if("a" in c2) {
-						switch(c2.b) {
-							case "hashtag_id":
-						}
-					}
-					const i1=db_val.z[0];
-					if("a" in i1) {
-						const {f: type,...y2}=i1;
-						console.log("[was_loaded_from_db] [type=%s]",type,y2);
-					} else if("type" in i1) {
-						const {b: type,...y2}=i1;
-						console.log("[was_loaded_from_db] [type=%s]",type,y2);
-					} else {
-						const {b,c,...y2}=i1;
-						console.log("[was_loaded_from_db] [b=%s] [c=%s]",b,c,y2);
-						i1;
-					}
+					let db_val=this.loaded_map.get(item.key); db_val;
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(item.key));
 				if(tx_scope.is_tx_complete) {
@@ -1088,10 +977,6 @@ class IndexedDBService extends BaseService {
 				if(cur_cursor===null) {
 					if(this.log_db_actions) console.log("[db_cursor.done]",cur_cursor);
 					if(this.log_db_actions) console.log("[update_sync_cache_item_add_to_db]",item);
-					if(tx_scope.is_tx_complete) {
-						console.log("cursor_loop_is_tx_complete_2");
-						break;
-					}
 					let put_req=typed_db.put(s.obj_store,item);
 					await this.get_async_result(put_req);
 					commit_value(item,"new");
@@ -1101,131 +986,7 @@ class IndexedDBService extends BaseService {
 				if(this.log_db_actions) console.log("[db_cursor.continue]",cur_cursor,item_db_2);
 				let idx=d_cache.indexOf(item);
 				d_cache[idx]=null;
-				if(item_db_2.key!==item.key) {
-					console.log(item_db_2.key.split(":"));
-					console.log(item.key.split(":"));
-					debugger;
-				}
-				let update_item=false;
-				/** @type {G_BoxedIdObj} */
-				let item_nt=item;
-				/** @type {G_BoxedIdObj} */
-				let item_db_nt=item_db_2;
-				switch(item_nt.d) {
-					default: {
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						let info1=item_nt.z[0].z[0]; let info2=item_db_nt.z[0].z[0];
-						if("raw_id" in info1&&"raw_id" in info2) {
-							if(info1.raw_id!==info2.raw_id) update_item=true;
-						}
-						if("tag" in info1&&"tag" in info2) {
-							if(info1.z[0].z[0].z[0]!==info2.z[0].z[0].z[0]) {
-								update_item=true;
-							}
-						}
-					} break;
-					case "a:save_id":
-					case "a:load_id":
-					case "a:update_id": {
-						if(this.log_db_actions) console.log("[sync_cache.id_obj]",item);
-						if(item_db_nt.b!==item_nt.type) {update_item=true; break;}
-						if(!item_db_nt.z[0]) {update_item=true; break;}
-						if(item_nt.key===item_db_nt.key&&item_nt.z[0].z[0]===item_db_nt.z[0].z[0]) break;
-						update_item=true;
-					} break;
-					// non-dynamic values
-					case "hashtag_id": {
-						if(item_db_nt.b!==item_nt.type) {update_item=true; break;}
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.z[0].z[0]===item_db_nt.z[0].z[0]) {update_item=true; break;}
-					} break;
-					case "key": {
-						if(item_db_nt.b!==item_nt.type) break;
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.z[0].z[0].z[0]===item_db_nt.z[0].z[0].z[0]) {update_item=true; break;}
-					} break;
-					case "exact:play_next": {
-						if(item_db_nt.b!==item_nt.type) break;
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.z[0].type!==item_db_nt.z[0].type) {update_item=true; break;}
-						if(item_nt.z[0].tag!==item_db_nt.z[0].tag) {update_item=true; break;}
-						if(item_nt.z[0].z[0].z[0].z[0]!==item_db_nt.z[0].z[0].z[0].z[0]) {update_item=true; break;}
-					} break;
-					case "video_time": {
-						if(item_db_nt.b!==item_nt.type) break;
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						if(item_nt.z[0].type===item_db_nt.z[0].type) break;
-						if(item_nt.z[0].z[0].z[0]===item_db_nt.z[0].z[0].z[0]) break;
-						update_item=true;
-					} break;
-					case "bigint":
-					case "boolean":
-					case "keys":
-					case "number":
-					case "root_visual_element":
-					case "string": {
-						if(item_db_nt.key!==item_nt.key) {update_item=true; break;}
-						let info1=item_nt.z[0].z[0]; let info2=item_db_nt.z[0].z[0];
-						if(info1 instanceof Array&&info2 instanceof Array) {
-							let v1=info1[1]; let v2=info2[1];
-							let v1_many=null; let v2_many=null;
-							let v1_arr=null; let v2_arr=null;
-							let v1_one=null; let v2_one=null;
-							if(v1 instanceof Array) for(let item of v1) {
-								if(item instanceof Array) {
-									if(!v1_many) v1_many=[];
-									v1_many.push(item);
-								} else {
-									if(!v1_arr) v1_arr=[];
-									v1_arr.push(item);
-								}
-							}
-							if(v2 instanceof Array) for(let item of v2) {
-								if(item instanceof Array) {
-									if(!v2_many) v2_many=[];
-									v2_many.push(item);
-								} else {
-									if(!v2_arr) v2_arr=[];
-									v2_arr.push(item);
-								}
-							}
-							if(!(v1 instanceof Array)) v1_one=v1;
-							if(!(v2 instanceof Array)) v2_one=v2;
-							if(v1_one!==null&&v2_one!==null) {
-								if(v1_one===v2_one) break;
-								debugger;
-							}
-							if(v1_one!==null) {
-								if(v2_arr!==null) {
-									if(v2_arr.includes(v1_one)) break;
-									debugger;
-								}
-								debugger;
-							}
-							if(v1_many!==null) {
-								if(v2_arr!==null) {
-									if(this.eq_keys(v1_many[0],v2_arr)) break;
-									debugger;
-								}
-								debugger;
-							}
-							if(v1_arr!==null) {
-								if(v2_arr!==null) {
-									if(this.eq_keys(v1_arr,v2_arr)) break;
-									debugger;
-								}
-								debugger;
-							}
-							update_item=true;
-						}
-					} break;
-				}
-				if(update_item) {
-					await this.force_update(s,item);
-					commit_value(item,"diff");
-				} else {
-					commit_value(item,"same");
-				}
+				await this.force_update(s,item);
 			}
 		} catch(e) {
 			s.tx.abort();
@@ -1235,10 +996,10 @@ class IndexedDBService extends BaseService {
 			this.handle_transaction_complete(tx_scope,complete_event);
 			this.database_open=false;
 			if(this.log_db_actions) console.log("close db");
-			if(no_id_cache.length>0) {
+			if(no_null_cache.length>0) {
 				console.log(
 					"[committed_cache_num] [ init:%o] [ same:%o] [ diff:%o] [ new:%o] [ committed:%o]",
-					no_id_cache.length,
+					no_null_cache.length,
 					same_arr.length,diff_arr.length,new_arr.length,
 					this.committed_data.length
 				);
