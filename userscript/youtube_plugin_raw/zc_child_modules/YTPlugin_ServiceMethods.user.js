@@ -752,26 +752,28 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
-	/** @private @arg {Popup_ClientSignal["popup"]} x */
-	S_Client_HandlePopup(x) {
-		const cf="S_Client_HandlePopup";
-		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
-		if("notificationActionRenderer" in x) return this.RA_Notification(x);
-		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
 		const cf="S_VoiceSearchPopup_Dialog";
-		const {popup,popupType,...y}=this.s(cf,x);/*#destructure_done*/
-		this.S_Client_HandlePopup(popup);
-		switch(popupType) {
+		switch(x.popupType) {
 			default: debugger; break;
-			case "TOAST": case "TOP_ALIGNED_DIALOG": case "DIALOG":
+			case "DIALOG": {
+				const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.t(beReused,x => this.cq(x,true));
+				if(!popup.confirmDialogRenderer) {this.codegen_typedef(cf,x); break;}
+				this.R_ConfirmDialog(popup);
+			} break;
+			case "TOAST": {
+				const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(!popup.notificationActionRenderer) {this.codegen_typedef(cf,x); break;}
+				this.RA_Notification(popup);
+			} break;
+			case "TOP_ALIGNED_DIALOG": {
+				const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(!popup.voiceSearchDialogRenderer) {this.codegen_typedef(cf,x); break;}
+				this.R_VoiceSearchDialog(popup);
+			} break;
 		}
-		if(this.is_empty_obj(y)) return this.g(y);
-		const {beReused,...y1}=y; this.g(y1);
-		this.t(beReused,x => this.cq(x,true));
 	}
 	/** @private @arg {A_SendFeedback} x */
 	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}

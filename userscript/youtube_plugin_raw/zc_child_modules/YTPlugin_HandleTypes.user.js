@@ -1798,7 +1798,7 @@ class HandleTypes extends ServiceMethods {
 		if("pp" in x3) {
 			const {pp,...y}=x3;
 			this.playerParams("watch.player_params",pp);
-			if(this.is_empty_obj(y)) return;
+			if(!this.is_not_empty_obj(y)) return;
 			x4=y;
 		}
 		let x5=null;
@@ -1830,10 +1830,10 @@ class HandleTypes extends ServiceMethods {
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
 					this.save_string("video_url.info.playnext",playnext);
-					if(this.is_empty_obj(y)) break y;
+					if(this.is_not_empty_obj(y)) break y;
 					this.g(y); break y;
 				}
-				if(this.is_empty_obj(y2)) break x;
+				if(!this.is_not_empty_obj(y2)) break x;
 				if("index" in y2) {
 					const {index,...y3}=y2; this.g(y3);
 					if(this.cache_playlist_index.includes(index)) break x;
@@ -1843,15 +1843,19 @@ class HandleTypes extends ServiceMethods {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.D_RawUrlFromInfo("raw","key:start_radio",{start_radio});
+				this.DI_AGR_UrlInfo(this.make_DI_R_Key_StartRadio(start_radio));
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
-				if(this.is_empty_obj(y3)) break x;
+				if(!this.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
 				this.videoId(rv);
 				this.g(y4);
 			}
 			return;
 		}
+	}
+	/** @arg {`${0|1}`} x  @returns {DI_R_Key_StartRadio} */
+	make_DI_R_Key_StartRadio(x) {
+		return {a: "R",b: "raw",c: "key:start_radio",z: [{a: "item:b",f: "start_radio",z: [x]}]};
 	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
@@ -3190,17 +3194,10 @@ class HandleTypes extends ServiceMethods {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
-	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["c"]} tag @template {DI_SpecialInfo} T @arg {T} x */
-	D_RawUrlFromInfo(type,tag,x) {
-		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["c"];z: [T]}} */
-		let mo={type,tag,z: [x]};
-		this.ht.DI_AGR_UrlInfo(as_any(mo));
-	}
-	/** @api @public @arg {"raw"} type @arg {Extract<DI_AGR_UrlInfo,{tag:any}>["c"]} tag @arg {string} x */
-	D_RawUrlFromTag(type,tag,x) {
-		/** @type {{type:"raw";tag:Extract<DI_AGR_UrlInfo,{tag:any}>["c"];z: [{raw_id: string}]}} */
-		let mo={type,tag,z: [{raw_id: x}]};
-		this.ht.DI_AGR_UrlInfo(as_any(mo));
+	/** @api @public @arg {Extract<DI_AGR_UrlInfo,{c:any}>["c"]} c @arg {string} x */
+	D_RawUrlFromTag(c,x) {
+		/** @type {DI_AGR_FromRaw} */
+		let z={a: "from_raw",b: "raw",c,z: [{raw_id: x}]}; this.ht.DI_AGR_UrlInfo(z);
 	}
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
@@ -3223,9 +3220,9 @@ class HandleTypes extends ServiceMethods {
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_Typeof2(x));}
 	/** @template {string} T @arg {T} x @returns {DIT_Item_AB<"id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
-	make_id(x) {return {f: "id",z: [this.make_Typeof2(x)]};}
+	make_id(x) {return {a: "item:b",f: "id",z: [this.make_Typeof2(x)]};}
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
-	make_DIT_Item_A_RawId(x) {return {f: "raw_id",z: [x]};}
+	make_DIT_Item_A_RawId(x) {return {a: "item:b",f: "raw_id",z: [x]};}
 	/** @template T @arg {T} x @returns {T_StoreTypeFromT<T>} */
 	get_s_type(x) {
 		switch(typeof x) {
@@ -3251,7 +3248,13 @@ class HandleTypes extends ServiceMethods {
 					case "":
 				}
 			} break;
-			case "playlist_id:PL": ret=this.make_info_PL(this.get_prim_3(x)); break;
+			case "playlist_id:PL": {
+				if("a" in x) {
+					console.log(x.z[0].raw_id);
+					break;
+				}
+				ret=this.make_info_PL(x.z[0].z[0].z[0]);
+			} break;
 			case "playlist_id:RD":/*make*/{
 				const raw_id=this.get_prim_3(x);
 				x: if(!this.str_starts_with(raw_id,"RDCMUC")) {
@@ -3435,7 +3438,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "playlist_id:UU":/*raw*/{
 				let x2=this.make_R_UrlInfo(x);
-				if(x2._bad) break;
 				x2; debugger;
 			} break;
 			case "playlist_id:PL":/*raw*/{
