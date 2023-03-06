@@ -23,7 +23,7 @@ type StoreStrMap={
 	root_visual_element: ["number"];
 	string: ["string"];
 };
-type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>;
+type make_item_group<T>=make_one_t<T>|make_arr_t<T>|make_many_t<T>|make_one_sp_typeof<T_GetTypeof<T>,T>;
 type V_StoreBigint=StoreDescription<"bigint">;
 type V_StoreBool=StoreDescription<"boolean">;
 type V_StoreKeys=StoreDescription<"keys">;
@@ -39,14 +39,32 @@ type G_StoreDescriptions=
 	|V_StoreVE
 	;
 ;
-type make_one_t<T>={is: "item"; type: "one",info_arr: [T];};
+type make_one_t<T>={
+	is: "item"; type: "one";
+	info_arr: [T];
+	m1_value_39392_one: {};
+};
+type make_one_sp_typeof<T extends T_GetTypeof<U>,U>={
+	is: "item"; type: "one";
+	special: "typeof";
+	info_arr: [T];
+};
+type make_one_sp_instance_name<T extends (U extends any[]? "array":"unknown"),U>={
+	is: "item"; type: "one";
+	special: "instance";
+	info_arr: [T];
+};
 type make_arr_t<T>={
 	is: "item";
 	type: "arr";
 	info_arr: [T[]];
-	m1_value_39392: {};
+	m1_value_39392_arr: {};
 };
-type make_many_t<T>={is: "item"; type: "many",info_arr: [T[][]];};
+type make_many_t<T>={
+	is: "item"; type: "many";
+	info_arr: [T[][]];
+	m1_value_39392_many: {};
+};
 type DB_NS_TypeStr="root_visual_element"|"boolean"|"string"|"number"|"keys";
 type StoredChangesItem={
 	type: "root_visual_element";

@@ -325,11 +325,11 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x */
 	uv_unpack(x) {
-		/** @type {make_one_t<T>|null} */
+		/** @type {Extract<make_item_group<T>,{type:"one"}>|null} */
 		let one=null;
-		/** @type {make_arr_t<T>|null} */
+		/** @type {Extract<make_item_group<T>,{type:"arr"}>|null} */
 		let arr=null;
-		/** @type {make_many_t<T>|null} */
+		/** @type {Extract<make_item_group<T>,{type:"many"}>|null} */
 		let many=null;
 		switch(x.type) {
 			default: debugger; break;
@@ -1210,13 +1210,27 @@ class IndexedDBService extends BaseService {
 								if(v1_one===v2_one) break;
 								debugger;
 							}
-							if(v1_arr!==null&&v2_arr!==null) {
-								if(this.eq_keys(v1_arr,v2_arr)) break;
+							if(v1_one!==null) {
+								if(v2_arr!==null) {
+									if(v2_arr.includes(v1_one)) break;
+									debugger;
+								}
 								debugger;
 							}
-							if(v1_one!==null) debugger;
-							if(v1_many!==null) debugger;
-							if(v1_arr!==null) debugger;
+							if(v1_many!==null) {
+								if(v2_arr!==null) {
+									if(this.eq_keys(v1_many[0],v2_arr)) break;
+									debugger;
+								}
+								debugger;
+							}
+							if(v1_arr!==null) {
+								if(v2_arr!==null) {
+									if(this.eq_keys(v1_arr,v2_arr)) break;
+									debugger;
+								}
+								debugger;
+							}
 							update_item=true;
 						}
 					} break;
