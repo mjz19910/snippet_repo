@@ -1,4 +1,4 @@
-type DIT_Item_AB<TF_String,T_InfoItem>={
-	a: "item:b"; f: TF_String;
-	z: [T_InfoItem];
+type DIT_Item_AB<T_Key,T_Value>={
+	a: "key_value"; k: T_Key;
+	z: [T_Value];
 };

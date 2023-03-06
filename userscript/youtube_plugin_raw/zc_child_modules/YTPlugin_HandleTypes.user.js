@@ -1853,9 +1853,11 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 	}
+	/** @template K,T @arg {K} k @arg {T} x  @returns {DIT_Item_AB<K,T>} */
+	make_DIT_Item_AB(k,x) {return {a: "key_value",k,z: [x]};}
 	/** @arg {`${0|1}`} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
-		return {a: "is:ABC",b: "raw",c: "key:start_radio",z: [{a: "item:b",f: "start_radio",z: [x]}]};
+		return {a: "is:ABC",b: "raw",c: "key:start_radio",z: [this.make_DIT_Item_AB("start_radio",x)]};
 	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
@@ -3220,9 +3222,9 @@ class HandleTypes extends ServiceMethods {
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_Typeof2(x));}
 	/** @template {string} T @arg {T} x @returns {DIT_Item_AB<"id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
-	make_id(x) {return {a: "item:b",f: "id",z: [this.make_Typeof2(x)]};}
+	make_id(x) {return {a: "item:b",k: "id",z: [this.make_Typeof2(x)]};}
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
-	make_DIT_Item_A_RawId(x) {return {a: "item:b",f: "raw_id",z: [x]};}
+	make_DIT_Item_A_RawId(x) {return {a: "item:b",k: "raw_id",z: [x]};}
 	/** @template T @arg {T} x @returns {T_StoreTypeFromT<T>} */
 	get_s_type(x) {
 		switch(typeof x) {
