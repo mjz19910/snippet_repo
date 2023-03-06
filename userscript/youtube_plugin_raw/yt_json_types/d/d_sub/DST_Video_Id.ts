@@ -1,6 +1,6 @@
 type DST_Video_Id={
-	type: "boxed_id";
+	b: "boxed_id";
 	key: `boxed_id:video_id:${string}`;
-	tag: "video_id";
+	j: "video_id";
 	z: [DI_A_VideoId];
 };

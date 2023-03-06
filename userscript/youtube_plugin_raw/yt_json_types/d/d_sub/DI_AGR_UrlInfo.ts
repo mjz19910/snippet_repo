@@ -34,8 +34,8 @@ type DI_G_UrlInfo=
 		// ^ a = is
 		b: "key";
 		// ^ b = type
-		t_j: J;
-		// ^ t_j = tag
+		j: J;
+		// ^ j = tag
 	}:{
 		a: "I";
 		// ^ a = is

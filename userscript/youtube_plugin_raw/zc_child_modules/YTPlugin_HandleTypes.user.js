@@ -3218,14 +3218,14 @@ class HandleTypes extends ServiceMethods {
 	get_prim_1(x) {return x.z[0];}
 	/** @template V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DIT_Item_Z<T1>} V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
+	/** @template T1 @template {DIT_Item_AZ<T1>} V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_Typeof2(x));}
 	/** @template {string} T @arg {T} x @returns {DIT_Item_AB<"id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
-	make_id(x) {return {b: "id",z: [this.make_Typeof2(x)]};}
+	make_id(x) {return {f: "id",z: [this.make_Typeof2(x)]};}
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
-	make_DIT_Item_A_RawId(x) {return {b: "raw_id",z: [x]};}
+	make_DIT_Item_A_RawId(x) {return {f: "raw_id",z: [x]};}
 	/** @template T @arg {T} x @returns {T_StoreTypeFromT<T>} */
 	get_s_type(x) {
 		switch(typeof x) {

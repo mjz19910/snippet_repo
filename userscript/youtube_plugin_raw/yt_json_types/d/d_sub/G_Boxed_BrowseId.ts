@@ -1,6 +1,6 @@
 type GST_Browse_Id=
 	|DST_Browse_FE
-	|DSS_Browse_MP
+	|DSS_ABJ_Browse_MP
 	|DSS_Browse_SP
 	|DSS_Browse_VL_WL
 	|DSS_Browse_SP

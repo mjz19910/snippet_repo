@@ -5,7 +5,7 @@ type I_KnownLoaded=
 	|DST_Playlist_RD_MM
 	|DST_Playlist_WL
 	|DST_Browse_FE
-	|DSS_Browse_MP
+	|DSS_ABJ_Browse_MP
 	|DSS_Browse_SP
 	|DSS_Browse_VL_WL
 	|DSS_Browse_VL_LL

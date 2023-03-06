@@ -7,8 +7,8 @@ async function fk_put_boxed_id(version: number,...args: Y_PutBoxedArgs) {
 		case "video_time": {
 			let [tag,,value]=args;
 			let ret=t.put_box({
-				type: "boxed_id",
-				tag,
+				b: "boxed_id",
+				j: tag,
 				key: `boxed_id:${tag}:${value.raw_value}`,
 				value,
 			},version);
