@@ -172,6 +172,18 @@ class IndexedDBService extends BaseService {
 			default: throw new Error();
 		}
 	}
+	/** @arg {number} version @returns {Promise<DST_LoadId|null>} */
+	async get_load_id(version) {
+		const t_key="boxed_id:a:load_id";
+		let box=await this.get("boxed_id",t_key,version);
+		return box;
+	}
+	/** @arg {number} version @returns {Promise<DST_SaveId|null>} */
+	async get_save_id(version) {
+		const t_key="boxed_id:a:save_id";
+		let box=await this.get("boxed_id",t_key,version);
+		return box;
+	}
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
 		/** @type {G_BoxedIdObj[]} */
@@ -270,14 +282,21 @@ class IndexedDBService extends BaseService {
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async load_database(store,version) {
-		let load_id=await this.get_id_box("load_id",version);
+		let load_id=await this.get_load_id(version);
 		if(!load_id) {
 			this.expected_load_id=0;
 			let put_promise=this.put_boxed_id_async_3(version,"load_id",null,this.expected_load_id);
 			this.on_loaded_resolver.resolve();
 			await put_promise;
-			load_id=await this.get_id_box("load_id",version);
+			load_id=await this.get_load_id(version);
 			if(!load_id) throw new Error("null on get");
+		}
+		if(!load_id.z) {
+			/** @type {{key:DST_LoadId["key"],value?: {raw:number}}} */
+			let ov=load_id;
+			if(ov.value) {
+				load_id={b: "boxed_id",j: "a:load_id",key: load_id.key,z: [{type: "number",z: [ov.value.raw]}]};
+			}
 		}
 		if(load_id.z[0].z[0]!==this.expected_load_id) this.expected_load_id=load_id.z[0].z[0];
 		await this.load_store_from_database(store,version);

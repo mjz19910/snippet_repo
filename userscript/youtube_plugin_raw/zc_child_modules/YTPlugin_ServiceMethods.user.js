@@ -1472,50 +1472,39 @@ class ServiceMethods extends ServiceData {
 	/** @type {Set<DU_IdCacheItem>} */
 	static id_cache=new Set;
 	id_cache=ServiceMethods.id_cache;
+	/** @arg {DU_IdCacheItem} x */
+	cache_raw_id(x) {
+		if(this.id_cache.has(x)) return true;
+		this.id_cache.add(x);
+		return false;
+	}
 	/** @protected @arg {DU_VideoId} x */
 	videoId(x) {
-		const type="video_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
-		if(this.id_cache.has(raw_id)) return;
-		this.id_cache.add(raw_id);
+		if(this.cache_raw_id(`video_id:${x}`)) return;
 		if(this.video_id_list.includes(x)) return;
-		debugger;
+		this.video_id_list.push(x);
 	}
 	/** @api @public @arg {DU_Browse_Id} x */
 	browseId(x) {
-		const type="browse_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
-		if(this.id_cache.has(raw_id)) return;
-		this.id_cache.add(raw_id);
-		debugger;
+		if(this.cache_raw_id(`browse_id:${x}`)) return;
 	}
-	static_playlist_ids=["WL"];
+	static_playlist_ids=["WL","LL"];
 	/** @public @arg {DU_Playlist_Id} x */
 	playlistId(x) {
-		const type="playlist_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
-		if(this.id_cache.has(raw_id)) return;
-		this.id_cache.add(raw_id);
 		if(this.static_playlist_ids.includes(x)) return;
-		debugger;
+		if(this.cache_raw_id(`playlist_id:${x}`)) return;
 	}
 	/** @protected @arg {DU_GuideEntry_Id} x */
 	guideEntryId(x) {
-		const type="guide_entry_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
-		if(this.id_cache.has(raw_id)) return;
-		this.id_cache.add(raw_id);
-		debugger;
+		if(this.cache_raw_id(`guide_entry_id:${x}`)) return;
 	}
 	/** @protected @arg {T_IdTemplate<"UC",D_UserIdStr>} x */
 	channelId(x) {
-		const type="channel_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
-		if(this.id_cache.has(raw_id)) return;
-		this.id_cache.add(raw_id);
-		debugger;
+		if(this.cache_raw_id(`channel_id:${x}`)) return;
 	}
 	/** @protected @arg {D_UserIdStr} x */
 	userId(x) {
-		const type="user_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
-		if(this.id_cache.has(raw_id)) return;
-		this.id_cache.add(raw_id);
-		debugger;
+		if(this.cache_raw_id(`user_id:${x}`)) return;
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
