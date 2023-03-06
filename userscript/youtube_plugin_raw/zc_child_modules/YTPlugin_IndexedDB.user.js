@@ -1062,33 +1062,44 @@ class IndexedDBService extends BaseService {
 					if(!db_val) throw new Error("Unreachable");
 					let cv=db_val.z[0];
 					let c2=item2.z[0];
-					switch(c2.a) {
-						case "channel_id": {
-							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.z[0].z[0]===c2.z[0].z[0]) {
-								commit_value(item,"same");
-								continue;
-							}
-						} break;
-						case "playlist_id": {
-							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.z[0].z[0]===c2.z[0].z[0]) {
-								commit_value(item,"same");
-								continue;
-							}
-						} break;
-						case "video_id": {
-							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.z[0].z[0]===c2.z[0].z[0]) {
-								commit_value(item,"same");
-								continue;
-							}
-						} break;
-						case "number": {
-							if(cv.a!==c2.type) throw new Error("Unreachable");
-							if(cv.z[0]===c2.z[0]) {
-								commit_value(item,"same");
-								continue;
+					if("b" in c2) {
+						continue;
+					}
+					if("tag" in c2) {
+						continue;
+					}
+					if("type" in c2) {
+						continue;
+					}
+					if("a" in c2) {
+						switch(c2.a) {
+							case "channel_id": {
+								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.z[0].z[0]===c2.z[0].z[0]) {
+									commit_value(item,"same");
+									continue;
+								}
+							} break;
+							case "playlist_id": {
+								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.z[0].z[0]===c2.z[0].z[0]) {
+									commit_value(item,"same");
+									continue;
+								}
+							} break;
+							case "video_id": {
+								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.z[0].z[0]===c2.z[0].z[0]) {
+									commit_value(item,"same");
+									continue;
+								}
+							} break;
+							case "number": {
+								if(cv.a!==c2.type) throw new Error("Unreachable");
+								if(cv.z[0]===c2.z[0]) {
+									commit_value(item,"same");
+									continue;
+								}
 							}
 						}
 					}
