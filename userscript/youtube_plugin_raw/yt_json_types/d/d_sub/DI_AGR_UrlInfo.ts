@@ -18,8 +18,8 @@ type DI_AGR_UrlInfo=
 	|T_Info_RawId_BC_J<"raw",["video_id"],DU_VideoId>
 	|DI_R_Key_StartRadio
 	|T_Info_RawId_BC_J<"raw",["playlist_id","RD"],Extract<DU_Playlist_Id,`RD${string}`>>
-	|{b: "raw",c: "playlist_id:PL"; z: [DIT_Item_AB<"raw_id",DIT_Box_Typeof<T_IdTemplate<"PL">>>];}
-	|{b: "raw",c: "playlist_id:UU"; z: [DIT_Item_AB<"raw_id",DIT_Box_Typeof<`UU${string}`>>];}
+	|{b: "raw",c: "playlist_id:PL"; z: [DIT_Item_AB<"raw_id",T_BoxTypeof<T_IdTemplate<"PL">>>];}
+	|{b: "raw",c: "playlist_id:UU"; z: [DIT_Item_AB<"raw_id",T_BoxTypeof<`UU${string}`>>];}
 	|DI_AGR_FromRaw
 	;
 ;

@@ -1,4 +1,4 @@
-type DIT_Box_Typeof2<T_Type extends T_StoreTypeFromT<U>,U>={
+type DIT_Box_Typeof2<T_Type extends T_GetPrimitiveTag<U>,U>={
 	a: "primitive";
 	// ^ a = is
 	e: T_Type;

@@ -3219,13 +3219,15 @@ class HandleTypes extends ServiceMethods {
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
 	/** @template T1 @template {DIT_Item_AZ<T1>} V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
-	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
-	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_Typeof2(x));}
-	/** @template {string} T @arg {T} x @returns {DIT_Item_AB<"id",DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>>} */
-	make_id(x) {return {a: "item:b",k: "id",z: [this.make_Typeof2(x)]};}
+	/** @template K,T @arg {K} k @arg {T} x @returns {DIT_Item_AB<K,T_BoxTypeof<T>>}*/
+	make_value_pair(k,x) {return {a: "key_value",k,z: [this.make_BoxTypeof(x)]};}
+	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T_BoxTypeof<T>>} */
+	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
+	/** @template {string} T @arg {T} x @returns {DIT_Item_AB<"id",T_BoxTypeof<T>>} */
+	make_id(x) {return this.make_value_pair("id",x);}
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
-	make_DIT_Item_A_RawId(x) {return {a: "item:b",k: "raw_id",z: [x]};}
-	/** @template T @arg {T} x @returns {T_StoreTypeFromT<T>} */
+	make_DIT_Item_A_RawId(x) {return {a: "key_value",k: "raw_id",z: [x]};}
+	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
 	get_s_type(x) {
 		switch(typeof x) {
 			case "bigint": return as("bigint");
@@ -3235,10 +3237,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		return as("unknown");
 	}
-	/** @template T @arg {T} x @returns {DIT_Box_Typeof<T>} */
+	/** @template T @arg {T} x @returns {T_BoxTypeof<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
-	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_StoreTypeFromT<T>,T>} */
-	make_Typeof2(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
+	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
+	make_BoxTypeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u @returns {MakeRet_DI_AGR_UrlInfo<TI>} */
 	make_R_UrlInfo(u) {
 		let ret;
@@ -3345,7 +3347,7 @@ class HandleTypes extends ServiceMethods {
 				const raw_id=this.get_prim_3(x);
 				/** @type {GI_GuideEntry_Id} */
 				let itv;
-				/** @template {"LL"|"WL"} K @arg {K} x @returns {{type:"guide_entry_id";tag:K,info_arr:[DIT_Item_AB<"playlist_id",DIT_Item_AB<"raw_id",DIT_Box_Typeof<K>>>]}} */
+				/** @template {"LL"|"WL"} K @arg {K} x @returns {{type:"guide_entry_id";tag:K,info_arr:[DIT_Item_AB<"playlist_id",DIT_Item_AB<"raw_id",T_BoxTypeof<K>>>]}} */
 				let mk_type_1=(x) => {
 					return {type: "guide_entry_id",tag: x,z: [{a: "playlist_id",z: [this.make_raw_id(x)]}]};
 				};

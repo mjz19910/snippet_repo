@@ -4,7 +4,7 @@ type DI_BrowseId_VL_LL={
 	c: "VL:LL";
 	// ^ c = tag
 	z: [
-		DIT_Item_AB<"raw_id",DIT_Box_Typeof<"VLLL">>,
+		DIT_Item_AB<"raw_id",T_BoxTypeof<"VLLL">>,
 		DI_A_Playlist_LL
 	];
 };
