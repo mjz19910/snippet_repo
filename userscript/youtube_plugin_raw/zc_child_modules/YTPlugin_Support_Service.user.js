@@ -167,69 +167,69 @@ class StoreDescription extends ApiBase2 {
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
-	/** @template {"many"|"arr"|"one"} W @template T @arg {W extends infer I?I extends "one"?[string,I,T]:I extends "arr"?[string,I,T[]]:[string,I,T[][]]:never} args @returns {W extends "one"?make_one_t<T>:W extends "arr"?make_arr_t<T>:make_many_t<T>} */
-	make_item(...args) {
-		const [b,c,x]=args;
+	/** @template T @template {[string,"one",T]|[string,"arr",T[]]|[string,"many",T[][]]} TA @arg {TA} arg0 */
+	make_item(...[f,c,x]) {
 		switch(c) {
-			case "one": {
-				/** @type {make_one_t<T>} */
-				const z={a: "item",b,c,z: [x]}; return as_any(z);
-			}
-			case "arr": {
-				/** @type {make_arr_t<T>} */
-				const z={b: "item",b,c,z: [x]}; return as_any(z);
-			}
-			case "many": {
-				/** @type {make_many_t<T>} */
-				const z={b: "item",b,c,z: [x]}; return as_any(z);
-			}
+			case "one": return this.make_one_t(f,x);
+			case "arr": return this.make_arr_t(f,x);
+			case "many": return this.make_many_t(f,x);
 		}
 	}
-	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
-	save_data(k,x) {
+	/** @arg {string} f @template T @arg {T} x @returns {make_one_t<T>} */
+	make_one_t(f,x) {return this.make_group([x],f,"one");}
+	/** @arg {string} f @template T @arg {T[][]} x @returns {make_many_t<T>} */
+	make_many_t(f,x) {return this.make_group([x],f,"many");}
+	/** @arg {string} f @template T @arg {T[]} x @returns {make_arr_t<T>} */
+	make_arr_t(f,x) {return this.make_group([x],f,"arr");}
+	/**
+	 * @template Z @arg {Z} z @template {string} F @arg {F} f
+	 * @template {string} C @arg {C} c
+	 * @param {"item"} b
+	 * @param {"group_value"} a
+	 * @returns {{a:"group_value",b:"item",c:C,f:F,z:Z}}
+	 **/
+	make_group(z,f,c,b="item",a="group_value") {return {a,b,c,f,z};}
+	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x_container */
+	save_data(k,x_container) {
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
-			let item=this.data[idx];
-			let item_container=item[1];
-			if(!("b" in x)) {x;}
-			if(item_container.b==="many"&&x.b==="arr") {
-				let {z: [item_many]}=item_container;
-				if(item_many.findIndex(item_arr => this.eq_keys(item_arr,x.z[0]))>-1) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1.z[0].push(x.z[0]),x1));
+			let y_item=this.data[idx];
+			let y_container=y_item[1];
+			if(!("b" in x_container)) {x_container;}
+			if(y_container.c==="many"&&x_container.c==="arr") {
+				let {z: [y_many]}=y_container;
+				if(y_many.findIndex(y_arr => this.eq_keys(y_arr,x_container.z[0]))>-1) return;
+				let new_container=this.clone_and_then(y_container,x1 => (x1.z[0].push(x_container.z[0]),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container.b==="arr"&&x.b==="one") {
-				let {z: [item_arr]}=item_container;
-				if("special" in x) {debugger; return;}
-				if(item_arr.includes(x.z[0])) return;
-				let new_container=this.clone_and_then(item_container,x1 => (x1.z[0].push(x.z[0]),x1));
+			if(y_container.c==="arr"&&x_container.c==="one") {
+				let {z: [item_arr]}=y_container;
+				if("special" in x_container) {debugger; return;}
+				if(item_arr.includes(x_container.z[0])) return;
+				let new_container=this.clone_and_then(y_container,x1 => (x1.z[0].push(x_container.z[0]),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(item_container.b==="arr"&&x.b==="arr") {
-				let {z: [item_arr]}=item_container;
-				if(this.eq_keys(item_arr,x.z[0])) return;
-				let new_container=this.clone_and_then(item_container,x1 => {
-					return {b: "item",b: "many",z: [[x1.z[0],x.z[0]]]};
-				});
-				this.push_new_data(k,new_container);
+			if(y_container.c==="arr"&&x_container.c==="arr") {
+				let {z: [y_arr]}=y_container;
+				if(this.eq_keys(y_arr,x_container.z[0])) return;
+				let {f,z: [y1_arr]}=this.clone_container(y_container);
+				this.push_new_data(k,this.make_many_t(f,[y1_arr,x_container.z[0]]));
 				return;
 			}
-			if(item_container.c==="one"&&x.c==="one") {
-				const {z: [item_value]}=item_container,{z: [x_value]}=x;
-				if(item_value===x_value) return;
-				let new_container=this.clone_and_then(item_container,x1 => {
-					return {b: "item",b: "arr",c: "arr",z: [[x1.z[0],x.z[0]]]};
-				});
+			if(y_container.c==="one"&&x_container.c==="one") {
+				const {z: [y]}=y_container,{z: [x]}=x_container;
+				if(y===x) return;
+				let new_container=this.clone_and_then(y_container,y1 => this.make_arr_t(y1.f,[y1.z[0],x]));
 				this.push_new_data(k,new_container);
 				return;
 			}
 			debugger;
 			return;
 		}
-		this.push_new_data(k,x);
+		this.push_new_data(k,x_container);
 	}
 	/** @api @public @this {V_StoreKeys} @template {{}} T @arg {string} k @arg {T|undefined} obj */
 	save_keys(k,obj) {
@@ -257,9 +257,9 @@ class StoreDescription extends ApiBase2 {
 				case "bigint": throw new Error("Unable to save type");
 				case "boolean": throw new Error("Unable to save type");
 				case "function": throw new Error("Unable to save type");
-				case "number": this.save_data(`${k}.type`,{a: "item",b: "one",c: "one",z: [zo]}); break;
+				case "number": this.save_data(`${k}.type`,this.make_one_t(k,zo)); break;
 				case "object": throw new Error("Unable to save type");
-				case "string": this.save_data(`${k}.type`,{a: "item",b: "one",c: "one",z: [zo]}); break;
+				case "string": this.save_data(`${k}.type`,this.make_one_t(k,zo)); break;
 				case "symbol": throw new Error("Unable to save type");
 				case "undefined": throw new Error("Unable to save type");
 			}
@@ -268,15 +268,13 @@ class StoreDescription extends ApiBase2 {
 		/** @type {object} */
 		let q=obj;
 		if(q instanceof Array) {
-			/** @type {(typeof q) extends any[]?make_instance_name_t_1:never} */
-			let z={is: "item",type: "one",u: "instance_name",z: ["array"]};
-			this.save_data(`${k}.instance`,z);
+			/** @type {make_instance_name_t_1} */
+			const z2=this.make_group(["array"],k,"instance_name");
+			this.save_data(`${k}.instance`,z2);
 			return;
 		}
 		let value=this.get_keys_of(obj);
-		/** @type {make_arr_t<string>} */
-		let x={b: "item",b: "arr",u: "arr",z: [value]};
-		return this.save_data(k,x);
+		return this.save_data(k,this.make_arr_t(k,value));
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_to_index(k,x) {
@@ -350,10 +348,6 @@ class StoreData {
 	}
 	/** @arg {StoreDataInput} args */
 	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
-	/** @api @public @arg {D_GM_VeNum} x */
-	on_ve_element(x) {
-		this.get_store("root_visual_element").save_data("ve_element",{a: "item",b: "one",c: "one",z: [x],m1_value_39392_one: {}});
-	}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends ServiceMethods {
@@ -455,11 +449,11 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
-		switch(cur.b) {
+		switch(cur.c) {
 			default: debugger; break;
 			case "one": debugger; break;
 			case "many": {
-				let src_data=cur.m1_value_39392_many;
+				let src_data=cur.z[0];
 				let max_len=src_data.map(e => e.length).reduce((a,b) => Math.max(a,b));
 				for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++) {
 					let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
@@ -503,17 +497,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		}).split("!").slice(1);
 		return rle.join("!");
 	}
-	num_bitmap_console() {
-		let gg=this.data_store.get_number_store().data.find(e => e[0]==="P_tracking_params.f1");
-		if(!gg) return;
-		let g1=gg[1];
-		if(g1.b!=="arr") return;
-		let sr=g1.z[0].slice().sort((a,b) => a-b);
-		this.save_number_arr("arr.P_tracking_params.f1",sr);
-		let bm=this.generate_bitmap_num(g1.z[0]).bitmap;
-		this.save_string("bitmap.P_tracking_params.f1",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.data_store.get_string_store().data.find(e => e[0]==="bitmap.P_tracking_params.f1")?.[1].value;
-	}
 	/** @private @template T @arg {T[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
 		let map_arr=[...new Set([...bitmap_src.map(e => {
@@ -532,15 +515,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		return new BitmapResult(map_arr,bitmap);
 	}
 	/** @private @arg {number[]} src */
-	generate_bitmap_num_raw(src) {
-		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
-		let zz=map_arr.at(-1)??0;
-		let ta=new Array(zz+1).fill(0);
-		src.forEach(e => {ta[e]=1;});
-		let bs=ta.join("");
-		return new BitmapResult(map_arr,bs);
-	}
-	/** @private @arg {number[]} src */
 	generate_bitmap_num_raw_fill(src,fill_value=0) {
 		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
 		let zz=map_arr.at(-1)??0;
@@ -556,7 +530,7 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let yt_plugin={ds: this,};
 		let gg=yt_plugin.ds.data_store.get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
-		if(gg[1].b!=="arr") return;
+		if(gg[1].c!=="arr") return;
 		gg[1].z[0].sort((a,b) => a-b);
 		let g1=gg[1];
 		/** @private @arg {string} str */
@@ -602,13 +576,6 @@ class LocalStorageSeenDatabase extends ServiceMethods {
 		let mx=mu_;
 		let rle_x=yt_plugin.ds.rle_enc(mx);
 		console.log(rle_x.split("!"));
-	}
-	console_code_2() {"0:0!1:1".split("!").map(e => e.split(":").map(e => parseInt(e,10))).map((e,i) => [...e,i]).sort(([,a],[,b]) => a-b).map(([a,b,i]) => `${b}$${i}$${a}`);}
-	/** @private @arg {number[]} bitmap_src */
-	generate_bitmap_num(bitmap_src) {
-		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
-		let bitmap_rle=this.rle_enc(bitmap);
-		return new BitmapResult(map_arr,bitmap_rle);
 	}
 }
 export_(exports => {exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;});
@@ -1857,7 +1824,7 @@ class Support_EventInput extends ServiceMethods {
 				},
 				expirationTime: x => this.t(x,this.a_primitive_num),
 			});
-			if(this.is_empty_obj(u)) return;
+			if(!this.is_not_empty_obj(u)) return;
 			if("previousCsn" in u) {
 				const {previousCsn,...y}=u; this.g(y);
 				this.D_VeCsn(previousCsn,true);

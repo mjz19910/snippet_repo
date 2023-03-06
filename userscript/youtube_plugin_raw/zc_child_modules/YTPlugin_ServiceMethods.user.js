@@ -1478,14 +1478,14 @@ class ServiceMethods extends ServiceData {
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
 		if(this.video_id_list.includes(x)) return;
-		this.ht.D_RawUrlFromTag("raw",type,x);
+		debugger;
 	}
 	/** @api @public @arg {DU_Browse_Id} x */
 	browseId(x) {
 		const type="browse_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.D_RawUrlFromTag("raw",type,x);
+		debugger;
 	}
 	static_playlist_ids=["WL"];
 	/** @public @arg {DU_Playlist_Id} x */
@@ -1494,28 +1494,28 @@ class ServiceMethods extends ServiceData {
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
 		if(this.static_playlist_ids.includes(x)) return;
-		this.ht.D_RawUrlFromTag("raw",type,x);
+		debugger;
 	}
 	/** @protected @arg {DU_GuideEntry_Id} x */
 	guideEntryId(x) {
 		const type="guide_entry_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.D_RawUrlFromTag("raw",type,x);
+		debugger;
 	}
 	/** @protected @arg {T_IdTemplate<"UC",D_UserIdStr>} x */
 	channelId(x) {
 		const type="channel_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.D_RawUrlFromTag("raw",type,x);
+		debugger;
 	}
 	/** @protected @arg {D_UserIdStr} x */
 	userId(x) {
 		const type="user_id",/**@type {`${typeof type}:${typeof x}`}*/raw_id=`${type}:${x}`;
 		if(this.id_cache.has(raw_id)) return;
 		this.id_cache.add(raw_id);
-		this.ht.DI_G_NoKey({b: type,z: [{k: "raw_id",z: [{a: "primitive",e: "string",z: [x]}]}]});
+		debugger;
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -2021,7 +2021,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,v,...u]=p;
 				if(u.length===0) {
-					this.ht.DI_G_NoKey({k: "hashtag_id",z: [{k: "hashtag",z: [{a: "primitive",e: "string",z: [v]}]}]});
+					debugger; v;
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -2841,8 +2841,6 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {if(x!==true) debugger;}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
-	/** @private @arg {D_GM_VeNum} x */
-	on_root_visual_element(x) {this.save_db.data_store.on_ve_element(x);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */
@@ -2853,7 +2851,7 @@ class ServiceMethods extends ServiceData {
 	is_yt_uuid_targetId(x) {return this.is_yt_uuid(x.targetId);}
 	/** @protected @template {D_GM_VeNum} T @arg {T} x @arg {T extends any?T:never} expected_x */
 	rootVe(x,expected_x) {
-		this.on_root_visual_element(x);
+		this.save_ve_element(x);
 		this.cq(x,expected_x);
 	}
 	/** @protected @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
@@ -3751,7 +3749,7 @@ class ServiceMethods extends ServiceData {
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(visitorData);
 		if(sessionIndex!==0) debugger;
-		this.on_root_visual_element(rootVisualElementType);
+		this.save_ve_element(rootVisualElementType);
 	}
 	/** @private @arg {RC_WR_ContextExtension} x */
 	RC_WR_ContextExtension(x) {
