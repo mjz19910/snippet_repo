@@ -19,58 +19,64 @@ main() {
 		) &
 		(
 			echo "w"
-			exec 5>>$F
-			exec 6>>/dev/shm/lock.1
-			exec 7>>/dev/shm/lock.2
-			exec 8>>/dev/shm/lock.done
+			exec {lock_pid}<$F
+			exec {lock_1}</dev/shm/lock.1
+			exec {lock_2}</dev/shm/lock.2
+			exec {done}</dev/shm/lock.done
+			exec {notify}</dev/shm/lock.notify
+			exec {respond}</dev/shm/lock.respond
 			while true; do
-				flock -w 0 5 && {
-					printf '\e[8B'
+				flock -w 0 $lock_pid && {
+					# printf '\e[8B'
 					return
 				}
+				while false && sleep 0.02; do
+					flock -w 0 $done && break
+				done
+				# printf '\e[H\e[2J[cls]\r'
+				# printf '\eM'
+				# printf '\e[1B'
+				flock $lock_1
+				sleep 0.02
+				flock -u $lock_1
+				flock $lock_1
+				sleep 0.02
+				flock -u $lock_1
+				flock $lock_1
+				sleep 0.02
+				flock -u $lock_1
 				sleep 0.5
-				flock 8
-				flock 6
-				printf '\e[4B'
-				flock -u 7
-				sleep 0.25
-				printf '\e[4B'
-				sleep 0.25
-				printf '\e[8A'
-				flock -u 6
-				flock 7
-				flock -u 8
 			done
 		)
 	}
 }
 resume_pid() {
+	sleep 0.$(shuf -i1-6 -n1)
 	echo "[resume_pid]" $@
-	sleep $(shuf -i1-4 -n1)
 	kill -CONT $@
 	trap "" SIGINT
 
 	while [ "${#@}" -gt "0" ]; do
 		echo $1
-		exec 6>>/dev/shm/lock.1
-		exec 7>>/dev/shm/lock.2
-		exec 8>>/dev/shm/lock.done
-		pv -d $1 | {
+		exec {lock_1}<>/dev/shm/lock.1
+		exec {lock_2}<>/dev/shm/lock.2
+		exec {done}<>/dev/shm/lock.done
+		exec {notify}<>/dev/shm/lock.notify
+		exec {respond}<>/dev/shm/lock.respond
+		pv -d $1 2>&1 | {
 			while IFS= read -r line; do
-				flock 8
-				echo "locked 8"
-				flock 6
-				echo "locked 6"
+				flock $done
+				flock $notify
+				printf "[l_notify_2]"
+				sleep 0.03
+				flock -u $notify
+				flock $lock_1
 				printf '%s\n' "$line"
-				flock -u 6
-				echo "unlocked 6"
-				flock 7
-				echo "locked 7"
-				printf '%s\n' "$line"
-				flock -u 7
-				echo "unlocked 7"
-				flock -u 8
-				echo "unlocked 8"
+				sleep 0.1
+				flock -u $lock_1
+				flock $lock_2
+				flock -u $lock_2
+				flock u $done
 			done
 		}
 		shift
