@@ -228,18 +228,22 @@ class IndexedDBService extends BaseService {
 			const {key,value}=o2;
 			if(!value.info_arr) {debugger; return x;}
 			let o_arr_t=value.info_arr[0];
-			switch(o_arr_t[0]) {
-				default: debugger; return x;
-				case "one":
-				case "arr": {
-					const z1={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
-					/** @type {DSS_Bigint["z"][0]} */
-					const z2={a: "group",b: value.type,z: [as_any(z1)]};
-					/** @type {DSS_Bigint} */
-					let z={a: "boxed_store",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
-					return as_any(z);
+			if(o_arr_t instanceof Array) {
+				switch(o_arr_t[0]) {
+					default: debugger; return x;
+					case "one":
+					case "arr": {
+						const z1={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
+						/** @type {DSS_Bigint["z"][0]} */
+						const z2={a: "group",b: value.type,z: [as_any(z1)]};
+						/** @type {DSS_Bigint} */
+						let z={a: "boxed_store",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
+						return as_any(z);
+					}
 				}
 			}
+			if(!o_arr_t.raw_id) {debugger; return x;}
+			debugger;
 		}
 		return x;
 	}
