@@ -3457,7 +3457,7 @@ class ServiceMethods extends ServiceData {
 	G_DE_MutationItem(x) {
 		switch(x.type) {
 			default: debugger; break;
-			case "ENTITY_MUTATION_TYPE_DELETE": this.DU_MutationDelete(x); break;
+			case "ENTITY_MUTATION_TYPE_DELETE": this.DE_MutationDelete(x); break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": this.DU_MutationReplace(x); break;
 		}
 	}
@@ -3615,8 +3615,8 @@ class ServiceMethods extends ServiceData {
 		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
 	/** @private @arg {DE_MutationDelete} x */
-	DU_MutationDelete(x) {
-		const cf="DU_MutationDelete";
+	DE_MutationDelete(x) {
+		const cf="DE_MutationDelete";
 		const {entityKey,type,options,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params("entity.key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE") debugger;
