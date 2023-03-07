@@ -1280,6 +1280,34 @@ class Support_RS_Watch extends BaseService {
 }
 export_(exports => {exports.Support_RS_Watch=Support_RS_Watch;});
 class Support_RS_Page_Browse extends BaseService {
+	/** @public @arg {G_RS_Page_Browse} ux */
+	G_RS_Page_Browse(ux) {
+		let x=null,x2=null;
+		if("rootVe" in ux) x=ux; else x2=ux;
+		if(x!==null) switch(x.rootVe) {
+			case 3854: {
+				const cf="RS_VE3854_BrowsePage";
+				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
+				this._primitive_of(expirationTime,"number");
+				this.save_number(`${cf}.rootVe`,rootVe);
+			} break;
+			case 6827: {
+				const cf="RS_VE6827_BrowsePage";
+				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
+				this._primitive_of(expirationTime,"number");
+				this.save_number(`${cf}.rootVe`,rootVe);
+			} break;
+			case 96368: {
+				const cf="RS_VE96368_BrowsePage";
+				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
+				this._primitive_of(expirationTime,"number");
+				this.save_number(`${cf}.rootVe`,rootVe);
+			} break;
+			default: debugger; break;
+		}
+		x=x2;
+		x2;
+	}
 	/** @public @arg {RS_Page_Browse} x */
 	RS_Page_Browse(x) {
 		const cf="RS_Page_Browse";
@@ -1303,7 +1331,7 @@ class Support_RS_Page_Browse extends BaseService {
 	}
 	/** @private */
 	log_url=false;
-	/** @private @arg {"RS_Page_Browse"} cf @template {RS_Page_Browse} T @arg {T} x */
+	/** @private @arg {CF_RS_Page_Browse} cf @template {G_RS_Page_Browse} T @arg {T} x */
 	RS_Page_Browse_Omit(cf,x) {
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
@@ -1912,12 +1940,12 @@ class Support_EventInput extends BaseService {
 		}
 	}
 	//#endregion
-	/** @private @arg {G_RS_ByPageType} x */
+	/** @public @arg {G_RS_ByPageType} x */
 	DataResponsePageType(x) {
 		const cf="DataResponsePageType";
 		this.sm.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
-			case "browse": return this.x.get("x_RS_Page_Browse").RS_Page_Browse(x);
+			case "browse": return this.x.get("x_RS_Page_Browse").G_RS_Page_Browse(x);
 			case "watch": return this.x.get("x_RS_WatchPage").RS_WatchPage(x);
 			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);

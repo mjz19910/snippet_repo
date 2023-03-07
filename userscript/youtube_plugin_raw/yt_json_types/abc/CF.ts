@@ -51,3 +51,4 @@ type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|"CF_TE_Endpoint_3";
 type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">|"CF_TE_Endpoint_Opt_3";
 type CF_TE_TrackedObj_2=T_ExtractImport<"CF_TE_TrackedObj_2">|"CF_TE_TrackedObj_2";
 type CF_TR_MultiPageMenu=T_ExtractImport<"CF_TR_MultiPageMenu">|"CF_TR_MultiPageMenu";
+type CF_RS_Page_Browse=T_ExtractImport<"CF_RS_Page_Browse">|"CF_RS_Page_Browse";

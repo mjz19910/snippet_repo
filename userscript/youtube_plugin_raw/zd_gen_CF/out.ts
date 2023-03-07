@@ -103,6 +103,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "B_Hack";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "B_TagObj";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "CF_H_a";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "CF_RS_Page_Browse";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "CF_T_Attachment";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "C_Executor";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "C_GetSurvey";}
@@ -802,6 +803,10 @@ export namespace Gen {
 		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_subscribe_button_entity_key";}
 		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_transcript_track_selection_entity_key";}
 		|{n: "CF_P_EntityKey"; t: CF_P_EntityKey; v: "P_view_count_entity_key";}
+		|{n: "CF_RS_Page_Browse"; t: CF_RS_Page_Browse; v: "RS_Page_Browse";}
+		|{n: "CF_RS_Page_Browse"; t: CF_RS_Page_Browse; v: "RS_VE3854_BrowsePage";}
+		|{n: "CF_RS_Page_Browse"; t: CF_RS_Page_Browse; v: "RS_VE6827_BrowsePage";}
+		|{n: "CF_RS_Page_Browse"; t: CF_RS_Page_Browse; v: "RS_VE96368_BrowsePage";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "RS_Page_Channel";}
 		|{n: "CF_RS_Page_Type1"; t: CF_RS_Page_Type1; v: "R_PageTypeBrowse_Response";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_AboutThisAd";}

@@ -2613,7 +2613,22 @@ class YtHandlers extends BaseService {
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		this.handle_any_data(`page_type_${ret.page}`,as(ret));
-		// this.x.get("handle_types").DataResponsePageType(ret);
+		switch(ret.page) {
+			case "browse": {
+				const x=ret;
+				x: if("rootVe" in x) {if(x.rootVe!==3854) break x; this.x.get("x_EventInput").DataResponsePageType(x); break;}
+				x: if("rootVe" in x) {if(x.rootVe!==6827) break x; this.x.get("x_EventInput").DataResponsePageType(x); break;}
+				x: if("rootVe" in x) {if(x.rootVe!==96368) break x; this.x.get("x_EventInput").DataResponsePageType(x); break;}
+				if(this.sm.is_TE_VE(x.endpoint,3854)) {
+				}
+			} break;
+			case "channel":
+			case "playlist":
+			case "search":
+			case "settings":
+			case "shorts":
+			case "watch": this.x.get("x_EventInput").DataResponsePageType(ret); break;
+		}
 		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {

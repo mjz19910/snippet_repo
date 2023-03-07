@@ -125,7 +125,7 @@ class ParserService extends BaseService {
 				/** @private @type {D_ApiStatsAdsStr} */
 				let sp=as(a[1]);
 				let {...v}=this.parse_url_search_params(sp);
-				this.save_db.k(`${cf}.ads`,v);
+				this.sm.k(`${cf}.ads`,v);
 				// spell:disable-next
 				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}/*!*/=v; this.g(y);
 			} break;
@@ -360,7 +360,7 @@ class ParserService extends BaseService {
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");
 		switch(y[0]) {
-			case "list": return this.x.get("handle_types").playlistId(y[1]);
+			case "list": return this.sm.playlistId(y[1]);
 			default: debugger;
 		}
 	}

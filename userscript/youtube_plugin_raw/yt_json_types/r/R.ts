@@ -297,6 +297,7 @@ type NavFinishDetail_Watch={
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
+type G_RS_Page_Browse=RS_VE6827_BrowsePage|RS_VE96368_BrowsePage|RS_Page_Browse;
 type RS_VE6827_BrowsePage={
 	rootVe: 6827;
 	url: "/feed/library";
@@ -417,7 +418,7 @@ type G_ResponseBrowse=
 	|RS_VE96368_BrowsePage
 	;
 ;
-type G_RS_ByPageType=G_RS_WatchPage|RS_ChannelPage|G_RS_Page_Playlist|G_RS_SettingsPage|RS_SearchPage|RS_Page_Browse|G_RS_ShortsPage;
+type G_RS_ByPageType=G_RS_WatchPage|RS_ChannelPage|G_RS_Page_Playlist|G_RS_SettingsPage|RS_SearchPage|RS_Page_Browse|G_RS_ShortsPage|RS_VE6827_BrowsePage|RS_VE96368_BrowsePage;
 //#endregion
 //#region RA_
 type RA_Notification={notificationActionRenderer: AD_Notification;};
