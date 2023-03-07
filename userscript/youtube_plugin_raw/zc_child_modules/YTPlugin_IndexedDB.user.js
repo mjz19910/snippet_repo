@@ -106,6 +106,11 @@ class TypedIDBValidKeyS {
 class IndexedDBService extends BaseService {
 	/** @returns {J_ResolverType_Ready} */
 	create_resolver() {return J_ResolverTypeImpl.make();}
+	/** @template {"boxed_id"} K @arg {K} key @arg {IDBDatabase} db */
+	create_store(key,db) {
+		let obj_store=db.createObjectStore(key,{keyPath: "key"});
+		obj_store.createIndex(key,"key",{unique: true});
+	}
 	database_opening=false;
 	database_open=false;
 	log_db_actions=false;
