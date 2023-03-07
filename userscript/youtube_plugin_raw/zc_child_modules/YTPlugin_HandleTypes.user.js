@@ -2454,12 +2454,6 @@ class HandleTypes extends BaseService {
 		this.sm.channelId(this.TV_Str(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
-	/** @temporary @api @public @template {{}} T @arg {CF_M_s|string} cf @arg {T} x */
-	s(cf,x) {
-		if(!x) debugger;
-		this.sm.k(cf,x);
-		return x;
-	}
 	/** @private @arg {TX_sequence_info} x */
 	TX_sequence_info(x) {
 		const cf="TX_sequence_info";

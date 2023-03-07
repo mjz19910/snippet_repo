@@ -101,21 +101,16 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
 	str_is_uri(x) {return x.includes(":");}
-	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
+	/** @public @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
 		switch(x) {
 			case "https://music.youtube.com/": break;
 			default: debugger; break;
 		}
 	}
-	/** @template {{}} T @arg {{}} x @arg {()=>T|null} wx @returns {asserts x is T} */
-	assert_is_omit_key(x,wx) {
-		function u1() {x; wx;}
-		u1;
-	}
 	/** @type {Map<string,[string,string[]][]>} */
 	strings_map=new Map;
-	/** @private @arg {GU_VE83769_Url_External} b */
+	/** @public @arg {GU_VE83769_Url_External} b */
 	D_YtStudio_Url(b) {
 		const cf="D_YtStudio_Url";
 		if(!this.str_is_uri(b)) {debugger; return;}
@@ -143,7 +138,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
-	/** @private @arg {GU_YoutubeKidsUrl_1} x */
+	/** @public @arg {GU_YoutubeKidsUrl_1} x */
 	D_YoutubeKidsUrl(x) {
 		const cf="D_YoutubeKidsUrl";
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
@@ -827,7 +822,7 @@ class ServiceMethods extends ServiceData {
 			console.log(`[${cf}.next_key] [${ka.shift()}]`);
 		}
 	}
-	/** @private @arg {R_UnifiedSharePanel} x */
+	/** @public @arg {R_UnifiedSharePanel} x */
 	R_UnifiedSharePanel(x) {this.H_s("unifiedSharePanelRenderer",x,this.D_UnifiedSharePanel);}
 	/** @private @arg {Popup_DL_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
@@ -1057,7 +1052,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @param {CF_TE_Endpoint_2} cf
-	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
+	 * @template {Extract<keyof T_EP,KA_EndpointKey>} T_Key @template {TE_Endpoint_2<KA_EndpointKey,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
 	 * @returns {[T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|T_Key>]}
 	 * */
 	TE_Endpoint_2(cf,k,x) {
@@ -1067,7 +1062,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/**
 	 * @protected @template R_D
-	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_2<any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,KA_EndpointKey>} T_Key @template {TE_Endpoint_2<any,any>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
 	 * @returns {[typeof y,R_D]}
@@ -1085,27 +1080,8 @@ class ServiceMethods extends ServiceData {
 		return [y,r1];
 	}
 	/**
-	 * @protected @template R_D
-	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_2_Opt<any,any>} T_Endpoint @arg {T_Endpoint} x
-	 * @arg {T_Key} k
-	 * @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
-	 * @returns {[typeof y,R_D]}
-	 */
-	TE_Endpoint_2_opt_v2(k,x,f1) {
-		let keys=this.get_keys_of(x);
-		let s=new JsonReplacerState({
-			text_decoder: this._decoder,
-			cf: k,keys,is_root: true,
-		});
-		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams: a,[k]: b,...y}=this.s(cf,x); y;
-		a&&this.clickTrackingParams(a);
-		const r1=f1.call(this,b);
-		return [y,r1];
-	}
-	/**
 	 * @arg {CF_TE_TrackedObj_2} cf
-	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
+	 * @template {Extract<keyof T_EP,KA_EndpointKey>} T_Key @template {TE_TrackedObj_2<KA_EndpointKey,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
 	 * @returns {[T_EP[T_Key],Omit<T_EP,"trackingParams"|T_Key>]}
 	 * */
 	TE_TrackedObj_2(cf,x,k) {
@@ -1113,7 +1089,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		return [endpoint,y];
 	}
-	/** @public @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} T_Key @template {TE_Endpoint_Opt_3<T_Key,any,any>} T_EP @arg {T_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]} */
+	/** @public @arg {CF_TE_Endpoint_Opt_3} cf @template {KA_EndpointKey} T_Key @template {TE_Endpoint_Opt_3<T_Key,any,any>} T_EP @arg {T_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
 		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
@@ -1392,7 +1368,7 @@ class ServiceMethods extends ServiceData {
 		if("browseId" in x) return this.y(this,cf,"browseId",x,this.browseId);
 		debugger;
 	}
-	/** @private @arg {GU_VE83769_Url_Redirect|`https://www.youtube.com/${string}`} x */
+	/** @public @arg {GU_VE83769_Url_Redirect|`https://www.youtube.com/${string}`} x */
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
@@ -1467,15 +1443,6 @@ class ServiceMethods extends ServiceData {
 		this.playlistId(playlistId);
 		this.a_primitive_num(index);
 		this.params("watch_playlist.params",params);
-	}
-	/** @private @arg {DE_SignalNavigation} x */
-	DE_SignalNavigation(x) {
-		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x);
-		switch(a) {
-			default: this.cg.codegen_case(`${cf}.signal`,a); break;
-			case "CHANNEL_SWITCHER":
-			case "LIVE_CONTROL_ROOM":
-		}
 	}
 	/** @private @arg {DE_VE3832_Watch} u */
 	DE_VE3832_Watch(u) {
@@ -1956,11 +1923,10 @@ class ServiceMethods extends ServiceData {
 		this.k(cf,x);
 		return x;
 	}
-	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
 	 * @public
 	 * @param {CF_TE_Endpoint_3} cf
-	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
+	 * @template {Extract<keyof T_EP,KA_EndpointKey>} T_Key @template {TE_Endpoint_3<KA_EndpointKey,{},{}>} T_EP @arg {T_EP} x
 	 * @param {T_Key} k
 	 * @returns {[T_EP['commandMetadata'],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]}
 	 */
@@ -2513,17 +2479,6 @@ class ServiceMethods extends ServiceData {
 		if("filterChipTransformCommand" in x) return this.C_FilterChipTransform(x);
 		if("replaceEnclosingAction" in x) return this.A_ReplaceEnclosing(x);
 		debugger;
-	}
-	/** @type {D_UiTargetId[]} */
-	reload_ui_target_id_arr=[];
-	/** @arg {D_UiTargetId} x */
-	D_UiTargetId(x) {
-		if(this.is_yt_uuid(x)) return;
-		switch(x) {
-			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
-			case "comments-section":
-			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
-		}
 	}
 	/** @private @arg {R_PlaylistLoopButton} x */
 	R_PlaylistLoopButton(x) {this.H_s("playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
@@ -3719,14 +3674,6 @@ class ServiceMethods extends ServiceData {
 		let k=this.get_keys_of(y)[0];
 		console.log("[D_DisplayAd.next_key] [%s]",k);
 	}
-	/** @private @arg {D_ClickLocationTarget} x */
-	D_ClickLocationTarget(x) {
-		const cf="D_ClickLocationTarget";
-		const {location,code,behaviorType,...y}=this.s(cf,x); this.g(y);
-		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_LOCATION",location);
-		this.save_number(`${cf}.code`,code);
-		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
-	}
 	/** @public @arg {D_EmptyMap} x */
 	D_EmptyMap(x) {
 		const cf="D_ActiveView";
@@ -3787,7 +3734,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {G_AdPlacementRendererItem} x */
 	G_AdPlacementRendererItem(x) {
 		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
-		if("clientForecastingAdRenderer" in x) return this.R_ClientForecastingAd(x);
+		if("clientForecastingAdRenderer" in x) return this.xm.R_ClientForecastingAd(x);
 		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
 		if("linearAdSequenceRenderer" in x) return this.R_LinearAdSequence(x);
 		debugger;
@@ -5129,13 +5076,13 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
 	D_CompactLink_NavEndpoint(x) {
 		const cf="D_CompactLink_NavEndpoint";
-		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
+		if("uploadEndpoint" in x) return this.xm.E_VE83769_Upload(x);
 		if("browseEndpoint" in x) {
 			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
 			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
 			this.is_TE_VE(x,this.assume_type.never()); debugger; return;
 		}
-		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
+		if("signalNavigationEndpoint" in x) return this.xm.E_SignalNavigation(x);
 		if("urlEndpoint" in x) return this.xm.E_Url(x);
 		x===""; this.codegen_typedef(cf,x);
 	}

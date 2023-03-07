@@ -171,6 +171,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "DS_EY_Subscription";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DS_EY_TranscriptSearchBox";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DS_EY_TranscriptTrackSelection";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "DU_BaseUrl";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DU_MutationDelete";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DU_MutationReplace";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DU_UrlParams";}
@@ -562,6 +563,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_params_2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_continuation_request_browse_token";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PD_event_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_invalidation_continuation";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_invalidation_continuation.f9";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PD_timed_continuation";}
@@ -575,6 +577,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PT_f1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_ad_data_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_buy_flow_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_upcoming_event_reminder_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_bin";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token.f9";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_1";}
@@ -587,6 +590,8 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_f2";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_next_token_item";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "PX_watch_sequence_info";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_PX_watch_next_token_2_f37";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_ad_layout_ad_serving_data_entry";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_bin_params_1";}
@@ -596,8 +601,10 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_create_backstage_post_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_create_comment_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_create_playlist_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_create_reply_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_dislike_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_dislike_params.f1";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_f3_PD_continuation_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_format_item_xtags";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_format_item_xtags.f1";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_get_notification_menu_ctoken";}
@@ -611,6 +618,8 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_notification_add_upcoming_event_reminder_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_notification_opt_out";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_notification_record_interactions";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_notification_remove_upcoming_event_reminder_params";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_perform_comment_action";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_playability_status_context_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_playlist_edit_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_reel_params";}
@@ -622,6 +631,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_subscribe_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_subscription_state_key";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_timed_continuation_data";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "P_transcript_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_transcript_track_selection_serialized_params";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_trending_bp";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "P_unsubscribe_params";}
@@ -715,6 +725,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "TE_SignalService_I_0";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "TM_Visibility";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "TR_ItemSection";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "TX_sequence_info";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "T_Autoplay";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "T_BaseUrl";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "T_Command_TP";}

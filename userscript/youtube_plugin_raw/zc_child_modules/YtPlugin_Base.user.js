@@ -2188,14 +2188,13 @@ class BaseService extends ServiceWithMembers {
 	 * @returns {[U,Omit<T,"webCommandMetadata">]}
 	 * */
 	T_WCM(cf,x,f) {
-		const {webCommandMetadata: a,...y}=this.sm.s(cf,x);
+		const {webCommandMetadata: a,...y}=this.s(cf,x);
 		let ret=f.call(this,a,`G${cf}`);
 		return [ret,y];
 	}
-	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
 	 * @protected @template R_D,R_M
-	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,KA_EndpointKey>} T_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
 	 * @returns {[typeof y,R_M,R_D]}
@@ -2207,7 +2206,7 @@ class BaseService extends ServiceWithMembers {
 			cf: k,keys,is_root: true,
 		});
 		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.sm.s(cf,x); y;
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
 		this.sm.clickTrackingParams(clickTrackingParams);
 		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
 		return [y,r1,r2];
