@@ -203,31 +203,13 @@ class IndexedDBService extends BaseService {
 			if(!o2.value) {debugger; return x;}
 			switch(o2.tag) {
 				default: debugger; break;
-				case "bigint": break;
 				case "number": break;
 				case "channel_id:UC": break;
-				case "browse_id:FE": break;
 				case "keys": break;
-				case "update_id": break;
-				case "browse_id:MP": break;
-				case "browse_id:SP": break;
-				case "browse_id:VL": break;
-				case "browse_id:VL:PL": break;
-				case "browse_id:VL:UC": break;
-				case "exact:play_next": break;
-				case "guide_entry_id": break;
-				case "hashtag_id": break;
-				case "key": break;
-				case "load_id": break;
-				case "playlist_id:LL": break;
-				case "playlist_id:PL": break;
-				case "playlist_id:RD": break;
-				case "playlist_id:RD:MM": break;
-				case "playlist_id:WL": break;
-				case "save_id": break;
-				case "user_id": break;
-				case "video_id": break;
-				case "video_time": break;
+				case "playlist_id:RD": {
+					const {key,value}=o2; key; value;
+					debugger;
+				} break;
 			}
 			const {key,value}=o2;
 			if(!("info_arr" in value)) {
@@ -238,8 +220,7 @@ class IndexedDBService extends BaseService {
 				switch(o_arr_t[0]) {
 					default: debugger; return x;
 					case "many":
-					case "one":
-					case "arr": {
+					case "one": {
 						const z1={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
 						/** @type {DSS_Bigint["z"][0]} */
 						const z2={a: "group",b: value.type,z: [as_any(z1)]};
@@ -251,25 +232,6 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			if(!o_arr_t.raw_id) {debugger; return x;}
-			let raw_id=o_arr_t.raw_id;
-			if(this.str_starts_with_rx("FE",raw_id)) {
-				let [,id]=split_string_once(raw_id,"FE");
-				/** @type {DI_BrowseId_FE} */
-				let rt={
-					b: "browse_id",c: "FE",
-					z: [{
-						a: "key_value",k: "raw_id",
-						z: [{a: "primitive",e: "string",z: [as(raw_id)]}]
-					},{
-						a: "key_value",k: "id",
-						z: [{a: "primitive",e: "string",z: [as(id)]}]
-					}]
-				};
-				/** @type {DST_Browse_FE} */
-				let zt={b: "boxed_id",j: "browse_id:FE",key: `boxed_id:browse_id:FE:${rt.z[1].z[0].z[0]}`,z: [rt]};
-				ret=zt;
-				break x;
-			}
 			switch(value.type) {
 				default: debugger; break;
 				case "channel_id": {
@@ -315,19 +277,16 @@ class IndexedDBService extends BaseService {
 		this.loaded_keys.add(x.key);
 		this.loaded_map.set(x.key,x);
 		this.cache_weak_set.add(x);
-		console.log("[depth_0.keys]",this.get_keys_of(x));
 		this.cache_depth_1(x.z[0]);
 	}
 	/** @arg {CacheTreeDepth1} x */
 	cache_depth_1(x) {
 		this.cache_weak_set.add(x);
-		console.log("[depth_1.keys]",this.get_keys_of(x));
 		this.cache_depth_2(x.z[0]);
 	}
 	/** @arg {CacheTreeDepth2} x */
 	cache_depth_2(x) {
 		if(typeof x==="number") return;
-		console.log("[depth_2.keys]",this.get_keys_of(x));
 		this.cache_weak_set.add(x);
 		this.cache_depth_3(x.z[0]);
 	}
