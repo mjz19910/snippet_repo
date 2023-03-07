@@ -691,7 +691,7 @@ class Support_RS_Player extends BaseService {
 				});
 				this.mf.a_primitive_bool(playableInEmbed);
 				this.t(liveStreamability,this.R_LiveStreamability);
-				this.t(offlineability,this.mf.R_Button);
+				this.t(offlineability,x => this.mf.xm.R_Button(x));
 				this.t(miniplayer,this.R_Miniplayer);
 				let ctx=atob(contextParams);
 				this.mf.params("playability_status.context_params",ctx);
@@ -1336,6 +1336,8 @@ class Support_RS_Page_Browse extends BaseService {
 export_(exports => {exports.Support_RS_Page_Browse=Support_RS_Page_Browse;});
 class Support_RS_Browse extends BaseService {
 	get mf() {return this.x.get("methods");}
+	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	H_(k,x,f) {this.mf.H_cls(this,k,x,f);}
 	/** @public @arg {RS_Browse} x */
 	RS_Browse(x) {
 		const cf="RS_Browse";
@@ -1668,10 +1670,10 @@ class Support_GenericApi extends BaseService {
 	D_AddToPlaylistCreate(x) {
 		const cf="D_AddToPlaylistCreate";
 		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_CompactLink(openCreateLink);
+		this.mf.R_CompactLink(openCreateLink);
 		this.mf.xr.R_TextInputFormField(nameInput);
 		this.R_Dropdown(privacyInput);
-		this.mf.R_Button(createAction);
+		this.mf.xm.R_Button(createAction);
 		this.mf.E_CreatePlaylistService(serviceEndpoint);
 	}
 	/** @private @arg {R_PlaylistAddToOption} x */
@@ -1719,7 +1721,7 @@ class Support_GenericApi extends BaseService {
 		const cf="D_SimpleMenuHeader";
 		const {title,buttons,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
 		this.mf.G_Text(title);
-		this.z(buttons,this.mf.R_Button);
+		this.z(buttons,this.mf.xm.R_Button);
 	}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
@@ -2600,7 +2602,7 @@ class Support_Renderer extends BaseService {
 		const cf="D_SuperVodBuyFlowContent";
 		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z([description,disclaimerText],this.mf.G_Text);
-		this.mf.R_Button(buyButton);
+		this.mf.xm.R_Button(buyButton);
 		this.mf.trackingParams(trackingParams);
 		this.R_PdgCommentPreview(commentPreview);
 		this.R_PdgColorSlider(colorSlider);
@@ -2629,7 +2631,7 @@ class Support_Renderer extends BaseService {
 		this.mf.G_Text(authorText);
 		this.z(commentOptionRenderers,this.R_PdgCommentOption);
 		this.mf.G_Text(defaultCommentText);
-		this.mf.R_Button(editButton);
+		this.mf.xm.R_Button(editButton);
 		this.mf.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
@@ -2639,8 +2641,8 @@ class Support_Renderer extends BaseService {
 		const cf="D_PdgBuyFlowHeader";
 		const {text,helpButton,dismissButton,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
 		this.mf.G_Text(text);
-		this.mf.R_Button(helpButton);
-		this.mf.R_Button(dismissButton);
+		this.mf.xm.R_Button(helpButton);
+		this.mf.xm.R_Button(dismissButton);
 	}
 	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
 	R_SingleColumnMusicWatchNextResults(x) {this.H_("singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
@@ -3002,7 +3004,7 @@ class Support_Renderer extends BaseService {
 		this.z(contents,this.R_RichItem);
 		this.mf.trackingParams(trackingParams);
 		this.R_Menu(menu);
-		this.mf.R_Button(showMoreButton);
+		this.mf.xm.R_Button(showMoreButton);
 		switch(rowIndex) {
 			default: this.cg.codegen_case(`${cf}.rowIndex`,rowIndex); break;
 			case 2: case 4: break;
@@ -3031,8 +3033,8 @@ class Support_Renderer extends BaseService {
 		const {ratings,trackingParams,notSureButton,undoButton,notSureEndpoint,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(ratings,x => this.mf.xr.R_RatingSurveyOption(x));
 		this.mf.trackingParams(trackingParams);
-		this.mf.R_Button(notSureButton);
-		this.mf.R_Button(undoButton);
+		this.mf.xm.R_Button(notSureButton);
+		this.mf.xm.R_Button(undoButton);
 		this.g(notSureEndpoint);
 	}
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
@@ -3120,7 +3122,7 @@ class Support_Renderer extends BaseService {
 		const cf="D_ChannelSwitcherHeader";
 		const {title,button,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
 		this.mf.G_Text(title);
-		this.mf.R_Button(button);
+		this.mf.xm.R_Button(button);
 	}
 	/** @private @arg {D_ChipColorPalette} x */
 	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.mf.codegen_typedef(cf,x); this.GEN(cf,x);}
@@ -3206,7 +3208,7 @@ class Support_Renderer extends BaseService {
 		const cf="D_ExpandableSurveyResponse";
 		const {options,submitButton,trackingParams,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
 		this.mf.xr.R_RatingSurvey(options);
-		this.mf.R_Button(submitButton);
+		this.mf.xm.R_Button(submitButton);
 		this.mf.trackingParams(trackingParams);
 	}
 	/** @arg {R_AutomixPreviewVideo} x */
@@ -3249,11 +3251,11 @@ class Support_Renderer extends BaseService {
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
 		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.mf.s(cf,x);
-		this.mf.R_Button(playButton);
+		this.mf.xm.R_Button(playButton);
 		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.playlistId(playlistId);
 		this.save_string(`${cf}.privacy`,privacy);
-		this.mf.R_Button(shufflePlayButton);
+		this.mf.xm.R_Button(shufflePlayButton);
 		this.mf.trackingParams(trackingParams);
 		this.D_EditableDetails(editableDetails);
 		this.t(editorEndpoint,this.E_PlaylistEditor);
@@ -3278,7 +3280,7 @@ class Support_Renderer extends BaseService {
 		this.mf.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
 		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
-		this.t(shareButton,this.mf.R_Button);
+		this.t(shareButton,this.mf.xm.R_Button);
 		this.t(titleForm,this.R_InlineForm);
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
@@ -3303,9 +3305,9 @@ class Support_Renderer extends BaseService {
 		const cf="D_InlineForm";
 		const {formField,editButton,saveButton,cancelButton,textDisplayed,style,placeholder,...y}=this.mf.s(cf,x); this.g(y);
 		this.R_TextInputFormField(formField);
-		this.mf.R_Button(editButton);
-		this.mf.R_Button(saveButton);
-		this.mf.R_Button(cancelButton);
+		this.mf.xm.R_Button(editButton);
+		this.mf.xm.R_Button(saveButton);
+		this.mf.xm.R_Button(cancelButton);
 		this.t(textDisplayed,this.mf.G_Text);
 		this.save_enum(cf,"INLINE_FORM_STYLE",style);
 		this.t(placeholder,this.mf.G_Text);
@@ -3385,7 +3387,7 @@ class Support_Renderer extends BaseService {
 		this.D_Thumbnail(tvBanner);
 		this.D_Thumbnail(mobileBanner);
 		this.mf.trackingParams(trackingParams);
-		this.t(sponsorButton,this.mf.R_Button);
+		this.t(sponsorButton,this.mf.xm.R_Button);
 		this.mf.G_Text(channelHandleText);
 		this.mf.G_Text(videosCountText);
 		const {visitTracking,...y}=u; this.g(y);
@@ -3413,8 +3415,8 @@ class Support_Renderer extends BaseService {
 		this.mf.trackingParams(trackingParams);
 		this.mf.G_Text(dismissalReasonsPrompt);
 		this.z(reasons,this.R_DismissalReasonText);
-		this.mf.R_Button(cancelButton);
-		this.mf.R_Button(submitButton);
+		this.mf.xm.R_Button(cancelButton);
+		this.mf.xm.R_Button(submitButton);
 		this.E_SubmitFeedback(submitFeedbackEndpoint);
 		this.mf.cq(dismissalViewStyle,"DISMISSAL_VIEW_STYLE_COMPACT_TALL");
 	}
@@ -3430,7 +3432,7 @@ class Support_Renderer extends BaseService {
 			this.D_Thumbnail(thumbnail);
 			this.E_Watch(onTap);
 			this.mf.trackingParams(trackingParams);
-			this.mf.R_Button(shareButton);
+			this.mf.xm.R_Button(shareButton);
 			this.t(repeatButton,this.R_ToggleButton);
 			this.mf.params("macro_marker_repeat_state.entity.key",a);
 			this.t(endRepeatCommand,this.C_CommandExecutor);
@@ -3541,7 +3543,7 @@ class Support_Renderer extends BaseService {
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent";
-		if("buttonRenderer" in x) return this.mf.R_Button(x);
+		if("buttonRenderer" in x) return this.mf.xm.R_Button(x);
 		if("accountItem" in x) return this.mf.ht.A_AccountItem(x);
 		x===""; this.mf.codegen_typedef(cf,x);
 	}
@@ -4067,13 +4069,13 @@ class Support_Renderer extends BaseService {
 	D_CommentReplyDialog(x) {
 		const cf="D_CommentReplyDialog";
 		const {replyButton,cancelButton,authorThumbnail,editableText,placeholderText,errorMessage,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=this.mf.s(cf,x); this.g(y);/*#destructure_done*/
-		this.mf.R_Button(replyButton);
-		this.mf.R_Button(cancelButton);
+		this.mf.xm.R_Button(replyButton);
+		this.mf.xm.R_Button(cancelButton);
 		this.D_Thumbnail(authorThumbnail);
 		this.t(editableText,this.mf.G_Text);
 		this.mf.G_Text(placeholderText);
 		this.mf.G_Text(errorMessage);
-		this.mf.R_Button(emojiButton);
+		this.mf.xm.R_Button(emojiButton);
 		this.R_EmojiPicker(emojiPicker);
 		this.mf.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
 	}
@@ -4124,16 +4126,16 @@ class Support_Renderer extends BaseService {
 		this.t(likeButton,this.R_LikeButton);
 		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
 		this.t(menu,this.R_Menu);
-		this.t(nextItemButton,this.mf.R_Button);
-		this.t(prevItemButton,this.mf.R_Button);
+		this.t(nextItemButton,this.mf.xm.R_Button);
+		this.t(prevItemButton,this.mf.xm.R_Button);
 		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.t(viewCommentsButton,this.mf.R_Button);
+		this.t(viewCommentsButton,this.mf.xm.R_Button);
 		this.t(videoInteractions,this.g);
 		const {trackingParams,reelPlayerNavigationModel,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=u; this.g(y);/*#destructure_done*/
 		this.mf.trackingParams(trackingParams);
 		{const x2=reelPlayerNavigationModel; this.t(x2,this.wg(x2,"REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
-		this.t(shareButton,this.mf.R_Button);
+		this.t(shareButton,this.mf.xm.R_Button);
 		this.t(pivotButton,this.R_PivotButton);
 		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
 		this.t(badge,this.RMD_Badge);
@@ -4200,7 +4202,7 @@ class Support_Methods extends BaseService {
 		const cf="D_VoiceSearchDialog";
 		const {trackingParams,exitButton,...y}=this.mf.s(cf,x);
 		this.mf.trackingParams(trackingParams);
-		this.mf.R_Button(exitButton);
+		this.mf.xm.R_Button(exitButton);
 		let u=Object.entries(y);
 		for(let x of u) {
 			let c=x[1];
@@ -4210,6 +4212,8 @@ class Support_Methods extends BaseService {
 			}
 		}
 	}
+	/** @protected @arg {E_SignalService_SendPost} x */
+	E_SignalService_SendPost(x) {const [a,b]=this.T_SE_Signal("E_SignalService_SendPost",x); this.M_SendPost(a); this.G_ClientSignal(b);}
 	/** @protected @arg {G_ClientSignal} x */
 	G_ClientSignal(x) {
 		const cf="G_ClientSignal";
@@ -4306,6 +4310,267 @@ class Support_Methods extends BaseService {
 			}
 		}
 		return a;
+	}
+	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
+	GE_ResponseReceived(cf,x) {
+		this.save_keys(`${cf}.response_endpoint`,x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
+		if("changeKeyedMarkersVisibilityCommand" in x) return this.C_ChangeKeyedMarkersVisibility(x);
+		if("loadMarkersCommand" in x) return this.C_LoadMarkers(x);
+		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
+		debugger;
+	}
+	/** @private @arg {D_ToggleButton_ToggledSrvEP} x */
+	D_ToggleButton_ToggledSrvEP(x) {
+		const cf="D_ToggleButton_ToggledSrvEP"; this.k(cf,x);
+		if("performCommentActionEndpoint" in x) return this.xr.E_PerformCommentAction(x);
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
+		if("removeUpcomingEventReminderEndpoint" in x) return this.E_RemoveUpcomingEventReminder(x);
+		x===""; debugger;
+	}
+	/** @private @arg {D_ToggleButton_DefaultSrvEP} x */
+	D_ToggleButton_DefaultSrvEP(x) {
+		const cf="D_ToggleButton_DefaultSrvEP"; this.k(cf,x);
+		if("performCommentActionEndpoint" in x) return this.xr.E_PerformCommentAction(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
+		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("addUpcomingEventReminderEndpoint" in x) return this.E_AddUpcomingEventReminder(x);
+		x===""; debugger;
+	}
+	/** @public @arg {R_SubscribeButton} x */
+	R_SubscribeButton(x) {this.H_s("subscribeButtonRenderer",x,this.D_SubscribeButton);}
+	/** @private @arg {D_SubscribeButton} x */
+	D_SubscribeButton(x) {
+		const cf="D_SubscribeButton";
+		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
+		this.a_primitive_bool(enabled);
+		this.t(buttonText,this.G_Text);
+		this.t(subscribed,this.a_primitive_bool);
+		this.t(type,x => this.ceq(x,"FREE"));
+		this.t(channelId,this.channelId);
+		if(trackingParams) this.trackingParams(trackingParams);
+		this.t(showPreferences,this.a_primitive_bool);
+		let [p1,o1]=this.unwrap_prefix(y1,"subscribed");
+		this.D_SubscribeButton_SubscribedPrefix(p1);
+		let [p2,o2]=this.unwrap_prefix(o1,"unsubscribed");
+		this.D_SubscribeButton_UnsubscribedPrefix(p2);
+		let [p3,o3]=this.unwrap_prefix(o2,"subscribe");
+		this.D_SubscribeButton_SubscribePrefix(p3);
+		let [p4,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
+		this.D_SubscribeButton_UnsubscribePrefix(p4);
+		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
+		this.tz(onSubscribeEndpoints,this.E_Subscribe);
+		this.tz(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
+		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
+		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
+		const {serviceEndpoints,...y}=y2; this.g(y);
+		this.tz(serviceEndpoints,x => {
+			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
+			if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+			debugger;
+		});
+	}
+	/** @private @arg {D_Button_SE} x */
+	D_Button_SE(x) {
+		const cf="D_Button_SE";
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
+		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
+		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
+		if("createCommentReplyEndpoint" in x) return this.xr.E_CreateCommentReply(x);
+		let gen_name=this.get_codegen_name(cf,x);
+		if(!gen_name) {debugger; return;}
+		x===""; this.codegen_typedef(`${cf}$${gen_name}`,x,true);
+	}
+	/**
+	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
+	 * @returns {[p1,p2,o2]}
+	 * */
+	D_ThumbnailOverlayToggleButton_Omit(cf,x) {
+		this.k(cf,x);
+		let [p1,{...o1}]=this.unwrap_prefix(x,"toggled");
+		let [p2,{trackingParams,...o2}]=this.unwrap_prefix(o1,"untoggled");
+		this.trackingParams(trackingParams);
+		return [p1,p2,o2];
+	}
+	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
+	R_ThumbnailOverlayToggleButton(x) {this.H_s("thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
+	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
+	D_ThumbnailOverlayToggleButton(x) {
+		const cf="D_ThumbnailOverlayToggleButton";
+		if("toggledServiceEndpoint" in x) {
+			const [o1,o2,{isToggled,...y}]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);
+			this.ceq(isToggled,this.false_());
+			this.D_ThumbnailOverlayToggleButton_ToggledPrefix_1(o1);
+			this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(o2);
+			return;
+		}
+		const [o1,o2,y]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);
+		this.D_ThumbnailOverlayToggleButton_ToggledPrefix_2(o1);
+		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
+	}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"toggled">} x */
+	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
+		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
+		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Accessibility(accessibility);
+		this.T_Icon(`${cf}:icon`,icon);
+		if(tooltip!=="Added") debugger;
+		this.E_PlaylistEdit(serviceEndpoint);
+	}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"untoggled">} x */
+	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x) {
+		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";
+		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Accessibility(accessibility);
+		this.T_Icon(`${cf}:icon`,icon);
+		if(tooltip!=="Add to queue") debugger;
+		this.E_SignalService_SendPost(serviceEndpoint);
+	}
+	/** @private @arg {AD_Signal} x */
+	AD_Signal(x) {
+		const cf="AD_Signal";
+		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(signal) {
+			default: debugger; break;
+			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
+		}
+	}
+	/** @private @arg {AD_SendFeedback} x */
+	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
+	/** @public @arg {R_Button} x */
+	R_Button(x) {this.H_s("buttonRenderer",x,this.D_Button);}
+	/** @private @arg {D_Button_targetId} x */
+	D_Button_targetId(x) {
+		let cf="D_Button_targetId";
+		switch(x) {
+			default: debugger; x===""; break;
+			case "watch-supervod-button":
+			case "clip-info-button":
+			case "create-clip-button-action-bar":
+			case "sponsorships-button":
+		}
+		this.targetId(cf,x);
+	}
+	/** @private @arg {D_Button_NavEP} x */
+	D_Button_NavEP(x) {
+		const cf="D_Button_NavEP";
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
+		}
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
+		x.createCommentReplyDialogEndpoint;
+		if("createCommentReplyDialogEndpoint" in x) return this.xr.E_CreateCommentReplyDialog(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {D_Button} x */
+	D_Button(x) {
+		const cf="D_Button";
+		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(hint,this.R_Hint);
+		this.t(iconPosition,x => this.save_enum(cf,"BUTTON_ICON_POSITION_TYPE",x));
+		this.t(targetId,this.D_Button_targetId);
+		this.t(serviceEndpoint,this.D_Button_SE);
+		this.t(style,x => this.save_string(`${cf}.style`,x));
+		this.t(isDisabled,this.a_primitive_bool);
+		this.t(text,this.G_Text);
+		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
+		this.t(navigationEndpoint,this.D_Button_NavEP);
+		this.t(accessibility,this.D_Label);
+		this.t(tooltip,this.a_primitive_str);
+		this.t(trackingParams,x => this.trackingParams(x));
+		this.t(accessibilityData,this.D_Accessibility);
+		this.t(command,this.GC_Button);
+	}
+	/** @protected @arg {G_ThumbnailOverlayItem} x */
+	G_ThumbnailOverlayItem(x) {
+		const cf="G_ThumbnailOverlayItem";
+		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
+		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
+		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
+		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
+		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
+		this.codegen_typedef(`ThumbnailOverlay$${cf}`,x);
+	}
+	/** @protected @arg {R_HeroPlaylistThumbnail} x */
+	R_HeroPlaylistThumbnail(x) {this.H_s("heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
+	/** @private @arg {D_HeroPlaylistThumbnail} x */
+	D_HeroPlaylistThumbnail(x) {
+		const cf="D_HeroPlaylistThumbnail";
+		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(thumbnail);
+		if(this.num_to_string(maxRatio)!=="0.5625") debugger;
+		this.trackingParams(trackingParams);
+		this.E_Watch(onTap);
+		this.G_ThumbnailOverlayItem(thumbnailOverlays);
+	}
+	/** @private @arg {D_EndScreenVideo} x */
+	D_EndScreenVideo(x) {
+		const cf="D_EndScreenVideo";
+		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(videoId);
+		this.G_Text(shortViewCountText);
+		this.G_Text(shortBylineText);
+		this.D_Thumbnail(thumbnail);
+		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		this.t(lengthInSeconds,this.a_primitive_num);
+		this.t(lengthText,this.G_Text);
+		this.G_Text(publishedTimeText);
+		x: {
+			let x=navigationEndpoint;
+			if("watchEndpoint" in x) {this.E_Watch(x); break x;}
+			if(!x.reelWatchEndpoint) debugger;
+		}
+	}
+	/** @public @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:G_ThumbnailOverlayItem[]}} T @arg {T} x */
+	D_Omit_ThumbnailOverlay(cf,x) {
+		const {thumbnailOverlays,...y}=this.s(cf,x);
+		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		return y;
+	}
+	/** @public @arg {R_PlaylistPanelVideo} x */
+	R_PlaylistPanelVideo(x) {this.H_s("playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
+	/** @private @arg {D_PlaylistPanelVideo} x */
+	D_PlaylistPanelVideo(x) {
+		const cf="D_PlaylistPanelVideo";
+		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_off*/
+		this.D_Thumbnail(thumbnail);
+		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		this.videoId(videoId);
+		this.a_primitive_str(playlistSetVideoId);
+		this.D_DarkColorPalette(cf,darkColorPalette);
+		this.D_LightColorPalette(cf,lightColorPalette);
+		this.G_Text(longBylineText);
+		this.G_Text(shortBylineText);
+		this.a_primitive_bool(selected);
+		this.G_Text(lengthText);
+		this.R_Menu(menu);
+		this.E_Watch(navigationEndpoint);
+		if("indexText" in y) return this.y(cf,"indexText",y,this.G_Text);
+		let kl=this.get_keys_of(y).length;
+		if(kl>0) {
+			this.codegen_typedef(`${cf}:omit`,y);
+		}
+		this.g(y);
 	}
 }
 export_(exports => {exports.Support_Methods=Support_Methods;});

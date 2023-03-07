@@ -470,7 +470,7 @@ class HandleTypes extends BaseService {
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,attributedDescription,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.mf.trackingParams(trackingParams);
 		this.t(description,x => this.mf.G_Text(x));
-		this.mf.R_SubscribeButton(subscribeButton);
+		this.mf.xm.R_SubscribeButton(subscribeButton);
 		this.mf.RMD_RowContainer(metadataRowContainer);
 		this.mf.G_Text(showMoreText);
 		this.mf.G_Text(showLessText);
@@ -1060,7 +1060,7 @@ class HandleTypes extends BaseService {
 		this.t(currentVideoEndpoint,x => this.mf.E_Watch(x));
 		this.mf.trackingParams(trackingParams);
 		this.t(playerOverlays,x => this.mf.R_PlayerOverlay(x));
-		this.tz(onResponseReceivedEndpoints,a => this.mf.GE_ResponseReceived(cf,a));
+		this.tz(onResponseReceivedEndpoints,a => this.xm.GE_ResponseReceived(cf,a));
 		this.tz(engagementPanels,x => this.mf.R_EngagementPanelSectionList(x));
 		this.t(topbar,x => this.mf.R_DesktopTopbar(x));
 		this.tz(pageVisualEffects,x => this.mf.R_CinematicContainer(x));
@@ -1120,11 +1120,12 @@ class HandleTypes extends BaseService {
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.mf.trackingParams(trackingParams);
 	}
+	get xm() {return this.x.get("x_methods");}
 	/** @public @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let pu=this.mf.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
+		let pu=this.xm.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
 		if("pdgBuyFlowRenderer" in pu) {this.xr.R_PdgBuyFlow(pu);}
 		pu.pdgBuyFlowRenderer;
 		this.mf.trackingParams(trackingParams);
@@ -1150,7 +1151,7 @@ class HandleTypes extends BaseService {
 		const cf="RSL_Like";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,x => {
-			if("openPopupAction" in x) return this.mf.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
 	}
@@ -1159,7 +1160,7 @@ class HandleTypes extends BaseService {
 		const cf="RSL_Dislike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let ac=this.tz(actions,x => {
-			if("openPopupAction" in x) return this.mf.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
 		if(!ac) return;
@@ -1171,7 +1172,7 @@ class HandleTypes extends BaseService {
 		const cf="RSL_RemoveLike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,(x => {
-			if("openPopupAction" in x) return this.mf.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		}));
 	}

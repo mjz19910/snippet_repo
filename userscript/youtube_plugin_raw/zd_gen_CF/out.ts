@@ -869,6 +869,7 @@ export namespace Gen {
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_UndoFeedback";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_Unsubscribe";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_Url";}
+		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_UserFeedback";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_VE11487";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_VE23462";}
 		|{n: "CF_TE_Endpoint_3"; t: CF_TE_Endpoint_3; v: "E_VE3611";}
