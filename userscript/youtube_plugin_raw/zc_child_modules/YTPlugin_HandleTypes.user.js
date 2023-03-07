@@ -3256,7 +3256,7 @@ class HandleTypes extends ServiceMethods {
 			case "browse_id": {
 				const b=u.k; const raw_id=u.z[0].z[0];
 				let id_info=this.get_parsed_info({b: "any",raw_id});
-				console.log(id_info);
+				console.log(b,id_info);
 			} break;
 			case "guide_entry_id": {
 				const b=u.k; const raw_id=u.z[0].z[0];
