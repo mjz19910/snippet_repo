@@ -569,7 +569,7 @@ class IndexedDBService extends BaseService {
 			case "key": {
 				let [j,id]=args;
 				/** @type {DST_KeySection} */
-				const z={a: "DST",b: "boxed_id",j,c: id,key: `boxed_id:${j}:${id}:${x.z[0].z[0].z[0]}`,z: [x]};
+				const z={a: "DST",b: "boxed_id",j,k: id,key: `boxed_id:${j}:${id}:${x.z[0].z[0].z[0]}`,z: [x]};
 				return {args,promise: this.put_box(z,version)};
 			}
 			case "guide_entry_id": /*db*/ {
@@ -948,6 +948,23 @@ class IndexedDBService extends BaseService {
 			let loaded_value=this.loaded_map.get(value.key);
 			if(value.b!=="boxed_id") {debugger; break x;}
 			let nw=null,ww=null,wj=null,nj=null;
+			switch(value.a) {
+				case "SS:D": break;
+				case "ST:D": {
+					value.j;
+				} break;
+				case "boxed_store": {
+					switch(value.d) {
+						default: debugger; break;
+						case "bigint": break;
+						case "boolean": break;
+						case "keys": break;
+						case "string": break;
+						case "number": break;
+						case "root_visual_element": break;
+					}
+				} break;
+			}
 			if("w" in value) ww=value; else nw=value;
 			if(nw!==null&&"j" in nw) wj=nw; else if(nw!==null) nj=nw;
 			if(nj!==null&&nj.a!=="boxed_store") {debugger; break x;}
@@ -960,18 +977,11 @@ class IndexedDBService extends BaseService {
 				case "number": break;
 				case "root_visual_element": break;
 			}
-			let wa,na;
-			if(wj!==null&&"a" in wj) wa=wj; else na=wj;
-			na; wa;
-			if(wj) {
-				let hsk=this.get_keys_of(wj);
-				/** @type {typeof hsk} */
-				let hk=["j","key"];
-				let [k1,k2,k3,k4,...ky]=this.get_keys_of_2(wj); k3; k4; ky;
-				if(hk.includes(k1)&&hk.includes(k2)) {}
+			if(wj) switch(wj.j) {
+				default: debugger; break;
+				case "browse_id:FE": break;
 			}
-			wj;
-			nw; ww; wj; nj;
+			ww&&ww.a;
 			console.log("has loaded cache value",loaded_value,value);
 		}
 		try {
