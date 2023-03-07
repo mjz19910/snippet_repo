@@ -18,6 +18,8 @@ const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 class ServiceMethods extends ServiceData {
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:ServiceMethods,x:T)=>U} f */
+	t(x,f) {return this.t_base(x,f);}
 	k=this.save_keys;
 	ks=this.k;
 	/** @private @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */

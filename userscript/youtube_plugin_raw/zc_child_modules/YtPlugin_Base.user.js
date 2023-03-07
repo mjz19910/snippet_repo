@@ -2452,10 +2452,10 @@ class BaseService extends ServiceWithMembers {
 	/** @protected @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	g(x) {this.on_empty_object(x);}
 	/** @public @template {{}} T @arg {({} extends T?T_DistributedKeysOf<T> extends []?T:never:never)|null|undefined} x */
-	tg(x) {this.t(x,this.g);}
+	tg_base(x) {this.t_base(x,this.g);}
 	// takes nullish (as None), returns null (as None)
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f */
-	t(x,f) {if(x==null) return null; return f.call(this,x);}
+	t_base(x,f) {if(x==null) return null; return f.call(this,x);}
 	/** @protected @template U @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>U} f */
 	tz(x,f) {if(x==null) return null; return this.z(x,f);}
 	// takes null (as None), returns undefined (as None)
@@ -2503,9 +2503,9 @@ class BaseService extends ServiceWithMembers {
 	/** @template T @arg {T} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U>} */
 	ms(x,y) {return this.mt(this.m(x),y);}
 	/** @template {{}} T @arg {T|undefined} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U|null>} */
-	ms_t(x,y) {return this.ms(x,x => this.t(x,y));}
+	ms_t(x,y) {return this.ms(x,x => this.t_base(x,y));}
 	/** @template {{}} T @arg {Some<T|null>} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U|null>} */
-	mt_t(x,y) {return this.mt(x,x => this.t(x,y));}
+	mt_t(x,y) {return this.mt(x,x => this.t_base(x,y));}
 	/** @template {string} T_CF @arg {T_CF} cf @arg {(this:this,cf:T_CF,x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U|null>} */
 	mt_cf(m,cf,f) {return this.mt(m,x => this.t_cf(cf,x,f));}
 	//#endregion

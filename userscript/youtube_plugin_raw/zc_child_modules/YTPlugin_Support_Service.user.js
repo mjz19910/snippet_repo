@@ -597,6 +597,8 @@ class Support_RS_Player extends BaseService {
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
 	}
 	//#endregion
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_Player,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player";
@@ -1244,6 +1246,8 @@ class Support_RS_WatchPage extends BaseService {
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.t(csn,x => this.sm.D_VeCsn(x));
 	}
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_WatchPage,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
 		const cf="RS_Page_Watch"; this.sm.k(cf,x);
@@ -1311,6 +1315,8 @@ class Support_RS_Page_Browse extends BaseService {
 }
 export_(exports => {exports.Support_RS_Page_Browse=Support_RS_Page_Browse;});
 class Support_RS_Browse extends BaseService {
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_Browse,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	/** @public @arg {RS_Browse} x */
 	RS_Browse(x) {
 		const cf="RS_Browse";
@@ -1401,6 +1407,8 @@ class Support_RS_Browse extends BaseService {
 }
 export_(exports => {exports.Support_RS_Browse=Support_RS_Browse;});
 class Support_GenericApi extends BaseService {
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_GenericApi,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	/** @private @arg {Popup_DD_NotificationMenu} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
@@ -1684,6 +1692,8 @@ class Support_GenericApi extends BaseService {
 }
 export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
 class Support_EventInput extends BaseService {
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_EventInput,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.sm.is_TE_VE(x.endpoint,t);}
 	//#region Renderer & Group
@@ -2254,6 +2264,8 @@ class Support_VE extends BaseService {
 }
 export_(exports => {exports.Support_VE=Support_VE;});
 class Support_VE37414 extends BaseService {
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_VE37414,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	/** @private @arg {D_SerializedContextData} x */
 	D_QoeLoggingContext(x) {
 		const cf="D_QoeLoggingContext";
@@ -2305,6 +2317,8 @@ class Support_VE37414 extends BaseService {
 }
 export_(exports => {exports.Support_VE37414=Support_VE37414;});
 class Support_Renderer extends BaseService {
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_Renderer,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	//#region data members
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
@@ -3981,6 +3995,8 @@ class Support_Renderer extends BaseService {
 }
 export_(exports => {exports.Support_Renderer=Support_Renderer;});
 class ForService_XMethods extends BaseService {
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:ForService_XMethods,x:T)=>U} F @arg {F} f */
+	t(x,f) {return this.t_base(x,f);}
 	/** @private @arg {R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
 	/** @private @arg {D_VoiceSearchDialog} x */
@@ -5292,7 +5308,7 @@ class ForService_XMethods extends BaseService {
 		this.sm.R_Menu(menu);
 		this.sm.E_Watch(navigationEndpoint);
 		this.tz(badges,this.sm.RMD_Badge);
-		this.tg(description);
+		this.tg_base(description);
 		this.sm.G_Text(showMoreText);
 		this.t(titleForm,this.R_InlineForm);
 		this.t(descriptionForm,this.R_InlineForm);

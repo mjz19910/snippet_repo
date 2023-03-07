@@ -449,6 +449,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
+	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:HandleTypes,x:T)=>U} f */
+	t(x,f) {return this.t_base(x,f);}
 	//#region Renderer methods
 	/** @public @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
@@ -2160,7 +2162,7 @@ class HandleTypes extends BaseService {
 		const cf="P_logging_context_serialized_context_data",t=this;
 		const {1: v1,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.PK_f1(this.T_VW(v1));
-		t.t(t.t(v3,t.TV_Str),x => this.sm.playlistId(x));
+		t.t(t.t(v3,x => t.TV_Str(x)),x => this.sm.playlistId(x));
 	}
 	/** @type {string[]} */
 	params_to_decode=[];
