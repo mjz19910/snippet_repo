@@ -106,13 +106,13 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_data_to_index(k,x) {
-		let idx=this.sm.key_index.get(k);
+		let idx=this.key_index.get(k);
 		if(idx!==void 0) {
 			this.data[idx]=[k,x];
 			return;
 		}
 		let new_len=this.data.push([k,x]);
-		this.sm.key_index.set(k,new_len-1);
+		this.key_index.set(k,new_len-1);
 		this.data_update_callback();
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
@@ -192,7 +192,7 @@ class StoreDescription extends ApiBase2 {
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x_container */
 	save_data(k,x_container) {
 		if(this.includes_key(k)) {
-			let idx=this.sm.key_index.get(k);
+			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
 			let y_item=this.data[idx];
 			let y_container=y_item[1];
@@ -281,18 +281,18 @@ class StoreDescription extends ApiBase2 {
 		/** @type {[typeof k,typeof x]} */
 		let p=[k,x];
 		let nk=this.data.push(p)-1;
-		this.sm.key_index.set(k,nk);
+		this.key_index.set(k,nk);
 		return p;
 	}
 	/** @arg {string} k */
 	includes_key(k) {
-		let idx=this.sm.key_index.get(k);
+		let idx=this.key_index.get(k);
 		if(idx!==void 0) return true;
 		return false;
 	}
 	/** @arg {string} key */
 	index_get(key) {
-		let idx=this.sm.key_index.get(key);
+		let idx=this.key_index.get(key);
 		if(idx===void 0) return null;
 		return this.data[idx];
 	}
@@ -1334,9 +1334,9 @@ class Support_RS_Page_Browse extends BaseService {
 }
 export_(exports => {exports.Support_RS_Page_Browse=Support_RS_Page_Browse;});
 class Support_RS_Browse extends BaseService {
-	get sm() {return this.x.get("methods");}
+	get s() {return this.x.get("methods");}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
+	H_(k,x,f) {this.s.H_cls(this,k,x,f);}
 	/** @public @arg {RS_Browse} x */
 	RS_Browse(x) {
 		const cf="RS_Browse";
@@ -1405,155 +1405,24 @@ class Support_RS_Browse extends BaseService {
 				break x;
 			}
 		}
-		const {responseContext,header,trackingParams,onResponseReceivedActions,onResponseReceivedEndpoints,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.RC_ResponseContext(responseContext);
-		this.t(header,this.G_BrowseHeader);
-		this.sm.trackingParams(trackingParams);
-		this.tz(onResponseReceivedActions,this.GA_ResponseReceived);
-		this.tz_cf(cf,onResponseReceivedEndpoints,this.sm.xm.GE_ResponseReceived);
-		this.t(contents,this.G_BrowseContents);
-		this.t(topbar,this.sm.R_DesktopTopbar);
-		this.t(frameworkUpdates,this.sm.R_EntityBatchUpdate);
-		this.t(sidebar,this.G_BrowseSidebar);
-		this.tz(observedStateTags,this.sm.B_StateTag);
-		this.t(cacheMetadata,this.sm.D_Cache_MD);
-		this.t(metadata,this.G_Browse_MD);
-		this.t(microformat,this.sm.R_Microformat);
+		const {responseContext,header,trackingParams,onResponseReceivedActions,onResponseReceivedEndpoints,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s.s(cf,x); this.g(y);/*#destructure_done*/
+		this.s.RC_ResponseContext(responseContext);
+		this.t(header,this.s.xm.G_BrowseHeader);
+		this.s.trackingParams(trackingParams);
+		this.tz(onResponseReceivedActions,this.s.xm.GA_ResponseReceived);
+		this.tz_cf(cf,onResponseReceivedEndpoints,this.s.xm.GE_ResponseReceived);
+		this.t(contents,this.s.xm.G_BrowseContents);
+		this.t(topbar,this.s.R_DesktopTopbar);
+		this.t(frameworkUpdates,this.s.R_EntityBatchUpdate);
+		this.t(sidebar,this.s.xm.G_BrowseSidebar);
+		this.tz(observedStateTags,this.s.B_StateTag);
+		this.t(cacheMetadata,this.s.D_Cache_MD);
+		this.t(metadata,this.s.xm.G_Browse_MD);
+		this.t(microformat,this.s.R_Microformat);
 		this.t(maxAgeStoreSeconds,x => this._primitive_of(x,"number"));
-		this.t(background,this.R_MusicThumbnail);
-		this.t(continuationContents,this.sm.RC_SectionList);
-		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
-	}
-	/** @private @arg {R_FeedTabbedHeader} x */
-	R_FeedTabbedHeader(x) {this.H_("feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
-	/** @private @arg {D_FeedTabbedHeader} x */
-	D_FeedTabbedHeader(x) {
-		const cf="D_FeedTabbedHeader";
-		const {title,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.G_Text(title);
-	}
-	/** @private @arg {G_BrowseHeader} x */
-	G_BrowseHeader(x) {
-		const cf="G_BrowseHeader";
-		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
-		if("c4TabbedHeaderRenderer" in x) return this.sm.xr.R_C4TabbedHeader(x);
-		if("playlistHeaderRenderer" in x) return this.sm.xr.R_PlaylistHeader(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
-	/** @private @arg {R_MusicThumbnail} x */
-	R_MusicThumbnail(x) {this.H_("musicThumbnailRenderer",x,this.D_MusicThumbnail);}
-	/** @private @arg {D_MusicThumbnail} x */
-	D_MusicThumbnail(x) {
-		const cf="D_MusicThumbnail";
-		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(a);
-		this.sm.D_Thumbnail(thumbnail);
-		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
-		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
-	}
-	/** @private @arg {G_Browse_MD} x */
-	G_Browse_MD(x) {
-		const cf="G_Browse_MD";
-		if("channelMetadataRenderer" in x) return this.sm.xr.R_Channel_MD(x);
-		if("playlistMetadataRenderer" in x) return this.sm.xr.R_Playlist_MD(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_BrowseSidebar} x */
-	G_BrowseSidebar(x) {
-		const cf="G_BrowseSidebar";
-		if("settingsSidebarRenderer" in x) return this.sm.xr.R_SettingsSidebar(x);
-		if("playlistSidebarRenderer" in x) return this.sm.xr.R_PlaylistSidebar(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
-	/** @private @arg {C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
-	/** @private @arg {DC_ResetChannelUnreadCount} x */
-	DC_ResetChannelUnreadCount(x) {
-		const cf="DC_ResetChannelUnreadCount";
-		const {channelId,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.channelId(channelId);
-	}
-	/** @private @arg {GA_ResponseReceived} x */
-	GA_ResponseReceived(x) {
-		const cf="GA_ResponseReceived";
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
-		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_BrowseContents} x */
-	G_BrowseContents(x) {
-		const cf="G_BrowseContents";
-		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
-		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
-	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
-	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
-		let b_info=this.is_browse_feedUC(x);
-		if(!b_info[0]) {
-			debugger;
-			return;
-		}
-		let [,bp]=b_info;
-		if(bp[0]===2) {
-			let [,sa,,last_part]=bp;
-			console.log("target_id.last_part",last_part);
-			if(this.str_starts_with_rx(sa,"UC")) {
-				let floc=sa.indexOf("featured");
-				if(floc<0) {debugger; return;}
-				let s1=sa.slice(0,floc);
-				let s2=sa.slice(floc);
-				console.log("[RichGrid.targetId]",x.targetId);
-				console.log("[target_id_parse]",s1,s2);
-			}
-			return;
-		}
-		let [,,channelId,last_part]=bp;
-		switch(last_part) {
-			default: debugger; break;
-			case "featured": case "search":
-		}
-		this.channelId(channelId);
-	}
-	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
-	D_SectionList_BrowseFeed_History(x) {
-		const cf="D_SectionList_BrowseFeed_History";
-		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x => {
-			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
-			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
-		});
-		this.R_TextHeader(header);
-		this.trackingParams(trackingParams);
-		if(targetId!=="browse-feedFEhistory") debugger;
-	}
-	/** @public @arg {RC_SectionList} x */
-	RC_SectionList(x) {this.H_("sectionListContinuation",x,this.GD_RC_SectionList);}
-	/** @public @arg {GD_RC_SectionList} x */
-	GD_RC_SectionList(x) {
-		const cf="GD_RC_SectionList";
-		if("targetId" in x) {
-			switch(x.targetId) {
-				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
-				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
-				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
-				case "search-feed": return this.DC_SectionList_SearchFeed(x);
-			}
-		}
-		if("contents" in x) {
-			return;
-		}
-		if("disablePullToRefresh" in x) {
-			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			if(disablePullToRefresh!==true) debugger;
-			return;
-		}
-		debugger;
+		this.t(background,this.s.xm.R_MusicThumbnail);
+		this.t(continuationContents,this.s.xm.RC_SectionList);
+		this.tz_cf(cf,alerts,this.s.RS_Playlist_AlertItem);
 	}
 }
 export_(exports => {exports.Support_RS_Browse=Support_RS_Browse;});
@@ -4830,5 +4699,157 @@ class ForService_XMethods extends BaseService {
 	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
 	/** @private @arg {GM_Subscribe} x */
 	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
+	/** @private @arg {R_FeedTabbedHeader} x */
+	R_FeedTabbedHeader(x) {this.H_("feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
+	/** @private @arg {D_FeedTabbedHeader} x */
+	D_FeedTabbedHeader(x) {
+		const cf="D_FeedTabbedHeader";
+		const {title,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.G_Text(title);
+	}
+	/** @public @arg {G_BrowseHeader} x */
+	G_BrowseHeader(x) {
+		const cf="G_BrowseHeader";
+		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
+		if("c4TabbedHeaderRenderer" in x) return this.sm.xr.R_C4TabbedHeader(x);
+		if("playlistHeaderRenderer" in x) return this.sm.xr.R_PlaylistHeader(x);
+		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @public @arg {R_MusicThumbnail} x */
+	R_MusicThumbnail(x) {this.H_("musicThumbnailRenderer",x,this.D_MusicThumbnail);}
+	/** @private @arg {D_MusicThumbnail} x */
+	D_MusicThumbnail(x) {
+		const cf="D_MusicThumbnail";
+		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.trackingParams(a);
+		this.sm.D_Thumbnail(thumbnail);
+		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
+		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
+	}
+	/** @public @arg {G_Browse_MD} x */
+	G_Browse_MD(x) {
+		const cf="G_Browse_MD";
+		if("channelMetadataRenderer" in x) return this.sm.xr.R_Channel_MD(x);
+		if("playlistMetadataRenderer" in x) return this.sm.xr.R_Playlist_MD(x);
+		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_BrowseSidebar} x */
+	G_BrowseSidebar(x) {
+		const cf="G_BrowseSidebar";
+		if("settingsSidebarRenderer" in x) return this.sm.xr.R_SettingsSidebar(x);
+		if("playlistSidebarRenderer" in x) return this.sm.xr.R_PlaylistSidebar(x);
+		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @private @arg {C_ResetChannelUnreadCount} x */
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
+	/** @private @arg {DC_ResetChannelUnreadCount} x */
+	DC_ResetChannelUnreadCount(x) {
+		const cf="DC_ResetChannelUnreadCount";
+		const {channelId,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.channelId(channelId);
+	}
+	/** @public @arg {GA_ResponseReceived} x */
+	GA_ResponseReceived(x) {
+		const cf="GA_ResponseReceived";
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
+		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
+		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
+		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_BrowseContents} x */
+	G_BrowseContents(x) {
+		const cf="G_BrowseContents";
+		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
+		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
+		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
+	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
+		let b_info=this.is_browse_feedUC(x);
+		if(!b_info[0]) {
+			debugger;
+			return;
+		}
+		let [,bp]=b_info;
+		if(bp[0]===2) {
+			let [,sa,,last_part]=bp;
+			console.log("target_id.last_part",last_part);
+			if(this.str_starts_with_rx(sa,"UC")) {
+				let floc=sa.indexOf("featured");
+				if(floc<0) {debugger; return;}
+				let s1=sa.slice(0,floc);
+				let s2=sa.slice(floc);
+				console.log("[RichGrid.targetId]",x.targetId);
+				console.log("[target_id_parse]",s1,s2);
+			}
+			return;
+		}
+		let [,,channelId,last_part]=bp;
+		switch(last_part) {
+			default: debugger; break;
+			case "featured": case "search":
+		}
+		this.channelId(channelId);
+	}
+	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
+	D_SectionList_BrowseFeed_History(x) {
+		const cf="D_SectionList_BrowseFeed_History";
+		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,x => {
+			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
+			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
+		});
+		this.R_TextHeader(header);
+		this.trackingParams(trackingParams);
+		if(targetId!=="browse-feedFEhistory") debugger;
+	}
+	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
+	D_SectionList_BrowseFeed_Subscriptions(x) {
+		const cf="D_SectionList_BrowseFeed_Subscriptions";
+		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,x => {
+			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
+			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
+		});
+		this.trackingParams(trackingParams);
+		if(targetId!=="browse-feedFEsubscriptions") debugger;
+	}
+	/** @private @arg {DC_SectionList_SearchFeed} x */
+	DC_SectionList_SearchFeed(x) {
+		const cf="DC_SectionList_SearchFeed";
+		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		if(targetId!=="search-feed") debugger;
+		this.z(contents,this.TR_SectionListItem_3_Empty);
+	}
+	/** @public @arg {RC_SectionList} x */
+	RC_SectionList(x) {this.H_("sectionListContinuation",x,this.GD_RC_SectionList);}
+	/** @public @arg {GD_RC_SectionList} x */
+	GD_RC_SectionList(x) {
+		const cf="GD_RC_SectionList";
+		if("targetId" in x) {
+			switch(x.targetId) {
+				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
+				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
+				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
+				case "search-feed": return this.DC_SectionList_SearchFeed(x);
+			}
+		}
+		if("contents" in x) {
+			return;
+		}
+		if("disablePullToRefresh" in x) {
+			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			if(disablePullToRefresh!==true) debugger;
+			return;
+		}
+		debugger;
+	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

@@ -3648,7 +3648,7 @@ class ServiceMethods extends ServiceData {
 		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x);
 		if(panelIdentifier!=="comment-item-section") debugger;
 		this.R_EngagementPanelTitleHeader(header);
-		this.R_SectionList(content);
+		this.xm.R_SectionList(content);
 		if(targetId!=="engagement-panel-comments-section") debugger;
 		this.targetId(cf,targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -5714,27 +5714,6 @@ class ServiceMethods extends ServiceData {
 	TR_SectionListItem_3_Empty(x) {
 		const cf="TR_SectionListItem_3_Empty";
 		this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
-	D_SectionList_BrowseFeed_Subscriptions(x) {
-		const cf="D_SectionList_BrowseFeed_Subscriptions";
-		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x => {
-			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
-			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
-		});
-		this.trackingParams(trackingParams);
-		if(targetId!=="browse-feedFEsubscriptions") debugger;
-	}
-	/** @private @arg {DC_SectionList_SearchFeed} x */
-	DC_SectionList_SearchFeed(x) {
-		const cf="DC_SectionList_SearchFeed";
-		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		if(targetId!=="search-feed") debugger;
-		this.z(contents,this.TR_SectionListItem_3_Empty);
 	}
 	/** @private @arg {R_MusicCarouselShelf} x */
 	R_MusicCarouselShelf(x) {this.H_s("musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
