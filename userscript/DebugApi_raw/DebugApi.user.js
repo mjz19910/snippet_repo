@@ -3940,7 +3940,7 @@ function is_record_with_T(x,k) {
 
 //#region cast_monad
 /** @template T @arg {T} x @returns {CM<T>} */
-function new_cast_monad(x) {return {type: "cast_tag",data: x};}
+function new_cast_monad(x) {return {type: "cast",data: x};}
 
 /** @template T @arg {CM<T>|null} x @returns {CM<T&{}|null>|null} */
 function cast_to_object(x) {
