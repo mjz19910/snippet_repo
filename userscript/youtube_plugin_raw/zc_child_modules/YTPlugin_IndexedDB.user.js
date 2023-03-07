@@ -195,7 +195,7 @@ class IndexedDBService extends BaseService {
 				const jl={b: "boxed_id",j: o1.tag,key: x.key,z: [{type: "number",z: [o1.value.raw]}]};
 				return as_any(jl);
 			}
-			/** @type {{key:G_BoxedIdObj["key"],type:"boxed_id",tag?: J_DU_TagStr,value?: {type:string,info_arr:[["one",bigint]|["arr",bigint[]]]}}} */
+			/** @type {{key:G_BoxedIdObj["key"],type:"boxed_id",tag: J_DU_TagStr,value?: {type:string,info_arr:[["one",bigint]|["arr",bigint[]]]}}} */
 			let o2=as_any(x);
 			if(!o2.value) {debugger; return x;}
 			switch(o2.tag) {

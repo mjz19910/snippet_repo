@@ -1,1 +1,5 @@
-type J_DU_TagStr="bigint"|DST_Channel_UC["j"]|"keys";
+type J_DU_TagStr=
+	|Extract<G_BoxedIdObj,{j: any;}>["j"]
+	|"bigint"
+	;
+;
