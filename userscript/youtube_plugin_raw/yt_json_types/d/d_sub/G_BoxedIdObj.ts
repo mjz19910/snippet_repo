@@ -19,13 +19,12 @@ type G_BoxedIdObj=
 	|DST_Playlist_LL
 	|DST_Playlist_PL
 	|DST_Playlist_RD
+	|DST_Playlist_RD_CM_UC
 	|DST_Playlist_RD_MM
-	|DST_Playlist_WL
 	|DST_Playlist_WL
 	|DST_PlayNext
 	|DST_SaveId
 	|DST_UpdateId
-	|DST_Video_Id
 	|DST_Video_Id
 	|DST_VideoTime
 	|GST_DSS
