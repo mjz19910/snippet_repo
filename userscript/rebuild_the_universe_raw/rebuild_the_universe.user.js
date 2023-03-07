@@ -21,7 +21,7 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-const {do_export,MulCompression}=require("../DebugApi_raw/DebugApi.user.js");
+const {do_export,MulCompression,CompressionStatsCalculator}=require("../DebugApi_raw/DebugApi.user.js");
 
 const __module_name__="debug$RebuildTheUniverse";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -1841,6 +1841,7 @@ class AutoBuyImplR {
 		this.state=new AutoBuyStateImplR(this.root_node);
 		this.debug=this.state.debug;
 		this.compressor=new MulCompression;
+		this.stats_calculator=new CompressionStatsCalculator;
 		let history_loaded=this.local_data_loader.load_str_arr("auto_buy_history_str");
 		if(history_loaded[0]) {this.state_history_arr=history_loaded[1];} else {this.state_history_arr=["S"];}
 		this.epoch_start_time=Date.now();
@@ -2333,7 +2334,7 @@ class AutoBuyImplR {
 		if(!value) throw new Error("Invalid state append requested");
 		let last=this.state_history_arr.at(-1);
 		this.state_history_arr.push(value);
-		this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
+		this.state_history_arr=this.stats_calculator.compress_array(this.state_history_arr);
 		this.update_history_element();
 		if(this.state.debug) console.log("history append",last,value);
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL,"state_history_append_tag item",value);
