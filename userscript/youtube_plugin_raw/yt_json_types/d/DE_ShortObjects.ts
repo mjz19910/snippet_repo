@@ -1,4 +1,4 @@
-//#region DE Short Objects
+//#region Endpoint Data
 type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
 type DE_AddToPlaylistService={videoId: string;};
 type DE_AdFeedback={content: R_AdFeedback;};
@@ -34,4 +34,8 @@ type DE_VE83769_Url_SearchObj={gclid: string;};
 type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
 type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
 type DE_YpcGetCart={transactionParams: string;};
+//#endregion
+//#region Endpoint Data Mutation Union
+type DE_MutationDelete={type: T_MutType<"DELETE">; entityKey: string; options: O_DU_Persistence;};
+type DE_MutationReplace={type: T_MutType<"REPLACE">; entityKey: string; payload: G_EY_Entity;};
 //#endregion

@@ -3443,7 +3443,7 @@ class ServiceMethods extends ServiceData {
 	DR_DC_EntityBatchUpdate(x) {
 		const cf="DR_DC_EntityBatchUpdate";
 		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(mutations,this.DE_MutationItem);
+		this.z(mutations,this.G_DE_MutationItem);
 		this.t(timestamp,this.D_TimestampWithNanos);
 	}
 	/** @private @arg {D_TimestampWithNanos} x */
@@ -3454,7 +3454,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_num(nanos);
 	}
 	/** @private @arg {G_DE_MutationItem} x */
-	DE_MutationItem(x) {
+	G_DE_MutationItem(x) {
 		switch(x.type) {
 			default: debugger; break;
 			case "ENTITY_MUTATION_TYPE_DELETE": this.DU_MutationDelete(x); break;
