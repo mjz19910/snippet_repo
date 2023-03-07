@@ -944,8 +944,34 @@ class IndexedDBService extends BaseService {
 	}
 	/** @api @public @template {G_BoxedIdObj} T @arg {"boxed_id"} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
-		if(this.loaded_keys.has(value.key)) {
+		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
+			if(value.b!=="boxed_id") {debugger; break x;}
+			let nw=null,ww=null,wj=null,nj=null;
+			if("w" in value) ww=value; else nw=value;
+			if(nw!==null&&"j" in nw) wj=nw; else if(nw!==null) nj=nw;
+			if(nj!==null&&nj.a!=="boxed_store") {debugger; break x;}
+			if(nj) switch(nj.d) {
+				default: debugger; break;
+				case "bigint": break;
+				case "boolean": break;
+				case "keys": break;
+				case "string": break;
+				case "number": break;
+				case "root_visual_element": break;
+			}
+			let wa,na;
+			if(wj!==null&&"a" in wj) wa=wj; else na=wj;
+			na; wa;
+			if(wj) {
+				let hsk=this.get_keys_of(wj);
+				/** @type {typeof hsk} */
+				let hk=["j","key"];
+				let [k1,k2,k3,k4,...ky]=this.get_keys_of_2(wj); k3; k4; ky;
+				if(hk.includes(k1)&&hk.includes(k2)) {}
+			}
+			wj;
+			nw; ww; wj; nj;
 			console.log("has loaded cache value",loaded_value,value);
 		}
 		try {
