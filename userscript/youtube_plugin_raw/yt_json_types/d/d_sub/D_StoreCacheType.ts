@@ -1,1 +1,0 @@
-type D_StoreCacheType=T_StoreCacheType<keyof DT_DatabaseStoreTypes>;
