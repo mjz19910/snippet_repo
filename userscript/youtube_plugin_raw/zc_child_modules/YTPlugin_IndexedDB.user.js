@@ -492,7 +492,7 @@ class IndexedDBService extends BaseService {
 			case "browse_id": return this.put_boxed_pl(version,...args);
 			case "key": {
 				let [j,id]=args;
-				return {args,promise: this.put_box({a: "K:ABJ",b: "boxed_id",j,id,key: `boxed_id:${j}:${id}:${x.z[0].z[0]}`,z: [x]},version)};
+				return {args,promise: this.put_box({a: "K:ABJ",b: "boxed_id",j,c: id,key: `boxed_id:${j}:${id}:${x.z[0].z[0]}`,z: [x]},version)};
 			}
 			case "guide_entry_id": /*db*/ {
 				let [tag]=args;
