@@ -1,5 +1,8 @@
 type DI_PlayNext={
 	a: "exact";
 	b: "play_next";
-	z: [DIT_Item_AB<"raw_id",T_PrimitiveBox<`${1}`>>];
+	z: [
+		T_DI_FromObj<{raw_id: `${1}`;}>,
+		T_DI_FromObj<{parsed_value: 1;}>
+	];
 };

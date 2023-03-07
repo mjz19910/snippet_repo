@@ -1,1 +1,1 @@
-type T_DI_Id<T extends string>=DIT_Item_AB<"id",T_PrimitiveBox<T>>;
+type T_DI_Id<T extends string>=T_DI_FromObj<{id: T;}>;

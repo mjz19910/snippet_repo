@@ -5,19 +5,18 @@ type DI_R_Key_StartRadio={
 	// ^ b = type
 	c: "key:start_radio";
 	// ^ c = tag
-	z: [DIT_Item_AB<"start_radio",T_PrimitiveBox<0|1>>];
+	z: [DI_Key_StartRadio];
 };
 type DI_EX_YY=Extract<DI_AGR_UrlInfo,{c: any;}>["c"];
 type DI_AGR_UrlInfo=
-	|{a: "arr"; z: ["browse_id",DU_Browse_Id];}
-	|{a: "arr"; z: ["guide_entry_id",DU_GuideEntry_Id];}
-	|{a: "arr"; z: ["playlist_id",DU_Playlist_Id];}
-	|{a: "arr"; z: ["video_id",DU_VideoId];}
-	|{a: "arr"; z: ["start_radio",DU_StartRadio];}
+	|T_DI_FromObj<{browse_id: DU_Browse_Id;}>
+	|T_DI_FromObj<{guide_entry_id: DU_GuideEntry_Id;}>
+	|T_DI_FromObj<{playlist_id: DU_Playlist_Id;}>
+	|T_DI_FromObj<{start_radio: DU_StartRadio;}>
+	|T_DI_FromObj<{video_id: DU_VideoId;}>
 	;
 ;
-type DI_AGR_UrlInfo_2={a: "arr",b: ""; v: "";};
-type DI_SpecialInfo={raw_id: string;};
+type DI_SpecialInfo=T_DI_FromObj<{raw_id: string;}>;
 type GI_BrowseId=
 	|DI_BrowseId_FE
 	|DI_BrowseId_MP
@@ -33,6 +32,5 @@ type DI_Key_StartRadio={
 	// ^ b = type
 	c: "start_radio";
 	// ^ c = key
-	z: DI_R_Key_StartRadio["z"];
+	z: [T_DI_FromObj<{start_radio: 0|1;}>];
 };
-type Gen_BrowseId=T_Info_RawId_BC_J<"raw",["browse_id"],DU_Browse_Id>;
