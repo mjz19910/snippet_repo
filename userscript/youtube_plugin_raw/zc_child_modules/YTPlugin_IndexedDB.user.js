@@ -518,7 +518,7 @@ class IndexedDBService extends BaseService {
 					case "VL:LL": {
 						x;
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [{b: "guide_entry_id",c: "VL:LL",z: [x]}]};
+						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [{a: "DI",b: "guide_entry_id",c: "VL:LL",z: [x]}]};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
@@ -569,7 +569,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "hashtag_id": {
 				let [tag,,value]=args;
-				const z=this.make_box_3(tag,value.z[0].z[0].z[0],value);
+				const z=this.make_box_3(tag,value.z[0].z[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "channel_id": {

@@ -88,9 +88,9 @@ export function cache_item_decompose_0(x: G_BoxedIdObj): RetValue {
 }
 function cache_item_decompose_1(s: ApiBase2,x: A2) {
 	if("a" in x) {
-		return cache_item_decompose_work(s,[1,x]);
+		return cache_item_decompose_work(s,[1,"+a",x]);
 	} else {
-		return cache_item_decompose_work(s,[2,x]);
+		return cache_item_decompose_work(s,[1,"-a",x]);
 	}
 }
 type DecomposeWork_1a=Extract<A2,{a: any;}>;
@@ -117,8 +117,9 @@ type DecomposeWorkItem=
 	|[id: 1,k: "-a=primitive",v: A4_RM_Box]
 	// final
 	|[id: 2,k: "b|item",v: A1b_Group_MK]
+	|[id: 2,k: "c|one",v: Extract<A1b_Group_MK,{c: "one";}>]
 	|[id: 2,k: "c|arr",v: Extract<A1b_Group_MK,{c: "arr";}>]
-	|[id: 2,k: "c|instance_name",v: make_instance_name_t_1]
+	|[id: 2,k: "c|instance_name",v: make_instance_name_t<any>]
 	|[id: 2,k: "c|many",v: Extract<A1b_Group_MK,{c: "many";}>]
 	|[id: 2,k: "c|typeof_name",v: Extract<A1b_Group_MK,{c: "typeof_name";}>]
 	|[id: 2,k: "a|primitive",b: A2_Box]
@@ -142,6 +143,7 @@ function cache_item_decompose_work(s: ApiBase2,x: DecomposeWorkItem): DecomposeW
 					switch(a) {case "group_value": break; default: a==="";}
 					switch(b) {case "item": break; default: b==="";}
 					switch(c) {
+						case "one": return [2,`c|${c}`,v];
 						case "arr": return [2,`c|${c}`,v];
 						case "instance_name": return [2,`c|${c}`,v];
 						case "many": return [2,`c|${c}`,v];
@@ -151,7 +153,6 @@ function cache_item_decompose_work(s: ApiBase2,x: DecomposeWorkItem): DecomposeW
 				} break;
 				case "-a": {
 					const v=x[2];
-					if("f" in v) return [1,"+f",v];
 					return [1,"-f",v];
 				}
 				case "+b": {
