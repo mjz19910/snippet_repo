@@ -18,48 +18,50 @@ type DI_AGR_UrlInfo=
 	;
 ;
 type DI_SrcInfo_Any={
-	b: "any";
+	k: "any";
 	raw_id: DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id;
 };
 type DI_RetInfo={
-	a: "tag"; b: "any"; c: "FE";
+	a: "tag"; k: "any"; c: "FE";
 	raw_id: T_IdTemplate<"FE">;
 }|{
-	a: "tag"; b: "any"; c: "SP";
+	a: "tag"; k: "any"; c: "SP";
 	raw_id: T_IdTemplate<"SP">;
 }|{
-	a: "tag"; b: "any"; c: "VL";
+	a: "tag"; k: "any"; c: "VL";
 	raw_id: T_IdTemplate<"VL">;
 }|{
-	a: "tag"; b: "any"; c: "UC";
+	a: "tag"; k: "any"; c: "UC";
 	raw_id: T_IdTemplate<"UC">;
 }|{
-	a: "tag"; b: "any"; c: "PL";
+	a: "tag"; k: "any"; c: "PL";
 	raw_id: T_IdTemplate<"PL">;
 }|{
-	a: "tag"; b: "any"; c: "MP";
+	a: "tag"; k: "any"; c: "MP";
 	raw_id: T_IdTemplate<"MP">;
 }|{
-	a: "tag"; b: "any"; c: "UU";
+	a: "tag"; k: "any"; c: "UU";
 	raw_id: T_IdTemplate<"UU">;
 }|{
-	a: "tag"; b: "any"; c: "RD";
+	a: "tag"; k: "any"; c: "RD";
 	raw_id: Extract<DU_Playlist_Id,`RD${string}`>;
 }|{
-	a: "tag"; b: "any"; c: null;
+	a: "tag"; k: "any"; c: null;
 	raw_id: DU_Playlist_Static;
 }|{
-	a: "tag"; b: "video_id"; c: null; raw_id: DU_VideoId;
+	a: "tag"; k: "video_id"; c: null; raw_id: DU_VideoId;
 }|{
-	a: "tag"; b: "start_radio";
+	a: "tag"; k: "start_radio";
 	raw_id: DU_StartRadio;
 }|{
 	a: null;
 };
+type T1<A extends [string,string]>=A[0] extends infer EA extends A[0]? EA extends infer I? {b: I; raw_id: A[1];}:never:never;
+type T2=T1<["start_radio"|"video_id","a"|"b"]>;
 type DI_SrcInfo=
 	|DI_SrcInfo_Any
-	|{b: "start_radio"; raw_id: DU_StartRadio;}
-	|{b: "video_id"; raw_id: DU_VideoId;};
+	|{k: "start_radio"; v: DU_StartRadio;}
+	|{k: "video_id"; v: DU_VideoId;};
 type DI_SpecialInfo=T_DI_FromObj<{raw_id: string;}>;
 type GI_BrowseId=
 	|DI_BrowseId_FE

@@ -3247,60 +3247,56 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {DI_SrcInfo} x @returns {DI_RetInfo} */
 	get_parsed_info(x) {
-		switch(x.b) {
+		switch(x.k) {
 			case "any": {
-				const {b,raw_id}=x;
-				if(this.str_starts_with_rx("FE",raw_id)) return {a: "tag",b,c: "FE",raw_id};
-				if(this.str_starts_with_rx("SP",raw_id)) return {a: "tag",b,c: "SP",raw_id};
-				if(this.str_starts_with_rx("VL",raw_id)) return {a: "tag",b,c: "VL",raw_id};
+				const {k,raw_id}=x;
+				if(this.str_starts_with_rx("FE",raw_id)) return {a: "tag",k,c: "FE",raw_id};
+				if(this.str_starts_with_rx("SP",raw_id)) return {a: "tag",k,c: "SP",raw_id};
+				if(this.str_starts_with_rx("VL",raw_id)) return {a: "tag",k,c: "VL",raw_id};
 				switch(raw_id) {
-					case "WL": return {a: "tag",b,c: null,raw_id};
-					case "LL": return {a: "tag",b,c: null,raw_id};
+					case "WL": return {a: "tag",k,c: null,raw_id};
+					case "LL": return {a: "tag",k,c: null,raw_id};
 				}
-				if(this.str_starts_with_rx("UC",raw_id)) return {a: "tag",b,c: "UC",raw_id};
-				if(this.str_starts_with_rx("PL",raw_id)) return {a: "tag",b,c: "PL",raw_id};
-				if(this.str_starts_with_rx("RD",raw_id)) return {a: "tag",b,c: "RD",raw_id};
-				if(this.str_starts_with_rx("MP",raw_id)) return {a: "tag",b,c: "MP",raw_id};
-				if(this.str_starts_with_rx("UU",raw_id)) return {a: "tag",b,c: "UU",raw_id};
+				if(this.str_starts_with_rx("UC",raw_id)) return {a: "tag",k,c: "UC",raw_id};
+				if(this.str_starts_with_rx("PL",raw_id)) return {a: "tag",k,c: "PL",raw_id};
+				if(this.str_starts_with_rx("RD",raw_id)) return {a: "tag",k,c: "RD",raw_id};
+				if(this.str_starts_with_rx("MP",raw_id)) return {a: "tag",k,c: "MP",raw_id};
+				if(this.str_starts_with_rx("UU",raw_id)) return {a: "tag",k,c: "UU",raw_id};
 				debugger;
 			} return {a: null};
 			case "start_radio": {
-				const {b,raw_id}=x;
-				return {a: "tag",b,raw_id};
+				const {k,v}=x;
+				return {a: "tag",k,c: null,raw_id: v};
 			}
 			case "video_id": {
-				const {b,raw_id}=x;
-				return {a: "tag",b,c: null,raw_id};
+				const {k,v}=x;
+				return {a: "tag",k,c: null,raw_id: v};
 			}
 			default: debugger; return {a: null};
 		}
 	}
-	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u */
-	make_R_UrlInfo(u) {
-		switch(u.k) {
-			case "browse_id": {
-				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info({b: "any",raw_id});
-				console.log(b,id_info);
-			} break;
-			case "guide_entry_id": {
-				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info({b: "any",raw_id});
-				console.log(b,id_info);
-			} break;
-			case "playlist_id": {
-				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info({b: "any",raw_id});
+	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {{k:K;v:T;}} */
+	mk_input(k,v) {return {k,v};}
+	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {{k:K;v:T;}} */
+	mk_obj_input(k,v) {return {k,v};}
+	/** @template {{}} T @arg {T_DI_FromObj<T>} x */
+	mk_input_from_R_info(x) {return this.mk_obj_input(x.k,x.z[0].z[0]);}
+	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
+	make_R_UrlInfo(x) {
+		switch(x.k) {
+			default: {
+				const b=x.k; const raw_id=x.z[0].z[0];
+				let id_info=this.get_parsed_info({k: "any",raw_id});
 				console.log(b,id_info);
 			} break;
 			case "start_radio": {
-				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info({b: "start_radio",raw_id});
-				console.log(b,id_info);
+				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
+				const u=x,id_info=this.get_parsed_info(this.mk_input_from_R_info(u));
+				console.log(x.k,id_info);
 			} break;
 			case "video_id": {
-				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info({b,raw_id});
+				const b=x.k; const raw_id=x.z[0].z[0];
+				let id_info=this.get_parsed_info(this.mk_input(b,raw_id));
 				console.log(b,id_info);
 			} break;
 		}
