@@ -21,7 +21,20 @@ class ServiceMethods extends ServiceData {
 	k=this.save_keys;
 	ks=this.k;
 	/** @public @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
-	cq(a,b) {if(a!==b) debugger;}
+	_cq_no_infer(a,b) {if(a!==b) debugger;}
+	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
+	_cq_infer(a,b) {if(a!==b) debugger;}
+	/** @public @type {<T,U extends T>(a:T,b:NoInfer<U>)=>void} */
+	cq=this._cq_no_infer;
+	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x */
+	wg(_l,x) {
+		/** @template {NoInfer<T>} TI @arg {TI} y */
+		return y => this._cq_infer(x,y);
+	}
+	/** @arg {D_ReelPlayerOverlay["reelPlayerNavigationModel"]} t_input_0 */
+	test_wg(t_input_0) {
+		{const x2=t_input_0; this.t(x2,this.sm.wg(x2,"xREEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
+	}
 	/** @public @arg {string} x @arg {boolean} is_prev */
 	D_VeCsn(x,is_prev=false) {
 		try {
@@ -42,9 +55,9 @@ class ServiceMethods extends ServiceData {
 	GEN(cf,x) {
 		let name=this.get_codegen_name(cf,x);
 		if(!name) return;
-		const cf2=`${cf}$${name}`;
-		this.#_GEN(cf2);
+		this.#_GEN(`${cf}$${name}`,x);
 	}
+	/** @arg {`${string}$${string}`} cf @arg {{}} x */
 	#_GEN(cf,x) {
 		this.cg.codegen_typedef(cf,x,false);
 		this.cg.codegen_renderer(cf,x);
@@ -767,11 +780,6 @@ class ServiceMethods extends ServiceData {
 	R_LikeButton(x) {this.H_s("likeButtonRenderer",x,this.D_LikeButton);}
 	/** @public @arg {R_Hint} x */
 	R_Hint(x) {this.H_s("hintRenderer",x,this.D_Hint);}
-	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x */
-	wg(_l,x) {
-		/** @arg {typeof x} y */
-		return y => this.cq(x,y);
-	}
 	/** @public @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @public @arg {C_GetPdgBuyFlow} x */
