@@ -638,7 +638,7 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region B
 	/** @public @arg {B_HrefUrl} x */
-	B_HrefUrl(x) {this.y(this,"B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
+	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
 	//#endregion
 	//#region D
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
@@ -938,9 +938,9 @@ class HandleTypes extends BaseService {
 		this.t(isPostLiveDvr,x => this.sm.cq(x,true));
 	}
 	/** @public @arg {D_StartSeconds} x */
-	D_StartSeconds(x) {this.y(this.sm,"D_StartSeconds","startSeconds",x,this.sm.a_primitive_num);}
+	D_StartSeconds(x) {this.sm.y("D_StartSeconds","startSeconds",x,this.sm.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {this.y(this.sm,"D_StreamSelectionConfig","maxBitrate",x,this.sm.visit_number_template);}
+	D_StreamSelectionConfig(x) {this.sm.y("D_StreamSelectionConfig","maxBitrate",x,this.sm.visit_number_template);}
 	//#endregion
 	//#region RS & RSG & RSL & REG & RSW
 	/** @public @arg {RS_AccountMenu} x */
@@ -1140,7 +1140,7 @@ class HandleTypes extends BaseService {
 	/** @private @arg {AU_Description} x */
 	AU_Description(x) {
 		const cf="AU_Description";
-		this.y(this,cf,"updateDescriptionAction",x,this.AD_Description);
+		this.y(cf,"updateDescriptionAction",x,this.AD_Description);
 	}
 	/** @private @arg {AD_Description} x */
 	AD_Description(x) {
@@ -1149,12 +1149,12 @@ class HandleTypes extends BaseService {
 		this.sm.G_Text(description);
 	}
 	/** @private @arg {AU_Title} x */
-	AU_Title(x) {this.y(this,"UA_Title","updateTitleAction",x,x => this.y(this.sm,"UA_TitleData","title",x,this.sm.G_Text));}
+	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.sm.y("UA_TitleData","title",x,this.sm.G_Text));}
 	/** @private @arg {AU_DateText} x */
-	AU_DateText(x) {this.y(this,"UA_DateText","updateDateTextAction",x,x => this.y(this.sm,"UA_DateTextData","dateText",x,this.sm.G_Text));}
+	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.sm.y("UA_DateTextData","dateText",x,this.sm.G_Text));}
 	/** @private @arg {AU_ToggleButtonText} x */
 	AU_ToggleButtonText(x) {
-		this.y(this,"AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
+		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
 			const cf="AU_ToggleButtonTextData";
 			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
 			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
@@ -1163,7 +1163,7 @@ class HandleTypes extends BaseService {
 		});
 	}
 	/** @private @arg {AU_Viewership} x */
-	AU_Viewership(x) {this.y(this,"AU_Viewership","updateViewershipAction",x,x => this.y(this.sm,"AU_ViewershipData","viewCount",x,this.sm.R_VideoViewCount));}
+	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.sm.y("AU_ViewershipData","viewCount",x,this.sm.R_VideoViewCount));}
 	/** @private @arg {AU_EngagementPanel} x */
 	AU_EngagementPanel(x) {
 		const cf="AU_EngagementPanel";

@@ -26,13 +26,11 @@ class ServiceMethods extends ServiceData {
 	_cq_infer(a,b) {if(a!==b) debugger;}
 	/** @public @type {<T,U extends T>(a:T,b:NoInfer<U>)=>void} */
 	cq=this._cq_no_infer;
-	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x */
-	wg(_l,x) {
-		/** @template {NoInfer<T>} TI @arg {TI} y */
-		return y => this._cq_infer(x,y);
-	}
+	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x @returns {(y: NoInfer<T>)=>void} */
+	wg(_l,x) {return y => this._cq_infer(x,y);}
 	/** @arg {D_ReelPlayerOverlay["reelPlayerNavigationModel"]} t_input_0 */
 	test_wg(t_input_0) {
+		// @ts-expect-error(2345)
 		{const x2=t_input_0; this.t(x2,this.sm.wg(x2,"xREEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
 	}
 	/** @public @arg {string} x @arg {boolean} is_prev */
@@ -75,8 +73,6 @@ class ServiceMethods extends ServiceData {
 			other: o3,
 		};
 	}
-	/** @public @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
-	T_Items(cf,x) {return this.w(cf,"items",x);}
 	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_TrackedItems<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
@@ -108,7 +104,7 @@ class ServiceMethods extends ServiceData {
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(cf,"commands",x),f);}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
-	T_Item=(x,f) => this.y(this,"T_Item","item",x,f);
+	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @public @template T @arg {CF_T_OpenPopup_Dropdown} cf @arg {T_OpenPopup_Dropdown<T>} x */
 	T_OpenPopup_Dropdown(cf,x) {
 		const {popupType,popup,beReused,...y}=this.s(cf,x); this.g(y);
@@ -124,8 +120,6 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 		}
 	}
-	/** @type {Map<string,[string,string[]][]>} */
-	strings_map=new Map;
 	/** @public @arg {GU_VE83769_Url_External} b */
 	D_YtStudio_Url(b) {
 		const cf="D_YtStudio_Url";
@@ -162,7 +156,7 @@ class ServiceMethods extends ServiceData {
 		this.cg.codegen_str(cf,x);
 	}
 	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {this.y(this,"DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.xm.R_EngagementPanelSectionList(x));}
+	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.xm.R_EngagementPanelSectionList(x));}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
 		const cf="D_ToggleMenuServiceItem";
@@ -259,12 +253,12 @@ class ServiceMethods extends ServiceData {
 		x: {
 			/** @type {DE_U_InternalUrl["url"]} */
 			let va=as(x);
-			let [p,r]=split_string_once(va,"://"); this.ceq(p,"https");
-			let [h,u]=split_string_once(r,"/"); this.ceq(h,"www.youtube.com");
+			let [p,r]=split_string_once(va,"://"); this.sm.cq(p,"https");
+			let [h,u]=split_string_once(r,"/"); this.sm.cq(h,"www.youtube.com");
 			switch(u) {
 				default: {
-					let [x1,x2,x3]=split_string(u,"/"); this.ceq(x1,"channel"); this.channelId(x2);
-					this.ceq(x3,"join");
+					let [x1,x2,x3]=split_string(u,"/"); this.sm.cq(x1,"channel"); this.channelId(x2);
+					this.sm.cq(x3,"join");
 				} break x;
 				case "t/creative_commons": return;
 			}
@@ -293,8 +287,8 @@ class ServiceMethods extends ServiceData {
 		{
 			/** @type {DE_U_ChannelUrl["url"]} */
 			let va=x;
-			let [p,r]=split_string_once(va,"://"); this.ceq(p,"https");
-			let [h,u]=split_string_once(r,"/"); this.ceq(h,"www.youtube.com");
+			let [p,r]=split_string_once(va,"://"); this.sm.cq(p,"https");
+			let [h,u]=split_string_once(r,"/"); this.sm.cq(h,"www.youtube.com");
 			let v=split_string_once(u,"/");
 			if(v.length!==1) debugger;
 		}
@@ -392,7 +386,7 @@ class ServiceMethods extends ServiceData {
 		const cf="GM_VE6827";
 		const {url,sendPost,webPageType,rootVe,apiUrl,...y}=this.s(cf,x);/*#destructure_done*/
 		this.t(url,this.D_VE6827_Url);
-		this.t(sendPost,x => this.ceq(x,true));
+		this.t(sendPost,x => this.sm.cq(x,true));
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		this.rootVe(rootVe,6827);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
@@ -469,47 +463,45 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {GM_EditPlaylist} x */
-	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
-	/** @public @arg {GM_Unsubscribe} x */
-	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
+	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.sm.cq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @public @arg {GM_GetPdgBuyFlow} x */
-	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
+	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.sm.cq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @private @arg {GM_GetSharePanel} x */
-	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.sm.cq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @public @arg {GM_AddToPlaylistService} x */
-	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
+	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.sm.cq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @arg {GM_RemoveLike} x */
-	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.ceq(x,"/youtubei/v1/like/removelike"));}
+	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.sm.cq(x,"/youtubei/v1/like/removelike"));}
 	/** @private @arg {GM_Dislike} x */
-	GM_Dislike(x) {this.T_GM("GM_Dislike",x,x => this.ceq(x,"/youtubei/v1/like/dislike"));}
+	GM_Dislike(x) {this.T_GM("GM_Dislike",x,x => this.sm.cq(x,"/youtubei/v1/like/dislike"));}
 	/** @private @arg {GM_LikeLike} x */
-	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.ceq(x,"/youtubei/v1/like/like"));}
+	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.sm.cq(x,"/youtubei/v1/like/like"));}
 	/** @private @arg {GM_RecordInteractions} x */
-	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
+	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.sm.cq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {GM_CreateBackstagePost} x */
-	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
+	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.sm.cq(x,"/youtubei/v1/backstage/create_post"));}
 	/** @public @arg {GM_UserFeedback} x */
-	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),true);}
+	GM_UserFeedback(x) {this.sm.cq(this.w("GM_UserFeedback","ignoreNavigation",x),true);}
 	/** @private @arg {GM_GetNotificationMenu} x */
-	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
+	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.sm.cq(x,"/youtubei/v1/notification/get_notification_menu"));}
 	/** @private @arg {GM_AccountMenu} x */
-	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
+	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.sm.cq(x,"/youtubei/v1/account/account_menu"));}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
-	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.ceq(x,"/youtubei/v1/notification/get_unseen_count"));}
+	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.sm.cq(x,"/youtubei/v1/notification/get_unseen_count"));}
 	/** @private @arg {GM_NotificationOptOut} x */
-	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
+	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.sm.cq(x,"/youtubei/v1/notification/opt_out"));}
 	/** @private @arg {GM_FlagGetForm} x */
-	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
+	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.sm.cq(x,"/youtubei/v1/flag/get_form"));}
 	/** @private @arg {GM_Feedback} x */
-	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
+	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.sm.cq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @private @arg {GM_CreatePlaylist} x */
-	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
+	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.sm.cq(x,"/youtubei/v1/playlist/create"));}
 	/** @private @arg {GM_SetSetting} x */
-	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
+	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.sm.cq(x,"/youtubei/v1/account/set_setting"));}
 	/** @private @arg {GM_GetTranscript} x */
-	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
+	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.sm.cq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {AD_Notification} x */
@@ -532,7 +524,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {AD_HideEnclosing} x */
-	AD_HideEnclosing(x) {this.y(this,"AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
+	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
@@ -553,7 +545,7 @@ class ServiceMethods extends ServiceData {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {AD_HideEngagementPanelTargetId} x */
-	AD_HideEngagementPanelTargetId(x) {this.y(this,"AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
+	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
 	/** @private @arg {AD_SetActivePanelItem} x */
 	AD_SetActivePanelItem(x) {
 		const cf="AD_SetActivePanelItem";
@@ -639,7 +631,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
 	/** @private @arg {D_Survey_Watch} x */
-	D_Survey_Watch(x) {this.y(this,"D_Survey_Watch","watch",x,this.B_Hack);}
+	D_Survey_Watch(x) {this.y("D_Survey_Watch","watch",x,this.B_Hack);}
 	/** @private @arg {D_PaidDigitalGoods} x */
 	R_PaidDigitalGoods(x) {this.H_s("paidDigitalGoods",x,this.B_Hack);}
 	/** @private @arg {G_DC_GetSurvey_Endpoint} x */
@@ -650,7 +642,7 @@ class ServiceMethods extends ServiceData {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @arg {"D_InfoCardIcon"} cf @arg {D_TrackingParams} x */
-	D_TrackingParams(cf,x) {this.y(this,cf,"trackingParams",x,x => this.trackingParams(x));}
+	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(x));}
 	/** @public @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
 	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf2 @arg {D_EngagementPanelTargetId} x */
@@ -702,13 +694,13 @@ class ServiceMethods extends ServiceData {
 		return [un_prefix,other];
 	}
 	/** @public @arg {D_ImpressionCap} x */
-	D_ImpressionCap(x) {this.ceq(this.w("D_ImpressionCap","impressionCap",x),"1");}
+	D_ImpressionCap(x) {this.sm.cq(this.w("D_ImpressionCap","impressionCap",x),"1");}
 	/** @public @arg {D_Hint} x */
 	D_Hint(x) {
 		const cf="D_Hint";
 		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.ceq(hintId,"sponsor-pre-purchase");
-		this.ceq(dwellTimeMs,"60000");
+		this.sm.cq(hintId,"sponsor-pre-purchase");
+		this.sm.cq(dwellTimeMs,"60000");
 		this.D_ImpressionCap(hintCap);
 		this.trackingParams(trackingParams);
 	}
@@ -810,13 +802,13 @@ class ServiceMethods extends ServiceData {
 	/** @arg {R_MenuPopup} x */
 	R_MenuPopup(x) {this.H_s("menuPopupRenderer",x,this.D_MenuPopup);}
 	/** @arg {D_MenuPopup} x */
-	D_MenuPopup(x) {this.y(this,"D_MenuPopup","items",x,x => this.z(x,this.R_MenuServiceItem));}
+	D_MenuPopup(x) {this.y("D_MenuPopup","items",x,x => this.z(x,this.R_MenuServiceItem));}
 	/** @template {T extends infer U?{} extends U? never:U:never} R @template {{}} T @arg {T} x @returns {x is R} */
 	is_not_empty_obj(x) {return this.get_keys_of(x).length>0;}
 	/** @template {T extends infer U?{} extends U? never:U:never} R @template {{}} T @arg {T} x @arg {R|null} _x @returns {x is Record<string,never>} */
 	is_empty_obj(x,_x=null) {return this.get_keys_of(x).length===0;}
 	/** @public @arg {R_ToggleButtonIdData} x */
-	R_ToggleButtonIdData(x) {this.y(this,"R_ToggleButtonIdData","toggleButtonIdData",x,this.D_ToggleButtonIdData);}
+	R_ToggleButtonIdData(x) {this.y("R_ToggleButtonIdData","toggleButtonIdData",x,this.D_ToggleButtonIdData);}
 	/** @public @arg {D_ToggleButtonIdData} x */
 	D_ToggleButtonIdData(x) {
 		const cf="D_ToggleButtonIdData";
@@ -946,8 +938,8 @@ class ServiceMethods extends ServiceData {
 			const {...u}=this.RD_MenuServiceItem_Omit(cf,x);
 			const {icon,hasSeparator,isDisabled,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
 			this.RD_MenuServiceItem_Icon(icon);
-			this.ceq(hasSeparator,true);
-			this.ceq(isDisabled,false);
+			this.sm.cq(hasSeparator,true);
+			this.sm.cq(isDisabled,false);
 			return;
 		}
 	}
@@ -1307,7 +1299,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_WatchEndpointMusicConfig";
 		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_bool(hasPersistentPlaylistPanel);
-		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
+		this.sm.cq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
 	}
 	/** @private @arg {R_PrefetchHintConfig} x */
 	R_PrefetchHintConfig(x) {this.H_s("prefetchHintConfig",x,this.D_PrefetchHintConfig);}
@@ -1315,7 +1307,7 @@ class ServiceMethods extends ServiceData {
 	D_PrefetchHintConfig(x) {
 		const cf="D_PrefetchHintConfig";
 		const {prefetchPriority,...y}=this.s(cf,x);/*#destructure_off*/
-		this.ceq(prefetchPriority,0);
+		this.sm.cq(prefetchPriority,0);
 		if(prefetchPriority!==0) debugger;
 		if("countdownUiRelativeSecondsPrefetchCondition" in y) {
 			const {countdownUiRelativeSecondsPrefetchCondition: a,...x1}=y; this.g(x1);/*#destructure_done*/
@@ -1376,7 +1368,7 @@ class ServiceMethods extends ServiceData {
 			this.DU_VE5754_BrowseId_2(browseId);
 			return;
 		}
-		if("browseId" in x) return this.y(this,cf,"browseId",x,this.browseId);
+		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
 		debugger;
 	}
 	/** @public @arg {GU_VE83769_Url_Redirect|`https://www.youtube.com/${string}`} x */
@@ -1385,7 +1377,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
-	/** @private @arg {GU_VE83769_Url_Redirect} x */
+	/** @public @arg {GU_VE83769_Url_Redirect} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect";
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
@@ -1443,7 +1435,7 @@ class ServiceMethods extends ServiceData {
 		const cf="M_ResolveUrlCommand";
 		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(parentTrackingParams,x => this.trackingParams(x));
-		this.t(isVanityUrl,x => this.ceq(x,true));
+		this.t(isVanityUrl,x => this.sm.cq(x,true));
 	}
 	/** @public @arg {E_WatchPlaylist} x */
 	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
@@ -1455,6 +1447,8 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_num(index);
 		this.params("watch_playlist.params",params);
 	}
+	/** @template T @arg {T} x @arg {T} y */
+	eq(x,y) {if(x!==y) debugger; return x===y;}
 	/** @private @arg {DE_VE3832_Watch} u */
 	DE_VE3832_Watch(u) {
 		const cf="DE_VE3832_Watch";
@@ -1474,7 +1468,7 @@ class ServiceMethods extends ServiceData {
 		this.t(playerParams,x => this.playerParams("watch.player_params",x));
 		this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
 		this.t(nofollow,this.a_primitive_bool);
-		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
+		this.t(playerExtraUrlParams,([a,...b]) => this.eq(a.key,"inline")&&this.eq(b.length,0));
 	}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
@@ -1761,12 +1755,6 @@ class ServiceMethods extends ServiceData {
 		/** @private @type {any} */
 		let ra=rq;
 		return ra;
-	}
-	/** @public @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
-	T_GM(cf,x,f) {
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(sendPost!==true) debugger;
-		return f.call(this,apiUrl);
 	}
 	/** @public @arg {string} ns @arg {()=>void} f */
 	grouped(ns,f) {
@@ -2335,31 +2323,13 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
 	/** @public @template {{targetId:string}} T @arg {T} x @returns {x is {targetId:D_TargetIdUuid}} */
 	is_yt_uuid_targetId(x) {return this.is_yt_uuid(x.targetId);}
-	/** @public @template {D_GM_VeNum} T @arg {T} x @arg {T extends any?T:never} expected_x */
+	/** @public @template {D_GM_VeNum} T @arg {T} x @arg {NoInfer<T>} expected_x */
 	rootVe(x,expected_x) {
 		this.save_ve_element(x);
 		this.cq(x,expected_x);
 	}
 	/** @public @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
-	make_icon_types_map() {
-		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
-		let r=[
-			"PLAY_ALL","PLAYLISTS",
-		];
-		const mi={
-			known: r,
-			/** @type {string[]} */
-			unknown: []
-		};
-		const k="D_ThumbnailOverlaySidePanel";
-		/** @type {Map<typeof k,typeof mi>} */
-		let mp=new Map([
-			[k,mi]
-		]);
-		return mp;
-	}
-	icon_types_map=this.make_icon_types_map();
 	/** @public @arg {CF_T_Icon_Any} cf @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf,x,ty_arr) {
 		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2379,8 +2349,6 @@ class ServiceMethods extends ServiceData {
 			this.codegen_typedef(cf,x);
 		} finally {console.groupEnd();}
 	}
-	/** @public @arg {D_ThumbnailOverlayLoadingPreview} x */
-	D_ThumbnailOverlayLoadingPreview(x) {this.H_s("text",x,this.G_Text);}
 	/** @private @arg {string} key @arg {Uint8Array} data @arg {number} [idx] */
 	save_next_byte(key,data,idx=0) {
 		let f=data[idx];
@@ -2564,7 +2532,7 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		const {hack,bucketIdentifier,...y}=this.s(cf,x); this.g(y);
-		this.ceq(hack,true);
+		this.sm.cq(hack,true);
 		this.save_string(`${cf}.bucketIdentifier`,bucketIdentifier);
 	}
 	/** @private @arg {M_NotificationOptOut} x */
@@ -2721,7 +2689,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {C_Loop} x */
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {this.y(this,"DC_Loop","loop",x,x => this.ceq(x,false));}
+	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.sm.cq(x,false));}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
 	/** @private @arg {C_EntityUpdate} x */
@@ -3590,7 +3558,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @private @arg {D_RelatedChipCloud} x */
-	D_RelatedChipCloud(x) {this.y(this,"D_RelatedChipCloud","content",x,this.R_ChipCloud);}
+	D_RelatedChipCloud(x) {this.y("D_RelatedChipCloud","content",x,this.R_ChipCloud);}
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
 		const cf="D_ProductList";
@@ -3687,7 +3655,7 @@ class ServiceMethods extends ServiceData {
 	D_EmptyMap(x) {
 		const cf="D_ActiveView";
 		const {emptyMap,...y}=this.s(cf,x); this.g(y);
-		this.ceq(emptyMap,true);
+		this.sm.cq(emptyMap,true);
 	}
 	/** @private @arg {D_InFeedAdLayout["renderingContent"]} x */
 	D_InFeedAdLayout_Content(x) {
@@ -3882,7 +3850,7 @@ class ServiceMethods extends ServiceData {
 		this.save_enum(cf,"FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @private @arg {CD_Next} x */
-	CD_Next(x) {this.y(this,"CD_Next","nextContinuationData",x,this.D_CD_Next);}
+	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
 	/** @private @arg {R_ProductListItem} x */
 	R_ProductListItem(x) {this.H_s("productListItemRenderer",x,this.D_ProductListItem);}
 	/** @private @arg {R_MerchandiseShelf} x */
@@ -3940,7 +3908,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_ContinuationItem";
 		const {trigger,continuationEndpoint,ghostCards,button,...y}=this.s(cf,x); this.g(y);
 		this.t(trigger,x => {
-			this.ceq(x,"CONTINUATION_TRIGGER_ON_ITEM_SHOWN");
+			this.sm.cq(x,"CONTINUATION_TRIGGER_ON_ITEM_SHOWN");
 			this.save_enum(`${cf}.trigger`,"CONTINUATION_TRIGGER",x);
 		});
 		this.t(continuationEndpoint,this.GE_Continuation);
@@ -3955,7 +3923,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {CD_Reload} x */
 	CD_Reload(x) {
-		this.y(this,"CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("reload.continuation",x));
+		this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("reload.continuation",x));
 	}
 	/** @public @arg {R_CompactVideo} x */
 	R_CompactVideo(x) {this.H_s("compactVideoRenderer",x,this.D_CompactVideo);}
@@ -4057,7 +4025,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {M_UpdatedMetadata} x */
 	M_UpdatedMetadata(x) {this.T_WCM("M_UpdatedMetadata",x,(x,cf) => this.T_GM(cf,x,x => this.cq(x,"/youtubei/v1/updated_metadata")));}
 	/** @private @arg {D_VideoId} x */
-	D_VideoId(x) {this.y(this,"D_VideoId","videoId",x,this.videoId);}
+	D_VideoId(x) {this.y("D_VideoId","videoId",x,this.videoId);}
 	/** @public @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_s("videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {D_VideoOwner} x */
@@ -4174,8 +4142,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {string} cf @arg {Extract<D_ChipCloudChip,{style:any}>["style"]} x */
 	D_ChipCloudChip_Style(cf,x) {
-		let ia=this.strings_map.get(cf);
-		if(!ia) this.strings_map.set(cf,ia=[]);
+		let ia=this.xm.get_strings_map_item(cf);
 		ia.push(["style.styleType",[x.styleType]]);
 		switch(x.styleType) {
 			default: debugger; break;
@@ -4291,7 +4258,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_bool(isLiked);
 		this.xm.R_Button(expandButton);
 		this.G_Text(publishedTimeText);
-		this.ceq(voteStatus,"INDIFFERENT");
+		this.sm.cq(voteStatus,"INDIFFERENT");
 		this.trackingParams(trackingParams);
 		this.xm.R_Button(collapseButton);
 		sponsorCommentBadge;
@@ -4318,8 +4285,7 @@ class ServiceMethods extends ServiceData {
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
 		this.save_enum(cf,"BADGE_STYLE_TYPE",x.style);
-		let ia=this.strings_map.get(x.style);
-		if(!ia) this.strings_map.set(x.style,ia=[]);
+		let ia=this.xm.get_strings_map_item(x.style);
 		switch(x.style) {
 			default: x===0; debugger; break;
 			case "BADGE_STYLE_TYPE_AD": case "BADGE_STYLE_TYPE_COLLECTION":
@@ -4407,7 +4373,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.t(titleText,this.G_Text);
 		this.t(commentsCount,this.G_Text);
-		this.t(showSeparator,x => this.ceq(x,true));
+		this.t(showSeparator,x => this.sm.cq(x,true));
 		this.tz(customEmojis,this.D_CustomEmoji);
 		this.t(unicodeEmojisUrl,x => this.parser.parse_url(cf,x));
 		this.t(loggingDirectives,this.D_LoggingDirectives);
@@ -4426,7 +4392,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {R_StructuredDescriptionPlaylistLockup} x */
 	R_StructuredDescriptionPlaylistLockup(x) {this.H_s("structuredDescriptionPlaylistLockupRenderer",x,this.D_StructuredDescriptionPlaylistLockup);}
 	/** @private @arg {D_StructuredDescriptionPlaylistLockup} x */
-	D_StructuredDescriptionPlaylistLockup(x) {this.y(this,"D_StructuredDescriptionPlaylistLockup","trackingParams",x,this.trackingParams);}
+	D_StructuredDescriptionPlaylistLockup(x) {this.y("D_StructuredDescriptionPlaylistLockup","trackingParams",x,this.trackingParams);}
 	/** @private @arg {R_FeedNudge} x */
 	R_FeedNudge(x) {this.H_s("feedNudgeRenderer",x,this.D_FeedNudge);}
 	/** @private @arg {D_FeedNudge} x */
@@ -4572,7 +4538,7 @@ class ServiceMethods extends ServiceData {
 		});
 		this.t(owner,this.D_Video_Owner);
 		this.t(shortViewCountText,this.G_Text);
-		this.t(isWatched,x => this.ceq(x,true));
+		this.t(isWatched,x => this.sm.cq(x,true));
 		this.t(topStandaloneBadge,this.RMD_Badge);
 		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
@@ -4723,10 +4689,10 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(tooltip);
 		let [m2,s2]=this.T_SE_Signal(`${cf}.U_UnseenCount.T_SE_Signal`,updateUnseenCountEndpoint);
 		this.M_GetUnseenNotificationCount(m2);
-		this.ceq(s2.signal,"GET_UNSEEN_NOTIFICATION_COUNT");
+		this.sm.cq(s2.signal,"GET_UNSEEN_NOTIFICATION_COUNT");
 		this.a_primitive_num(notificationCount);
-		this.ceq(handlerDatas.length,1);
-		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
+		this.sm.cq(handlerDatas.length,1);
+		this.sm.cq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
 	}
 	/** @private @arg {D_TopbarMenuButton} x */
 	D_TopbarMenuButton(x) {
@@ -4856,7 +4822,7 @@ class ServiceMethods extends ServiceData {
 		this.t(replies,this.R_CommentReplies);
 		this.trackingParams(trackingParams);
 		if(renderingPriority!=="RENDERING_PRIORITY_UNKNOWN") debugger;
-		this.ceq(isModeratedElqComment,false);
+		this.sm.cq(isModeratedElqComment,false);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @public @arg {R_RichListHeader} x */
@@ -5145,7 +5111,7 @@ class ServiceMethods extends ServiceData {
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem";
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.ceq(sections.length,1);
+		this.sm.cq(sections.length,1);
 		let n=this.TR_MP_MenuSection(sections[0]);
 		if(!n) {debugger; return;}
 		let n1=this.T_Items_TP("R_CompactLink_Items",n[0]);
@@ -5345,10 +5311,10 @@ class ServiceMethods extends ServiceData {
 	D_MusicCarouselShelf(x) {
 		const cf="D_MusicCarouselShelf";
 		const {contents,header,trackingParams,itemSize,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.ceq);
+		this.z(contents,this.sm.cq);
 		this.g(header);
 		this.trackingParams(trackingParams);
-		this.ceq(itemSize,"COLLECTION_STYLE_ITEM_SIZE_MEDIUM");
+		this.sm.cq(itemSize,"COLLECTION_STYLE_ITEM_SIZE_MEDIUM");
 	}
 	/** @public @arg {R_MusicShelf} x */
 	R_MusicShelf(x) {this.H_s("musicShelfRenderer",x,this.D_MusicShelf);}
@@ -5361,7 +5327,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.z(continuations,this.CD_Reload);
 		this.R_MusicShelfDivider(shelfDivider);
-		this.ceq(autoReloadWhenEmpty,true);
+		this.sm.cq(autoReloadWhenEmpty,true);
 		this.xm.R_Button(bottomButton);
 	}
 	/** @private @arg {R_MusicResponsiveListItem} x */
@@ -5700,7 +5666,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {CD_NextRadio} x */
 	CD_NextRadio(x) {
-		this.y(this,"CD_NextRadio","nextRadioContinuationData",x,
+		this.y("CD_NextRadio","nextRadioContinuationData",x,
 			x => this.DC_Generic_CTP("next_radio.continuation",x));
 	}
 	/** @public @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
@@ -5864,11 +5830,11 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {R_PlaylistByline} x */
 	R_PlaylistByline(x) {this.H_s("playlistBylineRenderer",x,this.D_PlaylistByline);}
 	/** @private @arg {D_PlaylistByline} x */
-	D_PlaylistByline(x) {this.y(this,"D_PlaylistByline","text",x,this.G_Text);}
+	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
 	/** @public @arg {D_CanDelete} x */
-	D_EditableDetails(x) {this.y(this,"D_EditableDetails","canDelete",x,this.a_primitive_bool);}
+	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,this.a_primitive_bool);}
 	/** @public @arg {D_CanShare} x */
-	D_CanShare(x) {this.y(this,"D_CanShare","canShare",x,this.a_primitive_bool);}
+	D_CanShare(x) {this.y("D_CanShare","canShare",x,this.a_primitive_bool);}
 	/** @private @arg {M_GetSettingsEditor} x */
 	M_GetSettingsEditor(x) {this.T_WCM("M_GetSettingsEditor",x,this.GM_GetSettingsEditor);}
 	/** @public @arg {M_AddUpcomingEventReminder} x */
@@ -5878,15 +5844,15 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {M_PlaylistDelete} x */
 	M_PlaylistDelete(x) {this.T_WCM("M_PlaylistDelete",x,this.GM_PlaylistDelete);}
 	/** @private @arg {GM_PlaylistDelete} x */
-	GM_PlaylistDelete(x) {this.T_GM("GM_PlaylistDelete",x,x => this.ceq(x,"/youtubei/v1/playlist/delete"));}
+	GM_PlaylistDelete(x) {this.T_GM("GM_PlaylistDelete",x,x => this.sm.cq(x,"/youtubei/v1/playlist/delete"));}
 	/** @private @arg {GM_RemoveUpcomingEventReminder} x */
-	GM_RemoveUpcomingEventReminder(x) {this.T_GM("GM_RemoveUpcomingEventReminder",x,x => this.ceq(x,"/youtubei/v1/notification/remove_upcoming_event_reminder"));}
+	GM_RemoveUpcomingEventReminder(x) {this.T_GM("GM_RemoveUpcomingEventReminder",x,x => this.sm.cq(x,"/youtubei/v1/notification/remove_upcoming_event_reminder"));}
 	/** @private @arg {GM_AddUpcomingEventReminder} x */
-	GM_AddUpcomingEventReminder(x) {this.T_GM("GM_AddUpcomingEventReminder",x,x => this.ceq(x,"/youtubei/v1/notification/add_upcoming_event_reminder"));}
+	GM_AddUpcomingEventReminder(x) {this.T_GM("GM_AddUpcomingEventReminder",x,x => this.sm.cq(x,"/youtubei/v1/notification/add_upcoming_event_reminder"));}
 	/** @private @arg {GM_GetSettingsEditor} x */
-	GM_GetSettingsEditor(x) {this.T_GM("GM_GetSettingsEditor",x,x => this.ceq(x,"/youtubei/v1/playlist/get_settings_editor"));}
+	GM_GetSettingsEditor(x) {this.T_GM("GM_GetSettingsEditor",x,x => this.sm.cq(x,"/youtubei/v1/playlist/get_settings_editor"));}
 	/** @private @arg {DE_PlaylistEditor} x */
-	DE_PlaylistEditor(x) {this.y(this,"DE_PlaylistEditor","playlistId",x,this.playlistId);}
+	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
 	//#region imports
 	/** @arg {D_Menu_WithItems} x */
 	D_Menu_WithItems(x) {
