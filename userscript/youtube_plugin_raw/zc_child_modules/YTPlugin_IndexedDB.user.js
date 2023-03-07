@@ -232,6 +232,7 @@ class IndexedDBService extends BaseService {
 				case "number": break;
 				case "channel_id:UC": break;
 				case "keys": break;
+				case "string": break;
 				case "playlist_id:RD": {
 					const {key,value}=o2;
 					/** @type {DI_A_Playlist_RD} */
@@ -254,6 +255,7 @@ class IndexedDBService extends BaseService {
 				switch(o_arr_t[0]) {
 					default: debugger; return x;
 					case "many":
+					case "arr":
 					case "one": {
 						const z1={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
 						/** @type {DSS_Bigint["z"][0]} */

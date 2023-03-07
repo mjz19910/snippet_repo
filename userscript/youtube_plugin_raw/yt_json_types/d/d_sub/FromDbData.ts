@@ -19,6 +19,14 @@ type FromDbData={
 		type: string;
 	};
 }|{
+	type: "boxed_id";
+	tag: "string";
+	key: `boxed_id:string:${string}`;
+	value: {
+		info_arr: [["one",string]|["arr",string[]]];
+		type: string;
+	};
+}|{
 	type: "boxed_id"; tag: "number";
 	key: `boxed_id:number:${string}`;
 	value: {
@@ -36,4 +44,9 @@ type FromDbData={
 			{id: string;}
 		];
 	};
+}|{
+	type: "boxed_id",
+	tag: "video_id",
+	key: `boxed_id:video_id:${string}`,
+	value: {type: "video_id",info_arr: [{raw_id: string;}];};
 };
