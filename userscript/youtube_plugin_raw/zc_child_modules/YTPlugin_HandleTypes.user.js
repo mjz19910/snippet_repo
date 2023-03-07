@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState}=require("./YtPlugin_Base.user"); const {ECatcherService}=require("./YTPlugin_ECatcherService.user"); const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
+const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState,BaseService}=require("./YtPlugin_Base.user"); const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
 
 //#region module setup
 const __module_name__="mod$HandleTypes";
@@ -29,7 +29,21 @@ ECatcherService.known_experiments.push(...[
 	[24486981],
 ].flat());
 //#region HandleTypes
-class HandleTypes extends ServiceMethods {
+class HandleTypes extends BaseService {
+	//#region Service Cache
+	get x_Renderer() {return this.x.get("x_Renderer");}
+	/** @type {this["x_Renderer"]|null} */
+	_xr=null;
+	get xr() {
+		if(this._xr) return this._xr;
+		this._xr=this.x_Renderer;
+		return this._xr;
+	}
+	//#endregion
+	//#region  Service Methods import
+	/** @template T @arg {any} x @arg {()=>T} _ty @returns {asserts x is T} */
+	assert_assume_is_type(x,_ty) {x;}
+	//#endregion
 	//#region remote service plugins
 	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
 	indexed_db_createDatabaseSchema(service,old_version,db) {
@@ -327,8 +341,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
 	T_Attachment(cf,x) {
 		const {startIndex,length,...y}=this.s(cf,x);
-		this.a_primitive_num(startIndex);
-		this.a_primitive_num(length);
+		this.mf.a_primitive_num(startIndex);
+		this.mf.a_primitive_num(length);
 		return y;
 	}
 	/** @private @template {number} T @arg {T_D32<T>} x */
@@ -360,7 +374,7 @@ class HandleTypes extends ServiceMethods {
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
 		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 		f.call(this,a);
 	}
 	//#endregion
@@ -377,7 +391,7 @@ class HandleTypes extends ServiceMethods {
 	D_WebPlayerConfig(x) {
 		const cf="D_WebPlayerConfig";
 		const {useCobaltTvosDash,webPlayerActionsPorting,...y}=this.s(cf,x); this.g(y);
-		this.cq(useCobaltTvosDash,true);
+		this.mf.cq(useCobaltTvosDash,true);
 		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
 	}
 	/** @public @arg {D_WebPlayerActionsPorting} x */
@@ -412,7 +426,7 @@ class HandleTypes extends ServiceMethods {
 	//#region Renderer Data Templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD_(cf,k,x) {
-		this.k(cf,x);
+		this.mf.k(cf,x);
 		let kx=this.get_keys_of(x);
 		if(kx.length!==1) debugger;
 		if(kx[0]!==k) debugger;
@@ -433,36 +447,36 @@ class HandleTypes extends ServiceMethods {
 		return x[k];
 	}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
-	zy(cf,k,x,f) {return this.z(this.w(cf,k,x),f);}
+	zy(cf,k,x,f) {return this.z(this.mf.w(cf,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
-	TA_Page(cf,x,f) {f.call(this,this.w(cf,"page",x));}
+	TA_Page(cf,x,f) {f.call(this,this.mf.w(cf,"page",x));}
 	//#endregion
 	//#region Action methods
 	/** @private @arg {A_GetMultiPageMenu} x */
-	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
+	A_GetMultiPageMenu(x) {this.mf.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @public @arg {A_AccountItem} x */
-	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
+	A_AccountItem(x) {this.mf.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	//#region Renderer methods
 	/** @public @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
+	R_VideoSecondaryInfo(x) {this.mf.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
 	/** @private @arg {D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x) {
 		const cf="D_VideoSecondaryInfo";
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,attributedDescription,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.t(description,this.G_Text);
-		this.R_SubscribeButton(subscribeButton);
-		this.RMD_RowContainer(metadataRowContainer);
-		this.G_Text(showMoreText);
-		this.G_Text(showLessText);
-		this.R_VideoOwner(owner);
-		this.a_primitive_bool(defaultExpanded);
-		this.a_primitive_num(descriptionCollapsedLines);
-		this.t(showMoreCommand,this.C_Executor);
-		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
+		this.mf.trackingParams(trackingParams);
+		this.t(description,x => this.mf.G_Text(x));
+		this.mf.R_SubscribeButton(subscribeButton);
+		this.mf.RMD_RowContainer(metadataRowContainer);
+		this.mf.G_Text(showMoreText);
+		this.mf.G_Text(showLessText);
+		this.mf.R_VideoOwner(owner);
+		this.mf.a_primitive_bool(defaultExpanded);
+		this.mf.a_primitive_num(descriptionCollapsedLines);
+		this.t(showMoreCommand,x => this.mf.C_Executor(x));
+		this.t(showLessCommand,x => this.mf.A_ChangeEngagementPanelVisibility(x));
 		this.t(attributedDescription,this.D_AttributedDescription);
 	}
 	/** @private @arg {D_CommandRunItem} x */
@@ -470,7 +484,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_CommandRunItem";
 		const {onTap,loggingDirectives,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.C_Innertube(onTap);
-		this.t(loggingDirectives,this.D_LoggingDirectives);
+		this.t(loggingDirectives,x => this.mf.D_LoggingDirectives(x));
 	}
 	/** @private @arg {D_StyleRunItem} x */
 	D_StyleRunItem(x) {
@@ -484,7 +498,7 @@ class HandleTypes extends ServiceMethods {
 	D_AttributedDescription(x) {
 		const cf="D_VideoSecondaryInfo";
 		const {content,commandRuns,styleRuns,attachmentRuns,decorationRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(content);
+		this.mf.a_primitive_str(content);
 		this.tz(commandRuns,this.D_CommandRunItem);
 		this.tz(styleRuns,this.D_StyleRunItem);
 		this.tz(attachmentRuns,this.R_AttachmentElement);
@@ -498,18 +512,18 @@ class HandleTypes extends ServiceMethods {
 		this.save_enum(cf,"ALIGNMENT",alignment);
 	}
 	/** @private @arg {R_TextDecorator} x */
-	R_TextDecorator(x) {this.H_("textDecorator",x,this.R_HighlightTextDecorator);}
+	R_TextDecorator(x) {this.mf.H_("textDecorator",x,this.R_HighlightTextDecorator);}
 	/** @private @arg {R_HighlightTextDecorator} x */
-	R_HighlightTextDecorator(x) {this.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
+	R_HighlightTextDecorator(x) {this.mf.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
 	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
+	R_ExpandableVideoDescriptionBody(x) {this.mf.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
 		const {descriptionBodyText,showMoreText,showLessText,attributedDescriptionBodyText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(descriptionBodyText,this.G_Text);
-		this.t(showMoreText,this.G_Text);
-		this.t(showLessText,this.G_Text);
+		this.t(descriptionBodyText,x => this.mf.G_Text(x));
+		this.t(showMoreText,x => this.mf.G_Text(x));
+		this.t(showLessText,x => this.mf.G_Text(x));
 		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
 	}
 	/** @private @arg {D_HighlightTextDecorator} x */
@@ -517,7 +531,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_HighlightTextDecorator";
 		const {backgroundColor,backgroundCornerRadius,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.save_number(`${cf}.backgroundColor`,backgroundColor);
-		this.cq(backgroundCornerRadius,8);
+		this.mf.cq(backgroundCornerRadius,8);
 	}
 	/** @private @arg {D_AttachmentElement} x */
 	D_AttachmentElement(x) {
@@ -527,41 +541,41 @@ class HandleTypes extends ServiceMethods {
 		this.R_LayoutProperties(properties);
 	}
 	/** @private @arg {R_LayoutProperties} x */
-	R_LayoutProperties(x) {this.H_("layoutProperties",x,this.D_LayoutProperties);}
+	R_LayoutProperties(x) {this.mf.H_("layoutProperties",x,this.D_LayoutProperties);}
 	/** @private @arg {D_LayoutProperties} x */
 	D_LayoutProperties(x) {
 		const cf="D_LayoutProperties";
 		const {height,width,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(height) {
-			this.cq(height.unit,"DIMENSION_UNIT_POINT");
-			this.cq(height.value,10);
+			this.mf.cq(height.unit,"DIMENSION_UNIT_POINT");
+			this.mf.cq(height.value,10);
 		} else debugger;
 		if(width) {
-			this.cq(width.unit,"DIMENSION_UNIT_POINT");
-			this.cq(width.value,14);
+			this.mf.cq(width.unit,"DIMENSION_UNIT_POINT");
+			this.mf.cq(width.value,14);
 		} else debugger;
 	}
 	/** @private @arg {D_ImageType} x */
-	D_ImageType(x) {this.H_("imageType",x,this.D_Image);}
+	D_ImageType(x) {this.mf.H_("imageType",x,this.D_Image);}
 	/** @private @arg {D_Image} x */
-	D_Image(x) {this.H_("image",x,this.D_Sources);}
+	D_Image(x) {this.mf.H_("image",x,this.D_Sources);}
 	/** @private @arg {D_Sources} x */
 	D_Sources(x) {
-		this.H_("sources",x,x => this.z(x,x => {
+		this.mf.H_("sources",x,x => this.z(x,x => {
 			const {url,...y}=this.s("D_Sources.sources[]",x); this.g(y);
-			this.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
+			this.mf.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
 		}));
 	}
 	/** @public @arg {R_BackgroundPromo} x */
-	R_BackgroundPromo(x) {this.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
+	R_BackgroundPromo(x) {this.mf.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
 	/** @public @arg {D_BackgroundPromo} x */
 	D_BackgroundPromo(x) {
 		const cf="D_LayoutProperties";
 		const {title,bodyText,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.G_Text(bodyText);
-		this.T_Icon(cf,icon);
-		this.trackingParams(trackingParams);
+		this.mf.G_Text(title);
+		this.mf.G_Text(bodyText);
+		this.mf.T_Icon(cf,icon);
+		this.mf.trackingParams(trackingParams);
 	}
 	//#endregion
 	//#region G
@@ -570,73 +584,73 @@ class HandleTypes extends ServiceMethods {
 		const cf="DB_SI_EngagementPanel";
 		switch(x.targetId) {
 			default: x===""; debugger; break;
-			case "engagement-panel-ads": return this.SI_DB_EngagementPanel_Ads(x);
+			case "engagement-panel-ads": return this.mf.SI_DB_EngagementPanel_Ads(x);
 			case "engagement-panel-clip-create":/*GE*/{
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
-				this.R_EngagementPanelTitleHeader(header);
-				this.R_ClipSection(content);
+				this.mf.R_EngagementPanelTitleHeader(header);
+				this.mf.R_ClipSection(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
+				this.mf.D_LoggingDirectives(loggingDirectives);
 				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
 			} break;
 			case "engagement-panel-macro-markers-description-chapters":/*GE*/{
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
-				this.R_EngagementPanelTitleHeader(header);
+				this.mf.R_EngagementPanelTitleHeader(header);
 				this.xr.R_MacroMarkersList(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
+				this.mf.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-macro-markers-auto-chapters":/*GE*/{
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
-				this.R_EngagementPanelTitleHeader(header);
+				this.mf.R_EngagementPanelTitleHeader(header);
 				this.xr.R_MacroMarkersList(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
+				this.mf.D_LoggingDirectives(loggingDirectives);
 			} break;
 		}
 	}
 	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x) {
 		const cf="G_EngagementPanelSectionShowCommands";
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
-		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		x===""; this.codegen_typedef(cf,x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.mf.A_ChangeEngagementPanelVisibility(x);
+		if("showEngagementPanelScrimAction" in x) return this.mf.A_ShowEngagementPanelScrim(x);
+		if("scrollToEngagementPanelCommand" in x) return this.mf.C_ScrollToEngagementPanel(x);
+		x===""; this.mf.codegen_typedef(cf,x);
 	}
 	/** @public @arg {C_Innertube} x */
-	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
+	C_Innertube(x) {this.mf.H_("innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {G_DC_Innertube} x */
 	G_DC_Innertube(x) {
-		const cf="G_DC_Innertube"; this.k(cf,x);
-		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
-		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		const cf="G_DC_Innertube"; this.mf.k(cf,x);
+		if("setActivePanelItemAction" in x) return this.mf.A_SetActivePanelItem(x);
+		if("ypcGetOfflineUpsellEndpoint" in x) return this.mf.E_YpcGetOfflineUpsell(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.mf.A_ChangeEngagementPanelVisibility(x);
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		if("browseEndpoint" in x) {
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			if(this.mf.is_TE_VE(x,3611)) return this.mf.E_VE3611(x);
+			if(this.mf.is_TE_VE(x,5754)) return this.mf.E_VE5754(x);
+			if(this.mf.is_TE_VE(x,6827)) return this.mf.E_VE6827(x);
 			debugger;
 			return;
 		}
-		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("watchEndpoint" in x) return this.mf.E_Watch(x);
 		debugger;
 	}
 	//#endregion
 	//#region CD & AU & C & DC
 	/** @private @arg {CD_TimedContinuation} x */
-	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
+	CD_TimedContinuation(x) {this.mf.H_("timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
-	AU_ChannelSwitcherPage(x) {this.H_("updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
+	AU_ChannelSwitcherPage(x) {this.mf.H_("updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
-	AD_GetMultiPageMenu(x) {this.H_("menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
+	AD_GetMultiPageMenu(x) {this.mf.H_("menu",x,x => this.mf.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.mf.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @arg {C_FollowUp} x */
-	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
+	C_FollowUp(x) {let [a,y]=this.mf.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
 	DC_AddFollowUpSurvey(x) {
 		const cf="DC_AddFollowUpSurvey";
@@ -646,14 +660,14 @@ class HandleTypes extends ServiceMethods {
 	DC_ResetChannelUnreadCount(x) {
 		const cf="DC_ResetChannelUnreadCount";
 		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.channelId(channelId);
+		this.mf.channelId(channelId);
 	}
 	/** @private @arg {DC_Timed} x */
 	DC_Timed(x) {
 		const cf="DC_Timed";
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_TimeoutMs(timeoutMs);
-		this.params("timed_continuation.data",continuation);
+		this.mf.params("timed_continuation.data",continuation);
 	}
 	/** @private @arg {D_TimeoutMs} x */
 	D_TimeoutMs(x) {
@@ -675,20 +689,20 @@ class HandleTypes extends ServiceMethods {
 	//#endregion
 	//#region B
 	/** @public @arg {B_HrefUrl} x */
-	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
+	B_HrefUrl(x) {this.mf.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
 	//#endregion
 	//#region D
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x) {
 		const cf="D_Microformat_Other";
 		let {tags,familySafe,noindex,unlisted,thumbnail,title,description,schemaDotOrgType,androidPackage,appName,availableCountries,linkAlternates,siteName,ogType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.tz(tags,this.a_primitive_str);
+		this.tz(tags,x => this.mf.a_primitive_str(x));
 		this.t(familySafe,x => {if(x!==true) debugger;});
 		if(noindex!==false) debugger;
 		if(unlisted!==false) debugger;
-		this.D_Thumbnail(thumbnail);
-		this.z([title,description,schemaDotOrgType,androidPackage,appName,siteName,ogType],this.a_primitive_str);
-		this.tz(availableCountries,this.a_primitive_str);
+		this.mf.D_Thumbnail(thumbnail);
+		this.z([title,description,schemaDotOrgType,androidPackage,appName,siteName,ogType],x => this.mf.a_primitive_str(x));
+		this.tz(availableCountries,x => this.mf.a_primitive_str(x));
 		this.z(linkAlternates,this.B_HrefUrl);
 	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
@@ -697,9 +711,9 @@ class HandleTypes extends ServiceMethods {
 	D_MenuServiceItem(x) {
 		const cf="D_MenuServiceItem";
 		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
+		this.mf.G_Text(text);
 		this.g(serviceEndpoint);
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 	}
 	/** @type {{cache:string[];new_:string[]}} */
 	selector={cache: [],new_: []};
@@ -825,15 +839,15 @@ class HandleTypes extends ServiceMethods {
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
 		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,gcr,spc,vprv,ufph,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
-		this.a_primitive_str(expire);
-		this.a_primitive_str(ei);
-		this.a_primitive_str(ip);
+		this.mf.a_primitive_str(expire);
+		this.mf.a_primitive_str(ei);
+		this.mf.a_primitive_str(ip);
 		aitags&&this.save_string(`${cf1}.aitags`,aitags);
 		{
 			let idp=split_string_once(id,".");
 			switch(idp.length) {
-				case 2: this.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_string(`${cf2}.id.1`,idp[1]); break;
-				case 1: this.save_b64_binary(`${cf2}.id.0`,idp[0]); break;
+				case 2: this.mf.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_string(`${cf2}.id.1`,idp[1]); break;
+				case 1: this.mf.save_b64_binary(`${cf2}.id.0`,idp[0]); break;
 			}
 		}
 		itag&&this.save_string(`${cf1}.itag`,itag);
@@ -841,7 +855,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.requiressl`,requiressl);
 		this.t(ctier,x => this.save_string(`${cf1}.ctier`,x));
 		gcr&&this.save_string(`${cf1}.gcr`,gcr);
-		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
+		spc&&this.mf.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_string(`${cf1}.vprv`,vprv);
 		this.save_string(`${cf1}.vprv`,vprv);
 		this.t(ufph,x => this.save_string(`${cf1}.ufph`,x));
@@ -850,21 +864,21 @@ class HandleTypes extends ServiceMethods {
 		this.t(noclen,x => this.save_string(`${cf1}.noclen`,x));
 		this.t(xtags,x => this.save_string(`${cf1}.xtags`,x));
 		this.save_string(`${cf1}.mime`,mime);
-		this.save_b64_binary(`${cf2}.ns`,ns);
+		this.mf.save_b64_binary(`${cf2}.ns`,ns);
 		cnr&&this.save_string(`${cf1}.cnr`,cnr);
 		if(gir) this.save_string(`${cf1}.gir`,gir);
 		this.t(clen,x => {
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
+			let x1=this.mf.parse_number_template(x);
+			this.mf.a_primitive_num(x1);
 		});
 		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
 		this.t(dur,x => {
-			let dur_=this.parse_number_template(x);
-			this.a_primitive_num(dur_);
+			let dur_=this.mf.parse_number_template(x);
+			this.mf.a_primitive_num(dur_);
 		});
 		this.t(lmt,x => {
-			let lmt_=this.parse_number_template(x);
-			this.a_primitive_num(lmt_);
+			let lmt_=this.mf.parse_number_template(x);
+			this.mf.a_primitive_num(lmt_);
 		});
 	}
 	/** @private @arg {D_VideoPlaybackShape_LS_Params} x */
@@ -894,8 +908,8 @@ class HandleTypes extends ServiceMethods {
 		x: {
 			let x2=initcwndbps;
 			if(!x2) break x;
-			let x3=this.parse_number_template(x2);
-			this.a_primitive_num(x3);
+			let x3=this.mf.parse_number_template(x2);
+			this.mf.a_primitive_num(x3);
 		}
 	}
 	/** @private @arg {D_VideoPlaybackShape_Other} x */
@@ -907,17 +921,17 @@ class HandleTypes extends ServiceMethods {
 		this.save_string(`${cf1}.fexp`,fexp);
 		this.save_string(`${cf1}.c`,c);
 		txp&&this.save_string(`${cf1}.txp`,txp);
-		this.save_b64_binary(`${cf2}.n`,n);
-		this.save_b64_binary(`${cf2}.lsig`,lsig);
-		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
+		this.mf.save_b64_binary(`${cf2}.n`,n);
+		this.mf.save_b64_binary(`${cf2}.lsig`,lsig);
+		this.t(sig,x => this.mf.save_b64_binary(`${cf2}.sig`,x));
 		const {gcr,mt,itag,...y}=y1; this.g(y);
 		itag&&this.save_string(`${cf1}.itag`,itag);
 		{
 			let x=mt;
-			let x1=this.parse_number_template(x);
-			this.a_primitive_num(x1);
+			let x1=this.mf.parse_number_template(x);
+			this.mf.a_primitive_num(x1);
 		}
-		this.t(gcr,x => this.cq(x,"ca"));
+		this.t(gcr,x => this.mf.cq(x,"ca"));
 	}
 	/** @private @arg {D_VideoPlaybackShape} uv */
 	D_VideoPlaybackShape(uv) {
@@ -942,162 +956,42 @@ class HandleTypes extends ServiceMethods {
 	D_LivePlayerConfig(x) {
 		const cf="D_LivePlayerConfig";
 		const {liveReadaheadSeconds,hasSubfragmentedFmp4,isLiveHeadPlayable,...y}=this.s(cf,x); this.g(y);
-		this.cq(liveReadaheadSeconds,1.6);
-		this.cq(hasSubfragmentedFmp4,true);
-		this.t(isLiveHeadPlayable,x => this.cq(x,true));
+		this.mf.cq(liveReadaheadSeconds,1.6);
+		this.mf.cq(hasSubfragmentedFmp4,true);
+		this.t(isLiveHeadPlayable,x => this.mf.cq(x,true));
 	}
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
 		const cf="D_VideoDetails";
 		const {videoId,title,lengthSeconds,isLive,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,isLiveDvrEnabled,thumbnail,liveChunkReadahead,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,isPostLiveDvr,...y}=this.s(cf,x); this.g(y);
-		this.videoId(videoId);
-		this.a_primitive_str(title);
-		this.a_primitive_num(this.parse_number_template(lengthSeconds));
-		this.t(isLive,x => this.cq(x,true));
-		this.tz(keywords,this.a_primitive_str);
-		this.channelId(channelId);
-		this.a_primitive_bool(isOwnerViewing);
-		this.cq(isOwnerViewing,false);
-		this.a_primitive_str(shortDescription);
-		this.a_primitive_bool(isCrawlable);
-		this.t(isLiveDvrEnabled,x => this.cq(x,true));
-		this.D_Thumbnail(thumbnail);
-		this.t(liveChunkReadahead,x => this.cq(x,2));
-		this.a_primitive_bool(allowRatings);
+		this.mf.videoId(videoId);
+		this.mf.a_primitive_str(title);
+		this.mf.a_primitive_num(this.mf.parse_number_template(lengthSeconds));
+		this.t(isLive,x => this.mf.cq(x,true));
+		this.tz(keywords,x => this.mf.a_primitive_str(x));
+		this.mf.channelId(channelId);
+		this.mf.a_primitive_bool(isOwnerViewing);
+		this.mf.cq(isOwnerViewing,false);
+		this.mf.a_primitive_str(shortDescription);
+		this.mf.a_primitive_bool(isCrawlable);
+		this.t(isLiveDvrEnabled,x => this.mf.cq(x,true));
+		this.mf.D_Thumbnail(thumbnail);
+		this.t(liveChunkReadahead,x => this.mf.cq(x,2));
+		this.mf.a_primitive_bool(allowRatings);
 		this.t(viewCount,x => {
-			let num=this.parse_number_template(x);
-			this.a_primitive_num(num);
+			let num=this.mf.parse_number_template(x);
+			this.mf.a_primitive_num(num);
 		});
-		this.a_primitive_str(author);
-		this.cq(isPrivate,false);
-		this.cq(isUnpluggedCorpus,false);
-		this.a_primitive_bool(isLiveContent);
-		this.t(isPostLiveDvr,x => this.cq(x,true));
+		this.mf.a_primitive_str(author);
+		this.mf.cq(isPrivate,false);
+		this.mf.cq(isUnpluggedCorpus,false);
+		this.mf.a_primitive_bool(isLiveContent);
+		this.t(isPostLiveDvr,x => this.mf.cq(x,true));
 	}
 	/** @public @arg {D_StartSeconds} x */
-	D_StartSeconds(x) {this.y("D_StartSeconds","startSeconds",x,this.a_primitive_num);}
+	D_StartSeconds(x) {this.mf.y("D_StartSeconds","startSeconds",x,x => this.mf.a_primitive_num(x));}
 	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {this.y("D_StreamSelectionConfig","maxBitrate",x,x => this.a_primitive_num(this.parse_number_template(x)));}
-	/** @arg {D_Menu_WithItems} x */
-	D_Menu_WithItems(x) {
-		const cf="D_Menu_WithItems";
-		const {items,...u1}=this.s(cf,x);
-		if(!this.is_not_empty_obj(u1)) return this.g(u1);
-		this.z(items,x => {
-			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-			debugger;
-		});
-		const {trackingParams,...u2}=u1;
-		this.trackingParams(trackingParams);
-		if(!this.is_not_empty_obj(u2)) return this.g(u2);
-		const {accessibility,...u3}=u2;
-		this.D_Accessibility(accessibility);
-		if(!this.is_not_empty_obj(u3)) return this.g(u3);
-		let u=u3;
-		if("flexibleItems" in u) {
-			const {topLevelButtons,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
-			this.z(topLevelButtons,x => {
-				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			this.z(flexibleItems,this.R_MenuFlexibleItem);
-			return;
-		}
-		if("topLevelButtons" in u) {
-			const {topLevelButtons,...y}=u; this.g(y);/*#destructure_done*/
-			this.z(topLevelButtons,x => {
-				if("buttonRenderer" in x) return this.R_Button(x);
-				debugger;
-			});
-			return;
-		}
-		if("loggingDirectives" in u) {
-			const {loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_LoggingDirectives(loggingDirectives);
-			return;
-		}
-		if("menuPopupAccessibility" in u) {
-			const {menuPopupAccessibility,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Label(menuPopupAccessibility);
-			return;
-		}
-		this.g(u);
-	}
-	/** @private @arg {D_TextRun_NavEP_1} x */
-	D_TextRun_NavEP_1(x) {
-		const cf="D_TextRun_NavEP_1"; this.k(cf,x);
-		if("browseEndpoint" in x) {
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-			if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
-			x===""; debugger;
-			return;
-		}
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.xr.E_Url(x);
-		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
-		x===""; debugger;
-	}
-	/** @public @arg {Extract<D_TextRun,{navigationEndpoint:any;loggingDirectives:any}>["navigationEndpoint"]} x */
-	D_TextRun_NavEP_2(x) {
-		if("browseEndpoint" in x) {
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-			debugger;
-			return;
-		}
-		if("urlEndpoint" in x) return this.xr.E_Url(x);
-		if("searchEndpoint" in x) return this.E_Search(x);
-		x===""; debugger;
-	}
-	/** @public @arg {D_TextRun} x */
-	D_TextRun(x) {
-		const cf="D_TextRun";
-		const {text,...u}=this.s(cf,x);/*#destructure_done*/
-		this.a_primitive_str(text);
-		if("strikethrough" in u) {
-			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
-			if(strikethrough!==true) debugger;
-			return;
-		}
-		if("italics" in u) {
-			const {italics,...y}=u; this.g(y);/*#destructure_done*/
-			if(italics!==true) debugger;
-			return;
-		}
-		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
-			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
-			this.D_TextRun_NavEP_2(navigationEndpoint);
-			this.D_LoggingDirectives(loggingDirectives);
-			if("bold" in y) {
-				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
-				this.cq(bold,true);
-				return;
-			}
-			this.g(y);
-			return;
-		}
-		if("navigationEndpoint" in u) {
-			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_TextRun_NavEP_1(navigationEndpoint);
-			return;
-		}
-		if("bold" in u) {
-			const {bold,...y}=u; this.g(y);/*#destructure_done*/
-			this.a_primitive_bool(bold);
-			return;
-		}
-		if("emoji" in u) {
-			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Emoji(emoji);
-			return;
-		}
-		this.g(u);
-	}
+	D_StreamSelectionConfig(x) {this.mf.y("D_StreamSelectionConfig","maxBitrate",x,x => this.mf.a_primitive_num(this.mf.parse_number_template(x)));}
 	//#endregion
 	//#region RS & RSG & RSL & REG & RSW
 	/** @public @arg {RS_AccountMenu} x */
@@ -1108,7 +1002,7 @@ class HandleTypes extends ServiceMethods {
 			if("openPopupAction" in x) return this.xr.A_GetSystemMenu(x);
 			return null;
 		});
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 	}
 	/** @public @arg {RS_UpdateMetadata} x */
 	RS_UpdateMetadata(x) {
@@ -1128,15 +1022,15 @@ class HandleTypes extends ServiceMethods {
 	RS_Search(x) {
 		const cf="RS_Search";
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(estimatedResults);
+		this.mf.a_primitive_str(estimatedResults);
 		this.xr.R_TwoColumnSearchResults(contents);
-		this.trackingParams(trackingParams);
-		this.R_DesktopTopbar(topbar);
-		this.z(refinements,this.a_primitive_str);
+		this.mf.trackingParams(trackingParams);
+		this.mf.R_DesktopTopbar(topbar);
+		this.z(refinements,x => this.mf.a_primitive_str(x));
 		this.z(onResponseReceivedCommands,x => {
-			if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
+			if("adsControlFlowOpportunityReceivedCommand" in x) return this.mf.C_AdsControlFlowOpportunityReceived(x);
 		});
-		this.targetId(cf,targetId);
+		this.mf.targetId(cf,targetId);
 	}
 	/** @public @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
@@ -1144,7 +1038,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},entries,prevEntries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.tz(prevEntries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
 	}
 	/** @public @arg {RS_GetLiveChat} x */
@@ -1152,23 +1046,23 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_GetLiveChat";
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_LiveChat(a1);
-		this.t_cf(cf,a2,this.trackingParams);
+		this.t_cf(cf,a2,x => this.mf.trackingParams(x));
 	}
 	/** @private @arg {string} x */
-	RS_Next_ContextParams(x) {this.params("next.queue_context.params",x);}
+	RS_Next_ContextParams(x) {this.mf.params("next.queue_context.params",x);}
 	/** @public @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next";
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(contents,x => this.xr.G_NextContents(x));
-		this.t(currentVideoEndpoint,this.E_Watch);
-		this.trackingParams(trackingParams);
-		this.t(playerOverlays,this.R_PlayerOverlay);
-		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived(cf,a));
-		this.tz(engagementPanels,this.R_EngagementPanelSectionList);
-		this.t(topbar,this.R_DesktopTopbar);
-		this.tz(pageVisualEffects,this.R_CinematicContainer);
-		this.t(frameworkUpdates,this.D_FrameworkUpdates);
+		this.t(currentVideoEndpoint,x => this.mf.E_Watch(x));
+		this.mf.trackingParams(trackingParams);
+		this.t(playerOverlays,x => this.mf.R_PlayerOverlay(x));
+		this.tz(onResponseReceivedEndpoints,a => this.mf.GE_ResponseReceived(cf,a));
+		this.tz(engagementPanels,x => this.mf.R_EngagementPanelSectionList(x));
+		this.t(topbar,x => this.mf.R_DesktopTopbar(x));
+		this.tz(pageVisualEffects,x => this.mf.R_CinematicContainer(x));
+		this.t(frameworkUpdates,x => this.mf.D_FrameworkUpdates(x));
 		this.t(videoReporting,x => this.xr.R_ReportFormModal(x));
 		this.t(queueContextParams,this.RS_Next_ContextParams);
 		this.t(continuationContents,this.RC_PlaylistPanel);
@@ -1177,7 +1071,7 @@ class HandleTypes extends ServiceMethods {
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(selectText);
+		this.mf.G_Text(selectText);
 		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
 	/** @public @arg {RS_SetSetting} x */
@@ -1196,7 +1090,7 @@ class HandleTypes extends ServiceMethods {
 	RS_AttGet(x) {
 		const cf="RS_AttGet";
 		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(challenge);
+		this.mf.a_primitive_str(challenge);
 		this.xr.D_AttBgChallenge(bgChallenge);
 	}
 	/** @public @arg {RS_Guide} x */
@@ -1204,7 +1098,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_Guide";
 		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,x => this.xr.G_GuideSectionItem(x));
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 	}
 	/** @public @arg {RS_WatchReelItem} x */
 	RS_WatchReelItem(x) {
@@ -1212,33 +1106,33 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
-		this.t(sequenceContinuation,this.a_primitive_str);
-		this.R_DesktopTopbar(desktopTopbar);
-		this.z(engagementPanels,this.R_EngagementPanelSectionList);
+		this.t(sequenceContinuation,x => this.mf.a_primitive_str(x));
+		this.mf.R_DesktopTopbar(desktopTopbar);
+		this.z(engagementPanels,x => this.mf.R_EngagementPanelSectionList(x));
 	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let pu=this.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
+		let pu=this.mf.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
 		if("pdgBuyFlowRenderer" in pu) {this.xr.R_PdgBuyFlow(pu);}
 		pu.pdgBuyFlowRenderer;
-		this.trackingParams(trackingParams);
-		this.D_FrameworkUpdates(frameworkUpdates);
+		this.mf.trackingParams(trackingParams);
+		this.mf.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @public @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
 		const cf="RSG_SearchSuggestions";
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
@@ -1247,14 +1141,14 @@ class HandleTypes extends ServiceMethods {
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
 		});
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.mf.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
 	}
@@ -1263,7 +1157,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RSL_Dislike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let ac=this.tz(actions,x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.mf.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
 		if(!ac) return;
@@ -1275,7 +1169,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RSL_RemoveLike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,(x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.mf.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		}));
 	}
@@ -1283,13 +1177,13 @@ class HandleTypes extends ServiceMethods {
 	REG_DatasyncIds(x) {
 		const cf="REG_DatasyncIds";
 		const {responseContext: {},datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(datasyncIds,this.a_primitive_str);
+		this.z(datasyncIds,x => this.mf.a_primitive_str(x));
 	}
 	/** @public @arg {REG_AccountSwitcher} x */
 	REG_AccountSwitcher(x) {
 		const cf="REG_AccountSwitcher";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(selectText);
+		this.mf.G_Text(selectText);
 		this.z(actions,this.A_GetMultiPageMenu);
 	}
 	//#endregion
@@ -1297,36 +1191,36 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {AU_Description} x */
 	AU_Description(x) {
 		const cf="AU_Description";
-		this.y(cf,"updateDescriptionAction",x,this.AD_Description);
+		this.mf.y(cf,"updateDescriptionAction",x,this.AD_Description);
 	}
 	/** @private @arg {AD_Description} x */
 	AD_Description(x) {
 		const cf="AD_Description";
 		const {description,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(description);
+		this.mf.G_Text(description);
 	}
 	/** @private @arg {AU_Title} x */
-	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
+	AU_Title(x) {this.mf.y("UA_Title","updateTitleAction",x,x => this.mf.y("UA_TitleData","title",x,x => this.mf.G_Text(x)));}
 	/** @private @arg {AU_DateText} x */
-	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));}
+	AU_DateText(x) {this.mf.y("UA_DateText","updateDateTextAction",x,x => this.mf.y("UA_DateTextData","dateText",x,x => this.mf.G_Text(x)));}
 	/** @private @arg {AU_ToggleButtonText} x */
 	AU_ToggleButtonText(x) {
-		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
+		this.mf.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
 			const cf="AU_ToggleButtonTextData";
 			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
 			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
-			this.G_Text(defaultText);
-			this.G_Text(toggledText);
+			this.mf.G_Text(defaultText);
+			this.mf.G_Text(toggledText);
 		});
 	}
 	/** @private @arg {AU_Viewership} x */
-	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.y("AU_ViewershipData","viewCount",x,this.R_VideoViewCount));}
+	AU_Viewership(x) {this.mf.y("AU_Viewership","updateViewershipAction",x,x => this.mf.y("AU_ViewershipData","viewCount",x,x => this.mf.R_VideoViewCount(x)));}
 	/** @private @arg {AU_EngagementPanel} x */
 	AU_EngagementPanel(x) {
 		const cf="AU_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
-		this.clickTrackingParams(clickTrackingParams);
+		this.mf.clickTrackingParams(clickTrackingParams);
 	}
 	/** @private @arg {AD_UpdateEngagementPanel} x */
 	AD_UpdateEngagementPanel(x) {
@@ -1338,9 +1232,9 @@ class HandleTypes extends ServiceMethods {
 	//#endregion
 	//#region Continuation [RC]
 	/** @private @arg {RC_PlaylistPanel} x */
-	RC_PlaylistPanel(x) {this.H_("playlistPanelContinuation",x,this.g);}
+	RC_PlaylistPanel(x) {this.mf.H_("playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
-	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
+	RC_LiveChat(x) {this.mf.H_("liveChatContinuation",x,this.DC_LiveChat);}
 	//#endregion
 	//#region Misc
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{type:T}} */
@@ -1647,7 +1541,7 @@ class HandleTypes extends ServiceMethods {
 			/** @arg {string} _x @returns {asserts _x is `${number}`} */
 			function assume_numeric_template(_x) {}
 			assume_numeric_template(e);
-			return this.parse_number_template(e);
+			return this.mf.parse_number_template(e);
 		});
 		if(kn.every(x => !Number.isNaN(x))) return x;
 		if("message" in x) return x;
@@ -1722,7 +1616,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f) {
 		if(!x) {debugger; return null;}
-		this.k(cf,x);
+		this.mf.k(cf,x);
 		let keys=this.get_keys_of(x);
 		if(keys.length!==1) debugger;
 		if(k!=keys[0]) {debugger; return null;}
@@ -1734,11 +1628,11 @@ class HandleTypes extends ServiceMethods {
 	/**
 	 * @protected
 	 * @template V @template {PropertyKey} K @template {{[U in K]:[T];}} T
-	 * @arg {K} k @arg {CF_H_a} cf @arg {T} x @arg {(this:this,x:T[K][0])=>V} f
+	 * @param {K} k @param {CF_H_a} cf @param {T} x @param {(this:this,x:T[K][0])=>V} f
 	 * @returns {[y,ret]}
 	 */
 	H_a(cf,k,x,f,save=false) {
-		if(save) this.k(cf,x);
+		if(save) this.mf.k(cf,x);
 		const {[k]: [a],...y}=this.s(cf,x);
 		const ret=f.call(this,a);
 		return [y,ret];
@@ -1774,7 +1668,7 @@ class HandleTypes extends ServiceMethods {
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
-		this.videoId(raw_id);
+		this.mf.videoId(raw_id);
 	}
 	/** @private @type {string[]} */
 	cache_playlist_index=[];
@@ -1787,8 +1681,8 @@ class HandleTypes extends ServiceMethods {
 		/** @arg {typeof x2} x @returns {typeof y2|null} */
 		const px_x2=(x) => {
 			const {v,...y}=x;
-			this.videoId(v);
-			if(this.is_empty_obj(y)) return null;
+			this.mf.videoId(v);
+			if(this.mf.is_empty_obj(y)) return null;
 			let y2=y;
 			return y2;
 		};
@@ -1797,14 +1691,14 @@ class HandleTypes extends ServiceMethods {
 		let x4=null;
 		if("pp" in x3) {
 			const {pp,...y}=x3;
-			this.playerParams("watch.player_params",pp);
-			if(!this.is_not_empty_obj(y)) return;
+			this.mf.playerParams("watch.player_params",pp);
+			if(!this.mf.is_not_empty_obj(y)) return;
 			x4=y;
 		}
 		let x5=null;
 		if(x4) {
 			const {list,...y}=x4;
-			this.playlistId(list);
+			this.mf.playlistId(list);
 			x5=y;
 		}
 		x: if(x5) {
@@ -1814,26 +1708,26 @@ class HandleTypes extends ServiceMethods {
 				this.cache_playlist_index.push(index);
 				if(this.log_playlist_index) console.log("[playlist_index]",index);
 			}
-			if(this.is_empty_obj(y)) break x;
+			if(this.mf.is_empty_obj(y)) break x;
 			this.g(y);
 		}
 		if("pp" in x3) return;
 		if("t" in x3) {
 			const {t,...y}=x3;
-			if(this.is_empty_obj(y)) return;
+			if(this.mf.is_empty_obj(y)) return;
 			this.g(y); return;
 		}
 		x: if("list" in x3) {
 			y: {
 				const {list,...y2}=x3;
-				this.playlistId(list);
+				this.mf.playlistId(list);
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
 					this.save_string("video_url.info.playnext",playnext);
-					if(this.is_not_empty_obj(y)) break y;
+					if(this.mf.is_not_empty_obj(y)) break y;
 					this.g(y); break y;
 				}
-				if(!this.is_not_empty_obj(y2)) break x;
+				if(!this.mf.is_not_empty_obj(y2)) break x;
 				if("index" in y2) {
 					const {index,...y3}=y2; this.g(y3);
 					if(this.cache_playlist_index.includes(index)) break x;
@@ -1843,11 +1737,11 @@ class HandleTypes extends ServiceMethods {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo(this.make_value_pair("start_radio",this.parse_number_template(start_radio)));
+				this.DI_AGR_UrlInfo(this.make_value_pair("start_radio",this.mf.parse_number_template(start_radio)));
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
-				if(!this.is_not_empty_obj(y3)) break x;
+				if(!this.mf.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
-				this.videoId(rv);
+				this.mf.videoId(rv);
 				this.g(y4);
 			}
 			return;
@@ -1887,7 +1781,7 @@ class HandleTypes extends ServiceMethods {
 	get_google_host_parts(x) {
 		/** @type {`${"r"|"rr"}${number}---sn-${string}n${string}.googlevideo.com`} */
 		const host=as_any(x.host);
-		if(!this.str_starts_with(host,"rr")) {
+		if(!this.mf.str_starts_with(host,"rr")) {
 			let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
 			if(empty_1!=="") debugger; if(y.length!==0) debugger;
 			let parts_1=split_string(host_parts_1,"---");
@@ -1927,24 +1821,24 @@ class HandleTypes extends ServiceMethods {
 	RS_Channel(x) {
 		const cf="RS_Channel";
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_TwoColumnBrowseResults(contents);
+		this.mf.R_TwoColumnBrowseResults(contents);
 		this.xr.R_C4TabbedHeader(header);
 		this.xr.R_Channel_MD(metadata);
-		this.R_DesktopTopbar(topbar);
-		this.trackingParams(trackingParams);
-		this.R_Microformat(microformat);
+		this.mf.R_DesktopTopbar(topbar);
+		this.mf.trackingParams(trackingParams);
+		this.mf.R_Microformat(microformat);
 		this.tz(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
-		this.t(cacheMetadata,this.D_Cache_MD);
+		this.t(cacheMetadata,x => this.mf.D_Cache_MD(x));
 	}
 	/** @public @arg {RSG_SharePanel} x */
 	RSG_SharePanel(x) {
 		const cf="RSG_SharePanel";
 		const {responseContext: {},trackingParams,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 		this.z(actions,x => {
 			const cf="RSG_SharePanel_Action";
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(clickTrackingParams);
+			this.mf.clickTrackingParams(clickTrackingParams);
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
@@ -1953,9 +1847,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="RS_Subscribe";
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => this.xr.G_RS_Subscribe_Action(x));
-		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
-		this.trackingParams(trackingParams);
-		this.D_FrameworkUpdates(frameworkUpdates);
+		this.mf.R_SubscriptionNotificationToggleButton(newNotificationButton);
+		this.mf.trackingParams(trackingParams);
+		this.mf.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,x => this.xr.R_ChannelSwitcherPage(x));}
@@ -1963,12 +1857,12 @@ class HandleTypes extends ServiceMethods {
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";
 		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
+		this.mf.RC_ResponseContext(responseContext);
 		this.z(actions,x => {
 			x;
 		});
-		this.trackingParams(trackingParams);
-		this.D_FrameworkUpdates(frameworkUpdates);
+		this.mf.trackingParams(trackingParams);
+		this.mf.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
@@ -1977,43 +1871,43 @@ class HandleTypes extends ServiceMethods {
 		this.z(continuations,x => this.xr.G_LiveChatContinuationItem(x));
 		this.t(actionPanel,x => this.xr.R_LiveChatMessageInput(x));
 		this.tz(actions,x => this.xr.G_LiveChatContinuationActions(x));
-		this.t(clientMessages,this.D_ClientMessages);
+		this.t(clientMessages,x => this.mf.D_ClientMessages(x));
 		this.tz(emojis,x => this.xr.D_LiveChatEmoji(x));
-		this.t(header,this.R_LiveChatHeader);
+		this.t(header,x => this.mf.R_LiveChatHeader(x));
 		this.t(itemList,x => this.xr.R_LiveChatItemList(x));
 		this.t(ticker,x => this.xr.R_LiveChatTicker(x));
-		this.trackingParams(trackingParams);
+		this.mf.trackingParams(trackingParams);
 		this.t(participantsList,x => this.xr.R_LiveChatParticipantsList(x));
 		this.t(popoutMessage,x => this.xr.R_Message(x));
-		this.t(viewerName,this.a_primitive_str);
+		this.t(viewerName,x => this.mf.a_primitive_str(x));
 	}
 	/** @private @arg {AD_AccountItem} x */
 	AD_AccountItem(x) {
 		const cf="AD_AccountItem";
 		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(accountName);
-		this.D_Thumbnail(accountPhoto);
-		this.a_primitive_bool(isSelected);
-		this.a_primitive_bool(isDisabled);
-		this.a_primitive_bool(hasChannel);
+		this.mf.G_Text(accountName);
+		this.mf.D_Thumbnail(accountPhoto);
+		this.mf.a_primitive_bool(isSelected);
+		this.mf.a_primitive_bool(isDisabled);
+		this.mf.a_primitive_bool(hasChannel);
 		this.g(serviceEndpoint);
-		this.G_Text(accountByline);
-		this.G_Text(channelHandle);
+		this.mf.G_Text(accountByline);
+		this.mf.G_Text(channelHandle);
 	}
 	/** @arg {S_VideoGoodPutShape} x */
 	S_VideoGoodPutShape(x) {
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
-		this.save_b64_binary(`${cf}.id`,id);
+		this.mf.save_b64_binary(`${cf}.id`,id);
 		this.save_string(`${cf}.source`,source);
 		this.save_string(`${cf}.range`,range);
-		let exp=this.parse_number_template(expire);
-		this.a_primitive_num(exp);
+		let exp=this.mf.parse_number_template(expire);
+		this.mf.a_primitive_num(exp);
 		this.save_string(`${cf}.ip`,ip);
 		this.save_string(`${cf}.ms`,ms);
 		this.save_string(`${cf}.mm`,mm);
 		this.save_string(`${cf}.pl`,pl);
-		this.save_b64_binary(`${cf}.nh`,nh);
+		this.mf.save_b64_binary(`${cf}.nh`,nh);
 		switch(sparams) {
 			default: this.cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
@@ -2139,7 +2033,7 @@ class HandleTypes extends ServiceMethods {
 	/** @api @public @arg {CF_L_TP_Params} cf @arg {`/${string}`} x */
 	parse_url_alt(cf,x) {
 		cf;
-		let s=split_string_once(x,"/"); this.cq(s[0],"");
+		let s=split_string_once(x,"/"); this.mf.cq(s[0],"");
 		let [,v]=s;
 		let s2=split_string_once(v,"/");
 		if(s2.length===1) return;
@@ -2185,7 +2079,7 @@ class HandleTypes extends ServiceMethods {
 		t.t(v3,x => t.TK_D32(cf,x,"f3"));
 		t.t(f4,t.VW_BinaryTimestamp);
 		t.t_cf(`${cf}_f6`,f6,t.H_TrackingObj_f6);
-		t.t(f7,x => t.save_b64_binary(`${cf}.f7`,t.TV_Str(x)));
+		t.t(f7,x => t.mf.save_b64_binary(`${cf}.f7`,t.TV_Str(x)));
 		t.ms_t(f8,u8 => {
 			let [v8]=u8[1];
 			switch(v8[0]) {
@@ -2204,7 +2098,7 @@ class HandleTypes extends ServiceMethods {
 				default: debugger; break;
 				case "FEwhat_to_watch":
 			}
-			this.browseId(x);
+			this.mf.browseId(x);
 		})(this.TV_Str(v11));
 		f16;
 		f19;
@@ -2217,7 +2111,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="v_param_arr") debugger;
-		let [,[a,...y1]]=x; this.cq(y1.length,0);
+		let [,[a,...y1]]=x; this.mf.cq(y1.length,0);
 		const [t]=a;
 		/** @type {["raw_str",H_TrackingObj_f6_Str]|["child_str",H_TrackingObj_f6_Str_2]|["unknown",string]|null} */
 		let r_str=null;
@@ -2258,7 +2152,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {{type:"click_tracking",v:H_TrackingObj}|{type:"tracking",v:H_TrackingObj}} x */
 	P_Typed_TrackingObj(x) {
 		const cf="P_Typed_TrackingObj";
-		const {type,v: z}=x; this.k(cf,z);
+		const {type,v: z}=x; this.mf.k(cf,z);
 		switch(type) {
 			case "click_tracking": return this.H_TrackingObj(z);
 			case "tracking": return this.H_TrackingObj(z);
@@ -2266,7 +2160,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {string} cf @arg {{}} x @arg {{}} y */
 	h_gen_keys(cf,x,y) {
-		let u=this.get_keys_of_2(y); if(u.length>0) {
+		let u=this.mf.get_keys_of_2(y); if(u.length>0) {
 			let is_new=this.codegen_typedef_bin(cf,x,false);
 			if(is_new) {
 				let k=u.join(); console.log(`[${cf}.next_key]`,k);
@@ -2317,7 +2211,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_logging_context_serialized_context_data",t=this;
 		const {1: v1,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.PK_f1(this.T_VW(v1));
-		t.t(t.t(v3,t.TV_Str),this.playlistId);
+		t.t(t.t(v3,t.TV_Str),x => this.mf.playlistId(x));
 	}
 	/** @type {string[]} */
 	params_to_decode=[];
@@ -2357,7 +2251,7 @@ class HandleTypes extends ServiceMethods {
 	P_EntityKey(cf,x) {
 		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
 			const {2: video_id,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-			this.t(this.TV_Str(video_id),this.videoId);
+			this.t(this.TV_Str(video_id),x => this.mf.videoId(x));
 			this.save_number(`${cf}.f4`,this.T_D32(f4));
 			this.save_number(`${cf}.f5`,this.T_D32(f5));
 			return;
@@ -2372,8 +2266,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {2: entity_target_id,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(entity_target_id),x => {
-			if(this.str_starts_with(x,"RD")) return this.playlistId(x);
-			if(this.str_starts_with(x,"UC")) return this.channelId(x);
+			if(this.mf.str_starts_with(x,"RD")) return this.mf.playlistId(x);
+			if(this.mf.str_starts_with(x,"UC")) return this.mf.channelId(x);
 			switch(x) {
 				default: {
 					debugger;
@@ -2405,8 +2299,8 @@ class HandleTypes extends ServiceMethods {
 	PF_23n24n(x) {
 		const cf="PF_23n24n";
 		const {23: a,24: b}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.cq(this.T_D32(a),1);
-		this.t(this.TV_Str(b),b => this.params("pf_23n24n.bin_params",b));
+		this.mf.cq(this.T_D32(a),1);
+		this.t(this.TV_Str(b),b => this.mf.params("pf_23n24n.bin_params",b));
 	}
 	/** @private @arg {P_bin_params_1_f1} x */
 	P_bin_params_1_f1(x) {
@@ -2466,7 +2360,7 @@ class HandleTypes extends ServiceMethods {
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
 		const {2: a,4: f4,5: f5}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(a),x => this.channelId(x));
+		this.t(this.TV_Str(a),x => this.mf.channelId(x));
 		this.save_number(`${cf}.f4`,this.T_D32(f4));
 		this.save_number(`${cf}.f5`,this.T_D32(f5));
 	}
@@ -2477,24 +2371,24 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_dislike_params.f1";
 		const {1: v1}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(v1[0]!=="v_param_arr") {debugger; return;}
-		let [,[a,...y1]]=v1; this.cq(y1.length,0);
+		let [,[a,...y1]]=v1; this.mf.cq(y1.length,0);
 		switch(a[0]) {
 			default: debugger; break;
 			case "v_child":/*unk*/{
 				let [,bin,]=a;
 				let video_id=this._decoder.decode(bin);
 				if(video_id==null) {debugger; break;}
-				this.videoId(video_id);
+				this.mf.videoId(video_id);
 			} break;
 			case "v_child_str":/*unk*/{
 				let [,,,[,video_id]]=a;
-				this.videoId(video_id);
+				this.mf.videoId(video_id);
 			} break;
 			case "v_raw_child": /*D_VideoIdStr*/{
 				let [,,,tb]=a;
 				if(tb[0]!=="string") {debugger; break;}
 				let [,x]=tb;
-				this.videoId(x);
+				this.mf.videoId(x);
 			} break;
 		}
 	}
@@ -2545,7 +2439,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_ypc_get_offers_params.f1";
 		const {1: v1,2: v2,...y}=x; this.h_gen_keys(cf,x,y);
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
-		this.t(this.TV_Str(v2),this.channelId);
+		this.t(this.TV_Str(v2),x => this.mf.channelId(x));
 	}
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
@@ -2559,7 +2453,7 @@ class HandleTypes extends ServiceMethods {
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
 		const {2: v2,5: f5,10: f10}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(v2),this.videoId);
+		this.t(this.TV_Str(v2),x => this.mf.videoId(x));
 		f5;
 		f10;
 	}
@@ -2590,7 +2484,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.is_T_VW(v3)) {
 			this.PD_continuation_params_f3(this.T_VW(v3));
 		} else {
-			this.params(`${cf}.f3`,this.TV_Str(v3));
+			this.mf.params(`${cf}.f3`,this.TV_Str(v3));
 		}
 		this.save_number(`${cf}.f8`,this.T_D32(f8));
 		v11&&this.PD_continuation_params_f11(this.T_VW(v11));
@@ -2607,14 +2501,14 @@ class HandleTypes extends ServiceMethods {
 	PX_buy_flow_params(x) {
 		const cf="PX_buy_flow_params";
 		const {1: v1,2: v2,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.videoId(this.TV_Str(v1));
-		this.channelId(this.TV_Str(v2));
+		this.mf.videoId(this.TV_Str(v1));
+		this.mf.channelId(this.TV_Str(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
-	/** @temporary @api @override @public @template {{}} T @arg {CF_M_s|string} cf @arg {T} x */
+	/** @temporary @api @public @template {{}} T @arg {CF_M_s|string} cf @arg {T} x */
 	s(cf,x) {
 		if(!x) debugger;
-		this.k(cf,x);
+		this.mf.k(cf,x);
 		return x;
 	}
 	/** @private @arg {TX_sequence_info} x */
@@ -2627,7 +2521,7 @@ class HandleTypes extends ServiceMethods {
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
 		const {1: v1,3: v3,5: f5,8: f8,12: f12}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.videoId(this.TV_Str(v1));
+		this.mf.videoId(this.TV_Str(v1));
 		v3;
 		this.TX_sequence_info(this.T_VW(f5));
 		f8; f12;
@@ -2636,7 +2530,7 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_sequence_info(x) {
 		const cf="PX_watch_sequence_info",t=this;
 		const {1: v1,3: v3,4: v4,6: f6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		t.videoId(t.TV_Str(v1));
+		t.mf.videoId(t.TV_Str(v1));
 		t.save_number(`${cf}.f3`,t.T_D32(v3));
 		t.save_number(`${cf}.f4`,t.T_D32(v4));
 		t.t(t.T_VW_Bigint(f6),x => t.save_bigint(`${cf}.f6`,x));
@@ -2645,15 +2539,15 @@ class HandleTypes extends ServiceMethods {
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token",t=this;
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		v1&&t.videoId(t.TV_Str(v1));
+		v1&&t.mf.videoId(t.TV_Str(v1));
 		t.PX_watch_sequence_info(t.T_VW(v3));
 		f5; f8; f12; f15;
 	}
 	/** @arg {"P_transcript_track_selection_serialized_params"|"P_get_transcript_params"} cf @template {PE_transcript_params} T @arg {T} x */
 	PE_transcript_params(cf,x) {
 		const {1: v1,2: v2,3: v3,6: f6,7: f7,8: f8,...y}=this.s(cf,x);
-		this.videoId(this.TV_Str(v1));
-		this.params("transcript.params",this.TV_Str(v2));
+		this.mf.videoId(this.TV_Str(v1));
+		this.mf.params("transcript.params",this.TV_Str(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 		this.save_number(`${cf}.f6`,this.T_D32(f6));
 		this.save_number(`${cf}.f7`,this.T_D32(f7));
@@ -2685,7 +2579,7 @@ class HandleTypes extends ServiceMethods {
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
 		const {1: v1,2: v2}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(v1),this.channelId);
+		this.t(this.TV_Str(v1),x => this.mf.channelId(x));
 		this.save_number(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_watch_playlist_params} x */
@@ -2700,7 +2594,7 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
 		const {2: v2,4: f4,6: f6,7: f7,25: f25,28: f28,36: f36}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.videoId(this.TV_Str(v2));
+		this.mf.videoId(this.TV_Str(v2));
 		f4; f6; f7; f25; f28; f36;
 	}
 	/** @private @arg {PX_watch_next_token_item} x */
@@ -2708,9 +2602,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="PX_watch_next_token_item";
 		const {1: v1,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(this.is_T_D32(v1)) {
-			this.a_primitive_num(this.T_D32(v1));
+			this.mf.a_primitive_num(this.T_D32(v1));
 		} else {
-			this.a_primitive_bigint(this.T_D64(v1));
+			this.mf.a_primitive_bigint(this.T_D64(v1));
 		}
 		v3&&this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
@@ -2751,7 +2645,7 @@ class HandleTypes extends ServiceMethods {
 	PX_watch_next_token_2(x) {
 		const cf="PX_watch_next_token_2";
 		const {4: a,6: b,15: c,37: f37}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.videoId(this.TV_Str(a));
+		this.mf.videoId(this.TV_Str(a));
 		this.save_number(`${cf}.f6`,this.T_D32(b));
 		this.save_number(`${cf}.f15`,this.T_D32(c));
 		f37&&this.save_string(`${cf}.f37`,this.TV_Str(f37));
@@ -2776,12 +2670,13 @@ class HandleTypes extends ServiceMethods {
 		v1&&this.save_number(`${cf}.f1`,this.T_D32(v1));
 		this.PX_watch_next_token_info(this.T_VW(v2));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
-		f5&&this.a_primitive_str(this.TV_Str(f5));
+		f5&&this.mf.a_primitive_str(this.TV_Str(f5));
 		f6&&this.PX_watch_next_token_1(this.T_VW(f6));
 		f9&&this.PX_watch_next_token_3(this.T_VW(f9));
 		f13&&this.PX_watch_next_token_4(this.T_VW(f13));
 		f14&&this.PX_watch_next_token_5(this.T_VW(f14));
 	}
+	get mf() {return this.x.services.methods;}
 	/** @private @template {string} T @arg {TV_Str<T>|TW_TagStr<T>} x */
 	TV_Str_ex(x) {return x[1][0][3][1];}
 	/** @private @arg {P_unsubscribe_params} x */
@@ -2789,7 +2684,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_unsubscribe_params";
 		const {1: v1,2: v2,3: v3}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1(this.T_VW(v1));
-		this.t(v2,x => this.videoId(this.TV_Str_ex(x)));
+		this.t(v2,x => this.mf.videoId(this.TV_Str_ex(x)));
 		this.save_number(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_subscribe_params} x */
@@ -2816,7 +2711,7 @@ class HandleTypes extends ServiceMethods {
 		const {1: v1,4: f4,5: f5,6: f6,7: f7}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let m1=this.mw(this.m(v1));
 		let v1_v1_str=m1.mc(this.T_VW).mc(this.PT_f1).mc(this.TW_Str).some.v;
-		this.videoId(v1_v1_str);
+		this.mf.videoId(v1_v1_str);
 		f4; f5; f6; f7;
 	}
 	/** @private @arg {{1:TV_Str<DU_VideoId>|TW_TagStr<DU_VideoId>;}} x */
@@ -2828,11 +2723,11 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 			case "v_child":/*unk*/{
 				let x2=v1_v1i[3][1];
-				this.videoId(x2);
+				this.mf.videoId(x2);
 			} break;
 			case "v_raw_child":/*unk*/{
 				let x2=v1_v1i[3][1];
-				this.videoId(x2);
+				this.mf.videoId(x2);
 			} break;
 		}
 	}
@@ -2926,7 +2821,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="P_format_item_xtags.f1";
 		const {1: v1,2: v2}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		console.log(this.TV_Str(v1));
-		this.cq(this.TV_Str(v2),"true");
+		this.mf.cq(this.TV_Str(v2),"true");
 	}
 	/** @private @arg {P_format_item_xtags} x */
 	P_format_item_xtags(x) {
@@ -3342,15 +3237,15 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @public @arg {R_VideoDescriptionMusicSection} x */
-	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
+	R_VideoDescriptionMusicSection(x) {this.mf.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(sectionTitle);
-		this.z(carouselLockups,this.R_CarouselLockup);
-		this.R_TopicLink(topicLink);
-		this.G_Text(premiumUpsellLink);
+		this.x.services.methods.G_Text(sectionTitle);
+		this.z(carouselLockups,x => this.mf.R_CarouselLockup(x));
+		this.mf.R_TopicLink(topicLink);
+		this.mf.G_Text(premiumUpsellLink);
 	}
 	/** @api @public @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {

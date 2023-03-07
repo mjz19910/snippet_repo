@@ -2472,7 +2472,7 @@ class YtHandlers extends BaseService {
 		let parsed_url=convert_to_url(request).url;
 		/** @private @type {D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
-		let ht=this.x.get("handle_types");
+		let ht=this.x.get("methods");
 		let url_type=ht.decode_url(api_url);
 		const res_parse=this._convert_url_to_obj(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
@@ -2814,7 +2814,7 @@ class GFeedbackService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.x.get("handle_types").browseId(param.value); break;
+				case "browse_id": this.x.get("methods").browseId(param.value); break;
 				case "context": this.on_context_param(this.data,param.value); break;
 				case "e": this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
@@ -2893,7 +2893,7 @@ class TrackingServices extends BaseService {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.x.get("handle_types").browseId(param.value); break;
+				case "browse_id": this.x.get("methods").browseId(param.value); break;
 				default: console.log("[new_param_key]",param); debugger;
 			}
 		}

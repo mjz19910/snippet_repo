@@ -46,7 +46,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @returns {true} */
 	true_() {return true;}
-	/** @protected @template T @template {T} U @arg {T} a @arg {U} b */
+	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
 	cq(a,b) {if(a!==b) debugger;}
 	/** @public @arg {string} x @arg {boolean} is_prev */
 	D_VeCsn(x,is_prev=false) {
@@ -1044,7 +1044,7 @@ class ServiceMethods extends ServiceData {
 	is_not_empty_obj(x) {return this.get_keys_of(x).length>0;}
 	/** @template {T extends infer U?{} extends U? never:U:never} R @template {{}} T @arg {T} x @arg {R|null} _x @returns {x is Record<string,never>} */
 	is_empty_obj(x,_x=null) {return this.get_keys_of(x).length===0;}
-	/** @protected @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
+	/** @public @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf,x) {
 		/** @type {TA_OpenPopup<unknown>} */
 		let xp=x;
@@ -1156,7 +1156,7 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(clickTrackingParams);
 		return [commandMetadata,signalServiceEndpoint];
 	}
-	/** @protected @arg {C_CommandExecutor} x */
+	/** @public @arg {C_CommandExecutor} x */
 	C_Executor(x) {
 		const cf="C_Executor";
 		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1223,7 +1223,7 @@ class ServiceMethods extends ServiceData {
 		this.R_MenuServiceItem(menuItem);
 		this.R_Button(topLevelButton);
 	}
-	/** @protected @arg {D_LoggingDirectives} x */
+	/** @public @arg {D_LoggingDirectives} x */
 	D_LoggingDirectives(x) {
 		const cf="D_LoggingDirectives";
 		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1257,7 +1257,7 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 	}
-	/** @protected @arg {R_MenuServiceItem} x */
+	/** @public @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @protected @arg {R_Menu} x */
 	R_Menu(x) {this.H_("menuRenderer",x,this.D_Menu);}
@@ -1348,7 +1348,7 @@ class ServiceMethods extends ServiceData {
 	D_Menu(x) {
 		const cf="D_Menu";
 		if("targetId" in x) return this.D_Menu_WithTargetId(x);
-		if("items" in x) return this.ht.D_Menu_WithItems(x);
+		if("items" in x) return this.D_Menu_WithItems(x);
 		if("topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
@@ -1362,13 +1362,13 @@ class ServiceMethods extends ServiceData {
 		x;
 		debugger;
 	}
-	/** @protected @arg {CF_T_Icon} cf @template {string} T @arg {T_Icon<T>} x */
+	/** @public @arg {CF_T_Icon} cf @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(cf,x) {
 		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_string(`${cf}.iconType`,iconType);
 	}
 	/**
-	 * @arg {CF_TE_Endpoint_2} cf
+	 * @param {CF_TE_Endpoint_2} cf
 	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
 	 * @returns {[T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|T_Key>]}
 	 * */
@@ -1380,8 +1380,8 @@ class ServiceMethods extends ServiceData {
 	/**
 	 * @protected @template R_D
 	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_2<any,any>} T_Endpoint @arg {T_Endpoint} x
-	 * @arg {T_Key} k
-	 * @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
+	 * @param {T_Key} k
+	 * @param {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
 	 * @returns {[typeof y,R_D]}
 	 */
 	TE_Endpoint_2_v2(k,x,f1) {
@@ -1451,13 +1451,13 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
-	/** @protected @arg {A_ChangeEngagementPanelVisibility} x */
+	/** @public @arg {A_ChangeEngagementPanelVisibility} x */
 	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
-	/** @protected @arg {CF_M_w} cf @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
+	/** @public @arg {CF_M_w} cf @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
 	w(cf,k,x) {this.k(cf,x); return this.ws(k,x);}
 	/** @protected @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
 	ws(k,x) {if(x[k]===void 0) debugger; return x[k];}
-	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
+	/** @public @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(cf,k,x),`${cf}.${k}`);}
 	/** @protected @arg {D_EndscreenElement_EP} x */
 	D_EndscreenElement_EP(x) {
@@ -1478,7 +1478,7 @@ class ServiceMethods extends ServiceData {
 		this.id_cache.add(x);
 		return false;
 	}
-	/** @protected @arg {DU_VideoId} x */
+	/** @public @arg {DU_VideoId} x */
 	videoId(x) {
 		if(this.cache_raw_id(`video_id:${x}`)) return;
 		this.ht.on_video_id(x);
@@ -1495,15 +1495,15 @@ class ServiceMethods extends ServiceData {
 		if(this.static_playlist_ids.includes(x)) return;
 		if(this.cache_raw_id(`playlist_id:${x}`)) return;
 	}
-	/** @protected @arg {DU_GuideEntry_Id} x */
+	/** @public @arg {DU_GuideEntry_Id} x */
 	guideEntryId(x) {
 		if(this.cache_raw_id(`guide_entry_id:${x}`)) return;
 	}
-	/** @protected @arg {T_IdTemplate<"UC",D_UserIdStr>} x */
+	/** @public @arg {T_IdTemplate<"UC",D_UserIdStr>} x */
 	channelId(x) {
 		if(this.cache_raw_id(`channel_id:${x}`)) return;
 	}
-	/** @protected @arg {D_UserIdStr} x */
+	/** @public @arg {D_UserIdStr} x */
 	userId(x) {
 		if(this.cache_raw_id(`user_id:${x}`)) return;
 	}
@@ -1583,7 +1583,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
-	/** @protected @arg {R_SubscribeButton} x */
+	/** @public @arg {R_SubscribeButton} x */
 	R_SubscribeButton(x) {this.H_("subscribeButtonRenderer",x,this.D_SubscribeButton);}
 	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
 	D_SubscribeButton_SubscribedPrefix(x) {
@@ -1611,7 +1611,7 @@ class ServiceMethods extends ServiceData {
 		this.t(buttonText,this.G_Text);
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @protected @arg {R_SubscriptionNotificationToggleButton} x */
+	/** @public @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @type {string[]} */
 	logged_strings=[];
@@ -1712,7 +1712,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_CommonConfig} x */
 	D_CommonConfig(x) {this.H_("url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
-	/** @protected @arg {E_VE3611} x */
+	/** @public @arg {E_VE3611} x */
 	E_VE3611(x) {
 		if(!this.is_TE_VE(x,3611)) {debugger; return;}
 		let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);
@@ -1721,11 +1721,11 @@ class ServiceMethods extends ServiceData {
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
 	/** @protected @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
-	/** @protected @arg {E_VE5754} x */
+	/** @public @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
-	/** @protected @arg {E_VE6827} x */
+	/** @public @arg {E_VE6827} x */
 	E_VE6827(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);}
-	/** @protected @arg {E_VE11487} x */
+	/** @public @arg {E_VE11487} x */
 	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
 	/** @protected @arg {E_VE23462} x */
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
@@ -2050,7 +2050,7 @@ class ServiceMethods extends ServiceData {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}
-	/** @protected @template {U["commandMetadata"]["webCommandMetadata"]["rootVe"]} T @template {TE_VE_In} U @arg {U} x @arg {T} t @returns {x is TE_VE<T>} */
+	/** @public @template {U["commandMetadata"]["webCommandMetadata"]["rootVe"]} T @template {TE_VE_In} U @arg {U} x @arg {T} t @returns {x is TE_VE<T>} */
 	is_TE_VE(x,t) {
 		return x.commandMetadata.webCommandMetadata.rootVe===t;
 	}
@@ -2132,15 +2132,15 @@ class ServiceMethods extends ServiceData {
 	D_Label(x) {this.H_("label",x,this.a_primitive_str);}
 	/** @protected @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_("accessibilityData",x,this.D_Label);}
-	/** @protected @arg {boolean} x */
+	/** @public @arg {boolean} x */
 	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
-	/** @protected @arg {G_Text} x */
+	/** @public @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text";
 		if(!x) {debugger; return;}
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(simpleText,this.a_primitive_str);
-		this.tz(runs,x => this.ht.D_TextRun(x));
+		this.tz(runs,this.D_TextRun);
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @protected @arg {D_Emoji} x */
@@ -2178,7 +2178,7 @@ class ServiceMethods extends ServiceData {
 			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
 		}
 	}
-	/** @protected @arg {D_Thumbnail} x */
+	/** @public @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {
 		const cf="D_Thumbnail";
 		const {lightColorPalette,darkColorPalette,sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2240,7 +2240,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
 	D_Params(cf,path,x) {const {params: p,...y}=this.s(cf,x); this.g(y); this.params(path,x.params);}
-	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
+	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
 		if(!obj) {debugger;}
 		let rq=Object.keys(obj);
@@ -2300,7 +2300,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
-	/** @protected @arg {string} cf1 @arg {DU_TargetId} x */
+	/** @public @arg {string} cf1 @arg {DU_TargetId} x */
 	targetId(cf1,x) {
 		const cf2="targetId";
 		this.parse_target_id(x);
@@ -2356,7 +2356,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {bigint} x */
 	a_primitive_bigint(x) {this._primitive_of(x,"bigint");}
-	/** @protected @arg {string} x */
+	/** @public @arg {string} x */
 	a_primitive_str(x) {this._primitive_of(x,"string");}
 	/** @arg {number} x */
 	a_primitive_num(x) {
@@ -2406,7 +2406,7 @@ class ServiceMethods extends ServiceData {
 			return [e[0],ei];
 		}));
 	}
-	/** @protected @arg {string} x */
+	/** @public @arg {string} x */
 	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
 	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
@@ -2455,7 +2455,7 @@ class ServiceMethods extends ServiceData {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {string} x */
 	trackingParams(x) {this.params("params.tracking",x);}
-	/** @protected @arg {string} cf @arg {{}} x */
+	/** @public @arg {string} cf @arg {{}} x */
 	codegen_typedef(cf,x,do_break=true) {
 		this.cg.codegen_typedef(cf,x,do_break,false);
 	}
@@ -2485,7 +2485,7 @@ class ServiceMethods extends ServiceData {
 		let r=x[k];
 		return [r];
 	}
-	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(k,x,f) {
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
@@ -2503,7 +2503,7 @@ class ServiceMethods extends ServiceData {
 		if(x.includes("e")) return parseFloat(x);
 		return parseInt(x,10);
 	}
-	/** @protected @template {number} T @arg {`${T}`} x */
+	/** @public @template {number} T @arg {`${T}`} x */
 	parse_number_template(x) {
 		/** @type {T} */
 		let num=as(this.parse_number(x));
@@ -2829,7 +2829,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {true} x */
 	expect_true(x) {if(x!==true) debugger;}
-	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
@@ -3006,7 +3006,7 @@ class ServiceMethods extends ServiceData {
 		this.save_number(rk,f);
 		this.save_number(k,1);
 	}
-	/** @protected @arg {R_MenuNavigationItem} x */
+	/** @public @arg {R_MenuNavigationItem} x */
 	R_MenuNavigationItem(x) {this.H_("menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
@@ -3257,7 +3257,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {E_UndoFeedback} x */
 	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
-	/** @protected @arg {E_YpcGetOfflineUpsell} x */
+	/** @public @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_Pinging} x */
 	E_Pinging(x) {
@@ -3295,7 +3295,7 @@ class ServiceMethods extends ServiceData {
 		this.parse_undo_token(undoToken);
 		this.z(actions,this.A_UndoFeedback);
 	}
-	/** @protected @arg {string} cf @arg {string} x */
+	/** @public @arg {string} cf @arg {string} x */
 	save_b64_binary(cf,x) {
 		this.t(base64_url_dec.decodeByteArray(x),x => {
 			if(x[0]===0) {
@@ -3324,7 +3324,7 @@ class ServiceMethods extends ServiceData {
 		const {targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
 	}
-	/** @protected @arg {C_ScrollToEngagementPanel} x */
+	/** @public @arg {C_ScrollToEngagementPanel} x */
 	C_ScrollToEngagementPanel(x) {
 		const cf="C_ScrollToEngagementPanel";
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3361,7 +3361,7 @@ class ServiceMethods extends ServiceData {
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("addUpcomingEventReminderEndpoint" in x) return this.handle_types.E_AddUpcomingEventReminder(x);
+		if("addUpcomingEventReminderEndpoint" in x) return this.E_AddUpcomingEventReminder(x);
 		x===""; debugger;
 	}
 	/** @private @arg {D_ToggleButton_ToggledSrvEP} x */
@@ -3371,7 +3371,7 @@ class ServiceMethods extends ServiceData {
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
-		if("removeUpcomingEventReminderEndpoint" in x) return this.handle_types.E_RemoveUpcomingEventReminder(x);
+		if("removeUpcomingEventReminderEndpoint" in x) return this.E_RemoveUpcomingEventReminder(x);
 		x===""; debugger;
 	}
 	/** @private @arg {D_ToggleButton} x */
@@ -3642,7 +3642,7 @@ class ServiceMethods extends ServiceData {
 	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
 	/** @private @arg {C_ChangeMarkersVisibility} x */
 	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
-	/** @protected @arg {C_AdsControlFlowOpportunityReceived} x */
+	/** @public @arg {C_AdsControlFlowOpportunityReceived} x */
 	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
 	/** @private @arg {C_ChangeKeyedMarkersVisibility} x */
 	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
@@ -5303,7 +5303,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DC_Generic_CTP} x */
 	D_CD_Next(x) {this.DC_Generic_CTP("next.continuation",x);}
-	/** @protected @arg {RMD_RowContainer} x */
+	/** @public @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {R_MerchandiseItem} x */
 	R_MerchandiseItem(x) {this.H_("merchandiseItemRenderer",x,this.D_MerchandiseItem);}
@@ -5779,7 +5779,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_ClipSection} x */
 	D_ClipSection(x) {this.H_("contents",x,x => this.z(x,this.R_ClipCreation));}
-	/** @protected @arg {A_ShowEngagementPanelScrim} x */
+	/** @public @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
 	/** @private @arg {G_EngagementPanelMenu} x */
 	G_EngagementPanelMenu(x) {
@@ -6599,7 +6599,7 @@ class ServiceMethods extends ServiceData {
 	RA_ReelDismissal(x) {this.H_("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_("notificationMultiActionRenderer",x,this.g);}
-	/** @protected @arg {R_TwoColumnBrowseResults} x */
+	/** @public @arg {R_TwoColumnBrowseResults} x */
 	R_TwoColumnBrowseResults(x) {this.H_("twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
@@ -6839,7 +6839,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(title);
 		this.D_Thumbnail(thumbnail);
 	}
-	/** @protected @arg {R_MicroformatData} x */
+	/** @public @arg {R_MicroformatData} x */
 	R_Microformat(x) {this.H_("microformatDataRenderer",x,this.D_Microformat);}
 	/** @private @arg {D_Microformat} x */
 	D_Microformat(x) {
@@ -6865,7 +6865,7 @@ class ServiceMethods extends ServiceData {
 			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.a_primitive_str);
 		}
 	}
-	/** @protected @arg {D_Cache_MD} x */
+	/** @public @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {
 		const cf="D_Cache_MD";
 		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6984,5 +6984,127 @@ class ServiceMethods extends ServiceData {
 	GM_GetSettingsEditor(x) {this.T_GM("GM_GetSettingsEditor",x,x => this.ceq(x,"/youtubei/v1/playlist/get_settings_editor"));}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
+	//#region imports
+	/** @arg {D_Menu_WithItems} x */
+	D_Menu_WithItems(x) {
+		const cf="D_Menu_WithItems";
+		const {items,...u1}=this.s(cf,x);
+		if(!this.is_not_empty_obj(u1)) return this.g(u1);
+		this.z(items,x => {
+			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+			debugger;
+		});
+		const {trackingParams,...u2}=u1;
+		this.trackingParams(trackingParams);
+		if(!this.is_not_empty_obj(u2)) return this.g(u2);
+		const {accessibility,...u3}=u2;
+		this.D_Accessibility(accessibility);
+		if(!this.is_not_empty_obj(u3)) return this.g(u3);
+		let u=u3;
+		if("flexibleItems" in u) {
+			const {topLevelButtons,flexibleItems,...y}=u; this.g(y);/*#destructure_done*/
+			this.z(topLevelButtons,x => {
+				if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			this.z(flexibleItems,this.R_MenuFlexibleItem);
+			return;
+		}
+		if("topLevelButtons" in u) {
+			const {topLevelButtons,...y}=u; this.g(y);/*#destructure_done*/
+			this.z(topLevelButtons,x => {
+				if("buttonRenderer" in x) return this.R_Button(x);
+				debugger;
+			});
+			return;
+		}
+		if("loggingDirectives" in u) {
+			const {loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("menuPopupAccessibility" in u) {
+			const {menuPopupAccessibility,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Label(menuPopupAccessibility);
+			return;
+		}
+		this.g(u);
+	}
+	/** @private @arg {D_TextRun_NavEP_1} x */
+	D_TextRun_NavEP_1(x) {
+		const cf="D_TextRun_NavEP_1"; this.k(cf,x);
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
+			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
+			x===""; debugger;
+			return;
+		}
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
+		x===""; debugger;
+	}
+	/** @public @arg {Extract<D_TextRun,{navigationEndpoint:any;loggingDirectives:any}>["navigationEndpoint"]} x */
+	D_TextRun_NavEP_2(x) {
+		if("browseEndpoint" in x) {
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
+			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+			debugger;
+			return;
+		}
+		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		if("searchEndpoint" in x) return this.E_Search(x);
+		x===""; debugger;
+	}
+	/** @public @arg {D_TextRun} x */
+	D_TextRun(x) {
+		const cf="D_TextRun";
+		const {text,...u}=this.s(cf,x);/*#destructure_done*/
+		this.a_primitive_str(text);
+		if("strikethrough" in u) {
+			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
+			if(strikethrough!==true) debugger;
+			return;
+		}
+		if("italics" in u) {
+			const {italics,...y}=u; this.g(y);/*#destructure_done*/
+			if(italics!==true) debugger;
+			return;
+		}
+		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
+			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
+			this.D_TextRun_NavEP_2(navigationEndpoint);
+			this.D_LoggingDirectives(loggingDirectives);
+			if("bold" in y) {
+				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
+				this.cq(bold,true);
+				return;
+			}
+			this.g(y);
+			return;
+		}
+		if("navigationEndpoint" in u) {
+			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_TextRun_NavEP_1(navigationEndpoint);
+			return;
+		}
+		if("bold" in u) {
+			const {bold,...y}=u; this.g(y);/*#destructure_done*/
+			this.a_primitive_bool(bold);
+			return;
+		}
+		if("emoji" in u) {
+			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Emoji(emoji);
+			return;
+		}
+		this.g(u);
+	}
+	//#endregion
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

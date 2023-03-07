@@ -18,6 +18,7 @@ const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
 const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
 const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 const {ParserService}=require("./YTPlugin_Parser_Service.user");
+const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 const {LocalStorageSeenDatabase,Support_RS_Player,Support_RS_WatchPage,Support_RS_Watch,Support_RS_Page_Browse,Support_RS_Browse,Support_GenericApi,Support_EventInput,Support_VE37414,Support_VE,TypedefGenerator,Support_Renderer}=require("./YTPlugin_Support_Service.user");
 
 const __module_name__="mod$ServiceLoaderPlugin";
@@ -29,6 +30,7 @@ if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
 	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
+		this.methods=new ServiceMethods(x);
 		this.codegen=new CodegenService(x);
 		this.csi_service=new CsiService(x);
 		this.e_catcher_service=new ECatcherService(x);
