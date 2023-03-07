@@ -204,6 +204,7 @@ class IndexedDBService extends BaseService {
 			switch(o2.tag) {
 				default: debugger; break;
 				case "bigint": break;
+				case "number": break;
 				case "channel_id:UC": break;
 				case "browse_id:FE": break;
 				case "keys": break;
@@ -236,6 +237,7 @@ class IndexedDBService extends BaseService {
 			if(o_arr_t instanceof Array) {
 				switch(o_arr_t[0]) {
 					default: debugger; return x;
+					case "many":
 					case "one":
 					case "arr": {
 						const z1={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
@@ -271,6 +273,9 @@ class IndexedDBService extends BaseService {
 			switch(value.type) {
 				default: debugger; break;
 				case "channel_id": {
+					if(value.info_arr.length===1) {
+						throw new Error("Unreachable");
+					}
 					/** @type {DI_A_ChannelId_UC} */
 					let x1={
 						b: "channel_id",c: "UC",z: [{
@@ -288,7 +293,7 @@ class IndexedDBService extends BaseService {
 						}]
 					};
 					/** @type {DST_Channel_UC} */
-					let rq={b: "boxed_id",j: "channel_id:UC",z: [x1],key};
+					let rq={b: "boxed_id",j: "channel_id:UC",z: [x1],key: `boxed_id:channel_id:UC:${value.info_arr[1].id}`};
 					ret=rq;
 					let [kk]=this.get_keys_of(ret); kk;
 					if("j" in ret) {

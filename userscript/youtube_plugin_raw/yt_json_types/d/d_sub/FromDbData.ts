@@ -18,4 +18,19 @@ type FromDbData={
 			{id: string;}
 		];
 	};
+}|{
+	type: "boxed_id";
+	tag: "keys";
+	key: `boxed_id:keys:${string}`;
+	value: {
+		info_arr: [["many",string[][]]];
+		type: string;
+	};
+}|{
+	type: "boxed_id"; tag: "number";
+	key: `boxed_id:number:${string}`;
+	value: {
+		info_arr: [["one",number]];
+		type: string;
+	};
 };
