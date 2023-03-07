@@ -4221,29 +4221,29 @@ class ForService_XMethods extends BaseService {
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton";
 		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
-		this.a_primitive_bool(enabled);
+		this.sm.a_primitive_bool(enabled);
 		this.t(buttonText,this.sm.G_Text);
-		this.t(subscribed,this.a_primitive_bool);
+		this.t(subscribed,this.sm.a_primitive_bool);
 		this.t(type,x => this.sm.cq(x,"FREE"));
 		this.t(channelId,this.sm.channelId);
 		if(trackingParams) this.sm.trackingParams(trackingParams);
-		this.t(showPreferences,this.a_primitive_bool);
+		this.t(showPreferences,this.sm.a_primitive_bool);
 		let [p1,o1]=this.sm.unwrap_prefix(y1,"subscribed");
-		this.D_SubscribeButton_SubscribedPrefix(p1);
+		this.sm.D_SubscribeButton_SubscribedPrefix(p1);
 		let [p2,o2]=this.sm.unwrap_prefix(o1,"unsubscribed");
-		this.D_SubscribeButton_UnsubscribedPrefix(p2);
+		this.sm.D_SubscribeButton_UnsubscribedPrefix(p2);
 		let [p3,o3]=this.sm.unwrap_prefix(o2,"subscribe");
-		this.D_SubscribeButton_SubscribePrefix(p3);
+		this.sm.D_SubscribeButton_SubscribePrefix(p3);
 		let [p4,{...o4}]=this.sm.unwrap_prefix(o3,"unsubscribe");
-		this.D_SubscribeButton_UnsubscribePrefix(p4);
+		this.sm.D_SubscribeButton_UnsubscribePrefix(p4);
 		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
-		this.tz(onSubscribeEndpoints,this.sm.E_Subscribe);
+		this.tz(onSubscribeEndpoints,this.xm.E_Subscribe);
 		this.tz(onUnsubscribeEndpoints,this.xm.E_SignalService_SendPost);
 		this.t(targetId,x => this.sm.cq(x,"watch-subscribe"));
-		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
+		this.t(notificationPreferenceButton,this.sm.R_SubscriptionNotificationToggleButton);
 		const {serviceEndpoints,...y}=y2; this.g(y);
 		this.tz(serviceEndpoints,x => {
-			if("subscribeEndpoint" in x) return this.sm.E_Subscribe(x);
+			if("subscribeEndpoint" in x) return this.xm.E_Subscribe(x);
 			if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
 			debugger;
 		});
@@ -4252,15 +4252,13 @@ class ForService_XMethods extends BaseService {
 	D_Button_SE(x) {
 		const cf="D_Button_SE";
 		if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
-		if("ypcGetOffersEndpoint" in x) return this.sm.E_YpcGetOffers(x);
+		if("ypcGetOffersEndpoint" in x) return this.xm.E_YpcGetOffers(x);
 		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
-		if("unsubscribeEndpoint" in x) return this.sm.E_Unsubscribe(x);
-		if("createCommentEndpoint" in x) return this.sm.E_CreateComment(x);
+		if("unsubscribeEndpoint" in x) return this.xm.E_Unsubscribe(x);
+		if("createCommentEndpoint" in x) return this.xm.E_CreateComment(x);
 		if("getPdgBuyFlowCommand" in x) return this.sm.C_GetPdgBuyFlow(x);
 		if("createCommentReplyEndpoint" in x) return this.xr.E_CreateCommentReply(x);
-		let gen_name=this.get_codegen_name(cf,x);
-		if(!gen_name) {debugger; return;}
-		x===""; this.sm.codegen_typedef(`${cf}$${gen_name}`,x,true);
+		x===""; this.sm.GEN(cf,x);
 	}
 	/**
 	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
@@ -4280,7 +4278,7 @@ class ForService_XMethods extends BaseService {
 		const cf="D_ThumbnailOverlayToggleButton";
 		if("toggledServiceEndpoint" in x) {
 			const [o1,o2,{isToggled,...y}]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);
-			this.sm.cq(isToggled,this.false_());
+			this.sm.cq(isToggled,false);
 			this.D_ThumbnailOverlayToggleButton_ToggledPrefix_1(o1);
 			this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(o2);
 			return;

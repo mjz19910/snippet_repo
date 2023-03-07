@@ -20,9 +20,7 @@ function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;
 	ks=this.k;
-	/** @public @returns {true} */
-	true_() {return true;}
-	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
+	/** @public @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
 	cq(a,b) {if(a!==b) debugger;}
 	/** @public @arg {string} x @arg {boolean} is_prev */
 	D_VeCsn(x,is_prev=false) {
@@ -44,7 +42,12 @@ class ServiceMethods extends ServiceData {
 	GEN(cf,x) {
 		let name=this.get_codegen_name(cf,x);
 		if(!name) return;
-		this.cg.codegen_renderer(x,`${cf}$${name}`);
+		const cf2=`${cf}$${name}`;
+		this.#_GEN(cf2);
+	}
+	#_GEN(cf,x) {
+		this.cg.codegen_typedef(cf,x,false);
+		this.cg.codegen_renderer(cf,x);
 		debugger;
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
@@ -59,7 +62,7 @@ class ServiceMethods extends ServiceData {
 			other: o3,
 		};
 	}
-	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
+	/** @public @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(cf,"items",x);}
 	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_TrackedItems<T>} x */
 	T_Items_TP(cf,x) {
@@ -473,7 +476,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
 	/** @public @arg {GM_UserFeedback} x */
-	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
+	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),true);}
 	/** @private @arg {GM_GetNotificationMenu} x */
 	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
 	/** @private @arg {GM_AccountMenu} x */
@@ -2710,9 +2713,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {C_Loop} x */
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {this.y(this,"DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
-	/** @returns {false} */
-	false_() {return false;}
+	DC_Loop(x) {this.y(this,"DC_Loop","loop",x,x => this.ceq(x,false));}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
 	/** @private @arg {C_EntityUpdate} x */
@@ -4563,7 +4564,7 @@ class ServiceMethods extends ServiceData {
 		});
 		this.t(owner,this.D_Video_Owner);
 		this.t(shortViewCountText,this.G_Text);
-		this.t(isWatched,x => this.ceq(x,this.true_()));
+		this.t(isWatched,x => this.ceq(x,true));
 		this.t(topStandaloneBadge,this.RMD_Badge);
 		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
@@ -5598,7 +5599,7 @@ class ServiceMethods extends ServiceData {
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
 		return y;
 	}
-	/** @private @arg {R_SubFeedSelector} x */
+	/** @public @arg {R_SubFeedSelector} x */
 	R_SubFeedSelector(x) {this.H_s("subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
 	/** @private @arg {D_SubFeedSelector} x */
 	D_SubFeedSelector(x) {
@@ -5700,7 +5701,7 @@ class ServiceMethods extends ServiceData {
 		if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
 		this.codegen_typedef(`${cf1}$${cf2}`,x);
 	}
-	/** @private @arg {R_SearchBox} x */
+	/** @public @arg {R_SearchBox} x */
 	R_SearchBox(x) {this.H_s("searchBoxRenderer",x,this.D_SearchBox);}
 	/** @private @arg {D_SearchBox} x */
 	D_SearchBox(x) {

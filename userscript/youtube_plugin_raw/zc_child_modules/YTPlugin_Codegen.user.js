@@ -1203,9 +1203,9 @@ class CodegenService extends ServiceWithAccessors {
 		});
 		return new Map(typedef_members);
 	}
-	/** @api @public @arg {unknown} x @arg {string|null} r @arg {boolean} [w] */
-	codegen_renderer(x,r,w) {
-		let gen_obj=this.#codegen_renderer(x,r);
+	/** @api @public @arg {unknown} x @arg {string|null} cf @arg {boolean} [w] */
+	codegen_renderer(cf,x,w) {
+		let gen_obj=this.#codegen_renderer(x,cf);
 		if(w) return gen_obj;
 		console.log(gen_obj);
 		return null;
