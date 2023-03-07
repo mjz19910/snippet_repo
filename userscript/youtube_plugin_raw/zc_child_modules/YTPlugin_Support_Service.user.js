@@ -1747,7 +1747,7 @@ class Support_EventInput extends BaseService {
 		if(this.is_EP_Val(x,3854)) {
 			let {...u}=this.RS_Page_Type1(cf,x,{
 				page: x => this.sm.cq(x,"browse"),
-				endpoint: x => this.E_VE3854(x),
+				endpoint: x => this.sm.E_VE3854(x),
 				response: x => this.x.get("x_RS_Browse").RS_Browse(x),
 				/** @arg {RS_VE3854_BrowsePage["url"]} x */
 				url(x) {
