@@ -182,18 +182,21 @@ class IndexedDBService extends BaseService {
 			this.on_loaded_resolver.resolve();
 			return;
 		}
-		for(let item of boxed) await this.load_store(store,item);
+		for(let item of boxed) await this.load_store(store,item,version);
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
-	/** @template {G_BoxedIdObj} T @arg {T} x @returns {T} */
-	update_obj_schema(x) {
-		if(!x.z) {
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
+	async update_obj_schema(x,version) {
+		/** @type {G_BoxedIdObj} */
+		let rv=x;
+		x: if(!x.z) {
 			/** @type {{key:DST_LoadId["key"],tag:string,value?: {raw:number}}} */
 			let o1=as_any(x);
 			if(o1.value&&o1.value.raw&&o1.tag) {
 				const jl={b: "boxed_id",j: o1.tag,key: x.key,z: [{type: "number",z: [o1.value.raw]}]};
-				return as_any(jl);
+				rv=as_any(jl);
+				break x;
 			}
 			/** @type {FromDbData} */
 			let o2=as_any(x);
@@ -238,7 +241,8 @@ class IndexedDBService extends BaseService {
 						const z2={a: "group",b: value.type,z: [as_any(z1)]};
 						/** @type {DSS_Bigint} */
 						let z={a: "boxed_store",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
-						return as_any(z);
+						rv=as_any(z);
+						break x;
 					}
 				}
 			}
@@ -257,11 +261,18 @@ class IndexedDBService extends BaseService {
 						z: [{a: "primitive",e: "string",z: [as(id)]}]
 					}]
 				};
-				return as_any(rt);
+				/** @type {DST_Browse_FE} */
+				let zt={b: "boxed_id",j: "browse_id:FE",key: as(key),z: [rt]};
+				rv=zt;
+				break x;
 			}
 			debugger;
+		} else {
+			return x;
 		}
-		return x;
+		await this.delete("boxed_id",x.key,version);
+		await this.direct_put("boxed_id",rv,version);
+		return as_any(rv);
 	}
 	/** @arg {G_BoxedIdObj} x */
 	store_cache_tree(x) {
@@ -321,10 +332,10 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {CacheTreeDepth4} x */
 	cache_depth_4(x) {x;}
-	/** @arg {StoreData} store @arg {G_BoxedIdObj} item */
-	async load_store(store,item) {
+	/** @arg {StoreData} store @arg {G_BoxedIdObj} item @arg {number} version */
+	async load_store(store,item,version) {
 		this.add_to_index(item.key,item,true);
-		item=this.update_obj_schema(item);
+		item=await this.update_obj_schema(item,version);
 		if(!item.z) return;
 		this.store_cache_tree(item);
 		/** @template {string} T @arg {{tag:T}} x */
@@ -358,7 +369,7 @@ class IndexedDBService extends BaseService {
 			save_id=await this.get_save_id(version);
 			if(!save_id) throw new Error("null on get");
 		}
-		save_id=this.update_obj_schema(save_id);
+		save_id=await this.update_obj_schema(save_id,version);
 		if(save_id.z[0].z[0]!==this.expected_save_id) this.expected_save_id=save_id.z[0].z[0];
 		await this.save_store_to_database(store,version);
 		this.expected_save_id++;
