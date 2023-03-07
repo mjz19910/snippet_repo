@@ -243,6 +243,22 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			if(!o_arr_t.raw_id) {debugger; return x;}
+			let raw_id=o_arr_t.raw_id;
+			if(this.str_starts_with_rx("FE",raw_id)) {
+				let [,id]=split_string_once(raw_id,"FE");
+				/** @type {DI_BrowseId_FE} */
+				let rt={
+					b: "browse_id",c: "FE",
+					z: [{
+						a: "key_value",k: "raw_id",
+						z: [{a: "primitive",e: "string",z: [as(raw_id)]}]
+					},{
+						a: "key_value",k: "id",
+						z: [{a: "primitive",e: "string",z: [as(id)]}]
+					}]
+				};
+				return as_any(rt);
+			}
 			debugger;
 		}
 		return x;
