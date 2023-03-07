@@ -199,10 +199,34 @@ class IndexedDBService extends BaseService {
 			let o2=as_any(x);
 			if(!o2.value) {debugger; return x;}
 			switch(o2.tag) {
+				default: debugger; break;
 				case "bigint": break;
+				case "channel_id:UC": break;
+				case "browse_id:FE": break;
+				case "keys": break;
+				case "update_id": break;
+				case "browse_id:MP": break;
+				case "browse_id:SP": break;
+				case "browse_id:VL": break;
+				case "browse_id:VL:PL": break;
+				case "browse_id:VL:UC": break;
+				case "exact:play_next": break;
+				case "guide_entry_id": break;
+				case "hashtag_id": break;
+				case "key": break;
+				case "load_id": break;
+				case "playlist_id:LL": break;
+				case "playlist_id:PL": break;
+				case "playlist_id:RD": break;
+				case "playlist_id:RD:MM": break;
+				case "playlist_id:WL": break;
+				case "save_id": break;
+				case "user_id": break;
+				case "video_id": break;
+				case "video_time": break;
 			}
-			o2.value;
 			const {key,value}=o2;
+			if(!value.info_arr) {debugger; return x;}
 			let o_arr_t=value.info_arr[0];
 			switch(o_arr_t[0]) {
 				default: debugger; return x;
