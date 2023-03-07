@@ -233,6 +233,7 @@ class IndexedDBService extends BaseService {
 				case "channel_id:UC": break;
 				case "keys": break;
 				case "string": break;
+				case "video_id": break;
 				case "playlist_id:RD": {
 					const {key,value}=o2;
 					/** @type {DI_A_Playlist_RD} */
