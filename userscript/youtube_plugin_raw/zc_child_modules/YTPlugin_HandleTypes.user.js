@@ -30,6 +30,8 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 //#region HandleTypes
 class HandleTypes extends BaseService {
+	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	H_(k,x,f) {this.mf.H_cls(this,k,x,f);}
 	//#region Service Cache
 	get x_Renderer() {return this.x.get("x_Renderer");}
 	/** @type {this["x_Renderer"]|null} */
@@ -455,13 +457,13 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region Action methods
 	/** @private @arg {A_GetMultiPageMenu} x */
-	A_GetMultiPageMenu(x) {this.mf.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
+	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @public @arg {A_AccountItem} x */
-	A_AccountItem(x) {this.mf.H_("accountItem",x,this.AD_AccountItem);}
+	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	//#region Renderer methods
 	/** @public @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.mf.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
+	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
 	/** @private @arg {D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x) {
 		const cf="D_VideoSecondaryInfo";
@@ -512,11 +514,11 @@ class HandleTypes extends BaseService {
 		this.save_enum(cf,"ALIGNMENT",alignment);
 	}
 	/** @private @arg {R_TextDecorator} x */
-	R_TextDecorator(x) {this.mf.H_("textDecorator",x,this.R_HighlightTextDecorator);}
+	R_TextDecorator(x) {this.H_("textDecorator",x,this.R_HighlightTextDecorator);}
 	/** @private @arg {R_HighlightTextDecorator} x */
-	R_HighlightTextDecorator(x) {this.mf.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
+	R_HighlightTextDecorator(x) {this.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
 	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {this.mf.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
+	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
@@ -541,7 +543,7 @@ class HandleTypes extends BaseService {
 		this.R_LayoutProperties(properties);
 	}
 	/** @private @arg {R_LayoutProperties} x */
-	R_LayoutProperties(x) {this.mf.H_("layoutProperties",x,this.D_LayoutProperties);}
+	R_LayoutProperties(x) {this.H_("layoutProperties",x,this.D_LayoutProperties);}
 	/** @private @arg {D_LayoutProperties} x */
 	D_LayoutProperties(x) {
 		const cf="D_LayoutProperties";
@@ -556,18 +558,18 @@ class HandleTypes extends BaseService {
 		} else debugger;
 	}
 	/** @private @arg {D_ImageType} x */
-	D_ImageType(x) {this.mf.H_("imageType",x,this.D_Image);}
+	D_ImageType(x) {this.H_("imageType",x,this.D_Image);}
 	/** @private @arg {D_Image} x */
-	D_Image(x) {this.mf.H_("image",x,this.D_Sources);}
+	D_Image(x) {this.H_("image",x,this.D_Sources);}
 	/** @private @arg {D_Sources} x */
 	D_Sources(x) {
-		this.mf.H_("sources",x,x => this.z(x,x => {
+		this.H_("sources",x,x => this.z(x,x => {
 			const {url,...y}=this.s("D_Sources.sources[]",x); this.g(y);
 			this.mf.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
 		}));
 	}
 	/** @public @arg {R_BackgroundPromo} x */
-	R_BackgroundPromo(x) {this.mf.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
+	R_BackgroundPromo(x) {this.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
 	/** @public @arg {D_BackgroundPromo} x */
 	D_BackgroundPromo(x) {
 		const cf="D_LayoutProperties";
@@ -621,7 +623,7 @@ class HandleTypes extends BaseService {
 		x===""; this.mf.codegen_typedef(cf,x);
 	}
 	/** @public @arg {C_Innertube} x */
-	C_Innertube(x) {this.mf.H_("innertubeCommand",x,this.G_DC_Innertube);}
+	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {G_DC_Innertube} x */
 	G_DC_Innertube(x) {
 		const cf="G_DC_Innertube"; this.mf.k(cf,x);
@@ -642,11 +644,11 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region CD & AU & C & DC
 	/** @private @arg {CD_TimedContinuation} x */
-	CD_TimedContinuation(x) {this.mf.H_("timedContinuationData",x,this.DC_Timed);}
+	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
-	AU_ChannelSwitcherPage(x) {this.mf.H_("updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
+	AU_ChannelSwitcherPage(x) {this.H_("updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
-	AD_GetMultiPageMenu(x) {this.mf.H_("menu",x,x => this.mf.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
+	AD_GetMultiPageMenu(x) {this.H_("menu",x,x => this.mf.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.mf.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @arg {C_FollowUp} x */
@@ -1232,9 +1234,9 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region Continuation [RC]
 	/** @private @arg {RC_PlaylistPanel} x */
-	RC_PlaylistPanel(x) {this.mf.H_("playlistPanelContinuation",x,this.g);}
+	RC_PlaylistPanel(x) {this.H_("playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
-	RC_LiveChat(x) {this.mf.H_("liveChatContinuation",x,this.DC_LiveChat);}
+	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
 	//#endregion
 	//#region Misc
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{type:T}} */
@@ -3237,7 +3239,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @public @arg {R_VideoDescriptionMusicSection} x */
-	R_VideoDescriptionMusicSection(x) {this.mf.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
+	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
