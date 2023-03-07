@@ -5353,5 +5353,24 @@ class ForService_XMethods extends BaseService {
 	}
 	/** @public @arg {D_Label} x */
 	D_Label(x) {this.sm.H_s("label",x,this.sm.a_primitive_str);}
+	/** @public @arg {GC_Button} x */
+	GC_Button(x) {
+		const cf="GC_Button";
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("continuationCommand" in x) return this.xr.C_Continuation(x);
+		if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
+		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
+		if("urlEndpoint" in x) return this.xm.E_Url(x);
+		if("commandExecutorCommand" in x) return this.C_Executor(x);
+		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
+		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
+		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("feedbackEndpoint" in x) return this.E_Feedback(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {E_CreateBackstagePost} x */
+	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

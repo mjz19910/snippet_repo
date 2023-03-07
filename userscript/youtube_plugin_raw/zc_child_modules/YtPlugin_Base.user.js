@@ -2178,7 +2178,13 @@ class BaseService extends ServiceWithMembers {
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_s(k,x,f) {
 		let tm=this;
-		if(!(tm instanceof ServiceData)) {debugger; return;}
+
+		x: if(!(tm instanceof ServiceData)) {
+			/** @type {(...args:any[])=>void} */
+			let a_fn=f;
+			if(a_fn===this.xm.D_Label) break x;
+			debugger; return;
+		}
 		this.sm.H_cls(this,k,x,f);
 	}
 	/** @public @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */

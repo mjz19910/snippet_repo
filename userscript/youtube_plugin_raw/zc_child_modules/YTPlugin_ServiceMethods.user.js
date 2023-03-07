@@ -849,8 +849,6 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(clickTrackingParams);
 		this.DC_CommandExecutor(commandExecutorCommand);
 	}
-	/** @private @arg {E_CreateBackstagePost} x */
-	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @public @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
 		const cf="C_GetSurvey";
@@ -883,23 +881,6 @@ class ServiceMethods extends ServiceData {
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @public @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
-	/** @public @arg {GC_Button} x */
-	GC_Button(x) {
-		const cf="GC_Button";
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("continuationCommand" in x) return this.xr.C_Continuation(x);
-		if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
-		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
-		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("commandExecutorCommand" in x) return this.C_Executor(x);
-		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
-		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
-		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("feedbackEndpoint" in x) return this.E_Feedback(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @public @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_s("menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
