@@ -195,10 +195,12 @@ class IndexedDBService extends BaseService {
 				const jl={b: "boxed_id",j: o1.tag,key: x.key,z: [{type: "number",z: [o1.value.raw]}]};
 				return as_any(jl);
 			}
-			/** @type {{key:DST_LoadId["key"],type:"boxed_id",tag?: "bigint",value?: {type:string,info_arr:[["one",bigint]|["arr",bigint[]]]}}} */
+			/** @type {{key:G_BoxedIdObj["key"],type:"boxed_id",tag?: J_DU_TagStr,value?: {type:string,info_arr:[["one",bigint]|["arr",bigint[]]]}}} */
 			let o2=as_any(x);
 			if(!o2.value) {debugger; return x;}
-			if(o2.tag!=="bigint") {console.log("fix tag (tag!=='bigint')",o2.tag); return x;}
+			switch(o2.tag) {
+				case "bigint": break;
+			}
 			o2.value;
 			const {key,value}=o2;
 			let o_arr_t=value.info_arr[0];
