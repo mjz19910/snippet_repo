@@ -12,9 +12,6 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-
-// @ts-nocheck
-
 const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$SupportService";
@@ -4272,6 +4269,12 @@ class ForService_XMethods extends BaseService {
 	A_SendFeedback(x) {let [a,b]=this.sm.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {let [a,b]=this.sm.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
+	/** @private @arg {DE_ShowEngagementPanel} x */
+	DE_ShowEngagementPanel(x) {
+		const cf="D_ShowEngagementPanel";
+		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {let [a,y]=this.sm.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
 	/** @public @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
@@ -4423,6 +4426,23 @@ class ForService_XMethods extends BaseService {
 		this.D_ThumbnailOverlayToggleButton_ToggledPrefix_2(o1);
 		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
 	}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"untoggled">} x */
+	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
+		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
+		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Accessibility(accessibility);
+		this.T_Icon(`${cf}:icon`,icon);
+		if(tooltip!=="Watch Later") debugger;
+		this.E_PlaylistEdit(serviceEndpoint);
+	}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"toggled">} x */
+	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
+		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
+		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Accessibility(accessibility);
+		this.T_Icon(`${cf}:icon`,icon);
+		if(tooltip!=="Added") debugger;
+	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
@@ -4526,6 +4546,8 @@ class ForService_XMethods extends BaseService {
 		this.E_Watch(onTap);
 		this.G_ThumbnailOverlayItem(thumbnailOverlays);
 	}
+	/** @public @arg {R_EndScreenVideo} x */
+	R_EndScreenVideo(x) {this.H_s("endScreenVideoRenderer",x,this.D_EndScreenVideo);}
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
 		const cf="D_EndScreenVideo";
@@ -4624,5 +4646,125 @@ class ForService_XMethods extends BaseService {
 		}
 		group_arr.push([k,[x]]);
 	}
+	/** @private @arg {E_Unsubscribe} x */
+	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
+	/** @private @arg {DE_Unsubscribe} x */
+	DE_Unsubscribe(x) {
+		const cf="DE_Unsubscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.channelId);
+		this.params("unsubscribe.params",params);
+	}
+	/** @private @arg {E_CreateComment} x */
+	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
+	/** @private @arg {E_Subscribe} x */
+	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
+	/** @private @arg {DE_Subscribe} x */
+	DE_Subscribe(x) {
+		const cf="DE_Subscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.channelId);
+		this.params("subscribe.params",params);
+	}
+	/** @private @arg {M_Subscribe} x */
+	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
+	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
+	R_ThumbnailOverlayBottomPanel(x) {this.H_s("thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
+	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
+	R_ThumbnailOverlayEndorsement(x) {this.H_s("thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
+	/** @private @arg {R_ThumbnailOverlayHoverText} x */
+	R_ThumbnailOverlayHoverText(x) {this.H_s("thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
+	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
+	R_ThumbnailOverlayInlineUnplayable(x) {this.H_s("thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
+	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
+	R_ThumbnailOverlayLoadingPreview(x) {this.H_s("thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
+	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
+	R_ThumbnailOverlayNowPlaying(x) {this.H_s("thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
+	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
+	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
+	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
+	R_ThumbnailOverlayResumePlayback(x) {this.H_s("thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
+	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
+	R_ThumbnailOverlaySidePanel(x) {this.H_s("thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
+	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
+	R_ThumbnailOverlayTimeStatus(x) {this.H_s("thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
+	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
+	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
+	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
+	D_ThumbnailOverlayTimeStatus(x) {
+		const cf="D_ThumbnailOverlayTimeStatus";
+		const {style,text,...y}=this.s(cf,x);
+		switch(style) {
+			default: debugger; break;
+			case "DEFAULT":
+			case "LIVE":
+			case "SHORTS":
+			case "UPCOMING":
+		}
+		if("icon" in y) {
+			const {icon,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
+			switch(icon.iconType) {
+				default: debugger; break;
+				case "LIVE":
+				case "YOUTUBE_SHORTS_FILL_NO_TRIANGLE_RED_16":
+			}
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
+	D_ThumbnailOverlaySidePanel(x) {
+		const cf="D_ThumbnailOverlaySidePanel";
+		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		let store=this.icon_types_map.get(cf);
+		if(!store) return;
+		const {known,unknown}=store;
+		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
+		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
+	}
+	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
+	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,this.D_MixIcon);}
+	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
+	D_ThumbnailOverlayEndorsement(x) {
+		const cf="D_ThumbnailOverlayEndorsement";
+		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
+	D_ThumbnailOverlayInlineUnplayable(x) {
+		const cf="D_ThumbnailOverlayInlineUnplayable";
+		const {text,icon,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(text);
+		this.ceq(icon.iconType,"PLAY_DISABLED");
+	}
+	/** @private @arg {D_ThumbnailOverlayHoverText} x */
+	D_ThumbnailOverlayHoverText(x) {
+		const cf="D_ThumbnailOverlayHoverText";
+		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		if(icon.iconType!=="PLAY_ALL") debugger;
+	}
+	/** @private @arg {DE_CreateComment} x */
+	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","create_comment.params","createCommentParams",x);}
+	/** @private @arg {E_YpcGetOffers} x */
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
+	/** @private @arg {DE_YpcGetOffers} x */
+	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
+	/** @private @arg {T_Icon<"MIX">} x */
+	D_MixIcon(x) {this.T_Icon("D_MixIcon",x);}
+	/** @private @arg {M_YpcGetOffers} x */
+	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
+	/** @private @arg {M_CreateComment} x */
+	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
+	/** @private @arg {M_Unsubscribe} x */
+	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
+	/** @private @arg {GM_YpcGetOffers} x */
+	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
+	/** @private @arg {GM_CreateComment} x */
+	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
+	/** @private @arg {GM_Subscribe} x */
+	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

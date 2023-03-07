@@ -235,19 +235,6 @@ class ServiceMethods extends ServiceData {
 			}
 		});
 	}
-	/** @private @arg {DE_ShowEngagementPanel} x */
-	DE_ShowEngagementPanel(x) {
-		const cf="D_ShowEngagementPanel";
-		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
-	}
-	/** @private @arg {DE_Unsubscribe} x */
-	DE_Unsubscribe(x) {
-		const cf="DE_Unsubscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.channelId);
-		this.params("unsubscribe.params",params);
-	}
 	get xm() {return this.x.get("x_methods");}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
@@ -505,10 +492,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
-	/** @private @arg {GM_YpcGetOffers} x */
-	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
-	/** @private @arg {GM_CreateComment} x */
-	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
 	/** @protected @arg {GM_Unsubscribe} x */
 	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
 	/** @protected @arg {GM_GetPdgBuyFlow} x */
@@ -527,8 +510,6 @@ class ServiceMethods extends ServiceData {
 	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
-	/** @private @arg {GM_Subscribe} x */
-	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 	/** @protected @arg {GM_UserFeedback} x */
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {GM_GetNotificationMenu} x */
@@ -553,23 +534,6 @@ class ServiceMethods extends ServiceData {
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"untoggled">} x */
-	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
-		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
-		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Accessibility(accessibility);
-		this.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Watch Later") debugger;
-		this.E_PlaylistEdit(serviceEndpoint);
-	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"toggled">} x */
-	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
-		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
-		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Accessibility(accessibility);
-		this.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Added") debugger;
-	}
 	/** @private @arg {AD_Notification} x */
 	AD_Notification(x) {
 		const cf="AD_Notification";
@@ -850,16 +814,6 @@ class ServiceMethods extends ServiceData {
 		/** @arg {typeof x} y */
 		return y => this.cq(x,y);
 	}
-	/** @private @arg {M_YpcGetOffers} x */
-	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
-	/** @private @arg {M_CreateComment} x */
-	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
-	/** @private @arg {M_Unsubscribe} x */
-	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
-	/** @private @arg {E_Unsubscribe} x */
-	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
-	/** @private @arg {E_CreateComment} x */
-	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
 	/** @protected @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @protected @arg {C_GetPdgBuyFlow} x */
@@ -1500,10 +1454,6 @@ class ServiceMethods extends ServiceData {
 	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
 	/** @protected @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
-	/** @private @arg {DE_YpcGetOffers} x */
-	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
-	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
 	/** @private @arg {DE_Search} x */
 	DE_Search(x) {
 		const cf="DE_Search";
@@ -1697,8 +1647,6 @@ class ServiceMethods extends ServiceData {
 		this.t(nofollow,this.a_primitive_bool);
 		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
 	}
-	/** @private @arg {DE_CreateComment} x */
-	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","create_comment.params","createCommentParams",x);}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
 		const cf="DE_Like"; this.ks(cf,x);
@@ -2585,31 +2533,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
-	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {
-		const cf="D_ThumbnailOverlayInlineUnplayable";
-		const {text,icon,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(text);
-		this.ceq(icon.iconType,"PLAY_DISABLED");
-	}
-	/** @private @arg {D_ThumbnailOverlayHoverText} x */
-	D_ThumbnailOverlayHoverText(x) {
-		const cf="D_ThumbnailOverlayHoverText";
-		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		if(icon.iconType!=="PLAY_ALL") debugger;
-	}
-	/** @private @arg {T_Icon<"MIX">} x */
-	D_MixIcon(x) {this.T_Icon("D_MixIcon",x);}
-	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,this.D_MixIcon);}
-	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
-	D_ThumbnailOverlayEndorsement(x) {
-		const cf="D_ThumbnailOverlayEndorsement";
-		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		this.trackingParams(trackingParams);
-	}
 	make_icon_types_map() {
 		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
 		let r=[
@@ -2636,17 +2559,6 @@ class ServiceMethods extends ServiceData {
 		this.save_string("IconType",iconType);
 		return is_missing_iconType;
 	}
-	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
-	D_ThumbnailOverlaySidePanel(x) {
-		const cf="D_ThumbnailOverlaySidePanel";
-		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		let store=this.icon_types_map.get(cf);
-		if(!store) return;
-		const {known,unknown}=store;
-		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
-		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
-	}
 	/** @protected @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
 	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
 		expected_arr.push(icon.iconType);
@@ -2658,52 +2570,8 @@ class ServiceMethods extends ServiceData {
 			this.codegen_typedef(cf,x);
 		} finally {console.groupEnd();}
 	}
-	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
-	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
-	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
-	D_ThumbnailOverlayTimeStatus(x) {
-		const cf="D_ThumbnailOverlayTimeStatus";
-		const {style,text,...y}=this.s(cf,x);
-		switch(style) {
-			default: debugger; break;
-			case "DEFAULT":
-			case "LIVE":
-			case "SHORTS":
-			case "UPCOMING":
-		}
-		if("icon" in y) {
-			const {icon,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
-			switch(icon.iconType) {
-				default: debugger; break;
-				case "LIVE":
-				case "YOUTUBE_SHORTS_FILL_NO_TRIANGLE_RED_16":
-			}
-			return;
-		}
-		this.g(y);
-	}
 	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {this.H_s("text",x,this.G_Text);}
-	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
-	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
-	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
-	R_ThumbnailOverlayBottomPanel(x) {this.H_s("thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
-	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
-	R_ThumbnailOverlayEndorsement(x) {this.H_s("thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
-	/** @private @arg {R_ThumbnailOverlayHoverText} x */
-	R_ThumbnailOverlayHoverText(x) {this.H_s("thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
-	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
-	R_ThumbnailOverlayInlineUnplayable(x) {this.H_s("thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
-	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
-	R_ThumbnailOverlayLoadingPreview(x) {this.H_s("thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
-	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
-	R_ThumbnailOverlayNowPlaying(x) {this.H_s("thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
-	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
-	R_ThumbnailOverlayResumePlayback(x) {this.H_s("thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
-	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
-	R_ThumbnailOverlaySidePanel(x) {this.H_s("thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
-	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
-	R_ThumbnailOverlayTimeStatus(x) {this.H_s("thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {string} key @arg {Uint8Array} data @arg {number} [idx] */
 	save_next_byte(key,data,idx=0) {
 		let f=data[idx];
@@ -2778,8 +2646,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {M_CreateBackstagePost} x */
 	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
-	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {A_HideEnclosing} x */
@@ -2816,15 +2682,6 @@ class ServiceMethods extends ServiceData {
 		if("replaceEnclosingAction" in x) return this.A_ReplaceEnclosing(x);
 		debugger;
 	}
-	/** @private @arg {DE_Subscribe} x */
-	DE_Subscribe(x) {
-		const cf="DE_Subscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.channelId);
-		this.params("subscribe.params",params);
-	}
-	/** @private @arg {M_Subscribe} x */
-	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @type {D_UiTargetId[]} */
 	reload_ui_target_id_arr=[];
 	/** @arg {D_UiTargetId} x */
@@ -4581,7 +4438,7 @@ class ServiceMethods extends ServiceData {
 	G_WatchNextEndScreenItem(x) {
 		const cf="G_WatchNextEndScreenItem";
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
-		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
+		if("endScreenVideoRenderer" in x) return this.xm.R_EndScreenVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @arg {R_VideoViewCount} x */
@@ -4922,8 +4779,6 @@ class ServiceMethods extends ServiceData {
 	R_MerchandiseItem(x) {this.H_s("merchandiseItemRenderer",x,this.D_MerchandiseItem);}
 	/** @private @arg {R_EndScreenPlaylist} x */
 	R_EndScreenPlaylist(x) {this.H_s("endScreenPlaylistRenderer",x,this.D_EndScreenPlaylist);}
-	/** @private @arg {R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {this.H_s("endScreenVideoRenderer",x,this.D_EndScreenVideo);}
 	/** @private @arg {R_TopbarMenuButton} x */
 	R_TopbarMenuButton(x) {this.H_s("topbarMenuButtonRenderer",x,this.D_TopbarMenuButton);}
 	/** @private @arg {R_NotificationTopbarButton} x */
@@ -5756,7 +5611,7 @@ class ServiceMethods extends ServiceData {
 	Omit_Menu_Radio(cf,x) {
 		if("adSlotMetadata" in x) {debugger; throw new Error();}
 		let u=this.D_Omit_Menu_Radio(cf,x);
-		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
+		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.xm.D_Omit_ThumbnailOverlay(cf,u);
 		this.playlistId(playlistId);
 		this.D_Thumbnail(thumbnail);
 		this.G_Text(videoCountText);
@@ -6373,7 +6228,7 @@ class ServiceMethods extends ServiceData {
 	G_PlaylistPanel_Item(x) {
 		const cf="G_PlaylistPanel_Item";
 		if("automixPreviewVideoRenderer" in x) return this.xr.R_AutomixPreviewVideo(x);
-		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
+		if("playlistPanelVideoRenderer" in x) return this.xm.R_PlaylistPanelVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {CD_NextRadio} x */
