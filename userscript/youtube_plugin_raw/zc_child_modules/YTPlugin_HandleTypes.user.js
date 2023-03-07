@@ -3272,8 +3272,8 @@ class HandleTypes extends ServiceMethods {
 				const {b,raw_id}=x;
 				return {a: "tag",b,c: null,raw_id};
 			}
+			default: return {a: null};
 		}
-		return {a: null};
 	}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u */
 	make_R_UrlInfo(u) {
