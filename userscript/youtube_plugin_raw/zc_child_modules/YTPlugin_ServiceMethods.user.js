@@ -437,14 +437,6 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_Url} x */
-	GM_Url(x) {
-		const cf="GM_Url";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GU_Url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		this.rootVe(rootVe,83769);
-	}
 	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
 	GM_VE96368(x) {
 		const cf="GM_VE96368";
@@ -670,13 +662,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {RA_Notification} x */
 	RA_Notification(x) {this.H_s("notificationActionRenderer",x,this.AD_Notification);}
-	/** @public @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
-	T_BaseUrl(x,f) {
-		const cf="T_BaseUrl";
-		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
-		f.call(this,baseUrl);
-		this.t(elapsedMediaTimeSeconds,this.a_primitive_num);
-	}
 	/** @public @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
 	T_Signal(cf,x) {return this.w(cf,"signal",x);}
 	/** @public @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
@@ -1119,25 +1104,6 @@ class ServiceMethods extends ServiceData {
 		return [y,r1];
 	}
 	/**
-	 * @protected @template R_D,R_M
-	 * @template {Extract<keyof T_Endpoint,EPL>} T_Key @template {TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
-	 * @arg {T_Key} k
-	 * @arg {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
-	 * @returns {[typeof y,R_M,R_D]}
-	 */
-	TE_Endpoint_3_v2(k,x,f1,f2) {
-		let keys=this.get_keys_of(x);
-		let s=new JsonReplacerState({
-			text_decoder: this._decoder,
-			cf: k,keys,is_root: true,
-		});
-		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
-		this.clickTrackingParams(clickTrackingParams);
-		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
-		return [y,r1,r2];
-	}
-	/**
 	 * @arg {CF_TE_TrackedObj_2} cf
 	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
 	 * @returns {[T_EP[T_Key],Omit<T_EP,"trackingParams"|T_Key>]}
@@ -1269,8 +1235,6 @@ class ServiceMethods extends ServiceData {
 		}
 		return ret_map;
 	}
-	/** @public @arg {E_Upload} x */
-	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_Url(a); this.B_Hack(b);}
 	/** @public @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack";
@@ -1414,19 +1378,6 @@ class ServiceMethods extends ServiceData {
 		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
 		this.DU_UrlParams(this.parse_url_search_params(x.search));
 	}
-	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
-	DU_Url(x) {
-		this.DU_UrlParse(this._convert_url_to_obj(x));
-		(x => {
-			if(x.host!=="www.youtube.com") debugger;
-			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
-			let pa1=this.split_str(x.search,"?");
-			let pa=this.split_str(pa1[1],"&"); pa;
-			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
-		})(this._convert_url_to_obj(x));
-	}
-	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
-	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
 	/** @public @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @private @arg {DE_Search} x */
@@ -1571,8 +1522,6 @@ class ServiceMethods extends ServiceData {
 	M_VE23462(x) {this.T_WCM("M_VE23462",x,this.GM_VE23462);}
 	/** @private @arg {M_VE42352} x */
 	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
-	/** @public @arg {M_Url} x */
-	M_Url(x) {this.T_WCM("M_Url",x,this.GM_Url);}
 	/** @private @arg {M_VE96368} x */
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
 	/** @private @arg {M_ResolveUrlCommand} x */
@@ -1651,8 +1600,6 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
-	/** @public @arg {E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_Url(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {GU_VE6827_Url} x */
 	D_VE6827_Url(x) {
 		let [f,...pf]=split_string(x,"/"); if(f!=="") debugger;
@@ -1910,15 +1857,6 @@ class ServiceMethods extends ServiceData {
 		let ra=rq;
 		return ra;
 	}
-	/**
-	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
-	 * @returns {[U,Omit<T,"webCommandMetadata">]}
-	 * */
-	T_WCM(cf,x,f) {
-		const {webCommandMetadata: a,...y}=this.s(cf,x);
-		let ret=f.call(this,a,`G${cf}`);
-		return [ret,y];
-	}
 	/** @public @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f) {
 		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2091,10 +2029,10 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
-	 * @protected
-	 * @arg {CF_TE_Endpoint_3} cf
+	 * @public
+	 * @param {CF_TE_Endpoint_3} cf
 	 * @template {Extract<keyof T_EP,EPL>} T_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
-	 * @arg {T_Key} k
+	 * @param {T_Key} k
 	 * @returns {[T_EP['commandMetadata'],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]}
 	 */
 	TE_Endpoint_3(cf,k,x) {
@@ -5858,19 +5796,6 @@ class ServiceMethods extends ServiceData {
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
 		return y;
 	}
-	/** @public @arg {R_BrowseFeedActions} x */
-	R_BrowseFeedActions(x) {this.H_s("browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
-	/** @private @arg {D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {this.H_s("contents",x,x => this.z(x,this.G_BrowseFeedContent));}
-	/** @private @arg {G_BrowseFeedContent} x */
-	G_BrowseFeedContent(x) {
-		const cf="G_BrowseFeedContent";
-		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
-		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
-		if("buttonRenderer" in x) return this.xm.R_Button(x);
-		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {R_SubFeedSelector} x */
 	R_SubFeedSelector(x) {this.H_s("subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
 	/** @private @arg {D_SubFeedSelector} x */
@@ -5898,17 +5823,6 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_bool(isSelected);
 		this.D_SubFeedOption_NavEP(navigationEndpoint);
 		this.trackingParams(trackingParams);
-	}
-	/** @public @arg {R_ProfileColumn} x */
-	R_ProfileColumn(x) {this.H_s("profileColumnRenderer",x,this.D_ProfileColumn);}
-	/** @private @arg {D_ProfileColumn} x */
-	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
-	/** @private @arg {G_ProfileColumnItem} x */
-	G_ProfileColumnItem(x) {
-		const cf="G_ProfileColumnItem";
-		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
-		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @arg {R_RichSection} x */
 	R_RichSection(x) {this.H_s("richSectionRenderer",x,this.D_RichSection);}

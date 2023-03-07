@@ -1760,7 +1760,7 @@ class Support_EventInput extends BaseService {
 				},
 				expirationTime: x => this.t(x,this.sm.a_primitive_num),
 			});
-			if(!this.is_not_empty_obj(u)) return;
+			if(!this.sm.is_not_empty_obj(u)) return;
 			if("previousCsn" in u) {
 				const {previousCsn,...y}=u; this.g(y);
 				this.sm.D_VeCsn(previousCsn,true);
@@ -1774,7 +1774,7 @@ class Support_EventInput extends BaseService {
 		if(this.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
 			/** @arg {RS_VE6827_BrowsePage["url"]} url */
 			url: (url) => {
-				if(this.str_is_search(url)) {
+				if(this.sm.str_is_search(url)) {
 					let up=split_string_once(url,"?");
 					switch(up[0]) {
 						default: up[0]===""; debugger; switch(up[0]) {
@@ -1815,7 +1815,7 @@ class Support_EventInput extends BaseService {
 		const cf="R_PageTypeBrowse";
 		if(this.is_EP_Val(x,3854)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-			this.E_VE3854(endpoint);
+			this.sm.E_VE3854(endpoint);
 			this.G_ResponseBrowse(response);
 			if(pageType!=="browse") debugger;
 			this._primitive_of(fromHistory,"boolean");
@@ -1825,7 +1825,7 @@ class Support_EventInput extends BaseService {
 		if(this.is_EP_Val(x,6827)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 			this.G_ResponseBrowse(response);
-			this.E_VE6827(endpoint);
+			this.sm.E_VE6827(endpoint);
 			if(pageType!=="browse") debugger;
 			this._primitive_of(fromHistory,"boolean");
 			this.sm.a_primitive_num(navigationDoneMs);
@@ -1834,7 +1834,7 @@ class Support_EventInput extends BaseService {
 		if(this.is_EP_Val(x,96368)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 			this.G_ResponseBrowse(response);
-			this.E_VE96368(endpoint);
+			this.sm.E_VE96368(endpoint);
 			if(pageType!=="browse") debugger;
 			this._primitive_of(fromHistory,"boolean");
 			this.sm.a_primitive_num(navigationDoneMs);
@@ -1847,7 +1847,7 @@ class Support_EventInput extends BaseService {
 		const cf="R_PageTypeChannel";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.DataResponsePageType(response);
-		this.E_VE3611(endpoint);
+		this.sm.E_VE3611(endpoint);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
@@ -1856,7 +1856,7 @@ class Support_EventInput extends BaseService {
 	NavFinishDetail_Playlist(x) {
 		const cf="R_PageTypePlaylist";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_VE5754(endpoint);
+		this.sm.E_VE5754(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
@@ -1866,7 +1866,7 @@ class Support_EventInput extends BaseService {
 	NavFinishDetail_Search(x) {
 		const cf="R_PageTypeSearch";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Search(endpoint);
+		this.sm.E_Search(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
@@ -1878,7 +1878,7 @@ class Support_EventInput extends BaseService {
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		x: {
 			let x2=endpoint;
-			if("browseEndpoint" in x2) {this.E_VE23462(x2); break x;}
+			if("browseEndpoint" in x2) {this.sm.E_VE23462(x2); break x;}
 			x2===""; debugger;
 		}
 		if(response.page!=="settings") debugger;
@@ -1941,9 +1941,14 @@ class Support_EventInput extends BaseService {
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	//#endregion
+	/** @template {{}} T @arg {{}} x @arg {()=>T|null} wx @returns {asserts x is T} */
+	assert_is_omit_key(x,wx) {
+		function u1() {x; wx;}
+		u1;
+	}
 	/**
 	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x
-	 * @arg {T_MakeHandlers<T>} handlers
+	 * @param {T_MakeHandlers<T>} handlers
 	 * @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>}
 	 */
 	RS_Page_Type1(cf,x,handlers) {
@@ -1981,7 +1986,7 @@ class Support_EventInput extends BaseService {
 				default: {
 					let [d,e]=c;
 					if(!d.startsWith("@")) debugger;
-					if(this.str_is_search(e)) {
+					if(this.sm.str_is_search(e)) {
 						let [p,s]=split_string_once(e,"?");
 						if(p!=="search") debugger;
 						let {query,...y}=this.parse_url_search_params(s); this.g(y);
@@ -1997,16 +2002,16 @@ class Support_EventInput extends BaseService {
 				} break;
 				case "channel": {
 					let [,e]=c;
-					if(!this.str_starts_with(e,"UC")) {debugger; break;}
-					if(this.str_is_search(e)) {debugger; break;}
+					if(!this.sm.str_starts_with(e,"UC")) {debugger; break;}
+					if(this.sm.str_is_search(e)) {debugger; break;}
 					let p=split_string_once(e,"/"); this.sm.cq(p.length,1);
-					this.channelId(p[0]);
+					this.sm.channelId(p[0]);
 				} break;
 			}
 		};
 		/** @arg {(typeof x)["endpoint"]} x */
 		let h_ep=x => {
-			if(this.sm.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			if(this.sm.is_TE_VE(x,3611)) return this.sm.E_VE3611(x);
 			debugger;
 		};
 		/** @arg {(typeof x)["response"]} x */
@@ -2065,14 +2070,14 @@ class Support_EventInput extends BaseService {
 			expirationTime: h_et,
 		};
 		const {...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
-		if(this.is_not_empty_obj(y)) debugger;
+		if(this.sm.is_not_empty_obj(y)) debugger;
 	}
 	/** @private @arg {G_RS_Page_Playlist} x */
 	G_RS_Page_Playlist(x) {
 		const cf="R_PlaylistPage";
 		const {url,endpoint,page,response,...y}=this.sm.s(cf,x);
 		if(page!=="playlist") debugger;
-		this.E_VE5754(endpoint);
+		this.sm.E_VE5754(endpoint);
 		this.RS_Playlist(response);
 		this.sm.a_primitive_str(url);
 		if("rootVe" in y) {
@@ -2091,7 +2096,7 @@ class Support_EventInput extends BaseService {
 		if("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
 		const {page,endpoint,response,url,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="settings") debugger;
-		this.E_VE23462(endpoint);
+		this.sm.E_VE23462(endpoint);
 		this.RS_Settings(response);
 		this.sm.a_primitive_str(url);
 	}
@@ -2105,7 +2110,7 @@ class Support_EventInput extends BaseService {
 		this.RS_Reel(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.t(reelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(!this.sm.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		this.t(previousCsn,x => this.sm.D_VeCsn(x,true));
 		this.t(cachedReelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
@@ -2115,9 +2120,9 @@ class Support_EventInput extends BaseService {
 		const cf="RS_SearchPage";
 		const {page,endpoint,response,url,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="search") debugger;
-		this.E_Search(endpoint);
+		this.sm.E_Search(endpoint);
 		this.sm.ht.RS_Search(response);
-		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
+		if(!this.sm.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
 	/** @private @arg {D_GraftedVeItem} x */
@@ -2131,7 +2136,7 @@ class Support_EventInput extends BaseService {
 		const cf="Settings_VE23462";
 		const {page,endpoint,response,url,rootVe,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="settings") debugger;
-		this.E_VE23462(endpoint);
+		this.sm.E_VE23462(endpoint);
 		this.RS_Settings(response);
 		this.sm.a_primitive_str(url);
 		this.sm.rootVe(rootVe,23462);
@@ -2146,7 +2151,7 @@ class Support_EventInput extends BaseService {
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(!this.sm.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.sm.ht.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
@@ -2215,7 +2220,7 @@ class Support_EventInput extends BaseService {
 			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
 			const cf2=`${cf}_${"R_MusicQueue"}`;
 			const {content,trackingParams,...y}=this.sm.s(cf2,x); this.g(y);/*#destructure_done*/
-			this.sm.ht.R_MusicQueue(content);
+			this.sm.R_MusicQueue(content);
 			this.sm.trackingParams(trackingParams);
 			return;
 		}
@@ -2225,7 +2230,7 @@ class Support_EventInput extends BaseService {
 			const cf2=`${cf}_WithEndpoint`;
 			const {endpoint,title,trackingParams,...y}=this.sm.s(cf2,x); this.g(y);/*#destructure_done*/
 			y: {
-				if(this.sm.is_TE_VE(endpoint,3611)) {this.E_VE3611(endpoint); break y;}
+				if(this.sm.is_TE_VE(endpoint,3611)) {this.sm.E_VE3611(endpoint); break y;}
 				debugger;
 			}
 			this.sm.trackingParams(trackingParams);
@@ -2238,7 +2243,7 @@ class Support_EventInput extends BaseService {
 		const {selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.sm.s(cf,x); this.g(y);
 		if(selected!==true) debugger;
 		if(!content.sectionListRenderer) debugger;
-		this.R_SectionList(content);
+		this.xm.R_SectionList(content);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_Tab_Subscriptions} x */
@@ -2247,13 +2252,13 @@ class Support_EventInput extends BaseService {
 		const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.sm.s(cf,x); this.g(y);
 		this.D_Tab_Subscriptions_EP(endpoint);
 		this.sm.cq(selected,true);
-		this.R_SectionList(content);
+		this.xm.R_SectionList(content);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
 	D_Tab_Subscriptions_EP(x) {
 		const cf="D_Tab_Subscriptions_EP";
-		if(this.sm.is_TE_VE(x,96368)) return this.E_VE96368(x);
+		if(this.sm.is_TE_VE(x,96368)) return this.sm.E_VE96368(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 }
@@ -2280,7 +2285,7 @@ class Support_VE37414 extends BaseService {
 	DE_VE37414_ReelWatch(x) {
 		const cf="DE_VE37414_ReelWatch";
 		const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,inputType,sequenceParams,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(videoId,this.videoId);
+		this.t(videoId,x => this.sm.videoId(x));
 		this.sm.params("reel.player_params",playerParams);
 		this.t(thumbnail,this.sm.D_Thumbnail);
 		this.sm.xr.R_ReelPlayerOverlay(overlay);
@@ -2299,7 +2304,7 @@ class Support_VE37414 extends BaseService {
 		this.D_QoeLoggingContext(qoeLoggingContext);
 	}
 	/** @public @arg {E_VE37414_ReelWatch} x */
-	E_VE37414_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE37414_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
+	E_VE37414_ReelWatch(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_VE37414_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @private @arg {M_VE37414} x */
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
@@ -2312,7 +2317,7 @@ class Support_VE37414 extends BaseService {
 			let [p1,p2]=up; if(p1!=="") debugger;
 			let u2=split_string_once(p2,"/");
 			let [p3,p4]=u2; if(p3!=="shorts") debugger;
-			this.videoId(p4);
+			this.sm.videoId(p4);
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
 		this.sm.rootVe(rootVe,37414);
@@ -2326,17 +2331,32 @@ class Support_Renderer extends BaseService {
 	view_conversion_info=new Map;
 	//#endregion
 	//#region Endpoint methods
-	/** @public @arg {E_Url} x */
-	E_Url(x) {
-		const [a,b,{loggingUrls,...y}]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y);
-		this.M_Url(a); this.DE_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
+	/** @public @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
+	T_BaseUrl(x,f) {
+		const cf="T_BaseUrl";
+		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.sm.s(cf,x); this.g(y);
+		f.call(this,baseUrl);
+		this.t(elapsedMediaTimeSeconds,x => this.sm.a_primitive_num(x));
+	}
+	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
+	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
+	/** @private @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
+	DU_Url(x) {
+		this.sm.DU_UrlParse(this._convert_url_to_obj(x));
+		(x => {
+			if(x.host!=="www.youtube.com") debugger;
+			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
+			let pa1=this.split_str(x.search,"?");
+			let pa=this.split_str(pa1[1],"&"); pa;
+			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
+		})(this._convert_url_to_obj(x));
 	}
 	/** @public @arg {E_YpcGetCart} x */
-	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
+	E_YpcGetCart(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @public @arg {E_ApplicationSettings} x */
-	E_ApplicationSettings(x) {const [y]=this.sm.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.sm.B_Hack); this.g(y);}
+	E_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.sm.B_Hack); this.g(y);}
 	/** @private @arg {E_SubmitFeedback} x */
-	E_SubmitFeedback(x) {const [y]=this.sm.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.sm.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
+	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.sm.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
 	//#endregion
 	//#region Action methods
 	/** @private @arg {A_AddToGuideSection} x */
@@ -2666,7 +2686,7 @@ class Support_Renderer extends BaseService {
 	D_TimedTextApi(x) {
 		const cf="D_TimedTextApi";
 		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.sm.s(cf,x); this.g(y);
-		this.videoId(v);
+		this.sm.videoId(v);
 		caps&&this.save_string(`${cf}.caps`,caps);
 		this.save_string(`${cf}.xoaf`,xoaf);
 		xoadf&&this.save_string(`${cf}.xoadf`,xoadf);
@@ -2714,7 +2734,7 @@ class Support_Renderer extends BaseService {
 		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		if("presentationStyle" in x) {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-			this.E_VE3611(navigationEndpoint);
+			this.sm.E_VE3611(navigationEndpoint);
 			this.sm.D_Thumbnail(thumbnail);
 			this.D_LiveBroadcastingBadge(badges);
 			this.sm.trackingParams(trackingParams);
@@ -2730,7 +2750,7 @@ class Support_Renderer extends BaseService {
 		}
 		if("entryData" in x) {
 			const {navigationEndpoint,thumbnail,trackingParams,formattedTitle,accessibility,entryData,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-			this.E_VE3611(navigationEndpoint);
+			this.sm.E_VE3611(navigationEndpoint);
 			this.sm.D_Thumbnail(thumbnail);
 			this.sm.trackingParams(trackingParams);
 			this.sm.G_Text(formattedTitle);
@@ -2745,8 +2765,8 @@ class Support_Renderer extends BaseService {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		{
 			let x2=navigationEndpoint;
-			if(this.sm.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-			if(this.sm.is_TE_VE(x2,42352)) return this.E_VE42352(x2);
+			if(this.sm.is_TE_VE(x2,6827)) return this.sm.E_VE6827(x2);
+			if(this.sm.is_TE_VE(x2,42352)) return this.sm.E_VE42352(x2);
 			debugger;
 		}
 		if(icon.iconType!=="VIDEO_LIBRARY_WHITE") debugger;
@@ -2760,7 +2780,7 @@ class Support_Renderer extends BaseService {
 		if("entryData" in x) {
 			if("icon" in x) {
 				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);
-				this.E_VE5754(navigationEndpoint);
+				this.sm.E_VE5754(navigationEndpoint);
 				switch(icon.iconType) {
 					default: icon===""; this.sm.codegen_typedef(cf1,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
@@ -2833,9 +2853,9 @@ class Support_Renderer extends BaseService {
 			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			if(this.sm.is_TE_VE(navigationEndpoint,3854)) {
-				this.E_VE3854(navigationEndpoint);
+				this.sm.E_VE3854(navigationEndpoint);
 			} else if(this.sm.is_TE_VE(navigationEndpoint,96368)) {
-				this.E_VE96368(navigationEndpoint);
+				this.sm.E_VE96368(navigationEndpoint);
 			} else {
 				debugger;
 			}
@@ -2851,11 +2871,11 @@ class Support_Renderer extends BaseService {
 		x: {
 			let x2=navigationEndpoint;
 			if("browseEndpoint" in x2) {
-				if(this.sm.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
-				if(this.sm.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
-				if(this.sm.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-				if(this.sm.is_TE_VE(x2,11487)) return this.E_VE11487(x2);
-				if(this.sm.is_TE_VE(x2,23462)) return this.E_VE23462(x2);
+				if(this.sm.is_TE_VE(x2,3611)) return this.sm.E_VE3611(x2);
+				if(this.sm.is_TE_VE(x2,5754)) return this.sm.E_VE5754(x2);
+				if(this.sm.is_TE_VE(x2,6827)) return this.sm.E_VE6827(x2);
+				if(this.sm.is_TE_VE(x2,11487)) return this.sm.E_VE11487(x2);
+				if(this.sm.is_TE_VE(x2,23462)) return this.sm.E_VE23462(x2);
 				x2; debugger;
 				break x;
 			}
@@ -2871,8 +2891,8 @@ class Support_Renderer extends BaseService {
 			let x2=navigationEndpoint;
 			if("urlEndpoint" in x2) return this.sm.xr.E_Url(x2);
 			if("browseEndpoint" in x2) {
-				if(this.sm.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
-				if(this.sm.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
+				if(this.sm.is_TE_VE(x2,6827)) return this.sm.E_VE6827(x2);
+				if(this.sm.is_TE_VE(x2,5754)) return this.sm.E_VE5754(x2);
 				x2; debugger;
 				return;
 			};
@@ -3070,7 +3090,7 @@ class Support_Renderer extends BaseService {
 		this.sm.a_primitive_str(keywords);
 		if(ownerUrls.length!==1) debugger;
 		let ur=this._convert_url_to_obj(ownerUrls[0]);
-		this.sm.cq(this.str_starts_with_rx("/@",ur.pathname),true);
+		this.sm.cq(this.sm.str_starts_with_rx("/@",ur.pathname),true);
 		this.sm.a_primitive_str(channelUrl);
 		this.sm.a_primitive_str(vanityChannelUrl);
 		const {channelConversionUrl,...y}=u; this.g(y);/*#destructure_done*/
@@ -3186,7 +3206,7 @@ class Support_Renderer extends BaseService {
 		this.D_EditableDetails(editableDetails);
 		this.t(editorEndpoint,this.E_PlaylistEditor);
 		this.sm.a_primitive_bool(isEditable);
-		this.E_VE3611(ownerEndpoint);
+		this.sm.E_VE3611(ownerEndpoint);
 		this.z(serviceEndpoints,x => {
 			if("playlistEditEndpoint" in x) return this.sm.E_PlaylistEdit(x);
 			if("deletePlaylistEndpoint" in x) return this.E_PlaylistDelete(x);
@@ -3303,7 +3323,7 @@ class Support_Renderer extends BaseService {
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.sm.s(cf,x);
 		this.channelId(channelId);
 		this.sm.a_primitive_str(title);
-		this.E_VE3611(navigationEndpoint);
+		this.sm.E_VE3611(navigationEndpoint);
 		this.sm.D_Thumbnail(avatar);
 		this.sm.D_Thumbnail(banner);
 		this.tz(badges,this.RMD_Badge);
@@ -3852,7 +3872,7 @@ class Support_Renderer extends BaseService {
 		if(x.categoryType==="CATEGORY_TYPE_GLOBAL") {
 			const cf="D_EmojiPickerCategory:Global";
 			const {categoryId,title,emojiIds,trackingParams,categoryType,...y}=this.sm.s(cf,x); this.g(y);
-			if(!this.str_starts_with(categoryId,"UC")) debugger;
+			if(!this.sm.str_starts_with(categoryId,"UC")) debugger;
 			this.sm.G_Text(title);
 			this.z(emojiIds,x => {
 				let [channel_id,parsed_emoji]=this.parse_emoji_id(x);
@@ -3878,7 +3898,7 @@ class Support_Renderer extends BaseService {
 		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
 	}
 	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: T_IdTemplate<"UC",D_UserIdStr>}} */
-	is_D_EmojiPickerCategoryButton_ForChannel(x) {return this.str_starts_with(x.categoryId,"UC");}
+	is_D_EmojiPickerCategoryButton_ForChannel(x) {return this.sm.str_starts_with(x.categoryId,"UC");}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
 	R_EmojiPickerCategoryButton(x) {this.H_("emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
 	/** @private @arg {D_EmojiPickerCategoryButton} x */
@@ -3942,7 +3962,7 @@ class Support_Renderer extends BaseService {
 		const {icon,color,authorText,authorEndpoint,iconTooltip,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 	}
 	/** @public @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {this.sm.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
+	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
 	/** @private @arg {M_PerformCommentAction} x */
 	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
 	/** @private @arg {DE_PerformCommentAction} x */
@@ -3965,7 +3985,7 @@ class Support_Renderer extends BaseService {
 		}
 	}
 	/** @public @arg {E_CreateCommentReplyDialog} x */
-	E_CreateCommentReplyDialog(x) {this.sm.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
+	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
 	/** @private @arg {M_CreateCommentReplyDialog} x */
 	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
 	/** @private @arg {GM_CreateCommentReply} x */
@@ -4006,7 +4026,7 @@ class Support_Renderer extends BaseService {
 		this.sm.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
 	}
 	/** @public @arg {E_CreateCommentReply} x */
-	E_CreateCommentReply(x) {this.sm.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
+	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
 	/** @private @arg {M_CreateCommentReply} x */
 	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
 	/** @private @arg {DE_CreateCommentReply} x */
@@ -4074,7 +4094,7 @@ class Support_Renderer extends BaseService {
 		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(reelTitleText);
 		this.sm.G_Text(timestampText);
-		this.E_VE3611(channelNavigationEndpoint);
+		this.sm.E_VE3611(channelNavigationEndpoint);
 		this.sm.G_Text(channelTitleText);
 		this.sm.D_Thumbnail(channelThumbnail);
 		this.sm.trackingParams(trackingParams);
@@ -4102,7 +4122,7 @@ class Support_Renderer extends BaseService {
 		this.t(thumbnail,this.sm.D_Thumbnail);
 		this.t(onClickCommand,x => {
 			if("addToToastAction" in x) return this.A_AddToToast(x);
-			if(this.sm.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			if(this.sm.is_TE_VE(x,3611)) return this.sm.E_VE3611(x);
 			x;
 		});
 		if(trackingParams) this.sm.trackingParams(trackingParams);
@@ -4413,7 +4433,7 @@ class ForService_XMethods extends BaseService {
 		const cf="D_Button_NavEP";
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("browseEndpoint" in x) {
-			if(this.sm.is_TE_VE(x,23462)) return this.E_VE23462(x);
+			if(this.sm.is_TE_VE(x,23462)) return this.sm.E_VE23462(x);
 		}
 		if("watchEndpoint" in x) return this.sm.E_Watch(x);
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
@@ -4506,7 +4526,7 @@ class ForService_XMethods extends BaseService {
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		this.sm.G_Text(title);
 		this.sm.trackingParams(trackingParams);
-		this.videoId(videoId);
+		this.sm.videoId(videoId);
 		this.sm.a_primitive_str(playlistSetVideoId);
 		this.D_DarkColorPalette(cf,darkColorPalette);
 		this.D_LightColorPalette(cf,lightColorPalette);
@@ -4569,7 +4589,7 @@ class ForService_XMethods extends BaseService {
 		group_arr.push([k,[x]]);
 	}
 	/** @private @arg {E_Unsubscribe} x */
-	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
+	E_Unsubscribe(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
 	/** @private @arg {DE_Unsubscribe} x */
 	DE_Unsubscribe(x) {
 		const cf="DE_Unsubscribe";
@@ -4578,9 +4598,9 @@ class ForService_XMethods extends BaseService {
 		this.params("unsubscribe.params",params);
 	}
 	/** @private @arg {E_CreateComment} x */
-	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
+	E_CreateComment(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
 	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
+	E_Subscribe(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {DE_Subscribe} x */
 	DE_Subscribe(x) {
 		const cf="DE_Subscribe";
@@ -4671,7 +4691,7 @@ class ForService_XMethods extends BaseService {
 	/** @private @arg {DE_CreateComment} x */
 	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","create_comment.params","createCommentParams",x);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.sm.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
 	/** @private @arg {DE_YpcGetOffers} x */
 	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
 	/** @private @arg {T_Icon<"MIX">} x */
@@ -4764,7 +4784,7 @@ class ForService_XMethods extends BaseService {
 		if(bp[0]===2) {
 			let [,sa,,last_part]=bp;
 			console.log("target_id.last_part",last_part);
-			if(this.str_starts_with_rx(sa,"UC")) {
+			if(this.sm.str_starts_with_rx(sa,"UC")) {
 				let floc=sa.indexOf("featured");
 				if(floc<0) {debugger; return;}
 				let s1=sa.slice(0,floc);
@@ -4849,14 +4869,14 @@ class ForService_XMethods extends BaseService {
 		const cf="D_ExpandableTab";
 		if(x.selected) {
 			const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.E_VE3611(endpoint);
+			this.sm.E_VE3611(endpoint);
 			this.a_primitive_str(title);
 			this.a_primitive_bool(selected);
 			this.t(expandedText,this.a_primitive_str);
 			return this.t(content,this.R_SectionList);
 		}
 		const {endpoint,title,selected,...y}=this.s(cf,x);/*#destructure_later*/
-		this.E_VE3611(endpoint);
+		this.sm.E_VE3611(endpoint);
 		this.a_primitive_str(title);
 		this.a_primitive_bool(selected);
 		if("expandedText" in y) {
@@ -5024,6 +5044,49 @@ class ForService_XMethods extends BaseService {
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
 		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {R_BrowseFeedActions} x */
+	R_BrowseFeedActions(x) {this.H_("browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
+	/** @private @arg {D_BrowseFeedActions} x */
+	D_BrowseFeedActions(x) {this.H_("contents",x,x => this.z(x,this.G_BrowseFeedContent));}
+	/** @private @arg {G_BrowseFeedContent} x */
+	G_BrowseFeedContent(x) {
+		const cf="G_BrowseFeedContent";
+		if("searchBoxRenderer" in x) return this.sm.R_SearchBox(x);
+		if("subFeedSelectorRenderer" in x) return this.sm.R_SubFeedSelector(x);
+		if("buttonRenderer" in x) return this.xm.R_Button(x);
+		if("compactLinkRenderer" in x) return this.sm.R_CompactLink(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {R_ProfileColumn} x */
+	R_ProfileColumn(x) {this.H_("profileColumnRenderer",x,this.D_ProfileColumn);}
+	/** @private @arg {D_ProfileColumn} x */
+	D_ProfileColumn(x) {this.z(this.sm.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
+	/** @private @arg {G_ProfileColumnItem} x */
+	G_ProfileColumnItem(x) {
+		const cf="G_ProfileColumnItem";
+		if("profileColumnStatsRenderer" in x) return this.sm.R_ProfileColumnStats(x);
+		if("profileColumnUserInfoRenderer" in x) return this.sm.R_ProfileColumnUserInfo(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {E_Upload} x */
+	E_VE83769_Upload(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_Url(a); this.B_Hack(b);}
+	/** @public @arg {E_SignalNavigation} x */
+	E_SignalNavigation(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_Url(a); this.DE_SignalNavigation(b);}
+	/** @public @arg {E_Url} x */
+	E_Url(x) {
+		const [a,b,{loggingUrls,...y}]=this.sm.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y);
+		this.M_Url(a); this.DE_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
+	}
+	/** @public @arg {M_Url} x */
+	M_Url(x) {this.T_WCM("M_Url",x,this.GM_Url);}
+	/** @private @arg {GM_Url} x */
+	GM_Url(x) {
+		const cf="GM_Url";
+		const {url,webPageType,rootVe,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.GU_Url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
+		this.sm.rootVe(rootVe,83769);
 	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});
