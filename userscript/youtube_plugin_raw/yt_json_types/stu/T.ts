@@ -116,7 +116,7 @@ type T_WCM_={
 // path,map_entry_values,map_entry_key_path,map_keys,root
 type T_ParseCallbackFunction<T extends CF_L_Params>=(
 	root: T,
-	path: P_ParamParse,
+	path: CF_P_ParamParse,
 	map_entry_values: V_ParamMapValue[],
 	map_entry_key_path: number[],
 	map_keys: number[],

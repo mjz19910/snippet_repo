@@ -2430,7 +2430,7 @@ class Support_Renderer extends BaseService {
 		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
 	}
 	// CommandData Data methods
-	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
+	/** @private @arg {"DC_PlayerSeek"} cf @arg {CF_P_ParamParse} path @arg {DC_Generic} x */
 	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.sm.params(path,x));}
 	/** @private @arg {DC_PlayerSeek} x */
 	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}

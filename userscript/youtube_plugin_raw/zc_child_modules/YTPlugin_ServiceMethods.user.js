@@ -1748,7 +1748,7 @@ class ServiceMethods extends ServiceData {
 		this.save_rgba(`${cf2}.s3_c`,s3_c);
 		this.save_rgba(`${cf2}.s4_c`,s4_c);
 	}
-	/** @public @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
+	/** @public @arg {CF_P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
 	D_Params(cf,path,x) {const {params: p,...y}=this.s(cf,x); this.g(y); this.params(path,x.params);}
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
@@ -1866,18 +1866,18 @@ class ServiceMethods extends ServiceData {
 	add_log_entry(path,cf2,key_index,entry) {
 		this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
 	}
-	/** @public @arg {P_ParamParse} cf @arg {string} x */
+	/** @public @arg {CF_P_ParamParse} cf @arg {string} x */
 	params(cf,x) {
 		this.x.get("handle_types").decode_binary_obj(cf,x);
 	}
-	/** @api @public @arg {P_ParamParse} cf @arg {string} x */
+	/** @api @public @arg {CF_P_ParamParse} cf @arg {string} x */
 	playerParams(cf,x) {
 		this.x.get("handle_types").decode_binary_obj(cf,x);
 	}
 	/**
 	 * @api @public
 	 * @template {CF_L_Params} T
-	 * @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback
+	 * @arg {T} root @arg {CF_P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback
 	 * @arg {boolean} is_debug_enabled
 	 * */
 	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback,is_debug_enabled) {
@@ -2330,7 +2330,7 @@ class ServiceMethods extends ServiceData {
 		this.save_ve_element(x);
 		this.cq(x,expected_x);
 	}
-	/** @public @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	/** @public @arg {CF_TD_Params} cf @arg {CF_P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
 	/** @public @arg {CF_T_Icon_Any} cf @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf,x,ty_arr) {
@@ -3917,7 +3917,7 @@ class ServiceMethods extends ServiceData {
 		this.t(ghostCards,this.R_GhostGrid);
 		this.t(button,this.xm.R_Button);
 	}
-	/** @public @arg {P_ParamParse} path @arg {DC_Generic_CTP} x */
+	/** @public @arg {CF_P_ParamParse} path @arg {DC_Generic_CTP} x */
 	DC_Generic_CTP(path,x) {
 		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
 		this.params(path,continuation);

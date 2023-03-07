@@ -1,4 +1,4 @@
-type ARG_on_player_params_callback_ty_len1<T extends CF_L_Params,U extends P_ParamParse>=[
+type ARG_on_player_params_callback_ty_len1<T extends CF_L_Params,U extends CF_P_ParamParse>=[
 	root: T,
 	path: U,
 	map_entry_key:

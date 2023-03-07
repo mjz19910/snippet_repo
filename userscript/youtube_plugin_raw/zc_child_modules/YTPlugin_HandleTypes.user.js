@@ -282,7 +282,7 @@ class HandleTypes extends BaseService {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(nts).toString(2)}]`);
 		}
 	}
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
+	/** @private @arg {CF_P_ParamParse} cf @arg {V_ParamObj} x */
 	decode_binary_object_log_info(cf,x) {
 		this._continuation_logged_str.push(cf);
 		const n_cf=`P_${cf.replaceAll(".","_")}`;
@@ -1236,7 +1236,7 @@ class HandleTypes extends BaseService {
 			}
 		})(x);
 	}
-	/** @public @arg {P_ParamParse} cf @arg {string} x */
+	/** @public @arg {CF_P_ParamParse} cf @arg {string} x */
 	decode_binary_obj(cf,x) {
 		let binary_arr=this.read_b64_protobuf(decodeURIComponent(x));
 		if(!binary_arr) {debugger; return;}
@@ -1590,7 +1590,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {string[]} */
 	_continuation_logged_str=[];
-	/** @private @arg {P_ParamParse} cf @arg {D_ProtobufObj[]} x */
+	/** @private @arg {CF_P_ParamParse} cf @arg {D_ProtobufObj[]} x */
 	decode_binary_arr(cf,x) {
 		if(x.length===0) debugger;
 		let bin_obj=this.tr_arr_to_obj(x);
@@ -2927,7 +2927,7 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	//#region binary_result()
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
+	/** @private @arg {CF_P_ParamParse} cf @arg {V_ParamObj} x */
 	binary_result(cf,x) {
 		switch(cf) {
 			case "_level_2_0._level_2_1":
