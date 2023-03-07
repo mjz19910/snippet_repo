@@ -30,7 +30,7 @@ if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
 	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
-		this.methods=new ServiceMethods(x);
+		this.service_methods=new ServiceMethods(x);
 		this.codegen=new CodegenService(x);
 		this.csi_service=new CsiService(x);
 		this.e_catcher_service=new ECatcherService(x);

@@ -30,18 +30,6 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 //#region HandleTypes
 class HandleTypes extends BaseService {
-	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
-	//#region Service Cache
-	get x_Renderer() {return this.x.get("x_Renderer");}
-	/** @type {this["x_Renderer"]|null} */
-	_xr=null;
-	get xr() {
-		if(this._xr) return this._xr;
-		this._xr=this.x_Renderer;
-		return this._xr;
-	}
-	//#endregion
 	//#region  Service Methods import
 	/** @template T @arg {any} x @arg {()=>T} _ty @returns {asserts x is T} */
 	assert_assume_is_type(x,_ty) {x;}
@@ -1079,7 +1067,6 @@ class HandleTypes extends BaseService {
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 	}
-	get xm() {return this.x.get("x_methods");}
 	/** @public @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
@@ -1783,7 +1770,7 @@ class HandleTypes extends BaseService {
 	RS_Channel(x) {
 		const cf="RS_Channel";
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.R_TwoColumnBrowseResults(contents);
+		this.xm.R_TwoColumnBrowseResults(contents);
 		this.xr.R_C4TabbedHeader(header);
 		this.xr.R_Channel_MD(metadata);
 		this.sm.R_DesktopTopbar(topbar);
@@ -3203,7 +3190,7 @@ class HandleTypes extends BaseService {
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.x.services.methods.G_Text(sectionTitle);
+		this.x.services.service_methods.G_Text(sectionTitle);
 		this.z(carouselLockups,x => this.sm.R_CarouselLockup(x));
 		this.sm.R_TopicLink(topicLink);
 		this.sm.G_Text(premiumUpsellLink);

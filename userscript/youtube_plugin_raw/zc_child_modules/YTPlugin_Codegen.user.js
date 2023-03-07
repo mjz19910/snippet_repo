@@ -641,7 +641,7 @@ class CodegenService extends ServiceWithAccessors {
 			if(xt.popup&&xt.popupType) {
 				/** @type {Popup_DL_ConfirmDialog} */
 				let xr={popup: xt.popup,popupType: xt.popupType};
-				return this.sm.x.get("gen_code").D_TypedefGenerator_Popup(xr);
+				return this.x.get("gen_code").D_TypedefGenerator_Popup(xr);
 			}
 		}
 		if(this.eq_keys(keys,["1","2","3"])) return x;

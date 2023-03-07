@@ -2111,11 +2111,51 @@ class ServiceWithResolver extends ApiBase {
 	/** @arg {(x:DefaultServiceResolver_2)=>void} cb */
 	addOnServicesListener(cb) {this.#x.listeners.push(cb);}
 }
+class PrivateAccessorCache extends ServiceWithResolver {
+	get x_Renderer() {return this.x.get("x_Renderer");}
+	get handle_types() {return this.x.get("handle_types");}
+	get indexed_db() {return this.x.get("indexed_db");}
+	get parser() {return this.x.get("parser_service");}
+	get codegen() {return this.x.get("codegen");}
+	get service_methods(/**/) {return this.x.get("service_methods");}
+	get x_methods() {return this.x.get("x_methods");}
+	get save_db() {return this.x.get("save_db");}
+}
 class ServiceWithAccessors extends ServiceWithResolver {
 	get parser() {return this.x.get("parser_service");}
 	get cg() {return this.x.get("codegen");}
-	get sm(/**/) {return this.x.get("methods");}
+	get sm(/**/) {return this.x.get("service_methods");}
+	get xm() {return this.x.get("x_methods");}
 	get save_db() {return this.x.get("save_db");}
+	//#region Service Cache
+	/** @private */
+	get z_xr() {return this.x.get("x_Renderer");}
+	/** @private */
+	get z_ht() {return this.x.get("handle_types");}
+	/** @private */
+	get z_ix() {return this.x.get("indexed_db");}
+	/** @type {PrivateAccessorCache["x_Renderer"]|null} */
+	_xr=null;
+	get xr() {
+		if(this._xr) return this._xr;
+		this._xr=this.z_xr;
+		return this._xr;
+	}
+	/** @type {PrivateAccessorCache["handle_types"]|null} */
+	_ht=null;
+	get ht() {
+		if(this._ht) return this._ht;
+		this._ht=this.z_ht;
+		return this._ht;
+	}
+	/** @type {PrivateAccessorCache["indexed_db"]|null} */
+	_ix=null;
+	get ix() {
+		if(this._ix) return this._ix;
+		this._ix=this.z_ix;
+		return this._ix;
+	}
+	//#endregion
 }
 class TextDecoderExt {
 	decoder=new TextDecoder("utf-8",{fatal: false});
@@ -2129,14 +2169,16 @@ class TextDecoderExt {
 	}
 }
 class ServiceWithMembers extends ServiceWithAccessors {
-	/** @protected */
+	/** @public */
 	_decoder=new TextDecoderExt;
 	/** @protected @type {string[]} */
 	logged_keys=[];
 }
 class BaseService extends ServiceWithMembers {
+	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
 	//#region string replace
-	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
+	/** @public @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
 		if(s===void 0) debugger;
 		let i=0;
@@ -2182,7 +2224,7 @@ class BaseService extends ServiceWithMembers {
 	/** @protected @arg {string} k @arg {Uint8Array} x */
 	save_number_bin(k,x) {
 		return this.save_db.save_to_data_store("number",this.tag_num_like(k,x));
-	//	return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(k,x));
+		//	return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(k,x));
 	}
 	/** @protected @arg {D_GM_VeNum} x */
 	save_ve_element(x) {
@@ -2250,13 +2292,13 @@ class BaseService extends ServiceWithMembers {
 	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"string">} */
 	make_prim_v(z) {return {a: "primitive",e: "string",z: [z]};}
 	//#endregion
-	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
+	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {
 		if(!x) {debugger;}
 		let r=x.split(s);
 		return as(r);
 	}
-	/** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
+	/** @public @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
 		let r=x.join(s);
@@ -2285,7 +2327,7 @@ class BaseService extends ServiceWithMembers {
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
-	/** @protected @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is (T extends `${infer B}${infer R}`?`${B}${Some<R>}${string}${U}`:`${string}${U}`)} */
+	/** @public @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is (T extends `${infer B}${infer R}`?`${B}${Some<R>}${string}${U}`:`${string}${U}`)} */
 	str_ends_with(str,ends_str) {return str.endsWith(ends_str);}
 	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_rx(needle,str) {return str.startsWith(needle);}
@@ -2485,8 +2527,7 @@ class YtHandlers extends BaseService {
 		let parsed_url=convert_to_url(request).url;
 		/** @private @type {D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
-		let ht=this.x.get("methods");
-		let url_type=ht.decode_url(api_url);
+		let url_type=this.sm.decode_url(api_url);
 		const res_parse=this._convert_url_to_obj(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
@@ -2501,7 +2542,7 @@ class YtHandlers extends BaseService {
 		}
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
-		let res=ht.decode_input(url_type,data);
+		let res=this.sm.decode_input(url_type,data);
 		if(res) {this.x.get("x_GenericApi").G_ResponseTypes(response,res);} else {console.log("failed to decode_input");}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
@@ -2827,7 +2868,7 @@ class GFeedbackService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.x.get("methods").browseId(param.value); break;
+				case "browse_id": this.sm.browseId(param.value); break;
 				case "context": this.on_context_param(this.data,param.value); break;
 				case "e": this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
@@ -2906,7 +2947,7 @@ class TrackingServices extends BaseService {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.x.get("methods").browseId(param.value); break;
+				case "browse_id": this.sm.browseId(param.value); break;
 				default: console.log("[new_param_key]",param); debugger;
 			}
 		}

@@ -20,30 +20,6 @@ function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;
 	ks=this.k;
-	get handle_types() {return this.x.get("handle_types");}
-	/** @type {this["handle_types"]|null} */
-	_ht=null;
-	get ht() {
-		if(this._ht) return this._ht;
-		this._ht=this.handle_types;
-		return this._ht;
-	}
-	get x_Renderer() {return this.x.get("x_Renderer");}
-	/** @type {this["x_Renderer"]|null} */
-	_xr=null;
-	get xr() {
-		if(this._xr) return this._xr;
-		this._xr=this.x_Renderer;
-		return this._xr;
-	}
-	get indexed_db() {return this.x.get("indexed_db");}
-	/** @type {this["indexed_db"]|null} */
-	_ix=null;
-	get ix() {
-		if(this._ix) return this._ix;
-		this._ix=this.indexed_db;
-		return this._ix;
-	}
 	/** @public @returns {true} */
 	true_() {return true;}
 	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
@@ -235,7 +211,6 @@ class ServiceMethods extends ServiceData {
 			}
 		});
 	}
-	get xm() {return this.x.get("x_methods");}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
 		const cf="DE_ShareEntityService";
@@ -2097,15 +2072,15 @@ class ServiceMethods extends ServiceData {
 	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
 	/** @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
-	indexed_db_put(key,value) {return this.indexed_db.put(key,value,this.indexed_db_version);}
+	indexed_db_put(key,value) {return this.ix.put(key,value,this.indexed_db_version);}
 	/** @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id(...args) {
-		let {...ret}=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
+		let {...ret}=await this.ix.put_boxed_id_async_3(this.indexed_db_version,...args);
 		return ret;
 	}
 	/** @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<T_PutAwaitPromise<Extract<Y_PutBoxedRet,{args:T}>>>} */
 	async put_boxed_id_3(...args) {
-		let ret=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
+		let ret=await this.ix.put_boxed_id_async_3(this.indexed_db_version,...args);
 		return as_any(ret);
 	}
 	/** @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
@@ -5860,15 +5835,6 @@ class ServiceMethods extends ServiceData {
 	RA_ReelDismissal(x) {this.H_s("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_s("notificationMultiActionRenderer",x,this.g);}
-	/** @public @arg {R_TwoColumnBrowseResults} x */
-	R_TwoColumnBrowseResults(x) {this.H_s("twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
-	/** @private @arg {D_TwoColumnBrowseResults} x */
-	D_TwoColumnBrowseResults(x) {
-		const cf="D_TwoColumnBrowseResults";
-		const {tabs,secondaryContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,this.sm.RG_Result);
-		this.t(secondaryContents,this.G_SecondaryContents);
-	}
 	/** @public @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_s("richGridRenderer",x,this.D_RichGrid);}
 	/** @private @arg {D_RichGrid} x */
@@ -5892,7 +5858,7 @@ class ServiceMethods extends ServiceData {
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
 		return y;
 	}
-	/** @private @arg {R_BrowseFeedActions} x */
+	/** @public @arg {R_BrowseFeedActions} x */
 	R_BrowseFeedActions(x) {this.H_s("browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
 	/** @private @arg {D_BrowseFeedActions} x */
 	D_BrowseFeedActions(x) {this.H_s("contents",x,x => this.z(x,this.G_BrowseFeedContent));}
@@ -5933,14 +5899,7 @@ class ServiceMethods extends ServiceData {
 		this.D_SubFeedOption_NavEP(navigationEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {G_SecondaryContents} x */
-	G_SecondaryContents(x) {
-		const cf="G_SecondaryContents";
-		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
-		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {R_ProfileColumn} x */
+	/** @public @arg {R_ProfileColumn} x */
 	R_ProfileColumn(x) {this.H_s("profileColumnRenderer",x,this.D_ProfileColumn);}
 	/** @private @arg {D_ProfileColumn} x */
 	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}

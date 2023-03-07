@@ -585,8 +585,6 @@ class LocalStorageSeenDatabase extends BaseService {
 export_(exports => {exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;});
 //#endregion
 class Support_RS_Player extends BaseService {
-	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
 	//#region dup
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {
@@ -1333,9 +1331,7 @@ class Support_RS_Page_Browse extends BaseService {
 }
 export_(exports => {exports.Support_RS_Page_Browse=Support_RS_Page_Browse;});
 class Support_RS_Browse extends BaseService {
-	get s() {return this.x.get("methods");}
-	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_(k,x,f) {this.s.H_cls(this,k,x,f);}
+	get s() {return this.x.get("service_methods");}
 	/** @public @arg {RS_Browse} x */
 	RS_Browse(x) {
 		const cf="RS_Browse";
@@ -1514,7 +1510,7 @@ class Support_GenericApi extends BaseService {
 		if(status!=="STATUS_SUCCEEDED") debugger;
 		let [r]=this.z(actions,x => {
 			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
-			if("openPopupAction" in x) return this.sm.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		});
 		this.z(r,a => a);
 		this.z(playlistEditResults,this.g);
@@ -1537,7 +1533,7 @@ class Support_GenericApi extends BaseService {
 		this.sm.RC_ResponseContext(responseContext);
 		let [u1]=this.z(actions,x => {
 			if(!x.openPopupAction) debugger;
-			let a=this.sm.TA_OpenPopup(cf,x);
+			let a=this.xm.TA_OpenPopup(cf,x);
 			return this.T_OpenPopup_Toast(a);
 		});
 		this.z(u1,this.sm.RA_Notification);
@@ -1564,7 +1560,7 @@ class Support_GenericApi extends BaseService {
 	/** @private @arg {A_NotificationMenuPopup} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action";
-		if("openPopupAction" in x) return this.sm.TA_OpenPopup("RSG_NotificationMenu_Action",x);
+		if("openPopupAction" in x) return this.xm.TA_OpenPopup("RSG_NotificationMenu_Action",x);
 		x===""; this.sm.codegen_typedef(cf,x);
 		return null;
 	}
@@ -1630,7 +1626,7 @@ class Support_GenericApi extends BaseService {
 	D_PlaylistAddToOption(x) {
 		const cf="D_PlaylistAddToOption";
 		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.playlistId(playlistId);
+		this.sm.playlistId(playlistId);
 		this.sm.G_Text(title);
 		switch(privacy) {
 			default: debugger; break;
@@ -1640,8 +1636,8 @@ class Support_GenericApi extends BaseService {
 		}
 		this.sm.cq(containsSelectedVideos,"NONE");
 		this.sm.cq(privacyIcon.iconType,"PRIVACY_PRIVATE");
-		this.E_PlaylistEdit(addToPlaylistServiceEndpoint);
-		this.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
+		this.sm.E_PlaylistEdit(addToPlaylistServiceEndpoint);
+		this.sm.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -1682,13 +1678,13 @@ class Support_GenericApi extends BaseService {
 		this.sm.G_Text(description);
 		if(int32Value!==1) debugger;
 		if(isSelected!==false) debugger;
-		this.D_Label(accessibility);
+		this.sm.D_Label(accessibility);
 	}
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
 	GR_MP_MenuNotificationSection_Item(x) {
 		const cf="R_MP_MenuNotificationSection_Item";
 		if("notificationRenderer" in x) return this.R_Notification(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_Notification} x */
@@ -1702,8 +1698,8 @@ class Support_GenericApi extends BaseService {
 		this.z([shortMessage,sentTimeText],this.sm.G_Text);
 		if(navigationEndpoint.watchEndpoint) {this.sm.E_Watch(navigationEndpoint);} else {debugger;}
 		this._primitive_of(read,"boolean");
-		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
-		this.R_Menu(contextualMenu);
+		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.sm.E_RecordNotificationInteractions(recordClickEndpoint);}
+		this.sm.R_Menu(contextualMenu);
 		this.sm.parse_number_template(notificationId);
 	}
 }
@@ -2170,7 +2166,7 @@ class Support_EventInput extends BaseService {
 	RS_Playlist(x) {
 		const cf="RS_Playlist";
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.R_TwoColumnBrowseResults(contents);
+		this.xm.R_TwoColumnBrowseResults(contents);
 		this.sm.xr.R_PlaylistHeader(header);
 		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
 		this.sm.xr.R_Playlist_MD(metadata);
@@ -2183,7 +2179,7 @@ class Support_EventInput extends BaseService {
 	RS_Settings(x) {
 		const cf="RS_Settings";
 		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.R_TwoColumnBrowseResults(contents);
+		this.xm.R_TwoColumnBrowseResults(contents);
 		this.sm.R_DesktopTopbar(topbar);
 		this.sm.trackingParams(trackingParams);
 		this.tz(onResponseReceivedEndpoints,(this.g));
@@ -3192,7 +3188,7 @@ class Support_Renderer extends BaseService {
 		this.sm.a_primitive_bool(isEditable);
 		this.E_VE3611(ownerEndpoint);
 		this.z(serviceEndpoints,x => {
-			if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
+			if("playlistEditEndpoint" in x) return this.sm.E_PlaylistEdit(x);
 			if("deletePlaylistEndpoint" in x) return this.E_PlaylistDelete(x);
 			this.sm.codegen_typedef("EF_PlaylistHeader",x,false);
 		});
@@ -3217,7 +3213,7 @@ class Support_Renderer extends BaseService {
 	}
 	/** @public @arg {A_FancyDismissibleDialog} x */
 	A_FancyDismissibleDialog(x) {
-		let dl=this.sm.TA_OpenPopup("A_FancyDismissibleDialog",x);
+		let dl=this.xm.TA_OpenPopup("A_FancyDismissibleDialog",x);
 		let pu=this.Popup_DL_DismissibleDialog(dl);
 		this.R_FancyDismissibleDialog(pu);
 	}
@@ -3252,7 +3248,7 @@ class Support_Renderer extends BaseService {
 		this.t(value,x => this.sm.a_primitive_str(x));
 		this.save_number(`${cf}.maxCharacterLimit`,maxCharacterLimit);
 		this.t(key,x => this.save_string(`${cf}.key`,x));
-		this.t(onChange,this.E_PlaylistEdit);
+		this.t(onChange,this.sm.E_PlaylistEdit);
 		this.t(placeholderText,x => this.sm.a_primitive_str(x));
 		this.sm.cq(validValueRegexp,"[^<>]*");
 		this.sm.G_Text(invalidValueErrorMessage);
@@ -3269,7 +3265,7 @@ class Support_Renderer extends BaseService {
 		this.sm.cq(key,"playlistEditEndpoint.actions.0.playlistPrivacy");
 		let kp=split_string(key,".");
 		this.sm.cq(kp[0],"playlistEditEndpoint");
-		this.E_PlaylistEdit(onChange);
+		this.sm.E_PlaylistEdit(onChange);
 	}
 	/** @public @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
@@ -3297,7 +3293,7 @@ class Support_Renderer extends BaseService {
 			case 0: case 1: case 2:
 		}
 		this.sm.a_primitive_bool(isSelected);
-		this.D_Label(accessibility);
+		this.sm.D_Label(accessibility);
 	}
 	/** @public @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
@@ -3439,7 +3435,7 @@ class Support_Renderer extends BaseService {
 	/** @public @arg {A_GetSystemMenu} x */
 	A_GetSystemMenu(x) {
 		const cf="A_GetSystemMenu";
-		let pu=this.sm.TA_OpenPopup(cf,x);
+		let pu=this.xm.TA_OpenPopup(cf,x);
 		this.Popup_DD_SystemMenu(pu);
 	}
 	/** @private @arg {Popup_DD_SystemMenu} x */
@@ -3544,7 +3540,7 @@ class Support_Renderer extends BaseService {
 	/** @public @arg {G_WatchNext} x */
 	G_WatchNext(x) {
 		const cf="G_WatchNext";
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
 		x===""; this.sm.codegen_typedef(cf,x);
@@ -3934,7 +3930,7 @@ class Support_Renderer extends BaseService {
 		this.z(continuationItems,x => {
 			const cf="G_CommentsSection";
 			if("commentThreadRenderer" in x) return this.R_CommentThread(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 			x===""; this.sm.codegen_typedef(cf,x);
 		});
 	}
@@ -4359,7 +4355,7 @@ class ForService_XMethods extends BaseService {
 		this.D_Accessibility(accessibility);
 		this.T_Icon(`${cf}:icon`,icon);
 		if(tooltip!=="Watch Later") debugger;
-		this.E_PlaylistEdit(serviceEndpoint);
+		this.sm.E_PlaylistEdit(serviceEndpoint);
 	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
@@ -4376,7 +4372,7 @@ class ForService_XMethods extends BaseService {
 		this.D_Accessibility(accessibility);
 		this.T_Icon(`${cf}:icon`,icon);
 		if(tooltip!=="Added") debugger;
-		this.E_PlaylistEdit(serviceEndpoint);
+		this.sm.E_PlaylistEdit(serviceEndpoint);
 	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x) {
@@ -4542,7 +4538,7 @@ class ForService_XMethods extends BaseService {
 		this.t(toggledText,this.sm.G_Text);
 		this.t(toggledServiceEndpoint,this.D_ToggleButton_ToggledSrvEP);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
-		this.t(accessibility,this.D_Label);
+		this.t(accessibility,this.sm.D_Label);
 		this.sm.trackingParams(trackingParams);
 		this.t(toggledStyle,x => this.save_string(`${cf}.toggledStyle.type`,x.styleType));
 		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
@@ -4744,22 +4740,22 @@ class ForService_XMethods extends BaseService {
 	/** @public @arg {GA_ResponseReceived} x */
 	GA_ResponseReceived(x) {
 		const cf="GA_ResponseReceived";
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
-		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
+		if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
+		if("reloadContinuationItemsCommand" in x) return this.sm.C_ReloadContinuationItems(x);
 		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_BrowseContents} x */
 	G_BrowseContents(x) {
 		const cf="G_BrowseContents";
-		if("twoColumnBrowseResultsRenderer" in x) return this.sm.R_TwoColumnBrowseResults(x);
-		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
+		if("twoColumnBrowseResultsRenderer" in x) return this.xm.R_TwoColumnBrowseResults(x);
+		if("feedFilterChipBarRenderer" in x) return this.sm.R_FeedFilterChipBar(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
 	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
-		let b_info=this.is_browse_feedUC(x);
+		let b_info=this.sm.is_browse_feedUC(x);
 		if(!b_info[0]) {
 			debugger;
 			return;
@@ -4791,7 +4787,7 @@ class ForService_XMethods extends BaseService {
 		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,x => {
 			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
 			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
 		});
@@ -4805,7 +4801,7 @@ class ForService_XMethods extends BaseService {
 		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,x => {
 			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
 			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
 		});
@@ -4971,7 +4967,7 @@ class ForService_XMethods extends BaseService {
 		const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
 		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 		this.R_EngagementPanelTitleHeader(header);
-		this.R_ContinuationItem(content);
+		this.sm.R_ContinuationItem(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 		this.targetId(cf,targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -4987,16 +4983,25 @@ class ForService_XMethods extends BaseService {
 		const cf="SI_VE124975_EngagementPanel";
 		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
-		this.R_EngagementPanelTitleHeader(header);
+		this.sm.R_EngagementPanelTitleHeader(header);
 		this.xr.R_StructuredDescriptionContent(content);
 		if(targetId!=="engagement-panel-structured-description") debugger;
-		this.targetId(cf,targetId);
+		this.sm.targetId(cf,targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.D_LoggingDirectives(loggingDirectives);
+		this.sm.D_LoggingDirectives(loggingDirectives);
 		if(identifier) {
-			let a1=this.GT_ShortsSurfaceIdentifier(identifier);
+			let a1=this.sm.GT_ShortsSurfaceIdentifier(identifier);
 			if(a1!=="engagement-panel-structured-description") debugger;
 		}
+	}
+	/** @public @arg {R_TwoColumnBrowseResults} x */
+	R_TwoColumnBrowseResults(x) {this.H_("twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
+	/** @private @arg {D_TwoColumnBrowseResults} x */
+	D_TwoColumnBrowseResults(x) {
+		const cf="D_TwoColumnBrowseResults";
+		const {tabs,secondaryContents,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(tabs,this.RG_Result);
+		this.t(secondaryContents,this.G_SecondaryContents);
 	}
 	/** @private @arg {RG_Result} x */
 	RG_Result(x) {
@@ -5012,6 +5017,13 @@ class ForService_XMethods extends BaseService {
 		if("showEngagementPanelScrimAction" in x) return this.sm.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.sm.C_ScrollToEngagementPanel(x);
 		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @private @arg {G_SecondaryContents} x */
+	G_SecondaryContents(x) {
+		const cf="G_SecondaryContents";
+		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
+		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});
