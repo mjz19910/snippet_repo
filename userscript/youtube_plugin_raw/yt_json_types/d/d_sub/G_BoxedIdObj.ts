@@ -1,5 +1,13 @@
 type G_BoxedIdObj=
+	|DSS_ABJ_Browse_MP
+	|DSS_Browse_SP
+	|DSS_Browse_SP
+	|DSS_Browse_VL_LL
+	|DSS_Browse_VL_PL
+	|DSS_Browse_VL_UC
+	|DSS_Browse_VL_WL
 	|DSS_User_Id
+	|DST_Browse_FE
 	|DST_Channel_UC
 	|DST_GuideEntry_LL
 	|DST_GuideEntry_PL
@@ -21,7 +29,6 @@ type G_BoxedIdObj=
 	|DST_Video_Id
 	|DST_Video_Id
 	|DST_VideoTime
-	|GST_Browse_Id
 	|GST_DSS
 	;
 ;

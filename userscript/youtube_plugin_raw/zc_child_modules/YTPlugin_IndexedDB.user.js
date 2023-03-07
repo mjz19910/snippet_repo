@@ -229,7 +229,9 @@ class IndexedDBService extends BaseService {
 				case "video_time": break;
 			}
 			const {key,value}=o2;
-			if(!value.info_arr) {debugger; return x;}
+			if(!("info_arr" in value)) {
+				debugger; return x;
+			}
 			let o_arr_t=value.info_arr[0];
 			if(o_arr_t instanceof Array) {
 				switch(o_arr_t[0]) {
@@ -262,9 +264,15 @@ class IndexedDBService extends BaseService {
 					}]
 				};
 				/** @type {DST_Browse_FE} */
-				let zt={b: "boxed_id",j: "browse_id:FE",key: as(key),z: [rt]};
+				let zt={b: "boxed_id",j: "browse_id:FE",key: `boxed_id:browse_id:FE:${rt.z[1].z[0].z[0]}`,z: [rt]};
 				rv=zt;
 				break x;
+			}
+			switch(value.type) {
+				default: debugger; break;
+				case "channel_id": {
+					
+				} break;
 			}
 			debugger;
 		} else {
