@@ -3245,10 +3245,35 @@ class HandleTypes extends ServiceMethods {
 		const type="video_id";
 		this.DI_AGR_UrlInfo(this.make_value_pair(type,x));
 	}
-	/** @arg {DI_SrcInfo} x */
+	/** @arg {DI_SrcInfo} x @returns {DI_RetInfo} */
 	get_parsed_info(x) {
-		x;
-		return {empty: true};
+		switch(x.b) {
+			case "any": {
+				const {b,raw_id}=x;
+				if(this.str_starts_with_rx("FE",raw_id)) return {a: "tag",b,c: "FE",raw_id};
+				if(this.str_starts_with_rx("SP",raw_id)) return {a: "tag",b,c: "SP",raw_id};
+				if(this.str_starts_with_rx("VL",raw_id)) return {a: "tag",b,c: "VL",raw_id};
+				switch(raw_id) {
+					case "WL": return {a: "tag",b,c: null,raw_id};
+					case "LL": return {a: "tag",b,c: null,raw_id};
+				}
+				if(this.str_starts_with_rx("UC",raw_id)) return {a: "tag",b,c: "UC",raw_id};
+				if(this.str_starts_with_rx("PL",raw_id)) return {a: "tag",b,c: "PL",raw_id};
+				if(this.str_starts_with_rx("RD",raw_id)) return {a: "tag",b,c: "RD",raw_id};
+				if(this.str_starts_with_rx("MP",raw_id)) return {a: "tag",b,c: "MP",raw_id};
+				if(this.str_starts_with_rx("UU",raw_id)) return {a: "tag",b,c: "UU",raw_id};
+				debugger;
+			} return {a: null};
+			case "start_radio": {
+				const {b,raw_id}=x;
+				return {a: "tag",b,raw_id};
+			}
+			case "video_id": {
+				const {b,raw_id}=x;
+				return {a: "tag",b,c: null,raw_id};
+			}
+		}
+		return {a: null};
 	}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} u */
 	make_R_UrlInfo(u) {

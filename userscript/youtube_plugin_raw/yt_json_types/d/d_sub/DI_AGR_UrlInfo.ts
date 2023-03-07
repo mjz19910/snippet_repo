@@ -17,11 +17,47 @@ type DI_AGR_UrlInfo=
 	|T_DI_FromObj<{video_id: DU_VideoId;}>
 	;
 ;
+type DI_SrcInfo_Any={
+	b: "any";
+	raw_id: DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id;
+};
+type DI_RetInfo={
+	a: "tag"; b: "any"; c: "FE";
+	raw_id: T_IdTemplate<"FE">;
+}|{
+	a: "tag"; b: "any"; c: "SP";
+	raw_id: T_IdTemplate<"SP">;
+}|{
+	a: "tag"; b: "any"; c: "VL";
+	raw_id: T_IdTemplate<"VL">;
+}|{
+	a: "tag"; b: "any"; c: "UC";
+	raw_id: T_IdTemplate<"UC">;
+}|{
+	a: "tag"; b: "any"; c: "PL";
+	raw_id: T_IdTemplate<"PL">;
+}|{
+	a: "tag"; b: "any"; c: "MP";
+	raw_id: T_IdTemplate<"MP">;
+}|{
+	a: "tag"; b: "any"; c: "UU";
+	raw_id: T_IdTemplate<"UU">;
+}|{
+	a: "tag"; b: "any"; c: "RD";
+	raw_id: Extract<DU_Playlist_Id,`RD${string}`>;
+}|{
+	a: "tag"; b: "any"; c: null;
+	raw_id: DU_Playlist_Static;
+}|{
+	a: "tag"; b: "video_id"; c: null; raw_id: DU_VideoId;
+}|{
+	a: "tag"; b: "start_radio";
+	raw_id: DU_StartRadio;
+}|{
+	a: null;
+};
 type DI_SrcInfo=
-	|{
-		b: "any";
-		raw_id: DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id;
-	}
+	|DI_SrcInfo_Any
 	|{b: "start_radio"; raw_id: DU_StartRadio;}
 	|{b: "video_id"; raw_id: DU_VideoId;};
 type DI_SpecialInfo=T_DI_FromObj<{raw_id: string;}>;
