@@ -2676,7 +2676,7 @@ class HandleTypes extends BaseService {
 		f13&&this.PX_watch_next_token_4(this.T_VW(f13));
 		f14&&this.PX_watch_next_token_5(this.T_VW(f14));
 	}
-	get mf() {return this.x.services.methods;}
+	get mf() {return this.x.get("methods");}
 	/** @private @template {string} T @arg {TV_Str<T>|TW_TagStr<T>} x */
 	TV_Str_ex(x) {return x[1][0][3][1];}
 	/** @private @arg {P_unsubscribe_params} x */
