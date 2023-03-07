@@ -199,6 +199,12 @@ class IndexedDBService extends BaseService {
 	 * */
 	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
 	/**
+	 * @param {Z} z @arg {B} b
+	 * @template B @template Z
+	 * @returns {{a: "DI:A";b:B,w:"a/b/w/z"; z:[Z]}}
+	 * */
+	make_abwz(b,z) {return {a: "DI:A",b,w: "a/b/w/z",z: [z]};}
+	/**
 	 * @param {Z} z @arg {K} k
 	 * @template K @template Z
 	 * @returns {{a:"key_value"; k:K,z:[Z]}}
@@ -230,10 +236,25 @@ class IndexedDBService extends BaseService {
 			switch(o2.tag) {
 				default: debugger; break;
 				case "number": break;
-				case "channel_id:UC": break;
+				case "channel_id:UC": {
+					const {key,tag,value}=o2;
+					/** @type {DI_A_ChannelId_UC} */
+					let bt=this.make_abcz(value.type,value.tag,[
+						this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
+						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
+					]);
+					/** @type {DST_Channel_UC} */
+					const z=this.make_abjz(key,tag,bt); ret=z; break x;
+				}
 				case "keys": break;
 				case "string": break;
-				case "video_id": break;
+				case "video_id": {
+					const {key,tag,value}=o2;
+					/** @type {DI_A_VideoId} */
+					let bt=this.make_abwz(value.type,this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)));
+					/** @type {DST_Video_Id} */
+					const z=this.make_abjz(key,tag,bt); ret=z; break x;
+				}
 				case "playlist_id:RD": {
 					const {key,value}=o2;
 					/** @type {DI_A_Playlist_RD} */
@@ -267,39 +288,6 @@ class IndexedDBService extends BaseService {
 						break x;
 					}
 				}
-			}
-			if(!o_arr_t.raw_id) {debugger; return x;}
-			switch(value.type) {
-				default: debugger; break;
-				case "channel_id": {
-					if(value.info_arr.length===1) {
-						throw new Error("Unreachable");
-					}
-					/** @type {DI_A_ChannelId_UC} */
-					let x1={
-						b: "channel_id",c: "UC",z: [{
-							a: "key_value",k: "raw_id",z: [{
-								a: "primitive",
-								e: "string",
-								z: [value.info_arr[0].raw_id]
-							}]
-						},{
-							a: "key_value",k: "id",z: [{
-								a: "primitive",
-								e: "string",
-								z: [value.info_arr[1].id]
-							}]
-						}]
-					};
-					/** @type {DST_Channel_UC} */
-					let rq={b: "boxed_id",j: "channel_id:UC",z: [x1],key: `boxed_id:channel_id:UC:${value.info_arr[1].id}`};
-					ret=rq;
-					let [kk]=this.get_keys_of(ret); kk;
-					if("j" in ret) {
-						if(ret.j==="channel_id:UC") {
-						}
-					}
-				} break x;
 			}
 			debugger;
 		} else {
@@ -618,7 +606,14 @@ class IndexedDBService extends BaseService {
 					}
 				}
 			}
-			case "video_id": return {args,promise: this.put_box(this.make_box_3(k,x.z[0].z[0],x),version)};
+			case "video_id": {
+				let [,v,x]=args;
+				/** @type {Pick<DST_Video_Id,"key">} */
+				const kj={key: `boxed_id:${k}:${v}`};
+				/** @type {DST_Video_Id} */
+				const z=this.make_abjz(kj.key,"video_id",x);
+				return {args,promise: this.put_box(z,version)};
+			}
 			case "user_id": return {args,promise: this.put_box(this.make_box_3(k,x.z[0].z[0].z[0],x),version)};
 			case "exact": {
 				const p1=this.make_box_4(k,args[1],x.z[0].z[0].z[0],x);

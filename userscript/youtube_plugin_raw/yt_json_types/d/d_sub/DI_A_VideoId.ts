@@ -4,5 +4,5 @@ type DI_A_VideoId={
 	b: "video_id";
 	// ^ b = type
 	w: "a/b/w/z";
-	z: [DIT_Item_AB<"raw_id",string>];
+	z: [T_DI_FromObj<{raw_id: string;}>];
 };
