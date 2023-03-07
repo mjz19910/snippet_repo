@@ -495,7 +495,7 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				let [tag1,]=split_string_once(tag,":");
 				let id=value.z[1].z[0].z[0].z[0];
-				/** @type {DSS_Browse_VL_LL} */
+				/** @type {DST_Browse_VL_LL} */
 				const z={
 					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag1}`,z: [value],
 					key: `boxed_id:${type}:${tag1}:${id}`,
@@ -517,7 +517,7 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
 				let id=value.z[1].z[1].z[0].z[0];
-				/** @type {DSS_Browse_VL_PL} */
+				/** @type {DST_Browse_VL_PL} */
 				const z={
 					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag1}:${tag2}`,z: [value],
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
@@ -528,7 +528,7 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				let [tag1,tag2]=split_string_once(tag,":");
 				let id=value.z[1].z[1].z[0].z[0];
-				/** @type {DSS_Browse_VL_UC} */
+				/** @type {DST_Browse_VL_UC} */
 				const z={
 					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag1}:${tag2}`,z: [value],
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,

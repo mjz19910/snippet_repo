@@ -6,10 +6,10 @@ type I_KnownLoaded=
 	|DST_Playlist_WL
 	|DST_Browse_FE
 	|DSS_Browse_MP
-	|DSS_Browse_SP
+	|DST_Browse_SP
 	|DSS_Browse_VL_WL
-	|DSS_Browse_VL_LL
-	|DSS_Browse_VL_PL
+	|DST_Browse_VL_LL
+	|DST_Browse_VL_PL
 	|DST_GuideEntry_LL
 	|DST_GuideEntry_WL
 	|DST_GuideEntry_PL

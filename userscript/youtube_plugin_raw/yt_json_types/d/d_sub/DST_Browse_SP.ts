@@ -1,5 +1,5 @@
-type DSS_Browse_SP={
-	a: "SS:D";
+type DST_Browse_SP={
+	a: "ST:D";
 	b: "boxed_id";
 	j: "browse_id:SP";
 	key: `boxed_id:browse_id:SP:${string}`;
