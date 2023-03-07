@@ -53,6 +53,7 @@ class ServiceLoader {
 		this.x_RS_WatchPage=new Support_RS_WatchPage(x);
 		this.x_VE=new Support_VE(x);
 		this.x_VE37414=new Support_VE37414(x);
+		this.x_methods=new Support_Methods(x);
 		this.yt_handlers=new YtHandlers(x);
 		this.yt_plugin=new YtPlugin(x);
 	}
