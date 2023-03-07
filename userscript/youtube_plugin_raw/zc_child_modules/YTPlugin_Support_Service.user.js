@@ -605,9 +605,9 @@ class Support_RS_Player extends BaseService {
 		this.t(streamingData,this.DD_Streaming);
 		this.t(heartbeatParams,this.D_HeartbeatParams);
 		this.tz(playerAds,this.R_DesktopWatchAds);
-		this.t(playbackTracking,this.D_PlaybackTracking);
-		this.t(videoDetails,x => this.sm.ht.D_VideoDetails(x));
-		this.t(playerConfig,x => this.sm.ht.D_PlayerConfig(x));
+		this.t(playbackTracking,x => this.xm.D_PlaybackTracking(x));
+		this.t(videoDetails,x => this.ht.D_VideoDetails(x));
+		this.t(playerConfig,x => this.ht.D_PlayerConfig(x));
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
@@ -831,19 +831,6 @@ class Support_RS_Player extends BaseService {
 		this.R_AdPlacementConfig(config);
 		this.sm.G_AdPlacementRendererItem(renderer);
 	}
-	/** @private @arg {D_PlaybackTracking} x */
-	D_PlaybackTracking(x) {
-		const cf="D_PlaybackTracking"; this.sm.k(cf,x);
-		let [a,u]=this.sm.unwrap_prefix(x,"videostats");
-		{
-			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
-		}
-		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
-		this.D_UrlAndElapsedMediaTime(atrUrl,x => this.sm.a_primitive_str(x));
-		this.sm.T_BaseUrl(ptrackingUrl,x => this.sm.a_primitive_str(x));
-		this.sm.T_BaseUrl(qoeUrl,x => this.sm.a_primitive_str(x));
-		this.t(youtubeRemarketingUrl,x => this.sm.T_BaseUrl(x,this.sm.a_primitive_str));
-	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
 		const cf="D_PlayerCaptionsTracklist";
@@ -970,13 +957,6 @@ class Support_RS_Player extends BaseService {
 		}
 		this.sm.a_primitive_str(channelName);
 		this.sm.xm.R_SubscribeButton(subscribeButton);
-	}
-	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
-	D_UrlAndElapsedMediaTime(x,f) {
-		const cf="D_UrlAndElapsedMediaTime";
-		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.sm.s(cf,x); this.g(y);
-		f.call(this,baseUrl);
-		this.sm.a_primitive_num(elapsedMediaTimeSeconds);
 	}
 	/** @private @arg {D_Botguard} x */
 	D_Botguard(x) {
@@ -1256,10 +1236,10 @@ class Support_RS_WatchPage extends BaseService {
 		const cf="R_WatchPage_VE3832"; this.sm.k(cf,x);
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.rootVe(rootVe,3832);
-		let wp_params=this.sm.ht.D_WatchPageUrl(cf,url);
+		let wp_params=this.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		this.sm.E_Watch(endpoint);
-		if(preconnect!==void 0) this.sm.ht.parse_preconnect_arr(preconnect);
+		if(preconnect!==void 0) this.ht.parse_preconnect_arr(preconnect);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.t(csn,x => this.sm.D_VeCsn(x));
@@ -1271,7 +1251,7 @@ class Support_RS_WatchPage extends BaseService {
 		this.sm.E_Watch(endpoint);
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
-		let wp_params=this.sm.ht.D_WatchPageUrl(cf,url);
+		let wp_params=this.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => this.sm.D_VeCsn(x,true));
 	}
@@ -1459,40 +1439,40 @@ class Support_GenericApi extends BaseService {
 			if(x.type==="get_transcript") break x;
 		}
 		switch(x.type) {
-			case "account.account_menu": return this.sm.ht.RS_AccountMenu(x.data);
-			case "account.accounts_list": return this.sm.ht.RS_AccountsList(x.data);
-			case "account.set_setting": return this.sm.ht.RS_SetSetting(x.data);
-			case "att.get": return this.sm.ht.RS_AttGet(x.data);
-			case "att.log": return this.sm.ht.RS_AttLog_RC(x.data);
+			case "account.account_menu": return this.ht.RS_AccountMenu(x.data);
+			case "account.accounts_list": return this.ht.RS_AccountsList(x.data);
+			case "account.set_setting": return this.ht.RS_SetSetting(x.data);
+			case "att.get": return this.ht.RS_AttGet(x.data);
+			case "att.log": return this.ht.RS_AttLog_RC(x.data);
 			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
 			case "browse": return this.x.get("x_RS_Browse").RS_Browse(x.data);
-			case "feedback": return this.sm.ht.RS_Feedback(x.data);
-			case "get_transcript": return this.sm.ht.RSG_Transcript(x.data);
-			case "get_survey": return this.sm.ht.RSG_Survey(x.data);
-			case "getAccountSwitcherEndpoint": return this.sm.ht.REG_AccountSwitcher(x.data);
-			case "getDatasyncIdsEndpoint": return this.sm.ht.REG_DatasyncIds(x.data);
-			case "guide": return this.sm.ht.RS_Guide(x.data);
-			case "like.like": return this.sm.ht.RSL_Like(x.data);
-			case "like.dislike": return this.sm.ht.RSL_Dislike(x.data);
-			case "like.removelike": return this.sm.ht.RSL_RemoveLike(x.data);
-			case "live_chat.get_live_chat_replay": return this.sm.ht.RS_GetLiveChat(x.data);
-			case "live_chat.get_live_chat": return this.sm.ht.RS_GetLiveChat(x.data);
-			case "music.get_search_suggestions": return this.sm.ht.RSG_SearchSuggestions(x.data);
-			case "next": return this.sm.ht.RS_Next(x.data);
+			case "feedback": return this.ht.RS_Feedback(x.data);
+			case "get_transcript": return this.ht.RSG_Transcript(x.data);
+			case "get_survey": return this.ht.RSG_Survey(x.data);
+			case "getAccountSwitcherEndpoint": return this.ht.REG_AccountSwitcher(x.data);
+			case "getDatasyncIdsEndpoint": return this.ht.REG_DatasyncIds(x.data);
+			case "guide": return this.ht.RS_Guide(x.data);
+			case "like.like": return this.ht.RSL_Like(x.data);
+			case "like.dislike": return this.ht.RSL_Dislike(x.data);
+			case "like.removelike": return this.ht.RSL_RemoveLike(x.data);
+			case "live_chat.get_live_chat_replay": return this.ht.RS_GetLiveChat(x.data);
+			case "live_chat.get_live_chat": return this.ht.RS_GetLiveChat(x.data);
+			case "music.get_search_suggestions": return this.ht.RSG_SearchSuggestions(x.data);
+			case "next": return this.ht.RS_Next(x.data);
 			case "notification.get_notification_menu": return this.RSG_NotificationMenu(x.data);
 			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
 			case "notification.record_interactions": return this.RS_Success(x.data);
 			case "player": return this.x.get("x_RS_Player").RS_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.sm.ht.RS_WatchReelItem(x.data);
-			case "reel.reel_watch_sequence": return this.sm.ht.RS_ReelWatchSequence(x.data);
-			case "share.get_share_panel": return this.sm.ht.RSG_SharePanel(x.data);
-			case "subscription.subscribe": return this.sm.ht.RS_Subscribe(x.data);
-			case "subscription.unsubscribe": return this.sm.ht.RS_Unsubscribe(x.data);
-			case "search": return this.sm.ht.RS_Search(x.data);
-			case "updated_metadata": return this.sm.ht.RS_UpdateMetadata(x.data);
-			case "pdg.get_pdg_buy_flow": return this.sm.ht.RSG_PdgBuyFlow(x.data);
+			case "reel.reel_item_watch": return this.ht.RS_WatchReelItem(x.data);
+			case "reel.reel_watch_sequence": return this.ht.RS_ReelWatchSequence(x.data);
+			case "share.get_share_panel": return this.ht.RSG_SharePanel(x.data);
+			case "subscription.subscribe": return this.ht.RS_Subscribe(x.data);
+			case "subscription.unsubscribe": return this.ht.RS_Unsubscribe(x.data);
+			case "search": return this.ht.RS_Search(x.data);
+			case "updated_metadata": return this.ht.RS_UpdateMetadata(x.data);
+			case "pdg.get_pdg_buy_flow": return this.ht.RSG_PdgBuyFlow(x.data);
 			default: debugger; return g(x);
 		}
 	}
@@ -1610,7 +1590,7 @@ class Support_GenericApi extends BaseService {
 	D_NotificationMenu_SectionItem(x) {
 		const cf="D_NotificationMenu_SectionItem";
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		if("backgroundPromoRenderer" in x) return this.sm.ht.R_BackgroundPromo(x);
+		if("backgroundPromoRenderer" in x) return this.ht.R_BackgroundPromo(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {MP_NotificationMenu} x */
@@ -2015,7 +1995,7 @@ class Support_EventInput extends BaseService {
 			debugger;
 		};
 		/** @arg {(typeof x)["response"]} x */
-		let h_rs=x => this.sm.ht.RS_Channel(x);
+		let h_rs=x => this.ht.RS_Channel(x);
 		/** @arg {(typeof x)["expirationTime"]} x */
 		let h_et=x => this.sm.a_primitive_num(x);
 		/** @type {T_MakeHandlers<typeof x>} */
@@ -2109,11 +2089,11 @@ class Support_EventInput extends BaseService {
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
-		this.t(reelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
+		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 		if(!this.sm.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		this.t(previousCsn,x => this.sm.D_VeCsn(x,true));
-		this.t(cachedReelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
+		this.t(cachedReelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 	}
 	/** @private @arg {RS_SearchPage} x */
 	RS_Page_Search(x) {
@@ -2121,7 +2101,7 @@ class Support_EventInput extends BaseService {
 		const {page,endpoint,response,url,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="search") debugger;
 		this.sm.E_Search(endpoint);
-		this.sm.ht.RS_Search(response);
+		this.ht.RS_Search(response);
 		if(!this.sm.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
@@ -2150,11 +2130,11 @@ class Support_EventInput extends BaseService {
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.t(reelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
+		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 		if(!this.sm.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
-		this.sm.ht.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
+		this.ht.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
 	/** @private @arg {RS_Reel} x */
 	RS_Reel(x) {
@@ -2331,13 +2311,6 @@ class Support_Renderer extends BaseService {
 	view_conversion_info=new Map;
 	//#endregion
 	//#region Endpoint methods
-	/** @public @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
-	T_BaseUrl(x,f) {
-		const cf="T_BaseUrl";
-		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.sm.s(cf,x); this.g(y);
-		f.call(this,baseUrl);
-		this.t(elapsedMediaTimeSeconds,x => this.sm.a_primitive_num(x));
-	}
 	/** @public @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @public @arg {E_ApplicationSettings} x */
@@ -2398,7 +2371,7 @@ class Support_Renderer extends BaseService {
 	}
 	// CommandData Data methods
 	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
-	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.sm.params(path,x));}
+	DC_Generic(cf,path,x) {this.y(this,cf,"continuation",x,x => this.sm.params(path,x));}
 	/** @private @arg {DC_PlayerSeek} x */
 	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}
 	/** @private @arg {DC_LiveChatReplay} x */
@@ -2410,11 +2383,11 @@ class Support_Renderer extends BaseService {
 	}
 	// ContinuationData Renderer methods
 	/** @private @arg {CD_PlayerSeek} x */
-	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
+	CD_PlayerSeek(x) {this.y(this,"CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
 	/** @private @arg {CD_LiveChatReplay} x */
-	CD_LiveChatReplay(x) {this.y("CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
+	CD_LiveChatReplay(x) {this.y(this,"CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
 	/** @private @arg {CD_Invalidation} x */
-	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
+	CD_Invalidation(x) {this.y(this,"CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
 	// ContinuationData Data methods
 	/** @private @arg {DC_Invalidation} x */
 	DC_Invalidation(x) {
@@ -2426,34 +2399,6 @@ class Support_Renderer extends BaseService {
 		this.t(clickTrackingParams,this.sm.clickTrackingParams);
 	}
 	// Endpoint Data methods
-	/** @private @arg {DE_Url} x */
-	DE_Url(x) {
-		const cf="DE_VE83769_Url";
-		const {url,...u}=this.sm.s(cf,x);/*#destructure_later*/
-		this.GM_E_VE83769_Url_TargetUrlType(url);
-		if("nofollow" in u&&"target" in u) {
-			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("nofollow" in u) {
-			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("target" in u) {
-			const {target,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			return;
-		}
-		if("grwOpenInOverride" in u) {
-			let x=this.ws("grwOpenInOverride",u);
-			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
-			return;
-		}
-		this.g(u);
-	}
 	/** @private @arg {DE_YpcGetCart} x */
 	DE_YpcGetCart(x) {this.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
 	/** @private @arg {DE_SubmitFeedback} x */
@@ -2540,7 +2485,7 @@ class Support_Renderer extends BaseService {
 		this.R_PdgCommentPreview(commentPreview);
 		this.R_PdgColorSlider(colorSlider);
 		console.log("defaultPriceTier",defaultPriceTier);
-		this.sm.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {R_PdgColorSlider} x */
 	R_PdgColorSlider(x) {this.H_("pdgColorSliderRenderer",x,this.D_PdgColorSlider);}
@@ -2549,7 +2494,7 @@ class Support_Renderer extends BaseService {
 		const cf="D_PdgColorSlider";
 		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(notches,this.D_NotchesItem);
-		this.sm.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 		this.sm.G_Text(maxTierValue);
 		this.sm.G_Text(minTierValue);
 	}
@@ -2565,7 +2510,7 @@ class Support_Renderer extends BaseService {
 		this.z(commentOptionRenderers,this.R_PdgCommentOption);
 		this.sm.G_Text(defaultCommentText);
 		this.sm.xm.R_Button(editButton);
-		this.sm.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
+		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
@@ -2684,7 +2629,7 @@ class Support_Renderer extends BaseService {
 		let e_num=this.sm.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.sm.a_primitive_num(e_num);
-		this.sm.ht.parse_signature(signature);
+		this.ht.parse_signature(signature);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.key`,key);
 		kind&&this.save_string(`${cf}.kind`,kind);
@@ -2952,7 +2897,7 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(responseText);
 		if(defaultStateIcon.iconType!=="STAR_BORDER") debugger;
 		if(onStateIcon.iconType!=="STAR") debugger;
-		this.sm.ht.C_FollowUp(followUpCommand);
+		this.ht.C_FollowUp(followUpCommand);
 		this.E_Feedback(responseEndpoint);
 		this.sm.trackingParams(trackingParams);
 		this.sm.a_primitive_bool(checked);
@@ -3120,14 +3065,14 @@ class Support_Renderer extends BaseService {
 		this.sm.xr.R_ProfilePageHeaderMetadataViewModel(metadata);
 		this.sm.xr.R_ProfilePageHeaderThumbnailViewModel(thumbnail);
 		if(alignment!=="a") debugger;
-		this.sm.ht.C_Innertube(onTap);
+		this.ht.C_Innertube(onTap);
 	}
 	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
 	/** @private @arg {D_ProfilePageHeaderTitle} x */
-	D_ProfilePageHeaderTitle(x) {this.y("D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
+	D_ProfilePageHeaderTitle(x) {this.y(this,"D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
 	/** @private @arg {D_ProfilePageHeaderTitle_Content} x */
-	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,x => this.sm.a_primitive_str(x));}
+	D_ProfilePageHeaderTitle_Content(x) {this.y(this.sm,"D_ProfilePageHeaderTitle_Content","content",x,this.sm.a_primitive_str);}
 	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
 	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("profilePageHeaderThumbnailViewModel",x,this.g);}
 	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
@@ -3432,10 +3377,10 @@ class Support_Renderer extends BaseService {
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x) {
 		const cf="G_StructuredDescriptionContentItem";
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.sm.ht.R_ExpandableVideoDescriptionBody(x);
+		if("expandableVideoDescriptionBodyRenderer" in x) return this.ht.R_ExpandableVideoDescriptionBody(x);
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.sm.ht.R_VideoDescriptionMusicSection(x);
+		if("videoDescriptionMusicSectionRenderer" in x) return this.ht.R_VideoDescriptionMusicSection(x);
 		if("videoDescriptionCourseSectionRenderer" in x) return this.R_VideoDescriptionCourseSection(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
@@ -3477,7 +3422,7 @@ class Support_Renderer extends BaseService {
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.sm.xm.R_Button(x);
-		if("accountItem" in x) return this.sm.ht.A_AccountItem(x);
+		if("accountItem" in x) return this.ht.A_AccountItem(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_PlaylistSidebarItem} x */
@@ -3775,12 +3720,12 @@ class Support_Renderer extends BaseService {
 		switch(x.request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				if("command" in x) {return this.y(this,cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
 				return this.g(this.DC_Continuation_Omit(cf,x));
 			}
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				if("command" in x) {return this.y(this,cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
 				return this.g(this.DC_Continuation_Omit(cf,x));
 			}
 		}
@@ -3793,7 +3738,7 @@ class Support_Renderer extends BaseService {
 		this.DC_ShowReloadUi(a);
 	}
 	/** @private @arg {DC_ShowReloadUi} x */
-	DC_ShowReloadUi(x) {this.y("DC_ShowReloadUi","targetId",x,this.D_UiTargetId);}
+	DC_ShowReloadUi(x) {this.y(this,"DC_ShowReloadUi","targetId",x,this.D_UiTargetId);}
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
 		const {token,request,...y}=this.sm.s(cf,x);
@@ -3989,7 +3934,7 @@ class Support_Renderer extends BaseService {
 		this.sm.a_primitive_str(tooltip);
 	}
 	/** @private @arg {D_IgnoreNavigation} x */
-	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.sm.cq(x,true));}
+	D_IgnoreNavigation(x) {this.y(this,"D_IgnoreNavigation","ignoreNavigation",x,x => this.sm.cq(x,true));}
 	/** @private @arg {DE_CreateCommentReplyDialog} x */
 	DE_CreateCommentReplyDialog(x) {
 		const cf="DE_CreateCommentReplyDialog";
@@ -4017,7 +3962,7 @@ class Support_Renderer extends BaseService {
 	/** @private @arg {M_CreateCommentReply} x */
 	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
 	/** @private @arg {DE_CreateCommentReply} x */
-	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.sm.params("create_reply.params",x));}
+	DE_CreateCommentReply(x) {this.y(this,"DE_CreateCommentReply","createReplyParams",x,x => this.sm.params("create_reply.params",x));}
 	/** @public @arg {R_VideoInfoCardContent} x */
 	R_VideoInfoCardContent(x) {this.H_("videoInfoCardContentRenderer",x,this.D_VideoInfoCardContent);}
 	/** @private @arg {D_VideoInfoCardContent} x */
@@ -4282,7 +4227,7 @@ class ForService_XMethods extends BaseService {
 		x===""; debugger;
 	}
 	/** @public @arg {R_SubscribeButton} x */
-	R_SubscribeButton(x) {this.H_s("subscribeButtonRenderer",x,this.D_SubscribeButton);}
+	R_SubscribeButton(x) {this.H_("subscribeButtonRenderer",x,this.D_SubscribeButton);}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton";
@@ -4340,7 +4285,7 @@ class ForService_XMethods extends BaseService {
 		return [p1,p2,o2];
 	}
 	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
-	R_ThumbnailOverlayToggleButton(x) {this.H_s("thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
+	R_ThumbnailOverlayToggleButton(x) {this.H_("thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
 	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
 	D_ThumbnailOverlayToggleButton(x) {
 		const cf="D_ThumbnailOverlayToggleButton";
@@ -4402,7 +4347,7 @@ class ForService_XMethods extends BaseService {
 	/** @private @arg {AD_SendFeedback} x */
 	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
 	/** @public @arg {R_Button} x */
-	R_Button(x) {this.H_s("buttonRenderer",x,this.D_Button);}
+	R_Button(x) {this.H_("buttonRenderer",x,this.D_Button);}
 	/** @private @arg {D_Button_targetId} x */
 	D_Button_targetId(x) {
 		let cf="D_Button_targetId";
@@ -4423,7 +4368,7 @@ class ForService_XMethods extends BaseService {
 			if(this.sm.is_TE_VE(x,23462)) return this.sm.E_VE23462(x);
 		}
 		if("watchEndpoint" in x) return this.sm.E_Watch(x);
-		if("urlEndpoint" in x) return this.xr.E_Url(x);
+		if("urlEndpoint" in x) return this.xm.E_Url(x);
 		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
 		x.createCommentReplyDialogEndpoint;
 		if("createCommentReplyDialogEndpoint" in x) return this.xr.E_CreateCommentReplyDialog(x);
@@ -4504,7 +4449,7 @@ class ForService_XMethods extends BaseService {
 		return y;
 	}
 	/** @public @arg {R_PlaylistPanelVideo} x */
-	R_PlaylistPanelVideo(x) {this.H_s("playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
+	R_PlaylistPanelVideo(x) {this.H_("playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo";
@@ -4523,7 +4468,7 @@ class ForService_XMethods extends BaseService {
 		this.sm.G_Text(lengthText);
 		this.R_Menu(menu);
 		this.sm.E_Watch(navigationEndpoint);
-		if("indexText" in y) return this.y(cf,"indexText",y,this.sm.G_Text);
+		if("indexText" in y) return this.y(this,cf,"indexText",y,this.sm.G_Text);
 		let kl=this.get_keys_of(y).length;
 		if(kl>0) {
 			this.sm.codegen_typedef(`${cf}:omit`,y);
@@ -4598,27 +4543,27 @@ class ForService_XMethods extends BaseService {
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
-	R_ThumbnailOverlayBottomPanel(x) {this.H_s("thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
+	R_ThumbnailOverlayBottomPanel(x) {this.H_("thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
 	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
-	R_ThumbnailOverlayEndorsement(x) {this.H_s("thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
+	R_ThumbnailOverlayEndorsement(x) {this.H_("thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
 	/** @private @arg {R_ThumbnailOverlayHoverText} x */
-	R_ThumbnailOverlayHoverText(x) {this.H_s("thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
+	R_ThumbnailOverlayHoverText(x) {this.H_("thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
 	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
-	R_ThumbnailOverlayInlineUnplayable(x) {this.H_s("thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
+	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
 	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
-	R_ThumbnailOverlayLoadingPreview(x) {this.H_s("thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
+	R_ThumbnailOverlayLoadingPreview(x) {this.H_("thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
 	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
-	R_ThumbnailOverlayNowPlaying(x) {this.H_s("thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
+	R_ThumbnailOverlayNowPlaying(x) {this.H_("thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
-	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.sm.G_Text);}
+	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(this,cf,"text",x,this.sm.G_Text);}
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
-	R_ThumbnailOverlayResumePlayback(x) {this.H_s("thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
+	R_ThumbnailOverlayResumePlayback(x) {this.H_("thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
 	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
-	R_ThumbnailOverlaySidePanel(x) {this.H_s("thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
+	R_ThumbnailOverlaySidePanel(x) {this.H_("thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
 	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
-	R_ThumbnailOverlayTimeStatus(x) {this.H_s("thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
+	R_ThumbnailOverlayTimeStatus(x) {this.H_("thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
-	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
+	D_ThumbnailOverlayResumePlayback(x) {this.y(this,"D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
 	D_ThumbnailOverlayTimeStatus(x) {
 		const cf="D_ThumbnailOverlayTimeStatus";
@@ -4653,7 +4598,7 @@ class ForService_XMethods extends BaseService {
 		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
 	}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,this.D_MixIcon);}
+	D_ThumbnailOverlayBottomPanel(x) {this.y(this,"D_ThumbnailOverlayBottomPanel","icon",x,this.D_MixIcon);}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement";
@@ -4905,7 +4850,7 @@ class ForService_XMethods extends BaseService {
 		this.g(y);
 	}
 	/** @public @arg {R_EngagementPanelSectionList} x */
-	R_EngagementPanelSectionList(x) {this.H_s("engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
+	R_EngagementPanelSectionList(x) {this.H_("engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
 		const cf="D_EngagementPanelSectionList"; this.ks(cf,x);
@@ -5099,7 +5044,47 @@ class ForService_XMethods extends BaseService {
 		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
 		this.DU_UrlParams(this.parse_url_search_params(x.search));
 	}
-	/** @public @arg {GU_VE83769_Url} x */
+	/** @private @arg {DE_Url} x */
+	DE_Url(x) {
+		const cf="DE_VE83769_Url";
+		const {url,...u}=this.sm.s(cf,x);/*#destructure_later*/
+		this.GM_E_VE83769_Url_TargetUrlType(url);
+		if("nofollow" in u&&"target" in u) {
+			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("nofollow" in u) {
+			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("target" in u) {
+			const {target,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			return;
+		}
+		if("grwOpenInOverride" in u) {
+			let x=this.ws("grwOpenInOverride",u);
+			this.save_enum(`${cf}.grwOpenInOverride`,"GRW_OPEN_IN_OVERRIDE",x);
+			return;
+		}
+		this.g(u);
+	}
+	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	GM_E_VE83769_Url_TargetUrlType(x) {
+		const rp="https://www.youtube.com/redirect?";
+		if(this.str_starts_with_rx(rp,x)) {
+			/** @type {GU_VE83769_Url_Redirect} */
+			let arg_x=as(x);
+			return this.GU_YoutubeUrlRedirect(arg_x);
+		}
+		let sp=this._convert_url_to_obj(x);
+		if(this.str_starts_with_rx("https://",sp.href)) {return;}
+		this.xm.GU_Url(sp.href);
+	}
+	/** @private @arg {GU_VE83769_Url} x */
 	GU_Url(x) {
 		if(this.str_starts_with_rx("/",x)) {
 			switch(x) {
@@ -5150,6 +5135,101 @@ class ForService_XMethods extends BaseService {
 			case "youtube.com": return;
 			default: get_host(up)===""; debugger; break;
 		}
+	}
+	/** @public @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
+	T_BaseUrl(x,f) {
+		const cf="T_BaseUrl";
+		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.sm.s(cf,x); this.g(y);
+		f.call(this,baseUrl);
+		this.t(elapsedMediaTimeSeconds,x => this.sm.a_primitive_num(x));
+	}
+	/** @public @arg {D_PlaybackTracking} x */
+	D_PlaybackTracking(x) {
+		const cf="D_PlaybackTracking"; this.sm.k(cf,x);
+		let [a,u]=this.sm.unwrap_prefix(x,"videostats");
+		{
+			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
+		}
+		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
+		this.D_UrlAndElapsedMediaTime(atrUrl,x => this.sm.a_primitive_str(x));
+		this.T_BaseUrl(ptrackingUrl,x => this.sm.a_primitive_str(x));
+		this.T_BaseUrl(qoeUrl,x => this.sm.a_primitive_str(x));
+		this.t(youtubeRemarketingUrl,x => this.T_BaseUrl(x,this.sm.a_primitive_str));
+	}
+	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
+	D_UrlAndElapsedMediaTime(x,f) {
+		const cf="D_UrlAndElapsedMediaTime";
+		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.sm.s(cf,x); this.g(y);
+		f.call(this,baseUrl);
+		this.sm.a_primitive_num(elapsedMediaTimeSeconds);
+	}
+	/** @private @arg {D_ActiveView} x */
+	D_ActiveView(x) {
+		const cf="D_ActiveView";
+		const {viewableCommands,endOfSessionCommands,regexUriMacroValidator,...y}=this.s(cf,x); this.g(y);
+		this.z(viewableCommands,this.E_Pinging);
+		this.z(endOfSessionCommands,this.E_Pinging);
+		this.sm.D_EmptyMap(regexUriMacroValidator);
+	}
+	/** @public @arg {E_Pinging} x */
+	E_Pinging(x) {
+		const cf="E_Pinging";
+		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.B_Hack(pingingEndpoint);
+		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
+			let pr=this._convert_url_to_obj(x);
+			switch(pr.host) {
+				case "pagead2.googlesyndication.com": {
+					if(pr.pathname!=="/pcs/activeview") debugger;
+					const {xai,sai,sig,cid,acvw,...y}=this.parse_url_search_params(pr.search); this.g(y);
+				} break;
+				case "googleads.g.doubleclick.net": {
+					if(pr.pathname!=="/pagead/interaction/") debugger;
+					let {ai,sigh,label,...y}=this.parse_url_search_params(pr.search); this.g(y);
+					if(label!=="noop_tap") debugger;
+				} break;
+				default: debugger; break;
+			};
+		}));
+	}
+	/** @public @arg {R_ClientForecastingAd} x */
+	R_ClientForecastingAd(x) {this.H_("clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
+	/** @private @arg {D_ClientForecastingAd} x */
+	D_ClientForecastingAd(x) {
+		const cf="D_ClientForecastingAd";
+		const {impressionUrls,...y}=this.sm.s(cf,x); this.g(y);
+		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
+			this.parser.parse_url(`${cf}.impressionUrl`,x);
+		}));
+	}
+	/** @private @arg {D_ImpressionCommand} x */
+	D_ImpressionCommand(x) {
+		const cf="D_ImpressionCommand";
+		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.sm.s(cf,x); this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.z(loggingUrls,x => this.T_BaseUrl(x,x => this.parser.parse_url(`${cf}:LoggingUrlItem`,x)));
+		this.B_Hack(pingingEndpoint);
+	}
+	/** @public @arg {R_PromotedSparklesWeb} x */
+	R_PromotedSparklesWeb(x) {this.H_("promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
+	/** @private @arg {D_PromotedSparklesWeb} x */
+	D_PromotedSparklesWeb(x) {
+		const cf="D_PromotedSparklesWeb";
+		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,noopTapEndpoints,menu,activeView,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(thumbnail);
+		this.T_Icon(`${cf}:icon`,icon);
+		this.G_Text(title);
+		this.G_Text(description);
+		this.G_Text(websiteText);
+		this.xm.R_Button(actionButton);
+		this.xm.E_Url(navigationEndpoint);
+		this.z(impressionCommands,this.D_ImpressionCommand);
+		this.tz(noopTapEndpoints,this.E_Pinging);
+		this.R_Menu(menu);
+		this.t(activeView,this.D_ActiveView);
+		this.trackingParams(trackingParams);
+		this.z(clickLocationTargets,this.D_ClickLocationTarget);
+		this.t(adBadge,this.RMD_Badge);
 	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

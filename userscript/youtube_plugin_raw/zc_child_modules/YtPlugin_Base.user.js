@@ -2175,6 +2175,14 @@ class ServiceWithMembers extends ServiceWithAccessors {
 	logged_keys=[];
 }
 class BaseService extends ServiceWithMembers {
+	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
+	s(cf,x) {
+		if(!x) debugger;
+		this.sm.k(cf,x);
+		return x;
+	}
+	/** @template CLS @arg {CLS} cls @public @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:CLS,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
+	y(cls,cf,k,x,f) {return f.call(cls,this.sm.w(cf,k,x),`${cf}.${k}`);}
 	/**
 	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
 	 * @returns {[U,Omit<T,"webCommandMetadata">]}
