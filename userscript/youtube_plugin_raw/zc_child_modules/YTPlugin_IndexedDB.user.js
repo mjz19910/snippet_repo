@@ -186,6 +186,32 @@ class IndexedDBService extends BaseService {
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
+	/**
+	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
+	 * @template J @template Z_Item @template T_Key
+	 * @returns {{a: "ST:D";b:"boxed_id",j:J,z:[Z_Item],key:T_Key}}
+	 * */
+	make_abjz(key,j,z) {return {a: "ST:D",b: "boxed_id",j,z: [z],key};}
+	/**
+	 * @param {Z} z @arg {B} b @arg {C} c
+	 * @template B,C @template Z
+	 * @returns {{a: "DI:A";b:B,c:C,z:Z}}
+	 * */
+	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
+	/**
+	 * @param {Z} z @arg {A} a @arg {K} k
+	 * @template A,K @template Z
+	 * @returns {{a:A,k:K,z:[Z]}}
+	 * */
+	make_akz(a,k,z) {return {a,k,z: [z]};}
+	/**
+	 * @param {Z} z @arg {A} a @arg {E} e
+	 * @template A,E @template Z
+	 * @returns {{a:A,e:E,z:[Z]}}
+	 * */
+	make_aez(a,e,z) {return {a,e,z: [z]};}
+	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"string">} */
+	make_prim_v(z) {return {a: "primitive",e: "string",z: [z]};}
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	async update_obj_schema(x,version) {
 		/** @type {G_BoxedIdObj} */
@@ -208,8 +234,19 @@ class IndexedDBService extends BaseService {
 				case "keys": break;
 				case "playlist_id:RD": {
 					const {key,value}=o2; key; value;
-					debugger;
-				} break;
+					/** @type {DI_A_Playlist_RD["z"][0]} */
+					const z2=this.make_akz("key_value","raw_id",this.make_prim_v(value.info_arr[0].raw_id));
+					/** @type {DI_A_Playlist_RD["z"][1]} */
+					const z3=this.make_akz("key_value","id",this.make_prim_v(value.info_arr[1].id));
+					/** @type {DI_A_Playlist_RD["z"]} */
+					const z1=[z2,z3];
+					/** @type {DI_A_Playlist_RD} */
+					let bt=this.make_abcz("playlist_id","RD",z1);
+					/** @type {DST_Playlist_RD} */
+					const z=this.make_abjz(key,"playlist_id:RD",bt);
+					ret=z;
+					break x;
+				}
 			}
 			const {key,value}=o2;
 			if(!("info_arr" in value)) {
@@ -611,10 +648,11 @@ class IndexedDBService extends BaseService {
 					}
 					case "RD": {
 						let [tag,id,value]=args;
-						let promise=this.put_box({
-							b: "boxed_id",j: `${tag}:${id}`,z: [value],
-							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`
-						},version); return {args,promise};
+						/** @type {Pick<DST_Playlist_RD,"key"|"j">} */
+						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
+						/** @type {DST_Playlist_RD} */
+						const z=this.make_abjz(kj.key,kj.j,value);
+						let promise=this.put_box(z,version); return {args,promise};
 					}
 					case "RD:MM": {
 						let [tag,id,value]=args;

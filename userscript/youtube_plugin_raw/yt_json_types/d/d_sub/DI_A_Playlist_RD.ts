@@ -1,4 +1,5 @@
 type DI_A_Playlist_RD={
+	a: "DI:A";
 	b: "playlist_id";
 	c: "RD";
 	z: [
