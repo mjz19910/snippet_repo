@@ -138,6 +138,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_CreateCommentReplyDialog";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_Feedback";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_GetNotificationMenu";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "DE_MutationDelete";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_NotificationOptOut";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_PerformCommentAction";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "DE_RecordNotificationInteractions";}
