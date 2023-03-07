@@ -297,7 +297,6 @@ class IndexedDBService extends BaseService {
 		if(typeof x==="bigint") return;
 		if(typeof x==="boolean") return;
 		if(x instanceof Array) return this.cache_depth_3_arr(x);
-		console.log("[depth_3.keys]",this.get_keys_of(x));
 		this.cache_depth_4(x.z[0]);
 		this.cache_weak_set.add(x);
 	}
