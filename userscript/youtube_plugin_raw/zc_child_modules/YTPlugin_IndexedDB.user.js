@@ -466,7 +466,7 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				/** @type {DSS_Browse_MP} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag}`,z: [value],
+					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/z",z: [value],
 					key: `boxed_id:browse_id:${tag}:${value.z[1].z[0].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -475,7 +475,7 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				/** @type {DSS_Browse_FE} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag}`,z: [value],
+					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/z",z: [value],
 					key: `boxed_id:${type}:${tag}:${value.z[1].z[0].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -728,7 +728,7 @@ class IndexedDBService extends BaseService {
 					case "MP": {
 						let [tag,id,value]=args;
 						let promise=this.put_box({
-							a: "K:ABJ",b: "boxed_id",j: `${tag}:${id}`,z: [value],
+							a: "K:ABJ",b: "boxed_id",j: `${tag}:${id}`,w: "/key/a/b/j/z",z: [value],
 							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`
 						},version); return {args,promise};
 					}
