@@ -2190,9 +2190,53 @@ class TextDecoderExt {
 		}
 	}
 }
-class BaseService extends BaseServicePrivate {
+class BaseServiceMembers extends BaseServicePrivate {
 	/** @protected */
 	_decoder=new TextDecoderExt;
+	/** @protected @type {string[]} */
+	logged_keys=[];
+}
+class BaseService extends BaseServiceMembers {
+	//#region template methods that make objects
+	/**
+	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
+	 * @template J @template Z_Item @template T_Key
+	 * @returns {{key:T_Key,a: "ST:D";b:"boxed_id",j:J,w:"/key/a/b/j/w/z",z:[Z_Item]}}
+	 * */
+	make_ST_jz(key,j,z) {return {key,a: "ST:D",b: "boxed_id",j,w: "/key/a/b/j/w/z",z: [z]};}
+	/**
+	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
+	 * @template J @template Z_Item @template T_Key
+	 * @returns {{a: "SS:D";b:"boxed_id",j:J,z:[Z_Item],key:T_Key}}
+	 * */
+	make_SS_abjz(key,j,z) {return {a: "SS:D",b: "boxed_id",j,z: [z],key};}
+	/**
+	 * @param {Z} z @arg {B} b @arg {C} c
+	 * @template B,C @template Z
+	 * @returns {{a: "DI:A";b:B,c:C,z:Z}}
+	 * */
+	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
+	/**
+	 * @param {Z} z @arg {B} b
+	 * @template B @template Z
+	 * @returns {{a: "DI:A";b:B,w:"a/b/w/z"; z:[Z]}}
+	 * */
+	make_abwz(b,z) {return {a: "DI:A",b,w: "a/b/w/z",z: [z]};}
+	/**
+	 * @param {Z} z @arg {K} k
+	 * @template K @template Z
+	 * @returns {{a:"key_value"; k:K,w: "/item/a/k/w/z",z:[Z]}}
+	 * */
+	make_akz(k,z) {return {a: "key_value",k,w: "/item/a/k/w/z",z: [z]};}
+	/**
+	 * @param {Z} z @arg {A} a @arg {E} e
+	 * @template A,E @template Z
+	 * @returns {{a:A,e:E,z:[Z]}}
+	 * */
+	make_aez(a,e,z) {return {a,e,z: [z]};}
+	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"string">} */
+	make_prim_v(z) {return {a: "primitive",e: "string",z: [z]};}
+	//#endregion
 	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {
 		if(!x) {debugger;}
@@ -2270,8 +2314,6 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @private @type {string[]} */
-	logged_keys=[];
 	/** @private @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	on_empty_object(x) {
 		if(!x) {debugger; return;}

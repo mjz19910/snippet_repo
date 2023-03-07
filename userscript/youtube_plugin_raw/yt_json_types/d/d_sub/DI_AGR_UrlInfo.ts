@@ -79,5 +79,6 @@ type DI_Key_StartRadio={
 	// ^ b = type
 	c: "start_radio";
 	// ^ c = key
+	w: "/a/b/c/w/z";
 	z: [T_DI_FromObj<{start_radio: 0|1;}>];
 };

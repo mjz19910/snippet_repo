@@ -186,44 +186,6 @@ class IndexedDBService extends BaseService {
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
-	/**
-	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
-	 * @template J @template Z_Item @template T_Key
-	 * @returns {{key:T_Key,a: "ST:D";b:"boxed_id",j:J,w:"/key/a/b/j/w/z",z:[Z_Item]}}
-	 * */
-	make_ST_jz(key,j,z) {return {key,a: "ST:D",b: "boxed_id",j,w: "/key/a/b/j/w/z",z: [z]};}
-	/**
-	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
-	 * @template J @template Z_Item @template T_Key
-	 * @returns {{a: "SS:D";b:"boxed_id",j:J,z:[Z_Item],key:T_Key}}
-	 * */
-	make_SS_abjz(key,j,z) {return {a: "SS:D",b: "boxed_id",j,z: [z],key};}
-	/**
-	 * @param {Z} z @arg {B} b @arg {C} c
-	 * @template B,C @template Z
-	 * @returns {{a: "DI:A";b:B,c:C,z:Z}}
-	 * */
-	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
-	/**
-	 * @param {Z} z @arg {B} b
-	 * @template B @template Z
-	 * @returns {{a: "DI:A";b:B,w:"a/b/w/z"; z:[Z]}}
-	 * */
-	make_abwz(b,z) {return {a: "DI:A",b,w: "a/b/w/z",z: [z]};}
-	/**
-	 * @param {Z} z @arg {K} k
-	 * @template K @template Z
-	 * @returns {{a:"key_value"; k:K,z:[Z]}}
-	 * */
-	make_akz(k,z) {return {a: "key_value",k,z: [z]};}
-	/**
-	 * @param {Z} z @arg {A} a @arg {E} e
-	 * @template A,E @template Z
-	 * @returns {{a:A,e:E,z:[Z]}}
-	 * */
-	make_aez(a,e,z) {return {a,e,z: [z]};}
-	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"string">} */
-	make_prim_v(z) {return {a: "primitive",e: "string",z: [z]};}
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	async update_obj_schema(x,version) {
 		/** @type {G_BoxedIdObj} */
