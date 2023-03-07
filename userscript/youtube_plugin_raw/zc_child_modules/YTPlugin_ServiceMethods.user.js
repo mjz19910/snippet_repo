@@ -139,20 +139,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @type {Map<string,[string,string[]][]>} */
 	strings_map=new Map;
-	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
-	add_string_to_map(cf,k_arg,x) {
-		/** @type {`${typeof cf}::${typeof k_arg}`} */
-		let k=`${cf}::${k_arg}`;
-		let group_arr=this.strings_map.get(cf);
-		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
-		let group_entry=group_arr.find(e => e[0]===k);
-		x: {
-			if(!group_entry) break x;
-			if(group_entry[1].includes(x)) return;
-			group_entry[1].push(x);
-		}
-		group_arr.push([k,[x]]);
-	}
 	/** @private @arg {GU_VE83769_Url_External} b */
 	D_YtStudio_Url(b) {
 		const cf="D_YtStudio_Url";
@@ -1142,7 +1128,7 @@ class ServiceMethods extends ServiceData {
 			this.trackingParams(trackingParams);
 			this.z(topLevelButtons,x => {
 				if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
-				if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
+				if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
 				debugger;
 			});
 			return;
@@ -1371,26 +1357,26 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
-	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
+	/** @public @arg {D_SubscribeButton_SubscribedPrefix} x */
 	D_SubscribeButton_SubscribedPrefix(x) {
 		const cf="D_SubscribeButton_SubscribedPrefix";
 		const {buttonText,entityKey,...y}=this.s(cf,x); this.g(y);
 		this.t(buttonText,this.G_Text);
 		this.t(entityKey,x => this.params("subscribe_button.entity.key",x));
 	}
-	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
+	/** @public @arg {D_SubscribeButton_UnsubscribedPrefix} x */
 	D_SubscribeButton_UnsubscribedPrefix(x) {
 		const cf="D_SubscribeButton_UnsubscribedPrefix";
 		const {buttonText,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(buttonText);
 	}
-	/** @private @arg {D_SubscribeButton_SubscribePrefix} x */
+	/** @public @arg {D_SubscribeButton_SubscribePrefix} x */
 	D_SubscribeButton_SubscribePrefix(x) {
 		const cf="D_SubscribeButton_SubscribePrefix";
 		const {accessibility,...y}=this.s(cf,x); this.g(y);
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @private @arg {D_SubscribeButton_UnsubscribePrefix} x */
+	/** @public @arg {D_SubscribeButton_UnsubscribePrefix} x */
 	D_SubscribeButton_UnsubscribePrefix(x) {
 		const cf="D_SubscribeButton_UnsubscribePrefix";
 		const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
@@ -2750,7 +2736,7 @@ class ServiceMethods extends ServiceData {
 		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
 		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
-		this.t(res,([t,x]) => (this.cq(t,"Signal"),this.G_ClientSignal(x)));
+		this.t(res,([t,x]) => (this.cq(t,"Signal"),this.xm.G_ClientSignal(x)));
 		this.trackingParams(trackingParams);
 		return y;
 	}
@@ -2777,7 +2763,7 @@ class ServiceMethods extends ServiceData {
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
 		if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
 		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
-		if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
+		if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
@@ -2875,8 +2861,8 @@ class ServiceMethods extends ServiceData {
 		const cf="D_SegmentedLikeDislikeButton";
 		if("likeButton" in x) {
 			const {likeButton,dislikeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.R_ToggleButton(likeButton);
-			this.R_ToggleButton(dislikeButton);
+			this.xm.R_ToggleButton(likeButton);
+			this.xm.R_ToggleButton(dislikeButton);
 			return;
 		}
 		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3032,8 +3018,6 @@ class ServiceMethods extends ServiceData {
 	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
-	/** @protected @arg {R_ToggleButton} x */
-	R_ToggleButton(x) {this.H_s("toggleButtonRenderer",x,this.D_ToggleButton);}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @protected @arg {C_CommandExecutor} x */
@@ -3075,35 +3059,6 @@ class ServiceMethods extends ServiceData {
 	DC_RepeatChapter(x) {
 		const cf="DC_RepeatChapter";
 		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-	}
-	/** @private @arg {D_ToggleButton} x */
-	D_ToggleButton(x) {
-		const cf="D_ToggleButton";
-		const {style,isToggled,isDisabled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,...u}=this.s(cf,x);
-		this.t(style,x => this.save_string(`${cf}.style`,x.styleType));
-		this.t(isToggled,this.a_primitive_bool);
-		this.t(isDisabled,x => this.cq(x,false));
-		this.t(defaultIcon,x => this.save_string(`${cf}.defaultIcon.type`,x.iconType));
-		this.t(defaultText,this.G_Text);
-		this.t(defaultServiceEndpoint,this.D_ToggleButton_DefaultSrvEP);
-		this.t(toggledText,this.G_Text);
-		this.t(toggledServiceEndpoint,this.D_ToggleButton_ToggledSrvEP);
-		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
-		this.t(accessibility,this.D_Label);
-		this.trackingParams(trackingParams);
-		this.t(toggledStyle,x => this.save_string(`${cf}.toggledStyle.type`,x.styleType));
-		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
-		this.t(toggledTooltip,x => this.add_string_to_map(cf,"toggledTooltip",x));
-		this.t(accessibilityData,this.D_Accessibility);
-		this.t(targetId,x => {
-			switch(x) {
-				default: debugger; break;
-				case "watch-dislike": case "watch-like":
-			}
-		});
-		const {size,toggledAccessibilityData,...y}=u2; this.g(y);
-		this.t(size,x => this.cq(x.sizeType,"SIZE_DEFAULT"));
-		this.t(toggledAccessibilityData,this.D_Accessibility);
 	}
 	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {
@@ -3340,15 +3295,15 @@ class ServiceMethods extends ServiceData {
 		const cf="DC_EngagementPanelHeaderShowNavigationButton";
 		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @private @arg {C_AddToPlaylist} x */
+	/** @public @arg {C_AddToPlaylist} x */
 	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
 	/** @private @arg {C_ChangeMarkersVisibility} x */
 	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
 	/** @public @arg {C_AdsControlFlowOpportunityReceived} x */
 	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
-	/** @private @arg {C_ChangeKeyedMarkersVisibility} x */
+	/** @public @arg {C_ChangeKeyedMarkersVisibility} x */
 	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
-	/** @private @arg {C_LoadMarkers} x */
+	/** @public @arg {C_LoadMarkers} x */
 	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
 	/** @protected @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
@@ -3756,7 +3711,7 @@ class ServiceMethods extends ServiceData {
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,shortBylineText,longBylineText,trackingParams,titleText,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x);/*#destructure_omit*/
 		this.trackingParams(trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.G_Text);
-		this.z(contents,this.R_PlaylistPanelVideo);
+		this.z(contents,x => this.xm.R_PlaylistPanelVideo(x));
 		this.a_primitive_str(title);
 		this.a_primitive_str(playlistId);
 		this.a_primitive_num(currentIndex);
@@ -4042,7 +3997,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Video} T @arg {T} x */
 	D_Omit_Compact_Video(cf,x) {
 		let u=this.D_Omit_Compact_Player(cf,x);
-		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
+		let {videoId,shortViewCountText,publishedTimeText,...y}=this.xm.D_Omit_ThumbnailOverlay(cf,u);
 		this.videoId(videoId);
 		this.G_Text(publishedTimeText);
 		this.G_Text(shortViewCountText);
@@ -4169,7 +4124,7 @@ class ServiceMethods extends ServiceData {
 		this.D_ClientMessages(clientMessages);
 		this.t(isReplay,this.a_primitive_bool);
 		this.save_enum(cf,"LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
-		this.R_ToggleButton(showHideButton);
+		this.xm.R_ToggleButton(showHideButton);
 	}
 	/** @private @arg {R_TopbarLogo} x */
 	R_TopbarLogo(x) {this.H_s("topbarLogoRenderer",x,this.D_TopbarLogo);}
@@ -4849,9 +4804,9 @@ class ServiceMethods extends ServiceData {
 	D_CommentActionButtons(x) {
 		const cf="D_CommentActionButtons";
 		const {likeButton,replyButton,dislikeButton,trackingParams,protoCreationMs,style,...y}=this.s(cf,x); this.g(y);
-		this.R_ToggleButton(likeButton);
+		this.xm.R_ToggleButton(likeButton);
 		this.xm.R_Button(replyButton);
-		this.R_ToggleButton(dislikeButton);
+		this.xm.R_ToggleButton(dislikeButton);
 		this.trackingParams(trackingParams);
 		this.a_primitive_str(protoCreationMs);
 		if(style!=="COMMENT_ACTION_BUTTON_STYLE_TYPE_DESKTOP_TOOLBAR") debugger;
@@ -5166,7 +5121,7 @@ class ServiceMethods extends ServiceData {
 		this.t(topStandaloneBadge,this.RMD_Badge);
 		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
-		this.tz(buttons,this.R_ToggleButton);
+		this.tz(buttons,x => this.xm.R_ToggleButton(x));
 	}
 	/** @private @arg {"D_Video_Other"|"D_Video_With:accessibility"|"D_Video_With:owner"|"D_Video_With:videoId"|"D_Video_With:videoId:topStandaloneBadge"|"D_Video_With:videoId:descriptionSnippet"} cf @arg {D_Video} x */
 	D_Video_With_Add_IsWatched(cf,x) {
@@ -6088,7 +6043,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @template {D_CompactVideo|D_Video} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
-		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
+		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.xm.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(trackingParams);
 		this.R_Menu(menu);
 		this.G_Text(title);
