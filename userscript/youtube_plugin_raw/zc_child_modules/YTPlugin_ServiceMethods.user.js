@@ -1480,9 +1480,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {DU_VideoId} x */
 	videoId(x) {
-		const type="video_id";
 		if(this.cache_raw_id(`video_id:${x}`)) return;
-		this.DI_AGR_UrlInfo(this.make_value_pair(type,this.parse_number_template(start_radio)));
+		this.ht.on_video_id(x);
 		if(this.video_id_list.includes(x)) return;
 		this.video_id_list.push(x);
 	}

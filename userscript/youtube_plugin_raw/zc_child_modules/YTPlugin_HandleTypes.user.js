@@ -1855,9 +1855,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template K,T @arg {K} k @arg {T} x  @returns {DIT_Item_AB<K,T>} */
 	make_DIT_Item_AB(k,x) {return {a: "key_value",k,z: [x]};}
-	/** @arg {`${0|1}`} x  @returns {DI_R_Key_StartRadio} */
+	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
-		return {a: "is:ABC",b: "raw",c: "key:start_radio",z: [this.make_DIT_Item_AB("start_radio",x)]};
+		return {
+			a: "DI:R",b: "raw",c: "key:start_radio",w: "a/b/c/w/z",z: [{
+				a: "DI",b: "key",c: "start_radio",z: [
+					{a: "key_value",k: "start_radio",z: [{a: "primitive",e: "number",z: [x]}]}
+				]
+			}]
+		};
 	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
@@ -3234,7 +3240,12 @@ class HandleTypes extends ServiceMethods {
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
 	make_BoxTypeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
-	/** @arg {DU_Browse_Id|DU_GuideEntry_Id} x */
+	/** @arg {DU_VideoId} x */
+	on_video_id(x) {
+		const type="video_id";
+		this.DI_AGR_UrlInfo(this.make_value_pair(type,x));
+	}
+	/** @arg {DI_SrcInfo} x */
 	get_parsed_info(x) {
 		x;
 		return {empty: true};
@@ -3244,117 +3255,36 @@ class HandleTypes extends ServiceMethods {
 		switch(u.k) {
 			case "browse_id": {
 				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info(raw_id);
+				let id_info=this.get_parsed_info({b: "any",raw_id});
 				console.log(id_info);
-				if(this.str_starts_with(raw_id,"UC")) {
-					let [,id]=split_string_once(raw_id,"UC");
-					/** @type {DI_A_ChannelId_UC} */
-					const z={b: "channel_id",c: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]};
-					/** @type {DI_BrowseId_UC} */
-					const r={a: "DI",b,c: "UC",z: [z]};
-					return r;
-				} else if(this.str_starts_with(raw_id,"FE")) {
-					let [,id]=split_string_once(raw_id,"FE");
-					/** @type {DI_BrowseId_FE} */
-					const z={b,c: "FE",z: [this.make_raw_id(raw_id),this.make_id(id)]};
-					return z;
-				} else if(this.str_starts_with(raw_id,"SP")) {
-					let [,id]=split_string_once(raw_id,"SP");
-					/** @type {DI_BrowseId_SP} */
-					const z={b,c: "SP",z: [this.make_raw_id(raw_id),this.make_id(id)]};
-					return z;
-				} else if(this.str_starts_with(raw_id,"MP")) {
-					let [,id]=split_string_once(raw_id,"MP");
-					let [a1,a2]=split_string_once(id,"_");
-					/** @type {DI_BrowseId_MP} */
-					const z={
-						b: "browse_id",c: "MP",
-						z: [
-							this.make_raw_id(raw_id),
-							this.make_id(a1),this.make_value_pair("data","_"),this.make_id(a2)
-						]
-					}; return z;
-				} else if(this.str_starts_with(raw_id,"VL")) {
-					if(raw_id==="VLLL") {
-						let [,id]=split_string_once(raw_id,"VL");
-						/** @type {DI_BrowseId_VL_LL} */
-						const z={
-							a: "DI",b: "browse_id",c: "VL:LL",z: [
-								this.make_raw_id(raw_id),
-								{a: "key_value",k: "playlist_id",z: [this.make_raw_id(id)]},
-							]
-						}; return z;
-					} else if(raw_id==="VLWL") {
-						let [,id]=split_string_once(raw_id,"VL");
-						/** @type {DI_BrowseId_VL_WL} */
-						const z={
-							a: "DI",b: "browse_id",c: "VL:WL",
-							z: [
-								this.make_raw_id(raw_id),
-								{a: "key_value",k: "playlist_id",z: [this.make_raw_id(id)]},
-							]
-						}; return z;
-					} else if(this.str_starts_with(raw_id,"VLPL")) {
-						const tag="VL";
-						let [,id]=split_string_once(raw_id,tag);
-						/** @type {DI_BrowseId_VL_PL} */
-						const z={a: "DI",b: "browse_id",c: "VL:PL",z: [this.make_raw_id(raw_id),this.make_info_PL(id)]};
-						return z;
-					} else {
-						raw_id===""; debugger; throw new Error();
-					}
-				} else {
-					raw_id===""; debugger; throw new Error();
-				}
 			}
 			case "guide_entry_id": {
 				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info(raw_id);
+				let id_info=this.get_parsed_info({b: "any",raw_id});
 				console.log(b,id_info);
-				if(this.str_starts_with(raw_id,"UC")) {
-					let [,id]=split_string_once(raw_id,"UC");
-					/** @type {DI_A_ChannelId_UC} */
-					const z={b: "channel_id",c: "UC",z: [this.make_raw_id(raw_id),this.make_id(id)]};
-					/** @type {DI_BrowseId_UC} */
-					const r={a: "DI",b,c: "UC",z: [z]};
-					return r;
-				}
 			} break;
 			case "playlist_id": {
 				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info(raw_id);
+				let id_info=this.get_parsed_info({b: "any",raw_id});
 				console.log(b,id_info);
 			} break;
 			case "start_radio": {
 				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info(raw_id);
+				let id_info=this.get_parsed_info({b: "start_radio",raw_id});
 				console.log(b,id_info);
 			} break;
 			case "video_id": {
 				const b=u.k; const raw_id=u.z[0].z[0];
-				let id_info=this.get_parsed_info(raw_id);
+				let id_info=this.get_parsed_info({b,raw_id});
 				console.log(b,id_info);
 			} break;
 		}
+		return null;
 	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {
-		switch(x.k) {
-			case "browse_id": {
-				let z=this.make_R_UrlInfo(x);
-			} break;
-			case "guide_entry_id": debugger; break;
-			case "playlist_id": debugger; break;
-			case "start_radio": debugger; break;
-			case "video_id": debugger; break;
-		}
-	}
-	/** @arg {DI_G_BrowseId} x */
-	DI_G_BrowseId(x) {
-		switch(x.c) {
-			case "FE":/*GB*/{
-			} break;
-		}
+		let z=this.make_R_UrlInfo(x);
+		console.log(z);
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */

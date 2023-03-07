@@ -17,6 +17,13 @@ type DI_AGR_UrlInfo=
 	|T_DI_FromObj<{video_id: DU_VideoId;}>
 	;
 ;
+type DI_SrcInfo=
+	|{
+		b: "any";
+		raw_id: DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id;
+	}
+	|{b: "start_radio"; raw_id: DU_StartRadio;}
+	|{b: "video_id"; raw_id: DU_VideoId;};
 type DI_SpecialInfo=T_DI_FromObj<{raw_id: string;}>;
 type GI_BrowseId=
 	|DI_BrowseId_FE
