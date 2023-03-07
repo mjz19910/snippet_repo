@@ -106,13 +106,13 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_data_to_index(k,x) {
-		let idx=this.key_index.get(k);
+		let idx=this.sm.key_index.get(k);
 		if(idx!==void 0) {
 			this.data[idx]=[k,x];
 			return;
 		}
 		let new_len=this.data.push([k,x]);
-		this.key_index.set(k,new_len-1);
+		this.sm.key_index.set(k,new_len-1);
 		this.data_update_callback();
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
@@ -192,7 +192,7 @@ class StoreDescription extends ApiBase2 {
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x_container */
 	save_data(k,x_container) {
 		if(this.includes_key(k)) {
-			let idx=this.key_index.get(k);
+			let idx=this.sm.key_index.get(k);
 			if(idx===void 0) throw new Error();
 			let y_item=this.data[idx];
 			let y_container=y_item[1];
@@ -281,18 +281,18 @@ class StoreDescription extends ApiBase2 {
 		/** @type {[typeof k,typeof x]} */
 		let p=[k,x];
 		let nk=this.data.push(p)-1;
-		this.key_index.set(k,nk);
+		this.sm.key_index.set(k,nk);
 		return p;
 	}
 	/** @arg {string} k */
 	includes_key(k) {
-		let idx=this.key_index.get(k);
+		let idx=this.sm.key_index.get(k);
 		if(idx!==void 0) return true;
 		return false;
 	}
 	/** @arg {string} key */
 	index_get(key) {
-		let idx=this.key_index.get(key);
+		let idx=this.sm.key_index.get(key);
 		if(idx===void 0) return null;
 		return this.data[idx];
 	}
@@ -717,7 +717,7 @@ class Support_RS_Player extends BaseService {
 	/** @private @arg {D_CaptionTrackItem} x */
 	D_CaptionTrackItem(x) {
 		const cf="D_CaptionTrackItem",t=this;
-		const {baseUrl,name,vssId,languageCode,rtl,kind,isTranslatable,...y}=t.s(cf,x); t.g(y);
+		const {baseUrl,name,vssId,languageCode,rtl,kind,isTranslatable,...y}=t.sm.s(cf,x); t.g(y);
 		{
 			let x=baseUrl;
 			let x1=split_string_once(x,"?");
@@ -730,7 +730,7 @@ class Support_RS_Player extends BaseService {
 		t.save_string(`${cf}.languageCode`,languageCode);
 		t.t(kind,x => t.save_string(`${cf}.kind`,x));
 		if(isTranslatable!==true) debugger;
-		t.t(rtl,x => t.cq(x,true));
+		t.t(rtl,x => t.sm.cq(x,true));
 	}
 	/** @private @arg {D_AudioTrackItem} x */
 	D_AudioTrackItem(x) {
@@ -751,7 +751,7 @@ class Support_RS_Player extends BaseService {
 	D_TranslationLanguage(x) {
 		const cf="D_TranslationLanguage";
 		const {languageCode,languageName,...y}=this.sm.s(cf,x); this.g(y);
-		this.a_primitive_str(languageCode);
+		this.sm.a_primitive_str(languageCode);
 		this.sm.G_Text(languageName);
 	}
 	/** @private @arg {D_Endscreen} x */
@@ -759,7 +759,7 @@ class Support_RS_Player extends BaseService {
 		const cf="D_Endscreen";
 		const {elements,startMs,trackingParams,...y}=this.sm.s(cf,x); this.g(y);
 		this.z(elements,this.R_EndscreenElement);
-		this.t(startMs,this.a_primitive_str);
+		this.t(startMs,x => this.sm.a_primitive_str(x));
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
@@ -790,7 +790,7 @@ class Support_RS_Player extends BaseService {
 		const {gutParams,playerAdParams,showCompanion,showInstream,useGut,...y}=this.sm.s(cf,x);
 		/** @arg {true} x */
 		const expect_true=x => this.sm.cq(x,true);
-		let params_tag=this.t(gutParams,this.B_TagObj);
+		let params_tag=this.t(gutParams,x => this.sm.B_TagObj(x));
 		// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
 		this.t(params_tag,x => this.sm.cq(x,"\\4061\\ytpwmpu"));
 		this.t(showCompanion,expect_true);
@@ -805,23 +805,23 @@ class Support_RS_Player extends BaseService {
 	D_PlayerMicroformat(x) {
 		const cf="D_PlayerMicroformat";
 		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,learningResource,...y}=this.sm.s(cf,x); this.g(y);
-		this.D_Thumbnail(thumbnail);
+		this.sm.D_Thumbnail(thumbnail);
 		this.t(embed,this.D_MicroformatEmbed);
 		this.sm.G_Text(title);
 		this.t(description,this.sm.G_Text);
-		this.a_primitive_str(lengthSeconds);
+		this.sm.a_primitive_str(lengthSeconds);
 		this.parser.parse_url(cf,ownerProfileUrl);
-		this.channelId(externalChannelId);
+		this.sm.channelId(externalChannelId);
 		this.sm.a_primitive_bool(isFamilySafe);
-		this.z(availableCountries,this.a_primitive_str);
+		this.z(availableCountries,x => this.sm.a_primitive_str(x));
 		this.sm.a_primitive_bool(isUnlisted);
 		this.sm.a_primitive_bool(hasYpcMetadata);
-		this.a_primitive_str(viewCount);
+		this.sm.a_primitive_str(viewCount);
 		this.D_VideoCategory(category);
-		this.a_primitive_str(publishDate);
-		this.a_primitive_str(ownerChannelName);
+		this.sm.a_primitive_str(publishDate);
+		this.sm.a_primitive_str(ownerChannelName);
 		this.t(liveBroadcastDetails,this.D_LiveBroadcastDetails);
-		this.a_primitive_str(uploadDate);
+		this.sm.a_primitive_str(uploadDate);
 		this.t(learningResource,this.D_LearningResource);
 	}
 	/** @private @arg {D_AdPlacement} x */
@@ -829,20 +829,20 @@ class Support_RS_Player extends BaseService {
 		const cf="D_AdPlacement";
 		const {config,renderer,...y}=this.sm.s(cf,x); this.g(y);
 		this.R_AdPlacementConfig(config);
-		this.G_AdPlacementRendererItem(renderer);
+		this.sm.G_AdPlacementRendererItem(renderer);
 	}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {
 		const cf="D_PlaybackTracking"; this.sm.k(cf,x);
-		let [a,u]=this.unwrap_prefix(x,"videostats");
+		let [a,u]=this.sm.unwrap_prefix(x,"videostats");
 		{
 			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
 		}
 		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
-		this.D_UrlAndElapsedMediaTime(atrUrl,this.a_primitive_str);
-		this.T_BaseUrl(ptrackingUrl,this.a_primitive_str);
-		this.T_BaseUrl(qoeUrl,this.a_primitive_str);
-		this.t(youtubeRemarketingUrl,x => this.T_BaseUrl(x,this.a_primitive_str));
+		this.D_UrlAndElapsedMediaTime(atrUrl,x => this.sm.a_primitive_str(x));
+		this.sm.T_BaseUrl(ptrackingUrl,x => this.sm.a_primitive_str(x));
+		this.sm.T_BaseUrl(qoeUrl,x => this.sm.a_primitive_str(x));
+		this.t(youtubeRemarketingUrl,x => this.sm.T_BaseUrl(x,this.sm.a_primitive_str));
 	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
@@ -853,7 +853,7 @@ class Support_RS_Player extends BaseService {
 		this.z(translationLanguages,this.D_TranslationLanguage);
 		this.sm.a_primitive_num(defaultAudioTrackIndex);
 		this.t(openTranscriptCommand,x => {
-			if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+			if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
 			debugger;
 		});
 	}
@@ -865,25 +865,25 @@ class Support_RS_Player extends BaseService {
 		this.sm.G_Text(text);
 		this.sm.xr.E_Url(endpoint);
 		this.sm.trackingParams(trackingParams);
-		this.RA_Notification(snackbar);
+		this.sm.RA_Notification(snackbar);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
 	D_PlayerAttestation(x) {
 		const cf="D_PlayerAttestation";
 		const {challenge,botguardData,...y}=this.sm.s(cf,x); this.g(y);
-		this.a_primitive_str(challenge);
+		this.sm.a_primitive_str(challenge);
 		this.D_Botguard(botguardData);
 	}
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
 		const cf="DD_Streaming";
 		const {expiresInSeconds,adaptiveFormats,formats,probeUrl,dashManifestUrl,hlsManifestUrl,...y}=this.sm.s(cf,x); this.g(y);
-		this.parse_number_template(expiresInSeconds);
+		this.sm.parse_number_template(expiresInSeconds);
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
 		this.tz(formats,this.D_FormatItem);
 		this.t(probeUrl,x => this.parser.parse_url(cf,x));
-		this.t(dashManifestUrl,this.a_primitive_str);
-		this.t(hlsManifestUrl,this.a_primitive_str);
+		this.t(dashManifestUrl,x => this.sm.a_primitive_str(x));
+		this.t(hlsManifestUrl,x => this.sm.a_primitive_str(x));
 	}
 	/** @private @arg {D_AdPlacementConfig} x */
 	D_AdPlacementConfig(x) {
@@ -922,15 +922,15 @@ class Support_RS_Player extends BaseService {
 		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,signatureCipher,...u}=this.sm.s(cf,x);
 		this.sm.a_primitive_num(itag);
 		this.t(url,x => this.parser.parse_url(cf,x));
-		this.a_primitive_str(mimeType);
+		this.sm.a_primitive_str(mimeType);
 		this.sm.a_primitive_num(bitrate);
 		this.t(width,this.sm.a_primitive_num);
 		this.t(height,this.sm.a_primitive_num);
-		this.a_primitive_str(lastModified);
-		this.t(contentLength,this.a_primitive_str);
-		this.a_primitive_str(quality);
+		this.sm.a_primitive_str(lastModified);
+		this.t(contentLength,x => this.sm.a_primitive_str(x));
+		this.sm.a_primitive_str(quality);
 		this.t(fps,this.D_FormatFps);
-		this.t(qualityLabel,this.a_primitive_str);
+		this.t(qualityLabel,x => this.sm.a_primitive_str(x));
 		if(projectionType!=="RECTANGULAR") debugger;
 		this.t(averageBitrate,this.sm.a_primitive_num);
 		this.t(audioQuality,x => {
@@ -940,7 +940,7 @@ class Support_RS_Player extends BaseService {
 				case "AUDIO_QUALITY_MEDIUM":
 			}
 		});
-		this.a_primitive_str(approxDurationMs);
+		this.sm.a_primitive_str(approxDurationMs);
 		this.t(audioSampleRate,this.D_AudioSampleRate);
 		this.t(audioChannels,x => {if(x!==2) debugger;});
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
@@ -960,16 +960,16 @@ class Support_RS_Player extends BaseService {
 	D_FeaturedChannel(x) {
 		const cf="D_FeaturedChannel"; this.sm.k(cf,x);
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
-		this.D_Thumbnail(watermark);
+		this.z([startTimeMs,endTimeMs],x => this.sm.a_primitive_str(x));
+		this.sm.D_Thumbnail(watermark);
 		this.sm.trackingParams(trackingParams);
 		x: {
 			let x2=navigationEndpoint;
-			if(this.sm.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
+			if(this.sm.is_TE_VE(x2,3611)) {this.sm.E_VE3611(x2); break x;}
 			debugger;
 		}
-		this.a_primitive_str(channelName);
-		this.R_SubscribeButton(subscribeButton);
+		this.sm.a_primitive_str(channelName);
+		this.sm.xm.R_SubscribeButton(subscribeButton);
 	}
 	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
 	D_UrlAndElapsedMediaTime(x,f) {
@@ -982,9 +982,9 @@ class Support_RS_Player extends BaseService {
 	D_Botguard(x) {
 		const cf="D_Botguard";
 		const {program,interpreterSafeUrl,serverEnvironment,...y}=this.sm.s(cf,x); this.g(y);
-		this.a_primitive_str(program);
-		let interpreterUrl=this.UrlWrappedValueT(interpreterSafeUrl);
-		this.a_primitive_str(interpreterUrl);
+		this.sm.a_primitive_str(program);
+		let interpreterUrl=this.sm.UrlWrappedValueT(interpreterSafeUrl);
+		this.sm.a_primitive_str(interpreterUrl);
 		this.save_number(`${cf}.serverEnvironment`,serverEnvironment);
 	}
 	/** @private @arg {D_CardCollection} x */
@@ -1029,7 +1029,7 @@ class Support_RS_Player extends BaseService {
 		const cf="D_LiveBroadcastDetails";
 		const {isLiveNow,startTimestamp,...y}=this.sm.s(cf,x);
 		this.sm.a_primitive_bool(isLiveNow);
-		this.a_primitive_str(startTimestamp);
+		this.sm.a_primitive_str(startTimestamp);
 		if("endTimestamp" in y) {
 			const {endTimestamp,...y1}=y; this.g(y1);
 			return;
@@ -1043,18 +1043,18 @@ class Support_RS_Player extends BaseService {
 		this.t(audioTrack,this.D_AudioTrack);
 		this.sm.a_primitive_num(itag);
 		this.t(url,x => this.parser.parse_url(cf,x));
-		this.a_primitive_str(mimeType);
+		this.sm.a_primitive_str(mimeType);
 		this.sm.a_primitive_num(bitrate);
 		this.t(width,this.sm.a_primitive_num);
 		this.t(height,this.sm.a_primitive_num);
 		this.t(initRange,this.D_Range);
 		this.t(indexRange,this.D_Range);
-		this.t(lastModified,this.a_primitive_str);
-		this.t(contentLength,this.a_primitive_str);
-		this.a_primitive_str(quality);
+		this.t(lastModified,x => this.sm.a_primitive_str(x));
+		this.t(contentLength,x => this.sm.a_primitive_str(x));
+		this.sm.a_primitive_str(quality);
 		this.t(xtags,x => this.sm.params("adaptive_format_item.xtags",x));
 		this.t(fps,this.D_FormatFps);
-		this.t(qualityLabel,this.a_primitive_str);
+		this.t(qualityLabel,x => this.sm.a_primitive_str(x));
 		if(projectionType!=="RECTANGULAR") debugger;
 		this.t(targetDurationSec,x => this.sm.cq(x,1));
 		this.t(maxDvrDurationSec,x => this.sm.cq(x,43200));
@@ -1069,7 +1069,7 @@ class Support_RS_Player extends BaseService {
 				case "AUDIO_QUALITY_MEDIUM":
 			}
 		});
-		this.t(approxDurationMs,this.a_primitive_str);
+		this.t(approxDurationMs,x => this.sm.a_primitive_str(x));
 		this.t(audioSampleRate,this.D_AudioSampleRate);
 		this.t(audioChannels,x => {
 			if(x!==2) debugger;
@@ -1123,14 +1123,14 @@ class Support_RS_Player extends BaseService {
 	D_Range(x) {
 		const cf="D_Range";
 		const {start,end,...y}=this.sm.s(cf,x); this.g(y);
-		this.a_primitive_str(start);
-		this.a_primitive_str(end);
+		this.sm.a_primitive_str(start);
+		this.sm.a_primitive_str(end);
 	}
 	/** @private @arg {D_AdTimeOffset} x */
 	D_AdTimeOffset(x) {
 		const cf="D_AdTimeOffset";
 		const {offsetStartMilliseconds,offsetEndMilliseconds,...y}=this.sm.s(cf,x); this.g(y);
-		this.a_primitive_str(offsetStartMilliseconds);
+		this.sm.a_primitive_str(offsetStartMilliseconds);
 		if(offsetEndMilliseconds!=="-1") debugger;
 	}
 	/** @private @arg {D_EndscreenElement} x */
@@ -1144,32 +1144,32 @@ class Support_RS_Player extends BaseService {
 			case "WEBSITE":
 			case "PLAYLIST":
 		}
-		this.D_Thumbnail(image);
+		this.sm.D_Thumbnail(image);
 		this.t(playlistLength,this.sm.G_Text);
-		this.t(icon,this.D_Thumbnail);
+		this.t(icon,this.sm.D_Thumbnail);
 		this.sm.a_primitive_num(left);
 		this.sm.a_primitive_num(width);
 		this.sm.a_primitive_num(top);
 		this.sm.a_primitive_num(aspectRatio);
-		this.a_primitive_str(startMs);
-		this.a_primitive_str(endMs);
+		this.sm.a_primitive_str(startMs);
+		this.sm.a_primitive_str(endMs);
 		this.sm.G_Text(title);
 		this.sm.G_Text(metadata);
 		this.t(callToAction,this.sm.G_Text);
 		this.t(dismiss,this.sm.G_Text);
-		this.D_EndscreenElement_EP(endpoint);
+		this.sm.D_EndscreenElement_EP(endpoint);
 		this.t(subscribersText,this.sm.G_Text);
-		this.t(hovercardButton,this.R_SubscribeButton);
+		this.t(hovercardButton,this.sm.xm.R_SubscribeButton);
 		this.sm.trackingParams(trackingParams);
 		this.t(isSubscribe,this.sm.a_primitive_bool);
-		this.a_primitive_str(id);
-		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		this.sm.a_primitive_str(id);
+		this.tz(thumbnailOverlays,this.sm.xm.G_ThumbnailOverlayItem);
 	}
 	/** @private @arg {D_AudioTrack} x */
 	D_AudioTrack(x) {
 		const cf="D_AudioTrack";
 		const {displayName,id,audioIsDefault,...y}=this.sm.s(cf,x); this.g(y);
-		this.a_primitive_str(displayName);
+		this.sm.a_primitive_str(displayName);
 		this.save_string(`${cf}.id`,id);
 		this.sm.cq(audioIsDefault,false);
 	}
@@ -1190,7 +1190,7 @@ class Support_RS_Player extends BaseService {
 		this.t(content,this.D_Card_Content);
 		this.z(cueRanges,this.D_CueRangeItem);
 		this.sm.trackingParams(trackingParams);
-		this.t(cardId,this.a_primitive_str);
+		this.t(cardId,x => this.sm.a_primitive_str(x));
 		this.t(feature,x => {
 			if(x!=="cards") debugger;
 		});
@@ -1204,11 +1204,11 @@ class Support_RS_Player extends BaseService {
 	/** @private @arg {D_CollaboratorInfoCardContent} x */
 	D_CollaboratorInfoCardContent(x) {x;}
 	/** @private @arg {D_TrackingParams} x */
-	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
+	D_InfoCardIcon(x) {this.sm.D_TrackingParams("D_InfoCardIcon",x);}
 	/** @private @arg {R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
 	/** @arg {`${number}`} x */
-	_bd=x => this.mb(this.parse_number_template,this.m(x));
+	_bd=x => this.mb(this.sm.parse_number_template,this.m(x));
 	/** @arg {`${number}`} x */
 	_pn=x => this.mb(this.sm.a_primitive_num,this._bd(x));
 	get bd() {return this._bd.bind(this);}
@@ -1218,8 +1218,8 @@ class Support_RS_Player extends BaseService {
 		const cf="D_CueRangeItem",t=this;
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.sm.s(cf,x); this.g(y);
 		this.z([startCardActiveMs,endCardActiveMs],t.pn);
-		this.save_number(`${cf}.teaserDurationMs`,this.parse_number_template(teaserDurationMs));
-		this.save_number(`${cf}.endCardActiveMs`,this.parse_number_template(endCardActiveMs));
+		this.save_number(`${cf}.teaserDurationMs`,this.sm.parse_number_template(teaserDurationMs));
+		this.save_number(`${cf}.endCardActiveMs`,this.sm.parse_number_template(endCardActiveMs));
 	}
 	/** @private @arg {D_SimpleCardTeaser} x */
 	D_SimpleCardTeaser(x) {
@@ -1229,7 +1229,7 @@ class Support_RS_Player extends BaseService {
 		this.sm.trackingParams(trackingParams);
 		this.sm.cq(prominent,true);
 		this.sm.cq(logVisibilityUpdates,true);
-		this.t(onTapCommand,this.A_ChangeEngagementPanelVisibility);
+		this.t(onTapCommand,this.sm.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {D_LearningResource} x */
 	D_LearningResource(x) {
@@ -1256,25 +1256,25 @@ class Support_RS_WatchPage extends BaseService {
 	RS_VE3832_Page_Watch(x) {
 		const cf="R_WatchPage_VE3832"; this.sm.k(cf,x);
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.rootVe(rootVe,3832);
+		this.sm.rootVe(rootVe,3832);
 		let wp_params=this.sm.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
-		this.E_Watch(endpoint);
+		this.sm.E_Watch(endpoint);
 		if(preconnect!==void 0) this.sm.ht.parse_preconnect_arr(preconnect);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_RS_Watch").RS_Watch(response);
-		this.t(csn,x => this.D_VeCsn(x));
+		this.t(csn,x => this.sm.D_VeCsn(x));
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
 		const cf="RS_Page_Watch"; this.sm.k(cf,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Watch(endpoint);
+		this.sm.E_Watch(endpoint);
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		let wp_params=this.sm.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`${cf}.wp_params`,wp_params);
-		this.t(previousCsn,x => this.D_VeCsn(x,true));
+		this.t(previousCsn,x => this.sm.D_VeCsn(x,true));
 	}
 }
 export_(exports => {exports.Support_RS_WatchPage=Support_RS_WatchPage;});
@@ -1284,16 +1284,16 @@ class Support_RS_Watch extends BaseService {
 	RS_Watch(x) {
 		const cf="RS_Watch";
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
-		this.R_TwoColumnWatchNextResults(contents);
-		this.E_Watch(currentVideoEndpoint);
+		this.sm.RC_ResponseContext(responseContext);
+		this.sm.R_TwoColumnWatchNextResults(contents);
+		this.sm.E_Watch(currentVideoEndpoint);
 		this.sm.trackingParams(trackingParams);
-		this.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,x => this.GE_ResponseReceived(cf,x));
-		this.z(engagementPanels,x => this.R_EngagementPanelSectionList(x));
-		this.R_DesktopTopbar(topbar);
-		this.z(pageVisualEffects,x => this.R_CinematicContainer(x));
-		this.D_FrameworkUpdates(frameworkUpdates);
+		this.sm.R_PlayerOverlay(playerOverlays);
+		this.z(onResponseReceivedEndpoints,x => this.sm.xm.GE_ResponseReceived(cf,x));
+		this.z(engagementPanels,x => this.sm.R_EngagementPanelSectionList(x));
+		this.sm.R_DesktopTopbar(topbar);
+		this.z(pageVisualEffects,x => this.sm.R_CinematicContainer(x));
+		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
 }
 export_(exports => {exports.Support_RS_Watch=Support_RS_Watch;});
@@ -1406,23 +1406,23 @@ class Support_RS_Browse extends BaseService {
 			}
 		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,onResponseReceivedEndpoints,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
+		this.sm.RC_ResponseContext(responseContext);
 		this.t(header,this.G_BrowseHeader);
 		this.sm.trackingParams(trackingParams);
 		this.tz(onResponseReceivedActions,this.GA_ResponseReceived);
-		this.tz_cf(cf,onResponseReceivedEndpoints,this.GE_ResponseReceived);
+		this.tz_cf(cf,onResponseReceivedEndpoints,this.sm.xm.GE_ResponseReceived);
 		this.t(contents,this.G_BrowseContents);
-		this.t(topbar,this.R_DesktopTopbar);
-		this.t(frameworkUpdates,this.R_EntityBatchUpdate);
+		this.t(topbar,this.sm.R_DesktopTopbar);
+		this.t(frameworkUpdates,this.sm.R_EntityBatchUpdate);
 		this.t(sidebar,this.G_BrowseSidebar);
-		this.tz(observedStateTags,this.B_StateTag);
-		this.t(cacheMetadata,this.D_Cache_MD);
+		this.tz(observedStateTags,this.sm.B_StateTag);
+		this.t(cacheMetadata,this.sm.D_Cache_MD);
 		this.t(metadata,this.G_Browse_MD);
-		this.t(microformat,this.R_Microformat);
+		this.t(microformat,this.sm.R_Microformat);
 		this.t(maxAgeStoreSeconds,x => this._primitive_of(x,"number"));
 		this.t(background,this.R_MusicThumbnail);
-		this.t(continuationContents,this.RC_SectionList);
-		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
+		this.t(continuationContents,this.sm.RC_SectionList);
+		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
 	}
 	/** @private @arg {R_FeedTabbedHeader} x */
 	R_FeedTabbedHeader(x) {this.H_("feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
@@ -1447,7 +1447,7 @@ class Support_RS_Browse extends BaseService {
 		const cf="D_MusicThumbnail";
 		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(a);
-		this.D_Thumbnail(thumbnail);
+		this.sm.D_Thumbnail(thumbnail);
 		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
 		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
@@ -1489,8 +1489,72 @@ class Support_RS_Browse extends BaseService {
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
-	/** @private @arg {RC_SectionList} x */
+	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
+	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
+		let b_info=this.is_browse_feedUC(x);
+		if(!b_info[0]) {
+			debugger;
+			return;
+		}
+		let [,bp]=b_info;
+		if(bp[0]===2) {
+			let [,sa,,last_part]=bp;
+			console.log("target_id.last_part",last_part);
+			if(this.str_starts_with_rx(sa,"UC")) {
+				let floc=sa.indexOf("featured");
+				if(floc<0) {debugger; return;}
+				let s1=sa.slice(0,floc);
+				let s2=sa.slice(floc);
+				console.log("[RichGrid.targetId]",x.targetId);
+				console.log("[target_id_parse]",s1,s2);
+			}
+			return;
+		}
+		let [,,channelId,last_part]=bp;
+		switch(last_part) {
+			default: debugger; break;
+			case "featured": case "search":
+		}
+		this.channelId(channelId);
+	}
+	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
+	D_SectionList_BrowseFeed_History(x) {
+		const cf="D_SectionList_BrowseFeed_History";
+		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,x => {
+			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
+			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
+		});
+		this.R_TextHeader(header);
+		this.trackingParams(trackingParams);
+		if(targetId!=="browse-feedFEhistory") debugger;
+	}
+	/** @public @arg {RC_SectionList} x */
 	RC_SectionList(x) {this.H_("sectionListContinuation",x,this.GD_RC_SectionList);}
+	/** @public @arg {GD_RC_SectionList} x */
+	GD_RC_SectionList(x) {
+		const cf="GD_RC_SectionList";
+		if("targetId" in x) {
+			switch(x.targetId) {
+				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
+				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
+				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
+				case "search-feed": return this.DC_SectionList_SearchFeed(x);
+			}
+		}
+		if("contents" in x) {
+			return;
+		}
+		if("disablePullToRefresh" in x) {
+			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			if(disablePullToRefresh!==true) debugger;
+			return;
+		}
+		debugger;
+	}
 }
 export_(exports => {exports.Support_RS_Browse=Support_RS_Browse;});
 class Support_GenericApi extends BaseService {
@@ -1517,7 +1581,7 @@ class Support_GenericApi extends BaseService {
 		this._current_response_type=x.type;
 		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
 		let v=x;
-		this.RC_ResponseContext(v.data.responseContext);
+		this.sm.RC_ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
 			if(x.type==="account.account_menu") break x;
 			if(x.type==="browse.edit_playlist") break x;
@@ -1603,13 +1667,13 @@ class Support_GenericApi extends BaseService {
 	RSM_ChannelPreference(x) {
 		const cf="RSM_ChannelPreference";
 		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
+		this.sm.RC_ResponseContext(responseContext);
 		let [u1]=this.z(actions,x => {
 			if(!x.openPopupAction) debugger;
 			let a=this.TA_OpenPopup(cf,x);
 			return this.T_OpenPopup_Toast(a);
 		});
-		this.z(u1,this.RA_Notification);
+		this.z(u1,this.sm.RA_Notification);
 		this.sm.trackingParams(trackingParams);
 		this.R_EntityBatchUpdate(frameworkUpdates);
 		this.channelId(channelId);
@@ -1650,7 +1714,7 @@ class Support_GenericApi extends BaseService {
 	AD_UpdateNotificationsUnseenCount(x) {
 		const cf="AD_UpdateNotificationsUnseenCount";
 		const {handlerData,unseenCount,timeoutMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(handlerData);
+		this.sm.a_primitive_str(handlerData);
 		this.sm.a_primitive_num(unseenCount);
 		this.sm.a_primitive_num(timeoutMs);
 	}
@@ -1767,13 +1831,13 @@ class Support_GenericApi extends BaseService {
 		const cf="D_Notification";
 		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
-		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
+		this.z([thumbnail,videoThumbnail],this.sm.D_Thumbnail);
 		this.z([shortMessage,sentTimeText],this.sm.G_Text);
-		if(navigationEndpoint.watchEndpoint) {this.E_Watch(navigationEndpoint);} else {debugger;}
+		if(navigationEndpoint.watchEndpoint) {this.sm.E_Watch(navigationEndpoint);} else {debugger;}
 		this._primitive_of(read,"boolean");
 		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
 		this.R_Menu(contextualMenu);
-		this.parse_number_template(notificationId);
+		this.sm.parse_number_template(notificationId);
 	}
 }
 export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
@@ -1837,12 +1901,12 @@ class Support_EventInput extends BaseService {
 			if(!this.is_not_empty_obj(u)) return;
 			if("previousCsn" in u) {
 				const {previousCsn,...y}=u; this.g(y);
-				this.D_VeCsn(previousCsn,true);
+				this.sm.D_VeCsn(previousCsn,true);
 				return;
 			}
 			const {graftedVes,csn,...y}=u; this.g(y);
 			this.z(graftedVes,this.D_GraftedVeItem);
-			this.D_VeCsn(csn);
+			this.sm.D_VeCsn(csn);
 			return;
 		}
 		if(this.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
@@ -1975,7 +2039,7 @@ class Support_EventInput extends BaseService {
 	NavFinishDetail_Watch(x) {
 		const cf="R_PageTypeWatch";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Watch(endpoint);
+		this.sm.E_Watch(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
@@ -2000,7 +2064,7 @@ class Support_EventInput extends BaseService {
 	/** @private @arg {G_RS_ByPageType} x */
 	DataResponsePageType(x) {
 		const cf="DataResponsePageType";
-		this.RC_ResponseContext(x.response.responseContext);
+		this.sm.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.x.get("x_RS_Page_Browse").RS_Page_Browse(x);
 			case "watch": return this.x.get("x_RS_WatchPage").RS_WatchPage(x);
@@ -2059,7 +2123,7 @@ class Support_EventInput extends BaseService {
 						let [p,s]=split_string_once(e,"?");
 						if(p!=="search") debugger;
 						let {query,...y}=this.parse_url_search_params(s); this.g(y);
-						this.a_primitive_str(query);
+						this.sm.a_primitive_str(query);
 						return;
 					}
 					switch(e) {
@@ -2098,7 +2162,7 @@ class Support_EventInput extends BaseService {
 			/** @type {T_MakeHandlers<typeof x>} */
 			const handlers={...h_d,url: h_url,expirationTime: h_et};
 			let {previousCsn,...u1}=this.RS_Page_Type1(cf,x,handlers); this.g(u1);
-			this.D_VeCsn(previousCsn,true);
+			this.sm.D_VeCsn(previousCsn,true);
 			return;
 		}
 		if("rootVe" in x) {
@@ -2111,8 +2175,8 @@ class Support_EventInput extends BaseService {
 				expirationTime: h_et,
 			};
 			const {rootVe,csn,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
-			this.rootVe(rootVe,3611);
-			this.t(csn,this.D_VeCsn);
+			this.sm.rootVe(rootVe,3611);
+			this.t(csn,this.sm.D_VeCsn);
 			return;
 		}
 		if("csn" in x) {
@@ -2125,7 +2189,7 @@ class Support_EventInput extends BaseService {
 				expirationTime: h_et,
 			};
 			const {csn,graftedVes,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
-			this.t(csn,this.D_VeCsn);
+			this.t(csn,this.sm.D_VeCsn);
 			this.z(graftedVes,this.D_GraftedVeItem);
 			return;
 		}
@@ -2148,7 +2212,7 @@ class Support_EventInput extends BaseService {
 		if(page!=="playlist") debugger;
 		this.E_VE5754(endpoint);
 		this.RS_Playlist(response);
-		this.a_primitive_str(url);
+		this.sm.a_primitive_str(url);
 		if("rootVe" in y) {
 			const {rootVe,...u}=this.sm.s(cf,y); this.g(u);/*#destructure_done*/
 			switch(rootVe) {
@@ -2167,7 +2231,7 @@ class Support_EventInput extends BaseService {
 		if(page!=="settings") debugger;
 		this.E_VE23462(endpoint);
 		this.RS_Settings(response);
-		this.a_primitive_str(url);
+		this.sm.a_primitive_str(url);
 	}
 	/** @private @arg {G_RS_ShortsPage} x */
 	G_RS_Page_Shorts(x) {
@@ -2181,7 +2245,7 @@ class Support_EventInput extends BaseService {
 		this.t(reelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
-		this.t(previousCsn,x => this.D_VeCsn(x,true));
+		this.t(previousCsn,x => this.sm.D_VeCsn(x,true));
 		this.t(cachedReelWatchSequenceResponse,x => this.sm.ht.RS_ReelWatchSequence(x));
 	}
 	/** @private @arg {RS_SearchPage} x */
@@ -2198,7 +2262,7 @@ class Support_EventInput extends BaseService {
 	D_GraftedVeItem(x) {
 		const cf="D_GraftedVeItem";
 		const {veData,csn,...y}=this.sm.s(cf,x); this.g(y);
-		this.D_VeCsn(csn);
+		this.sm.D_VeCsn(csn);
 	}
 	/** @private @arg {RS_VE23462_Page_Settings} x */
 	RS_VE23462_Page_Settings(x) {
@@ -2207,14 +2271,14 @@ class Support_EventInput extends BaseService {
 		if(page!=="settings") debugger;
 		this.E_VE23462(endpoint);
 		this.RS_Settings(response);
-		this.a_primitive_str(url);
-		this.rootVe(rootVe,23462);
+		this.sm.a_primitive_str(url);
+		this.sm.rootVe(rootVe,23462);
 	}
 	/** @private @arg {RS_VE37414_Shorts} x */
 	RS_VE37414_Shorts(x) {
 		const cf="Shorts_VE37414";
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.rootVe(rootVe,37414);
+		this.sm.rootVe(rootVe,37414);
 		if(page!=="shorts") debugger;
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
@@ -2358,7 +2422,7 @@ class Support_VE37414 extends BaseService {
 		const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,inputType,sequenceParams,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(videoId,this.videoId);
 		this.sm.params("reel.player_params",playerParams);
-		this.t(thumbnail,this.D_Thumbnail);
+		this.t(thumbnail,this.sm.D_Thumbnail);
 		this.sm.xr.R_ReelPlayerOverlay(overlay);
 		this.sm.params("reel.params",params);
 		this.t(loggingContext,this.D_LoggingContext);
@@ -2391,7 +2455,7 @@ class Support_VE37414 extends BaseService {
 			this.videoId(p4);
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
-		this.rootVe(rootVe,37414);
+		this.sm.rootVe(rootVe,37414);
 		return `VE${rootVe}`;
 	}
 }
@@ -2457,7 +2521,7 @@ class Support_Renderer extends BaseService {
 		const cf="AD_ReplayChatItem";
 		const {actions,videoOffsetTimeMsec,...y}=this.sm.s(cf,x); this.g(y);
 		this.z(actions,this.A_AddChatItem);
-		this.a_primitive_str(videoOffsetTimeMsec);
+		this.sm.a_primitive_str(videoOffsetTimeMsec);
 	}
 	/** @private @arg {AD_AddChatItem} x */
 	AD_AddChatItem(x) {
@@ -2542,7 +2606,7 @@ class Support_Renderer extends BaseService {
 		const {url,webPageType,rootVe,...y}=this.sm.s(cf,x); this.g(y);
 		this.sm.cq(url,"/select_site");
 		this.sm.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
-		this.rootVe(rootVe,12924);
+		this.sm.rootVe(rootVe,12924);
 	}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_cart"));}
@@ -2575,7 +2639,7 @@ class Support_Renderer extends BaseService {
 		this.t(title,this.sm.G_Text);
 		this.z(stats,this.sm.G_Text);
 		this.R_Menu(menu);
-		this.E_Watch(navigationEndpoint);
+		this.sm.E_Watch(navigationEndpoint);
 		this.tz(badges,this.RMD_Badge);
 		this.tg(description);
 		this.sm.G_Text(showMoreText);
@@ -2630,7 +2694,7 @@ class Support_Renderer extends BaseService {
 		const cf="D_PdgCommentPreview";
 		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(title);
-		this.D_Thumbnail(authorThumbnail);
+		this.sm.D_Thumbnail(authorThumbnail);
 		this.sm.G_Text(authorText);
 		this.z(commentOptionRenderers,this.R_PdgCommentOption);
 		this.sm.G_Text(defaultCommentText);
@@ -2678,12 +2742,12 @@ class Support_Renderer extends BaseService {
 				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
 				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
 			});
-			this.a_primitive_str(a);
+			this.sm.a_primitive_str(a);
 		} else {
 			const {identifier,serializedTemplateConfig: a,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 			let idp=split_string_once(identifier,"|");
 			if(idp[0]!=="bottom_sheet_list_option.eml") debugger;
-			this.a_primitive_str(a);
+			this.sm.a_primitive_str(a);
 		}
 	}
 	/** @public @arg {R_Transcript} x */
@@ -2729,8 +2793,8 @@ class Support_Renderer extends BaseService {
 	D_TranscriptSegment(x) {
 		const cf="D_TranscriptSegment";
 		const {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y}=this.sm.s(cf,x); this.g(y);
-		this.a_primitive_str(startMs);
-		this.a_primitive_str(endMs);
+		this.sm.a_primitive_str(startMs);
+		this.sm.a_primitive_str(endMs);
 		this.sm.G_Text(snippet);
 		this.sm.G_Text(startTimeText);
 		this.sm.trackingParams(trackingParams);
@@ -2751,7 +2815,7 @@ class Support_Renderer extends BaseService {
 		this.save_string(`${cf}.hl`,hl);
 		this.save_string(`${cf}.ip`,ip);
 		this.save_string(`${cf}.ipbits`,ipbits);
-		let e_num=this.parse_number_template(expire);
+		let e_num=this.sm.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.sm.a_primitive_num(e_num);
 		this.sm.ht.parse_signature(signature);
@@ -2792,7 +2856,7 @@ class Support_Renderer extends BaseService {
 		if("presentationStyle" in x) {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 			this.E_VE3611(navigationEndpoint);
-			this.D_Thumbnail(thumbnail);
+			this.sm.D_Thumbnail(thumbnail);
 			this.D_LiveBroadcastingBadge(badges);
 			this.sm.trackingParams(trackingParams);
 			this.sm.G_Text(formattedTitle);
@@ -2808,7 +2872,7 @@ class Support_Renderer extends BaseService {
 		if("entryData" in x) {
 			const {navigationEndpoint,thumbnail,trackingParams,formattedTitle,accessibility,entryData,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 			this.E_VE3611(navigationEndpoint);
-			this.D_Thumbnail(thumbnail);
+			this.sm.D_Thumbnail(thumbnail);
 			this.sm.trackingParams(trackingParams);
 			this.sm.G_Text(formattedTitle);
 			this.D_Accessibility(accessibility);
@@ -2849,14 +2913,14 @@ class Support_Renderer extends BaseService {
 				this.R_GuideEntryData(entryData);
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
-				this.D_Thumbnail(thumbnail);
+				this.sm.D_Thumbnail(thumbnail);
 				this.D_LiveBroadcastingBadge(badges);
 				return;
 			}
 			const {entryData,navigationEndpoint,thumbnail,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);/*#destructure_done*/
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.D_Thumbnail(thumbnail);
+			this.sm.D_Thumbnail(thumbnail);
 			return;
 		}
 		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
@@ -3092,7 +3156,7 @@ class Support_Renderer extends BaseService {
 		const cf="D_LiveChatPlaceholderItem";
 		const {id,timestampUsec,...y}=this.sm.s(cf,x); this.g(y);
 		console.log(`${cf}.id`,id);
-		let u_seconds=this.parse_number_template(timestampUsec);
+		let u_seconds=this.sm.parse_number_template(timestampUsec);
 		this.sm.a_primitive_num(u_seconds);
 	}
 	/** @public @arg {R_LiveChatTextMessage} x */
@@ -3133,23 +3197,23 @@ class Support_Renderer extends BaseService {
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
 		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,facebookProfileId,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...u}=this.sm.s(cf,x);
-		this.t(facebookProfileId,this.a_primitive_str);
-		this.a_primitive_str(title);
-		this.a_primitive_str(description);
-		this.a_primitive_str(androidDeepLink);
-		this.a_primitive_str(iosAppindexingLink);
+		this.t(facebookProfileId,x => this.sm.a_primitive_str(x));
+		this.sm.a_primitive_str(title);
+		this.sm.a_primitive_str(description);
+		this.sm.a_primitive_str(androidDeepLink);
+		this.sm.a_primitive_str(iosAppindexingLink);
 		this.sm.cq(isFamilySafe,true);
-		this.a_primitive_str(externalId);
-		this.a_primitive_str(androidAppindexingLink);
-		this.z(availableCountryCodes,this.a_primitive_str);
-		this.D_Thumbnail(avatar);
-		this.a_primitive_str(rssUrl);
-		this.a_primitive_str(keywords);
+		this.sm.a_primitive_str(externalId);
+		this.sm.a_primitive_str(androidAppindexingLink);
+		this.z(availableCountryCodes,x => this.sm.a_primitive_str(x));
+		this.sm.D_Thumbnail(avatar);
+		this.sm.a_primitive_str(rssUrl);
+		this.sm.a_primitive_str(keywords);
 		if(ownerUrls.length!==1) debugger;
 		let ur=this._convert_url_to_obj(ownerUrls[0]);
 		this.sm.cq(this.str_starts_with_rx("/@",ur.pathname),true);
-		this.a_primitive_str(channelUrl);
-		this.a_primitive_str(vanityChannelUrl);
+		this.sm.a_primitive_str(channelUrl);
+		this.sm.a_primitive_str(vanityChannelUrl);
 		const {channelConversionUrl,...y}=u; this.g(y);/*#destructure_done*/
 		this.t_cf(`${cf}.channelConversionUrl`,channelConversionUrl,(cf,x) => this.parser.parse_url(cf,x));
 	}
@@ -3197,7 +3261,7 @@ class Support_Renderer extends BaseService {
 	/** @private @arg {D_ProfilePageHeaderTitle} x */
 	D_ProfilePageHeaderTitle(x) {this.y("D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
 	/** @private @arg {D_ProfilePageHeaderTitle_Content} x */
-	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,this.a_primitive_str);}
+	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,x => this.sm.a_primitive_str(x));}
 	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
 	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("profilePageHeaderThumbnailViewModel",x,this.g);}
 	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
@@ -3222,10 +3286,10 @@ class Support_Renderer extends BaseService {
 		const {interpreterUrl,interpreterHash,program,globalName,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(interpreterUrl,a => {
 			let uw=this.UrlWrappedValueT(a);
-			this.a_primitive_str(uw);
+			this.sm.a_primitive_str(uw);
 		});
-		this.a_primitive_str(interpreterHash);
-		this.a_primitive_str(program);
+		this.sm.a_primitive_str(interpreterHash);
+		this.sm.a_primitive_str(program);
 		if(globalName!=="trayride") debugger;
 	}
 	/** @public @arg {D_AudioConfig} x */
@@ -3322,11 +3386,11 @@ class Support_Renderer extends BaseService {
 		const cf="D_TextInputFormField";
 		const {label,value,maxCharacterLimit,key,onChange,placeholderText,validValueRegexp,invalidValueErrorMessage,isMultiline,required,...y}=this.sm.s(cf,x); this.g(y);
 		this.sm.G_Text(label);
-		this.t(value,this.a_primitive_str);
+		this.t(value,x => this.sm.a_primitive_str(x));
 		this.save_number(`${cf}.maxCharacterLimit`,maxCharacterLimit);
 		this.t(key,x => this.save_string(`${cf}.key`,x));
 		this.t(onChange,this.E_PlaylistEdit);
-		this.t(placeholderText,this.a_primitive_str);
+		this.t(placeholderText,x => this.sm.a_primitive_str(x));
 		this.sm.cq(validValueRegexp,"[^<>]*");
 		this.sm.G_Text(invalidValueErrorMessage);
 		this.t(isMultiline,x => this.sm.cq(x,true));
@@ -3354,7 +3418,7 @@ class Support_Renderer extends BaseService {
 			if("privacyDropdownItemRenderer" in x) return this.R_PrivacyDropdownItem(x);
 			debugger;
 		});
-		this.t(label,this.a_primitive_str);
+		this.t(label,x => this.sm.a_primitive_str(x));
 	}
 	/** @public @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
@@ -3379,16 +3443,16 @@ class Support_Renderer extends BaseService {
 		const cf="D_C4TabbedHeader";
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...u}=this.sm.s(cf,x);
 		this.channelId(channelId);
-		this.a_primitive_str(title);
+		this.sm.a_primitive_str(title);
 		this.E_VE3611(navigationEndpoint);
-		this.D_Thumbnail(avatar);
-		this.D_Thumbnail(banner);
+		this.sm.D_Thumbnail(avatar);
+		this.sm.D_Thumbnail(banner);
 		this.tz(badges,this.RMD_Badge);
 		this.t(headerLinks,this.R_ChannelHeaderLinks);
 		this.R_SubscribeButton(subscribeButton);
 		this.sm.G_Text(subscriberCountText);
-		this.D_Thumbnail(tvBanner);
-		this.D_Thumbnail(mobileBanner);
+		this.sm.D_Thumbnail(tvBanner);
+		this.sm.D_Thumbnail(mobileBanner);
 		this.sm.trackingParams(trackingParams);
 		this.t(sponsorButton,this.sm.xm.R_Button);
 		this.sm.G_Text(channelHandleText);
@@ -3403,7 +3467,7 @@ class Support_Renderer extends BaseService {
 		const cf="D_ActiveAccountHeader";
 		const {accountName,accountPhoto,settingsEndpoint,manageAccountTitle,trackingParams,channelHandle,...y}=this.sm.s(cf,x); this.g(y);
 		this.sm.G_Text(accountName);
-		this.D_Thumbnail(accountPhoto);
+		this.sm.D_Thumbnail(accountPhoto);
 		this.E_ApplicationSettings(settingsEndpoint);
 		this.sm.G_Text(manageAccountTitle);
 		this.sm.trackingParams(trackingParams);
@@ -3432,8 +3496,8 @@ class Support_Renderer extends BaseService {
 			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.sm.s(cf,x); this.g(y);
 			this.sm.G_Text(title);
 			this.sm.G_Text(timeDescription);
-			this.D_Thumbnail(thumbnail);
-			this.E_Watch(onTap);
+			this.sm.D_Thumbnail(thumbnail);
+			this.sm.E_Watch(onTap);
 			this.sm.trackingParams(trackingParams);
 			this.sm.xm.R_Button(shareButton);
 			this.t(repeatButton,this.R_ToggleButton);
@@ -3441,7 +3505,7 @@ class Support_Renderer extends BaseService {
 			this.t(endRepeatCommand,this.C_CommandExecutor);
 			this.sm.params("player_state.entity.key",b);
 			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-			this.a_primitive_str(timeDescriptionA11yLabel);
+			this.sm.a_primitive_str(timeDescriptionA11yLabel);
 			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
 			this.t_cf(cf,darkColorPalette,this.D_DarkColorPalette);
 			return;
@@ -3449,8 +3513,8 @@ class Support_Renderer extends BaseService {
 		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.sm.s(cf,x); this.g(y);
 		this.sm.G_Text(title);
 		this.sm.G_Text(timeDescription);
-		this.D_Thumbnail(thumbnail);
-		this.E_Watch(onTap);
+		this.sm.D_Thumbnail(thumbnail);
+		this.sm.E_Watch(onTap);
 		this.sm.trackingParams(trackingParams);
 		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
@@ -3725,7 +3789,7 @@ class Support_Renderer extends BaseService {
 	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData";
 		const {serverBuildLabel,resourceStatuses: a,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(serverBuildLabel);
+		this.sm.a_primitive_str(serverBuildLabel);
 		this.z(a,this.D_ElementResourceStatus);
 	}
 	/** @private @arg {D_ElementResourceStatus} x */
@@ -3733,22 +3797,22 @@ class Support_Renderer extends BaseService {
 		const cf="D_ElementResourceStatus";
 		const {identifier,status,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
-		this.a_primitive_str(identifier);
+		this.sm.a_primitive_str(identifier);
 	}
 	/** @private @arg {D_PlaylistVideoThumbnail} x */
 	D_PlaylistVideoThumbnail(x) {
 		const cf="D_PlaylistVideoThumbnail";
 		const {thumbnail,trackingParams,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(thumbnail);
+		this.sm.D_Thumbnail(thumbnail);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_Playlist_MD} x */
 	D_Playlist_MD(x) {
 		const cf="D_Playlist_MD";
 		const {title,iosAppindexingLink,androidAppindexingLink,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(title);
-		this.a_primitive_str(iosAppindexingLink);
-		this.a_primitive_str(androidAppindexingLink);
+		this.sm.a_primitive_str(title);
+		this.sm.a_primitive_str(iosAppindexingLink);
+		this.sm.a_primitive_str(androidAppindexingLink);
 	}
 	/** @private @arg {D_PdgCommentOption} x */
 	D_PdgCommentOption(x) {
@@ -3773,7 +3837,7 @@ class Support_Renderer extends BaseService {
 		t.cq(tr.host,"www.youtube.com");
 		let [r,...p]=split_string(tr.pathname,"/"); t.cq(r,"");
 		t.cq(p[0],"pagead"); t.cq(p[1],"viewthroughconversion");
-		let np=this.parse_number_template(p[2]);
+		let np=this.sm.parse_number_template(p[2]);
 		if(this.view_conversion_info.has(np)) return;
 		let sp=this.parse_url_search_params(tr.search);
 		let kk=this.get_keys_of(sp);
@@ -3920,7 +3984,7 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(searchPlaceholderText);
 		this.sm.G_Text(searchNoResultsText);
 		this.sm.G_Text(pickSkinToneText);
-		this.z([clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel],this.a_primitive_str);
+		this.z([clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel],x => this.sm.a_primitive_str(x));
 	}
 	/** @private @arg {R_EmojiPickerCategory} x */
 	R_EmojiPickerCategory(x) {this.H_("emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
@@ -4055,8 +4119,8 @@ class Support_Renderer extends BaseService {
 	D_SponsorCommentBadge(x) {
 		const cf="D_SponsorCommentBadge";
 		const {customBadge,tooltip,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(customBadge);
-		this.a_primitive_str(tooltip);
+		this.sm.D_Thumbnail(customBadge);
+		this.sm.a_primitive_str(tooltip);
 	}
 	/** @private @arg {D_IgnoreNavigation} x */
 	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.sm.cq(x,true));}
@@ -4074,7 +4138,7 @@ class Support_Renderer extends BaseService {
 		const {replyButton,cancelButton,authorThumbnail,editableText,placeholderText,errorMessage,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.xm.R_Button(replyButton);
 		this.sm.xm.R_Button(cancelButton);
-		this.D_Thumbnail(authorThumbnail);
+		this.sm.D_Thumbnail(authorThumbnail);
 		this.t(editableText,this.sm.G_Text);
 		this.sm.G_Text(placeholderText);
 		this.sm.G_Text(errorMessage);
@@ -4094,12 +4158,12 @@ class Support_Renderer extends BaseService {
 	D_VideoInfoCardContent(x) {
 		const cf="D_VideoInfoCardContent";
 		const {videoThumbnail,lengthString,videoTitle,channelName,viewCountText,action,trackingParams,...y}=this.sm.s(cf,x); this.g(y);
-		this.D_Thumbnail(videoThumbnail);
+		this.sm.D_Thumbnail(videoThumbnail);
 		this.sm.G_Text(lengthString);
 		this.sm.G_Text(videoTitle);
 		this.sm.G_Text(channelName);
 		this.sm.G_Text(viewCountText);
-		this.E_Watch(action);
+		this.sm.E_Watch(action);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_SimpleCardContent} x */
@@ -4108,7 +4172,7 @@ class Support_Renderer extends BaseService {
 	D_SimpleCardContent(x) {
 		const cf="D_SimpleCardContent";
 		const {image,title,actionButton,trackingParams,displayDomain,showLinkIcon,callToAction,command,...y}=this.sm.s(cf,x); this.g(y);
-		this.D_Thumbnail(image);
+		this.sm.D_Thumbnail(image);
 		this.sm.G_Text(title);
 		this.R_SimpleCardButton(actionButton);
 		this.sm.trackingParams(trackingParams);
@@ -4153,7 +4217,7 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(timestampText);
 		this.E_VE3611(channelNavigationEndpoint);
 		this.sm.G_Text(channelTitleText);
-		this.D_Thumbnail(channelThumbnail);
+		this.sm.D_Thumbnail(channelThumbnail);
 		this.sm.trackingParams(trackingParams);
 		this.D_Accessibility(accessibility);
 	}
@@ -4166,8 +4230,8 @@ class Support_Renderer extends BaseService {
 		this.sm.T_Icon(cf,icon);
 		this.sm.G_Text(title);
 		if(!command.watchEndpoint) debugger;
-		this.E_Watch(command);
-		this.a_primitive_str(a11yLabel);
+		this.sm.E_Watch(command);
+		this.sm.a_primitive_str(a11yLabel);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @use_import D_ReelPlayerOverlay @public @arg {R_PivotButton} x */
@@ -4176,7 +4240,7 @@ class Support_Renderer extends BaseService {
 	D_PivotButton(x) {
 		const cf="D_PivotButton";
 		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,backgroundColor,icon,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(thumbnail,this.D_Thumbnail);
+		this.t(thumbnail,this.sm.D_Thumbnail);
 		this.t(onClickCommand,x => {
 			if("addToToastAction" in x) return this.A_AddToToast(x);
 			if(this.sm.is_TE_VE(x,3611)) return this.E_VE3611(x);
@@ -4227,13 +4291,13 @@ class ForService_XMethods extends BaseService {
 	}
 	/** @arg {G_ClientSignal_Item} x */
 	G_ClientSignal_Item(x) {
-		const cf="G_ClientSignal_Item"; this.k(cf,x);
+		const cf="G_ClientSignal_Item"; this.sm.k(cf,x);
 		if("openPopupAction" in x) return this.S_Client_Popup(x);
 		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
 		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
 		if("signalAction" in x) return this.A_Signal(x);
 		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
-		this.codegen_typedef(cf,x);
+		this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<Popup_ClientSignal>>} x */
 	S_Client_Popup(x) {
@@ -4250,17 +4314,17 @@ class ForService_XMethods extends BaseService {
 			case "DIALOG": {
 				const {popup,popupType,beReused,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 				this.t(beReused,x => this.cq(x,true));
-				if(!popup.confirmDialogRenderer) {this.codegen_typedef(cf,x); break;}
+				if(!popup.confirmDialogRenderer) {this.sm.codegen_typedef(cf,x); break;}
 				this.R_ConfirmDialog(popup);
 			} break;
 			case "TOAST": {
 				const {popup,popupType,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-				if(!popup.notificationActionRenderer) {this.codegen_typedef(cf,x); break;}
-				this.RA_Notification(popup);
+				if(!popup.notificationActionRenderer) {this.sm.codegen_typedef(cf,x); break;}
+				this.sm.RA_Notification(popup);
 			} break;
 			case "TOP_ALIGNED_DIALOG": {
 				const {popup,popupType,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-				if(!popup.voiceSearchDialogRenderer) {this.codegen_typedef(cf,x); break;}
+				if(!popup.voiceSearchDialogRenderer) {this.sm.codegen_typedef(cf,x); break;}
 				this.R_VoiceSearchDialog(popup);
 			} break;
 		}
@@ -4297,7 +4361,7 @@ class ForService_XMethods extends BaseService {
 				} break;
 				case "TOAST": {
 					let x1=ax.popup;
-					if("notificationActionRenderer" in x1) {this.RA_Notification(x1); break;}
+					if("notificationActionRenderer" in x1) {this.sm.RA_Notification(x1); break;}
 					debugger;
 				} break;
 				case "TOP_ALIGNED_DIALOG": {
@@ -4325,31 +4389,31 @@ class ForService_XMethods extends BaseService {
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`${cf}.response_endpoint`,x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		if("changeKeyedMarkersVisibilityCommand" in x) return this.C_ChangeKeyedMarkersVisibility(x);
-		if("loadMarkersCommand" in x) return this.C_LoadMarkers(x);
-		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
+		if("changeKeyedMarkersVisibilityCommand" in x) return this.sm.C_ChangeKeyedMarkersVisibility(x);
+		if("loadMarkersCommand" in x) return this.sm.C_LoadMarkers(x);
+		if("reloadContinuationItemsCommand" in x) return this.sm.C_ReloadContinuationItems(x);
+		if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
 		debugger;
 	}
 	/** @private @arg {D_ToggleButton_ToggledSrvEP} x */
 	D_ToggleButton_ToggledSrvEP(x) {
-		const cf="D_ToggleButton_ToggledSrvEP"; this.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.xr.E_PerformCommentAction(x);
-		if("likeEndpoint" in x) return this.E_Like(x);
+		const cf="D_ToggleButton_ToggledSrvEP"; this.sm.k(cf,x);
+		if("performCommentActionEndpoint" in x) return this.sm.xr.E_PerformCommentAction(x);
+		if("likeEndpoint" in x) return this.sm.E_Like(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
-		if("removeUpcomingEventReminderEndpoint" in x) return this.E_RemoveUpcomingEventReminder(x);
+		if("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
+		if("removeUpcomingEventReminderEndpoint" in x) return this.sm.E_RemoveUpcomingEventReminder(x);
 		x===""; debugger;
 	}
 	/** @private @arg {D_ToggleButton_DefaultSrvEP} x */
 	D_ToggleButton_DefaultSrvEP(x) {
-		const cf="D_ToggleButton_DefaultSrvEP"; this.k(cf,x);
-		if("performCommentActionEndpoint" in x) return this.xr.E_PerformCommentAction(x);
-		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
+		const cf="D_ToggleButton_DefaultSrvEP"; this.sm.k(cf,x);
+		if("performCommentActionEndpoint" in x) return this.sm.xr.E_PerformCommentAction(x);
+		if("repeatChapterCommand" in x) return this.sm.C_RepeatChapter(x);
+		if("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("addUpcomingEventReminderEndpoint" in x) return this.E_AddUpcomingEventReminder(x);
+		if("addUpcomingEventReminderEndpoint" in x) return this.sm.E_AddUpcomingEventReminder(x);
 		x===""; debugger;
 	}
 	/** @public @arg {R_SubscribeButton} x */
@@ -4359,19 +4423,19 @@ class ForService_XMethods extends BaseService {
 		const cf="D_SubscribeButton";
 		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.sm.s(cf,x);
 		this.a_primitive_bool(enabled);
-		this.t(buttonText,this.G_Text);
+		this.t(buttonText,this.sm.G_Text);
 		this.t(subscribed,this.a_primitive_bool);
 		this.t(type,x => this.sm.cq(x,"FREE"));
 		this.t(channelId,this.channelId);
-		if(trackingParams) this.trackingParams(trackingParams);
+		if(trackingParams) this.sm.trackingParams(trackingParams);
 		this.t(showPreferences,this.a_primitive_bool);
-		let [p1,o1]=this.unwrap_prefix(y1,"subscribed");
+		let [p1,o1]=this.sm.unwrap_prefix(y1,"subscribed");
 		this.D_SubscribeButton_SubscribedPrefix(p1);
-		let [p2,o2]=this.unwrap_prefix(o1,"unsubscribed");
+		let [p2,o2]=this.sm.unwrap_prefix(o1,"unsubscribed");
 		this.D_SubscribeButton_UnsubscribedPrefix(p2);
-		let [p3,o3]=this.unwrap_prefix(o2,"subscribe");
+		let [p3,o3]=this.sm.unwrap_prefix(o2,"subscribe");
 		this.D_SubscribeButton_SubscribePrefix(p3);
-		let [p4,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
+		let [p4,{...o4}]=this.sm.unwrap_prefix(o3,"unsubscribe");
 		this.D_SubscribeButton_UnsubscribePrefix(p4);
 		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
 		this.tz(onSubscribeEndpoints,this.E_Subscribe);
@@ -4397,17 +4461,17 @@ class ForService_XMethods extends BaseService {
 		if("createCommentReplyEndpoint" in x) return this.xr.E_CreateCommentReply(x);
 		let gen_name=this.get_codegen_name(cf,x);
 		if(!gen_name) {debugger; return;}
-		x===""; this.codegen_typedef(`${cf}$${gen_name}`,x,true);
+		x===""; this.sm.codegen_typedef(`${cf}$${gen_name}`,x,true);
 	}
 	/**
 	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
 	 * @returns {[p1,p2,o2]}
 	 * */
 	D_ThumbnailOverlayToggleButton_Omit(cf,x) {
-		this.k(cf,x);
-		let [p1,{...o1}]=this.unwrap_prefix(x,"toggled");
-		let [p2,{trackingParams,...o2}]=this.unwrap_prefix(o1,"untoggled");
-		this.trackingParams(trackingParams);
+		this.sm.k(cf,x);
+		let [p1,{...o1}]=this.sm.unwrap_prefix(x,"toggled");
+		let [p2,{trackingParams,...o2}]=this.sm.unwrap_prefix(o1,"untoggled");
+		this.sm.trackingParams(trackingParams);
 		return [p1,p2,o2];
 	}
 	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
@@ -4493,33 +4557,33 @@ class ForService_XMethods extends BaseService {
 		if("browseEndpoint" in x) {
 			if(this.sm.is_TE_VE(x,23462)) return this.E_VE23462(x);
 		}
-		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("watchEndpoint" in x) return this.sm.E_Watch(x);
 		if("urlEndpoint" in x) return this.xr.E_Url(x);
 		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
 		x.createCommentReplyDialogEndpoint;
 		if("createCommentReplyDialogEndpoint" in x) return this.xr.E_CreateCommentReplyDialog(x);
-		x===""; this.codegen_typedef(cf,x);
+		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
 		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(hint,this.R_Hint);
+		this.t(hint,this.sm.R_Hint);
 		this.t(iconPosition,x => this.save_enum(cf,"BUTTON_ICON_POSITION_TYPE",x));
 		this.t(targetId,this.D_Button_targetId);
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => this.save_string(`${cf}.style`,x));
-		this.t(isDisabled,this.a_primitive_bool);
-		this.t(text,this.G_Text);
+		this.t(isDisabled,this.sm.a_primitive_bool);
+		this.t(text,this.sm.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
 		this.t(navigationEndpoint,this.D_Button_NavEP);
-		this.t(accessibility,this.D_Label);
-		this.t(tooltip,this.a_primitive_str);
-		this.t(trackingParams,x => this.trackingParams(x));
+		this.t(accessibility,this.sm.D_Label);
+		this.t(tooltip,x => this.sm.a_primitive_str(x));
+		this.t(trackingParams,x => this.sm.trackingParams(x));
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 	}
-	/** @protected @arg {G_ThumbnailOverlayItem} x */
+	/** @public @arg {G_ThumbnailOverlayItem} x */
 	G_ThumbnailOverlayItem(x) {
 		const cf="G_ThumbnailOverlayItem";
 		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
@@ -4532,39 +4596,39 @@ class ForService_XMethods extends BaseService {
 		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
 		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
 		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
-		this.codegen_typedef(`ThumbnailOverlay$${cf}`,x);
+		this.sm.codegen_typedef(`ThumbnailOverlay$${cf}`,x);
 	}
 	/** @protected @arg {R_HeroPlaylistThumbnail} x */
-	R_HeroPlaylistThumbnail(x) {this.H_s("heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
+	R_HeroPlaylistThumbnail(x) {this.H_("heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {D_HeroPlaylistThumbnail} x */
 	D_HeroPlaylistThumbnail(x) {
 		const cf="D_HeroPlaylistThumbnail";
 		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(thumbnail);
-		if(this.num_to_string(maxRatio)!=="0.5625") debugger;
-		this.trackingParams(trackingParams);
-		this.E_Watch(onTap);
+		this.sm.D_Thumbnail(thumbnail);
+		if(this.sm.num_to_string(maxRatio)!=="0.5625") debugger;
+		this.sm.trackingParams(trackingParams);
+		this.sm.E_Watch(onTap);
 		this.G_ThumbnailOverlayItem(thumbnailOverlays);
 	}
 	/** @public @arg {R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {this.H_s("endScreenVideoRenderer",x,this.D_EndScreenVideo);}
+	R_EndScreenVideo(x) {this.H_("endScreenVideoRenderer",x,this.D_EndScreenVideo);}
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
 		const cf="D_EndScreenVideo";
 		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(videoId);
-		this.G_Text(shortViewCountText);
-		this.G_Text(shortBylineText);
-		this.D_Thumbnail(thumbnail);
+		this.sm.a_primitive_str(videoId);
+		this.sm.G_Text(shortViewCountText);
+		this.sm.G_Text(shortBylineText);
+		this.sm.D_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
+		this.sm.G_Text(title);
+		this.sm.trackingParams(trackingParams);
 		this.t(lengthInSeconds,this.sm.a_primitive_num);
-		this.t(lengthText,this.G_Text);
-		this.G_Text(publishedTimeText);
+		this.t(lengthText,this.sm.G_Text);
+		this.sm.G_Text(publishedTimeText);
 		x: {
 			let x=navigationEndpoint;
-			if("watchEndpoint" in x) {this.E_Watch(x); break x;}
+			if("watchEndpoint" in x) {this.sm.E_Watch(x); break x;}
 			if(!x.reelWatchEndpoint) debugger;
 		}
 	}
@@ -4580,24 +4644,24 @@ class ForService_XMethods extends BaseService {
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo";
 		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.sm.s(cf,x);/*#destructure_off*/
-		this.D_Thumbnail(thumbnail);
+		this.sm.D_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
+		this.sm.G_Text(title);
+		this.sm.trackingParams(trackingParams);
 		this.videoId(videoId);
-		this.a_primitive_str(playlistSetVideoId);
+		this.sm.a_primitive_str(playlistSetVideoId);
 		this.D_DarkColorPalette(cf,darkColorPalette);
 		this.D_LightColorPalette(cf,lightColorPalette);
-		this.G_Text(longBylineText);
-		this.G_Text(shortBylineText);
+		this.sm.G_Text(longBylineText);
+		this.sm.G_Text(shortBylineText);
 		this.a_primitive_bool(selected);
-		this.G_Text(lengthText);
+		this.sm.G_Text(lengthText);
 		this.R_Menu(menu);
-		this.E_Watch(navigationEndpoint);
-		if("indexText" in y) return this.y(cf,"indexText",y,this.G_Text);
+		this.sm.E_Watch(navigationEndpoint);
+		if("indexText" in y) return this.y(cf,"indexText",y,this.sm.G_Text);
 		let kl=this.get_keys_of(y).length;
 		if(kl>0) {
-			this.codegen_typedef(`${cf}:omit`,y);
+			this.sm.codegen_typedef(`${cf}:omit`,y);
 		}
 		this.g(y);
 	}
@@ -4611,13 +4675,13 @@ class ForService_XMethods extends BaseService {
 		this.t(isToggled,this.a_primitive_bool);
 		this.t(isDisabled,x => this.cq(x,false));
 		this.t(defaultIcon,x => this.save_string(`${cf}.defaultIcon.type`,x.iconType));
-		this.t(defaultText,this.G_Text);
+		this.t(defaultText,this.sm.G_Text);
 		this.t(defaultServiceEndpoint,this.D_ToggleButton_DefaultSrvEP);
-		this.t(toggledText,this.G_Text);
+		this.t(toggledText,this.sm.G_Text);
 		this.t(toggledServiceEndpoint,this.D_ToggleButton_ToggledSrvEP);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
 		this.t(accessibility,this.D_Label);
-		this.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 		this.t(toggledStyle,x => this.save_string(`${cf}.toggledStyle.type`,x.styleType));
 		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
 		this.t(toggledTooltip,x => this.add_string_to_map(cf,"toggledTooltip",x));
@@ -4681,7 +4745,7 @@ class ForService_XMethods extends BaseService {
 	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
 	R_ThumbnailOverlayNowPlaying(x) {this.H_s("thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
-	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
+	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.sm.G_Text);}
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_s("thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
 	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
@@ -4716,7 +4780,7 @@ class ForService_XMethods extends BaseService {
 	D_ThumbnailOverlaySidePanel(x) {
 		const cf="D_ThumbnailOverlaySidePanel";
 		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
+		this.sm.G_Text(text);
 		let store=this.icon_types_map.get(cf);
 		if(!store) return;
 		const {known,unknown}=store;
@@ -4729,21 +4793,21 @@ class ForService_XMethods extends BaseService {
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		this.trackingParams(trackingParams);
+		this.sm.G_Text(text);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {
 		const cf="D_ThumbnailOverlayInlineUnplayable";
 		const {text,icon,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(text);
+		this.sm.G_Text(text);
 		this.ceq(icon.iconType,"PLAY_DISABLED");
 	}
 	/** @private @arg {D_ThumbnailOverlayHoverText} x */
 	D_ThumbnailOverlayHoverText(x) {
 		const cf="D_ThumbnailOverlayHoverText";
 		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
+		this.sm.G_Text(text);
 		if(icon.iconType!=="PLAY_ALL") debugger;
 	}
 	/** @private @arg {DE_CreateComment} x */

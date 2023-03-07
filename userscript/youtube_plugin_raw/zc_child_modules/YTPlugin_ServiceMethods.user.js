@@ -44,7 +44,7 @@ class ServiceMethods extends ServiceData {
 		this._ix=this.indexed_db;
 		return this._ix;
 	}
-	/** @protected @returns {true} */
+	/** @public @returns {true} */
 	true_() {return true;}
 	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
 	cq(a,b) {if(a!==b) debugger;}
@@ -111,7 +111,7 @@ class ServiceMethods extends ServiceData {
 	str_ends_with_arr(x,needle) {return this.str_starts_with(x[0],needle);}
 	/** @public @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {return this.wn("TR_ItemSection_2",x,"itemSectionRenderer");}
-	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
+	/** @public @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(cf,"commands",x),f);}
@@ -244,7 +244,7 @@ class ServiceMethods extends ServiceData {
 		this.z(y1,x => {if(x!==void 0) debugger;});
 		this.z(u1,this.Popup_ShareEntityService);
 	}
-	/** @protected @arg {DE_AddToPlaylistService} x */
+	/** @public @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
 		const cf="DE_AddToPlaylistService";
 		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -313,15 +313,15 @@ class ServiceMethods extends ServiceData {
 			if(v.length!==1) debugger;
 		}
 	}
-	/** @protected @arg {E_PlaylistEdit} x */
+	/** @public @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
-	/** @protected @arg {E_PlaylistDelete} x */
+	/** @public @arg {E_PlaylistDelete} x */
 	E_PlaylistDelete(x) {const [y]=this.TE_Endpoint_3_v2("deletePlaylistEndpoint",x,this.M_PlaylistDelete,this.DE_PlaylistDelete); this.g(y);}
 	/** @public @arg {E_AddUpcomingEventReminder} x */
 	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_AddUpcomingEventReminder,x => {this.D_Params("DE_AddUpcomingEventReminder","notification_add_upcoming_event_reminder.params",x);}); this.g(y);}
 	/** @public @arg {E_RemoveUpcomingEventReminder} x */
 	E_RemoveUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("removeUpcomingEventReminderEndpoint",x,this.M_RemoveUpcomingEventReminder,x => {this.D_Params("DE_RemoveUpcomingEventReminder","notification_remove_upcoming_event_reminder.params",x);}); this.g(y);}
-	/** @protected @arg {DE_PlaylistDelete} x */
+	/** @public @arg {DE_PlaylistDelete} x */
 	DE_PlaylistDelete(x) {x;}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
@@ -492,13 +492,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
-	/** @protected @arg {GM_Unsubscribe} x */
+	/** @public @arg {GM_Unsubscribe} x */
 	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
-	/** @protected @arg {GM_GetPdgBuyFlow} x */
+	/** @public @arg {GM_GetPdgBuyFlow} x */
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @private @arg {GM_GetSharePanel} x */
 	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
-	/** @protected @arg {GM_AddToPlaylistService} x */
+	/** @public @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @arg {GM_RemoveLike} x */
 	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.ceq(x,"/youtubei/v1/like/removelike"));}
@@ -510,7 +510,7 @@ class ServiceMethods extends ServiceData {
 	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
-	/** @protected @arg {GM_UserFeedback} x */
+	/** @public @arg {GM_UserFeedback} x */
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {GM_GetNotificationMenu} x */
 	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
@@ -639,7 +639,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_s(k,x,f) {this.H_cls(this,k,x,f);}
-	/** @protected @arg {R_ConfirmDialog} x */
+	/** @public @arg {R_ConfirmDialog} x */
 	R_ConfirmDialog(x) {this.H_s("confirmDialogRenderer",x,this.D_ConfirmDialog);}
 	/** @private @arg {D_ConfirmDialog} x */
 	D_ConfirmDialog(x) {
@@ -658,7 +658,7 @@ class ServiceMethods extends ServiceData {
 		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_string("Visibility.types",types);
 	}
-	/** @protected @arg {M_SendPost} x */
+	/** @public @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
 	/** @private @arg {D_Survey_Watch} x */
 	D_Survey_Watch(x) {this.y("D_Survey_Watch","watch",x,this.B_Hack);}
@@ -671,9 +671,9 @@ class ServiceMethods extends ServiceData {
 		if("watch" in x) return this.D_Survey_Watch(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {"D_InfoCardIcon"} cf @arg {D_TrackingParams} x */
+	/** @public @arg {"D_InfoCardIcon"} cf @arg {D_TrackingParams} x */
 	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(x));}
-	/** @protected @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
+	/** @public @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
 	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf2 @arg {D_EngagementPanelTargetId} x */
 	D_EngagementPanelTargetId(cf2,x) {
@@ -693,18 +693,18 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-macro-markers-problem-walkthroughs":
 		}
 	}
-	/** @protected @arg {RA_Notification} x */
+	/** @public @arg {RA_Notification} x */
 	RA_Notification(x) {this.H_s("notificationActionRenderer",x,this.AD_Notification);}
-	/** @protected @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @public @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
 	T_BaseUrl(x,f) {
 		const cf="T_BaseUrl";
 		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
 		f.call(this,baseUrl);
 		this.t(elapsedMediaTimeSeconds,this.a_primitive_num);
 	}
-	/** @protected @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
+	/** @public @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
 	T_Signal(cf,x) {return this.w(cf,"signal",x);}
-	/** @protected @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
+	/** @public @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
 	unwrap_prefix(x,pf) {
 		/** @private @type {T_RemovePrefix<U,VV>} */
 		let un_prefix=as({});
@@ -730,9 +730,9 @@ class ServiceMethods extends ServiceData {
 		}
 		return [un_prefix,other];
 	}
-	/** @protected @arg {D_ImpressionCap} x */
+	/** @public @arg {D_ImpressionCap} x */
 	D_ImpressionCap(x) {this.ceq(this.w("D_ImpressionCap","impressionCap",x),"1");}
-	/** @protected @arg {D_Hint} x */
+	/** @public @arg {D_Hint} x */
 	D_Hint(x) {
 		const cf="D_Hint";
 		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -781,7 +781,7 @@ class ServiceMethods extends ServiceData {
 			this.tz(serviceEndpoints,this.E_Like);
 		}
 	}
-	/** @protected @arg {E_Like} x */
+	/** @public @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {M_Like} x */
 	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
@@ -805,18 +805,18 @@ class ServiceMethods extends ServiceData {
 		}
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {R_LikeButton} x */
+	/** @public @arg {R_LikeButton} x */
 	R_LikeButton(x) {this.H_s("likeButtonRenderer",x,this.D_LikeButton);}
-	/** @protected @arg {R_Hint} x */
+	/** @public @arg {R_Hint} x */
 	R_Hint(x) {this.H_s("hintRenderer",x,this.D_Hint);}
 	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x */
 	wg(_l,x) {
 		/** @arg {typeof x} y */
 		return y => this.cq(x,y);
 	}
-	/** @protected @arg {E_ShareEntityService} x */
+	/** @public @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
-	/** @protected @arg {C_GetPdgBuyFlow} x */
+	/** @public @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
 	/** @private @arg {M_GetPdgBuyFlow} x */
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
@@ -849,9 +849,9 @@ class ServiceMethods extends ServiceData {
 	is_not_empty_obj(x) {return this.get_keys_of(x).length>0;}
 	/** @template {T extends infer U?{} extends U? never:U:never} R @template {{}} T @arg {T} x @arg {R|null} _x @returns {x is Record<string,never>} */
 	is_empty_obj(x,_x=null) {return this.get_keys_of(x).length===0;}
-	/** @protected @arg {R_ToggleButtonIdData} x */
+	/** @public @arg {R_ToggleButtonIdData} x */
 	R_ToggleButtonIdData(x) {this.y("R_ToggleButtonIdData","toggleButtonIdData",x,this.D_ToggleButtonIdData);}
-	/** @protected @arg {D_ToggleButtonIdData} x */
+	/** @public @arg {D_ToggleButtonIdData} x */
 	D_ToggleButtonIdData(x) {
 		const cf="D_ToggleButtonIdData";
 		this.T_Id(x,x => this.save_enum(cf,"TOGGLE_BUTTON_ID_TYPE",x));
@@ -877,7 +877,7 @@ class ServiceMethods extends ServiceData {
 		if(popupType!=="DIALOG") debugger;
 		this.t(beReused,x => this.cq(x,true));
 	}
-	/** @protected @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
+	/** @public @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
 	T_SE_Signal(cf,x) {
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		/** @type {`T_SE_Signal:${CF_T_SE_Signal}`} */
@@ -893,7 +893,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
-	/** @protected @arg {C_GetSurvey} x */
+	/** @public @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
 		const cf="C_GetSurvey";
 		const {clickTrackingParams,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -917,15 +917,15 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
-	/** @protected @arg {M_AddToPlaylistService} x */
+	/** @public @arg {M_AddToPlaylistService} x */
 	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
-	/** @protected @arg {E_AddToPlaylistService} x */
+	/** @public @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
-	/** @protected @arg {E_Feedback} x */
+	/** @public @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
-	/** @protected @arg {GC_Button} x */
+	/** @public @arg {GC_Button} x */
 	GC_Button(x) {
 		const cf="GC_Button";
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
@@ -942,7 +942,7 @@ class ServiceMethods extends ServiceData {
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {R_MenuFlexibleItem} x */
+	/** @public @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_s("menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
 	D_MenuFlexibleItem(x) {
@@ -987,7 +987,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_s("menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
-	/** @protected @arg {R_Menu} x */
+	/** @public @arg {R_Menu} x */
 	R_Menu(x) {this.H_s("menuRenderer",x,this.D_Menu);}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
 	R_ToggleMenuServiceItem(x) {this.H_s("toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
@@ -1172,7 +1172,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		return [endpoint,y];
 	}
-	/** @protected @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} T_Key @template {TE_Endpoint_Opt_3<T_Key,any,any>} T_EP @arg {T_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]} */
+	/** @public @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} T_Key @template {TE_Endpoint_Opt_3<T_Key,any,any>} T_EP @arg {T_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|T_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
 		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
@@ -1183,11 +1183,11 @@ class ServiceMethods extends ServiceData {
 	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
 	/** @public @arg {CF_M_w} cf @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
 	w(cf,k,x) {this.k(cf,x); return this.ws(k,x);}
-	/** @protected @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
+	/** @public @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
 	ws(k,x) {if(x[k]===void 0) debugger; return x[k];}
 	/** @public @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(cf,k,x),`${cf}.${k}`);}
-	/** @protected @arg {D_EndscreenElement_EP} x */
+	/** @public @arg {D_EndscreenElement_EP} x */
 	D_EndscreenElement_EP(x) {
 		const cf="D_EndscreenElement_EP"; this.ks(cf,x);
 		if("browseEndpoint" in x) return this.E_VE3611(x);
@@ -1235,14 +1235,14 @@ class ServiceMethods extends ServiceData {
 	userId(x) {
 		if(this.cache_raw_id(`user_id:${x}`)) return;
 	}
-	/** @protected @arg {string} x */
+	/** @public @arg {string} x */
 	create_param_map(x) {
 		let res_e=this._decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
 		if(res_e.find(e => e[0]==="error")) {return null;}
 		return this.make_param_map(res_e);
 	}
-	/** @protected @arg {D_ProtobufObj[]} res_e */
+	/** @public @arg {D_ProtobufObj[]} res_e */
 	make_param_map(res_e) {
 		/** @private @type {V_ParamMapType} */
 		let ret_map=new Map();
@@ -1294,9 +1294,9 @@ class ServiceMethods extends ServiceData {
 		}
 		return ret_map;
 	}
-	/** @protected @arg {E_Upload} x */
+	/** @public @arg {E_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_Url(a); this.B_Hack(b);}
-	/** @protected @arg {B_Hack} x */
+	/** @public @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack";
 		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1309,7 +1309,7 @@ class ServiceMethods extends ServiceData {
 		let dec_params=atob(params);
 		this.params("get_pdg_buy_flow.params",dec_params);
 	}
-	/** @protected @template {string} T @arg {T_UrlWrappedValue<T>} x */
+	/** @public @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @public @arg {D_SubscribeButton_SubscribedPrefix} x */
 	D_SubscribeButton_SubscribedPrefix(x) {
@@ -1412,9 +1412,9 @@ class ServiceMethods extends ServiceData {
 		if(!this.is_TE_VE(x,3611)) {debugger; return;}
 		let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);
 	}
-	/** @protected @arg {E_VE3854} x */
+	/** @public @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
-	/** @protected @arg {E_Search} x */
+	/** @public @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
 	/** @public @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
@@ -1422,9 +1422,9 @@ class ServiceMethods extends ServiceData {
 	E_VE6827(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);}
 	/** @public @arg {E_VE11487} x */
 	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
-	/** @protected @arg {E_VE23462} x */
+	/** @public @arg {E_VE23462} x */
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
-	/** @protected @arg {E_VE42352} x */
+	/** @public @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
 	/** @arg {DU_UrlParams} x */
 	DU_UrlParams(x) {
@@ -1439,7 +1439,7 @@ class ServiceMethods extends ServiceData {
 		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
 		this.DU_UrlParams(this.parse_url_search_params(x.search));
 	}
-	/** @protected @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
+	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
 	DU_Url(x) {
 		this.DU_UrlParse(this._convert_url_to_obj(x));
 		(x => {
@@ -1450,9 +1450,9 @@ class ServiceMethods extends ServiceData {
 			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
 		})(this._convert_url_to_obj(x));
 	}
-	/** @protected @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
+	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
 	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
-	/** @protected @arg {E_VE96368} x */
+	/** @public @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @private @arg {DE_Search} x */
 	DE_Search(x) {
@@ -1479,7 +1479,7 @@ class ServiceMethods extends ServiceData {
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
-	/** @protected @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @public @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_VE83769_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x)) {
@@ -1543,7 +1543,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx("https://googleads.g.doubleclick.net",x)) return;
 		x;
 	}
-	/** @protected @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
+	/** @public @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
 	/** @private @arg {GU_VE83769_Url_Redirect} x */
 	GU_YoutubeUrlRedirect(x) {
@@ -1575,7 +1575,7 @@ class ServiceMethods extends ServiceData {
 		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		return this.GM_VE3611(a);
 	}
-	/** @protected @arg {M_VE3832} x */
+	/** @public @arg {M_VE3832} x */
 	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832);}
 	/** @private @arg {M_VE3854} x */
 	M_VE3854(x) {
@@ -1596,7 +1596,7 @@ class ServiceMethods extends ServiceData {
 	M_VE23462(x) {this.T_WCM("M_VE23462",x,this.GM_VE23462);}
 	/** @private @arg {M_VE42352} x */
 	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
-	/** @protected @arg {M_Url} x */
+	/** @public @arg {M_Url} x */
 	M_Url(x) {this.T_WCM("M_Url",x,this.GM_Url);}
 	/** @private @arg {M_VE96368} x */
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
@@ -1607,7 +1607,7 @@ class ServiceMethods extends ServiceData {
 		this.t(parentTrackingParams,x => this.trackingParams(x));
 		this.t(isVanityUrl,x => this.ceq(x,true));
 	}
-	/** @protected @arg {E_WatchPlaylist} x */
+	/** @public @arg {E_WatchPlaylist} x */
 	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {DE_WatchPlaylist} x */
 	DE_WatchPlaylist(x) {
@@ -1676,7 +1676,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
-	/** @protected @arg {E_SignalNavigation} x */
+	/** @public @arg {E_SignalNavigation} x */
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_Url(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {GU_VE6827_Url} x */
 	D_VE6827_Url(x) {
@@ -1725,7 +1725,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
-	/** @protected @arg {GE_Browse} x */
+	/** @public @arg {GE_Browse} x */
 	GE_Browse_old(x) {
 		if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
 		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
@@ -1815,9 +1815,9 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
-	/** @protected @arg {D_Label} x */
+	/** @public @arg {D_Label} x */
 	D_Label(x) {this.H_s("label",x,this.a_primitive_str);}
-	/** @protected @arg {D_Accessibility} x */
+	/** @public @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_s("accessibilityData",x,this.D_Label);}
 	/** @public @arg {boolean} x */
 	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
@@ -1830,7 +1830,7 @@ class ServiceMethods extends ServiceData {
 		this.tz(runs,this.D_TextRun);
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @protected @arg {D_Emoji} x */
+	/** @public @arg {D_Emoji} x */
 	D_Emoji(x) {
 		const cf="D_Emoji";
 		const {emojiId,shortcuts,searchTerms,image,...y}=this.s(cf,x); this.g(y);
@@ -1846,7 +1846,7 @@ class ServiceMethods extends ServiceData {
 		if(!this.eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
 		this.z(Object.values(x),x => this._primitive_of(x,"number"));
 	}
-	/** @protected @arg {D_ThumbnailItem} x */
+	/** @public @arg {D_ThumbnailItem} x */
 	D_ThumbnailItem(x) {
 		const cf="D_ThumbnailItem";
 		const {url,width,height,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1897,7 +1897,7 @@ class ServiceMethods extends ServiceData {
 		this.save_number(`${cf2}_b`,b);
 		this.save_number(`${cf2}_a`,a);
 	}
-	/** @protected @arg {"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"|"D_Thumbnail"} cf1 @arg {D_DarkColorPalette} x */
+	/** @public @arg {"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"|"D_Thumbnail"} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
 		const cf0="D_DarkColorPalette";
 		const cf2="dark";
@@ -1911,7 +1911,7 @@ class ServiceMethods extends ServiceData {
 		this.save_rgba(`${cf2}.s3_c`,s3_c);
 		this.save_rgba(`${cf2}.s4_c`,s4_c);
 	}
-	/** @protected @arg {"D_Thumbnail"|"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"} cf1 @arg {D_LightColorPalette} x */
+	/** @public @arg {"D_Thumbnail"|"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
 		const cf0="D_LightColorPalette";
 		const cf2="light";
@@ -1925,7 +1925,7 @@ class ServiceMethods extends ServiceData {
 		this.save_rgba(`${cf2}.s3_c`,s3_c);
 		this.save_rgba(`${cf2}.s4_c`,s4_c);
 	}
-	/** @protected @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
+	/** @public @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
 	D_Params(cf,path,x) {const {params: p,...y}=this.s(cf,x); this.g(y); this.params(path,x.params);}
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
@@ -1944,13 +1944,13 @@ class ServiceMethods extends ServiceData {
 		let ret=f.call(this,a,`G${cf}`);
 		return [ret,y];
 	}
-	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
+	/** @public @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f) {
 		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
-	/** @protected @arg {string} ns @arg {()=>void} f */
+	/** @public @arg {string} ns @arg {()=>void} f */
 	grouped(ns,f) {
 		console.group(ns);
 		f();
@@ -1961,7 +1961,7 @@ class ServiceMethods extends ServiceData {
 		this.save_number_arr(path,x[1]);
 		return this.save_string(path,`${x[2]}n`);
 	}
-	/** @protected @arg {string} x @returns {x is D_TargetIdUuid} */
+	/** @public @arg {string} x @returns {x is D_TargetIdUuid} */
 	is_yt_uuid(x) {
 		return x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)!==null;
 	}
@@ -2096,7 +2096,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {string} x */
 	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
-	/** @protected @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
+	/** @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
 	indexed_db_put(key,value) {return this.indexed_db.put(key,value,this.indexed_db_version);}
 	/** @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id(...args) {
@@ -2108,7 +2108,7 @@ class ServiceMethods extends ServiceData {
 		let ret=await this.indexed_db.put_boxed_id_async_3(this.indexed_db_version,...args);
 		return as_any(ret);
 	}
-	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {T} x */
+	/** @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
@@ -2128,7 +2128,7 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(clickTrackingParams);
 		return [commandMetadata,a,y];
 	}
-	/** @protected @template T @arg {B_TagObj<T>} x */
+	/** @public @template T @arg {B_TagObj<T>} x */
 	B_TagObj(x) {
 		const cf="B_TagObj";
 		const {tag,...y}=this.s(cf,x);
@@ -2138,7 +2138,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return tag;
 	}
-	/** @protected @template T @template {T} U @arg {T} v1 @arg {U} v2 */
+	/** @public @template T @template {T} U @arg {T} v1 @arg {U} v2 */
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {string} x */
 	trackingParams(x) {this.params("params.tracking",x);}
@@ -2146,7 +2146,7 @@ class ServiceMethods extends ServiceData {
 	codegen_typedef(cf,x,do_break=true) {
 		this.cg.codegen_typedef(cf,x,do_break,false);
 	}
-	/** @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	/** @public @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
 		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
@@ -2161,7 +2161,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return ok_e;
 	}
-	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {[T[SI]]|null} */
+	/** @public @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {[T[SI]]|null} */
 	wn(cf,x,ex_name,excl=[]) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x);
@@ -2514,24 +2514,24 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @protected @arg {true} x */
+	/** @public @arg {true} x */
 	expect_true(x) {if(x!==true) debugger;}
 	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
-	/** @protected @arg {`/@${string}`} x */
+	/** @public @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
-	/** @protected @arg {string} x */
+	/** @public @arg {string} x */
 	_previousCsn(x) {console.log(base64_dec.decode_str(x));}
-	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
+	/** @public @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
-	/** @protected @template {{targetId:string}} T @arg {T} x @returns {x is {targetId:D_TargetIdUuid}} */
+	/** @public @template {{targetId:string}} T @arg {T} x @returns {x is {targetId:D_TargetIdUuid}} */
 	is_yt_uuid_targetId(x) {return this.is_yt_uuid(x.targetId);}
-	/** @protected @template {D_GM_VeNum} T @arg {T} x @arg {T extends any?T:never} expected_x */
+	/** @public @template {D_GM_VeNum} T @arg {T} x @arg {T extends any?T:never} expected_x */
 	rootVe(x,expected_x) {
 		this.save_ve_element(x);
 		this.cq(x,expected_x);
 	}
-	/** @protected @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	/** @public @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
 	make_icon_types_map() {
 		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
@@ -2551,7 +2551,7 @@ class ServiceMethods extends ServiceData {
 		return mp;
 	}
 	icon_types_map=this.make_icon_types_map();
-	/** @protected @arg {CF_T_Icon_Any} cf @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
+	/** @public @arg {CF_T_Icon_Any} cf @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf,x,ty_arr) {
 		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		const is_missing_iconType=!ty_arr.includes(iconType);
@@ -2559,7 +2559,7 @@ class ServiceMethods extends ServiceData {
 		this.save_string("IconType",iconType);
 		return is_missing_iconType;
 	}
-	/** @protected @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
+	/** @public @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
 	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
 		expected_arr.push(icon.iconType);
 		missing_arr.push(icon.iconType);
@@ -2570,7 +2570,7 @@ class ServiceMethods extends ServiceData {
 			this.codegen_typedef(cf,x);
 		} finally {console.groupEnd();}
 	}
-	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
+	/** @public @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {this.H_s("text",x,this.G_Text);}
 	/** @private @arg {string} key @arg {Uint8Array} data @arg {number} [idx] */
 	save_next_byte(key,data,idx=0) {
@@ -2657,7 +2657,7 @@ class ServiceMethods extends ServiceData {
 		this.params("notification.record_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
-	/** @protected @arg {E_RecordNotificationInteractions} x */
+	/** @public @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
@@ -2695,7 +2695,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_PlaylistLoopButton} x */
 	R_PlaylistLoopButton(x) {this.H_s("playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
-	/** @protected @arg {R_SegmentedLikeDislikeButton} x */
+	/** @public @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_s("segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["Signal",T]} */
 	TE_SignalService_I_0(x) {
@@ -2851,7 +2851,7 @@ class ServiceMethods extends ServiceData {
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
-	/** @protected @arg {E_PlaylistEditor} x */
+	/** @public @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {DE_UndoFeedback} x */
 	DE_UndoFeedback(x) {
@@ -2877,7 +2877,7 @@ class ServiceMethods extends ServiceData {
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
-	/** @protected @arg {C_CommandExecutor} x */
+	/** @public @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
@@ -2910,7 +2910,7 @@ class ServiceMethods extends ServiceData {
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {C_RepeatChapter} x */
+	/** @public @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
 	/** @private @arg {DC_RepeatChapter} x */
 	DC_RepeatChapter(x) {
@@ -2951,7 +2951,7 @@ class ServiceMethods extends ServiceData {
 	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
-	/** @protected @arg {DC_EntityBatchUpdate} x */
+	/** @public @arg {DC_EntityBatchUpdate} x */
 	R_EntityBatchUpdate(x) {this.H_s("entityBatchUpdate",x,this.DR_DC_EntityBatchUpdate);}
 	/** @public @arg {DR_DC_EntityBatchUpdate} x */
 	DR_DC_EntityBatchUpdate(x) {
@@ -3162,9 +3162,9 @@ class ServiceMethods extends ServiceData {
 	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
 	/** @public @arg {C_LoadMarkers} x */
 	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
-	/** @protected @arg {C_ReloadContinuationItems} x */
+	/** @public @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
-	/** @protected @arg {A_AppendContinuationItems} x */
+	/** @public @arg {A_AppendContinuationItems} x */
 	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @type {string[]} */
 	DC_AddToPlaylist_listTypes=[
@@ -3269,7 +3269,7 @@ class ServiceMethods extends ServiceData {
 		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(relevantStateTags,this.B_StateTag);
 	}
-	/** @protected @arg {B_StateTag} x */
+	/** @public @arg {B_StateTag} x */
 	B_StateTag(x) {
 		const cf="StateTag";
 		if(x.stateTag!==3) debugger;
@@ -3579,8 +3579,6 @@ class ServiceMethods extends ServiceData {
 		this._primitive_of(isCourse,"boolean");
 		return y;
 	}
-	/** @public @arg {R_SectionList} x */
-	R_SectionList(x) {this.H_s("sectionListRenderer",x,this.GD_RC_SectionList);}
 	/**
 	 * @private
 	 * @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]["itemSectionRenderer"]} x
@@ -3631,28 +3629,6 @@ class ServiceMethods extends ServiceData {
 			this.GD_RC_SectionList_res_1(x);
 		});
 		this.trackingParams(trackingParams);
-	}
-	/** @public @arg {GD_RC_SectionList} x */
-	GD_RC_SectionList(x) {
-		const cf="GD_RC_SectionList";
-		if("targetId" in x) {
-			switch(x.targetId) {
-				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
-				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
-				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
-				case "search-feed": return this.DC_SectionList_SearchFeed(x);
-			}
-		}
-		if("contents" in x) {
-			return;
-		}
-		if("disablePullToRefresh" in x) {
-			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			if(disablePullToRefresh!==true) debugger;
-			return;
-		}
-		debugger;
 	}
 	/** @public @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
 	GT_ShortsSurfaceIdentifier(x) {
@@ -4086,7 +4062,7 @@ class ServiceMethods extends ServiceData {
 		if("displayAdRenderer" in x) return this.R_DisplayAd(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @protected @arg {R_InFeedAdLayout} x */
+	/** @public @arg {R_InFeedAdLayout} x */
 	R_InFeedAdLayout(x) {this.H_s("inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {const {adLayoutMetadata: a,renderingContent: b,...y}=this.s("D_InFeedAdLayout",x); this.g(y); this.MG_AdLayout(a); this.D_InFeedAdLayout_Content(b);}
@@ -4140,7 +4116,7 @@ class ServiceMethods extends ServiceData {
 		this.g(adLayoutLoggingData);
 		if(layoutId!=="") debugger;
 	}
-	/** @protected @arg {G_AdPlacementRendererItem} x */
+	/** @public @arg {G_AdPlacementRendererItem} x */
 	G_AdPlacementRendererItem(x) {
 		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
 		if("clientForecastingAdRenderer" in x) return this.R_ClientForecastingAd(x);
@@ -4312,7 +4288,7 @@ class ServiceMethods extends ServiceData {
 	R_BrowserMediaSession(x) {this.H_s("browserMediaSessionRenderer",x,this.g);}
 	/** @private @arg {R_HotkeyDialogSection} x */
 	R_HotkeyDialogSection(x) {this.H_s("hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
-	/** @protected @arg {R_ContinuationItem} x */
+	/** @public @arg {R_ContinuationItem} x */
 	R_ContinuationItem(x) {this.H_s("continuationItemRenderer",x,this.D_ContinuationItem);}
 	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
@@ -4712,7 +4688,7 @@ class ServiceMethods extends ServiceData {
 			this.codegen_typedef(cf,x);
 		});
 	}
-	/** @protected @arg {RMD_Badge} x */
+	/** @public @arg {RMD_Badge} x */
 	RMD_Badge(x) {this.H_s("metadataBadgeRenderer",x,this.DMD_Badge);}
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
@@ -4785,7 +4761,7 @@ class ServiceMethods extends ServiceData {
 	R_NotificationTopbarButton(x) {this.H_s("notificationTopbarButtonRenderer",x,this.D_NotificationTopbarButton);}
 	/** @private @arg {R_CommentsEntryPointHeader} x */
 	R_CommentsEntryPointHeader(x) {this.H_s("commentsEntryPointHeaderRenderer",x,this.D_CommentsEntryPointHeader);}
-	/** @protected @arg {R_CompactPlaylist} x */
+	/** @public @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_s("compactPlaylistRenderer",x,this.D_CompactPlaylist);}
 	/** @private @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_s("compactRadioRenderer",x,this.D_CompactRadio);}
@@ -4814,7 +4790,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
 	R_HotkeyDialogSectionOption(x) {this.H_s("hotkeyDialogSectionOptionRenderer",x,this.D_HotkeyDialogSectionOption);}
-	/** @protected @arg {R_VideoDescriptionCourseSection} x */
+	/** @public @arg {R_VideoDescriptionCourseSection} x */
 	R_VideoDescriptionCourseSection(x) {this.H_s("videoDescriptionCourseSectionRenderer",x,this.D_VideoDescriptionCourseSection);}
 	/** @private @arg {D_VideoDescriptionCourseSection} x */
 	D_VideoDescriptionCourseSection(x) {
@@ -5195,9 +5171,9 @@ class ServiceMethods extends ServiceData {
 	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {M_GetUnseenNotificationCount} x */
 	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
-	/** @protected @arg {R_CommentThread} x */
+	/** @public @arg {R_CommentThread} x */
 	R_CommentThread(x) {this.H_s("commentThreadRenderer",x,this.D_CommentThread);}
-	/** @protected @arg {R_VideoDescriptionHeader} x */
+	/** @public @arg {R_VideoDescriptionHeader} x */
 	R_VideoDescriptionHeader(x) {this.H_s("videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
 	/** @private @arg {D_VideoDescriptionHeader} x */
 	D_VideoDescriptionHeader(x) {
@@ -5691,7 +5667,7 @@ class ServiceMethods extends ServiceData {
 			case "PRIVACY_PUBLIC":
 		}
 	}
-	/** @protected @template CT,T,U @template {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {[VU["itemSectionRenderer"],Omit<VU,"itemSectionRenderer">]} */
+	/** @public @template CT,T,U @template {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {[VU["itemSectionRenderer"],Omit<VU,"itemSectionRenderer">]} */
 	TR_ItemSection(x) {
 		const cf="TR_ItemSection";
 		const {itemSectionRenderer: a,...y}=this.s(cf,x);/*#destructure_done*/
@@ -5734,34 +5710,6 @@ class ServiceMethods extends ServiceData {
 		}
 		return [false,null];
 	}
-	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
-	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
-		let b_info=this.is_browse_feedUC(x);
-		if(!b_info[0]) {
-			debugger;
-			return;
-		}
-		let [,bp]=b_info;
-		if(bp[0]===2) {
-			let [,sa,,last_part]=bp;
-			console.log("target_id.last_part",last_part);
-			if(this.str_starts_with_rx(sa,"UC")) {
-				let floc=sa.indexOf("featured");
-				if(floc<0) {debugger; return;}
-				let s1=sa.slice(0,floc);
-				let s2=sa.slice(floc);
-				console.log("[RichGrid.targetId]",x.targetId);
-				console.log("[target_id_parse]",s1,s2);
-			}
-			return;
-		}
-		let [,,channelId,last_part]=bp;
-		switch(last_part) {
-			default: debugger; break;
-			case "featured": case "search":
-		}
-		this.channelId(channelId);
-	}
 	/** @private @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {
 		const cf="TR_SectionListItem_3_Empty";
@@ -5779,20 +5727,6 @@ class ServiceMethods extends ServiceData {
 		});
 		this.trackingParams(trackingParams);
 		if(targetId!=="browse-feedFEsubscriptions") debugger;
-	}
-	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
-	D_SectionList_BrowseFeed_History(x) {
-		const cf="D_SectionList_BrowseFeed_History";
-		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x => {
-			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
-			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
-		});
-		this.R_TextHeader(header);
-		this.trackingParams(trackingParams);
-		if(targetId!=="browse-feedFEhistory") debugger;
 	}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x) {
@@ -6236,7 +6170,7 @@ class ServiceMethods extends ServiceData {
 		this.y("CD_NextRadio","nextRadioContinuationData",x,
 			x => this.DC_Generic_CTP("next_radio.continuation",x));
 	}
-	/** @protected @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
+	/** @public @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
 	RS_Playlist_AlertItem(cf1,x) {
 		const cf2="RS_Playlist_AlertItem";
 		if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
@@ -6319,7 +6253,7 @@ class ServiceMethods extends ServiceData {
 		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!isCacheHit) debugger;
 	}
-	/** @protected @arg {R_ChannelHeaderLinks} x */
+	/** @public @arg {R_ChannelHeaderLinks} x */
 	R_ChannelHeaderLinks(x) {this.H_s("channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {D_ChannelHeaderLinks} x */
 	D_ChannelHeaderLinks(x) {
@@ -6394,11 +6328,11 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_FancyDismissibleDialog} x */
 	R_FancyDismissibleDialog(x) {this.H_s("fancyDismissibleDialogRenderer",x,this.D_FancyDismissibleDialog);}
-	/** @protected @arg {R_PlaylistByline} x */
+	/** @public @arg {R_PlaylistByline} x */
 	R_PlaylistByline(x) {this.H_s("playlistBylineRenderer",x,this.D_PlaylistByline);}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
-	/** @protected @arg {D_CanDelete} x */
+	/** @public @arg {D_CanDelete} x */
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,this.a_primitive_bool);}
 	/** @public @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,this.a_primitive_bool);}
@@ -6408,7 +6342,7 @@ class ServiceMethods extends ServiceData {
 	M_AddUpcomingEventReminder(x) {this.T_WCM("M_AddUpcomingEventReminder",x,this.GM_AddUpcomingEventReminder);}
 	/** @public @arg {M_RemoveUpcomingEventReminder} x */
 	M_RemoveUpcomingEventReminder(x) {this.T_WCM("M_RemoveUpcomingEventReminder",x,this.GM_RemoveUpcomingEventReminder);}
-	/** @protected @arg {M_PlaylistDelete} x */
+	/** @public @arg {M_PlaylistDelete} x */
 	M_PlaylistDelete(x) {this.T_WCM("M_PlaylistDelete",x,this.GM_PlaylistDelete);}
 	/** @private @arg {GM_PlaylistDelete} x */
 	GM_PlaylistDelete(x) {this.T_GM("GM_PlaylistDelete",x,x => this.ceq(x,"/youtubei/v1/playlist/delete"));}
