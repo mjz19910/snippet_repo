@@ -189,9 +189,15 @@ class IndexedDBService extends BaseService {
 	/**
 	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
 	 * @template J @template Z_Item @template T_Key
-	 * @returns {{a: "ST:D";b:"boxed_id",j:J,z:[Z_Item],key:T_Key}}
+	 * @returns {{key:T_Key,a: "ST:D";b:"boxed_id",j:J,w:"/key/a/b/j/w/z",z:[Z_Item]}}
 	 * */
-	make_abjz(key,j,z) {return {a: "ST:D",b: "boxed_id",j,z: [z],key};}
+	make_ST_abjz(key,j,z) {return {key,a: "ST:D",b: "boxed_id",j,w: "/key/a/b/j/w/z",z: [z]};}
+	/**
+	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
+	 * @template J @template Z_Item @template T_Key
+	 * @returns {{a: "SS:D";b:"boxed_id",j:J,z:[Z_Item],key:T_Key}}
+	 * */
+	make_SS_abjz(key,j,z) {return {a: "SS:D",b: "boxed_id",j,z: [z],key};}
 	/**
 	 * @param {Z} z @arg {B} b @arg {C} c
 	 * @template B,C @template Z
@@ -244,7 +250,7 @@ class IndexedDBService extends BaseService {
 						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
 					/** @type {DST_Channel_UC} */
-					const z=this.make_abjz(key,tag,bt); ret=z; break x;
+					const z=this.make_ST_abjz(key,tag,bt); ret=z; break x;
 				}
 				case "keys": break;
 				case "string": break;
@@ -253,7 +259,7 @@ class IndexedDBService extends BaseService {
 					/** @type {DI_A_VideoId} */
 					let bt=this.make_abwz(value.type,this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)));
 					/** @type {DST_Video_Id} */
-					const z=this.make_abjz(key,tag,bt); ret=z; break x;
+					const z=this.make_ST_abjz(key,tag,bt); ret=z; break x;
 				}
 				case "playlist_id:RD": {
 					const {key,value}=o2;
@@ -263,7 +269,7 @@ class IndexedDBService extends BaseService {
 						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
 					/** @type {DST_Playlist_RD} */
-					const z=this.make_abjz(key,"playlist_id:RD",bt);
+					const z=this.make_ST_abjz(key,"playlist_id:RD",bt);
 					ret=z;
 					break x;
 				}
@@ -407,13 +413,7 @@ class IndexedDBService extends BaseService {
 			load_id=await this.get_load_id(version);
 			if(!load_id) throw new Error("null on get");
 		}
-		if(!load_id.z) {
-			/** @type {{key:DST_LoadId["key"],value?: {raw:number}}} */
-			let ov=load_id;
-			if(ov.value) {
-				load_id={b: "boxed_id",j: "load_id",key: load_id.key,z: [{type: "number",z: [ov.value.raw]}]};
-			}
-		}
+		load_id=await this.update_obj_schema(load_id,version);
 		if(load_id.z[0].z[0]!==this.expected_load_id) this.expected_load_id=load_id.z[0].z[0];
 		await this.load_store_from_database(store,version);
 		this.expected_load_id++;
@@ -475,18 +475,18 @@ class IndexedDBService extends BaseService {
 			default: args[1]===""; debugger; throw new Error("Unreachable");
 			case "MP": {
 				let [type,tag,value]=args;
-				/** @type {DSS_Browse_MP} */
+				/** @type {DST_Browse_MP} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/z",z: [value],
+					a: "ST:D",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/z",z: [value],
 					key: `boxed_id:browse_id:${tag}:${value.z[1].z[0].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "FE": {
 				let [type,tag,value]=args;
-				/** @type {DSS_Browse_FE} */
+				/** @type {DST_Browse_FE} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/z",z: [value],
+					a: "ST:D",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/w/z",z: [value],
 					key: `boxed_id:${type}:${tag}:${value.z[1].z[0].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -497,7 +497,7 @@ class IndexedDBService extends BaseService {
 				let id=value.z[1].z[0].z[0].z[0];
 				/** @type {DST_Browse_VL_LL} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag1}`,z: [value],
+					a: "ST:D",b: "boxed_id",j: `${type}:${tag1}`,z: [value],
 					key: `boxed_id:${type}:${tag1}:${id}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -506,9 +506,9 @@ class IndexedDBService extends BaseService {
 				let [type,tag,value]=args;
 				let [tag1]=split_string_once(tag,":");
 				let id=value.z[1].z[0].z[0].z[0];
-				/** @type {DSS_Browse_VL_WL} */
+				/** @type {DST_Browse_VL_WL} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag1}`,z: [value],
+					a: "ST:D",b: "boxed_id",j: `${type}:${tag1}`,z: [value],
 					key: `boxed_id:${type}:${tag1}:${id}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -519,7 +519,7 @@ class IndexedDBService extends BaseService {
 				let id=value.z[1].z[1].z[0].z[0];
 				/** @type {DST_Browse_VL_PL} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag1}:${tag2}`,z: [value],
+					a: "ST:D",b: "boxed_id",j: `${type}:${tag1}:${tag2}`,z: [value],
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -530,7 +530,7 @@ class IndexedDBService extends BaseService {
 				let id=value.z[1].z[1].z[0].z[0];
 				/** @type {DST_Browse_VL_UC} */
 				const z={
-					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag1}:${tag2}`,z: [value],
+					a: "ST:D",b: "boxed_id",j: `${type}:${tag1}:${tag2}`,z: [value],
 					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -538,14 +538,18 @@ class IndexedDBService extends BaseService {
 			case "SP": {
 				let [tag,id,value]=args;
 				let promise=this.put_box({
-					a: "K:ABJ",b: "boxed_id",j: `${tag}:${id}`,z: [value],
+					a: "ST:D",b: "boxed_id",j: `${tag}:${id}`,z: [value],
 					key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`
 				},version); return {args,promise};
 			}
 		}
 	}
-	/** @template T @arg {T_Tag} j @arg {T_VTag} value_tag @arg {T} x @template {string} T_Tag @template {string} T_VTag @returns {{b:"boxed_id";j:T_Tag;key: `boxed_id:${T_Tag}:${T_VTag}`;z:[T]}}	*/
-	make_box_3(j,value_tag,x) {return {b: "boxed_id",j,key: `boxed_id:${j}:${value_tag}`,z: [x]};}
+	/** @template T @arg {T_Tag} j @arg {T_VTag} value_tag @arg {T} x @template {string} T_Tag @template {string} T_VTag	*/
+	make_box_3(j,value_tag,x) {
+		/** @type {`boxed_id:${T_Tag}:${T_VTag}`} */
+		const key=`boxed_id:${j}:${value_tag}`;
+		return this.make_ST_abjz(key,j,x);
+	}
 	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} a3 @arg {A4} x @template {string} A1 @template {string} A2 @template {string} A3 @returns {{b:"boxed_id";j:`${A1}:${A2}`;key: `boxed_id:${A1}:${A2}:${A3}`;z:[A4]}}	*/
 	make_box_4(a1,a2,a3,x) {return {b: "boxed_id",j: `${a1}:${a2}`,key: `boxed_id:${a1}:${a2}:${a3}`,z: [x]};}
 	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DIZ_Item_AB<T_Tag2,T>} V @arg {V} z @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
@@ -569,7 +573,7 @@ class IndexedDBService extends BaseService {
 			case "key": {
 				let [j,id]=args;
 				/** @type {DST_KeySection} */
-				const z={a: "DST",b: "boxed_id",j,k: id,key: `boxed_id:${j}:${id}:${x.z[0].z[0].z[0]}`,z: [x]};
+				const z={key: `boxed_id:${j}:${id}:${x.z[0].z[0].z[0]}`,a: "ST:D",b: "boxed_id",j,k: id,w: "key/a/b/j/k/w/z",z: [x]};
 				return {args,promise: this.put_box(z,version)};
 			}
 			case "guide_entry_id": /*db*/ {
@@ -578,30 +582,29 @@ class IndexedDBService extends BaseService {
 					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [x]};
+						const z={a: "ST:D",b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "WL": {
 						/** @type {DST_GuideEntry_WL} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [x]};
+						const z={key: `boxed_id:${tag}:${x.c}`,a: "ST:D",b: "boxed_id",j: tag,w: "key/a/b/w/j/z",z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
 						let iv=x.z[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${iv.c}:${iv.z[1].z[0].z[0]}`,z: [x]};
+						const z={a: "ST:D",b: "boxed_id",j: tag,key: `boxed_id:${tag}:${iv.c}:${iv.z[1].z[0].z[0]}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "UC": {
 						let iv=x.z[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${iv.c}:${iv.z[1].z[0].z[0]}`,z: [x]};
+						const z={a: "ST:D",b: "boxed_id",j: tag,key: `boxed_id:${tag}:${iv.c}:${iv.z[1].z[0].z[0]}`,z: [x]};
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "VL:LL": {
-						x;
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [{a: "DI",b: "guide_entry_id",c: "VL:LL",z: [x]}]};
+						const z={a: "ST:D",b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [{a: "DI",b: "guide_entry_id",c: "VL:LL",z: [x]}]};
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
@@ -611,13 +614,24 @@ class IndexedDBService extends BaseService {
 				/** @type {Pick<DST_Video_Id,"key">} */
 				const kj={key: `boxed_id:${k}:${v}`};
 				/** @type {DST_Video_Id} */
-				const z=this.make_abjz(kj.key,"video_id",x);
+				const z=this.make_ST_abjz(kj.key,"video_id",x);
 				return {args,promise: this.put_box(z,version)};
 			}
-			case "user_id": return {args,promise: this.put_box(this.make_box_3(k,x.z[0].z[0].z[0],x),version)};
-			case "exact": {
-				const p1=this.make_box_4(k,args[1],x.z[0].z[0].z[0],x);
-				return {args,promise: this.put_box(p1,version)};
+			case "user_id": {
+				const x=args[2];
+				/** @type {Pick<DST_User_Id,"key">} */
+				const kj={key: `boxed_id:${k}:${x.z[0].z[0].z[0]}`};
+				/** @type {DST_User_Id} */
+				const z=this.make_ST_abjz(kj.key,"user_id",x);
+				return {args,promise: this.put_box(z,version)};
+			}
+			case "play_next": {
+				const x=args[2];
+				/** @type {Pick<DST_PlayNext,"key">} */
+				const kj={key: `boxed_id:${k}:${x.z[0].z[0].z[0]}`};
+				/** @type {DST_PlayNext} */
+				const z=this.make_ST_abjz(kj.key,"play_next",x);
+				return {args,promise: this.put_box(z,version)};
 			}
 			case "playlist_id": {
 				switch(args[1]) {
@@ -627,7 +641,7 @@ class IndexedDBService extends BaseService {
 						/** @type {Pick<DST_Playlist_LL,"key"|"j">} */
 						const kj={key: `boxed_id:${k}:${v}`,j: `${k}:${v}`};
 						/** @type {DST_Playlist_LL} */
-						const z=this.make_abjz(kj.key,kj.j,x);
+						const z=this.make_ST_abjz(kj.key,kj.j,x);
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "WL": {
@@ -635,7 +649,7 @@ class IndexedDBService extends BaseService {
 						/** @type {Pick<DST_Playlist_WL,"key"|"j">} */
 						const kj={key: `boxed_id:${tag}:${id}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_WL} */
-						const z=this.make_abjz(kj.key,kj.j,value);
+						const z=this.make_ST_abjz(kj.key,kj.j,value);
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
@@ -643,7 +657,7 @@ class IndexedDBService extends BaseService {
 						/** @type {Pick<DST_Playlist_PL,"key"|"j">} */
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_PL} */
-						const z=this.make_abjz(kj.key,kj.j,value);
+						const z=this.make_ST_abjz(kj.key,kj.j,value);
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "RD": {
@@ -651,7 +665,7 @@ class IndexedDBService extends BaseService {
 						/** @type {Pick<DST_Playlist_RD,"key"|"j">} */
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_RD} */
-						const z=this.make_abjz(kj.key,kj.j,value);
+						const z=this.make_ST_abjz(kj.key,kj.j,value);
 						const r={args,promise: this.put_box(z,version)}; r;
 						return {args,promise: this.put_box(z,version)};
 					}
@@ -660,7 +674,7 @@ class IndexedDBService extends BaseService {
 						/** @type {Pick<DST_Playlist_RD_MM,"key"|"j">} */
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_RD_MM} */
-						const z=this.make_abjz(kj.key,kj.j,value);
+						const z=this.make_ST_abjz(kj.key,kj.j,value);
 						return {args,promise: this.put_box(z,version)};
 					}
 					case "RD:CM:UC": {
@@ -668,18 +682,20 @@ class IndexedDBService extends BaseService {
 						/** @type {Pick<DST_Playlist_RD_CM_UC,"key"|"j">} */
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_RD_CM_UC} */
-						const z=this.make_abjz(kj.key,kj.j,value);
+						const z=this.make_ST_abjz(kj.key,kj.j,value);
 						return {args,promise: this.put_box(z,version)};
 					}
 				}
 			}
 			case "hashtag_id": {
 				let [tag,,value]=args;
+				/** @type {DST_HashtagId} */
 				const z=this.make_box_3(tag,value.z[0].z[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "channel_id": {
 				let [tag,,value]=args;
+				/** @type {DST_Channel_UC} */
 				const z=this.make_box_4(tag,value.c,value.z[1].z[0].z[0],value);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -762,7 +778,7 @@ class IndexedDBService extends BaseService {
 					case "MP": {
 						let [tag,id,value]=args;
 						let promise=this.put_box({
-							a: "K:ABJ",b: "boxed_id",j: `${tag}:${id}`,w: "/key/a/b/j/z",z: [value],
+							a: "ST:D",b: "boxed_id",j: `${tag}:${id}`,w: "/key/a/b/j/z",z: [value],
 							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`
 						},version); return {args,promise};
 					}

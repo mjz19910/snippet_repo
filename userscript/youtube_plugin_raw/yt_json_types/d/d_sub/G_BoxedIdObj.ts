@@ -1,11 +1,11 @@
 type G_BoxedIdObj=
-	|DSS_Browse_MP
+	|DST_Browse_MP
 	|DST_Browse_SP
 	|DST_Browse_VL_LL
 	|DST_Browse_VL_PL
 	|DST_Browse_VL_UC
-	|DSS_Browse_VL_WL
-	|DSS_User_Id
+	|DST_Browse_VL_WL
+	|DST_User_Id
 	|DST_Browse_FE
 	|DST_Channel_UC
 	|DST_GuideEntry_LL

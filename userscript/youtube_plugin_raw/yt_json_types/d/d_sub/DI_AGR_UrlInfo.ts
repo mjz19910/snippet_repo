@@ -56,8 +56,8 @@ type DI_RetInfo={
 }|{
 	a: null;
 };
-type T1<A extends [string,string]>=A[0] extends infer EA extends A[0]? EA extends infer I? {b: I; raw_id: A[1];}:never:never;
-type T2=T1<["start_radio"|"video_id","a"|"b"]>;
+type SP1<A extends [string,string]>=A[0] extends infer EA extends A[0]? EA extends infer I? {b: I; raw_id: A[1];}:never:never;
+type SP2=SP1<["start_radio"|"video_id","a"|"b"]>;
 type DI_SrcInfo=
 	|DI_SrcInfo_Any
 	|{k: "start_radio"; v: DU_StartRadio;}

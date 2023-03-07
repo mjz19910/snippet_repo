@@ -1,7 +1,4 @@
-type DSS_User_Id={
-	a: "SS:D";
-	b: "boxed_id";
-	j: "user_id";
+type DST_User_Id={
 	key: `boxed_id:user_id:${string}`;
-	z: [DI_User_Id];
+	a: "ST:D"; b: "boxed_id"; j: "user_id"; w: "/key/a/b/j/w/z"; z: [DI_User_Id];
 };

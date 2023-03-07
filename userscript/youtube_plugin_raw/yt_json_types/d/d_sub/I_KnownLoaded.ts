@@ -5,9 +5,9 @@ type I_KnownLoaded=
 	|DST_Playlist_RD_MM
 	|DST_Playlist_WL
 	|DST_Browse_FE
-	|DSS_Browse_MP
+	|DST_Browse_MP
 	|DST_Browse_SP
-	|DSS_Browse_VL_WL
+	|DST_Browse_VL_WL
 	|DST_Browse_VL_LL
 	|DST_Browse_VL_PL
 	|DST_GuideEntry_LL
@@ -17,7 +17,7 @@ type I_KnownLoaded=
 	|DST_Playlist_PL
 	|DST_HashtagId
 	|DST_PlayNext
-	|DSS_User_Id
+	|DST_User_Id
 	|DST_Video_Id
 	|DST_VideoTime
 	|DST_LoadId
