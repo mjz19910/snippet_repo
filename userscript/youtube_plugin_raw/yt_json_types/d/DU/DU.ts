@@ -66,7 +66,13 @@ type P_param_known_like=`${LP_LogItems_Str}.${P_param_known_like_paths}`;
 
 //#region Url Templates & Unions
 type DU_VE3832_PreconnectUrl=`https://${GV_SubDomain}.googlevideo.com/generate_204`;
+type DU_Str_ChannelUrl=`https://www.youtube.com/${string}`;
 type DFU_GoogleVideoUrl_Hostname=UrlParse<GU_GoogleVideoUrl>["host"];
+type GU_InternalUrl=
+	|`https://www.youtube.com/channel/UC${string}/join`
+	|"https://www.youtube.com/t/creative_commons"
+	;
+;
 type GU_GoogleVideoUrl=
 	|DU_VE3832_PreconnectUrl
 	|GU_GoodPut_ProbeUrl
