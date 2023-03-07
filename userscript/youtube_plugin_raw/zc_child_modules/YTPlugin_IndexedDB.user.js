@@ -283,7 +283,7 @@ class IndexedDBService extends BaseService {
 						/** @type {DSS_Bigint["z"][0]} */
 						const z2={a: "group",b: value.type,z: [as_any(z1)]};
 						/** @type {DSS_Bigint} */
-						let z={a: "boxed_store",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
+						let z={a: "SI:T:D",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
 						ret=as_any(z);
 						break x;
 					}
