@@ -3642,23 +3642,6 @@ class ServiceMethods extends ServiceData {
 		}
 		return tag;
 	}
-	/** @private @arg {SI_VE76278_EngagementPanel} x */
-	SI_VE76278_EngagementPanel(x) {
-		const cf="SI_VE76278_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x);
-		if(panelIdentifier!=="comment-item-section") debugger;
-		this.R_EngagementPanelTitleHeader(header);
-		this.xm.R_SectionList(content);
-		if(targetId!=="engagement-panel-comments-section") debugger;
-		this.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.D_LoggingDirectives(loggingDirectives);
-		if("identifier" in y) {
-			this.force_parse_identifier("SI_VE76278_Identifier",y);
-			return;
-		}
-		this.g(y);
-	}
 	/** @private @arg {SI_VE99999_EngagementPanel} x */
 	SI_VE99999_EngagementPanel(x) {
 		const cf="SI_VE99999_EngagementPanel";
@@ -3703,21 +3686,6 @@ class ServiceMethods extends ServiceData {
 			let a1=this.GT_ShortsSurfaceIdentifier(identifier);
 			if(a1!=="engagement-panel-structured-description") debugger;
 		}
-	}
-	/** @private @arg {SI_VE139722_EngagementPanel} x */
-	SI_VE139722_EngagementPanel(x) {
-		const cf="SI_VE139722_EngagementPanel";
-		const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_SectionList(content);
-		this.t(header,this.R_EngagementPanelTitleHeader);
-		if(targetId!=="engagement-panel-comments-section") debugger;
-		this.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.D_LoggingDirectives(loggingDirectives);
-		if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
-		if(!identifier) debugger;
-		let a1=this.GT_ShortsSurfaceIdentifier(identifier);
-		if(a1!=="shorts-comments-panel") debugger;
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
@@ -5968,29 +5936,6 @@ class ServiceMethods extends ServiceData {
 		const {tabs,secondaryContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.G_SecondaryContents);
-	}
-	/** @private @arg {R_ExpandableTab} x */
-	R_ExpandableTab(x) {this.H_s("expandableTabRenderer",x,this.D_ExpandableTab);}
-	/** @private @arg {D_ExpandableTab} x */
-	D_ExpandableTab(x) {
-		const cf="D_ExpandableTab";
-		if(x.selected) {
-			const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.E_VE3611(endpoint);
-			this.a_primitive_str(title);
-			this.a_primitive_bool(selected);
-			this.t(expandedText,this.a_primitive_str);
-			return this.t(content,this.R_SectionList);
-		}
-		const {endpoint,title,selected,...y}=this.s(cf,x);/*#destructure_later*/
-		this.E_VE3611(endpoint);
-		this.a_primitive_str(title);
-		this.a_primitive_bool(selected);
-		if("expandedText" in y) {
-			const {expandedText,...y1}=y; this.g(y1);
-			return this.t(expandedText,this.a_primitive_str);
-		}
-		this.g(y);
 	}
 	/** @public @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_s("richGridRenderer",x,this.D_RichGrid);}
