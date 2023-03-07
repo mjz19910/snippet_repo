@@ -1290,7 +1290,7 @@ class Support_RS_Watch extends BaseService {
 		this.sm.trackingParams(trackingParams);
 		this.sm.R_PlayerOverlay(playerOverlays);
 		this.z(onResponseReceivedEndpoints,x => this.sm.xm.GE_ResponseReceived(cf,x));
-		this.z(engagementPanels,x => this.sm.R_EngagementPanelSectionList(x));
+		this.z(engagementPanels,x => this.sm.xm.R_EngagementPanelSectionList(x));
 		this.sm.R_DesktopTopbar(topbar);
 		this.z(pageVisualEffects,x => this.sm.R_CinematicContainer(x));
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
@@ -1516,7 +1516,7 @@ class Support_GenericApi extends BaseService {
 		if(status!=="STATUS_SUCCEEDED") debugger;
 		let [r]=this.z(actions,x => {
 			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
-			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.sm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		});
 		this.z(r,a => a);
 		this.z(playlistEditResults,this.g);
@@ -1528,7 +1528,7 @@ class Support_GenericApi extends BaseService {
 		const {responseContext: {},actions,trackingParams,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
 		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
 		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
-		let [u3]=this.z(u2,x => this.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
+		let [u3]=this.z(u2,x => this.sm.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
 		this.z(u3,this.D_NotificationMenu);
 		this.sm.trackingParams(trackingParams);
 	}
@@ -1539,14 +1539,14 @@ class Support_GenericApi extends BaseService {
 		this.sm.RC_ResponseContext(responseContext);
 		let [u1]=this.z(actions,x => {
 			if(!x.openPopupAction) debugger;
-			let a=this.TA_OpenPopup(cf,x);
+			let a=this.sm.TA_OpenPopup(cf,x);
 			return this.T_OpenPopup_Toast(a);
 		});
 		this.z(u1,this.sm.RA_Notification);
 		this.sm.trackingParams(trackingParams);
-		this.R_EntityBatchUpdate(frameworkUpdates);
-		this.channelId(channelId);
-		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
+		this.sm.R_EntityBatchUpdate(frameworkUpdates);
+		this.sm.channelId(channelId);
+		this.sm.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
 	/** @private @arg {RS_Success} x */
 	RS_Success(x) {
@@ -1566,7 +1566,7 @@ class Support_GenericApi extends BaseService {
 	/** @private @arg {A_NotificationMenuPopup} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action";
-		if("openPopupAction" in x) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
+		if("openPopupAction" in x) return this.sm.TA_OpenPopup("RSG_NotificationMenu_Action",x);
 		x===""; this.sm.codegen_typedef(cf,x);
 		return null;
 	}
@@ -2165,29 +2165,29 @@ class Support_EventInput extends BaseService {
 		this.sm.xr.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.sm.trackingParams(trackingParams);
-		this.R_DesktopTopbar(desktopTopbar);
+		this.sm.R_DesktopTopbar(desktopTopbar);
 		if(!engagementPanels) debugger;
-		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
+		else {this.z(engagementPanels,x => this.sm.xm.R_EngagementPanelSectionList(x));}
 	}
 	/** @private @arg {RS_Playlist} x */
 	RS_Playlist(x) {
 		const cf="RS_Playlist";
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_TwoColumnBrowseResults(contents);
+		this.sm.R_TwoColumnBrowseResults(contents);
 		this.sm.xr.R_PlaylistHeader(header);
-		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
+		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
 		this.sm.xr.R_Playlist_MD(metadata);
-		this.R_DesktopTopbar(topbar);
+		this.sm.R_DesktopTopbar(topbar);
 		this.sm.trackingParams(trackingParams);
-		this.R_Microformat(microformat);
+		this.sm.R_Microformat(microformat);
 		this.sm.xr.R_PlaylistSidebar(sidebar);
 	}
 	/** @private @arg {RS_Settings} x */
 	RS_Settings(x) {
 		const cf="RS_Settings";
 		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_TwoColumnBrowseResults(contents);
-		this.R_DesktopTopbar(topbar);
+		this.sm.R_TwoColumnBrowseResults(contents);
+		this.sm.R_DesktopTopbar(topbar);
 		this.sm.trackingParams(trackingParams);
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.sm.xr.R_SettingsSidebar(sidebar);
@@ -2196,7 +2196,7 @@ class Support_EventInput extends BaseService {
 	D_Tab_WhatToWatch(x) {
 		const {selected,content,tabIdentifier: {},trackingParams,...y}=this.sm.s("D_Tab_WhatToWatch",x); this.g(y);
 		this.sm.cq(selected,true);
-		this.sm.ht.R_RichGrid(content);
+		this.sm.R_RichGrid(content);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_Tab_Library} x */
@@ -3223,7 +3223,7 @@ class Support_Renderer extends BaseService {
 	}
 	/** @public @arg {A_FancyDismissibleDialog} x */
 	A_FancyDismissibleDialog(x) {
-		let dl=this.TA_OpenPopup("A_FancyDismissibleDialog",x);
+		let dl=this.sm.TA_OpenPopup("A_FancyDismissibleDialog",x);
 		let pu=this.Popup_DL_DismissibleDialog(dl);
 		this.R_FancyDismissibleDialog(pu);
 	}
@@ -3445,7 +3445,7 @@ class Support_Renderer extends BaseService {
 	/** @public @arg {A_GetSystemMenu} x */
 	A_GetSystemMenu(x) {
 		const cf="A_GetSystemMenu";
-		let pu=this.TA_OpenPopup(cf,x);
+		let pu=this.sm.TA_OpenPopup(cf,x);
 		this.Popup_DD_SystemMenu(pu);
 	}
 	/** @private @arg {Popup_DD_SystemMenu} x */
@@ -4760,7 +4760,7 @@ class ForService_XMethods extends BaseService {
 	/** @public @arg {G_BrowseContents} x */
 	G_BrowseContents(x) {
 		const cf="G_BrowseContents";
-		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
+		if("twoColumnBrowseResultsRenderer" in x) return this.sm.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
@@ -4907,6 +4907,118 @@ class ForService_XMethods extends BaseService {
 			return;
 		}
 		this.g(y);
+	}
+	/** @public @arg {R_EngagementPanelSectionList} x */
+	R_EngagementPanelSectionList(x) {this.H_s("engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
+	/** @private @arg {D_EngagementPanelSectionList} x */
+	D_EngagementPanelSectionList(x) {
+		const cf="D_EngagementPanelSectionList"; this.ks(cf,x);
+		if("veType" in x) {
+			switch(x.veType) {
+				default: debugger; break;
+				case 76278: return this.SI_VE76278_EngagementPanel(x);
+				case 99999: return this.SI_VE99999_EngagementPanel(x);
+				case 126250: return this.SI_VE126250_EngagementPanel(x);
+				case 124975: return this.SI_VE124975_EngagementPanel(x);
+				case 139722: return this.SI_VE139722_EngagementPanel(x);
+			}
+			return;
+		}
+		if("targetId" in x) return this.G_SI_DB_EngagementPanel(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {G_SI_DB_EngagementPanel} x */
+	G_SI_DB_EngagementPanel(x) {
+		const cf="DB_SI_EngagementPanel";
+		switch(x.targetId) {
+			default: x===""; debugger; break;
+			case "engagement-panel-ads": return this.sm.SI_DB_EngagementPanel_Ads(x);
+			case "engagement-panel-clip-create":/*GE*/{
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
+				this.sm.R_EngagementPanelTitleHeader(header);
+				this.sm.R_ClipSection(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.sm.D_LoggingDirectives(loggingDirectives);
+				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
+			} break;
+			case "engagement-panel-macro-markers-description-chapters":/*GE*/{
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
+				this.sm.R_EngagementPanelTitleHeader(header);
+				this.xr.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.sm.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-macro-markers-auto-chapters":/*GE*/{
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
+				this.sm.R_EngagementPanelTitleHeader(header);
+				this.xr.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.sm.D_LoggingDirectives(loggingDirectives);
+			} break;
+		}
+	}
+	/** @private @arg {SI_VE99999_EngagementPanel} x */
+	SI_VE99999_EngagementPanel(x) {
+		const cf="SI_VE99999_EngagementPanel";
+		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
+		this.R_EngagementPanelTitleHeader(header);
+		this.R_ProductList(content);
+		if(targetId!=="shopping_panel_for_entry_point_5") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+	}
+	/** @private @arg {SI_VE126250_EngagementPanel} x */
+	SI_VE126250_EngagementPanel(x) {
+		const cf="SI_VE126250_EngagementPanel";
+		const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+		this.R_EngagementPanelTitleHeader(header);
+		this.R_ContinuationItem(content);
+		if(targetId!=="engagement-panel-searchable-transcript") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+		if("identifier" in y) {
+			this.force_parse_identifier("SI_VE126250_Identifier",y);
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {SI_VE124975_EngagementPanel} x */
+	SI_VE124975_EngagementPanel(x) {
+		const cf="SI_VE124975_EngagementPanel";
+		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
+		this.R_EngagementPanelTitleHeader(header);
+		this.xr.R_StructuredDescriptionContent(content);
+		if(targetId!=="engagement-panel-structured-description") debugger;
+		this.targetId(cf,targetId);
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+		if(identifier) {
+			let a1=this.GT_ShortsSurfaceIdentifier(identifier);
+			if(a1!=="engagement-panel-structured-description") debugger;
+		}
+	}
+	/** @private @arg {RG_Result} x */
+	RG_Result(x) {
+		const cf="RG_Result";
+		if("tabRenderer" in x) return this.x.get("x_EventInput").R_Tab(x);
+		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
+	G_EngagementPanelSectionShowCommands(x) {
+		const cf="G_EngagementPanelSectionShowCommands";
+		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
+		if("showEngagementPanelScrimAction" in x) return this.sm.A_ShowEngagementPanelScrim(x);
+		if("scrollToEngagementPanelCommand" in x) return this.sm.C_ScrollToEngagementPanel(x);
+		x===""; this.sm.codegen_typedef(cf,x);
 	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

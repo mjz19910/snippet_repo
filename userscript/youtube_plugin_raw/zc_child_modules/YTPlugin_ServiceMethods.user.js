@@ -175,7 +175,7 @@ class ServiceMethods extends ServiceData {
 		this.cg.codegen_str(cf,x);
 	}
 	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
+	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.xm.R_EngagementPanelSectionList(x));}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
 		const cf="D_ToggleMenuServiceItem";
@@ -2142,10 +2142,6 @@ class ServiceMethods extends ServiceData {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {string} x */
 	trackingParams(x) {this.params("params.tracking",x);}
-	/** @public @arg {string} cf @arg {{}} x */
-	codegen_typedef(cf,x,do_break=true) {
-		this.cg.codegen_typedef(cf,x,do_break,false);
-	}
 	/** @public @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
@@ -3419,8 +3415,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(y);
 	}
-	/** @public @arg {R_EngagementPanelSectionList} x */
-	R_EngagementPanelSectionList(x) {this.H_s("engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @public @arg {R_DesktopTopbar} x */
 	R_DesktopTopbar(x) {this.H_s("desktopTopbarRenderer",x,this.D_DesktopTopbar);}
 	/** @private @arg {R_DecoratedPlayerBar} x */
@@ -3641,68 +3635,6 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 		}
 		return tag;
-	}
-	/** @private @arg {SI_VE99999_EngagementPanel} x */
-	SI_VE99999_EngagementPanel(x) {
-		const cf="SI_VE99999_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
-		this.R_EngagementPanelTitleHeader(header);
-		this.R_ProductList(content);
-		if(targetId!=="shopping_panel_for_entry_point_5") debugger;
-		this.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.D_LoggingDirectives(loggingDirectives);
-	}
-	/** @private @arg {SI_VE126250_EngagementPanel} x */
-	SI_VE126250_EngagementPanel(x) {
-		const cf="SI_VE126250_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
-		this.R_EngagementPanelTitleHeader(header);
-		this.R_ContinuationItem(content);
-		if(targetId!=="engagement-panel-searchable-transcript") debugger;
-		this.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.D_LoggingDirectives(loggingDirectives);
-		if("identifier" in y) {
-			this.force_parse_identifier("SI_VE126250_Identifier",y);
-			return;
-		}
-		this.g(y);
-	}
-	/** @private @arg {SI_VE124975_EngagementPanel} x */
-	SI_VE124975_EngagementPanel(x) {
-		const cf="SI_VE124975_EngagementPanel";
-		const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
-		this.R_EngagementPanelTitleHeader(header);
-		this.xr.R_StructuredDescriptionContent(content);
-		if(targetId!=="engagement-panel-structured-description") debugger;
-		this.targetId(cf,targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.D_LoggingDirectives(loggingDirectives);
-		if(identifier) {
-			let a1=this.GT_ShortsSurfaceIdentifier(identifier);
-			if(a1!=="engagement-panel-structured-description") debugger;
-		}
-	}
-	/** @private @arg {D_EngagementPanelSectionList} x */
-	D_EngagementPanelSectionList(x) {
-		const cf="D_EngagementPanelSectionList"; this.ks(cf,x);
-		if("veType" in x) {
-			switch(x.veType) {
-				default: debugger; break;
-				case 76278: return this.SI_VE76278_EngagementPanel(x);
-				case 99999: return this.SI_VE99999_EngagementPanel(x);
-				case 126250: return this.SI_VE126250_EngagementPanel(x);
-				case 124975: return this.SI_VE124975_EngagementPanel(x);
-				case 139722: return this.SI_VE139722_EngagementPanel(x);
-			}
-			return;
-		}
-		if("targetId" in x) return this.ht.G_SI_DB_EngagementPanel(x);
-		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_ThumbnailsList} x */
 	D_ThumbnailsList(x) {
@@ -5959,13 +5891,6 @@ class ServiceMethods extends ServiceData {
 		if(reflowOptions.minimumRowsOfVideosAtStart!==2) debugger;
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
 		return y;
-	}
-	/** @private @arg {RG_Result} x */
-	RG_Result(x) {
-		const cf="RG_Result";
-		if("tabRenderer" in x) return this.x.get("x_EventInput").R_Tab(x);
-		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
-		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_BrowseFeedActions} x */
 	R_BrowseFeedActions(x) {this.H_s("browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}

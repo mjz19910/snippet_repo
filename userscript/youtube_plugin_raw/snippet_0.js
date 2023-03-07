@@ -182,8 +182,6 @@ export class Snippet_0_tmp {
 class ND extends Snippet_0_tmp {
 	/** @protected @arg {string} x */
 	uppercase_first(x) {return x[0].toUpperCase()+x.slice(1);}
-	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
-	H_(x,f) {f.call(this,this.w(x));}
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
 	c1(f) {return x => f.call(this,x);}
 	/** @protected @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */

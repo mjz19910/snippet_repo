@@ -582,47 +582,6 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	//#region G
-	/** @public @arg {G_SI_DB_EngagementPanel} x */
-	G_SI_DB_EngagementPanel(x) {
-		const cf="DB_SI_EngagementPanel";
-		switch(x.targetId) {
-			default: x===""; debugger; break;
-			case "engagement-panel-ads": return this.sm.SI_DB_EngagementPanel_Ads(x);
-			case "engagement-panel-clip-create":/*GE*/{
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
-				this.sm.R_EngagementPanelTitleHeader(header);
-				this.sm.R_ClipSection(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.sm.D_LoggingDirectives(loggingDirectives);
-				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
-			} break;
-			case "engagement-panel-macro-markers-description-chapters":/*GE*/{
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
-				this.sm.R_EngagementPanelTitleHeader(header);
-				this.xr.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.sm.D_LoggingDirectives(loggingDirectives);
-			} break;
-			case "engagement-panel-macro-markers-auto-chapters":/*GE*/{
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
-				this.sm.R_EngagementPanelTitleHeader(header);
-				this.xr.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.sm.D_LoggingDirectives(loggingDirectives);
-			} break;
-		}
-	}
-	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
-	G_EngagementPanelSectionShowCommands(x) {
-		const cf="G_EngagementPanelSectionShowCommands";
-		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
-		if("showEngagementPanelScrimAction" in x) return this.sm.A_ShowEngagementPanelScrim(x);
-		if("scrollToEngagementPanelCommand" in x) return this.sm.C_ScrollToEngagementPanel(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
 	/** @public @arg {C_Innertube} x */
 	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {G_DC_Innertube} x */
@@ -1062,7 +1021,7 @@ class HandleTypes extends BaseService {
 		this.sm.trackingParams(trackingParams);
 		this.t(playerOverlays,x => this.sm.R_PlayerOverlay(x));
 		this.tz(onResponseReceivedEndpoints,a => this.xm.GE_ResponseReceived(cf,a));
-		this.tz(engagementPanels,x => this.sm.R_EngagementPanelSectionList(x));
+		this.tz(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
 		this.t(topbar,x => this.sm.R_DesktopTopbar(x));
 		this.tz(pageVisualEffects,x => this.sm.R_CinematicContainer(x));
 		this.t(frameworkUpdates,x => this.sm.D_FrameworkUpdates(x));
@@ -1113,7 +1072,7 @@ class HandleTypes extends BaseService {
 		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
 		this.t(sequenceContinuation,x => this.sm.a_primitive_str(x));
 		this.sm.R_DesktopTopbar(desktopTopbar);
-		this.z(engagementPanels,x => this.sm.R_EngagementPanelSectionList(x));
+		this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
 	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {

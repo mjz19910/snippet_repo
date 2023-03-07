@@ -12,14 +12,15 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {as,BaseService,do_export,split_string_once,split_string,as_any,JsonReplacerState}=require("./YtPlugin_Base.user");
+const {as,do_export,split_string_once,split_string,as_any,JsonReplacerState,ServiceWithResolver}=require("./YtPlugin_Base.user");
 
 if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-class CodegenService extends BaseService {
+class CodegenService extends ServiceWithResolver {
+	get sm() {return this.x.get("methods");}
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";}
 	/** @private @arg {{}} x2 @arg {string} k */
@@ -137,7 +138,7 @@ class CodegenService extends BaseService {
 		let gen_data_name=() => {
 			if(!kk) throw new Error();
 			let kn_pre=this.get_codegen_name(kk);
-			if(this.str_starts_with_rx("R_",kn_pre)) {
+			if(this.sm.str_starts_with_rx("R_",kn_pre)) {
 				let np_arr_2=split_string_once(kn_pre,"R_");
 				return `D_${np_arr_2[1]}`;
 			}
@@ -241,7 +242,7 @@ class CodegenService extends BaseService {
 		if(o2==null) return null;
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		let s=new JsonReplacerState({
-			text_decoder: this._decoder,
+			text_decoder: this.sm._decoder,
 			cf,keys,is_root: true,
 		});
 		let new_typedef=this.codegen_typedef_base(s,cf,x);
@@ -315,7 +316,7 @@ class CodegenService extends BaseService {
 	get_codegen_name_obj(cf,x1) {
 		let keys=this.get_keys_of(x1);
 		let s=new JsonReplacerState({
-			text_decoder: this._decoder,
+			text_decoder: this.sm._decoder,
 			cf,keys,is_root: true,
 		});
 		/** @type {{}} */
@@ -453,7 +454,7 @@ class CodegenService extends BaseService {
 		}
 		let mi=s.object_store.indexOf(x);
 		if(x instanceof Uint8Array) {
-			let res=this._decoder.decode(x);
+			let res=this.sm._decoder.decode(x);
 			return `TYPE::V_Uint8Array<"${res}">`;
 		}
 		let xi=Object.entries(x);
@@ -538,12 +539,12 @@ class CodegenService extends BaseService {
 			let u2=v.webCommandMetadata.rootVe;
 			if(u2) return `TYPE::M_VE${u2}`;
 			if(u1) {
-				let ss=this.split_str(u1,"/");
+				let ss=this.sm.split_str(u1,"/");
 				if(ss[0]!=="") debugger;
 				let [,a2,a3,...rest]=ss;
 				if(a2!=="youtubei") debugger;
 				if(a3!=="v1") debugger;
-				let cq=this.join_string(rest,"_");
+				let cq=this.sm.join_string(rest,"_");
 				return `TYPE::M_${cq}`;
 			}
 			/** @type {M_SendPost} */
@@ -641,7 +642,7 @@ class CodegenService extends BaseService {
 			if(xt.popup&&xt.popupType) {
 				/** @type {Popup_DL_ConfirmDialog} */
 				let xr={popup: xt.popup,popupType: xt.popupType};
-				return this.x.get("gen_code").D_TypedefGenerator_Popup(xr);
+				return this.sm.x.get("gen_code").D_TypedefGenerator_Popup(xr);
 			}
 		}
 		if(this.eq_keys(keys,["1","2","3"])) return x;
@@ -682,7 +683,7 @@ class CodegenService extends BaseService {
 		s.set_cf(cf);
 		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,s),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
-		tc=this.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+		tc=this.sm.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
 		});
@@ -1138,7 +1139,7 @@ class CodegenService extends BaseService {
 			;
 		if(hg) {
 			let hr=g();
-			if(this.str_ends_with(hr,"Command")) {
+			if(this.sm.str_ends_with(hr,"Command")) {
 				let sq=split_string_once(hr,"Command");
 				if(sq[1]==="") {return `TYPE::C_${split_string_once(sq[0],"TYPE::")[1]}`;}
 				console.log(sq);

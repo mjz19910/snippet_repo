@@ -2099,7 +2099,7 @@ class ApiBase extends ApiBase2 {
 }
 //#endregion
 //#region Service
-class BaseServicePrivate extends ApiBase {
+class ServiceWithResolver extends ApiBase {
 	#x;
 	/** @constructor @public @arg {DefaultServiceResolver} x */
 	constructor(x) {
@@ -2108,15 +2108,12 @@ class BaseServicePrivate extends ApiBase {
 	}
 	/** @protected @returns {NonNullable<DefaultServiceResolver["value"]>} */
 	get x() {return as_any(this.#x.value);}
-	get parser() {return this.x.get("parser_service");}
-	get cg() {
-		if(!this.#x.value) throw new Error();
-		return this.#x.value.get("codegen");
-	}
 	/** @arg {(x:DefaultServiceResolver_2)=>void} cb */
-	addOnServicesListener(cb) {
-		this.#x.listeners.push(cb);
-	}
+	addOnServicesListener(cb) {this.#x.listeners.push(cb);}
+}
+class BaseServicePrivate extends ServiceWithResolver {
+	get parser() {return this.x.get("parser_service");}
+	get cg() {return this.x.get("codegen");}
 	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
 		if(s===void 0) debugger;
@@ -2197,6 +2194,12 @@ class BaseServiceMembers extends BaseServicePrivate {
 	logged_keys=[];
 }
 class BaseService extends BaseServiceMembers {
+	//#region accessors
+	//#endregion
+	//#region redirect member functions
+	/** @public @arg {string} cf @arg {{}} x */
+	codegen_typedef(cf,x,do_break=true) {this.cg.codegen_typedef(cf,x,do_break,false);}
+	//#endregion
 	//#region template methods that make objects
 	/**
 	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
@@ -3230,6 +3233,7 @@ export_((exports) => {
 	exports.yt_plugin_base_main=yt_plugin_base_main;
 });
 export_(exports => {exports.ApiBase=ApiBase;});
+export_(exports => {exports.ServiceWithResolver=ServiceWithResolver;});
 export_(exports => {exports.BaseServicePrivate=BaseServicePrivate;});
 export_(exports => {
 	exports.BaseService=BaseService;
