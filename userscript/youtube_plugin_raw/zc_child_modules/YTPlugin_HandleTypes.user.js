@@ -30,7 +30,6 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 //#region HandleTypes
 class HandleTypes extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
 	//#region Service Cache

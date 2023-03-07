@@ -2111,9 +2111,31 @@ class ServiceWithResolver extends ApiBase {
 	/** @arg {(x:DefaultServiceResolver_2)=>void} cb */
 	addOnServicesListener(cb) {this.#x.listeners.push(cb);}
 }
-class BaseServicePrivate extends ServiceWithResolver {
+class ServiceWithAccessors extends ServiceWithResolver {
 	get parser() {return this.x.get("parser_service");}
 	get cg() {return this.x.get("codegen");}
+	get sm(/**/) {return this.x.get("methods");}
+	get save_db() {return this.x.get("save_db");}
+}
+class TextDecoderExt {
+	decoder=new TextDecoder("utf-8",{fatal: false});
+	/** @arg {BufferSource} buffer */
+	decode(buffer) {
+		try {
+			return this.decoder.decode(buffer);
+		} catch {
+			return null;
+		}
+	}
+}
+class ServiceWithMembers extends ServiceWithAccessors {
+	/** @protected */
+	_decoder=new TextDecoderExt;
+	/** @protected @type {string[]} */
+	logged_keys=[];
+}
+class BaseService extends ServiceWithMembers {
+	//#region string replace
 	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
 		if(s===void 0) debugger;
@@ -2129,17 +2151,20 @@ class BaseServicePrivate extends ServiceWithResolver {
 		} while(ps!==s);
 		return s;
 	}
-	get save_db() {return this.x.get("save_db");}
 	/** @arg {string} x */
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */
 		let y=as(x);
 		return this.save_db.unwrap_brackets(y);
 	}
+	//#endregion
+	//#region make
 	/** @arg {string} k @template T @arg {T} x @returns {make_one_t<T>} */
 	make_one_t(k,x) {const b="item",c="one"; return {a: "group_value",b,c,f: k,z: [x]};}
 	/** @arg {string} k @template T @arg {T[]} x @returns {make_arr_t<T>} */
 	make_arr_t(k,x) {const b="item",c="arr"; return {a: "group_value",b,c,f: k,z: [x]};}
+	//#endregion
+	//#region save
 	/** @protected @arg {string} k @arg {bigint} x */
 	save_bigint(k,x) {return this.save_db.data_store.get_store("bigint").save_data(k,this.make_one_t(k,x));}
 	/** @protected @arg {string} k @arg {boolean} x */
@@ -2155,12 +2180,16 @@ class BaseServicePrivate extends ServiceWithResolver {
 	/** @protected @arg {string} k @arg {number[]} x */
 	save_number_arr(k,x) {return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(k,x));}
 	/** @protected @arg {string} k @arg {Uint8Array} x */
-	save_number_bin(k,x) {return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(k,x));}
+	save_number_bin(k,x) {
+		return this.save_db.save_to_data_store("number",this.tag_num_like(k,x));
+	//	return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(k,x));
+	}
 	/** @protected @arg {D_GM_VeNum} x */
 	save_ve_element(x) {
 		const k="ve_element";
 		this.save_db.data_store.get_store("root_visual_element").save_data(k,this.make_one_t(k,x));
 	}
+	//#endregion
 	/** @arg {string} k @arg {number[]|Uint8Array} a */
 	tag_num_like(k,a) {
 		let r=[];
@@ -2175,25 +2204,6 @@ class BaseServicePrivate extends ServiceWithResolver {
 	}
 	/** @protected @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} k */
 	save_enum(cf,ns,k) {return this.save_db.save_enum_impl(cf,ns,k);}
-}
-class TextDecoderExt {
-	decoder=new TextDecoder("utf-8",{fatal: false});
-	/** @arg {BufferSource} buffer */
-	decode(buffer) {
-		try {
-			return this.decoder.decode(buffer);
-		} catch {
-			return null;
-		}
-	}
-}
-class BaseServiceMembers extends BaseServicePrivate {
-	/** @protected */
-	_decoder=new TextDecoderExt;
-	/** @protected @type {string[]} */
-	logged_keys=[];
-}
-class BaseService extends BaseServiceMembers {
 	//#region accessors
 	//#endregion
 	//#region redirect member functions
@@ -2277,7 +2287,7 @@ class BaseService extends BaseServiceMembers {
 	}
 	/** @protected @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is (T extends `${infer B}${infer R}`?`${B}${Some<R>}${string}${U}`:`${string}${U}`)} */
 	str_ends_with(str,ends_str) {return str.endsWith(ends_str);}
-	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_rx(needle,str) {return str.startsWith(needle);}
 	/** @protected */
 	get TODO_true() {return true;}
@@ -3234,7 +3244,7 @@ export_((exports) => {
 });
 export_(exports => {exports.ApiBase=ApiBase;});
 export_(exports => {exports.ServiceWithResolver=ServiceWithResolver;});
-export_(exports => {exports.BaseServicePrivate=BaseServicePrivate;});
+export_(exports => {exports.ServiceWithAccessors=ServiceWithAccessors;});
 export_(exports => {
 	exports.BaseService=BaseService;
 	exports.YtPlugin=YtPlugin;

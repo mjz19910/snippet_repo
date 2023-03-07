@@ -3703,7 +3703,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
-	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
+	/** @public @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
 		const {identifier,...a}=this.s(cf,x); this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
@@ -3795,7 +3795,7 @@ class ServiceMethods extends ServiceData {
 		this.xm.R_Button(a11ySkipNavigationButton);
 		this.xm.R_Button(voiceSearchButton);
 	}
-	/** @private @arg {R_ProductList} x */
+	/** @public @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_s("productListRenderer",x,this.D_ProductList);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
@@ -5595,7 +5595,7 @@ class ServiceMethods extends ServiceData {
 		this.params("get_notification_menu.ctoken",ctoken);
 	}
 	/** @typedef {"featured"|"search"} S_BrowseFeedEnd  */
-	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,T_IdTemplate<"UC",D_UserIdStr>,string]|[1,`UC${string}${S_BrowseFeedEnd}`,T_IdTemplate<"UC",D_UserIdStr>,S_BrowseFeedEnd]]} */
+	/** @public @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}${S_BrowseFeedEnd}`,T_IdTemplate<"UC",D_UserIdStr>,string]|[1,`UC${string}${S_BrowseFeedEnd}`,T_IdTemplate<"UC",D_UserIdStr>,S_BrowseFeedEnd]]} */
 	is_browse_feedUC(x) {
 		if(this.str_starts_with_rx("browse-feed",x.targetId)) {
 			let ss=split_string(x.targetId,"browse-feed");
@@ -5610,12 +5610,12 @@ class ServiceMethods extends ServiceData {
 		}
 		return [false,null];
 	}
-	/** @private @arg {TR_SectionListItem_3_Empty} x */
+	/** @public @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {
 		const cf="TR_SectionListItem_3_Empty";
 		this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {R_MusicCarouselShelf} x */
+	/** @public @arg {R_MusicCarouselShelf} x */
 	R_MusicCarouselShelf(x) {this.H_s("musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
@@ -5626,7 +5626,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.ceq(itemSize,"COLLECTION_STYLE_ITEM_SIZE_MEDIUM");
 	}
-	/** @private @arg {R_MusicShelf} x */
+	/** @public @arg {R_MusicShelf} x */
 	R_MusicShelf(x) {this.H_s("musicShelfRenderer",x,this.D_MusicShelf);}
 	/** @private @arg {D_MusicShelf} x */
 	D_MusicShelf(x) {
@@ -5690,7 +5690,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
-	/** @private @arg {R_TextHeader} x */
+	/** @public @arg {R_TextHeader} x */
 	R_TextHeader(x) {this.H_s("textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {D_TextHeader} x */
 	D_TextHeader(x) {
@@ -5866,7 +5866,7 @@ class ServiceMethods extends ServiceData {
 	D_TwoColumnBrowseResults(x) {
 		const cf="D_TwoColumnBrowseResults";
 		const {tabs,secondaryContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,this.RG_Result);
+		this.z(tabs,this.sm.RG_Result);
 		this.t(secondaryContents,this.G_SecondaryContents);
 	}
 	/** @public @arg {R_RichGrid} x */

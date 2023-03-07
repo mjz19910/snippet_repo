@@ -61,7 +61,6 @@ class OnePropertyObjArray {
 }
 export_(exports => {exports.OnePropertyObjArray=OnePropertyObjArray;});
 class TypedefGenerator extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
 		const cf="popup_dialog"; cf; this.sm.k(cf,x);
@@ -351,7 +350,6 @@ class StoreData {
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @arg {string} key */
 	get_store_keys(key) {return this.data_store.get_store("string").index_get(key);}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
@@ -366,6 +364,11 @@ class LocalStorageSeenDatabase extends BaseService {
 		return s3;
 	}
 	data_store=new StoreData(() => this.onDataChange());
+	/** @template {StoreDataInput["type"]} SName @arg {SName extends infer I extends keyof J_StoreTypeMap?[I,make_item_group<J_StoreTypeMap[I]>]:never} args */
+	save_to_data_store(...args) {
+		const [sn,x]=args;
+		this.data_store.get_store(sn).save_data(x.f,as(x));
+	}
 	/** @type {IndexedDBService} */
 	idb=(() => {
 		if(!this.x) {
@@ -582,7 +585,6 @@ class LocalStorageSeenDatabase extends BaseService {
 export_(exports => {exports.LocalStorageSeenDatabase=LocalStorageSeenDatabase;});
 //#endregion
 class Support_RS_Player extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
 	//#region dup
@@ -1242,7 +1244,6 @@ class Support_RS_Player extends BaseService {
 }
 export_(exports => {exports.Support_RS_Player=Support_RS_Player;});
 class Support_RS_WatchPage extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @public @arg {G_RS_WatchPage} x */
 	RS_WatchPage(x) {
 		const cf="R_WatchPage"; this.sm.k(cf,x);
@@ -1279,7 +1280,6 @@ class Support_RS_WatchPage extends BaseService {
 }
 export_(exports => {exports.Support_RS_WatchPage=Support_RS_WatchPage;});
 class Support_RS_Watch extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @public @arg {RS_Watch} x */
 	RS_Watch(x) {
 		const cf="RS_Watch";
@@ -1298,7 +1298,6 @@ class Support_RS_Watch extends BaseService {
 }
 export_(exports => {exports.Support_RS_Watch=Support_RS_Watch;});
 class Support_RS_Page_Browse extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @public @arg {RS_Page_Browse} x */
 	RS_Page_Browse(x) {
 		const cf="RS_Page_Browse";
@@ -1427,7 +1426,6 @@ class Support_RS_Browse extends BaseService {
 }
 export_(exports => {exports.Support_RS_Browse=Support_RS_Browse;});
 class Support_GenericApi extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @private @arg {Popup_DD_NotificationMenu} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
@@ -1711,7 +1709,6 @@ class Support_GenericApi extends BaseService {
 }
 export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
 class Support_EventInput extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.sm.is_TE_VE(x.endpoint,t);}
 	//#region Renderer & Group
@@ -2266,7 +2263,6 @@ class Support_EventInput extends BaseService {
 }
 export_(exports => {exports.Support_EventInput=Support_EventInput;});
 class Support_VE extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @public @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
 	/** @public @arg {D_VssLoggingContext} x */
@@ -2278,7 +2274,6 @@ class Support_VE extends BaseService {
 }
 export_(exports => {exports.Support_VE=Support_VE;});
 class Support_VE37414 extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @private @arg {D_SerializedContextData} x */
 	D_QoeLoggingContext(x) {
 		const cf="D_QoeLoggingContext";
@@ -2330,7 +2325,6 @@ class Support_VE37414 extends BaseService {
 }
 export_(exports => {exports.Support_VE37414=Support_VE37414;});
 class Support_Renderer extends BaseService {
-	get sm() {return this.x.get("methods");}
 	//#region data members
 	/** @type {Map<number,object>} */
 	view_conversion_info=new Map;
@@ -4129,7 +4123,6 @@ class Support_Renderer extends BaseService {
 }
 export_(exports => {exports.Support_Renderer=Support_Renderer;});
 class ForService_XMethods extends BaseService {
-	get sm() {return this.x.get("methods");}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
 	/** @private @arg {R_VoiceSearchDialog} x */

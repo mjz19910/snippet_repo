@@ -12,15 +12,14 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {as,do_export,split_string_once,split_string,as_any,JsonReplacerState,ServiceWithResolver}=require("./YtPlugin_Base.user");
+const {as,do_export,split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YtPlugin_Base.user");
 
 if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-class CodegenService extends ServiceWithResolver {
-	get sm() {return this.x.get("methods");}
+class CodegenService extends ServiceWithAccessors {
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";}
 	/** @private @arg {{}} x2 @arg {string} k */
