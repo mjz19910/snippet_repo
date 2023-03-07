@@ -1693,7 +1693,7 @@ class Support_GenericApi extends BaseService {
 		this.sm.G_Text(description);
 		if(int32Value!==1) debugger;
 		if(isSelected!==false) debugger;
-		this.sm.D_Label(accessibility);
+		this.xm.D_Label(accessibility);
 	}
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
 	GR_MP_MenuNotificationSection_Item(x) {
@@ -3200,7 +3200,7 @@ class Support_Renderer extends BaseService {
 			case 0: case 1: case 2:
 		}
 		this.sm.a_primitive_bool(isSelected);
-		this.sm.D_Label(accessibility);
+		this.xm.D_Label(accessibility);
 	}
 	/** @public @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
@@ -4337,7 +4337,7 @@ class ForService_XMethods extends BaseService {
 		this.t(text,this.sm.G_Text);
 		this.t(icon,x => this.sm.T_Icon(`${cf}.icon`,x));
 		this.t(navigationEndpoint,this.D_Button_NavEP);
-		this.t(accessibility,this.sm.D_Label);
+		this.xm.t(accessibility,this.xm.D_Label);
 		this.t(tooltip,x => this.sm.a_primitive_str(x));
 		this.t(trackingParams,x => this.sm.trackingParams(x));
 		this.t(accessibilityData,this.sm.D_Accessibility);
@@ -4435,12 +4435,12 @@ class ForService_XMethods extends BaseService {
 		this.t(isToggled,this.sm.a_primitive_bool);
 		this.t(isDisabled,x => this.sm.cq(x,false));
 		this.t(defaultIcon,x => this.save_string(`${cf}.defaultIcon.type`,x.iconType));
-		this.t(defaultText,this.sm.G_Text);
+		this.sm.t(defaultText,this.sm.G_Text);
 		this.t(defaultServiceEndpoint,this.D_ToggleButton_DefaultSrvEP);
-		this.t(toggledText,this.sm.G_Text);
+		this.sm.t(toggledText,this.sm.G_Text);
 		this.t(toggledServiceEndpoint,this.D_ToggleButton_ToggledSrvEP);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
-		this.t(accessibility,this.sm.D_Label);
+		this.xm.t(accessibility,this.xm.D_Label);
 		this.sm.trackingParams(trackingParams);
 		this.t(toggledStyle,x => this.save_string(`${cf}.toggledStyle.type`,x.styleType));
 		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
@@ -5351,5 +5351,7 @@ class ForService_XMethods extends BaseService {
 		this.sm.D_Thumbnail(thumbnail);
 		this.sm.trackingParams(trackingParams);
 	}
+	/** @public @arg {D_Label} x */
+	D_Label(x) {this.sm.H_s("label",x,this.sm.a_primitive_str);}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

@@ -2175,6 +2175,12 @@ class ServiceWithMembers extends ServiceWithAccessors {
 	logged_keys=[];
 }
 class BaseService extends ServiceWithMembers {
+	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	H_s(k,x,f) {
+		let tm=this;
+		if(!(tm instanceof ServiceData)) {debugger; return;}
+		this.sm.H_cls(this,k,x,f);
+	}
 	/** @public @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f) {
 		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

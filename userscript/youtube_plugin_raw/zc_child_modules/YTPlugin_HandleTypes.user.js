@@ -2023,6 +2023,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
+		if(this.ht!==this) {this.ht.H_TrackingObj(x); return;}
 		const cf="H_TrackingObj",t=this;
 		const {1: obj_tag,2: obj_id,3: v3,4: f4,6: f6,7: f7,8: f8,9: f9,11: v11,16: f16,19: f19,21: f21}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.t(obj_tag,x => t.TK_D32(cf,x,"tag"));
