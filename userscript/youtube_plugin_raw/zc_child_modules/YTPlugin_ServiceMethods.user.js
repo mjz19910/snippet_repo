@@ -20,9 +20,9 @@ function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;
 	ks=this.k;
-	/** @public @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
+	/** @private @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
 	_cq_no_infer(a,b) {if(a!==b) debugger;}
-	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
+	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
 	_cq_infer(a,b) {if(a!==b) debugger;}
 	/** @public @type {<T,U extends T>(a:T,b:NoInfer<U>)=>void} */
 	cq=this._cq_no_infer;
