@@ -11,8 +11,8 @@ type E1=Extract<A3,{info_arr: any;}>["z"][0];
 class ChainWalker {
 	/** @arg {RetValue} parent */
 	constructor(parent: RetValue) {
-		if(parent.a===null) throw new Error("Linked List empty");
-		this.head=parent.a;
+		if(parent.linked_list_head===null) throw new Error("Linked List empty");
+		this.head=parent.linked_list_head;
 	}
 	head: G_Ex_Ret;
 	next() {
@@ -31,13 +31,13 @@ class RetValue {
 		|{t: "d"; u: string;}
 		|null
 	]=[null];
-	a: G_Ex_Ret|null=null;
-	t: G_Ex_Ret|null=null;
+	linked_list_head: G_Ex_Ret|null=null;
+	linked_list_tail: G_Ex_Ret|null=null;
 	add_link(...args: G_Ex_WV) {
-		if(this.a===null) this.a=[-1,1,args,null];
-		let head=this.a;
-		if(this.t===null) this.t=head;
-		let tail=this.t;
+		if(this.linked_list_head===null) this.linked_list_head=[-1,1,args,null];
+		let head=this.linked_list_head;
+		if(this.linked_list_tail===null) this.linked_list_tail=head;
+		let tail=this.linked_list_tail;
 		// added it
 		if(head===tail) return;
 		tail[3]=[-1,0,args,null];
@@ -50,7 +50,7 @@ class RetValue {
 			if(next[3]===null) throw new Error("Disconnected linked list");
 			next=next[3];
 		}
-		this.t=tail;
+		this.linked_list_tail=tail;
 	}
 	walk_chain() {
 		return new ChainWalker(this);
@@ -93,33 +93,14 @@ function cache_item_decompose_1(s: ApiBase2,x: A2) {
 		return cache_item_decompose_work(s,[2,x]);
 	}
 }
-type DecomposeWork_1a=Extract<A2,{
-	a: any;
-}>;
-
-type DecomposeWork_1f=Exclude<A2,{
-	a: any;
-}>;
-
-type DecomposeWork_1b=Extract<DecomposeWork_1a,{
-	b: any;
-}>;
-
-type DecomposeWork_sub_1b=Exclude<DecomposeWork_1a,{
-	b: any;
-}>;
-
+type DecomposeWork_1a=Extract<A2,{a: any;}>;
+type DecomposeWork_1f=Exclude<A2,{a: any;}>;
+type DecomposeWork_1b=Extract<DecomposeWork_1a,{b: any;}>;
+type DecomposeWork_sub_1b=Exclude<DecomposeWork_1a,{b: any;}>;
 type A2_Box=Extract<A2,T_PrimitiveBox<any>>;
-type A1b_Group_MK=Extract<DecomposeWork_1b,{
-	a: "group_value";
-}>;
-
-type A1b_Group_RM=Exclude<DecomposeWork_1b,{
-	a: "group_value";
-}>;
-
+type A1b_Group_MK=Extract<DecomposeWork_1b,{a: "group_value";}>;
+type A1b_Group_RM=Exclude<DecomposeWork_1b,{a: "group_value";}>;
 type A4_RM_Box=Exclude<DecomposeWork_sub_1b,T_PrimitiveBox<any>>;
-
 type DecomposeWorkItem=
 	// a
 	|[1,"+a",DecomposeWork_1a]

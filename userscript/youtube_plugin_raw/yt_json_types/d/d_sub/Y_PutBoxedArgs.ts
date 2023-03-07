@@ -13,7 +13,7 @@ type Y_PutBoxedArgs=
 	|["keys",null,[string,make_item_group<string|number>]]
 	|["load_id",null,number]
 	|["number",null,[string,make_item_group<number>]]
-	|["exact","play_next",DI_PlayNext]
+	|["exact","play_next",DI_A_PlayNext]
 	|["playlist_id","LL",DI_A_Playlist_LL]
 	|["playlist_id","PL",DI_A_Playlist_PL]
 	|["playlist_id","WL",DI_A_Playlist_WL]

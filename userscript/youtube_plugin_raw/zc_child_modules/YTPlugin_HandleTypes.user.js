@@ -3214,9 +3214,9 @@ class HandleTypes extends ServiceMethods {
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	/** @template K,T @arg {K} k @arg {T} x @returns {DIT_Item_AB<K,T_PrimitiveBox<T>>}*/
 	make_value_pair(k,x) {return {a: "key_value",k,z: [this.make_BoxTypeof(x)]};}
-	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T_PrimitiveBox<T>>} */
+	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
-	/** @template {string} T @arg {T} x @returns {DIT_Item_AB<"id",T_PrimitiveBox<T>>} */
+	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
 	make_id(x) {return this.make_value_pair("id",x);}
 	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return {a: "key_value",k: "raw_id",z: [x]};}
@@ -3350,7 +3350,7 @@ class HandleTypes extends ServiceMethods {
 				const make_key_value=(x) => {
 					return {a: "key_value",k: "playlist_id",z: [x]};
 				};
-				/** @template {"LL"|"WL"} K @arg {K} x @returns {{b:"guide_entry_id";c:K,z:[{a:"key_value",k:"playlist_id",z:[DIT_Item_AB<"raw_id",T_PrimitiveBox<K>>]}]}} */
+				/** @template {"LL"|"WL"} K @arg {K} x @returns {{b:"guide_entry_id";c:K,z:[{a:"key_value",k:"playlist_id",z:[T_DI_FromObj<{raw_id: K}>]}]}} */
 				let mk_type_1=(x) => {
 					return {b: "guide_entry_id",c: x,z: [make_key_value(this.make_raw_id(x))]};
 				};

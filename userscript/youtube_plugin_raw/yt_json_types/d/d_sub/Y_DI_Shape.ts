@@ -1,4 +1,5 @@
 type Y_DI_Shape={
-	type: string;
-	z: [DIT_Item_AB<"raw_id",T_PrimitiveBox<string>>];
+	a: string;
+	b: string;
+	z: [T_DI_FromObj<{raw_id: string;}>];
 };

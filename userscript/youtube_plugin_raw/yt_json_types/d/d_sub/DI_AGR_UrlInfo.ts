@@ -1,10 +1,11 @@
 type DI_R_Key_StartRadio={
-	a: "is:ABC";
+	a: "DI:R";
 	// ^ a = is
 	b: "raw";
 	// ^ b = type
 	c: "key:start_radio";
 	// ^ c = tag
+	w: "a/b/c/w/z";
 	z: [DI_Key_StartRadio];
 };
 type DI_EX_YY=Extract<DI_AGR_UrlInfo,{c: any;}>["c"];
@@ -28,6 +29,7 @@ type GI_BrowseId=
 	;
 ;
 type DI_Key_StartRadio={
+	a: "DI";
 	b: "key";
 	// ^ b = type
 	c: "start_radio";

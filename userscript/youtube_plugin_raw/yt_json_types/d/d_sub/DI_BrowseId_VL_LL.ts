@@ -1,4 +1,5 @@
 type DI_BrowseId_VL_LL={
+	a: "DI";
 	b: "browse_id";
 	// ^ b = type
 	c: "VL:LL";
