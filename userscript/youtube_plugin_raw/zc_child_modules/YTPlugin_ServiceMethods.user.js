@@ -303,10 +303,10 @@ class ServiceMethods extends ServiceData {
 			const {gclid,...y1}=x3; this.g(y1);
 		}
 	}
-	/** @arg {(DU_InternalUrl|DU_ChannelUrl)["url"]} x */
+	/** @arg {(DE_U_InternalUrl|DE_U_ChannelUrl)["url"]} x */
 	GU_VE83769_Url_1(x) {
 		x: {
-			/** @type {DU_InternalUrl["url"]} */
+			/** @type {DE_U_InternalUrl["url"]} */
 			let va=as(x);
 			let [p,r]=split_string_once(va,"://"); this.ceq(p,"https");
 			let [h,u]=split_string_once(r,"/"); this.ceq(h,"www.youtube.com");
@@ -340,7 +340,7 @@ class ServiceMethods extends ServiceData {
 		}
 		x;
 		{
-			/** @type {DU_ChannelUrl["url"]} */
+			/** @type {DE_U_ChannelUrl["url"]} */
 			let va=x;
 			let [p,r]=split_string_once(va,"://"); this.ceq(p,"https");
 			let [h,u]=split_string_once(r,"/"); this.ceq(h,"www.youtube.com");
@@ -3453,7 +3453,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(seconds);
 		this.a_primitive_num(nanos);
 	}
-	/** @private @arg {DE_MutationItem} x */
+	/** @private @arg {G_DE_MutationItem} x */
 	DE_MutationItem(x) {
 		switch(x.type) {
 			default: debugger; break;
@@ -3461,7 +3461,7 @@ class ServiceMethods extends ServiceData {
 			case "ENTITY_MUTATION_TYPE_REPLACE": this.DU_MutationReplace(x); break;
 		}
 	}
-	/** @private @arg {DU_MutationReplace} x */
+	/** @private @arg {DE_MutationReplace} x */
 	DU_MutationReplace(x) {
 		const cf="DU_MutationReplace";
 		const {entityKey,type,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3614,7 +3614,7 @@ class ServiceMethods extends ServiceData {
 		this.codegen_typedef(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
 		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
-	/** @private @arg {DU_MutationDelete} x */
+	/** @private @arg {DE_MutationDelete} x */
 	DU_MutationDelete(x) {
 		const cf="DU_MutationDelete";
 		const {entityKey,type,options,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

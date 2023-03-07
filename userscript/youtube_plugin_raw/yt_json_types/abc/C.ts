@@ -65,7 +65,7 @@ type DC_ShowReloadUi={targetId: D_UiTargetId;};
 type DC_Timed={continuation: string; timeoutMs: D_TimeoutMs;};
 type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION"; toggled: false;};
 //#endregion
-type DR_DC_EntityBatchUpdate={mutations: DE_MutationItem[]; timestamp?: D_TimestampWithNanos;};
+type DR_DC_EntityBatchUpdate={mutations: G_DE_MutationItem[]; timestamp?: D_TimestampWithNanos;};
 type CP_Tracking={clickTrackingParams: string;};
 type CR_ContinuationItemsFor<T,U,V extends {continuationItems: any;}>={
 	slot: U;

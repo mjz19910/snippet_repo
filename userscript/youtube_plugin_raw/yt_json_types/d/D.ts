@@ -1239,7 +1239,7 @@ type D_FeedNudge={
 	style: "FEED_NUDGE_STYLE_CHIP";
 	contents: R_ChipCloudChip[];
 };
-type D_YoutubeUrl=DU_InternalUrl["url"]|DU_ChannelUrl["url"];
+type D_YoutubeUrl=DE_U_InternalUrl["url"]|DE_U_ChannelUrl["url"];
 //#region imported
 type D_AboutThisAd={
 	url: D_UrlWrappedValue;
@@ -1704,7 +1704,6 @@ type D_DismissalReasonText={
 	feedbackToken: string;
 };
 type R_DismissalReasonText={dismissalReasonTextRenderer: D_DismissalReasonText;};
-type DE_SubmitFeedback=T_Signal<"SUBMIT_FEEDBACK">;
 type E_SubmitFeedback=T_SE_Signal<M_Feedback,DE_SubmitFeedback>;
 type D_DismissalFollowUp={
 	trackingParams: string;

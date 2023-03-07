@@ -1,3 +1,6 @@
+type DE_SubmitFeedback=T_Signal<"SUBMIT_FEEDBACK">;
+
+
 //#region String Enum
 type DE_AdPlacementKind=T_EnumStr<"AD_PLACEMENT_KIND","END"|"SELF_START"|"START">;
 type DE_OpportunityType=T_EnumStr<"OPPORTUNITY_TYPE",T_EnumStr<"ORGANIC",T_EnumStr<"BROWSE"|"WATCH_NEXT","RESPONSE_RECEIVED">>>;
@@ -43,7 +46,6 @@ type DE_VE96368=DE_VE<"FEsubscriptions">;
 //#endregion
 //#region DE_
 //#region Objects
-type D_SerializedContextData={serializedContextData: string;};
 type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
 type DE_AddToPlaylistService={videoId: string;};
 type DE_AdFeedback={content: R_AdFeedback;};
@@ -57,6 +59,7 @@ type DE_Like=DE_LikeIndifferent|DE_LikeLike|DE_LikeDislike;
 type DE_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string;};
 type DE_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};
 type DE_LikeLike={status: "LIKE"; target: D_LikeApi; actions?: C_MusicLibraryStatusUpdate[]; likeParams?: string;};
+type DE_MuteAd={type: "HIDE"; actions: A_HideEnclosing[];};
 type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
 type DE_PerformCommentAction={action: string; clientActions: A_UpdateCommentVote[];};
 type DE_PlaylistDelete=D_PlaylistId;
@@ -86,95 +89,6 @@ type DE_YpcGetOfflineUpsell=DC_Params;
 //#endregion
 //#endregion
 //#region Unions
-type DE_MutationItem=DU_MutationReplace|DU_MutationDelete;
+type G_DE_MutationItem=DE_MutationReplace|DE_MutationDelete;
 type G_DE_UserFeedback=DE_AdditionalDatas|DE_BucketIdentifier;
-//#endregion
-//#region Long Objects
-type DE_Url=
-	|DU_InternalUrl
-	|DU_RedirectUrl
-	|DU_ExternalUrl
-	|DU_ChannelUrl
-	|{
-		url: `https://support.google.com/youtube?${string}`;
-		grwOpenInOverride: "GRW_OPEN_IN_OVERRIDE_USE_PREFERRED_APP_NO_PROMPT";
-	}
-	;
-;
-type DE_VE3832_Watch={
-	videoId: string;
-	index?: number;
-	playlistSetVideoId?: string;
-	params?: string;
-	startTimeSeconds?: number;
-	continuePlayback?: boolean;
-	loggingContext?: R_VssLoggingContext;
-	watchEndpointSupportedOnesieConfig?: R_Html5PlaybackOnesieConfig;
-	watchEndpointSupportedPrefetchConfig?: R_PrefetchHintConfig;
-	playerParams?: string;
-	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
-	nofollow?: boolean;
-	playerExtraUrlParams?: [G_ExtraUrlParamItem];
-}|({
-	videoId: string;
-	index?: number;
-	playlistSetVideoId?: string;
-	params?: string;
-	startTimeSeconds?: number;
-	continuePlayback?: boolean;
-	loggingContext?: R_VssLoggingContext;
-	watchEndpointSupportedOnesieConfig?: R_Html5PlaybackOnesieConfig;
-	watchEndpointSupportedPrefetchConfig?: R_PrefetchHintConfig;
-	playerParams?: string;
-	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
-	nofollow?: boolean;
-	playerExtraUrlParams?: [G_ExtraUrlParamItem];
-}&D_PlaylistId);
-type D_LoggingContext={
-	vssLoggingContext: D_SerializedContextData;
-	qoeLoggingContext: D_SerializedContextData;
-};
-type DE_ReelWatch={
-	videoId?: string;
-	playerParams: string;
-	thumbnail?: D_Thumbnail;
-	overlay: R_ReelPlayerOverlay;
-	params: string;
-	loggingContext?: D_LoggingContext;
-	sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
-	inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
-	sequenceParams?: string;
-};
-type DE_VE83769_Url_1$d$ad_url2={
-	utm_term: "";
-	utm_campaign: "DISPLAY campaign for \"web development\" landing page";
-	utm_source: "adwords";
-	utm_medium: "ppc";
-	hsa_acc: `${number}`;
-	hsa_cam: `${number}`;
-	hsa_grp: `${number}`;
-	hsa_ad: `${number}`;
-	hsa_src: "d";
-	hsa_tgt: "";
-	hsa_kw: "";
-	hsa_mt: "";
-	hsa_net: "adwords";
-	hsa_ver: "3";
-	gclid: string;
-};
-type DE_VE83769_Url_Shape={
-	sa: "l";
-	ai: string;
-	ae: "1";
-	num: "1";
-	cid: string;
-	sig: string;
-	client: `ca-pub-${number}`;
-	rf: "3";
-	adurl: `https://plantagreenhouses.ca/?gclid=${string}`|`https://www.newdawndevelopments.com/service/custom-homes?gclid=${string}&hsa_ver=3&hsa_net=adwords&hsa_mt=&hsa_kw=&hsa_tgt=&hsa_src=d&hsa_ad=${number}&hsa_grp=${number}&hsa_cam=${number}&hsa_acc=${number}&utm_medium=ppc&utm_source=adwords&utm_campaign=DISPLAY+campaign+for+%22web+development%22+landing+page&utm_term=`;
-};
-type DE_VE83769_Url_1={
-	url: `https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`;
-	target: "TARGET_NEW_WINDOW";
-};
 //#endregion
