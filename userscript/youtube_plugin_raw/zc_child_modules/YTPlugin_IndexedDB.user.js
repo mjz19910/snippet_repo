@@ -652,14 +652,15 @@ class IndexedDBService extends BaseService {
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_RD} */
 						const z=this.make_abjz(kj.key,kj.j,value);
-						let promise=this.put_box(z,version); return {args,promise};
+						return {args,promise:this.put_box(z,version)};
 					}
 					case "RD:MM": {
 						let [tag,id,value]=args;
-						let promise=this.put_box({
-							b: "boxed_id",j: `${tag}:${id}`,z: [value],
-							key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`
-						},version); return {args,promise};
+						/** @type {Pick<DST_Playlist_RD_MM,"key"|"j">} */
+						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
+						/** @type {DST_Playlist_RD_MM} */
+						const z=this.make_abjz(kj.key,kj.j,value);
+						return {args,promise:this.put_box(z,version)};
 					}
 				}
 			}
