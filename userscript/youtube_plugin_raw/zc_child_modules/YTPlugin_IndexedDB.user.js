@@ -189,13 +189,13 @@ class IndexedDBService extends BaseService {
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	async update_obj_schema(x,version) {
 		/** @type {G_BoxedIdObj} */
-		let rv=x;
+		let ret=x;
 		x: if(!x.z) {
 			/** @type {{key:DST_LoadId["key"],tag:string,value?: {raw:number}}} */
 			let o1=as_any(x);
 			if(o1.value&&o1.value.raw&&o1.tag) {
 				const jl={b: "boxed_id",j: o1.tag,key: x.key,z: [{type: "number",z: [o1.value.raw]}]};
-				rv=as_any(jl);
+				ret=as_any(jl);
 				break x;
 			}
 			/** @type {FromDbData} */
@@ -243,7 +243,7 @@ class IndexedDBService extends BaseService {
 						const z2={a: "group",b: value.type,z: [as_any(z1)]};
 						/** @type {DSS_Bigint} */
 						let z={a: "boxed_store",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
-						rv=as_any(z);
+						ret=as_any(z);
 						break x;
 					}
 				}
@@ -265,22 +265,45 @@ class IndexedDBService extends BaseService {
 				};
 				/** @type {DST_Browse_FE} */
 				let zt={b: "boxed_id",j: "browse_id:FE",key: `boxed_id:browse_id:FE:${rt.z[1].z[0].z[0]}`,z: [rt]};
-				rv=zt;
+				ret=zt;
 				break x;
 			}
 			switch(value.type) {
 				default: debugger; break;
 				case "channel_id": {
-
-				} break;
+					/** @type {DI_A_ChannelId_UC} */
+					let x1={
+						b: "channel_id",c: "UC",z: [{
+							a: "key_value",k: "raw_id",z: [{
+								a: "primitive",
+								e: "string",
+								z: [value.info_arr[0].raw_id]
+							}]
+						},{
+							a: "key_value",k: "id",z: [{
+								a: "primitive",
+								e: "string",
+								z: [value.info_arr[1].id]
+							}]
+						}]
+					};
+					/** @type {DST_Channel_UC} */
+					let rq={b: "boxed_id",j: "channel_id:UC",z: [x1],key};
+					ret=rq;
+					let [kk]=this.get_keys_of(ret); kk;
+					if("j" in ret) {
+						if(ret.j==="channel_id:UC") {
+						}
+					}
+				} break x;
 			}
 			debugger;
 		} else {
 			return x;
 		}
 		await this.delete("boxed_id",x.key,version);
-		await this.direct_put("boxed_id",rv,version);
-		return as_any(rv);
+		await this.direct_put("boxed_id",ret,version);
+		return as_any(ret);
 	}
 	/** @arg {G_BoxedIdObj} x */
 	store_cache_tree(x) {
