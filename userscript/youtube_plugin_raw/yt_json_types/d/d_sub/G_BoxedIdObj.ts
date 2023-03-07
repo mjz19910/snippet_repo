@@ -1,5 +1,5 @@
 type G_BoxedIdObj=
-	|DSS_ABJ_Browse_MP
+	|DSS_Browse_MP
 	|DSS_Browse_SP
 	|DSS_Browse_VL_LL
 	|DSS_Browse_VL_PL

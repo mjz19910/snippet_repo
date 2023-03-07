@@ -1,4 +1,4 @@
-type DSS_ABJ_Browse_MP={
+type DSS_Browse_MP={
 	a: "K:ABJ"; b: "boxed_id"; j: "browse_id:MP";
 	key: `boxed_id:browse_id:MP:${string}`;
 	z: [DI_BrowseId_MP];

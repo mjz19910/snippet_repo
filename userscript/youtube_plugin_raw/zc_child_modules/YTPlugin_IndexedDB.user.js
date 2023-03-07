@@ -271,7 +271,7 @@ class IndexedDBService extends BaseService {
 			switch(value.type) {
 				default: debugger; break;
 				case "channel_id": {
-					
+
 				} break;
 			}
 			debugger;
@@ -464,7 +464,7 @@ class IndexedDBService extends BaseService {
 			default: args[1]===""; debugger; throw new Error("Unreachable");
 			case "MP": {
 				let [type,tag,value]=args;
-				/** @type {DSS_ABJ_Browse_MP} */
+				/** @type {DSS_Browse_MP} */
 				const z={
 					a: "K:ABJ",b: "boxed_id",j: `${type}:${tag}`,z: [value],
 					key: `boxed_id:browse_id:${tag}:${value.z[1].z[0].z[0]}`,
