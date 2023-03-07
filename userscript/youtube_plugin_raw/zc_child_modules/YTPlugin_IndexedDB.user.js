@@ -289,7 +289,7 @@ class IndexedDBService extends BaseService {
 						/** @type {DSS_Bigint["z"][0]} */
 						const z2={a: "group",b: value.type,z: [as_any(z1)]};
 						/** @type {DSS_Bigint} */
-						let z={a: "SI:T:D",b: "boxed_id",d: "bigint",key: as_any(key),z: [z2]};
+						let z={key: as_any(key),a: "SI:T:D",b: "boxed_id",d: "bigint",w: "/key/a/b/d/w/z",z: [z2]};
 						ret=as_any(z);
 						break x;
 					}
@@ -560,6 +560,8 @@ class IndexedDBService extends BaseService {
 	make_BoxStore_adz(key,a,d,x) {return {key,a,b: "boxed_id",d,w: "/key/a/b/d/w/z",z: [x]};}
 	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DIZ_Item_AB<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"boxed_store",tag1,x);}
+	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DIZ_Item_AB<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2_v2<T_Tag1,T_Tag2,V>} */
+	make_T_BoxedStore_v2(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"SI:T:D",tag1,x);}
 	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DIZ_Item_AB<B,T>} */
 	DIZ_Item_AB(b,x) {return {a: "group",b,z: [x]};}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
@@ -712,6 +714,7 @@ class IndexedDBService extends BaseService {
 					b: "boxed_id",d: tag,
 					/** @type {`boxed_id:${typeof tag}:${typeof id}`} */
 					key: `boxed_id:${tag}:${id}`,
+					w: "/key/a/b/d/w/z",
 					z: [{a: "group",b: id,z: [value]}]
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -722,7 +725,7 @@ class IndexedDBService extends BaseService {
 				let p1=this.DIZ_Item_AB(tag2,value);
 				/** @type {DSS_Boolean} */
 				const z={
-					a: "SI:T:D",b: "boxed_id",d: tag1,z: [p1],
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",z: [p1],
 					key: `boxed_id:${tag1}:${tag2}`
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -733,7 +736,7 @@ class IndexedDBService extends BaseService {
 				let p1=this.DIZ_Item_AB(tag2,value);
 				/** @type {DSS_Number} */
 				const z={
-					a: "SI:T:D",b: "boxed_id",d: tag1,z: [p1],
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",z: [p1],
 					key: `boxed_id:${tag1}:${tag2}`
 				};
 				let promise=this.put_box(z,version); return {args,promise};
@@ -741,17 +744,19 @@ class IndexedDBService extends BaseService {
 			case "string": {
 				let [tag1,,[tag2,value]]=args;
 				/** @type {DSS_String} */
-				const z=this.make_T_BoxedStore(tag1,tag2,this.DIZ_Item_AB(tag2,value));
+				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.DIZ_Item_AB(tag2,value));
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "keys": {
 				let [tag1,,[tag2,value]]=args;
-				const z=this.make_T_BoxedStore(tag1,tag2,this.DIZ_Item_AB(tag2,value));
+				/** @type {DSS_Keys} */
+				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.DIZ_Item_AB(tag2,value));
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "root_visual_element": {
 				let [tag1,,[tag2,value]]=args;
-				const z=this.make_T_BoxedStore(tag1,tag2,this.DIZ_Item_AB(tag2,value));
+				/** @type {DSS_VE} */
+				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.DIZ_Item_AB(tag2,value));
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "load_id": {
@@ -793,7 +798,7 @@ class IndexedDBService extends BaseService {
 			case "bigint": {
 				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					a: "SI:T:D",b: "boxed_id",d: tag1,
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",
 					key: `boxed_id:${tag1}:${tag2}`,
 					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
@@ -801,7 +806,7 @@ class IndexedDBService extends BaseService {
 			case "boolean": {
 				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					a: "SI:T:D",b: "boxed_id",d: tag1,
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",
 					key: `boxed_id:${tag1}:${tag2}`,
 					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
@@ -809,7 +814,7 @@ class IndexedDBService extends BaseService {
 			case "number": {
 				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					a: "SI:T:D",b: "boxed_id",d: tag1,
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",
 					key: `boxed_id:${tag1}:${tag2}`,
 					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
@@ -817,7 +822,7 @@ class IndexedDBService extends BaseService {
 			case "string": {
 				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					a: "SI:T:D",b: "boxed_id",d: tag1,
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",
 					key: `boxed_id:${tag1}:${tag2}`,
 					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
@@ -825,7 +830,7 @@ class IndexedDBService extends BaseService {
 			case "keys": {
 				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					a: "SI:T:D",b: "boxed_id",d: tag1,
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",
 					key: `boxed_id:${tag1}:${tag2}`,
 					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
@@ -833,7 +838,7 @@ class IndexedDBService extends BaseService {
 			case "root_visual_element": {
 				let [tag1,,[tag2,value]]=args;
 				let promise=this.put_box({
-					a: "SI:T:D",b: "boxed_id",d: tag1,
+					a: "SI:T:D",b: "boxed_id",d: tag1,w: "/key/a/b/d/w/z",
 					key: `boxed_id:${tag1}:${tag2}`,
 					z: [{a: "group",b: tag2,z: [value]}],
 				},version); return {args,promise};
@@ -962,13 +967,12 @@ class IndexedDBService extends BaseService {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
 			if(value.b!=="boxed_id") {debugger; break x;}
-			let nw=null,ww=null,wj=null,nj=null;
+			let nw=null;
 			switch(value.a) {
-				case "SS:D": break;
 				case "ST:D": {
 					value.j;
 				} break;
-				case "boxed_store": {
+				case "SI:T:D": {
 					switch(value.d) {
 						default: debugger; break;
 						case "bigint": break;
@@ -980,23 +984,26 @@ class IndexedDBService extends BaseService {
 					}
 				} break;
 			}
-			if("w" in value) ww=value; else nw=value;
-			if(nw!==null&&"j" in nw) wj=nw; else if(nw!==null) nj=nw;
-			if(nj!==null&&nj.a!=="boxed_store") {debugger; break x;}
-			if(nj) switch(nj.d) {
-				default: debugger; break;
-				case "bigint": break;
-				case "boolean": break;
-				case "keys": break;
-				case "string": break;
-				case "number": break;
-				case "root_visual_element": break;
+			if(!("w" in value)) nw=value;
+			y: if(nw!==null&&!("j" in nw)) {
+				/** @type {{a:"boxed_store"}} */
+				const no=nw;
+				if(no.a!=="boxed_store") break y;
+				console.log("[cache_outdated]",no);
 			}
-			if(wj) switch(wj.j) {
-				default: debugger; break;
-				case "browse_id:FE": break;
+			if(nw!==null&&!("j" in nw)&&"d" in nw) {
+				/** @type {{d:GST_DSS["d"]}} */
+				const no=nw;
+				switch(no.d) {
+					default: debugger; break;
+					case "bigint":
+					case "boolean":
+					case "keys":
+					case "string":
+					case "number":
+					case "root_visual_element": console.log("[cache_outdated]",no); break;
+				}
 			}
-			ww&&ww.a;
 			console.log("has loaded cache value",loaded_value,value);
 		}
 		try {
