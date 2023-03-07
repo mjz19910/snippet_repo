@@ -1371,13 +1371,6 @@ class ServiceMethods extends ServiceData {
 		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
 		this.save_string(`${cf}.label`,x.label);
 	}
-	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
-	DU_UrlParse(x) {
-		const cf="DU_UrlParse";
-		this.save_string(`${cf}.host`,x.host);
-		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
-		this.DU_UrlParams(this.parse_url_search_params(x.search));
-	}
 	/** @public @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @private @arg {DE_Search} x */
@@ -1415,59 +1408,7 @@ class ServiceMethods extends ServiceData {
 		}
 		let sp=this._convert_url_to_obj(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
-		this.GU_Url(sp.href);
-	}
-	/** @private @arg {Extract<GU_VE83769_Url,`https://${string}`>} x */
-	GU_Url_Obj(x) {
-		let up=this._convert_url_to_obj(x);
-		/** @template {string} T @arg {{host:T}} u */
-		function get_host(u) {return u.host;}
-		switch(up.host) {
-			case "googleads.g.doubleclick.net": return;
-			case "music.youtube.com": return this.handle_yt_music_url(up.href);
-			case "myaccount.google.com": return;
-			case "myactivity.google.com": return;
-			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
-			case "support.google.com": return;
-			case "tv.youtube.com": return;
-			case "www.google.com": return;
-			case "www.googleadservices.com": return;
-			case "www.youtube.com": return this.GU_FullYoutubeUrl(up.href);
-			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
-			case "youtube.com": return;
-			default: get_host(up)===""; debugger; break;
-		}
-	}
-	/** @private @arg {GU_VE83769_Url} x */
-	GU_Url(x) {
-		if(this.str_starts_with_rx("/",x)) {
-			switch(x) {
-				default: x===""; debugger; break;
-				case "/upload": break;
-			}
-			return;
-		}
-		if(this.str_starts_with_rx("https://www.youtube.com/redirect?",x)) return;
-		if(this.str_starts_with_rx("https://youtube.com",x)) {
-			let up=this._convert_url_to_obj(x);
-			this.ht.parse_url_alt("GU_Url",up.pathname);
-			return;
-		}
-		this.GU_Url_Obj(x);
-		const hn_yt_studio="https://studio.youtube.com";
-		const hn_yt_music="https://music.youtube.com";
-		const hn_yt_kids="https://www.youtubekids.com";
-		const hn_yt_tv="https://tv.youtube.com";
-		if(this.str_starts_with_rx(hn_yt_studio,x)) return;
-		if(this.str_starts_with_rx(hn_yt_music,x)) return;
-		if(this.str_starts_with_rx(hn_yt_kids,x)) return;
-		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
-		if(this.str_starts_with_rx("https://www.google.com",x)) return;
-		if(this.str_starts_with_rx("https://myactivity.google.com",x)) return;
-		if(this.str_starts_with_rx("https://support.google.com",x)) return;
-		if(this.str_starts_with_rx("https://www.googleadservices.com",x)) return;
-		if(this.str_starts_with_rx("https://googleads.g.doubleclick.net",x)) return;
-		x;
+		this.xm.GU_Url(sp.href);
 	}
 	/** @public @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}

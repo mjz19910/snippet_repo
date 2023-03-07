@@ -2338,19 +2338,6 @@ class Support_Renderer extends BaseService {
 		f.call(this,baseUrl);
 		this.t(elapsedMediaTimeSeconds,x => this.sm.a_primitive_num(x));
 	}
-	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
-	DU_BaseUrl(x) {this.T_BaseUrl(x,this.DU_Url);}
-	/** @private @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
-	DU_Url(x) {
-		this.sm.DU_UrlParse(this._convert_url_to_obj(x));
-		(x => {
-			if(x.host!=="www.youtube.com") debugger;
-			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
-			let pa1=this.split_str(x.search,"?");
-			let pa=this.split_str(pa1[1],"&"); pa;
-			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
-		})(this._convert_url_to_obj(x));
-	}
 	/** @public @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @public @arg {E_ApplicationSettings} x */
@@ -5084,9 +5071,85 @@ class ForService_XMethods extends BaseService {
 	GM_Url(x) {
 		const cf="GM_Url";
 		const {url,webPageType,rootVe,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.GU_Url(url);
+		this.GU_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		this.sm.rootVe(rootVe,83769);
+	}
+	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
+	DU_BaseUrl(x) {
+		const cf="DU_BaseUrl";
+		const {baseUrl,...y}=this.sm.s(cf,x); this.g(y);/*#destructure_done*/
+		this.DU_Url(baseUrl);
+	}
+	/** @private @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
+	DU_Url(x) {
+		this.DU_UrlParse(this._convert_url_to_obj(x));
+		(x => {
+			if(x.host!=="www.youtube.com") debugger;
+			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
+			let pa1=this.split_str(x.search,"?");
+			let pa=this.split_str(pa1[1],"&"); pa;
+			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
+		})(this._convert_url_to_obj(x));
+	}
+	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
+	DU_UrlParse(x) {
+		const cf="DU_UrlParse";
+		this.save_string(`${cf}.host`,x.host);
+		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
+		this.DU_UrlParams(this.parse_url_search_params(x.search));
+	}
+	/** @public @arg {GU_VE83769_Url} x */
+	GU_Url(x) {
+		if(this.str_starts_with_rx("/",x)) {
+			switch(x) {
+				default: x===""; debugger; break;
+				case "/upload": break;
+			}
+			return;
+		}
+		if(this.str_starts_with_rx("https://www.youtube.com/redirect?",x)) return;
+		if(this.str_starts_with_rx("https://youtube.com",x)) {
+			let up=this._convert_url_to_obj(x);
+			this.ht.parse_url_alt("GU_Url",up.pathname);
+			return;
+		}
+		this.GU_Url_Obj(x);
+		const hn_yt_studio="https://studio.youtube.com";
+		const hn_yt_music="https://music.youtube.com";
+		const hn_yt_kids="https://www.youtubekids.com";
+		const hn_yt_tv="https://tv.youtube.com";
+		if(this.str_starts_with_rx(hn_yt_studio,x)) return;
+		if(this.str_starts_with_rx(hn_yt_music,x)) return;
+		if(this.str_starts_with_rx(hn_yt_kids,x)) return;
+		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
+		if(this.str_starts_with_rx("https://www.google.com",x)) return;
+		if(this.str_starts_with_rx("https://myactivity.google.com",x)) return;
+		if(this.str_starts_with_rx("https://support.google.com",x)) return;
+		if(this.str_starts_with_rx("https://www.googleadservices.com",x)) return;
+		if(this.str_starts_with_rx("https://googleads.g.doubleclick.net",x)) return;
+		x;
+	}
+	/** @private @arg {Extract<GU_VE83769_Url,`https://${string}`>} x */
+	GU_Url_Obj(x) {
+		let up=this._convert_url_to_obj(x);
+		/** @template {string} T @arg {{host:T}} u */
+		function get_host(u) {return u.host;}
+		switch(up.host) {
+			case "googleads.g.doubleclick.net": return;
+			case "music.youtube.com": return this.handle_yt_music_url(up.href);
+			case "myaccount.google.com": return;
+			case "myactivity.google.com": return;
+			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
+			case "support.google.com": return;
+			case "tv.youtube.com": return;
+			case "www.google.com": return;
+			case "www.googleadservices.com": return;
+			case "www.youtube.com": return this.GU_FullYoutubeUrl(up.href);
+			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
+			case "youtube.com": return;
+			default: get_host(up)===""; debugger; break;
+		}
 	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});
