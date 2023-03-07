@@ -199,11 +199,11 @@ class IndexedDBService extends BaseService {
 	 * */
 	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
 	/**
-	 * @param {Z} z @arg {A} a @arg {K} k
-	 * @template A,K @template Z
-	 * @returns {{a:A,k:K,z:[Z]}}
+	 * @param {Z} z @arg {K} k
+	 * @template K @template Z
+	 * @returns {{a:"key_value"; k:K,z:[Z]}}
 	 * */
-	make_akz(a,k,z) {return {a,k,z: [z]};}
+	make_akz(k,z) {return {a: "key_value",k,z: [z]};}
 	/**
 	 * @param {Z} z @arg {A} a @arg {E} e
 	 * @template A,E @template Z
@@ -233,15 +233,12 @@ class IndexedDBService extends BaseService {
 				case "channel_id:UC": break;
 				case "keys": break;
 				case "playlist_id:RD": {
-					const {key,value}=o2; key; value;
-					/** @type {DI_A_Playlist_RD["z"][0]} */
-					const z2=this.make_akz("key_value","raw_id",this.make_prim_v(value.info_arr[0].raw_id));
-					/** @type {DI_A_Playlist_RD["z"][1]} */
-					const z3=this.make_akz("key_value","id",this.make_prim_v(value.info_arr[1].id));
-					/** @type {DI_A_Playlist_RD["z"]} */
-					const z1=[z2,z3];
+					const {key,value}=o2;
 					/** @type {DI_A_Playlist_RD} */
-					let bt=this.make_abcz("playlist_id","RD",z1);
+					let bt=this.make_abcz("playlist_id","RD",[
+						this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
+						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
+					]);
 					/** @type {DST_Playlist_RD} */
 					const z=this.make_abjz(key,"playlist_id:RD",bt);
 					ret=z;
@@ -641,7 +638,7 @@ class IndexedDBService extends BaseService {
 						const kj={key: `boxed_id:${tag}:${id}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_WL} */
 						const z=this.make_abjz(kj.key,kj.j,value);
-						return {args,promise:this.put_box(z,version)};
+						return {args,promise: this.put_box(z,version)};
 					}
 					case "PL": {
 						let [tag,id,value]=args;
@@ -649,7 +646,7 @@ class IndexedDBService extends BaseService {
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_PL} */
 						const z=this.make_abjz(kj.key,kj.j,value);
-						return {args,promise:this.put_box(z,version)};
+						return {args,promise: this.put_box(z,version)};
 					}
 					case "RD": {
 						let [tag,id,value]=args;
@@ -657,8 +654,8 @@ class IndexedDBService extends BaseService {
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_RD} */
 						const z=this.make_abjz(kj.key,kj.j,value);
-						const r={args,promise:this.put_box(z,version)}; r;
-						return {args,promise:this.put_box(z,version)};
+						const r={args,promise: this.put_box(z,version)}; r;
+						return {args,promise: this.put_box(z,version)};
 					}
 					case "RD:MM": {
 						let [tag,id,value]=args;
@@ -666,7 +663,7 @@ class IndexedDBService extends BaseService {
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_RD_MM} */
 						const z=this.make_abjz(kj.key,kj.j,value);
-						return {args,promise:this.put_box(z,version)};
+						return {args,promise: this.put_box(z,version)};
 					}
 					case "RD:CM:UC": {
 						let [tag,id,value]=args;
@@ -674,7 +671,7 @@ class IndexedDBService extends BaseService {
 						const kj={key: `boxed_id:${tag}:${id}:${value.z[1].z[0].z[0]}`,j: `${tag}:${id}`};
 						/** @type {DST_Playlist_RD_CM_UC} */
 						const z=this.make_abjz(kj.key,kj.j,value);
-						return {args,promise:this.put_box(z,version)};
+						return {args,promise: this.put_box(z,version)};
 					}
 				}
 			}
