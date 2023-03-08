@@ -1006,15 +1006,15 @@ class IndexedDBService extends BaseService {
 					case "root_visual_element": console.log("[cache_outdated]",no); break;
 				}
 			}
-			/** @arg {G_BoxedIdObj} x */
+			/** @arg {G_BoxedIdObj|undefined} x */
 			function w(x) {
+				if(!x) return [];
 				let {z: z1,...z0}=x.z[0];
 				if("a" in z0) {
 					return ["+a",z0,z1[0]];
 				}
 				return ["-a",z0];
 			}
-			if(y===void 0) break x;
 			if(x.key==="boxed_id:load_id") break x;
 			if(x.key==="boxed_id:save_id") break x;
 			console.log("[cur_cache_value] [x.key]",x.key);
