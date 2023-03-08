@@ -2097,23 +2097,25 @@ class ApiBase2 {
 	/** @arg {{}} mod */
 	module_debug_log(mod) {
 		let fn_list=[];
+		const box_sym=Symbol.for("box_symbol");
 		/** @arg {string} k @arg {unknown} z @returns {unknown} */
 		const json_filter=(k,z) => {
 			if(typeof z==="function") return {type: "function",id: fn_list.push(z),...z};
 			if(typeof z!=="object") return z;
 			if(z===null) return z;
+			if(box_sym in z&&z[box_sym]===true) return z;
 			if("cloned" in z&&z.cloned===true) return z;
 			x: if("encoding" in z&&"fatal" in z&&"ignoreBOM" in z&&"decode" in z) {
 				if(typeof z.decode!=="function") break x; if(typeof z.encoding!=="string") break x; if(typeof z.fatal!=="boolean") break x;
 				if(typeof z.ignoreBOM!=="boolean") break x;
 				/** @type {TextDecoder["decode"]} */
 				const decode=as(z.decode);
-				/** @type {TextDecoder} */
-				const z1={...z,decode,encoding: z.encoding,fatal: z.fatal,ignoreBOM: z.ignoreBOM};
-				const filtered=json_filter(k,z1);
+				/** @type {TextDecoder&{cloned:true}} */
+				const z1={...z,decode,encoding: z.encoding,fatal: z.fatal,ignoreBOM: z.ignoreBOM,cloned: true};
+				const filtered=JSON.parse(JSON.stringify({[k]: z1,box: true,[box_sym]: true},json_filter))[k];
 				try {
 					let cloned=structuredClone(filtered);
-					return {...cloned,cloned: true};
+					return {...cloned};
 				} catch {
 					debugger; return filtered;
 				}
