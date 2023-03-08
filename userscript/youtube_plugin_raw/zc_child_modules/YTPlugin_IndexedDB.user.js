@@ -514,7 +514,7 @@ class IndexedDBService extends BaseService {
 		const z=this.mk_s1("key",t_kv,x);
 		return z;
 	}
-	/** @arg {DI_GuideEntry_LL} x */
+	/** @template {string} C @template {string} K @template {{k:K}} I @template {{c:C;z:[I]}} X @arg {X} x @returns {mk_s2<C,K,X>} */
 	mk_bx_nw(x) {return this.mk_s2(this.za1(x).k,x);}
 	/** @typedef {ZAT1<any>} ZA_S_1 */
 	/** @typedef {ZAT2<any>} ZA_S_2 */
@@ -616,8 +616,7 @@ class IndexedDBService extends BaseService {
 					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
-						const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}:${x.c}`,z: [x]};
-						const z2=this.mk_bx_nw(x); z2;
+						const z=this.mk_bx_nw(x);
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "WL": {
@@ -701,7 +700,6 @@ class IndexedDBService extends BaseService {
 						const kj={key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,j: `${t}:${id}`};
 						/** @type {DST_Playlist_RD} */
 						const z=this.make_ST_jz(kj.key,kj.j,x);
-						const r={args: s0,promise: this.put_box(z,version)}; r;
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "RD:MM": {
