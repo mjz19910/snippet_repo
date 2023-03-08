@@ -2161,8 +2161,12 @@ class ApiBase2 {
 	json_set_filter(x,k) {
 		const v=x[k];
 		const f=this.json_filter(k,v);
-		if(typeof f==="object"&&f!==null&&"type" in f&&f.type==="normal"&&!("copy" in f)) {
-			this.set(x,k,f.value);
+		if(typeof f==="object"&&f!==null&&"value" in f&&f.value) {
+			const z=f.value;
+			switch(z.type) {
+				default: debugger; break;
+				case "normal": this.set(x,k,z.value);
+			}
 		} else {
 			debugger;
 		}
