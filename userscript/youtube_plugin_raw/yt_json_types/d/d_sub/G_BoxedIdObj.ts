@@ -55,21 +55,24 @@ type TP1=G_BoxedIdObj['key'] extends infer I?
 	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}:${infer r1_4}:${infer r1_5}`? [f0,f1,r2,r1_3,r1_4,r1_5]:
 	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}:${infer r1_4}`? [f0,f1,r2,r1_3,r1_4]:
 	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}`? [f0,f1,r2,r1_3]:
-	I extends `${infer f0}:${infer f1}:${infer r2}`? [f0,f1,r2]:never:never
+	I extends `${infer f0}:${infer f1}:${infer r2}`? [f0,f1,r2]:
+	I extends `${infer f0}:${infer f1}`? [f0,f1]:[I]:never
 	;
 ;
-type TP2=Join<Exclude<Extract<TP1,[any,any,any]>,[any,"FE",any]>,":">;
+type TP2=Exclude<TP1,[any,any]>;
 type TP3=[
-	// 2
 	Join<Extract<TP1,[any,any]>,":">,
 	// 3
-	Join<Exclude<Extract<TP1,[any,any,any]>,[any,"FE",any]>,":">,
-	Join<Extract<Extract<TP1,[any,any,any]>,[any,"FE",any]>,":">,
+	Join<Extract<TP1,[any,any,any]>,":">,
 	// 4
-	Join<Extract<TP1,[any,any,any,any]>,":">,
+	Join<Exclude<Extract<TP1,[any,any,any,any]>,[any,any,"FE",any]>,":">,
+	Join<Extract<Extract<TP1,[any,any,any,any]>,[any,any,"FE",any]>,":">,
 	// 5
 	Join<Extract<TP1,[any,any,any,any,any]>,":">,
+	// 6
+	Join<Extract<TP1,[any,any,any,any,any,any]>,":">,
 ];
+type TP4=Exclude<Extract<TP1,[any,any,any,any]>,[any,any,"FE",any]>;
 type GB_A1_J_Base="user_id"|"channel_id:UC"|"guide_entry_id:PL"|"guide_entry_id:UC";
 type G_BoxedInner=
 	|["z",G_BoxedIdObj]
@@ -78,11 +81,11 @@ type G_BoxedInner=
 	|[0,GST_DSS]
 	|[1,{
 		key:
-		|`boxed_id:${TP3[0]}`
-		|`boxed_id:${TP3[1]}`
-		|`boxed_id:${TP3[2]}`
-		|`boxed_id:${TP3[3]}`
-		|`boxed_id:${TP3[4]}`
+		|`${TP3[0]}`
+		|`${TP3[1]}`
+		|`${TP3[2]}`
+		|`${TP3[3]}`
+		|`${TP3[4]}`
 		;
 		a: DST_PlayNext["a"]; b: "boxed_id";
 		j:
