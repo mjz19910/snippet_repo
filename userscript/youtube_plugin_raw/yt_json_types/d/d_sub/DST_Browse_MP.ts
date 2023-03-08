@@ -1,13 +1,11 @@
 type DST_Browse_MP={
-	a: "ST:D"; b: "boxed_id"; j: "browse_id:MP";
-	key: `boxed_id:browse_id:MP:${string}`;
-	w: "/key/a/b/j/z";
 	z: [DI_BrowseId_MP];
-};
-type DST_T_abz<T>={
+}&DST_T_abz<"browse_id:MP">;
+type DST_T_abz_j<J,X>={
 	key: `boxed_id:browse_id:MP:${string}`;
-	j: T;
+	a: "ST:D"; b: "boxed_id"; j: J; w: "/key/a/b/j/w/z"; z: [X];
 };
+type DST_T_abz<T>=DST_T_abz_j<T,any>;
 type OneKey<K extends string,V=any>={
 	[P in K]: (Record<P,V>&Partial<Record<Exclude<K,P>,never>>) extends infer O? Decay<O>:never;
 }[K];
