@@ -2214,11 +2214,11 @@ class ApiBase2 {
 			case "prototype": {
 				/** @type {RequiredType<typeof x['type']>} */
 				let b={...x,type: x.type};
-				const {type,key,of,__prototype_description,...w2}=b; if(this.get_keys_of(w2).length!==0) debugger;
+				const {type,key,type_name,__prototype_description,...w2}=b; if(this.get_keys_of(w2).length!==0) debugger;
 				if(key===void 0) {debugger; return null;}
-				if(of===void 0) {debugger; return null;}
+				if(type_name===void 0) {debugger; return null;}
 				if(__prototype_description===void 0) {debugger; return null;}
-				r1={...w2,type,key,of,__prototype_description};
+				r1={...w2,type,key,type_name,__prototype_description};
 			} break;
 		}
 		if(r1) return r1;
@@ -2280,10 +2280,10 @@ class ApiBase2 {
 			const desc=Object.getOwnPropertyDescriptors(zt);
 			const fd=this.simple_filter('prototype_description',desc);
 			if(fd!==null&&typeof fd==="object") {
-				return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_r]: true}};
+				return {type: "prototype",key: k,type_name: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_r]: true}};
 			} else {
 				debugger;
-				return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {value: fd,[box_sym_r]: true}};
+				return {type: "prototype",key: k,type_name: "TextDecoder",value: null,__prototype_description: {value: fd,[box_sym_r]: true}};
 			}
 		}
 		if(z instanceof TextDecoder) {
