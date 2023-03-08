@@ -431,6 +431,10 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
+	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_Key_StartRadio} x */
+	mk_s1(j,k,x) {return this.kwb(x,j,k);}
+	/** @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s2<IC,J,X>} */
+	mk_s2(j,x) {return {a: "ST:D",b: "boxed_id",j,z: [x],key: `boxed_id:${j}:${x.c}`};}
 	/** @template {string} S @arg {S} s @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s3<IC,J,S,X>} */
 	mk_s3(j,s,x) {return {a: "ST:D",b: "boxed_id",j: `${j}:${s}`,z: [x],key: `boxed_id:${j}:${s}:${x.c}`};}
 	/** @template {string} S @template {Omit<DI_BrowseId_FE,"z">&{z:[any,ZAT2<S>]}} X @arg {X} x @returns {Omit<DST_Browse_FE,"key"|"z">&{key:`boxed_id:browse_id:FE:${S}`,z:[X]}} */
@@ -528,8 +532,6 @@ class IndexedDBService extends BaseService {
 		const key=`boxed_id:key:${c}:${this.za3(x)}`;
 		return {key,a: "ST:D",b: "boxed_id",j,k,w: this.mka("kw"),z: [x]};
 	}
-	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_Key_StartRadio} x */
-	mk_s1(j,k,x) {return this.kwb(x,j,k);}
 	/** @arg {DI_Key_StartRadio} x */
 	mk_start_radio(x) {
 		let t_kv=this.za1(x).k;
@@ -537,8 +539,6 @@ class IndexedDBService extends BaseService {
 		const z=this.mk_s1("key",t_kv,x);
 		return z;
 	}
-	/** @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s2<IC,J,X>} */
-	mk_s2(j,x) {return {a: "ST:D",b: "boxed_id",j,z: [x],key: `boxed_id:${j}:${x.c}`};}
 	/** @arg {DI_GuideEntry_LL} x */
 	mk_bx_nw(x) {return this.mk_s2(this.za1(x).k,x);}
 	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
