@@ -1006,14 +1006,15 @@ class IndexedDBService extends BaseService {
 					case "root_visual_element": console.log("[cache_outdated]",no); break;
 				}
 			}
-			/** @arg {G_BoxedIdObj|undefined} x */
+			/** @arg {G_BoxedPrintable|undefined} x @returns {G_BoxedInner} */
 			function w(x) {
-				if(!x) return [];
-				let {z: z1,...z0}=x.z[0];
-				if("a" in z0) {
-					return ["+a",z0,z1[0]];
-				}
-				return ["-a",z0];
+				if(!x) return ["n"];
+				/** @type {[GST_DSS|null,Exclude<G_BoxedPrintable,{a:"SI:T:D"}>|null]} */
+				let n=[null,null];
+				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
+				if(n[0]) return [0,n[0]];
+				if(n[1]) return [1,n[1]];
+				return ["a1",x.z[0]];
 			}
 			if(x.key==="boxed_id:load_id") break x;
 			if(x.key==="boxed_id:save_id") break x;

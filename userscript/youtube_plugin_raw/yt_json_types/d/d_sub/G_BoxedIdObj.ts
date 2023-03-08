@@ -31,3 +31,68 @@ type G_BoxedIdObj=
 	|GST_DSS
 	;
 ;
+type G_BoxedPrintable=|G_BoxedIdObj;
+type GB_A1=G_BoxedIdObj["z"][0];
+type GB_A1_J_Shape=
+	|`browse_id:${string}`
+	|"play_next"
+	|`playlist_id:${string}`
+	|"user_id"
+	|"channel_id:UC"
+	|"guide_entry_id"
+	|"hashtag_id"
+	|"key"
+	|"load_id"
+	|"save_id"
+	|"update_id"
+	|"video_id"
+	|"video_time"
+	|"guide_entry_id:LL"
+	|"guide_entry_id:VL:LL"
+	;
+;
+type TP1=G_BoxedIdObj['key'] extends infer I?
+	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}:${infer r1_4}:${infer r1_5}`? [f0,f1,r2,r1_3,r1_4,r1_5]:
+	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}:${infer r1_4}`? [f0,f1,r2,r1_3,r1_4]:
+	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}`? [f0,f1,r2,r1_3]:
+	I extends `${infer f0}:${infer f1}:${infer r2}`? [f0,f1,r2]:never:never
+	;
+;
+type TP2=Join<Exclude<Extract<TP1,[any,any,any]>,[any,"FE",any]>,":">;
+type TP3=[
+	// 2
+	Join<Extract<TP1,[any,any]>,":">,
+	// 3
+	Join<Exclude<Extract<TP1,[any,any,any]>,[any,"FE",any]>,":">,
+	Join<Extract<Extract<TP1,[any,any,any]>,[any,"FE",any]>,":">,
+	// 4
+	Join<Extract<TP1,[any,any,any,any]>,":">,
+	// 5
+	Join<Extract<TP1,[any,any,any,any,any]>,":">,
+];
+type GB_A1_J_Base="user_id"|"channel_id:UC"|"guide_entry_id:PL"|"guide_entry_id:UC";
+type G_BoxedInner=
+	|["z",G_BoxedIdObj]
+	|["n"]
+	|["a1",GB_A1]
+	|[0,GST_DSS]
+	|[1,{
+		key:
+		|`boxed_id:${TP3[0]}`
+		|`boxed_id:${TP3[1]}`
+		|`boxed_id:${TP3[2]}`
+		|`boxed_id:${TP3[3]}`
+		|`boxed_id:${TP3[4]}`
+		;
+		a: DST_PlayNext["a"]; b: "boxed_id";
+		j:
+		|GB_A1_J_Shape
+		;
+	}]
+	;
+;
+type G_BoxedInner_Tmp=[
+	GST_DSS|null,
+	Exclude<G_BoxedPrintable,{a: "SI:T:D";}>|null
+];
+type G_BoxedInner_Tmp_l=Exclude<G_BoxedPrintable,{a: "SI:T:D";}>;
