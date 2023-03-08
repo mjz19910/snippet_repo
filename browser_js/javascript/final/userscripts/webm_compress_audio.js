@@ -27,18 +27,21 @@ class AudioGainController {
 	media_source_set=new Set;
 	/** @type {Set<HTMLVideoElement>} */
 	connected_video_elements=new Set;
+	/** @type {Map<HTMLVideoElement,MediaElementAudioSourceNode>} */
+	connection_map=new Map;
 	static instance;
 	static {
 		this.instance=new this;
 	}
 	start() {
 		const ctx=this.audioCtx,gain=this.gainNode,compressor=this.compressorNode;
-		let t=document.querySelector("video");
-		if(!t) return;
-		if(this.connected_video_elements.has(t)) return;
-		this.connected_video_elements.add(t);
-		let media_source=ctx.createMediaElementSource(t);
+		let video_element=document.querySelector("video");
+		if(!video_element) return;
+		if(this.connected_video_elements.has(video_element)) return;
+		this.connected_video_elements.add(video_element);
+		let media_source=ctx.createMediaElementSource(video_element);
 		this.media_source_set.add(media_source);
+		this.connection_map.set(video_element,media_source);
 		media_source.connect(compressor);
 		compressor.connect(gain);
 		gain.connect(ctx.destination);
