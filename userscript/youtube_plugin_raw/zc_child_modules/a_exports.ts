@@ -18,3 +18,4 @@ type VolumeRange=import("./YtPlugin_Base.user.js").VolumeRange;
 type DefaultServiceResolverBox=ServiceResolverBox<ServiceResolver<ServiceLoader,ServiceOptions>>;
 type DefaultServiceResolver=ServiceResolverBox<ServiceResolver<ServiceLoader,ServiceOptions>>;
 type DefaultServiceResolver_2=ServiceResolver<ServiceLoader,ServiceOptions>;
+type MakeImportPath<T>=T extends `./${infer BaseName}`? T|`../zc_child_modules/${BaseName}`:T;

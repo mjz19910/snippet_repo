@@ -1,5 +1,5 @@
-import {IndexedDBService,TypedIndexedDB} from "./YTPlugin_IndexedDB.user";
-import {as_any} from "./YtPlugin_Base.user";
+import {IndexedDBService,TypedIndexedDB} from "../zc_child_modules/YTPlugin_IndexedDB.user";
+import {as_any} from "../zc_child_modules/YtPlugin_Base.user";
 export class IndexedDBDeadCode extends IndexedDBService {
 	/**
 	 * @template {"boxed_id"} K

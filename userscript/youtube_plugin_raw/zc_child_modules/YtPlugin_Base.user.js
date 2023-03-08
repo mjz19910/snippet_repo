@@ -73,14 +73,65 @@ const path_map={
 	/** @type {["sys","moment"]} */
 	["moment"]: ["sys","moment"],
 };
-/** @template {keyof typeof path_map} T @arg {T} x */
-function require(x) {
-	if(x===void 0) {throw new Error("missing required");}
+export_(exports => exports.__path_map__=path_map);
+/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+function str_starts_with(str,needle) {return str.startsWith(needle);}
+/** @template {MakeImportPath<keyof typeof path_map>} T @arg {T} x @arg {"zc_child_modules"|"zc_a_other"} location @returns {keyof typeof path_map} */
+function resolve_path(x,location) {
+	/** @type {MakeImportPath<keyof typeof path_map>} */
+	let u=x;
+	if(!str_starts_with(u,".")) return u;
+	let parts=split_string(u,"/");
+	switch(parts[0]) {
+		default: debugger; throw new Error("Unable to resolve path: "+u);
+		case "..": {
+			switch(parts[1]) {
+				default: debugger; throw new Error("Unable to resolve path: "+u);
+				case "DebugApi_raw": return `../${parts[1]}/${parts[2]}`;
+				case "zc_child_modules": {
+					if(location==="zc_a_other") return `./${parts[2]}`;
+					throw new Error("Unable to resolve path: "+parts.join("/"));
+				}
+			}
+		}
+		case ".": {
+			if(location!=="zc_child_modules") throw new Error("Unable to resolve path: "+u);
+			switch(parts[1]) {
+				default: debugger; throw new Error("Unable to resolve path: "+u);
+				case "YTPlugin_Codegen.user": return `./${parts[1]}`;
+				case "YTPlugin_ECatcherService_Plugin.user": return `./${parts[1]}`;
+				case "YTPlugin_HandleTypes.user": return `./${parts[1]}`;
+				case "YTPlugin_IndexedDB.user": return `./${parts[1]}`;
+				case "YTPlugin_Parser_Service.user": return `./${parts[1]}`;
+				case "YTPlugin_ServiceMethods.user": return `./${parts[1]}`;
+				case "YTPlugin_Support_Service.user": return `./${parts[1]}`;
+				case "YtPlugin_Base.user": return `./${parts[1]}`;
+				case "YtPlugin_ServiceLoader_Plugin.user": return `./${parts[1]}`;
+			}
+		}
+	}
+}
+/** @template {keyof typeof path_map} P @template {MakeImportPath<P>} T @arg {T} arg @arg {{location:"zc_a_other"}} [opts] @returns {import("../zb_plugin_types/exports").ProcessImport<T>} */
+function require(arg,opts) {
+	if(arg===void 0) {throw new Error("missing required");}
 	window.__plugin_modules__??={};
-	const M=window.__plugin_modules__,loc=path_map[x],i=required;
-	if(loc[0]==="sys") return i(window[loc[1]]);
-	if(loc[0]==="raw") return i(M[loc[1]]);
-	return i(M[`${loc[0]}$${loc[1]}`]);
+	const M=window.__plugin_modules__,i=required;
+	const loc=path_map[resolve_path(arg,opts?.location??"zc_child_modules")];
+	/** @arg {import("../zb_plugin_types/exports").ProcessImport<keyof path_map>} x @returns {asserts x is import("../zb_plugin_types/exports").ProcessImport<T>} */
+	function correct_return_type(x) {x;}
+	if(loc[0]==="sys") {
+		let mod=i(window[loc[1]]);
+		correct_return_type(mod);
+		return mod;
+	}
+	if(loc[0]==="raw") {
+		let mod=i(M[loc[1]]);
+		correct_return_type(mod);
+		return mod;
+	}
+	let mod=i(M[`${loc[0]}$${loc[1]}`]);
+	correct_return_type(mod);
+	return mod;
 }
 /** @template T @arg {T|null} x @returns {T} */
 function non_null(x) {
