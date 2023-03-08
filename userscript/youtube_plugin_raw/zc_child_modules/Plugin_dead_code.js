@@ -114,28 +114,32 @@ export class IndexedDBDeadCode extends IndexedDBService {
 	/** @template {G_BoxedIdObj} T @arg {(UpdateSchemaItem<T>)[]} arr */
 	update_obj_schema_3(arr) {
 		for(let x of arr) {
-			let unk=null,ok_=null,upd=null;
-			let om=null,ud=null;
+			let unk=null,ok_=null,update_ok=null;
+			let missing=null,update_bad=null,bad=null,missing2=null,update2=null;
 			if(x[0]!==false) {
 				switch(x[1]) {
-					case "update": upd=x; break;
 					case "ok": ok_=x; break;
 					case "unknown": unk=x; break;
+					case "update": update_ok=x; break;
+				}
+			} else {
+				switch(x[1]) {
+					case "bad": bad=x; break;
+					case "missing": missing=x; break;
+					case "missing2": missing2=x; break;
+					case "update": update_bad=x; break;
+					case "update2": update2=x; break;
 				}
 			}
-			switch(x[1]) {
-				case "missing": om=x; break;
-				case "update": ud=x; break;
-			}
-			om; ud; unk; ok_; upd;
-			if(om) switch(om[2]) {
+			missing; update_bad; unk; ok_; update_ok; bad; missing2; update2;
+			if(missing) switch(missing[2]) {
 				case "key": break;
 				case "tag": break;
 				case "type": break;
 				case "value": break;
 			}
 			{
-				const c=ud; if(c) switch(c[1]) {
+				const c=update_bad; if(c) switch(c[1]) {
 					default: debugger; break;
 					case "update": console.log(c[2]); break;
 				}
@@ -156,7 +160,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 				}
 			}
 			{
-				const c=upd; if(c) switch(c[1]) {
+				const c=update_ok; if(c) switch(c[1]) {
 					default: debugger; break;
 					case "update": console.log(c[2]); break;
 				}
