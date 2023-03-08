@@ -88,8 +88,7 @@ type G_BoxedInner=
 		|`${TP3[4]}`
 		;
 		a: DST_PlayNext["a"]; b: "boxed_id";
-		j:
-		|GB_A1_J_Shape
+		j: GB_A1_J_Shape
 		;
 	}]
 	;
