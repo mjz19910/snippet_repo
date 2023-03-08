@@ -431,6 +431,12 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
+	/** @template {string} S @arg {S} s @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s3<IC,J,S,X>} */
+	mk_s3(j,s,x) {return {a: "ST:D",b: "boxed_id",j: `${j}:${s}`,z: [x],key: `boxed_id:${j}:${s}:${x.c}`};}
+	/** @template {DI_BrowseId_FE} X @arg {X} x @returns {Omit<DST_Browse_FE,"key">&{key:`boxed_id:browse_id:FE:${X}`}} */
+	_mk_s4(x) {return {a: "ST:D",b: "boxed_id",j: `${x.b}:${x.c}`,w: "/key/a/b/j/w/z",z: [x],key: `boxed_id:${x.b}:${x.c}:${x.z[1].z[0].z[0]}`};}
+	/** @arg {DI_BrowseId_FE} x @returns {DST_Browse_FE} */
+	mk_s4(x) {return this._mk_s4(x);}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
@@ -438,20 +444,14 @@ class IndexedDBService extends BaseService {
 			case "MP": {
 				let [type,tag,value]=args;
 				/** @type {DST_Browse_MP} */
-				const z={
-					a: "ST:D",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/z",z: [value],
-					key: `boxed_id:browse_id:${tag}:${this.za2(value.z[1])}`,
-				};
-				let promise=this.put_box(z,version); return {args,promise};
+				const z2={...this.mk_s3(type,tag,value),w: "/key/a/b/j/z"};
+				let promise=this.put_box(z2,version); return {args,promise};
 			}
 			case "FE": {
-				let [type,tag,value]=args;
+				let [,,value]=args;
 				/** @type {DST_Browse_FE} */
-				const z={
-					a: "ST:D",b: "boxed_id",j: `${type}:${tag}`,w: "/key/a/b/j/w/z",z: [value],
-					key: `boxed_id:${type}:${tag}:${this.za2(value.z[1])}`,
-				};
-				let promise=this.put_box(z,version); return {args,promise};
+				const z2=this.mk_s4(value);
+				let promise=this.put_box(z2,version); return {args,promise};
 			}
 			case "VL:LL": {
 				let [type,tag,value]=args;
@@ -530,15 +530,17 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_Key_StartRadio} x */
 	mk_s1(j,k,x) {return this.kwb(x,j,k);}
-	/** @arg {"start_radio"} t_key @arg {ZA3<DI_Key_StartRadio>} tag @arg {DI_Key_StartRadio} x */
-	mk_start_radio(t_key,tag,x) {
+	/** @arg {DI_Key_StartRadio} x */
+	mk_start_radio(x) {
+		let t_kv=this.za1(x).k;
 		/** @type {DST_Key_StartRadio} */
-		const z={
-			a: "ST:D",b: "boxed_id",j: "key",k: t_key,w: "/db/key/a/b/j/k/w/z",z: [x],
-			key: `boxed_id:key:${t_key}:${tag}`,
-		};
+		const z=this.mk_s1("key",t_kv,x);
 		return z;
 	}
+	/** @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s2<IC,J,X>} */
+	mk_s2(j,x) {return {a: "ST:D",b: "boxed_id",j,z: [x],key: `boxed_id:${j}:${x.c}`};}
+	/** @arg {DI_GuideEntry_LL} x */
+	mk_bx_nw(x) {return this.mk_s2(this.za1(x).k,x);}
 	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
 	tz_pop(x) {return x.z[0];}
 	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
@@ -555,7 +557,7 @@ class IndexedDBService extends BaseService {
 			default: debugger; throw new Error("Unreachable");
 			case "key": {
 				/** @type {DST_Key_StartRadio} */
-				const z=this.mk_start_radio(this.za1(x).k,this.za3(x),x);
+				const z=this.mk_start_radio(x);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "hashtag_id": {
@@ -610,11 +612,7 @@ class IndexedDBService extends BaseService {
 			} debugger; throw new Error();
 			case "browse_id": return this.put_boxed_pl(version,...s0);
 			case "url_info": return this.put_boxed_url_info(version,s0[0],s0[1],s0[2]);
-			case "key": {
-				let [,k]=s0;
-				const z=this.mk_start_radio(k,this.za3(x),x);
-				return {args: s0,promise: this.put_box(z,version)};
-			}
+			case "key": return {args: s0,promise: this.put_box(this.mk_start_radio(x),version)};
 			case "guide_entry_id": /*db*/ {
 				let [tag]=s0;
 				switch(x.c) {
@@ -622,6 +620,7 @@ class IndexedDBService extends BaseService {
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
 						const z={a: "ST:D",b: "boxed_id",j: tag,key: `boxed_id:${tag}:${x.c}`,z: [x]};
+						const z2=this.mk_bx_nw(x); z2;
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "WL": {
