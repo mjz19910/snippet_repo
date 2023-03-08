@@ -72,7 +72,7 @@ type TP3=[
 	// 6
 	Join<Extract<TP1,[any,any,any,any,any,any]>,":">,
 ];
-type TP4=Exclude<Extract<TP1,[any,any,any,any]>,[any,any,"FE",any]>;
+type TP4=Exclude<Extract<TP2,[any,any,any,any]>,[any,any,"FE",any]>;
 type GB_A1_J_Base="user_id"|"channel_id:UC"|"guide_entry_id:PL"|"guide_entry_id:UC";
 type G_BoxedInner=
 	|["z",G_BoxedIdObj]
