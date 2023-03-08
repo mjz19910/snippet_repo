@@ -433,10 +433,10 @@ class IndexedDBService extends BaseService {
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
 	/** @template {string} S @arg {S} s @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s3<IC,J,S,X>} */
 	mk_s3(j,s,x) {return {a: "ST:D",b: "boxed_id",j: `${j}:${s}`,z: [x],key: `boxed_id:${j}:${s}:${x.c}`};}
-	/** @template {DI_BrowseId_FE} X @arg {X} x @returns {Omit<DST_Browse_FE,"key">&{key:`boxed_id:browse_id:FE:${X}`}} */
-	_mk_s4(x) {return {a: "ST:D",b: "boxed_id",j: `${x.b}:${x.c}`,w: "/key/a/b/j/w/z",z: [x],key: `boxed_id:${x.b}:${x.c}:${x.z[1].z[0].z[0]}`};}
+	/** @template {string} S @template {Omit<DI_BrowseId_FE,"z">&{z:[any,ZAT2<S>]}} X @arg {X} x @returns {Omit<DST_Browse_FE,"key"|"z">&{key:`boxed_id:browse_id:FE:${S}`,z:[X]}} */
+	mk_s4(x) {return {a: "ST:D",b: "boxed_id",j: `${x.b}:${x.c}`,w: "/key/a/b/j/w/z",z: [x],key: `boxed_id:${x.b}:${x.c}:${this.za2(x.z[1])}`};}
 	/** @arg {DI_BrowseId_FE} x @returns {DST_Browse_FE} */
-	mk_s4(x) {return this._mk_s4(x);}
+	mk_s5(x) {return this.mk_s4(x);}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
@@ -450,7 +450,7 @@ class IndexedDBService extends BaseService {
 			case "FE": {
 				let [,,value]=args;
 				/** @type {DST_Browse_FE} */
-				const z2=this.mk_s4(value);
+				const z2=this.mk_s5(value);
 				let promise=this.put_box(z2,version); return {args,promise};
 			}
 			case "VL:LL": {
@@ -511,8 +511,8 @@ class IndexedDBService extends BaseService {
 	/** @typedef {ZAT3<any>} ZA_S_3 */
 	/** @template {ZA_S_1} K @typedef {K["z"][0]} T_Z_Pop */
 	/** @template {ZA_S_1} K @typedef {T_Z_Pop<K>} ZA1 */
-	/** @template {ZA_S_2} K @typedef {T_Z_Pop<ZA1<K>>} ZA2 */
-	/** @template {ZA_S_3} K @typedef {T_Z_Pop<ZA2<K>>} ZA3 */
+	/** @template {ZA_S_2} K @typedef {T_Z_Pop<ZA1<K>>} za2 */
+	/** @template {ZA_S_3} K @typedef {T_Z_Pop<za2<K>>} ZA3 */
 	/** @template T @typedef {T_Z_Next<T>} ZAT1 */
 	/** @template T @typedef {T_Z_Next<ZAT1<T>>} ZAT2 */
 	/** @type {"a/b/j/k/w/z"} */
@@ -545,7 +545,7 @@ class IndexedDBService extends BaseService {
 	tz_pop(x) {return x.z[0];}
 	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
 	za1(x) {return this.tz_pop(x);}
-	/** @template V @template {ZAT2<V>} T @arg {T} x @returns {ZA2<T>} */
+	/** @template V @template {ZAT2<V>} T @arg {T} x @returns {za2<T>} */
 	za2(x) {return this.tz_pop(this.za1(x));}
 	/** @template V @template {ZAT3<V>} T @arg {T} x @returns {ZA3<T>} */
 	za3(x) {return this.tz_pop(this.za2(x));}
