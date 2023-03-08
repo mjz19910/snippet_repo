@@ -468,7 +468,7 @@ class HandleTypes extends BaseService {
 		this.sm.a_primitive_bool(defaultExpanded);
 		this.sm.a_primitive_num(descriptionCollapsedLines);
 		this.t(showMoreCommand,x => this.sm.C_Executor(x));
-		this.t(showLessCommand,x => this.sm.A_ChangeEngagementPanelVisibility(x));
+		this.sm.t(showLessCommand,x => this.sm.A_ChangeEngagementPanelVisibility(x));
 		this.t(attributedDescription,this.D_AttributedDescription);
 	}
 	/** @private @arg {D_CommandRunItem} x */

@@ -4106,7 +4106,7 @@ class ServiceMethods extends ServiceData {
 		this.z(chips,this.R_ChipCloudChip);
 		this.trackingParams(trackingParams);
 		if(horizontalScrollable!==false) debugger;
-		this.z([nextButton,previousButton],this.xm.R_Button);
+		this.xm.z([nextButton,previousButton],this.xm.R_Button);
 	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any,"comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {

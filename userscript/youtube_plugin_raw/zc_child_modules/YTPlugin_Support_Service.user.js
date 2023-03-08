@@ -1211,7 +1211,7 @@ class Support_RS_Player extends BaseService {
 		this.sm.trackingParams(trackingParams);
 		this.sm.cq(prominent,true);
 		this.sm.cq(logVisibilityUpdates,true);
-		this.t(onTapCommand,this.sm.A_ChangeEngagementPanelVisibility);
+		this.sm.t(onTapCommand,this.sm.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {D_LearningResource} x */
 	D_LearningResource(x) {
@@ -1662,7 +1662,7 @@ class Support_GenericApi extends BaseService {
 		const cf="D_SimpleMenuHeader";
 		const {title,buttons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(title);
-		this.z(buttons,this.xm.R_Button);
+		this.xm.z(buttons,this.xm.R_Button);
 	}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
