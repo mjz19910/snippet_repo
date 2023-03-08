@@ -2223,8 +2223,29 @@ class ApiBase2 {
 					});
 				}
 			}
+			return;
 		}
-		debugger;
+		if(typeof f==="string") return;
+		if(typeof f==="number") return;
+		if(typeof f==="bigint") return;
+		if(typeof f==="boolean") return;
+		if(f===void 0) return;
+		if(f===null) return;
+		if("empty" in f) {
+			const {empty,...y}=f;
+			if(this.get_keys_of(y).length!==0) debugger;
+			if(empty!==true) debugger;
+			return;
+		}
+		if(f.a!=="/value") {debugger; return;};
+		let fv=f.value; fv;
+		switch(fv.a) {
+			default: debugger; break;
+			case "/id": break;
+		}
+		if(fv.type!=="function") debugger;
+		const {a,id,type,...y}=fv;
+		if(this.get_keys_of(y).length!==0) debugger;
 	}
 	/** @arg {unknown} x */
 	save_clone(x) {
