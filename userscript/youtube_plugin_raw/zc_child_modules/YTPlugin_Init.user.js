@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Init.user.js
 // ==/UserScript==
 
-const {do_export,yt_plugin_base_main}=require("./YtPlugin_Base.user");
+const {do_export,yt_plugin_base_main,get_exports,ApiBase2}=require("./YtPlugin_Base.user");
 const __module_name__="mod$InitPlugin";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
@@ -29,5 +29,12 @@ x: {
 		break x;
 	}
 	console=typeof window==="undefined"? console:(() => window.console)();
+	let modules=get_exports();
+	const test_base=new ApiBase2;
+	let module_keys=test_base.get_keys_of(modules);
+	for(let module_name of module_keys) {
+		let value=modules[module_name];
+		console.log("module",value);
+	}
 	yt_plugin_base_main();
 }

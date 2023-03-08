@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState,BaseService}=require("./YtPlugin_Base.user"); const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
+const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState,BaseService}=require("./YtPlugin_Base.user");
 
 //#region module setup
 const __module_name__="mod$HandleTypes";
@@ -23,10 +23,15 @@ if(window.__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
-// [new_fexp_expected]
-ECatcherService.known_experiments.push(...[
-	[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030],
-].flat());
+//#region
+function init_module() {
+	const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
+	// [new_fexp_expected]
+	ECatcherService.known_experiments.push(...[
+		[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030],
+	].flat());
+}
+export_((exports) => {exports.init_module=init_module;});
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	//#region  Service Methods import
@@ -3010,7 +3015,6 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	//#endregion binary
-	//#endregion
 	//#region import renderer
 	//#endregion
 	//#region import group

@@ -37,6 +37,13 @@ function do_export(fn,flags,exports,module_name) {
 }
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+function get_exports() {
+	window.__plugin_modules__??={};
+	let all_modules=window.__plugin_modules__;
+	/** @type {{[U in keyof PluginStore]?:{}}} */
+	let ok_modules=all_modules;
+	return ok_modules;
+}
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
@@ -92,7 +99,10 @@ export_(exports => {
 	exports.non_null=non_null;
 	exports.require=require;
 },{global: true});
-export_(exports => {exports.do_export=do_export;});
+export_(exports => {
+	exports.get_exports=get_exports;
+	exports.do_export=do_export;
+});
 const log_imports=false;
 export_(exports => {exports.__yt_plugin_log_imports__=log_imports;},{global: true});
 if(log_imports) console.log("Load PluginBase");
