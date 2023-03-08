@@ -2122,7 +2122,15 @@ class ApiBase2 {
 				if(x===null) return x;
 				return this.simple_filter(k,x);
 			}
-			console.log("simple cant copy",k,x);
+			let r=this.json_filter(k,x);
+			if(r!==null&&typeof r==="object") {
+				if(r.type==="function") return r;
+			}
+			if(typeof r==="string") return r;
+			if(r==true||r==false) return r;
+			if(r===null) return r;
+			console.log("simple cant copy",k,r.type,r);
+			debugger;
 			return x;
 		});
 		console.log("simple clone end",k,Object.fromEntries(res_entries));
@@ -2227,11 +2235,13 @@ class ApiBase2 {
 		console.log("not handled",k,x);
 		return null;
 	}
+	/** @type {any[]} */
+	unable_to_clone_cache=[];
 	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>} */
 	json_filter(k,z) {
 		if(typeof z==="string") return z;
 		if(typeof z==="boolean") return z;
-		console.log("rep",k,z);
+		// console.log("rep",k,z);
 		if(typeof z==="function") {
 			let idx=this.fn_list.indexOf(z);
 			if(idx===-1) idx=this.fn_list.push(z)-1;
@@ -2302,7 +2312,15 @@ class ApiBase2 {
 			return x;
 		});
 		let rz=Object.fromEntries(res_entries);
-		try {return structuredClone(rz);} catch {console.log("cant clone",rz);}
+		try {return structuredClone(rz);} catch {
+			if(this.unable_to_clone_cache.includes(rz)) {
+				console.log("cant clone already known to be un-cloneable",rz);
+				debugger;
+				return null;
+			}
+			this.unable_to_clone_cache.push(rz);
+			console.log("cant clone",rz);
+		}
 		return {type: "normal:copy",copy: true,value: rz};
 	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
