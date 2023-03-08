@@ -9,7 +9,7 @@ type Type_PrototypeDescription_OfTextDecoder<K>={
 	__prototype_description: Type_GetOwnPropertyDescriptors<TextDecoder>&{[box_sym_g]: boolean;};
 };
 type GType_PrototypeDescription_OfTextDecoder<K,T_Of,V>={
-	type: "prototype"; key: K; of: T_Of; value: null;
+	type: "prototype"; key: K; of: T_Of;
 	__prototype_description: Type_GetOwnPropertyDescriptors<V>&{[box_sym_g]: boolean;};
 };
 
@@ -27,9 +27,9 @@ type JsonFilterRet<K,T>=
 	}
 	|GType_PrototypeDescription_OfTextDecoder<K,"TextDecoder",TextDecoder>
 	|{
-		type: "symbol"; value: null; for: "box_symbol";
+		type: "symbol"; for: "box_symbol";
 	}
-	|{type: "symbol"; value: null;}
+	|{type: "symbol";}
 	|{
 		type: "normal:copy"; copy: true; value: {
 			[k: string]: unknown;

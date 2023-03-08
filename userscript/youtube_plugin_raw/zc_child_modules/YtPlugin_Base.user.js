@@ -2142,10 +2142,9 @@ class ApiBase2 {
 			console.log("simple clone start",k,x);
 			if(x===null) return x;
 			const in_entries=Object.entries(x);
-			const res_entries=this.iter_entries(in_entries,(k,x) => {
-				return this.simple_filter(k,x);
-			});
+			const res_entries=this.iter_entries(in_entries,this.simple_filter);
 			reconstructed=Object.fromEntries(res_entries);
+			return structuredClone(reconstructed);
 		} catch(e) {
 			console.log("simple copy error",e);
 			console.log("simple cant copy",k,x);
@@ -2202,19 +2201,17 @@ class ApiBase2 {
 			} break;
 			case "symbol": {
 				if("for" in x) {
-					const {type,value,for: for_,...w2}=x;
-					if(value===void 0) {debugger; return null;}
+					const {type,for: for_,...w2}=x;
 					if(for_===void 0) {debugger; return null;}
 					if(this.get_keys_of(w2).length!==0) debugger;
-					r1={type,value,for: for_};
+					r1={type,for: for_};
 					break;
 				}
 				/** @type {RequiredType<typeof x['type']>} */
 				let b={...x,type: x.type};
-				if(b.value===void 0) {debugger; return null;}
-				const {type,value,...w2}=b;
+				const {type,...w2}=b;
 				if(this.get_keys_of(w2).length!==0) debugger;
-				r1={...w2,type,value};
+				r1={...w2,type};
 			} break;
 			case "normal": {
 				/** @type {RequiredType<typeof x['type']>} */
@@ -2245,12 +2242,11 @@ class ApiBase2 {
 			case "prototype": {
 				/** @type {RequiredType<typeof x['type']>} */
 				let b={...x,type: x.type};
-				if(b.value===void 0) {debugger; return null;}
-				const {type,value,key,of,__prototype_description,...w2}=b; if(this.get_keys_of(w2).length!==0) debugger;
+				const {type,key,of,__prototype_description,...w2}=b; if(this.get_keys_of(w2).length!==0) debugger;
 				if(key===void 0) {debugger; return null;}
 				if(of===void 0) {debugger; return null;}
 				if(__prototype_description===void 0) {debugger; return null;}
-				r1={...w2,type,value,key,of,__prototype_description};
+				r1={...w2,type,key,of,__prototype_description};
 			} break;
 		}
 		if(r1) return r1;
