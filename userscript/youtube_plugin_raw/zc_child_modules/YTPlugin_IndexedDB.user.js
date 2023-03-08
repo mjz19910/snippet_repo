@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService,split_string_once,as_any}=require("./YtPlugin_Base.user");
+const {do_export,as,BaseService,split_string_once}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -188,82 +188,10 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	async update_obj_schema(x,version) {
-		/** @type {G_BoxedIdObj} */
-		let ret=x;
-		x: if(!x.z) {
-			/** @type {{key:DST_LoadId["key"],tag:string,value?: {raw:number}}} */
-			let o1=as_any(x);
-			if(o1.value&&o1.value.raw&&o1.tag) {
-				const jl={b: "boxed_id",j: o1.tag,key: x.key,z: [{type: "number",z: [o1.value.raw]}]};
-				ret=as_any(jl);
-				break x;
-			}
-			/** @type {FromDbData} */
-			let o2=as_any(x);
-			if(!o2.value) {debugger; return x;}
-			switch(o2.tag) {
-				default: debugger; break;
-				case "number": break;
-				case "channel_id:UC": {
-					const {key,tag,value}=o2;
-					/** @type {DI_A_ChannelId_UC} */
-					let bt=this.make_abcz(value.type,value.tag,[
-						this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
-						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
-					]);
-					/** @type {DST_Channel_UC} */
-					const z=this.make_ST_jz(key,tag,bt); ret=z; break x;
-				}
-				case "keys": break;
-				case "string": break;
-				case "video_id": {
-					const {key,tag,value}=o2;
-					/** @type {DI_A_VideoId} */
-					let bt=this.make_abwz_item(value.type,this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)));
-					/** @type {DST_Video_Id} */
-					const z=this.make_ST_jz(key,tag,bt); ret=z; break x;
-				}
-				case "playlist_id:RD": {
-					const {key,value}=o2;
-					/** @type {DI_A_Playlist_RD} */
-					let bt=this.make_abcz("playlist_id","RD",[
-						this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
-						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
-					]);
-					/** @type {DST_Playlist_RD} */
-					const z=this.make_ST_jz(key,"playlist_id:RD",bt);
-					ret=z;
-					break x;
-				}
-			}
-			const {key,value}=o2;
-			if(!("info_arr" in value)) {
-				debugger; return x;
-			}
-			let o_arr_t=value.info_arr[0];
-			if(o_arr_t instanceof Array) {
-				switch(o_arr_t[0]) {
-					default: debugger; return x;
-					case "many":
-					case "arr":
-					case "one": {
-						const i3={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
-						/** @type {DSS_Bigint["z"][0]} */
-						const i2={a: "group",b: value.type,z: [as_any(i3)]};
-						/** @type {DSS_Bigint} */
-						const z={key: as_any(key),a: "SI:T:D",b: "boxed_id",d: "bigint",w: "/key/a/b/d/w/z",z: [i2]};
-						ret=as_any(z);
-						break x;
-					}
-				}
-			}
-			debugger;
-		} else {
-			return x;
-		}
+		if(x.z) return x;
 		await this.delete("boxed_id",x.key,version);
-		await this.direct_put("boxed_id",ret,version);
-		return as_any(ret);
+		await this.direct_put("boxed_id",x,version);
+		return x;
 	}
 	/** @arg {G_BoxedIdObj} x */
 	store_cache_tree(x) {
