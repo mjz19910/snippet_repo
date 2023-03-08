@@ -116,20 +116,17 @@ export class IndexedDBDeadCode extends IndexedDBService {
 		for(let x of arr) {
 			let unk=null,ok_=null,update_ok=null;
 			let missing=null,update_bad=null,bad=null,missing2=null,update2=null;
-			if(x[0]) {
-				switch(x[1]) {
-					case "ok": ok_=x; break;
-					case "unknown": unk=x; break;
-					case "update": update_ok=x; break;
-				}
-			} else {
-				switch(x[1]) {
-					case "bad": bad=x; break;
-					case "missing": missing=x; break;
-					case "missing2": missing2=x; break;
-					case "update": update_bad=x; break;
-					case "update2": update2=x; break;
-				}
+			if(x[0]) switch(x[1]) {
+				case "ok": ok_=x; break;
+				case "unknown": unk=x; break;
+				case "update": update_ok=x; break;
+			}
+			else switch(x[1]) {
+				case "bad": bad=x; break;
+				case "missing": missing=x; break;
+				case "missing2": missing2=x; break;
+				case "update": update_bad=x; break;
+				case "update2": update2=x; break;
 			}
 			missing; update_bad; unk; ok_; update_ok; bad; missing2; update2;
 			if(missing) switch(missing[2]) {
