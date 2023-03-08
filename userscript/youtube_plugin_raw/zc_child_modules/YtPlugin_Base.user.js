@@ -2093,14 +2093,11 @@ const general_service_state={
 	/** @private @type {"non_member"|null} */
 	premium_membership: null,
 };
-const box_sym_r=Symbol("box_symbol");
-export_(exports=>exports.box_sym=box_sym_r)
+const box_sym_r=Symbol.for("box_symbol");
+export_(exports => exports.box_sym=box_sym_r);
 class ApiBase2 {
 	/** @type {{readonly x: typeof box_sym_r}} */
 	static box_sym={x: box_sym_r};
-	constructor() {
-		this.box_sym=Symbol.for("box_symbol");
-	}
 	/** @arg {{}} mod */
 	module_debug_log(mod) {
 		/** @type {((()=>void)|Function)[]} */
@@ -2118,7 +2115,7 @@ class ApiBase2 {
 		function json_set_filter(x,k) {
 			const v=x[k];
 			const f=json_filter(k,v);
-			if(f.type==="normal") {
+			if(f.type==="normal"&&!("copy" in f)) {
 				set(x,k,f.value);
 			} else {
 				debugger;
@@ -2132,17 +2129,51 @@ class ApiBase2 {
 				if(idx===-1) idx=fn_list.push(z)-1;
 				return {type: "function",id: idx,...z};
 			}
+			if(typeof z==="symbol") {
+				switch(z) {
+					default: debugger; return {type: "symbol"};
+					case box_sym_r: return {type: "symbol",for: "box_symbol"};
+				}
+			}
 			if(typeof z!=="object") return {type: "normal",value: z};
 			if(z===null) return {type: "normal",value: z};
-			if(ApiBase2.box_sym.x in z&&z[ApiBase2.box_sym.x]===true) return {type: "normal",value: z};
+			if(box_sym_r in z&&z[box_sym_r]===true) return {type: "normal",value: z};
 			if(cloned_sym in z&&z[cloned_sym]===true) return {type: "normal",value: z};
-			if(z instanceof TextDecoder) {
-				if(z===TextDecoder.prototype) {
-					/** @type {Type_GetOwnPropertyDescriptors<T>} */
-					const desc=Object.getOwnPropertyDescriptors(z);
-					const fd=simple_filter('prototype_description',desc);
-					return {type: "prototype",key: k,of: "TextDecoder",__prototype_description: {...fd,[box_sym_g]: true}};
+			if("type" in z) {
+				/** @type {{}} */
+				let w=z;
+				/** @type {Partial<JsonFilterRet<any,any>>} */
+				let w2=w; let wr=null;
+				if(w2.type) {wr={type: w2.type,...w2};}
+				let r1=null;
+				if(wr) switch(wr.type) {
+					default: debugger; break;
+					case "function": {
+						const wrt=wr.type; const z=wr;
+						/** @type {Partial<JsonFilterRet<any,any>>&Pick<JsonFilterRet<any,any>,"type">} */
+						/** @typedef {Extract<JsonFilterRet<any,any>,{type:typeof wrt}>} T1 */
+						/** @type {Partial<Omit<T1,"type">>&Pick<T1,"type">} */
+						let w={...z,type: "function"};
+						const {...w2}=w;
+						if(w2.id!==void 0) {
+							const {type,id}=w2;
+							r1={type,id};
+						}
+					} break;
 				}
+				if(r1) {r1; debugger;}
+			}
+			/** @type {{}} */
+			const zo=z;
+			if(zo===TextDecoder.prototype) {
+				/** @type {TextDecoder} */
+				const zt=as(zo);
+				/** @type {Type_GetOwnPropertyDescriptors<TextDecoder>} */
+				const desc=Object.getOwnPropertyDescriptors(zt);
+				const fd=simple_filter('prototype_description',desc);
+				return {type: "prototype",key: k,of: "TextDecoder",__prototype_description: {...fd,[box_sym_g]: true}};
+			}
+			if(z instanceof TextDecoder) {
 				/** @type {TextDecoder} */
 				const td=z;
 				const {encoding,decode,fatal,ignoreBOM,...y}=td;
@@ -2167,13 +2198,15 @@ class ApiBase2 {
 						res_arr.push({[i]: structuredClone(f),key: k,[cloned_sym]: true});
 					} catch {debugger; res_arr.push(f); continue;}
 				}
-				return z;
+				return {type: "normal",value: z};
 			}
 			const entries=Object.entries(z);
 			/** @type {[string,any][]} */
 			let res_entries=[];
 			for(const entry of entries) {
 				const [k1,x]=entry;
+				let copy=json_filter(k,x);
+				console.log("copy entry",k1,copy.value);
 				// const filtered=JSON.parse(JSON.stringify({[k1]: json_filter(k1,x),key: k,box: true,[box_sym]: true},json_filter))[k1];
 				try {
 					res_entries.push([k1,structuredClone(x)]); continue;
@@ -2187,7 +2220,7 @@ class ApiBase2 {
 			}
 			let rz=Object.fromEntries(res_entries);
 			try {return structuredClone(rz);} catch {console.log("cant clone",rz);}
-			return rz;
+			return {type: "normal",copy: true,value: rz};
 		};
 		/** @arg {unknown} x */
 		function save_clone(x) {
