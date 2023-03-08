@@ -2099,12 +2099,19 @@ export_(exports => exports.box_sym_r=box_sym_r);
 class ApiBase2 {
 	/** @type {((()=>void)|Function)[]} */
 	fn_list=[];
-	/** @arg {[string,unknown][]} x @arg {(k:string,x:unknown)=>unknown} f */
+	/** @arg {[string,unknown][]} x @arg {(this:this,k:string,x:unknown)=>unknown} f */
 	iter_entries(x,f) {return x.map(this.map_entry.bind(this,f));}
-	/** @arg {(k:string,x:unknown)=>unknown} f @arg {[string,unknown]} a0 @returns {[string,unknown]} */
+	/** @arg {[string,unknown][]} x @template {(k:string,x:unknown,f:{c:J})=>unknown} J @arg {J} f */
+	iter_entries_curry(x,f) {return x.map(this.map_entry_curry.bind(this,f));}
+	/** @template {(k:string,x:unknown,curry:{c:J})=>unknown} J @arg {J} f @arg {[string,unknown]} a0 @returns {[string,unknown]} */
+	map_entry_curry(f,a0) {
+		const [k,v]=a0;
+		return [k,f(k,v,{c: f})];
+	}
+	/** @arg {(this:this,k:string,x:unknown)=>unknown} f @arg {[string,unknown]} a0 @returns {[string,unknown]} */
 	map_entry(f,a0) {
 		const [k,v]=a0;
-		return [k,f(k,v)];
+		return [k,f.call(this,k,v)];
 	}
 	/** @template {{}} T @template {string} K @arg {K} k @arg {T} x @returns {T} */
 	simple_filter(k,x) {
@@ -2273,7 +2280,7 @@ class ApiBase2 {
 			/** @type {Type_GetOwnPropertyDescriptors<TextDecoder>} */
 			const desc=Object.getOwnPropertyDescriptors(zt);
 			const fd=this.simple_filter('prototype_description',desc);
-			return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_g]: true}};
+			return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_r]: true}};
 		}
 		if(z instanceof TextDecoder) {
 			/** @type {TextDecoder} */
@@ -2303,16 +2310,25 @@ class ApiBase2 {
 			return {type: "normal",value: z};
 		}
 		const entries=Object.entries(z);
-		const res_entries=this.iter_entries(entries,(k,x) => {
-			let r;
+		const res_entries=this.iter_entries(entries,function self(k,x) {
+			let r,err=null;
 			try {
 				r=this.json_filter(k,x);
-			} catch (e) {
-				console.log("cant filter iter_entry",k,e,x);
+			} catch(e) {
+				err=e;
+			}
+			if(err) {
+				console.log("cant filter iter_entry",k,err,x);
+				debugger;
+			}
+			try {
+				r=this.json_filter(k,x);
+			} catch(e) {
+				console.log("cant filter iter_entry try 2",k,e,x);
 				debugger;
 				throw new Error();
 			}
-			try {structuredClone(r);} catch (e) {
+			try {structuredClone(r);} catch(e) {
 				console.log("cant clone iter_entry",k,e,x);
 				debugger;
 				r=this.json_filter(k,x);
@@ -2323,7 +2339,7 @@ class ApiBase2 {
 		let rz=Object.fromEntries(res_entries);
 		try {
 			return structuredClone(rz);
-		} catch (e) {
+		} catch(e) {
 			if(this.unable_to_clone_cache.includes(z)) {
 				console.log("cant clone already known to be un-cloneable",z);
 				debugger;
