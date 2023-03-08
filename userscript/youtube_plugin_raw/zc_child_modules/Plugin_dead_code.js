@@ -111,7 +111,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 		if(ok) res.push([true,"ok",x]); else res.push([ok,"bad",x]);
 		return;
 	}
-	/** @template T @arg {(UpdateSchemaItem<T>)[]} arr */
+	/** @template {G_BoxedIdObj} T @arg {(UpdateSchemaItem<T>)[]} arr */
 	update_obj_schema_3(arr) {
 		for(let x of arr) {
 			let unk=null,ok_=null,upd=null;
