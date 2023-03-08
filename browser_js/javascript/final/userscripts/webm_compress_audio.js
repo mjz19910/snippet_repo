@@ -10,23 +10,45 @@
 // @run-at       document-start
 // ==/UserScript==
 /* eslint-disable no-undef */
+class AudioGainController {
+	constructor() {
+		this.audioCtx=new AudioContext();
+		let x=this.audioCtx.createGain();
+		this.gainNode=x;
+		this.audioGainParam=x.gain;
+		let s=this.audioCtx.createDynamicsCompressor();
+		this.compressorNode=s;
+		s.knee.value=28;
+		s.attack.value=s.release.value=1;
+		s.ratio.value=10;
+		s.threshold.value=-24;
+	}
+	/** @type {Set<MediaElementAudioSourceNode>} */
+	media_source=new Set;
+	/** @type {Set<HTMLVideoElement>} */
+	connected_video_elements=new Set;
+	static instance;
+	static {
+		this.instance=new this;
+	}
+	start() {
+		const ctx=this.audioCtx,gain=this.gainNode,compressor=this.compressorNode;
+		if(this.media_source) {
+			return;
+		}
+		let t=document.querySelector("video");
+		if(!t) return;
+		if(this.connected_video_elements.has(t)) return;
+		this.connected_video_elements.add(t);
+		let media_source=ctx.createMediaElementSource(t);
+		media_source.connect(compressor);
+		compressor.connect(gain);
+		gain.connect(ctx.destination);
 
+	}
+}
 (function() {
 	'use strict';
-	if(typeof aud=='undefined')aud={};
-	e=aud;
-	t=document.querySelector("video");
-	e.audioCtx=new AudioContext();
-	m=e.audioCtx.destination;
-	x=e.audioCtx.createGain();
-x.connect(m);
-	j=e.gain_v=x.gain;
-e.gain=x;
-	s=e.audioCtx.createDynamicsCompressor();
-s.connect(x);
-e.comp=s;
-	(({knee,attack,release,ratio,threshold})=>{knee.value=28;attack.value=release.value=1;ratio.value=10;threshold.value=-24})(s);
-	y=e.audioCtx.createMediaElementSource(t);
-	y.connect(s);
+	AudioGainController.instance.start();
 	// Your code here...
 })();
