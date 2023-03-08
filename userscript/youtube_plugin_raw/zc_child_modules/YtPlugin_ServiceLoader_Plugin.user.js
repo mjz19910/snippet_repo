@@ -28,7 +28,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
-	/** @constructor @public @arg {DefaultServiceResolver} x */
+	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {
 		this.service_methods=new ServiceMethods(x);
 		this.codegen=new CodegenService(x);
@@ -57,7 +57,7 @@ class ServiceLoader {
 		this.yt_handlers=new YtHandlers(x);
 		this.yt_plugin=new YtPlugin(x);
 	}
-	/** @api @public @arg {((x: DefaultServiceResolver_2) => void)[]} listeners @arg {DefaultServiceResolver_2} x */
+	/** @api @public @arg {((x: ServiceResolverValue) => void)[]} listeners @arg {ServiceResolverValue} x */
 	on_resolve_services(listeners,x) {
 		for(let handler of listeners) handler(x);
 	}

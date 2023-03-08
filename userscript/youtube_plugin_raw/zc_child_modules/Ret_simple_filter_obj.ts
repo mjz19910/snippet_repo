@@ -60,8 +60,8 @@ type Ret_can_clone_map={
 	a: "/type/z";
 	type: "original";
 	z: {
-		a: "/k/v/sf";
-		k: string; v: unknown; sf: Ret_simple_filter;
+		a: "/k/v/f";
+		k: string; v: unknown; f: Ret_simple_filter;
 	};
 }|{
 	a: "/type/b/k/value";

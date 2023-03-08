@@ -625,7 +625,7 @@ class VolumeRange {
 			ytd_app.volume_range=volume_range;
 		}
 	}
-	/** @private @arg {number} min @arg {number} max @arg {number} overdrive @arg {AudioGainController} gain_controller */
+	/** @api @public @arg {number} min @arg {number} max @arg {number} overdrive @arg {AudioGainController} gain_controller */
 	constructor(min,max,overdrive,gain_controller) {
 		this.use_cache=true;
 		this.max=max;
@@ -779,7 +779,7 @@ class R_HandleRichGrid_Base {
 	class_name="HandleRichGridRenderer";
 	/** @readonly */
 	entry="richGridRenderer";
-	/** @constructor @public @arg {DefaultServiceResolver} x */
+	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {this.rendererContentItemArray=new HandleRendererContentItemArray(x);}
 	/** @handler @public @arg {string} path @arg {Todo_D_RichGrid} renderer */
 	richGridRenderer(path,renderer) {
@@ -1955,7 +1955,7 @@ function yt_plugin_base_main() {
 	if(failed_to_load) return;
 	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
 	const log_enabled_page_type_change=false;
-	/** @private @type {DefaultServiceResolver} */
+	/** @private @type {ServiceResolverBox<{}>} */
 	const resolver_value={
 		value: null,
 		listeners: [],
@@ -2114,7 +2114,7 @@ class ApiBase2 {
 		const [k,v]=a0;
 		return [k,f.call(this,k,v)];
 	}
-	/** @template T @arg {T} c @returns {Ret_simple_filter} */
+	/** @template T @arg {T} c @returns {Ret_simple_filter|null} */
 	simple_filter(c) {
 		/** @type {unknown} */
 		let x=c;
@@ -2145,32 +2145,36 @@ class ApiBase2 {
 	clone_entry_item(e) {
 		this.num_count++;
 		if(this.num_count>64) return null;
-		let [k,x]=e;
-		if(typeof x==="boolean") return {
+		let [k,v]=e;
+		if(typeof v==="boolean") return {
 			a: "/type/p/value",type: "entry",p: "boolean",
-			value: [k,x]
+			value: [k,v]
 		};
-		if(typeof x==="function") return {
-			a: "/type/z",type: "original",
-			z: {
-				a: "/k/v/sf",
-				k: k,
-				v: x,
-				sf: this.simple_filter(x)
-			}
-		};
-		if(x instanceof RegExp) return {
+		if(typeof v==="function") {
+			let f=this.simple_filter(v);
+			if(f===null) return null;
+			return {
+				a: "/type/z",type: "original",
+				z: {
+					a: "/k/v/f",
+					k,
+					v,
+					f
+				}
+			};
+		}
+		if(v instanceof RegExp) return {
 			a: "/type/b/k/value",b: "no-clone",k,
 			type: "RegExp",
-			value: {source: x.source}
+			value: {source: v.source}
 		};
-		if(x instanceof TextDecoder) return {
+		if(v instanceof TextDecoder) return {
 			a: "/type/value",b: "no-clone",k,
 			type: "TextDecoder",
 			value: {
-				encoding: x.encoding,
-				fatal: x.fatal,
-				ignoreBOM: x.ignoreBOM
+				encoding: v.encoding,
+				fatal: v.fatal,
+				ignoreBOM: v.ignoreBOM
 			}
 		};
 		try {
@@ -2186,22 +2190,24 @@ class ApiBase2 {
 				case "function": debugger; break;
 			}
 		} catch {
-			console.log("[log_fail_c1]",k,x);
+			console.log("[log_fail_c1]",k,v);
+			let f=this.simple_filter(v);
+			if(f===null) return null;
 			return {
 				a: "/type/z",
 				type: "original",
 				z: {
-					a: "/k/v/sf",
+					a: "/k/v/f",
 					k: k,
-					v: x,
-					sf: this.simple_filter(x)
+					v: v,
+					f
 				}
 			};
 		}
 		debugger;
 		throw new Error();
 	};
-	/** @template {object|null} T @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
+	/** @template {object|null} T @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj|null} */
 	simple_filter_obj(x) {
 		if(x instanceof Array) {
 			const in_entries=Object.entries(x);
@@ -2214,8 +2220,9 @@ class ApiBase2 {
 		let r_obj;
 		{
 			const in_entries=Object.entries(x);
-			/** @arg {Ret_can_clone_map} x @returns {[string,any]} */
+			/** @arg {Ret_can_clone_map|null} x @returns {[string,any]|null} */
 			const map_clone_2=x => {
+				if(x===null) return null;
 				switch(x.a) {
 					case "/type/b/k/value": return [x.k,x];
 					case "/type/p/value": return [x.value[0],x];
@@ -2224,16 +2231,22 @@ class ApiBase2 {
 						case "clone": return [x.k,x];
 						case "primitive": return [x.k,x];
 					}
-					case "/type/z": return [x.z.k,x.z.sf];
+					case "/type/z": return [x.z.k,x.z.f];
 				}
 			};
 			const res_entries=in_entries.map(this.clone_entry_item,this).map(map_clone_2).map(ent => {
+				if(ent===null) return null;
 				if(ent instanceof Array) {
 					Object.setPrototypeOf(ent[1],null);
 				}
 				return ent;
 			});
-			r_obj=Object.fromEntries(res_entries);
+			let ok_entries=[];
+			for(let ent of res_entries) {
+				if(ent===null) return null;
+				ok_entries.push(ent);
+			}
+			r_obj=Object.fromEntries(ok_entries);
 			Object.setPrototypeOf(r_obj,null);
 			return {a: "/raw",raw: r_obj};
 		}
@@ -2263,6 +2276,7 @@ class ApiBase2 {
 	json_set_filter(x,k) {
 		const v=x[k];
 		const f=this.simple_filter(v);
+		if(f===null) return;
 		x.modify_log.push({
 			a: "/type/k/value",
 			type: "filter",
@@ -2375,10 +2389,11 @@ class ApiBase2 {
 			return {type: "prototype",key: k,type_name: "TextDecoder",__prototype_description: {value: fd,[box_sym_r]: true}};
 		}
 	}
-	/** @arg {TextDecoder} x @returns {Ret_TextDecoderInfo} */
+	/** @arg {TextDecoder} x @returns {Ret_TextDecoderInfo|null} */
 	filter_text_decoder(x) {
 		const {encoding,decode,fatal,ignoreBOM}=x;
-		const dec_fn=this.simple_filter(decode);
+		const f=this.simple_filter(decode);
+		if(f===null) return null;
 		/** @type {GType_PrototypeDescription_OfTextDecoder<"%%prototype", "TextDecoder",TextDecoder>} */
 		const filtered_proto={
 			a: "/value",value: {
@@ -2388,8 +2403,7 @@ class ApiBase2 {
 						a: "/type/z/arr",
 						arr: [box_sym_r],
 						type: "own_property_descriptors",
-						z: as({}),
-						[box_sym_r]: true,
+						z: as({})
 					}
 				},
 			}
@@ -2399,7 +2413,7 @@ class ApiBase2 {
 			encoding,fatal,ignoreBOM,__symbol_prototype: filtered_proto,modify_log: [
 				{
 					a: "/type/key/obj",type: "update",key: "decode",
-					obj: {a: "/decode",decode: dec_fn}
+					obj: {a: "/decode",decode: f}
 				}
 			]
 		};
@@ -2416,25 +2430,26 @@ class ApiBase2 {
 		let x=z; k;
 		if(this.seen_keys_list.includes(k)) return x;
 		this.seen_keys_list.push(k);
-		let res=this.simple_filter(x);
-		switch(res.a) {
+		let f=this.simple_filter(x);
+		if(f===null) return null;
+		switch(f.a) {
 			default: debugger; break;
 			case "/raw": {
-				let rv=res.raw;
+				let rv=f.raw;
 				if("__module_loaded__" in rv) return rv;
 			} return null;
 			case "/type": {
-				switch(res.type) {
-					case "empty": return `${res.a}/${res.type}`;
+				switch(f.type) {
+					case "empty": return `${f.a}/${f.type}`;
 					case "symbol": {
-						let idx=this.symbol_list.indexOf(res.sym); res.type;
-						if(idx===-1) idx=this.symbol_list.push(res.sym)-1;
+						let idx=this.symbol_list.indexOf(f.sym); f.type;
+						if(idx===-1) idx=this.symbol_list.push(f.sym)-1;
 						return {type: "symbol",index: idx};
 					}
 				}
 			}
 		}
-		return res;
+		return f;
 	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
@@ -2544,14 +2559,14 @@ class ApiBase extends ApiBase2 {
 //#region Service
 class ServiceWithResolver extends ApiBase {
 	#x;
-	/** @constructor @public @arg {DefaultServiceResolver} x */
+	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {
 		super();
 		this.#x=x;
 	}
 	/** @protected @returns {NonNullable<DefaultServiceResolver["value"]>} */
 	get x() {return as_any(this.#x.value);}
-	/** @arg {(x:DefaultServiceResolver_2)=>void} cb */
+	/** @arg {(x:{})=>void} cb */
 	addOnServicesListener(cb) {this.#x.listeners.push(cb);}
 }
 class PrivateAccessorCache extends ServiceWithResolver {
@@ -2988,7 +3003,7 @@ class YtHandlers extends BaseService {
 		}
 		return true;
 	}
-	/** @constructor @public @arg {DefaultServiceResolver} res */
+	/** @constructor @public @arg {ServiceResolverBox<{}>} res */
 	constructor(res) {
 		super(res);
 		this.filter_handler_debug=false;
@@ -3224,7 +3239,7 @@ class YtObjectVisitor {
 	}
 }
 class IterateApiResultBase extends BaseService {
-	/** @constructor @public @arg {DefaultServiceResolver} x @arg {YtObjectVisitor} obj_visitor */
+	/** @constructor @public @arg {ServiceResolverBox<{}>} x @arg {YtObjectVisitor} obj_visitor */
 	constructor(x,obj_visitor) {
 		super(x);
 		this.obj_visitor=obj_visitor;
@@ -3305,7 +3320,7 @@ class CsiService extends BaseService {
 	}
 	/** @private @type {{[x: T_RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
-	/** @constructor @public @arg {DefaultServiceResolver} x */
+	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {
 		super(x);
 		this.data={
@@ -3639,7 +3654,7 @@ class YtPlugin extends BaseService {
 	get indexed_db() {return this.x.get("indexed_db");}
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
-	/** @constructor @public @arg {DefaultServiceResolver} x */
+	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {
 		super(x);
 		YtPlugin.do_init(this);
