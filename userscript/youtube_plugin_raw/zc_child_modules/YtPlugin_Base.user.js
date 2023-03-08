@@ -2135,7 +2135,7 @@ class ApiBase2 {
 			}
 		}
 	}
-	/** @template {{}} T @arg {string} k @arg {T|null} x */
+	/** @template {object|null} T @arg {string} k @arg {T|null} x */
 	simple_filter_obj(k,x) {
 		let reconstructed=null;
 		try {
