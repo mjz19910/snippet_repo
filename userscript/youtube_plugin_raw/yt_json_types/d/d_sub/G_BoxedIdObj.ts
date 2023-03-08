@@ -80,16 +80,9 @@ type G_BoxedInner=
 	|["a1",GB_A1]
 	|[0,GST_DSS]
 	|[1,{
-		key:
-		|`${TP3[0]}`
-		|`${TP3[1]}`
-		|`${TP3[2]}`
-		|`${TP3[3]}`
-		|`${TP3[4]}`
-		;
+		key: TP3[number];
 		a: DST_PlayNext["a"]; b: "boxed_id";
-		j: GB_A1_J_Shape
-		;
+		j: GB_A1_J_Shape;
 	}]
 	;
 ;
