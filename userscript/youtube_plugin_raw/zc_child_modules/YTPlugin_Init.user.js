@@ -34,6 +34,12 @@ x: {
 	let module_keys=test_base.get_keys_of(modules);
 	for(let module_name of module_keys) {
 		let value=modules[module_name];
+		if(!value) continue;
+		if("init_module" in value&&typeof value.init_module==="function") {
+			console.log("init_module",value);
+			value.init_module();
+			continue;
+		}
 		console.log("module",value);
 	}
 	yt_plugin_base_main();
