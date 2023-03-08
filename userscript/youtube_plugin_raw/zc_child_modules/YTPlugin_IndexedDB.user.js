@@ -521,18 +521,24 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "hashtag_id": {
+				const {b: k,z: [w]}=x;
+				/** @type {DI_HashtagId} */
+				const a={a: "key_value",k,w: "/item/a/k/w/z",z: [w.z[0]]};
 				/** @type {DST_HashtagId} */
 				const z={
-					a: "ST:D",b: "boxed_id",j: x.b,k: x.z[0].k,w: "key/a/b/j/k/w/z",z: [x],
-					key: `boxed_id:key:${x.z[0].k}:${x.z[0].z[0].z[0]}`,
+					a: "ST:D",b: "boxed_id",j: k,w: "/db/a/b/j/w/z",z: [a],
+					key: `boxed_id:${k}:${x.z[0].z[0].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "video_id": {
+				const {b: j,w,z: [zi]}=x;
+				/** @type {DI_A_VideoId} */
+				const a={a: "DI:A",b: j,w,z: [zi]};
 				/** @type {DST_Video_Id} */
 				const z={
-					a: "ST:D",b: "boxed_id",j: "key",k: x.z[0].k,w: "key/a/b/j/k/w/z",z: [x],
-					key: `boxed_id:key:${x.z[0].k}:${x.z[0].z[0].z[0]}`,
+					a: "ST:D",b: "boxed_id",j,w: "/db/key/a/b/j/w/z",z: [a],
+					key: `boxed_id:${j}:${x.z[0].z[0].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}

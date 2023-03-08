@@ -3134,6 +3134,12 @@ class HandleTypes extends BaseService {
 	mk_input_from_R_info(x) {return this.mk_obj_input(x.k,x.z[0].z[0]);}
 	/** @template {number} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"number">} */
 	make_prim_num_t(z) {return {a: "primitive",e: "number",z: [z]};}
+	/**
+	 * @param {T} z @arg {K} b
+	 * @template K @template T
+	 * @returns {DI_T_abwz_item<K,T>}
+	 * */
+	make_abwz_item(b,z) {return {a: "DI:A",b,w: "/item/a/b/w/z",z: [z]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		switch(x.k) {
@@ -3165,7 +3171,7 @@ class HandleTypes extends BaseService {
 				const s=this.mk_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				/** @type {DI_T_abz<typeof b>} */
-				const z=this.make_abwz(x.k,this.make_akz("raw_id",this.make_prim_v(p.raw_id)));
+				const z=this.make_abwz_item(x.k,this.make_akz("raw_id",this.make_prim_v(p.raw_id)));
 				return z;
 			}
 		}
