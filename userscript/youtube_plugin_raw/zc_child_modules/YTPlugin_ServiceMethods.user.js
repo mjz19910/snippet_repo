@@ -507,7 +507,7 @@ class ServiceMethods extends ServiceData {
 		const cf="AD_Notification";
 		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(responseText);
-		this.t(actionButton,x => this.xm.R_Button(x));
+		this.xm.t(actionButton,x => this.xm.R_Button(x));
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
@@ -3772,8 +3772,8 @@ class ServiceMethods extends ServiceData {
 		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.R_ChipCloudChip);
 		this.trackingParams(trackingParams);
-		this.t(nextButton,this.xm.R_Button);
-		this.t(previousButton,this.xm.R_Button);
+		this.xm.t(nextButton,this.xm.R_Button);
+		this.xm.t(previousButton,this.xm.R_Button);
 		switch(styleType) {
 			default: debugger; break;
 			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID": break;
@@ -3845,7 +3845,7 @@ class ServiceMethods extends ServiceData {
 		});
 		this.t(continuationEndpoint,this.GE_Continuation);
 		this.t(ghostCards,this.R_GhostGrid);
-		this.t(button,this.xm.R_Button);
+		this.xm.t(button,this.xm.R_Button);
 	}
 	/** @public @arg {CF_P_ParamParse} path @arg {DC_Generic_CTP} x */
 	DC_Generic_CTP(path,x) {
@@ -3974,7 +3974,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.t(subscriberCountText,this.G_Text);
 		this.t(subscriptionButton,this.D_SubscriptionButton);
-		this.t(membershipButton,this.xm.R_Button);
+		this.xm.t(membershipButton,this.xm.R_Button);
 		return y;
 	}
 	/** @private @arg {D_SubscriptionButton} x */
@@ -4578,7 +4578,7 @@ class ServiceMethods extends ServiceData {
 		const {title,contextualInfo,informationButton,menu,visibilityButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.t(contextualInfo,this.G_Text);
-		this.t(informationButton,this.xm.R_Button);
+		this.xm.t(informationButton,this.xm.R_Button);
 		this.t(menu,this.G_EngagementPanelMenu);
 		this.xm.R_Button(visibilityButton);
 		this.trackingParams(trackingParams);

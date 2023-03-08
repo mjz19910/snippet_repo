@@ -2183,6 +2183,7 @@ class BaseService extends ServiceWithMembers {
 			/** @type {(...args:any[])=>void} */
 			let a_fn=f;
 			if(a_fn===this.xm.D_Label) break x;
+			if(a_fn!==void 0) break x;
 			debugger; return;
 		}
 		this.sm.H_cls(this,k,x,f);
@@ -2230,7 +2231,10 @@ class BaseService extends ServiceWithMembers {
 		return [y,r1,r2];
 	}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_(k,x,f) {this.sm.H_cls(this,k,x,f);}
+	H_(k,x,f) {
+		if(f===void 0) {debugger; return;}
+		this.sm.H_cls(this,k,x,f);
+	}
 	//#region string replace
 	/** @public @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {

@@ -692,7 +692,7 @@ class Support_RS_Player extends BaseService {
 				});
 				this.sm.a_primitive_bool(playableInEmbed);
 				this.t(liveStreamability,this.R_LiveStreamability);
-				this.t(offlineability,x => this.xm.R_Button(x));
+				this.xm.t(offlineability,x => this.xm.R_Button(x));
 				this.t(miniplayer,this.R_Miniplayer);
 				let ctx=atob(contextParams);
 				this.sm.params("playability_status.context_params",ctx);
@@ -3220,7 +3220,7 @@ class Support_Renderer extends BaseService {
 		this.sm.D_Thumbnail(tvBanner);
 		this.sm.D_Thumbnail(mobileBanner);
 		this.sm.trackingParams(trackingParams);
-		this.t(sponsorButton,this.xm.R_Button);
+		this.xm.t(sponsorButton,this.xm.R_Button);
 		this.sm.G_Text(channelHandleText);
 		this.sm.G_Text(videosCountText);
 		const {visitTracking,...y}=u; this.g(y);
@@ -3956,16 +3956,16 @@ class Support_Renderer extends BaseService {
 		this.t(likeButton,this.sm.R_LikeButton);
 		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
 		this.t(menu,this.sm.R_Menu);
-		this.t(nextItemButton,this.xm.R_Button);
-		this.t(prevItemButton,this.xm.R_Button);
+		this.xm.t(nextItemButton,this.xm.R_Button);
+		this.xm.t(prevItemButton,this.xm.R_Button);
 		this.t(subscribeButtonRenderer,this.xm.R_SubscribeButton);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.t(viewCommentsButton,this.xm.R_Button);
+		this.xm.t(viewCommentsButton,this.xm.R_Button);
 		this.t(videoInteractions,this.g);
 		const {trackingParams,reelPlayerNavigationModel,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=u; this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 		{const x2=reelPlayerNavigationModel; this.t(x2,this.sm.wg(x2,"REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
-		this.t(shareButton,this.xm.R_Button);
+		this.xm.t(shareButton,this.xm.R_Button);
 		this.t(pivotButton,this.R_PivotButton);
 		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
 		this.t(badge,this.sm.RMD_Badge);
@@ -5265,7 +5265,7 @@ class ForService_XMethods extends BaseService {
 		this.sm.G_Text(viewCountText);
 		this.sm.R_CinematicContainer(cinematicContainer);
 		const {shareButton,titleForm,descriptionForm,privacyForm,...y1}=y; this.g(y1);
-		this.t(shareButton,this.xm.R_Button);
+		this.xm.t(shareButton,this.xm.R_Button);
 		this.t(titleForm,this.R_InlineForm);
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
