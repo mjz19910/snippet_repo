@@ -2177,43 +2177,12 @@ class ApiBase2 {
 				ignoreBOM: v.ignoreBOM
 			}
 		};
-		try {
-			{
-				let [,v]=e;
-				switch(typeof v) {
-					default: debugger; break;
-				}
-			}
-			{
-				let [k,v]=this.clone(e); k;
-				switch(typeof v) {
-					case "bigint": debugger; break;
-					case "string": return {a: "/b/k/value",b: "primitive",j: "string",k,value: v};
-					case "number": return {a: "/b/k/value",b: "primitive",j: "number",k,value: v};
-					case "boolean": debugger; break;
-					case "symbol": debugger; break;
-					case "undefined": debugger; break;
-					case "object": return {a: "/b/k/value",b: "clone",k,value: v};
-					case "function": debugger; break;
-				}
-			}
-		} catch {
-			console.log("[log_fail_c1]",k,v);
-			let f=this.simple_filter(v);
-			if(f===null) return null;
-			return {
-				a: "/type/z",
-				type: "original",
-				z: {
-					a: "/k/v/f",
-					k: k,
-					v: v,
-					f
-				}
-			};
+		if(v instanceof Array) {
+			return {a: "/type/z",type: "array",k,v};
 		}
-		debugger;
-		throw new Error();
+		let f=this.simple_filter(v);
+		if(f===null) return null;
+		return {a: "/type/z",type: "filter",k,z: f};
 	};
 	/** @template {object|null} T @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj|null} */
 	simple_filter_obj(x) {
@@ -2232,15 +2201,38 @@ class ApiBase2 {
 			const map_clone_2=x => {
 				if(x===null) return null;
 				switch(x.a) {
-					case "/type/b/k/value": return [x.k,x];
-					case "/type/p/value": return [x.value[0],x];
-					case "/type/value": return [x.k,x];
+					default: debugger; break;
+					case "/type/b/k/value": return [x.k,x.value];
+					case "/type/p/value": return x.value;
+					case "/type/value": return [x.k,x.value];
 					case "/b/k/value": switch(x.b) {
-						case "clone": return [x.k,x];
-						case "primitive": return [x.k,x];
+						case "clone": return [x.k,x.value];
+						case "primitive": return [x.k,x.value];
 					}
-					case "/type/z": return [x.z.k,x.z.f];
+					case "/type/z": {
+						switch(x.type) {
+							default: debugger; break;
+							case "array": {
+								let c=x.v; console.log(c);
+								return [x.k,c];
+							}
+							case "filter": {
+								let c=x.z; console.log(c.a);
+							} break;
+							case "original": {
+								let c=x.z; console.log(c.f);
+								return [c.k,c.v];
+							}
+						}
+						const c=x.z; console.log(c);
+						switch(c.a) {
+							default: debugger; break;
+							case "/raw": debugger; break;
+						}
+						return [x.type,x.z];
+					}
 				}
+				return null;
 			};
 			const res_entries=in_entries.map(this.clone_entry_item,this).map(map_clone_2).map(ent => {
 				if(ent===null) return null;
@@ -2256,7 +2248,7 @@ class ApiBase2 {
 			}
 			r_obj=Object.fromEntries(ok_entries);
 			Object.setPrototypeOf(r_obj,null);
-			return {a: "/raw",raw: r_obj};
+			return {a: "/raw",value: r_obj};
 		}
 	}
 	/** @template {object} T @arg {string} k @arg {T} x @returns {Ret_FilterEmptyType} */
@@ -2443,7 +2435,7 @@ class ApiBase2 {
 		switch(f.a) {
 			default: debugger; break;
 			case "/raw": {
-				let rv=f.raw;
+				let rv=f.value;
 				if("__module_loaded__" in rv) return rv;
 			} return null;
 			case "/type": {
