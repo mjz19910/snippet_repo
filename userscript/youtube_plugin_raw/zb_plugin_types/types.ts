@@ -27,19 +27,20 @@ type JsonFilterRet<K,T>=
 	}
 	|GType_PrototypeDescription_OfTextDecoder<K,"TextDecoder",TextDecoder>
 	|{
-		type: "normal"; copy: true;
-		value: {
-			[k: string]: any;
-		};
-	}
-	|{
 		type: "symbol"; value: null; for: "box_symbol";
 	}
 	|{type: "symbol"; value: null;}
+	|{
+		type: "normal:copy"; copy: true; value: {
+			[k: string]: unknown;
+		};
+	}
 	|string
 	|boolean
 	|null
 	;
 ;
 type PartialWithType<T,S=JsonFilterRet<any,any>>=Extract<S,{type: T;}>;
+type PartialWithType2<L,S=JsonFilterRet<any,any>>=Extract<S,L>;
+type RequiredType2<V,L extends {type: any;}>=Partial<Omit<PartialWithType2<V,L>,"type">>&Pick<PartialWithType2<V,L>,"type">;
 type RequiredType<V>=Partial<Omit<PartialWithType<V>,"type">>&Pick<PartialWithType<V>,"type">;

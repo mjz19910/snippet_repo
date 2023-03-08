@@ -2168,10 +2168,17 @@ class ApiBase2 {
 				if(b.value===void 0) {debugger; return null;}
 				if(b.id===void 0) {debugger; return null;}
 				const {type,value,id,...w2}=b;
-				if(this.get_keys_of(w2).length!==0) debugger;
 				r1={...w2,type,value,id};
 			} break;
 			case "symbol": {
+				if("for" in x) {
+					const {type,value,for: for_,...w2}=x;
+					if(value===void 0) {debugger; return null;}
+					if(for_===void 0) {debugger; return null;}
+					if(this.get_keys_of(w2).length!==0) debugger;
+					r1={type,value,for: for_};
+					break;
+				}
 				/** @type {RequiredType<typeof x['type']>} */
 				let b={...x,type: x.type};
 				if(b.value===void 0) {debugger; return null;}
@@ -2186,6 +2193,15 @@ class ApiBase2 {
 				const {type,value,...w2}=b;
 				if(this.get_keys_of(w2).length!==0) debugger;
 				r1={...w2,type,value};
+			} break;
+			case "normal:copy": {
+				/** @type {RequiredType<typeof x['type']>} */
+				let b={...x,type: x.type};
+				if(b.value===void 0) {debugger; return null;}
+				const {type,copy,value,...w2}=b;
+				if(copy===void 0) {debugger; return null;}
+				if(this.get_keys_of(w2).length!==0) debugger;
+				r1={...w2,type,copy,value};
 			} break;
 			case "obj": {
 				/** @type {RequiredType<typeof x['type']>} */
@@ -2287,7 +2303,7 @@ class ApiBase2 {
 		});
 		let rz=Object.fromEntries(res_entries);
 		try {return structuredClone(rz);} catch {console.log("cant clone",rz);}
-		return {type: "normal",copy: true,value: rz};
+		return {type: "normal:copy",copy: true,value: rz};
 	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
