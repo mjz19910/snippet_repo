@@ -2195,6 +2195,9 @@ class ApiBase2 {
 						r1={type,value: null,id};
 					}
 				} break;
+				case "symbol": {
+
+				} break;
 			}
 			if(r1) {
 				return r1;
