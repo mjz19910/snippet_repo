@@ -135,10 +135,6 @@ class IndexedDBService extends BaseService {
 	/** @private @type {Map<string,number>} */
 	store_cache_index=new Map;
 	cache_index() {return this.store_cache_index;}
-	/** @type {Map<string,G_BoxedIdObj>} */
-	loaded_map=new Map;
-	/** @type {Set<string>} */
-	loaded_keys=new Set;
 	/** @type {Set<string>} */
 	database_diff_keys=new Set;
 	/** @type {WeakSet<CacheSetItems>} */
@@ -157,8 +153,8 @@ class IndexedDBService extends BaseService {
 		let arr=this.cache();
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
-	put_box(x,version) {return this.put("boxed_id",x,version);}
+	/** @temporary @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
+	put_box(x,version) {return this.ht.put("boxed_id",x,version);}
 	/** @arg {number} version @returns {Promise<DST_LoadId|null>} */
 	async get_load_id(version) {
 		const t_key="boxed_id:load_id";
@@ -195,8 +191,8 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {G_BoxedIdObj} x */
 	store_cache_tree(x) {
-		this.loaded_keys.add(x.key);
-		this.loaded_map.set(x.key,x);
+		this.ht.loaded_keys.add(x.key);
+		this.ht.loaded_map.set(x.key,x);
 		this.cache_weak_set.add(x);
 		this.cache_depth_1(x.z[0]);
 	}
@@ -361,7 +357,7 @@ class IndexedDBService extends BaseService {
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
 	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_Key_StartRadio} x */
 	mk_s1(j,k,x) {
-		let u=this.za1(x);
+		let u=this.ht.za1(x);
 		return this.kwb(x,u,j,k);
 	}
 	/** @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s2<IC,J,X>} */
@@ -440,21 +436,18 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {DI_Key_StartRadio} x */
 	mk_start_radio(x) {
-		let t_kv=this.za1(x).k;
+		let t_kv=this.ht.za1(x).k;
 		/** @type {DST_Key_StartRadio} */
 		const z=this.mk_s1("key",t_kv,x);
 		return z;
 	}
 	/** @template {string} C @template {string} K @template {{k:K}} I @template {{c:C;z:[I]}} X @arg {X} x @returns {mk_s2<C,K,X>} */
-	mk_bx_nw(x) {return this.mk_s2(this.za1(x).k,x);}
-	/** @typedef {ZAT1<any>} ZA_S_1 */
+	mk_bx_nw(x) {return this.mk_s2(this.ht.za1(x).k,x);}
 	/** @typedef {ZAT2<any>} ZA_S_2 */
 	/** @typedef {ZAT3<any>} ZA_S_3 */
 	/** @template {ZA_S_1} K @typedef {K["z"][0]} T_Z_Pop */
-	/** @template {ZA_S_1} K @typedef {T_Z_Pop<K>} ZA1 */
 	/** @template {ZA_S_2} K @typedef {T_Z_Pop<ZA1<K>>} za2 */
 	/** @template {ZA_S_3} K @typedef {T_Z_Pop<za2<K>>} ZA3 */
-	/** @template T @typedef {T_Z_Next<T>} ZAT1 */
 	/** @template T @typedef {T_Z_Next<ZAT1<T>>} ZAT2 */
 	/** @type {"a/b/j/k/w/z"} */
 	kz_kw="a/b/j/k/w/z";
@@ -469,14 +462,10 @@ class IndexedDBService extends BaseService {
 		const key=`boxed_id:key:${c}:${this.za2(z)}`;
 		return {key,a: "ST:D",b: "boxed_id",j,k,w: this.mka("kw"),z: [x]};
 	}
-	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
-	tz_pop(x) {return x.z[0];}
-	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
-	za1(x) {return this.tz_pop(x);}
 	/** @template V @template {ZAT2<V>} T @arg {T} x @returns {za2<T>} */
-	za2(x) {return this.tz_pop(this.za1(x));}
+	za2(x) {return this.ht.tz_pop(this.ht.za1(x));}
 	/** @template V @template {ZAT3<V>} T @arg {T} x @returns {ZA3<T>} */
-	za3(x) {return this.tz_pop(this.za2(x));}
+	za3(x) {return this.ht.tz_pop(this.za2(x));}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"url_info"}>} T @arg {T} args */
 	put_boxed_url_info(version,...args) {
 		version; args;
@@ -827,7 +816,7 @@ class IndexedDBService extends BaseService {
 		let obj_store=await this.open_rw_object_store(typed_db,key,version);
 		return this.get_async_result(obj_store.put(value));
 	}
-	/** @private @template {DT_DatabaseStoreTypes[U]} T @template {"boxed_id"} U @arg {U} key @arg {T} value @arg {number} version */
+	/** @api @public @template {DT_DatabaseStoreTypes[U]} T @template {"boxed_id"} U @arg {U} key @arg {T} value @arg {number} version */
 	async putImpl(key,value,version) {
 		if(!value) {debugger; return value;}
 		let cache=this.cached_data.get(key);
@@ -999,7 +988,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let d_cache=this.cache();
-		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.loaded_keys.has(e.key));
+		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.ht.loaded_keys.has(e.key));
 		/** @type {G_BoxedIdObj[]} */
 		let new_arr=[];
 		/** @type {G_BoxedIdObj[]} */
@@ -1028,8 +1017,8 @@ class IndexedDBService extends BaseService {
 				}
 				if(x_value===null) continue;
 				if(this.committed_data.includes(x_value)) continue;
-				if(this.loaded_keys.has(x_value.key)) {
-					let y_value=this.loaded_map.get(x_value.key); y_value;
+				if(this.ht.loaded_keys.has(x_value.key)) {
+					let y_value=this.ht.loaded_map.get(x_value.key); y_value;
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(x_value.key));
 				if(tx_scope.is_tx_complete) {

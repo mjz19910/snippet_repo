@@ -1,1 +1,1 @@
-type ZA_S_1=T_Z_Next<any>;
+type ZA_S_1=ZAT1<any>;

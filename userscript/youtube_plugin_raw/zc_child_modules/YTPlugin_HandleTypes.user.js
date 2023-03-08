@@ -3026,6 +3026,7 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region import group
 	//#region import group other
+	//#region log_*
 	/** @arg {`promise_rejected_with.errors.${number}`} cf @arg {unknown} x */
 	log_error_sub(cf,x) {
 		console.log(`[log_error_next_info.${cf}]`,x);
@@ -3046,7 +3047,15 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
+	/** @public @arg {string} type @arg {string} id */
+	log_playlist_id(type,id,critical=false) {
+		if(!this.cache_playlist_id.includes(id)) {
+			this.cache_playlist_id.push(id);
+			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",type,id);
+		}
+	}
 	log_promise_resolve_values=false;
+	//#endregion
 	/** @template T @arg {Promise<T>} x */
 	execute_promise_def(x) {
 		x.then(x => {
@@ -3054,6 +3063,16 @@ class HandleTypes extends BaseService {
 		},x => {
 			this.log_error("promise_rejected_with",x);
 		});
+	}
+	/** @public @arg {DI_AGR_UrlInfo} x */
+	DI_AGR_UrlInfo(x) {
+		let z=this.make_R_UrlInfo(x);
+		if(z) {
+			/** @type {Y_PutBoxedArgs} */
+			let args=["url_info",null,z];
+			let box_res=this.put_boxed_id(...args);
+			this.execute_promise_def((async () => (await box_res).ret)());
+		}
 	}
 	//#region get
 	/** @template T @arg {{tag:T}} x */
@@ -3189,26 +3208,9 @@ class HandleTypes extends BaseService {
 		let {...ret}=await this.ix.put_boxed_id_async_3(this.sm.indexed_db_version,...args);
 		return ret;
 	}
-	/** @public @arg {DI_AGR_UrlInfo} x */
-	DI_AGR_UrlInfo(x) {
-		let z=this.make_R_UrlInfo(x);
-		if(z) {
-			/** @type {Y_PutBoxedArgs} */
-			let args=["url_info",null,z];
-			let box_res=this.put_boxed_id(...args);
-			this.execute_promise_def((async () => (await box_res).ret)());
-		}
-	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
 	cache_playlist_id=[];
-	/** @public @arg {string} type @arg {string} id */
-	log_playlist_id(type,id,critical=false) {
-		if(!this.cache_playlist_id.includes(id)) {
-			this.cache_playlist_id.push(id);
-			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",type,id);
-		}
-	}
 	/** @arg {DU_VideoId} x */
 	on_video_id(x) {
 		const type="video_id";
@@ -3220,7 +3222,7 @@ class HandleTypes extends BaseService {
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.x.services.service_methods.G_Text(sectionTitle);
+		this.sm.G_Text(sectionTitle);
 		this.z(carouselLockups,x => this.sm.R_CarouselLockup(x));
 		this.sm.R_TopicLink(topicLink);
 		this.sm.G_Text(premiumUpsellLink);
@@ -3247,6 +3249,92 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
+	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
+	tz_pop(x) {return x.z[0];}
+	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
+	za1(x) {return this.tz_pop(x);}
+	/** @type {Map<string,G_BoxedIdObj>} */
+	loaded_map=new Map;
+	/** @type {Set<string>} */
+	loaded_keys=new Set;
+	/** @api @public @template {G_BoxedIdObj} T @arg {"boxed_id"} key @arg {T} value @arg {number} version */
+	async put(key,value,version) {
+		x: if(this.loaded_keys.has(value.key)) {
+			let loaded_value=this.loaded_map.get(value.key);
+			let x=value; let y=loaded_value;
+			if(value.b!=="boxed_id") {debugger; break x;}
+			let nw=null;
+			switch(value.a) {
+				case "ST:D": {
+					value.j;
+				} break;
+				case "SI:T:D": {
+					switch(value.d) {
+						default: debugger; break;
+						case "bigint": break;
+						case "boolean": break;
+						case "keys": break;
+						case "string": break;
+						case "number": break;
+						case "root_visual_element": break;
+					}
+				} break;
+			}
+			if(!("w" in value)) nw=value;
+			y: if(nw!==null&&!("j" in nw)) {
+				/** @type {{a:"boxed_store"}} */
+				const no=nw;
+				if(no.a!=="boxed_store") break y;
+				console.log("[cache_outdated]",no);
+			}
+			if(nw!==null&&!("j" in nw)&&"d" in nw) {
+				/** @type {{d:GST_DSS["d"]}} */
+				const no=nw;
+				switch(no.d) {
+					default: debugger; break;
+					case "bigint":
+					case "boolean":
+					case "keys":
+					case "string":
+					case "number":
+					case "root_visual_element": console.log("[cache_outdated]",no); break;
+				}
+			}
+			/** @arg {G_BoxedPrintable|undefined} x @returns {G_BoxedInner} */
+			let w=(x) => {
+				if(!x) return ["n"];
+				if("k" in x) return ["k:sr",x];
+				/** @type {[GST_DSS|null,Exclude<G_BoxedPrintable,{a:"SI:T:D"}>|null]} */
+				let n=[null,null];
+				/** @type {[DSS_String|null,Exclude<GST_DSS,DSS_String>|null]} */
+				const n2=[null,null];
+				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
+				if(n[0]) {let c=n[0]; if(c.d==="string") n2[0]=c; else n2[1]=c;}
+				if(n2[0]) {let c=n2[0],d=c.z[0],e=d.z[0]; return [2,d.b,e.c,e.z[0]];}
+				if(n[0]) {return [0,n[0]];}
+				if(n[1]) return [1,n[1]];
+				return ["a1",this.za1(x)];
+			};
+			if(x.key==="boxed_id:load_id") break x;
+			if(x.key==="boxed_id:save_id") break x;
+			console.log("[cur_cache_value] [x.key]",x.key);
+			console.log("[val] [x]",...w(x));
+			console.log("[val] [y]",...w(y));
+		}
+		try {
+			let ret=await this.ix.putImpl(key,value,version);
+			return ret;
+		} catch(e) {
+			if(this.log_failed) {
+				console.log("failed to put",e);
+				setTimeout(() => this.log_failed=true,5000);
+			}
+			this.log_failed=false;
+			throw new AggregateError([e],"put await error");
+		}
+	}
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
+	put_box(x,version) {return this.put("boxed_id",x,version);}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x */
