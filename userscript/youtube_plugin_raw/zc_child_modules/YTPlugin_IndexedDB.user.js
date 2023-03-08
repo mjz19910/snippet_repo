@@ -506,6 +506,21 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
+	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"url_info"}>} T @arg {T} args */
+	put_boxed_url_info(version,...args) {
+		version; args;
+		let [type,,value]=args;
+		switch(value.b) {
+			case "key": {
+				/** @type {DST_Key_StartRadio} */
+				const z={
+					a: "ST:D",b: "boxed_id",j: type,w: "/key/a/b/j/z",z: [value],
+					key: `boxed_id:${type}:${value.z[0].k}:${value.z[0].z[0].z[0]}`,
+				};
+				let promise=this.put_box(z,version); return {args,promise};
+			}
+		}
+	}
 	/** @template T @arg {T_Tag} j @arg {T_VTag} tag @arg {T} x @template {string} T_Tag @template {string} T_VTag	*/
 	make_box_3(j,tag,x) {
 		/** @type {`boxed_id:${T_Tag}:${T_VTag}`} */
@@ -533,6 +548,7 @@ class IndexedDBService extends BaseService {
 			default: k===""; switch((k)) {
 			} debugger; throw new Error();
 			case "browse_id": return this.put_boxed_pl(version,...args);
+			case "url_info": return this.put_boxed_url_info(version,...args);
 			case "key": {
 				let [j,id]=args;
 				/** @type {DST_KeySection} */

@@ -3171,10 +3171,20 @@ class HandleTypes extends BaseService {
 		}
 		return null;
 	}
+	/** @template {Y_PutBoxedArgs} T @arg {T} args */
+	async put_boxed_id(...args) {
+		let {...ret}=await this.ix.put_boxed_id_async_3(this.sm.indexed_db_version,...args);
+		return ret;
+	}
 	/** @public @arg {DI_AGR_UrlInfo} x */
 	DI_AGR_UrlInfo(x) {
 		let z=this.make_R_UrlInfo(x);
-		console.log(z);
+		if(z) {
+			/** @type {Y_PutBoxedArgs} */
+			let args=["url_info",null,z];
+			let box_res=this.put_boxed_id(...args);
+			this.execute_promise_def((async () => (await box_res).ret)());
+		}
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
