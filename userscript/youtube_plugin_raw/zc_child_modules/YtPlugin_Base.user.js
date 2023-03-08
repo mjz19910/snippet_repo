@@ -2178,16 +2178,24 @@ class ApiBase2 {
 			}
 		};
 		try {
-			let [k,v]=this.clone(e); k;
-			switch(typeof v) {
-				case "bigint": debugger; break;
-				case "string": return {a: "/b/k/value",b: "primitive",j: "string",k,value: v};
-				case "number": return {a: "/b/k/value",b: "primitive",j: "number",k,value: v};
-				case "boolean": debugger; break;
-				case "symbol": debugger; break;
-				case "undefined": debugger; break;
-				case "object": return {a: "/b/k/value",b: "clone",k,value: v};
-				case "function": debugger; break;
+			{
+				let [,v]=e;
+				switch(typeof v) {
+					default: debugger; break;
+				}
+			}
+			{
+				let [k,v]=this.clone(e); k;
+				switch(typeof v) {
+					case "bigint": debugger; break;
+					case "string": return {a: "/b/k/value",b: "primitive",j: "string",k,value: v};
+					case "number": return {a: "/b/k/value",b: "primitive",j: "number",k,value: v};
+					case "boolean": debugger; break;
+					case "symbol": debugger; break;
+					case "undefined": debugger; break;
+					case "object": return {a: "/b/k/value",b: "clone",k,value: v};
+					case "function": debugger; break;
+				}
 			}
 		} catch {
 			console.log("[log_fail_c1]",k,v);
