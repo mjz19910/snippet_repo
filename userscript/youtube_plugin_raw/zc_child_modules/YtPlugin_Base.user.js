@@ -2160,6 +2160,16 @@ class ApiBase2 {
 					v: e[1],
 					sf: this.simple_filter(e[0],e[1]),
 				};
+				if(e[1] instanceof RegExp) return [e[0],`TYPE::RegExp<"${e[1].source}">`];
+				if(e[1] instanceof TextDecoder) return [e[0],{
+					a: "/type/value",b: "no-clone",
+					type: "TextDecoder",
+					value: {
+						encoding: e[1].encoding,
+						fatal: e[1].fatal,
+						ignoreBOM: e[1].ignoreBOM
+					}
+				}];
 				console.log("[log_c1]",e[0],e[1]);
 				try {
 					return [structuredClone(e)];
