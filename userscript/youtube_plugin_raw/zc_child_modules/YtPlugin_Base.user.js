@@ -2145,7 +2145,34 @@ class ApiBase2 {
 			let rc=Object.fromEntries(res_entries);
 			return structuredClone(rc);
 		}
+		if(x instanceof TextDecoder) {
+			/** @type {TextDecoder} */
+			const td=x;
+			const {encoding,decode,fatal,ignoreBOM,...y}=td;
+			/** @type {GType_PrototypeDescription_OfTextDecoder<"%%prototype", "TextDecoder",TextDecoder>} */
+			const filtered_proto={
+				a: "/value",value: {
+					type: "prototype",key: "%%prototype","type_name": "TextDecoder",
+					__prototype_description: {
+						a: "/value",value: {
+							a: "/type/z/arr",
+							arr: [box_sym_r],
+							type: "own_property_descriptors",
+							z: as({}),
+							[box_sym_r]: true,
+						}
+					},
+				}
+			};
+			const dec_fn=this.json_filter("decode",decode);
+			/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;decode: typeof dec_fn}} */
+			let dec_info={encoding,decode: dec_fn,fatal,ignoreBOM,__symbol_prototype: filtered_proto,...y};
+			if(this.get_keys_of(y).length>0) debugger;
+			this.json_set_filter(dec_info,"decode");
+			return {type: "obj",value: {__symbol_prototype: filtered_proto}};
+		}
 		if(x===null) return x;
+		let r_obj;
 		{
 			const in_entries=Object.entries(x);
 			/** @arg {[string,unknown]} e */
@@ -2176,13 +2203,14 @@ class ApiBase2 {
 				Object.setPrototypeOf(ent[1],null);
 				return ent;
 			});
-			const r_obj=Object.fromEntries(res_entries);
+			r_obj=Object.fromEntries(res_entries);
 			Object.setPrototypeOf(r_obj,null);
 		}
 		let reconstructed=null;
 		try {
 			console.log("simple clone start",k,x);
 			if(x===null) return x;
+			reconstructed=structuredClone(x);
 		} catch(e) {
 			console.log("simple copy error",e);
 			console.log("simple cant copy",k,x);
@@ -2234,13 +2262,13 @@ class ApiBase2 {
 			console.log(entry);
 		}
 	}
-	/** @returns {JsonFilterRet<K,T>} @template T @template {string} K @arg {K} k @arg {JsonFilterRet<K,T>} x */
+	/** @template T @template {string} K @arg {K} k @arg {JsonFilterRet<K,T>|JsonFilterStatic} x @returns {JsonFilterRet<K,T>|JsonFilterStatic|JsonFilterPrimitive} */
 	json_filter_filter_ret(k,x) {
 		this.add_key_root(k,x);
 		if(typeof x==="string"||typeof x==="boolean"||x===null) return x;
 		/** @type {JsonFilterRet<K,T>|null} */
 		let r1=null;
-		/** @type {Extract<JsonFilterRet<K,T>,object>["value"]|null} */
+		/** @type {JsonFilterRet<K,T>["value"]|Extract<JsonFilterStatic,object>["value"]|null} */
 		let v1=null;
 		const v=x.value;
 		switch(v.type) {
@@ -2275,7 +2303,7 @@ class ApiBase2 {
 	/** @type {any[]} */
 	unable_to_clone_cache=[];
 	is_throwing=false;
-	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>|{}|T|undefined} */
+	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>|Ret_simple_filter|{}|T|undefined} */
 	json_filter(k,z) {
 		let simple=true;
 		if(simple) {
@@ -2319,12 +2347,9 @@ class ApiBase2 {
 					const v=wx.value;
 					switch(v.type) {
 						default: debugger; break;
-						case "function": return this.json_filter_filter_ret(k,{a: "/value",value: v});
 						case "normal": return this.json_filter_filter_ret(k,{a: "/value",value: v});
-						case "normal:copy": return this.json_filter_filter_ret(k,{a: "/value",value: v});
 						case "obj": return this.json_filter_filter_ret(k,{a: "/value",value: v});
 						case "prototype": return this.json_filter_filter_ret(k,{a: "/value",value: v});
-						case "symbol": return this.json_filter_filter_ret(k,{a: "/value",value: v});
 					}
 				}
 			}
