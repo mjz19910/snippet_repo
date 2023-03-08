@@ -116,7 +116,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 		for(let x of arr) {
 			let unk=null,ok_=null,update_ok=null;
 			let missing=null,update_bad=null,bad=null,missing2=null,update2=null;
-			if(x[0]!==false) {
+			if(x[0]) {
 				switch(x[1]) {
 					case "ok": ok_=x; break;
 					case "unknown": unk=x; break;
