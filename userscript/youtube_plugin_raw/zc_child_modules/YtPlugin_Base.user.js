@@ -2163,7 +2163,9 @@ class ApiBase2 {
 				/** @type {unknown[]} */
 				let res_arr=[];
 				for(let i=0;i<rv.length;i++) {
-					const item=rv[i]; const filtered=json_filter(`${i}`,item);
+					const item=rv[i];
+					/** @type {unknown} */
+					const filtered=JSON.parse(JSON.stringify({item,box: true,[box_sym]: true},json_filter)).item;
 					try {
 						let cloned=structuredClone(filtered);
 						res_arr.push({...cloned,cloned: true});
