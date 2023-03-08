@@ -1798,7 +1798,7 @@ class HandleTypes extends BaseService {
 		const cf="RS_Subscribe";
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => this.xr.G_RS_Subscribe_Action(x));
-		this.sm.R_SubscriptionNotificationToggleButton(newNotificationButton);
+		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
 		this.sm.trackingParams(trackingParams);
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}

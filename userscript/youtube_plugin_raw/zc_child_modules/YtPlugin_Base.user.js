@@ -2437,7 +2437,7 @@ class BaseService extends ServiceWithMembers {
 	//#region short names
 	/** @protected @name iterate_obj @arg {{}|undefined} x @arg {(this:this,k:string,v: {})=>void} f */
 	v(x,f) {if(x===void 0) return; this.z(Object.entries(x),e => f.call(this,e[0],e[1]));}
-	/** @protected @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
+	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
 	z(x,f) {
 		if(x===void 0||!x.entries) {debugger; return [[],[]];}
 		/** @private @type {any[]} */

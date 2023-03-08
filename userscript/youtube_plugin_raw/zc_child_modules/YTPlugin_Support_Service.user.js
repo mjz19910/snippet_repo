@@ -1555,7 +1555,7 @@ class Support_GenericApi extends BaseService {
 		this.sm.trackingParams(trackingParams);
 		this.sm.R_EntityBatchUpdate(frameworkUpdates);
 		this.sm.channelId(channelId);
-		this.sm.R_SubscriptionNotificationToggleButton(newNotificationButton);
+		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
 	/** @private @arg {RS_Success} x */
 	RS_Success(x) {
@@ -4188,7 +4188,7 @@ class ForService_XMethods extends BaseService {
 		this.t(buttonText,this.sm.G_Text);
 		this.t(subscribed,this.sm.a_primitive_bool);
 		this.t(type,x => this.sm.cq(x,"FREE"));
-		this.t(channelId,this.sm.channelId);
+		this.sm.t(channelId,this.sm.channelId);
 		if(trackingParams) this.sm.trackingParams(trackingParams);
 		this.t(showPreferences,this.sm.a_primitive_bool);
 		let [p1,o1]=this.sm.unwrap_prefix(y1,"subscribed");
@@ -4203,7 +4203,7 @@ class ForService_XMethods extends BaseService {
 		this.tz(onSubscribeEndpoints,this.xm.E_Subscribe);
 		this.tz(onUnsubscribeEndpoints,this.xm.E_SignalService_SendPost);
 		this.t(targetId,x => this.sm.cq(x,"watch-subscribe"));
-		this.t(notificationPreferenceButton,this.sm.R_SubscriptionNotificationToggleButton);
+		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 		const {serviceEndpoints,...y}=y2; this.g(y);
 		this.tz(serviceEndpoints,x => {
 			if("subscribeEndpoint" in x) return this.xm.E_Subscribe(x);
@@ -4483,7 +4483,7 @@ class ForService_XMethods extends BaseService {
 	DE_Unsubscribe(x) {
 		const cf="DE_Unsubscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.sm.channelId);
+		this.sm.z(channelIds,this.sm.channelId);
 		this.sm.params("unsubscribe.params",params);
 	}
 	/** @private @arg {E_CreateComment} x */
@@ -4494,7 +4494,7 @@ class ForService_XMethods extends BaseService {
 	DE_Subscribe(x) {
 		const cf="DE_Subscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.sm.channelId);
+		this.sm.z(channelIds,this.sm.channelId);
 		this.sm.params("subscribe.params",params);
 	}
 	/** @private @arg {M_Subscribe} x */
@@ -5382,5 +5382,44 @@ class ForService_XMethods extends BaseService {
 	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.sm.cq(x,"/youtubei/v1/backstage/create_post"));}
+	/** @type {string[]} */
+	logged_strings=[];
+	group_sub_noti_toggle_btn=false;
+	/** @public @arg {R_SubscriptionNotificationToggleButton} x */
+	R_SubscriptionNotificationToggleButton(x) {this.H_s("subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
+	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
+	D_SubscriptionNotificationToggleButton(x) {
+		const cf="D_SubscriptionNotificationToggleButton";
+		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(this.group_sub_noti_toggle_btn) console.group(`--- [${cf}] ---`);
+		let ids=this.exact_arr(states[0].stateId,states[1].stateId,states[2].stateId);
+		const n2=2,n3=3,n0=0;
+		/** @type {[n2,n3,n0]} */
+		const ids_e=[n2,n3,n0];
+		let log_states=false;
+		if(!this.eq_keys(ids,ids_e)) log_states=true;
+		this.z(states,(x,i) => {
+			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
+			if(nextStateId!==stateId) debugger;
+			if(log_states) console.log("[button.state_id.%s]",i,stateId);
+			this.xm.R_Button(state);
+			return stateId;
+		});
+		if(this.group_sub_noti_toggle_btn) console.groupEnd();
+		switch(currentStateId) {
+			default: debugger; break;
+			case 0: case 2: case 3:
+		}
+		this.sm.trackingParams(trackingParams);
+		this.sm.C_Executor(command);
+		switch(targetId) {
+			default: if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
+				this.logged_strings.push(`${cf}:${targetId}`);
+				console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
+			} break;
+			case "notification-bell": break;
+		}
+		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
+	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

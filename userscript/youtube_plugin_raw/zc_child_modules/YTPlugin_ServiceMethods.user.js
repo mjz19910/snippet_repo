@@ -1228,45 +1228,6 @@ class ServiceMethods extends ServiceData {
 		this.t(buttonText,this.G_Text);
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @public @arg {R_SubscriptionNotificationToggleButton} x */
-	R_SubscriptionNotificationToggleButton(x) {this.H_s("subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
-	/** @type {string[]} */
-	logged_strings=[];
-	group_sub_noti_toggle_btn=false;
-	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
-	D_SubscriptionNotificationToggleButton(x) {
-		const cf="D_SubscriptionNotificationToggleButton";
-		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(this.group_sub_noti_toggle_btn) console.group(`--- [${cf}] ---`);
-		let ids=this.exact_arr(states[0].stateId,states[1].stateId,states[2].stateId);
-		const n2=2,n3=3,n0=0;
-		/** @type {[n2,n3,n0]} */
-		const ids_e=[n2,n3,n0];
-		let log_states=false;
-		if(!this.eq_keys(ids,ids_e)) log_states=true;
-		this.z(states,(x,i) => {
-			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
-			if(nextStateId!==stateId) debugger;
-			if(log_states) console.log("[button.state_id.%s]",i,stateId);
-			this.xm.R_Button(state);
-			return stateId;
-		});
-		if(this.group_sub_noti_toggle_btn) console.groupEnd();
-		switch(currentStateId) {
-			default: debugger; break;
-			case 0: case 2: case 3:
-		}
-		this.trackingParams(trackingParams);
-		this.C_Executor(command);
-		switch(targetId) {
-			default: if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
-				this.logged_strings.push(`${cf}:${targetId}`);
-				console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
-			} break;
-			case "notification-bell": break;
-		}
-		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
-	}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
 	R_WatchEndpointMusicConfig(x) {this.H_s("watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
 	/** @private @arg {D_WatchEndpointMusicConfig} x */
