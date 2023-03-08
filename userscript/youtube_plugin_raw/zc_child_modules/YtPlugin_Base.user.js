@@ -2156,27 +2156,22 @@ class ApiBase2 {
 				const {
 					[k]: v,...y
 				}=rm;
-				Object.setPrototypeOf(y,null);
-				if(typeof v==="object"&&v!==null) Object.setPrototypeOf(v,null);
-				const e=[k,v];
-				Object.setPrototypeOf(e,null);
-				entries.push(e);
-				acc.push(y);
+				entries.push(this.np([k,this.np(v)]));
+				acc.push(this.np(y));
 			} catch {
 				let v=Object.getOwnPropertyDescriptor(rm,k);
-				Object.setPrototypeOf(v,null);
-				const e=[k,v];
-				Object.setPrototypeOf(e,null);
-				throwing_getters.push(e);
+				if(!v) {debugger; break;}
+				throwing_getters.push(this.np([k,this.np(v)]));
 			}
 		}
-		Object.setPrototypeOf(acc,null);
-		return {
+		return this.np({
 			x,
-			acc,
-			entries
-		};
+			acc: this.np(acc),
+			entries: this.np(entries)
+		});
 	}
+	/** @template {object} T @arg {T} x */
+	np(x) {Object.setPrototypeOf(x,null); return x;}
 	console_code_0() {
 		const x=Function.prototype;
 		const {[Symbol.hasInstance]: hasInstance,apply,bind,call,toString,length,name,...y}=this.rm_all(x).x;
