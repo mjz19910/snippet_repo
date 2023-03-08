@@ -2140,8 +2140,11 @@ class ApiBase2 {
 	np(x) {Object.setPrototypeOf(x,null); return x;}
 	/** @template T @arg {T}x @returns {T} */
 	clone(x) {return structuredClone(x);}
-	/** @arg {[string,unknown]} e @returns {Ret_can_clone_map} */
+	num_count=0;
+	/** @arg {[string,unknown]} e @returns {Ret_can_clone_map|null} */
 	clone_entry_item(e) {
+		this.num_count++;
+		if(this.num_count>64) return null;
 		let [k,x]=e;
 		if(typeof x==="boolean") return {
 			a: "/type/p/value",type: "entry",p: "boolean",
