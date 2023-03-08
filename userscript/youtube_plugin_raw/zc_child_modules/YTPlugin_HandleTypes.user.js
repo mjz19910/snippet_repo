@@ -3025,6 +3025,7 @@ class HandleTypes extends BaseService {
 	//#region import renderer
 	//#endregion
 	//#region import group
+	//#region import group other
 	/** @arg {`promise_rejected_with.errors.${number}`} cf @arg {unknown} x */
 	log_error_sub(cf,x) {
 		console.log(`[log_error_next_info.${cf}]`,x);
@@ -3054,49 +3055,9 @@ class HandleTypes extends BaseService {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
+	//#region get
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
-	/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
-	make_info_PL(raw_id) {return this.make_info_3("playlist_id","PL",raw_id);}
-	/** @arg {"playlist_id"}x1 @arg {"PL"} x2 @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
-	make_info_3(x1,x2,x3) {
-		x1; x2; x3;
-		let [,id]=split_string_once(x3,x2);
-		return {b: x1,c: x2,z: [this.make_raw_id(x3),this.make_id(id)]};
-	}
-	/** @template U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
-	get_prim_1(x) {return x.z[0];}
-	/** @template V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
-	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DIT_Item_AZ<T1>} V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
-	get_prim_3(x) {return this.get_prim_2(x).z[0];}
-	/** @template K,T @arg {K} k @arg {T} x @returns {DIT_Item_AB<K,T_PrimitiveBox<T>>}*/
-	make_value_pair(k,x) {return {a: "key_value",k,w: "/item/a/k/w/z",z: [this.make_BoxTypeof(x)]};}
-	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
-	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
-	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
-	make_id(x) {return this.make_value_pair("id",x);}
-	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
-	make_DIT_Item_A_RawId(x) {return {a: "key_value",k: "raw_id",w: "/item/a/k/w/z",z: [x]};}
-	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
-	get_s_type(x) {
-		switch(typeof x) {
-			case "bigint": return as("bigint");
-			case "number": return as("number");
-			case "string": return as("string");
-			case "boolean": return as("boolean");
-		}
-		return as("unknown");
-	}
-	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
-	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
-	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
-	make_BoxTypeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
-	/** @arg {DU_VideoId} x */
-	on_video_id(x) {
-		const type="video_id";
-		this.DI_AGR_UrlInfo(this.make_value_pair(type,x));
-	}
 	/** @template {DI_SrcInfo} T @arg {T} x @returns {[Extract<DI_RetInfo,{k:T["k"]}>] extends [never]?{a:null}:Extract<DI_RetInfo,{k:T["k"]}>} */
 	get_parsed_info(x) {
 		/** @arg {DI_RetInfo} x @returns {asserts x is Extract<DI_RetInfo,{k:T["k"]}>} */
@@ -3138,12 +3099,51 @@ class HandleTypes extends BaseService {
 			default: debugger; return pr({a: null});
 		}
 	}
+	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
+	get_s_type(x) {
+		switch(typeof x) {
+			case "bigint": return as("bigint");
+			case "number": return as("number");
+			case "string": return as("string");
+			case "boolean": return as("boolean");
+		}
+		return as("unknown");
+	}
+	/** @template U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
+	get_prim_1(x) {return x.z[0];}
+	/** @template V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
+	get_prim_2(x) {return this.get_prim_1(x).z[0];}
+	/** @template T1 @template {DIT_Item_AZ<T1>} V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
+	get_prim_3(x) {return this.get_prim_2(x).z[0];}
+	//#endregion
+	//#endregion
+	//#region make_*
+	/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
+	make_info_PL(raw_id) {return this.make_info_3("playlist_id","PL",raw_id);}
+	/** @arg {"playlist_id"}x1 @arg {"PL"} x2 @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
+	make_info_3(x1,x2,x3) {
+		x1; x2; x3;
+		let [,id]=split_string_once(x3,x2);
+		return {b: x1,c: x2,z: [this.make_raw_id(x3),this.make_id(id)]};
+	}
+	/** @template K,T @arg {K} k @arg {T} x @returns {DIT_Item_AB<K,T_PrimitiveBox<T>>}*/
+	make_value_pair(k,x) {return {a: "key_value",k,w: "/item/a/k/w/z",z: [this.make_BoxTypeof(x)]};}
+	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
+	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
+	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
+	make_id(x) {return this.make_value_pair("id",x);}
+	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
+	make_DIT_Item_A_RawId(x) {return {a: "key_value",k: "raw_id",w: "/item/a/k/w/z",z: [x]};}
+	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
+	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
+	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
+	make_BoxTypeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {{k:K;v:T;}} */
-	mk_input(k,v) {return {k,v};}
+	make_input(k,v) {return {k,v};}
 	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {{k:K;v:T;}} */
-	mk_obj_input(k,v) {return {k,v};}
+	make_obj_input(k,v) {return {k,v};}
 	/** @template {{}} T @arg {T_DI_FromObj<T>} x */
-	mk_input_from_R_info(x) {return this.mk_obj_input(x.k,x.z[0].z[0]);}
+	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0].z[0]);}
 	/** @template {number} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"number">} */
 	make_prim_num_t(z) {return {a: "primitive",e: "number",z: [z]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
@@ -3166,7 +3166,7 @@ class HandleTypes extends BaseService {
 			} break;
 			case "start_radio": {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
-				const u=x,p=this.get_parsed_info(this.mk_input_from_R_info(u));
+				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
 				/** @type {DI_Key_StartRadio} */
 				const z={a: "DI",b: "key",c: p.k,w: "/item/a/b/c/w/z",z: [this.make_akz(p.k,this.make_prim_num_t(p.raw_id))]};
 				return z;
@@ -3174,7 +3174,7 @@ class HandleTypes extends BaseService {
 			case "hashtag_id":
 			case "video_id": {
 				const b=x.k,raw_id=x.z[0].z[0];
-				const s=this.mk_input(b,raw_id);
+				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				/** @type {DI_T_abz<typeof b>} */
 				const z=this.make_abwz_item(x.k,this.make_akz("raw_id",this.make_prim_v(p.raw_id)));
@@ -3183,6 +3183,7 @@ class HandleTypes extends BaseService {
 		}
 		return null;
 	}
+	//#endregion make_*
 	/** @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id(...args) {
 		let {...ret}=await this.ix.put_boxed_id_async_3(this.sm.indexed_db_version,...args);
@@ -3207,6 +3208,11 @@ class HandleTypes extends BaseService {
 			this.cache_playlist_id.push(id);
 			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",type,id);
 		}
+	}
+	/** @arg {DU_VideoId} x */
+	on_video_id(x) {
+		const type="video_id";
+		this.DI_AGR_UrlInfo(this.make_value_pair(type,x));
 	}
 	/** @public @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
