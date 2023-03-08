@@ -2165,16 +2165,17 @@ class ApiBase2 {
 			}
 		}
 		return this.np({
-			x,
+			original: this.np({x: x}),
 			acc: this.np(acc),
-			entries: this.np(entries)
+			entries: this.np(entries),
+			prototype: Object.getPrototypeOf(x),
 		});
 	}
 	/** @template {object} T @arg {T} x */
 	np(x) {Object.setPrototypeOf(x,null); return x;}
 	console_code_0() {
 		const x=Function.prototype;
-		const {[Symbol.hasInstance]: hasInstance,apply,bind,call,toString,length,name,...y}=this.rm_all(x).x;
+		const {[Symbol.hasInstance]: hasInstance,apply,bind,call,toString,length,name,...y}=this.rm_all(x).original.x;
 		Object.setPrototypeOf(y,null);
 		let v={
 			[Symbol.hasInstance]: hasInstance,
@@ -2186,7 +2187,6 @@ class ApiBase2 {
 			length,
 			name,
 			toString,
-			prototype: Object.getPrototypeOf(x),
 			__proto__: null,
 		};
 		console.log(v);
@@ -2205,7 +2205,14 @@ class ApiBase2 {
 			const in_entries=Object.entries(x);
 			/** @arg {[string,unknown]} e */
 			const can_clone_map=e => {
-				console.log();
+				if(typeof e[1]==="boolean") return [e];
+				if(typeof e[1]==="function") return {
+					type: "original",
+					k: e[0],
+					v: e[1],
+					sf: this.simple_filter(e[0],e[1]),
+				};
+				console.log("[log_c1]",e[0],e[1]);
 				try {
 					return [structuredClone(e)];
 				} catch {
