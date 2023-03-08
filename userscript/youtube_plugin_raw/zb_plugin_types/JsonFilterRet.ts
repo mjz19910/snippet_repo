@@ -11,7 +11,7 @@ type JsonFilterRet_1<T>={
 	};
 };
 
-type JsonFilterRet_2={
+type JsonFilterRet_FunctionItem={
 	a: "/value";
 	value: {
 		a: "/id";
@@ -62,7 +62,7 @@ type JsonFilterRet<K,T>=
 ;
 type JsonFilterPrimitive=string|boolean|null;
 type JsonFilterStatic=
-	|JsonFilterRet_2
+	|JsonFilterRet_FunctionItem
 	|JsonFilterRet_Sym
 	|JsonFilterRet_Copy
 	;

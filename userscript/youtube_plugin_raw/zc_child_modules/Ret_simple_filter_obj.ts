@@ -16,3 +16,20 @@ type Ret_Filter_FunctionModify={
 	id: number;
 	log: ObjModifyLog[];
 };
+type G_ObjModifyItem={
+	type: "modify";
+	k: string;
+	value: Ret_Filter_FunctionModify;
+}|{
+	type: "filter";
+	k: string;
+	value: JsonFilterRetAny|Ret_simple_filter|JsonFilterRet_FunctionItem;
+};
+type Ret_TextDecoderInfo={
+	type: "obj";
+	value: {
+		type: "TextDecoder";
+		__symbol_prototype: GType_PrototypeDescription_OfTextDecoder<"%%prototype","TextDecoder",TextDecoder>;
+	};
+};
+type JsonFilterRetAny={a: "any",z: [{}];};
