@@ -1,0 +1,1 @@
+import {BoxSym} from "./BoxSym.js"; declare global {const box_sym_g: BoxSym;}
