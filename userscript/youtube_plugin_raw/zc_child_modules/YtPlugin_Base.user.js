@@ -2175,12 +2175,12 @@ class ApiBase2 {
 			let [k,v]=this.clone(e); k;
 			switch(typeof v) {
 				case "bigint": debugger; break;
-				case "string": debugger; break;
+				case "string": return {a: "/b/k/value",b: "primitive",j: "string",k,value: v};
 				case "number": debugger; break;
 				case "boolean": debugger; break;
 				case "symbol": debugger; break;
 				case "undefined": debugger; break;
-				case "object": debugger; break;
+				case "object": return {a: "/b/k/value",b: "clone",k,value: v};
 				case "function": debugger; break;
 			}
 		} catch {
@@ -2200,6 +2200,7 @@ class ApiBase2 {
 	};
 	/** @template {object|null} T @arg {string} k @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
 	simple_filter_obj(k,x) {
+		let r_ret=true;
 		if(x instanceof Array) {
 			const in_entries=Object.entries(x);
 			const res_entries=this.iter_entries(in_entries,this.simple_filter);
@@ -2214,13 +2215,15 @@ class ApiBase2 {
 			/** @arg {Ret_can_clone_map} x @returns {[string,any]} */
 			const map_clone_2=x => {
 				switch(x.a) {
-					case "/type/b/k/value": break;
-					case "/type/p/value": break;
-					case "/type/value": break;
+					case "/type/b/k/value": return [x.k,x];
+					case "/type/p/value": return [x.value[0],x];
+					case "/type/value": return [x.k,x];
+					case "/b/k/value": switch(x.b) {
+						case "clone": return [x.k,x];
+						case "primitive": return [x.k,x];
+					}
 					case "/type/z": return [x.z.k,x.z.sf];
 				}
-				debugger;
-				throw new Error();
 			};
 			const res_entries=in_entries.map(this.clone_entry_item,this).map(map_clone_2).map(ent => {
 				if(ent instanceof Array) {
@@ -2230,7 +2233,11 @@ class ApiBase2 {
 			});
 			r_obj=Object.fromEntries(res_entries);
 			Object.setPrototypeOf(r_obj,null);
+			return {a: "/raw",raw: r_obj};
 		}
+	}
+	/** @template {object} T @arg {string} k @arg {T} x @returns {Ret_FilterEmptyType} */
+	simple_filter_reconstruct(k,x) {
 		let reconstructed=null;
 		try {
 			console.log("simple clone start",k,x);

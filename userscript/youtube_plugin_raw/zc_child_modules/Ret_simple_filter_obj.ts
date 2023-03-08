@@ -1,8 +1,13 @@
+type Ret_FilterEmptyType={
+	a: "/type";
+	type: "empty";
+};
+
 type Ret_simple_filter_obj=
-	|{a: "/empty"; empty: true;}
 	|{a: "/type/k/v/sf"; type: "string"; k: string; v: number; sf: number;}
-	|{a: "/type"; type: "empty";}
+	|Ret_FilterEmptyType
 	|{a: "/type/value"; type: "obj",value: number;}
+	|{a: "/raw",raw: {[k: string]: any;};}
 	|Ret_TextDecoderInfo
 	|null
 	;
@@ -72,4 +77,12 @@ type Ret_can_clone_map={
 		fatal: boolean;
 		ignoreBOM: boolean;
 	};
+}|{
+	a: "/b/k/value";
+	b: "clone";
+	k: string;
+	value: {}|null;
+}|{
+	a: "/b/k/value"; b: "primitive"; j: "string";
+	k: string; value: string;
 };
