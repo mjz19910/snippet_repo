@@ -3310,16 +3310,40 @@ class HandleTypes extends BaseService {
 				const n2=[null,null];
 				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
 				if(n[0]) {let c=n[0]; if(c.d==="string") n2[0]=c; else n2[1]=c;}
-				if(n2[0]) {let c=n2[0],d=c.z[0],e=d.z[0]; return [2,d.b,e.c,e.z[0]];}
+				if(n2[0]) {let c=n2[0],d=c.z[0],e=d.z[0],f=e.z[0]; return [2,[c,d,e,f],d.b,e.c,e.z[0]];}
 				if(n[0]) {return [0,n[0]];}
 				if(n[1]) return [1,n[1]];
 				return ["a1",this.za1(x)];
 			};
 			if(x.key==="boxed_id:load_id") break x;
 			if(x.key==="boxed_id:save_id") break x;
+			let diff_plus=[],diff_minus=[];
+			let xi=w(x);
+			switch(xi[0]) {
+				case 2: {
+					let [,[x_container,,x_item_group]]=xi; x_item_group;
+					switch(x_item_group.c) {
+						case "arr": {
+							diff_plus.push(x_container);
+						} break;
+					}
+				} break;
+			}
+			const yi=w(y);
+			switch(yi[0]) {
+				case 2: {
+					let [,[y_container,,y_item_group]]=yi; y_item_group;
+					switch(y_item_group.c) {
+						case "arr": {
+							diff_minus.push(y_container);
+						} break;
+					}
+				} break;
+			}
 			console.log("[cur_cache_value] [x.key]",x.key);
 			console.log("[val] [x]",...w(x));
 			console.log("[val] [y]",...w(y));
+			console.log(diff_minus,diff_plus);
 		}
 		try {
 			let ret=await this.ix.putImpl(key,value,version);

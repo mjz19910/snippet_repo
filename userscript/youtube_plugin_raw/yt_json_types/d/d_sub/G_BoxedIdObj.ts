@@ -91,7 +91,7 @@ type G_BoxedInner=
 		j: GB_A1_J_Shape;
 	}]
 	|["k:sr",DST_Key_StartRadio]
-	|[2,string,"many"|"one"|"arr"|"typeof_name"|"instance_name"|"string",string|string[]|string[][]]
+	|[2,[DSS_String,DIZ_Item_AB<string,string>,make_item_group<string>,string|string[]|string[][]],string,"many"|"one"|"arr"|"typeof_name"|"instance_name"|"string",string|string[]|string[][]]
 	;
 ;
 type G_BoxedInner_Tmp=[
