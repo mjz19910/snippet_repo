@@ -607,33 +607,6 @@ class IndexedDBService extends BaseService {
 		switch(k) {
 			default: k===""; switch((k)) {
 			} debugger; throw new Error();
-			case "browse_id": return this.put_boxed_pl(version,...s0);
-			case "url_info": return this.put_boxed_url_info(version,s0[0],s0[1],s0[2]);
-			case "key": return {args: s0,promise: this.put_box(this.mk_start_radio(x),version)};
-			case "video_id": {
-				let [,v,x]=s0;
-				/** @type {Pick<DST_Video_Id,"key">} */
-				const kj={key: `boxed_id:${k}:${v}`};
-				/** @type {DST_Video_Id} */
-				const z=this.make_ST_jz(kj.key,"video_id",x);
-				return {args: s0,promise: this.put_box(z,version)};
-			}
-			case "user_id": {
-				const x=s0[2];
-				/** @type {Pick<DST_User_Id,"key">} */
-				const kj={key: `boxed_id:${k}:${this.za3(x)}`};
-				/** @type {DST_User_Id} */
-				const z=this.make_ST_jz(kj.key,"user_id",x);
-				return {args: s0,promise: this.put_box(z,version)};
-			}
-			case "play_next": {
-				const x=s0[2];
-				/** @type {Pick<DST_PlayNext,"key">} */
-				const kj={key: `boxed_id:${k}:${this.za3(x)}`};
-				/** @type {DST_PlayNext} */
-				const z=this.make_ST_jz(kj.key,"play_next",x);
-				return {args: s0,promise: this.put_box(z,version)};
-			}
 			case "playlist_id": {
 				switch(s0[1]) {
 					default: debugger; throw new Error();
@@ -749,6 +722,30 @@ class IndexedDBService extends BaseService {
 					}
 				}
 			} throw new Error("end");
+			case "video_id": {
+				let [,v,x]=s0;
+				/** @type {Pick<DST_Video_Id,"key">} */
+				const kj={key: `boxed_id:${k}:${v}`};
+				/** @type {DST_Video_Id} */
+				const z=this.make_ST_jz(kj.key,"video_id",x);
+				return {args: s0,promise: this.put_box(z,version)};
+			}
+			case "user_id": {
+				const x=s0[2];
+				/** @type {Pick<DST_User_Id,"key">} */
+				const kj={key: `boxed_id:${k}:${this.za3(x)}`};
+				/** @type {DST_User_Id} */
+				const z=this.make_ST_jz(kj.key,"user_id",x);
+				return {args: s0,promise: this.put_box(z,version)};
+			}
+			case "play_next": {
+				const x=s0[2];
+				/** @type {Pick<DST_PlayNext,"key">} */
+				const kj={key: `boxed_id:${k}:${this.za3(x)}`};
+				/** @type {DST_PlayNext} */
+				const z=this.make_ST_jz(kj.key,"play_next",x);
+				return {args: s0,promise: this.put_box(z,version)};
+			}
 			case "channel_id": {
 				let [t,,x]=s0;
 				/** @type {DST_Channel_UC} */
@@ -814,6 +811,9 @@ class IndexedDBService extends BaseService {
 				const z2={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
 				return {args: s0,promise: this.put_box(z2,version)};
 			}
+			case "browse_id": return this.put_boxed_pl(version,...s0);
+			case "url_info": return this.put_boxed_url_info(version,s0[0],s0[1],s0[2]);
+			case "key": return {args: s0,promise: this.put_box(this.mk_start_radio(x),version)};
 		}
 	}
 	/** @template {G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
