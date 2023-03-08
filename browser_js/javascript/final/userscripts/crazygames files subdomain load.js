@@ -8,6 +8,7 @@
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
+// @ts-nocheck
 /* eslint-disable no-undef */
 
 (function() {

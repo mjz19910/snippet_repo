@@ -12,7 +12,7 @@
 
 (function() {
 	'use strict';
-	/** @arg {{value:number;parentElement:HTMLElement}[]} in_out_arr @returns {[]} */
+	/** @arg {{value:number;parentElement:HTMLElement}[]} in_out_arr @returns {void} */
 	function solver_input(in_out_arr) {
 		let x=in_out_arr.map(e => e.parentElement).map(x => {
 			let q1=x.querySelectorAll("button"),qa=[];
