@@ -2094,143 +2094,147 @@ const general_service_state={
 	premium_membership: null,
 };
 const box_sym_r=Symbol.for("box_symbol");
+const cloned_sym=Symbol.for("cloned");
 export_(exports => exports.box_sym=box_sym_r);
 class ApiBase2 {
+	/** @type {((()=>void)|Function)[]} */
+	fn_list=[];
 	/** @type {{readonly x: typeof box_sym_r}} */
 	static box_sym={x: box_sym_r};
+	/** @arg {[string,unknown][]} x */
+	iter_entries(x) {return x.map(this.map_entry,this);}
+	/** @arg {[string,unknown]} a0 @returns {[string,unknown]} */
+	map_entry([k,v]) {return [k,this.json_filter(k,v)];}
+	/** @template T @template {string} K @arg {K} _k @arg {T} z @returns {T} */
+	simple_filter(_k,z) {
+		return structuredClone(z);
+	}
+	/** @template {{[U in K]:any}} T @template {keyof T&string} K @arg {T} x @arg {K} k */
+	json_set_filter(x,k) {
+		const v=x[k];
+		const f=this.json_filter(k,v);
+		if(f.type==="normal"&&!("copy" in f)) {
+			this.set(x,k,f.value);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {unknown} x */
+	save_clone(x) {
+		const str=JSON.stringify(x,this.json_filter.bind(this));
+		return JSON.parse(str);
+	}
+	/** @template {{[U in K]:any}} T @template {keyof T} K @arg {T} x @arg {K} k @template {T[K]} V @arg {V} v */
+	set(x,k,v) {
+		x[k]=v;
+	}
 	/** @arg {{}} mod */
 	module_debug_log(mod) {
-		/** @type {((()=>void)|Function)[]} */
-		let fn_list=[];
-		const cloned_sym=Symbol.for("cloned");
-		/** @template T @template {string} K @arg {K} _k @arg {T} z @returns {T} */
-		function simple_filter(_k,z) {
-			return structuredClone(z);
-		}
-		/** @template {{[U in K]:any}} T @template {keyof T} K @arg {T} x @arg {K} k @template {T[K]} V @arg {V} v */
-		function set(x,k,v) {
-			x[k]=v;
-		}
-		/** @template {{[U in K]:any}} T @template {keyof T&string} K @arg {T} x @arg {K} k */
-		function json_set_filter(x,k) {
-			const v=x[k];
-			const f=json_filter(k,v);
-			if(f.type==="normal"&&!("copy" in f)) {
-				set(x,k,f.value);
-			} else {
-				debugger;
-			}
-		}
-		/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>} */
-		const json_filter=(k,z) => {
-			console.log("rep",k,z);
-			if(typeof z==="function") {
-				let idx=fn_list.indexOf(z);
-				if(idx===-1) idx=fn_list.push(z)-1;
-				return {type: "function",id: idx,...z};
-			}
-			if(typeof z==="symbol") {
-				switch(z) {
-					default: debugger; return {type: "symbol"};
-					case box_sym_r: return {type: "symbol",for: "box_symbol"};
-				}
-			}
-			if(typeof z!=="object") return {type: "normal",value: z};
-			if(z===null) return {type: "normal",value: z};
-			if(box_sym_r in z&&z[box_sym_r]===true) return {type: "normal",value: z};
-			if(cloned_sym in z&&z[cloned_sym]===true) return {type: "normal",value: z};
-			if("type" in z) {
-				/** @type {{}} */
-				let w=z;
-				/** @type {Partial<JsonFilterRet<any,any>>} */
-				let w2=w; let wr=null;
-				if(w2.type) {wr={type: w2.type,...w2};}
-				let r1=null;
-				if(wr) switch(wr.type) {
-					default: debugger; break;
-					case "function": {
-						const wrt=wr.type; const z=wr;
-						/** @type {Partial<JsonFilterRet<any,any>>&Pick<JsonFilterRet<any,any>,"type">} */
-						/** @typedef {Extract<JsonFilterRet<any,any>,{type:typeof wrt}>} T1 */
-						/** @type {Partial<Omit<T1,"type">>&Pick<T1,"type">} */
-						let w={...z,type: "function"};
-						const {...w2}=w;
-						if(w2.id!==void 0) {
-							const {type,id}=w2;
-							r1={type,id};
-						}
-					} break;
-				}
-				if(r1) {r1; debugger;}
-			}
-			/** @type {{}} */
-			const zo=z;
-			if(zo===TextDecoder.prototype) {
-				/** @type {TextDecoder} */
-				const zt=as(zo);
-				/** @type {Type_GetOwnPropertyDescriptors<TextDecoder>} */
-				const desc=Object.getOwnPropertyDescriptors(zt);
-				const fd=simple_filter('prototype_description',desc);
-				return {type: "prototype",key: k,of: "TextDecoder",__prototype_description: {...fd,[box_sym_g]: true}};
-			}
-			if(z instanceof TextDecoder) {
-				/** @type {TextDecoder} */
-				const td=z;
-				const {encoding,decode,fatal,ignoreBOM,...y}=td;
-				const filtered_proto=json_filter("%%prototype",Object.getPrototypeOf(z));
-				const dec_fn=json_filter("decode",decode);
-				/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;decode: typeof dec_fn}} */
-				let dec_info={encoding,decode: dec_fn,fatal,ignoreBOM,__symbol_prototype: filtered_proto,...y};
-				if(this.get_keys_of(y).length>0) debugger;
-				json_set_filter(dec_info,"decode");
-				return {type: "obj",of: "TextDecoder",value: as(dec_info)};
-			}
-			if(z instanceof Array) {
-				try {
-					return structuredClone(z);
-				} catch {}
-				/** @type {unknown[]} */
-				let res_arr=[];
-				for(let i=0;i<z.length;i++) {
-					const c=z[i];
-					const f=json_filter(i+"",c);
-					try {
-						res_arr.push({[i]: structuredClone(f),key: k,[cloned_sym]: true});
-					} catch {debugger; res_arr.push(f); continue;}
-				}
-				return {type: "normal",value: z};
-			}
-			const entries=Object.entries(z);
-			/** @type {[string,any][]} */
-			let res_entries=[];
-			for(const entry of entries) {
-				const [k1,x]=entry;
-				let copy=json_filter(k,x);
-				console.log("copy entry",k1,copy.value);
-				// const filtered=JSON.parse(JSON.stringify({[k1]: json_filter(k1,x),key: k,box: true,[box_sym]: true},json_filter))[k1];
-				try {
-					res_entries.push([k1,structuredClone(x)]); continue;
-				} catch {}
-				/** @type {unknown} */
-				const f=json_filter(k1,x);
-				try {
-					res_entries.push([k1,structuredClone(f)]); continue;
-				} catch {}
-				debugger; res_entries.push([k1,f]);
-			}
-			let rz=Object.fromEntries(res_entries);
-			try {return structuredClone(rz);} catch {console.log("cant clone",rz);}
-			return {type: "normal",copy: true,value: rz};
-		};
-		/** @arg {unknown} x */
-		function save_clone(x) {
-			const str=JSON.stringify(x,json_filter);
-			return JSON.parse(str);
-		}
-		const json_clone=save_clone(mod);
+		const json_clone=this.save_clone(mod);
 		console.log("module_debug: module");
 		console.log(json_clone);
 	}
+	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>} */
+	json_filter(k,z) {
+		console.log("rep",k,z);
+		if(typeof z==="function") {
+			let idx=this.fn_list.indexOf(z);
+			if(idx===-1) idx=this.fn_list.push(z)-1;
+			return {type: "function",value: null,id: idx,...z};
+		}
+		if(typeof z==="symbol") {
+			switch(z) {
+				default: debugger; return {type: "symbol",value: null};
+				case box_sym_r: return {type: "symbol",value: null,for: "box_symbol"};
+			}
+		}
+		if(typeof z!=="object") return {type: "normal",value: z};
+		if(z===null) return {type: "normal",value: z};
+		if(box_sym_r in z&&z[box_sym_r]===true) return {type: "normal",value: z};
+		if(cloned_sym in z&&z[cloned_sym]===true) return {type: "normal",value: z};
+		if("type" in z) {
+			/** @type {{}} */
+			let w=z;
+			/** @type {Partial<JsonFilterRet<any,any>>} */
+			let w2=w; let wr=null;
+			if(w2.type) {wr={type: w2.type,...w2};}
+			let r1=null;
+			if(wr) switch(wr.type) {
+				default: debugger; break;
+				case "function": {
+					const wrt=wr.type; const z=wr;
+					/** @type {Partial<JsonFilterRet<any,any>>&Pick<JsonFilterRet<any,any>,"type">} */
+					/** @typedef {Extract<JsonFilterRet<any,any>,{type:typeof wrt}>} T1 */
+					/** @type {Partial<Omit<T1,"type">>&Pick<T1,"type">} */
+					let w={...z,value: null,type: "function"};
+					const {...w2}=w;
+					if(w2.id!==void 0) {
+						const {type,id}=w2;
+						r1={type,id};
+					}
+				} break;
+			}
+			if(r1) {r1; debugger;}
+		}
+		/** @type {{}} */
+		const zo=z;
+		if(zo===TextDecoder.prototype) {
+			/** @type {TextDecoder} */
+			const zt=as(zo);
+			/** @type {Type_GetOwnPropertyDescriptors<TextDecoder>} */
+			const desc=Object.getOwnPropertyDescriptors(zt);
+			const fd=this.simple_filter('prototype_description',desc);
+			return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_g]: true}};
+		}
+		if(z instanceof TextDecoder) {
+			/** @type {TextDecoder} */
+			const td=z;
+			const {encoding,decode,fatal,ignoreBOM,...y}=td;
+			const filtered_proto=this.json_filter("%%prototype",Object.getPrototypeOf(z));
+			const dec_fn=this.json_filter("decode",decode);
+			/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;decode: typeof dec_fn}} */
+			let dec_info={encoding,decode: dec_fn,fatal,ignoreBOM,__symbol_prototype: filtered_proto,...y};
+			if(this.get_keys_of(y).length>0) debugger;
+			this.json_set_filter(dec_info,"decode");
+			return {type: "obj",of: "TextDecoder",value: as(dec_info)};
+		}
+		if(z instanceof Array) {
+			try {
+				return structuredClone(z);
+			} catch {}
+			/** @type {unknown[]} */
+			let res_arr=[];
+			for(let i=0;i<z.length;i++) {
+				const c=z[i];
+				const f=this.json_filter(i+"",c);
+				try {
+					res_arr.push({[i]: structuredClone(f),key: k,[cloned_sym]: true});
+				} catch {debugger; res_arr.push(f); continue;}
+			}
+			return {type: "normal",value: z};
+		}
+		const entries=Object.entries(z);
+		/** @type {[string,any][]} */
+		let res_entries=[];
+		for(const entry of entries) {
+			const [k1,x]=entry;
+			let copy=this.json_filter(k,x);
+			console.log("copy entry",k1,copy.value);
+			// const filtered=JSON.parse(JSON.stringify({[k1]: json_filter(k1,x),key: k,box: true,[box_sym]: true},json_filter))[k1];
+			try {
+				res_entries.push([k1,structuredClone(x)]); continue;
+			} catch {}
+			/** @type {unknown} */
+			const f=this.json_filter(k1,x);
+			try {
+				res_entries.push([k1,structuredClone(f)]); continue;
+			} catch {}
+			debugger; res_entries.push([k1,f]);
+		}
+		let rz=Object.fromEntries(res_entries);
+		try {return structuredClone(rz);} catch {console.log("cant clone",rz);}
+		return {type: "normal",copy: true,value: rz};
+	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {debugger;}
