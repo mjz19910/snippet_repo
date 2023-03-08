@@ -44,7 +44,6 @@ class AudioGainController {
 		media_source.connect(compressor);
 		compressor.connect(gain);
 		gain.connect(ctx.destination);
-
 	}
 }
 (function() {
