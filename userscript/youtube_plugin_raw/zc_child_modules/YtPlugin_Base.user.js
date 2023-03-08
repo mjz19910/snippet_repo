@@ -2218,6 +2218,7 @@ class ApiBase2 {
 				if(key===void 0) {debugger; return null;}
 				if(type_name===void 0) {debugger; return null;}
 				if(__prototype_description===void 0) {debugger; return null;}
+				console.log("proto",__prototype_description);
 				r1={...w2,type,key,type_name,__prototype_description};
 			} break;
 		}
