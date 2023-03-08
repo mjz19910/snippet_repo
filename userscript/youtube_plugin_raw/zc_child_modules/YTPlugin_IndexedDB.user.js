@@ -967,6 +967,7 @@ class IndexedDBService extends BaseService {
 	async put(key,value,version) {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
+			let x=value; let y=loaded_value;
 			if(value.b!=="boxed_id") {debugger; break x;}
 			let nw=null;
 			switch(value.a) {
@@ -1006,10 +1007,19 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			/** @arg {G_BoxedIdObj} x */
-			function w(x) {return x.z[0];}
-			if(loaded_value===void 0) break x;
-			let x=value; let y=loaded_value;
-			console.log("[cur_cache_value] [x.key,x,y]",x.key,w(x),w(y));
+			function w(x) {
+				let {z: z1,...z0}=x.z[0];
+				if("a" in z0) {
+					return ["+a",z0,z1[0]];
+				}
+				return ["-a",z0];
+			}
+			if(y===void 0) break x;
+			if(x.key==="boxed_id:load_id") break x;
+			if(x.key==="boxed_id:save_id") break x;
+			console.log("[cur_cache_value] [x.key]",x.key);
+			console.log("[val] [x]",...w(x));
+			console.log("[val] [y]",...w(y));
 		}
 		try {
 			let ret=await this.putImpl(key,value,version);
