@@ -1,0 +1,1 @@
+type Ret_simple_filter_obj={empty: true;}|null|{type: string; k: string; v: unknown; sf: any;}|{type: string;};

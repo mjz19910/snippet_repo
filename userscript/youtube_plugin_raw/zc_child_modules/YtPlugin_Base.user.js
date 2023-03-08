@@ -2113,7 +2113,7 @@ class ApiBase2 {
 		const [k,v]=a0;
 		return [k,f.call(this,k,v)];
 	}
-	/** @template T @template {string} K @arg {K} k @arg {T} c */
+	/** @template T @template {string} K @arg {K} k @arg {T} c @returns {Ret_simple_filter} */
 	simple_filter(k,c) {
 		/** @type {unknown} */
 		let x=c;
@@ -2124,37 +2124,130 @@ class ApiBase2 {
 			case "boolean": return x;
 			case "symbol": switch(x) {
 				default: debugger; return {type: "symbol"};
-				case box_sym_r: return {type: "symbol",for: "box_symbol"};
+				case box_sym_r: return {type: "symbol-for",for: "box_symbol"};
 			}
 			case "undefined": return x;
 			case "object": return this.simple_filter_obj(k,x);
 			case "function": {
 				let idx=this.fn_list.indexOf(x);
 				if(idx===-1) idx=this.fn_list.push(x)-1;
-				return {type: "function",id: idx,...x};
+				return {type: "function",id: idx,value: x};
 			}
 		}
 	}
-	/** @template {object|null} T @arg {string} k @arg {T|{type:"empty";value:null}} x */
+	/** @template {{[x: PropertyKey]:any}} T @arg {T} x */
+	rm_all(x) {
+		/** @type {{[x: PropertyKey]:any}} */
+		let rm=x;
+		let entries=[];
+		let throwing_getters=[];
+		let acc=[];
+		/** @type {PropertyKey[]} */
+		let sa=Object.getOwnPropertySymbols(rm);
+		let sa_2=Object.getOwnPropertyNames(rm);
+		let sa_all=sa.concat(sa_2);
+		let i=0;
+		while(sa_all.length>0) {
+			i++;
+			if(i>40) break;
+			let k=sa_all.pop();
+			if(k===void 0) break;
+			try {
+				const {
+					[k]: v,...y
+				}=rm;
+				Object.setPrototypeOf(y,null);
+				if(typeof v==="object"&&v!==null) Object.setPrototypeOf(v,null);
+				const e=[k,v];
+				Object.setPrototypeOf(e,null);
+				entries.push(e);
+				acc.push(y);
+			} catch {
+				let v=Object.getOwnPropertyDescriptor(rm,k);
+				Object.setPrototypeOf(v,null);
+				const e=[k,v];
+				Object.setPrototypeOf(e,null);
+				throwing_getters.push(e);
+			}
+		}
+		Object.setPrototypeOf(acc,null);
+		return {
+			x,
+			acc,
+			entries
+		};
+	}
+	console_code_0() {
+		const x=Function.prototype;
+		const {[Symbol.hasInstance]: hasInstance,apply,bind,call,toString,length,name,...y}=this.rm_all(x).x;
+		Object.setPrototypeOf(y,null);
+		let v={
+			[Symbol.hasInstance]: hasInstance,
+			apply,
+			arguments: null,
+			bind,
+			call,
+			caller: null,
+			length,
+			name,
+			toString,
+			prototype: Object.getPrototypeOf(x),
+			__proto__: null,
+		};
+		console.log(v);
+		console.log(x);
+	}
+	/** @template {object|null} T @arg {string} k @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
 	simple_filter_obj(k,x) {
+		if(x instanceof Array) {
+			const in_entries=Object.entries(x);
+			const res_entries=this.iter_entries(in_entries,this.simple_filter);
+			let rc=Object.fromEntries(res_entries);
+			return structuredClone(rc);
+		}
+		if(x===null) return x;
+		{
+			const in_entries=Object.entries(x);
+			/** @arg {[string,unknown]} e */
+			const can_clone_map=e => {
+				console.log();
+				try {
+					return [structuredClone(e)];
+				} catch {
+					return {
+						type: "original",
+						k: e[0],
+						v: e[1],
+						sf: this.simple_filter(e[0],e[1]),
+					};
+				}
+			};
+			const res_entries=in_entries.map(can_clone_map).map(x => {
+				if(x instanceof Array) return x;
+				return [[x.k,x.sf]];
+			}).map(v => v[0]).map(ent => {
+				Object.setPrototypeOf(ent[1],null);
+				return ent;
+			});
+			const r_obj=Object.fromEntries(res_entries);
+			Object.setPrototypeOf(r_obj,null);
+		}
 		let reconstructed=null;
 		try {
 			console.log("simple clone start",k,x);
 			if(x===null) return x;
-			const in_entries=Object.entries(x);
-			const res_entries=this.iter_entries(in_entries,this.simple_filter);
-			reconstructed=Object.fromEntries(res_entries);
-			return structuredClone(reconstructed);
 		} catch(e) {
 			console.log("simple copy error",e);
 			console.log("simple cant copy",k,x);
 			debugger;
 		} finally {
-			if(reconstructed!==null) console.log("simple clone end",k,reconstructed);
+			if(reconstructed!==null) console.log("simple clone end [reconstructed]",k,reconstructed);
 			else {
-				console.log("simple clone end",k,x);
+				console.log("simple clone end [default]",k,x);
 			}
 		}
+		if(reconstructed!==null) return reconstructed;
+		debugger;
 		return {type: "empty"};
 	}
 	/** @template {{[U in K]:any}} T @template {keyof T&string} K @arg {T} x @arg {K} k */
