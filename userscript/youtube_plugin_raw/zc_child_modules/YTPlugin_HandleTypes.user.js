@@ -137,11 +137,11 @@ class HandleTypes extends BaseService {
 				return vr;
 			}
 			if(x[0]==="failed") {debugger; return null;}
-			x==="";
+			debugger;
 			return null;
 		}
 		if(x instanceof Uint8Array) return {0: ["v_param_arr",[["v_raw",["binary",x]]]]};
-		x==="";
+		debugger;
 		return null;
 	}
 	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
