@@ -2193,51 +2193,23 @@ class ApiBase2 {
 			default: debugger; break;
 			case "function": {
 				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,value: null,type: "function"};
-				if(b.value===void 0) {debugger; return null;}
-				if(b.id===void 0) {debugger; return null;}
-				const {type,value,id,...w2}=b;
-				r1={...w2,type,value,id};
+				let b={...x,type: x.type}; r1=as_any(b);
 			} break;
 			case "symbol": {
-				if("for" in x) {
-					const {type,for: for_,...w2}=x;
-					if(for_===void 0) {debugger; return null;}
-					if(this.get_keys_of(w2).length!==0) debugger;
-					r1={type,for: for_};
-					break;
-				}
 				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type};
-				const {type,...w2}=b;
-				if(this.get_keys_of(w2).length!==0) debugger;
-				r1={...w2,type};
+				let b={...x,type: x.type}; r1=b;
 			} break;
 			case "normal": {
 				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type};
-				if(b.value===void 0) {debugger; return null;}
-				const {type,value,...w2}=b;
-				if(this.get_keys_of(w2).length!==0) debugger;
-				r1={...w2,type,value};
+				let b={...x,type: x.type}; r1=b;
 			} break;
 			case "normal:copy": {
 				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type};
-				if(b.value===void 0) {debugger; return null;}
-				const {type,copy,value,...w2}=b;
-				if(copy===void 0) {debugger; return null;}
-				if(this.get_keys_of(w2).length!==0) debugger;
-				r1={...w2,type,copy,value};
+				let b={...x,type: x.type}; r1=as_any(b);
 			} break;
 			case "obj": {
 				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type};
-				if(b.value===void 0) {debugger; return null;}
-				if(b.of===void 0) {debugger; return null;}
-				const {type,value,of,...w2}=b;
-				if(this.get_keys_of(w2).length!==0) debugger;
-				r1={...w2,type,of,value};
+				let b={...x,type: x.type}; r1=as_any(b);
 			} break;
 			case "prototype": {
 				/** @type {RequiredType<typeof x['type']>} */
