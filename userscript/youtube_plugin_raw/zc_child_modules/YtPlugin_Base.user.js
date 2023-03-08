@@ -1937,20 +1937,20 @@ function yt_plugin_base_main() {
 		let mod=modules[module_name];
 		if(!mod) continue;
 		if("__init_module__" in mod&&mod.__init_module__===true) {
-			console.log("module_is: module init",mod);
+			if(log_imports) console.log("module_is: module init",mod);
 			continue;
 		}
 		if(mod.__module_loaded__===false) {
-			console.log("module_state: module not loaded",mod);
+			if(log_imports) console.log("module_state: module not loaded",mod);
 			failed_to_load=true;
 			continue;
 		}
 		if("init_module" in mod&&typeof mod.init_module==="function") {
-			console.log("module_action: init",mod);
+			if(log_imports) console.log("module_action: init",mod);
 			mod.init_module();
 			continue;
 		}
-		console.log("module_debug: module",mod);
+		console.log("module_debug: module",structuredClone(mod));
 	}
 	if(failed_to_load) return;
 	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
