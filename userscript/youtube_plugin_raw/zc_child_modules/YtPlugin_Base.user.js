@@ -2113,39 +2113,64 @@ class ApiBase2 {
 		const [k,v]=a0;
 		return [k,f.call(this,k,v)];
 	}
-	/** @template {{}} T @template {string} K @arg {K} k @arg {T} x @returns {T} */
-	simple_filter(k,x) {
-		if(typeof x==="function") {
-			let idx=this.fn_list.indexOf(x);
-			if(idx===-1) idx=this.fn_list.push(x)-1;
-			return {type: "function",value: null,id: idx,...x};
+	/** @template T @template {string} K @arg {K} k @arg {T} c */
+	simple_filter(k,c) {
+		/** @type {unknown} */
+		let x=c;
+		switch(typeof x) {
+			case "string": return x;
+			case "number": return x;
+			case "bigint": return x;
+			case "boolean": return x;
+			case "symbol": switch(x) {
+				default: debugger; return {type: "symbol",value: null};
+				case box_sym_r: return {type: "symbol",value: null,for: "box_symbol"};
+			}
+			case "undefined": return x;
+			case "object": return this.simple_filter_obj(k,x);
+			case "function": {
+				let idx=this.fn_list.indexOf(x);
+				if(idx===-1) idx=this.fn_list.push(x)-1;
+				return {type: "function",value: null,id: idx,...x};
+			}
 		}
-		console.log("simple clone start",k,x);
-		const entries=Object.entries(x);
-		const res_entries=this.iter_entries(entries,(k,x) => {
-			if(typeof x==="object") {
-				if(x===null) return x;
+		if(x===null) return x;
+		if(typeof x==="object") {
+			return this.simple_filter_obj(k,x);
+		}
+		if(typeof x==="symbol")
+			if(typeof x==="string") return x;
+		if(typeof x==="boolean") return x;
+		if(x===undefined) return x;
+	}
+	/** @template {{}} T @arg {string} k @arg {T|null} x */
+	simple_filter_obj(k,x) {
+		let reconstructed=null;
+		try {
+			console.log("simple clone start",k,x);
+			if(x===null) return x;
+			const in_entries=Object.entries(x);
+			const res_entries=this.iter_entries(in_entries,(k,x) => {
 				return this.simple_filter(k,x);
-			}
-			let r=this.json_filter(k,x);
-			if(r!==null&&typeof r==="object") {
-				if(r.type==="function") return r;
-			}
-			if(typeof r==="string") return r;
-			if(r==true||r==false) return r;
-			if(r===null) return r;
-			console.log("simple cant copy",k,r.type,r);
+			});
+			reconstructed=Object.fromEntries(res_entries);
+		} catch(e) {
+			console.log("simple copy error",e);
+			console.log("simple cant copy",k,x);
 			debugger;
-			return x;
-		});
-		console.log("simple clone end",k,Object.fromEntries(res_entries));
-		return structuredClone(x);
+		} finally {
+			if(reconstructed!==null) console.log("simple clone end",k,reconstructed);
+			else {
+				console.log("simple clone end",k,x);
+			}
+		}
+		return {type: "empty",value: null};
 	}
 	/** @template {{[U in K]:any}} T @template {keyof T&string} K @arg {T} x @arg {K} k */
 	json_set_filter(x,k) {
 		const v=x[k];
 		const f=this.json_filter(k,v);
-		if(typeof f==="object"&&f!==null&&f.type==="normal"&&!("copy" in f)) {
+		if(typeof f==="object"&&f!==null&&"type" in f&&f.type==="normal"&&!("copy" in f)) {
 			this.set(x,k,f.value);
 		} else {
 			debugger;
@@ -2242,8 +2267,22 @@ class ApiBase2 {
 	}
 	/** @type {any[]} */
 	unable_to_clone_cache=[];
-	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>} */
+	is_throwing=false;
+	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>|{}|T|undefined} */
 	json_filter(k,z) {
+		let simple=true;
+		if(simple) {
+			if(typeof z==="object") {
+				if(z===null) return z;
+				return this.simple_filter(k,z);
+			}
+			if(typeof z==="function") {
+				let idx=this.fn_list.indexOf(z);
+				if(idx===-1) idx=this.fn_list.push(z)-1;
+				return {type: "function",value: null,id: idx,...z};
+			}
+			return z;
+		}
 		if(typeof z==="string") return z;
 		if(typeof z==="boolean") return z;
 		// console.log("rep",k,z);
@@ -2280,7 +2319,12 @@ class ApiBase2 {
 			/** @type {Type_GetOwnPropertyDescriptors<TextDecoder>} */
 			const desc=Object.getOwnPropertyDescriptors(zt);
 			const fd=this.simple_filter('prototype_description',desc);
-			return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_r]: true}};
+			if(fd!==null&&typeof fd==="object") {
+				return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_r]: true}};
+			} else {
+				debugger;
+				return {type: "prototype",key: k,of: "TextDecoder",value: null,__prototype_description: {value: fd,[box_sym_r]: true}};
+			}
 		}
 		if(z instanceof TextDecoder) {
 			/** @type {TextDecoder} */
@@ -2315,6 +2359,7 @@ class ApiBase2 {
 			try {
 				r=this.json_filter(k,x);
 			} catch(e) {
+				if(this.is_throwing) throw e;
 				err=e;
 			}
 			if(err) {
@@ -2326,6 +2371,7 @@ class ApiBase2 {
 			} catch(e) {
 				console.log("cant filter iter_entry try 2",k,e,x);
 				debugger;
+				this.is_throwing=true;
 				throw new Error();
 			}
 			try {structuredClone(r);} catch(e) {
