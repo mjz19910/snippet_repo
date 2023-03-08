@@ -1705,8 +1705,8 @@ class HandleTypes extends BaseService {
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
 		return {
-			a: "DI:R",b: "raw",c: "key:start_radio",w: "a/b/c/w/z",z: [{
-				a: "DI",b: "key",c: "start_radio",w: "/a/b/c/w/z",z: [
+			a: "DI:R",b: "raw",c: "key:start_radio",w: "/item/a/b/c/w/z",z: [{
+				a: "DI",b: "key",c: "start_radio",w: "/item/a/b/c/w/z",z: [
 					{a: "key_value",k: "start_radio",w: "/item/a/k/w/z",z: [{a: "primitive",e: "number",z: [x]}]}
 				]
 			}]
@@ -3160,7 +3160,7 @@ class HandleTypes extends BaseService {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
 				const u=x,p=this.get_parsed_info(this.mk_input_from_R_info(u));
 				/** @type {DI_Key_StartRadio} */
-				const z={a: "DI",b: "key",c: p.k,w: "/a/b/c/w/z",z: [this.make_akz(p.k,this.make_prim_num_t(p.raw_id))]};
+				const z={a: "DI",b: "key",c: p.k,w: "/item/a/b/c/w/z",z: [this.make_akz(p.k,this.make_prim_num_t(p.raw_id))]};
 				return z;
 			}
 			case "hashtag_id":

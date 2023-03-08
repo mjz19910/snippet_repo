@@ -1,6 +1,6 @@
 type I_KnownLoaded=
 	|DST_Channel_UC
-	|DST_KeySection
+	|DST_Key_StartRadio
 	|DST_Playlist_RD
 	|DST_Playlist_RD_MM
 	|DST_Playlist_WL

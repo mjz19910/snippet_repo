@@ -14,8 +14,8 @@ type G_BoxedIdObj=
 	|DST_GuideEntry_VL_LL
 	|DST_GuideEntry_WL
 	|DST_HashtagId
-	|DST_KeySection
-	|DST_KeySection
+	|DST_Key_StartRadio
+	|DST_Key_StartRadio
 	|DST_LoadId
 	|DST_Playlist_LL
 	|DST_Playlist_PL
@@ -52,14 +52,13 @@ type GB_A1_J_Shape=
 	;
 ;
 type TP1=G_BoxedIdObj['key'] extends infer I?
-	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}:${infer r1_4}:${infer r1_5}`? [f0,f1,r2,r1_3,r1_4,r1_5]:
-	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}:${infer r1_4}`? [f0,f1,r2,r1_3,r1_4]:
-	I extends `${infer f0}:${infer f1}:${infer r2}:${infer r1_3}`? [f0,f1,r2,r1_3]:
-	I extends `${infer f0}:${infer f1}:${infer r2}`? [f0,f1,r2]:
+	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}:${infer f5}`? [f0,f1,f2,f3,f4,f5]:
+	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}`? [f0,f1,f2,f3,f4]:
+	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}`? [f0,f1,f2,f3]:
+	I extends `${infer f0}:${infer f1}:${infer f2}`? [f0,f1,f2]:
 	I extends `${infer f0}:${infer f1}`? [f0,f1]:[I]:never
 	;
 ;
-type TP2=Exclude<TP1,[any,any]>;
 type TP3=[
 	Join<Extract<TP1,[any,any]>,":">,
 	// 3
@@ -72,7 +71,9 @@ type TP3=[
 	// 6
 	Join<Extract<TP1,[any,any,any,any,any,any]>,":">,
 ];
-type TP4=Exclude<Extract<TP2,[any,any,any,any]>,[any,any,"FE",any]>;
+type GB_A1_Keys=G_BoxedIdObj extends infer V? V extends infer I? T_DistributedKeyof<Omit<I,"key"|"a"|"b"|"j"|"w"|"z">>:[]:[];
+type GB_A1_KS1=Extract<G_BoxedIdObj,{w: any;}>;
+type GB_A1_KS2=Extract<G_BoxedIdObj,{k: any;}>;
 type GB_A1_J_Base="user_id"|"channel_id:UC"|"guide_entry_id:PL"|"guide_entry_id:UC";
 type G_BoxedInner=
 	|["z",G_BoxedIdObj]
@@ -80,10 +81,17 @@ type G_BoxedInner=
 	|["a1",GB_A1]
 	|[0,GST_DSS]
 	|[1,{
-		key: TP3[number];
+		key: G_BoxedIdObj['key'];
+		a: DST_PlayNext["a"]; b: "boxed_id";
+		j: GB_A1_J_Shape;
+		w: any;
+	}|{
+		key: G_BoxedIdObj['key'];
 		a: DST_PlayNext["a"]; b: "boxed_id";
 		j: GB_A1_J_Shape;
 	}]
+	|["k:sr",DST_Key_StartRadio]
+	|[2,string,"many"|"one"|"arr"|"typeof_name"|"instance_name"|"string",string|string[]|string[][]]
 	;
 ;
 type G_BoxedInner_Tmp=[
