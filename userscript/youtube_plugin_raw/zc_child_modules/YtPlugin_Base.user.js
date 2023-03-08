@@ -2229,15 +2229,18 @@ class ApiBase2 {
 	json_set_filter(x,k) {
 		const v=x[k];
 		const f=this.json_filter(k,v);
-		if(typeof f==="object"&&f!==null&&"value" in f&&f.value) {
-			const z=f.value;
-			switch(z.type) {
+		if(typeof f==="object"&&f!==null&&"type" in f) {
+			switch(f.type) {
 				default: debugger; break;
-				case "normal": this.set(x,k,z.value);
+				case "function": {
+					/** @type {Ret_Filter_FunctionModify} */
+					let w={type: "function",id: f.id,log: [{type: "add",key: k,value: v}]};
+					return w;
+				}
 			}
-		} else {
-			debugger;
 		}
+		debugger;
+		return x;
 	}
 	/** @arg {unknown} x */
 	save_clone(x) {
@@ -2378,8 +2381,8 @@ class ApiBase2 {
 			/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;decode: typeof dec_fn}} */
 			let dec_info={encoding,decode: dec_fn,fatal,ignoreBOM,__symbol_prototype: filtered_proto,...y};
 			if(this.get_keys_of(y).length>0) debugger;
-			this.json_set_filter(dec_info,"decode");
-			return {type: "obj",of: "TextDecoder",value: as(dec_info)};
+			let set_info=this.json_set_filter(dec_info,"decode");
+			return {type: "obj",of: "TextDecoder",value: set_info};
 		}
 		if(z instanceof Array) {
 			try {
