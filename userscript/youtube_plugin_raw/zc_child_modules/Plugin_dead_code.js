@@ -129,11 +129,13 @@ export class IndexedDBDeadCode extends IndexedDBService {
 				case "update2": update2=x; break;
 			}
 			missing; update_bad; unk; ok_; update_ok; bad; missing2; update2;
-			if(missing) switch(missing[2]) {
-				case "key": break;
-				case "tag": break;
-				case "type": break;
-				case "value": break;
+			{
+				const c=missing; if(c) switch(c[2]) {
+					case "key": break;
+					case "tag": break;
+					case "type": break;
+					case "value": break;
+				}
 			}
 			{
 				const c=update_bad; if(c) switch(c[1]) {
