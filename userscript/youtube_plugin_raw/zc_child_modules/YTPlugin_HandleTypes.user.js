@@ -25,10 +25,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
-	[24456736],
-	[24486981],
-	[24451320],
-	[24412856,24447992,24483504,24483766,24491863,24492030],
+	[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends BaseService {
