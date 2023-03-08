@@ -41,3 +41,5 @@ type JsonFilterRet<K,T>=
 	|null
 	;
 ;
+type PartialWithType<T,S=JsonFilterRet<any,any>>=Extract<S,{type: T;}>;
+type RequiredType<V>=Partial<Omit<PartialWithType<V>,"type">>&Pick<PartialWithType<V>,"type">;

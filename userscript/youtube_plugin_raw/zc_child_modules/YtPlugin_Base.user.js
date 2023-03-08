@@ -2153,6 +2153,64 @@ class ApiBase2 {
 		console.log("module_debug: module");
 		console.log(json_clone);
 	}
+	/** @returns {JsonFilterRet<K,T>} @template T @template {string} K @arg {K} k @arg {JsonFilterRet<K,T> extends infer P? P extends infer I?Partial<I>:never:never} x */
+	json_filter_filter_ret(k,x) {
+		k;
+		if(typeof x==="string"||typeof x==="boolean"||x===null) return x;
+		if(x.type===void 0) {debugger; return null;}
+		/** @type {JsonFilterRet<K,T>|null} */
+		let r1=null;
+		switch(x.type) {
+			default: debugger; break;
+			case "function": {
+				/** @type {RequiredType<typeof x['type']>} */
+				let b={...x,value: null,type: "function"};
+				if(b.value===void 0) {debugger; return null;}
+				if(b.id===void 0) {debugger; return null;}
+				const {type,value,id,...w2}=b;
+				if(this.get_keys_of(w2).length!==0) debugger;
+				r1={...w2,type,value,id};
+			} break;
+			case "symbol": {
+				/** @type {RequiredType<typeof x['type']>} */
+				let b={...x,type: x.type};
+				if(b.value===void 0) {debugger; return null;}
+				const {type,value,...w2}=b;
+				if(this.get_keys_of(w2).length!==0) debugger;
+				r1={...w2,type,value};
+			} break;
+			case "normal": {
+				/** @type {RequiredType<typeof x['type']>} */
+				let b={...x,type: x.type};
+				if(b.value===void 0) {debugger; return null;}
+				const {type,value,...w2}=b;
+				if(this.get_keys_of(w2).length!==0) debugger;
+				r1={...w2,type,value};
+			} break;
+			case "obj": {
+				/** @type {RequiredType<typeof x['type']>} */
+				let b={...x,type: x.type};
+				if(b.value===void 0) {debugger; return null;}
+				if(b.of===void 0) {debugger; return null;}
+				const {type,value,of,...w2}=b;
+				if(this.get_keys_of(w2).length!==0) debugger;
+				r1={...w2,type,of,value};
+			} break;
+			case "prototype": {
+				/** @type {RequiredType<typeof x['type']>} */
+				let b={...x,type: x.type};
+				if(b.value===void 0) {debugger; return null;}
+				const {type,value,key,of,__prototype_description,...w2}=b; if(this.get_keys_of(w2).length!==0) debugger;
+				if(key===void 0) {debugger; return null;}
+				if(of===void 0) {debugger; return null;}
+				if(__prototype_description===void 0) {debugger; return null;}
+				r1={...w2,type,value,key,of,__prototype_description};
+			} break;
+		}
+		if(r1) return r1;
+		console.log("not handled",k,x);
+		return null;
+	}
 	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>} */
 	json_filter(k,z) {
 		if(typeof z==="string") return z;
@@ -2175,32 +2233,12 @@ class ApiBase2 {
 		if(cloned_sym in z&&z[cloned_sym]===true) return {type: "normal",value: z};
 		if("type" in z) {
 			/** @type {{}} */
-			let w=z;
-			/** @type {Partial<JsonFilterRet<any,any>>} */
-			let w2=w; let wr=null;
-			if(w2.type) {wr={type: w2.type,...w2};}
-			let r1=null;
-			if(wr) switch(wr.type) {
-				default: debugger; break;
-				case "function": {
-					const wrt=wr.type; const z=wr;
-					/** @type {Partial<JsonFilterRet<any,any>>&Pick<Extract<JsonFilterRet<any,any>,object>,"type">} */
-					/** @typedef {Extract<JsonFilterRet<any,any>,{type:typeof wrt}>} T1 */
-					/** @type {Partial<Omit<T1,"type">>&Pick<T1,"type">} */
-					let w={...z,value: null,type: "function"};
-					if(w.value===void 0) {debugger; return null;}
-					const {...w2}=w;
-					if(w2.id!==void 0) {
-						const {type,id}=w2;
-						r1={type,value: null,id};
-					}
-				} break;
-				case "symbol": {
-
-				} break;
-			}
-			if(r1) {
-				return r1;
+			let _w1=z;
+			/** @type {JsonFilterRet<any,any> extends infer A?A extends infer I?Partial<I>:never} */
+			let w=_w1;
+			if(w.type) {
+				const r=this.json_filter_filter_ret(k,w);
+				return r;
 			}
 		}
 		/** @type {{}} */
