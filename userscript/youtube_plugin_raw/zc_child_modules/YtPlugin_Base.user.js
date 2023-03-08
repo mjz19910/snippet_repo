@@ -1950,7 +1950,7 @@ function yt_plugin_base_main() {
 			mod.init_module();
 			continue;
 		}
-		console.log("module_debug: module",structuredClone(mod));
+		test_base.module_debug_log(mod);
 	}
 	if(failed_to_load) return;
 	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
@@ -2094,6 +2094,88 @@ const general_service_state={
 	premium_membership: null,
 };
 class ApiBase2 {
+	/** @arg {{}} mod */
+	module_debug_log(mod) {
+		let fn_list=[];
+		/** @arg {string} k @arg {unknown} z @returns {unknown} */
+		const json_filter=(k,z) => {
+			if(typeof z==="function") return {type: "function",id: fn_list.push(z),...z};
+			if(typeof z!=="object") return z;
+			if(z===null) return z;
+			x: if("length" in z&&typeof z.length==="number") {
+				let x=null;
+				{
+					let [...y]=this.get_keys_of_2([]);
+					{
+						const [a,b,c,d,e,f,g,h,i,j,k,l,...m]=y; x=m;
+						if(!(a in z)) break x; if(!(b in z)) break x; if(!(c in z)) break x; if(!(d in z)) break x; if(!(e in z)) break x; if(!(f in z)) break x;
+						if(!(g in z)) break x; if(!(h in z)) break x; if(!(i in z)) break x; if(!(j in z)) break x; if(!(k in z)) break x; if(!(l in z)) break x;
+					}
+					let n=null,q=null;
+					{
+						const [a,b,c,d,e,f,g,h,i,j,k,l,...m]=x; n=m;
+						if(!(a in z)) break x; if(!(b in z)) break x; if(!(c in z)) break x; if(!(d in z)) break x; if(!(e in z)) break x; if(!(f in z)) break x;
+						if(!(g in z)) break x; if(!(h in z)) break x; if(!(i in z)) break x; if(!(j in z)) break x; if(!(k in z)) break x; if(!(l in z)) break x;
+					}
+					{
+						const [a,b,c,d,e,f,g,h,i,j,k,l,...m]=n; q=m;
+						if(!(a in z)) break x; if(!(b in z)) break x; if(!(c in z)) break x; if(!(d in z)) break x; if(!(e in z)) break x; if(!(f in z)) break x;
+						if(!(g in z)) break x; if(!(h in z)) break x; if(!(i in z)) break x; if(!(j in z)) break x; if(!(k in z)) break x; if(!(l in z)) break x;
+					}
+					if(!(q[0] in z)) break x;
+					if(!(q[1] in z)) break x;
+					if(!(Symbol.iterator in z)) break x;
+					if(!(Symbol.unscopables in z)) break x;
+				}
+				if(typeof z.pop!=="function") break x; if(typeof z.push!=="function") break x; if(typeof z.concat!=="function") break x;
+				/** @type {Object} */
+				const o=z;
+				{
+					let [...y]=this.get_keys_of_2(o);
+					const [a,b,c,d,e,f,g,h]=y;
+					if(!(a in o)) break x; if(!(b in o)) break x; if(!(c in o)) break x; if(!(d in o)) break x; if(!(e in o)) break x; if(!(f in o)) break x; if(!(g in o)) break x; if(!(h in o)) break x;
+				}
+				const {}=o;
+				/** @type {[]} */
+				// const {pop,push,concat,copyWithin,join,reduce,reduceRight,reverse,shift,slice,some,sort,splice,toLocaleString,toString}=[];
+				/** @type {any[]} */
+				// const z2={...z,length: z.length,pop,push,concat,copyWithin,join,reduce,reduceRight,reverse,shift,slice,some,sort,splice,toLocaleString,toString};
+				/** @type {{length:number;[x: number]: unknown}} */
+				let rv={...z,length: z.length};
+				/** @type {unknown[]} */
+				let res_arr=[];
+				for(let i=0;i<rv.length;i++) {
+					const item=rv[i]; const filtered=json_filter(`${i}`,item);
+					try {
+						let cloned=structuredClone(filtered);
+						res_arr.push({...cloned,cloned: true});
+					} catch {debugger; res_arr.push(filtered); continue;}
+				}
+				return res_arr;
+			}
+			if("cloned" in z&&z.cloned===true) return z;
+			const entries=Object.entries(z);
+			/** @type {[string,any][]} */
+			let res_entries=[];
+			for(const entry of entries) {
+				const [k1,x]=entry;
+				const filtered=json_filter(`${k}.${k1}`,x);
+				try {
+					let cloned=structuredClone(filtered);
+					res_entries.push([k1,{...cloned,cloned: true}]);
+				} catch {debugger; res_entries.push([k1,filtered]); continue;}
+			}
+			return z;
+		};
+		/** @arg {unknown} x */
+		function save_clone(x) {
+			const str=JSON.stringify(x,json_filter);
+			return JSON.parse(str);
+		}
+		const json_clone=save_clone(mod);
+		console.log(json_clone);
+		console.log("module_debug: module",json_clone);
+	}
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {debugger;}
@@ -2106,6 +2188,14 @@ class ApiBase2 {
 			if(pn!=v) return v;
 			return pn;
 		});
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
+	}
+	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
+	get_keys_of_2(obj) {
+		if(!obj) {debugger;}
+		let rq=Object.keys(obj);
 		/** @private @type {any} */
 		let ra=rq;
 		return ra;

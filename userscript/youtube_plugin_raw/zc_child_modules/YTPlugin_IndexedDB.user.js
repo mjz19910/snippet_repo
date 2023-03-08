@@ -1106,14 +1106,6 @@ class IndexedDBService extends BaseService {
 		cache_index.set(key,idx);
 		return idx;
 	}
-	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
-	get_keys_of_2(obj) {
-		if(!obj) {debugger;}
-		let rq=Object.keys(obj);
-		/** @private @type {any} */
-		let ra=rq;
-		return ra;
-	}
 	/** @template T @arg {IDBRequest<T>} request @returns {Promise<Event>} */
 	await_success(request) {
 		return new Promise(function(accept,reject) {
