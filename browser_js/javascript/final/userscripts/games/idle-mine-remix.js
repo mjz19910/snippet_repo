@@ -12,8 +12,12 @@
 
 (function() {
 	'use strict';
-var strcode
-	(function(e){strcode=e.raw[0].trim()})`
+	/** @arg {TemplateStringsArray} e */
+	const str_get_raw=function(e) {
+		if(e.raw.length!==1) debugger;
+		return e.raw[0].trim();
+	};
+	var strcode=str_get_raw`
 (function() {
 	var dofn = function(arr, p_a, p_r) {
 			var wk;
@@ -382,8 +386,8 @@ var strcode
 }
 )()
 //# sourceURL=snippets:///$__.imr
-`
-var noteval=Function("return eval")()
-	noteval(strcode)
+`;
+	var noteval=Function("return eval")();
+	noteval(strcode);
 	// Your code here...
 })();
