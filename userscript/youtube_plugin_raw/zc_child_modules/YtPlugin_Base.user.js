@@ -2102,6 +2102,22 @@ class ApiBase2 {
 			if(typeof z==="function") return {type: "function",id: fn_list.push(z),...z};
 			if(typeof z!=="object") return z;
 			if(z===null) return z;
+			if("cloned" in z&&z.cloned===true) return z;
+			x: if("encoding" in z&&"fatal" in z&&"ignoreBOM" in z&&"decode" in z) {
+				if(typeof z.decode!=="function") break x; if(typeof z.encoding!=="string") break x; if(typeof z.fatal!=="boolean") break x;
+				if(typeof z.ignoreBOM!=="boolean") break x;
+				/** @type {TextDecoder["decode"]} */
+				const decode=as(z.decode);
+				/** @type {TextDecoder} */
+				const z1={...z,decode,encoding: z.encoding,fatal: z.fatal,ignoreBOM: z.ignoreBOM};
+				const filtered=json_filter(k,z1);
+				try {
+					let cloned=structuredClone(filtered);
+					return {...cloned,cloned: true};
+				} catch {
+					debugger; return filtered;
+				}
+			}
 			x: if("length" in z&&typeof z.length==="number") {
 				let x=null;
 				{
@@ -2153,7 +2169,6 @@ class ApiBase2 {
 				}
 				return res_arr;
 			}
-			if("cloned" in z&&z.cloned===true) return z;
 			const entries=Object.entries(z);
 			/** @type {[string,any][]} */
 			let res_entries=[];
