@@ -384,7 +384,7 @@ async function async_plugin_init(event) {
 					if(e_tn=="IRON-ICONSET-SVG") return false;
 					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e.id==="home-page-skeleton") return false;
-					// cspell:ignore skeletonhidden
+					// cspell: ignore skeletonhidden
 					if(e.id==="watch-page-skeleton"&&(
 						e.classList.value==="watch-skeletonhidden"||
 						e.classList.value==="watch-skeleton"

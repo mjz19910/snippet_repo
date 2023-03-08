@@ -256,6 +256,7 @@ type RS_Page_Shorts={
 	previousCsn?: string;
 	cachedReelWatchSequenceResponse?: RS_ReelWatchSequence;
 };
+// cspell: ignoreRegExp /"([A-Za-z0-9]{27})\."/
 type RS_Page_Watch={
 	page: "watch";
 	endpoint: E_Watch;
@@ -263,6 +264,7 @@ type RS_Page_Watch={
 	playerResponse: RS_Player;
 	url: D_WatchPageUrl;
 	previousCsn?: string;
+	csn?: "MC4wMjg2Nzc5NzkwNzQ3NjQ1NDg.";
 };
 type RS_Page_Browse={
 	page: "browse";

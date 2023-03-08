@@ -341,7 +341,7 @@ type P_continuation_request_reel_watch_sequence_token={
 	15: T_VW<P_reel_watch_sequence_data>;
 };
 type TX_sequence_info={3: T_D32<12>;};
-// cspell:ignore BRaeiCMuKpQ
+// cspell: ignore BRaeiCMuKpQ
 // https://www.youtube.com/shorts/BRaeiCMuKpQ
 type P_reel_sequence_params={
 	1: TV_Str<DU_VideoId>;

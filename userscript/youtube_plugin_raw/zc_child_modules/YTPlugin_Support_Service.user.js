@@ -1245,13 +1245,14 @@ class Support_RS_WatchPage extends BaseService {
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
 		const cf="RS_Page_Watch"; this.sm.k(cf,x);
-		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {page: {},endpoint,response,playerResponse,url,previousCsn,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.E_Watch(endpoint);
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		let wp_params=this.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_keys(`${cf}.wp_params`,wp_params);
-		this.t(previousCsn,x => this.sm.D_VeCsn(x,true));
+		this.t(previousCsn,x => this.sm.D_VeCsn(x,{prev: true}));
+		this.t(csn,x => this.sm.D_VeCsn(x,{cur: true}));
 	}
 }
 export_(exports => {exports.Support_RS_WatchPage=Support_RS_WatchPage;});
@@ -1774,7 +1775,7 @@ class Support_EventInput extends BaseService {
 			if(!this.sm.is_not_empty_obj(u)) return;
 			if("previousCsn" in u) {
 				const {previousCsn,...y}=u; this.g(y);
-				this.sm.D_VeCsn(previousCsn,true);
+				this.sm.D_VeCsn(previousCsn,{prev: true});
 				return;
 			}
 			const {graftedVes,csn,...y}=u; this.g(y);
@@ -2040,7 +2041,7 @@ class Support_EventInput extends BaseService {
 			/** @type {T_MakeHandlers<typeof x>} */
 			const handlers={...h_d,url: h_url,expirationTime: h_et};
 			let {previousCsn,...u1}=this.RS_Page_Type1(cf,x,handlers); this.g(u1);
-			this.sm.D_VeCsn(previousCsn,true);
+			this.sm.D_VeCsn(previousCsn,{prev: true});
 			return;
 		}
 		if("rootVe" in x) {
@@ -2123,7 +2124,7 @@ class Support_EventInput extends BaseService {
 		this.t(reelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 		if(!this.sm.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
-		this.t(previousCsn,x => this.sm.D_VeCsn(x,true));
+		this.t(previousCsn,x => this.sm.D_VeCsn(x,{prev: true}));
 		this.t(cachedReelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 	}
 	/** @private @arg {RS_SearchPage} x */
