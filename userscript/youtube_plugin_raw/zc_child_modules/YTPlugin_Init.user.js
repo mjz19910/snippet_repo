@@ -12,43 +12,14 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Init.user.js
 // ==/UserScript==
 
-const {do_export,yt_plugin_base_main,get_exports,ApiBase2}=require("./YtPlugin_Base.user");
-const __module_name__="mod$InitPlugin";
-/** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-export_(exports => {exports.__is_module_flag__=true;});
-x: {
-	const sl=require("./YtPlugin_ServiceLoader_Plugin.user");
-	if(sl===void 0) {
-		console.log("missing ServiceLoaderPlugin");
-		break x;
-	}
-	const ss=require("./YTPlugin_Support_Service.user");
-	if(!ss) {
-		console.log("missing SupportService");
-		break x;
-	}
-	console=typeof window==="undefined"? console:(() => window.console)();
-	let modules=get_exports();
-	const test_base=new ApiBase2;
-	let module_keys=test_base.get_keys_of(modules);
-	let failed_to_load=false;
-	for(let module_name of module_keys) {
-		let value=modules[module_name];
-		if(!value) continue;
-		if(value.__module_loaded__===false) {
-			console.log("module_not_loaded",value);
-			failed_to_load=true;
-			continue;
-		}
-		if("init_module" in value&&typeof value.init_module==="function") {
-			console.log("init_module",value);
-			value.init_module();
-			continue;
-		}
-		console.log("module",value);
-	}
-	if(failed_to_load) break x;
+const {yt_plugin_base_main,do_export}=require("./YtPlugin_Base.user");
+
+(function() {
+	"use strict";
+	const __module_name__="mod$InitPlugin";
+	/** @private @arg {(x:typeof exports)=>void} fn */
+	function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+	export_(exports => {exports.__is_module_flag__=true; exports.__init_module__=true;});
 	yt_plugin_base_main();
-}
-export_(exports => exports.__module_loaded__=true);
+	export_(exports => exports.__module_loaded__=true);
+})();

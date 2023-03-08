@@ -75,20 +75,12 @@ const path_map={
 };
 /** @template {keyof typeof path_map} T @arg {T} x */
 function require(x) {
-	window.__plugin_modules__??={};
-	let M=window.__plugin_modules__;
 	if(x===void 0) {throw new Error("missing required");}
-	let loc=path_map[x];
-	if(loc[0]==="raw") {
-		let imp=M[loc[1]];
-		return imp;
-	}
-	if(loc[0]==="sys") {
-		return window[loc[1]];
-	}
-	let imp=M[`${loc[0]}$${loc[1]}`];
-	if(!imp) {debugger; throw new Error("missing require path map");}
-	return imp;
+	window.__plugin_modules__??={};
+	const M=window.__plugin_modules__,loc=path_map[x],i=required;
+	if(loc[0]==="sys") return i(window[loc[1]]);
+	if(loc[0]==="raw") return i(M[loc[1]]);
+	return i(M[`${loc[0]}$${loc[1]}`]);
 }
 /** @template T @arg {T|null} x @returns {T} */
 function non_null(x) {
@@ -1871,6 +1863,31 @@ class ServiceResolver {
 //#endregion
 //#region main
 function yt_plugin_base_main() {
+	console=typeof window==="undefined"? console:(() => window.console)();
+	let modules=get_exports();
+	const test_base=new ApiBase2;
+	let module_keys=test_base.get_keys_of(modules);
+	let failed_to_load=false;
+	for(let module_name of module_keys) {
+		let mod=modules[module_name];
+		if(!mod) continue;
+		if("__init_module__" in mod&&mod.__init_module__===true) {
+			console.log("module_is: module init",mod);
+			continue;
+		}
+		if(mod.__module_loaded__===false) {
+			console.log("module_state: module not loaded",mod);
+			failed_to_load=true;
+			continue;
+		}
+		if("init_module" in mod&&typeof mod.init_module==="function") {
+			console.log("module_action: init",mod);
+			mod.init_module();
+			continue;
+		}
+		console.log("module_debug: module",mod);
+	}
+	if(failed_to_load) return;
 	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
 	const log_enabled_page_type_change=false;
 	/** @private @type {DefaultServiceResolver} */
