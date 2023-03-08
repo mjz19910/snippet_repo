@@ -1005,7 +1005,11 @@ class IndexedDBService extends BaseService {
 					case "root_visual_element": console.log("[cache_outdated]",no); break;
 				}
 			}
-			console.log("has loaded cache value",loaded_value,value);
+			/** @arg {G_BoxedIdObj} x */
+			function w(x) {return x.z[0];}
+			if(loaded_value===void 0) break x;
+			let x=value; let y=loaded_value;
+			console.log("[cur_cache_value] [x.key,x,y]",x.key,w(x),w(y));
 		}
 		try {
 			let ret=await this.putImpl(key,value,version);

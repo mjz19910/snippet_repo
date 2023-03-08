@@ -347,7 +347,7 @@ class HandleTypes extends BaseService {
 	T_FD32(x) {return this.T_RawChild(x)[1];}
 	/** @private @template{bigint} T @arg {T_FD64<T>} x */
 	T_FD64(x) {return this.T_RawChild(x)[1];}
-	/** @protected @template T @arg {T_VW<T>} x */
+	/** @protected @template T @arg {["v_param_arr", [[any,any,T,any]]]} x */
 	T_VW(x) {return this.T_RawChild(x)[2];}
 	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
 	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
@@ -355,7 +355,7 @@ class HandleTypes extends BaseService {
 	TV_Str(x) {return this.T_RawChild(x)[3][1];}
 	/** @protected @template T @template {string} Str @arg {T_VW<T>|TV_Str_CS<Str>} x */
 	T_PArr_1(x) {return x[1];}
-	/** @protected @template T @arg {T_PArr_1<[T]>} x */
+	/** @protected @template J @template {T_PArr_1<[J]>} T @arg {T} x @returns {T[1][0]} */
 	T_RawChild(x) {
 		if(x===void 0) debugger;
 		return x[1][0];
@@ -2859,7 +2859,8 @@ class HandleTypes extends BaseService {
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.PD_timed_continuation_f3(this.T_VW(v3));
+		let i3=this.TV_Str_ex(v3); this.on_video_id(i3);
+		this.t(this.T_VW(v3),this.PD_timed_continuation_f3);
 		f4; f7; f8;
 	}
 	/** @private @arg {P_f3_PD_continuation_params} x */
@@ -2904,7 +2905,8 @@ class HandleTypes extends BaseService {
 	P_notification_remove_upcoming_event_reminder_params(x) {
 		const cf="P_notification_remove_upcoming_event_reminder_params";
 		const {1: v1,6: v6}=this.s(cf,x);//,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.PD_event_info(this.T_VW(v1));
+		console.log("nr:ue:r:params.f1",v1[1][0][3][1]);
+		this.t(this.T_VW(v1),this.PD_event_info);
 		this.PX_upcoming_event_reminder_info(this.T_VW(v6));
 	}
 	/** @private @arg {PD_event_info} x */
