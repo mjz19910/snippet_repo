@@ -14,7 +14,7 @@
 
 const {do_export,CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers,YtPlugin,ModifyEnv}=require("./YtPlugin_Base.user");
 const {CodegenService}=require("./YTPlugin_Codegen.user");
-const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
+const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
 const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 const {ParserService}=require("./YTPlugin_Parser_Service.user");
@@ -63,7 +63,5 @@ class ServiceLoader {
 	}
 }
 
-export_(exports => {
-	exports.ServiceLoader=ServiceLoader;
-	exports.__module_loaded__=true;
-});
+export_(exports => {exports.ServiceLoader=ServiceLoader;});
+export_(exports => exports.__module_loaded__=true);

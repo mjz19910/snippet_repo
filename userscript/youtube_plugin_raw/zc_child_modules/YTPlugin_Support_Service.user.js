@@ -17,6 +17,7 @@ const {do_export,as,split_string_once,split_string,split_string_once_ex,split_st
 const __module_name__="mod$SupportService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 //#region SeenDatabase & non support exports
 /** @private @arg {WA|null} _wa @template {[string,string]} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_v2<WA,S,D>} */
 function split_string_once_ex_v2(s,d=as(","),_wa) {
@@ -5418,3 +5419,4 @@ class ForService_XMethods extends BaseService {
 	D_TwoColumnSearchResults(x) {this.H_("primaryContents",x,this.R_SectionList);}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});
+export_(exports => exports.__module_loaded__=true);

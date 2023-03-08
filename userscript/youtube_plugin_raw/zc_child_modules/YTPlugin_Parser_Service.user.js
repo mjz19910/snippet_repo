@@ -637,7 +637,5 @@ class ParserService extends BaseService {
 	}
 }
 
-export_(exports => {
-	exports.ParserService=ParserService;
-	exports.__is_module_flag__=true;
-});
+export_(exports => {exports.ParserService=ParserService;});
+export_(exports => exports.__module_loaded__=true);

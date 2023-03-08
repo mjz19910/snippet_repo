@@ -1228,6 +1228,5 @@ class CodegenService extends ServiceWithAccessors {
 		ret_arr.push(`if(${k1}!=="${x2}") debugger;`);
 	}
 }
-export_(exports => {
-	exports.CodegenService=CodegenService;
-});
+export_(exports => {exports.CodegenService=CodegenService;});
+export_(exports => exports.__module_loaded__=true);

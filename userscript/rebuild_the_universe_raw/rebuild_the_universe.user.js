@@ -3178,3 +3178,4 @@ if(typeof exports==="object") {
 		StackVMImpl: StackVMImpl,
 	};
 }
+export_(exports => exports.__module_loaded__=true);

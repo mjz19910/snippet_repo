@@ -14,7 +14,7 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 //#region module init
 const __module_name__="mod$YoutubePluginBase";
-/** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+/** @arg {keyof PluginStore} module_name @template {{__is_module_flag__:true}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn,flags,exports,module_name) {
 	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {fn(exports);} else {
@@ -28,7 +28,7 @@ function do_export(fn,flags,exports,module_name) {
 			window.__plugin_modules__??={};
 			let all_modules=window.__plugin_modules__;
 			exports=as(all_modules[module_name]??{});
-			/** @type {{[U in keyof PluginStore]?:{}}} */
+			/** @type {{[U in keyof PluginStore]?:{__is_module_flag__:true;}}} */
 			let ok_modules=all_modules;
 			ok_modules[module_name]=as(exports);
 		}
@@ -105,6 +105,7 @@ export_(exports => {
 });
 const log_imports=false;
 export_(exports => {exports.__yt_plugin_log_imports__=log_imports;},{global: true});
+export_(exports => {exports.__is_module_flag__=true;});
 if(log_imports) console.log("Load PluginBase");
 //#endregion
 //#region basic
@@ -3393,6 +3394,7 @@ export_(exports => {
 });
 export_(exports => {exports.base64_url_dec=base64_url_dec;});
 export_(exports => {exports.is_firefox=is_firefox;});
+export_(exports => exports.__module_loaded__=true);
 //#endregion
 //#region global exports
 export_((exports) => {exports.__youtube_plugin_base_loaded__=true;},{global: true});

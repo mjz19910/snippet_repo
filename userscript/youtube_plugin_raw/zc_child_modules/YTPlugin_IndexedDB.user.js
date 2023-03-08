@@ -1283,7 +1283,5 @@ class IndexedDBService extends BaseService {
 		console.log(res.store_diff);
 	}
 }
-export_(exports => {
-	exports.__module_loaded__=true;
-	exports.IndexedDBService=IndexedDBService;
-});
+export_(exports => {exports.IndexedDBService=IndexedDBService;});
+export_(exports => exports.__module_loaded__=true);

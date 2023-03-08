@@ -25,7 +25,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 //#region
 function init_module() {
-	const {ECatcherService}=require("./YTPlugin_ECatcherService.user");
+	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 	// [new_fexp_expected]
 	ECatcherService.known_experiments.push(...[
 		[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030],
@@ -3245,3 +3245,4 @@ class HandleTypes extends BaseService {
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});
+export_(exports => exports.__module_loaded__=true);

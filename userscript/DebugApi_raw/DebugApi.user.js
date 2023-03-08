@@ -4754,3 +4754,4 @@ class DebugApi {
 	}
 }
 export_(exports => {exports.DebugApi=DebugApi;});
+export_(exports => exports.__module_loaded__=true);

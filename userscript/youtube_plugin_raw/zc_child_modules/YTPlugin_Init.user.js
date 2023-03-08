@@ -44,3 +44,4 @@ x: {
 	}
 	yt_plugin_base_main();
 }
+export_(exports => exports.__module_loaded__=true);

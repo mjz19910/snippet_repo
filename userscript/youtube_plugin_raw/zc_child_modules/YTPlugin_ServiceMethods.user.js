@@ -17,6 +17,7 @@ const {ServiceData,do_export,split_string_once,split_string,as,base64_url_dec,as
 const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 class ServiceMethods extends ServiceData {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:ServiceMethods,x:T)=>U} f */
 	t(x,f) {return this.t_base(x,f);}
@@ -5917,3 +5918,4 @@ class ServiceMethods extends ServiceData {
 	//#endregion
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
+export_(exports => exports.__module_loaded__=true);

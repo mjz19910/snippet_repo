@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	YTPlugin ECatcherService handler
+// @name	YTPlugin ECatcherService Plugin
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.1
 // @description	try to take over the world!
@@ -8,8 +8,8 @@
 // @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService.user.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user.js
 // ==/UserScript==
 
 const {do_export,BaseService}=require("./YtPlugin_Base.user");
@@ -93,7 +93,5 @@ class ECatcherService extends BaseService {
 	/** @private @arg {NonNullable<this["data"]["client"]>} client */
 	update_client(client) {this.data.client=client;}
 }
-export_(exports => {
-	exports.ECatcherService=ECatcherService;
-	exports.__module_loaded__=true;
-});
+export_(exports => {exports.ECatcherService=ECatcherService;});
+export_(exports => exports.__module_loaded__=true);

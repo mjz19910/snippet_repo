@@ -25,4 +25,4 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 // User code here
 
-export_(exports => {exports.__module_loaded__=true;});
+export_(exports => exports.__module_loaded__=true);
