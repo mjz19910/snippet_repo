@@ -4341,7 +4341,7 @@ class ForService_XMethods extends BaseService {
 		this.t(tooltip,x => this.sm.a_primitive_str(x));
 		this.t(trackingParams,x => this.sm.trackingParams(x));
 		this.t(accessibilityData,this.sm.D_Accessibility);
-		this.t(command,this.sm.GC_Button);
+		this.xm.t(command,this.xm.GC_Button);
 	}
 	/** @public @arg {G_ThumbnailOverlayItem} x */
 	G_ThumbnailOverlayItem(x) {
@@ -5356,21 +5356,31 @@ class ForService_XMethods extends BaseService {
 	/** @public @arg {GC_Button} x */
 	GC_Button(x) {
 		const cf="GC_Button";
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.xr.C_Continuation(x);
 		if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
-		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
+		if("signalServiceEndpoint" in x) return this.sm.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("commandExecutorCommand" in x) return this.C_Executor(x);
+		if("commandExecutorCommand" in x) return this.sm.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
-		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
+		if("getSurveyCommand" in x) return this.sm.C_GetSurvey(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.sm.E_AddToPlaylistService(x);
 		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("feedbackEndpoint" in x) return this.E_Feedback(x);
+		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
+		if("feedbackEndpoint" in x) return this.sm.E_Feedback(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {E_CreateBackstagePost} x */
-	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
+	E_CreateBackstagePost(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
+	/** @private @arg {DE_CreateBackstagePost} x */
+	DE_CreateBackstagePost(x) {this.sm.TD_Params("DE_CreateBackstagePost","create_backstage_post.params","createBackstagePostParams",x);}
+	/** @private @arg {C_ShowReelsCommentsOverlay} x */
+	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
+	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
+	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.xm.R_EngagementPanelSectionList(x));}
+	/** @private @arg {M_CreateBackstagePost} x */
+	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
+	/** @private @arg {GM_CreateBackstagePost} x */
+	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.sm.cq(x,"/youtubei/v1/backstage/create_post"));}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

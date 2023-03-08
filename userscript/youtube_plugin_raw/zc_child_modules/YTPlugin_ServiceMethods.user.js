@@ -157,8 +157,6 @@ class ServiceMethods extends ServiceData {
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
 		this.cg.codegen_str(cf,x);
 	}
-	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.xm.R_EngagementPanelSectionList(x));}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
 		const cf="D_ToggleMenuServiceItem";
@@ -480,8 +478,6 @@ class ServiceMethods extends ServiceData {
 	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.cq(x,"/youtubei/v1/like/like"));}
 	/** @private @arg {GM_RecordInteractions} x */
 	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.cq(x,"/youtubei/v1/notification/record_interactions"));}
-	/** @private @arg {GM_CreateBackstagePost} x */
-	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.cq(x,"/youtubei/v1/backstage/create_post"));}
 	/** @public @arg {GM_UserFeedback} x */
 	GM_UserFeedback(x) {this.cq(this.w("GM_UserFeedback","ignoreNavigation",x),true);}
 	/** @private @arg {GM_GetNotificationMenu} x */
@@ -877,8 +873,6 @@ class ServiceMethods extends ServiceData {
 	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @public @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
-	/** @private @arg {C_ShowReelsCommentsOverlay} x */
-	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @public @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
 	/** @public @arg {R_MenuFlexibleItem} x */
@@ -2391,8 +2385,6 @@ class ServiceMethods extends ServiceData {
 		if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {this.TD_Params("DE_CreateBackstagePost","create_backstage_post.params","createBackstagePostParams",x);}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
@@ -2401,8 +2393,6 @@ class ServiceMethods extends ServiceData {
 		this.t(uiActions,this.D_HideEnclosingContainer);
 		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
 	}
-	/** @private @arg {M_CreateBackstagePost} x */
-	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {A_HideEnclosing} x */
