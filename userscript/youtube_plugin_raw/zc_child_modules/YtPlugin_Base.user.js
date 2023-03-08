@@ -2123,15 +2123,15 @@ class ApiBase2 {
 			case "bigint": return x;
 			case "boolean": return x;
 			case "symbol": switch(x) {
-				default: debugger; return {type: "symbol",value: null};
-				case box_sym_r: return {type: "symbol",value: null,for: "box_symbol"};
+				default: debugger; return {type: "symbol"};
+				case box_sym_r: return {type: "symbol",for: "box_symbol"};
 			}
 			case "undefined": return x;
 			case "object": return this.simple_filter_obj(k,x);
 			case "function": {
 				let idx=this.fn_list.indexOf(x);
 				if(idx===-1) idx=this.fn_list.push(x)-1;
-				return {type: "function",value: null,id: idx,...x};
+				return {type: "function",id: idx,...x};
 			}
 		}
 	}
@@ -2155,7 +2155,7 @@ class ApiBase2 {
 				console.log("simple clone end",k,x);
 			}
 		}
-		return {type: "empty",value: null};
+		return {type: "empty"};
 	}
 	/** @template {{[U in K]:any}} T @template {keyof T&string} K @arg {T} x @arg {K} k */
 	json_set_filter(x,k) {
@@ -2182,38 +2182,39 @@ class ApiBase2 {
 		console.log("module_debug: module");
 		console.log(json_clone);
 	}
-	/** @returns {JsonFilterRet<K,T>} @template T @template {string} K @arg {K} k @arg {JsonFilterRet<K,T> extends infer P? P extends infer I?Partial<I>:never:never} x */
+	/** @returns {JsonFilterRet<K,T>} @template T @template {string} K @arg {K} k @arg {Record<"type", unknown>} x */
 	json_filter_filter_ret(k,x) {
 		k;
 		if(typeof x==="string"||typeof x==="boolean"||x===null) return x;
 		if(x.type===void 0) {debugger; return null;}
+		if(typeof x.type!=="string") {debugger; return null;}
 		/** @type {JsonFilterRet<K,T>|null} */
 		let r1=null;
 		switch(x.type) {
 			default: debugger; break;
 			case "function": {
-				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type}; r1=as_any(b);
+				/** @type {RequiredType<"function">} */
+				let b={...x,type: x.type}; r1=b;
 			} break;
 			case "symbol": {
-				/** @type {RequiredType<typeof x['type']>} */
+				/** @type {RequiredType<"symbol">} */
 				let b={...x,type: x.type}; r1=b;
 			} break;
 			case "normal": {
-				/** @type {RequiredType<typeof x['type']>} */
+				/** @type {RequiredType<"normal">} */
 				let b={...x,type: x.type}; r1=b;
 			} break;
 			case "normal:copy": {
-				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type}; r1=as_any(b);
+				/** @type {RequiredType<"normal:copy">} */
+				let b={...x,type: x.type}; r1=b;
 			} break;
 			case "obj": {
-				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type}; r1=as_any(b);
+				/** @type {RequiredType<"obj">} */
+				let b={...x,type: x.type}; r1=b;
 			} break;
 			case "prototype": {
-				/** @type {RequiredType<typeof x['type']>} */
-				let b={...x,type: x.type};
+				/** @type {RequiredType<"prototype">} */
+				let b=as_any(x);
 				const {type,key,type_name,__prototype_description,...w2}=b; if(this.get_keys_of(w2).length!==0) debugger;
 				if(key===void 0) {debugger; return null;}
 				if(type_name===void 0) {debugger; return null;}
@@ -2240,7 +2241,7 @@ class ApiBase2 {
 			if(typeof z==="function") {
 				let idx=this.fn_list.indexOf(z);
 				if(idx===-1) idx=this.fn_list.push(z)-1;
-				return {type: "function",value: null,id: idx,...z};
+				return {type: "function",id: idx,...z};
 			}
 			return z;
 		}
@@ -2250,12 +2251,12 @@ class ApiBase2 {
 		if(typeof z==="function") {
 			let idx=this.fn_list.indexOf(z);
 			if(idx===-1) idx=this.fn_list.push(z)-1;
-			return {type: "function",value: null,id: idx,...z};
+			return {type: "function",id: idx,...z};
 		}
 		if(typeof z==="symbol") {
 			switch(z) {
-				default: debugger; return {type: "symbol",value: null};
-				case box_sym_r: return {type: "symbol",value: null,for: "box_symbol"};
+				default: debugger; return {type: "symbol"};
+				case box_sym_r: return {type: "symbol",for: "box_symbol"};
 			}
 		}
 		if(typeof z!=="object") return {type: "normal",value: z};
@@ -2263,10 +2264,7 @@ class ApiBase2 {
 		if(box_sym_r in z&&z[box_sym_r]===true) return {type: "normal",value: z};
 		if(cloned_sym in z&&z[cloned_sym]===true) return {type: "normal",value: z};
 		if("type" in z) {
-			/** @type {{}} */
-			let _w1=z;
-			/** @type {JsonFilterRet<any,any> extends infer A?A extends infer I?Partial<I>:never} */
-			let w=_w1;
+			let w=z;
 			if(w.type) {
 				const r=this.json_filter_filter_ret(k,w);
 				return r;
@@ -2281,10 +2279,10 @@ class ApiBase2 {
 			const desc=Object.getOwnPropertyDescriptors(zt);
 			const fd=this.simple_filter('prototype_description',desc);
 			if(fd!==null&&typeof fd==="object") {
-				return {type: "prototype",key: k,type_name: "TextDecoder",value: null,__prototype_description: {...fd,[box_sym_r]: true}};
+				return {type: "prototype",key: k,type_name: "TextDecoder",__prototype_description: {...fd,[box_sym_r]: true}};
 			} else {
 				debugger;
-				return {type: "prototype",key: k,type_name: "TextDecoder",value: null,__prototype_description: {value: fd,[box_sym_r]: true}};
+				return {type: "prototype",key: k,type_name: "TextDecoder",__prototype_description: {value: fd,[box_sym_r]: true}};
 			}
 		}
 		if(z instanceof TextDecoder) {
