@@ -610,39 +610,6 @@ class IndexedDBService extends BaseService {
 			case "browse_id": return this.put_boxed_pl(version,...s0);
 			case "url_info": return this.put_boxed_url_info(version,s0[0],s0[1],s0[2]);
 			case "key": return {args: s0,promise: this.put_box(this.mk_start_radio(x),version)};
-			case "guide_entry_id": /*db*/ {
-				let [j]=s0;
-				switch(x.c) {
-					default: x===""; throw new Error();
-					case "LL": {
-						/** @type {DST_GuideEntry_LL} */
-						const z=this.mk_bx_nw(x);
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "WL": {
-						/** @type {DST_GuideEntry_WL} */
-						const z={key: `boxed_id:${j}:${x.c}`,a: "ST:D",b: "boxed_id",j,w: "key/a/b/w/j/z",z: [x]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "PL": {
-						let iv=x.z[0];
-						/** @type {DST_GuideEntry_PL} */
-						const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}:${iv.c}:${this.za2(iv.z[1])}`,z: [x]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "UC": {
-						let iv=x.z[0];
-						/** @type {DST_GuideEntry_UC} */
-						const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}:${iv.c}:${this.za2(iv.z[1])}`,z: [x]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "VL:LL": {
-						/** @type {DST_GuideEntry_VL_LL} */
-						const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}:${x.c}`,z: [{a: "DI",b: "guide_entry_id",c: "VL:LL",z: [x]}]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-				}
-			}
 			case "video_id": {
 				let [,v,x]=s0;
 				/** @type {Pick<DST_Video_Id,"key">} */
@@ -720,16 +687,78 @@ class IndexedDBService extends BaseService {
 					}
 				}
 			}
-			case "hashtag_id": {
-				let [t,,x]=s0;
-				/** @type {DST_HashtagId} */
-				const z=this.make_box_3(t,this.za2(x),x);
-				let promise=this.put_box(z,version); return {args: s0,promise};
+			case "guide_entry_id": /*db*/ {
+				let [j]=s0;
+				switch(x.c) {
+					default: x===""; throw new Error();
+					case "LL": {
+						/** @type {DST_GuideEntry_LL} */
+						const z=this.mk_bx_nw(x);
+						return {args: s0,promise: this.put_box(z,version)};
+					}
+					case "WL": {
+						/** @type {DST_GuideEntry_WL} */
+						const z={key: `boxed_id:${j}:${x.c}`,a: "ST:D",b: "boxed_id",j,w: "key/a/b/w/j/z",z: [x]};
+						return {args: s0,promise: this.put_box(z,version)};
+					}
+					case "PL": {
+						let iv=x.z[0];
+						/** @type {DST_GuideEntry_PL} */
+						const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}:${iv.c}:${this.za2(iv.z[1])}`,z: [x]};
+						return {args: s0,promise: this.put_box(z,version)};
+					}
+					case "UC": {
+						let iv=x.z[0];
+						/** @type {DST_GuideEntry_UC} */
+						const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}:${iv.c}:${this.za2(iv.z[1])}`,z: [x]};
+						return {args: s0,promise: this.put_box(z,version)};
+					}
+					case "VL:LL": {
+						/** @type {DST_GuideEntry_VL_LL} */
+						const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}:${x.c}`,z: [{a: "DI",b: "guide_entry_id",c: "VL:LL",z: [x]}]};
+						return {args: s0,promise: this.put_box(z,version)};
+					}
+				}
 			}
+			case "browse_id": {
+				switch(s0[1]) {
+					case "FE": {
+						let [t,id,x]=s0;
+						/** @type {DST_Browse_FE} */
+						const z={
+							key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,
+							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,w: "/key/a/b/j/w/z",z: [x]
+						};
+						let promise=this.put_box(z,version); return {args: s0,promise};
+					}
+					case "MP": {
+						let [t,id,x]=s0;
+						/** @type {DST_Browse_MP} */
+						const z={
+							key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,
+							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,w: "/key/a/b/j/w/z",z: [x]
+						};
+						let promise=this.put_box(z,version); return {args: s0,promise};
+					}
+					case "SP": {
+						let [t,id,x]=s0;
+						let promise=this.put_box({
+							key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,
+							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,z: [x]
+						},version); return {args: s0,promise};
+					}
+				}
+			} throw new Error("end");
 			case "channel_id": {
 				let [t,,x]=s0;
 				/** @type {DST_Channel_UC} */
 				const z=this.make_box_4(t,x.c,this.za2(x.z[1]),x);
+				let promise=this.put_box(z,version); return {args: s0,promise};
+			}
+			case "hashtag_id": {
+				let [t,,x]=s0;
+				/** @type {DST_HashtagId} */
+				const z=this.make_box_3(t,this.za2(x),x);
 				let promise=this.put_box(z,version); return {args: s0,promise};
 			}
 			case "video_time": {
@@ -785,35 +814,6 @@ class IndexedDBService extends BaseService {
 				const z2={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
 				return {args: s0,promise: this.put_box(z2,version)};
 			}
-			case "browse_id": {
-				switch(s0[1]) {
-					case "FE": {
-						let [t,id,x]=s0;
-						/** @type {DST_Browse_FE} */
-						const z={
-							key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,
-							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,w: "/key/a/b/j/w/z",z: [x]
-						};
-						let promise=this.put_box(z,version); return {args: s0,promise};
-					}
-					case "MP": {
-						let [t,id,x]=s0;
-						/** @type {DST_Browse_MP} */
-						const z={
-							key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,
-							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,w: "/key/a/b/j/w/z",z: [x]
-						};
-						let promise=this.put_box(z,version); return {args: s0,promise};
-					}
-					case "SP": {
-						let [t,id,x]=s0;
-						let promise=this.put_box({
-							key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,
-							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,z: [x]
-						},version); return {args: s0,promise};
-					}
-				}
-			} throw new Error("end");
 		}
 	}
 	/** @template {G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
