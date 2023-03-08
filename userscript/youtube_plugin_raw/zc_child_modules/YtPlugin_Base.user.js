@@ -2114,21 +2114,21 @@ class ApiBase2 {
 		const [k,v]=a0;
 		return [k,f.call(this,k,v)];
 	}
-	/** @template T @template {string} K @arg {K} k @arg {T} c @returns {Ret_simple_filter} */
-	simple_filter(k,c) {
+	/** @template T @arg {T} c @returns {Ret_simple_filter} */
+	simple_filter(c) {
 		/** @type {unknown} */
 		let x=c;
 		switch(typeof x) {
-			case "string": return x;
-			case "number": return x;
-			case "bigint": return x;
-			case "boolean": return x;
+			case "string": return {a: "/type/value",type: "string",value: x};
+			case "number": return {a: "/type/value",type: "number",value: x};
+			case "bigint": return {a: "/type/value",type: "bigint",value: x};
+			case "boolean": return {a: "/type/value",type: "boolean",value: x};
 			case "symbol": switch(x) {
 				default: debugger; return {a: "/type",type: "symbol"};
 				case box_sym_r: return {a: "/type/for",type: "symbol-for",for: "box_symbol"};
 			}
-			case "undefined": return x;
-			case "object": return this.simple_filter_obj(k,x);
+			case "undefined": return {a: "/type/value",type: "undefined"};
+			case "object": return this.simple_filter_obj(x);
 			case "function": {
 				let idx=this.fn_list.indexOf(x);
 				if(idx===-1) idx=this.fn_list.push(x)-1;
@@ -2153,7 +2153,7 @@ class ApiBase2 {
 				a: "/k/v/sf",
 				k: k,
 				v: x,
-				sf: this.simple_filter(k,x)
+				sf: this.simple_filter(x)
 			}
 		};
 		if(x instanceof RegExp) return {
@@ -2191,16 +2191,15 @@ class ApiBase2 {
 					a: "/k/v/sf",
 					k: k,
 					v: x,
-					sf: this.simple_filter(k,x)
+					sf: this.simple_filter(x)
 				}
 			};
 		}
 		debugger;
 		throw new Error();
 	};
-	/** @template {object|null} T @arg {string} k @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
-	simple_filter_obj(k,x) {
-		let r_ret=true;
+	/** @template {object|null} T @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
+	simple_filter_obj(x) {
 		if(x instanceof Array) {
 			const in_entries=Object.entries(x);
 			const res_entries=this.iter_entries(in_entries,this.simple_filter);
@@ -2208,7 +2207,7 @@ class ApiBase2 {
 			return structuredClone(rc);
 		}
 		if(x instanceof TextDecoder) return this.filter_text_decoder(x);
-		if(x===null) return x;
+		if(x===null) return {a: "/type/value",type: "null"};
 		let r_obj;
 		{
 			const in_entries=Object.entries(x);
@@ -2297,6 +2296,7 @@ class ApiBase2 {
 	}
 	/** @arg {unknown} x */
 	save_clone(x) {
+		this.seen_keys_list.length=0;
 		const str=JSON.stringify(x,this.json_filter.bind(this));
 		return JSON.parse(str);
 	}
@@ -2364,7 +2364,7 @@ class ApiBase2 {
 		const zt=x;
 		/** @type {Type_GetOwnPropertyDescriptors<TextDecoder>} */
 		const desc=Object.getOwnPropertyDescriptors(zt);
-		const fd=this.simple_filter('prototype_description',desc);
+		const fd=this.simple_filter(desc);
 		if(fd!==null&&typeof fd==="object") {
 			return {type: "prototype",key: k,type_name: "TextDecoder",__prototype_description: {...fd,[box_sym_r]: true}};
 		} else {
@@ -2403,11 +2403,20 @@ class ApiBase2 {
 		this.json_set_filter(dec_info,"decode");
 		return {a: "/type/value",type: "obj",value: {a: "/type/__symbol_prototype",type: "TextDecoder",__symbol_prototype: filtered_proto}};
 	}
-	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {Ret_simple_filter} */
+	/** @type {string[]} */
+	seen_keys_list=[];
+	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {Ret_simple_filter|unknown} */
 	json_filter(k,z) {
 		/** @type {unknown} */
-		let x=z;
-		return this.simple_filter(k,x);
+		let x=z; k;
+		if(this.seen_keys_list.includes(k)) return x;
+		this.seen_keys_list.push(k);
+		let res=this.simple_filter(x);
+		switch(res.a) {
+			default: debugger; break;
+			case "/empty": break;
+		}
+		return res;
 	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {

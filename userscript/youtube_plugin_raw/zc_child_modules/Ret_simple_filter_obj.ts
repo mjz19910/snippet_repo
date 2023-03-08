@@ -9,7 +9,7 @@ type Ret_simple_filter_obj=
 	|{a: "/type/value"; type: "obj",value: number;}
 	|{a: "/raw",raw: {[k: string]: any;};}
 	|Ret_TextDecoderInfo
-	|null
+	|{a: "/type/value"; type: "null";}
 	;
 ;
 type ObjModifyLog={
