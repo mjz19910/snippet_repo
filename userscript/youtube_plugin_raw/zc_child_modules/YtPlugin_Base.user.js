@@ -116,9 +116,23 @@ function require(arg,opts) {
 	if(arg===void 0) {throw new Error("missing required");}
 	window.__plugin_modules__??={};
 	const M=window.__plugin_modules__,i=required;
-	const loc=path_map[resolve_path(arg,opts?.location??"zc_child_modules")];
+	const resolved_path=resolve_path("../DebugApi_raw/DebugApi.user.js",opts?.location??"zc_child_modules");
+	switch(resolved_path) {
+		case "../DebugApi_raw/DebugApi.user.js": {
+			const real_path="../DebugApi_raw/DebugApi.user.js";
+			const loc=path_map[resolved_path];
+			if(loc[0]==="raw") {
+				let mod=i(M[loc[1]]);
+				/** @arg {import("../zb_plugin_types/exports").ProcessImport<typeof real_path>} x @returns {asserts x is import("../zb_plugin_types/exports").ProcessImport<T>} */
+				function correct_return_type(x) {x;}
+				correct_return_type(mod);
+				return mod;
+			}
+		} break;
+	}
 	/** @arg {import("../zb_plugin_types/exports").ProcessImport<keyof path_map>} x @returns {asserts x is import("../zb_plugin_types/exports").ProcessImport<T>} */
 	function correct_return_type(x) {x;}
+	const loc=path_map[resolve_path(arg,opts?.location??"zc_child_modules")];
 	if(loc[0]==="sys") {
 		let mod=i(window[loc[1]]);
 		correct_return_type(mod);

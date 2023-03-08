@@ -1,3 +1,3 @@
-import {MatchType_Import_} from "./exports.js";
+import {S_AllImportPaths} from "./S_AllImportPaths.js";
 
-export type MatchType_Import2=Extract<MatchType_Import_,`.${string}`>;
+export type MatchType_Import2=Extract<S_AllImportPaths,`.${string}`>;
