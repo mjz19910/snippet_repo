@@ -55,7 +55,7 @@ const path_map={
 	/** @type {["mod","SupportService"]} */
 	["./YTPlugin_Support_Service.user"]: ["mod","SupportService"],
 	/** @type {["mod","ECatcherService"]} */
-	["./YTPlugin_ECatcherService.user"]: ["mod","ECatcherService"],
+	["./YTPlugin_ECatcherService_Plugin.user"]: ["mod","ECatcherService"],
 	/** @type {["mod","ServiceMethods"]} */
 	["./YTPlugin_ServiceMethods.user"]: ["mod","ServiceMethods"],
 	/** @type {["raw","DebugApi"]} */
