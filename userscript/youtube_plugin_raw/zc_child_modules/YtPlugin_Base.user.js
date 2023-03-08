@@ -2134,14 +2134,6 @@ class ApiBase2 {
 				return {type: "function",value: null,id: idx,...x};
 			}
 		}
-		if(x===null) return x;
-		if(typeof x==="object") {
-			return this.simple_filter_obj(k,x);
-		}
-		if(typeof x==="symbol")
-			if(typeof x==="string") return x;
-		if(typeof x==="boolean") return x;
-		if(x===undefined) return x;
 	}
 	/** @template {{}} T @arg {string} k @arg {T|null} x */
 	simple_filter_obj(k,x) {
