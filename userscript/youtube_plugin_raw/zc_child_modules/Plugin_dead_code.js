@@ -26,7 +26,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 		/** @type {(UpdateSchemaItem<T>)[]} */
 		const arr=[];
 		this.update_obj_schema_2(x,arr);
-		this.update_obj_schema_3(arr);
+		this.update_obj_schema_3(x,arr);
 	}
 	/** @template {G_BoxedIdObj} T @arg {T} x @arg {(UpdateSchemaItem<T>)[]} res */
 	update_obj_schema_2(x,res) {
@@ -111,8 +111,8 @@ export class IndexedDBDeadCode extends IndexedDBService {
 		if(ok) res.push([true,"ok",x]); else res.push([ok,"bad",x]);
 		return;
 	}
-	/** @template {G_BoxedIdObj} T @arg {(UpdateSchemaItem<T>)[]} arr */
-	update_obj_schema_3(arr) {
+	/** @template {G_BoxedIdObj} T @arg {T} x @arg {(UpdateSchemaItem<T>)[]} arr */
+	update_obj_schema_3(x,arr) {
 		for(let x of arr) {
 			let unk=null,ok_=null,update_ok=null;
 			let missing=null,update_bad=null,bad=null,missing2=null,update2=null;
@@ -128,42 +128,48 @@ export class IndexedDBDeadCode extends IndexedDBService {
 				case "update": update_bad=x; break;
 				case "update2": update2=x; break;
 			}
-			missing; update_bad; unk; ok_; update_ok; bad; missing2; update2;
-			{
-				const c=missing; if(c) switch(c[2]) {
+			/** @arg {[false, "missing2", [keyof FromDbData, keyof FromDbData["value"]], T]|[false,"missing",keyof G_BoxedIdObj,T]|[false,"missing",keyof FromDbData,T]|null} x */
+			function kty_missing(x) {
+				if(!x) return;
+				switch(x[2]) {
 					case "key": break;
 					case "tag": break;
 					case "type": break;
 					case "value": break;
 				}
 			}
-			{
-				const c=update_bad; if(c) switch(c[1]) {
+			/** @arg {[true,"ok",T]|[true,"unknown","new_info",T]|null} x */
+			function kty3(x) {
+				if(!x) return;
+				switch(x[1]) {
 					default: debugger; break;
-					case "update": console.log(c[2]); break;
+					case "unknown": break;
+					case "ok": {
+						console.log(...x);
+					} return;
 				}
-			}
-			{
-				const c=unk; if(c) switch(c[1]) {
+				switch(x[2]) {
 					default: debugger; break;
-					case "unknown": {
-						if(c[2]!=="new_info") debugger;
-						console.log(c[3]);
-					} break;
+					case "new_info": break;
 				}
+				console.log(...x);
+			};
+			/** @arg {[false, "update2", keyof FromDbData, T]|[true, "update", keyof T, T]|[false, "update", keyof T, T]} x */
+			function kty_upd(x) {
+				x;
 			}
-			{
-				const c=ok_; if(c) switch(c[1]) {
-					default: debugger; break;
-					case "ok": console.log(c[2]); break;
-				}
+			/** @arg {[false, "bad", T]} x */
+			function kty_bad(x) {
+				x;
 			}
-			{
-				const c=update_ok; if(c) switch(c[1]) {
-					default: debugger; break;
-					case "update": console.log(c[2]); break;
-				}
-			}
+			kty_missing(missing);
+			update_bad&&kty_upd(update_bad);
+			kty3(unk);
+			kty3(ok_);
+			update_ok&&kty_upd(update_ok);
+			bad&&kty_bad(bad);
+			update2&&kty_upd(update2);
+			missing2&&kty_missing(missing2);
 		}
 	}
 }
