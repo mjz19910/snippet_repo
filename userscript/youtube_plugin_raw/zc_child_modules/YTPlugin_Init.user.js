@@ -32,9 +32,15 @@ x: {
 	let modules=get_exports();
 	const test_base=new ApiBase2;
 	let module_keys=test_base.get_keys_of(modules);
+	let failed_to_load=false;
 	for(let module_name of module_keys) {
 		let value=modules[module_name];
 		if(!value) continue;
+		if(value.__module_loaded__===false) {
+			console.log("module_not_loaded",value);
+			failed_to_load=true;
+			continue;
+		}
 		if("init_module" in value&&typeof value.init_module==="function") {
 			console.log("init_module",value);
 			value.init_module();
@@ -42,6 +48,7 @@ x: {
 		}
 		console.log("module",value);
 	}
+	if(failed_to_load) break x;
 	yt_plugin_base_main();
 }
 export_(exports => exports.__module_loaded__=true);

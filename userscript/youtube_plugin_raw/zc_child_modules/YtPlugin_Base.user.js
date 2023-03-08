@@ -14,7 +14,7 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 //#region module init
 const __module_name__="mod$YoutubePluginBase";
-/** @arg {keyof PluginStore} module_name @template {{__is_module_flag__:true}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+/** @arg {keyof PluginStore} module_name @template {BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn,flags,exports,module_name) {
 	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {fn(exports);} else {
@@ -28,7 +28,7 @@ function do_export(fn,flags,exports,module_name) {
 			window.__plugin_modules__??={};
 			let all_modules=window.__plugin_modules__;
 			exports=as(all_modules[module_name]??{});
-			/** @type {{[U in keyof PluginStore]?:{__is_module_flag__:true;}}} */
+			/** @type {{[U in keyof PluginStore]?:BaseModuleType}} */
 			let ok_modules=all_modules;
 			ok_modules[module_name]=as(exports);
 		}
@@ -40,7 +40,7 @@ function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_
 function get_exports() {
 	window.__plugin_modules__??={};
 	let all_modules=window.__plugin_modules__;
-	/** @type {{[U in keyof PluginStore]?:{}}} */
+	/** @type {{[U in keyof PluginStore]?:BaseModuleType}} */
 	let ok_modules=all_modules;
 	return ok_modules;
 }
