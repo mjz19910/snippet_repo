@@ -513,20 +513,18 @@ class IndexedDBService extends BaseService {
 	/** @template {ZA_S_1} K @typedef {T_Z_Pop<K>} ZA1 */
 	/** @template {ZA_S_2} K @typedef {T_Z_Pop<ZA1<K>>} ZA2 */
 	/** @template {ZA_S_3} K @typedef {T_Z_Pop<ZA2<K>>} ZA3 */
-	/** @template T @typedef {{z:[T,...any]}} T_Z_Next */
 	/** @template T @typedef {T_Z_Next<T>} ZAT1 */
 	/** @template T @typedef {T_Z_Next<ZAT1<T>>} ZAT2 */
-	/** @template T @typedef {T_Z_Next<ZAT2<T>>} ZAT3 */
 	/** @type {"a/b/j/k/w/z"} */
 	kz_kw="a/b/j/k/w/z";
 	/** @template {string} T @arg {T}x @returns {`/db/key/${T}`}  */
 	mdk=x => `/db/key/${x}`;
 	/** @arg {"kw"} x */
 	mka=x => this.mdk(this[`kz_${x}`]);
-	/** @template J,K @template {DI_Key_StartRadio} X @arg {J} j @arg {K} k @arg {X} x @returns {T_kwb<X>} */
+	/** @template J,K @template {string} IC @template {{c:IC}&ZAT3<IC>} X @arg {J} j @arg {K} k @arg {X} x @returns {T_kwb<X,J,K>} */
 	kwb(x,j,k) {
 		const {c}=x;
-		/** @type {`boxed_id:key:${X['c']}:${ZA3<X>}`} */
+		/** @type {`boxed_id:key:${IC}:${ZA3<X>}`} */
 		const key=`boxed_id:key:${c}:${this.za3(x)}`;
 		return {key,a: "ST:D",b: "boxed_id",j,k,w: this.mka("kw"),z: [x]};
 	}
