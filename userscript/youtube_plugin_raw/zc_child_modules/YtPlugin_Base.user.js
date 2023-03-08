@@ -116,7 +116,7 @@ function require(arg,opts) {
 	if(arg===void 0) {throw new Error("missing required");}
 	window.__plugin_modules__??={};
 	const M=window.__plugin_modules__,i=required;
-	const resolved_path=resolve_path("../DebugApi_raw/DebugApi.user.js",opts?.location??"zc_child_modules");
+	const resolved_path=resolve_path(arg,opts?.location??"zc_child_modules");
 	switch(resolved_path) {
 		case "../DebugApi_raw/DebugApi.user.js": {
 			const real_path="../DebugApi_raw/DebugApi.user.js";

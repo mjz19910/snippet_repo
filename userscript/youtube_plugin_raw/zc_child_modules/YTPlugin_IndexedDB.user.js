@@ -360,7 +360,10 @@ class IndexedDBService extends BaseService {
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id_async_3(version,...args) {return {args,ret: await (this.put_boxed_id_3(version,...args).promise)};}
 	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_Key_StartRadio} x */
-	mk_s1(j,k,x) {return this.kwb(x,j,k);}
+	mk_s1(j,k,x) {
+		let u=this.za1(x);
+		return this.kwb(x,u,j,k);
+	}
 	/** @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s2<IC,J,X>} */
 	mk_s2(j,x) {return {a: "ST:D",b: "boxed_id",j,z: [x],key: `boxed_id:${j}:${x.c}`};}
 	/** @template {string} S @arg {S} s @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s3<IC,J,S,X>} */
@@ -459,11 +462,11 @@ class IndexedDBService extends BaseService {
 	mdk=x => `/db/key/${x}`;
 	/** @arg {"kw"} x */
 	mka=x => this.mdk(this[`kz_${x}`]);
-	/** @template J,K @template {string} IC @template {{c:IC}&ZAT3<IC>} X @arg {J} j @arg {K} k @arg {X} x @returns {T_kwb<X,J,K>} */
-	kwb(x,j,k) {
+	/** @template J,K @template {Primitive} ZI @template {ZAT2<ZI>} Z @arg {Z} z @template {string} IC @template {{c:IC;z:[Z];}} X @arg {J} j @arg {K} k @arg {X} x @returns {T_kwb_2<X,J,K>} */
+	kwb(x,z,j,k) {
 		const {c}=x;
-		/** @type {`boxed_id:key:${IC}:${ZA3<X>}`} */
-		const key=`boxed_id:key:${c}:${this.za3(x)}`;
+		/** @type {`boxed_id:key:${IC}:${ZI}`} */
+		const key=`boxed_id:key:${c}:${this.za2(z)}`;
 		return {key,a: "ST:D",b: "boxed_id",j,k,w: this.mka("kw"),z: [x]};
 	}
 	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
