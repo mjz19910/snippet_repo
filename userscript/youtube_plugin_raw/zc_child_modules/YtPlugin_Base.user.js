@@ -2314,9 +2314,9 @@ class BaseService extends ServiceWithMembers {
 	/**
 	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
 	 * @template J @template Z_Item @template T_Key
-	 * @returns {{key:T_Key,a: "ST:D";b:"boxed_id",j:J,w:"/key/a/b/j/w/z",z:[Z_Item]}}
+	 * @returns {{key:T_Key,a: "ST:D";b:"boxed_id",j:J,w:"/db/key/a/b/j/w/z",z:[Z_Item]}}
 	 * */
-	make_ST_jz(key,j,z) {return {key,a: "ST:D",b: "boxed_id",j,w: "/key/a/b/j/w/z",z: [z]};}
+	make_ST_jz(key,j,z) {return {key,a: "ST:D",b: "boxed_id",j,w: "/db/key/a/b/j/w/z",z: [z]};}
 	/**
 	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
 	 * @template J @template Z_Item @template T_Key
@@ -2335,6 +2335,12 @@ class BaseService extends ServiceWithMembers {
 	 * @returns {{a: "DI:A";b:B,w:"a/b/w/z"; z:[Z]}}
 	 * */
 	make_abwz(b,z) {return {a: "DI:A",b,w: "a/b/w/z",z: [z]};}
+	/**
+	 * @param {T} z @arg {K} b
+	 * @template K @template T
+	 * @returns {DI_T_abwz_item<K,T>}
+	 * */
+	make_abwz_item(b,z) {return {a: "DI:A",b,w: "/item/a/b/w/z",z: [z]};}
 	/**
 	 * @param {Z} z @arg {K} k
 	 * @template K @template Z
