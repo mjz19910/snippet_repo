@@ -2140,6 +2140,64 @@ class ApiBase2 {
 	np(x) {Object.setPrototypeOf(x,null); return x;}
 	/** @template T @arg {T}x @returns {T} */
 	clone(x) {return structuredClone(x);}
+	/** @arg {[string,unknown]} e @returns {Ret_can_clone_map} */
+	clone_entry_item(e) {
+		let [k,x]=e;
+		if(typeof x==="boolean") return {
+			a: "/type/p/value",type: "entry",p: "boolean",
+			value: [k,x]
+		};
+		if(typeof x==="function") return {
+			a: "/type/z",type: "original",
+			z: {
+				a: "/k/v/sf",
+				k: k,
+				v: x,
+				sf: this.simple_filter(k,x)
+			}
+		};
+		if(x instanceof RegExp) return {
+			a: "/type/b/k/value",b: "no-clone",k,
+			type: "RegExp",
+			value: {source: x.source}
+		};
+		if(x instanceof TextDecoder) return {
+			a: "/type/value",b: "no-clone",k,
+			type: "TextDecoder",
+			value: {
+				encoding: x.encoding,
+				fatal: x.fatal,
+				ignoreBOM: x.ignoreBOM
+			}
+		};
+		console.log("[log_c1]",k,x);
+		try {
+			let [k,v]=this.clone(e); k;
+			switch(typeof v) {
+				case "bigint": debugger; break;
+				case "string": debugger; break;
+				case "number": debugger; break;
+				case "boolean": debugger; break;
+				case "symbol": debugger; break;
+				case "undefined": debugger; break;
+				case "object": debugger; break;
+				case "function": debugger; break;
+			}
+		} catch {
+			return {
+				a: "/type/z",
+				type: "original",
+				z: {
+					a: "/k/v/sf",
+					k: k,
+					v: x,
+					sf: this.simple_filter(k,x)
+				}
+			};
+		}
+		debugger;
+		throw new Error();
+	};
 	/** @template {object|null} T @arg {string} k @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
 	simple_filter_obj(k,x) {
 		if(x instanceof Array) {
@@ -2153,64 +2211,6 @@ class ApiBase2 {
 		let r_obj;
 		{
 			const in_entries=Object.entries(x);
-			/** @arg {[string,unknown]} e @returns {Ret_can_clone_map} */
-			const can_clone_map=e => {
-				let [k,x]=e;
-				if(typeof x==="boolean") return {
-					a: "/type/p/value",type: "entry",p: "boolean",
-					value: [k,x]
-				};
-				if(typeof x==="function") return {
-					a: "/type/z",type: "original",
-					z: {
-						a: "/k/v/sf",
-						k: k,
-						v: x,
-						sf: this.simple_filter(k,x)
-					}
-				};
-				if(x instanceof RegExp) return {
-					a: "/type/b/k/value",b: "no-clone",k,
-					type: "RegExp",
-					value: {source: x.source}
-				};
-				if(x instanceof TextDecoder) return {
-					a: "/type/value",b: "no-clone",k,
-					type: "TextDecoder",
-					value: {
-						encoding: x.encoding,
-						fatal: x.fatal,
-						ignoreBOM: x.ignoreBOM
-					}
-				};
-				console.log("[log_c1]",k,x);
-				try {
-					let [k,v]=this.clone(e); k;
-					switch(typeof v) {
-						case "bigint": debugger; break;
-						case "string": debugger; break;
-						case "number": debugger; break;
-						case "boolean": debugger; break;
-						case "symbol": debugger; break;
-						case "undefined": debugger; break;
-						case "object": debugger; break;
-						case "function": debugger; break;
-					}
-				} catch {
-					return {
-						a: "/type/z",
-						type: "original",
-						z: {
-							a: "/k/v/sf",
-							k: k,
-							v: x,
-							sf: this.simple_filter(k,x)
-						}
-					};
-				}
-				debugger;
-				throw new Error();
-			};
 			/** @arg {Ret_can_clone_map} x @returns {[string,any]} */
 			const map_clone_2=x => {
 				switch(x.a) {
@@ -2222,7 +2222,7 @@ class ApiBase2 {
 				debugger;
 				throw new Error();
 			};
-			const res_entries=in_entries.map(can_clone_map).map(map_clone_2).map(ent => {
+			const res_entries=in_entries.map(this.clone_entry_item,this).map(map_clone_2).map(ent => {
 				if(ent instanceof Array) {
 					Object.setPrototypeOf(ent[1],null);
 				}
