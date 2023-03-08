@@ -36,5 +36,8 @@ type JsonFilterRet<K,T>=
 		type: "symbol"; value: null; for: "box_symbol";
 	}
 	|{type: "symbol"; value: null;}
+	|string
+	|boolean
+	|null
 	;
 ;

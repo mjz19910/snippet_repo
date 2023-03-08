@@ -2101,19 +2101,38 @@ class ApiBase2 {
 	fn_list=[];
 	/** @type {{readonly x: typeof box_sym_r}} */
 	static box_sym={x: box_sym_r};
-	/** @arg {[string,unknown][]} x */
-	iter_entries(x) {return x.map(this.map_entry,this);}
-	/** @arg {[string,unknown]} a0 @returns {[string,unknown]} */
-	map_entry([k,v]) {return [k,this.json_filter(k,v)];}
-	/** @template T @template {string} K @arg {K} _k @arg {T} z @returns {T} */
-	simple_filter(_k,z) {
-		return structuredClone(z);
+	/** @arg {[string,unknown][]} x @arg {(k:string,x:unknown)=>unknown} f */
+	iter_entries(x,f) {return x.map(this.map_entry.bind(this,f));}
+	/** @arg {(k:string,x:unknown)=>unknown} f @arg {[string,unknown]} a0 @returns {[string,unknown]} */
+	map_entry(f,a0) {
+		const [k,v]=a0;
+		return [k,f(k,v)];
+	}
+	/** @template {{}} T @template {string} K @arg {K} k @arg {T} x @returns {T} */
+	simple_filter(k,x) {
+		if(typeof x==="function") {
+			let idx=this.fn_list.indexOf(x);
+			if(idx===-1) idx=this.fn_list.push(x)-1;
+			return {type: "function",value: null,id: idx,...x};
+		}
+		console.log("simple clone start",k,x);
+		const entries=Object.entries(x);
+		const res_entries=this.iter_entries(entries,(k,x) => {
+			if(typeof x==="object") {
+				if(x===null) return x;
+				return this.simple_filter(k,x);
+			}
+			console.log("simple cant copy",k,x);
+			return x;
+		});
+		console.log("simple clone end",k,Object.fromEntries(res_entries));
+		return structuredClone(x);
 	}
 	/** @template {{[U in K]:any}} T @template {keyof T&string} K @arg {T} x @arg {K} k */
 	json_set_filter(x,k) {
 		const v=x[k];
 		const f=this.json_filter(k,v);
-		if(f.type==="normal"&&!("copy" in f)) {
+		if(typeof f==="object"&&f!==null&&f.type==="normal"&&!("copy" in f)) {
 			this.set(x,k,f.value);
 		} else {
 			debugger;
@@ -2136,6 +2155,8 @@ class ApiBase2 {
 	}
 	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRet<K,T>} */
 	json_filter(k,z) {
+		if(typeof z==="string") return z;
+		if(typeof z==="boolean") return z;
 		console.log("rep",k,z);
 		if(typeof z==="function") {
 			let idx=this.fn_list.indexOf(z);
@@ -2163,18 +2184,21 @@ class ApiBase2 {
 				default: debugger; break;
 				case "function": {
 					const wrt=wr.type; const z=wr;
-					/** @type {Partial<JsonFilterRet<any,any>>&Pick<JsonFilterRet<any,any>,"type">} */
+					/** @type {Partial<JsonFilterRet<any,any>>&Pick<Extract<JsonFilterRet<any,any>,object>,"type">} */
 					/** @typedef {Extract<JsonFilterRet<any,any>,{type:typeof wrt}>} T1 */
 					/** @type {Partial<Omit<T1,"type">>&Pick<T1,"type">} */
 					let w={...z,value: null,type: "function"};
+					if(w.value===void 0) {debugger; return null;}
 					const {...w2}=w;
 					if(w2.id!==void 0) {
 						const {type,id}=w2;
-						r1={type,id};
+						r1={type,value: null,id};
 					}
 				} break;
 			}
-			if(r1) {r1; debugger;}
+			if(r1) {
+				return r1;
+			}
 		}
 		/** @type {{}} */
 		const zo=z;
@@ -2214,23 +2238,12 @@ class ApiBase2 {
 			return {type: "normal",value: z};
 		}
 		const entries=Object.entries(z);
-		/** @type {[string,any][]} */
-		let res_entries=[];
-		for(const entry of entries) {
-			const [k1,x]=entry;
-			let copy=this.json_filter(k,x);
-			console.log("copy entry",k1,copy.value);
-			// const filtered=JSON.parse(JSON.stringify({[k1]: json_filter(k1,x),key: k,box: true,[box_sym]: true},json_filter))[k1];
+		const res_entries=this.iter_entries(entries,(k,x) => {
 			try {
-				res_entries.push([k1,structuredClone(x)]); continue;
-			} catch {}
-			/** @type {unknown} */
-			const f=this.json_filter(k1,x);
-			try {
-				res_entries.push([k1,structuredClone(f)]); continue;
-			} catch {}
-			debugger; res_entries.push([k1,f]);
-		}
+				return this.json_filter(k,x);
+			} catch {console.log("cant clone iter_entry",k,x);}
+			return x;
+		});
 		let rz=Object.fromEntries(res_entries);
 		try {return structuredClone(rz);} catch {console.log("cant clone",rz);}
 		return {type: "normal",copy: true,value: rz};
