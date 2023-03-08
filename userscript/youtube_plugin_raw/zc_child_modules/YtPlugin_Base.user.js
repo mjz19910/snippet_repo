@@ -2135,63 +2135,8 @@ class ApiBase2 {
 			}
 		}
 	}
-	/** @template {{[x: PropertyKey]:any}} T @arg {T} x */
-	rm_all(x) {
-		/** @type {{[x: PropertyKey]:any}} */
-		let rm=x;
-		let entries=[];
-		let throwing_getters=[];
-		let acc=[];
-		/** @type {PropertyKey[]} */
-		let sa=Object.getOwnPropertySymbols(rm);
-		let sa_2=Object.getOwnPropertyNames(rm);
-		let sa_all=sa.concat(sa_2);
-		let i=0;
-		while(sa_all.length>0) {
-			i++;
-			if(i>40) break;
-			let k=sa_all.pop();
-			if(k===void 0) break;
-			try {
-				const {
-					[k]: v,...y
-				}=rm;
-				entries.push(this.np([k,this.np(v)]));
-				acc.push(this.np(y));
-			} catch {
-				let v=Object.getOwnPropertyDescriptor(rm,k);
-				if(!v) {debugger; break;}
-				throwing_getters.push(this.np([k,this.np(v)]));
-			}
-		}
-		return this.np({
-			original: this.np({x: x}),
-			acc: this.np(acc),
-			entries: this.np(entries),
-			prototype: Object.getPrototypeOf(x),
-		});
-	}
 	/** @template {object} T @arg {T} x */
 	np(x) {Object.setPrototypeOf(x,null); return x;}
-	console_code_0() {
-		const x=Function.prototype;
-		const {[Symbol.hasInstance]: hasInstance,apply,bind,call,toString,length,name,...y}=this.rm_all(x).original.x;
-		Object.setPrototypeOf(y,null);
-		let v={
-			[Symbol.hasInstance]: hasInstance,
-			apply,
-			arguments: null,
-			bind,
-			call,
-			caller: null,
-			length,
-			name,
-			toString,
-			__proto__: null,
-		};
-		console.log(v);
-		console.log(x);
-	}
 	/** @template {object|null} T @arg {string} k @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
 	simple_filter_obj(k,x) {
 		if(x instanceof Array) {
