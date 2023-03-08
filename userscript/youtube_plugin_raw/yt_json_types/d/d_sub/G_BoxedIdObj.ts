@@ -15,6 +15,7 @@ type G_BoxedIdObj=
 	|DST_GuideEntry_WL
 	|DST_HashtagId
 	|DST_KeySection
+	|DST_KeySection
 	|DST_LoadId
 	|DST_Playlist_LL
 	|DST_Playlist_PL

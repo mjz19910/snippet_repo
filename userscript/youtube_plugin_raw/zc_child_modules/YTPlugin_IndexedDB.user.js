@@ -509,13 +509,30 @@ class IndexedDBService extends BaseService {
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"url_info"}>} T @arg {T} args */
 	put_boxed_url_info(version,...args) {
 		version; args;
-		let [type,,value]=args;
-		switch(value.b) {
+		let [,,x]=args;
+		switch(x.b) {
+			default: debugger; throw new Error("Unreachable");
 			case "key": {
-				/** @type {DST_Key_StartRadio} */
+				/** @type {DST_KeySection} */
 				const z={
-					a: "ST:D",b: "boxed_id",j: type,w: "/key/a/b/j/z",z: [value],
-					key: `boxed_id:${type}:${value.z[0].k}:${value.z[0].z[0].z[0]}`,
+					a: "ST:D",b: "boxed_id",j: "key",k: x.z[0].k,w: "key/a/b/j/k/w/z",z: [x],
+					key: `boxed_id:key:${x.z[0].k}:${x.z[0].z[0].z[0]}`,
+				};
+				let promise=this.put_box(z,version); return {args,promise};
+			}
+			case "hashtag_id": {
+				/** @type {DST_HashtagId} */
+				const z={
+					a: "ST:D",b: "boxed_id",j: x.b,k: x.z[0].k,w: "key/a/b/j/k/w/z",z: [x],
+					key: `boxed_id:key:${x.z[0].k}:${x.z[0].z[0].z[0]}`,
+				};
+				let promise=this.put_box(z,version); return {args,promise};
+			}
+			case "video_id": {
+				/** @type {DST_Video_Id} */
+				const z={
+					a: "ST:D",b: "boxed_id",j: "key",k: x.z[0].k,w: "key/a/b/j/k/w/z",z: [x],
+					key: `boxed_id:key:${x.z[0].k}:${x.z[0].z[0].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}

@@ -974,7 +974,7 @@ class HandleTypes extends BaseService {
 		const cf="RS_Search";
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.a_primitive_str(estimatedResults);
-		this.xr.R_TwoColumnSearchResults(contents);
+		this.xm.R_TwoColumnSearchResults(contents);
 		this.sm.trackingParams(trackingParams);
 		this.sm.R_DesktopTopbar(topbar);
 		this.z(refinements,x => this.sm.a_primitive_str(x));
