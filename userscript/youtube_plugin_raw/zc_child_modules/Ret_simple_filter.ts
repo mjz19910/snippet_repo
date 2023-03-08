@@ -1,7 +1,7 @@
 type Ret_simple_filter=
 	|Ret_simple_filter_obj
 	|Ret_FilterEmptyType
-	|{a: "/type"; type: "symbol";}
+	|{a: "/type"; type: "symbol"; sym: symbol;}
 	|{a: "/type/for"; type: "symbol-for"; for: "box_symbol";}
 	|{a: "/type/id/value"; type: "function"; id: number; value: {a: "/name"; name: string;};}
 	|{a: "/type/value"; type: "string"; value: string;}

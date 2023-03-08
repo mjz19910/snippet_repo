@@ -2124,7 +2124,7 @@ class ApiBase2 {
 			case "bigint": return {a: "/type/value",type: "bigint",value: x};
 			case "boolean": return {a: "/type/value",type: "boolean",value: x};
 			case "symbol": switch(x) {
-				default: debugger; return {a: "/type",type: "symbol"};
+				default: debugger; return {a: "/type",type: "symbol",sym: x};
 				case box_sym_r: return {a: "/type/for",type: "symbol-for",for: "box_symbol"};
 			}
 			case "undefined": return {a: "/type/value",type: "undefined"};
@@ -2170,13 +2170,12 @@ class ApiBase2 {
 				ignoreBOM: x.ignoreBOM
 			}
 		};
-		console.log("[log_c1]",k,x);
 		try {
 			let [k,v]=this.clone(e); k;
 			switch(typeof v) {
 				case "bigint": debugger; break;
 				case "string": return {a: "/b/k/value",b: "primitive",j: "string",k,value: v};
-				case "number": debugger; break;
+				case "number": return {a: "/b/k/value",b: "primitive",j: "number",k,value: v};
 				case "boolean": debugger; break;
 				case "symbol": debugger; break;
 				case "undefined": debugger; break;
@@ -2184,6 +2183,7 @@ class ApiBase2 {
 				case "function": debugger; break;
 			}
 		} catch {
+			console.log("[log_fail_c1]",k,x);
 			return {
 				a: "/type/z",
 				type: "original",
@@ -2259,7 +2259,7 @@ class ApiBase2 {
 	/** @template {{[U in K]?:any}&{modify_log:G_ObjModifyItem[]}} T @template {keyof TextDecoder&string} K @arg {T} x @arg {K} k */
 	json_set_filter(x,k) {
 		const v=x[k];
-		const f=this.json_filter(k,v);
+		const f=this.simple_filter(v);
 		x.modify_log.push({
 			a: "/type/k/value",
 			type: "filter",
@@ -2375,7 +2375,7 @@ class ApiBase2 {
 	/** @arg {TextDecoder} x @returns {Ret_TextDecoderInfo} */
 	filter_text_decoder(x) {
 		const {encoding,decode,fatal,ignoreBOM}=x;
-		const dec_fn=this.json_filter("decode",decode);
+		const dec_fn=this.simple_filter(decode);
 		/** @type {GType_PrototypeDescription_OfTextDecoder<"%%prototype", "TextDecoder",TextDecoder>} */
 		const filtered_proto={
 			a: "/value",value: {
@@ -2405,6 +2405,8 @@ class ApiBase2 {
 	}
 	/** @type {string[]} */
 	seen_keys_list=[];
+	/** @type {symbol[]} */
+	symbol_list=[];
 	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {Ret_simple_filter|unknown} */
 	json_filter(k,z) {
 		/** @type {unknown} */
@@ -2414,7 +2416,20 @@ class ApiBase2 {
 		let res=this.simple_filter(x);
 		switch(res.a) {
 			default: debugger; break;
-			case "/empty": break;
+			case "/raw": {
+				let rv=res.raw;
+				if("__module_loaded__" in rv) return rv;
+			} return null;
+			case "/type": {
+				switch(res.type) {
+					case "empty": return `${res.a}/${res.type}`;
+					case "symbol": {
+						let idx=this.symbol_list.indexOf(res.sym); res.type;
+						if(idx===-1) idx=this.symbol_list.push(res.sym)-1;
+						return {type: "symbol",index: idx};
+					}
+				}
+			}
 		}
 		return res;
 	};

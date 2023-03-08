@@ -33,7 +33,7 @@ type G_ObjModifyItem={
 	a: "/type/k/value";
 	type: "filter";
 	k: string;
-	value: JsonFilterRetAny|Ret_simple_filter|JsonFilterRet_FunctionItem;
+	value: Ret_simple_filter;
 }|{
 	a: "/type/key/obj";
 	type: "update";
@@ -85,4 +85,7 @@ type Ret_can_clone_map={
 }|{
 	a: "/b/k/value"; b: "primitive"; j: "string";
 	k: string; value: string;
+}|{
+	a: "/b/k/value"; b: "primitive"; j: "number";
+	k: string; value: number;
 };
