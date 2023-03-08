@@ -2095,12 +2095,10 @@ const general_service_state={
 };
 const box_sym_r=Symbol.for("box_symbol");
 const cloned_sym=Symbol.for("cloned");
-export_(exports => exports.box_sym=box_sym_r);
+export_(exports => exports.box_sym_r=box_sym_r);
 class ApiBase2 {
 	/** @type {((()=>void)|Function)[]} */
 	fn_list=[];
-	/** @type {{readonly x: typeof box_sym_r}} */
-	static box_sym={x: box_sym_r};
 	/** @arg {[string,unknown][]} x @arg {(k:string,x:unknown)=>unknown} f */
 	iter_entries(x,f) {return x.map(this.map_entry.bind(this,f));}
 	/** @arg {(k:string,x:unknown)=>unknown} f @arg {[string,unknown]} a0 @returns {[string,unknown]} */
@@ -2306,22 +2304,36 @@ class ApiBase2 {
 		}
 		const entries=Object.entries(z);
 		const res_entries=this.iter_entries(entries,(k,x) => {
+			let r;
 			try {
-				return this.json_filter(k,x);
-			} catch {console.log("cant clone iter_entry",k,x);}
-			return x;
+				r=this.json_filter(k,x);
+			} catch (e) {
+				console.log("cant filter iter_entry",k,e,x);
+				debugger;
+				throw new Error();
+			}
+			try {structuredClone(r);} catch (e) {
+				console.log("cant clone iter_entry",k,e,x);
+				debugger;
+				r=this.json_filter(k,x);
+				throw new Error();
+			}
+			return r;
 		});
 		let rz=Object.fromEntries(res_entries);
-		try {return structuredClone(rz);} catch {
-			if(this.unable_to_clone_cache.includes(rz)) {
-				console.log("cant clone already known to be un-cloneable",rz);
+		try {
+			return structuredClone(rz);
+		} catch (e) {
+			if(this.unable_to_clone_cache.includes(z)) {
+				console.log("cant clone already known to be un-cloneable",z);
 				debugger;
-				return null;
+				throw new Error();
 			}
-			this.unable_to_clone_cache.push(rz);
-			console.log("cant clone",rz);
+			this.unable_to_clone_cache.push(z);
+			console.log("cant clone",e,z);
+			throw new Error();
 		}
-		return {type: "normal:copy",copy: true,value: rz};
+		// return {type: "normal:copy",copy: true,value: as_any(z)};
 	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
