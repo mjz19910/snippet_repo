@@ -2124,15 +2124,15 @@ class ApiBase2 {
 			case "bigint": return x;
 			case "boolean": return x;
 			case "symbol": switch(x) {
-				default: debugger; return {type: "symbol"};
-				case box_sym_r: return {type: "symbol-for",for: "box_symbol"};
+				default: debugger; return {a: "/type",type: "symbol"};
+				case box_sym_r: return {a: "/type/for",type: "symbol-for",for: "box_symbol"};
 			}
 			case "undefined": return x;
 			case "object": return this.simple_filter_obj(k,x);
 			case "function": {
 				let idx=this.fn_list.indexOf(x);
 				if(idx===-1) idx=this.fn_list.push(x)-1;
-				return {type: "function",id: idx,value: x};
+				return {a: "/type/id/value",type: "function",id: idx,value: {...x,a: "/name"}};
 			}
 		}
 	}
@@ -2199,13 +2199,14 @@ class ApiBase2 {
 		}
 		if(reconstructed!==null) return reconstructed;
 		debugger;
-		return {type: "empty"};
+		return {a: "/type",type: "empty"};
 	}
-	/** @template {{[U in K]:any}&{modify_log:G_ObjModifyItem[]}} T @template {keyof T&string} K @arg {T} x @arg {K} k */
+	/** @template {{[U in K]?:any}&{modify_log:G_ObjModifyItem[]}} T @template {keyof TextDecoder&string} K @arg {T} x @arg {K} k */
 	json_set_filter(x,k) {
 		const v=x[k];
 		const f=this.json_filter(k,v);
 		x.modify_log.push({
+			a: "/type/k/value",
 			type: "filter",
 			k,
 			value: f,
@@ -2215,9 +2216,9 @@ class ApiBase2 {
 				default: debugger; break;
 				case "function": {
 					/** @type {Ret_Filter_FunctionModify} */
-					let w={type: "function",id: f.id,log: [{type: "add",key: k,value: v}]};
+					let w={a: "/type/id/log",type: "function",id: f.id,log: [{a: "/type/k/value",type: "add",k,value: v}]};
 					x.modify_log.push({
-						type: "modify",
+						a: "/type/k/value",type: "modify",
 						k,
 						value: w,
 					});
@@ -2237,15 +2238,6 @@ class ApiBase2 {
 			if(empty!==true) debugger;
 			return;
 		}
-		if(f.a!=="/value") {debugger; return;};
-		let fv=f.value; fv;
-		switch(fv.a) {
-			default: debugger; break;
-			case "/id": break;
-		}
-		if(fv.type!=="function") debugger;
-		const {a,id,type,...y}=fv;
-		if(this.get_keys_of(y).length!==0) debugger;
 	}
 	/** @arg {unknown} x */
 	save_clone(x) {
@@ -2343,26 +2335,23 @@ class ApiBase2 {
 				},
 			}
 		};
-		/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;decode: typeof dec_fn;modify_log:G_ObjModifyItem[]}} */
-		let dec_info={encoding,decode: dec_fn,fatal,ignoreBOM,__symbol_prototype: filtered_proto,modify_log: []};
+		/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;modify_log:G_ObjModifyItem[]}} */
+		let dec_info={
+			encoding,fatal,ignoreBOM,__symbol_prototype: filtered_proto,modify_log: [
+				{
+					a: "/type/key/obj",type: "update",key: "decode",
+					obj: {a: "/decode",decode: dec_fn}
+				}
+			]
+		};
 		this.json_set_filter(dec_info,"decode");
-		return {type: "obj",value: {type: "TextDecoder",__symbol_prototype: filtered_proto}};
+		return {a: "/type/value",type: "obj",value: {a: "/type/__symbol_prototype",type: "TextDecoder",__symbol_prototype: filtered_proto}};
 	}
-	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {JsonFilterRetAny|JsonFilterRet_FunctionItem|Ret_simple_filter|undefined} */
+	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {Ret_simple_filter} */
 	json_filter(k,z) {
 		/** @type {unknown} */
 		let x=z;
-		if(x===null||x===void 0) return x;
-		if(typeof x==="object") return this.simple_filter(k,x);
-		if(typeof x==="function") {
-			let idx=this.fn_list.indexOf(x);
-			if(idx===-1) idx=this.fn_list.push(x)-1;
-			return {a: "/value",value: {a: "/id",type: "function",id: idx}};
-		}
-		if(typeof x==="string") return x;
-		if(typeof x==="boolean") return x;
-		debugger;
-		return {a: "any",z: [x]};
+		return this.simple_filter(k,x);
 	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
