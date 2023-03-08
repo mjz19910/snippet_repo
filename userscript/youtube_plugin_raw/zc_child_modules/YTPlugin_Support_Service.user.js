@@ -1141,11 +1141,11 @@ class Support_RS_Player extends BaseService {
 		this.t(dismiss,this.sm.G_Text);
 		this.sm.D_EndscreenElement_EP(endpoint);
 		this.t(subscribersText,this.sm.G_Text);
-		this.t(hovercardButton,this.xm.R_SubscribeButton);
+		this.xm.t(hovercardButton,this.xm.R_SubscribeButton);
 		this.sm.trackingParams(trackingParams);
 		this.t(isSubscribe,this.sm.a_primitive_bool);
 		this.sm.a_primitive_str(id);
-		this.tz(thumbnailOverlays,this.xm.G_ThumbnailOverlayItem);
+		this.xm.tz(thumbnailOverlays,this.xm.G_ThumbnailOverlayItem);
 	}
 	/** @private @arg {D_AudioTrack} x */
 	D_AudioTrack(x) {
@@ -1189,17 +1189,11 @@ class Support_RS_Player extends BaseService {
 	D_InfoCardIcon(x) {this.sm.D_TrackingParams("D_InfoCardIcon",x);}
 	/** @private @arg {R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
-	/** @arg {`${number}`} x */
-	_bd=x => this.mb(this.sm.parse_number_template,this.m(x));
-	/** @arg {`${number}`} x */
-	_pn=x => this.mb(this.sm.a_primitive_num,this._bd(x));
-	get bd() {return this._bd.bind(this);}
-	get pn() {return this._pn.bind(this);}
 	/** @private @arg {D_CueRangeItem} x */
 	D_CueRangeItem(x) {
 		const cf="D_CueRangeItem",t=this;
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
-		this.z([startCardActiveMs,endCardActiveMs],t.pn);
+		this.z([startCardActiveMs,endCardActiveMs],t.sm.pn);
 		this.save_number(`${cf}.teaserDurationMs`,this.sm.parse_number_template(teaserDurationMs));
 		this.save_number(`${cf}.endCardActiveMs`,this.sm.parse_number_template(endCardActiveMs));
 	}
@@ -1415,21 +1409,21 @@ class Support_RS_Browse extends BaseService {
 		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,onResponseReceivedEndpoints,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.RC_ResponseContext(responseContext);
-		this.t(header,this.xm.G_BrowseHeader);
+		this.xm.t(header,this.xm.G_BrowseHeader);
 		this.sm.trackingParams(trackingParams);
-		this.tz(onResponseReceivedActions,this.xm.GA_ResponseReceived);
+		this.xm.tz(onResponseReceivedActions,this.xm.GA_ResponseReceived);
 		this.tz_cf(cf,onResponseReceivedEndpoints,this.xm.GE_ResponseReceived);
-		this.t(contents,this.xm.G_BrowseContents);
+		this.xm.t(contents,this.xm.G_BrowseContents);
 		this.t(topbar,this.sm.R_DesktopTopbar);
 		this.t(frameworkUpdates,this.sm.R_EntityBatchUpdate);
-		this.t(sidebar,this.xm.G_BrowseSidebar);
+		this.xm.t(sidebar,this.xm.G_BrowseSidebar);
 		this.tz(observedStateTags,this.sm.B_StateTag);
 		this.t(cacheMetadata,this.sm.D_Cache_MD);
-		this.t(metadata,this.xm.G_Browse_MD);
+		this.xm.t(metadata,this.xm.G_Browse_MD);
 		this.t(microformat,this.sm.R_Microformat);
 		this.t(maxAgeStoreSeconds,x => this._primitive_of(x,"number"));
-		this.t(background,this.xm.R_MusicThumbnail);
-		this.t(continuationContents,this.xm.RC_SectionList);
+		this.xm.t(background,this.xm.R_MusicThumbnail);
+		this.xm.t(continuationContents,this.xm.RC_SectionList);
 		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
 	}
 }
@@ -2612,10 +2606,6 @@ class Support_Renderer extends BaseService {
 		this.sm.trackingParams(trackingParams);
 		this.R_TranscriptSearchPanel(a);
 	}
-	/** @public @arg {R_TwoColumnSearchResults} x */
-	R_TwoColumnSearchResults(x) {this.H_("twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
-	/** @private @arg {D_TwoColumnSearchResults} x */
-	D_TwoColumnSearchResults(x) {this.H_("primaryContents",x,this.xm.R_SectionList);}
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {D_TranscriptSegmentList} x */
@@ -3266,7 +3256,7 @@ class Support_Renderer extends BaseService {
 			this.sm.E_Watch(onTap);
 			this.sm.trackingParams(trackingParams);
 			this.xm.R_Button(shareButton);
-			this.t(repeatButton,this.xm.R_ToggleButton);
+			this.xm.t(repeatButton,this.xm.R_ToggleButton);
 			this.sm.params("macro_marker_repeat_state.entity.key",a);
 			this.t(endRepeatCommand,this.sm.C_CommandExecutor);
 			this.sm.params("player_state.entity.key",b);
@@ -3477,7 +3467,7 @@ class Support_Renderer extends BaseService {
 	D_PlaylistSidebar(x) {
 		const cf="D_PlaylistSidebar";
 		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(items,this.xm.G_PlaylistSidebarItem);
+		this.xm.z(items,this.xm.G_PlaylistSidebarItem);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_NotchesItem} x */
@@ -3958,7 +3948,7 @@ class Support_Renderer extends BaseService {
 		this.t(menu,this.sm.R_Menu);
 		this.xm.t(nextItemButton,this.xm.R_Button);
 		this.xm.t(prevItemButton,this.xm.R_Button);
-		this.t(subscribeButtonRenderer,this.xm.R_SubscribeButton);
+		this.xm.t(subscribeButtonRenderer,this.xm.R_SubscribeButton);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.xm.t(viewCommentsButton,this.xm.R_Button);
 		this.t(videoInteractions,this.g);
@@ -4200,8 +4190,8 @@ class ForService_XMethods extends BaseService {
 		let [p4,{...o4}]=this.sm.unwrap_prefix(o3,"unsubscribe");
 		this.sm.D_SubscribeButton_UnsubscribePrefix(p4);
 		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
-		this.tz(onSubscribeEndpoints,this.xm.E_Subscribe);
-		this.tz(onUnsubscribeEndpoints,this.xm.E_SignalService_SendPost);
+		this.xm.tz(onSubscribeEndpoints,this.xm.E_Subscribe);
+		this.xm.tz(onUnsubscribeEndpoints,this.xm.E_SignalService_SendPost);
 		this.t(targetId,x => this.sm.cq(x,"watch-subscribe"));
 		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 		const {serviceEndpoints,...y}=y2; this.g(y);
@@ -5149,8 +5139,8 @@ class ForService_XMethods extends BaseService {
 	D_ActiveView(x) {
 		const cf="D_ActiveView";
 		const {viewableCommands,endOfSessionCommands,regexUriMacroValidator,...y}=this.s(cf,x); this.g(y);
-		this.z(viewableCommands,this.xm.E_Pinging);
-		this.z(endOfSessionCommands,this.xm.E_Pinging);
+		this.z(viewableCommands,this.E_Pinging);
+		this.z(endOfSessionCommands,this.E_Pinging);
 		this.sm.D_EmptyMap(regexUriMacroValidator);
 	}
 	/** @public @arg {E_Pinging} x */
@@ -5206,7 +5196,7 @@ class ForService_XMethods extends BaseService {
 		this.xm.R_Button(actionButton);
 		this.xm.E_Url(navigationEndpoint);
 		this.z(impressionCommands,this.D_ImpressionCommand);
-		this.tz(noopTapEndpoints,this.xm.E_Pinging);
+		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.sm.R_Menu(menu);
 		this.t(activeView,this.D_ActiveView);
 		this.sm.trackingParams(trackingParams);
@@ -5421,5 +5411,9 @@ class ForService_XMethods extends BaseService {
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
+	/** @public @arg {R_TwoColumnSearchResults} x */
+	R_TwoColumnSearchResults(x) {this.H_("twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
+	/** @private @arg {D_TwoColumnSearchResults} x */
+	D_TwoColumnSearchResults(x) {this.H_("primaryContents",x,this.R_SectionList);}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});

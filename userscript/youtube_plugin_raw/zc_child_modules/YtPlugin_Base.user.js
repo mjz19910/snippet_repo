@@ -2472,7 +2472,7 @@ class BaseService extends ServiceWithMembers {
 	// takes nullish (as None), returns null (as None)
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f */
 	t_base(x,f) {if(x==null) return null; return f.call(this,x);}
-	/** @protected @template U @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>U} f */
+	/** @public @template U @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>U} f */
 	tz(x,f) {if(x==null) return null; return this.z(x,f);}
 	// takes null (as None), returns undefined (as None)
 	/** @protected @template {string} CF_T @arg {CF_T} cf @template {{}} T @arg {T|null} x @arg {(this:this,cf:CF_T,x:T)=>void} f */

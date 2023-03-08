@@ -5907,5 +5907,13 @@ class ServiceMethods extends ServiceData {
 		this.g(u);
 	}
 	//#endregion
+	//#region imports
+	/** @arg {`${number}`} x */
+	_bd=x => this.mb(this.parse_number_template,this.m(x));
+	/** @arg {`${number}`} x */
+	_pn=x => this.mb(this.a_primitive_num,this._bd(x));
+	get bd() {return this._bd.bind(this);}
+	get pn() {return this._pn.bind(this);}
+	//#endregion
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
