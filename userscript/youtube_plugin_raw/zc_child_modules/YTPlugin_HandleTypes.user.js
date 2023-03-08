@@ -3117,6 +3117,8 @@ class HandleTypes extends BaseService {
 				const {k,v}=x;
 				return pr({a: "tag",k,c: null,raw_id: v});
 			}
+			// ! strings
+			case "hashtag_id":
 			case "video_id": {
 				const {k,v}=x;
 				return pr({a: "tag",k,c: null,raw_id: v});
@@ -3157,9 +3159,12 @@ class HandleTypes extends BaseService {
 				const z={a: "DI",b: "key",c: p.k,w: "/a/b/c/w/z",z: [this.make_akz(p.k,this.make_prim_num_t(p.raw_id))]};
 				return z;
 			}
+			case "hashtag_id":
 			case "video_id": {
-				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info(this.mk_input(b,raw_id));
-				/** @type {DI_A_VideoId} */
+				const b=x.k,raw_id=x.z[0].z[0];
+				const s=this.mk_input(b,raw_id);
+				const p=this.get_parsed_info(s);
+				/** @type {DI_T_abz<typeof b>} */
 				const z=this.make_abwz(x.k,this.make_akz("raw_id",this.make_prim_v(p.raw_id)));
 				return z;
 			}
