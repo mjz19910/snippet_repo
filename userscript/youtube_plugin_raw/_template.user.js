@@ -14,9 +14,13 @@
 // @downloadURL	{downloadURL}
 // ==/UserScript==
 
-const __module_name__="mod$Template";
-/** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-export_(exports => {exports.__is_module_flag__=true;});
-// User code here
-export_(exports => exports.__module_loaded__=true);
+(function() {
+	"use strict";
+	const __module_name__="mod$Template";
+	/** @private @arg {(x:typeof exports)=>void} fn */
+	function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+	export_(exports => {exports.__is_module_flag__=true;});
+	// User code here
+	
+	export_(exports => exports.__module_loaded__=true);
+})();
