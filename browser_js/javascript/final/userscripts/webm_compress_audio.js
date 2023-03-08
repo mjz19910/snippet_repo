@@ -24,7 +24,7 @@ class AudioGainController {
 		s.threshold.value=-24;
 	}
 	/** @type {Set<MediaElementAudioSourceNode>} */
-	media_source=new Set;
+	media_source_set=new Set;
 	/** @type {Set<HTMLVideoElement>} */
 	connected_video_elements=new Set;
 	static instance;
@@ -33,14 +33,12 @@ class AudioGainController {
 	}
 	start() {
 		const ctx=this.audioCtx,gain=this.gainNode,compressor=this.compressorNode;
-		if(this.media_source) {
-			return;
-		}
 		let t=document.querySelector("video");
 		if(!t) return;
 		if(this.connected_video_elements.has(t)) return;
 		this.connected_video_elements.add(t);
 		let media_source=ctx.createMediaElementSource(t);
+		this.media_source_set.add(media_source);
 		media_source.connect(compressor);
 		compressor.connect(gain);
 		gain.connect(ctx.destination);
