@@ -2141,13 +2141,16 @@ class ApiBase2 {
 					/** @type {Type_GetOwnPropertyDescriptors<T>} */
 					const desc=Object.getOwnPropertyDescriptors(z);
 					const fd=simple_filter('prototype_description',desc);
-					return {type: "prototype",key: k,of: "TextDecoder",__prototype_description: {...fd,[ApiBase2.box_sym.x]: true}};
+					return {type: "prototype",key: k,of: "TextDecoder",__prototype_description: {...fd,[box_sym_g]: true}};
 				}
-				const {encoding,decode,fatal,ignoreBOM,...y}=z;
+				/** @type {TextDecoder} */
+				const td=z;
+				const {encoding,decode,fatal,ignoreBOM,...y}=td;
 				const filtered_proto=json_filter("%%prototype",Object.getPrototypeOf(z));
 				const dec_fn=json_filter("decode",decode);
-				/** @type {TextDecoder} */
+				/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;decode: typeof dec_fn}} */
 				let dec_info={encoding,decode: dec_fn,fatal,ignoreBOM,__symbol_prototype: filtered_proto,...y};
+				if(this.get_keys_of(y).length>0) debugger;
 				json_set_filter(dec_info,"decode");
 				return {type: "obj",of: "TextDecoder",value: as(dec_info)};
 			}
