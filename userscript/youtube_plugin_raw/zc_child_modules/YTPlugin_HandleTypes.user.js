@@ -27,6 +27,8 @@ export_(exports => {exports.__is_module_flag__=true;});
 ECatcherService.known_experiments.push(...[
 	[24456736],
 	[24486981],
+	[24451320],
+	[24412856,24447992,24483504,24483766,24491863,24492030],
 ].flat());
 //#region HandleTypes
 class HandleTypes extends BaseService {
