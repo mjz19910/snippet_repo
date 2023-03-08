@@ -2653,6 +2653,8 @@ class BaseService extends ServiceWithMembers {
 	save_boolean_one(k,x) {return this.save_db.data_store.get_store("boolean").save_data(k,this.make_one_t(k,x));}
 	/** @public @arg {string} k @arg {{}} x */
 	save_keys(k,x) {this.save_db.data_store.get_store("keys").save_keys(k,x);}
+	k=this.save_keys;
+	ks=this.k;
 	/** @protected @arg {string} k @arg {string} x */
 	save_string(k,x) {return this.save_db.data_store.get_store("string").save_data(k,this.make_one_t(k,x));}
 	/** @public @arg {string} k @arg {string[]} x */

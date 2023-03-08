@@ -21,8 +21,6 @@ export_(exports => {exports.__is_module_flag__=true;});
 class ServiceMethods extends ServiceData {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:ServiceMethods,x:T)=>U} f */
 	t(x,f) {return this.t_base(x,f);}
-	k=this.save_keys;
-	ks=this.k;
 	/** @private @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
 	_cq_no_infer(a,b) {if(a!==b) debugger;}
 	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
@@ -1686,14 +1684,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {CF_P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
 	D_Params(cf,path,x) {const {params: p,...y}=this.s(cf,x); this.g(y); this.params(path,x.params);}
-	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
-	get_keys_of_2(obj) {
-		if(!obj) {debugger;}
-		let rq=Object.keys(obj);
-		/** @private @type {any} */
-		let ra=rq;
-		return ra;
-	}
 	/** @public @arg {string} ns @arg {()=>void} f */
 	grouped(ns,f) {
 		console.group(ns);
@@ -1843,7 +1833,7 @@ class ServiceMethods extends ServiceData {
 	clickTrackingParams(x) {this.params("params.click_tracking",x);}
 	indexed_db_version=3;
 	/** @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
-	indexed_db_put(key,value) {return this.ix.put(key,value,this.indexed_db_version);}
+	indexed_db_put(key,value) {return this.ht.put(key,value,this.indexed_db_version);}
 	/** @template {Y_PutBoxedArgs} T @arg {T} args */
 	async put_boxed_id(...args) {
 		let {...ret}=await this.ix.put_boxed_id_async_3(this.indexed_db_version,...args);

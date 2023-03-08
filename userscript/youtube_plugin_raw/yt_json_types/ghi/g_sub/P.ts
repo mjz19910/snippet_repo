@@ -534,6 +534,11 @@ type P_ve_3611_params_2={
 type P_ve_3611_params={
 	2?: TW_Str2<"community"|"">;
 	23?: T_D32<0>;
+	73?: T_VW_J<{
+		1: T_VW_J<{
+			1: T_D32<1>;
+		}>;
+	}>;
 	110: T_VW<P_ve_3611_params_1>;
 };
 type P_search_params={

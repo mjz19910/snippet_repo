@@ -2118,7 +2118,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} cf @arg {{}} x @arg {{}} y */
 	h_gen_keys(cf,x,y) {
-		let u=this.sm.get_keys_of_2(y); if(u.length>0) {
+		let u=this.get_keys_of_2(y); if(u.length>0) {
 			let is_new=this.codegen_typedef_bin(cf,x,false);
 			if(is_new) {
 				let k=u.join(); console.log(`[${cf}.next_key]`,k);
@@ -2823,8 +2823,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
 		const cf="P_ve_3611_params";
-		const {2: v2,23: f23,110: f110,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(v2,x => {
+		const {2: i1,23: i2,73: i3,110: i5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.t(i1,x => {
 			let a=this.TW_Str2(x);
 			switch(a) {
 				default: a===""; debugger; break;
@@ -2833,7 +2833,8 @@ class HandleTypes extends BaseService {
 			}
 			a;
 		});
-		f23; f110;
+		this.t(i2,i2 => this.save_number("2:i2",this.T_D32(i2)));
+		this.t(i5,i5 => this.k("110:i5",this.T_VW(i5)));
 	}
 	/** @private @arg {P_playlist_edit_params} x */
 	P_playlist_edit_params(x) {
