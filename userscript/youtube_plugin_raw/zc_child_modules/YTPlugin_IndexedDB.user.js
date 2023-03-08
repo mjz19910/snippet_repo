@@ -247,11 +247,11 @@ class IndexedDBService extends BaseService {
 					case "many":
 					case "arr":
 					case "one": {
-						const z1={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
+						const i3={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
 						/** @type {DSS_Bigint["z"][0]} */
-						const z2={a: "group",b: value.type,z: [as_any(z1)]};
+						const i2={a: "group",b: value.type,z: [as_any(i3)]};
 						/** @type {DSS_Bigint} */
-						let z={key: as_any(key),a: "SI:T:D",b: "boxed_id",d: "bigint",w: "/key/a/b/d/w/z",z: [z2]};
+						let z={key: as_any(key),a: "SI:T:D",b: "boxed_id",d: "bigint",w: "/key/a/b/d/w/z",z: [i2]};
 						ret=as_any(z);
 						break x;
 					}
@@ -446,8 +446,8 @@ class IndexedDBService extends BaseService {
 			case "MP": {
 				let [type,tag,x]=args;
 				/** @type {DST_Browse_MP} */
-				const z2={...this.mk_s3(type,tag,x),w: "/key/a/b/j/w/z"};
-				let promise=this.put_box(z2,version); return {args,promise};
+				const z={...this.mk_s3(type,tag,x),w: "/key/a/b/j/w/z"};
+				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "FE": {
 				let [,,value]=args;
@@ -802,14 +802,14 @@ class IndexedDBService extends BaseService {
 			case "load_id": {
 				let [j,,id]=s0;
 				/** @type {DST_LoadId} */
-				const z2={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
-				return {args: s0,promise: this.put_box(z2,version)};
+				const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "save_id": {
 				let [j,,id]=s0;
 				/** @type {DST_SaveId} */
-				const z2={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
-				return {args: s0,promise: this.put_box(z2,version)};
+				const z={a: "ST:D",b: "boxed_id",j,key: `boxed_id:${j}`,z: [{type: "number",z: [id]}]};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "browse_id": return this.put_boxed_pl(version,...s0);
 			case "url_info": return this.put_boxed_url_info(version,s0[0],s0[1],s0[2]);
