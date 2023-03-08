@@ -47,4 +47,29 @@ type Ret_TextDecoderInfo={
 		__symbol_prototype: GType_PrototypeDescription_OfTextDecoder<"%%prototype","TextDecoder",TextDecoder>;
 	};
 };
-type JsonFilterRetAny={a: "any",z: [number];};
+type JsonFilterRetAny={a: "/z",z: [number];};
+type Ret_can_clone_map={
+	a: "/type/p/value"; p: "boolean"; type: "entry";
+	value: [string,boolean];
+}|{
+	a: "/type/z";
+	type: "original";
+	z: {
+		a: "/k/v/sf";
+		k: string; v: unknown; sf: Ret_simple_filter;
+	};
+}|{
+	a: "/type/b/k/value";
+	b: "no-clone";
+	type: "RegExp";
+	k: string;
+	value: {source: string;};
+}|{
+	a: "/type/value"; b: "no-clone"; k: string;
+	type: "TextDecoder";
+	value: {
+		encoding: string;
+		fatal: boolean;
+		ignoreBOM: boolean;
+	};
+};

@@ -1231,7 +1231,7 @@ class MyReader {
 					this.failed=true;
 				}
 				x: if(res) {
-					if(res.findIndex(e => e[0]==="error")>-1) {
+					if(res.findIndex(([t]) => t==="error")>-1) {
 						first_num.push(["child",fieldId,sub_buffer,null]);
 						break x;
 					}
@@ -2138,6 +2138,8 @@ class ApiBase2 {
 	}
 	/** @template {object} T @arg {T} x */
 	np(x) {Object.setPrototypeOf(x,null); return x;}
+	/** @template T @arg {T}x @returns {T} */
+	clone(x) {return structuredClone(x);}
 	/** @template {object|null} T @arg {string} k @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj} */
 	simple_filter_obj(k,x) {
 		if(x instanceof Array) {
@@ -2151,42 +2153,79 @@ class ApiBase2 {
 		let r_obj;
 		{
 			const in_entries=Object.entries(x);
-			/** @arg {[string,unknown]} e */
+			/** @arg {[string,unknown]} e @returns {Ret_can_clone_map} */
 			const can_clone_map=e => {
-				if(typeof e[1]==="boolean") return [e];
-				if(typeof e[1]==="function") return {
-					type: "original",
-					k: e[0],
-					v: e[1],
-					sf: this.simple_filter(e[0],e[1]),
+				let [k,x]=e;
+				if(typeof x==="boolean") return {
+					a: "/type/p/value",type: "entry",p: "boolean",
+					value: [k,x]
 				};
-				if(e[1] instanceof RegExp) return [e[0],`TYPE::RegExp<"${e[1].source}">`];
-				if(e[1] instanceof TextDecoder) return [e[0],{
-					a: "/type/value",b: "no-clone",
+				if(typeof x==="function") return {
+					a: "/type/z",type: "original",
+					z: {
+						a: "/k/v/sf",
+						k: k,
+						v: x,
+						sf: this.simple_filter(k,x)
+					}
+				};
+				if(x instanceof RegExp) return {
+					a: "/type/b/k/value",b: "no-clone",k,
+					type: "RegExp",
+					value: {source: x.source}
+				};
+				if(x instanceof TextDecoder) return {
+					a: "/type/value",b: "no-clone",k,
 					type: "TextDecoder",
 					value: {
-						encoding: e[1].encoding,
-						fatal: e[1].fatal,
-						ignoreBOM: e[1].ignoreBOM
+						encoding: x.encoding,
+						fatal: x.fatal,
+						ignoreBOM: x.ignoreBOM
 					}
-				}];
-				console.log("[log_c1]",e[0],e[1]);
+				};
+				console.log("[log_c1]",k,x);
 				try {
-					return [structuredClone(e)];
+					let [k,v]=this.clone(e); k;
+					switch(typeof v) {
+						case "bigint": debugger; break;
+						case "string": debugger; break;
+						case "number": debugger; break;
+						case "boolean": debugger; break;
+						case "symbol": debugger; break;
+						case "undefined": debugger; break;
+						case "object": debugger; break;
+						case "function": debugger; break;
+					}
 				} catch {
 					return {
+						a: "/type/z",
 						type: "original",
-						k: e[0],
-						v: e[1],
-						sf: this.simple_filter(e[0],e[1]),
+						z: {
+							a: "/k/v/sf",
+							k: k,
+							v: x,
+							sf: this.simple_filter(k,x)
+						}
 					};
 				}
+				debugger;
+				throw new Error();
 			};
-			const res_entries=in_entries.map(can_clone_map).map(x => {
-				if(x instanceof Array) return x;
-				return [[x.k,x.sf]];
-			}).map(v => v[0]).map(ent => {
-				Object.setPrototypeOf(ent[1],null);
+			/** @arg {Ret_can_clone_map} x @returns {[string,any]} */
+			const map_clone_2=x => {
+				switch(x.a) {
+					case "/type/b/k/value": break;
+					case "/type/p/value": break;
+					case "/type/value": break;
+					case "/type/z": return [x.z.k,x.z.sf];
+				}
+				debugger;
+				throw new Error();
+			};
+			const res_entries=in_entries.map(can_clone_map).map(map_clone_2).map(ent => {
+				if(ent instanceof Array) {
+					Object.setPrototypeOf(ent[1],null);
+				}
 				return ent;
 			});
 			r_obj=Object.fromEntries(res_entries);
@@ -2818,7 +2857,7 @@ class BaseService extends ServiceWithMembers {
 	}
 	//#region short names
 	/** @protected @name iterate_obj @arg {{}|undefined} x @arg {(this:this,k:string,v: {})=>void} f */
-	v(x,f) {if(x===void 0) return; this.z(Object.entries(x),e => f.call(this,e[0],e[1]));}
+	v(x,f) {if(x===void 0) return; this.z(Object.entries(x),([k,v]) => f.call(this,k,v));}
 	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
 	z(x,f) {
 		if(x===void 0||!x.entries) {debugger; return [[],[]];}
