@@ -1,1 +1,1 @@
-type RequiredType<V>=Partial<Omit<PartialWithType<V>,"type">>&Pick<PartialWithType<V>,"type">;
+type RequiredType<V>=Partial<Omit<PartialWithType<V>,"a">>&Pick<PartialWithType<V>,"a">;

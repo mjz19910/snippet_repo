@@ -2186,48 +2186,49 @@ class ApiBase2 {
 		console.log("module_debug: module");
 		console.log(json_clone);
 	}
-	/** @returns {JsonFilterRet<K,T>} @template T @template {string} K @arg {K} k @arg {Record<"type", unknown>} x */
+	key_path_map=new Map;
+	/** @arg {string} k @arg {any} x */
+	add_key_root(k,x) {
+		this.key_path_map.set(k,x);
+		for(let entry of Object.entries(x)) {
+			console.log(entry);
+		}
+	}
+	/** @returns {JsonFilterRet<K,T>} @template T @template {string} K @arg {K} k @arg {JsonFilterRet<K,T>} x */
 	json_filter_filter_ret(k,x) {
-		k;
+		this.add_key_root(k,x);
 		if(typeof x==="string"||typeof x==="boolean"||x===null) return x;
-		if(x.type===void 0) {debugger; return null;}
-		if(typeof x.type!=="string") {debugger; return null;}
 		/** @type {JsonFilterRet<K,T>|null} */
 		let r1=null;
-		switch(x.type) {
-			default: debugger; break;
-			case "function": {
-				/** @type {RequiredType<"function">} */
-				let b={...x,type: x.type}; r1=b;
-			} break;
-			case "symbol": {
-				/** @type {RequiredType<"symbol">} */
-				let b={...x,type: x.type}; r1=b;
-			} break;
-			case "normal": {
-				/** @type {RequiredType<"normal">} */
-				let b={...x,type: x.type}; r1=b;
-			} break;
-			case "normal:copy": {
-				/** @type {RequiredType<"normal:copy">} */
-				let b={...x,type: x.type}; r1=b;
-			} break;
-			case "obj": {
-				/** @type {RequiredType<"obj">} */
-				let b={...x,type: x.type}; r1=b;
-			} break;
+		/** @type {Extract<JsonFilterRet<K,T>,object>["value"]|null} */
+		let v1=null;
+		const v=x.value;
+		switch(v.type) {
+			default: console.log("skip",x.value); v1=x.value; break;
+			case "function": break;
 			case "prototype": {
-				/** @type {RequiredType<"prototype">} */
-				let b=as_any(x);
-				const {type,key,type_name,__prototype_description,...w2}=b; if(this.get_keys_of(w2).length!==0) debugger;
+				const {type,key,type_name,__prototype_description,...w2}=v; if(this.get_keys_of(w2).length!==0) debugger;
 				if(key===void 0) {debugger; return null;}
 				if(type_name===void 0) {debugger; return null;}
 				if(__prototype_description===void 0) {debugger; return null;}
 				console.log("proto",__prototype_description);
-				r1={...w2,type,key,type_name,__prototype_description};
+				/** @type {Type_PrototypeDescription_OfTextDecoder<typeof k>} */
+				let z={a: "/value",value: {...w2,type,key,type_name,__prototype_description}};
+				r1=z;
 			} break;
 		}
 		if(r1) return r1;
+		if(v1) {
+			switch(v1.type) {
+				case "function": return {a: "/value",value: v1};
+				case "prototype": return {a: "/value",value: v1};
+				case "normal": return {a: "/value",value: v1};
+				case "symbol": return {a: "/value",value: v1};
+				case "obj": return {a: "/value",value: v1};
+				case "normal:copy": return {a: "/value",value: v1};
+			}
+
+		}
 		console.log("not handled",k,x);
 		return null;
 	}
@@ -2267,11 +2268,25 @@ class ApiBase2 {
 		if(z===null) return {type: "normal",value: z};
 		if(box_sym_r in z&&z[box_sym_r]===true) return {type: "normal",value: z};
 		if(cloned_sym in z&&z[cloned_sym]===true) return {type: "normal",value: z};
-		if("type" in z) {
+		if("a" in z&&"value" in z) {
 			let w=z;
-			if(w.type) {
-				const r=this.json_filter_filter_ret(k,w);
-				return r;
+			if(w.a&&w.a==="/value") {
+				/** @type {{a:"/value"}} */
+				let wc={...w,a: w.a};
+				/** @type {Partial<JsonFilterRet<K,any>>} */
+				let wx=wc;
+				if(wx.value) {
+					const v=wx.value;
+					switch(v.type) {
+						default: debugger; break;
+						case "function": return this.json_filter_filter_ret(k,{a: "/value",value: v});
+						case "normal": return this.json_filter_filter_ret(k,{a: "/value",value: v});
+						case "normal:copy": return this.json_filter_filter_ret(k,{a: "/value",value: v});
+						case "obj": return this.json_filter_filter_ret(k,{a: "/value",value: v});
+						case "prototype": return this.json_filter_filter_ret(k,{a: "/value",value: v});
+						case "symbol": return this.json_filter_filter_ret(k,{a: "/value",value: v});
+					}
+				}
 			}
 		}
 		/** @type {{}} */

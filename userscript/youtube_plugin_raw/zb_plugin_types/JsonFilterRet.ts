@@ -11,9 +11,12 @@ type JsonFilterRet<K,T>=
 	}
 	|GType_PrototypeDescription_OfTextDecoder<K,"TextDecoder",TextDecoder>
 	|{
-		a: "/value"; value: {type: "symbol"; a: "/for"; for: "box_symbol";};
+		a: "/value"; value: {
+			type: "symbol"; a: "/for"; for: "box_symbol";
+		}|{
+			type: "symbol"; a: "/empty"; empty: true;
+		};
 	}
-	|{a: "/value"; value: {type: "symbol"; a: "/empty"; empty: true;};}
 	|{
 		a: "/value"; value: {type: "normal:copy"; a: "/copy/z"; copy: true; z: {[k: string]: unknown;};};
 	}
