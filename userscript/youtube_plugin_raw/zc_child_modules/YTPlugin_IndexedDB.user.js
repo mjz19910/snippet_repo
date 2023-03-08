@@ -443,12 +443,6 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {string} C @template {string} K @template {{k:K}} I @template {{c:C;z:[I]}} X @arg {X} x @returns {mk_s2<C,K,X>} */
 	mk_bx_nw(x) {return this.mk_s2(this.ht.za1(x).k,x);}
-	/** @typedef {ZAT2<any>} ZA_S_2 */
-	/** @typedef {ZAT3<any>} ZA_S_3 */
-	/** @template {ZA_S_1} K @typedef {K["z"][0]} T_Z_Pop */
-	/** @template {ZA_S_2} K @typedef {T_Z_Pop<ZA1<K>>} za2 */
-	/** @template {ZA_S_3} K @typedef {T_Z_Pop<za2<K>>} ZA3 */
-	/** @template T @typedef {T_Z_Next<ZAT1<T>>} ZAT2 */
 	/** @type {"a/b/j/k/w/z"} */
 	kz_kw="a/b/j/k/w/z";
 	/** @template {string} T @arg {T}x @returns {`/db/key/${T}`}  */
@@ -462,7 +456,7 @@ class IndexedDBService extends BaseService {
 		const key=`boxed_id:key:${c}:${this.za2(z)}`;
 		return {key,a: "ST:D",b: "boxed_id",j,k,w: this.mka("kw"),z: [x]};
 	}
-	/** @template V @template {ZAT2<V>} T @arg {T} x @returns {za2<T>} */
+	/** @template V @template {ZAT2<V>} T @arg {T} x @returns {ZA2<T>} */
 	za2(x) {return this.ht.tz_pop(this.ht.za1(x));}
 	/** @template V @template {ZAT3<V>} T @arg {T} x @returns {ZA3<T>} */
 	za3(x) {return this.ht.tz_pop(this.za2(x));}
