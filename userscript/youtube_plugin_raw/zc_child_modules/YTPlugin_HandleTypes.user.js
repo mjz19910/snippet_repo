@@ -3161,21 +3161,7 @@ class HandleTypes extends BaseService {
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		switch(x.k) {
-			default: {
-				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
-				console.log(b,p);
-				switch(p.c) {
-					case null: debugger; break;
-					case "FE": debugger; break;
-					case "MP": debugger; break;
-					case "PL": debugger; break;
-					case "RD": debugger; break;
-					case "SP": debugger; break;
-					case "UC": debugger; break;
-					case "UU": debugger; break;
-					case "VL": debugger; break;
-				}
-			} break;
+			default: debugger; break;
 			case "start_radio": {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
 				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
@@ -3192,6 +3178,26 @@ class HandleTypes extends BaseService {
 				const z=this.make_abwz_item(x.k,this.make_akz("raw_id",this.make_prim_v(p.raw_id)));
 				return z;
 			}
+			case "browse_id": {
+				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				console.log(b,p);
+			} break;
+			case "channel_id": {
+				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				console.log(b,p);
+			} break;
+			case "guide_entry_id": {
+				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				console.log(b,p);
+			} break;
+			case "playlist_id": {
+				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				console.log(b,p);
+			} break;
+			case "user_id": {
+				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: b,raw_id});
+				console.log(b,p);
+			} break;
 		}
 		return null;
 	}
