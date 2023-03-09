@@ -15,7 +15,7 @@
 // ==/UserScript==
 /*eslint-disable no-undef*/
 
-const {do_export}=require("../zc_child_modules/YtPlugin_Base.user",{location: "zc_a_other"});
+const {do_export}=require("./YtPlugin_Base.user",{location: "zc_a_other"});
 
 (function() {
 	'use strict';
