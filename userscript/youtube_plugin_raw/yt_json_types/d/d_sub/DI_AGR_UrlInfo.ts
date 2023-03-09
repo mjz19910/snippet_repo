@@ -1,5 +1,3 @@
-type DU_HashtagId=string;
-
 type DI_AGR_UrlInfo=
 	|T_DI_FromObj<{browse_id: DU_Browse_Id;}>
 	|T_DI_FromObj<{guide_entry_id: DU_GuideEntry_Id;}>

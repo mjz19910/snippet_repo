@@ -25,14 +25,13 @@ type DU_PlaylistId_Base=
 	|"UU"
 	;
 ;
-//#region Template String
-//#region DU
+//#region DU Template String
 type DU_Browse_Id=T_IdTemplate<"FE">|T_IdTemplate<"VL">|T_IdTemplate<"UC">|T_IdTemplate<"MP">|T_IdTemplate<"SP">;
 type DU_ChannelId=T_IdTemplate<"UC">;
 type DU_GuideEntry_Id=DU_Playlist_Static|T_IdTemplate<"UC">|T_IdTemplate<"PL">|"VLLL";
+type DU_HashtagId=string;
 type DU_Playlist_Id=DU_Playlist_Static|T_IdTemplate<DU_PlaylistId_Base>;
 type DU_Playlist_Radio_Id=T_IdTemplate<Extract<DU_PlaylistId_Base,`RD${string}`>>;
 type DU_Playlist_Static="WL"|"LL";
 type DU_StartRadio=0|1;
-//#endregion
 //#endregion
