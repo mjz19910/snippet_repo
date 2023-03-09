@@ -3382,8 +3382,7 @@ class HandleTypes extends BaseService {
 			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
 			const y_many=[];
 			const cmp_map=new WeakMap;
-			const xi0=w(x);
-			let xi=null;
+			const xi0=w(x),yi0=w(y); let xi=null,yi=null;
 			switch(xi0[0]) {
 				case 1: break;
 				case 2: {
@@ -3425,7 +3424,6 @@ class HandleTypes extends BaseService {
 					acc_items(container,x_many);
 				}
 			}
-			const yi0=w(y); let yi=null;
 			switch(yi0[0]) {
 				default: debugger; break;
 				case 1: break;
