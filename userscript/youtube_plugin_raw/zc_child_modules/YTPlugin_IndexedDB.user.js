@@ -454,7 +454,7 @@ class IndexedDBService extends BaseService {
 	mka=x => this.mdk(this[`kz_${x}`]);
 	/**
 	 * @template L,M
-	 * @template {Primitive} K3 @template {string} K2 @template {KV_T_AKZ<K2,T>} X @arg {L} l @arg {M} m @arg {X} x
+	 * @template {G_Primitives} K3 @template {string} K2 @template {KV_T_AKZ<K2,T>} X @arg {L} l @arg {M} m @arg {X} x
 	 * @template {TMK_SuccessorX2<K3>} T @arg {T} z
 	 * @returns {DST_MakeLM_2<X,L,M,T>}
 	 * */

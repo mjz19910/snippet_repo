@@ -26,7 +26,7 @@ type DSI_T_Item_ABD<T_Type extends keyof J_StoreTypeMap,T>={
 
 //#region DST_MakeLM (ABLMZ)
 type DST_MoveRegion1_Src="DST_MakeLM:Src"|DST_MoveRegion1_Dst;
-type DST_MakeLM<L extends string,M extends string,ZV extends Primitive,T extends KV_T_AKZ<L,TMK_SuccessorX2<ZV>>=KV_T_AKZ<L,TMK_SuccessorX2<ZV>>>={
+type DST_MakeLM<L extends string,M extends string,ZV extends G_Primitives,T extends KV_T_AKZ<L,TMK_SuccessorX2<ZV>>=KV_T_AKZ<L,TMK_SuccessorX2<ZV>>>={
 	key: `boxed_id:${L}:${M}:${ZV}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
@@ -34,7 +34,7 @@ type DST_MakeLM<L extends string,M extends string,ZV extends Primitive,T extends
 	m: M;
 	z: [T];
 };
-type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends Primitive>={
+type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends G_Primitives>={
 	key: `boxed_id:${T["k"]}:${TZ_SuccessorX3<T>}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
@@ -42,7 +42,7 @@ type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends Pr
 	m: M;
 	z: [T];
 };
-type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string,M extends string,V extends Primitive>={
+type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string,M extends string,V extends G_Primitives>={
 	key: `boxed_id:${L}:${M}:${V}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
@@ -50,7 +50,7 @@ type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string
 	m: M;
 	z: [T];
 };
-type DST_MakeLM_FromObj<T extends TMK_SuccessorX3<V>&{k: string;},L="key",M extends Primitive=TZ_Successor<T> extends infer J extends {k: string;}? J["k"]:"unknown",V extends Primitive=Primitive>={
+type DST_MakeLM_FromObj<T extends TMK_SuccessorX3<V>&{k: string;},L="key",M extends G_Primitives=TZ_Successor<T> extends infer J extends {k: string;}? J["k"]:"unknown",V extends G_Primitives=G_Primitives>={
 	key: `boxed_id:${T['k']}:${M}:${V}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
@@ -83,7 +83,7 @@ type DST_MakeLM_From_BC<
 		b: string; c: string;
 		z: [T_DI_FromObj<{[K in T_KeyName]: T_RawId}>,...any];
 	},
-	V extends Primitive,L extends T["b"]=T["b"],M extends T["c"]=T["c"],T_KeyName extends PropertyKey=keyof T_GP_FromObj<T['z'][0]>,T_RawId=T_GP_FromObj<T['z'][0]>[T_KeyName]
+	V extends G_Primitives,L extends T["b"]=T["b"],M extends T["c"]=T["c"],T_KeyName extends PropertyKey=keyof T_GP_FromObj<T['z'][0]>,T_RawId=T_GP_FromObj<T['z'][0]>[T_KeyName]
 >={
 	key: `boxed_id:${L}:${M}:${V}`;
 	a: DST_KStr_ABLMZ;
