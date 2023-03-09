@@ -106,7 +106,7 @@ type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
 	|["arr",[U[],any,T]]
 	|["many",[U[][],any,T]]
 	|["typeof_name",[T_GetTypeof<U>,any,T]]
-	|["instance_name",[U,any,T]]
+	|["instance_name",["array",any,T]]
 	;
 ;
 type Ret_w_dss<T extends DSI_T_Item_ABD<any,any>>=
