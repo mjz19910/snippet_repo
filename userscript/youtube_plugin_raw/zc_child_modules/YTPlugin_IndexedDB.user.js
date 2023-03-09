@@ -324,7 +324,7 @@ class IndexedDBService extends BaseService {
 	uv_unpack_mt(x,_mt) {
 		/** @type {MT_MakeSplitObj<T>} */
 		const make={},nul=null;
-		/** @type {{u:make_arr_t<T>|make_instance_name_t<T>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
+		/** @type {{u:make_arr_t<T>|make_instance_name_t<string>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
 		const D_holder={};
 		D_holder.u=x; make.arr=nul; make.instance_name=nul; make.many=nul; make.one=nul; make.typeof_name=nul;
 		switch(x.c) {
