@@ -3,4 +3,4 @@ type DST_GuideEntry_WL={
 	key: "boxed_id:guide_entry_id:WL";
 	w: "key/a/b/w/j/z";
 	z: [DI_GuideEntry_WL];
-};
+}|DST_MakeLM_FromObj<DI_GuideEntry_WL>;

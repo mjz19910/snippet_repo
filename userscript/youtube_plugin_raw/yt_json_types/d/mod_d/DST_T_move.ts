@@ -1,8 +1,30 @@
+//#region KStr
+type DST_KStr_ABDZ="/db/key/a/b/d/z";
 type DST_KStr_ABLMZ="/db/key/a/b/l/m/z";
-
 type DST_KStr_ABLZ="/db/key/a/b/l/z";
+//#endregion
 
-//#region DST_MakeLM
+
+//#region ABDZ
+// ~ SI = StorableItem
+type DSI_T_Item_ABD2<T_Type extends string,T_Tag2 extends string,T>={
+	key: `boxed_id:${T_Type}:${T_Tag2}`;
+	a: DST_KStr_ABDZ; b: "boxed_id"; d: T_Type; z: [T];
+};
+
+type DSI_T_Item_ABD<T_Type extends keyof J_StoreTypeMap,T>={
+	key: `boxed_id:${T_Type}:${string}`;
+	a: DST_KStr_ABDZ; b: "boxed_id"; d: T_Type; z: [DI_T_KV_Z<string,make_item_group<T>>];
+	descriptive_name?: "boxed_store";
+	renames_arr?: DEX_Renames<[
+		DRN_KeyIs<DST_KStr_ABDZ>,
+		DRN_KeyType<T_Type>,
+	]>;
+};
+//#endregion
+
+
+//#region DST_MakeLM (ABLMZ)
 type DST_MoveRegion1_Src="DST_MakeLM:Src"|DST_MoveRegion1_Dst;
 type DST_MakeLM<L extends string,M extends string,ZV extends Primitive,T extends DI_T_KV_Z<L,TMK_SuccessorX2<ZV>>=DI_T_KV_Z<L,TMK_SuccessorX2<ZV>>>={
 	key: `boxed_id:${L}:${M}:${ZV}`;
@@ -27,6 +49,15 @@ type DST_MakeLM_3<T extends DI_T_KV_Z<string,TMK_SuccessorX2<V>>,L extends strin
 	l: L;
 	m: M;
 	z: [T];
+};
+type DST_MakeLM_FromObj<T extends TMK_SuccessorX3<V>&{k: string;},L="key",M extends Primitive=TZ_Successor<T> extends infer J extends {k: string;}? J["k"]:"unknown",V extends Primitive=Primitive>={
+	key: `boxed_id:${T['k']}:${M}:${V}`;
+	a: DST_KStr_ABLMZ;
+	b: "boxed_id";
+	l: L;
+	m: M;
+	z: [T];
+	_info_arr?: [TZ_SuccessorX3<T>];
 };
 //#endregion
 type DST_T_ABLZ_FromDI<T extends Y_DI_Shape>=DST_T_ABLZ<T["k"],TZ_SuccessorX3<T>,T>;
