@@ -93,15 +93,45 @@ type G_BoxedInner=
 	}]
 	|["k:sr",DST_Key_StartRadio]
 	|[2,[DSS_String,DIZ_Item_AB<string,string>,make_item_group<string>,string|string[]|string[][]],string,"many"|"one"|"arr"|"typeof_name"|"instance_name"|"string",string|string[]|string[][]]
-	|[3,DSS_Bigint]
-	|[4,any]
-	|[5,any]
-	|[6,any]
-	|[7,any]
-	|[8,any]
+	|[3,DSS_Bigint,Ret_w_dss<DSS_Bigint>]
+	|[4,DSS_Boolean,Ret_w_dss<DSS_Boolean>]
+	|[5,DSS_Keys,Ret_w_dss<DSS_Keys>]
+	|[6,DSS_Number,Ret_w_dss<DSS_Number>]
+	|[7,DSS_VE,Ret_w_dss<DSS_VE>]
+	|[8,DSS_String,Ret_w_dss<DSS_String>]
 	;
 ;
-type Ret_w_diz<T,A extends DIZ_Item_AB<string,T>['z'][0]=DIZ_Item_AB<string,T>['z'][0]>=[A['c'],[A['z'][0],A,DIZ_Item_AB<string,T>]]|{};
+type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
+	|["one",[U,any,T]]
+	|["arr",[U[],any,T]]
+	|["many",[U[][],any,T]]
+	|["typeof_name",[T_GetTypeof<U>,any,T]]
+	|["instance_name",[U,any,T]]
+	;
+;
+type Ret_w_dss<T extends DSI_T_Item_ABD<any,any>>=
+	["bigint",[T,Ret_w_diz<DIZ_Item_AB<string,T>,T>]]|
+	["boolean",[T extends DSI_T_Item_ABD<"boolean",any>? T|{}:{},{}]]|
+	T extends DSI_T_Item_ABD<"boolean",any>? ["boolean",[T,{}]]:
+	T extends DSI_T_Item_ABD<"number",any>? ["number",[T,{}]]:
+	T extends DSI_T_Item_ABD<"keys",any>? ["keys",[T,{}]]:
+	T extends DSI_T_Item_ABD<"root_visual_element",any>? ["root_visual_element",[T,{}]]:
+	T extends DSI_T_Item_ABD<"string",any>? ["string",[T,{}]]:
+	never;
+;
+;
+type Ret_T_W_DIZ=Ret_w_diz<DIZ_Item_AB<string,DSS_Bigint>,DSS_Bigint>;
+function test_1(x: Ret_T_W_DIZ) {
+	switch(x[0]) {
+		case "one": {
+			x[1];
+		} break;
+		case "arr":
+		case "many":
+		case "typeof_name":
+		case "instance_name":
+	}
+}
 type G_BoxedInner_Tmp=[
 	GST_DSS|null,
 	Exclude<G_BoxedPrintable,{a: "SI:T:D";}>|null

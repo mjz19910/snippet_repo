@@ -3300,7 +3300,7 @@ class HandleTypes extends BaseService {
 					case "root_visual_element": console.log("[cache_outdated]",no); break;
 				}
 			}
-			/** @template T @arg {DIZ_Item_AB<string,T>} x @returns {Ret_w_diz<T>} */
+			/** @template U @template {DIZ_Item_AB<string,U>} T @arg {T} x @returns {Ret_w_diz<T,U>} */
 			let w_diz=x => {
 				x.a; x.b; let a=x.z[0];
 				switch(a.c) {
@@ -3311,16 +3311,15 @@ class HandleTypes extends BaseService {
 					case "instance_name": {let b=a.z[0]; return [a.c,[b,a,x]];}
 				}
 			};
-			/** @template {GST_DSS} T @arg {T} x @returns {[[T],T['d'],Ret_w_diz<any>]} */
+			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss<T>} */
 			let w_dss=x => {
-				x.z;
 				switch(x.d) {
-					case "bigint": return [[x],x.d,w_diz(x.z[0])];
-					case "boolean": return [[x],x.d,w_diz(x.z[0])];
-					case "keys": return [[x],x.d,w_diz(x.z[0])];
-					case "number": return [[x],x.d,w_diz(x.z[0])];
-					case "root_visual_element": return [[x],x.d,w_diz(x.z[0])];
-					case "string": return [[x],x.d,w_diz(x.z[0])];
+					case "bigint": return [x.d,[x,w_diz(x.z[0])]];
+					case "boolean": return [x.d,[x,w_diz(x.z[0])]];
+					case "keys": return [x.d,[x,w_diz(x.z[0])]];
+					case "number": return [x.d,[x,w_diz(x.z[0])]];
+					case "root_visual_element": return [x.d,[x,w_diz(x.z[0])]];
+					case "string": return [x.d,[x,w_diz(x.z[0])]];
 				}
 			}; w_dss;
 			/** @arg {G_BoxedPrintable|undefined} x @returns {G_BoxedInner} */
@@ -3337,12 +3336,12 @@ class HandleTypes extends BaseService {
 				if(n[0]) {
 					let x=n[0];
 					switch(x.d) {
-						case "bigint": return [3,x];
-						case "boolean": return [4,x];
-						case "keys": return [5,x];
-						case "number": return [6,x];
-						case "root_visual_element": return [7,x];
-						case "string": return [8,x];
+						case "bigint": {let w=w_dss(x); return [3,x,w];}
+						case "boolean": {let w=w_dss(x); return [4,x,w];}
+						case "keys": {let w=w_dss(x); return [5,x,w];}
+						case "number": {let w=w_dss(x); return [6,x,w];}
+						case "root_visual_element": {let w=w_dss(x); return [7,x,w];}
+						case "string": {let w=w_dss(x); return [8,x,w];}
 					}
 				}
 				if(n[1]) return [1,n[1]];
