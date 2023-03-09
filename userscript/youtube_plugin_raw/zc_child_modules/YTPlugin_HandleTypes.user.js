@@ -3311,7 +3311,7 @@ class HandleTypes extends BaseService {
 					case "instance_name": {let b=a.z[0]; return [a.c,[b,a,x]];}
 				}
 			};
-			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss<T>} */
+			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss} */
 			let w_dss=x => {
 				switch(x.d) {
 					case "bigint": return [x.d,[x,w_diz(x.z[0])]];
@@ -3328,20 +3328,16 @@ class HandleTypes extends BaseService {
 				if("k" in x) return ["k:sr",x];
 				/** @type {[GST_DSS|null,Exclude<G_BoxedPrintable,{a:"SI:T:D"}>|null]} */
 				let n=[null,null];
-				/** @type {[DSS_String|null,Exclude<GST_DSS,DSS_String>|null]} */
-				const n2=[null,null];
 				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
-				if(n[0]) {let c=n[0]; if(c.d==="string") n2[0]=c; else n2[1]=c;}
-				if(n2[0]) {let c=n2[0],d=c.z[0],e=d.z[0],f=e.z[0]; return [2,[c,d,e,f],d.b,e.c,e.z[0]];}
 				if(n[0]) {
-					let x=n[0];
-					switch(x.d) {
-						case "bigint": {let w=w_dss(x); return [3,x,w];}
-						case "boolean": {let w=w_dss(x); return [4,x,w];}
-						case "keys": {let w=w_dss(x); return [5,x,w];}
-						case "number": {let w=w_dss(x); return [6,x,w];}
-						case "root_visual_element": {let w=w_dss(x); return [7,x,w];}
-						case "string": {let w=w_dss(x); return [8,x,w];}
+					let x=n[0]; let w=w_dss(x);
+					switch(w[0]) {
+						case "bigint": return [2,1,w];
+						case "boolean": return [2,2,w];
+						case "keys": return [2,3,w];
+						case "number": return [2,4,w];
+						case "root_visual_element": return [2,5,w];
+						case "string": return [2,6,w];
 					}
 				}
 				if(n[1]) return [1,n[1]];
@@ -3349,41 +3345,63 @@ class HandleTypes extends BaseService {
 			};
 			if(x.key==="boxed_id:load_id") break x;
 			if(x.key==="boxed_id:save_id") break x;
-			const diff_plus=[],diff_minus=[];
-			const xi=w(x);
-			switch(xi[0]) {
-				case 3: {
-					const [,x]=xi; diff_plus.push(x);
-					/** @type {DSS_Bigint} */
-				} break;
+			const x_items=[],y_items=[];
+			const xi0=w(x); let xi=null;
+			switch(xi0[0]) {
+				case 1: debugger; break;
 				case 2: {
-					const [,[x_container,,x_item_group]]=xi; x_item_group;
+					let [,...vp]=xi0;
+					xi=vp;
+				} break;
+				case "n": debugger; break;
+				case "z": debugger; break;
+				case "a1": debugger; break;
+				case "k:sr": debugger; break;
+			}
+			if(xi) switch(xi[0]) {
+				case 6: {
+					let x_container=xi[1][1][0]; x_container.z[0].z[0].z[0];
+					const x_item_group=x_container.z[0].z[0];
 					switch(x_item_group.c) {
 						case "arr": {
-							diff_plus.push(x_container);
+							let x_arr=x_item_group.z[0]; x_arr;
+							x_items.push(...x_arr);
 						} break;
 					}
 				} break;
 			}
-			const yi=w(y);
-			switch(yi[0]) {
-				case 3: {
-					const [,x]=xi; diff_minus.push(x);
-					/** @type {GST_DSS} */
-				} break;
-				case 2: {
-					const [,[y_container,,y_item_group]]=yi; y_item_group;
+			const yi0=w(y); let yi=null;
+			switch(yi0[0]) {
+				default: debugger; break;
+				case 2: {const [,...v]=yi0; yi=v;} break;
+			}
+			if(yi) switch(yi[0]) {
+				default: debugger; break;
+				case 6: {
+					let y_container=yi[1][1][0];
+					const y_item_group=y_container.z[0].z[0];
 					switch(y_item_group.c) {
+						default: debugger; break;
 						case "arr": {
-							diff_minus.push(y_container);
+							let y_arr=y_item_group.z[0]; y_arr;
+							y_items.push(...y_arr);
 						} break;
 					}
 				} break;
+			}
+			let diff_plus=[],diff_minus=[];
+			for(let v of x_items) {
+				if(y_items.includes(v)) continue;
+				diff_plus.push(v);
+			}
+			for(let v of y_items) {
+				if(x_items.includes(v)) continue;
+				diff_minus.push(v);
 			}
 			console.log("[cur_cache_value] [x.key]",x.key);
 			console.log("[val] [x]",...w(x));
 			console.log("[val] [y]",...w(y));
-			console.log(diff_minus,diff_plus);
+			console.log(diff_plus,diff_minus);
 		}
 		try {
 			let ret=await this.ix.putImpl(key,value,version);

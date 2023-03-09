@@ -92,13 +92,12 @@ type G_BoxedInner=
 		j: GB_A1_J_Shape;
 	}]
 	|["k:sr",DST_Key_StartRadio]
-	|[2,[DSS_String,DIZ_Item_AB<string,string>,make_item_group<string>,string|string[]|string[][]],string,"many"|"one"|"arr"|"typeof_name"|"instance_name"|"string",string|string[]|string[][]]
-	|[3,DSS_Bigint,Ret_w_dss<DSS_Bigint>]
-	|[4,DSS_Boolean,Ret_w_dss<DSS_Boolean>]
-	|[5,DSS_Keys,Ret_w_dss<DSS_Keys>]
-	|[6,DSS_Number,Ret_w_dss<DSS_Number>]
-	|[7,DSS_VE,Ret_w_dss<DSS_VE>]
-	|[8,DSS_String,Ret_w_dss<DSS_String>]
+	|[2,1,Ret_W_DSS_Impl<DSS_Bigint,"bigint">]
+	|[2,2,Ret_W_DSS_Impl<DSS_Boolean,"boolean">]
+	|[2,3,Ret_W_DSS_Impl<DSS_Keys,"keys">]
+	|[2,4,Ret_W_DSS_Impl<DSS_Number,"number">]
+	|[2,5,Ret_W_DSS_Impl<DSS_VE,"root_visual_element">]
+	|[2,6,Ret_W_DSS_Impl<DSS_String,"string">]
 	;
 ;
 type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
@@ -109,17 +108,16 @@ type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
 	|["instance_name",["array",any,T]]
 	;
 ;
-type Ret_w_dss<T extends DSI_T_Item_ABD<any,any>>=
-	["bigint",[T,Ret_w_diz<DIZ_Item_AB<string,T>,T>]]|
-	["boolean",[T extends DSI_T_Item_ABD<"boolean",any>? T|{}:{},{}]]|
-	T extends DSI_T_Item_ABD<"boolean",any>? ["boolean",[T,{}]]:
-	T extends DSI_T_Item_ABD<"number",any>? ["number",[T,{}]]:
-	T extends DSI_T_Item_ABD<"keys",any>? ["keys",[T,{}]]:
-	T extends DSI_T_Item_ABD<"root_visual_element",any>? ["root_visual_element",[T,{}]]:
-	T extends DSI_T_Item_ABD<"string",any>? ["string",[T,{}]]:
-	never;
+type Ret_w_dss=
+	|Ret_W_DSS_Impl<DSS_Bigint,"bigint">
+	|Ret_W_DSS_Impl<DSS_Boolean,"boolean">
+	|Ret_W_DSS_Impl<DSS_Keys,"keys">
+	|Ret_W_DSS_Impl<DSS_Number,"number">
+	|Ret_W_DSS_Impl<DSS_String,"string">
+	|Ret_W_DSS_Impl<DSS_VE,"root_visual_element">
+	;
 ;
-;
+type Ret_W_DSS_Impl<T extends DSI_T_Item_ABD<J,any>,J extends keyof J_StoreTypeMap>=[J,[T,any]];
 type Ret_T_W_DIZ=Ret_w_diz<DIZ_Item_AB<string,DSS_Bigint>,DSS_Bigint>;
 function test_1(x: Ret_T_W_DIZ) {
 	switch(x[0]) {
