@@ -3317,11 +3317,15 @@ class HandleTypes extends BaseService {
 			};
 			if(x.key==="boxed_id:load_id") break x;
 			if(x.key==="boxed_id:save_id") break x;
-			let diff_plus=[],diff_minus=[];
-			let xi=w(x);
+			const diff_plus=[],diff_minus=[];
+			const xi=w(x);
 			switch(xi[0]) {
+				case 0: {
+					const [,x]=xi; diff_plus.push(x);
+					/** @type {GST_DSS} */
+				} break;
 				case 2: {
-					let [,[x_container,,x_item_group]]=xi; x_item_group;
+					const [,[x_container,,x_item_group]]=xi; x_item_group;
 					switch(x_item_group.c) {
 						case "arr": {
 							diff_plus.push(x_container);
@@ -3331,8 +3335,12 @@ class HandleTypes extends BaseService {
 			}
 			const yi=w(y);
 			switch(yi[0]) {
+				case 0: {
+					const [,x]=xi; diff_minus.push(x);
+					/** @type {GST_DSS} */
+				} break;
 				case 2: {
-					let [,[y_container,,y_item_group]]=yi; y_item_group;
+					const [,[y_container,,y_item_group]]=yi; y_item_group;
 					switch(y_item_group.c) {
 						case "arr": {
 							diff_minus.push(y_container);
