@@ -1,1 +1,0 @@
-type ZA1<K extends ZA_S_1>=T_Z_Pop<K>;

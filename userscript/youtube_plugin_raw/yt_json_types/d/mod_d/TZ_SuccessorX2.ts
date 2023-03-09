@@ -1,0 +1,1 @@
+type TZ_SuccessorX2<T extends TShape_SuccessorX2<V>,V=TZ_Successor<T>["z"][0]>=V;

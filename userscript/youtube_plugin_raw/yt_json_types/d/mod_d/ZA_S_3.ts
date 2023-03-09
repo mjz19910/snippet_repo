@@ -1,1 +1,0 @@
-type ZA_S_3=ZAT1<ZA_S_2>;

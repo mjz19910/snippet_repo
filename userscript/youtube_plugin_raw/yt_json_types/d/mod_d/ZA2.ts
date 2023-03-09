@@ -1,1 +1,0 @@
-type ZA2<T extends ZA_S_2>=ZA1<ZA1<T>>;

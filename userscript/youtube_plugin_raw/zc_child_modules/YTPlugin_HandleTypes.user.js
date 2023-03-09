@@ -3276,9 +3276,9 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
+	/** @template V @template {TShape_Successor<V>} T @arg {T} x @returns {TZ_Successor<T>} */
 	tz_pop(x) {return x.z[0];}
-	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
+	/** @template V @template {TShape_Successor<V>} T @arg {T} x @returns {TZ_Successor<T>} */
 	za1(x) {return this.tz_pop(x);}
 	/** @type {Map<string,G_BoxedDatabaseData>} */
 	loaded_map=new Map;

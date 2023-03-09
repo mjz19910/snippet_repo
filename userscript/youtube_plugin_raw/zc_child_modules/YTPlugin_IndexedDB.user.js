@@ -364,7 +364,7 @@ class IndexedDBService extends BaseService {
 	mk_s2(j,x) {return {a: "ST:D",b: "boxed_id",j,z: [x],key: `boxed_id:${j}:${x.c}`};}
 	/** @template {string} S @arg {S} s @template {string} J @arg {J} j @template {string} IC @template {{c:IC}} X @arg {X} x @returns {mk_s3<IC,J,S,X>} */
 	mk_s3(j,s,x) {return {a: "ST:D",b: "boxed_id",j: `${j}:${s}`,z: [x],key: `boxed_id:${j}:${s}:${x.c}`};}
-	/** @template {string} S @template {string} SC @template {Omit<DI_BrowseId_FE,"z"|"c">&{c:SC;z:[any,ZAT2<S>]}} X @arg {X} x @returns {Omit<DST_Browse_FE,"key"|"j"|"z">&{j:`browse_id:${SC}`;key:`boxed_id:browse_id:${SC}:${S}`,z:[X]}} */
+	/** @template {string} S @template {string} SC @template {Omit<DI_BrowseId_FE,"z"|"c">&{c:SC;z:[any,TMK_SuccessorX2<S>]}} X @arg {X} x @returns {Omit<DST_Browse_FE,"key"|"j"|"z">&{j:`browse_id:${SC}`;key:`boxed_id:browse_id:${SC}:${S}`,z:[X]}} */
 	mk_s4(x) {return {a: "ST:D",b: "boxed_id",j: `${x.b}:${x.c}`,w: "/key/a/b/j/w/z",z: [x],key: `boxed_id:${x.b}:${x.c}:${this.za2(x.z[1])}`};}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
@@ -449,16 +449,16 @@ class IndexedDBService extends BaseService {
 	mdk=x => `/db/key/${x}`;
 	/** @arg {"kw"} x */
 	mka=x => this.mdk(this[`kz_${x}`]);
-	/** @template J,K1 @template {Primitive} K3 @template {ZAT2<K3>} V @arg {V} z @template {string} K2 @template {DI_T_KV_Z<K2,V>} X @arg {J} j @arg {K1} k @arg {X} x @returns {DST_MakeLM_2<X,J,K1>} */
-	kwb(x,z,j,k) {
+	/** @template L,M @template {Primitive} K3 @template {TMK_SuccessorX2<K3>} V @arg {V} z @template {string} K2 @template {DI_T_KV_Z<K2,V>} X @arg {L} l @arg {M} m @arg {X} x @returns {DST_MakeLM_2<X,L,M>} */
+	kwb(x,z,l,m) {
 		const {k: k2}=x;
 		/** @type {`boxed_id:key:${K2}:${K3}`} */
 		const key=`boxed_id:key:${k2}:${this.za2(z)}`;
-		return {key,a: "ST:D",b: "boxed_id",l: j,m: k,w: this.mka("kw"),z: [x]};
+		return {key,a: "ST:D",b: "boxed_id",l,m,w: this.mka("kw"),z: [x]};
 	}
-	/** @template V @template {ZAT2<V>} T @arg {T} x @returns {ZA2<T>} */
+	/** @template V @template {TMK_SuccessorX2<V>} T @arg {T} x @returns {TZ_SuccessorX2<T>} */
 	za2(x) {return this.ht.tz_pop(this.ht.za1(x));}
-	/** @template V @template {ZAT3<V>} T @arg {T} x @returns {ZA3<T>} */
+	/** @template V @template {TMK_SuccessorX3<V>} T @arg {T} x @returns {TZ_SuccessorX3<T>} */
 	za3(x) {return this.ht.tz_pop(this.za2(x));}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"url_info"}>} T @arg {T} args */
 	put_boxed_url_info(version,...args) {

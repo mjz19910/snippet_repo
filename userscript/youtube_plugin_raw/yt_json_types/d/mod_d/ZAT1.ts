@@ -1,1 +1,0 @@
-type ZAT1<T>=T_Z_Next<T>;

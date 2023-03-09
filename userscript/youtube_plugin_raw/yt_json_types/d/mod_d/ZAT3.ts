@@ -1,1 +1,0 @@
-type ZAT3<T>=ZAT1<ZAT2<T>>;
