@@ -101,7 +101,6 @@ type G_BoxedInner_Tmp=[
 	Exclude<G_BoxedPrintable,{a: "SI:T:D";}>|null
 ];
 type G_BoxedInner_Tmp_l=Exclude<G_BoxedPrintable,{a: "SI:T:D";}>;
-type DST_Browse_MP=DST_T_abz_j<"browse_id:MP",DI_BrowseId_MP>;
 //#region DST_T
 type DST_T_abz_j<J,X>={
 	key: `boxed_id:browse_id:MP:${string}`;

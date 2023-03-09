@@ -1,0 +1,1 @@
+type DST_Browse_MP=DST_T_abz_j<"browse_id:MP",DI_BrowseId_MP>;
