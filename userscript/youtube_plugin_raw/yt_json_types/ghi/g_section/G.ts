@@ -1,16 +1,7 @@
 //#region G_RS
 type G_RS_Page_Playlist=RS_PlaylistPage|RS_VE5754_Page_Playlist;
 //#endregion
-
-// all from GR_CD.ts
-type G_LiveChatContinuationItem=
-	|CD_Invalidation
-	|CD_LiveChatReplay
-	|CD_PlayerSeek
-	;
-;
-
-// all from GR_EY.ts
+//#region from G_EY.ts
 type G_EY_Entity=
 	|EY_MacroMarkersList
 	|EY_Offlineability
@@ -27,8 +18,8 @@ type G_EY_Entity=
 	}
 	;
 ;
-
-// from GR_SI.ts
+//#endregion
+//#region Panel Section (from G_SI.ts)
 type G_SI_DB_EngagementPanel=
 	|SI_DB_EngagementPanel_Ads
 	|SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters
@@ -36,68 +27,22 @@ type G_SI_DB_EngagementPanel=
 	|SI_DB_EngagementPanel_MacroMarkers_AutoChapters
 	;
 ;
-
-// from Action Renderers and Actions (GR_RA.ts, GR_A.ts)
+//#endregion
+//#region Action Renderers and Actions (from G_RA.ts)
 type G_RA_LiveChatContinuationActions=
 	|A_ReplayChatItem
 	|A_AddChatItem
 	;
 ;
-type GE_Browse=
-	|E_VE3611
-	|E_VE3854
-	|E_VE5754
-	|E_VE6827
-	|E_VE11487
-	|E_VE23462
-	|E_VE42352
-	|E_VE96368
-	|E_VE6827
+//#endregion
+//#region (from G.ts)
+//#region done
+type G_LiveChatContinuationItem=
+	|CD_Invalidation
+	|CD_LiveChatReplay
+	|CD_PlayerSeek
 	;
 ;
-type GE_Browse_WCM=GE_Browse["commandMetadata"];
-
-type GE_ResponseReceived=
-	|A_AppendContinuationItems
-	|C_AdsControlFlowOpportunityReceived
-	|C_ChangeKeyedMarkersVisibility
-	|C_LoadMarkers
-	|C_ReloadContinuationItems
-	|C_ReloadContinuationItems
-	|E_SignalService_SendPost
-	;
-;
-type GA_FormatItagNum=
-	|18
-	|133|134|135|136|137|140|160
-	|242|243|244|247|248|249|250|251|278|298|299
-	|302|303|308|315|394|395|396|397|398|399
-	|400|401
-	;
-;
-type GC_Button=
-	|A_ChangeEngagementPanelVisibility
-	|C_CommandExecutor
-	|C_Continuation
-	|C_GetSurvey
-	|C_ShowReelsCommentsOverlay
-	|E_AddToPlaylistService
-	|E_CreateBackstagePost
-	|E_Feedback
-	|E_ShareEntityService
-	|E_SignalService_SendPost
-	|E_Url
-	|TA_OpenPopup_Empty
-	;
-;
-type GD_EngagementPanelMenu={
-	title: G_Text;
-	contextualInfo: G_Text;
-	menu: R_SortFilterSubMenu;
-	visibilityButton: R_Button;
-	trackingParams: string;
-};
-type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
 type G_SettingItemIdEnum=
 	|"NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS"
 	|"NOTIFICATION_RECOMMENDATION_WEB_CONTROL"
@@ -112,14 +57,6 @@ type G_SettingItemIdEnum=
 	|"EMAIL_CREATOR_NEWSLETTER"
 	;
 ;
-type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;
-type RSB_EditPlaylist={
-	responseContext: RC_ResponseContext;
-	actions: GA_EditPlaylist[];
-	status: "STATUS_SUCCEEDED";
-	playlistEditResults: G_PlaylistEditResult[];
-	trackingParams: string;
-};
 type G_CardList_StyleType="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION";
 type G_AccountItemSection=R_AccountItem|R_CompactLink;
 type G_AccountPageSettingsSections=
@@ -216,12 +153,6 @@ type G_PopupItem=
 	;
 ;
 type G_ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;
-type GC_EngagementPanelSectionShow=
-	|A_ChangeEngagementPanelVisibility
-	|A_ShowEngagementPanelScrim
-	|C_ScrollToEngagementPanel
-	;
-;
 type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
 type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
 type G_ClientSignal_Item=
@@ -239,16 +170,6 @@ type G_Text={
 	accessibility?: D_Accessibility;
 };
 type G_Text_Base={accessibility?: D_Accessibility;};
-type G_SE_MenuService=
-	|A_ChangeEngagementPanelVisibility
-	|E_AddToPlaylistService
-	|E_PlaylistEdit
-	|E_Feedback
-	|E_SignalService_SendPost
-	|E_ShareEntityService
-	|E_GetReportForm
-	;
-;
 type G_PlaylistPanel_Item=R_AutomixPreviewVideo|R_PlaylistPanelVideo;
 type G_AllSignalTypes=
 	|Signal_GetNotificationsMenu
@@ -260,14 +181,6 @@ type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEnd
 type G_AdditionalDataItem=
 	|T_UserFeedbackEndpointProductSpecificValueData<"lockup","player">
 	|T_UserFeedbackEndpointProductSpecificValueData<"video_id",string>
-	;
-;
-type GRC_ServiceTrackingParams=
-	|RC_Csi_SPs
-	|RC_ECatcher_SPs
-	|RC_GFeedback_SPs
-	|RC_GoogleHelp_SPs
-	|SP_GuidedHelp_SPs
 	;
 ;
 type G_ResponseActions=
@@ -339,15 +252,6 @@ type G_ShortsSurfaceIdentifier_ValidTag=
 	|"shorts-comments-panel"
 	;
 ;
-type D_StructuredDescriptionPlaylistLockup={trackingParams: string;};
-type R_StructuredDescriptionPlaylistLockup={
-	structuredDescriptionPlaylistLockupRenderer: D_StructuredDescriptionPlaylistLockup;
-};
-type D_VideoDescriptionCourseSection={
-	sectionTitle: G_Text;
-	mediaLockups: R_StructuredDescriptionPlaylistLockup[];
-};
-type R_VideoDescriptionCourseSection={videoDescriptionCourseSectionRenderer: D_VideoDescriptionCourseSection;};
 type G_StructuredDescriptionContentItem=
 	|R_ExpandableVideoDescriptionBody
 	|R_HorizontalCardList
@@ -394,8 +298,8 @@ type G_AdPlacementRendererItem=
 	|R_LinearAdSequence
 	;
 ;
-type GR_MP_MenuNotificationSection_Item=R_Notification|R_ContinuationItem;
 type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;
+//#endregion
 type G_RendererContentItem=
 	|R_RichItem
 	|R_RichSection
@@ -406,45 +310,16 @@ type G_RendererContentItem=
 	|R_CompactPlaylist
 	;
 ;
-type DC_SectionList_1={
-	trackingParams: string;
-	disablePullToRefresh: true;
-};
-type D_ItemSection_T_Message={contents: R_Message[]; trackingParams: string;};
-
-type R_ItemSection_T_Message={itemSectionRenderer: D_ItemSection_T_Message;};
-type DC_SectionList_2={
-	contents: R_ItemSection_T_Message[];
-	trackingParams: string;
-};
-type GD_RC_SectionList=
-	|DC_SectionListBase
-	|DC_SectionList_1
-	|DC_SectionList_2
-	|DC_SectionList_SearchFeed
-	|G_DC_SectionList_BrowseFeed_ChannelFeatured
-	|DC_SectionList_BrowseFeed_Subscriptions
-	|DC_SectionList_BrowseFeed_History
+//#endregion
+//#region (from G_SE.ts)
+type G_SE_MenuService=
+	|A_ChangeEngagementPanelVisibility
+	|E_AddToPlaylistService
+	|E_PlaylistEdit
+	|E_Feedback
+	|E_SignalService_SendPost
+	|E_ShareEntityService
+	|E_GetReportForm
 	;
 ;
-type Ret_get_auto_type_name=
-	|"RMD_Badge"
-	|`TA_OpenPopup<T_OpenPopup_Dialog<${string}>>`
-	|`TA_OpenPopup<T_OpenPopup_Toast<${string}>>`
-	|"A_OpenPopup"
-	|"{}"
-	|`D_${"PrefetchHintConfig"}`
-	|"R_TwoColumnBrowseResults"
-	|"GE_Browse"
-	|`C_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Command`>,"Command">[0]}`
-	;
-;
-type Ret_json_auto_replace_1=Capitalize<Ret_json_auto_raw>|"{}";
-type Ret_json_auto_raw=
-	|"prefetchHintConfig"
-	|"openPopupAction"
-	|"metadataBadgeRenderer"
-	|keyof R_TwoColumnBrowseResults
-	|"browseEndpoint"
-	|"innertubeCommand"
-	;
+//#endregion

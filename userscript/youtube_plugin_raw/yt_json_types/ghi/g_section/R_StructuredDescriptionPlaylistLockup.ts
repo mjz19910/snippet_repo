@@ -1,0 +1,3 @@
+type R_StructuredDescriptionPlaylistLockup={
+	structuredDescriptionPlaylistLockupRenderer: D_StructuredDescriptionPlaylistLockup;
+};
