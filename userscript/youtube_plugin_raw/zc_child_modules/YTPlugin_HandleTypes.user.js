@@ -3370,11 +3370,6 @@ class HandleTypes extends BaseService {
 			/** @arg {GST_DSS} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
 			function acc_items(container,items_arr) {
 				const item_group=container.z[0].z[0];
-				switch(container.d) {
-					case "string":
-					case "number": {switch(container.z[0].z[0].c) {case "one": items_arr.push([container.z[0].z[0].z[0]]);}} break;
-					case "bigint": {switch(container.z[0].z[0].c) {case "one": items_arr.push([container.z[0].z[0].z[0]]);}} break;
-				}
 				switch(item_group.c) {
 					case "many": {
 						const item_many=item_group.z[0];
