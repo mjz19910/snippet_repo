@@ -1,3 +1,5 @@
 type GC_EngagementPanelSectionShow=A_ChangeEngagementPanelVisibility|
-	A_ShowEngagementPanelScrim|
-	C_ScrollToEngagementPanel;
+	A_ShowEngagementPanelScrim
+	|C_ScrollToEngagementPanel
+	;
+;

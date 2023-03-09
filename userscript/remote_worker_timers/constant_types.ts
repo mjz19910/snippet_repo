@@ -178,33 +178,39 @@ export type WorkerDestroyTypeMessageT={
 	v: number;
 };
 export type DispatchMessageType=
-	TimeoutClearRepeatingMessageT|
-	TimeoutClearSingleMessageT|
-	ReplyClearRepeatingMessageT|
-	ReplyClearSingleMessageT|
-	ReplySetRepeatingMessageT|
-	ReplySetSingleMessageT|
-	ReplyWorkerReadyMessageT|
-	MessageWorkerUpdateMessageHandlerReplyT|
-	ReplyToWorkerStateMessageT|
-	ReplyToLocalTimerMessageT|
-	MessageReplyFromWorkerData;
+	|TimeoutClearRepeatingMessageT
+	|TimeoutClearSingleMessageT
+	|ReplyClearRepeatingMessageT
+	|ReplyClearSingleMessageT
+	|ReplySetRepeatingMessageT
+	|ReplySetSingleMessageT
+	|ReplyWorkerReadyMessageT
+	|MessageWorkerUpdateMessageHandlerReplyT
+	|ReplyToWorkerStateMessageT
+	|ReplyToLocalTimerMessageT
+	|MessageReplyFromWorkerData
+	;
+;
 
 export type WorkerReplyTypes=
-	ReplyFromWorkerMessage|
-	ReplyToLocalTimerMessageT|
-	ReplyToWorkerStateMessageT|
-	WorkerDestroyTypeMessageT|
-	TimeoutFireSingleMessageT;
+	|ReplyFromWorkerMessage
+	|ReplyToLocalTimerMessageT
+	|ReplyToWorkerStateMessageT
+	|WorkerDestroyTypeMessageT
+	|TimeoutFireSingleMessageT
+	;
+;
 
 export type WorkerSendTypes=
-	TimeoutSetSingleMessageT|
-	TimeoutSetRepeatingMessageT|
-	TimeoutFireSingleMessageT|
-	TimeoutSingleReplyMessageT|
-	TimeoutClearAnyMessageT|
-	TimeoutClearSingleMessageT|
-	TimeoutClearRepeatingMessageT;
+	|TimeoutSetSingleMessageT
+	|TimeoutSetRepeatingMessageT
+	|TimeoutFireSingleMessageT
+	|TimeoutSingleReplyMessageT
+	|TimeoutClearAnyMessageT
+	|TimeoutClearSingleMessageT
+	|TimeoutClearRepeatingMessageT
+	;
+;
 
 export type SetSingleMessageDataT={
 	t: number;

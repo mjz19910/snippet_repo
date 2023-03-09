@@ -32,50 +32,52 @@ import {VoidPromiseBox} from "./VoidPromiseBox.js";
 import {WindowBox} from "./WindowBox.js";
 
 export type Box=
-	RawBoxes|
-	NumberBox|
-	StringBox|
+	|RawBoxes
+	|NumberBox
+	|StringBox
 	// function result
 	CSSStyleSheetInitBox|
 	// array
-	EmptyArrayBox|
-	ArrayBox|
-	InstructionTypeArrayBox|
+	|EmptyArrayBox
+	|ArrayBox
+	|InstructionTypeArrayBox
 	// constructor function
 	CSSStyleSheetConstructorBox|
 	// function
-	FunctionBox|
-	NewableFunctionBox|
-	NewableInstancePackBox|
-	AsyncFunctionBox|
-	FunctionConstructorBox|
+	|FunctionBox
+	|NewableFunctionBox
+	|NewableInstancePackBox
+	|AsyncFunctionBox
+	|FunctionConstructorBox
 	// return type
 	CSSStyleSheetPromiseBox|
 	// global
-	GlobalThisBox|
-	WindowBox|
-	DocumentBox|
+	|GlobalThisBox
+	|WindowBox
+	|DocumentBox
 	// object instances
-	StackVMBox|
-	NodeBox|
-	CSSStyleSheetBox|
-	MediaListBox|
+	|StackVMBox
+	|NodeBox
+	|CSSStyleSheetBox
+	|MediaListBox
 	// StackVM
 	InstructionTypeBox|
 	// object
-	NullBox|
-	IndexBox|
-	ObjectBox|
+	|NullBox
+	|IndexBox
+	|ObjectBox
 	// promise types
-	VoidPromiseBox|
-	PromiseBox|
+	|VoidPromiseBox
+	|PromiseBox
 	// No value (Void)
-	VoidBox|
-	RealVoidBox|
+	|VoidBox
+	|RealVoidBox
 	// Box with stuff
 	BoxWithPropertiesIsBox|
 	// Generic boxes
 	NewableInstancePackObjectBox|
-	DomElementBox|
-	never;
+	DomElementBox
+	|never
+	;
+;
 

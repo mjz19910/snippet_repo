@@ -20,7 +20,6 @@
 
 import captureStackTrace from "../../src/capture-stack-trace.js";
 import {CompressDual} from "../DebugApi/types/CompressDual";
-import {CompressStateBase} from "../DebugApi/types/CompressStateBase";
 
 export interface AbstractVM {
 	halt(): void;
@@ -261,7 +260,7 @@ export class NewableFunctionBox {
 	}
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
-			case 'factory_value': vm.push(new NewableInstancePackBox(this.value.factory_value))
+			case 'factory_value': vm.push(new NewableInstancePackBox(this.value.factory_value));
 		}
 		throw new Error("Method not implemented.");
 	}
@@ -609,52 +608,54 @@ class InstructionConstructImpl {
 type CastOperandTarget="object_index"|"vm_function"|"object_index_to_function";
 
 type BoxImpl=
-	RawBoxes|
-	NumberBox|
-	StringBoxImpl|
+	|RawBoxes
+	|NumberBox
+	|StringBoxImpl
 	// function result
-	CSSStyleSheetInitBox|
+	|CSSStyleSheetInitBox
 	// array
-	EmptyArrayBox|
-	ArrayBoxImpl|
-	InstructionTypeArrayBox|
+	|EmptyArrayBox
+	|ArrayBoxImpl
+	|InstructionTypeArrayBox
 	// constructor function
-	CSSStyleSheetConstructorBox|
+	|CSSStyleSheetConstructorBox
 	// function
-	FunctionBoxImpl|
-	NewableFunctionBox|
-	NewableInstancePackBox|
-	AsyncFunctionBoxImpl|
-	FunctionConstructorBoxImpl|
+	|FunctionBoxImpl
+	|NewableFunctionBox
+	|NewableInstancePackBox
+	|AsyncFunctionBoxImpl
+	|FunctionConstructorBoxImpl
 	// return type
-	CSSStyleSheetPromiseBox|
+	|CSSStyleSheetPromiseBox
 	// global
-	GlobalThisBox|
-	WindowBox|
-	DocumentBox|
+	|GlobalThisBox
+	|WindowBox
+	|DocumentBox
 	// object instances
-	StackVMBox|
-	NodeBox|
-	CSSStyleSheetBoxImpl|
-	MediaListBox|
+	|StackVMBox
+	|NodeBox
+	|CSSStyleSheetBoxImpl
+	|MediaListBox
 	// StackVM
-	InstructionTypeBox|
+	|InstructionTypeBox
 	// object
-	NullBox|
-	IndexBox|
-	ObjectBox|
+	|NullBox
+	|IndexBox
+	|ObjectBox
 	// promise types
-	VoidPromiseBox|
-	PromiseBox|
+	|VoidPromiseBox
+	|PromiseBox
 	// No value (Void)
-	VoidBoxImpl|
-	RealVoidBox|
+	|VoidBoxImpl
+	|RealVoidBox
 	// Box with stuff
-	BoxWithPropertiesIsBoxImpl|
+	|BoxWithPropertiesIsBoxImpl
 	// Generic boxes
-	NewableInstancePackObjectBox|
-	DomElementBox|
-	never;
+	|NewableInstancePackObjectBox
+	|DomElementBox
+	|never
+	;
+;
 
 
 class InstructionCastImpl {
@@ -1523,11 +1524,16 @@ class CompressionStatsCalculator {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
 }
+type AnyOrRepeat2<T,U>=[T,U];
+type AltPair<T,U>=[T,U];
+class CompressStateBase<T,U> {
+	constructor(public arr: U[],public ret: T[]) {}
+}
 class BaseCompression {
-	compress_result_state_dual(arg0: CompressDual): DualR_1 {
+	compress_result_state_dual(arg0: CompressDual): {} {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR_1 {
+	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2<string,number>[]): {} {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
@@ -2391,7 +2397,7 @@ class AsyncAutoBuy {
 		if(!no_wait) await this.next_timeout_async(this.parent.timeout_ms,"A");
 		await this.main_async();
 	}
-	async maybe_async_reset() {
+	async maybe_async_reset(): Promise<[true,number]|[false,number]> {
 		let loss_rate=this.parent.unit_promote_start();
 		if(this.parent.maybe_run_reset()) return [true,loss_rate];
 		return [false,loss_rate];

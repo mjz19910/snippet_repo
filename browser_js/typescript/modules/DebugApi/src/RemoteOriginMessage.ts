@@ -4,7 +4,9 @@ import {RemoteOriginKeepAliveReply} from "./RemoteOriginKeepAliveReply";
 import {RemoteOriginKeepAlive} from "./RemoteOriginKeepAlive";
 
 export type RemoteOriginMessage=
-	RemoteOriginConnected|
-	RemoteOriginDisconnected|
-	RemoteOriginKeepAlive|
-	RemoteOriginKeepAliveReply;
+	|RemoteOriginConnected
+	|RemoteOriginDisconnected
+	|RemoteOriginKeepAlive
+	|RemoteOriginKeepAliveReply
+	;
+;

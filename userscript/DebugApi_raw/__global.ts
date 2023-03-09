@@ -151,10 +151,12 @@ declare global {
 		data: T,
 	};
 	type MessageType=
-		ConnectionConnected|
-		ConnectionDisconnected|
-		ConnectionSideMsg|
-		ConnectionWillDisconnect;
+		|ConnectionConnected
+		|ConnectionDisconnected
+		|ConnectionSideMsg
+		|ConnectionWillDisconnect
+		;
+;
 	type ConnectionMessage={
 		type: "tcp",
 		flags: ConnectFlag,
