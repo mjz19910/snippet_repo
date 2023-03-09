@@ -3169,6 +3169,7 @@ class HandleTypes extends BaseService {
 				const z={a: "DI",b: "key",c: p.k,w: "/item/a/b/c/w/z",z: [this.make_akz(p.k,this.make_prim_num_t(p.raw_id))]};
 				return z;
 			}
+			case "user_id":
 			case "hashtag_id":
 			case "video_id": {
 				const b=x.k,raw_id=x.z[0].z[0];
@@ -3195,7 +3196,9 @@ class HandleTypes extends BaseService {
 				console.log(b,p);
 			} break;
 			case "user_id": {
-				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: b,raw_id});
+				const b=x.k,raw_id=x.z[0].z[0];
+				const s=this.make_input(b,raw_id);
+				const p=this.get_parsed_info(s);
 				console.log(b,p);
 			} break;
 		}
