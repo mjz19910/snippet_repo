@@ -3355,7 +3355,8 @@ class HandleTypes extends BaseService {
 			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
 			const y_many=[];
 			const cmp_map=new WeakMap;
-			const xi0=w(x); let xi=null;
+			const xi0=w(x);
+			let xi=null;
 			switch(xi0[0]) {
 				case 1: {
 					const xi=xi0[1]; console.log("TODO [x] [1]",xi);
