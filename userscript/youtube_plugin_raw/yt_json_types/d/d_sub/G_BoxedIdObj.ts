@@ -81,7 +81,6 @@ type G_BoxedInner=
 	|["z",G_BoxedIdObj]
 	|["n"]
 	|["a1",GB_A1]
-	|[0,GST_DSS]
 	|[1,{
 		key: G_BoxedIdObj['key'];
 		a: DST_PlayNext["a"]; b: "boxed_id";
@@ -94,8 +93,15 @@ type G_BoxedInner=
 	}]
 	|["k:sr",DST_Key_StartRadio]
 	|[2,[DSS_String,DIZ_Item_AB<string,string>,make_item_group<string>,string|string[]|string[][]],string,"many"|"one"|"arr"|"typeof_name"|"instance_name"|"string",string|string[]|string[][]]
+	|[3,DSS_Bigint]
+	|[4,any]
+	|[5,any]
+	|[6,any]
+	|[7,any]
+	|[8,any]
 	;
 ;
+type Ret_w_diz<T,A extends DIZ_Item_AB<string,T>['z'][0]=DIZ_Item_AB<string,T>['z'][0]>=[A['c'],[A['z'][0],A,DIZ_Item_AB<string,T>]]|{};
 type G_BoxedInner_Tmp=[
 	GST_DSS|null,
 	Exclude<G_BoxedPrintable,{a: "SI:T:D";}>|null

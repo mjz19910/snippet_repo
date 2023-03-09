@@ -3300,6 +3300,29 @@ class HandleTypes extends BaseService {
 					case "root_visual_element": console.log("[cache_outdated]",no); break;
 				}
 			}
+			/** @template T @arg {DIZ_Item_AB<string,T>} x @returns {Ret_w_diz<T>} */
+			let w_diz=x => {
+				x.a; x.b; let a=x.z[0];
+				switch(a.c) {
+					case "one": {let b=a.z[0]; return [a.c,[b,a,x]];}
+					case "arr": {let b=a.z[0]; return [a.c,[b,a,x]];}
+					case "many": {let b=a.z[0]; return [a.c,[b,a,x]];}
+					case "typeof_name": {let b=a.z[0]; return [a.c,[b,a,x]];}
+					case "instance_name": {let b=a.z[0]; return [a.c,[b,a,x]];}
+				}
+			};
+			/** @template {GST_DSS} T @arg {T} x @returns {[[T],T['d'],Ret_w_diz<any>]} */
+			let w_dss=x => {
+				x.z;
+				switch(x.d) {
+					case "bigint": return [[x],x.d,w_diz(x.z[0])];
+					case "boolean": return [[x],x.d,w_diz(x.z[0])];
+					case "keys": return [[x],x.d,w_diz(x.z[0])];
+					case "number": return [[x],x.d,w_diz(x.z[0])];
+					case "root_visual_element": return [[x],x.d,w_diz(x.z[0])];
+					case "string": return [[x],x.d,w_diz(x.z[0])];
+				}
+			}; w_dss;
 			/** @arg {G_BoxedPrintable|undefined} x @returns {G_BoxedInner} */
 			let w=(x) => {
 				if(!x) return ["n"];
@@ -3311,7 +3334,17 @@ class HandleTypes extends BaseService {
 				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
 				if(n[0]) {let c=n[0]; if(c.d==="string") n2[0]=c; else n2[1]=c;}
 				if(n2[0]) {let c=n2[0],d=c.z[0],e=d.z[0],f=e.z[0]; return [2,[c,d,e,f],d.b,e.c,e.z[0]];}
-				if(n[0]) {return [0,n[0]];}
+				if(n[0]) {
+					let x=n[0];
+					switch(x.d) {
+						case "bigint": return [3,x];
+						case "boolean": return [4,x];
+						case "keys": return [5,x];
+						case "number": return [6,x];
+						case "root_visual_element": return [7,x];
+						case "string": return [8,x];
+					}
+				}
 				if(n[1]) return [1,n[1]];
 				return ["a1",this.za1(x)];
 			};
@@ -3320,9 +3353,9 @@ class HandleTypes extends BaseService {
 			const diff_plus=[],diff_minus=[];
 			const xi=w(x);
 			switch(xi[0]) {
-				case 0: {
+				case 3: {
 					const [,x]=xi; diff_plus.push(x);
-					/** @type {GST_DSS} */
+					/** @type {DSS_Bigint} */
 				} break;
 				case 2: {
 					const [,[x_container,,x_item_group]]=xi; x_item_group;
@@ -3335,7 +3368,7 @@ class HandleTypes extends BaseService {
 			}
 			const yi=w(y);
 			switch(yi[0]) {
-				case 0: {
+				case 3: {
 					const [,x]=xi; diff_minus.push(x);
 					/** @type {GST_DSS} */
 				} break;
