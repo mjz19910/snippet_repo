@@ -1707,7 +1707,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 	}
-	/** @template K,T @arg {K} k @arg {T} x  @returns {DIT_Item_AB<K,T>} */
+	/** @template K,T @arg {K} k @arg {T} x  @returns {DI_T_Item_AB<K,T>} */
 	make_DIT_Item_AB(k,x) {return {a: "key_value",k,w: "/item/a/k/w/z",z: [x]};}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
@@ -3126,11 +3126,11 @@ class HandleTypes extends BaseService {
 		}
 		return as("unknown");
 	}
-	/** @template U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
+	/** @template U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
 	get_prim_1(x) {return x.z[0];}
-	/** @template V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
+	/** @template V @template {DI_T_Item_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DIT_Item_AZ<T1>} V @template {DIT_Item_AB<any,V>} U @template {DIT_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
+	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {DI_T_Item_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	//#endregion
 	//#endregion
@@ -3143,13 +3143,13 @@ class HandleTypes extends BaseService {
 		let [,id]=split_string_once(x3,x2);
 		return {b: x1,c: x2,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
-	/** @template K,T @arg {K} k @arg {T} x @returns {DIT_Item_AB<K,T_PrimitiveBox<T>>}*/
+	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_Item_AB<K,T_PrimitiveBox<T>>}*/
 	make_value_pair(k,x) {return {a: "key_value",k,w: "/item/a/k/w/z",z: [this.make_BoxTypeof(x)]};}
 	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
 	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
 	make_id(x) {return this.make_value_pair("id",x);}
-	/** @template T @arg {T} x @returns {DIT_Item_AB<"raw_id",T>} */
+	/** @template T @arg {T} x @returns {DI_T_Item_AB<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return {a: "key_value",k: "raw_id",w: "/item/a/k/w/z",z: [x]};}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
@@ -3307,7 +3307,7 @@ class HandleTypes extends BaseService {
 					case "root_visual_element": console.log("[cache_outdated]",no); break;
 				}
 			}
-			/** @template U @template {DIZ_Item_AB<string,U>} T @arg {T} x @returns {Ret_w_diz<T,U>} */
+			/** @template U @template {DI_T_ABZ<string,U>} T @arg {T} x @returns {Ret_w_diz<T,U>} */
 			let w_diz=x => {
 				x.a; x.b; let a=x.z[0];
 				switch(a.c) {

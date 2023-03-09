@@ -1,4 +1,4 @@
-type CacheSetItems=
+type G_CacheSetItems=
 	|make_item_group<bigint>|G_BoxedDatabaseData|G_BoxedDatabaseData["z"][0]
 	|make_item_group<boolean>
 	|make_item_group<string|number>

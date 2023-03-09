@@ -137,7 +137,7 @@ class IndexedDBService extends BaseService {
 	cache_index() {return this.store_cache_index;}
 	/** @type {Set<string>} */
 	database_diff_keys=new Set;
-	/** @type {WeakSet<CacheSetItems>} */
+	/** @type {WeakSet<G_CacheSetItems>} */
 	cache_weak_set=new WeakSet;
 	/** @private @type {G_BoxedDatabaseData[]} */
 	committed_data=[];
@@ -509,11 +509,11 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {K} key @arg {A} a @arg {D} d @arg {T} x @template {string} K @template {string} A @template {string} D @template T @returns {T_BoxStore_adz<K,A,D,T>} */
 	make_BoxStore_adz(key,a,d,x) {return {key,a,b: "boxed_id",d,w: "/key/a/b/d/w/z",z: [x]};}
-	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DIZ_Item_AB<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
+	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_ABZ<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"boxed_store",tag1,x);}
-	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DIZ_Item_AB<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2_v2<T_Tag1,T_Tag2,V>} */
+	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_ABZ<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2_v2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore_v2(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"SI:T:D",tag1,x);}
-	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DIZ_Item_AB<B,T>} */
+	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DI_T_ABZ<B,T>} */
 	DIZ_Item_AB(b,x) {return {a: "group",b,z: [x]};}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} s0 */
 	put_boxed_id_3(version,...s0) {
