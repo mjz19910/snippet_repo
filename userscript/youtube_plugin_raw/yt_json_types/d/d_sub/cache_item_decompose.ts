@@ -125,6 +125,7 @@ type DecomposeWorkItem=
 	|[id: 2,k: "a|primitive",b: A2_Box]
 	;
 function cache_item_decompose_work(s: ApiBase2,x: DecomposeWorkItem): DecomposeWorkItem|null {
+	s;
 	switch(x[0]) {
 		default: return null;
 		case 1: {
@@ -138,18 +139,7 @@ function cache_item_decompose_work(s: ApiBase2,x: DecomposeWorkItem): DecomposeW
 					}
 				}
 				case "+a=group_value": {
-					const v=x[2];
-					const {a,b,c,f,z,...y}=v; s.get_keys_of(y).length===0;
-					switch(a) {case "group_value": break; default: a==="";}
-					switch(b) {case "item": break; default: b==="";}
-					switch(c) {
-						case "one": return [2,`c|${c}`,v];
-						case "arr": return [2,`c|${c}`,v];
-						case "instance_name": return [2,`c|${c}`,v];
-						case "many": return [2,`c|${c}`,v];
-						case "typeof_name": return [2,`c|${c}`,v];
-						default: c===""; break;
-					}
+					const v=x[2]; v;
 				} break;
 				case "-a": {
 					const v=x[2];

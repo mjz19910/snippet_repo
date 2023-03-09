@@ -1,1 +1,0 @@
-type Type_PrototypeDescription_OfTextDecoder<K>=GType_PrototypeDescription_OfTextDecoder<K,"TextDecoder",TextDecoder>;
