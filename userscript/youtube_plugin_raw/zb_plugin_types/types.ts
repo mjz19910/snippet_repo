@@ -1,4 +1,3 @@
-type RequiredType<V>=Partial<Omit<PartialWithType<V>,"a">>&Pick<PartialWithType<V>,"a">;
 type IndexedDBService=InstanceType<PluginStore["mod$IndexedDBService"]["IndexedDBService"]>;
 type VolumeRange=InstanceType<PluginStore["mod$YoutubePluginBase"]["VolumeRange"]>;
 type ServiceResolverBox<T>={
