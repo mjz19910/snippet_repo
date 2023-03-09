@@ -560,16 +560,15 @@ type PX_upcoming_event_reminder_info={
 	2: T_D32<0>;
 };
 type P_notification_add_upcoming_event_reminder_params={
-	1: T_VW<PD_event_info>|TV_Str_CS<"PEcy1vYHb8A">;
+	1: TV_Str_CS<"PEcy1vYHb8A">;
 	6: T_VW<PX_upcoming_event_reminder_info>;
 };
 type P_notification_remove_upcoming_event_reminder_params={
-	1: T_VW<PD_event_info>|TV_Str<"ew_7JtJ1AW4">;
+	1: TV_Str<"ew_7JtJ1AW4">;
 	6: T_VW<PX_upcoming_event_reminder_info>;
 };
-type PD_event_info={14: T_FD64<bigint>;};
 type PD_timed_continuation={
-	3: T_VW<PD_event_info>|TV_Str<"ew_7JtJ1AW4">;
+	3: TV_Str<"ew_7JtJ1AW4">;
 	4: T_D32<number>;
 	7: T_D32<1>;
 	8: T_D32<1>;

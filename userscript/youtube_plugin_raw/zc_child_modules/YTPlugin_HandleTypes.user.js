@@ -2848,9 +2848,8 @@ class HandleTypes extends BaseService {
 		const {1: v1,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let u1=this.T_PArr_1(v1)[0];
 		switch(u1[0]) {
-			case "v_child":/*unk*/{
-				const {14: x2_f14,...y2}=u1[2]; this.g(y2);
-				this.save_bigint(`${cf}.f1.f14`,this.T_FD64(x2_f14));
+			case "v_child": {
+				this.save_string(`${cf}.f1`,u1[3][1]);
 			} break;
 			case "v_child_str":/*unk*/{
 				this.save_string(`${cf}.f1`,u1[3][1]);
