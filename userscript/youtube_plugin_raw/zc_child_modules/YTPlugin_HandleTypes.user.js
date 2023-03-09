@@ -3454,8 +3454,8 @@ class HandleTypes extends BaseService {
 				diff_minus.push(y_item);
 			}
 			console.log("[cur_cache_value] [x.key]",x.key);
-			console.log("[val] [x]",...w(x));
-			console.log("[val] [y]",...w(y));
+			console.log("[val] [x]",...xi0);
+			console.log("[val] [y]",...yi0);
 			console.log(diff_plus,diff_minus);
 		}
 		try {
