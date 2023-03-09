@@ -33,26 +33,7 @@ type G_BoxedDatabaseData=
 	;
 ;
 //#endregion
-type G_Boxed_StrExtract=G_BoxedDatabaseData['key'] extends infer I?
-	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}:${infer f5}`? [f0,f1,f2,f3,f4,f5]:
-	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}`? [f0,f1,f2,f3,f4]:
-	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}`? [f0,f1,f2,f3]:
-	I extends `${infer f0}:${infer f1}:${infer f2}`? [f0,f1,f2]:
-	I extends `${infer f0}:${infer f1}`? [f0,f1]:[I]:never
-	;
 ;
-type G_Boxed_StrArr=[
-	Join<Extract<G_Boxed_StrExtract,[any,any]>,":">,
-	// 3
-	Join<Extract<G_Boxed_StrExtract,[any,any,any]>,":">,
-	// 4
-	Join<Exclude<Extract<G_Boxed_StrExtract,[any,any,any,any]>,[any,any,"FE",any]>,":">,
-	Join<Extract<Extract<G_Boxed_StrExtract,[any,any,any,any]>,[any,any,"FE",any]>,":">,
-	// 5
-	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any]>,":">,
-	// 6
-	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any,any]>,":">,
-];
 type GB_A1_Keys=G_BoxedDatabaseData extends infer V? V extends infer I? T_DistributedKeyof<Omit<I,"key"|"a"|"b"|"j"|"w"|"z">>:[]:[];
 type GB_A1_KS1=Extract<G_BoxedDatabaseData,{w: any;}>;
 type GB_A1_KS2=Extract<G_BoxedDatabaseData,{k: any;}>;
