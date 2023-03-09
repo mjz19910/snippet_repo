@@ -1713,7 +1713,7 @@ class HandleTypes extends BaseService {
 	make_DI_R(c,x) {return {a: "DI",b: "key",c,w: "/item/a/b/c/w/z",z: [x]};}
 	/** @template {string} C @template T @arg {C} c @arg {T} x @returns {T_DI_Raw_2<C,T>} */
 	make_DI_Raw(c,x) {return {a: "DI:R",b: "raw",c,w: "/item/a/b/c/w/z",z: [x]};}
-	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,DI_T_KV_Z<K1,DI_T_KV_Z<K2,T>>>} */
+	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
 	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(`${k1}:${k2}`,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {return this.make_DI_Raw_KV_l2("key","start_radio",this.make_prim_num_t(x));}
@@ -3126,9 +3126,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @template U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
 	get_prim_1(x) {return x.z[0];}
-	/** @template V @template {DI_T_KV_Z<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
+	/** @template V @template {KV_T_AKZ<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {DI_T_KV_Z<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
+	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {KV_T_AKZ<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	//#endregion
 	//#endregion
@@ -3140,13 +3140,13 @@ class HandleTypes extends BaseService {
 		let [,id]=split_string_once(x3,c);
 		return {b,c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
-	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_KV_Z<K,T_PrimitiveBox<T>>}*/
+	/** @template K,T @arg {K} k @arg {T} x @returns {KV_T_AKZ<K,T_PrimitiveBox<T>>}*/
 	make_kv_ab(k,x) {return this.make_DI_T_KV_Z(k,this.make_BoxTypeof(x));}
 	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
 	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
 	make_id(x) {return this.make_kv_ab("id",x);}
-	/** @template T @arg {T} x @returns {DI_T_KV_Z<"raw_id",T>} */
+	/** @template T @arg {T} x @returns {KV_T_AKZ<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_KV_Z("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}

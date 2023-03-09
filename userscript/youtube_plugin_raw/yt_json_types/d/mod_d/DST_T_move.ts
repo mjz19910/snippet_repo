@@ -14,7 +14,7 @@ type DSI_T_Item_ABD2<T_Type extends string,T_Tag2 extends string,T>={
 
 type DSI_T_Item_ABD<T_Type extends keyof J_StoreTypeMap,T>={
 	key: `boxed_id:${T_Type}:${string}`;
-	a: DST_KStr_ABDZ; b: "boxed_id"; d: T_Type; z: [DI_T_KV_Z<string,make_item_group<T>>];
+	a: DST_KStr_ABDZ; b: "boxed_id"; d: T_Type; z: [KV_T_AKZ<string,make_item_group<T>>];
 	descriptive_name?: "boxed_store";
 	renames_arr?: DEX_Renames<[
 		DRN_KeyIs<DST_KStr_ABDZ>,
@@ -26,7 +26,7 @@ type DSI_T_Item_ABD<T_Type extends keyof J_StoreTypeMap,T>={
 
 //#region DST_MakeLM (ABLMZ)
 type DST_MoveRegion1_Src="DST_MakeLM:Src"|DST_MoveRegion1_Dst;
-type DST_MakeLM<L extends string,M extends string,ZV extends Primitive,T extends DI_T_KV_Z<L,TMK_SuccessorX2<ZV>>=DI_T_KV_Z<L,TMK_SuccessorX2<ZV>>>={
+type DST_MakeLM<L extends string,M extends string,ZV extends Primitive,T extends KV_T_AKZ<L,TMK_SuccessorX2<ZV>>=KV_T_AKZ<L,TMK_SuccessorX2<ZV>>>={
 	key: `boxed_id:${L}:${M}:${ZV}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
@@ -34,7 +34,7 @@ type DST_MakeLM<L extends string,M extends string,ZV extends Primitive,T extends
 	m: M;
 	z: [T];
 };
-type DST_MakeLM_2<T extends DI_T_KV_Z<string,TMK_SuccessorX2<V>>,L,M,V extends Primitive>={
+type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends Primitive>={
 	key: `boxed_id:${T["k"]}:${TZ_SuccessorX3<T>}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
@@ -42,7 +42,7 @@ type DST_MakeLM_2<T extends DI_T_KV_Z<string,TMK_SuccessorX2<V>>,L,M,V extends P
 	m: M;
 	z: [T];
 };
-type DST_MakeLM_3<T extends DI_T_KV_Z<string,TMK_SuccessorX2<V>>,L extends string,M extends string,V extends Primitive>={
+type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string,M extends string,V extends Primitive>={
 	key: `boxed_id:${L}:${M}:${V}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
@@ -62,7 +62,7 @@ type DST_MakeLM_FromObj<T extends TMK_SuccessorX3<V>&{k: string;},L="key",M exte
 //#endregion
 type DST_T_ABLZ_FromDI<T extends Y_DI_Shape>=DST_T_ABLZ<T["k"],TZ_SuccessorX3<T>,T>;
 
-type DST_T_ABLZ<L extends string,V extends string=string,T extends DI_T_KV_Z<string,any>=DI_T_KV_Z<string,any>>={
+type DST_T_ABLZ<L extends string,V extends string=string,T extends KV_T_AKZ<string,any>=KV_T_AKZ<string,any>>={
 	key: `boxed_id:${L}:${V}`;
 	a: DST_KStr_ABLZ;
 	b: "boxed_id";
@@ -77,7 +77,7 @@ type DI_A_HashtagId=T_DI_FromObj2<{
 }>;
 
 type DST_HashtagId=DST_T_ABLZ<"hashtag_id",string,DI_A_HashtagId>;
-type CV_ABC_KV<T extends {b: string; c: string; z: [any,...any];}>=DI_T_KV_Z<`${T["b"]}:${T['c']}`,TZ_Successor<T>>;
+type CV_ABC_KV<T extends {b: string; c: string; z: [any,...any];}>=KV_T_AKZ<`${T["b"]}:${T['c']}`,TZ_Successor<T>>;
 type DST_MakeLM_From_BC<
 	T extends {
 		b: string; c: string;

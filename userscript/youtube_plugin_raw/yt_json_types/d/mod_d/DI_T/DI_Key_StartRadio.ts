@@ -1,1 +1,0 @@
-type DI_Key_StartRadio=DI_T_KV_Z<"key",T_DI_FromObj<{start_radio: 0|1;}>>;
