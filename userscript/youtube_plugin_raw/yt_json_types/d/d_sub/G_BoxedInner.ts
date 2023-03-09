@@ -1,14 +1,14 @@
 type G_BoxedInner=
-	|["z",G_BoxedIdObj]
+	|["z",G_BoxedDatabaseData]
 	|["n"]
 	|["a1",GB_A1]
 	|[1,...Ret_w_dst<G_Boxed_DST>,{
-		key: G_BoxedIdObj['key'];
+		key: G_BoxedDatabaseData['key'];
 		a: DST_PlayNext["a"]; b: "boxed_id";
 		j: GB_A1_J_Shape;
 		w: any;
 	}|{
-		key: G_BoxedIdObj['key'];
+		key: G_BoxedDatabaseData['key'];
 		a: DST_PlayNext["a"]; b: "boxed_id";
 		j: GB_A1_J_Shape;
 	}]

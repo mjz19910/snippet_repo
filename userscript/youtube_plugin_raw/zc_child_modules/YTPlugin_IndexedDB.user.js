@@ -139,21 +139,21 @@ class IndexedDBService extends BaseService {
 	database_diff_keys=new Set;
 	/** @type {WeakSet<CacheSetItems>} */
 	cache_weak_set=new WeakSet;
-	/** @private @type {G_BoxedIdObj[]} */
+	/** @private @type {G_BoxedDatabaseData[]} */
 	committed_data=[];
 	/** @private @type {DA_CacheInfoType} */
 	store_cache=[];
 	cache() {return this.store_cache;}
 	/** @type {string[][]} */
 	delayed_log_messages=[];
-	/** @type {Promise<G_BoxedIdObj[]>[]} */
+	/** @type {Promise<G_BoxedDatabaseData[]>[]} */
 	waiting_promises=[];
 	on_loaded_resolver=J_ResolverTypeImpl.make();
 	check_size() {
 		let arr=this.cache();
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
-	/** @temporary @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
+	/** @temporary @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.ht.put("boxed_id",x,version);}
 	/** @arg {number} version @returns {Promise<DST_LoadId|null>} */
 	async get_load_id(version) {
@@ -169,7 +169,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async load_store_from_database(store,version) {
-		/** @type {G_BoxedIdObj[]} */
+		/** @type {G_BoxedDatabaseData[]} */
 		let boxed;
 		try {
 			boxed=await this.getAll("boxed_id",version);
@@ -182,14 +182,14 @@ class IndexedDBService extends BaseService {
 		this.has_loaded_keys=true;
 		this.on_loaded_resolver.resolve();
 	}
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T>} */
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T>} */
 	async update_obj_schema(x,version) {
 		if(x.z) return x;
 		await this.delete("boxed_id",x.key,version);
 		await this.direct_put("boxed_id",x,version);
 		return x;
 	}
-	/** @arg {G_BoxedIdObj} x */
+	/** @arg {G_BoxedDatabaseData} x */
 	store_cache_tree(x) {
 		this.ht.loaded_keys.add(x.key);
 		this.ht.loaded_map.set(x.key,x);
@@ -243,7 +243,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {CacheTreeDepth4} x */
 	cache_depth_4(x) {x;}
-	/** @arg {StoreData} store @arg {G_BoxedIdObj} item @arg {number} version */
+	/** @arg {StoreData} store @arg {G_BoxedDatabaseData} item @arg {number} version */
 	async load_store(store,item,version) {
 		this.add_to_index(item.key,item,true);
 		item=await this.update_obj_schema(item,version);
@@ -347,7 +347,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x */
 	uv_unpack(x) {return this.uv_unpack_mt(x,[]);}
-	/** @arg {{args:Y_PutBoxedArgs;promise:Promise<G_BoxedIdObj>;}} x */
+	/** @arg {{args:Y_PutBoxedArgs;promise:Promise<G_BoxedDatabaseData>;}} x */
 	async await_put_result(x) {
 		const {args,promise}=x;
 		let ret=await promise;
@@ -928,7 +928,7 @@ class IndexedDBService extends BaseService {
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
 	/**
-	 * @arg {TypedIndexedDB} tdb @template {G_BoxedIdObj} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
+	 * @arg {TypedIndexedDB} tdb @template {G_BoxedDatabaseData} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
 	 * @returns {{type:"err";err:unknown}|{type:"ok";req:IDBRequest<IDBValidKey>}}
 	 * */
 	start_put_request(tdb,store,value) {
@@ -984,15 +984,15 @@ class IndexedDBService extends BaseService {
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let d_cache=this.cache();
 		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.ht.loaded_keys.has(e.key));
-		/** @type {G_BoxedIdObj[]} */
+		/** @type {G_BoxedDatabaseData[]} */
 		let new_arr=[];
-		/** @type {G_BoxedIdObj[]} */
+		/** @type {G_BoxedDatabaseData[]} */
 		let same_arr=[];
-		/** @type {G_BoxedIdObj[]} */
+		/** @type {G_BoxedDatabaseData[]} */
 		let diff_arr=[];
-		/** @type {G_BoxedIdObj[]} */
+		/** @type {G_BoxedDatabaseData[]} */
 		let unknown_arr=[];
-		/** @arg {G_BoxedIdObj} x @arg {"new"|"same"|"diff"|"unknown"} changed */
+		/** @arg {G_BoxedDatabaseData} x @arg {"new"|"same"|"diff"|"unknown"} changed */
 		let commit_value=(x,changed) => {
 			switch(changed) {
 				case "new": new_arr.push(x); break;
@@ -1080,13 +1080,13 @@ class IndexedDBService extends BaseService {
 		let result=await this.get_async_result(typed_db.getAll(obj_store));
 		return result;
 	}
-	/** @api @public @arg {G_BoxedIdObj} obj */
+	/** @api @public @arg {G_BoxedDatabaseData} obj */
 	push_value(obj) {
 		const {key}=obj;
 		let idx=this.add_to_index(key,obj);
 		if(this.log_cache_push) console.log("push wait",key,idx,obj);
 	}
-	/** @arg {G_BoxedIdObj["key"]} key @arg {G_BoxedIdObj} x */
+	/** @arg {G_BoxedDatabaseData["key"]} key @arg {G_BoxedDatabaseData} x */
 	add_to_index(key,x,null_out_key=false) {
 		let cache_arr=this.cache();
 		let cache_index=this.cache_index();

@@ -1,6 +1,6 @@
 import {ApiBase2} from "../../../zc_child_modules/YtPlugin_Base.user.js";
 
-export function cache_item_decompose_info_0_info_0(x: G_BoxedIdObj) {
+export function cache_item_decompose_info_0_info_0(x: G_BoxedDatabaseData) {
 	let s1=x.z[0].z[0];
 	return s1;
 }
@@ -58,7 +58,7 @@ class RetValue {
 }
 type G_Ex_WV=[t: 1,r: ReturnType<typeof cache_item_decompose_1>];
 type G_Ex_Ret=[t: -1,n: number,v: G_Ex_WV,n: G_Ex_Ret|null];
-export function cache_item_decompose_0(x: G_BoxedIdObj): RetValue {
+export function cache_item_decompose_0(x: G_BoxedDatabaseData): RetValue {
 	let a_base_2=new ApiBase2;
 	let a1=x.z[0].z[0];
 	let ret=new RetValue();

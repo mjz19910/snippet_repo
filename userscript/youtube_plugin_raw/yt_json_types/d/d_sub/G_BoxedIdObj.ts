@@ -1,5 +1,5 @@
 //#region G_Boxed
-type G_BoxedIdObj=
+type G_BoxedDatabaseData=
 	|DST_Browse_MP
 	|DST_Browse_SP
 	|DST_Browse_VL_LL
@@ -33,28 +33,7 @@ type G_BoxedIdObj=
 	;
 ;
 //#endregion
-type G_BoxedPrintable=G_BoxedIdObj;
-type G_Boxed_DST=Exclude<G_BoxedIdObj,GST_DSS>;
-type GB_A1=G_BoxedIdObj["z"][0];
-type GB_A1_J_Shape=
-	|`browse_id:${string}`
-	|"play_next"
-	|`playlist_id:${string}`
-	|"user_id"
-	|"channel_id:UC"
-	|"guide_entry_id"
-	|"hashtag_id"
-	|"key"
-	|"load_id"
-	|"save_id"
-	|"update_id"
-	|"video_id"
-	|"video_time"
-	|"guide_entry_id:LL"
-	|"guide_entry_id:VL:LL"
-	;
-;
-type G_Boxed_StrExtract=G_BoxedIdObj['key'] extends infer I?
+type G_Boxed_StrExtract=G_BoxedDatabaseData['key'] extends infer I?
 	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}:${infer f5}`? [f0,f1,f2,f3,f4,f5]:
 	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}`? [f0,f1,f2,f3,f4]:
 	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}`? [f0,f1,f2,f3]:
@@ -74,9 +53,9 @@ type G_Boxed_StrArr=[
 	// 6
 	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any,any]>,":">,
 ];
-type GB_A1_Keys=G_BoxedIdObj extends infer V? V extends infer I? T_DistributedKeyof<Omit<I,"key"|"a"|"b"|"j"|"w"|"z">>:[]:[];
-type GB_A1_KS1=Extract<G_BoxedIdObj,{w: any;}>;
-type GB_A1_KS2=Extract<G_BoxedIdObj,{k: any;}>;
+type GB_A1_Keys=G_BoxedDatabaseData extends infer V? V extends infer I? T_DistributedKeyof<Omit<I,"key"|"a"|"b"|"j"|"w"|"z">>:[]:[];
+type GB_A1_KS1=Extract<G_BoxedDatabaseData,{w: any;}>;
+type GB_A1_KS2=Extract<G_BoxedDatabaseData,{k: any;}>;
 type GB_A1_J_Base="user_id"|"channel_id:UC"|"guide_entry_id:PL"|"guide_entry_id:UC";
 type G_BoxedDSS={};
 type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
@@ -109,9 +88,9 @@ function test_1(x: Ret_T_W_DIZ) {
 }
 type G_BoxedInner_Tmp=[
 	GST_DSS|null,
-	Exclude<G_BoxedPrintable,{a: "SI:T:D";}>|null
+	Exclude<G_BoxedDatabaseData,{a: "SI:T:D";}>|null
 ];
-type G_BoxedInner_Tmp_l=Exclude<G_BoxedPrintable,{a: "SI:T:D";}>;
+type G_BoxedInner_Tmp_l=Exclude<G_BoxedDatabaseData,{a: "SI:T:D";}>;
 //#region DST_T
 type DST_T_abz_j<J,X>={
 	key: `boxed_id:browse_id:MP:${string}`;

@@ -3,7 +3,7 @@ import {as_any} from "../zc_child_modules/YtPlugin_Base.user";
 export class IndexedDBDeadCode extends IndexedDBService {
 	/**
 	 * @template {"boxed_id"} K
-	 * @template {G_BoxedIdObj} T
+	 * @template {G_BoxedDatabaseData} T
 	 * @param {IDBTransaction} tx
 	 * @param {K} key
 	 * @param {IDBDatabase} db
@@ -21,14 +21,14 @@ export class IndexedDBDeadCode extends IndexedDBService {
 		for(let x of video_id_result) dst_obj_store.put(x);
 	}
 	/** @template T @typedef {[true,"unknown","new_info",T]|[false,"missing2",[keyof FromDbData,keyof (FromDbData["value"])],T]|[false,"update2",keyof FromDbData,T]|[false,"update",keyof T,T]|[true,"update",keyof T,T]|[false,"missing",keyof FromDbData,T]|[true,"ok",T]|[false,"bad",T]} UpdateSchemaItem */
-	/** @template {G_BoxedIdObj} T @arg {T} x */
+	/** @template {G_BoxedDatabaseData} T @arg {T} x */
 	update_obj_schema_r(x) {
 		/** @type {(UpdateSchemaItem<T>)[]} */
 		const arr=[];
 		this.update_obj_schema_2(x,arr);
 		this.update_obj_schema_3(x,arr);
 	}
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {(UpdateSchemaItem<T>)[]} res */
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @arg {(UpdateSchemaItem<T>)[]} res */
 	update_obj_schema_2(x,res) {
 		let ok=true;
 		if(!x.z) {
@@ -111,7 +111,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 		if(ok) res.push([true,"ok",x]); else res.push([ok,"bad",x]);
 		return;
 	}
-	/** @template {G_BoxedIdObj} T @arg {T} u @arg {(UpdateSchemaItem<T>)[]} arr */
+	/** @template {G_BoxedDatabaseData} T @arg {T} u @arg {(UpdateSchemaItem<T>)[]} arr */
 	update_obj_schema_3(u,arr) {
 		u;
 		for(let x of arr) {
@@ -129,7 +129,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 				case "update": update_bad=x; break;
 				case "update2": update2=x; break;
 			}
-			/** @arg {[false, "missing2", [keyof FromDbData, keyof FromDbData["value"]], T]|[false,"missing",keyof G_BoxedIdObj,T]|[false,"missing",keyof FromDbData,T]|null} x */
+			/** @arg {[false, "missing2", [keyof FromDbData, keyof FromDbData["value"]], T]|[false,"missing",keyof G_BoxedDatabaseData,T]|[false,"missing",keyof FromDbData,T]|null} x */
 			function kty_missing(x) {
 				if(!x) return;
 				switch(x[2]) {

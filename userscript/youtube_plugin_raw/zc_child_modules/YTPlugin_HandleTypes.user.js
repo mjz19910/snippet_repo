@@ -3260,11 +3260,11 @@ class HandleTypes extends BaseService {
 	tz_pop(x) {return x.z[0];}
 	/** @template V @template {ZAT1<V>} T @arg {T} x @returns {ZA1<T>} */
 	za1(x) {return this.tz_pop(x);}
-	/** @type {Map<string,G_BoxedIdObj>} */
+	/** @type {Map<string,G_BoxedDatabaseData>} */
 	loaded_map=new Map;
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
-	/** @api @public @template {G_BoxedIdObj} T @arg {"boxed_id"} key @arg {T} value @arg {number} version */
+	/** @api @public @template {G_BoxedDatabaseData} T @arg {"boxed_id"} key @arg {T} value @arg {number} version */
 	async put(key,value,version) {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
@@ -3351,11 +3351,11 @@ class HandleTypes extends BaseService {
 					return [true,ty,x.j,a1,a2,a3,x];
 				}
 			};
-			/** @arg {G_BoxedPrintable|undefined} x @returns {G_BoxedInner} */
+			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
 			const w=(x) => {
 				if(!x) return ["n"];
 				if("k" in x) return ["k:sr",x];
-				/** @type {[GST_DSS|null,Exclude<G_BoxedPrintable,{a:"SI:T:D"}>|null]} */
+				/** @type {[GST_DSS|null,Exclude<G_BoxedDatabaseData,{a:"SI:T:D"}>|null]} */
 				const n=[null,null];
 				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
 				if(n[0]) {
@@ -3470,7 +3470,7 @@ class HandleTypes extends BaseService {
 			throw new AggregateError([e],"put await error");
 		}
 	}
-	/** @template {G_BoxedIdObj} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	//#endregion
 	//#region TODO_minimal_member_fns

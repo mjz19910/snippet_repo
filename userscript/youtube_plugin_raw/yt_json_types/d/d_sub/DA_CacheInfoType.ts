@@ -1,1 +1,1 @@
-type DA_CacheInfoType=(G_BoxedIdObj|null)[];
+type DA_CacheInfoType=(G_BoxedDatabaseData|null)[];

@@ -1,3 +1,3 @@
 type DT_DatabaseStoreTypes={
-	boxed_id: G_BoxedIdObj;
+	boxed_id: G_BoxedDatabaseData;
 };
