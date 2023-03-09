@@ -1,4 +1,4 @@
-import {UB_obj2} from "./UB_obj2.js";
-import {Ub1} from "./Ub1.js";
+import {GP_Z1} from "./GP_Z1.js";
+import {GP_DI_FromObj} from "./GP_DI_FromObj.js";
 
-export type ub_obj_2=UB_obj2<Ub1>;
+export type ub_obj_2=GP_DI_FromObj<GP_Z1<DI_Key_StartRadio>>;

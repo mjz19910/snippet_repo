@@ -1,0 +1,1 @@
+export type GP_Z1<T extends {z: [{}];}>=T["z"][0];
