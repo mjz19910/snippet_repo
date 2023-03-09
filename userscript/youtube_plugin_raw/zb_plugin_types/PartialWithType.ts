@@ -1,1 +1,1 @@
-type PartialWithType<T,S=JsonFilterRet<any,any>>=Extract<S,{a: T;}>;
+type PartialWithType<T,S=JsonFilterRet<any>>=Extract<S,{a: T;}>;

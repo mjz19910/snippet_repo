@@ -2114,25 +2114,20 @@ class ApiBase2 {
 		const [k,v]=a0;
 		return [k,f.call(this,k,v)];
 	}
-	/** @template T @arg {T} c @returns {Ret_simple_filter|null} */
-	simple_filter(c) {
-		/** @type {unknown} */
-		let x=c;
-		switch(typeof x) {
-			case "string": return {a: "/type/value",type: "string",value: x};
-			case "number": return {a: "/type/value",type: "number",value: x};
-			case "bigint": return {a: "/type/value",type: "bigint",value: x};
-			case "boolean": return {a: "/type/value",type: "boolean",value: x};
-			case "symbol": switch(x) {
-				default: debugger; return {a: "/type",type: "symbol",sym: x};
-				case box_sym_r: return {a: "/type/for",type: "symbol-for",for: "box_symbol"};
-			}
-			case "undefined": return {a: "/type/value",type: "undefined"};
-			case "object": return this.simple_filter_obj(x);
+	/** @arg {unknown} z @returns {Ret_simple_filter|null} */
+	simple_filter(z) {
+		switch(typeof z) {
+			case "string": return {a: "/string",z};
+			case "number": return {a: "/number",z};
+			case "bigint": return {a: "/bigint",z};
+			case "boolean": return {a: "/boolean",z};
+			case "symbol": return {a: "/symbol",z};
+			case "undefined": return {a: "/undefined"};
+			case "object": return this.simple_filter_obj(z);
 			case "function": {
-				let idx=this.fn_list.indexOf(x);
-				if(idx===-1) idx=this.fn_list.push(x)-1;
-				return {a: "/type/id/value",type: "function",id: idx,value: {...x,a: "/name"}};
+				let idx=this.fn_list.indexOf(z);
+				if(idx===-1) idx=this.fn_list.push(z)-1;
+				return {a: "/function",z: idx};
 			}
 		}
 	}
@@ -2141,117 +2136,20 @@ class ApiBase2 {
 	/** @template T @arg {T}x @returns {T} */
 	clone(x) {return structuredClone(x);}
 	num_count=0;
-	/** @arg {[string,unknown]} e @returns {Ret_can_clone_map|null} */
+	/** @arg {[string,unknown]} e @returns {[string,Ret_simple_filter|null]|null} */
 	clone_entry_item(e) {
 		this.num_count++;
 		if(this.num_count>64) return null;
 		let [k,v]=e;
-		if(typeof v==="boolean") return {
-			a: "/type/p/value",type: "entry",p: "boolean",
-			value: [k,v]
-		};
-		if(typeof v==="function") {
-			let f=this.simple_filter(v);
-			if(f===null) return null;
-			return {
-				a: "/type/z",type: "original",
-				z: {
-					a: "/k/v/f",
-					k,
-					v,
-					f
-				}
-			};
-		}
-		if(v instanceof RegExp) return {
-			a: "/type/b/k/value",b: "no-clone",k,
-			type: "RegExp",
-			value: {source: v.source}
-		};
-		if(v instanceof TextDecoder) return {
-			a: "/type/value",b: "no-clone",k,
-			type: "TextDecoder",
-			value: {
-				encoding: v.encoding,
-				fatal: v.fatal,
-				ignoreBOM: v.ignoreBOM
-			}
-		};
-		if(v instanceof Array) {
-			return {a: "/type/z",type: "array",k,v};
-		}
 		let f=this.simple_filter(v);
-		if(f===null) return null;
-		return {a: "/type/z",type: "filter",k,z: f};
+		return [k,f];
 	};
-	/** @template {object|null} T @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter_obj|null} */
+	/** @template {object|null} T @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter|null} */
 	simple_filter_obj(x) {
-		if(x instanceof Array) {
-			const in_entries=Object.entries(x);
-			const res_entries=this.iter_entries(in_entries,this.simple_filter);
-			let rc=Object.fromEntries(res_entries);
-			return structuredClone(rc);
-		}
-		if(x instanceof TextDecoder) return this.filter_text_decoder(x);
-		if(x===null) return {a: "/type/value",type: "null"};
-		let r_obj;
-		{
-			const in_entries=Object.entries(x);
-			/** @arg {Ret_can_clone_map|null} x @returns {[string,any]|null} */
-			const map_clone_2=x => {
-				if(x===null) return null;
-				switch(x.a) {
-					default: debugger; break;
-					case "/type/b/k/value": return [x.k,x.value];
-					case "/type/p/value": return x.value;
-					case "/type/value": return [x.k,x.value];
-					case "/b/k/value": switch(x.b) {
-						case "clone": return [x.k,x.value];
-						case "primitive": return [x.k,x.value];
-					}
-					case "/type/z": {
-						switch(x.type) {
-							default: debugger; break;
-							case "array": {
-								let c=x.v; console.log(c);
-								return [x.k,c];
-							}
-							case "filter": {
-								let c=x.z; console.log(c.a);
-							} break;
-							case "original": {
-								let c=x.z; console.log(c.f);
-								return [c.k,c.v];
-							}
-						}
-						const c=x.z; console.log(c);
-						switch(c.a) {
-							default: debugger; break;
-							case "/raw": debugger; break;
-						}
-						return [x.type,x.z];
-					}
-				}
-				return null;
-			};
-			const res_entries=in_entries.map(this.clone_entry_item,this).map(map_clone_2).map(ent => {
-				if(ent===null) return null;
-				if(ent instanceof Array) {
-					Object.setPrototypeOf(ent[1],null);
-				}
-				return ent;
-			});
-			let ok_entries=[];
-			for(let ent of res_entries) {
-				if(ent===null) return null;
-				ok_entries.push(ent);
-			}
-			r_obj=Object.fromEntries(ok_entries);
-			Object.setPrototypeOf(r_obj,null);
-			return {a: "/raw",value: r_obj};
-		}
+		if(x instanceof Array) return {a: "/arr",z: x};
+		return null;
 	}
-	/** @template {object} T @arg {string} k @arg {T} x @returns {Ret_FilterEmptyType} */
+	/** @template {object} T @arg {string} k @arg {T} x @returns {{a: "/empty"}} */
 	simple_filter_reconstruct(k,x) {
 		let reconstructed=null;
 		try {
@@ -2270,51 +2168,12 @@ class ApiBase2 {
 		}
 		if(reconstructed!==null) return reconstructed;
 		debugger;
-		return {a: "/type",type: "empty"};
-	}
-	/** @template {{[U in K]?:any}&{modify_log:G_ObjModifyItem[]}} T @template {keyof TextDecoder&string} K @arg {T} x @arg {K} k */
-	json_set_filter(x,k) {
-		const v=x[k];
-		const f=this.simple_filter(v);
-		if(f===null) return;
-		x.modify_log.push({
-			a: "/type/k/value",
-			type: "filter",
-			k,
-			value: f,
-		});
-		if(typeof f==="object"&&f!==null&&"type" in f) {
-			switch(f.type) {
-				default: debugger; break;
-				case "function": {
-					/** @type {Ret_Filter_FunctionModify} */
-					let w={a: "/type/id/log",type: "function",id: f.id,log: [{a: "/type/k/value",type: "add",k,value: v}]};
-					x.modify_log.push({
-						a: "/type/k/value",type: "modify",
-						k,
-						value: w,
-					});
-				}
-			}
-			return;
-		}
-		if(typeof f==="string") return;
-		if(typeof f==="number") return;
-		if(typeof f==="bigint") return;
-		if(typeof f==="boolean") return;
-		if(f===void 0) return;
-		if(f===null) return;
-		if("empty" in f) {
-			const {empty,...y}=f;
-			if(this.get_keys_of(y).length!==0) debugger;
-			if(empty!==true) debugger;
-			return;
-		}
+		return {a: "/empty"};
 	}
 	/** @arg {unknown} x */
 	save_clone(x) {
 		this.seen_keys_list.length=0;
-		const str=JSON.stringify(x,this.json_filter.bind(this));
+		const str=JSON.stringify(x,(_k,x) => this.simple_filter(x));
 		return JSON.parse(str);
 	}
 	/** @template {{[U in K]:any}} T @template {keyof T} K @arg {T} x @arg {K} k @template {T[K]} V @arg {V} v */
@@ -2335,41 +2194,10 @@ class ApiBase2 {
 			console.log(entry);
 		}
 	}
-	/** @template T @template {string} K @arg {K} k @arg {JsonFilterRet<K,T>|JsonFilterStatic} x @returns {JsonFilterRet<K,T>|JsonFilterStatic|JsonFilterPrimitive} */
+	/** @template {string} K @arg {K} k @arg {JsonFilterRet<K>|null} x @returns {JsonFilterRet<K>|null|null} */
 	json_filter_filter_ret(k,x) {
 		this.add_key_root(k,x);
 		if(typeof x==="string"||typeof x==="boolean"||x===null) return x;
-		/** @type {JsonFilterRet<K,T>|null} */
-		let r1=null;
-		/** @type {JsonFilterRet<K,T>["value"]|Extract<JsonFilterStatic,object>["value"]|null} */
-		let v1=null;
-		const v=x.value;
-		switch(v.type) {
-			default: console.log("skip",x.value); v1=x.value; break;
-			case "function": break;
-			case "prototype": {
-				const {type,key,type_name,__prototype_description,...w2}=v; if(this.get_keys_of(w2).length!==0) debugger;
-				if(key===void 0) {debugger; return null;}
-				if(type_name===void 0) {debugger; return null;}
-				if(__prototype_description===void 0) {debugger; return null;}
-				console.log("proto",__prototype_description);
-				/** @type {Type_PrototypeDescription_OfTextDecoder<typeof k>} */
-				let z={a: "/value",value: {...w2,type,key,type_name,__prototype_description}};
-				r1=z;
-			} break;
-		}
-		if(r1) return r1;
-		if(v1) {
-			switch(v1.type) {
-				case "function": return {a: "/value",value: v1};
-				case "prototype": return {a: "/value",value: v1};
-				case "normal": return {a: "/value",value: v1};
-				case "symbol": return {a: "/value",value: v1};
-				case "obj": return {a: "/value",value: v1};
-				case "normal:copy": return {a: "/value",value: v1};
-			}
-
-		}
 		console.log("not handled",k,x);
 		return null;
 	}
@@ -2389,68 +2217,10 @@ class ApiBase2 {
 			return {type: "prototype",key: k,type_name: "TextDecoder",__prototype_description: {value: fd,[box_sym_r]: true}};
 		}
 	}
-	/** @arg {TextDecoder} x @returns {Ret_TextDecoderInfo|null} */
-	filter_text_decoder(x) {
-		const {encoding,decode,fatal,ignoreBOM}=x;
-		const f=this.simple_filter(decode);
-		if(f===null) return null;
-		/** @type {GType_PrototypeDescription_OfTextDecoder<"%%prototype", "TextDecoder",TextDecoder>} */
-		const filtered_proto={
-			a: "/value",value: {
-				type: "prototype",key: "%%prototype","type_name": "TextDecoder",
-				__prototype_description: {
-					a: "/value",value: {
-						a: "/type/z/arr",
-						arr: [box_sym_r],
-						type: "own_property_descriptors",
-						z: as({})
-					}
-				},
-			}
-		};
-		/** @type {Omit<TextDecoder,"decode">&{__symbol_prototype:any;modify_log:G_ObjModifyItem[]}} */
-		let dec_info={
-			encoding,fatal,ignoreBOM,__symbol_prototype: filtered_proto,modify_log: [
-				{
-					a: "/type/key/obj",type: "update",key: "decode",
-					obj: {a: "/decode",decode: f}
-				}
-			]
-		};
-		this.json_set_filter(dec_info,"decode");
-		return {a: "/type/value",type: "obj",value: {a: "/type/__symbol_prototype",type: "TextDecoder",__symbol_prototype: filtered_proto}};
-	}
 	/** @type {string[]} */
 	seen_keys_list=[];
 	/** @type {symbol[]} */
 	symbol_list=[];
-	/** @template T @template {string} K @arg {K} k @arg {T} z @returns {Ret_simple_filter|unknown} */
-	json_filter(k,z) {
-		/** @type {unknown} */
-		let x=z; k;
-		if(this.seen_keys_list.includes(k)) return x;
-		this.seen_keys_list.push(k);
-		let f=this.simple_filter(x);
-		if(f===null) return null;
-		switch(f.a) {
-			default: debugger; break;
-			case "/raw": {
-				let rv=f.value;
-				if("__module_loaded__" in rv) return rv;
-			} return null;
-			case "/type": {
-				switch(f.type) {
-					case "empty": return `${f.a}/${f.type}`;
-					case "symbol": {
-						let idx=this.symbol_list.indexOf(f.sym); f.type;
-						if(idx===-1) idx=this.symbol_list.push(f.sym)-1;
-						return {type: "symbol",index: idx};
-					}
-				}
-			}
-		}
-		return f;
-	};
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {debugger;}

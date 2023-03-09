@@ -1,18 +1,12 @@
-type GType_PrototypeDescription_OfTextDecoder<K,T_Of,V>={
-	a: "/value"; value: {
-		type: "prototype";
-		key: K;
-		type_name: T_Of;
-		__prototype_description: GType_GetOwnPropertyDescriptors<V>;
+type GType_PrototypeDescription_OfTextDecoder<K>={
+	a: "/k/z";
+	k: K;
+	z: {
+		a: "/__prototype_description";
+		__prototype_description: GType_GetOwnPropertyDescriptors<any>;
 	};
 };
 type GType_GetOwnPropertyDescriptors<T>={
-	a: "/value";
-	value: {
-		a: "/type/z/arr";
-		arr: [typeof box_sym_g];
-		type: "own_property_descriptors";
-		z: Type_GetOwnPropertyDescriptors<T>;
-		[box_sym_g]: boolean;
-	};
+	a: "/b/z"; b: "own_property_descriptors";
+	z: Type_GetOwnPropertyDescriptors<T>;
 };
