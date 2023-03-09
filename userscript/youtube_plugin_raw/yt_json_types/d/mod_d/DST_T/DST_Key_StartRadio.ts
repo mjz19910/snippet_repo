@@ -1,1 +1,1 @@
-type DST_Key_StartRadio=DST_MakeLM<"key",DI_Key_StartRadio,"start_radio",0|1>;
+type DST_Key_StartRadio=DST_MakeLM<"key","start_radio",0|1>;

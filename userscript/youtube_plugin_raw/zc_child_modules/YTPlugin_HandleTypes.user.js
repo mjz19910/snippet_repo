@@ -1715,7 +1715,7 @@ class HandleTypes extends BaseService {
 	make_DI_R_Key_StartRadio(x) {
 		return {
 			a: "DI:R",b: "raw",c: "key:start_radio",w: "/item/a/b/c/w/z",z: [
-				this.make_DI_T_Item_AB("start_radio",this.make_prim_num(x))
+				{a: "KV/a/k/z",k: "key",z: [this.make_DI_T_KV_Z("start_radio",this.make_prim_num_t(x))]}
 			]
 		};
 	}
@@ -3143,13 +3143,13 @@ class HandleTypes extends BaseService {
 		return {b,c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
 	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_KV_Z<K,T_PrimitiveBox<T>>}*/
-	make_kv_ab(k,x) {return this.make_DI_T_Item_AB(k,this.make_BoxTypeof(x));}
+	make_kv_ab(k,x) {return this.make_DI_T_KV_Z(k,this.make_BoxTypeof(x));}
 	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
 	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
 	make_id(x) {return this.make_kv_ab("id",x);}
 	/** @template T @arg {T} x @returns {DI_T_KV_Z<"raw_id",T>} */
-	make_DIT_Item_A_RawId(x) {return this.make_DI_T_Item_AB("raw_id",x);}
+	make_DIT_Item_A_RawId(x) {return this.make_DI_T_KV_Z("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
@@ -3170,7 +3170,7 @@ class HandleTypes extends BaseService {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
 				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
 				/** @type {DI_Key_StartRadio} */
-				const z={a: "DI",b: "key",k: p.k,w: "/item/a/b/c/w/z",z: [this.make_DI_T_Item_AB(p.k,this.make_prim_num_t(p.raw_id))]};
+				const z={a: "KV/a/k/z",k: "key",z: [this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(p.raw_id))]};
 				return z;
 			}
 			case "user_id": {
@@ -3180,7 +3180,7 @@ class HandleTypes extends BaseService {
 				/** @type {{raw_id:string}} */
 				let pr=as_any(p);
 				/** @type {DI_A_UserId} */
-				const z=this.make_abwz_item(x.k,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(pr.raw_id)));
+				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(pr.raw_id)));
 				return z;
 			}
 			case "hashtag_id": {
@@ -3188,7 +3188,7 @@ class HandleTypes extends BaseService {
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				/** @type {DI_A_HashtagId} */
-				const z=this.make_abwz_item(x.k,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(p.raw_id)));
+				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.raw_id)));
 				return z;
 			}
 			case "video_id": {
@@ -3196,7 +3196,7 @@ class HandleTypes extends BaseService {
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				/** @type {DI_A_VideoId} */
-				const z=this.make_abwz_item(x.k,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(p.raw_id)));
+				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.raw_id)));
 				return z;
 			}
 			case "browse_id": {

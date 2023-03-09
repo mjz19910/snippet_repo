@@ -2420,20 +2420,8 @@ class BaseService extends ServiceWithMembers {
 	 * @returns {{a: "DI:A";b:B,c:C,z:Z}}
 	 * */
 	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
-	/**
-	 * @param {Z} z @arg {B} b
-	 * @template B @template Z
-	 * @returns {{a: "DI:A";b:B,w:"a/b/w/z"; z:[Z]}}
-	 * */
-	make_abwz(b,z) {return {a: "DI:A",b,w: "a/b/w/z",z: [z]};}
-	/**
-	 * @param {T} z @arg {K} b
-	 * @template K @template T
-	 * @returns {DI_T_KV_Z<K,T>}
-	 * */
-	make_abwz_item(b,z) {return {a: "/di/k/z",k: b,z: [z]};}
 	/** @template K,T @arg {K} k @arg {T} x  @returns {DI_T_KV_Z<K,T>} */
-	make_DI_T_Item_AB(k,x) {return {a: "KV/a/k/z",k,z: [x]};}
+	make_DI_T_KV_Z(k,x) {return {a: "KV/a/k/z",k,z: [x]};}
 	/**
 	 * @param {Z} z @arg {A} a @arg {E} e
 	 * @template A,E @template Z
