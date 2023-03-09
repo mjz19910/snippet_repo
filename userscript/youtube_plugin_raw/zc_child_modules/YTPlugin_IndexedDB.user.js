@@ -373,7 +373,7 @@ class IndexedDBService extends BaseService {
 			case "MP": {
 				let [type,tag,x]=args;
 				/** @type {DST_Browse_MP} */
-				const z={...this.mk_s3(type,tag,x),w: "/key/a/b/j/w/z"};
+				const z={...this.mk_s3(type,tag,x),w: "/db/key/a/b/j/w/z"};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "FE": {
@@ -623,7 +623,7 @@ class IndexedDBService extends BaseService {
 						/** @type {DST_Browse_MP} */
 						const z={
 							key: `boxed_id:${t}:${id}:${this.za2(x.z[1])}`,
-							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,w: "/key/a/b/j/w/z",z: [x]
+							a: "ST:D",b: "boxed_id",j: `${t}:${id}`,w: "/db/key/a/b/j/w/z",z: [x]
 						};
 						let promise=this.put_box(z,version); return {args: s0,promise};
 					}
@@ -674,6 +674,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "video_time": {
 				let [t,,x]=s0;
+				/** @type {DST_VideoTime} */
 				const z=this.make_box_3(t,this.za2(x),x);
 				let promise=this.put_box(z,version); return {args: s0,promise};
 			}
