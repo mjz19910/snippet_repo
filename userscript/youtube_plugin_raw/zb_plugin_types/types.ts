@@ -34,8 +34,9 @@ namespace TestData {
 type DefaultServiceResolver=ServiceResolverBox<ServiceResolverValue>;
 type ServiceResolverValue=ServiceResolver<ServiceLoader,ServiceOptions>;
 type MakeImportPath1<T>=T extends `./DebugApi_raw/${infer BaseName1}`? `../DebugApi_raw/${BaseName1}`:never;
-type MakeImportPath<T>=T extends `./DebugApi_raw/${infer BaseName1}`? `../DebugApi_raw/${BaseName1}`:T extends `./youtube_plugin_raw/zc_child_modules/${infer BaseName1}`? `./${BaseName1}`:T extends `./${infer BaseName}`? `./${BaseName}`:T;
-type ImpPathTest1=MakeImportPath1<keyof typeof TestData.path_map>;
+type MakeImportPathForTemplateDir<T>=T extends `./youtube_plugin_raw/zc_child_modules/${infer BaseName1}`? `../zc_child_modules/${BaseName1}`|`./${BaseName1}`:never;
+type MakeImportPath<T>=T extends `./DebugApi_raw/${infer BaseName1}`? `../DebugApi_raw/${BaseName1}`:T extends `./youtube_plugin_raw/zc_child_modules/${string}`? MakeImportPathForTemplateDir<T>:T extends `./${infer BaseName}`? `./${BaseName}`:T;
+type ImpPathTest1=MakeImportPathForTemplateDir<keyof typeof TestData.path_map>;
 type Ret_ParserService_GetUrlType=ReturnType<ParserService["get_url_type"]>;
 type AsyncPluginEventDetail={
 	handle_types: HandleTypes;
