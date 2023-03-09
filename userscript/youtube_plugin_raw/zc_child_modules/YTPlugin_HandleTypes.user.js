@@ -364,7 +364,7 @@ class HandleTypes extends BaseService {
 	T_PArr_1(x) {return x[1];}
 	/** @protected @template J @template {T_PArr_1<[J]>} T @arg {T} x @returns {T[1][0]} */
 	T_RawChild(x) {
-		if(x===void 0) debugger;
+		if(x===void 0) {debugger; throw new Error("x is missing");}
 		return x[1][0];
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
