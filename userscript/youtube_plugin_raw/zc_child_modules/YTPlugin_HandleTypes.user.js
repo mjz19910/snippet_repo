@@ -3319,7 +3319,7 @@ class HandleTypes extends BaseService {
 				}
 			};
 			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss} */
-			let w_dss=x => {
+			const w_dss=x => {
 				switch(x.d) {
 					case "bigint": return [x.d,...w_diz(x.z[0]),x];
 					case "boolean": return [x.d,...w_diz(x.z[0]),x];
@@ -3328,16 +3328,39 @@ class HandleTypes extends BaseService {
 					case "root_visual_element": return [x.d,...w_diz(x.z[0]),x];
 					case "string": return [x.d,...w_diz(x.z[0]),x];
 				}
-			}; w_dss;
+			};
+			/** @template {G_Boxed_DST['z'][0]} T @arg {T} x @returns {[true,number,string,T['z'][0],T]|[false,number,T]} */
+			const w_di=x => {
+				/** @type {G_Boxed_DST['z'][0]} */
+				let u=x;
+				let cnt=0; cnt;
+				cnt++; {const k="a"; if(k in u&&k in x) return [true,cnt,x.a,x.z[0],x]; if(k in x||k in u) throw 1;}
+				cnt++; {const k="b"; if(k in u&&k in x) return [true,cnt,x.b,x.z[0],x]; if(k in x||k in u) throw 1;}
+				cnt++; if(u.type==="number"&&x.type==="number") return [true,cnt,x.type,x.z[0],x]; if(u.type==="number"||x.type==="number") throw 1;
+				cnt++; if(u.type==="video_time"&&x.type==="video_time") return [true,cnt,x.type,x.z[0],x]; if(u.type==="video_time"||x.type==="video_time") throw 1;
+				return [false,cnt+1,x];
+			};
+			/** @template {G_Boxed_DST} T @arg {T} x @returns {Ret_w_dst<T>} */
+			const w_dst=x => {
+				let a=x.z[0],w=w_di(a);
+				if(w[0]===false) {
+					let [,ty,a1]=w;
+					return [false,ty,x.j,a1,x];
+				}
+				{
+					let [,ty,a1,a2,a3]=w;
+					return [true,ty,x.j,a1,a2,a3,x];
+				}
+			};
 			/** @arg {G_BoxedPrintable|undefined} x @returns {G_BoxedInner} */
-			let w=(x) => {
+			const w=(x) => {
 				if(!x) return ["n"];
 				if("k" in x) return ["k:sr",x];
 				/** @type {[GST_DSS|null,Exclude<G_BoxedPrintable,{a:"SI:T:D"}>|null]} */
-				let n=[null,null];
+				const n=[null,null];
 				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
 				if(n[0]) {
-					let x=n[0]; let w=w_dss(x);
+					const x=n[0],w=w_dss(x);
 					switch(w[0]) {
 						case "bigint": return [2,1,...w];
 						case "boolean": return [2,2,...w];
@@ -3347,7 +3370,12 @@ class HandleTypes extends BaseService {
 						case "string": return [2,6,...w];
 					}
 				}
-				if(n[1]) return [1,n[1]];
+				if(n[1]) {
+					let x=n[1],w=w_dst(x);
+					x.j;
+					console.log("TODO [ReturnType<typeof w_dst>] [1]",w); debugger;
+					return [1,...w,x];
+				}
 				return ["a1",this.za1(x)];
 			};
 			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
@@ -3358,9 +3386,7 @@ class HandleTypes extends BaseService {
 			const xi0=w(x);
 			let xi=null;
 			switch(xi0[0]) {
-				case 1: {
-					const xi=xi0[1]; console.log("TODO [x] [1]",xi);
-				} break;
+				case 1: break;
 				case 2: {
 					let [,...vp]=xi0;
 					xi=vp;
@@ -3403,9 +3429,7 @@ class HandleTypes extends BaseService {
 			const yi0=w(y); let yi=null;
 			switch(yi0[0]) {
 				default: debugger; break;
-				case 1: {
-					const yi=yi0[1]; console.log("TODO [y] [1]",yi);
-				} break;
+				case 1: break;
 				case 2: {const [,...v]=yi0; yi=v;} break;
 			}
 			if(yi) switch(yi[0]) {

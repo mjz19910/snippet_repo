@@ -33,7 +33,8 @@ type G_BoxedIdObj=
 	;
 ;
 //#endregion
-type G_BoxedPrintable=|G_BoxedIdObj;
+type G_BoxedPrintable=G_BoxedIdObj;
+type G_Boxed_DST=Exclude<G_BoxedIdObj,GST_DSS>;
 type GB_A1=G_BoxedIdObj["z"][0];
 type GB_A1_J_Shape=
 	|`browse_id:${string}`
