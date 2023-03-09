@@ -17,5 +17,4 @@ type AsyncPluginEventDetail={
 };
 type ServiceMethods=InstanceType<PluginStore["mod$ServiceMethods"]["ServiceMethods"]>;
 type ParserService=InstanceType<PluginStore["mod$ParserService"]["ParserService"]>;
-type BoxSym=PluginStore["mod$YoutubePluginBase"]["box_sym_r"];
 type HandleTypes=InstanceType<PluginStore["mod$HandleTypes"]["HandleTypes"]>;

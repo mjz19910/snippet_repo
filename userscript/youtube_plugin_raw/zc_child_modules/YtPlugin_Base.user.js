@@ -2093,134 +2093,13 @@ const general_service_state={
 	/** @private @type {"non_member"|null} */
 	premium_membership: null,
 };
-const box_sym_r=Symbol.for("box_symbol");
-const cloned_sym=Symbol.for("cloned");
-export_(exports => exports.box_sym_r=box_sym_r);
 class ApiBase2 {
-	cloned_sym=cloned_sym;
-	/** @type {((()=>void)|Function)[]} */
-	fn_list=[];
-	/** @arg {[string,unknown][]} x @arg {(this:this,k:string,x:unknown)=>unknown} f */
-	iter_entries(x,f) {return x.map(this.map_entry.bind(this,f));}
-	/** @arg {[string,unknown][]} x @template {(k:string,x:unknown,f:{c:J})=>unknown} J @arg {J} f */
-	iter_entries_curry(x,f) {return x.map(this.map_entry_curry.bind(this,f));}
-	/** @template {(k:string,x:unknown,curry:{c:J})=>unknown} J @arg {J} f @arg {[string,unknown]} a0 @returns {[string,unknown]} */
-	map_entry_curry(f,a0) {
-		const [k,v]=a0;
-		return [k,f(k,v,{c: f})];
-	}
-	/** @arg {(this:this,k:string,x:unknown)=>unknown} f @arg {[string,unknown]} a0 @returns {[string,unknown]} */
-	map_entry(f,a0) {
-		const [k,v]=a0;
-		return [k,f.call(this,k,v)];
-	}
-	/** @arg {unknown} z @returns {Ret_simple_filter|null} */
-	simple_filter(z) {
-		switch(typeof z) {
-			case "string": return {a: "/string",z};
-			case "number": return {a: "/number",z};
-			case "bigint": return {a: "/bigint",z};
-			case "boolean": return {a: "/boolean",z};
-			case "symbol": return {a: "/symbol",z};
-			case "undefined": return {a: "/undefined"};
-			case "object": return this.simple_filter_obj(z);
-			case "function": {
-				let idx=this.fn_list.indexOf(z);
-				if(idx===-1) idx=this.fn_list.push(z)-1;
-				return {a: "/function",z: idx};
-			}
-		}
-	}
-	/** @template {object} T @arg {T} x */
-	np(x) {Object.setPrototypeOf(x,null); return x;}
-	/** @template T @arg {T}x @returns {T} */
-	clone(x) {return structuredClone(x);}
-	num_count=0;
-	/** @arg {[string,unknown]} e @returns {[string,Ret_simple_filter|null]|null} */
-	clone_entry_item(e) {
-		this.num_count++;
-		if(this.num_count>64) return null;
-		let [k,v]=e;
-		let f=this.simple_filter(v);
-		return [k,f];
-	};
-	/** @template {object|null} T @arg {T|{type:"empty";value:null}} x @returns {Ret_simple_filter|null} */
-	simple_filter_obj(x) {
-		if(x instanceof Array) return {a: "/arr",z: x};
-		return null;
-	}
-	/** @template {object} T @arg {string} k @arg {T} x @returns {{a: "/empty"}} */
-	simple_filter_reconstruct(k,x) {
-		let reconstructed=null;
-		try {
-			console.log("simple clone start",k,x);
-			if(x===null) return x;
-			reconstructed=structuredClone(x);
-		} catch(e) {
-			console.log("simple copy error",e);
-			console.log("simple cant copy",k,x);
-			debugger;
-		} finally {
-			if(reconstructed!==null) console.log("simple clone end [reconstructed]",k,reconstructed);
-			else {
-				console.log("simple clone end [default]",k,x);
-			}
-		}
-		if(reconstructed!==null) return reconstructed;
-		debugger;
-		return {a: "/empty"};
-	}
-	/** @arg {unknown} x */
-	save_clone(x) {
-		this.seen_keys_list.length=0;
-		const str=JSON.stringify(x,(_k,x) => this.simple_filter(x));
-		return JSON.parse(str);
-	}
-	/** @template {{[U in K]:any}} T @template {keyof T} K @arg {T} x @arg {K} k @template {T[K]} V @arg {V} v */
-	set(x,k,v) {
-		x[k]=v;
-	}
 	/** @arg {{}} mod */
 	module_debug_log(mod) {
-		const json_clone=this.save_clone(mod);
-		console.log("module_debug: module");
-		console.log(json_clone);
+		let log=false;
+		if(log) console.log("module_debug: module");
+		if(log) console.log(mod);
 	}
-	key_path_map=new Map;
-	/** @arg {string} k @arg {any} x */
-	add_key_root(k,x) {
-		this.key_path_map.set(k,x);
-		for(let entry of Object.entries(x)) {
-			console.log(entry);
-		}
-	}
-	/** @template {string} K @arg {K} k @arg {JsonFilterRet<K>|null} x @returns {JsonFilterRet<K>|null|null} */
-	json_filter_filter_ret(k,x) {
-		this.add_key_root(k,x);
-		if(typeof x==="string"||typeof x==="boolean"||x===null) return x;
-		console.log("not handled",k,x);
-		return null;
-	}
-	/** @type {any[]} */
-	unable_to_clone_cache=[];
-	is_throwing=false;
-	/** @template K @arg {K} k @arg {TextDecoder} x */
-	filter_text_decoder_prototype(k,x) {
-		const zt=x;
-		/** @type {Type_GetOwnPropertyDescriptors<TextDecoder>} */
-		const desc=Object.getOwnPropertyDescriptors(zt);
-		const fd=this.simple_filter(desc);
-		if(fd!==null&&typeof fd==="object") {
-			return {type: "prototype",key: k,type_name: "TextDecoder",__prototype_description: {...fd,[box_sym_r]: true}};
-		} else {
-			debugger;
-			return {type: "prototype",key: k,type_name: "TextDecoder",__prototype_description: {value: fd,[box_sym_r]: true}};
-		}
-	}
-	/** @type {string[]} */
-	seen_keys_list=[];
-	/** @type {symbol[]} */
-	symbol_list=[];
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {debugger;}
