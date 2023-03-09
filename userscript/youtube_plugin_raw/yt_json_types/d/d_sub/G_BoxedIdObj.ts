@@ -100,6 +100,7 @@ type G_BoxedInner=
 	|[2,6,...Ret_W_DSS_Impl<DSS_String,"string",string>]
 	;
 ;
+type G_BoxedDSS={};
 type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
 	|["one",[["1",U],T['z'][0],T]]
 	|["arr",[["2",U[]],T['z'][0],T]]

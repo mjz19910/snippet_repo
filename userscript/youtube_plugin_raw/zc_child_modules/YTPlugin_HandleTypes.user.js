@@ -3348,8 +3348,6 @@ class HandleTypes extends BaseService {
 				if(n[1]) return [1,n[1]];
 				return ["a1",this.za1(x)];
 			};
-			if(x.key==="boxed_id:load_id") break x;
-			if(x.key==="boxed_id:save_id") break x;
 			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
 			const x_many=[];
 			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
