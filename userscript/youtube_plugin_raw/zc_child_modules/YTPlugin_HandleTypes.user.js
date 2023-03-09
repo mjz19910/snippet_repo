@@ -3333,12 +3333,11 @@ class HandleTypes extends BaseService {
 			const w_di=x => {
 				/** @type {G_Boxed_DST['z'][0]} */
 				let u=x;
-				let cnt=0; cnt;
-				cnt++; {const k="a"; if(k in u&&k in x) return [true,cnt,x.a,x.z[0],x]; if(k in x||k in u) throw 1;}
-				cnt++; {const k="b"; if(k in u&&k in x) return [true,cnt,x.b,x.z[0],x]; if(k in x||k in u) throw 1;}
-				cnt++; if(u.type==="number"&&x.type==="number") return [true,cnt,x.type,x.z[0],x]; if(u.type==="number"||x.type==="number") throw 1;
-				cnt++; if(u.type==="video_time"&&x.type==="video_time") return [true,cnt,x.type,x.z[0],x]; if(u.type==="video_time"||x.type==="video_time") throw 1;
-				return [false,cnt+1,x];
+				{const k="a"; if(k in u&&k in x) return [true,0,x.a,x.z[0],x]; if(k in x||k in u) throw 1;}
+				{const k="b"; if(k in u&&k in x) return [true,1,x.b,x.z[0],x]; if(k in x||k in u) throw 1;}
+				if(u.type==="number"&&x.type==="number") return [true,2,x.type,x.z[0],x]; if(u.type==="number"||x.type==="number") throw 1;
+				if(u.type==="video_time"&&x.type==="video_time") return [true,3,x.type,x.z[0],x]; if(u.type==="video_time"||x.type==="video_time") throw 1;
+				return [false,4,x];
 			};
 			/** @template {G_Boxed_DST} T @arg {T} x @returns {Ret_w_dst<T>} */
 			const w_dst=x => {
