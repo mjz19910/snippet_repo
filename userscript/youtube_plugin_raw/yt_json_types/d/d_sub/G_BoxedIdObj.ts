@@ -101,11 +101,11 @@ type G_BoxedInner=
 	;
 ;
 type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
-	|["one",[U,any,T]]
-	|["arr",[U[],any,T]]
-	|["many",[U[][],any,T]]
-	|["typeof_name",[T_GetTypeof<U>,any,T]]
-	|["instance_name",["array",any,T]]
+	|["one",[["1",U],T['z'][0],T]]
+	|["arr",[["2",U[]],T['z'][0],T]]
+	|["many",[["3",U[][]],T['z'][0],T]]
+	|["typeof_name",[["t",T_GetTypeof<U>],T['z'][0],T]]
+	|["instance_name",[["i","array"],T['z'][0],T]]
 	;
 ;
 type Ret_w_dss=
@@ -117,7 +117,7 @@ type Ret_w_dss=
 	|Ret_W_DSS_Impl<DSS_VE,"root_visual_element",number>
 	;
 ;
-type Ret_W_DSS_Impl<T extends DSI_T_Item_ABD<J,Y>,J extends keyof J_StoreTypeMap,Y>=[J,[T,make_item_group<Y>["z"][0]]];
+type Ret_W_DSS_Impl<T extends DSI_T_Item_ABD<J,Y>,J extends keyof J_StoreTypeMap,Y>=[J,[T,[string,[["1",Y]|["2",Y[]]|["3",any[][]]|["t",string]|["i","array"],make_item_group<Y>,DIZ_Item_AB<string,Y>]]]];
 type Ret_T_W_DIZ=Ret_w_diz<DIZ_Item_AB<string,DSS_Bigint>,DSS_Bigint>;
 function test_1(x: Ret_T_W_DIZ) {
 	switch(x[0]) {

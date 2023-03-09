@@ -3309,11 +3309,11 @@ class HandleTypes extends BaseService {
 			let w_diz=x => {
 				x.a; x.b; let a=x.z[0];
 				switch(a.c) {
-					case "one": {let b=a.z[0]; return [a.c,[b,a,x]];}
-					case "arr": {let b=a.z[0]; return [a.c,[b,a,x]];}
-					case "many": {let b=a.z[0]; return [a.c,[b,a,x]];}
-					case "typeof_name": {let b=a.z[0]; return [a.c,[b,a,x]];}
-					case "instance_name": {let b=a.z[0]; return [a.c,[b,a,x]];}
+					case "one": {let b=a.z[0]; return [a.c,[["1",b],a,x]];}
+					case "arr": {let b=a.z[0]; return [a.c,[["2",b],a,x]];}
+					case "many": {let b=a.z[0]; return [a.c,[["3",b],a,x]];}
+					case "typeof_name": {let b=a.z[0]; return [a.c,[["t",b],a,x]];}
+					case "instance_name": {let b=a.z[0]; return [a.c,[["i",b],a,x]];}
 				}
 			};
 			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss} */
@@ -3386,8 +3386,10 @@ class HandleTypes extends BaseService {
 			}
 			if(xi) switch(xi[0]) {
 				default: {
-					console.log('d',xi[1][1][1][1][0]);
-					console.log('[x] container.key',xi[1][1][0].key);
+					const [,dss_info]=xi,[ty2,data]=dss_info,[container,diz_info]=data,[key,diz_box]=diz_info,[item_info,item_obj,diz_obj]=diz_box; key;
+					const [type,value]=item_info; item_obj; diz_obj;
+					console.log(`[x] [type=${type}] content.value`,value);
+					console.log('[x] [ty2=%s] container.key',ty2,container.key);
 				} break;
 				case 1:
 				case 3:
