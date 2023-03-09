@@ -965,9 +965,9 @@ class IndexedDBService extends BaseService {
 	async open_database(key,version) {
 		if(this.log_db_actions) console.log("open db");
 		if(!this.has_loaded_keys) {
-			console.log("[start_load_wait]");
+			if(this.log_db_actions) console.log("[start_load_wait]");
 			await this.on_loaded_resolver.promise;
-			console.log("[load_wait_done]");
+			if(this.log_db_actions) console.log("[load_wait_done]");
 		}
 		this.database_opening=true;
 		let db=await this.get_async_result(this.get_db_request(version));
