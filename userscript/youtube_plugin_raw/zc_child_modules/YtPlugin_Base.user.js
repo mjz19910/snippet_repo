@@ -51,35 +51,36 @@ function required(x) {
 }
 const path_map={
 	/** @type {["mod","YoutubePluginBase"]} */
-	["./YtPlugin_Base.user"]: ["mod","YoutubePluginBase"],
+	["./youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user"]: ["mod","YoutubePluginBase"],
 	/** @type {["mod","SupportService"]} */
-	["./YTPlugin_Support_Service.user"]: ["mod","SupportService"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user"]: ["mod","SupportService"],
 	/** @type {["mod","ECatcherService"]} */
-	["./YTPlugin_ECatcherService_Plugin.user"]: ["mod","ECatcherService"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user"]: ["mod","ECatcherService"],
 	/** @type {["mod","ServiceMethods"]} */
-	["./YTPlugin_ServiceMethods.user"]: ["mod","ServiceMethods"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user"]: ["mod","ServiceMethods"],
 	/** @type {["raw","DebugApi"]} */
-	["../DebugApi_raw/DebugApi.user.js"]: ["raw","DebugApi"],
+	["./DebugApi_raw/DebugApi.user.js"]: ["raw","DebugApi"],
 	/** @type {["mod","ServiceLoaderPlugin"]} */
-	["./YtPlugin_ServiceLoader_Plugin.user"]: ["mod","ServiceLoaderPlugin"],
+	["./youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user"]: ["mod","ServiceLoaderPlugin"],
 	/** @type {["mod","CodegenService"]} */
-	["./YTPlugin_Codegen.user"]: ["mod","CodegenService"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Codegen.user"]: ["mod","CodegenService"],
 	/** @type {["mod","HandleTypes"]} */
-	["./YTPlugin_HandleTypes.user"]: ["mod","HandleTypes"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user"]: ["mod","HandleTypes"],
 	/** @type {["mod","IndexedDBService"]} */
-	["./YTPlugin_IndexedDB.user"]: ["mod","IndexedDBService"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user"]: ["mod","IndexedDBService"],
 	/** @type {["mod","ParserService"]} */
-	["./YTPlugin_Parser_Service.user"]: ["mod","ParserService"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user"]: ["mod","ParserService"],
 	/** @type {["sys","moment"]} */
 	["moment"]: ["sys","moment"],
 };
 export_(exports => exports.__path_map__=path_map);
 /** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 function str_starts_with(str,needle) {return str.startsWith(needle);}
-/** @template {MakeImportPath<keyof typeof path_map>} T @arg {T} x @arg {"zc_child_modules"|"zc_a_other"} location @returns {keyof typeof path_map} */
-function resolve_path(x,location) {
+/** @template {MakeImportPath<keyof typeof path_map>} T @arg {T} x @returns {(keyof typeof path_map)|null} */
+function resolve_path_to_userscript_dir(x) {
 	/** @type {MakeImportPath<keyof typeof path_map>} */
 	let u=x;
+	const yt_plugin_base_path="youtube_plugin_raw/zc_child_modules";
 	if(!str_starts_with(u,".")) return u;
 	let parts=split_string(u,"/");
 	switch(parts[0]) {
@@ -87,66 +88,50 @@ function resolve_path(x,location) {
 		case "..": {
 			switch(parts[1]) {
 				default: debugger; throw new Error("Unable to resolve path: "+u);
-				case "DebugApi_raw": return `../${parts[1]}/${parts[2]}`;
-				case "zc_child_modules": {
-					if(location==="zc_a_other") return `./${parts[2]}`;
-					throw new Error("Unable to resolve path: "+parts.join("/"));
+				case "DebugApi_raw": {
+					switch(parts[2]) {
+						case "DebugApi.user.js": return `./${parts[1]}/${parts[2]}`;
+					}
 				}
 			}
 		}
 		case ".": {
-			if(location!=="zc_child_modules") throw new Error("Unable to resolve path: "+u);
 			switch(parts[1]) {
 				default: debugger; throw new Error("Unable to resolve path: "+u);
-				case "YTPlugin_Codegen.user": return `./${parts[1]}`;
-				case "YTPlugin_ECatcherService_Plugin.user": return `./${parts[1]}`;
-				case "YTPlugin_HandleTypes.user": return `./${parts[1]}`;
-				case "YTPlugin_IndexedDB.user": return `./${parts[1]}`;
-				case "YTPlugin_Parser_Service.user": return `./${parts[1]}`;
-				case "YTPlugin_ServiceMethods.user": return `./${parts[1]}`;
-				case "YTPlugin_Support_Service.user": return `./${parts[1]}`;
-				case "YtPlugin_Base.user": return `./${parts[1]}`;
-				case "YtPlugin_ServiceLoader_Plugin.user": return `./${parts[1]}`;
+				case "youtube_plugin_raw": break;
 			}
 		}
 	}
+	switch(parts[3]) {
+		case "YTPlugin_Codegen.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YTPlugin_ECatcherService_Plugin.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YTPlugin_HandleTypes.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YTPlugin_IndexedDB.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YTPlugin_Parser_Service.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YTPlugin_ServiceMethods.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YTPlugin_Support_Service.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YtPlugin_Base.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+		case "YtPlugin_ServiceLoader_Plugin.user": return `./${yt_plugin_base_path}/${parts[3]}`;
+	}
 }
-/** @template {keyof typeof path_map} P @template {MakeImportPath<P>} T @arg {T} arg @arg {{location:"zc_a_other"}} [opts] @returns {import("../zb_plugin_types/exports").ProcessImport<T>} */
-function require(arg,opts) {
+/** @template {keyof typeof path_map} P @template {MakeImportPath<P>} T @arg {T} arg @returns {import("../zb_plugin_types/exports").ProcessImport<T>} */
+function require(arg) {
 	if(arg===void 0) {throw new Error("missing required");}
 	window.__plugin_modules__??={};
 	const M=window.__plugin_modules__,i=required;
-	const resolved_path=resolve_path(arg,opts?.location??"zc_child_modules");
-	switch(resolved_path) {
-		case "../DebugApi_raw/DebugApi.user.js": {
-			const real_path="../DebugApi_raw/DebugApi.user.js";
-			const loc=path_map[resolved_path];
-			if(loc[0]==="raw") {
-				let mod=i(M[loc[1]]);
-				/** @arg {import("../zb_plugin_types/exports").ProcessImport<typeof real_path>} x @returns {asserts x is import("../zb_plugin_types/exports").ProcessImport<T>} */
-				function correct_return_type(x) {x;}
-				correct_return_type(mod);
-				return mod;
-			}
-		} break;
-	}
+	const resolved_path=resolve_path_to_userscript_dir(arg);
+	if(resolved_path===null) throw new Error("Unable to resolve path: "+arg);
 	/** @arg {import("../zb_plugin_types/exports").ProcessImport<keyof path_map>} x @returns {asserts x is import("../zb_plugin_types/exports").ProcessImport<T>} */
 	function correct_return_type(x) {x;}
-	const loc=path_map[resolve_path(arg,opts?.location??"zc_child_modules")];
-	if(loc[0]==="sys") {
-		let mod=i(window[loc[1]]);
-		correct_return_type(mod);
-		return mod;
-	}
-	if(loc[0]==="raw") {
-		let mod=i(M[loc[1]]);
-		correct_return_type(mod);
-		return mod;
-	}
-	let mod=i(M[`${loc[0]}$${loc[1]}`]);
+	const loc=path_map[resolved_path];
+	let mod;
+	if(loc[0]==="sys") mod=i(window[loc[1]]);
+	else if(loc[0]==="raw") mod=i(M[loc[1]]);
+	else mod=i(M[`${loc[0]}$${loc[1]}`]);
 	correct_return_type(mod);
 	return mod;
 }
+
 /** @template T @arg {T|null} x @returns {T} */
 function non_null(x) {
 	if(x===null) {throw new Error("null not expected");}
