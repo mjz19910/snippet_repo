@@ -127,21 +127,21 @@ type PT_DigDomain=[
 type PT_TypeS_NoRep=[
 ];
 type PT_TypeS=[
-	["5ua",gen_g3_t2<"5ua",["ez","ld"]>],
-	["9gv",gen_g3_t2<"9gv7",["e","l","z"]>],
-	["a5m",gen_g3_t2<"a5m",["ek","lr","se"]>],
-	["ab5",gen_g3_t2<"ab5",["l6","sz"]>],
-	["hp5",gen_g3_t2<"hp57",["k","y"]>],
-	["n4v",gen_g3_t2<"n4v",["7s","7z"]>],
-	["n8v",gen_g2_t1<"n8v7z">],
-	["nx5",gen_g3_t2<"nx5",["s7","7y"]>],
-	["o09",gen_g2_t1<"o097z">],
-	["p5q",gen_g3_t2<"p5q",["ls","s7"]>],
-	["q4f",gen_g3_t2<"q4f",["l6","lr","ze"]>],
-	["qxo",gen_g3_t2<"qxo",["7r","ed"]>],
-	["t0a",gen_g3_t2<"t0a7",["l","s"]>],
-	["tt1",gen_g3_t2<"tt1e",["7","l"]>],
-	["vgq",gen_g3_t2<"vgqs",["k","r"]>],
+	["5ua",GV_gen_g3_t2<"5ua",["ez","ld"]>],
+	["9gv",GV_gen_g3_t2<"9gv7",["e","l","z"]>],
+	["a5m",GV_gen_g3_t2<"a5m",["ek","lr","se"]>],
+	["ab5",GV_gen_g3_t2<"ab5",["l6","sz"]>],
+	["hp5",GV_gen_g3_t2<"hp57",["k","y"]>],
+	["n4v",GV_gen_g3_t2<"n4v",["7s","7z"]>],
+	["n8v",GV_gen_g2_t1<"n8v7z">],
+	["nx5",GV_gen_g3_t2<"nx5",["s7","7y"]>],
+	["o09",GV_gen_g2_t1<"o097z">],
+	["p5q",GV_gen_g3_t2<"p5q",["ls","s7"]>],
+	["q4f",GV_gen_g3_t2<"q4f",["l6","lr","ze"]>],
+	["qxo",GV_gen_g3_t2<"qxo",["7r","ed"]>],
+	["t0a",GV_gen_g3_t2<"t0a7",["l","s"]>],
+	["tt1",GV_gen_g3_t2<"tt1e",["7","l"]>],
+	["vgq",GV_gen_g3_t2<"vgqs",["k","r"]>],
 ];
 type PT_TypeArr=[
 	["5uaez",[
