@@ -1707,16 +1707,16 @@ class HandleTypes extends BaseService {
 			return;
 		}
 	}
-	/** @template K,T @arg {K} k @arg {T} x  @returns {DI_T_Item_AB<K,T>} */
-	make_DIT_Item_AB(k,x) {return {a: "key_value",k,w: "/item/a/k/w/z",z: [x]};}
+	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
+	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
+	/** @template C,T @arg {C} c @arg {T} x  @returns {{a:"DI";b:"key";c:C;w: "/item/a/b/c/w/z";z: [T]}} */
+	make_DI_R(c,x) {return {a: "DI",b: "key",c,w: "/item/a/b/c/w/z",z: [x]};}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
 		return {
-			a: "DI:R",b: "raw",c: "key:start_radio",w: "/item/a/b/c/w/z",z: [{
-				a: "DI",b: "key",c: "start_radio",w: "/item/a/b/c/w/z",z: [
-					{a: "key_value",k: "start_radio",w: "/item/a/k/w/z",z: [{a: "primitive",e: "number",z: [x]}]}
-				]
-			}]
+			a: "DI:R",b: "raw",c: "key:start_radio",w: "/item/a/b/c/w/z",z: [
+				this.make_DI_R("start_radio",this.make_DI_T_Item_AB("start_radio",this.make_prim_num(x)))
+			]
 		};
 	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
@@ -3144,13 +3144,13 @@ class HandleTypes extends BaseService {
 		return {b: x1,c: x2,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
 	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_Item_AB<K,T_PrimitiveBox<T>>}*/
-	make_value_pair(k,x) {return {a: "key_value",k,w: "/item/a/k/w/z",z: [this.make_BoxTypeof(x)]};}
+	make_value_pair(k,x) {return this.make_DI_T_Item_AB(k,this.make_BoxTypeof(x));}
 	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
 	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
 	make_id(x) {return this.make_value_pair("id",x);}
 	/** @template T @arg {T} x @returns {DI_T_Item_AB<"raw_id",T>} */
-	make_DIT_Item_A_RawId(x) {return {a: "key_value",k: "raw_id",w: "/item/a/k/w/z",z: [x]};}
+	make_DIT_Item_A_RawId(x) {return this.make_DI_T_Item_AB("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
@@ -3171,7 +3171,7 @@ class HandleTypes extends BaseService {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
 				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
 				/** @type {DI_Key_StartRadio} */
-				const z={a: "DI",b: "key",c: p.k,w: "/item/a/b/c/w/z",z: [this.make_akz(p.k,this.make_prim_num_t(p.raw_id))]};
+				const z={a: "DI",b: "key",c: p.k,w: "/item/a/b/c/w/z",z: [this.make_DI_T_Item_AB(p.k,this.make_prim_num_t(p.raw_id))]};
 				return z;
 			}
 			case "user_id":
@@ -3181,7 +3181,7 @@ class HandleTypes extends BaseService {
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				/** @type {DI_T_abz<typeof b>} */
-				const z=this.make_abwz_item(x.k,this.make_akz("raw_id",this.make_prim_v(p.raw_id)));
+				const z=this.make_abwz_item(x.k,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(p.raw_id)));
 				return z;
 			}
 			case "browse_id": {

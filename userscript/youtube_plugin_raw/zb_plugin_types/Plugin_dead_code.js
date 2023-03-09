@@ -53,8 +53,8 @@ export class IndexedDBDeadCode extends IndexedDBService {
 					const {key,tag,value}=o2;
 					/** @type {DI_A_ChannelId_UC} */
 					let bt=this.make_abcz(value.type,value.tag,[
-						this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
-						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
+						this.make_DI_T_Item_AB("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
+						this.make_DI_T_Item_AB("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
 					/** @type {DST_Channel_UC} */
 					const z=this.make_ST_jz(key,tag,bt);
@@ -66,7 +66,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 				case "video_id": {
 					const {key,tag,value}=o2;
 					/** @type {DI_A_VideoId} */
-					let bt=this.make_abwz_item(value.type,this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)));
+					let bt=this.make_abwz_item(value.type,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(value.info_arr[0].raw_id)));
 					/** @type {DST_Video_Id} */
 					const z=this.make_ST_jz(key,tag,bt);
 					/** @type {T} */
@@ -76,8 +76,8 @@ export class IndexedDBDeadCode extends IndexedDBService {
 					const {key,value}=o2;
 					/** @type {DI_A_Playlist_RD} */
 					let bt=this.make_abcz("playlist_id","RD",[
-						this.make_akz("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
-						this.make_akz("id",this.make_prim_v(value.info_arr[1].id)),
+						this.make_DI_T_Item_AB("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
+						this.make_DI_T_Item_AB("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
 					/** @type {DST_Playlist_RD} */
 					const z=this.make_ST_jz(key,"playlist_id:RD",bt);
