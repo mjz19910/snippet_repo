@@ -29,6 +29,8 @@ function init_module() {
 	// [new_fexp_expected]
 	ECatcherService.known_experiments.push(...[
 		[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030,24447748,24465486,24486981,24494197],
+		[24487523],
+		[39323338],
 	].flat());
 }
 export_((exports) => {exports.init_module=init_module;});
@@ -354,7 +356,10 @@ class HandleTypes extends BaseService {
 	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
 	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
 	/** @private @template {string} T @arg {TV_Str<T>} x */
-	TV_Str(x) {return this.T_RawChild(x)[3][1];}
+	TV_Str(x) {
+		if(!x) debugger;
+		return this.T_RawChild(x)[3][1];
+	}
 	/** @protected @template T @template {string} Str @arg {T_VW<T>|TV_Str_CS<Str>} x */
 	T_PArr_1(x) {return x[1];}
 	/** @protected @template J @template {T_PArr_1<[J]>} T @arg {T} x @returns {T[1][0]} */
@@ -3345,7 +3350,11 @@ class HandleTypes extends BaseService {
 			};
 			if(x.key==="boxed_id:load_id") break x;
 			if(x.key==="boxed_id:save_id") break x;
-			const x_items=[],y_items=[];
+			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
+			const x_many=[];
+			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
+			const y_many=[];
+			const cmp_map=new WeakMap;
 			const xi0=w(x); let xi=null;
 			switch(xi0[0]) {
 				case 1: debugger; break;
@@ -3358,16 +3367,31 @@ class HandleTypes extends BaseService {
 				case "a1": debugger; break;
 				case "k:sr": debugger; break;
 			}
+			/** @arg {GST_DSS} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
+			function acc_items(container,items_arr) {
+				const item_group=container.z[0].z[0];
+				switch(container.d) {
+					case "string":
+					case "number": {switch(container.z[0].z[0].c) {case "one": items_arr.push([container.z[0].z[0].z[0]]);}} break;
+					case "bigint": {switch(container.z[0].z[0].c) {case "one": items_arr.push([container.z[0].z[0].z[0]]);}} break;
+				}
+				switch(item_group.c) {
+					case "many": {
+						const item_many=item_group.z[0];
+						let xm=item_group.z[0].map(e => e.join(","));
+						items_arr.push(xm);
+						cmp_map.set(item_many,[xm]);
+					} break;
+					case "arr": items_arr.push(item_group.z[0]); break;
+					case "one": items_arr.push([item_group.z[0]]); break;
+				}
+				container;
+			}
+			acc_items;
 			if(xi) switch(xi[0]) {
+				case 3:
 				case 6: {
-					let x_container=xi[1][1][0]; x_container.z[0].z[0].z[0];
-					const x_item_group=x_container.z[0].z[0];
-					switch(x_item_group.c) {
-						case "arr": {
-							let x_arr=x_item_group.z[0]; x_arr;
-							x_items.push(...x_arr);
-						} break;
-					}
+					acc_items(xi[1][1][0],x_many);
 				} break;
 			}
 			const yi0=w(y); let yi=null;
@@ -3377,25 +3401,19 @@ class HandleTypes extends BaseService {
 			}
 			if(yi) switch(yi[0]) {
 				default: debugger; break;
+				case 3:
 				case 6: {
 					let y_container=yi[1][1][0];
-					const y_item_group=y_container.z[0].z[0];
-					switch(y_item_group.c) {
-						default: debugger; break;
-						case "arr": {
-							let y_arr=y_item_group.z[0]; y_arr;
-							y_items.push(...y_arr);
-						} break;
-					}
+					acc_items(y_container,y_many);
 				} break;
 			}
 			let diff_plus=[],diff_minus=[];
-			for(let v of x_items) {
-				if(y_items.includes(v)) continue;
+			for(let v of x_many) {
+				if(y_many.includes(v)) continue;
 				diff_plus.push(v);
 			}
-			for(let v of y_items) {
-				if(x_items.includes(v)) continue;
+			for(let v of y_many) {
+				if(x_many.includes(v)) continue;
 				diff_minus.push(v);
 			}
 			console.log("[cur_cache_value] [x.key]",x.key);
