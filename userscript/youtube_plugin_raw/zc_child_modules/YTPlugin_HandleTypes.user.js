@@ -3363,17 +3363,40 @@ class HandleTypes extends BaseService {
 				let a=x.z[0],w=w_di(a);
 				if(w[0]===false) {
 					let [,ty,a1]=w;
-					return [false,ty,x.j,a1,x];
+					if(x.a==="ST:D") {
+						switch(x.l) {
+							default: throw new Error();
+							case "browse_id:SP":
+							case "browse_id:VL":
+							case "browse_id:VL:PL":
+							case "browse_id:VL:UC":
+							case "browse_id:FE": return [false,ty,x.l,a1,x];
+							case "guide_entry_id":
+							case "load_id":
+							case "playlist_id:LL":
+							case "playlist_id:PL":
+							case "playlist_id:RD":
+							case "playlist_id:RD:CM:UC":
+							case "playlist_id:RD:MM":
+							case "playlist_id:WL": return [false,ty,x.l,a1,x];
+							case "play_next":
+							case "save_id":
+							case "update_id":
+							case "video_time": return [false,ty,x.l,a1,x];
+						}
+					} else {
+						if("j" in x) return [false,ty,x.l,a1,x];
+						return [false,ty,x.l,a1,x];
+					}
 				}
 				{
 					let [,ty,a1,a2,a3]=w;
-					return [true,ty,x.j,a1,a2,a3,x];
+					return [true,ty,x.l,a1,a2,a3,x];
 				}
 			};
 			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
 			const w_db_data=(x) => {
 				if(!x) return ["n"];
-				if("k" in x) return ["k:sr",x];
 				/** @type {[GST_DSS|null,G_Boxed_DST|null]} */
 				const n=[null,null];
 				if(x.a==="/db/key/a/b/d/z") n[0]=x; else n[1]=x;
@@ -3390,7 +3413,7 @@ class HandleTypes extends BaseService {
 				}
 				if(n[1]) {
 					let x=n[1],w=w_dst(x);
-					x.j;
+					x.l;
 					console.log("TODO [ReturnType<typeof w_dst>] [1]",w); debugger;
 					return [1,w,x];
 				}
