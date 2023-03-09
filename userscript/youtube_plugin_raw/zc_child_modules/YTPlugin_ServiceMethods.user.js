@@ -1108,29 +1108,29 @@ class ServiceMethods extends ServiceData {
 	/** @api @public @arg {DU_Browse_Id} x */
 	browseId(x) {
 		if(this.cache_raw_id(`browse_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_value_pair("browse_id",x));
+		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("browse_id",x));
 	}
 	static_playlist_ids=["WL","LL"];
 	/** @public @arg {DU_Playlist_Id} x */
 	playlistId(x) {
 		if(this.static_playlist_ids.includes(x)) return;
 		if(this.cache_raw_id(`playlist_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_value_pair("playlist_id",x));
+		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("playlist_id",x));
 	}
 	/** @public @arg {DU_GuideEntry_Id} x */
 	guideEntryId(x) {
 		if(this.cache_raw_id(`guide_entry_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_value_pair("guide_entry_id",x));
+		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("guide_entry_id",x));
 	}
 	/** @public @arg {T_IdTemplate<"UC",D_UserIdStr>} x */
 	channelId(x) {
 		if(this.cache_raw_id(`channel_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_value_pair("channel_id",x));
+		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("channel_id",x));
 	}
 	/** @public @arg {D_UserIdStr} x */
 	userId(x) {
 		if(this.cache_raw_id(`user_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_value_pair("user_id",x));
+		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("user_id",x));
 	}
 	/** @public @arg {string} x */
 	create_param_map(x) {

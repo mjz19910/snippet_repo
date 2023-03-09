@@ -1697,7 +1697,7 @@ class HandleTypes extends BaseService {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo(this.make_value_pair("start_radio",this.sm.parse_number_template(start_radio)));
+				this.DI_AGR_UrlInfo(this.make_kv_ab("start_radio",this.sm.parse_number_template(start_radio)));
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(!this.sm.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -3128,28 +3128,27 @@ class HandleTypes extends BaseService {
 	}
 	/** @template U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
 	get_prim_1(x) {return x.z[0];}
-	/** @template V @template {DI_T_Item_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
+	/** @template V @template {DI_T_KV_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {DI_T_Item_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
+	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {DI_T_KV_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	//#endregion
 	//#endregion
 	//#region make_*
 	/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
 	make_info_PL(raw_id) {return this.make_info_3("playlist_id","PL",raw_id);}
-	/** @arg {"playlist_id"}x1 @arg {"PL"} x2 @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
-	make_info_3(x1,x2,x3) {
-		x1; x2; x3;
-		let [,id]=split_string_once(x3,x2);
-		return {b: x1,c: x2,z: [this.make_raw_id(x3),this.make_id(id)]};
+	/** @arg {"playlist_id"}b @arg {"PL"} c @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
+	make_info_3(b,c,x3) {
+		let [,id]=split_string_once(x3,c);
+		return {b,c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
-	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_Item_AB<K,T_PrimitiveBox<T>>}*/
-	make_value_pair(k,x) {return this.make_DI_T_Item_AB(k,this.make_BoxTypeof(x));}
+	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_KV_AB<K,T_PrimitiveBox<T>>}*/
+	make_kv_ab(k,x) {return this.make_DI_T_Item_AB(k,this.make_BoxTypeof(x));}
 	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
 	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
-	make_id(x) {return this.make_value_pair("id",x);}
-	/** @template T @arg {T} x @returns {DI_T_Item_AB<"raw_id",T>} */
+	make_id(x) {return this.make_kv_ab("id",x);}
+	/** @template T @arg {T} x @returns {DI_T_KV_AB<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_Item_AB("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
@@ -3198,6 +3197,13 @@ class HandleTypes extends BaseService {
 			} break;
 			case "playlist_id": {
 				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				switch(p.c) {
+					case null: debugger; break;
+					case "PL": {
+						let di=this.make_info_3("playlist_id","PL",p.raw_id);
+						return di;
+					}
+				}
 				console.log(b,p);
 			} break;
 			case "user_id": {
@@ -3221,7 +3227,7 @@ class HandleTypes extends BaseService {
 	/** @arg {DU_VideoId} x */
 	on_video_id(x) {
 		const type="video_id";
-		this.DI_AGR_UrlInfo(this.make_value_pair(type,x));
+		this.DI_AGR_UrlInfo(this.make_kv_ab(type,x));
 	}
 	/** @public @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
@@ -3335,7 +3341,6 @@ class HandleTypes extends BaseService {
 				let u=x;
 				{const k="a"; if(k in u&&k in x) return [true,0,x.a,x.z[0],x]; if(k in x||k in u) throw 1;}
 				{const k="b"; if(k in u&&k in x) return [true,1,x.b,x.z[0],x]; if(k in x||k in u) throw 1;}
-				if(u.type==="number"&&x.type==="number") return [true,2,x.type,x.z[0],x]; if(u.type==="number"||x.type==="number") throw 1;
 				if(u.type==="video_time"&&x.type==="video_time") return [true,3,x.type,x.z[0],x]; if(u.type==="video_time"||x.type==="video_time") throw 1;
 				return [false,4,x];
 			};

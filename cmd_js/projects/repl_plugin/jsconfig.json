@@ -5,9 +5,7 @@
 			"esnext",
 			"DOM",
 		],
-		"types": [
-			"node"
-		],
+		"types": [],
 		"strict": true,
 		"declaration": true,
 		"checkJs": true,
