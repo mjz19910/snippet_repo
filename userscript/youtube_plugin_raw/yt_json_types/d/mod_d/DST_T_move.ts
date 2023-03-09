@@ -20,6 +20,18 @@ type DST_MakeLM_2<T extends DI_T_KV_Z<string,TMK_SuccessorX2<V>>,L,M,V extends P
 	m: M;
 	z: [T];
 };
+type DST_MakeLM_FromObj<T extends DI_T_KV_Z<string,TMK_SuccessorX2<V>>,L,M extends string,V>={
+	key: [M,TZ_SuccessorX3<T>] extends infer J extends [Primitive,Primitive]? `boxed_id:${T["k"]}:${J[0]}:${J[1]}`:`boxed_id:${T["k"]}:${M}`;
+	a: DST_KStr_ABLMZ;
+	b: "boxed_id";
+	l: L;
+	m: M;
+	z: [T];
+	debug?: [T_DI_FromObjEx<{
+		m: M;
+		v: TZ_SuccessorX3<T>;
+	}>];
+};
 type DST_MakeLM_3<T extends DI_T_KV_Z<string,TMK_SuccessorX2<V>>,L extends string,M extends string,V extends Primitive>={
 	key: `boxed_id:${L}:${M}:${V}`;
 	a: DST_KStr_ABLMZ;
@@ -66,12 +78,13 @@ type DST_Channel_UC={
 	key: `boxed_id:channel_id:UC:${string}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
-	l: "channel_id:UC";
+	l: "channel_id";
+	m: "UC";
 	z: [DI_A_ChannelId_UC];
 };
 type DST_Video_Id={
 	key: `boxed_id:video_id:${string}`;
-	a: DST_KStr_ABLMZ;
+	a: DST_KStr_ABLZ;
 	b: "boxed_id";
 	l: "video_id";
 	z: [DI_A_VideoId];

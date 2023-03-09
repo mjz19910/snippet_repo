@@ -3292,9 +3292,8 @@ class HandleTypes extends BaseService {
 			if(value.b!=="boxed_id") {debugger; break x;}
 			let nw=null;
 			switch(value.a) {
-				case "ST:D": {
-					debugger;
-				} break;
+				case "/db/key/a/b/l/m/z": debugger; break;
+				case "/db/key/a/b/l/z": debugger; break;
 				case "/db/key/a/b/d/z": {
 					switch(value.d) {
 						default: debugger; break;
@@ -3362,36 +3361,16 @@ class HandleTypes extends BaseService {
 			const w_dst=x => {
 				let a=x.z[0],w=w_di(a);
 				if(w[0]===false) {
-					let [,ty,a1]=w;
-					if(x.a==="ST:D") {
-						switch(x.l) {
-							default: throw new Error();
-							case "browse_id:SP":
-							case "browse_id:VL":
-							case "browse_id:VL:PL":
-							case "browse_id:VL:UC":
-							case "browse_id:FE": return [false,ty,x.l,a1,x];
-							case "guide_entry_id":
-							case "load_id":
-							case "playlist_id:LL":
-							case "playlist_id:PL":
-							case "playlist_id:RD":
-							case "playlist_id:RD:CM:UC":
-							case "playlist_id:RD:MM":
-							case "playlist_id:WL": return [false,ty,x.l,a1,x];
-							case "play_next":
-							case "save_id":
-							case "update_id":
-							case "video_time": return [false,ty,x.l,a1,x];
-						}
-					} else {
-						if("j" in x) return [false,ty,x.l,a1,x];
-						return [false,ty,x.l,a1,x];
+					let [,,a1]=w;
+					if("a" in x&&x.a==="/db/key/a/b/l/m/z") {
+						x.a;
+						return [true,2,x.l,x.m,a1,x];
 					}
+					return [false,4,x.l,a1,x];
 				}
 				{
-					let [,ty,a1,a2,a3]=w;
-					return [true,ty,x.l,a1,a2,a3,x];
+					let [,,a1,a2,a3]=w;
+					return [true,1,x.l,a1,a2,a3,x];
 				}
 			};
 			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
