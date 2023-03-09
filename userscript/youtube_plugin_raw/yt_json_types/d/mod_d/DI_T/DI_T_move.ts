@@ -334,3 +334,30 @@ type DI_R_Key_StartRadio={
 };
 type T_DI_Raw<k1 extends string,k2 extends string,T>={a: "DI:R",b: "raw",c: `${k1}:${k2}`,w: "/item/a/b/c/w/z",z: [T];};
 type T_DI_Raw_2<C extends string,T>={a: "DI:R",b: "raw",c: C,w: "/item/a/b/c/w/z",z: [T];};
+type DI_R_PlaylistId={
+	a: "DI:R"; b: "raw"; c: "playlist_id";
+	z: [T_DI_FromObj<{raw_id: DU_Playlist_Id;}>];
+};
+type DI_R_Radio_Playlist={
+	a: "DI:R";
+	b: "raw";
+	c: "playlist_id:RD";
+	z: [T_DI_FromObj<{raw_id: Extract<DU_Playlist_Id,`RD${string}`>;}>];
+};
+type DI_R_VideoId={
+	a: "DI:R";
+	b: "raw";
+	c: "video_id";
+	z: [T_DI_FromObj<{raw_id: DU_VideoId;}>];
+};
+type DI_Ret_AnyString={
+	a: "tag";
+	k: "hashtag_id";
+	c: null;
+	raw_id: string;
+}|{
+	a: "tag";
+	k: "video_id";
+	c: null;
+	raw_id: DU_VideoId;
+};
