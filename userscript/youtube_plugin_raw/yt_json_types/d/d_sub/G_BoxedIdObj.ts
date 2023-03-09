@@ -92,12 +92,12 @@ type G_BoxedInner=
 		j: GB_A1_J_Shape;
 	}]
 	|["k:sr",DST_Key_StartRadio]
-	|[2,1,Ret_W_DSS_Impl<DSS_Bigint,"bigint">]
-	|[2,2,Ret_W_DSS_Impl<DSS_Boolean,"boolean">]
-	|[2,3,Ret_W_DSS_Impl<DSS_Keys,"keys">]
-	|[2,4,Ret_W_DSS_Impl<DSS_Number,"number">]
-	|[2,5,Ret_W_DSS_Impl<DSS_VE,"root_visual_element">]
-	|[2,6,Ret_W_DSS_Impl<DSS_String,"string">]
+	|[2,1,Ret_W_DSS_Impl<DSS_Bigint,"bigint",bigint>]
+	|[2,2,Ret_W_DSS_Impl<DSS_Boolean,"boolean",boolean>]
+	|[2,3,Ret_W_DSS_Impl<DSS_Keys,"keys",number|string>]
+	|[2,4,Ret_W_DSS_Impl<DSS_Number,"number",number>]
+	|[2,5,Ret_W_DSS_Impl<DSS_VE,"root_visual_element",number>]
+	|[2,6,Ret_W_DSS_Impl<DSS_String,"string",string>]
 	;
 ;
 type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
@@ -109,15 +109,15 @@ type Ret_w_diz<T extends DIZ_Item_AB<string,U>,U>=
 	;
 ;
 type Ret_w_dss=
-	|Ret_W_DSS_Impl<DSS_Bigint,"bigint">
-	|Ret_W_DSS_Impl<DSS_Boolean,"boolean">
-	|Ret_W_DSS_Impl<DSS_Keys,"keys">
-	|Ret_W_DSS_Impl<DSS_Number,"number">
-	|Ret_W_DSS_Impl<DSS_String,"string">
-	|Ret_W_DSS_Impl<DSS_VE,"root_visual_element">
+	|Ret_W_DSS_Impl<DSS_Bigint,"bigint",bigint>
+	|Ret_W_DSS_Impl<DSS_Boolean,"boolean",boolean>
+	|Ret_W_DSS_Impl<DSS_Keys,"keys",number|string>
+	|Ret_W_DSS_Impl<DSS_Number,"number",number>
+	|Ret_W_DSS_Impl<DSS_String,"string",string>
+	|Ret_W_DSS_Impl<DSS_VE,"root_visual_element",number>
 	;
 ;
-type Ret_W_DSS_Impl<T extends DSI_T_Item_ABD<J,any>,J extends keyof J_StoreTypeMap>=[J,[T,any]];
+type Ret_W_DSS_Impl<T extends DSI_T_Item_ABD<J,Y>,J extends keyof J_StoreTypeMap,Y>=[J,[T,make_item_group<Y>["z"][0]]];
 type Ret_T_W_DIZ=Ret_w_diz<DIZ_Item_AB<string,DSS_Bigint>,DSS_Bigint>;
 function test_1(x: Ret_T_W_DIZ) {
 	switch(x[0]) {

@@ -3357,7 +3357,9 @@ class HandleTypes extends BaseService {
 			const cmp_map=new WeakMap;
 			const xi0=w(x); let xi=null;
 			switch(xi0[0]) {
-				case 1: debugger; break;
+				case 1: {
+					const xi=xi0[1]; console.log("TODO [x] [1]",xi);
+				} break;
 				case 2: {
 					let [,...vp]=xi0;
 					xi=vp;
@@ -3382,25 +3384,28 @@ class HandleTypes extends BaseService {
 				}
 				container;
 			}
-			acc_items;
 			if(xi) switch(xi[0]) {
-				case 3:
-				case 6: {
-					acc_items(xi[1][1][0],x_many);
+				default: {
+					console.log('d',xi[1][1][1][1][0]);
+					console.log('[x] container.key',xi[1][1][0].key);
 				} break;
+				case 1:
+				case 3:
+				case 6: acc_items(xi[1][1][0],x_many);
 			}
 			const yi0=w(y); let yi=null;
 			switch(yi0[0]) {
 				default: debugger; break;
+				case 1: {
+					const yi=yi0[1]; console.log("TODO [y] [1]",yi);
+				} break;
 				case 2: {const [,...v]=yi0; yi=v;} break;
 			}
 			if(yi) switch(yi[0]) {
 				default: debugger; break;
+				case 1:
 				case 3:
-				case 6: {
-					let y_container=yi[1][1][0];
-					acc_items(y_container,y_many);
-				} break;
+				case 6: acc_items(yi[1][1][0],y_many);
 			}
 			let diff_plus=[],diff_minus=[];
 			for(let v of x_many) {
