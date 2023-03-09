@@ -1,4 +1,5 @@
 type DI_BrowseId_FE={
+	a: "DI";
 	b: "browse_id";
 	c: "FE";
 	z: [

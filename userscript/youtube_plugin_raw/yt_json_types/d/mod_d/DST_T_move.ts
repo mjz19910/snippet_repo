@@ -33,14 +33,35 @@ type DST_T_ABLZ_FromDI<T extends Y_DI_Shape>=DST_T_ABLZ<T["k"],TZ_SuccessorX3<T>
 
 type DST_T_ABLZ<L extends string,V extends string=string,T extends DI_T_KV_Z<string,any>=DI_T_KV_Z<string,any>>={
 	key: `boxed_id:${L}:${V}`;
-	a: DST_KStr_ABLMZ;
+	a: DST_KStr_ABLZ;
 	b: "boxed_id";
 	l: L;
 	z: [T];
 };
 
+type DI_A_HashtagId=T_DI_FromObj2<{
+	hashtag_id: T_DI_FromObj<{
+		raw_id: string;
+	}>;
+}>;
+
 type DST_HashtagId=DST_T_ABLZ<"hashtag_id",string,DI_A_HashtagId>;
-type DST_Browse_MP=DST_T_ABLZ<"browse_id:MP",string,DI_BrowseId_MP>;
+type CV_ABC_KV<T extends {b: string; c: string; z: [any,...any];}>=DI_T_KV_Z<`${T["b"]}:${T['c']}`,TZ_Successor<T>>;
+type DST_MakeLM_From_BC<
+	T extends {
+		b: string; c: string;
+		z: [T_DI_FromObj<{[K in T_KeyName]: T_RawId}>,...any];
+	},
+	V extends Primitive,L extends T["b"]=T["b"],M extends T["c"]=T["c"],T_KeyName extends PropertyKey=keyof T_GP_FromObj<T['z'][0]>,T_RawId=T_GP_FromObj<T['z'][0]>[T_KeyName]
+>={
+	key: `boxed_id:${L}:${M}:${V}`;
+	a: DST_KStr_ABLMZ;
+	b: "boxed_id";
+	l: L;
+	m: M;
+	z: [T];
+};
+type DST_Browse_MP=DST_MakeLM_From_BC<DI_BrowseId_MP,string>;
 type DST_Channel_UC={
 	key: `boxed_id:channel_id:UC:${string}`;
 	a: DST_KStr_ABLMZ;
