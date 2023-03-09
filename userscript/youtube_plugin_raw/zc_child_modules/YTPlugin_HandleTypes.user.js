@@ -1780,7 +1780,10 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_Channel} x */
 	RS_Channel(x) {
 		const cf="RS_Channel";
-		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let kk=this.get_keys_of(x);
+		let idx=kk.indexOf("microformat");
+		if(idx!==--1) {let nk=kk[idx+1]; console.log("after .microformat",nk);}
+		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,frameworkUpdates,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.R_TwoColumnBrowseResults(contents);
 		this.xr.R_C4TabbedHeader(header);
 		this.xr.R_Channel_MD(metadata);
