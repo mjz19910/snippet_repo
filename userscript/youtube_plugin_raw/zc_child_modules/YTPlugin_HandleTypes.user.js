@@ -28,10 +28,7 @@ function init_module() {
 	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 	// [new_fexp_expected]
 	ECatcherService.known_experiments.push(...[
-		[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030],
-		[24447748,24465486],
-		[24486981],
-		[24494197],
+		[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030,24447748,24465486,24486981,24494197],
 	].flat());
 }
 export_((exports) => {exports.init_module=init_module;});
