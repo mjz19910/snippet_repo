@@ -3293,7 +3293,7 @@ class HandleTypes extends BaseService {
 			let nw=null;
 			switch(value.a) {
 				case "ST:D": {
-					value.l;
+					debugger;
 				} break;
 				case "/db/key/a/b/d/z": {
 					switch(value.d) {
