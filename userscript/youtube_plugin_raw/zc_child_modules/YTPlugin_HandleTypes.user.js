@@ -2674,18 +2674,16 @@ class HandleTypes extends BaseService {
 		this.sm.videoId(v1_v1_str);
 		f4; f5; f6; f7;
 	}
-	/** @private @arg {{1:TV_Str<DU_VideoId>|TW_TagStr<DU_VideoId>;}} x */
+	/** @private @arg {{1:TV_Str<DU_VideoId>|TV_Str_CS<DU_VideoId>|TW_TagStr<DU_VideoId>;}} x */
 	PK_f1_str(x) {
 		let m1=this.mw(this.m(x));
 		let v1_v1=m1.mc(this.PT_f1).some.v;
 		let v1_v1i=v1_v1[1][0];
 		switch(v1_v1i[0]) {
 			default: debugger; break;
-			case "v_child":/*unk*/{
-				let x2=v1_v1i[3][1];
-				this.sm.videoId(x2);
-			} break;
-			case "v_raw_child":/*unk*/{
+			case "v_child_str":
+			case "v_child":
+			case "v_raw_child": {
 				let x2=v1_v1i[3][1];
 				this.sm.videoId(x2);
 			} break;
