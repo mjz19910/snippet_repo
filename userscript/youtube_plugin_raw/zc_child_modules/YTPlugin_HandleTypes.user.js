@@ -3308,22 +3308,22 @@ class HandleTypes extends BaseService {
 			let w_diz=x => {
 				x.a; x.b; let a=x.z[0];
 				switch(a.c) {
-					case "one": {let b=a.z[0]; return [a.c,[["1",b],a,x]];}
-					case "arr": {let b=a.z[0]; return [a.c,[["2",b],a,x]];}
-					case "many": {let b=a.z[0]; return [a.c,[["3",b],a,x]];}
-					case "typeof_name": {let b=a.z[0]; return [a.c,[["t",b],a,x]];}
-					case "instance_name": {let b=a.z[0]; return [a.c,[["i",b],a,x]];}
+					case "one": {let b=a.z[0]; return [a.c,["1",b],a,x];}
+					case "arr": {let b=a.z[0]; return [a.c,["2",b],a,x];}
+					case "many": {let b=a.z[0]; return [a.c,["3",b],a,x];}
+					case "typeof_name": {let b=a.z[0]; return [a.c,["t",b],a,x];}
+					case "instance_name": {let b=a.z[0]; return [a.c,["i",b],a,x];}
 				}
 			};
 			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss} */
 			let w_dss=x => {
 				switch(x.d) {
-					case "bigint": return [x.d,x,w_diz(x.z[0])];
-					case "boolean": return [x.d,x,w_diz(x.z[0])];
-					case "keys": return [x.d,x,w_diz(x.z[0])];
-					case "number": return [x.d,x,w_diz(x.z[0])];
-					case "root_visual_element": return [x.d,x,w_diz(x.z[0])];
-					case "string": return [x.d,x,w_diz(x.z[0])];
+					case "bigint": return [x.d,...w_diz(x.z[0]),x];
+					case "boolean": return [x.d,...w_diz(x.z[0]),x];
+					case "keys": return [x.d,...w_diz(x.z[0]),x];
+					case "number": return [x.d,...w_diz(x.z[0]),x];
+					case "root_visual_element": return [x.d,...w_diz(x.z[0]),x];
+					case "string": return [x.d,...w_diz(x.z[0]),x];
 				}
 			}; w_dss;
 			/** @arg {G_BoxedPrintable|undefined} x @returns {G_BoxedInner} */
@@ -3384,7 +3384,7 @@ class HandleTypes extends BaseService {
 			}
 			if(xi) switch(xi[0]) {
 				default: {
-					const [,ty2,container,diz_info]=xi,[key,diz_box]=diz_info,[item_info,item_obj,diz_obj]=diz_box; key;
+					const [,ty2,key,item_info,item_obj,diz_obj,container]=xi; key;
 					const [type,value]=item_info; item_obj; diz_obj;
 					console.log(`[x] [type=${type}] content.value`,value);
 					console.log('[x] [ty2=%s] container.key',ty2,container.key);
@@ -3393,7 +3393,7 @@ class HandleTypes extends BaseService {
 				case 3:
 				case 4:
 				case 6: {
-					const [,,container,]=xi;
+					const {6: container}=xi;
 					acc_items(container,x_many);
 				}
 			}
@@ -3411,18 +3411,21 @@ class HandleTypes extends BaseService {
 				case 3:
 				case 4:
 				case 6: {
-					const [,,container,]=yi;
+					const {6: container}=yi;
 					acc_items(container,y_many);
 				}
 			}
 			let diff_plus=[],diff_minus=[];
-			for(let v of x_many) {
-				if(y_many.includes(v)) continue;
-				diff_plus.push(v);
+			let x_set=new Set,y_set=new Set;
+			for(let arr of x_many) for(let item of arr) x_set.add(item);
+			for(let arr of y_many) for(let item of arr) y_set.add(item);
+			for(let arr of x_many) for(let x_item of arr) {
+				if(y_set.has(x_item)) continue;
+				diff_plus.push(x_item);
 			}
-			for(let v of y_many) {
-				if(x_many.includes(v)) continue;
-				diff_minus.push(v);
+			for(let arr of x_many) for(let y_item of arr) {
+				if(x_set.has(y_item)) continue;
+				diff_minus.push(y_item);
 			}
 			console.log("[cur_cache_value] [x.key]",x.key);
 			console.log("[val] [x]",...w(x));
