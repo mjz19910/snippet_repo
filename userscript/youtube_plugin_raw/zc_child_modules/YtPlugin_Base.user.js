@@ -98,20 +98,17 @@ function resolve_path_to_userscript_dir(x) {
 		case ".": {
 			switch(parts[1]) {
 				default: debugger; throw new Error("Unable to resolve path: "+u);
-				case "youtube_plugin_raw": break;
+				case "YTPlugin_Codegen.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YTPlugin_ECatcherService_Plugin.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YTPlugin_HandleTypes.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YTPlugin_IndexedDB.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YTPlugin_Parser_Service.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YTPlugin_ServiceMethods.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YTPlugin_Support_Service.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YtPlugin_Base.user": return `./${yt_plugin_base_path}/${parts[1]}`;
+				case "YtPlugin_ServiceLoader_Plugin.user": return `./${yt_plugin_base_path}/${parts[1]}`;
 			}
 		}
-	}
-	switch(parts[3]) {
-		case "YTPlugin_Codegen.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YTPlugin_ECatcherService_Plugin.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YTPlugin_HandleTypes.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YTPlugin_IndexedDB.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YTPlugin_Parser_Service.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YTPlugin_ServiceMethods.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YTPlugin_Support_Service.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YtPlugin_Base.user": return `./${yt_plugin_base_path}/${parts[3]}`;
-		case "YtPlugin_ServiceLoader_Plugin.user": return `./${yt_plugin_base_path}/${parts[3]}`;
 	}
 }
 /** @template {keyof typeof path_map} P @template {MakeImportPath<P>} T @arg {T} arg @returns {import("../zb_plugin_types/exports").ProcessImport<T>} */
