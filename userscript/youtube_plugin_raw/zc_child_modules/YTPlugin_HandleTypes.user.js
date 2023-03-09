@@ -1711,14 +1711,12 @@ class HandleTypes extends BaseService {
 	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
 	/** @template C,T @arg {C} c @arg {T} x  @returns {{a:"DI";b:"key";c:C;w: "/item/a/b/c/w/z";z: [T]}} */
 	make_DI_R(c,x) {return {a: "DI",b: "key",c,w: "/item/a/b/c/w/z",z: [x]};}
+	/** @template {string} C @template T @arg {C} c @arg {T} x @returns {T_DI_Raw_2<C,T>} */
+	make_DI_Raw(c,x) {return {a: "DI:R",b: "raw",c,w: "/item/a/b/c/w/z",z: [x]};}
+	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,DI_T_KV_Z<K1,DI_T_KV_Z<K2,T>>>} */
+	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(`${k1}:${k2}`,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
-	make_DI_R_Key_StartRadio(x) {
-		return {
-			a: "DI:R",b: "raw",c: "key:start_radio",w: "/item/a/b/c/w/z",z: [
-				{a: "KV/a/k/z",k: "key",z: [this.make_DI_T_KV_Z("start_radio",this.make_prim_num_t(x))]}
-			]
-		};
-	}
+	make_DI_R_Key_StartRadio(x) {return this.make_DI_Raw_KV_l2("key","start_radio",this.make_prim_num_t(x));}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
@@ -3170,7 +3168,7 @@ class HandleTypes extends BaseService {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
 				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
 				/** @type {DI_Key_StartRadio} */
-				const z={a: "KV/a/k/z",k: "key",z: [this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(p.raw_id))]};
+				const z=this.make_DI_T_KV_Z("key",this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(p.raw_id)));
 				return z;
 			}
 			case "user_id": {

@@ -1,5 +1,1 @@
-type DI_A_UserId={
-	a: "/di/k/z";
-	k: "user_id";
-	z: [T_DI_FromObj<{raw_id: string;}>];
-};
+type DI_A_UserId=DI_T_KV_Z<"user_id",T_DI_FromObj<{raw_id: string;}>>;
