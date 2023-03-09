@@ -2386,11 +2386,12 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_reel_params} x */
 	P_reel_params(x) {
 		const cf="P_reel_params";
-		const {1: v1,3: v3,5: g5,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		const {1: v1,3: v3,5: g5,6: v6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_number(`${cf}.f1`,this.T_D32(v1));
 		v3&&this.VW_BinaryTimestamp(v3);
 		g5&&this.g(this.T_VW(g5));
 		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
+		f7;
 	}
 	//#endregion
 	//#region binary get keys
@@ -3392,6 +3393,7 @@ class HandleTypes extends BaseService {
 				} break;
 				case 1:
 				case 3:
+				case 4:
 				case 6: {
 					const [,,container,]=xi;
 					acc_items(container,x_many);
@@ -3409,6 +3411,7 @@ class HandleTypes extends BaseService {
 				default: debugger; break;
 				case 1:
 				case 3:
+				case 4:
 				case 6: {
 					const [,,container,]=yi;
 					acc_items(container,y_many);

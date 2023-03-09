@@ -131,6 +131,7 @@ type P_reel_params={
 	3?: T_VW<V_BinaryTimestamp>;
 	5?: T_VW_J<{}>;
 	6?: T_D32<2>;
+	7?: T_D32<0>;
 };
 type PK_f1={1: T_D32<2|3|12>;};
 type P_logging_context_serialized_context_data={
