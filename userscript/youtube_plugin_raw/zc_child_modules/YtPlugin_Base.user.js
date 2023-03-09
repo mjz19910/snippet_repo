@@ -2429,11 +2429,11 @@ class BaseService extends ServiceWithMembers {
 	/**
 	 * @param {T} z @arg {K} b
 	 * @template K @template T
-	 * @returns {DI_T_abwz_item<K,T>}
+	 * @returns {DI_T_KV_Z<K,T>}
 	 * */
-	make_abwz_item(b,z) {return {a: "DI:A",b,w: "/item/a/b/w/z",z: [z]};}
-	/** @template K,T @arg {K} k @arg {T} x  @returns {DI_T_KV_AB<K,T>} */
-	make_DI_T_Item_AB(k,x) {return {a: "KV/a/k/w/z",k,z: [x]};}
+	make_abwz_item(b,z) {return {a: "/di/k/z",k: b,z: [z]};}
+	/** @template K,T @arg {K} k @arg {T} x  @returns {DI_T_KV_Z<K,T>} */
+	make_DI_T_Item_AB(k,x) {return {a: "KV/a/k/z",k,z: [x]};}
 	/**
 	 * @param {Z} z @arg {A} a @arg {E} e
 	 * @template A,E @template Z

@@ -9,7 +9,7 @@ type Y_PutBoxedArgs=
 	|["browse_id","VL:UC",DI_BrowseId_VL_UC]
 	|["browse_id","VL:WL",DI_BrowseId_VL_WL]
 	|["channel_id","UC",DI_A_ChannelId_UC]
-	|["hashtag_id",null,DI_HashtagId]
+	|["hashtag_id",null,DI_A_HashtagId]
 	|["keys",null,[string,make_item_group<string|number>]]
 	|["load_id",null,number]
 	|["number",null,[string,make_item_group<number>]]
@@ -20,7 +20,7 @@ type Y_PutBoxedArgs=
 	|["root_visual_element",null,[string,make_item_group<number>]]
 	|["save_id",null,number]
 	|["string",null,[string,make_item_group<string>]]
-	|["user_id",null,DI_User_Id]
+	|["user_id",null,DI_A_UserId]
 	|["video_id",null,DI_A_VideoId]
 	|["video_time",null,DI_VideoTime]
 	|["guide_entry_id",null,GI_GuideEntry_Id]
@@ -31,6 +31,6 @@ type Y_PutBoxedArgs=
 	|["playlist_id","RD:CM:UC",DI_A_Playlist_RD_CM_UC]
 	|["playlist_id","RD:GM:EM",DI_A_Playlist_RD_GM_EM]
 	|["key","start_radio",DI_Key_StartRadio]
-	|["url_info",null,DI_Key_StartRadio|DI_T_abz<"video_id"|"hashtag_id"|"user_id">]
+	|["url_info",null,DI_Key_StartRadio|DI_A_Playlist_PL|DI_A_HashtagId|DI_A_VideoId]
 	;
 ;

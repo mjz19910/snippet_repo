@@ -1,1 +1,1 @@
-type DST_User_Id=MK_DbItem_BZ<DI_User_Id>;
+type DST_User_Id=MK_DbItem_BZ<DI_A_UserId>;

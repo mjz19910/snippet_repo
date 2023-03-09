@@ -133,7 +133,7 @@ class StoreDescription extends ApiBase2 {
 	/** @arg {DSI_T_Item_ABD<CLS_K,J_StoreTypeMap[CLS_K]>} item */
 	load_data(item) {
 		const x=item.z[0].z[0];
-		const k=item.z[0].b;
+		const k=item.z[0].k;
 		this.add_data_to_index(k,x);
 	}
 	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */

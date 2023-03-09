@@ -157,14 +157,14 @@ class IndexedDBService extends BaseService {
 	put_box(x,version) {return this.ht.put("boxed_id",x,version);}
 	/** @arg {number} version @returns {Promise<DST_LoadId|null>} */
 	async get_load_id(version) {
-		const t_key="boxed_id:load_id";
-		let box=await this.get("boxed_id",t_key,version);
+		/** @type {DST_LoadId|null} */
+		const box=await this.get("boxed_id","boxed_id:load_id",version);
 		return box;
 	}
 	/** @arg {number} version @returns {Promise<DST_SaveId|null>} */
 	async get_save_id(version) {
-		const t_key="boxed_id:save_id";
-		let box=await this.get("boxed_id",t_key,version);
+		/** @type {DST_SaveId|null} */
+		const box=await this.get("boxed_id","boxed_id:save_id",version);
 		return box;
 	}
 	/** @arg {StoreData} store @arg {number} version */
@@ -449,12 +449,12 @@ class IndexedDBService extends BaseService {
 	mdk=x => `/db/key/${x}`;
 	/** @arg {"kw"} x */
 	mka=x => this.mdk(this[`kz_${x}`]);
-	/** @template J,K @template {Primitive} ZI @template {ZAT2<ZI>} Z @arg {Z} z @template {string} IC @template {{c:IC;z:[Z];}} X @arg {J} j @arg {K} k @arg {X} x @returns {T_kwb_2<X,J,K>} */
+	/** @template J,K1 @template {Primitive} K3 @template {ZAT2<K3>} V @arg {V} z @template {string} K2 @template {DI_T_KV_Z<K2,V>} X @arg {J} j @arg {K1} k @arg {X} x @returns {DST_MakeLM_2<X,J,K1>} */
 	kwb(x,z,j,k) {
-		const {c}=x;
-		/** @type {`boxed_id:key:${IC}:${ZI}`} */
-		const key=`boxed_id:key:${c}:${this.za2(z)}`;
-		return {key,a: "ST:D",b: "boxed_id",j,k,w: this.mka("kw"),z: [x]};
+		const {k: k2}=x;
+		/** @type {`boxed_id:key:${K2}:${K3}`} */
+		const key=`boxed_id:key:${k2}:${this.za2(z)}`;
+		return {key,a: "ST:D",b: "boxed_id",l: j,m: k,w: this.mka("kw"),z: [x]};
 	}
 	/** @template V @template {ZAT2<V>} T @arg {T} x @returns {ZA2<T>} */
 	za2(x) {return this.ht.tz_pop(this.ht.za1(x));}
@@ -464,7 +464,7 @@ class IndexedDBService extends BaseService {
 	put_boxed_url_info(version,...args) {
 		version; args;
 		let [,,x]=args;
-		switch(x.b) {
+		switch(x.k) {
 			default: debugger; throw new Error("Unreachable");
 			case "key": {
 				/** @type {DST_Key_StartRadio} */
@@ -472,9 +472,10 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "hashtag_id": {
-				const {b: k,z: [w]}=x;
-				/** @type {DI_HashtagId} */
-				const a={a: "key_value",k,w: "/item/a/k/w/z",z: [w.z[0]]};
+				const {k: k,z: [w]}=x;
+				const prim_box=this.make_prim_v(w.z[0].z[0]);
+				/** @type {DI_A_HashtagId} */
+				const a={a: "/di/k/z",k,z: [{a: "KV/a/k/z",k: "raw_id",z: [prim_box]}]};
 				/** @type {DST_HashtagId} */
 				const z={
 					a: "ST:D",b: "boxed_id",j: k,w: "/db/key/a/b/j/w/z",z: [a],
@@ -485,7 +486,7 @@ class IndexedDBService extends BaseService {
 			case "video_id": {
 				const {b: j,w,z: [zi]}=x;
 				/** @type {DI_A_VideoId} */
-				const a={a: "DI:A",b: j,w,z: [zi]};
+				const a={a: "DI:A",k: j,w,z: [zi]};
 				/** @type {DST_Video_Id} */
 				const z={
 					a: "ST:D",b: "boxed_id",j,w: "/db/key/a/b/j/w/z",z: [a],
@@ -509,12 +510,12 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {K} key @arg {A} a @arg {D} d @arg {T} x @template {string} K @template {string} A @template {string} D @template T @returns {T_BoxStore_adz<K,A,D,T>} */
 	make_BoxStore_adz(key,a,d,x) {return {key,a,b: "boxed_id",d,w: "/key/a/b/d/w/z",z: [x]};}
-	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_ABZ<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
+	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_KV_Z_MakeItemGroup<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"boxed_store",tag1,x);}
-	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_ABZ<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2_v2<T_Tag1,T_Tag2,V>} */
+	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_KV_Z_MakeItemGroup<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2_v2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore_v2(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"SI:T:D",tag1,x);}
-	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DI_T_ABZ<B,T>} */
-	DIZ_Item_AB(b,x) {return {a: "group",b,z: [x]};}
+	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DI_T_KV_Z_MakeItemGroup<B,T>} */
+	DIZ_Item_AB(b,x) {return {a: "group",k: b,z: [x]};}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} s0 */
 	put_boxed_id_3(version,...s0) {
 		const [k,,x]=s0;

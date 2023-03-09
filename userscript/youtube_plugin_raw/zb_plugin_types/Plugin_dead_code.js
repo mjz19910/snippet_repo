@@ -99,7 +99,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 					case "one": {
 						const i3={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
 						/** @type {DSS_Bigint["z"][0]} */
-						const i2={a: "group",b: value.type,z: [as_any(i3)]};
+						const i2={a: "group",k: value.type,z: [as_any(i3)]};
 						/** @type {DSS_Bigint} */
 						const z={key: as_any(key),a: "SI:T:D",b: "boxed_id",d: "bigint",w: "/key/a/b/d/w/z",z: [i2]};
 						return [true,z];

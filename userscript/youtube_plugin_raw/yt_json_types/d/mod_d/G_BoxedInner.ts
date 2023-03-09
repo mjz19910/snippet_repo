@@ -2,16 +2,7 @@ type G_BoxedInner=
 	|["z",G_BoxedDatabaseData]
 	|["n"]
 	|["a1",GB_A1]
-	|[1,...Ret_w_dst<G_Boxed_DST>,{
-		key: G_BoxedDatabaseData['key'];
-		a: DST_PlayNext["a"]; b: "boxed_id";
-		j: GB_A1_J_Shape;
-		w: any;
-	}|{
-		key: G_BoxedDatabaseData['key'];
-		a: DST_PlayNext["a"]; b: "boxed_id";
-		j: GB_A1_J_Shape;
-	}]
+	|[1,Ret_w_dst<G_Boxed_DST>,G_Boxed_DST]
 	|["k:sr",DST_Key_StartRadio]
 	|[2,1,...Ret_W_DSS_Impl<DSS_Bigint,"bigint",bigint>]
 	|[2,2,...Ret_W_DSS_Impl<DSS_Boolean,"boolean",boolean>]

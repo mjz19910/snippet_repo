@@ -1715,7 +1715,7 @@ class HandleTypes extends BaseService {
 	make_DI_R_Key_StartRadio(x) {
 		return {
 			a: "DI:R",b: "raw",c: "key:start_radio",w: "/item/a/b/c/w/z",z: [
-				this.make_DI_R("start_radio",this.make_DI_T_Item_AB("start_radio",this.make_prim_num(x)))
+				this.make_DI_T_Item_AB("start_radio",this.make_prim_num(x))
 			]
 		};
 	}
@@ -3067,7 +3067,7 @@ class HandleTypes extends BaseService {
 		let z=this.make_R_UrlInfo(x);
 		if(z) {
 			/** @type {Y_PutBoxedArgs} */
-			let args=["url_info",null,z];
+			let args=as_any(["url_info",null,z]);
 			let box_res=this.put_boxed_id(...args);
 			this.execute_promise_def((async () => (await box_res).ret)());
 		}
@@ -3128,9 +3128,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @template U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
 	get_prim_1(x) {return x.z[0];}
-	/** @template V @template {DI_T_KV_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
+	/** @template V @template {DI_T_KV_Z<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {DI_T_KV_AB<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
+	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {DI_T_KV_Z<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	//#endregion
 	//#endregion
@@ -3142,13 +3142,13 @@ class HandleTypes extends BaseService {
 		let [,id]=split_string_once(x3,c);
 		return {b,c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
-	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_KV_AB<K,T_PrimitiveBox<T>>}*/
+	/** @template K,T @arg {K} k @arg {T} x @returns {DI_T_KV_Z<K,T_PrimitiveBox<T>>}*/
 	make_kv_ab(k,x) {return this.make_DI_T_Item_AB(k,this.make_BoxTypeof(x));}
 	/** @template T @arg {T} x @returns {T_DI_FromObj<{raw_id: T}>} */
 	make_raw_id(x) {return this.make_DIT_Item_A_RawId(this.make_BoxTypeof(x));}
 	/** @template {string} T @arg {T} x @returns {T_DI_FromObj<{id: T}>} */
 	make_id(x) {return this.make_kv_ab("id",x);}
-	/** @template T @arg {T} x @returns {DI_T_KV_AB<"raw_id",T>} */
+	/** @template T @arg {T} x @returns {DI_T_KV_Z<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_Item_AB("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
@@ -3170,16 +3170,32 @@ class HandleTypes extends BaseService {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
 				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
 				/** @type {DI_Key_StartRadio} */
-				const z={a: "DI",b: "key",c: p.k,w: "/item/a/b/c/w/z",z: [this.make_DI_T_Item_AB(p.k,this.make_prim_num_t(p.raw_id))]};
+				const z={a: "DI",b: "key",k: p.k,w: "/item/a/b/c/w/z",z: [this.make_DI_T_Item_AB(p.k,this.make_prim_num_t(p.raw_id))]};
 				return z;
 			}
-			case "user_id":
-			case "hashtag_id":
+			case "user_id": {
+				const b=x.k,raw_id=x.z[0].z[0];
+				const s=this.make_input(b,raw_id);
+				const p=this.get_parsed_info(s);
+				/** @type {{raw_id:string}} */
+				let pr=as_any(p);
+				/** @type {DI_A_UserId} */
+				const z=this.make_abwz_item(x.k,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(pr.raw_id)));
+				return z;
+			}
+			case "hashtag_id": {
+				const b=x.k,raw_id=x.z[0].z[0];
+				const s=this.make_input(b,raw_id);
+				const p=this.get_parsed_info(s);
+				/** @type {DI_A_HashtagId} */
+				const z=this.make_abwz_item(x.k,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(p.raw_id)));
+				return z;
+			}
 			case "video_id": {
 				const b=x.k,raw_id=x.z[0].z[0];
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
-				/** @type {DI_T_abz<typeof b>} */
+				/** @type {DI_A_VideoId} */
 				const z=this.make_abwz_item(x.k,this.make_DI_T_Item_AB("raw_id",this.make_prim_v(p.raw_id)));
 				return z;
 			}
@@ -3270,7 +3286,7 @@ class HandleTypes extends BaseService {
 	loaded_map=new Map;
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
-	/** @api @public @template {G_BoxedDatabaseData} T @arg {"boxed_id"} key @arg {T} value @arg {number} version */
+	/** @api @public @template {G_BoxedDatabaseData} T_Put @arg {"boxed_id"} key @arg {T_Put} value @arg {number} version */
 	async put(key,value,version) {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
@@ -3279,9 +3295,9 @@ class HandleTypes extends BaseService {
 			let nw=null;
 			switch(value.a) {
 				case "ST:D": {
-					value.j;
+					value.l;
 				} break;
-				case "SI:T:D": {
+				case "/db/key/a/b/d/z": {
 					switch(value.d) {
 						default: debugger; break;
 						case "bigint": break;
@@ -3296,7 +3312,7 @@ class HandleTypes extends BaseService {
 			if(!("w" in value)) nw=value;
 			y: if(nw!==null&&!("j" in nw)) {
 				/** @type {{a:"boxed_store"}} */
-				const no=nw;
+				const no=as_any(nw);
 				if(no.a!=="boxed_store") break y;
 				console.log("[cache_outdated]",no);
 			}
@@ -3313,9 +3329,9 @@ class HandleTypes extends BaseService {
 					case "root_visual_element": console.log("[cache_outdated]",no); break;
 				}
 			}
-			/** @template U @template {DI_T_ABZ<string,U>} T @arg {T} x @returns {Ret_w_diz<T,U>} */
+			/** @template T_Arg @template {DI_T_KV_Z_MakeItemGroup<string,T_Arg>} T_Box @arg {T_Box} x @returns {Ret_w_diz<T_Arg>} */
 			let w_diz=x => {
-				x.a; x.b; let a=x.z[0];
+				x.a; x.k; let a=x.z[0];
 				switch(a.c) {
 					case "one": {let b=a.z[0]; return [a.c,["1",b],a,x];}
 					case "arr": {let b=a.z[0]; return [a.c,["2",b],a,x];}
@@ -3357,12 +3373,12 @@ class HandleTypes extends BaseService {
 				}
 			};
 			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
-			const w=(x) => {
+			const w_db_data=(x) => {
 				if(!x) return ["n"];
 				if("k" in x) return ["k:sr",x];
-				/** @type {[GST_DSS|null,Exclude<G_BoxedDatabaseData,{a:"SI:T:D"}>|null]} */
+				/** @type {[GST_DSS|null,G_Boxed_DST|null]} */
 				const n=[null,null];
-				if(x.a==="SI:T:D") n[0]=x; else n[1]=x;
+				if(x.a==="/db/key/a/b/d/z") n[0]=x; else n[1]=x;
 				if(n[0]) {
 					const x=n[0],w=w_dss(x);
 					switch(w[0]) {
@@ -3378,7 +3394,7 @@ class HandleTypes extends BaseService {
 					let x=n[1],w=w_dst(x);
 					x.j;
 					console.log("TODO [ReturnType<typeof w_dst>] [1]",w); debugger;
-					return [1,...w,x];
+					return [1,w,x];
 				}
 				return ["a1",this.za1(x)];
 			};
@@ -3387,7 +3403,7 @@ class HandleTypes extends BaseService {
 			/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
 			const y_many=[];
 			const cmp_map=new WeakMap;
-			const xi0=w(x),yi0=w(y); let xi=null,yi=null;
+			const xi0=w_db_data(x),yi0=w_db_data(y); let xi=null,yi=null;
 			switch(xi0[0]) {
 				case 1: break;
 				case 2: {
