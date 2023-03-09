@@ -1,5 +1,7 @@
 //#region DStr
 type DStr_DI_ABDZ="/di/a/b/d/z";
+type DStr_DI_AZ="/di/a/z";
+type DStr_DIT_AEZ="/dit/a/e/z";
 //#endregion
 
 //#region ABDZ
@@ -10,14 +12,13 @@ type DI_T_Item_ABD<T_Type,T_Tag,T_InfoItem>={
 //#endregion
 
 type DIT_Box_Typeof2<T_Type extends T_GetPrimitiveTag<U>,U>={
-	a: "primitive";
+	a: DStr_DIT_AEZ;
 	// ^ a = is
 	e: T_Type;
 	// ^ e = type
 	z: [U];
 	// ^ z = info_arr
 };
-type DI_T_Item_AZ<T>={a: "/a/z"; z: [T];};
 type DI_T_KV_Z_MakeItemGroup<K extends string,T>=KV_T_AKZ<K,make_item_group<T>>;
 type DI_SrcInfo=
 	|DI_SrcInfo_Any
@@ -296,7 +297,7 @@ type DI_BrowseId_VL_UC={
 	b: "browse_id";
 	c: "VL:UC";
 	z: [
-		T_DI_FromObj<{raw_id: `VL${T_IdTemplate<"UC",D_UserIdStr>}`}>,
+		T_DI_FromObj<{raw_id: `VL${T_IdTemplate<"UC",D_UserIdStr>}`;}>,
 		DI_A_ChannelId_UC
 	];
 };
@@ -361,3 +362,7 @@ type DI_Ret_AnyString={
 	c: null;
 	raw_id: DU_VideoId;
 };
+
+//#region AZ
+type DI_T_AZ<T>={a: DStr_DI_AZ; z: [T];};
+//#endregion

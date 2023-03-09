@@ -3128,7 +3128,7 @@ class HandleTypes extends BaseService {
 	get_prim_1(x) {return x.z[0];}
 	/** @template V @template {KV_T_AKZ<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
 	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DI_T_Item_AZ<T1>} V @template {KV_T_AKZ<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
+	/** @template T1 @template {DI_T_AZ<T1>} V @template {KV_T_AKZ<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
 	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	//#endregion
 	//#endregion
