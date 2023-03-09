@@ -1,1 +1,0 @@
-type JsonFilterRet<K>=GType_PrototypeDescription_OfTextDecoder<K>;
