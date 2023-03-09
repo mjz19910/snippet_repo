@@ -2858,18 +2858,14 @@ class HandleTypes extends BaseService {
 		f6;
 	}
 	//#endregion
-	/** @private @arg {PD_event_info} x */
-	PD_timed_continuation_f3(x) {
-		const cf="PD_timed_continuation_f3";
-		const {14: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_bigint(`${cf}.f14`,this.T_FD64(r));
-	}
 	/** @private @arg {PD_timed_continuation} x */
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let i3=this.TV_Str_ex(v3); this.on_video_id(i3);
-		this.t(this.T_VW(v3),this.PD_timed_continuation_f3);
+		this.t(this.T_VW(v3),x => {
+			this.save_keys(`${cf}.f3`,x);
+		});
 		f4; f7; f8;
 	}
 	/** @private @arg {P_f3_PD_continuation_params} x */
@@ -2915,14 +2911,11 @@ class HandleTypes extends BaseService {
 		const cf="P_notification_remove_upcoming_event_reminder_params";
 		const {1: v1,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		console.log("nr:ue:r:params.f1",v1[1][0][3][1]);
-		this.t(this.T_VW(v1),this.PD_event_info);
+		this.sm.videoId(this.TV_Str_ex(v1));
+		this.t(this.T_VW(v1),x => {
+			this.save_keys(`${cf}.f1`,x);
+		});
 		this.PX_upcoming_event_reminder_info(this.T_VW(v6));
-	}
-	/** @private @arg {PD_event_info} x */
-	PD_event_info(x) {
-		const cf="PD_event_info";
-		const {14: v14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_bigint(`${cf}.f14`,this.T_FD64(v14));
 	}
 	/** @private @arg {PX_upcoming_event_reminder_info} x */
 	PX_upcoming_event_reminder_info(x) {
