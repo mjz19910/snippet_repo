@@ -1726,8 +1726,22 @@ class HandleTypes extends BaseService {
 	make_DI_Raw(l,m,x) {return {a: this.get_KZ("kl"),k: "raw",l,m,z: [x]};}
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
 	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(k1,k2,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
+	/** @arg {0|1} x  @returns {DI_Key_StartRadio} */
+	make_DI_Key_StartRadio(x) {
+		/** @type {T_PrimitiveBox<0|1>} */
+		let x5=this.make_DI_T_KV_Z("number",x);
+		/** @type {T_DI_FromObj<{start_radio: 0 | 1;}>} */
+		let x4=this.make_DI_T_KV_Z("start_radio",x5);
+		/** @type {G_PrimitiveTag} */
+		let vv=typeof {}; vv;
+		/** @type {T_PrimitiveBox<T_DI_FromObj<{start_radio: 0 | 1;}>>} */
+		let x2=this.make_DI_T_KV_Z("object",x4);
+		return this.make_DI_T_KV_Z("key",x2);
+	}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
-	make_DI_R_Key_StartRadio(x) {return this.make_DI_Raw_KV_l2("key","start_radio",this.make_prim_num_t(x));}
+	make_DI_R_Key_StartRadio(x) {
+		return this.make_DI_Raw("key","start_radio",this.make_DI_Key_StartRadio(x));
+	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
@@ -3411,6 +3425,12 @@ class HandleTypes extends BaseService {
 	tz_pop(x) {return x.z[0];}
 	/** @template V @template {TShape_Successor<V>} T @arg {T} x @returns {TZ_Successor<T>} */
 	za1(x) {return this.tz_pop(x);}
+	/** @template V @template {TShape_SuccessorX2<V>} T @arg {T} x @returns {TZ_SuccessorX2<T>} */
+	za2(x) {return this.tz_pop(this.za1(x));}
+	/** @template V @template {TShape_SuccessorX3<V>} T @arg {T} x @returns {TZ_SuccessorX3<T>} */
+	za3(x) {return this.tz_pop(this.za2(x));}
+	/** @template V @template {TShape_SuccessorX3<TShape_Successor<V>>} T @arg {T} x @returns {TZ_SuccessorX3<TZ_Successor<T>>} */
+	za4(x) {return this.tz_pop(this.za3(x));}
 	/** @type {Map<string,G_BoxedDatabaseData>} */
 	loaded_map=new Map;
 	/** @type {Set<string>} */
@@ -3526,6 +3546,19 @@ class HandleTypes extends BaseService {
 				let nx=null;
 				/** @type {[Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/m/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/m/n/z"}>|null]} */
 				const n=[null,null,null];
+				/** @arg {G_BoxedDatabaseData} v */
+				function xf(v) {
+					let lb=v.z[0];
+					switch(lb.a) {
+						case "/di/a/k/z": {
+							lb.z[0];
+						} break;
+						case "/di/a/k/l/z":
+						case "/di/a/k/l/m/z":
+						case "/di/a/l/m/z":
+					}
+				}
+				xf(x);
 				if(x.a==="/db/key/a/k/l/z") n[0]=x; else if(x.a==="/db/key/a/k/l/m/z") n[1]=x; else if(x.a==="/db/key/a/k/l/m/n/z") n[2]=x; else nx=x;
 				if(n[0]) {
 					const x=n[0],w=w_dss(x);
@@ -3558,11 +3591,11 @@ class HandleTypes extends BaseService {
 					}
 				}
 				if(nx) {
-					{const v=4; try {return [7,v,this.za3(this.za1(nx)),nx];} catch {} }
-					{const v=3; try {return [7,v,this.za3(nx),nx];} catch {} }
-					{const v=2; try {return [7,v,this.za2(nx),nx];} catch {} }
-					{const v=1; try {return [7,v,this.za1(nx),nx];} catch {} }
-					return [7,0,nx];
+					{const v=4; try {return [7,v,[this.za4(nx),this.za3(nx),this.za2(nx),this.za1(nx),nx]];} catch {} }
+					{const v=3; try {return [7,v,[this.za3(nx),this.za2(nx),this.za1(nx),nx]];} catch {} }
+					{const v=2; try {return [7,v,[this.za2(nx),this.za1(nx),nx]];} catch {} }
+					{const v=1; try {return [7,v,[this.za1(nx),nx]];} catch {} }
+					return [7,0,[nx]];
 				}
 				return ["a1",this.za1(x)];
 			};

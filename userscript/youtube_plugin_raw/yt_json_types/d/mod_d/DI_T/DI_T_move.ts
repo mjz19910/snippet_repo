@@ -23,7 +23,7 @@ type MakeInfoInput_Len2=
 //#endregion
 
 //#region DStr
-type DStr_DI_AKLMZ=`/di/a/k/l/m/z`
+type DStr_DI_AKLMZ=`/di/a/k/l/m/z`;
 type DStr_DI_ALM_Z=`/di/a/l/m/z`;
 type DStr_DI_AKLZ=`/di/a/k/l/z`;
 type DStr_DI_AKZ=`/di/a/k/z`;
@@ -186,7 +186,7 @@ type DI_GuideEntry_VL_LL={
 //#endregion
 //#region ABZ
 type DI_A_PlayNext={
-	a: "/item/a/b/z";
+	a: "/di/a/k/z";
 	k: "play_next";
 	z: [
 		T_DI_FromObj<{raw_id: `${1}`;}>,
@@ -327,7 +327,7 @@ type DI_BrowseId_VL_PL={
 	k: "browse_id";
 	l: "VL"; m: "PL";
 	z: [
-		KV_T_AKZ<"raw_id",T_PrimitiveBox<T_IdTemplate<"VL">>>,
+		T_DI_FromObj<{raw_id: T_IdTemplate<"VL">;}>,
 		DI_A_Playlist_PL
 	];
 };
@@ -394,21 +394,17 @@ type DI_R_VideoId={
 };
 //#endregion
 //#region AKZ
-type DI_Key_StartRadio=KV_T_AKZ<"key",T_DI_FromObj<{start_radio: 0|1;}>>;
-type DI_A_UserId=KV_T_AKZ<"user_id",T_DI_FromObj<{raw_id: string;}>>;
-type DI_A_VideoId=T_DI_FromObj2<{
-	video_id: T_DI_FromObj<{
-		raw_id: string;
-	}>;
-}>;
+type DI_Key_StartRadio=T_DI_FromObj<{key: T_DI_FromObj<{start_radio: 0|1;}>;}>;
+type DI_A_UserId=T_DI_FromObj<{user_id: T_DI_FromObj<{start_radio: 0|1;}>;}>;
+type DI_A_VideoId=T_DI_FromObj2<{video_id: T_DI_FromObj<{raw_id: string;}>;}>;
 type DI_T_KV_Z_MakeItemGroup<K extends string,T>=KV_T_AKZ<K,make_item_group<T>>;
 type DI_A_Playlist_LL={
-	a: "key_value";
+	a: DStr_DI_AKZ;
 	k: "playlist_id";
 	z: [T_DI_FromObj<{raw_id: "LL";}>];
 };
 type DI_A_Playlist_WL={
-	a: "key_value";
+	a: DStr_DI_AKZ;
 	k: "playlist_id";
 	z: [T_DI_FromObj<{raw_id: "WL";}>];
 };
