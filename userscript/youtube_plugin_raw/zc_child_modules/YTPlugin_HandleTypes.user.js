@@ -3355,6 +3355,25 @@ class HandleTypes extends BaseService {
 				/** @type {G_Boxed_DST['z'][0]} */
 				let u=x;
 				if("a" in u&&"a" in x) return [true,0,[x.a],[x.z[0],x]];
+				x: if("type" in u) {
+					let v=gv();
+					if(!v) break x;
+					/** @returns {{type:unknown}|{type:"number";r:true}|null}  */
+					function gv() {
+						if("type" in u) {
+							/** @type {{type:unknown}} */
+							let v=u;
+							return v;
+						}
+						return null;
+					}
+					Object.defineProperty(v,"r",{value: true});
+					if("r" in v&&v.r===true) switch(v.type) {
+						case "number": {
+							debugger;
+						} break;
+					}
+				}
 				debugger;
 				throw 1;
 			};
@@ -3364,6 +3383,8 @@ class HandleTypes extends BaseService {
 			const extract_dst_l=x => {return x.a==="/db/key/a/b/l/z";};
 			/** @template {G_Boxed_DST} T @arg {T} v_dst @returns {Ret_w_dst<T>} */
 			const w_dst=v_dst => {
+				let s=v_dst;
+				if("j" in v_dst) {v_dst.l=as(v_dst.j); delete v_dst.j;}
 				if(v_dst.a==="/db/key/a/b/l/m/z") {
 					if(!extract_dst_lm(v_dst)) throw new Error();
 					let v_di=v_dst.z[0],w=w_di(v_di);
@@ -3376,9 +3397,17 @@ class HandleTypes extends BaseService {
 					let [,,[k],[v_value]]=w;
 					return [true,1,[v_dst.l,k],[v_value,v_di,v_dst]];
 				}
-				if("l" in v_dst) {
-					debugger; v_dst;
-					throw new Error();
+				if("l" in s) {
+					/** @type {{[x:string]:"ST:D"}} */
+					let s1=as_any(s);
+					/** @type {"ST:D"} */
+					let a2=as(s1.a);
+					switch(a2) {
+						case "ST:D": {
+							s.a="/db/key/a/b/l/z";
+							return w_dst(s);
+						}
+					}
 				}
 				debugger; v_dst;
 				throw new Error();
