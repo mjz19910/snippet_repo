@@ -67,9 +67,9 @@ type DST_MakeLM_FromObj<T extends {k: any; z: [{z: [any]; k: any;}];},L="key",M=
 	_info_arr?: [TZ_SuccessorX3<T>];
 };
 //#endregion
-type DST_T_ABLZ_FromDI<T extends Y_DI_Shape>=DST_T_ABLZ<T["k"],TZ_SuccessorX3<T>,T>;
+type DST_T_ABLZ_FromDI<T extends Y_DI_Shape>=DST_T_ABLZ<T["k"],TZ_SuccessorX4<T>,T>;
 
-type DST_T_ABLZ<L extends string,V extends string=string,T extends KV_T_AKZ<string,any>=KV_T_AKZ<string,any>>={
+type DST_T_ABLZ<L extends string|number,V extends string|number=string,T extends KV_T_AKZ<string|number,any>=KV_T_AKZ<string,any>>={
 	key: `boxed_id:${L}:${V}`;
 	a: DST_KStr_AKLZ;
 	k: "boxed_id";

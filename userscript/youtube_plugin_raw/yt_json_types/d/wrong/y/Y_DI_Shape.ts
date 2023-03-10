@@ -1,1 +1,1 @@
-type Y_DI_Shape=KV_T_AKZ<string,T_DI_FromObj<{raw_id: string;}>>;
+type Y_DI_Shape=T_DI_FromObj<{[x: string]: T_DI_FromObj<{start_radio: 0|1;}>;}>;

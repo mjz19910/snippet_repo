@@ -56,7 +56,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 						this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
 						this.make_DI_T_KV_Z("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
-					/** @type {{key:`boxed_id:channel_id:UC:${string}`,a: DST_KStr_AKLZ;b:"boxed_id",l:"channel_id:UC",w:"/db/key/a/b/j/w/z",z:[{}]}} */
+					/** @type {{key:`boxed_id:channel_id:UC:${string}`,a: DST_KStr_AKLZ;b:"boxed_id",l:"channel_id:UC",z:[{}]}} */
 					const z=this.make_ST_jz(key,tag,bt);
 					/** @type {T} */
 					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
