@@ -3350,28 +3350,38 @@ class HandleTypes extends BaseService {
 					case "string": return [x.d,...w_diz(x.z[0]),x];
 				}
 			};
-			/** @template {G_Boxed_DST['z'][0]} T @arg {T} x @returns {[true,number,string,T['z'][0],T]|[false,number,T]} */
+			/** @template {G_Boxed_DST['z'][0]} T @arg {T} x @returns {[true,0,[string],[T['z'][0],T]]} */
 			const w_di=x => {
 				/** @type {G_Boxed_DST['z'][0]} */
 				let u=x;
-				{const k="a"; if(k in u&&k in x) return [true,0,x.a,x.z[0],x]; if(k in x||k in u) throw 1;}
-				return [false,4,x];
+				if("a" in u&&"a" in x) return [true,0,[x.a],[x.z[0],x]];
+				debugger;
+				throw 1;
 			};
-			/** @template {G_Boxed_DST} T @arg {T} x @returns {Ret_w_dst<T>} */
-			const w_dst=x => {
-				let a=x.z[0],w=w_di(a);
-				if(w[0]===false) {
-					let [,,a1]=w;
-					if("a" in x&&x.a==="/db/key/a/b/l/m/z") {
-						x.a;
-						return [true,2,x.l,x.m,a1,x];
-					}
-					return [false,4,x.l,a1,x];
+			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: "/db/key/a/b/l/m/z";}>} */
+			const extract_dst_lm=x => {return x.a==="/db/key/a/b/l/m/z";};
+			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: "/db/key/a/b/l/z";}>} */
+			const extract_dst_l=x => {return x.a==="/db/key/a/b/l/z";};
+			/** @template {G_Boxed_DST} T @arg {T} v_dst @returns {Ret_w_dst<T>} */
+			const w_dst=v_dst => {
+				if(v_dst.a==="/db/key/a/b/l/m/z") {
+					if(!extract_dst_lm(v_dst)) throw new Error();
+					let v_di=v_dst.z[0],w=w_di(v_di);
+					let [,,,[v_value]]=w;
+					return [true,2,[v_dst.l,v_dst.m],[v_value,v_di,v_dst]];
 				}
-				{
-					let [,,a1,a2,a3]=w;
-					return [true,1,x.l,a1,a2,a3,x];
+				if(v_dst.a==="/db/key/a/b/l/z") {
+					if(!extract_dst_l(v_dst)) throw new Error();
+					let v_di=v_dst.z[0],w=w_di(v_di);
+					let [,,[k],[v_value]]=w;
+					return [true,1,[v_dst.l,k],[v_value,v_di,v_dst]];
 				}
+				if("l" in v_dst) {
+					debugger; v_dst;
+					throw new Error();
+				}
+				debugger; v_dst;
+				throw new Error();
 			};
 			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
 			const w_db_data=(x) => {
@@ -3392,6 +3402,11 @@ class HandleTypes extends BaseService {
 				}
 				if(n[1]) {
 					let x=n[1],w=w_dst(x);
+					if("j" in x) {x.l=as(x.j); delete x.j;}
+					if(x.l==="load_id") {
+						let w=w_dst(x);
+						return [3,w,x];
+					}
 					x.l;
 					console.log("TODO [ReturnType<typeof w_dst>] [1]",w); debugger;
 					return [1,w,x];

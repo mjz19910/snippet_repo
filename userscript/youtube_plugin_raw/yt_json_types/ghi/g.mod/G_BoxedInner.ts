@@ -10,5 +10,7 @@ type G_BoxedInner=
 	|[2,4,...Ret_W_DSS_Impl<DSS_Number,"number",number>]
 	|[2,5,...Ret_W_DSS_Impl<DSS_VE,"root_visual_element",number>]
 	|[2,6,...Ret_W_DSS_Impl<DSS_String,"string",string>]
+	|[3,Ret_w_dst<DST_LoadId>,DST_LoadId]
 	;
 ;
+type U1=Ret_w_dst<DST_LoadId>[2];
