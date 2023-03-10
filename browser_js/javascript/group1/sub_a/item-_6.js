@@ -26,7 +26,7 @@ function not_null(value) {
 	return value;
 }
 
-async function run() {
+async function item_6_run() {
 	const wasm_header=[0,0x61,0x73,0x6d,1,0,0,0];
 	// const empty_wasm_module=await WebAssembly.compile(new Uint8Array(wasm_header));
 	/** @type {WebAssembly.Module[]} */
@@ -42,4 +42,4 @@ async function run() {
 	}
 	console.log('success rate',module_list.length/256);
 }
-run();
+item_6_run();

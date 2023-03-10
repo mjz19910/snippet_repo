@@ -193,7 +193,7 @@ let stp=["https",":","//","domain.glass","/","atl,","14","s","79","-","in","-","
 url_arr??=make_parr();
 
 promise_arr??=url_arr.map(e => fetch(e));
-async function run () {
+async function item_6_run () {
 	if(!promise_arr) return;
 	p_res??=(await Promise.all(promise_arr)).map(e => e.text());
 	px_res??=(await Promise.all(p_res));

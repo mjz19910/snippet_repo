@@ -1,5 +1,3 @@
-import {console_log} from "../helper/console.js";
-
 export function attach_proxy_for_setInterval() {
 	globalThis.setInterval=new Proxy(globalThis.setInterval,{
 		/** @arg {[ typeof setInterval, any, [ TimerHandler, number|undefined ] ]} arg0 */
@@ -8,7 +6,7 @@ export function attach_proxy_for_setInterval() {
 			if(typeof ha=='function') {
 				let func=ha;
 				return setTimeout(function() {
-					console_log("timeout");
+					console.log("timeout");
 					func();
 				},0);
 			} else {
