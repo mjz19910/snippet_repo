@@ -31,6 +31,7 @@ function init_module() {
 		[24412856,24447748,24447992,24451320,24456736,24465486,24483504,24483766,24491863,24492030,24447748,24465486,24486981,24494197],
 		[24487523],
 		[39323338],
+		[24483085],
 	].flat());
 }
 export_((exports) => {exports.init_module=init_module;});
@@ -3105,7 +3106,8 @@ class HandleTypes extends BaseService {
 				}
 			}
 			case "any": {
-				const {a: k,z: [v]}=x;
+				if("k" in x) return pr({a: null});
+				const {z: [v]}=x; const k="any";
 				if(this.str_starts_with_rx("FE",v)) {
 					/** @type {DI_RetInfo} */
 					const z={a: "tag",k,l: "FE",z: [v]};

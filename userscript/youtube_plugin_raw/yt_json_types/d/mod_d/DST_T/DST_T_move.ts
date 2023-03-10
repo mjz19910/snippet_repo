@@ -86,10 +86,11 @@ type DST_HashtagId=DST_T_ABLZ<"hashtag_id",string,DI_A_HashtagId>;
 type CV_ABC_KV<T extends {b: string; c: string; z: [any,...any];}>=KV_T_AKZ<`${T["b"]}:${T['c']}`,TZ_Successor<T>>;
 type DST_MakeLM_From_BC<
 	T extends {
-		b: string; c: string;
+		k: string;
+		l: string;
 		z: [T_DI_FromObj<{[K in T_KeyName]: T_RawId}>,...any];
 	},
-	V extends G_Primitives,L extends T["b"]=T["b"],M extends T["c"]=T["c"],T_KeyName extends PropertyKey=keyof T_GP_FromObj<T['z'][0]>,T_RawId=T_GP_FromObj<T['z'][0]>[T_KeyName]
+	V extends G_Primitives,L extends T["k"]=T["k"],M extends T["l"]=T["l"],T_KeyName extends PropertyKey=keyof T_GP_FromObj<T['z'][0]>,T_RawId=T_GP_FromObj<T['z'][0]>[T_KeyName]
 >={
 	key: `boxed_id:${L}:${M}:${V}`;
 	a: DST_KStr_AKLMZ;

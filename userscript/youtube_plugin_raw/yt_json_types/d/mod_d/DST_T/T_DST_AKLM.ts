@@ -1,4 +1,4 @@
-type T_DST_AKLM<K,L,M,T extends {z: [any,T_DI_FromObj<{id: any;}>];}>={
-	key: `boxed_id:browse_id:FE:${T["z"][1]["z"][0]["z"][0]}`;
+type T_DST_AKLM<K extends string,L extends string,M extends string,T extends {z: [any,T_DI_FromObj<{id: V;}>];},V extends string=TZ_SuccessorX2<T['z'][1]>>={
+	key: `boxed_id:${K}:${L}:${M}:${V}`;
 	a: DST_KStr_AKLMZ; k: K; l: L; m: M; z: [T];
 };

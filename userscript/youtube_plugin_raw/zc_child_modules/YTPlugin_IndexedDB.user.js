@@ -249,26 +249,26 @@ class IndexedDBService extends BaseService {
 		item=await this.update_obj_schema(item,version);
 		if(!item.z) return;
 		this.store_cache_tree(item);
-		/** @template {string} T @arg {{tag:T}} x */
-		function get_tag(x) {return x.tag;}
-		/** @template {{b:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
+		/** @template {string} T @arg {{a:T}} x */
+		function get_tag(x) {return x.a;}
+		/** @template {{a:string;b:"boxed_id";l:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
 		function decay_item(x) {return x;}
-		if("d" in item) {
-			switch(item.l) {
-				default: {
-					let di=decay_item(item);
-					switch(get_tag(item)) {
-					}
-					console.log("skip_tag",di.tag);
-					debugger;
-				} break;
-				case "bigint": return store.get_store(item.l).load_data(item);
-				case "boolean": return store.get_store(item.l).load_data(item);
-				case "keys": return store.get_store(item.l).load_data(item);
-				case "number": return store.get_store(item.l).load_data(item);
-				case "root_visual_element": return store.get_store(item.l).load_data(item);
-				case "string": return store.get_store(item.l).load_data(item);
-			}
+		if(item.a==="/db/key/a/k/l/m/z") return;
+		switch(item.l) {
+			default: {
+				let di=decay_item(item);
+				if(di.a===void 0) break;
+				switch(get_tag(item)) {
+				}
+				console.log("skip_a",di.a,di.l);
+				debugger;
+			} break;
+			case "bigint": return store.get_store(item.l).load_data(item);
+			case "boolean": return store.get_store(item.l).load_data(item);
+			case "keys": return store.get_store(item.l).load_data(item);
+			case "number": return store.get_store(item.l).load_data(item);
+			case "root_visual_element": return store.get_store(item.l).load_data(item);
+			case "string": return store.get_store(item.l).load_data(item);
 		}
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
@@ -366,75 +366,28 @@ class IndexedDBService extends BaseService {
 		return this.kwb(x,u,j,k);
 	}
 	/** @template {string} L @arg {L} l @template {string} V @template {{c:V}} X @arg {X} x @returns {DST_T_ABLZ<L,V,X>} */
-	mk_s2(l,x) {return {a: this.mka("l"),b: "boxed_id",l,z: [x],key: `boxed_id:${l}:${x.c}`};}
-	/** @template {string} M @arg {M} m @template {string} L @arg {L} l @template {string} IC @template {{c:IC}} X @arg {X} x @returns {DST_MakeLM_3<X,L,M,IC>} */
-	mk_s3(l,m,x) {return {a: this.mka("lm"),b: "boxed_id",l,m,z: [x],key: `boxed_id:${l}:${m}:${x.c}`};}
-	/** @template {string} S @template {string} SC @template {Omit<DI_BrowseId_FE,"z"|"c">&{c:SC;z:[any,TMK_SuccessorX2<S>]}} X @arg {X} x @returns {Omit<DST_Browse_FE,"key"|"l"|"m"|"z">&{l:`browse_id`;m:SC;key:`boxed_id:browse_id:${SC}:${S}`,z:[X]}} */
-	mk_s4(x) {return {a: this.mka("l"),b: "boxed_id",l: x.b,m: x.c,z: [x],key: `boxed_id:${x.b}:${x.c}:${this.za2(x.z[1])}`};}
+	mk_s2(l,x) {return {a: this.mka("l"),k: "boxed_id",l,z: [x],key: `boxed_id:${l}:${x.c}`};}
+	/** @template {string} M @arg {M} m @template {string} L @arg {L} l @template {string} IC @template {T_DI_AKLZ<any,any,any>} X @arg {X} x @returns {DST_MakeLM_3<X,L,M,IC>} */
+	mk_s3(l,m,x) {return {a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x],key: `boxed_id:${l}:${m}:${x.l}`};}
+	// a/k/l/m/z
+	/** @template {string} K @template {string} L @template {string} M @template {string} V @template {{k: K; l: L; m: M; z:[any,T_DI_FromObj<{id:V;}>]}} T @arg {T} x @returns {T_DST_AKLM<K,L,M,T>} */
+	mk_s4(x) {
+		const iv=this.za2(x.z[1]);
+		/** @type {T_DST_AKLM<K,L,M,T>["key"]} */
+		const key=`boxed_id:${x.k}:${x.l}:${x.m}:${iv}`;
+		return {a: "/db/key/a/k/l/m/z",k: x.k,l: x.l,m: x.m,z: [x],key};
+	}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
-			default: args[1]===""; debugger; throw new Error("Unreachable");
+			default: debugger; return null;
 			case "MP": {
 				let [type,tag,x]=args;
+				/** @type {DI_BrowseId_MP} */
+				let ia;
+				function u() {ia;}; u;
 				/** @type {DST_Browse_MP} */
 				const z=this.mk_s3(type,tag,x);
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "FE": {
-				let [,,value]=args;
-				/** @type {DST_Browse_FE} */
-				const z=this.mk_s4(value);
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "VL:LL": {
-				let [type,tag,x]=args;
-				let [tag1,]=split_string_once(tag,":");
-				let id=this.za2(x.z[1].z[0]);
-				/** @type {DST_Browse_VL_LL} */
-				const z={
-					key: `boxed_id:${type}:${tag1}:${id}`,
-					a: this.mka("l"),b: "boxed_id",l: `${type}:${tag1}`,z: [x]
-				};
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "VL:WL": {
-				let [type,tag,x]=args;
-				let [tag1]=split_string_once(tag,":");
-				let id=this.za2(x.z[1].z[0]);
-				/** @type {DST_Browse_VL_WL} */
-				const z={
-					key: `boxed_id:${type}:${tag1}:${id}`,
-					a: this.mka("l"),b: "boxed_id",l: `${type}:${tag1}`,z: [x]
-				};
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "VL:PL": {
-				let [type,tag,x]=args;
-				let [tag1,tag2]=split_string_once(tag,":");
-				let id=this.za2(x.z[1].z[1]);
-				/** @type {DST_Browse_VL_PL} */
-				const z={
-					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
-					a: this.mka("l"),b: "boxed_id",l: `${type}:${tag1}:${tag2}`,z: [x]
-				};
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "VL:UC": {
-				let [type,tag,x]=args;
-				let [tag1,tag2]=split_string_once(tag,":");
-				let id=this.za2(x.z[1].z[1]);
-				/** @type {DST_Browse_VL_UC} */
-				const z={
-					key: `boxed_id:${type}:${tag1}:${tag2}:${id}`,
-					a: this.mka("l"),b: "boxed_id",l: `${type}:${tag1}:${tag2}`,z: [x]
-				};
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "SP": {
-				let [,,s]=args;
-				/** @type {DST_Browse_SP} */
-				const z=this.mk_s4(s);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 		}
@@ -447,8 +400,8 @@ class IndexedDBService extends BaseService {
 		const z=r;
 		return z;
 	}
-	/** @type {"a/b/l/m/z"} */
-	kz_lm="a/b/l/m/z";
+	/** @type {"a/k/l/m/z"} */
+	kz_lm="a/k/l/m/z";
 	/** @type {"a/k/l/z"} */
 	kz_l="a/k/l/z";
 	/** @template {string} T @arg {T}x @returns {`/db/key/${T}`}  */

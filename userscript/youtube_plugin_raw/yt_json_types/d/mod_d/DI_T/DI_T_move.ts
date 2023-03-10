@@ -57,10 +57,11 @@ type DI_SrcInfo_Any={
 };
 type DI_SrcInfo=
 	|DI_SrcInfo_Any
-	|{a: "start_radio"; z: [DU_StartRadio];}
-	|{a: "video_id"; z: [DU_VideoId];}
 	|{a: "hashtag_id"; z: [string];}
+	|{a: "start_radio"; z: [DU_StartRadio];}
 	|{a: "user_id"; z: [string];}
+	|{a: "video_id"; z: [DU_VideoId];}
+	|MK_DIInfo1<["key","hashtag_id",string]>
 	|MK_DIInfo1<["key","start_radio",DU_StartRadio]>
 	|MK_DIInfo1<["key","user_id",string]>
 	;
@@ -218,21 +219,22 @@ type DI_BrowseId_FE={
 		T_DI_FromObj<{id: D_BrowseEndpointPages;}>
 	];
 };
-type DI_BrowseId_MP={
+type DI_BrowseId_MP=T_DI_AKLZ<"browse_id","MP",[
+	T_DI_FromObj<{raw_id: `MP${string}_${string}`;}>,
+	T_DI_FromObj<{
+		id: `${string}_${string}`;
+		parts: [
+			T_DI_FromObj<{id: string;}>,
+			T_DI_FromObj<{data: "_";}>,
+			T_DI_FromObj<{id: string;}>
+		];
+	}>
+]>;
+type T_DI_AKLZ<K,L,Z extends any[]>={
 	a: DStr_DI_AKLZ;
-	k: "browse_id";
-	l: "MP";
-	z: [
-		T_DI_FromObj<{raw_id: `MP${string}_${string}`;}>,
-		T_DI_FromObj<{
-			id: `${string}_${string}`;
-			parts: [
-				T_DI_FromObj<{id: string;}>,
-				T_DI_FromObj<{data: "_";}>,
-				T_DI_FromObj<{id: string;}>
-			];
-		}>,
-	];
+	k: K;
+	l: L;
+	z: Z;
 };
 type DI_BrowseId_SP={
 	a: DStr_DI_AKLZ;
