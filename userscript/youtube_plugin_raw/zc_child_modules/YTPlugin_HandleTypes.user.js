@@ -3118,7 +3118,8 @@ class HandleTypes extends BaseService {
 				if(this.str_starts_with_rx("VL",v)) return pr({a: "/key/a/k/m/z",k,m: "VL",z: [v]});
 				if(this.str_starts_with_rx("MP",v)) return pr({a: "/key/a/k/m/z",k,m: "MP",z: [v]});
 				if(this.str_starts_with_rx("SP",v)) return pr({a: "/key/a/k/m/z",k,m: "SP",z: [v]});
-				return pr({a: "/key/a/k/z",k,z: [v]});
+				debugger;
+				throw new Error();
 			}
 			case "guide_entry_id": {
 				const {k,z: [v]}=x;
@@ -3205,7 +3206,7 @@ class HandleTypes extends BaseService {
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		let p2=null; p2;
-		switch(x.l) {
+		switch(x.k) {
 			default: debugger; return null;
 			case "start_radio": {
 				/** @type {T_DI_FromObj2<{start_radio: DU_StartRadio;}>} */
@@ -3213,44 +3214,50 @@ class HandleTypes extends BaseService {
 				const p1=this.make_input_from_R_info(u);
 				const p=this.get_parsed_info(p1);
 				if(p.a===null) return null;
-				if(p.k!==x.l) {debugger; return null;}
+				if(p.k!==x.k) {debugger; return null;}
 				/** @type {DI_A_StartRadio} */
 				const z=this.make_DI_StartRadio(x.z[0]);
 				return z;
 			}
 			case "user_id": {
-				const b=x.l,raw_id=x.z[0];
+				const b=x.k,raw_id=x.z[0];
 				const s=this.make_obj_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				if(p.a===null) return null;
-				if(p.k!==x.l) {debugger; return null;}
+				if(p.k!==x.k) {debugger; return null;}
 				/** @type {DI_A_UserId} */
 				const z=this.make_DI_KeyLike_like(p.k,p.z[0]);
 				return z;
 			}
 			case "hashtag_id": {
-				const k=x.l,raw_id=x.z[0];
+				const k=x.k,raw_id=x.z[0];
 				/** @type {DI_A_HashtagId} */
 				const z=this.make_DI_Key2Like_like(k,"raw_id",raw_id);
 				return z;
 			}
 			case "video_id": {
-				const b=x.l,raw_id=x.z[0];
+				const b=x.k,raw_id=x.z[0];
 				const s=this.make_obj_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				if(p.a===null) return null;
-				if(p.k!==x.l) {debugger; return null;}
+				if(p.k!==x.k) {debugger; return null;}
 				/** @type {DI_A_VideoId} */
-				const z=this.make_DI_FromObj2(x.l,this.make_DI_RawIdBox(raw_id));
+				const z=this.make_DI_FromObj2(x.k,this.make_DI_RawIdBox(raw_id));
 				return z;
 			}
 			case "browse_id": {
-				const k=x.l,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
-				if(p.a===null) return null;
+				const k=x.k,raw_id=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [raw_id]});
+				switch(p.m) {
+					case "FE":
+					case "VL":
+					case "UC":
+					case "MP":
+					case "SP":
+				}
 				console.log(k,p);
 			} return null;
 			case "channel_id": {
-				const k=x.l,raw_id=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [raw_id]});
+				const k=x.k,raw_id=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [raw_id]});
 				if(p.a===null) return null;
 				if(p.k!==k) return null;
 				let [,id]=split_string_once(raw_id,p.m);
@@ -3259,7 +3266,7 @@ class HandleTypes extends BaseService {
 				return z;
 			}
 			case "guide_entry_id": {
-				const k=x.l,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
+				const k=x.k,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
 				switch(p.a) {
 					case "/key/a/k/m/z": {
 						switch(p.m) {
@@ -3333,14 +3340,14 @@ class HandleTypes extends BaseService {
 				}
 			}
 			case "playlist_id": {
-				if(x.l!=="playlist_id") {debugger; return null;}
-				const k=x.l,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
+				if(x.k!=="playlist_id") {debugger; return null;}
+				const k=x.k,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
 				if("m" in p) switch(p.m) {
 					default: p===""; debugger; return null;
 					case "PL": {
-						const {l}=x,[,id]=split_string_once(p.z[0],"PL");
+						const {k}=x,[,id]=split_string_once(p.z[0],"PL");
 						/** @type {DI_A_Playlist_PL} */
-						let di={a: "/di/a/l/m/z",l,m: "PL",z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
+						let di={a: "/di/a/l/m/z",l: k,m: "PL",z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
 						return di;
 					}
 					case "RD": {
@@ -3380,7 +3387,7 @@ class HandleTypes extends BaseService {
 				console.log(k,p);
 			} return null;
 			case "user_id": {
-				const b=x.l,raw_id=x.z[0];
+				const b=x.k,raw_id=x.z[0];
 				const s=this.make_obj_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				console.log(b,p);
@@ -3450,12 +3457,12 @@ class HandleTypes extends BaseService {
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
 	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLMZ;}>} */
-	extract_dst_lm(x) {return x.a==="/db/key/a/k/l/m/z";}
-	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLZ;}>} */
-	extract_dst_l(x) {return x.a==="/db/key/a/k/l/z";}
+	extract_dst_lm(x) {return x.a==="/di/a/k/l/m/z";}
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_ABKZ;}>} */
+	extract_dst_l(x) {return x.a==="/di/a/k/z";}
 	/** @template T_Arg @template {DI_T_KV_Z_MakeItemGroup<string,T_Arg>} T_Box @arg {T_Box} x @returns {Ret_w_diz<T_Arg>} */
 	w_diz(x) {
-		x.a; x.l; let a=x.z[0];
+		x.a; x.k; let a=x.z[0];
 		switch(a.l) {
 			case "one": {let b=a.z[0]; return [a.l,["1",b],a,x];}
 			case "arr": {let b=a.z[0]; return [a.l,["2",b],a,x];}
@@ -3468,22 +3475,9 @@ class HandleTypes extends BaseService {
 	w_db_data(x) {
 		if(!x) return ["n"];
 		let nx=null;
-		/** @type {[Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/m/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/m/n/z"}>|null]} */
+		/** @type {[Extract<G_BoxedDatabaseData,{l:any}>|null,Extract<G_BoxedDatabaseData,{a:"/di/a/b/k/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/di/a/k/z"}>|null]} */
 		const n=[null,null,null];
-		/** @arg {G_BoxedDatabaseData} v */
-		function xf(v) {
-			let lb=v.z[0];
-			switch(lb.a) {
-				case this.get_KZ("k"): {
-					lb.z[0];
-				} break;
-				case "/di/a/k/l/z":
-				case "/di/a/k/l/m/z":
-				case "/di/a/l/m/z":
-			}
-		}
-		xf(x);
-		if(x.a==="/db/key/a/k/l/z") n[0]=x; else if(x.a==="/db/key/a/k/l/m/z") n[1]=x; else if(x.a==="/db/key/a/k/l/m/n/z") n[2]=x; else nx=x;
+		if("l" in x) n[0]=x; else if(x.a==="/di/a/b/k/z") n[1]=x; else if(x.a==="/di/a/k/z") n[2]=x;
 		if(n[0]) {
 			const x=n[0],w=this.w_dss(x);
 			if(!w) return [8,x];
@@ -3498,20 +3492,20 @@ class HandleTypes extends BaseService {
 		}
 		if(n[1]) {
 			let db_data=n[1];
-			if(db_data.a==="/db/key/a/k/l/m/z") {
+			if(db_data.a==="/di/a/b/k/z") {
 				let v_di=db_data.z[0],w=this.w_di(v_di);
 				let [,,,[v_value]]=w;
-				return ["m:0",[db_data.l,db_data.m],[v_value,v_di,db_data]];
+				return ["m:0",[],[v_value,v_di,db_data]];
 			}
 			console.log("TODO [ReturnType<typeof w_dst>] [1]",db_data); debugger;
 			return [1,db_data];
 		}
 		if(n[2]) {
 			let db_data=n[2];
-			if(db_data.a==="/db/key/a/k/l/m/n/z") {
+			if(db_data.a==="/di/a/k/z") {
 				let v_di=db_data.z[0],w=this.w_di(v_di);
 				let [,,[k],[v_value]]=w;
-				return ["m:1",[db_data.l,k],[v_value,v_di,db_data]];
+				return ["m:1",[k],[v_value,v_di,db_data]];
 			}
 		}
 		if(nx) {
@@ -3522,7 +3516,7 @@ class HandleTypes extends BaseService {
 		}
 		return ["a1",this.za1(x)];
 	}
-	/** @template {Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>} T @arg {T} x @returns {Ret_w_dss|null} */
+	/** @template {Extract<G_BoxedDatabaseData,{l:any}>} T @arg {T} x @returns {Ret_w_dss|null} */
 	w_dss(x) {
 		switch(x.l) {
 			case "bigint": {
@@ -3568,10 +3562,10 @@ class HandleTypes extends BaseService {
 	/** @template {G_BoxedDatabaseData} T_Put @arg {T_Put} value */
 	on_has_key_in_cache(value) {
 		const x=value,loaded_value=this.loaded_map.get(x.key),y=loaded_value;
-		if(x.k!=="boxed_id") return;
+		if(x.b!=="boxed_id") return;
 		let nw=null;
 		switch(x.a) {
-			case "/db/key/a/k/l/m/z": {
+			case "/di/a/k/l/m/z": {
 				switch(x.l) {
 					default: debugger; break;
 					case "browse_id": break;
@@ -3579,21 +3573,8 @@ class HandleTypes extends BaseService {
 					case "key": break;
 				}
 			} break;
-			case "/db/key/a/k/l/z": {
-				switch(x.l) {
-					case "playlist_id":
-					case "load_id":
-					case "video_id": return;
-				}
-				switch(x.l) {
-					default: debugger; break;
-					case "bigint": break;
-					case "boolean": break;
-					case "keys": break;
-					case "string": break;
-					case "number": break;
-					case "root_visual_element": break;
-				}
+			case "/di/a/b/k/z": {
+				debugger;
 			} break;
 		}
 		if(!("w" in x)) nw=x;

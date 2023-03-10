@@ -125,7 +125,6 @@ type DI_RetInfo=
 	|MK_DIInfo2<"browse_id","VL">
 	|MK_DIInfo2<"browse_id","MP">
 	|MK_DIInfo2<"browse_id","SP">
-	|MK_DIInfo1<"browse_id",never>
 	|MK_DIInfo4<"RDCMUC","playlist_id","RD","CM","UC">
 	|MK_DIInfo4<"RDGMEM","playlist_id","RD","GM","EM">
 	|MK_DIInfo3<"RDMM","playlist_id","RD","MM">

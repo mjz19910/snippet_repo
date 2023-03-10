@@ -187,7 +187,7 @@ class StoreDescription extends ApiBase2 {
 	 * @param {"item"} b
 	 * @returns {G_MakeGroupShape<Z,"item",C,F>}
 	 **/
-	make_group(z,f,c,b="item") {return {a: "/db/key/a/k/l/m/z",k: b,l: c,m: f,z: [z]};}
+	make_group(z,f,c,b="item") {return {a: "/di/a/k/l/m/z",k: b,l: c,m: f,z: [z]};}
 	log_count=0;
 	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} T @arg {T} x @arg {T} src */
 	upgrade_item_container(x,src) {

@@ -16,7 +16,7 @@ type T_DST_AKLM_Params<K,L,M,T extends T_SRC_AKLM<K,L,M,V>,V=TZ_Successor<T['z']
 type T_DST_AKL<K extends string,L extends string,T,V extends string>={
 	key: `boxed_id:${K}:${L}:${V}`;
 	a: DST_KStr_AKLMZ;
-	k: "boxed_id";
+	b: "boxed_id";
 	l: K;
 	m: L;
 	z: [T];

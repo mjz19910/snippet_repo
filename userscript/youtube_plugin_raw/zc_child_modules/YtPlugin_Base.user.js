@@ -2410,10 +2410,10 @@ class BaseService extends ServiceWithMembers {
 	kz_km="a/k/m/z";
 	/** @type {"a/l/m/z"} */
 	kz_lm="a/l/m/z";
-	/** @template {string} T @arg {T}x @returns {`/di/${T}`}  */
-	mdk=x => `/di/${x}`;
-	/** @template {"kl"|"k"|"lm"|"km"} T @arg {T} x */
-	get_KZ=x => this.mdk(this[`kz_${x}`]);
+	/** @type {"a/k/l/z"} */
+	kz_klz="a/k/l/z";
+	/** @template {"kl"|"k"|"lm"|"km"|"klz"} T @arg {T} x @returns {`/di/${this[`kz_${T}`]}`} */
+	get_KZ=x => `/di/${this[`kz_${x}`]}`;
 	/** @template K,T @arg {K} k @arg {T} x @returns {T_DI_FromObj2<{[U in K]: T}>} */
 	make_DI_FromObj2(k,x) {return {a: this.get_KZ("k"),k,z: [x]};}
 	/** @template T @arg {T} x @returns {T_DI_FromObj2<{raw_id:T}>} */

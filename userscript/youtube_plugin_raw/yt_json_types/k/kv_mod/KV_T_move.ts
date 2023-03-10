@@ -3,7 +3,7 @@ type KV_T_AKZ<K,V>={a: DStr_DI_AKZ; k: K; z: [V];};
 //#endregion
 type KV_T_AKLZ<K,L,V>={a: DStr_DI_AKLZ; k: K; l: L; z: [V];};
 
-type DB_T_AKLZ<S extends string,K,L,V>={key: S; a: DST_KStr_AKLZ; k: K; l: L; z: [V];};
+type DB_T_AKLZ<S extends string,K,L,V>={key: S; a: DST_KStr_ABKZ; k: K; l: L; z: [V];};
 
 
 type DI_T_KV_Z_MakeItemGroup<K extends string,T>=T_DI_FromObj2<{[U in K]: make_item_group<T>}>;
@@ -22,10 +22,10 @@ type Ret_w_diz<T,T_Box extends T_DI_FromObj2<{[x: string]: make_item_group<T>;}>
 
 type DSI_T_Item_ABD<T_Type extends keyof J_StoreTypeMap,T>={
 	key: `boxed_id:${T_Type}:${string}`;
-	a: DST_KStr_AKLZ; k: "boxed_id"; l: T_Type; z: [KV_T_AKZ<string,make_item_group<T>>];
+	a: DST_KStr_ABKZ; b: "boxed_id"; l: T_Type; z: [KV_T_AKZ<string,make_item_group<T>>];
 	descriptive_name?: "boxed_store";
 	renames_arr?: DEX_Renames<[
-		DRN_KeyIs<DST_KStr_AKLZ>,
+		DRN_KeyIs<DST_KStr_ABKZ>,
 		DRN_KeyType<T_Type>,
 	]>;
 };
@@ -34,15 +34,15 @@ type DSI_T_Item_ABD<T_Type extends keyof J_StoreTypeMap,T>={
 type DST_MakeLM<L extends string,M extends string,ZV extends G_Primitives,T extends KV_T_AKZ<L,TMK_SuccessorX2<ZV>>=KV_T_AKZ<L,TMK_SuccessorX2<ZV>>>={
 	key: `boxed_id:${L}:${M}:${ZV}`;
 	a: DST_KStr_AKLMZ;
-	k: "boxed_id";
+	b: "boxed_id";
 	l: L;
 	m: M;
 	z: [T];
 };
 type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends G_Primitives>={
-	key: `boxed_id:${T["l"]}:${TZ_SuccessorX3<T>}`;
+	key: `boxed_id:${T["k"]}:${TZ_SuccessorX3<T>}`;
 	a: DST_KStr_AKLMZ;
-	k: "boxed_id";
+	b: "boxed_id";
 	l: L;
 	m: M;
 	z: [T];
@@ -50,7 +50,7 @@ type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends G_
 type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string,M extends string,V extends G_Primitives>={
 	key: `boxed_id:${L}:${M}:${V}`;
 	a: DST_KStr_AKLMZ;
-	k: "boxed_id";
+	b: "boxed_id";
 	l: L;
 	m: M;
 	z: [T];
@@ -58,11 +58,11 @@ type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string
 
 
 
-type DST_T_ABLZ<L extends string|number,V extends string|number=string,T extends KV_T_AKZ<string|number,any>=KV_T_AKZ<string,any>>={
-	key: `boxed_id:${L}:${V}`;
-	a: DST_KStr_AKLZ;
-	k: "boxed_id";
-	l: L;
+type DST_T_ABLZ<K extends string|number,V extends string|number=string,T extends KV_T_AKZ<string|number,any>=KV_T_AKZ<string,any>>={
+	key: `boxed_id:${K}:${V}`;
+	a: DST_KStr_ABKZ;
+	b: "boxed_id"
+	k: K;
 	z: [T];
 };
 
