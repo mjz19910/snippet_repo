@@ -20,6 +20,9 @@
 
 import captureStackTrace from "../../src/capture-stack-trace.js";
 import {CompressDual} from "../DebugApi/types/CompressDual";
+import {AltPair} from "./AltPair";
+import {AnyOrRepeat2} from "./AnyOrRepeat2";
+import {CompressStateBase} from "./CompressStateBase";
 
 export interface AbstractVM {
 	halt(): void;
@@ -1523,11 +1526,6 @@ class CompressionStatsCalculator {
 	calc_for_stats_index(stats_arr: any[],arr: any[],index: number) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
-}
-type AnyOrRepeat2<T,U>=[T,U];
-type AltPair<T,U>=[T,U];
-class CompressStateBase<T,U> {
-	constructor(public arr: U[],public ret: T[]) {}
 }
 class BaseCompression {
 	compress_result_state_dual(arg0: CompressDual): {} {

@@ -1,10 +1,12 @@
-import {BaseCompression} from "./BaseCompression";
-
+import {BaseCompression} from "../../../src/compression/BaseCompression";
+import {AltPair} from "../../rebuild_the_universe/AltPair";
+import {DualR} from "./DualR";
+type AnyOrRepeat2<T,U>=[T,U];
 export class CompressDual {
 	i: number=0;
-	ret: AnyOrRepeat2_1<string,number>[]=[];
+	ret: AnyOrRepeat2<string,number>[]=[];
 	m_base=new BaseCompression;
-	try_compress_dual(): DualR_1 {
+	try_compress_dual(): DualR {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
