@@ -367,6 +367,7 @@ class IndexedDBService extends BaseService {
 	async put_boxed_id_async_3(version,...args) {
 		let box_res=this.put_boxed_id_3(version,...args);
 		if(!box_res) return {args,ret: box_res};
+		box_res;
 		if(!box_res.promise) return {args,ret: box_res.promise,box: box_res};
 		return {args,ret: await box_res.promise};
 	}
@@ -432,7 +433,7 @@ class IndexedDBService extends BaseService {
 	za2(x) {return this.ht.tz_pop(this.ht.za1(x));}
 	/** @template V @template {TShape_SuccessorX3<V>} T @arg {T} x @returns {TZ_SuccessorX3<T>} */
 	za3(x) {return this.ht.tz_pop(this.za2(x));}
-	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"url_info"}>} T @arg {T} args @returns {RetPromise_put_boxed_url_info<T>} */
+	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"url_info"}>} T @arg {T} args @returns {RetPromise_put_boxed_url_info<T>|null} */
 	put_boxed_url_info(version,...args) {
 		version; args;
 		let [,,x]=args;
@@ -476,7 +477,10 @@ class IndexedDBService extends BaseService {
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
-		} else throw new Error();
+		} else {
+			debugger;
+			return null;
+		}
 	}
 	/**
 	 * @param {T_Key} key
@@ -495,9 +499,8 @@ class IndexedDBService extends BaseService {
 	make_boxed_id_box(x) {x; debugger;}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} s0 */
 	put_boxed_id_3(version,...s0) {
-		const [l,,x]=s0;
-		switch(l) {
-			default: l===""; switch((l)) {
+		switch(s0[0]) {
+			default: s0[0]===""; switch(s0[0]) {
 			} debugger; throw new Error();
 			case "playlist_id": {
 				switch(s0[1]) {
@@ -541,35 +544,54 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			case "guide_entry_id": /*db*/ {
-				let [l]=s0;
-				switch(x.m) {
-					default: x===""; throw new Error();
-					case "LL": {
-						/** @type {DST_GuideEntry_LL} */
-						const z={key: `boxed_id:${l}:${x.l}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "WL": {
-						/** @type {DST_GuideEntry_WL} */
-						const z={key: `boxed_id:${l}:${x.l}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "PL": {
-						let iv=x.z[0];
-						/** @type {DST_GuideEntry_PL} */
-						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "UC": {
-						let iv=x.z[0];
-						/** @type {DST_GuideEntry_UC} */
-						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
-						return {args: s0,promise: this.put_box(z,version)};
-					}
-					case "VL": {
-						/** @type {DST_GuideEntry_VL_LL} */
-						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${x.l}:${x.m}`,z: [{a: "/di/a/k/l/m/z",k: "guide_entry_id",l: "VL",m: "LL",z: [x]}]};
-						return {args: s0,promise: this.put_box(z,version)};
+				if(s0[1]==="UC") {
+					const [l,,x]=s0;
+					const raw_id=x.z[0].z[0].z[0];
+					const [,id]=split_string(raw_id,"UC");
+					/** @type {DST_GuideEntry_UC} */
+					const z={key: `boxed_id:${l}:${x.l}:${id}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
+					return {args: s0,promise: this.put_box(z,version)};
+				} else {
+					const [l,,x]=s0;
+					if("m" in x&&"l" in x) switch(x.l) {
+						default: x===""; throw new Error();
+						case "VL": {
+							if(x.m!=="LL") {debugger; return null;}
+							/** @type {DI_GuideEntry_VL_LL} */
+							const z1={a: "/di/a/k/l/m/z",k: "guide_entry_id",l: "VL",m: "LL",z: [x]};
+							/** @type {DST_GuideEntry_VL_LL} */
+							const z={key: `boxed_id:${l}:${x.l}:${x.m}`,a: this.mka("l"),k: "boxed_id",l,z: [z1]};
+							return {args: s0,promise: this.put_box(z,version)};
+						}
+					} else if("l" in x) {
+						switch(x.l) {
+							case "LL": {
+								/** @type {DST_GuideEntry_LL} */
+								const z={key: `boxed_id:${l}:${x.l}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
+								return {args: s0,promise: this.put_box(z,version)};
+							}
+							case "UC": {
+								let iv=x.z[0];
+								/** @type {DST_GuideEntry_UC} */
+								const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
+								return {args: s0,promise: this.put_box(z,version)};
+							}
+							case "WL": {
+								/** @type {DST_GuideEntry_WL} */
+								const z={key: `boxed_id:${l}:${x.l}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
+								return {args: s0,promise: this.put_box(z,version)};
+							}
+						}
+					} else {
+						switch(x.m) {
+							default: debugger; throw new Error();
+							case "PL": {
+								let iv=x.z[0];
+								/** @type {DST_GuideEntry_PL} */
+								const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
+								return {args: s0,promise: this.put_box(z,version)};
+							}
+						}
 					}
 				}
 			}
@@ -579,19 +601,19 @@ class IndexedDBService extends BaseService {
 						let [l,m,x]=s0;
 						/** @type {DST_Browse_FE} */
 						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
-						let promise=this.put_box(z,version); return {args: s0,promise};
+						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "MP": {
 						let [l,m,x]=s0;
 						/** @type {DST_Browse_MP} */
 						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
-						let promise=this.put_box(z,version); return {args: s0,promise};
+						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "SP": {
 						let [l,m,x]=s0;
 						/** @type {DST_Browse_SP} */
 						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
-						let promise=this.put_box(z,version); return {args: s0,promise};
+						return {args: s0,promise: this.put_box(z,version)};
 					}
 				}
 			} throw new Error("end");
@@ -602,70 +624,70 @@ class IndexedDBService extends BaseService {
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "user_id": {
-				let x=s0[2];
+				let x=s0[2],{k: l}=x;
 				/** @type {DST_User_Id} */
-				const z={key: `boxed_id:${l}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
+				const z={key: `boxed_id:${x.k}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "play_next": {
-				const x=s0[2];
+				const x=s0[2],{k: l}=x;
 				/** @type {DST_PlayNext} */
-				const z={key: `boxed_id:${l}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
+				const z={key: `boxed_id:${x.k}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "channel_id": {
-				const x=s0[2],{m}=x;
+				const x=s0[2],{l,m}=x;
 				/** @type {DST_Channel_UC} */
 				const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "hashtag_id": {
-				const x=s0[2];
+				const x=s0[2],{k: l}=x;
 				/** @type {DST_HashtagId} */
 				const z={key: `boxed_id:${l}:${this.za1(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "video_time": {
-				const x=s0[2];
+				const x=s0[2],{k: l}=x;
 				/** @type {DST_VideoTime} */
 				const z={key: `boxed_id:${l}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "bigint": {
 				let [tag1,,[tag2,value]]=s0;
 				/** @type {DSS_Bigint} */
 				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.make_DIZ_Item_AB(tag2,value));
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "boolean": {
 				let [tag1,,[tag2,value]]=s0;
 				/** @type {DSS_Boolean} */
 				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.make_DIZ_Item_AB(tag2,value));
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "number": {
 				let [tag1,,[tag2,value]]=s0;
 				/** @type {DSS_Number} */
 				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.make_DIZ_Item_AB(tag2,value));
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "string": {
 				let [tag1,,[tag2,value]]=s0;
 				/** @type {DSS_String} */
 				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.make_DIZ_Item_AB(tag2,value));
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "keys": {
 				let [tag1,,[tag2,value]]=s0;
 				/** @type {DSS_Keys} */
 				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.make_DIZ_Item_AB(tag2,value));
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "root_visual_element": {
 				let [tag1,,[tag2,value]]=s0;
 				/** @type {DSS_VE} */
 				const z=this.make_T_BoxedStore_v2(tag1,tag2,this.make_DIZ_Item_AB(tag2,value));
-				let promise=this.put_box(z,version); return {args: s0,promise};
+				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "load_id": {
 				let [l,,id]=s0;
@@ -681,7 +703,10 @@ class IndexedDBService extends BaseService {
 			}
 			case "browse_id": return this.put_boxed_pl(version,...s0);
 			case "url_info": return this.put_boxed_url_info(version,s0[0],s0[1],s0[2]);
-			case "key": return {args: s0,promise: this.put_box(this.mk_start_radio(x),version)};
+			case "key": {
+				let [,,x]=s0;
+				return {args: s0,promise: this.put_box(this.mk_start_radio(x),version)};
+			}
 		}
 	}
 	/** @template {G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */

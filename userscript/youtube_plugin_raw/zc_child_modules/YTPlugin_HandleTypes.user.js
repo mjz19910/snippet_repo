@@ -750,7 +750,7 @@ class HandleTypes extends BaseService {
 				this.selector.cache.push(selector);
 				selector===""; debugger;
 			} break;
-			case "6 ": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6r": case "6 ": case "6 ": case "6z":
+			case "6 ": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6r": case "6 ": case "6y": case "6z":
 			case "76": case "7 ": case "7d": case "7 ": case "7k": case "7l": case "7r": case "7s": case "7y": case "7z":
 			case "d6": case "d ": case "d ": case "d ": case "d ": case "d ": case "dr": case "ds": case "dy": case "dz":
 			case "e6": case "e7": case "e ": case "ee": case "ek": case "el": case "e ": case "es": case "ey": case "ez":
