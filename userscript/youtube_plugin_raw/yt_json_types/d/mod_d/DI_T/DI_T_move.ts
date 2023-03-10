@@ -395,7 +395,7 @@ type DI_R_VideoId={
 //#endregion
 //#region AKZ
 type DI_Key_StartRadio=T_DI_FromObj<{key: T_DI_FromObj<{start_radio: 0|1;}>;}>;
-type DI_A_UserId=T_DI_FromObj<{user_id: T_DI_FromObj<{start_radio: 0|1;}>;}>;
+type DI_A_UserId=T_DI_FromObj<{user_id: T_DI_FromObj<{raw_id: string;}>;}>;
 type DI_A_VideoId=T_DI_FromObj2<{video_id: T_DI_FromObj<{raw_id: string;}>;}>;
 type DI_T_KV_Z_MakeItemGroup<K extends string,T>=KV_T_AKZ<K,make_item_group<T>>;
 type DI_A_Playlist_LL={

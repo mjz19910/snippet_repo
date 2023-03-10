@@ -1738,6 +1738,30 @@ class HandleTypes extends BaseService {
 		let x2=this.make_DI_T_KV_Z("object",x4);
 		return this.make_DI_T_KV_Z("key",x2);
 	}
+	/** @template {string} K2 @arg {K2} k1 @template {string} K1 @template V @arg {K1} k2 @arg {V} x  @returns {T_DI_FromObj<{[U in K2]: T_DI_FromObj<{[U in K1]: V;}>;}>} */
+	make_DI_KeyLike_like(k1,k2,x) {
+		/** @type {T_PrimitiveBox<V>} */
+		let x5=this.make_DI_T_KV_Z(this.get_s_type(x),x);
+		/** @type {T_DI_FromObj<{[U in K1]:V;}>} */
+		let x4=this.make_DI_T_KV_Z(k2,x5);
+		/** @type {G_PrimitiveTag} */
+		let vv=typeof {}; vv;
+		/** @type {T_PrimitiveBox<typeof x4>} */
+		let x2=this.make_DI_T_KV_Z("object",x4);
+		/** @type {T_DI_FromObj<{[U in K2]:typeof x4}}> */
+		let x1=this.make_DI_T_KV_Z(k1,x2);
+		return x1;
+	}
+	/** @template {string} K2 @arg {K2} k1 @template {string} K1 @template V @arg {K1} k2 @arg {V} x  @returns {T_DI_FromObj2<{[U in K2]: T_DI_FromObj<{[U in K1]: V;}>;}>} */
+	make_DI_Key2Like_like(k1,k2,x) {
+		/** @type {T_PrimitiveBox<V>} */
+		let z1=this.make_DI_T_KV_Z(this.get_s_type(x),x);
+		/** @type {T_DI_FromObj<{[U in K1]:V;}>} */
+		let z2=this.make_DI_T_KV_Z(k2,z1);
+		/** @type {T_DI_FromObj2<{[U in K2]:typeof z2}>} */
+		let z3=this.make_DI_T_KV_Z(k1,z2);
+		return z3;
+	}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
 		return this.make_DI_Raw("key","start_radio",this.make_DI_Key_StartRadio(x));
@@ -3274,7 +3298,7 @@ class HandleTypes extends BaseService {
 				if(p.a===null) return null;
 				if(p.k!==x.k) {debugger; return null;}
 				/** @type {DI_Key_StartRadio} */
-				const z=this.make_DI_T_KV_Z("key",this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(p.z[0])));
+				const z=this.make_DI_Key_StartRadio(x.z[0].z[0]);
 				return z;
 			}
 			case "user_id": {
@@ -3284,7 +3308,7 @@ class HandleTypes extends BaseService {
 				if(p.a===null) return null;
 				if(p.k!==x.k) {debugger; return null;}
 				/** @type {DI_A_UserId} */
-				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.z[0])));
+				const z=this.make_DI_KeyLike_like(p.k,"raw_id",p.z[0]);
 				return z;
 			}
 			case "hashtag_id": {
@@ -3294,7 +3318,7 @@ class HandleTypes extends BaseService {
 				if(p.a===null) return null;
 				if(p.k!==x.k) {debugger; return null;}
 				/** @type {DI_A_HashtagId} */
-				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.z[0])));
+				const z=this.make_DI_Key2Like_like(p.k,"raw_id",p.z[0]);
 				return z;
 			}
 			case "video_id": {
