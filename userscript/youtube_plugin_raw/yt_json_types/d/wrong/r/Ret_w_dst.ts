@@ -20,4 +20,3 @@ type Ret_w_dst=
 	|[false,6,[],[]]
 	;
 ;
-type GetAllZ<T extends TShape_SuccessorX2<any>>=[T["z"][0]['z'][0],T["z"][0],T];

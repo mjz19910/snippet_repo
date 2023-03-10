@@ -97,12 +97,11 @@ class StoreDescription extends ApiBase2 {
 	data=[];
 	/** @type {[string, make_item_group<J_StoreTypeMap[CLS_K]>][]} */
 	new_data=[];
-	/** @arg {CLS_K} type @arg {J_StoreStrMap[CLS_K]} type_arr @arg {()=>void} data_update_callback */
-	constructor(type,type_arr,data_update_callback) {
+	/** @arg {CLS_K} type @arg {J_StoreStrMap[CLS_K]} type_arr */
+	constructor(type,type_arr) {
 		super();
 		this.type=type;
 		this.type_arr=type_arr;
-		this.data_update_callback=data_update_callback;
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_data_to_index(k,x) {
@@ -113,7 +112,6 @@ class StoreDescription extends ApiBase2 {
 		}
 		let new_len=this.data.push([k,x]);
 		this.key_index.set(k,new_len-1);
-		this.data_update_callback();
 	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_new_data_to_index(k,x) {
@@ -128,12 +126,6 @@ class StoreDescription extends ApiBase2 {
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	push_new_data(k,x) {
 		this.add_new_data_to_index(k,x);
-		this.add_data_to_index(k,x);
-	}
-	/** @arg {DSI_T_Item_ABD<CLS_K,J_StoreTypeMap[CLS_K]>} item */
-	load_data(item) {
-		const x=item.z[0].z[0];
-		const k=item.z[0].l;
 		this.add_data_to_index(k,x);
 	}
 	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
@@ -167,131 +159,6 @@ class StoreDescription extends ApiBase2 {
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
-	/** @template T @template {[string,"one",T]|[string,"arr",T[]]|[string,"many",T[][]]} TA @arg {TA} arg0 */
-	make_item(...[f,c,x]) {
-		switch(c) {
-			case "one": return this.make_one_t(f,x);
-			case "arr": return this.make_arr_t(f,x);
-			case "many": return this.make_many_t(f,x);
-		}
-	}
-	/** @arg {string} f @template T @arg {T} x @returns {make_one_t<T>} */
-	make_one_t(f,x) {return this.make_group(x,f,"one");}
-	/** @arg {string} f @template T @arg {T[][]} x @returns {make_many_t<T>} */
-	make_many_t(f,x) {return this.make_group(x,f,"many");}
-	/** @arg {string} f @template T @arg {T[]} x @returns {make_arr_t<T>} */
-	make_arr_t(f,x) {return this.make_group(x,f,"arr");}
-	/**
-	 * @template Z @arg {Z} z @template {string} F @arg {F} f
-	 * @template {string} C @arg {C} c
-	 * @param {"item"} b
-	 * @returns {G_MakeGroupShape<Z,"item",C,F>}
-	 **/
-	make_group(z,f,c,b="item") {return {a: "/di/a/k/l/m/z",k: b,l: c,m: f,z: [z]};}
-	log_count=0;
-	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} T @arg {T} x @arg {T} src */
-	upgrade_item_container(x,src) {
-		if("c" in x&&typeof x.c==='string') {
-			x.l=as(x.c);
-			delete x.c;
-		}
-		if("f" in x) {
-			let ka1=this.get_keys_of_2(x);
-			let ka2=this.get_keys_of_2(src);
-			this.log_count++;
-			if(this.log_count>128) return x;
-			console.log(ka1.join(),ka2.join());
-		}
-		return x;
-	}
-	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x_container */
-	save_data(k,x_container) {
-		if(this.includes_key(k)) {
-			let idx=this.key_index.get(k);
-			if(idx===void 0) throw new Error();
-			let y_item=this.data[idx];
-			let y_container=this.upgrade_item_container(y_item[1],x_container);
-			if(!("b" in x_container)) {x_container;}
-			if(y_container.l==="many"&&x_container.l==="arr") {
-				let {z: [y_many]}=y_container;
-				if(y_many.findIndex(y_arr => this.eq_keys(y_arr,x_container.z[0]))>-1) return;
-				let new_container=this.clone_and_then(y_container,x1 => (x1.z[0].push(x_container.z[0]),x1));
-				this.push_new_data(k,new_container);
-				return;
-			}
-			if(y_container.l==="arr"&&x_container.l==="one") {
-				let {z: [item_arr]}=y_container;
-				if("special" in x_container) {debugger; return;}
-				if(item_arr.includes(x_container.z[0])) return;
-				let new_container=this.clone_and_then(y_container,x1 => (x1.z[0].push(x_container.z[0]),x1));
-				this.push_new_data(k,new_container);
-				return;
-			}
-			if(y_container.l==="arr"&&x_container.l==="arr") {
-				let {z: [y_arr]}=y_container;
-				if(this.eq_keys(y_arr,x_container.z[0])) return;
-				let {m: f,z: [y1_arr]}=this.clone_container(y_container);
-				this.push_new_data(k,this.make_many_t(f,[y1_arr,x_container.z[0]]));
-				return;
-			}
-			if(y_container.l==="one"&&x_container.l==="one") {
-				const {z: [y]}=y_container,{z: [x]}=x_container;
-				if(y===x) return;
-				let new_container=this.clone_and_then(y_container,y1 => this.make_arr_t(y1.m,[y1.z[0],x]));
-				this.push_new_data(k,new_container);
-				return;
-			}
-			if("f" in y_container) return;
-			debugger;
-			return;
-		}
-		this.push_new_data(k,x_container);
-	}
-	/** @api @public @this {V_StoreKeys} @template {{}} T @arg {string} k @arg {T|undefined} obj */
-	save_keys(k,obj) {
-		if(!obj) {debugger; return;}
-		/** @type {{}} */
-		let tc=obj;
-		let zo=null;
-		let ta=typeof tc;
-		switch(ta) {
-			default: {
-				ta==="";
-			} break;
-			case "bigint": zo=ta; break;
-			case "boolean": zo=ta; break;
-			case "function": zo=ta; break;
-			case "number": zo=ta; break;
-			case "object": zo=ta; break;
-			case "string": zo=ta; break;
-			case "symbol": zo=ta; break;
-			case "undefined": zo=ta; break;
-		}
-		if(typeof obj!=="object") {
-			if(zo===null) throw new Error("Invalid state");
-			switch(zo) {
-				case "bigint": throw new Error("Unable to save type");
-				case "boolean": throw new Error("Unable to save type");
-				case "function": throw new Error("Unable to save type");
-				case "number": this.save_data(`${k}.type`,this.make_one_t(k,zo)); break;
-				case "object": throw new Error("Unable to save type");
-				case "string": this.save_data(`${k}.type`,this.make_one_t(k,zo)); break;
-				case "symbol": throw new Error("Unable to save type");
-				case "undefined": throw new Error("Unable to save type");
-			}
-			return;
-		}
-		/** @type {object} */
-		let q=obj;
-		if(q instanceof Array) {
-			/** @type {make_instance_name_t<"array">} */
-			const z2=this.make_group("array",k,"instance_name");
-			this.save_data(`${k}.instance`,z2);
-			return;
-		}
-		let value=this.get_keys_of(obj);
-		return this.save_data(k,this.make_arr_t(k,value));
-	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
 	add_to_index(k,x) {
 		/** @type {[typeof k,typeof x]} */
@@ -317,34 +184,33 @@ export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
 	/** @type {Map<StoreDataInput["type"],StoreDataInput["description"]>} */
 	stores=new Map;
-	/** @arg {()=>void} data_update_callback */
-	constructor(data_update_callback) {
+	constructor() {
 		/** @arg {StoreDataInput["type"]} type @returns {StoreDataInput} */
 		function make_store(type) {
 			switch(type) {
 				case "bigint": {
 					/** @type {StoreDescription<"bigint">} */
-					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
+					const description=new StoreDescription(type,[type]); return {type,description};
 				}
 				case "boolean": {
 					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
+					const description=new StoreDescription(type,[type]); return {type,description};
 				}
 				case "keys": {
 					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,["number","string"],data_update_callback); return {type,description};
+					const description=new StoreDescription(type,["number","string"]); return {type,description};
 				}
 				case "number": {
 					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
+					const description=new StoreDescription(type,[type]); return {type,description};
 				}
 				case "root_visual_element": {
 					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,["number"],data_update_callback); return {type,description};
+					const description=new StoreDescription(type,["number"]); return {type,description};
 				}
 				case "string": {
 					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,[type],data_update_callback); return {type,description};
+					const description=new StoreDescription(type,[type]); return {type,description};
 				}
 			}
 		}
@@ -380,12 +246,7 @@ class LocalStorageSeenDatabase extends BaseService {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	data_store=new StoreData(() => this.onDataChange());
-	/** @template {StoreDataInput["type"]} SName @arg {SName extends infer I extends keyof J_StoreTypeMap?[I,make_item_group<J_StoreTypeMap[I]>]:never} args */
-	save_to_data_store(...args) {
-		const [sn,x]=args;
-		this.data_store.get_store(sn).save_data(x.m,as(x));
-	}
+	data_store=new StoreData;
 	/** @type {IndexedDBService} */
 	idb=(() => {
 		if(!this.x) {
@@ -396,33 +257,7 @@ class LocalStorageSeenDatabase extends BaseService {
 		}
 		return this.x.get("indexed_db");
 	})();
-	/** @no_mod @type {number|null} */
-	#idle_id=null;
 	loaded_database=false;
-	onDataChange() {
-		if(this.#idle_id!==null) return;
-		this.is_ready=false;
-		this.#idle_id=requestIdleCallback(async () => {
-			const version=this.sm.indexed_db_version;
-			if(!this.loaded_database) {
-				try {
-					await this.idb.load_database(this.data_store,version);
-					this.loaded_database=true;
-				} catch(err) {
-					console.log("load_database failed",err);
-					return;
-				}
-			}
-			try {
-				await this.idb.save_database(this.data_store,version);
-			} catch(err) {
-				console.log("save_database failed",err);
-				return;
-			}
-			this.is_ready=true;
-			this.#idle_id=null;
-		});
-	}
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
 	split_box_type(k) {
 		/** @returns {`${A}:${B}`|null} */

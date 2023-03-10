@@ -2355,31 +2355,25 @@ class BaseService extends ServiceWithMembers {
 	//#endregion
 	//#region save
 	/** @protected @arg {string} k @arg {bigint} x */
-	save_bigint(k,x) {return this.save_db.data_store.get_store("bigint").save_data(k,this.make_one_t(k,x));}
+	save_bigint(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean_one(k,x) {return this.save_db.data_store.get_store("boolean").save_data(k,this.make_one_t(k,x));}
+	save_boolean_one(k,x) {k; x;}
 	/** @public @arg {string} k @arg {{}} x */
-	save_keys(k,x) {this.save_db.data_store.get_store("keys").save_keys(k,x);}
+	save_keys(k,x) {k; x;}
 	k=this.save_keys;
 	ks=this.k;
 	/** @protected @arg {string} k @arg {string} x */
-	save_string(k,x) {return this.save_db.data_store.get_store("string").save_data(k,this.make_one_t(k,x));}
+	save_string(k,x) {k; x;}
 	/** @public @arg {string} k @arg {string[]} x */
-	save_string_arr(k,x) {return this.save_db.data_store.get_store("string").save_data(k,this.make_arr_t(k,x));}
+	save_string_arr(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {number} x */
-	save_number(k,x) {return this.save_db.data_store.get_store("number").save_data(k,this.make_one_t(k,x));}
+	save_number(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {number[]} x */
-	save_number_arr(k,x) {return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(k,x));}
+	save_number_arr(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {Uint8Array} x */
-	save_number_bin(k,x) {
-		return this.save_db.save_to_data_store("number",this.tag_num_like(k,x));
-		//	return this.save_db.data_store.get_store("number").save_data(k,this.tag_num_like(k,x));
-	}
+	save_number_bin(k,x) {k; x;}
 	/** @protected @arg {D_GM_VeNum} x */
-	save_ve_element(x) {
-		const k="ve_element";
-		this.save_db.data_store.get_store("root_visual_element").save_data(k,this.make_one_t(k,x));
-	}
+	save_ve_element(x) {x;}
 	//#endregion
 	/** @arg {string} k @arg {number[]|Uint8Array} a */
 	tag_num_like(k,a) {
