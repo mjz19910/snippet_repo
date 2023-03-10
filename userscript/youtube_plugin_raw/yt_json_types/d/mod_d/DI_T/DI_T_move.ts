@@ -3,7 +3,11 @@ type DStr_DI_ABDZ="/di/a/b/d/z";
 type DStr_DI_AZ="/di/a/z";
 type DStr_DIT_AEZ="/dit/a/e/z";
 //#endregion
-
+//#region T_DI
+type T_DI_Raw<k1 extends string,k2 extends string,T>={a: "/item/a/b/c/z"; b: "raw",c: `${k1}:${k2}`,z: [T];};
+type T_DI_Key_2<C extends string,T>={a: "/item/a/b/c/z"; b: "key",c: C,z: [T];};
+type T_DI_Raw_2<C extends string,T>={a: "/item/a/b/c/z"; b: "raw",c: C,z: [T];};
+//#endregion
 //#region ABDZ
 type DI_T_Item_ABD<T_Type,T_Tag,T_InfoItem>={
 	a: DStr_DI_ABDZ; b: T_Type; d: T_Tag;
@@ -15,7 +19,7 @@ type T_PrimitiveBox<T>={
 	a: DStr_DIT_AEZ;
 	// ^ a = is
 	e: T_GetPrimitiveTag<T>;
-	// ^ e = type_name 
+	// ^ e = type_name
 	// * primitive typeof
 	z: [T];
 	// ^ z = info_arr
@@ -24,7 +28,7 @@ type T_PrimitiveBox_E<T,E extends T_GetPrimitiveTag<T>>={
 	a: DStr_DIT_AEZ;
 	// ^ a = is
 	e: E;
-	// ^ e = type_name 
+	// ^ e = type_name
 	// * primitive typeof
 	z: [T];
 	// ^ z = info_arr
@@ -39,10 +43,11 @@ type DIT_Box_Typeof2<T_Type extends T_GetPrimitiveTag<U>,U>={
 };
 //#endregion
 
-//#region AKZ
-type DI_T_KV_Z_MakeItemGroup<K extends string,T>=KV_T_AKZ<K,make_item_group<T>>;
-//#endregion
 //#region {k,v}
+type DI_SrcInfo_Any={
+	k: "any";
+	v: DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id;
+};
 type DI_SrcInfo=
 	|DI_SrcInfo_Any
 	|{k: "start_radio"; v: DU_StartRadio;}
@@ -53,41 +58,53 @@ type DI_SrcInfo=
 ;
 //#endregion
 //#region {K,raw_id}
-type DI_SrcInfo_Any={
-	k: "any";
-	raw_id: DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id;
-};
 type DI_SpecialInfo=T_DI_FromObj<{raw_id: string;}>;
 type DI_RetInfo={
+	a: "tag";
+	k: "user_id";
+	v: string;
+}|{
+	a: "tag"; k: "hashtag_id"; v: string;
+}|{
+	a: "tag"; k: "video_id"; v: string;
+}|{
 	a: "tag"; k: "any"; c: "FE";
-	raw_id: T_IdTemplate<"FE">;
+	v: T_IdTemplate<"FE">;
 }|{
 	a: "tag"; k: "any"; c: "SP";
-	raw_id: T_IdTemplate<"SP">;
+	v: T_IdTemplate<"SP">;
 }|{
 	a: "tag"; k: "any"; c: "VL";
-	raw_id: T_IdTemplate<"VL">;
+	v: T_IdTemplate<"VL">;
 }|{
 	a: "tag"; k: "any"; c: "UC";
-	raw_id: T_IdTemplate<"UC">;
+	v: T_IdTemplate<"UC">;
 }|{
 	a: "tag"; k: "any"; c: "PL";
-	raw_id: T_IdTemplate<"PL">;
+	v: T_IdTemplate<"PL">;
 }|{
 	a: "tag"; k: "any"; c: "MP";
-	raw_id: T_IdTemplate<"MP">;
+	v: T_IdTemplate<"MP">;
 }|{
 	a: "tag"; k: "any"; c: "UU";
-	raw_id: T_IdTemplate<"UU">;
+	v: T_IdTemplate<"UU">;
 }|{
 	a: "tag"; k: "any"; c: "RD";
-	raw_id: Extract<DU_Playlist_Id,`RD${string}`>;
+	v: Extract<DU_Playlist_Id,`RD${string}`>;
 }|{
 	a: "tag"; k: "any"; c: null;
-	raw_id: DU_Playlist_Static;
-}|DI_Ret_AnyString|{
+	v: DU_Playlist_Static;
+}|{
+	a: "/di/a/k/raw_id";
+	k: "hashtag_id";
+	v: string;
+}|{
+	a: "/di/a/k/raw_id";
+	k: "video_id";
+	v: DU_VideoId;
+}|{
 	a: "tag"; k: "start_radio";
-	raw_id: DU_StartRadio;
+	v: DU_StartRadio;
 }|{a: null;};
 //#endregion
 //#region ABCZ
@@ -117,20 +134,6 @@ type DI_GuideEntry_VL_LL={
 	b: "guide_entry_id";
 	c: "VL:LL";
 	z: [DI_BrowseId_VL_LL];
-};
-//#endregion
-//#region PlaylistId (AKZ)
-type DI_A_Playlist_LL={
-	a: "key_value";
-	k: "playlist_id";
-	z: [T_DI_FromObj<{raw_id: "LL";}>];
-};
-//#endregion
-//#region AKZ
-type DI_A_Playlist_WL={
-	a: "key_value";
-	k: "playlist_id";
-	z: [T_DI_FromObj<{raw_id: "WL";}>];
 };
 //#endregion
 //#region DI_G
@@ -168,9 +171,6 @@ type DI_G_BrowseId=
 //#endregion
 //#endregion
 
-//#region AKZ
-type DI_A_UserId=KV_T_AKZ<"user_id",T_DI_FromObj<{raw_id: string;}>>;
-//#endregion
 //#region ABZ
 type DI_A_PlayNext={
 	a: "/item/a/b/z";
@@ -180,15 +180,6 @@ type DI_A_PlayNext={
 		T_DI_FromObj<{parsed_value: 1;}>
 	];
 };
-//#endregion
-//#region AKZ+KV
-// ~ a = is
-// ~ k = type
-type DI_A_VideoId=T_DI_FromObj2<{
-	video_id: T_DI_FromObj<{
-		raw_id: string;
-	}>;
-}>;
 //#endregion
 //#region DI_AGR
 type DI_AGR_UrlInfo=
@@ -381,8 +372,6 @@ type DI_R_Key_StartRadio={
 	z: [DI_Key_StartRadio];
 };
 //#endregion
-type T_DI_Raw<k1 extends string,k2 extends string,T>={a: "/item/a/b/c/z"; b: "raw",c: `${k1}:${k2}`,z: [T];};
-type T_DI_Raw_2<C extends string,T>={a: "/item/a/b/c/z"; b: "raw",c: C,z: [T];};
 type DI_R_PlaylistId={
 	a: "/item/a/b/c/z"; b: "raw"; c: "playlist_id";
 	z: [T_DI_FromObj<{raw_id: DU_Playlist_Id;}>];
@@ -399,19 +388,29 @@ type DI_R_VideoId={
 	c: "video_id";
 	z: [T_DI_FromObj<{raw_id: DU_VideoId;}>];
 };
-type DI_Ret_AnyString={
-	a: "/di/a/k/raw_id";
-	k: "hashtag_id";
-	raw_id: string;
-}|{
-	a: "/di/a/k/raw_id";
-	k: "video_id";
-	raw_id: DU_VideoId;
-};
-
 //#region AZ
 type DI_T_AZ<T>={a: DStr_DI_AZ; z: [T];};
 //#endregion
+
 //#region AKZ
+// ~ a = is
+// ~ k = type
 type DI_Key_StartRadio=KV_T_AKZ<"key",T_DI_FromObj<{start_radio: 0|1;}>>;
+type DI_A_UserId=KV_T_AKZ<"user_id",T_DI_FromObj<{raw_id: string;}>>;
+type DI_A_VideoId=T_DI_FromObj2<{
+	video_id: T_DI_FromObj<{
+		raw_id: string;
+	}>;
+}>;
+type DI_T_KV_Z_MakeItemGroup<K extends string,T>=KV_T_AKZ<K,make_item_group<T>>;
+type DI_A_Playlist_LL={
+	a: "key_value";
+	k: "playlist_id";
+	z: [T_DI_FromObj<{raw_id: "LL";}>];
+};
+type DI_A_Playlist_WL={
+	a: "key_value";
+	k: "playlist_id";
+	z: [T_DI_FromObj<{raw_id: "WL";}>];
+};
 //#endregion

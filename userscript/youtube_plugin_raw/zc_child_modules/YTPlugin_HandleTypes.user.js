@@ -1709,10 +1709,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
 	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
-	/** @template C,T @arg {C} c @arg {T} x  @returns {{a:"DI";b:"key";c:C;w: "/item/a/b/c/w/z";z: [T]}} */
-	make_DI_R(c,x) {return {a: "DI",b: "key",c,w: "/item/a/b/c/w/z",z: [x]};}
+	/** @template C,T @arg {C} c @arg {T} x  @returns {T_DI_Key_2<C,T>} */
+	make_DI_R(c,x) {return {a: "/item/a/b/c/z",b: "key",c,z: [x]};}
 	/** @template {string} C @template T @arg {C} c @arg {T} x @returns {T_DI_Raw_2<C,T>} */
-	make_DI_Raw(c,x) {return {a: "DI:R",b: "raw",c,w: "/item/a/b/c/w/z",z: [x]};}
+	make_DI_Raw(c,x) {return {a: "/item/a/b/c/z",b: "raw",c,z: [x]};}
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
 	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(`${k1}:${k2}`,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
@@ -3081,35 +3081,38 @@ class HandleTypes extends BaseService {
 		function pr(x) {assert_assume_ret(x); return x;}
 		switch(x.k) {
 			case "any": {
-				const {k,raw_id}=x;
-				if(this.str_starts_with_rx("FE",raw_id)) {
+				const {k,v}=x;
+				if(this.str_starts_with_rx("FE",v)) {
 					/** @type {DI_RetInfo} */
-					const z={a: "tag",k,c: "FE",raw_id};
+					const z={a: "tag",k,c: "FE",v};
 					assert_assume_ret(z);
 					return z;
 				}
-				if(this.str_starts_with_rx("SP",raw_id)) return pr({a: "tag",k,c: "SP",raw_id});
-				if(this.str_starts_with_rx("VL",raw_id)) return pr({a: "tag",k,c: "VL",raw_id});
-				switch(raw_id) {
-					case "WL": return pr({a: "tag",k,c: null,raw_id});
-					case "LL": return pr({a: "tag",k,c: null,raw_id});
+				if(this.str_starts_with_rx("SP",v)) return pr({a: "tag",k,c: "SP",v});
+				if(this.str_starts_with_rx("VL",v)) return pr({a: "tag",k,c: "VL",v});
+				switch(v) {
+					case "WL": return pr({a: "tag",k,c: null,v});
+					case "LL": return pr({a: "tag",k,c: null,v});
 				}
-				if(this.str_starts_with_rx("UC",raw_id)) return pr({a: "tag",k,c: "UC",raw_id});
-				if(this.str_starts_with_rx("PL",raw_id)) return pr({a: "tag",k,c: "PL",raw_id});
-				if(this.str_starts_with_rx("RD",raw_id)) return pr({a: "tag",k,c: "RD",raw_id});
-				if(this.str_starts_with_rx("MP",raw_id)) return pr({a: "tag",k,c: "MP",raw_id});
-				if(this.str_starts_with_rx("UU",raw_id)) return pr({a: "tag",k,c: "UU",raw_id});
+				if(this.str_starts_with_rx("UC",v)) return pr({a: "tag",k,c: "UC",v});
+				if(this.str_starts_with_rx("PL",v)) return pr({a: "tag",k,c: "PL",v});
+				if(this.str_starts_with_rx("RD",v)) return pr({a: "tag",k,c: "RD",v});
+				if(this.str_starts_with_rx("MP",v)) return pr({a: "tag",k,c: "MP",v});
+				if(this.str_starts_with_rx("UU",v)) return pr({a: "tag",k,c: "UU",v});
 				debugger;
 			} return pr({a: null});
 			case "start_radio": {
 				const {k,v}=x;
-				return pr({a: "tag",k,c: null,raw_id: v});
+				return pr({a: "tag",k,v});
 			}
 			// ! strings
-			case "hashtag_id":
+			case "hashtag_id": {
+				const {k,v}=x;
+				return pr({a: "tag",k,v});
+			}
 			case "video_id": {
 				const {k,v}=x;
-				return pr({a: "tag",k,c: null,raw_id: v});
+				return pr({a: "tag",k,v});
 			}
 			default: debugger; return pr({a: null});
 		}
@@ -3138,7 +3141,7 @@ class HandleTypes extends BaseService {
 	/** @arg {"playlist_id"}b @arg {"PL"} c @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
 	make_info_3(b,c,x3) {
 		let [,id]=split_string_once(x3,c);
-		return {b,c,z: [this.make_raw_id(x3),this.make_id(id)]};
+		return {a: "/item/a/b/c/z",b,c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
 	/** @template K,T @arg {K} k @arg {T} x @returns {KV_T_AKZ<K,T_PrimitiveBox<T>>}*/
 	make_kv_ab(k,x) {return this.make_DI_T_KV_Z(k,this.make_BoxTypeof(x));}
@@ -3149,7 +3152,7 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x @returns {KV_T_AKZ<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_KV_Z("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
-	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
+	make_Typeof(x) {return {a: "/dit/a/e/z",e: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
 	make_BoxTypeof(x) {return {a: "/dit/a/e/z",e: this.get_s_type(x),z: [x]};}
 	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {{k:K;v:T;}} */
@@ -3158,8 +3161,8 @@ class HandleTypes extends BaseService {
 	make_obj_input(k,v) {return {k,v};}
 	/** @template {{}} T @arg {T_DI_FromObj<T>} x */
 	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0].z[0]);}
-	/** @template {number} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"number">} */
-	make_prim_num_t(z) {return {a: "primitive",e: "number",z: [z]};}
+	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
+	make_prim_num_t(x) {return {a: "/dit/a/e/z",e: this.get_s_type(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		switch(x.k) {
@@ -3168,25 +3171,24 @@ class HandleTypes extends BaseService {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
 				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
 				/** @type {DI_Key_StartRadio} */
-				const z=this.make_DI_T_KV_Z("key",this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(p.raw_id)));
+				const z=this.make_DI_T_KV_Z("key",this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(p.v)));
 				return z;
 			}
 			case "user_id": {
 				const b=x.k,raw_id=x.z[0].z[0];
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
-				/** @type {{raw_id:string}} */
-				let pr=as_any(p);
 				/** @type {DI_A_UserId} */
-				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(pr.raw_id)));
+				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.v)));
 				return z;
 			}
 			case "hashtag_id": {
 				const b=x.k,raw_id=x.z[0].z[0];
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
+				p.a;
 				/** @type {DI_A_HashtagId} */
-				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.raw_id)));
+				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.v)));
 				return z;
 			}
 			case "video_id": {
@@ -3194,27 +3196,27 @@ class HandleTypes extends BaseService {
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				/** @type {DI_A_VideoId} */
-				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.raw_id)));
+				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.v)));
 				return z;
 			}
 			case "browse_id": {
-				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
 				console.log(b,p);
 			} break;
 			case "channel_id": {
-				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
 				console.log(b,p);
 			} break;
 			case "guide_entry_id": {
-				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
 				console.log(b,p);
 			} break;
 			case "playlist_id": {
-				const b=x.k,raw_id=x.z[0].z[0],p=this.get_parsed_info({k: "any",raw_id});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
 				switch(p.c) {
 					case null: debugger; break;
 					case "PL": {
-						let di=this.make_info_3("playlist_id","PL",p.raw_id);
+						let di=this.make_info_3("playlist_id","PL",p.v);
 						return di;
 					}
 				}
@@ -3353,8 +3355,6 @@ class HandleTypes extends BaseService {
 				/** @type {G_Boxed_DST['z'][0]} */
 				let u=x;
 				{const k="a"; if(k in u&&k in x) return [true,0,x.a,x.z[0],x]; if(k in x||k in u) throw 1;}
-				{const k="b"; if(k in u&&k in x) return [true,1,x.b,x.z[0],x]; if(k in x||k in u) throw 1;}
-				if(u.type==="video_time"&&x.type==="video_time") return [true,3,x.type,x.z[0],x]; if(u.type==="video_time"||x.type==="video_time") throw 1;
 				return [false,4,x];
 			};
 			/** @template {G_Boxed_DST} T @arg {T} x @returns {Ret_w_dst<T>} */

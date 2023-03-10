@@ -138,7 +138,7 @@ type D_AddToPlaylistCreate={
 //#region Icons
 type D_Icon_Button=T_Icon<DE_IconType_Button>;
 //#endregion
-//#region 
+//#region D_Survey
 type D_Survey_Watch={watch: B_Hack;};
 //#endregion
 type D_ProfileColumn={items: G_ProfileColumnItem[];};

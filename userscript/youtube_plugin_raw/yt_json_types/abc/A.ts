@@ -2,7 +2,7 @@
 type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId; continuationItems: T_ItemType[];};
 type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
 //#endregion
-//#region Endpoint Actions 
+//#region Endpoint Actions
 type A_AccountItem=TE_Endpoint_1_Generic<"accountItem",AD_AccountItem>;
 type A_AddChatItem={
 	clickTrackingParams?: string;

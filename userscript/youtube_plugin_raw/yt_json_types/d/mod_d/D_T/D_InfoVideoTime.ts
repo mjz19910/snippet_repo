@@ -1,4 +1,5 @@
 type DI_VideoTime={
-	type: "video_time";
+	a: "/di/k/z";
+	k: "video_time";
 	z: [T_PrimitiveBox<`${number}s`>];
 };

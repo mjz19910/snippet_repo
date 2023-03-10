@@ -2403,11 +2403,11 @@ class BaseService extends ServiceWithMembers {
 	//#endregion
 	//#region template methods that make objects
 	/**
-	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
+	 * @param {Z_Item} z @arg {J} l @arg {T_Key} key
 	 * @template J @template Z_Item @template T_Key
-	 * @returns {{key:T_Key,a: "ST:D";b:"boxed_id",j:J,w:"/db/key/a/b/j/w/z",z:[Z_Item]}}
+	 * @returns {{key:T_Key,a: "/db/key/a/b/l/z";b:"boxed_id",l:J,w:"/db/key/a/b/j/w/z",z:[Z_Item]}}
 	 * */
-	make_ST_jz(key,j,z) {return {key,a: "ST:D",b: "boxed_id",j,w: "/db/key/a/b/j/w/z",z: [z]};}
+	make_ST_jz(key,l,z) {return {key,a: "/db/key/a/b/l/z",b: "boxed_id",l,w: "/db/key/a/b/j/w/z",z: [z]};}
 	/**
 	 * @param {Z_Item} z @arg {J} j @arg {T_Key} key
 	 * @template J @template Z_Item @template T_Key
@@ -2429,7 +2429,7 @@ class BaseService extends ServiceWithMembers {
 	 * */
 	make_aez(a,e,z) {return {a,e,z: [z]};}
 	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"string">} */
-	make_prim_v(z) {return {a: "primitive",e: "string",z: [z]};}
+	make_prim_v(z) {return {a: "/dit/a/e/z",e: "string",z: [z]};}
 	//#endregion
 	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {

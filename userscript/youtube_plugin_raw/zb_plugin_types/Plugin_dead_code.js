@@ -51,12 +51,12 @@ export class IndexedDBDeadCode extends IndexedDBService {
 				case "number": break;
 				case "channel_id:UC": {
 					const {key,tag,value}=o2;
-					/** @type {DI_A_ChannelId_UC} */
+					/** @type {{}} */
 					let bt=this.make_abcz(value.type,value.tag,[
 						this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
 						this.make_DI_T_KV_Z("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
-					/** @type {DST_Channel_UC} */
+					/** @type {{key:`boxed_id:channel_id:UC:${string}`,a: "/db/key/a/b/l/z";b:"boxed_id",l:"channel_id:UC",w:"/db/key/a/b/j/w/z",z:[{}]}} */
 					const z=this.make_ST_jz(key,tag,bt);
 					/** @type {T} */
 					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
@@ -67,19 +67,20 @@ export class IndexedDBDeadCode extends IndexedDBService {
 					const {key,tag,value}=o2;
 					/** @type {DI_A_VideoId} */
 					let bt=this.make_DI_T_KV_Z(value.type,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)));
-					/** @type {DST_Video_Id} */
+					/** @type {DST_Video_Id&{w: "/db/key/a/b/j/w/z"}} */
 					const z=this.make_ST_jz(key,tag,bt);
 					/** @type {T} */
 					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
 				} break;
 				case "playlist_id:RD": {
 					const {key,value}=o2;
-					/** @type {DI_A_Playlist_RD} */
+					const {type,tag}=value;
+					/** @type {{}} */
 					let bt=this.make_abcz("playlist_id","RD",[
 						this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
 						this.make_DI_T_KV_Z("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
-					/** @type {DST_Playlist_RD} */
+					/** @type {{key:`boxed_id:${typeof type}:${typeof tag}:${string}`,a: "/db/key/a/b/l/z";b:"boxed_id",l:`${typeof type}:${typeof tag}`,w:"/db/key/a/b/j/w/z",z:[{}]}} */
 					const z=this.make_ST_jz(key,"playlist_id:RD",bt);
 					/** @type {T} */
 					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
@@ -99,9 +100,9 @@ export class IndexedDBDeadCode extends IndexedDBService {
 					case "one": {
 						const i3={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
 						/** @type {DSS_Bigint["z"][0]} */
-						const i2={a: "group",k: value.type,z: [as_any(i3)]};
+						const i2={a: "/KV/a/k/z",k: value.type,z: [as_any(i3)]};
 						/** @type {DSS_Bigint} */
-						const z={key: as_any(key),a: "SI:T:D",b: "boxed_id",d: "bigint",w: "/key/a/b/d/w/z",z: [i2]};
+						const z={key: as_any(key),a: "/db/key/a/b/d/z",b: "boxed_id",d: "bigint",z: [i2]};
 						return [true,z];
 					}
 				}

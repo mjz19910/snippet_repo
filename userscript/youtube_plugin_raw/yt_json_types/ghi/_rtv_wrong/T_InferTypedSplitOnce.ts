@@ -1,5 +1,5 @@
 // TI_SplitOnce<T,D>
-// @template {string} WA @template {string} S @template {string} D 
+// @template {string} WA @template {string} S @template {string} D
 type TI_SplitOnce<WA extends string,S extends string,D extends string>=
 	S extends `${infer Begin}${D}${infer Rest}`? TI_SplitOnce_1<WA,S,D,Begin,Rest>:[S];
 ;
