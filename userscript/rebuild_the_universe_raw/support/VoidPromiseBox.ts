@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate.js";
+import {BoxTemplate} from "./box/template/BoxTemplate.js";
 
 export class VoidPromiseBox extends BoxTemplate<"promise_box",Promise<void>> {
 	readonly type="promise_box";

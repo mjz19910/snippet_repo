@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate.js";
+import {BoxTemplate} from "./box/template/BoxTemplate.js";
 
 export interface BoxMaker<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
 	maker: (
