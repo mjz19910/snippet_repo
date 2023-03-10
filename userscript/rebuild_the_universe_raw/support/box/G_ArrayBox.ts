@@ -1,8 +1,10 @@
-import {ArrayBox} from "./box/ArrayBox.js";
+import {ArrayBox} from "./ArrayBox.js";
 import {EmptyArrayBox} from "./EmptyArrayBox.js";
 import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox.js";
 
-
-export type G_ArrayBox=ArrayBox|
-	EmptyArrayBox|
-	InstructionTypeArrayBox;
+export type G_ArrayBox=
+	|ArrayBox
+	|EmptyArrayBox
+	|InstructionTypeArrayBox
+	;
+;

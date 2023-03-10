@@ -1,8 +1,8 @@
-import {Box} from "./box/Box.js";
-import {FunctionBox} from "../zz_broken/FunctionBox.js";
-import {BoxMaker} from "../../BoxMaker.js";
-import {FunctionConstructorFactory} from "../interface/FunctionConstructorFactory.js";
-import {BoxTemplate} from "../template/BoxTemplate.js";
+import {Box} from "./Box.js";
+import {FunctionBox} from "./FunctionBox.js";
+import {BoxMaker} from "./support.mod/BoxMaker.js";
+import {FunctionConstructorFactory} from "./interface/FunctionConstructorFactory.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class FunctionConstructorBox extends BoxTemplate<"constructor_box",FunctionConstructor> {
 	readonly type="constructor_box";

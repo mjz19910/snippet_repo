@@ -1,7 +1,5 @@
-import {RawAnyBox} from "../RawAnyBox.js";
-import {RawInterfaceBox} from "../RawInterfaceBox.js";
-import {RawUnknownBox} from "../RawUnknownBox.js";
+import {RawAnyBox} from "./RawAnyBox";
+import {RawInterfaceBox} from "./RawInterfaceBox";
+import {RawUnknownBox} from "./RawUnknownBox";
 
-export type G_RawBox=RawInterfaceBox|
-	RawUnknownBox|
-	RawAnyBox;
+export type G_RawBox=RawInterfaceBox|RawUnknownBox|RawAnyBox;

@@ -1,4 +1,4 @@
-import {Box} from "./box/z_done/box/Box";
+import {Box} from "./box/Box";
 
 export class StackVM {
 	stack:Box[]=[];

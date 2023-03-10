@@ -1,8 +1,8 @@
 import {StackVM} from "../StackVM.js";
-import {Box} from "../z_done/Box.js";
-import {StringBox} from "../StringBox.js";
-import {BoxTemplate} from "../template/BoxTemplate.js";
-import {VoidBox} from "../VoidBox.js";
+import {Box} from "./Box.js";
+import {StringBox} from "./StringBox.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
+import {VoidBox} from "./VoidBox.js";
 
 export class FunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Box> {
 	readonly type="function_box";

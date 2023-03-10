@@ -1,7 +1,7 @@
 import {StackVM} from "../StackVM.js";
-import {Box} from "./z_done/box/Box.js";
+import {Box} from "./Box.js";
 import {NewableInstancePack} from "./interface/NewableInstancePack.js";
-import {NewableInstancePackBox} from "../NewableInstancePackBox.js";
+import {NewableInstancePackBox} from "./NewableInstancePackBox.js";
 
 export class NewableFunctionBox {
 	readonly type="constructor_box";

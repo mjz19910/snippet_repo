@@ -1,3 +1,3 @@
-import {Box} from "./box/z_done/box/Box.js"
+import {Box} from "./box/Box.js"
 
 export type BoxWithPropertiesObjType<T extends readonly string[]>={[U in T[number]]: Box}

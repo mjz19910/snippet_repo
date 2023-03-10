@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./box/template/BoxTemplate.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class NodeBox extends BoxTemplate<"instance_box",Node> {
 	readonly type="instance_box";

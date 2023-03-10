@@ -1,5 +1,5 @@
-import {MediaListBox} from "../MediaListBox.js";
-import {BoxTemplate} from "../template/BoxTemplate.js";
+import {MediaListBox} from "./MediaListBox.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetInit> {
 	readonly type="shape_box";

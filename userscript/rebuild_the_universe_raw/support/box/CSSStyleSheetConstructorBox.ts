@@ -1,6 +1,6 @@
-import {rebuild_the_universe_plugin} from "../../../rebuild_the_universe.user.js";
-import {Box} from "./box/Box.js";
-import {BoxTemplate} from "../template/BoxTemplate.js";
+import {rebuild_the_universe_plugin} from "../../rebuild_the_universe.user.js";
+import {Box} from "./Box.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.js";
 

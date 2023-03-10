@@ -1,4 +1,4 @@
-import {Box} from "../z_done/box/Box.js"
+import {Box} from "../Box.js"
 import {FunctionBox_Value} from "./FunctionBox_Value.js"
 
 type not_prim_or_null=Exclude<Box,{value:{}|null|void}>;

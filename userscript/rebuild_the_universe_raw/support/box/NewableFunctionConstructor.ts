@@ -1,4 +1,4 @@
-import {Box} from "./z_done/box/Box.js";
-import {FunctionInstance} from "./z_done/FunctionInstance.js";
+import {Box} from "./Box.js";
+import {FunctionInstance} from "./FunctionInstance.js";
 
 export interface NewableFunctionConstructor {make_new: new (...a: Box[]) => FunctionInstance}

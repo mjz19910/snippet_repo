@@ -1,4 +1,4 @@
-import {BoxTemplate} from "../template/BoxTemplate.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleSheet> {
 	readonly type="CSSStyleSheetBox";
