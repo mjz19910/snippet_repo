@@ -1,1 +1,1 @@
-type GI_GuideEntry_Id=DI_GuideEntry_LL|DI_GuideEntry_WL|DI_GuideEntry_PL|DI_GuideEntry_UC|DI_BrowseId_VL_LL;
+type GI_GuideEntry_Id=DI_A_GuideEntry_LL|DI_A_GuideEntry_WL|DI_GuideEntry_PL|DI_GuideEntry_UC|DI_BrowseId_VL_LL;

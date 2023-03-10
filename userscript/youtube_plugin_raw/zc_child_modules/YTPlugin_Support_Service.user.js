@@ -188,20 +188,29 @@ class StoreDescription extends ApiBase2 {
 	 * @returns {G_MakeGroupShape<Z,"item",C,F>}
 	 **/
 	make_group(z,f,c,b="item") {return {a: "/db/key/a/k/l/m/z",k: b,l: c,m: f,z: [z]};}
-	/*{
-		a: "/GV/b/c/f/z";
-		b: "item";
-		c: "one";
-		f: string;
-		z: [T];
-} */
+	log_count=0;
+	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} T @arg {T} x @arg {T} src */
+	upgrade_item_container(x,src) {
+		if("c" in x&&typeof x.c==='string') {
+			x.l=as(x.c);
+			delete x.c;
+		}
+		if("f" in x) {
+			let ka1=this.get_keys_of_2(x);
+			let ka2=this.get_keys_of_2(src);
+			this.log_count++;
+			if(this.log_count>128) return x;
+			console.log(ka1.join(),ka2.join());
+		}
+		return x;
+	}
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x_container */
 	save_data(k,x_container) {
 		if(this.includes_key(k)) {
 			let idx=this.key_index.get(k);
 			if(idx===void 0) throw new Error();
 			let y_item=this.data[idx];
-			let y_container=y_item[1];
+			let y_container=this.upgrade_item_container(y_item[1],x_container);
 			if(!("b" in x_container)) {x_container;}
 			if(y_container.l==="many"&&x_container.l==="arr") {
 				let {z: [y_many]}=y_container;
@@ -232,6 +241,7 @@ class StoreDescription extends ApiBase2 {
 				this.push_new_data(k,new_container);
 				return;
 			}
+			if("f" in y_container) return;
 			debugger;
 			return;
 		}

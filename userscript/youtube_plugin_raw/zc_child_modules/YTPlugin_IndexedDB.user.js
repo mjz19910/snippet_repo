@@ -466,9 +466,9 @@ class IndexedDBService extends BaseService {
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "playlist_id": {
-				const {a: {},k,l,z: [z1,z2]}=x;
+				const {a: {},k,m: l,z: [z1,z2]}=x;
 				/** @type {DI_A_Playlist_PL} */
-				const a={a: "/di/a/k/l/z",k,l,z: [z1,z2]};
+				const a={a: "/di/a/k/l/z",k,m: l,z: [z1,z2]};
 				/** @type {DST_Playlist_PL} */
 				const z={
 					a: this.mka("l"),k: "boxed_id",l: k,m: l,z: [a],
@@ -542,7 +542,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "guide_entry_id": /*db*/ {
 				let [l]=s0;
-				switch(x.l) {
+				switch(x.m) {
 					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
@@ -557,7 +557,7 @@ class IndexedDBService extends BaseService {
 					case "PL": {
 						let iv=x.z[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.l}:${this.za1(iv.z[1])}`,z: [x]};
+						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "UC": {
