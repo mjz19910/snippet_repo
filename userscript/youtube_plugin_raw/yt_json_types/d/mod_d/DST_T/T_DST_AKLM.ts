@@ -27,4 +27,4 @@ type RetPromise_put_boxed_url_info<T>={
 	args: T;
 	promise: Promise<RetAwaited_boxed_url_info>;
 };
-type RetAwaited_boxed_url_info=DST_Playlist_PL|DST_Video_Id|DST_HashtagId|DST_Key_StartRadio|DST_Playlist_RD|null;
+type RetAwaited_boxed_url_info=DST_User_Id|DST_GuideEntry_PL|DST_Playlist_PL|DST_Video_Id|DST_HashtagId|DST_Key_StartRadio|DST_Playlist_RD|null;

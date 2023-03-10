@@ -3174,16 +3174,16 @@ class HandleTypes extends BaseService {
 	/** @arg {"playlist_id"}b @arg {"PL"} c @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
 	make_info_3(b,c,x3) {
 		let [,id]=split_string_once(x3,c);
-		return {a: "/di/a/k/m/z",k: b,m: c,z: [this.make_DI_RawIdBox(x3),this.make_DI_IdBox(id)]};
+		return {a: "/di/a/l/m/z",l: b,m: c,z: [this.make_DI_RawIdBox(x3),this.make_DI_IdBox(id)]};
 	}
 	/** @arg {MakeInfoInput_Len2} a0 @returns {DI_A_Playlist_PL|DI_A_Playlist_RD|null} */
 	make_info_3_v2(a0) {
 		switch(a0.type) {
 			default: debugger; return null;
 			case "PL": {
-				const {type,arr: [k,m],raw_id}=a0;
+				const {type,arr: [l,m],raw_id}=a0;
 				let [,id]=split_string_once(raw_id,type);
-				return {a: "/di/a/k/m/z",k,m,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
+				return {a: "/di/a/l/m/z",l,m,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
 			}
 			case "RD": {
 				const {type,arr: [k,l],raw_id}=a0;
@@ -3241,7 +3241,7 @@ class HandleTypes extends BaseService {
 		let ka=this.get_keys_of(x);
 		if(ka.length===0) return {a: "/di/a"};
 		let [k1]=ka;
-		return {a: "/di/a/k/z",k: k1,z: [x[k1]]};
+		return {a: "/di/a/k/z",l: k1,z: [x[k1]]};
 	}
 	/** @template {string} T @arg {T} x @returns {T_DI_FromObj2<{id:T}>} */
 	make_DI_IdBox(x) {return this.make_kv_ab("id",x);}
@@ -3254,13 +3254,13 @@ class HandleTypes extends BaseService {
 	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {MK_DIInfo1<K,T>} */
 	make_obj_input(k,v) {return {a: "/key/a/k/z",k,z: [v]};}
 	/** @template {{}} T @arg {T_DI_FromObj2<T>} x @returns {MK_DIInfo1<keyof T,T[keyof T]>} */
-	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0]);}
+	make_input_from_R_info(x) {return this.make_obj_input(x.l,x.z[0]);}
 	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
 	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		let p2=null; p2;
-		switch(x.k) {
+		switch(x.l) {
 			default: debugger; return null;
 			case "start_radio": {
 				/** @type {T_DI_FromObj2<{start_radio: DU_StartRadio;}>} */
@@ -3268,44 +3268,44 @@ class HandleTypes extends BaseService {
 				const p1=this.make_input_from_R_info(u);
 				const p=this.get_parsed_info(p1);
 				if(p.a===null) return null;
-				if(p.k!==x.k) {debugger; return null;}
+				if(p.k!==x.l) {debugger; return null;}
 				/** @type {DI_A_StartRadio} */
 				const z=this.make_DI_StartRadio(x.z[0]);
 				return z;
 			}
 			case "user_id": {
-				const b=x.k,raw_id=x.z[0];
+				const b=x.l,raw_id=x.z[0];
 				const s=this.make_obj_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				if(p.a===null) return null;
-				if(p.k!==x.k) {debugger; return null;}
+				if(p.k!==x.l) {debugger; return null;}
 				/** @type {DI_A_UserId} */
 				const z=this.make_DI_KeyLike_like(p.k,p.z[0]);
 				return z;
 			}
 			case "hashtag_id": {
-				const k=x.k,raw_id=x.z[0];
+				const k=x.l,raw_id=x.z[0];
 				/** @type {DI_A_HashtagId} */
 				const z=this.make_DI_Key2Like_like(k,"raw_id",raw_id);
 				return z;
 			}
 			case "video_id": {
-				const b=x.k,raw_id=x.z[0];
+				const b=x.l,raw_id=x.z[0];
 				const s=this.make_obj_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				if(p.a===null) return null;
-				if(p.k!==x.k) {debugger; return null;}
+				if(p.k!==x.l) {debugger; return null;}
 				/** @type {DI_A_VideoId} */
-				const z=this.make_DI_FromObj2(x.k,this.make_DI_RawIdBox(raw_id));
+				const z=this.make_DI_FromObj2(x.l,this.make_DI_RawIdBox(raw_id));
 				return z;
 			}
 			case "browse_id": {
-				const k=x.k,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
+				const k=x.l,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
 				if(p.a===null) return null;
 				console.log(k,p);
 			} return null;
 			case "channel_id": {
-				const k=x.k,raw_id=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [raw_id]});
+				const k=x.l,raw_id=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [raw_id]});
 				if(p.a===null) return null;
 				if(p.k!==k) return null;
 				let [,id]=split_string_once(raw_id,p.m);
@@ -3314,7 +3314,7 @@ class HandleTypes extends BaseService {
 				return z;
 			}
 			case "guide_entry_id": {
-				const k=x.k,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
+				const k=x.l,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
 				switch(p.a) {
 					case "/key/a/k/m/z": {
 						switch(p.m) {
@@ -3322,17 +3322,17 @@ class HandleTypes extends BaseService {
 								const {m}=p;
 								let [,id]=split_string_once(p.z[0],m);
 								/** @type {DI_A_Playlist_PL} */
-								const z1={a: "/di/a/k/m/z",k: "playlist_id",m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
+								const z1={a: "/di/a/l/m/z",l: "playlist_id",m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
 								/** @type {DI_GuideEntry_PL} */
-								const z={a: "/di/a/k/l/z",k: "guide_entry_id",m,z: [z1]};
+								const z={a: "/di/a/k/m/z",k: "guide_entry_id",m,z: [z1]};
 								return z;
 							}
 							case "UC": {
-								let [,id]=split_string_once(p.z[0],p.m);
+								const {m}=p,[,id]=split_string_once(p.z[0],m);
 								/** @type {DI_A_ChannelId_UC} */
-								const z1={a: "/di/a/l/m/z",l: "channel_id",m: p.m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
+								const z1={a: "/di/a/l/m/z",l: "channel_id",m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
 								/** @type {DI_GuideEntry_UC} */
-								const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: p.m,z: [z1]};
+								const z={a: "/di/a/k/m/z",k: "guide_entry_id",m,z: [z1]};
 								return z;
 							}
 							case "VL": {
@@ -3341,23 +3341,23 @@ class HandleTypes extends BaseService {
 									let [,raw_id]=split_string_once(l,"VL");
 									let [,id]=split_string_once(raw_id,"PL");
 									/** @type {DI_A_Playlist_PL} */
-									const z1={a: "/di/a/k/m/z",k: "playlist_id",m: "PL",z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
+									const z1={a: "/di/a/l/m/z",l: "playlist_id",m: "PL",z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
 									/** @type {DI_GuideEntry_PL} */
-									const z={a: "/di/a/k/l/z",k: "guide_entry_id",m: "PL",z: [z1]};
+									const z={a: "/di/a/k/m/z",k: "guide_entry_id",m: "PL",z: [z1]};
 									return z;
 								}
 								let [,id]=split_string_once(l,p.m);
 								switch(id) {
 									case "LL": {
 										/** @type {DI_A_Playlist_LL} */
-										const z1={a: "/di/a/k/z",k: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
+										const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
 										/** @type {DI_A_GuideEntry_LL} */
 										const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "LL",z: [z1]};
 										return z;
 									}
 									case "WL": {
 										/** @type {DI_A_Playlist_WL} */
-										const z1={a: "/di/a/k/z",k: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
+										const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
 										/** @type {DI_A_GuideEntry_WL} */
 										const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "WL",z: [z1]};
 										return z;
@@ -3371,14 +3371,14 @@ class HandleTypes extends BaseService {
 						switch(l) {
 							case "WL": {
 								/** @type {DI_A_Playlist_WL} */
-								const z1={a: "/di/a/k/z",k: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
+								const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
 								/** @type {DI_A_GuideEntry_WL} */
 								const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "WL",z: [z1]};
 								return z;
 							}
 							case "LL": {
 								/** @type {DI_A_Playlist_LL} */
-								const z1={a: "/di/a/k/z",k: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
+								const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
 								/** @type {DI_A_GuideEntry_LL} */
 								const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "LL",z: [z1]};
 								return z;
@@ -3388,14 +3388,14 @@ class HandleTypes extends BaseService {
 				}
 			}
 			case "playlist_id": {
-				if(x.k!=="playlist_id") {debugger; return null;}
-				const k=x.k,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
+				if(x.l!=="playlist_id") {debugger; return null;}
+				const k=x.l,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
 				if("m" in p) switch(p.m) {
 					default: p===""; debugger; return null;
 					case "PL": {
-						let [,id]=split_string_once(p.z[0],"PL");
+						const {l}=x,[,id]=split_string_once(p.z[0],"PL");
 						/** @type {DI_A_Playlist_PL} */
-						let di={a: "/di/a/k/m/z",k: x.k,m: "PL",z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
+						let di={a: "/di/a/l/m/z",l,m: "PL",z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
 						return di;
 					}
 					case "RD": {
@@ -3435,7 +3435,7 @@ class HandleTypes extends BaseService {
 				console.log(k,p);
 			} return null;
 			case "user_id": {
-				const b=x.k,raw_id=x.z[0];
+				const b=x.l,raw_id=x.z[0];
 				const s=this.make_obj_input(b,raw_id);
 				const p=this.get_parsed_info(s);
 				console.log(b,p);
@@ -3510,7 +3510,7 @@ class HandleTypes extends BaseService {
 	extract_dst_l(x) {return x.a==="/db/key/a/k/l/z";}
 	/** @template T_Arg @template {DI_T_KV_Z_MakeItemGroup<string,T_Arg>} T_Box @arg {T_Box} x @returns {Ret_w_diz<T_Arg>} */
 	w_diz(x) {
-		x.a; x.k; let a=x.z[0];
+		x.a; x.l; let a=x.z[0];
 		switch(a.l) {
 			case "one": {let b=a.z[0]; return [a.l,["1",b],a,x];}
 			case "arr": {let b=a.z[0]; return [a.l,["2",b],a,x];}

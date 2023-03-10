@@ -168,7 +168,7 @@ type DI_A_GuideEntry_LL={
 	z: [DI_A_Playlist_LL];
 };
 type DI_GuideEntry_PL={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKMZ;
 	k: "guide_entry_id";
 	m: "PL";
 	z: [DI_A_Playlist_PL];
@@ -208,8 +208,8 @@ type DI_EX_YY=Extract<DI_AGR_UrlInfo,{c: any;}>["c"];
 //#endregion
 //#region PlaylistId (ABCZ)
 type DI_A_Playlist_PL={
-	a: "/di/a/k/m/z";
-	k: "playlist_id";
+	a: "/di/a/l/m/z";
+	l: "playlist_id";
 	m: "PL";
 	z: [
 		T_DI_RawIdBox<T_IdTemplate<"PL">>,
@@ -360,7 +360,7 @@ type DI_BrowseId_VL_UC={
 	];
 };
 type DI_GuideEntry_UC={
-	a: DStr_DI_AKLZ; k: "guide_entry_id"; l: "UC";
+	a: DStr_DI_AKMZ; k: "guide_entry_id"; m: "UC";
 	z: [DI_A_ChannelId_UC];
 };
 type DI_GuideEntry_VL={

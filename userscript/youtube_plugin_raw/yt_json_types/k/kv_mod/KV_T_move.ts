@@ -4,7 +4,7 @@ type DStr_KV_AKZ=DStr_DI_AKZ;
 
 
 //#region AKZ
-type KV_T_AKZ<K,V>={a: DStr_KV_AKZ; k: K; z: [V];};
+type KV_T_AKZ<K,V>={a: DStr_KV_AKZ; l: K; z: [V];};
 //#endregion
 
 type DI_T_KV_Z_MakeItemGroup<K extends string,T>=T_DI_FromObj2<{[U in K]: make_item_group<T>}>;
@@ -41,7 +41,7 @@ type DST_MakeLM<L extends string,M extends string,ZV extends G_Primitives,T exte
 	z: [T];
 };
 type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends G_Primitives>={
-	key: `boxed_id:${T["k"]}:${TZ_SuccessorX3<T>}`;
+	key: `boxed_id:${T["l"]}:${TZ_SuccessorX3<T>}`;
 	a: DST_KStr_AKLMZ;
 	k: "boxed_id";
 	l: L;

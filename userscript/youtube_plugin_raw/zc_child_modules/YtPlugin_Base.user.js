@@ -2403,7 +2403,7 @@ class BaseService extends ServiceWithMembers {
 	//#endregion
 	//#region template methods that make objects
 	/** @template K,T @arg {K} k @arg {T} x @returns {T_DI_FromObj2<{[U in K]: T}>} */
-	make_DI_FromObj2(k,x) {return {a: "/di/a/k/z",k,z: [x]};}
+	make_DI_FromObj2(k,x) {return {a: "/di/a/k/z",l: k,z: [x]};}
 	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
 	get_primitive_tag(x) {
 		switch(typeof x) {
