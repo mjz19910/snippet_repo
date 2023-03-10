@@ -173,7 +173,7 @@ type DI_GuideEntry_PL={
 	m: "PL";
 	z: [DI_A_Playlist_PL];
 };
-type DI_GuideEntry_VL_LL={
+type DI_A_GuideEntry_VL_LL={
 	a: DStr_DI_AKLMZ;
 	k: "guide_entry_id";
 	l: "VL"; m: "LL";

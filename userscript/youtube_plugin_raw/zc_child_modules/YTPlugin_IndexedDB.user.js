@@ -428,11 +428,31 @@ class IndexedDBService extends BaseService {
 		version; args;
 		let [,,x]=args;
 		switch(x.a) {
+			default: x===""; debugger; throw new Error();
 			case "/di/a/k/l/z": {
+				if(x.k!=="guide_entry_id") {debugger; throw new Error();}
 				switch(x.l) {
 					default: debugger; throw new Error("Unreachable");
-					case "LL": break;
-					case "WL": break;
+					case "LL": {
+						const {k,l,z: [w]}=x;
+						/** @type {DI_A_Playlist_LL} */
+						const a1={a: "/di/a/k/z",l: "playlist_id",z: [w.z[0]]};
+						/** @type {DI_A_GuideEntry_LL} */
+						const a={a: "/di/a/k/l/z",k,l,z: [a1]};
+						/** @type {DST_GuideEntry_LL} */
+						const z={key: `boxed_id:${k}:${this.za3(x)}`,a: this.mka("l"),k: "boxed_id",l: k,z: [a]};
+						return {args,promise: this.put_box(z,version)};
+					}
+					case "WL": {
+						const {k,l,z: [w]}=x;
+						/** @type {DI_A_Playlist_WL} */
+						const a1={a: "/di/a/k/z",l: "playlist_id",z: [w.z[0]]};
+						/** @type {DI_A_GuideEntry_WL} */
+						const a={a: "/di/a/k/l/z",k,l,z: [a1]};
+						/** @type {DST_GuideEntry_WL} */
+						const z={key: `boxed_id:${k}:${this.za3(x)}`,a: this.mka("l"),k: "boxed_id",l: k,z: [a]};
+						return {args,promise: this.put_box(z,version)};
+					}
 				}
 			} break;
 			case "/di/a/k/m/z": {
@@ -455,6 +475,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "/di/a/k/z": {
 				switch(x.l) {
+					default: x===""; throw new Error();
 					case "hashtag_id": {
 						const {l: k,z: [w]}=x;
 						/** @type {DI_A_HashtagId} */
@@ -497,6 +518,10 @@ class IndexedDBService extends BaseService {
 			}
 			case "/di/a/l/m/z": {
 				switch(x.l) {
+					default: x===""; throw new Error();
+					case "channel_id": {
+
+					} break;
 					case "playlist_id": {
 						switch(x.m) {
 							case "PL": {
@@ -594,6 +619,7 @@ class IndexedDBService extends BaseService {
 				}
 			}
 			case "guide_entry_id": /*db*/ {
+				let klmz=null,klz=null,kmz=null;
 				if(s0[1]==="UC") {
 					const [l,,x]=s0;
 					const raw_id=x.z[0].z[0].z[0];
@@ -602,33 +628,38 @@ class IndexedDBService extends BaseService {
 					const z={key: `boxed_id:${l}:${x.m}:${id}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
 					return {args: s0,promise: this.put_box(z,version)};
 				} else {
-					const [l,,x]=s0;
+					const [,,x]=s0;
+					switch(x.a) {
+						case "/di/a/k/l/m/z": klmz=x; break;
+						case "/di/a/k/l/z": klz=x; break;
+						case "/di/a/k/m/z": kmz=x; break;
+					}
 					if("m" in x&&"l" in x) switch(x.l) {
 						default: x===""; throw new Error();
 						case "VL": {
 							if(x.m!=="LL") {debugger; return null;}
-							/** @type {DI_GuideEntry_VL_LL} */
+							/** @type {DI_A_GuideEntry_VL_LL} */
 							const z1={a: "/di/a/k/l/m/z",k: "guide_entry_id",l: "VL",m: "LL",z: [x]};
 							/** @type {DST_GuideEntry_VL_LL} */
-							const z={key: `boxed_id:${l}:${x.l}:${x.m}`,a: this.mka("l"),k: "boxed_id",l,z: [z1]};
+							const z={key: `boxed_id:${klz}:${x.l}:${x.m}`,a: this.mka("l"),k: "boxed_id",l: klz,z: [z1]};
 							return {args: s0,promise: this.put_box(z,version)};
 						}
-					} else if("l" in x) {
+					} else if("m" in x) {
 						switch(x.m) {
 							case "LL": {
 								/** @type {DST_GuideEntry_LL} */
-								const z={key: `boxed_id:${l}:${x.l}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
+								const z={key: `boxed_id:${klz}:${x.l}`,a: this.mka("l"),k: "boxed_id",l: klz,z: [x]};
 								return {args: s0,promise: this.put_box(z,version)};
 							}
 							case "UC": {
 								let iv=x.z[0];
 								/** @type {DST_GuideEntry_UC} */
-								const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
+								const z={a: this.mka("l"),k: "boxed_id",l: klz,key: `boxed_id:${klz}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
 								return {args: s0,promise: this.put_box(z,version)};
 							}
 							case "WL": {
 								/** @type {DST_GuideEntry_WL} */
-								const z={key: `boxed_id:${l}:${x.l}`,a: this.mka("l"),k: "boxed_id",l,z: [x]};
+								const z={key: `boxed_id:${klz}:${x.l}`,a: this.mka("l"),k: "boxed_id",l: klz,z: [x]};
 								return {args: s0,promise: this.put_box(z,version)};
 							}
 						}
@@ -638,7 +669,7 @@ class IndexedDBService extends BaseService {
 							case "PL": {
 								let iv=x.z[0];
 								/** @type {DST_GuideEntry_PL} */
-								const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
+								const z={a: this.mka("l"),k: "boxed_id",l: klz,key: `boxed_id:${klz}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
 								return {args: s0,promise: this.put_box(z,version)};
 							}
 						}
