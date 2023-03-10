@@ -1,4 +1,5 @@
 //#region KStr
+type DST_KStr_AK_LMN_Z=`/db/key/a/k/l/m/n/z`;
 type DST_KStr_AKLMZ=`/db/key/a/k/l/m/z`;
 type DST_KStr_AKLZ=`/db/key/a/k/l/z`;
 //#endregion

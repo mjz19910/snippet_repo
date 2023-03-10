@@ -13,6 +13,7 @@ type G_BoxedInner=
 	|[3,Ret_w_dst,DST_Browse_MP|DST_Browse_FE]
 	|["m:0",any,any]
 	|["m:1",any,any]
+	|[7,2,G_BoxedDatabaseData["z"][0],G_BoxedDatabaseData]
 	|[8,any]
 	;
 ;

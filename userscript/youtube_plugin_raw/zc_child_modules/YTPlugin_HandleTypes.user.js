@@ -3523,9 +3523,10 @@ class HandleTypes extends BaseService {
 			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
 			const w_db_data=(x) => {
 				if(!x) return ["n"];
-				/** @type {[Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>|null,Exclude<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>|null]} */
-				const n=[null,null];
-				if(x.a==="/db/key/a/k/l/z") n[0]=x; else n[1]=x;
+				let nx=null;
+				/** @type {[Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/m/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/m/n/z"}>|null]} */
+				const n=[null,null,null];
+				if(x.a==="/db/key/a/k/l/z") n[0]=x; else if(x.a==="/db/key/a/k/l/m/z") n[1]=x; else if(x.a==="/db/key/a/k/l/m/n/z") n[2]=x; else nx=x;
 				if(n[0]) {
 					const x=n[0],w=w_dss(x);
 					if(!w) return [8,x];
@@ -3540,30 +3541,28 @@ class HandleTypes extends BaseService {
 				}
 				if(n[1]) {
 					let db_data=n[1];
-					if("j" in db_data) {db_data.l=as(db_data.j); delete db_data.j;}
-					if("l" in db_data) {
-						/** @type {{[x:string]:"ST:D"}} */
-						let s1=as_any(db_data);
-						/** @type {"ST:D"} */
-						let a2=as(s1.a);
-						switch(a2) {
-							case "ST:D": {
-								db_data.a="/db/key/a/k/l/m/z";
-							}
-						}
-					}
 					if(db_data.a==="/db/key/a/k/l/m/z") {
 						let v_di=db_data.z[0],w=w_di(v_di);
 						let [,,,[v_value]]=w;
 						return ["m:0",[db_data.l,db_data.m],[v_value,v_di,db_data]];
 					}
-					if(db_data.a==="/db/key/a/k/l/z") {
+					console.log("TODO [ReturnType<typeof w_dst>] [1]",db_data); debugger;
+					return [1,db_data];
+				}
+				if(n[2]) {
+					let db_data=n[2];
+					if(db_data.a==="/db/key/a/k/l/m/n/z") {
 						let v_di=db_data.z[0],w=w_di(v_di);
 						let [,,[k],[v_value]]=w;
 						return ["m:1",[db_data.l,k],[v_value,v_di,db_data]];
 					}
-					console.log("TODO [ReturnType<typeof w_dst>] [1]",db_data); debugger;
-					return [1,db_data];
+				}
+				if(nx) {
+					{const v=4; try {return [7,v,this.za3(this.za1(nx)),nx];} catch {} }
+					{const v=3; try {return [7,v,this.za3(nx),nx];} catch {} }
+					{const v=2; try {return [7,v,this.za2(nx),nx];} catch {} }
+					{const v=1; try {return [7,v,this.za1(nx),nx];} catch {} }
+					return [7,0,nx];
 				}
 				return ["a1",this.za1(x)];
 			};

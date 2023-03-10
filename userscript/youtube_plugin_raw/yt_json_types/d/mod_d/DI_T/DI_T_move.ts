@@ -23,6 +23,8 @@ type MakeInfoInput_Len2=
 //#endregion
 
 //#region DStr
+type DStr_DI_AKLMZ=`/di/a/k/l/m/z`
+type DStr_DI_ALM_Z=`/di/a/l/m/z`;
 type DStr_DI_AKLZ=`/di/a/k/l/z`;
 type DStr_DI_AKZ=`/di/a/k/z`;
 type DStr_DI_AZ=`/di/a/z`;
@@ -154,9 +156,10 @@ type DI_RetInfo_Test1=Exclude<DU_ChannelId,"RDGM"|"RDCMUC"|"RDMM"|"PL"|"RD"|"UU"
 //#endregion
 //#region ABCZ
 type DI_A_ChannelId_UC={
-	a: DStr_DI_AKLZ;
-	k: "channel_id";
-	l: "UC";
+	a: DStr_DI_ALM_Z;
+	// k is reserved
+	l: "channel_id";
+	m: "UC";
 	z: [
 		T_DI_FromObj<{raw_id: T_IdTemplate<"UC">;}>,
 		T_DI_FromObj<{id: string;}>,
@@ -175,7 +178,7 @@ type DI_GuideEntry_PL={
 	z: [DI_A_Playlist_PL];
 };
 type DI_GuideEntry_VL_LL={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKLMZ;
 	k: "guide_entry_id";
 	l: "VL"; m: "LL";
 	z: [DI_BrowseId_VL_LL];
@@ -311,7 +314,7 @@ type DI_BrowseId_SP={
 	];
 };
 type DI_BrowseId_VL_LL={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKLMZ;
 	k: "browse_id";
 	l: "VL"; m: "LL";
 	z: [
@@ -320,7 +323,7 @@ type DI_BrowseId_VL_LL={
 	];
 };
 type DI_BrowseId_VL_PL={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKLMZ;
 	k: "browse_id";
 	l: "VL"; m: "PL";
 	z: [
@@ -329,13 +332,13 @@ type DI_BrowseId_VL_PL={
 	];
 };
 type DI_BrowseId_VL_UU={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKLMZ;
 	k: "browse_id";
 	l: "VL"; m: "UU";
 	z: [T_DI_FromObj<{raw_id: `VLUU${string}`;}>];
 };
 type DI_BrowseId_VL_WL={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKLMZ;
 	k: "browse_id";
 	l: "VL"; m: "WL";
 	z: [
@@ -352,7 +355,7 @@ type DI_BrowseId_UC={
 	z: [DI_A_ChannelId_UC];
 };
 type DI_BrowseId_VL_UC={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKLMZ;
 	k: "browse_id";
 	l: "VL"; m: "UC";
 	z: [
