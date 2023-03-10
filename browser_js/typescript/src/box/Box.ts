@@ -36,13 +36,13 @@ export type Box=
 	|NumberBox
 	|StringBox
 	// function result
-	CSSStyleSheetInitBox|
+	|CSSStyleSheetInitBox
 	// array
 	|EmptyArrayBox
 	|ArrayBox
 	|InstructionTypeArrayBox
 	// constructor function
-	CSSStyleSheetConstructorBox|
+	|CSSStyleSheetConstructorBox
 	// function
 	|FunctionBox
 	|NewableFunctionBox
@@ -50,7 +50,7 @@ export type Box=
 	|AsyncFunctionBox
 	|FunctionConstructorBox
 	// return type
-	CSSStyleSheetPromiseBox|
+	|CSSStyleSheetPromiseBox
 	// global
 	|GlobalThisBox
 	|WindowBox
@@ -61,7 +61,7 @@ export type Box=
 	|CSSStyleSheetBox
 	|MediaListBox
 	// StackVM
-	InstructionTypeBox|
+	|InstructionTypeBox
 	// object
 	|NullBox
 	|IndexBox
@@ -73,10 +73,10 @@ export type Box=
 	|VoidBox
 	|RealVoidBox
 	// Box with stuff
-	BoxWithPropertiesIsBox|
+	|BoxWithPropertiesIsBox
 	// Generic boxes
-	NewableInstancePackObjectBox|
-	DomElementBox
+	|NewableInstancePackObjectBox
+	|DomElementBox
 	|never
 	;
 ;
