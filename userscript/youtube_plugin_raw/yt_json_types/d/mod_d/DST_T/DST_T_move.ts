@@ -1,10 +1,8 @@
 //#region KStr
-type DST_KStr_ABDZ="/db/key/a/b/d/z";
-type DST_KStr_ABLMZ="/db/key/a/b/l/m/z";
-type DST_KStr_ABLZ="/db/key/a/b/l/z";
+type DST_KStr_ABDZ=`/db/key/a/b/d/z`;
+type DST_KStr_ABLMZ=`/db/key/a/b/l/m/z`;
+type DST_KStr_ABLZ=`/db/key/a/k/l/z`;
 //#endregion
-
-
 //#region ABDZ
 // ~ SI = StorableItem
 type DSI_T_Item_ABD2<T_Type extends string,T_Tag2 extends string,T>={
@@ -59,8 +57,8 @@ type DST_MakeLM_FromObjR<T extends TMK_SuccessorX3<V>&{k: string;},L,M extends G
 	z: [T];
 	_info_arr?: [TZ_SuccessorX3<T>];
 };
-type DST_MakeLM_FromObj<T extends TMK_SuccessorX3<V>&{k: string;},L="key",M extends G_Primitives=TZ_Successor<T> extends infer J extends {k: string;}? J["k"]:"unknown",V extends G_Primitives=G_Primitives>={
-	key: `boxed_id:${T['k']}:${M}:${V}`;
+type DST_MakeLM_FromObj<T extends {k: any; z: [{z: [any]; k: any;}];},L="key",M=TZ_Successor<T>["k"],V=G_Primitives>={
+	key: `boxed_id:${T['k']}:${M&string}:${V&string}`;
 	a: DST_KStr_ABLMZ;
 	b: "boxed_id";
 	l: L;

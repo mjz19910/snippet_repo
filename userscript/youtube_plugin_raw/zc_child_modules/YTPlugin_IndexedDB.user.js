@@ -486,7 +486,7 @@ class IndexedDBService extends BaseService {
 				const {k: k,z: [w]}=x;
 				const prim_box=this.make_prim_v(w.z[0].z[0]);
 				/** @type {DI_A_HashtagId} */
-				const a={a: "/KV/a/k/z",k,z: [{a: "/KV/a/k/z",k: "raw_id",z: [prim_box]}]};
+				const a={a: DStr_DI_AKZ,k,z: [{a: DStr_DI_AKZ,k: "raw_id",z: [prim_box]}]};
 				/** @type {DST_HashtagId} */
 				const z={
 					a: this.mka("l"),b: "boxed_id",l: k,z: [a],
@@ -497,7 +497,7 @@ class IndexedDBService extends BaseService {
 			case "video_id": {
 				const {a: {},k,z: [zi]}=x;
 				/** @type {DI_A_VideoId} */
-				const a={a: "/KV/a/k/z",k,z: [zi]};
+				const a={a: DStr_DI_AKZ,k,z: [zi]};
 				/** @type {DST_Video_Id} */
 				const z={
 					a: this.mka("l"),b: "boxed_id",l: k,z: [a],
@@ -528,7 +528,7 @@ class IndexedDBService extends BaseService {
 	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_KV_Z_MakeItemGroup<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore_v2(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"/db/key/a/b/d/z",tag1,x);}
 	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DI_T_KV_Z_MakeItemGroup<B,T>} */
-	make_DIZ_Item_AB(b,x) {return {a: "/KV/a/k/z",k: b,z: [x]};}
+	make_DIZ_Item_AB(b,x) {return {a: DStr_DI_AKZ,k: b,z: [x]};}
 	/** @arg {any} x */
 	make_boxed_id_box(x) {x; debugger;}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} s0 */

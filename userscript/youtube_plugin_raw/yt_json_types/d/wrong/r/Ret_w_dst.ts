@@ -5,7 +5,7 @@ type Ret_w_dst<T extends G_Boxed_DST>=
 			x1: Extract<T,{l: any;}>["l"],
 			x2: string
 		],
-		GetAllZ<Extract<T,{a: "/db/key/a/b/l/z";}>>
+		GetAllZ<Extract<T,{a: DST_KStr_ABLZ;}>>
 	]
 	|[
 		true,2,

@@ -2405,9 +2405,9 @@ class BaseService extends ServiceWithMembers {
 	/**
 	 * @param {Z_Item} z @arg {J} l @arg {T_Key} key
 	 * @template J @template Z_Item @template T_Key
-	 * @returns {{key:T_Key,a: "/db/key/a/b/l/z";b:"boxed_id",l:J,z:[Z_Item]}}
+	 * @returns {{key:T_Key,a: DST_KStr_ABLZ;b:"boxed_id",l:J,z:[Z_Item]}}
 	 * */
-	make_ST_jz(key,l,z) {return {key,a: "/db/key/a/b/l/z",b: "boxed_id",l,z: [z]};}
+	make_ST_jz(key,l,z) {return {key,a: DStr_DST_Key_ABLZ,b: "boxed_id",l,z: [z]};}
 	/**
 	 * @param {Z} z @arg {B} b @arg {C} c
 	 * @template B,C @template Z
@@ -2415,7 +2415,7 @@ class BaseService extends ServiceWithMembers {
 	 * */
 	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
 	/** @template K,T @arg {K} k @arg {T} x  @returns {KV_T_AKZ<K,T>} */
-	make_DI_T_KV_Z(k,x) {return {a: "/KV/a/k/z",k,z: [x]};}
+	make_DI_T_KV_Z(k,x) {return {a: DStr_DI_AKZ,k,z: [x]};}
 	/**
 	 * @param {Z} z @arg {A} a @arg {E} e
 	 * @template A,E @template Z

@@ -1,5 +1,5 @@
 //#region DStr
-type DStr_KV_AKZ="/KV/a/k/z";
+type DStr_KV_AKZ=DStr_DI_AKZ;
 //#endregion
 
 

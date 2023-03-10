@@ -1711,10 +1711,12 @@ class HandleTypes extends BaseService {
 	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
 	/** @template C,T @arg {C} c @arg {T} x  @returns {T_DI_Key_2<C,T>} */
 	make_DI_R(c,x) {return {a: "/item/a/k/l/z",k: "key",l: c,z: [x]};}
-	/** @template {string} C @template T @arg {C} c @arg {T} x @returns {T_DI_Raw_2<C,T>} */
-	make_DI_Raw(c,x) {return {a: "/item/a/k/l/z",b: "raw",c,z: [x]};}
+	/** @template {string} C @template T @arg {C} l @arg {T} x @returns {T_DI_Raw_2<C,T>} */
+	make_DI_Raw_2(l,x) {return {a: "/item/a/k/l/z",k: "raw",l,z: [x]};}
+	/** @template {string} L @template {string} M @template T @arg {L} l @arg {M} m @arg {T} x @returns {T_DI_Raw<L,M,T>} */
+	make_DI_Raw(l,m,x) {return {a: "/item/a/k/l/z",k: "raw",l,m,z: [x]};}
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
-	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(`${k1}:${k2}`,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
+	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(k1,k2,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {return this.make_DI_Raw_KV_l2("key","start_radio",this.make_prim_num_t(x));}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
@@ -3081,38 +3083,38 @@ class HandleTypes extends BaseService {
 		function pr(x) {assert_assume_ret(x); return x;}
 		switch(x.a) {
 			case "any": {
-				const {a: k,v}=x;
+				const {a: k,z: [v]}=x;
 				if(this.str_starts_with_rx("FE",v)) {
 					/** @type {DI_RetInfo} */
-					const z={a: "tag",k,l: "FE",z: v};
+					const z={a: "tag",k,l: "FE",z: [v]};
 					assert_assume_ret(z);
 					return z;
 				}
-				if(this.str_starts_with_rx("SP",v)) return pr({a: "tag",k,l: "SP",z: v});
-				if(this.str_starts_with_rx("VL",v)) return pr({a: "tag",k,l: "VL",z: v});
+				if(this.str_starts_with_rx("SP",v)) return pr({a: "tag",k,l: "SP",z: [v]});
+				if(this.str_starts_with_rx("VL",v)) return pr({a: "tag",k,l: "VL",z: [v]});
 				switch(v) {
-					case "WL": return pr({a: "tag",k,c: null,z: v});
-					case "LL": return pr({a: "tag",k,c: null,z: v});
+					case "WL": return pr({a: "tag",k,z: [v]});
+					case "LL": return pr({a: "tag",k,z: [v]});
 				}
-				if(this.str_starts_with_rx("UC",v)) return pr({a: "tag",k,l: "UC",z: v});
-				if(this.str_starts_with_rx("PL",v)) return pr({a: "tag",k,l: "PL",z: v});
-				if(this.str_starts_with_rx("RD",v)) return pr({a: "tag",k,c: "RD",z: v});
-				if(this.str_starts_with_rx("MP",v)) return pr({a: "tag",k,c: "MP",z: v});
-				if(this.str_starts_with_rx("UU",v)) return pr({a: "tag",k,c: "UU",z: v});
+				if(this.str_starts_with_rx("UC",v)) return pr({a: "tag",k,l: "UC",z: [v]});
+				if(this.str_starts_with_rx("PL",v)) return pr({a: "tag",k,l: "PL",z: [v]});
+				if(this.str_starts_with_rx("RD",v)) return pr({a: "tag",k,l: "RD",z: [v]});
+				if(this.str_starts_with_rx("MP",v)) return pr({a: "tag",k,l: "MP",z: [v]});
+				if(this.str_starts_with_rx("UU",v)) return pr({a: "tag",k,l: "UU",z: [v]});
 				debugger;
 			} return pr({a: null});
 			case "start_radio": {
-				const {a: k,v}=x;
-				return pr({a: "tag",k,z: v});
+				const {a: k,z: [v]}=x;
+				return pr({a: "tag",k,z: [v]});
 			}
 			// ! strings
 			case "hashtag_id": {
-				const {a: k,v}=x;
-				return pr({a: "tag",k,z: v});
+				const {a: k,z: [v]}=x;
+				return pr({a: "tag",k,z: [v]});
 			}
 			case "video_id": {
-				const {a: k,v}=x;
-				return pr({a: "tag",k,z: v});
+				const {a: k,z: [v]}=x;
+				return pr({a: "tag",k,z: [v]});
 			}
 			default: debugger; return pr({a: null});
 		}
@@ -3152,17 +3154,25 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x @returns {KV_T_AKZ<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_KV_Z("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
-	make_Typeof(x) {return {a: "/dit/a/e/z",k: this.get_s_type(x),z: [x]};}
+	make_Typeof(x) {return {a: "/dit/a/k/z",k: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
-	make_BoxTypeof(x) {return {a: "/dit/a/e/z",k: this.get_s_type(x),z: [x]};}
+	make_BoxTypeof(x) {return {a: "/dit/a/k/z",k: this.get_s_type(x),z: [x]};}
 	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {{k:K;v:T;}} */
 	make_input(k,v) {return {k,v};}
 	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {{k:K;v:T;}} */
 	make_obj_input(k,v) {return {k,v};}
 	/** @template {{}} T @arg {T_DI_FromObj<T>} x */
 	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0].z[0]);}
+	/** @type {"a/k/l/z"} */
+	kz_kl="a/k/l/z";
+	/** @type {"a/k/z"} */
+	kz_k="a/k/z";
+	/** @template {string} T @arg {T}x @returns {`/di/${T}`}  */
+	mdk=x => `/di/${x}`;
+	/** @template {"kl"|"k"} T @arg {T} x */
+	mka=x => this.mdk(this[`kz_${x}`]);
 	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
-	make_prim_num_t(x) {return {a: "/dit/a/e/z",k: this.get_s_type(x),z: [x]};}
+	make_prim_num_t(x) {return {a: this.mka("k"),k: this.get_s_type(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		switch(x.k) {
@@ -3291,11 +3301,11 @@ class HandleTypes extends BaseService {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
 			let x=value; let y=loaded_value;
-			if(value.b!=="boxed_id") {debugger; break x;}
+			if(value.k!=="boxed_id") {debugger; break x;}
 			let nw=null;
 			switch(value.a) {
 				case "/db/key/a/b/l/m/z": debugger; break;
-				case "/db/key/a/b/l/z": debugger; break;
+				case DStr_DST_Key_ABLZ: debugger; break;
 				case "/db/key/a/b/d/z": {
 					switch(value.d) {
 						default: debugger; break;
@@ -3379,8 +3389,8 @@ class HandleTypes extends BaseService {
 			};
 			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: "/db/key/a/b/l/m/z";}>} */
 			const extract_dst_lm=x => {return x.a==="/db/key/a/b/l/m/z";};
-			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: "/db/key/a/b/l/z";}>} */
-			const extract_dst_l=x => {return x.a==="/db/key/a/b/l/z";};
+			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_ABLZ;}>} */
+			const extract_dst_l=x => {return x.a===DStr_DST_Key_ABLZ;};
 			/** @template {G_Boxed_DST} T @arg {T} v_dst @returns {Ret_w_dst<T>} */
 			const w_dst=v_dst => {
 				let s=v_dst;
@@ -3392,7 +3402,7 @@ class HandleTypes extends BaseService {
 					let a2=as(s1.a);
 					switch(a2) {
 						case "ST:D": {
-							s.a="/db/key/a/b/l/z";
+							s.a=DStr_DST_Key_ABLZ;
 						}
 					}
 				}
@@ -3402,7 +3412,7 @@ class HandleTypes extends BaseService {
 					let [,,,[v_value]]=w;
 					return [true,2,[v_dst.l,v_dst.m],[v_value,v_di,v_dst]];
 				}
-				if(v_dst.a==="/db/key/a/b/l/z") {
+				if(v_dst.a===DStr_DST_Key_ABLZ) {
 					if(!extract_dst_l(v_dst)) throw new Error();
 					let v_di=v_dst.z[0],w=w_di(v_di);
 					let [,,[k],[v_value]]=w;
