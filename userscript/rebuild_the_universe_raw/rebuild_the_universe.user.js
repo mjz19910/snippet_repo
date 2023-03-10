@@ -174,7 +174,7 @@ class WindowBoxImpl {
 	/** @arg {Window} value */
 	constructor(value) {this.value=value;}
 }
-/** @typedef {import("./ns.js").ObjectBox} ObjectBox_CJS */
+/** @typedef {import("./ns.js").GenericObjectBox} ObjectBox_CJS */
 /** @implements {ObjectBox_CJS} */
 class ObjectBoxImpl {
 	/** @readonly */
@@ -1501,7 +1501,7 @@ class DataLoaderImplR {
 	/** @arg {string} data */
 	parse_int_arr(data) {return this.default_split(data).map(DataLoaderImplR.int_parser);}
 }
-/** @typedef {import("./ns.js").VoidBox} VoidBox_CJS */
+/** @typedef {import("./ns.js").VoidBox_ForUndefined} VoidBox_CJS */
 /** @implements {VoidBox_CJS} */
 class VoidBoxImpl {
 	/** @type {"void"} */

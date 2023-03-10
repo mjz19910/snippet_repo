@@ -1,9 +1,9 @@
 export {};
 export {CSSStyleSheetBox} from "./support/box/mod/CSSStyleSheetBox";
-export {StackVMBox} from "./support/StackVMBox";
+export {StackVMBox} from "./support/box/mod/StackVMBox";
 export {type Box} from "./support/box/mod/Box";
 export {NumberBox} from "./support/box/mod/NumberBox";
-export {GenericObjectBox as ObjectBox} from "./support/box/mod/GenericObjectBox";
-export {VoidBox} from "./support/VoidBox";
-export {WindowBox} from "./support/WindowBox";
+export {GenericObjectBox} from "./support/box/mod/GenericObjectBox";
+export {VoidBox_ForUndefined} from "./support/box/mod/VoidBox_ForUndefined.js";
+export {WindowBox} from "./support/box/mod/WindowBox";
 export {StackVM} from "./support/StackVM";
