@@ -7,10 +7,10 @@ type DStr_KV_AKZ=DStr_DI_AKZ;
 type KV_T_AKZ<K,V>={a: DStr_KV_AKZ; k: K; z: [V];};
 //#endregion
 
-type DI_T_KV_Z_MakeItemGroup<K extends string,T>=KV_T_AKZ<K,make_item_group<T>>;
+type DI_T_KV_Z_MakeItemGroup<K extends string,T>=T_DI_FromObj2<{[U in K]: make_item_group<T>}>;
 
 
-type Ret_w_diz<T,T_Box extends KV_T_AKZ<string,make_item_group<T>>=KV_T_AKZ<string,make_item_group<T>>>=
+type Ret_w_diz<T,T_Box extends T_DI_FromObj2<{[x: string]: make_item_group<T>;}>=T_DI_FromObj2<{[x: string]: make_item_group<T>;}>>=
 	["one",["1",T],T_Box['z'][0],T_Box]|
 	["arr",["2",T[]],T_Box['z'][0],T_Box]|
 	["many",["3",T[][]],T_Box['z'][0],T_Box]|
@@ -79,4 +79,6 @@ type T_DI_FromObj<T extends {}>=KV_T_AKZ<keyof T,T_PrimitiveBox<T[keyof T]>>;
 type T_DI_FromObj2<T extends {}>=KV_T_AKZ<keyof T,T[keyof T]>;
 type T_DI_FromObjEx<T extends {}>=T_DI_FromKeysOfObj<T,T_DistributedKeysOf_2<T>> extends {length: 1;}? T_DI_FromKeysOfObj<T,T_DistributedKeysOf_2<T>>[0]:KV_T_AKZ<"list",T_DI_FromKeysOfObj<T,T_DistributedKeysOf_2<T>>>;
 type T_DI_ToObj2<T>=T extends T_DI_FromObj2<{[U in infer K]: infer J}>? {[R in K]: J}:never;
+type T_DI_IdBox<T>=T_DI_FromObj2<{id: T;}>;
+type T_DI_RawIdBox<T>=T_DI_FromObj2<{raw_id: T;}>;
 //#endregion

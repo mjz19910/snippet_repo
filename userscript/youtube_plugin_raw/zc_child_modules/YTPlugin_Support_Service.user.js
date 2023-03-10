@@ -176,19 +176,18 @@ class StoreDescription extends ApiBase2 {
 		}
 	}
 	/** @arg {string} f @template T @arg {T} x @returns {make_one_t<T>} */
-	make_one_t(f,x) {return this.make_group([x],f,"one");}
+	make_one_t(f,x) {return this.make_group(x,f,"one");}
 	/** @arg {string} f @template T @arg {T[][]} x @returns {make_many_t<T>} */
-	make_many_t(f,x) {return this.make_group([x],f,"many");}
+	make_many_t(f,x) {return this.make_group(x,f,"many");}
 	/** @arg {string} f @template T @arg {T[]} x @returns {make_arr_t<T>} */
-	make_arr_t(f,x) {return this.make_group([x],f,"arr");}
+	make_arr_t(f,x) {return this.make_group(x,f,"arr");}
 	/**
 	 * @template Z @arg {Z} z @template {string} F @arg {F} f
 	 * @template {string} C @arg {C} c
 	 * @param {"item"} b
-	 * @param {"/GV/a/b/c/f/z"} a
 	 * @returns {G_MakeGroupShape<Z,"item",C,F>}
 	 **/
-	make_group(z,f,c,b="item",a="/GV/a/b/c/f/z") {return {a,k: b,l: c,m: f,z: this.make_prim_v([z])};}
+	make_group(z,f,c,b="item") {return {a: "/db/key/a/k/l/m/z",k: b,l: c,m: f,z: [z]};}
 	/*{
 		a: "/GV/b/c/f/z";
 		b: "item";
@@ -276,7 +275,7 @@ class StoreDescription extends ApiBase2 {
 		let q=obj;
 		if(q instanceof Array) {
 			/** @type {make_instance_name_t<"array">} */
-			const z2=this.make_group(["array"],k,"instance_name");
+			const z2=this.make_group("array",k,"instance_name");
 			this.save_data(`${k}.instance`,z2);
 			return;
 		}

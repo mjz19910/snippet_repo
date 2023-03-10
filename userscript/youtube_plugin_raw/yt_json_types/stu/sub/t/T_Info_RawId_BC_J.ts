@@ -4,5 +4,5 @@ type T_Info_RawId_BC_J<T_Type extends string,T_PartArr extends string[],T_RawStr
 	// ^ k = type
 	l: Join<T_PartArr,":">;
 	// ^ l = tag
-	z: [T_DI_FromObj<{raw_id: T_RawStr;}>];
+	z: [T_DI_RawIdBox<T_RawStr>];
 };

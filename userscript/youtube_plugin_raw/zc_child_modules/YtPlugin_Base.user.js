@@ -2402,8 +2402,8 @@ class BaseService extends ServiceWithMembers {
 	codegen_typedef(cf,x,do_break=true) {this.cg.codegen_typedef(cf,x,do_break,false);}
 	//#endregion
 	//#region template methods that make objects
-	/** @template K,T @arg {K} k @arg {T} x  @returns {KV_T_AKZ<K,T>} */
-	make_DI_T_KV_Z(k,x) {return {a: "/di/a/k/z",k,z: [x]};}
+	/** @template K,T @arg {K} k @arg {T} x @returns {T_DI_FromObj2<{[U in K]: T}>} */
+	make_DI_FromObj2(k,x) {return {a: "/di/a/k/z",k,z: [x]};}
 	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
 	get_primitive_tag(x) {
 		switch(typeof x) {

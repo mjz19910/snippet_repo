@@ -24,6 +24,19 @@ type DST_MakeLM_FromObjR<T extends TMK_SuccessorX3<V>&{k: string;},L,M extends G
 	z: [T];
 	_info_arr?: [TZ_SuccessorX3<T>];
 };
+type DST_Make_FromObj_K<T extends {k: any; z: [{k: string; z: [V];}];},V extends G_Primitives=TZ_Successor<T>['z'][0]>={
+	key: `boxed_id:${T['k']}:${V}`;
+	a: "/db/key/a/k/z";
+	k: "boxed_id";
+	z: [T];
+};
+type DST_Make_FromObj_KL<T extends {k: any; z: [{z: [any]; k: any;}];},L extends G_Primitives=TZ_Successor<T>["k"],V extends G_Primitives=G_Primitives>={
+	key: `boxed_id:${T['k']}:${L}:${V}`;
+	a: DST_KStr_AKLMZ;
+	k: "boxed_id";
+	l: L;
+	z: [T];
+};
 type DST_MakeLM_FromObj<T extends {k: any; z: [{z: [any]; k: any;}];},L="key",M=TZ_Successor<T>["k"],V=G_Primitives>={
 	key: `boxed_id:${T['k']}:${M&string}:${V&string}`;
 	a: DST_KStr_AKLMZ;
@@ -34,7 +47,7 @@ type DST_MakeLM_FromObj<T extends {k: any; z: [{z: [any]; k: any;}];},L="key",M=
 	_info_arr?: [TZ_SuccessorX3<T>];
 };
 //#endregion
-type DST_T_ABLZ_FromDI<T extends KV_T_AKZ<string,any>>=T_DI_ToObj2<T> extends {[U in infer R extends string]: any;}? T_DI_ToObj2<T_DI_ToObj2<T>[keyof T_DI_ToObj2<T>]> extends infer J extends {raw_id:string}? DST_T_ABLZ<R,J["raw_id"],T>:never:never;
+type DST_T_ABLZ_FromDI<T extends KV_T_AKZ<string,any>>=T_DI_ToObj2<T> extends {[U in infer R extends string]: any;}? T_DI_ToObj2<T_DI_ToObj2<T>[keyof T_DI_ToObj2<T>]> extends infer J extends {raw_id: string;}? DST_T_ABLZ<R,J["raw_id"],T>:never:never;
 
 type DI_A_HashtagId=T_DI_FromObj2<{
 	hashtag_id: T_DI_FromObj2<{
@@ -47,7 +60,7 @@ type DST_MakeLM_From_BC<
 	T extends {
 		k: string;
 		l: string;
-		z: [T_DI_FromObj<{[K in T_KeyName]: T_RawId}>,...any];
+		z: [T_DI_FromObj2<{[K in T_KeyName]: T_RawId}>,...any];
 	},
 	V extends G_Primitives,L extends T["k"]=T["k"],M extends T["l"]=T["l"],T_KeyName extends PropertyKey=keyof T_GP_FromObj<T['z'][0]>,T_RawId=T_GP_FromObj<T['z'][0]>[T_KeyName]
 >={

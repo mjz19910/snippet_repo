@@ -253,7 +253,7 @@ class IndexedDBService extends BaseService {
 		function get_tag(x) {return x.a;}
 		/** @template {{a:string;b:"boxed_id";l:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
 		function decay_item(x) {return x;}
-		if(item.a==="/db/key/a/k/l/m/z") return;
+		if(item.a!=="/db/key/a/k/l/z") return;
 		switch(item.l) {
 			default: {
 				let di=decay_item(item);
@@ -269,7 +269,6 @@ class IndexedDBService extends BaseService {
 			case "number": return store.get_store(item.l).load_data(item);
 			case "root_visual_element": return store.get_store(item.l).load_data(item);
 			case "string": return store.get_store(item.l).load_data(item);
-			case "browse_id": let di=decay_item(item); di; break;
 			case "user_id":
 			case "playlist_id":
 			case "hashtag_id":
@@ -342,10 +341,10 @@ class IndexedDBService extends BaseService {
 			default: {
 				/** @type {unknown} */
 				let ux=x;
-				if(typeof ux==="object"&&ux!==null&&"c" in ux&&typeof ux.c==="string") {
-					/** @type {{[U in string]:{c:string}|null}} */
+				if(typeof ux==="object"&&ux!==null&&"k" in ux&&typeof ux.k==="string") {
+					/** @type {{[U in string]:{k:string}|null}} */
 					let m_any=make;
-					m_any[ux.c]={c: ux.c};
+					m_any[ux.k]={k: ux.k};
 				}
 			} break;
 			case "one": make.one=x; break;
@@ -371,23 +370,23 @@ class IndexedDBService extends BaseService {
 		if(!box_res.promise) return {args,ret: box_res.promise,box: box_res};
 		return {args,ret: await box_res.promise};
 	}
-	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_A_StartRadio} x @returns {DST_MakeLM_FromObj<DI_A_StartRadio>} */
-	mk_s1(j,k,x) {
+	/** @arg {DI_A_StartRadio} x @returns {DST_Key_StartRadio} */
+	mk_start_radio(x) {
 		let u=this.ht.za1(x);
-		return this.kwb(x,u,j,k);
+		return {key: `boxed_id:${x.k}:${u.z[0]}`,a: this.mka("k"),k: "boxed_id",z: [x]};
 	}
 	/** @template {string} L @arg {L} l @template {string} V @template {{c:V}} X @arg {X} x @returns {DST_T_ABLZ<L,V,X>} */
 	mk_s2(l,x) {return {a: this.mka("l"),k: "boxed_id",l,z: [x],key: `boxed_id:${l}:${x.c}`};}
 	/** @template {string} M @arg {M} m @template {string} L @arg {L} l @template {string} IC @template {T_DI_AKLZ<any,any,any>} X @arg {X} x @returns {DST_MakeLM_3<X,L,M,IC>} */
 	mk_s3(l,m,x) {return {a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x],key: `boxed_id:${l}:${m}:${x.l}`};}
 	/**
-	 * @template {string} K @template {string} L @template {string} M @template {string} V @template {{k: K; l: L; m: M; z:[any,T_DI_FromObj<{id:V;}>]}} T
+	 * @template {string} K @template {string} L @template {string} M @template {string} V @template {{k: K; l: L; m: M; z:[any,T_DI_FromObj2<{id:V;}>]}} T
 	 * @param {T} x
 	 * @returns {T_DST_AKLM<K,L,M,T>}
 	 * */
 	mk_s4(x) {
 		const {k,l,m}=x;
-		let p=this.make_dst_lm(k,l,m,x,this.za2(x.z[1]));
+		let p=this.make_dst_lm(k,l,m,x,x.z[1].z[0]);
 		return p;
 	}
 	/** @template {T_SRC_AKLM<K,L,M,V>} T @arg {T} x @template {string} K @arg {K} k @template {string} L @arg {L} l @template {string} M @arg {M} m @template {G_Primitives} V @arg {V} v @returns {T_DST_AKLM_Params<K,L,M,T,V>&{key:`boxed_id:${K}:${L}:${M}:${V}`}} */
@@ -407,21 +406,15 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
-	/** @arg {DI_A_StartRadio} x */
-	mk_start_radio(x) {
-		let t_kv=this.ht.za1(x).k;
-		const r=this.mk_s1("key",t_kv,x);
-		/** @type {DST_Key_StartRadio} */
-		const z=r;
-		return z;
-	}
 	/** @type {"a/k/l/m/z"} */
 	kz_lm="a/k/l/m/z";
 	/** @type {"a/k/l/z"} */
 	kz_l="a/k/l/z";
+	/** @type {"a/k/z"} */
+	kz_k="a/k/z";
 	/** @template {string} T @arg {T}x @returns {`/db/key/${T}`}  */
 	mdk=x => `/db/key/${x}`;
-	/** @template {"lm"|"l"} T @arg {T} x */
+	/** @template {keyof IndexedDBService extends infer I?I extends `kz_${infer J extends string}`?J:never:never} T @arg {T} x */
 	mka=x => this.mdk(this[`kz_${x}`]);
 	/**
 	 * @template L @template {string} M
@@ -433,9 +426,11 @@ class IndexedDBService extends BaseService {
 		const kv=this.za2(z);
 		return {key: `boxed_id:${x.k}:${m}:${kv}`,a: this.mka("lm"),k: "boxed_id",l: l,m: m,z: [x]};
 	}
-	/** @template V @template {TMK_SuccessorX2<V>} T @arg {T} x @returns {TZ_SuccessorX2<T>} */
+	/** @template V @template {TShape_Successor<V>} T @arg {T} x @returns {TZ_Successor<T>} */
+	za1(x) {return this.ht.tz_pop(x);}
+	/** @template V @template {TShape_SuccessorX2<V>} T @arg {T} x @returns {TZ_SuccessorX2<T>} */
 	za2(x) {return this.ht.tz_pop(this.ht.za1(x));}
-	/** @template V @template {TMK_SuccessorX3<V>} T @arg {T} x @returns {TZ_SuccessorX3<T>} */
+	/** @template V @template {TShape_SuccessorX3<V>} T @arg {T} x @returns {TZ_SuccessorX3<T>} */
 	za3(x) {return this.ht.tz_pop(this.za2(x));}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"url_info"}>} T @arg {T} args @returns {RetPromise_put_boxed_url_info<T>} */
 	put_boxed_url_info(version,...args) {
@@ -443,20 +438,19 @@ class IndexedDBService extends BaseService {
 		let [,,x]=args;
 		if("k" in x) switch(x.k) {
 			default: debugger; throw new Error("Unreachable");
-			case "key": {
+			case "start_radio": {
 				/** @type {DST_Key_StartRadio} */
 				const z=this.mk_start_radio(x);
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 			case "hashtag_id": {
 				const {k: k,z: [w]}=x;
-				const prim_box=this.make_prim_v(w.z[0].z[0]);
 				/** @type {DI_A_HashtagId} */
-				const a={a: "/di/a/k/z",k,z: [{a: "/di/a/k/z",k: "raw_id",z: [prim_box]}]};
+				const a={a: "/di/a/k/z",k,z: [{a: "/di/a/k/z",k: "raw_id",z: [w.z[0]]}]};
 				/** @type {DST_HashtagId} */
 				const z={
 					a: this.mka("l"),k: "boxed_id",l: k,z: [a],
-					key: `boxed_id:${k}:${this.za3(x)}`,
+					key: `boxed_id:${k}:${this.za2(x)}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -467,7 +461,7 @@ class IndexedDBService extends BaseService {
 				/** @type {DST_Video_Id} */
 				const z={
 					a: this.mka("l"),k: "boxed_id",l: k,z: [a],
-					key: `boxed_id:${k}:${this.za3(x)}`,
+					key: `boxed_id:${k}:${this.za2(x)}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
@@ -478,23 +472,11 @@ class IndexedDBService extends BaseService {
 				/** @type {DST_Playlist_PL} */
 				const z={
 					a: this.mka("l"),k: "boxed_id",l: k,m: l,z: [a],
-					key: `boxed_id:${k}:${l}:${this.za2(x.z[1])}`,
+					key: `boxed_id:${k}:${l}:${x.z[1].z[0]}`,
 				};
 				let promise=this.put_box(z,version); return {args,promise};
 			}
 		} else throw new Error();
-	}
-	/** @template T @arg {L} l @arg {M} m @arg {T} x @template {string} L @template {string} M	*/
-	make_box_3(l,m,x) {
-		/** @type {`boxed_id:${L}:${M}`} */
-		const key=`boxed_id:${l}:${m}`;
-		return this.make_ST_jz(key,l,x);
-	}
-	/** @template A4 @arg {A1} a1 @arg {A2} a2 @arg {A3} tag @arg {A4} x @template {string} A1 @template {string} A2 @template {string} A3	*/
-	make_box_4(a1,a2,tag,x) {
-		/** @type {`${A1}:${A2}`} */
-		const j=`${a1}:${a2}`;
-		return this.make_box_3(j,tag,x);
 	}
 	/**
 	 * @param {T_Key} key
@@ -535,25 +517,25 @@ class IndexedDBService extends BaseService {
 					case "PL": {
 						let [l,m,x]=s0;
 						/** @type {DST_Playlist_PL} */
-						const z={key: `boxed_id:${l}:${m}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,m,z: [x]};
+						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,m,z: [x]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "RD": {
 						let [l,m,x]=s0;
 						/** @type {DST_Playlist_RD} */
-						const z={key: `boxed_id:${l}:${m}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,m,z: [x]};
+						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,m,z: [x]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "RD:MM": {
 						let [l,u,x]=s0; let [m,n]=split_string(u,":");
 						/** @type {DST_Playlist_RD_MM} */
-						const z={key: `boxed_id:${l}:${u}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l: "playlist_id",m,n,z: [x]};
+						const z={key: `boxed_id:${l}:${u}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l: "playlist_id",m,n,z: [x]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "RD:CM:UC": {
 						let [l,u,x]=s0; let [m,n,o]=split_string(u,":");
 						/** @type {DST_Playlist_RD_CM_UC} */
-						const z={key: `boxed_id:${l}:${u}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l: "playlist_id",m,n,o,z: [x]};
+						const z={key: `boxed_id:${l}:${u}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/z",k: "boxed_id",l: "playlist_id",m,n,o,z: [x]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 				}
@@ -575,13 +557,13 @@ class IndexedDBService extends BaseService {
 					case "PL": {
 						let iv=x.z[0];
 						/** @type {DST_GuideEntry_PL} */
-						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.l}:${this.za2(iv.z[1])}`,z: [x]};
+						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.l}:${this.za1(iv.z[1])}`,z: [x]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "UC": {
 						let iv=x.z[0];
 						/** @type {DST_GuideEntry_UC} */
-						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za2(iv.z[1])}`,z: [x]};
+						const z={a: this.mka("l"),k: "boxed_id",l,key: `boxed_id:${l}:${iv.m}:${this.za1(iv.z[1])}`,z: [x]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 					case "VL": {
@@ -596,19 +578,19 @@ class IndexedDBService extends BaseService {
 					case "FE": {
 						let [l,m,x]=s0;
 						/** @type {DST_Browse_FE} */
-						const z={key: `boxed_id:${l}:${m}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
+						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
 						let promise=this.put_box(z,version); return {args: s0,promise};
 					}
 					case "MP": {
 						let [l,m,x]=s0;
 						/** @type {DST_Browse_MP} */
-						const z={key: `boxed_id:${l}:${m}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
+						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
 						let promise=this.put_box(z,version); return {args: s0,promise};
 					}
 					case "SP": {
 						let [l,m,x]=s0;
 						/** @type {DST_Browse_SP} */
-						const z={key: `boxed_id:${l}:${m}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
+						const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
 						let promise=this.put_box(z,version); return {args: s0,promise};
 					}
 				}
@@ -616,37 +598,37 @@ class IndexedDBService extends BaseService {
 			case "video_id": {
 				let [l,,x]=s0;
 				/** @type {DST_Video_Id} */
-				const z={key: `boxed_id:${l}:${this.za3(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
+				const z={key: `boxed_id:${l}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "user_id": {
 				let x=s0[2];
 				/** @type {DST_User_Id} */
-				const z={key: `boxed_id:${l}:${this.za3(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
+				const z={key: `boxed_id:${l}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "play_next": {
 				const x=s0[2];
 				/** @type {DST_PlayNext} */
-				const z={key: `boxed_id:${l}:${x.z[0].z[0].z[0]}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
+				const z={key: `boxed_id:${l}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "channel_id": {
 				const x=s0[2],{m}=x;
 				/** @type {DST_Channel_UC} */
-				const z={key: `boxed_id:${l}:${m}:${this.za2(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
+				const z={key: `boxed_id:${l}:${m}:${this.za1(x.z[1])}`,a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x]};
 				let promise=this.put_box(z,version); return {args: s0,promise};
 			}
 			case "hashtag_id": {
 				const x=s0[2];
 				/** @type {DST_HashtagId} */
-				const z={key: `boxed_id:${l}:${x.z[0].z[0].z[0]}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
+				const z={key: `boxed_id:${l}:${this.za1(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
 				let promise=this.put_box(z,version); return {args: s0,promise};
 			}
 			case "video_time": {
 				const x=s0[2];
 				/** @type {DST_VideoTime} */
-				const z={key: `boxed_id:${l}:${x.z[0].z[0]}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
+				const z={key: `boxed_id:${l}:${this.za2(x)}`,a: "/db/key/a/k/l/z",k: "boxed_id",l,z: [x]};
 				let promise=this.put_box(z,version); return {args: s0,promise};
 			}
 			case "bigint": {
