@@ -3600,17 +3600,14 @@ class HandleTypes extends BaseService {
 				container;
 			}
 			if(xi) switch(xi[0]) {
-				default: {
-					const [,ty2,key,item_info,item_obj,diz_obj,container]=xi; key;
-					const [type,value]=item_info; item_obj; diz_obj;
-					console.log(`[x] [type=${type}] content.value`,value);
-					console.log('[x] [ty2=%s] container.key',ty2,container.key);
-				} break;
+				default: console.log('[x] [xi]',xi); break;
 				case 1:
+				case 2:
 				case 3:
 				case 4:
+				case 5:
 				case 6: {
-					const {6: container}=xi;
+					const {5: container}=xi[1];
 					acc_items(container,x_many);
 				}
 			}
@@ -3620,12 +3617,14 @@ class HandleTypes extends BaseService {
 				case 2: {const [,...v]=yi0; yi=v;} break;
 			}
 			if(yi) switch(yi[0]) {
-				default: debugger; break;
+				default: yi===""; debugger; break;
 				case 1:
+				case 2:
 				case 3:
 				case 4:
+				case 5:
 				case 6: {
-					const {6: container}=yi;
+					const [,{5: container}]=yi;
 					acc_items(container,y_many);
 				}
 			}
