@@ -3415,6 +3415,10 @@ class HandleTypes extends BaseService {
 	loaded_map=new Map;
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLMZ;}>} */
+	extract_dst_lm(x) {return x.a==="/db/key/a/k/l/m/z";}
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLZ;}>} */
+	extract_dst_l(x) {return x.a==="/db/key/a/k/l/z";}
 	/** @api @public @template {G_BoxedDatabaseData} T_Put @arg {"boxed_id"} key @arg {T_Put} value @arg {number} version */
 	async put(key,value,version) {
 		x: if(this.loaded_keys.has(value.key)) {
@@ -3516,40 +3520,6 @@ class HandleTypes extends BaseService {
 				debugger;
 				throw 1;
 			};
-			/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLMZ;}>} */
-			const extract_dst_lm=x => {return x.a==="/db/key/a/k/l/m/z";};
-			/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLZ;}>} */
-			const extract_dst_l=x => {return x.a==="/db/key/a/k/l/z";};
-			/** @arg {G_BoxedDatabaseData} db_data @returns {Ret_w_dst} */
-			const w_dst=db_data => {
-				let s=db_data;
-				if("j" in db_data) {db_data.l=as(db_data.j); delete db_data.j;}
-				if("l" in s) {
-					/** @type {{[x:string]:"ST:D"}} */
-					let s1=as_any(s);
-					/** @type {"ST:D"} */
-					let a2=as(s1.a);
-					switch(a2) {
-						case "ST:D": {
-							s.a="/db/key/a/k/l/z";
-						}
-					}
-				}
-				if(db_data.a==="/db/key/a/k/l/m/z") {
-					if(!extract_dst_lm(db_data)) throw new Error();
-					let v_di=db_data.z[0],w=w_di(v_di);
-					let [,,,[v_value]]=w;
-					return [true,2,[db_data.l,db_data.m],[v_value,v_di,db_data]];
-				}
-				if(db_data.a==="/db/key/a/k/l/z") {
-					if(!extract_dst_l(db_data)) throw new Error();
-					let v_di=db_data.z[0],w=w_di(v_di);
-					let [,,[k],[v_value]]=w;
-					return [true,1,[db_data.l,k],[v_value,v_di,db_data]];
-				}
-				debugger; db_data;
-				throw new Error();
-			};
 			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
 			const w_db_data=(x) => {
 				if(!x) return ["n"];
@@ -3569,16 +3539,31 @@ class HandleTypes extends BaseService {
 					}
 				}
 				if(n[1]) {
-					let x=n[1],w=w_dst(x);
-					if(!w) return [8,x];
-					if("j" in x) {x.l=as(x.j); delete x.j;}
-					if(x.l==="browse_id") {
-						let w=w_dst(x);
-						return [3,w,x];
+					let db_data=n[1];
+					if("j" in db_data) {db_data.l=as(db_data.j); delete db_data.j;}
+					if("l" in db_data) {
+						/** @type {{[x:string]:"ST:D"}} */
+						let s1=as_any(db_data);
+						/** @type {"ST:D"} */
+						let a2=as(s1.a);
+						switch(a2) {
+							case "ST:D": {
+								db_data.a="/db/key/a/k/l/m/z";
+							}
+						}
 					}
-					x.l;
-					console.log("TODO [ReturnType<typeof w_dst>] [1]",w); debugger;
-					return [1,w,x];
+					if(db_data.a==="/db/key/a/k/l/m/z") {
+						let v_di=db_data.z[0],w=w_di(v_di);
+						let [,,,[v_value]]=w;
+						return ["m:0",[db_data.l,db_data.m],[v_value,v_di,db_data]];
+					}
+					if(db_data.a==="/db/key/a/k/l/z") {
+						let v_di=db_data.z[0],w=w_di(v_di);
+						let [,,[k],[v_value]]=w;
+						return ["m:1",[db_data.l,k],[v_value,v_di,db_data]];
+					}
+					console.log("TODO [ReturnType<typeof w_dst>] [1]",db_data); debugger;
+					return [1,db_data];
 				}
 				return ["a1",this.za1(x)];
 			};
