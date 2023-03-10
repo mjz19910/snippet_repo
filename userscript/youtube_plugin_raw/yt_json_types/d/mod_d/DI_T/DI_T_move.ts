@@ -1,3 +1,22 @@
+//#region Templates
+
+
+type MakeInfoInput=
+	|{
+		type: "PL";
+		arr: ["playlist_id","PL"];
+		raw_id: `PL${string}`;
+	}
+	|{
+		type: "RD";
+		arr: ["playlist_id","RD"];
+		raw_id: `RD${string}`;
+	}
+	;
+;
+
+//#endregion
+
 //#region DStr
 type DStr_DI_AKLZ=`/di/a/k/l/z`;
 type DStr_DI_AKZ=`/di/a/k/z`;
@@ -52,49 +71,77 @@ type DIT_Box_Typeof2<T_Type extends T_GetPrimitiveTag<U>,U>={
 //#endregion
 //#region AKZ
 type DI_SpecialInfo=T_DI_FromObj<{v: string;}>;
-type MK_DIInfo1<T extends [string,string,G_Primitives]>={
-	a: T[0];
-	k: T[1];
-	z: [T[2]];
-};
-type MK_DIInfo2<T_Arr extends [string,string,string],T extends string=T_IdTemplate<T_Arr[2]&keyof B_IdTemplateArgs>>={
-	a: T_Arr[0];
-	k: T_Arr[1];
-	l: T_Arr[2];
+type MK_DIInfo1<K extends DI_SrcArr[1],T extends G_Primitives>={
+	a: "key";
+	k: K;
 	z: [T];
 };
-type MK_DIInfo3<T_Arr extends [string,string,string,string],T extends string=T_IdTemplate<T_Arr[2]&keyof B_IdTemplateArgs>>={
-	a: T_Arr[0];
-	k: T_Arr[1];
-	l: T_Arr[2];
-	m: T_Arr[3];
-	z: [T];
+type MK_DIInfo2<K extends DI_SrcArr[1],T extends keyof B_IdTemplateArgs>={
+	a: "key";
+	k: K;
+	l: T;
+	z: [T_IdTemplate<T>];
 };
-type DI_SrcInfo=
-	|MK_DIInfo1<["key","browse_id",DU_Browse_Id]>
-	|MK_DIInfo1<["key","guide_entry_id",DU_GuideEntry_Id]>
-	|MK_DIInfo1<["key","hashtag_id",string]>
-	|MK_DIInfo1<["key","playlist_id",DU_Playlist_Id]>
-	|MK_DIInfo1<["key","start_radio",DU_StartRadio]>
-	|MK_DIInfo1<["key","user_id",string]>
-	|MK_DIInfo1<["key","video_id",DU_VideoId]>
-	|MK_DIInfo1<["key","channel_id",DU_ChannelId]>
+type MK_DIInfo3<T extends keyof B_IdTemplateArgs,K extends DI_SrcArr[1],L extends "RD",M extends "GM"|"MM">={
+	a: "key";
+	k: K;
+	l: L;
+	m: M;
+	z: [T_IdTemplate<T>];
+};
+type DI_SrcArr=
+	|["key","browse_id",DU_Browse_Id]
+	|["key","guide_entry_id",DU_GuideEntry_Id]
+	|["key","hashtag_id",string]
+	|["key","playlist_id",DU_Playlist_Id]
+	|["key","start_radio",DU_StartRadio]
+	|["key","user_id",string]
+	|["key","video_id",DU_VideoId]
+	|["key","channel_id",DU_ChannelId]
 	;
 ;
+type DI_SrcInfo=
+	|MK_DIInfo1<"browse_id",DU_Browse_Id>
+	|MK_DIInfo1<"guide_entry_id",DU_GuideEntry_Id>
+	|MK_DIInfo1<"hashtag_id",string>
+	|MK_DIInfo1<"playlist_id",DU_Playlist_Id>
+	|MK_DIInfo1<"start_radio",DU_StartRadio>
+	|MK_DIInfo1<"user_id",string>
+	|MK_DIInfo1<"video_id",DU_VideoId>
+	|MK_DIInfo1<"channel_id",DU_ChannelId>
+	;
+;
+type MK_DIInfo4<T extends keyof B_IdTemplateArgs,T1 extends DI_SrcArr[1],L extends "RD",M extends "CM",N extends "UC">={
+	a: "tag";
+	k: T1;
+	l: L;
+	m: M;
+	n: N;
+	z: [T_IdTemplate<T>];
+};
 type DI_RetInfo=
-	|{a: "tag",k: "browse_id",l: "FE",z: [T_IdTemplate<"FE">];}
-	|{a: "tag",k: "playlist_id",l: "RD",m: "CM",n: "UC",z: [T_IdTemplate<"RDCMUC">];}
-	|{a: "tag",k: "playlist_id",l: "RD",m: "GM",z: [T_IdTemplate<"RDGM">];}
-	|{a: "tag",k: "playlist_id",l: "RD",m: "MM",z: [T_IdTemplate<"RDMM">];}
-	|{a: "tag",k: "playlist_id",z: [DU_Playlist_Static];}
-	|MK_DIInfo1<["tag","hashtag_id",string]>
-	|MK_DIInfo1<["tag","start_radio",DU_StartRadio]>
-	|MK_DIInfo1<["tag","user_id",string]>
-	|MK_DIInfo1<["tag","video_id",DU_VideoId]>
-	|MK_DIInfo2<["tag","channel_id","UC"],T_IdTemplate<"UC">>
-	|MK_DIInfo2<["tag","playlist_id","PL"],T_IdTemplate<"PL">>
-	|MK_DIInfo2<["tag","playlist_id","RD"],T_IdTemplate<"RD">>
-	|MK_DIInfo2<["tag","playlist_id","UU"],T_IdTemplate<"UU">>
+	|MK_DIInfo2<"browse_id","FE">
+	|MK_DIInfo2<"browse_id","UC">
+	|MK_DIInfo2<"browse_id","VL">
+	|MK_DIInfo2<"browse_id","MP">
+	|MK_DIInfo2<"browse_id","SP">
+	|MK_DIInfo1<"browse_id",never>
+	|MK_DIInfo4<"RDCMUC","playlist_id","RD","CM","UC">
+	|MK_DIInfo3<"RDGM","playlist_id","RD","GM">
+	|MK_DIInfo3<"RDMM","playlist_id","RD","MM">
+	|MK_DIInfo1<"playlist_id",DU_Playlist_Static>
+	|MK_DIInfo1<"hashtag_id",string>
+	|MK_DIInfo1<"start_radio",DU_StartRadio>
+	|MK_DIInfo1<"user_id",string>
+	|MK_DIInfo1<"video_id",DU_VideoId>
+	|MK_DIInfo2<"channel_id","UC">
+	|MK_DIInfo2<"playlist_id","PL">
+	|MK_DIInfo2<"playlist_id","RD">
+	|MK_DIInfo2<"playlist_id","UU">
+	|MK_DIInfo1<"guide_entry_id",DU_Playlist_Static>
+	|MK_DIInfo2<"guide_entry_id","VL">
+	|MK_DIInfo2<"guide_entry_id","UC">
+	|MK_DIInfo2<"guide_entry_id","PL">
 	|{a: null;}
 	;
 ;
@@ -125,7 +172,7 @@ type DI_GuideEntry_PL={
 type DI_GuideEntry_VL_LL={
 	a: DStr_DI_AKLZ;
 	k: "guide_entry_id";
-	l: "VL:LL";
+	l: "VL"; m: "LL";
 	z: [DI_BrowseId_VL_LL];
 };
 //#endregion
@@ -177,7 +224,7 @@ type DI_A_Playlist_RD={
 type DI_A_Playlist_RD_CM_UC={
 	a: DStr_DI_AKLZ;
 	k: "playlist_id";
-	l: "RD:CM:UC";
+	l: "RD"; m: "CM"; n: "UC";
 	z: [
 		T_DI_FromObj<{raw_id: `RDCMUC${string}`;}>,
 		T_DI_FromObj<{id: string;}>,
@@ -186,16 +233,27 @@ type DI_A_Playlist_RD_CM_UC={
 type DI_A_Playlist_RD_GM_EM={
 	a: DStr_DI_AKLZ;
 	k: "playlist_id";
-	l: "RD:GM:EM";
+	l: "RD"; m: "GM"; n: "EM";
 	z: [
 		T_DI_FromObj<{raw_id: `RDGMEM${string}`;}>,
 		T_DI_FromObj<{id: string;}>,
 	];
 };
+type DI_A_Playlist_RD_GM={
+	a: DStr_DI_AKLZ;
+	k: "playlist_id";
+	l: "RD"; m: "GM";
+	z: [
+		T_DI_FromObj<{raw_id: `RDGM${string}`;}>,
+		T_DI_FromObj<{id: string;}>,
+	];
+	next?: DI_A_Playlist_RD_GM_EM;
+};
 type DI_A_Playlist_RD_MM={
 	a: DStr_DI_AKLZ;
 	k: "playlist_id";
-	l: "RD:MM";
+	l: "RD";
+	m: "MM";
 	z: [
 		T_DI_FromObj<{raw_id: `RDMM${string}`;}>,
 		T_DI_FromObj<{id: string;}>,
@@ -250,7 +308,7 @@ type DI_BrowseId_SP={
 type DI_BrowseId_VL_LL={
 	a: DStr_DI_AKLZ;
 	k: "browse_id";
-	l: "VL:LL";
+	l: "VL"; m: "LL";
 	z: [
 		T_DI_FromObj<{raw_id: "VLLL";}>,
 		DI_A_Playlist_LL
@@ -259,7 +317,7 @@ type DI_BrowseId_VL_LL={
 type DI_BrowseId_VL_PL={
 	a: DStr_DI_AKLZ;
 	k: "browse_id";
-	l: "VL:PL";
+	l: "VL"; m: "PL";
 	z: [
 		KV_T_AKZ<"raw_id",T_PrimitiveBox<T_IdTemplate<"VL">>>,
 		DI_A_Playlist_PL
@@ -268,13 +326,13 @@ type DI_BrowseId_VL_PL={
 type DI_BrowseId_VL_UU={
 	a: DStr_DI_AKLZ;
 	k: "browse_id";
-	l: "VL:UU";
+	l: "VL"; m: "UU";
 	z: [T_DI_FromObj<{raw_id: `VLUU${string}`;}>];
 };
 type DI_BrowseId_VL_WL={
 	a: DStr_DI_AKLZ;
 	k: "browse_id";
-	l: "VL:WL";
+	l: "VL"; m: "WL";
 	z: [
 		T_DI_FromObj<{raw_id: "VLWL";}>,
 		DI_A_Playlist_WL
@@ -291,7 +349,7 @@ type DI_BrowseId_UC={
 type DI_BrowseId_VL_UC={
 	a: DStr_DI_AKLZ;
 	k: "browse_id";
-	l: "VL:UC";
+	l: "VL"; m: "UC";
 	z: [
 		T_DI_FromObj<{raw_id: `VL${T_IdTemplate<"UC",D_UserIdStr>}`;}>,
 		DI_A_ChannelId_UC
