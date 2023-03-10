@@ -20,7 +20,7 @@ type WatchUrlFormat=
 	|D_WatchPageUrl
 	|`/watch?${D_WatchUrlStr}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
-	|`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`
+	|`/watch?v=${string}&list=RDGMEM${string}&start_radio=1&rv=${string}`
 	|`/watch?v=${string}&playnext=1&list=${DU_Playlist_Radio_Id}`
 	;
 ;

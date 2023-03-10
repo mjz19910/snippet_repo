@@ -24,9 +24,10 @@ type MakeInfoInput_Len2=
 
 //#region DStr
 type DStr_DI_AKLMZ=`/di/a/k/l/m/z`;
-type DStr_DI_ALM_Z=`/di/a/l/m/z`;
 type DStr_DI_AKLZ=`/di/a/k/l/z`;
+type DStr_DI_AKMZ=`/di/a/k/m/z`;
 type DStr_DI_AKZ=`/di/a/k/z`;
+type DStr_DI_ALMZ=`/di/a/l/m/z`;
 type DStr_DI_AZ=`/di/a/z`;
 
 //#endregion
@@ -108,7 +109,7 @@ type DI_SrcInfo=
 	|MK_DIInfo1<"guide_entry_id:playlist_id",T_IdTemplate<"PL">|DU_Playlist_Static>
 	;
 ;
-type MK_DIInfo4<T extends keyof B_IdTemplateArgs,T1 extends DI_SrcArr[1],L extends "RD",M extends "CM",N extends "UC">={
+type MK_DIInfo4<T extends keyof B_IdTemplateArgs,T1 extends DI_SrcArr[1],L extends "RD",M extends "CM"|"GM",N extends "UC"|"EM">={
 	a: "/key/a/k/l/m/n/z";
 	k: T1;
 	l: L;
@@ -125,7 +126,7 @@ type DI_RetInfo=
 	|MK_DIInfo2<"browse_id","SP">
 	|MK_DIInfo1<"browse_id",never>
 	|MK_DIInfo4<"RDCMUC","playlist_id","RD","CM","UC">
-	|MK_DIInfo3<"RDGM","playlist_id","RD","GM">
+	|MK_DIInfo4<"RDGMEM","playlist_id","RD","GM","EM">
 	|MK_DIInfo3<"RDMM","playlist_id","RD","MM">
 	|MK_DIInfo1<"playlist_id",DU_Playlist_Static>
 	|MK_DIInfo1<"hashtag_id",string>
@@ -151,7 +152,7 @@ type X_ChannelId_UC=T_DI_RawIdBox<T_IdTemplate<"UC">>;
 //#endregion
 //#region ABCZ
 type DI_A_ChannelId_UC={
-	a: DStr_DI_ALM_Z;
+	a: DStr_DI_ALMZ;
 	// k is reserved
 	l: "channel_id";
 	m: "UC";
@@ -216,9 +217,9 @@ type DI_A_Playlist_PL={
 	];
 };
 type DI_A_Playlist_RD={
-	a: DStr_DI_AKLZ;
-	k: "playlist_id";
-	l: "RD";
+	a: DStr_DI_ALMZ;
+	l: "playlist_id";
+	m: "RD";
 	z: [
 		T_DI_RawIdBox<`RD${string}`>,
 		T_DI_IdBox<string>,
@@ -263,9 +264,9 @@ type DI_A_Playlist_RD_MM={
 	];
 };
 type DI_A_Playlist_UU={
-	a: DStr_DI_AKLZ;
+	a: DStr_DI_AKMZ;
 	k: "playlist_id";
-	l: "UU";
+	m: "UU";
 	z: [
 		T_DI_RawIdBox<`UU${string}`>,
 		T_DI_IdBox<string>

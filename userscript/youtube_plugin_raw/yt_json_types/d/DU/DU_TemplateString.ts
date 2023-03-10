@@ -9,7 +9,7 @@ type B_IdTemplateArgs={
 	PL: string;
 	RD: string;
 	RDCMUC: string;
-	RDGM: string;
+	RDGMEM: string;
 	RDMM: string;
 	UU: string;
 	SP: D_Settings_Id;
@@ -20,7 +20,7 @@ type DU_PlaylistId_Base=
 	|"PL"
 	|"RD"
 	|"RDCMUC"
-	|"RDGM"
+	|"RDGMEM"
 	|"RDMM"
 	|"UU"
 	;

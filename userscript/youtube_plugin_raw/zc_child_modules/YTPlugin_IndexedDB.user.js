@@ -425,7 +425,7 @@ class IndexedDBService extends BaseService {
 	 * */
 	kwb(x,z,l,m) {
 		const kv=this.za2(z);
-		return {key: `boxed_id:${x.k}:${m}:${kv}`,a: this.mka("lm"),k: "boxed_id",l: l,m: m,z: [x]};
+		return {key: `boxed_id:${x.k}:${m}:${kv}`,a: this.mka("lm"),k: "boxed_id",l: l,m,z: [x]};
 	}
 	/** @template V @template {TShape_Successor<V>} T @arg {T} x @returns {TZ_Successor<T>} */
 	za1(x) {return this.ht.tz_pop(x);}
@@ -437,50 +437,56 @@ class IndexedDBService extends BaseService {
 	put_boxed_url_info(version,...args) {
 		version; args;
 		let [,,x]=args;
-		if("k" in x) switch(x.k) {
+		if("l" in x) switch(x.l) {
 			default: debugger; throw new Error("Unreachable");
-			case "start_radio": {
-				/** @type {DST_Key_StartRadio} */
-				const z=this.mk_start_radio(x);
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "hashtag_id": {
-				const {k: k,z: [w]}=x;
-				/** @type {DI_A_HashtagId} */
-				const a={a: "/di/a/k/z",k,z: [{a: "/di/a/k/z",k: "raw_id",z: [w.z[0]]}]};
-				/** @type {DST_HashtagId} */
-				const z={
-					a: this.mka("l"),k: "boxed_id",l: k,z: [a],
-					key: `boxed_id:${k}:${this.za2(x)}`,
-				};
-				let promise=this.put_box(z,version); return {args,promise};
-			}
-			case "video_id": {
-				const {a: {},k,z: [zi]}=x;
-				/** @type {DI_A_VideoId} */
-				const a={a: "/di/a/k/z",k,z: [zi]};
-				/** @type {DST_Video_Id} */
-				const z={
-					a: this.mka("l"),k: "boxed_id",l: k,z: [a],
-					key: `boxed_id:${k}:${this.za2(x)}`,
-				};
-				let promise=this.put_box(z,version); return {args,promise};
-			}
 			case "playlist_id": {
-				const {a: {},k,m: l,z: [z1,z2]}=x;
-				/** @type {DI_A_Playlist_PL} */
-				const a={a: "/di/a/k/l/z",k,m: l,z: [z1,z2]};
-				/** @type {DST_Playlist_PL} */
-				const z={
-					a: this.mka("l"),k: "boxed_id",l: k,m: l,z: [a],
-					key: `boxed_id:${k}:${l}:${x.z[1].z[0]}`,
-				};
-				let promise=this.put_box(z,version); return {args,promise};
+				switch(x.a) {
+					case "/di/a/l/m/z": {
+						const {a: {},l,m,z: [z1,z2]}=x;
+						/** @type {DI_A_Playlist_RD} */
+						const a={a: "/di/a/l/m/z",l,m,z: [z1,z2]};
+						/** @type {DST_Playlist_RD} */
+						const z={
+							a: this.mka("l"),k: "boxed_id",l,m,z: [a],
+							key: `boxed_id:${l}:${m}:${x.z[1].z[0]}`,
+						};
+						let promise=this.put_box(z,version); return {args,promise};
+					}
+				}
 			}
 		} else {
-			x;
-			debugger;
-			return null;
+			switch(x.k) {
+				case "start_radio": {
+					/** @type {DST_Key_StartRadio} */
+					const z=this.mk_start_radio(x);
+					let promise=this.put_box(z,version); return {args,promise};
+				}
+				case "hashtag_id": {
+					const {k: k,z: [w]}=x;
+					/** @type {DI_A_HashtagId} */
+					const a={a: "/di/a/k/z",k,z: [{a: "/di/a/k/z",k: "raw_id",z: [w.z[0]]}]};
+					/** @type {DST_HashtagId} */
+					const z={
+						a: this.mka("l"),k: "boxed_id",l: k,z: [a],
+						key: `boxed_id:${k}:${this.za2(x)}`,
+					};
+					let promise=this.put_box(z,version); return {args,promise};
+				}
+				case "video_id": {
+					const {a: {},k,z: [zi]}=x;
+					/** @type {DI_A_VideoId} */
+					const a={a: "/di/a/k/z",k,z: [zi]};
+					/** @type {DST_Video_Id} */
+					const z={
+						a: this.mka("l"),k: "boxed_id",l: k,z: [a],
+						key: `boxed_id:${k}:${this.za2(x)}`,
+					};
+					let promise=this.put_box(z,version); return {args,promise};
+				}
+				case "guide_entry_id": break;
+				case "playlist_id": break;
+				case "user_id": break;
+			}
 		}
 	}
 	/**
