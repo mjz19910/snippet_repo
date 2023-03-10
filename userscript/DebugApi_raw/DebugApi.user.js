@@ -56,7 +56,6 @@ const DebugApiH_o={
 };
 export_(exports => {exports.DebugApiH_o=DebugApiH_o;});
 // Use module types
-/** @type {import("./__global.js")} */
 // #endregion
 // #region saved
 /** @type {[string,{name:string}][]} */
@@ -4022,18 +4021,17 @@ class FlagHandler {
 	is_ack() {return (this.f&2)==2;}
 	get_flags() {return this.f;}
 	valueOf() {return this.f;}
-	/** @arg {import("./__global.js").ConnectFlag} flags */
+	/** @arg {ConnectFlag} flags */
 	constructor(flags) {this.f=flags;}
 }
 
-/** @typedef {import("./__global.js").ConnectFlag} ConnectFlag */
 /** @type {1} */
 const tcp_syn=1;
-/** @type {(typeof import("./__global.js").ConnectFlag)["Syn"]} */
+/** @type {(typeof ConnectFlag)["Syn"]} */
 const val_tcp_syn=tcp_syn; val_tcp_syn;
 /** @type {2} */
 const tcp_ack=2;
-/** @readonly @type {(typeof import("./__global.js").ConnectFlag)["Ack"]} */
+/** @readonly @type {(typeof ConnectFlag)["Ack"]} */
 const val_tcp_ack=tcp_ack; val_tcp_ack;
 
 const ack_win=5000;

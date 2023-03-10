@@ -2,7 +2,6 @@
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/makiki99_prestige-frame_client_code.js
 */
-/** @type {import("./__global.js")} */
 let holder=1;
 holder;
 if(activatePrestige.length==3) {

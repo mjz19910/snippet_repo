@@ -6,7 +6,6 @@
  When a duplicate tag is found in the xml tree, convert the value corresponding to
  that tag into an array */
 async function read_library_ms_xml() {
-	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
 	let r;
