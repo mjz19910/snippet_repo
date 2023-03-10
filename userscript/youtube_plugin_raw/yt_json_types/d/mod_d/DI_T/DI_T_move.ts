@@ -82,18 +82,19 @@ type DI_SrcInfo=
 	;
 ;
 type DI_RetInfo=
-	|MK_DIInfo1<["tag","user_id",string]>
-	|MK_DIInfo1<["tag","hashtag_id",string]>
-	|MK_DIInfo1<["tag","video_id",DU_VideoId]>
-	|MK_DIInfo2<["tag","playlist_id","RD"],T_IdTemplate<"RD">>
-	|MK_DIInfo2<["tag","playlist_id","PL"],T_IdTemplate<"PL">>
-	|MK_DIInfo2<["tag","playlist_id","UU"],T_IdTemplate<"UU">>
-	|MK_DIInfo2<["tag","channel_id","UC"],T_IdTemplate<"UC">>
-	|MK_DIInfo1<["tag","start_radio",DU_StartRadio]>
+	|{a: "tag",k: "browse_id",l: "FE",z: [T_IdTemplate<"FE">];}
 	|{a: "tag",k: "playlist_id",l: "RD",m: "CM",n: "UC",z: [T_IdTemplate<"RDCMUC">];}
 	|{a: "tag",k: "playlist_id",l: "RD",m: "GM",z: [T_IdTemplate<"RDGM">];}
 	|{a: "tag",k: "playlist_id",l: "RD",m: "MM",z: [T_IdTemplate<"RDMM">];}
 	|{a: "tag",k: "playlist_id",z: [DU_Playlist_Static];}
+	|MK_DIInfo1<["tag","hashtag_id",string]>
+	|MK_DIInfo1<["tag","start_radio",DU_StartRadio]>
+	|MK_DIInfo1<["tag","user_id",string]>
+	|MK_DIInfo1<["tag","video_id",DU_VideoId]>
+	|MK_DIInfo2<["tag","channel_id","UC"],T_IdTemplate<"UC">>
+	|MK_DIInfo2<["tag","playlist_id","PL"],T_IdTemplate<"PL">>
+	|MK_DIInfo2<["tag","playlist_id","RD"],T_IdTemplate<"RD">>
+	|MK_DIInfo2<["tag","playlist_id","UU"],T_IdTemplate<"UU">>
 	|{a: null;}
 	;
 ;

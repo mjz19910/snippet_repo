@@ -3129,7 +3129,7 @@ class HandleTypes extends BaseService {
 			}
 			case "channel_id": {
 				const {k,z: [v]}=x;
-				return pr({a: "tag",k,z: [v]});
+				return pr({a: "tag",k,l: "UC",z: [v]});
 			}
 			case "browse_id": {
 				const {k,z: [v]}=x;
