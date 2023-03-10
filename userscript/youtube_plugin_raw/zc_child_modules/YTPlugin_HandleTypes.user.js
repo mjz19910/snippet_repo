@@ -1710,7 +1710,7 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
 	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
 	/** @template C,T @arg {C} c @arg {T} x  @returns {T_DI_Key_2<C,T>} */
-	make_DI_R(c,x) {return {a: "/item/a/k/l/z",b: "key",c,z: [x]};}
+	make_DI_R(c,x) {return {a: "/item/a/k/l/z",k: "key",l: c,z: [x]};}
 	/** @template {string} C @template T @arg {C} c @arg {T} x @returns {T_DI_Raw_2<C,T>} */
 	make_DI_Raw(c,x) {return {a: "/item/a/k/l/z",b: "raw",c,z: [x]};}
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
@@ -3073,46 +3073,46 @@ class HandleTypes extends BaseService {
 	//#region get
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
-	/** @template {DI_SrcInfo} T @arg {T} x @returns {[Extract<DI_RetInfo,{k:T["k"]}>] extends [never]?{a:null}:Extract<DI_RetInfo,{k:T["k"]}>} */
+	/** @template {DI_SrcInfo} T @arg {T} x @returns {[Extract<DI_RetInfo,{k:T["a"]}>] extends [never]?{a:null}:Extract<DI_RetInfo,{k:T["a"]}>} */
 	get_parsed_info(x) {
-		/** @arg {DI_RetInfo} x @returns {asserts x is Extract<DI_RetInfo,{k:T["k"]}>} */
+		/** @arg {DI_RetInfo} x @returns {asserts x is Extract<DI_RetInfo,{k:T["a"]}>} */
 		function assert_assume_ret(x) {x;}
 		/** @arg {DI_RetInfo} x */
 		function pr(x) {assert_assume_ret(x); return x;}
-		switch(x.k) {
+		switch(x.a) {
 			case "any": {
-				const {k,v}=x;
+				const {a: k,v}=x;
 				if(this.str_starts_with_rx("FE",v)) {
 					/** @type {DI_RetInfo} */
-					const z={a: "tag",k,c: "FE",v};
+					const z={a: "tag",k,l: "FE",z: v};
 					assert_assume_ret(z);
 					return z;
 				}
-				if(this.str_starts_with_rx("SP",v)) return pr({a: "tag",k,c: "SP",v});
-				if(this.str_starts_with_rx("VL",v)) return pr({a: "tag",k,c: "VL",v});
+				if(this.str_starts_with_rx("SP",v)) return pr({a: "tag",k,l: "SP",z: v});
+				if(this.str_starts_with_rx("VL",v)) return pr({a: "tag",k,l: "VL",z: v});
 				switch(v) {
-					case "WL": return pr({a: "tag",k,c: null,v});
-					case "LL": return pr({a: "tag",k,c: null,v});
+					case "WL": return pr({a: "tag",k,c: null,z: v});
+					case "LL": return pr({a: "tag",k,c: null,z: v});
 				}
-				if(this.str_starts_with_rx("UC",v)) return pr({a: "tag",k,c: "UC",v});
-				if(this.str_starts_with_rx("PL",v)) return pr({a: "tag",k,c: "PL",v});
-				if(this.str_starts_with_rx("RD",v)) return pr({a: "tag",k,c: "RD",v});
-				if(this.str_starts_with_rx("MP",v)) return pr({a: "tag",k,c: "MP",v});
-				if(this.str_starts_with_rx("UU",v)) return pr({a: "tag",k,c: "UU",v});
+				if(this.str_starts_with_rx("UC",v)) return pr({a: "tag",k,l: "UC",z: v});
+				if(this.str_starts_with_rx("PL",v)) return pr({a: "tag",k,l: "PL",z: v});
+				if(this.str_starts_with_rx("RD",v)) return pr({a: "tag",k,c: "RD",z: v});
+				if(this.str_starts_with_rx("MP",v)) return pr({a: "tag",k,c: "MP",z: v});
+				if(this.str_starts_with_rx("UU",v)) return pr({a: "tag",k,c: "UU",z: v});
 				debugger;
 			} return pr({a: null});
 			case "start_radio": {
-				const {k,v}=x;
-				return pr({a: "tag",k,v});
+				const {a: k,v}=x;
+				return pr({a: "tag",k,z: v});
 			}
 			// ! strings
 			case "hashtag_id": {
-				const {k,v}=x;
-				return pr({a: "tag",k,v});
+				const {a: k,v}=x;
+				return pr({a: "tag",k,z: v});
 			}
 			case "video_id": {
-				const {k,v}=x;
-				return pr({a: "tag",k,v});
+				const {a: k,v}=x;
+				return pr({a: "tag",k,z: v});
 			}
 			default: debugger; return pr({a: null});
 		}
@@ -3152,9 +3152,9 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x @returns {KV_T_AKZ<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_KV_Z("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
-	make_Typeof(x) {return {a: "/dit/a/e/z",e: this.get_s_type(x),z: [x]};}
+	make_Typeof(x) {return {a: "/dit/a/e/z",k: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
-	make_BoxTypeof(x) {return {a: "/dit/a/e/z",e: this.get_s_type(x),z: [x]};}
+	make_BoxTypeof(x) {return {a: "/dit/a/e/z",k: this.get_s_type(x),z: [x]};}
 	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {{k:K;v:T;}} */
 	make_input(k,v) {return {k,v};}
 	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {{k:K;v:T;}} */
@@ -3162,7 +3162,7 @@ class HandleTypes extends BaseService {
 	/** @template {{}} T @arg {T_DI_FromObj<T>} x */
 	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0].z[0]);}
 	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
-	make_prim_num_t(x) {return {a: "/dit/a/e/z",e: this.get_s_type(x),z: [x]};}
+	make_prim_num_t(x) {return {a: "/dit/a/e/z",k: this.get_s_type(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		switch(x.k) {
@@ -3200,19 +3200,19 @@ class HandleTypes extends BaseService {
 				return z;
 			}
 			case "browse_id": {
-				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({a: "any",v});
 				console.log(b,p);
 			} break;
 			case "channel_id": {
-				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({a: "any",v});
 				console.log(b,p);
 			} break;
 			case "guide_entry_id": {
-				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({a: "any",v});
 				console.log(b,p);
 			} break;
 			case "playlist_id": {
-				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({k: "any",v});
+				const b=x.k,v=x.z[0].z[0],p=this.get_parsed_info({a: "any",v});
 				switch(p.c) {
 					case null: debugger; break;
 					case "PL": {

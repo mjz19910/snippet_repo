@@ -733,13 +733,13 @@ class IndexedDBService extends BaseService {
 			case "load_id": {
 				let [l,,id]=s0;
 				/** @type {DST_LoadId} */
-				const z={a: this.mka("l"),b: "boxed_id",l,key: `boxed_id:${l}`,z: [{a: "/dit/a/e/z",e: "number",z: [id]}]};
+				const z={a: this.mka("l"),b: "boxed_id",l,key: `boxed_id:${l}`,z: [{a: "/dit/a/e/z",k: "number",z: [id]}]};
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "save_id": {
 				let [l,,id]=s0;
 				/** @type {DST_SaveId} */
-				const z={a: this.mka("l"),b: "boxed_id",l,key: `boxed_id:${l}`,z: [{a: "/dit/a/e/z",e: "number",z: [id]}]};
+				const z={a: this.mka("l"),b: "boxed_id",l,key: `boxed_id:${l}`,z: [{a: "/dit/a/e/z",k: "number",z: [id]}]};
 				return {args: s0,promise: this.put_box(z,version)};
 			}
 			case "browse_id": return this.put_boxed_pl(version,...s0);

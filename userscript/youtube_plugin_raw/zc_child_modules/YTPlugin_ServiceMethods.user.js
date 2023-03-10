@@ -1460,7 +1460,7 @@ class ServiceMethods extends ServiceData {
 				let [,v,...u]=p;
 				if(u.length===0) {
 					/** @type {T_DI_FromObj<{hashtag_id: string;}>} */
-					const z={k: "hashtag_id",a: "key_value",w: "/item/a/k/w/z",z: [{a: "primitive",e: "string",z: [v]}]};
+					const z={k: "hashtag_id",a: "key_value",w: "/item/a/k/w/z",z: [{a: "primitive",k: "string",z: [v]}]};
 					this.ht.DI_AGR_UrlInfo(z);
 				} else if(u.length===1) {
 					switch(u[0]) {

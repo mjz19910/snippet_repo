@@ -2423,7 +2423,7 @@ class BaseService extends ServiceWithMembers {
 	 * */
 	make_aez(a,e,z) {return {a,e,z: [z]};}
 	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"string">} */
-	make_prim_v(z) {return {a: "/dit/a/e/z",e: "string",z: [z]};}
+	make_prim_v(z) {return {a: "/dit/a/e/z",k: "string",z: [z]};}
 	//#endregion
 	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {
