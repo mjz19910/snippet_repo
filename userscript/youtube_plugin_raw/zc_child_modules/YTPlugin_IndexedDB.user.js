@@ -371,7 +371,7 @@ class IndexedDBService extends BaseService {
 		if(!box_res.promise) return {args,ret: box_res.promise,box: box_res};
 		return {args,ret: await box_res.promise};
 	}
-	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_Key_StartRadio} x @returns {DST_MakeLM_FromObj<DI_Key_StartRadio>} */
+	/** @arg {"start_radio"} k @arg {"key"} j @arg {DI_A_StartRadio} x @returns {DST_MakeLM_FromObj<DI_A_StartRadio>} */
 	mk_s1(j,k,x) {
 		let u=this.ht.za1(x);
 		return this.kwb(x,u,j,k);
@@ -407,7 +407,7 @@ class IndexedDBService extends BaseService {
 			}
 		}
 	}
-	/** @arg {DI_Key_StartRadio} x */
+	/** @arg {DI_A_StartRadio} x */
 	mk_start_radio(x) {
 		let t_kv=this.ht.za1(x).k;
 		const r=this.mk_s1("key",t_kv,x);

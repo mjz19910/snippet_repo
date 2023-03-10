@@ -373,7 +373,7 @@ type DI_GuideEntry_WL={
 	l: "WL";
 	z: [DI_A_Playlist_WL];
 };
-type DI_R_Key_StartRadio=T_DI_Raw<"key","start_radio",DI_Key_StartRadio>;
+type DI_R_Key_StartRadio=T_DI_Raw<"key","start_radio",DI_A_StartRadio>;
 //#endregion
 //#region (ACKZ)
 type DI_R_PlaylistId={
@@ -394,7 +394,7 @@ type DI_R_VideoId={
 };
 //#endregion
 //#region AKZ
-type DI_Key_StartRadio=DI_RawIdBox<"start_radio",0|1>;
+type DI_A_StartRadio=DI_RawIdBox<"start_radio",0|1>;
 type DI_A_UserId=DI_RawIdBox<"user_id",DU_UserId>;
 type DI_A_VideoId=DI_RawIdBox<"video_id",DU_VideoId>;
 type DI_A_Playlist_LL=DI_RawIdBox<"playlist_id","LL">;

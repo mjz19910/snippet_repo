@@ -30,7 +30,7 @@ type Y_PutBoxedArgs=
 	|["playlist_id","RD:MM",DI_A_Playlist_RD_MM]
 	|["playlist_id","RD:CM:UC",DI_A_Playlist_RD_CM_UC]
 	|["playlist_id","RD:GM:EM",DI_A_Playlist_RD_GM_EM]
-	|["key","start_radio",DI_Key_StartRadio]
-	|["url_info",null,DI_Key_StartRadio|DI_A_Playlist_PL|DI_A_HashtagId|DI_A_VideoId]
+	|["key","start_radio",DI_A_StartRadio]
+	|["url_info",null,DI_A_StartRadio|DI_A_Playlist_PL|DI_A_HashtagId|DI_A_VideoId]
 	;
 ;

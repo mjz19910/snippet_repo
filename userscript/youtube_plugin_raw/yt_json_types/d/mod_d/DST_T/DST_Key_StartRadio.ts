@@ -1,1 +1,1 @@
-type DST_Key_StartRadio=DST_MakeLM_FromObj<DI_Key_StartRadio>;
+type DST_Key_StartRadio=DST_MakeLM_FromObj<DI_A_StartRadio>;

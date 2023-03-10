@@ -34,10 +34,10 @@ type DST_MakeLM_FromObj<T extends {k: any; z: [{z: [any]; k: any;}];},L="key",M=
 	_info_arr?: [TZ_SuccessorX3<T>];
 };
 //#endregion
-type DST_T_ABLZ_FromDI<T extends Y_DI_Shape<K1,K2>,K1 extends string=T["k"],K2 extends string=T["z"][0]["k"]>=DST_T_ABLZ<T["k"],TZ_SuccessorX4<T>,T>;
+type DST_T_ABLZ_FromDI<T extends KV_T_AKZ<string,any>>=T_DI_ToObj2<T> extends {[U in infer R extends string]: any;}? T_DI_ToObj2<T_DI_ToObj2<T>[keyof T_DI_ToObj2<T>]> extends infer J extends {raw_id:string}? DST_T_ABLZ<R,J["raw_id"],T>:never:never;
 
 type DI_A_HashtagId=T_DI_FromObj2<{
-	hashtag_id: T_DI_FromObj<{
+	hashtag_id: T_DI_FromObj2<{
 		raw_id: string;
 	}>;
 }>;

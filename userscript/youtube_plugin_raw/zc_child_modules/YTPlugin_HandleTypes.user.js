@@ -1726,8 +1726,10 @@ class HandleTypes extends BaseService {
 	make_DI_Raw(l,m,x) {return {a: this.get_KZ("kl"),k: "raw",l,m,z: [x]};}
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
 	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(k1,k2,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
-	/** @arg {0|1} x  @returns {DI_Key_StartRadio} */
-	make_DI_Key_StartRadio(x) {return this.make_DI_T_KV_Z("key",{start_radio: x});}
+	/** @template T @arg {T} x @returns {KV_T_AKZ<"raw_id",T>} */
+	make_raw_id_obj(x) {return {a: "/di/a/k/z",k: "raw_id",z: [x]};}
+	/** @arg {0|1} x  @returns {DI_A_StartRadio} */
+	make_DI_StartRadio(x) {return this.make_DI_T_KV_Z("start_radio",this.make_raw_id_obj(x));}
 	/** @template {string} K @arg {K} k @template V @arg {V} v @returns {[K,V]} */
 	make_obj(k,v) {
 		let x={[k]: v};
@@ -1754,7 +1756,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
 	make_DI_R_Key_StartRadio(x) {
-		return this.make_DI_Raw("key","start_radio",this.make_DI_Key_StartRadio(x));
+		return this.make_DI_Raw("key","start_radio",this.make_DI_StartRadio(x));
 	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
@@ -3271,8 +3273,8 @@ class HandleTypes extends BaseService {
 				const p=this.get_parsed_info(p1);
 				if(p.a===null) return null;
 				if(p.k!==x.k) {debugger; return null;}
-				/** @type {DI_Key_StartRadio} */
-				const z=this.make_DI_Key_StartRadio(x.z[0].z[0]);
+				/** @type {DI_A_StartRadio} */
+				const z=this.make_DI_StartRadio(x.z[0].z[0]);
 				return z;
 			}
 			case "user_id": {

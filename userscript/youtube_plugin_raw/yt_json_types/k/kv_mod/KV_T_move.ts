@@ -72,8 +72,11 @@ type CV_ABC_KV<T extends {b: string; c: string; z: [any,...any];}>=KV_T_AKZ<`${T
 
 type T_CopyArray_Modify<T extends any[],Acc extends any[]=[]>=T extends [infer F,...infer VR extends T[number][]]? T_CopyArray_Modify<VR,[KV_T_AKZ<F,T_PrimitiveBox<{}>>,...Acc]>:Acc;
 type T_CopyArray_Modify_v2<T extends [string,any][],Acc extends any[]=[]>=T extends [[infer K,infer V],...infer VR extends T[number][]]? T_CopyArray_Modify_v2<VR,[KV_T_AKZ<K,T_PrimitiveBox<V>>,...Acc]>:Acc;
+
+//#region T_DI from and to object
+type T_DI_FromKeysOfObj<T,K extends string[]>=K extends [infer F extends keyof T,...infer R extends string[]]? [KV_T_AKZ<F,T_PrimitiveBox<T[F]>>,...T_DI_FromKeysOfObj<T,R>]:[];
 type T_DI_FromObj<T extends {}>=KV_T_AKZ<keyof T,T_PrimitiveBox<T[keyof T]>>;
 type T_DI_FromObj2<T extends {}>=KV_T_AKZ<keyof T,T[keyof T]>;
-type T_DI_FromKeysOfObj<T,K extends string[]>=K extends [infer F extends keyof T,...infer R extends string[]]? [KV_T_AKZ<F,T_PrimitiveBox<T[F]>>,...T_DI_FromKeysOfObj<T,R>]:[];
 type T_DI_FromObjEx<T extends {}>=T_DI_FromKeysOfObj<T,T_DistributedKeysOf_2<T>> extends {length: 1;}? T_DI_FromKeysOfObj<T,T_DistributedKeysOf_2<T>>[0]:KV_T_AKZ<"list",T_DI_FromKeysOfObj<T,T_DistributedKeysOf_2<T>>>;
-
+type T_DI_ToObj2<T>=T extends T_DI_FromObj2<{[U in infer K]: infer J}>? {[R in K]: J}:never;
+//#endregion

@@ -132,11 +132,7 @@ function cache_item_decompose_work(s: ApiBase2,x: DecomposeWorkItem): DecomposeW
 			switch(x[1]) {
 				case "+a": {
 					const v=x[2];
-					if("b" in v) {
-						return [1,"+b",v];
-					} else {
-						return [1,"-b",v];
-					}
+					return [1,"-b",v];
 				}
 				case "+a=group_value": {
 					const v=x[2]; v;
@@ -145,12 +141,6 @@ function cache_item_decompose_work(s: ApiBase2,x: DecomposeWorkItem): DecomposeW
 					const v=x[2];
 					return [1,"-f",v];
 				}
-				case "+b": {
-					const v=x[2];
-					if(v.a==="/GV/a/b/c/f/z") return [1,"+a=group_value",v];
-					v.a;
-					const {z,...y}=x[2]; y;
-				} break;
 				case "+f": break;
 				case "-a=group_value": break;
 				case "-a=primitive": break;
