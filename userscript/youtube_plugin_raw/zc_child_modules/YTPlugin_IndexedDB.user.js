@@ -137,8 +137,6 @@ class IndexedDBService extends BaseService {
 	cache_index() {return this.store_cache_index;}
 	/** @type {Set<string>} */
 	database_diff_keys=new Set;
-	/** @type {WeakSet<G_CacheSetItems>} */
-	cache_weak_set=new WeakSet;
 	/** @private @type {G_BoxedDatabaseData[]} */
 	committed_data=[];
 	/** @private @type {DA_CacheInfoType} */
@@ -167,58 +165,10 @@ class IndexedDBService extends BaseService {
 		const box=await this.get("boxed_id","boxed_id:save_id",version);
 		return box;
 	}
-	/** @arg {StoreData} store @arg {number} version */
-	async load_store_from_database(store,version) {
-		/** @type {G_BoxedDatabaseData[]} */
-		let boxed;
-		try {
-			boxed=await this.getAll("boxed_id",version);
-		} catch {
-			this.has_loaded_keys=true;
-			this.on_loaded_resolver.resolve();
-			return;
-		}
-		for(let item of boxed) await this.load_store(store,item,version);
-		this.has_loaded_keys=true;
-		this.on_loaded_resolver.resolve();
-	}
-	/** @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T>} */
-	async update_obj_schema(x,version) {
-		if(x.z) return x;
-		await this.delete("boxed_id",x.key,version);
-		await this.direct_put("boxed_id",x,version);
-		return x;
-	}
 	/** @arg {G_BoxedDatabaseData} x */
 	store_cache_tree(x) {
 		this.ht.loaded_keys.add(x.key);
 		this.ht.loaded_map.set(x.key,x);
-		this.cache_weak_set.add(x);
-	}
-	/** @arg {StoreData} store @arg {G_BoxedDatabaseData} item @arg {number} version */
-	async load_store(store,item,version) {
-		this.add_to_index(item.key,item,true);
-		item=await this.update_obj_schema(item,version);
-		if(!item.z) return;
-		this.store_cache_tree(item);
-		if(!("l" in item)) return;
-		switch(item.l) {
-			case "bigint": return store.get_store(item.l).load_data(item);
-			case "boolean": return store.get_store(item.l).load_data(item);
-			case "keys": return store.get_store(item.l).load_data(item);
-			case "number": return store.get_store(item.l).load_data(item);
-			case "root_visual_element": return store.get_store(item.l).load_data(item);
-			case "string": return store.get_store(item.l).load_data(item);
-			case "browse_id":
-			case "channel_id":
-			case "guide_entry_id":
-			case "key":
-			case "load_id":
-			case "play_next":
-			case "playlist_id":
-			case "save_id":
-			case "video_time": console.log("skip_a",item.key,item); break;
-		}
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {T[]} _mt */
 	uv_unpack_mt(x,_mt) {
@@ -247,12 +197,6 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template T @arg {make_item_group<T>} x */
 	uv_unpack(x) {return this.uv_unpack_mt(x,[]);}
-	/** @arg {{args:Y_PutBoxedArgs;promise:Promise<G_BoxedDatabaseData>;}} x */
-	async await_put_result(x) {
-		const {args,promise}=x;
-		let ret=await promise;
-		return {args,ret};
-	}
 	/** @arg {make_item_group<any>} x @returns {x is make_item_group<string>} */
 	is_vi_has_str(x) {return this.is_vi_typeof_check(x,"string");}
 	/** @arg {make_item_group<any>} x @returns {x is make_item_group<number>} */
@@ -566,22 +510,11 @@ class IndexedDBService extends BaseService {
 		if(this.log_cache_push) console.log("push wait",key,idx,obj);
 	}
 	/** @arg {G_BoxedDatabaseData["key"]} key @arg {G_BoxedDatabaseData} x */
-	add_to_index(key,x,null_out_key=false) {
+	add_to_index(key,x) {
 		let cache_arr=this.cache();
 		let cache_index=this.cache_index();
 		let idx=cache_index.get(key);
-		if(idx!==void 0) {
-			if(!this.cache_weak_set.has(x)) {
-				this.cache_weak_set.add(x);
-				cache_arr[idx]=x;
-			} else if(cache_arr[idx]!==null) {
-				cache_arr[idx]=x;
-			}
-			if(null_out_key) {
-				cache_arr[idx]=null;
-			}
-			return;
-		}
+		if(idx!==void 0) return;
 		idx=cache_arr.push(x)-1;
 		cache_index.set(key,idx);
 		return idx;

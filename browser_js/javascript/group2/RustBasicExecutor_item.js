@@ -445,7 +445,7 @@ function main(exports) {
 				/** @type {{ wake: () => void; }|null} */
 				this.waker=null;
 				this.wake_count=0;
-				/** @type {{}|null} */
+				/** @type {Promise<any>|null} */
 				this.inner=null;
 				this.notifier=null;
 			}
