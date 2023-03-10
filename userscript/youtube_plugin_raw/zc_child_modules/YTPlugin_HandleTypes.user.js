@@ -1707,14 +1707,22 @@ class HandleTypes extends BaseService {
 			return;
 		}
 	}
+	/** @type {"a/k/l/z"} */
+	kz_kl="a/k/l/z";
+	/** @type {"a/k/z"} */
+	kz_k="a/k/z";
+	/** @template {string} T @arg {T}x @returns {`/di/${T}`}  */
+	mdk=x => `/di/${x}`;
+	/** @template {"kl"|"k"} T @arg {T} x */
+	get_KZ=x => this.mdk(this[`kz_${x}`]);
 	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
 	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
 	/** @template C,T @arg {C} c @arg {T} x  @returns {T_DI_Key_2<C,T>} */
-	make_DI_R(c,x) {return {a: "/item/a/k/l/z",k: "key",l: c,z: [x]};}
+	make_DI_R(c,x) {return {a: this.get_KZ("kl"),k: "key",l: c,z: [x]};}
 	/** @template {string} C @template T @arg {C} l @arg {T} x @returns {T_DI_Raw_2<C,T>} */
-	make_DI_Raw_2(l,x) {return {a: "/item/a/k/l/z",k: "raw",l,z: [x]};}
+	make_DI_Raw_2(l,x) {return {a: this.get_KZ("kl"),k: "raw",l,z: [x]};}
 	/** @template {string} L @template {string} M @template T @arg {L} l @arg {M} m @arg {T} x @returns {T_DI_Raw<L,M,T>} */
-	make_DI_Raw(l,m,x) {return {a: "/item/a/k/l/z",k: "raw",l,m,z: [x]};}
+	make_DI_Raw(l,m,x) {return {a: this.get_KZ("kl"),k: "raw",l,m,z: [x]};}
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
 	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(k1,k2,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
@@ -3075,13 +3083,27 @@ class HandleTypes extends BaseService {
 	//#region get
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
-	/** @template {DI_SrcInfo} T @arg {T} x @returns {[Extract<DI_RetInfo,{k:T["a"]}>] extends [never]?{a:null}:Extract<DI_RetInfo,{k:T["a"]}>} */
+	/** @template {DI_SrcInfo} T @arg {T} x @returns {[Extract<DI_RetInfo,{k:T["a"]}>] extends [never]?{a:null}:Extract<DI_RetInfo,{k:T["a"]}>|null} */
 	get_parsed_info(x) {
 		/** @arg {DI_RetInfo} x @returns {asserts x is Extract<DI_RetInfo,{k:T["a"]}>} */
 		function assert_assume_ret(x) {x;}
 		/** @arg {DI_RetInfo} x */
 		function pr(x) {assert_assume_ret(x); return x;}
 		switch(x.a) {
+			// TODO: Fix this
+			case void 0: return null;
+			case "key": {
+				switch(x.k) {
+					case "start_radio": {
+						const {k,z: [v]}=x;
+						return pr({a: "tag",k,z: [v]});
+					}
+					case "user_id": {
+						const {k,z: [v]}=x;
+						return pr({a: "tag",k,z: [v]});
+					}
+				}
+			}
 			case "any": {
 				const {a: k,z: [v]}=x;
 				if(this.str_starts_with_rx("FE",v)) {
@@ -3143,7 +3165,7 @@ class HandleTypes extends BaseService {
 	/** @arg {"playlist_id"}b @arg {"PL"} c @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
 	make_info_3(b,c,x3) {
 		let [,id]=split_string_once(x3,c);
-		return {a: "/item/a/k/l/z",k: b,l: c,z: [this.make_raw_id(x3),this.make_id(id)]};
+		return {a: this.get_KZ("kl"),k: b,l: c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
 	/** @template K,T @arg {K} k @arg {T} x @returns {KV_T_AKZ<K,T_PrimitiveBox<T>>}*/
 	make_kv_ab(k,x) {return this.make_DI_T_KV_Z(k,this.make_BoxTypeof(x));}
@@ -3154,34 +3176,39 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x @returns {KV_T_AKZ<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_KV_Z("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
-	make_Typeof(x) {return {a: "/dit/a/k/z",k: this.get_s_type(x),z: [x]};}
+	make_Typeof(x) {return {a: this.get_KZ("k"),k: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
-	make_BoxTypeof(x) {return {a: "/dit/a/k/z",k: this.get_s_type(x),z: [x]};}
-	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {{k:K;v:T;}} */
-	make_input(k,v) {return {k,v};}
-	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {{k:K;v:T;}} */
-	make_obj_input(k,v) {return {k,v};}
-	/** @template {{}} T @arg {T_DI_FromObj<T>} x */
+	make_BoxTypeof(x) {return {a: this.get_KZ("k"),k: this.get_s_type(x),z: [x]};}
+	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {MK_DIInfo1<["key",K,T]>} */
+	make_input(k,v) {return {a: "key",k,z: [v]};}
+	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {MK_DIInfo1<["key",K,T]>} */
+	make_obj_input(k,v) {return {a: "key",k,z: [v]};}
+	/** @template {{}} T @arg {T_DI_FromObj<T>} x @returns {MK_DIInfo1<["key",keyof T,T[keyof T]]>} */
 	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0].z[0]);}
-	/** @type {"a/k/l/z"} */
-	kz_kl="a/k/l/z";
-	/** @type {"a/k/z"} */
-	kz_k="a/k/z";
-	/** @template {string} T @arg {T}x @returns {`/di/${T}`}  */
-	mdk=x => `/di/${x}`;
-	/** @template {"kl"|"k"} T @arg {T} x */
-	mka=x => this.mdk(this[`kz_${x}`]);
 	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
-	make_prim_num_t(x) {return {a: this.mka("k"),k: this.get_s_type(x),z: [x]};}
+	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_s_type(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		switch(x.k) {
 			default: debugger; break;
 			case "start_radio": {
 				/** @type {T_DI_FromObj<{start_radio: DU_StartRadio;}>} */
-				const u=x,p=this.get_parsed_info(this.make_input_from_R_info(u));
+				const u=x;
+				const p1=this.make_input_from_R_info(u);
+				const p=this.get_parsed_info(p1);
+				// TODO: Fix this
+				if(p.a===null) return null;
+				if(!("k" in p)) return null;
+				if(!("v" in p)) return null;
+				if(p.k!=="start_radio") return null;
+				if(typeof p.v!=="number") return null;
+				/** @type {0|1|null} */
+				let v=null;
+				if(p.v===1) v=1;
+				if(p.v===0) v=0;
+				if(v===null) return null;
 				/** @type {DI_Key_StartRadio} */
-				const z=this.make_DI_T_KV_Z("key",this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(p.v)));
+				const z=this.make_DI_T_KV_Z("key",this.make_DI_T_KV_Z(p.k,this.make_prim_num_t(v)));
 				return z;
 			}
 			case "user_id": {
@@ -3196,7 +3223,6 @@ class HandleTypes extends BaseService {
 				const b=x.k,raw_id=x.z[0].z[0];
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
-				p.a;
 				/** @type {DI_A_HashtagId} */
 				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.v)));
 				return z;
@@ -3205,6 +3231,8 @@ class HandleTypes extends BaseService {
 				const b=x.k,raw_id=x.z[0].z[0];
 				const s=this.make_input(b,raw_id);
 				const p=this.get_parsed_info(s);
+				// TODO: Fix this
+				if(p===null) return null;
 				/** @type {DI_A_VideoId} */
 				const z=this.make_DI_T_KV_Z(x.k,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(p.v)));
 				return z;
@@ -3301,11 +3329,13 @@ class HandleTypes extends BaseService {
 		x: if(this.loaded_keys.has(value.key)) {
 			let loaded_value=this.loaded_map.get(value.key);
 			let x=value; let y=loaded_value;
-			if(value.k!=="boxed_id") {debugger; break x;}
+			// TODO: fix this error
+			// @ts-ignore
+			if(value.k!=="boxed_id") break x;
 			let nw=null;
 			switch(value.a) {
 				case "/db/key/a/b/l/m/z": debugger; break;
-				case DStr_DST_Key_ABLZ: debugger; break;
+				case "/db/key/a/k/l/z": debugger; break;
 				case "/db/key/a/b/d/z": {
 					switch(value.d) {
 						default: debugger; break;
@@ -3326,7 +3356,7 @@ class HandleTypes extends BaseService {
 				console.log("[cache_outdated]",no);
 			}
 			if(nw!==null&&!("j" in nw)&&"d" in nw) {
-				/** @type {{d:GST_DSS["d"]}} */
+				/** @type {{d:GST_DSS["l"]}} */
 				const no=nw;
 				switch(no.d) {
 					default: debugger; break;
@@ -3351,13 +3381,13 @@ class HandleTypes extends BaseService {
 			};
 			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss} */
 			const w_dss=x => {
-				switch(x.d) {
-					case "bigint": return [x.d,...w_diz(x.z[0]),x];
-					case "boolean": return [x.d,...w_diz(x.z[0]),x];
-					case "keys": return [x.d,...w_diz(x.z[0]),x];
-					case "number": return [x.d,...w_diz(x.z[0]),x];
-					case "root_visual_element": return [x.d,...w_diz(x.z[0]),x];
-					case "string": return [x.d,...w_diz(x.z[0]),x];
+				switch(x.l) {
+					case "bigint": return [x.l,...w_diz(x.z[0]),x];
+					case "boolean": return [x.l,...w_diz(x.z[0]),x];
+					case "keys": return [x.l,...w_diz(x.z[0]),x];
+					case "number": return [x.l,...w_diz(x.z[0]),x];
+					case "root_visual_element": return [x.l,...w_diz(x.z[0]),x];
+					case "string": return [x.l,...w_diz(x.z[0]),x];
 				}
 			};
 			/** @template {G_Boxed_DST['z'][0]} T @arg {T} x @returns {[true,0,[string],[T['z'][0],T]]} */
@@ -3389,7 +3419,7 @@ class HandleTypes extends BaseService {
 			};
 			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: "/db/key/a/b/l/m/z";}>} */
 			const extract_dst_lm=x => {return x.a==="/db/key/a/b/l/m/z";};
-			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_ABLZ;}>} */
+			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLZ;}>} */
 			const extract_dst_l=x => {return x.a===DStr_DST_Key_ABLZ;};
 			/** @template {G_Boxed_DST} T @arg {T} v_dst @returns {Ret_w_dst<T>} */
 			const w_dst=v_dst => {

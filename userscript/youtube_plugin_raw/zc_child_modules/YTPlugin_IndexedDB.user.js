@@ -254,7 +254,7 @@ class IndexedDBService extends BaseService {
 		/** @template {{b:"boxed_id";tag:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
 		function decay_item(x) {return x;}
 		if("d" in item) {
-			switch(item.d) {
+			switch(item.l) {
 				default: {
 					let di=decay_item(item);
 					switch(get_tag(item)) {
@@ -262,12 +262,12 @@ class IndexedDBService extends BaseService {
 					console.log("skip_tag",di.tag);
 					debugger;
 				} break;
-				case "bigint": return store.get_store(item.d).load_data(item);
-				case "boolean": return store.get_store(item.d).load_data(item);
-				case "keys": return store.get_store(item.d).load_data(item);
-				case "number": return store.get_store(item.d).load_data(item);
-				case "root_visual_element": return store.get_store(item.d).load_data(item);
-				case "string": return store.get_store(item.d).load_data(item);
+				case "bigint": return store.get_store(item.l).load_data(item);
+				case "boolean": return store.get_store(item.l).load_data(item);
+				case "keys": return store.get_store(item.l).load_data(item);
+				case "number": return store.get_store(item.l).load_data(item);
+				case "root_visual_element": return store.get_store(item.l).load_data(item);
+				case "string": return store.get_store(item.l).load_data(item);
 			}
 		}
 	}
@@ -369,8 +369,8 @@ class IndexedDBService extends BaseService {
 	mk_s2(l,x) {return {a: this.mka("l"),b: "boxed_id",l,z: [x],key: `boxed_id:${l}:${x.c}`};}
 	/** @template {string} M @arg {M} m @template {string} L @arg {L} l @template {string} IC @template {{c:IC}} X @arg {X} x @returns {DST_MakeLM_3<X,L,M,IC>} */
 	mk_s3(l,m,x) {return {a: this.mka("lm"),b: "boxed_id",l,m,z: [x],key: `boxed_id:${l}:${m}:${x.c}`};}
-	/** @template {string} S @template {string} SC @template {Omit<DI_BrowseId_FE,"z"|"c">&{c:SC;z:[any,TMK_SuccessorX2<S>]}} X @arg {X} x @returns {Omit<DST_Browse_FE,"key"|"l"|"z">&{l:`browse_id:${SC}`;key:`boxed_id:browse_id:${SC}:${S}`,z:[X]}} */
-	mk_s4(x) {return {a: this.mka("l"),b: "boxed_id",l: `${x.b}:${x.c}`,z: [x],key: `boxed_id:${x.b}:${x.c}:${this.za2(x.z[1])}`};}
+	/** @template {string} S @template {string} SC @template {Omit<DI_BrowseId_FE,"z"|"c">&{c:SC;z:[any,TMK_SuccessorX2<S>]}} X @arg {X} x @returns {Omit<DST_Browse_FE,"key"|"l"|"m"|"z">&{l:`browse_id`;m:SC;key:`boxed_id:browse_id:${SC}:${S}`,z:[X]}} */
+	mk_s4(x) {return {a: this.mka("l"),b: "boxed_id",l: x.b,m: x.c,z: [x],key: `boxed_id:${x.b}:${x.c}:${this.za2(x.z[1])}`};}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
@@ -447,15 +447,13 @@ class IndexedDBService extends BaseService {
 		const z=r;
 		return z;
 	}
-	/** @type {"a/b/j/k/w/z"} */
-	kz_kw="a/b/j/k/w/z";
 	/** @type {"a/b/l/m/z"} */
 	kz_lm="a/b/l/m/z";
-	/** @type {"a/b/l/z"} */
-	kz_l="a/b/l/z";
+	/** @type {"a/k/l/z"} */
+	kz_l="a/k/l/z";
 	/** @template {string} T @arg {T}x @returns {`/db/key/${T}`}  */
 	mdk=x => `/db/key/${x}`;
-	/** @template {"kw"|"lm"|"l"} T @arg {T} x */
+	/** @template {"lm"|"l"} T @arg {T} x */
 	mka=x => this.mdk(this[`kz_${x}`]);
 	/**
 	 * @template L @template {string} M
@@ -486,7 +484,7 @@ class IndexedDBService extends BaseService {
 				const {k: k,z: [w]}=x;
 				const prim_box=this.make_prim_v(w.z[0].z[0]);
 				/** @type {DI_A_HashtagId} */
-				const a={a: DStr_DI_AKZ,k,z: [{a: DStr_DI_AKZ,k: "raw_id",z: [prim_box]}]};
+				const a={a: "/di/a/k/z",k,z: [{a: "/di/a/k/z",k: "raw_id",z: [prim_box]}]};
 				/** @type {DST_HashtagId} */
 				const z={
 					a: this.mka("l"),b: "boxed_id",l: k,z: [a],
@@ -497,7 +495,7 @@ class IndexedDBService extends BaseService {
 			case "video_id": {
 				const {a: {},k,z: [zi]}=x;
 				/** @type {DI_A_VideoId} */
-				const a={a: DStr_DI_AKZ,k,z: [zi]};
+				const a={a: "/di/a/k/z",k,z: [zi]};
 				/** @type {DST_Video_Id} */
 				const z={
 					a: this.mka("l"),b: "boxed_id",l: k,z: [a],
@@ -528,7 +526,7 @@ class IndexedDBService extends BaseService {
 	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_KV_Z_MakeItemGroup<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
 	make_T_BoxedStore_v2(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"/db/key/a/b/d/z",tag1,x);}
 	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DI_T_KV_Z_MakeItemGroup<B,T>} */
-	make_DIZ_Item_AB(b,x) {return {a: DStr_DI_AKZ,k: b,z: [x]};}
+	make_DIZ_Item_AB(b,x) {return {a: "/di/a/k/z",k: b,z: [x]};}
 	/** @arg {any} x */
 	make_boxed_id_box(x) {x; debugger;}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} s0 */
@@ -592,7 +590,8 @@ class IndexedDBService extends BaseService {
 			}
 			case "guide_entry_id": /*db*/ {
 				let [l]=s0;
-				switch(x.l) {
+				x.k;
+				if("l" in x) switch(x.l) {
 					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
@@ -621,6 +620,11 @@ class IndexedDBService extends BaseService {
 						const z={a: this.mka("l"),b: "boxed_id",l,key: `boxed_id:${l}:${x.l}`,z: [{a: "DI",k: "guide_entry_id",l: "VL:LL",z: [x]}]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
+				}
+				debugger;
+				switch(x.c) {
+					case "UC": break;
+					case "WL": break;
 				}
 			}
 			case "browse_id": {

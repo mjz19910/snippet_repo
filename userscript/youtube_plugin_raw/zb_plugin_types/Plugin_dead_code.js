@@ -56,7 +56,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 						this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
 						this.make_DI_T_KV_Z("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
-					/** @type {{key:`boxed_id:channel_id:UC:${string}`,a: DST_KStr_ABLZ;b:"boxed_id",l:"channel_id:UC",w:"/db/key/a/b/j/w/z",z:[{}]}} */
+					/** @type {{key:`boxed_id:channel_id:UC:${string}`,a: DST_KStr_AKLZ;b:"boxed_id",l:"channel_id:UC",w:"/db/key/a/b/j/w/z",z:[{}]}} */
 					const z=this.make_ST_jz(key,tag,bt);
 					/** @type {T} */
 					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
@@ -80,7 +80,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 						this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
 						this.make_DI_T_KV_Z("id",this.make_prim_v(value.info_arr[1].id)),
 					]);
-					/** @type {{key:`boxed_id:${typeof type}:${typeof tag}:${string}`,a: DST_KStr_ABLZ;b:"boxed_id",l:`${typeof type}:${typeof tag}`,w:"/db/key/a/b/j/w/z",z:[{}]}} */
+					/** @type {{key:`boxed_id:${typeof type}:${typeof tag}:${string}`,a: DST_KStr_AKLZ;b:"boxed_id",l:`${typeof type}:${typeof tag}`,w:"/db/key/a/b/j/w/z",z:[{}]}} */
 					const z=this.make_ST_jz(key,"playlist_id:RD",bt);
 					/** @type {T} */
 					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
@@ -102,7 +102,7 @@ export class IndexedDBDeadCode extends IndexedDBService {
 						/** @type {DSS_Bigint["z"][0]} */
 						const i2={a: DStr_DI_AKZ,k: value.type,z: [as_any(i3)]};
 						/** @type {DSS_Bigint} */
-						const z={key: as_any(key),a: "/db/key/a/b/d/z",b: "boxed_id",d: "bigint",z: [i2]};
+						const z={key: as_any(key),a: "/db/key/a/b/d/z",b: "boxed_id",l: "bigint",z: [i2]};
 						return [true,z];
 					}
 				}
