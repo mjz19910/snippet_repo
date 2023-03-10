@@ -3560,12 +3560,12 @@ class HandleTypes extends BaseService {
 					const x=n[0],w=w_dss(x);
 					if(!w) return [8,x];
 					switch(w[0]) {
-						case "bigint": return [2,1,...w];
-						case "boolean": return [2,2,...w];
-						case "keys": return [2,3,...w];
-						case "number": return [2,4,...w];
-						case "root_visual_element": return [2,5,...w];
-						case "string": return [2,6,...w];
+						case "bigint": return [2,1,w];
+						case "boolean": return [2,2,w];
+						case "keys": return [2,3,w];
+						case "number": return [2,4,w];
+						case "root_visual_element": return [2,5,w];
+						case "string": return [2,6,w];
 					}
 				}
 				if(n[1]) {
