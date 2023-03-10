@@ -3176,8 +3176,8 @@ class HandleTypes extends BaseService {
 		/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
 		const y_many=[];
 		const cmp_map=new WeakMap;
-		const xi0=this.w_db_data(x),yi0=this.w_db_data(y); let xi=null,yi=null;
-		/** @arg {GST_DSS} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
+		const xi0=this.w_db_data(x),yi0=this.w_db_data(y);
+		/** @arg {{z:[{z:[{l:"many";z:[any[][]]}|{l:"arr";z:[any[]]}|{l:"one";z:[any]}]}]}} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
 		function acc_items(container,items_arr) {
 			const item_group=container.z[0].z[0];
 			switch(item_group.l) {
@@ -3191,6 +3191,7 @@ class HandleTypes extends BaseService {
 				case "one": items_arr.push([item_group.z[0]]); break;
 			}
 		}
+		acc_items(x,x_many);
 		let diff_plus=[],diff_minus=[];
 		let x_set=new Set,y_set=new Set;
 		for(let arr of x_many) for(let item of arr) x_set.add(item);
