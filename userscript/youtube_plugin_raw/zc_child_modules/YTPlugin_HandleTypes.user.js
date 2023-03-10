@@ -1698,7 +1698,7 @@ class HandleTypes extends BaseService {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo(this.make_kv_ab("start_radio",this.sm.parse_number_template(start_radio)));
+				this.DI_AGR_UrlInfo({"start_radio": this.sm.parse_number_template(start_radio)});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(!this.sm.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -3051,352 +3051,51 @@ class HandleTypes extends BaseService {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
-	/** @public @arg {DI_AGR_UrlInfo} x */
+	/** @public @arg {DI_SrcInfo} x */
 	DI_AGR_UrlInfo(x) {
 		let z=this.make_R_UrlInfo(x);
-		if(z) {
-			/** @type {Y_PutBoxedArgs} */
-			let arg_box={a: "url_info",i: [],t: [],v: z};
-			let box_res=this.put_boxed_id(arg_box);
-			this.execute_promise_def((async () => (await box_res).ret)());
-		}
+		let box_res=this.put_boxed_id(z);
+		this.execute_promise_def((async () => (await box_res).ret)());
 	}
 	//#region get
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
-	/** @template {DI_SrcInfo} T @arg {T} x @returns {Extract<DI_RetInfo,{k:T["k"]}>} */
+	/** @template {DI_SrcInfo} T @arg {T} x @returns {DI_RetInfo} */
 	get_parsed_info(x) {
-		/** @arg {DI_RetInfo} x @returns {Extract<DI_RetInfo,{k:T["k"]}>} */
-		function pr(x) {return as(x);}
-		switch(x.k) {
-			case "start_radio": {
-				const {k,z: [v]}=x;
-				/** @type {MK_DIInfo1<"start_radio",DU_StartRadio>} */
-				const z={a: "/key/a/k/z",k,z: [v]};
-				return pr(z);
-			}
-			case "user_id": {
-				const {k,z: [v]}=x;
-				return pr({a: "/key/a/k/z",k,z: [v]});
-			}
-			case "playlist_id": {
-				const {k,z: [v]}=x;
-				switch(v) {
-					case "WL": return pr({a: "/key/a/k/z",k,z: [v]});
-					case "LL": return pr({a: "/key/a/k/z",k,z: [v]});
-				}
-				if(this.str_starts_with_rx("PL",v)) return pr({a: "/key/a/k/m/z",k,m: "PL",z: [v]});
-				/** @type {DI_RetInfo} */
-				if(this.str_starts_with_rx("RDCMUC",v)) return pr({a: "/key/a/k/l/m/n/z",k,l: "RD",m: "CM",n: "UC",z: [v]});
-				if(this.str_starts_with_rx("RDGMEM",v)) return pr({a: "/key/a/k/l/m/n/z",k,l: "RD",m: "GM",n: "EM",z: [v]});
-				if(this.str_starts_with_rx("RDMM",v)) return pr({a: "/key/a/k/l/m/z",k,l: "RD",m: "MM",z: [v]});
-				if(this.str_starts_with_rx("RD",v)) return pr({a: "/key/a/k/m/z",k,m: "RD",z: [v]});
-				if(this.str_starts_with_rx("UU",v)) return pr({a: "/key/a/k/m/z",k,m: "UU",z: [v]});
-				debugger;
-			} return pr({a: null});
-			case "channel_id": {
-				const {k,z: [v]}=x;
-				return pr({a: "/key/a/k/m/z",k,m: "UC",z: [v]});
-			}
-			// ! Primitives
-			case "start_radio": {
-				const {k,z: [v]}=x;
-				return pr({a: "/key/a/k/z",k,z: [v]});
-			}
-			case "hashtag_id": {
-				const {k,z: [v]}=x;
-				return pr({a: "/key/a/k/z",k,z: [v]});
-			}
-			case "video_id": {
-				const {k,z: [v]}=x;
-				return pr({a: "/key/a/k/z",k,z: [v]});
-			}
-			case "browse_id": {
-				const {k,z: [v]}=x;
-				if(this.str_starts_with_rx("FE",v)) return pr({a: "/key/a/k/m/z",k,m: "FE",z: [v]});
-				if(this.str_starts_with_rx("UC",v)) return pr({a: "/key/a/k/m/z",k,m: "UC",z: [v]});
-				if(this.str_starts_with_rx("VL",v)) return pr({a: "/key/a/k/m/z",k,m: "VL",z: [v]});
-				if(this.str_starts_with_rx("MP",v)) return pr({a: "/key/a/k/m/z",k,m: "MP",z: [v]});
-				if(this.str_starts_with_rx("SP",v)) return pr({a: "/key/a/k/m/z",k,m: "SP",z: [v]});
-				debugger;
-				throw new Error();
-			}
-			case "guide_entry_id": {
-				const {k,z: [v]}=x;
-				switch(v) {
-					case "WL": return pr({a: "/key/a/k/z",k,z: [v]});
-					case "LL": return pr({a: "/key/a/k/z",k,z: [v]});
-				}
-				if(this.str_starts_with_rx("VL",v)) return pr({a: "/key/a/k/m/z",k,m: "VL",z: [v]});
-				if(this.str_starts_with_rx("UC",v)) return pr({a: "/key/a/k/m/z",k,m: "UC",z: [v]});
-				if(this.str_starts_with_rx("PL",v)) return pr({a: "/key/a/k/m/z",k,m: "PL",z: [v]});
-				return pr({a: "/key/a/k/z",k,z: [v]});
-			}
-			default: debugger; return pr({a: null});
+		let v=x.z[0];
+		if(typeof v==="number") return {type: "num",z: [v]};
+		if(this.str_starts_with_rx("RDCMUC",v)) return {type: "RDCMUC",z: [v]};
+		if(this.str_starts_with_rx("RDGMEM",v)) return {type: "RDGMEM",z: [v]};
+		if(this.str_starts_with_rx("RDGM",v)) return {type: "RDGM",z: [v]};
+		if(this.str_starts_with_rx("RDCM",v)) return {type: "RDCM",z: [v]};
+		if(this.str_starts_with_rx("RDMM",v)) return {type: "RDMM",z: [v]};
+		if(this.str_starts_with_rx("PL",v)) return {type: "PL",z: [v]};
+		if(this.str_starts_with_rx("FE",v)) return {type: "FE",z: [v]};
+		if(this.str_starts_with_rx("MP",v)) return {type: "MP",z: [v]};
+		if(this.str_starts_with_rx("PL",v)) return {type: "PL",z: [v]};
+		if(this.str_starts_with_rx("RD",v)) return {type: "RD",z: [v]};
+		if(this.str_starts_with_rx("SP",v)) return {type: "SP",z: [v]};
+		if(this.str_starts_with_rx("UC",v)) return {type: "UC",z: [v]};
+		if(this.str_starts_with_rx("UC",v)) return {type: "UC",z: [v]};
+		if(this.str_starts_with_rx("UU",v)) return {type: "UU",z: [v]};
+		if(this.str_starts_with_rx("VL",v)) return {type: "VL",z: [v]};
+		if(this.str_starts_with_rx("VL",v)) return {type: "VL",z: [v]};
+		switch(v) {
+			case "WL": return {type: "static",z: [v]};
+			case "LL": return {type: "static",z: [v]};
 		}
+		return {type: "str",z: [v]};
 	}
 	//#endregion
 	//#endregion
 	//#region make_*
-	/** @arg {`PL${string}`} raw_id @returns {DI_A_Playlist_PL} */
-	make_info_PL(raw_id) {return this.make_info_3("playlist_id","PL",raw_id);}
-	/** @arg {"playlist_id"}b @arg {"PL"} c @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
-	make_info_3(b,c,x3) {
-		let [,id]=split_string_once(x3,c);
-		return {a: "/di/a/l/m/z",l: b,m: c,z: [this.make_DI_RawIdBox(x3),this.make_DI_IdBox(id)]};
-	}
-	/** @arg {MakeInfoInput_Len2} a0 @returns {DI_A_Playlist_PL|DI_A_Playlist_RD|null} */
-	make_info_3_v2(a0) {
-		switch(a0.type) {
-			default: debugger; return null;
-			case "PL": {
-				const {type,arr: [l,m],raw_id}=a0;
-				let [,id]=split_string_once(raw_id,type);
-				return {a: "/di/a/l/m/z",l,m,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-			}
-			case "RD": {
-				const {type,arr: [k,l],raw_id}=a0;
-				let [,id]=split_string_once(raw_id,type);
-				return {a: this.get_KZ("lm"),l: k,m: l,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-			}
-		}
-	}
-	/** @template {{type:"RDCMUC",arr:["playlist_id","RD","CM","UC"],raw_id:`RDCMUC${string}`}|{type:"RDGMEM",arr:["playlist_id","RD","GM","EM"],raw_id:`RDGMEM${string}`}} T @arg {T} a0 @returns {T extends {type:"RDCMUC"}?DI_A_Playlist_RD_CM_UC:DI_A_Playlist_RD_GM_EM} */
-	make_info_5(a0) {
-		switch(a0.type) {
-			default: debugger; throw new Error();
-			case "RDCMUC": {
-				const {type,arr: [k,l,m,n],raw_id}=a0;
-				let [,id]=split_string_once(raw_id,type);
-				/** @type {DI_A_Playlist_RD_CM_UC} */
-				const z={a: "/di/a/k/l/z",k,l,m,n,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-				return as_any(z);
-			}
-			case "RDGMEM": {
-				const {type,arr: [k,l,m,n],raw_id}=a0;
-				let [,id]=split_string_once(raw_id,type);
-				/** @type {DI_A_Playlist_RD_GM_EM} */
-				const z={a: "/di/a/k/l/z",k,l,m,n,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-				return as_any(z);
-			}
-		}
-	}
-	/**
-	 * @template {{type:"RDMM",arr:["playlist_id","RD","MM"],raw_id:`RDMM${string}`}|{type:"RDGM",arr:["playlist_id","RD","GM"],raw_id:`RDGM${string}`}} T
-	 * @param {T} a0
-	 * @returns {T extends {type:"RDMM";}?DI_A_Playlist_RD_MM:DI_A_Playlist_RD_GM} */
-	make_info_4(a0) {
-		switch(a0.type) {
-			default: debugger; throw new Error();
-			case "RDGM": {
-				const {raw_id,arr: [k,l,m],type}=a0,[,id]=split_string_once(raw_id,type);
-				/** @type {DI_A_Playlist_RD_GM} */
-				const z={a: "/di/a/k/l/z",k,l,m,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-				return as_any(z);
-			}
-			case "RDMM": {
-				const {raw_id,arr: [k,l,m],type}=a0;
-				let [,id]=split_string_once(raw_id,type);
-				/** @type {DI_A_Playlist_RD_MM} */
-				const z={a: "/di/a/k/l/z",k,l,m,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-				return as_any(z);
-			}
-		}
-	}
-	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
+	/** @arg {DI_SrcInfo} x */
 	make_R_UrlInfo(x) {
-		let p2=null; p2;
-		switch(x.k) {
-			default: debugger; return null;
-			case "start_radio": {
-				/** @type {T_DI_FromObj2<{start_radio: DU_StartRadio;}>} */
-				const u=x;
-				const p1=this.make_input_from_R_info(u);
-				const p=this.get_parsed_info(p1);
-				if(p.a===null) return null;
-				if(p.k!==x.k) {debugger; return null;}
-				/** @type {DI_A_StartRadio} */
-				const z=this.make_DI_StartRadio(x.z[0]);
-				return z;
-			}
-			case "user_id": {
-				const b=x.k,raw_id=x.z[0];
-				const s=this.make_obj_input(b,raw_id);
-				const p=this.get_parsed_info(s);
-				if(p.a===null) return null;
-				if(p.k!==x.k) {debugger; return null;}
-				/** @type {DI_A_UserId} */
-				const z=this.make_DI_KeyLike_like(p.k,p.z[0]);
-				return z;
-			}
-			case "hashtag_id": {
-				const k=x.k,raw_id=x.z[0];
-				/** @type {DI_A_HashtagId} */
-				const z=this.make_DI_Key2Like_like(k,"raw_id",raw_id);
-				return z;
-			}
-			case "video_id": {
-				const b=x.k,raw_id=x.z[0];
-				const s=this.make_obj_input(b,raw_id);
-				const p=this.get_parsed_info(s);
-				if(p.a===null) return null;
-				if(p.k!==x.k) {debugger; return null;}
-				/** @type {DI_A_VideoId} */
-				const z=this.make_DI_FromObj2(x.k,this.make_DI_RawIdBox(raw_id));
-				return z;
-			}
-			case "browse_id": {
-				const k=x.k,raw_id=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [raw_id]});
-				switch(p.m) {
-					case "FE":
-					case "VL":
-					case "UC":
-					case "MP":
-					case "SP":
-				}
-				console.log(k,p);
-			} return null;
-			case "channel_id": {
-				const k=x.k,raw_id=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [raw_id]});
-				if(p.a===null) return null;
-				if(p.k!==k) return null;
-				let [,id]=split_string_once(raw_id,p.m);
-				/** @type {DI_A_ChannelId_UC} */
-				const z={a: "/di/a/l/m/z",l: "channel_id",m: p.m,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-				return z;
-			}
-			case "guide_entry_id": {
-				const k=x.k,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
-				switch(p.a) {
-					case "/key/a/k/m/z": {
-						switch(p.m) {
-							case "PL": {
-								const {m}=p;
-								let [,id]=split_string_once(p.z[0],m);
-								/** @type {DI_A_Playlist_PL} */
-								const z1={a: "/di/a/l/m/z",l: "playlist_id",m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
-								/** @type {DI_A_GuideEntry_PL} */
-								const z={a: "/di/a/k/m/z",k: "guide_entry_id",m,z: [z1]};
-								return z;
-							}
-							case "UC": {
-								const {m}=p,[,id]=split_string_once(p.z[0],m);
-								/** @type {DI_A_ChannelId_UC} */
-								const z1={a: "/di/a/l/m/z",l: "channel_id",m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
-								/** @type {DI_A_GuideEntry_UC} */
-								const z={a: "/di/a/k/m/z",k: "guide_entry_id",m,z: [z1]};
-								return z;
-							}
-							case "VL": {
-								const l=p.z[0];
-								if(this.str_starts_with_rx("VLPL",l)) {
-									let [,raw_id]=split_string_once(l,"VL");
-									let [,id]=split_string_once(raw_id,"PL");
-									/** @type {DI_A_Playlist_PL} */
-									const z1={a: "/di/a/l/m/z",l: "playlist_id",m: "PL",z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-									/** @type {DI_A_GuideEntry_PL} */
-									const z={a: "/di/a/k/m/z",k: "guide_entry_id",m: "PL",z: [z1]};
-									return z;
-								}
-								let [,id]=split_string_once(l,p.m);
-								switch(id) {
-									case "LL": {
-										/** @type {DI_A_Playlist_LL} */
-										const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
-										/** @type {DI_A_GuideEntry_LL} */
-										const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "LL",z: [z1]};
-										return z;
-									}
-									case "WL": {
-										/** @type {DI_A_Playlist_WL} */
-										const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
-										/** @type {DI_A_GuideEntry_WL} */
-										const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "WL",z: [z1]};
-										return z;
-									}
-								}
-							}
-						}
-					}
-					case "/key/a/k/z": {
-						let l=p.z[0];
-						switch(l) {
-							case "WL": {
-								/** @type {DI_A_Playlist_WL} */
-								const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
-								/** @type {DI_A_GuideEntry_WL} */
-								const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "WL",z: [z1]};
-								return z;
-							}
-							case "LL": {
-								/** @type {DI_A_Playlist_LL} */
-								const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
-								/** @type {DI_A_GuideEntry_LL} */
-								const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "LL",z: [z1]};
-								return z;
-							}
-						}
-					}
-				}
-			}
-			case "playlist_id": {
-				if(x.k!=="playlist_id") {debugger; return null;}
-				const k=x.k,v=x.z[0],p=this.get_parsed_info({a: "/key/a/k/z",k,z: [v]});
-				if("m" in p) switch(p.m) {
-					default: p===""; debugger; return null;
-					case "PL": {
-						const {k}=x,[,id]=split_string_once(p.z[0],"PL");
-						/** @type {DI_A_Playlist_PL} */
-						let di={a: "/di/a/l/m/z",l: k,m: "PL",z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
-						return di;
-					}
-					case "RD": {
-						const raw_id=p.z[0],[,id]=split_string_once(p.z[0],p.m);
-						/** @type {DI_A_Playlist_RD} */
-						let di={a: this.get_KZ("lm"),l: "playlist_id",m: "RD",z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-						return di;
-					}
-					case "UU": {
-						const {m}=p,raw_id=p.z[0],[,id]=split_string_once(p.z[0],p.m);
-						/** @type {DI_A_Playlist_UU} */
-						let di={a: this.get_KZ("km"),k: "playlist_id",m,z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-						return di;
-					}
-					case "CM": {
-						/** @type {DI_A_Playlist_RD_CM_UC} */
-						let di=this.make_info_5({type: "RDCMUC",arr: ["playlist_id",p.l,p.m,p.n],raw_id: p.z[0]});
-						return di;
-					}
-					case "GM": {
-						const {l,m,n}=p,raw_id=p.z[0];
-						/** @type {DI_A_Playlist_RD_GM_EM} */
-						let di=this.make_info_5({type: "RDGMEM",arr: ["playlist_id",l,m,n],raw_id});
-						return di;
-					}
-					case "MM": {
-						const {l,m}=p,raw_id=p.z[0];
-						/** @type {DI_A_Playlist_RD_MM} */
-						let di=this.make_info_4({type: "RDMM",arr: ["playlist_id",l,m],raw_id});
-						return di;
-					}
-				}
-				switch(p.z[0]) {
-					case "LL": break;
-					case "WL": break;
-				}
-				console.log(k,p);
-			} return null;
-			case "user_id": {
-				const b=x.k,raw_id=x.z[0];
-				const s=this.make_obj_input(b,raw_id);
-				const p=this.get_parsed_info(s);
-				console.log(b,p);
-				debugger;
-			} return null;
-		}
+		const p=this.get_parsed_info(x);
+		return p;
 	}
 	//#endregion make_*
-	/** @template {Y_PutBoxedArgs} T @arg {T} arg_box */
+	/** @template {DI_RetInfo} T @arg {T} arg_box */
 	async put_boxed_id(arg_box) {
 		let {...ret}=await this.ix.put_boxed_id_async_3(this.sm.indexed_db_version,arg_box);
 		return ret;
@@ -3456,164 +3155,35 @@ class HandleTypes extends BaseService {
 	loaded_map=new Map;
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
-	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLMZ;}>} */
-	extract_dst_lm(x) {return x.a==="/di/a/k/l/m/z";}
-	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_ABKZ;}>} */
-	extract_dst_l(x) {return x.a==="/di/a/k/z";}
-	/** @template T_Arg @template {DI_T_KV_Z_MakeItemGroup<string,T_Arg>} T_Box @arg {T_Box} x @returns {Ret_w_diz<T_Arg>} */
-	w_diz(x) {
-		x.a; x.k; let a=x.z[0];
-		switch(a.l) {
-			case "one": {let b=a.z[0]; return [a.l,["1",b],a,x];}
-			case "arr": {let b=a.z[0]; return [a.l,["2",b],a,x];}
-			case "many": {let b=a.z[0]; return [a.l,["3",b],a,x];}
-			case "typeof_name": {let b=a.z[0]; return [a.l,["t",b],a,x];}
-			case "instance_name": {let b=a.z[0]; return [a.l,["i",b],a,x];}
-		}
-	}
-	/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
+	/** @arg {G_BoxedDatabaseData} x @returns {G_BoxedInner} */
 	w_db_data(x) {
-		if(!x) return ["n"];
-		let nx=null;
-		/** @type {[Extract<G_BoxedDatabaseData,{l:any}>|null,Extract<G_BoxedDatabaseData,{a:"/di/a/b/k/z"}>|null,Extract<G_BoxedDatabaseData,{a:"/di/a/k/z"}>|null]} */
-		const n=[null,null,null];
-		if("l" in x) n[0]=x; else if(x.a==="/di/a/b/k/z") n[1]=x; else if(x.a==="/di/a/k/z") n[2]=x;
-		if(n[0]) {
-			const x=n[0],w=this.w_dss(x);
-			if(!w) return [8,x];
-			switch(w[0]) {
-				case "bigint": return [2,1,w];
-				case "boolean": return [2,2,w];
-				case "keys": return [2,3,w];
-				case "number": return [2,4,w];
-				case "root_visual_element": return [2,5,w];
-				case "string": return [2,6,w];
-			}
-		}
-		if(n[1]) {
-			let db_data=n[1];
-			if(db_data.a==="/di/a/b/k/z") {
-				let v_di=db_data.z[0],w=this.w_di(v_di);
-				let [,,,[v_value]]=w;
-				return ["m:0",[],[v_value,v_di,db_data]];
-			}
-			console.log("TODO [ReturnType<typeof w_dst>] [1]",db_data); debugger;
-			return [1,db_data];
-		}
-		if(n[2]) {
-			let db_data=n[2];
-			if(db_data.a==="/di/a/k/z") {
-				let v_di=db_data.z[0],w=this.w_di(v_di);
-				let [,,[k],[v_value]]=w;
-				return ["m:1",[k],[v_value,v_di,db_data]];
-			}
-		}
-		if(nx) {
-			{const v=3; try {return [7,v,[this.za3(nx),this.za2(nx),this.za1(nx),nx]];} catch {} }
-			{const v=2; try {return [7,v,[this.za2(nx),this.za1(nx),nx]];} catch {} }
-			{const v=1; try {return [7,v,[this.za1(nx),nx]];} catch {} }
-			return [7,0,[nx]];
-		}
-		return ["a1",this.za1(x)];
+		const w=this.w_dss(x);
+		return [1,[w,x]];
 	}
-	/** @template {Extract<G_BoxedDatabaseData,{l:any}>} T @arg {T} x @returns {Ret_w_dss|null} */
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {Ret_w_dss|null} */
 	w_dss(x) {
-		switch(x.l) {
-			case "bigint": {
-				let w=this.w_diz(x.z[0]);
-				return [x.l,w,x];
-			}
-			case "boolean": return [x.l,this.w_diz(x.z[0]),x];
-			case "keys": return [x.l,this.w_diz(x.z[0]),x];
-			case "number": return [x.l,this.w_diz(x.z[0]),x];
-			case "root_visual_element": return [x.l,this.w_diz(x.z[0]),x];
-			case "string": return [x.l,this.w_diz(x.z[0]),x];
-		}
-		debugger;
-		return null;
+		let w=this.w_diz(x.z[0]);
+		return [w,x];
 	}
-	/** @template {G_BoxedDatabaseData['z'][0]} T @arg {T} x @returns {[true,0,[string],[T['z'][0],T]]} */
+	/** @arg {any} x @returns {Ret_w_diz} */
+	w_diz(x) {
+		const a=x.z[0],w=this.w_di(a);
+		return [w,a,x];
+	}
+	/** @arg {any} x @returns {[any,any]} */
 	w_di(x) {
-		/** @type {G_BoxedDatabaseData['z'][0]} */
-		let u=x;
-		if("a" in u&&"a" in x) return [true,0,[x.a],[x.z[0],x]];
-		x: if("type" in u) {
-			let v=gv();
-			if(!v) break x;
-			/** @returns {{type:unknown}|{type:"number";r:true}|null}  */
-			function gv() {
-				if("type" in u) {
-					/** @type {{type:unknown}} */
-					let v=u;
-					return v;
-				}
-				return null;
-			}
-			Object.defineProperty(v,"r",{value: true});
-			if("r" in v&&v.r===true) switch(v.type) {
-				case "number": {
-					debugger;
-				} break;
-			}
-		}
-		debugger;
-		throw 1;
+		return [x.z[0],x];
 	}
 	/** @template {G_BoxedDatabaseData} T_Put @arg {T_Put} value */
 	on_has_key_in_cache(value) {
 		const x=value,loaded_value=this.loaded_map.get(x.key),y=loaded_value;
-		if(x.b!=="boxed_id") return;
-		let nw=null;
-		switch(x.a) {
-			case "/di/a/k/l/m/z": {
-				switch(x.l) {
-					default: debugger; break;
-					case "browse_id": break;
-					case "channel_id": break;
-					case "key": break;
-				}
-			} break;
-			case "/di/a/b/k/z": {
-				debugger;
-			} break;
-		}
-		if(!("w" in x)) nw=x;
-		if(nw!==null&&!("j" in nw)) {
-			/** @type {{a:"boxed_store"}} */
-			const no=as_any(nw);
-			if(no.a!=="boxed_store") return;
-			console.log("[cache_outdated]",no);
-		}
-		if(nw!==null&&!("j" in nw)&&"d" in nw) {
-			/** @type {{d:GST_DSS["l"]}} */
-			const no=as_any(nw);
-			switch(no.d) {
-				default: debugger; break;
-				case "bigint":
-				case "boolean":
-				case "keys":
-				case "string":
-				case "number":
-				case "root_visual_element": console.log("[cache_outdated]",no); break;
-			}
-		}
+		if(y===void 0) return;
 		/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
 		const x_many=[];
 		/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
 		const y_many=[];
 		const cmp_map=new WeakMap;
 		const xi0=this.w_db_data(x),yi0=this.w_db_data(y); let xi=null,yi=null;
-		switch(xi0[0]) {
-			case 1: break;
-			case 2: {
-				let [,...vp]=xi0;
-				xi=vp;
-			} break;
-			case "n": debugger; break;
-			case "z": debugger; break;
-			case "a1": debugger; break;
-			case "k:sr": debugger; break;
-		}
 		/** @arg {GST_DSS} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
 		function acc_items(container,items_arr) {
 			const item_group=container.z[0].z[0];
@@ -3626,36 +3196,6 @@ class HandleTypes extends BaseService {
 				} break;
 				case "arr": items_arr.push(item_group.z[0]); break;
 				case "one": items_arr.push([item_group.z[0]]); break;
-			}
-			container;
-		}
-		if(xi) switch(xi[0]) {
-			default: console.log('[x] [xi]',xi); break;
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6: {
-				const container=xi[1][2];
-				acc_items(container,x_many);
-			}
-		}
-		switch(yi0[0]) {
-			default: debugger; break;
-			case 1: break;
-			case 2: {const [,...v]=yi0; yi=v;} break;
-		}
-		if(yi) switch(yi[0]) {
-			default: yi===""; debugger; break;
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6: {
-				const container=yi[1][2];
-				acc_items(container,y_many);
 			}
 		}
 		let diff_plus=[],diff_minus=[];

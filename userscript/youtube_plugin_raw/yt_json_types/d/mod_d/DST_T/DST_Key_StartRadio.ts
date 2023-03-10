@@ -1,1 +1,0 @@
-type DST_Key_StartRadio=DST_Make_FromObj_K<DI_A_StartRadio>;

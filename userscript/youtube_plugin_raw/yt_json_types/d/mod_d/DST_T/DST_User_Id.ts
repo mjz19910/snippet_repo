@@ -1,1 +1,0 @@
-type DST_User_Id=DST_T_ABLZ_FromDI<DI_A_UserId>;
