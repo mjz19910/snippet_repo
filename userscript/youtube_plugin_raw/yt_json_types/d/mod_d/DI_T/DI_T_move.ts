@@ -63,9 +63,7 @@ type DI_RetInfo={
 }|DI_Ret_AnyString|{
 	a: "tag"; k: "start_radio";
 	raw_id: DU_StartRadio;
-}|{
-	a: null;
-};
+}|{a: null;};
 type DI_A_ChannelId_UC={
 	b: "channel_id";
 	c: "UC";

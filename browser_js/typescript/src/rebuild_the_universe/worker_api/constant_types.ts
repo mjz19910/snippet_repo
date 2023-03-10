@@ -1,3 +1,4 @@
+import {WorkerReplyTypesT} from "./WorkerReplyTypesT";
 import {
 	ReplyClearAny,
 	ReplyClearRepeating,
@@ -106,10 +107,6 @@ export type ReplyTypesT={
 	ready: WorkerReadyReplyT;
 	set: ReplySetTypesT;
 	clear: ReplyClearTypesT;
-};
-
-export type WorkerReplyTypesT={
-	fire: WorkerReplyTimerFireTypesT;
 };
 
 export type WorkerUpdateMessageHandlerT=typeof WorkerUpdateMessageHandler;

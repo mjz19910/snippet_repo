@@ -1,0 +1,1 @@
+type ConnectionConnected={type: "connected";};

@@ -32,7 +32,15 @@ declare global {
 // lunar-atoms-tycoon.js
 declare global {
 	var Upgrade: {apply: (arg0: any) => {(): any; new(): any; toNumber: {(): any; new(): any;};};};
-	type GameType={upgrades: {maxObjects: any;}; mergeObjects: string|any[]; spawnTime: {cd: any;}; matter: any;};
+	type GameUpgradesObj={
+		maxObjects: any;
+	};
+
+	type GameSpawnTimeObj={
+		cd: any;
+	};
+
+	type GameType={upgrades: GameUpgradesObj; mergeObjects: string|any[]; spawnTime: GameSpawnTimeObj; matter: any;};
 	var gameFunctions: {decreaseSpawnCooldown: (arg0: number) => void; maxUpgrades: (arg0: any,arg1: any) => void;};
 
 	interface Document {
@@ -125,9 +133,7 @@ declare global {
 	var __instance: {constructor: never;};
 }
 
-interface JQueryExpandoData {
-	events: JQueryEvents;
-}
+interface JQueryExpandoData {events: JQueryEvents;}
 
 interface JQueryEvents {
 	click?: JQueryEventHandler[];

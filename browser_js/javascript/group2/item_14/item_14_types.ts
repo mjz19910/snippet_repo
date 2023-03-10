@@ -1,9 +1,7 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14_types.ts
 */
-type DataParsable = {
-	__parsable_tag: true;
-};
+type DataParsable = {__parsable_tag: true;};
 type VueApp = {
 	_instance: {
 		uid: number;
@@ -16,9 +14,7 @@ type VueVnode = {
 	type: {};
 	props: null;
 };
-type VueComponent = {
-	vnode: VueVnode;
-};
+type VueComponent = {vnode: VueVnode;};
 type VueAppContainer = {
 	component: VueComponent;
 	_container: null;
@@ -71,9 +67,7 @@ type MakeAlt<T extends [any, ...any]> = T extends [infer F, ...infer R] ? [Alt<`
 type DataItemReturnAlt = MakeAlt<DataItemReturn>
 	| MakeAlt<["TYPE::wrap", WhatInfoItem | UnpackUnitCommand | UnpackCommand]>
 	;
-type WhatInfoObj = {
-	__what: true;
-};
+type WhatInfoObj = {__what: true;};
 type WhatInfoItem = ["TYPE::DBG_What", WhatInfoObj];
 
 type JsonEventResult = [type: "handle_result", from: DataItemReturn extends infer U extends DataItemReturn ? { [Symbol.toStringTag]: U[0] } : never, data: [results: string[], command_results: string[]]] | ["string", string[]];
@@ -98,10 +92,6 @@ type IndexBoxMap = {
 };
 type IndexUnboxMap<T, O, U> = Map<T, { _inner_tag: U, value: O & { _tag: U } }>;
 type InputObjBoxItem = { __tag: "InputObjBox"; item_level: 2; };
-type CacheIndexWithArr = {
-	cache_index: number;
-};
-
 type IterObjectStoreType = {
 	cache_index: number;
 	arr: CacheIndexWithArr[][];

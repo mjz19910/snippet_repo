@@ -1,0 +1,1 @@
+type IdHolderBox={value: number;};

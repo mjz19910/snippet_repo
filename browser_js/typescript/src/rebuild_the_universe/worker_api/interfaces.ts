@@ -64,10 +64,10 @@ import {
 	WorkerDestroyTypeT,
 	WorkerReadyReplyT,
 	WorkerReplyTimerFireTypesT,
-	WorkerReplyTypesT,
 	WorkerUpdateMessageHandlerReplyT,
 	WorkerUpdateMessageHandlerT
 } from "./constant_types.js";
+import {WorkerReplyTypesT} from "./WorkerReplyTypesT";
 
 export class TimeoutClearStrings implements TimeoutClearStringsT {
 	single: typeof TimeoutClearStringSingle=TimeoutClearStringSingle;

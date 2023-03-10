@@ -1,3 +1,1 @@
-export type ItemType={
-	alt_6: Buffer;
-};
+export type ItemType={alt_6: Buffer;};

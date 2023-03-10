@@ -1,0 +1,1 @@
+type ConnectionSide="client"|"server";

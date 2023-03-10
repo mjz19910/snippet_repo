@@ -127,10 +127,6 @@ type D_PaidContentOverlay={
 	trackingParams: string;
 };
 
-type R_PaidContentOverlay={
-	paidContentOverlayRenderer: D_PaidContentOverlay;
-};
-
 type RS_Player={
 	responseContext: RC_ResponseContext;
 	playabilityStatus: D_PlayabilityStatus;

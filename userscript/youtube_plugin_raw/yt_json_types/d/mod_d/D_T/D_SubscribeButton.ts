@@ -1,6 +1,4 @@
-type D_SubscribeButton_UnsubscribedPrefix={
-	buttonText: G_Text;
-};
+type D_SubscribeButton_UnsubscribedPrefix={buttonText: G_Text;};
 type D_SubscribeButton_SubscribedPrefix={
 	buttonText?: G_Text;
 	entityKey?: string;

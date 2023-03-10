@@ -1,22 +1,10 @@
-type MastheadContainerChildren={
-	center: Element;
-};
-
-type MastheadContainer={
-	children: MastheadContainerChildren;
-};
-
-type MastheadNext={
-	container: MastheadContainer;
-};
+import {MastheadNext} from "./MastheadNext";
 
 interface MastheadChildren {
 	$: MastheadNext;
 }
 
-interface YtdAppChildren {
-	masthead: MastheadChildren;
-}
+interface YtdAppChildren {masthead: MastheadChildren;}
 
 export interface YtdAppElement extends HTMLElement {
 	ytp_click_cint?: ReturnType<typeof setTimeout>;

@@ -1,4 +1,4 @@
-export class IDValue_0 {
+class IDValue_0 {
 	set_arr_T<T extends {}>(arr: T[]) {
 		if(arr.length===0)
 			throw new Error("Unable to use zero length array");

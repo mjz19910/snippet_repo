@@ -935,9 +935,7 @@ type D_VE_TextRun=
 	;
 ;
 type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_Url;
-type D_TextRun=|D_VE_TextRun|{
-	text: string;
-}|{
+type D_TextRun=|D_VE_TextRun|{text: string;}|{
 	text: string;
 	strikethrough: true;
 }|{
@@ -1531,9 +1529,7 @@ type D_CommentReplies={
 	targetId: `comment-replies-item-${string}`;
 };
 
-type R_CommentReplies={
-	commentRepliesRenderer: D_CommentReplies;
-};
+type R_CommentReplies={commentRepliesRenderer: D_CommentReplies;};
 type D_CommentThread={
 	comment: R_Comment;
 	replies?: R_CommentReplies;
@@ -1548,9 +1544,7 @@ type D_CommentsSimplebox={
 	trackingParams: string;
 };
 
-type R_CommentsSimplebox={
-	commentsSimpleboxRenderer: D_CommentsSimplebox;
-};
+type R_CommentsSimplebox={commentsSimpleboxRenderer: D_CommentsSimplebox;};
 type D_CommentsEntryPointHeader={
 	headerText: G_Text;
 	onTap: C_CommandExecutor;
@@ -2276,8 +2270,6 @@ type D_DropdownFormField={
 	key: "playlistEditEndpoint.actions.0.playlistPrivacy";
 	onChange: E_PlaylistEdit;
 };
-type R_DropdownFormField={dropdownFormFieldRenderer: D_DropdownFormField;};
-
 type D_PlaylistHeader={
 	title: G_Text;
 	numVideosText: G_Text;

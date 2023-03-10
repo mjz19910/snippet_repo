@@ -16,6 +16,12 @@ const commit_id_sha1=/* @sha1 */"ce87fbfd";
 const InjectApiStr="inject_api";
 
 let api_debug_enabled=false;
+type NodeExt={
+	__id_holder: {
+		value: number;
+	};
+};
+
 class AddEventListenerExtension {
 	/** @private */
 	original_prototype={
@@ -142,7 +148,7 @@ class AddEventListenerExtension {
 		}
 	}
 	/** @private @arg {Node} val */
-	generate_node_id(val: Node|({__id_holder: {value: number;};}&Node)) {
+	generate_node_id(val: Node|(NodeExt&Node)) {
 		if("__id_holder" in val&&val.__id_holder) {
 			return val.__id_holder.value;
 		}

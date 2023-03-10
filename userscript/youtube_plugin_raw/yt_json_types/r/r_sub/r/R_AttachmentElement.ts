@@ -14,9 +14,7 @@ type D_LayoutProperties={
 	height: D_DimensionUnit<10>;
 	width: D_DimensionUnit<14>;
 };
-type R_LayoutProperties={
-	layoutProperties: D_LayoutProperties;
-};
+type R_LayoutProperties={layoutProperties: D_LayoutProperties;};
 type D_AttachmentElement={
 	type: D_ImageType;
 	properties: R_LayoutProperties;

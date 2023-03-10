@@ -1,7 +1,3 @@
-import {ProtoTypeB0} from "./ProtoTypeB0";
+import {YtProtoTypeB0} from "./YtProtoTypeB0.js";
 
-
-
-export type YtProtoTypeB={
-	a36: ProtoTypeB0;
-};
+export type YtProtoTypeB={a36: YtProtoTypeB0;};
