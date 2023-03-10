@@ -269,6 +269,17 @@ class IndexedDBService extends BaseService {
 			case "number": return store.get_store(item.l).load_data(item);
 			case "root_visual_element": return store.get_store(item.l).load_data(item);
 			case "string": return store.get_store(item.l).load_data(item);
+			case "browse_id": let di=decay_item(item); di; break;
+			case "user_id":
+			case "playlist_id":
+			case "hashtag_id":
+			case "video_id":
+			case "guide_entry_id":
+			case "load_id":
+			case "play_next":
+			case "save_id":
+			case "update_id":
+			case "video_time": console.log("skip_a",item.key,item); break;
 		}
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
@@ -369,7 +380,6 @@ class IndexedDBService extends BaseService {
 	mk_s2(l,x) {return {a: this.mka("l"),k: "boxed_id",l,z: [x],key: `boxed_id:${l}:${x.c}`};}
 	/** @template {string} M @arg {M} m @template {string} L @arg {L} l @template {string} IC @template {T_DI_AKLZ<any,any,any>} X @arg {X} x @returns {DST_MakeLM_3<X,L,M,IC>} */
 	mk_s3(l,m,x) {return {a: "/db/key/a/k/l/m/z",k: "boxed_id",l,m,z: [x],key: `boxed_id:${l}:${m}:${x.l}`};}
-	// a/k/l/m/z
 	/**
 	 * @template {string} K @template {string} L @template {string} M @template {string} V @template {{k: K; l: L; m: M; z:[any,T_DI_FromObj<{id:V;}>]}} T
 	 * @param {T} x
@@ -377,12 +387,11 @@ class IndexedDBService extends BaseService {
 	 * */
 	mk_s4(x) {
 		const {k,l,m}=x;
-		const v=this.za2(x.z[1]);
 		let p=this.make_dst_lm(k,l,m,x,this.za2(x.z[1]));
-		return {...p,key: `boxed_id:${x.k}:${x.l}:${x.m}:${v}`};
+		return p;
 	}
-	/** @template {T_SRC_AKLM<V>} T @arg {T} x @template {string} K @arg {K} k @template {string} L @arg {L} l @template {string} M @arg {M} m @template V @arg {V} v @returns {[T_DST_AKLM_Params<K,L,M,T,V>,`boxed_id:${K}:${L}:${M}:${V}`]} */
-	make_dst_lm(k,l,m,x,v) {return [{a: "/db/key/a/k/l/m/z",k,l,m,z: [x]},`boxed_id:${x.k}:${x.l}:${x.m}:${v}`];}
+	/** @template {T_SRC_AKLM<K,L,M,V>} T @arg {T} x @template {string} K @arg {K} k @template {string} L @arg {L} l @template {string} M @arg {M} m @template {G_Primitives} V @arg {V} v @returns {T_DST_AKLM_Params<K,L,M,T,V>&{key:`boxed_id:${K}:${L}:${M}:${V}`}} */
+	make_dst_lm(k,l,m,x,v) {return {key: `boxed_id:${x.k}:${x.l}:${x.m}:${v}`,a: "/db/key/a/k/l/m/z",k,l,m,z: [x]};}
 	/** @arg {number} version @template {Extract<Y_PutBoxedArgs,{0:"browse_id"}>} T @arg {T} args */
 	put_boxed_pl(version,...args) {
 		switch(args[1]) {
