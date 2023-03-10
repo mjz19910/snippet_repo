@@ -27,6 +27,7 @@ type DStr_DI_AKLMZ=`/di/a/k/l/m/z`;
 type DStr_DI_AKLZ=`/di/a/k/l/z`;
 type DStr_DI_AKMZ=`/di/a/k/m/z`;
 type DStr_DI_AKZ=`/di/a/k/z`;
+type DStr_KV_ALZ=`/di/a/l/z`;
 type DStr_DI_ALMZ=`/di/a/l/m/z`;
 type DStr_DI_AZ=`/di/a/z`;
 
@@ -167,7 +168,7 @@ type DI_A_GuideEntry_LL={
 	l: "LL";
 	z: [DI_A_Playlist_LL];
 };
-type DI_GuideEntry_PL={
+type DI_A_GuideEntry_PL={
 	a: DStr_DI_AKMZ;
 	k: "guide_entry_id";
 	m: "PL";
@@ -359,7 +360,7 @@ type DI_BrowseId_VL_UC={
 		DI_A_ChannelId_UC
 	];
 };
-type DI_GuideEntry_UC={
+type DI_A_GuideEntry_UC={
 	a: DStr_DI_AKMZ; k: "guide_entry_id"; m: "UC";
 	z: [DI_A_ChannelId_UC];
 };

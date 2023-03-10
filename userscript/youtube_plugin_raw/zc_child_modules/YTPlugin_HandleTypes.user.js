@@ -1708,38 +1708,6 @@ class HandleTypes extends BaseService {
 			return;
 		}
 	}
-	/** @type {"a/k/l/z"} */
-	kz_kl="a/k/l/z";
-	/** @type {"a/k/z"} */
-	kz_k="a/k/z";
-	/** @type {"a/k/m/z"} */
-	kz_km="a/k/m/z";
-	/** @type {"a/l/m/z"} */
-	kz_lm="a/l/m/z";
-	/** @template {string} T @arg {T}x @returns {`/di/${T}`}  */
-	mdk=x => `/di/${x}`;
-	/** @template {"kl"|"k"|"lm"|"km"} T @arg {T} x */
-	get_KZ=x => this.mdk(this[`kz_${x}`]);
-	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
-	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
-	/** @template {string} L @template T @arg {L} l @arg {T} x @returns {T_DI_Raw<L,T>} */
-	make_DI_Raw(l,x) {return {a: this.get_KZ("kl"),k: "raw",l,z: [x]};}
-	/** @arg {0|1} x  @returns {DI_A_StartRadio} */
-	make_DI_StartRadio(x) {return this.make_DI_FromObj2("start_radio",this.make_DI_RawIdBox(x));}
-	/** @template {string} K @template V @arg {K} k @arg {V} v  @returns {DI_RawIdContainer<K,V>} */
-	make_DI_KeyLike_like(k,v) {return this.make_DI_FromObj2(k,this.make_DI_RawIdBox(v));}
-	/** @template {string} K2 @arg {K2} k1 @template {string} K1 @template V @arg {K1} k2 @arg {V} x  @returns {T_DI_FromObj2<{[U in K2]: T_DI_FromObj2<{[U in K1]: V;}>;}>} */
-	make_DI_Key2Like_like(k1,k2,x) {
-		/** @type {T_DI_FromObj2<{[U in K1]:V;}>} */
-		let z2=this.make_DI_FromObj2(k2,x);
-		/** @type {T_DI_FromObj2<{[U in K2]:typeof z2}>} */
-		let z3=this.make_DI_FromObj2(k1,z2);
-		return z3;
-	}
-	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
-	make_DI_R_Key_StartRadio(x) {
-		return this.make_DI_Raw("start_radio",this.make_DI_StartRadio(x));
-	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
@@ -3088,8 +3056,8 @@ class HandleTypes extends BaseService {
 		let z=this.make_R_UrlInfo(x);
 		if(z) {
 			/** @type {Y_PutBoxedArgs} */
-			let args=as_any(["url_info",null,z]);
-			let box_res=this.put_boxed_id(...args);
+			let arg_box={a: "url_info",i: [],t: [],v: z};
+			let box_res=this.put_boxed_id(arg_box);
 			this.execute_promise_def((async () => (await box_res).ret)());
 		}
 	}
@@ -3234,29 +3202,6 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @template K,T @arg {K} k @arg {T} x @returns {KV_T_AKZ<K,T>}*/
-	make_kv_ab(k,x) {return this.make_DI_FromObj2(k,x);}
-	/** @template {{}} T @arg {T} x @returns {{a:"/di/a"}|T_DI_FromObj2<{[U in keyof T]: T[U]}>} */
-	make_T_DI_FromObj2(x) {
-		let ka=this.get_keys_of(x);
-		if(ka.length===0) return {a: "/di/a"};
-		let [k1]=ka;
-		return {a: "/di/a/k/z",l: k1,z: [x[k1]]};
-	}
-	/** @template {string} T @arg {T} x @returns {T_DI_FromObj2<{id:T}>} */
-	make_DI_IdBox(x) {return this.make_kv_ab("id",x);}
-	/** @template T @arg {T} x @returns {T_DI_FromObj2<{raw_id:T}>} */
-	make_DI_RawIdBox(x) {return this.make_DI_FromObj2("raw_id",x);}
-	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
-	make_Typeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
-	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
-	make_BoxTypeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
-	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {MK_DIInfo1<K,T>} */
-	make_obj_input(k,v) {return {a: "/key/a/k/z",k,z: [v]};}
-	/** @template {{}} T @arg {T_DI_FromObj2<T>} x @returns {MK_DIInfo1<keyof T,T[keyof T]>} */
-	make_input_from_R_info(x) {return this.make_obj_input(x.l,x.z[0]);}
-	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
-	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		let p2=null; p2;
@@ -3323,7 +3268,7 @@ class HandleTypes extends BaseService {
 								let [,id]=split_string_once(p.z[0],m);
 								/** @type {DI_A_Playlist_PL} */
 								const z1={a: "/di/a/l/m/z",l: "playlist_id",m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
-								/** @type {DI_GuideEntry_PL} */
+								/** @type {DI_A_GuideEntry_PL} */
 								const z={a: "/di/a/k/m/z",k: "guide_entry_id",m,z: [z1]};
 								return z;
 							}
@@ -3331,7 +3276,7 @@ class HandleTypes extends BaseService {
 								const {m}=p,[,id]=split_string_once(p.z[0],m);
 								/** @type {DI_A_ChannelId_UC} */
 								const z1={a: "/di/a/l/m/z",l: "channel_id",m,z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
-								/** @type {DI_GuideEntry_UC} */
+								/** @type {DI_A_GuideEntry_UC} */
 								const z={a: "/di/a/k/m/z",k: "guide_entry_id",m,z: [z1]};
 								return z;
 							}
@@ -3342,7 +3287,7 @@ class HandleTypes extends BaseService {
 									let [,id]=split_string_once(raw_id,"PL");
 									/** @type {DI_A_Playlist_PL} */
 									const z1={a: "/di/a/l/m/z",l: "playlist_id",m: "PL",z: [this.make_DI_RawIdBox(raw_id),this.make_DI_IdBox(id)]};
-									/** @type {DI_GuideEntry_PL} */
+									/** @type {DI_A_GuideEntry_PL} */
 									const z={a: "/di/a/k/m/z",k: "guide_entry_id",m: "PL",z: [z1]};
 									return z;
 								}
@@ -3350,14 +3295,14 @@ class HandleTypes extends BaseService {
 								switch(id) {
 									case "LL": {
 										/** @type {DI_A_Playlist_LL} */
-										const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
+										const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
 										/** @type {DI_A_GuideEntry_LL} */
 										const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "LL",z: [z1]};
 										return z;
 									}
 									case "WL": {
 										/** @type {DI_A_Playlist_WL} */
-										const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
+										const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(id)]};
 										/** @type {DI_A_GuideEntry_WL} */
 										const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "WL",z: [z1]};
 										return z;
@@ -3371,14 +3316,14 @@ class HandleTypes extends BaseService {
 						switch(l) {
 							case "WL": {
 								/** @type {DI_A_Playlist_WL} */
-								const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
+								const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
 								/** @type {DI_A_GuideEntry_WL} */
 								const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "WL",z: [z1]};
 								return z;
 							}
 							case "LL": {
 								/** @type {DI_A_Playlist_LL} */
-								const z1={a: "/di/a/k/z",l: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
+								const z1={a: this.get_KZ("k"),k: "playlist_id",z: [this.make_DI_RawIdBox(l)]};
 								/** @type {DI_A_GuideEntry_LL} */
 								const z={a: "/di/a/k/l/z",k: "guide_entry_id",l: "LL",z: [z1]};
 								return z;
@@ -3444,9 +3389,9 @@ class HandleTypes extends BaseService {
 		}
 	}
 	//#endregion make_*
-	/** @template {Y_PutBoxedArgs} T @arg {T} args */
-	async put_boxed_id(...args) {
-		let {...ret}=await this.ix.put_boxed_id_async_3(this.sm.indexed_db_version,...args);
+	/** @template {Y_PutBoxedArgs} T @arg {T} arg_box */
+	async put_boxed_id(arg_box) {
+		let {...ret}=await this.ix.put_boxed_id_async_3(this.sm.indexed_db_version,arg_box);
 		return ret;
 	}
 	log_enabled_playlist_id=false;
@@ -3529,7 +3474,7 @@ class HandleTypes extends BaseService {
 		function xf(v) {
 			let lb=v.z[0];
 			switch(lb.a) {
-				case "/di/a/k/z": {
+				case this.get_KZ("k"): {
 					lb.z[0];
 				} break;
 				case "/di/a/k/l/z":

@@ -1,11 +1,10 @@
-//#region DStr
-type DStr_KV_AKZ=DStr_DI_AKZ;
-//#endregion
-
-
 //#region AKZ
-type KV_T_AKZ<K,V>={a: DStr_KV_AKZ; l: K; z: [V];};
+type KV_T_AKZ<K,V>={a: DStr_DI_AKZ; k: K; z: [V];};
 //#endregion
+type KV_T_AKLZ<K,L,V>={a: DStr_DI_AKLZ; k: K; l: L; z: [V];};
+
+type DB_T_AKLZ<S extends string,K,L,V>={key: S; a: DST_KStr_AKLZ; k: K; l: L; z: [V];};
+
 
 type DI_T_KV_Z_MakeItemGroup<K extends string,T>=T_DI_FromObj2<{[U in K]: make_item_group<T>}>;
 

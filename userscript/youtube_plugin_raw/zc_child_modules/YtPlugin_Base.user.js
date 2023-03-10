@@ -2349,9 +2349,9 @@ class BaseService extends ServiceWithMembers {
 	//#endregion
 	//#region make
 	/** @arg {string} k @template T @arg {T} x @returns {make_one_t<T>} */
-	make_one_t(k,x) {const b="item",c="one"; return {a: "/db/key/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
+	make_one_t(k,x) {const b="item",c="one"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	/** @arg {string} k @template T @arg {T[]} x @returns {make_arr_t<T>} */
-	make_arr_t(k,x) {const b="item",c="arr"; return {a: "/db/key/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
+	make_arr_t(k,x) {const b="item",c="arr"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	//#endregion
 	//#region save
 	/** @protected @arg {string} k @arg {bigint} x */
@@ -2402,8 +2402,42 @@ class BaseService extends ServiceWithMembers {
 	codegen_typedef(cf,x,do_break=true) {this.cg.codegen_typedef(cf,x,do_break,false);}
 	//#endregion
 	//#region template methods that make objects
+	/** @type {"a/k/l/z"} */
+	kz_kl="a/k/l/z";
+	/** @type {"a/k/z"} */
+	kz_k="a/k/z";
+	/** @type {"a/k/m/z"} */
+	kz_km="a/k/m/z";
+	/** @type {"a/l/m/z"} */
+	kz_lm="a/l/m/z";
+	/** @template {string} T @arg {T}x @returns {`/di/${T}`}  */
+	mdk=x => `/di/${x}`;
+	/** @template {"kl"|"k"|"lm"|"km"} T @arg {T} x */
+	get_KZ=x => this.mdk(this[`kz_${x}`]);
 	/** @template K,T @arg {K} k @arg {T} x @returns {T_DI_FromObj2<{[U in K]: T}>} */
-	make_DI_FromObj2(k,x) {return {a: "/di/a/k/z",l: k,z: [x]};}
+	make_DI_FromObj2(k,x) {return {a: this.get_KZ("k"),k,z: [x]};}
+	/** @template T @arg {T} x @returns {T_DI_FromObj2<{raw_id:T}>} */
+	make_DI_RawIdBox(x) {return this.make_DI_FromObj2("raw_id",x);}
+	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
+	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
+	/** @template {string} L @template T @arg {L} l @arg {T} x @returns {T_DI_Raw<L,T>} */
+	make_DI_Raw(l,x) {return {a: this.get_KZ("kl"),k: "raw",l,z: [x]};}
+	/** @arg {0|1} x  @returns {DI_A_StartRadio} */
+	make_DI_StartRadio(x) {return this.make_DI_FromObj2("start_radio",this.make_DI_RawIdBox(x));}
+	/** @template {string} K @template V @arg {K} k @arg {V} v  @returns {DI_RawIdContainer<K,V>} */
+	make_DI_KeyLike_like(k,v) {return this.make_DI_FromObj2(k,this.make_DI_RawIdBox(v));}
+	/** @template {string} K2 @arg {K2} k1 @template {string} K1 @template V @arg {K1} k2 @arg {V} x  @returns {T_DI_FromObj2<{[U in K2]: T_DI_FromObj2<{[U in K1]: V;}>;}>} */
+	make_DI_Key2Like_like(k1,k2,x) {
+		/** @type {T_DI_FromObj2<{[U in K1]:V;}>} */
+		let z2=this.make_DI_FromObj2(k2,x);
+		/** @type {T_DI_FromObj2<{[U in K2]:typeof z2}>} */
+		let z3=this.make_DI_FromObj2(k1,z2);
+		return z3;
+	}
+	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
+	make_DI_R_Key_StartRadio(x) {
+		return this.make_DI_Raw("start_radio",this.make_DI_StartRadio(x));
+	}
 	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
 	get_primitive_tag(x) {
 		switch(typeof x) {
@@ -2416,8 +2450,29 @@ class BaseService extends ServiceWithMembers {
 		debugger;
 		return as("unknown");
 	}
-	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox<Z>} */
-	make_prim_v(z) {return {a: "/di/a/k/z",k: this.get_primitive_tag(z),z: [z]};}
+	/** @template {string|number} Z @param {Z} z @returns {T_PrimitiveBox<Z>} */
+	make_prim_v(z) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(z),z: [z]};}
+	/** @template K,T @arg {K} k @arg {T} x @returns {KV_T_AKZ<K,T>}*/
+	make_kv_ab(k,x) {return this.make_DI_FromObj2(k,x);}
+	/** @template {{}} T @arg {T} x @returns {{a:"/di/a"}|T_DI_FromObj2<{[U in keyof T]: T[U]}>} */
+	make_T_DI_FromObj2(x) {
+		let ka=this.get_keys_of(x);
+		if(ka.length===0) return {a: "/di/a"};
+		let [k1]=ka;
+		return {a: this.get_KZ("k"),k: k1,z: [x[k1]]};
+	}
+	/** @template {string} T @arg {T} x @returns {T_DI_FromObj2<{id:T}>} */
+	make_DI_IdBox(x) {return this.make_kv_ab("id",x);}
+	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
+	make_Typeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
+	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
+	make_BoxTypeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
+	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {MK_DIInfo1<K,T>} */
+	make_obj_input(k,v) {return {a: "/key/a/k/z",k,z: [v]};}
+	/** @template {{}} T @arg {T_DI_FromObj2<T>} x @returns {MK_DIInfo1<keyof T,T[keyof T]>} */
+	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0]);}
+	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
+	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	//#endregion
 	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {
