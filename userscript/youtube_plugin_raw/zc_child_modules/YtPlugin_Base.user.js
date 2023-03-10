@@ -2407,7 +2407,7 @@ class BaseService extends ServiceWithMembers {
 	 * @template J @template Z_Item @template T_Key
 	 * @returns {{key:T_Key,a: DST_KStr_AKLZ;b:"boxed_id",l:J,z:[Z_Item]}}
 	 * */
-	make_ST_jz(key,l,z) {return {key,a: DStr_DST_Key_ABLZ,b: "boxed_id",l,z: [z]};}
+	make_ST_jz(key,l,z) {return {key,a: "/db/key/a/k/l/z",b: "boxed_id",l,z: [z]};}
 	/**
 	 * @param {Z} z @arg {B} b @arg {C} c
 	 * @template B,C @template Z

@@ -50,18 +50,6 @@ type DIT_Box_Typeof2<T_Type extends T_GetPrimitiveTag<U>,U>={
 	z: [U];
 };
 //#endregion
-//#region KZ
-type DI_SrcInfo=
-	|MK_DIInfo1<["key","browse_id",DU_Browse_Id]>
-	|MK_DIInfo1<["key","guide_entry_id",DU_GuideEntry_Id]>
-	|MK_DIInfo1<["key","hashtag_id",string]>
-	|MK_DIInfo1<["key","playlist_id",DU_Playlist_Id]>
-	|MK_DIInfo1<["key","start_radio",DU_StartRadio]>
-	|MK_DIInfo1<["key","user_id",string]>
-	|MK_DIInfo1<["key","video_id",DU_VideoId]>
-	;
-;
-//#endregion
 //#region AKZ
 type DI_SpecialInfo=T_DI_FromObj<{v: string;}>;
 type MK_DIInfo1<T extends [string,string,G_Primitives]>={
@@ -75,23 +63,41 @@ type MK_DIInfo2<T_Arr extends [string,string,string],T extends string=T_IdTempla
 	l: T_Arr[2];
 	z: [T];
 };
+type MK_DIInfo3<T_Arr extends [string,string,string,string],T extends string=T_IdTemplate<T_Arr[2]&keyof B_IdTemplateArgs>>={
+	a: T_Arr[0];
+	k: T_Arr[1];
+	l: T_Arr[2];
+	m: T_Arr[3];
+	z: [T];
+};
+type DI_SrcInfo=
+	|MK_DIInfo1<["key","browse_id",DU_Browse_Id]>
+	|MK_DIInfo1<["key","guide_entry_id",DU_GuideEntry_Id]>
+	|MK_DIInfo1<["key","hashtag_id",string]>
+	|MK_DIInfo1<["key","playlist_id",DU_Playlist_Id]>
+	|MK_DIInfo1<["key","start_radio",DU_StartRadio]>
+	|MK_DIInfo1<["key","user_id",string]>
+	|MK_DIInfo1<["key","video_id",DU_VideoId]>
+	|MK_DIInfo1<["key","channel_id",DU_ChannelId]>
+	;
+;
 type DI_RetInfo=
 	|MK_DIInfo1<["tag","user_id",string]>
 	|MK_DIInfo1<["tag","hashtag_id",string]>
 	|MK_DIInfo1<["tag","video_id",DU_VideoId]>
-	|MK_DIInfo2<["tag","any","FE"]>
-	|MK_DIInfo2<["tag","any","SP"]>
-	|MK_DIInfo2<["tag","any","VL"]>
-	|MK_DIInfo2<["tag","any","UC"]>
-	|MK_DIInfo2<["tag","any","PL"]>
-	|MK_DIInfo2<["tag","any","MP"]>
-	|MK_DIInfo2<["tag","any","UU"]>
-	|MK_DIInfo2<["tag","any","RD"],Extract<DU_Playlist_Id,`RD${string}`>>
-	|{a: "tag"; k: "any"; z: [DU_Playlist_Static];}
+	|MK_DIInfo2<["tag","playlist_id","RD"],T_IdTemplate<"RD">>
+	|MK_DIInfo2<["tag","playlist_id","PL"],T_IdTemplate<"PL">>
+	|MK_DIInfo2<["tag","playlist_id","UU"],T_IdTemplate<"UU">>
+	|MK_DIInfo2<["tag","channel_id","UC"],T_IdTemplate<"UC">>
 	|MK_DIInfo1<["tag","start_radio",DU_StartRadio]>
+	|{a: "tag",k: "playlist_id",l: "RD",m: "CM",n: "UC",z: [T_IdTemplate<"RDCMUC">];}
+	|{a: "tag",k: "playlist_id",l: "RD",m: "GM",z: [T_IdTemplate<"RDGM">];}
+	|{a: "tag",k: "playlist_id",l: "RD",m: "MM",z: [T_IdTemplate<"RDMM">];}
+	|{a: "tag",k: "playlist_id",z: [DU_Playlist_Static];}
 	|{a: null;}
 	;
 ;
+type DI_RetInfo_Test1=Exclude<DU_ChannelId,"RDGM"|"RDCMUC"|"RDMM"|"PL"|"RD"|"UU">;
 //#endregion
 //#region ABCZ
 type DI_A_ChannelId_UC={
@@ -310,7 +316,7 @@ type DI_R_PlaylistId={
 type DI_R_Radio_Playlist={
 	a: DStr_DI_AKLZ;
 	k: "raw";
-	l: "playlist_id:RD";
+	l: "playlist_id"; m: "RD";
 	z: [T_DI_FromObj<{raw_id: Extract<DU_Playlist_Id,`RD${string}`>;}>];
 };
 type DI_R_VideoId={
