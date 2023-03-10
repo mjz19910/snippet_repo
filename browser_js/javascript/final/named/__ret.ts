@@ -1,6 +1,8 @@
 import {__RetType} from "./__RetType";
-// ;__ret
+import {undebugI} from "./undebugI";
+
 declare global {
+
 	interface Window {
 		__m: {}|null;
 		// __ret
@@ -21,4 +23,3 @@ declare global {
 		s_refs?: SRefBase[][];
 	}
 }
-export {};
