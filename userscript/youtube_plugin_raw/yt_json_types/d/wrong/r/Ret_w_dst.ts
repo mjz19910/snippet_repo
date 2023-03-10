@@ -1,22 +1,22 @@
-type Ret_w_dst<T extends G_Boxed_DST>=
+type Ret_w_dst=
 	|[
 		true,1,
 		[
-			x1: Extract<T,{l: any;}>["l"],
+			x1: "",
 			x2: string
 		],
-		GetAllZ<Extract<T,{a: DST_KStr_AKLZ;}>>
+		[{}]
 	]
 	|[
 		true,2,
 		[
-			x1: Extract<T,{a: "/db/key/a/b/l/m/z";}>["l"],
-			x2: Extract<T,{a: "/db/key/a/b/l/m/z";}>["m"]
+			x1: "",
+			x2: ""
 		],
-		GetAllZ<Extract<T,{a: "/db/key/a/b/l/m/z";}>>
+		[{}]
 	]
-	|[false,4,[x1: Extract<T,{l: any;}>["l"]],[T["z"][0],T]]
-	|[false,5,[],[T["z"][0],T]]
+	|[false,4,[x1: ""],[any,any]]
+	|[false,5,[],[any,any]]
 	|[false,6,[],[]]
 	;
 ;

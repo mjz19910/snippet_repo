@@ -1,7 +1,7 @@
 //#region Templates
 
 
-type MakeInfoInput=
+type MakeInfoInput_Len2=
 	|{
 		type: "PL";
 		arr: ["playlist_id","PL"];
@@ -11,6 +11,11 @@ type MakeInfoInput=
 		type: "RD";
 		arr: ["playlist_id","RD"];
 		raw_id: `RD${string}`;
+	}
+	|{
+		type: "UU";
+		arr: ["playlist_id","UU"];
+		raw_id: `UU${string}`;
 	}
 	;
 ;

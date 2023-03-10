@@ -3182,11 +3182,16 @@ class HandleTypes extends BaseService {
 		let [,id]=split_string_once(x3,c);
 		return {a: this.get_KZ("kl"),k: b,l: c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
-	/** @arg {{type:"PL",arr:["playlist_id","PL"],raw_id:`PL${string}`}|{type:"RD",arr:["playlist_id","RD"],raw_id:`RD${string}`}} a0 @returns {DI_A_Playlist_PL|null} */
+	/** @arg {MakeInfoInput_Len2} a0 @returns {DI_A_Playlist_PL|DI_A_Playlist_RD|null} */
 	make_info_3_v2(a0) {
 		switch(a0.type) {
 			default: debugger; return null;
 			case "PL": {
+				const {type,arr: [k,l],raw_id}=a0;
+				let [,id]=split_string_once(raw_id,type);
+				return {a: this.get_KZ("kl"),k,l,z: [this.make_raw_id(raw_id),this.make_id(id)]};
+			}
+			case "RD": {
 				const {type,arr: [k,l],raw_id}=a0;
 				let [,id]=split_string_once(raw_id,type);
 				return {a: this.get_KZ("kl"),k,l,z: [this.make_raw_id(raw_id),this.make_id(id)]};
@@ -3335,12 +3340,12 @@ class HandleTypes extends BaseService {
 					}
 					case "RD": {
 						if(!(p.z instanceof Array)) return null;
-						let di=this.make_info_3_v2({type: "RD",arr: ["playlist_id",p.l],raw_id: p.z[0]});
+						let di=this.make_info_3_v2({type: p.l,arr: ["playlist_id",p.l],raw_id: p.z[0]});
 						return di;
 					}
 					case "UU": {
 						if(!(p.z instanceof Array)) return null;
-						let di=this.make_info_3_v2("playlist_id",p.l,p.z[0]);
+						let di=this.make_info_3_v2({type: p.l,arr: ["playlist_id",p.l],raw_id: p.z[0]});
 						return di;
 					}
 				}
@@ -3420,10 +3425,16 @@ class HandleTypes extends BaseService {
 			if(value.k!=="boxed_id") break x;
 			let nw=null;
 			switch(value.a) {
-				case "/db/key/a/b/l/m/z": debugger; break;
-				case "/db/key/a/k/l/z": debugger; break;
-				case "/db/key/a/b/d/z": {
-					switch(value.d) {
+				case "/db/key/a/k/l/m/z": {
+					switch(value.l) {
+						default: debugger; break;
+						case "browse_id": break;
+						case "channel_id": break;
+						case "key": break;
+					}
+				} break;
+				case "/db/key/a/k/l/z": {
+					switch(value.l) {
 						default: debugger; break;
 						case "bigint": break;
 						case "boolean": break;
@@ -3443,7 +3454,7 @@ class HandleTypes extends BaseService {
 			}
 			if(nw!==null&&!("j" in nw)&&"d" in nw) {
 				/** @type {{d:GST_DSS["l"]}} */
-				const no=nw;
+				const no=as_any(nw);
 				switch(no.d) {
 					default: debugger; break;
 					case "bigint":
@@ -3465,7 +3476,7 @@ class HandleTypes extends BaseService {
 					case "instance_name": {let b=a.z[0]; return [a.c,["i",b],a,x];}
 				}
 			};
-			/** @template {GST_DSS} T @arg {T} x @returns {Ret_w_dss} */
+			/** @template {Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>} T @arg {T} x @returns {Ret_w_dss|null} */
 			const w_dss=x => {
 				switch(x.l) {
 					case "bigint": return [x.l,...w_diz(x.z[0]),x];
@@ -3475,10 +3486,12 @@ class HandleTypes extends BaseService {
 					case "root_visual_element": return [x.l,...w_diz(x.z[0]),x];
 					case "string": return [x.l,...w_diz(x.z[0]),x];
 				}
+				debugger;
+				return null;
 			};
-			/** @template {G_Boxed_DST['z'][0]} T @arg {T} x @returns {[true,0,[string],[T['z'][0],T]]} */
+			/** @template {G_BoxedDatabaseData['z'][0]} T @arg {T} x @returns {[true,0,[string],[T['z'][0],T]]} */
 			const w_di=x => {
-				/** @type {G_Boxed_DST['z'][0]} */
+				/** @type {G_BoxedDatabaseData['z'][0]} */
 				let u=x;
 				if("a" in u&&"a" in x) return [true,0,[x.a],[x.z[0],x]];
 				x: if("type" in u) {
@@ -3503,14 +3516,14 @@ class HandleTypes extends BaseService {
 				debugger;
 				throw 1;
 			};
-			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLMZ;}>} */
+			/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLMZ;}>} */
 			const extract_dst_lm=x => {return x.a==="/db/key/a/k/l/m/z";};
-			/** @template {G_Boxed_DST} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLZ;}>} */
+			/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {x is Extract<T,{a: DST_KStr_AKLZ;}>} */
 			const extract_dst_l=x => {return x.a==="/db/key/a/k/l/z";};
-			/** @template {G_Boxed_DST} T @arg {T} v_dst @returns {Ret_w_dst<T>} */
-			const w_dst=v_dst => {
-				let s=v_dst;
-				if("j" in v_dst) {v_dst.l=as(v_dst.j); delete v_dst.j;}
+			/** @arg {G_BoxedDatabaseData} db_data @returns {Ret_w_dst} */
+			const w_dst=db_data => {
+				let s=db_data;
+				if("j" in db_data) {db_data.l=as(db_data.j); delete db_data.j;}
 				if("l" in s) {
 					/** @type {{[x:string]:"ST:D"}} */
 					let s1=as_any(s);
@@ -3522,29 +3535,30 @@ class HandleTypes extends BaseService {
 						}
 					}
 				}
-				if(v_dst.a==="/db/key/a/k/l/m/z") {
-					if(!extract_dst_lm(v_dst)) throw new Error();
-					let v_di=v_dst.z[0],w=w_di(v_di);
+				if(db_data.a==="/db/key/a/k/l/m/z") {
+					if(!extract_dst_lm(db_data)) throw new Error();
+					let v_di=db_data.z[0],w=w_di(v_di);
 					let [,,,[v_value]]=w;
-					return [true,2,[v_dst.l,v_dst.m],[v_value,v_di,v_dst]];
+					return [true,2,[db_data.l,db_data.m],[v_value,v_di,db_data]];
 				}
-				if(v_dst.a==="/db/key/a/k/l/z") {
-					if(!extract_dst_l(v_dst)) throw new Error();
-					let v_di=v_dst.z[0],w=w_di(v_di);
+				if(db_data.a==="/db/key/a/k/l/z") {
+					if(!extract_dst_l(db_data)) throw new Error();
+					let v_di=db_data.z[0],w=w_di(v_di);
 					let [,,[k],[v_value]]=w;
-					return [true,1,[v_dst.l,k],[v_value,v_di,v_dst]];
+					return [true,1,[db_data.l,k],[v_value,v_di,db_data]];
 				}
-				debugger; v_dst;
+				debugger; db_data;
 				throw new Error();
 			};
 			/** @arg {G_BoxedDatabaseData|undefined} x @returns {G_BoxedInner} */
 			const w_db_data=(x) => {
 				if(!x) return ["n"];
-				/** @type {[GST_DSS|null,G_Boxed_DST|null]} */
+				/** @type {[Extract<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>|null,Exclude<G_BoxedDatabaseData,{a:"/db/key/a/k/l/z"}>|null]} */
 				const n=[null,null];
-				if(x.a==="/db/key/a/b/d/z") n[0]=x; else n[1]=x;
+				if(x.a==="/db/key/a/k/l/z") n[0]=x; else n[1]=x;
 				if(n[0]) {
 					const x=n[0],w=w_dss(x);
+					if(!w) return [8,x];
 					switch(w[0]) {
 						case "bigint": return [2,1,...w];
 						case "boolean": return [2,2,...w];
@@ -3556,8 +3570,9 @@ class HandleTypes extends BaseService {
 				}
 				if(n[1]) {
 					let x=n[1],w=w_dst(x);
+					if(!w) return [8,x];
 					if("j" in x) {x.l=as(x.j); delete x.j;}
-					if(x.l==="load_id") {
+					if(x.l==="browse_id") {
 						let w=w_dst(x);
 						return [3,w,x];
 					}
