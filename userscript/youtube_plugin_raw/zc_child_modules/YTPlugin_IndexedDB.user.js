@@ -249,20 +249,8 @@ class IndexedDBService extends BaseService {
 		item=await this.update_obj_schema(item,version);
 		if(!item.z) return;
 		this.store_cache_tree(item);
-		/** @template {string} T @arg {{a:T}} x */
-		function get_tag(x) {return x.a;}
-		/** @template {{a:string;b:"boxed_id";l:string;key:string;}} R @template {R} T @arg {T} x @returns {R} */
-		function decay_item(x) {return x;}
 		if(!("l" in item)) return;
 		switch(item.l) {
-			default: {
-				let di=decay_item(item);
-				if(di.a===void 0) break;
-				switch(get_tag(item)) {
-				}
-				console.log("skip_a",di.a,di.l);
-				debugger;
-			} break;
 			case "bigint": return store.get_store(item.l).load_data(item);
 			case "boolean": return store.get_store(item.l).load_data(item);
 			case "keys": return store.get_store(item.l).load_data(item);
