@@ -3105,8 +3105,7 @@ class HandleTypes extends BaseService {
 	cache_playlist_id=[];
 	/** @arg {DU_VideoId} x */
 	on_video_id(x) {
-		const type="video_id";
-		this.DI_AGR_UrlInfo(this.make_kv_ab(type,x));
+		this.DI_AGR_UrlInfo({z: [x]});
 	}
 	/** @public @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
