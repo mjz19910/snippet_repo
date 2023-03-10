@@ -10,44 +10,11 @@ type DSI_T_Item_ABD2<T_Type extends string,T_Tag2 extends string,T>={
 	a: DST_KStr_AKLZ; k: "boxed_id"; l: T_Type; z: [T];
 };
 
-type DSI_T_Item_ABD<T_Type extends keyof J_StoreTypeMap,T>={
-	key: `boxed_id:${T_Type}:${string}`;
-	a: DST_KStr_AKLZ; k: "boxed_id"; l: T_Type; z: [KV_T_AKZ<string,make_item_group<T>>];
-	descriptive_name?: "boxed_store";
-	renames_arr?: DEX_Renames<[
-		DRN_KeyIs<DST_KStr_AKLZ>,
-		DRN_KeyType<T_Type>,
-	]>;
-};
 //#endregion
 
 
 //#region DST_MakeLM (ABLMZ)
 type DST_MoveRegion1_Src="DST_MakeLM:Src"|DST_MoveRegion1_Dst;
-type DST_MakeLM<L extends string,M extends string,ZV extends G_Primitives,T extends KV_T_AKZ<L,TMK_SuccessorX2<ZV>>=KV_T_AKZ<L,TMK_SuccessorX2<ZV>>>={
-	key: `boxed_id:${L}:${M}:${ZV}`;
-	a: DST_KStr_AKLMZ;
-	k: "boxed_id";
-	l: L;
-	m: M;
-	z: [T];
-};
-type DST_MakeLM_2<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L,M,V extends G_Primitives>={
-	key: `boxed_id:${T["k"]}:${TZ_SuccessorX3<T>}`;
-	a: DST_KStr_AKLMZ;
-	k: "boxed_id";
-	l: L;
-	m: M;
-	z: [T];
-};
-type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string,M extends string,V extends G_Primitives>={
-	key: `boxed_id:${L}:${M}:${V}`;
-	a: DST_KStr_AKLMZ;
-	k: "boxed_id";
-	l: L;
-	m: M;
-	z: [T];
-};
 type DST_MakeLM_FromObjR<T extends TMK_SuccessorX3<V>&{k: string;},L,M extends G_Primitives,V extends G_Primitives>={
 	key: `boxed_id:${T['k']}:${M}:${V}`;
 	a: DST_KStr_AKLMZ;
@@ -67,15 +34,7 @@ type DST_MakeLM_FromObj<T extends {k: any; z: [{z: [any]; k: any;}];},L="key",M=
 	_info_arr?: [TZ_SuccessorX3<T>];
 };
 //#endregion
-type DST_T_ABLZ_FromDI<T extends Y_DI_Shape>=DST_T_ABLZ<T["k"],TZ_SuccessorX4<T>,T>;
-
-type DST_T_ABLZ<L extends string|number,V extends string|number=string,T extends KV_T_AKZ<string|number,any>=KV_T_AKZ<string,any>>={
-	key: `boxed_id:${L}:${V}`;
-	a: DST_KStr_AKLZ;
-	k: "boxed_id";
-	l: L;
-	z: [T];
-};
+type DST_T_ABLZ_FromDI<T extends Y_DI_Shape<K1,K2>,K1 extends string=T["k"],K2 extends string=T["z"][0]["k"]>=DST_T_ABLZ<T["k"],TZ_SuccessorX4<T>,T>;
 
 type DI_A_HashtagId=T_DI_FromObj2<{
 	hashtag_id: T_DI_FromObj<{
@@ -84,7 +43,6 @@ type DI_A_HashtagId=T_DI_FromObj2<{
 }>;
 
 type DST_HashtagId=DST_T_ABLZ<"hashtag_id",string,DI_A_HashtagId>;
-type CV_ABC_KV<T extends {b: string; c: string; z: [any,...any];}>=KV_T_AKZ<`${T["b"]}:${T['c']}`,TZ_Successor<T>>;
 type DST_MakeLM_From_BC<
 	T extends {
 		k: string;

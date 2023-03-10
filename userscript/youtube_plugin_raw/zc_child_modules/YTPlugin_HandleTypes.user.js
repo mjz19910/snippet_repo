@@ -1727,35 +1727,25 @@ class HandleTypes extends BaseService {
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
 	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(k1,k2,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
 	/** @arg {0|1} x  @returns {DI_Key_StartRadio} */
-	make_DI_Key_StartRadio(x) {
-		/** @type {T_PrimitiveBox<0|1>} */
-		let x5=this.make_DI_T_KV_Z("number",x);
-		/** @type {T_DI_FromObj<{start_radio: 0 | 1;}>} */
-		let x4=this.make_DI_T_KV_Z("start_radio",x5);
-		/** @type {G_PrimitiveTag} */
-		let vv=typeof {}; vv;
-		/** @type {T_PrimitiveBox<T_DI_FromObj<{start_radio: 0 | 1;}>>} */
-		let x2=this.make_DI_T_KV_Z("object",x4);
-		return this.make_DI_T_KV_Z("key",x2);
+	make_DI_Key_StartRadio(x) {return this.make_DI_T_KV_Z("key",{start_radio: x});}
+	/** @template {string} K @arg {K} k @template V @arg {V} v @returns {[K,V]} */
+	make_obj(k,v) {
+		let x={[k]: v};
+		/** @arg {{[x: string]:V}} x @returns {asserts x is {[U in K]:V}} */
+		function assume_is_mapped_obj(x) {x;}
+		assume_is_mapped_obj(x);
+		return [k,v];
 	}
-	/** @template {string} K2 @arg {K2} k1 @template {string} K1 @template V @arg {K1} k2 @arg {V} x  @returns {T_DI_FromObj<{[U in K2]: T_DI_FromObj<{[U in K1]: V;}>;}>} */
-	make_DI_KeyLike_like(k1,k2,x) {
-		/** @type {T_PrimitiveBox<V>} */
-		let x5=this.make_DI_T_KV_Z(this.get_s_type(x),x);
-		/** @type {T_DI_FromObj<{[U in K1]:V;}>} */
-		let x4=this.make_DI_T_KV_Z(k2,x5);
-		/** @type {G_PrimitiveTag} */
-		let vv=typeof {}; vv;
-		/** @type {T_PrimitiveBox<typeof x4>} */
-		let x2=this.make_DI_T_KV_Z("object",x4);
-		/** @type {T_DI_FromObj<{[U in K2]:typeof x4}}> */
-		let x1=this.make_DI_T_KV_Z(k1,x2);
-		return x1;
+	/** @template {string} K1 @arg {K1} k1 @template {string} K2 @template V @arg {K2} k2 @arg {V} v  @returns {T_DI_FromObj2<{[U in K1]:[K2,V]}>} */
+	make_DI_KeyLike_like(k1,k2,v) {
+		/** @type {[K2,V]} */
+		let z=this.make_obj(k2,v);
+		return this.make_DI_T_KV_Z(k1,z);
 	}
 	/** @template {string} K2 @arg {K2} k1 @template {string} K1 @template V @arg {K1} k2 @arg {V} x  @returns {T_DI_FromObj2<{[U in K2]: T_DI_FromObj<{[U in K1]: V;}>;}>} */
 	make_DI_Key2Like_like(k1,k2,x) {
 		/** @type {T_PrimitiveBox<V>} */
-		let z1=this.make_DI_T_KV_Z(this.get_s_type(x),x);
+		let z1=this.make_DI_T_KV_Z(this.get_primitive_tag(x),x);
 		/** @type {T_DI_FromObj<{[U in K1]:V;}>} */
 		let z2=this.make_DI_T_KV_Z(k2,z1);
 		/** @type {T_DI_FromObj2<{[U in K2]:typeof z2}>} */
@@ -3194,22 +3184,6 @@ class HandleTypes extends BaseService {
 			default: debugger; return pr({a: null});
 		}
 	}
-	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
-	get_s_type(x) {
-		switch(typeof x) {
-			case "bigint": return as("bigint");
-			case "number": return as("number");
-			case "string": return as("string");
-			case "boolean": return as("boolean");
-		}
-		return as("unknown");
-	}
-	/** @template U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]} */
-	get_prim_1(x) {return x.z[0];}
-	/** @template V @template {KV_T_AKZ<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]} */
-	get_prim_2(x) {return this.get_prim_1(x).z[0];}
-	/** @template T1 @template {DI_T_AZ<T1>} V @template {KV_T_AKZ<any,V>} U @template {DI_T_Item_ABD<any,any,U>} T @arg {T} x @returns {T["z"][0]["z"][0]["z"][0]} */
-	get_prim_3(x) {return this.get_prim_2(x).z[0];}
 	//#endregion
 	//#endregion
 	//#region make_*
@@ -3275,9 +3249,9 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x @returns {KV_T_AKZ<"raw_id",T>} */
 	make_DIT_Item_A_RawId(x) {return this.make_DI_T_KV_Z("raw_id",x);}
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
-	make_Typeof(x) {return {a: this.get_KZ("k"),k: this.get_s_type(x),z: [x]};}
+	make_Typeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
-	make_BoxTypeof(x) {return {a: this.get_KZ("k"),k: this.get_s_type(x),z: [x]};}
+	make_BoxTypeof(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {MK_DIInfo1<K,T>} */
 	make_input(k,v) {return {a: "key",k,z: [v]};}
 	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {MK_DIInfo1<K,T>} */
@@ -3285,7 +3259,7 @@ class HandleTypes extends BaseService {
 	/** @template {{}} T @arg {T_DI_FromObj<T>} x @returns {MK_DIInfo1<keyof T,T[keyof T]>} */
 	make_input_from_R_info(x) {return this.make_obj_input(x.k,x.z[0].z[0]);}
 	/** @template {number} T @param {T} x @returns {T_PrimitiveBox<T>} */
-	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_s_type(x),z: [x]};}
+	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	/** @public @template {DI_AGR_UrlInfo} TI @arg {TI} x */
 	make_R_UrlInfo(x) {
 		switch(x.k) {
@@ -3434,7 +3408,7 @@ class HandleTypes extends BaseService {
 		let s_url_data=this.save_db.data_store.get_number_store().data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_number(k,1); return;}
 		let wd=s_url_data[1];
-		switch(wd.c) {
+		switch(wd.l) {
 			default: throw new Error("What");
 			case "one": return this.save_number(k,wd.z[0]+1);
 			case "arr": {
@@ -3516,8 +3490,8 @@ class HandleTypes extends BaseService {
 			/** @template T_Arg @template {DI_T_KV_Z_MakeItemGroup<string,T_Arg>} T_Box @arg {T_Box} x @returns {Ret_w_diz<T_Arg>} */
 			let w_diz=x => {
 				x.a; x.k; let a=x.z[0];
-				switch(a.c) {
-					case "one": {let b=a.z[0]; return [a.c,["1",b],a,x];}
+				switch(a.l) {
+					case "one": {let b=a.z[0]; return [a.l,["1",b],a,x];}
 					case "arr": {let b=a.z[0]; return [a.c,["2",b],a,x];}
 					case "many": {let b=a.z[0]; return [a.c,["3",b],a,x];}
 					case "typeof_name": {let b=a.z[0]; return [a.c,["t",b],a,x];}
@@ -3643,7 +3617,7 @@ class HandleTypes extends BaseService {
 			/** @arg {GST_DSS} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
 			function acc_items(container,items_arr) {
 				const item_group=container.z[0].z[0];
-				switch(item_group.c) {
+				switch(item_group.l) {
 					case "many": {
 						const item_many=item_group.z[0];
 						let xm=item_group.z[0].map(e => e.join(","));

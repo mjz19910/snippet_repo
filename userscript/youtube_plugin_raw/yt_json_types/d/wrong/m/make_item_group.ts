@@ -1,21 +1,22 @@
 type make_one_t<T>={
-	a: "/GV/b/c/f/z"; b: "item"; c: "one"; f: string;
+	a: DST_KStr_AKLMZ; k: "item"; l: "one"; m: string;
 	z: [T];
 };
 type make_arr_t<T>={
-	a: "GV/b/c/f/z"; b: "item"; c: "arr"; f: string;
+	a: DST_KStr_AKLMZ; k: "item"; l: "arr"; m: string;
 	z: [T[]];
 };
+type G_MakeGroupShape<T,K="item",L="one",M=string>={a: DST_KStr_AKLMZ; k: K; l: L; m: M; z: [T];};
 type make_many_t<T>={
-	a: "GV/b/c/f/z"; b: "item"; c: "many"; f: string;
+	a: DST_KStr_AKLMZ; k: "item"; l: "many"; m: string;
 	z: [T[][]];
 };
 type make_typeof_name_t<T,U extends T_GetTypeof<T>=T_GetTypeof<T>>={
-	a: "GV/b/c/f/z"; b: "item"; c: "typeof_name"; f: string;
+	a: DST_KStr_AKLMZ; k: "item"; l: "typeof_name"; m: string;
 	z: [U];
 };
 type make_instance_name_t<V extends string>={
-	a: "GV/b/c/f/z"; b: "item"; c: "instance_name"; f: string;
+	a: DST_KStr_AKLMZ; k: "item"; l: "instance_name"; m: string;
 	z: [V];
 };
 

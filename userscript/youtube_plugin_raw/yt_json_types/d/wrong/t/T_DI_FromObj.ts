@@ -1,1 +1,0 @@
-type T_DI_FromObj<T extends {}>=KV_T_AKZ<keyof T,T_PrimitiveBox<T[keyof T]>>;

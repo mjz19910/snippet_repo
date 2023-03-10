@@ -50,59 +50,40 @@ export class IndexedDBDeadCode extends IndexedDBService {
 				default: debugger; break;
 				case "number": break;
 				case "channel_id:UC": {
-					const {key,tag,value}=o2;
-					/** @type {{}} */
-					let bt=this.make_abcz(value.type,value.tag,[
-						this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
-						this.make_DI_T_KV_Z("id",this.make_prim_v(value.info_arr[1].id)),
-					]);
-					/** @type {{key:`boxed_id:channel_id:UC:${string}`,a: DST_KStr_AKLZ;b:"boxed_id",l:"channel_id:UC",z:[{}]}} */
-					const z=this.make_ST_jz(key,tag,bt);
-					/** @type {T} */
-					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
+					debugger;
 				} break;
 				case "keys": break;
 				case "string": break;
 				case "video_id": {
 					const {key,tag,value}=o2;
 					/** @type {DI_A_VideoId} */
-					let bt=this.make_DI_T_KV_Z(value.type,this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)));
-					/** @type {DST_Video_Id&{w: "/db/key/a/b/j/w/z"}} */
-					const z=this.make_ST_jz(key,tag,bt);
+					let bt=this.make_DI_T_KV_Z(value.type,{raw_id: value.info_arr[0].raw_id});
+					/** @type {DST_Video_Id} */
+					const z={key,a: "/db/key/a/k/l/z",k: "boxed_id",l: tag,z: [bt]};
 					/** @type {T} */
 					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
 				} break;
 				case "playlist_id:RD": {
-					const {key,value}=o2;
-					const {type,tag}=value;
-					/** @type {{}} */
-					let bt=this.make_abcz("playlist_id","RD",[
-						this.make_DI_T_KV_Z("raw_id",this.make_prim_v(value.info_arr[0].raw_id)),
-						this.make_DI_T_KV_Z("id",this.make_prim_v(value.info_arr[1].id)),
-					]);
-					/** @type {{key:`boxed_id:${typeof type}:${typeof tag}:${string}`,a: DST_KStr_AKLZ;b:"boxed_id",l:`${typeof type}:${typeof tag}`,w:"/db/key/a/b/j/w/z",z:[{}]}} */
-					const z=this.make_ST_jz(key,"playlist_id:RD",bt);
-					/** @type {T} */
-					ok=false; const zr=as_any(z); res.push([ok,"update","key",zr]);
+					debugger;
 				} break;
 			}
-			const {key,value}=o2;
-			if(!("info_arr" in value)) {
+			const {key,value: v1}=o2;
+			if(!("info_arr" in v1)) {
 				ok=false;
 				res.push([ok,"missing2",["value","info_arr"],x]);
 			}
-			let o_arr_t=value.info_arr[0];
+			let o_arr_t=v1.info_arr[0];
 			if(o_arr_t instanceof Array) {
 				switch(o_arr_t[0]) {
 					default: debugger; ok=true; res.push([ok,"unknown","new_info",x]); return;
 					case "many":
 					case "arr":
 					case "one": {
-						const i3={a: "group_value",b: "item",c: o_arr_t[0],f: value.type,z: [o_arr_t[1]]};
+						const i3={a: "/db/key/a/k/l/m/z",k: "item",l: o_arr_t[0],m: v1.type,z: [o_arr_t[1]]};
 						/** @type {DSS_Bigint["z"][0]} */
-						const i2={a: DStr_DI_AKZ,k: value.type,z: [as_any(i3)]};
+						const i2={a: "/di/a/k/z",k: v1.type,z: [as_any(i3)]};
 						/** @type {DSS_Bigint} */
-						const z={key: as_any(key),a: "/db/key/a/b/d/z",b: "boxed_id",l: "bigint",z: [i2]};
+						const z={key: as_any(key),a: "/db/key/a/k/l/z",k: "boxed_id",l: "bigint",z: [i2]};
 						return [true,z];
 					}
 				}

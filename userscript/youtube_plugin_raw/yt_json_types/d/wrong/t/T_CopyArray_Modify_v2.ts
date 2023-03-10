@@ -1,1 +1,0 @@
-type T_CopyArray_Modify_v2<T extends [string,any][],Acc extends any[]=[]>=T extends [[infer K,infer V],...infer VR extends T[number][]]? T_CopyArray_Modify_v2<VR,[KV_T_AKZ<K,T_PrimitiveBox<V>>,...Acc]>:Acc;

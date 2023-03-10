@@ -338,7 +338,7 @@ class IndexedDBService extends BaseService {
 		/** @type {{u:make_arr_t<T>|make_instance_name_t<string>|make_many_t<T>|make_one_t<T>|make_typeof_name_t<T>}} */
 		const D_holder={};
 		D_holder.u=x; make.arr=nul; make.instance_name=nul; make.many=nul; make.one=nul; make.typeof_name=nul;
-		switch(x.c) {
+		switch(x.l) {
 			default: {
 				/** @type {unknown} */
 				let ux=x;
@@ -757,7 +757,7 @@ class IndexedDBService extends BaseService {
 	is_vi_typeof_check(x,ty) {
 		/** @arg {T} x @arg {T_GetTypeof<T>} ty */
 		function t_check_typeof(x,ty) {return typeof x===ty;}
-		switch(x.c) {
+		switch(x.l) {
 			default: debugger; throw new Error();
 			case "one": const z1=x.z; return t_check_typeof(z1[0],ty);
 			case "arr": const u=x.z,z2=u[0]; return z2.length===0||t_check_typeof(z2[0],ty);

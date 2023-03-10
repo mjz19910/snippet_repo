@@ -394,21 +394,10 @@ type DI_R_VideoId={
 };
 //#endregion
 //#region AKZ
-type DI_Key_StartRadio=T_DI_FromObj<{key: T_DI_FromObj<{start_radio: 0|1;}>;}>;
-type DI_A_UserId=T_DI_FromObj<{user_id: T_DI_FromObj<{raw_id: string;}>;}>;
-type DI_A_VideoId=T_DI_FromObj2<{video_id: T_DI_FromObj<{raw_id: string;}>;}>;
-type DI_T_KV_Z_MakeItemGroup<K extends string,T>=KV_T_AKZ<K,make_item_group<T>>;
-type DI_A_Playlist_LL={
-	a: DStr_DI_AKZ;
-	k: "playlist_id";
-	z: [T_DI_FromObj<{raw_id: "LL";}>];
-};
-type DI_A_Playlist_WL={
-	a: DStr_DI_AKZ;
-	k: "playlist_id";
-	z: [T_DI_FromObj<{raw_id: "WL";}>];
-};
-//#endregion
-//#region AZ
-type DI_T_AZ<T>={a: DStr_DI_AZ; z: [T];};
+type DI_Key_StartRadio=DI_RawIdBox<"start_radio",0|1>;
+type DI_A_UserId=DI_RawIdBox<"user_id",DU_UserId>;
+type DI_A_VideoId=DI_RawIdBox<"video_id",DU_VideoId>;
+type DI_A_Playlist_LL=DI_RawIdBox<"playlist_id","LL">;
+type DI_A_Playlist_WL=DI_RawIdBox<"playlist_id","WL">;
+type DI_RawIdBox<K1 extends string,T>=T_DI_FromObj2<{[U in K1]: T_DI_FromObj2<{raw_id: T;}>}>;
 //#endregion

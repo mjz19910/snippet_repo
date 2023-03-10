@@ -98,8 +98,8 @@ type DecomposeWork_1f=Exclude<A2,{a: any;}>;
 type DecomposeWork_1b=Extract<DecomposeWork_1a,{b: any;}>;
 type DecomposeWork_sub_1b=Exclude<DecomposeWork_1a,{b: any;}>;
 type A2_Box=Extract<A2,T_PrimitiveBox<any>>;
-type A1b_Group_MK=Extract<DecomposeWork_1b,{a: "group_value";}>;
-type A1b_Group_RM=Exclude<DecomposeWork_1b,{a: "group_value";}>;
+type A1b_Group_MK=Extract<DecomposeWork_1b,{a: "/GV/a/b/c/f/z";}>;
+type A1b_Group_RM=Exclude<DecomposeWork_1b,{a: "/GV/a/b/c/f/z";}>;
 type A4_RM_Box=Exclude<DecomposeWork_sub_1b,T_PrimitiveBox<any>>;
 type DecomposeWorkItem=
 	// a
@@ -147,7 +147,7 @@ function cache_item_decompose_work(s: ApiBase2,x: DecomposeWorkItem): DecomposeW
 				}
 				case "+b": {
 					const v=x[2];
-					if(v.a==="group_value") return [1,"+a=group_value",v];
+					if(v.a==="/GV/a/b/c/f/z") return [1,"+a=group_value",v];
 					v.a;
 					const {z,...y}=x[2]; y;
 				} break;

@@ -2349,9 +2349,9 @@ class BaseService extends ServiceWithMembers {
 	//#endregion
 	//#region make
 	/** @arg {string} k @template T @arg {T} x @returns {make_one_t<T>} */
-	make_one_t(k,x) {const b="item",c="one"; return {a: "group_value",b,c,f: k,z: [x]};}
+	make_one_t(k,x) {const b="item",c="one"; return {a: "/db/key/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	/** @arg {string} k @template T @arg {T[]} x @returns {make_arr_t<T>} */
-	make_arr_t(k,x) {const b="item",c="arr"; return {a: "group_value",b,c,f: k,z: [x]};}
+	make_arr_t(k,x) {const b="item",c="arr"; return {a: "/db/key/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	//#endregion
 	//#region save
 	/** @protected @arg {string} k @arg {bigint} x */
@@ -2402,28 +2402,22 @@ class BaseService extends ServiceWithMembers {
 	codegen_typedef(cf,x,do_break=true) {this.cg.codegen_typedef(cf,x,do_break,false);}
 	//#endregion
 	//#region template methods that make objects
-	/**
-	 * @param {Z_Item} z @arg {J} l @arg {T_Key} key
-	 * @template J @template Z_Item @template T_Key
-	 * @returns {{key:T_Key,a: DST_KStr_AKLZ;b:"boxed_id",l:J,z:[Z_Item]}}
-	 * */
-	make_ST_jz(key,l,z) {return {key,a: "/db/key/a/k/l/z",b: "boxed_id",l,z: [z]};}
-	/**
-	 * @param {Z} z @arg {B} b @arg {C} c
-	 * @template B,C @template Z
-	 * @returns {{a: "DI:A";b:B,c:C,z:Z}}
-	 * */
-	make_abcz(b,c,z) {return {a: "DI:A",b,c,z};}
 	/** @template K,T @arg {K} k @arg {T} x  @returns {KV_T_AKZ<K,T>} */
-	make_DI_T_KV_Z(k,x) {return {a: DStr_DI_AKZ,k,z: [x]};}
-	/**
-	 * @param {Z} z @arg {A} a @arg {E} e
-	 * @template A,E @template Z
-	 * @returns {{a:A,e:E,z:[Z]}}
-	 * */
-	make_aez(a,e,z) {return {a,e,z: [z]};}
-	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox_E<Z,"string">} */
-	make_prim_v(z) {return {a: "/dit/a/e/z",k: "string",z: [z]};}
+	make_DI_T_KV_Z(k,x) {return {a: "/di/a/k/z",k,z: [x]};}
+	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
+	get_primitive_tag(x) {
+		switch(typeof x) {
+			case "bigint": return as("bigint");
+			case "number": return as("number");
+			case "string": return as("string");
+			case "boolean": return as("boolean");
+			case "object": return as("object");
+		}
+		debugger;
+		return as("unknown");
+	}
+	/** @template {string} Z @param {Z} z @returns {T_PrimitiveBox<Z>} */
+	make_prim_v(z) {return {a: "/di/a/k/z",k: this.get_primitive_tag(z),z: [z]};}
 	//#endregion
 	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(",")) {

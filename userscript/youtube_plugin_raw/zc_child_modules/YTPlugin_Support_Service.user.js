@@ -138,7 +138,7 @@ class StoreDescription extends ApiBase2 {
 	}
 	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
 	clone_container(x) {
-		switch(x.c) {
+		switch(x.l) {
 			default: debugger; throw new Error("Unable to clone");
 			case "arr": {
 				/** @type {typeof x} */
@@ -185,10 +185,17 @@ class StoreDescription extends ApiBase2 {
 	 * @template Z @arg {Z} z @template {string} F @arg {F} f
 	 * @template {string} C @arg {C} c
 	 * @param {"item"} b
-	 * @param {"group_value"} a
-	 * @returns {{a:"group_value",b:"item",c:C,f:F,z:Z}}
+	 * @param {"/GV/a/b/c/f/z"} a
+	 * @returns {G_MakeGroupShape<Z,"item",C,F>}
 	 **/
-	make_group(z,f,c,b="item",a="group_value") {return {a,b,c,f,z};}
+	make_group(z,f,c,b="item",a="/GV/a/b/c/f/z") {return {a,k: b,l: c,m: f,z: this.make_prim_v([z])};}
+	/*{
+		a: "/GV/b/c/f/z";
+		b: "item";
+		c: "one";
+		f: string;
+		z: [T];
+} */
 	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x_container */
 	save_data(k,x_container) {
 		if(this.includes_key(k)) {
@@ -197,14 +204,14 @@ class StoreDescription extends ApiBase2 {
 			let y_item=this.data[idx];
 			let y_container=y_item[1];
 			if(!("b" in x_container)) {x_container;}
-			if(y_container.c==="many"&&x_container.c==="arr") {
+			if(y_container.l==="many"&&x_container.l==="arr") {
 				let {z: [y_many]}=y_container;
 				if(y_many.findIndex(y_arr => this.eq_keys(y_arr,x_container.z[0]))>-1) return;
 				let new_container=this.clone_and_then(y_container,x1 => (x1.z[0].push(x_container.z[0]),x1));
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(y_container.c==="arr"&&x_container.c==="one") {
+			if(y_container.l==="arr"&&x_container.l==="one") {
 				let {z: [item_arr]}=y_container;
 				if("special" in x_container) {debugger; return;}
 				if(item_arr.includes(x_container.z[0])) return;
@@ -212,17 +219,17 @@ class StoreDescription extends ApiBase2 {
 				this.push_new_data(k,new_container);
 				return;
 			}
-			if(y_container.c==="arr"&&x_container.c==="arr") {
+			if(y_container.l==="arr"&&x_container.l==="arr") {
 				let {z: [y_arr]}=y_container;
 				if(this.eq_keys(y_arr,x_container.z[0])) return;
-				let {f,z: [y1_arr]}=this.clone_container(y_container);
+				let {m: f,z: [y1_arr]}=this.clone_container(y_container);
 				this.push_new_data(k,this.make_many_t(f,[y1_arr,x_container.z[0]]));
 				return;
 			}
-			if(y_container.c==="one"&&x_container.c==="one") {
+			if(y_container.l==="one"&&x_container.l==="one") {
 				const {z: [y]}=y_container,{z: [x]}=x_container;
 				if(y===x) return;
-				let new_container=this.clone_and_then(y_container,y1 => this.make_arr_t(y1.f,[y1.z[0],x]));
+				let new_container=this.clone_and_then(y_container,y1 => this.make_arr_t(y1.m,[y1.z[0],x]));
 				this.push_new_data(k,new_container);
 				return;
 			}
@@ -368,7 +375,7 @@ class LocalStorageSeenDatabase extends BaseService {
 	/** @template {StoreDataInput["type"]} SName @arg {SName extends infer I extends keyof J_StoreTypeMap?[I,make_item_group<J_StoreTypeMap[I]>]:never} args */
 	save_to_data_store(...args) {
 		const [sn,x]=args;
-		this.data_store.get_store(sn).save_data(x.f,as(x));
+		this.data_store.get_store(sn).save_data(x.m,as(x));
 	}
 	/** @type {IndexedDBService} */
 	idb=(() => {
@@ -454,7 +461,7 @@ class LocalStorageSeenDatabase extends BaseService {
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
-		switch(cur.c) {
+		switch(cur.l) {
 			default: debugger; break;
 			case "one": debugger; break;
 			case "many": {
@@ -535,7 +542,7 @@ class LocalStorageSeenDatabase extends BaseService {
 		let yt_plugin={ds: this,};
 		let gg=yt_plugin.ds.data_store.get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
-		if(gg[1].c!=="arr") return;
+		if(gg[1].l!=="arr") return;
 		gg[1].z[0].sort((a,b) => a-b);
 		let g1=gg[1];
 		/** @private @arg {string} str */
