@@ -130,6 +130,7 @@ type DI_RetInfo=
 	|MK_DIInfo1<DU_Playlist_Static>
 	|{type: "num",z: [number];}
 	|{type: "RDCMUC"; z: [`RDCMUC${string}`];}
+	|{type: string; z: [string];}
 	;
 ;
 type DI_RetInfo_Test1=Exclude<DU_ChannelId,"RDGM"|"RDCMUC"|"RDMM"|"PL"|"RD"|"UU">;

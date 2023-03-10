@@ -1698,7 +1698,7 @@ class HandleTypes extends BaseService {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo({"start_radio": this.sm.parse_number_template(start_radio)});
+				this.DI_AGR_UrlInfo({z: [this.sm.parse_number_template(start_radio)]});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(!this.sm.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
