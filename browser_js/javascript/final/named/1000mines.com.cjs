@@ -363,7 +363,7 @@ function main() {
 						is_classy=true;
 				}
 				func_as_string=func.toString();
-				let js_filt=[func.toString()];
+				let js_filter=[func.toString()];
 				/** @type {any[]} */
 				let js_out=[];
 				let js_parse_no_white=( /** @type {string} */ e) => {
@@ -399,8 +399,8 @@ function main() {
 				};
 				/** @arg {(value: string, index: number, array: string[])=> void} func */
 				function fe_block(func) {
-					js_filt.forEach(func);
-					js_filt=js_out;
+					js_filter.forEach(func);
+					js_filter=js_out;
 					js_out=[];
 				}
 				/** @arg {string[]} js_in @arg {string[]} js_tmp @returns {[[]|[string,string],string[],string[]]}
@@ -476,17 +476,17 @@ function main() {
 					let js_out=[];
 					let top_item=js_in.pop();
 					js_out=[];
-					js_filt=[top_item];
+					js_filter=[top_item];
 					do {
 						fe_block(js_parse_no_white);
 						if(loop_counter++>loop_max_count) {
 							break;
-						} else if(js_filt.length>1) {
-							let nx=js_filt.pop();
+						} else if(js_filter.length>1) {
+							let nx=js_filter.pop();
 							if(!nx) throw new Error("1");
-							js_out.push(...js_filt);
-							js_filt=[nx];
-						} else if(js_filt.length==1) {
+							js_out.push(...js_filter);
+							js_filter=[nx];
+						} else if(js_filter.length==1) {
 							break;
 						}
 					} while(true);
@@ -498,13 +498,13 @@ function main() {
 						let js_func_ident,js_func_args;
 						js_out.push(e[0]);
 						js_out.push(e.slice(1));
-						let ret=js_parse_loop_whitespace(js_out,js_filt);
-						let js_tmp=js_filt;
-						[js_out,js_out,js_filt]=ret;
+						let ret=js_parse_loop_whitespace(js_out,js_filter);
+						let js_tmp=js_filter;
+						[js_out,js_out,js_filter]=ret;
 						js_out.push(...js_out,...js_tmp);
 						if(is_classy) {
-							ret=js_parse_ident(js_out,js_filt);
-							[js_out,js_out,js_filt]=ret;
+							ret=js_parse_ident(js_out,js_filter);
+							[js_out,js_out,js_filter]=ret;
 							js_func_ident=js_out[0];
 							js_out.push(js_out[0],js_out[1]);
 							if(js_out[0]==='constructor') {
@@ -518,28 +518,28 @@ function main() {
 								wt=ret.pop();
 								js_func_args=ret.slice();
 								js_out.push(...ret);
-								parse_stack.push([js_out,js_filt]);
+								parse_stack.push([js_out,js_filter]);
 								js_out=[wt];
-								js_filt=[];
-								ret=js_parse_loop_whitespace(js_out,js_filt);
-								js_tmp=js_filt;
-								[js_out,js_out,js_filt]=ret;
-								[js_out,js_filt]=parse_stack.pop();
+								js_filter=[];
+								ret=js_parse_loop_whitespace(js_out,js_filter);
+								js_tmp=js_filter;
+								[js_out,js_out,js_filter]=ret;
+								[js_out,js_filter]=parse_stack.pop();
 								js_out.push(...js_out,...js_tmp);
 								wt=js_out.pop();
-								parse_stack.push([js_out,js_filt]);
+								parse_stack.push([js_out,js_filter]);
 								js_out=[];
-								js_filt=[wt];
+								js_filter=[wt];
 								fe_block(js_parse_block_enter);
-								let last=js_filt.pop();
+								let last=js_filter.pop();
 								if(!last) throw new Error("1");
 								js_tmp.push(last);
-								js_class_methods.push([js_func_ident,js_func_args,js_filt.slice()]);
+								js_class_methods.push([js_func_ident,js_func_args,js_filter.slice()]);
 								last=js_tmp.pop();
 								if(!last) throw new Error("1");
-								js_filt.push(last);
-								js_tmp=js_filt;
-								[js_out,js_filt]=parse_stack.pop();
+								js_filter.push(last);
+								js_tmp=js_filter;
+								[js_out,js_filter]=parse_stack.pop();
 								js_tmp.forEach(e => js_out.push(e));
 								let p_cur=parse_stack.pop();
 								//['classy',is_classy,e=>is_classy=e]
@@ -556,15 +556,15 @@ function main() {
 							loop_max_count=40;
 
 							function call_loop_parse_whitespace() {
-								ret=js_parse_loop_whitespace(js_out,js_filt);
-								js_tmp=js_filt;
-								[js_out,js_out,js_filt]=ret;
+								ret=js_parse_loop_whitespace(js_out,js_filter);
+								js_tmp=js_filter;
+								[js_out,js_out,js_filter]=ret;
 								js_out.push(...js_out,...js_tmp);
 							}
 
 							function call_parse_ident() {
-								ret=js_parse_ident(js_out,js_filt);
-								[js_out,js_out,js_filt]=ret;
+								ret=js_parse_ident(js_out,js_filter);
+								[js_out,js_out,js_filter]=ret;
 								js_out.push(js_out[0],js_out[1]);
 							}
 							while(js_out[js_out.length-1].match(/^[ \t\n]*}/)==null) {
@@ -582,19 +582,19 @@ function main() {
 								js_out.push(...ret);
 								call_loop_parse_whitespace();
 								wt=js_out.pop();
-								parse_stack.push([js_out,js_filt]);
+								parse_stack.push([js_out,js_filter]);
 								js_out=[];
-								js_filt=[wt];
+								js_filter=[wt];
 								fe_block(js_parse_block_enter);
-								let last=js_filt.pop();
+								let last=js_filter.pop();
 								if(!last) throw new Error("1");
 								js_tmp.push(last);
-								js_class_methods.push([js_func_ident,js_func_args,js_filt.slice()]);
+								js_class_methods.push([js_func_ident,js_func_args,js_filter.slice()]);
 								last=js_tmp.pop();
 								if(!last) throw new Error("1");
-								js_filt.push(last);
-								js_tmp=js_filt;
-								[js_out,js_filt]=parse_stack.pop();
+								js_filter.push(last);
+								js_tmp=js_filter;
+								[js_out,js_filter]=parse_stack.pop();
 								js_tmp.forEach(e => js_out.push(e));
 								let p_cur=parse_stack.pop();
 								['classy',is_classy,( /** @type {boolean} */ e) => is_classy=e];
@@ -614,10 +614,10 @@ function main() {
 							let fm_idx=js_out.indexOf(first_met[0]);
 							js_out=js_out.slice(0,fm_idx).concat(js_class_methods,js_out.slice(-1));
 							let wt=js_out.pop();
-							parse_stack.push([js_out,js_filt]);
+							parse_stack.push([js_out,js_filter]);
 							ret=js_parse_loop_whitespace([wt],[]);
-							js_tmp=js_filt;
-							[js_out,js_out,js_filt]=ret;
+							js_tmp=js_filter;
+							[js_out,js_out,js_filter]=ret;
 							[js_out]=parse_stack.pop();
 							js_out.push(...js_out,...js_tmp);
 						} else {

@@ -1,4 +1,4 @@
-import {SubARet} from "../../group1/sub_a/types/item_2_support.js";
+import {SubARet} from "../../group1/sub_a/types/SubARet.js";
 import {Runner} from "../support/Runner.js";
 
 export type __RetType={
