@@ -5,11 +5,15 @@ declare global {
 }
 
 export function use_jquery() {
-	let jq=window.$
+	let jq=window.$;
 	if(!jq)
-		return
-	let res=jq('head')
-	let r_proto=Object.getPrototypeOf(res)
-	r_proto.lazyload=function() {}
-	return jq
+		return;
+	let res=jq('head');
+	let r_proto=Object.getPrototypeOf(res);
+	r_proto.lazyload=function() {};
+	return jq;
 }
+interface JQueryStatic {
+	(x: string): JQueryRes;
+}
+interface JQueryRes {}
