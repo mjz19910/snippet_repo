@@ -524,12 +524,13 @@ class IndexedDBService extends BaseService {
 	/** @arg {K} key @arg {A} a @arg {D} d @arg {T} x @template {string} K @template {string} A @template {string} D @template T @returns {T_BoxStore_adz<K,A,D,T>} */
 	make_BoxStore_adz(key,a,d,x) {return {key,a,b: "boxed_id",d,w: "/key/a/b/d/w/z",z: [x]};}
 	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_KV_Z_MakeItemGroup<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
-	make_T_BoxedStore(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"/key/a/b/d/z",tag1,x);}
+	make_T_BoxedStore(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"/db/key/a/b/d/z",tag1,x);}
 	/** @template {string} T_Tag1 @template {string} T_Tag2 @arg {T_Tag1} tag1 @arg {T_Tag2} tag2 @template T @template {DI_T_KV_Z_MakeItemGroup<T_Tag2,T>} V @arg {V} x @returns {DSI_T_Item_ABD2<T_Tag1,T_Tag2,V>} */
-	make_T_BoxedStore_v2(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"/key/a/b/d/z",tag1,x);}
+	make_T_BoxedStore_v2(tag1,tag2,x) {return this.make_BoxStore_adz(`boxed_id:${tag1}:${tag2}`,"/db/key/a/b/d/z",tag1,x);}
 	/** @template {string} B @arg {B} b @template T @arg {make_item_group<T>} x @returns {DI_T_KV_Z_MakeItemGroup<B,T>} */
 	make_DIZ_Item_AB(b,x) {return {a: "/KV/a/k/z",k: b,z: [x]};}
-	make_boxed_id_box(x) {x;}
+	/** @arg {any} x */
+	make_boxed_id_box(x) {x; debugger;}
 	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} s0 */
 	put_boxed_id_3(version,...s0) {
 		const [k,,x]=s0;
@@ -591,7 +592,7 @@ class IndexedDBService extends BaseService {
 			}
 			case "guide_entry_id": /*db*/ {
 				let [l]=s0;
-				switch(x.c) {
+				switch(x.l) {
 					default: x===""; throw new Error();
 					case "LL": {
 						/** @type {DST_GuideEntry_LL} */
@@ -617,7 +618,7 @@ class IndexedDBService extends BaseService {
 					}
 					case "VL:LL": {
 						/** @type {DST_GuideEntry_VL_LL} */
-						const z={a: this.mka("l"),b: "boxed_id",l,key: `boxed_id:${l}:${x.c}`,z: [{a: "DI",b: "guide_entry_id",c: "VL:LL",z: [x]}]};
+						const z={a: this.mka("l"),b: "boxed_id",l,key: `boxed_id:${l}:${x.l}`,z: [{a: "DI",k: "guide_entry_id",l: "VL:LL",z: [x]}]};
 						return {args: s0,promise: this.put_box(z,version)};
 					}
 				}
@@ -678,7 +679,7 @@ class IndexedDBService extends BaseService {
 			case "channel_id": {
 				let [t,,x]=s0;
 				/** @type {DST_Channel_UC} */
-				const z=this.make_box_4(t,x.c,this.za2(x.z[1]),x);
+				const z=this.make_box_4(t,x.l,this.za2(x.z[1]),x);
 				let promise=this.put_box(z,version); return {args: s0,promise};
 			}
 			case "hashtag_id": {

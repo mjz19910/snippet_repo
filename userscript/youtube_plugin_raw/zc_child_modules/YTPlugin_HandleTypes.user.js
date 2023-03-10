@@ -1710,9 +1710,9 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x  @returns {{a:"primitive";e:"number";z: [T]}} */
 	make_prim_num(x) {return {a: "primitive",e: "number",z: [x]};}
 	/** @template C,T @arg {C} c @arg {T} x  @returns {T_DI_Key_2<C,T>} */
-	make_DI_R(c,x) {return {a: "/item/a/b/c/z",b: "key",c,z: [x]};}
+	make_DI_R(c,x) {return {a: "/item/a/k/l/z",b: "key",c,z: [x]};}
 	/** @template {string} C @template T @arg {C} c @arg {T} x @returns {T_DI_Raw_2<C,T>} */
-	make_DI_Raw(c,x) {return {a: "/item/a/b/c/z",b: "raw",c,z: [x]};}
+	make_DI_Raw(c,x) {return {a: "/item/a/k/l/z",b: "raw",c,z: [x]};}
 	/** @template {string} K1 @template {string} K2 @template T @arg {K1} k1 @arg {K2} k2 @arg {T} x @returns {T_DI_Raw<K1,K2,KV_T_AKZ<K1,KV_T_AKZ<K2,T>>>} */
 	make_DI_Raw_KV_l2(k1,k2,x) {return this.make_DI_Raw(`${k1}:${k2}`,this.make_DI_T_KV_Z(k1,this.make_DI_T_KV_Z(k2,x)));}
 	/** @arg {0|1} x  @returns {DI_R_Key_StartRadio} */
@@ -3141,7 +3141,7 @@ class HandleTypes extends BaseService {
 	/** @arg {"playlist_id"}b @arg {"PL"} c @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
 	make_info_3(b,c,x3) {
 		let [,id]=split_string_once(x3,c);
-		return {a: "/item/a/b/c/z",b,c,z: [this.make_raw_id(x3),this.make_id(id)]};
+		return {a: "/item/a/k/l/z",k: b,l: c,z: [this.make_raw_id(x3),this.make_id(id)]};
 	}
 	/** @template K,T @arg {K} k @arg {T} x @returns {KV_T_AKZ<K,T_PrimitiveBox<T>>}*/
 	make_kv_ab(k,x) {return this.make_DI_T_KV_Z(k,this.make_BoxTypeof(x));}

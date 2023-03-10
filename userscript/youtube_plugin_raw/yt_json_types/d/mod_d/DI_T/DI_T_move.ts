@@ -2,11 +2,12 @@
 type DStr_DI_ABDZ="/di/a/b/d/z";
 type DStr_DI_AZ="/di/a/z";
 type DStr_DIT_AEZ="/dit/a/e/z";
+type DStr_DI_Item_ABCZ=`/item/a/k/l/z`;
 //#endregion
 //#region T_DI
-type T_DI_Raw<k1 extends string,k2 extends string,T>={a: "/item/a/b/c/z"; b: "raw",c: `${k1}:${k2}`,z: [T];};
-type T_DI_Key_2<C extends string,T>={a: "/item/a/b/c/z"; b: "key",c: C,z: [T];};
-type T_DI_Raw_2<C extends string,T>={a: "/item/a/b/c/z"; b: "raw",c: C,z: [T];};
+type T_DI_Raw<k1 extends string,k2 extends string,T>={a: DStr_DI_Item_ABCZ; b: "raw",c: `${k1}:${k2}`,z: [T];};
+type T_DI_Key_2<C extends string,T>={a: DStr_DI_Item_ABCZ; b: "key",c: C,z: [T];};
+type T_DI_Raw_2<C extends string,T>={a: DStr_DI_Item_ABCZ; b: "raw",c: C,z: [T];};
 //#endregion
 //#region ABDZ
 type DI_T_Item_ABD<T_Type,T_Tag,T_InfoItem>={
@@ -17,43 +18,32 @@ type DI_T_Item_ABD<T_Type,T_Tag,T_InfoItem>={
 //#region AEZ
 type T_PrimitiveBox<T>={
 	a: DStr_DIT_AEZ;
-	// ^ a = is
 	e: T_GetPrimitiveTag<T>;
-	// ^ e = type_name
-	// * primitive typeof
 	z: [T];
-	// ^ z = info_arr
 };
 type T_PrimitiveBox_E<T,E extends T_GetPrimitiveTag<T>>={
 	a: DStr_DIT_AEZ;
-	// ^ a = is
 	e: E;
-	// ^ e = type_name
-	// * primitive typeof
 	z: [T];
-	// ^ z = info_arr
 };
 type DIT_Box_Typeof2<T_Type extends T_GetPrimitiveTag<U>,U>={
 	a: DStr_DIT_AEZ;
-	// ^ a = is
 	e: T_Type;
-	// ^ e = type
 	z: [U];
-	// ^ z = info_arr
 };
 //#endregion
 
 //#region {k,v}
 type DI_SrcInfo_Any={
 	k: "any";
-	v: DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id;
+	z: [DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id];
 };
 type DI_SrcInfo=
 	|DI_SrcInfo_Any
-	|{k: "start_radio"; v: DU_StartRadio;}
-	|{k: "video_id"; v: DU_VideoId;}
-	|{k: "hashtag_id"; v: string;}
-	|{k: "user_id"; v: string;}
+	|{k: "start_radio"; z: [DU_StartRadio];}
+	|{k: "video_id"; z: [DU_VideoId];}
+	|{k: "hashtag_id"; z: [string];}
+	|{k: "user_id"; z: [string];}
 	;
 ;
 //#endregion
@@ -62,119 +52,84 @@ type DI_SpecialInfo=T_DI_FromObj<{raw_id: string;}>;
 type DI_RetInfo={
 	a: "tag";
 	k: "user_id";
-	v: string;
+	z: [string];
 }|{
-	a: "tag"; k: "hashtag_id"; v: string;
+	z: "tag"; k: "hashtag_id"; v: [string];
 }|{
-	a: "tag"; k: "video_id"; v: string;
+	z: "tag"; k: "video_id"; v: [string];
 }|{
 	a: "tag"; k: "any"; c: "FE";
-	v: T_IdTemplate<"FE">;
+	z: [T_IdTemplate<"FE">];
 }|{
 	a: "tag"; k: "any"; c: "SP";
-	v: T_IdTemplate<"SP">;
+	z: [T_IdTemplate<"SP">];
 }|{
 	a: "tag"; k: "any"; c: "VL";
-	v: T_IdTemplate<"VL">;
+	z: [T_IdTemplate<"VL">];
 }|{
 	a: "tag"; k: "any"; c: "UC";
-	v: T_IdTemplate<"UC">;
+	z: [T_IdTemplate<"UC">];
 }|{
 	a: "tag"; k: "any"; c: "PL";
-	v: T_IdTemplate<"PL">;
+	z: [T_IdTemplate<"PL">];
 }|{
 	a: "tag"; k: "any"; c: "MP";
-	v: T_IdTemplate<"MP">;
+	z: [T_IdTemplate<"MP">];
 }|{
 	a: "tag"; k: "any"; c: "UU";
-	v: T_IdTemplate<"UU">;
+	z: [T_IdTemplate<"UU">];
 }|{
 	a: "tag"; k: "any"; c: "RD";
-	v: Extract<DU_Playlist_Id,`RD${string}`>;
+	z: [Extract<DU_Playlist_Id,`RD${string}`>];
 }|{
 	a: "tag"; k: "any"; c: null;
-	v: DU_Playlist_Static;
+	z: [DU_Playlist_Static];
 }|{
 	a: "/di/a/k/raw_id";
 	k: "hashtag_id";
-	v: string;
+	z: [string];
 }|{
 	a: "/di/a/k/raw_id";
 	k: "video_id";
-	v: DU_VideoId;
+	z: [DU_VideoId];
 }|{
 	a: "tag"; k: "start_radio";
-	v: DU_StartRadio;
+	z: [DU_StartRadio];
 }|{a: null;};
 //#endregion
 //#region ABCZ
 type DI_A_ChannelId_UC={
-	a: "/item/a/b/c/z";
-	b: "channel_id";
-	c: "UC";
+	a: DStr_DI_Item_ABCZ;
+	k: "channel_id";
+	l: "UC";
 	z: [
 		T_DI_FromObj<{raw_id: T_IdTemplate<"UC">;}>,
 		T_DI_FromObj<{id: string;}>,
 	];
 };
 type DI_GuideEntry_LL={
-	a: "/item/a/b/c/z";
-	b: "guide_entry_id";
-	c: "LL";
+	a: DStr_DI_Item_ABCZ;
+	k: "guide_entry_id";
+	l: "LL";
 	z: [DI_A_Playlist_LL];
 };
 type DI_GuideEntry_PL={
-	a: "/item/a/b/c/z";
-	b: "guide_entry_id";
-	c: "PL";
+	a: DStr_DI_Item_ABCZ;
+	k: "guide_entry_id";
+	l: "PL";
 	z: [DI_A_Playlist_PL];
 };
 type DI_GuideEntry_VL_LL={
-	a: "/item/a/b/c/z";
-	b: "guide_entry_id";
-	c: "VL:LL";
+	a: DStr_DI_Item_ABCZ;
+	k: "guide_entry_id";
+	l: "VL:LL";
 	z: [DI_BrowseId_VL_LL];
 };
 //#endregion
-//#region DI_G
-type DI_G_PlaylistId=
-	|DI_A_Playlist_LL
-	|DI_A_Playlist_PL
-	|DI_A_Playlist_RD
-	|DI_A_Playlist_RD_CM_UC
-	|DI_A_Playlist_RD_GM_EM
-	|DI_A_Playlist_RD_MM
-	|DI_A_Playlist_UU
-	|DI_A_Playlist_WL
-	;
-;
-type DI_G_Playlist_RD=
-	|DI_A_Playlist_RD
-	|DI_A_Playlist_RD_CM_UC
-	|DI_A_Playlist_RD_GM_EM
-	|DI_A_Playlist_RD_MM
-	;
-;
-//#endregion
-//#region BrowseId
-//#region DI_G
-type DI_G_BrowseId=
-	|DI_BrowseId_FE
-	|DI_BrowseId_MP
-	|DI_BrowseId_SP
-	|DI_BrowseId_VL_LL
-	|DI_BrowseId_VL_PL
-	|DI_BrowseId_VL_UU
-	|DI_BrowseId_VL_WL
-	;
-;
-//#endregion
-//#endregion
-
 //#region ABZ
 type DI_A_PlayNext={
 	a: "/item/a/b/z";
-	b: "play_next";
+	k: "play_next";
 	z: [
 		T_DI_FromObj<{raw_id: `${1}`;}>,
 		T_DI_FromObj<{parsed_value: 1;}>
@@ -197,30 +152,18 @@ type DI_AGR_UrlInfo=
 //#region DI+Extract
 type DI_EX_YY=Extract<DI_AGR_UrlInfo,{c: any;}>["c"];
 //#endregion
-//#region DI_G
-type DI_G_NoKey=
-	|DI_A_ChannelId_UC
-	|DI_G_BrowseId
-	|DI_A_HashtagId
-	|DI_A_PlayNext
-	|DI_A_UserId
-	|DI_A_VideoId
-	|DI_VideoTime
-	;
-;
-//#endregion
 //#region PlaylistId (ABCZ)
 type DI_A_Playlist_PL={
-	a: "/item/a/b/c/z";
-	b: "playlist_id";
-	c: "PL";
+	a: DStr_DI_Item_ABCZ;
+	k: "playlist_id";
+	l: "PL";
 	z: [
 		T_DI_FromObj<{raw_id: T_IdTemplate<"PL">;}>,
 		T_DI_FromObj<{id: string;}>,
 	];
 };
 type DI_A_Playlist_RD={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "playlist_id";
 	c: "RD";
 	z: [
@@ -229,7 +172,7 @@ type DI_A_Playlist_RD={
 	];
 };
 type DI_A_Playlist_RD_CM_UC={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "playlist_id";
 	c: "RD:CM:UC";
 	z: [
@@ -238,7 +181,7 @@ type DI_A_Playlist_RD_CM_UC={
 	];
 };
 type DI_A_Playlist_RD_GM_EM={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "playlist_id";
 	c: "RD:GM:EM";
 	z: [
@@ -247,7 +190,7 @@ type DI_A_Playlist_RD_GM_EM={
 	];
 };
 type DI_A_Playlist_RD_MM={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "playlist_id";
 	c: "RD:MM";
 	z: [
@@ -256,7 +199,7 @@ type DI_A_Playlist_RD_MM={
 	];
 };
 type DI_A_Playlist_UU={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "playlist_id";
 	c: "UU";
 	z: [
@@ -267,7 +210,7 @@ type DI_A_Playlist_UU={
 //#endregion
 //#region BrowseId (ABCZ)
 type DI_BrowseId_FE={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "browse_id";
 	c: "FE";
 	z: [
@@ -276,7 +219,7 @@ type DI_BrowseId_FE={
 	];
 };
 type DI_BrowseId_MP={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "browse_id";
 	c: "MP";
 	z: [
@@ -292,27 +235,25 @@ type DI_BrowseId_MP={
 	];
 };
 type DI_BrowseId_SP={
-	a: "/item/a/b/c/z";
-	b: "browse_id";
-	c: "SP";
+	a: DStr_DI_Item_ABCZ;
+	k: "browse_id";
+	l: "SP";
 	z: [
 		T_DI_FromObj<{raw_id: `SP${G_BrowseIdStr_SP_Inner}`;}>,
 		T_DI_FromObj<{id: G_BrowseIdStr_SP_Inner;}>,
 	];
 };
 type DI_BrowseId_VL_LL={
-	a: "/item/a/b/c/z";
-	b: "browse_id";
-	// ^ b = type
-	c: "VL:LL";
-	// ^ c = tag
+	a: DStr_DI_Item_ABCZ;
+	k: "browse_id";
+	l: "VL:LL";
 	z: [
 		T_DI_FromObj<{raw_id: "VLLL";}>,
 		DI_A_Playlist_LL
 	];
 };
 type DI_BrowseId_VL_PL={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "browse_id";
 	c: "VL:PL";
 	z: [
@@ -321,13 +262,13 @@ type DI_BrowseId_VL_PL={
 	];
 };
 type DI_BrowseId_VL_UU={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "browse_id";
 	c: "VL:UU";
 	z: [T_DI_FromObj<{raw_id: `VLUU${string}`;}>];
 };
 type DI_BrowseId_VL_WL={
-	a: "/item/a/b/c/z";
+	a: DStr_DI_Item_ABCZ;
 	b: "browse_id";
 	c: "VL:WL";
 	z: [
@@ -336,16 +277,16 @@ type DI_BrowseId_VL_WL={
 	];
 };
 //#endregion
-//#region BrowseId (ABCZ)
+//#region BrowseId (ACKZ)
 type DI_BrowseId_UC={
-	a: "/item/a/b/c/z";
-	b: "browse_id";
+	a: DStr_DI_Item_ABCZ;
+	k: "browse_id";
 	c: "UC";
 	z: [DI_A_ChannelId_UC];
 };
 type DI_BrowseId_VL_UC={
-	a: "/item/a/b/c/z";
-	b: "browse_id";
+	a: DStr_DI_Item_ABCZ;
+	k: "browse_id";
 	c: "VL:UC";
 	z: [
 		T_DI_FromObj<{raw_id: `VL${T_IdTemplate<"UC",D_UserIdStr>}`;}>,
@@ -353,48 +294,41 @@ type DI_BrowseId_VL_UC={
 	];
 };
 type DI_GuideEntry_UC={
-	a: "/item/a/b/c/z"; b: "guide_entry_id"; c: "UC";
+	a: DStr_DI_Item_ABCZ; k: "guide_entry_id"; c: "UC";
 	z: [DI_A_ChannelId_UC];
 };
 type DI_GuideEntry_WL={
-	a: "/item/a/b/c/z";
-	b: "guide_entry_id";
+	a: DStr_DI_Item_ABCZ;
+	k: "guide_entry_id";
 	c: "WL";
 	z: [DI_A_Playlist_WL];
 };
 type DI_R_Key_StartRadio={
-	a: "/item/a/b/c/z";
-	// ^ a = is
-	b: "raw";
-	// ^ b = type
+	a: DStr_DI_Item_ABCZ;
+	k: "raw";
 	c: "key:start_radio";
-	// ^ c = tag
 	z: [DI_Key_StartRadio];
 };
 //#endregion
+//#region (ACKZ)
 type DI_R_PlaylistId={
-	a: "/item/a/b/c/z"; b: "raw"; c: "playlist_id";
+	a: DStr_DI_Item_ABCZ; k: "raw"; c: "playlist_id";
 	z: [T_DI_FromObj<{raw_id: DU_Playlist_Id;}>];
 };
 type DI_R_Radio_Playlist={
-	a: "/item/a/b/c/z";
-	b: "raw";
+	a: DStr_DI_Item_ABCZ;
+	k: "raw";
 	c: "playlist_id:RD";
 	z: [T_DI_FromObj<{raw_id: Extract<DU_Playlist_Id,`RD${string}`>;}>];
 };
 type DI_R_VideoId={
-	a: "/item/a/b/c/z";
-	b: "raw";
+	a: DStr_DI_Item_ABCZ;
+	k: "raw";
 	c: "video_id";
 	z: [T_DI_FromObj<{raw_id: DU_VideoId;}>];
 };
-//#region AZ
-type DI_T_AZ<T>={a: DStr_DI_AZ; z: [T];};
 //#endregion
-
 //#region AKZ
-// ~ a = is
-// ~ k = type
 type DI_Key_StartRadio=KV_T_AKZ<"key",T_DI_FromObj<{start_radio: 0|1;}>>;
 type DI_A_UserId=KV_T_AKZ<"user_id",T_DI_FromObj<{raw_id: string;}>>;
 type DI_A_VideoId=T_DI_FromObj2<{
@@ -413,4 +347,7 @@ type DI_A_Playlist_WL={
 	k: "playlist_id";
 	z: [T_DI_FromObj<{raw_id: "WL";}>];
 };
+//#endregion
+//#region AZ
+type DI_T_AZ<T>={a: DStr_DI_AZ; z: [T];};
 //#endregion
