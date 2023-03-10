@@ -3156,13 +3156,7 @@ class HandleTypes extends BaseService {
 	loaded_keys=new Set;
 	/** @arg {G_BoxedDatabaseData} x @returns {G_BoxedInner} */
 	w_db_data(x) {
-		const w=this.w_dss(x);
-		return [1,[w,x]];
-	}
-	/** @template {G_BoxedDatabaseData} T @arg {T} x @returns {Ret_w_dss|null} */
-	w_dss(x) {
-		let w=this.w_diz(x.z[0]);
-		return [w,x];
+		return [1,x];
 	}
 	/** @arg {any} x @returns {Ret_w_diz} */
 	w_diz(x) {
