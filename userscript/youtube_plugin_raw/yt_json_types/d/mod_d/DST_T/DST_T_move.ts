@@ -15,27 +15,6 @@ type DSI_T_Item_ABD2<T_Type extends string,T_Tag2 extends string,T>={
 
 //#region DST_MakeLM (ABLMZ)
 type DST_MoveRegion1_Src="DST_MakeLM:Src"|DST_MoveRegion1_Dst;
-type DST_MakeLM_FromObjR<T extends TMK_SuccessorX3<V>&{k: string;},L,M extends G_Primitives,V extends G_Primitives>={
-	key: `boxed_id:${T['k']}:${M}:${V}`;
-	a: DST_KStr_AKLMZ;
-	b: "boxed_id";
-	l: L;
-	m: M;
-	z: [T];
-	_info_arr?: [TZ_SuccessorX3<T>];
-};
-type DST_Make_FromObj_K<T extends {k: any; z: [{k: string; z: [V];}];},V extends G_Primitives=TZ_Successor<T>['z'][0]>={
-	key: `boxed_id:${T['k']}:${V}`;
-	z: [T];
-};
-type DST_Make_FromObj_KL<T extends {k: any; z: [{z: [any]; k: any;}];},L extends G_Primitives=TZ_Successor<T>["k"],V extends G_Primitives=G_Primitives>={
-	key: `boxed_id:${T['k']}:${L}:${V}`;
-	z: [T];
-};
-type DST_MakeLM_FromObj<T extends {k: any; z: [{z: [any]; k: any;}];},M=TZ_Successor<T>["k"],V=G_Primitives>={
-	key: `boxed_id:${T['k']}:${M&string}:${V&string}`;
-	z: [T];
-};
 //#endregion
 
 type DX_RawId<T>={

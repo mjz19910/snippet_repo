@@ -128,9 +128,23 @@ type DI_RetInfo=
 	|MK_DIInfo2<"PL">
 	|MK_DIInfo2<"PL">
 	|MK_DIInfo1<DU_Playlist_Static>
-	|{type: "num",z: [number];}
-	|{type: "RDCMUC"; z: [`RDCMUC${string}`];}
-	|{type: string; z: [string];}
+	|{type: "RDCMUC"; exact: true; z: [`RDCMUC${string}`];}
+	|{type: "RDGMEM"; exact: true; z: [`RDGMEM${string}`];}
+	|{type: "RDGM"; exact: true; z: [`RDGM${string}`];}
+	|{type: "RDCM"; exact: true; z: [`RDCM${string}`];}
+	|{type: "RDMM"; exact: true; z: [`RDMM${string}`];}
+	|{type: "PL"; exact: true; z: [`PL${string}`];}
+	|{type: "FE"; exact: true; z: [`FE${string}`];}
+	|{type: "MP"; exact: true; z: [`MP${string}`];}
+	|{type: "RD"; exact: true; z: [`RD${string}`];}
+	|{type: "SP"; exact: true; z: [`SP${string}`];}
+	|{type: "UC"; exact: true; z: [`UC${string}`];}
+	|{type: "UU"; exact: true; z: [`UU${string}`];}
+	|{type: "VL"; exact: true; z: [`VL${string}`];}
+	|{type: "WL"; exact: true; z: ["WL"];}
+	|{type: "LL"; exact: true; z: ["LL"];}
+	|{type: "string"; exact: false; z: [string];}
+	|{type: "number"; exact: false; z: [number];}
 	;
 ;
 type DI_RetInfo_Test1=Exclude<DU_ChannelId,"RDGM"|"RDCMUC"|"RDMM"|"PL"|"RD"|"UU">;

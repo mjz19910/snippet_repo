@@ -1101,36 +1101,30 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {DU_VideoId} x */
 	videoId(x) {
 		if(this.cache_raw_id(`video_id:${x}`)) return;
-		this.ht.on_video_id(x);
 		if(this.video_id_list.includes(x)) return;
 		this.video_id_list.push(x);
 	}
 	/** @api @public @arg {DU_Browse_Id} x */
 	browseId(x) {
 		if(this.cache_raw_id(`browse_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("browse_id",x));
 	}
 	static_playlist_ids=["WL","LL"];
 	/** @public @arg {DU_Playlist_Id} x */
 	playlistId(x) {
 		if(this.static_playlist_ids.includes(x)) return;
 		if(this.cache_raw_id(`playlist_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("playlist_id",x));
 	}
 	/** @public @arg {DU_GuideEntry_Id} x */
 	guideEntryId(x) {
 		if(this.cache_raw_id(`guide_entry_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("guide_entry_id",x));
 	}
 	/** @public @arg {T_IdTemplate<"UC",D_UserIdStr>} x */
 	channelId(x) {
 		if(this.cache_raw_id(`channel_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("channel_id",x));
 	}
 	/** @public @arg {D_UserIdStr} x */
 	userId(x) {
 		if(this.cache_raw_id(`user_id:${x}`)) return;
-		this.ht.DI_AGR_UrlInfo(this.ht.make_kv_ab("user_id",x));
 	}
 	/** @public @arg {string} x */
 	create_param_map(x) {
@@ -1459,9 +1453,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,v,...u]=p;
 				if(u.length===0) {
-					/** @type {T_DI_FromObj2<{hashtag_id: string;}>} */
-					const z={a: "/di/a/k/z",l: "hashtag_id",z: [v]};
-					this.ht.DI_AGR_UrlInfo(z);
+					v;
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -1839,16 +1831,6 @@ class ServiceMethods extends ServiceData {
 	indexed_db_version=3;
 	/** @public @template {keyof DT_DatabaseStoreTypes} U @arg {U} key @arg {DT_DatabaseStoreTypes[U]} value */
 	indexed_db_put(key,value) {return this.ht.put(key,value,this.indexed_db_version);}
-	/** @template {Y_PutBoxedArgs} T @arg {T} args */
-	async put_boxed_id(...args) {
-		let {...ret}=await this.ix.put_boxed_id_async_3(this.indexed_db_version,...args);
-		return ret;
-	}
-	/** @template {Y_PutBoxedArgs} T @arg {T} args @returns {Promise<T_PutAwaitPromise<Extract<Y_PutBoxedRet,{args:T}>>>} */
-	async put_boxed_id_3(...args) {
-		let ret=await this.ix.put_boxed_id_async_3(this.indexed_db_version,...args);
-		return as_any(ret);
-	}
 	/** @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;

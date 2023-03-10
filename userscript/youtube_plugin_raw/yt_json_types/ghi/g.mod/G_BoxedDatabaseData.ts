@@ -1,6 +1,6 @@
 //#region G_Boxed
 type G_BoxedDatabaseData={
-	key: string;
+	key: "boxed_id:any";
 	l: string;
 	z: [{
 		z: [{
@@ -11,4 +11,4 @@ type G_BoxedDatabaseData={
 			l: "one"; z: [any];
 		}];
 	}];
-};
+}|DST_SaveId|DST_LoadId;

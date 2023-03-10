@@ -1,1 +1,0 @@
-type TMK_SuccessorX3<T>=TMK_Successor<TMK_SuccessorX2<T>>;

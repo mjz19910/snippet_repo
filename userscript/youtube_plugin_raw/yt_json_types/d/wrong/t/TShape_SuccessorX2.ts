@@ -1,1 +1,0 @@
-type TShape_SuccessorX2<T>=TShape_Successor<TShape_Successor<T>>;

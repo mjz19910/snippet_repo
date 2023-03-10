@@ -1698,7 +1698,6 @@ class HandleTypes extends BaseService {
 				}
 				const {start_radio,...y3}=y2;
 				this.save_string("video_url.info.start_radio",start_radio);
-				this.DI_AGR_UrlInfo({z: [this.sm.parse_number_template(start_radio)]});
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(!this.sm.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -2856,10 +2855,7 @@ class HandleTypes extends BaseService {
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		let i3=this.TV_Str_ex(v3); this.on_video_id(i3);
-		this.t(this.T_VW(v3),x => {
-			this.save_keys(`${cf}.f3`,x);
-		});
+		this.t(this.T_VW(v3),x => this.save_keys(`${cf}.f3`,x));
 		f4; f7; f8;
 	}
 	/** @private @arg {P_f3_PD_continuation_params} x */
@@ -3051,19 +3047,13 @@ class HandleTypes extends BaseService {
 			this.log_error("promise_rejected_with",x);
 		});
 	}
-	/** @public @arg {DI_SrcInfo} x */
-	DI_AGR_UrlInfo(x) {
-		let z=this.make_R_UrlInfo(x);
-		let box_res=this.put_boxed_id(z);
-		this.execute_promise_def((async () => (await box_res).ret)());
-	}
 	//#region get
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
 	/** @template {DI_SrcInfo} T @arg {T} x @returns {DI_RetInfo} */
 	get_parsed_info(x) {
 		let v=x.z[0];
-		if(typeof v==="number") return {type: "num",z: [v]};
+		if(typeof v==="number") return {type: "number",exact: false,z: [v]};
 		if(this.str_starts_with_rx("RDCMUC",v)) return {type: "RDCMUC",z: [v]};
 		if(this.str_starts_with_rx("RDGMEM",v)) return {type: "RDGMEM",z: [v]};
 		if(this.str_starts_with_rx("RDGM",v)) return {type: "RDGM",z: [v]};
@@ -3081,10 +3071,10 @@ class HandleTypes extends BaseService {
 		if(this.str_starts_with_rx("VL",v)) return {type: "VL",z: [v]};
 		if(this.str_starts_with_rx("VL",v)) return {type: "VL",z: [v]};
 		switch(v) {
-			case "WL": return {type: "static",z: [v]};
-			case "LL": return {type: "static",z: [v]};
+			case "WL": return {type: "WL",z: [v]};
+			case "LL": return {type: "LL",z: [v]};
 		}
-		return {type: "str",z: [v]};
+		return {type: "string",z: [v]};
 	}
 	//#endregion
 	//#endregion
@@ -3095,18 +3085,9 @@ class HandleTypes extends BaseService {
 		return p;
 	}
 	//#endregion make_*
-	/** @template {DI_RetInfo} T @arg {T} arg_box */
-	async put_boxed_id(arg_box) {
-		let {...ret}=await this.ix.put_boxed_id_async_3(this.sm.indexed_db_version,arg_box);
-		return ret;
-	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
 	cache_playlist_id=[];
-	/** @arg {DU_VideoId} x */
-	on_video_id(x) {
-		this.DI_AGR_UrlInfo({z: [x]});
-	}
 	/** @public @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
@@ -3140,16 +3121,6 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @template V @template {TShape_Successor<V>} T @arg {T} x @returns {TZ_Successor<T>} */
-	tz_pop(x) {return x.z[0];}
-	/** @template V @template {TShape_Successor<V>} T @arg {T} x @returns {TZ_Successor<T>} */
-	za1(x) {return this.tz_pop(x);}
-	/** @template V @template {TShape_SuccessorX2<V>} T @arg {T} x @returns {TZ_SuccessorX2<T>} */
-	za2(x) {return this.tz_pop(this.za1(x));}
-	/** @template V @template {TShape_SuccessorX3<V>} T @arg {T} x @returns {TZ_SuccessorX3<T>} */
-	za3(x) {return this.tz_pop(this.za2(x));}
-	/** @template V @template {TShape_SuccessorX3<TShape_Successor<V>>} T @arg {T} x @returns {TZ_SuccessorX3<TZ_Successor<T>>} */
-	za4(x) {return this.tz_pop(this.za3(x));}
 	/** @type {Map<string,G_BoxedDatabaseData>} */
 	loaded_map=new Map;
 	/** @type {Set<string>} */
@@ -3177,6 +3148,7 @@ class HandleTypes extends BaseService {
 		const y_many=[];
 		const cmp_map=new WeakMap;
 		const xi0=this.w_db_data(x),yi0=this.w_db_data(y);
+		if(x.key==="boxed_id:save_id"||x.key==="boxed_id:load_id") return;
 		/** @arg {{z:[{z:[{l:"many";z:[any[][]]}|{l:"arr";z:[any[]]}|{l:"one";z:[any]}]}]}} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
 		function acc_items(container,items_arr) {
 			const item_group=container.z[0].z[0];
