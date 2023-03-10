@@ -1,4 +1,4 @@
-import {Box} from "./box/Box";
+import {Box} from "./box/mod/Box";
 
 export class StackVM {
 	stack:Box[]=[];
