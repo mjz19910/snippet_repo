@@ -3385,6 +3385,17 @@ class HandleTypes extends BaseService {
 			const w_dst=v_dst => {
 				let s=v_dst;
 				if("j" in v_dst) {v_dst.l=as(v_dst.j); delete v_dst.j;}
+				if("l" in s) {
+					/** @type {{[x:string]:"ST:D"}} */
+					let s1=as_any(s);
+					/** @type {"ST:D"} */
+					let a2=as(s1.a);
+					switch(a2) {
+						case "ST:D": {
+							s.a="/db/key/a/b/l/z";
+						}
+					}
+				}
 				if(v_dst.a==="/db/key/a/b/l/m/z") {
 					if(!extract_dst_lm(v_dst)) throw new Error();
 					let v_di=v_dst.z[0],w=w_di(v_di);
@@ -3396,18 +3407,6 @@ class HandleTypes extends BaseService {
 					let v_di=v_dst.z[0],w=w_di(v_di);
 					let [,,[k],[v_value]]=w;
 					return [true,1,[v_dst.l,k],[v_value,v_di,v_dst]];
-				}
-				if("l" in s) {
-					/** @type {{[x:string]:"ST:D"}} */
-					let s1=as_any(s);
-					/** @type {"ST:D"} */
-					let a2=as(s1.a);
-					switch(a2) {
-						case "ST:D": {
-							s.a="/db/key/a/b/l/z";
-							return w_dst(s);
-						}
-					}
 				}
 				debugger; v_dst;
 				throw new Error();

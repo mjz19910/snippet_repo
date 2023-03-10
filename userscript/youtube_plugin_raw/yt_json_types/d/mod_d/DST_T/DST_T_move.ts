@@ -50,6 +50,15 @@ type DST_MakeLM_3<T extends KV_T_AKZ<string,TMK_SuccessorX2<V>>,L extends string
 	m: M;
 	z: [T];
 };
+type DST_MakeLM_FromObjR<T extends TMK_SuccessorX3<V>&{k: string;},L,M extends G_Primitives,V extends G_Primitives>={
+	key: `boxed_id:${T['k']}:${M}:${V}`;
+	a: DST_KStr_ABLMZ;
+	b: "boxed_id";
+	l: L;
+	m: M;
+	z: [T];
+	_info_arr?: [TZ_SuccessorX3<T>];
+};
 type DST_MakeLM_FromObj<T extends TMK_SuccessorX3<V>&{k: string;},L="key",M extends G_Primitives=TZ_Successor<T> extends infer J extends {k: string;}? J["k"]:"unknown",V extends G_Primitives=G_Primitives>={
 	key: `boxed_id:${T['k']}:${M}:${V}`;
 	a: DST_KStr_ABLMZ;

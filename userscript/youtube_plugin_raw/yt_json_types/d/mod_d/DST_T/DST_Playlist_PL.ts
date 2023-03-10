@@ -3,3 +3,4 @@ type DST_Playlist_PL={
 	key: `boxed_id:playlist_id:PL:${string}`;
 	z: [DI_A_Playlist_PL];
 };
+type GetKJType<T extends {key: any; l: any;},_PK=any>=Pick<T,"key"|"l">;
