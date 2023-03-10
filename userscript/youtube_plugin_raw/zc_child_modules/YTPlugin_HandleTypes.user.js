@@ -3170,7 +3170,7 @@ class HandleTypes extends BaseService {
 	/** @arg {"playlist_id"}b @arg {"PL"} c @arg {`PL${string}`} x3 @returns {DI_A_Playlist_PL} */
 	make_info_3(b,c,x3) {
 		let [,id]=split_string_once(x3,c);
-		return {a: this.get_KZ("kl"),k: b,m: c,z: [this.make_DI_RawIdBox(x3),this.make_DI_IdBox(id)]};
+		return {a: "/di/a/k/m/z",k: b,m: c,z: [this.make_DI_RawIdBox(x3),this.make_DI_IdBox(id)]};
 	}
 	/** @arg {MakeInfoInput_Len2} a0 @returns {DI_A_Playlist_PL|DI_A_Playlist_RD|null} */
 	make_info_3_v2(a0) {
@@ -3377,33 +3377,29 @@ class HandleTypes extends BaseService {
 				if("m" in p) switch(p.m) {
 					default: p===""; debugger; return null;
 					case "PL": {
-						if(!(p.z instanceof Array)) return null;
-						let di=this.make_info_3("playlist_id",p.m,p.z[0]);
+						let [,id]=split_string_once(p.z[0],"PL");
+						/** @type {DI_A_Playlist_PL} */
+						let di={a: "/di/a/k/m/z",k: x.k,m: "PL",z: [this.make_DI_RawIdBox(p.z[0]),this.make_DI_IdBox(id)]};
 						return di;
 					}
 					case "RD": {
-						if(!(p.z instanceof Array)) return null;
 						let di=this.make_info_3_v2({type: p.m,arr: ["playlist_id",p.m],raw_id: p.z[0]});
 						return di;
 					}
 					case "UU": {
-						if(!(p.z instanceof Array)) return null;
 						let di=this.make_info_3_v2({type: p.m,arr: ["playlist_id",p.m],raw_id: p.z[0]});
 						return di;
 					}
 					case "CM": {
-						if(!(p.z instanceof Array)) return null;
 						let di=this.make_info_5({type: "RDCMUC",arr: ["playlist_id",p.l,p.m,p.n],raw_id: p.z[0]});
 						return di;
 					}
 					case "GM": {
-						if(!(p.z instanceof Array)) return null;
 						p;
 						let di=this.make_info_4("playlist_id",p.l,p.m,p.z[0]);
 						return di;
 					}
 					case "MM": {
-						if(!(p.z instanceof Array)) return null;
 						let di=this.make_info_4("playlist_id",p.l,p.m,p.z[0]);
 						return di;
 					}

@@ -207,7 +207,7 @@ type DI_EX_YY=Extract<DI_AGR_UrlInfo,{c: any;}>["c"];
 //#endregion
 //#region PlaylistId (ABCZ)
 type DI_A_Playlist_PL={
-	a: DStr_DI_AKLZ;
+	a: "/di/a/k/m/z";
 	k: "playlist_id";
 	m: "PL";
 	z: [
