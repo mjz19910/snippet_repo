@@ -51,19 +51,14 @@ type DIT_Box_Typeof2<T_Type extends T_GetPrimitiveTag<U>,U>={
 };
 //#endregion
 //#region KZ
-type DI_SrcInfo_Any={
-	a: "any";
-	z: [DU_Browse_Id|DU_GuideEntry_Id|DU_Playlist_Id];
-};
 type DI_SrcInfo=
-	|DI_SrcInfo_Any
-	|{a: "hashtag_id"; z: [string];}
-	|{a: "start_radio"; z: [DU_StartRadio];}
-	|{a: "user_id"; z: [string];}
-	|{a: "video_id"; z: [DU_VideoId];}
+	|MK_DIInfo1<["key","browse_id",DU_Browse_Id]>
+	|MK_DIInfo1<["key","guide_entry_id",DU_GuideEntry_Id]>
 	|MK_DIInfo1<["key","hashtag_id",string]>
+	|MK_DIInfo1<["key","playlist_id",DU_Playlist_Id]>
 	|MK_DIInfo1<["key","start_radio",DU_StartRadio]>
 	|MK_DIInfo1<["key","user_id",string]>
+	|MK_DIInfo1<["key","video_id",DU_VideoId]>
 	;
 ;
 //#endregion
