@@ -3151,7 +3151,7 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x @returns {T_PrimitiveBox<T>} */
 	make_Typeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
 	/** @template T @arg {T} x @returns {DIT_Box_Typeof2<T_GetPrimitiveTag<T>,T>} */
-	make_BoxTypeof(x) {return {a: "primitive",e: this.get_s_type(x),z: [x]};}
+	make_BoxTypeof(x) {return {a: "/dit/a/e/z",e: this.get_s_type(x),z: [x]};}
 	/** @template {string} K @arg {K} k @template T @arg {T} v @returns {{k:K;v:T;}} */
 	make_input(k,v) {return {k,v};}
 	/** @template {PropertyKey} K @template T @arg {T} v @arg {K} k @returns {{k:K;v:T;}} */
@@ -3473,8 +3473,8 @@ class HandleTypes extends BaseService {
 				diff_minus.push(y_item);
 			}
 			console.log("[cur_cache_value] [x.key]",x.key);
-			console.log("[val] [x]",...xi0);
-			console.log("[val] [y]",...yi0);
+			console.log("[val] [x]",xi0[0],xi0.slice(1));
+			console.log("[val] [y]",yi0[0],yi0.slice(1));
 			console.log(diff_plus,diff_minus);
 		}
 		try {

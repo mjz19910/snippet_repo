@@ -11,5 +11,8 @@
   },
   "scripts": {
     "build_webpack": "webpack --config web/webpack.config.js"
+  },
+  "dependencies": {
+    "path": "^0.12.7"
   }
 }

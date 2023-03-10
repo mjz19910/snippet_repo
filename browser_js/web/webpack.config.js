@@ -1,5 +1,5 @@
 const path=require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin=require('html-webpack-plugin');
 
 /** @arg {ModuleDesc} template */
 function devtool_module_template(template) {
@@ -7,7 +7,7 @@ function devtool_module_template(template) {
 	if(template.identifier.includes("webpack/")) {
 		return "";
 	}
-	console.log(Object.keys(template).map(e=>[e,typeof template[e]]));
+	console.log(get_keys_of(template).map(e => [e,typeof template[e]]));
 	console.log(template.shortIdentifier);
 	return "file:///"+path.resolve(path.dirname(__dirname),template.identifier);
 }
@@ -19,14 +19,14 @@ module.exports={
 		print: __dirname+'/src/print.js',
 	},
 	plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Output Management',
-    }),
-  ],
+		new HtmlWebpackPlugin({
+			title: 'Output Management',
+		}),
+	],
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname,'dist'),
-		devtoolModuleFilenameTemplate:devtool_module_template,
+		devtoolModuleFilenameTemplate: devtool_module_template,
 	},
 	devtool: "nosources-source-map",
 };

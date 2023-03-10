@@ -697,7 +697,7 @@ export class AutoBuy implements AutoBuyInterface {
 			return this.rare_begin();
 		this.faster_timeout();
 	}
-	async maybe_async_reset() {
+	async maybe_async_reset(): Promise<[boolean,number]> {
 		let loss_rate=this.unit_promote_start();
 		if(this.maybe_run_reset())
 			return [true,loss_rate];
