@@ -409,6 +409,7 @@ export namespace Gen {
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Radio";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_RadioShareUrl";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_Range";}
+		|{n: "CF_M_s"; t: CF_M_s; v: "D_ReelItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_ReelMultimixAttributionLabel";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_ReelPlayerHeader";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "D_ReelPlayerOverlay";}

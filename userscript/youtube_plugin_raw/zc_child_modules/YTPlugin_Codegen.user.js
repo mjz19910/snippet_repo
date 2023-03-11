@@ -592,7 +592,16 @@ class CodegenService extends ServiceWithAccessors {
 			if(!p) break x;
 			if(p[1]==="owner") {return "TYPE::D_Video_Owner";}
 			if(p[1].endsWith("Renderer")) {
-				let res=this.get_short_typename(as(p[1]));
+				let pre_str=this.uppercase_first(p[1]);
+				let res=this.get_short_typename(as(pre_str));
+				if(res[0]) {
+					let str=res[1];
+					if(this.sm.str_starts_with(str,"R_")) {
+						let d=split_string_once(str,"R_")[1];
+						return `TYPE::D_${d}`;
+					}
+					break x;
+				}
 				console.log(res);
 				debugger;
 				break x;
