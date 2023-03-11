@@ -195,7 +195,9 @@ export class JSPunctuators extends LexerBase {
 	}
 	OptionalChainingPunctuator(str: string,index: number): LexReturnType {
 		if(str.slice(index,index+2)==='?.') {
-			let [,num_len]=this.DecimalDigit(str,index+2);
+			let res=this.DecimalDigit(str,index+2);
+			if(!res[0]) return [null,0];
+			let [,num_len]=res;
 			if(num_len>0) {
 				return [null,0];
 			}

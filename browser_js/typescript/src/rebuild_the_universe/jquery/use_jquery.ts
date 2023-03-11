@@ -1,9 +1,3 @@
-declare global {
-	interface Window {
-		$?: JQueryStatic;
-	}
-}
-
 export function use_jquery() {
 	let jq=window.$;
 	if(!jq)
@@ -13,7 +7,3 @@ export function use_jquery() {
 	r_proto.lazyload=function() {};
 	return jq;
 }
-interface JQueryStatic {
-	(x: string): JQueryRes;
-}
-interface JQueryRes {}

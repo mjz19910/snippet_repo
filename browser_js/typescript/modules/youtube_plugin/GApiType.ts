@@ -11,12 +11,24 @@ import {yt_watch_page_loaded_handler} from "./player_plugin_activate/yt_watch_pa
 import {PropertyHandler} from "./PropertyHandler.js";
 import {HTMLMediaElementGainController} from "./volume_range_plugin/HTMLMediaElementGainController.js";
 
-export abstract class GApiType {
-	abstract create():ReturnType<this['real_create']>&{
-		parse_javascript_str?: (code_str:string)=>void;
-	}
-	real_create() {
-		let g_api={
+export class GApiType {
+	create() {
+		let g_api: {
+			Seen: typeof Seen,
+			PropertyHandler: typeof PropertyHandler,
+			DomObserver: typeof DomObserver,
+			MessagePortState: typeof MessagePortState,
+			PluginOverlayElement: typeof PluginOverlayElement,
+			HTMLMediaElementGainController: typeof HTMLMediaElementGainController,
+			dom_observer: typeof dom_observer,
+			port_state: typeof port_state,
+			yt_state_map: typeof yt_state_map,
+			yt_handlers: typeof yt_handlers,
+			yt_watch_page_loaded_handler: typeof yt_watch_page_loaded_handler,
+			blob_create_args_arr: typeof blob_create_args_arr,
+			gain_controller: HTMLMediaElementGainController|null,
+			plugin_overlay_element: {}|null,
+		}={
 			Seen,
 			PropertyHandler,
 			DomObserver,
@@ -29,6 +41,8 @@ export abstract class GApiType {
 			yt_handlers,
 			yt_watch_page_loaded_handler,
 			blob_create_args_arr,
+			gain_controller: null,
+			plugin_overlay_element: null,
 		};
 		return g_api;
 	}
