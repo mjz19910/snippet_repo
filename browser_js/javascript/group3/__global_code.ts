@@ -1,1 +1,2 @@
-export {}; declare global {interface Window {code: string;}}
+export {};
+declare global {interface Window {code: string;}}

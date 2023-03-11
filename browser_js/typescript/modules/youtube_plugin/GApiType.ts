@@ -4,7 +4,6 @@ import {DomObserver} from "./dom_observer/DomObserver.js";
 import {dom_observer} from "./dom_observer/dom_observer.js";
 import {MessagePortState} from "./dom_observer/MessagePortState.js";
 import {port_state} from "./dom_observer/port_state.js";
-import {yt_handlers} from "./fetch_result_handler_plugin/yt_handlers.js";
 import {yt_state_map} from "./fetch_result_handler_plugin/yt_state_map.js";
 import {PluginOverlayElement} from "./player_plugin_activate/elements/PluginOverlayElement.js";
 import {yt_watch_page_loaded_handler} from "./player_plugin_activate/yt_watch_page_loaded_handler.js";
@@ -23,7 +22,6 @@ export class GApiType {
 			dom_observer: typeof dom_observer,
 			port_state: typeof port_state,
 			yt_state_map: typeof yt_state_map,
-			yt_handlers: typeof yt_handlers,
 			yt_watch_page_loaded_handler: typeof yt_watch_page_loaded_handler,
 			blob_create_args_arr: typeof blob_create_args_arr,
 			gain_controller: HTMLMediaElementGainController|null,
@@ -38,7 +36,6 @@ export class GApiType {
 			dom_observer,
 			port_state,
 			yt_state_map,
-			yt_handlers,
 			yt_watch_page_loaded_handler,
 			blob_create_args_arr,
 			gain_controller: null,

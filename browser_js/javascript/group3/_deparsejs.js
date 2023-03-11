@@ -25,6 +25,7 @@ class ParseJsState {
 		this.parast=[];
 		/** @type {TokenTypes[]} */
 		this.tok=[];
+		/** @type {string[]} */
 		this.idents=[];
 		this.keywords=keywords;
 		this.primitives=primitives;

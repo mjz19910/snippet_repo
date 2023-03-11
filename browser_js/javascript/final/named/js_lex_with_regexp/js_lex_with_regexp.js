@@ -1,7 +1,8 @@
 import {Runner} from "../../support/Runner.js";
-import {add_function} from "./add_function.js";
-import {add_object} from "./add_object.js";
-
+/** @arg {any} x */
+function add_function(x) {x;}
+/** @arg {any} x @arg {any} y */
+function add_object(x,y) {x; y;}
 /* spell:words
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
@@ -227,7 +228,7 @@ function main() {
 			};
 			/** @arg {string} str @arg {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj */
 			constructor(str,obj) {
-				this.lex_chunks=[]
+				this.lex_chunks=[];
 				this.str=str;
 				this.obj=obj;
 			}
