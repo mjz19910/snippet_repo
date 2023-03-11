@@ -43,12 +43,6 @@ function generate_ts_backup_output {
 	popd
 	popd
 }
-function generate_ts_setup {
-	generate_ts_make_tmp_git_repo
-	generate_ts_backup_output
-	pushd "$TMP_DIR/$DEST_DIR"
-	generate_ts_init_cwd
-}
 function generate_ts_restore {
 	mkdir -p "$PROJ_DIR/$DEST_DIR/bak/$BACKUP_DATE"
 	mv "generated/tmp.ts" "$PROJ_DIR/$DEST_DIR/bak/$BACKUP_DATE/tmp.ts.bak" || exit 1
@@ -75,13 +69,12 @@ function gen_code_v1 {
 		echo "--- [tmp_out.txt] $i ---"
 		tail "$TMP_DIR/tmp_out.txt"
 		if grep -q "n:" "$TMP_DIR/tmp_out.txt"; then
-			generate_typescript_code_unique >"$TMP_DIR/tmp.ts"
+			generate_typescript_code_unique
 			cp "$TMP_DIR/tmp.ts" "generated/tmp.ts"
 			tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
-			mv "$TMP_DIR/tmp_acc.ts" "$TMP_DIR/tmp.ts"
 			grep "|{n:" "$TMP_DIR/tmp.ts" | sort -u >"$TMP_DIR/tmp_partial.ts"
 		else
-			generate_typescript_code_unique >"$TMP_DIR/tmp.ts"
+			generate_typescript_code_unique
 			cp "$TMP_DIR/tmp.ts" "generated/tmp.ts"
 			cp "$TMP_DIR/tmp.ts" "generated/out.ts"
 			grep "|{n:" "$TMP_DIR/tmp.ts" | sort -u >"$TMP_DIR/tmp_partial_end.ts"
@@ -90,16 +83,12 @@ function gen_code_v1 {
 	done
 }
 generate_typescript_code_unique() {
-	echo "export namespace Gen {\n\texport type CF_Generated="
-	cat "$TMP_DIR/tmp_partial.ts" "$TMP_DIR/tmp_out.txt" | sort -u
-	src_file=`realpath "/proc/self/fd/0" <&0`
-	if [ -f $src_file ]; then
-		# if stdin is a normal file, save the partial result
-		cp "$src_file" "$TMP_DIR/tmp_acc.ts"
-	fi
-	echo "\t\t;"
-	echo "}"
+	echo "export namespace Gen {\n\texport type CF_Generated=" >"$TMP_DIR/tmp.ts"
+	cat "$TMP_DIR/tmp_partial.ts" "$TMP_DIR/tmp_out.txt" | sort -u >>"$TMP_DIR/tmp.ts"
+	echo "\t\t;" >>"$TMP_DIR/tmp.ts"
+	echo "}" >>"$TMP_DIR/tmp.ts"
 }
+
 generate_typescript_code_force_valid() {
 	echo "export namespace Gen {\n\texport type CF_Generated="
 	echo "\n\t\t|never"
@@ -109,7 +98,13 @@ generate_typescript_code_force_valid() {
 }
 
 function generate_ts_output_v1 {
-	generate_ts_setup
+	generate_ts_make_tmp_git_repo
+	generate_ts_backup_output
+	pushd "$TMP_DIR/$DEST_DIR"
+	generate_ts_init_cwd
+
+	cp "$PROJ_DIR/$DEST_DIR/generated/out.ts" "generated/tmp.ts"
+
 	grep "|{n:" "generated/out.ts.bak" >"$TMP_DIR/tmp_partial.ts"
 	generate_typescript_code_force_valid >"$TMP_DIR/tmp.ts"
 	tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
