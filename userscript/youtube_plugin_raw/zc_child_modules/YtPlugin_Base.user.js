@@ -201,8 +201,6 @@ let ytmusic_app=null;
 let created_blobs=new Map;
 /** @private @type {Set<string>} */
 let active_blob_set=new Set;
-/** @private @type {D_Saved} */
-let saved_data=as({});
 //#endregion
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>asserts x is X} */
 function assume_assert_is_instanceof(_value,_constructor_type) {}
@@ -2630,7 +2628,6 @@ class YtHandlers extends BaseService {
 			rich_grid: new R_HandleRichGrid_Base(res),
 			renderer_content_item_array: new HandleRendererContentItemArray(res),
 		};
-		this.iteration=new IterateApiResultBase(res,new YtObjectVisitor);
 		this.blacklisted_item_sections=new Map([
 			["backstagePostThreadRenderer",false],
 			["channelAboutFullMetadataRenderer",false],
@@ -2659,8 +2656,9 @@ class YtHandlers extends BaseService {
 			["videoRenderer",false],
 		]);
 	}
-	/** @api @public @arg {string|URL|Request} request @arg {Response} response @arg {{}} data */
-	on_handle_api(request,response,data) {
+	/** @api @public @arg {FetchJsonParseArgs} target_args  */
+	on_handle_api(target_args) {
+		const {request,response,parsed_obj}=target_args;
 		/** @private @arg {string|URL|Request} req */
 		function convert_to_url(req) {
 			if(typeof req=="string") {return {url: to_url(req)};}
@@ -2671,31 +2669,9 @@ class YtHandlers extends BaseService {
 		/** @private @type {D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
 		let url_type=this.sm.decode_url(api_url);
-		const res_parse=this._convert_url_to_obj(api_url);
-		let ss1=split_string_once(res_parse.pathname,"/")[1];
-		let get_ss2=() => {
-			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {return split_string_once(ss1,"youtubei/v1/")[1];} else {return ss1;}
-		};
-		let ss2=get_ss2();
-		if(!url_type) {
-			debugger;
-			/** @private @type {DU_UrlType} */
-			let url_h=as(this.join_string(split_string(ss2,"/"),"."));
-			url_type=url_h;
-		}
-		if(!url_type) throw new Error("Unreachable");
-		this.handle_any_data(url_type,data);
-		let res=this.sm.decode_input(url_type,data);
-		if(res) {this.x.get("x_GenericApi").G_ResponseTypes(response,res);} else {console.log("failed to decode_input");}
-		this.iteration.default_iter({t: this,path: url_type},data);
-	}
-	/** @private @arg {DU_UrlType|`page_type_${G_NavFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
-	handle_any_data(path,data) {
-		saved_data.any_data??={};
-		/** @private @type {D_AnySaved} */
-		let merge_obj={[path]: data};
-		saved_data.any_data={...saved_data.any_data,...merge_obj};
-		this.iteration.default_iter({t: this,path},data);
+		let res=this.sm.decode_json_response(url_type,parsed_obj);
+		if(!res) {console.log("Decoding of the json response did not return a result"); return;}
+		this.x.get("x_GenericApi").G_ResponseTypes(response,res);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
@@ -2713,24 +2689,28 @@ class YtHandlers extends BaseService {
 			this.upgrade_obj(ret.endpoint,{is_initial_endpoint: true}).is_initial_endpoint=true;
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
-		this.handle_any_data(`page_type_${ret.page}`,as(ret));
-		switch(ret.page) {
+		/** @arg {G_RS_ByPageType} x */
+		let ok=(x) => {
+			this.x.get("x_EventInput").DataResponsePageType(x);
+		};
+		const x=ret;
+		switch(x.page) {
 			case "browse": {
-				const x=ret;
-				x: if("rootVe" in x) {if(x.rootVe!==3854) break x; this.x.get("x_EventInput").DataResponsePageType(x); break;}
-				x: if("rootVe" in x) {if(x.rootVe!==6827) break x; this.x.get("x_EventInput").DataResponsePageType(x); break;}
-				x: if("rootVe" in x) {if(x.rootVe!==96368) break x; this.x.get("x_EventInput").DataResponsePageType(x); break;}
-				if(this.sm.is_TE_VE(x.endpoint,3854)) {
-				}
+				x: if("rootVe" in x) {if(x.rootVe!==3854) break x; ok(x); break;}
+				x: if("rootVe" in x) {if(x.rootVe!==6827) break x; ok(x); break;}
+				x: if("rootVe" in x) {if(x.rootVe!==96368) break x; ok(x); break;}
+				x: {if(!this.sm.is_EP_Val(x,3854)) break x; ok(x); break;}
+				x: {if(!this.sm.is_EP_Val(x,6827)) break x; ok(x); break;}
+				x: {if(!this.sm.is_EP_Val(x,96368)) break x; ok(x); break;}
+				debugger;
 			} break;
 			case "channel":
 			case "playlist":
 			case "search":
 			case "settings":
 			case "shorts":
-			case "watch": this.x.get("x_EventInput").DataResponsePageType(ret); break;
+			case "watch": ok(x); break;
 		}
-		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
 			debugger;
@@ -2810,93 +2790,6 @@ class HandleRendererContentItemArray extends BaseService {
 			if(!("richSectionRenderer" in content_item)) return true;
 			return this.handle_rich_section_renderer(content_item);
 		}));
-	}
-}
-/** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
-class YtObjectVisitor {
-	/** @handler @public @arg {ApiIterateState} state @arg {AD_AppendContinuationItems} action */
-	appendContinuationItemsAction(state,action) {
-		if(!action.continuationItems) {debugger;}
-		let filtered=state.t.handlers.renderer_content_item_array.replace_array(action.continuationItems);
-		if(filtered.length>0) {action.continuationItems=filtered;}
-	}
-	/** @handler @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
-	reloadContinuationItemsCommand({t: state},command) {
-		if(!("continuationItems" in command)) return;
-		/** @type {(typeof command)["continuationItems"][number][]} */
-		let iterable_items=command.continuationItems;
-		let filtered=state.handlers.renderer_content_item_array.replace_array(iterable_items);
-		if(filtered.length>0) {command.continuationItems=as(filtered);}
-	}
-	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3<T1,T2,T3>} renderer */
-	itemSectionRenderer_with_state(state,renderer) {
-		let {t}=state;
-		t.iteration.default_iter(state,renderer);
-		if(renderer.contents===void 0) return;
-		renderer.contents=renderer.contents.filter(state.t.filter_renderer_contents_item,state.t);
-	}
-	/** @handler @public @arg {ApiIterateState} state @arg {Todo_D_RichGrid} renderer */
-	richGridRenderer(state,renderer) {
-		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
-		state.path="richGridRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
-	compactVideoRenderer(state,renderer) {
-		state.path="compactVideoRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
-	thumbnailOverlayToggleButtonRenderer(state,renderer) {
-		state.path="thumbnailOverlayToggleButtonRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
-	videoRenderer(state,renderer) {
-		state.path="videoRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-}
-class IterateApiResultBase extends BaseService {
-	/** @constructor @public @arg {ServiceResolverBox<{}>} x @arg {YtObjectVisitor} obj_visitor */
-	constructor(x,obj_visitor) {
-		super(x);
-		this.obj_visitor=obj_visitor;
-		/** @private @type {Map<string,keyof YtObjectVisitor>} */
-		this.keys_map=new Map;
-		let keys=this.get_keys_of_ex(obj_visitor);
-		for(let i of keys) {this.keys_map.set(i,i);}
-	}
-	/** @api @public @arg {ApiIterateState} state @arg {{}} data */
-	default_iter(state,data) {
-		if(data===void 0) {return;}
-		if(typeof data==="string") {return;}
-		let {t,path}=state;
-		if(data instanceof Array) {
-			for(let [key,value] of data.entries()) {this.default_iter({t,path: `${path}[${key}]`},value);}
-			return;
-		}
-		for(let key in data) {
-			/** @private @type {{[x: string]: any}} */
-			let wk=data;
-			let value=wk[key];
-			let rk=this.keys_map.get(key);
-			let iter_target=this.obj_visitor;
-			const state={t,path: `${path}.${key}`};
-			if(rk!==void 0) {
-				if(this.obj_visitor[rk]===void 0) {
-					console.log("update keys map remove",key);
-					debugger;
-				}
-				iter_target[rk](state,as(value));
-			} else {
-				if(key in this.obj_visitor) {
-					console.log("update keys map new key",key);
-					debugger;
-				}
-				this.default_iter(state,value);
-			}
-		}
 	}
 }
 class CsiService extends BaseService {
@@ -3128,31 +3021,62 @@ class ModifyEnv extends BaseService {
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
 		let handle_types=this.x.get("handle_types");
-		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_RS_AllResponses} response_obj */
-		function fetch_filter_text_then_data_url(request,response,response_obj) {
-			try {yt_handlers.on_handle_api(request,response,response_obj);} catch(e) {
-				console.log("plugin error");
-				console.log(e);
+		const json_action_obj={
+			/** @arg {Parameters<NonNullable<ProxyHandler<JSON['parse']>["apply"]>>} proxy_args @returns {G_RS_AllResponses} */
+			original_action: (proxy_args) => Reflect.apply(...proxy_args),
+			/** @type {JSON["parse"]} */
+			json_parse: JSON.parse,
+			/** @arg {FetchJsonParseArgs} target_args */
+			json_response_parsed(target_args) {
+				try {
+					yt_handlers.on_handle_api(target_args);
+				} catch(e) {
+					console.log("plugin error");
+					console.log(e);
+				}
 			}
+		};
+		/**
+		 * @param {Parameters<NonNullable<ProxyHandler<JSON['parse']>["apply"]>>} proxy_args
+		 * @param {typeof json_parse_callback} callback
+		 * @param {string | URL | Request} request
+		 * @param {Response} response
+		 */
+		function on_json_parse_called(proxy_args,request,response,callback) {
+			if(is_yt_debug_enabled) console.log("JSON.parse()");
+			try {
+				let response_obj=json_action_obj.original_action(proxy_args);
+				/** @type {FetchJsonParseArgs} */
+				const target_args={
+					request,
+					response,
+					parsed_obj: response_obj,
+				};
+				callback(target_args);
+				return response_obj;
+			} catch(e) {
+				console.log("target error",e);
+				throw e;
+			} finally {
+				JSON.parse=json_action_obj.json_parse;
+			}
+		}
+		/** @arg {FetchJsonParseArgs} target_args */
+		function json_parse_callback(target_args) {
+			json_action_obj.json_response_parsed(target_args);
 		}
 		/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 		function handle_json_parse({request,options},state,onfulfilled,on_rejected,response_text) {
 			if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
-			let original_json_parse=JSON.parse;
+			json_action_obj.json_parse=JSON.parse;
 			if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
-			JSON.parse=new Proxy(original_json_parse,{
-				apply: function(...proxy_args) {
-					if(is_yt_debug_enabled) console.log("JSON.parse()");
-					let obj;
-					try {obj=Reflect.apply(...proxy_args);} catch(e) {
-						console.log("target error",e);
-						throw e;
-					} finally {JSON.parse=original_json_parse;}
-					if(is_yt_debug_enabled) console.log("request.url");
-					fetch_filter_text_then_data_url(request,state.response,obj);
-					return obj;
+			/** @type {ProxyHandler<JSON['parse']>} */
+			const proxy_handler={
+				apply: (...proxy_args) => {
+					on_json_parse_called(proxy_args,request,state.response,json_parse_callback);
 				}
-			});
+			};
+			JSON.parse=new Proxy(JSON.parse,proxy_handler);
 			let ret;
 			try {if(onfulfilled) {ret=onfulfilled(response_text);} else {ret=response_text;} } catch(err) {
 				if(on_rejected) return on_rejected(err);

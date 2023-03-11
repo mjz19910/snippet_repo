@@ -1488,8 +1488,6 @@ export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
 class Support_EventInput extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_EventInput,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
-	is_EP_Val(x,t) {return this.sm.is_TE_VE(x.endpoint,t);}
 	//#region Renderer & Group
 	/** @private @arg {G_ResponseBrowse} x */
 	G_ResponseBrowse(x) {
@@ -1527,7 +1525,7 @@ class Support_EventInput extends BaseService {
 			}
 			return;
 		}
-		if(this.is_EP_Val(x,3854)) {
+		if(this.sm.is_EP_Val(x,3854)) {
 			let {...u}=this.RS_Page_Type1(cf,x,{
 				page: x => this.sm.cq(x,"browse"),
 				endpoint: x => this.sm.E_VE3854(x),
@@ -1554,7 +1552,7 @@ class Support_EventInput extends BaseService {
 			this.sm.D_VeCsn(csn);
 			return;
 		}
-		if(this.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
+		if(this.sm.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
 			/** @arg {RS_VE6827_BrowsePage["url"]} url */
 			url: (url) => {
 				if(this.sm.str_is_search(url)) {
@@ -1579,7 +1577,7 @@ class Support_EventInput extends BaseService {
 				}
 			}
 		}));
-		if(this.is_EP_Val(x,96368)) return this.g(this.RS_Page_Type1(cf,x,{
+		if(this.sm.is_EP_Val(x,96368)) return this.g(this.RS_Page_Type1(cf,x,{
 			/** @arg {RS_VE96368_BrowsePage["url"]} url */
 			url(url) {
 				switch(url) {
@@ -1596,7 +1594,7 @@ class Support_EventInput extends BaseService {
 	/** @private @arg {NavFinishDetail_Browse} x */
 	NavFinishDetail_Browse(x) {
 		const cf="R_PageTypeBrowse";
-		if(this.is_EP_Val(x,3854)) {
+		if(this.sm.is_EP_Val(x,3854)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.sm.E_VE3854(endpoint);
 			this.G_ResponseBrowse(response);
@@ -1605,7 +1603,7 @@ class Support_EventInput extends BaseService {
 			this.sm.a_primitive_num(navigationDoneMs);
 			return;
 		}
-		if(this.is_EP_Val(x,6827)) {
+		if(this.sm.is_EP_Val(x,6827)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.G_ResponseBrowse(response);
 			this.sm.E_VE6827(endpoint);
@@ -1614,7 +1612,7 @@ class Support_EventInput extends BaseService {
 			this.sm.a_primitive_num(navigationDoneMs);
 			return;
 		}
-		if(this.is_EP_Val(x,96368)) {
+		if(this.sm.is_EP_Val(x,96368)) {
 			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.G_ResponseBrowse(response);
 			this.sm.E_VE96368(endpoint);
@@ -1807,7 +1805,7 @@ class Support_EventInput extends BaseService {
 			endpoint: h_ep,
 			response: h_rs,
 		};
-		if(!this.is_EP_Val(x,3611)) debugger;
+		if(!this.sm.is_EP_Val(x,3611)) debugger;
 		if("previousCsn" in x) {
 			/** @type {T_MakeHandlers<typeof x>} */
 			const handlers={...h_d,url: h_url,expirationTime: h_et};

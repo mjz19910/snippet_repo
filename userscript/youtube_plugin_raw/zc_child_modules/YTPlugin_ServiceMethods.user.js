@@ -1492,10 +1492,10 @@ class ServiceMethods extends ServiceData {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}
+	/** @arg {{endpoint:TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:TE_VE<T>}} */
+	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
 	/** @public @template {U["commandMetadata"]["webCommandMetadata"]["rootVe"]} T @template {TE_VE_In} U @arg {U} x @arg {T} t @returns {x is TE_VE<T>} */
-	is_TE_VE(x,t) {
-		return x.commandMetadata.webCommandMetadata.rootVe===t;
-	}
+	is_TE_VE(x,t) {return x.commandMetadata.webCommandMetadata.rootVe===t;}
 	/** @private @arg {GU_VE42352_Url} x */
 	GU_VE42352_Url(x) {
 		switch(x) {
@@ -1931,7 +1931,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @typedef {G_ResponseTypes} DecodeReturn */
 	/** @public @arg {DU_UrlType} url_type @arg {{}} x @returns {DecodeReturn|null} */
-	decode_input(url_type,x) {
+	decode_json_response(url_type,x) {
 		/** @private @type {T_Split<DU_UrlType,".">} */
 		let target=split_string(url_type,".");
 		/** @private @type {DecodeReturn|null} */
@@ -1976,15 +1976,32 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @public @arg {D_ApiUrlFormat} x */
-	decode_url(x) {
-		const res_parse=this._convert_url_to_obj(x);
+	/**
+	 * @param {D_ApiUrlFormat} api_url
+	 */
+	get_pathname_str(api_url) {
+		const res_parse=this._convert_url_to_obj(api_url);
+		let ss_arg=split_string_once(res_parse.pathname,"/")[1];
+		if(this.str_starts_with_rx("youtubei/v1/",ss_arg)) {
+			return split_string_once(ss_arg,"youtubei/v1/")[1];
+		} else {
+			return ss_arg;
+		}
+	}
+	/** @public @arg {D_ApiUrlFormat} api_url */
+	decode_url(api_url) {
+		const res_parse=this._convert_url_to_obj(api_url);
 		if("_tag" in res_parse) {
-			console.log("parse failed (should never happen)",x,res_parse);
+			console.log("parse failed (should never happen)",api_url,res_parse);
 			throw new Error("unreachable");
 		}
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
-		return this.parser.get_url_type(path_parts);
+		let result=this.parser.get_url_type(path_parts);
+		if(!result) {
+			let ss2=this.get_pathname_str(api_url);
+			return this.join_string(split_string(ss2,"/"),".");
+		}
+		return result;
 	}
 	/** @private @arg {Extract<T_Split<DU_UrlType,".">,[any]>} target @arg {{}} x @returns {DecodeReturn|null} */
 	decode_return_length_1(target,x) {
