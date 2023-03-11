@@ -12,7 +12,6 @@ function generate_ts_output {
 	tsc --pretty -p "userscript" >"errors.out"
 	popd
 	{
-		cat "out_prelude.ts"
 		echo "export namespace Gen {\n\texport type CF_Generated="
 		generate_ts_filter_errors_v2 "$TMP_DIR/errors.out" | generate_ts_with_perl | sort -u
 		echo "\t\t;"
