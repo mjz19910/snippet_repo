@@ -453,7 +453,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
-		const cf="GM_Like"; this.ks(cf,x);
+		const cf="GM_Like"; this.k(cf,x);
 		switch(x.apiUrl) {
 			default: {x===""; this.codegen_typedef(cf,x);} break;
 			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
@@ -535,7 +535,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {AD_ReplaceEnclosing_Item} x */
 	AD_ReplaceEnclosing_Item(x) {
-		const cf="AD_ReplaceEnclosing_Item"; this.ks(cf,x);
+		const cf="AD_ReplaceEnclosing_Item"; this.k(cf,x);
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 		if("reelDismissalActionRenderer" in x) return this.RA_ReelDismissal(x);
 		if("notificationMultiActionRenderer" in x) return this.RA_NotificationMulti(x);
@@ -927,7 +927,7 @@ class ServiceMethods extends ServiceData {
 	R_CommonConfig(x) {this.H_s("commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
-		const cf="G_MenuItem"; this.ks(cf,x);
+		const cf="G_MenuItem"; this.k(cf,x);
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
@@ -1081,7 +1081,7 @@ class ServiceMethods extends ServiceData {
 	ws(k,x) {if(x[k]===void 0) debugger; return x[k];}
 	/** @public @arg {D_EndscreenElement_EP} x */
 	D_EndscreenElement_EP(x) {
-		const cf="D_EndscreenElement_EP"; this.ks(cf,x);
+		const cf="D_EndscreenElement_EP"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_VE3611(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.xm.E_Url(x);
@@ -1406,7 +1406,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
-		const cf="DE_Like"; this.ks(cf,x);
+		const cf="DE_Like"; this.k(cf,x);
 		switch(x.status) {
 			default: {x===""; this.codegen_typedef(cf,x);} break;
 			case "INDIFFERENT": {
@@ -2599,7 +2599,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_LoggingDirectives_Gestures} x */
 	D_LoggingDirectives_Gestures(x) {
-		const cf="D_LoggingDirectives_Gestures"; this.ks(cf,x);
+		const cf="D_LoggingDirectives_Gestures"; this.k(cf,x);
 		let inner=this.T_Types(x);
 		if(inner!==4) {
 			inner===""; this.codegen_typedef(cf,x);
@@ -3739,7 +3739,7 @@ class ServiceMethods extends ServiceData {
 					const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 					this.targetId(cf,targetId);
 					this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
-					this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
+					this.z(continuationItems,a => {this.save_primitive("continuationItem",a);});
 					return;
 				}
 				const {targetId,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
@@ -3815,7 +3815,7 @@ class ServiceMethods extends ServiceData {
 	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @private @arg {GE_Continuation} x */
 	GE_Continuation(x) {
-		const cf="GE_Continuation"; this.ks(cf,x);
+		const cf="GE_Continuation"; this.k(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) return this.xr.C_Continuation(x);
 		if("getTranscriptEndpoint" in x) return this.E_GetTranscript(x);

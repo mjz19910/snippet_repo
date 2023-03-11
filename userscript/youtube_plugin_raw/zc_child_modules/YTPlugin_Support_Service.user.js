@@ -1085,7 +1085,7 @@ class Support_RS_WatchPage extends BaseService {
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.rootVe(rootVe,3832);
 		let wp_params=this.ht.D_WatchPageUrl(cf,url);
-		wp_params&&this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
+		wp_params&&this.save_primitive(`VE3832.${cf}.wp_params`,wp_params);
 		this.sm.E_Watch(endpoint);
 		if(preconnect!==void 0) this.ht.parse_preconnect_arr(preconnect);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
@@ -1102,7 +1102,7 @@ class Support_RS_WatchPage extends BaseService {
 		this.x.get("x_RS_Watch").RS_Watch(response);
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		let wp_params=this.ht.D_WatchPageUrl(cf,url);
-		wp_params&&this.save_keys(`${cf}.wp_params`,wp_params);
+		wp_params&&this.save_primitive(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => this.sm.D_VeCsn(x,{prev: true}));
 		this.t(csn,x => this.sm.D_VeCsn(x,{cur: true}));
 	}
@@ -1286,7 +1286,7 @@ class Support_GenericApi extends BaseService {
 	t(x,f) {return this.t_base(x,f);}
 	/** @public @arg {Response} response @arg {G_ResponseTypes} x */
 	G_ResponseTypes(response,x) {
-		const cf="G_ResponseTypes"; this.sm.ks(cf,x);
+		const cf="G_ResponseTypes"; this.sm.k(cf,x);
 		if(!response.ok) {
 			console.log("not ok",x);
 			return;
@@ -3909,7 +3909,7 @@ class ForService_XMethods extends BaseService {
 	}
 	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
-		this.save_keys(`${cf}.response_endpoint`,x);
+		this.save_primitive(`${cf}.response_endpoint`,x);
 		if("signalServiceEndpoint" in x) return this.xm.E_SignalService_SendPost(x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
 		if("changeKeyedMarkersVisibilityCommand" in x) return this.sm.C_ChangeKeyedMarkersVisibility(x);
@@ -4592,7 +4592,7 @@ class ForService_XMethods extends BaseService {
 	R_EngagementPanelSectionList(x) {this.H_("engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
-		const cf="D_EngagementPanelSectionList"; this.sm.ks(cf,x);
+		const cf="D_EngagementPanelSectionList"; this.sm.k(cf,x);
 		if("veType" in x) {
 			switch(x.veType) {
 				default: debugger; break;

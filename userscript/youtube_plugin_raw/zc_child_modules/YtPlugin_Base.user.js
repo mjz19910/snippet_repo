@@ -2357,11 +2357,7 @@ class BaseService extends ServiceWithMembers {
 	/** @protected @arg {string} k @arg {boolean} x */
 	save_boolean_one(k,x) {k; x;}
 	/** @public @arg {string} k @arg {{}} x */
-	save_keys(k,x) {k; x;}
-	/** @public @arg {string} k @arg {{}} x */
-	k(k,x) {k; x;}
-	/** @public @arg {string} k @arg {{}} x */
-	ks(k,x) {k; x;}
+	k(k,x) {this.save_primitive(k,x);}
 	/** @protected @arg {string} k @arg {string} x */
 	save_string(k,x) {k; x;}
 	/** @public @arg {string} k @arg {string[]} x */
