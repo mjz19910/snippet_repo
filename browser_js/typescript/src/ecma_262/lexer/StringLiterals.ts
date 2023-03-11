@@ -132,7 +132,9 @@ export class StringLiterals extends LexerBase {
 		if(out[0]) return [true,out[1]];
 		// 0 [lookahead ∉ DecimalDigit]
 		x: if(str[index]==='0') {
-			let [,peek]=this.m_dispatcher.DecimalDigit(str,index);
+			let peek_res=this.m_dispatcher.DecimalDigit(str,index);
+			if(!peek_res[0]) break x;
+			let [,peek]=peek_res;
 			if(peek>0) break x;
 			return [true,1];
 		}
