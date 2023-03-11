@@ -32,6 +32,8 @@ function init_module() {
 		[24487523],
 		[39323338],
 		[24483085],
+		[24495841],
+		[24494067],
 	].flat());
 }
 export_((exports) => {exports.init_module=init_module;});
@@ -2110,12 +2112,15 @@ class HandleTypes extends BaseService {
 			case "tracking": return this.H_TrackingObj(z);
 		}
 	}
+	/** @type {{}[]} */
+	missing_objs=[];
 	/** @arg {string} cf @arg {{}} x @arg {{}} y */
 	h_gen_keys(cf,x,y) {
 		let u=this.get_keys_of_2(y); if(u.length>0) {
-			let is_new=this.codegen_typedef_bin(cf,x,false);
+			let is_new=this.codegen_typedef_bin(cf+"$new",y,false);
 			if(is_new) {
 				let k=u.join(); console.log(`[${cf}.next_key]`,k);
+				this.missing_objs.push(x);
 			}
 		}
 	}
@@ -3199,6 +3204,47 @@ class HandleTypes extends BaseService {
 	/** @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	//#endregion
+	/** @public @arg {RSG_NotificationMenu} x */
+	RSG_NotificationMenu(x) {
+		const cf="RSG_NotificationMenu";
+		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
+		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
+		let [u3]=this.z(u2,x => this.sm.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
+		this.z(u3,this.D_NotificationMenu);
+		this.sm.trackingParams(trackingParams);
+	}
+	/** @private @arg {MP_NotificationMenu} x */
+	D_NotificationMenu(x) {
+		const cf="D_NotificationMenu";
+		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xm.R_SimpleMenuHeader(header);
+		this.z(sections,this.D_NotificationMenu_SectionItem);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+		this.sm.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_NotificationMenu_SectionItem} x */
+	D_NotificationMenu_SectionItem(x) {
+		const cf="D_NotificationMenu_SectionItem";
+		if("multiPageMenuNotificationSectionRenderer" in x) return this.xm.R_MP_MenuNotificationSection(x);
+		if("backgroundPromoRenderer" in x) return this.R_BackgroundPromo(x);
+		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @private @arg {Popup_DD_NotificationMenu} x */
+	D_NotificationMenu_Popup(x) {
+		const cf="D_NotificationMenu_Popup";
+		const {popupType: a,popup: b,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(a!=="DROPDOWN") {this.sm.codegen_typedef(cf,x); return null;}
+		this.t(beReused,x => this.sm.cq(x,true));
+		return b;
+	}
+	/** @private @arg {A_NotificationMenuPopup} x */
+	RSG_NotificationMenu_Action(x) {
+		const cf="RSG_NotificationMenu_Action";
+		if("openPopupAction" in x) return this.xm.TA_OpenPopup("RSG_NotificationMenu_Action",x);
+		x===""; this.sm.codegen_typedef(cf,x);
+		return null;
+	}
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x */
 	/** @private @arg {minimal_handler_member} x ! */

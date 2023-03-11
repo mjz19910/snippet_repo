@@ -1284,14 +1284,6 @@ export_(exports => {exports.Support_RS_Browse=Support_RS_Browse;});
 class Support_GenericApi extends BaseService {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_GenericApi,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @private @arg {Popup_DD_NotificationMenu} x */
-	D_NotificationMenu_Popup(x) {
-		const cf="D_NotificationMenu_Popup";
-		const {popupType: a,popup: b,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(a!=="DROPDOWN") {this.sm.codegen_typedef(cf,x); return null;}
-		this.t(beReused,x => this.sm.cq(x,true));
-		return b;
-	}
 	/** @public @arg {Response} response @arg {G_ResponseTypes} x */
 	G_ResponseTypes(response,x) {
 		const cf="G_ResponseTypes"; this.sm.ks(cf,x);
@@ -1341,7 +1333,7 @@ class Support_GenericApi extends BaseService {
 			case "live_chat.get_live_chat": return this.ht.RS_GetLiveChat(x.data);
 			case "music.get_search_suggestions": return this.ht.RSG_SearchSuggestions(x.data);
 			case "next": return this.ht.RS_Next(x.data);
-			case "notification.get_notification_menu": return this.RSG_NotificationMenu(x.data);
+			case "notification.get_notification_menu": return this.ht.RSG_NotificationMenu(x.data);
 			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
 			case "notification.record_interactions": return this.RS_Success(x.data);
@@ -1378,16 +1370,6 @@ class Support_GenericApi extends BaseService {
 		this.z(playlistEditResults,this.g);
 		this.sm.trackingParams(trackingParams);
 	}
-	/** @private @arg {RSG_NotificationMenu} x */
-	RSG_NotificationMenu(x) {
-		const cf="RSG_NotificationMenu";
-		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
-		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
-		let [u3]=this.z(u2,x => this.sm.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
-		this.z(u3,this.D_NotificationMenu);
-		this.sm.trackingParams(trackingParams);
-	}
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
 		const cf="RSM_ChannelPreference";
@@ -1418,13 +1400,6 @@ class Support_GenericApi extends BaseService {
 			if("updateNotificationsUnseenCountAction" in x) return this.AU_NotificationsUnseenCount(x);
 		}));
 		if(unseenCount!==void 0) this.sm.a_primitive_num(unseenCount);
-	}
-	/** @private @arg {A_NotificationMenuPopup} x */
-	RSG_NotificationMenu_Action(x) {
-		const cf="RSG_NotificationMenu_Action";
-		if("openPopupAction" in x) return this.xm.TA_OpenPopup("RSG_NotificationMenu_Action",x);
-		x===""; this.sm.codegen_typedef(cf,x);
-		return null;
 	}
 	/** @private @arg {AU_NotificationsUnseenCount} x */
 	AU_NotificationsUnseenCount(x) {let [a,y]=this.sm.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
@@ -1468,22 +1443,6 @@ class Support_GenericApi extends BaseService {
 	R_PlaylistAddToOption(x) {this.H_("playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.sm.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {D_NotificationMenu_SectionItem} x */
-	D_NotificationMenu_SectionItem(x) {
-		const cf="D_NotificationMenu_SectionItem";
-		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		if("backgroundPromoRenderer" in x) return this.ht.R_BackgroundPromo(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
-	/** @private @arg {MP_NotificationMenu} x */
-	D_NotificationMenu(x) {
-		const cf="D_NotificationMenu";
-		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._R_SimpleMenuHeader(header);
-		this.z(sections,this.D_NotificationMenu_SectionItem);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-		this.sm.trackingParams(trackingParams);
-	}
 	/** @private @arg {D_PlaylistAddToOption} x */
 	D_PlaylistAddToOption(x) {
 		const cf="D_PlaylistAddToOption";
@@ -1502,15 +1461,6 @@ class Support_GenericApi extends BaseService {
 		this.sm.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
 		this.sm.trackingParams(trackingParams);
 	}
-	/** @private @arg {R_SimpleMenuHeader} x */
-	_R_SimpleMenuHeader(x) {this.H_("simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
-	/** @private @arg {D_SimpleMenuHeader} x */
-	D_SimpleMenuHeader(x) {
-		const cf="D_SimpleMenuHeader";
-		const {title,buttons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.G_Text(title);
-		this.xm.z(buttons,this.xm.R_Button);
-	}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
 	/** @private @arg {D_Dropdown_Privacy} x */
@@ -1519,15 +1469,6 @@ class Support_GenericApi extends BaseService {
 		const {entries,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,this.R_PrivacyDropdownItem);
 		this.t(label,x => this.sm.cq(x,"Privacy"));
-	}
-	/** @private @arg {R_MultiPageMenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {this.H_("multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
-	/** @private @arg {D_MultiPageMenuNotificationSection} x */
-	D_MP_MenuNotificationSection(x) {
-		const cf="D_MP_MenuNotificationSection";
-		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
-		this.z(items,this.GR_MP_MenuNotificationSection_Item);
 	}
 	/** @private @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
@@ -1541,28 +1482,6 @@ class Support_GenericApi extends BaseService {
 		if(int32Value!==1) debugger;
 		if(isSelected!==false) debugger;
 		this.xm.D_Label(accessibility);
-	}
-	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
-	GR_MP_MenuNotificationSection_Item(x) {
-		const cf="R_MP_MenuNotificationSection_Item";
-		if("notificationRenderer" in x) return this.R_Notification(x);
-		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
-		x===""; this.sm.codegen_typedef(cf,x);
-	}
-	/** @private @arg {R_Notification} x */
-	R_Notification(x) {this.H_("notificationRenderer",x,this.D_Notification);}
-	/** @private @arg {D_Notification} x */
-	D_Notification(x) {
-		const cf="D_Notification";
-		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
-		this.sm.z([thumbnail,videoThumbnail],this.sm.D_Thumbnail);
-		this.sm.z([shortMessage,sentTimeText],this.sm.G_Text);
-		if(navigationEndpoint.watchEndpoint) {this.sm.E_Watch(navigationEndpoint);} else {debugger;}
-		this._primitive_of(read,"boolean");
-		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.sm.E_RecordNotificationInteractions(recordClickEndpoint);}
-		this.sm.R_Menu(contextualMenu);
-		this.sm.parse_number_template(notificationId);
 	}
 }
 export_(exports => {exports.Support_GenericApi=Support_GenericApi;});
@@ -5268,6 +5187,46 @@ class ForService_XMethods extends BaseService {
 	R_TwoColumnSearchResults(x) {this.H_("twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("primaryContents",x,this.R_SectionList);}
+	/** @public @arg {R_SimpleMenuHeader} x */
+	R_SimpleMenuHeader(x) {this.H_("simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
+	/** @private @arg {D_SimpleMenuHeader} x */
+	D_SimpleMenuHeader(x) {
+		const cf="D_SimpleMenuHeader";
+		const {title,buttons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.G_Text(title);
+		this.z(buttons,this.R_Button);
+	}
+	/** @public @arg {R_MultiPageMenuNotificationSection} x */
+	R_MP_MenuNotificationSection(x) {this.H_("multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
+	/** @private @arg {D_MultiPageMenuNotificationSection} x */
+	D_MP_MenuNotificationSection(x) {
+		const cf="D_MP_MenuNotificationSection";
+		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.trackingParams(trackingParams);
+		this.z(items,this.GR_MP_MenuNotificationSection_Item);
+	}
+	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
+	GR_MP_MenuNotificationSection_Item(x) {
+		const cf="R_MP_MenuNotificationSection_Item";
+		if("notificationRenderer" in x) return this.R_Notification(x);
+		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
+		x===""; this.sm.codegen_typedef(cf,x);
+	}
+	/** @private @arg {R_Notification} x */
+	R_Notification(x) {this.H_("notificationRenderer",x,this.D_Notification);}
+	/** @private @arg {D_Notification} x */
+	D_Notification(x) {
+		const cf="D_Notification";
+		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.trackingParams(trackingParams);
+		this.sm.z([thumbnail,videoThumbnail],this.sm.D_Thumbnail);
+		this.sm.z([shortMessage,sentTimeText],this.sm.G_Text);
+		if(navigationEndpoint.watchEndpoint) {this.sm.E_Watch(navigationEndpoint);} else {debugger;}
+		this._primitive_of(read,"boolean");
+		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.sm.E_RecordNotificationInteractions(recordClickEndpoint);}
+		this.sm.R_Menu(contextualMenu);
+		this.sm.parse_number_template(notificationId);
+	}
 }
 export_(exports => {exports.ForService_XMethods=ForService_XMethods;});
 export_(exports => exports.__module_loaded__=true);
