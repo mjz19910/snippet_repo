@@ -2554,9 +2554,16 @@ class HandleTypes extends BaseService {
 	/** @private @arg {PX_watch_next_token_info} x */
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
-		const {2: v2,4: f4,6: f6,7: f7,25: f25,28: f28,36: f36,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		const {2: v2,4: f4,6: f6,7: f7,24: f24,25: f25,28: f28,36: f36,47: f47,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(v2));
-		f4; f6; f7; f25; f28; f36;
+		this.t(this.ms_t(f4,this.TV_Str).v,x => console.log(`${cf}.f4`,x));
+		this.t(this.ms_t(f6,this.T_VW).v,x => console.log(`${cf}.f6`,x));
+		this.t(this.ms_t(f7,this.T_D32).v,x => console.log(`${cf}.f7`,x));
+		this.t(this.ms_t(f24,this.T_D32).v,x => console.log(`${cf}.f24`,x));
+		this.t(this.ms_t(f25,this.T_D32).v,x => console.log(`${cf}.f25`,x));
+		this.t(this.ms_t(f28,this.T_D32).v,x => console.log(`${cf}.f28`,x));
+		this.t(this.ms_t(f36,this.T_VW).v,x => console.log(`${cf}.f36`,x));
+		this.t(this.ms_t(f47,this.T_D32).v,x => console.log(`${cf}.f47`,x));
 	}
 	/** @private @arg {PX_watch_next_token_item} x */
 	PX_watch_next_token_item(x) {
@@ -3259,7 +3266,15 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_s("notificationMultiActionRenderer",x,this.AD_NotificationMulti);}
 	/** @public @arg {AD_NotificationMulti} x */
-	AD_NotificationMulti(x) {x;}
+	AD_NotificationMulti(x) {
+		const cf="AD_NotificationMulti";
+		const {responseText,buttons,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.G_Text(responseText);
+		this.xm.z(buttons,this.xm.R_Button);
+		this.sm.trackingParams(trackingParams);
+	}
+	/** @public @arg {R_PlayerErrorMessage} x */
+	R_PlayerErrorMessage(x) {this.H_s("notificationMultiActionRenderer",x,this.D_PlayerErrorMessage);}
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});

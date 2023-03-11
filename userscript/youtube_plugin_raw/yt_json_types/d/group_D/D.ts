@@ -2130,22 +2130,6 @@ type D_PlayabilityOkReason=
 	|"We're experiencing technical difficulties."
 	;
 ;
-type D_PlayabilityStatus={
-	status: "OK";
-	reason?: D_PlayabilityOkReason;
-	playableInEmbed: boolean;
-	liveStreamability?: R_LiveStreamability;
-	offlineability?: R_Button;
-	miniplayer?: R_Miniplayer;
-	contextParams: string;
-}|{
-	status: "LIVE_STREAM_OFFLINE";
-	reason: "This live event will begin in a few moments.";
-	playableInEmbed: true;
-	liveStreamability: R_LiveStreamability;
-	miniplayer: R_Miniplayer;
-	contextParams: string;
-};
 type D_PlaybackTracking={
 	atrUrl: D_UrlAndElapsedMediaTime<`https://s.youtube.com/api/stats/atr?${string}`>;
 	ptrackingUrl: T_BaseUrl<`https://www.youtube.com/ptracking?${string}`>;

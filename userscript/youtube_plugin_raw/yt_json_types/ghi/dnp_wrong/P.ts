@@ -185,12 +185,14 @@ type PX_watch_next_token_info={
 	4?: TV_Str<string>;
 	6?: T_VW<{}>;
 	7?: T_D32<18>;
+	24?: T_D32<0>;
 	25?: T_D32<0>;
 	28?: T_D32<3>;
 	36?: T_VW<{
 		5: T_D64<bigint>;
 		8: T_D32<0>;
 	}>;
+	47: T_D32<0>;
 };
 type PX_watch_next_token_item={
 	1: T_D32<number>|T_D64<bigint>;
@@ -434,7 +436,7 @@ type P_ypc_get_offers_params={
 	1: T_VW<P_ypc_get_offers_params_f1>;
 	3: T_D32<3>;
 	5: T_VW<P_ypc_get_offers_params_f5>;
-	9?: T_D32<2>
+	9?: T_D32<2>;
 };
 type P_notification_record_interactions={
 	2: T_VW<{

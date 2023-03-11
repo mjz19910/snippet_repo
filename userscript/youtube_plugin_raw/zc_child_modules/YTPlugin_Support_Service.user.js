@@ -551,6 +551,10 @@ class Support_RS_Player extends BaseService {
 				let ctx=atob(contextParams);
 				this.sm.params("playability_status.context_params",ctx);
 			} break;
+			case "UNPLAYABLE": {
+				const {status: {},errorScreen,...y}=this.s(cf,x); this.g(y);
+				this.ht.R_PlayerErrorMessage(errorScreen);
+			} break;
 		}
 	}
 	/** @private @arg {R_LiveStreamability} x */

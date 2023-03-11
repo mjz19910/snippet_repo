@@ -11,8 +11,8 @@ function generate_ts-make_tmp_git_repo {
 		echo not in git repo at "$TMP_DIR"
 		git clone "$PROJ_DIR" "$TMP_DIR" -q
 	fi
-	git -C "$PROJ_DIR" diff >"../snippet_repo.diff"
-	git -C "$TMP_DIR" apply --allow-empty "../snippet_repo.diff"
+	git -C "$PROJ_DIR" diff >"$TMP_DIR/../snippet_repo.diff"
+	git -C "$TMP_DIR" apply --allow-empty "$TMP_DIR/../snippet_repo.diff"
 	pnpm -C "$TMP_DIR/userscript" i --silent
 }
 
