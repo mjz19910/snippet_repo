@@ -14,6 +14,8 @@
 
 const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YtPlugin_Base.user");
 
+// priority SupportService(6)
+
 const __module_name__="mod$SupportService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
@@ -202,6 +204,14 @@ class StoreData extends BaseService {
 				this.loaded_database=true;
 			} catch(err) {
 				console.log("load_database failed",err);
+				let stack=[err];
+				while(stack.length>0) {
+					if(err instanceof AggregateError) {
+						console.log("caused by",err);
+						for(let err_iter of err.errors) stack.push(err_iter);
+					}
+					if(stack.length>0) err=stack.pop(); else break;
+				}
 				return;
 			}
 			this.idle_id=null;
@@ -418,7 +428,7 @@ class LocalStorageSeenDatabase extends BaseService {
 		return new BitmapResult(map_arr,bs);
 	}
 	bitmap_console_todo_1() {
-		const yt_plugin={ds:this};
+		const yt_plugin={ds: this};
 		let gg=yt_plugin.ds.x.get("data_store").get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1].l!=="arr") return;

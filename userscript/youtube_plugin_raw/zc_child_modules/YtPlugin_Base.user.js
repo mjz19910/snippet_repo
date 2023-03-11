@@ -3052,7 +3052,7 @@ class ModifyEnv extends BaseService {
 			/** @type {ProxyHandler<JSON['parse']>} */
 			const proxy_handler={
 				apply: (...proxy_args) => {
-					on_json_parse_called(proxy_args,request,state.response,json_parse_callback);
+					return on_json_parse_called(proxy_args,request,state.response,json_parse_callback);
 				}
 			};
 			JSON.parse=new Proxy(JSON.parse,proxy_handler);

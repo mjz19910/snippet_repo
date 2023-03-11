@@ -13,7 +13,10 @@
 // ==/UserScript==
 
 const {do_export,as,BaseService}=require("./YtPlugin_Base.user");
+// IndexedDB_Service(7) => Support_Service(6) => Base(1)
 const {StoreData}=require("./YTPlugin_Support_Service.user");
+
+// priority IndexedDB_Service(7)
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -397,9 +400,9 @@ class IndexedDBService extends BaseService {
 		return db_req;
 	}
 	/**
-	 * @arg {TypedIndexedDB} typed_db
-	 * @arg {IDBDatabase} db @template {"boxed_id"} U @arg {U} key @arg {IDBTransactionMode} mode
-	 * @arg {()=>void} complete_cb
+	 * @param {TypedIndexedDB} typed_db
+	 * @param {IDBDatabase} db @template {"boxed_id"} U @arg {U} key @arg {IDBTransactionMode} mode
+	 * @param {()=>void} complete_cb
 	*/
 	open_transaction(typed_db,db,key,mode,complete_cb) {
 		const tx=typed_db.transaction(db,key,mode);
@@ -470,16 +473,19 @@ class IndexedDBService extends BaseService {
 	/** @template {EventTarget} Base @arg {Base|null} x @template {Base} T @arg {T} y @returns {asserts x is T} */
 	assert_assume_is(x,y) {if(x!==y) throw new Error();}
 	/**
-	 * @arg {TypedIndexedDB} tdb @template {G_BoxedDatabaseData} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
+	 * @param {TypedIndexedDB} tdb @template {G_BoxedDatabaseData} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
 	 * @returns {{type:"err";err:unknown}|{type:"ok";req:IDBRequest<IDBValidKey>}}
 	 * */
 	start_put_request(tdb,store,value) {
 		try {
 			return {type: "ok",req: tdb.put(store,value)};
 		} catch(e) {
-			console.log("failed to start put request",e);
-			debugger;
-			return {type: "err",err: e};
+			if(this.log_failed) {
+				console.log("IDBObjectStore.put threw an error:",e);
+				setTimeout(() => this.log_failed=true,5000);
+			}
+			this.log_failed=false;
+			throw new AggregateError([e],"failed to call IDBObjectStore.put");
 		}
 	}
 	/** @template {"boxed_id"} U @arg {{error_count:number;db:IDBDatabase;tx:IDBTransaction|null;obj_store:TypedIDBObjectStore<DT_DatabaseStoreTypes[U]>|null;typed_db:TypedIndexedDB;}} s @arg {DT_DatabaseStoreTypes[U]} value */
@@ -566,6 +572,10 @@ class IndexedDBService extends BaseService {
 				if(cur_cursor===null) {
 					if(this.log_db_actions) console.log("[db_cursor.done]",cur_cursor);
 					if(this.log_db_actions) console.log("[update_sync_cache_item_add_to_db]",x_value);
+					let req=this.start_put_request(s.typed_db,s.obj_store,x_value);
+					if(req.type==="err") {
+						throw new AggregateError([req.err],"start_put_request error");
+					}
 					let put_req=typed_db.put(s.obj_store,x_value);
 					await this.get_async_result(put_req);
 					commit_value(x_value,"new");

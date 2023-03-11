@@ -3211,11 +3211,11 @@ class HandleTypes extends BaseService {
 			return ret;
 		} catch(e) {
 			if(this.log_failed) {
-				console.log("failed to put",e);
+				console.log("waiting for put request resulted in an error:",e);
 				setTimeout(() => this.log_failed=true,5000);
 			}
 			this.log_failed=false;
-			throw new AggregateError([e],"put await error");
+			throw new AggregateError([e],"put request failed");
 		}
 	}
 	/** @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
