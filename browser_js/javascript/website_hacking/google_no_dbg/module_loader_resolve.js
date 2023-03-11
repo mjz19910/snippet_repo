@@ -1,4 +1,5 @@
 {
+	// @ts-ignore
 	let _a=a;
 	let _b=b;
 	{

@@ -1,2 +1,5 @@
-var player_nums,player={};
-class ExpantaNum {}
+export var player_nums=0;
+export var player={};
+
+export class ExpantaNum {}
+

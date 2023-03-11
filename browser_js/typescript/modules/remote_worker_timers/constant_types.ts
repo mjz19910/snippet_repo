@@ -1,4 +1,4 @@
-import {WorkerReplyTypesT} from "./WorkerReplyTypesT";
+import {WorkerReplyTypesT} from "./WorkerReplyTypesT.js";
 import {
 	ReplyClearAny,
 	ReplyClearRepeating,
