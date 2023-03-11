@@ -199,7 +199,7 @@ class ServiceMethods extends ServiceData {
 				case "ACTION_SET_PLAYLIST_PRIVACY": {
 					const cf="AS_PlaylistPrivacy";
 					const {action: {},playlistPrivacy,...y}=this.s(cf,x); this.g(y);
-					this.t(playlistPrivacy,x => this.save_string(`${cf}.playlistPrivacy`,x));
+					this.t(playlistPrivacy,x => this.save_primitive(`${cf}.playlistPrivacy`,x));
 				} break;
 				case "ACTION_SET_PLAYLIST_DESCRIPTION": {
 					const cf="AS_PlaylistDescription";
@@ -551,7 +551,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "engagement-panel-macro-markers-auto-chapters":
 		}
-		this.save_number(`${cf}.itemIndex`,itemIndex);
+		this.save_primitive(`${cf}.itemIndex`,itemIndex);
 	}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
@@ -592,7 +592,7 @@ class ServiceMethods extends ServiceData {
 			}
 			switch(x.targetId) {
 				case "browse-feedFEwhat_to_watch": {
-					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
+					this.save_primitive("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
 				} break;
 			}
 			return;
@@ -621,7 +621,7 @@ class ServiceMethods extends ServiceData {
 	TM_Visibility(x) {
 		const cf="TM_Visibility";
 		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string("Visibility.types",types);
+		this.save_primitive("Visibility.types",types);
 	}
 	/** @public @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
@@ -859,7 +859,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_GetSurvey";
 		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if("paidDigitalGoods" in a) {debugger;}
-		this.save_string("GetSurvey.action",action);
+		this.save_primitive("GetSurvey.action",action);
 		switch(action) {
 			default: debugger; break;
 			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL":
@@ -1025,7 +1025,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {CF_T_Icon} cf @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(cf,x) {
 		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string(`${cf}.iconType`,iconType);
+		this.save_primitive(`${cf}.iconType`,iconType);
 	}
 	/**
 	 * @param {CF_TE_Endpoint_2} cf
@@ -1098,11 +1098,22 @@ class ServiceMethods extends ServiceData {
 		this.id_cache.add(x);
 		return false;
 	}
+	video_id_lengths=[11];
 	/** @public @arg {DU_VideoId} x */
 	videoId(x) {
 		if(this.cache_raw_id(`video_id:${x}`)) return;
 		if(this.video_id_list.includes(x)) return;
 		this.video_id_list.push(x);
+		let split=split_string(x,"");
+		/** @arg {string[]} x @returns {x is DU_VideoId_Arr} */
+		let is_video_id_len=(x) => {return this.video_id_lengths.includes(x.length);};
+		if(!is_video_id_len(split)) return;
+		/** @type {DU_VideoId_Arr} */
+		let res_arr=split;
+		switch(res_arr.length) {
+			default: debugger; break;
+			case 11: break;
+		}
 	}
 	/** @api @public @arg {DU_Browse_Id} x */
 	browseId(x) {
@@ -1280,7 +1291,7 @@ class ServiceMethods extends ServiceData {
 	DU_UrlParams(x) {
 		const cf="DU_UrlParams";
 		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.label`,x.label);
+		this.save_primitive(`${cf}.label`,x.label);
 	}
 	/** @public @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
@@ -1512,7 +1523,7 @@ class ServiceMethods extends ServiceData {
 			if(a1.length!==1) debugger;
 			let [x1]=a1;
 			let a2=split_string_once(x1,"@"); this.cq(a2[0],"");
-			this.save_string("channel_handle",a2[1]);
+			this.save_primitive("channel_handle",a2[1]);
 			return;
 		}
 		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
@@ -1591,9 +1602,9 @@ class ServiceMethods extends ServiceData {
 		let emoji_parts=this.split_str(emojiId,"");
 		if(emoji_parts.length!==2) debugger;
 		this.join_string(emoji_parts,"");
-		this.save_string(`save://Emoji.d/emojiId`,emojiId);
-		this.save_string(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
-		this.save_string(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
+		this.save_primitive(`save://Emoji.d/emojiId`,emojiId);
+		this.save_primitive(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
+		this.save_primitive(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
 	}
 	/** @private @arg {D_Color} x */
 	D_Color(x) {
@@ -1646,10 +1657,10 @@ class ServiceMethods extends ServiceData {
 		if(!x) return;
 		const cf2=`${cf1}_p_tc`;
 		let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-		this.save_number(`${cf2}_r`,r);
-		this.save_number(`${cf2}_g`,g);
-		this.save_number(`${cf2}_b`,b);
-		this.save_number(`${cf2}_a`,a);
+		this.save_primitive(`${cf2}_r`,r);
+		this.save_primitive(`${cf2}_g`,g);
+		this.save_primitive(`${cf2}_b`,b);
+		this.save_primitive(`${cf2}_a`,a);
 	}
 	/** @public @arg {"D_PlaylistPanelVideo"|"D_MacroMarkersListItem"|"D_Thumbnail"} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
@@ -1689,8 +1700,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_number_arr(path,x[1]);
-		return this.save_string(path,`${x[2]}n`);
+		this.save_array(path,x[1]);
+		return this.save_primitive(path,`${x[2]}n`);
 	}
 	/** @public @arg {string} x @returns {x is D_TargetIdUuid} */
 	is_yt_uuid(x) {
@@ -1714,7 +1725,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with(x,"watch")) {return this.save_enum(cf,"watch",x);}
 		if(this.str_starts_with(x,"shopping_panel")) {return this.save_enum(cf,"shopping_panel",x);}
 		if(this.str_starts_with(x,"clip")) {return this.save_enum(cf,"clip",x);}
-		this.save_string("target_id",x);
+		this.save_primitive("target_id",x);
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
@@ -1723,7 +1734,7 @@ class ServiceMethods extends ServiceData {
 		const cf2="targetId";
 		this.parse_target_id(x);
 		if(this.is_yt_uuid(x)) return;
-		this.save_string(`${cf1}.${cf2}`,x);
+		this.save_primitive(`${cf1}.${cf2}`,x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
 			switch(x) {
@@ -2267,7 +2278,7 @@ class ServiceMethods extends ServiceData {
 		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		const is_missing_iconType=!ty_arr.includes(iconType);
 		if(is_missing_iconType) {console.log(`[missing_icon.${cf}]`,iconType);}
-		this.save_string("IconType",iconType);
+		this.save_primitive("IconType",iconType);
 		return is_missing_iconType;
 	}
 	/** @public @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
@@ -2288,8 +2299,8 @@ class ServiceMethods extends ServiceData {
 		let rk=`${key}.data[${idx}]`;
 		/** @type {`${typeof rk}=${typeof f}`} */
 		let k=`${rk}=${f}`;
-		this.save_number(rk,f);
-		this.save_number(k,1);
+		this.save_primitive(rk,f);
+		this.save_primitive(k,1);
 	}
 	/** @public @arg {R_MenuNavigationItem} x */
 	R_MenuNavigationItem(x) {this.H_s("menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
@@ -2416,8 +2427,8 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string(`${cf}.style`,style);
-		this.save_string(`${cf}.size`,size);
+		this.save_primitive(`${cf}.style`,style);
+		this.save_primitive(`${cf}.size`,size);
 		if(isDisabled!==false) debugger;
 		this.G_Text(text);
 		this.E_ShareEntityService(serviceEndpoint);
@@ -2460,7 +2471,7 @@ class ServiceMethods extends ServiceData {
 		}
 		const {hack,bucketIdentifier,...y}=this.s(cf,x); this.g(y);
 		this.cq(hack,true);
-		this.save_string(`${cf}.bucketIdentifier`,bucketIdentifier);
+		this.save_primitive(`${cf}.bucketIdentifier`,bucketIdentifier);
 	}
 	/** @private @arg {M_NotificationOptOut} x */
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
@@ -2536,9 +2547,9 @@ class ServiceMethods extends ServiceData {
 	save_b64_binary(cf,x) {
 		this.t(base64_url_dec.decodeByteArray(x),x => {
 			if(x[0]===0) {
-				this.save_number(`${cf}.bytes.1`,x[1]);
+				this.save_primitive(`${cf}.bytes.1`,x[1]);
 			}
-			this.save_number(`${cf}.bytes.0`,x[0]);
+			this.save_primitive(`${cf}.bytes.0`,x[0]);
 		});
 	}
 	/** @private @arg {string} x */
@@ -2718,7 +2729,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DS_EY_TranscriptTrackSelection";
 		const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
 		this.params("transcript_track_selection.entity.key",key);
-		this.save_number(`${cf}.selectedTrackIndex`,selectedTrackIndex);
+		this.save_primitive(`${cf}.selectedTrackIndex`,selectedTrackIndex);
 		this.params("transcript_track_selection.serialized_params",serializedParams);
 	}
 	/** @private @arg {DS_EY_Subscription} x */
@@ -2843,7 +2854,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
 		const cf="DC_AddToPlaylist";
-		this.save_string(`${cf}.listType`,x.listType);
+		this.save_primitive(`${cf}.listType`,x.listType);
 		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
 			let known=this.DC_AddToPlaylist_listTypes;
 			this.DC_AddToPlaylist_listTypes.push(x.listType);
@@ -3116,23 +3127,23 @@ class ServiceMethods extends ServiceData {
 	D_CinematicConfig(x) {
 		const cf="D_CinematicConfig";
 		const {lightThemeBackgroundColor,darkThemeBackgroundColor,animationConfig,colorSourceSizeMultiplier,applyClientImageBlur,bottomColorSourceHeightMultiplier,maxBottomColorSourceHeight,colorSourceWidthMultiplier,colorSourceHeightMultiplier,blurStrength,...u}=this.s(cf,x);
-		this.save_number(`${cf}.lightBackground.color`,lightThemeBackgroundColor);
-		this.save_number(`${cf}.darkBackground.color`,darkThemeBackgroundColor);
+		this.save_primitive(`${cf}.lightBackground.color`,lightThemeBackgroundColor);
+		this.save_primitive(`${cf}.darkBackground.color`,darkThemeBackgroundColor);
 		this.t(x.animationConfig,x => {
 			const cf="D_CinematicAnimationConfig";
 			const {minImageUpdateIntervalMs,crossfadeDurationMs,crossfadeStartOffset,maxFrameRate,...y}=this.s(cf,x); this.g(y);
-			this.save_number(`${cf}.minImageUpdateIntervalMs`,minImageUpdateIntervalMs);
-			this.save_number(`${cf}.crossfadeDurationMs`,crossfadeDurationMs);
-			this.save_number(`${cf}.crossfadeStartOffset`,crossfadeStartOffset);
-			this.save_number(`${cf}.maxFrameRate`,maxFrameRate);
+			this.save_primitive(`${cf}.minImageUpdateIntervalMs`,minImageUpdateIntervalMs);
+			this.save_primitive(`${cf}.crossfadeDurationMs`,crossfadeDurationMs);
+			this.save_primitive(`${cf}.crossfadeStartOffset`,crossfadeStartOffset);
+			this.save_primitive(`${cf}.maxFrameRate`,maxFrameRate);
 		});
-		this.save_number(`${cf}.colorSourceSizeMultiplier`,colorSourceSizeMultiplier);
+		this.save_primitive(`${cf}.colorSourceSizeMultiplier`,colorSourceSizeMultiplier);
 		this.t(applyClientImageBlur,x => this.cq(x,true));
-		this.t(bottomColorSourceHeightMultiplier,x => this.save_number(`${cf}.bottomColorSourceHeightMultiplier`,x));
-		this.t(maxBottomColorSourceHeight,x => this.save_number(`${cf}.maxBottomColorSourceHeight`,x));
-		this.t(colorSourceWidthMultiplier,x => this.save_number(`${cf}.colorSourceWidthMultiplier`,x));
-		this.t(colorSourceHeightMultiplier,x => this.save_number(`${cf}.colorSourceHeightMultiplier`,x));
-		this.t(blurStrength,x => this.save_number(`${cf}.blurStrength`,x));
+		this.t(bottomColorSourceHeightMultiplier,x => this.save_primitive(`${cf}.bottomColorSourceHeightMultiplier`,x));
+		this.t(maxBottomColorSourceHeight,x => this.save_primitive(`${cf}.maxBottomColorSourceHeight`,x));
+		this.t(colorSourceWidthMultiplier,x => this.save_primitive(`${cf}.colorSourceWidthMultiplier`,x));
+		this.t(colorSourceHeightMultiplier,x => this.save_primitive(`${cf}.colorSourceHeightMultiplier`,x));
+		this.t(blurStrength,x => this.save_primitive(`${cf}.blurStrength`,x));
 		const {watchFullscreenConfig,...y}=u; this.g(y);/*#destructure_done*/
 		this.t(watchFullscreenConfig,this.g);
 	}
@@ -3205,20 +3216,20 @@ class ServiceMethods extends ServiceData {
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==0) debugger;
-			this.save_string("dark_gradient.0",u);
+			this.save_primitive("dark_gradient.0",u);
 		}
 		{
 			let c=x[1];
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
-			this.save_string("dark_gradient.1",u);
+			this.save_primitive("dark_gradient.1",u);
 		}
 		{
 			let c=x[2];
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==1) debugger;
-			this.save_string("dark_gradient.2",u);
+			this.save_primitive("dark_gradient.2",u);
 		}
 	}
 	/** @private @arg {D_AutoplayContent} x */
@@ -3241,7 +3252,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(playlistId);
 		this.a_primitive_num(currentIndex);
 		// this.parser.parse_url(cf,playlistShareUrl);
-		this.save_number("Playlist.localCurrentIndex",localCurrentIndex);
+		this.save_primitive("Playlist.localCurrentIndex",localCurrentIndex);
 		this.R_Menu(playlistButtons);
 		this._primitive_of(isInfinite,"boolean");
 		this._primitive_of(isCourse,"boolean");
@@ -3627,7 +3638,7 @@ class ServiceMethods extends ServiceData {
 		this.z(csiParameters,this.g);
 		this.params("instream_video_ad.player_vars",playerVars);
 		this.g(playerOverlay);
-		this.save_string(`${cf}.elementId`,elementId);
+		this.save_primitive(`${cf}.elementId`,elementId);
 		this.trackingParams(trackingParams);
 		if(legacyInfoCardVastExtension!=="") debugger;
 		this.g(sodarExtensionData);
@@ -3683,8 +3694,8 @@ class ServiceMethods extends ServiceData {
 			let sid=split_string(slotId,":");
 			let n=(BigInt(sid[0]));
 			n/=1000n;
-			this.save_number("AdSlot.slotId[0]",Number(n));
-			this.save_number_arr("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
+			this.save_primitive("AdSlot.slotId[0]",Number(n));
+			this.save_array("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		}
 		switch(slotPhysicalPosition) {
 			case 0:
@@ -3728,7 +3739,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {`ReloadContinuation.slot.${"body"|"header"}.targetId`} cf @arg {DC_ReloadContinuationItems["targetId"]} x */
 	DC_ReloadContinuationItem_TargetId(cf,x) {
 		if(this.is_yt_uuid(x)) return;
-		this.save_string(cf,x);
+		this.save_primitive(cf,x);
 	}
 	/** @private @arg {DC_ReloadContinuationItems} x */
 	DC_ReloadContinuationItems(x) {
@@ -3976,7 +3987,7 @@ class ServiceMethods extends ServiceData {
 	D_SubscriptionButton(x) {
 		const cf="D_SubscriptionButton";
 		const {type,subscribed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string("button.type",type);
+		this.save_primitive("button.type",type);
 		this.t(subscribed,this.a_primitive_bool);
 	}
 	/** @private @arg {D_MerchandiseShelf} x */
@@ -4507,7 +4518,7 @@ class ServiceMethods extends ServiceData {
 			const {content,trackingParams,rowIndex,colIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.G_RichItemContent(content);
 			this.trackingParams(trackingParams);
-			this.save_number_arr("Item.pos",[rowIndex,colIndex]);
+			this.save_array("Item.pos",[rowIndex,colIndex]);
 			return;
 		}
 		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -4544,7 +4555,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DMD_RowContainer";
 		const {rows,collapsedItemCount,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(rows,this.DMD_RowItem);
-		this.save_number(`${cf}.coll_item_count`,collapsedItemCount);
+		this.save_primitive(`${cf}.coll_item_count`,collapsedItemCount);
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_MerchandiseItem} x */
@@ -4860,8 +4871,8 @@ class ServiceMethods extends ServiceData {
 		this.parse_emoji_id(emojiId);
 		let [s_arr]=this.z(shortcuts,this.parse_emoji_shortcut);
 		this.z(s_arr,this.a_primitive_str);
-		this.save_string(`save://CustomEmoji.d/shortcuts/${emojiId}?custom=${isCustomEmoji}`,shortcuts.join(","));
-		this.save_string(`save://CustomEmoji.d/searchTerms/${emojiId}?custom=${isCustomEmoji}`,searchTerms.join(","));
+		this.save_primitive(`save://CustomEmoji.d/shortcuts/${emojiId}?custom=${isCustomEmoji}`,shortcuts.join(","));
+		this.save_primitive(`save://CustomEmoji.d/searchTerms/${emojiId}?custom=${isCustomEmoji}`,searchTerms.join(","));
 		this.D_EmojiImage(image);
 		this.a_primitive_bool(isCustomEmoji);
 		return y;
@@ -5418,7 +5429,7 @@ class ServiceMethods extends ServiceData {
 			let [,v3]=s2;
 			this.channelId(v3);
 		});
-		this.t(query,x => this.save_string(`${cf}.query`,x));
+		this.t(query,x => this.save_primitive(`${cf}.query`,x));
 	}
 	/** @public @arg {DE_VE3854} x */
 	DE_VE3854(x) {
@@ -5435,7 +5446,7 @@ class ServiceMethods extends ServiceData {
 			case "FEstorefront": case "FEtrending": case "SPreport_history":
 		}
 		this.t(params,x => this.params("ve_6827.params",x));
-		this.t(query,x => this.save_string(`${cf}.query`,x));
+		this.t(query,x => this.save_primitive(`${cf}.query`,x));
 	}
 	/** @public @arg {DE_VE11487} x */
 	DE_VE11487(x) {

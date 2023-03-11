@@ -46,7 +46,7 @@ class ParserService extends BaseService {
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
 		let vns=split_string(vv[1]," ")[1];
-		this.save_string("mime-type",vv[0]);
+		this.save_primitive("mime-type",vv[0]);
 		let v1=split_string(vns,"=")[1];
 		let codec_type_raw=this.extract_inner(v1,"\"");
 		if(this.str_has_sep(codec_type_raw,".")) {
@@ -200,12 +200,10 @@ class ParserService extends BaseService {
 		let xx=mapper(map_entry_value);
 		if(xx instanceof Array) {return xx.map(mapper);} else {return xx;}
 	}
-	/** @unused_api @protected @arg {string[]} x */
-	report$params(x) {this.save_string("report.params.path",x.join("$"));}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_number_arr(path,x[1]);
-		this.save_string(path,`${x[2]}n`);
+		this.save_array(path,x[1]);
+		this.save_primitive(path,`${x[2]}n`);
 	}
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
 	to_param_obj(x) {
@@ -366,22 +364,21 @@ class ParserService extends BaseService {
 	}
 	/** @unused_api @protected @arg {GU_VE6827_Url} x */
 	parse_ve_6827_url(x) {
-		const cf="parse_ve_6827_url";
 		/** @private @type {T_SplitOnce<GU_VE6827_Url,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string_once(su,"/");
 		if(su1.length===1) {
 			let [pt0]=su1;
-			this.save_string(`ve_6827.part[0]`,`${pt0}`);
 			switch(pt0) {
-				case "reporthistory": return;
-				default: debugger; return;
+				case "reporthistory": break;
+				default: debugger; break;
 			}
+			return;
 		}
 		switch(su1[0]) {
+			default: debugger; break;
 			case "feed": {
 				let [pt]=split_string_once(su1[1],"?");
-				this.save_string(cf,`${su1[0]}/${pt}`);
 				switch(pt) {
 					case "trending": break;
 					case "library": break;
@@ -392,6 +389,14 @@ class ParserService extends BaseService {
 				}
 			} break;
 			case "hashtag": break;
+			case "source": {
+				let [s1,s2]=split_string_once(su1[1],"/");
+				this.sm.videoId(s1);
+				switch(s2) {
+					default: debugger; break;
+					case "shorts": break;
+				}
+			} break;
 		}
 	}
 	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */

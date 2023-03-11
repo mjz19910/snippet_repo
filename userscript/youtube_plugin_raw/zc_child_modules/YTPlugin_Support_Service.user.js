@@ -292,9 +292,9 @@ class LocalStorageSeenDatabase extends BaseService {
 		if(!nn[1]) throw new Error();
 		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
-		this.save_string(`${ns_name}::${ns}`,no_ns_part);
-		this.save_string(`${cf}::enum_type`,ns_name);
-		this.save_string(`${cf}::enum_namespace`,ns);
+		this.save_primitive(`${ns_name}::${ns}`,no_ns_part);
+		this.save_primitive(`${cf}::enum_type`,ns_name);
+		this.save_primitive(`${cf}::enum_namespace`,ns);
 	}
 	/** @public @arg {string} ns @arg {number} idx @arg {StoreDescription<"string"|"keys">} store */
 	show_strings_bitmap(ns,idx,store) {
@@ -580,9 +580,9 @@ class Support_RS_Player extends BaseService {
 			t.xr.D_TimedTextApi(as_any(rx));
 		}
 		t.sm.G_Text(name);
-		t.save_string(`${cf}.vssId`,vssId);
-		t.save_string(`${cf}.languageCode`,languageCode);
-		t.t(kind,x => t.save_string(`${cf}.kind`,x));
+		t.save_primitive(`${cf}.vssId`,vssId);
+		t.save_primitive(`${cf}.languageCode`,languageCode);
+		t.t(kind,x => t.save_primitive(`${cf}.kind`,x));
 		if(isTranslatable!==true) debugger;
 		t.t(rtl,x => t.sm.cq(x,true));
 	}
@@ -628,9 +628,9 @@ class Support_RS_Player extends BaseService {
 	D_HeartbeatParams(x) {
 		const cf="D_HeartbeatParams";
 		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
+		this.save_primitive(`${cf}.intervalMilliseconds`,intervalMilliseconds);
 		this.sm.a_primitive_bool(softFailOnError);
-		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
+		this.save_primitive(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
 	/** @private @arg {D_Miniplayer} x */
 	D_Miniplayer(x) {
@@ -819,7 +819,7 @@ class Support_RS_Player extends BaseService {
 		this.sm.a_primitive_str(program);
 		let interpreterUrl=this.sm.UrlWrappedValueT(interpreterSafeUrl);
 		this.sm.a_primitive_str(interpreterUrl);
-		this.save_number(`${cf}.serverEnvironment`,serverEnvironment);
+		this.save_primitive(`${cf}.serverEnvironment`,serverEnvironment);
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
@@ -839,8 +839,8 @@ class Support_RS_Player extends BaseService {
 		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
 		this.parser.parse_url(cf,iframeUrl);
 		this.parser.parse_url(cf,flashUrl);
-		this.save_number(`${cf}.width`,width);
-		this.save_number(`${cf}.height`,height);
+		this.save_primitive(`${cf}.width`,width);
+		this.save_primitive(`${cf}.height`,height);
 		this.parser.parse_url(cf,flashSecureUrl);
 	}
 	/** @private @arg {D_VideoCategory} x */
@@ -951,7 +951,7 @@ class Support_RS_Player extends BaseService {
 	/** @private @arg {D_FormatFps} x */
 	D_FormatFps(x) {
 		const cf="D_FormatFps";
-		this.save_number(cf,x);
+		this.save_primitive(cf,x);
 	}
 	/** @private @arg {D_Range} x */
 	D_Range(x) {
@@ -1004,7 +1004,7 @@ class Support_RS_Player extends BaseService {
 		const cf="D_AudioTrack";
 		const {displayName,id,audioIsDefault,...y}=this.s(cf,x); this.g(y);
 		this.sm.a_primitive_str(displayName);
-		this.save_string(`${cf}.id`,id);
+		this.save_primitive(`${cf}.id`,id);
 		this.sm.cq(audioIsDefault,false);
 	}
 	/** @private @arg {D_Card_Content} x */
@@ -1046,8 +1046,8 @@ class Support_RS_Player extends BaseService {
 		const cf="D_CueRangeItem",t=this;
 		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
 		this.z([startCardActiveMs,endCardActiveMs],t.sm.pn);
-		this.save_number(`${cf}.teaserDurationMs`,this.sm.parse_number_template(teaserDurationMs));
-		this.save_number(`${cf}.endCardActiveMs`,this.sm.parse_number_template(endCardActiveMs));
+		this.save_primitive(`${cf}.teaserDurationMs`,this.sm.parse_number_template(teaserDurationMs));
+		this.save_primitive(`${cf}.endCardActiveMs`,this.sm.parse_number_template(endCardActiveMs));
 	}
 	/** @private @arg {D_SimpleCardTeaser} x */
 	D_SimpleCardTeaser(x) {
@@ -1063,9 +1063,9 @@ class Support_RS_Player extends BaseService {
 	D_LearningResource(x) {
 		const cf="D_LearningResource";
 		const {learningResourceType,educationalLevel,educationalLevelCountry,...y}=this.s(cf,x); this.g(y);
-		this.save_string_arr("D_LearningResource.learningResourceType",learningResourceType);
-		educationalLevel&&this.save_string_arr("D_LearningResource.educationalLevel",educationalLevel);
-		educationalLevelCountry&&this.save_string("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
+		this.save_array("D_LearningResource.learningResourceType",learningResourceType);
+		educationalLevel&&this.save_array("D_LearningResource.educationalLevel",educationalLevel);
+		educationalLevelCountry&&this.save_primitive("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
 	}
 }
 export_(exports => {exports.Support_RS_Player=Support_RS_Player;});
@@ -1136,19 +1136,19 @@ class Support_RS_Page_Browse extends BaseService {
 				const cf="RS_VE3854_BrowsePage";
 				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 				this._primitive_of(expirationTime,"number");
-				this.save_number(`${cf}.rootVe`,rootVe);
+				this.save_primitive(`${cf}.rootVe`,rootVe);
 			} break;
 			case 6827: {
 				const cf="RS_VE6827_BrowsePage";
 				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 				this._primitive_of(expirationTime,"number");
-				this.save_number(`${cf}.rootVe`,rootVe);
+				this.save_primitive(`${cf}.rootVe`,rootVe);
 			} break;
 			case 96368: {
 				const cf="RS_VE96368_BrowsePage";
 				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 				this._primitive_of(expirationTime,"number");
-				this.save_number(`${cf}.rootVe`,rootVe);
+				this.save_primitive(`${cf}.rootVe`,rootVe);
 			} break;
 			default: debugger; break;
 		}
@@ -1163,7 +1163,7 @@ class Support_RS_Page_Browse extends BaseService {
 				case 3854: {
 					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 					this._primitive_of(expirationTime,"number");
-					this.save_number(`${cf}.rootVe`,rootVe);
+					this.save_primitive(`${cf}.rootVe`,rootVe);
 				} break;
 				default: debugger; break;
 			}
@@ -1292,7 +1292,7 @@ class Support_GenericApi extends BaseService {
 			return;
 		}
 		/** @private @arg {{type:string}} x */
-		let g=x => {return this.save_string("need_api_type",x.type);};
+		let g=x => {return this.save_primitive("need_api_type",x.type);};
 		switch(x.type) {case "_Generic": return g(x);}
 		/** @private */
 		this._current_response_type=x.type;
@@ -2015,7 +2015,7 @@ class Support_EventInput extends BaseService {
 				debugger;
 			}
 			this.sm.trackingParams(trackingParams);
-			this.save_string(`${cf2}.title`,title);
+			this.save_primitive(`${cf2}.title`,title);
 		}
 	}
 	/** @private @arg {D_Tab_History} x */
@@ -2191,7 +2191,7 @@ class Support_Renderer extends BaseService {
 		const cf="AD_AddChatItem";
 		const {item,clientId,...y}=this.s(cf,x); this.g(y);
 		this.xr.G_ChatItem(item);
-		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
+		this.t(clientId,x => this.save_primitive(`${cf}.clientId`,x));
 	}
 	// CommandData Data methods
 	/** @private @arg {"DC_PlayerSeek"} cf @arg {CF_P_ParamParse} path @arg {DC_Generic} x */
@@ -2349,15 +2349,15 @@ class Support_Renderer extends BaseService {
 			const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			let idp=split_string_once(identifier,"|");
 			if(idp[0]!=="track_selection_sheet_option.eml") debugger;
-			this.save_string("D_TemplateUpdate.identifier.id",idp[0]);
-			this.save_string("D_TemplateUpdate.identifier.hash",idp[1]);
+			this.save_primitive("D_TemplateUpdate.identifier.id",idp[0]);
+			this.save_primitive("D_TemplateUpdate.identifier.hash",idp[1]);
 			this.t(dependencies,dep_arr => {
 				if(dep_arr.length!==1) debugger;
 				const dep=dep_arr[0];
 				let ddp=split_string_once(dep,"|");
 				if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
-				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
-				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
+				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
+				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
 			});
 			this.sm.a_primitive_str(a);
 		} else {
@@ -2412,7 +2412,7 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(startTimeText);
 		this.sm.trackingParams(trackingParams);
 		this.sm.D_Accessibility(accessibility);
-		this.t(targetId,x => this.save_string(`${cf}.targetId`,x));
+		this.t(targetId,x => this.save_primitive(`${cf}.targetId`,x));
 	}
 	/** @private @arg {D_TranscriptFooter} x */
 	D_TranscriptFooter(x) {this.sm.H_("languageMenu",x,this.sm.R_SortFilterSubMenu);}
@@ -2421,21 +2421,21 @@ class Support_Renderer extends BaseService {
 		const cf="D_TimedTextApi";
 		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(v);
-		caps&&this.save_string(`${cf}.caps`,caps);
-		this.save_string(`${cf}.xoaf`,xoaf);
-		xoadf&&this.save_string(`${cf}.xoadf`,xoadf);
-		xosf&&this.save_string(`${cf}.xosf`,xosf);
-		this.save_string(`${cf}.hl`,hl);
-		this.save_string(`${cf}.ip`,ip);
-		this.save_string(`${cf}.ipbits`,ipbits);
+		caps&&this.save_primitive(`${cf}.caps`,caps);
+		this.save_primitive(`${cf}.xoaf`,xoaf);
+		xoadf&&this.save_primitive(`${cf}.xoadf`,xoadf);
+		xosf&&this.save_primitive(`${cf}.xosf`,xosf);
+		this.save_primitive(`${cf}.hl`,hl);
+		this.save_primitive(`${cf}.ip`,ip);
+		this.save_primitive(`${cf}.ipbits`,ipbits);
 		let e_num=this.sm.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.sm.a_primitive_num(e_num);
 		this.ht.parse_signature(signature);
-		this.save_string(`${cf}.sparams`,sparams);
-		this.save_string(`${cf}.key`,key);
-		kind&&this.save_string(`${cf}.kind`,kind);
-		this.save_string(`${cf}.lang`,lang);
+		this.save_primitive(`${cf}.sparams`,sparams);
+		this.save_primitive(`${cf}.key`,key);
+		kind&&this.save_primitive(`${cf}.kind`,kind);
+		this.save_primitive(`${cf}.lang`,lang);
 	}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
@@ -3521,7 +3521,7 @@ class Support_Renderer extends BaseService {
 			this.z(emojiIds,x => {
 				let [channel_id,parsed_emoji]=this.sm.parse_emoji_id(x);
 				this.sm.channelId(channel_id);
-				this.save_string(`${categoryId}.emojiId`,parsed_emoji);
+				this.save_primitive(`${categoryId}.emojiId`,parsed_emoji);
 			});
 			this.sm.channelId(categoryId);
 			this.sm.trackingParams(trackingParams);
@@ -3535,7 +3535,7 @@ class Support_Renderer extends BaseService {
 		}
 		this.sm.G_Text(title);
 		this.z(emojiIds,x => {
-			this.save_string(`${categoryId}.emojiId`,x);
+			this.save_primitive(`${categoryId}.emojiId`,x);
 		});
 		this.sm.trackingParams(trackingParams);
 		if(imageLoadingLazy!==true) debugger;
@@ -3623,7 +3623,7 @@ class Support_Renderer extends BaseService {
 		const cf="AD_UpdateCommentVote";
 		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.t(voteCount,this.sm.G_Text);
-		this.save_string(`${cf}.voteStatus`,voteStatus);
+		this.save_primitive(`${cf}.voteStatus`,voteStatus);
 		switch(voteStatus) {
 			case "LIKE":
 		}
@@ -3808,7 +3808,7 @@ class ForService_XMethods extends BaseService {
 	G_ClientSignal(x) {
 		const cf="G_ClientSignal";
 		let {signal,actions,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.signal`,signal);
+		this.save_primitive(`${cf}.signal`,signal);
 		this.z(actions,this.G_ClientSignal_Item);
 	}
 	/** @arg {G_ClientSignal_Item} x */
@@ -4092,7 +4092,7 @@ class ForService_XMethods extends BaseService {
 		this.t(iconPosition,x => this.save_enum(cf,"BUTTON_ICON_POSITION_TYPE",x));
 		this.t(targetId,this.D_Button_targetId);
 		this.t(serviceEndpoint,this.D_Button_SE);
-		this.t(style,x => this.save_string(`${cf}.style`,x));
+		this.t(style,x => this.save_primitive(`${cf}.style`,x));
 		this.sm.t(isDisabled,this.sm.a_primitive_bool);
 		this.sm.t(text,this.sm.G_Text);
 		this.t(icon,x => this.sm.T_Icon(`${cf}.icon`,x));
@@ -4191,10 +4191,10 @@ class ForService_XMethods extends BaseService {
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
 		const {style,isToggled,isDisabled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,...u}=this.s(cf,x);
-		this.t(style,x => this.save_string(`${cf}.style`,x.styleType));
+		this.t(style,x => this.save_primitive(`${cf}.style`,x.styleType));
 		this.sm.t(isToggled,this.sm.a_primitive_bool);
 		this.t(isDisabled,x => this.sm.cq(x,false));
-		this.t(defaultIcon,x => this.save_string(`${cf}.defaultIcon.type`,x.iconType));
+		this.t(defaultIcon,x => this.save_primitive(`${cf}.defaultIcon.type`,x.iconType));
 		this.sm.t(defaultText,this.sm.G_Text);
 		this.t(defaultServiceEndpoint,this.D_ToggleButton_DefaultSrvEP);
 		this.sm.t(toggledText,this.sm.G_Text);
@@ -4202,7 +4202,7 @@ class ForService_XMethods extends BaseService {
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
 		this.xm.t(accessibility,this.xm.D_Label);
 		this.sm.trackingParams(trackingParams);
-		this.t(toggledStyle,x => this.save_string(`${cf}.toggledStyle.type`,x.styleType));
+		this.t(toggledStyle,x => this.save_primitive(`${cf}.toggledStyle.type`,x.styleType));
 		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
 		this.t(toggledTooltip,x => this.add_string_to_map(cf,"toggledTooltip",x));
 		this.sm.t(accessibilityData,this.sm.D_Accessibility);
@@ -4282,7 +4282,7 @@ class ForService_XMethods extends BaseService {
 	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
 	R_ThumbnailOverlayTimeStatus(x) {this.H_("thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
-	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
+	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_primitive("resume_playback.percentDurationWatched",x));}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
 	D_ThumbnailOverlayTimeStatus(x) {
 		const cf="D_ThumbnailOverlayTimeStatus";
@@ -4782,8 +4782,8 @@ class ForService_XMethods extends BaseService {
 	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
 	DU_UrlParse(x) {
 		const cf="DU_UrlParse";
-		this.save_string(`${cf}.host`,x.host);
-		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_string(`${cf}.pathname`,x.pathname);
+		this.save_primitive(`${cf}.host`,x.host);
+		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_primitive(`${cf}.pathname`,x.pathname);
 		this.sm.DU_UrlParams(this.parse_url_search_params(x.search));
 	}
 	/** @private @arg {DE_Url} x */
@@ -4978,7 +4978,7 @@ class ForService_XMethods extends BaseService {
 		const cf="D_ClickLocationTarget";
 		const {location,code,behaviorType,...y}=this.s(cf,x); this.g(y);
 		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_LOCATION",location);
-		this.save_number(`${cf}.code`,code);
+		this.save_primitive(`${cf}.code`,code);
 		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
 	/** @private @arg {DE_SignalNavigation} x */
@@ -4999,7 +4999,7 @@ class ForService_XMethods extends BaseService {
 		this.xm.R_Button(playButton);
 		this.xm.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.sm.playlistId(playlistId);
-		this.save_string(`${cf}.privacy`,privacy);
+		this.save_primitive(`${cf}.privacy`,privacy);
 		this.xm.R_Button(shufflePlayButton);
 		this.sm.trackingParams(trackingParams);
 		this.sm.D_EditableDetails(editableDetails);
@@ -5052,8 +5052,8 @@ class ForService_XMethods extends BaseService {
 		const {label,value,maxCharacterLimit,key,onChange,placeholderText,validValueRegexp,invalidValueErrorMessage,isMultiline,required,...y}=this.s(cf,x); this.g(y);
 		this.sm.G_Text(label);
 		this.t(value,x => this.sm.a_primitive_str(x));
-		this.save_number(`${cf}.maxCharacterLimit`,maxCharacterLimit);
-		this.t(key,x => this.save_string(`${cf}.key`,x));
+		this.save_primitive(`${cf}.maxCharacterLimit`,maxCharacterLimit);
+		this.t(key,x => this.save_primitive(`${cf}.key`,x));
 		this.sm.t(onChange,this.sm.E_PlaylistEdit);
 		this.t(placeholderText,x => this.sm.a_primitive_str(x));
 		this.sm.cq(validValueRegexp,"[^<>]*");

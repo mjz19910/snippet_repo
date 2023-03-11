@@ -440,8 +440,8 @@ async function async_plugin_init(event) {
 					if(e.id==="player"&&e.classList.value==="skeleton flexy") return false;
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
-					let fut_data=[e.tagName,e.id,e.classList.value];
-					window.yt_plugin?.save_string_arr("body_element",fut_data);
+					console.log([e.tagName,e.id,e.classList.value]);
+					debugger;
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2358,16 +2358,10 @@ class BaseService extends ServiceWithMembers {
 	save_boolean_one(k,x) {k; x;}
 	/** @public @arg {string} k @arg {{}} x */
 	k(k,x) {this.save_primitive(k,x);}
-	/** @protected @arg {string} k @arg {string} x */
-	save_string(k,x) {k; x;}
-	/** @public @arg {string} k @arg {string[]} x */
-	save_string_arr(k,x) {k; x;}
-	/** @protected @arg {string} k @arg {number} x */
-	save_number(k,x) {k; x;}
-	/** @protected @arg {string} k @arg {number[]} x */
-	save_number_arr(k,x) {k; x;}
+	/** @protected @arg {string} k @arg {number[]|string[]} x */
+	save_array(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {Uint8Array} x */
-	save_number_bin(k,x) {k; x;}
+	save_binary_array(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {object|string|number} x */
 	save_primitive(k,x) {k; x;}
 	/** @protected @arg {D_GM_VeNum} x */
@@ -2482,8 +2476,8 @@ class BaseService extends ServiceWithMembers {
 		let n2=n1[1];
 		if(sep!=="") {
 			let sd=this.drop_separator(n1[1],sep);
-			this.save_string(`${ns_name}::${enum_base}`,sd);
-		} else {this.save_string(`${ns_name}::${enum_base}`,n2);}
+			this.save_primitive(`${ns_name}::${enum_base}`,sd);
+		} else {this.save_primitive(`${ns_name}::${enum_base}`,n2);}
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]} */
 	drop_separator(x,sep) {
@@ -2804,14 +2798,14 @@ class CsiService extends BaseService {
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
 		this.decode_rid_section(x);
-		this.save_string("rid_key",x.key);
+		this.save_primitive("rid_key",x.key);
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_section(x) {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
 			let section_id=section[0].toLowerCase();
-			this.save_string("section_id",section_id);
+			this.save_primitive("section_id",section_id);
 		} else {debugger;}
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} param */
@@ -2865,7 +2859,7 @@ class CsiService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "c": {
-					this.save_string(`CsiService.${param.key}`,param.value);
+					this.save_primitive(`CsiService.${param.key}`,param.value);
 					this.data[param.key]=param.value;
 				} continue;
 				case "cver": this.data[param.key]=param.value; continue;

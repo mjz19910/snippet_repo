@@ -327,7 +327,7 @@ class HandleTypes extends BaseService {
 		if(!buffer) {debugger; return;}
 		let c_pos=0;
 		for(;c_pos<6;c_pos++) this.save_primitive(`${cf}.${c_pos}`,buffer[c_pos]);
-		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number_arr(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
+		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_array(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
 	cg_mismatch_set=new Set();
@@ -2087,7 +2087,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		switch(r_str[1]) {
-			default: this.save_string_arr(`${cf}.str.default`,r_str); break;
+			default: this.save_array(`${cf}.str.default`,r_str); break;
 			case "cards":
 			case "endscreen":
 			case "external":
