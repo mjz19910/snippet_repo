@@ -105,9 +105,7 @@ function generate_ts-output_v1 {
 	{
 		pushd "$TMP_DIR/$DEST_DIR"
 		generate_ts-init_cwd
-
 		cp "$PROJ_DIR/$DEST_DIR/generated/out.ts" "generated/tmp.ts"
-
 		grep "|{n:" "generated/out.ts.bak" >"$TMP_DIR/tmp_partial.ts"
 		generate_typescript_code_force_valid >"$TMP_DIR/tmp.ts"
 		tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
