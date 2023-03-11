@@ -6,16 +6,19 @@ type TaskAsFuture<T>={
 
 type ActiveTask<T>={
 	future: TaskAsFuture<T>;
-	cancel():void;
+	cancel(): void;
 };
 
 declare global {
+	class ExpantaNum {
+		clone(): ExpantaNum;
+	}
 	interface Window {
 		// cint (number for a single setTimeout / setInterval)
 		__cint?: number;
 		// item_04
 		__active_task?: ActiveTask<{}>;
-		get_active_task<T>(like:T): ActiveTask<T>;
+		get_active_task<T>(like: T): ActiveTask<T>;
 		__cur_task: TimeoutExecutor;
 		// item_05
 		buffer_vec: ArrayBuffer;
@@ -31,7 +34,7 @@ declare global {
 declare global {
 	interface Window {
 		module_list: WebAssembly.Module[];
-		exchange?: (x:number)=>void;
+		exchange?: (x: number) => void;
 	}
 }
 

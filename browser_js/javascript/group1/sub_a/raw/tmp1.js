@@ -1,13 +1,6 @@
 /*
 https://jacorb90.me/The-Factory-Of-Automation/
 */
-
-player_nums = Object.fromEntries(
-	Object.entries(player)
-		.filter(e => e[1] instanceof ExpantaNum)
-		.map(e => [e[0], e[1].clone()])
-);
-
 window.confirm = function(msg) {
 	console.log(msg, new Error().stack);
 	return true;

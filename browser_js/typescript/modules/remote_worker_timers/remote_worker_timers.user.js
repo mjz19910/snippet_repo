@@ -197,7 +197,7 @@
 		fire=new WorkerReplyTimerFireTypes;
 	}
 	class TimeoutWorkerTypes {
-		/** @type {import("./constant_types.js").WorkerReplyTypesT} */
+		/** @type {import("./WorkerReplyTypesT.js").WorkerReplyTypesT} */
 		reply=new WorkerReplyTypes;
 		/** @type {import("./constant_types.js").WorkerUpdateMessageHandlerT} */
 		update_message_handler=WorkerUpdateMessageHandler;

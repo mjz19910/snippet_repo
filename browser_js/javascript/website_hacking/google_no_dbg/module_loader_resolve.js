@@ -1,6 +1,7 @@
 {
 	// @ts-ignore
 	let _a=a;
+	// @ts-ignore
 	let _b=b;
 	{
 		let a=_a;
