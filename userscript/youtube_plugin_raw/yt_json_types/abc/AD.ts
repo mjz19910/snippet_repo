@@ -39,4 +39,3 @@ type AD_AccountItem={
 	channelHandle: G_Text;
 };
 type AD_AddToToast={item: R_NotificationText;};
-type AD_NotificationMulti={};

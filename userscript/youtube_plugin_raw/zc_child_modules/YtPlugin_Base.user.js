@@ -2206,16 +2206,17 @@ class PrivateAccessorCache extends ServiceWithResolver {
 	get indexed_db() {return this.x.get("indexed_db");}
 	get parser() {return this.x.get("parser_service");}
 	get codegen() {return this.x.get("codegen");}
-	get service_methods(/**/) {return this.x.get("service_methods");}
+	get service_methods() {return this.x.get("service_methods");}
 	get x_methods() {return this.x.get("x_methods");}
 	get save_db() {return this.x.get("save_db");}
 }
 class ServiceWithAccessors extends ServiceWithResolver {
-	get parser() {return this.x.get("parser_service");}
-	get cg() {return this.x.get("codegen");}
-	get sm(/**/) {return this.x.get("service_methods");}
-	get xm() {return this.x.get("x_methods");}
-	get save_db() {return this.x.get("save_db");}
+	get m_c() {return this.x.get("common_methods");}
+	get m_cg() {return this.x.get("codegen");}
+	get m_ps() {return this.x.get("parser_service");}
+	get m_s() {return this.x.get("service_methods");}
+	get m_sd() {return this.x.get("save_db");}
+	get m_x() {return this.x.get("x_methods");}
 	//#region Service Cache
 	/** @private */
 	get z_xr() {return this.x.get("x_Renderer");}
@@ -2225,21 +2226,21 @@ class ServiceWithAccessors extends ServiceWithResolver {
 	get z_ix() {return this.x.get("indexed_db");}
 	/** @type {PrivateAccessorCache["x_Renderer"]|null} */
 	_xr=null;
-	get xr() {
+	get m_xr() {
 		if(this._xr) return this._xr;
 		this._xr=this.z_xr;
 		return this._xr;
 	}
 	/** @type {PrivateAccessorCache["handle_types"]|null} */
 	_ht=null;
-	get ht() {
+	get m_ht() {
 		if(this._ht) return this._ht;
 		this._ht=this.z_ht;
 		return this._ht;
 	}
 	/** @type {PrivateAccessorCache["indexed_db"]|null} */
 	_ix=null;
-	get ix() {
+	get m_ix() {
 		if(this._ix) return this._ix;
 		this._ix=this.z_ix;
 		return this._ix;
@@ -2271,11 +2272,11 @@ class BaseService extends ServiceWithMembers {
 		x: if(!(tm instanceof ServiceData)) {
 			/** @type {(...args:any[])=>void} */
 			let a_fn=f;
-			if(a_fn===this.xm.D_Label) break x;
+			if(a_fn===this.m_x.D_Label) break x;
 			if(a_fn!==void 0) break x;
 			debugger; return;
 		}
-		this.sm.H_cls(this,k,x,f);
+		this.m_s.H_cls(this,k,x,f);
 	}
 	/** @public @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f) {
@@ -2286,11 +2287,11 @@ class BaseService extends ServiceWithMembers {
 	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s(cf,x) {
 		if(!x) debugger;
-		this.sm.k(cf,x);
+		this.m_s.k(cf,x);
 		return x;
 	}
 	/** @public @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
-	y(cf,k,x,f) {return f.call(this,this.sm.w(cf,k,x),`${cf}.${k}`);}
+	y(cf,k,x,f) {return f.call(this,this.m_s.w(cf,k,x),`${cf}.${k}`);}
 	/**
 	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
 	 * @returns {[U,Omit<T,"webCommandMetadata">]}
@@ -2313,16 +2314,16 @@ class BaseService extends ServiceWithMembers {
 			text_decoder: this._decoder,
 			cf: k,keys,is_root: true,
 		});
-		let cf=this.cg.get_auto_type_name(s,x);
+		let cf=this.m_cg.get_auto_type_name(s,x);
 		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
-		this.sm.clickTrackingParams(clickTrackingParams);
+		this.m_s.clickTrackingParams(clickTrackingParams);
 		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
 		return [y,r1,r2];
 	}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(k,x,f) {
 		if(f===void 0) {debugger; return;}
-		this.sm.H_cls(this,k,x,f);
+		this.m_s.H_cls(this,k,x,f);
 	}
 	//#region string replace
 	/** @public @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
@@ -2344,7 +2345,7 @@ class BaseService extends ServiceWithMembers {
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */
 		let y=as(x);
-		return this.save_db.unwrap_brackets(y);
+		return this.m_sd.unwrap_brackets(y);
 	}
 	//#endregion
 	//#region make
@@ -2382,12 +2383,12 @@ class BaseService extends ServiceWithMembers {
 		return this.make_arr_t(k,[...r,...a]);
 	}
 	/** @protected @arg {string} cf @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} k */
-	save_enum(cf,ns,k) {return this.save_db.save_enum_impl(cf,ns,k);}
+	save_enum(cf,ns,k) {return this.m_sd.save_enum_impl(cf,ns,k);}
 	//#region accessors
 	//#endregion
 	//#region redirect member functions
 	/** @public @arg {string} cf @arg {{}} x */
-	codegen_typedef(cf,x,do_break=true) {this.cg.codegen_typedef(cf,x,do_break,false);}
+	codegen_typedef(cf,x,do_break=true) {this.m_cg.codegen_typedef(cf,x,do_break,false);}
 	//#endregion
 	//#region template methods that make objects
 	/** @type {"a/k/l/z"} */
@@ -2664,8 +2665,8 @@ class YtHandlers extends BaseService {
 		let parsed_url=convert_to_url(request).url;
 		/** @private @type {D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
-		let url_type=this.sm.decode_url(api_url);
-		let res=this.sm.decode_json_response(url_type,parsed_obj);
+		let url_type=this.m_s.decode_url(api_url);
+		let res=this.m_s.decode_json_response(url_type,parsed_obj);
 		if(!res) {console.log("Decoding of the json response did not return a result"); return;}
 		this.x.get("x_GenericApi").G_ResponseTypes(response,res);
 	}
@@ -2695,9 +2696,9 @@ class YtHandlers extends BaseService {
 				x: if("rootVe" in x) {if(x.rootVe!==3854) break x; ok(x); break;}
 				x: if("rootVe" in x) {if(x.rootVe!==6827) break x; ok(x); break;}
 				x: if("rootVe" in x) {if(x.rootVe!==96368) break x; ok(x); break;}
-				x: {if(!this.sm.is_EP_Val(x,3854)) break x; ok(x); break;}
-				x: {if(!this.sm.is_EP_Val(x,6827)) break x; ok(x); break;}
-				x: {if(!this.sm.is_EP_Val(x,96368)) break x; ok(x); break;}
+				x: {if(!this.m_s.is_EP_Val(x,3854)) break x; ok(x); break;}
+				x: {if(!this.m_s.is_EP_Val(x,6827)) break x; ok(x); break;}
+				x: {if(!this.m_s.is_EP_Val(x,96368)) break x; ok(x); break;}
 				debugger;
 			} break;
 			case "channel":
@@ -2915,7 +2916,7 @@ class GFeedbackService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.sm.browseId(param.value); break;
+				case "browse_id": this.m_s.browseId(param.value); break;
 				case "context": this.on_context_param(this.data,param.value); break;
 				case "e": this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
@@ -2942,7 +2943,7 @@ class GFeedbackService extends BaseService {
 	}
 	/** @private @arg {SP_GFeedbackServiceRouteParam} x */
 	parse_route_param(x) {
-		let h=this.parser;
+		let h=this.m_ps;
 		this.data.route=x.value;
 		let route_parts=split_string_once(x.value,".");
 		switch(route_parts[0]) {
@@ -2994,7 +2995,7 @@ class TrackingServices extends BaseService {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.sm.browseId(param.value); break;
+				case "browse_id": this.m_s.browseId(param.value); break;
 				default: console.log("[new_param_key]",param); debugger;
 			}
 		}

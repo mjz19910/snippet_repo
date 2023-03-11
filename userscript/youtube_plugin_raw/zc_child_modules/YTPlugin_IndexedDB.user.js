@@ -152,7 +152,7 @@ class IndexedDBService extends BaseService {
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
 	/** @temporary @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
-	put_box(x,version) {return this.ht.put("boxed_id",x,version);}
+	put_box(x,version) {return this.m_ht.put("boxed_id",x,version);}
 	/** @arg {number} version @returns {Promise<DST_LoadId|null>} */
 	async get_load_id(version) {
 		/** @type {DST_LoadId|null} */
@@ -167,8 +167,8 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {G_BoxedDatabaseData} x */
 	store_cache_tree(x) {
-		this.ht.loaded_keys.add(x.key);
-		this.ht.loaded_map.set(x.key,x);
+		this.m_ht.loaded_keys.add(x.key);
+		this.m_ht.loaded_map.set(x.key,x);
 	}
 	/** @template T @arg {make_item_group<T>} x @arg {T[]} _mt */
 	uv_unpack_mt(x,_mt) {
@@ -406,7 +406,7 @@ class IndexedDBService extends BaseService {
 		};
 		s.obj_store=typed_db.objectStore(s.tx,key);
 		let d_cache=this.cache();
-		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.ht.loaded_keys.has(e.key));
+		let no_null_cache=d_cache.filter(e => e!==null&&"type" in e&&!this.m_ht.loaded_keys.has(e.key));
 		/** @type {G_BoxedDatabaseData[]} */
 		let new_arr=[];
 		/** @type {G_BoxedDatabaseData[]} */
@@ -435,8 +435,8 @@ class IndexedDBService extends BaseService {
 				}
 				if(x_value===null) continue;
 				if(this.committed_data.includes(x_value)) continue;
-				if(this.ht.loaded_keys.has(x_value.key)) {
-					let y_value=this.ht.loaded_map.get(x_value.key); y_value;
+				if(this.m_ht.loaded_keys.has(x_value.key)) {
+					let y_value=this.m_ht.loaded_map.get(x_value.key); y_value;
 				}
 				let cursor_req=typed_db.openCursor(s.obj_store,TypedIDBValidKeyS.only(x_value.key));
 				if(tx_scope.is_tx_complete) {

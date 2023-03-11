@@ -50,9 +50,8 @@ class CodegenService extends ServiceWithAccessors {
 			if("iconType" in x) {return (`this.T$Icon(${k});`);}
 		}
 		if(x===null) return `if(${k}!==null) debugger;`;
-		if(cf.startsWith("E_")) {
-			debugger; x;
-			let ic=this.uppercase_first(split_string_once(cf,"Endpoint")[0]);
+		if(cf.startsWith("E_")&&k.endsWith("Endpoint")) {
+			let ic=split_string_once(cf,"E_")[1];
 			return `this.DE_${ic}(${k});`;
 		}
 		if(k.endsWith("Endpoint")) {
@@ -66,7 +65,8 @@ class CodegenService extends ServiceWithAccessors {
 		if(this.#simple_gen_names.includes(k)) {
 			return `this.${k}(${k});`;
 		}
-		return `this.D_${k}(${k});`;
+		let ic=this.uppercase_first(k);
+		return `this.D_${ic}(${k});`;
 	}
 	/** @no_mod @arg {string} cf @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#codegen_renderer_body(cf,x,keys,t_name) {
@@ -135,7 +135,7 @@ class CodegenService extends ServiceWithAccessors {
 		let gen_data_name=() => {
 			if(!kk) throw new Error();
 			let kn_pre=this.get_codegen_name(kk);
-			if(this.sm.str_starts_with_rx("R_",kn_pre)) {
+			if(this.m_s.str_starts_with_rx("R_",kn_pre)) {
 				let np_arr_2=split_string_once(kn_pre,"R_");
 				return `D_${np_arr_2[1]}`;
 			}
@@ -244,7 +244,7 @@ class CodegenService extends ServiceWithAccessors {
 		if(o2==null) return null;
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		let s=new JsonReplacerState({
-			text_decoder: this.sm._decoder,
+			text_decoder: this.m_s._decoder,
 			cf,keys,is_root: true,
 		});
 		let new_typedef=this.codegen_typedef_base(s,cf,x);
@@ -318,7 +318,7 @@ class CodegenService extends ServiceWithAccessors {
 	get_codegen_name_obj(cf,x1) {
 		let keys=this.get_keys_of(x1);
 		let s=new JsonReplacerState({
-			text_decoder: this.sm._decoder,
+			text_decoder: this.m_s._decoder,
 			cf,keys,is_root: true,
 		});
 		/** @type {{}} */
@@ -456,7 +456,7 @@ class CodegenService extends ServiceWithAccessors {
 		}
 		let mi=s.object_store.indexOf(x);
 		if(x instanceof Uint8Array) {
-			let res=this.sm._decoder.decode(x);
+			let res=this.m_s._decoder.decode(x);
 			return `TYPE::V_Uint8Array<"${res}">`;
 		}
 		let xi=Object.entries(x);
@@ -541,12 +541,12 @@ class CodegenService extends ServiceWithAccessors {
 			let u2=v.webCommandMetadata.rootVe;
 			if(u2) return `TYPE::M_VE${u2}`;
 			if(u1) {
-				let ss=this.sm.split_str(u1,"/");
+				let ss=this.m_s.split_str(u1,"/");
 				if(ss[0]!=="") debugger;
 				let [,a2,a3,...rest]=ss;
 				if(a2!=="youtubei") debugger;
 				if(a3!=="v1") debugger;
-				let cq=this.sm.join_string(rest,"_");
+				let cq=this.m_s.join_string(rest,"_");
 				return `TYPE::M_${cq}`;
 			}
 			/** @type {M_SendPost} */
@@ -599,7 +599,7 @@ class CodegenService extends ServiceWithAccessors {
 				let res=this.get_short_typename(as(pre_str));
 				if(res[0]) {
 					let str=res[1];
-					if(this.sm.str_starts_with(str,"R_")) {
+					if(this.m_s.str_starts_with(str,"R_")) {
 						let d=split_string_once(str,"R_")[1];
 						return `TYPE::D_${d}`;
 					}
@@ -700,7 +700,7 @@ class CodegenService extends ServiceWithAccessors {
 		s.set_cf(cf);
 		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,s),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
-		tc=this.sm.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+		tc=this.m_s.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
 		});
@@ -1162,7 +1162,7 @@ class CodegenService extends ServiceWithAccessors {
 			;
 		if(hg) {
 			let hr=g();
-			if(this.sm.str_ends_with(hr,"Command")) {
+			if(this.m_s.str_ends_with(hr,"Command")) {
 				let sq=split_string_once(hr,"Command");
 				if(sq[1]==="") {return `TYPE::C_${split_string_once(sq[0],"TYPE::")[1]}`;}
 				console.log(sq);
