@@ -1576,7 +1576,7 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	//#region More misc
-	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
+	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {CF_M_H_d} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f) {
 		if(!x) {debugger; return null;}
 		this.sm.k(cf,x);

@@ -74,6 +74,35 @@ export namespace Gen {
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "RS_Page_Watch";}
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "R_WatchPage_VE3832";}
 		|{n: "CF_M_HD"; t: CF_M_HD; v: "RS_AttLog_RC";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "110:i5";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "AD_ReplaceEnclosing_Item";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "DE_Like";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_Card_Content";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_ClientMessages";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_EndscreenElement_EP";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_EngagementPanelSectionList";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_LoggingDirectives_Gestures";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_PlaybackTracking";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_TextRun_NavEP_1";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_ThumbnailOverlayToggleButton";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_ToggleButton_DefaultSrvEP";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "D_ToggleButton_ToggledSrvEP";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "GE_Continuation";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "GM_Like";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_ClientSignal_Item";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_DC_Innertube";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_MenuItem";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_MenuNavigationPopup";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_Menu_TopLevelButton";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_PlayerStoryboards";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_ResponseTypes";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "G_WatchResultItem_ItemSection.section";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "P_Typed_TrackingObj";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "R_ConfirmDialog";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "R_WatchPage";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "YTNavigateFinishDetail";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "parse_api_stats_url.ads";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "popup_dialog";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_AccountItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_AddChatItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_AddToGuideSection";}
