@@ -588,10 +588,16 @@ class CodegenService extends ServiceWithAccessors {
 			return `TYPE::${sig_type}`;
 		}
 		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
-			let pi=s.parent_map.get(x);
-			if(!pi) break x;
-			if(pi[1]==="owner") {return "TYPE::D_Video_Owner";}
-			console.log(pi);
+			let p=s.parent_map.get(x);
+			if(!p) break x;
+			if(p[1]==="owner") {return "TYPE::D_Video_Owner";}
+			if(p[1].endsWith("Renderer")) {
+				let res=this.get_short_typename(as(p[1]));
+				console.log(res);
+				debugger;
+				break x;
+			}
+			console.log(p);
 			debugger;
 		}
 		/** @private @type {D_Accessibility} */
@@ -724,11 +730,58 @@ class CodegenService extends ServiceWithAccessors {
 		}
 		return "{}";
 	}
+	/** @arg {Exclude<Ret_json_auto_replace_1,"{}">} type_name @returns {[true,G_ShortTypeName]|[false,"PrefetchHintConfig"]} */
+	get_short_typename(type_name) {
+		if(type_name==="MetadataBadgeRenderer") return [true,"RMD_Badge"];
+		/** @template {string} O @arg {O} x @arg {U} _sec @template {string} U @returns {asserts x is Exclude<O,`${string}${U}`>}  */
+		function assert_not_ends_with(x,_sec) {x;}
+		{
+			let split_val=split_string_once(type_name,"Action");
+			if(split_val.length===2) {
+				let real_val=split_val[0];
+				return [true,`A_${real_val}`];
+			}
+			assert_not_ends_with(type_name,"Action");
+		}
+		{
+			const ed="Command";
+			let split_val=split_string_once(type_name,ed);
+			if(split_val.length!==1) {
+				let real_val=split_val[0];
+				return [true,`C_${real_val}`];
+			}
+			assert_not_ends_with(type_name,ed);
+		}
+		{
+			const ed="Endpoint";
+			let split_val=split_string_once(type_name,ed);
+			if(split_val.length!==1) {
+				let real_val=split_val[0];
+				if(real_val==="Browse") {
+					console.log(type_name);
+					debugger;
+					/** @type {GE_Browse} */
+					return [true,"GE_Browse"];
+				}
+				return [true,`E_${real_val}`];
+			}
+			assert_not_ends_with(type_name,ed);
+		}
+		{
+			const ed="Renderer";
+			let split_val=split_string_once(type_name,ed);
+			if(split_val.length!==1) {
+				let real_val=split_val[0];
+				return [true,`R_${real_val}`];
+			}
+			assert_not_ends_with(type_name,ed);
+		}
+		return [false,type_name];
+	}
 	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {Ret_get_auto_type_name} */
 	get_auto_type_name(s,x) {
 		let type_name=this.json_auto_replace_1(x);
 		if(type_name==="{}") return "{}";
-		if(type_name==="MetadataBadgeRenderer") {return "RMD_Badge";}
 		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
 			if(!x.openPopupAction) break x;
 			/** @type {TA_OpenPopup<T_OpenPopup_Dialog<{}>|T_OpenPopup_Toast<{}>>} */
@@ -753,50 +806,9 @@ class CodegenService extends ServiceWithAccessors {
 				}
 			}
 		}
-		/** @template {string} O @arg {O} x @arg {U} _sec @template {string} U @returns {asserts x is Exclude<O,`${string}${U}`>}  */
-		function assert_not_ends_with(x,_sec) {x;}
-		{
-			let split_val=split_string_once(type_name,"Action");
-			if(split_val.length===2) {
-				let real_val=split_val[0];
-				return `A_${real_val}`;
-			}
-			assert_not_ends_with(type_name,"Action");
-		}
-		{
-			const ed="Command";
-			let split_val=split_string_once(type_name,ed);
-			if(split_val.length!==1) {
-				let real_val=split_val[0];
-				return `C_${real_val}`;
-			}
-			assert_not_ends_with(type_name,ed);
-		}
-		{
-			const ed="Endpoint";
-			let split_val=split_string_once(type_name,ed);
-			if(split_val.length!==1) {
-				let real_val=split_val[0];
-				if(real_val==="Browse") {
-					console.log(type_name);
-					debugger;
-					/** @type {GE_Browse} */
-					return "GE_Browse";
-				}
-				return `E_${real_val}`;
-			}
-			assert_not_ends_with(type_name,ed);
-		}
-		{
-			const ed="Renderer";
-			let split_val=split_string_once(type_name,ed);
-			if(split_val.length!==1) {
-				let real_val=split_val[0];
-				return `R_${real_val}`;
-			}
-			assert_not_ends_with(type_name,ed);
-		}
-		return `D_${type_name}`;
+		let res=this.get_short_typename(type_name);
+		if(res[0]) return res[1];
+		return `D_${res[1]}`;
 	}
 	/** @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x */
 	json_auto_replace(s,x) {

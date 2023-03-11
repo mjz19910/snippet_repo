@@ -421,6 +421,7 @@ async function async_plugin_init(event) {
 			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body) {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => {
 					let e_tn=e.tagName;
+					let lower_tagName=e_tn.toLowerCase();
 					if(e_tn=="SPAN") return false;
 					if(e_tn=="LINK") return false;
 					if(e_tn=="META") return false;
@@ -440,6 +441,7 @@ async function async_plugin_init(event) {
 					if(e.id==="player"&&e.classList.value==="skeleton flexy") return false;
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
+					if(lower_tagName==="ytd-app") return true;
 					console.log([e.tagName,e.id,e.classList.value]);
 					debugger;
 					return true;
