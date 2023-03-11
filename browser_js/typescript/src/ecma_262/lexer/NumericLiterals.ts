@@ -1,76 +1,76 @@
-import {Dispatcher} from "./Dispatcher.js"
-import {is_octal_digit} from "../is_octal_digit.js"
-import {LexerBase} from "./LexerBase.js"
-import {LexReturnType} from "./LexReturnType.js"
-import {TokenType} from "../TokenType.js"
+import {Dispatcher} from "./Dispatcher.js";
+import {is_octal_digit} from "../is_octal_digit.js";
+import {LexerBase} from "./LexerBase.js";
+import {LexReturnType} from "./LexReturnType.js";
+import {TokenType} from "../TokenType.js";
 import {is_ascii_digit} from "./is_ascii_digit";
 
 // https://tc39.es/ecma262/#sec-literals-numeric-literals
 export class NumericLiterals extends LexerBase {
-	result_error_token: ['Error',string]|null=null
+	result_error_token: ['Error',string]|null=null;
 	/*HexDigits[Sep] */
 	// https://tc39.es/ecma262/#prod-HexDigits
 	HexDigits(str: string,index: number): LexReturnType {
-		let cur
-		cur=this.HexDigit(str,index)
-		let nx=this.HexDigit(str,index)
+		let cur;
+		cur=this.HexDigit(str,index);
+		let nx=this.HexDigit(str,index);
 		if(cur[0]&&cur[1]>0&&(!nx[0])) {
-			return ["HexDigits",1]
+			return ["HexDigits",1];
 		}
 		// HexDigit
 		// HexDigits[?Sep] HexDigit
-		cur=this.HexDigits(str,index)
+		cur=this.HexDigits(str,index);
 		if(cur[0]&&cur[1]) {
-			nx=this.HexDigit(str,index)
+			nx=this.HexDigit(str,index);
 			if(nx[0]&&nx[1]>0) {
-				return ["HexDigits",cur[1]+nx[1]]
+				return ["HexDigits",cur[1]+nx[1]];
 			}
 		}
 		// [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
 		// Alternative omitted ([+Sep])
-		return [null,0]
+		return [null,0];
 
 	}
 	HexDigits_Sep(str: string,index: number): LexReturnType {
-		let cur=this.HexDigit(str,index)
-		let nx=this.HexDigit(str,index)
+		let cur=this.HexDigit(str,index);
+		let nx=this.HexDigit(str,index);
 		if(cur[0]&&cur[1]>0&&(!nx[0])) {
-			return ["HexDigits_Sep",1]
+			return ["HexDigits_Sep",1];
 		}
 		// HexDigits[?Sep] HexDigit
-		cur=this.HexDigits_Sep(str,index)
+		cur=this.HexDigits_Sep(str,index);
 		if(cur[0]&&cur[1]) {
-			nx=this.HexDigits_Sep(str,index)
+			nx=this.HexDigits_Sep(str,index);
 			if(nx[0]&&nx[1]>0) {
-				return ["HexDigits_Sep",cur[1]+nx[1]]
+				return ["HexDigits_Sep",cur[1]+nx[1]];
 			}
 		}
 		// [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
-		cur=this.HexDigits_Sep(str,index)
+		cur=this.HexDigits_Sep(str,index);
 		if(cur[0]&&cur[1]) {
-			nx=this.NumericLiteralSeparator(str,index+cur[1])
+			nx=this.NumericLiteralSeparator(str,index+cur[1]);
 			if(nx[0]&&nx[1]>0) {
-				let n3=this.HexDigit(str,index+cur[1]+nx[1])
+				let n3=this.HexDigit(str,index+cur[1]+nx[1]);
 				if(n3[0]&&n3[1]>0) {
-					return ["HexDigits_Sep",cur[1]+nx[1]+n3[1]]
+					return ["HexDigits_Sep",cur[1]+nx[1]+n3[1]];
 				}
 			}
 		}
-		return [null,0]
+		return [null,0];
 	}
-	token_type: TokenType
-	token_message: string
+	token_type: TokenType;
+	token_message: string;
 	constructor(dis: Dispatcher) {
-		super(dis)
-		this.token_type=TokenType.Invalid
-		this.token_message="There is no token"
+		super(dis);
+		this.token_type=TokenType.Invalid;
+		this.token_message="There is no token";
 	}
-	m_source!: string
-	m_position!: number
-	m_current_char!: string
-	m_initialized=false
+	m_source!: string;
+	m_position!: number;
+	m_current_char!: string;
+	m_initialized=false;
 	init() {
-		this.m_current_char=this.m_source[this.m_position]
+		this.m_current_char=this.m_source[this.m_position];
 	}
 	consume() {
 		/*
@@ -160,40 +160,40 @@ export class NumericLiterals extends LexerBase {
 	}
 
 	m_current_char = m_source[m_position++] */
-		this.m_position++
-		this.m_current_char=this.m_source[this.m_position]
+		this.m_position++;
+		this.m_current_char=this.m_source[this.m_position];
 	}
 	m_current_char_() {
-		return this.m_current_char
+		return this.m_current_char;
 	}
 	// template<typename Callback>
 	// bool Lexer::match_numeric_literal_separator_followed_by(Callback callback) const
 	match_numeric_literal_separator_followed_by<Callback extends Function>(callback: Callback): boolean {
-		if(this.m_position>=this.m_source.length) return false
-		return this.m_current_char=='_'&&callback(this.m_source[this.m_position])
+		if(this.m_position>=this.m_source.length) return false;
+		return this.m_current_char=='_'&&callback(this.m_source[this.m_position]);
 	}
 	consume_decimal_number(): boolean {
 		if(!is_ascii_digit(this.m_current_char))
-			return false
+			return false;
 
 		while(is_ascii_digit(this.m_current_char)||this.match_numeric_literal_separator_followed_by(is_ascii_digit)) {
-			this.consume()
+			this.consume();
 		}
-		return true
+		return true;
 	}
 	consume_exponent(): boolean {
-		this.consume()
+		this.consume();
 		if(this.m_current_char=='-'||this.m_current_char=='+') {
-			this.consume()
+			this.consume();
 		}
-		if(!is_ascii_digit(this.m_current_char)) return false
-		return this.consume_decimal_number()
+		if(!is_ascii_digit(this.m_current_char)) return false;
+		return this.consume_decimal_number();
 	}
 	DecimalDigit(str: string,index: number): LexReturnType {
 		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
-			return ["DecimalDigit",1]
+			return ["DecimalDigit",1];
 		}
-		return [null,0]
+		return [null,0];
 	}
 	/*bool Lexer::is_numeric_literal_start() const
 	{
@@ -205,30 +205,30 @@ export class NumericLiterals extends LexerBase {
 				this.m_current_char=='.'&&
 				this.m_position<this.m_source.length&&
 				is_ascii_digit(this.m_source[this.m_position])
-			)
+			);
 	}
 	/*
 	// C++ from SerenityOS's LibJS Lexer::next()
 	if (is_numeric_literal_start()) { */
 	NumericLiteral(str: string,index: number): LexReturnType {
 		// token_type = TokenType::NumericLiteral
-		this.token_type=TokenType.NumericLiteral
+		this.token_type=TokenType.NumericLiteral;
 		// bool is_invalid_numeric_literal = false
-		let is_invalid_numeric_literal=false
+		let is_invalid_numeric_literal=false;
 		if(index>=str.length) {
-			return [null,0]
+			return [null,0];
 		}
-		this.m_source=str
-		this.m_position=index
-		this.init()
+		this.m_source=str;
+		this.m_position=index;
+		this.init();
 		if(!this.is_numeric_literal_start()) {
-			return [null,0]
+			return [null,0];
 		}
 		/*if (m_current_char == '0') {
 			// into js
 		}*/
 		if(this.m_current_char_()==='0') {
-			this.consume()
+			this.consume();
 			// typechecking failed us, need to use a
 			// function return type to indirectly access
 			// m_current_char as that was inferred to be '0'
@@ -237,19 +237,19 @@ export class NumericLiterals extends LexerBase {
 			}*/
 			if(this.m_current_char_()=='.') {
 				// decimal
-				this.consume()
+				this.consume();
 				while(is_ascii_digit(this.m_current_char)) {
-					this.consume()
+					this.consume();
 				}
 				if(this.m_current_char_()=='e'||this.m_current_char_()=='E') {
-					is_invalid_numeric_literal=!this.consume_exponent()
+					is_invalid_numeric_literal=!this.consume_exponent();
 				}
 			}
 			/*else if (m_current_char == 'e' || m_current_char == 'E') {
 				is_invalid_numeric_literal = !consume_exponent()
 			}*/
 			else if(this.m_current_char_()=='e'||this.m_current_char_()=='E') {
-				is_invalid_numeric_literal=!this.consume_exponent()
+				is_invalid_numeric_literal=!this.consume_exponent();
 			}
 			/*else if (m_current_char == 'o' || m_current_char == 'O') {
 				// octal
@@ -261,10 +261,10 @@ export class NumericLiterals extends LexerBase {
 			}*/
 			else if(this.m_current_char_()=='o'||this.m_current_char_()=='O') {
 				// octal
-				is_invalid_numeric_literal=!this.consume_octal_number()
+				is_invalid_numeric_literal=!this.consume_octal_number();
 				if(this.m_current_char_()=='n') {
-					this.consume()
-					this.token_type=TokenType.BigIntLiteral
+					this.consume();
+					this.token_type=TokenType.BigIntLiteral;
 				}
 			}
 			/*else if (m_current_char == 'b' || m_current_char == 'B') {
@@ -277,10 +277,10 @@ export class NumericLiterals extends LexerBase {
 			}*/
 			else if(this.m_current_char_()=='b'||this.m_current_char_()=='B') {
 				// binary
-				is_invalid_numeric_literal=!this.consume_binary_number()
+				is_invalid_numeric_literal=!this.consume_binary_number();
 				if(this.m_current_char_()=='n') {
-					this.consume()
-					this.token_type=TokenType.BigIntLiteral
+					this.consume();
+					this.token_type=TokenType.BigIntLiteral;
 				}
 			}
 			/*else if (m_current_char == 'x' || m_current_char == 'X') {
@@ -293,10 +293,10 @@ export class NumericLiterals extends LexerBase {
 			}*/
 			else if(this.m_current_char_()=='x'||this.m_current_char_()=='X') {
 				// hexadecimal
-				is_invalid_numeric_literal=!this.consume_hexadecimal_number()
+				is_invalid_numeric_literal=!this.consume_hexadecimal_number();
 				if(this.m_current_char_()=='n') {
-					this.consume()
-					this.token_type=TokenType.BigIntLiteral
+					this.consume();
+					this.token_type=TokenType.BigIntLiteral;
 				}
 			}
 			/*else if (m_current_char == 'n') {
@@ -304,8 +304,8 @@ export class NumericLiterals extends LexerBase {
 				token_type = TokenType::BigIntLiteral
 			}*/
 			else if(this.m_current_char=='n') {
-				this.consume()
-				this.token_type=TokenType.BigIntLiteral
+				this.consume();
+				this.token_type=TokenType.BigIntLiteral;
 			}
 			/*else if (is_ascii_digit(m_current_char)) {
 				// octal without '0o' prefix. Forbidden in 'strict mode'
@@ -316,11 +316,11 @@ export class NumericLiterals extends LexerBase {
 			else if(is_ascii_digit(this.m_current_char)) {
 				// octal without '0o' prefix. Forbidden in 'strict mode'
 				if(this.m_dispatcher.environment_settings.is_strict) {
-					this.result_error_token=['Error',"Strict mode violation"]
+					this.result_error_token=['Error',"Strict mode violation"];
 				}
 				do {
-					this.consume()
-				} while(is_ascii_digit(this.m_current_char))
+					this.consume();
+				} while(is_ascii_digit(this.m_current_char));
 			}
 		}
 		/*else {
@@ -331,14 +331,14 @@ export class NumericLiterals extends LexerBase {
 			/*while (is_ascii_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_ascii_digit))
 				consume()*/
 			while(is_ascii_digit(this.m_current_char)||this.match_numeric_literal_separator_followed_by(is_ascii_digit))
-				this.consume()
+				this.consume();
 			/*if (m_current_char == 'n') {
 				consume()
 				token_type = TokenType::BigIntLiteral
 			}*/
 			if(this.m_current_char=='n') {
-				this.consume()
-				this.token_type=TokenType.BigIntLiteral
+				this.consume();
+				this.token_type=TokenType.BigIntLiteral;
 			}
 			/*
 			else {
@@ -355,212 +355,212 @@ export class NumericLiterals extends LexerBase {
 					}
 				}*/
 				if(this.m_current_char=='.') {
-					this.consume()
+					this.consume();
 					if(this.m_current_char_()=='_')
-						is_invalid_numeric_literal=true
+						is_invalid_numeric_literal=true;
 
 					while(is_ascii_digit(this.m_current_char)||this.match_numeric_literal_separator_followed_by(is_ascii_digit)) {
-						this.consume()
+						this.consume();
 					}
 				}
 				/*if (m_current_char == 'e' || m_current_char == 'E')
 					is_invalid_numeric_literal = is_invalid_numeric_literal || !consume_exponent()*/
 				if(this.m_current_char=='e'||this.m_current_char=='E')
-					is_invalid_numeric_literal=is_invalid_numeric_literal||!this.consume_exponent()
+					is_invalid_numeric_literal=is_invalid_numeric_literal||!this.consume_exponent();
 			}
 
 		}
 		if(is_invalid_numeric_literal) {
-			this.token_type=TokenType.Invalid
-			this.token_message="Invalid numeric literal"
+			this.token_type=TokenType.Invalid;
+			this.token_message="Invalid numeric literal";
 		}
 		if(this.token_type===TokenType.Invalid) {
-			return [null,0]
+			return [null,0];
 		}
 		if(this.result_error_token) {
-			return [this.result_error_token,this.m_position-index]
+			return [this.result_error_token,this.m_position-index];
 		}
-		return ["NumericLiteral",this.m_position-index]
+		return ["NumericLiteral",this.m_position-index];
 	}
 	consume_hexadecimal_number(): boolean {
-		throw new Error("Method not implemented.")
+		throw new Error("Method not implemented.");
 	}
 	consume_binary_number(): boolean {
-		throw new Error("Method not implemented.")
+		throw new Error("Method not implemented.");
 	}
 	consume_octal_number() {
 		//consume()
-		this.consume()
+		this.consume();
 		/*if (!is_octal_digit(m_current_char))
 			return false */
 		if(!is_octal_digit(this.m_current_char))
-			return false
+			return false;
 
 		/*while (is_octal_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_octal_digit))
 		consume()*/
 		while(is_octal_digit(this.m_current_char)||this.match_numeric_literal_separator_followed_by(is_octal_digit))
-			this.consume()
+			this.consume();
 
-		return true
+		return true;
 	}
 	DecimalLiteral(str: string,index: number): LexReturnType {
 		if(str[index]==='0') {
-			return ["DecimalLiteral",1]
+			return ["DecimalLiteral",1];
 		}
-		let [,zd_len]=this.NonZeroDigit(str,index)
-		let off=0
+		let [,zd_len]=this.NonZeroDigit(str,index);
+		let off=0;
 		if(zd_len===1) {
-			off+=1
-			let [,ns_len]=this.NumericLiteralSeparator(str,index+off)
-			if(ns_len>0) {
-				off++
-			}
-			let dd_r=this.DecimalDigits(str,index+off)
-			if(!dd_r[0]) throw dd_r[1]
-			return ["DecimalLiteral",dd_r[1]+off]
+			off+=1;
+			let res=this.NumericLiteralSeparator(str,index+off);
+			if(!res[0]) return ["DecimalLiteral",0];
+			let [,ns_len]=res;
+			if(ns_len>0) off++;
+			let dd_r=this.DecimalDigits(str,index+off);
+			if(!dd_r[0]) throw dd_r[1];
+			return ["DecimalLiteral",dd_r[1]+off];
 		}
-		return ["DecimalLiteral",off]
+		return ["DecimalLiteral",off];
 	}
 	// DecimalDigits[~Sep]
 	DecimalDigits(str: string,index: number): LexReturnType {
 		// DecimalDigit
-		let off=0
+		let off=0;
 		for(;;) {
-			let [,len]=this.DecimalDigit(str,index+off)
+			let [,len]=this.DecimalDigit(str,index+off);
 			if(len>0) {
-				off++
-				continue
+				off++;
+				continue;
 			}
-			break
+			break;
 		}
-		return ["DecimalDigits",off]
+		return ["DecimalDigits",off];
 	}
 	// DecimalDigits[+Sep]
 	DecimalDigits_Sep(str: string,index: number): LexReturnType {
-		let off=0
+		let off=0;
 		for(;;) {
 			// DecimalDigit
-			let [,len]=this.DecimalDigit(str,index+off)
+			let [,len]=this.DecimalDigit(str,index+off);
 			if(len>0) {
-				off++
+				off++;
 				// DecimalDigits[?Sep] DecimalDigit
-				continue
+				continue;
 			}
 			// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
-			let [,s_len]=this.NumericLiteralSeparator(str,index+off)
+			let [,s_len]=this.NumericLiteralSeparator(str,index+off);
 			if(s_len>0) {
-				let [,exl]=this.DecimalDigit(str,index+off+1)
+				let [,exl]=this.DecimalDigit(str,index+off+1);
 				if(exl>0) {
-					off++
+					off++;
 					// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
-					continue
+					continue;
 				}
-				break
+				break;
 			}
-			break
+			break;
 		}
-		return ["DecimalDigits",off]
+		return ["DecimalDigits",off];
 	}
 	NonZeroDigit(str: string,index: number): LexReturnType {
 		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
-			return ["NonZeroDigit",1]
+			return ["NonZeroDigit",1];
 		}
-		return [null,0]
+		return [null,0];
 	}
 	NumericLiteralSeparator(str: string,index: number): LexReturnType {
 		if(str[index]==='_') {
-			return ["NumericLiteralSeparator",1]
+			return ["NumericLiteralSeparator",1];
 		}
-		return [null,0]
+		return [null,0];
 	}
 	// https://tc39.es/ecma262/#prod-DecimalIntegerLiteral
 	DecimalIntegerLiteral(str: string,index: number) {
-		let len=0
+		let len=0;
 		// 0
 		if(str[index]==='0') {
-			len++
+			len++;
 		}
 		{
 			// NonZeroDigit
-			let tmp=this.NonZeroDigit(str,index)
+			let tmp=this.NonZeroDigit(str,index);
 			if(tmp[0]&&tmp[1]>len) {
-				len=tmp[1]
+				len=tmp[1];
 			}
 		}
 		// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
 		{
-			let tmp_len=0
-			let tmp=this.NonZeroDigit(str,index+tmp_len)
+			let tmp_len=0;
+			let tmp=this.NonZeroDigit(str,index+tmp_len);
 			if(tmp[0]) {
-				tmp_len+=tmp[1]
-				let t2=this.NumericLiteralSeparator(str,index+tmp_len)
+				tmp_len+=tmp[1];
+				let t2=this.NumericLiteralSeparator(str,index+tmp_len);
 				if(t2[0]) {
-					tmp_len+=t2[1]
+					tmp_len+=t2[1];
 				}
-				this.DecimalDigits_Sep(str,index)
+				this.DecimalDigits_Sep(str,index);
 			}
 		}
 	}
 	NonOctalDecimalIntegerLiteral(str: string,index: number): LexReturnType {
 		// 0 NonOctalDigit
 		non_oct: if(str[index]==='0') {
-			let tmp=this.NonOctalDigit(str,index+1)
+			let tmp=this.NonOctalDigit(str,index+1);
 			if(!tmp[0]) {
-				break non_oct
+				break non_oct;
 			}
-			return ["NonOctalDecimalIntegerLiteral",1+tmp[1]]
+			return ["NonOctalDecimalIntegerLiteral",1+tmp[1]];
 		}
 		// LegacyOctalLikeDecimalIntegerLiteral NonOctalDigit
-		let tmp=this.LegacyOctalLikeDecimalIntegerLiteral(str,index)
+		let tmp=this.LegacyOctalLikeDecimalIntegerLiteral(str,index);
 		not_int_1: if(tmp[0]===true) {
-			let tmp2=this.NonOctalDigit(str,index+1)
+			let tmp2=this.NonOctalDigit(str,index+1);
 			if(tmp2[0]===true) {
-				return ["NonOctalDecimalIntegerLiteral",2]
+				return ["NonOctalDecimalIntegerLiteral",2];
 			}
 		}
-		throw new Error("Not implemented")
+		throw new Error("Not implemented");
 	}
 	OctalDigit(str: string,index: number): LexReturnType {
 		// 0 1 2 3 4 5 6 7
 		if(str.charCodeAt(index)>='0'.charCodeAt(0)&&str.charCodeAt(index)<='7'.charCodeAt(0)) {
-			return ["OctalDigit",1]
+			return ["OctalDigit",1];
 		}
-		return [null,0]
+		return [null,0];
 	}
 	LegacyOctalLikeDecimalIntegerLiteral(str: string,index: number): LexReturnType {
-		let len=0
+		let len=0;
 		// 0 OctalDigit
 		is_oct: if(str[index]==='0') {
-			len++
-			let tmp=this.OctalDigit(str,index+len)
+			len++;
+			let tmp=this.OctalDigit(str,index+len);
 			while(tmp[0]) {
-				tmp=this.OctalDigit(str,index+len)
+				tmp=this.OctalDigit(str,index+len);
 				if(tmp[0]) {
-					len++
+					len++;
 				}
 			}
-			return ["LegacyOctalLikeDecimalIntegerLiteral",len+1]
+			return ["LegacyOctalLikeDecimalIntegerLiteral",len+1];
 		}
 		let tmp=this.OctalDigit(str,index+2);
-		console.error("todo", tmp);
+		console.error("todo",tmp);
 		throw new Error("Not implemented");
 	}
 	NonOctalDigit(str: string,index: number): LexReturnType {
 		if(str[index]==='8'||str[index]==='9') {
-			return ["NonOctalDigit",1]
+			return ["NonOctalDigit",1];
 		}
-		return [null,0]
+		return [null,0];
 	}
 	HexDigit(str: string,index: number): LexReturnType {
 		if(str.charCodeAt(index)>='0'.charCodeAt(0)&&str.charCodeAt(index)<='9'.charCodeAt(0)) {
-			return ["HexDigit",1]
+			return ["HexDigit",1];
 		}
 		if(str.charCodeAt(index)>='a'.charCodeAt(0)&&str.charCodeAt(index)<='f'.charCodeAt(0)) {
-			return ["HexDigit",1]
+			return ["HexDigit",1];
 		}
 		if(str.charCodeAt(index)>='A'.charCodeAt(0)&&str.charCodeAt(index)<='F'.charCodeAt(0)) {
-			return ["HexDigit",1]
+			return ["HexDigit",1];
 		}
-		return [null,0]
+		return [null,0];
 	}
 }
