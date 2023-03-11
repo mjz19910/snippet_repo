@@ -2370,6 +2370,8 @@ class BaseService extends ServiceWithMembers {
 	save_number_arr(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {Uint8Array} x */
 	save_number_bin(k,x) {k; x;}
+	/** @protected @arg {string} k @arg {string|number} x */
+	save_primitive(k,x) {k; x;}
 	/** @protected @arg {D_GM_VeNum} x */
 	save_ve_element(x) {x;}
 	//#endregion

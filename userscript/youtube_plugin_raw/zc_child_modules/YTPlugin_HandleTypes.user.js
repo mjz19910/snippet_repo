@@ -326,7 +326,7 @@ class HandleTypes extends BaseService {
 		let buffer=base64_url_dec.decodeByteArray(x1);
 		if(!buffer) {debugger; return;}
 		let c_pos=0;
-		for(;c_pos<6;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
+		for(;c_pos<6;c_pos++) this.save_primitive(`${cf}.${c_pos}`,buffer[c_pos]);
 		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number_arr(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
@@ -494,9 +494,9 @@ class HandleTypes extends BaseService {
 	D_StyleRunItem(x) {
 		const cf="D_StyleRunItem";
 		const {fontColor,fontName,weight,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
-		this.save_number(`${cf}.fontColor`,fontColor);
-		this.t(fontName,x => this.save_string("style.font_name",x));
-		this.t(weight,x => this.save_number("style.weight",x));
+		this.save_primitive(`${cf}.fontColor`,fontColor);
+		this.t(fontName,x => this.save_primitive("style.font_name",x));
+		this.t(weight,x => this.save_primitive("style.weight",x));
 	}
 	/** @private @arg {D_AttributedDescription} x */
 	D_AttributedDescription(x) {
@@ -534,7 +534,7 @@ class HandleTypes extends BaseService {
 	D_HighlightTextDecorator(x) {
 		const cf="D_HighlightTextDecorator";
 		const {backgroundColor,backgroundCornerRadius,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
-		this.save_number(`${cf}.backgroundColor`,backgroundColor);
+		this.save_primitive(`${cf}.backgroundColor`,backgroundColor);
 		this.sm.cq(backgroundCornerRadius,8);
 	}
 	/** @private @arg {D_AttachmentElement} x */
@@ -686,8 +686,8 @@ class HandleTypes extends BaseService {
 	D_GoogleVideoHostPartition(x) {
 		const cf="google_video";
 		const {partition,selector}=x;
-		this.save_string(`${cf}.partition`,partition);
-		this.save_string(`${cf}.selector`,selector);
+		this.save_primitive(`${cf}.partition`,partition);
+		this.save_primitive(`${cf}.selector`,selector);
 		/** @type {G_GV_0} */
 		// cSpell:ignoreRegExp /"(5u|qx|vg)[a-z]{3}"/
 		switch(partition) {
@@ -805,36 +805,36 @@ class HandleTypes extends BaseService {
 		this.sm.a_primitive_str(expire);
 		this.sm.a_primitive_str(ei);
 		this.sm.a_primitive_str(ip);
-		aitags&&this.save_string(`${cf1}.aitags`,aitags);
+		aitags&&this.save_primitive(`${cf1}.aitags`,aitags);
 		{
 			let idp=split_string_once(id,".");
 			switch(idp.length) {
-				case 2: this.sm.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_string(`${cf2}.id.1`,idp[1]); break;
+				case 2: this.sm.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_primitive(`${cf2}.id.1`,idp[1]); break;
 				case 1: this.sm.save_b64_binary(`${cf2}.id.0`,idp[0]); break;
 			}
 		}
-		itag&&this.save_string(`${cf1}.itag`,itag);
-		this.save_string(`${cf1}.source`,source);
-		this.save_string(`${cf1}.requiressl`,requiressl);
-		this.t(ctier,x => this.save_string(`${cf1}.ctier`,x));
-		gcr&&this.save_string(`${cf1}.gcr`,gcr);
+		itag&&this.save_primitive(`${cf1}.itag`,itag);
+		this.save_primitive(`${cf1}.source`,source);
+		this.save_primitive(`${cf1}.requiressl`,requiressl);
+		this.t(ctier,x => this.save_primitive(`${cf1}.ctier`,x));
+		gcr&&this.save_primitive(`${cf1}.gcr`,gcr);
 		spc&&this.sm.save_b64_binary(`${cf1}.spc`,spc);
-		this.save_string(`${cf1}.vprv`,vprv);
-		this.save_string(`${cf1}.vprv`,vprv);
-		this.t(ufph,x => this.save_string(`${cf1}.ufph`,x));
-		this.t(live,x => this.save_string(`${cf1}.live`,x));
-		this.t(hang,x => this.save_string(`${cf1}.hang`,x));
-		this.t(noclen,x => this.save_string(`${cf1}.noclen`,x));
-		this.t(xtags,x => this.save_string(`${cf1}.xtags`,x));
-		this.save_string(`${cf1}.mime`,mime);
+		this.save_primitive(`${cf1}.vprv`,vprv);
+		this.save_primitive(`${cf1}.vprv`,vprv);
+		this.t(ufph,x => this.save_primitive(`${cf1}.ufph`,x));
+		this.t(live,x => this.save_primitive(`${cf1}.live`,x));
+		this.t(hang,x => this.save_primitive(`${cf1}.hang`,x));
+		this.t(noclen,x => this.save_primitive(`${cf1}.noclen`,x));
+		this.t(xtags,x => this.save_primitive(`${cf1}.xtags`,x));
+		this.save_primitive(`${cf1}.mime`,mime);
 		this.sm.save_b64_binary(`${cf2}.ns`,ns);
-		cnr&&this.save_string(`${cf1}.cnr`,cnr);
-		if(gir) this.save_string(`${cf1}.gir`,gir);
+		cnr&&this.save_primitive(`${cf1}.cnr`,cnr);
+		if(gir) this.save_primitive(`${cf1}.gir`,gir);
 		this.t(clen,x => {
 			let x1=this.sm.parse_number_template(x);
 			this.sm.a_primitive_num(x1);
 		});
-		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
+		ratebypass&&this.save_primitive(`${cf1}.ratebypass`,ratebypass);
 		this.t(dur,x => {
 			let dur_=this.sm.parse_number_template(x);
 			this.sm.a_primitive_num(dur_);
@@ -848,8 +848,8 @@ class HandleTypes extends BaseService {
 	D_VideoPlaybackShape_LS_Params(x) {
 		const cf1="D_VideoPlaybackShape_LS_Params",cf2="video_playback.api_url"; cf2;
 		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,...y}=this.s(cf1,x); this.g(y);
-		this.save_string(`${cf1}.mh`,mh);
-		this.save_string(`${cf1}.mm`,mm);
+		this.save_primitive(`${cf1}.mh`,mh);
+		this.save_primitive(`${cf1}.mm`,mm);
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
@@ -864,10 +864,10 @@ class HandleTypes extends BaseService {
 				case "n4v7s": case "nx57y": case "o097z": case "nx5s7": case "9gv7l":
 			}
 		}
-		this.save_string(`${cf1}.ms`,ms);
-		this.save_string(`${cf1}.mv`,mv);
-		this.save_string(`${cf1}.mvi`,mvi);
-		this.save_string(`${cf1}.pl`,pl);
+		this.save_primitive(`${cf1}.ms`,ms);
+		this.save_primitive(`${cf1}.mv`,mv);
+		this.save_primitive(`${cf1}.mvi`,mvi);
+		this.save_primitive(`${cf1}.pl`,pl);
 		x: {
 			let x2=initcwndbps;
 			if(!x2) break x;
@@ -879,16 +879,16 @@ class HandleTypes extends BaseService {
 	D_VideoPlaybackShape_Other(x) {
 		const cf1="D_VideoPlaybackShape_Other",cf2="video_playback.api_url";
 		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y1}=this.s(cf1,x);
-		this.save_string(`${cf1}.fvip`,fvip);
-		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
-		this.save_string(`${cf1}.fexp`,fexp);
-		this.save_string(`${cf1}.c`,c);
-		txp&&this.save_string(`${cf1}.txp`,txp);
+		this.save_primitive(`${cf1}.fvip`,fvip);
+		keepalive&&this.save_primitive(`${cf1}.keepalive`,keepalive);
+		this.save_primitive(`${cf1}.fexp`,fexp);
+		this.save_primitive(`${cf1}.c`,c);
+		txp&&this.save_primitive(`${cf1}.txp`,txp);
 		this.sm.save_b64_binary(`${cf2}.n`,n);
 		this.sm.save_b64_binary(`${cf2}.lsig`,lsig);
 		this.t(sig,x => this.sm.save_b64_binary(`${cf2}.sig`,x));
 		const {gcr,mt,itag,...y}=y1; this.g(y);
-		itag&&this.save_string(`${cf1}.itag`,itag);
+		itag&&this.save_primitive(`${cf1}.itag`,itag);
 		{
 			let x=mt;
 			let x1=this.sm.parse_number_template(x);
@@ -1686,7 +1686,7 @@ class HandleTypes extends BaseService {
 				this.sm.playlistId(list);
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
-					this.save_string("video_url.info.playnext",playnext);
+					this.save_primitive("video_url.info.playnext",playnext);
 					if(this.sm.is_not_empty_obj(y)) break y;
 					this.g(y); break y;
 				}
@@ -1699,7 +1699,7 @@ class HandleTypes extends BaseService {
 					return;
 				}
 				const {start_radio,...y3}=y2;
-				this.save_string("video_url.info.start_radio",start_radio);
+				this.save_primitive("video_url.info.start_radio",start_radio);
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
 				if(!this.sm.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
@@ -1852,21 +1852,21 @@ class HandleTypes extends BaseService {
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
 		this.sm.save_b64_binary(`${cf}.id`,id);
-		this.save_string(`${cf}.source`,source);
-		this.save_string(`${cf}.range`,range);
+		this.save_primitive(`${cf}.source`,source);
+		this.save_primitive(`${cf}.range`,range);
 		let exp=this.sm.parse_number_template(expire);
 		this.sm.a_primitive_num(exp);
-		this.save_string(`${cf}.ip`,ip);
-		this.save_string(`${cf}.ms`,ms);
-		this.save_string(`${cf}.mm`,mm);
-		this.save_string(`${cf}.pl`,pl);
+		this.save_primitive(`${cf}.ip`,ip);
+		this.save_primitive(`${cf}.ms`,ms);
+		this.save_primitive(`${cf}.mm`,mm);
+		this.save_primitive(`${cf}.pl`,pl);
 		this.sm.save_b64_binary(`${cf}.nh`,nh);
 		switch(sparams) {
 			default: this.cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
 		this.parse_signature(signature);
-		this.save_string(`${cf}.key`,key);
+		this.save_primitive(`${cf}.key`,key);
 	}
 	/** @private @arg {`sn-${string}n${string}`} x @returns {D_GoogleVideoHostPartition} */
 	get_host_partition(x) {
@@ -1916,8 +1916,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {"D_VideoPlaybackShape"} cf @arg {D_VideoPlaybackShape} uv */
 	extract_shape_params(cf,uv) {
 		const {sparams,lsparams}=this.s(cf,uv);
-		this.save_string(`${cf}.sparams`,sparams);
-		this.save_string(`${cf}.lsparams`,lsparams);
+		this.save_primitive(`${cf}.sparams`,sparams);
+		this.save_primitive(`${cf}.lsparams`,lsparams);
 		let kk_x=this.get_keys_of(uv);
 		let s_params_obj=this.extract_sparams(kk_x,uv,sparams,"sparams");
 		let ls_params_obj=this.extract_sparams(kk_x,uv,lsparams,"lsparams");
@@ -1971,7 +1971,7 @@ class HandleTypes extends BaseService {
 	/** @arg {string} cf @arg {string} sig_str */
 	validate_sig(cf,sig_str) {
 		if(sig_str.match(/^[0-9A-F]+$/)===null) debugger;
-		this.save_number(cf,sig_str.length);
+		this.save_primitive(cf,sig_str.length);
 		switch(sig_str.length) {
 			default: debugger; break;
 			case 38: case 40:
@@ -2008,19 +2008,19 @@ class HandleTypes extends BaseService {
 	RB_Obj_f19(x) {
 		const cf="R_Obj_f19",t=this;
 		const {1: obj_tag,2: binary_ve,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		t.t(obj_tag,x => t.save_number(`${cf}.tag`,t.T_D32(x)));
-		t.save_number(`${cf}.BinaryVe`,this.T_D32(binary_ve));
+		t.t(obj_tag,x => t.save_primitive(`${cf}.tag`,t.T_D32(x)));
+		t.save_primitive(`${cf}.BinaryVe`,this.T_D32(binary_ve));
 		t.BinaryVe(t.T_D32(binary_ve));
-		t.t(v3,x => t.save_number(`${cf}.f3`,t.T_D32(x)));
+		t.t(v3,x => t.save_primitive(`${cf}.f3`,t.T_D32(x)));
 		this.codegen_typedef_bin(cf,x,false);
 	}
 	/** @protected @arg {D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x) {
 		const cf="G_PR_TrackingObj_f16";
 		const {1: v_tag,2: v_id,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v_tag));
-		this.save_number(`${cf}.f2`,this.T_D32(v_id));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v_tag));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v_id));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f4;
 	}
 	/** @protected @arg {H_TrackingObj} x */
@@ -2039,7 +2039,7 @@ class HandleTypes extends BaseService {
 			switch(v8[0]) {
 				default: debugger; break;
 				case "v_data32":/*unk*/{
-					let [,i8]=v8; this.save_number(`${cf}.f8`,i8);
+					let [,i8]=v8; this.save_primitive(`${cf}.f8`,i8);
 				} break;
 				case "v_data64":/*unk*/{
 					let [,,i8]=v8; this.save_bigint(`${cf}.f8`,i8);
@@ -2061,7 +2061,7 @@ class HandleTypes extends BaseService {
 	/** @arg {VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.V_BinaryTimestamp(this.T_VW(x));}
 	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<H_TrackingObj,KM_TrackingObj>} k */
-	TK_D32(cf,x,k) {this.save_number(`${cf}.${k}`,this.T_D32(x));}
+	TK_D32(cf,x,k) {this.save_primitive(`${cf}.${k}`,this.T_D32(x));}
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="v_param_arr") debugger;
@@ -2081,9 +2081,9 @@ class HandleTypes extends BaseService {
 			case "v_raw_child":/*unk*/{const [,,,b]=a; const [,c]=b; r_str=["raw_str",c];} break;
 		}
 		if(!r_str) return;
-		this.save_string(`${cf}.str`,r_str[1]);
+		this.save_primitive(`${cf}.str`,r_str[1]);
 		if(r_str[0]==="unknown") {
-			this.save_string(`${cf}.str.unk`,`${r_str[0]}:${r_str[1]}`);
+			this.save_primitive(`${cf}.str.unk`,`${r_str[0]}:${r_str[1]}`);
 			return;
 		}
 		switch(r_str[1]) {
@@ -2114,7 +2114,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {{}[]} */
 	missing_objs=[];
-	/** @arg {string} cf @arg {{}} x @arg {{}} y */
+	/** @arg {string} cf @arg {{}} x @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} y */
 	h_gen_keys(cf,x,y) {
 		let u=this.get_keys_of_2(y); if(u.length>0) {
 			let is_new=this.codegen_typedef_bin(cf+"$new",y,false);
@@ -2151,7 +2151,7 @@ class HandleTypes extends BaseService {
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
 		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(a),x => this.save_string(`${cf}.f77`,x));
+		this.t(this.TV_Str(a),x => this.save_primitive(`${cf}.f77`,x));
 	}
 	/** @private @arg {V_ShortTimestamp} x */
 	V_ShortTimestamp(x) {
@@ -2176,12 +2176,12 @@ class HandleTypes extends BaseService {
 	PD_continuation_request_browse_token(x) {
 		const cf="PD_continuation_request_browse_token";
 		const {2: browse_id,3: target_params,35: target_id,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(browse_id),x => this.save_string(`${cf}.f2`,x));
+		this.t(this.TV_Str(browse_id),x => this.save_primitive(`${cf}.f2`,x));
 		this.t(this.TV_Str(target_params),x => {
 			if(this.params_to_decode.includes(x)) return;
 			this.params_to_decode.push(x);
 		});
-		this.t(target_id,x => this.t(this.TV_Str(x),x => this.save_string(`${cf}.f35`,x)));
+		this.t(target_id,x => this.t(this.TV_Str(x),x => this.save_primitive(`${cf}.f35`,x)));
 	}
 	/** @private @arg {PR_continuation_request_browse_token} x */
 	PR_continuation_request_browse_token(x) {
@@ -2193,14 +2193,14 @@ class HandleTypes extends BaseService {
 	P_create_playlist_params(x) {
 		const cf="P_create_playlist_params";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params"; let t=this;
 		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
-		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_number));};
+		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_primitive));};
 		r("f30",f30); r("f57",f57); r("f71",f71);
 		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
 	}
@@ -2209,16 +2209,16 @@ class HandleTypes extends BaseService {
 		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
 			const {2: video_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.t(this.TV_Str(video_id),x => this.sm.videoId(x));
-			this.save_number(`${cf}.f4`,this.T_D32(f4));
-			this.save_number(`${cf}.f5`,this.T_D32(f5));
+			this.save_primitive(`${cf}.f4`,this.T_D32(f4));
+			this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 			return;
 		}
 		if(this.is_T_D32_at(x,246)) {
 			const {2: wrapped_str,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			const {1: f2_f1,...y1}=this.T_VW(wrapped_str); this.g(y1);
-			this.t(this.TV_Str(f2_f1),x => this.save_string(`${cf}.f2.f1`,x));
-			this.save_number(`${cf}.f4`,this.T_D32(f4));
-			this.save_number(`${cf}.f5`,this.T_D32(f5));
+			this.t(this.TV_Str(f2_f1),x => this.save_primitive(`${cf}.f2.f1`,x));
+			this.save_primitive(`${cf}.f4`,this.T_D32(f4));
+			this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 			return;
 		}
 		const {2: entity_target_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
@@ -2243,8 +2243,8 @@ class HandleTypes extends BaseService {
 				case "topbar": break;
 			}
 		});
-		this.save_number(`${cf}.f4`,this.T_D32(f4));
-		this.save_number(`${cf}.f5`,this.T_D32(f5));
+		this.save_primitive(`${cf}.f4`,this.T_D32(f4));
+		this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 	}
 	/** @private @arg {P_search_params} x */
 	P_search_params(x) {
@@ -2264,9 +2264,9 @@ class HandleTypes extends BaseService {
 		const cf="P_bin_params_1.f1";
 		const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let iv_fa=parseInt(this.T_FD64(a).toString(16).slice(0,2),16);
-		this.save_number(`${cf}.f1.first_byte`,iv_fa);
+		this.save_primitive(`${cf}.f1.first_byte`,iv_fa);
 		let iv_fb=parseInt(this.T_FD64(b).toString(16).slice(0,2),16);
-		this.save_number(`${cf}.f2.first_byte`,iv_fb);
+		this.save_primitive(`${cf}.f2.first_byte`,iv_fb);
 	}
 	/** @private @arg {P_bin_params_1} x */
 	P_bin_params_1(x) {
@@ -2287,17 +2287,17 @@ class HandleTypes extends BaseService {
 			30: f30,31: f31,33: v33,34: f34,
 			...y
 		}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
-		v11&&this.save_number(`${cf}.f11`,this.T_D32(v11));
-		this.save_number(`${cf}.f22`,this.T_D32(v22));
-		this.save_number(`${cf}.f33`,this.T_D32(v33));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
+		v11&&this.save_primitive(`${cf}.f11`,this.T_D32(v11));
+		this.save_primitive(`${cf}.f22`,this.T_D32(v22));
+		this.save_primitive(`${cf}.f33`,this.T_D32(v33));
 	}
 	/** @private @arg {PD_invalidation_continuation} x */
 	PD_invalidation_continuation(x) {
 		const cf="PD_invalidation_continuation";
 		const {3: v3,5: f5,6: f6,8: f8,9: f9,10: f10,11: v11,16: f16,17: f17,19: f19,20: f20,21: f21,22: v22,23: f23,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_string(`${cf}.f3`,this.TV_Str(v3));
+		this.save_primitive(`${cf}.f3`,this.TV_Str(v3));
 		f5;
 		f6;
 		f8;
@@ -2318,8 +2318,8 @@ class HandleTypes extends BaseService {
 		const cf="P_subscription_state_key";
 		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(a),x => this.sm.channelId(x));
-		this.save_number(`${cf}.f4`,this.T_D32(f4));
-		this.save_number(`${cf}.f5`,this.T_D32(f5));
+		this.save_primitive(`${cf}.f4`,this.T_D32(f4));
+		this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 	}
 	/** @type {string[]} */
 	LP_dislike=[];
@@ -2354,16 +2354,16 @@ class HandleTypes extends BaseService {
 		const cf="P_dislike_params";
 		const {1: v1,2: v2,3: v3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_dislike_params_f1(this.T_VW(v1));
-		this.save_number(`${cf}.f2`,this.T_D32(v2));
-		this.t(v3,x => this.save_number(`${cf}.f3`,this.T_D32(x)));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
+		this.t(v3,x => this.save_primitive(`${cf}.f3`,this.T_D32(x)));
 		this.V_ShortTimestamp(this.T_VW(f4));
-		this.t(f5,x => this.save_number(`${cf}.f5`,this.T_D32(x)));
+		this.t(f5,x => this.save_primitive(`${cf}.f5`,this.T_D32(x)));
 	}
 	/** @private @arg {PK_f1} x */
 	PK_f1(x) {
 		const cf="PK_f1";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.data`,this.T_D32(v1));
+		this.save_primitive(`${cf}.data`,this.T_D32(v1));
 	}
 	/** @protected @template T @arg {{1:T}} x */
 	PT_f1(x) {
@@ -2375,7 +2375,7 @@ class HandleTypes extends BaseService {
 	P_playability_status_context_params(x) {
 		const cf="P_playability_status_context_params";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.PK_f1(this.T_VW(v2));
 	}
 	//#endregion
@@ -2383,10 +2383,10 @@ class HandleTypes extends BaseService {
 	P_reel_params(x) {
 		const cf="P_reel_params";
 		const {1: v1,3: v3,5: g5,6: v6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		v3&&this.VW_BinaryTimestamp(v3);
 		g5&&this.g(this.T_VW(g5));
-		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
+		v6&&this.save_primitive(`${cf}.f6`,this.T_D32(v6));
 		f7;
 	}
 	//#endregion
@@ -2396,21 +2396,21 @@ class HandleTypes extends BaseService {
 	P_ypc_get_offers_params_f1(x) {
 		const cf="P_ypc_get_offers_params.f1";
 		const {1: v1,2: v2,...y}=x; this.h_gen_keys(cf,x,y);
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.t(this.TV_Str(v2),x => this.sm.channelId(x));
 	}
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
 		const cf="P_ypc_get_offers_params";
-		const {1: v1,3: v3,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		const {1: v1,3: v3,5: f5,9: f9,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_ypc_get_offers_params_f1(this.T_VW(v1));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		this.P_ypc_get_offers_params_f5(this.T_VW(f5));
 	}
 	/** @private @arg {P_ypc_get_offers_params_f5} x */
 	P_ypc_get_offers_params_f5(x) {
 		const cf="P_ypc_get_offers_params";
-		const {1: v1,3: v3,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		const {1: v1,3: v3,5: f5,9: f9,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
@@ -2449,10 +2449,10 @@ class HandleTypes extends BaseService {
 		} else {
 			this.sm.params(`${cf}.f3`,this.TV_Str(v3));
 		}
-		this.save_number(`${cf}.f8`,this.T_D32(f8));
+		this.save_primitive(`${cf}.f8`,this.T_D32(f8));
 		v11&&this.PD_continuation_params_f11(this.T_VW(v11));
 		this.PD_continuation_params_f14(this.T_VW(f14));
-		f15&&this.save_number(`${cf}.f15`,this.T_D32(f15));
+		f15&&this.save_primitive(`${cf}.f15`,this.T_D32(f15));
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
 	P_get_pdg_buy_flow_params(x) {
@@ -2466,13 +2466,13 @@ class HandleTypes extends BaseService {
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(v1));
 		this.sm.channelId(this.TV_Str(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {TX_sequence_info} x */
 	TX_sequence_info(x) {
 		const cf="TX_sequence_info";
 		const {3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f3`,this.T_D32(f3));
+		this.save_primitive(`${cf}.f3`,this.T_D32(f3));
 	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
@@ -2488,8 +2488,8 @@ class HandleTypes extends BaseService {
 		const cf="PX_watch_sequence_info",t=this;
 		const {1: v1,3: v3,4: v4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.sm.videoId(t.TV_Str(v1));
-		t.save_number(`${cf}.f3`,t.T_D32(v3));
-		t.save_number(`${cf}.f4`,t.T_D32(v4));
+		t.save_primitive(`${cf}.f3`,t.T_D32(v3));
+		t.save_primitive(`${cf}.f4`,t.T_D32(v4));
 		t.t(t.T_VW_Bigint(f6),x => t.save_bigint(`${cf}.f6`,x));
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
@@ -2505,10 +2505,10 @@ class HandleTypes extends BaseService {
 		const {1: v1,2: v2,3: v3,6: f6,7: f7,8: f8,...y}=this.s(cf,x);
 		this.sm.videoId(this.TV_Str(v1));
 		this.sm.params("transcript.params",this.TV_Str(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
-		this.save_number(`${cf}.f6`,this.T_D32(f6));
-		this.save_number(`${cf}.f7`,this.T_D32(f7));
-		this.save_number(`${cf}.f8`,this.T_D32(f8));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f6`,this.T_D32(f6));
+		this.save_primitive(`${cf}.f7`,this.T_D32(f7));
+		this.save_primitive(`${cf}.f8`,this.T_D32(f8));
 		return y;
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
@@ -2537,14 +2537,14 @@ class HandleTypes extends BaseService {
 		const cf="P_create_backstage_post_params";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(v1),x => this.sm.channelId(x));
-		this.save_number(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_watch_playlist_params} x */
 	P_watch_playlist_params(x) {
 		const cf="P_watch_playlist_params";
 		const {2: v2,3: v3,7: f7,12: f12,13: f13,27: f27,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f2`,this.T_D32(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f7; f12; f13; f27;
 	}
 	/** @private @arg {PX_watch_next_token_info} x */
@@ -2563,7 +2563,7 @@ class HandleTypes extends BaseService {
 		} else {
 			this.sm.a_primitive_bigint(this.T_D64(v1));
 		}
-		v3&&this.save_number(`${cf}.f3`,this.T_D32(v3));
+		v3&&this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {PX_watch_next_token_6} x */
 	PX_watch_next_token_6(x) {
@@ -2573,24 +2573,24 @@ class HandleTypes extends BaseService {
 			let n1=v1[1];
 			for(let [,,u1] of n1) this.PX_watch_next_token_item(u1);
 		}
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
-		v4&&this.save_string(`${cf}.f4`,this.TV_Str(v4));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
+		v4&&this.save_primitive(`${cf}.f4`,this.TV_Str(v4));
 	}
 	/** @private @arg {PX_watch_next_token_3} x */
 	PX_watch_next_token_3(x) {
 		const cf="PX_watch_next_token_3";
 		const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_watch_next_token_6(this.T_VW(v1));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
-		this.save_string(`${cf}.f4`,this.TV_Str(v4));
-		this.save_number(`${cf}.f5`,this.T_D32(v5));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f4`,this.TV_Str(v4));
+		this.save_primitive(`${cf}.f5`,this.T_D32(v5));
 	}
 	/** @private @arg {PX_watch_next_token_1} x */
 	PX_watch_next_token_1(x) {
 		const cf="PX_watch_next_token_1";
 		const {4: v4,6: v6,8: v8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_watch_next_token_2(this.T_VW(v4));
-		v6&&this.save_number(`${cf}.f6`,this.T_D32(v6));
+		v6&&this.save_primitive(`${cf}.f6`,this.T_D32(v6));
 		let i8=this.TV_Str(v8);
 		switch(i8) {
 			default: debugger; break;
@@ -2603,30 +2603,30 @@ class HandleTypes extends BaseService {
 		const cf="PX_watch_next_token_2";
 		const {4: a,6: b,15: c,37: f37,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(a));
-		this.save_number(`${cf}.f6`,this.T_D32(b));
-		this.save_number(`${cf}.f15`,this.T_D32(c));
-		f37&&this.save_string(`${cf}.f37`,this.TV_Str(f37));
+		this.save_primitive(`${cf}.f6`,this.T_D32(b));
+		this.save_primitive(`${cf}.f15`,this.T_D32(c));
+		f37&&this.save_primitive(`${cf}.f37`,this.TV_Str(f37));
 	}
 	/** @private @arg {PX_watch_next_token_4} x */
 	PX_watch_next_token_4(x) {
 		const cf="PX_watch_next_token_4";
 		const {5: a,12: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f5`,this.T_FD32(a));
+		this.save_primitive(`${cf}.f5`,this.T_FD32(a));
 		this.save_bigint(`${cf}.f12`,this.T_FD64(b));
 	}
 	/** @private @arg {PX_watch_next_token_5} x */
 	PX_watch_next_token_5(x) {
 		const cf="PX_watch_next_token_5";
 		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(a));
+		this.save_primitive(`${cf}.f1`,this.T_D32(a));
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {
 		const cf="P_continuation_request_watch_next_token";
 		const {1: v1,2: v2,3: v3,5: f5,6: f6,9: f9,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		v1&&this.save_number(`${cf}.f1`,this.T_D32(v1));
+		v1&&this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.PX_watch_next_token_info(this.T_VW(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f5&&this.sm.a_primitive_str(this.TV_Str(f5));
 		f6&&this.PX_watch_next_token_1(this.T_VW(f6));
 		f9&&this.PX_watch_next_token_3(this.T_VW(f9));
@@ -2641,14 +2641,14 @@ class HandleTypes extends BaseService {
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1(this.T_VW(v1));
 		this.t(v2,x => this.sm.videoId(this.TV_Str_ex(x)));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_subscribe_params} x */
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
 		const {2: v2,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1(this.T_VW(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f4;
 	}
 	/** @private @template {string} T @arg {TW_Str<T>} x */
@@ -2690,7 +2690,7 @@ class HandleTypes extends BaseService {
 		const cf="P_remove_like_params";
 		const {1: v1,3: v3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1_str(this.T_VW(v1));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f4; f5; f6;
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
@@ -2703,9 +2703,9 @@ class HandleTypes extends BaseService {
 	PX_ad_data_info(x) {
 		const cf="PX_ad_data_info";
 		const {1: v1,6: f6,11: f11,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
-		this.save_number(`${cf}.f6`,this.T_D32(f6));
-		this.save_number(`${cf}.f11`,this.T_D32(f11));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f6`,this.T_D32(f6));
+		this.save_primitive(`${cf}.f11`,this.T_D32(f11));
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
@@ -2728,10 +2728,10 @@ class HandleTypes extends BaseService {
 	PX_watch_bin(x) {
 		const cf="PX_watch_bin";
 		const {2: v2,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_string(`${cf}.f2`,this.TV_Str(v2));
-		this.save_string(`${cf}.v3`,"0b"+this.T_D32(v3).toString(2));
-		this.save_string(`${cf}.f4`,"0b"+this.T_D32(v4).toString(2));
-		this.save_number(`${cf}.f5`,this.T_D32(v5));
+		this.save_primitive(`${cf}.f2`,this.TV_Str(v2));
+		this.save_primitive(`${cf}.v3`,"0b"+this.T_D32(v3).toString(2));
+		this.save_primitive(`${cf}.f4`,"0b"+this.T_D32(v4).toString(2));
+		this.save_primitive(`${cf}.f5`,this.T_D32(v5));
 	}
 	/** @private @arg {PR_watch_bin} x */
 	PR_watch_bin(x) {
@@ -2743,15 +2743,15 @@ class HandleTypes extends BaseService {
 	PD_watch_bin(x) {
 		const cf="PD_watch_bin";
 		const {2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f2`,this.T_D32(v2));
-		this.save_number(`${cf}.f3`,this.T_D32(v3));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_watch_params} x */
 	P_watch_params(x) {
 		const cf="P_watch_params";
 		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: v40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		v2&&this.save_number(`${cf}.f2`,this.T_D32(v2));
-		v3&&this.save_number(`${cf}.f3`,this.T_D32(v3));
+		v2&&this.save_primitive(`${cf}.f2`,this.T_D32(v2));
+		v3&&this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f7;
 		f12;
 		f13;
@@ -2787,14 +2787,14 @@ class HandleTypes extends BaseService {
 	P_get_notification_menu_ctoken(x) {
 		const cf="P_get_notification_menu_ctoken";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_notification_opt_out} x */
 	P_notification_opt_out(x) {
 		const cf="P_notification_opt_out";
 		const {2: v2,3: v3,4: f4,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f2`,this.T_D32(v2));
-		this.save_string(`${cf}.f3`,this.TV_Str(v3));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f3`,this.TV_Str(v3));
 		f4;
 		f7;
 	}
@@ -2831,14 +2831,14 @@ class HandleTypes extends BaseService {
 			}
 			a;
 		});
-		this.t(i2,i2 => this.save_number("2:i2",this.T_D32(i2)));
+		this.t(i2,i2 => this.save_primitive("2:i2",this.T_D32(i2)));
 		this.t(i5,i5 => this.k("110:i5",this.T_VW(i5)));
 	}
 	/** @private @arg {P_playlist_edit_params} x */
 	P_playlist_edit_params(x) {
 		const cf="P_playlist_edit_params";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
 	P_notification_add_upcoming_event_reminder_params(x) {
@@ -2847,10 +2847,10 @@ class HandleTypes extends BaseService {
 		let u1=this.T_PArr_1(v1)[0];
 		switch(u1[0]) {
 			case "v_child": {
-				this.save_string(`${cf}.f1`,u1[3][1]);
+				this.save_primitive(`${cf}.f1`,u1[3][1]);
 			} break;
 			case "v_child_str":/*unk*/{
-				this.save_string(`${cf}.f1`,u1[3][1]);
+				this.save_primitive(`${cf}.f1`,u1[3][1]);
 			} break;
 		}
 		f6;
@@ -2866,14 +2866,14 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_f3_PD_continuation_params} x */
 	P_f3_PD_continuation_params(x) {
 		const cf="P_f3_PD_continuation_params";
-		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.T_VW(r);
+		const {1: v1,3: f3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.T_VW(v1);
 	}
 	/** @private @arg {P_PX_watch_next_token_2_f37} x */
 	P_PX_watch_next_token_2_f37(x) {
 		const cf="P_PX_watch_next_token_2_f37";
 		const {10: r,15: f15,20: f20,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_string(`${cf}.f10`,this.TV_Str(r));
+		this.save_primitive(`${cf}.f10`,this.TV_Str(r));
 		f15;
 		f20;
 	}
@@ -2881,7 +2881,7 @@ class HandleTypes extends BaseService {
 	P_create_reply_params(x) {
 		const cf="P_create_reply_params";
 		const {2: r,4: f4,5: f5,10: f10,14: f14,29: f29,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_string(`${cf}.f2`,this.TV_Str(r));
+		this.save_primitive(`${cf}.f2`,this.TV_Str(r));
 		f4;
 		f5;
 		f10;
@@ -2891,15 +2891,17 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_perform_comment_action} x */
 	P_perform_comment_action(x) {
 		const cf="P_perform_comment_action";
-		const {1: v1,2: v2,3: f3,5: f5,6: f6,7: f7,9: f9,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
-		this.save_number(`${cf}.f2`,this.T_D32(v2));
-		f3;
-		f5;
-		f6;
-		f7;
-		f9;
-		f21;
+		const {1: v1,2: v2,3: f3,5: f5,6: f6,7: f7,9: f9,21: f21,23: f23,30: f30,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f3`,this.TV_Str(f3));
+		this.save_primitive(`${cf}.f5`,this.TV_Str(f5));
+		this.save_primitive(`${cf}.f6`,this.T_D32(f6));
+		this.save_primitive(`${cf}.f7`,this.T_D32(f7));
+		this.save_primitive(`${cf}.f9`,this.TV_Str(f9));
+		this.save_primitive(`${cf}.f21`,this.T_D32(f21));
+		this.save_primitive(`${cf}.f23`,this.TV_Str(f23));
+		this.save_primitive(`${cf}.f30`,this.T_D32(f30));
 	}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
 	P_notification_remove_upcoming_event_reminder_params(x) {
@@ -2916,15 +2918,15 @@ class HandleTypes extends BaseService {
 	PX_upcoming_event_reminder_info(x) {
 		const cf="PX_upcoming_event_reminder_info";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_number(`${cf}.f1`,this.T_D32(v1));
-		this.save_number(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_transcript_params} x */
 	P_transcript_params(x) {
 		const cf="P_transcript_params";
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_string(`${cf}.f1`,this.TV_Str(v1));
-		this.save_string(`${cf}.f2`,this.TV_Str(v2));
+		this.save_primitive(`${cf}.f1`,this.TV_Str(v1));
+		this.save_primitive(`${cf}.f2`,this.TV_Str(v2));
 		this.g(this.T_VW(v3));
 	}
 	//#endregion
@@ -3111,18 +3113,18 @@ class HandleTypes extends BaseService {
 		let rk=`${user_key}.data[${idx}]`;
 		/** @type {`${typeof rk}[${f}]`} */
 		let k=`${rk}[${JSON.stringify(f)}]`;
-		this.save_string(rk,f);
+		this.save_primitive(rk,f);
 		let s_url_data=this.save_db.data_store.get_number_store().data.find(e => e[0]===k);
-		if(!s_url_data) {this.save_number(k,1); return;}
+		if(!s_url_data) {this.save_primitive(k,1); return;}
 		let wd=s_url_data[1];
 		switch(wd.l) {
 			default: throw new Error("What");
-			case "one": return this.save_number(k,wd.z[0]+1);
+			case "one": return this.save_primitive(k,wd.z[0]+1);
 			case "arr": {
 				let {z: [v]}=wd;
-				if(!v.length) return this.save_number(k,1);
+				if(!v.length) return this.save_primitive(k,1);
 				let n=v[0]+1;
-				return this.save_number(k,n);
+				return this.save_primitive(k,n);
 			}
 		}
 	}

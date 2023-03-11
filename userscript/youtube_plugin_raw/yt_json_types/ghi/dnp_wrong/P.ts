@@ -434,6 +434,7 @@ type P_ypc_get_offers_params={
 	1: T_VW<P_ypc_get_offers_params_f1>;
 	3: T_D32<3>;
 	5: T_VW<P_ypc_get_offers_params_f5>;
+	9?: T_D32<2>
 };
 type P_notification_record_interactions={
 	2: T_VW<{

@@ -2892,7 +2892,7 @@ class ServiceMethods extends ServiceData {
 		const cf="RC_ResponseContext";
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
-		this.z(serviceTrackingParams,x => {
+		this.tz(serviceTrackingParams,x => {
 			const service_tracking=this.x.get("service_tracking");
 			service_tracking.set_service_params(x);
 		});
