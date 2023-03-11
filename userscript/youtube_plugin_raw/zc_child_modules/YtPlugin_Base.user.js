@@ -430,7 +430,7 @@ let main_page_app=null;
  * @param {(ready_event:FindElement_IsReady,iter_count:number) => Promise<void>} fn1
  * @param {number} iter_count
  */
-async function iterate_find_element_async(ready_event,fn1,iter_count) {
+function iterate_find_element_async(ready_event,fn1,iter_count) {
 	if(ready_event.type==="done") return;
 	if(ready_event.type==="dom-not-ready") return;
 	if(ready_event.type==="current-page-not-found") return;
@@ -473,7 +473,8 @@ async function find_from_ytd_app(event,iter_count,obj,cur_count) {
 	iterate_find_element(ytd_page_manager,"ytd-page-manager",document,on_ytd_page_manager);
 	iterate_find_element(yt_playlist_manager,"yt-playlist-manager",document,event.detail.elements.on_yt_playlist_manager);
 	const find_event=create_find_event_for_ytd_watch_flexy();
-	await iterate_find_element_async(find_event,find_ytd_watch_flexy,iter_count);
+	const res=iterate_find_element_async(find_event,find_ytd_watch_flexy,iter_count);
+	if(res!==void 0) await res;
 	iterate_find_element(ytd_watch_flexy,"ytd-page-manager",ytd_watch_flexy,on_ytd_player);
 	do_find_video();
 
