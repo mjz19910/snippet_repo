@@ -11,10 +11,10 @@ function generate_ts-make_tmp_git_repo {
 		echo not in git repo at "$TMP_DIR"
 		git clone "$PROJ_DIR" "$TMP_DIR" -q
 	fi
-	pushd "$TMP_DIR"
 	git -C "$PROJ_DIR" diff >"../snippet_repo.diff"
-	git apply --allow-empty "../snippet_repo.diff"
-	pnpm i --silent -p "$TMP_DIR/userscript"
+	git -C "$TMP_DIR" apply --allow-empty "../snippet_repo.diff"
+	pushd "$TMP_DIR/userscript"
+	pnpm i --silent
 	popd
 }
 
