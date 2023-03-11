@@ -426,7 +426,9 @@ export class NumericLiterals extends LexerBase {
 		// DecimalDigit
 		let off=0;
 		for(;;) {
-			let [,len]=this.DecimalDigit(str,index+off);
+			let res=this.DecimalDigit(str,index+off);
+			if(!res[0]) break;
+			let [,len]=res;
 			if(len>0) {
 				off++;
 				continue;
@@ -440,18 +442,24 @@ export class NumericLiterals extends LexerBase {
 		let off=0;
 		for(;;) {
 			// DecimalDigit
-			let [,len]=this.DecimalDigit(str,index+off);
+			let res=this.DecimalDigit(str,index+off);
+			if(!res[0]) break;
+			let [,len]=res;
 			if(len>0) {
 				off++;
 				// DecimalDigits[?Sep] DecimalDigit
 				continue;
 			}
 			// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
-			let [,s_len]=this.NumericLiteralSeparator(str,index+off);
+			let res2=this.NumericLiteralSeparator(str,index+off);
+			if(!res2[0]) break;
+			let [,s_len]=res2;
 			if(s_len>0) {
-				let [,exl]=this.DecimalDigit(str,index+off+1);
+				off++;
+				let res=this.DecimalDigit(str,index+off);
+				if(!res[0]) break;
+				let [,exl]=res;
 				if(exl>0) {
-					off++;
 					// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
 					continue;
 				}
