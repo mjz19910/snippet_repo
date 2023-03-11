@@ -1,1 +1,1 @@
-export {Gen} from "./tmp.js";
+export {Gen} from "./generated/tmp.js";
