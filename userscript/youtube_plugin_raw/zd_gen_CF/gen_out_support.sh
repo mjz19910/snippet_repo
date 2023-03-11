@@ -3,29 +3,18 @@ export PROJ_DIR="$PWD"
 export DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF"
 export TMP_DIR="/dev/shm/snippet_repo_tmp"
 
-function generate_ts-after_tmp_git_repo {
-	git apply --allow-empty "../snippet_repo.diff"
-}
-
 function generate_ts-make_tmp_git_repo {
-	pushd /dev/shm
-	git -C $PROJ_DIR diff >"snippet_repo.diff"
 	if git -C "$TMP_DIR" rev-parse 2>/dev/null; then
-		pushd "$TMP_DIR"
-		git reset --hard -q
-		git pull -q
-		generate_ts-after_tmp_git_repo
-		popd
+		git -C "$TMP_DIR" reset --hard -q
+		git -C "$TMP_DIR" pull -q
 	else
-		echo not in git repo at $TMP_DIR
-		git clone "$PROJ_DIR" snippet_repo_tmp -q
-		pushd "$TMP_DIR"
-		generate_ts-after_tmp_git_repo
-		pushd "$TMP_DIR/$DEST_DIR"
-		pnpm i --silent
-		popd
-		popd
+		echo not in git repo at "$TMP_DIR"
+		git clone "$PROJ_DIR" "$TMP_DIR" -q
 	fi
+	pushd "$TMP_DIR"
+	git -C "$PROJ_DIR" diff >"../snippet_repo.diff"
+	git apply --allow-empty "../snippet_repo.diff"
+	pnpm i --silent -p "$TMP_DIR/userscript"
 	popd
 }
 
