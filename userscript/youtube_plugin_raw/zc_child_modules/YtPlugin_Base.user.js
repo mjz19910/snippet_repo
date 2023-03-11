@@ -202,12 +202,26 @@ let created_blobs=new Map;
 /** @private @type {Set<string>} */
 let active_blob_set=new Set;
 //#endregion
-/** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>asserts x is X} */
-function assume_assert_is_instanceof(_value,_constructor_type) {}
-/** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X} */
-function as_instanceof(value,_constructor_type) {
-	assume_assert_is_instanceof(value,_constructor_type);
-	return value;
+/**
+ * @template T
+ * @template {abstract new (...args: any) => any} U
+ * @template {InstanceType<U>} X
+ * @param {T|X} x
+ * @param {U} c_ty
+ * @returns {asserts x is X}
+ */
+function assume_assert_is_instanceof(x,c_ty) {x; c_ty;}
+/**
+ * @template T
+ * @template {abstract new (...args: any) => any} U
+ * @template {InstanceType<U>} X
+ * @param {T|X} x
+ * @param {U} c_ty
+ * @returns {X}
+ */
+function as_instanceof(x,c_ty) {
+	assume_assert_is_instanceof(x,c_ty);
+	return x;
 }
 /** @private @template {{length:number;[x:number]:T[number]}} T */
 class Iterator {
@@ -2277,7 +2291,7 @@ class BaseService extends ServiceWithMembers {
 	/**
 	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
 	 * @returns {[U,Omit<T,"webCommandMetadata">]}
-	 * */
+	 */
 	T_WCM(cf,x,f) {
 		const {webCommandMetadata: a,...y}=this.s(cf,x);
 		let ret=f.call(this,a,`G${cf}`);

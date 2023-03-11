@@ -1028,7 +1028,7 @@ class ServiceMethods extends ServiceData {
 	 * @param {CF_TE_Endpoint_2} cf
 	 * @template {Extract<keyof T_EP,KA_EndpointKey>} T_Key @template {TE_Endpoint_2<KA_EndpointKey,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
 	 * @returns {[T_EP[T_Key],Omit<T_EP,"clickTrackingParams"|T_Key>]}
-	 * */
+	 */
 	TE_Endpoint_2(cf,k,x) {
 		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
 		this.clickTrackingParams(clickTrackingParams);
@@ -1057,7 +1057,7 @@ class ServiceMethods extends ServiceData {
 	 * @arg {CF_TE_TrackedObj_2} cf
 	 * @template {Extract<keyof T_EP,KA_EndpointKey>} T_Key @template {TE_TrackedObj_2<KA_EndpointKey,{}>} T_EP @arg {T_EP} x @arg {T_Key} k
 	 * @returns {[T_EP[T_Key],Omit<T_EP,"trackingParams"|T_Key>]}
-	 * */
+	 */
 	TE_TrackedObj_2(cf,x,k) {
 		const {trackingParams,[k]: endpoint,...y}=this.s(cf,x);
 		this.trackingParams(trackingParams);
@@ -1810,7 +1810,7 @@ class ServiceMethods extends ServiceData {
 	 * @template {CF_L_Params} T
 	 * @arg {T} root @arg {CF_P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback
 	 * @arg {boolean} is_debug_enabled
-	 * */
+	 */
 	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback,is_debug_enabled) {
 		let map_entry_key=map_entry_key_path.at(-1);
 		let map_keys_=map_keys.slice();
@@ -4853,7 +4853,7 @@ class ServiceMethods extends ServiceData {
 	 * @arg {D_EmojiImage} x
 	 * This might be D_Thumbnail, if the optional properties match,
 	 * use that instead of repeating the code
-	 * */
+	 */
 	D_EmojiImage(x) {
 		const cf="D_EmojiImage";
 		const {accessibility,thumbnails,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

@@ -2482,9 +2482,17 @@ class HandleTypes extends BaseService {
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.sm.videoId(this.TV_Str(v1));
-		v3;
+		this.t(v1,x => this.sm.videoId(this.TV_Str(x)));
+		this.t(v3,x => {
+			let [,v1]=x; v1;
+			console.log(`${cf}.f3`,this.T_VW(x));
+		});
 		this.TX_sequence_info(this.T_VW(f5));
+		this.t(f8,x => {
+			let [,[v1,...v1y]]=x; v1;
+			let [v2,...v3]=v1;
+			console.log(`${cf}.f8`,v2,v3,v1y);
+		});
 		f8; f12;
 	}
 	/** @private @arg {PX_watch_sequence_info} x */

@@ -206,11 +206,11 @@ class StoreData extends BaseService {
 				console.log("load_database failed",err);
 				let stack=[err];
 				while(stack.length>0) {
-					if(err instanceof AggregateError) {
-						console.log("caused by",err);
-						for(let err_iter of err.errors) stack.push(err_iter);
+					let cur_err=stack.pop();
+					if(cur_err instanceof AggregateError) {
+						if(cur_err!==err) console.log("caused by",cur_err);
+						for(let err_iter of cur_err.errors) stack.push(err_iter);
 					}
-					if(stack.length>0) err=stack.pop(); else break;
 				}
 				return;
 			}
@@ -4044,7 +4044,7 @@ class ForService_XMethods extends BaseService {
 	/**
 	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
 	 * @returns {[p1,p2,o2]}
-	 * */
+	 */
 	D_ThumbnailOverlayToggleButton_Omit(cf,x) {
 		this.sm.k(cf,x);
 		let [p1,{...o1}]=this.sm.unwrap_prefix(x,"toggled");

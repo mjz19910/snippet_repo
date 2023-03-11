@@ -475,7 +475,7 @@ class IndexedDBService extends BaseService {
 	/**
 	 * @param {TypedIndexedDB} tdb @template {G_BoxedDatabaseData} T @arg {TypedIDBObjectStore<T>} store @arg {T} value
 	 * @returns {{type:"err";err:unknown}|{type:"ok";req:IDBRequest<IDBValidKey>}}
-	 * */
+	 */
 	start_put_request(tdb,store,value) {
 		try {
 			return {type: "ok",req: tdb.put(store,value)};
@@ -613,7 +613,7 @@ class IndexedDBService extends BaseService {
 	 * @template {Extract<T,{key:KA}>} T2
 	 * @param {number} version
 	 * @returns {Promise<T2|null>}
-	 * */
+	 */
 	async get(key,store_key,version) {
 		let typed_db=new TypedIndexedDB;
 		let db=await this.get_async_result(this.get_db_request(version));
