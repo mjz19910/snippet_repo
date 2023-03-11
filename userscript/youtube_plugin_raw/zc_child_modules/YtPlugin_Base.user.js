@@ -404,9 +404,10 @@ function on_ytd_app(element) {
 	});
 }
 //#endregion
-/** @arg {Node|null} element_value @arg {string} tag_name @arg {Document|Element} src_element @arg {(x:HTMLElement)=>void} cb */
+/** @arg {Node|null} element_value @arg {string} tag_name @arg {Document|Element|null} src_element @arg {(x:HTMLElement)=>void} cb */
 function iterate_find_element(element_value,tag_name,src_element,cb) {
 	if(element_value) return;
+	if(!src_element) return;
 	const target_element=get_html_elements(src_element,tag_name)[0];
 	if(!target_element) return;
 	found_element_count++;
@@ -417,6 +418,51 @@ function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {con
 /** @private @type {Element|null} */
 let main_page_app=null;
 /**
+ * @typedef {{type: "ready";detail: {current_page: YtCurrentPage;ytd_page_manager: YtdPageManagerElement;};}} FindElement_IsReady
+ */
+
+/**
+ * @typedef {{type:"done"}|{type:"dom-not-ready"}|{type:"current-page-not-found";detail:{ytd_page_manager: YtdPageManagerElement}}|FindElement_IsReady} MaybeReadyEvent
+ */
+
+/**
+ * @param {MaybeReadyEvent} ready_event
+ * @param {(ready_event:FindElement_IsReady,iter_count:number) => Promise<void>} fn1
+ * @param {number} iter_count
+ */
+async function iterate_find_element_async(ready_event,fn1,iter_count) {
+	if(ready_event.type==="done") return;
+	if(ready_event.type==="dom-not-ready") return;
+	if(ready_event.type==="current-page-not-found") return;
+	return fn1(ready_event,iter_count);
+}
+/** @arg {FindElement_IsReady} ready_event @arg {number} iter_count */
+async function find_ytd_watch_flexy(ready_event,iter_count) {
+	const {current_page}=ready_event.detail;
+	if(!current_page.__theater_handler_plugin_attached) {
+		current_page.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+		current_page.__theater_handler_plugin_attached=true;
+	}
+	if(is_yt_debug_enabled) console.log("PageManager:current_page:"+current_page.tagName.toLowerCase());
+	if(current_page.tagName.toLowerCase()!="ytd-watch-flexy") {
+		if(iter_count>100) {console.log("found current_page [%s] at iter=%o",current_page.tagName.toLowerCase(),iter_count);}
+		/** @private @type {Promise<void>} */
+		let promise=new Promise((accept,reject) => {
+			if(!ytd_page_manager) return reject(new Error("missing data"));
+			ytd_page_manager.addEventListener(
+				"yt-page-type-changed",
+				() => accept(),
+				{once: true}
+			);
+		});
+		await promise;
+		return;
+	}
+	found_element_count++;
+	on_ytd_watch_flexy(current_page);
+	return;
+}
+/**
  * @param {AsyncPluginInitEvent} event
  * @param {number} iter_count
  * @param {DomObserver} obj
@@ -424,62 +470,17 @@ let main_page_app=null;
  * @returns {Promise<IterationDecision>}
  */
 async function find_from_ytd_app(event,iter_count,obj,cur_count) {
-	// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager"});
 	iterate_find_element(ytd_page_manager,"ytd-page-manager",document,on_ytd_page_manager);
-	// END(ytd-page-manager): obj.dispatchEvent({type: "ytd-page-manager"});
-	// BEGIN(yt-playlist-manager): obj.dispatchEvent({type: "find-yt-playlist-manager"});
-	iterate_find_element(yt_playlist_manager,"yt-playlist-manager",document,element => {
-		event.detail.elements.on_yt_playlist_manager(element);
-	});
-	// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy"});
-	x: {
-		if(ytd_watch_flexy) break x;
-		if(!ytd_page_manager) break x;
-		if(!ytd_page_manager.getCurrentPage()) break x;
-		/** @private @template T @arg {T|undefined} x @arg {(e:T)=>void} w */
-		function using_current_page(x,w) {if(x) w(x);}
-		if(!ytd_page_manager.getCurrentPage()?.__theater_handler_plugin_attached) {
-			ytd_page_manager.getCurrentPage()?.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-			using_current_page(ytd_page_manager.getCurrentPage(),e => {
-				e.__theater_handler_plugin_attached=true;
-			});
-		}
-		if(is_yt_debug_enabled) console.log("PageManager:current_page:"+ytd_page_manager.getCurrentPage()?.tagName.toLowerCase());
-		if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
-			if(iter_count>100) {console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);}
-			/** @private @type {Promise<void>} */
-			let promise=new Promise((accept,reject) => {
-				if(!ytd_page_manager) return reject(new Error("missing data"));
-				ytd_page_manager.addEventListener(
-					"yt-page-type-changed",
-					() => accept(),
-					{once: true}
-				);
-			});
-			await promise;
-			break x;
-		}
-		found_element_count++;
-		using_current_page(ytd_page_manager.getCurrentPage(),on_ytd_watch_flexy);
-	}
-	// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy"});
-	// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player"});
-	x: {
-		if(ytd_player) break x;
-		if(!ytd_watch_flexy) break x;
-		const target_element=get_html_elements(ytd_watch_flexy,"ytd-player")[0];
-		if(!target_element) break x;
-		found_element_count++;
-		on_ytd_player(target_element);
-	}
-	// END(ytd-player): obj.dispatchEvent({type: "ytd-player",detail,port});
-	// BEGIN(video): obj.dispatchEvent({type: "find-video",detail,port});
+	iterate_find_element(yt_playlist_manager,"yt-playlist-manager",document,event.detail.elements.on_yt_playlist_manager);
+	const find_event=create_find_event_for_ytd_watch_flexy();
+	await iterate_find_element_async(find_event,find_ytd_watch_flexy,iter_count);
+	iterate_find_element(ytd_watch_flexy,"ytd-page-manager",ytd_watch_flexy,on_ytd_player);
 	do_find_video();
-	// END(video): obj.dispatchEvent({type: "video",detail,port});
+
 	await obj.wait_for_port(event.port,cur_count);
 	if(found_element_count>=expected_element_count) {
 		obj.dispatchEvent({...event,type: "plugin-activate"});
-		return {type: "continue"};
+		return {type: "break"};
 	}
 	const max_find_iter=7588;
 	if(!box_map.has("video-list")) return {type: "continue"};
@@ -489,6 +490,14 @@ async function find_from_ytd_app(event,iter_count,obj,cur_count) {
 	if(iter_count>max_find_iter) {alert("found plugin reqs in iters="+iter_count);}
 	obj.dispatchEvent({...event,type: "plugin-activate"});
 	return {type: "break"};
+}
+/** @returns {MaybeReadyEvent} */
+function create_find_event_for_ytd_watch_flexy() {
+	if(ytd_watch_flexy) return {type: "done"};
+	if(!ytd_page_manager) return {type: "dom-not-ready"};
+	let current_page=ytd_page_manager.getCurrentPage();
+	if(!current_page) return {type: "current-page-not-found",detail: {ytd_page_manager}};
+	return {type: "ready",detail: {current_page,ytd_page_manager}};
 }
 /** @private @arg {AsyncPluginInitEvent} event */
 async function async_plugin_init(event) {
