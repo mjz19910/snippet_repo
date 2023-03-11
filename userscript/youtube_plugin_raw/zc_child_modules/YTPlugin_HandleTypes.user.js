@@ -3208,7 +3208,7 @@ class HandleTypes extends BaseService {
 	RSG_NotificationMenu(x) {
 		const cf="RSG_NotificationMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
+		let [ar]=this.z(actions,this.A_NotificationMenuPopup);
 		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
 		let [u3]=this.z(u2,x => this.sm.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
 		this.z(u3,this.D_NotificationMenu);
@@ -3239,9 +3239,9 @@ class HandleTypes extends BaseService {
 		return b;
 	}
 	/** @private @arg {A_NotificationMenuPopup} x */
-	RSG_NotificationMenu_Action(x) {
-		const cf="RSG_NotificationMenu_Action";
-		if("openPopupAction" in x) return this.xm.TA_OpenPopup("RSG_NotificationMenu_Action",x);
+	A_NotificationMenuPopup(x) {
+		const cf="A_NotificationMenuPopup";
+		if("openPopupAction" in x) return this.xm.TA_OpenPopup("A_NotificationMenuPopup",x);
 		x===""; this.sm.codegen_typedef(cf,x);
 		return null;
 	}

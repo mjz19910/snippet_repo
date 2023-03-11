@@ -888,6 +888,7 @@ export namespace Gen {
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_FancyDismissibleDialog";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_GetAccountMenu";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_GetSystemMenu";}
+		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "A_NotificationMenuPopup";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "DE_ShareEntityService";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "GA_MenuNavigationPopup";}
 		|{n: "CF_TA_OpenPopup"; t: CF_TA_OpenPopup; v: "G_Action_GetNotificationsMenu";}
