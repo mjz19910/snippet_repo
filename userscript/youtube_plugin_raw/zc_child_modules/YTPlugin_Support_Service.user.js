@@ -182,16 +182,31 @@ class StoreDescription extends ApiBase2 {
 	}
 }
 export_(exports => {exports.StoreDescription=StoreDescription;});
-class StoreData {
+class StoreData extends BaseService {
 	/** @type {Map<string,StoreDescription<string>>} */
 	stores=new Map;
-	constructor() {
+	/** @arg {ServiceResolverBox<{}>} x */
+	constructor(x) {
+		super(x);
 		/** @arg {string} type @returns {T_StoreDataInput<string>} */
 		function make_store(type) {
 			const description=new StoreDescription(type,[type]); return {type,description};
 		}
 		const store_names_arr=["bigint","boolean","keys","number","root_visual_element","string"];
 		for(let store_name of store_names_arr) this.add_store(make_store(store_name));
+		this.loaded_database=false;
+		/** @type {number|null} */
+		this.idle_id=requestIdleCallback(async () => {
+			try {
+				await this.ix.load_database(this,this.sm.indexed_db_version);
+				this.loaded_database=true;
+			} catch(err) {
+				console.log("load_database failed",err);
+				return;
+			}
+			this.idle_id=null;
+			if(this.m_outdated_store_description_arr.length!==0) this.on_stores_to_save();
+		});
 	}
 	/** @returns {StoreDescription<"string">} */
 	get_string_store() {return as_any(this.get_store("string"));}
@@ -208,6 +223,50 @@ class StoreData {
 	/** @arg {G_BoxedDatabaseData} item */
 	on_item_loaded_from_database(item) {
 		item;
+	}
+	/** @private */
+	store_description_sets={
+		/** @private @type {StoreDescription<string>[]} */
+		outdated: [],
+		/** @private @type {StoreDescription<string>[]} */
+		saved: [],
+	};
+	/** @arg {StoreDescription<string>} store */
+	on_store_update(store) {
+		let idx=this.store_description_sets.saved.indexOf(store);
+		if(idx!==-1) this.store_description_sets.saved.splice(idx,1);
+		if(this.store_description_sets.outdated.includes(store)) return;
+		this.store_description_sets.outdated.push(store);
+	}
+	on_stores_to_save() {
+		if(this.idle_id!==null) return;
+		this.idle_id=requestIdleCallback(async (idle_deadline) => {
+			console.log("idle time remaining",idle_deadline.timeRemaining());
+			while(true) {
+				for(let outdated_store of this.store_description_sets.outdated) {
+					if(this.store_description_sets.saved.includes(outdated_store)) continue;
+					try {
+						console.log("[time_remaining:save_store:enter]",outdated_store.type,idle_deadline.timeRemaining());
+						await this.ix.save_store_to_database(outdated_store,this.sm.indexed_db_version);
+						this.store_description_sets.saved.push(outdated_store);
+						console.log("[time_remaining:save_store:leave]",outdated_store.type,idle_deadline.timeRemaining());
+						console.log("end save at time remaining",idle_deadline.timeRemaining());
+					} catch(err) {
+						console.log("save_store_to_database failed",err);
+						break;
+					}
+				}
+				for(let saved_store of this.store_description_sets.saved) {
+					const outdated_idx=this.store_description_sets.outdated.indexOf(saved_store);
+					if(outdated_idx===-1) continue;
+					this.store_description_sets.outdated.splice(outdated_idx,1);
+				}
+				if(this.store_description_sets.outdated.length!==0) continue;
+				break;
+			}
+			console.log("idle time remaining at exit",idle_deadline.timeRemaining());
+			this.idle_id=null;
+		});
 	}
 }
 export_(exports => {exports.StoreData=StoreData;});
@@ -233,7 +292,6 @@ class LocalStorageSeenDatabase extends BaseService {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	data_store=new StoreData;
 	/** @type {IndexedDBService} */
 	idb=(() => {
 		if(!this.x) {
@@ -245,6 +303,30 @@ class LocalStorageSeenDatabase extends BaseService {
 		return this.x.get("indexed_db");
 	})();
 	loaded_database=false;
+	/** @private @type {number|null} */
+	idle_id=null;
+	onDataChange() {
+		if(this.idle_id!==null) return;
+		this.is_ready=false;
+		this.idle_id=requestIdleCallback(async () => {
+			const version=this.sm.indexed_db_version;
+			if(!this.loaded_database) {
+				try {
+					await this.idb.load_database(this.data_store,version);
+					this.loaded_database=true;
+				} catch(err) {
+					console.log("load_database failed",err);
+					return;
+				}
+			}
+			try {
+				await this.idb.save_database(this.data_store,version);
+			} catch(err) {
+				console.log("save_database failed",err);
+				return;
+			}
+		});
+	}
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
 	split_box_type(k) {
 		/** @returns {`${A}:${B}`|null} */

@@ -19,7 +19,7 @@ const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
 const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 const {ParserService}=require("./YTPlugin_Parser_Service.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
-const {LocalStorageSeenDatabase,Support_RS_Player,Support_RS_WatchPage,Support_RS_Watch,Support_RS_Page_Browse,Support_RS_Browse,Support_GenericApi,Support_EventInput,Support_VE37414,Support_VE,TypedefGenerator,Support_Renderer,ForService_XMethods,ForService_CommonMethods}=require("./YTPlugin_Support_Service.user");
+const {LocalStorageSeenDatabase,Support_RS_Player,Support_RS_WatchPage,Support_RS_Watch,Support_RS_Page_Browse,Support_RS_Browse,Support_GenericApi,Support_EventInput,Support_VE37414,Support_VE,TypedefGenerator,Support_Renderer,ForService_XMethods,ForService_CommonMethods,StoreData}=require("./YTPlugin_Support_Service.user");
 
 const __module_name__="mod$ServiceLoaderPlugin";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -57,6 +57,9 @@ class ServiceLoader {
 		this.common_methods=new ForService_CommonMethods(x);
 		this.yt_handlers=new YtHandlers(x);
 		this.yt_plugin=new YtPlugin(x);
+		this.data_store=new StoreData(x,(database_load_target) => {
+			return this.indexed_db.load_database(database_load_target,this.service_methods.indexed_db_version);
+		});
 	}
 	/** @api @public @arg {(() => void)[]} listeners */
 	on_resolve_services(listeners) {
