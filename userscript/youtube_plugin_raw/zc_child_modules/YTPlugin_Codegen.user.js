@@ -39,7 +39,7 @@ class CodegenService extends ServiceWithAccessors {
 	get_renderer_codegen_str(cf,k) {
 		if(cf.startsWith("E_")) {
 			let ic=this.uppercase_first(split_string_once(cf,"Endpoint")[0]);
-			if(`E_${ic}`===cf) return `this.DE_${ic}(${k});`;
+			return `this.DE_${ic}(${k});`;
 		}
 		if(k.endsWith("Endpoint")) {
 			let ic=this.uppercase_first(split_string_once(k,"Endpoint")[0]);
