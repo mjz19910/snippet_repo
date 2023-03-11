@@ -1904,18 +1904,11 @@ class ServiceMethods extends ServiceData {
 		if(keys.length!==1) {debugger; return;}
 		let cf=this.get_codegen_name(k,x);
 		if(!cf) {debugger; return;}
-		let cf_ty=null;
-		switch(cf) {
-			default: debugger; break;
-			case "CF_M_wn": cf_ty=cf; break;
-		}
-		if(cf_ty) {
-			let wr=this.wn(cf_ty,x,k);
-			if(!wr) return;
-			return f.call(cls,wr[0]);
-		} else {
-			throw new Error("H_cls: new cf from get_codegen_name");
-		}
+		/** @type {CF_M_wn} */
+		let cf_ty=as(cf);
+		let wr=this.wn(cf_ty,x,k);
+		if(!wr) return;
+		return f.call(cls,wr[0]);
 	}
 	/** @private @arg {`${number}`} x */
 	parse_number(x) {
