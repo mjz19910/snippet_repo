@@ -2,7 +2,7 @@ type IndexedDBService=InstanceType<PluginStore["mod$IndexedDBService"]["IndexedD
 type VolumeRange=InstanceType<PluginStore["mod$YoutubePluginBase"]["VolumeRange"]>;
 type ServiceResolverBox<T>={
 	value: T|null;
-	listeners: ((x: T) => void)[];
+	listeners: (() => void)[];
 };
 namespace TestData {
 
@@ -31,7 +31,6 @@ namespace TestData {
 		["moment"]: ["sys","moment"],
 	};
 }
-type DefaultServiceResolver=ServiceResolverBox<ServiceResolverValue>;
 type ServiceResolverValue=ServiceResolver<ServiceLoader,ServiceOptions>;
 type MakeImportPath1<T>=T extends `./DebugApi_raw/${infer BaseName1}`? `../DebugApi_raw/${BaseName1}`:never;
 type MakeImportPathForTemplateDir<T>=T extends `./youtube_plugin_raw/zc_child_modules/${infer BaseName1}`? `../zc_child_modules/${BaseName1}`|`./${BaseName1}`:never;

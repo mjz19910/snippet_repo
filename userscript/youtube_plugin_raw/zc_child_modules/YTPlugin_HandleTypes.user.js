@@ -344,8 +344,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
 	T_Attachment(cf,x) {
 		const {startIndex,length,...y}=this.s(cf,x);
-		this.m_s.a_primitive_num(startIndex);
-		this.m_s.a_primitive_num(length);
+		this.sm.a_primitive_num(startIndex);
+		this.sm.a_primitive_num(length);
 		return y;
 	}
 	/** @private @template {number} T @arg {T_D32<T>} x */
@@ -380,7 +380,7 @@ class HandleTypes extends BaseService {
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
 		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 		f.call(this,a);
 	}
 	//#endregion
@@ -397,7 +397,7 @@ class HandleTypes extends BaseService {
 	D_WebPlayerConfig(x) {
 		const cf="D_WebPlayerConfig";
 		const {useCobaltTvosDash,webPlayerActionsPorting,...y}=this.s(cf,x); this.g(y);
-		this.m_s.cq(useCobaltTvosDash,true);
+		this.sm.cq(useCobaltTvosDash,true);
 		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
 	}
 	/** @public @arg {D_WebPlayerActionsPorting} x */
@@ -425,14 +425,14 @@ class HandleTypes extends BaseService {
 			if(this.is_eq_keys(u4,this.exact_arr("v","list","index","pp"))) break x;
 			u4===""; debugger;
 		}
-		this.m_ps.parse_url(cf,x);
+		this.ps.parse_url(cf,x);
 		return u3;
 	}
 	//#endregion
 	//#region Renderer Data Templates
 	/** @private @arg {CF_M_HD} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD(cf,k,x) {
-		this.m_s.k(cf,x);
+		this.sm.k(cf,x);
 		let kx=this.get_keys_of(x);
 		if(kx.length!==1) debugger;
 		if(kx[0]!==k) debugger;
@@ -453,11 +453,11 @@ class HandleTypes extends BaseService {
 		return x[k];
 	}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
-	zy(cf,k,x,f) {return this.z(this.m_s.w(cf,k,x),f);}
+	zy(cf,k,x,f) {return this.z(this.sm.w(cf,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
-	TA_Page(cf,x,f) {f.call(this,this.m_s.w(cf,"page",x));}
+	TA_Page(cf,x,f) {f.call(this,this.sm.w(cf,"page",x));}
 	//#endregion
 	//#region Action methods
 	/** @private @arg {A_GetMultiPageMenu} x */
@@ -474,17 +474,17 @@ class HandleTypes extends BaseService {
 	D_VideoSecondaryInfo(x) {
 		const cf="D_VideoSecondaryInfo";
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,attributedDescription,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.trackingParams(trackingParams);
-		this.t(description,x => this.m_s.G_Text(x));
-		this.m_s.m_x.R_SubscribeButton(subscribeButton);
-		this.m_s.RMD_RowContainer(metadataRowContainer);
-		this.m_s.G_Text(showMoreText);
-		this.m_s.G_Text(showLessText);
-		this.m_s.R_VideoOwner(owner);
-		this.m_s.a_primitive_bool(defaultExpanded);
-		this.m_s.a_primitive_num(descriptionCollapsedLines);
-		this.t(showMoreCommand,x => this.m_s.C_Executor(x));
-		this.m_s.t(showLessCommand,x => this.m_s.A_ChangeEngagementPanelVisibility(x));
+		this.sm.trackingParams(trackingParams);
+		this.t(description,x => this.sm.G_Text(x));
+		this.sm.xm.R_SubscribeButton(subscribeButton);
+		this.sm.RMD_RowContainer(metadataRowContainer);
+		this.sm.G_Text(showMoreText);
+		this.sm.G_Text(showLessText);
+		this.sm.R_VideoOwner(owner);
+		this.sm.a_primitive_bool(defaultExpanded);
+		this.sm.a_primitive_num(descriptionCollapsedLines);
+		this.t(showMoreCommand,x => this.sm.C_Executor(x));
+		this.sm.t(showLessCommand,x => this.sm.A_ChangeEngagementPanelVisibility(x));
 		this.t(attributedDescription,this.D_AttributedDescription);
 	}
 	/** @private @arg {D_CommandRunItem} x */
@@ -492,7 +492,7 @@ class HandleTypes extends BaseService {
 		const cf="D_CommandRunItem";
 		const {onTap,loggingDirectives,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.C_Innertube(onTap);
-		this.t(loggingDirectives,x => this.m_s.D_LoggingDirectives(x));
+		this.t(loggingDirectives,x => this.sm.D_LoggingDirectives(x));
 	}
 	/** @private @arg {D_StyleRunItem} x */
 	D_StyleRunItem(x) {
@@ -506,7 +506,7 @@ class HandleTypes extends BaseService {
 	D_AttributedDescription(x) {
 		const cf="D_VideoSecondaryInfo";
 		const {content,commandRuns,styleRuns,attachmentRuns,decorationRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.a_primitive_str(content);
+		this.sm.a_primitive_str(content);
 		this.tz(commandRuns,this.D_CommandRunItem);
 		this.tz(styleRuns,this.D_StyleRunItem);
 		this.tz(attachmentRuns,this.R_AttachmentElement);
@@ -529,9 +529,9 @@ class HandleTypes extends BaseService {
 	D_ExpandableVideoDescriptionBody(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
 		const {descriptionBodyText,showMoreText,showLessText,attributedDescriptionBodyText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(descriptionBodyText,x => this.m_s.G_Text(x));
-		this.t(showMoreText,x => this.m_s.G_Text(x));
-		this.t(showLessText,x => this.m_s.G_Text(x));
+		this.t(descriptionBodyText,x => this.sm.G_Text(x));
+		this.t(showMoreText,x => this.sm.G_Text(x));
+		this.t(showLessText,x => this.sm.G_Text(x));
 		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
 	}
 	/** @private @arg {D_HighlightTextDecorator} x */
@@ -539,7 +539,7 @@ class HandleTypes extends BaseService {
 		const cf="D_HighlightTextDecorator";
 		const {backgroundColor,backgroundCornerRadius,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.save_primitive(`${cf}.backgroundColor`,backgroundColor);
-		this.m_s.cq(backgroundCornerRadius,8);
+		this.sm.cq(backgroundCornerRadius,8);
 	}
 	/** @private @arg {D_AttachmentElement} x */
 	D_AttachmentElement(x) {
@@ -555,12 +555,12 @@ class HandleTypes extends BaseService {
 		const cf="D_LayoutProperties";
 		const {height,width,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(height) {
-			this.m_s.cq(height.unit,"DIMENSION_UNIT_POINT");
-			this.m_s.cq(height.value,10);
+			this.sm.cq(height.unit,"DIMENSION_UNIT_POINT");
+			this.sm.cq(height.value,10);
 		} else debugger;
 		if(width) {
-			this.m_s.cq(width.unit,"DIMENSION_UNIT_POINT");
-			this.m_s.cq(width.value,14);
+			this.sm.cq(width.unit,"DIMENSION_UNIT_POINT");
+			this.sm.cq(width.value,14);
 		} else debugger;
 	}
 	/** @private @arg {D_ImageType} x */
@@ -571,7 +571,7 @@ class HandleTypes extends BaseService {
 	D_Sources(x) {
 		this.H_("sources",x,x => this.z(x,x => {
 			const {url,...y}=this.s("D_Sources.sources[]",x); this.g(y);
-			this.m_s.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
+			this.sm.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
 		}));
 	}
 	/** @public @arg {R_BackgroundPromo} x */
@@ -580,10 +580,10 @@ class HandleTypes extends BaseService {
 	D_BackgroundPromo(x) {
 		const cf="D_LayoutProperties";
 		const {title,bodyText,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.G_Text(title);
-		this.m_s.G_Text(bodyText);
-		this.m_s.T_Icon(cf,icon);
-		this.m_s.trackingParams(trackingParams);
+		this.sm.G_Text(title);
+		this.sm.G_Text(bodyText);
+		this.sm.T_Icon(cf,icon);
+		this.sm.trackingParams(trackingParams);
 	}
 	//#endregion
 	//#region G
@@ -591,19 +591,19 @@ class HandleTypes extends BaseService {
 	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {G_DC_Innertube} x */
 	G_DC_Innertube(x) {
-		const cf="G_DC_Innertube"; this.m_s.k(cf,x);
-		if("setActivePanelItemAction" in x) return this.m_s.A_SetActivePanelItem(x);
-		if("ypcGetOfflineUpsellEndpoint" in x) return this.m_s.E_YpcGetOfflineUpsell(x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.m_s.A_ChangeEngagementPanelVisibility(x);
-		if("urlEndpoint" in x) return this.m_x.E_Url(x);
+		const cf="G_DC_Innertube"; this.sm.k(cf,x);
+		if("setActivePanelItemAction" in x) return this.sm.A_SetActivePanelItem(x);
+		if("ypcGetOfflineUpsellEndpoint" in x) return this.sm.E_YpcGetOfflineUpsell(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
+		if("urlEndpoint" in x) return this.xm.E_Url(x);
 		if("browseEndpoint" in x) {
-			if(this.m_s.is_TE_VE(x,3611)) return this.m_s.E_VE3611(x);
-			if(this.m_s.is_TE_VE(x,5754)) return this.m_s.E_VE5754(x);
-			if(this.m_s.is_TE_VE(x,6827)) return this.m_s.E_VE6827(x);
+			if(this.sm.is_TE_VE(x,3611)) return this.sm.E_VE3611(x);
+			if(this.sm.is_TE_VE(x,5754)) return this.sm.E_VE5754(x);
+			if(this.sm.is_TE_VE(x,6827)) return this.sm.E_VE6827(x);
 			debugger;
 			return;
 		}
-		if("watchEndpoint" in x) return this.m_s.E_Watch(x);
+		if("watchEndpoint" in x) return this.sm.E_Watch(x);
 		debugger;
 	}
 	//#endregion
@@ -613,11 +613,11 @@ class HandleTypes extends BaseService {
 	/** @private @arg {AU_ChannelSwitcherPage} x */
 	AU_ChannelSwitcherPage(x) {this.H_("updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
-	AD_GetMultiPageMenu(x) {this.H_("menu",x,x => this.m_s.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
+	AD_GetMultiPageMenu(x) {this.H_("menu",x,x => this.sm.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.m_s.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @arg {C_FollowUp} x */
-	C_FollowUp(x) {let [a,y]=this.m_s.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
+	C_FollowUp(x) {let [a,y]=this.sm.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
 	DC_AddFollowUpSurvey(x) {
 		const cf="DC_AddFollowUpSurvey";
@@ -627,14 +627,14 @@ class HandleTypes extends BaseService {
 	DC_ResetChannelUnreadCount(x) {
 		const cf="DC_ResetChannelUnreadCount";
 		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.channelId(channelId);
+		this.sm.channelId(channelId);
 	}
 	/** @private @arg {DC_Timed} x */
 	DC_Timed(x) {
 		const cf="DC_Timed";
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_TimeoutMs(timeoutMs);
-		this.m_s.params("timed_continuation.data",continuation);
+		this.sm.params("timed_continuation.data",continuation);
 	}
 	/** @private @arg {D_TimeoutMs} x */
 	D_TimeoutMs(x) {
@@ -656,20 +656,20 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region B
 	/** @public @arg {B_HrefUrl} x */
-	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.m_ps.parse_url("B_HrefUrl.url",x));}
+	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.ps.parse_url("B_HrefUrl.url",x));}
 	//#endregion
 	//#region D
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x) {
 		const cf="D_Microformat_Other";
 		let {tags,familySafe,noindex,unlisted,thumbnail,title,description,schemaDotOrgType,androidPackage,appName,availableCountries,linkAlternates,siteName,ogType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.tz(tags,x => this.m_s.a_primitive_str(x));
+		this.tz(tags,x => this.sm.a_primitive_str(x));
 		this.t(familySafe,x => {if(x!==true) debugger;});
 		if(noindex!==false) debugger;
 		if(unlisted!==false) debugger;
-		this.m_s.D_Thumbnail(thumbnail);
-		this.z([title,description,schemaDotOrgType,androidPackage,appName,siteName,ogType],x => this.m_s.a_primitive_str(x));
-		this.tz(availableCountries,x => this.m_s.a_primitive_str(x));
+		this.sm.D_Thumbnail(thumbnail);
+		this.z([title,description,schemaDotOrgType,androidPackage,appName,siteName,ogType],x => this.sm.a_primitive_str(x));
+		this.tz(availableCountries,x => this.sm.a_primitive_str(x));
 		this.z(linkAlternates,this.B_HrefUrl);
 	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
@@ -678,9 +678,9 @@ class HandleTypes extends BaseService {
 	D_MenuServiceItem(x) {
 		const cf="D_MenuServiceItem";
 		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.G_Text(text);
+		this.sm.G_Text(text);
 		this.g(serviceEndpoint);
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @type {{cache:string[];new_:string[]}} */
 	selector={cache: [],new_: []};
@@ -698,9 +698,9 @@ class HandleTypes extends BaseService {
 			default: {
 				if(!this.partition.new_.includes(partition)) this.partition.new_.push(partition);
 				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
-				let gen=this.m_cg.codegen_case_cache(`g_case:${cf}:host_partition`,partition);
+				let gen=this.cg.codegen_case_cache(`g_case:${cf}:host_partition`,partition);
 				if(gen.has) break;
-				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.m_cg.codegen_case_ret(gen)}`);
+				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				debugger;
 				switch((partition)) {
 				}
@@ -806,15 +806,15 @@ class HandleTypes extends BaseService {
 	D_VideoPlaybackShape_S_Params(x) {
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
 		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,gcr,spc,vprv,ufph,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
-		this.m_s.a_primitive_str(expire);
-		this.m_s.a_primitive_str(ei);
-		this.m_s.a_primitive_str(ip);
+		this.sm.a_primitive_str(expire);
+		this.sm.a_primitive_str(ei);
+		this.sm.a_primitive_str(ip);
 		aitags&&this.save_primitive(`${cf1}.aitags`,aitags);
 		{
 			let idp=split_string_once(id,".");
 			switch(idp.length) {
-				case 2: this.m_s.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_primitive(`${cf2}.id.1`,idp[1]); break;
-				case 1: this.m_s.save_b64_binary(`${cf2}.id.0`,idp[0]); break;
+				case 2: this.sm.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_primitive(`${cf2}.id.1`,idp[1]); break;
+				case 1: this.sm.save_b64_binary(`${cf2}.id.0`,idp[0]); break;
 			}
 		}
 		itag&&this.save_primitive(`${cf1}.itag`,itag);
@@ -822,7 +822,7 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf1}.requiressl`,requiressl);
 		this.t(ctier,x => this.save_primitive(`${cf1}.ctier`,x));
 		gcr&&this.save_primitive(`${cf1}.gcr`,gcr);
-		spc&&this.m_s.save_b64_binary(`${cf1}.spc`,spc);
+		spc&&this.sm.save_b64_binary(`${cf1}.spc`,spc);
 		this.save_primitive(`${cf1}.vprv`,vprv);
 		this.save_primitive(`${cf1}.vprv`,vprv);
 		this.t(ufph,x => this.save_primitive(`${cf1}.ufph`,x));
@@ -831,21 +831,21 @@ class HandleTypes extends BaseService {
 		this.t(noclen,x => this.save_primitive(`${cf1}.noclen`,x));
 		this.t(xtags,x => this.save_primitive(`${cf1}.xtags`,x));
 		this.save_primitive(`${cf1}.mime`,mime);
-		this.m_s.save_b64_binary(`${cf2}.ns`,ns);
+		this.sm.save_b64_binary(`${cf2}.ns`,ns);
 		cnr&&this.save_primitive(`${cf1}.cnr`,cnr);
 		if(gir) this.save_primitive(`${cf1}.gir`,gir);
 		this.t(clen,x => {
-			let x1=this.m_s.parse_number_template(x);
-			this.m_s.a_primitive_num(x1);
+			let x1=this.sm.parse_number_template(x);
+			this.sm.a_primitive_num(x1);
 		});
 		ratebypass&&this.save_primitive(`${cf1}.ratebypass`,ratebypass);
 		this.t(dur,x => {
-			let dur_=this.m_s.parse_number_template(x);
-			this.m_s.a_primitive_num(dur_);
+			let dur_=this.sm.parse_number_template(x);
+			this.sm.a_primitive_num(dur_);
 		});
 		this.t(lmt,x => {
-			let lmt_=this.m_s.parse_number_template(x);
-			this.m_s.a_primitive_num(lmt_);
+			let lmt_=this.sm.parse_number_template(x);
+			this.sm.a_primitive_num(lmt_);
 		});
 	}
 	/** @private @arg {D_VideoPlaybackShape_LS_Params} x */
@@ -861,9 +861,9 @@ class HandleTypes extends BaseService {
 			switch(ap.partition) {
 				default: {
 					let {partition: x}=ap;
-					let gen=this.m_cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
+					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
 					if(gen.has) break;
-					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.m_cg.codegen_case_ret(gen)}`);
+					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				}; break;
 				case "n4v7s": case "nx57y": case "o097z": case "nx5s7": case "9gv7l":
 			}
@@ -875,8 +875,8 @@ class HandleTypes extends BaseService {
 		x: {
 			let x2=initcwndbps;
 			if(!x2) break x;
-			let x3=this.m_s.parse_number_template(x2);
-			this.m_s.a_primitive_num(x3);
+			let x3=this.sm.parse_number_template(x2);
+			this.sm.a_primitive_num(x3);
 		}
 	}
 	/** @private @arg {D_VideoPlaybackShape_Other} x */
@@ -888,17 +888,17 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf1}.fexp`,fexp);
 		this.save_primitive(`${cf1}.c`,c);
 		txp&&this.save_primitive(`${cf1}.txp`,txp);
-		this.m_s.save_b64_binary(`${cf2}.n`,n);
-		this.m_s.save_b64_binary(`${cf2}.lsig`,lsig);
-		this.t(sig,x => this.m_s.save_b64_binary(`${cf2}.sig`,x));
+		this.sm.save_b64_binary(`${cf2}.n`,n);
+		this.sm.save_b64_binary(`${cf2}.lsig`,lsig);
+		this.t(sig,x => this.sm.save_b64_binary(`${cf2}.sig`,x));
 		const {gcr,mt,itag,...y}=y1; this.g(y);
 		itag&&this.save_primitive(`${cf1}.itag`,itag);
 		{
 			let x=mt;
-			let x1=this.m_s.parse_number_template(x);
-			this.m_s.a_primitive_num(x1);
+			let x1=this.sm.parse_number_template(x);
+			this.sm.a_primitive_num(x1);
 		}
-		this.t(gcr,x => this.m_s.cq(x,"ca"));
+		this.t(gcr,x => this.sm.cq(x,"ca"));
 	}
 	/** @private @arg {D_VideoPlaybackShape} uv */
 	D_VideoPlaybackShape(uv) {
@@ -912,53 +912,53 @@ class HandleTypes extends BaseService {
 	D_PlayerConfig(x) {
 		const cf="D_PlayerConfig";
 		const {audioConfig,playbackStartConfig,streamSelectionConfig,livePlayerConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
-		this.m_xr.D_AudioConfig(audioConfig);
+		this.xr.D_AudioConfig(audioConfig);
 		this.t(playbackStartConfig,this.D_StartSeconds);
 		this.t(streamSelectionConfig,this.D_StreamSelectionConfig);
 		this.t(livePlayerConfig,this.D_LivePlayerConfig);
-		this.m_xr.R_DynamicReadaheadConfig(mediaCommonConfig);
+		this.xr.R_DynamicReadaheadConfig(mediaCommonConfig);
 		this.D_WebPlayerConfig(webPlayerConfig);
 	}
 	/** @private @arg {D_LivePlayerConfig} x */
 	D_LivePlayerConfig(x) {
 		const cf="D_LivePlayerConfig";
 		const {liveReadaheadSeconds,hasSubfragmentedFmp4,isLiveHeadPlayable,...y}=this.s(cf,x); this.g(y);
-		this.m_s.cq(liveReadaheadSeconds,1.6);
-		this.m_s.cq(hasSubfragmentedFmp4,true);
-		this.t(isLiveHeadPlayable,x => this.m_s.cq(x,true));
+		this.sm.cq(liveReadaheadSeconds,1.6);
+		this.sm.cq(hasSubfragmentedFmp4,true);
+		this.t(isLiveHeadPlayable,x => this.sm.cq(x,true));
 	}
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
 		const cf="D_VideoDetails";
 		const {videoId,title,lengthSeconds,isLive,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,isLiveDvrEnabled,thumbnail,liveChunkReadahead,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,isPostLiveDvr,...y}=this.s(cf,x); this.g(y);
-		this.m_s.videoId(videoId);
-		this.m_s.a_primitive_str(title);
-		this.m_s.a_primitive_num(this.m_s.parse_number_template(lengthSeconds));
-		this.t(isLive,x => this.m_s.cq(x,true));
-		this.tz(keywords,x => this.m_s.a_primitive_str(x));
-		this.m_s.channelId(channelId);
-		this.m_s.a_primitive_bool(isOwnerViewing);
-		this.m_s.cq(isOwnerViewing,false);
-		this.m_s.a_primitive_str(shortDescription);
-		this.m_s.a_primitive_bool(isCrawlable);
-		this.t(isLiveDvrEnabled,x => this.m_s.cq(x,true));
-		this.m_s.D_Thumbnail(thumbnail);
-		this.t(liveChunkReadahead,x => this.m_s.cq(x,2));
-		this.m_s.a_primitive_bool(allowRatings);
+		this.sm.videoId(videoId);
+		this.sm.a_primitive_str(title);
+		this.sm.a_primitive_num(this.sm.parse_number_template(lengthSeconds));
+		this.t(isLive,x => this.sm.cq(x,true));
+		this.tz(keywords,x => this.sm.a_primitive_str(x));
+		this.sm.channelId(channelId);
+		this.sm.a_primitive_bool(isOwnerViewing);
+		this.sm.cq(isOwnerViewing,false);
+		this.sm.a_primitive_str(shortDescription);
+		this.sm.a_primitive_bool(isCrawlable);
+		this.t(isLiveDvrEnabled,x => this.sm.cq(x,true));
+		this.sm.D_Thumbnail(thumbnail);
+		this.t(liveChunkReadahead,x => this.sm.cq(x,2));
+		this.sm.a_primitive_bool(allowRatings);
 		this.t(viewCount,x => {
-			let num=this.m_s.parse_number_template(x);
-			this.m_s.a_primitive_num(num);
+			let num=this.sm.parse_number_template(x);
+			this.sm.a_primitive_num(num);
 		});
-		this.m_s.a_primitive_str(author);
-		this.m_s.cq(isPrivate,false);
-		this.m_s.cq(isUnpluggedCorpus,false);
-		this.m_s.a_primitive_bool(isLiveContent);
-		this.t(isPostLiveDvr,x => this.m_s.cq(x,true));
+		this.sm.a_primitive_str(author);
+		this.sm.cq(isPrivate,false);
+		this.sm.cq(isUnpluggedCorpus,false);
+		this.sm.a_primitive_bool(isLiveContent);
+		this.t(isPostLiveDvr,x => this.sm.cq(x,true));
 	}
 	/** @public @arg {D_StartSeconds} x */
-	D_StartSeconds(x) {this.m_s.y("D_StartSeconds","startSeconds",x,this.m_s.a_primitive_num);}
+	D_StartSeconds(x) {this.sm.y("D_StartSeconds","startSeconds",x,this.sm.a_primitive_num);}
 	/** @public @arg {D_StreamSelectionConfig} x */
-	D_StreamSelectionConfig(x) {this.m_s.y("D_StreamSelectionConfig","maxBitrate",x,this.m_s.visit_number_template);}
+	D_StreamSelectionConfig(x) {this.sm.y("D_StreamSelectionConfig","maxBitrate",x,this.sm.visit_number_template);}
 	//#endregion
 	//#region RS & RSG & RSL & REG & RSW
 	/** @public @arg {RS_AccountMenu} x */
@@ -966,10 +966,10 @@ class HandleTypes extends BaseService {
 		const cf="RS_AccountMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.m_xr.A_GetSystemMenu(x);
+			if("openPopupAction" in x) return this.xr.A_GetSystemMenu(x);
 			return null;
 		});
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RS_UpdateMetadata} x */
 	RS_UpdateMetadata(x) {
@@ -989,15 +989,15 @@ class HandleTypes extends BaseService {
 	RS_Search(x) {
 		const cf="RS_Search";
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.a_primitive_str(estimatedResults);
-		this.m_x.R_TwoColumnSearchResults(contents);
-		this.m_s.trackingParams(trackingParams);
-		this.m_s.R_DesktopTopbar(topbar);
-		this.z(refinements,x => this.m_s.a_primitive_str(x));
+		this.sm.a_primitive_str(estimatedResults);
+		this.xm.R_TwoColumnSearchResults(contents);
+		this.sm.trackingParams(trackingParams);
+		this.sm.R_DesktopTopbar(topbar);
+		this.z(refinements,x => this.sm.a_primitive_str(x));
 		this.z(onResponseReceivedCommands,x => {
-			if("adsControlFlowOpportunityReceivedCommand" in x) return this.m_s.C_AdsControlFlowOpportunityReceived(x);
+			if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
 		});
-		this.m_s.targetId(cf,targetId);
+		this.sm.targetId(cf,targetId);
 	}
 	/** @public @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
@@ -1005,32 +1005,32 @@ class HandleTypes extends BaseService {
 		const {responseContext: {},entries,prevEntries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.tz(prevEntries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
-		this.m_s.trackingParams(trackingParams);
-		this.t(continuationEndpoint,x => this.m_xr.C_Continuation(x));
+		this.sm.trackingParams(trackingParams);
+		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
 	}
 	/** @public @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
 		const cf="RS_GetLiveChat";
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_LiveChat(a1);
-		this.t_cf(cf,a2,x => this.m_s.trackingParams(x));
+		this.t_cf(cf,a2,x => this.sm.trackingParams(x));
 	}
 	/** @private @arg {string} x */
-	RS_Next_ContextParams(x) {this.m_s.params("next.queue_context.params",x);}
+	RS_Next_ContextParams(x) {this.sm.params("next.queue_context.params",x);}
 	/** @public @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next";
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(contents,x => this.m_xr.G_NextContents(x));
-		this.t(currentVideoEndpoint,x => this.m_s.E_Watch(x));
-		this.m_s.trackingParams(trackingParams);
-		this.t(playerOverlays,x => this.m_s.R_PlayerOverlay(x));
-		this.tz(onResponseReceivedEndpoints,a => this.m_x.GE_ResponseReceived(cf,a));
-		this.tz(engagementPanels,x => this.m_x.R_EngagementPanelSectionList(x));
-		this.t(topbar,x => this.m_s.R_DesktopTopbar(x));
-		this.tz(pageVisualEffects,x => this.m_s.R_CinematicContainer(x));
-		this.t(frameworkUpdates,x => this.m_s.D_FrameworkUpdates(x));
-		this.t(videoReporting,x => this.m_xr.R_ReportFormModal(x));
+		this.t(contents,x => this.xr.G_NextContents(x));
+		this.t(currentVideoEndpoint,x => this.sm.E_Watch(x));
+		this.sm.trackingParams(trackingParams);
+		this.t(playerOverlays,x => this.sm.R_PlayerOverlay(x));
+		this.tz(onResponseReceivedEndpoints,a => this.xm.GE_ResponseReceived(cf,a));
+		this.tz(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
+		this.t(topbar,x => this.sm.R_DesktopTopbar(x));
+		this.tz(pageVisualEffects,x => this.sm.R_CinematicContainer(x));
+		this.t(frameworkUpdates,x => this.sm.D_FrameworkUpdates(x));
+		this.t(videoReporting,x => this.xr.R_ReportFormModal(x));
 		this.t(queueContextParams,this.RS_Next_ContextParams);
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
@@ -1038,7 +1038,7 @@ class HandleTypes extends BaseService {
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.G_Text(selectText);
+		this.sm.G_Text(selectText);
 		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
 	/** @public @arg {RS_SetSetting} x */
@@ -1051,55 +1051,55 @@ class HandleTypes extends BaseService {
 	RS_Feedback(x) {
 		const cf="RS_Feedback";
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(feedbackResponses,x => this.m_xr.D_FeedbackResponseProcessedStatus(x));
+		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
 	}
 	/** @public @arg {RS_AttGet} x */
 	RS_AttGet(x) {
 		const cf="RS_AttGet";
 		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.a_primitive_str(challenge);
-		this.m_xr.D_AttBgChallenge(bgChallenge);
+		this.sm.a_primitive_str(challenge);
+		this.xr.D_AttBgChallenge(bgChallenge);
 	}
 	/** @public @arg {RS_Guide} x */
 	RS_Guide(x) {
 		const cf="RS_Guide";
 		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(items,x => this.m_xr.G_GuideSectionItem(x));
-		this.m_s.trackingParams(trackingParams);
+		this.z(items,x => this.xr.G_GuideSectionItem(x));
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RS_WatchReelItem} x */
 	RS_WatchReelItem(x) {
 		const cf="RS_WatchReelItem";
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_xr.R_ReelPlayerOverlay(overlay);
+		this.xr.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 		this.t(replacementEndpoint,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x));
-		this.t(sequenceContinuation,x => this.m_s.a_primitive_str(x));
-		this.m_s.R_DesktopTopbar(desktopTopbar);
-		this.z(engagementPanels,x => this.m_x.R_EngagementPanelSectionList(x));
+		this.t(sequenceContinuation,x => this.sm.a_primitive_str(x));
+		this.sm.R_DesktopTopbar(desktopTopbar);
+		this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
 	}
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let pu=this.m_x.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
-		if("pdgBuyFlowRenderer" in pu) {this.m_xr.R_PdgBuyFlow(pu);}
+		let pu=this.xm.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
+		if("pdgBuyFlowRenderer" in pu) {this.xr.R_PdgBuyFlow(pu);}
 		pu.pdgBuyFlowRenderer;
-		this.m_s.trackingParams(trackingParams);
-		this.m_s.D_FrameworkUpdates(frameworkUpdates);
+		this.sm.trackingParams(trackingParams);
+		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @public @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
 		const cf="RSG_SearchSuggestions";
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
@@ -1108,14 +1108,14 @@ class HandleTypes extends BaseService {
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
 		});
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,x => {
-			if("openPopupAction" in x) return this.m_x.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
 	}
@@ -1124,7 +1124,7 @@ class HandleTypes extends BaseService {
 		const cf="RSL_Dislike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let ac=this.tz(actions,x => {
-			if("openPopupAction" in x) return this.m_x.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
 		if(!ac) return;
@@ -1136,7 +1136,7 @@ class HandleTypes extends BaseService {
 		const cf="RSL_RemoveLike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,(x => {
-			if("openPopupAction" in x) return this.m_x.TA_OpenPopup("TA_OpenPopup_Empty",x);
+			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		}));
 	}
@@ -1144,13 +1144,13 @@ class HandleTypes extends BaseService {
 	REG_DatasyncIds(x) {
 		const cf="REG_DatasyncIds";
 		const {responseContext: {},datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(datasyncIds,x => this.m_s.a_primitive_str(x));
+		this.z(datasyncIds,x => this.sm.a_primitive_str(x));
 	}
 	/** @public @arg {REG_AccountSwitcher} x */
 	REG_AccountSwitcher(x) {
 		const cf="REG_AccountSwitcher";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.G_Text(selectText);
+		this.sm.G_Text(selectText);
 		this.z(actions,this.A_GetMultiPageMenu);
 	}
 	//#endregion
@@ -1164,36 +1164,36 @@ class HandleTypes extends BaseService {
 	AD_Description(x) {
 		const cf="AD_Description";
 		const {description,...y}=this.s(cf,x); this.g(y);
-		this.m_s.G_Text(description);
+		this.sm.G_Text(description);
 	}
 	/** @private @arg {AU_Title} x */
-	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.m_s.y("UA_TitleData","title",x,this.m_s.G_Text));}
+	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.sm.y("UA_TitleData","title",x,this.sm.G_Text));}
 	/** @private @arg {AU_DateText} x */
-	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.m_s.y("UA_DateTextData","dateText",x,this.m_s.G_Text));}
+	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.sm.y("UA_DateTextData","dateText",x,this.sm.G_Text));}
 	/** @private @arg {AU_ToggleButtonText} x */
 	AU_ToggleButtonText(x) {
 		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
 			const cf="AU_ToggleButtonTextData";
 			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
 			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
-			this.m_s.G_Text(defaultText);
-			this.m_s.G_Text(toggledText);
+			this.sm.G_Text(defaultText);
+			this.sm.G_Text(toggledText);
 		});
 	}
 	/** @private @arg {AU_Viewership} x */
-	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.m_s.y("AU_ViewershipData","viewCount",x,this.m_s.R_VideoViewCount));}
+	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.sm.y("AU_ViewershipData","viewCount",x,this.sm.R_VideoViewCount));}
 	/** @private @arg {AU_EngagementPanel} x */
 	AU_EngagementPanel(x) {
 		const cf="AU_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
-		this.m_s.clickTrackingParams(clickTrackingParams);
+		this.sm.clickTrackingParams(clickTrackingParams);
 	}
 	/** @private @arg {AD_UpdateEngagementPanel} x */
 	AD_UpdateEngagementPanel(x) {
 		const cf="AD_UpdateEngagementPanel";
 		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_xr.R_Transcript(content);
+		this.xr.R_Transcript(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
 	//#endregion
@@ -1508,7 +1508,7 @@ class HandleTypes extends BaseService {
 			/** @arg {string} _x @returns {asserts _x is `${number}`} */
 			function assume_numeric_template(_x) {}
 			assume_numeric_template(e);
-			return this.m_s.parse_number_template(e);
+			return this.sm.parse_number_template(e);
 		});
 		if(kn.every(x => !Number.isNaN(x))) return x;
 		if("message" in x) return x;
@@ -1583,7 +1583,7 @@ class HandleTypes extends BaseService {
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {CF_M_H_d} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f) {
 		if(!x) {debugger; return null;}
-		this.m_s.k(cf,x);
+		this.sm.k(cf,x);
 		let keys=this.get_keys_of(x);
 		if(keys.length!==1) debugger;
 		if(k!=keys[0]) {debugger; return null;}
@@ -1599,7 +1599,7 @@ class HandleTypes extends BaseService {
 	 * @returns {[y,ret]}
 	 */
 	H_a(cf,k,x,f,save=false) {
-		if(save) this.m_s.k(cf,x);
+		if(save) this.sm.k(cf,x);
 		const {[k]: [a],...y}=this.s(cf,x);
 		const ret=f.call(this,a);
 		return [y,ret];
@@ -1635,7 +1635,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
-		this.m_s.videoId(raw_id);
+		this.sm.videoId(raw_id);
 	}
 	/** @private @type {string[]} */
 	cache_playlist_index=[];
@@ -1648,8 +1648,8 @@ class HandleTypes extends BaseService {
 		/** @arg {typeof x2} x @returns {typeof y2|null} */
 		const px_x2=(x) => {
 			const {v,...y}=x;
-			this.m_s.videoId(v);
-			if(this.m_s.is_empty_obj(y)) return null;
+			this.sm.videoId(v);
+			if(this.sm.is_empty_obj(y)) return null;
 			let y2=y;
 			return y2;
 		};
@@ -1658,14 +1658,14 @@ class HandleTypes extends BaseService {
 		let x4=null;
 		if("pp" in x3) {
 			const {pp,...y}=x3;
-			this.m_s.playerParams("watch.player_params",pp);
-			if(!this.m_s.is_not_empty_obj(y)) return;
+			this.sm.playerParams("watch.player_params",pp);
+			if(!this.sm.is_not_empty_obj(y)) return;
 			x4=y;
 		}
 		let x5=null;
 		if(x4) {
 			const {list,...y}=x4;
-			this.m_s.playlistId(list);
+			this.sm.playlistId(list);
 			x5=y;
 		}
 		x: if(x5) {
@@ -1675,26 +1675,26 @@ class HandleTypes extends BaseService {
 				this.cache_playlist_index.push(index);
 				if(this.log_playlist_index) console.log("[playlist_index]",index);
 			}
-			if(this.m_s.is_empty_obj(y)) break x;
+			if(this.sm.is_empty_obj(y)) break x;
 			this.g(y);
 		}
 		if("pp" in x3) return;
 		if("t" in x3) {
 			const {t,...y}=x3;
-			if(this.m_s.is_empty_obj(y)) return;
+			if(this.sm.is_empty_obj(y)) return;
 			this.g(y); return;
 		}
 		x: if("list" in x3) {
 			y: {
 				const {list,...y2}=x3;
-				this.m_s.playlistId(list);
+				this.sm.playlistId(list);
 				if("playnext" in y2) {
 					const {playnext,...y}=y2;
 					this.save_primitive("video_url.info.playnext",playnext);
-					if(this.m_s.is_not_empty_obj(y)) break y;
+					if(this.sm.is_not_empty_obj(y)) break y;
 					this.g(y); break y;
 				}
-				if(!this.m_s.is_not_empty_obj(y2)) break x;
+				if(!this.sm.is_not_empty_obj(y2)) break x;
 				if("index" in y2) {
 					const {index,...y3}=y2; this.g(y3);
 					if(this.cache_playlist_index.includes(index)) break x;
@@ -1705,9 +1705,9 @@ class HandleTypes extends BaseService {
 				const {start_radio,...y3}=y2;
 				this.save_primitive("video_url.info.start_radio",start_radio);
 				if(this.log_start_radio) console.log("[playlist_start_radio] [v=%s] [start_radio=%s]",x2.v,start_radio);
-				if(!this.m_s.is_not_empty_obj(y3)) break x;
+				if(!this.sm.is_not_empty_obj(y3)) break x;
 				const {rv,...y4}=y3;
-				this.m_s.videoId(rv);
+				this.sm.videoId(rv);
 				this.g(y4);
 			}
 			return;
@@ -1735,7 +1735,7 @@ class HandleTypes extends BaseService {
 	get_google_host_parts(x) {
 		/** @type {`${"r"|"rr"}${number}---sn-${string}n${string}.googlevideo.com`} */
 		const host=as_any(x.host);
-		if(!this.m_s.str_starts_with(host,"rr")) {
+		if(!this.sm.str_starts_with(host,"rr")) {
 			let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
 			if(empty_1!=="") debugger; if(y.length!==0) debugger;
 			let parts_1=split_string(host_parts_1,"---");
@@ -1778,24 +1778,24 @@ class HandleTypes extends BaseService {
 		let idx=kk.indexOf("microformat");
 		if(idx!==-1) {let nk=kk[idx+1]; console.log("after .microformat",nk);}
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,frameworkUpdates,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_x.R_TwoColumnBrowseResults(contents);
-		this.m_xr.R_C4TabbedHeader(header);
-		this.m_xr.R_Channel_MD(metadata);
-		this.m_s.R_DesktopTopbar(topbar);
-		this.m_s.trackingParams(trackingParams);
-		this.m_s.R_Microformat(microformat);
+		this.xm.R_TwoColumnBrowseResults(contents);
+		this.xr.R_C4TabbedHeader(header);
+		this.xr.R_Channel_MD(metadata);
+		this.sm.R_DesktopTopbar(topbar);
+		this.sm.trackingParams(trackingParams);
+		this.sm.R_Microformat(microformat);
 		this.tz(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
-		this.t(cacheMetadata,x => this.m_s.D_Cache_MD(x));
+		this.t(cacheMetadata,x => this.sm.D_Cache_MD(x));
 	}
 	/** @public @arg {RSG_SharePanel} x */
 	RSG_SharePanel(x) {
 		const cf="RSG_SharePanel";
 		const {responseContext: {},trackingParams,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 		this.z(actions,x => {
 			const cf="RSG_SharePanel_Action";
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.m_s.clickTrackingParams(clickTrackingParams);
+			this.sm.clickTrackingParams(clickTrackingParams);
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
@@ -1803,70 +1803,70 @@ class HandleTypes extends BaseService {
 	RS_Subscribe(x) {
 		const cf="RS_Subscribe";
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,x => this.m_xr.G_RS_Subscribe_Action(x));
-		this.m_x.R_SubscriptionNotificationToggleButton(newNotificationButton);
-		this.m_s.trackingParams(trackingParams);
-		this.m_s.D_FrameworkUpdates(frameworkUpdates);
+		this.z(actions,x => this.xr.G_RS_Subscribe_Action(x));
+		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
+		this.sm.trackingParams(trackingParams);
+		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
-	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,x => this.m_xr.R_ChannelSwitcherPage(x));}
+	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,x => this.xr.R_ChannelSwitcherPage(x));}
 	/** @public @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";
 		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.RC_ResponseContext(responseContext);
+		this.sm.RC_ResponseContext(responseContext);
 		this.z(actions,x => {
 			x;
 		});
-		this.m_s.trackingParams(trackingParams);
-		this.m_s.D_FrameworkUpdates(frameworkUpdates);
+		this.sm.trackingParams(trackingParams);
+		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
 		const cf="DC_LiveChat";
 		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(continuations,x => this.m_xr.G_LiveChatContinuationItem(x));
-		this.t(actionPanel,x => this.m_xr.R_LiveChatMessageInput(x));
-		this.tz(actions,x => this.m_xr.G_LiveChatContinuationActions(x));
-		this.t(clientMessages,x => this.m_s.D_ClientMessages(x));
-		this.tz(emojis,x => this.m_xr.D_LiveChatEmoji(x));
-		this.t(header,x => this.m_s.R_LiveChatHeader(x));
-		this.t(itemList,x => this.m_xr.R_LiveChatItemList(x));
-		this.t(ticker,x => this.m_xr.R_LiveChatTicker(x));
-		this.m_s.trackingParams(trackingParams);
-		this.t(participantsList,x => this.m_xr.R_LiveChatParticipantsList(x));
-		this.t(popoutMessage,x => this.m_xr.R_Message(x));
-		this.t(viewerName,x => this.m_s.a_primitive_str(x));
+		this.z(continuations,x => this.xr.G_LiveChatContinuationItem(x));
+		this.t(actionPanel,x => this.xr.R_LiveChatMessageInput(x));
+		this.tz(actions,x => this.xr.G_LiveChatContinuationActions(x));
+		this.t(clientMessages,x => this.sm.D_ClientMessages(x));
+		this.tz(emojis,x => this.xr.D_LiveChatEmoji(x));
+		this.t(header,x => this.sm.R_LiveChatHeader(x));
+		this.t(itemList,x => this.xr.R_LiveChatItemList(x));
+		this.t(ticker,x => this.xr.R_LiveChatTicker(x));
+		this.sm.trackingParams(trackingParams);
+		this.t(participantsList,x => this.xr.R_LiveChatParticipantsList(x));
+		this.t(popoutMessage,x => this.xr.R_Message(x));
+		this.t(viewerName,x => this.sm.a_primitive_str(x));
 	}
 	/** @private @arg {AD_AccountItem} x */
 	AD_AccountItem(x) {
 		const cf="AD_AccountItem";
 		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.G_Text(accountName);
-		this.m_s.D_Thumbnail(accountPhoto);
-		this.m_s.a_primitive_bool(isSelected);
-		this.m_s.a_primitive_bool(isDisabled);
-		this.m_s.a_primitive_bool(hasChannel);
+		this.sm.G_Text(accountName);
+		this.sm.D_Thumbnail(accountPhoto);
+		this.sm.a_primitive_bool(isSelected);
+		this.sm.a_primitive_bool(isDisabled);
+		this.sm.a_primitive_bool(hasChannel);
 		this.g(serviceEndpoint);
-		this.m_s.G_Text(accountByline);
-		this.m_s.G_Text(channelHandle);
+		this.sm.G_Text(accountByline);
+		this.sm.G_Text(channelHandle);
 	}
 	/** @arg {S_VideoGoodPutShape} x */
 	S_VideoGoodPutShape(x) {
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
-		this.m_s.save_b64_binary(`${cf}.id`,id);
+		this.sm.save_b64_binary(`${cf}.id`,id);
 		this.save_primitive(`${cf}.source`,source);
 		this.save_primitive(`${cf}.range`,range);
-		let exp=this.m_s.parse_number_template(expire);
-		this.m_s.a_primitive_num(exp);
+		let exp=this.sm.parse_number_template(expire);
+		this.sm.a_primitive_num(exp);
 		this.save_primitive(`${cf}.ip`,ip);
 		this.save_primitive(`${cf}.ms`,ms);
 		this.save_primitive(`${cf}.mm`,mm);
 		this.save_primitive(`${cf}.pl`,pl);
-		this.m_s.save_b64_binary(`${cf}.nh`,nh);
+		this.sm.save_b64_binary(`${cf}.nh`,nh);
 		switch(sparams) {
-			default: this.m_cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
+			default: this.cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
 		this.parse_signature(signature);
@@ -1990,7 +1990,7 @@ class HandleTypes extends BaseService {
 	/** @api @public @arg {CF_L_TP_Params} cf @arg {`/${string}`} x */
 	parse_url_alt(cf,x) {
 		cf;
-		let s=split_string_once(x,"/"); this.m_s.cq(s[0],"");
+		let s=split_string_once(x,"/"); this.sm.cq(s[0],"");
 		let [,v]=s;
 		let s2=split_string_once(v,"/");
 		if(s2.length===1) return;
@@ -2029,7 +2029,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
-		if(this.m_ht!==this) {this.m_ht.H_TrackingObj(x); return;}
+		if(this.ht!==this) {this.ht.H_TrackingObj(x); return;}
 		const cf="H_TrackingObj",t=this;
 		const {1: obj_tag,2: obj_id,3: v3,4: f4,6: f6,7: f7,8: f8,9: f9,11: v11,16: f16,19: f19,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.t(obj_tag,x => t.TK_D32(cf,x,"tag"));
@@ -2037,7 +2037,7 @@ class HandleTypes extends BaseService {
 		t.t(v3,x => t.TK_D32(cf,x,"f3"));
 		t.t(f4,t.VW_BinaryTimestamp);
 		t.t_cf(`${cf}_f6`,f6,t.H_TrackingObj_f6);
-		t.t(f7,x => t.m_s.save_b64_binary(`${cf}.f7`,t.TV_Str(x)));
+		t.t(f7,x => t.sm.save_b64_binary(`${cf}.f7`,t.TV_Str(x)));
 		t.ms_t(f8,u8 => {
 			let [v8]=u8[1];
 			switch(v8[0]) {
@@ -2056,7 +2056,7 @@ class HandleTypes extends BaseService {
 				default: debugger; break;
 				case "FEwhat_to_watch":
 			}
-			this.m_s.browseId(x);
+			this.sm.browseId(x);
 		})(this.TV_Str(v11));
 		f16;
 		f19;
@@ -2069,7 +2069,7 @@ class HandleTypes extends BaseService {
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
 		if(x[0]!=="v_param_arr") debugger;
-		let [,[a,...y1]]=x; this.m_s.cq(y1.length,0);
+		let [,[a,...y1]]=x; this.sm.cq(y1.length,0);
 		const [t]=a;
 		/** @type {["raw_str",H_TrackingObj_f6_Str]|["child_str",H_TrackingObj_f6_Str_2]|["unknown",string]|null} */
 		let r_str=null;
@@ -2110,7 +2110,7 @@ class HandleTypes extends BaseService {
 	/** @protected @arg {{type:"click_tracking",v:H_TrackingObj}|{type:"tracking",v:H_TrackingObj}} x */
 	P_Typed_TrackingObj(x) {
 		const cf="P_Typed_TrackingObj";
-		const {type,v: z}=x; this.m_s.k(cf,z);
+		const {type,v: z}=x; this.sm.k(cf,z);
 		switch(type) {
 			case "click_tracking": return this.H_TrackingObj(z);
 			case "tracking": return this.H_TrackingObj(z);
@@ -2172,7 +2172,7 @@ class HandleTypes extends BaseService {
 		const cf="P_logging_context_serialized_context_data",t=this;
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.PK_f1(this.T_VW(v1));
-		t.t(t.t(v3,x => t.TV_Str(x)),x => this.m_s.playlistId(x));
+		t.t(t.t(v3,x => t.TV_Str(x)),x => this.sm.playlistId(x));
 	}
 	/** @type {string[]} */
 	params_to_decode=[];
@@ -2212,7 +2212,7 @@ class HandleTypes extends BaseService {
 	P_EntityKey(cf,x) {
 		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
 			const {2: video_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-			this.t(this.TV_Str(video_id),x => this.m_s.videoId(x));
+			this.t(this.TV_Str(video_id),x => this.sm.videoId(x));
 			this.save_primitive(`${cf}.f4`,this.T_D32(f4));
 			this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 			return;
@@ -2227,8 +2227,8 @@ class HandleTypes extends BaseService {
 		}
 		const {2: entity_target_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(entity_target_id),x => {
-			if(this.m_s.str_starts_with(x,"RD")) return this.m_s.playlistId(x);
-			if(this.m_s.str_starts_with(x,"UC")) return this.m_s.channelId(x);
+			if(this.sm.str_starts_with(x,"RD")) return this.sm.playlistId(x);
+			if(this.sm.str_starts_with(x,"UC")) return this.sm.channelId(x);
 			switch(x) {
 				default: {
 					debugger;
@@ -2260,8 +2260,8 @@ class HandleTypes extends BaseService {
 	PF_23n24n(x) {
 		const cf="PF_23n24n";
 		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.m_s.cq(this.T_D32(a),1);
-		this.t(this.TV_Str(b),b => this.m_s.params("pf_23n24n.bin_params",b));
+		this.sm.cq(this.T_D32(a),1);
+		this.t(this.TV_Str(b),b => this.sm.params("pf_23n24n.bin_params",b));
 	}
 	/** @private @arg {P_bin_params_1_f1} x */
 	P_bin_params_1_f1(x) {
@@ -2321,7 +2321,7 @@ class HandleTypes extends BaseService {
 	P_subscription_state_key(x) {
 		const cf="P_subscription_state_key";
 		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(a),x => this.m_s.channelId(x));
+		this.t(this.TV_Str(a),x => this.sm.channelId(x));
 		this.save_primitive(`${cf}.f4`,this.T_D32(f4));
 		this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 	}
@@ -2332,24 +2332,24 @@ class HandleTypes extends BaseService {
 		const cf="P_dislike_params.f1";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(v1[0]!=="v_param_arr") {debugger; return;}
-		let [,[a,...y1]]=v1; this.m_s.cq(y1.length,0);
+		let [,[a,...y1]]=v1; this.sm.cq(y1.length,0);
 		switch(a[0]) {
 			default: debugger; break;
 			case "v_child":/*unk*/{
 				let [,bin,]=a;
 				let video_id=this._decoder.decode(bin);
 				if(video_id==null) {debugger; break;}
-				this.m_s.videoId(video_id);
+				this.sm.videoId(video_id);
 			} break;
 			case "v_child_str":/*unk*/{
 				let [,,,[,video_id]]=a;
-				this.m_s.videoId(video_id);
+				this.sm.videoId(video_id);
 			} break;
 			case "v_raw_child": /*D_VideoIdStr*/{
 				let [,,,tb]=a;
 				if(tb[0]!=="string") {debugger; break;}
 				let [,x]=tb;
-				this.m_s.videoId(x);
+				this.sm.videoId(x);
 			} break;
 		}
 	}
@@ -2401,7 +2401,7 @@ class HandleTypes extends BaseService {
 		const cf="P_ypc_get_offers_params.f1";
 		const {1: v1,2: v2,...y}=x; this.h_gen_keys(cf,x,y);
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
-		this.t(this.TV_Str(v2),x => this.m_s.channelId(x));
+		this.t(this.TV_Str(v2),x => this.sm.channelId(x));
 	}
 	/** @private @arg {P_ypc_get_offers_params} x */
 	P_ypc_get_offers_params(x) {
@@ -2420,7 +2420,7 @@ class HandleTypes extends BaseService {
 	P_create_comment_params(x) {
 		const cf="P_create_comment_params";
 		const {2: v2,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(v2),x => this.m_s.videoId(x));
+		this.t(this.TV_Str(v2),x => this.sm.videoId(x));
 		f5;
 		f10;
 	}
@@ -2451,7 +2451,7 @@ class HandleTypes extends BaseService {
 		if(this.is_T_VW(v3)) {
 			this.PD_continuation_params_f3(this.T_VW(v3));
 		} else {
-			this.m_s.params(`${cf}.f3`,this.TV_Str(v3));
+			this.sm.params(`${cf}.f3`,this.TV_Str(v3));
 		}
 		this.save_primitive(`${cf}.f8`,this.T_D32(f8));
 		v11&&this.PD_continuation_params_f11(this.T_VW(v11));
@@ -2468,8 +2468,8 @@ class HandleTypes extends BaseService {
 	PX_buy_flow_params(x) {
 		const cf="PX_buy_flow_params";
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.m_s.videoId(this.TV_Str(v1));
-		this.m_s.channelId(this.TV_Str(v2));
+		this.sm.videoId(this.TV_Str(v1));
+		this.sm.channelId(this.TV_Str(v2));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {TX_sequence_info} x */
@@ -2482,7 +2482,7 @@ class HandleTypes extends BaseService {
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.m_s.videoId(this.TV_Str(v1));
+		this.sm.videoId(this.TV_Str(v1));
 		v3;
 		this.TX_sequence_info(this.T_VW(f5));
 		f8; f12;
@@ -2491,7 +2491,7 @@ class HandleTypes extends BaseService {
 	PX_watch_sequence_info(x) {
 		const cf="PX_watch_sequence_info",t=this;
 		const {1: v1,3: v3,4: v4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		t.m_s.videoId(t.TV_Str(v1));
+		t.sm.videoId(t.TV_Str(v1));
 		t.save_primitive(`${cf}.f3`,t.T_D32(v3));
 		t.save_primitive(`${cf}.f4`,t.T_D32(v4));
 		t.t(t.T_VW_Bigint(f6),x => t.save_bigint(`${cf}.f6`,x));
@@ -2500,15 +2500,15 @@ class HandleTypes extends BaseService {
 	P_continuation_request_reel_watch_sequence_token(x) {
 		const cf="P_continuation_request_reel_watch_sequence_token",t=this;
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		v1&&t.m_s.videoId(t.TV_Str(v1));
+		v1&&t.sm.videoId(t.TV_Str(v1));
 		t.PX_watch_sequence_info(t.T_VW(v3));
 		f5; f8; f12; f15;
 	}
 	/** @arg {"P_transcript_track_selection_serialized_params"|"P_get_transcript_params"} cf @template {PE_transcript_params} T @arg {T} x */
 	PE_transcript_params(cf,x) {
 		const {1: v1,2: v2,3: v3,6: f6,7: f7,8: f8,...y}=this.s(cf,x);
-		this.m_s.videoId(this.TV_Str(v1));
-		this.m_s.params("transcript.params",this.TV_Str(v2));
+		this.sm.videoId(this.TV_Str(v1));
+		this.sm.params("transcript.params",this.TV_Str(v2));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		this.save_primitive(`${cf}.f6`,this.T_D32(f6));
 		this.save_primitive(`${cf}.f7`,this.T_D32(f7));
@@ -2540,7 +2540,7 @@ class HandleTypes extends BaseService {
 	P_create_backstage_post_params(x) {
 		const cf="P_create_backstage_post_params";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(v1),x => this.m_s.channelId(x));
+		this.t(this.TV_Str(v1),x => this.sm.channelId(x));
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_watch_playlist_params} x */
@@ -2555,7 +2555,7 @@ class HandleTypes extends BaseService {
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
 		const {2: v2,4: f4,6: f6,7: f7,25: f25,28: f28,36: f36,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.m_s.videoId(this.TV_Str(v2));
+		this.sm.videoId(this.TV_Str(v2));
 		f4; f6; f7; f25; f28; f36;
 	}
 	/** @private @arg {PX_watch_next_token_item} x */
@@ -2563,9 +2563,9 @@ class HandleTypes extends BaseService {
 		const cf="PX_watch_next_token_item";
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(this.is_T_D32(v1)) {
-			this.m_s.a_primitive_num(this.T_D32(v1));
+			this.sm.a_primitive_num(this.T_D32(v1));
 		} else {
-			this.m_s.a_primitive_bigint(this.T_D64(v1));
+			this.sm.a_primitive_bigint(this.T_D64(v1));
 		}
 		v3&&this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
@@ -2606,7 +2606,7 @@ class HandleTypes extends BaseService {
 	PX_watch_next_token_2(x) {
 		const cf="PX_watch_next_token_2";
 		const {4: a,6: b,15: c,37: f37,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.m_s.videoId(this.TV_Str(a));
+		this.sm.videoId(this.TV_Str(a));
 		this.save_primitive(`${cf}.f6`,this.T_D32(b));
 		this.save_primitive(`${cf}.f15`,this.T_D32(c));
 		f37&&this.save_primitive(`${cf}.f37`,this.TV_Str(f37));
@@ -2631,7 +2631,7 @@ class HandleTypes extends BaseService {
 		v1&&this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.PX_watch_next_token_info(this.T_VW(v2));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
-		f5&&this.m_s.a_primitive_str(this.TV_Str(f5));
+		f5&&this.sm.a_primitive_str(this.TV_Str(f5));
 		f6&&this.PX_watch_next_token_1(this.T_VW(f6));
 		f9&&this.PX_watch_next_token_3(this.T_VW(f9));
 		f13&&this.PX_watch_next_token_4(this.T_VW(f13));
@@ -2644,7 +2644,7 @@ class HandleTypes extends BaseService {
 		const cf="P_unsubscribe_params";
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1(this.T_VW(v1));
-		this.t(v2,x => this.m_s.videoId(this.TV_Str_ex(x)));
+		this.t(v2,x => this.sm.videoId(this.TV_Str_ex(x)));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_subscribe_params} x */
@@ -2671,7 +2671,7 @@ class HandleTypes extends BaseService {
 		const {1: v1,4: f4,5: f5,6: f6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let m1=this.mw(this.m(v1));
 		let v1_v1_str=m1.mc(this.T_VW).mc(this.PT_f1).mc(this.TW_Str).some.v;
-		this.m_s.videoId(v1_v1_str);
+		this.sm.videoId(v1_v1_str);
 		f4; f5; f6; f7;
 	}
 	/** @private @arg {{1:TV_Str<DU_VideoId>|TV_Str_CS<DU_VideoId>|TW_TagStr<DU_VideoId>;}} x */
@@ -2685,7 +2685,7 @@ class HandleTypes extends BaseService {
 			case "v_child":
 			case "v_raw_child": {
 				let x2=v1_v1i[3][1];
-				this.m_s.videoId(x2);
+				this.sm.videoId(x2);
 			} break;
 		}
 	}
@@ -2779,7 +2779,7 @@ class HandleTypes extends BaseService {
 		const cf="P_format_item_xtags.f1";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		console.log(this.TV_Str(v1));
-		this.m_s.cq(this.TV_Str(v2),"true");
+		this.sm.cq(this.TV_Str(v2),"true");
 	}
 	/** @private @arg {P_format_item_xtags} x */
 	P_format_item_xtags(x) {
@@ -2904,7 +2904,7 @@ class HandleTypes extends BaseService {
 		const cf="P_notification_remove_upcoming_event_reminder_params";
 		const {1: v1,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		console.log("nr:ue:r:params.f1",v1[1][0][3][1]);
-		this.m_s.videoId(this.TV_Str_ex(v1));
+		this.sm.videoId(this.TV_Str_ex(v1));
 		this.t(this.T_VW(v1),x => {
 			this.save_primitive(`${cf}.f1`,x);
 		});
@@ -3096,10 +3096,10 @@ class HandleTypes extends BaseService {
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_s.G_Text(sectionTitle);
-		this.z(carouselLockups,x => this.m_s.R_CarouselLockup(x));
-		this.m_s.R_TopicLink(topicLink);
-		this.m_s.G_Text(premiumUpsellLink);
+		this.sm.G_Text(sectionTitle);
+		this.z(carouselLockups,x => this.sm.R_CarouselLockup(x));
+		this.sm.R_TopicLink(topicLink);
+		this.sm.G_Text(premiumUpsellLink);
 	}
 	/** @api @public @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {
@@ -3109,7 +3109,7 @@ class HandleTypes extends BaseService {
 		/** @type {`${typeof rk}[${f}]`} */
 		let k=`${rk}[${JSON.stringify(f)}]`;
 		this.save_primitive(rk,f);
-		let s_url_data=this.m_sd.data_store.get_number_store().data.find(e => e[0]===k);
+		let s_url_data=this.sd.data_store.get_number_store().data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_primitive(k,1); return;}
 		let wd=s_url_data[1];
 		switch(wd.l) {
@@ -3187,7 +3187,7 @@ class HandleTypes extends BaseService {
 	async put(key,value,version) {
 		if(this.loaded_keys.has(value.key)) this.on_has_key_in_cache(value);
 		try {
-			let ret=await this.m_ix.putImpl(key,value,version);
+			let ret=await this.ix.putImpl(key,value,version);
 			return ret;
 		} catch(e) {
 			if(this.log_failed) {
@@ -3207,39 +3207,39 @@ class HandleTypes extends BaseService {
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let [ar]=this.z(actions,this.A_NotificationMenuPopup);
 		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
-		let [u3]=this.z(u2,x => this.m_s.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
+		let [u3]=this.z(u2,x => this.sm.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
 		this.z(u3,this.D_NotificationMenu);
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {MP_NotificationMenu} x */
 	D_NotificationMenu(x) {
 		const cf="D_NotificationMenu";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.m_x.R_SimpleMenuHeader(header);
+		this.xm.R_SimpleMenuHeader(header);
 		this.z(sections,this.D_NotificationMenu_SectionItem);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-		this.m_s.trackingParams(trackingParams);
+		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_NotificationMenu_SectionItem} x */
 	D_NotificationMenu_SectionItem(x) {
 		const cf="D_NotificationMenu_SectionItem";
-		if("multiPageMenuNotificationSectionRenderer" in x) return this.m_x.R_MP_MenuNotificationSection(x);
+		if("multiPageMenuNotificationSectionRenderer" in x) return this.xm.R_MP_MenuNotificationSection(x);
 		if("backgroundPromoRenderer" in x) return this.R_BackgroundPromo(x);
-		x===""; this.m_s.codegen_typedef(cf,x);
+		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {Popup_DD_NotificationMenu} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(a!=="DROPDOWN") {this.m_s.codegen_typedef(cf,x); return null;}
-		this.t(beReused,x => this.m_s.cq(x,true));
+		if(a!=="DROPDOWN") {this.sm.codegen_typedef(cf,x); return null;}
+		this.t(beReused,x => this.sm.cq(x,true));
 		return b;
 	}
 	/** @private @arg {A_NotificationMenuPopup} x */
 	A_NotificationMenuPopup(x) {
 		const cf="A_NotificationMenuPopup";
-		if("openPopupAction" in x) return this.m_x.TA_OpenPopup("A_NotificationMenuPopup",x);
-		x===""; this.m_s.codegen_typedef(cf,x);
+		if("openPopupAction" in x) return this.xm.TA_OpenPopup("A_NotificationMenuPopup",x);
+		x===""; this.sm.codegen_typedef(cf,x);
 		return null;
 	}
 	/** @public @arg {R_ReelItem} x */
@@ -3252,9 +3252,9 @@ class HandleTypes extends BaseService {
 	/** @arg {G_Menu_TopLevelButton} x */
 	G_Menu_TopLevelButton(x) {
 		const cf="G_Menu_TopLevelButton"; this.k(cf,x);
-		if("playlistLoopButtonRenderer" in x) return this.m_s.R_PlaylistLoopButton(x);
-		if("toggleButtonRenderer" in x) return this.m_x.R_ToggleButton(x);
-		if("buttonRenderer" in x) return this.m_x.R_Button(x);
+		if("playlistLoopButtonRenderer" in x) return this.sm.R_PlaylistLoopButton(x);
+		if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
+		if("buttonRenderer" in x) return this.xm.R_Button(x);
 	}
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_s("notificationMultiActionRenderer",x,this.AD_NotificationMulti);}
