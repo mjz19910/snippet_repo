@@ -22,12 +22,6 @@ export_(exports => {exports.__is_module_flag__=true;});
 class CodegenService extends ServiceWithAccessors {
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";}
-	/** @private @arg {{}} x2 @arg {string} k */
-	generate_code_for_entry(x2,k) {
-		let kk=this.get_name_from_keys(x2);
-		if(kk===null) return null;
-		return this.get_renderer_codegen_str(k,kk);
-	}
 	#R_ThumbnailStr() {
 		/** @private @type {D_Thumbnail} */
 		return "D_Thumbnail";
@@ -35,9 +29,29 @@ class CodegenService extends ServiceWithAccessors {
 	#simple_gen_names=[
 		"clickTrackingParams",
 	];
-	/** @arg {string} cf @arg {string} k */
-	get_renderer_codegen_str(cf,k) {
+	/** @arg {string} cf @arg {{}} x @arg {string} k */
+	get_renderer_codegen_str(cf,x,k) {
+		for(let first=true;;first=false) {
+			if(!first) break;
+			if(typeof x==="string") return this.generate_code_for_string(k,x);
+			if(typeof x=="number") {return (`this.primitive_of(${k},"number");`);}
+			if(typeof x=="boolean") {return (`if(${k}!==${x}) debugger;`);}
+			if(typeof x!=="object") {debugger; continue;}
+			if(x instanceof Array) {
+				let arr_str=this.#generate_body_array_item(k,x);
+				if(arr_str!==null) return arr_str;
+				debugger;
+			}
+			if(x===null) {return (`if(${k}!==null) debugger;`);}
+			if("simpleText" in x) {return (`this.G_Text(${k});`);};
+			/** @private @type {G_Text} */
+			if("runs" in x&&x.runs instanceof Array) {return (`this.G_Text(${k});`);};
+			if(this.#is_Thumbnail(x)) {return (`this.${this.#R_ThumbnailStr()}(${k});`);}
+			if("iconType" in x) {return (`this.T$Icon(${k});`);}
+		}
+		if(x===null) return `if(${k}!==null) debugger;`;
 		if(cf.startsWith("E_")) {
+			debugger; x;
 			let ic=this.uppercase_first(split_string_once(cf,"Endpoint")[0]);
 			return `this.DE_${ic}(${k});`;
 		}
@@ -67,20 +81,7 @@ class CodegenService extends ServiceWithAccessors {
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
 			if(k=="responseContext") {ret_arr.push(`this.RC$ResponseContext(${k});`); continue;}
 			let x2=x1[k];
-			if(typeof x2==="string") {this.generate_code_for_string(ret_arr,k,x2); continue;}
-			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(${k},"number");`);}
-			if(typeof x2=="boolean") {ret_arr.push(`if(${k}!==${x2}) debugger;`); continue;}
-			if(typeof x2!=="object") {debugger; continue;}
-			let new_code=this.generate_code_for_entry(x2,k);
-			if(new_code) {ret_arr.push(new_code); continue;}
-			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
-			if("simpleText" in x2) {ret_arr.push(`this.G_Text(${k});`); continue;};
-			/** @private @type {G_Text} */
-			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.G_Text(${k});`); continue;};
-			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
-			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.${this.#R_ThumbnailStr()}(${k});`); continue;}
-			if("iconType" in x2) {ret_arr.push(`this.T$Icon(${k});`); continue;}
-			let m_gen_res=this.get_renderer_codegen_str(cf,k);
+			let m_gen_res=this.get_renderer_codegen_str(cf,x2,k);
 			ret_arr.push(m_gen_res);
 			/*
 			console.log("[gen_body_default_for] [%s]",k,x2);
@@ -99,28 +100,26 @@ class CodegenService extends ServiceWithAccessors {
 		}
 		return `D_${k}`;
 	}
-	/** @no_mod @arg {string} k @arg {unknown[]} x @arg {string[]} out */
-	#generate_body_array_item(k,x,out) {
-		if(typeof x[0]!=="object") return;
-		if(x[0]===null) return;
-		let ret_arr=out;
+	/** @no_mod @arg {string} k @arg {unknown[]} x */
+	#generate_body_array_item(k,x) {
+		if(typeof x[0]!=="object") return null;
+		if(x[0]===null) return null;
 		/** @private @type {{[x:string]:{};[x:number]:{};}} */
 		let io=as(x[0]);
 		let c=this.get_name_from_keys(io);
 		if(c) {
 			if(c.endsWith("Renderer")) {
 				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
-				ret_arr.push(`this.z(${k},this.R_${ic});`);
-				return;
+				return `this.z(${k},this.R_${ic});`;
 			}
 			if(c.endsWith("Endpoint")) {
 				let ic=this.uppercase_first(c);
-				ret_arr.push(`this.z(${k},this.E_${ic});`);
-				return;
+				return (`this.z(${k},this.E_${ic});`);
 			}
 			let ic=this.uppercase_first(c);
-			ret_arr.push(`this.z(${k},this.${ic});`);
+			return (`this.z(${k},this.${ic});`);
 		}
+		return null;
 	}
 	/** @no_mod @arg {string} x */
 	#codegen_padding(x) {return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {return "\t".repeat(g);});}
@@ -1235,22 +1234,21 @@ class CodegenService extends ServiceWithAccessors {
 		console.log(gen_obj);
 		return null;
 	}
-	/** @private @arg {string[]} res @arg {string} k1 @arg {string} x */
-	generate_code_for_string(res,k1,x) {
+	/** @private @arg {string} k1 @arg {string} x */
+	generate_code_for_string(k1,x) {
 		function gen_str() {
-			res.push(`this.a_primitive_str(${k1});`);
+			return `this.a_primitive_str(${k1});`;
 		}
-		if(k1==="playlistId") {if(x.startsWith("RD")) {res.push(`this.str_starts_with("RD",${k1},"string");`);} }
+		if(k1==="playlistId"&&x.startsWith("RD")) return `this.str_starts_with("RD",${k1},"string");`;
 		if(k1=="videoId") return gen_str();
 		let x2=x;
-		let ret_arr=res;
 		if(x2.startsWith("https:")) return gen_str();
 		let u_count=[...new Set(x2.split("").sort())].join("").length;
 		if(x2.includes("%")) {
 			if(u_count>13) return gen_str();
 		}
 		console.log("[unique_chars_count]",k1,[...new Set(x2.split("").sort())].join("").length);
-		ret_arr.push(`if(${k1}!=="${x2}") debugger;`);
+		return `if(${k1}!=="${x2}") debugger;`;
 	}
 }
 export_(exports => {exports.CodegenService=CodegenService;});
