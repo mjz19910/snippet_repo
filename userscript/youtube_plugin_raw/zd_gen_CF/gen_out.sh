@@ -48,7 +48,7 @@ function generate_ts_output {
 	generate_ts_setup
 	grep "|{n:" "out.ts.bak" >"$TMP_DIR/tmp_partial.ts"
 	generate_typescript_code_force_valid >"$TMP_DIR/tmp.ts"
-	cp "$TMP_DIR/tmp.ts" tmp.ts
+	cp "$TMP_DIR/tmp.ts" "tmp.ts"
 	tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 	gen_code
 	generate_ts_restore
