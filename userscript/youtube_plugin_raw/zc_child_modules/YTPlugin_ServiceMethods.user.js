@@ -1886,7 +1886,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return ok_e;
 	}
-	/** @public @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {[T[SI]]|null} */
+	/** @public @arg {CF_M_wn} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {[T[SI]]|null} */
 	wn(cf,x,ex_name,excl=[]) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x);
@@ -1904,9 +1904,18 @@ class ServiceMethods extends ServiceData {
 		if(keys.length!==1) {debugger; return;}
 		let cf=this.get_codegen_name(k,x);
 		if(!cf) {debugger; return;}
-		let wr=this.wn(cf,x,k);
-		if(!wr) return;
-		return f.call(cls,wr[0]);
+		let cf_ty=null;
+		switch(cf) {
+			default: debugger; break;
+			case "CF_M_wn": cf_ty=cf; break;
+		}
+		if(cf_ty) {
+			let wr=this.wn(cf_ty,x,k);
+			if(!wr) return;
+			return f.call(cls,wr[0]);
+		} else {
+			throw new Error("H_cls: new cf from get_codegen_name");
+		}
 	}
 	/** @private @arg {`${number}`} x */
 	parse_number(x) {

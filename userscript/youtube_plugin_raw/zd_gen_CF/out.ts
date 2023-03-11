@@ -76,6 +76,7 @@ export namespace Gen {
 		|{n: "CF_M_HD"; t: CF_M_HD; v: "RS_AttLog_RC";}
 		|{n: "CF_M_k"; t: CF_M_k; v: "110:i5";}
 		|{n: "CF_M_k"; t: CF_M_k; v: "AD_ReplaceEnclosing_Item";}
+		|{n: "CF_M_k"; t: CF_M_k; v: "CF_M_wn";}
 		|{n: "CF_M_k"; t: CF_M_k; v: "DE_Like";}
 		|{n: "CF_M_k"; t: CF_M_k; v: "D_Card_Content";}
 		|{n: "CF_M_k"; t: CF_M_k; v: "D_ClientMessages";}
@@ -778,6 +779,8 @@ export namespace Gen {
 		|{n: "CF_M_w"; t: CF_M_w; v: "G_EY_Entity_Any:G_EY_Entity";}
 		|{n: "CF_M_w"; t: CF_M_w; v: "Unpack:T_WCM:CF_T_WCM_Unpack";}
 		|{n: "CF_M_w"; t: CF_M_w; v: "Unpack:T_WCM:MG_Survey_CMD";}
+		|{n: "CF_M_wn"; t: CF_M_wn; v: "TR_ItemSection_2";}
+		|{n: "CF_M_wn"; t: CF_M_wn; v: "TR_MP_MenuSection";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "AD_HideEnclosing";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "AD_HideEngagementPanelTargetId";}
 		|{n: "CF_M_y"; t: CF_M_y; v: "AU_Description";}
