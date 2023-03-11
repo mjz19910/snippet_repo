@@ -196,18 +196,35 @@ class IndexedDBService extends BaseService {
 	}
 	/** @public @arg {StoreData} store @arg {number} version */
 	async save_database(store,version) {
-		let save_id=await this.get_save_id(version);
-		if(!save_id) {
+		let cur_id_box=await this.get_save_id(version);
+		if(!cur_id_box) {
 			this.expected_save_id=0;
 			await this.put_boxed_id(version,"save_id",[null,this.expected_save_id]);
-			save_id=await this.get_save_id(version);
-			if(!save_id) throw new Error("null on get");
+			cur_id_box=await this.get_save_id(version);
+			if(!cur_id_box) throw new Error("null on get");
 		}
-		save_id=await this.update_obj_schema(save_id,version);
-		if(save_id.z[0]!==this.expected_save_id) this.expected_save_id=save_id.z[0];
+		cur_id_box=await this.update_obj_schema(cur_id_box,version);
+		if(cur_id_box.z[0]!==this.expected_save_id) this.expected_save_id=cur_id_box.z[0];
 		await this.save_store_data_to_database(store,version);
 		this.expected_save_id++;
 		await this.put_boxed_id(version,"save_id",[null,this.expected_save_id]);
+	}
+	/** @public @arg {StoreData} store @arg {number} version */
+	async load_database(store,version) {
+		let cur_id_box=await this.get_load_id(version);
+		if(!cur_id_box) {
+			this.expected_load_id=0;
+			let put_promise=this.put_boxed_id(version,"load_id",[null,this.expected_load_id]);
+			this.on_loaded_resolver.resolve();
+			await put_promise;
+			cur_id_box=await this.get_load_id(version);
+			if(!cur_id_box) throw new Error("null on get");
+		}
+		cur_id_box=await this.update_obj_schema(cur_id_box,version);
+		if(cur_id_box.z[0]!==this.expected_save_id) this.expected_save_id=cur_id_box.z[0];
+		await this.load_store_from_database(store,version);
+		this.expected_load_id++;
+		await this.put_boxed_id(version,"load_id",[null,this.expected_load_id]);
 	}
 	/** @arg {StoreData} store @arg {number} version */
 	async save_store_data_to_database(store,version) {
