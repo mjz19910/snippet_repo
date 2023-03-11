@@ -349,6 +349,7 @@ function do_find_video() {
 		if(async_plugin_init.__debug) console.log("found video elements");
 	} else {if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);}
 }
+//#region on element handlers
 /** @private @arg {HTMLElement} element */
 function on_ytcp_app(element) {
 	ytcp_app=element;
@@ -358,13 +359,6 @@ function on_ytcp_app(element) {
 function on_ytmusic_app(element) {
 	ytmusic_app=element;
 	window.ytmusic_app=element;
-}
-function iterate_ytd_app() {
-	if(ytd_app) return false;
-	const target_element=get_html_elements(document,"ytd-app")[0];
-	if(!target_element) return false;
-	on_ytd_app(target_element);
-	return true;
 }
 /** @private @arg {HTMLElement} element */
 function on_ytd_app(element) {
@@ -408,6 +402,14 @@ function on_ytd_app(element) {
 			}
 		} else {ytd_app.app_is_visible=false;}
 	});
+}
+//#endregion
+function iterate_ytd_app() {
+	if(ytd_app) return false;
+	const target_element=get_html_elements(document,"ytd-app")[0];
+	if(!target_element) return false;
+	on_ytd_app(target_element);
+	return true;
 }
 /** @private @arg {AsyncPluginInitEvent} event */
 function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {console.log("async error",e);});}
