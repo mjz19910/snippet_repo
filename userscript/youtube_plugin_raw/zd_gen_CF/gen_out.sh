@@ -34,8 +34,8 @@ generate_typescript_code_unique() {
 		# if stdin is a normal file, save the partial result
 		cp "$src_file" "$TMP_DIR/tmp_acc.ts"
 	fi
-	echo "\t\t;" >>"$TMP_DIR/tmp.ts"
-	echo "}" >>"$TMP_DIR/tmp.ts"
+	echo "\t\t;"
+	echo "}"
 }
 generate_typescript_code_force_valid() {
 	echo "export namespace Gen {\n\texport type CF_Generated="
