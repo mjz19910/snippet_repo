@@ -1,4 +1,3 @@
-import {ytd_player} from "./elements/ytd_player.js"
 import {is_watch_page_active} from "./event/is_watch_page_active.js"
 
 export function fire_on_visibility_change_restart_video_playback() {

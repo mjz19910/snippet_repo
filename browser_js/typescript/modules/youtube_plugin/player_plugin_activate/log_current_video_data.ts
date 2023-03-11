@@ -1,4 +1,3 @@
-import {ytd_player} from "./elements/ytd_player.js"
 import {overlay_content_div} from "./elements/overlay_content_div.js"
 import {playlist_arr} from "./playlist_arr.js"
 import {update_plugin_overlay} from "./update_plugin_overlay.js"

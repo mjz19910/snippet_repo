@@ -1,7 +1,6 @@
 import {page_changed_next_frame} from "./page_changed_next_frame.js";
 import {player_overlay_style_source} from "./css/player_overlay_style_source.js";
 import {load_volume_range_plugin} from "./load_volume_range_plugin.js";
-import {ytd_player} from "./elements/ytd_player.js";
 import {ytd_page_manager} from "./elements/ytd_page_manager.js";
 import {debug} from "../debug.js";
 import {plugin_overlay_element} from "./elements/plugin_overlay_element.js";
