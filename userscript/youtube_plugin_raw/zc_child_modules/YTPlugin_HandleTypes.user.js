@@ -2557,13 +2557,18 @@ class HandleTypes extends BaseService {
 		const {2: v2,4: f4,6: f6,7: f7,24: f24,25: f25,28: f28,36: f36,47: f47,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(v2));
 		this.t(this.ms_t(f4,this.TV_Str).v,x => console.log(`${cf}.f4`,x));
-		this.t(this.ms_t(f6,this.T_VW).v,x => console.log(`${cf}.f6`,x));
+		this.t(this.ms_t(f6,x => x[1][0][3][1]).v,x => x!==""&&console.log(`${cf}.f6`,x));
 		this.t(this.ms_t(f7,this.T_D32).v,x => console.log(`${cf}.f7`,x));
 		this.t(this.ms_t(f24,this.T_D32).v,x => console.log(`${cf}.f24`,x));
-		this.t(this.ms_t(f25,this.T_D32).v,x => console.log(`${cf}.f25`,x));
-		this.t(this.ms_t(f28,this.T_D32).v,x => console.log(`${cf}.f28`,x));
-		this.t(this.ms_t(f36,this.T_VW).v,x => console.log(`${cf}.f36`,x));
-		this.t(this.ms_t(f47,this.T_D32).v,x => console.log(`${cf}.f47`,x));
+		this.t(this.ms_t(f25,this.T_D32).v,x => x!==0&&console.log(`${cf}.f25`,x));
+		this.t(this.ms_t(f28,this.T_D32).v,x => x!==3&&console.log(`${cf}.f28`,x));
+		this.t(this.ms_t(f36,this.T_VW).v,x => {
+			/** @type {`${cf}.f36`} */
+			const cf2=`${cf}.f36`;
+			const {5: f5,8: f8,...y}=this.s(cf2,x); this.h_gen_keys(cf2,x,y);/*#destructure_start*/
+			console.log(cf2,"f5",this.T_D64(f5),"f8",this.T_D32(f8));
+		});
+		this.t(this.ms_t(f47,this.T_D32).v,x => x!==0&&console.log(`${cf}.f47`,x));
 	}
 	/** @private @arg {PX_watch_next_token_item} x */
 	PX_watch_next_token_item(x) {
@@ -3212,15 +3217,12 @@ class HandleTypes extends BaseService {
 	RSG_NotificationMenu(x) {
 		const cf="RSG_NotificationMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let [ar]=this.z(actions,this.A_NotificationMenuPopup);
-		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
-		let [u3]=this.z(u2,x => this.sm.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
-		this.z(u3,this.D_NotificationMenu);
+		this.z(actions,this.A_NotificationMenuPopup);
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {MP_NotificationMenu} x */
-	D_NotificationMenu(x) {
-		const cf="D_NotificationMenu";
+	MP_NotificationMenu(x) {
+		const cf="MP_NotificationMenu";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.R_SimpleMenuHeader(header);
 		this.z(sections,this.D_NotificationMenu_SectionItem);
@@ -3235,19 +3237,24 @@ class HandleTypes extends BaseService {
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {Popup_DD_NotificationMenu} x */
-	D_NotificationMenu_Popup(x) {
+	Popup_DD_NotificationMenu(x) {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(a!=="DROPDOWN") {this.sm.codegen_typedef(cf,x); return null;}
+		if(a!=="DROPDOWN") this.sm.codegen_typedef(cf,x);
 		this.t(beReused,x => this.sm.cq(x,true));
 		return b;
 	}
 	/** @private @arg {A_NotificationMenuPopup} x */
 	A_NotificationMenuPopup(x) {
 		const cf="A_NotificationMenuPopup";
-		if("openPopupAction" in x) return this.xm.TA_OpenPopup("A_NotificationMenuPopup",x);
+		if("openPopupAction" in x) {
+			let action=this.xm.TA_OpenPopup("A_NotificationMenuPopup",x);
+			let popup=this.Popup_DD_NotificationMenu(action);
+			let menu=this.sm.TR_MultiPageMenu("R_NotificationMenu",popup);
+			this.MP_NotificationMenu(menu);
+			return;
+		}
 		x===""; this.sm.codegen_typedef(cf,x);
-		return null;
 	}
 	/** @public @arg {R_ReelItem} x */
 	R_ReelItem(x) {this.H_s("reelItemRenderer",x,this.D_ReelItem);}
@@ -3255,6 +3262,27 @@ class HandleTypes extends BaseService {
 	D_ReelItem(x) {
 		const cf="D_ReelItem";
 		const {videoId,headline,thumbnail,viewCountText,navigationEndpoint,menu,trackingParams,accessibility,style,dismissalInfo,videoType,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.videoId(videoId);
+		this.sm.G_Text(headline);
+		this.sm.G_Text(thumbnail);
+		this.sm.G_Text(viewCountText);
+		this.x.get("x_VE37414").E_VE37414_ReelWatch(navigationEndpoint);
+		this.sm.R_Menu(menu);
+		this.sm.trackingParams(trackingParams);
+		this.sm.D_Accessibility(accessibility);
+		switch(style) {
+			default: debugger; break;
+			case "REEL_ITEM_STYLE_AVATAR_CIRCLE": break;
+		}
+		this.t(dismissalInfo,this.D_FeedbackToken);
+		this.sm.cq(videoType,"REEL_VIDEO_TYPE_VIDEO");
+		this.sm.D_LoggingDirectives(loggingDirectives);
+	}
+	/** @arg {D_FeedbackToken} x */
+	D_FeedbackToken(x) {
+		const cf="D_FeedbackToken";
+		const {feedbackToken: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.params("feedbackToken",a);
 	}
 	/** @arg {G_Menu_TopLevelButton} x */
 	G_Menu_TopLevelButton(x) {
@@ -3262,10 +3290,11 @@ class HandleTypes extends BaseService {
 		if("playlistLoopButtonRenderer" in x) return this.sm.R_PlaylistLoopButton(x);
 		if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
+		debugger;
 	}
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_s("notificationMultiActionRenderer",x,this.AD_NotificationMulti);}
-	/** @public @arg {AD_NotificationMulti} x */
+	/** @private @arg {AD_NotificationMulti} x */
 	AD_NotificationMulti(x) {
 		const cf="AD_NotificationMulti";
 		const {responseText,buttons,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3274,7 +3303,16 @@ class HandleTypes extends BaseService {
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_PlayerErrorMessage} x */
-	R_PlayerErrorMessage(x) {this.H_s("notificationMultiActionRenderer",x,this.D_PlayerErrorMessage);}
+	R_PlayerErrorMessage(x) {this.H_s("playerErrorMessageRenderer",x,this.D_PlayerErrorMessage);}
+	/** @private @arg {D_PlayerErrorMessage} x */
+	D_PlayerErrorMessage(x) {
+		const cf="D_PlayerErrorMessage";
+		const {reason,proceedButton,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.G_Text(reason);
+		this.xm.R_Button(proceedButton);
+		this.sm.T_Icon(cf,icon);
+		this.sm.cq(icon.iconType,"OFFLINE_NO_CONTENT");
+	}
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});

@@ -1022,6 +1022,7 @@ class ServiceMethods extends ServiceData {
 	T_Icon(cf,x) {
 		const {iconType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_primitive(`${cf}.iconType`,iconType);
+		return iconType;
 	}
 	/**
 	 * @param {CF_TE_Endpoint_2} cf
@@ -4887,7 +4888,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {CF_TR_MultiPageMenu} cf @template T @template {TR_MultiPageMenu<T>} U @arg {U} x */
 	TR_MultiPageMenu(cf,x) {
 		let [dk]=this.get_keys_of(x);
-		if(dk!=="multiPageMenuRenderer") {debugger; return null;}
+		if(dk!=="multiPageMenuRenderer") {debugger; throw new Error("Wrong key");}
 		return this.w(cf,dk,x);
 	}
 	/** @private @arg {S_GetAccountMenu} x */
