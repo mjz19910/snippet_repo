@@ -2869,14 +2869,6 @@ class HandleTypes extends BaseService {
 		const {1: v1,3: f3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.T_VW(v1);
 	}
-	/** @private @arg {P_PX_watch_next_token_2_f37} x */
-	P_PX_watch_next_token_2_f37(x) {
-		const cf="P_PX_watch_next_token_2_f37";
-		const {10: r,15: f15,20: f20,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_primitive(`${cf}.f10`,this.TV_Str(r));
-		f15;
-		f20;
-	}
 	/** @private @arg {P_create_reply_params} x */
 	P_create_reply_params(x) {
 		const cf="P_create_reply_params";
@@ -2980,7 +2972,6 @@ class HandleTypes extends BaseService {
 			case "pf_23n24n.bin_params": this.P_bin_params_1(as_any(x)); break;
 			case "playability_status.context_params": this.P_playability_status_context_params(as_any(x)); break;
 			case "playlist_edit.params": this.P_playlist_edit_params(as_any(x)); break;
-			case "PX_watch_next_token_2.f37": this.P_PX_watch_next_token_2_f37(as_any(x)); break;
 			case "reel.params": this.P_reel_params(as_any(x)); break;
 			case "reel.player_params": this.P_reel_player_params(as_any(x)); break;
 			case "reel.sequence_params": this.P_reel_sequence_params(as_any(x)); break;

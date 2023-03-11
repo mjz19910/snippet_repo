@@ -9,18 +9,15 @@ function gen_code {
 		echo "--- [tmp_out.txt] $i ---"
 		tail "$TMP_DIR/tmp_out.txt"
 		if grep -q "n:" "$TMP_DIR/tmp_out.txt"; then
-			echo "export namespace Gen {\n\texport type CF_Generated=" >"$TMP_DIR/tmp.ts"
-			cat "$TMP_DIR/tmp_partial.ts" "$TMP_DIR/tmp_out.txt" >"$TMP_DIR/tmp_2.ts"
-			sort -u <"$TMP_DIR/tmp_2.ts" >>"$TMP_DIR/tmp.ts"
-			cp "$TMP_DIR/tmp.ts" "$TMP_DIR/tmp_acc.ts"
-			echo "\t\t;" >>"$TMP_DIR/tmp.ts"
-			echo "}" >>"$TMP_DIR/tmp.ts"
-			cp "$TMP_DIR/tmp.ts" tmp.ts
+			(generate_typescript_code_unique) >"$TMP_DIR/tmp.ts"
+			cp "$TMP_DIR/tmp.ts" "generated/tmp.ts"
 			tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 			mv "$TMP_DIR/tmp_acc.ts" "$TMP_DIR/tmp.ts"
 			grep "|{n:" "$TMP_DIR/tmp.ts" | sort -u >"$TMP_DIR/tmp_partial.ts"
 		else
-			generate_typescript_code_unique >"$TMP_DIR/tmp.ts"
+			(generate_typescript_code_unique) >"$TMP_DIR/tmp.ts"
+			cp "$TMP_DIR/tmp.ts" "generated/tmp.ts"
+			cp "$TMP_DIR/tmp.ts" "generated/out.ts"
 			grep "|{n:" "$TMP_DIR/tmp.ts" | sort -u >"$TMP_DIR/tmp_partial_end.ts"
 			break
 		fi
@@ -46,9 +43,8 @@ generate_typescript_code_force_valid() {
 }
 function generate_ts_output {
 	generate_ts_setup
-	grep "|{n:" "out.ts.bak" >"$TMP_DIR/tmp_partial.ts"
+	grep "|{n:" "generated/out.ts.bak" >"$TMP_DIR/tmp_partial.ts"
 	generate_typescript_code_force_valid >"$TMP_DIR/tmp.ts"
-	cp "$TMP_DIR/tmp.ts" "tmp.ts"
 	tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 	gen_code
 	generate_ts_restore

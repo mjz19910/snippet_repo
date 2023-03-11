@@ -639,11 +639,6 @@ type P_create_reply_params={
 	14: TV_Str<`${string}.${string}`>;
 	29: T_D32<0>;
 };
-type P_PX_watch_next_token_2_f37={
-	10: TV_Str<string>;
-	15: T_D32<2>;
-	20: T_D32<2>;
-};
 type P_f3_PD_continuation_params_f1_data={
 	1: TV_Str<T_IdTemplate<"UC",D_UserIdStr>>;
 	2: TV_Str<DU_VideoId>;
