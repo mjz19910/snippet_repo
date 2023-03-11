@@ -372,8 +372,8 @@ type D_ActionCompanionAd={
 	headline: D_TemplatedText;
 	description: D_TemplatedText;
 	actionButton: R_Button;
-	iconImage: D_ThumbnailsList;
-	bannerImage: D_ThumbnailsList;
+	iconImage: D_TrackedThumbnail;
+	bannerImage: D_TrackedThumbnail;
 	navigationEndpoint: {};
 	trackingParams: string;
 	adInfoRenderer: R_AdHoverTextButton;
@@ -484,19 +484,19 @@ type D_DesktopTopbar={
 	voiceSearchButton: R_Button;
 };
 type D_DisplayAd={
+	trackingParams: string;
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: G_Text;
-	image: D_ThumbnailsList;
+	image: D_TrackedThumbnail;
 	bodyText: G_Text;
 	secondaryText: G_Text;
-	badge: DMD_Badge;
+	badge: RMD_Badge;
 	menu: R_Menu;
 	ctaButton: R_Button;
-	impressionEndpoints: {}[];
-	clickCommand: {};
+	impressionEndpoints: E_Pinging[];
+	clickCommand: E_Url;
 	mediaHoverOverlay: R_Button;
-	mediaBadge: DMD_Badge;
-	trackingParams: string;
+	mediaBadge: RMD_Badge;
 };
 type D_EngagementPanelTitleHeader={
 	title: G_Text;
@@ -1333,7 +1333,7 @@ type D_AudioTrackItem={
 }|{
 	captionTrackIndices: number[];
 	defaultCaptionTrackIndex: number;
-	visibility: "UNKNOWN";
+	visibility: "UNKNOWN"|"ON";
 	hasDefaultTrack: true;
 	captionsInitialState: "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED";
 };
@@ -1481,7 +1481,7 @@ type D_CinematicConfig={
 	watchFullscreenConfig?: {};
 };
 type D_CinematicContainer={
-	backgroundImageConfig?: D_ThumbnailsList;
+	backgroundImageConfig?: D_TrackedThumbnail;
 	gradientColorConfig: D_GradientColorConfig;
 	presentationStyle?: "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED";
 	config: D_CinematicConfig;
@@ -2913,7 +2913,7 @@ type D_Button_With_TargetId=
 	;
 ;
 //#endregion
-type D_ThumbnailsList={thumbnail: D_Thumbnail; trackingParams?: string;};
+type D_TrackedThumbnail={thumbnail: D_Thumbnail; trackingParams?: string;};
 type D_Thumbnail={
 	thumbnails: D_ThumbnailItem[];
 	accessibility?: D_Accessibility;

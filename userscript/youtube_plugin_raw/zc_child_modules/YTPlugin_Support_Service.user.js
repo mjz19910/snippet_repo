@@ -595,7 +595,13 @@ class Support_RS_Player extends BaseService {
 			const {captionTrackIndices,defaultCaptionTrackIndex,visibility,hasDefaultTrack,captionsInitialState,...y}=this.s(cf,x); this.g(y);
 			this.sm.z(captionTrackIndices,this.sm.a_primitive_num);
 			this.sm.a_primitive_num(defaultCaptionTrackIndex);
-			this.sm.cq(visibility,"UNKNOWN");
+			this.t(visibility,x2 => {
+				switch(x2) {
+					default: debugger; break;
+					case "UNKNOWN":
+					case "ON":
+				}
+			});
 			this.sm.cq(hasDefaultTrack,true);
 			if(captionsInitialState!=="CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED") debugger;
 			return;

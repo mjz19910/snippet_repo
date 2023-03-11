@@ -3319,7 +3319,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return tag;
 	}
-	/** @private @arg {D_ThumbnailsList} x */
+	/** @private @arg {D_TrackedThumbnail} x */
 	D_ThumbnailsList(x) {
 		const cf="D_ThumbnailsList";
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3583,9 +3583,9 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_DisplayAd} x */
 	D_DisplayAd(x) {
 		const cf="D_DisplayAd";
-		const {layout,...y}=this.s(cf,x);
-		let k=this.get_keys_of(y)[0];
-		console.log("[D_DisplayAd.next_key] [%s]",k);
+		const {trackingParams,layout,titleText,image,bodyText,secondaryText,badge,menu,ctaButton,impressionEndpoints,clickCommand,mediaHoverOverlay,mediaBadge,...y}=this.s(cf,x);
+		let k=this.get_keys_of(y);
+		if(k.length>0) console.log("[D_DisplayAd.next_keys]"+" [%s]".repeat(k.length),...k);
 	}
 	/** @public @arg {D_EmptyMap} x */
 	D_EmptyMap(x) {
