@@ -2358,8 +2358,10 @@ class BaseService extends ServiceWithMembers {
 	save_boolean_one(k,x) {k; x;}
 	/** @public @arg {string} k @arg {{}} x */
 	save_keys(k,x) {k; x;}
-	k=this.save_keys;
-	ks=this.k;
+	/** @public @arg {string} k @arg {{}} x */
+	k(k,x) {k; x;}
+	/** @public @arg {string} k @arg {{}} x */
+	ks(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {string} x */
 	save_string(k,x) {k; x;}
 	/** @public @arg {string} k @arg {string[]} x */
@@ -2370,7 +2372,7 @@ class BaseService extends ServiceWithMembers {
 	save_number_arr(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {Uint8Array} x */
 	save_number_bin(k,x) {k; x;}
-	/** @protected @arg {string} k @arg {string|number} x */
+	/** @protected @arg {string} k @arg {object|string|number} x */
 	save_primitive(k,x) {k; x;}
 	/** @protected @arg {D_GM_VeNum} x */
 	save_ve_element(x) {x;}

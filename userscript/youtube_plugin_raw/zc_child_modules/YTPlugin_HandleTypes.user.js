@@ -1935,7 +1935,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {D_InitPlayback} x */
 	D_InitPlayback(x) {
-		this.save_keys("D_InitPlayback",x);
+		this.save_primitive("D_InitPlayback",x);
 	}
 	/** @api @public @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
@@ -2860,7 +2860,7 @@ class HandleTypes extends BaseService {
 	PD_timed_continuation(x) {
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.T_VW(v3),x => this.save_keys(`${cf}.f3`,x));
+		this.t(this.T_VW(v3),x => this.save_primitive(`${cf}.f3`,x));
 		f4; f7; f8;
 	}
 	/** @private @arg {P_f3_PD_continuation_params} x */
@@ -2910,7 +2910,7 @@ class HandleTypes extends BaseService {
 		console.log("nr:ue:r:params.f1",v1[1][0][3][1]);
 		this.sm.videoId(this.TV_Str_ex(v1));
 		this.t(this.T_VW(v1),x => {
-			this.save_keys(`${cf}.f1`,x);
+			this.save_primitive(`${cf}.f1`,x);
 		});
 		this.PX_upcoming_event_reminder_info(this.T_VW(v6));
 	}
