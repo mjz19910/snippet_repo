@@ -1,0 +1,1 @@
+type IterationDecision=IterationDecisionContinue|IterationDecisionBreak;

@@ -404,17 +404,92 @@ function on_ytd_app(element) {
 	});
 }
 //#endregion
-function iterate_ytd_app() {
-	if(ytd_app) return false;
-	const target_element=get_html_elements(document,"ytd-app")[0];
-	if(!target_element) return false;
-	on_ytd_app(target_element);
-	return true;
+/** @arg {Node|null} element_value @arg {string} tag_name @arg {Document|Element} src_element @arg {(x:HTMLElement)=>void} cb */
+function iterate_find_element(element_value,tag_name,src_element,cb) {
+	if(element_value) return;
+	const target_element=get_html_elements(src_element,tag_name)[0];
+	if(!target_element) return;
+	found_element_count++;
+	cb(target_element);
 }
 /** @private @arg {AsyncPluginInitEvent} event */
 function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {console.log("async error",e);});}
 /** @private @type {Element|null} */
 let main_page_app=null;
+/**
+ * @param {AsyncPluginInitEvent} event
+ * @param {number} iter_count
+ * @param {DomObserver} obj
+ * @param {number} cur_count
+ * @returns {Promise<IterationDecision>}
+ */
+async function find_from_ytd_app(event,iter_count,obj,cur_count) {
+	// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager"});
+	iterate_find_element(ytd_page_manager,"ytd-page-manager",document,on_ytd_page_manager);
+	// END(ytd-page-manager): obj.dispatchEvent({type: "ytd-page-manager"});
+	// BEGIN(yt-playlist-manager): obj.dispatchEvent({type: "find-yt-playlist-manager"});
+	iterate_find_element(yt_playlist_manager,"yt-playlist-manager",document,element => {
+		event.detail.elements.on_yt_playlist_manager(element);
+	});
+	// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy"});
+	x: {
+		if(ytd_watch_flexy) break x;
+		if(!ytd_page_manager) break x;
+		if(!ytd_page_manager.getCurrentPage()) break x;
+		/** @private @template T @arg {T|undefined} x @arg {(e:T)=>void} w */
+		function using_current_page(x,w) {if(x) w(x);}
+		if(!ytd_page_manager.getCurrentPage()?.__theater_handler_plugin_attached) {
+			ytd_page_manager.getCurrentPage()?.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+			using_current_page(ytd_page_manager.getCurrentPage(),e => {
+				e.__theater_handler_plugin_attached=true;
+			});
+		}
+		if(is_yt_debug_enabled) console.log("PageManager:current_page:"+ytd_page_manager.getCurrentPage()?.tagName.toLowerCase());
+		if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
+			if(iter_count>100) {console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);}
+			/** @private @type {Promise<void>} */
+			let promise=new Promise((accept,reject) => {
+				if(!ytd_page_manager) return reject(new Error("missing data"));
+				ytd_page_manager.addEventListener(
+					"yt-page-type-changed",
+					() => accept(),
+					{once: true}
+				);
+			});
+			await promise;
+			break x;
+		}
+		found_element_count++;
+		using_current_page(ytd_page_manager.getCurrentPage(),on_ytd_watch_flexy);
+	}
+	// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy"});
+	// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player"});
+	x: {
+		if(ytd_player) break x;
+		if(!ytd_watch_flexy) break x;
+		const target_element=get_html_elements(ytd_watch_flexy,"ytd-player")[0];
+		if(!target_element) break x;
+		found_element_count++;
+		on_ytd_player(target_element);
+	}
+	// END(ytd-player): obj.dispatchEvent({type: "ytd-player",detail,port});
+	// BEGIN(video): obj.dispatchEvent({type: "find-video",detail,port});
+	do_find_video();
+	// END(video): obj.dispatchEvent({type: "video",detail,port});
+	await obj.wait_for_port(event.port,cur_count);
+	if(found_element_count>=expected_element_count) {
+		obj.dispatchEvent({...event,type: "plugin-activate"});
+		return {type: "continue"};
+	}
+	const max_find_iter=7588;
+	if(!box_map.has("video-list")) return {type: "continue"};
+	if(ytd_page_manager===null) return {type: "continue"};
+	if(!ytd_page_manager.getCurrentPage()) return {type: "continue"};
+	console.log("[iter_count]",iter_count);
+	if(iter_count>max_find_iter) {alert("found plugin reqs in iters="+iter_count);}
+	obj.dispatchEvent({...event,type: "plugin-activate"});
+	return {type: "break"};
+}
 /** @private @arg {AsyncPluginInitEvent} event */
 async function async_plugin_init(event) {
 	let plugin_state={};
@@ -470,104 +545,28 @@ async function async_plugin_init(event) {
 				plugin_state.show_interesting_elements=false;
 			}
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
-			{
-				let found=iterate_ytd_app();
-				if(found) {found_element_count++;}
-			}
-			x: {
-				if(ytcp_app) break x;
-				const target_element=get_html_elements(document,"ytcp-app")[0];
-				if(!target_element) break x;
-				found_element_count++;
-				on_ytcp_app(target_element);
-			}
-			if(ytcp_app) break;
-			x: {
-				if(ytmusic_app) break x;
-				const target_element=get_html_elements(document,"ytmusic-app")[0];
-				if(!target_element) break x;
-				found_element_count++;
-				on_ytmusic_app(target_element);
-			}
-			if(ytmusic_app) break;
-			if(main_page_app&&!ytd_app) {
+			iterate_find_element(ytd_app,"ytd-app",document,on_ytd_app);
+			// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
+			// BEGIN(ytcp-app): dispatchEvent({type: "find-ytd-app"});
+			iterate_find_element(ytcp_app,"ytcp-app",document,on_ytcp_app);
+			// END(ytcp-app): obj.dispatchEvent({type: "ytcp-app"});
+			// BEGIN(ytmusic-app): dispatchEvent({type: "find-ytmusic-app"});
+			iterate_find_element(ytmusic_app,"ytmusic-app",document,on_ytmusic_app);
+			// END(ytmusic-app): obj.dispatchEvent({type: "ytmusic-app"});
+			if(ytd_app) {
+				let do_break=await find_from_ytd_app(event,iter_count,obj,cur_count);
+				if(do_break.type==="break") break;
+				if(do_break.type==="continue") continue;
+			} else if(ytcp_app) {
+				// handle creator page
+				break;
+			} else if(ytmusic_app) {
+				// handle ytmusic app
+				break;
+			} else if(main_page_app&&!ytd_app) {
 				console.log("[found.main_page_app]",main_page_app);
 				break;
 			}
-			// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
-			// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
-			x: {
-				if(ytd_page_manager) break x;
-				const target_element=get_html_elements(document,"ytd-page-manager")[0];
-				if(!target_element) break x;
-				found_element_count++;
-				on_ytd_page_manager(target_element);
-			}
-			// END(ytd-page-manager): obj.dispatchEvent({type: "ytd-page-manager",detail,port});
-			// BEGIN(yt-playlist-manager): obj.dispatchEvent({type: "find-yt-playlist-manager",detail,port});
-			x: {
-				if(yt_playlist_manager) break x;
-				const target_element=get_html_elements(document,"yt-playlist-manager")[0];
-				if(!target_element) break x;
-				found_element_count++;
-				event.detail.elements.on_yt_playlist_manager(target_element);
-			}
-			// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
-			x: {
-				if(ytd_watch_flexy) break x;
-				if(!ytd_page_manager) break x;
-				if(!ytd_page_manager.getCurrentPage()) break x;
-				/** @private @template T @arg {T|undefined} x @arg {(e:T)=>void} w */
-				function using(x,w) {if(x) {w(x);} }
-				if(!ytd_page_manager.getCurrentPage()?.__has_theater_handler_plugin) {
-					ytd_page_manager.getCurrentPage()?.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-					using(ytd_page_manager.getCurrentPage(),e => e.__has_theater_handler_plugin=true);
-				}
-				if(is_yt_debug_enabled) console.log("PageManager:current_page:"+ytd_page_manager.getCurrentPage()?.tagName.toLowerCase());
-				if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
-					if(iter_count>100) {console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);}
-					/** @private @type {Promise<void>} */
-					let promise=new Promise((accept,reject) => {
-						if(!ytd_page_manager) return reject(new Error("missing data"));
-						ytd_page_manager.addEventListener(
-							"yt-page-type-changed",
-							() => accept(),
-							{once: true}
-						);
-					});
-					await promise;
-					break x;
-				}
-				found_element_count++;
-				using(ytd_page_manager.getCurrentPage(),on_ytd_watch_flexy);
-			}
-			// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
-			// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player",detail,port});
-			x: {
-				if(ytd_player) break x;
-				if(!ytd_watch_flexy) break x;
-				const target_element=get_html_elements(ytd_watch_flexy,"ytd-player")[0];
-				if(!target_element) break x;
-				found_element_count++;
-				on_ytd_player(target_element);
-			}
-			// END(ytd-player): obj.dispatchEvent({type: "ytd-player",detail,port});
-			// BEGIN(video): obj.dispatchEvent({type: "find-video",detail,port});
-			do_find_video();
-			// END(video): obj.dispatchEvent({type: "video",detail,port});
-			await obj.wait_for_port(event.port,cur_count);
-			if(found_element_count>=expected_element_count) {
-				obj.dispatchEvent({...event,type: "plugin-activate"});
-				break;
-			}
-			const max_find_iter=7588;
-			if(!box_map.has("video-list")) continue;
-			if(ytd_page_manager===null) continue;
-			if(!ytd_page_manager.getCurrentPage()) continue;
-			console.log("[iter_count]",iter_count);
-			if(iter_count>max_find_iter) {alert("found plugin reqs in iters="+iter_count);}
-			obj.dispatchEvent({...event,type: "plugin-activate"});
-			break;
 		}
 	} catch(e) {console.log("had error in async init",e);}
 }

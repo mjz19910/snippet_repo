@@ -1,0 +1,3 @@
+type IterationDecisionContinue={
+	type: "continue";
+};
