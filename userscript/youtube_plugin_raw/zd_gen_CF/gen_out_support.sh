@@ -13,9 +13,7 @@ function generate_ts-make_tmp_git_repo {
 	fi
 	git -C "$PROJ_DIR" diff >"../snippet_repo.diff"
 	git -C "$TMP_DIR" apply --allow-empty "../snippet_repo.diff"
-	pushd "$TMP_DIR/userscript"
-	pnpm i --silent
-	popd
+	pnpm -C "$TMP_DIR/userscript" i --silent
 }
 
 function generate_ts-init_cwd {
