@@ -25,18 +25,37 @@ class CodegenService extends ServiceWithAccessors {
 	/** @private @arg {{}} x2 @arg {string} k */
 	generate_code_for_entry(x2,k) {
 		let kk=this.get_name_from_keys(x2);
-		if(kk&&kk.endsWith("Endpoint")) {
-			let u=this.uppercase_first(kk);
-			return `this.E_${u}(${k});`;
-		}
-		return null;
+		if(kk===null) return null;
+		return this.get_renderer_codegen_str(k,kk);
 	}
 	#R_ThumbnailStr() {
 		/** @private @type {D_Thumbnail} */
 		return "D_Thumbnail";
 	}
-	/** @no_mod @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
-	#codegen_renderer_body(req_names,x,keys,t_name) {
+	#simple_gen_names=[
+		"clickTrackingParams",
+	];
+	/** @arg {string} cf @arg {string} k */
+	get_renderer_codegen_str(cf,k) {
+		if(cf.startsWith("E_")) {
+			let ic=this.uppercase_first(split_string_once(cf,"Endpoint")[0]);
+			if(`E_${ic}`===cf) return `this.DE_${ic}(${k});`;
+		}
+		if(k.endsWith("Endpoint")) {
+			let ic=this.uppercase_first(split_string_once(k,"Endpoint")[0]);
+			return `this.E_${ic}(${k});`;
+		}
+		if(k.endsWith("Renderer")) {
+			let ic=this.uppercase_first(split_string_once(k,"Renderer")[0]);
+			return `this.R_${ic}(${k});`;
+		}
+		if(this.#simple_gen_names.includes(k)) {
+			return `this.${k}(${k});`;
+		}
+		return `this.D_${k}(${k});`;
+	}
+	/** @no_mod @arg {string} cf @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
+	#codegen_renderer_body(cf,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
 		let x1=x;
 		/** @private @type {string[]} */
@@ -61,24 +80,12 @@ class CodegenService extends ServiceWithAccessors {
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.${this.#R_ThumbnailStr()}(${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.T$Icon(${k});`); continue;}
-			/** @private @type {{}} */
-			let o3=x2;
-			let c=this.get_name_from_keys(o3);
-			if(!c||typeof c==="number") {
-				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
-				continue;
-			}
-			if(c.endsWith("Renderer")) {
-				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
-				ret_arr.push(`this.R_${ic}(${k});`);
-				continue;
-			}
-			if(k.endsWith("Renderer")) {
-				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
-				continue;
-			}
+			let m_gen_res=this.get_renderer_codegen_str(cf,k);
+			ret_arr.push(m_gen_res);
+			/*
 			console.log("[gen_body_default_for] [%s]",k,x2);
-			this.#generate_body_default_item(k,ret_arr,req_names,t_name);
+			this.#generate_body_default_item(k,ret_arr);*/
+			continue;
 		}
 		let no_pad_arr=ret_arr.map(e => e.trim());
 		return no_pad_arr.join("\nd2!");
@@ -91,14 +98,6 @@ class CodegenService extends ServiceWithAccessors {
 			return `R_${ic}`;
 		}
 		return `D_${k}`;
-	}
-	/** @no_mod @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
-	#generate_body_default_item(k,out,env_names,def_name) {
-		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
-		let mn=tn;
-		if(mn===def_name) mn=`D_${tn}`;
-		env_names.push(mn);
-		out.push(`this.${mn}(${k});`);
 	}
 	/** @no_mod @arg {string} k @arg {unknown[]} x @arg {string[]} out */
 	#generate_body_array_item(k,x,out) {
@@ -125,9 +124,9 @@ class CodegenService extends ServiceWithAccessors {
 	}
 	/** @no_mod @arg {string} x */
 	#codegen_padding(x) {return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {return "\t".repeat(g);});}
-	/** @arg {string[]} keys @arg {object} x @arg {string} e */
-	#codegen_required_renderer_names(keys,x,e) {
-		let kk=keys.find(v => v===e);
+	/** @arg {string} cf @arg {string[]} keys @arg {object} x @arg {string} e */
+	#codegen_required_renderer_names(cf,keys,x,e) {
+		let kk=keys.find(v => this.uppercase_first(v)===e);
 		if(!kk) {debugger; return "";}
 		/** @private @type {{}} */
 		let ucx=x;
@@ -149,22 +148,19 @@ class CodegenService extends ServiceWithAccessors {
 		let keys_2=Object.keys(val_2);
 		/** @private @type {string[]} */
 		let next_req=[];
-		let body_2=this.#codegen_renderer_body(next_req,val_2,keys_2,kn);
+		let body_2=this.#codegen_renderer_body(cf,val_2,keys_2,kn);
 		let tmp0=`
 		d1!/** @private @arg {${kn}} x */
 		d1!${kn}(x) {
 			d2!${body_2}
 		d1!}
 		`;
-		if(next_req.length>0) {
-			console.log("[renderer_gen_more_req]",next_req);
-			debugger;
-		}
+		if(next_req.length>0) return "";
 		return tmp0;
 	}
-	/** @arg {string[]} req_names @arg {string} code @arg {string[]} keys @arg {object} x */
-	#codegen_renderer_finalize(req_names,code,keys,x) {
-		let required_names_code_arr=req_names.map(e => this.#codegen_required_renderer_names(keys,x,e));
+	/** @arg {string} cf @arg {string[]} req_names @arg {string} code @arg {string[]} keys @arg {object} x */
+	#codegen_renderer_finalize(cf,req_names,code,keys,x) {
+		let required_names_code_arr=req_names.map(e => this.#codegen_required_renderer_names(cf,keys,x,e));
 		let all_code=required_names_code_arr.join("")+code;
 		let trimmed_code=all_code.split("\n").map(e => e.trim()).filter(e => e).join("\n");
 		let code_with_padding=this.#codegen_padding(trimmed_code);
@@ -189,16 +185,24 @@ class CodegenService extends ServiceWithAccessors {
 			}
 		}
 	}
+	/** @public @template {string} T @arg {T} x @template {string} V @arg {V} v @returns {x is `${string}${V}${string}`} */
+	str_is_including(x,v) {return x.includes(v);}
 	/** @no_mod @arg {unknown} x @arg {string|null} r_name */
 	#codegen_renderer(x,r_name=null) {
 		if(typeof x!=='object') return null;
 		if(x===null) return null;
 		/** @private @type {string[]} */
 		let req_names=[];
-		let k=this.get_name_from_keys(x);
+		/** @type {string|null} */
+		let k=null;
 		if(r_name) k=r_name;
+		if(k&&this.str_is_including(k,"$")) {
+			k=split_string_once(k,"$")[1];
+		}
+		if(!k) k=this.get_name_from_keys(x);
 		if(k===null) return null;
-		console.log("gen renderer for",x);
+		const cf=k;
+		console.log("gen renderer for [cf=%s]",cf,x);
 		/** @type {`A$R_Test`|`${string}Renderer`} */
 		let t_name=as_any(this.uppercase_first(k));
 		let keys=Object.keys(x);
@@ -211,18 +215,18 @@ class CodegenService extends ServiceWithAccessors {
 				d1!/** @private @arg {R_${name}} x @generated {${t_name}} */
 				d1!R_${name}(x) {this.H_("${keys[0]}",x,this.D_${name});}\n`;
 				req_names.push(keys[0]);
-				return this.#codegen_renderer_finalize(req_names,self_code,keys,x);
+				return this.#codegen_renderer_finalize(cf,req_names,self_code,keys,x);
 			}
 			return;
 		}
-		let body=this.#codegen_renderer_body(req_names,x,keys,t_name);
+		let body=this.#codegen_renderer_body(cf,x,keys,t_name);
 		let self_code=`
-		d1!/** @private @arg {${t_name}} x */
+		d1!/** @private @arg {${t_name}} x @generated {${r_name}} */
 		d1!${t_name}(x) {
 			d2!${body}
 		d1!}
 		`;
-		return this.#codegen_renderer_finalize(req_names,self_code,keys,x);
+		return this.#codegen_renderer_finalize(cf,req_names,self_code,keys,x);
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
