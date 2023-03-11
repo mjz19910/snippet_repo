@@ -52,8 +52,6 @@ function generate_ts_restore {
 	mv "$TMP_DIR/tmp.ts" "generated/tmp.ts" || exit 1
 	mv "generated/tmp.ts" "generated/out.ts" || exit 1
 	cp "out_empty.ts" "generated/tmp.ts" || exit 1
-	popd
-	cp "$TMP_DIR/$DEST_DIR/generated/out.ts" "$DEST_DIR/generated/out.ts" || exit 1
 }
 function generate_ts_filter_errors {
 	grep -Po "$(cat grep.args)" "$@"
@@ -110,4 +108,6 @@ function generate_ts_output_v1 {
 	tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 	gen_code_v1
 	generate_ts_restore
+	popd
+	cp "$TMP_DIR/$DEST_DIR/generated/out.ts" "$DEST_DIR/generated/out.ts" || exit 1
 }
