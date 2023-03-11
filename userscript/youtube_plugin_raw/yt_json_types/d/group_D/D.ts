@@ -2388,6 +2388,7 @@ type D_RatingSurveyOption={
 	checked: boolean;
 	selected: boolean;
 };
+type D_FeedbackToken={feedbackToken: string;};
 type D_ReelItem={
 	videoId: D_VideoIdTagStr;
 	headline: G_Text;
@@ -2398,6 +2399,7 @@ type D_ReelItem={
 	trackingParams: string;
 	accessibility: D_Accessibility;
 	style: "REEL_ITEM_STYLE_AVATAR_CIRCLE";
+	dismissalInfo?: D_FeedbackToken;
 	videoType: "REEL_VIDEO_TYPE_VIDEO";
 	loggingDirectives: D_LoggingDirectives;
 };

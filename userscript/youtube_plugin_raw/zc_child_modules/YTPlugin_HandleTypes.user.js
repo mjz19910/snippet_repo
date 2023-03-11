@@ -426,8 +426,8 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	//#region Renderer Data Templates
-	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
-	HD_(cf,k,x) {
+	/** @private @arg {CF_M_HD} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
+	HD(cf,k,x) {
 		this.sm.k(cf,x);
 		let kx=this.get_keys_of(x);
 		if(kx.length!==1) debugger;
@@ -1764,7 +1764,7 @@ class HandleTypes extends BaseService {
 		this.D_GoogleVideoHostPartitionRet(parts);
 	}
 	/** @public @arg {RS_AttLog_RC} x */
-	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
+	RS_AttLog_RC(x) {this.HD("RS_AttLog_RC","responseContext",x);}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
 	/** @public @arg {RS_Channel} x */
@@ -3252,7 +3252,14 @@ class HandleTypes extends BaseService {
 	/** @private @arg {D_ReelItem} x */
 	D_ReelItem(x) {
 		const cf="D_ReelItem";
-		const {videoId,headline,thumbnail,viewCountText,navigationEndpoint,menu,trackingParams,accessibility,style,videoType,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {videoId,headline,thumbnail,viewCountText,navigationEndpoint,menu,trackingParams,accessibility,style,dismissalInfo,videoType,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @arg {G_Menu_TopLevelButton} x */
+	G_Menu_TopLevelButton(x) {
+		const cf="G_Menu_TopLevelButton"; this.k(cf,x);
+		if("playlistLoopButtonRenderer" in x) return this.sm.R_PlaylistLoopButton(x);
+		if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
+		if("buttonRenderer" in x) return this.xm.R_Button(x);
 	}
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x */

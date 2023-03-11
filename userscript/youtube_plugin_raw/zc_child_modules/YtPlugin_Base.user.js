@@ -2358,7 +2358,7 @@ class BaseService extends ServiceWithMembers {
 	save_bigint(k,x) {k; x;}
 	/** @protected @arg {string} k @arg {boolean} x */
 	save_boolean_one(k,x) {k; x;}
-	/** @public @arg {string} k @arg {{}} x */
+	/** @public @arg {CF_M_k} k @arg {{}} x */
 	k(k,x) {this.save_primitive(k,x);}
 	/** @protected @arg {string} k @arg {number[]|string[]} x */
 	save_array(k,x) {k; x;}

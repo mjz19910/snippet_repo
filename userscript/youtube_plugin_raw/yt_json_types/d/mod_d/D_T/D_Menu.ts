@@ -76,9 +76,12 @@ type D_Menu_WithTargetId=|{
 	accessibility: TD_Accessibility<"Action menu">;
 	targetId: "playlist-browse-action-menu";
 };
-type D_Menu=D_Menu_WithItems|D_Menu_WithTargetId|{
+type G_Menu_TopLevelButton=R_PlaylistLoopButton|R_ToggleButton|R_Button;
+type D_Menu_WithButtons={
 	trackingParams: string;
-	topLevelButtons: (R_PlaylistLoopButton|R_ToggleButton)[];
+	topLevelButtons: G_Menu_TopLevelButton[];
 };
+
+type D_Menu=D_Menu_WithItems|D_Menu_WithTargetId|D_Menu_WithButtons;
 type R_MenuPopup={menuPopupRenderer: D_MenuPopup;};
 type D_MenuPopup={items: R_MenuServiceItem[];};

@@ -88,7 +88,7 @@ class ServiceMethods extends ServiceData {
 		let [ls,w]=split_string_once(fs[1],":"); if(w!=="") debugger;
 		return ls;
 	}
-	/** @private @template {{}} T @arg {string} cf @arg {T} x */
+	/** @private @template {{}} T @arg {CF_M_rl} cf @arg {T} x */
 	rl(cf,x) {this.k(`${cf}:omit`,x); return x;}
 	/** @arg {D_CustomEmoji['emojiId']} x */
 	parse_emoji_id(x) {return split_string_once(x,"/");}
@@ -1012,11 +1012,7 @@ class ServiceMethods extends ServiceData {
 		if("topLevelButtons" in x) {
 			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.trackingParams(trackingParams);
-			this.z(topLevelButtons,x => {
-				if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
-				if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
-				debugger;
-			});
+			this.ht.z(topLevelButtons,this.ht.G_Menu_TopLevelButton);
 			return;
 		}
 		x;
@@ -2397,7 +2393,7 @@ class ServiceMethods extends ServiceData {
 		if("replaceEnclosingAction" in x) return this.A_ReplaceEnclosing(x);
 		debugger;
 	}
-	/** @private @arg {R_PlaylistLoopButton} x */
+	/** @public @arg {R_PlaylistLoopButton} x */
 	R_PlaylistLoopButton(x) {this.H_s("playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
 	/** @public @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_s("segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}

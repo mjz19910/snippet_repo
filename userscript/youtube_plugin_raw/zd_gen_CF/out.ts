@@ -73,6 +73,7 @@ export namespace Gen {
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "GU_Url";}
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "RS_Page_Watch";}
 		|{n: "CF_L_TP_Params"; t: CF_L_TP_Params; v: "R_WatchPage_VE3832";}
+		|{n: "CF_M_HD"; t: CF_M_HD; v: "RS_AttLog_RC";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_AccountItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_AddChatItem";}
 		|{n: "CF_M_s"; t: CF_M_s; v: "AD_AddToGuideSection";}
@@ -821,7 +822,6 @@ export namespace Gen {
 		|{n: "CF_P_ParamParse"; t: CF_P_ParamParse; v: "create_reply.params";}
 		|{n: "CF_P_ParamParse"; t: CF_P_ParamParse; v: "dislike.params";}
 		|{n: "CF_P_ParamParse"; t: CF_P_ParamParse; v: "entity.key";}
-		|{n: "CF_P_ParamParse"; t: CF_P_ParamParse; v: "feedbackToken";}
 		|{n: "CF_P_ParamParse"; t: CF_P_ParamParse; v: "format_item.xtags";}
 		|{n: "CF_P_ParamParse"; t: CF_P_ParamParse; v: "get_notification_menu.ctoken";}
 		|{n: "CF_P_ParamParse"; t: CF_P_ParamParse; v: "get_pdg_buy_flow.params";}
