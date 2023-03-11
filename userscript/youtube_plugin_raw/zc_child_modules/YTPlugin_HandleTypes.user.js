@@ -3247,6 +3247,13 @@ class HandleTypes extends BaseService {
 		x===""; this.sm.codegen_typedef(cf,x);
 		return null;
 	}
+	/** @public @arg {R_ReelItem} x */
+	R_ReelItem(x) {this.H_s("reelItemRenderer",x,this.D_ReelItem);}
+	/** @private @arg {D_ReelItem} x */
+	D_ReelItem(x) {
+		const cf="D_ReelItem";
+		const {videoId,headline,thumbnail,viewCountText,navigationEndpoint,menu,trackingParams,accessibility,style,videoType,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x */
 	/** @private @arg {minimal_handler_member} x ! */

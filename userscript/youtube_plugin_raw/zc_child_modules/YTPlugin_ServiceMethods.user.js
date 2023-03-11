@@ -4507,16 +4507,8 @@ class ServiceMethods extends ServiceData {
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		if("reelItemRenderer" in x) return this.R_ReelItem(x);
+		if("reelItemRenderer" in x) return this.ht.R_ReelItem(x);
 		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {R_ReelItem} x */
-	R_ReelItem(x) {this.H_s("reelItemRenderer",x,this.D_ReelItem);}
-	/** @private @arg {D_ReelItem} x */
-	D_ReelItem(x) {
-		const cf="D_ReelItem";
-		const {videoId,headline,thumbnail,viewCountText,navigationEndpoint,menu,trackingParams,accessibility,style,videoType,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.join_string(this.get_keys_of_2(y),",")==="";
 	}
 	/** @public @arg {R_RichItem} x */
 	R_RichItem(x) {this.H_s("richItemRenderer",x,this.D_RichItem);}
