@@ -13,6 +13,7 @@
 // ==/UserScript==
 
 const {do_export,as,BaseService}=require("./YtPlugin_Base.user");
+const {StoreData}=require("./YTPlugin_Support_Service.user");
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -164,6 +165,107 @@ class IndexedDBService extends BaseService {
 		/** @type {DST_SaveId|null} */
 		const box=await this.get("boxed_id","boxed_id:save_id",version);
 		return box;
+	}
+	/** @arg {StoreData} store @arg {number} version */
+	async load_store_from_database(store,version) {
+		/** @type {G_BoxedDatabaseData[]} */
+		let boxed;
+		try {
+			boxed=await this.getAll("boxed_id",version);
+		} catch {
+			this.has_loaded_keys=true;
+			this.on_loaded_resolver.resolve();
+			return;
+		}
+		for(let item of boxed) await this.load_store(store,item,version);
+		this.has_loaded_keys=true;
+		this.on_loaded_resolver.resolve();
+	}
+	/** @arg {StoreData} store @arg {G_BoxedDatabaseData} item @arg {number} version */
+	async load_store(store,item,version) {
+		this.add_to_index(item.key,item);
+		item=await this.update_obj_schema(item,version);
+		store.on_item_loaded_from_database(item);
+	}
+	/** @template {G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T>} */
+	async update_obj_schema(x,version) {
+		if(x.z) return x;
+		await this.delete("boxed_id",x.key,version);
+		await this.direct_put("boxed_id",x,version);
+		return x;
+	}
+	/** @public @arg {StoreData} store @arg {number} version */
+	async save_database(store,version) {
+		let save_id=await this.get_save_id(version);
+		if(!save_id) {
+			this.expected_save_id=0;
+			await this.put_boxed_id(version,"save_id",[null,this.expected_save_id]);
+			save_id=await this.get_save_id(version);
+			if(!save_id) throw new Error("null on get");
+		}
+		save_id=await this.update_obj_schema(save_id,version);
+		if(save_id.z[0]!==this.expected_save_id) this.expected_save_id=save_id.z[0];
+		await this.save_store_data_to_database(store,version);
+		this.expected_save_id++;
+		await this.put_boxed_id(version,"save_id",[null,this.expected_save_id]);
+	}
+	/** @arg {StoreData} store @arg {number} version */
+	async save_store_data_to_database(store,version) {
+		let s_values=store.stores.values();
+		for(let store of s_values) {
+			await this.save_store_to_database(store,version);
+		}
+	}
+	/** @arg {StoreDescription<string>} store @arg {number} version */
+	async save_store_to_database(store,version) {
+		let results=await Promise.allSettled(store.data.map(item => this.save_store_item_to_database(store,item,version)));
+		for(let result of results) {
+			if(result.status==="rejected") {
+				console.log("[push_store_to_database.iter.err]",result.reason);
+			} else {
+				if(result.value==null) throw new Error("null on put");
+				if("err" in result.value) {
+				} else {}
+			}
+		}
+	}
+	/** @arg {{key: string; z: [any]; _z: [string]}} x @template U @arg {()=>U} fn_ex @returns {asserts x is U} */
+	assert_is_distributed_iter(x,fn_ex) {x; fn_ex;}
+	/** @template {string} T @arg {T} src @template U @arg {U} value @returns {T extends infer I?{key:`boxed_id:${I}`; z: [U]; _z: [I]}:never} */
+	make_box_size_1(src,value) {
+		/** @type {{key:`boxed_id:${T}`; z: [U]; _z: [T]}} */
+		const z={
+			/** @type {`boxed_id:${T}`} */
+			key: `boxed_id:${src}`,
+			z: [value],_z: [src]
+		};
+		/** @returns {T extends infer I?{key:`boxed_id:${I}`; z: [U]; _z: [I]}:never} */
+		function fn_ex() {throw new Error();}
+		this.assert_is_distributed_iter(z,fn_ex);
+		return z;
+	}
+	/** @arg {number} version @template {Y_PutBoxedArgs} T @arg {T} s0 */
+	async put_boxed_id(version,...s0) {
+		const [k,x]=s0; k; x;
+		if(x[0]===null) {
+			switch(k) {
+				case "save_id":
+				case "load_id": {
+					/** @type {DST_SaveId|DST_LoadId} */
+					const z=this.make_box_size_1(k,x[1]);
+					return this.put_box(z,version);
+				}
+			}
+			debugger;
+			return null;
+		}
+		/** @type {DST_Group} */
+		const z={key: `boxed_id:${k}:${x[0]}`,z: [x[1]],_z: [k,x[0]]};;
+		return this.put_box(z,version);
+	}
+	/** @template {G_StoreDescription} T @arg {T} store @arg {T["data"][number]} item @arg {number} version */
+	async save_store_item_to_database(store,item,version) {
+		return this.put_boxed_id(version,store.type,item);
 	}
 	/** @arg {G_BoxedDatabaseData} x */
 	store_cache_tree(x) {

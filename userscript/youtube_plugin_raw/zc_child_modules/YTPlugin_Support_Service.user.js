@@ -87,17 +87,18 @@ class BitmapResult {
 		this.bitmap=bitmap;
 	}
 }
-/** @template {keyof J_StoreTypeMap} CLS_K */
+/** @template {string} CLS_Kx */
 class StoreDescription extends ApiBase2 {
 	/** @type {Map<string,number>} */
 	key_index=new Map;
 	/** @type {Map<string,number>} */
 	new_key_index=new Map;
+	/** @typedef {CLS_Kx&keyof J_StoreTypeMap} CLS_K */
 	/** @type {[string, make_item_group<J_StoreTypeMap[CLS_K]>][]} */
 	data=[];
 	/** @type {[string, make_item_group<J_StoreTypeMap[CLS_K]>][]} */
 	new_data=[];
-	/** @arg {CLS_K} type @arg {J_StoreStrMap[CLS_K]} type_arr */
+	/** @arg {CLS_Kx} type @arg {[string]} type_arr */
 	constructor(type,type_arr) {
 		super();
 		this.type=type;
@@ -182,59 +183,45 @@ class StoreDescription extends ApiBase2 {
 }
 export_(exports => {exports.StoreDescription=StoreDescription;});
 class StoreData {
-	/** @type {Map<StoreDataInput["type"],StoreDataInput["description"]>} */
+	/** @type {Map<string,StoreDescription<string>>} */
 	stores=new Map;
 	constructor() {
-		/** @arg {StoreDataInput["type"]} type @returns {StoreDataInput} */
+		/** @arg {string} type @returns {T_StoreDataInput<string>} */
 		function make_store(type) {
-			switch(type) {
-				case "bigint": {
-					/** @type {StoreDescription<"bigint">} */
-					const description=new StoreDescription(type,[type]); return {type,description};
-				}
-				case "boolean": {
-					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,[type]); return {type,description};
-				}
-				case "keys": {
-					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,["number","string"]); return {type,description};
-				}
-				case "number": {
-					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,[type]); return {type,description};
-				}
-				case "root_visual_element": {
-					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,["number"]); return {type,description};
-				}
-				case "string": {
-					/** @type {StoreDescription<typeof type>} */
-					const description=new StoreDescription(type,[type]); return {type,description};
-				}
-			}
+			const description=new StoreDescription(type,[type]); return {type,description};
 		}
-		/** @type {["bigint","boolean","keys","number","root_visual_element","string"]} */
 		const store_names_arr=["bigint","boolean","keys","number","root_visual_element","string"];
 		for(let store_name of store_names_arr) this.add_store(make_store(store_name));
 	}
 	/** @returns {StoreDescription<"string">} */
-	get_string_store() {return this.get_store("string");}
+	get_string_store() {return as_any(this.get_store("string"));}
 	/** @returns {StoreDescription<"number">} */
-	get_number_store() {return this.get_store("number");}
-	/** @template {StoreDataInput} R @template {R["type"]} T @arg {T} key @returns {Extract<R,{type:T}>["description"]} */
+	get_number_store() {return as_any(this.get_store("number"));}
+	/** @template {string} T @arg {T} key @returns {StoreDescription<string>|null} */
 	get_store(key) {
 		let item=this.stores.get(key);
-		if(item===void 0) throw new Error();
+		if(item===void 0) return null;
 		return item;
 	}
-	/** @arg {StoreDataInput} args */
+	/** @arg {T_StoreDataInput<string>} args */
 	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
+	/** @arg {G_BoxedDatabaseData} item */
+	on_item_loaded_from_database(item) {
+		item;
+	}
 }
 export_(exports => {exports.StoreData=StoreData;});
 class LocalStorageSeenDatabase extends BaseService {
+	/** @template {string} X @template {X} Ty @arg {StoreDescription<X>} store @arg {Ty} type @returns {x is StoreDescription<Ty>} */
+	is_store_type(store,type) {
+		return store.type===type;
+	}
 	/** @arg {string} key */
-	get_store_keys(key) {return this.data_store.get_store("string").index_get(key);}
+	get_store_keys(key) {
+		let res=this.data_store.get_store("string");
+		if(!res) return null;
+		return res.index_get(key);
+	}
 	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */

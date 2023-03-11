@@ -3162,10 +3162,15 @@ class HandleTypes extends BaseService {
 		const y_many=[];
 		const cmp_map=new WeakMap;
 		const xi0=this.w_db_data(x),yi0=this.w_db_data(y);
-		if(x.key==="boxed_id:save_id"||x.key==="boxed_id:load_id") return;
-		/** @arg {{z:[{z:[{l:"many";z:[any[][]]}|{l:"arr";z:[any[]]}|{l:"one";z:[any]}]}]}} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
+		/** @arg {G_BoxedDatabaseData} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
 		function acc_items(container,items_arr) {
-			const item_group=container.z[0].z[0];
+			if(container.key==="boxed_id:load_id"||container.key==="boxed_id:save_id") {
+				const item=container.z[0];
+				items_arr.push([item]);
+				return;
+			}
+			let group_container=container;
+			const item_group=group_container.z[0];
 			switch(item_group.l) {
 				case "many": {
 					const item_many=item_group.z[0];
@@ -3190,10 +3195,13 @@ class HandleTypes extends BaseService {
 			if(x_set.has(y_item)) continue;
 			diff_minus.push(y_item);
 		}
-		console.log("[cur_cache_value] [x.key]",x.key);
-		console.log("[val] [x]",xi0[0],xi0.slice(1));
-		console.log("[val] [y]",yi0[0],yi0.slice(1));
-		console.log(diff_plus,diff_minus);
+		let key=x.key;
+		if(key!=="boxed_id:load_id"&&key!=="boxed_id:save_id") {
+			console.log("[cur_cache_value] [x.key]",key);
+			console.log("[val] [x]",xi0[0],xi0.slice(1));
+			console.log("[val] [y]",yi0[0],yi0.slice(1));
+			console.log(diff_plus,diff_minus);
+		}
 	}
 	/** @api @public @template {G_BoxedDatabaseData} T_Put @arg {"boxed_id"} key @arg {T_Put} value @arg {number} version */
 	async put(key,value,version) {
