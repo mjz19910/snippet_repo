@@ -205,7 +205,7 @@ class StoreData extends BaseService {
 				return;
 			}
 			this.idle_id=null;
-			if(this.m_outdated_store_description_arr.length!==0) this.on_stores_to_save();
+			if(this.store_description_sets.outdated.length!==0) this.on_stores_to_save();
 		});
 	}
 	/** @returns {StoreDescription<"string">} */
@@ -277,7 +277,7 @@ class LocalStorageSeenDatabase extends BaseService {
 	}
 	/** @arg {string} key */
 	get_store_keys(key) {
-		let res=this.data_store.get_store("string");
+		let res=this.x.get("data_store").get_store("string");
 		if(!res) return null;
 		return res.index_get(key);
 	}
@@ -292,41 +292,7 @@ class LocalStorageSeenDatabase extends BaseService {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	/** @type {IndexedDBService} */
-	idb=(() => {
-		if(!this.x) {
-			this.addOnServicesListener(() => {
-				this.idb=this.x.get("indexed_db");
-			});
-			return as_any({});
-		}
-		return this.x.get("indexed_db");
-	})();
 	loaded_database=false;
-	/** @private @type {number|null} */
-	idle_id=null;
-	onDataChange() {
-		if(this.idle_id!==null) return;
-		this.is_ready=false;
-		this.idle_id=requestIdleCallback(async () => {
-			const version=this.sm.indexed_db_version;
-			if(!this.loaded_database) {
-				try {
-					await this.idb.load_database(this.data_store,version);
-					this.loaded_database=true;
-				} catch(err) {
-					console.log("load_database failed",err);
-					return;
-				}
-			}
-			try {
-				await this.idb.save_database(this.data_store,version);
-			} catch(err) {
-				console.log("save_database failed",err);
-				return;
-			}
-		});
-	}
 	/** @template {string} A @template {string} B @arg {`boxed_id:${A}:${B}`} k */
 	split_box_type(k) {
 		/** @returns {`${A}:${B}`|null} */
@@ -439,7 +405,7 @@ class LocalStorageSeenDatabase extends BaseService {
 		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
 		return new BitmapResult(map_arr,bitmap);
 	}
-	/** @private @arg {number[]} src */
+	/** @arg {number[]} src */
 	generate_bitmap_num_raw_fill(src,fill_value=0) {
 		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
 		let zz=map_arr.at(-1)??0;
@@ -452,8 +418,8 @@ class LocalStorageSeenDatabase extends BaseService {
 		return new BitmapResult(map_arr,bs);
 	}
 	bitmap_console_todo_1() {
-		let yt_plugin={ds: this,};
-		let gg=yt_plugin.ds.data_store.get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
+		const yt_plugin={ds:this};
+		let gg=yt_plugin.ds.x.get("data_store").get_number_store().data.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1].l!=="arr") return;
 		gg[1].z[0].sort((a,b) => a-b);

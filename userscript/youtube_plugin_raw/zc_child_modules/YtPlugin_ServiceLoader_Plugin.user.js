@@ -57,9 +57,7 @@ class ServiceLoader {
 		this.common_methods=new ForService_CommonMethods(x);
 		this.yt_handlers=new YtHandlers(x);
 		this.yt_plugin=new YtPlugin(x);
-		this.data_store=new StoreData(x,(database_load_target) => {
-			return this.indexed_db.load_database(database_load_target,this.service_methods.indexed_db_version);
-		});
+		this.data_store=new StoreData(x);
 	}
 	/** @api @public @arg {(() => void)[]} listeners */
 	on_resolve_services(listeners) {
