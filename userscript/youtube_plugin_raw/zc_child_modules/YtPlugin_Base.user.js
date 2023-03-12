@@ -2617,9 +2617,8 @@ class BaseService extends ServiceWithMembers {
 		function assume_ret(x) {x;}
 		/** @type {Some<T>|None} */
 		let mr;
-		if(x.v===void 0) {
-			mr={type: "n"};
-		} else mr={type: "s",v: x.v};
+		if(x.v===void 0) mr={type: "n"};
+		else mr={type: "s",v: x.v};
 		assume_ret(mr);
 		return mr;
 	}
