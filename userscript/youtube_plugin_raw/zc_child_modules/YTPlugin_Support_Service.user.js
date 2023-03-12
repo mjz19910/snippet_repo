@@ -2961,14 +2961,6 @@ class Support_Renderer extends BaseService {
 		this.sm.a_primitive_str(program);
 		if(globalName!=="trayride") debugger;
 	}
-	/** @public @arg {D_AudioConfig} x */
-	D_AudioConfig(x) {
-		const cf="D_AudioConfig";
-		const {loudnessDb,perceptualLoudnessDb,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
-		this.sm.t(loudnessDb,this.sm.a_primitive_num);
-		this.sm.t(perceptualLoudnessDb,this.sm.a_primitive_num);
-		this.sm.t(enablePerFormatLoudness,this.sm.a_primitive_bool);
-	}
 	/** @public @arg {R_DynamicReadaheadConfig} x */
 	R_DynamicReadaheadConfig(x) {this.H_("dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
 	/** @public @arg {D_DynamicReadaheadConfig} x */
@@ -4042,6 +4034,7 @@ class ForService_XMethods extends BaseService {
 		if("getPdgBuyFlowCommand" in x) return this.sm.C_GetPdgBuyFlow(x);
 		if("createCommentReplyEndpoint" in x) return this.xr.E_CreateCommentReply(x);
 		if("feedbackEndpoint" in x) return this.sm.E_Feedback(x);
+		if("ypcGetOfflineUpsellEndpoint" in x) return this.sm.E_YpcGetOfflineUpsell(x);
 		x===""; this.sm.GEN(cf,x);
 	}
 	/**

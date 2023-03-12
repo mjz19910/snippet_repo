@@ -673,3 +673,18 @@ type PE_transcript_params={
 	7: T_D32<1>;
 	8: T_D32<1>;
 };
+// cspell:ignore v9lp5ESKJTE
+type P_ypc_get_offline_upsell_params={
+	1: T_VW_J<P_f3_PD_continuation_params_obj>,
+	4: T_VW_J<{
+		7: T_FD64<6073749868478034028n>,
+		8: T_FD32<151524138>;
+	}>,
+	5: T_VW_J<{
+		1: T_D32<9>,
+		10: T_VW_J<{
+			1: TV_Str<"v9lp5ESKJTE">,
+			4: T_D32<1>;
+		}>;
+	}>;
+};

@@ -2618,6 +2618,12 @@ class BaseService extends ServiceWithMembers {
 	/** @template {string} T_CF @arg {T_CF} cf @arg {(this:this,cf:T_CF,x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U|null>} */
 	mt_cf(m,cf,f) {return this.mt(m,x => this.t_cf(cf,x,f));}
 	//#endregion
+	/** @private @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
+	_cq_no_infer(a,b) {if(a!==b) debugger;}
+	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
+	_cq_infer(a,b) {if(a!==b) debugger;}
+	/** @public @type {<T,U extends T>(a:T,b:NoInfer<U>)=>void} */
+	cq=this._cq_no_infer;
 }
 class YtHandlers extends BaseService {
 	/** @api @public @arg {{}} item */

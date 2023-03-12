@@ -15,6 +15,7 @@ type D_UrlFormat=
 	|`/playlist?${D_PlaylistUrlParams}`
 	|`/shorts/${string}`
 	|`/v/${string}?version=3&autohide=1`
+	|`/v/${string}`
 	|`/watch?${string}`
 	|`https://www.youtube.com/pagead/adview?${string}`
 	|`https://www.youtube.com/watch?${string}`

@@ -300,17 +300,9 @@ class HandleTypes extends BaseService {
 		this._continuation_logged_str.push(cf);
 		const n_cf=`P_${cf.replaceAll(".","_")}`;
 		this.codegen_typedef_bin(n_cf,x,false);
-		let str_arr=[""];
-		/** @arg {string} code */
-		function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
-		let pad=1;
-		ap(`case "${cf}":/*db_gen*/{`);
-		pad+=1;
-		ap(`/** @type {${n_cf}} */`);
-		ap(`this.${n_cf}(u);`);
-		pad-=1;
-		ap(`} break;`);
-		console.log(`-- [binary_gen_case:${cf}] --\n${str_arr.join("\n")}`);
+		/** @arg {number} pad @arg {string} code */
+		let ap=(pad,code) => `${"\t".repeat(pad)}${code}`;
+		console.log(`-- [binary_gen_case:${cf}] --\n${ap(1,`case "${cf}": this.${n_cf}(as_any(x)); break;`)}`);
 		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
 	/** @protected @template T @arg {[T]} x */
@@ -413,7 +405,15 @@ class HandleTypes extends BaseService {
 	/** @public @arg {CF_L_TP_Params} cf @arg {D_WatchPageUrl} x */
 	D_WatchPageUrl(cf,x) {
 		let u1=split_string_once(x,"/")[1];
-		let u2=split_string_once(u1,"?")[1];
+		let uq=split_string_once(u1,"?");
+		if(uq.length===1) {
+			let uv=uq[0];
+			let [p,a]=split_string_once(uv,"/");
+			if(p!=="v") debugger;
+			this.sm.videoId(a);
+			return;
+		}
+		let u2=uq[1];
 		let u3=this.parse_url_search_params(u2);
 		let u4=this.keyof_search_params(u2);
 		x: {
@@ -916,13 +916,14 @@ class HandleTypes extends BaseService {
 	/** @public @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
 		const cf="D_PlayerConfig";
-		const {audioConfig,playbackStartConfig,streamSelectionConfig,livePlayerConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
-		this.xr.D_AudioConfig(audioConfig);
+		const {audioConfig,playbackStartConfig,streamSelectionConfig,livePlayerConfig,mediaCommonConfig,webPlayerConfig,inlinePlaybackConfig,...y}=this.s(cf,x); this.g(y);
+		this.D_AudioConfig(audioConfig);
 		this.t(playbackStartConfig,this.D_StartSeconds);
 		this.t(streamSelectionConfig,this.D_StreamSelectionConfig);
 		this.t(livePlayerConfig,this.D_LivePlayerConfig);
 		this.xr.R_DynamicReadaheadConfig(mediaCommonConfig);
 		this.D_WebPlayerConfig(webPlayerConfig);
+		this.t(inlinePlaybackConfig,this.D_InlinePlaybackConfig);
 	}
 	/** @private @arg {D_LivePlayerConfig} x */
 	D_LivePlayerConfig(x) {
@@ -2976,75 +2977,77 @@ class HandleTypes extends BaseService {
 	//#region binary_result()
 	/** @private @arg {CF_P_ParamParse} cf @arg {V_ParamObj} x */
 	binary_result(cf,x) {
+		let u=as_any(x);
 		switch(cf) {
 			case "_level_2_0._level_2_1":
 			case "_level_1_0": debugger; break;
 			//#region entity.key
-			case "aadc_guidelines_state.entity.key": this.P_EntityKey("P_aadc_guidelines_state_entity_key",as_any(x)); break;
-			case "change_markers_visibility.entity.key": this.P_EntityKey("P_change_markers_visibility_entity_key",as_any(x)); break;
-			case "entity.key": this.P_EntityKey("P_entity_key",as_any(x)); break;
-			case "load_markers.entity.key": this.P_EntityKey("P_load_markers_entity_key",as_any(x)); break;
-			case "macro_marker_repeat_state.entity.key": this.P_EntityKey("P_macro_marker_repeat_state_entity_key",as_any(x)); break;
-			case "macro_markers_list.entity.key": this.P_EntityKey("P_macro_markers_list_entity_key",as_any(x)); break;
-			case "player_state.entity.key": this.P_EntityKey("P_player_state_entity_key",as_any(x)); break;
-			case "playlist_loop_state.entity.key": this.P_EntityKey("P_playlist_loop_state_entity_key",as_any(x)); break;
-			case "subscribe_button.entity.key": this.P_EntityKey("P_subscribe_button_entity_key",as_any(x)); break;
-			case "transcript_track_selection.entity.key": this.P_EntityKey("P_transcript_track_selection_entity_key",as_any(x)); break;
-			case "view_count.entity.key": this.P_EntityKey("P_view_count_entity_key",as_any(x)); break;
+			case "aadc_guidelines_state.entity.key": this.P_EntityKey("P_aadc_guidelines_state_entity_key",u); break;
+			case "change_markers_visibility.entity.key": this.P_EntityKey("P_change_markers_visibility_entity_key",u); break;
+			case "entity.key": this.P_EntityKey("P_entity_key",u); break;
+			case "load_markers.entity.key": this.P_EntityKey("P_load_markers_entity_key",u); break;
+			case "macro_marker_repeat_state.entity.key": this.P_EntityKey("P_macro_marker_repeat_state_entity_key",u); break;
+			case "macro_markers_list.entity.key": this.P_EntityKey("P_macro_markers_list_entity_key",u); break;
+			case "player_state.entity.key": this.P_EntityKey("P_player_state_entity_key",u); break;
+			case "playlist_loop_state.entity.key": this.P_EntityKey("P_playlist_loop_state_entity_key",u); break;
+			case "subscribe_button.entity.key": this.P_EntityKey("P_subscribe_button_entity_key",u); break;
+			case "transcript_track_selection.entity.key": this.P_EntityKey("P_transcript_track_selection_entity_key",u); break;
+			case "view_count.entity.key": this.P_EntityKey("P_view_count_entity_key",u); break;
 			//#endregion
 			//#region done2
-			case "ad_layout.ad_serving_data_entry": this.P_ad_layout_ad_serving_data_entry(as_any(x)); break;
-			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": this.P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(as_any(x)); break;
-			case "continuation_request.browse.token": this.PR_continuation_request_browse_token(as_any(x)); break;
-			case "continuation_request.reel_watch_sequence.token": this.P_continuation_request_reel_watch_sequence_token(as_any(x)); break;
-			case "continuation_request.watch_next.token": this.P_continuation_request_watch_next_token(as_any(x)); break;
-			case "continuation.params": this.PR_continuation_params(as_any(x)); break;
-			case "create_backstage_post.params": this.P_create_backstage_post_params(as_any(x)); break;
-			case "create_comment.params": this.P_create_comment_params(as_any(x)); break;
-			case "create_playlist.params": this.P_create_playlist_params(as_any(x)); break;
-			case "create_reply.params": this.P_create_reply_params(as_any(x)); break;
-			case "dislike.params": this.P_dislike_params(as_any(x)); break;
-			case "format_item.xtags": this.P_format_item_xtags(as_any(x)); break;
-			case "get_notification_menu.ctoken": this.P_get_notification_menu_ctoken(as_any(x)); break;
-			case "get_pdg_buy_flow.params": this.P_get_pdg_buy_flow_params(as_any(x)); break;
-			case "get_report_form.params": this.P_get_report_form_params(as_any(x)); break;
-			case "get_transcript.params": this.P_get_transcript_params(as_any(x)); break;
-			case "invalidation.continuation": this.P_invalidation_continuation(as_any(x)); break;
-			case "like.params": this.P_like_params(as_any(x)); break;
-			case "logging_context.serialized_context_data": this.P_logging_context_serialized_context_data(as_any(x)); break;
-			case "notification_add_upcoming_event_reminder.params": this.P_notification_add_upcoming_event_reminder_params(as_any(x)); break;
-			case "notification_remove_upcoming_event_reminder.params": this.P_notification_remove_upcoming_event_reminder_params(as_any(x)); break;
-			case "notification.opt_out": this.P_notification_opt_out(as_any(x)); break;
-			case "notification.record_interactions": this.P_notification_record_interactions(as_any(x)); break;
-			case "params.click_tracking": this.P_Typed_TrackingObj({type: "click_tracking",v: as_any(x)}); break;
-			case "params.tracking": this.P_Typed_TrackingObj({type: "tracking",v: as_any(x)}); break;
-			case "PD_continuation_params.f3": this.P_f3_PD_continuation_params(as_any(x)); break;
-			case "perform_comment.action": this.P_perform_comment_action(as_any(x)); break;
-			case "pf_23n24n.bin_params": this.P_bin_params_1(as_any(x)); break;
-			case "playability_status.context_params": this.P_playability_status_context_params(as_any(x)); break;
-			case "playlist_edit.params": this.P_playlist_edit_params(as_any(x)); break;
-			case "reel.params": this.P_reel_params(as_any(x)); break;
-			case "reel.player_params": this.P_reel_player_params(as_any(x)); break;
-			case "reel.sequence_params": this.P_reel_sequence_params(as_any(x)); break;
-			case "remove_like.params": this.P_remove_like_params(as_any(x)); break;
-			case "search.params": this.P_search_params(as_any(x)); break;
-			case "shorts.source.bp": this.P_shorts_source_bp(as_any(x)); break;
-			case "subscribe.params": this.P_subscribe_params(as_any(x)); break;
-			case "subscription_state.key": this.PG_subscription_state_key(as_any(x)); break;
-			case "timed_continuation.data": this.P_timed_continuation_data(as_any(x)); break;
-			case "transcript_track_selection.serialized_params": this.P_transcript_track_selection_serialized_params(as_any(x)); break;
-			case "transcript.params": this.P_transcript_params(as_any(x)); break;
-			case "trending.bp": this.P_trending_bp(as_any(x)); break;
-			case "unsubscribe.params": this.P_unsubscribe_params(as_any(x)); break;
-			case "ve_3611.params": this.P_ve_3611_params(as_any(x)); break;
-			case "ve_6827.params": this.P_ve_6827_params(as_any(x)); break;
-			case "watch_playlist.params": this.P_watch_playlist_params(as_any(x)); break;
-			case "watch.params": this.P_watch_params(as_any(x)); break;
-			case "watch.player_params": this.P_watch_player_params(as_any(x)); break;
-			case "ypc_get_offers.params": this.P_ypc_get_offers_params(as_any(x)); break;
+			case "ad_layout.ad_serving_data_entry": this.P_ad_layout_ad_serving_data_entry(u); break;
+			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": this.P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(u); break;
+			case "continuation_request.browse.token": this.PR_continuation_request_browse_token(u); break;
+			case "continuation_request.reel_watch_sequence.token": this.P_continuation_request_reel_watch_sequence_token(u); break;
+			case "continuation_request.watch_next.token": this.P_continuation_request_watch_next_token(u); break;
+			case "continuation.params": this.PR_continuation_params(u); break;
+			case "create_backstage_post.params": this.P_create_backstage_post_params(u); break;
+			case "create_comment.params": this.P_create_comment_params(u); break;
+			case "create_playlist.params": this.P_create_playlist_params(u); break;
+			case "create_reply.params": this.P_create_reply_params(u); break;
+			case "dislike.params": this.P_dislike_params(u); break;
+			case "format_item.xtags": this.P_format_item_xtags(u); break;
+			case "get_notification_menu.ctoken": this.P_get_notification_menu_ctoken(u); break;
+			case "get_pdg_buy_flow.params": this.P_get_pdg_buy_flow_params(u); break;
+			case "get_report_form.params": this.P_get_report_form_params(u); break;
+			case "get_transcript.params": this.P_get_transcript_params(u); break;
+			case "invalidation.continuation": this.P_invalidation_continuation(u); break;
+			case "like.params": this.P_like_params(u); break;
+			case "logging_context.serialized_context_data": this.P_logging_context_serialized_context_data(u); break;
+			case "notification_add_upcoming_event_reminder.params": this.P_notification_add_upcoming_event_reminder_params(u); break;
+			case "notification_remove_upcoming_event_reminder.params": this.P_notification_remove_upcoming_event_reminder_params(u); break;
+			case "notification.opt_out": this.P_notification_opt_out(u); break;
+			case "notification.record_interactions": this.P_notification_record_interactions(u); break;
+			case "params.click_tracking": this.P_Typed_TrackingObj({type: "click_tracking",v: u}); break;
+			case "params.tracking": this.P_Typed_TrackingObj({type: "tracking",v: u}); break;
+			case "PD_continuation_params.f3": this.P_f3_PD_continuation_params(u); break;
+			case "perform_comment.action": this.P_perform_comment_action(u); break;
+			case "pf_23n24n.bin_params": this.P_bin_params_1(u); break;
+			case "playability_status.context_params": this.P_playability_status_context_params(u); break;
+			case "playlist_edit.params": this.P_playlist_edit_params(u); break;
+			case "reel.params": this.P_reel_params(u); break;
+			case "reel.player_params": this.P_reel_player_params(u); break;
+			case "reel.sequence_params": this.P_reel_sequence_params(u); break;
+			case "remove_like.params": this.P_remove_like_params(u); break;
+			case "search.params": this.P_search_params(u); break;
+			case "shorts.source.bp": this.P_shorts_source_bp(u); break;
+			case "subscribe.params": this.P_subscribe_params(u); break;
+			case "subscription_state.key": this.PG_subscription_state_key(u); break;
+			case "timed_continuation.data": this.P_timed_continuation_data(u); break;
+			case "transcript_track_selection.serialized_params": this.P_transcript_track_selection_serialized_params(u); break;
+			case "transcript.params": this.P_transcript_params(u); break;
+			case "trending.bp": this.P_trending_bp(u); break;
+			case "unsubscribe.params": this.P_unsubscribe_params(u); break;
+			case "ve_3611.params": this.P_ve_3611_params(u); break;
+			case "ve_6827.params": this.P_ve_6827_params(u); break;
+			case "watch_playlist.params": this.P_watch_playlist_params(u); break;
+			case "watch.params": this.P_watch_params(u); break;
+			case "watch.player_params": this.P_watch_player_params(u); break;
+			case "ypc_get_offers.params": this.P_ypc_get_offers_params(u); break;
 			//#endregion
 			//#region done
 			//#endregion
+			case "ypc_get_offline_upsell.params": this.P_ypc_get_offline_upsell_params(u); break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3053,6 +3056,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	//#endregion
+	/** @private @arg {P_ypc_get_offline_upsell_params} x */
+	P_ypc_get_offline_upsell_params(x) {x;}
 	//#endregion binary
 	//#region import renderer
 	//#endregion
@@ -3355,6 +3360,22 @@ class HandleTypes extends BaseService {
 		this.xm.R_Button(proceedButton);
 		this.sm.T_Icon(cf,icon);
 		this.sm.cq(icon.iconType,"OFFLINE_NO_CONTENT");
+	}
+	/** @public @arg {D_InlinePlaybackConfig} x */
+	D_InlinePlaybackConfig(x) {
+		const cf="D_InlinePlaybackConfig";
+		const {showAudioControls,showScrubbingControls,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.cq(showAudioControls,true);
+		this.sm.cq(showScrubbingControls,true);
+	}
+	/** @public @arg {D_AudioConfig} x */
+	D_AudioConfig(x) {
+		const cf="D_AudioConfig";
+		const {loudnessDb,perceptualLoudnessDb,muteOnStart,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
+		this.sm.t(loudnessDb,this.sm.a_primitive_num);
+		this.sm.t(perceptualLoudnessDb,this.sm.a_primitive_num);
+		this.sm.t(enablePerFormatLoudness,this.sm.a_primitive_bool);
+		this.t(muteOnStart,x => this.sm.cq(x,true));
 	}
 }
 //#endregion

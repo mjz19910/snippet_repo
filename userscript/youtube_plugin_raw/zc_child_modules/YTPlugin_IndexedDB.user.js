@@ -643,7 +643,10 @@ class IndexedDBService extends BaseService {
 		let cache_arr=this.cache();
 		let cache_index=this.cache_index();
 		let idx=cache_index.get(key);
-		if(idx!==void 0) return;
+		if(idx!==void 0) {
+			cache_arr[idx]=x;
+			return;
+		}
 		idx=cache_arr.push(x)-1;
 		cache_index.set(key,idx);
 		return idx;

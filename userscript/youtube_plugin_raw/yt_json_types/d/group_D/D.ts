@@ -31,6 +31,7 @@ type D_WatchPageUrl=
 	|`/watch?v=${string}&pp=${string}`
 	|`/watch?v=${string}&t=${number}s`
 	|`/watch?v=${string}`
+	|`/v/${string}`
 	;
 ;
 type D_WatchPlaylistUrlFormat=
@@ -2920,6 +2921,7 @@ type D_PaidDigitalGoods={paidDigitalGoods: B_Hack;};
 type D_AudioConfig={
 	loudnessDb?: number;
 	perceptualLoudnessDb?: number;
+	muteOnStart?: true;
 	enablePerFormatLoudness?: boolean;
 };
 type D_DescriptionChapters={

@@ -21,12 +21,6 @@ export_(exports => {exports.__is_module_flag__=true;});
 class ServiceMethods extends ServiceData {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:ServiceMethods,x:T)=>U} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @private @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
-	_cq_no_infer(a,b) {if(a!==b) debugger;}
-	/** @private @template T @template {T} U @arg {T} a @arg {U} b */
-	_cq_infer(a,b) {if(a!==b) debugger;}
-	/** @public @type {<T,U extends T>(a:T,b:NoInfer<U>)=>void} */
-	cq=this._cq_no_infer;
 	/** @arg {T|undefined} _l @template {string} T @arg {NoInfer<T>} x @returns {(y: NoInfer<T>)=>void} */
 	wg(_l,x) {return y => this._cq_infer(x,y);}
 	/** @arg {D_ReelPlayerOverlay["reelPlayerNavigationModel"]} t_input_0 */
