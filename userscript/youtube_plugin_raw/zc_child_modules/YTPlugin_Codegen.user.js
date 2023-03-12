@@ -409,11 +409,11 @@ class CodegenService extends ServiceWithAccessors {
 	}
 	/** @arg {{[U in string]: unknown}} x */
 	is_GuideEntrySimple(x) {
-		return x.navigationEndpoint
+		return !!(x.navigationEndpoint
 			&&x.icon
 			&&x.trackingParams
 			&&x.formattedTitle
-			&&x.accessibility;
+			&&x.accessibility);
 	}
 	/** @arg {string} x */
 	filter_typedef_part_gen(x) {
@@ -489,148 +489,152 @@ class CodegenService extends ServiceWithAccessors {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
 		}
-		x: if(this.is_GuideEntrySimple(x)&&typeof x.icon==="object"&&x.icon) {
-			/** @type {{iconType?:string}} */
-			let ru=x.icon;
-			if(!ru.iconType) break x;
-			/** @arg {unknown} u @returns {{[x: string]: unknown}|null} */
-			function o(u) {
-				if(typeof u==='object') {
-					/** @type {{}|null} */
-					let c=u;
-					return c;
-				}
-				return null;
-			}
-			let kk=this.get_keys_of(x);
-			if(this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"])) {
-				if(!o(x.navigationEndpoint)?.browseEndpoint) {
-					/** @type {TD_GuideEntry_EntryData<any>} */
-					console.log("[Generate.TD_GuideEntry_EntryData.wrong_endpoint]",this.get_keys_of(x));
-					break x;
-				}
-				return `TYPE::TD_GuideEntry_EntryData<"${ru.iconType}">`;
-			}
-			/** @type {TD_GuideEntry_Simple<any>} */
-			if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
-				console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(x));
-				break x;
-			}
-			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
-		}
-		x: if(x.signalServiceEndpoint) {
-			let v=this.as_T_SE_Signal(x);
-			let sr=this.get_typedef_part(s,v.signalServiceEndpoint);
-			if(!sr) break x;
-			let wc=this.get_typedef_part(s,v.commandMetadata);
-			let sig_type=`T_SE_Signal<${wc},${sr}>`;
-			/** @type {E_SignalService_SendPost} */
-			if(sig_type==="T_SE_Signal<M_SendPost,G_ClientSignal>") sig_type="E_SignalService_SendPost";
-			return `TYPE::${sig_type}`;
-		}
-		x: if(x.multiPageMenuRenderer) {
-			let v=this.as$TR_MultiPageMenu(x);
-			let sr=this.get_typedef_part(s,v.multiPageMenuRenderer);
-			if(!sr) break x;
-			return `TYPE::TR_MultiPageMenu<${sr}>`;
-		}
-		if(x.webCommandMetadata) {
-			/** @type {{webCommandMetadata:{sendPost?:true;rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
-			let v=as(x);
-			let u1=v.webCommandMetadata.apiUrl;
-			let u2=v.webCommandMetadata.rootVe;
-			if(u2) return `TYPE::M_VE${u2}`;
-			if(u1) {
-				let ss=this.sm.split_str(u1,"/");
-				if(ss[0]!=="") debugger;
-				let [,a2,a3,...rest]=ss;
-				if(a2!=="youtubei") debugger;
-				if(a3!=="v1") debugger;
-				let cq=this.sm.join_string(rest,"_");
-				return `TYPE::M_${cq}`;
-			}
-			/** @type {M_SendPost} */
-			if(this.eq_keys(this.get_keys_of(v.webCommandMetadata),["sendPost"])) return "TYPE::M_SendPost";
-			return x;
-		}
-		x: if(x.accessibilityData) {
-			/** @type {{accessibilityData?:Partial<D_Label>}} */
-			let xu=x;
-			if(!xu?.accessibilityData?.label) break x;
-			return `TYPE::TD_Accessibility<${JSON.stringify(xu.accessibilityData.label)}>`;
-		}
-		x: if(x.label) {
-			/** @type {Partial<D_Label>} */
-			let xu=x;
-			if(!xu.label) break x;
-			return `TYPE::TD_Label<${JSON.stringify(xu.label)}>`;
-		}
-		x: if(x.browseEndpoint) {
-			/** @type {Partial<GE_Browse>} */
-			let xu=x;
-			if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
-			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
-			return `TYPE::E_VE${ve_num}`;
-		}
-		x: if(x.urlEndpoint) {
-			/** @type {Partial<E_Url>} */
-			let xu=x;
-			if(!(xu.urlEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
-			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
-			if(ve_num!==83769) break x;
-			return `TYPE::E_Url`;
-		}
-		/** @private @type {G_Text} */
-		if(x.runs&&x.runs instanceof Array) return "TYPE::G_Text";
-		if(x.simpleText) return "TYPE::G_Text";
-		if(x.thumbnails&&x.thumbnails instanceof Array) return `TYPE::${this.#R_ThumbnailStr()}`;
-		/** @private @type {T_Icon<"">} */
-		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
-		if(x.signal) {
-			let sig_type=this.getType$Signal(x);
-			return `TYPE::${sig_type}`;
-		}
-		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
-			let p=s.parent_map.get(x);
-			if(!p) break x;
-			if(p[1]==="owner") {return "TYPE::D_Video_Owner";}
-			if(p[1].endsWith("Renderer")) {
-				let pre_str=this.uppercase_first(p[1]);
-				let res=this.get_short_typename(as(pre_str));
-				if(res[0]) {
-					let str=res[1];
-					if(this.sm.str_starts_with(str,"R_")) {
-						let d=split_string_once(str,"R_")[1];
-						return `TYPE::D_${d}`;
+		if(xi.length===1) {
+			x: if(this.is_GuideEntrySimple(x)&&typeof x.icon==="object"&&x.icon) {
+				/** @type {{iconType?:string}} */
+				let ru=x.icon;
+				if(!ru.iconType) break x;
+				/** @arg {unknown} u @returns {{[x:string]:unknown}|null} */
+				function o(u) {
+					if(typeof u==='object') {
+						/** @type {{}|null} */
+						let c=u;
+						return c;
 					}
+					return null;
+				}
+				let kk=this.get_keys_of(x);
+				if(this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"])) {
+					if(!o(x.navigationEndpoint)?.browseEndpoint) {
+						/** @type {TD_GuideEntry_EntryData<any>} */
+						console.log("[Generate.TD_GuideEntry_EntryData.wrong_endpoint]",this.get_keys_of(x));
+						break x;
+					}
+					return `TYPE::TD_GuideEntry_EntryData<"${ru.iconType}">`;
+				}
+				/** @type {TD_GuideEntry_Simple<any>} */
+				if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
+					console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(x));
 					break x;
 				}
-				console.log(res);
-				debugger;
-				break x;
+				return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 			}
-			console.log(p);
+			x: if(x.signalServiceEndpoint) {
+				let v=this.as_T_SE_Signal(x);
+				let sr=this.get_typedef_part(s,v.signalServiceEndpoint);
+				if(!sr) break x;
+				let wc=this.get_typedef_part(s,v.commandMetadata);
+				let sig_type=`T_SE_Signal<${wc},${sr}>`;
+				/** @type {E_SignalService_SendPost} */
+				if(sig_type==="T_SE_Signal<M_SendPost,G_ClientSignal>") sig_type="E_SignalService_SendPost";
+				return `TYPE::${sig_type}`;
+			}
+			x: if(x.multiPageMenuRenderer) {
+				let v=this.as$TR_MultiPageMenu(x);
+				let sr=this.get_typedef_part(s,v.multiPageMenuRenderer);
+				if(!sr) break x;
+				return `TYPE::TR_MultiPageMenu<${sr}>`;
+			}
+			if(x.webCommandMetadata) {
+				/** @type {{webCommandMetadata:{sendPost?:true;rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
+				let v=as(x);
+				let u1=v.webCommandMetadata.apiUrl;
+				let u2=v.webCommandMetadata.rootVe;
+				if(u2) return `TYPE::M_VE${u2}`;
+				if(u1) {
+					let ss=this.sm.split_str(u1,"/");
+					if(ss[0]!=="") debugger;
+					let [,a2,a3,...rest]=ss;
+					if(a2!=="youtubei") debugger;
+					if(a3!=="v1") debugger;
+					let cq=this.sm.join_string(rest,"_");
+					return `TYPE::M_${cq}`;
+				}
+				/** @type {M_SendPost} */
+				if(this.eq_keys(this.get_keys_of(v.webCommandMetadata),["sendPost"])) return "TYPE::M_SendPost";
+				return x;
+			}
+			x: if(x.accessibilityData) {
+				/** @type {{accessibilityData?:Partial<D_Label>}} */
+				let xu=x;
+				if(!xu?.accessibilityData?.label) break x;
+				return `TYPE::TD_Accessibility<${JSON.stringify(xu.accessibilityData.label)}>`;
+			}
+			x: if(x.label) {
+				/** @type {Partial<D_Label>} */
+				let xu=x;
+				if(!xu.label) break x;
+				return `TYPE::TD_Label<${JSON.stringify(xu.label)}>`;
+			}
+			x: if(x.browseEndpoint) {
+				/** @type {Partial<GE_Browse>} */
+				let xu=x;
+				if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
+				let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
+				return `TYPE::E_VE${ve_num}`;
+			}
+			x: if(x.urlEndpoint) {
+				/** @type {Partial<E_Url>} */
+				let xu=x;
+				if(!(xu.urlEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
+				let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
+				if(ve_num!==83769) break x;
+				return `TYPE::E_Url`;
+			}
+			/** @private @type {G_Text} */
+			if(x.runs&&x.runs instanceof Array) return "TYPE::G_Text";
+			if(x.simpleText) return "TYPE::G_Text";
+			if(x.thumbnails&&x.thumbnails instanceof Array) return `TYPE::${this.#R_ThumbnailStr()}`;
+			/** @private @type {T_Icon<"">} */
+			if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
+			if(x.signal) {
+				let sig_type=this.getType$Signal(x);
+				return `TYPE::${sig_type}`;
+			}
+			x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
+				let p=s.parent_map.get(x);
+				if(!p) break x;
+				if(p[1]==="owner") {return "TYPE::D_Video_Owner";}
+				if(p[1].endsWith("Renderer")) {
+					let pre_str=this.uppercase_first(p[1]);
+					let res=this.get_short_typename(as(pre_str));
+					if(res[0]) {
+						let str=res[1];
+						if(this.sm.str_starts_with(str,"R_")) {
+							let d=split_string_once(str,"R_")[1];
+							return `TYPE::D_${d}`;
+						}
+						break x;
+					}
+					console.log(res);
+					debugger;
+					break x;
+				}
+				console.log(p);
+				debugger;
+			}
+			/** @private @type {D_Accessibility} */
+			if(x.accessibilityData) return "TYPE::D_Accessibility";
+			/** @private @type {R_GuideEntryData} */
+			if(x.guideEntryData) return "TYPE::R_GuideEntryData";
+			if(x.styleType&&typeof x.styleType==="string") return `TYPE::T_StyleType<"${x.styleType}">`;
+			if(x.sizeType&&typeof x.sizeType==="string") return `TYPE::T_SizeType<"${x.sizeType}">`;
+			if(x.button_id) return `TYPE::ButtonId<"${x.button_id}">`;
+			/** @private @type {D_Label} */
+			if(x.label) return "TYPE::D_Label";
+			if(x.baseUrl&&"baseUrl" in x&&typeof x.baseUrl==="string") {
+				let gen_url=x.baseUrl;
+				if(gen_url.startsWith("https://")) {
+					let pt=split_string_once(gen_url,"?");
+					if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
+					return `TYPE::T_BaseUrl<\`${pt[0]}?\${string}\`>`;
+				}
+				return `TYPE::T_BaseUrl<${x.baseUrl}>`;
+			}
+			if(x.hack&&x.hack===true) return "TYPE::B_Hack";
+		} else {
 			debugger;
 		}
-		/** @private @type {D_Accessibility} */
-		if(x.accessibilityData) return "TYPE::D_Accessibility";
-		/** @private @type {R_GuideEntryData} */
-		if(x.guideEntryData) return "TYPE::R_GuideEntryData";
-		if(x.styleType&&typeof x.styleType==="string") return `TYPE::T_StyleType<"${x.styleType}">`;
-		if(x.sizeType&&typeof x.sizeType==="string") return `TYPE::T_SizeType<"${x.sizeType}">`;
-		if(x.button_id) return `TYPE::ButtonId<"${x.button_id}">`;
-		/** @private @type {D_Label} */
-		if(x.label) return "TYPE::D_Label";
-		if(x.baseUrl&&"baseUrl" in x&&typeof x.baseUrl==="string") {
-			let gen_url=x.baseUrl;
-			if(gen_url.startsWith("https://")) {
-				let pt=split_string_once(gen_url,"?");
-				if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
-				return `TYPE::T_BaseUrl<\`${pt[0]}?\${string}\`>`;
-			}
-			return `TYPE::T_BaseUrl<${x.baseUrl}>`;
-		}
-		if(x.hack&&x.hack===true) return "TYPE::B_Hack";
 		if(1 in x) return x;
 		/** @private @type {RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC_ResponseContext";
@@ -664,7 +668,7 @@ class CodegenService extends ServiceWithAccessors {
 		}
 		if(this.eq_keys(keys,["1","2","3"])) return x;
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
-		{debugger;}
+		debugger;
 		return null;
 	}
 	/** @private @arg {JsonReplacerState} s @arg {string} k1 @arg {unknown} o */
