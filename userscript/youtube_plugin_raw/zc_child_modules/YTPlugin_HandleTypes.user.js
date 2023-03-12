@@ -2759,7 +2759,9 @@ class HandleTypes extends BaseService {
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
 		const {1: v1,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.VW_BinaryTimestamp(v1);
-		this.PX_ad_data_info(this.T_VW(v3));
+		let x1x=this.ms_ud(v3);
+		let x2=this.m_nu_t(x1x,this.T_VW);
+		this.m_nu_t(x2,this.PX_ad_data_info);
 		f4;
 	}
 	/** @private @arg {P_ve_6827_params} x */

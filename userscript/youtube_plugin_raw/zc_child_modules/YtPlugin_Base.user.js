@@ -2611,6 +2611,49 @@ class BaseService extends ServiceWithMembers {
 	mt(x,y) {return this.m(y.call(this,x.v));}
 	/** @arg {(this:this,x:T)=>U} y @template {{}} T @arg {Some<T|null|undefined>} x @template U @returns {Some<U|null>} */
 	m_t(x,y) {return this.m(this.t_base(x.v,y));}
+	/** @template {{}|undefined} T @arg {Some<T>} x @returns {T extends infer V?V extends undefined?None:Some<V>:never} */
+	m_ud(x) {
+		/** @arg {Some<T>|None} x @returns {asserts x is T extends infer V?V extends undefined?None:Some<V>:never} */
+		function assume_ret(x) {x;}
+		/** @type {Some<T>|None} */
+		let mr;
+		if(x.v===void 0) {
+			mr={type: "n"};
+		} else mr={type: "s",v: x.v};
+		assume_ret(mr);
+		return mr;
+	}
+	/** @template {{}|undefined} T @arg {T} x */
+	ms_ud(x) {return this.m_ud(this.m(x));}
+	/** @template {{}|null} T @arg {Some<T>} x @returns {T extends infer V?V extends null?None:Some<V>:never} */
+	m_nu(x) {
+		/** @arg {Some<T>|None} x @returns {asserts x is T extends infer V?V extends null?None:Some<V>:never} */
+		function assume_ret(x) {x;}
+		/** @type {Some<T>|None} */
+		let mr;
+		if(x.v===null) {
+			mr={type: "n"};
+		} else mr={type: "s",v: x.v};
+		assume_ret(mr);
+		return mr;
+	}
+	/** @arg {(this:this,x:Extract<A,Some<any>>["v"])=>U} y @template {{}} T @template {None|Some<T>} A @arg {A} x @template {{}|undefined|void} U @returns {A extends None?None:U extends void|undefined?None:Some<U>} */
+	m_nu_t(x,y) {
+		/** @arg {Some<U>|None} x @returns {asserts x is A extends None?None:U extends void|undefined?None:Some<U>} */
+		function assume_ret(x) {x;}
+		/** @type {Some<U>|None} */
+		let mr;
+		if(x.type==="n") {
+			mr={type: "n"};
+		} else {
+			let r=y.call(this,x.v);
+			if(r===void 0) {
+				mr={type: "n"};
+			} else mr={type: "s",v: r};
+		}
+		assume_ret(mr);
+		return mr;
+	}
 	/** @arg {(this:this,x:T)=>U} y @template {{}} T @template {Some<T[]>} Opt @arg {Opt} x @template U */
 	mz(x,y) {return this.mt(x,x => this.z(x,y));}
 	/** @arg {(this:this,x:T)=>U} f @template T @arg {Some<T>} m @template U */

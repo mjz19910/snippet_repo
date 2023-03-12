@@ -1488,7 +1488,7 @@ type D_CinematicContainer={
 	presentationStyle?: "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED";
 	config: D_CinematicConfig;
 };
-type D_ClientForecastingAd={impressionUrls: T_BaseUrl<`https://www.youtube.com/api/stats/ads?${D_ApiStatsAdsStr}`>[];};
+type D_ClientForecastingAd={impressionUrls?: T_BaseUrl<`https://www.youtube.com/api/stats/ads?${D_ApiStatsAdsStr}`>[];};
 type D_ClientMessages={
 	reconnectMessage: G_Text;
 	unableToReconnectMessage: G_Text;

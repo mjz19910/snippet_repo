@@ -4819,7 +4819,7 @@ class ForService_XMethods extends BaseService {
 		let {...pp}=this.parse_url_search_params(uo.search);
 		this.DU_UrlParse({host: uo.host,pathname: uo.pathname,search: pp});
 		(x => {
-			if(x.host!=="www.youtube.com") debugger;
+			if(x.host!=="www.youtube.com") return;
 			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
 			let pa1=this.split_str(x.search,"?");
 			let pa=this.split_str(pa1[1],"&"); pa;
@@ -4994,7 +4994,7 @@ class ForService_XMethods extends BaseService {
 	D_ClientForecastingAd(x) {
 		const cf="D_ClientForecastingAd";
 		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
-		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
+		this.tz(impressionUrls,x => this.T_BaseUrl(x,x => {
 			this.ps.parse_url(`${cf}.impressionUrl`,x);
 		}));
 	}
