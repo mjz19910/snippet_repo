@@ -2883,7 +2883,7 @@ class HandleTypes extends BaseService {
 	P_nri_f2(x) {
 		const cf="P_nri_f2";
 		const {1: v1,14: v14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		console.log(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.P_nri_f14(this.T_VW(v14));
 	}
 	/** @private @arg {P_nri_f14} x */
@@ -2891,14 +2891,14 @@ class HandleTypes extends BaseService {
 		const cf="P_nri_f14";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_nri_f1(this.T_VW(v1));
-		console.log(`${cf}.f2`,this.TV_Str(v2));
+		this.save_primitive(`${cf}.f2`,this.TV_Str(v2));
 	}
 	/** @private @arg {P_nri_f1} x */
 	P_nri_f1(x) {
 		const cf="P_nri_f1";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		console.log(`${cf}.f1`,this.T_D32(v1));
-		console.log(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @template {string} T @arg {TW_Str2<T>} x */
 	TW_Str2(x) {
