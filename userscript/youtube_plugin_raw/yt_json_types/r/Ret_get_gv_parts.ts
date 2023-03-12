@@ -320,7 +320,7 @@ type G_GV_11="6"|"7"|"d"|"e"|"k"|"l"|"r"|"s"|"y"|"z";
 type G_GV_1=
 	|`6${Exclude<G_GV_11,"7"|"e"|"k"|"s">|" "}`
 	|`7${Exclude<G_GV_11,"7"|"e">|" "}`
-	|`d${Exclude<G_GV_11,"7"|"e"|"k"|"l">|" "}`
+	|`d${Exclude<G_GV_11,"7"|"e"|"k">|" "}`
 	|`e${Exclude<G_GV_11,"d"|"r">|" "}`
 	|`k${Extract<G_GV_11,"6"|"d">|" "}`
 	|`l${Exclude<G_GV_11,"z">|" "}`

@@ -4895,7 +4895,7 @@ class ForService_XMethods extends BaseService {
 			this.ht.parse_url_alt("GU_Url",up.pathname);
 			return;
 		}
-		this.GU_Url_Obj(x);
+		this.GU_UrlObj(x);
 		const hn_yt_studio="https://studio.youtube.com";
 		const hn_yt_music="https://music.youtube.com";
 		const hn_yt_kids="https://www.youtubekids.com";
@@ -4912,7 +4912,7 @@ class ForService_XMethods extends BaseService {
 		x;
 	}
 	/** @private @arg {Extract<GU_VE83769_Url,`https://${string}`>} x */
-	GU_Url_Obj(x) {
+	GU_UrlObj(x) {
 		let up=this._convert_url_to_obj(x);
 		/** @template {string} T @arg {{host:T}} u */
 		function get_host(u) {return u.host;}
@@ -4929,7 +4929,7 @@ class ForService_XMethods extends BaseService {
 			case "www.youtube.com": return this.sm.GU_FullYoutubeUrl(up.href);
 			case "www.youtubekids.com": return this.sm.D_YoutubeKidsUrl(up.href);
 			case "youtube.com": return;
-			default: get_host(up)===""; debugger; break;
+			default: get_host(up)===""; console.log("new GU_UrlObj.host",get_host(up)); break;
 		}
 	}
 	/** @public @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */

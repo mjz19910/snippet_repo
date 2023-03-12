@@ -758,7 +758,7 @@ class HandleTypes extends BaseService {
 			} break;
 			case "66": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6r": case "6 ": case "6y": case "6z":
 			case "76": case "7 ": case "7d": case "7 ": case "7k": case "7l": case "7r": case "7s": case "7y": case "7z":
-			case "d6": case "d ": case "dd": case "d ": case "d ": case "d ": case "dr": case "ds": case "dy": case "dz":
+			case "d6": case "d ": case "dd": case "d ": case "d ": case "dl": case "dr": case "ds": case "dy": case "dz":
 			case "e6": case "e7": case "e ": case "ee": case "ek": case "el": case "e ": case "es": case "ey": case "ez":
 			case "k6": case "k ": case "kd": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ":
 			case "l6": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "l ":
@@ -2858,9 +2858,30 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
 		const cf="P_notification_record_interactions";
-		const {2: v2,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.PK_f1("nri",this.T_VW(v2));
-		f5;
+		const {2: v2,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.P_nri_f2(this.T_VW(v2));
+		console.log(`${cf}.f5`,this.T_D32(v5));
+	}
+	/** @private @arg {P_nri_f2} x */
+	P_nri_f2(x) {
+		const cf="P_nri_f2";
+		const {1: v1,14: v14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		console.log(`${cf}.f1`,this.T_D32(v1));
+		this.P_nri_f14(this.T_VW(v14));
+	}
+	/** @private @arg {P_nri_f14} x */
+	P_nri_f14(x) {
+		const cf="P_nri_f14";
+		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.P_nri_f1(this.T_VW(v1));
+		console.log(`${cf}.f2`,this.TV_Str(v2));
+	}
+	/** @private @arg {P_nri_f1} x */
+	P_nri_f1(x) {
+		const cf="P_nri_f1";
+		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		console.log(`${cf}.f1`,this.T_D32(v1));
+		console.log(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @template {string} T @arg {TW_Str2<T>} x */
 	TW_Str2(x) {

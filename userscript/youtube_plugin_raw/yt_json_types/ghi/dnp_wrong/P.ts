@@ -437,17 +437,21 @@ type P_ypc_get_offers_params={
 	5: T_VW<P_ypc_get_offers_params_f5>;
 	9?: T_D32<2>;
 };
+type P_nri_f1={
+	1: T_D32<number>;
+	2: T_D32<6>;
+};
+type P_nri_f14={
+	1: T_VW<P_nri_f1>;
+	2: TV_Str<string>;
+};
+
+type P_nri_f2={
+	1: T_D32<2>;
+	14: T_VW<P_nri_f14>;
+};
 type P_notification_record_interactions={
-	2: T_VW<{
-		1: T_D32<2>;
-		14: T_VW<{
-			1: T_VW<{
-				1: T_D32<number>;
-				2: T_D32<6>;
-			}>;
-			2: TV_Str<string>;
-		}>;
-	}>;
+	2: T_VW<P_nri_f2>;
 	5: T_D32<number>;
 };
 type P_get_report_form_params={
