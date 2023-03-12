@@ -1,15 +1,15 @@
 type D_InstreamVideoAd={
 	skipOffsetMilliseconds: number;
 	pings: D_Pings;
-	clickthroughEndpoint: {};
-	csiParameters: {}[];
+	clickthroughEndpoint: E_Url;
+	csiParameters: D_CsiParameterItem[];
 	playerVars: string;
-	playerOverlay: {};
+	playerOverlay: R_InstreamAdPlayerOverlay;
 	elementId: string;
 	trackingParams: string;
 	legacyInfoCardVastExtension: string;
-	sodarExtensionData: {};
+	sodarExtensionData: D_SodarExtensionData;
 	externalVideoId: string;
-	adLayoutLoggingData: {};
+	adLayoutLoggingData: D_SerializedAdServingDataEntry;
 	layoutId: string;
 };

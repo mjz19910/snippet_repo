@@ -1,0 +1,1 @@
+type R_InstreamAdPlayerOverlay={instreamAdPlayerOverlayRenderer: D_InstreamAdPlayerOverlay;};
