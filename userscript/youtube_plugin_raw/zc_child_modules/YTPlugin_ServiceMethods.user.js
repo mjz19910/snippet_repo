@@ -328,7 +328,8 @@ class ServiceMethods extends ServiceData {
 		this.GU_VE3611_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		this.rootVe(rootVe,3611);
+		this.rootVe(rootVe);
+		this.cq(rootVe,3611);
 		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_VE3832} x */
@@ -340,7 +341,8 @@ class ServiceMethods extends ServiceData {
 			if(this.str_starts_with(url,"/watch")) break x;
 			debugger;
 		}
-		this.rootVe(rootVe,3832);
+		this.rootVe(rootVe);
+		this.cq(rootVe,3832);
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
 	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
@@ -351,7 +353,8 @@ class ServiceMethods extends ServiceData {
 			if(url==="/") break x;
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		this.rootVe(rootVe,3854);
+		this.rootVe(rootVe);
+		this.cq(rootVe,3854);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -361,7 +364,8 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		this.rootVe(rootVe,4724);
+		this.rootVe(rootVe);
+		this.cq(rootVe,4724);
 		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_VE5754} x @returns {`VE${rootVe}`} */
@@ -370,7 +374,8 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE5754_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
-		this.rootVe(rootVe,5754);
+		this.rootVe(rootVe);
+		this.cq(rootVe,5754);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -381,7 +386,8 @@ class ServiceMethods extends ServiceData {
 		this.t(url,this.D_VE6827_Url);
 		this.t(sendPost,x => this.cq(x,true));
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		this.rootVe(rootVe,6827);
+		this.rootVe(rootVe);
+		this.cq(rootVe,6827);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		if("sendPost" in y) {
 			const {sendPost,...y1}=y; this.g(y1);
@@ -396,7 +402,8 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(url!=="/premium") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		this.rootVe(rootVe,11487);
+		this.rootVe(rootVe);
+		this.cq(rootVe,11487);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -421,7 +428,8 @@ class ServiceMethods extends ServiceData {
 			case "/account":
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		this.rootVe(rootVe,23462);
+		this.rootVe(rootVe);
+		this.cq(rootVe,23462);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -431,7 +439,8 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE42352_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		this.rootVe(rootVe,42352);
+		this.rootVe(rootVe);
+		this.cq(rootVe,42352);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -441,7 +450,8 @@ class ServiceMethods extends ServiceData {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(url!=="/feed/subscriptions") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		this.rootVe(rootVe,96368);
+		this.rootVe(rootVe);
+		this.cq(rootVe,96368);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
@@ -1694,7 +1704,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_array(path,x[1]);
+		this.save_primitive(path,x[1]);
 		return this.save_primitive(path,`${x[2]}n`);
 	}
 	/** @public @arg {string} x @returns {x is D_TargetIdUuid} */
@@ -2252,11 +2262,6 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
 	/** @public @template {{targetId:string}} T @arg {T} x @returns {x is {targetId:D_TargetIdUuid}} */
 	is_yt_uuid_targetId(x) {return this.is_yt_uuid(x.targetId);}
-	/** @public @template {D_GM_VeNum} T @arg {T} x @arg {NoInfer<T>} expected_x */
-	rootVe(x,expected_x) {
-		this.save_ve_element(x);
-		this.cq(x,expected_x);
-	}
 	/** @public @arg {CF_TD_Params} cf @arg {CF_P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
 	/** @public @arg {CF_T_Icon_Any} cf @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
@@ -2915,14 +2920,6 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
-	/** @private @arg {D_YtConfig} x */
-	D_YtConfig(x) {
-		const cf="D_YtConfig";
-		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(visitorData);
-		if(sessionIndex!==0) debugger;
-		this.save_ve_element(rootVisualElementType);
-	}
 	/** @private @arg {RC_WR_ContextExtension} x */
 	RC_WR_ContextExtension(x) {
 		const cf="RC_WR_ContextExtension";
@@ -2930,6 +2927,19 @@ class ServiceMethods extends ServiceData {
 		if(hasDecorated!==void 0) this._primitive_of(hasDecorated,"boolean");
 		this.t(ytConfigData,x => this.D_YtConfig(x));
 		this.t(webPrefetchData,this.D_WebPrefetch);
+	}
+	/** @private @arg {D_YtConfig} x */
+	D_YtConfig(x) {
+		const cf="D_YtConfig";
+		const {visitorData,sessionIndex,rootVisualElementType: rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(visitorData);
+		if(sessionIndex!==0) debugger;
+		this.rootVe(rootVe);
+	}
+	known_ve_arr=[4724,83769,3611,3832,3854,5754,6827,11487,12924,23462,37414,42352,96368];
+	/** @public @arg {D_GM_VeNum} x */
+	rootVe(x) {
+		if(!this.known_ve_arr.includes(x)) debugger;
 	}
 	/** @private @arg {RCA_RelevantStateTags} x */
 	RCA_RelevantStateTags(x) {
@@ -3451,7 +3461,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Accessibility(enabledAccessibilityData);
 		this.D_Accessibility(disabledAccessibilityData);
 		this.trackingParams(trackingParams);
-		this.save_boolean_one("autoplay.switch.enabled",enabled);
+		this.a_primitive_bool(enabled);
 	}
 	/** @private @arg {D_DesktopTopbar} x */
 	D_DesktopTopbar(x) {
@@ -3671,7 +3681,7 @@ class ServiceMethods extends ServiceData {
 			let n=(BigInt(sid[0]));
 			n/=1000n;
 			this.save_primitive("AdSlot.slotId[0]",Number(n));
-			this.save_array("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
+			this.save_primitive("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		}
 		switch(slotPhysicalPosition) {
 			case 0:
@@ -4496,7 +4506,7 @@ class ServiceMethods extends ServiceData {
 			const {content,trackingParams,rowIndex,colIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.G_RichItemContent(content);
 			this.trackingParams(trackingParams);
-			this.save_array("Item.pos",[rowIndex,colIndex]);
+			this.save_primitive("Item.pos",[rowIndex,colIndex]);
 			return;
 		}
 		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

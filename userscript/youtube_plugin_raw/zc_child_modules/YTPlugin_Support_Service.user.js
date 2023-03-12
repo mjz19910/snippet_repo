@@ -1105,8 +1105,8 @@ class Support_RS_Player extends BaseService {
 	D_LearningResource(x) {
 		const cf="D_LearningResource";
 		const {learningResourceType,educationalLevel,educationalLevelCountry,...y}=this.s(cf,x); this.g(y);
-		this.save_array("D_LearningResource.learningResourceType",learningResourceType);
-		educationalLevel&&this.save_array("D_LearningResource.educationalLevel",educationalLevel);
+		this.save_primitive("D_LearningResource.learningResourceType",learningResourceType);
+		educationalLevel&&this.save_primitive("D_LearningResource.educationalLevel",educationalLevel);
 		educationalLevelCountry&&this.save_primitive("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
 	}
 }
@@ -1125,7 +1125,8 @@ class Support_RS_WatchPage extends BaseService {
 	RS_VE3832_Page_Watch(x) {
 		const cf="R_WatchPage_VE3832"; this.sm.k(cf,x);
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,csn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.rootVe(rootVe,3832);
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,3832);
 		let wp_params=this.ht.D_WatchPageUrl(cf,url);
 		wp_params&&this.save_primitive(`VE3832.${cf}.wp_params`,wp_params);
 		this.sm.E_Watch(endpoint);
@@ -1865,7 +1866,8 @@ class Support_EventInput extends BaseService {
 				expirationTime: h_et,
 			};
 			const {rootVe,csn,...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
-			this.sm.rootVe(rootVe,3611);
+			this.sm.rootVe(rootVe);
+			this.cq(rootVe,3611);
 			this.sm.t(csn,this.sm.D_VeCsn);
 			return;
 		}
@@ -1962,13 +1964,15 @@ class Support_EventInput extends BaseService {
 		this.sm.E_VE23462(endpoint);
 		this.RS_Settings(response);
 		this.sm.a_primitive_str(url);
-		this.sm.rootVe(rootVe,23462);
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,23462);
 	}
 	/** @private @arg {RS_VE37414_Shorts} x */
 	RS_VE37414_Shorts(x) {
 		const cf="Shorts_VE37414";
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.rootVe(rootVe,37414);
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,37414);
 		if(page!=="shorts") debugger;
 		this.x.get("x_RS_Player").RS_Player(playerResponse);
 		this.x.get("x_VE37414").E_VE37414_ReelWatch(endpoint);
@@ -2145,7 +2149,8 @@ class Support_VE37414 extends BaseService {
 			this.sm.videoId(p4);
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
-		this.sm.rootVe(rootVe,37414);
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,37414);
 		return `VE${rootVe}`;
 	}
 }
@@ -2283,7 +2288,8 @@ class Support_Renderer extends BaseService {
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
 		this.sm.cq(url,"/select_site");
 		this.sm.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
-		this.sm.rootVe(rootVe,12924);
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,12924);
 	}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.sm.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_cart"));}
@@ -4809,7 +4815,8 @@ class ForService_XMethods extends BaseService {
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		this.sm.rootVe(rootVe,83769);
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,83769);
 	}
 	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
 	DU_BaseUrl(x) {

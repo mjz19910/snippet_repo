@@ -202,7 +202,7 @@ class ParserService extends BaseService {
 	}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_array(path,x[1]);
+		this.save_primitive(path,x[1]);
 		this.save_primitive(path,`${x[2]}n`);
 	}
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */

@@ -318,7 +318,7 @@ class HandleTypes extends BaseService {
 		if(!buffer) {debugger; return;}
 		let c_pos=0;
 		for(;c_pos<6;c_pos++) this.save_primitive(`${cf}.${c_pos}`,buffer[c_pos]);
-		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_array(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
+		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_primitive(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
 	cg_mismatch_set=new Set();
@@ -2060,7 +2060,7 @@ class HandleTypes extends BaseService {
 					let [,i8]=v8; this.save_primitive(`${cf}.f8`,i8);
 				} break;
 				case "v_data64":/*unk*/{
-					let [,,i8]=v8; this.save_bigint(`${cf}.f8`,i8);
+					let [,,i8]=v8; this.save_primitive(`${cf}.f8`,i8);
 				} break;
 			}
 		});
@@ -2105,7 +2105,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		switch(r_str[1]) {
-			default: this.save_array(`${cf}.str.default`,r_str); break;
+			default: this.save_primitive(`${cf}.str.default`,r_str); break;
 			case "cards":
 			case "endscreen":
 			case "external":
@@ -2514,7 +2514,7 @@ class HandleTypes extends BaseService {
 		t.sm.videoId(t.TV_Str(v1));
 		t.save_primitive(`${cf}.f3`,t.T_D32(v3));
 		t.save_primitive(`${cf}.f4`,t.T_D32(v4));
-		t.t(t.T_VW_Bigint(f6),x => t.save_bigint(`${cf}.f6`,x));
+		t.t(t.T_VW_Bigint(f6),x => t.save_primitive(`${cf}.f6`,x));
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
 	P_continuation_request_reel_watch_sequence_token(x) {
@@ -2675,7 +2675,7 @@ class HandleTypes extends BaseService {
 		const cf="PX_watch_next_token_4";
 		const {5: a,12: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f5`,this.T_FD32(a));
-		this.save_bigint(`${cf}.f12`,this.T_FD64(b));
+		this.save_primitive(`${cf}.f12`,this.T_FD64(b));
 	}
 	/** @private @arg {PX_watch_next_token_5} x */
 	PX_watch_next_token_5(x) {
@@ -2877,7 +2877,7 @@ class HandleTypes extends BaseService {
 		const cf="P_notification_record_interactions";
 		const {2: v2,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_nri_f2(this.T_VW(v2));
-		console.log(`${cf}.f5`,this.T_D32(v5));
+		this.save_primitive(`${cf}.f5`,this.T_D32(v5));
 	}
 	/** @private @arg {P_nri_f2} x */
 	P_nri_f2(x) {

@@ -2372,20 +2372,10 @@ class BaseService extends ServiceWithMembers {
 	make_arr_t(k,x) {const b="item",c="arr"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	//#endregion
 	//#region save
-	/** @protected @arg {string} k @arg {bigint} x */
-	save_bigint(k,x) {k; x;}
-	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean_one(k,x) {k; x;}
 	/** @public @arg {CF_M_k} k @arg {{}} x */
 	k(k,x) {this.save_primitive(k,x);}
-	/** @protected @arg {string} k @arg {number[]|string[]} x */
-	save_array(k,x) {k; x;}
-	/** @protected @arg {string} k @arg {Uint8Array} x */
-	save_binary_array(k,x) {k; x;}
-	/** @protected @arg {string} k @arg {object|string|number} x */
+	/** @protected @arg {string} k @arg {object|string|number|bigint|number[]|string[]|Uint8Array} x */
 	save_primitive(k,x) {k; x;}
-	/** @protected @arg {D_GM_VeNum} x */
-	save_ve_element(x) {x;}
 	//#endregion
 	/** @arg {string} k @arg {number[]|Uint8Array} a */
 	tag_num_like(k,a) {
