@@ -10,7 +10,7 @@ namespace YT_Base_source {
 		export function Ca(a: any,b: any,c?: any) {
 			a; b; c;
 		}
-		export function A<T>(a: (x2: ia) => any): Promise<T> {
+		export function A<T>(a: (x2: ia) => any): Promise<T|undefined> {
 			return maa(new laa(new jaa(a)));
 		}
 		export function Mh(a: any): string {
@@ -204,7 +204,7 @@ namespace YT_Base_source {
 	var Cy: any;
 	var Yw: any;
 	var Zw: any;
-	var Zoa=function(): Promise<{}> {
+	var Zoa=function(): Promise<{}|undefined> {
 		var a,b,c,d;
 		return g.A(function(e) {
 			switch(e.j) {
@@ -242,7 +242,7 @@ namespace YT_Base_source {
 	};
 	var Woa: any;
 	var By: any;
-	function $oa(): Promise<{}> {
+	function $oa(): Promise<{}|undefined> {
 		if(void 0!==Fy)
 			return Fy;
 		Vx=!0;
@@ -351,15 +351,15 @@ namespace YT_Base_source {
 		a.J=!0;
 	}
 	// var maa=uaa;
-	var maa=function <U>(a: laa): Promise<U> {
-		function b(d: any) {
-			return a.next(d);
+	function maa<T>(a: laa<T>): Promise<T|undefined> {
+		function b(reason?: any) {
+			return a.next(reason);
 		}
-		function c(d: any) {
-			return a.throw(d);
+		function c(value: T|PromiseLike<T>) {
+			return a.throw(value);
 		}
-		function run_promise(d: (value: U|PromiseLike<U>) => void,e: (reason?: any) => void) {
-			function f(h: {done: boolean,value: any;}) {
+		function run_promise(d: (value: T|PromiseLike<T>|undefined) => void,e: (reason?: any) => void) {
+			function f(h: {value: undefined; done: true;}|{value: T; done: false;}) {
 				h.done? d(h.value):Promise.resolve(h.value).then(b,c).then(f,e);
 			}
 			f(a.next());
@@ -437,34 +437,29 @@ namespace YT_Base_source {
 		return ta(a);
 	}
 	// var laa=taa;
-	class laa extends taa_base {
-		next: (x?: any) => {value: any,done: false;}|{value: undefined,done: true;};
-		throw: (x: any) => {value: any,done: false;}|{value: undefined,done: true;};
-		return: (x: any) => {value: any,done: false;}|{value: undefined,done: true;};
+	class laa<T> extends taa_base {
+		#a: jaa<(b: ia) => T>;
+		constructor(a: jaa<(b: ia) => T>) {super(); this.#a=a;}
+		next(b?: any): {value: T,done: false;}|{value: undefined,done: true;} {
+			let a=this.#a;
+			ka(a.j);
+			let b2;
+			a.j.C? b2=sa(a,a.j.C.next,b,a.j.V):(a.j.V(b),b2=ta(a));
+			return b2;
+		}
+		throw(b: any): {value: T,done: false;}|{value: undefined,done: true;} {
+			let a=this.#a;
+			ka(a.j);
+			let b2;
+			a.j.C? b2=sa(a,a.j.C["throw"],b,a.j.V):(la(a.j,b),
+				b2=ta(a));
+			return b2;
+		}
+		return(b: any) {
+			return kaa(this.#a,b);
+		}
 		[Symbol.iterator]() {
 			return this;
-		};
-		constructor(a: jaa<any>) {
-			super();
-			this.next=function(b) {
-				ka(a.j);
-				let b2;
-				a.j.C? b2=sa(a,a.j.C.next,b,a.j.V):(a.j.V(b),b2=ta(a));
-				return b2;
-			};
-			this.throw=function(b) {
-				ka(a.j);
-				let b2;
-				a.j.C? b2=sa(a,a.j.C["throw"],b,a.j.V):(la(a.j,b),
-					b2=ta(a));
-				return b2;
-			};
-			this.return=function(b: any) {
-				return kaa(a,b);
-			};
-			this[Symbol.iterator]=function() {
-				return this;
-			};
 		}
 	}
 	class ia<YR={},RV={}> {
