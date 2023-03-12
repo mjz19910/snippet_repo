@@ -874,7 +874,7 @@ class ServiceMethods extends ServiceData {
 	D_MenuFlexibleItem(x) {
 		const cf="D_MenuFlexibleItem";
 		const {menuItem,topLevelButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_MenuServiceItem(menuItem);
+		if("menuServiceItemRenderer" in menuItem) this.R_MenuServiceItem(menuItem);
 		this.xm.R_Button(topLevelButton);
 	}
 	/** @public @arg {D_LoggingDirectives} x */

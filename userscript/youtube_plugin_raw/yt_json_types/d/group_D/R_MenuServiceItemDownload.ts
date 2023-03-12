@@ -1,0 +1,1 @@
+type R_MenuServiceItemDownload={menuServiceItemDownloadRenderer: D_MenuServiceItemDownload;};
