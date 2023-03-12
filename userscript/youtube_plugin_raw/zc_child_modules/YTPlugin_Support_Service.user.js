@@ -793,14 +793,20 @@ class Support_RS_Player extends BaseService {
 	D_AdPlacementConfig(x) {
 		const cf="D_AdPlacementConfig";
 		const {kind,adTimeOffset,hideCueRangeMarker,...y}=this.s(cf,x); this.g(y);
-		switch(kind) {
-			default: debugger; break;
+		this.DE_AdPlacementKind(kind);
+		this.t(adTimeOffset,this.D_AdTimeOffset);
+		this.sm.cq(hideCueRangeMarker,true);
+	}
+	/** @private @arg {DE_AdPlacementKind} x */
+	DE_AdPlacementKind(x) {
+		const cf="DE_AdPlacementKind"; let v=x;
+		switch(x) {
+			default: console.log(`${cf}.split`,v.split("AD_PLACEMENT_KIND_")); debugger; break;
+			case "AD_PLACEMENT_KIND_MILLISECONDS":
 			case "AD_PLACEMENT_KIND_END":
 			case "AD_PLACEMENT_KIND_SELF_START":
 			case "AD_PLACEMENT_KIND_START":
 		}
-		this.t(adTimeOffset,this.D_AdTimeOffset);
-		this.sm.cq(hideCueRangeMarker,true);
 	}
 	/** @private @arg {D_TriggerCriteria} x */
 	D_TriggerCriteria(x) {
