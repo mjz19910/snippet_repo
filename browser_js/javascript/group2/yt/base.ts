@@ -150,11 +150,6 @@ namespace YT_Base_source {
 		a.j.return(b);
 		return ta(a);
 	}
-	var ka=function(a: ia) {
-		if(a.J)
-			throw new TypeError("Generator is already running");
-		a.J=!0;
-	};
 	// var laa=taa;
 	class laa extends taa_base {
 		next: (x?: any) => {value: any,done: false;}|{value: undefined,done: true;};
