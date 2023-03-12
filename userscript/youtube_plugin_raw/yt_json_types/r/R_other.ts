@@ -56,7 +56,7 @@ type RSG_GetUnseenCount={
 };
 type RSG_NotificationMenu={
 	responseContext: RC_ResponseContext;
-	actions: A_NotificationMenuPopup[];
+	actions: (A_NotificationMenuPopup|A_AppendContinuationItems)[];
 	trackingParams: string;
 };
 type RSG_PdgBuyFlow={

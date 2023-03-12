@@ -297,7 +297,7 @@ class HandleTypes extends BaseService {
 		this.codegen_typedef_bin(n_cf,x,false);
 		/** @arg {number} pad @arg {string} code */
 		let ap=(pad,code) => `${"\t".repeat(pad)}${code}`;
-		console.log(`-- [binary_gen_case:${cf}] --\n${ap(1,`case "${cf}": this.${n_cf}(u); break;`)}`);
+		console.log(`-- [binary_gen_case:${cf}] --\n\n${ap(1,`case "${cf}": this.${n_cf}(u); break;`)}`);
 		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
 	/** @protected @template T @arg {[T]} x */
@@ -965,7 +965,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";
-		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.xr.A_GetSystemMenu(x);
 			return null;
@@ -975,7 +975,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_UpdateMetadata} x */
 	RS_UpdateMetadata(x) {
 		const cf="RS_UpdateMetadata";
-		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,continuation,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.CD_TimedContinuation(continuation);
 		this.z(actions,x => {
 			if("updateViewershipAction" in x) return this.AU_Viewership(x);
@@ -989,7 +989,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="RS_Search";
-		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.a_primitive_str(estimatedResults);
 		this.xm.R_TwoColumnSearchResults(contents);
 		this.sm.trackingParams(trackingParams);
@@ -1003,7 +1003,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
 		const cf="RS_ReelWatchSequence";
-		const {responseContext: {},entries,prevEntries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,entries,prevEntries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.tz(prevEntries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.sm.trackingParams(trackingParams);
@@ -1012,7 +1012,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
 		const cf="RS_GetLiveChat";
-		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,x => this.sm.trackingParams(x));
 	}
@@ -1021,7 +1021,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next";
-		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(contents,x => this.xr.G_NextContents(x));
 		this.t(currentVideoEndpoint,x => this.sm.E_Watch(x));
 		this.sm.trackingParams(trackingParams);
@@ -1038,40 +1038,40 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
-		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(selectText);
 		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
 	/** @public @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="RS_SetSetting";
-		const {responseContext: {},settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(settingItemId!=="407") debugger;
 	}
 	/** @public @arg {RS_Feedback} x */
 	RS_Feedback(x) {
 		const cf="RS_Feedback";
-		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
 	}
 	/** @public @arg {RS_AttGet} x */
 	RS_AttGet(x) {
 		const cf="RS_AttGet";
-		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.a_primitive_str(challenge);
 		this.xr.D_AttBgChallenge(bgChallenge);
 	}
 	/** @public @arg {RS_Guide} x */
 	RS_Guide(x) {
 		const cf="RS_Guide";
-		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,x => this.xr.G_GuideSectionItem(x));
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RS_WatchReelItem} x */
 	RS_WatchReelItem(x) {
 		const cf="RS_WatchReelItem";
-		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.sm.trackingParams(trackingParams);
@@ -1083,13 +1083,13 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
-		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
-		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let pu=this.xm.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
 		if("pdgBuyFlowRenderer" in pu) {this.xr.R_PdgBuyFlow(pu);}
 		pu.pdgBuyFlowRenderer;
@@ -1099,13 +1099,13 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
 		const cf="RSG_SearchSuggestions";
-		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
 		const cf="RSG_Transcript";
-		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
 		});
@@ -1114,7 +1114,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
-		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,x => {
 			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
@@ -1123,7 +1123,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RSL_Dislike} x */
 	RSL_Dislike(x) {
 		const cf="RSL_Dislike";
-		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let ac=this.tz(actions,x => {
 			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
@@ -1135,7 +1135,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RSL_RemoveLike} x */
 	RSL_RemoveLike(x) {
 		const cf="RSL_RemoveLike";
-		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,(x => {
 			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
@@ -1144,13 +1144,13 @@ class HandleTypes extends BaseService {
 	/** @public @arg {REG_DatasyncIds} x */
 	REG_DatasyncIds(x) {
 		const cf="REG_DatasyncIds";
-		const {responseContext: {},datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(datasyncIds,x => this.sm.a_primitive_str(x));
 	}
 	/** @public @arg {REG_AccountSwitcher} x */
 	REG_AccountSwitcher(x) {
 		const cf="REG_AccountSwitcher";
-		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(selectText);
 		this.z(actions,this.A_GetMultiPageMenu);
 	}
@@ -1778,7 +1778,7 @@ class HandleTypes extends BaseService {
 		let kk=this.get_keys_of(x);
 		let idx=kk.indexOf("microformat");
 		if(idx!==-1) {let nk=kk[idx+1]; console.log("after .microformat",nk);}
-		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,frameworkUpdates,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,contents,header,metadata,topbar,trackingParams,microformat,frameworkUpdates,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.R_TwoColumnBrowseResults(contents);
 		this.xr.R_C4TabbedHeader(header);
 		this.xr.R_Channel_MD(metadata);
@@ -1791,7 +1791,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RSG_SharePanel} x */
 	RSG_SharePanel(x) {
 		const cf="RSG_SharePanel";
-		const {responseContext: {},trackingParams,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,trackingParams,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 		this.z(actions,x => {
 			const cf="RSG_SharePanel_Action";
@@ -1803,7 +1803,7 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
 		const cf="RS_Subscribe";
-		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext,actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => this.xr.G_RS_Subscribe_Action(x));
 		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
 		this.sm.trackingParams(trackingParams);
@@ -3045,6 +3045,7 @@ class HandleTypes extends BaseService {
 			case "ypc_get_offline_upsell.params": this.P_ypc_get_offline_upsell_params(u); break;
 			case "video.params": this.P_video_params(u); break;
 			case "offlineability.entity_key": this.P_offlineability_entity_key(u); break;
+			case "watch_next_info_next1": this.P_watch_next_info_next1(u); break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3052,13 +3053,15 @@ class HandleTypes extends BaseService {
 			} break;
 		}
 	}
-	//#endregion
 	/** @private @arg {P_ypc_get_offline_upsell_params} x */
 	P_ypc_get_offline_upsell_params(x) {x;}
 	/** @private @arg {P_video_params} x */
 	P_video_params(x) {x;}
 	/** @private @arg {P_offlineability_entity_key} x */
 	P_offlineability_entity_key(x) {x;}
+	/** @private @arg {P_watch_next_info_next1} x */
+	P_watch_next_info_next1(x) {x;}
+	//#endregion
 	//#endregion binary
 	//#region import renderer
 	//#endregion
@@ -3265,8 +3268,12 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
 		const cf="RSG_NotificationMenu";
-		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,this.A_NotificationMenuPopup);
+		const {responseContext,actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(actions,x => {
+			if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
+			if("openPopupAction" in x) return this.A_NotificationMenuPopup(x);
+			debugger;
+		});
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {MP_NotificationMenu} x */

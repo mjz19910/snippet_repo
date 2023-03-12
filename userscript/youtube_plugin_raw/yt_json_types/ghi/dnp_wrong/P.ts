@@ -698,3 +698,11 @@ type P_offlineability_entity_key={
 	4: T_D32<246>,
 	5: T_D32<1>;
 };
+type P_watch_next_info_next1={
+	33: T_VW_J<{
+		2: TV_Str<"lungs9N_6q5KHQHi">,
+		3: T_D32<9458436>,
+		4: T_D32<1678462303842713>,
+		5: T_D32<6>
+	}>
+};
