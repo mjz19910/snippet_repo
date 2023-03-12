@@ -187,7 +187,7 @@ type PX_watch_next_token_info={
 	7?: T_D32<18>;
 	24?: T_D32<0>;
 	25?: T_D32<0>;
-	28?: T_D32<3>;
+	28?: T_D32<1|3>;
 	36?: T_VW<{
 		5: T_D64<bigint>;
 		8: T_D32<0>;
@@ -687,4 +687,14 @@ type P_ypc_get_offline_upsell_params={
 			4: T_D32<1>;
 		}>;
 	}>;
+};
+type P_video_params={
+	1: T_D32<1>;
+};
+type P_offlineability_entity_key={
+	2: T_VW_J<{
+		1: TV_Str<DU_VideoId>
+	}>,
+	4: T_D32<246>,
+	5: T_D32<1>
 };

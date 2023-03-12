@@ -302,7 +302,7 @@ class HandleTypes extends BaseService {
 		this.codegen_typedef_bin(n_cf,x,false);
 		/** @arg {number} pad @arg {string} code */
 		let ap=(pad,code) => `${"\t".repeat(pad)}${code}`;
-		console.log(`-- [binary_gen_case:${cf}] --\n${ap(1,`case "${cf}": this.${n_cf}(as_any(x)); break;`)}`);
+		console.log(`-- [binary_gen_case:${cf}] --\n${ap(1,`case "${cf}": this.${n_cf}(u); break;`)}`);
 		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
 	/** @protected @template T @arg {[T]} x */
@@ -2593,7 +2593,7 @@ class HandleTypes extends BaseService {
 		this.t(this.ms_t(f7,this.T_D32).v,x => console.log(`${cf}.f7`,x));
 		this.t(this.ms_t(f24,this.T_D32).v,x => x!==0&&console.log(`${cf}.f24`,x));
 		this.t(this.ms_t(f25,this.T_D32).v,x => x!==0&&console.log(`${cf}.f25`,x));
-		this.t(this.ms_t(f28,this.T_D32).v,x => x!==3&&console.log(`${cf}.f28`,x));
+		this.t(this.ms_t(f28,this.T_D32).v,x => x!==3&&x!==1&&console.log(`${cf}.f28`,x));
 		this.t(this.ms_t(f36,this.T_VW).v,x => {
 			/** @type {`${cf}.f36`} */
 			const cf2=`${cf}.f36`;
@@ -3048,6 +3048,8 @@ class HandleTypes extends BaseService {
 			//#region done
 			//#endregion
 			case "ypc_get_offline_upsell.params": this.P_ypc_get_offline_upsell_params(u); break;
+			case "video.params": this.P_video_params(u); break;
+			case "offlineability.entity_key": this.P_offlineability_entity_key(u); break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3058,6 +3060,10 @@ class HandleTypes extends BaseService {
 	//#endregion
 	/** @private @arg {P_ypc_get_offline_upsell_params} x */
 	P_ypc_get_offline_upsell_params(x) {x;}
+	/** @private @arg {P_video_params} x */
+	P_video_params(x) {x;}
+	/** @private @arg {P_offlineability_entity_key} x */
+	P_offlineability_entity_key(x) {x;}
 	//#endregion binary
 	//#region import renderer
 	//#endregion

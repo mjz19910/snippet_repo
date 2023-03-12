@@ -3266,8 +3266,21 @@ class Support_Renderer extends BaseService {
 	G_MenuNavigationItem_NavEP(x) {
 		if("userFeedbackEndpoint" in x) return this.sm.E_UserFeedback(x);
 		if("openPopupAction" in x) return this.GA_MenuNavigationPopup(x);
+		if("adFeedbackEndpoint" in x) return this.E_AdFeedback(x);
+		if("urlEndpoint" in x) return this.xm.E_Url(x);
 		debugger;
 	}
+	/** @public @arg {E_AdFeedback} x */
+	E_AdFeedback(x) {
+		const cf="E_AdFeedback";
+		let [d,{loggingUrls,...y}]=this.sm.TE_Endpoint_2(cf,"adFeedbackEndpoint",x); this.g(y);
+		this.DE_AdFeedback(d);
+		this.z(loggingUrls,x => this.xm.T_BaseUrl(x,x => {
+			this.ps.parse_url(`${cf}.loggingUrls[]`,x);
+		}));
+	}
+	/** @public @arg {DE_AdFeedback} x */
+	DE_AdFeedback(x) {x;}
 	//#endregion
 	//#region GA_
 	/** @private @arg {GA_MenuNavigationPopup} x */
