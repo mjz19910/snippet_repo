@@ -2886,6 +2886,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
+		if(!x) {debugger; return;}
 		const cf="RC_ResponseContext";
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);

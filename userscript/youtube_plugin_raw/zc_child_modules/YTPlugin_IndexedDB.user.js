@@ -385,6 +385,7 @@ class IndexedDBService extends BaseService {
 		try {
 			await this.open_db_promise;
 		} catch(e) {
+			console.log("putImpl rejection",e);
 			resolver.reject(e);
 			throw e;
 		}

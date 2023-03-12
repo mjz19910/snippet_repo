@@ -570,6 +570,7 @@ class Support_RS_Player extends BaseService {
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
 		const cf="D_PlayabilityStatus";
+		if(!x) {debugger; return;}
 		switch(x.status) {
 			default: debugger; break;
 			case "LIVE_STREAM_OFFLINE": {

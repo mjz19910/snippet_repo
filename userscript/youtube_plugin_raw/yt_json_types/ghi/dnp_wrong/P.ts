@@ -656,7 +656,7 @@ type P_f3_PD_continuation_params={
 type P_transcript_params={
 	1: TV_Str<"asr">;
 	2: TV_Str<"en">;
-	3: T_VW<{}>;
+	3: T_VW<"Default"|"">;
 };
 type PE_transcript_params={
 	1: TV_Str<DU_VideoId>;
@@ -693,8 +693,8 @@ type P_video_params={
 };
 type P_offlineability_entity_key={
 	2: T_VW_J<{
-		1: TV_Str<DU_VideoId>
+		1: TV_Str<DU_VideoId>;
 	}>,
 	4: T_D32<246>,
-	5: T_D32<1>
+	5: T_D32<1>;
 };

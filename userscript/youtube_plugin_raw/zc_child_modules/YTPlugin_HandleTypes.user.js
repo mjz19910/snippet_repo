@@ -349,7 +349,7 @@ class HandleTypes extends BaseService {
 	T_VW(x) {return this.T_RawChild(x)[2];}
 	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
 	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
-	/** @private @template {string} T @arg {TV_Str<T>} x */
+	/** @private @template {string} T @arg {["v_param_arr", [[any,any,any,["string",T]]]]} x */
 	TV_Str(x) {
 		if(!x) debugger;
 		return this.T_RawChild(x)[3][1];
@@ -2966,7 +2966,7 @@ class HandleTypes extends BaseService {
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.TV_Str(v1));
 		this.save_primitive(`${cf}.f2`,this.TV_Str(v2));
-		this.g(this.T_VW(v3));
+		this.save_primitive(`${cf}.f3`,this.TA_Str(v3));
 	}
 	//#endregion
 	//#region binary_result()
