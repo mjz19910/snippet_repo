@@ -1282,7 +1282,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
 	/** @arg {DU_UrlParams_PageadParallelAdInteraction} x */
-	DU_UrlParams(x) {
+	DU_UrlParams_PageadParallelAdInteraction(x) {
 		const cf="DU_UrlParams";
 		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
 		this.save_primitive(`${cf}.label`,x.label);
@@ -3106,7 +3106,7 @@ class ServiceMethods extends ServiceData {
 	D_CinematicContainer(x) {
 		const cf="D_CinematicContainer";
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(backgroundImageConfig,this.D_ThumbnailsList);
+		this.t(backgroundImageConfig,this.D_TrackedThumbnail);
 		this.D_GradientColorConfig(gradientColorConfig);
 		this.t(presentationStyle,x => this.save_enum(cf,"CINEMATIC_CONTAINER_PRESENTATION_STYLE",x));
 		this.D_CinematicConfig(config);
@@ -3309,9 +3309,9 @@ class ServiceMethods extends ServiceData {
 		}
 		return tag;
 	}
-	/** @private @arg {D_TrackedThumbnail} x */
-	D_ThumbnailsList(x) {
-		const cf="D_ThumbnailsList";
+	/** @public @arg {D_TrackedThumbnail} x */
+	D_TrackedThumbnail(x) {
+		const cf="D_TrackedThumbnail"; this.codegen_typedef(cf,{x});
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(thumbnail);
 		this.t_cf(cf,trackingParams,this.trackingParams);

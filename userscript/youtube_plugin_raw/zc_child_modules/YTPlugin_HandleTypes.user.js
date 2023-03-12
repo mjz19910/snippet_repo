@@ -3484,7 +3484,9 @@ class HandleTypes extends BaseService {
 		switch(pp[0]) {
 			default: debugger; break;
 			case "get_midroll_info": {
-				let {...px}=this.parse_url_search_params(pp[1]);
+				/** @type {{ei: string;m_pos:`${number}`;token:string;index:`${number}`}} */
+				let po=as_any(this.parse_url_search_params(pp[1]));
+				let {ei,m_pos,token,index,...px}=po;
 				console.log("get_midroll_info",px);
 			} break;
 		}
@@ -3513,7 +3515,29 @@ class HandleTypes extends BaseService {
 		console.log(`${cf}.bgp`,bgp);
 	}
 	/** @private @arg {D_InstreamAdPlayerOverlay} x */
-	D_InstreamAdPlayerOverlay(x) {x;}
+	D_InstreamAdPlayerOverlay(x) {
+		const cf="D_InstreamAdPlayerOverlay";
+		const {skipOrPreviewRenderer,...y}=this.s(cf,x); y;
+		this.R_SkipAd(skipOrPreviewRenderer);
+	}
+	/** @private @arg {R_SkipAd} x */
+	R_SkipAd(x) {this.H_("skipAdRenderer",x,this.D_SkipAd);}
+	/** @private @arg {D_SkipAd} x */
+	D_SkipAd(x) {
+		const cf="D_SkipAd";
+		const {preskipRenderer,...y}=this.s(cf,x); y;
+		this.R_AdPreview(preskipRenderer);
+	}
+	/** @private @arg {R_AdPreview} x */
+	R_AdPreview(x) {this.H_("adPreviewRenderer",x,this.D_AdPreview);}
+	/** @private @arg {D_AdPreview} x */
+	D_AdPreview(x) {
+		const cf="D_AdPreview";
+		const {thumbnail,...y}=this.s(cf,x); y;
+		this.sm.D_TrackedThumbnail(thumbnail);
+	}
+	/** @public @arg {DU_UrlParams_PageAd_AClk} x */
+	DU_UrlParams_PageAd_AClk(x) {x;}
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});

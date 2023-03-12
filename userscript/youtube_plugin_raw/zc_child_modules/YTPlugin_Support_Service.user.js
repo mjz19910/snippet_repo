@@ -4830,8 +4830,15 @@ class ForService_XMethods extends BaseService {
 	DU_UrlParse(x) {
 		const cf="DU_UrlParse";
 		this.save_primitive(`${cf}.host`,x.host);
-		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_primitive(`${cf}.pathname`,x.pathname);
-		this.sm.DU_UrlParams(x.search);
+		this.save_primitive(`${cf}.pathname`,x.pathname);
+		switch(x.pathname) {
+			case "/pagead/aclk": {
+				this.ht.DU_UrlParams_PageAd_AClk(x.search);
+			} break;
+			case "/pagead/paralleladinteraction": {
+				this.sm.DU_UrlParams_PageadParallelAdInteraction(x.search);
+			} break;
+		}
 	}
 	/** @private @arg {DE_Url} x */
 	DE_Url(x) {
