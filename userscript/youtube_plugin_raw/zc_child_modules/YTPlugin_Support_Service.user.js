@@ -207,8 +207,8 @@ class StoreData extends BaseService {
 				let stack=[err];
 				while(stack.length>0) {
 					let cur_err=stack.pop();
+					if(cur_err!==err) console.log("caused by",cur_err);
 					if(cur_err instanceof AggregateError) {
-						if(cur_err!==err) console.log("caused by",cur_err);
 						for(let err_iter of cur_err.errors) stack.push(err_iter);
 					}
 				}
