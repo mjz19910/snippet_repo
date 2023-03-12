@@ -2954,18 +2954,31 @@ class HandleTypes extends BaseService {
 	P_f3_PD_continuation_params(x) {
 		const cf="P_f3_PD_continuation_params";
 		const {1: v1,3: f3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.T_VW(v1);
+		this.P_f3_PD_continuation_params_f1(this.T_VW(v1));
+	}
+	/** @private @arg {P_f3_PD_continuation_params_f1} x */
+	P_f3_PD_continuation_params_f1(x) {
+		const cf="P_f3_PD_continuation_params_f1";
+		const {5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.P_f3_PD_continuation_params_f1_data(this.T_VW(v5));
+	}
+	/** @private @arg {P_f3_PD_continuation_params_f1_data} x */
+	P_f3_PD_continuation_params_f1_data(x) {
+		const cf="P_f3_PD_continuation_params_f1";
+		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.sm.channelId(this.TV_Str(v1));
+		console.log(`${cf}.f2`,this.TV_Str(v2));
 	}
 	/** @private @arg {P_create_reply_params} x */
 	P_create_reply_params(x) {
 		const cf="P_create_reply_params";
 		const {2: r,4: f4,5: f5,10: f10,14: f14,29: f29,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.TV_Str(r));
-		f4;
-		f5;
-		f10;
-		f14;
-		f29;
+		console.log(`${cf}.f4`,this.TV_Str(f4));
+		console.log(`${cf}.f5`,this.T_VW(f5));
+		console.log(`${cf}.f10`,this.T_D32(f10));
+		console.log(`${cf}.f14`,this.TV_Str(f14));
+		console.log(`${cf}.f29`,this.T_D32(f29));
 	}
 	/** @private @arg {P_perform_comment_action} x */
 	P_perform_comment_action(x) {
