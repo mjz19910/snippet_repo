@@ -1,4 +1,53 @@
 namespace YT_Base_source {
+	namespace g {
+		//#region done
+		export function Rw(_x: any): string|undefined {
+			throw 1;
+		}
+		export function ba(a: string,b: any) {
+			a; b;
+		}
+		export function Ca(a: any,b: any,c?: any) {
+			a; b; c;
+		}
+		export function A<T>(a: (x2: ia) => any): Promise<T> {
+			return maa(new laa(new jaa(a)));
+		}
+		export function Mh(a: any) {
+			a;
+		}
+		export class Do {
+			j: Storage;
+			constructor(a: Storage) {
+				this.j=a;
+			}
+			set(a: any,b: any) {
+				void 0===b? this.j.remove(a):this.j.set(a,g.Mh(b));
+			}
+			get(a: any): any {
+				try {
+					var b=this.j.get(a);
+				} catch(c) {
+					return;
+				}
+				if(null!==b)
+					try {
+						return JSON.parse(b);
+					} catch(c) {
+						throw "Storage: Invalid value was encountered";
+					}
+			}
+			remove(a: any) {
+				this.j.remove(a);
+			}
+		}
+		//#endregion
+		export function Wo(a: any) {
+			var b=new Jo;
+			return b.isAvailable()? a? new Vo(b,a):b:null;
+		}
+	}
+	//#region done
 	var Fy: any;
 	var Vx: boolean;
 	var Qx: any;
@@ -10,40 +59,6 @@ namespace YT_Base_source {
 		}),
 			10<Ux.length&&Ux.shift()));
 	}
-	class Eo<T> {
-		j: T;
-		constructor(a) {
-			this.j=a;
-		}
-		get(a: any) {
-			if(a=this.u(a)) {
-				if(a=a.data,
-					void 0===a)
-					throw "Storage: Invalid value was encountered";
-			} else
-				a=void 0;
-			return a;
-		}
-		u(a) {
-			a=Eo.Df.get.call(this,a);
-			if(void 0===a||a instanceof Object)
-				return a;
-			throw "Storage: Invalid value was encountered";
-		}
-	}
-	class Fo<T> extends Eo<T> {
-		static Df={
-			u: Eo.prototype.u,
-		};
-		u(a,b) {
-			var c=Fo.Df.u.call(this,a);
-			if(c)
-				if(!b&&g.wla(c))
-					Fo.prototype.remove.call(this,a);
-				else
-					return c;
-		}
-	}
 	abstract class So_Base {
 		abstract isAvailable(): boolean;
 	}
@@ -51,9 +66,9 @@ namespace YT_Base_source {
 		constructor(public x: any) {super();}
 		isAvailable(): boolean {return false;};
 	}
-	class Nx<T> {
-		j: Fo<T>|null;
-		constructor(a: T) {
+	class Nx {
+		j: FoBase<any>|null;
+		constructor(a: string) {
 			let b_; let a_2=a;
 			b_1: {
 				let b=g.Wo(a);
@@ -68,7 +83,7 @@ namespace YT_Base_source {
 			}
 			let b=b_; b;
 			let a_=b;
-			this.j=a_? new Fo(a):null;
+			this.j=a_? new (Fo as any)(a):null;
 		}
 		get(a: string,b: any) {
 			var c: string|undefined=void 0
@@ -88,11 +103,14 @@ namespace YT_Base_source {
 						c=void 0;
 				}
 			return c;
-
+		}
+		remove(a: any) {
+			this.j&&this.j.remove(a);
+			g.Sw(a,"/",this.u);
 		}
 	}
 	var Ox=function() {
-		var a: Nx<"ytidb">|undefined;
+		var a: Nx|undefined;
 		return function() {
 			a||(a=new Nx("ytidb"));
 			return a;
@@ -156,40 +174,79 @@ namespace YT_Base_source {
 			return a;
 		});
 	}
-	namespace g {
-		export function ba(a: string,b: any) {
-			a; b;
+	class Eo extends g.Do {
+		static Df=g.Do.prototype;
+		override get(a: any) {
+			if(a=this.u(a)) {
+				if(a=a.data,
+					void 0===a)
+					throw "Storage: Invalid value was encountered";
+			} else
+				a=void 0;
+			return a;
 		}
-		export function Ca(a: any,b: any,c?: any) {
-			a; b; c;
+		u(a: any,_b?: any) {
+			a=Eo.Df.get.call(this,a);
+			if(void 0===a||a instanceof Object)
+				return a;
+			throw "Storage: Invalid value was encountered";
 		}
-		export function A<T>(a: (x2: ia) => any): Promise<T> {
-			return maa(new laa(new jaa(a)));
-		}
-		export function Wo(a: any) {
-			var b=new Jo;
-			return b.isAvailable()? a? new Vo(b,a):b:null;
-		}
-		export class Do<T> {
-			j: T;
-			constructor(a: T) {
-				this.j=a;
-			}
-			get(a: any): any {
-				try {
-					var b=this.j.get(a);
-				} catch(c) {
-					return;
-				}
-				if(null!==b)
-					try {
-						return JSON.parse(b);
-					} catch(c) {
-						throw "Storage: Invalid value was encountered";
-					}
-			};
+		override set(a: any,b: any) {
+			Eo.Df.set.call(this,a,vla(b));
 		}
 	}
+	class Jo {
+		j: Storage|null;
+		constructor() {
+			var a=null;
+			try {
+				a=window.localStorage||null;
+			} catch(b) {}
+			this.j=a;
+		}
+	}
+	class Vo {
+		u: Jo;
+		j: string;
+		constructor(a: Jo,b: string) {
+			this.u=a;
+			this.j=b+"::";
+		}
+	}
+	function vla(x: any) {
+		x;
+		return true;
+	}
+	interface FoBase<T> {
+		j: T;
+		get(x: any): string;
+		remove(x: string): void;
+	}
+	function Fo<T>(this: FoBase<T>,a: T) {
+		this.j=a;
+	}
+	Fo.Df=Eo.prototype;
+	Fo.prototype.u=function u<T>(this: FoBase<T>,a: any,b: any) {
+		var c=Fo.Df.u.call(this,a);
+		if(c)
+			if(!b&&g.wla(c))
+				this.remove(a);
+			else
+				return c;
+	};
+	Fo.prototype.set=function set<T>(this: FoBase<T>,a: any,b: any,c: any) {
+		if(b=vla(b)) {
+			if(c) {
+				if(c<g.Qa()) {
+					this.remove(a);
+					return;
+				}
+				b.expiration=c;
+			}
+			b.creation=g.Qa();
+		}
+		Fo.Df.set.call(this,a,b);
+	};
 	function ka(a: {J: boolean;}) {
 		if(a.J)
 			throw new TypeError("Generator is already running");
