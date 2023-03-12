@@ -2486,7 +2486,7 @@ class Support_Renderer extends BaseService {
 		let {v,caps,exp,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(v);
 		caps&&this.save_primitive(`${cf}.caps`,caps);
-		this.cq(exp,"xpo");
+		this.t(exp,x => this.cq(x,"xpo"));
 		this.save_primitive(`${cf}.xoaf`,xoaf);
 		xoadf&&this.save_primitive(`${cf}.xoadf`,xoadf);
 		xosf&&this.save_primitive(`${cf}.xosf`,xosf);
