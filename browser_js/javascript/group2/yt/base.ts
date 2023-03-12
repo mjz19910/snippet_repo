@@ -101,7 +101,7 @@ namespace YT_Base_source {
 		//#endregion
 		export var Dy: any;
 		export var oa: any;
-		export var y: any;
+		export var y: (a: any,b: any,c: any) => void;
 		export var ra: any;
 		export var wla: any;
 		export var Qa: any;
@@ -345,7 +345,7 @@ namespace YT_Base_source {
 		}
 		Fo.Df.set.call(this,a,b);
 	};
-	function ka(a: {J: boolean;}) {
+	function ka(a: ia) {
 		if(a.J)
 			throw new TypeError("Generator is already running");
 		a.J=!0;
@@ -373,7 +373,7 @@ namespace YT_Base_source {
 		};
 		a.j=a.I||a.D;
 	}
-	function ta(a: any) {
+	function ta<T extends (b: ia) => any>(a: jaa<T>) {
 		for(;a.j.j;)
 			try {
 				var b=a.u(a.j);
@@ -422,7 +422,7 @@ namespace YT_Base_source {
 		return ta(a);
 
 	}
-	function kaa<T>(a: jaa<T>,b: any) {
+	function kaa<T extends (b: ia<{},{}>) => any>(a: jaa<T>,b: any) {
 		ka(a.j);
 		var c=a.j.C;
 		if(c)
@@ -445,6 +445,7 @@ namespace YT_Base_source {
 			ka(a.j);
 			let b2;
 			a.j.C? b2=sa(a,a.j.C.next,b,a.j.V):(a.j.V(b),b2=ta(a));
+			// b = ta(a);
 			return b2;
 		}
 		throw(b: any): {value: T,done: false;}|{value: undefined,done: true;} {
@@ -507,7 +508,7 @@ namespace YT_Base_source {
 		}
 	}
 	// var jaa=qaa;
-	class jaa<T> {
+	class jaa<T extends (b: ia) => any> {
 		j: ia;
 		u: T;
 		constructor(a: T) {
