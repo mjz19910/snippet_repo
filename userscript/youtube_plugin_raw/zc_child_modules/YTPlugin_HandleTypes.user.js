@@ -2039,7 +2039,7 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f1`,this.T_D32(v_tag));
 		this.save_primitive(`${cf}.f2`,this.T_D32(v_id));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
-		f4;
+		this.VW_BinaryTimestamp(f4);
 	}
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
