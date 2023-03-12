@@ -30,6 +30,6 @@ type D_AdaptiveFormatItem={
 	audioChannels?: 2;
 	loudnessDb?: number;
 	signatureCipher?: D_FormatItem_SignatureCipher_SP;
-	targetDurationSec?: 1;
+	targetDurationSec?: 1|2;
 	maxDvrDurationSec?: 43200;
 };

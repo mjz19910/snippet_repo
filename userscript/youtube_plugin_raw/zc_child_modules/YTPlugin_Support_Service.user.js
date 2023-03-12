@@ -931,7 +931,12 @@ class Support_RS_Player extends BaseService {
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,x => this.sm.a_primitive_str(x));
 		if(projectionType!=="RECTANGULAR") debugger;
-		this.t(targetDurationSec,x => this.sm.cq(x,1));
+		this.t(targetDurationSec,x => {
+			switch(x) {
+				default: debugger; break;
+				case 1: case 2:
+			}
+		});
 		this.t(maxDvrDurationSec,x => this.sm.cq(x,43200));
 		maxDvrDurationSec;
 		this.sm.t(averageBitrate,this.sm.a_primitive_num);

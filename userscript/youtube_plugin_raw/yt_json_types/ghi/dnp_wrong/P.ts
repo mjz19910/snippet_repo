@@ -471,17 +471,19 @@ type P_format_item_xtags_f1={
 	2: TV_Str<`${true}`>;
 };
 type P_format_item_xtags={1: T_VW<P_format_item_xtags_f1>;};
+type PX_wpp_f1={
+	2: T_D32<2>;
+	3: T_D32<1>;
+};
+type PX_wpp_f40={1: T_VW<PX_wpp_f1>;};
 type P_watch_player_params={
 	8?: T_D32<1>;
 	9?: T_D32<1>;
 	12?: T_D32<1>;
 	25?: T_D32<1>;
-	40?: T_VW<{
-		1: T_VW<{
-			2: T_D32<2>;
-			3: T_D32<1>;
-		}>;
-	}>;
+	27?: T_D32<3800>,
+	34?: T_D32<1>;
+	40?: T_VW<PX_wpp_f40>;
 };
 type PX_watch_bin={
 	2: TV_Str<string>;

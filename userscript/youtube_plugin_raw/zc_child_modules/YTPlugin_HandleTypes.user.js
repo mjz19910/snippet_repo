@@ -924,9 +924,22 @@ class HandleTypes extends BaseService {
 	D_LivePlayerConfig(x) {
 		const cf="D_LivePlayerConfig";
 		const {liveReadaheadSeconds,hasSubfragmentedFmp4,isLiveHeadPlayable,...y}=this.s(cf,x); this.g(y);
-		this.sm.cq(liveReadaheadSeconds,1.6);
+		x: {
+			let is_4_8=this.float_near_48(liveReadaheadSeconds,4.8,0.000000000000001);
+			if(is_4_8) break x;
+			if(liveReadaheadSeconds===4.8) break x;
+			if(liveReadaheadSeconds===1.6) break x;
+			debugger;
+		}
 		this.sm.cq(hasSubfragmentedFmp4,true);
 		this.t(isLiveHeadPlayable,x => this.sm.cq(x,true));
+	}
+	/** @arg {number} x @arg {number} nv @arg {number} tol */
+	float_near_48(x,nv,tol) {
+		if(tol>0.00000000000001) debugger;
+		if(x===nv+tol) return true;
+		if(x===nv-tol) return true;
+		return false;
 	}
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
@@ -2816,8 +2829,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
-		const {8: f8,9: f9,12: f12,25: f25,40: f40,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		f8; f9; f12; f25; f40;
+		const {8: f8,9: f9,12: f12,25: f25,27: f27,34: f34,40: f40,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		f8; f9; f12; f25; f27; f40;
 	}
 	/** @private @arg {P_format_item_xtags_f1} x */
 	P_format_item_xtags_f1(x) {
