@@ -46,6 +46,59 @@ namespace YT_Base_source {
 			var b=new Jo;
 			return b.isAvailable()? a? new Vo(b,a):b:null;
 		}
+		var Ow: false=false;
+		var Nb: any;
+		class Gh {
+			j: {cookie: string;};
+			constructor(a: Document|null) {
+				this.j=a||{
+					cookie: ""
+				};
+			}
+			remove(a: any,b: any,c: any) {
+				var d=void 0!==this.get(a);
+				this.set(a,"",{
+					aG: 0,
+					path: b,
+					domain: c
+				});
+				return d;
+			}
+			set(a: any,b: any,c: any) {
+				var d: boolean|string=!1;
+				if("object"===typeof c) {
+					var e=c.X5a;
+					d=c.i8||!1;
+					var f=c.domain||void 0;
+					var h=c.path||void 0;
+					var l=c.aG;
+				}
+				if(/[;=\s]/.test(a))
+					throw Error('Invalid cookie name "'+a+'"');
+				if(/[;\r\n]/.test(b))
+					throw Error('Invalid cookie value "'+b+'"');
+				void 0===l&&(l=-1);
+				c=f? ";domain="+f:"";
+				h=h? ";path="+h:"";
+				d=d? ";secure":"";
+				l=0>l? "":0==l? ";expires="+(new Date(1970,1,1)).toUTCString():";expires="+(new Date(Date.now()+1E3*l)).toUTCString();
+				this.j.cookie=a+"="+b+c+h+l+d+(null!=e? ";samesite="+e:"");
+			}
+			get(a: any,b?: any) {
+				for(var c=a+"=",d=(this.j.cookie||"").split(";"),e=0,f;e<d.length;e++) {
+					f=Nb(d[e]);
+					if(0==f.lastIndexOf(c,0))
+						return f.slice(c.length);
+					if(f==a)
+						return "";
+				}
+				return b;
+			}
+		}
+		var Pw=new Gh("undefined"==typeof document? null:document);
+		export function Sw(a: any,b: any,c: any) {
+			Ow||Pw.remove(""+a,void 0===b? "/":b,void 0===c? "youtube.com":c);
+		}
 	}
 	//#region done
 	var Fy: any;
@@ -66,7 +119,9 @@ namespace YT_Base_source {
 		constructor(public x: any) {super();}
 		isAvailable(): boolean {return false;};
 	}
+	//#endregion
 	class Nx {
+		//#region done
 		j: FoBase<any>|null;
 		constructor(a: string) {
 			let b_; let a_2=a;
@@ -84,7 +139,9 @@ namespace YT_Base_source {
 			let b=b_; b;
 			let a_=b;
 			this.j=a_? new (Fo as any)(a):null;
+			this.u=window.location.hostname;
 		}
+		u: string;
 		get(a: string,b: any) {
 			var c: string|undefined=void 0
 				,d=!this.j;
@@ -104,29 +161,30 @@ namespace YT_Base_source {
 				}
 			return c;
 		}
+		//#endregion
 		remove(a: any) {
 			this.j&&this.j.remove(a);
 			g.Sw(a,"/",this.u);
 		}
 	}
+	var Ox__=new Nx("ytidb");
 	var Ox=function() {
-		var a: Nx|undefined;
-		return function() {
-			a||(a=new Nx("ytidb"));
-			return a;
-		};
-	}();
+		return Ox__;
+	};
 	var Px=function() {
 		var a;
 		return null==(a=Ox())? void 0:a.get("LAST_RESULT_ENTRY_KEY",!0);
 	};
+	var Cy: any;
+	var Yw: any;
+	var Zw: any;
 	var Zoa=function(): Promise<{}> {
 		var a,b,c,d;
 		return g.A(function(e) {
 			switch(e.j) {
 				case 1:
 					a=Px();
-					if(null==(b=a)? 0:b.hasSucceededOnce)
+					if(null==(b=a)? 0:(b as any).hasSucceededOnce)
 						return e.return(!0);
 					if(Cy&&Yw()&&!Zw()||g.Dy)
 						return e.return(!1);
@@ -156,6 +214,8 @@ namespace YT_Base_source {
 			}
 		});
 	};
+	var Woa: any;
+	var By: any;
 	function $oa(): Promise<{}> {
 		if(void 0!==Fy)
 			return Fy;
@@ -164,7 +224,7 @@ namespace YT_Base_source {
 			Vx=!1;
 			var b;
 			if(null!=(b=Ox())&&b.j) {
-				var c;
+				var c: string|{hasSucceededOnce: any;}|undefined;
 				b={
 					hasSucceededOnce: (null==(c=Px())? void 0:c.hasSucceededOnce)||a
 				};
@@ -203,6 +263,17 @@ namespace YT_Base_source {
 				a=window.localStorage||null;
 			} catch(b) {}
 			this.j=a;
+		}
+		isAvailable() {
+			if(!this.j)
+				return !1;
+			try {
+				return this.j.setItem("__sak","1"),
+					this.j.removeItem("__sak"),
+					!0;
+			} catch(a) {
+				return !1;
+			}
 		}
 	}
 	class Vo {
@@ -373,7 +444,10 @@ namespace YT_Base_source {
 		// isRunning_
 		J: boolean;
 		// yieldAllIterator_
-		C: null;
+		C: {
+			next: never;
+			throw: never;
+		}|null;
 		// yieldResult
 		u: YR|undefined;
 		// nextAddress
