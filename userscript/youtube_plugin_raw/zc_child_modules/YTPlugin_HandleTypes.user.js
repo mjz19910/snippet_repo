@@ -2868,9 +2868,18 @@ class HandleTypes extends BaseService {
 	P_get_report_form_params(x) {
 		const cf="P_get_report_form_params";
 		const {25: f25,26: f26,28: f28,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		f25;
-		f26;
-		f28;
+		this.cq(this.TV_Str(f25),"shopping");
+		this.cq(this.T_D32(f26),14);
+		this.t(f28,x => this.P_grf_p_f28(this.T_VW(x)));
+	}
+	/** @private @arg {PR_grf_p_f28} x */
+	P_grf_p_f28(x) {
+		const cf="P_grf_p_f28";
+		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		let arr=v1[1];
+		for(let vi of arr) {
+			vi;
+		}
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
@@ -2916,7 +2925,6 @@ class HandleTypes extends BaseService {
 				case "":
 				case "community":
 			}
-			a;
 		});
 		this.t(i2,i2 => this.save_primitive("2:i2",this.T_D32(i2)));
 		this.t(i5,i5 => this.k("110:i5",this.T_VW(i5)));
@@ -2931,16 +2939,8 @@ class HandleTypes extends BaseService {
 	P_notification_add_upcoming_event_reminder_params(x) {
 		const cf="P_notification_add_upcoming_event_reminder_params";
 		const {1: v1,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		let u1=this.T_PArr_1(v1)[0];
-		switch(u1[0]) {
-			case "v_child": {
-				this.save_primitive(`${cf}.f1`,u1[3][1]);
-			} break;
-			case "v_child_str":/*unk*/{
-				this.save_primitive(`${cf}.f1`,u1[3][1]);
-			} break;
-		}
-		f6;
+		this.save_primitive(`${cf}.f1`,this.TW_Str(v1));
+		this.PX_upcoming_event_reminder_info(this.T_VW(f6));
 	}
 	//#endregion
 	/** @private @arg {PD_timed_continuation} x */
@@ -2956,6 +2956,8 @@ class HandleTypes extends BaseService {
 		const {1: v1,3: f3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_f3_PD_continuation_params_f1(this.T_VW(v1));
 		this.P_f3_PD_continuation_params_obj(this.T_VW(f3));
+		this.cq(this.T_D32(f4),1);
+		this.cq(this.T_D32(f6),0);
 	}
 	/** @private @arg {P_f3_PD_continuation_params_obj} x */
 	P_f3_PD_continuation_params_obj(x) {

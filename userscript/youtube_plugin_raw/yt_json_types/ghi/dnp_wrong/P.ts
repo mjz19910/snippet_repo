@@ -290,50 +290,83 @@ type PX_watch_sequence_info={
 	4: T_D32<2>;
 	6: T_VW_Bigint<bigint>;
 };
+type P_reel_watch_sequence_obj0={
+	1: T_D32<number>;
+	2: T_D32<1>;
+};
+type P_reel_watch_sequence_obj1={
+	1: T_D32</*536,887*/number>;
+};
+type P_rw_sd_obj0_f2={
+	6: T_D32<26>;
+};
+
+type P_rw_sd_obj0_f3={
+	1: T_D32<number>;
+	2: T_D32<number>;
+};
+
+type P_rw_sd_obj0_f4={
+	1: T_D32<number>;
+};
+
+type P_rw_sd_obj0_f5={
+	1: T_D32<13>;
+	2: T_D32<2>;
+};
+
+type P_rw_sd_obj0_f6={1: T_PArr_R<P_reel_watch_sequence_obj0[]>;};
+
+type P_rw_sd_obj0_f7={
+	1: T_PArr_R<P_reel_watch_sequence_obj1[]>;
+};
+
+type P_rw_sd_obj0_f8={
+	1: T_VW<{
+		1: T_D32<203>;
+	}>;
+	2: T_D32<2>;
+};
+
+type P_rw_sd_obj0_f9={
+	1: T_VW<{
+		1: T_D32<205>;
+	}>;
+	2: T_D32<2>;
+};
+
+type P_rw_sd_obj0_f10={
+	1: T_VW<{
+		1: T_D32<203>;
+	}>;
+	2: T_D32<2>;
+};
+
+type P_rw_sd_obj0_f11={
+	2: T_VW<{
+		1: T_D32<1>;
+		2: T_D32<1>;
+	}>;
+};
+
+type P_rw_sd_obj0={
+	1: TV_Str<string>;
+	2: T_VW<P_rw_sd_obj0_f2>;
+	3: T_VW<P_rw_sd_obj0_f3>;
+	4: T_VW<P_rw_sd_obj0_f4>;
+	5: T_VW<P_rw_sd_obj0_f5>;
+	6: T_VW<P_rw_sd_obj0_f6>;
+	7: T_VW<P_rw_sd_obj0_f7>;
+	8: T_VW<P_rw_sd_obj0_f8>;
+	9: T_VW<P_rw_sd_obj0_f9>;
+	10: T_VW<P_rw_sd_obj0_f10>;
+	11: T_VW<P_rw_sd_obj0_f11>;
+};
+
 type P_reel_watch_sequence_data={
 	1: T_D32<10>;
 	3: T_D32<9>;
-	6: T_VW<{
-		1: TV_Str<string>;
-		2: T_VW<{
-			6: T_D32<26>;
-		}>;
-		3: T_VW<{
-			1: T_D32<number>;
-			2: T_D32<number>;
-		}>;
-		4: T_VW<{
-			1: T_D32<number>;
-		}>;
-		5: T_VW<{
-			1: T_D32<13>;
-			2: T_D32<2>;
-		}>;
-		6: T_VW<{
-			1: T_PArr_R<P_reel_watch_sequence_Arr1>;
-		}>;
-		7: T_VW<{
-			1: T_PArr_R<P_reel_watch_sequence_Arr2>;
-		}>;
-		8: T_VW<{
-			1: T_VW<{1: T_D32<203>;}>;
-			2: T_D32<2>;
-		}>;
-		9: T_VW<{
-			1: T_VW<{1: T_D32<205>;}>;
-			2: T_D32<2>;
-		}>;
-		10: T_VW<{
-			1: T_VW<{1: T_D32<203>;}>;
-			2: T_D32<2>;
-		}>;
-		11: T_VW<{
-			2: T_VW<{
-				1: T_D32<1>;
-				2: T_D32<1>;
-			}>;
-		}>;
-	}>;
+	6: T_VW<P_rw_sd_obj0>;
 };
 type P_continuation_request_reel_watch_sequence_token={
 	1?: TV_Str<DU_VideoId>;
@@ -395,11 +428,8 @@ type PD_invalidation_continuation={
 	11?: T_D32<number>;
 	16: T_VW<{
 		1: T_D32<4>;
-		3: T_D32<1>;
-	}|{
-		1: T_D32<4>;
-		3: T_D32<2>;
-		4: T_D32<0>;
+		3: T_D32<1|2>;
+		4?: T_D32<0>;
 	}>;
 	17: T_D32<0|1>;
 	19?: T_VW<{1: T_D32<0>;}>;
@@ -408,9 +438,10 @@ type PD_invalidation_continuation={
 	22: T_VW<{}>;
 	23?: T_VW<{1: T_D32<10>;}>;
 };
+type P_continuation_params={0x94d81d4: T_VW<PD_continuation_params>;};
 type PR_continuation_params=
-	|{0x94d81d4: T_VW<PD_continuation_params>;}
-	|{0x722607a: T_VW<PD_invalidation_continuation>;}
+	|P_continuation_params
+	|P_invalidation_continuation
 	|P_timed_continuation_data
 	;
 ;
@@ -445,7 +476,6 @@ type P_nri_f14={
 	1: T_VW<P_nri_f1>;
 	2: TV_Str<string>;
 };
-
 type P_nri_f2={
 	1: T_D32<2>;
 	14: T_VW<P_nri_f14>;
@@ -454,10 +484,18 @@ type P_notification_record_interactions={
 	2: T_VW<P_nri_f2>;
 	5: T_D32<number>;
 };
+type PD_grf_p_f28=T_VW_Child<PR_grf_p_obj0>[];
+type PR_grf_p_obj0={
+	1: T_VW<PR_grf_p_obj1>;
+	3: TV_Str<string>;
+};
+type PD_grf_p_obj1={1: TV_Str<"Spring">;};
+type PR_grf_p_obj1={1: T_PArr_R<T_VW_Child<PD_grf_p_obj1>[]>;};
+type PR_grf_p_f28={1: T_PArr_R<PD_grf_p_f28>;};
 type P_get_report_form_params={
 	25: TV_Str<"shopping">;
 	26: T_D32<14>;
-	28?: T_VW<{1: T_PArr_R<P_get_report_form_params_Arr1>;}>;
+	28?: T_VW<PR_grf_p_f28>;
 };
 type P_notification_opt_out={
 	2: T_D32<1>;
@@ -511,25 +549,32 @@ type P_watch_params={
 	40?: T_VW<PR_watch_bin>;
 	56?: TV_Str<DU_VideoId>;
 };
+type P_ve_6827_params_f1_f2={
+	1: TV_Str<DU_VideoId>;
+	2: TV_Str<DU_VideoId>;
+	3: TV_Str<DU_VideoId>;
+};
+
+type P_ve_6827_params_f1={
+	2: T_VW_BinTs<P_ve_6827_params_f1_f2>;
+};
+
+type P_ve_6827_params_f94={
+	1: T_VW<P_ve_6827_params_f1>;
+	5: T_D64<bigint>;
+};
+type P_ve_6827_params_f93={
+	1: TV_Str<"bigbusiness">;
+	3: T_D32<1>;
+};
+type P_ve_6827_params_f84={
+	5: T_D32<2>;
+};
 type P_ve_6827_params={
 	77?: TV_Str<"FEexplore">;
-	84?: T_VW<{
-		5: T_D32<2>;
-	}>;
-	93?: T_VW<{
-		1: TV_Str<"bigbusiness">;
-		3: T_D32<1>;
-	}>;
-	94?: T_VW<{
-		1: T_VW<{
-			2: T_VW_BinTs<{
-				1: TV_Str<DU_VideoId>;
-				2: TV_Str<DU_VideoId>;
-				3: TV_Str<DU_VideoId>;
-			}>;
-		}>;
-		5: T_D64<bigint>;
-	}>;
+	84?: T_VW<P_ve_6827_params_f84>;
+	93?: T_VW<P_ve_6827_params_f93>;
+	94?: T_VW<P_ve_6827_params_f94>;
 };
 type P_playlist_edit_params={
 	1: T_D32<1>;
@@ -540,14 +585,15 @@ type P_ve_3611_params_1={
 type P_ve_3611_params_2={
 	6: T_VW<{}>;
 };
+type P_ve_3611_params_f73={
+	1: T_VW<{
+		1: T_D32<1>;
+	}>;
+};
 type P_ve_3611_params={
 	2?: TW_Str2<"community"|"">;
 	23?: T_D32<0>;
-	73?: T_VW<{
-		1: T_VW<{
-			1: T_D32<1>;
-		}>;
-	}>;
+	73?: T_VW<P_ve_3611_params_f73>;
 	110: T_VW<P_ve_3611_params_1>;
 };
 type P_search_params={
@@ -679,20 +725,22 @@ type PE_transcript_params={
 	7: T_D32<1>;
 	8: T_D32<1>;
 };
+type P_ypc_get_offline_upsell_params_f4={
+	7: T_FD64<6073749868478034028n>;
+	8: T_FD32<151524138>;
+};
 // cspell:ignore v9lp5ESKJTE
+type P_ypc_get_offline_upsell_params_f5={
+	1: T_D32<9>;
+	10: T_VW_J<{
+		1: TV_Str<"v9lp5ESKJTE">;
+		4: T_D32<1>;
+	}>;
+};
 type P_ypc_get_offline_upsell_params={
 	1: T_VW_J<P_f3_PD_continuation_params_obj>,
-	4: T_VW_J<{
-		7: T_FD64<6073749868478034028n>,
-		8: T_FD32<151524138>;
-	}>,
-	5: T_VW_J<{
-		1: T_D32<9>,
-		10: T_VW_J<{
-			1: TV_Str<"v9lp5ESKJTE">,
-			4: T_D32<1>;
-		}>;
-	}>;
+	4: T_VW_J<P_ypc_get_offline_upsell_params_f4>,
+	5: T_VW_J<P_ypc_get_offline_upsell_params_f5>;
 };
 type P_video_params={
 	1: T_D32<1>;
@@ -704,11 +752,10 @@ type P_offlineability_entity_key={
 	4: T_D32<246>,
 	5: T_D32<1>;
 };
-type P_watch_next_info_next1={
-	33: T_VW_J<{
-		2: TV_Str<"lungs9N_6q5KHQHi">,
-		3: T_D32<9458436>,
-		4: T_D32<1678462303842713>,
-		5: T_D32<6>
-	}>
+type P_watch_next_info_next1_obj1={
+	2: TV_Str<"lungs9N_6q5KHQHi">;
+	3: T_D32<9458436>;
+	4: T_D32<1678462303842713>;
+	5: T_D32<6>;
 };
+type P_watch_next_info_next1={33: T_VW_J<P_watch_next_info_next1_obj1>;};
