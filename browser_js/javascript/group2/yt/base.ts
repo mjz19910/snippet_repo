@@ -13,8 +13,8 @@ namespace YT_Base_source {
 		export function A<T>(a: (x2: ia) => any): Promise<T> {
 			return maa(new laa(new jaa(a)));
 		}
-		export function Mh(a: any) {
-			a;
+		export function Mh(a: any): string {
+			throw new AggregateError([a],"Not implemented");
 		}
 		export class Do {
 			j: Storage;
@@ -41,7 +41,6 @@ namespace YT_Base_source {
 				this.j.remove(a);
 			}
 		}
-		//#endregion
 		export function Wo(a: any) {
 			var b=new Jo;
 			return b.isAvailable()? a? new Vo(b,a):b:null;
@@ -99,6 +98,14 @@ namespace YT_Base_source {
 		export function Sw(a: any,b: any,c: any) {
 			Ow||Pw.remove(""+a,void 0===b? "/":b,void 0===c? "youtube.com":c);
 		}
+		//#endregion
+		export var Dy: any;
+		export var oa: any;
+		export var y: any;
+		export var ra: any;
+		export var wla: any;
+		export var Qa: any;
+		export var Qw: any;
 	}
 	//#region done
 	var Fy: any;
@@ -166,6 +173,25 @@ namespace YT_Base_source {
 			this.j&&this.j.remove(a);
 			g.Sw(a,"/",this.u);
 		}
+		set(a: any,b: any,c: any,d: any) {
+			c=c||31104E3;
+			this.remove(a);
+			if(this.j)
+				try {
+					this.j.set(a,b,Date.now()+1E3*c);
+					return;
+				} catch(f) {}
+			var e="";
+			if(d)
+				try {
+					e=escape(g.Mh(b));
+				} catch(f) {
+					return;
+				}
+			else
+				e=escape(b);
+			g.Qw(a,e,c,this.u);
+		}
 	}
 	var Ox__=new Nx("ytidb");
 	var Ox=function() {
@@ -226,7 +252,7 @@ namespace YT_Base_source {
 			if(null!=(b=Ox())&&b.j) {
 				var c: string|{hasSucceededOnce: any;}|undefined;
 				b={
-					hasSucceededOnce: (null==(c=Px())? void 0:c.hasSucceededOnce)||a
+					hasSucceededOnce: (null==(c=Px())? void 0:(c as any).hasSucceededOnce)||a
 				};
 				var d;
 				null==(d=Ox())||d.set("LAST_RESULT_ENTRY_KEY",b,2592E3,!0);
@@ -290,6 +316,7 @@ namespace YT_Base_source {
 	}
 	interface FoBase<T> {
 		j: T;
+		set(x: any,v: any,a2?: any): void;
 		get(x: any): string;
 		remove(x: string): void;
 	}
