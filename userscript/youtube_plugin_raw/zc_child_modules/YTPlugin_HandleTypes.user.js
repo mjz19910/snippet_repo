@@ -2579,7 +2579,7 @@ class HandleTypes extends BaseService {
 		this.t(this.ms_t(f4,this.TV_Str).v,x => console.log(`${cf}.f4`,x));
 		this.t(this.ms_t(f6,this.TA_Str).v,x => {
 			if(x==="") return;
-			this.params("watch_next_info_next1",x);
+			this.sm.params("watch_next_info_next1",x);
 		});
 		this.t(this.ms_t(f7,this.T_D32).v,x => console.log(`${cf}.f7`,x));
 		this.t(this.ms_t(f24,this.T_D32).v,x => console.log(`${cf}.f24`,x));
