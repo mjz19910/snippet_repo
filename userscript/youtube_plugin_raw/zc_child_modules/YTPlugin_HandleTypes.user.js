@@ -2571,6 +2571,14 @@ class HandleTypes extends BaseService {
 		}
 		console.log(cf,big_num);
 	}
+	/** @arg {bigint} big_num */
+	dec_num64(big_num) {
+		if(big_num>0xffffffffffffff00n) {
+			let ba=new BigInt64Array(1);
+			ba[0]=big_num; return ba[0];
+		}
+		return big_num;
+	}
 	/** @private @arg {PX_watch_next_token_info} x */
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
@@ -2582,15 +2590,17 @@ class HandleTypes extends BaseService {
 			this.sm.params("watch_next_info_next1",x);
 		});
 		this.t(this.ms_t(f7,this.T_D32).v,x => console.log(`${cf}.f7`,x));
-		this.t(this.ms_t(f24,this.T_D32).v,x => console.log(`${cf}.f24`,x));
+		this.t(this.ms_t(f24,this.T_D32).v,x => x!==0&&console.log(`${cf}.f24`,x));
 		this.t(this.ms_t(f25,this.T_D32).v,x => x!==0&&console.log(`${cf}.f25`,x));
 		this.t(this.ms_t(f28,this.T_D32).v,x => x!==3&&console.log(`${cf}.f28`,x));
 		this.t(this.ms_t(f36,this.T_VW).v,x => {
 			/** @type {`${cf}.f36`} */
 			const cf2=`${cf}.f36`;
 			const {5: f5,8: f8,...y}=this.s(cf2,x); this.h_gen_keys(cf2,x,y);/*#destructure_start*/
-			this.log_big_num(`${cf2}.f5`,this.T_D64(f5));
-			console.log(`${cf2}.f8`,this.T_D32(f8));
+			let x5=this.dec_num64(this.T_D64(f5));
+			x5!==-1n&&console.log(`${cf2}.f5`,x5);
+			let x8=this.T_D32(f8);
+			x8!==0&&console.log(`${cf2}.f8`,x8);
 		});
 		this.t(this.ms_t(f47,this.T_D32).v,x => x!==0&&console.log(`${cf}.f47`,x));
 	}
