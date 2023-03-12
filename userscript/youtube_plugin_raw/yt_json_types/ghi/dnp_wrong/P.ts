@@ -129,7 +129,7 @@ type P_reel_player_params={
 type P_reel_params={
 	1: T_D32<15>;
 	3?: T_VW<V_BinaryTimestamp>;
-	5?: T_VW_J<{}>;
+	5?: T_VW<{}>;
 	6?: T_D32<2>;
 	7?: T_D32<0>;
 };
@@ -344,18 +344,17 @@ type P_continuation_request_reel_watch_sequence_token={
 	15: T_VW<P_reel_watch_sequence_data>;
 };
 type TX_sequence_info={3: T_D32<12|15>;};
-// cspell: ignore BRaeiCMuKpQ
-// https://www.youtube.com/shorts/BRaeiCMuKpQ
+type R_obj1={
+	1: TV_Str<DU_VideoId>;
+	3: T_D32<0>;
+	4: T_D32<1>;
+	6: T_D64<bigint>;
+};
 type P_reel_sequence_params={
 	1?: TV_Str<DU_VideoId>;
-	3?: T_VW_J<{
-		1: TV_Str<DU_VideoId>;
-		3: T_D32<0>;
-		4: T_D32<1>;
-		6: T_D64<bigint>;
-	}>;
+	3?: T_VW<R_obj1>;
 	5: T_VW<TX_sequence_info>;
-	8?: T_VW_J<{}>;
+	8?: T_VW<{}>;
 	12?: TV_Str<"RDSH">;
 };
 type PX_buy_flow_params={
@@ -538,8 +537,8 @@ type P_ve_3611_params_2={
 type P_ve_3611_params={
 	2?: TW_Str2<"community"|"">;
 	23?: T_D32<0>;
-	73?: T_VW_J<{
-		1: T_VW_J<{
+	73?: T_VW<{
+		1: T_VW<{
 			1: T_D32<1>;
 		}>;
 	}>;
@@ -657,7 +656,7 @@ type P_f3_PD_continuation_params={
 type P_transcript_params={
 	1: TV_Str<"asr">;
 	2: TV_Str<"en">;
-	3: T_VW_J<{}>;
+	3: T_VW<{}>;
 };
 type PE_transcript_params={
 	1: TV_Str<DU_VideoId>;

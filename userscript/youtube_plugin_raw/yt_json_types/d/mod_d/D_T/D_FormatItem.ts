@@ -15,7 +15,7 @@ type D_FormatItem={
 	audioQuality: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
 	approxDurationMs: `${number}`;
 	audioSampleRate: `${D_AudioSampleRate}`;
-	audioChannels: 2;
+	audioChannels: 1|2;
 	signatureCipher?: D_FormatItem_SignatureCipher_SP;
 	xtags?: string;
 };

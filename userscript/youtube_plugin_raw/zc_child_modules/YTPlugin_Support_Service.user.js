@@ -212,6 +212,7 @@ class StoreData extends BaseService {
 						for(let err_iter of cur_err.errors) stack.push(err_iter);
 					}
 				}
+				debugger;
 				return;
 			}
 			this.idle_id=null;
@@ -840,7 +841,9 @@ class Support_RS_Player extends BaseService {
 		});
 		this.sm.a_primitive_str(approxDurationMs);
 		this.t(audioSampleRate,this.D_AudioSampleRate);
-		this.t(audioChannels,x => {if(x!==2) debugger;});
+		this.t(audioChannels,x => {
+			switch(x) {case 1: case 2: break; default: debugger;}
+		});
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 		const {xtags,...y}=u; this.g(y);
 		this.t(xtags,x => this.sm.params("format_item.xtags",x));

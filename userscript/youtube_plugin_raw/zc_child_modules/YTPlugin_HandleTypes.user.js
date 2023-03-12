@@ -756,13 +756,13 @@ class HandleTypes extends BaseService {
 				this.selector.cache.push(selector);
 				selector===""; debugger;
 			} break;
-			case "6 ": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6r": case "6 ": case "6y": case "6z":
+			case "66": case "6 ": case "6d": case "6 ": case "6 ": case "6l": case "6r": case "6 ": case "6y": case "6z":
 			case "76": case "7 ": case "7d": case "7 ": case "7k": case "7l": case "7r": case "7s": case "7y": case "7z":
 			case "d6": case "d ": case "d ": case "d ": case "d ": case "d ": case "dr": case "ds": case "dy": case "dz":
 			case "e6": case "e7": case "e ": case "ee": case "ek": case "el": case "e ": case "es": case "ey": case "ez":
 			case "k6": case "k ": case "kd": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ": case "k ":
 			case "l6": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "l ":
-			case "r ": case "r ": case "r ": case "r ": case "r ": case "rl": case "rr": case "r ": case "r ": case "r ":
+			case "r6": case "r ": case "r ": case "r ": case "r ": case "rl": case "rr": case "r ": case "r ": case "r ":
 			case "s6": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sy": case "sz":
 			case "z ": case "z7": case "zd": case "ze": case "zk": case "z ": case "zr": case "zs": case "zy": case "zz":
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
@@ -2478,6 +2478,7 @@ class HandleTypes extends BaseService {
 		const {3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f3`,this.T_D32(f3));
 	}
+	R_obj1(x) {x;}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
@@ -2489,9 +2490,10 @@ class HandleTypes extends BaseService {
 		});
 		this.TX_sequence_info(this.T_VW(f5));
 		this.t(f8,x => {
-			let [,[v1,...v1y]]=x; v1;
-			let [v2,...v3]=v1;
-			console.log(`${cf}.f8`,v2,v3,v1y);
+			let [,[v1,...v1y]]=x; v1; if(v1y.length!==0) debugger;
+			if(v1[0]!=="v_child") {debugger; return;}
+			let [,,,[,v_str]]=v1;
+			if(v_str.length>0) console.log(`${cf}.f8`,v_str);
 		});
 		f8; f12;
 	}
