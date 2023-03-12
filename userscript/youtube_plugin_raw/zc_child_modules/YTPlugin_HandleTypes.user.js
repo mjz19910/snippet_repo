@@ -2955,6 +2955,22 @@ class HandleTypes extends BaseService {
 		const cf="P_f3_PD_continuation_params";
 		const {1: v1,3: f3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_f3_PD_continuation_params_f1(this.T_VW(v1));
+		this.P_f3_PD_continuation_params_obj(this.T_VW(f3));
+	}
+	/** @private @arg {P_f3_PD_continuation_params_obj} x */
+	P_f3_PD_continuation_params_obj(x) {
+		const cf="P_f3_PD_continuation_params_obj"; this.k(cf,x);
+		if(0x2e6ea8d in x) {
+			const {0x2e6ea8d: v1,...y}=x; this.h_gen_keys(cf,x,y);/*#destructure_start*/
+			return this.P_f3_PD_continuation_params_data(this.T_VW(v1));
+		}
+		debugger;
+	}
+	/** @private @arg {P_f3_PD_continuation_params_data} x */
+	P_f3_PD_continuation_params_data(x) {
+		const cf="P_f3_PD_continuation_params_data";
+		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		console.log(`${cf}.f1`,this.TV_Str(v1));
 	}
 	/** @private @arg {P_f3_PD_continuation_params_f1} x */
 	P_f3_PD_continuation_params_f1(x) {
