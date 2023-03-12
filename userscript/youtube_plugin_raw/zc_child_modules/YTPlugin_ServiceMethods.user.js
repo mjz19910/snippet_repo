@@ -869,13 +869,13 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
 	/** @public @arg {R_MenuFlexibleItem} x */
-	R_MenuFlexibleItem(x) {this.H_s("menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
+	R_MenuFlexibleItem(x) {this.H_s("menuFlexibleItemRenderer",x,this.DT_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
-	D_MenuFlexibleItem(x) {
-		const cf="D_MenuFlexibleItem";
+	DT_MenuFlexibleItem(x) {
+		const cf="DT_MenuFlexibleItem";
 		const {menuItem,topLevelButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if("menuServiceItemRenderer" in menuItem) this.R_MenuServiceItem(menuItem);
-		this.xm.R_Button(topLevelButton);
+		this.ht.G_MenuItem_2(menuItem);
+		this.ht.DT_MenuItem_Button(topLevelButton);
 	}
 	/** @public @arg {D_LoggingDirectives} x */
 	D_LoggingDirectives(x) {
@@ -1791,14 +1791,6 @@ class ServiceMethods extends ServiceData {
 	add_log_entry(path,cf2,key_index,entry) {
 		this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
 	}
-	/** @public @arg {CF_P_ParamParse} cf @arg {string} x */
-	params(cf,x) {
-		this.x.get("handle_types").decode_binary_obj(cf,x);
-	}
-	/** @api @public @arg {CF_P_ParamParse} cf @arg {string} x */
-	playerParams(cf,x) {
-		this.x.get("handle_types").decode_binary_obj(cf,x);
-	}
 	/**
 	 * @api @public
 	 * @template {CF_L_Params} T
@@ -1864,8 +1856,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @template T @template {T} U @arg {T} v1 @arg {U} v2 */
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
-	/** @public @arg {string} x */
-	trackingParams(x) {this.params("params.tracking",x);}
 	/** @public @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();

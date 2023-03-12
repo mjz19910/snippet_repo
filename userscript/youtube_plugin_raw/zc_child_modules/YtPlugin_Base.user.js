@@ -2272,6 +2272,16 @@ class ServiceWithMembers extends ServiceWithAccessors {
 	logged_keys=[];
 }
 class BaseService extends ServiceWithMembers {
+	/** @public @arg {CF_P_ParamParse} cf @arg {string} x */
+	params(cf,x) {
+		this.ht.decode_binary_obj(cf,x);
+	}
+	/** @api @public @arg {CF_P_ParamParse} cf @arg {string} x */
+	playerParams(cf,x) {
+		this.ht.decode_binary_obj(cf,x);
+	}
+	/** @public @arg {string} x */
+	trackingParams(x) {this.params("params.tracking",x);}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_s(k,x,f) {
 		let tm=this;

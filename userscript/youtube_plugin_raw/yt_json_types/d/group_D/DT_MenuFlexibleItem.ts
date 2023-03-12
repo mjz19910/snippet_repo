@@ -1,4 +1,6 @@
+type DT_MenuItem_Button=R_Button|R_DownloadButton;
+
 type DT_MenuFlexibleItem={
-	menuItem: R_MenuServiceItem|R_MenuServiceItemDownload;
-	topLevelButton: R_Button;
+	menuItem: G_MenuItem_2;
+	topLevelButton: DT_MenuItem_Button;
 };

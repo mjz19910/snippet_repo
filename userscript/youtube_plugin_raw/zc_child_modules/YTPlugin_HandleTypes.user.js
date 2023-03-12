@@ -3377,6 +3377,83 @@ class HandleTypes extends BaseService {
 		this.sm.t(enablePerFormatLoudness,this.sm.a_primitive_bool);
 		this.t(muteOnStart,x => this.sm.cq(x,true));
 	}
+	/** @public @arg {CF_M_wn} cf @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	H_x(cf,k,x,f) {
+		if(!x) {debugger; return;}
+		let keys=this.get_keys_of(x);
+		if(keys.length!==1) {debugger; return;}
+		let wr=this.sm.wn(cf,x,k);
+		if(!wr) return;
+		return f.call(this,wr[0]);
+	}
+	/** @public @arg {R_MenuServiceItemDownload} x */
+	M_DownloadRenderer(x) {
+		const cf="M_DownloadRenderer";
+		this.H_x(cf,"menuServiceItemDownloadRenderer",x,x => {x;});
+	}
+	/** @public @arg {D_MenuServiceItemDownload} x */
+	D_MenuServiceItemDownload(x) {
+		const cf="D_MenuServiceItemDownload";
+		const {serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.sm.trackingParams(trackingParams);
+		if(!serviceEndpoint.offlineVideoEndpoint) debugger;
+		this.E_OfflineVideo(serviceEndpoint);
+	}
+	/** @public @arg {E_OfflineVideo} x */
+	E_OfflineVideo(x) {
+		const cf="E_OfflineVideo";
+		const {clickTrackingParams,offlineVideoEndpoint,...y}=this.s(cf,x); this.g(y);
+		this.sm.clickTrackingParams(clickTrackingParams);
+		this.DE_OfflineVideo(offlineVideoEndpoint);
+	}
+	/** @public @arg {DE_OfflineVideo} x */
+	DE_OfflineVideo(x) {
+		const cf="DE_OfflineVideo";
+		const {videoId,onAddCommand,...y}=this.s(cf,x); this.g(y);
+		this.sm.videoId(videoId);
+		this.AC_GetDownload(onAddCommand);
+	}
+	/** @private @arg {AC_GetDownload} x */
+	AC_GetDownload(x) {
+		const cf="AC_GetDownload";
+		const {clickTrackingParams,getDownloadActionCommand,...y}=this.s(cf,x); this.g(y);
+		this.sm.clickTrackingParams(clickTrackingParams);
+		this.DC_GetDownload(getDownloadActionCommand);
+	}
+	/** @private @arg {DC_GetDownload} x */
+	DC_GetDownload(x) {
+		const cf="DC_GetDownload";
+		const {videoId,params,offlineabilityEntityKey,...y}=this.s(cf,x); this.g(y);
+		this.sm.videoId(videoId);
+		this.sm.params("video.params",params);
+		this.sm.params("offlineability.entity_key",offlineabilityEntityKey);
+	}
+	/** @public @arg {G_MenuItem_2} x */
+	G_MenuItem_2(x) {
+		if("menuServiceItemRenderer" in x) return this.sm.R_MenuServiceItem(x);
+		if("menuServiceItemDownloadRenderer" in x) return this.M_DownloadRenderer(x);
+		debugger;
+	}
+	/** @public @arg {DT_MenuItem_Button} x */
+	DT_MenuItem_Button(x) {
+		if("downloadButtonRenderer" in x) return this.R_DownloadButton(x);
+		if("buttonRenderer" in x) return this.xm.R_Button(x);
+		debugger;
+	}
+	/** @private @arg {R_DownloadButton} x */
+	R_DownloadButton(x) {
+		this.H_s("downloadButtonRenderer",x,this.D_DownloadButton);
+	}
+	/** @private @arg {D_DownloadButton} x */
+	D_DownloadButton(x) {
+		const cf="D_DownloadButton";
+		const {trackingParams,style,size,targetId,command,...y}=this.s(cf,x); this.g(y);
+		this.trackingParams(trackingParams);
+		this.cq(style,"STYLE_DEFAULT");
+		this.cq(size,"SIZE_DEFAULT");
+		this.cq(targetId,"watch-download-button");
+		this.E_OfflineVideo(command);
+	}
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});
