@@ -1,3 +1,7 @@
+/* spell:words
+--- version_list item 1 ---
+v1 (cur): snippet_repo/javascript/group2/item_04.js
+*/
 window.__primitive_map__ ??= new Map();
 for (let[k,o] of Object.entries(window)) {
 	let mk = __primitive_map__.get(o);

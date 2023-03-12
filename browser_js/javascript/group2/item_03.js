@@ -1,3 +1,7 @@
+/* spell:words
+--- version_list item 1 ---
+v1 (cur): snippet_repo/javascript/group2/item_03.js
+*/
 x:{
 	if(!('temp1' in window)) {
 		if(queryObjects) {
