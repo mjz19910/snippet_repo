@@ -50,21 +50,50 @@ type YT_NetworklessRequestController_TestFns={
 	requestWithinAgeLimit(y: any,E: any): any;
 	retryQueuedRequests(): void;
 };
-class JSC_Context {
-	[x: `JSC$${number}_next_`]: (x: any) => any;
+class qa<YR={},RV={}> {
+	isRunning_: boolean;
 	yieldAllIterator_: {
-		next: {};
+		next: never;
+		throw: never;
 	}|null=null;
+	yieldResult: YR|undefined;
+	nextAddress: number;
+	finallyAddress_: number;
+	catchAddress_: number;
+	finallyContexts_: null;
+	abruptCompletion_: {
+		return: RV;
+	}|null;
+	constructor() {
+		this.isRunning_=!1;
+		this.yieldAllIterator_=null;
+		this.yieldResult=void 0;
+		this.nextAddress=1;
+		this.finallyAddress_=this.catchAddress_=0;
+		this.finallyContexts_=this.abruptCompletion_=null;
+	}
+	JSC$5671_next_(a: YR) {
+		this.yieldResult=a;
+	}
+	jumpTo(a: number) {
+		this.nextAddress=a;
+	}
+	return(a: RV) {
+		this.abruptCompletion_={return: a};
+		this.nextAddress=this.finallyAddress_;
+	}
 }
-const qa=JSC_Context;
 class qaa<T> {
-	[x: `JSC$${number}_context_`]: JSC_Context;
+	JSC$5676_context_: qa;
 	constructor(public program_: T) {
-		this.JSC$1000_context_=new qa;
+		this.JSC$5676_context_=new qa;
 	}
 }
 abstract class taa_base {
 	abstract next(v: any): any;
+	abstract throw(v: any): any;
+	abstract return(v: any): any;
+	abstract [Symbol.iterator](): this;
 }
 function maa(x: any) {
 	x;
@@ -72,7 +101,7 @@ function maa(x: any) {
 function raa(x: any,y: any,a: any,b: any): any {
 	x; y; a; b;
 };
-function naa(x: any,b: any) {
+function naa<T>(x: qa,b: qaa<T>) {
 	x; b;
 }
 function ya(a: any): {value: any,done: false;}|{value: undefined,done: true;} {
@@ -84,7 +113,7 @@ function ya(a: any): {value: any,done: false;}|{value: undefined,done: true;} {
 			value: b.value,done: !1
 		};
 	} catch(c) {
-		a.JSC$5676_context_.yieldResult=void 0,naa(a.JSC$5676_context_,c);
+		a.JSC$5676_context_.yieldResult=void 0,naa(a.JSC$5676_context_,c as qaa<any>);
 	} a.JSC$5676_context_.isRunning_=!1;
 	if(a.JSC$5676_context_.abruptCompletion_) {
 		b=a.JSC$5676_context_.abruptCompletion_;
@@ -97,18 +126,50 @@ function ya(a: any): {value: any,done: false;}|{value: undefined,done: true;} {
 		value: void 0,done: !0
 	};
 }
+
+function saa<T>(a: qaa<T>,b: any) {
+	maa(a.JSC$5676_context_);
+	var c=a.JSC$5676_context_.yieldAllIterator_;
+	if(c)
+		return raa(a,"return" in c? c["return"]:function(d: any) {
+			return {
+				value: d,
+				done: !0
+			};
+		}
+			,b,a.JSC$5676_context_.return);
+	a.JSC$5676_context_.return(b);
+	return ya(a);
+}
 class taa<T> extends taa_base {
-	next: (x: qaa<T>) => {value: any,done: false;}|{value: undefined,done: true;};
+	next(b: qaa<T>) {
+		let a=this.trg;
+		maa(a.JSC$5676_context_);
+		if(a.JSC$5676_context_.yieldAllIterator_) {
+			return raa(a,a.JSC$5676_context_.yieldAllIterator_.next,b,a.JSC$5676_context_.JSC$5671_next_);
+		}
+		a.JSC$5676_context_.JSC$5671_next_(b);
+		return ya(a);
+	}
+	throw(b: qaa<T>) {
+		let a=this.trg;
+		maa(a.JSC$5676_context_);
+		if(a.JSC$5676_context_.yieldAllIterator_) {
+			return raa(a,a.JSC$5676_context_.yieldAllIterator_["throw"],b,a.JSC$5676_context_.JSC$5671_next_);
+		}
+		naa(a.JSC$5676_context_,b);
+		return ya(a);
+	}
+	return(b: qaa<T>) {
+		return saa(this.trg,b);
+	}
+	[Symbol.iterator]() {
+		return this;
+	}
+	trg: qaa<T>;
 	constructor(public a: qaa<T>) {
 		super();
-		this.next=function(b) {
-			maa(a.JSC$5676_context_);
-			if(a.JSC$5676_context_.yieldAllIterator_) {
-				return raa(a,a.JSC$5676_context_.yieldAllIterator_.next,b,a.JSC$5676_context_.JSC$5671_next_);
-			}
-			a.JSC$5676_context_.JSC$1000_next_(b);
-			return ya(a);
-		};
+		this.trg=a;
 	}
 }
 function uaa<T>(x: T) {return x;}
