@@ -1,5 +1,5 @@
 type D_EndscreenElement={
-	style: "VIDEO"|"CHANNEL"|"WEBSITE"|"PLAYLIST";
+	style: "VIDEO"|"CHANNEL"|"WEBSITE"|"PLAYLIST"|"CREATOR_MERCHANDISE";
 	image: D_Thumbnail;
 	playlistLength?: G_Text;
 	icon?: D_Thumbnail;
@@ -17,6 +17,8 @@ type D_EndscreenElement={
 	subscribersText?: G_Text;
 	hovercardButton?: R_SubscribeButton;
 	trackingParams: string;
+	productPrice?: G_Text;
+	additionalFeesText?: G_Text;
 	isSubscribe?: boolean;
 	id: string;
 	thumbnailOverlays?: G_ThumbnailOverlayItem[];

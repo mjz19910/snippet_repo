@@ -3415,9 +3415,10 @@ class HandleTypes extends BaseService {
 	/** @public @arg {DE_OfflineVideo} x */
 	DE_OfflineVideo(x) {
 		const cf="DE_OfflineVideo";
-		const {videoId,onAddCommand,...y}=this.s(cf,x); this.g(y);
+		const {videoId,onAddCommand,action,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(videoId);
 		this.AC_GetDownload(onAddCommand);
+		this.t(action,x => this.cq(x,"ACTION_ADD"));
 	}
 	/** @private @arg {AC_GetDownload} x */
 	AC_GetDownload(x) {

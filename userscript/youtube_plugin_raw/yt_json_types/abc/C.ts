@@ -52,7 +52,6 @@ type DC_MusicLibraryStatusUpdate={libraryStatus: "MUSIC_LIBRARY_STATUS_IN_LIBRAR
 type DC_Next=DC_Generic_CTP;
 type DC_NextRadio=DC_Generic_CTP;
 type DC_PlayerSeek=DC_Generic;
-type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
 type DC_Reload=DC_Generic_CTP;
 type DC_ResetChannelUnreadCount={channelId: T_IdTemplate<"UC",D_UserIdStr>;};
 type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["targetId"];};

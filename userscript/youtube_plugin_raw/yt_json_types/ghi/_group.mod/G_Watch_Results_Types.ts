@@ -16,7 +16,7 @@ type G_ConversationBar=R_LiveChat|R_ConversationBar;
 type RG_Watch_ItemSection=TR_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem,"sid-wn-chips","watch-next-feed">;
 type G_Watch_SecondaryResults_G_SectionItem=R_CompactPlaylist|R_CompactVideo|R_CompactRadio|R_AdSlot;
 type G_Watch_AnyResultItem=R_RelatedChipCloud|RG_Watch_ItemSection;
-type G_Watch_SecondaryResults_Results={trackingParams: string; results: G_Watch_AnyResultItem[];};
+type G_Watch_SecondaryResults_Results={trackingParams: string; results: G_Watch_AnyResultItem[]; continuations?: [];};
 type G_Watch_SecondaryResults_Contents={contents: G_Watch_AnyResultItem[];};
 //#endregion
 //#region Watch ContentsItem

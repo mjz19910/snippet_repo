@@ -1034,9 +1034,10 @@ class Support_RS_Player extends BaseService {
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
 		const cf="D_EndscreenElement";
-		const {style,image,playlistLength,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,subscribersText,hovercardButton,trackingParams,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
+		const {style,image,playlistLength,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,subscribersText,hovercardButton,trackingParams,productPrice,additionalFeesText,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
 		switch(style) {
 			default: debugger; break;
+			case "CREATOR_MERCHANDISE":
 			case "CHANNEL":
 			case "VIDEO":
 			case "WEBSITE":
@@ -1059,6 +1060,8 @@ class Support_RS_Player extends BaseService {
 		this.sm.t(subscribersText,this.sm.G_Text);
 		this.xm.t(hovercardButton,this.xm.R_SubscribeButton);
 		this.sm.trackingParams(trackingParams);
+		this.sm.t(productPrice,this.sm.G_Text);
+		this.sm.t(additionalFeesText,this.sm.G_Text);
 		this.sm.t(isSubscribe,this.sm.a_primitive_bool);
 		this.sm.a_primitive_str(id);
 		this.xm.tz(thumbnailOverlays,this.xm.G_ThumbnailOverlayItem);
@@ -3089,8 +3092,8 @@ class Support_Renderer extends BaseService {
 			this.sm.params("player_state.entity.key",b);
 			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 			this.sm.a_primitive_str(timeDescriptionA11yLabel);
-			this.t_cf(cf,lightColorPalette,this.sm.D_LightColorPalette);
-			this.t_cf(cf,darkColorPalette,this.sm.D_DarkColorPalette);
+			this.t_cf(cf,lightColorPalette,(cf,x) => this.sm.D_LightColorPalette(cf,x));
+			this.t_cf(cf,darkColorPalette,(cf,x) => this.sm.D_DarkColorPalette(cf,x));
 			return;
 		}
 		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);

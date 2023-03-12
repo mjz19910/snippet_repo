@@ -2701,25 +2701,10 @@ class YtHandlers extends BaseService {
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
-	/** @api @public @arg {[()=>G_NavFinishDetail["response"], object, []]} apply_args */
-	on_initial_data(apply_args) {
-		/** @private @type {G_NavFinishDetail["response"]} */
-		let ret=Reflect.apply(...apply_args);
-		if(!("page" in ret)) {return ret;}
-		if(!ret.response) {
-			console.log("[unhandled_return_value]",ret);
-			debugger;
-		}
-		if(this.do_initial_data_trace) {
-			this.upgrade_obj(ret,{is_initial_data: true}).is_initial_data=true;
-			this.upgrade_obj(ret.endpoint,{is_initial_endpoint: true}).is_initial_endpoint=true;
-		}
-		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
+	/** @private @arg {G_RS_ByPageType} x */
+	plugin_run_on_data(x) {
 		/** @arg {G_RS_ByPageType} x */
-		let ok=(x) => {
-			this.x.get("x_EventInput").DataResponsePageType(x);
-		};
-		const x=ret;
+		let ok=x => this.x.get("x_EventInput").DataResponsePageType(x);
 		switch(x.page) {
 			case "browse": {
 				x: if("rootVe" in x) {if(x.rootVe!==3854) break x; ok(x); break;}
@@ -2736,6 +2721,26 @@ class YtHandlers extends BaseService {
 			case "settings":
 			case "shorts":
 			case "watch": ok(x); break;
+		}
+	}
+	/** @api @public @arg {[()=>G_NavFinishDetail["response"], object, []]} apply_args */
+	on_initial_data(apply_args) {
+		/** @private @type {G_NavFinishDetail["response"]} */
+		let ret=Reflect.apply(...apply_args);
+		if(!("page" in ret)) {return ret;}
+		if(!ret.response) {
+			console.log("[unhandled_return_value]",ret);
+			debugger;
+		}
+		if(this.do_initial_data_trace) {
+			this.upgrade_obj(ret,{is_initial_data: true}).is_initial_data=true;
+			this.upgrade_obj(ret.endpoint,{is_initial_endpoint: true}).is_initial_endpoint=true;
+		}
+		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
+		try {
+			this.plugin_run_on_data(ret);
+		} catch(e) {
+			console.log("plugin error",e);
 		}
 		let page_type=window.ytPageType;
 		if(!page_type) {

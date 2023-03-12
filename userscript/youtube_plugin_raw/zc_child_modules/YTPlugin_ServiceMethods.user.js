@@ -1271,7 +1271,10 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
 	/** @public @arg {E_VE6827} x */
-	E_VE6827(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);}
+	E_VE6827(x) {
+		let [a,b,{trackingParams,...y}]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);
+		this.t(trackingParams,this.trackingParams);
+	}
 	/** @public @arg {E_VE11487} x */
 	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
 	/** @public @arg {E_VE23462} x */
@@ -3001,9 +3004,10 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
 	G_Watch_SecondaryResults_Results(x) {
 		const cf="G_Watch_SecondaryResults_Results";
-		const {results,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {results,trackingParams,continuations,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(results,this.G_Watch_AnyResultItem);
 		this.trackingParams(trackingParams);
+		if(continuations&&continuations.length>0) debugger;
 	}
 	/** @private @arg {G_Watch_SecondaryResults} x */
 	G_Watch_SecondaryResults(x) {
@@ -4000,9 +4004,15 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
 		const cf="DC_RelatedChip";
-		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {targetSectionIdentifier,loadCached,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
+		this.tz(contents,x => {
+			if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+			if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			debugger;
+		});
 	}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
