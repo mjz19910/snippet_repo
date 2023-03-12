@@ -3996,12 +3996,7 @@ class ServiceMethods extends ServiceData {
 		const {targetSectionIdentifier,loadCached,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
-		this.tz(contents,x => {
-			if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-			if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			debugger;
-		});
+		this.ht.tz(contents,this.ht.G_RelatedItem);
 	}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
@@ -4273,7 +4268,7 @@ class ServiceMethods extends ServiceData {
 	R_CommentsEntryPointHeader(x) {this.H_s("commentsEntryPointHeaderRenderer",x,this.D_CommentsEntryPointHeader);}
 	/** @public @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_s("compactPlaylistRenderer",x,this.D_CompactPlaylist);}
-	/** @private @arg {R_CompactRadio} x */
+	/** @public @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_s("compactRadioRenderer",x,this.D_CompactRadio);}
 	/** @public @arg {R_EngagementPanelTitleHeader} x */
 	R_EngagementPanelTitleHeader(x) {this.H_s("engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}

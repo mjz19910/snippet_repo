@@ -3559,6 +3559,14 @@ class HandleTypes extends BaseService {
 		const {thumbnail,...y}=this.s(cf,x); y;
 		this.sm.D_TrackedThumbnail(thumbnail);
 	}
+	/** @public @arg {G_RelatedItem} x */
+	G_RelatedItem(x) {
+		if("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
+		if("compactRadioRenderer" in x) return this.sm.R_CompactRadio(x);
+		if("compactVideoRenderer" in x) return this.sm.R_CompactVideo(x);
+		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
+		debugger;
+	}
 	/** @public @arg {DU_UrlParams_PageAd_AClk} x */
 	DU_UrlParams_PageAd_AClk(x) {x;}
 }
