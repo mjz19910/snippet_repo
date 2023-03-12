@@ -2165,7 +2165,7 @@ class HandleTypes extends BaseService {
 		this.log_buffer.push(["number",`max_gen:V_ShortTimestamp:binary_ts_gen`,"f1","milliseconds",this.T_D32(request_timestamp_milli_utc)]);
 		this.immediate_run_logger();
 		let x2=this.T_D32(nanoseconds_ts);
-		if(x2<=0b111011001010010001111110101000) return;
+		if(x2<=0b111011001100100010101111000001) return;
 		console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${x2.toString(2)}]`);
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
@@ -3484,7 +3484,8 @@ class HandleTypes extends BaseService {
 		switch(pp[0]) {
 			default: debugger; break;
 			case "get_midroll_info": {
-				console.log("get_midroll_info",pp[1]);
+				let {...px}=this.parse_url_search_params(pp[1]);
+				console.log("get_midroll_info",px);
 			} break;
 		}
 	}
