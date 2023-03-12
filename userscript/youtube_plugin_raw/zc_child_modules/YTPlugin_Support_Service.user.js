@@ -4815,7 +4815,9 @@ class ForService_XMethods extends BaseService {
 	}
 	/** @private @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
 	DU_Url(x) {
-		this.DU_UrlParse(this._convert_url_to_obj(x));
+		const uo=this._convert_url_to_obj(x);
+		let {...pp}=this.parse_url_search_params(uo.search);
+		this.DU_UrlParse({host: uo.host,pathname: uo.pathname,search: pp});
 		(x => {
 			if(x.host!=="www.youtube.com") debugger;
 			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
@@ -4824,12 +4826,12 @@ class ForService_XMethods extends BaseService {
 			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
 		})(this._convert_url_to_obj(x));
 	}
-	/** @arg {{host:"www.youtube.com",pathname:"/pagead/paralleladinteraction",search:`?ai=${string}&sigh=${string}&cid=${string}&ad_mt=[AD_MT]&acvw=[VIEWABILITY]&gv=[GOOGLE_VIEWABILITY]&nb=%5BNB%5D&label=video_click_to_advertiser_site`}} x */
+	/** @arg {DU_UrlParse} x */
 	DU_UrlParse(x) {
 		const cf="DU_UrlParse";
 		this.save_primitive(`${cf}.host`,x.host);
 		if(x.pathname!=="/pagead/paralleladinteraction") debugger; this.save_primitive(`${cf}.pathname`,x.pathname);
-		this.sm.DU_UrlParams(this.parse_url_search_params(x.search));
+		this.sm.DU_UrlParams(x.search);
 	}
 	/** @private @arg {DE_Url} x */
 	DE_Url(x) {

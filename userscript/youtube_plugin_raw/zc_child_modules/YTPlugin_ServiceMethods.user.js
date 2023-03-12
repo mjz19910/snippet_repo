@@ -1281,7 +1281,7 @@ class ServiceMethods extends ServiceData {
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @public @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
-	/** @arg {DU_UrlParams} x */
+	/** @arg {DU_UrlParams_PageadParallelAdInteraction} x */
 	DU_UrlParams(x) {
 		const cf="DU_UrlParams";
 		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
@@ -3611,7 +3611,7 @@ class ServiceMethods extends ServiceData {
 	D_InstreamVideoAd(x) {
 		const cf="D_InstreamVideoAd";
 		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(skipOffsetMilliseconds);
+		this.t(skipOffsetMilliseconds,this.a_primitive_num);
 		this.ht.D_Pings(pings);
 		if(!clickthroughEndpoint.urlEndpoint) {debugger; return;}
 		this.xm.E_Url(clickthroughEndpoint);
@@ -3624,7 +3624,11 @@ class ServiceMethods extends ServiceData {
 		this.ht.D_SodarExtensionData(sodarExtensionData);
 		this.videoId(externalVideoId);
 		this.D_SerializedAdServingDataEntry(adLayoutLoggingData);
-		if(layoutId!=="") debugger;
+		let buffer=base64_dec.decodeByteArray(layoutId);
+		if(buffer) {
+			let str=this._decoder.decode(buffer.slice(0,2));
+			if(str!==null) console.log(str); else console.log(buffer);
+		} else debugger;
 	}
 	/** @public @arg {R_LinearAdSequence} x */
 	R_LinearAdSequence(x) {this.H_s("linearAdSequenceRenderer",x,this.D_LinearAdSequence);}

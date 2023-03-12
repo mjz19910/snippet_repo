@@ -1,5 +1,5 @@
 //#region Parsed Url (as objects)
-type DU_UrlParams={
+type DU_UrlParams_PageadParallelAdInteraction={
 	ai: string;
 	sigh: string;
 	cid: string;

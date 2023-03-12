@@ -1,5 +1,5 @@
 type D_InstreamVideoAd={
-	skipOffsetMilliseconds: number;
+	skipOffsetMilliseconds?: number;
 	pings: D_Pings;
 	clickthroughEndpoint: E_Url;
 	csiParameters: D_CsiParameterItem[];
@@ -11,5 +11,5 @@ type D_InstreamVideoAd={
 	sodarExtensionData: D_SodarExtensionData;
 	externalVideoId: string;
 	adLayoutLoggingData: D_SerializedAdServingDataEntry;
-	layoutId: string;
+	layoutId: "TUcDnyC2fuGT3fcz";
 };
