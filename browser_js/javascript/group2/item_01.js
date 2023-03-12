@@ -5,7 +5,7 @@ v2 (old): snippet_repo/javascript/final/items/item_01_v2.js
 v3 (unk): snippet_repo/javascript/group2/item_01.js
 */
 //cspell:disable
-let extensionId="cjpalhdlnbpafiamejdnhcphjbkeiagm";
+let extensionId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
 //cspell:enable
 // @ts-expect-error
 main(chrome);
@@ -19,15 +19,16 @@ function main(chrome) {
 		});
 	}
 	async function async_main() {
-		let activity_log=chrome.activityLogPrivate.getExtensionActivities({
+		let activity_log = chrome.activityLogPrivate.getExtensionActivities({
 			activityType: chrome.activityLogPrivate.ExtensionActivityFilter.ANY,
 			extensionId: extensionId
 		});
-		(async () => {
-			console.log('activity_log',await activity_log);
-		})();
+		(async()=>{
+			console.log('activity_log', await activity_log);
+		}
+		)();
 	}
-	async_main().then(() => console.log("done"));
+	async_main().then(()=>console.log("done"));
 	return {
 		load_activity_log
 	};
