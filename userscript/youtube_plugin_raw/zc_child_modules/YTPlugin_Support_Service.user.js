@@ -653,7 +653,11 @@ class Support_RS_Player extends BaseService {
 				}
 			});
 			this.sm.cq(hasDefaultTrack,true);
-			if(captionsInitialState!=="CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED") debugger;
+			switch(captionsInitialState) {
+				default: debugger; break;
+				case "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED":
+				case "CAPTIONS_INITIAL_STATE_ON_REQUIRED":
+			}
 			return;
 		}
 		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
@@ -2479,9 +2483,10 @@ class Support_Renderer extends BaseService {
 	/** @public @arg {D_TimedTextApi} x */
 	D_TimedTextApi(x) {
 		const cf="D_TimedTextApi";
-		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
+		let {v,caps,exp,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(v);
 		caps&&this.save_primitive(`${cf}.caps`,caps);
+		this.cq(exp,"xpo");
 		this.save_primitive(`${cf}.xoaf`,xoaf);
 		xoadf&&this.save_primitive(`${cf}.xoadf`,xoadf);
 		xosf&&this.save_primitive(`${cf}.xosf`,xosf);
@@ -2967,7 +2972,7 @@ class Support_Renderer extends BaseService {
 	D_DynamicReadaheadConfig(x) {
 		const cf="D_DynamicReadaheadConfig";
 		const {maxReadAheadMediaTimeMs,minReadAheadMediaTimeMs,readAheadGrowthRateMs,...y}=this.s(cf,x); this.g(y);
-		this.sm.cq(maxReadAheadMediaTimeMs,120000);
+		this.t(maxReadAheadMediaTimeMs,x => this.sm.cq(x,120000));
 		this.sm.cq(minReadAheadMediaTimeMs,15000);
 		this.sm.cq(readAheadGrowthRateMs,1000);
 	}

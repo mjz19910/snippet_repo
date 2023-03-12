@@ -1336,7 +1336,7 @@ type D_AudioTrackItem={
 	defaultCaptionTrackIndex: number;
 	visibility: "UNKNOWN"|"ON";
 	hasDefaultTrack: true;
-	captionsInitialState: "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED";
+	captionsInitialState: "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED"|"CAPTIONS_INITIAL_STATE_ON_REQUIRED";
 };
 type D_AutoplaySwitchButton={
 	onEnabledCommand: T_Setting_AutoNavForDesktop<true>;
@@ -1411,6 +1411,7 @@ type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_TimedTextApi={
 	v: DU_VideoId;
 	caps?: "asr";
+	exp?: "xpo";
 	xoaf: `${5}`;
 	xoadf?: string;
 	xosf?: `${1}`;
