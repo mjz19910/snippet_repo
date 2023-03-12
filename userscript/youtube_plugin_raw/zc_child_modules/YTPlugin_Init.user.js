@@ -14,12 +14,9 @@
 
 const {yt_plugin_base_main,do_export}=require("./YtPlugin_Base.user");
 
-(function() {
-	"use strict";
-	const __module_name__="mod$InitPlugin";
-	/** @private @arg {(x:typeof exports)=>void} fn */
-	function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-	export_(exports => {exports.__is_module_flag__=true; exports.__init_module__=true;});
-	yt_plugin_base_main();
-	export_(exports => exports.__module_loaded__=true);
-})();
+const __module_name__="mod$InitPlugin";
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true; exports.__init_module__=true;});
+yt_plugin_base_main();
+export_(exports => exports.__module_loaded__=true);
