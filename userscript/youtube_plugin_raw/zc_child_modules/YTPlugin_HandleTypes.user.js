@@ -3494,6 +3494,25 @@ class HandleTypes extends BaseService {
 		const {impressionPings,errorPings,mutePings,unmutePings,pausePings,rewindPings,resumePings,skipPings,closePings,progressPings,fullscreenPings,activeViewViewablePings,endFullscreenPings,activeViewMeasurablePings,abandonPings,activeViewFullyViewableAudibleHalfDurationPings,completePings,activeViewTracking,...y}=this.s(cf,x);
 		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_keys]`,k);}
 	}
+	/** @public @arg {D_CsiParameterItem} x */
+	D_CsiParameterItem(x) {
+		const cf="D_CsiParameterItem";
+		const {key,value}=x;
+		console.log(cf,key,value);
+	}
+	/** @public @arg {R_InstreamAdPlayerOverlay} x */
+	R_InstreamAdPlayerOverlay(x) {this.H_s("instreamAdPlayerOverlayRenderer",x,this.D_InstreamAdPlayerOverlay);}
+	/** @public @arg {D_SodarExtensionData} x */
+	D_SodarExtensionData(x) {
+		const cf="D_SodarExtensionData";
+		const {siub,bgub,scs,bgp,...y}=this.s(cf,x); this.g(y);
+		console.log(`${cf}.siub`,siub);
+		console.log(`${cf}.bgub`,bgub);
+		console.log(`${cf}.scs`,scs);
+		console.log(`${cf}.bgp`,bgp);
+	}
+	/** @private @arg {D_InstreamAdPlayerOverlay} x */
+	D_InstreamAdPlayerOverlay(x) {x;}
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});

@@ -3613,16 +3613,17 @@ class ServiceMethods extends ServiceData {
 		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(skipOffsetMilliseconds);
 		this.ht.D_Pings(pings);
-		this.g(clickthroughEndpoint);
-		this.z(csiParameters,this.g);
+		if(!clickthroughEndpoint.urlEndpoint) {debugger; return;}
+		this.xm.E_Url(clickthroughEndpoint);
+		this.z(csiParameters,x => this.ht.D_CsiParameterItem(x));
 		this.params("instream_video_ad.player_vars",playerVars);
-		this.g(playerOverlay);
+		this.ht.R_InstreamAdPlayerOverlay(playerOverlay);
 		this.save_primitive(`${cf}.elementId`,elementId);
 		this.trackingParams(trackingParams);
 		if(legacyInfoCardVastExtension!=="") debugger;
-		this.g(sodarExtensionData);
+		this.ht.D_SodarExtensionData(sodarExtensionData);
 		this.videoId(externalVideoId);
-		this.g(adLayoutLoggingData);
+		this.D_SerializedAdServingDataEntry(adLayoutLoggingData);
 		if(layoutId!=="") debugger;
 	}
 	/** @public @arg {R_LinearAdSequence} x */
