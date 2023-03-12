@@ -2582,6 +2582,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {bigint} big_num */
 	dec_num64(big_num) {
+		if(big_num===void 0) debugger;
 		if(big_num>0xffffffffffffff00n) {
 			let ba=new BigInt64Array(1);
 			ba[0]=big_num; return ba[0];
