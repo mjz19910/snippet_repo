@@ -1249,7 +1249,7 @@ type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;
 type D_AccountSettingIdList=[407];
 type D_AdBreakService={
 	prefetchMilliseconds: "10000";
-	getAdBreakUrl: string;
+	getAdBreakUrl: `https://www.youtube.com/get_midroll_info?${string}`;
 };
 type D_AdHoverTextButton={
 	button: R_Button;
@@ -1265,7 +1265,7 @@ type D_AdPlacementConfig={
 };
 type D_AdTimeOffset={
 	offsetStartMilliseconds: `${number}`;
-	offsetEndMilliseconds: "-1";
+	offsetEndMilliseconds: "-1"|`${number}`;
 };
 type QualArr=[
 	...make_qual_for_fps<50>,

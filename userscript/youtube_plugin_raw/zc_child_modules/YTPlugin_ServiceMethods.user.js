@@ -3603,18 +3603,9 @@ class ServiceMethods extends ServiceData {
 		this.MG_AdLayout(adLayoutMetadata);
 		this.R_VideoMastheadAdV3(renderingContent);
 	}
-	/** @private @arg {R_AdBreakService} x */
-	R_AdBreakService(x) {this.H_s("adBreakServiceRenderer",x,this.D_AdBreakService);}
-	/** @private @arg {D_AdBreakService} x */
-	D_AdBreakService(x) {
-		const cf="D_AdBreakService";
-		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
-		if(prefetchMilliseconds!=="10000") debugger;
-		debugger;
-	}
 	/** @private @arg {R_AdActionInterstitial} x */
 	R_AdActionInterstitial(x) {this.H_s("adActionInterstitialRenderer",x,this.g);}
-	/** @private @arg {R_InstreamVideoAd} x */
+	/** @public @arg {R_InstreamVideoAd} x */
 	R_InstreamVideoAd(x) {this.H_s("instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
 	/** @private @arg {D_InstreamVideoAd} x */
 	D_InstreamVideoAd(x) {
@@ -3634,15 +3625,7 @@ class ServiceMethods extends ServiceData {
 		this.g(adLayoutLoggingData);
 		if(layoutId!=="") debugger;
 	}
-	/** @public @arg {G_AdPlacementRendererItem} x */
-	G_AdPlacementRendererItem(x) {
-		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
-		if("clientForecastingAdRenderer" in x) return this.xm.R_ClientForecastingAd(x);
-		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
-		if("linearAdSequenceRenderer" in x) return this.R_LinearAdSequence(x);
-		debugger;
-	}
-	/** @private @arg {R_LinearAdSequence} x */
+	/** @public @arg {R_LinearAdSequence} x */
 	R_LinearAdSequence(x) {this.H_s("linearAdSequenceRenderer",x,this.D_LinearAdSequence);}
 	/** @private @arg {D_LinearAdSequence} x */
 	D_LinearAdSequence(x) {

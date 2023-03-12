@@ -764,7 +764,7 @@ class HandleTypes extends BaseService {
 			case "l6": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "l ":
 			case "r6": case "r ": case "r ": case "r ": case "r ": case "rl": case "rr": case "r ": case "r ": case "r ":
 			case "s6": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sy": case "sz":
-			case "z ": case "z7": case "zd": case "ze": case "zk": case "z ": case "zr": case "zs": case "zy": case "zz":
+			case "z6": case "z7": case "zd": case "ze": case "zk": case "z ": case "zr": case "zs": case "zy": case "zz":
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
 				break;
 		}
@@ -3462,6 +3462,31 @@ class HandleTypes extends BaseService {
 		this.cq(size,"SIZE_DEFAULT");
 		this.cq(targetId,"watch-download-button");
 		this.E_OfflineVideo(command);
+	}
+	/** @public @arg {G_AdPlacementRendererItem} x */
+	G_AdPlacementRendererItem(x) {
+		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
+		if("clientForecastingAdRenderer" in x) return this.xm.R_ClientForecastingAd(x);
+		if("instreamVideoAdRenderer" in x) return this.sm.R_InstreamVideoAd(x);
+		if("linearAdSequenceRenderer" in x) return this.sm.R_LinearAdSequence(x);
+		debugger;
+	}
+	/** @private @arg {R_AdBreakService} x */
+	R_AdBreakService(x) {this.H_s("adBreakServiceRenderer",x,this.D_AdBreakService);}
+	/** @private @arg {D_AdBreakService} x */
+	D_AdBreakService(x) {
+		const cf="D_AdBreakService";
+		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
+		if(prefetchMilliseconds!=="10000") debugger;
+		let p1=split_string(getAdBreakUrl,"://")[1];
+		let p2=split_string(p1,"/");
+		let pp=split_string_once(p2[1],"?");
+		switch(pp[0]) {
+			default: debugger; break;
+			case "get_midroll_info": {
+				console.log("get_midroll_info",pp[1]);
+			} break;
+		}
 	}
 }
 //#endregion

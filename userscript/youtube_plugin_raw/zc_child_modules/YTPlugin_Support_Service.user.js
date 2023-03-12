@@ -746,7 +746,7 @@ class Support_RS_Player extends BaseService {
 		const cf="D_AdPlacement";
 		const {config,renderer,...y}=this.s(cf,x); this.g(y);
 		this.R_AdPlacementConfig(config);
-		this.sm.G_AdPlacementRendererItem(renderer);
+		this.ht.G_AdPlacementRendererItem(renderer);
 	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
@@ -1036,7 +1036,7 @@ class Support_RS_Player extends BaseService {
 		const cf="D_AdTimeOffset";
 		const {offsetStartMilliseconds,offsetEndMilliseconds,...y}=this.s(cf,x); this.g(y);
 		this.sm.a_primitive_str(offsetStartMilliseconds);
-		if(offsetEndMilliseconds!=="-1") debugger;
+		this.sm.a_primitive_str(offsetEndMilliseconds);
 	}
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
