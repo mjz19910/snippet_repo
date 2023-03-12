@@ -2599,6 +2599,8 @@ class BaseService extends ServiceWithMembers {
 	mu(x) {return x.v;}
 	/** @arg {(this:this,x:T)=>U} y @template T @arg {Some<T>} x @template U @returns {Some<U>} */
 	mt(x,y) {return this.m(y.call(this,x.v));}
+	/** @arg {(this:this,x:T)=>U} y @template {{}} T @arg {Some<T|null|undefined>} x @template U @returns {Some<U|null>} */
+	m_t(x,y) {return this.m(this.t_base(x.v,y));}
 	/** @arg {(this:this,x:T)=>U} y @template {{}} T @template {Some<T[]>} Opt @arg {Opt} x @template U */
 	mz(x,y) {return this.mt(x,x => this.z(x,y));}
 	/** @arg {(this:this,x:T)=>U} f @template T @arg {Some<T>} m @template U */
@@ -2607,6 +2609,10 @@ class BaseService extends ServiceWithMembers {
 	ms(x,y) {return this.mt(this.m(x),y);}
 	/** @template {{}} T @arg {T|undefined} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U|null>} */
 	ms_t(x,y) {return this.ms(x,x => this.t_base(x,y));}
+	/** @template {{}} T1 @arg {Some<T1|undefined>} x @template {{}} T2 @arg {(this:this,x:T1)=>T2} y @template T3 @arg {(this:this,x:T2)=>T3} z @returns {Some<T3|null>} */
+	m2_t(x,y,z) {return this.m_t(this.m_t(x,y),z);}
+	/** @template {{}} T1 @arg {T1|undefined} x @template {{}} T2 @arg {(this:this,x:T1)=>T2} y @template T3 @arg {(this:this,x:T2)=>T3} z @returns {Some<T3|null>} */
+	ms2_t(x,y,z) {return this.m2_t(this.m(x),y,z);}
 	/** @template {{}} T @arg {Some<T|null>} x @template U @arg {(this:this,x:T)=>U} y @returns {Some<U|null>} */
 	mt_t(x,y) {return this.mt(x,x => this.t_base(x,y));}
 	/** @template {string} T_CF @arg {T_CF} cf @arg {(this:this,cf:T_CF,x:T)=>U} f @template T @arg {Some<T>} m @template U @returns {Some<U|null>} */

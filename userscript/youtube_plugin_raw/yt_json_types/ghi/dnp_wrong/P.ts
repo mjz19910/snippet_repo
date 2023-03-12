@@ -183,7 +183,7 @@ type P_unsubscribe_params={
 type PX_watch_next_token_info={
 	2: TV_Str<DU_VideoId>;
 	4?: TV_Str<string>;
-	6?: T_VW<{}>;
+	6?: TV_Str<string>;
 	7?: T_D32<18>;
 	24?: T_D32<0>;
 	25?: T_D32<0>;

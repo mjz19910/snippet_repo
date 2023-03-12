@@ -367,6 +367,11 @@ class HandleTypes extends BaseService {
 		if(!x) debugger;
 		return this.T_RawChild(x)[3][1];
 	}
+	/** @private @template {string} T @arg {["v_param_arr", [[any,any,any,["string",T]]]]} x */
+	TA_Str(x) {
+		if(!x) debugger;
+		return this.T_RawChild(x)[3][1];
+	}
 	/** @protected @template T @template {string} Str @arg {T_VW<T>|TV_Str_CS<Str>} x */
 	T_PArr_1(x) {return x[1];}
 	/** @protected @template J @template {T_PArr_1<[J]>} T @arg {T} x @returns {T[1][0]} */
@@ -2171,7 +2176,7 @@ class HandleTypes extends BaseService {
 	P_logging_context_serialized_context_data(x) {
 		const cf="P_logging_context_serialized_context_data",t=this;
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		v1&&this.PK_f1(this.T_VW(v1));
+		v1&&this.PK_f1("lc.scd",this.T_VW(v1));
 		t.t(t.t(v3,x => t.TV_Str(x)),x => this.sm.playlistId(x));
 	}
 	/** @type {string[]} */
@@ -2363,11 +2368,11 @@ class HandleTypes extends BaseService {
 		this.V_ShortTimestamp(this.T_VW(f4));
 		this.t(f5,x => this.save_primitive(`${cf}.f5`,this.T_D32(x)));
 	}
-	/** @private @arg {PK_f1} x */
-	PK_f1(x) {
-		const cf="PK_f1";
-		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_primitive(`${cf}.data`,this.T_D32(v1));
+	/** @private @template {string} T @arg {T} cf1 @arg {PK_f1} x */
+	PK_f1(cf1,x) {
+		const cf2=`${cf1}_PK_f1`;
+		const {1: v1,...y}=this.s(as(cf2),x); this.h_gen_keys(cf2,x,y);/*#destructure_start*/
+		this.save_primitive(`${cf2}.data`,this.T_D32(v1));
 	}
 	/** @protected @template T @arg {{1:T}} x */
 	PT_f1(x) {
@@ -2380,7 +2385,7 @@ class HandleTypes extends BaseService {
 		const cf="P_playability_status_context_params";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
-		this.PK_f1(this.T_VW(v2));
+		this.PK_f1("cp",this.T_VW(v2));
 	}
 	//#endregion
 	/** @private @arg {P_reel_params} x */
@@ -2478,24 +2483,20 @@ class HandleTypes extends BaseService {
 		const {3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f3`,this.T_D32(f3));
 	}
-	R_obj1(x) {x;}
+	/** @private @arg {R_obj1} x */
+	R_obj1(x) {
+		const cf="R_obj1";
+		const {1: v1,3: v3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
 		const cf="P_reel_sequence_params";
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(v1,x => this.sm.videoId(this.TV_Str(x)));
-		this.t(v3,x => {
-			let [,v1]=x; v1;
-			console.log(`${cf}.f3`,this.T_VW(x));
-		});
+		this.t(v3,x => this.R_obj1(this.T_VW(x)));
 		this.TX_sequence_info(this.T_VW(f5));
-		this.t(f8,x => {
-			let [,[v1,...v1y]]=x; v1; if(v1y.length!==0) debugger;
-			if(v1[0]!=="v_child") {debugger; return;}
-			let [,,,[,v_str]]=v1;
-			if(v_str.length>0) console.log(`${cf}.f8`,v_str);
-		});
-		f8; f12;
+		this.ms2_t(f8,this.TA_Str,x => x!==""&&console.log(`${cf}.f8`,x));
+		this.t(f12,x => this.sm.cq(this.TV_Str(x),"RDSH"));
 	}
 	/** @private @arg {PX_watch_sequence_info} x */
 	PX_watch_sequence_info(x) {
@@ -2561,13 +2562,25 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f7; f12; f13; f27;
 	}
+	// cspell:ignoreRegexp /0x[0-9a-fA-F_]+n/
+	/** @arg {string} cf @arg {bigint} big_num */
+	log_big_num(cf,big_num) {
+		if(big_num>0xffffffffffffff00n) {
+			let ba=new BigInt64Array(1);
+			ba[0]=big_num; big_num=ba[0];
+		}
+		console.log(cf,big_num);
+	}
 	/** @private @arg {PX_watch_next_token_info} x */
 	PX_watch_next_token_info(x) {
 		const cf="PX_watch_next_token_info";
 		const {2: v2,4: f4,6: f6,7: f7,24: f24,25: f25,28: f28,36: f36,47: f47,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(v2));
 		this.t(this.ms_t(f4,this.TV_Str).v,x => console.log(`${cf}.f4`,x));
-		this.t(this.ms_t(f6,x => x[1][0][3][1]).v,x => x!==""&&console.log(`${cf}.f6`,x));
+		this.t(this.ms_t(f6,this.TA_Str).v,x => {
+			if(x==="") return;
+			this.params("watch_next_info_next1",x);
+		});
 		this.t(this.ms_t(f7,this.T_D32).v,x => console.log(`${cf}.f7`,x));
 		this.t(this.ms_t(f24,this.T_D32).v,x => console.log(`${cf}.f24`,x));
 		this.t(this.ms_t(f25,this.T_D32).v,x => x!==0&&console.log(`${cf}.f25`,x));
@@ -2576,7 +2589,8 @@ class HandleTypes extends BaseService {
 			/** @type {`${cf}.f36`} */
 			const cf2=`${cf}.f36`;
 			const {5: f5,8: f8,...y}=this.s(cf2,x); this.h_gen_keys(cf2,x,y);/*#destructure_start*/
-			console.log(cf2,"f5",this.T_D64(f5),"f8",this.T_D32(f8));
+			this.log_big_num(`${cf2}.f5`,this.T_D64(f5));
+			console.log(`${cf2}.f8`,this.T_D32(f8));
 		});
 		this.t(this.ms_t(f47,this.T_D32).v,x => x!==0&&console.log(`${cf}.f47`,x));
 	}
@@ -2665,7 +2679,7 @@ class HandleTypes extends BaseService {
 	P_unsubscribe_params(x) {
 		const cf="P_unsubscribe_params";
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.PK_f1(this.T_VW(v1));
+		this.PK_f1("up",this.T_VW(v1));
 		this.t(v2,x => this.sm.videoId(this.TV_Str_ex(x)));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
@@ -2673,7 +2687,7 @@ class HandleTypes extends BaseService {
 	P_subscribe_params(x) {
 		const cf="P_subscribe_params";
 		const {2: v2,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.PK_f1(this.T_VW(v2));
+		this.PK_f1("sp",this.T_VW(v2));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		f4;
 	}
@@ -2836,7 +2850,7 @@ class HandleTypes extends BaseService {
 	P_notification_record_interactions(x) {
 		const cf="P_notification_record_interactions";
 		const {2: v2,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.PK_f1(this.T_VW(v2));
+		this.PK_f1("nri",this.T_VW(v2));
 		f5;
 	}
 	/** @private @template {string} T @arg {TW_Str2<T>} x */
