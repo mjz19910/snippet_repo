@@ -10,11 +10,46 @@ namespace YT_Base_source {
 		}),
 			10<Ux.length&&Ux.shift()));
 	}
-	class Fo<T> {
+	class Eo<T> {
 		j: T;
-		constructor(a: T) {
+		constructor(a) {
 			this.j=a;
 		}
+		get(a: any) {
+			if(a=this.u(a)) {
+				if(a=a.data,
+					void 0===a)
+					throw "Storage: Invalid value was encountered";
+			} else
+				a=void 0;
+			return a;
+		}
+		u(a) {
+			a=Eo.Df.get.call(this,a);
+			if(void 0===a||a instanceof Object)
+				return a;
+			throw "Storage: Invalid value was encountered";
+		}
+	}
+	class Fo<T> extends Eo<T> {
+		static Df={
+			u: Eo.prototype.u,
+		};
+		u(a,b) {
+			var c=Fo.Df.u.call(this,a);
+			if(c)
+				if(!b&&g.wla(c))
+					Fo.prototype.remove.call(this,a);
+				else
+					return c;
+		}
+	}
+	abstract class So_Base {
+		abstract isAvailable(): boolean;
+	}
+	class So extends So_Base {
+		constructor(public x: any) {super();}
+		isAvailable(): boolean {return false;};
 	}
 	class Nx<T> {
 		j: Fo<T>|null;
@@ -35,8 +70,25 @@ namespace YT_Base_source {
 			let a_=b;
 			this.j=a_? new Fo(a):null;
 		}
-		get(x: string,def: any) {
-			this.j.get(a);
+		get(a: string,b: any) {
+			var c: string|undefined=void 0
+				,d=!this.j;
+			if(!d)
+				try {
+					c=this.j!.get(a);
+				} catch(e) {
+					d=!0;
+				}
+			if(d&&(c=g.Rw(a))&&(c=unescape(c),
+				b))
+				try {
+					c=JSON.parse(c);
+				} catch(e) {
+					this.remove(a),
+						c=void 0;
+				}
+			return c;
+
 		}
 	}
 	var Ox=function() {
@@ -104,43 +156,122 @@ namespace YT_Base_source {
 			return a;
 		});
 	}
-	var g={
-		ba: (a: string,b: any): void => {a; b;},
-		Ca: (a: any,b: any,c?: any): void => {a; b; c;},
-		A: function <T>(a: (x2: ia) => any): Promise<T> {
+	namespace g {
+		export function ba(a: string,b: any) {
+			a; b;
+		}
+		export function Ca(a: any,b: any,c?: any) {
+			a; b; c;
+		}
+		export function A<T>(a: (x2: ia) => any): Promise<T> {
 			return maa(new laa(new jaa(a)));
-		},
-		Wo: function(a: any) {
+		}
+		export function Wo(a: any) {
 			var b=new Jo;
 			return b.isAvailable()? a? new Vo(b,a):b:null;
-		},
-	};
-	function ka(a) {
+		}
+		export class Do<T> {
+			j: T;
+			constructor(a: T) {
+				this.j=a;
+			}
+			get(a: any): any {
+				try {
+					var b=this.j.get(a);
+				} catch(c) {
+					return;
+				}
+				if(null!==b)
+					try {
+						return JSON.parse(b);
+					} catch(c) {
+						throw "Storage: Invalid value was encountered";
+					}
+			};
+		}
+	}
+	function ka(a: {J: boolean;}) {
 		if(a.J)
 			throw new TypeError("Generator is already running");
 		a.J=!0;
 	}
 	// var maa=uaa;
 	var maa=function <U>(a: laa): Promise<U> {
-		function b(d) {
+		function b(d: any) {
 			return a.next(d);
 		}
-		function c(d) {
+		function c(d: any) {
 			return a.throw(d);
 		}
-		return new Promise(function(d,e) {
-			function f(h) {
+		function run_promise(d: (value: U|PromiseLike<U>) => void,e: (reason?: any) => void) {
+			function f(h: {done: boolean,value: any;}) {
 				h.done? d(h.value):Promise.resolve(h.value).then(b,c).then(f,e);
 			}
 			f(a.next());
 		}
-		);
+		return new Promise(run_promise);
 	};
-	function kaa<T>(a: qaa<T>,b: any) {
+	function la(a: any,b: any) {
+		a.B={
+			GS: b,
+			iU: !0
+		};
+		a.j=a.I||a.D;
+	}
+	function ta(a: any) {
+		for(;a.j.j;)
+			try {
+				var b=a.u(a.j);
+				if(b)
+					return a.j.J=!1,
+					{
+						value: b.value,
+						done: !1
+					};
+			} catch(c) {
+				a.j.u=void 0,
+					la(a.j,c);
+			}
+		a.j.J=!1;
+		if(a.j.B) {
+			b=a.j.B;
+			a.j.B=null;
+			if(b.iU)
+				throw b.GS;
+			return {
+				value: b.return,
+				done: !0
+			};
+		}
+		return {
+			value: void 0,
+			done: !0
+		};
+	}
+	function sa(a: any,b: any,c: any,d: any) {
+		try {
+			var e=b.call(a.j.C,c);
+			if(!(e instanceof Object))
+				throw new TypeError("Iterator result "+e+" is not an object");
+			if(!e.done)
+				return a.j.J=!1,
+					e;
+			var f=e.value;
+		} catch(h) {
+			return a.j.C=null,
+				la(a.j,h),
+				ta(a);
+		}
+		a.j.C=null;
+		d.call(a.j,f);
+		return ta(a);
+
+	}
+	function kaa<T>(a: jaa<T>,b: any) {
 		ka(a.j);
 		var c=a.j.C;
 		if(c)
-			return sa(a,"return" in c? c["return"]:function(d) {
+			return sa(a,"return" in c? c["return"]:function(d: any) {
 				return {
 					value: d,
 					done: !0
@@ -181,15 +312,24 @@ namespace YT_Base_source {
 			};
 		}
 	}
-	class ia {
+	class ia<YR={},RV={}> {
+		// isRunning_
 		J: boolean;
+		// yieldAllIterator_
 		C: null;
-		u: undefined;
+		// yieldResult
+		u: YR|undefined;
+		// nextAddress
 		j: number;
+		// finallyAddress_
 		D: number;
+		// catchAddress_
 		I: number;
+		// finallyContexts_
 		Y: null;
-		B: null;
+		B: {
+			return: RV;
+		}|null;
 		constructor() {
 			this.J=!1;
 			this.C=null;
@@ -197,6 +337,20 @@ namespace YT_Base_source {
 			this.j=1;
 			this.D=this.I=0;
 			this.Y=this.B=null;
+		}
+		// JSC$5671_next_
+		V(a: YR) {
+			this.u=a;
+		}
+		return(a: RV) {
+			this.B={
+				return: a
+			};
+			this.j=this.D;
+		}
+		// jumpTo
+		Ja(a: number) {
+			this.j=a;
 		}
 	}
 	// var jaa=qaa;

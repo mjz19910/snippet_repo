@@ -50,12 +50,14 @@ type YT_NetworklessRequestController_TestFns={
 	requestWithinAgeLimit(y: any,E: any): any;
 	retryQueuedRequests(): void;
 };
+type V_YieldAllIterator={
+	next: never;
+	throw: never;
+};
+
 class qa<YR={},RV={}> {
 	isRunning_: boolean;
-	yieldAllIterator_: {
-		next: never;
-		throw: never;
-	}|null=null;
+	yieldAllIterator_: V_YieldAllIterator|null=null;
 	yieldResult: YR|undefined;
 	nextAddress: number;
 	finallyAddress_: number;
