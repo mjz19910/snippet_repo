@@ -3488,6 +3488,12 @@ class HandleTypes extends BaseService {
 			} break;
 		}
 	}
+	/** @public @arg {D_Pings} x */
+	D_Pings(x) {
+		const cf="D_Pings";
+		const {impressionPings,errorPings,mutePings,unmutePings,pausePings,rewindPings,resumePings,skipPings,closePings,progressPings,fullscreenPings,activeViewViewablePings,endFullscreenPings,activeViewMeasurablePings,abandonPings,activeViewFullyViewableAudibleHalfDurationPings,completePings,activeViewTracking,...y}=this.s(cf,x);
+		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_keys]`,k);}
+	}
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});

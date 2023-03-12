@@ -1257,7 +1257,11 @@ type D_AdHoverTextButton={
 	trackingParams: string;
 };
 type D_AdLayout={serializedAdServingDataEntry: string;};
-type D_AdPlacement={config: R_AdPlacementConfig; renderer: G_AdPlacementRendererItem;};
+type D_AdPlacement={
+	config: R_AdPlacementConfig;
+	renderer: G_AdPlacementRendererItem;
+	adSlotLoggingData?: D_SerializedSlotAdServingDataEntry;
+};
 type D_AdPlacementConfig={
 	kind: DE_AdPlacementKind;
 	adTimeOffset?: D_AdTimeOffset;
@@ -1879,21 +1883,6 @@ type D_InfoRow={
 	expandIcon?: T_Icon<"EXPAND">;
 	trackingParams: string;
 	infoRowExpandStatusKey?: D_Element_StructuredDescription;
-};
-type D_InstreamVideoAd={
-	skipOffsetMilliseconds: number;
-	pings: {};
-	clickthroughEndpoint: {};
-	csiParameters: {}[];
-	playerVars: string;
-	playerOverlay: {};
-	elementId: string;
-	trackingParams: string;
-	legacyInfoCardVastExtension: string;
-	sodarExtensionData: {};
-	externalVideoId: string;
-	adLayoutLoggingData: {};
-	layoutId: string;
 };
 type D_InvalidationId={
 	objectSource: number;

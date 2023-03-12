@@ -3612,7 +3612,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_InstreamVideoAd";
 		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(skipOffsetMilliseconds);
-		this.g(pings);
+		this.ht.D_Pings(pings);
 		this.g(clickthroughEndpoint);
 		this.z(csiParameters,this.g);
 		this.params("instream_video_ad.player_vars",playerVars);
@@ -5887,6 +5887,44 @@ class ServiceMethods extends ServiceData {
 			return;
 		}
 		this.g(u);
+	}
+	/** @public @arg {R_AdPlacement} x */
+	R_AdPlacement(x) {this.H_("adPlacementRenderer",x,this.D_AdPlacement);}
+	/** @private @arg {D_AdPlacement} x */
+	D_AdPlacement(x) {
+		const cf="D_AdPlacement";
+		const {config,renderer,adSlotLoggingData,...y}=this.s(cf,x); this.g(y);
+		this.R_AdPlacementConfig(config);
+		this.ht.G_AdPlacementRendererItem(renderer);
+		this.t(adSlotLoggingData,x => this.sm.D_SerializedSlotAdServingDataEntry(x));
+	}
+	/** @private @arg {R_AdPlacementConfig} x */
+	R_AdPlacementConfig(x) {this.H_("adPlacementConfig",x,this.D_AdPlacementConfig);}
+	/** @private @arg {D_AdPlacementConfig} x */
+	D_AdPlacementConfig(x) {
+		const cf="D_AdPlacementConfig";
+		const {kind,adTimeOffset,hideCueRangeMarker,...y}=this.s(cf,x); this.g(y);
+		this.DE_AdPlacementKind(kind);
+		this.t(adTimeOffset,this.D_AdTimeOffset);
+		this.sm.cq(hideCueRangeMarker,true);
+	}
+	/** @private @arg {DE_AdPlacementKind} x */
+	DE_AdPlacementKind(x) {
+		const cf="DE_AdPlacementKind"; let v=x;
+		switch(x) {
+			default: console.log(`${cf}.split`,v.split("AD_PLACEMENT_KIND_")); debugger; break;
+			case "AD_PLACEMENT_KIND_MILLISECONDS":
+			case "AD_PLACEMENT_KIND_END":
+			case "AD_PLACEMENT_KIND_SELF_START":
+			case "AD_PLACEMENT_KIND_START":
+		}
+	}
+	/** @private @arg {D_AdTimeOffset} x */
+	D_AdTimeOffset(x) {
+		const cf="D_AdTimeOffset";
+		const {offsetStartMilliseconds,offsetEndMilliseconds,...y}=this.s(cf,x); this.g(y);
+		this.sm.a_primitive_str(offsetStartMilliseconds);
+		this.sm.a_primitive_str(offsetEndMilliseconds);
 	}
 	//#endregion
 	//#region imports

@@ -518,7 +518,7 @@ class Support_RS_Player extends BaseService {
 		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
 		this.t(captions,this.R_PlayerCaptionsTracklist);
 		this.tz(adPlacements,x => {
-			if("adPlacementRenderer" in x) return this.R_AdPlacement(x);
+			if("adPlacementRenderer" in x) return this.sm.R_AdPlacement(x);
 			let ka=this.get_keys_of(x);
 			if(ka.length!==0) debugger;
 		});
@@ -533,8 +533,6 @@ class Support_RS_Player extends BaseService {
 	}
 	/** @private @arg {R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("endscreenElementRenderer",x,this.D_EndscreenElement);}
-	/** @private @arg {R_AdPlacementConfig} x */
-	R_AdPlacementConfig(x) {this.H_("adPlacementConfig",x,this.D_AdPlacementConfig);}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
 	/** @private @arg {R_Miniplayer} x */
@@ -551,8 +549,6 @@ class Support_RS_Player extends BaseService {
 	R_CardCollection(x) {this.H_("cardCollectionRenderer",x,this.D_CardCollection);}
 	/** @private @arg {R_PlayerMicroformat} x */
 	R_PlayerMicroformat(x) {this.H_("playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
-	/** @private @arg {R_AdPlacement} x */
-	R_AdPlacement(x) {this.H_("adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @private @arg {R_Endscreen} x */
 	R_Endscreen(x) {this.H_("endscreenRenderer",x,this.D_Endscreen);}
 	/** @private @arg {R_PaidContentOverlay} x */
@@ -741,13 +737,6 @@ class Support_RS_Player extends BaseService {
 		this.sm.a_primitive_str(uploadDate);
 		this.t(learningResource,this.D_LearningResource);
 	}
-	/** @private @arg {D_AdPlacement} x */
-	D_AdPlacement(x) {
-		const cf="D_AdPlacement";
-		const {config,renderer,...y}=this.s(cf,x); this.g(y);
-		this.R_AdPlacementConfig(config);
-		this.ht.G_AdPlacementRendererItem(renderer);
-	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
 		const cf="D_PlayerCaptionsTracklist";
@@ -788,25 +777,6 @@ class Support_RS_Player extends BaseService {
 		this.t(probeUrl,x => this.ps.parse_url(cf,x));
 		this.t(dashManifestUrl,x => this.sm.a_primitive_str(x));
 		this.t(hlsManifestUrl,x => this.sm.a_primitive_str(x));
-	}
-	/** @private @arg {D_AdPlacementConfig} x */
-	D_AdPlacementConfig(x) {
-		const cf="D_AdPlacementConfig";
-		const {kind,adTimeOffset,hideCueRangeMarker,...y}=this.s(cf,x); this.g(y);
-		this.DE_AdPlacementKind(kind);
-		this.t(adTimeOffset,this.D_AdTimeOffset);
-		this.sm.cq(hideCueRangeMarker,true);
-	}
-	/** @private @arg {DE_AdPlacementKind} x */
-	DE_AdPlacementKind(x) {
-		const cf="DE_AdPlacementKind"; let v=x;
-		switch(x) {
-			default: console.log(`${cf}.split`,v.split("AD_PLACEMENT_KIND_")); debugger; break;
-			case "AD_PLACEMENT_KIND_MILLISECONDS":
-			case "AD_PLACEMENT_KIND_END":
-			case "AD_PLACEMENT_KIND_SELF_START":
-			case "AD_PLACEMENT_KIND_START":
-		}
 	}
 	/** @private @arg {D_TriggerCriteria} x */
 	D_TriggerCriteria(x) {
@@ -1030,13 +1000,6 @@ class Support_RS_Player extends BaseService {
 		const {start,end,...y}=this.s(cf,x); this.g(y);
 		this.sm.a_primitive_str(start);
 		this.sm.a_primitive_str(end);
-	}
-	/** @private @arg {D_AdTimeOffset} x */
-	D_AdTimeOffset(x) {
-		const cf="D_AdTimeOffset";
-		const {offsetStartMilliseconds,offsetEndMilliseconds,...y}=this.s(cf,x); this.g(y);
-		this.sm.a_primitive_str(offsetStartMilliseconds);
-		this.sm.a_primitive_str(offsetEndMilliseconds);
 	}
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
