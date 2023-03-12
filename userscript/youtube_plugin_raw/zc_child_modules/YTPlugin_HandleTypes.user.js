@@ -3484,10 +3484,10 @@ class HandleTypes extends BaseService {
 		switch(pp[0]) {
 			default: debugger; break;
 			case "get_midroll_info": {
-				/** @type {{ei: string;m_pos:`${number}`;token:string;index:`${number}`}} */
+				/** @type {D_GetMidrollInfoParams} */
 				let po=as_any(this.parse_url_search_params(pp[1]));
-				let {ei,m_pos,token,index,...px}=po;
-				console.log("get_midroll_info",px);
+				let {ei,m_pos,token,index,cpn,lact,vis,ad_block,tsla,bid,dt,flash,frm,ca_type,u_tz,u_his,u_java,u_h,u_w,u_ah,u_aw,u_cd,u_nplug,u_nmime,p_w,p_h,c,cver,m_pos_ms,...px}=po;
+				if(this.get_keys_of(px).length!==0) console.log("get_midroll_info",px);
 			} break;
 		}
 	}

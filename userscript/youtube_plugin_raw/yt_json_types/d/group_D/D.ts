@@ -1247,10 +1247,6 @@ type D_AboutThisAd={
 type D_Accessibility={accessibilityData: D_Label;};
 type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;
 type D_AccountSettingIdList=[407];
-type D_AdBreakService={
-	prefetchMilliseconds: "10000";
-	getAdBreakUrl: `https://www.youtube.com/get_midroll_info?ei=${string}&index=${number}&cpn=[CPN]&lact=[LACT]&vis=[VIS]&ad_block=[AD_BLOCK]&tsla=[TSLA]&bid=[BISCOTTI_ID]&dt=[DT]&flash=[FLASH]&frm=[FRM]&ca_type=[CA_TYPE]&u_tz=[U_TZ]&u_his=[U_HIS]&u_java=[U_JAVA]&u_h=[U_H]&u_w=[U_W]&u_ah=[U_AH]&u_aw=[U_AW]&u_cd=[U_CD]&u_nplug=[U_NPLUG]&u_nmime=[U_NMIME]&p_w=[P_W]&p_h=[P_H]&c=WEB&cver=2.20230309.08.00&m_pos_ms=-1`;
-};
 type D_AdHoverTextButton={
 	button: R_Button;
 	hoverText: G_Text;
