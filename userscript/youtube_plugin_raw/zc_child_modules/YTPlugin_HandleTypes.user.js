@@ -2877,9 +2877,27 @@ class HandleTypes extends BaseService {
 		const cf="P_grf_p_f28";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		let arr=v1[1];
-		for(let vi of arr) {
-			vi;
-		}
+		for(let vi of arr) this.PR_grf_p_obj0(vi);
+	}
+	/** @private @arg {PR_grf_p_obj0} x */
+	PR_grf_p_obj0(x) {
+		const cf="PR_grf_p_obj0";
+		let {1: v1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		this.PR_grf_p_obj1(this.T_VW(v1));
+		console.log(`${cf}.f3`,this.TV_Str(f3));
+	}
+	/** @private @arg {PR_grf_p_obj1} x */
+	PR_grf_p_obj1(x) {
+		const cf="PR_grf_p_obj1";
+		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		let arr=v1[1];
+		for(let vi of arr) this.PD_grf_p_obj1(vi);
+	}
+	/** @private @arg {PD_grf_p_obj1} x */
+	PD_grf_p_obj1(x) {
+		const cf="PR_grf_p_obj1";
+		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
+		console.log(`${cf}.f1`,this.TV_Str(v1));
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
