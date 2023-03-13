@@ -911,6 +911,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {AD_HideEnclosing} x */
 	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
+	/** @private @arg {A_ReplaceEnclosing} x */
+	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
@@ -2641,8 +2643,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {C_FilterChipTransform} x */
 	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
-	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 	/** @private @arg {DE_GetReportForm} x */
 	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm","get_report_form.params",x);}
 	/** @private @arg {DE_NotificationOptOut} x */
