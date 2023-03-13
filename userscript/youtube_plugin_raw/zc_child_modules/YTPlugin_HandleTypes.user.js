@@ -2050,7 +2050,24 @@ class HandleTypes extends BaseService {
 		t.t(obj_id,x => t.TK_D32(cf,x,"id"));
 		t.t(v3,x => t.TK_D32(cf,x,"f3"));
 		t.t(f4,t.VW_BinaryTimestamp);
-		t.t_cf(`${cf}_f6`,f6,t.H_TrackingObj_f6);
+		t.t(f6,x => {
+			let str=this.TV_Str(x);
+			this.save_primitive(`${cf}.f6`,str);
+			switch(str) {
+				default: debugger; break;
+				case "cards":
+				case "endscreen":
+				case "external":
+				case "iv-endscreen":
+				case "list_other":
+				case "ni-push-u-sub":
+				case "related-auto":
+				case "related":
+				case "rellist":
+				case "shortswatch":
+				case "watch":
+			}
+		});
 		t.t(f7,x => t.sm.save_b64_binary(`${cf}.f7`,t.TV_Str(x)));
 		t.ms_t(f8,u8 => {
 			let [v8]=u8[1];
@@ -2082,30 +2099,10 @@ class HandleTypes extends BaseService {
 	TK_D32(cf,x,k) {this.save_primitive(`${cf}.${k}`,this.T_D32(x));}
 	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
 	H_TrackingObj_f6(cf,x) {
-		if(x[0]!=="v_param_arr") debugger;
-		let [,[a,...y1]]=x; this.sm.cq(y1.length,0);
-		const [t]=a;
-		/** @type {["raw_str",H_TrackingObj_f6_Str]|["child_str",H_TrackingObj_f6_Str_2]|["unknown",string]|null} */
-		let r_str=null;
-		switch(t) {
-			default: debugger; break;
-			case "v_child_str":/*unk*/{const [,,,b]=a; const [,c]=b; r_str=["child_str",c];} break;
-			case "v_child":/*unk*/{
-				const [,b]=a;
-				let c=this._decoder.decode(b);
-				if(!c) {debugger; break;}
-				r_str=["unknown",c];
-			} break;
-			case "v_raw_child":/*unk*/{const [,,,b]=a; const [,c]=b; r_str=["raw_str",c];} break;
-		}
-		if(!r_str) return;
-		this.save_primitive(`${cf}.str`,r_str[1]);
-		if(r_str[0]==="unknown") {
-			this.save_primitive(`${cf}.str.unk`,`${r_str[0]}:${r_str[1]}`);
-			return;
-		}
-		switch(r_str[1]) {
-			default: this.save_primitive(`${cf}.str.default`,r_str); break;
+		let str=this.TV_Str(x);
+		this.save_primitive(`${cf}.str`,str);
+		switch(str) {
+			default: this.save_primitive(`${cf}.str.default`,str); break;
 			case "cards":
 			case "endscreen":
 			case "external":
