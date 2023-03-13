@@ -902,11 +902,29 @@ class ServiceMethods extends ServiceData {
 	AD_ChangeEngagementPanelVisibility(x) {
 		const cf="AD_ChangeEngagementPanelVisibility";
 		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_EngagementPanelTargetId(cf,targetId);
+		this.D_EngagementPanelTargetId(targetId);
 		switch(visibility) {
 			default: this.cg.codegen_case(`${cf}.visibility`,visibility); break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
+		}
+	}
+	/** @private @arg {D_EngagementPanelTargetId} x */
+	D_EngagementPanelTargetId(x) {
+		const cf="D_EngagementPanelTargetId";
+		switch(x) {
+			default: x===""; this.cg.codegen_case(`${cf}.targetId`,x); break;
+			case "shopping_panel_for_entry_point_22": debugger; break;
+			case "shopping_panel_for_entry_point_5":
+			case "engagement-panel-clip-create":
+			case "engagement-panel-clip-view":
+			case "engagement-panel-comments-section":
+			case "engagement-panel-error-corrections":
+			case "engagement-panel-macro-markers-auto-chapters":
+			case "engagement-panel-macro-markers-description-chapters":
+			case "engagement-panel-searchable-transcript":
+			case "engagement-panel-structured-description":
+			case "engagement-panel-macro-markers-problem-walkthroughs":
 		}
 	}
 	/** @private @arg {AD_HideEnclosing} x */
@@ -1027,24 +1045,6 @@ class ServiceMethods extends ServiceData {
 	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(x));}
 	/** @public @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
-	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf2 @arg {D_EngagementPanelTargetId} x */
-	D_EngagementPanelTargetId(cf2,x) {
-		const cf1="D_EngagementPanelTargetId";
-		switch(x) {
-			default: x===""; this.cg.codegen_case(`${cf1}:${cf2}.targetId`,x); break;
-			case "shopping_panel_for_entry_point_22": debugger; break;
-			case "shopping_panel_for_entry_point_5":
-			case "engagement-panel-clip-create":
-			case "engagement-panel-clip-view":
-			case "engagement-panel-comments-section":
-			case "engagement-panel-error-corrections":
-			case "engagement-panel-macro-markers-auto-chapters":
-			case "engagement-panel-macro-markers-description-chapters":
-			case "engagement-panel-searchable-transcript":
-			case "engagement-panel-structured-description":
-			case "engagement-panel-macro-markers-problem-walkthroughs":
-		}
-	}
 	/** @public @arg {RA_ReelDismissal} x */
 	RA_ReelDismissal(x) {this.H_s("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
 	/** @public @arg {AD_ReelDismissal} x */
