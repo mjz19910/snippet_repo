@@ -861,31 +861,6 @@ class ServiceMethods extends ServiceData {
 	GM_CreateCommentReply(x) {this.sm.T_GM("GM_CreateCommentReply",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment_reply"));}
 	/** @private @arg {GM_GetSharePanel} x */
 	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.cq(x,"/youtubei/v1/share/get_share_panel"));}
-	/** @private @arg {string} x */
-	GU_YoutubeUrlRedirect_RedirectToken(x) {
-		let token_str=atob(x);
-		let token_parts=split_string_once(token_str,"|");
-		if(token_parts.length===1) {debugger; return;}
-		let [p1,p2]=token_parts.map(x => base64_url_dec.decodeByteArray(x));
-		if(!(p1&&p2)) return;
-		for(let i=0;i<3;i++) {
-			this.save_next_byte("url.redir_token[0].data",p1,i);
-		}
-		for(let i=0;i<3;i++) {
-			this.save_next_byte("url.redir_token[1].data",p2,i);
-		}
-	}
-	/** @private @arg {GU_YoutubeUrlRedirect_Event} x */
-	GU_YoutubeUrlRedirect_Event(x) {
-		switch(x) {
-			default: debugger; break;
-			case "":
-			case "channel_banner":
-			case "endscreen":
-			case "product_shelf":
-			case "video_description":
-		}
-	}
 	/** @private @arg {A_UpdateCommentVote} x */
 	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
 	/** @private @arg {AD_UpdateCommentVote} x */
@@ -1082,6 +1057,31 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(responseText);
 		this.xm.t(actionButton,x => this.xm.R_Button(x));
 		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {string} x */
+	GU_YoutubeUrlRedirect_RedirectToken(x) {
+		let token_str=atob(x);
+		let token_parts=split_string_once(token_str,"|");
+		if(token_parts.length===1) {debugger; return;}
+		let [p1,p2]=token_parts.map(x => base64_url_dec.decodeByteArray(x));
+		if(!(p1&&p2)) return;
+		for(let i=0;i<3;i++) {
+			this.save_next_byte("url.redir_token[0].data",p1,i);
+		}
+		for(let i=0;i<3;i++) {
+			this.save_next_byte("url.redir_token[1].data",p2,i);
+		}
+	}
+	/** @private @arg {GU_YoutubeUrlRedirect_Event} x */
+	GU_YoutubeUrlRedirect_Event(x) {
+		switch(x) {
+			default: debugger; break;
+			case "":
+			case "channel_banner":
+			case "endscreen":
+			case "product_shelf":
+			case "video_description":
+		}
 	}
 	/** @public @arg {R_ConfirmDialog} x */
 	R_ConfirmDialog(x) {this.H_s("confirmDialogRenderer",x,this.D_ConfirmDialog);}
