@@ -2779,16 +2779,57 @@ class HandleTypes extends BaseService {
 		let x1x=this.ms_ud(v3);
 		let x2=this.m_nu_t(x1x,this.T_VW);
 		this.m_nu_t(x2,this.PX_ad_data_info);
-		f4;
+		f4&&this.save_primitive(`${cf}.f4`,this.T_D32(f4));
 	}
 	/** @private @arg {P_ve_6827_params} x */
 	P_ve_6827_params(x) {
 		const cf="P_ve_6827_params";
 		const {77: f77,84: f84,93: f93,94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		f77;
-		f84;
-		f93;
-		f94;
+		if(f77) {
+			let i77=this.TV_Str(f77);
+			this.save_primitive(`${cf}.f77`,i77);
+			switch(i77) {
+				default: debugger; break;
+				case "FEexplore": break;
+			}
+		}
+		f84&&this.P_ve_6827_params_f84(this.T_VW(f84));
+		f93&&this.P_ve_6827_params_f93(this.T_VW(f93));
+		f94&&this.P_ve_6827_params_f94(this.T_VW(f94));
+	}
+	/** @private @arg {P_ve_6827_params_f94} x */
+	P_ve_6827_params_f94(x) {
+		const cf="P_ve_6827_params_f94";
+		const {1: f1,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.P_ve_6827_params_f1(this.T_VW(f1));
+		this.save_primitive(`${cf}.f5`,f5);
+	}
+	/** @private @arg {P_ve_6827_params_f1} x */
+	P_ve_6827_params_f1(x) {
+		const cf="P_ve_6827_params_f1";
+		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.P_ve_6827_params_f1_f2(this.T_VW(f2));
+	}
+	/** @private @arg {P_ve_6827_params_f1_f2} x */
+	P_ve_6827_params_f1_f2(x) {
+		const cf="P_ve_6827_params_f1_f2";
+		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.sm.videoId(this.TV_Str(f1));
+		this.sm.videoId(this.TV_Str(f2));
+		this.sm.videoId(this.TV_Str(f3));
+	}
+	/** @private @arg {P_ve_6827_params_f93} x */
+	P_ve_6827_params_f93(x) {
+		const cf="P_ve_6827_params_f93";
+		const {1: f1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.save_primitive(`${cf}.f1`,this.TV_Str(f1));
+		this.save_primitive(`${cf}.f3`,this.T_D32(f3));
+	}
+	/** @private @arg {P_ve_6827_params_f84} x */
+	P_ve_6827_params_f84(x) {
+		const cf="P_ve_6827_params_f84";
+		const {5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 	}
 	/** @private @arg {PX_watch_bin} x */
 	PX_watch_bin(x) {
@@ -2818,23 +2859,53 @@ class HandleTypes extends BaseService {
 		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: v40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v2&&this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 		v3&&this.save_primitive(`${cf}.f3`,this.T_D32(v3));
-		f7;
-		f12;
-		f13;
-		f15;
-		f24;
-		f27;
+		f7&&this.save_primitive(`${cf}.f7`,this.T_D32(f7));
+		f12&&this.save_primitive(`${cf}.f12`,this.TV_Str(f12));
+		f13&&this.save_primitive(`${cf}.f13`,this.T_D32(f13));
+		f15&&this.save_primitive(`${cf}.f15`,this.TV_Str(f15));
+		f24&&this.save_primitive(`${cf}.f24`,this.T_D32(f24));
+		f27&&this.P_obj1(this.T_VW(f27));
 		v33&&this.PX_watch_bin(this.T_VW(v33));
-		f36;
-		f39;
+		f36&&this.P_obj2(this.T_VW(f36));
+		f39&&this.save_primitive(`${cf}.f39`,this.T_D32(f39));
 		v40&&this.PR_watch_bin(this.T_VW(v40));
-		f56;
+		f56&&this.save_primitive(`${cf}.f56`,this.TV_Str(f56));
+	}
+	/** @private @arg {P_obj1} x */
+	P_obj1(x) {
+		const cf="P_obj1";
+		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
+	}
+	/** @private @arg {P_obj2} x */
+	P_obj2(x) {
+		const cf="P_obj2";
+		const {24: v24,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.save_primitive(`${cf}.f24`,this.T_D32(v24));
 	}
 	/** @private @arg {P_watch_player_params} x */
 	P_watch_player_params(x) {
 		const cf="P_watch_player_params";
 		const {8: f8,9: f9,12: f12,25: f25,27: f27,34: f34,40: f40,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		f8; f9; f12; f25; f27; f40;
+		f8&&this.save_primitive(`${cf}.f8`,this.T_D32(f8));
+		f9&&this.save_primitive(`${cf}.f9`,this.T_D32(f9));
+		f12&&this.save_primitive(`${cf}.f12`,this.T_D32(f12));
+		f25&&this.save_primitive(`${cf}.f25`,this.T_D32(f25));
+		f27&&this.save_primitive(`${cf}.f27`,this.T_D32(f27));
+		f40&&this.PX_wpp_f40(this.T_VW(f40));
+	}
+	/** @private @arg {PX_wpp_f40} x */
+	PX_wpp_f40(x) {
+		const cf="PX_wpp_f40";
+		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.PX_wpp_f1(this.T_VW(v1));
+	}
+	/** @private @arg {PX_wpp_f1} x */
+	PX_wpp_f1(x) {
+		const cf="PX_wpp_f1";
+		const {2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
+		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_format_item_xtags_f1} x */
 	P_format_item_xtags_f1(x) {
@@ -2861,8 +2932,8 @@ class HandleTypes extends BaseService {
 		const {2: v2,3: v3,4: f4,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 		this.save_primitive(`${cf}.f3`,this.TV_Str(v3));
-		f4;
-		f7;
+		this.save_primitive(`${cf}.f4`,this.T_D32(f4));
+		this.save_primitive(`${cf}.f7`,this.TV_Str(f7));
 	}
 	/** @private @arg {P_get_report_form_params} x */
 	P_get_report_form_params(x) {
@@ -2876,8 +2947,7 @@ class HandleTypes extends BaseService {
 	P_grf_p_f28(x) {
 		const cf="P_grf_p_f28";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		let arr=v1[1];
-		for(let vi of arr) this.PR_grf_p_obj0(vi);
+		for(let vi of v1[1]) this.PR_grf_p_obj0(vi);
 	}
 	/** @private @arg {PR_grf_p_obj0} x */
 	PR_grf_p_obj0(x) {
@@ -2890,8 +2960,7 @@ class HandleTypes extends BaseService {
 	PR_grf_p_obj1(x) {
 		const cf="PR_grf_p_obj1";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		let arr=v1[1];
-		for(let vi of arr) this.PD_grf_p_obj1(vi);
+		for(let vi of v1[1]) this.PD_grf_p_obj1(vi);
 	}
 	/** @private @arg {PD_grf_p_obj1} x */
 	PD_grf_p_obj1(x) {
@@ -2927,17 +2996,12 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
-	/** @private @template {string} T @arg {TW_Str2<T>} x */
-	TW_Str2(x) {
-		let raw=x[1][0];
-		return raw[3][1];
-	}
 	/** @private @arg {P_ve_3611_params} x */
 	P_ve_3611_params(x) {
 		const cf="P_ve_3611_params";
 		const {2: i1,23: i2,73: i3,110: i5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(i1,x => {
-			let a=this.TW_Str2(x);
+			let a=this.TW_Str(x);
 			switch(a) {
 				default: a===""; debugger; break;
 				case "":
@@ -2966,7 +3030,9 @@ class HandleTypes extends BaseService {
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.T_VW(v3),x => this.save_primitive(`${cf}.f3`,x));
-		f4; f7; f8;
+		this.save_primitive(`${cf}.f4`,this.T_D32(f4));
+		this.save_primitive(`${cf}.f7`,this.T_D32(f7));
+		this.save_primitive(`${cf}.f8`,this.T_D32(f8));
 	}
 	/** @private @arg {P_f3_PD_continuation_params} x */
 	P_f3_PD_continuation_params(x) {

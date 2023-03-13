@@ -534,6 +534,14 @@ type PD_watch_bin={
 	3: T_D32<1>;
 };
 type PR_watch_bin={1: T_VW<PD_watch_bin>;};
+type P_obj1={
+	1: T_D32<1>;
+};
+
+type P_obj2={
+	24: T_D32<0>;
+};
+
 type P_watch_params={
 	2?: T_D32<1>;
 	3?: T_D32<1>;
@@ -542,9 +550,9 @@ type P_watch_params={
 	13?: T_D32<0>;
 	15?: TV_Str<`${string}.${string}`>;
 	24?: T_D32<1>;
-	27?: T_VW<{1: T_D32<1>;}>;
+	27?: T_VW<P_obj1>;
 	33?: T_VW<PX_watch_bin>;
-	36?: T_VW<{24: T_D32<0>;}>;
+	36?: T_VW<P_obj2>;
 	39?: T_D32<637>;
 	40?: T_VW<PR_watch_bin>;
 	56?: TV_Str<DU_VideoId>;
@@ -556,7 +564,7 @@ type P_ve_6827_params_f1_f2={
 };
 
 type P_ve_6827_params_f1={
-	2: T_VW_BinTs<P_ve_6827_params_f1_f2>;
+	2: T_VW<P_ve_6827_params_f1_f2>;
 };
 
 type P_ve_6827_params_f94={
