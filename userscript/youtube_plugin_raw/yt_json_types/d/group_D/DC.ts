@@ -6,9 +6,9 @@ type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 type DC_ChangeKeyedMarkersVisibility={key: "HEATSEEKER"; isVisible: true;};
 type DC_RepeatChapter={
 	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT"|"REPEAT_CHAPTER_TYPE_DISABLE_REPEAT";
-	startTimeMs: "0";
-	endTimeMs: `${number}`;
-	repeatStateEntityKey: string;
+	startTimeMs?: `${number}`;
+	endTimeMs?: `${number}`;
+	repeatStateEntityKey?: string;
 };
 type DC_ReloadContinuationItems={
 	targetId: SI_VE76278_EngagementPanel["targetId"];

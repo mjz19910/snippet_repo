@@ -564,9 +564,9 @@ class ServiceMethods extends ServiceData {
 			case "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT":
 			case "REPEAT_CHAPTER_TYPE_DISABLE_REPEAT":
 		}
-		this.cq(startTimeMs,"0");
-		this.save_primitive(`${cf}.endTimeMs`,this.parse_number_template(endTimeMs));
-		this.params("repeat_state.entity_key",repeatStateEntityKey);
+		this.t(startTimeMs,x => this.save_primitive(`${cf}.startTimeMs`,this.parse_number_template(x)));
+		this.t(endTimeMs,x => this.save_primitive(`${cf}.endTimeMs`,this.parse_number_template(x)));
+		this.t(repeatStateEntityKey,x => this.params("repeat_state.entity_key",x));
 	}
 	/** @private @arg {C_UpdateToggleButtonState} x */
 	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
