@@ -335,18 +335,6 @@ class ServiceMethods extends ServiceData {
 		this.sm.params("perform_comment.action",action);
 		this.z(clientActions,this.A_UpdateCommentVote);
 	}
-	/** @private @arg {A_UpdateCommentVote} x */
-	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
-	/** @private @arg {AD_UpdateCommentVote} x */
-	AD_UpdateCommentVote(x) {
-		const cf="AD_UpdateCommentVote";
-		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.t(voteCount,this.sm.G_Text);
-		this.save_primitive(`${cf}.voteStatus`,voteStatus);
-		switch(voteStatus) {
-			case "LIKE":
-		}
-	}
 	/** @public @arg {E_CreateCommentReplyDialog} x */
 	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
 	/** @private @arg {D_IgnoreNavigation} x */
@@ -896,6 +884,18 @@ class ServiceMethods extends ServiceData {
 			case "endscreen":
 			case "product_shelf":
 			case "video_description":
+		}
+	}
+	/** @private @arg {A_UpdateCommentVote} x */
+	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
+	/** @private @arg {AD_UpdateCommentVote} x */
+	AD_UpdateCommentVote(x) {
+		const cf="AD_UpdateCommentVote";
+		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.t(voteCount,this.sm.G_Text);
+		this.save_primitive(`${cf}.voteStatus`,voteStatus);
+		switch(voteStatus) {
+			case "LIKE":
 		}
 	}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
