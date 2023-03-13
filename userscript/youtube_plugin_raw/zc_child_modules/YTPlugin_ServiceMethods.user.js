@@ -6001,6 +6001,13 @@ class ServiceMethods extends ServiceData {
 			this.a_primitive_bool(bold);
 			return;
 		}
+		if("emoji" in u&&"loggingDirectives" in u) {
+			const {emoji,loggingDirectives,...y}=u;/*#destructure_done*/
+			this.D_Emoji(emoji);
+			this.D_LoggingDirectives(loggingDirectives);
+			this.g(y);
+			return;
+		}
 		if("emoji" in u) {
 			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_Emoji(emoji);

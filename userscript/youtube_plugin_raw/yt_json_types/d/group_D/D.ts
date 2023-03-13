@@ -936,7 +936,11 @@ type D_VE_TextRun=
 	;
 ;
 type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_Url;
-type D_TextRun=|D_VE_TextRun|{text: string;}|{
+type D_TextRun=|{
+	text: "☹";
+	loggingDirectives: D_LoggingDirectives;
+	emoji: D_Emoji;
+}|D_VE_TextRun|{text: string;}|{
 	text: string;
 	strikethrough: true;
 }|{

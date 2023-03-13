@@ -288,7 +288,7 @@ class HandleTypes extends BaseService {
 		}
 		let nts=this.T_FD32(nanoseconds_ts);
 		x: {
-			if(nts<=0b11111111000011111010011111000000) break x;
+			if(nts<=0b11111111000011111101000010101011) break x;
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(nts).toString(2)}]`);
 		}
 	}
