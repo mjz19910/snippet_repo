@@ -594,6 +594,111 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
 	}
+	/** @private @arg {C_FilterChipTransform} x */
+	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
+	/** @public @arg {C_ScrollToEngagementPanel} x */
+	C_ScrollToEngagementPanel(x) {
+		const cf="C_ScrollToEngagementPanel";
+		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(clickTrackingParams);
+		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
+	}
+	/** @public @arg {C_RepeatChapter} x */
+	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
+	/** @private @arg {DC_RepeatChapter} x */
+	DC_RepeatChapter(x) {
+		const cf="DC_RepeatChapter";
+		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @private @arg {C_UpdateToggleButtonState} x */
+	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
+	/** @private @arg {DC_UpdateToggleButtonState} x */
+	DC_UpdateToggleButtonState(x) {
+		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(a);
+		this.save_enum(cf,"TOGGLE_BUTTON_ID_TYPE",b);
+	}
+	/** @private @arg {C_Loop} x */
+	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
+	/** @private @arg {DC_Loop} x */
+	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.cq(x,false));}
+	/** @private @arg {C_EntityUpdate} x */
+	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
+	/** @public @arg {DC_EntityBatchUpdate} x */
+	R_EntityBatchUpdate(x) {this.H_s("entityBatchUpdate",x,this.DR_DC_EntityBatchUpdate);}
+	/** @public @arg {DR_DC_EntityBatchUpdate} x */
+	DR_DC_EntityBatchUpdate(x) {
+		const cf="DR_DC_EntityBatchUpdate";
+		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(mutations,this.G_DE_MutationItem);
+		this.t(timestamp,this.D_TimestampWithNanos);
+	}
+	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
+	C_EngagementPanelHeaderShowNavigationButton(x) {
+		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
+		this.DC_EngagementPanelHeaderShowNavigationButton(a);
+	}
+	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
+	DC_EngagementPanelHeaderShowNavigationButton(x) {
+		const cf="DC_EngagementPanelHeaderShowNavigationButton";
+		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @public @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
+	/** @private @arg {C_ChangeMarkersVisibility} x */
+	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
+	/** @public @arg {C_AdsControlFlowOpportunityReceived} x */
+	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
+	/** @public @arg {C_ChangeKeyedMarkersVisibility} x */
+	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
+	/** @public @arg {C_LoadMarkers} x */
+	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
+	/** @public @arg {C_ReloadContinuationItems} x */
+	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
+	/** @type {string[]} */
+	DC_AddToPlaylist_listTypes=[
+		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
+	];
+	/** @private @arg {DC_AddToPlaylist} x */
+	DC_AddToPlaylist(x) {
+		const cf="DC_AddToPlaylist";
+		this.save_primitive(`${cf}.listType`,x.listType);
+		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
+			let known=this.DC_AddToPlaylist_listTypes;
+			this.DC_AddToPlaylist_listTypes.push(x.listType);
+			this.codegen_typedef(cf,x);
+			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
+			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}:`).join("\n")}`);
+		}
+		switch(x.listType) {
+			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
+				if("openListPanel" in x) {
+					const {openMiniplayer,videoId,listType: {},onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					this.E_CreatePlaylistService(onCreateListCommand);
+					if(openListPanel!==true) debugger;
+					if(openMiniplayer!==false) debugger;
+					this.a_primitive_bool(openMiniplayer);
+					this.videoId(videoId);
+					this.z(videoIds,this.videoId);
+					return;
+				}
+				const {openMiniplayer,videoId,listType: {},onCreateListCommand,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_CreatePlaylistService(onCreateListCommand);
+				this.a_primitive_bool(openMiniplayer);
+				this.videoId(videoId);
+				this.z(videoIds,this.videoId);
+			}
+		}
+	}
+	/** @private @arg {DC_ChangeMarkersVisibility} x */
+	DC_ChangeMarkersVisibility(x) {
+		const cf="DC_ChangeMarkersVisibility";
+		const {isVisible,entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(isVisible);
+		this.z(entityKeys,x => {
+			this.params("change_markers_visibility.entity.key",x);
+		});
+	}
 	/** @private @arg {M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
@@ -2696,8 +2801,6 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.D_Accessibility(accessibilityData);
 	}
-	/** @private @arg {C_FilterChipTransform} x */
-	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
 	/** @private @arg {DE_GetReportForm} x */
 	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm","get_report_form.params",x);}
 	/** @private @arg {DE_NotificationOptOut} x */
@@ -2786,20 +2889,6 @@ class ServiceMethods extends ServiceData {
 		const {targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
 	}
-	/** @public @arg {C_ScrollToEngagementPanel} x */
-	C_ScrollToEngagementPanel(x) {
-		const cf="C_ScrollToEngagementPanel";
-		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(clickTrackingParams);
-		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
-	}
-	/** @public @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
-	/** @private @arg {DC_RepeatChapter} x */
-	DC_RepeatChapter(x) {
-		const cf="DC_RepeatChapter";
-		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-	}
 	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {
 		const cf="T_Types";
@@ -2815,29 +2904,6 @@ class ServiceMethods extends ServiceData {
 		if(inner!==4) {
 			inner===""; this.codegen_typedef(cf,x);
 		}
-	}
-	/** @private @arg {C_UpdateToggleButtonState} x */
-	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
-	/** @private @arg {DC_UpdateToggleButtonState} x */
-	DC_UpdateToggleButtonState(x) {
-		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(a);
-		this.save_enum(cf,"TOGGLE_BUTTON_ID_TYPE",b);
-	}
-	/** @private @arg {C_Loop} x */
-	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
-	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.cq(x,false));}
-	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
-	/** @public @arg {DC_EntityBatchUpdate} x */
-	R_EntityBatchUpdate(x) {this.H_s("entityBatchUpdate",x,this.DR_DC_EntityBatchUpdate);}
-	/** @public @arg {DR_DC_EntityBatchUpdate} x */
-	DR_DC_EntityBatchUpdate(x) {
-		const cf="DR_DC_EntityBatchUpdate";
-		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(mutations,this.G_DE_MutationItem);
-		this.t(timestamp,this.D_TimestampWithNanos);
 	}
 	/** @private @arg {D_TimestampWithNanos} x */
 	D_TimestampWithNanos(x) {
@@ -3018,72 +3084,6 @@ class ServiceMethods extends ServiceData {
 		const cf="O_DU_Persistence";
 		const {persistenceOption,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
-	}
-	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
-	C_EngagementPanelHeaderShowNavigationButton(x) {
-		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
-		this.DC_EngagementPanelHeaderShowNavigationButton(a);
-	}
-	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
-	DC_EngagementPanelHeaderShowNavigationButton(x) {
-		const cf="DC_EngagementPanelHeaderShowNavigationButton";
-		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-	}
-	/** @public @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
-	/** @private @arg {C_ChangeMarkersVisibility} x */
-	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
-	/** @public @arg {C_AdsControlFlowOpportunityReceived} x */
-	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
-	/** @public @arg {C_ChangeKeyedMarkersVisibility} x */
-	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
-	/** @public @arg {C_LoadMarkers} x */
-	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
-	/** @public @arg {C_ReloadContinuationItems} x */
-	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
-	/** @type {string[]} */
-	DC_AddToPlaylist_listTypes=[
-		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
-	];
-	/** @private @arg {DC_AddToPlaylist} x */
-	DC_AddToPlaylist(x) {
-		const cf="DC_AddToPlaylist";
-		this.save_primitive(`${cf}.listType`,x.listType);
-		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
-			let known=this.DC_AddToPlaylist_listTypes;
-			this.DC_AddToPlaylist_listTypes.push(x.listType);
-			this.codegen_typedef(cf,x);
-			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
-			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}:`).join("\n")}`);
-		}
-		switch(x.listType) {
-			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
-				if("openListPanel" in x) {
-					const {openMiniplayer,videoId,listType: {},onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					this.E_CreatePlaylistService(onCreateListCommand);
-					if(openListPanel!==true) debugger;
-					if(openMiniplayer!==false) debugger;
-					this.a_primitive_bool(openMiniplayer);
-					this.videoId(videoId);
-					this.z(videoIds,this.videoId);
-					return;
-				}
-				const {openMiniplayer,videoId,listType: {},onCreateListCommand,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.E_CreatePlaylistService(onCreateListCommand);
-				this.a_primitive_bool(openMiniplayer);
-				this.videoId(videoId);
-				this.z(videoIds,this.videoId);
-			}
-		}
-	}
-	/** @private @arg {DC_ChangeMarkersVisibility} x */
-	DC_ChangeMarkersVisibility(x) {
-		const cf="DC_ChangeMarkersVisibility";
-		const {isVisible,entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(isVisible);
-		this.z(entityKeys,x => {
-			this.params("change_markers_visibility.entity.key",x);
-		});
 	}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
