@@ -289,8 +289,6 @@ class ServiceMethods extends ServiceData {
 	DE_PlaylistDelete(x) {x;}
 	/** @public @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
-	/** @private @arg {M_RecordInteractions} x */
-	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @public @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {E_NotificationOptOut} x */
@@ -318,26 +316,18 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {DE_YpcGetCart} x */
 	DE_YpcGetCart(x) {this.sm.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
 	/** @public @arg {E_ApplicationSettings} x */
 	E_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.B_Hack); this.g(y);}
-	/** @private @arg {M_VE12924} x */
-	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
 	/** @public @arg {E_SubmitFeedback} x */
 	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
 	/** @private @arg {DE_SubmitFeedback} x */
 	DE_SubmitFeedback(x) {this.sm.cq(this.sm.T_Signal("DE_SubmitFeedback",x),"SUBMIT_FEEDBACK");}
 	/** @private @arg {E_UpdatedMetadata} x */
 	E_UpdatedMetadata(x) {const [y]=this.TE_Endpoint_3_v2("updatedMetadataEndpoint",x,this.M_UpdatedMetadata,this.D_VideoId); this.g(y);}
-	/** @private @arg {M_UpdatedMetadata} x */
-	M_UpdatedMetadata(x) {this.T_WCM("M_UpdatedMetadata",x,(x,cf) => this.T_GM(cf,x,x => this.cq(x,"/youtubei/v1/updated_metadata")));}
 	/** @public @arg {E_PerformCommentAction} x */
 	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
-	/** @private @arg {M_PerformCommentAction} x */
-	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
 	/** @private @arg {DE_PerformCommentAction} x */
 	DE_PerformCommentAction(x) {
 		const cf="DE_PerformCommentAction";
@@ -359,14 +349,10 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {E_CreateCommentReplyDialog} x */
 	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
-	/** @private @arg {M_CreateCommentReplyDialog} x */
-	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
 	/** @private @arg {D_IgnoreNavigation} x */
 	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.cq(x,true));}
 	/** @public @arg {E_CreateCommentReply} x */
 	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
-	/** @private @arg {M_CreateCommentReply} x */
-	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
 	/** @private @arg {DE_CreateCommentReply} x */
 	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.sm.params("create_reply.params",x));}
 	/** @private @arg {DE_CreateCommentReplyDialog} x */
@@ -375,8 +361,6 @@ class ServiceMethods extends ServiceData {
 		const {dialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_CommentReplyDialog(dialog);
 	}
-	/** @public @arg {M_AddToPlaylistService} x */
-	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @public @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @public @arg {E_Feedback} x */
@@ -439,12 +423,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
-	/** @private @arg {M_Like} x */
-	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
 	/** @public @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
-	/** @private @arg {M_GetSharePanel} x */
-	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
 		const cf="DE_ShareEntityService";
@@ -455,12 +435,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
-	/** @private @arg {M_GetPdgBuyFlow} x */
-	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
-	/** @private @arg {M_EditPlaylist} x */
-	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @public @arg {M_SendPost} x */
-	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
 	/** @private @arg {M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
@@ -476,8 +450,6 @@ class ServiceMethods extends ServiceData {
 		this.GM_VE3854(a);
 		this.t(b,this.M_ResolveUrlCommand);
 	}
-	/** @private @arg {M_Search} x */
-	M_Search(x) {this.T_WCM("M_Search",x,this.GM_Search);}
 	/** @private @arg {M_VE5754} x */
 	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754);}
 	/** @private @arg {M_VE6827} x */
@@ -490,6 +462,14 @@ class ServiceMethods extends ServiceData {
 	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
 	/** @private @arg {M_VE96368} x */
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
+	/** @private @arg {M_Search} x */
+	M_Search(x) {this.T_WCM("M_Search",x,this.GM_Search);}
+	/** @private @arg {M_GetPdgBuyFlow} x */
+	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
+	/** @private @arg {M_EditPlaylist} x */
+	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
+	/** @public @arg {M_SendPost} x */
+	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
 	/** @private @arg {M_ResolveUrlCommand} x */
 	M_ResolveUrlCommand(x) {
 		const cf="M_ResolveUrlCommand";
@@ -525,6 +505,26 @@ class ServiceMethods extends ServiceData {
 	M_RemoveUpcomingEventReminder(x) {this.T_WCM("M_RemoveUpcomingEventReminder",x,this.GM_RemoveUpcomingEventReminder);}
 	/** @public @arg {M_PlaylistDelete} x */
 	M_PlaylistDelete(x) {this.T_WCM("M_PlaylistDelete",x,this.GM_PlaylistDelete);}
+	/** @private @arg {M_RecordInteractions} x */
+	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
+	/** @private @arg {M_VE12924} x */
+	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
+	/** @private @arg {M_YpcGetCart} x */
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {M_UpdatedMetadata} x */
+	M_UpdatedMetadata(x) {this.T_WCM("M_UpdatedMetadata",x,(x,cf) => this.T_GM(cf,x,x => this.cq(x,"/youtubei/v1/updated_metadata")));}
+	/** @private @arg {M_PerformCommentAction} x */
+	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
+	/** @private @arg {M_CreateCommentReplyDialog} x */
+	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
+	/** @private @arg {M_CreateCommentReply} x */
+	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
+	/** @public @arg {M_AddToPlaylistService} x */
+	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
+	/** @private @arg {M_Like} x */
+	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
+	/** @private @arg {M_GetSharePanel} x */
+	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
 	/** @type {string[]} */
 	gm_ve_urls=[];
 	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
