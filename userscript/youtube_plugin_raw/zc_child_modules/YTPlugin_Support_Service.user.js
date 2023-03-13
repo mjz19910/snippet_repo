@@ -3956,11 +3956,12 @@ class ForService_XMethods extends BaseService {
 					switch(a_menu.style) {
 						default: debugger; break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": {
-							this.sm.MP_AccountMenu(a_menu);
+							this.sm.MP_LoadingAccountMenu(a_menu);
 						} break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": {
+							if("showLoadingSpinner" in a_menu) {this.sm.MP_LoadingNotificationMenu(a_menu); break;}
 							if("header" in a_menu) {this.ht.MP_NotificationMenu(a_menu); break;}
-							this.sm.MP_GetNotificationMenu(a_menu); this.MP_NotificationsMenu(a_menu);
+							debugger;
 						} break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM": break;
 					}

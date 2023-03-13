@@ -796,7 +796,7 @@ class ServiceMethods extends ServiceData {
 		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
 		debugger;
 	}
-	/** @arg {T_OpenPopup_Dropdown<TR_MultiPageMenu<{style: string;}>>} x @returns {x is Popup_DD_GetAccountMenu} */
+	/** @arg {T_OpenPopup_Dropdown<TR_MultiPageMenu<{style: string;}>>} x @returns {x is Popup_LoadingAccountMenu} */
 	is_D_GetAccountMenu_Popup(x) {return x.popup.multiPageMenuRenderer.style==="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";}
 	/** @arg {R_MenuPopup} x */
 	R_MenuPopup(x) {this.H_s("menuPopupRenderer",x,this.D_MenuPopup);}
@@ -4634,9 +4634,9 @@ class ServiceMethods extends ServiceData {
 		}
 		const {avatar,menuRequest,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(avatar);
-		let res=this.T_SE_Signal(`${cf}.SE_Signal`,menuRequest);
-		this.M_AccountMenu(res[0]);
-		this.S_GetAccountMenu(res[1]);
+		let [meta,data]=this.T_SE_Signal(`${cf}.SE_Signal`,menuRequest);
+		this.M_AccountMenu(meta);
+		this.S_GetAccountMenu(data);
 	}
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
@@ -4865,14 +4865,6 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_bool(isCustomEmoji);
 		return y;
 	}
-	/** @public @arg {Popup_DD_GetAccountMenu} x */
-	Popup_GetAccountMenu(x) {
-		const cf="Popup_GetAccountMenu";
-		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(b!=="DROPDOWN") debugger;
-		if(c!==true) debugger;
-		return a;
-	}
 	/** @public @arg {CF_TR_MultiPageMenu} cf @template T @template {TR_MultiPageMenu<T>} U @arg {U} x */
 	TR_MultiPageMenu(cf,x) {
 		let [dk]=this.get_keys_of(x);
@@ -4884,18 +4876,26 @@ class ServiceMethods extends ServiceData {
 		const cf="S_GetAccountMenu";
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		let [u]=this.z(actions,this.A_GetAccountMenu);
-		let [u1]=this.z(u,this.Popup_GetAccountMenu);
-		let [u2]=this.z(u1,this.R_AccountMenu);
-		this.z(u2,this.MP_AccountMenu);
+		let [u]=this.z(actions,this.A_LoadingAccountMenu);
+		let [u1]=this.z(u,this.Popup_LoadingAccountMenu);
+		let [u2]=this.z(u1,this.R_LoadingAccountMenu);
+		this.z(u2,this.MP_LoadingAccountMenu);
 	}
-	/** @private @arg {R_AccountMenu} x */
-	R_AccountMenu(x) {return this.TR_MultiPageMenu("R_AccountMenu",x);}
-	/** @public @arg {A_GetAccountMenu} x */
-	A_GetAccountMenu(x) {return this.xm.TA_OpenPopup("A_GetAccountMenu",x);}
+	/** @public @arg {A_LoadingAccountMenu} x */
+	A_LoadingAccountMenu(x) {return this.xm.TA_OpenPopup("A_LoadingAccountMenu",x);}
+	/** @public @arg {Popup_LoadingAccountMenu} x */
+	Popup_LoadingAccountMenu(x) {
+		const cf="Popup_LoadingAccountMenu";
+		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(b!=="DROPDOWN") debugger;
+		if(c!==true) debugger;
+		return a;
+	}
+	/** @private @arg {R_LoadingAccountMenu} x */
+	R_LoadingAccountMenu(x) {return this.TR_MultiPageMenu("R_LoadingAccountMenu",x);}
 	/** @public @arg {MP_LoadingAccountMenu} x */
-	MP_AccountMenu(x) {
-		const cf="MP_AccountMenu";
+	MP_LoadingAccountMenu(x) {
+		const cf="MP_LoadingAccountMenu";
 		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
 		this.trackingParams(trackingParams);
@@ -4938,8 +4938,8 @@ class ServiceMethods extends ServiceData {
 		return y;
 	}
 	/** @public @arg {MP_LoadingNotificationMenu} x */
-	MP_GetNotificationMenu(x) {
-		const cf="MP_GetNotificationMenu";
+	MP_LoadingNotificationMenu(x) {
+		const cf="MP_LoadingNotificationMenu";
 		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
@@ -4955,7 +4955,7 @@ class ServiceMethods extends ServiceData {
 		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
 		/** @type {[MP_LoadingNotificationMenu[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
-		this.z(u2,this.MP_GetNotificationMenu);
+		this.z(u2,this.MP_LoadingNotificationMenu);
 	}
 	/** @public @arg {Popup_DD_LoadingNotificationsMenu} x */
 	G_Action_GetNotificationsMenu_Popup(x) {
@@ -5037,11 +5037,9 @@ class ServiceMethods extends ServiceData {
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem";
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.cq(sections.length,1);
-		let n=this.TR_MP_MenuSection(sections[0]);
-		if(!n) {debugger; return;}
-		let n1=this.T_Items_TP("R_CompactLink_Items",n[0]);
-		this.tz(n1,this.R_CompactLink);
+		let [n,y1]=this.z(sections,this.TR_MP_MenuSection); this.cq(this.eq_keys(y1,[]),true);
+		let [n1,y2]=this.z(n,v => this.T_Items_TP("R_CompactLink_Items",v[0])); this.cq(this.eq_keys(y2,[]),true);
+		this.z(n1,x => this.z(x,this.R_CompactLink));
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}

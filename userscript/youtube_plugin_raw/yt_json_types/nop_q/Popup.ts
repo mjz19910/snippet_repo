@@ -30,7 +30,7 @@ type A_AboutThisAd=TA_OpenPopup<Popup_DL_AboutThisAd>;
 type A_ClientSignal=TA_OpenPopup<Popup_ClientSignal>;
 type A_ConfirmDialog=TA_OpenPopup<Popup_DL_ConfirmDialog>;
 type A_FancyDismissibleDialog=TA_OpenPopup<Popup_DL_DismissibleDialog>;
-type A_GetAccountMenu=TA_OpenPopup<Popup_DD_GetAccountMenu>;
+type A_LoadingAccountMenu=TA_OpenPopup<Popup_LoadingAccountMenu>;
 type A_LoadingNotificationsMenu=TA_OpenPopup<Popup_DD_LoadingNotificationsMenu>;
 type A_GetSystemMenu=TA_OpenPopup<Popup_DD_SystemMenu>;
 type A_NotificationMenuPopup=TA_OpenPopup<Popup_DD_NotificationMenu>;
@@ -42,7 +42,7 @@ type G_OpenPopup_All=
 	|A_ClientSignal
 	|A_ConfirmDialog
 	|A_FancyDismissibleDialog
-	|A_GetAccountMenu
+	|A_LoadingAccountMenu
 	|A_GetSystemMenu
 	|A_LoadingNotificationsMenu
 	|A_NotificationMenuPopup
@@ -60,7 +60,7 @@ type Popup_ClientSignal=
 	|Popup_TAD_VoiceSearch
 	;
 ;
-type Popup_DD_GetAccountMenu=T_OpenPopup_Dropdown<R_AccountMenu>;
+type Popup_LoadingAccountMenu=T_OpenPopup_Dropdown<R_LoadingAccountMenu>;
 type Popup_DD_LoadingNotificationsMenu=T_OpenPopup_Dropdown<R_LoadingNotificationsMenu>;
 type Popup_DD_MenuPopup=T_OpenPopup_Dropdown<R_MenuPopup>;
 type Popup_DD_NotificationMenu=T_OpenPopup_Dropdown<R_NotificationMenu>;
@@ -74,7 +74,7 @@ type Popup_TAD_VoiceSearch=T_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>;
 type Popup_TT_NotificationToast=T_OpenPopup_Toast<RA_Notification>;
 // {popup:TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>;popupType:"DROPDOWN";}
 type G_Popup_All=
-	|Popup_DD_GetAccountMenu
+	|Popup_LoadingAccountMenu
 	|Popup_DD_LoadingNotificationsMenu
 	|Popup_DD_MenuPopup
 	|Popup_DD_NotificationMenu
@@ -90,7 +90,7 @@ type G_Popup_All=
 ;
 //#endregion
 //#region MultiPageMenu
-type R_AccountMenu=TR_MultiPageMenu<MP_LoadingAccountMenu>;
+type R_LoadingAccountMenu=TR_MultiPageMenu<MP_LoadingAccountMenu>;
 type R_LoadingNotificationsMenu=TR_MultiPageMenu<MP_LoadingNotificationMenu>;
 type R_NotificationMenu=TR_MultiPageMenu<MP_NotificationMenu>;
 type R_SystemMenu=TR_MultiPageMenu<MP_SystemMenu>;
