@@ -766,7 +766,7 @@ class HandleTypes extends BaseService {
 			case "l6": case "l7": case "ld": case "le": case "lk": case "ll": case "lr": case "ls": case "ly": case "lz":
 			case "r6": case "r ": case "r ": case "r ": case "r ": case "rl": case "rr": case "r ": case "r ": case "r ":
 			case "s6": case "s7": case "sd": case "se": case "sk": case "sl": case "sr": case "ss": case "sy": case "sz":
-			case "z6": case "z7": case "zd": case "ze": case "zk": case "z ": case "zr": case "zs": case "zy": case "zz":
+			case "z6": case "z7": case "zd": case "ze": case "zk": case "zl": case "zr": case "zs": case "zy": case "zz":
 				if(!this.selector.cache.includes(selector)) this.selector.cache.push(selector);
 				break;
 		}
@@ -2840,9 +2840,10 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_ve_6827_params_f93} x */
 	P_ve_6827_params_f93(x) {
 		const cf="P_ve_6827_params_f93";
-		const {1: f1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		const {1: f1,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.TV_Str(f1));
 		this.save_primitive(`${cf}.f3`,this.T_D32(f3));
+		f4&&this.save_primitive(`${cf}.f3`,this.T_D64(f4));
 	}
 	/** @private @arg {P_ve_6827_params_f84} x */
 	P_ve_6827_params_f84(x) {

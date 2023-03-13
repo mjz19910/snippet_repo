@@ -128,7 +128,7 @@ type P_offlineability_entity_key={
 type P_repeat_state_entity_key={
 	2: TV_Str<"repeat_state">,
 	4: T_D32<329>,
-	5: T_D32<1>
+	5: T_D32<1>;
 };
 type P_EntityKey=
 	|P_aadc_guidelines_state_entity_key
@@ -607,6 +607,7 @@ type P_ve_6827_params_f94={
 type P_ve_6827_params_f93={
 	1: TV_Str<"bigbusiness">;
 	3: T_D32<1>;
+	4?: T_D64<16623178601253197356n>;
 };
 type P_ve_6827_params_f84={5: T_D32<2>;};
 type P_ve_6827_params={
