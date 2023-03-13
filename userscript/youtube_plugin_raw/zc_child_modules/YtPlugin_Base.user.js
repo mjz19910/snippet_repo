@@ -2055,6 +2055,32 @@ function split_string_once_ex(s,d=as(","),_wa) {
 	let q=r;
 	return as(q);
 }
+/** @private @arg {A1|null} _a1 @template {string} A1 @arg {A2|null} _a2 @template {string} A2 @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_2arg<A1,A2,S,D>} */
+function split_string_once_ex2(s,d=as(","),_a1,_a2) {
+	if(s==="") {
+		/** @private @type {[]} */
+		let r=[];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let i=s.indexOf(d);
+	if(i===-1) {
+		/** @private @type {[S]} */
+		let r=[s];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let a=s.slice(0,i);
+	let b=s.slice(i+d.length);
+	/** @private @type {[string,string]} */
+	let r=[a,b];
+	/** @private @type {any} */
+	let q=r;
+	return as(q);
+}
+export_(exports => exports.split_string_once_ex2=split_string_once_ex2);
 /** @private @arg {WA|null} _wx @template {string} S @template {string} WA @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_NE<WA,S,D>} */
 function split_string_once_last(s,d,_wx) {
 	if(s==="") {

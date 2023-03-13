@@ -13,7 +13,8 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState,BaseService}=require("./YtPlugin_Base.user");
+const {split_string_once_ex2}=require("./YtPlugin_Base.user");
+const {as,base64_url_dec,split_string_once,MyReader,split_string,do_export,as_any,JsonReplacerState,BaseService,split_string_once_ex}=require("./YtPlugin_Base.user");
 
 //#region module setup
 const __module_name__="mod$HandleTypes";
@@ -3864,25 +3865,72 @@ class HandleTypes extends BaseService {
 		const {impressionPings,errorPings,mutePings,unmutePings,pausePings,rewindPings,resumePings,skipPings,closePings,progressPings,fullscreenPings,activeViewViewablePings,endFullscreenPings,activeViewMeasurablePings,abandonPings,activeViewFullyViewableAudibleHalfDurationPings,completePings,activeViewTracking,...y}=this.s(cf,x); this.g(y);
 		/** @type {`https://www.youtube.com/pagead/adview?${string}`[]} */
 		let ad_view_urls=[];
+		/** @type {`https://www.youtube.com/pagead/interaction/?${string}`[]} */
+		let interaction_urls=[];
+		/** @type {`https://www.youtube.com/pcs/activeview?${string}`[]} */
+		let pcs_active_view_urls=[];
 		let r;
 		[r]=this.z(impressionPings,x => this.xm.T_BaseUrl(x)); ad_view_urls.push(...r);
-		errorPings;
-		mutePings;
-		unmutePings;
-		pausePings;
-		rewindPings;
-		resumePings;
-		skipPings;
-		closePings;
-		progressPings;
-		fullscreenPings;
-		activeViewViewablePings;
-		endFullscreenPings;
-		activeViewMeasurablePings;
-		abandonPings;
-		activeViewFullyViewableAudibleHalfDurationPings;
-		completePings;
-		activeViewTracking;
+		[r]=this.z(errorPings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(mutePings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(unmutePings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(pausePings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(rewindPings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(resumePings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(skipPings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(closePings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(progressPings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(fullscreenPings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(activeViewViewablePings,x => this.xm.T_BaseUrl(x)); pcs_active_view_urls.push(...r);
+		[r]=this.z(endFullscreenPings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(activeViewMeasurablePings,x => this.xm.T_BaseUrl(x)); pcs_active_view_urls.push(...r);
+		[r]=this.z(abandonPings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		[r]=this.z(activeViewFullyViewableAudibleHalfDurationPings,x => this.xm.T_BaseUrl(x)); pcs_active_view_urls.push(...r);
+		[r]=this.z(completePings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
+		this.D_TrafficType(activeViewTracking);
+		this.z(ad_view_urls,x => {
+			let [hostname,path_and_search]=this.parse_url_parts(x); this.cq(hostname,"www.youtube.com");
+			let [pathname,search]=split_string_once(path_and_search,"?");
+			let [path1,path2]=split_string_once(pathname,"/"); this.cq(path1,"pagead"); this.cq(path2,"adview");
+			let so=this.parse_url_search_params(`?${search}`);
+			console.log("[search_params]",pathname,so);
+		});
+		this.z(interaction_urls,x => {
+			let [hostname,path_and_search]=this.parse_url_parts(x); this.cq(hostname,"www.youtube.com");
+			let [pathname,search]=split_string_once(path_and_search,"?");
+			let [path1,path2]=split_string_once(pathname,"/"); this.cq(path1,"pagead"); this.cq(path2,"interaction/");
+			let so=this.parse_url_search_params(`?${search}`);
+			console.log("[search_params]",pathname,so);
+		});
+		this.z(pcs_active_view_urls,x => {
+			let [hostname,path_and_search]=this.parse_url_parts(x); this.cq(hostname,"www.youtube.com");
+			let [pathname,search]=split_string_once(path_and_search,"?");
+			let [path1,path2]=split_string_once(pathname,"/"); this.cq(path1,"pcs"); this.cq(path2,"activeview");
+			let so=this.parse_url_search_params(`?${search}`);
+			console.log("[search_params]",pathname,so);
+		});
+	}
+	/** @private @template {string} A @template {string} B @arg {`https://${A}/${B}`} x @returns {[A,B]} */
+	parse_url_parts(x) {
+		/** @arg {`${A}/${B}`|null} x */
+		function wa(x) {return x;}
+		/** @type {`${A}/${B}`|null} */
+		let xv=wa(null);
+		let [...p]=split_string_once_ex(x,"://",xv);
+		/** @arg {A|null} x */
+		function wa1(x) {return x;}
+		let xv1=wa1(null);
+		/** @arg {B|null} x */
+		function wa2(x) {return x;}
+		let xv2=wa2(null);
+		let [...p2]=split_string_once_ex2(p[1],"/",xv1,xv2);
+		return p2;
+	}
+	/** @private @arg {D_TrafficType} x */
+	D_TrafficType(x) {
+		const cf="D_TrafficType";
+		const {trafficType,...y}=this.s(cf,x); this.g(y);
+		this.cq(trafficType,"ACTIVE_VIEW_TRAFFIC_TYPE_VIDEO");
 	}
 }
 //#endregion

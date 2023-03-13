@@ -3,6 +3,18 @@
 type TI_SplitOnce<WA extends string,S extends string,D extends string>=
 	S extends `${infer Begin}${D}${infer Rest}`? TI_SplitOnce_1<WA,S,D,Begin,Rest>:[S];
 ;
+type TI_SplitOnce_2arg<A1 extends string,A2 extends string,S extends string,D extends string>=
+	S extends `${infer Begin}${D}${infer Rest}`? TI_SplitOnce_2arg_1<A1,A2,S,D,Begin,Rest>:[S];
+;
+type TI_SplitOnce_2arg_1<A1 extends string,A2 extends string,S extends string,D extends string,Begin extends string,Rest extends string>=
+	Begin extends A1
+	? TI_SplitOnce_NR_3<A1,Rest>
+	:TI_SplitOnce_2arg_3<A1,A2,S,D,[Begin,Rest]>;
+;
+type TI_SplitOnce_2arg_3<A1 extends string,A2 extends string,S extends string,D extends string,Split extends [string,string]>=
+	Split[0] extends ""? TI_SplitOnce_NB_2<A1,S,D>:TI_SplitOnce_2arg_2<A1,A2,Split>;
+;
+type TI_SplitOnce_2arg_2<A1 extends string,A2 extends string,Split extends [string,string]>=Split extends [A1,A2]? [A1,A2]:never;
 type TI_SplitOnce_1<WA extends string,S extends string,D extends string,Begin extends string,Rest extends string>=
 	Begin extends WA
 	? TI_SplitOnce_NR_3<WA,Rest>
