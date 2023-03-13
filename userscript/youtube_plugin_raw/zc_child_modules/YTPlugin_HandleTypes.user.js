@@ -3075,7 +3075,7 @@ class HandleTypes extends BaseService {
 	P_f3_PD_continuation_params_data(x) {
 		const cf="P_f3_PD_continuation_params_data";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		console.log(`${cf}.f1`,this.TV_Str(v1));
+		this.sm.videoId(this.TV_Str(v1));
 	}
 	/** @private @arg {P_f3_PD_continuation_params_f1} x */
 	P_f3_PD_continuation_params_f1(x) {
@@ -3085,10 +3085,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {P_f3_PD_continuation_params_f1_data} x */
 	P_f3_PD_continuation_params_f1_data(x) {
-		const cf="P_f3_PD_continuation_params_f1";
+		const cf="P_f3_PD_continuation_params_f1_data";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.channelId(this.TV_Str(v1));
-		console.log(`${cf}.f2`,this.TV_Str(v2));
+		this.sm.videoId(this.TV_Str(v2));
 	}
 	/** @private @arg {P_create_reply_params} x */
 	P_create_reply_params(x) {
@@ -3792,14 +3792,30 @@ class HandleTypes extends BaseService {
 		const {skipOrPreviewRenderer,trackingParams,visitAdvertiserRenderer,adBadgeRenderer,adDurationRemaining,adInfoRenderer,flyoutCtaRenderer,adLayoutLoggingData,elementId,...y}=this.s(cf,x); this.g(y);
 		this.R_SkipAd(skipOrPreviewRenderer);
 		this.trackingParams(trackingParams);
-		visitAdvertiserRenderer;
-		adBadgeRenderer;
-		adDurationRemaining;
-		adInfoRenderer;
-		flyoutCtaRenderer;
-		adLayoutLoggingData;
-		elementId;
+		this.xm.R_Button(visitAdvertiserRenderer);
+		this.R_SimpleAdBadge(adBadgeRenderer);
+		this.R_AdDurationRemaining(adDurationRemaining);
+		this.R_AdHoverTextButton(adInfoRenderer);
+		this.R_FlyoutCta(flyoutCtaRenderer);
+		this.sm.D_SerializedAdServingDataEntry(adLayoutLoggingData);
+		console.log("elementId",elementId);
 	}
+	/** @private @arg {R_SimpleAdBadge} x */
+	R_SimpleAdBadge(x) {this.H_("simpleAdBadgeRenderer",x,this.D_SimpleAdBadge);}
+	/** @private @arg {D_SimpleAdBadge} x */
+	D_SimpleAdBadge(x) {x;}
+	/** @private @arg {R_AdDurationRemaining} x */
+	R_AdDurationRemaining(x) {this.H_("adDurationRemainingRenderer",x,this.D_AdDurationRemaining);}
+	/** @private @arg {D_AdDurationRemaining} x */
+	D_AdDurationRemaining(x) {x;}
+	/** @private @arg {R_AdHoverTextButton} x */
+	R_AdHoverTextButton(x) {this.H_("adHoverTextButtonRenderer",x,this.D_AdHoverTextButton);}
+	/** @private @arg {D_AdHoverTextButton} x */
+	D_AdHoverTextButton(x) {x;}
+	/** @private @arg {R_FlyoutCta} x */
+	R_FlyoutCta(x) {this.H_("flyoutCtaRenderer",x,this.D_FlyoutCta);}
+	/** @private @arg {D_EmptyObj} x */
+	D_FlyoutCta(x) {x;}
 	/** @public @arg {D_Pings} x */
 	D_Pings(x) {
 		const cf="D_Pings";

@@ -1,4 +1,5 @@
-type M_Empty_WCM=TM_Gen<{}>;
+type D_EmptyObj={};
+type M_Empty_WCM=TM_Gen<D_EmptyObj>;
 //#region M_VE
 type M_VE3611={webCommandMetadata: GM_VE3611; resolveUrlCommandMetadata?: M_ResolveUrlCommand;};
 type M_VE3832=TM_Gen<GM_VE3832>;
