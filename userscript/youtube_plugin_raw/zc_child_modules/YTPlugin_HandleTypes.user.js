@@ -3663,12 +3663,6 @@ class HandleTypes extends BaseService {
 			} break;
 		}
 	}
-	/** @public @arg {D_Pings} x */
-	D_Pings(x) {
-		const cf="D_Pings";
-		const {impressionPings,errorPings,mutePings,unmutePings,pausePings,rewindPings,resumePings,skipPings,closePings,progressPings,fullscreenPings,activeViewViewablePings,endFullscreenPings,activeViewMeasurablePings,abandonPings,activeViewFullyViewableAudibleHalfDurationPings,completePings,activeViewTracking,...y}=this.s(cf,x);
-		let u=this.get_keys_of_2(y); if(u.length>0) {let k=u.join(); console.log(`[${cf}.next_keys]`,k);}
-	}
 	/** @public @arg {D_CsiParameterItem} x */
 	D_CsiParameterItem(x) {
 		const cf="D_CsiParameterItem";
@@ -3717,12 +3711,6 @@ class HandleTypes extends BaseService {
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		debugger;
 	}
-	/** @public @arg {DU_UrlParams_PageAd_AClk} x */
-	DU_UrlParams_PageAd_AClk(x) {
-		const cf="DU_UrlParams_PageAd_AClk";
-		const {sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms,...y}=this.s(cf,x); this.g(y);
-		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms);
-	}
 	/** @private @arg {R_TemplatedAdText} x */
 	R_TemplatedAdText(x) {this.H_("templatedAdText",x,this.D_TemplatedAdText);}
 	/** @private @arg {D_TemplatedAdText} x */
@@ -3750,6 +3738,43 @@ class HandleTypes extends BaseService {
 		this.cq(isTemplated,false);
 		this.trackingParams(trackingParams);
 	}
+	/** @public @arg {VM_PlaceData} x */
+	VM_PlaceData(x) {this.H_x("VM_PlaceData","placeDataViewModel",x,this.VD_PlaceData);}
+	/** @private @arg {VD_PlaceData} x */
+	VD_PlaceData(x) {
+		const cf="D_InstreamAdPlayerOverlay";
+		const {placeName,placeCategory,rating,ratingA11yLabel,reviewsCount,reviewsCountA11yLabel,thumbnailUrl,onTap,trackingParams,placeCardA11yHint,openLinkUiStyle,cardStyle,...y}=this.s(cf,x); this.g(y);
+		this.sm.a_primitive_str(placeName);
+		this.sm.a_primitive_str(placeCategory);
+		this.sm.a_primitive_str(rating);
+		this.sm.a_primitive_str(ratingA11yLabel);
+		this.sm.a_primitive_str(reviewsCount);
+		this.sm.a_primitive_str(reviewsCountA11yLabel);
+		let uo=this._convert_url_to_obj(thumbnailUrl);
+		let up=split_string(split_string_once(uo.pathname,"/")[1],"/");
+		switch(up[0]) {
+			default: debugger; break;
+			case "p": break;
+		}
+		let ua=split_string(up[1],"=");
+		let ur=(/** @returns {[(typeof ua)[0],...typeof p2]} */(cv) => {
+			let p2=split_string(cv[1],"-");
+			return [cv[0],...p2];
+		})(ua);
+		console.log(ur);
+		this.C_Innertube(onTap);
+		this.trackingParams(trackingParams);
+		this.sm.a_primitive_str(placeCardA11yHint);
+		this.sm.a_primitive_str(openLinkUiStyle);
+		this.sm.a_primitive_str(cardStyle);
+		this.join_string(this.get_keys_of_2(y),",")==="";
+	}
+	/** @public @arg {DU_UrlParams_PageAd_AClk} x */
+	DU_UrlParams_PageAd_AClk(x) {
+		const cf="DU_UrlParams_PageAd_AClk";
+		const {sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms,...y}=this.s(cf,x); this.g(y);
+		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms);
+	}
 	/** @private @arg {D_InstreamAdPlayerOverlay} x */
 	D_InstreamAdPlayerOverlay(x) {
 		const cf="D_InstreamAdPlayerOverlay";
@@ -3763,6 +3788,29 @@ class HandleTypes extends BaseService {
 		flyoutCtaRenderer;
 		adLayoutLoggingData;
 		elementId;
+	}
+	/** @public @arg {D_Pings} x */
+	D_Pings(x) {
+		const cf="D_Pings";
+		const {impressionPings,errorPings,mutePings,unmutePings,pausePings,rewindPings,resumePings,skipPings,closePings,progressPings,fullscreenPings,activeViewViewablePings,endFullscreenPings,activeViewMeasurablePings,abandonPings,activeViewFullyViewableAudibleHalfDurationPings,completePings,activeViewTracking,...y}=this.s(cf,x); this.g(y);
+		impressionPings;
+		errorPings;
+		mutePings;
+		unmutePings;
+		pausePings;
+		rewindPings;
+		resumePings;
+		skipPings;
+		closePings;
+		progressPings;
+		fullscreenPings;
+		activeViewViewablePings;
+		endFullscreenPings;
+		activeViewMeasurablePings;
+		abandonPings;
+		activeViewFullyViewableAudibleHalfDurationPings;
+		completePings;
+		activeViewTracking;
 	}
 }
 //#endregion

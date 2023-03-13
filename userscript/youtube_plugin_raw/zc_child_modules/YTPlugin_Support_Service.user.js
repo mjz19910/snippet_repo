@@ -3115,7 +3115,11 @@ class Support_Renderer extends BaseService {
 	D_HorizontalCardList(x) {
 		const cf="D_HorizontalCardList";
 		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(cards,this.R_MacroMarkersListItem);
+		this.z(cards,x => {
+			if("macroMarkersListItemRenderer" in x) return this.R_MacroMarkersListItem(x);
+			if("placeDataViewModel" in x) return this.ht.VM_PlaceData(x);
+			x===""; debugger;
+		});
 		this.sm.trackingParams(trackingParams);
 		this.sm.R_RichListHeader(header);
 		x: {

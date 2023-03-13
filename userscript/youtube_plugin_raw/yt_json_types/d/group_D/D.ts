@@ -1810,8 +1810,23 @@ type D_Hint={
 	trackingParams: string;
 };
 type D_HistoryEntryTime={entryTime: number;};
+type VD_PlaceData={
+	placeName: string;
+	placeCategory: string;
+	rating: `${number}`;
+	ratingA11yLabel: "${number} stars";
+	reviewsCount: `(${number})`;
+	reviewsCountA11yLabel: `${number} reviews`;
+	thumbnailUrl: `https://lh5.googleusercontent.com/p/${string}=w${number}-h${number}-n-k-no`;
+	onTap: C_Innertube;
+	trackingParams: string;
+	placeCardA11yHint: "open map";
+	openLinkUiStyle: "OPEN_LINK_UI_STYLE_UNSPECIFIED";
+	cardStyle: "PLACE_CARD_STYLE_TALL";
+};
+type VM_PlaceData={placeDataViewModel: VD_PlaceData;};
 type D_HorizontalCardList={
-	cards: R_MacroMarkersListItem[];
+	cards: (R_MacroMarkersListItem|VM_PlaceData)[];
 	trackingParams: string;
 	header: R_RichListHeader;
 	style: T_StyleType<G_CardList_StyleType>|{type: G_CardList_StyleType;};
