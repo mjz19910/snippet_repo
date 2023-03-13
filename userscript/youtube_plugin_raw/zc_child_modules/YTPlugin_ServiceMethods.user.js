@@ -271,11 +271,6 @@ class ServiceMethods extends ServiceData {
 			r.pathname;
 			return;
 		}
-		if(this.str_starts_with(x,"https://www.youtube.com/channel/UC")) {
-			let r=this._convert_url_to_obj(x);
-			r.pathname;
-			return;
-		}
 		x;
 		{
 			/** @type {DE_U_ChannelUrl["url"]} */
@@ -404,6 +399,68 @@ class ServiceMethods extends ServiceData {
 		const cf="DE_CreateCommentReplyDialog";
 		const {dialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_CommentReplyDialog(dialog);
+	}
+	/** @public @arg {M_AddToPlaylistService} x */
+	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
+	/** @public @arg {E_AddToPlaylistService} x */
+	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
+	/** @public @arg {E_Feedback} x */
+	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
+	/** @public @arg {E_VE3611} x */
+	E_VE3611(x) {
+		if(!this.is_TE_VE(x,3611)) {debugger; return;}
+		let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);
+	}
+	/** @public @arg {E_VE3854} x */
+	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
+	/** @public @arg {E_Search} x */
+	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
+	/** @public @arg {E_VE5754} x */
+	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
+	/** @public @arg {E_VE6827} x */
+	E_VE6827(x) {
+		let [a,b,{trackingParams,...y}]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);
+		this.t(trackingParams,this.trackingParams);
+	}
+	/** @public @arg {E_VE11487} x */
+	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
+	/** @public @arg {E_VE23462} x */
+	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
+	/** @public @arg {E_VE42352} x */
+	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	/** @arg {DU_UrlParams_PageadParallelAdInteraction} x */
+	DU_UrlParams_PageadParallelAdInteraction(x) {
+		const cf="DU_UrlParams";
+		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
+		this.save_primitive(`${cf}.label`,x.label);
+	}
+	/** @public @arg {E_VE96368} x */
+	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
+	/** @private @arg {DE_Search} x */
+	DE_Search(x) {
+		const cf="DE_Search";
+		const {query,params,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(query);
+		this.t(params,x => this.params("search.params",x));
+	}
+	/** @public @arg {E_WatchPlaylist} x */
+	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
+	/** @private @arg {DE_WatchPlaylist} x */
+	DE_WatchPlaylist(x) {
+		const cf="DE_WatchPlaylist";
+		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.playlistId(playlistId);
+		this.a_primitive_num(index);
+		this.params("watch_playlist.params",params);
+	}
+	/** @public @arg {E_Watch} x */
+	E_Watch(x) {
+		const cf="E_Watch";
+		if("clickTrackingParams" in x) {
+			const [a,b,y]=this.TE_Endpoint_3(cf,"watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
+		} else {
+			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
+		}
 	}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
@@ -981,12 +1038,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
-	/** @public @arg {M_AddToPlaylistService} x */
-	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
-	/** @public @arg {E_AddToPlaylistService} x */
-	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
-	/** @public @arg {E_Feedback} x */
-	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
 	/** @public @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_s("menuFlexibleItemRenderer",x,this.DT_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
@@ -1378,43 +1429,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_CommonConfig} x */
 	D_CommonConfig(x) {this.H_s("url",x,x => this.ps.parse_url("D_CommonConfig.url",x));}
-	/** @public @arg {E_VE3611} x */
-	E_VE3611(x) {
-		if(!this.is_TE_VE(x,3611)) {debugger; return;}
-		let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);
-	}
-	/** @public @arg {E_VE3854} x */
-	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
-	/** @public @arg {E_Search} x */
-	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
-	/** @public @arg {E_VE5754} x */
-	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
-	/** @public @arg {E_VE6827} x */
-	E_VE6827(x) {
-		let [a,b,{trackingParams,...y}]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);
-		this.t(trackingParams,this.trackingParams);
-	}
-	/** @public @arg {E_VE11487} x */
-	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
-	/** @public @arg {E_VE23462} x */
-	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
-	/** @public @arg {E_VE42352} x */
-	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
-	/** @arg {DU_UrlParams_PageadParallelAdInteraction} x */
-	DU_UrlParams_PageadParallelAdInteraction(x) {
-		const cf="DU_UrlParams";
-		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
-		this.save_primitive(`${cf}.label`,x.label);
-	}
-	/** @public @arg {E_VE96368} x */
-	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
-	/** @private @arg {DE_Search} x */
-	DE_Search(x) {
-		const cf="DE_Search";
-		const {query,params,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_str(query);
-		this.t(params,x => this.params("search.params",x));
-	}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {this.browseId(x);}
 	seen_map=new Set;
@@ -1494,16 +1508,6 @@ class ServiceMethods extends ServiceData {
 		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(parentTrackingParams,x => this.trackingParams(x));
 		this.t(isVanityUrl,x => this.cq(x,true));
-	}
-	/** @public @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
-	/** @private @arg {DE_WatchPlaylist} x */
-	DE_WatchPlaylist(x) {
-		const cf="DE_WatchPlaylist";
-		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.playlistId(playlistId);
-		this.a_primitive_num(index);
-		this.params("watch_playlist.params",params);
 	}
 	/** @template T @arg {T} x @arg {T} y */
 	eq(x,y) {if(x!==y) debugger; return x===y;}
@@ -1734,15 +1738,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_Html5PlaybackOnesieConfig} x */
 	R_Html5PlaybackOnesieConfig(x) {this.H_s("html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
-	/** @public @arg {E_Watch} x */
-	E_Watch(x) {
-		const cf="E_Watch";
-		if("clickTrackingParams" in x) {
-			const [a,b,y]=this.TE_Endpoint_3(cf,"watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
-		} else {
-			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
-		}
-	}
 	/** @public @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {
 		const cf="D_Thumbnail";
