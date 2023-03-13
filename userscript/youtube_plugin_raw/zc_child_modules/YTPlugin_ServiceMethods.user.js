@@ -215,64 +215,6 @@ class ServiceMethods extends ServiceData {
 		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.videoId(videoId);
 	}
-	/** @arg {GU_VE83769_Url_External} x */
-	GU_VE83769_Url_External(x) {
-		let x1=this._convert_url_to_obj(x);
-		if(x1.hostname!=="googleads.g.doubleclick.net") debugger;
-		if(x1.pathname!=="/aclk") debugger;
-		let s_map=Object.fromEntries(x1.searchParams.entries());
-		{
-			/** @type {DE_VE83769_Url_Shape} */
-			let x2=as(s_map);
-			const {sa,ai,ae,num,cid,sig,client,rf,adurl,...y}=x2; this.g(y);
-			let u1=this._convert_url_to_obj(adurl);
-			if(u1.hostname!=="plantagreenhouses.ca") debugger;
-			if(u1.pathname!=="/") debugger;
-			/** @type {DE_VE83769_Url_SearchObj} */
-			let x3=as(Object.fromEntries(u1.searchParams.entries()));
-			const {gclid,...y1}=x3; this.g(y1);
-		}
-	}
-	/** @arg {(DE_U_InternalUrl|DE_U_ChannelUrl)["url"]} x */
-	GU_VE83769_Url_1(x) {
-		x: {
-			/** @type {DE_U_InternalUrl["url"]} */
-			let va=as(x);
-			let [p,r]=split_string_once(va,"://"); this.cq(p,"https");
-			let [h,u]=split_string_once(r,"/"); this.cq(h,"www.youtube.com");
-			switch(u) {
-				default: {
-					let [x1,x2,x3]=split_string(u,"/"); this.cq(x1,"channel"); this.channelId(x2);
-					this.cq(x3,"join");
-				} break x;
-				case "t/creative_commons": return;
-			}
-		}
-		/** @type {["",typeof x]} */
-		let xa=["",x];
-		if(this.str_starts_with_rx_in_arr(xa,"https://www.youtube.com/channel/UC")&&this.str_ends_with(xa[1],"/join")) {
-			let [,...xu]=xa;
-			if(this.str_ends_with_arr(xu,"/join")) {
-				xu;
-			}
-			return;
-		}
-		x;
-		if(this.str_starts_with(x,"https://www.youtube.com/channel/UC")) {
-			let r=this._convert_url_to_obj(x);
-			r.pathname;
-			return;
-		}
-		x;
-		{
-			/** @type {DE_U_ChannelUrl["url"]} */
-			let va=x;
-			let [p,r]=split_string_once(va,"://"); this.cq(p,"https");
-			let [h,u]=split_string_once(r,"/"); this.cq(h,"www.youtube.com");
-			let v=split_string_once(u,"/");
-			if(v.length!==1) debugger;
-		}
-	}
 	/** @public @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @public @arg {E_PlaylistDelete} x */
@@ -609,6 +551,10 @@ class ServiceMethods extends ServiceData {
 	DC_RepeatChapter(x) {
 		const cf="DC_RepeatChapter";
 		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.cq(repeat,"REPEAT_CHAPTER_TYPE_ENABLE_REPEAT");
+		this.cq(startTimeMs,"0");
+		this.cq(endTimeMs,"60000");
+		this.params("repeat_state.entity_key",repeatStateEntityKey);
 	}
 	/** @private @arg {C_UpdateToggleButtonState} x */
 	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
@@ -642,6 +588,8 @@ class ServiceMethods extends ServiceData {
 	DC_EngagementPanelHeaderShowNavigationButton(x) {
 		const cf="DC_EngagementPanelHeaderShowNavigationButton";
 		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.cq(targetId,"engagement-panel-macro-markers-description-chapters");
+		this.xm.R_Button(navigationButton);
 	}
 	/** @public @arg {C_AddToPlaylist} x */
 	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
