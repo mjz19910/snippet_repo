@@ -1,3 +1,54 @@
+type D_TrackingObj_f16={
+	1: T_D32<41>;
+	2: T_D32<6075>;
+	3: T_D32<0>;
+	4: VW_BinaryTimestamp;
+};
+type D_TrackingObj_f19={
+	1: T_D32<16>;
+	2: T_D32<3832>;
+};
+type H_TrackingObj_Tag=T_D32<0|330|523>;
+type H_TrackingObj_Id=T_D32<13188>;
+type H_TrackingObj_f6_Str=
+	|"cards"
+	|"endscreen"
+	|"external"
+	|"iv-endscreen"
+	|"list_other"
+	|"ni-push-u-sub"
+	|"related-auto"
+	|"related"
+	|"rellist"
+	|"shortswatch"
+	|"watch"
+	;
+;
+type H_TrackingObj_f6=TV_Str<H_TrackingObj_f6_Str>;
+type H_TrackingObj_f3=T_D32<0>;
+type H_TrackingObj_f21={
+	6: T_FD32<1315653944>;
+	10: T_PArr_R<[
+		T_FD32<826690645>,
+		T_D32<114>,
+		T_D32<84>
+	]>;
+	14: T_FD64<4715926796601679684n>;
+};
+type H_TrackingObj={
+	1?: H_TrackingObj_Tag;
+	2?: H_TrackingObj_Id;
+	3?: H_TrackingObj_f3;
+	4?: VW_BinaryTimestamp;
+	6?: H_TrackingObj_f6;
+	7?: TV_Str<T_Base64Str>;
+	8?: T_VW_Bigint<101551873087600536n>|T_D32<2048687136925003>;
+	9?: T_VW_Bigint<bigint>;
+	11?: TV_Str<"FEwhat_to_watch">;
+	16?: T_VW<D_TrackingObj_f16>;
+	19?: T_VW<D_TrackingObj_f19>;
+	21?: T_VW<H_TrackingObj_f21>;
+};
 type P_entity_key={
 	2: T_VW<{1: TV_Str<DU_VideoId>;}>;
 	4: T_D32<246>;
@@ -102,7 +153,6 @@ type P_ad_layout_ad_serving_data_entry={
 	13: T_D32<1>;
 	14: T_D32<37>;
 };
-
 type PX_ad_data_info={
 	1: T_D32<5>;
 	6: T_D32<1>;
@@ -255,18 +305,17 @@ type P_subscription_state_key={
 	4: T_D32<51>;
 	5: T_D32<1>;
 };
-type P_shorts_source_bp={
-	94: {
-		1: {
-			2: {
-				1: TV_Str<string>;
-				2: TV_Str<string>;
-				3: TV_Str<string>;
-			};
-		};
-		5: T_VW_Bigint<bigint>;
-	};
+type P_shorts_source_bp_obj2={
+	1: TV_Str<string>;
+	2: TV_Str<string>;
+	3: TV_Str<string>;
 };
+type P_shorts_source_bp_obj1={2: T_VW<P_shorts_source_bp_obj2>;};
+type P_shorts_source_bp_f94={
+	1: T_VW<P_shorts_source_bp_obj1>;
+	5: T_VW_Bigint<bigint>;
+};
+type P_shorts_source_bp={94: T_VW<P_shorts_source_bp_f94>;};
 type P_get_transcript_params={
 	1: TV_Str<DU_VideoId>;
 	2: TV_Str<string>;
@@ -294,61 +343,37 @@ type P_reel_watch_sequence_obj0={
 	1: T_D32<number>;
 	2: T_D32<1>;
 };
-type P_reel_watch_sequence_obj1={
-	1: T_D32</*536,887*/number>;
-};
-type P_rw_sd_obj0_f2={
-	6: T_D32<26>;
-};
-
+type P_reel_watch_sequence_obj1={1: T_D32<number>;};
+type P_rw_sd_obj0_f2={6: T_D32<26>;};
 type P_rw_sd_obj0_f3={
 	1: T_D32<number>;
 	2: T_D32<number>;
 };
-
-type P_rw_sd_obj0_f4={
-	1: T_D32<number>;
-};
-
+type P_rw_sd_obj0_f4={1: T_D32<number>;};
 type P_rw_sd_obj0_f5={
 	1: T_D32<13>;
 	2: T_D32<2>;
 };
-
 type P_rw_sd_obj0_f6={1: T_PArr_R<P_reel_watch_sequence_obj0[]>;};
-
-type P_rw_sd_obj0_f7={
-	1: T_PArr_R<P_reel_watch_sequence_obj1[]>;
-};
-
+type P_rw_sd_obj0_f7={1: T_PArr_R<P_reel_watch_sequence_obj1[]>;};
+type P_rw_sd_obj1={1: T_D32<203|205>;};
 type P_rw_sd_obj0_f8={
-	1: T_VW<{
-		1: T_D32<203>;
-	}>;
+	1: T_VW<P_rw_sd_obj1>;
 	2: T_D32<2>;
 };
-
 type P_rw_sd_obj0_f9={
-	1: T_VW<{
-		1: T_D32<205>;
-	}>;
+	1: T_VW<P_rw_sd_obj1>;
 	2: T_D32<2>;
 };
-
 type P_rw_sd_obj0_f10={
-	1: T_VW<{
-		1: T_D32<203>;
-	}>;
+	1: T_VW<P_rw_sd_obj1>;
 	2: T_D32<2>;
 };
-
-type P_rw_sd_obj0_f11={
-	2: T_VW<{
-		1: T_D32<1>;
-		2: T_D32<1>;
-	}>;
+type P_rw_sd_obj2={
+	1: T_D32<1>;
+	2: T_D32<1>;
 };
-
+type P_rw_sd_obj0_f11={2: T_VW<P_rw_sd_obj2>;};
 type P_rw_sd_obj0={
 	1: TV_Str<string>;
 	2: T_VW<P_rw_sd_obj0_f2>;
@@ -362,7 +387,6 @@ type P_rw_sd_obj0={
 	10: T_VW<P_rw_sd_obj0_f10>;
 	11: T_VW<P_rw_sd_obj0_f11>;
 };
-
 type P_reel_watch_sequence_data={
 	1: T_D32<10>;
 	3: T_D32<9>;
@@ -418,6 +442,13 @@ type PD_continuation_params={
 	14: T_VW<PD_continuation_params_f14>;
 	15?: T_D32<1>;
 };
+type PD_continuation_obj1={
+	1: T_D32<4>;
+	3: T_D32<1|2>;
+	4?: T_D32<0>;
+};
+type PD_continuation_obj2={1: T_D32<0>;};
+type PD_continuation_obj3={1: T_D32<10>;};
 type PD_invalidation_continuation={
 	3: TV_Str<string>;
 	5?: T_D32<number>;
@@ -426,17 +457,13 @@ type PD_invalidation_continuation={
 	9?: T_VW<PD_invalidation_continuation_f9>;
 	10?: T_D32<number>;
 	11?: T_D32<number>;
-	16: T_VW<{
-		1: T_D32<4>;
-		3: T_D32<1|2>;
-		4?: T_D32<0>;
-	}>;
+	16: T_VW<PD_continuation_obj1>;
 	17: T_D32<0|1>;
-	19?: T_VW<{1: T_D32<0>;}>;
+	19?: T_VW<PD_continuation_obj2>;
 	20: T_D32<number>;
 	21: T_D32<0>;
 	22: T_VW<{}>;
-	23?: T_VW<{1: T_D32<10>;}>;
+	23?: T_VW<PD_continuation_obj3>;
 };
 type P_continuation_params={0x94d81d4: T_VW<PD_continuation_params>;};
 type PR_continuation_params=
@@ -534,14 +561,8 @@ type PD_watch_bin={
 	3: T_D32<1>;
 };
 type PR_watch_bin={1: T_VW<PD_watch_bin>;};
-type P_obj1={
-	1: T_D32<1>;
-};
-
-type P_obj2={
-	24: T_D32<0>;
-};
-
+type P_obj1={1: T_D32<1>;};
+type P_obj2={24: T_D32<0>;};
 type P_watch_params={
 	2?: T_D32<1>;
 	3?: T_D32<1>;
@@ -562,11 +583,7 @@ type P_ve_6827_params_f1_f2={
 	2: TV_Str<DU_VideoId>;
 	3: TV_Str<DU_VideoId>;
 };
-
-type P_ve_6827_params_f1={
-	2: T_VW<P_ve_6827_params_f1_f2>;
-};
-
+type P_ve_6827_params_f1={2: T_VW<P_ve_6827_params_f1_f2>;};
 type P_ve_6827_params_f94={
 	1: T_VW<P_ve_6827_params_f1>;
 	5: T_D64<bigint>;
@@ -575,38 +592,25 @@ type P_ve_6827_params_f93={
 	1: TV_Str<"bigbusiness">;
 	3: T_D32<1>;
 };
-type P_ve_6827_params_f84={
-	5: T_D32<2>;
-};
+type P_ve_6827_params_f84={5: T_D32<2>;};
 type P_ve_6827_params={
 	77?: TV_Str<"FEexplore">;
 	84?: T_VW<P_ve_6827_params_f84>;
 	93?: T_VW<P_ve_6827_params_f93>;
 	94?: T_VW<P_ve_6827_params_f94>;
 };
-type P_playlist_edit_params={
-	1: T_D32<1>;
-};
-type P_ve_3611_params_1={
-	1: T_VW<P_ve_3611_params_2>;
-};
-type P_ve_3611_params_2={
-	6: T_VW<{}>;
-};
-type P_ve_3611_params_f73={
-	1: T_VW<{
-		1: T_D32<1>;
-	}>;
-};
+type P_playlist_edit_params={1: T_D32<1>;};
+type P_ve_3611_params_1={1: T_VW<P_ve_3611_params_2>;};
+type P_ve_3611_params_2={6: T_VW<{}>;};
+type P_ve_3611_params_obj0={1: T_D32<1>;};
+type P_ve_3611_params_f73={1: T_VW<P_ve_3611_params_obj0>;};
 type P_ve_3611_params={
 	2?: TW_Str2<"community"|"">;
 	23?: T_D32<0>;
 	73?: T_VW<P_ve_3611_params_f73>;
 	110: T_VW<P_ve_3611_params_1>;
 };
-type P_search_params={
-	2: T_VW<PF_23n24n>;
-};
+type P_search_params={2: T_VW<PF_23n24n>;};
 type PF_23n24n={
 	23: T_D32<1>;
 	24: TV_Str<string>;
@@ -615,9 +619,7 @@ type P_bin_params_1_f1={
 	1: T_FD64<bigint>;
 	2: T_FD64<bigint>;
 };
-type P_bin_params_1={
-	1: T_VW<P_bin_params_1_f1>;
-};
+type P_bin_params_1={1: T_VW<P_bin_params_1_f1>;};
 type PX_upcoming_event_reminder_info={
 	1: T_D32<0>;
 	2: T_D32<0>;
@@ -637,42 +639,52 @@ type PD_timed_continuation={
 	8: T_D32<1>;
 };
 type P_timed_continuation_data={0x6b7c87f: T_VW<PD_timed_continuation>;};
+type PD_continuation_f9={
+	2: T_D32<0>;
+	3: T_D32<0>;
+	4: T_D32<0>;
+};
+type PD_continuation_f20={
+	1: T_VW<{
+		1: T_D32<number>;
+		2: T_D32<number>;
+	}>;
+	2: T_VW<{
+		1: T_D32<number>;
+		2: T_D32<number>;
+	}>;
+	3: T_VW<{
+		1: T_D32<300>;
+	}>;
+	4: T_D32<0>;
+};
+type PD_continuation_f21={
+	2: T_D32<0>;
+	3: T_VW<{
+		1: T_D32<1>;
+	}>;
+	4: T_VW<{
+		1: T_D32<1>;
+	}>;
+};
+type PD_continuation_f28={
+	1: T_D32<number>;
+	2: T_D32<number>;
+};
 type PD_invalidation_continuation_f9={
 	1: T_D32<0>;
 	3: T_D32<0>;
 	4: T_D32<0>;
-	9: T_VW<{
-		2: T_D32<0>;
-		3: T_D32<0>;
-		4: T_D32<0>;
-	}>;
+	9: T_VW<PD_continuation_f9>;
 	10: T_D32<number>;
 	11: T_D32<3>;
 	15: T_D32<0>;
-	20: T_VW<{
-		1: T_VW<{
-			1: T_D32<number>;
-			2: T_D32<number>;
-		}>;
-		2: T_VW<{
-			1: T_D32<number>;
-			2: T_D32<number>;
-		}>;
-		3: T_VW<{1: T_D32<300>;}>;
-		4: T_D32<0>;
-	}>;
-	21: T_VW<{
-		2: T_D32<0>;
-		3: T_VW<{1: T_D32<1>;}>;
-		4: T_VW<{1: T_D32<1>;}>;
-	}>;
+	20: T_VW<PD_continuation_f20>;
+	21: T_VW<PD_continuation_f21>;
 	22: T_D32<0>;
 	24: T_D32<0>;
 	25: T_D32<number>;
-	28: T_VW<{
-		1: T_D32<number>;
-		2: T_D32<number>;
-	}>;
+	28: T_VW<PD_continuation_f28>;
 	29: T_D32<0>;
 	30: T_D32<0>;
 	31: T_D32<0>;

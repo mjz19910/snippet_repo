@@ -2169,7 +2169,14 @@ class HandleTypes extends BaseService {
 	P_trending_bp(x) {
 		const cf="P_trending_bp";
 		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(a),x => this.save_primitive(`${cf}.f77`,x));
+		if(a) {
+			let ia=this.TV_Str(a);
+			this.save_primitive(`${cf}.f77`,ia);
+			switch(ia) {
+				default: debugger; break;
+				case "FEexplore":
+			}
+		}
 	}
 	/** @private @arg {V_ShortTimestamp} x */
 	V_ShortTimestamp(x) {
@@ -2186,7 +2193,7 @@ class HandleTypes extends BaseService {
 		const cf="P_logging_context_serialized_context_data",t=this;
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.PK_f1("lc.scd",this.T_VW(v1));
-		t.t(t.t(v3,x => t.TV_Str(x)),x => this.sm.playlistId(x));
+		v3&&this.sm.playlistId(t.TV_Str(v3));
 	}
 	/** @type {string[]} */
 	params_to_decode=[];
@@ -2216,11 +2223,11 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {
 		const cf="P_reel_player_params"; let t=this;
-		const {30: f30,57: f57,71: f71,72: f72,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		const {30: f30,57: f57,71: f71,72: f72,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
-		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => this.t(x,this.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_primitive));};
+		let r=(k,v) => {t.mt_cf(t.mt(t.m(v),x => t.t(x,t.T_D32_v)),`${cf}.${k}`,(cf,x) => t.tn_cf(cf,x,t.save_primitive));};
 		r("f30",f30); r("f57",f57); r("f71",f71);
-		t.ms(f72,x => this.t(x,this.T_VW_Bigint));
+		f72&&t.save_primitive(`${cf}.f72`,t.T_VW_Bigint(f72));
 	}
 	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
 	P_EntityKey(cf,x) {
@@ -2319,7 +2326,7 @@ class HandleTypes extends BaseService {
 		f5;
 		f6;
 		f8;
-		this.t(f9,x => this.PD_invalidation_continuation_f9(this.T_VW(x)));
+		f9&&this.PD_invalidation_continuation_f9(this.T_VW(f9));
 		f10;
 		v11&&console.log("f11",this.T_D32(v11));
 		f16;
@@ -2429,6 +2436,10 @@ class HandleTypes extends BaseService {
 	P_ypc_get_offers_params_f5(x) {
 		const cf="P_ypc_get_offers_params";
 		const {1: v1,3: v3,5: f5,9: f9,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		v1;
+		v3;
+		f5;
+		f9;
 	}
 	/** @private @arg {P_create_comment_params} x */
 	P_create_comment_params(x) {
@@ -2442,7 +2453,13 @@ class HandleTypes extends BaseService {
 	PD_continuation_params_f3(x) {
 		const cf="PD_continuation_params.f3";
 		const {4: f4,8: f8,9: f9,10: f10,12: f12,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		f4; f8; f9; f10; f12; f13; f14;
+		f4;
+		f8;
+		f9;
+		f10;
+		f12;
+		f13;
+		f14;
 	}
 	/** @private @arg {PD_continuation_params_f11} x */
 	PD_continuation_params_f11(x) {
