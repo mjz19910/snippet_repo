@@ -209,14 +209,6 @@ class ServiceMethods extends ServiceData {
 			}
 		});
 	}
-	/** @private @arg {DE_ShareEntityService} x */
-	DE_ShareEntityService(x) {
-		const cf="DE_ShareEntityService";
-		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
-		let [u1,y1]=this.z(b,x => this.xm.TA_OpenPopup(cf,x));
-		this.z(y1,x => {if(x!==void 0) debugger;});
-		this.z(u1,this.Popup_ShareEntityService);
-	}
 	/** @public @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
 		const cf="DE_AddToPlaylistService";
@@ -462,6 +454,24 @@ class ServiceMethods extends ServiceData {
 			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
 		}
 	}
+	/** @public @arg {E_Like} x */
+	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
+	/** @private @arg {M_Like} x */
+	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
+	/** @public @arg {E_ShareEntityService} x */
+	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
+	/** @private @arg {M_GetSharePanel} x */
+	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
+	/** @private @arg {GM_GetSharePanel} x */
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.cq(x,"/youtubei/v1/share/get_share_panel"));}
+	/** @private @arg {DE_ShareEntityService} x */
+	DE_ShareEntityService(x) {
+		const cf="DE_ShareEntityService";
+		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
+		let [u1,y1]=this.z(b,x => this.xm.TA_OpenPopup(cf,x));
+		this.z(y1,x => {if(x!==void 0) debugger;});
+		this.z(u1,this.Popup_ShareEntityService);
+	}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
 		let token_str=atob(x);
@@ -635,8 +645,6 @@ class ServiceMethods extends ServiceData {
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.cq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @public @arg {GM_GetPdgBuyFlow} x */
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.cq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
-	/** @private @arg {GM_GetSharePanel} x */
-	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.cq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @public @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.cq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @arg {GM_RemoveLike} x */
@@ -909,10 +917,6 @@ class ServiceMethods extends ServiceData {
 			this.tz(serviceEndpoints,this.E_Like);
 		}
 	}
-	/** @public @arg {E_Like} x */
-	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
-	/** @private @arg {M_Like} x */
-	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
 		if(!x) {debugger; return;}
@@ -937,14 +941,10 @@ class ServiceMethods extends ServiceData {
 	R_LikeButton(x) {this.H_s("likeButtonRenderer",x,this.D_LikeButton);}
 	/** @public @arg {R_Hint} x */
 	R_Hint(x) {this.H_s("hintRenderer",x,this.D_Hint);}
-	/** @public @arg {E_ShareEntityService} x */
-	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @public @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
 	/** @private @arg {M_GetPdgBuyFlow} x */
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
-	/** @private @arg {M_GetSharePanel} x */
-	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
 	/** @public @arg {R_AboutThisAd} x */
 	R_AboutThisAd(x) {this.H_s("aboutThisAdRenderer",x,this.D_AboutThisAd);}
 	/** @private @arg {D_AboutThisAd} x */
