@@ -645,32 +645,11 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {C_AddToPlaylist} x */
 	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
-	/** @private @arg {C_ChangeMarkersVisibility} x */
-	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
-	/** @public @arg {C_AdsControlFlowOpportunityReceived} x */
-	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
-	/** @public @arg {C_ChangeKeyedMarkersVisibility} x */
-	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
-	/** @public @arg {C_LoadMarkers} x */
-	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
-	/** @public @arg {C_ReloadContinuationItems} x */
-	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
-	/** @type {string[]} */
-	DC_AddToPlaylist_listTypes=[
-		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
-	];
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
 		const cf="DC_AddToPlaylist";
-		this.save_primitive(`${cf}.listType`,x.listType);
-		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
-			let known=this.DC_AddToPlaylist_listTypes;
-			this.DC_AddToPlaylist_listTypes.push(x.listType);
-			this.codegen_typedef(cf,x);
-			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
-			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}:`).join("\n")}`);
-		}
 		switch(x.listType) {
+			default: debugger; break;
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
 				if("openListPanel" in x) {
 					const {openMiniplayer,videoId,listType: {},onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -690,6 +669,8 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
+	/** @private @arg {C_ChangeMarkersVisibility} x */
+	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
 	/** @private @arg {DC_ChangeMarkersVisibility} x */
 	DC_ChangeMarkersVisibility(x) {
 		const cf="DC_ChangeMarkersVisibility";
@@ -698,6 +679,75 @@ class ServiceMethods extends ServiceData {
 		this.z(entityKeys,x => {
 			this.params("change_markers_visibility.entity.key",x);
 		});
+	}
+	/** @public @arg {C_AdsControlFlowOpportunityReceived} x */
+	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
+	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
+	DC_AdsControlFlowOpportunityReceived(x) {
+		const cf="DC_AdsControlFlowOpportunityReceived";
+		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.save_enum(cf,"OPPORTUNITY_TYPE",opportunityType);
+		this.tz(adSlotAndLayoutMetadata,(this.D_AdSlotAndLayoutItem));
+		this._primitive_of(isInitialLoad,"boolean");
+		this._primitive_of(enablePacfLoggingWeb,"boolean");
+	}
+	/** @public @arg {C_ChangeKeyedMarkersVisibility} x */
+	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
+	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
+	DC_ChangeKeyedMarkersVisibility(x) {
+		const cf="DC_ChangeKeyedMarkersVisibility";
+		const {isVisible,key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(isVisible!==true) debugger;
+		if(key!=="HEATSEEKER") debugger;
+	}
+	/** @public @arg {C_LoadMarkers} x */
+	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
+	/** @private @arg {DC_LoadMarkers} x */
+	DC_LoadMarkers(x) {
+		const cf="DC_LoadMarkers";
+		const {entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(entityKeys,this.DC_Load_EntityKey);
+	}
+	/** @public @arg {C_ReloadContinuationItems} x */
+	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
+	/** @private @arg {DC_ReloadContinuationItems} x */
+	DC_ReloadContinuationItems(x) {
+		const cf="DC_ReloadContinuationItems";
+		switch(x.slot) {
+			case "RELOAD_CONTINUATION_SLOT_BODY": {
+				if("continuationItems" in x) {
+					const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
+					this.targetId(cf,targetId);
+					this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
+					this.z(continuationItems,a => {this.save_primitive("continuationItem",a);});
+					return;
+				}
+				const {targetId,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
+				this.targetId(cf,targetId);
+				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
+			} break;
+			case "RELOAD_CONTINUATION_SLOT_HEADER": {
+				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
+				this.targetId(cf,targetId);
+				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.header.targetId",targetId);
+				this.t(continuationItems,x => this.z_ty(x,x => {
+					if("commentsHeaderRenderer" in x) return this.R_CommentsHeader(x);
+					if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
+					debugger;
+				},x[0]));
+			} break;
+			default: debugger; break;
+		};
+	}
+	/** @private @arg {C_RelatedChip} x */
+	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	/** @private @arg {DC_RelatedChip} x */
+	DC_RelatedChip(x) {
+		const cf="DC_RelatedChip";
+		const {targetSectionIdentifier,loadCached,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
+		if(loadCached!==true) debugger;
+		this.ht.tz(contents,this.ht.G_RelatedItem);
 	}
 	/** @private @arg {M_VE3611} x */
 	M_VE3611(x) {
@@ -3247,19 +3297,6 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		});
 	}
-	/** @private @arg {DC_LoadMarkers} x */
-	DC_LoadMarkers(x) {
-		const cf="DC_LoadMarkers";
-		const {entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entityKeys,this.DC_Load_EntityKey);
-	}
-	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
-	DC_ChangeKeyedMarkersVisibility(x) {
-		const cf="DC_ChangeKeyedMarkersVisibility";
-		const {isVisible,key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(isVisible!==true) debugger;
-		if(key!=="HEATSEEKER") debugger;
-	}
 	/** @private @arg {D_PlayerOverlay} x */
 	D_PlayerOverlay(x) {
 		const cf="D_PlayerOverlay";
@@ -3749,15 +3786,6 @@ class ServiceMethods extends ServiceData {
 	R_FusionSearchbox(x) {this.H_s("fusionSearchboxRenderer",x,this.D_FusionSearchbox);}
 	/** @private @arg {R_HotkeyDialog} x */
 	R_HotkeyDialog(x) {this.H_s("hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
-	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
-	DC_AdsControlFlowOpportunityReceived(x) {
-		const cf="DC_AdsControlFlowOpportunityReceived";
-		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_enum(cf,"OPPORTUNITY_TYPE",opportunityType);
-		this.tz(adSlotAndLayoutMetadata,(this.D_AdSlotAndLayoutItem));
-		this._primitive_of(isInitialLoad,"boolean");
-		this._primitive_of(enablePacfLoggingWeb,"boolean");
-	}
 	/** @private @arg {D_HotkeyDialog} x */
 	D_HotkeyDialog(x) {
 		const cf="D_HotkeyDialog";
@@ -3927,35 +3955,6 @@ class ServiceMethods extends ServiceData {
 	DC_ReloadContinuationItem_TargetId(cf,x) {
 		if(this.is_yt_uuid(x)) return;
 		this.save_primitive(cf,x);
-	}
-	/** @private @arg {DC_ReloadContinuationItems} x */
-	DC_ReloadContinuationItems(x) {
-		const cf="DC_ReloadContinuationItems";
-		switch(x.slot) {
-			case "RELOAD_CONTINUATION_SLOT_BODY": {
-				if("continuationItems" in x) {
-					const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
-					this.targetId(cf,targetId);
-					this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
-					this.z(continuationItems,a => {this.save_primitive("continuationItem",a);});
-					return;
-				}
-				const {targetId,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
-				this.targetId(cf,targetId);
-				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.body.targetId",targetId);
-			} break;
-			case "RELOAD_CONTINUATION_SLOT_HEADER": {
-				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
-				this.targetId(cf,targetId);
-				this.DC_ReloadContinuationItem_TargetId("ReloadContinuation.slot.header.targetId",targetId);
-				this.t(continuationItems,x => this.z_ty(x,x => {
-					if("commentsHeaderRenderer" in x) return this.R_CommentsHeader(x);
-					if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-					debugger;
-				},x[0]));
-			} break;
-			default: debugger; break;
-		};
 	}
 	/** @public @arg {R_FeedFilterChipBar} x */
 	R_FeedFilterChipBar(x) {this.H_s("feedFilterChipBarRenderer",x,this.D_FeedFilterChipBar);}
@@ -4303,16 +4302,6 @@ class ServiceMethods extends ServiceData {
 		this.xm.E_Url(onClickCommand);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {DC_RelatedChip} x */
-	DC_RelatedChip(x) {
-		const cf="DC_RelatedChip";
-		const {targetSectionIdentifier,loadCached,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
-		if(loadCached!==true) debugger;
-		this.ht.tz(contents,this.ht.G_RelatedItem);
-	}
-	/** @private @arg {C_RelatedChip} x */
-	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @private @arg {D_ChipCloudChip_navigationEndpoint} x */
 	D_ChipCloudChip_navigationEndpoint(x) {
 		const cf="D_ChipCloudChip_navigationEndpoint";
