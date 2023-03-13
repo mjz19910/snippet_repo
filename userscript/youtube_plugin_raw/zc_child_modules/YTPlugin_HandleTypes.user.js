@@ -2496,6 +2496,10 @@ class HandleTypes extends BaseService {
 	R_obj1(x) {
 		const cf="R_obj1";
 		const {1: v1,3: v3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		v1;
+		v3;
+		f4;
+		f6;
 	}
 	/** @private @arg {P_reel_sequence_params} x */
 	P_reel_sequence_params(x) {
