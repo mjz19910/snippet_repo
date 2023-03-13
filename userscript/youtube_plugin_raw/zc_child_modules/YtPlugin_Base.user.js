@@ -2923,7 +2923,7 @@ class CsiService extends BaseService {
 			default: console.log("[verify_param_bad]",value); debugger; return false;
 		};
 	}
-	/** @api @public @arg {DRC_Csi_SPs} params */
+	/** @api @public @arg {DRC_CsiVarKV[]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -2953,7 +2953,7 @@ class GFeedbackService extends BaseService {
 	/** @private @type {string[]} */
 	seen_e_param=[];
 	has_new_e_param=false;
-	/** @private @arg {Extract<RC_To_SPs<SP_GFeedbackVarMap>[number],{key:"e"}>} param */
+	/** @private @arg {Extract<ToKeyValue<SP_GFeedbackVarMap>,{key:"e"}>} param */
 	parse_e_param(param) {
 		if(this.seen_e_param.includes(param.value)) return;
 		this.seen_e_param.push(param.value);
@@ -2977,7 +2977,7 @@ class GFeedbackService extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @api @public @arg {SP_GFeedbackServiceParamsType} params */
+	/** @api @public @arg {SP_GFeedbackServiceParams[]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {

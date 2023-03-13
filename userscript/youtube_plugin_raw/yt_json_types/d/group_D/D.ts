@@ -3030,5 +3030,5 @@ type DMD_RowContainer={
 	collapsedItemCount: number;
 	trackingParams: string;
 };
-type DRC_Csi_SPs=RC_To_SPs<RC_CsiVarMap>|(RC_CsiServiceC|RC_CsiServiceCVer)[];
+type DRC_CsiVarKV=ToKeyValue<RC_CsiVarMap>|RC_CsiServiceC|RC_CsiServiceCVer;
 type DSS_Context={context: D_ContextTypeStr|null;};
