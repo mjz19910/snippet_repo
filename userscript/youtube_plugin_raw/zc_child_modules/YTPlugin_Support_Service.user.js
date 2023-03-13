@@ -3934,7 +3934,7 @@ class ForService_XMethods extends BaseService {
 		this.sm.clickTrackingParams(clickTrackingParams);
 		/** @type {G_OpenPopup_All["openPopupAction"]|G_Popup_All|{}|null|undefined} */
 		let ax=xp.openPopupAction;
-		if(ax&&"popupType" in ax&&"popup" in ax) {
+		if(ax&&typeof ax==="object"&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
 				default: debugger; ax===""; break;
 				case "DIALOG": this.G_Popup_DL(ax.popup); break;
@@ -3965,6 +3965,8 @@ class ForService_XMethods extends BaseService {
 					}
 				} break;
 			}
+		} else {
+			ax; debugger;
 		}
 		return a;
 	}
