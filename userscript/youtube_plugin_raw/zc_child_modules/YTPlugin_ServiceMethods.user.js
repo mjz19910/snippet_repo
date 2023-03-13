@@ -559,7 +559,11 @@ class ServiceMethods extends ServiceData {
 	DC_RepeatChapter(x) {
 		const cf="DC_RepeatChapter";
 		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.cq(repeat,"REPEAT_CHAPTER_TYPE_ENABLE_REPEAT");
+		switch(repeat) {
+			default: debugger; break;
+			case "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT":
+			case "REPEAT_CHAPTER_TYPE_DISABLE_REPEAT":
+		}
 		this.cq(startTimeMs,"0");
 		this.save_primitive(`${cf}.endTimeMs`,this.parse_number_template(endTimeMs));
 		this.params("repeat_state.entity_key",repeatStateEntityKey);
