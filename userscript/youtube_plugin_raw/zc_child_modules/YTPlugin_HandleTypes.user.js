@@ -3865,8 +3865,7 @@ class HandleTypes extends BaseService {
 		/** @type {`https://www.youtube.com/pagead/adview?${string}`[]} */
 		let ad_view_urls=[];
 		let r;
-		[r]=this.z(impressionPings,x => this.xm.T_BaseUrl(x));
-		ad_view_urls.push(...r);
+		[r]=this.z(impressionPings,x => this.xm.T_BaseUrl(x)); ad_view_urls.push(...r);
 		errorPings;
 		mutePings;
 		unmutePings;
