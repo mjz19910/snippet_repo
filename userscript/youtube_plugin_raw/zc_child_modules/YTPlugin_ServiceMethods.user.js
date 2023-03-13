@@ -365,26 +365,108 @@ class ServiceMethods extends ServiceData {
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @public @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
+	/** @public @arg {E_Search} x */
+	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
+	/** @private @arg {DE_Search} x */
+	DE_Search(x) {
+		const cf="DE_Search";
+		const {query,params,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(query);
+		this.t(params,x => this.params("search.params",x));
+	}
+	/** @type {string[]} */
+	de_browse_ids=[];
 	/** @public @arg {E_VE3611} x */
 	E_VE3611(x) {
 		if(!this.is_TE_VE(x,3611)) {debugger; return;}
 		let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);
 	}
+	/** @public @arg {DE_VE3611} x */
+	DE_VE3611(x) {
+		const cf="DE_VE3611";
+		const {params,browseId,canonicalBaseUrl,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(params,x => this.params("ve_3611.params",x));
+		this.channelId(browseId);
+		this.t(canonicalBaseUrl,x => {
+			let sp=split_string_once(x,"/"); this.cq(sp.length,2);
+			let [e1,sr]=sp; this.cq(e1,"");
+			let s2=split_string_once(sr,"/");
+			if(s2.length===1) {
+				let [p]=s2;
+				let s3=split_string_once(p,"@"); this.cq(s3[0],"");
+				this.cq(s3.length,2);
+				return;
+			}
+			switch(s2[0]) {
+				default: debugger; return;
+				case "channel":
+			}
+			let [,v3]=s2;
+			this.channelId(v3);
+		});
+		this.t(query,x => this.save_primitive(`${cf}.query`,x));
+	}
 	/** @public @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
-	/** @public @arg {E_Search} x */
-	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
+	/** @public @arg {DE_VE3854} x */
+	DE_VE3854(x) {
+		const cf="DE_VE3854";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(browseId!=="FEwhat_to_watch") debugger;
+	}
 	/** @public @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
+	/** @private @arg {DE_VE5754} x */
+	DE_VE5754(x) {
+		const cf="DE_VE5754";
+		if("canonicalBaseUrl" in x) {
+			const {browseId,canonicalBaseUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.DU_VE5754_BrowseId_2(browseId);
+			return;
+		}
+		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
+		debugger;
+	}
 	/** @public @arg {E_VE6827} x */
 	E_VE6827(x) {
 		let [a,b,{trackingParams,...y}]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);
 		this.t(trackingParams,this.trackingParams);
 	}
+	/** @public @arg {DE_VE6827} x */
+	DE_VE6827(x) {
+		const cf="DE_VE6827";
+		const {browseId,params,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(browseId) {
+			case "FEguide_builder": case "FEhashtag": case "FEhistory": case "FElibrary": case "FEsfv_audio_pivot":
+			case "FEstorefront": case "FEtrending": case "SPreport_history":
+		}
+		this.t(params,x => this.params("ve_6827.params",x));
+		this.t(query,x => this.save_primitive(`${cf}.query`,x));
+	}
 	/** @public @arg {E_VE11487} x */
 	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
+	/** @public @arg {DE_VE11487} x */
+	DE_VE11487(x) {
+		const cf="DE_VE11487";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.cq(browseId,"SPunlimited");
+	}
 	/** @public @arg {E_VE23462} x */
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
+	/** @public @arg {DE_VE23462} x */
+	DE_VE23462(x) {
+		const cf="DE_VE23462";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(browseId) {
+			default: {
+				if(this.de_browse_ids.includes(browseId)) break;
+				this.de_browse_ids.push(browseId);
+				console.log(`-- [${cf}.browseId] --\n\n${this.de_browse_ids.map(e => `case "${e}": `).join("")}`);
+			} break;
+			case "SPaccount_playback": case "SPaccount_privacy": case "SPaccount_sharing": case "SPaccount_billing": case "SPaccount_advanced":
+			case "SPaccount_overview": case "SPaccount_notifications":
+		}
+	}
 	/** @public @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
 	/** @arg {DU_UrlParams_PageadParallelAdInteraction} x */
@@ -395,13 +477,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
-	/** @private @arg {DE_Search} x */
-	DE_Search(x) {
-		const cf="DE_Search";
-		const {query,params,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_str(query);
-		this.t(params,x => this.params("search.params",x));
-	}
 	/** @public @arg {E_WatchPlaylist} x */
 	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {DE_WatchPlaylist} x */
@@ -1504,17 +1579,6 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {this.browseId(x);}
 	seen_map=new Set;
-	/** @private @arg {DE_VE5754} x */
-	DE_VE5754(x) {
-		const cf="DE_VE5754";
-		if("canonicalBaseUrl" in x) {
-			const {browseId,canonicalBaseUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.DU_VE5754_BrowseId_2(browseId);
-			return;
-		}
-		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
-		debugger;
-	}
 	/** @public @arg {GU_VE83769_Url_Redirect|`https://www.youtube.com/${string}`} x */
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
@@ -5588,70 +5652,6 @@ class ServiceMethods extends ServiceData {
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
-	}
-	/** @public @arg {DE_VE3611} x */
-	DE_VE3611(x) {
-		const cf="DE_VE3611";
-		const {params,browseId,canonicalBaseUrl,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(params,x => this.params("ve_3611.params",x));
-		this.channelId(browseId);
-		this.t(canonicalBaseUrl,x => {
-			let sp=split_string_once(x,"/"); this.cq(sp.length,2);
-			let [e1,sr]=sp; this.cq(e1,"");
-			let s2=split_string_once(sr,"/");
-			if(s2.length===1) {
-				let [p]=s2;
-				let s3=split_string_once(p,"@"); this.cq(s3[0],"");
-				this.cq(s3.length,2);
-				return;
-			}
-			switch(s2[0]) {
-				default: debugger; return;
-				case "channel":
-			}
-			let [,v3]=s2;
-			this.channelId(v3);
-		});
-		this.t(query,x => this.save_primitive(`${cf}.query`,x));
-	}
-	/** @public @arg {DE_VE3854} x */
-	DE_VE3854(x) {
-		const cf="DE_VE3854";
-		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(browseId!=="FEwhat_to_watch") debugger;
-	}
-	/** @public @arg {DE_VE6827} x */
-	DE_VE6827(x) {
-		const cf="DE_VE6827";
-		const {browseId,params,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(browseId) {
-			case "FEguide_builder": case "FEhashtag": case "FEhistory": case "FElibrary": case "FEsfv_audio_pivot":
-			case "FEstorefront": case "FEtrending": case "SPreport_history":
-		}
-		this.t(params,x => this.params("ve_6827.params",x));
-		this.t(query,x => this.save_primitive(`${cf}.query`,x));
-	}
-	/** @public @arg {DE_VE11487} x */
-	DE_VE11487(x) {
-		const cf="DE_VE11487";
-		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.cq(browseId,"SPunlimited");
-	}
-	/** @type {string[]} */
-	de_browse_ids=[];
-	/** @public @arg {DE_VE23462} x */
-	DE_VE23462(x) {
-		const cf="DE_VE23462";
-		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(browseId) {
-			default: {
-				if(this.de_browse_ids.includes(browseId)) break;
-				this.de_browse_ids.push(browseId);
-				console.log(`-- [${cf}.browseId] --\n\n${this.de_browse_ids.map(e => `case "${e}": `).join("")}`);
-			} break;
-			case "SPaccount_playback": case "SPaccount_privacy": case "SPaccount_sharing": case "SPaccount_billing": case "SPaccount_advanced":
-			case "SPaccount_overview": case "SPaccount_notifications":
-		}
 	}
 	/** @public @arg {DE_VE42352} x */
 	DE_VE42352(x) {
