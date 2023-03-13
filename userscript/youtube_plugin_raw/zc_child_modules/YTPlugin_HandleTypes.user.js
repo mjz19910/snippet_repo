@@ -2621,10 +2621,15 @@ class HandleTypes extends BaseService {
 			/** @type {`${cf}.f36`} */
 			const cf2=`${cf}.f36`;
 			const {5: f5,8: f8,...y}=this.s(cf2,x); this.h_gen_keys(cf2,x,y);/*#destructure_start*/
-			let x5=this.dec_num64(this.T_D64(f5));
-			x: {
-				if(x5===void 0) {debugger; break x;}
-				x5!==-1n&&console.log(`${cf2}.f5`,x5);
+			if(this.is_T_D32(f5)) {
+				let x5=this.T_D32(f5);
+				x5!==0&&console.log(`${cf2}.f5`,x5);
+			} else {
+				let x5=this.dec_num64(this.T_D64(f5));
+				x: {
+					if(x5===void 0) {debugger; break x;}
+					x5!==-1n&&console.log(`${cf2}.f5`,x5);
+				}
 			}
 			let x8=this.T_D32(f8);
 			x8!==0&&console.log(`${cf2}.f8`,x8);

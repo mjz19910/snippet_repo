@@ -255,7 +255,7 @@ type PX_watch_next_token_info={
 	25?: T_D32<0>;
 	28?: T_D32<1|3>;
 	36?: T_VW<{
-		5: T_D64<bigint>;
+		5: T_D64<bigint>|T_D32<0>;
 		8: T_D32<0>;
 	}>;
 	47: T_D32<0>;
