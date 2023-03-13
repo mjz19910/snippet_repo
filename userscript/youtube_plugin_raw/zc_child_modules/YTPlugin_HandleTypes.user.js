@@ -3568,10 +3568,7 @@ class HandleTypes extends BaseService {
 		return f.call(this,wr[0]);
 	}
 	/** @public @arg {R_MenuServiceItemDownload} x */
-	M_DownloadRenderer(x) {
-		const cf="M_DownloadRenderer";
-		this.H_x(cf,"menuServiceItemDownloadRenderer",x,x => {x;});
-	}
+	M_DownloadRenderer(x) {this.H_x("M_DownloadRenderer","menuServiceItemDownloadRenderer",x,this.D_MenuServiceItemDownload);}
 	/** @public @arg {D_MenuServiceItemDownload} x */
 	D_MenuServiceItemDownload(x) {
 		const cf="D_MenuServiceItemDownload";
@@ -3612,20 +3609,20 @@ class HandleTypes extends BaseService {
 	}
 	/** @public @arg {G_MenuItem_2} x */
 	G_MenuItem_2(x) {
+		const cf="G_MenuItem_2"; this.k(cf,x);
 		if("menuServiceItemRenderer" in x) return this.sm.R_MenuServiceItem(x);
 		if("menuServiceItemDownloadRenderer" in x) return this.M_DownloadRenderer(x);
 		debugger;
 	}
 	/** @public @arg {DT_MenuItem_Button} x */
 	DT_MenuItem_Button(x) {
+		const cf="DT_MenuItem_Button"; this.k(cf,x);
 		if("downloadButtonRenderer" in x) return this.R_DownloadButton(x);
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
 		debugger;
 	}
 	/** @private @arg {R_DownloadButton} x */
-	R_DownloadButton(x) {
-		this.H_s("downloadButtonRenderer",x,this.D_DownloadButton);
-	}
+	R_DownloadButton(x) {this.H_("downloadButtonRenderer",x,this.D_DownloadButton);}
 	/** @private @arg {D_DownloadButton} x */
 	D_DownloadButton(x) {
 		const cf="D_DownloadButton";
@@ -3638,6 +3635,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @public @arg {G_AdPlacementRendererItem} x */
 	G_AdPlacementRendererItem(x) {
+		const cf="G_AdPlacementRendererItem"; this.k(cf,x);
 		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
 		if("clientForecastingAdRenderer" in x) return this.xm.R_ClientForecastingAd(x);
 		if("instreamVideoAdRenderer" in x) return this.sm.R_InstreamVideoAd(x);
@@ -3698,19 +3696,26 @@ class HandleTypes extends BaseService {
 	/** @private @arg {D_SkipAd} x */
 	D_SkipAd(x) {
 		const cf="D_SkipAd";
-		const {preskipRenderer,...y}=this.s(cf,x); y;
+		const {preskipRenderer,skippableRenderer,trackingParams,skipOffsetMilliseconds,...y}=this.s(cf,x); y;
 		this.R_AdPreview(preskipRenderer);
+		this.R_SkipButton(skippableRenderer);
+		this.trackingParams(trackingParams);
+		this.cq(skipOffsetMilliseconds,5000);
 	}
 	/** @private @arg {R_AdPreview} x */
 	R_AdPreview(x) {this.H_("adPreviewRenderer",x,this.D_AdPreview);}
 	/** @private @arg {D_AdPreview} x */
 	D_AdPreview(x) {
 		const cf="D_AdPreview";
-		const {thumbnail,...y}=this.s(cf,x); y;
+		const {thumbnail,trackingParams,templatedCountdown,durationMilliseconds,...y}=this.s(cf,x); y;
 		this.sm.D_TrackedThumbnail(thumbnail);
+		this.trackingParams(trackingParams);
+		this.R_TemplatedAdText(templatedCountdown);
+		this.sm.cq(durationMilliseconds,5000);
 	}
 	/** @public @arg {G_RelatedItem} x */
 	G_RelatedItem(x) {
+		const cf="D_AdPreview"; this.k(cf,x);
 		if("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
 		if("compactRadioRenderer" in x) return this.sm.R_CompactRadio(x);
 		if("compactVideoRenderer" in x) return this.sm.R_CompactVideo(x);
@@ -3718,7 +3723,38 @@ class HandleTypes extends BaseService {
 		debugger;
 	}
 	/** @public @arg {DU_UrlParams_PageAd_AClk} x */
-	DU_UrlParams_PageAd_AClk(x) {x;}
+	DU_UrlParams_PageAd_AClk(x) {
+		const cf="DU_UrlParams_PageAd_AClk";
+		const {sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms,...y}=this.s(cf,x); this.g(y);
+		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms);
+	}
+	/** @private @arg {R_TemplatedAdText} x */
+	R_TemplatedAdText(x) {this.H_("templatedAdText",x,this.D_TemplatedAdText);}
+	/** @private @arg {D_TemplatedAdText} x */
+	D_TemplatedAdText(x) {
+		const cf="D_TemplatedAdText";
+		const {text,isTemplated,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.cq(text,"{TIME_REMAINING}");
+		this.cq(isTemplated,true);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {R_SkipButton} x */
+	R_SkipButton(x) {this.H_("skipButtonRenderer",x,this.D_SkipButton);}
+	/** @private @arg {D_SkipButton} x */
+	D_SkipButton(x) {
+		const cf="D_TemplatedAdText";
+		const {message,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.R_MaybeTemplatedText(message);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_SkipButton["message"]} x */
+	R_MaybeTemplatedText(x) {
+		const cf="D_TemplatedAdText";
+		const {text,isTemplated,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.cq(text,"Skip Ads");
+		this.cq(isTemplated,false);
+		this.trackingParams(trackingParams);
+	}
 }
 //#endregion
 export_((exports) => {exports.HandleTypes=HandleTypes;});
