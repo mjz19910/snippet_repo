@@ -950,8 +950,12 @@ class ServiceMethods extends ServiceData {
 		if("notificationMultiActionRenderer" in x) return this.ht.RA_NotificationMulti(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {A_HideEngagementPanelScrim} x */
+	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
 	/** @private @arg {AD_HideEngagementPanelTargetId} x */
 	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
+	/** @arg {A_SetActivePanelItem} x */
+	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
 	/** @private @arg {AD_SetActivePanelItem} x */
 	AD_SetActivePanelItem(x) {
 		const cf="AD_SetActivePanelItem";
@@ -962,6 +966,8 @@ class ServiceMethods extends ServiceData {
 		}
 		this.save_primitive(`${cf}.itemIndex`,itemIndex);
 	}
+	/** @public @arg {A_ShowEngagementPanelScrim} x */
+	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
 		const cf="AD_ShowEngagementPanelScrim";
@@ -975,8 +981,12 @@ class ServiceMethods extends ServiceData {
 		});
 		this.z(x2,this.R_ConfirmDialog);
 	}
+	/** @public @arg {A_AddToToast} x */
+	A_AddToToast(x) {let [a,y]=this.TE_Endpoint_2("A_AddToToast","addToToastAction",x); this.g(y); this.AD_AddToToast(a);}
 	/** @public @arg {AD_AddToToast} x */
 	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
+	/** @public @arg {A_AppendContinuationItems} x */
+	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @private @arg {AD_AppendContinuationItems} x */
 	AD_AppendContinuationItems(x) {
 		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId);
@@ -1010,6 +1020,20 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-comments-section": this.xr.A_CommentsSectionContinuation_2(x); break;
 			default: x===0; debugger;
 		}
+	}
+	/** @public @arg {RA_ReelDismissal} x */
+	RA_ReelDismissal(x) {this.H_s("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
+	/** @public @arg {AD_ReelDismissal} x */
+	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
+	/** @public @arg {RA_Notification} x */
+	RA_Notification(x) {this.H_s("notificationActionRenderer",x,this.AD_Notification);}
+	/** @private @arg {AD_Notification} x */
+	AD_Notification(x) {
+		const cf="AD_Notification";
+		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(responseText);
+		this.xm.t(actionButton,x => this.xm.R_Button(x));
+		this.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_ConfirmDialog} x */
 	R_ConfirmDialog(x) {this.H_s("confirmDialogRenderer",x,this.D_ConfirmDialog);}
@@ -1045,20 +1069,6 @@ class ServiceMethods extends ServiceData {
 	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(x));}
 	/** @public @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
-	/** @public @arg {RA_ReelDismissal} x */
-	RA_ReelDismissal(x) {this.H_s("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
-	/** @public @arg {AD_ReelDismissal} x */
-	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
-	/** @public @arg {RA_Notification} x */
-	RA_Notification(x) {this.H_s("notificationActionRenderer",x,this.AD_Notification);}
-	/** @private @arg {AD_Notification} x */
-	AD_Notification(x) {
-		const cf="AD_Notification";
-		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(responseText);
-		this.xm.t(actionButton,x => this.xm.R_Button(x));
-		this.trackingParams(trackingParams);
-	}
 	/** @public @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
 	T_Signal(cf,x) {return this.w(cf,"signal",x);}
 	/** @public @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
@@ -2795,8 +2805,6 @@ class ServiceMethods extends ServiceData {
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.cq(x,false));}
-	/** @private @arg {A_HideEngagementPanelScrim} x */
-	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
 	/** @public @arg {DC_EntityBatchUpdate} x */
@@ -2856,8 +2864,6 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(thumbnailDetails);
 		this.ht.C_Innertube(onActive);
 	}
-	/** @arg {A_SetActivePanelItem} x */
-	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell.params",x);}
 	/** @private @arg {D_MarkersList} x */
@@ -3012,8 +3018,6 @@ class ServiceMethods extends ServiceData {
 	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
 	/** @public @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
-	/** @public @arg {A_AppendContinuationItems} x */
-	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @type {string[]} */
 	DC_AddToPlaylist_listTypes=[
 		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
@@ -4991,8 +4995,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_ClipSection} x */
 	D_ClipSection(x) {this.H_s("contents",x,x => this.z(x,this.R_ClipCreation));}
-	/** @public @arg {A_ShowEngagementPanelScrim} x */
-	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
 	/** @private @arg {G_EngagementPanelMenu} x */
 	G_EngagementPanelMenu(x) {
 		const cf="G_EngagementPanelMenu";
@@ -5664,8 +5666,6 @@ class ServiceMethods extends ServiceData {
 		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
-	/** @public @arg {A_AddToToast} x */
-	A_AddToToast(x) {let [a,y]=this.TE_Endpoint_2("A_AddToToast","addToToastAction",x); this.g(y); this.AD_AddToToast(a);}
 	/** @public @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_s("richGridRenderer",x,this.D_RichGrid);}
 	/** @private @arg {D_RichGrid} x */
