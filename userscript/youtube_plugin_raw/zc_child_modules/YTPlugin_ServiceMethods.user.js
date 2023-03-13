@@ -469,14 +469,26 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	/** @public @arg {DE_VE42352} x */
+	DE_VE42352(x) {
+		const cf="DE_VE42352";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.cq(browseId,"FEdownloads");
+	}
+	/** @public @arg {E_VE96368} x */
+	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
+	/** @public @arg {DE_VE96368} x */
+	DE_VE96368(x) {
+		const cf="DE_VE96368";
+		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.cq(browseId,"FEsubscriptions");
+	}
 	/** @arg {DU_UrlParams_PageadParallelAdInteraction} x */
 	DU_UrlParams_PageadParallelAdInteraction(x) {
 		const cf="DU_UrlParams";
 		let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.s(cf,x); this.g(y);
 		this.save_primitive(`${cf}.label`,x.label);
 	}
-	/** @public @arg {E_VE96368} x */
-	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @public @arg {E_WatchPlaylist} x */
 	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {DE_WatchPlaylist} x */
@@ -490,14 +502,61 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {E_Watch} x */
 	E_Watch(x) {
 		const cf="E_Watch";
-		if("clickTrackingParams" in x) {
-			const [a,b,y]=this.TE_Endpoint_3(cf,"watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
-		} else {
-			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
-		}
+		const {clickTrackingParams: a,commandMetadata: b,watchEndpoint: c,...y}=this.s(cf,x); this.g(y);
+		this.t(a,this.clickTrackingParams); this.M_VE3832(b); this.DE_VE3832_Watch(c);
+	}
+	/** @private @arg {DE_VE3832_Watch} u */
+	DE_VE3832_Watch(u) {
+		const cf="DE_VE3832_Watch";
+		/** @type {Partial<Extract<typeof u extends infer J?J extends infer I?Required<Partial<I>>:never:never,{playlistId:any}>>&Required<{videoId:any}>} */
+		let x=u;
+		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.videoId(videoId);
+		this.t(playlistId,this.playlistId);
+		this.t(index,this.a_primitive_num);
+		this.t(playlistSetVideoId,this.a_primitive_str);
+		this.t(params,params => this.params("watch.params",params));
+		this.t(startTimeSeconds,this.a_primitive_num);
+		this.t(continuePlayback,this.a_primitive_bool);
+		this.t(loggingContext,x => this.x.get("x_VE").R_VssLoggingContext(x));
+		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
+		this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
+		this.t(playerParams,x => this.playerParams("watch.player_params",x));
+		this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
+		this.t(nofollow,this.a_primitive_bool);
+		this.t(playerExtraUrlParams,([a,...b]) => this.eq(a.key,"inline")&&this.eq(b.length,0));
 	}
 	/** @public @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
+	/** @private @arg {DE_Like} x */
+	DE_Like(x) {
+		const cf="DE_Like"; this.k(cf,x);
+		switch(x.status) {
+			default: {x===""; this.codegen_typedef(cf,x);} break;
+			case "INDIFFERENT": {
+				const cf="E_LikeIndifferent";
+				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(removeLikeParams,x => this.params("remove_like.params",x));
+			} break;
+			case "LIKE": {
+				const cf="E_LikeLike";
+				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				actions;
+				this.t(likeParams,x => this.params("like.params",x));
+			} break;
+			case "DISLIKE": {
+				const cf="E_LikeDislike";
+				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(dislikeParams,x => this.params("dislike.params",x));
+			} break;
+		}
+	}
 	/** @public @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @private @arg {DE_ShareEntityService} x */
@@ -510,6 +569,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
+	/** @private @arg {DC_GetPdgBuyFlow} x */
+	DC_GetPdgBuyFlow(x) {
+		const cf="DC_GetPdgBuyFlow";
+		const {params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let dec_params=atob(params);
+		this.params("get_pdg_buy_flow.params",dec_params);
+	}
 	/** @private @arg {M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
@@ -832,14 +898,6 @@ class ServiceMethods extends ServiceData {
 			case "video_description":
 		}
 	}
-	/** @private @arg {AD_Notification} x */
-	AD_Notification(x) {
-		const cf="AD_Notification";
-		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(responseText);
-		this.xm.t(actionButton,x => this.xm.R_Button(x));
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	AD_ChangeEngagementPanelVisibility(x) {
 		const cf="AD_ChangeEngagementPanelVisibility";
@@ -899,8 +957,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {AD_AddToToast} x */
 	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
-	/** @public @arg {AD_ReelDismissal} x */
-	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
 	/** @private @arg {AD_AppendContinuationItems} x */
 	AD_AppendContinuationItems(x) {
 		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId);
@@ -987,8 +1043,20 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-macro-markers-problem-walkthroughs":
 		}
 	}
+	/** @public @arg {RA_ReelDismissal} x */
+	RA_ReelDismissal(x) {this.H_s("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
+	/** @public @arg {AD_ReelDismissal} x */
+	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
 	/** @public @arg {RA_Notification} x */
 	RA_Notification(x) {this.H_s("notificationActionRenderer",x,this.AD_Notification);}
+	/** @private @arg {AD_Notification} x */
+	AD_Notification(x) {
+		const cf="AD_Notification";
+		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(responseText);
+		this.xm.t(actionButton,x => this.xm.R_Button(x));
+		this.trackingParams(trackingParams);
+	}
 	/** @public @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
 	T_Signal(cf,x) {return this.w(cf,"signal",x);}
 	/** @public @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
@@ -1510,13 +1578,6 @@ class ServiceMethods extends ServiceData {
 		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(hack!==true) debugger;
 	}
-	/** @private @arg {DC_GetPdgBuyFlow} x */
-	DC_GetPdgBuyFlow(x) {
-		const cf="DC_GetPdgBuyFlow";
-		const {params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let dec_params=atob(params);
-		this.params("get_pdg_buy_flow.params",dec_params);
-	}
 	/** @public @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @public @arg {D_SubscribeButton_SubscribedPrefix} x */
@@ -1611,56 +1672,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @template T @arg {T} x @arg {T} y */
 	eq(x,y) {if(x!==y) debugger; return x===y;}
-	/** @private @arg {DE_VE3832_Watch} u */
-	DE_VE3832_Watch(u) {
-		const cf="DE_VE3832_Watch";
-		/** @type {Partial<Extract<typeof u extends infer J?J extends infer I?Required<Partial<I>>:never:never,{playlistId:any}>>&Required<{videoId:any}>} */
-		let x=u;
-		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.videoId(videoId);
-		this.t(playlistId,this.playlistId);
-		this.t(index,this.a_primitive_num);
-		this.t(playlistSetVideoId,this.a_primitive_str);
-		this.t(params,params => this.params("watch.params",params));
-		this.t(startTimeSeconds,this.a_primitive_num);
-		this.t(continuePlayback,this.a_primitive_bool);
-		this.t(loggingContext,x => this.x.get("x_VE").R_VssLoggingContext(x));
-		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
-		this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
-		this.t(playerParams,x => this.playerParams("watch.player_params",x));
-		this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
-		this.t(nofollow,this.a_primitive_bool);
-		this.t(playerExtraUrlParams,([a,...b]) => this.eq(a.key,"inline")&&this.eq(b.length,0));
-	}
-	/** @private @arg {DE_Like} x */
-	DE_Like(x) {
-		const cf="DE_Like"; this.k(cf,x);
-		switch(x.status) {
-			default: {x===""; this.codegen_typedef(cf,x);} break;
-			case "INDIFFERENT": {
-				const cf="E_LikeIndifferent";
-				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(removeLikeParams,x => this.params("remove_like.params",x));
-			} break;
-			case "LIKE": {
-				const cf="E_LikeLike";
-				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				actions;
-				this.t(likeParams,x => this.params("like.params",x));
-			} break;
-			case "DISLIKE": {
-				const cf="E_LikeDislike";
-				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(dislikeParams,x => this.params("dislike.params",x));
-			} break;
-		}
-	}
 	/** @private @arg {GU_VE6827_Url} x */
 	D_VE6827_Url(x) {
 		let [f,...pf]=split_string(x,"/"); if(f!=="") debugger;
@@ -5653,22 +5664,8 @@ class ServiceMethods extends ServiceData {
 		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
-	/** @public @arg {DE_VE42352} x */
-	DE_VE42352(x) {
-		const cf="DE_VE42352";
-		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.cq(browseId,"FEdownloads");
-	}
-	/** @public @arg {DE_VE96368} x */
-	DE_VE96368(x) {
-		const cf="DE_VE96368";
-		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.cq(browseId,"FEsubscriptions");
-	}
 	/** @public @arg {A_AddToToast} x */
 	A_AddToToast(x) {let [a,y]=this.TE_Endpoint_2("A_AddToToast","addToToastAction",x); this.g(y); this.AD_AddToToast(a);}
-	/** @public @arg {RA_ReelDismissal} x */
-	RA_ReelDismissal(x) {this.H_s("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
 	/** @public @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_s("richGridRenderer",x,this.D_RichGrid);}
 	/** @private @arg {D_RichGrid} x */

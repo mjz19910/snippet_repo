@@ -25,7 +25,11 @@ type E_Upload=TE_Endpoint_3<"uploadEndpoint",DE_Upload,M_Url>;
 type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",G_DE_UserFeedback,M_UserFeedback>;
 type E_Watch_2=TE_Endpoint_NoTrack_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>;
 type E_Watch_3=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>;
-type E_Watch=E_Watch_3|E_Watch_2;
+type E_Watch={
+	clickTrackingParams?: string;
+	commandMetadata: M_VE3832;
+	watchEndpoint: DE_VE3832_Watch;
+};
 type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_VE3832>;
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_YpcGetOffers>;
