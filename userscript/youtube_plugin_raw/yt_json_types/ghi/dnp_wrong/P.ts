@@ -14,7 +14,9 @@ type H_TrackingObj_f6_Str=
 	|"cards"
 	|"endscreen"
 	|"external"
+	|"g-high-rec"
 	|"iv-endscreen"
+	|"iv"
 	|"list_other"
 	|"ni-push-u-sub"
 	|"related-auto"
@@ -24,7 +26,6 @@ type H_TrackingObj_f6_Str=
 	|"watch"
 	;
 ;
-type H_TrackingObj_f6=TV_Str<H_TrackingObj_f6_Str>;
 type H_TrackingObj_f3=T_D32<0>;
 type H_TrackingObj_f21={
 	6: T_FD32<1315653944>;
@@ -40,7 +41,7 @@ type H_TrackingObj={
 	2?: H_TrackingObj_Id;
 	3?: H_TrackingObj_f3;
 	4?: VW_BinaryTimestamp;
-	6?: H_TrackingObj_f6;
+	6?: TV_Str<H_TrackingObj_f6_Str>;
 	7?: TV_Str<T_Base64Str>;
 	8?: T_VW_Bigint<101551873087600536n>|T_D32<2048687136925003>;
 	9?: T_VW_Bigint<bigint>;
@@ -517,8 +518,8 @@ type PR_grf_p_obj0={
 	3: TV_Str<string>;
 };
 type PD_grf_p_obj1={1: TV_Str<"Spring">;};
-type PR_grf_p_obj1={1: T_PArr_R<T_VW_Child<PD_grf_p_obj1>[]>;};
-type PR_grf_p_f28={1: T_PArr_R<PD_grf_p_f28>;};
+type PR_grf_p_obj1={1: T_PArr_R<T_Param_Child<PD_grf_p_obj1>[]>;};
+type PR_grf_p_f28={1: T_PArr_R<T_Param_Child<PR_grf_p_obj0>[]>;};
 type P_get_report_form_params={
 	25: TV_Str<"shopping">;
 	26: T_D32<14>;

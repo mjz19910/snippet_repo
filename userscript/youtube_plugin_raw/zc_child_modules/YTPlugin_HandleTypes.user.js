@@ -2041,6 +2041,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 		this.VW_BinaryTimestamp(f4);
 	}
+	/** @type {string[]} */
+	h_f6_str_arr=[];
 	/** @protected @arg {H_TrackingObj} x */
 	H_TrackingObj(x) {
 		if(this.ht!==this) {this.ht.H_TrackingObj(x); return;}
@@ -2054,11 +2056,13 @@ class HandleTypes extends BaseService {
 			let str=this.TV_Str(x);
 			this.save_primitive(`${cf}.f6`,str);
 			switch(str) {
-				default: debugger; break;
+				default: if(this.h_f6_str_arr.includes(str)) break; this.h_f6_str_arr.push(str); debugger; break;
 				case "cards":
 				case "endscreen":
 				case "external":
+				case "g-high-rec":
 				case "iv-endscreen":
+				case "iv":
 				case "list_other":
 				case "ni-push-u-sub":
 				case "related-auto":
@@ -2097,25 +2101,6 @@ class HandleTypes extends BaseService {
 	VW_BinaryTimestamp(x) {this.V_BinaryTimestamp(this.T_VW(x));}
 	/** @arg {"H_TrackingObj"} cf @arg {T_D32<number>} x @arg {T_ObjGetNumKey<H_TrackingObj,KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.save_primitive(`${cf}.${k}`,this.T_D32(x));}
-	/** @arg {"H_TrackingObj_f6"} cf @arg {H_TrackingObj_f6} x */
-	H_TrackingObj_f6(cf,x) {
-		let str=this.TV_Str(x);
-		this.save_primitive(`${cf}.str`,str);
-		switch(str) {
-			default: this.save_primitive(`${cf}.str.default`,str); break;
-			case "cards":
-			case "endscreen":
-			case "external":
-			case "iv-endscreen":
-			case "list_other":
-			case "ni-push-u-sub":
-			case "related-auto":
-			case "related":
-			case "rellist":
-			case "shortswatch":
-			case "watch":
-		}
-	}
 	/** @arg {"H_TrackingObj"} cf @arg {{tag: H_TrackingObj_Tag,id: H_TrackingObj_Id;}} x */
 	P_Tag_TrackingObj(cf,x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");}
 	/** @protected @arg {{type:"click_tracking",v:H_TrackingObj}|{type:"tracking",v:H_TrackingObj}} x */
@@ -2965,7 +2950,7 @@ class HandleTypes extends BaseService {
 	P_grf_p_f28(x) {
 		const cf="P_grf_p_f28";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		for(let vi of v1[1]) this.PR_grf_p_obj0(vi);
+		for(let vi of v1[1]) this.PR_grf_p_obj0(vi[2]);
 	}
 	/** @private @arg {PR_grf_p_obj0} x */
 	PR_grf_p_obj0(x) {
@@ -2978,13 +2963,13 @@ class HandleTypes extends BaseService {
 	PR_grf_p_obj1(x) {
 		const cf="PR_grf_p_obj1";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		for(let vi of v1[1]) this.PD_grf_p_obj1(vi);
+		for(let vi of v1[1]) this.PD_grf_p_obj1(vi[2]);
 	}
 	/** @private @arg {PD_grf_p_obj1} x */
 	PD_grf_p_obj1(x) {
-		const cf="PR_grf_p_obj1";
+		const cf="PD_grf_p_obj1";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`${cf}.f1`,this.TV_Str(v1));
+		console.log(`[${cf}.f1] [%s]`,this.TV_Str(v1));
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
