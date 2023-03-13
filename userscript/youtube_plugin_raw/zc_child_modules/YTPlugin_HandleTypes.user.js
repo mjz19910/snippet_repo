@@ -3773,7 +3773,11 @@ class HandleTypes extends BaseService {
 	DU_UrlParams_PageAd_AClk(x) {
 		const cf="DU_UrlParams_PageAd_AClk";
 		const {sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms,...y}=this.s(cf,x); this.g(y);
-		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms);
+		switch(label) {
+			default: debugger; break;
+			case "video_click_to_advertiser_site": break;
+		}
+		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,ctype,ms);
 	}
 	/** @private @arg {D_InstreamAdPlayerOverlay} x */
 	D_InstreamAdPlayerOverlay(x) {

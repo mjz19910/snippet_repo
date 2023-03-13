@@ -4843,13 +4843,6 @@ class ForService_XMethods extends BaseService {
 		const uo=this._convert_url_to_obj(x);
 		let {...pp}=this.parse_url_search_params(uo.search);
 		this.DU_UrlParse({host: uo.host,pathname: uo.pathname,search: pp});
-		(x => {
-			if(x.host!=="www.youtube.com") return;
-			if(x.pathname!=="/pagead/paralleladinteraction") debugger;
-			let pa1=this.split_str(x.search,"?");
-			let pa=this.split_str(pa1[1],"&"); pa;
-			let {ai,sigh,cid,ad_mt,acvw,gv,nb,label,...y}=this.parse_url_search_params(x.search); this.g(y);
-		})(this._convert_url_to_obj(x));
 	}
 	/** @arg {DU_UrlParse} x */
 	DU_UrlParse(x) {
@@ -4857,12 +4850,9 @@ class ForService_XMethods extends BaseService {
 		this.save_primitive(`${cf}.host`,x.host);
 		this.save_primitive(`${cf}.pathname`,x.pathname);
 		switch(x.pathname) {
-			case "/pagead/aclk": {
-				this.ht.DU_UrlParams_PageAd_AClk(x.search);
-			} break;
-			case "/pagead/paralleladinteraction": {
-				this.sm.DU_UrlParams_PageadParallelAdInteraction(x.search);
-			} break;
+			default: debugger; break;
+			case "/pagead/aclk": this.ht.DU_UrlParams_PageAd_AClk(x.search); break;
+			case "/pagead/paralleladinteraction": this.sm.DU_UrlParams_PageadParallelAdInteraction(x.search); break;
 		}
 	}
 	/** @private @arg {DE_Url} x */
