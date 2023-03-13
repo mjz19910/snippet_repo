@@ -2061,6 +2061,7 @@ class HandleTypes extends BaseService {
 				case "endscreen":
 				case "external":
 				case "g-high-rec":
+				case "g-high":
 				case "iv-endscreen":
 				case "iv":
 				case "list_other":

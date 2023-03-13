@@ -15,6 +15,7 @@ type H_TrackingObj_f6_Str=
 	|"endscreen"
 	|"external"
 	|"g-high-rec"
+	|"g-high"
 	|"iv-endscreen"
 	|"iv"
 	|"list_other"
