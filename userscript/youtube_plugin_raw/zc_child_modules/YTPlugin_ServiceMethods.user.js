@@ -320,23 +320,12 @@ class ServiceMethods extends ServiceData {
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {GM_YpcGetCart} x */
-	GM_YpcGetCart(x) {this.sm.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_cart"));}
 	/** @private @arg {DE_YpcGetCart} x */
 	DE_YpcGetCart(x) {this.sm.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
 	/** @public @arg {E_ApplicationSettings} x */
 	E_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.B_Hack); this.g(y);}
 	/** @private @arg {M_VE12924} x */
 	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
-	/** @private @arg {GM_VE12924} x */
-	GM_VE12924(x) {
-		const cf="GM_VE12924";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
-		this.sm.cq(url,"/select_site");
-		this.sm.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
-		this.sm.rootVe(rootVe);
-		this.cq(rootVe,12924);
-	}
 	/** @public @arg {E_SubmitFeedback} x */
 	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
 	/** @private @arg {DE_SubmitFeedback} x */
@@ -349,8 +338,6 @@ class ServiceMethods extends ServiceData {
 	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
 	/** @private @arg {M_PerformCommentAction} x */
 	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
-	/** @private @arg {GM_PerformCommentAction} x */
-	GM_PerformCommentAction(x) {this.sm.T_GM("GM_PerformCommentAction",x,x => this.sm.cq(x,"/youtubei/v1/comment/perform_comment_action"));}
 	/** @private @arg {DE_PerformCommentAction} x */
 	DE_PerformCommentAction(x) {
 		const cf="DE_PerformCommentAction";
@@ -374,16 +361,12 @@ class ServiceMethods extends ServiceData {
 	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
 	/** @private @arg {M_CreateCommentReplyDialog} x */
 	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
-	/** @private @arg {GM_CreateCommentReplyDialog} x */
-	GM_CreateCommentReplyDialog(x) {this.D_IgnoreNavigation(x);}
 	/** @private @arg {D_IgnoreNavigation} x */
 	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.cq(x,true));}
 	/** @public @arg {E_CreateCommentReply} x */
 	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
 	/** @private @arg {M_CreateCommentReply} x */
 	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
-	/** @private @arg {GM_CreateCommentReply} x */
-	GM_CreateCommentReply(x) {this.sm.T_GM("GM_CreateCommentReply",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment_reply"));}
 	/** @private @arg {DE_CreateCommentReply} x */
 	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.sm.params("create_reply.params",x));}
 	/** @private @arg {DE_CreateCommentReplyDialog} x */
@@ -462,8 +445,6 @@ class ServiceMethods extends ServiceData {
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
-	/** @private @arg {GM_GetSharePanel} x */
-	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.cq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
 		const cf="DE_ShareEntityService";
@@ -569,6 +550,8 @@ class ServiceMethods extends ServiceData {
 			case "video_description":
 		}
 	}
+	/** @type {string[]} */
+	gm_ve_urls=[];
 	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
 	GM_VE3611(x) {
 		const cf="GM_VE3611";
@@ -655,8 +638,15 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @type {string[]} */
-	gm_ve_urls=[];
+	/** @private @arg {GM_VE12924} x */
+	GM_VE12924(x) {
+		const cf="GM_VE12924";
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
+		this.sm.cq(url,"/select_site");
+		this.sm.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,12924);
+	}
 	/** @private @arg {GM_VE23462} x @returns {`VE${rootVe}`} */
 	GM_VE23462(x) {
 		const cf="GM_VE23462";
@@ -749,6 +739,24 @@ class ServiceMethods extends ServiceData {
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.cq(x,"/youtubei/v1/account/set_setting"));}
 	/** @private @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.cq(x,"/youtubei/v1/get_transcript"));}
+	/** @private @arg {GM_PlaylistDelete} x */
+	GM_PlaylistDelete(x) {this.T_GM("GM_PlaylistDelete",x,x => this.cq(x,"/youtubei/v1/playlist/delete"));}
+	/** @private @arg {GM_RemoveUpcomingEventReminder} x */
+	GM_RemoveUpcomingEventReminder(x) {this.T_GM("GM_RemoveUpcomingEventReminder",x,x => this.cq(x,"/youtubei/v1/notification/remove_upcoming_event_reminder"));}
+	/** @private @arg {GM_AddUpcomingEventReminder} x */
+	GM_AddUpcomingEventReminder(x) {this.T_GM("GM_AddUpcomingEventReminder",x,x => this.cq(x,"/youtubei/v1/notification/add_upcoming_event_reminder"));}
+	/** @private @arg {GM_GetSettingsEditor} x */
+	GM_GetSettingsEditor(x) {this.T_GM("GM_GetSettingsEditor",x,x => this.cq(x,"/youtubei/v1/playlist/get_settings_editor"));}
+	/** @private @arg {GM_YpcGetCart} x */
+	GM_YpcGetCart(x) {this.sm.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_cart"));}
+	/** @private @arg {GM_PerformCommentAction} x */
+	GM_PerformCommentAction(x) {this.sm.T_GM("GM_PerformCommentAction",x,x => this.sm.cq(x,"/youtubei/v1/comment/perform_comment_action"));}
+	/** @private @arg {GM_CreateCommentReplyDialog} x */
+	GM_CreateCommentReplyDialog(x) {this.D_IgnoreNavigation(x);}
+	/** @private @arg {GM_CreateCommentReply} x */
+	GM_CreateCommentReply(x) {this.sm.T_GM("GM_CreateCommentReply",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment_reply"));}
+	/** @private @arg {GM_GetSharePanel} x */
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.cq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @private @arg {AD_Notification} x */
 	AD_Notification(x) {
 		const cf="AD_Notification";
@@ -5946,14 +5954,6 @@ class ServiceMethods extends ServiceData {
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,this.a_primitive_bool);}
 	/** @public @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,this.a_primitive_bool);}
-	/** @private @arg {GM_PlaylistDelete} x */
-	GM_PlaylistDelete(x) {this.T_GM("GM_PlaylistDelete",x,x => this.cq(x,"/youtubei/v1/playlist/delete"));}
-	/** @private @arg {GM_RemoveUpcomingEventReminder} x */
-	GM_RemoveUpcomingEventReminder(x) {this.T_GM("GM_RemoveUpcomingEventReminder",x,x => this.cq(x,"/youtubei/v1/notification/remove_upcoming_event_reminder"));}
-	/** @private @arg {GM_AddUpcomingEventReminder} x */
-	GM_AddUpcomingEventReminder(x) {this.T_GM("GM_AddUpcomingEventReminder",x,x => this.cq(x,"/youtubei/v1/notification/add_upcoming_event_reminder"));}
-	/** @private @arg {GM_GetSettingsEditor} x */
-	GM_GetSettingsEditor(x) {this.T_GM("GM_GetSettingsEditor",x,x => this.cq(x,"/youtubei/v1/playlist/get_settings_editor"));}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
 	//#region imports
