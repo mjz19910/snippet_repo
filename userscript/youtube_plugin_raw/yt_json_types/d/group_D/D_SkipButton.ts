@@ -1,8 +1,4 @@
 type D_SkipButton={
-	message: {
-		text: "Skip Ads";
-		isTemplated: false;
-		trackingParams: string;
-	};
+	message: T_MaybeTemplatedText<"Skip Ads">;
 	trackingParams: string;
 };

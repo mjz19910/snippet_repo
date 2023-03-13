@@ -3727,16 +3727,17 @@ class HandleTypes extends BaseService {
 	D_SkipButton(x) {
 		const cf="D_TemplatedAdText";
 		const {message,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.R_MaybeTemplatedText(message);
+		let text=this.T_MaybeTemplatedText(message);
+		this.cq(text,"Skip Ads");
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {D_SkipButton["message"]} x */
-	R_MaybeTemplatedText(x) {
+	/** @private @template T @arg {T_MaybeTemplatedText<T>} x */
+	T_MaybeTemplatedText(x) {
 		const cf="D_TemplatedAdText";
 		const {text,isTemplated,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.cq(text,"Skip Ads");
 		this.cq(isTemplated,false);
 		this.trackingParams(trackingParams);
+		return text;
 	}
 	/** @public @arg {VM_PlaceData} x */
 	VM_PlaceData(x) {this.H_x("VM_PlaceData","placeDataViewModel",x,this.VD_PlaceData);}
@@ -3803,24 +3804,70 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_SimpleAdBadge} x */
 	R_SimpleAdBadge(x) {this.H_("simpleAdBadgeRenderer",x,this.D_SimpleAdBadge);}
 	/** @private @arg {D_SimpleAdBadge} x */
-	D_SimpleAdBadge(x) {x;}
+	D_SimpleAdBadge(x) {
+		const cf="D_SimpleAdBadge";
+		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);
+		let a=this.T_MaybeTemplatedText(text);
+		this.cq(a,"Ad 1 of 2");
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {R_AdDurationRemaining} x */
 	R_AdDurationRemaining(x) {this.H_("adDurationRemainingRenderer",x,this.D_AdDurationRemaining);}
 	/** @private @arg {D_AdDurationRemaining} x */
-	D_AdDurationRemaining(x) {x;}
+	D_AdDurationRemaining(x) {
+		const cf="D_AdDurationRemaining";
+		const {templatedCountdown,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_TemplatedAdText(templatedCountdown);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {R_AdHoverTextButton} x */
 	R_AdHoverTextButton(x) {this.H_("adHoverTextButtonRenderer",x,this.D_AdHoverTextButton);}
 	/** @private @arg {D_AdHoverTextButton} x */
-	D_AdHoverTextButton(x) {x;}
+	D_AdHoverTextButton(x) {
+		const cf="D_AdHoverTextButton";
+		const {button,hoverText,trackingParams,...y}=this.s(cf,x); this.g(y);
+		button;
+		hoverText;
+		trackingParams;
+	}
 	/** @private @arg {R_FlyoutCta} x */
 	R_FlyoutCta(x) {this.H_("flyoutCtaRenderer",x,this.D_FlyoutCta);}
-	/** @private @arg {D_EmptyObj} x */
-	D_FlyoutCta(x) {x;}
+	/** @private @arg {D_FlyoutCta} x */
+	D_FlyoutCta(x) {
+		const cf="D_FlyoutCta";
+		const {image,headline,description,actionButton,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_TrackedThumbnail2(image);
+		let text=this.T_MaybeTemplatedText(headline);
+		this.sm.a_primitive_str(text);
+		this.D_TrackedText(description);
+		this.xm.R_Button(actionButton);
+		this.cq(startMs,1);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_TrackedThumbnail2} x */
+	D_TrackedThumbnail2(x) {
+		const cf="D_TrackedThumbnail2";
+		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.sm.D_Thumbnail(thumbnail);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_TrackedText} x */
+	D_TrackedText(x) {
+		const cf="D_TrackedText";
+		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.sm.a_primitive_str(text);
+		this.trackingParams(trackingParams);
+	}
 	/** @public @arg {D_Pings} x */
 	D_Pings(x) {
 		const cf="D_Pings";
 		const {impressionPings,errorPings,mutePings,unmutePings,pausePings,rewindPings,resumePings,skipPings,closePings,progressPings,fullscreenPings,activeViewViewablePings,endFullscreenPings,activeViewMeasurablePings,abandonPings,activeViewFullyViewableAudibleHalfDurationPings,completePings,activeViewTracking,...y}=this.s(cf,x); this.g(y);
-		impressionPings;
+		/** @type {`https://www.youtube.com/pagead/adview?${string}`[]} */
+		let ad_view_urls=[];
+		let r;
+		[r]=this.z(impressionPings,x => this.xm.T_BaseUrl(x));
+		ad_view_urls.push(...r);
+		ad_view_urls;
 		errorPings;
 		mutePings;
 		unmutePings;

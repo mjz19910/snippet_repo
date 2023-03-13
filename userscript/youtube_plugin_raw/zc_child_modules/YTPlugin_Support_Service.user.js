@@ -3263,9 +3263,8 @@ class Support_Renderer extends BaseService {
 		const cf="E_AdFeedback";
 		let [d,{loggingUrls,...y}]=this.sm.TE_Endpoint_2(cf,"adFeedbackEndpoint",x); this.g(y);
 		this.DE_AdFeedback(d);
-		this.z(loggingUrls,x => this.xm.T_BaseUrl(x,x => {
-			this.ps.parse_url(`${cf}.loggingUrls[]`,x);
-		}));
+		let [r]=this.z(loggingUrls,x => this.xm.T_BaseUrl(x));
+		this.z(r,x => this.ps.parse_url(`${cf}.loggingUrls[]`,x));
 	}
 	/** @public @arg {DE_AdFeedback} x */
 	DE_AdFeedback(x) {x;}
@@ -4947,12 +4946,12 @@ class ForService_XMethods extends BaseService {
 			default: get_host(up)===""; console.log("new GU_UrlObj.host",get_host(up)); break;
 		}
 	}
-	/** @public @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
-	T_BaseUrl(x,f) {
+	/** @public @template {string} T @arg {T_BaseUrl<T>} x */
+	T_BaseUrl(x) {
 		const cf="T_BaseUrl";
 		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
-		f.call(this,baseUrl);
 		this.t(elapsedMediaTimeSeconds,x => this.sm.a_primitive_num(x));
+		return baseUrl;
 	}
 	/** @public @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {
@@ -4963,9 +4962,10 @@ class ForService_XMethods extends BaseService {
 		}
 		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
 		this.D_UrlAndElapsedMediaTime(atrUrl,x => this.sm.a_primitive_str(x));
-		this.T_BaseUrl(ptrackingUrl,x => this.sm.a_primitive_str(x));
-		this.T_BaseUrl(qoeUrl,x => this.sm.a_primitive_str(x));
-		this.sm.t(youtubeRemarketingUrl,x => this.T_BaseUrl(x,this.sm.a_primitive_str));
+		this.sm.a_primitive_str(this.T_BaseUrl(ptrackingUrl));
+		this.sm.a_primitive_str(this.T_BaseUrl(qoeUrl));
+		let r=this.sm.t(youtubeRemarketingUrl,this.T_BaseUrl);
+		this.t(r,this.sm.a_primitive_str);
 	}
 	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
 	D_UrlAndElapsedMediaTime(x,f) {
@@ -4987,7 +4987,8 @@ class ForService_XMethods extends BaseService {
 		const cf="E_Pinging";
 		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.B_Hack(pingingEndpoint);
-		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
+		let [r]=this.z(loggingUrls,this.T_BaseUrl);
+		this.z(r,x => {
 			let pr=this._convert_url_to_obj(x);
 			switch(pr.host) {
 				case "pagead2.googlesyndication.com": {
@@ -5001,7 +5002,7 @@ class ForService_XMethods extends BaseService {
 				} break;
 				default: debugger; break;
 			};
-		}));
+		});
 	}
 	/** @public @arg {R_ClientForecastingAd} x */
 	R_ClientForecastingAd(x) {this.H_("clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
@@ -5009,16 +5010,16 @@ class ForService_XMethods extends BaseService {
 	D_ClientForecastingAd(x) {
 		const cf="D_ClientForecastingAd";
 		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
-		this.tz(impressionUrls,x => this.T_BaseUrl(x,x => {
-			this.ps.parse_url(`${cf}.impressionUrl`,x);
-		}));
+		let r=this.tz(impressionUrls,this.T_BaseUrl);
+		this.t(r,([x]) => this.z(x,x => this.ps.parse_url(`${cf}.impressionUrl`,x)));
 	}
 	/** @private @arg {D_ImpressionCommand} x */
 	D_ImpressionCommand(x) {
 		const cf="D_ImpressionCommand";
 		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);
 		this.sm.clickTrackingParams(clickTrackingParams);
-		this.z(loggingUrls,x => this.T_BaseUrl(x,x => this.ps.parse_url(`${cf}:LoggingUrlItem`,x)));
+		let [r]=this.z(loggingUrls,this.T_BaseUrl);
+		this.z(r,x => this.ps.parse_url(`${cf}:LoggingUrlItem`,x));
 		this.sm.B_Hack(pingingEndpoint);
 	}
 	/** @public @arg {R_PromotedSparklesWeb} x */

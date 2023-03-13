@@ -1,8 +1,4 @@
 type D_SimpleAdBadge={
-	text: {
-		text: "Ad 1 of 2";
-		isTemplated: false;
-		trackingParams: string;
-	};
+	text: T_MaybeTemplatedText<"Ad 1 of 2">;
 	trackingParams: string;
 };

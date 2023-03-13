@@ -370,8 +370,8 @@ type D_AccountLinkButton={
 	unlinkedButton: R_Button;
 };
 type D_ActionCompanionAd={
-	headline: D_TemplatedText;
-	description: D_TemplatedText;
+	headline: T_MaybeTemplatedText<string>;
+	description: T_MaybeTemplatedText<string>;
 	actionButton: R_Button;
 	iconImage: D_TrackedThumbnail;
 	bannerImage: D_TrackedThumbnail;
@@ -2559,11 +2559,6 @@ type D_TemplateUpdate={
 }|{
 	identifier: `bottom_sheet_list_option.eml|${string}`;
 	serializedTemplateConfig: string;
-};
-type D_TemplatedText={
-	text: string;
-	isTemplated: false;
-	trackingParams: string;
 };
 type D_TextInputFormField={
 	label: G_Text;

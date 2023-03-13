@@ -1,17 +1,7 @@
 type D_FlyoutCta={
-	image: {
-		thumbnail: D_Thumbnail;
-		trackingParams: string;
-	};
-	headline: {
-		text: "Champions";
-		isTemplated: false;
-		trackingParams: string;
-	};
-	description: {
-		text: "championsmovie.ca";
-		trackingParams: string;
-	};
+	image: D_TrackedThumbnail2;
+	headline: T_MaybeTemplatedText<string>;
+	description: D_TrackedText;
 	actionButton: R_Button;
 	startMs: 1;
 	trackingParams: string;
