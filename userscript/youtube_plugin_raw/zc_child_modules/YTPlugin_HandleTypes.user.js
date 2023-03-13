@@ -3867,7 +3867,6 @@ class HandleTypes extends BaseService {
 		let r;
 		[r]=this.z(impressionPings,x => this.xm.T_BaseUrl(x));
 		ad_view_urls.push(...r);
-		ad_view_urls;
 		errorPings;
 		mutePings;
 		unmutePings;
