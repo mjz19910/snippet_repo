@@ -2685,7 +2685,7 @@ class HandleTypes extends BaseService {
 	PX_watch_next_token_5(x) {
 		const cf="PX_watch_next_token_5";
 		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.save_primitive(`${cf}.f1`,this.T_D32(a));
+		a&&this.save_primitive(`${cf}.f1`,this.T_D32(a));
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
 	P_continuation_request_watch_next_token(x) {

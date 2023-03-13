@@ -271,7 +271,7 @@ type PX_watch_next_token_4={
 	5: T_FD32<number>;
 	12: T_FD64<bigint>;
 };
-type PX_watch_next_token_5={1: T_D32<0>;};
+type PX_watch_next_token_5={1?: T_D32<0>;};
 type PX_watch_next_token_6={
 	1?: T_VA<PX_watch_next_token_item>;
 	3: T_D32<2|25>;

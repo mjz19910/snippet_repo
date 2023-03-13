@@ -2667,6 +2667,92 @@ class BaseService extends ServiceWithMembers {
 	/** @public @type {<T,U extends T>(a:T,b:NoInfer<U>)=>void} */
 	cq=this._cq_no_infer;
 }
+/** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
+class YtObjectVisitor {
+	/** @handler @public @arg {ApiIterateState} state @arg {AD_AppendContinuationItems} action */
+	appendContinuationItemsAction(state,action) {
+		if(!action.continuationItems) {debugger;}
+		let filtered=state.t.handlers.renderer_content_item_array.replace_array(action.continuationItems);
+		if(filtered.length>0) action.continuationItems=filtered;
+	}
+	/** @handler @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
+	reloadContinuationItemsCommand({t: state},command) {
+		if(!("continuationItems" in command)) return;
+		let iterable_items=command.continuationItems;
+		let filtered=state.handlers.renderer_content_item_array.replace_array(iterable_items);
+		if(filtered.length>0) command.continuationItems=filtered;
+	}
+	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3<T1,T2,T3>} renderer */
+	itemSectionRenderer_with_state(state,renderer) {
+		let {t}=state;
+		t.iteration.default_iter(state,renderer);
+		if(renderer.contents===void 0) return;
+		renderer.contents=renderer.contents.filter(state.t.filter_renderer_contents_item,state.t);
+	}
+	/** @handler @public @arg {ApiIterateState} state @arg {Todo_D_RichGrid} renderer */
+	richGridRenderer(state,renderer) {
+		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
+		state.path="richGridRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
+	compactVideoRenderer(state,renderer) {
+		state.path="compactVideoRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
+	thumbnailOverlayToggleButtonRenderer(state,renderer) {
+		state.path="thumbnailOverlayToggleButtonRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
+	videoRenderer(state,renderer) {
+		state.path="videoRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+}
+class IterateApiResultBase extends BaseService {
+	/** @constructor @public @arg {ServiceResolverBox<{}>} x @arg {YtObjectVisitor} obj_visitor */
+	constructor(x,obj_visitor) {
+		super(x);
+		this.obj_visitor=obj_visitor;
+		/** @private @type {Map<string,keyof YtObjectVisitor>} */
+		this.keys_map=new Map;
+		let keys=this.get_keys_of_ex(obj_visitor);
+		for(let i of keys) {this.keys_map.set(i,i);}
+	}
+	/** @api @public @arg {ApiIterateState} state @arg {{}} data */
+	default_iter(state,data) {
+		if(data===void 0) {return;}
+		if(typeof data==="string") {return;}
+		let {t,path}=state;
+		if(data instanceof Array) {
+			for(let [key,value] of data.entries()) {this.default_iter({t,path: `${path}[${key}]`},value);}
+			return;
+		}
+		for(let key in data) {
+			/** @private @type {{[x: string]: any}} */
+			let wk=data;
+			let value=wk[key];
+			let rk=this.keys_map.get(key);
+			let iter_target=this.obj_visitor;
+			const state={t,path: `${path}.${key}`};
+			if(rk!==void 0) {
+				if(this.obj_visitor[rk]===void 0) {
+					console.log("update keys map remove",key);
+					debugger;
+				}
+				iter_target[rk](state,as(value));
+			} else {
+				if(key in this.obj_visitor) {
+					console.log("update keys map new key",key);
+					debugger;
+				}
+				this.default_iter(state,value);
+			}
+		}
+	}
+}
 class YtHandlers extends BaseService {
 	/** @api @public @arg {{}} item */
 	filter_renderer_contents_item(item) {
@@ -2686,6 +2772,7 @@ class YtHandlers extends BaseService {
 			rich_grid: new R_HandleRichGrid_Base(res),
 			renderer_content_item_array: new HandleRendererContentItemArray(res),
 		};
+		this.iteration=new IterateApiResultBase(res,new YtObjectVisitor);
 		this.blacklisted_item_sections=new Map([
 			["backstagePostThreadRenderer",false],
 			["channelAboutFullMetadataRenderer",false],
@@ -2730,6 +2817,7 @@ class YtHandlers extends BaseService {
 		let res=this.sm.decode_json_response(url_type,parsed_obj);
 		if(!res) {console.log("Decoding of the json response did not return a result"); return;}
 		this.x.get("x_GenericApi").G_ResponseTypes(response,res);
+		this.iteration.default_iter({t: this,path: url_type},parsed_obj);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
@@ -2759,7 +2847,10 @@ class YtHandlers extends BaseService {
 	on_initial_data(apply_args) {
 		/** @private @type {G_NavFinishDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
-		if(!("page" in ret)) {return ret;}
+		let start_path="unknown";
+		if("page" in ret) start_path=ret.page;
+		this.iteration.default_iter({t: this,path: start_path},ret);
+		if(!("page" in ret)) return ret;
 		if(!ret.response) {
 			console.log("[unhandled_return_value]",ret);
 			debugger;
