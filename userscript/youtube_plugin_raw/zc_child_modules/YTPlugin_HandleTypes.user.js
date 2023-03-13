@@ -726,6 +726,7 @@ class HandleTypes extends BaseService {
 			case "nx5s7":
 			case "nx57y":
 			case "o097z":
+			case "p5qdd":
 			case "p5qls":
 			case "p5qs7":
 			case "q4fl6":
@@ -1099,13 +1100,21 @@ class HandleTypes extends BaseService {
 		const {responseContext,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 	}
+	/** @template T @template {{popup:T}} V @arg {V} x @arg {(x:Omit<V,"popup">)=>void} f */
+	T_AnyPopup(x,f) {
+		const {popup,...y}=x;
+		f.call(this,y);
+		return popup;
+	}
 	/** @public @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext,command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let pu=this.xm.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
-		if("pdgBuyFlowRenderer" in pu) {this.xr.R_PdgBuyFlow(pu);}
-		pu.pdgBuyFlowRenderer;
+		let pr=this.T_AnyPopup(pu,({popupType,...y2}) => {
+			this.cq(popupType,"DIALOG"); this.g(y2);
+		});
+		if("pdgBuyFlowRenderer" in pr) {this.xr.R_PdgBuyFlow(pr);}
 		this.sm.trackingParams(trackingParams);
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
@@ -2964,13 +2973,18 @@ class HandleTypes extends BaseService {
 	PR_grf_p_obj1(x) {
 		const cf="PR_grf_p_obj1";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		for(let vi of v1[1]) this.PD_grf_p_obj1(vi[2]);
+		let store_item_arr=[];
+		for(let vi of v1[1]) {
+			let ret_str=this.PD_grf_p_obj1(vi[2]);
+			store_item_arr.push(ret_str);
+		}
+		console.log("[store_item_data] \"%s\"",store_item_arr.join(""));
 	}
 	/** @private @arg {PD_grf_p_obj1} x */
 	PD_grf_p_obj1(x) {
 		const cf="PD_grf_p_obj1";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
-		console.log(`[${cf}.f1] [%s]`,this.TV_Str(v1));
+		return this.TV_Str(v1);
 	}
 	/** @private @arg {P_notification_record_interactions} x */
 	P_notification_record_interactions(x) {
@@ -3435,7 +3449,7 @@ class HandleTypes extends BaseService {
 		});
 		this.sm.trackingParams(trackingParams);
 	}
-	/** @private @arg {MP_NotificationMenu} x */
+	/** @public @arg {MP_NotificationMenu} x */
 	MP_NotificationMenu(x) {
 		const cf="MP_NotificationMenu";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

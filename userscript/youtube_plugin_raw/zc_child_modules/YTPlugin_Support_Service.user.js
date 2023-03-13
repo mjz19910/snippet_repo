@@ -3917,6 +3917,15 @@ class ForService_XMethods extends BaseService {
 	}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {let [a,y]=this.sm.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
+	/** @arg {Extract<G_Popup_All,{popupType:"DIALOG"}>["popup"]} x */
+	G_Popup_DL(x) {
+		if("confirmDialogRenderer" in x) return this.sm.R_ConfirmDialog(x);
+		if("unifiedSharePanelRenderer" in x) return this.sm.R_UnifiedSharePanel(x);
+		if("fancyDismissibleDialogRenderer" in x) return this.sm.R_FancyDismissibleDialog(x);
+		if("aboutThisAdRenderer" in x) return this.sm.R_AboutThisAd(x);
+		if("pdgBuyFlowRenderer" in x) return this.xr.R_PdgBuyFlow(x);
+		x===""; debugger;
+	}
 	/** @public @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf,x) {
 		/** @type {TA_OpenPopup<unknown>} */
@@ -3928,13 +3937,7 @@ class ForService_XMethods extends BaseService {
 		if(ax&&"popupType" in ax&&"popup" in ax) {
 			switch(ax.popupType) {
 				default: debugger; ax===""; break;
-				case "DIALOG": {
-					let x1=ax.popup;
-					if("confirmDialogRenderer" in x1) {this.sm.R_ConfirmDialog(x1); break;}
-					if("unifiedSharePanelRenderer" in x1) {this.sm.R_UnifiedSharePanel(x1); break;}
-					if("fancyDismissibleDialogRenderer" in x1) {this.sm.R_FancyDismissibleDialog(x1); break;}
-					debugger;
-				} break;
+				case "DIALOG": this.G_Popup_DL(ax.popup); break;
 				case "TOAST": {
 					let x1=ax.popup;
 					if("notificationActionRenderer" in x1) {this.sm.RA_Notification(x1); break;}
@@ -3952,8 +3955,13 @@ class ForService_XMethods extends BaseService {
 					if(!a_menu) return a;
 					switch(a_menu.style) {
 						default: debugger; break;
-						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": break;
-						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": break;
+						case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": {
+							this.sm.MP_AccountMenu(a_menu);
+						} break;
+						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": {
+							if("header" in a_menu) {this.ht.MP_NotificationMenu(a_menu); break;}
+							this.sm.MP_GetNotificationMenu(a_menu);
+						} break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM": break;
 					}
 				} break;

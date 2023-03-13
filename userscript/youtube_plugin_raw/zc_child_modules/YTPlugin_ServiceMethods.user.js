@@ -4938,8 +4938,8 @@ class ServiceMethods extends ServiceData {
 		return y;
 	}
 	/** @public @arg {MP_GetNotificationMenu} x */
-	D_NotificationMenuPopupMenuItem(x) {
-		const cf="D_NotificationMenuPopupMenuItem";
+	MP_GetNotificationMenu(x) {
+		const cf="MP_GetNotificationMenu";
 		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
@@ -4955,7 +4955,7 @@ class ServiceMethods extends ServiceData {
 		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
 		/** @type {[MP_GetNotificationMenu[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
-		this.z(u2,this.D_NotificationMenuPopupMenuItem);
+		this.z(u2,this.MP_GetNotificationMenu);
 	}
 	/** @public @arg {Popup_DD_GetNotificationsMenu} x */
 	G_Action_GetNotificationsMenu_Popup(x) {

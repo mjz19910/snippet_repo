@@ -20,6 +20,7 @@ type TR_MultiPageMenu<T>={multiPageMenuRenderer: T;};
 type T_MenuPopup_RD<T>=T_OpenPopup_Dropdown<TR_MultiPageMenu<T>>;
 type T_OpenPopup_Dropdown<T>={popupType: "DROPDOWN"; popup: T; beReused?: true;};
 type T_OpenPopup_Dialog<T>={popup: T; popupType: "DIALOG"; beReused?: true;};
+type T_OpenPopup_Dialog1<T>={popup: T; popupType: "DIALOG";};
 type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
 type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
 //#endregion
@@ -34,7 +35,7 @@ type A_GetNotificationsMenu=TA_OpenPopup<Popup_DD_GetNotificationsMenu>;
 type A_GetSystemMenu=TA_OpenPopup<Popup_DD_SystemMenu>;
 type A_NotificationMenuPopup=TA_OpenPopup<Popup_DD_NotificationMenu>;
 type A_NotificationToast=TA_OpenPopup<Popup_TT_NotificationToast>;
-type A_PdgBuyFlow=TA_OpenPopup<R_PdgBuyFlow>;
+type A_PdgBuyFlow=TA_OpenPopup<Popup_DL_PdgBuyFlow>;
 type A_ShareEntityService=TA_OpenPopup<Popup_DL_ShareEntityService>;
 type G_OpenPopup_All=
 	|A_AboutThisAd
@@ -68,6 +69,7 @@ type Popup_DD_SystemMenu=T_OpenPopup_Dropdown<R_SystemMenu>;
 type Popup_DL_AboutThisAd=T_OpenPopup_Dialog<R_AboutThisAd>;
 type Popup_DL_ConfirmDialog=T_OpenPopup_Dialog<R_ConfirmDialog>;
 type Popup_DL_DismissibleDialog=T_OpenPopup_Dialog<R_FancyDismissibleDialog>;
+type Popup_DL_PdgBuyFlow=T_OpenPopup_Dialog1<R_PdgBuyFlow>;
 type Popup_DL_ShareEntityService=T_OpenPopup_Dialog<R_UnifiedSharePanel>;
 type Popup_TAD_VoiceSearch=T_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>;
 type Popup_TT_NotificationToast=T_OpenPopup_Toast<RA_Notification>;
@@ -82,6 +84,7 @@ type G_Popup_All=
 	|Popup_DL_AboutThisAd
 	|Popup_DL_ConfirmDialog
 	|Popup_DL_DismissibleDialog
+	|Popup_DL_PdgBuyFlow
 	|Popup_DL_ShareEntityService
 	|Popup_TAD_VoiceSearch
 	|Popup_TT_NotificationToast
