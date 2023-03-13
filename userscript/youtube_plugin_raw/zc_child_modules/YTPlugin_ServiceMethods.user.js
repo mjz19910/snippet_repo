@@ -898,17 +898,6 @@ class ServiceMethods extends ServiceData {
 			case "LIKE":
 		}
 	}
-	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
-	AD_ChangeEngagementPanelVisibility(x) {
-		const cf="AD_ChangeEngagementPanelVisibility";
-		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_EngagementPanelTargetId(targetId);
-		switch(visibility) {
-			default: this.cg.codegen_case(`${cf}.visibility`,visibility); break;
-			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
-			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
-		}
-	}
 	/** @private @arg {D_EngagementPanelTargetId} x */
 	D_EngagementPanelTargetId(x) {
 		const cf="D_EngagementPanelTargetId";
@@ -927,8 +916,6 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-macro-markers-problem-walkthroughs":
 		}
 	}
-	/** @private @arg {AD_HideEnclosing} x */
-	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {A_ReplaceEnclosing} x */
 	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 	/** @private @arg {AD_ReplaceEnclosing} x */
@@ -1020,6 +1007,67 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-comments-section": this.xr.A_CommentsSectionContinuation_2(x); break;
 			default: x===0; debugger;
 		}
+	}
+	/** @private @arg {A_GetSurvey} x */
+	A_GetSurvey(x) {
+		const cf="A_GetSurvey";
+		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if("paidDigitalGoods" in a) {debugger;}
+		this.save_primitive("GetSurvey.action",action);
+		switch(action) {
+			default: debugger; break;
+			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL":
+		}
+		this.G_DC_GetSurvey_Endpoint(a);
+	}
+	/** @public @arg {A_ChangeEngagementPanelVisibility} x */
+	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
+	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
+	AD_ChangeEngagementPanelVisibility(x) {
+		const cf="AD_ChangeEngagementPanelVisibility";
+		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_EngagementPanelTargetId(targetId);
+		switch(visibility) {
+			default: this.cg.codegen_case(`${cf}.visibility`,visibility); break;
+			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
+			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
+		}
+	}
+	/** @private @arg {A_HideEnclosing} x */
+	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
+	/** @private @arg {AD_HideEnclosing} x */
+	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
+	/** @private @arg {A_UndoFeedback} x */
+	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
+	/** @private @arg {S_GetAccountMenu} x */
+	S_GetAccountMenu(x) {
+		const cf="S_GetAccountMenu";
+		const {signal,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(signal!=="GET_ACCOUNT_MENU") debugger;
+		let [u]=this.z(actions,this.A_LoadingAccountMenu);
+		let [u1]=this.z(u,this.Popup_LoadingAccountMenu);
+		let [u2]=this.z(u1,this.R_LoadingAccountMenu);
+		this.z(u2,this.MP_LoadingAccountMenu);
+	}
+	/** @public @arg {A_LoadingAccountMenu} x */
+	A_LoadingAccountMenu(x) {return this.xm.TA_OpenPopup("A_LoadingAccountMenu",x);}
+	/** @public @arg {Popup_LoadingAccountMenu} x */
+	Popup_LoadingAccountMenu(x) {
+		const cf="Popup_LoadingAccountMenu";
+		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(b!=="DROPDOWN") debugger;
+		if(c!==true) debugger;
+		return a;
+	}
+	/** @private @arg {R_LoadingAccountMenu} x */
+	R_LoadingAccountMenu(x) {return this.TR_MultiPageMenu("R_LoadingAccountMenu",x);}
+	/** @public @arg {MP_LoadingAccountMenu} x */
+	MP_LoadingAccountMenu(x) {
+		const cf="MP_LoadingAccountMenu";
+		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
+		this.trackingParams(trackingParams);
+		if(showLoadingSpinner!==true) debugger;
 	}
 	/** @public @arg {RA_ReelDismissal} x */
 	RA_ReelDismissal(x) {this.H_s("reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
@@ -1246,22 +1294,10 @@ class ServiceMethods extends ServiceData {
 		const cf="C_GetSurvey";
 		const {clickTrackingParams,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
-		this.DC_GetSurvey(c);
+		this.A_GetSurvey(c);
 		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
-	}
-	/** @private @arg {A_GetSurvey} x */
-	DC_GetSurvey(x) {
-		const cf="D_GetSurvey";
-		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if("paidDigitalGoods" in a) {debugger;}
-		this.save_primitive("GetSurvey.action",action);
-		switch(action) {
-			default: debugger; break;
-			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL":
-		}
-		this.G_DC_GetSurvey_Endpoint(a);
 	}
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
@@ -1461,8 +1497,6 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
-	/** @public @arg {A_ChangeEngagementPanelVisibility} x */
-	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
 	/** @public @arg {CF_M_w} cf @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
 	w(cf,k,x) {this.k(cf,x); return this.ws(k,x);}
 	/** @public @arg {K} k @template {keyof T} K @template {{}} T @arg {T} x @returns {T[K]} */
@@ -2582,8 +2616,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
-	/** @private @arg {A_HideEnclosing} x */
-	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
@@ -2735,8 +2767,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {this.save_b64_binary("undo_token",x);}
-	/** @private @arg {A_UndoFeedback} x */
-	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
 	/** @public @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
@@ -5144,36 +5174,6 @@ class ServiceMethods extends ServiceData {
 		let [dk]=this.get_keys_of(x);
 		if(dk!=="multiPageMenuRenderer") {debugger; throw new Error("Wrong key");}
 		return this.w(cf,dk,x);
-	}
-	/** @private @arg {S_GetAccountMenu} x */
-	S_GetAccountMenu(x) {
-		const cf="S_GetAccountMenu";
-		const {signal,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		let [u]=this.z(actions,this.A_LoadingAccountMenu);
-		let [u1]=this.z(u,this.Popup_LoadingAccountMenu);
-		let [u2]=this.z(u1,this.R_LoadingAccountMenu);
-		this.z(u2,this.MP_LoadingAccountMenu);
-	}
-	/** @public @arg {A_LoadingAccountMenu} x */
-	A_LoadingAccountMenu(x) {return this.xm.TA_OpenPopup("A_LoadingAccountMenu",x);}
-	/** @public @arg {Popup_LoadingAccountMenu} x */
-	Popup_LoadingAccountMenu(x) {
-		const cf="Popup_LoadingAccountMenu";
-		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(b!=="DROPDOWN") debugger;
-		if(c!==true) debugger;
-		return a;
-	}
-	/** @private @arg {R_LoadingAccountMenu} x */
-	R_LoadingAccountMenu(x) {return this.TR_MultiPageMenu("R_LoadingAccountMenu",x);}
-	/** @public @arg {MP_LoadingAccountMenu} x */
-	MP_LoadingAccountMenu(x) {
-		const cf="MP_LoadingAccountMenu";
-		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
-		this.trackingParams(trackingParams);
-		if(showLoadingSpinner!==true) debugger;
 	}
 	/** @public @arg {R_CommentsSimplebox} x */
 	R_CommentsSimplebox(x) {this.H_s("commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
