@@ -3685,18 +3685,12 @@ class HandleTypes extends BaseService {
 		console.log(`${cf}.scs`,scs);
 		console.log(`${cf}.bgp`,bgp);
 	}
-	/** @private @arg {D_InstreamAdPlayerOverlay} x */
-	D_InstreamAdPlayerOverlay(x) {
-		const cf="D_InstreamAdPlayerOverlay";
-		const {skipOrPreviewRenderer,...y}=this.s(cf,x); y;
-		this.R_SkipAd(skipOrPreviewRenderer);
-	}
 	/** @private @arg {R_SkipAd} x */
 	R_SkipAd(x) {this.H_("skipAdRenderer",x,this.D_SkipAd);}
 	/** @private @arg {D_SkipAd} x */
 	D_SkipAd(x) {
 		const cf="D_SkipAd";
-		const {preskipRenderer,skippableRenderer,trackingParams,skipOffsetMilliseconds,...y}=this.s(cf,x); y;
+		const {preskipRenderer,skippableRenderer,trackingParams,skipOffsetMilliseconds,...y}=this.s(cf,x); this.g(y);
 		this.R_AdPreview(preskipRenderer);
 		this.R_SkipButton(skippableRenderer);
 		this.trackingParams(trackingParams);
@@ -3707,7 +3701,7 @@ class HandleTypes extends BaseService {
 	/** @private @arg {D_AdPreview} x */
 	D_AdPreview(x) {
 		const cf="D_AdPreview";
-		const {thumbnail,trackingParams,templatedCountdown,durationMilliseconds,...y}=this.s(cf,x); y;
+		const {thumbnail,trackingParams,templatedCountdown,durationMilliseconds,...y}=this.s(cf,x); this.g(y);
 		this.sm.D_TrackedThumbnail(thumbnail);
 		this.trackingParams(trackingParams);
 		this.R_TemplatedAdText(templatedCountdown);
@@ -3754,6 +3748,20 @@ class HandleTypes extends BaseService {
 		this.cq(text,"Skip Ads");
 		this.cq(isTemplated,false);
 		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_InstreamAdPlayerOverlay} x */
+	D_InstreamAdPlayerOverlay(x) {
+		const cf="D_InstreamAdPlayerOverlay";
+		const {skipOrPreviewRenderer,trackingParams,visitAdvertiserRenderer,adBadgeRenderer,adDurationRemaining,adInfoRenderer,flyoutCtaRenderer,adLayoutLoggingData,elementId,...y}=this.s(cf,x); this.g(y);
+		this.R_SkipAd(skipOrPreviewRenderer);
+		this.trackingParams(trackingParams);
+		visitAdvertiserRenderer;
+		adBadgeRenderer;
+		adDurationRemaining;
+		adInfoRenderer;
+		flyoutCtaRenderer;
+		adLayoutLoggingData;
+		elementId;
 	}
 }
 //#endregion

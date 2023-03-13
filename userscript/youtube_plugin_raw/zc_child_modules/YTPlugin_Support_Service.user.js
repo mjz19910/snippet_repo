@@ -1539,7 +1539,7 @@ class Support_EventInput extends BaseService {
 			switch(x.rootVe) {
 				default: x===""; debugger; break;
 				case 3854: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); y;/*#destructure_done*/
+					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 					switch(url) {
 						default: debugger; switch(url) {
 							case "/":
@@ -1548,7 +1548,7 @@ class Support_EventInput extends BaseService {
 					}
 				} break;
 				case 6827: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); y;/*#destructure_done*/
+					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 					switch(url) {
 						default: debugger; switch(url) {
 							case "/feed":
@@ -1557,7 +1557,7 @@ class Support_EventInput extends BaseService {
 					}
 				} break;
 				case 96368: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); y;/*#destructure_done*/
+					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 					switch(url) {
 						default: debugger; switch(url) {
 							case "/feed":
@@ -2196,7 +2196,7 @@ class Support_Renderer extends BaseService {
 			cf: k,keys,is_root: true,
 		});
 		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams: a,[k]: b,...y}=this.s(cf,x); y;
+		const {clickTrackingParams: a,[k]: b,...y}=this.s(cf,x);
 		a&&this.sm.clickTrackingParams(a);
 		const r1=f1.call(this,b);
 		return [y,r1];

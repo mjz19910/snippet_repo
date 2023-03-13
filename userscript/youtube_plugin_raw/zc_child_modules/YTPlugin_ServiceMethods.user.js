@@ -1052,7 +1052,7 @@ class ServiceMethods extends ServiceData {
 			cf: k,keys,is_root: true,
 		});
 		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams,[k]: a,...y}=this.s(cf,x); y;
+		const {clickTrackingParams,[k]: a,...y}=this.s(cf,x);
 		this.clickTrackingParams(clickTrackingParams);
 		const r1=f1.call(this,a);
 		return [y,r1];

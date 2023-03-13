@@ -2332,7 +2332,7 @@ class BaseService extends ServiceWithMembers {
 			cf: k,keys,is_root: true,
 		});
 		let cf=this.cg.get_auto_type_name(s,x);
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x); y;
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x);
 		this.sm.clickTrackingParams(clickTrackingParams);
 		const r1=f1.call(this,commandMetadata),r2=f2.call(this,a);
 		return [y,r1,r2];
