@@ -118,6 +118,18 @@ type P_change_markers_visibility_entity_key={
 	4: T_D32<274>;
 	5: T_D32<1>;
 };
+type P_offlineability_entity_key={
+	2: T_VW_J<{
+		1: TV_Str<DU_VideoId>;
+	}>,
+	4: T_D32<246>,
+	5: T_D32<1>;
+};
+type P_repeat_state_entity_key={
+	2: TV_Str<"repeat_state">,
+	4: T_D32<329>,
+	5: T_D32<1>
+};
 type P_EntityKey=
 	|P_aadc_guidelines_state_entity_key
 	|P_change_markers_visibility_entity_key
@@ -125,8 +137,10 @@ type P_EntityKey=
 	|P_load_markers_entity_key
 	|P_macro_marker_repeat_state_entity_key
 	|P_macro_markers_list_entity_key
+	|P_offlineability_entity_key
 	|P_player_state_entity_key
 	|P_playlist_loop_state_entity_key
+	|P_repeat_state_entity_key
 	|P_subscribe_button_entity_key
 	|P_transcript_track_selection_entity_key
 	|P_view_count_entity_key
@@ -766,13 +780,6 @@ type P_ypc_get_offline_upsell_params={
 };
 type P_video_params={
 	1: T_D32<1>;
-};
-type P_offlineability_entity_key={
-	2: T_VW_J<{
-		1: TV_Str<DU_VideoId>;
-	}>,
-	4: T_D32<246>,
-	5: T_D32<1>;
 };
 type P_watch_next_info_next1_obj1={
 	2: TV_Str<"lungs9N_6q5KHQHi">;

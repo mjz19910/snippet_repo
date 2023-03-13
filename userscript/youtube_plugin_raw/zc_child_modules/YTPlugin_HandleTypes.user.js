@@ -29,7 +29,7 @@ function init_module() {
 	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 	// [new_fexp_expected]
 	ECatcherService.known_experiments.push(...[
-		[],
+		[24489232,24491070],
 	].flat());
 }
 export_((exports) => {exports.init_module=init_module;});
@@ -3163,6 +3163,8 @@ class HandleTypes extends BaseService {
 			case "subscribe_button.entity.key": this.P_EntityKey("P_subscribe_button_entity_key",u); break;
 			case "transcript_track_selection.entity.key": this.P_EntityKey("P_transcript_track_selection_entity_key",u); break;
 			case "view_count.entity.key": this.P_EntityKey("P_view_count_entity_key",u); break;
+			case "offlineability.entity_key": this.P_EntityKey("P_offlineability_entity_key",u); break;
+			case "repeat_state.entity_key": this.P_EntityKey("P_repeat_state_entity_key",u); break;
 			//#endregion
 			//#region done2
 			case "ad_layout.ad_serving_data_entry": this.P_ad_layout_ad_serving_data_entry(u); break;
@@ -3219,7 +3221,6 @@ class HandleTypes extends BaseService {
 			//#endregion
 			case "ypc_get_offline_upsell.params": this.P_ypc_get_offline_upsell_params(u); break;
 			case "video.params": this.P_video_params(u); break;
-			case "offlineability.entity_key": this.P_offlineability_entity_key(u); break;
 			case "watch_next_info_next1": this.P_watch_next_info_next1(u); break;
 			default: {
 				if(this._continuation_logged_str.includes(cf)) break;
@@ -3232,8 +3233,6 @@ class HandleTypes extends BaseService {
 	P_ypc_get_offline_upsell_params(x) {x;}
 	/** @private @arg {P_video_params} x */
 	P_video_params(x) {x;}
-	/** @private @arg {P_offlineability_entity_key} x */
-	P_offlineability_entity_key(x) {x;}
 	/** @private @arg {P_watch_next_info_next1} x */
 	P_watch_next_info_next1(x) {x;}
 	//#endregion
