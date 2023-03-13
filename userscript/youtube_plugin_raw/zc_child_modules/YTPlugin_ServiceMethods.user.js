@@ -291,9 +291,13 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {E_PlaylistDelete} x */
 	E_PlaylistDelete(x) {const [y]=this.TE_Endpoint_3_v2("deletePlaylistEndpoint",x,this.M_PlaylistDelete,this.DE_PlaylistDelete); this.g(y);}
 	/** @public @arg {E_AddUpcomingEventReminder} x */
-	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_AddUpcomingEventReminder,x => {this.D_Params("DE_AddUpcomingEventReminder","notification_add_upcoming_event_reminder.params",x);}); this.g(y);}
+	E_AddUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("addUpcomingEventReminderEndpoint",x,this.M_AddUpcomingEventReminder,this.DE_AddUpcomingEventReminder); this.g(y);}
+	/** @private @arg {DC_Params} x */
+	DE_AddUpcomingEventReminder(x) {this.D_Params("DE_AddUpcomingEventReminder","notification_add_upcoming_event_reminder.params",x);}
 	/** @public @arg {E_RemoveUpcomingEventReminder} x */
-	E_RemoveUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("removeUpcomingEventReminderEndpoint",x,this.M_RemoveUpcomingEventReminder,x => {this.D_Params("DE_RemoveUpcomingEventReminder","notification_remove_upcoming_event_reminder.params",x);}); this.g(y);}
+	E_RemoveUpcomingEventReminder(x) {const [y]=this.TE_Endpoint_3_v2("removeUpcomingEventReminderEndpoint",x,this.M_RemoveUpcomingEventReminder,this.DE_RemoveUpcomingEventReminder); this.g(y);}
+	/** @private @arg {DC_Params} x */
+	DE_RemoveUpcomingEventReminder(x) {this.D_Params("DE_RemoveUpcomingEventReminder","notification_remove_upcoming_event_reminder.params",x);}
 	/** @public @arg {DE_PlaylistDelete} x */
 	DE_PlaylistDelete(x) {x;}
 	/** @private @arg {string} x */
@@ -3944,10 +3948,192 @@ class ServiceMethods extends ServiceData {
 		this.t(extraShortViewCount,this.G_Text);
 		this.t(isLive,this.a_primitive_bool);
 	}
+	/** @public @arg {E_YpcGetCart} x */
+	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
+	/** @private @arg {M_YpcGetCart} x */
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {GM_YpcGetCart} x */
+	GM_YpcGetCart(x) {this.sm.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_cart"));}
+	/** @private @arg {DE_YpcGetCart} x */
+	DE_YpcGetCart(x) {this.sm.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
+	/** @public @arg {E_ApplicationSettings} x */
+	E_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.B_Hack); this.g(y);}
+	/** @private @arg {M_VE12924} x */
+	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
+	/** @private @arg {GM_VE12924} x */
+	GM_VE12924(x) {
+		const cf="GM_VE12924";
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
+		this.sm.cq(url,"/select_site");
+		this.sm.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,12924);
+	}
+	/** @public @arg {E_SubmitFeedback} x */
+	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
+	/** @private @arg {DE_SubmitFeedback} x */
+	DE_SubmitFeedback(x) {this.sm.cq(this.sm.T_Signal("DE_SubmitFeedback",x),"SUBMIT_FEEDBACK");}
 	/** @private @arg {E_UpdatedMetadata} x */
 	E_UpdatedMetadata(x) {const [y]=this.TE_Endpoint_3_v2("updatedMetadataEndpoint",x,this.M_UpdatedMetadata,this.D_VideoId); this.g(y);}
 	/** @private @arg {M_UpdatedMetadata} x */
 	M_UpdatedMetadata(x) {this.T_WCM("M_UpdatedMetadata",x,(x,cf) => this.T_GM(cf,x,x => this.cq(x,"/youtubei/v1/updated_metadata")));}
+	/** @public @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
+	/** @private @arg {M_PerformCommentAction} x */
+	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
+	/** @private @arg {GM_PerformCommentAction} x */
+	GM_PerformCommentAction(x) {this.sm.T_GM("GM_PerformCommentAction",x,x => this.sm.cq(x,"/youtubei/v1/comment/perform_comment_action"));}
+	/** @private @arg {DE_PerformCommentAction} x */
+	DE_PerformCommentAction(x) {
+		const cf="DE_PerformCommentAction";
+		const {action,clientActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.params("perform_comment.action",action);
+		this.z(clientActions,this.A_UpdateCommentVote);
+	}
+	/** @private @arg {A_UpdateCommentVote} x */
+	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
+	/** @private @arg {AD_UpdateCommentVote} x */
+	AD_UpdateCommentVote(x) {
+		const cf="AD_UpdateCommentVote";
+		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.t(voteCount,this.sm.G_Text);
+		this.save_primitive(`${cf}.voteStatus`,voteStatus);
+		switch(voteStatus) {
+			case "LIKE":
+		}
+	}
+	/** @public @arg {E_CreateCommentReplyDialog} x */
+	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
+	/** @private @arg {M_CreateCommentReplyDialog} x */
+	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
+	/** @private @arg {GM_CreateCommentReplyDialog} x */
+	GM_CreateCommentReplyDialog(x) {this.D_IgnoreNavigation(x);}
+	/** @private @arg {D_IgnoreNavigation} x */
+	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.cq(x,true));}
+	/** @private @arg {DE_CreateCommentReplyDialog} x */
+	DE_CreateCommentReplyDialog(x) {
+		const cf="DE_CreateCommentReplyDialog";
+		const {dialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_CommentReplyDialog(dialog);
+	}
+	/** @private @arg {R_CommentReplyDialog} x */
+	R_CommentReplyDialog(x) {this.H_("commentReplyDialogRenderer",x,this.D_CommentReplyDialog);}
+	/** @private @arg {D_CommentReplyDialog} x */
+	D_CommentReplyDialog(x) {
+		const cf="D_CommentReplyDialog";
+		const {replyButton,cancelButton,authorThumbnail,editableText,placeholderText,errorMessage,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.xm.R_Button(replyButton);
+		this.xm.R_Button(cancelButton);
+		this.sm.D_Thumbnail(authorThumbnail);
+		this.sm.t(editableText,this.sm.G_Text);
+		this.sm.G_Text(placeholderText);
+		this.sm.G_Text(errorMessage);
+		this.xm.R_Button(emojiButton);
+		this.R_EmojiPicker(emojiPicker);
+		this.sm.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
+	}
+	/** @public @arg {R_EmojiPicker} x */
+	R_EmojiPicker(x) {this.H_("emojiPickerRenderer",x,this.D_EmojiPicker);}
+	/** @private @arg {D_EmojiPicker} x */
+	D_EmojiPicker(x) {
+		const cf="D_EmojiPicker";
+		const {id,categories,categoryButtons,searchPlaceholderText,searchNoResultsText,pickSkinToneText,trackingParams,clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel,...y}=this.s(cf,x); this.g(y);
+		if(id!=="emoji") debugger;
+		this.z(categories,x => {
+			if("emojiPickerCategoryRenderer" in x) return this.R_EmojiPickerCategory(x);
+			x.emojiPickerUpsellCategoryRenderer;
+		});
+		this.z(categoryButtons,this.R_EmojiPickerCategoryButton);
+		this.sm.G_Text(searchPlaceholderText);
+		this.sm.G_Text(searchNoResultsText);
+		this.sm.G_Text(pickSkinToneText);
+		this.z([clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel],x => this.sm.a_primitive_str(x));
+	}
+	/** @private @arg {R_EmojiPickerCategoryButton} x */
+	R_EmojiPickerCategoryButton(x) {this.H_("emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
+	/** @private @arg {D_EmojiPickerCategoryButton} x */
+	D_EmojiPickerCategoryButton(x) {
+		if("targetId" in x) {
+			const cf="D_EmojiPickerCategoryButton:targetId";
+			const {categoryId,icon,tooltip,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
+			switch(categoryId) {
+				default: debugger; break;
+				case "people":
+			}
+			this.sm.T_Icon(`${cf}:icon`,icon);
+			if(tooltip!=="People") debugger;
+			this.sm.D_Accessibility(accessibility);
+			if(targetId!=="emoji-picker-category-button-people") debugger;
+			return;
+		}
+		if(this.is_D_EmojiPickerCategoryButton_ForChannel(x)) {
+			const cf="D_EmojiPickerCategoryButton:ForChannel";
+			const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+			this.sm.channelId(categoryId);
+			this.sm.T_Icon(`${cf}:icon`,icon);
+			switch(tooltip) {
+				default: debugger; break;
+				case "Custom emoji":
+				case "YouTube":
+			}
+			this.sm.D_Accessibility(accessibility);
+			return;
+		}
+		const cf="D_EmojiPickerCategoryButton";
+		const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.sm.T_Icon(`${cf}:icon`,icon);
+		switch(tooltip) {
+			default: debugger; break;
+			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
+		}
+		this.sm.D_Accessibility(accessibility);
+	}
+	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: T_IdTemplate<"UC",D_UserIdStr>}} */
+	is_D_EmojiPickerCategoryButton_ForChannel(x) {return this.sm.str_starts_with(x.categoryId,"UC");}
+	/** @private @arg {R_EmojiPickerCategory} x */
+	R_EmojiPickerCategory(x) {this.H_("emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
+	/** @private @arg {D_EmojiPickerCategory} x */
+	D_EmojiPickerCategory(x) {
+		if(x.categoryType==="CATEGORY_TYPE_GLOBAL") {
+			const cf="D_EmojiPickerCategory:Global";
+			const {categoryId,title,emojiIds,trackingParams,categoryType,...y}=this.s(cf,x); this.g(y);
+			if(!this.sm.str_starts_with(categoryId,"UC")) debugger;
+			this.sm.G_Text(title);
+			this.z(emojiIds,x => {
+				let [channel_id,parsed_emoji]=this.sm.parse_emoji_id(x);
+				this.sm.channelId(channel_id);
+				this.save_primitive(`${categoryId}.emojiId`,parsed_emoji);
+			});
+			this.sm.channelId(categoryId);
+			this.sm.trackingParams(trackingParams);
+			return;
+		}
+		const cf="D_EmojiPickerCategory";
+		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "people": case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.sm.G_Text(title);
+		this.z(emojiIds,x => {
+			this.save_primitive(`${categoryId}.emojiId`,x);
+		});
+		this.sm.trackingParams(trackingParams);
+		if(imageLoadingLazy!==true) debugger;
+		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
+	}
+	/** @public @arg {E_CreateCommentReply} x */
+	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
+	/** @private @arg {M_CreateCommentReply} x */
+	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
+	/** @private @arg {GM_CreateCommentReply} x */
+	GM_CreateCommentReply(x) {this.sm.T_GM("GM_CreateCommentReply",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment_reply"));}
+	/** @private @arg {DE_CreateCommentReply} x */
+	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.sm.params("create_reply.params",x));}
 	/** @private @arg {D_VideoId} x */
 	D_VideoId(x) {this.y("D_VideoId","videoId",x,this.videoId);}
 	/** @public @arg {R_VideoOwner} x */
@@ -4679,7 +4865,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);
-		this.t(emojiPicker,x => this.xr.R_EmojiPicker(x));
+		this.t(emojiPicker,this.R_EmojiPicker);
 		this.trackingParams(trackingParams);
 		this.xm.R_Button(emojiButton);
 	}
