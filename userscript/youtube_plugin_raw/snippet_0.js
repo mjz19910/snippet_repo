@@ -146,11 +146,6 @@ export class Snippet_0_tmp {
 	}
 	/** @public @template {{}} T @arg {{commands:T[]}} x @arg {(x:T)=>void} f */
 	CommandsTemplate(x,f) {this.z(x.commands,f);}
-	/** @public @template T @arg {T|undefined} val @returns {T} */
-	non_null(val) {
-		if(val===void 0) throw new Error();
-		return val;
-	}
 	/** @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=this.as(to_remove.slice());

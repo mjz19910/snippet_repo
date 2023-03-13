@@ -128,16 +128,7 @@ function require(arg) {
 	correct_return_type(mod);
 	return mod;
 }
-
-/** @template T @arg {T|null} x @returns {T} */
-function non_null(x) {
-	if(x===null) {throw new Error("null not expected");}
-	return x;
-}
-export_(exports => {
-	exports.non_null=non_null;
-	exports.require=require;
-},{global: true});
+export_(exports => exports.require=require,{global: true});
 export_(exports => {
 	exports.get_exports=get_exports;
 	exports.do_export=do_export;

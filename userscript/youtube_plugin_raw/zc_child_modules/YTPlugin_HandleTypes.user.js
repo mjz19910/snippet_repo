@@ -3777,7 +3777,14 @@ class HandleTypes extends BaseService {
 			default: debugger; break;
 			case "video_click_to_advertiser_site": break;
 		}
-		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,ctype,ms);
+		let po=this._convert_url_to_obj(adurl);
+		switch(po.hostname) {
+			default: debugger; break;
+			case "www.xometry.com": {
+				console.log("adurl.search",po.search);
+			} break;
+		};
+		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,ctype,ms);
 	}
 	/** @private @arg {D_InstreamAdPlayerOverlay} x */
 	D_InstreamAdPlayerOverlay(x) {
