@@ -324,7 +324,7 @@ type G_GV_1=
 	|`d${Exclude<G_GV_11,"7"|"e"|"k">|" "}`
 	|`e${Exclude<G_GV_11,"d"|"r">|" "}`
 	|`k${Extract<G_GV_11,"6"|"d">|" "}`
-	|`l${Exclude<G_GV_11,"z">|" "}`
+	|`l${G_GV_11}`
 	|`r${Extract<G_GV_11,"6"|"l"|"r">|" "}`
 	|`s${G_GV_11}`
 	|`z${Exclude<G_GV_11,"l">|" "}`
