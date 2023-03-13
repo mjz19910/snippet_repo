@@ -598,6 +598,19 @@ type P_ve_6827_params_f1_f2={
 	1: TV_Str<DU_VideoId>;
 	2: TV_Str<DU_VideoId>;
 	3: TV_Str<DU_VideoId>;
+	4?: T_VW_J<{
+		1: T_D32<82000>,
+		2: T_VW_J<{
+			1: T_D32<8>,
+			2: T_D32<500000000>
+		}>
+	}>,
+	5?: T_VW_J<{
+		2: T_VW_J<{
+			1: T_D32<8>,
+			2: T_D32<500000000>
+		}>
+	}>
 };
 type P_ve_6827_params_f1={2: T_VW<P_ve_6827_params_f1_f2>;};
 type P_ve_6827_params_f94={

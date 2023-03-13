@@ -30,6 +30,7 @@ function init_module() {
 	// [new_fexp_expected]
 	ECatcherService.known_experiments.push(...[
 		[24489232,24491070],
+		[24412855],
 	].flat());
 }
 export_((exports) => {exports.init_module=init_module;});
@@ -2832,10 +2833,12 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_ve_6827_params_f1_f2} x */
 	P_ve_6827_params_f1_f2(x) {
 		const cf="P_ve_6827_params_f1_f2";
-		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
+		const {1: f1,2: f2,3: f3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(f1));
 		this.sm.videoId(this.TV_Str(f2));
 		this.sm.videoId(this.TV_Str(f3));
+		f4&&console.log(this.TV_Str(f4));
+		f5&&console.log(this.TV_Str(f5));
 	}
 	/** @private @arg {P_ve_6827_params_f93} x */
 	P_ve_6827_params_f93(x) {
