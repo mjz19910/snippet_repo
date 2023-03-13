@@ -300,6 +300,111 @@ class ServiceMethods extends ServiceData {
 	DE_RemoveUpcomingEventReminder(x) {this.D_Params("DE_RemoveUpcomingEventReminder","notification_remove_upcoming_event_reminder.params",x);}
 	/** @public @arg {DE_PlaylistDelete} x */
 	DE_PlaylistDelete(x) {x;}
+	/** @public @arg {E_RecordNotificationInteractions} x */
+	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
+	/** @private @arg {M_RecordInteractions} x */
+	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
+	/** @public @arg {E_CreatePlaylistService} x */
+	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
+	/** @private @arg {E_NotificationOptOut} x */
+	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
+	/** @public @arg {E_UserFeedback} x */
+	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UserFeedback","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
+	/** @private @arg {E_GetReportForm} x */
+	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
+	/** @private @arg {E_UndoFeedback} x */
+	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
+	/** @public @arg {E_YpcGetOfflineUpsell} x */
+	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
+	/** @private @arg {E_GetNotificationMenu} x */
+	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
+	/** @private @arg {E_GetTranscript} x */
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
+	/** @public @arg {E_PlaylistEditor} x */
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
+	/** @private @arg {DE_UndoFeedback} x */
+	DE_UndoFeedback(x) {
+		const cf="DE_UndoFeedback";
+		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.parse_undo_token(undoToken);
+		this.z(actions,this.A_UndoFeedback);
+	}
+	/** @public @arg {E_YpcGetCart} x */
+	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
+	/** @private @arg {M_YpcGetCart} x */
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {GM_YpcGetCart} x */
+	GM_YpcGetCart(x) {this.sm.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_cart"));}
+	/** @private @arg {DE_YpcGetCart} x */
+	DE_YpcGetCart(x) {this.sm.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
+	/** @public @arg {E_ApplicationSettings} x */
+	E_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.B_Hack); this.g(y);}
+	/** @private @arg {M_VE12924} x */
+	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
+	/** @private @arg {GM_VE12924} x */
+	GM_VE12924(x) {
+		const cf="GM_VE12924";
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
+		this.sm.cq(url,"/select_site");
+		this.sm.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
+		this.sm.rootVe(rootVe);
+		this.cq(rootVe,12924);
+	}
+	/** @public @arg {E_SubmitFeedback} x */
+	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
+	/** @private @arg {DE_SubmitFeedback} x */
+	DE_SubmitFeedback(x) {this.sm.cq(this.sm.T_Signal("DE_SubmitFeedback",x),"SUBMIT_FEEDBACK");}
+	/** @private @arg {E_UpdatedMetadata} x */
+	E_UpdatedMetadata(x) {const [y]=this.TE_Endpoint_3_v2("updatedMetadataEndpoint",x,this.M_UpdatedMetadata,this.D_VideoId); this.g(y);}
+	/** @private @arg {M_UpdatedMetadata} x */
+	M_UpdatedMetadata(x) {this.T_WCM("M_UpdatedMetadata",x,(x,cf) => this.T_GM(cf,x,x => this.cq(x,"/youtubei/v1/updated_metadata")));}
+	/** @public @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
+	/** @private @arg {M_PerformCommentAction} x */
+	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
+	/** @private @arg {GM_PerformCommentAction} x */
+	GM_PerformCommentAction(x) {this.sm.T_GM("GM_PerformCommentAction",x,x => this.sm.cq(x,"/youtubei/v1/comment/perform_comment_action"));}
+	/** @private @arg {DE_PerformCommentAction} x */
+	DE_PerformCommentAction(x) {
+		const cf="DE_PerformCommentAction";
+		const {action,clientActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.params("perform_comment.action",action);
+		this.z(clientActions,this.A_UpdateCommentVote);
+	}
+	/** @private @arg {A_UpdateCommentVote} x */
+	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
+	/** @private @arg {AD_UpdateCommentVote} x */
+	AD_UpdateCommentVote(x) {
+		const cf="AD_UpdateCommentVote";
+		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.sm.t(voteCount,this.sm.G_Text);
+		this.save_primitive(`${cf}.voteStatus`,voteStatus);
+		switch(voteStatus) {
+			case "LIKE":
+		}
+	}
+	/** @public @arg {E_CreateCommentReplyDialog} x */
+	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
+	/** @private @arg {M_CreateCommentReplyDialog} x */
+	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
+	/** @private @arg {GM_CreateCommentReplyDialog} x */
+	GM_CreateCommentReplyDialog(x) {this.D_IgnoreNavigation(x);}
+	/** @private @arg {D_IgnoreNavigation} x */
+	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.cq(x,true));}
+	/** @public @arg {E_CreateCommentReply} x */
+	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
+	/** @private @arg {M_CreateCommentReply} x */
+	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
+	/** @private @arg {GM_CreateCommentReply} x */
+	GM_CreateCommentReply(x) {this.sm.T_GM("GM_CreateCommentReply",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment_reply"));}
+	/** @private @arg {DE_CreateCommentReply} x */
+	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.sm.params("create_reply.params",x));}
+	/** @private @arg {DE_CreateCommentReplyDialog} x */
+	DE_CreateCommentReplyDialog(x) {
+		const cf="DE_CreateCommentReplyDialog";
+		const {dialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_CommentReplyDialog(dialog);
+	}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
 		let token_str=atob(x);
@@ -2368,10 +2473,6 @@ class ServiceMethods extends ServiceData {
 		this.params("notification.record_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
-	/** @public @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
-	/** @private @arg {M_RecordInteractions} x */
-	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {RD_MenuServiceItem["serviceEndpoint"]} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
 		const cf="RD_MenuServiceItem_serviceEndpoint";
@@ -2432,14 +2533,6 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.D_Accessibility(accessibilityData);
 	}
-	/** @public @arg {E_CreatePlaylistService} x */
-	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
-	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
-	/** @public @arg {E_UserFeedback} x */
-	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UserFeedback","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
-	/** @private @arg {E_GetReportForm} x */
-	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
 	/** @private @arg {C_FilterChipTransform} x */
 	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
 	/** @private @arg {A_ReplaceEnclosing} x */
@@ -2520,23 +2613,6 @@ class ServiceMethods extends ServiceData {
 				this.videoId(d.value);
 			} break;
 		}
-	}
-	/** @private @arg {E_UndoFeedback} x */
-	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
-	/** @public @arg {E_YpcGetOfflineUpsell} x */
-	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
-	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
-	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
-	/** @public @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
-	/** @private @arg {DE_UndoFeedback} x */
-	DE_UndoFeedback(x) {
-		const cf="DE_UndoFeedback";
-		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parse_undo_token(undoToken);
-		this.z(actions,this.A_UndoFeedback);
 	}
 	/** @public @arg {string} cf @arg {string} x */
 	save_b64_binary(cf,x) {
@@ -3948,74 +4024,6 @@ class ServiceMethods extends ServiceData {
 		this.t(extraShortViewCount,this.G_Text);
 		this.t(isLive,this.a_primitive_bool);
 	}
-	/** @public @arg {E_YpcGetCart} x */
-	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {GM_YpcGetCart} x */
-	GM_YpcGetCart(x) {this.sm.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_cart"));}
-	/** @private @arg {DE_YpcGetCart} x */
-	DE_YpcGetCart(x) {this.sm.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
-	/** @public @arg {E_ApplicationSettings} x */
-	E_ApplicationSettings(x) {const [y]=this.TE_Endpoint_3_v2("applicationSettingsEndpoint",x,this.M_ApplicationSettings,this.B_Hack); this.g(y);}
-	/** @private @arg {M_VE12924} x */
-	M_ApplicationSettings(x) {this.T_WCM("M_VE12924",x,this.GM_VE12924);}
-	/** @private @arg {GM_VE12924} x */
-	GM_VE12924(x) {
-		const cf="GM_VE12924";
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);
-		this.sm.cq(url,"/select_site");
-		this.sm.cq(webPageType,"WEB_PAGE_TYPE_SETTINGS");
-		this.sm.rootVe(rootVe);
-		this.cq(rootVe,12924);
-	}
-	/** @public @arg {E_SubmitFeedback} x */
-	E_SubmitFeedback(x) {const [y]=this.TE_Endpoint_3_v2("signalServiceEndpoint",x,this.M_Feedback,this.DE_SubmitFeedback); this.g(y);}
-	/** @private @arg {DE_SubmitFeedback} x */
-	DE_SubmitFeedback(x) {this.sm.cq(this.sm.T_Signal("DE_SubmitFeedback",x),"SUBMIT_FEEDBACK");}
-	/** @private @arg {E_UpdatedMetadata} x */
-	E_UpdatedMetadata(x) {const [y]=this.TE_Endpoint_3_v2("updatedMetadataEndpoint",x,this.M_UpdatedMetadata,this.D_VideoId); this.g(y);}
-	/** @private @arg {M_UpdatedMetadata} x */
-	M_UpdatedMetadata(x) {this.T_WCM("M_UpdatedMetadata",x,(x,cf) => this.T_GM(cf,x,x => this.cq(x,"/youtubei/v1/updated_metadata")));}
-	/** @public @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {this.TE_Endpoint_3_v2("performCommentActionEndpoint",x,this.M_PerformCommentAction,this.DE_PerformCommentAction);}
-	/** @private @arg {M_PerformCommentAction} x */
-	M_PerformCommentAction(x) {this.T_WCM("M_PerformCommentAction",x,this.GM_PerformCommentAction);}
-	/** @private @arg {GM_PerformCommentAction} x */
-	GM_PerformCommentAction(x) {this.sm.T_GM("GM_PerformCommentAction",x,x => this.sm.cq(x,"/youtubei/v1/comment/perform_comment_action"));}
-	/** @private @arg {DE_PerformCommentAction} x */
-	DE_PerformCommentAction(x) {
-		const cf="DE_PerformCommentAction";
-		const {action,clientActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.params("perform_comment.action",action);
-		this.z(clientActions,this.A_UpdateCommentVote);
-	}
-	/** @private @arg {A_UpdateCommentVote} x */
-	A_UpdateCommentVote(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateCommentVote","updateCommentVoteAction",x); this.g(y); this.AD_UpdateCommentVote(a);}
-	/** @private @arg {AD_UpdateCommentVote} x */
-	AD_UpdateCommentVote(x) {
-		const cf="AD_UpdateCommentVote";
-		const {voteCount,voteStatus,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.t(voteCount,this.sm.G_Text);
-		this.save_primitive(`${cf}.voteStatus`,voteStatus);
-		switch(voteStatus) {
-			case "LIKE":
-		}
-	}
-	/** @public @arg {E_CreateCommentReplyDialog} x */
-	E_CreateCommentReplyDialog(x) {this.TE_Endpoint_3_v2("createCommentReplyDialogEndpoint",x,this.M_CreateCommentReplyDialog,this.DE_CreateCommentReplyDialog);}
-	/** @private @arg {M_CreateCommentReplyDialog} x */
-	M_CreateCommentReplyDialog(x) {this.T_WCM("M_CreateCommentReplyDialog",x,this.GM_CreateCommentReplyDialog);}
-	/** @private @arg {GM_CreateCommentReplyDialog} x */
-	GM_CreateCommentReplyDialog(x) {this.D_IgnoreNavigation(x);}
-	/** @private @arg {D_IgnoreNavigation} x */
-	D_IgnoreNavigation(x) {this.y("D_IgnoreNavigation","ignoreNavigation",x,x => this.cq(x,true));}
-	/** @private @arg {DE_CreateCommentReplyDialog} x */
-	DE_CreateCommentReplyDialog(x) {
-		const cf="DE_CreateCommentReplyDialog";
-		const {dialog,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_CommentReplyDialog(dialog);
-	}
 	/** @private @arg {R_CommentReplyDialog} x */
 	R_CommentReplyDialog(x) {this.H_("commentReplyDialogRenderer",x,this.D_CommentReplyDialog);}
 	/** @private @arg {D_CommentReplyDialog} x */
@@ -4126,14 +4134,6 @@ class ServiceMethods extends ServiceData {
 		if(imageLoadingLazy!==true) debugger;
 		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
 	}
-	/** @public @arg {E_CreateCommentReply} x */
-	E_CreateCommentReply(x) {this.TE_Endpoint_3_v2("createCommentReplyEndpoint",x,this.M_CreateCommentReply,this.DE_CreateCommentReply);}
-	/** @private @arg {M_CreateCommentReply} x */
-	M_CreateCommentReply(x) {this.T_WCM("M_CreateCommentReply",x,this.GM_CreateCommentReply);}
-	/** @private @arg {GM_CreateCommentReply} x */
-	GM_CreateCommentReply(x) {this.sm.T_GM("GM_CreateCommentReply",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment_reply"));}
-	/** @private @arg {DE_CreateCommentReply} x */
-	DE_CreateCommentReply(x) {this.y("DE_CreateCommentReply","createReplyParams",x,x => this.sm.params("create_reply.params",x));}
 	/** @private @arg {D_VideoId} x */
 	D_VideoId(x) {this.y("D_VideoId","videoId",x,this.videoId);}
 	/** @public @arg {R_VideoOwner} x */
