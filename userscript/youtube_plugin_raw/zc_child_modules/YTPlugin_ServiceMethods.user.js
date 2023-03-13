@@ -209,12 +209,6 @@ class ServiceMethods extends ServiceData {
 			}
 		});
 	}
-	/** @public @arg {DE_AddToPlaylistService} x */
-	DE_AddToPlaylistService(x) {
-		const cf="DE_AddToPlaylistService";
-		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.videoId(videoId);
-	}
 	/** @public @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @public @arg {E_PlaylistDelete} x */
@@ -293,8 +287,22 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
+	/** @public @arg {DE_AddToPlaylistService} x */
+	DE_AddToPlaylistService(x) {
+		const cf="DE_AddToPlaylistService";
+		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.videoId(videoId);
+	}
 	/** @public @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
+	/** @private @arg {DE_Feedback} x */
+	DE_Feedback(x) {
+		const cf="DE_Feedback";
+		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
+		this.save_b64_binary("DE_Feedback.feedbackToken",feedbackToken);
+		this.t(uiActions,this.D_HideEnclosingContainer);
+		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
+	}
 	/** @public @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_Search(a); this.DE_Search(b);}
 	/** @private @arg {DE_Search} x */
@@ -2721,14 +2729,6 @@ class ServiceMethods extends ServiceData {
 		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
 		if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
 		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {DE_Feedback} x */
-	DE_Feedback(x) {
-		const cf="DE_Feedback";
-		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
-		this.save_b64_binary("DE_Feedback.feedbackToken",feedbackToken);
-		this.t(uiActions,this.D_HideEnclosingContainer);
-		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
 	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
