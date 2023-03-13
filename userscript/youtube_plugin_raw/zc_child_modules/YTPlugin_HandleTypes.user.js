@@ -2967,8 +2967,9 @@ class HandleTypes extends BaseService {
 		const cf="PR_grf_p_obj0";
 		let {1: v1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.PR_grf_p_obj1(this.T_VW(v1));
-		console.log(`${cf}.f3`,this.TV_Str(f3));
+		if(this.log_store_items) console.log(`${cf}.f3`,this.TV_Str(f3));
 	}
+	log_store_items=false;
 	/** @private @arg {PR_grf_p_obj1} x */
 	PR_grf_p_obj1(x) {
 		const cf="PR_grf_p_obj1";
@@ -2978,7 +2979,7 @@ class HandleTypes extends BaseService {
 			let ret_str=this.PD_grf_p_obj1(vi[2]);
 			store_item_arr.push(ret_str);
 		}
-		console.log("[store_item_data] \"%s\"",store_item_arr.join(""));
+		if(this.log_store_items) console.log("[store_item_data] \"%s\"",store_item_arr.join(""));
 	}
 	/** @private @arg {PD_grf_p_obj1} x */
 	PD_grf_p_obj1(x) {
