@@ -561,7 +561,7 @@ class ServiceMethods extends ServiceData {
 		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.cq(repeat,"REPEAT_CHAPTER_TYPE_ENABLE_REPEAT");
 		this.cq(startTimeMs,"0");
-		this.cq(endTimeMs,"60000");
+		this.save_primitive(`${cf}.endTimeMs`,this.parse_number_template(endTimeMs));
 		this.params("repeat_state.entity_key",repeatStateEntityKey);
 	}
 	/** @private @arg {C_UpdateToggleButtonState} x */

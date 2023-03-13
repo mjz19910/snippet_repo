@@ -7,7 +7,7 @@ type DC_ChangeKeyedMarkersVisibility={key: "HEATSEEKER"; isVisible: true;};
 type DC_RepeatChapter={
 	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT";
 	startTimeMs: "0";
-	endTimeMs: "60000";
+	endTimeMs: `${number}`;
 	repeatStateEntityKey: string;
 };
 type DC_ReloadContinuationItems={
