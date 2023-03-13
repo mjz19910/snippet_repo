@@ -57,10 +57,5 @@ type MG_AdLayout=
 	|MG_AdLayout_DisplaySquareImage
 	;
 ;
-type MP_NotificationsMenu={
-	trackingParams: string;
-	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
-	showLoadingSpinner: true;
-};
 
 //#endregion

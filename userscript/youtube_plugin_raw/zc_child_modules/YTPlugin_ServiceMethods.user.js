@@ -4893,7 +4893,7 @@ class ServiceMethods extends ServiceData {
 	R_AccountMenu(x) {return this.TR_MultiPageMenu("R_AccountMenu",x);}
 	/** @public @arg {A_GetAccountMenu} x */
 	A_GetAccountMenu(x) {return this.xm.TA_OpenPopup("A_GetAccountMenu",x);}
-	/** @public @arg {MP_AccountMenu} x */
+	/** @public @arg {MP_LoadingAccountMenu} x */
 	MP_AccountMenu(x) {
 		const cf="MP_AccountMenu";
 		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -4937,7 +4937,7 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(tooltip);
 		return y;
 	}
-	/** @public @arg {MP_GetNotificationMenu} x */
+	/** @public @arg {MP_LoadingNotificationMenu} x */
 	MP_GetNotificationMenu(x) {
 		const cf="MP_GetNotificationMenu";
 		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -4950,14 +4950,14 @@ class ServiceMethods extends ServiceData {
 		const cf="Signal_GetNotificationsMenu";
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
-		/** @type {[(A_GetNotificationsMenu["openPopupAction"])[], never[]]} */
+		/** @type {[(A_LoadingNotificationsMenu["openPopupAction"])[], never[]]} */
 		let [u]=this.z(actions,x => this.xm.TA_OpenPopup("G_Action_GetNotificationsMenu",x));
 		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
-		/** @type {[MP_GetNotificationMenu[], never[]]} */
+		/** @type {[MP_LoadingNotificationMenu[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.MP_GetNotificationMenu);
 	}
-	/** @public @arg {Popup_DD_GetNotificationsMenu} x */
+	/** @public @arg {Popup_DD_LoadingNotificationsMenu} x */
 	G_Action_GetNotificationsMenu_Popup(x) {
 		const cf="G_Action_GetNotificationsMenu_Popup";
 		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

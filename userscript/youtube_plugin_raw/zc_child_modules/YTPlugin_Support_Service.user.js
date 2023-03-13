@@ -3960,7 +3960,7 @@ class ForService_XMethods extends BaseService {
 						} break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": {
 							if("header" in a_menu) {this.ht.MP_NotificationMenu(a_menu); break;}
-							this.sm.MP_GetNotificationMenu(a_menu);
+							this.sm.MP_GetNotificationMenu(a_menu); this.MP_NotificationsMenu(a_menu);
 						} break;
 						case "MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM": break;
 					}

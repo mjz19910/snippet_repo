@@ -31,7 +31,7 @@ type A_ClientSignal=TA_OpenPopup<Popup_ClientSignal>;
 type A_ConfirmDialog=TA_OpenPopup<Popup_DL_ConfirmDialog>;
 type A_FancyDismissibleDialog=TA_OpenPopup<Popup_DL_DismissibleDialog>;
 type A_GetAccountMenu=TA_OpenPopup<Popup_DD_GetAccountMenu>;
-type A_GetNotificationsMenu=TA_OpenPopup<Popup_DD_GetNotificationsMenu>;
+type A_LoadingNotificationsMenu=TA_OpenPopup<Popup_DD_LoadingNotificationsMenu>;
 type A_GetSystemMenu=TA_OpenPopup<Popup_DD_SystemMenu>;
 type A_NotificationMenuPopup=TA_OpenPopup<Popup_DD_NotificationMenu>;
 type A_NotificationToast=TA_OpenPopup<Popup_TT_NotificationToast>;
@@ -43,8 +43,8 @@ type G_OpenPopup_All=
 	|A_ConfirmDialog
 	|A_FancyDismissibleDialog
 	|A_GetAccountMenu
-	|A_GetNotificationsMenu
 	|A_GetSystemMenu
+	|A_LoadingNotificationsMenu
 	|A_NotificationMenuPopup
 	|A_NotificationToast
 	|A_PdgBuyFlow
@@ -61,10 +61,9 @@ type Popup_ClientSignal=
 	;
 ;
 type Popup_DD_GetAccountMenu=T_OpenPopup_Dropdown<R_AccountMenu>;
-type Popup_DD_GetNotificationsMenu=T_OpenPopup_Dropdown<R_GetNotificationsMenu>;
+type Popup_DD_LoadingNotificationsMenu=T_OpenPopup_Dropdown<R_LoadingNotificationsMenu>;
 type Popup_DD_MenuPopup=T_OpenPopup_Dropdown<R_MenuPopup>;
 type Popup_DD_NotificationMenu=T_OpenPopup_Dropdown<R_NotificationMenu>;
-type Popup_DD_NotificationsMenu=T_OpenPopup_Dropdown<R_NotificationsMenu>;
 type Popup_DD_SystemMenu=T_OpenPopup_Dropdown<R_SystemMenu>;
 type Popup_DL_AboutThisAd=T_OpenPopup_Dialog<R_AboutThisAd>;
 type Popup_DL_ConfirmDialog=T_OpenPopup_Dialog<R_ConfirmDialog>;
@@ -76,10 +75,9 @@ type Popup_TT_NotificationToast=T_OpenPopup_Toast<RA_Notification>;
 // {popup:TR_MultiPageMenu<MP_AccountMenu|MP_NotificationsMenu>;popupType:"DROPDOWN";}
 type G_Popup_All=
 	|Popup_DD_GetAccountMenu
-	|Popup_DD_GetNotificationsMenu
+	|Popup_DD_LoadingNotificationsMenu
 	|Popup_DD_MenuPopup
 	|Popup_DD_NotificationMenu
-	|Popup_DD_NotificationsMenu
 	|Popup_DD_SystemMenu
 	|Popup_DL_AboutThisAd
 	|Popup_DL_ConfirmDialog
@@ -92,19 +90,32 @@ type G_Popup_All=
 ;
 //#endregion
 //#region MultiPageMenu
-type R_AccountMenu=TR_MultiPageMenu<MP_AccountMenu>;
-type R_GetNotificationsMenu=TR_MultiPageMenu<MP_GetNotificationMenu>;
+type R_AccountMenu=TR_MultiPageMenu<MP_LoadingAccountMenu>;
+type R_LoadingNotificationsMenu=TR_MultiPageMenu<MP_LoadingNotificationMenu>;
 type R_NotificationMenu=TR_MultiPageMenu<MP_NotificationMenu>;
-type R_NotificationsMenu=TR_MultiPageMenu<MP_NotificationsMenu>;
 type R_SystemMenu=TR_MultiPageMenu<MP_SystemMenu>;
 type R_TopbarMenu=TR_MultiPageMenu<MP_TopbarMenu>;
 //#endregion
 //#region MultiPageMenu Renderer Data
-type MP_AccountMenu=T_LoadingMenu<"MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT">;
-type MP_SystemMenu=T_BaseMenu<T_MP_SG<"SYSTEM">>&{header: R_ActiveAccountHeader; sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];};
-type MP_GetNotificationMenu=T_LoadingMenu<T_MP_SG<"NOTIFICATIONS">>;
-type MP_NotificationMenu=T_BaseMenu<T_MP_SG<"NOTIFICATIONS">>&{header: R_SimpleMenuHeader; sections: D_NotificationMenu_SectionItem[];};
-type MP_TopbarMenu=T_BaseMenu<T_MP_SG<"CREATION">>&{sections: [TR_MultiPageMenuSection<R_CompactLink>];};
+type MP_LoadingAccountMenu=T_LoadingMenu<"MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT">;
+type MP_LoadingNotificationMenu=T_LoadingMenu<T_MP_SG<"NOTIFICATIONS">>;
+type MP_SystemMenu={
+	trackingParams: string;
+	style: T_MP_SG<"SYSTEM">;
+	header: R_ActiveAccountHeader;
+	sections: TR_MultiPageMenu<R_MultiPageMenuSection>[];
+};
+type MP_NotificationMenu={
+	trackingParams: string;
+	style: T_MP_SG<"NOTIFICATIONS">;
+	header: R_SimpleMenuHeader;
+	sections: D_NotificationMenu_SectionItem[];
+};
+type MP_TopbarMenu={
+	trackingParams: string;
+	style: T_MP_SG<"CREATION">;
+	sections: TR_MultiPageMenuSection<R_CompactLink>[];
+};
 //#endregion
 //#region Popup Renderer Data
 //#endregion
