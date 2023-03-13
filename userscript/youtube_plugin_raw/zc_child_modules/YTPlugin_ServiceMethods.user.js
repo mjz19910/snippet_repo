@@ -564,6 +564,36 @@ class ServiceMethods extends ServiceData {
 		let dec_params=atob(params);
 		this.params("get_pdg_buy_flow.params",dec_params);
 	}
+	/** @public @arg {C_CommandExecutor} x */
+	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
+	/** @private @arg {DC_CommandExecutor} x */
+	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
+	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
+	G_DC_CommandExecutor_CommandItem(x) {
+		const cf="G_DC_CommandExecutor_CommandItem";
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
+		if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
+		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
+		if("loopCommand" in x) return this.C_Loop(x);
+		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
+		if("changeMarkersVisibilityCommand" in x) return this.C_ChangeMarkersVisibility(x);
+		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
+		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {C_GetSurvey} x */
+	C_GetSurvey(x) {
+		const cf="C_GetSurvey";
+		const {clickTrackingParams,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(clickTrackingParams);
+		this.A_GetSurvey(c);
+		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
+		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
+		if(sendPost!==true) debugger;
+	}
 	/** @private @arg {M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
@@ -1281,23 +1311,6 @@ class ServiceMethods extends ServiceData {
 		/** @type {`T_SE_Signal:${CF_T_SE_Signal}`} */
 		this.clickTrackingParams(clickTrackingParams);
 		return [commandMetadata,signalServiceEndpoint];
-	}
-	/** @public @arg {C_CommandExecutor} x */
-	C_Executor(x) {
-		const cf="C_Executor";
-		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(clickTrackingParams);
-		this.DC_CommandExecutor(commandExecutorCommand);
-	}
-	/** @public @arg {C_GetSurvey} x */
-	C_GetSurvey(x) {
-		const cf="C_GetSurvey";
-		const {clickTrackingParams,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(clickTrackingParams);
-		this.A_GetSurvey(c);
-		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
-		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
-		if(sendPost!==true) debugger;
 	}
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
@@ -2767,10 +2780,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {this.save_b64_binary("undo_token",x);}
-	/** @public @arg {C_CommandExecutor} x */
-	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
-	/** @private @arg {DC_CommandExecutor} x */
-	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
 	/** @private @arg {DC_ScrollToEngagementPanel} x */
 	DC_ScrollToEngagementPanel(x) {
 		const cf="DC_ScrollToEngagementPanel";
@@ -2783,22 +2792,6 @@ class ServiceMethods extends ServiceData {
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(clickTrackingParams);
 		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
-	}
-	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
-	G_DC_CommandExecutor_CommandItem(x) {
-		const cf="G_DC_CommandExecutor_CommandItem";
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
-		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
-		if("loopCommand" in x) return this.C_Loop(x);
-		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
-		if("changeMarkersVisibilityCommand" in x) return this.C_ChangeMarkersVisibility(x);
-		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
-		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
-		if("likeEndpoint" in x) return this.E_Like(x);
-		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
@@ -4905,7 +4898,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_CommentsEntryPointHeader";
 		const {headerText,onTap,trackingParams,commentCount,contentRenderer,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(headerText);
-		this.C_Executor(onTap);
+		this.C_CommandExecutor(onTap);
 		this.trackingParams(trackingParams);
 		this.t(commentCount,this.G_Text);
 		this.D_CommentsEntryPointHeader_contentRenderer(contentRenderer);

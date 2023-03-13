@@ -5009,7 +5009,7 @@ class ForService_XMethods extends BaseService {
 		if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("signalServiceEndpoint" in x) return this.sm.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("commandExecutorCommand" in x) return this.sm.C_Executor(x);
+		if("commandExecutorCommand" in x) return this.sm.C_CommandExecutor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.sm.C_GetSurvey(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.sm.E_AddToPlaylistService(x);
@@ -5059,7 +5059,7 @@ class ForService_XMethods extends BaseService {
 			case 0: case 2: case 3:
 		}
 		this.sm.trackingParams(trackingParams);
-		this.sm.C_Executor(command);
+		this.sm.C_CommandExecutor(command);
 		switch(targetId) {
 			default: if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
 				this.logged_strings.push(`${cf}:${targetId}`);
