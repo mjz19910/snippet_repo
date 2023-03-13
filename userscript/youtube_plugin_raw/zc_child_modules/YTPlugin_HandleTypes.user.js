@@ -3105,7 +3105,7 @@ class HandleTypes extends BaseService {
 	P_notification_remove_upcoming_event_reminder_params(x) {
 		const cf="P_notification_remove_upcoming_event_reminder_params";
 		const {1: v1,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		console.log("nr:ue:r:params.f1",v1[1][0][3][1]);
+		console.log("nr:ue:r:params.f1",this.TV_Str(v1));
 		this.sm.videoId(this.TV_Str_ex(v1));
 		this.t(this.T_VW(v1),x => {
 			this.save_primitive(`${cf}.f1`,x);
