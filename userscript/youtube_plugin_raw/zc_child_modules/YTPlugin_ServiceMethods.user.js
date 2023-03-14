@@ -28,10 +28,17 @@ class ServiceMethods extends ServiceData {
 		// @ts-expect-error(2345)
 		{const x2=t_input_0; this.t(x2,this.wg(x2,"xREEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
 	}
+	/** @private @arg {string} x */
+	decode_csn_str(x) {
+		let idx=x.indexOf(".");
+		if(idx==-1) return x;
+		debugger;
+		return x.slice(0,idx-1);
+	}
 	/** @public @arg {string} x @arg {{prev:true}|{cur:true}} is_prev */
 	D_VeCsn(x,is_prev={cur: true}) {
 		try {
-			let csn_dec=atob(x);
+			let csn_dec=atob(this.decode_csn_str(x));
 			if("prev" in is_prev) {
 				console.log("[csn_dec] [old]",csn_dec);
 			} else {
