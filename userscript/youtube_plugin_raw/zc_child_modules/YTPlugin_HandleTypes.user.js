@@ -33,7 +33,7 @@ function init_module() {
 		[24412855],
 	].flat());
 }
-export_((exports) => {exports.init_module=init_module;});
+export_(exports => {exports.init_module=init_module;});
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	//#region TODO_minimal_member_fns
@@ -3942,5 +3942,5 @@ class HandleTypes extends BaseService {
 	}
 }
 //#endregion
-export_((exports) => {exports.HandleTypes=HandleTypes;});
-export_(exports => exports.__module_loaded__=true);
+export_(exports => {exports.HandleTypes=HandleTypes;});
+export_(exports => {exports.__module_loaded__=true;});

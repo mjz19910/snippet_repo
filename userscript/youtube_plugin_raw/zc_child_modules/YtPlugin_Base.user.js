@@ -1971,7 +1971,7 @@ function yt_plugin_base_main() {
 
 	// init section
 	const service_resolver=new ServiceResolver(services,new ServiceFlags);
-	export_((exports) => {exports.services=services;});
+	export_(exports => {exports.services=services;});
 	resolver_value.value=service_resolver;
 	services.on_resolve_services(resolver_value.listeners);
 	_close_div_scope();
@@ -2017,7 +2017,7 @@ function yt_plugin_base_main() {
 		if(log_enabled_page_type_change) console.log(nav_load_str);
 	}
 }
-export_((exports) => {
+export_(exports => {
 	exports.ServiceResolver=ServiceResolver;
 	exports.VolumeRange=VolumeRange;
 	exports.sizeof_js=sizeof_js;
@@ -3525,10 +3525,10 @@ class JsonReplacerState {
 }
 export_(exports => {exports.JsonReplacerState=JsonReplacerState;});
 //#region exports
-export_((exports) => {
+export_(exports => {
 	exports.ServiceData=ServiceData;
 });
-export_((exports) => {
+export_(exports => {
 	exports.split_string_once=split_string_once;
 	exports.base64_dec=base64_dec;
 	exports.AudioGainController=AudioGainController;
@@ -3560,5 +3560,5 @@ export_(exports => {exports.is_firefox=is_firefox;});
 export_(exports => exports.__module_loaded__=true);
 //#endregion
 //#region global exports
-export_((exports) => {exports.__youtube_plugin_base_loaded__=true;},{global: true});
+export_(exports => {exports.__youtube_plugin_base_loaded__=true;},{global: true});
 //#endregion
