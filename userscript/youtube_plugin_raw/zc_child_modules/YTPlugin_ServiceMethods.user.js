@@ -2002,7 +2002,12 @@ class ServiceMethods extends ServiceData {
 		const cf="D_Emoji";
 		const {emojiId,shortcuts,searchTerms,image,...y}=this.s(cf,x); this.g(y);
 		let emoji_parts=this.split_str(emojiId,"");
-		if(emoji_parts.length!==2) debugger;
+		switch(emoji_parts.length) {
+			default: debugger; break;
+			case 1: break;
+			// is a utf16 surrogate pair
+			case 2: break;
+		}
 		this.join_string(emoji_parts,"");
 		this.save_primitive(`save://Emoji.d/emojiId`,emojiId);
 		this.save_primitive(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));

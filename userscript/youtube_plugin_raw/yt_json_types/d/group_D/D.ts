@@ -881,6 +881,18 @@ type D_Emoji={
 	shortcuts: [":rolling_on_the_floor_laughing:"];
 	searchTerms: ["rolling"];
 	image: D_Thumbnail;
+}|{
+	emojiId: "☹";
+	shortcuts: [":frowning_face:"];
+	searchTerms: ["frowning"];
+	image: {
+		thumbnails: {
+			url: "https://www.youtube.com/s/gaming/emoji/7ff574f2/emoji_u2639.png";
+			width: 24;
+			height: 24;
+		}[];
+		accessibility: TD_Accessibility<"☹">;
+	};
 };
 type D_VE3611_TextRun=|{
 	text: string;
