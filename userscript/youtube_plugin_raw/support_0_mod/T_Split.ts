@@ -18,12 +18,11 @@ type T_Split_Helper_t<S extends string,D extends string=",">=
 	? [2.1,T,...T_Split_Helper<U,D>]:[2.2,S]
 	;
 ;
-type TS_Test2=T_Split_Helper<`
-g
-`,"\n">;
+type TS_Test2=T_Split<"g","">;
 type T_Split<S extends string,D extends string=",">=
 	string extends S? string[]:
 	S extends ''? []:
+	D extends ''? T_Split_Helper<S,D>:
 	S extends `${infer T}${D}${infer U}`? U extends ""? [T,""]:
 	T_Split_Helper<S,D>:T_Split_Helper<S,D>
 	;
