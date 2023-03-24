@@ -1,10 +1,13 @@
 import {start_server_template} from "./api/server_start_template.js";
 
+/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+function as(e,x=e) {return x;}
+
 /**
  * @param {NS} ns @arg {Set<string>} server_set @arg {[[]|[string,number]|[string],[number,"GB"],string][]} server_map_arr
  * @param {boolean} trace @param {number} depth @arg {Map<string,string[]>} map
  * */
-async function iter_entries(ns,server_set,server_map_arr,trace,depth,map) {
+function iter_entries(ns,server_set,server_map_arr,trace,depth,map) {
 	const clone=new Map(map);
 	for(let [key,val] of clone.entries()) {
 		for(let [idx,srv] of val.entries()) {
@@ -18,9 +21,6 @@ async function iter_entries(ns,server_set,server_map_arr,trace,depth,map) {
 			x: if(trace) {
 				if(scan_res.length===0) break x;
 				ns.print(depth," ",srv," ",scan_res);
-				await ns.sleep(8);
-			} else {
-				await ns.sleep(80);
 			}
 			map.set(srv,scan_res);
 		}
@@ -48,6 +48,11 @@ export async function main(ns) {
 	ns.disableLog("httpworm");
 	ns.tail();
 
+	/** @type {{fast:boolean;restart_purchased_servers:boolean}} */
+	const cmd_args=as(ns.flags([
+		["fast",false],
+		["restart_purchased_servers",false],
+	]));
 
 	const trace=true;
 	const distribute=true;
@@ -60,11 +65,19 @@ export async function main(ns) {
 	const has_http_0day=ns.fileExists("HTTPWorm.exe","home");
 	const has_sql_0day=ns.fileExists("SQLInject.exe","home");
 
-	if(template_changed) ns.scriptKill("early-hack-template-v2.js","home");
+	// Player stats
+	const player_hacking_skill=ns.getPlayer().skills.hacking;
+
+	const home_top=ns.ps("home");
+	const template_ram_use=home_top.map(ps => {
+		if(ps.filename!==template_script) return 0;
+		return ps.threads*2.4;
+	}).reduce((a,b) => a+b,0);
+	const in_use_ram=ns.getServerUsedRam("home")-template_ram_use;
 
 	/** @type {[[]|[string,number]|[string],[number,"GB"],string][]} */
 	let server_map_arr=[
-		[[],[ns.getServerMaxRam("home")-ns.getServerUsedRam("home"),"GB"],"home"],
+		[[],[ns.getServerMaxRam("home")-in_use_ram,"GB"],"home"],
 	];
 	let server_set=new Set;
 	let dest_map=new Map;
@@ -72,16 +85,13 @@ export async function main(ns) {
 	let depth=0;
 	for(;;) {
 		depth++;
-		await iter_entries(ns,server_set,server_map_arr,trace,depth,dest_map);
+		iter_entries(ns,server_set,server_map_arr,trace,depth,dest_map);
 		if(dest_map.size===0) break;
-		await ns.sleep(80);
 	}
 	/** @arg {string} srv @arg {number} t */
 	function exec_template(srv,t) {
-		let hacking_skill=ns.getServerRequiredHackingLevel(srv);
-		return start_server_template(ns,has_ssh_0day,distribute,template_changed,template_script,hacking_skill,srv,t);
+		return start_server_template(ns,has_ssh_0day,distribute,template_changed,template_script,player_hacking_skill,srv,t);
 	}
-	if(distribute) await ns.sleep(1000);
 	/** @arg {string} srv */
 	function brutessh(srv) {
 		if(has_ssh_0day) ns.brutessh(srv);
@@ -123,7 +133,15 @@ export async function main(ns) {
 		}
 		if(distribute) await ns.sleep(20);
 	}
+	if(cmd_args.restart_purchased_servers) for(let [,[sz],srv] of server_map_arr) {
+		if(srv.startsWith("pserv-")||srv.startsWith("big-")) {
+			await exec_template(srv,sz/2.4|0);
+		}
+	}
+	let async_delay=3000;
+	if(cmd_args.fast) async_delay=80;
 	for(let [,[sz],srv] of server_map_arr) {
+		if(srv.startsWith("pserv-")||srv.startsWith("big-")) continue;
 		let server_info=ns.getServer(srv);
 		if(!server_info.hasAdminRights) continue;
 		if(sz===0) {
@@ -136,7 +154,7 @@ export async function main(ns) {
 			continue;
 		}
 		let started=await exec_template(srv,sz/2.4|0);
-		if(distribute&&started) await ns.sleep(3000);
+		if(distribute&&started) await ns.sleep(async_delay);
 	}
 	// finished
 }
