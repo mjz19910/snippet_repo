@@ -93,6 +93,10 @@ export async function main(ns) {
 					ns.deleteServer(server);
 					if(server_money<ns.getPurchasedServerCost(ram)) break x;
 					let hostname=ns.purchaseServer("big-"+ram+"-"+i,ram);
+					if(hostname==="") {
+						ns.print("failed to buy server");
+						ns.exit();
+					}
 					await start_script(hostname);
 					++i;
 					break;
