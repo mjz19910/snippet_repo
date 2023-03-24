@@ -34,19 +34,44 @@
 --------> solaris: Solaris Space Systems
 --------> zeus-med: Zeus Medical
 ----> unitalife: UnitaLife Group
---------> defcomm //
+
+
+
+--------- !!! -----------
+> unitalife: UnitaLife Group
+--------- ~~~ -----------
+> defcomm: DefComm
+----> taiyang-digital: Taiyang Digital
+--------> applied-energetics: Applied Energetics
+------------> fulcrumtech: Fulcrum Technologies
+----------------> .
+------------> helios: Helios Labs
+----> zb-def: ZB Defense Industries
+--------> titan-labs: Titan Laboratories
+----> nova-med: Nova Medical
+
+--------- !!! -----------
+> .
+--------- ~~~ -----------
+> blade: Blade Industries
+> clarkinc: Clarke Incorporated
+----> fulcrumassets: Fulcrum Technologies
+> powerhouse-fitness: Powerhouse Fitness
+----> megacorp: MegaCorp
+----> The-Cave: Helios
+
 
 --------- !!! -----------
 > zeus-med: Zeus Medical
 --------- ~~~ -----------
-> infocomm
+> infocomm: InfoComm
 ----> microdyne: Microdyne Technologies
 --------> stormtech: Storm Technologies
 ------------> 4sigma: Four Sigma
 ----------------> nwo: NWO
-------------> kuai-gong
+------------> kuai-gong: KuaiGong International
 --------> vitalife: VitaLife
 ------------> omnitek: OmniTek Incorporated
 ----------------> b-and-a: Bachman & Associates 
-------------------> ecorp
-----> run4theh111z
+------------------> ecorp: ECorp
+----> run4theh111z: The Runners
