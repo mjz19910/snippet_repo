@@ -1,5 +1,5 @@
-import {get_has_ssh_0day} from "../api/get-has_ssh_0day";
-import {start_server_template} from "../api/server_start_template";
+import {get_has_ssh_0day} from "../api/get-has_ssh_0day.js";
+import {start_server_template} from "../api/server_start_template.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
