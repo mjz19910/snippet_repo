@@ -87,11 +87,12 @@ export async function main(ns) {
 		let min_delay=1000;
 		for(const server of only_pserv) {
 			for(;;) {
-				x: if(server_money>ns.getPurchasedServerCost(ram)) {
+				const buy_cost1=ns.getPurchasedServerCost(ram);
+				x: if(server_money>buy_cost1) {
 					let old_proc=ns.ps(server);
 					old_proc.forEach(v => ns.kill(v.pid));
 					ns.deleteServer(server);
-					if(server_money<ns.getPurchasedServerCost(ram)) break x;
+					if(!(server_money>buy_cost1)) break x;
 					let hostname=ns.purchaseServer("big-"+ram+"-"+i,ram);
 					if(hostname==="") {
 						ns.print("failed to buy server");
@@ -102,10 +103,11 @@ export async function main(ns) {
 					break;
 				}
 				await ns.sleep(delay);
+				const buy_cost2=ns.getPurchasedServerCost(ram);
 				last_server_money=server_money;
 				server_money=ns.getServerMoneyAvailable("home");
-				if(server_money>ns.getPurchasedServerCost(ram)) break;
-				const cost_diff=ns.getPurchasedServerCost(ram)-last_server_money;
+				if(server_money>buy_cost2) break;
+				const cost_diff=buy_cost2-last_server_money;
 				const per_second_rate=(server_money-last_server_money)/(delay/1000);
 				const est_to_can_buy_server=cost_diff/per_second_rate;
 				delay=(est_to_can_buy_server/6)*1000;
