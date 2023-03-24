@@ -1,5 +1,5 @@
-import {get_has_ssh_0day} from "../api/get-has_ssh_0day.js";
-import {start_server_template} from "../api/server_start_template.js";
+import {get_has_ssh_0day} from "./api/get-has_ssh_0day.js";
+import {start_server_template} from "./api/server_start_template.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
@@ -18,21 +18,23 @@ export async function main(ns) {
 	const distribute=true;
 	const template_changed=false;
 
+	const has_ssh_0day=await get_has_ssh_0day(ns);
+
 	/** @arg {string} srv */
 	async function start_script(srv) {
 		ns.scp(target_script,srv);
 		let thread_n=ns.getServerMaxRam(srv)/2.4|0;
-		return start_server_template(ns,await get_has_ssh_0day(ns),distribute,template_changed,target_script,player_hacking_skill,srv,thread_n);
+		return start_server_template(ns,has_ssh_0day,distribute,template_changed,target_script,player_hacking_skill,srv,thread_n);
 	}
 
 	for(let hostname of purchased_server_hostnames) {
 		let processes=ns.ps(hostname);
 		if(processes.length===0) {
-			start_script(hostname);
+			await start_script(hostname);
 			continue;
 		}
 		ns.kill(processes[0].pid);
-		start_script(hostname);
+		await start_script(hostname);
 	}
 
 	ns.print("RAM: 8.00GB");
@@ -56,7 +58,7 @@ export async function main(ns) {
 			//  3. Run our hacking script on the newly-purchased server with 3 threads
 			//  4. Increment our iterator to indicate that we've bought a new server
 			let hostname=ns.purchaseServer("pserv-"+i,ram);
-			start_script(hostname);
+			await start_script(hostname);
 			++i;
 		}
 		//Make the script wait for a second before looping again.
@@ -91,7 +93,7 @@ export async function main(ns) {
 					ns.deleteServer(server);
 					if(server_money<ns.getPurchasedServerCost(ram)) break x;
 					let hostname=ns.purchaseServer("big-"+ram+"-"+i,ram);
-					start_script(hostname);
+					await start_script(hostname);
 					++i;
 					break;
 				}
