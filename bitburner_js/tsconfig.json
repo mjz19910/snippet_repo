@@ -1,0 +1,46 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "NodeNext",
+		"target": "ESNext",
+		"lib": [
+			"ESNext",
+			"DOM"
+		],
+		"types": [],
+		"typeRoots": [
+			"./node_modules/@types"
+		],
+		"outDir": "./build",
+		"esModuleInterop": true,
+		"sourceMap": true,
+		"declaration": true,
+		"strict": true,
+		"allowJs": true,
+		"checkJs": true,
+		"incremental": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noFallthroughCasesInSwitch": true,
+		"noErrorTruncation": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"useUnknownInCatchVariables": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"forceConsistentCasingInFileNames": true,
+		"exactOptionalPropertyTypes": true,
+		"experimentalDecorators": true,
+		"isolatedModules": false,
+	},
+	"include": [
+		"netscript.d.ts",
+		"net-fs/**/*",
+	],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts",
+		"./build"
+	],
+}
