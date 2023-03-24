@@ -12,19 +12,38 @@
 ----------> alpha-ent: Alpha Enterprises
 ------> avmnite-02h: NiteSec
 --------> syscore: SysCore Securities
- > joesguns
---> max-hardware
-----> silver-helix
-------> the-hub
---------> rothman-uni
+ > joesguns: Joe's Guns
+--> max-hardware: Max Hardware Store
+----> silver-helix: Silver Helix
+------> the-hub: The Hub
+--------> rothman-uni: Rothman University
 ----------> millenium-fitness: Millenium Fitness Network
-------> computek
+------> computek: CompuTek
 > hong-fang-tea
 --> zer0
+----> neo-net
+------> crush-fitness: Crush Fitness
 > harakiri-sushi
 > iron-gym
 --> CSEC
+----> phantasy
 > darkweb
+
+--------- !!! -----------
+> crush-fitness: Crush Fitness
+--------- ~~~ -----------
+> zb-institute: ZB Institute of Technology
+----> lexo-corp: LexoCorp
+--------> global-pharm: Global Pharmaceuticals
+------------> omnia: Omnia Cybersystems
+> catalyst: Catalyst Ventures
+----> aevum-police: Aevum Police Headquarters
+
+--------- !!! -----------
+> omnia: Omnia Cybersystems
+--------- ~~~ -----------
+> icarus: Icarus Microsystems
+> univ-energy: Universal Energy
 
 --------- !!! -----------
 > millenium-fitness: Millenium Fitness Network
