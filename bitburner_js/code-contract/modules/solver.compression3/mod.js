@@ -6,7 +6,7 @@ import {min_len_sel} from "./min_len_sel.js";
 /** @arg {string} input */
 function solve(input) {
 	let show_l2_rest=false;
-	let show_l2_before=false;
+	let show_l2_before=true;
 
 	let r1=calc_compression_step1(input);
 	let [r_not_len6,r2_len6]=calc_compression_step2(r1);
