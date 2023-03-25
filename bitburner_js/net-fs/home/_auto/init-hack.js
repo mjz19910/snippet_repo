@@ -123,7 +123,7 @@ export async function main(ns) {
 		let srv=server_map[hostname];
 		if(srv.purchasedByPlayer) continue;
 		if(!srv.hasAdminRights) continue;
-		if(!srv.backdoorInstalled) {
+		if(srv.requiredHackingSkill<=player_hacking_skill&&!srv.backdoorInstalled) {
 			if(!to_backdoor.includes(hostname)) {
 				ns.print("to_backdoor: ",hostname);
 				to_backdoor.push(hostname);
@@ -133,9 +133,9 @@ export async function main(ns) {
 			if(idx!==-1) to_backdoor.splice(idx,1);
 		}
 	}
-	for (const hostname of to_backdoor) {
-		let srv = server_map[hostname];
-		ns.print("backdoor: ", hostname, " ", srv.requiredHackingSkill);
+	for(const hostname of to_backdoor) {
+		let srv=server_map[hostname];
+		ns.print("backdoor: ",hostname," ",srv.requiredHackingSkill);
 	}
 	ns.write(backdoor_path,to_backdoor.join("\n")+"\n","w");
 	// finished
