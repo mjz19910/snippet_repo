@@ -16,7 +16,7 @@ export async function start_server_template(ns,distribute,template_changed,scrip
 		"[b:%s lvl:%s %s~/]> %s",
 		srv.backdoorInstalled,
 		srv.requiredHackingSkill,
-		srv,
+		srv.hostname,
 		`run ${script_file} -t ${t} ${hacking_skill}`,
 	);
 	let mode=get_mode(ns);
