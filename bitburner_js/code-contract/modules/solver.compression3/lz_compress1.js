@@ -1,4 +1,5 @@
-import {lz_compress_mode1,get_compressed_opts} from "./mod.js";
+import {get_compressed_opts} from "./get_compressed_opts.js";
+import {lz_compress_mode1} from "./lz_compress_mode1.js";
 
 /** @param {string} input @param {string} part @returns {LZBufferItem[]} */
 export function lz_compress1(input,part) {
