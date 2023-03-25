@@ -16,16 +16,19 @@ export function start_host_scan(ns,args) {
 
 	map.set(src_host,ns.scan(src_host));
 	/** @type {HostScanOpts} */
-	const scan_opts={...args,log_file: scan_log_file,seen_set,server_map_arr};
+	const scan_opts={...args,seen_set,server_map_arr};
+	let scan_results=[];
 	let depth=0;
 	for(;;) {
 		depth++;
-		iter_host_scan_entries(ns,scan_opts,depth,map);
+		const result=iter_host_scan_entries(ns,scan_opts,depth,map);
+		scan_results.push(result);
 		if(map.size===0) break;
 	}
+	ns.write(scan_log_file,scan_results.join("\n\n"),"w");
 	return {map,server_map_arr};
 }
-/** @typedef {{src_host:string;log_file:string;seen_set:Set<string>;server_map_arr:ServerMapArray;trace:boolean}} HostScanOpts */
+/** @typedef {{src_host:string;seen_set:Set<string>;server_map_arr:ServerMapArray;trace:boolean}} HostScanOpts */
 /** @typedef {[[]|[string,number]|[string],[number,"GB"],string][]} ServerMapArray */
 /**
  * @param {NS} ns
@@ -74,8 +77,7 @@ export function iter_host_scan_entries(ns,opts,depth,map) {
 		}
 		append("\n");
 	}
-	append("\n");
-	ns.write(opts.log_file,file_data.join(""),"a");
+	return file_data.join("\n");
 }
 
 /** @param {NS} ns @arg {string[]} arr_disabled */
