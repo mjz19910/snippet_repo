@@ -5,11 +5,14 @@ import {exclude_null} from "./exclude_null.js";
 import {find_part_buf_arr} from "./find_part_buf_arr.js";
 import {log_sel} from "./log_sel.js";
 import {min_len_sel} from "./min_len_sel.js";
+/** @arg {string} input */
+function calc_compression_step2(input) {
+
+}
 
 /** @arg {string} input */
 function solve(input) {
 	let r1=calc_compression_step1(input);
-	let sel1=min_len_sel(r1); sel1;
 	let r2=compress_set_exclude_len(r1,6);
 	let r2_n=compress_set_extract_len(r1,6);
 	let r2_part=r2_n.map(v => find_part_buf_arr(v));
