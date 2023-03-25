@@ -14,8 +14,6 @@ export function lz_compress1(input,part) {
 		let cp_1=lz_compress_mode1(input,first_idx,part.length,next_idx);
 		let p3=input.slice(next_idx,next_idx+part.length);
 		let p4=input.slice(next_idx+part.length+1);
-		/** @type {LZBufferItem[]} */
-		let out=[];
 		out.push(...cp_1);
 		out.push(['1',"part",p3.length,p3]);
 		add_opts_lz_item(out,"rest",p4);
