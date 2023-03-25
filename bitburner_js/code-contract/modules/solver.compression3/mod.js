@@ -10,11 +10,14 @@ function solve(input) {
 	if(r_not_len6.length>0) {
 		let sel2=min_len_sel(r_not_len6); sel2;
 		let sel_before=sel2[0];
-		let before_compress=sel_before[4];
-		if(before_compress) {
-			log_sel(sel2,"sel_before: ",before_compress[0]);
+		if(sel_before[1]==="before") {
+			let before_compress=sel_before[4];
+			if(before_compress) {
+				log_sel(sel2,"sel_before: ",before_compress[0]);
+			}
+			else throw new Error("TODO");
 		}
-		else {throw new Error("TODO");}
+		else throw new Error("TODO");
 	}
 	let part_uniq=calc_compression_step3(r2_len6);
 	return `${part_uniq[0]}:${part_uniq[1]}`;
