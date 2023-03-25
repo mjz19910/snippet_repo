@@ -18,6 +18,15 @@ export async function main(ns) {
 	/** @type {string[]} */
 	const to_backdoor=load_to_backdoor_list(ns,backdoor_path);
 
+	/** @arg {string} hostname */
+	function get_server(hostname) {
+		let srv=server_map[hostname];
+		if(srv) return srv;
+		srv=ns.getServer(hostname);
+		server_map[hostname]=srv;
+		return srv;
+	}
+
 	/** @type {{fast:boolean;restart_purchased_servers:boolean}} */
 	const cmd_args=as(ns.flags([
 		["fast",false],
@@ -37,17 +46,15 @@ export async function main(ns) {
 		if(ps.filename!==template_script) return 0;
 		return ps.threads*2.4;
 	}).reduce((a,b) => a+b,0);
-	const in_use_ram=ns.getServer("home").ramUsed-template_ram_use+15;
+	get_server("home");
+	const in_use_ram=get_server("home").ramUsed-template_ram_use+15;
 
 	/** @type {{map:Map<string,string[]>;server_map_arr:ServerMapArray}} */
 	let scan_res=start_host_scan(ns,{src_host: "home",used_ram: in_use_ram,trace});
 	/** @type {ServerMapArray} */
 	const server_map_arr=scan_res.server_map_arr;
 
-	for(let [,,hostname] of server_map_arr) {
-		let srv=ns.getServer(hostname);
-		server_map[hostname]=srv;
-	}
+	for(let [,,hostname] of server_map_arr) get_server(hostname);
 
 	/** @arg {Server} srv @arg {number} t */
 	function exec_template(srv,t) {
@@ -55,7 +62,7 @@ export async function main(ns) {
 	}
 
 	for(let [,,hostname] of server_map_arr) {
-		const srv=server_map[hostname];
+		const srv=get_server(hostname);
 		const num_ports=srv.numOpenPortsRequired;
 		ns.scp(template_script,hostname);
 		if(num_ports>=1&&!srv.sshPortOpen) unlock_service(srv,"ssh");
