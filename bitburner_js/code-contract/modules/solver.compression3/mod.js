@@ -18,7 +18,7 @@ function solve(input) {
 			if(before_compress) {
 				if(show_l2_before) {
 					log_sel(sel2);
-					console.log("sel_before: ",before_compress[0]);
+					console.log("sel_before: ",[before_compress[0]]);
 				}
 			}
 			else throw new Error("TODO");
