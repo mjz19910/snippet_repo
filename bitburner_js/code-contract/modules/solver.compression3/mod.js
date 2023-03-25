@@ -16,8 +16,10 @@ function solve(input) {
 		if(sel_before[1]==="before") {
 			let before_compress=sel_before[4];
 			if(before_compress) {
-				if(show_l2_before) log_sel(sel2);
-				console.log("sel_before: ",before_compress[0]);
+				if(show_l2_before) {
+					log_sel(sel2);
+					console.log("sel_before: ",before_compress[0]);
+				}
 			}
 			else throw new Error("TODO");
 		}
