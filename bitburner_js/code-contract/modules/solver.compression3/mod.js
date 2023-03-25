@@ -3,6 +3,21 @@ import {calc_compression_step2} from "./calc_compression_step2.js";
 import {calc_compression_step3} from "./calc_compression_step3.js";
 import {log_sel} from "./log_sel.js";
 import {min_len_sel} from "./min_len_sel.js";
+/** @arg {LZBufferItem} v @returns {v is LZPartItem} */
+function extract_part_arr(v) {
+	return v[1]==="part";
+}
+/** @arg {LZBufferItem} v @returns {v is Exclude<LZBufferItem,LZPartItem>} */
+function exclude_part_arr(v) {
+	return v[1]!=="part";
+}
+/** @arg {LZBufferItem[]} arr */
+function to_buffer_obj(arr) {
+	let parts=arr.filter(extract_part_arr);
+	let not_parts=arr.filter(exclude_part_arr);
+	return {part: parts[0],_: not_parts};
+}
+
 /** @arg {string} input */
 function solve(input) {
 	let show_l2_rest=false;
@@ -15,10 +30,12 @@ function solve(input) {
 		let sel_before=sel2[0];
 		if(sel_before[1]==="before") {
 			let before_compress=sel_before[4];
+			if(!before_compress) throw new Error("TODO");
 			if(show_l2_before) {
 				log_sel(sel2);
 				console.log("sel_before: ",[before_compress[0]]);
-				console.log("sel_before.item: ",[before_compress[0][2]]);
+				console.log("sel_before.item: ",[[before_compress[0][2]]]);
+				console.log("sel_mode_after: ",before_compress[0][2]);
 			}
 			else throw new Error("TODO");
 		}
