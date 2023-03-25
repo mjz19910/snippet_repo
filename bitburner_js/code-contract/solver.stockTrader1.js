@@ -16,6 +16,7 @@ export function textSolve(lines) {
   return res;
 }
 
+/** @type {[]} */
 export const tests=[
   // See stockTrader4.js
 ];
