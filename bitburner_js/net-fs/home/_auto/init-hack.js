@@ -133,8 +133,9 @@ export async function main(ns) {
 			if(idx!==-1) to_backdoor.splice(idx,1);
 		}
 	}
-	for(const hostname of to_backdoor) {
-		ns.print("backdoor: ",hostname);
+	for (const hostname of to_backdoor) {
+		let srv = server_map[hostname];
+		ns.print("backdoor: ", hostname, " ", srv.requiredHackingSkill);
 	}
 	ns.write(backdoor_path,to_backdoor.join("\n")+"\n","w");
 	// finished
