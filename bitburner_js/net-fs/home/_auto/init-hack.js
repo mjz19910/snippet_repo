@@ -114,7 +114,7 @@ export async function main(ns) {
 			);
 			continue;
 		}
-		let started=await exec_template(srv,srv.maxRam/2.4|0);
+		let started=await exec_template(srv,(srv.maxRam-srv.ramUsed)/2.4|0);
 		if(distribute&&started) await ns.sleep(async_delay);
 	}
 	for(let [,,hostname] of server_map_arr) {
