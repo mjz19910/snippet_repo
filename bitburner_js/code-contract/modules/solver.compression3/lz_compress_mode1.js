@@ -1,4 +1,4 @@
-import {add_opts_lz_item} from "./add_opts_lz_item";
+import {add_opts_lz_item} from "./add_opts_lz_item.js";
 /**
  * @param {string} str
  * @param {number} start
