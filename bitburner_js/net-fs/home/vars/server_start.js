@@ -1,0 +1,1 @@
+export const hack_template_v2 = "/_auto/early-hack-template-v2.js";

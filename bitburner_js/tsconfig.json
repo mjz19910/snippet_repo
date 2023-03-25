@@ -12,6 +12,7 @@
 			"./node_modules/@types"
 		],
 		"outDir": "./build",
+		"baseUrl": "net-fs/home",
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"declaration": true,
@@ -33,6 +34,11 @@
 		"exactOptionalPropertyTypes": true,
 		"experimentalDecorators": true,
 		"isolatedModules": false,
+		"paths": {
+			"/*": [
+				"*"
+			],
+		}
 	},
 	"include": [
 		"netscript.d.ts",
