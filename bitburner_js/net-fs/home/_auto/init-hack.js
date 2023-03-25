@@ -3,8 +3,8 @@ import {get_hack_target} from "/_auto/early-hack-template-v2.js";
 import {disable_log_use as disable_log_use1,start_host_scan} from "/api/iter_host_scan_entries.js";
 import {do_disable} from "/api/do_disable.js";
 import {hack_template_v2} from "/vars/server_start.js";
+import {as} from "/helper/as.js";
 
-/** @typedef {[[]|[string,number]|[string],[number,"GB"],string][]} ServerMapArray */
 /** @param {NS} ns */
 export async function main(ns) {
 	const trace=false;
@@ -49,19 +49,16 @@ export async function main(ns) {
 	get_server("home");
 	const in_use_ram=get_server("home").ramUsed-template_ram_use+15;
 
-	/** @type {{map:Map<string,string[]>;server_map_arr:ServerMapArray}} */
-	let scan_res=start_host_scan(ns,{src_host: "home",used_ram: in_use_ram,trace});
-	/** @type {ServerMapArray} */
-	const server_map_arr=scan_res.server_map_arr;
-
-	for(let [,,hostname] of server_map_arr) get_server(hostname);
+	/** @type {{map:Map<string,string[]>;server_map_arr:import("/api/exports.js").ServerMapArray}} */
+	let {server_map_arr}=start_host_scan(ns,{src_host: "home",used_ram: in_use_ram,trace});
+	const hostname_list=server_map_arr.map(v => v[2]);
 
 	/** @arg {Server} srv @arg {number} t */
 	function exec_template(srv,t) {
 		return start_server_template(ns,distribute,template_changed,template_script,player_hacking_skill,srv,t);
 	}
 
-	for(let [,,hostname] of server_map_arr) {
+	for(const hostname of hostname_list) {
 		const srv=get_server(hostname);
 		const num_ports=srv.numOpenPortsRequired;
 		ns.scp(template_script,hostname);
@@ -82,17 +79,19 @@ export async function main(ns) {
 		}
 		if(distribute) await ns.sleep(20);
 	}
-	if(cmd_args.restart_purchased_servers) for(let [,[sz],hostname] of server_map_arr) {
-		if(!hostname.startsWith("big-")) continue;
-		const srv=server_map[hostname];
-		await exec_template(srv,sz/2.4|0);
+	if(cmd_args.restart_purchased_servers) {
+		for(const hostname of hostname_list) {
+			if(!hostname.startsWith("big-")) continue;
+			const srv=server_map[hostname];
+			await exec_template(srv,srv.maxRam/2.4|0);
+		}
 	}
 	let servers_to_start_script_count=0;
-	for(let [,[sz],hostname] of server_map_arr) {
+	for(const hostname of hostname_list) {
 		if(hostname.startsWith("big-")) continue;
 		const srv=server_map[hostname];
 		if(!srv.hasAdminRights) continue;
-		if(sz===0) continue;
+		if(srv.maxRam===0) continue;
 		servers_to_start_script_count++;
 	}
 	let target_server=get_hack_target([player_hacking_skill,get_mode(ns)]);
@@ -100,11 +99,11 @@ export async function main(ns) {
 	if(trace) ns.print("difficulty_score: ",difficulty_score);
 	let async_delay=difficulty_score;
 	if(cmd_args.fast) async_delay=difficulty_score/10;
-	for(let [,[sz],hostname] of server_map_arr) {
+	for(const hostname of hostname_list) {
 		if(hostname.startsWith("big-")) continue;
 		let srv=server_map[hostname];
 		if(!srv.hasAdminRights) continue;
-		if(sz===0) {
+		if(srv.maxRam===0) {
 			if(trace) ns.printf(
 				"[w:%s, b:%s lvl:%s %s ~/]> %s",
 				ns.tFormat(async_delay),
@@ -115,7 +114,7 @@ export async function main(ns) {
 			);
 			continue;
 		}
-		let started=await exec_template(srv,sz/2.4|0);
+		let started=await exec_template(srv,srv.maxRam/2.4|0);
 		if(distribute&&started) await ns.sleep(async_delay);
 	}
 	for(let [,,hostname] of server_map_arr) {
@@ -206,5 +205,3 @@ function disable_log_use(callback) {
 	callback("relaysmtp");
 	callback("httpworm");
 }
-/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function as(e,x=e) {return x;}

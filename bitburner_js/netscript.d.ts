@@ -29,7 +29,7 @@ type CodingContractData=any;
 type PortData=string|number;
 
 /** @public */
-type ScriptArg=string|number|boolean;
+type ScriptArg=string|number|boolean|null;
 
 /** @public */
 type FilenameOrPID=number|string;
@@ -6758,7 +6758,7 @@ interface NS {
    * // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":true}
    * ```
    */
-  flags(schema: [string,string|number|boolean|string[]][]): {[key: string]: ScriptArg|string[];};
+  flags(schema: [string,null|string|number|boolean|string[]][]): {[key: string]: ScriptArg|string[];};
 
   /**
    * Share your computer with your factions.

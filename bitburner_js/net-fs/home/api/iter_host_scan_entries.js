@@ -9,13 +9,13 @@ export function start_host_scan(ns,args) {
 	let map=new Map;
 	/** @type {Set<string>} */
 	let seen_set=new Set;
-	/** @type {[[]|[string,number]|[string],[number,"GB"],string][]} */
+	/** @type {import("/api/exports.js").ServerMapArray} */
 	let server_map_arr=[
-		[[],[ns.getServerMaxRam(src_host)-args.used_ram,"GB"],src_host],
+		[[null,0],[ns.getServerMaxRam(src_host)-args.used_ram,"GB"],src_host],
 	];
 
 	map.set(src_host,ns.scan(src_host));
-	/** @type {HostScanOpts} */
+	/** @type {import("/api/exports.js").HostScanOpts} */
 	const scan_opts={...args,seen_set,server_map_arr};
 	let scan_results=["------\n","\n"];
 	let depth=0;
@@ -28,12 +28,10 @@ export function start_host_scan(ns,args) {
 	ns.write(scan_log_file,scan_results.join(""),"w");
 	return {map,server_map_arr};
 }
-/** @typedef {{src_host:string;seen_set:Set<string>;server_map_arr:ServerMapArray;trace:boolean}} HostScanOpts */
-/** @typedef {[[]|[string,number]|[string],[number,"GB"],string][]} ServerMapArray */
 /**
  * @param {NS} ns
  * @param {number} depth @arg {Map<string,string[]>} map
- * @param {HostScanOpts} opts
+ * @param {import("/api/exports.js").HostScanOpts} opts
  * */
 export function iter_host_scan_entries(ns,opts,depth,map) {
 	const {seen_set,server_map_arr}=opts;
