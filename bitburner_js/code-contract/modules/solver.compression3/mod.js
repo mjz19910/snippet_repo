@@ -6,6 +6,7 @@ import {min_len_sel} from "./min_len_sel.js";
 /** @arg {string} input */
 function solve(input) {
 	let show_l2_rest=false;
+	let show_l2_before=false;
 
 	let r1=calc_compression_step1(input);
 	let [r_not_len6,r2_len6]=calc_compression_step2(r1);
@@ -15,7 +16,8 @@ function solve(input) {
 		if(sel_before[1]==="before") {
 			let before_compress=sel_before[4];
 			if(before_compress) {
-				log_sel(sel2,"sel_before: ",before_compress[0]);
+				if(show_l2_before) log_sel(sel2);
+				console.log("sel_before: ",before_compress[0]);
 			}
 			else throw new Error("TODO");
 		}
