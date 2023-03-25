@@ -4,9 +4,8 @@ import {compress_set_extract_len} from "./compress_set_extract_len.js";
 import {log_sel} from "./log_sel.js";
 import {min_len_sel} from "./min_len_sel.js";
 
-/** @arg {string} input */
-export function calc_compression_step2(input) {
-	let r1=calc_compression_step1(input);
+/** @arg {LZBufferItem[][]} r1 */
+export function calc_compression_step2(r1) {
 	let r2=compress_set_exclude_len(r1,6);
 	let r2_n=compress_set_extract_len(r1,6);
 	if(r2.length>0) {
