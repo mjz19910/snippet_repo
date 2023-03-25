@@ -17,7 +17,6 @@ function solve(input) {
 		else {throw new Error("TODO");}
 	}
 	let part_uniq=calc_compression_step3(r2_len6);
-	console.log(r_not_len6[0]);
 	return `${part_uniq[0]}:${part_uniq[1]}`;
 }
 console.log(solve("0jyij2toaaaaaaaaaq13U7FiEfprCfprCfprCpJ7222222222VVV22222V2hw2hw"));
