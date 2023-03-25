@@ -17,6 +17,7 @@ export function lz_compress1(input,part) {
 		out.push(...cp_1);
 		out.push(['1',"part",p3.length,p3]);
 		add_opts_lz_item(out,"rest",p4);
+		return out;
 	}
 	let p1=input.slice(0,first_idx);
 	let cp_1=lz_compress_mode1(input,first_idx,part.length,next_idx);
