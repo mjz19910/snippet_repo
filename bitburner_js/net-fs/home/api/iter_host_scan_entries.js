@@ -5,7 +5,9 @@ export function start_host_scan(ns,args) {
 	const scan_log_file="/data/host_scan.list.txt";
 	ns.clear(scan_log_file);
 
+	/** @arg {Map<string, string[]>} */
 	let map=new Map;
+	/** @arg {Set<string>} */
 	let seen_set=new Set;
 	/** @type {[[]|[string,number]|[string],[number,"GB"],string][]} */
 	let server_map_arr=[
