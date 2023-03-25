@@ -22,21 +22,18 @@ export async function main(ns) {
 	const distribute=true;
 	const template_changed=false;
 
-	/** @arg {string} srv */
+	/** @arg {Server} srv */
 	async function start_script(srv) {
-		ns.scp(target_script,srv);
-		let thread_n=ns.getServerMaxRam(srv)/2.4|0;
+		ns.scp(target_script,srv.hostname);
+		let thread_n=srv.maxRam/2.4|0;
 		return start_server_template(ns,distribute,template_changed,target_script,player_hacking_skill,srv,thread_n);
 	}
 
 	for(let hostname of purchased_server_hostnames) {
 		let processes=ns.ps(hostname);
-		if(processes.length===0) {
-			await start_script(hostname);
-			continue;
-		}
-		ns.kill(processes[0].pid);
-		await start_script(hostname);
+		if(processes.length!==0) ns.kill(processes[0].pid);
+		const srv=ns.getServer(hostname);
+		await start_script(srv);
 	}
 
 	// Iterator we'll use for our loop
@@ -59,19 +56,20 @@ export async function main(ns) {
 		let max_delay=60*1000*2;
 		let min_delay=5000;
 		let acc_avg_dur=0;
-		for(const srv of only_pserv) {
+		for(const hostname of only_pserv) {
 			wl: for(;;) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
 				if(cur_server_money>buy_cost1) {
-					if(purchased_server_hostnames.includes(srv)) {
-						let old_proc=ns.ps(srv);
+					if(purchased_server_hostnames.includes(hostname)) {
+						let old_proc=ns.ps(hostname);
 						old_proc.forEach(v => ns.kill(v.pid));
-						ns.upgradePurchasedServer(srv,ram);
+						ns.upgradePurchasedServer(hostname,ram);
 					} else {
-						ns.purchaseServer(srv,ram);
+						ns.purchaseServer(hostname,ram);
 					}
+					const srv=ns.getServer(hostname);
 					await start_script(srv);
-					rename_purchased_server(ns,only_pserv,srv,`big-${ram}-${i}`);
+					rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
 					++i;
 					last_server_money=server_money;
 					acc_avg_dur=delay;
@@ -98,7 +96,7 @@ export async function main(ns) {
 				if(!Number.isFinite(delay)) delay=min_delay;
 				if(delay<min_delay) delay=min_delay;
 				if(delay>max_delay) delay=max_delay;
-				ns.print(`sleep ${delay/1000}; upgrade ${srv} --ram [${ram},$${ns.formatNumber(buy_cost1)}]`);
+				ns.print(`sleep ${delay/1000}; upgrade ${hostname} --ram [${ram},$${ns.formatNumber(buy_cost1)}]`);
 			}
 		}
 	}

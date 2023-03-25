@@ -49,7 +49,7 @@ export async function main(ns) {
 		server_map[hostname]=srv;
 	}
 
-	/** @arg {string} srv @arg {number} t */
+	/** @arg {Server} srv @arg {number} t */
 	function exec_template(srv,t) {
 		return start_server_template(ns,distribute,template_changed,template_script,player_hacking_skill,srv,t);
 	}
@@ -75,10 +75,10 @@ export async function main(ns) {
 		}
 		if(distribute) await ns.sleep(20);
 	}
-	if(cmd_args.restart_purchased_servers) for(let [,[sz],srv] of server_map_arr) {
-		if(srv.startsWith("big-")) {
-			await exec_template(srv,sz/2.4|0);
-		}
+	if(cmd_args.restart_purchased_servers) for(let [,[sz],hostname] of server_map_arr) {
+		if(!hostname.startsWith("big-")) continue;
+		const srv=server_map[hostname];
+		await exec_template(srv,sz/2.4|0);
 	}
 	let servers_to_start_script_count=0;
 	for(let [,[sz],hostname] of server_map_arr) {
@@ -108,7 +108,7 @@ export async function main(ns) {
 			);
 			continue;
 		}
-		let started=await exec_template(hostname,sz/2.4|0);
+		let started=await exec_template(srv,sz/2.4|0);
 		if(distribute&&started) await ns.sleep(async_delay);
 	}
 	for(let [,,hostname] of server_map_arr) {
