@@ -54,8 +54,9 @@ export function calc_compression_not_len6_arr(r_not_len6) {
 	if(show_l2_before) {
 		let before_obj=to_buffer_obj(before_compress[0]);
 		console.log("sel_before: ",[before_obj]);
-		console.log("sel_before.item: ",[[before_compress[0][2]]]);
-		console.log("sel_mode_after: ",before_compress[0][2]);
+		let l2_before_inner=before_obj.after;
+		console.log("sel_before.item: ",[[l2_before_inner]]);
+		console.log("sel_mode_after: ",l2_before_inner[4]);
 	}
 	let sel2_rest=sel2[4];
 	if(sel2_rest[1]!=="rest") throw new Error("Unhandled");
