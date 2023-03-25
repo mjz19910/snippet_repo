@@ -53,7 +53,7 @@ export function calc_compression_not_len6_arr(r_not_len6) {
 	if(show_l2_before_sel_log) log_sel(sel2);
 	if(show_l2_before) {
 		let before_obj=to_buffer_obj(before_compress[0]);
-		console.log("sel_before: ",before_obj);
+		console.log("sel_before: ",[before_obj]);
 		console.log("sel_before.item: ",[[before_compress[0][2]]]);
 		console.log("sel_mode_after: ",before_compress[0][2]);
 	}
