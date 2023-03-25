@@ -3,8 +3,7 @@ import {lz_compress_mode1} from "./lz_compress_mode1.js";
 
 /** @param {string} input @param {string} part @returns {LZBufferItem[]} */
 export function lz_compress1(input,part) {
-	if(part.length===0)
-		return [["1","data",input.length,input]];
+	if(part.length===0) return [["1","data",input.length,input]];
 	let first_idx=input.indexOf(part);
 	let next_idx=input.indexOf(part,first_idx+1);
 	if(next_idx===-1) return [["1","data",input.length,input]];
