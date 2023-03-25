@@ -19,14 +19,20 @@ export async function main(ns) {
 	let server_offset=purchased_server_hostnames.length;
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const target_script=hack_template_v2;
-	const distribute=true;
 	const template_changed=false;
 
 	/** @arg {Server} srv */
 	async function start_script(srv) {
 		ns.scp(target_script,srv.hostname);
 		let thread_n=srv.maxRam/2.4|0;
-		return start_server_template(ns,distribute,template_changed,target_script,player_hacking_skill,srv,thread_n);
+		ns.printf(
+			"[b:%s lvl:%s %s ~/]> %s",
+			+srv.backdoorInstalled,
+			srv.requiredHackingSkill,
+			srv.hostname,
+			`run hack-template-v2 -t ${thread_n} ${player_hacking_skill}`,
+		);
+		return start_server_template(ns,template_changed,target_script,player_hacking_skill,srv,thread_n);
 	}
 
 	for(let hostname of purchased_server_hostnames) {

@@ -55,7 +55,7 @@ export async function main(ns) {
 
 	/** @arg {Server} srv @arg {number} t */
 	function exec_template(srv,t) {
-		return start_server_template(ns,distribute,template_changed,template_script,player_hacking_skill,srv,t);
+		return start_server_template(ns,template_changed,template_script,player_hacking_skill,srv,t);
 	}
 
 	for(const hostname of hostname_list) {
@@ -103,18 +103,25 @@ export async function main(ns) {
 		if(hostname.startsWith("big-")) continue;
 		let srv=server_map[hostname];
 		if(!srv.hasAdminRights) continue;
-		if(srv.maxRam===0) {
-			if(trace) ns.printf(
+		/** @arg {string} msg */
+		function format_print(msg) {
+			ns.printf(
 				"[w:%s, b:%s lvl:%s %s ~/]> %s",
 				ns.tFormat(async_delay),
-				srv.backdoorInstalled,
+				+srv.backdoorInstalled,
 				srv.requiredHackingSkill,
 				hostname,
-				"unable to run scripts"
+				msg,
 			);
+		}
+		if(srv.maxRam===0) {
+			if(trace) format_print("unable to run scripts");
 			continue;
 		}
-		let started=await exec_template(srv,(srv.maxRam-srv.ramUsed-15)/2.4|0);
+		let t=srv.maxRam/2.4|0;
+		if(hostname==="home") t=(srv.maxRam-srv.ramUsed-15)/2.4|0;
+		if(distribute) format_print(`run hack-template-v2 -t ${t} ${player_hacking_skill}`);
+		let started=await exec_template(srv,t);
 		if(distribute&&started) await ns.sleep(async_delay);
 	}
 	for(let [,,hostname] of server_map_arr) {
