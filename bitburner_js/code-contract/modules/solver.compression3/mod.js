@@ -18,6 +18,8 @@ function solve(input) {
 			else throw new Error("TODO");
 		}
 		else throw new Error("TODO");
+		let sel2_i1=sel2[4];
+		console.log(sel2_i1);
 	}
 	let part_uniq=calc_compression_step3(r2_len6);
 	return `${part_uniq[0]}:${part_uniq[1]}`;
