@@ -56,6 +56,7 @@ export async function main(ns) {
 					if(purchased_server_hostnames.includes(hostname)) {
 						let old_proc=ns.ps(hostname);
 						old_proc.forEach(v => ns.kill(v.pid));
+						ns.scp(s.scripts,hostname);
 						ns.upgradePurchasedServer(hostname,ram);
 					} else {
 						let new_host=ns.purchaseServer(hostname,ram);
