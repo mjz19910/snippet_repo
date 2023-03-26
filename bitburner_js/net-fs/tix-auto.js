@@ -10,13 +10,13 @@ export async function main(ns) {
 		let ask_price=ns.stock.getAskPrice(cur_sym);
 		stock_ask_price.set(cur_sym,ask_price);
 	}
-	const wait_seconds=6;
-	await ns.sleep(wait_seconds*1000);
+	await ns.sleep(1000);
 	/** @type {Map<string,number[]>} */
 	let stock_ask_price_change_rate=new Map;
 	for(let cur_sym of symbols) {
 		let ask_price=ns.stock.getAskPrice(cur_sym);
 		let prev_price=stock_ask_price.get(cur_sym);
+		if(!prev_price) continue;
 		stock_ask_price_change_rate.set(cur_sym,[prev_price-ask_price]);
 		stock_ask_price.set(cur_sym,ask_price);
 	}
@@ -34,6 +34,7 @@ export async function main(ns) {
 		for(let cur_sym of symbols) {
 			let ask_price=ns.stock.getAskPrice(cur_sym);
 			let prev_price=stock_ask_price.get(cur_sym);
+			if(!prev_price) continue;
 			if(prev_price===ask_price) continue;
 			stock_ask_price.set(cur_sym,ask_price);
 			const price_arr=stock_ask_price_change_rate.get(cur_sym);
