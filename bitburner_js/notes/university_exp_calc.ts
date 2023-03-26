@@ -40,7 +40,8 @@ function world() {
 			type: "location",
 			tag: "iron gym",
 			company_name: "Iron Gym",
-			service_cost: {exp_rate: 1.828,cost: -108},
+			service_cost: {exp_rate: 1.883,cost: -120},
+			backdoor_discount: "10%",
 			services: [
 				{type: "train",exp: {type: "str",tag: "strength"}},
 				{type: "train",exp: {type: "def",tag: "defense"}},
