@@ -59,7 +59,7 @@ type RippleCarryAdd<T extends string,U extends string>=
 	;
 ;
 type RCTest=RippleCarryAdd<"1","9">;
-export let rc_val: RCTest;
+export let rc_val: RCTest|null=null;
 
 function university<T extends number>(base_exp: T) {
 	const computer_science=computer_sci(base_exp);
