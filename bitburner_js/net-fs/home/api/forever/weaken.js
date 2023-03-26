@@ -1,6 +1,10 @@
+import {as} from "/helper/as.js";
+
 /** @param {NS} ns */
 export async function main(ns) {
+	/** @type {{_: [string]}} */
+	let flags_=as(ns.flags([]));
 	while(true) {
-		await ns.weaken(ns.args[0]);
+		await ns.weaken(flags_._[0]);
 	}
 }
