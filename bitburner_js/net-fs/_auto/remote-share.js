@@ -4,7 +4,7 @@ export async function main(ns) {
 
 	ns.tail();
 	ns.clearLog();
-	const share_script="api/share.js";
+	const share_script="/api/share.js";
 	ns.kill(share_script);
 	let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
 	let pid=ns.run(share_script,thread_n,"auto","home");
