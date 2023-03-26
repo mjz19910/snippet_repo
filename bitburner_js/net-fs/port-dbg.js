@@ -7,7 +7,7 @@ export async function main(ns) {
 		let delayed_messages=[];
 		let handle=ns.getPortHandle(port);
 		if(handle.empty()) {
-			ns.print("empty port");
+			ns.print(port,": empty");
 			return;
 		}
 		while(!handle.empty()) {
