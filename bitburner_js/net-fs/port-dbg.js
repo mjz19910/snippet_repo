@@ -11,7 +11,10 @@ export async function main(ns) {
 	while(!handle.empty()) {
 		delayed_messages.push(handle.read());
 	}
-	ns.print(delayed_messages);
+	ns.print(delayed_messages.map(v => {
+		if(typeof v==="string") return JSON.parse(v);
+		return v;
+	}));
 	for(let msg of delayed_messages) {
 		let removed_msg=handle.write(msg);
 		if(removed_msg!==null) ns.print("dropped: ",removed_msg);
