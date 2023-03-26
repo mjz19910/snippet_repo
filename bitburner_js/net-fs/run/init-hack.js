@@ -38,7 +38,7 @@ export class InitHackScript {
 	}
 	async init_hack() {
 		this.start_host_scan("home");
-		this.start_hack_server_if_needed();
+		if(!this.has_process_by_file("home",hack_server)) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
 		await this.do_get_admin_rights();
 		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
@@ -46,10 +46,14 @@ export class InitHackScript {
 		this.update_backdoor_cache();
 		this.log_servers_to_backdoor();
 	}
-	start_hack_server_if_needed() {
-		let cur_ps=this.ns.ps("home");
-		let server_idx=cur_ps.findIndex(v => v.filename===hack_server);
-		if(server_idx===-1) this.ns.run(hack_server);
+	/**
+	 * @param {string} hostname
+	 * @param {string} filename
+	 */
+	has_process_by_file(hostname,filename) {
+		let cur_ps=this.ns.ps(hostname);
+		let server_idx=cur_ps.findIndex(v => v.filename===filename);
+		return server_idx>-1;
 	}
 	get_mode() {
 		const f_=this.gen_crack_flags();
