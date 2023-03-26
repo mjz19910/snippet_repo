@@ -12,6 +12,8 @@ export class InitHackScript {
 	backdoor_path="/data/backdoor_list.txt";
 	/** @type {string[]} */
 	arr_disabled=[];
+	/** @type {string[]} */
+	hostname_list=[];
 	/** @arg {NS} ns @arg {{trace:boolean;distribute:boolean;template_changed:boolean}} s */
 	constructor(ns,s) {
 		this.opts=s;
@@ -25,7 +27,6 @@ export class InitHackScript {
 		this.player_hacking_skill=ns.getPlayer().skills.hacking;
 		/** @type {string[]} */
 		this.to_backdoor=this.load_to_backdoor_list();
-		this.hostname_list=this.start_host_scan("home");
 		this.template_changed=s.template_changed;
 		this.f_=this.gen_crack_flags();
 		this.service_map={
@@ -108,7 +109,6 @@ export class InitHackScript {
 		this.disableLog_("httpworm");
 		this.disableLog_("getServerMaxRam");
 	}
-	/** @typedef {{src_host:string;seen_set:Set<string>;hostname_list:string[]}} HostScanOpts */
 	/** @arg {string} src_host */
 	start_host_scan(src_host) {
 		const scan_log_file="/data/host_scan.list.txt";
@@ -118,36 +118,33 @@ export class InitHackScript {
 		let map=new Map;
 		/** @type {Set<string>} */
 		let seen_set=new Set;
-		const hostname_list=[src_host];
+		this.hostname_list.push(src_host);
 		map.set(src_host,this.ns.scan(src_host));
-		/** @type {HostScanOpts} */
-		const scan_opts={src_host,seen_set,hostname_list};
 		let scan_results=["------\n","\n"];
 		let depth=0;
 		for(;;) {
 			depth++;
-			const result=this.iter_host_scan_entries(scan_opts,depth,map);
+			const result=this.iter_host_scan_entries(src_host,seen_set,depth,map);
 			scan_results.push(result);
 			if(map.size===0) break;
 		}
 		this.ns.write(scan_log_file,scan_results.join(""),"w");
-		return hostname_list;
 	}
 	/**
+	 * @param {string} src_host
 	 * @param {number} depth @arg {Map<string,string[]>} map
-	 * @param {HostScanOpts} opts
+	 * @param {Set<string>} seen_set
 	 * */
-	iter_host_scan_entries(opts,depth,map) {
-		const {seen_set,hostname_list}=opts;
+	iter_host_scan_entries(src_host,seen_set,depth,map) {
 		let depth_list=[];
 		const clone=new Map(map);
 		for(let [key,val] of clone.entries()) {
 			for(let srv of val) {
 				if(seen_set.has(srv)) continue;
 				seen_set.add(srv);
-				hostname_list.push(srv);
+				this.hostname_list.push(srv);
 				let scan_res=this.ns.scan(srv);
-				let home_idx=scan_res.indexOf(opts.src_host);
+				let home_idx=scan_res.indexOf(src_host);
 				if(home_idx>-1) scan_res.splice(home_idx,1);
 				scan_res=scan_res.filter(v => !seen_set.has(v));
 				depth_list.push([depth," ",srv," ",scan_res]);
@@ -200,6 +197,7 @@ export class InitHackScript {
 		return [];
 	}
 	async init_hack() {
+		this.start_host_scan("home");
 		let cur_ps=this.ns.ps("home");
 		let server_idx=cur_ps.findIndex(v => v.filename===hack_server);
 		if(server_idx===-1) this.ns.run(hack_server);
