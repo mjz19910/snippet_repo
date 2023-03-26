@@ -4,6 +4,7 @@ export async function main(ns) {
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 	let symbols=ns.stock.getSymbols();
+	/** @type {Map<string,number>} */
 	let stock_ask_price=new Map;
 	for(let cur_sym of symbols) {
 		let ask_price=ns.stock.getAskPrice(cur_sym);
