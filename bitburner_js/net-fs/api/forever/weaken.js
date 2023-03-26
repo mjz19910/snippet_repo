@@ -1,4 +1,4 @@
-import {as} from "/run/helper/as.js";
+import {as} from "/run/as.js";
 
 /** @param {NS} ns */
 export async function main(ns) {

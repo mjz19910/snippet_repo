@@ -1,7 +1,7 @@
 /** @typedef {{target:"getServer";_: [string]}} ScriptFlags */
 /** @typedef {{servers:string[];txts: string[];scripts:string[];flags:NS["flags"]}} AutoCompleteData */
 
-import {as} from "/run/helper/as.js";
+import {as} from "/run/as.js";
 
 /** @arg {AutoCompleteData} data @arg {(string | number | boolean)[]} args */
 export function autocomplete(data,args) {
