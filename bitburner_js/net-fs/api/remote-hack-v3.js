@@ -1,11 +1,12 @@
+import {hack_support, hack_template} from "/run/script_paths.js";
+
 /** @param {NS} ns */
 export async function main(ns) {
 	const player_hacking_skill=ns.getHackingLevel();
-	const hack_script="hack-template-v3.js";
-	const scripts=["hack-support-v3.js",hack_script];
+	const scripts=[hack_support,hack_template];
 	let scan_res=ns.scan("home");
 	const target_host=scan_res[0];
 	ns.scp(scripts,target_host,"home");
 	ns.killall(target_host);
-	ns.exec(hack_script,target_host,1,player_hacking_skill,"none");
+	ns.exec(hack_template,target_host,1,player_hacking_skill,"none");
 }

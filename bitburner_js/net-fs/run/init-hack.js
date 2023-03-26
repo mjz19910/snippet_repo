@@ -1,14 +1,14 @@
 import {as} from "../api/helper/as.js";
 import {get_hack_target} from "/run/hack-template-v3.js";
-import {hack_template_v3} from "/run/script_paths.js";
+import {hack_support,hack_template} from "/run/script_paths.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
 export class InitHackScript {
 	/** @readonly */
 	backdoor_path="/data/backdoor_list.txt";
 	/** @readonly */
-	script_file=hack_template_v3;
-	script_files=["hack-support-v3.js",hack_template_v3];
+	script_file=hack_template;
+	script_files=[hack_support,hack_template];
 	arr_disabled=["disableLog"];
 	get_mode() {
 		const f_=this.gen_crack_flags();
