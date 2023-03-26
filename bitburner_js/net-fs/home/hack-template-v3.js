@@ -40,6 +40,7 @@ export function get_hack_target(args) {
 
 /** @param {NS} ns */
 export async function main(ns) {
+	ns.tail();
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 	// Defines the "target server", which is the server
@@ -49,7 +50,6 @@ export async function main(ns) {
 	// Defines how much money a server should have before we hack it
 	// In this case, it is set to 75% of the server's max money
 	const moneyThresh=await getServerMaxMoney_(ns,target)*0.85;
-	let skip=true; if(skip) return;
 
 	// Defines the maximum security level the target server can
 	// have. If the target's security level is higher than this,

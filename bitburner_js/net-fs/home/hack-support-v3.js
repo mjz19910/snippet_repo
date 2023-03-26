@@ -8,13 +8,20 @@
 /** @typedef {{call:"getServerSecurityLevel",args:[string]}|CallMsg4} CallMsg3 */
 /** @typedef {{call:"getServerMoneyAvailable",args:[string]}} CallMsg4 */
 
-/** @param {NS} ns */
-export function read_port1_msg(ns) {
-	let data=ns.readPort(1);
+
+/** @param {NS} ns @arg {number} port */
+export function read_port_msg(ns,port) {
+	let data=ns.readPort(port);
 	if(typeof data==="number") {
 		throw new Error("Invalid message");
 	}
 	if(data==="NULL PORT DATA") return null;
+	return data;
+}
+/** @param {NS} ns */
+export function read_port1_msg(ns) {
+	let data=read_port_msg(ns,1);
+	if(data===null) return null;
 	/** @type {CallMsg} */
 	let msg=JSON.parse(data);
 	return msg;
@@ -25,11 +32,8 @@ export function send_port1_msg(ns,msg) {
 }
 /** @param {NS} ns */
 export function read_port2_msg(ns) {
-	let data=ns.readPort(2);
-	if(typeof data==="number") {
-		throw new Error("Invalid message");
-	}
-	if(data==="NULL PORT DATA") return null;
+	let data=read_port_msg(ns,2);
+	if(data===null) return null;
 	/** @type {ReplyMsg} */
 	let msg=JSON.parse(data);
 	return msg;
@@ -55,7 +59,7 @@ export async function getServerMinSecurityLevel_(ns,target) {
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerMinSecurityLevel") {
-			ns.print("reject: ",reply_msg);
+			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
@@ -81,7 +85,7 @@ export async function getServerSecurityLevel_(ns,target) {
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerSecurityLevel") {
-			ns.print("reject: ",reply_msg);
+			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
@@ -107,7 +111,7 @@ export async function getServerMoneyAvailable_(ns,target) {
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerMoneyAvailable") {
-			ns.print("reject: ",reply_msg);
+			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
@@ -134,7 +138,7 @@ export async function getServerMaxMoney_(ns,target) {
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerMaxMoney") {
-			ns.print("reject: ",reply_msg);
+			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
