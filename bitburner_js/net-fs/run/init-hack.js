@@ -112,8 +112,6 @@ export class InitHackScript {
 	/** @arg {string} src_host */
 	start_host_scan(src_host) {
 		const scan_log_file="/data/host_scan.list.txt";
-		this.ns.clear(scan_log_file);
-
 		/** @type {Map<string, string[]>} */
 		let map=new Map;
 		/** @type {Set<string>} */
