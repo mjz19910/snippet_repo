@@ -35,12 +35,15 @@ export function read_port2_msg(ns) {
 	return msg;
 }
 
+const trace=false;
+
 /** @param {NS} ns @arg {string} target */
 export async function getServerMinSecurityLevel_(ns,target) {
+	send_port1_msg(ns,{call: "getServerMinSecurityLevel",args: [target]});
 	/** @type {ReplyMsg|null} */
 	let reply=null;
 	for(;reply===null;) {
-		send_port1_msg(ns,{call: "getServerMinSecurityLevel",args: [target]});
+		if(trace) ns.print("query1");
 		await ns.sleep(40);
 		let data=ns.readPort(2);
 		if(data==="NULL PORT DATA") {
@@ -48,10 +51,11 @@ export async function getServerMinSecurityLevel_(ns,target) {
 			continue;
 		}
 		if(typeof data==="number") throw new Error("Invalid reply");
-		ns.print(data);
+		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerMinSecurityLevel") {
+			ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
@@ -65,14 +69,19 @@ export async function getServerSecurityLevel_(ns,target) {
 	/** @type {ReplyMsg|null} */
 	let reply=null;
 	for(;reply===null;) {
+		if(trace) ns.print("query2");
 		await ns.sleep(40);
 		let data=ns.readPort(2);
 		if(typeof data==="number") throw new Error("Invalid reply");
-		if(data==="NULL PORT DATA") throw new Error("Null reply");
-		ns.print(data);
+		if(data==="NULL PORT DATA") {
+			await ns.sleep(1500);
+			continue;
+		}
+		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerSecurityLevel") {
+			ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
@@ -83,21 +92,22 @@ export async function getServerSecurityLevel_(ns,target) {
 /** @param {NS} ns @arg {string} target */
 export async function getServerMoneyAvailable_(ns,target) {
 	send_port1_msg(ns,{call: "getServerMoneyAvailable",args: [target]});
-	await ns.sleep(40);
-	let data=ns.readPort(2);
-	ns.print(data);
 	/** @type {ReplyMsg|null} */
 	let reply=null;
 	for(;reply===null;) {
-		ns.writePort(1,JSON.stringify({call: "getServerMoneyAvailable",args: [target]}));
+		if(trace) ns.print("query3");
 		await ns.sleep(40);
 		let data=ns.readPort(2);
 		if(typeof data==="number") throw new Error("Invalid reply");
-		if(data==="NULL PORT DATA") throw new Error("Null reply");
-		ns.print(data);
+		if(data==="NULL PORT DATA") {
+			await ns.sleep(1500);
+			continue;
+		}
+		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerMoneyAvailable") {
+			ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
@@ -112,17 +122,19 @@ export async function getServerMaxMoney_(ns,target) {
 	/** @type {ReplyMsg|null} */
 	let reply=null;
 	for(;reply===null;) {
+		if(trace) ns.print("query4");
 		await ns.sleep(40);
 		let data=ns.readPort(2);
+		if(typeof data==="number") throw new Error("Invalid reply");
 		if(data==="NULL PORT DATA") {
 			await ns.sleep(1500);
 			continue;
 		}
-		if(typeof data==="number") throw new Error("Invalid reply");
-		ns.print(data);
+		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
 		if(reply_msg.id!=="getServerMaxMoney") {
+			ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
