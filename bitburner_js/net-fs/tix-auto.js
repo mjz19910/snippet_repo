@@ -3,12 +3,14 @@ export async function main(ns) {
 	ns.tail();
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
+
 	let symbols=ns.stock.getSymbols();
 	/** @type {Map<string,number>} */
 	let stock_ask_price=new Map;
 	/** @type {Map<string,number[]>} */
 	let stock_ask_price_change_rate=new Map;
 	for(let cur_sym of symbols) stock_ask_price_change_rate.set(cur_sym,[]);
+
 	for(;;) {
 		await ns.sleep(1000);
 		let did_update=false;
