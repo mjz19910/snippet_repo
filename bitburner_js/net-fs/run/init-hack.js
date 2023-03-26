@@ -4,6 +4,10 @@ import {hack_server,hack_support,hack_template} from "/run/script_paths.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
 export class InitHackScript {
+	scripts=[
+		hack_support,hack_template,
+		"/run/helper/as.js",
+	];
 	/** @readonly */
 	backdoor_path="/data/backdoor_list.txt";
 	/** @type {string[]} */
@@ -201,7 +205,7 @@ export class InitHackScript {
 		let server_idx=cur_ps.findIndex(v => v.filename===hack_server);
 		if(server_idx===-1) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) {
-			this.ns.scp([hack_support,hack_template],hostname);
+			this.ns.scp(this.scripts,hostname);
 		}
 		await this.do_get_admin_rights();
 		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
