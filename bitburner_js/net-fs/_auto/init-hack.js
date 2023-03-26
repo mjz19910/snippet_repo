@@ -304,9 +304,8 @@ export class InitHackScript {
 				this.ns.nuke(hostname);
 				srv.hasAdminRights=true;
 				if(!this.to_backdoor.includes(hostname)) this.to_backdoor.push(hostname);
-				if(distribute) await this.ns.sleep(80);
+				if(distribute) await this.ns.sleep(20);
 			}
-			if(distribute) await this.ns.sleep(20);
 		}
 	}
 	/** @type {{[x:string]:Server}} */
