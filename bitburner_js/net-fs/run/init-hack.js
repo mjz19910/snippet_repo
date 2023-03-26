@@ -1,6 +1,6 @@
 import {as} from "/api/helper/as.js";
 import {get_hack_target} from "/run/hack-template-v3.js";
-import {hack_support,hack_template} from "/run/script_paths.js";
+import {hack_server, hack_support,hack_template} from "/run/script_paths.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
 export class InitHackScript {
@@ -198,8 +198,8 @@ export class InitHackScript {
 	}
 	async init_hack() {
 		let cur_ps=this.ns.ps("home");
-		let server_idx=cur_ps.findIndex(v => v.filename==="hack-server-v3.js");
-		if(server_idx===-1) this.ns.run("hack-server-v3.js");
+		let server_idx=cur_ps.findIndex(v => v.filename===hack_server);
+		if(server_idx===-1) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) {
 			this.ns.scp([hack_support,hack_template],hostname);
 		}
