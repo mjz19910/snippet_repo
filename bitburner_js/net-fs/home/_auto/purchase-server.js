@@ -20,6 +20,7 @@ export async function main(ns) {
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const target_script=hack_template_v2;
 	const template_changed=false;
+	const s={ns,player_hacking_skill,script_file: target_script,template_changed};
 
 	/** @arg {Server} srv */
 	async function start_script(srv) {
@@ -32,7 +33,7 @@ export async function main(ns) {
 			srv.hostname,
 			`run hack-template-v2 -t ${thread_n} ${player_hacking_skill}`,
 		);
-		return start_server_template(ns,template_changed,target_script,player_hacking_skill,srv,thread_n);
+		return start_server_template(s,srv,thread_n);
 	}
 
 	for(let hostname of purchased_server_hostnames) {
@@ -49,10 +50,14 @@ export async function main(ns) {
 	let last_server_money=server_money;
 	/** @arg {NS} ns @arg {string[]} servers @arg {string} old_srv @arg {string} new_srv */
 	function rename_purchased_server(ns,servers,old_srv,new_srv) {
+		if(old_srv===new_srv) return;
 		let idx=servers.indexOf(old_srv);
 		servers[idx]=new_srv;
 		let res=ns.renamePurchasedServer(old_srv,new_srv);
-		if(!res) ns.exit();
+		if(!res) {
+			ns.printf("%s -> %s",old_srv,new_srv);
+			ns.exit();
+		}
 	}
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} not_pserv @arg {string[]} only_pserv */
 	async function increase_server_ram(prev_ram,ram,not_pserv,only_pserv) {
@@ -79,6 +84,7 @@ export async function main(ns) {
 					++i;
 					last_server_money=server_money;
 					acc_avg_dur=delay;
+					await ns.sleep(50);
 					break wl;
 				}
 				await ns.sleep(delay);
