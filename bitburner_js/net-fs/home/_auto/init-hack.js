@@ -19,22 +19,31 @@ class ScriptState {
 		if(f_.has_ssh) return "with-ssh";
 		return "none";
 	}
-	/** @param {Server} srv @arg {number} t */
-	async start_server_template(srv,t) {
-		const {ns}=this;
-		const processes=ns.ps(srv.hostname);
+	/** @param {Server} srv */
+	async start_script_template(srv) {
+		const ro_1=`s:${this.player_hacking_skill}`;
+		const ro_2=`lvl:${srv.requiredHackingSkill}`;
+		const async_delay=this.get_async_delay();
+		if(srv.maxRam===0) {
+			if(this.opts.trace) this.format_print(async_delay,srv,`${ro_1} ${ro_2} h:-${srv.hostname}`);
+			return false;
+		}
+		const ro_base=`hack-v2 ${ro_1}`;
+		const processes=this.ns.ps(srv.hostname);
 		if(processes.length>0) {
 			if(!this.template_changed&&processes.find(ps => ps.filename===this.script_file)) return false;
 			processes.forEach(ps => {
-				if(ps.filename===this.script_file) ns.kill(ps.pid);
+				if(ps.filename===this.script_file) this.ns.kill(ps.pid);
 			});
 		}
-		if(ns.fileExists("debug.txt",srv.hostname)) {
-			ns.exec(this.script_file,srv.hostname,t,this.player_hacking_skill,"debug.txt");
-			return true;
-		}
+		const t=this.get_thread_count(srv);
 		let mode=this.get_mode();
-		ns.exec(this.script_file,srv.hostname,t,this.player_hacking_skill,mode);
+		this.ns.exec(this.script_file,srv.hostname,t,this.player_hacking_skill,mode);
+		if(this.opts.distribute) {
+			const ro_mem=`t:${t} h:${srv.hostname}`;
+			this.format_print(async_delay,srv,`${ro_base} ${ro_2} ${ro_mem}`);
+			await this.ns.sleep(async_delay);
+		}
 		return true;
 	}
 	/** @arg {string} fn_key */
@@ -189,7 +198,7 @@ class ScriptState {
 		}
 		await this.do_get_admin_rights();
 		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
-		await this.start_v2_hack();
+		await this.start_hack_script();
 		this.update_backdoor_cache();
 		this.log_servers_to_backdoor();
 	}
@@ -216,33 +225,20 @@ class ScriptState {
 	get_server_difficulty_score(srv) {
 		return this.ns.getHackTime(srv)+this.ns.getGrowTime(srv)+this.ns.getWeakenTime(srv)/3;
 	}
-	async start_v2_hack() {
-		const {opts: {trace,distribute}}=this;
+	get_async_delay() {
 		let servers_to_start_script_count=this.get_script_runner_count();
 		let target_server=get_hack_target([this.player_hacking_skill,this.get_mode()]);
 		let difficulty_score=this.get_server_difficulty_score(target_server)/servers_to_start_script_count|0;
-		if(trace) this.ns.print("difficulty_score: ",difficulty_score);
-		let async_delay=difficulty_score;
-		if(this.cmd_args.fast) async_delay=difficulty_score/10;
-		const ro_1=`s:${this.player_hacking_skill}`;
-		const static_run_on=`hack-v2 ${ro_1}`;
+		if(this.opts.trace) this.ns.print("difficulty_score: ",difficulty_score);
+		if(this.cmd_args.fast) return difficulty_score/10;
+		return difficulty_score;
+	}
+	async start_hack_script() {
 		for(const hostname of this.hostname_list) {
 			if(hostname.startsWith("big-")) continue;
 			const srv=this.get_server(hostname);
-			const ro_2=`lvl:${srv.requiredHackingSkill}`;
 			if(!srv.hasAdminRights) continue;
-			if(srv.maxRam===0) {
-				if(trace) this.format_print(async_delay,srv,`${ro_1} ${ro_2} h:-${hostname}`);
-				continue;
-			}
-			let t=srv.maxRam/2|0;
-			const ro_mem=`t:${t} h:${hostname}`;
-			if(hostname==="home") t=(srv.maxRam-srv.ramUsed-15)/2.4|0;
-			let started=await this.start_server_template(srv,t);
-			if(distribute&&started) {
-				this.format_print(async_delay,srv,`${static_run_on} ${ro_2} ${ro_mem}`);
-				await this.ns.sleep(async_delay);
-			}
+			await this.start_script_template(srv);
 		}
 	}
 	/** @arg {number} async_delay @arg {Server} srv @arg {string} msg */
@@ -278,11 +274,16 @@ class ScriptState {
 			}
 		}
 	}
+	/** @arg {Server} srv */
+	get_thread_count(srv) {
+		if(srv.hostname==="home") return (srv.maxRam-srv.ramUsed-16)/2|0;
+		return srv.maxRam/2|0;
+	}
 	async do_restart_purchased_servers() {
 		for(const hostname of this.hostname_list) {
 			if(!hostname.startsWith("big-")) continue;
 			const srv=this.get_server(hostname);
-			await this.start_server_template(srv,srv.maxRam/2|0);
+			await this.start_script_template(srv);
 		}
 	}
 	async do_get_admin_rights() {
