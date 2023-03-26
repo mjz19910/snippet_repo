@@ -42,6 +42,7 @@ function world() {
 			company_name: "Iron Gym",
 			service_cost: {exp_rate: 1.883,cost: -120},
 			backdoor_discount: "10%",
+			backdoor_rates: {cost: -120-(-120*0.1)},
 			services: [
 				{type: "train",exp: {type: "str",tag: "strength"}},
 				{type: "train",exp: {type: "def",tag: "defense"}},
@@ -95,12 +96,14 @@ function world() {
 		case "location": {
 			switch(location.tag) {
 				case "rothman university": {
-					const base_exp_rate=location.base_service_cost.exp_rate;
+					const enabled=false;
 					const base_cost_rate=location.base_service_cost.cost;
-					console.log(location.services.slice(0,2));
-					console.log(location.services.slice(2));
-					console.log(-120/base_cost_rate);
-					base_exp_rate;
+					if(enabled) console.log(location.services.slice(0,2));
+					if(enabled) console.log(location.services.slice(2));
+					if(enabled) console.log(-120/base_cost_rate);
+				} break;
+				case "iron gym": {
+					console.log(location);
 				} break;
 			}
 		} break;
