@@ -1,15 +1,18 @@
 /** @param {NS} ns */
 export async function main(ns) {
 	const use_hacked_servers=false;
+	const use_home_server=false;
 
 	ns.tail();
 	ns.clearLog();
 	const share_script="/api/share.js";
-	ns.kill(share_script);
-	let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
-	let pid=ns.run(share_script,thread_n,"auto","home");
-	await ns.sleep(200);
-	ns.closeTail(pid);
+	if(use_home_server) {
+		ns.kill(share_script);
+		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
+		let pid=ns.run(share_script,thread_n,"auto","home");
+		await ns.sleep(200);
+		ns.closeTail(pid);
+	}
 
 	// share purchased_servers
 	let share_servers=ns.getPurchasedServers().slice(0,16);
