@@ -4,17 +4,17 @@ export async function main(ns) {
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 
-	let symbols=ns.stock.getSymbols();
+	const symbols=ns.stock.getSymbols();
 	/** @type {Map<string,number>} */
-	let stock_ask_price=new Map;
+	const stock_ask_price=new Map;
 	/** @type {Map<string,number[]>} */
-	let stock_ask_price_change_rate=new Map;
-	for(let cur_sym of symbols) stock_ask_price_change_rate.set(cur_sym,[]);
+	const stock_ask_price_change_rate=new Map;
+	for(const cur_sym of symbols) stock_ask_price_change_rate.set(cur_sym,[]);
 
 	for(;;) {
 		await ns.sleep(1000);
 		let did_update=false;
-		for(let cur_sym of symbols) {
+		for(const cur_sym of symbols) {
 			let cur_price=ns.stock.getAskPrice(cur_sym);
 			let prev_price=stock_ask_price.get(cur_sym);
 			if(prev_price===void 0) {
@@ -26,9 +26,9 @@ export async function main(ns) {
 		}
 		if(!did_update) continue;
 		ns.tprintf("--- TIX Start ---");
-		for(let cur_sym of symbols) {
-			let ask_price=ns.stock.getAskPrice(cur_sym);
-			let prev_price=stock_ask_price.get(cur_sym);
+		for(const cur_sym of symbols) {
+			const ask_price=ns.stock.getAskPrice(cur_sym);
+			const prev_price=stock_ask_price.get(cur_sym);
 			if(!prev_price) continue;
 			if(prev_price===ask_price) continue;
 			stock_ask_price.set(cur_sym,ask_price);
