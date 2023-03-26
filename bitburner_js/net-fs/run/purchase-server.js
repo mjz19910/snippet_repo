@@ -23,6 +23,7 @@ export async function main(ns) {
 		let processes=ns.ps(hostname);
 		if(processes.length!==0) ns.kill(processes[0].pid);
 		const srv=ns.getServer(hostname);
+		ns.scp(s.scripts,hostname);
 		await s.start_script_template(srv);
 	}
 
@@ -56,7 +57,6 @@ export async function main(ns) {
 					if(purchased_server_hostnames.includes(hostname)) {
 						let old_proc=ns.ps(hostname);
 						old_proc.forEach(v => ns.kill(v.pid));
-						ns.scp(s.scripts,hostname);
 						ns.upgradePurchasedServer(hostname,ram);
 					} else {
 						let new_host=ns.purchaseServer(hostname,ram);
@@ -64,6 +64,7 @@ export async function main(ns) {
 						ns.scp(s.scripts,new_host);
 					}
 					const srv=ns.getServer(hostname);
+					ns.scp(s.scripts,hostname);
 					await s.start_script_template(srv);
 					rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
 					++i;
