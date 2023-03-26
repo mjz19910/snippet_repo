@@ -1,7 +1,8 @@
-/** @typedef {{call:"getServerMaxMoney";hostname:string;reply:number}|ReplyMsg2} ReplyMsg */
-/** @typedef {{call:"getServerMinSecurityLevel";hostname:string;reply:number}|ReplyMsg3} ReplyMsg2 */
-/** @typedef {{call:"getServerSecurityLevel";hostname:string;reply:number}|ReplyMsg4} ReplyMsg3 */
-/** @typedef {{call:"getServerMoneyAvailable";hostname:string;reply:number}|ReplyMsg5} ReplyMsg4 */
+/** @typedef {ReplyMsg1|ReplyMsg2|ReplyMsg3|ReplyMsg4|ReplyMsg5} ReplyMsg */
+/** @typedef {{call: "getServerMaxMoney";hostname: string;reply: number;}} ReplyMsg1 */
+/** @typedef {{call:"getServerMinSecurityLevel";hostname:string;reply:number}} ReplyMsg2 */
+/** @typedef {{call:"getServerSecurityLevel";hostname:string;reply:number}} ReplyMsg3 */
+/** @typedef {{call:"getServerMoneyAvailable";hostname:string;reply:number}} ReplyMsg4 */
 /** @typedef {{call:"get_server";hostname:string;reply:Server}} ReplyMsg5 */
 
 /** @typedef {{call:"getServerMaxMoney",args:[string]}|CallMsg2} CallMsg */
