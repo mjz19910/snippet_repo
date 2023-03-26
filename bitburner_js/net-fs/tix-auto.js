@@ -2,7 +2,7 @@
 export async function main(ns) {
 	ns.tail();
 	ns.tprintf("--- TIX Start ---");
-	let symbols=ns.stock.getSymbols();
+	let symbols=ns.stock.getSymbols().slice(0,8);
 	let stock_ask_price=new Map;
 	for(let cur_sym of symbols) {
 		let ask_price=ns.stock.getAskPrice(cur_sym);
@@ -28,8 +28,13 @@ export async function main(ns) {
 		ns.tprintf("%s:\t%s",cur_sym,price_arr.map(v => ns.formatNumber(v,0)).map(s => {
 			if(s.startsWith("-")) {
 				if(s.length===2) return " "+s;
+				if(s.length===3) return " "+s;
+				if(s.length===4) return " "+s;
 			}
 			if(s.length===1) return "  "+s;
+			if(s.length===2) return "  "+s;
+			if(s.length===3) return "  "+s;
+			ns.print("len: ",s.length," ",s);
 			if(s.length<4) {
 				let m=4-s.length;
 				return " ".repeat(m)+s;
