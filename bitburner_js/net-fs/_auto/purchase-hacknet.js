@@ -1,0 +1,115 @@
+/** @param {NS} ns */
+export async function main(ns) {
+	ns.disableLog("disableLog");
+	ns.disableLog("sleep");
+	ns.clearLog();
+	ns.tail();
+
+	let hacknet_entries = get_hacknet_node_entries(ns);
+	while (hacknet_entries.length < 9) {
+		let node_id = ns.hacknet.purchaseNode();
+		if (node_id !== -1) {
+			let node_info = ns.hacknet.getNodeStats(node_id);
+			hacknet_entries.push([node_id, node_info]);
+			ns.print("new node", node_id);
+		}
+		await ns.sleep(1000);
+	}
+	let nodes_not = hacknet_entries.filter(v => (v[1].level % 10) !== 0);
+	hacknet_entries = hacknet_entries.filter(v => v[1].level % 10 === 0);
+	nodes_not.forEach(([idx, { level }]) => ns.hacknet.upgradeLevel(idx, 10 - level % 10));
+	if (nodes_not.length > 0) {
+		ns.print("not", ns.hacknet.getNodeStats(nodes_not[0][0]));
+		return;
+	}
+	/** @arg {NodeStats} a @arg {NodeStats} b */
+	function cmp_node(a, b) {
+		if (a.level === b.level) {
+			return a.cores < b.cores;
+		}
+		if (a.cores === b.cores) {
+			if (a.ram === b.ram) return a.level < b.level;
+			return a.ram < b.ram;
+		}
+		if (a.ram === b.ram) return a.level < b.level;
+		return a.level < b.level;
+	}
+	let min_node_entry = hacknet_entries.reduce((v, u) => cmp_node(u[1], v[1]) ? u : v);
+	let continue_flag = true;
+	while (continue_flag) {
+		min_node_entry = hacknet_entries.reduce((v, u) => cmp_node(u[1], v[1]) ? u : v);
+		continue_flag = false;
+		hacknet_entries.forEach(v => {
+			let res = upgrade_node_level_entry(ns, ...v);
+			if (res) continue_flag = res;
+		});
+		hacknet_entries.forEach(v => {
+			let res = upgrade_node_ram(ns, ...v);
+			if (res) continue_flag = res;
+		});
+		hacknet_entries.forEach(v => {
+			let res = upgrade_node_cores(ns, ...v);
+			if (res) continue_flag = res;
+		});
+		ns.print("min: ", ns.hacknet.getNodeStats(min_node_entry[0]));
+		await ns.sleep(1000);
+	}
+	ns.print("done: ", ns.hacknet.getNodeStats(min_node_entry[0]));
+}
+/** @param {NS} ns @arg {number} idx @arg {NodeStats} node */
+function upgrade_node_cores(ns, idx, node) {
+	if (node.cores >= 16) return false;
+	let cores_n = 16 - node.cores;
+	while (cores_n > 0) {
+		let res = ns.hacknet.upgradeCore(idx, cores_n);
+		if (res) {
+			node.cores += cores_n;
+			break;
+		}
+		cores_n--;
+	}
+	return true;
+}
+/** @param {NS} ns @arg {number} idx @arg {NodeStats} node */
+function upgrade_node_ram(ns, idx, node) {
+	if (node.ram >= 64) return false;
+	let ram_n = 8 - Math.log2(node.ram);
+	while (ram_n > 0) {
+		let res = ns.hacknet.upgradeRam(idx, ram_n);
+		if (res) {
+			let cnt = ram_n;
+			for (let i = 0; i < cnt; i++) {
+				node.ram *= 2;
+			}
+			break;
+		}
+		ram_n--;
+	}
+	return true;
+}
+/** @param {NS} ns @arg {number} idx @arg {NodeStats} node */
+function upgrade_node_level_entry(ns, idx, node) {
+	if (node.level >= 200) return false;
+	let level_n = 200 - node.level;
+	while (level_n > 0) {
+		let res = ns.hacknet.upgradeLevel(idx, level_n);
+		if (res) {
+			node.level += level_n;
+			break;
+		}
+		level_n -= 10;
+	}
+	return true;
+}
+/** @param {NS} ns */
+function get_hacknet_node_entries(ns) {
+	/** @type {[number,NodeStats][]} */
+	let node_list = [];
+	let i = 0, len = ns.hacknet.numNodes();
+	while (i < len) {
+		let node_info = ns.hacknet.getNodeStats(i);
+		node_list.push([i, node_info]);
+		++i;
+	}
+	return node_list;
+}
