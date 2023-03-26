@@ -1,13 +1,14 @@
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
+	ns.tprintf("--- TIX Start ---");
 	let symbols=ns.stock.getSymbols();
 	let stock_ask_price=new Map;
 	for(let cur_sym of symbols) {
 		let ask_price=ns.stock.getAskPrice(cur_sym);
 		stock_ask_price.set(cur_sym,ask_price);
 	}
-	const wait_seconds=5;
+	const wait_seconds=6;
 	await ns.sleep(wait_seconds*1000);
 	/** @type {Map<string,number[]>} */
 	let stock_ask_price_change_rate=new Map;
@@ -25,7 +26,14 @@ export async function main(ns) {
 		if(!price_arr) continue;
 		price_arr.push(prev_price-ask_price);
 		ns.tprintf("%s:\t%s",cur_sym,price_arr.map(v => ns.formatNumber(v,0)).map(s => {
-			ns.print(s.length);
+			if(s.startsWith("-")) {
+				if(s.length===2) return " "+s;
+			}
+			if(s.length===1) return "  "+s;
+			if(s.length<4) {
+				let m=4-s.length;
+				return " ".repeat(m)+s;
+			}
 			return s;
 		}).join(",\t"));
 	}
