@@ -9,9 +9,7 @@ export async function main(ns) {
 	if(use_home_server) {
 		ns.kill(share_script);
 		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
-		let pid=ns.run(share_script,thread_n,"auto","home");
-		await ns.sleep(40);
-		ns.closeTail(pid);
+		ns.run(share_script,thread_n,"auto","home");
 	}
 
 	// share purchased_servers
@@ -22,9 +20,7 @@ export async function main(ns) {
 		}
 		ns.killall(srv);
 		let thread_n=ns.getServerMaxRam(srv)/4|0;
-		let pid=ns.exec(share_script,srv,thread_n,"auto",srv);
-		await ns.sleep(40);
-		ns.closeTail(pid);
+		ns.exec(share_script,srv,thread_n,"auto",srv);
 	}
 	if(!use_hacked_servers) return;
 	let seen_srv=new Set;
