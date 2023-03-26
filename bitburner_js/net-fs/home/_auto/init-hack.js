@@ -48,9 +48,9 @@ class ScriptState {
 		ns.clearLog();
 		ns.print("Script started");
 	}
-	/** @typedef {{src_host:string;seen_set:Set<string>;hostname_list:string[];trace:boolean}} HostScanOpts */
-	/** @arg {string} src_host @arg {boolean} trace */
-	start_host_scan(src_host,trace) {
+	/** @typedef {{src_host:string;seen_set:Set<string>;hostname_list:string[]}} HostScanOpts */
+	/** @arg {string} src_host */
+	start_host_scan(src_host) {
 		const scan_log_file="/data/host_scan.list.txt";
 		this.ns.clear(scan_log_file);
 
@@ -61,7 +61,7 @@ class ScriptState {
 		const hostname_list=[src_host];
 		map.set(src_host,this.ns.scan(src_host));
 		/** @type {HostScanOpts} */
-		const scan_opts={src_host,trace,seen_set,hostname_list};
+		const scan_opts={src_host,seen_set,hostname_list};
 		let scan_results=["------\n","\n"];
 		let depth=0;
 		for(;;) {
@@ -133,7 +133,7 @@ class ScriptState {
 		this.player_hacking_skill=ns.getPlayer().skills.hacking;
 		/** @type {string[]} */
 		this.to_backdoor=this.load_to_backdoor_list();
-		this.hostname_list=this.start_host_scan("home",s.trace);
+		this.hostname_list=this.start_host_scan("home");
 		this.template_changed=s.template_changed;
 		this.f_=this.gen_crack_flags();
 		this.service_map={
