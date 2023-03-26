@@ -44,16 +44,19 @@ export async function main(ns) {
 	const target=get_hack_target(as(ns.args));
 
 	// Defines how much money a server should have before we hack it
-	const moneyThresh=(await getServerMaxMoney_(ns,target))*0.85;
+	const moneyThreshold=(await getServerMaxMoney_(ns,target))*0.85;
+	ns.print("money threshold");
 
 	// Defines the maximum security level the target server can have.
-	const securityThresh=(await getServerMinSecurityLevel_(ns,target))+2.5;
+	const securityThreshold=(await getServerMinSecurityLevel_(ns,target))+2.5;
 
 	// Infinite loop that continuously hacks/grows/weakens the target server
 	while(true) {
-		if((await getServerSecurityLevel_(ns,target))>securityThresh) {
+		const security_level=await getServerSecurityLevel_(ns,target);
+		const server_money=await getServerMoneyAvailable_(ns,target);
+		if(security_level>securityThreshold) {
 			await ns.weaken(target);
-		} else if((await getServerMoneyAvailable_(ns,target))<moneyThresh) {
+		} else if(server_money<moneyThreshold) {
 			await ns.grow(target);
 		} else {
 			await ns.hack(target);

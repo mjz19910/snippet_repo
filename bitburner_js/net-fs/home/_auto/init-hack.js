@@ -184,6 +184,9 @@ class ScriptState {
 		let cur_ps=this.ns.ps("home");
 		let server_idx=cur_ps.findIndex(v => v.filename==="hack-server-v3.js");
 		if(server_idx===-1) this.ns.run("hack-server-v3.js");
+		for(const hostname of this.hostname_list) {
+			this.ns.scp(this.script_files,hostname);
+		}
 		await this.do_get_admin_rights();
 		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
 		await this.start_v2_hack();
@@ -299,7 +302,6 @@ class ScriptState {
 			if(!srv.hasAdminRights&&srv.openPortCount>=srv.numOpenPortsRequired) {
 				this.ns.nuke(hostname);
 				srv.hasAdminRights=true;
-				this.ns.scp(this.script_files,hostname);
 				if(!this.to_backdoor.includes(hostname)) this.to_backdoor.push(hostname);
 				if(distribute) await this.ns.sleep(1000/3);
 			}
@@ -335,5 +337,5 @@ export async function main(ns) {
 		distribute,
 		trace,
 	});
-	s.init_hack();
+	await s.init_hack();
 }
