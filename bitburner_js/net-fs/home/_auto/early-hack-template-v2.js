@@ -1,5 +1,3 @@
-import {as} from "/helper/as.js";
-
 /** @param {number} skill_lvl */
 function with_ssh(skill_lvl) {
 	if(skill_lvl>(100*2)) return "iron-gym";
@@ -27,7 +25,7 @@ function with_ftp(skill_lvl) {
 	return with_ssh(skill_lvl);
 }
 /**
- * @param {[number,"none"|"with-ssh"|"with-ftp"]} args
+ * @param {[number,"none"|"with-ssh"|"with-ftp"|"with-http"|"with-smtp"|"with-sql"]} args
  * Returns the "target server",
  * which is the server that we're going to hack.
  * */
@@ -67,3 +65,6 @@ export async function main(ns) {
 		}
 	}
 }
+
+/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+function as(e,x=e) {return x;}

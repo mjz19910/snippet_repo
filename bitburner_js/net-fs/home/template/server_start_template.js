@@ -24,8 +24,8 @@ export function get_mode(ns) {
 	if(f_.has_sql) return "with-sql";
 	if(f_.has_smtp) return "with-smtp";
 	if(f_.has_http) return "with-http";
-	if(!f_.has_ftp) return "with-ftp";
-	if(!f_.has_ssh) return "with-ssh";
+	if(f_.has_ftp) return "with-ftp";
+	if(f_.has_ssh) return "with-ssh";
 	return "none";
 }
 
