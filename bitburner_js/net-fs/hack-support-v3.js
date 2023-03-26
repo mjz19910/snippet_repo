@@ -71,14 +71,11 @@ export async function getServerMinSecurityLevel_(ns,target) {
 	for(;reply===null;) {
 		if(trace) ns.print("query1");
 		await ns.sleep(40);
-		let data=read_port_msg(ns,2);
-		if(data===null) {
+		let reply_msg=read_port2_msg(ns);
+		if(reply_msg===null) {
 			await ns.sleep(300);
 			continue;
 		}
-		if(trace) ns.print(data);
-		/** @type {ReplyMsg} */
-		let reply_msg=JSON.parse(data);
 		if(should_reject(reply_msg,call_id,target)) {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
