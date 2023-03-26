@@ -2,6 +2,8 @@ import {read_port1_msg,read_port_msg} from "/hack-support-v3.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
+	ns.tail();
+	ns.clearLog();
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 	ns.disableLog("getServerMaxMoney");
