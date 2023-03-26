@@ -1,3 +1,4 @@
+import {as} from "./helper/as.js";
 import {getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/api/hack-support-v3.js";
 
 /** @param {number} skill_lvl */
@@ -66,6 +67,3 @@ export async function main(ns) {
 		}
 	}
 }
-
-/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function as(e,x=e) {return x;}

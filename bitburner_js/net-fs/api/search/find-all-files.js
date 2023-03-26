@@ -1,4 +1,4 @@
-import {as} from "/helper/as.js";
+import {as} from "../helper/as.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
@@ -43,4 +43,5 @@ export async function main(ns) {
 		}
 	} while(cur_pos!==void 0);
 }
+
 /** @typedef {{start:string;exclude_ext: string;grep: string|null;_:string[]}} ScriptFlags */

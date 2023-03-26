@@ -1,4 +1,4 @@
-import {as} from "../../helper/as.js";
+import {as} from "../helper/as.js";
 
 /** @param {NS} ns */
 export function main(ns) {
