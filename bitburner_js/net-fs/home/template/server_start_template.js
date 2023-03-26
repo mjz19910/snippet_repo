@@ -1,12 +1,12 @@
-import {hack_template_v2} from "/vars/server_start.js";
+import {hack_template_v3} from "/vars/server_start.js";
 /** @arg {{ns:NS;template_changed:boolean;script_file:string;player_hacking_skill:number}} s @param {Server} srv @arg {number} t */
 export async function start_server_template(s,srv,t) {
 	const {ns}=s;
 	const processes=ns.ps(srv.hostname);
 	if(processes.length>0) {
-		if(!s.template_changed&&processes.find(ps => ps.filename===hack_template_v2)) return false;
+		if(!s.template_changed&&processes.find(ps => ps.filename===hack_template_v3)) return false;
 		processes.forEach(ps => {
-			if(ps.filename===hack_template_v2) ns.kill(ps.pid);
+			if(ps.filename===hack_template_v3) ns.kill(ps.pid);
 		});
 	}
 	if(ns.fileExists("debug.txt",srv.hostname)) {
