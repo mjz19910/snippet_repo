@@ -65,6 +65,7 @@ function world() {
 				{
 					position: "Employee",
 					money_rate: 163.778,
+					// calculated based on current skill levels
 					reputation_rate: 0.053,
 					strength_exp: 0.188,
 					defense_exp: 0.188,
@@ -75,6 +76,7 @@ function world() {
 				{
 					position: "Part-time Employee",
 					money_rate: 163.778,
+					// calculated based on current skill levels
 					reputation_rate: 0.053,
 					strength_exp: 0.188*(3/8),
 					defense_exp: 0.188*(3/8),
