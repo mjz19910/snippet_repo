@@ -28,7 +28,7 @@ function world() {
 			type: "location",
 			tag: "powerhouse gym",
 			company_name: "Powerhouse Gym",
-			service_cost: {exp_rate: 18.280,cost: -2400},
+			service_cost: {exp_rate: 18.834,cost: -2400},
 			services: [
 				{type: "train",exp: {type: "str",tag: "strength"}},
 				{type: "train",exp: {type: "def",tag: "defense"}},
