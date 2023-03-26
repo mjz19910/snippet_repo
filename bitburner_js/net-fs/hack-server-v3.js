@@ -32,19 +32,19 @@ export async function main(ns) {
 			switch(msg.call) {
 				case "getServerMaxMoney": {
 					let reply=ns.getServerMaxMoney(...msg.args);
-					send_port2_msg(ns,{call: "getServerMaxMoney",reply});
+					send_port2_msg(ns,{call: "getServerMaxMoney",hostname: msg.args[0],reply});
 				} break;
 				case "getServerMinSecurityLevel": {
 					let reply=ns.getServerMinSecurityLevel(...msg.args);
-					send_port2_msg(ns,{call: "getServerMinSecurityLevel",reply});
+					send_port2_msg(ns,{call: "getServerMinSecurityLevel",hostname: msg.args[0],reply});
 				} break;
 				case "getServerMoneyAvailable": {
 					let reply=ns.getServerMoneyAvailable(...msg.args);
-					send_port2_msg(ns,{call: "getServerMoneyAvailable",reply});
+					send_port2_msg(ns,{call: "getServerMoneyAvailable",hostname: msg.args[0],reply});
 				} break;
 				case "getServerSecurityLevel": {
 					let reply=ns.getServerSecurityLevel(...msg.args);
-					send_port2_msg(ns,{call: "getServerSecurityLevel",reply});
+					send_port2_msg(ns,{call: "getServerSecurityLevel",hostname: msg.args[0],reply});
 				} break;
 				case "get_server": {
 					let reply=get_server(msg.args[0]);
