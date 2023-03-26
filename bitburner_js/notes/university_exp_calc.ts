@@ -23,6 +23,56 @@ function university<T extends number,U extends number>(base_exp: T,base_cost: U)
 	] as const;
 }
 function world() {
+	let sector_12_locations=[
+		{
+			key: "blade industries",
+			company_name: "Blade Industries",
+			mirrors: [
+				{key: "four sigma",company_name: "Four Sigma"},
+			],
+			services: [
+				{
+					type: "job",position: "Business",
+					job_titles: [
+						{
+							title: null,requirements: [
+								{type: "hacking",level: 225},
+								{type: "charisma",level: 225}
+							]
+						}
+					],
+				},
+				{
+					type: "job",position: "IT",
+					job_titles: [
+						{title: "Intern",requirements: [{type: "hacking",level: 225}]}
+					],
+				},
+				{
+					type: "job",position: "Security",
+					job_titles: [
+						{
+							title: null,requirements: [
+								{type: "strength",level: 275},
+								{type: "defense",level: 275},
+								{type: "dexterity",level: 275},
+								{type: "agility",level: 275},
+								{type: "charisma",level: 225}
+							]
+						}
+					],
+				},
+				{
+					type: "job",position: "Software",
+					long_name: "Software Engineering",
+					job_titles: [
+						{title: "Intern",requirements: [{type: "hacking",hacking: 225}]}
+					],
+				},
+				{type: "infiltration",level: 25},
+			]
+		}
+	] as const;
 	let sector_12=[
 		{
 			type: "location",
@@ -88,6 +138,10 @@ function world() {
 					charisma_exp: 0.377*(3/4),
 				}
 			]
+		},
+		{
+			type: "locations",
+			value: sector_12_locations,
 		},
 		{
 			type: "map",
