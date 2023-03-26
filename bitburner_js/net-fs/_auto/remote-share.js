@@ -10,7 +10,7 @@ export async function main(ns) {
 		ns.kill(share_script);
 		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
 		let pid=ns.run(share_script,thread_n,"auto","home");
-		await ns.sleep(200);
+		await ns.sleep(40);
 		ns.closeTail(pid);
 	}
 
@@ -23,7 +23,7 @@ export async function main(ns) {
 		ns.killall(srv);
 		let thread_n=ns.getServerMaxRam(srv)/4|0;
 		let pid=ns.exec(share_script,srv,thread_n,"auto",srv);
-		await ns.sleep(200);
+		await ns.sleep(40);
 		ns.closeTail(pid);
 	}
 	if(!use_hacked_servers) return;
@@ -56,7 +56,7 @@ export async function main(ns) {
 		if(next_srv===void 0) break;
 		cur_srv=next_srv;
 		if(!pid) continue;
-		await ns.sleep(200);
+		await ns.sleep(40);
 		ns.closeTail(pid);
 	}
 }
