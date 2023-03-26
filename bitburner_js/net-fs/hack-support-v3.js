@@ -1,5 +1,7 @@
+const trace=false;
+
 /** @typedef {ReplyMsg1|ReplyMsg2|ReplyMsg3|ReplyMsg4|ReplyMsg5} ReplyMsg */
-/** @typedef {{call: "getServerMaxMoney";hostname: string;reply: number;}} ReplyMsg1 */
+/** @typedef {{call:"getServerMaxMoney";hostname:string;reply:number;}} ReplyMsg1 */
 /** @typedef {{call:"getServerMinSecurityLevel";hostname:string;reply:number}} ReplyMsg2 */
 /** @typedef {{call:"getServerSecurityLevel";hostname:string;reply:number}} ReplyMsg3 */
 /** @typedef {{call:"getServerMoneyAvailable";hostname:string;reply:number}} ReplyMsg4 */
@@ -49,20 +51,41 @@ export function read_port2_msg(ns) {
 	let msg=JSON.parse(data);
 	return msg;
 }
-
-const trace=false;
-
 /**
+ * @template {string} CallId
  * @param {ReplyMsg} reply
- * @param {string} call_
+ * @param {CallId} call_
  * @param {string} arg0
+ * @returns {reply is {call:CallId}}
  */
-function should_reject(reply,call_,arg0) {
-	if(reply.call!==call_) return true;
-	if(reply.hostname!==arg0) return true;
-	return false;
+function should_accept(reply,call_,arg0) {
+	if(reply.call!==call_) return false;
+	if(reply.hostname!==arg0) return false;
+	return true;
 }
-
+/** @param {NS} ns @arg {string} target */
+export async function getServerMaxMoney_(ns,target) {
+	const call_id="getServerMaxMoney";
+	send_port1_msg(ns,{call: call_id,args: [target]});
+	/** @type {ReplyMsg|null} */
+	let reply=null;
+	for(;reply===null;) {
+		if(trace) ns.print("query4");
+		await ns.sleep(40);
+		let reply_msg=read_port2_msg(ns);
+		if(reply_msg===null) {
+			await ns.sleep(300);
+			continue;
+		}
+		if(!should_accept(reply_msg,call_id,target)) {
+			if(trace) ns.print("reject: ",reply_msg);
+			ns.writePort(3,JSON.stringify(reply_msg));
+			continue;
+		}
+		reply=reply_msg;
+	}
+	return reply.reply;
+}
 /** @param {NS} ns @arg {string} target */
 export async function getServerMinSecurityLevel_(ns,target) {
 	const call_id="getServerMinSecurityLevel";
@@ -77,12 +100,11 @@ export async function getServerMinSecurityLevel_(ns,target) {
 			await ns.sleep(300);
 			continue;
 		}
-		if(should_reject(reply_msg,call_id,target)) {
+		if(!should_accept(reply_msg,call_id,target)) {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
-		if(reply_msg.call!==call_id) throw new Error("Rejected message");
 		reply=reply_msg;
 	}
 	return reply.reply;
@@ -101,7 +123,7 @@ export async function getServerSecurityLevel_(ns,target) {
 			await ns.sleep(300);
 			continue;
 		}
-		if(reply_msg.call!==call_id) {
+		if(!should_accept(reply_msg,call_id,target)) {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
@@ -112,7 +134,8 @@ export async function getServerSecurityLevel_(ns,target) {
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerMoneyAvailable_(ns,target) {
-	send_port1_msg(ns,{call: "getServerMoneyAvailable",args: [target]});
+	const call_id="getServerMoneyAvailable";
+	send_port1_msg(ns,{call: call_id,args: [target]});
 	/** @type {ReplyMsg|null} */
 	let reply=null;
 	for(;reply===null;) {
@@ -123,30 +146,7 @@ export async function getServerMoneyAvailable_(ns,target) {
 			await ns.sleep(300);
 			continue;
 		}
-		if(reply_msg.call!=="getServerMoneyAvailable") {
-			if(trace) ns.print("reject: ",reply_msg);
-			ns.writePort(3,JSON.stringify(reply_msg));
-			continue;
-		}
-		reply=reply_msg;
-	}
-	return reply.reply;
-}
-
-/** @param {NS} ns @arg {string} target */
-export async function getServerMaxMoney_(ns,target) {
-	send_port1_msg(ns,{call: "getServerMaxMoney",args: [target]});
-	/** @type {ReplyMsg|null} */
-	let reply=null;
-	for(;reply===null;) {
-		if(trace) ns.print("query4");
-		await ns.sleep(40);
-		let reply_msg=read_port2_msg(ns);
-		if(reply_msg===null) {
-			await ns.sleep(300);
-			continue;
-		}
-		if(reply_msg.call!=="getServerMaxMoney") {
+		if(!should_accept(reply_msg,call_id,target)) {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
