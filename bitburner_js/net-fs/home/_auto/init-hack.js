@@ -4,6 +4,12 @@ import {as} from "/helper/as.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
 class ScriptState {
+	/** @readonly */
+	backdoor_path="/data/backdoor_list.txt";
+	/** @readonly */
+	script_file=hack_template_v3;
+	script_files=["hack-support-v3.js",hack_template_v3];
+	arr_disabled=["disableLog"];
 	get_mode() {
 		const f_=this.gen_crack_flags();
 		if(f_.has_sql) return "with-sql";
@@ -31,11 +37,6 @@ class ScriptState {
 		ns.exec(this.script_file,srv.hostname,t,this.player_hacking_skill,mode);
 		return true;
 	}
-	/** @readonly */
-	backdoor_path="/data/backdoor_list.txt";
-	/** @readonly */
-	script_file=hack_template_v3;
-	arr_disabled=["disableLog"];
 	/** @arg {string} fn_key */
 	disableLog_(fn_key) {
 		if(this.arr_disabled.includes(fn_key)) return;
@@ -283,7 +284,6 @@ class ScriptState {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			const num_ports=srv.numOpenPortsRequired;
-			this.ns.scp(hack_template_v3,hostname);
 			if(num_ports>=1&&!srv.sshPortOpen) this.unlock_service(srv,"ssh");
 			if(num_ports>=2&&!srv.ftpPortOpen) this.unlock_service(srv,"ftp");
 			if(num_ports>=3&&!srv.smtpPortOpen) this.unlock_service(srv,"smtp");
@@ -296,6 +296,7 @@ class ScriptState {
 			if(!srv.hasAdminRights&&srv.openPortCount>=srv.numOpenPortsRequired) {
 				this.ns.nuke(hostname);
 				srv.hasAdminRights=true;
+				this.ns.scp(this.script_files,hostname);
 				if(!this.to_backdoor.includes(hostname)) this.to_backdoor.push(hostname);
 				if(distribute) await this.ns.sleep(1000/3);
 			}
