@@ -13,13 +13,7 @@ export async function main(ns) {
 	await ns.sleep(1000);
 	/** @type {Map<string,number[]>} */
 	let stock_ask_price_change_rate=new Map;
-	for(let cur_sym of symbols) {
-		let ask_price=ns.stock.getAskPrice(cur_sym);
-		let prev_price=stock_ask_price.get(cur_sym);
-		if(!prev_price) continue;
-		stock_ask_price_change_rate.set(cur_sym,[prev_price-ask_price]);
-		stock_ask_price.set(cur_sym,ask_price);
-	}
+	for(let cur_sym of symbols) stock_ask_price_change_rate.set(cur_sym,[]);
 	for(;;) {
 		await ns.sleep(1000);
 		let did_update=false;
