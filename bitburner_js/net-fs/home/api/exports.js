@@ -1,2 +1,1 @@
-/** @typedef {{src_host:string;seen_set:Set<string>;server_map_arr:ServerMapArray;trace:boolean}} HostScanOpts */
-/** @typedef {[[string|null,number], [number, "GB"], string][]} ServerMapArray */
+/** @typedef {{src_host:string;seen_set:Set<string>;hostname_list:string[];trace:boolean}} HostScanOpts */

@@ -1,7 +1,6 @@
 import {do_disable} from "/api/do_disable.js";
-/** @param {NS} ns @arg {{src_host:string,used_ram:number;trace:boolean}} args */
-export function start_host_scan(ns,args) {
-	const {src_host}=args;
+/** @param {NS} ns @arg {string} src_host @arg {boolean} trace */
+export function start_host_scan(ns,src_host,trace) {
 	const scan_log_file="/data/host_scan.list.txt";
 	ns.clear(scan_log_file);
 
@@ -9,14 +8,10 @@ export function start_host_scan(ns,args) {
 	let map=new Map;
 	/** @type {Set<string>} */
 	let seen_set=new Set;
-	/** @type {import("/api/exports.js").ServerMapArray} */
-	let server_map_arr=[
-		[[null,0],[ns.getServerMaxRam(src_host)-args.used_ram,"GB"],src_host],
-	];
-
+	const hostname_list=[src_host];
 	map.set(src_host,ns.scan(src_host));
 	/** @type {import("/api/exports.js").HostScanOpts} */
-	const scan_opts={...args,seen_set,server_map_arr};
+	const scan_opts={src_host,trace,seen_set,hostname_list};
 	let scan_results=["------\n","\n"];
 	let depth=0;
 	for(;;) {
@@ -26,7 +21,7 @@ export function start_host_scan(ns,args) {
 		if(map.size===0) break;
 	}
 	ns.write(scan_log_file,scan_results.join(""),"w");
-	return {map,server_map_arr};
+	return hostname_list;
 }
 /**
  * @param {NS} ns
@@ -34,14 +29,14 @@ export function start_host_scan(ns,args) {
  * @param {import("/api/exports.js").HostScanOpts} opts
  * */
 export function iter_host_scan_entries(ns,opts,depth,map) {
-	const {seen_set,server_map_arr}=opts;
+	const {seen_set,hostname_list}=opts;
 	let depth_list=[];
 	const clone=new Map(map);
 	for(let [key,val] of clone.entries()) {
-		for(let [idx,srv] of val.entries()) {
+		for(let srv of val) {
 			if(seen_set.has(srv)) continue;
 			seen_set.add(srv);
-			server_map_arr.push([[key,idx],[ns.getServerMaxRam(srv),"GB"],srv]);
+			hostname_list.push(srv);
 			let scan_res=ns.scan(srv);
 			let home_idx=scan_res.indexOf(opts.src_host);
 			if(home_idx>-1) scan_res.splice(home_idx,1);
