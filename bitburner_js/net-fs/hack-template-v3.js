@@ -56,7 +56,7 @@ export async function main(ns) {
 		const security_level=await getServerSecurityLevel_(ns,target);
 		const server_money=await getServerMoneyAvailable_(ns,target);
 		ns.print("securityLevel: ",security_level);
-		ns.print("moneyAvailable: ",server_money);
+		ns.print("moneyAvailable: $",ns.formatNumber(server_money));
 		if(security_level>securityThreshold) {
 			await ns.weaken(target);
 		} else if(server_money<moneyThreshold) {
