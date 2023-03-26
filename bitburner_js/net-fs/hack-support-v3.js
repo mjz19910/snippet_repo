@@ -63,95 +63,51 @@ function should_accept(reply,call_,arg0) {
 	if(reply.hostname!==arg0) return false;
 	return true;
 }
-/** @param {NS} ns @arg {string} target */
-export async function getServerMaxMoney_(ns,target) {
-	const call_id="getServerMaxMoney";
-	send_port1_msg(ns,{call: call_id,args: [target]});
-	/** @type {ReplyMsg|null} */
-	let reply=null;
-	for(;reply===null;) {
-		if(trace) ns.print("query4");
+/**
+ * @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id @arg {number} uid
+ */
+async function generic_get_call(ns,target,call_id,uid) {
+	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
+	function assume_return(x) {x;}
+	for(let rep_count=6;;rep_count++) {
+		if(rep_count>=6) {
+			send_port1_msg(ns,{call: call_id,args: [target]});
+			rep_count=0;
+		}
+		if(trace) ns.print(`query${uid}`);
 		await ns.sleep(40);
-		let reply_msg=read_port2_msg(ns);
-		if(reply_msg===null) {
+		let msg=read_port2_msg(ns);
+		if(msg===null) {
 			await ns.sleep(300);
 			continue;
 		}
-		if(!should_accept(reply_msg,call_id,target)) {
-			if(trace) ns.print("reject: ",reply_msg);
-			ns.writePort(3,JSON.stringify(reply_msg));
+		if(!should_accept(msg,call_id,target)) {
+			if(trace) ns.print("reject: ",msg);
+			ns.writePort(3,JSON.stringify(msg));
 			continue;
 		}
-		reply=reply_msg;
+		let ret=msg.reply;
+		assume_return(ret);
+		return ret;
 	}
-	return reply.reply;
+}
+/** @param {NS} ns @arg {string} target */
+export function getServerMaxMoney_(ns,target) {
+	const call_id="getServerMaxMoney",uid=4;
+	return generic_get_call(ns,target,call_id,uid);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerMinSecurityLevel_(ns,target) {
 	const call_id="getServerMinSecurityLevel";
-	send_port1_msg(ns,{call: call_id,args: [target]});
-	/** @type {ReplyMsg|null} */
-	let reply=null;
-	for(;reply===null;) {
-		if(trace) ns.print("query1");
-		await ns.sleep(40);
-		let reply_msg=read_port2_msg(ns);
-		if(reply_msg===null) {
-			await ns.sleep(300);
-			continue;
-		}
-		if(!should_accept(reply_msg,call_id,target)) {
-			if(trace) ns.print("reject: ",reply_msg);
-			ns.writePort(3,JSON.stringify(reply_msg));
-			continue;
-		}
-		reply=reply_msg;
-	}
-	return reply.reply;
+	return generic_get_call(ns,target,call_id,1);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerSecurityLevel_(ns,target) {
 	const call_id="getServerSecurityLevel";
-	send_port1_msg(ns,{call: call_id,args: [target]});
-	/** @type {ReplyMsg|null} */
-	let reply=null;
-	for(;reply===null;) {
-		if(trace) ns.print("query2");
-		await ns.sleep(40);
-		let reply_msg=read_port2_msg(ns);
-		if(reply_msg===null) {
-			await ns.sleep(300);
-			continue;
-		}
-		if(!should_accept(reply_msg,call_id,target)) {
-			if(trace) ns.print("reject: ",reply_msg);
-			ns.writePort(3,JSON.stringify(reply_msg));
-			continue;
-		}
-		reply=reply_msg;
-	}
-	return reply.reply;
+	return generic_get_call(ns,target,call_id,2);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerMoneyAvailable_(ns,target) {
 	const call_id="getServerMoneyAvailable";
-	send_port1_msg(ns,{call: call_id,args: [target]});
-	/** @type {ReplyMsg|null} */
-	let reply=null;
-	for(;reply===null;) {
-		if(trace) ns.print("query3");
-		await ns.sleep(40);
-		let reply_msg=read_port2_msg(ns);
-		if(reply_msg===null) {
-			await ns.sleep(300);
-			continue;
-		}
-		if(!should_accept(reply_msg,call_id,target)) {
-			if(trace) ns.print("reject: ",reply_msg);
-			ns.writePort(3,JSON.stringify(reply_msg));
-			continue;
-		}
-		reply=reply_msg;
-	}
-	return reply.reply;
+	return generic_get_call(ns,target,call_id,3);
 }
