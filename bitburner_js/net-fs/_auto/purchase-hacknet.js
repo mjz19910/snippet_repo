@@ -45,7 +45,7 @@ export async function main(ns) {
 	}
 	let min_node_entry=hacknet_entries.reduce((v,u) => cmp_node(u[1],v[1])? u:v);
 	let continue_flag=true,did_upgrade=false;
-	let delay=1000;
+	let delay=100;
 	while(continue_flag) {
 		min_node_entry=hacknet_entries.reduce((v,u) => cmp_node(u[1],v[1])? u:v);
 		continue_flag=false;
