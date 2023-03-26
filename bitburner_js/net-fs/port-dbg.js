@@ -4,7 +4,6 @@ export async function main(ns) {
 	ns.clearLog();
 	let delayed_messages=[];
 	let handle=ns.getPortHandle(3);
-	await handle.nextWrite();
 	if(handle.empty()) {
 		ns.print("empty port");
 		return;
