@@ -23,6 +23,17 @@ export function read_port1_msg(ns) {
 export function send_port1_msg(ns,msg) {
 	return ns.writePort(1,JSON.stringify(msg));
 }
+/** @param {NS} ns */
+export function read_port2_msg(ns) {
+	let data=ns.readPort(2);
+	if(typeof data==="number") {
+		throw new Error("Invalid message");
+	}
+	if(data==="NULL PORT DATA") return null;
+	/** @type {ReplyMsg} */
+	let msg=JSON.parse(data);
+	return msg;
+}
 
 /** @param {NS} ns @arg {string} target */
 export async function getServerMinSecurityLevel_(ns,target) {
