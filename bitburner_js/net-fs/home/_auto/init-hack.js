@@ -2,61 +2,76 @@ import {start_server_template,get_mode} from "/template/server_start_template.js
 import {get_hack_target} from "/_auto/early-hack-template-v2.js";
 import {disable_log_use as disable_log_use1,start_host_scan} from "/api/iter_host_scan_entries.js";
 import {do_disable} from "/api/do_disable.js";
-import {hack_template_v2} from "/vars/server_start.js";
+import {hack_template_v3} from "/vars/server_start.js";
 import {as} from "/helper/as.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
+// /** @typedef {{backdoor_path:"/data/backdoor_list.txt";ns:NS;cmd_args:RunFlags;distribute:boolean;trace:boolean;template_changed:boolean;player_hacking_skill:number;script_file:string;hostname_list:string[];to_backdoor:string[];get_server(x:string):Server;exec_template(srv:Server,t:number):Promise<boolean>}} ScriptState */
+class ScriptState {
+	/** @readonly */
+	backdoor_path="/data/backdoor_list.txt";
+	/** @readonly */
+	script_file=hack_template_v3;
+	/** @arg {NS} ns @arg {{trace:boolean;distribute:boolean;template_changed:boolean}} s */
+	constructor(ns,s) {
+		this.opts=s;
+		this.ns=ns;
+		/** @type {RunFlags} */
+		this.cmd_args=as(ns.flags([
+			["fast",false],
+			["restart_purchased_servers",false],
+		]));
+		this.player_hacking_skill=ns.getPlayer().skills.hacking;
+		/** @type {string[]} */
+		this.to_backdoor=load_to_backdoor_list(ns,this.backdoor_path);
+		this.hostname_list=start_host_scan(ns,"home",s.trace);
+		this.template_changed=s.template_changed;
+		s;
+	}
+	/** @arg {Server} srv @arg {number} t */
+	exec_template(srv,t) {
+		return start_server_template(this,srv,t);
+	}
+	/** @type {{[x:string]:Server}} */
+	server_map={};
+	/** @arg {string} hostname */
+	get_server(hostname) {
+		let server=this.server_map[hostname];
+		if(server) return server;
+		server=this.ns.getServer(hostname);
+		this.server_map[hostname]=server;
+		return server;
+	}
+}
 
 /** @param {NS} ns */
 export async function main(ns) {
 	const trace=false;
 	const distribute=true;
 	const template_changed=false;
-	/** @type {RunFlags} */
-	const cmd_args=as(ns.flags([
-		["fast",false],
-		["restart_purchased_servers",false],
-	]));
-
-	/** @type {{[x:string]:Server}} */
-	const server_map={};
-	/** @arg {string} hostname */
-	function get_server(hostname) {
-		let server=server_map[hostname];
-		if(server) return server;
-		server=ns.getServer(hostname);
-		server_map[hostname]=server;
-		return server;
-	}
 
 	init_script(ns);
-	const backdoor_path="/data/backdoor_list.txt";
-	/** @type {string[]} */
-	const to_backdoor=load_to_backdoor_list(ns,backdoor_path);
-	const player_hacking_skill=ns.getPlayer().skills.hacking;
+	const s=new ScriptState(ns,{
+		template_changed,
+		distribute,
+		trace,
+	});
 
-	/** @type {string} */
-	const template_script=hack_template_v2;
-	const script_state={ns,script_file: template_script,template_changed,player_hacking_skill};
-
-	// Player stats
-	/** @arg {Server} srv @arg {number} t */
-	function exec_template(srv,t) {
-		return start_server_template(script_state,srv,t);
-	}
-	/** @type {string[]} */
-	const hostname_list=start_host_scan(ns,"home",trace);
-
-	await do_get_admin_rights(ns,hostname_list,get_server,template_script,to_backdoor,distribute);
-	if(cmd_args.restart_purchased_servers) await do_restart_purchased_servers(get_server,hostname_list,exec_template);
-	await start_v2_hack(ns,cmd_args,hostname_list,trace,get_server,player_hacking_skill,exec_template,distribute);
-	update_backdoor_cache(ns,hostname_list,get_server,player_hacking_skill,to_backdoor);
-	for(const hostname of to_backdoor) {
-		const srv=get_server(hostname);
+	await do_get_admin_rights(s);
+	if(s.cmd_args.restart_purchased_servers) await do_restart_purchased_servers(s);
+	await start_v2_hack(s);
+	update_backdoor_cache(s);
+	log_servers_to_backdoor(s);
+	// finished
+}
+/** @param {ScriptState} s */
+function log_servers_to_backdoor(s) {
+	const {ns,backdoor_path}=s;
+	for(const hostname of s.to_backdoor) {
+		const srv=s.get_server(hostname);
 		ns.print("backdoor: ",hostname," ",srv.requiredHackingSkill);
 	}
-	ns.write(backdoor_path,to_backdoor.join("\n")+"\n","w");
-	// finished
+	ns.write(backdoor_path,s.to_backdoor.join("\n")+"\n","w");
 }
 /** @param {NS} ns @param {string} srv */
 function get_server_difficulty_score(ns,srv) {
@@ -128,12 +143,12 @@ function disable_log_use(callback) {
 	callback("httpworm");
 }
 
-/** @arg {(hostname:string)=>Server} get_server @arg {string[]} hostname_list */
-function get_script_runner_count(get_server,hostname_list) {
+/** @param {ScriptState} s */
+function get_script_runner_count(s) {
 	let server_count=0;
-	for(const hostname of hostname_list) {
+	for(const hostname of s.hostname_list) {
 		if(hostname.startsWith("big-")) continue;
-		const srv=get_server(hostname);
+		const srv=s.get_server(hostname);
 		if(!srv.hasAdminRights) continue;
 		if(srv.maxRam===0) continue;
 		server_count++;
@@ -157,37 +172,28 @@ function short_time_format(ns,time_ms) {
 	format_str=format_str.replace(" seconds","s");
 	return format_str;
 }
-/** @param {(hostname:string)=>Server} get_server @param {string[]} hostname_list @param {(srv:Server,t:number)=>Promise<boolean>} exec_template */
-async function do_restart_purchased_servers(get_server,hostname_list,exec_template) {
-	for(const hostname of hostname_list) {
+/** @param {ScriptState} s */
+async function do_restart_purchased_servers(s) {
+	for(const hostname of s.hostname_list) {
 		if(!hostname.startsWith("big-")) continue;
-		const srv=get_server(hostname);
-		await exec_template(srv,srv.maxRam/2.4|0);
+		const srv=s.get_server(hostname);
+		await s.exec_template(srv,srv.maxRam/2.4|0);
 	}
 }
-
-/**
- * @param {NS} ns
- * @param {string[]} hostname_list
- * @param {boolean} trace
- * @param {(hostname:string)=>Server} get_server
- * @param {number} player_hacking_skill
- * @param {(srv:Server,t:number)=>Promise<boolean>} exec_template
- * @param {boolean} distribute
- * @param {RunFlags} cmd_args
- */
-async function start_v2_hack(ns,cmd_args,hostname_list,trace,get_server,player_hacking_skill,exec_template,distribute) {
-	let servers_to_start_script_count=get_script_runner_count(get_server,hostname_list);
-	let target_server=get_hack_target([player_hacking_skill,get_mode(ns)]);
+/** @param {ScriptState} s */
+async function start_v2_hack(s) {
+	const {ns,opts: {trace,distribute}}=s;
+	let servers_to_start_script_count=get_script_runner_count(s);
+	let target_server=get_hack_target([s.player_hacking_skill,get_mode(ns)]);
 	let difficulty_score=get_server_difficulty_score(ns,target_server)/servers_to_start_script_count|0;
 	if(trace) ns.print("difficulty_score: ",difficulty_score);
 	let async_delay=difficulty_score;
-	if(cmd_args.fast) async_delay=difficulty_score/10;
-	const ro_1=`s:${player_hacking_skill}`;
+	if(s.cmd_args.fast) async_delay=difficulty_score/10;
+	const ro_1=`s:${s.player_hacking_skill}`;
 	const static_run_on=`hack-v2 ${ro_1}`;
-	for(const hostname of hostname_list) {
+	for(const hostname of s.hostname_list) {
 		if(hostname.startsWith("big-")) continue;
-		const srv=get_server(hostname);
+		const srv=s.get_server(hostname);
 		const ro_2=`lvl:${srv.requiredHackingSkill}`;
 		if(!srv.hasAdminRights) continue;
 		if(srv.maxRam===0) {
@@ -197,28 +203,21 @@ async function start_v2_hack(ns,cmd_args,hostname_list,trace,get_server,player_h
 		let t=srv.maxRam/2.4|0;
 		const ro_mem=`t:${t} h:${hostname}`;
 		if(hostname==="home") t=(srv.maxRam-srv.ramUsed-15)/2.4|0;
-		let started=await exec_template(srv,t);
+		let started=await s.exec_template(srv,t);
 		if(distribute&&started) {
 			format_print(ns,async_delay,srv,`${static_run_on} ${ro_2} ${ro_mem}`);
 			await ns.sleep(async_delay);
 		}
 	}
 }
-
-/**
- * @param {NS} ns
- * @param {string[]} hostname_list
- * @param {(hostname:string)=>Server} get_server
- * @param {string} template_script
- * @param {any[]} to_backdoor
- * @param {boolean} distribute
- */
-async function do_get_admin_rights(ns,hostname_list,get_server,template_script,to_backdoor,distribute) {
+/** @param {ScriptState} s */
+async function do_get_admin_rights(s) {
+	const {ns,opts: {distribute}}=s;
 	const {unlock_service}=gen_server_crack(ns);
-	for(const hostname of hostname_list) {
-		const srv=get_server(hostname);
+	for(const hostname of s.hostname_list) {
+		const srv=s.get_server(hostname);
 		const num_ports=srv.numOpenPortsRequired;
-		ns.scp(template_script,hostname);
+		ns.scp(hack_template_v3,hostname);
 		if(num_ports>=1&&!srv.sshPortOpen) unlock_service(srv,"ssh");
 		if(num_ports>=2&&!srv.ftpPortOpen) unlock_service(srv,"ftp");
 		if(num_ports>=3&&!srv.smtpPortOpen) unlock_service(srv,"smtp");
@@ -231,27 +230,21 @@ async function do_get_admin_rights(ns,hostname_list,get_server,template_script,t
 		if(!srv.hasAdminRights&&srv.openPortCount>=srv.numOpenPortsRequired) {
 			ns.nuke(hostname);
 			srv.hasAdminRights=true;
-			if(!to_backdoor.includes(hostname)) to_backdoor.push(hostname);
+			if(!s.to_backdoor.includes(hostname)) s.to_backdoor.push(hostname);
 			if(distribute) await ns.sleep(1000/3);
 		}
 		if(distribute) await ns.sleep(20);
 	}
 }
-
-/**
- * @param {NS} ns
- * @param {string[]} hostname_list
- * @param {(hostname:string)=>Server} get_server
- * @param {number} player_hacking_skill
- * @param {any[]} to_backdoor
- */
-function update_backdoor_cache(ns,hostname_list,get_server,player_hacking_skill,to_backdoor) {
-	for(let hostname of hostname_list) {
+/** @param {ScriptState} s */
+function update_backdoor_cache(s) {
+	const {ns,to_backdoor}=s;
+	for(let hostname of s.hostname_list) {
 		if(hostname.startsWith("big-")) continue;
-		const srv=get_server(hostname);
+		const srv=s.get_server(hostname);
 		if(srv.purchasedByPlayer) continue;
 		if(!srv.hasAdminRights) continue;
-		if(srv.requiredHackingSkill<=player_hacking_skill&&!srv.backdoorInstalled) {
+		if(srv.requiredHackingSkill<=s.player_hacking_skill&&!srv.backdoorInstalled) {
 			if(!to_backdoor.includes(hostname)) {
 				ns.print("to_backdoor: ",hostname);
 				to_backdoor.push(hostname);
