@@ -117,9 +117,6 @@ function calc_compression_step1(input) {
 	let r1=all_res.filter(v => v[0][2]!==input.length);
 	return r1;
 }
-function extract_len(arr,len) {
-
-}
 /** @arg {string} input */
 function solve(input) {
 	let r1=calc_compression_step1(input);
