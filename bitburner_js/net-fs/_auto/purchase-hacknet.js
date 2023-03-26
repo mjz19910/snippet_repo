@@ -48,8 +48,10 @@ export async function main(ns) {
 	while(continue_flag) {
 		min_node_entry=hacknet_entries.reduce((v,u) => cmp_node(u[1],v[1])? u:v);
 		continue_flag=false;
-		let upgrade_cost=null,upgrade_type=null;
-		hacknet_entries.forEach(v => {
+		/** @type {number|null} */
+		let upgrade_cost=null;
+		let upgrade_type=null;
+		for(let v of hacknet_entries) {
 			let res=upgrade_node_level_entry(ns,...v);
 			if(res[0]) {
 				upgrade_type="level";
@@ -57,8 +59,8 @@ export async function main(ns) {
 				continue_flag=res[0];
 				upgrade_cost=res[1];
 			}
-		});
-		hacknet_entries.forEach(v => {
+		};
+		for(let v of hacknet_entries) {
 			let res=upgrade_node_ram(ns,...v);
 			if(res[0]) {
 				upgrade_type="ram";
@@ -66,8 +68,8 @@ export async function main(ns) {
 				continue_flag=res[0];
 				upgrade_cost=res[1];
 			}
-		});
-		hacknet_entries.forEach(v => {
+		};
+		for(let v of hacknet_entries) {
 			let res=upgrade_node_cores(ns,...v);
 			if(res[0]) {
 				upgrade_type="core";
@@ -75,9 +77,9 @@ export async function main(ns) {
 				continue_flag=res[0];
 				upgrade_cost=res[1];
 			}
-		});
+		};
 		if(upgrade_cost!==null) ns.printf("min: %s %s",min_node_entry[1].name,upgrade_type);
-		await ns.sleep(1000);
+		await ns.sleep(5000);
 	}
 	if(did_upgrade) {
 		ns.print("done: ",ns.hacknet.getNodeStats(min_node_entry[0]));
