@@ -6,8 +6,18 @@ export async function main(ns) {
 
 	const tix=ns.stock;
 
+	/** @type {Map<string,number>} */
+	const num_map=new Map;
+
 	const symbols=tix.getSymbols();
-	for(let sym of symbols) {
-		ns.printf("%s: %s%%",sym,ns.formatNumber(tix.getForecast(sym)*100,2));
+	for(;;) {
+		ns.printf("--- TIX Forecast ---");
+		for(let sym of symbols.slice(0,18)) {
+			const cur=tix.getForecast(sym);
+			let prev=num_map.get(sym);
+			if(prev===void 0) {num_map.set(sym,cur); continue;}
+			ns.printf("%s:\t%s%%",sym,ns.formatNumber(tix.getForecast(sym)*100,3));
+		}
+		await ns.sleep(1000);
 	}
 }
