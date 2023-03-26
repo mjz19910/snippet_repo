@@ -223,7 +223,6 @@ class ScriptState {
 			}
 		}
 	}
-
 	/** @arg {number} async_delay @arg {Server} srv @arg {string} msg */
 	format_print(async_delay,srv,msg) {
 		this.ns.printf(
@@ -233,7 +232,6 @@ class ScriptState {
 			msg,
 		);
 	}
-
 	/** @arg {number} time_ms */
 	short_time_format(time_ms) {
 		let format_str=this.ns.tFormat(time_ms);
