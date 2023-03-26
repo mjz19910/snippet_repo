@@ -51,28 +51,40 @@ export function read_port2_msg(ns) {
 
 const trace=false;
 
+/**
+ * @param {ReplyMsg} reply
+ * @param {string} call_
+ * @param {string} arg0
+ */
+function should_reject(reply,call_,arg0) {
+	if(reply.call!==call_) return true;
+	if(reply.hostname!==arg0) return true;
+	return false;
+}
+
 /** @param {NS} ns @arg {string} target */
 export async function getServerMinSecurityLevel_(ns,target) {
-	send_port1_msg(ns,{call: "getServerMinSecurityLevel",args: [target]});
+	const call_id="getServerMinSecurityLevel";
+	send_port1_msg(ns,{call: call_id,args: [target]});
 	/** @type {ReplyMsg|null} */
 	let reply=null;
 	for(;reply===null;) {
 		if(trace) ns.print("query1");
 		await ns.sleep(40);
-		let data=ns.readPort(2);
-		if(data==="NULL PORT DATA") {
-			await ns.sleep(1500);
+		let data=read_port_msg(ns,2);
+		if(data===null) {
+			await ns.sleep(300);
 			continue;
 		}
-		if(typeof data==="number") throw new Error("Invalid reply");
 		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
-		if(reply_msg.call!=="getServerMinSecurityLevel") {
+		if(should_reject(reply_msg,call_id,target)) {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
 		}
+		if(reply_msg.call!==call_id) throw new Error("Rejected message");
 		reply=reply_msg;
 	}
 	return reply.reply;
