@@ -79,50 +79,32 @@ export async function main(ns) {
 		}
 		if(distribute) await ns.sleep(20);
 	}
-	if(cmd_args.restart_purchased_servers) {
-		for(const hostname of hostname_list) {
-			if(!hostname.startsWith("big-")) continue;
-			const srv=server_map[hostname];
-			await exec_template(srv,srv.maxRam/2.4|0);
-		}
-	}
-	let servers_to_start_script_count=0;
-	for(const hostname of hostname_list) {
-		if(hostname.startsWith("big-")) continue;
-		const srv=server_map[hostname];
-		if(!srv.hasAdminRights) continue;
-		if(srv.maxRam===0) continue;
-		servers_to_start_script_count++;
-	}
+	if(cmd_args.restart_purchased_servers) do_restart_purchased_servers(server_map,hostname_list,exec_template);
+	let servers_to_start_script_count=get_script_runner_count(server_map,hostname_list);
 	let target_server=get_hack_target([player_hacking_skill,get_mode(ns)]);
 	let difficulty_score=get_server_difficulty_score(ns,target_server)/servers_to_start_script_count|0;
 	if(trace) ns.print("difficulty_score: ",difficulty_score);
 	let async_delay=difficulty_score;
 	if(cmd_args.fast) async_delay=difficulty_score/10;
+	const ro_1=`s:${player_hacking_skill}`;
+	const static_run_on=`hack-v2 ${ro_1}`;
 	for(const hostname of hostname_list) {
 		if(hostname.startsWith("big-")) continue;
 		let srv=server_map[hostname];
+		const ro_2=`lvl:${srv.requiredHackingSkill}`;
 		if(!srv.hasAdminRights) continue;
-		/** @arg {string} msg */
-		function format_print(msg) {
-			ns.printf(
-				"[w:%s, b:%s lvl:%s %s ~/]> %s",
-				ns.tFormat(async_delay),
-				+srv.backdoorInstalled,
-				srv.requiredHackingSkill,
-				hostname,
-				msg,
-			);
-		}
 		if(srv.maxRam===0) {
-			if(trace) format_print("unable to run scripts");
+			if(trace) format_print(ns,async_delay,srv,`${ro_1} ${ro_2} h:-${hostname}`);
 			continue;
 		}
 		let t=srv.maxRam/2.4|0;
+		const ro_mem=`t:${t} h:${hostname}`;
 		if(hostname==="home") t=(srv.maxRam-srv.ramUsed-15)/2.4|0;
-		if(distribute) format_print(`run hack-template-v2 -t ${t} ${player_hacking_skill}`);
 		let started=await exec_template(srv,t);
-		if(distribute&&started) await ns.sleep(async_delay);
+		if(distribute&&started) {
+			format_print(ns,async_delay,srv,`${static_run_on} ${ro_2} ${ro_mem}`);
+			await ns.sleep(async_delay);
+		}
 	}
 	for(let [,,hostname] of server_map_arr) {
 		if(hostname.startsWith("big-")) continue;
@@ -174,6 +156,7 @@ export function gen_server_crack(ns) {
 		if(f_[`has_${type}`]) {
 			service_map[type](srv.hostname);
 			srv[`${type}PortOpen`]=true;
+			srv.openPortCount++;
 		}
 	}
 	return {flags_: f_,unlock_service};
@@ -211,4 +194,42 @@ function disable_log_use(callback) {
 	callback("ftpcrack");
 	callback("relaysmtp");
 	callback("httpworm");
+}
+
+/** @arg {{[x:string]:Server}} server_map @arg {string[]} hostname_list */
+function get_script_runner_count(server_map,hostname_list) {
+	let server_count=0;
+	for(const hostname of hostname_list) {
+		if(hostname.startsWith("big-")) continue;
+		const srv=server_map[hostname];
+		if(!srv.hasAdminRights) continue;
+		if(srv.maxRam===0) continue;
+		server_count++;
+	}
+	return server_count;
+}
+
+/** @param {NS} ns @arg {number} async_delay @arg {Server} srv @arg {string} msg */
+function format_print(ns,async_delay,srv,msg) {
+	ns.printf(
+		"[w:%s, b:%s] %s",
+		short_time_format(ns,async_delay),
+		+srv.backdoorInstalled,
+		msg,
+	);
+}
+
+/** @param {NS} ns @arg {number} time_ms */
+function short_time_format(ns,time_ms) {
+	let format_str=ns.tFormat(time_ms);
+	format_str=format_str.replace(" seconds","s");
+	return format_str;
+}
+/** @param {{[x:string]:Server}} server_map @param {string[]} hostname_list @param {(srv:Server,t:number)=>Promise<boolean>} exec_template */
+async function do_restart_purchased_servers(server_map,hostname_list,exec_template) {
+	for(const hostname of hostname_list) {
+		if(!hostname.startsWith("big-")) continue;
+		const srv=server_map[hostname];
+		await exec_template(srv,srv.maxRam/2.4|0);
+	}
 }
