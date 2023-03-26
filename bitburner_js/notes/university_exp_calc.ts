@@ -58,6 +58,33 @@ function world() {
 			services: university(3.184,-120),
 		},
 		{
+			type: "location",
+			tag: "foodnstuff",
+			company_name: "FoodNStuff",
+			jobs: [
+				{
+					position: "Employee",
+					money_rate: 163.778,
+					reputation_rate: 0.053,
+					strength_exp: 0.188,
+					defense_exp: 0.188,
+					dexterity_exp: 0.188,
+					agility_exp: 0.188,
+					charisma_exp: 0.377,
+				},
+				{
+					position: "Part-time Employee",
+					money_rate: 163.778,
+					reputation_rate: 0.053,
+					strength_exp: 0.188*(3/8),
+					defense_exp: 0.188*(3/8),
+					dexterity_exp: 0.188*(3/8),
+					agility_exp: 0.188*(3/8),
+					charisma_exp: 0.377*(3/4),
+				}
+			]
+		},
+		{
 			type: "map",
 			map: `
           78                                                     o 97           
