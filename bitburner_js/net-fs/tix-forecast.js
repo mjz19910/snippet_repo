@@ -17,6 +17,7 @@ export async function main(ns) {
 			let prev=num_map.get(sym);
 			if(prev===void 0) {num_map.set(sym,cur); continue;}
 			if(prev===cur) continue;
+			num_map.set(sym,cur);
 			ns.printf("%s:\t%s%%",sym,ns.formatNumber(tix.getForecast(sym)*100,3));
 		}
 		await ns.sleep(1000);
