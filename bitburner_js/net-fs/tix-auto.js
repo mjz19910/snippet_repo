@@ -39,7 +39,7 @@ export async function main(ns) {
 			const price_arr=stock_ask_price_change_rate.get(cur_sym);
 			if(!price_arr) continue;
 			price_arr.push(prev_price-ask_price);
-			if(price_arr.length>40) price_arr.shift();
+			if(price_arr.length>24) price_arr.shift();
 			ns.tprintf("%s:\t%s",cur_sym,price_arr.map(v => ns.formatNumber(v,0)).map(s => {
 				if(s.startsWith("-")) {
 					let w=s.split("-")[1];
