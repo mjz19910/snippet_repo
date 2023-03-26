@@ -1,4 +1,5 @@
 import {do_disable} from "/api/do_disable.js";
+
 /** @param {NS} ns @arg {string} src_host @arg {boolean} trace */
 export function start_host_scan(ns,src_host,trace) {
 	const scan_log_file="/data/host_scan.list.txt";
@@ -10,7 +11,7 @@ export function start_host_scan(ns,src_host,trace) {
 	let seen_set=new Set;
 	const hostname_list=[src_host];
 	map.set(src_host,ns.scan(src_host));
-	/** @type {import("/api/exports.js").HostScanOpts} */
+	/** @type {HostScanOpts} */
 	const scan_opts={src_host,trace,seen_set,hostname_list};
 	let scan_results=["------\n","\n"];
 	let depth=0;
@@ -26,7 +27,7 @@ export function start_host_scan(ns,src_host,trace) {
 /**
  * @param {NS} ns
  * @param {number} depth @arg {Map<string,string[]>} map
- * @param {import("/api/exports.js").HostScanOpts} opts
+ * @param {HostScanOpts} opts
  * */
 export function iter_host_scan_entries(ns,opts,depth,map) {
 	const {seen_set,hostname_list}=opts;
@@ -76,3 +77,5 @@ export function disable_log_use(ns,arr_disabled) {
 	do_disable(ns,arr_disabled,"scan");
 	do_disable(ns,arr_disabled,"getServerMaxRam");
 }
+
+/** @typedef {{src_host:string;seen_set:Set<string>;hostname_list:string[];trace:boolean}} HostScanOpts */
