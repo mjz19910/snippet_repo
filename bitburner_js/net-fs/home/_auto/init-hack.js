@@ -235,7 +235,7 @@ class ScriptState {
 				if(trace) this.format_print(async_delay,srv,`${ro_1} ${ro_2} h:-${hostname}`);
 				continue;
 			}
-			let t=srv.maxRam/2.4|0;
+			let t=srv.maxRam/2|0;
 			const ro_mem=`t:${t} h:${hostname}`;
 			if(hostname==="home") t=(srv.maxRam-srv.ramUsed-15)/2.4|0;
 			let started=await this.start_server_template(srv,t);
