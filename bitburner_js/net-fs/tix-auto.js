@@ -36,7 +36,7 @@ export async function main(ns) {
 			if(!price_arr) continue;
 			price_arr.push(prev_price-ask_price);
 			if(price_arr.length>32) {
-				while(price_arr.length>16) price_arr.shift();
+				while(price_arr.length>28) price_arr.shift();
 			}
 			ns.tprintf("%s:\t%s",cur_sym,price_arr.map(v => ns.formatNumber(v,0)).map(s => {
 				if(s.startsWith("-")) {

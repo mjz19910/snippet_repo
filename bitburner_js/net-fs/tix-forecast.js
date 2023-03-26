@@ -8,6 +8,6 @@ export async function main(ns) {
 
 	const symbols=tix.getSymbols();
 	for(let sym of symbols) {
-		ns.printf("%s: %s",sym,tix.getForecast(sym));
+		ns.printf("%s: %s",sym,ns.formatNumber(tix.getForecast(sym)));
 	}
 }
