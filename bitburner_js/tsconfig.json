@@ -12,7 +12,7 @@
 			"./node_modules/@types"
 		],
 		"outDir": "./build",
-		"baseUrl": "net-fs/home",
+		"baseUrl": "net-fs",
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"declaration": true,
