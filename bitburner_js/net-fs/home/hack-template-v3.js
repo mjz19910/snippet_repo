@@ -10,7 +10,6 @@ function with_ssh(skill_lvl) {
 }
 /** @param {number} skill_lvl */
 function without_ssh(skill_lvl) {
-	if(skill_lvl>(10*2)) return "hong-fang-tea";
 	if(skill_lvl>10) return "joesguns";
 	return "n00dles";
 }
