@@ -6,7 +6,6 @@ import {hack_template_v3} from "/vars/server_start.js";
 import {as} from "/helper/as.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
-// /** @typedef {{backdoor_path:"/data/backdoor_list.txt";ns:NS;cmd_args:RunFlags;distribute:boolean;trace:boolean;template_changed:boolean;player_hacking_skill:number;script_file:string;hostname_list:string[];to_backdoor:string[];get_server(x:string):Server;exec_template(srv:Server,t:number):Promise<boolean>}} ScriptState */
 class ScriptState {
 	/** @readonly */
 	backdoor_path="/data/backdoor_list.txt";
