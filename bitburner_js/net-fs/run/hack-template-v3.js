@@ -1,5 +1,5 @@
-import {as} from "./helper/as.js";
-import {getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/api/hack-support-v3.js";
+import {as} from "/api/helper/as.js";
+import {getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support-v3.js";
 
 /** @param {number} skill_lvl */
 function with_ssh(skill_lvl) {
