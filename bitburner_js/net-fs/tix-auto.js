@@ -13,7 +13,6 @@ export async function main(ns) {
 		let ask_price=ns.stock.getAskPrice(cur_sym);
 		stock_ask_price.set(cur_sym,ask_price);
 	}
-	await ns.sleep(1000);
 	for(;;) {
 		await ns.sleep(1000);
 		let did_update=false;
