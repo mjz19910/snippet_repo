@@ -36,6 +36,20 @@ export class InitHackScript {
 			sql: ns.sqlinject,
 		};
 	}
+	async init_hack() {
+		this.start_host_scan("home");
+		let cur_ps=this.ns.ps("home");
+		let server_idx=cur_ps.findIndex(v => v.filename===hack_server);
+		if(server_idx===-1) this.ns.run(hack_server);
+		for(const hostname of this.hostname_list) {
+			this.ns.scp(this.scripts,hostname);
+		}
+		await this.do_get_admin_rights();
+		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
+		await this.start_hack_script();
+		this.update_backdoor_cache();
+		this.log_servers_to_backdoor();
+	}
 	get_mode() {
 		const f_=this.gen_crack_flags();
 		if(f_.has_sql) return "with-sql";
@@ -191,20 +205,6 @@ export class InitHackScript {
 			return [];
 		}
 		return [];
-	}
-	async init_hack() {
-		this.start_host_scan("home");
-		let cur_ps=this.ns.ps("home");
-		let server_idx=cur_ps.findIndex(v => v.filename===hack_server);
-		if(server_idx===-1) this.ns.run(hack_server);
-		for(const hostname of this.hostname_list) {
-			this.ns.scp(this.scripts,hostname);
-		}
-		await this.do_get_admin_rights();
-		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
-		await this.start_hack_script();
-		this.update_backdoor_cache();
-		this.log_servers_to_backdoor();
 	}
 	log_servers_to_backdoor() {
 		for(const hostname of this.to_backdoor) {
