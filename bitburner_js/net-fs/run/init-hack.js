@@ -1,4 +1,4 @@
-import {as} from "/api/helper/as.js";
+import {as} from "/run/helper/as.js";
 import {get_hack_target} from "/run/hack-template-v3.js";
 import {hack_server, hack_support,hack_template} from "/run/script_paths.js";
 

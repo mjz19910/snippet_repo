@@ -1,4 +1,4 @@
-import {as} from "/api/helper/as.js";
+import {as} from "/run/helper/as.js";
 import {getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support-v3.js";
 
 /** @param {number} skill_lvl */
