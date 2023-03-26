@@ -1,12 +1,14 @@
-/** @typedef {{id:"getServerMaxMoney",reply:number}|ReplyMsg2} ReplyMsg */
-/** @typedef {{id:"getServerMinSecurityLevel",reply:number}|ReplyMsg3} ReplyMsg2 */
-/** @typedef {{id:"getServerSecurityLevel",reply:number}|ReplyMsg4} ReplyMsg3 */
-/** @typedef {{id:"getServerMoneyAvailable",reply:number}} ReplyMsg4 */
+/** @typedef {{call:"getServerMaxMoney",reply:number}|ReplyMsg2} ReplyMsg */
+/** @typedef {{call:"getServerMinSecurityLevel",reply:number}|ReplyMsg3} ReplyMsg2 */
+/** @typedef {{call:"getServerSecurityLevel",reply:number}|ReplyMsg4} ReplyMsg3 */
+/** @typedef {{call:"getServerMoneyAvailable",reply:number}|ReplyMsg5} ReplyMsg4 */
+/** @typedef {{call:"get_server";hostname:string;reply:Server}} ReplyMsg5 */
 
 /** @typedef {{call:"getServerMaxMoney",args:[string]}|CallMsg2} CallMsg */
 /** @typedef {{call:"getServerMinSecurityLevel",args:[string]}|CallMsg3} CallMsg2 */
 /** @typedef {{call:"getServerSecurityLevel",args:[string]}|CallMsg4} CallMsg3 */
-/** @typedef {{call:"getServerMoneyAvailable",args:[string]}} CallMsg4 */
+/** @typedef {{call:"getServerMoneyAvailable",args:[string]}|CallMsg5} CallMsg4 */
+/** @typedef {{call:"get_server",args:[string]}} CallMsg5 */
 
 
 /** @param {NS} ns @arg {number} port */
@@ -18,6 +20,10 @@ export function read_port_msg(ns,port) {
 	if(data==="NULL PORT DATA") return null;
 	return data;
 }
+/** @param {NS} ns @arg {number} port @arg {{}} msg */
+export function send_port_msg(ns,port,msg) {
+	return ns.writePort(port,JSON.stringify(msg));
+}
 /** @param {NS} ns */
 export function read_port1_msg(ns) {
 	let data=read_port_msg(ns,1);
@@ -28,7 +34,11 @@ export function read_port1_msg(ns) {
 }
 /** @arg {NS} ns @arg {CallMsg} msg */
 export function send_port1_msg(ns,msg) {
-	return ns.writePort(1,JSON.stringify(msg));
+	return send_port_msg(ns,1,msg);
+}
+/** @arg {NS} ns @arg {ReplyMsg} msg */
+export function send_port2_msg(ns,msg) {
+	return send_port_msg(ns,2,msg);
 }
 /** @param {NS} ns */
 export function read_port2_msg(ns) {
@@ -58,7 +68,7 @@ export async function getServerMinSecurityLevel_(ns,target) {
 		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
-		if(reply_msg.id!=="getServerMinSecurityLevel") {
+		if(reply_msg.call!=="getServerMinSecurityLevel") {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
@@ -84,7 +94,7 @@ export async function getServerSecurityLevel_(ns,target) {
 		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
-		if(reply_msg.id!=="getServerSecurityLevel") {
+		if(reply_msg.call!=="getServerSecurityLevel") {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
@@ -110,7 +120,7 @@ export async function getServerMoneyAvailable_(ns,target) {
 		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
-		if(reply_msg.id!=="getServerMoneyAvailable") {
+		if(reply_msg.call!=="getServerMoneyAvailable") {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
@@ -137,7 +147,7 @@ export async function getServerMaxMoney_(ns,target) {
 		if(trace) ns.print(data);
 		/** @type {ReplyMsg} */
 		let reply_msg=JSON.parse(data);
-		if(reply_msg.id!=="getServerMaxMoney") {
+		if(reply_msg.call!=="getServerMaxMoney") {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;

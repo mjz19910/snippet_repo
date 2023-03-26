@@ -1,4 +1,4 @@
-import {read_port1_msg,read_port_msg} from "/hack-support-v3.js";
+import {read_port1_msg,read_port_msg,send_port2_msg} from "/hack-support-v3.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
@@ -12,6 +12,16 @@ export async function main(ns) {
 	ns.disableLog("getServerSecurityLevel");
 
 	const trace=false;
+	/** @type {{[x:string]:Server}} */
+	const server_map={};
+	/** @arg {string} hostname */
+	function get_server(hostname) {
+		let server=server_map[hostname];
+		if(server) return server;
+		server=ns.getServer(hostname);
+		server_map[hostname]=server;
+		return server;
+	}
 
 	let processed_messages_count=0;
 	function process_messages() {
@@ -21,20 +31,24 @@ export async function main(ns) {
 			processed_messages_count++;
 			switch(msg.call) {
 				case "getServerMaxMoney": {
-					let result=ns.getServerMaxMoney(...msg.args);
-					ns.writePort(2,JSON.stringify({id: "getServerMaxMoney",result}));
+					let reply=ns.getServerMaxMoney(...msg.args);
+					send_port2_msg(ns,{call: "getServerMaxMoney",reply});
 				} break;
 				case "getServerMinSecurityLevel": {
-					let result=ns.getServerMinSecurityLevel(...msg.args);
-					ns.writePort(2,JSON.stringify({id: "getServerMinSecurityLevel",result}));
+					let reply=ns.getServerMinSecurityLevel(...msg.args);
+					send_port2_msg(ns,{call: "getServerMinSecurityLevel",reply});
 				} break;
 				case "getServerMoneyAvailable": {
-					let result=ns.getServerMoneyAvailable(...msg.args);
-					ns.writePort(2,JSON.stringify({id: "getServerMoneyAvailable",result}));
+					let reply=ns.getServerMoneyAvailable(...msg.args);
+					send_port2_msg(ns,{call: "getServerMoneyAvailable",reply});
 				} break;
 				case "getServerSecurityLevel": {
-					let result=ns.getServerSecurityLevel(...msg.args);
-					ns.writePort(2,JSON.stringify({id: "getServerSecurityLevel",result}));
+					let reply=ns.getServerSecurityLevel(...msg.args);
+					send_port2_msg(ns,{call: "getServerSecurityLevel",reply});
+				} break;
+				case "get_server": {
+					let reply=get_server(msg.args[0]);
+					send_port2_msg(ns,{call: "get_server",hostname: msg.args[0],reply});
 				} break;
 			}
 			if(trace) ns.print(msg);
