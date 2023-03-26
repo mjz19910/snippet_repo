@@ -1,6 +1,8 @@
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
+	ns.disableLog("disableLog");
+	ns.disableLog("sleep");
 	let symbols=ns.stock.getSymbols();
 	let stock_ask_price=new Map;
 	for(let cur_sym of symbols) {
@@ -27,6 +29,7 @@ export async function main(ns) {
 			did_update=true;
 		}
 		if(!did_update) continue;
+		ns.print("update");
 		ns.tprintf("--- TIX Start ---");
 		for(let cur_sym of symbols) {
 			let ask_price=ns.stock.getAskPrice(cur_sym);
