@@ -6,10 +6,8 @@ import {hack_support,hack_template} from "/run/script_paths.js";
 export class InitHackScript {
 	/** @readonly */
 	backdoor_path="/data/backdoor_list.txt";
-	/** @readonly */
-	script_file=hack_template;
-	script_files=[hack_support,hack_template];
-	arr_disabled=["disableLog"];
+	/** @type {string[]} */
+	arr_disabled=[];
 	get_mode() {
 		const f_=this.gen_crack_flags();
 		if(f_.has_sql) return "with-sql";
@@ -41,13 +39,13 @@ export class InitHackScript {
 				this.ns.exec("/api/share.js",srv.hostname,share_ps.threads/2|0,...share_ps.args);
 				srv.ramUsed-=share_ps.threads*2;
 			}
-			if(!this.template_changed&&processes.find(ps => ps.filename===this.script_file)) return false;
+			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return false;
 			processes.forEach(ps => {
-				if(ps.filename===this.script_file) this.ns.kill(ps.pid);
+				if(ps.filename===hack_template) this.ns.kill(ps.pid);
 			});
 		}
 		let mode=this.get_mode();
-		this.ns.exec(this.script_file,srv.hostname,t,this.player_hacking_skill,mode);
+		this.ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
 		if(this.opts.distribute) {
 			const ro_mem=`t:${t} h:${srv.hostname}`;
 			this.format_print(async_delay,srv,`${ro_base} ${ro_2} ${ro_mem}`);
@@ -203,7 +201,7 @@ export class InitHackScript {
 		let server_idx=cur_ps.findIndex(v => v.filename==="hack-server-v3.js");
 		if(server_idx===-1) this.ns.run("hack-server-v3.js");
 		for(const hostname of this.hostname_list) {
-			this.ns.scp(this.script_files,hostname);
+			this.ns.scp([hack_support,hack_template],hostname);
 		}
 		await this.do_get_admin_rights();
 		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
