@@ -3,7 +3,8 @@ export async function main(ns) {
 	ns.tail();
 	ns.clearLog();
 	let delayed_messages=[];
-	let handle=ns.getPortHandle(4);
+	let handle=ns.getPortHandle(1);
+	await handle.nextWrite();
 	if(handle.empty()) {
 		ns.print("empty port");
 		return;
