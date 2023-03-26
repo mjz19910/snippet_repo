@@ -3,7 +3,7 @@ import {hack_template_v3} from "/vars/server_start.js";
 import {as} from "/helper/as.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
-class ScriptState {
+class InitHackScript {
 	/** @readonly */
 	backdoor_path="/data/backdoor_list.txt";
 	/** @readonly */
@@ -333,7 +333,7 @@ export async function main(ns) {
 	const trace=false;
 	const distribute=true;
 	const template_changed=false;
-	const s=new ScriptState(ns,{
+	const s=new InitHackScript(ns,{
 		template_changed,
 		distribute,
 		trace,

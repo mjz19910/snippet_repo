@@ -1,4 +1,3 @@
-import {start_server_template} from "/template/server_start_template.js";
 import {hack_template_v2} from "/vars/server_start.js";
 
 /** @param {NS} ns */
