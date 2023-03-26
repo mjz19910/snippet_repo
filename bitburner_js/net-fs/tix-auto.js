@@ -9,10 +9,6 @@ export async function main(ns) {
 	/** @type {Map<string,number[]>} */
 	let stock_ask_price_change_rate=new Map;
 	for(let cur_sym of symbols) stock_ask_price_change_rate.set(cur_sym,[]);
-	for(let cur_sym of symbols) {
-		let ask_price=ns.stock.getAskPrice(cur_sym);
-		stock_ask_price.set(cur_sym,ask_price);
-	}
 	for(;;) {
 		await ns.sleep(1000);
 		let did_update=false;
