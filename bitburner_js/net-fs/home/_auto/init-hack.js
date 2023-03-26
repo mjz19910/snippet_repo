@@ -181,6 +181,9 @@ class ScriptState {
 		return [];
 	}
 	async init_hack() {
+		let cur_ps=this.ns.ps("home");
+		let server_idx=cur_ps.findIndex(v => v.filename==="hack-server-v3.js");
+		if(server_idx===-1) this.ns.run("hack-server-v3.js");
 		await this.do_get_admin_rights();
 		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
 		await this.start_v2_hack();
