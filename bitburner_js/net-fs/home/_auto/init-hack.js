@@ -1,4 +1,3 @@
-import {start_server_template,get_mode} from "/template/server_start_template.js";
 import {get_hack_target} from "/_auto/early-hack-template-v2.js";
 import {disable_log_use as disable_log_use1,start_host_scan} from "/api/iter_host_scan_entries.js";
 import {do_disable} from "/api/do_disable.js";
@@ -7,6 +6,33 @@ import {as} from "/helper/as.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
 class ScriptState {
+	get_mode() {
+		const f_=gen_crack_flags(this.ns);
+		if(f_.has_sql) return "with-sql";
+		if(f_.has_smtp) return "with-smtp";
+		if(f_.has_http) return "with-http";
+		if(f_.has_ftp) return "with-ftp";
+		if(f_.has_ssh) return "with-ssh";
+		return "none";
+	}
+	/** @param {Server} srv @arg {number} t */
+	async start_server_template(srv,t) {
+		const {ns}=this;
+		const processes=ns.ps(srv.hostname);
+		if(processes.length>0) {
+			if(!this.template_changed&&processes.find(ps => ps.filename===this.script_file)) return false;
+			processes.forEach(ps => {
+				if(ps.filename===this.script_file) ns.kill(ps.pid);
+			});
+		}
+		if(ns.fileExists("debug.txt",srv.hostname)) {
+			ns.exec(this.script_file,srv.hostname,t,this.player_hacking_skill,"debug.txt");
+			return true;
+		}
+		let mode=this.get_mode();
+		ns.exec(this.script_file,srv.hostname,t,this.player_hacking_skill,mode);
+		return true;
+	}
 	/** @readonly */
 	backdoor_path="/data/backdoor_list.txt";
 	/** @readonly */
@@ -35,6 +61,13 @@ class ScriptState {
 			sql: ns.sqlinject,
 		};
 	}
+	async init_hack() {
+		await this.do_get_admin_rights();
+		if(this.cmd_args.restart_purchased_servers) await this.do_restart_purchased_servers();
+		await this.start_v2_hack();
+		this.update_backdoor_cache();
+		this.log_servers_to_backdoor();
+	}
 	log_servers_to_backdoor() {
 		const {ns,backdoor_path,to_backdoor}=this;
 		for(const hostname of to_backdoor) {
@@ -43,10 +76,21 @@ class ScriptState {
 		}
 		ns.write(backdoor_path,to_backdoor.join("\n")+"\n","w");
 	}
+	get_script_runner_count() {
+		let server_count=0;
+		for(const hostname of this.hostname_list) {
+			if(hostname.startsWith("big-")) continue;
+			const srv=this.get_server(hostname);
+			if(!srv.hasAdminRights) continue;
+			if(srv.maxRam===0) continue;
+			server_count++;
+		}
+		return server_count;
+	}
 	async start_v2_hack() {
 		const {ns,opts: {trace,distribute}}=this;
-		let servers_to_start_script_count=get_script_runner_count(this);
-		let target_server=get_hack_target([this.player_hacking_skill,get_mode(ns)]);
+		let servers_to_start_script_count=this.get_script_runner_count();
+		let target_server=get_hack_target([this.player_hacking_skill,this.get_mode()]);
 		let difficulty_score=get_server_difficulty_score(ns,target_server)/servers_to_start_script_count|0;
 		if(trace) ns.print("difficulty_score: ",difficulty_score);
 		let async_delay=difficulty_score;
@@ -65,7 +109,7 @@ class ScriptState {
 			let t=srv.maxRam/2.4|0;
 			const ro_mem=`t:${t} h:${hostname}`;
 			if(hostname==="home") t=(srv.maxRam-srv.ramUsed-15)/2.4|0;
-			let started=await this.exec_template(srv,t);
+			let started=await this.start_server_template(srv,t);
 			if(distribute&&started) {
 				format_print(ns,async_delay,srv,`${static_run_on} ${ro_2} ${ro_mem}`);
 				await ns.sleep(async_delay);
@@ -94,12 +138,32 @@ class ScriptState {
 		for(const hostname of this.hostname_list) {
 			if(!hostname.startsWith("big-")) continue;
 			const srv=this.get_server(hostname);
-			await this.exec_template(srv,srv.maxRam/2.4|0);
+			await this.start_server_template(srv,srv.maxRam/2.4|0);
 		}
 	}
-	/** @arg {Server} srv @arg {number} t */
-	exec_template(srv,t) {
-		return start_server_template(this,srv,t);
+	async do_get_admin_rights() {
+		const {ns,opts: {distribute}}=this;
+		for(const hostname of this.hostname_list) {
+			const srv=this.get_server(hostname);
+			const num_ports=srv.numOpenPortsRequired;
+			ns.scp(hack_template_v3,hostname);
+			if(num_ports>=1&&!srv.sshPortOpen) this.unlock_service(srv,"ssh");
+			if(num_ports>=2&&!srv.ftpPortOpen) this.unlock_service(srv,"ftp");
+			if(num_ports>=3&&!srv.smtpPortOpen) this.unlock_service(srv,"smtp");
+			if(num_ports>=4&&!srv.httpPortOpen) this.unlock_service(srv,"http");
+			if(num_ports>=5&&!srv.sqlPortOpen) this.unlock_service(srv,"sql");
+			if(num_ports>5) {
+				ns.print("failed (too many ports required) ",num_ports," ",hostname);
+				ns.exit();
+			}
+			if(!srv.hasAdminRights&&srv.openPortCount>=srv.numOpenPortsRequired) {
+				ns.nuke(hostname);
+				srv.hasAdminRights=true;
+				if(!this.to_backdoor.includes(hostname)) this.to_backdoor.push(hostname);
+				if(distribute) await ns.sleep(1000/3);
+			}
+			if(distribute) await ns.sleep(20);
+		}
 	}
 	/** @type {{[x:string]:Server}} */
 	server_map={};
@@ -120,7 +184,6 @@ class ScriptState {
 		}
 	}
 }
-
 /** @param {NS} ns */
 export async function main(ns) {
 	const trace=false;
@@ -131,12 +194,7 @@ export async function main(ns) {
 		distribute,
 		trace,
 	});
-	await do_get_admin_rights(s);
-	if(s.cmd_args.restart_purchased_servers) await s.do_restart_purchased_servers();
-	await s.start_v2_hack();
-	s.update_backdoor_cache();
-	s.log_servers_to_backdoor();
-	// finished
+	s.init_hack();
 }
 /** @param {NS} ns @param {string} srv */
 function get_server_difficulty_score(ns,srv) {
@@ -186,19 +244,6 @@ function disable_log_use(callback) {
 	callback("httpworm");
 }
 
-/** @param {ScriptState} s */
-function get_script_runner_count(s) {
-	let server_count=0;
-	for(const hostname of s.hostname_list) {
-		if(hostname.startsWith("big-")) continue;
-		const srv=s.get_server(hostname);
-		if(!srv.hasAdminRights) continue;
-		if(srv.maxRam===0) continue;
-		server_count++;
-	}
-	return server_count;
-}
-
 /** @param {NS} ns @arg {number} async_delay @arg {Server} srv @arg {string} msg */
 function format_print(ns,async_delay,srv,msg) {
 	ns.printf(
@@ -214,29 +259,4 @@ function short_time_format(ns,time_ms) {
 	let format_str=ns.tFormat(time_ms);
 	format_str=format_str.replace(" seconds","s");
 	return format_str;
-}
-/** @param {ScriptState} s */
-async function do_get_admin_rights(s) {
-	const {ns,opts: {distribute}}=s;
-	for(const hostname of s.hostname_list) {
-		const srv=s.get_server(hostname);
-		const num_ports=srv.numOpenPortsRequired;
-		ns.scp(hack_template_v3,hostname);
-		if(num_ports>=1&&!srv.sshPortOpen) s.unlock_service(srv,"ssh");
-		if(num_ports>=2&&!srv.ftpPortOpen) s.unlock_service(srv,"ftp");
-		if(num_ports>=3&&!srv.smtpPortOpen) s.unlock_service(srv,"smtp");
-		if(num_ports>=4&&!srv.httpPortOpen) s.unlock_service(srv,"http");
-		if(num_ports>=5&&!srv.sqlPortOpen) s.unlock_service(srv,"sql");
-		if(num_ports>5) {
-			ns.print("failed (too many ports required) ",num_ports," ",hostname);
-			ns.exit();
-		}
-		if(!srv.hasAdminRights&&srv.openPortCount>=srv.numOpenPortsRequired) {
-			ns.nuke(hostname);
-			srv.hasAdminRights=true;
-			if(!s.to_backdoor.includes(hostname)) s.to_backdoor.push(hostname);
-			if(distribute) await ns.sleep(1000/3);
-		}
-		if(distribute) await ns.sleep(20);
-	}
 }
