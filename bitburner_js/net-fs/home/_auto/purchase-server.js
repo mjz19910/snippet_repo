@@ -1,4 +1,4 @@
-import {hack_template_v2} from "/vars/server_start.js";
+import {InitHackScript} from "/_auto/init-hack.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
@@ -13,36 +13,19 @@ export async function main(ns) {
 	// How much RAM each purchased server will have. In this case, it'll
 	// be 8GB.
 	let ram=8;
-	let player_hacking_skill=ns.getPlayer().skills.hacking;
 	let purchased_server_hostnames=ns.getPurchasedServers();
 	let server_offset=purchased_server_hostnames.length;
 	const purchased_server_limit=ns.getPurchasedServerLimit();
-	const target_script=hack_template_v2;
 	const template_changed=false;
-	const s={ns,player_hacking_skill,script_file: target_script,template_changed};
-
-	/** @arg {Server} srv */
-	async function start_script(srv) {
-		ns.scp(target_script,srv.hostname);
-		let thread_n=srv.maxRam/2.4|0;
-		ns.printf(
-			"[b:%s lvl:%s %s ~/]> %s",
-			+srv.backdoorInstalled,
-			srv.requiredHackingSkill,
-			srv.hostname,
-			`run hack-template-v2 -t ${thread_n} ${player_hacking_skill}`,
-		);
-		return start_server_template(s,srv,thread_n);
-	}
+	const s=new InitHackScript(ns,{trace: false,distribute: false,template_changed});
 
 	for(let hostname of purchased_server_hostnames) {
 		let processes=ns.ps(hostname);
 		if(processes.length!==0) ns.kill(processes[0].pid);
 		const srv=ns.getServer(hostname);
-		await start_script(srv);
+		await s.start_script_template(srv);
 	}
 
-	// Iterator we'll use for our loop
 	let i=server_offset;
 	let delay=1000;
 	let server_money=ns.getServerMoneyAvailable("home");
@@ -78,7 +61,7 @@ export async function main(ns) {
 						ns.purchaseServer(hostname,ram);
 					}
 					const srv=ns.getServer(hostname);
-					await start_script(srv);
+					await s.start_script_template(srv);
 					rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
 					++i;
 					last_server_money=server_money;

@@ -3,7 +3,7 @@ import {hack_template_v3} from "/vars/server_start.js";
 import {as} from "/helper/as.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
-class InitHackScript {
+export class InitHackScript {
 	/** @readonly */
 	backdoor_path="/data/backdoor_list.txt";
 	/** @readonly */
