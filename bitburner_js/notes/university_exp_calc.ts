@@ -1,4 +1,4 @@
-function university<T extends number,U extends number>(base_exp: T,base_cost) {
+function university<T extends number,U extends number>(base_exp: T,base_cost: U) {
 	return [
 		{
 			type: "course",tag: "Computer Science",
@@ -43,7 +43,7 @@ function world() {
 			tag: "rothman university",
 			company_name: "Rothman University",
 			base_service_cost: {exp_rate: 3.184,cost: -120},
-			services: university(3.184),
+			services: university(3.184,-120),
 		},
 		{
 			type: "map",
@@ -86,7 +86,6 @@ function world() {
 				case "rothman university": {
 					const base_exp_rate=location.base_service_cost.exp_rate;
 					const base_cost_rate=location.base_service_cost.cost;
-					location.services[0].rates.hacking_exp_per_sec;
 					console.log(location.services);
 					console.log(-120/base_cost_rate);
 					base_exp_rate;
