@@ -58,7 +58,9 @@ export async function main(ns) {
 						old_proc.forEach(v => ns.kill(v.pid));
 						ns.upgradePurchasedServer(hostname,ram);
 					} else {
-						ns.purchaseServer(hostname,ram);
+						let new_host=ns.purchaseServer(hostname,ram);
+						if(new_host==="") throw new Error("failed to purchase server");
+						ns.scp(s.scripts,new_host);
 					}
 					const srv=ns.getServer(hostname);
 					await s.start_script_template(srv);
