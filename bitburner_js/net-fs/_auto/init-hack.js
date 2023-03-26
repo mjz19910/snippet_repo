@@ -31,6 +31,12 @@ export class InitHackScript {
 		const ro_base=`hack-v2 ${ro_1}`;
 		const processes=this.ns.ps(srv.hostname);
 		if(processes.length>0) {
+			let share_ps=processes.find(ps => ps.filename==="/api/share.js");
+			if(share_ps) {
+				this.ns.kill(share_ps.pid);
+				this.ns.exec("/api/share.js",srv.hostname,share_ps.threads/2|0,...share_ps.args);
+				srv.ramUsed-=share_ps.threads*2;
+			}
 			if(!this.template_changed&&processes.find(ps => ps.filename===this.script_file)) return false;
 			processes.forEach(ps => {
 				if(ps.filename===this.script_file) this.ns.kill(ps.pid);
