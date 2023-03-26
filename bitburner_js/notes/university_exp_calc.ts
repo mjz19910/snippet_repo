@@ -61,6 +61,9 @@ function world() {
 			type: "location",
 			tag: "foodnstuff",
 			company_name: "FoodNStuff",
+			mirrors: [
+				{tag: "joesguns",company_name: "Joe's Guns"}
+			],
 			jobs: [
 				{
 					position: "Employee",
