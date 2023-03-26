@@ -12,6 +12,30 @@ export class InitHackScript {
 	backdoor_path="/data/backdoor_list.txt";
 	/** @type {string[]} */
 	arr_disabled=[];
+	/** @arg {NS} ns @arg {{trace:boolean;distribute:boolean;template_changed:boolean}} s */
+	constructor(ns,s) {
+		this.opts=s;
+		this.ns=ns;
+		this.init_script();
+		/** @type {RunFlags} */
+		this.cmd_args=as(ns.flags([
+			["fast",false],
+			["restart_purchased_servers",false],
+		]));
+		this.player_hacking_skill=ns.getPlayer().skills.hacking;
+		/** @type {string[]} */
+		this.to_backdoor=this.load_to_backdoor_list();
+		this.hostname_list=this.start_host_scan("home");
+		this.template_changed=s.template_changed;
+		this.f_=this.gen_crack_flags();
+		this.service_map={
+			ssh: ns.brutessh,
+			ftp: ns.ftpcrack,
+			smtp: ns.relaysmtp,
+			http: ns.httpworm,
+			sql: ns.sqlinject,
+		};
+	}
 	get_mode() {
 		const f_=this.gen_crack_flags();
 		if(f_.has_sql) return "with-sql";
@@ -154,31 +178,6 @@ export class InitHackScript {
 		}
 		append("\n");
 		return file_data.join("");
-	}
-
-	/** @arg {NS} ns @arg {{trace:boolean;distribute:boolean;template_changed:boolean}} s */
-	constructor(ns,s) {
-		this.opts=s;
-		this.ns=ns;
-		this.init_script();
-		/** @type {RunFlags} */
-		this.cmd_args=as(ns.flags([
-			["fast",false],
-			["restart_purchased_servers",false],
-		]));
-		this.player_hacking_skill=ns.getPlayer().skills.hacking;
-		/** @type {string[]} */
-		this.to_backdoor=this.load_to_backdoor_list();
-		this.hostname_list=this.start_host_scan("home");
-		this.template_changed=s.template_changed;
-		this.f_=this.gen_crack_flags();
-		this.service_map={
-			ssh: ns.brutessh,
-			ftp: ns.ftpcrack,
-			smtp: ns.relaysmtp,
-			http: ns.httpworm,
-			sql: ns.sqlinject,
-		};
 	}
 	/** @type {NS["fileExists"]} */
 	fileExists(a,b) {
