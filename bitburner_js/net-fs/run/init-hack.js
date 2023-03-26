@@ -1,6 +1,6 @@
 import {as} from "/run/helper/as.js";
-import {get_hack_target} from "/run/hack-template-v3.js";
-import {hack_server, hack_support,hack_template} from "/run/script_paths.js";
+import {get_hack_target} from "/run/hack-template.js";
+import {hack_server,hack_support,hack_template} from "/run/script_paths.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
 export class InitHackScript {

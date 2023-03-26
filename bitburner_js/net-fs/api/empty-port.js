@@ -1,4 +1,4 @@
-import {read_port1_msg,read_port2_msg} from "/run/hack-support-v3.js";
+import {read_port1_msg,read_port2_msg} from "/run/hack-support.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
