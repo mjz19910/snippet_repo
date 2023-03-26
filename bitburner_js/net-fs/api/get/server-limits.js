@@ -1,6 +1,10 @@
+import {as} from "../helper/as.js";
+
 /** @param {NS} ns */
 export async function main(ns) {
-	const hostname=ns.args[0];
+	/** @type {{_: [string]}} */
+	let f_=as(ns.flags([]));
+	const {_: [hostname]}=f_;
 	const log_args=[
 		hostname,
 		ns.formatRam(ns.getServerMaxRam(hostname)),
