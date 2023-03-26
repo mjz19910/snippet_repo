@@ -1,4 +1,4 @@
-import {read_port1_msg,read_port_msg,send_port2_msg} from "/hack-support-v3.js";
+import {read_port1_msg,read_port_msg,send_port2_msg} from "/api/hack-support-v3.js";
 
 /** @param {NS} ns */
 export async function main(ns) {

@@ -1,5 +1,5 @@
-import {get_hack_target} from "/hack-template-v3.js";
-import {hack_template_v3} from "/vars/server_start.js";
+import {get_hack_target} from "/api/hack-template-v3.js";
+import {hack_template_v3} from "/api/vars/server_start.js";
 import {as} from "/helper/as.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
