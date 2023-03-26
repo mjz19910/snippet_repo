@@ -43,6 +43,7 @@
 	"include": [
 		"netscript.d.ts",
 		"net-fs/**/*",
+		"notes/*.ts",
 	],
 	"exclude": [
 		"node_modules",
