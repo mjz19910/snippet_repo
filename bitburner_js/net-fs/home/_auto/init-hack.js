@@ -1,4 +1,4 @@
-import {get_hack_target} from "/_auto/early-hack-template-v2.js";
+import {get_hack_target} from "/hack-template-v3.js";
 import {hack_template_v3} from "/vars/server_start.js";
 import {as} from "/helper/as.js";
 

@@ -26,7 +26,7 @@ function with_ftp(skill_lvl) {
 	return with_ssh(skill_lvl);
 }
 /**
- * @param {[number,"none"|"with-ssh"|"with-ftp"]} args
+ * @param {[number,"none"|"with-ssh"|"with-ftp"|"with-http"|"with-smtp"|"with-sql"]} args
  * Returns the "target server",
  * which is the server that we're going to hack.
  * */
@@ -41,29 +41,21 @@ export function get_hack_target(args) {
 export async function main(ns) {
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
-	// Defines the "target server", which is the server
-	// that we're going to hack.
 	const target=get_hack_target(as(ns.args));
 
 	// Defines how much money a server should have before we hack it
-	// In this case, it is set to 75% of the server's max money
 	const moneyThresh=(await getServerMaxMoney_(ns,target))*0.85;
 
-	// Defines the maximum security level the target server can
-	// have. If the target's security level is higher than this,
-	// we'll weaken it before doing anything else
+	// Defines the maximum security level the target server can have.
 	const securityThresh=(await getServerMinSecurityLevel_(ns,target))+2.5;
 
 	// Infinite loop that continuously hacks/grows/weakens the target server
 	while(true) {
 		if((await getServerSecurityLevel_(ns,target))>securityThresh) {
-			// If the server's security level is above our threshold, weaken it
 			await ns.weaken(target);
 		} else if((await getServerMoneyAvailable_(ns,target))<moneyThresh) {
-			// If the server's money is less than our threshold, grow it
 			await ns.grow(target);
 		} else {
-			// Otherwise, hack it
 			await ns.hack(target);
 		}
 	}
