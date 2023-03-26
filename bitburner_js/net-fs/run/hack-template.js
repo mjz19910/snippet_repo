@@ -37,13 +37,8 @@ export function get_hack_target(args) {
 	if(args.length===2&&args[1]==="with-ftp") return with_ftp(args[0]);
 	return with_ftp(args[0]);
 }
-
-/** @param {NS} ns */
-export async function main(ns) {
-	ns.disableLog("disableLog");
-	ns.disableLog("sleep");
-	const target=get_hack_target(as(ns.args));
-
+/** @param {NS} ns @param {string} target */
+export async function run_hack(ns,target) {
 	// Defines how much money a server should have before we hack it
 	const moneyThreshold=(await getServerMaxMoney_(ns,target))*0.85;
 	ns.print("moneyThreshold: $",ns.formatNumber(moneyThreshold));
@@ -66,4 +61,12 @@ export async function main(ns) {
 			await ns.hack(target);
 		}
 	}
+}
+
+/** @param {NS} ns */
+export function main(ns) {
+	ns.disableLog("disableLog");
+	ns.disableLog("sleep");
+	const target=get_hack_target(as(ns.args));
+	return run_hack(ns,target);
 }
