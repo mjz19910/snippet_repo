@@ -4,7 +4,7 @@
 		".script",
 		".txt"
 	],
-	"allowDeletingFiles": false,
+	"allowDeletingFiles": true,
 	"port": 12525,
 	"scriptsFolder": "net-fs",
 	"quiet": false,
