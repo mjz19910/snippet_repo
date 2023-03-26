@@ -41,18 +41,23 @@ export async function main(ns) {
 		return a.level<b.level;
 	}
 	let min_node_entry=hacknet_entries.reduce((v,u) => cmp_node(u[1],v[1])? u:v);
-	let continue_flag=true;
+	let continue_flag=true,did_upgrade=false;
 	while(continue_flag) {
 		min_node_entry=hacknet_entries.reduce((v,u) => cmp_node(u[1],v[1])? u:v);
 		continue_flag=false;
 		let upgrade_cost=null;
 		hacknet_entries.forEach(v => {
 			let res=upgrade_node_level_entry(ns,...v);
-			if(res) continue_flag=res;
+			if(res[0]) {
+				did_upgrade=true;
+				continue_flag=res[0];
+				upgrade_cost=res[1];
+			}
 		});
 		hacknet_entries.forEach(v => {
 			let res=upgrade_node_ram(ns,...v);
 			if(res[0]) {
+				did_upgrade=true;
 				continue_flag=res[0];
 				upgrade_cost=res[1];
 			}
@@ -60,6 +65,7 @@ export async function main(ns) {
 		hacknet_entries.forEach(v => {
 			let res=upgrade_node_cores(ns,...v);
 			if(res[0]) {
+				did_upgrade=true;
 				continue_flag=res[0];
 				upgrade_cost=res[1];
 			}
@@ -67,9 +73,16 @@ export async function main(ns) {
 		if(upgrade_cost!==null) ns.print("min: ",ns.hacknet.getNodeStats(min_node_entry[0]));
 		await ns.sleep(1000);
 	}
-	ns.print("done: ",ns.hacknet.getNodeStats(min_node_entry[0]));
+	if(did_upgrade) {
+		ns.print("done: ",ns.hacknet.getNodeStats(min_node_entry[0]));
+	} else {
+		ns.print("no upgrades");
+	}
 }
-/** @param {NS} ns @arg {number} idx @arg {NodeStats} node @returns {[false,null]|[true,number]} */
+/**
+ * @param {NS} ns @arg {number} idx @arg {NodeStats} node
+ * @returns {[false,null]|[true,number]}
+ */
 function upgrade_node_cores(ns,idx,node) {
 	if(node.cores>=16) return [false,null];
 	let cores_n=16-node.cores;
@@ -84,7 +97,10 @@ function upgrade_node_cores(ns,idx,node) {
 	let cost=ns.hacknet.getCoreUpgradeCost(idx,1);
 	return [true,cost];
 }
-/** @param {NS} ns @arg {number} idx @arg {NodeStats} node @returns {[false,null]|[true,number]} */
+/**
+ * @param {NS} ns @arg {number} idx @arg {NodeStats} node
+ * @returns {[false,null]|[true,number]}
+ */
 function upgrade_node_ram(ns,idx,node) {
 	if(node.ram>=64) return [false,null];
 	let ram_n=8-Math.log2(node.ram);
@@ -102,9 +118,12 @@ function upgrade_node_ram(ns,idx,node) {
 	let cost=ns.hacknet.getRamUpgradeCost(idx,1);
 	return [true,cost];
 }
-/** @param {NS} ns @arg {number} idx @arg {NodeStats} node */
+/**
+ * @param {NS} ns @arg {number} idx @arg {NodeStats} node
+ * @returns {[false,null]|[true,number]}
+ */
 function upgrade_node_level_entry(ns,idx,node) {
-	if(node.level>=200) return false;
+	if(node.level>=200) return [false,null];
 	let level_n=200-node.level;
 	while(level_n>0) {
 		let res=ns.hacknet.upgradeLevel(idx,level_n);
@@ -114,7 +133,8 @@ function upgrade_node_level_entry(ns,idx,node) {
 		}
 		level_n-=10;
 	}
-	return true;
+	let cost=ns.hacknet.getLevelUpgradeCost(idx,10);
+	return [true,cost];
 }
 /** @param {NS} ns */
 function get_hacknet_node_entries(ns) {
