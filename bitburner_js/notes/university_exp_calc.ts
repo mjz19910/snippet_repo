@@ -15,6 +15,11 @@ function university<T extends number,U extends number>(base_exp: T,base_cost: U)
 			cost: base_cost*2,
 			hacking_exp: base_exp*4,
 		},
+		{
+			type: "course",tag: "Algorithms",
+			cost: base_cost*8,
+			hacking_exp: base_exp*8,
+		},
 	] as const;
 }
 function world() {
