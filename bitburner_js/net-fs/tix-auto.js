@@ -18,11 +18,20 @@ export async function main(ns) {
 		stock_ask_price.set(cur_sym,ask_price);
 	}
 	for(;;) {
-		await ns.sleep(wait_seconds*1000);
+		await ns.sleep(1000);
+		let did_update=false;
+		for(let cur_sym of symbols) {
+			let ask_price=ns.stock.getAskPrice(cur_sym);
+			let prev_price=stock_ask_price.get(cur_sym);
+			if(prev_price===ask_price) continue;
+			did_update=true;
+		}
+		if(!did_update) continue;
 		ns.tprintf("--- TIX Start ---");
 		for(let cur_sym of symbols) {
 			let ask_price=ns.stock.getAskPrice(cur_sym);
 			let prev_price=stock_ask_price.get(cur_sym);
+			if(prev_price===ask_price) continue;
 			stock_ask_price.set(cur_sym,ask_price);
 			const price_arr=stock_ask_price_change_rate.get(cur_sym);
 			if(!price_arr) continue;
@@ -40,7 +49,7 @@ export async function main(ns) {
 				if(s.length===3) return " "+s;
 				ns.print("len: ",s.length," ",s);
 				return s;
-			}).join("\t"));
+			}).join());
 		}
 	}
 }
