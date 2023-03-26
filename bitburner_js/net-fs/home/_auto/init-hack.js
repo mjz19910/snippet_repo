@@ -282,7 +282,7 @@ class ScriptState {
 		for(const hostname of this.hostname_list) {
 			if(!hostname.startsWith("big-")) continue;
 			const srv=this.get_server(hostname);
-			await this.start_server_template(srv,srv.maxRam/2.4|0);
+			await this.start_server_template(srv,srv.maxRam/2|0);
 		}
 	}
 	async do_get_admin_rights() {
