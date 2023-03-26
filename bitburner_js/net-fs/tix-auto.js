@@ -17,9 +17,13 @@ export async function main(ns) {
 		await ns.sleep(1000);
 		let did_update=false;
 		for(let cur_sym of symbols) {
-			let ask_price=ns.stock.getAskPrice(cur_sym);
+			let cur_price=ns.stock.getAskPrice(cur_sym);
 			let prev_price=stock_ask_price.get(cur_sym);
-			if(prev_price===ask_price) continue;
+			if(prev_price===void 0) {
+				stock_ask_price.set(cur_sym,cur_price);
+				prev_price=cur_price;
+			}
+			if(prev_price===cur_price) continue;
 			did_update=true;
 		}
 		if(!did_update) continue;
