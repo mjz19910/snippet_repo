@@ -1,7 +1,6 @@
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
-	ns.tprintf("--- TIX Start ---");
 	let symbols=ns.stock.getSymbols();
 	let stock_ask_price=new Map;
 	for(let cur_sym of symbols) {
@@ -19,6 +18,7 @@ export async function main(ns) {
 		stock_ask_price.set(cur_sym,ask_price);
 	}
 	await ns.sleep(wait_seconds*1000);
+	ns.tprintf("--- TIX Start ---");
 	for(let cur_sym of symbols) {
 		let ask_price=ns.stock.getAskPrice(cur_sym);
 		let prev_price=stock_ask_price.get(cur_sym);
