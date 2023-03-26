@@ -11,7 +11,7 @@ export async function main(ns) {
 	while(!handle.empty()) {
 		delayed_messages.push(handle.read());
 	}
-	ns.print(delayed_messages.map(v => {
+	ns.print("3: ",delayed_messages.map(v => {
 		if(typeof v==="string") return JSON.parse(v);
 		return v;
 	}));
