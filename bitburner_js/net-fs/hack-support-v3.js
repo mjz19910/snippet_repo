@@ -89,22 +89,19 @@ export async function getServerMinSecurityLevel_(ns,target) {
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerSecurityLevel_(ns,target) {
-	send_port1_msg(ns,{call: "getServerSecurityLevel",args: [target]});
+	const call_id="getServerSecurityLevel";
+	send_port1_msg(ns,{call: call_id,args: [target]});
 	/** @type {ReplyMsg|null} */
 	let reply=null;
 	for(;reply===null;) {
 		if(trace) ns.print("query2");
 		await ns.sleep(40);
-		let data=ns.readPort(2);
-		if(typeof data==="number") throw new Error("Invalid reply");
-		if(data==="NULL PORT DATA") {
-			await ns.sleep(1500);
+		let reply_msg=read_port2_msg(ns);
+		if(reply_msg===null) {
+			await ns.sleep(300);
 			continue;
 		}
-		if(trace) ns.print(data);
-		/** @type {ReplyMsg} */
-		let reply_msg=JSON.parse(data);
-		if(reply_msg.call!=="getServerSecurityLevel") {
+		if(reply_msg.call!==call_id) {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
 			continue;
@@ -121,15 +118,11 @@ export async function getServerMoneyAvailable_(ns,target) {
 	for(;reply===null;) {
 		if(trace) ns.print("query3");
 		await ns.sleep(40);
-		let data=ns.readPort(2);
-		if(typeof data==="number") throw new Error("Invalid reply");
-		if(data==="NULL PORT DATA") {
-			await ns.sleep(1500);
+		let reply_msg=read_port2_msg(ns);
+		if(reply_msg===null) {
+			await ns.sleep(300);
 			continue;
 		}
-		if(trace) ns.print(data);
-		/** @type {ReplyMsg} */
-		let reply_msg=JSON.parse(data);
 		if(reply_msg.call!=="getServerMoneyAvailable") {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
@@ -148,15 +141,11 @@ export async function getServerMaxMoney_(ns,target) {
 	for(;reply===null;) {
 		if(trace) ns.print("query4");
 		await ns.sleep(40);
-		let data=ns.readPort(2);
-		if(typeof data==="number") throw new Error("Invalid reply");
-		if(data==="NULL PORT DATA") {
-			await ns.sleep(1500);
+		let reply_msg=read_port2_msg(ns);
+		if(reply_msg===null) {
+			await ns.sleep(300);
 			continue;
 		}
-		if(trace) ns.print(data);
-		/** @type {ReplyMsg} */
-		let reply_msg=JSON.parse(data);
 		if(reply_msg.call!=="getServerMaxMoney") {
 			if(trace) ns.print("reject: ",reply_msg);
 			ns.writePort(3,JSON.stringify(reply_msg));
