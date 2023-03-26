@@ -1,5 +1,4 @@
 import {get_hack_target} from "/_auto/early-hack-template-v2.js";
-import {do_disable} from "/api/do_disable.js";
 import {hack_template_v3} from "/vars/server_start.js";
 import {as} from "/helper/as.js";
 
@@ -36,17 +35,33 @@ class ScriptState {
 	backdoor_path="/data/backdoor_list.txt";
 	/** @readonly */
 	script_file=hack_template_v3;
+	arr_disabled=["disableLog"];
+	/** @arg {string} fn_key */
+	disableLog_(fn_key) {
+		if(this.arr_disabled.includes(fn_key)) return;
+		this.ns.disableLog(fn_key);
+		this.arr_disabled.push(fn_key);
+	}
 	init_script() {
 		const {ns}=this;
-		const arr_disabled=["disableLog"];
-		/** @arg {string} fn_key */
-		function disableLog_(fn_key) {do_disable(ns,arr_disabled,fn_key);}
-		disableLog_("disableLog");
-		disable_log_use(disableLog_);
+		this.disableLog_("disableLog");
+		this.disable_log_use();
 
 		ns.tail();
 		ns.clearLog();
 		ns.print("Script started");
+	}
+	disable_log_use() {
+		this.disableLog_("scan");
+		this.disableLog_("kill");
+		this.disableLog_("scp");
+		this.disableLog_("exec");
+		this.disableLog_("sleep");
+		this.disableLog_("brutessh");
+		this.disableLog_("ftpcrack");
+		this.disableLog_("relaysmtp");
+		this.disableLog_("httpworm");
+		this.disableLog_("getServerMaxRam");
 	}
 	/** @typedef {{src_host:string;seen_set:Set<string>;hostname_list:string[]}} HostScanOpts */
 	/** @arg {string} src_host */
@@ -317,17 +332,4 @@ export async function main(ns) {
 		trace,
 	});
 	s.init_hack();
-}
-/** @arg {(fn:string)=>void} callback */
-function disable_log_use(callback) {
-	callback("scan");
-	callback("kill");
-	callback("scp");
-	callback("exec");
-	callback("sleep");
-	callback("brutessh");
-	callback("ftpcrack");
-	callback("relaysmtp");
-	callback("httpworm");
-	callback("getServerMaxRam");
 }
