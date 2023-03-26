@@ -1,6 +1,6 @@
 import {as} from "/run/helper/as.js";
 import {get_hack_target} from "/run/hack-template.js";
-import {hack_server,hack_support,hack_template} from "/run/script_paths.js";
+import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list_file} from "/run/script_paths.js";
 
 /** @typedef {{fast:boolean;restart_purchased_servers:boolean}} RunFlags */
 export class InitHackScript {
@@ -9,7 +9,6 @@ export class InitHackScript {
 		"/run/helper/as.js",
 	];
 	/** @readonly */
-	backdoor_path="/data/backdoor_list.txt";
 	/** @type {string[]} */
 	arr_disabled=[];
 	/** @type {string[]} */
@@ -111,7 +110,6 @@ export class InitHackScript {
 	}
 	/** @arg {string} src_host */
 	start_host_scan(src_host) {
-		const scan_log_file="/data/host_scan.list.txt";
 		/** @type {Map<string, string[]>} */
 		let map=new Map;
 		/** @type {Set<string>} */
@@ -126,7 +124,7 @@ export class InitHackScript {
 			scan_results.push(result);
 			if(map.size===0) break;
 		}
-		this.ns.write(scan_log_file,scan_results.join(""),"w");
+		this.ns.write(host_scan_list_file,scan_results.join(""),"w");
 	}
 	/**
 	 * @param {string} src_host
@@ -187,8 +185,8 @@ export class InitHackScript {
 		return {has_ssh,has_ftp,has_smtp,has_http,has_sql};
 	}
 	load_to_backdoor_list() {
-		if(this.fileExists(this.backdoor_path,"home")) {
-			let data=this.ns.read(this.backdoor_path).trim();
+		if(this.fileExists(backdoor_list_file,"home")) {
+			let data=this.ns.read(backdoor_list_file).trim();
 			if(data!=="") return data.split("\n");
 			return [];
 		}
@@ -209,12 +207,11 @@ export class InitHackScript {
 		this.log_servers_to_backdoor();
 	}
 	log_servers_to_backdoor() {
-		const {backdoor_path,to_backdoor}=this;
-		for(const hostname of to_backdoor) {
+		for(const hostname of this.to_backdoor) {
 			const srv=this.get_server(hostname);
 			this.ns.print("backdoor: ",hostname," ",srv.requiredHackingSkill);
 		}
-		this.ns.write(backdoor_path,to_backdoor.join("\n")+"\n","w");
+		this.ns.write(backdoor_list_file,this.to_backdoor.join("\n")+"\n","w");
 	}
 	get_script_runner_count() {
 		let server_count=0;
