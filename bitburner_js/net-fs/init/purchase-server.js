@@ -78,12 +78,12 @@ export async function main(ns) {
 	ns.print("min_mem: ",min_mem);
 	ram*=2;
 	ns.print("upg_ram: ",ns.formatRam(ram));
-	let buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
+	let buy_cost1=ns.getPurchasedServerCost(ram-prev_ram);
 	let cur_server_money=ns.getServerMoneyAvailable("home");
-	while(cur_server_money>(buy_cost1*25*1.5)) {
+	while(cur_server_money>(buy_cost1*25*2)) {
 		await upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
 		prev_ram=ram; ram*=2;
-		buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
+		buy_cost1=ns.getPurchasedServerCost(ram-prev_ram);
 		cur_server_money=ns.getServerMoneyAvailable("home");
 		ns.print("upg_ram: ",ns.formatRam(ram));
 	}
