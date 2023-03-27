@@ -5,6 +5,7 @@ export async function main(ns) {
 	ns.disableLog("disableLog");
 	ns.disableLog("getServerMaxRam");
 	ns.disableLog("killall");
+	ns.disableLog("spawn");
 	ns.disableLog("sleep");
 	ns.disableLog("exec");
 	ns.disableLog("scan");
