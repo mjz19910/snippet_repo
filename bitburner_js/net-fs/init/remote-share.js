@@ -12,7 +12,7 @@ export async function main(ns) {
 	const share_script="/api/share.js";
 	const seen_srv=new Set;
 	const servers_arr=["home"];
-	const home_reserved_mem=8.3+4;
+	const home_reserved_mem=8.3+4+2*4096;
 	for(;;) {
 		let next=servers_arr.shift();
 		if(next===void 0) break;

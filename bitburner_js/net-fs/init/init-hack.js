@@ -25,9 +25,7 @@ export class InitHackScript {
 			sql: ns.sqlinject,
 		};
 	}
-	/** @type {number[]} */
-	tails_to_close=[];
-	async init_hack() {
+	init_hack() {
 		this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
@@ -35,11 +33,6 @@ export class InitHackScript {
 		this.start_hack_script();
 		this.update_backdoor_cache();
 		this.log_servers_to_backdoor();
-		await this.ns.sleep(33);
-		this.close_tails();
-	}
-	close_tails() {
-		for(let pid of this.tails_to_close) this.ns.closeTail(pid);
 	}
 	/**
 	 * @param {string} hostname
@@ -75,14 +68,13 @@ export class InitHackScript {
 				if(ps.filename===hack_template) ns.kill(ps.pid);
 			});
 		}
-		if(t>64) {
-			let pid=ns.exec("/api/share.js",srv.hostname,t/4|0);
-			this.tails_to_close.push(pid);
-			t-=t/2|0;
-		}
-		if(!srv.purchasedByPlayer) this.format_print(srv,`t:${t} h:${srv.hostname}`);
+		if(srv.hostname==="home"||!srv.purchasedByPlayer) this.format_print(srv,`t:${t} h:${srv.hostname}`);
 		let mode=this.get_mode();
-		ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
+		let pid=ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
+		if(pid===0) {
+			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
+			ns.exit();
+		}
 		return true;
 	}
 	/** @arg {string} fn_key */
@@ -300,5 +292,5 @@ export async function main(ns) {
 		template_changed,
 		trace,
 	});
-	await s.init_hack();
+	s.init_hack();
 }

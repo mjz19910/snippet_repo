@@ -26,23 +26,24 @@ export function main(ns) {
 		s.start_script_template(srv);
 	}
 	let i=server_offset;
-	/** @arg {NS} ns @arg {string[]} servers @arg {string} old_srv @arg {string} new_srv */
-	function rename_purchased_server(ns,servers,old_srv,new_srv) {
-		if(old_srv===new_srv) return;
-		let idx=servers.indexOf(old_srv);
-		servers[idx]=new_srv;
-		let res=ns.renamePurchasedServer(old_srv,new_srv);
+	/** @arg {NS} ns @arg {string[]} servers @arg {string} old_str @arg {string} new_str */
+	function rename_purchased_server(ns,servers,old_str,new_str) {
+		if(old_str===new_str) return new_str;
+		let idx=servers.indexOf(old_str);
+		servers[idx]=new_str;
+		let res=ns.renamePurchasedServer(old_str,new_str);
 		if(!res) {
-			ns.printf("%s -> %s",old_srv,new_srv);
+			ns.printf("%s -> %s",old_str,new_str);
 			ns.exit();
 		}
+		return new_str;
 	}
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} not_pserv @arg {string[]} only_pserv */
 	function increase_server_ram(prev_ram,ram,not_pserv,only_pserv) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
 		i=not_pserv.length;
-		for(const hostname of only_pserv) {
-			for(;;) {
+		for(let hostname of only_pserv) {
+			for(;;++i) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
 				if(cur_server_money<buy_cost1) return;
 				if(purchased_server_hostnames.includes(hostname)) {
@@ -54,10 +55,9 @@ export function main(ns) {
 					if(new_host==="") throw new Error("failed to purchase server");
 					ns.scp(s.scripts,new_host);
 				}
+				hostname=rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
 				const srv=ns.getServer(hostname);
 				s.start_script_template(srv);
-				rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
-				++i;
 			}
 		}
 	}
