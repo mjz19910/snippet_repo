@@ -11,12 +11,14 @@ class DomList {
 	}
 	/** @arg {HTMLDivElement} root_element */
 	constructor(root_element) {
+		this.MuiBox_root=query_element(root_element,"#root > div.MuiBox-root");
 		/** @type {HTMLDivElement} */
-		const MuiDrawer_root=query_element(root_element,"div.MuiBox-root>div.MuiDrawer-root");
+		this.MuiDrawer_root=query_element(this.MuiBox_root,"div.MuiDrawer-root");
 		/** @type {HTMLDivElement} */
-		const MuiPaper_root=query_element(MuiDrawer_root,"div.MuiPaper-root");
+		this.MuiPaper_root=query_element(this.MuiDrawer_root,"div.MuiPaper-root");
 		/** @type {HTMLUListElement} */
-		const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
+		const MuiList_root=query_element(this.MuiPaper_root,"ul.MuiList-root");
+		this.MuiList_root=MuiList_root;
 		// 2,5,8 are dividers
 		this.hacking_section_header=as_div_element(MuiList_root.children[0]);
 		this.expand_collapsed_section(this.hacking_section_header);
@@ -62,7 +64,6 @@ class DomList {
 		/** @type {any} */
 		let win_any=window;
 		win_any.__dom_list=this;
-		this.city_button;
 		Object.values(this.city_button)[1].onClick();
 	}
 }
