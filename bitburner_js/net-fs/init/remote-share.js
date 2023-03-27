@@ -80,5 +80,6 @@ export async function main(ns) {
 		cur_srv=next_srv;
 		if(!pid) continue;
 		await ns.sleep(40);
+		ns.closeTail(pid);
 	}
 }

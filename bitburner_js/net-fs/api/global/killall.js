@@ -1,3 +1,5 @@
+import {hack_server} from "/run/hack-scripts";
+
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.disableLog("disableLog");
@@ -5,10 +7,10 @@ export async function main(ns) {
 	ns.disableLog("scan");
 	ns.killall("home",true);
 	for(let item of ns.getRecentScripts()) {
-		ns.closeTail(item.pid);
+		if(item.filename===hack_server) ns.closeTail(item.pid);
 	}
 	for(let item of ns.ps("home")) {
-		ns.closeTail(item.pid);
+		if(item.filename===hack_server) ns.closeTail(item.pid);
 	}
 	let killed=new Set;
 	let next=["home"];
