@@ -15,10 +15,11 @@ export async function main(ns) {
 		return query_element(doc,"#terminal-input");
 	}
 	async function wait_for_terminal() {
-		let new_element=get_terminal_input();
+		let new_element=get_terminal_input(),cnt=0;
 		while(new_element===null) {
-			ns.print("waiting for terminal");
+			if(cnt%8===0) ns.print("waiting for terminal");
 			await ns.sleep(250);
+			cnt++;
 			new_element=get_terminal_input();
 		}
 		return new_element;
