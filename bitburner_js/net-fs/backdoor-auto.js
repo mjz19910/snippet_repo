@@ -20,13 +20,13 @@ export async function main(ns) {
 	let scan_res2=[];
 	/** @type {HTMLInputElement&{[x:string]:ReactEventState}} */
 	let terminalInput=as_any(terminalInput_nt);
-	while(scan_res2.length>0) {
+	do {
 		scan_res2.length=0;
 		await handle_scan_list({ns,scan_data: [scan_res,scan_res2],server_map,seen_hosts,terminalInput});
 		for(let item of scan_res2) {
 			scan_res.push(item);
 		}
-	}
+	} while(scan_res2.length>0);
 }
 
 /** @param {{ns:NS;terminalInput:HTMLInputElement&{[x:string]:ReactEventState};scan_data: [Arr1,Arr1];server_map:{[x:string]:Server};seen_hosts:Set<string>}} s */
