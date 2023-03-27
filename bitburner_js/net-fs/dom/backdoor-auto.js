@@ -1,5 +1,3 @@
-import {as_any} from "/run/as.js";
-
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
@@ -7,12 +5,25 @@ export async function main(ns) {
 	ns.disableLog("getHackingLevel");
 	ns.disableLog("sleep");
 	ns.disableLog("scan");
-	const terminalInput_nt=globalThis["document"].getElementById("terminal-input");
-	if(!terminalInput_nt) {
-		ns.tprint("not at terminal");
-		return;
+	const doc=globalThis["document"];
+	/** @template {Element} R @returns {R|null} @template {ParentNode} T @arg {T} root @template {string} U @arg {U} selector */
+	function query_element(root,selector) {
+		return root.querySelector(selector);
 	}
-	if(!(terminalInput_nt instanceof HTMLInputElement)) ns.exit();
+	/** @returns {HTMLInputElement&{[x:string]:ReactEventState}|null} */
+	function get_terminal_input() {
+		return query_element(doc,"#terminal-input");
+	}
+	async function wait_for_terminal() {
+		let new_element=get_terminal_input();
+		while(new_element===null) {
+			ns.print("waiting for terminal");
+			await ns.sleep(250);
+			new_element=get_terminal_input();
+		}
+		return new_element;
+	}
+	let terminalInput=await wait_for_terminal();
 	let hacking_level=ns.getHackingLevel();
 	let seen_hosts=new Set(["home"]);
 	/** @type {{[x:string]:Server}} */
@@ -21,8 +32,6 @@ export async function main(ns) {
 	let scan_res=ns.scan().map(v => [{final: v},{path: []}]);
 	/** @type {([{final:string},{path:string[]}])[]} */
 	let scan_res2=[];
-	/** @type {HTMLInputElement&{[x:string]:ReactEventState}} */
-	let terminalInput=as_any(terminalInput_nt);
 	do {
 		scan_res2.length=0;
 		for(let host_desc of scan_res) {
@@ -41,8 +50,9 @@ export async function main(ns) {
 			if(srv.backdoorInstalled) continue;
 			if(srv.requiredHackingSkill>hacking_level) continue;
 			let delay=ns.getHackTime(hostname);
-			/** @arg {HTMLInputElement&{[x:string]:ReactEventState}} terminalInput @arg {string} command */
-			function start_terminal_command(terminalInput,command) {
+			/** @arg {string} command */
+			async function start_terminal_command(command) {
+				terminalInput=await wait_for_terminal();
 				terminalInput.value=command;
 				const handler=Object.keys(terminalInput)[1];
 				terminalInput[handler].onChange({target: terminalInput});
@@ -55,21 +65,22 @@ export async function main(ns) {
 			});
 			let cmd_list=full_path.map(v => "connect "+v);
 			cmd_list.push("backdoor");
-			start_terminal_command(terminalInput,cmd_list.join(";"));
+			await start_terminal_command(cmd_list.join(";"));
 			let acc_delay=0,start_perf=performance.now(),cnt=0;
 			const est_delay=delay/4;
 			ns.printf("est_delay:%s",tFormat(ns,est_delay));
 			await ns.sleep(est_delay);
 			for(;;cnt++) {
+				terminalInput=await wait_for_terminal();
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
 				if(!has_disabled) break;
-				await ns.sleep(0);
+				await ns.sleep(33);
 			}
 			acc_delay=performance.now()-start_perf;
 			ns.printf("ratio:%s",ns.formatNumber(delay/acc_delay,2));
 			ns.printf("time:%s",tFormat(ns,acc_delay));
 			ns.print("cnt: ",cnt);
-			start_terminal_command(terminalInput,"home");
+			await start_terminal_command("home");
 		}
 		for(let item of scan_res2) {
 			scan_res.push(item);
