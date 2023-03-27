@@ -5,12 +5,13 @@
 /** @typedef {{call:"getServerMoneyAvailable";hostname:string;reply:number}} ReplyMsg4 */
 /** @typedef {{call:"get_server";hostname:string;reply:Server}} ReplyMsg5 */
 
-/** @typedef {CallMsg1|CallMsg2|CallMsg3|CallMsg4|CallMsg5} CallMsg */
+/** @typedef {CallMsg1|CallMsg2|CallMsg3|CallMsg4|CallMsg5|CallMsg6} CallMsg */
 /** @typedef {{call:"getServerMaxMoney",args:[string]}} CallMsg1 */
 /** @typedef {{call:"getServerMinSecurityLevel",args:[string]}} CallMsg2 */
 /** @typedef {{call:"getServerSecurityLevel",args:[string]}} CallMsg3 */
 /** @typedef {{call:"getServerMoneyAvailable",args:[string]}} CallMsg4 */
 /** @typedef {{call:"get_server",args:[string]}} CallMsg5 */
+/** @typedef {{call:"get_hack_target",args:[string]}} CallMsg6 */
 
 /** @param {NS} ns @arg {number} port */
 export function read_port_msg(ns,port) {

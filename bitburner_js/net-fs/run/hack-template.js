@@ -30,5 +30,5 @@ export async function run_hack(ns,target) {
 export function main(ns) {
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
-	return run_hack(ns,"n00dles");
+	return run_hack(ns,"foodnstuff");
 }

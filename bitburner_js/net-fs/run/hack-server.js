@@ -1,5 +1,7 @@
 import {read_port1_msg,read_port_msg,send_port2_msg} from "/run/hack-support.js";
-
+function rand_num(min,max) {
+	return Math.floor(Math.random()*(max-min+1))+min;
+}
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
@@ -22,16 +24,24 @@ export async function main(ns) {
 	const trace=false;
 	/** @type {{[x:string]:Server}} */
 	const server_map={};
+	/** @type {string[]} */
+	const hostname_list=[];
 	/** @arg {string} hostname */
 	function get_server(hostname) {
 		let server=server_map[hostname];
 		if(server) return server;
+		hostname_list.push(hostname);
 		server=ns.getServer(hostname);
 		server_map[hostname]=server;
 		return server;
 	}
 
+	for(let item of ns.scan("home")) {
+		get_server(item);
+	}
+
 	let processed_messages_count=0;
+	let print_server_message=true;
 	function process_messages() {
 		for(;;) {
 			let msg=read_port1_msg(ns);
@@ -48,6 +58,15 @@ export async function main(ns) {
 				} break;
 				case "getServerMoneyAvailable": {
 					let reply=ns.getServerMoneyAvailable(...msg.args);
+					if(print_server_message&&reply!==0) {
+						ns.tprintf("getServerMoneyAvailable: (%s) %s",msg.args[0],ns.formatNumber(reply));
+						print_server_message=false;
+						async function run_sleep() {
+							await ns.asleep(1000);
+							print_server_message=true;
+						}
+						run_sleep();
+					}
 					send_port2_msg(ns,{call: "getServerMoneyAvailable",hostname: msg.args[0],reply});
 				} break;
 				case "getServerSecurityLevel": {
@@ -56,6 +75,14 @@ export async function main(ns) {
 				} break;
 				case "get_server": {
 					let reply=get_server(msg.args[0]);
+					send_port2_msg(ns,{call: "get_server",hostname: msg.args[0],reply});
+				} break;
+				case "get_hack_target": {
+					let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
+					for(let item of ns.scan(hostname)) {
+						get_server(item);
+					}
+					let srv=get_server(msg.args[0]);
 					send_port2_msg(ns,{call: "get_server",hostname: msg.args[0],reply});
 				} break;
 			}
