@@ -1,10 +1,5 @@
-import {hack_server,hack_template} from "/run/hack-scripts";
-
 /** @param {NS} ns */
 export async function main(ns) {
-	const use_hacked_servers=false;
-	const use_home_server=false;
-
 	ns.tail();
 	ns.clearLog();
 	ns.disableLog("disableLog");
@@ -12,42 +7,11 @@ export async function main(ns) {
 	ns.disableLog("killall");
 	ns.disableLog("sleep");
 	ns.disableLog("exec");
-	const use_all=true;
+	ns.disableLog("scan");
 	const share_script="/api/share.js";
-	if(use_all) {
-		let ps_list=ns.ps("home");
-		ps_list.forEach(info => {
-			if(info.filename===hack_server) return;
-			if(info.filename===hack_template) ns.kill(info.pid);
-			if(info.filename===share_script) ns.kill(info.pid);
-		});
-	}
-	if(use_home_server||use_all) {
-		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
-		ns.run(share_script,thread_n,"auto","home");
-	}
-
-	// share purchased_servers
-	let share_servers;
-	if(use_all) {
-		share_servers=ns.getPurchasedServers();
-	} else {
-		share_servers=ns.getPurchasedServers().slice(0,16);
-	}
-	for(let srv of share_servers) {
-		if(!ns.ls(srv).includes(share_script)) {
-			ns.scp(share_script,srv);
-		}
-		ns.killall(srv);
-		let thread_n=ns.getServerMaxRam(srv)/4|0;
-		ns.exec(share_script,srv,thread_n,"auto",srv);
-		await ns.sleep(33);
-	}
-	if(!use_hacked_servers) return;
 	let seen_srv=new Set;
-	let servers_arr=[];
-	let cur_srv="home";
-	while(cur_srv) {
+	let servers_arr=["home"];
+	for(let cur_srv;cur_srv=servers_arr.shift();) {
 		seen_srv.add(cur_srv);
 		/** @type {number|null} */
 		let pid=null;
@@ -67,9 +31,6 @@ export async function main(ns) {
 			let thread_n=server_ram/4|0;
 			pid=ns.exec(share_script,srv,thread_n,"auto",srv);
 		}
-		let next_srv=servers_arr.pop();
-		if(next_srv===void 0) break;
-		cur_srv=next_srv;
 		if(!pid) continue;
 		await ns.sleep(33);
 		ns.closeTail(pid);
