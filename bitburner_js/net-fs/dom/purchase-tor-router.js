@@ -64,11 +64,13 @@ class DomList {
 	}
 	/** @param {NS} ns */
 	async use(ns) {
-		ns.print("start: tor router");
+		if(ns.hasTorRouter()) return;
+		ns.print("start: purchase_tor_router");
 		/** @type {any} */
 		let win_any=window;
 		win_any.__dom_list=this;
 		this.click_on(this.city_button);
+		/** @type {HTMLDivElement} */
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
 		const city_location=this.current_page.children[0].textContent;
 		if(city_location!=="Sector-12") throw new Error("Handle new city");
@@ -78,6 +80,7 @@ class DomList {
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
 		const purchase_tor_router_button=as_html_element(this.current_page.children[8]);
 		this.click_on(purchase_tor_router_button);
+		this.click_on(this.current_page);
 	}
 }
 
