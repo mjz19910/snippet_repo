@@ -83,7 +83,7 @@ export class InitHackScript {
 			let res=start_handle.read();
 			ns.tprintf("%s",res);
 		}
-		await this.ns.sleep(2*1000);
+		await this.ns.sleep(10*1000);
 		return;
 	}
 	/** @arg {string} fn_key */
