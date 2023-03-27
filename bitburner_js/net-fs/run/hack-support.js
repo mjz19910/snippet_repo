@@ -63,11 +63,8 @@ function should_accept(reply,call_,arg0) {
 	if(reply.hostname!==arg0) return false;
 	return true;
 }
-/**
- * @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id @arg {number} uid
- * @param {Extract<ReplyMsg,{call:CallId}>|null} _reply_obj
- */
-async function generic_get_call(ns,target,call_id,uid,_reply_obj=null) {
+/** @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id @arg {number} uid */
+async function generic_get_call(ns,target,call_id,uid) {
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let rep_count=6;;rep_count++) {
