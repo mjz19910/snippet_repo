@@ -11,6 +11,12 @@ export async function main(ns) {
 	ns.disableLog("getServerMoneyAvailable");
 	ns.disableLog("getServerSecurityLevel");
 
+	await ns.sleep(33);
+
+	const width=250;
+	ns.resizeTail(width,0);
+	ns.moveTail(1920-width-5,1);
+
 	const trace=false;
 	/** @type {{[x:string]:Server}} */
 	const server_map={};
