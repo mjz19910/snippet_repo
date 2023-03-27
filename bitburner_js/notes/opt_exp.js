@@ -24,6 +24,32 @@ function log_crime_min2(key,exp_str,exp,dur_min,dur_sec=0) {
 	console.log(`${key}:`,exp_str,":",val,"exp/sec");
 }
 /**
+ * @param {string} key
+ * @param {string} exp_str
+ * @param {number[]} exp
+ * @param {number} dur_min
+ * @param {number} dur_sec
+ */
+function log_crime_min3(key,exp_str,exp,dur_min,dur_sec=0) {
+	dur_sec+=dur_min*60;
+	const rate=exp[0]/dur_sec;
+	const val=parseFloat(rate.toPrecision(3));
+	console.log(`${key}:`,exp_str,":",val,"exp/sec");
+}
+/**
+ * @param {string} key
+ * @param {string} exp_str
+ * @param {number[][]} exp
+ * @param {number} dur_min
+ * @param {number} dur_sec
+ */
+function log_crime_min4(key,exp_str,exp,dur_min,dur_sec=0) {
+	dur_sec+=dur_min*60;
+	const rate=exp[0][0]/dur_sec;
+	const val=parseFloat(rate.toPrecision(3));
+	console.log(`${key}:`,exp_str,":",val,"exp/sec");
+}
+/**
  * @param {number} num
  */
 function round_float(num) {
@@ -68,27 +94,25 @@ function main_1() {
 	json_mults;
 	const mults={
 		hacking_exp: 4.122273968381145,
+		strength_exp: 2.0717875259144165,
 		charisma_exp: 2.0717875259144165,
+		defense_exp: 2.0717875259144165,
+		dexterity_exp: 2.0717875259144165,
+		agility_exp: 2.0717875259144165,
+		crime_money: 2.0472208754095025,
 	};
-	log_crime_min("shoplift",4.144,0,2);
-	log_crime_min2("rob_store","hack",112.426,1,0);
-	log_crime_min2("rob_store","dex,agi",84.755,1,0);
-	log_crime_min2("larceny","hack",168.638,1,30);
-	log_crime_min2("larceny","dex",113.007,1,30);
-	log_crime_min2("deal_drugs","dex",9.417,0,10);
-	log_crime_min2("deal_drugs","cha",18.834,0,10);
-	log_crime_min2("bond_forgery","hack",374.752,5,0);
-	log_crime_min2("bond_forgery","dex",282.516,5,0);
-	log_crime_min2("bond_forgery","cha",28.252,5,0);
-	log_crime_min2("traffic_arms","str",37.669,0,40);
-	log_crime_min2("traffic_arms","cha",75.338,0,40);
-	log_crime_min2("homicide","str,def,dex,agi",4.144,0,3);
-	log_crime_min2("grand_theft_auto","str",37.669,1,20);
-	log_crime_min2("grand_theft_auto","agi",165.743,1,20);
-	log_crime_min2("grand_theft_auto","cha",75.338,1,20);
-	log_crime_min2("kidnap","str,def,dex,agi,cha",165.743,2);
-	log_crime_min2("assassination","str,def,dex,agi",621.536,5);
-	log_crime_min2("heist","hack,str,def,dex,agi,cha",932.304,10);
+	0&&log_crime_min2("shoplift","dex,agi",mults.hacking_exp*1,0,2);
+	0&&log_crime_min4("rob_store","[hack],[dex,agi]",[[mults.agility_exp*45],[mults.hacking_exp*30]],5,0);
+	0&&log_crime_min2("mug","str,def,dex,agi",mults.agility_exp*3,0,4);
+	0&&log_crime_min4("larceny","[hack],[dex,agi]",[[mults.hacking_exp*45],[mults.agility_exp*60]],5,0);
+	0&&log_crime_min4("deal_drugs","[dex,agi],[cha]",[[mults.agility_exp*5],[mults.charisma_exp*10]],5,0);
+	0&&log_crime_min3("bond_forgery","hack,dex,cha",[mults.hacking_exp*100,mults.dexterity_exp*150,mults.charisma_exp*15],5,0);
+	0&&log_crime_min3("traffic_arms","str,cha",[mults.strength_exp*20,mults.charisma_exp*40],5,0);
+	0&&log_crime_min2("homicide","str,def,dex,agi",mults.strength_exp*2,0,3);
+	0&&log_crime_min3("grand_theft_auto","str,agi,cha",[mults.strength_exp*20,mults.agility_exp*80,mults.charisma_exp*15],5,0);
+	0&&log_crime_min2("kidnap","str,def,dex,agi,cha",mults.agility_exp*80,2);
+	0&&log_crime_min2("assassination","str,def,dex,agi",mults.strength_exp*300,5);
+	0&&log_crime_min4("heist","[hack],[str,def,dex,agi,cha]",[[mults.hacking_exp*450],[mults.strength_exp*450]],10,0);
 	let is_enabled_rothman_uni=false;
 	if(is_enabled_rothman_uni) {
 		const cur="rothman_uni";
