@@ -16,11 +16,10 @@ export async function main(ns) {
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
 	const s=new InitHackScript(ns,{trace: false,template_changed});
-	/** @arg {string[]} servers @arg {Server} srv @arg {string} new_str */
-	function rename_purchased_server(servers,srv,new_str) {
+	/** @arg {(s:string,d:string)=>void} rename_fn @arg {Server} srv @arg {string} new_str */
+	function rename_purchased_server(rename_fn,srv,new_str) {
 		if(srv.hostname===new_str) return;
-		let idx=servers.indexOf(srv.hostname);
-		servers[idx]=new_str;
+		rename_fn(srv.hostname,new_str);
 		let res=ns.renamePurchasedServer(srv.hostname,new_str);
 		if(!res) {
 			ns.printf("%s -> %s",srv.hostname,new_str);
@@ -42,14 +41,21 @@ export async function main(ns) {
 				let old_proc=ns.ps(hostname);
 				old_proc.forEach(v => ns.kill(v.pid));
 				ns.upgradePurchasedServer(hostname,ram);
+				srv.maxRam=ram;
 			} else {
+				ns.print("buy_server: ",hostname);
 				let new_host=ns.purchaseServer(hostname,ram);
 				if(new_host==="") throw new Error("failed to purchase server");
 				purchased_server_list.push(new_host);
 				ns.scp(s.scripts,new_host);
 				srv=ns.getServer(new_host);
 			}
-			rename_purchased_server(hostname_list,srv,`big-${ram}-${host_parts[2]}`);
+			rename_purchased_server((a1,a2) => {
+				let idx=hostname_list.indexOf(a1);
+				hostname_list[idx]=a2;
+				idx=purchased_server_list.indexOf(a1);
+				purchased_server_list[idx]=a2;
+			},srv,`big-${ram}-${host_parts[2]}`);
 			await s.start_script_template(srv);
 		}
 	}
