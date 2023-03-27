@@ -75,6 +75,7 @@ export class InitHackScript {
 			return false;
 		}
 		const ro_base=`hack-v2 ${ro_1}`;
+		let t=this.get_thread_count(srv);
 		const processes=ns.ps(srv.hostname);
 		if(processes.length>0) {
 			let share_ps=processes.find(ps => ps.filename==="/api/share.js");
@@ -83,13 +84,13 @@ export class InitHackScript {
 				const new_share_thread_count=(srv.maxRam/2)/4|0;
 				ns.exec("/api/share.js",srv.hostname,new_share_thread_count,...share_ps.args);
 				srv=this.update_server(srv);
+				t-=t/2|0;
 			}
 			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return false;
 			processes.forEach(ps => {
 				if(ps.filename===hack_template) ns.kill(ps.pid);
 			});
 		}
-		const t=this.get_thread_count(srv);
 		let mode=this.get_mode();
 		ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
 		if(this.opts.distribute) {
@@ -282,7 +283,7 @@ export class InitHackScript {
 	}
 	/** @arg {Server} srv */
 	get_thread_count(srv) {
-		if(srv.hostname==="home") return (srv.maxRam-srv.ramUsed-16)/2|0;
+		if(srv.hostname==="home") return (srv.maxRam-48)/2|0;
 		return srv.maxRam/2|0;
 	}
 	async do_restart_purchased_servers() {
