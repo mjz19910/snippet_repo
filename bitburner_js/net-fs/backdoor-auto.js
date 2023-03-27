@@ -16,6 +16,23 @@ export async function main(ns) {
 	let server_map={};
 	/** @type {([{final:string},{path:string[]}])[]} */
 	let scan_res=ns.scan().map(v => [{final: v},{path: []}]);
+	/** @type {([{final:string},{path:string[]}])[]} */
+	let scan_res2=[];
+	/** @type {HTMLInputElement&{[x:string]:ReactEventState}} */
+	let terminalInput=as_any(terminalInput_nt);
+	while(scan_res2.length>0) {
+		await handle_scan_list({ns,scan_data: [scan_res,scan_res2],server_map,seen_hosts,terminalInput});
+		for(let item of scan_res2) {
+			scan_res.push(item);
+		}
+		scan_res2.length=0;
+	}
+}
+
+/** @param {{ns:NS;terminalInput:HTMLInputElement&{[x:string]:ReactEventState};scan_data: [Arr1,Arr1];server_map:{[x:string]:Server};seen_hosts:Set<string>}} s */
+async function handle_scan_list(s) {
+	const {ns,scan_data,seen_hosts,server_map,terminalInput}=s;
+	const [scan_res,scan_res2]=scan_data;
 	for(let host_desc of scan_res) {
 		const hostname=host_desc[0].final;
 		if(hostname.startsWith("big-")) continue;
@@ -23,15 +40,13 @@ export async function main(ns) {
 		for(let res of next) {
 			if(seen_hosts.has(res)) continue;
 			seen_hosts.add(res);
-			scan_res.push([{final: res},{path: [...host_desc[1].path,hostname]}]);
+			scan_res2.push([{final: res},{path: [...host_desc[1].path,hostname]}]);
 		}
 		let srv=ns.getServer(hostname);
 		server_map[hostname]=srv;
 		if(srv.purchasedByPlayer) continue;
 		if(!srv.hasAdminRights) continue;
 		if(srv.backdoorInstalled) continue;
-		/** @type {HTMLInputElement&{[x:string]:ReactEventState}} */
-		let terminalInput=as_any(terminalInput_nt);
 		/** @arg {HTMLInputElement&{[x:string]:ReactEventState}} terminalInput @arg {string} command */
 		function start_terminal_command(terminalInput,command) {
 			terminalInput.value=command;
@@ -44,7 +59,9 @@ export async function main(ns) {
 			let v2=arr[idx+1];
 			return !server_map[v2].backdoorInstalled;
 		});
-		start_terminal_command(terminalInput,`connect ${full_path.reduce((p,c) => `${p};connect ${c}`)};backdoor`);
+		let cmd_list=full_path.map(v => "connect "+v);
+		cmd_list.push("backdoor");
+		start_terminal_command(terminalInput,cmd_list.join(";"));
 		let delay=ns.getHackTime(hostname); delay;
 		let acc_delay=0;
 		for(;;) {
@@ -57,5 +74,5 @@ export async function main(ns) {
 		start_terminal_command(terminalInput,"home");
 	}
 }
-
+/** @typedef {([{final:string},{path:string[]}])[]} Arr1 */
 /** @typedef {{onChange(x:{target:HTMLInputElement}):void;onKeyDown(x:{key:"Enter";preventDefault():null}):void}} ReactEventState */
