@@ -39,7 +39,7 @@ export async function main(ns) {
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
 	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
-		y: for(let hostname of hostname_list) {
+		for(let hostname of hostname_list) {
 			let srv=ns.getServer(hostname);
 			if(srv.maxRam>=ram) continue;
 			for(;;++i) {
