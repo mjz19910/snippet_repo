@@ -30,7 +30,7 @@ export async function main(ns) {
 	/** @type {{[x:string]:Server}} */
 	let server_map={};
 	/** @type {([{final:string},{path:string[]}])[]} */
-	let scan_res=ns.scan().map(v => [{final: v},{path: []}]);
+	let scan_res=ns.scan().map(v => [{final: v},{path: ["home"]}]);
 	/** @type {([{final:string},{path:string[]}])[]} */
 	let scan_res2=[];
 	do {

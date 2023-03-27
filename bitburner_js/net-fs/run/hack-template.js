@@ -67,7 +67,9 @@ export async function main(ns) {
 		const srv=await generic_get_call(ns,Math.random()+"","get_hack_target");
 		s.target=srv.hostname;
 		ns.printf("[%s] target: %s",s.hostname,s.target);
-		await run_hack(s);
+		for(let i=0;i<8;i++) {
+			await run_hack(s);
+		}
 	}
 }
 /** @typedef {{first:boolean;ns:NS;thread_count:number;hostname:string;target:string|null}} HackState */
