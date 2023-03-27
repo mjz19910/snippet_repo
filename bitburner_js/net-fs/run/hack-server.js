@@ -11,11 +11,13 @@ export async function main(ns) {
 	ns.disableLog("getServerMoneyAvailable");
 	ns.disableLog("getServerSecurityLevel");
 
+	const window_width=globalThis["document"].body.getClientRects()[0].width;
+
 	await ns.sleep(33);
 
 	const width=250;
 	ns.resizeTail(width,0);
-	ns.moveTail(1920-width-5,1);
+	ns.moveTail(window_width-width-4,1);
 
 	const trace=false;
 	/** @type {{[x:string]:Server}} */
