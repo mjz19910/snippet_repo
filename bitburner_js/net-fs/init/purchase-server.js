@@ -22,8 +22,8 @@ export async function main(ns) {
 		const srv=s.get_server(hostname);
 		await s.start_script_template(srv);
 	}
-	/** @arg {NS} ns @arg {string[]} servers @arg {Server} srv @arg {string} new_str */
-	function rename_purchased_server(ns,servers,srv,new_str) {
+	/** @arg {string[]} servers @arg {Server} srv @arg {string} new_str */
+	function rename_purchased_server(servers,srv,new_str) {
 		if(srv.hostname===new_str) return;
 		let idx=servers.indexOf(srv.hostname);
 		servers[idx]=new_str;
@@ -32,7 +32,7 @@ export async function main(ns) {
 			ns.printf("%s -> %s",srv.hostname,new_str);
 			ns.exit();
 		}
-		srv.hostname=new_str;
+		s.rename_server(srv,new_str);
 	}
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
 	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
@@ -45,7 +45,7 @@ export async function main(ns) {
 				if(cur_server_money<buy_cost1) return;
 				let host_parts=hostname.split("-");
 				ns.print(host_parts[2],srv.maxRam);
-				if(server_hostname_list.includes(hostname)) {
+				if(hostname in s.server_map) {
 					let old_proc=ns.ps(hostname);
 					old_proc.forEach(v => ns.kill(v.pid));
 					ns.upgradePurchasedServer(hostname,ram);
@@ -54,7 +54,7 @@ export async function main(ns) {
 					if(new_host==="") throw new Error("failed to purchase server");
 					ns.scp(s.scripts,new_host);
 				}
-				rename_purchased_server(ns,hostname_list,srv,`big-${ram}-${host_parts[2]}`);
+				rename_purchased_server(hostname_list,srv,`big-${ram}-${host_parts[2]}`);
 				await s.start_script_template(srv);
 				await ns.sleep(1000);
 				break;

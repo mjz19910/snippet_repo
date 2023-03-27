@@ -265,6 +265,12 @@ export class InitHackScript {
 		this.server_map[srv.hostname]=srv;
 		return srv;
 	}
+	/** @param {Server} srv @param {string} str */
+	rename_server(srv,str) {
+		delete this.server_map[srv.hostname];
+		this.server_map[str]=srv;
+		srv.hostname=str;
+	}
 	/** @arg {Server} srv @arg {"ssh"|"ftp"|"smtp"|"http"|"sql"} type */
 	unlock_service(srv,type) {
 		if(this.f_[`has_${type}`]) {
