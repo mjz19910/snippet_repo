@@ -12,7 +12,6 @@ export async function main(ns) {
 
 	let ram=1;
 	let server_hostname_list=ns.getPurchasedServers();
-	let server_offset=server_hostname_list.length;
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
 	const s=new InitHackScript(ns,{trace: false,template_changed});
@@ -23,7 +22,6 @@ export async function main(ns) {
 		const srv=s.get_server(hostname);
 		await s.start_script_template(srv);
 	}
-	let i=server_offset;
 	/** @arg {NS} ns @arg {string[]} servers @arg {Server} srv @arg {string} new_str */
 	function rename_purchased_server(ns,servers,srv,new_str) {
 		if(srv.hostname===new_str) return;
@@ -42,7 +40,7 @@ export async function main(ns) {
 		for(let hostname of hostname_list) {
 			let srv=ns.getServer(hostname);
 			if(srv.maxRam>=ram) continue;
-			for(;;++i) {
+			for(;;) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
 				if(cur_server_money<buy_cost1) return;
 				let host_parts=hostname.split("-");
