@@ -64,13 +64,13 @@ async function handle_scan_list(s) {
 		let cmd_list=full_path.map(v => "connect "+v);
 		cmd_list.push("backdoor");
 		start_terminal_command(terminalInput,cmd_list.join(";"));
-		let acc_delay=0;
+		let acc_delay=0,start_perf=performance.now();
 		for(;;) {
-			await ns.sleep(80);
-			acc_delay+=80;
+			await ns.sleep(30);
 			let has_disabled=terminalInput.classList.contains("Mui-disabled");
 			if(!has_disabled) break;
 		}
+		acc_delay=performance.now()-start_perf;
 		ns.printf("backdoor_ratio:%s",ns.formatNumber(delay/acc_delay));
 		ns.printf("hack_time:%s",ns.tFormat(delay));
 		ns.printf("backdoor_time:%s",ns.tFormat(acc_delay));
