@@ -14,18 +14,16 @@ export async function main(ns) {
 	ns.disableLog("exec");
 	const use_all=true;
 	const share_script="/api/share.js";
-	let has_share_running=false;
 	if(use_all) {
 		let ps_list=ns.ps("home");
 		ps_list.forEach(info => {
 			if(info.filename===hack_server) return;
 			if(info.filename===hack_template) ns.kill(info.pid);
-			if(info.filename===share_script) has_share_running=true;
+			if(info.filename===share_script) ns.kill(info.pid);
 		});
 	}
 	if(use_home_server||use_all) {
 		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
-		if(has_share_running) return;
 		ns.run(share_script,thread_n,"auto","home");
 	}
 
@@ -55,7 +53,6 @@ export async function main(ns) {
 		let pid=null;
 		let srv=cur_srv;
 		x: {
-			if(srv.startsWith("big-")) break x;
 			let hosts=ns.scan(srv);
 			for(let host of hosts) {
 				if(seen_srv.has(host)) continue;
