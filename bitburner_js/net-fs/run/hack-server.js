@@ -43,7 +43,7 @@ export async function main(ns) {
 	for(let item of ns.scan("home")) get_server(item);
 
 	let processed_messages_count=0;
-	function process_messages() {
+	async function process_messages() {
 		for(;;) {
 			let msg=read_port1_msg(ns);
 			if(msg===null) break;
@@ -75,17 +75,16 @@ export async function main(ns) {
 					let reply=null;
 					for(;;) {
 						let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
+						await ns.sleep(33);
 						if(hostname==="home") continue;
 						if(hostname.startsWith("big-")) continue;
 						const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
 						if(scan_results.length>0) ns.tprint("scan: ",hostname," ",scan_results);
-						for(let item of scan_results) {
-							get_server(item);
-						}
+						for(let item of scan_results) get_server(item);
 						let srv=get_server(hostname);
-						if(srv.maxRam===0) continue;
-						if(srv.moneyMax===0) continue;
 						if(srv.purchasedByPlayer) continue;
+						if(srv.moneyMax===0) continue;
+						if(srv.maxRam===0) continue;
 						if(srv.hasAdminRights) {
 							reply=srv;
 							break;
@@ -98,7 +97,7 @@ export async function main(ns) {
 		}
 	}
 	for(;;) {
-		process_messages();
+		await process_messages();
 		await ns.sleep(33);
 		if(processed_messages_count===0) await ns.sleep(1500);
 		processed_messages_count=0;
