@@ -1,4 +1,4 @@
-import {as_any} from "./run/as.js";
+import {as_any} from "/run/as.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
