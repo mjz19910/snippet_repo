@@ -155,8 +155,16 @@ function main_1() {
 	}
 	let is_gym=false;
 	if(is_gym) {
+		const cur="powerhouse_gym";
+		log_gym_min(`${cur}.str`,20.718,-2400);
+	}
+	if(is_gym) {
 		const cur="snap_fitness_gym";
 		log_gym_min(`${cur}.str`,10.359,-1080);
+	}
+	if(is_gym) {
+		const cur="millenium_fitness_gym";
+		log_gym_min(`${cur}.str`,8.287,-324);
 	}
 	if(is_gym) {
 		const cur="crush_fitness_gym";
