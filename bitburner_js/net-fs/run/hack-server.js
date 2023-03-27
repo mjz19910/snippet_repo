@@ -61,7 +61,6 @@ export async function main(ns) {
 				} break;
 				case "getServerMoneyAvailable": {
 					let reply=ns.getServerMoneyAvailable(...args);
-					ns.printf("getServerMoneyAvailable: (%s) %s",args[0],ns.formatNumber(reply));
 					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 				case "getServerSecurityLevel": {
