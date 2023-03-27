@@ -3,12 +3,12 @@ import {as_any} from "./run/as.js";
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
-	const terminalInput=globalThis["document"].getElementById("terminal-input");
-	if(!terminalInput) {
+	const terminalInput_nt=globalThis["document"].getElementById("terminal-input");
+	if(!terminalInput_nt) {
 		ns.tprint("not at terminal");
 		return;
 	}
-	if(!(terminalInput instanceof HTMLInputElement)) ns.exit();
+	if(!(terminalInput_nt instanceof HTMLInputElement)) ns.exit();
 	let scan_res=ns.scan();
 	for(let hostname of scan_res) {
 		if(hostname.startsWith("big-")) continue;
@@ -17,10 +17,14 @@ export async function main(ns) {
 		if(!srv.hasAdminRights) continue;
 		if(srv.backdoorInstalled) continue;
 		await ns.sleep(200);
-		terminalInput.value=`connect ${hostname}`;
-		const handler=Object.keys(terminalInput)[1];
-		/** @type {{[x:string]:{onChange(x:{target:HTMLInputElement}):void}}} */
-		let o1=as_any(terminalInput);
-		o1[handler].onChange({target: terminalInput});
+		terminalInput_nt.value=`connect ${hostname}`;
+		const handler=Object.keys(terminalInput_nt)[1];
+
+		/** @type {{[x:string]:ReactEventState}} */
+		let terminalInput=as_any(terminalInput_nt);
+		terminalInput[handler].onChange({target: terminalInput_nt});
+		terminalInput[handler].onKeyDown({key: 'Enter',preventDefault: () => null});
 	}
 }
+
+/** @typedef {{onChange(x:{target:HTMLInputElement}):void;onKeyDown(x:{key:"Enter";preventDefault():null}):void}} ReactEventState */
