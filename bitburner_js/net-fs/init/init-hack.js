@@ -78,11 +78,12 @@ export class InitHackScript {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
 		}
-		await Promise.race([start_handle.nextWrite(),ns.asleep(2*60*1000)]);
-		let res=start_handle.read();
-		ns.tprintf("%s",res);
-		start_handle.clear();
-		await this.ns.sleep(5000);
+		await start_handle.nextWrite();
+		while(!start_handle.empty()) {
+			let res=start_handle.read();
+			ns.tprintf("%s",res);
+		}
+		await this.ns.sleep(2*1000);
 		return;
 	}
 	/** @arg {string} fn_key */
