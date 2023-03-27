@@ -84,9 +84,7 @@ export async function main(ns) {
 			}
 			srv.backdoorInstalled=true;
 		}
-		for(let item of scan_res2) {
-			scan_res.push(item);
-		}
+		scan_res.push(...scan_res2);
 	} while(scan_res2.length>0);
 }
 
