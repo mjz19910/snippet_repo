@@ -37,7 +37,6 @@ export async function run_hack(ns,thread_count,target) {
 
 /** @param {NS} ns */
 export async function main(ns) {
-	ns.tail();
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 	/** @type {any} */
