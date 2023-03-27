@@ -1,7 +1,11 @@
 import {generic_get_call,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support.js";
 
-/** @param {NS} ns @param {string} target */
-export async function run_hack(ns,target) {
+/**
+ * @param {NS} ns
+ * @param {string} target
+ * @param {number} thread_count
+ */
+export async function run_hack(ns,thread_count,target) {
 	const max_money=await getServerMaxMoney_(ns,target);
 	if(max_money===0) return;
 	// Defines how much money a server should have before we hack it
@@ -21,16 +25,27 @@ export async function run_hack(ns,target) {
 	} else {
 		await ns.hack(target);
 	}
+	if(thread_count>512) {
+		while(security_level>securityThreshold) {
+			ns.tprint("big weaken");
+			await ns.weaken(target);
+		}
+	}
 }
 
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
+	/** @type {any} */
+	let pa=ns.flags([]);
+	/** @type {{_:[number]}} */
+	let f_=pa;
+	const thread_count=f_._[0];
 	for(;;) {
 		const srv=await generic_get_call(ns,Math.random()+"","get_hack_target");
 		const target=srv.hostname;
 		ns.print("target: ",target);
-		await run_hack(ns,target);
+		await run_hack(ns,thread_count,target);
 	}
 }

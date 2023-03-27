@@ -49,19 +49,20 @@ export async function main(ns) {
 			let msg=read_port1_msg(ns);
 			if(msg===null) break;
 			processed_messages_count++;
-			switch(msg.call) {
+			const {call,args}=msg;
+			switch(call) {
 				case "getServerMaxMoney": {
-					let reply=ns.getServerMaxMoney(...msg.args);
-					send_port2_msg(ns,{call: "getServerMaxMoney",hostname: msg.args[0],reply});
+					let reply=ns.getServerMaxMoney(...args);
+					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 				case "getServerMinSecurityLevel": {
-					let reply=ns.getServerMinSecurityLevel(...msg.args);
-					send_port2_msg(ns,{call: "getServerMinSecurityLevel",hostname: msg.args[0],reply});
+					let reply=ns.getServerMinSecurityLevel(...args);
+					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 				case "getServerMoneyAvailable": {
-					let reply=ns.getServerMoneyAvailable(...msg.args);
+					let reply=ns.getServerMoneyAvailable(...args);
 					if(print_server_message&&reply!==0) {
-						ns.tprintf("getServerMoneyAvailable: (%s) %s",msg.args[0],ns.formatNumber(reply));
+						ns.tprintf("getServerMoneyAvailable: (%s) %s",args[0],ns.formatNumber(reply));
 						print_server_message=false;
 						async function run_sleep() {
 							await ns.asleep(1000);
@@ -69,15 +70,15 @@ export async function main(ns) {
 						}
 						run_sleep();
 					}
-					send_port2_msg(ns,{call: "getServerMoneyAvailable",hostname: msg.args[0],reply});
+					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 				case "getServerSecurityLevel": {
-					let reply=ns.getServerSecurityLevel(...msg.args);
-					send_port2_msg(ns,{call: "getServerSecurityLevel",hostname: msg.args[0],reply});
+					let reply=ns.getServerSecurityLevel(...args);
+					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 				case "get_server": {
-					let reply=get_server(msg.args[0]);
-					send_port2_msg(ns,{call: "get_server",hostname: msg.args[0],reply});
+					let reply=get_server(args[0]);
+					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 				case "get_hack_target": {
 					let reply=null;
@@ -98,7 +99,7 @@ export async function main(ns) {
 							break;
 						}
 					}
-					send_port2_msg(ns,{call: "get_hack_target",id: msg.args[0],reply});
+					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 			}
 			if(trace) ns.print(msg);

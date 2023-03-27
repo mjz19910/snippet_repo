@@ -71,7 +71,7 @@ export class InitHackScript {
 			});
 		}
 		if(srv.hostname==="home"||!srv.purchasedByPlayer) this.format_print(srv,`t:${t} h:${srv.hostname}`);
-		let pid=ns.exec(hack_template,srv.hostname,t);
+		let pid=ns.exec(hack_template,srv.hostname,t,t);
 		if(pid===0) {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
