@@ -83,11 +83,16 @@ export async function main(ns) {
 					let reply=null;
 					for(;;) {
 						let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-						for(let item of ns.scan(hostname)) {
+						if(hostname==="home") continue;
+						if(hostname.startsWith("big-")) continue;
+						const scan_results=ns.scan(hostname);
+						ns.printf("scan: %s %o",hostname,scan_results);
+						for(let item of scan_results) {
 							get_server(item);
 						}
 						let srv=get_server(hostname);
 						if(srv.maxRam===0) continue;
+						if(srv.purchasedByPlayer) continue;
 						if(srv.hasAdminRights) {
 							reply=srv;
 							break;
