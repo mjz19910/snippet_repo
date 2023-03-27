@@ -28,9 +28,9 @@ export async function main(ns) {
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 	for(;;) {
-		ns.print("next target get");
 		const srv=await generic_get_call(ns,Math.random()+"","get_hack_target");
 		const target=srv.hostname;
+		ns.print("target: ",target);
 		await run_hack(ns,target);
 	}
 }
