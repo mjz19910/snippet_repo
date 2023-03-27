@@ -27,6 +27,7 @@ export async function main(ns) {
 	ns.moveTail(window_width-width-4,1);
 
 	const trace=false;
+	const randomize_hack=false;
 	/** @type {{[x:string]:Server}} */
 	const server_map={};
 	/** @type {string[]} */
@@ -72,25 +73,30 @@ export async function main(ns) {
 					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 				case "get_hack_target": {
-					let reply=null;
-					for(;;) {
-						let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-						await ns.sleep(33);
-						if(hostname==="home") continue;
-						if(hostname.startsWith("big-")) continue;
-						const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
-						if(scan_results.length>0) ns.printf("scan: %s %s",hostname,JSON.stringify(scan_results));
-						for(let item of scan_results) get_server(item);
-						let srv=get_server(hostname);
-						if(srv.purchasedByPlayer) continue;
-						if(srv.moneyMax===0) continue;
-						if(srv.maxRam===0) continue;
-						if(srv.hasAdminRights) {
-							reply=srv;
-							break;
+					if(randomize_hack) {
+						let reply=null;
+						for(;;) {
+							let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
+							await ns.sleep(33);
+							if(hostname==="home") continue;
+							if(hostname.startsWith("big-")) continue;
+							const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
+							if(scan_results.length>0) ns.printf("scan: %s %s",hostname,JSON.stringify(scan_results));
+							for(let item of scan_results) get_server(item);
+							let srv=get_server(hostname);
+							if(srv.purchasedByPlayer) continue;
+							if(srv.moneyMax===0) continue;
+							if(srv.maxRam===0) continue;
+							if(srv.hasAdminRights) {
+								reply=srv;
+								break;
+							}
 						}
+						send_reply_msg(write_handle,{call,id: args[0],reply});
+					} else {
+						let srv=get_server("ecorp");
+						send_reply_msg(write_handle,{call,id: args[0],reply: srv});
 					}
-					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 			}
 			while(!log_handle.empty()) {
