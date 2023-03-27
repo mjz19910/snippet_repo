@@ -26,15 +26,18 @@ export async function run_hack(ns,thread_count,target) {
 		await ns.hack(target);
 	}
 	if(thread_count>512) {
+		let security_level=await getServerSecurityLevel_(ns,target);
 		while(security_level>securityThreshold) {
 			ns.tprint("big weaken ",target);
 			await ns.weaken(target);
+			security_level=await getServerSecurityLevel_(ns,target);
 		}
 	}
 }
 
 /** @param {NS} ns */
 export async function main(ns) {
+	ns.tail();
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 	/** @type {any} */
