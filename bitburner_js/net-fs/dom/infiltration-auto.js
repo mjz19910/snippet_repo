@@ -1,5 +1,6 @@
 // infiltration-auto
 
+import {query_element} from "./dom-support.js";
 import {as_any} from "/run/as.js";
 
 /** @param {NS} ns */
@@ -10,16 +11,6 @@ export async function main(ns) {
 	if(!("root" in window)) return;
 	/** @type {HTMLDivElement} */
 	const root_element=as_any(window.root);
-	/** @template {Element} R @returns {R} @template {Element} T @arg {T} root @template {string} U @arg {U} selector */
-	function query_element(root,selector) {
-		/** @type {R|null} */
-		let element=root.querySelector(selector);
-		if(!element) {
-			debugger;
-			throw new Error("Missing element");
-		}
-		return element;
-	};
 	/** @template {Element} T @arg {T} node */
 	function query_parent_element(node) {
 		let element=node.parentElement;
