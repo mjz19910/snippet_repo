@@ -15,13 +15,6 @@ export async function main(ns) {
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
 	const s=new InitHackScript(ns,{trace: false,template_changed});
-
-	for(let hostname of server_hostname_list) {
-		let processes=ns.ps(hostname);
-		if(processes.length!==0) ns.kill(processes[0].pid);
-		const srv=s.get_server(hostname);
-		await s.start_script_template(srv);
-	}
 	/** @arg {string[]} servers @arg {Server} srv @arg {string} new_str */
 	function rename_purchased_server(servers,srv,new_str) {
 		if(srv.hostname===new_str) return;
