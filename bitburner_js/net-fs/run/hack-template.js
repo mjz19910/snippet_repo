@@ -2,6 +2,8 @@ import {generic_get_call,getServerMaxMoney_,getServerMinSecurityLevel_,getServer
 
 /** @param {NS} ns @param {string} target */
 export async function run_hack(ns,target) {
+	const max_money=await getServerMaxMoney_(ns,target);
+	if(max_money===0) return;
 	// Defines how much money a server should have before we hack it
 	const moneyThreshold=(await getServerMaxMoney_(ns,target))*0.85;
 	ns.print("moneyThreshold: $",ns.formatNumber(moneyThreshold));
