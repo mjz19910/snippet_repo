@@ -70,7 +70,7 @@ export async function generic_get_call(ns,target,call_id) {
 	function assume_return(x) {x;}
 	send_call_msg(request_port,{call: call_id,args: [target]});
 	for(;;) {
-		await ns.sleep(0);
+		await ns.sleep(100);
 		let msg=await read_reply_msg(reply_port);
 		if(!should_accept(msg,call_id,target)) {
 			ns.writePort(2,JSON.stringify(msg));
