@@ -31,13 +31,14 @@ export async function main(ns) {
 	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
 		for(let hostname of hostname_list) {
-			let srv=ns.getServer(hostname);
-			if(srv.maxRam>=ram) continue;
 			let cur_server_money=ns.getServerMoneyAvailable("home");
 			if(cur_server_money<buy_cost1) return;
 			let host_parts=hostname.split("-");
-			ns.print(host_parts[2]," ",ns.formatRam(srv.maxRam));
+			let srv;
 			if(hostname in s.server_map) {
+				srv=ns.getServer(hostname);
+				if(srv.maxRam>=ram) continue;
+				ns.print(host_parts[2]," ",ns.formatRam(srv.maxRam));
 				let old_proc=ns.ps(hostname);
 				old_proc.forEach(v => ns.kill(v.pid));
 				ns.upgradePurchasedServer(hostname,ram);
@@ -45,6 +46,7 @@ export async function main(ns) {
 				let new_host=ns.purchaseServer(hostname,ram);
 				if(new_host==="") throw new Error("failed to purchase server");
 				ns.scp(s.scripts,new_host);
+				srv=ns.getServer(new_host);
 			}
 			rename_purchased_server(hostname_list,srv,`big-${ram}-${host_parts[2]}`);
 			await s.start_script_template(srv);
