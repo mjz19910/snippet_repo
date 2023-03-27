@@ -1,12 +1,7 @@
-import {as} from "/run/as.js";
 import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list_file} from "/run/hack-scripts.js";
 
-/** @typedef {{restart_purchased_servers:boolean}} RunFlags */
 export class InitHackScript {
-	scripts=[
-		hack_support,hack_template,
-		"/run/as.js",
-	];
+	scripts=[hack_support,hack_template];
 	/** @readonly */
 	/** @type {string[]} */
 	arr_disabled=[];
@@ -17,10 +12,6 @@ export class InitHackScript {
 		this.opts=s;
 		this.ns=ns;
 		this.init_script();
-		/** @type {RunFlags} */
-		this.cmd_args=as(ns.flags([
-			["restart_purchased_servers",false],
-		]));
 		this.player_hacking_skill=ns.getPlayer().skills.hacking;
 		/** @type {string[]} */
 		this.to_backdoor=this.load_to_backdoor_list();
@@ -39,7 +30,6 @@ export class InitHackScript {
 		if(!this.has_process_by_file("home",hack_server)) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
 		this.do_get_admin_rights();
-		if(this.cmd_args.restart_purchased_servers) this.do_restart_purchased_servers();
 		this.start_hack_script();
 		this.update_backdoor_cache();
 		this.log_servers_to_backdoor();
@@ -74,19 +64,13 @@ export class InitHackScript {
 		let t=this.get_thread_count(srv);
 		const processes=ns.ps(srv.hostname);
 		if(processes.length>0) {
-			let share_ps=processes.find(ps => ps.filename==="/api/share.js");
-			if(share_ps) {
-				ns.kill(share_ps.pid);
-				const new_share_thread_count=(srv.maxRam/2)/4|0;
-				ns.exec("/api/share.js",srv.hostname,new_share_thread_count,...share_ps.args);
-				srv=this.update_server(srv);
-				t-=t/2|0;
-			}
 			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return false;
 			processes.forEach(ps => {
 				if(ps.filename===hack_template) ns.kill(ps.pid);
 			});
 		}
+		ns.exec("/api/share.js",srv.hostname,t/4|0);
+		t-=t/2|0;
 		let mode=this.get_mode();
 		ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
 		const ro_mem=`t:${t} h:${srv.hostname}`;
@@ -213,7 +197,6 @@ export class InitHackScript {
 	}
 	start_hack_script() {
 		for(const hostname of this.hostname_list) {
-			if(hostname.startsWith("big-")) continue;
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
 			this.start_script_template(srv);
@@ -255,13 +238,6 @@ export class InitHackScript {
 	get_thread_count(srv) {
 		if(srv.hostname==="home") return (srv.maxRam-48)/2|0;
 		return srv.maxRam/2|0;
-	}
-	do_restart_purchased_servers() {
-		for(const hostname of this.hostname_list) {
-			if(!hostname.startsWith("big-")) continue;
-			const srv=this.get_server(hostname);
-			this.start_script_template(srv);
-		}
 	}
 	do_get_admin_rights() {
 		for(const hostname of this.hostname_list) {
