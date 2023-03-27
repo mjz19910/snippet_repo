@@ -40,25 +40,22 @@ export async function main(ns) {
 		for(let hostname of hostname_list) {
 			let srv=ns.getServer(hostname);
 			if(srv.maxRam>=ram) continue;
-			for(;;) {
-				let cur_server_money=ns.getServerMoneyAvailable("home");
-				if(cur_server_money<buy_cost1) return;
-				let host_parts=hostname.split("-");
-				ns.print(host_parts[2],srv.maxRam);
-				if(hostname in s.server_map) {
-					let old_proc=ns.ps(hostname);
-					old_proc.forEach(v => ns.kill(v.pid));
-					ns.upgradePurchasedServer(hostname,ram);
-				} else {
-					let new_host=ns.purchaseServer(hostname,ram);
-					if(new_host==="") throw new Error("failed to purchase server");
-					ns.scp(s.scripts,new_host);
-				}
-				rename_purchased_server(hostname_list,srv,`big-${ram}-${host_parts[2]}`);
-				await s.start_script_template(srv);
-				await ns.sleep(1000);
-				break;
+			let cur_server_money=ns.getServerMoneyAvailable("home");
+			if(cur_server_money<buy_cost1) return;
+			let host_parts=hostname.split("-");
+			ns.print(host_parts[2],srv.maxRam);
+			if(hostname in s.server_map) {
+				let old_proc=ns.ps(hostname);
+				old_proc.forEach(v => ns.kill(v.pid));
+				ns.upgradePurchasedServer(hostname,ram);
+			} else {
+				let new_host=ns.purchaseServer(hostname,ram);
+				if(new_host==="") throw new Error("failed to purchase server");
+				ns.scp(s.scripts,new_host);
 			}
+			rename_purchased_server(hostname_list,srv,`big-${ram}-${host_parts[2]}`);
+			await s.start_script_template(srv);
+			await ns.sleep(1000);
 		}
 	}
 	server_hostname_list=ns.getPurchasedServers();
