@@ -35,6 +35,12 @@ export async function main(ns) {
 	}
 	const react_symbols={
 		forward_ref: window.React.forwardRef(() => null)["$$typeof"],
+		react_element: (() => {
+			let u=window.React.createElement("div");
+			/** @type {DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>,HTMLElement>} */
+			let r=as_any(u);
+			return r["$$typeof"];
+		})(),
 	};
 	const seen_react_fiber_set=new Set;
 	/**
@@ -60,11 +66,16 @@ export async function main(ns) {
 	const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
 	let mui_list_react_fiber=get_react_fiber(MuiList_root);
 	on_react_fiber(mui_list_react_fiber);
+	/** @arg {{}} obj */
+	function filter_fiber(obj) {
+		let cloned={...obj};
+		return cloned;
+	}
 	/** @param {ReactFiber} fiber @arg {string[]} path */
 	function on_react_fiber(fiber,path=["fiber"]) {
 		if(seen_react_fiber_set.has(fiber)) return;
 		seen_react_fiber_set.add(fiber);
-		console.log(path.join("."),fiber.tag,fiber);
+		console.log(path.join("."),fiber.tag,filter_fiber(fiber));
 		switch(fiber.tag) {
 			default: ns.print(`${path.join(".")}.tag: `,fiber.tag); console.log(path.join("."),fiber); break;
 			case 11: {
