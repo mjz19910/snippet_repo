@@ -21,10 +21,7 @@ function log_crime_min2(key,exp_str,exp,dur_min,dur_sec=0) {
 	dur_sec+=dur_min*60;
 	const rate=exp/dur_sec;
 	const val=parseFloat(rate.toPrecision(3));
-	let ss=exp_str.split(",");
-	for(let s1 of ss) {
-		console.log(`${key}.${s1}:`,val,"exp/sec");
-	}
+	console.log(`${key}:`,exp_str,":",val,"exp/sec");
 }
 /**
  * @param {number} num
@@ -76,22 +73,22 @@ function main_1() {
 	log_crime_min("shoplift",4.144,0,2);
 	log_crime_min2("rob_store","hack",112.426,1,0);
 	log_crime_min2("rob_store","dex,agi",84.755,1,0);
-	log_crime_min("larceny.hack",168.638,1,30);
-	log_crime_min("larceny.dex",113.007,1,30);
-	log_crime_min("deal_drugs.dex",9.417,0,10);
-	log_crime_min("deal_drugs.cha",18.834,0,10);
-	log_crime_min("bond_forgery.hack",374.752,5,0);
-	log_crime_min("bond_forgery.dex",282.516,5,0);
-	log_crime_min("bond_forgery.cha",28.252,5,0);
-	log_crime_min("traffic_arms.str",37.669,0,40);
-	log_crime_min("traffic_arms.cha",75.338,0,40);
-	log_crime_min("homicide",4.144,0,3);
-	log_crime_min("grand_theft_auto.str",37.669,1,20);
-	log_crime_min("grand_theft_auto.agi",150.675,1,20);
-	log_crime_min("grand_theft_auto.cha",75.338,1,20);
-	log_crime_min("kidnap",150.675,2);
-	// console.log((847.549/10)/60,"exp/sec");
-	// console.log((565.033/5)/60,"exp/sec");
+	log_crime_min2("larceny","hack",168.638,1,30);
+	log_crime_min2("larceny","dex",113.007,1,30);
+	log_crime_min2("deal_drugs","dex",9.417,0,10);
+	log_crime_min2("deal_drugs","cha",18.834,0,10);
+	log_crime_min2("bond_forgery","hack",374.752,5,0);
+	log_crime_min2("bond_forgery","dex",282.516,5,0);
+	log_crime_min2("bond_forgery","cha",28.252,5,0);
+	log_crime_min2("traffic_arms","str",37.669,0,40);
+	log_crime_min2("traffic_arms","cha",75.338,0,40);
+	log_crime_min2("homicide","str,def,dex,agi",4.144,0,3);
+	log_crime_min2("grand_theft_auto","str",37.669,1,20);
+	log_crime_min2("grand_theft_auto","agi",165.743,1,20);
+	log_crime_min2("grand_theft_auto","cha",75.338,1,20);
+	log_crime_min2("kidnap","str,def,dex,agi,cha",165.743,2);
+	log_crime_min2("assassination","str,def,dex,agi",621.536,5);
+	log_crime_min2("heist","hack,str,def,dex,agi,cha",932.304,10);
 	let is_enabled_rothman_uni=false;
 	if(is_enabled_rothman_uni) {
 		const cur="rothman_uni";
