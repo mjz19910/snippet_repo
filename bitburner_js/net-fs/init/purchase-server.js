@@ -39,7 +39,7 @@ export function main(ns) {
 		return new_str;
 	}
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} not_pserv @arg {string[]} hostname_list */
-	function increase_server_ram(prev_ram,ram,not_pserv,hostname_list) {
+	function upgrade_purchased_server_list(prev_ram,ram,not_pserv,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
 		i=not_pserv.length;
 		for(let hostname of hostname_list) {
@@ -65,7 +65,7 @@ export function main(ns) {
 	function split_server_prefix(prefix) {
 		let not_pserv=purchased_server_hostnames.filter(e => !e.startsWith(prefix));
 		let only_pserv=purchased_server_hostnames.filter(e => e.startsWith(prefix));
-		increase_server_ram(prev_ram,ram,not_pserv,only_pserv);
+		upgrade_purchased_server_list(prev_ram,ram,not_pserv,only_pserv);
 		ns.print("only prefix: ",only_pserv);
 	}
 	purchased_server_hostnames=ns.getPurchasedServers();
@@ -75,7 +75,7 @@ export function main(ns) {
 		for(let i=0;i<purchased_server_limit;i++) {
 			only_pserv.push(`big-${ram}-${i}`);
 		}
-		increase_server_ram(prev_ram,ram,[],only_pserv);
+		upgrade_purchased_server_list(prev_ram,ram,[],only_pserv);
 	}
 	/** @arg {string} hostname */
 	function get_ram(hostname) {return ns.getServerMaxRam(hostname);}
