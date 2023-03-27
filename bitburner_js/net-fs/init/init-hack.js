@@ -74,24 +74,25 @@ export class InitHackScript {
 			return false;
 		}
 		const ro_base=`hack-v2 ${ro_1}`;
-		let t=this.get_thread_count(srv);
 		const processes=this.ns.ps(srv.hostname);
 		if(processes.length>0) {
 			let share_ps=processes.find(ps => ps.filename==="/api/share.js");
 			if(share_ps) {
 				this.ns.kill(share_ps.pid);
-				const ram_use1=share_ps.threads*4+t*2;
-				t/=2;
-				const allocation_percent=(srv.maxRam)/ram_use1;
+				const ram_use1=share_ps.threads*4;
+				const other_ram_use=srv.ramUsed-ram_use1;
+				const allocation_percent=srv.maxRam/ram_use1;
 				this.ns.tprint("allocated to share.js: ",allocation_percent);
-				this.ns.exec("/api/share.js",srv.hostname,share_ps.threads/2|0,...share_ps.args);
-				srv.ramUsed-=share_ps.threads*2;
+				const new_share_thread_count=share_ps.threads/2|0;
+				this.ns.exec("/api/share.js",srv.hostname,new_share_thread_count,...share_ps.args);
+				srv.ramUsed=other_ram_use+new_share_thread_count*4;
 			}
 			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return false;
 			processes.forEach(ps => {
 				if(ps.filename===hack_template) this.ns.kill(ps.pid);
 			});
 		}
+		const t=this.get_thread_count(srv);
 		let mode=this.get_mode();
 		this.ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
 		if(this.opts.distribute) {

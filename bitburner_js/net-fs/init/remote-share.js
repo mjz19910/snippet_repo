@@ -8,21 +8,28 @@ export async function main(ns) {
 
 	ns.tail();
 	ns.clearLog();
+	ns.disableLog("disableLog");
+	ns.disableLog("getServerMaxRam");
+	ns.disableLog("killall");
+	ns.disableLog("sleep");
+	ns.disableLog("exec");
 	/** @type {{all:boolean}} */
 	const f_=as(ns.flags([
 		["all",false],
 	]));
 	const share_script="/api/share.js";
+	let has_share_running=false;
 	if(f_.all) {
 		let ps_list=ns.ps("home");
 		ps_list.forEach(info => {
 			if(info.filename===hack_server) return;
 			if(info.filename===hack_template) ns.kill(info.pid);
+			if(info.filename===share_script) has_share_running=true;
 		});
 	}
 	if(use_home_server||f_.all) {
-		ns.kill(share_script);
 		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
+		if(has_share_running) return;
 		ns.run(share_script,thread_n,"auto","home");
 	}
 
@@ -73,6 +80,5 @@ export async function main(ns) {
 		cur_srv=next_srv;
 		if(!pid) continue;
 		await ns.sleep(40);
-		ns.closeTail(pid);
 	}
 }

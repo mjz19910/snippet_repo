@@ -117,8 +117,8 @@ export async function main(ns) {
 		}
 		await increase_server_ram(prev_ram,ram,[],only_pserv);
 	}
-	/** @arg {string} srv */
-	function get_ram(srv) {return ns.getServerMaxRam(srv);}
+	/** @arg {string} hostname */
+	function get_ram(hostname) {return ns.getServerMaxRam(hostname);}
 	if(purchased_server_hostnames.length===0) return;
 	let min_mem=purchased_server_hostnames.reduce(
 		(a,r) => get_ram(a)>get_ram(r)? r:a
