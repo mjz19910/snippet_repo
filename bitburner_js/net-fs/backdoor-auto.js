@@ -56,23 +56,37 @@ export async function main(ns) {
 			let cmd_list=full_path.map(v => "connect "+v);
 			cmd_list.push("backdoor");
 			start_terminal_command(terminalInput,cmd_list.join(";"));
-			let acc_delay=0,start_perf=performance.now();
-			await ns.sleep(delay/4-100);
-			for(;;) {
-				await ns.sleep(30);
+			let acc_delay=0,start_perf=performance.now(),cnt=0;
+			const est_delay=delay/4;
+			ns.printf("est_delay:%s",tFormat(ns,est_delay));
+			await ns.sleep(est_delay);
+			for(;;cnt++) {
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
 				if(!has_disabled) break;
+				await ns.sleep(0);
 			}
 			acc_delay=performance.now()-start_perf;
-			ns.printf("backdoor_ratio:%s",ns.formatNumber(delay/acc_delay));
-			ns.printf("hack_time:%s",ns.tFormat(delay));
-			ns.printf("backdoor_time:%s",ns.tFormat(acc_delay));
+			ns.printf("ratio:%s",ns.formatNumber(delay/acc_delay,2));
+			ns.printf("time:%s",tFormat(ns,acc_delay));
+			ns.print("cnt: ",cnt);
 			start_terminal_command(terminalInput,"home");
 		}
 		for(let item of scan_res2) {
 			scan_res.push(item);
 		}
 	} while(scan_res2.length>0);
+}
+
+/**
+ * @param {NS} ns
+ * @param {number} msec
+ * @param {boolean | undefined} [milliPrecision]
+ */
+function tFormat(ns,msec,milliPrecision) {
+	let ns_fmt=ns.tFormat(msec,milliPrecision);
+	ns_fmt=ns_fmt.replace(/ minutes? /,"m");
+	ns_fmt=ns_fmt.replace(/ seconds?/,"s");
+	return ns_fmt;
 }
 
 /** @typedef {{onChange(x:{target:HTMLInputElement}):void;onKeyDown(x:{key:"Enter";preventDefault():null}):void}} ReactEventState */
