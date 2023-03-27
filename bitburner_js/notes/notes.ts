@@ -6,7 +6,7 @@ const map_template={
 
 function main_2() {
 	type MapType={
-		[x: string]: {street_address: number|null;};
+		[x: string]: {street_address: string|number|null;};
 	};
 	// Volhaven
 	const volhaven_map={
@@ -44,10 +44,10 @@ function main_2() {
 		travel_agency: {street_address: 2},
 		world_stock_exchange: {street_address: 8},
 		syscore_sec: {street_address: 18},
-		lexocorp: {street_address: 58},
-		zb: {street_address: 58},
-		computek: {street_address: 58},
-		nwo: {street_address: 58},
+		nwo: {street_address: "58n"},
+		computek: {street_address: "58e"},
+		lexocorp: {street_address: "58s"},
+		zb: {street_address: "58w"},
 		hospital: {street_address: 63},
 		omnia_cybersystems: {street_address: 67},
 		helios_labs: {street_address: 74},
