@@ -34,7 +34,7 @@ export class InitHackScript {
 			sql: ns.sqlinject,
 		};
 	}
-	async init_hack() {
+	init_hack() {
 		this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
