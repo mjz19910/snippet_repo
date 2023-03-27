@@ -51,12 +51,12 @@ export async function main(ns) {
 		continue_flag=false;
 		/** @type {number|null} */
 		let upgrade_cost=null;
-		/** @type {["level"|"ram"|"core",2|3]|null} */
-		let upgrade_type=null;
+		/** @type {["level"|"ram"|"core",2|3][]} */
+		let upgrade_type=[];
 		for(let v of hacknet_entries) {
 			let res=upgrade_node_level_entry(ns,...v);
 			if(res[1]!==null) {
-				upgrade_type=["level",res[0]];
+				upgrade_type[0]=["level",res[0]];
 				did_upgrade=true;
 				continue_flag=true;
 				upgrade_cost=res[1];
@@ -65,7 +65,7 @@ export async function main(ns) {
 		for(let v of hacknet_entries) {
 			let res=upgrade_node_ram(ns,...v);
 			if(res[1]!==null) {
-				upgrade_type=["ram",res[0]];
+				upgrade_type[0]=["ram",res[0]];
 				did_upgrade=true;
 				continue_flag=true;
 				upgrade_cost=res[1];
@@ -74,7 +74,7 @@ export async function main(ns) {
 		for(let v of hacknet_entries) {
 			let res=upgrade_node_cores(ns,...v);
 			if(res[1]!==null) {
-				upgrade_type=["core",res[0]];
+				upgrade_type[0]=["core",res[0]];
 				did_upgrade=true;
 				continue_flag=true;
 				upgrade_cost=res[1];
@@ -82,10 +82,11 @@ export async function main(ns) {
 		};
 		if(upgrade_cost!==null) ns.printf("min: %s %s",min_node_entry[1].name,upgrade_type);
 		await ns.sleep(delay);
-		if(upgrade_type) {
-			if(upgrade_type[1]===2) {
+		let sel_upg=upgrade_type[0];
+		if(sel_upg) {
+			if(sel_upg[1]===2) {
 				delay+=5000;
-			} else if(upgrade_type[1]===3) {
+			} else if(sel_upg[1]===3) {
 				if(delay>5000) delay/=4;
 				if(delay<4000) delay=4000;
 			} else throw new Error("Bad");
@@ -126,10 +127,12 @@ function upgrade_node_cores(ns,idx,node) {
  */
 function upgrade_node_ram(ns,idx,node) {
 	if(node.ram>=64) return [1,null];
+	let upgraded_ram=false;
 	let ram_n=8-Math.log2(node.ram);
 	while(ram_n>0) {
 		let res=ns.hacknet.upgradeRam(idx,ram_n);
 		if(res) {
+			upgraded_ram=true;
 			let cnt=ram_n;
 			for(let i=0;i<cnt;i++) {
 				node.ram*=2;
@@ -139,6 +142,9 @@ function upgrade_node_ram(ns,idx,node) {
 		ram_n--;
 	}
 	let cost=ns.hacknet.getRamUpgradeCost(idx,1);
+	if(upgraded_ram) {
+		return [3,cost];
+	}
 	return [2,cost];
 }
 /**
