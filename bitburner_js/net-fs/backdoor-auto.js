@@ -5,6 +5,7 @@ export async function main(ns) {
 	ns.tail();
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
+	ns.disableLog("scan");
 	const terminalInput_nt=globalThis["document"].getElementById("terminal-input");
 	if(!terminalInput_nt) {
 		ns.tprint("not at terminal");
