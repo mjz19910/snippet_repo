@@ -53,7 +53,6 @@ export function send_port2_msg(ns,msg) {
 /** @param {NetscriptPort} ns_port */
 export async function read_reply_msg(ns_port) {
 	let data=await read_ns_port_msg(ns_port);
-	if(data===null) return null;
 	if(typeof data==="number") throw new Error("Invalid message");
 	/** @type {ReplyMsg} */
 	let msg=JSON.parse(data);
@@ -82,12 +81,12 @@ function should_accept(reply,call_,arg0) {
 }
 /** @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id */
 export async function generic_get_call(ns,target,call_id) {
+	const h_port=ns.getPortHandle(2);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	send_port1_msg(ns,{call: call_id,args: [target]});
 	for(;;) {
-		let msg=await read_port2_msg(ns);
-		if(msg===null) continue;
+		let msg=await read_reply_msg(h_port);
 		if(!should_accept(msg,call_id,target)) {
 			ns.writePort(2,JSON.stringify(msg));
 			continue;
