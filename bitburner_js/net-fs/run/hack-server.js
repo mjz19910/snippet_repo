@@ -93,13 +93,14 @@ export async function main(ns) {
 						}
 						let srv=get_server(hostname);
 						if(srv.maxRam===0) continue;
+						if(srv.moneyMax===0) continue;
 						if(srv.purchasedByPlayer) continue;
 						if(srv.hasAdminRights) {
 							reply=srv;
 							break;
 						}
 					}
-					if(reply!==null) ns.tprintf("hack_target: (%s) %s",args[0],reply.hostname);
+					ns.tprintf("hack_target: %s",reply.hostname);
 					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 			}
