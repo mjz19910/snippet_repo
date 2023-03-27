@@ -31,10 +31,11 @@ export async function main(ns) {
 	let server_money=ns.getServerMoneyAvailable("home");
 	let last_server_money=server_money;
 	/** @arg {NS} ns @arg {string[]} servers @arg {string} old_srv @arg {string} new_srv */
-	function rename_purchased_server(ns,servers,old_srv,new_srv) {
+	async function rename_purchased_server(ns,servers,old_srv,new_srv) {
 		if(old_srv===new_srv) return;
 		let idx=servers.indexOf(old_srv);
 		servers[idx]=new_srv;
+		await ns.sleep(0);
 		let res=ns.renamePurchasedServer(old_srv,new_srv);
 		if(!res) {
 			ns.printf("%s -> %s",old_srv,new_srv);
@@ -56,7 +57,6 @@ export async function main(ns) {
 					if(purchased_server_hostnames.includes(hostname)) {
 						let old_proc=ns.ps(hostname);
 						old_proc.forEach(v => ns.kill(v.pid));
-						await ns.sleep(0);
 						ns.upgradePurchasedServer(hostname,ram);
 					} else {
 						let new_host=ns.purchaseServer(hostname,ram);
@@ -65,7 +65,7 @@ export async function main(ns) {
 					}
 					const srv=ns.getServer(hostname);
 					await s.start_script_template(srv);
-					rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
+					await rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
 					++i;
 					last_server_money=server_money;
 					acc_avg_dur=delay;
