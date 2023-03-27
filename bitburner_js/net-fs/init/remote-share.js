@@ -1,3 +1,6 @@
+import {as} from "/run/as";
+import {hack_server,hack_template} from "/run/hack-scripts";
+
 /** @param {NS} ns */
 export async function main(ns) {
 	const use_hacked_servers=false;
@@ -5,8 +8,19 @@ export async function main(ns) {
 
 	ns.tail();
 	ns.clearLog();
+	/** @type {{all:boolean}} */
+	const f_=as(ns.flags([
+		["all",false],
+	]));
 	const share_script="/api/share.js";
-	if(use_home_server) {
+	if(f_.all) {
+		let ps_list=ns.ps("home");
+		ps_list.forEach(info => {
+			if(info.filename===hack_server) return;
+			if(info.filename===hack_template) ns.kill(info.pid);
+		});
+	}
+	if(use_home_server||f_.all) {
 		ns.kill(share_script);
 		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
 		ns.run(share_script,thread_n,"auto","home");
