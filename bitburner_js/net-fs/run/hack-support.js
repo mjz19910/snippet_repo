@@ -25,7 +25,7 @@ export function read_port_msg(ns,port) {
 }
 /** @param {NetscriptPort} ns_port */
 export async function read_ns_port_msg(ns_port) {
-	if(ns_port.empty()) await ns_port.nextWrite();
+	await ns_port.nextWrite();
 	let data=ns_port.read();
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
 	return data;
