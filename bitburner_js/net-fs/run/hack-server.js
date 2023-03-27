@@ -94,7 +94,14 @@ export async function main(ns) {
 						}
 						send_reply_msg(write_handle,{call,id: args[0],reply});
 					} else {
-						let srv=get_server("ecorp");
+						let srv;
+						for(let name of ["ecorp","foodnstuff","n00dles"]) {
+							srv=get_server(name);
+							if(srv.hasAdminRights) break;
+							if(srv.openPortCount<srv.numOpenPortsRequired) continue;
+							ns.nuke(name);
+						}
+						if(!srv) srv=get_server("n00dles");
 						send_reply_msg(write_handle,{call,id: args[0],reply: srv});
 					}
 				} break;
