@@ -12,8 +12,8 @@ export async function main(ns) {
 	const share_script="/api/share.js";
 	const seen_srv=new Set;
 	const servers_arr=[];
-	let hostname="home";
-	for(;;) {
+	const home_reserved_mem=8.3+4;
+	for(let hostname="home";;) {
 		let next=servers_arr.shift();
 		if(next===void 0) break;
 		hostname=next;
@@ -30,7 +30,7 @@ export async function main(ns) {
 		const server_ram=ns.getServerMaxRam(hostname);
 		if(server_ram===0) continue;
 		if(hostname==="home") {
-			const thread_n=server_ram/4|0;
+			const thread_n=(server_ram-home_reserved_mem)/4|0;
 			const pid=ns.exec(share_script,hostname,thread_n-2,"auto",hostname);
 			if(pid===0) {
 				ns.print("failed to start ",share_script," on ",hostname);
@@ -45,8 +45,4 @@ export async function main(ns) {
 			ns.exit();
 		}
 	}
-	hostname="home";
-	const server_ram=ns.getServerMaxRam(hostname);
-	const thread_n=server_ram/4|0;
-	ns.spawn(share_script,thread_n-2,"auto",hostname);
 }
