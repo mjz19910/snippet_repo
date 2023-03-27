@@ -11,12 +11,12 @@ export async function main(ns) {
 	ns.disableLog("scan");
 	const share_script="/api/share.js";
 	const seen_srv=new Set;
-	const servers_arr=[];
+	const servers_arr=["home"];
 	const home_reserved_mem=8.3+4;
-	for(let hostname="home";;) {
+	for(;;) {
 		let next=servers_arr.shift();
 		if(next===void 0) break;
-		hostname=next;
+		let hostname=next;
 		seen_srv.add(hostname);
 		const hosts=ns.scan(hostname);
 		for(const host of hosts) {
