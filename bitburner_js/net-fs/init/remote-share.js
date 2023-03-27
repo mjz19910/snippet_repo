@@ -1,4 +1,3 @@
-import {as} from "/run/as";
 import {hack_server,hack_template} from "/run/hack-scripts";
 
 /** @param {NS} ns */
@@ -13,13 +12,10 @@ export async function main(ns) {
 	ns.disableLog("killall");
 	ns.disableLog("sleep");
 	ns.disableLog("exec");
-	/** @type {{all:boolean}} */
-	const f_=as(ns.flags([
-		["all",false],
-	]));
+	const use_all=true;
 	const share_script="/api/share.js";
 	let has_share_running=false;
-	if(f_.all) {
+	if(use_all) {
 		let ps_list=ns.ps("home");
 		ps_list.forEach(info => {
 			if(info.filename===hack_server) return;
@@ -27,7 +23,7 @@ export async function main(ns) {
 			if(info.filename===share_script) has_share_running=true;
 		});
 	}
-	if(use_home_server||f_.all) {
+	if(use_home_server||use_all) {
 		let thread_n=(ns.getServerMaxRam("home")-48)/4|0;
 		if(has_share_running) return;
 		ns.run(share_script,thread_n,"auto","home");
@@ -35,7 +31,7 @@ export async function main(ns) {
 
 	// share purchased_servers
 	let share_servers;
-	if(f_.all) {
+	if(use_all) {
 		share_servers=ns.getPurchasedServers();
 	} else {
 		share_servers=ns.getPurchasedServers().slice(0,16);
@@ -65,7 +61,6 @@ export async function main(ns) {
 				if(seen_srv.has(host)) continue;
 				servers_arr.push(host);
 			}
-			if(srv==="home"&&!f_.all) break x;
 			if(!ns.ls(srv).includes(share_script)) {
 				ns.scp([share_script],srv);
 			}
