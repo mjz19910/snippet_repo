@@ -30,8 +30,6 @@ export async function main(ns) {
 	const server_map={};
 	/** @type {string[]} */
 	const hostname_list=[];
-	/** @type {{[x:string]:boolean}} */
-	const enabled_host_map={};
 	/** @arg {string} hostname */
 	function get_server(hostname) {
 		let server=server_map[hostname];
@@ -39,7 +37,6 @@ export async function main(ns) {
 		hostname_list.push(hostname);
 		server=ns.getServer(hostname);
 		server_map[hostname]=server;
-		enabled_host_map[hostname]=true;
 		return server;
 	}
 
@@ -48,7 +45,7 @@ export async function main(ns) {
 	let processed_messages_count=0;
 	let print_server_message=true;
 	function process_messages() {
-		m_loop: for(;;) {
+		for(;;) {
 			let msg=read_port1_msg(ns);
 			if(msg===null) break;
 			processed_messages_count++;
@@ -87,7 +84,6 @@ export async function main(ns) {
 					let reply=null;
 					for(;;) {
 						let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-						if(!enabled_host_map[hostname]) break;
 						if(hostname==="home") continue;
 						if(hostname.startsWith("big-")) continue;
 						const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
@@ -99,18 +95,12 @@ export async function main(ns) {
 						if(srv.maxRam===0) continue;
 						if(srv.purchasedByPlayer) continue;
 						if(srv.hasAdminRights) {
-							enabled_host_map[hostname]=false;
 							reply=srv;
 							break;
 						}
 					}
 					if(reply!==null) ns.tprintf("hack_target: (%s) %s",args[0],reply.hostname);
 					send_port2_msg(ns,{call,id: args[0],reply});
-				} break;
-				case "enable_hack_target": {
-					enabled_host_map[args[0]]=true;
-					ns.tprintf("enable: %s",args[0]);
-					send_port2_msg(ns,{call,id: args[0],reply: null});
 				} break;
 			}
 			if(trace) ns.print(msg);
