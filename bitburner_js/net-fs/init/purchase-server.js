@@ -43,7 +43,7 @@ export async function main(ns) {
 			let cur_server_money=ns.getServerMoneyAvailable("home");
 			if(cur_server_money<buy_cost1) return;
 			let host_parts=hostname.split("-");
-			ns.print(host_parts[2],srv.maxRam);
+			ns.print(host_parts[2]," ",ns.formatRam(srv.maxRam));
 			if(hostname in s.server_map) {
 				let old_proc=ns.ps(hostname);
 				old_proc.forEach(v => ns.kill(v.pid));
