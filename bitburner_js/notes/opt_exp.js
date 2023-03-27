@@ -134,6 +134,5 @@ function main() {
 	};
 	let log_map=true;
 	if(log_map) console.log(volhaven_map);
-	// hospital: 63
 }
 main();
