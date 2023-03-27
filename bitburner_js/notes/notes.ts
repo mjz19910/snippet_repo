@@ -1,6 +1,4 @@
-export {};
-
-function main() {
+function main_2() {
 	// Volhaven
 	const volhaven_map={
 		travel_agency: {
@@ -25,4 +23,4 @@ function main() {
 	let log_map=true;
 	if(log_map) console.log(volhaven_map);
 }
-main();
+main_1();

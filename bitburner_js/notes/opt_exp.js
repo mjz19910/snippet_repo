@@ -51,7 +51,7 @@ function log_gym_min(key,exp_rate,cost_rate,calc_base) {
 		console.log(`${key}: %o exp/sec %c%s%c cost/sec`,val,"color: yellow;",cost_str,"");
 	}
 }
-function main() {
+function main_1() {
 	const json_mults=JSON.parse('{"hacking_chance":1.8598182764745166,"hacking_speed":1.8505297937672616,"hacking_money":3.1076812888716248,"hacking_grow":1.861109886735911,"hacking":2.9804916217637816,"strength":2.1358245948972256,"defense":2.0429626559886507,"dexterity":2.6911389895705042,"agility":2.0476057529340794,"charisma":2.0635986424127784,"hacking_exp":4.122273968381145,"strength_exp":2.0717875259144165,"defense_exp":2.0717875259144165,"dexterity_exp":2.0717875259144165,"agility_exp":2.0717875259144165,"charisma_exp":2.0717875259144165,"company_rep":2.4861450310973,"faction_rep":1.883443205376742,"crime_money":2.0472208754095025,"crime_success":1.4888879093887288,"hacknet_node_money":3.7551148907198795,"hacknet_node_purchase_cost":0.5138063081686742,"hacknet_node_ram_cost":0.6716422329002277,"hacknet_node_core_cost":0.6716422329002277,"hacknet_node_level_cost":0.5708958979651936,"work_money":1.6377767003276018,"bladeburner_max_stamina":1,"bladeburner_stamina_gain":1,"bladeburner_analysis":1,"bladeburner_success_chance":1}');
 	json_mults;
 	const mults={
@@ -127,4 +127,4 @@ function main() {
 		log_gym_min(`${cur}.str`,4.144,-324);
 	}
 }
-main();
+main_1();
