@@ -65,8 +65,9 @@ function should_accept(reply,call_,arg0) {
 }
 /**
  * @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id @arg {number} uid
+ * @param {Extract<ReplyMsg,{call:CallId}>|null} _reply_obj
  */
-async function generic_get_call(ns,target,call_id,uid) {
+async function generic_get_call(ns,target,call_id,uid,_reply_obj=null) {
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let rep_count=6;;rep_count++) {
@@ -93,21 +94,21 @@ async function generic_get_call(ns,target,call_id,uid) {
 }
 /** @param {NS} ns @arg {string} target */
 export function getServerMaxMoney_(ns,target) {
-	const call_id="getServerMaxMoney",uid=4;
-	return generic_get_call(ns,target,call_id,uid);
+	const call_id="getServerMaxMoney";
+	return generic_get_call(ns,target,call_id,1);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerMinSecurityLevel_(ns,target) {
 	const call_id="getServerMinSecurityLevel";
-	return generic_get_call(ns,target,call_id,1);
+	return generic_get_call(ns,target,call_id,2);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerSecurityLevel_(ns,target) {
 	const call_id="getServerSecurityLevel";
-	return generic_get_call(ns,target,call_id,2);
+	return generic_get_call(ns,target,call_id,3);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerMoneyAvailable_(ns,target) {
 	const call_id="getServerMoneyAvailable";
-	return generic_get_call(ns,target,call_id,3);
+	return generic_get_call(ns,target,call_id,4);
 }
