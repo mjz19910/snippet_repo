@@ -12,8 +12,9 @@ function write_log_message(s,a1,a2,a3) {
 }
 /**
  * @param {HackState} s
+ * @param {number} i
  */
-export async function run_hack(s) {
+export async function run_hack(s,i) {
 	const {ns,thread_count,target}=s;
 	if(!target) throw new Error("Bad args");
 	const max_money=await getServerMaxMoney_(ns,target);
@@ -29,16 +30,16 @@ export async function run_hack(s) {
 	ns.print("securityLevel: ",security_level);
 	ns.print("moneyAvailable: $",ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
-		write_log_message(s,s.hostname,"weaken",target);
+		if(i===0) write_log_message(s,s.hostname,"weaken",target);
 		await ns.weaken(target);
 	} else if(server_money<moneyThreshold) {
-		write_log_message(s,s.hostname,"grow",target);
+		if(i===0) write_log_message(s,s.hostname,"grow",target);
 		await ns.grow(target);
 	} else {
-		write_log_message(s,s.hostname,"hack",target);
+		if(i===0) write_log_message(s,s.hostname,"hack",target);
 		await ns.hack(target);
 	}
-	if(thread_count>512) {
+	if(i===0&&thread_count>512) {
 		let security_level=await getServerSecurityLevel_(ns,target);
 		while(security_level>securityThreshold) {
 			write_log_message(s,s.hostname,"weaken",target);
@@ -68,7 +69,7 @@ export async function main(ns) {
 		s.target=srv.hostname;
 		ns.printf("[%s] target: %s",s.hostname,s.target);
 		for(let i=0;i<8;i++) {
-			await run_hack(s);
+			await run_hack(s,i);
 		}
 	}
 }
