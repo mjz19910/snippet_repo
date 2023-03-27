@@ -1,4 +1,4 @@
-import {as_div_element,as_svg_element,query_element} from "/dom/dom-support.js";
+import {as_div_element,as_html_element,as_svg_element,query_element} from "/dom/dom-support.js";
 import {as_any} from "/run/as.js";
 
 class DomList {
@@ -44,7 +44,7 @@ class DomList {
 		this.augmentations_button=character_section.children[0].children[0].children[2];
 		this.hacknet_button=character_section.children[0].children[0].children[3];
 
-		this.city_button=world_section.children[0].children[0].children[0];
+		this.city_button=as_div_element(world_section.children[0].children[0].children[0]);
 		this.travel_button=world_section.children[0].children[0].children[1];
 		this.stock_market_button=world_section.children[0].children[0].children[2];
 
@@ -58,13 +58,26 @@ class DomList {
 		this.world_section=world_section;
 		this.help_section=help_section;
 	}
+	/** @arg {HTMLElement} element */
+	click_on(element) {
+		Object.values(element)[1].onClick();
+	}
 	/** @param {NS} ns */
 	async use(ns) {
 		ns.print("start: tor router");
 		/** @type {any} */
 		let win_any=window;
 		win_any.__dom_list=this;
-		Object.values(this.city_button)[1].onClick();
+		this.click_on(this.city_button);
+		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
+		const city_location=this.current_page.children[0].textContent;
+		if(city_location!=="Sector-12") throw new Error("Handle new city");
+		/** @type {HTMLSpanElement} */
+		const alpha_enterprises_map_location=query_element(this.current_page,"[aria-label='Alpha Enterprises']");
+		this.click_on(alpha_enterprises_map_location);
+		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
+		const purchase_tor_router_button=as_html_element(this.current_page.children[8]);
+		this.click_on(purchase_tor_router_button);
 	}
 }
 
