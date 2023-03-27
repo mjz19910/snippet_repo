@@ -86,7 +86,7 @@ export async function main(ns) {
 						if(hostname==="home") continue;
 						if(hostname.startsWith("big-")) continue;
 						const scan_results=ns.scan(hostname);
-						ns.printf("scan: %s %o",hostname,scan_results);
+						ns.tprintf("scan: %s %o",hostname,scan_results);
 						for(let item of scan_results) {
 							get_server(item);
 						}
