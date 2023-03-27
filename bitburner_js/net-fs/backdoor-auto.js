@@ -17,13 +17,19 @@ export async function main(ns) {
 		if(!srv.hasAdminRights) continue;
 		if(srv.backdoorInstalled) continue;
 		await ns.sleep(200);
-		terminalInput_nt.value=`connect ${hostname}`;
-		const handler=Object.keys(terminalInput_nt)[1];
-
-		/** @type {{[x:string]:ReactEventState}} */
+		/** @type {HTMLInputElement&{[x:string]:ReactEventState}} */
 		let terminalInput=as_any(terminalInput_nt);
-		terminalInput[handler].onChange({target: terminalInput_nt});
-		terminalInput[handler].onKeyDown({key: 'Enter',preventDefault: () => null});
+		/** @arg {HTMLInputElement&{[x:string]:ReactEventState}} terminalInput @arg {string} command */
+		function set_input_value(terminalInput,command) {
+			terminalInput.value=command;
+			const handler=Object.keys(terminalInput)[1];
+			terminalInput[handler].onChange({target: terminalInput});
+			terminalInput[handler].onKeyDown({key: 'Enter',preventDefault: () => null});
+		}
+		set_input_value(terminalInput,`connect ${hostname};backdoor`);
+		await ns.sleep(66);
+		let delay=ns.getHackTime(hostname);
+		await ns.sleep(delay);
 	}
 }
 
