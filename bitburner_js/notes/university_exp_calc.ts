@@ -194,6 +194,13 @@ function world() {
 			}
 		} break;
 	}
+	let locations=[{
+		key: "snap fitness gym",
+		exp: 9.417,
+	}] as const;
+	for(const location of locations) switch(location.key) {
+		case "snap fitness gym": break;
+	}
 	sector_12[0];
 }
 
