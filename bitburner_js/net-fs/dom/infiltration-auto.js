@@ -64,8 +64,9 @@ export async function main(ns) {
 	function on_react_fiber(fiber,path=["fiber"]) {
 		if(seen_react_fiber_set.has(fiber)) return;
 		seen_react_fiber_set.add(fiber);
+		console.log(path.join("."),fiber.tag,fiber);
 		switch(fiber.tag) {
-			default: ns.print(`${path.join(".")}.tag: `,fiber.tag); break;
+			default: ns.print(`${path.join(".")}.tag: `,fiber.tag); console.log(path.join("."),fiber); break;
 			case 11: {
 				const {tag,key,elementType,type,stateNode,return: return_,child,sibling,index,ref,pendingProps,memoizedProps,updateQueue,...y}=fiber;
 				const {memoizedState,dependencies,mode,flags,nextEffect,firstEffect,lastEffect,lanes,childLanes,alternate,...y1}=y;
