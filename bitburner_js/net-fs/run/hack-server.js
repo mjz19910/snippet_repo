@@ -97,12 +97,10 @@ export async function main(ns) {
 			if(trace) ns.print(msg);
 		}
 	}
-	const start_handle=ns.getPortHandle(10);
 	for(;;) {
 		await process_messages();
 		await ns.sleep(33);
 		if(processed_messages_count===0) await ns.sleep(1500);
 		processed_messages_count=0;
-		start_handle.clear();
 	}
 }
