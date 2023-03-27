@@ -54,7 +54,7 @@ export async function main(ns) {
 	for(;;) {
 		const srv=await generic_get_call(ns,Math.random()+"","get_hack_target");
 		s.target=srv.hostname;
-		ns.print("target: ",s.target);
+		ns.tprintf("[%s] target: %s",s.hostname,s.target);
 		await run_hack(s);
 	}
 }
