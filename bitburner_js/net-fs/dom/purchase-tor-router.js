@@ -26,9 +26,9 @@ export async function main(ns) {
 			const MuiPaper_root=query_element(MuiDrawer_root,"div.MuiPaper-root");
 			/** @type {HTMLUListElement} */
 			const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
+			// 2,5,8 are dividers
 			this.hacking_section_header=as_div_element(MuiList_root.children[0]);
 			this.expand_collapsed_section(this.hacking_section_header);
-			// 2,5,8 are dividers
 			this.character_section_header=as_div_element(MuiList_root.children[3]);
 			this.expand_collapsed_section(this.character_section_header);
 			this.help_section_header=as_div_element(MuiList_root.children[9]);
