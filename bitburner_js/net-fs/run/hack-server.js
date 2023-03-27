@@ -79,7 +79,7 @@ export async function main(ns) {
 						if(hostname==="home") continue;
 						if(hostname.startsWith("big-")) continue;
 						const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
-						if(scan_results.length>0) ns.tprintf("scan: %s %s",hostname,JSON.stringify(scan_results));
+						if(scan_results.length>0) ns.printf("scan: %s %s",hostname,JSON.stringify(scan_results));
 						for(let item of scan_results) get_server(item);
 						let srv=get_server(hostname);
 						if(srv.purchasedByPlayer) continue;
@@ -95,7 +95,7 @@ export async function main(ns) {
 			}
 			while(!log_handle.empty()) {
 				let res=log_handle.read();
-				ns.tprintf("%s",res);
+				ns.printf("%s",res);
 			}
 			if(trace) ns.print(msg);
 		}
