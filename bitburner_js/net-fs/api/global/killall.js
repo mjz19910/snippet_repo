@@ -6,11 +6,16 @@ export async function main(ns) {
 	ns.disableLog("killall");
 	ns.disableLog("scan");
 	ns.killall("home",true);
-	for(let item of ns.getRecentScripts()) {
+	/** @param {ProcessInfo} item */
+	function kill_item_tail(item) {
 		if(item.filename===hack_server) ns.closeTail(item.pid);
+		if(item.filename==="/api/share.js") ns.closeTail(item.pid);
+	}
+	for(let item of ns.getRecentScripts()) {
+		kill_item_tail(item);
 	}
 	for(let item of ns.ps("home")) {
-		if(item.filename===hack_server) ns.closeTail(item.pid);
+		kill_item_tail(item);
 	}
 	let killed=new Set;
 	let next=["home"];
