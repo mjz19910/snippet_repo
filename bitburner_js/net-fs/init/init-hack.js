@@ -243,7 +243,6 @@ export class InitHackScript {
 	}
 	async start_hack_script() {
 		for(const hostname of this.hostname_list) {
-			if(hostname.startsWith("big-")) continue;
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
 			await this.start_script_template(srv);
