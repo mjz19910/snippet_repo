@@ -38,11 +38,11 @@ export function main(ns) {
 		}
 		return new_str;
 	}
-	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} not_pserv @arg {string[]} only_pserv */
-	function increase_server_ram(prev_ram,ram,not_pserv,only_pserv) {
+	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} not_pserv @arg {string[]} hostname_list */
+	function increase_server_ram(prev_ram,ram,not_pserv,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
 		i=not_pserv.length;
-		for(let hostname of only_pserv) {
+		for(let hostname of hostname_list) {
 			for(;;++i) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
 				if(cur_server_money<buy_cost1) return;
@@ -55,7 +55,7 @@ export function main(ns) {
 					if(new_host==="") throw new Error("failed to purchase server");
 					ns.scp(s.scripts,new_host);
 				}
-				hostname=rename_purchased_server(ns,only_pserv,hostname,`big-${ram}-${i}`);
+				hostname=rename_purchased_server(ns,hostname_list,hostname,`big-${ram}-${i}`);
 				const srv=ns.getServer(hostname);
 				s.start_script_template(srv);
 			}
