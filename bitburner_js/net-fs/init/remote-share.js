@@ -23,13 +23,21 @@ export async function main(ns) {
 			if(seen_srv.has(host)) continue;
 			servers_arr.push(host);
 		}
-		if(hostname==="home") continue;
 		if(!ns.ls(hostname).includes(share_script)) {
 			ns.scp([share_script],hostname);
 		}
 		ns.killall(hostname);
 		const server_ram=ns.getServerMaxRam(hostname);
 		if(server_ram===0) continue;
+		if(hostname==="home") {
+			const thread_n=server_ram/4|0;
+			const pid=ns.exec(share_script,hostname,thread_n-2,"auto",hostname);
+			if(pid===0) {
+				ns.print("failed to start ",share_script," on ",hostname);
+				ns.exit();
+			}
+			continue;
+		}
 		const thread_n=server_ram/4|0;
 		const pid=ns.exec(share_script,hostname,thread_n,"auto",hostname);
 		if(pid===0) {
@@ -40,5 +48,5 @@ export async function main(ns) {
 	hostname="home";
 	const server_ram=ns.getServerMaxRam(hostname);
 	const thread_n=server_ram/4|0;
-	ns.spawn(share_script,thread_n,"auto",hostname);
+	ns.spawn(share_script,thread_n-2,"auto",hostname);
 }
