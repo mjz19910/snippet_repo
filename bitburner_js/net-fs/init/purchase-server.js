@@ -20,21 +20,21 @@ export async function main(ns) {
 	for(let hostname of server_hostname_list) {
 		let processes=ns.ps(hostname);
 		if(processes.length!==0) ns.kill(processes[0].pid);
-		const srv=ns.getServer(hostname);
+		const srv=s.get_server(hostname);
 		await s.start_script_template(srv);
 	}
 	let i=server_offset;
-	/** @arg {NS} ns @arg {string[]} servers @arg {string} old_str @arg {string} new_str */
-	function rename_purchased_server(ns,servers,old_str,new_str) {
-		if(old_str===new_str) return new_str;
-		let idx=servers.indexOf(old_str);
+	/** @arg {NS} ns @arg {string[]} servers @arg {Server} srv @arg {string} new_str */
+	function rename_purchased_server(ns,servers,srv,new_str) {
+		if(srv.hostname===new_str) return;
+		let idx=servers.indexOf(srv.hostname);
 		servers[idx]=new_str;
-		let res=ns.renamePurchasedServer(old_str,new_str);
+		let res=ns.renamePurchasedServer(srv.hostname,new_str);
 		if(!res) {
-			ns.printf("%s -> %s",old_str,new_str);
+			ns.printf("%s -> %s",srv.hostname,new_str);
 			ns.exit();
 		}
-		return new_str;
+		srv.hostname=new_str;
 	}
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
 	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
@@ -47,10 +47,6 @@ export async function main(ns) {
 				if(cur_server_money<buy_cost1) return;
 				let host_parts=hostname.split("-");
 				ns.print(host_parts[2],srv.maxRam);
-				if(srv.maxRam>=ram) {
-					await ns.sleep(1000);
-					continue y;
-				}
 				if(server_hostname_list.includes(hostname)) {
 					let old_proc=ns.ps(hostname);
 					old_proc.forEach(v => ns.kill(v.pid));
@@ -60,10 +56,10 @@ export async function main(ns) {
 					if(new_host==="") throw new Error("failed to purchase server");
 					ns.scp(s.scripts,new_host);
 				}
-				hostname=rename_purchased_server(ns,hostname_list,hostname,`big-${ram}-${host_parts[2]}`);
-				srv=ns.getServer(hostname);
+				rename_purchased_server(ns,hostname_list,srv,`big-${ram}-${host_parts[2]}`);
 				await s.start_script_template(srv);
 				await ns.sleep(1000);
+				break;
 			}
 		}
 	}
