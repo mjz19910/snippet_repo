@@ -27,7 +27,12 @@ export async function main(ns) {
 	}
 
 	// share purchased_servers
-	let share_servers=ns.getPurchasedServers().slice(0,16);
+	let share_servers;
+	if(f_.all) {
+		share_servers=ns.getPurchasedServers();
+	} else {
+		share_servers=ns.getPurchasedServers().slice(0,16);
+	}
 	for(let srv of share_servers) {
 		if(!ns.ls(srv).includes(share_script)) {
 			ns.scp(share_script,srv);
@@ -35,6 +40,7 @@ export async function main(ns) {
 		ns.killall(srv);
 		let thread_n=ns.getServerMaxRam(srv)/4|0;
 		ns.exec(share_script,srv,thread_n,"auto",srv);
+		await ns.sleep(1000);
 	}
 	if(!use_hacked_servers) return;
 	let seen_srv=new Set;
