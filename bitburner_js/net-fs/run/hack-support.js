@@ -64,13 +64,14 @@ function should_accept(reply,call_,arg0) {
 }
 /** @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id */
 export async function generic_get_call(ns,target,call_id) {
-	const h_port=ns.getPortHandle(2);
+	const request_port=ns.getPortHandle(1);
+	const reply_port=ns.getPortHandle(2);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	send_call_msg(h_port,{call: call_id,args: [target]});
+	send_call_msg(request_port,{call: call_id,args: [target]});
 	for(;;) {
 		await ns.sleep(0);
-		let msg=await read_reply_msg(h_port);
+		let msg=await read_reply_msg(reply_port);
 		if(!should_accept(msg,call_id,target)) {
 			ns.writePort(2,JSON.stringify(msg));
 			continue;
