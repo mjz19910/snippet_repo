@@ -27,7 +27,7 @@ export class InitHackScript {
 	}
 	init_hack() {
 		this.start_host_scan("home");
-		if(!this.has_process_by_file("home",hack_server)) this.ns.run(hack_server);
+		if(!this.has_process_by_file("home",hack_server)) this.ns.exec(hack_server,"home");
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
 		this.do_get_admin_rights();
 		this.start_hack_script();

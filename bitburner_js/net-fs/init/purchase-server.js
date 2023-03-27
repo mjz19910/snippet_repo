@@ -10,16 +10,14 @@ export function main(ns) {
 	ns.disableLog("sleep");
 	ns.disableLog("scp");
 
-	// How much RAM each purchased server will have. In this case, it'll
-	// be 8GB.
-	let ram=8;
-	let purchased_server_hostnames=ns.getPurchasedServers();
-	let server_offset=purchased_server_hostnames.length;
+	let ram=1;
+	let server_hostname_list=ns.getPurchasedServers();
+	let server_offset=server_hostname_list.length;
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
 	const s=new InitHackScript(ns,{trace: false,template_changed});
 
-	for(let hostname of purchased_server_hostnames) {
+	for(let hostname of server_hostname_list) {
 		let processes=ns.ps(hostname);
 		if(processes.length!==0) ns.kill(processes[0].pid);
 		const srv=ns.getServer(hostname);
@@ -38,15 +36,14 @@ export function main(ns) {
 		}
 		return new_str;
 	}
-	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} not_pserv @arg {string[]} hostname_list */
-	function upgrade_purchased_server_list(prev_ram,ram,not_pserv,hostname_list) {
+	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
+	function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
-		i=not_pserv.length;
 		for(let hostname of hostname_list) {
 			for(;;++i) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
 				if(cur_server_money<buy_cost1) return;
-				if(purchased_server_hostnames.includes(hostname)) {
+				if(server_hostname_list.includes(hostname)) {
 					let old_proc=ns.ps(hostname);
 					old_proc.forEach(v => ns.kill(v.pid));
 					ns.upgradePurchasedServer(hostname,ram);
@@ -61,31 +58,23 @@ export function main(ns) {
 			}
 		}
 	}
-	/** @arg {`big-${number}-`} prefix */
-	function split_server_prefix(prefix) {
-		let not_pserv=purchased_server_hostnames.filter(e => !e.startsWith(prefix));
-		let only_pserv=purchased_server_hostnames.filter(e => e.startsWith(prefix));
-		upgrade_purchased_server_list(prev_ram,ram,not_pserv,only_pserv);
-		ns.print("only prefix: ",only_pserv);
+	server_hostname_list=ns.getPurchasedServers();
+	/** @param {string[]} a @param {number} limit */
+	function add_new_purchased_servers(a,limit) {
+		if(a.length!==limit) for(let i=0;i<limit;i++) a.push(`big-${ram}-${i}`);
 	}
-	purchased_server_hostnames=ns.getPurchasedServers();
-	let prev_ram=ram;
-	if(purchased_server_hostnames.length!==purchased_server_limit) {
-		let only_pserv=[];
-		for(let i=0;i<purchased_server_limit;i++) {
-			only_pserv.push(`big-${ram}-${i}`);
-		}
-		upgrade_purchased_server_list(prev_ram,ram,[],only_pserv);
-	}
+	add_new_purchased_servers(server_hostname_list,purchased_server_limit);
+	if(server_hostname_list.length!==purchased_server_limit) for(let i=0;i<purchased_server_limit;i++) server_hostname_list.push(`big-${ram}-${i}`);
+	upgrade_purchased_server_list(0,ram,server_hostname_list);
 	/** @arg {string} hostname */
 	function get_ram(hostname) {return ns.getServerMaxRam(hostname);}
-	if(purchased_server_hostnames.length===0) return;
-	let min_mem=purchased_server_hostnames.reduce(
+	if(server_hostname_list.length===0) return;
+	let min_mem=server_hostname_list.reduce(
 		(a,r) => get_ram(a)>get_ram(r)? r:a
 	);
-	prev_ram=ram=get_ram(min_mem);
+	ram=get_ram(min_mem);
+	let prev_ram=ram;
 	ns.print("min_mem: ",min_mem);
 	ram*=2;
-	let srv_parts=min_mem.split("-");
-	split_server_prefix(`big-${+srv_parts[1]}-`);
+	upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
 }
