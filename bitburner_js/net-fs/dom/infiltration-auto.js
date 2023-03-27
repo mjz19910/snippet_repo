@@ -4,6 +4,7 @@ import {as_any} from "/run/as.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
+	ns.clearLog();
 	ns.tail();
 	ns.disableLog("disableLog");
 	if(!("root" in window)) return;
@@ -58,13 +59,47 @@ export async function main(ns) {
 	const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
 	let mui_list_react_fiber=get_react_fiber(MuiList_root);
 	on_react_fiber(mui_list_react_fiber);
-	/** @param {ReactFiber} fiber */
-	function on_react_fiber(fiber) {
+	/** @param {ReactFiber} fiber @arg {string[]} path */
+	function on_react_fiber(fiber,path=["fiber"]) {
 		switch(fiber.tag) {
-			default: ns.print("fiber.tag: ",fiber.tag); break;
+			default: ns.print(`${path.join(".")}.tag: `,fiber.tag); break;
 			case 5: {
-				const {tag,key,elementType,type,stateNode,return: return_,child,sibling,index,pendingProps,memoizedProps,updateQueue,...y}=fiber;
-				console.log("rest:",y);
+				const {tag,key,elementType,type,stateNode,return: return_,child,sibling,index,ref,pendingProps,memoizedProps,updateQueue,...y}=fiber;
+				const {memoizedState,dependencies,mode,flags,nextEffect,firstEffect,lastEffect,lanes,childLanes,alternate,...y1}=y;
+				if(Object.keys(y1).length>0) ns.print("rest: ",y1);
+				/** @param {string} a1 @param {any} a2 */
+				function p(a1,a2) {
+					x: {
+						if(typeof a2==="string") break x;
+						if(typeof a2==="number") break x;
+						if(a2===null) break x;
+						if(a1==="stateNode") break x;
+						if(a1==="pendingProps") {
+							break x;
+						}
+						if(a1==="memoizedProps") break x;
+						console.log(`fiber.${a1}:`,a2);
+					}
+					try {
+						ns.print(path.join("."),".",a1," ",a2);
+					} catch {
+						ns.print(path.join("."),".",a1," ","{[cyclic object]}");
+					}
+				}
+				p("tag",tag);
+				p("key",key);
+				p("elementType",elementType);
+				p("type",type);
+				p("stateNode",stateNode);
+				on_react_fiber(return_,[...path,"return"]);
+				on_react_fiber(child,[...path,"child"]);
+				p("sibling",sibling);
+				p("index",index);
+				p("ref",ref);
+				p("pendingProps",pendingProps.className);
+				console.log("pendingProps",pendingProps.children);
+				p("memoizedProps",memoizedProps);
+				p("updateQueue",updateQueue);
 			} break;
 		}
 		fiber.tag;
