@@ -5,12 +5,13 @@ function main_2() {
 	// Volhaven
 	const volhaven_map={
 		travel_agency: {street_address: 2},
-		intersection4: {street_address: 4},
-		placeholder5: {street_address: 5},
-		placeholder6: {street_address: 6},
-		intersection7: {street_address: 7},
+		intersection04: {street_address: 4},
+		placeholder05: {street_address: 5},
+		placeholder06: {street_address: 6},
+		intersection07: {street_address: 7},
 		world_stock_exchange: {street_address: 8},
-		road_termination9: {street_address: 9},
+		road_termination09: {street_address: 9},
+		road_termination17: {street_address: 17},
 		syscore_sec: {street_address: 18},
 		lexocorp: {street_address: 58},
 		hospital: {street_address: 63},
