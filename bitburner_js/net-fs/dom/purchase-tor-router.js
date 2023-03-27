@@ -62,6 +62,8 @@ class DomList {
 		/** @type {any} */
 		let win_any=window;
 		win_any.__dom_list=this;
+		this.city_button;
+		Object.values(this.city_button)[1].onClick();
 	}
 }
 
