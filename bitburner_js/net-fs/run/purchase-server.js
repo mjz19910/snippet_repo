@@ -47,7 +47,7 @@ export async function main(ns) {
 		server_offset=not_pserv.length;
 		i=server_offset;
 		let max_delay=60*1000*2;
-		let min_delay=5000;
+		let min_delay=300;
 		let acc_avg_dur=0;
 		for(const hostname of only_pserv) {
 			wl: for(;;) {
@@ -56,6 +56,7 @@ export async function main(ns) {
 					if(purchased_server_hostnames.includes(hostname)) {
 						let old_proc=ns.ps(hostname);
 						old_proc.forEach(v => ns.kill(v.pid));
+						await ns.sleep(0);
 						ns.upgradePurchasedServer(hostname,ram);
 					} else {
 						let new_host=ns.purchaseServer(hostname,ram);
@@ -68,7 +69,7 @@ export async function main(ns) {
 					++i;
 					last_server_money=server_money;
 					acc_avg_dur=delay;
-					await ns.sleep(50);
+					await ns.sleep(0);
 					break wl;
 				}
 				await ns.sleep(delay);
