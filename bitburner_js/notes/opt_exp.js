@@ -1,4 +1,3 @@
-
 /**
  * @param {string} key
  * @param {number} exp
@@ -10,6 +9,22 @@ function log_crime_min(key,exp,dur_min,dur_sec=0) {
 	const rate=exp/dur_sec;
 	const val=parseFloat(rate.toPrecision(3));
 	console.log(key+":",val,"exp/sec");
+}
+/**
+ * @param {string} key
+ * @param {string} exp_str
+ * @param {number} exp
+ * @param {number} dur_min
+ * @param {number} dur_sec
+ */
+function log_crime_min2(key,exp_str,exp,dur_min,dur_sec=0) {
+	dur_sec+=dur_min*60;
+	const rate=exp/dur_sec;
+	const val=parseFloat(rate.toPrecision(3));
+	let ss=exp_str.split(",");
+	for(let s1 of ss) {
+		console.log(`${key}.${s1}:`,val,"exp/sec");
+	}
 }
 /**
  * @param {number} num
@@ -59,8 +74,8 @@ function main_1() {
 		charisma_exp: 2.0717875259144165,
 	};
 	log_crime_min("shoplift",4.144,0,2);
-	log_crime_min("rob_store.hack",112.426,1,0);
-	log_crime_min("rob_store.dex",84.755,1,0);
+	log_crime_min2("rob_store","hack",112.426,1,0);
+	log_crime_min2("rob_store","dex,agi",84.755,1,0);
 	log_crime_min("larceny.hack",168.638,1,30);
 	log_crime_min("larceny.dex",113.007,1,30);
 	log_crime_min("deal_drugs.dex",9.417,0,10);
