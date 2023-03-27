@@ -1,9 +1,10 @@
-/** @typedef {ReplyMsg1|ReplyMsg2|ReplyMsg3|ReplyMsg4|ReplyMsg5} ReplyMsg */
+/** @typedef {ReplyMsg1|ReplyMsg2|ReplyMsg3|ReplyMsg4|ReplyMsg5|ReplyMsg6} ReplyMsg */
 /** @typedef {{call:"getServerMaxMoney";hostname:string;reply:number;}} ReplyMsg1 */
 /** @typedef {{call:"getServerMinSecurityLevel";hostname:string;reply:number}} ReplyMsg2 */
 /** @typedef {{call:"getServerSecurityLevel";hostname:string;reply:number}} ReplyMsg3 */
 /** @typedef {{call:"getServerMoneyAvailable";hostname:string;reply:number}} ReplyMsg4 */
 /** @typedef {{call:"get_server";hostname:string;reply:Server}} ReplyMsg5 */
+/** @typedef {{call:"get_hack_target";id:string;reply:Server}} ReplyMsg6 */
 
 /** @typedef {CallMsg1|CallMsg2|CallMsg3|CallMsg4|CallMsg5|CallMsg6} CallMsg */
 /** @typedef {{call:"getServerMaxMoney",args:[string]}} CallMsg1 */
@@ -59,11 +60,12 @@ export function read_port2_msg(ns) {
  */
 function should_accept(reply,call_,arg0) {
 	if(reply.call!==call_) return false;
-	if(reply.hostname!==arg0) return false;
+	if("hostname" in reply&&reply.hostname!==arg0) return false;
+	if("id" in reply&&reply.id!==arg0) return false;
 	return true;
 }
 /** @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id */
-async function generic_get_call(ns,target,call_id) {
+export async function generic_get_call(ns,target,call_id) {
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let rep_count=6;;rep_count++) {
@@ -75,7 +77,7 @@ async function generic_get_call(ns,target,call_id) {
 		let msg=read_port2_msg(ns);
 		if(msg===null) continue;
 		if(!should_accept(msg,call_id,target)) {
-			ns.writePort(3,JSON.stringify(msg));
+			ns.writePort(2,JSON.stringify(msg));
 			continue;
 		}
 		let ret=msg.reply;

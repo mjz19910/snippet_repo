@@ -1,4 +1,8 @@
-import {read_port1_msg,read_port_msg,send_port2_msg} from "/run/hack-support.js";
+import {read_port1_msg,send_port2_msg} from "/run/hack-support.js";
+/**
+ * @param {number} min
+ * @param {number} max
+ */
 function rand_num(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
 }
@@ -36,9 +40,7 @@ export async function main(ns) {
 		return server;
 	}
 
-	for(let item of ns.scan("home")) {
-		get_server(item);
-	}
+	for(let item of ns.scan("home")) get_server(item);
 
 	let processed_messages_count=0;
 	let print_server_message=true;
@@ -78,27 +80,29 @@ export async function main(ns) {
 					send_port2_msg(ns,{call: "get_server",hostname: msg.args[0],reply});
 				} break;
 				case "get_hack_target": {
-					let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-					for(let item of ns.scan(hostname)) {
-						get_server(item);
+					let reply=null;
+					for(;;) {
+						let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
+						for(let item of ns.scan(hostname)) {
+							get_server(item);
+						}
+						let srv=get_server(msg.args[0]);
+						if(srv.maxRam===0) continue;
+						if(srv.hasAdminRights) {
+							reply=srv;
+							break;
+						}
 					}
-					let srv=get_server(msg.args[0]);
-					send_port2_msg(ns,{call: "get_server",hostname: msg.args[0],reply});
+					send_port2_msg(ns,{call: "get_hack_target",id: msg.args[0],reply});
 				} break;
 			}
 			if(trace) ns.print(msg);
 		}
 	}
-	let resend_reply=null;
 	for(;;) {
-		while(resend_reply!==null) {
-			ns.writePort(2,resend_reply);
-			resend_reply=read_port_msg(ns,3);
-		}
 		process_messages();
-		await ns.sleep(40);
+		await ns.sleep(33);
 		if(processed_messages_count===0) await ns.sleep(1500);
 		processed_messages_count=0;
-		resend_reply=read_port_msg(ns,3);
 	}
 }
