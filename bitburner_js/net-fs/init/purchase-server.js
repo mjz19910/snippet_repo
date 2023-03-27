@@ -39,7 +39,6 @@ export async function main(ns) {
 			if(purchased_server_list.includes(hostname)) {
 				srv=ns.getServer(hostname);
 				if(srv.maxRam>=ram) continue;
-				ns.print(host_parts[2]," ",ns.formatRam(srv.maxRam));
 				let old_proc=ns.ps(hostname);
 				old_proc.forEach(v => ns.kill(v.pid));
 				ns.upgradePurchasedServer(hostname,ram);

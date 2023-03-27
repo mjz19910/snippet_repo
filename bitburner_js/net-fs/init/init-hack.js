@@ -72,7 +72,7 @@ export class InitHackScript {
 				if(ps.filename===hack_template) ns.kill(ps.pid);
 			});
 		}
-		this.format_print(srv,`t:${t} h:${srv.hostname}`);
+		this.format_print(srv,`t:${t} m:${ns.formatRam(srv.maxRam)} h:${srv.hostname}`);
 		let pid=ns.exec(hack_template,srv.hostname,t,t,srv.hostname);
 		if(pid===0) {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
