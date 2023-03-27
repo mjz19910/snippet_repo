@@ -64,6 +64,7 @@ export class InitHackScript {
 			return false;
 		}
 		let t=this.get_thread_count(srv);
+		if(t<=0) return;
 		const processes=ns.ps(srv.hostname);
 		if(processes.length>0) {
 			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return;
