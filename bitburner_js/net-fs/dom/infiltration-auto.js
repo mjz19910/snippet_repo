@@ -36,6 +36,7 @@ export async function main(ns) {
 	const react_symbols={
 		forward_ref: window.React.forwardRef(() => null)["$$typeof"],
 	};
+	const seen_react_fiber_set=new Set;
 	/**
 	 * @returns {HTMLDivElement}
 	 * @param {HTMLElement} node
@@ -61,8 +62,15 @@ export async function main(ns) {
 	on_react_fiber(mui_list_react_fiber);
 	/** @param {ReactFiber} fiber @arg {string[]} path */
 	function on_react_fiber(fiber,path=["fiber"]) {
+		if(seen_react_fiber_set.has(fiber)) return;
+		seen_react_fiber_set.add(fiber);
 		switch(fiber.tag) {
 			default: ns.print(`${path.join(".")}.tag: `,fiber.tag); break;
+			case 11: {
+				const {tag,key,elementType,type,stateNode,return: return_,child,sibling,index,ref,pendingProps,memoizedProps,updateQueue,...y}=fiber;
+				const {memoizedState,dependencies,mode,flags,nextEffect,firstEffect,lastEffect,lanes,childLanes,alternate,...y1}=y;
+				if(Object.keys(y1).length>0) ns.print("rest: ",y1);
+			} break;
 			case 5: {
 				const {tag,key,elementType,type,stateNode,return: return_,child,sibling,index,ref,pendingProps,memoizedProps,updateQueue,...y}=fiber;
 				const {memoizedState,dependencies,mode,flags,nextEffect,firstEffect,lastEffect,lanes,childLanes,alternate,...y1}=y;
