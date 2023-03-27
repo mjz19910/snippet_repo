@@ -1,4 +1,4 @@
-import {read_port1_msg,send_port2_msg} from "/run/hack-support.js";
+import {read_call_msg,send_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -43,34 +43,36 @@ export async function main(ns) {
 	for(let item of ns.scan("home")) get_server(item);
 
 	let processed_messages_count=0;
+	const read_handle=ns.getPortHandle(1);
+	const write_handle=ns.getPortHandle(2);
+	const log_handle=ns.getPortHandle(3);
 	async function process_messages() {
 		for(;;) {
-			await ns.sleep(0);
-			let msg=read_port1_msg(ns);
+			let msg=await read_call_msg(read_handle);
 			if(msg===null) break;
 			processed_messages_count++;
 			const {call,args}=msg;
 			switch(call) {
 				case "getServerMaxMoney": {
 					let reply=ns.getServerMaxMoney(...args);
-					send_port2_msg(ns,{call,id: args[0],reply});
+					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 				case "getServerMinSecurityLevel": {
 					let reply=ns.getServerMinSecurityLevel(...args);
-					send_port2_msg(ns,{call,id: args[0],reply});
+					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 				case "getServerMoneyAvailable": {
 					let reply=ns.getServerMoneyAvailable(...args);
 					ns.printf("getServerMoneyAvailable: (%s) %s",args[0],ns.formatNumber(reply));
-					send_port2_msg(ns,{call,id: args[0],reply});
+					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 				case "getServerSecurityLevel": {
 					let reply=ns.getServerSecurityLevel(...args);
-					send_port2_msg(ns,{call,id: args[0],reply});
+					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 				case "get_server": {
 					let reply=get_server(args[0]);
-					send_port2_msg(ns,{call,id: args[0],reply});
+					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 				case "get_hack_target": {
 					let reply=null;
@@ -91,7 +93,7 @@ export async function main(ns) {
 							break;
 						}
 					}
-					send_port2_msg(ns,{call,id: args[0],reply});
+					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 			}
 			if(trace) ns.print(msg);
@@ -102,5 +104,10 @@ export async function main(ns) {
 		await ns.sleep(33);
 		if(processed_messages_count===0) await ns.sleep(1500);
 		processed_messages_count=0;
+		await log_handle.nextWrite();
+		while(!log_handle.empty()) {
+			let res=log_handle.read();
+			ns.tprintf("%s",res);
+		}
 	}
 }

@@ -72,16 +72,10 @@ export class InitHackScript {
 			});
 		}
 		if(srv.hostname==="home"||!srv.purchasedByPlayer) this.format_print(srv,`t:${t} h:${srv.hostname}`);
-		const start_handle=ns.getPortHandle(10);
 		let pid=ns.exec(hack_template,srv.hostname,t,t,srv.hostname);
 		if(pid===0) {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
-		}
-		await start_handle.nextWrite();
-		while(!start_handle.empty()) {
-			let res=start_handle.read();
-			ns.tprintf("%s",res);
 		}
 		await this.ns.sleep(10*1000);
 		return;

@@ -1,8 +1,8 @@
-import {read_ns_port_msg} from "/run/hack-support.js";
+import {read_port_msg} from "/run/hack-support.js";
 /** @arg {NS} ns @arg {NetscriptPort} ns_port */
 async function read_all_ns_port(ns,ns_port) {
 	while(!ns_port.empty()) {
-		let msg=await read_ns_port_msg(ns_port);
+		let msg=await read_port_msg(ns_port);
 		ns.tprint(msg);
 	}
 }
