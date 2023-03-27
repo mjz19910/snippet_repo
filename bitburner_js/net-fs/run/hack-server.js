@@ -11,12 +11,12 @@ export async function main(ns) {
 	ns.tail();
 	ns.clearLog();
 	ns.disableLog("disableLog");
-	ns.disableLog("scan");
-	ns.disableLog("sleep");
-	ns.disableLog("getServerMaxMoney");
 	ns.disableLog("getServerMinSecurityLevel");
 	ns.disableLog("getServerMoneyAvailable");
 	ns.disableLog("getServerSecurityLevel");
+	ns.disableLog("getServerMaxMoney");
+	ns.disableLog("sleep");
+	ns.disableLog("scan");
 
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
 
