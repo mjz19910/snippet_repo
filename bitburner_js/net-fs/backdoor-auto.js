@@ -4,6 +4,7 @@ import {as_any} from "./run/as.js";
 export async function main(ns) {
 	ns.tail();
 	ns.disableLog("disableLog");
+	ns.disableLog("getHackingLevel");
 	ns.disableLog("sleep");
 	ns.disableLog("scan");
 	const terminalInput_nt=globalThis["document"].getElementById("terminal-input");
@@ -12,6 +13,7 @@ export async function main(ns) {
 		return;
 	}
 	if(!(terminalInput_nt instanceof HTMLInputElement)) ns.exit();
+	let hacking_level=ns.getHackingLevel();
 	let seen_hosts=new Set(["home"]);
 	/** @type {{[x:string]:Server}} */
 	let server_map={};
@@ -37,7 +39,8 @@ export async function main(ns) {
 			if(srv.purchasedByPlayer) continue;
 			if(!srv.hasAdminRights) continue;
 			if(srv.backdoorInstalled) continue;
-			let delay=ns.getHackTime(hostname); delay;
+			if(srv.requiredHackingSkill > hacking_level) continue;
+			let delay=ns.getHackTime(hostname);
 			/** @arg {HTMLInputElement&{[x:string]:ReactEventState}} terminalInput @arg {string} command */
 			function start_terminal_command(terminalInput,command) {
 				terminalInput.value=command;
