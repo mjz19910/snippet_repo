@@ -12,7 +12,6 @@
 /** @typedef {{call:"getServerMoneyAvailable",args:[string]}} CallMsg4 */
 /** @typedef {{call:"get_server",args:[string]}} CallMsg5 */
 
-
 /** @param {NS} ns @arg {number} port */
 export function read_port_msg(ns,port) {
 	let data=ns.readPort(port);
