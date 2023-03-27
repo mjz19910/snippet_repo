@@ -44,6 +44,12 @@ export async function main(ns) {
 				seen_hosts.add(res);
 				scan_res2.push([{final: res},{path: [...host_desc[1].path,hostname]}]);
 			}
+			for(;;) {
+				terminalInput=await wait_for_terminal();
+				let has_disabled=terminalInput.classList.contains("Mui-disabled");
+				if(!has_disabled) break;
+				await ns.sleep(33);
+			}
 			let srv=ns.getServer(hostname);
 			server_map[hostname]=srv;
 			if(srv.purchasedByPlayer) continue;
