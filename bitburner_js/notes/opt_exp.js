@@ -97,22 +97,24 @@ function main() {
 	}
 	{
 		const cur="summit_uni";
-		/** @type {()=>`hack${1|2|3}`|`cha${1|2}`} */
-		function get_sel() {return "hack1";}
+		/** @type {()=>`hack${1|2|3|4}`|`cha${1|2}`|"none"} */
+		function get_sel() {return "hack4";}
 		const sel=get_sel();
 		{
-			const base=mults.hacking_exp;
+			const base=mults.hacking_exp*1.5;
 			// Computer Science
-			if(sel==="hack1") log_university_min(`${cur}.hack1`,base,0);
+			{const s2="hack1"; if(sel===s2) log_university_min(`${cur}.${s2}`,base,0);}
 			// Data Structures
-			if(sel==="hack2") log_university_min(`${cur}.hack2`,base*2,0);
+			{const s2="hack2"; if(sel===s2) log_university_min(`${cur}.${s2}`,base*2,-144);}
 			// Networks
-			if(sel==="hack3") log_university_min(`${cur}.hack3`,base*4,0);
+			{const s2="hack3"; if(sel===s2) log_university_min(`${cur}.${s2}`,base*4,-288);}
+			// Algorithms
+			{const s2="hack4"; if(sel===s2) log_university_min(`${cur}.${s2}`,base*8,-1152);}
 		}
 		{
-			const base=mults.charisma_exp;
-			if(sel==="cha1") log_university_min(`${cur}.cha1`,base,-432);
-			if(sel==="cha2") log_university_min(`${cur}.cha2`,base*2,-864);
+			const base=mults.charisma_exp*6;
+			if(sel==="cha1") log_university_min(`${cur}.cha1`,base,-576);
+			if(sel==="cha2") log_university_min(`${cur}.cha2`,base*2,-1152);
 		}
 	}
 	let is_gym=false;
