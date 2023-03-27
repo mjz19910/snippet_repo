@@ -71,7 +71,9 @@ async function handle_scan_list(s) {
 			let has_disabled=terminalInput.classList.contains("Mui-disabled");
 			if(!has_disabled) break;
 		}
-		console.log(delay/acc_delay,delay,acc_delay);
+		ns.printf("backdoor_ratio:%s",ns.formatNumber(delay/acc_delay));
+		ns.printf("hack_time:%s",ns.tFormat(delay));
+		ns.printf("backdoor_time:%s",ns.tFormat(acc_delay));
 		start_terminal_command(terminalInput,"home");
 	}
 }
