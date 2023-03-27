@@ -78,6 +78,7 @@ export class InitHackScript {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
 		}
+		debugger;
 		await start_handle.nextWrite();
 		while(!start_handle.empty()) {
 			let res=start_handle.read();
