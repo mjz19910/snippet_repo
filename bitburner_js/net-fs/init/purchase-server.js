@@ -49,7 +49,7 @@ export async function main(ns) {
 				ns.print(host_parts[2],srv.maxRam);
 				if(srv.maxRam>=ram) {
 					await ns.sleep(1000);
-					continue;
+					continue y;
 				}
 				if(server_hostname_list.includes(hostname)) {
 					let old_proc=ns.ps(hostname);
