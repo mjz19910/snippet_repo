@@ -56,7 +56,7 @@ export class InitHackScript {
 		return server_idx>-1;
 	}
 	/** @param {Server} srv */
-	start_script_template(srv) {
+	async start_script_template(srv) {
 		const {ns}=this;
 		if(srv.maxRam===0) {
 			if(this.opts.trace) this.format_print(srv,`t:0 h:${srv.hostname}`);
@@ -76,6 +76,7 @@ export class InitHackScript {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
 		}
+		await this.ns.sleep(100);
 		return;
 	}
 	/** @arg {string} fn_key */
@@ -187,8 +188,7 @@ export class InitHackScript {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
-			this.start_script_template(srv);
-			await this.ns.sleep(100);
+			await this.start_script_template(srv);
 		}
 	}
 	/** @arg {Server} srv @arg {string} msg */

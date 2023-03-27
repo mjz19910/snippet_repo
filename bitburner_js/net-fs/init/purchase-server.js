@@ -1,7 +1,7 @@
 import {InitHackScript} from "/init/init-hack.js";
 
 /** @param {NS} ns */
-export function main(ns) {
+export async function main(ns) {
 	ns.tail();
 	ns.clearLog();
 	ns.disableLog("disableLog");
@@ -21,7 +21,7 @@ export function main(ns) {
 		let processes=ns.ps(hostname);
 		if(processes.length!==0) ns.kill(processes[0].pid);
 		const srv=ns.getServer(hostname);
-		s.start_script_template(srv);
+		await s.start_script_template(srv);
 	}
 	let i=server_offset;
 	/** @arg {NS} ns @arg {string[]} servers @arg {string} old_str @arg {string} new_str */
@@ -37,7 +37,7 @@ export function main(ns) {
 		return new_str;
 	}
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
-	function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
+	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
 		for(let hostname of hostname_list) {
 			for(;;++i) {
@@ -54,7 +54,7 @@ export function main(ns) {
 				}
 				hostname=rename_purchased_server(ns,hostname_list,hostname,`big-${ram}-${i}`);
 				const srv=ns.getServer(hostname);
-				s.start_script_template(srv);
+				await s.start_script_template(srv);
 			}
 		}
 	}
@@ -65,7 +65,7 @@ export function main(ns) {
 	}
 	add_new_purchased_servers(server_hostname_list,purchased_server_limit);
 	if(server_hostname_list.length!==purchased_server_limit) for(let i=0;i<purchased_server_limit;i++) server_hostname_list.push(`big-${ram}-${i}`);
-	upgrade_purchased_server_list(0,ram,server_hostname_list);
+	await upgrade_purchased_server_list(0,ram,server_hostname_list);
 	/** @arg {string} hostname */
 	function get_ram(hostname) {return ns.getServerMaxRam(hostname);}
 	if(server_hostname_list.length===0) return;
@@ -76,5 +76,5 @@ export function main(ns) {
 	let prev_ram=ram;
 	ns.print("min_mem: ",min_mem);
 	ram*=2;
-	upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
+	await upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
 }
