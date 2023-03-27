@@ -28,8 +28,12 @@ export async function main(ns) {
 	async function writeNodesToFile(nodes) {
 		let lines=[];
 		for(let node of nodes) {
-			for(var field of get_keys_of(node)) {
-				var value=node[field];
+			const s_node={
+				...node,
+				maxMoney: ns.formatNumber(node.maxMoney),
+			};
+			for(var field of get_keys_of(s_node)) {
+				var value=s_node[field];
 				lines.push(field+": "+value);
 			}
 			lines.push("");
