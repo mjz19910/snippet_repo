@@ -1,4 +1,9 @@
 function main_2() {
+	type MapType={
+		[x: string]: {
+			street_address: number|null,
+		};
+	};
 	// Volhaven
 	const volhaven_map={
 		travel_agency: {
@@ -19,7 +24,10 @@ function main_2() {
 		omnia_cybersystems: {
 			street_address: 67,
 		},
-	};
+		the_slums: {
+			street_address: null,
+		}
+	} as const satisfies MapType;
 	let log_map=true;
 	if(log_map) console.log(volhaven_map);
 }
