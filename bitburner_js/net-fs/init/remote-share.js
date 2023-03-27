@@ -65,7 +65,7 @@ export async function main(ns) {
 				if(seen_srv.has(host)) continue;
 				servers_arr.push(host);
 			}
-			if(srv==="home") break x;
+			if(srv==="home"&&!f_.all) break x;
 			if(!ns.ls(srv).includes(share_script)) {
 				ns.scp([share_script],srv);
 			}

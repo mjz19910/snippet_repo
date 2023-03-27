@@ -66,6 +66,7 @@ export class InitHackScript {
 	}
 	/** @param {Server} srv */
 	async start_script_template(srv) {
+		const {ns}=this;
 		const ro_1=`s:${this.player_hacking_skill}`;
 		const ro_2=`lvl:${srv.requiredHackingSkill}`;
 		const async_delay=this.get_async_delay();
@@ -74,31 +75,27 @@ export class InitHackScript {
 			return false;
 		}
 		const ro_base=`hack-v2 ${ro_1}`;
-		const processes=this.ns.ps(srv.hostname);
+		const processes=ns.ps(srv.hostname);
 		if(processes.length>0) {
 			let share_ps=processes.find(ps => ps.filename==="/api/share.js");
 			if(share_ps) {
-				this.ns.kill(share_ps.pid);
-				const ram_use1=share_ps.threads*4;
-				const other_ram_use=srv.ramUsed-ram_use1;
-				const allocation_percent=srv.maxRam/ram_use1;
-				this.ns.tprint("allocated to share.js: ",allocation_percent);
-				const new_share_thread_count=share_ps.threads/2|0;
-				this.ns.exec("/api/share.js",srv.hostname,new_share_thread_count,...share_ps.args);
-				srv.ramUsed=other_ram_use+new_share_thread_count*4;
+				ns.kill(share_ps.pid);
+				const new_share_thread_count=(srv.maxRam/2)/4|0;
+				ns.exec("/api/share.js",srv.hostname,new_share_thread_count,...share_ps.args);
+				srv=this.update_server(srv);
 			}
 			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return false;
 			processes.forEach(ps => {
-				if(ps.filename===hack_template) this.ns.kill(ps.pid);
+				if(ps.filename===hack_template) ns.kill(ps.pid);
 			});
 		}
 		const t=this.get_thread_count(srv);
 		let mode=this.get_mode();
-		this.ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
+		ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
 		if(this.opts.distribute) {
 			const ro_mem=`t:${t} h:${srv.hostname}`;
 			this.format_print(async_delay,srv,`${ro_base} ${ro_2} ${ro_mem}`);
-			await this.ns.sleep(async_delay);
+			await ns.sleep(async_delay);
 		}
 		return true;
 	}
@@ -326,6 +323,12 @@ export class InitHackScript {
 		server=this.ns.getServer(hostname);
 		this.server_map[hostname]=server;
 		return server;
+	}
+	/** @arg {Server} srv */
+	update_server(srv) {
+		srv=this.ns.getServer(srv.hostname);
+		this.server_map[srv.hostname]=srv;
+		return srv;
 	}
 	/** @arg {Server} srv @arg {"ssh"|"ftp"|"smtp"|"http"|"sql"} type */
 	unlock_service(srv,type) {
