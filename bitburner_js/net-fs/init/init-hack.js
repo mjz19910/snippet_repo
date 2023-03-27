@@ -37,12 +37,12 @@ export class InitHackScript {
 		this.disableLog_("httpworm");
 		this.disableLog_("getServerMaxRam");
 	}
-	init_hack() {
+	async init_hack() {
 		this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.exec(hack_server,"home");
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
 		this.do_get_admin_rights();
-		this.start_hack_script();
+		await this.start_hack_script();
 		this.update_backdoor_cache();
 		this.log_servers_to_backdoor();
 	}
@@ -65,7 +65,7 @@ export class InitHackScript {
 		let t=this.get_thread_count(srv);
 		const processes=ns.ps(srv.hostname);
 		if(processes.length>0) {
-			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return false;
+			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return;
 			processes.forEach(ps => {
 				if(ps.filename===hack_template) ns.kill(ps.pid);
 			});
@@ -76,7 +76,7 @@ export class InitHackScript {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
 		}
-		return true;
+		return;
 	}
 	/** @arg {string} fn_key */
 	disableLog_(fn_key) {
@@ -183,11 +183,12 @@ export class InitHackScript {
 		}
 		this.ns.write(backdoor_list_file,this.to_backdoor.join("\n")+"\n","w");
 	}
-	start_hack_script() {
+	async start_hack_script() {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
 			this.start_script_template(srv);
+			await this.ns.sleep(100);
 		}
 	}
 	/** @arg {Server} srv @arg {string} msg */
@@ -280,5 +281,5 @@ export async function main(ns) {
 		template_changed,
 		trace,
 	});
-	s.init_hack();
+	await s.init_hack();
 }
