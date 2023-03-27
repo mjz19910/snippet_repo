@@ -45,6 +45,7 @@ export async function main(ns) {
 	let processed_messages_count=0;
 	async function process_messages() {
 		for(;;) {
+			await ns.sleep(33);
 			let msg=read_port1_msg(ns);
 			if(msg===null) break;
 			processed_messages_count++;
