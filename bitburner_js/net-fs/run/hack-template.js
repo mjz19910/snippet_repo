@@ -64,6 +64,7 @@ export async function main(ns) {
 		first: true,
 		target: null,
 	};
+	debugger;
 	for(;;) {
 		const srv=await generic_get_call(ns,Math.random()+"","get_hack_target");
 		s.target=srv.hostname;
