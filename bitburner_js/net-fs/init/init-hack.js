@@ -91,7 +91,6 @@ export class InitHackScript {
 
 		ns.tail();
 		ns.clearLog();
-		ns.print("Script started");
 	}
 	/** @arg {string} src_host */
 	start_host_scan(src_host) {
