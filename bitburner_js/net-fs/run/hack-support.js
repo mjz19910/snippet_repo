@@ -71,12 +71,9 @@ async function generic_get_call(ns,target,call_id) {
 			send_port1_msg(ns,{call: call_id,args: [target]});
 			rep_count=0;
 		}
-		await ns.sleep(40);
+		await ns.sleep(33);
 		let msg=read_port2_msg(ns);
-		if(msg===null) {
-			await ns.sleep(300);
-			continue;
-		}
+		if(msg===null) continue;
 		if(!should_accept(msg,call_id,target)) {
 			ns.writePort(3,JSON.stringify(msg));
 			continue;
