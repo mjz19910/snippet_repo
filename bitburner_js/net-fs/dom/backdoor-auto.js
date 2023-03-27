@@ -17,7 +17,7 @@ export async function main(ns) {
 	async function wait_for_terminal() {
 		let new_element=get_terminal_input(),cnt=0;
 		while(new_element===null) {
-			if(cnt%8===0) ns.print("waiting for terminal");
+			if(cnt%8===0) ns.print("wait ",cnt/8);
 			await ns.sleep(250);
 			cnt++;
 			new_element=get_terminal_input();
