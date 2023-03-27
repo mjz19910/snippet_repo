@@ -44,7 +44,7 @@ export async function main(ns) {
 			if(srv.maxRam>=ram) continue;
 			for(;;++i) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
-				if(cur_server_money<buy_cost1) return;
+				if(cur_server_money<buy_cost1) continue y;
 				let host_parts=hostname.split("-");
 				ns.print(host_parts[2],srv.maxRam);
 				if(server_hostname_list.includes(hostname)) {
