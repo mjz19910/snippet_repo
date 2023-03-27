@@ -17,7 +17,7 @@ export async function main(ns) {
 	let server_offset=purchased_server_hostnames.length;
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
-	const s=new InitHackScript(ns,{trace: false,distribute: false,template_changed});
+	const s=new InitHackScript(ns,{trace: false,template_changed});
 
 	for(let hostname of purchased_server_hostnames) {
 		let processes=ns.ps(hostname);
