@@ -23,6 +23,13 @@ export function read_port_msg(ns,port) {
 	if(data==="NULL PORT DATA") return null;
 	return data;
 }
+/** @param {NetscriptPort} ns_port */
+export async function read_ns_port_msg(ns_port) {
+	if(ns_port.empty()) await ns_port.nextWrite();
+	let data=ns_port.read();
+	if(data==="NULL PORT DATA") throw new Error("Invalid message");
+	return data;
+}
 /** @param {NS} ns @arg {number} port @arg {{}} msg */
 export function send_port_msg(ns,port,msg) {
 	return ns.writePort(port,JSON.stringify(msg));
@@ -42,6 +49,15 @@ export function send_port1_msg(ns,msg) {
 /** @arg {NS} ns @arg {ReplyMsg} msg */
 export function send_port2_msg(ns,msg) {
 	return send_port_msg(ns,2,msg);
+}
+/** @param {NetscriptPort} ns_port */
+export async function read_reply_msg(ns_port) {
+	let data=await read_ns_port_msg(ns_port);
+	if(data===null) return null;
+	if(typeof data==="number") throw new Error("Invalid message");
+	/** @type {ReplyMsg} */
+	let msg=JSON.parse(data);
+	return msg;
 }
 /** @param {NS} ns */
 export function read_port2_msg(ns) {
@@ -68,13 +84,9 @@ function should_accept(reply,call_,arg0) {
 export async function generic_get_call(ns,target,call_id) {
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	for(let rep_count=6;;rep_count++) {
-		if(rep_count>=6) {
-			send_port1_msg(ns,{call: call_id,args: [target]});
-			rep_count=0;
-		}
-		await ns.sleep(33);
-		let msg=read_port2_msg(ns);
+	send_port1_msg(ns,{call: call_id,args: [target]});
+	for(;;) {
+		let msg=await read_port2_msg(ns);
 		if(msg===null) continue;
 		if(!should_accept(msg,call_id,target)) {
 			ns.writePort(2,JSON.stringify(msg));
