@@ -3,6 +3,8 @@ type ElementMap={
 	div: HTMLDivElement;
 	ul: HTMLUListElement;
 };
+const react_element_symbol=Symbol("react.element");
+type react_element_symbol=typeof react_element_symbol;
 type ReactFiberElement<ElementType extends HtmlReactElementType>={
 	tag: 5;
 	key: null;
@@ -16,11 +18,11 @@ type ReactFiberElement<ElementType extends HtmlReactElementType>={
 	ref: null;
 	pendingProps: {
 		className: "MuiList-root MuiList-padding";
-		children: [undefined,{}[]];
+		children: [undefined,{}[]]|[{"$$typeof": react_element_symbol;},{}];
 	};
 	memoizedProps: {
 		className: "MuiList-root MuiList-padding";
-		children: [undefined,{}[]];
+		children: [undefined,{}[]]|[{},{}];
 	};
 	updateQueue: null;
 	memoizedState: null;

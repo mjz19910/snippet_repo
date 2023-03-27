@@ -114,7 +114,16 @@ export async function main(ns) {
 				p("index",index);
 				p("ref",ref);
 				p("pendingProps.className",pendingProps.className);
-				console.log("pendingProps",pendingProps.children);
+				for(let each_prop of pendingProps.children) {
+					if(each_prop===void 0) continue;
+					if(each_prop instanceof Array) {
+						for(let prop_item of each_prop) {
+							console.log("pendingProps.item",prop_item);
+						}
+						continue;
+					}
+					console.log("pendingProps",each_prop);
+				}
 				p("memoizedProps.className",memoizedProps.className);
 				p("updateQueue",updateQueue);
 			} break;
