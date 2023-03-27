@@ -25,6 +25,18 @@ export class InitHackScript {
 			sql: ns.sqlinject,
 		};
 	}
+	disable_log_use() {
+		this.disableLog_("scan");
+		this.disableLog_("kill");
+		this.disableLog_("scp");
+		this.disableLog_("exec");
+		this.disableLog_("sleep");
+		this.disableLog_("brutessh");
+		this.disableLog_("ftpcrack");
+		this.disableLog_("relaysmtp");
+		this.disableLog_("httpworm");
+		this.disableLog_("getServerMaxRam");
+	}
 	init_hack() {
 		this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.exec(hack_server,"home");
@@ -43,16 +55,6 @@ export class InitHackScript {
 		let server_idx=cur_ps.findIndex(v => v.filename===filename);
 		return server_idx>-1;
 	}
-	/** @private */
-	get_mode() {
-		const f_=this.gen_crack_flags();
-		if(f_.has_sql) return "with-sql";
-		if(f_.has_smtp) return "with-smtp";
-		if(f_.has_http) return "with-http";
-		if(f_.has_ftp) return "with-ftp";
-		if(f_.has_ssh) return "with-ssh";
-		return "none";
-	}
 	/** @param {Server} srv */
 	start_script_template(srv) {
 		const {ns}=this;
@@ -69,8 +71,7 @@ export class InitHackScript {
 			});
 		}
 		if(srv.hostname==="home"||!srv.purchasedByPlayer) this.format_print(srv,`t:${t} h:${srv.hostname}`);
-		let mode=this.get_mode();
-		let pid=ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
+		let pid=ns.exec(hack_template,srv.hostname,t);
 		if(pid===0) {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
@@ -91,18 +92,6 @@ export class InitHackScript {
 		ns.tail();
 		ns.clearLog();
 		ns.print("Script started");
-	}
-	disable_log_use() {
-		this.disableLog_("scan");
-		this.disableLog_("kill");
-		this.disableLog_("scp");
-		this.disableLog_("exec");
-		this.disableLog_("sleep");
-		this.disableLog_("brutessh");
-		this.disableLog_("ftpcrack");
-		this.disableLog_("relaysmtp");
-		this.disableLog_("httpworm");
-		this.disableLog_("getServerMaxRam");
 	}
 	/** @arg {string} src_host */
 	start_host_scan(src_host) {
