@@ -36,7 +36,6 @@ export function send_reply_msg(ns,msg) {
 /** @param {NetscriptPort} ns */
 export async function read_call_msg(ns) {
 	let data=await read_port_msg(ns);
-	if(data===null) return null;
 	if(typeof data==="number") throw new Error("Invalid message");
 	/** @type {CallMsg} */
 	let msg=JSON.parse(data);

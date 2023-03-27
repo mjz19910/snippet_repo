@@ -42,15 +42,12 @@ export async function main(ns) {
 
 	for(let item of ns.scan("home")) get_server(item);
 
-	let processed_messages_count=0;
 	const read_handle=ns.getPortHandle(1);
 	const write_handle=ns.getPortHandle(2);
 	const log_handle=ns.getPortHandle(3);
 	async function process_messages() {
 		for(;;) {
 			let msg=await read_call_msg(read_handle);
-			if(msg===null) break;
-			processed_messages_count++;
 			const {call,args}=msg;
 			switch(call) {
 				case "getServerMaxMoney": {
@@ -96,18 +93,12 @@ export async function main(ns) {
 					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 			}
+			while(!log_handle.empty()) {
+				let res=log_handle.read();
+				ns.tprintf("%s",res);
+			}
 			if(trace) ns.print(msg);
 		}
 	}
-	for(;;) {
-		await process_messages();
-		await ns.sleep(33);
-		if(processed_messages_count===0) await ns.sleep(1500);
-		processed_messages_count=0;
-		await log_handle.nextWrite();
-		while(!log_handle.empty()) {
-			let res=log_handle.read();
-			ns.tprintf("%s",res);
-		}
-	}
+	await process_messages();
 }

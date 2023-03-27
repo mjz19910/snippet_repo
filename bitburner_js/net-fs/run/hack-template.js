@@ -1,5 +1,15 @@
 import {generic_get_call,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support.js";
 
+
+/**
+ * @param {HackState} s
+ * @param {string} a1
+ * @param {string} a2
+ * @param {string} a3
+ */
+function write_log_message(s,a1,a2,a3) {
+	s.ns.writePort(3,a1+"->"+a2+":"+a3);
+}
 /**
  * @param {HackState} s
  */
@@ -19,30 +29,19 @@ export async function run_hack(s) {
 	ns.print("securityLevel: ",security_level);
 	ns.print("moneyAvailable: $",ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
-		if(s.first) {
-			debugger;
-			ns.writePort(10,s.hostname+"->weaken:"+target);
-			s.first=false;
-		}
+		write_log_message(s,s.hostname,"weaken",target);
 		await ns.weaken(target);
 	} else if(server_money<moneyThreshold) {
-		if(s.first) {
-			debugger;
-			ns.writePort(10,s.hostname+"->grow:"+target);
-			s.first=false;
-		}
+		write_log_message(s,s.hostname,"grow",target);
 		await ns.grow(target);
 	} else {
-		if(s.first) {
-			debugger;
-			ns.writePort(10,s.hostname+"->hack:"+target);
-			s.first=false;
-		}
+		write_log_message(s,s.hostname,"hack",target);
 		await ns.hack(target);
 	}
 	if(thread_count>512) {
 		let security_level=await getServerSecurityLevel_(ns,target);
 		while(security_level>securityThreshold) {
+			write_log_message(s,s.hostname,"weaken",target);
 			await ns.weaken(target);
 			security_level=await getServerSecurityLevel_(ns,target);
 		}
