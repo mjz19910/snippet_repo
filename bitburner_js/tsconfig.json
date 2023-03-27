@@ -44,8 +44,11 @@
 	},
 	"include": [
 		"NetscriptDefinitions.d.ts",
-		"net-fs/**/*",
+		"net-fs/**/*.js",
+		"net-fs/**/*.ts",
 		"notes/*.ts",
+		"notes/*.js",
+		"notes/*.mts",
 	],
 	"exclude": [
 		"node_modules",

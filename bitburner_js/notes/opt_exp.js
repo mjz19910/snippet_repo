@@ -126,13 +126,5 @@ function main() {
 		const cur="crush_fitness_gym";
 		log_gym_min(`${cur}.str`,4.144,-324);
 	}
-	// Volhaven
-	const volhaven_map={
-		hospital: {
-			street_address: 63
-		}
-	};
-	let log_map=true;
-	if(log_map) console.log(volhaven_map);
 }
 main();
