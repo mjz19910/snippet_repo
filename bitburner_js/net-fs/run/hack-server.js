@@ -86,7 +86,7 @@ export async function main(ns) {
 						for(let item of ns.scan(hostname)) {
 							get_server(item);
 						}
-						let srv=get_server(msg.args[0]);
+						let srv=get_server(hostname);
 						if(srv.maxRam===0) continue;
 						if(srv.hasAdminRights) {
 							reply=srv;
