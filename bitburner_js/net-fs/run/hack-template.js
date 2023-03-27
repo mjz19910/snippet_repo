@@ -18,12 +18,14 @@ export async function run_hack(ns,thread_count,target) {
 	const server_money=await getServerMoneyAvailable_(ns,target);
 	ns.print("securityLevel: ",security_level);
 	ns.print("moneyAvailable: $",ns.formatNumber(server_money));
-	ns.writePort(10,"ready:"+target);
 	if(security_level>securityThreshold) {
+		ns.writePort(10,"weaken:"+target);
 		await ns.weaken(target);
 	} else if(server_money<moneyThreshold) {
+		ns.writePort(10,"grow:"+target);
 		await ns.grow(target);
 	} else {
+		ns.writePort(10,"hack:"+target);
 		await ns.hack(target);
 	}
 	if(thread_count>512) {
