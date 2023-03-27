@@ -44,7 +44,7 @@ export async function main(ns) {
 	const thread_count=f_._[0];
 	for(;;) {
 		const srv=await generic_get_call(ns,Math.random()+"","get_hack_target");
-		if(!srv) {ns.sleep(100); continue;}
+		if(!srv) {await ns.sleep(100); continue;}
 		const target=srv.hostname;
 		ns.print("target: ",target);
 		await run_hack(ns,thread_count,target);
