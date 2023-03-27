@@ -79,7 +79,7 @@ export async function main(ns) {
 		if(next_srv===void 0) break;
 		cur_srv=next_srv;
 		if(!pid) continue;
-		await ns.sleep(40);
+		await ns.sleep(33);
 		ns.closeTail(pid);
 	}
 }
