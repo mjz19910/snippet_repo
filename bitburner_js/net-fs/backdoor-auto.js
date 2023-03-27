@@ -39,7 +39,7 @@ export async function main(ns) {
 			if(srv.purchasedByPlayer) continue;
 			if(!srv.hasAdminRights) continue;
 			if(srv.backdoorInstalled) continue;
-			if(srv.requiredHackingSkill > hacking_level) continue;
+			if(srv.requiredHackingSkill>hacking_level) continue;
 			let delay=ns.getHackTime(hostname);
 			/** @arg {HTMLInputElement&{[x:string]:ReactEventState}} terminalInput @arg {string} command */
 			function start_terminal_command(terminalInput,command) {
@@ -57,6 +57,7 @@ export async function main(ns) {
 			cmd_list.push("backdoor");
 			start_terminal_command(terminalInput,cmd_list.join(";"));
 			let acc_delay=0,start_perf=performance.now();
+			await ns.sleep(delay/4-100);
 			for(;;) {
 				await ns.sleep(30);
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
