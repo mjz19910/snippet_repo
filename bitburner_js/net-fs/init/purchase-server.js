@@ -80,7 +80,7 @@ export async function main(ns) {
 	ns.print("upg_ram: ",ns.formatRam(ram));
 	let buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
 	let cur_server_money=ns.getServerMoneyAvailable("home");
-	while(cur_server_money>(buy_cost1*25*4)) {
+	while(cur_server_money>(buy_cost1*25*1.5)) {
 		await upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
 		prev_ram=ram; ram*=2;
 		buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
