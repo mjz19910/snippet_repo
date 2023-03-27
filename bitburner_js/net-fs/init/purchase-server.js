@@ -48,7 +48,6 @@ export async function main(ns) {
 			}
 			rename_purchased_server(hostname_list,srv,`big-${ram}-${host_parts[2]}`);
 			await s.start_script_template(srv);
-			await ns.sleep(1000);
 		}
 	}
 	server_hostname_list=ns.getPurchasedServers();
