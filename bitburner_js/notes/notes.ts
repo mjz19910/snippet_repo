@@ -23,4 +23,4 @@ function main_2() {
 	let log_map=true;
 	if(log_map) console.log(volhaven_map);
 }
-main_1();
+main_2();
