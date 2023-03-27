@@ -1,5 +1,3 @@
-const trace=false;
-
 /** @typedef {ReplyMsg1|ReplyMsg2|ReplyMsg3|ReplyMsg4|ReplyMsg5} ReplyMsg */
 /** @typedef {{call:"getServerMaxMoney";hostname:string;reply:number;}} ReplyMsg1 */
 /** @typedef {{call:"getServerMinSecurityLevel";hostname:string;reply:number}} ReplyMsg2 */
@@ -7,10 +5,11 @@ const trace=false;
 /** @typedef {{call:"getServerMoneyAvailable";hostname:string;reply:number}} ReplyMsg4 */
 /** @typedef {{call:"get_server";hostname:string;reply:Server}} ReplyMsg5 */
 
-/** @typedef {{call:"getServerMaxMoney",args:[string]}|CallMsg2} CallMsg */
-/** @typedef {{call:"getServerMinSecurityLevel",args:[string]}|CallMsg3} CallMsg2 */
-/** @typedef {{call:"getServerSecurityLevel",args:[string]}|CallMsg4} CallMsg3 */
-/** @typedef {{call:"getServerMoneyAvailable",args:[string]}|CallMsg5} CallMsg4 */
+/** @typedef {CallMsg1|CallMsg2|CallMsg3|CallMsg4|CallMsg5} CallMsg */
+/** @typedef {{call:"getServerMaxMoney",args:[string]}} CallMsg1 */
+/** @typedef {{call:"getServerMinSecurityLevel",args:[string]}} CallMsg2 */
+/** @typedef {{call:"getServerSecurityLevel",args:[string]}} CallMsg3 */
+/** @typedef {{call:"getServerMoneyAvailable",args:[string]}} CallMsg4 */
 /** @typedef {{call:"get_server",args:[string]}} CallMsg5 */
 
 
@@ -63,8 +62,8 @@ function should_accept(reply,call_,arg0) {
 	if(reply.hostname!==arg0) return false;
 	return true;
 }
-/** @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id @arg {number} uid */
-async function generic_get_call(ns,target,call_id,uid) {
+/** @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id */
+async function generic_get_call(ns,target,call_id) {
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let rep_count=6;;rep_count++) {
@@ -72,7 +71,6 @@ async function generic_get_call(ns,target,call_id,uid) {
 			send_port1_msg(ns,{call: call_id,args: [target]});
 			rep_count=0;
 		}
-		if(trace) ns.print(`query${uid}`);
 		await ns.sleep(40);
 		let msg=read_port2_msg(ns);
 		if(msg===null) {
@@ -80,7 +78,6 @@ async function generic_get_call(ns,target,call_id,uid) {
 			continue;
 		}
 		if(!should_accept(msg,call_id,target)) {
-			if(trace) ns.print("reject: ",msg);
 			ns.writePort(3,JSON.stringify(msg));
 			continue;
 		}
@@ -92,20 +89,20 @@ async function generic_get_call(ns,target,call_id,uid) {
 /** @param {NS} ns @arg {string} target */
 export function getServerMaxMoney_(ns,target) {
 	const call_id="getServerMaxMoney";
-	return generic_get_call(ns,target,call_id,1);
+	return generic_get_call(ns,target,call_id);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerMinSecurityLevel_(ns,target) {
 	const call_id="getServerMinSecurityLevel";
-	return generic_get_call(ns,target,call_id,2);
+	return generic_get_call(ns,target,call_id);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerSecurityLevel_(ns,target) {
 	const call_id="getServerSecurityLevel";
-	return generic_get_call(ns,target,call_id,3);
+	return generic_get_call(ns,target,call_id);
 }
 /** @param {NS} ns @arg {string} target */
 export async function getServerMoneyAvailable_(ns,target) {
 	const call_id="getServerMoneyAvailable";
-	return generic_get_call(ns,target,call_id,4);
+	return generic_get_call(ns,target,call_id);
 }
