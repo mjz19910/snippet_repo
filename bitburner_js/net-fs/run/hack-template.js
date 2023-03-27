@@ -5,7 +5,6 @@ export async function run_hack(ns,target) {
 	// Defines how much money a server should have before we hack it
 	const moneyThreshold=(await getServerMaxMoney_(ns,target))*0.85;
 	ns.print("moneyThreshold: $",ns.formatNumber(moneyThreshold));
-
 	// Defines the maximum security level the target server can have.
 	const securityThreshold=(await getServerMinSecurityLevel_(ns,target))+2.5;
 	ns.print("securityThreshold: ",securityThreshold);
