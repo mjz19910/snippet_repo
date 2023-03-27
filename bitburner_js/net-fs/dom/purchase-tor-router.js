@@ -31,10 +31,10 @@ export async function main(ns) {
 			this.expand_collapsed_section(this.hacking_section_header);
 			this.character_section_header=as_div_element(MuiList_root.children[3]);
 			this.expand_collapsed_section(this.character_section_header);
-			this.help_section_header=as_div_element(MuiList_root.children[9]);
-			this.expand_collapsed_section(this.help_section_header);
 			this.world_section_header=as_div_element(MuiList_root.children[6]);
 			this.expand_collapsed_section(this.world_section_header);
+			this.help_section_header=as_div_element(MuiList_root.children[9]);
+			this.expand_collapsed_section(this.help_section_header);
 
 			const hacking_section=MuiList_root.children[1];
 			const character_section=MuiList_root.children[4];
