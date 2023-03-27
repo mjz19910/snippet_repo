@@ -48,6 +48,7 @@ async function handle_scan_list(s) {
 		if(srv.purchasedByPlayer) continue;
 		if(!srv.hasAdminRights) continue;
 		if(srv.backdoorInstalled) continue;
+		let delay=ns.getHackTime(hostname); delay;
 		/** @arg {HTMLInputElement&{[x:string]:ReactEventState}} terminalInput @arg {string} command */
 		function start_terminal_command(terminalInput,command) {
 			terminalInput.value=command;
@@ -63,7 +64,6 @@ async function handle_scan_list(s) {
 		let cmd_list=full_path.map(v => "connect "+v);
 		cmd_list.push("backdoor");
 		start_terminal_command(terminalInput,cmd_list.join(";"));
-		let delay=ns.getHackTime(hostname); delay;
 		let acc_delay=0;
 		for(;;) {
 			await ns.sleep(80);
