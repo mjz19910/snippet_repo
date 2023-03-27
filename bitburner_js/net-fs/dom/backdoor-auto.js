@@ -78,6 +78,7 @@ export async function main(ns) {
 				await ns.sleep(33);
 			}
 			acc_delay=performance.now()-start_perf;
+			srv.backdoorInstalled=true;
 			ns.printf("ratio:%s",ns.formatNumber(delay/acc_delay,2));
 			ns.printf("time:%s",tFormat(ns,acc_delay));
 			ns.print("cnt: ",cnt);
