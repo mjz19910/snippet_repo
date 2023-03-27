@@ -104,10 +104,12 @@ export async function main(ns) {
 							break;
 						}
 					}
+					if(reply!==null) ns.tprintf("hack_target: (%s) %s",args[0],reply.hostname);
 					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 				case "enable_hack_target": {
 					enabled_host_map[args[0]]=true;
+					ns.tprintf("enable: %s",args[0]);
 					send_port2_msg(ns,{call,id: args[0],reply: null});
 				} break;
 			}
