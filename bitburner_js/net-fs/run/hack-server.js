@@ -85,8 +85,8 @@ export async function main(ns) {
 						let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
 						if(hostname==="home") continue;
 						if(hostname.startsWith("big-")) continue;
-						const scan_results=ns.scan(hostname);
-						ns.tprintf("scan: %s %o",hostname,scan_results);
+						const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
+						if(scan_results.length>0) ns.tprint("scan: ",hostname," ",scan_results);
 						for(let item of scan_results) {
 							get_server(item);
 						}
