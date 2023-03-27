@@ -1,4 +1,4 @@
-import {query_element} from "./dom-support.js";
+import {query_element} from "/dom/dom-support.js";
 import {as_any} from "/run/as.js";
 
 /** @param {NS} ns */
