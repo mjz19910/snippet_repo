@@ -25,14 +25,21 @@ export class InitHackScript {
 			sql: ns.sqlinject,
 		};
 	}
+	/** @type {number[]} */
+	tails_to_close=[];
 	async init_hack() {
 		this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
 		this.do_get_admin_rights();
-		await this.start_hack_script();
+		this.start_hack_script();
 		this.update_backdoor_cache();
 		this.log_servers_to_backdoor();
+		await this.ns.sleep(33);
+		this.close_tails();
+	}
+	close_tails() {
+		for(let pid of this.tails_to_close) this.ns.closeTail(pid);
 	}
 	/**
 	 * @param {string} hostname
@@ -54,7 +61,7 @@ export class InitHackScript {
 		return "none";
 	}
 	/** @param {Server} srv */
-	async start_script_template(srv) {
+	start_script_template(srv) {
 		const {ns}=this;
 		if(srv.maxRam===0) {
 			if(this.opts.trace) this.format_print(srv,`t:0 h:${srv.hostname}`);
@@ -70,8 +77,7 @@ export class InitHackScript {
 		}
 		if(t>64) {
 			let pid=ns.exec("/api/share.js",srv.hostname,t/4|0);
-			await ns.sleep(33);
-			ns.closeTail(pid);
+			this.tails_to_close.push(pid);
 			t-=t/2|0;
 		}
 		if(!srv.purchasedByPlayer) this.format_print(srv,`t:${t} h:${srv.hostname}`);
@@ -197,11 +203,11 @@ export class InitHackScript {
 		}
 		this.ns.write(backdoor_list_file,this.to_backdoor.join("\n")+"\n","w");
 	}
-	async start_hack_script() {
+	start_hack_script() {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
-			await this.start_script_template(srv);
+			this.start_script_template(srv);
 		}
 	}
 	/** @arg {Server} srv @arg {string} msg */
