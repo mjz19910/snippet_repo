@@ -11,7 +11,8 @@ export async function main(ns) {
 	ns.disableLog("scp");
 
 	let ram=1;
-	let server_hostname_list=ns.getPurchasedServers();
+	let purchased_server_list=ns.getPurchasedServers();
+	let server_hostname_list=purchased_server_list.slice();
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
 	const s=new InitHackScript(ns,{trace: false,template_changed});
@@ -35,7 +36,7 @@ export async function main(ns) {
 			if(cur_server_money<buy_cost1) return;
 			let host_parts=hostname.split("-");
 			let srv;
-			if(hostname in s.server_map) {
+			if(purchased_server_list.includes(hostname)) {
 				srv=ns.getServer(hostname);
 				if(srv.maxRam>=ram) continue;
 				ns.print(host_parts[2]," ",ns.formatRam(srv.maxRam));
@@ -45,6 +46,7 @@ export async function main(ns) {
 			} else {
 				let new_host=ns.purchaseServer(hostname,ram);
 				if(new_host==="") throw new Error("failed to purchase server");
+				purchased_server_list.push(new_host);
 				ns.scp(s.scripts,new_host);
 				srv=ns.getServer(new_host);
 			}
