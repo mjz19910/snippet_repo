@@ -21,11 +21,11 @@ export async function main(ns) {
 	/** @type {HTMLInputElement&{[x:string]:ReactEventState}} */
 	let terminalInput=as_any(terminalInput_nt);
 	while(scan_res2.length>0) {
+		scan_res2.length=0;
 		await handle_scan_list({ns,scan_data: [scan_res,scan_res2],server_map,seen_hosts,terminalInput});
 		for(let item of scan_res2) {
 			scan_res.push(item);
 		}
-		scan_res2.length=0;
 	}
 }
 
