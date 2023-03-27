@@ -40,7 +40,7 @@ export async function main(ns) {
 		ns.killall(srv);
 		let thread_n=ns.getServerMaxRam(srv)/4|0;
 		ns.exec(share_script,srv,thread_n,"auto",srv);
-		await ns.sleep(1000);
+		await ns.sleep(33);
 	}
 	if(!use_hacked_servers) return;
 	let seen_srv=new Set;
