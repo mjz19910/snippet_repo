@@ -80,7 +80,7 @@ export class InitHackScript {
 		}
 		await Promise.race([start_handle.nextWrite(),ns.asleep(2*60*1000)]);
 		let res=start_handle.read();
-		ns.tprintf("%o",res);
+		ns.tprintf("%s",res);
 		start_handle.clear();
 		await this.ns.sleep(5000);
 		return;
