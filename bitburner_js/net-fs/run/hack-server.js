@@ -11,6 +11,7 @@ export async function main(ns) {
 	ns.tail();
 	ns.clearLog();
 	ns.disableLog("disableLog");
+	ns.disableLog("scan");
 	ns.disableLog("sleep");
 	ns.disableLog("getServerMaxMoney");
 	ns.disableLog("getServerMinSecurityLevel");
