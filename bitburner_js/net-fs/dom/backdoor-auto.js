@@ -67,22 +67,16 @@ export async function main(ns) {
 			let cmd_list=full_path.map(v => "connect "+v);
 			cmd_list.push("backdoor");
 			await start_terminal_command(cmd_list.join(";"));
-			let acc_delay=0,start_perf=performance.now(),cnt=0;
 			const est_delay=delay/4;
 			ns.printf("est_delay:%s",tFormat(ns,est_delay));
 			await ns.sleep(est_delay);
-			for(;;cnt++) {
+			for(;;) {
 				terminalInput=await wait_for_terminal();
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
 				if(!has_disabled) break;
 				await ns.sleep(33);
 			}
-			acc_delay=performance.now()-start_perf;
 			srv.backdoorInstalled=true;
-			ns.printf("ratio:%s",ns.formatNumber(delay/acc_delay,2));
-			ns.printf("time:%s",tFormat(ns,acc_delay));
-			ns.print("cnt: ",cnt);
-			await start_terminal_command("home");
 		}
 		for(let item of scan_res2) {
 			scan_res.push(item);

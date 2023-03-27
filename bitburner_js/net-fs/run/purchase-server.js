@@ -25,7 +25,7 @@ export async function main(ns) {
 		const srv=ns.getServer(hostname);
 		await s.start_script_template(srv);
 	}
-
+	let skip_delay=true;
 	let i=server_offset;
 	let delay=1000;
 	let server_money=ns.getServerMoneyAvailable("home");
@@ -35,7 +35,7 @@ export async function main(ns) {
 		if(old_srv===new_srv) return;
 		let idx=servers.indexOf(old_srv);
 		servers[idx]=new_srv;
-		await ns.sleep(0);
+		if(!skip_delay) await ns.sleep(0);
 		let res=ns.renamePurchasedServer(old_srv,new_srv);
 		if(!res) {
 			ns.printf("%s -> %s",old_srv,new_srv);
@@ -49,10 +49,12 @@ export async function main(ns) {
 		i=server_offset;
 		let max_delay=60*1000*2;
 		let min_delay=300;
+		let cur_min_delay=1000;
 		let acc_avg_dur=0;
 		for(const hostname of only_pserv) {
 			wl: for(;;) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
+				if(cur_server_money<buy_cost1) skip_delay=false;
 				if(cur_server_money>buy_cost1) {
 					if(purchased_server_hostnames.includes(hostname)) {
 						let old_proc=ns.ps(hostname);
@@ -69,10 +71,10 @@ export async function main(ns) {
 					++i;
 					last_server_money=server_money;
 					acc_avg_dur=delay;
-					await ns.sleep(0);
+					if(!skip_delay) await ns.sleep(0);
 					break wl;
 				}
-				await ns.sleep(delay);
+				if(!skip_delay) await ns.sleep(delay);
 				acc_avg_dur+=delay;
 				if(server_money<last_server_money) {
 					last_server_money=server_money;
@@ -84,11 +86,13 @@ export async function main(ns) {
 				const avg_duration_seconds=acc_avg_dur/1000;
 				const per_second_rate=(server_money-last_server_money)/avg_duration_seconds;
 				if(per_second_rate>=0) {
+					cur_min_delay=1000;
 					const est_to_can_buy_server=cost_diff/(per_second_rate+1);
 					ns.print("money gain rate: $",ns.formatNumber(est_to_can_buy_server));
 					delay=(est_to_can_buy_server/6)*1000;
 				} else {
-					delay=min_delay*3;
+					cur_min_delay+=1000;
+					delay=cur_min_delay;
 				}
 				if(!Number.isFinite(delay)) delay=min_delay;
 				if(delay<min_delay) delay=min_delay;
