@@ -38,7 +38,7 @@ export class InitHackScript {
 		this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.run(hack_server);
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
-		await this.do_get_admin_rights();
+		this.do_get_admin_rights();
 		if(this.cmd_args.restart_purchased_servers) this.do_restart_purchased_servers();
 		this.start_hack_script();
 		this.update_backdoor_cache();
