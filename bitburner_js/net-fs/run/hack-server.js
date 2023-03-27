@@ -49,6 +49,7 @@ export async function main(ns) {
 	async function process_messages() {
 		for(;;) {
 			let msg=await read_call_msg(read_handle);
+			console.time("server-work1");
 			const {call,args}=msg;
 			switch(call) {
 				case "getServerMaxMoney": {
@@ -93,6 +94,7 @@ export async function main(ns) {
 					send_reply_msg(write_handle,{call,id: args[0],reply});
 				} break;
 			}
+			console.timeEnd("server-work1");
 			while(!log_handle.empty()) {
 				let res=log_handle.read();
 				ns.printf("%s",res);
