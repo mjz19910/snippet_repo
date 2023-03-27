@@ -31,7 +31,7 @@ export async function main(ns) {
 		if(server_ram===0) continue;
 		if(hostname==="home") {
 			const thread_n=(server_ram-home_reserved_mem)/4|0;
-			const pid=ns.exec(share_script,hostname,thread_n-2,"auto",hostname);
+			const pid=ns.exec(share_script,hostname,thread_n,"auto",hostname);
 			if(pid===0) {
 				ns.print("failed to start ",share_script," on ",hostname);
 				ns.exit();
