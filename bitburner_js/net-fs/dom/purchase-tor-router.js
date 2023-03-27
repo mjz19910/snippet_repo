@@ -1,4 +1,4 @@
-import {as_div_element,query_element} from "/dom/dom-support.js";
+import {as_div_element, as_html_element,query_element} from "/dom/dom-support.js";
 import {as_any} from "/run/as.js";
 
 /** @param {NS} ns */
@@ -20,7 +20,7 @@ export async function main(ns) {
 			/** @type {HTMLUListElement} */
 			const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
 			this.hacking_section_header=as_div_element(MuiList_root.children[0]);
-			if(this.hacking_section_header.dataset.testid==="ExpandMoreIcon") {
+			if(as_html_element(query_element(this.hacking_section_header,"svg:nth-child(3)")).dataset.testid!=="ExpandMoreIcon") {
 				let r=Object.values(this.hacking_section_header)[1];
 				console.log(r);
 			}
@@ -36,7 +36,11 @@ export async function main(ns) {
 			this.help_section_header=MuiList_root.children[9];
 			this.help_section=MuiList_root.children[10];
 		}
-		async use() {}
+		async use() {
+			/** @type {any} */
+			let win_any=window;
+			win_any.__dom_list=this;
+		}
 	}
 	await new DomList(root_element).use();
 }

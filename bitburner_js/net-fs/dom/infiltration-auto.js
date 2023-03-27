@@ -11,15 +11,6 @@ export async function main(ns) {
 	if(!("root" in window)) return;
 	/** @type {HTMLDivElement} */
 	const root_element=as_any(window.root);
-	/** @template {Element} T @arg {T} node */
-	function query_parent_element(node) {
-		let element=node.parentElement;
-		if(!element) {
-			debugger;
-			throw new Error("Missing element");
-		}
-		return element;
-	}
 	/** @param {Element} val @returns {ReactFiber} */
 	function get_react_fiber(val) {
 		return Object.values(val)[0];
@@ -34,23 +25,8 @@ export async function main(ns) {
 		})(),
 	};
 	const seen_react_fiber_set=new Set;
-	/**
-	 * @returns {HTMLDivElement}
-	 * @param {HTMLElement} node
-	 */
-	function as_div_element(node) {
-		if(!(node instanceof HTMLDivElement)) {
-			debugger;
-			throw new Error("Wrong type");
-		}
-		return node;
-	}
 	/** @type {HTMLDivElement} */
 	const MuiDrawer_root=query_element(root_element,"div.MuiBox-root>div.MuiDrawer-root");
-	/** @type {HTMLDivElement} */
-	const MuiBox_root=as_div_element(query_parent_element(MuiDrawer_root));
-	let mui_box_react_fiber=get_react_fiber(MuiBox_root);
-	on_react_fiber(mui_box_react_fiber);
 	/** @type {HTMLDivElement} */
 	const MuiPaper_root=query_element(MuiDrawer_root,"div.MuiPaper-root");
 	/** @type {HTMLUListElement} */

@@ -8,14 +8,27 @@ export function query_element(root,selector) {
 	}
 	return element;
 }
-
-/**
- * @returns {HTMLDivElement}
- * @param {Element} node
- */
-export function as_div_element(node) {
-	if(!(node instanceof HTMLDivElement)) {
+/** @param {Element} node */
+export function as_html_element(node) {
+	if(!(node instanceof HTMLElement)) {
 		throw new Error("Wrong type");
 	}
 	return node;
+}
+/** @param {Element} node */
+export function as_div_element(node) {
+	if(!(node instanceof HTMLDivElement)) {
+		debugger;
+		throw new Error("Wrong type");
+	}
+	return node;
+}
+/** @template {Element} T @arg {T} node */
+export function query_parent_element(node) {
+	let element=node.parentElement;
+	if(!element) {
+		debugger;
+		throw new Error("Missing element");
+	}
+	return element;
 }
