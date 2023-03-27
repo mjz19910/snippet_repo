@@ -98,7 +98,7 @@ function main() {
 	{
 		const cur="summit_uni";
 		/** @type {()=>`hack${1|2|3|4}`|`cha${1|2}`|"none"} */
-		function get_sel() {return "hack4";}
+		function get_sel() {return "none";}
 		const sel=get_sel();
 		{
 			const base=mults.hacking_exp*1.5;
@@ -126,5 +126,14 @@ function main() {
 		const cur="crush_fitness_gym";
 		log_gym_min(`${cur}.str`,4.144,-324);
 	}
+	// Volhaven
+	const volhaven_map={
+		hospital: {
+			street_address: 63
+		}
+	};
+	let log_map=true;
+	if(log_map) console.log(volhaven_map);
+	// hospital: 63
 }
 main();
