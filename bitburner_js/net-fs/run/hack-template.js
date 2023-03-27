@@ -40,11 +40,13 @@ export async function run_hack(s,i) {
 		await ns.hack(target);
 	}
 	if(i===0&&thread_count>512) {
+		let j=0;
 		let security_level=await getServerSecurityLevel_(ns,target);
 		while(security_level>securityThreshold) {
-			write_log_message(s,s.hostname,"weaken",target);
+			if(i===0&&j===0) write_log_message(s,s.hostname,"weaken",target);
 			await ns.weaken(target);
 			security_level=await getServerSecurityLevel_(ns,target);
+			j++;
 		}
 	}
 }
