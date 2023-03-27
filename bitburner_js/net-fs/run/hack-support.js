@@ -66,7 +66,6 @@ function should_accept(reply,call_,arg0) {
 export async function generic_get_call(ns,target,call_id) {
 	const request_port=ns.getPortHandle(1);
 	const reply_port=ns.getPortHandle(2);
-	console.time("get-call1");
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	send_call_msg(request_port,{call: call_id,args: [target]});
@@ -79,7 +78,6 @@ export async function generic_get_call(ns,target,call_id) {
 		}
 		let ret=msg.reply;
 		assume_return(ret);
-		console.timeEnd("get-call1");
 		return ret;
 	}
 }
