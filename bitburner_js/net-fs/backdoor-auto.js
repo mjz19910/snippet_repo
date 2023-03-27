@@ -16,20 +16,20 @@ export async function main(ns) {
 		if(srv.purchasedByPlayer) continue;
 		if(!srv.hasAdminRights) continue;
 		if(srv.backdoorInstalled) continue;
-		await ns.sleep(200);
 		/** @type {HTMLInputElement&{[x:string]:ReactEventState}} */
 		let terminalInput=as_any(terminalInput_nt);
 		/** @arg {HTMLInputElement&{[x:string]:ReactEventState}} terminalInput @arg {string} command */
-		function set_input_value(terminalInput,command) {
+		function start_terminal_command(terminalInput,command) {
 			terminalInput.value=command;
 			const handler=Object.keys(terminalInput)[1];
 			terminalInput[handler].onChange({target: terminalInput});
 			terminalInput[handler].onKeyDown({key: 'Enter',preventDefault: () => null});
 		}
-		set_input_value(terminalInput,`connect ${hostname};backdoor`);
-		await ns.sleep(66);
-		let delay=ns.getHackTime(hostname);
-		await ns.sleep(delay);
+		start_terminal_command(terminalInput,`connect ${hostname};backdoor`);
+		let delay=ns.getHackTime(hostname); delay;
+		await ns.sleep(5000);
+		console.log(terminalInput);
+		start_terminal_command(terminalInput,"home");
 	}
 }
 
