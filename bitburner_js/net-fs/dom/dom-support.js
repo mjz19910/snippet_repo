@@ -8,3 +8,14 @@ export function query_element(root,selector) {
 	}
 	return element;
 }
+
+/**
+ * @returns {HTMLDivElement}
+ * @param {Element} node
+ */
+export function as_div_element(node) {
+	if(!(node instanceof HTMLDivElement)) {
+		throw new Error("Wrong type");
+	}
+	return node;
+}
