@@ -27,7 +27,7 @@ export async function run_hack(ns,thread_count,target) {
 	}
 	if(thread_count>512) {
 		while(security_level>securityThreshold) {
-			ns.tprint("big weaken");
+			ns.tprint("big weaken ",target);
 			await ns.weaken(target);
 		}
 	}
