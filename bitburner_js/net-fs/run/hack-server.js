@@ -43,7 +43,6 @@ export async function main(ns) {
 	for(let item of ns.scan("home")) get_server(item);
 
 	let processed_messages_count=0;
-	let print_server_message=true;
 	function process_messages() {
 		for(;;) {
 			let msg=read_port1_msg(ns);
@@ -61,15 +60,7 @@ export async function main(ns) {
 				} break;
 				case "getServerMoneyAvailable": {
 					let reply=ns.getServerMoneyAvailable(...args);
-					if(print_server_message&&reply!==0) {
-						ns.tprintf("getServerMoneyAvailable: (%s) %s",args[0],ns.formatNumber(reply));
-						print_server_message=false;
-						async function run_sleep() {
-							await ns.asleep(1000);
-							print_server_message=true;
-						}
-						run_sleep();
-					}
+					ns.printf("getServerMoneyAvailable: (%s) %s",args[0],ns.formatNumber(reply));
 					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 				case "getServerSecurityLevel": {
@@ -100,7 +91,6 @@ export async function main(ns) {
 							break;
 						}
 					}
-					ns.tprintf("hack_target: %s",reply.hostname);
 					send_port2_msg(ns,{call,id: args[0],reply});
 				} break;
 			}
