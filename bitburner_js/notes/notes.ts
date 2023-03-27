@@ -8,7 +8,9 @@ function main_2() {
 		intersection4: {street_address: 4},
 		placeholder5: {street_address: 5},
 		placeholder6: {street_address: 6},
+		intersection7: {street_address: 7},
 		world_stock_exchange: {street_address: 8},
+		road_termination9: {street_address: 9},
 		syscore_sec: {street_address: 18},
 		lexocorp: {street_address: 58},
 		hospital: {street_address: 63},
@@ -20,6 +22,7 @@ function main_2() {
 	let vol_map_from_ent=Object.fromEntries(Object.entries(volhaven_map).filter(v => {
 		if(v[0].startsWith("intersection")) return false;
 		if(v[0].startsWith("placeholder")) return false;
+		if(v[0].startsWith("road_termination")) return false;
 		return true;
 	}));
 	if(log_map) console.log(vol_map_from_ent);
