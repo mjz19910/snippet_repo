@@ -19,13 +19,22 @@ export async function run_hack(s) {
 	ns.print("securityLevel: ",security_level);
 	ns.print("moneyAvailable: $",ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
-		ns.writePort(10,s.hostname+"->weaken:"+target);
+		if(s.first) {
+			ns.writePort(10,s.hostname+"->weaken:"+target);
+			s.first=false;
+		}
 		await ns.weaken(target);
 	} else if(server_money<moneyThreshold) {
-		ns.writePort(10,s.hostname+"->grow:"+target);
+		if(s.first) {
+			ns.writePort(10,s.hostname+"->grow:"+target);
+			s.first=false;
+		}
 		await ns.grow(target);
 	} else {
-		ns.writePort(10,s.hostname+"->hack:"+target);
+		if(s.first) {
+			ns.writePort(10,s.hostname+"->hack:"+target);
+			s.first=false;
+		}
 		await ns.hack(target);
 	}
 	if(thread_count>512) {
@@ -49,6 +58,7 @@ export async function main(ns) {
 	/** @type {HackState} */
 	const s={
 		ns,thread_count,hostname,
+		first: true,
 		target: null,
 	};
 	for(;;) {
@@ -58,4 +68,4 @@ export async function main(ns) {
 		await run_hack(s);
 	}
 }
-/** @typedef {{ns:NS;thread_count:number;hostname:string;target:string|null}} HackState */
+/** @typedef {{first:boolean;ns:NS;thread_count:number;hostname:string;target:string|null}} HackState */
