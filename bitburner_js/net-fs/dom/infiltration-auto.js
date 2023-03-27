@@ -86,7 +86,6 @@ export async function main(ns) {
 						ns.print(path.join("."),".",a1," ","{[cyclic object]}");
 					}
 				}
-				p("tag",tag);
 				p("key",key);
 				p("elementType",elementType);
 				p("type",type);
@@ -96,9 +95,9 @@ export async function main(ns) {
 				p("sibling",sibling);
 				p("index",index);
 				p("ref",ref);
-				p("pendingProps",pendingProps.className);
+				p("pendingProps.className",pendingProps.className);
 				console.log("pendingProps",pendingProps.children);
-				p("memoizedProps",memoizedProps);
+				p("memoizedProps.className",memoizedProps.className);
 				p("updateQueue",updateQueue);
 			} break;
 		}
