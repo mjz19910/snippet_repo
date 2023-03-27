@@ -1,9 +1,14 @@
-type ReactFiber5={
+type HtmlReactElementType="ul"|"div";
+type ElementMap={
+	div: HTMLDivElement;
+	ul: HTMLUListElement;
+};
+type ReactFiberElement<ElementType extends HtmlReactElementType>={
 	tag: 5;
 	key: null;
-	elementType: "ul";
-	type: "ul";
-	stateNode: HTMLUListElement;
+	elementType: ElementType;
+	type: ElementType;
+	stateNode: ElementMap[ElementType];
 	return: ReactFiber11;
 	child: ReactFiber7;
 	sibling: null;
@@ -29,6 +34,9 @@ type ReactFiber5={
 	childLanes: 0;
 	alternate: {};
 };
+type ReactFiberElement_UList=ReactFiberElement<"ul">;
+
+type ReactFiber5=ReactFiberElement_UList|ReactFiberElement<"div">;
 
 type ReactFiber=ReactFiber5|ReactFiber11|ReactFiber7;
 

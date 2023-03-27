@@ -83,13 +83,23 @@ export async function main(ns) {
 					try {
 						ns.print(path.join("."),".",a1," ",a2);
 					} catch {
-						ns.print(path.join("."),".",a1," ","{[cyclic object]}");
+						ns.print(path.join("."),".",a1," ",a2.toString()," {[cyclic object]}");
 					}
 				}
-				p("key",key);
-				p("elementType",elementType);
-				p("type",type);
-				p("stateNode",stateNode);
+				if(key!==null) p("key",key);
+				switch(elementType) {
+					default: p("elementType",elementType); break;
+					case "ul": case "div":
+				}
+				switch(type) {
+					default: p("type",type); break;
+					case "ul": case "div":
+				}
+				x: {
+					if(stateNode instanceof HTMLUListElement) break x;
+					if(stateNode instanceof HTMLDivElement) break x;
+					p("stateNode",stateNode);
+				}
 				on_react_fiber(return_,[...path,"return"]);
 				on_react_fiber(child,[...path,"child"]);
 				p("sibling",sibling);
