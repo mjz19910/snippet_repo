@@ -76,7 +76,7 @@ export class InitHackScript {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
 		}
-		await this.ns.sleep(100);
+		await this.ns.sleep(8000);
 		return;
 	}
 	/** @arg {string} fn_key */
