@@ -39,21 +39,27 @@ export async function main(ns) {
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
 	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
-		for(let hostname of hostname_list) {
+		y: for(let hostname of hostname_list) {
+			let srv=ns.getServer(hostname);
+			if(srv.maxRam>=ram) continue;
 			for(;;++i) {
 				let cur_server_money=ns.getServerMoneyAvailable("home");
 				if(cur_server_money<buy_cost1) return;
+				let host_parts=hostname.split("-");
+				ns.tprint(host_parts[2]);
 				if(server_hostname_list.includes(hostname)) {
 					let old_proc=ns.ps(hostname);
 					old_proc.forEach(v => ns.kill(v.pid));
+					srv=ns.getServer(hostname);
+					if(srv.maxRam>=ram) continue y;
 					ns.upgradePurchasedServer(hostname,ram);
 				} else {
 					let new_host=ns.purchaseServer(hostname,ram);
 					if(new_host==="") throw new Error("failed to purchase server");
 					ns.scp(s.scripts,new_host);
 				}
-				hostname=rename_purchased_server(ns,hostname_list,hostname,`big-${ram}-${i}`);
-				const srv=ns.getServer(hostname);
+				hostname=rename_purchased_server(ns,hostname_list,hostname,`big-${ram}-${host_parts[2]}`);
+				srv=ns.getServer(hostname);
 				await s.start_script_template(srv);
 			}
 		}
@@ -74,7 +80,8 @@ export async function main(ns) {
 	);
 	ram=get_ram(min_mem);
 	let prev_ram=ram;
-	ns.print("min_mem: ",min_mem);
+	ns.tprint("min_mem: ",min_mem);
 	ram*=2;
+	ns.tprint("upg_ram: ",ram);
 	await upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
 }
