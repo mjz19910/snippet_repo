@@ -18,6 +18,7 @@ export async function run_hack(ns,thread_count,target) {
 	const server_money=await getServerMoneyAvailable_(ns,target);
 	ns.print("securityLevel: ",security_level);
 	ns.print("moneyAvailable: $",ns.formatNumber(server_money));
+	ns.writePort(10,"ready:"+target);
 	if(security_level>securityThreshold) {
 		await ns.weaken(target);
 	} else if(server_money<moneyThreshold) {
