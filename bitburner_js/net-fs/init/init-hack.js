@@ -56,9 +56,8 @@ export class InitHackScript {
 	/** @param {Server} srv */
 	start_script_template(srv) {
 		const {ns}=this;
-		const ro_2=`lvl:${srv.requiredHackingSkill}`;
 		if(srv.maxRam===0) {
-			if(this.opts.trace) this.format_print(srv,`${ro_2} h:-${srv.hostname}`);
+			if(this.opts.trace) this.format_print(srv,`t:0 h:${srv.hostname}`);
 			return false;
 		}
 		let t=this.get_thread_count(srv);
@@ -69,12 +68,13 @@ export class InitHackScript {
 				if(ps.filename===hack_template) ns.kill(ps.pid);
 			});
 		}
-		ns.exec("/api/share.js",srv.hostname,t/4|0);
-		t-=t/2|0;
+		if(t>64) {
+			ns.exec("/api/share.js",srv.hostname,t/4|0);
+			t-=t/2|0;
+		}
+		if(!srv.purchasedByPlayer) this.format_print(srv,`t:${t} h:${srv.hostname}`);
 		let mode=this.get_mode();
 		ns.exec(hack_template,srv.hostname,t,this.player_hacking_skill,mode);
-		const ro_mem=`t:${t} h:${srv.hostname}`;
-		this.format_print(srv,`${ro_2} ${ro_mem}`);
 		return true;
 	}
 	/** @arg {string} fn_key */
