@@ -34,7 +34,7 @@ class DomList {
 		const world_section=MuiList_root.children[7];
 		const help_section=MuiList_root.children[10];
 
-		this.terminal_button=hacking_section.children[0].children[0].children[0];
+		this.terminal_button=as_div_element(hacking_section.children[0].children[0].children[0]);
 		this.script_editor_button=hacking_section.children[0].children[0].children[1];
 		this.active_scripts_button=hacking_section.children[0].children[0].children[2];
 		this.create_program_button=hacking_section.children[0].children[0].children[3];
@@ -87,6 +87,7 @@ class DomList {
 		/** @type {HTMLDivElement} */
 		const backdrop_root=query_element(document,"div.MuiBackdrop-root");
 		this.click_on_1(backdrop_root);
+		this.click_on(this.terminal_button);
 	}
 }
 
