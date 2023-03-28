@@ -53,7 +53,7 @@ export async function main(ns) {
 	async function process_messages() {
 		for(;;) {
 			while(!retry_reply_handle.empty()) {
-				retry_arr.push(await read_reply_msg(ns,retry_reply_handle));
+				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
 			while(!write_handle.full()) {
 				let first=retry_arr.pop();
@@ -62,7 +62,7 @@ export async function main(ns) {
 			}
 			while(!read_handle.empty()) {
 				await ns.sleep(100);
-				let msg=await read_call_msg(ns,read_handle);
+				let msg=await read_call_msg(read_handle);
 				const {call,args}=msg;
 				switch(call) {
 					case "getServerMaxMoney": {

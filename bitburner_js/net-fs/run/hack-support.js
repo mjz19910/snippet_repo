@@ -19,12 +19,8 @@ export const reply_port_id=2;
 export const log_port_id=3;
 export const reply_retry_port_id=4;
 
-/** @param {NS} ns @param {NetscriptPort} ns_port */
-export async function async_port_read_data(ns,ns_port) {
-	if(!ns_port) debugger;
-	while(ns_port.empty()) {
-		await ns.sleep(100);
-	}
+/** @param {NetscriptPort} ns_port */
+export async function async_port_read_data(ns_port) {
 	let data=ns_port.read();
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
 	return data;
@@ -39,9 +35,9 @@ export async function async_port_write_data(ns,ns_port,str) {
 		await ns.sleep(100);
 	}
 }
-/** @template {{}} T @param {NS} ns @param {NetscriptPort} ns_port @returns {Promise<T>} */
-export async function async_read_port_msg(ns,ns_port) {
-	let data=await async_port_read_data(ns,ns_port);
+/** @template {{}} T @param {NetscriptPort} ns_port @returns {Promise<T>} */
+export async function async_read_port_msg(ns_port) {
+	let data=await async_port_read_data(ns_port);
 	if(typeof data==="number") throw new Error("Invalid message");
 	return JSON.parse(data);
 }
@@ -57,13 +53,13 @@ export function send_call_msg(ns,ns_port,msg) {
 export function send_reply_msg(ns,ns_port,msg) {
 	return send_port_msg(ns,ns_port,msg);
 }
-/** @param {NS} ns @param {NetscriptPort} ns_port @returns {Promise<CallMsg>} */
-export function read_call_msg(ns,ns_port) {
-	return async_read_port_msg(ns,ns_port);
+/** @param {NetscriptPort} ns_port @returns {Promise<CallMsg>} */
+export function read_call_msg(ns_port) {
+	return async_read_port_msg(ns_port);
 }
-/** @param {NS} ns @param {NetscriptPort} ns_port @returns {Promise<ReplyMsg>} */
-export function read_reply_msg(ns,ns_port) {
-	return async_read_port_msg(ns,ns_port);
+/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsg>} */
+export function read_reply_msg(ns_port) {
+	return async_read_port_msg(ns_port);
 }
 /**
  * @template {string} CallId
@@ -88,7 +84,7 @@ export async function generic_get_call(ns,target,call_id) {
 	let prev=send_call_msg(ns,request_port,{call: call_id,args: [target]});
 	if(prev!==null) await prev;
 	for(;;) {
-		let msg=await read_reply_msg(ns,reply_port);
+		let msg=await read_reply_msg(reply_port);
 		if(!should_accept(msg,call_id,target)) {
 			await async_port_write_data(ns,retry_reply_handle,JSON.stringify(msg));
 			continue;
