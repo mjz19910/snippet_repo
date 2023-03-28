@@ -14,9 +14,12 @@
 /** @typedef {{call:"get_server",args:[string]}} CallMsg5 */
 /** @typedef {{call:"get_hack_target",args:[string]}} CallMsg6 */
 
-/** @param {NetscriptPort} ns_port */
-export async function read_port_msg(ns_port) {
-	while(ns_port.empty()) await ns_port.nextWrite();
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function read_port_msg(ns,ns_port) {
+	while(ns_port.empty()) {
+		ns.tprint("port empty");
+		await ns.sleep(1000);
+	}
 	let data=ns_port.read();
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
 	return data;
@@ -33,17 +36,17 @@ export function send_call_msg(ns,msg) {
 export function send_reply_msg(ns,msg) {
 	return send_port_msg(ns,msg);
 }
-/** @param {NetscriptPort} ns */
-export async function read_call_msg(ns) {
-	let data=await read_port_msg(ns);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function read_call_msg(ns,ns_port) {
+	let data=await read_port_msg(ns,ns_port);
 	if(typeof data==="number") throw new Error("Invalid message");
 	/** @type {CallMsg} */
 	let msg=JSON.parse(data);
 	return msg;
 }
-/** @param {NetscriptPort} ns */
-export async function read_reply_msg(ns) {
-	let data=await read_port_msg(ns);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function read_reply_msg(ns,ns_port) {
+	let data=await read_port_msg(ns,ns_port);
 	if(typeof data==="number") throw new Error("Invalid message");
 	/** @type {ReplyMsg} */
 	let msg=JSON.parse(data);
@@ -70,8 +73,7 @@ export async function generic_get_call(ns,target,call_id) {
 	function assume_return(x) {x;}
 	send_call_msg(request_port,{call: call_id,args: [target]});
 	for(;;) {
-		await ns.sleep(100);
-		let msg=await read_reply_msg(reply_port);
+		let msg=await read_reply_msg(ns,reply_port);
 		if(!should_accept(msg,call_id,target)) {
 			ns.writePort(2,JSON.stringify(msg));
 			continue;

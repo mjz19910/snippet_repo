@@ -20,7 +20,7 @@ export async function main(ns) {
 
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
 
-	await ns.sleep(33);
+	await ns.sleep(1000);
 
 	const width=250;
 	ns.resizeTail(width,0);
@@ -49,7 +49,7 @@ export async function main(ns) {
 	const log_handle=ns.getPortHandle(3);
 	async function process_messages() {
 		for(;;) {
-			let msg=await read_call_msg(read_handle);
+			let msg=await read_call_msg(ns,read_handle);
 			const {call,args}=msg;
 			switch(call) {
 				case "getServerMaxMoney": {
@@ -77,7 +77,7 @@ export async function main(ns) {
 						let reply=null;
 						for(;;) {
 							let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-							await ns.sleep(33);
+							await ns.sleep(1000);
 							if(hostname==="home") continue;
 							if(hostname.startsWith("big-")) continue;
 							const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
