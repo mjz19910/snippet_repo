@@ -62,6 +62,10 @@ class DomList {
 	click_on(element) {
 		Object.values(element)[1].onClick();
 	}
+	/** @arg {HTMLElement} element */
+	click_on_1(element) {
+		Object.values(element)[1].onClick({});
+	}
 	/** @param {NS} ns */
 	async use(ns) {
 		if(ns.hasTorRouter()) return;
@@ -80,6 +84,9 @@ class DomList {
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
 		const purchase_tor_router_button=as_html_element(this.current_page.children[8]);
 		this.click_on(purchase_tor_router_button);
+		/** @type {HTMLDivElement} */
+		const backdrop_root=query_element(document,"div.MuiBackdrop-root");
+		this.click_on_1(backdrop_root);
 	}
 }
 
