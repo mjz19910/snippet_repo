@@ -108,13 +108,16 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	function assume_return(x) {x;}
 	/** @param {string|number} i */
 	function tprint_log(i) {
-		if(this_.hostname!=="home") return;
-		this_.ns.tprintf("%s %s %s",this_.hostname,call_id,i);
+		this_.ns.printf("%s %s %s",this_.hostname,call_id,i);
 	}
 	for(;;) {
 		let sent_msg=false;
 		for(let i=0;i<20;i++) {
-			function delay_time() {return 100+i*50;}
+			function delay_time() {
+				const slow_boundary=11;
+				if(i<=(slow_boundary+1)) return 33;
+				return 33+(i-slow_boundary)*33;
+			}
 			function delay_for() {return this_.ns.sleep(delay_time());}
 			tprint_log(`${i} ${id}`);
 			if(!sent_msg) {
@@ -145,7 +148,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			const retry_reply_handle=this_.ns.getPortHandle(reply_retry_port_id);
 			if(!reply_port.empty()) retry_reply_handle.write(reply_port.read());
 		}
-		this_.ns.tprintf("%s retry",call_id);
+		this_.ns.printf("%s retry",call_id);
 		await this_.ns.sleep(15*1000);
 	}
 }

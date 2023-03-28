@@ -53,6 +53,7 @@ export async function main(ns) {
 	const write_handle=ns.getPortHandle(reply_port_id);
 	const log_handle=ns.getPortHandle(log_port_id);
 	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
+	retry_reply_handle.clear();
 	read_handle.clear();
 	/** @param {import("/run/hack-support.js").ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
