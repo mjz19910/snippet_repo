@@ -30,7 +30,7 @@ export async function read_port_msg(ns,ns_port) {
 	return data;
 }
 /** @param {NS} ns @param {NetscriptPort} ns_port @param {PortData} str */
-export async function async_port_write(ns,ns_port,str) {
+export async function async_port_write_data(ns,ns_port,str) {
 	/** @type {PortData|null} */
 	let popped=str;
 	while(popped!==null) {
@@ -38,13 +38,9 @@ export async function async_port_write(ns,ns_port,str) {
 		popped=ns_port.write(popped);
 	}
 }
-/** @param {NS} ns @param {NetscriptPort} ns_port @param {string} str */
-export function port_write_str(ns,ns_port,str) {
-	return async_port_write(ns,ns_port,str);
-}
 /** @param {NS} ns @param {NetscriptPort} ns_port @arg {{}} msg */
 export function send_port_msg(ns,ns_port,msg) {
-	return port_write_str(ns,ns_port,JSON.stringify(msg));
+	return async_port_write_data(ns,ns_port,JSON.stringify(msg));
 }
 /** @param {NS} ns @arg {NetscriptPort} ns_port @arg {CallMsg} msg */
 export function send_call_msg(ns,ns_port,msg) {
@@ -95,7 +91,7 @@ export async function generic_get_call(ns,target,call_id) {
 	for(;;) {
 		let msg=await read_reply_msg(ns,reply_port);
 		if(!should_accept(msg,call_id,target)) {
-			await port_write_str(ns,retry_reply_handle,JSON.stringify(msg));
+			await async_port_write_data(ns,retry_reply_handle,JSON.stringify(msg));
 			continue;
 		}
 		let ret=msg.reply;
