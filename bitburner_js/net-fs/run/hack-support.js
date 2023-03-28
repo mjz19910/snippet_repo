@@ -84,6 +84,7 @@ export async function generic_get_call(ns,target,call_id) {
 	let prev=send_call_msg(ns,request_port,{call: call_id,args: [target]});
 	if(prev!==null) await prev;
 	for(;;) {
+		while(reply_port.empty()) await ns.sleep(100);
 		let msg=await read_reply_msg(reply_port);
 		if(!should_accept(msg,call_id,target)) {
 			await async_port_write_data(ns,retry_reply_handle,JSON.stringify(msg));
