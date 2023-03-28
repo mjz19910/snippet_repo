@@ -25,6 +25,18 @@ export async function async_port_read_data(ns_port) {
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
 	return data;
 }
+/** @param {NetscriptPort} ns_port */
+export async function async_port_peek_data(ns_port) {
+	let data=ns_port.peek();
+	if(data==="NULL PORT DATA") throw new Error("Invalid message");
+	return data;
+}
+/** @template {{}} T @param {NetscriptPort} ns_port @returns {Promise<T>} */
+export async function async_port_peek_msg(ns_port) {
+	let data=await async_port_peek_data(ns_port);
+	if(typeof data==="number") throw new Error("Invalid message");
+	return JSON.parse(data);
+}
 /** @param {NS} ns @param {NetscriptPort} ns_port @param {PortData} str */
 export async function async_port_write_data(ns,ns_port,str) {
 	/** @type {PortData|null} */
@@ -58,6 +70,10 @@ export function read_call_msg(ns_port) {
 	return async_read_port_msg(ns_port);
 }
 /** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsg>} */
+export function peek_reply_msg(ns_port) {
+	return async_port_peek_msg(ns_port);
+}
+/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsg>} */
 export function read_reply_msg(ns_port) {
 	return async_read_port_msg(ns_port);
 }
@@ -78,18 +94,18 @@ function should_accept(reply,call_,arg0) {
 export async function generic_get_call(ns,target,call_id) {
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
-	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	let prev=send_call_msg(ns,request_port,{call: call_id,args: [target]});
 	if(prev!==null) await prev;
 	for(;;) {
 		while(reply_port.empty()) await ns.sleep(100);
-		let msg=await read_reply_msg(reply_port);
+		let msg=await peek_reply_msg(reply_port);
 		if(!should_accept(msg,call_id,target)) {
-			await async_port_write_data(ns,retry_reply_handle,JSON.stringify(msg));
+			await ns.sleep(100);
 			continue;
 		}
+		reply_port.read();
 		let ret=msg.reply;
 		assume_return(ret);
 		return ret;
