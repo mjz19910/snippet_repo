@@ -20,7 +20,7 @@ export async function main(ns) {
 
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
 
-	await ns.sleep(100);
+	await ns.sleep(33);
 
 	const width=250+120;
 	ns.resizeTail(width,120);
@@ -62,8 +62,8 @@ export async function main(ns) {
 		await send_reply_msg(write_handle,msg);
 	}
 	async function process_messages() {
-		for(;;) {
-			await ns.sleep(1);
+		for(let i=0;;i++) {
+			if(i>64) {await ns.sleep(1); i=0;}
 			while(!retry_reply_handle.empty()) {
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
@@ -105,10 +105,7 @@ export async function main(ns) {
 						if(randomize_hack) {
 							let reply=null;
 							for(let i=0;;i++) {
-								if(i>64) {
-									i=0;
-									await ns.sleep(100);
-								}
+								if(i>64) {await ns.sleep(1); i=0;}
 								let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
 								if(hostname==="home") continue;
 								if(hostname.startsWith("big-")) continue;
