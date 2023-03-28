@@ -59,7 +59,7 @@ export async function main(ns) {
 			while(!write_handle.full()) {
 				let first=retry_arr.pop();
 				if(first===void 0) break;
-				await send_reply_msg(ns,write_handle,first);
+				await send_reply_msg(write_handle,first);
 			}
 			while(!read_handle.empty()) {
 				await ns.sleep(100);
@@ -68,23 +68,23 @@ export async function main(ns) {
 				switch(call) {
 					case "getServerMaxMoney": {
 						let reply=ns.getServerMaxMoney(...args);
-						await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
+						await send_reply_msg(write_handle,{call,id: args[0],reply});
 					} break;
 					case "getServerMinSecurityLevel": {
 						let reply=ns.getServerMinSecurityLevel(...args);
-						await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
+						await send_reply_msg(write_handle,{call,id: args[0],reply});
 					} break;
 					case "getServerMoneyAvailable": {
 						let reply=ns.getServerMoneyAvailable(...args);
-						await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
+						await send_reply_msg(write_handle,{call,id: args[0],reply});
 					} break;
 					case "getServerSecurityLevel": {
 						let reply=ns.getServerSecurityLevel(...args);
-						await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
+						await send_reply_msg(write_handle,{call,id: args[0],reply});
 					} break;
 					case "get_server": {
 						let reply=get_server(args[0]);
-						await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
+						await send_reply_msg(write_handle,{call,id: args[0],reply});
 					} break;
 					case "get_hack_target": {
 						if(randomize_hack) {
@@ -106,7 +106,7 @@ export async function main(ns) {
 									break;
 								}
 							}
-							await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
+							await send_reply_msg(write_handle,{call,id: args[0],reply});
 						} else {
 							let srv;
 							for(let name of ["ecorp","foodnstuff","n00dles"]) {
@@ -116,7 +116,7 @@ export async function main(ns) {
 								ns.nuke(name);
 							}
 							if(!srv) srv=get_server("n00dles");
-							await send_reply_msg(ns,write_handle,{call,id: args[0],reply: srv});
+							await send_reply_msg(write_handle,{call,id: args[0],reply: srv});
 						}
 					} break;
 				}

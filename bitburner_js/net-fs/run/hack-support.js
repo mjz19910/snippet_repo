@@ -37,15 +37,11 @@ export async function async_port_peek_msg(ns_port) {
 	if(typeof data==="number") throw new Error("Invalid message");
 	return JSON.parse(data);
 }
-/** @param {NS} ns @param {NetscriptPort} ns_port @param {PortData} str */
-export async function async_port_write_data(ns,ns_port,str) {
-	/** @type {PortData|null} */
-	let popped=str;
-	while(popped!==null) {
-		popped=ns_port.write(popped);
-		if(popped===null) break;
-		await ns.sleep(100);
-	}
+/** @param {NetscriptPort} ns_port @param {PortData} str */
+export async function async_port_write_data(ns_port,str) {
+	while(ns_port.full()) throw new Error("Port full");
+	let popped=ns_port.write(str);
+	if(popped!==null) throw new Error("Unreachable");
 }
 /** @template {{}} T @param {NetscriptPort} ns_port @returns {Promise<T>} */
 export async function async_read_port_msg(ns_port) {
@@ -53,17 +49,17 @@ export async function async_read_port_msg(ns_port) {
 	if(typeof data==="number") throw new Error("Invalid message");
 	return JSON.parse(data);
 }
-/** @param {NS} ns @param {NetscriptPort} ns_port @arg {{}} msg */
-export function send_port_msg(ns,ns_port,msg) {
-	return async_port_write_data(ns,ns_port,JSON.stringify(msg));
+/** @param {NetscriptPort} ns_port @arg {{}} msg */
+export function send_port_msg(ns_port,msg) {
+	return async_port_write_data(ns_port,JSON.stringify(msg));
 }
-/** @param {NS} ns @arg {NetscriptPort} ns_port @arg {CallMsg} msg */
-export function send_call_msg(ns,ns_port,msg) {
-	return send_port_msg(ns,ns_port,msg);
+/** @arg {NetscriptPort} ns_port @arg {CallMsg} msg */
+export function send_call_msg(ns_port,msg) {
+	return send_port_msg(ns_port,msg);
 }
-/** @param {NS} ns @arg {NetscriptPort} ns_port @arg {ReplyMsg} msg */
-export function send_reply_msg(ns,ns_port,msg) {
-	return send_port_msg(ns,ns_port,msg);
+/** @arg {NetscriptPort} ns_port @arg {ReplyMsg} msg */
+export function send_reply_msg(ns_port,msg) {
+	return send_port_msg(ns_port,msg);
 }
 /** @param {NetscriptPort} ns_port @returns {Promise<CallMsg>} */
 export function read_call_msg(ns_port) {
@@ -96,8 +92,7 @@ export async function generic_get_call(ns,target,call_id) {
 	const reply_port=ns.getPortHandle(reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	let prev=send_call_msg(ns,request_port,{call: call_id,args: [target]});
-	if(prev!==null) await prev;
+	await send_call_msg(request_port,{call: call_id,args: [target]});
 	for(;;) {
 		while(reply_port.empty()) await ns.sleep(100);
 		let msg=await peek_reply_msg(reply_port);
