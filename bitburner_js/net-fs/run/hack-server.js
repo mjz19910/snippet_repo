@@ -27,7 +27,7 @@ export async function main(ns) {
 	ns.moveTail(window_width-width-4,1);
 
 	const trace=false;
-	const randomize_hack=false;
+	const randomize_hack=true;
 	/** @type {{[x:string]:Server}} */
 	const server_map={};
 	/** @type {string[]} */
