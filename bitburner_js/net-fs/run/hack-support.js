@@ -106,32 +106,47 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const reply_port=this_.ns.getPortHandle(reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
+	/** @param {string|number} i */
+	function tprint_log(i) {
+		if(this_.hostname!=="home") return;
+		this_.ns.tprintf("%s %s %s",this_.hostname,call_id,i);
+	}
 	for(;;) {
 		let sent_msg=false;
-		for(let i=0;i<8;i++) {
-			this_.ns.tprint();
+		for(let i=0;i<20;i++) {
+			function delay_time() {return 100+i*50;}
+			function delay_for() {return this_.ns.sleep(delay_time());}
+			tprint_log(`${i} ${id}`);
 			if(!sent_msg) {
 				if(request_port.full()) {
-					await this_.ns.sleep(100);
+					await delay_for();
 					continue;
 				}
 				await send_call_msg(request_port,{call: call_id,args: [id]});
 				sent_msg=true;
 			}
-			if(reply_port.empty()) {
-				await this_.ns.sleep(100);
-				continue;
+			for(let j=0;j<8;j++) {
+				if(reply_port.empty()) {
+					await delay_for();
+					continue;
+				}
+				let msg=await peek_reply_msg(reply_port);
+				if(!should_accept(msg,call_id,id)) {
+					const {reply,...l_msg}=msg;
+					tprint_log(`reject_reply ${i} ${j} ${JSON.stringify(l_msg)}`);
+					await delay_for();
+					continue;
+				}
+				reply_port.read();
+				let ret=msg.reply;
+				assume_return(ret);
+				return ret;
 			}
-			let msg=await peek_reply_msg(reply_port);
-			if(!should_accept(msg,call_id,id)) {
-				await this_.ns.sleep(100);
-				continue;
-			}
-			reply_port.read();
-			let ret=msg.reply;
-			assume_return(ret);
-			return ret;
+			const retry_reply_handle=this_.ns.getPortHandle(reply_retry_port_id);
+			if(!reply_port.empty()) retry_reply_handle.write(reply_port.read());
 		}
+		this_.ns.tprintf("%s retry",call_id);
+		await this_.ns.sleep(15*1000);
 	}
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */
