@@ -1,4 +1,4 @@
-import {read_call_msg,send_reply_msg} from "/run/hack-support.js";
+import {log_port_id,read_call_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -44,33 +44,38 @@ export async function main(ns) {
 
 	for(let item of ns.scan("home")) get_server(item);
 
-	const read_handle=ns.getPortHandle(1);
-	const write_handle=ns.getPortHandle(2);
-	const log_handle=ns.getPortHandle(3);
+	const read_handle=ns.getPortHandle(request_port_id);
+	const write_handle=ns.getPortHandle(reply_port_id);
+	const log_handle=ns.getPortHandle(log_port_id);
+	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
 	async function process_messages() {
 		for(;;) {
+			while(!retry_reply_handle.empty()) {
+				write_handle.write(retry_reply_handle.read());
+				await ns.sleep(1000);
+			}
 			let msg=await read_call_msg(ns,read_handle);
 			const {call,args}=msg;
 			switch(call) {
 				case "getServerMaxMoney": {
 					let reply=ns.getServerMaxMoney(...args);
-					send_reply_msg(write_handle,{call,id: args[0],reply});
+					await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
 				} break;
 				case "getServerMinSecurityLevel": {
 					let reply=ns.getServerMinSecurityLevel(...args);
-					send_reply_msg(write_handle,{call,id: args[0],reply});
+					await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
 				} break;
 				case "getServerMoneyAvailable": {
 					let reply=ns.getServerMoneyAvailable(...args);
-					send_reply_msg(write_handle,{call,id: args[0],reply});
+					await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
 				} break;
 				case "getServerSecurityLevel": {
 					let reply=ns.getServerSecurityLevel(...args);
-					send_reply_msg(write_handle,{call,id: args[0],reply});
+					await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
 				} break;
 				case "get_server": {
 					let reply=get_server(args[0]);
-					send_reply_msg(write_handle,{call,id: args[0],reply});
+					await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
 				} break;
 				case "get_hack_target": {
 					if(randomize_hack) {
@@ -92,7 +97,7 @@ export async function main(ns) {
 								break;
 							}
 						}
-						send_reply_msg(write_handle,{call,id: args[0],reply});
+						await send_reply_msg(ns,write_handle,{call,id: args[0],reply});
 					} else {
 						let srv;
 						for(let name of ["ecorp","foodnstuff","n00dles"]) {
@@ -102,7 +107,7 @@ export async function main(ns) {
 							ns.nuke(name);
 						}
 						if(!srv) srv=get_server("n00dles");
-						send_reply_msg(write_handle,{call,id: args[0],reply: srv});
+						await send_reply_msg(ns,write_handle,{call,id: args[0],reply: srv});
 					}
 				} break;
 			}
