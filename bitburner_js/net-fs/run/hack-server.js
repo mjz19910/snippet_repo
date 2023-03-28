@@ -45,15 +45,20 @@ export async function main(ns) {
 
 	for(let item of ns.scan("home")) get_server(item);
 
+	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
+	const pending_reply_list=[];
+	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
+	const retry_arr=[];
 	const read_handle=ns.getPortHandle(request_port_id);
 	const write_handle=ns.getPortHandle(reply_port_id);
 	const log_handle=ns.getPortHandle(log_port_id);
 	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
-	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
-	let retry_arr=[];
 	/** @param {import("/run/hack-support.js").ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		while(write_handle.full()) await ns.sleep(100);
+		if(write_handle.full()) {
+			pending_reply_list.push(msg);
+			return;
+		}
 		await send_reply_msg(write_handle,msg);
 	}
 	async function process_messages() {
@@ -63,7 +68,7 @@ export async function main(ns) {
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
 			while(!write_handle.full()) {
-				let first=retry_arr.pop();
+				let first=pending_reply_list.pop();
 				if(first===void 0) break;
 				await send_reply_msg_2(first);
 			}
