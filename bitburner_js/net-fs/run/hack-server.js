@@ -143,7 +143,6 @@ export async function main(ns) {
 				}
 				if(trace) ns.print(msg);
 				console.log(msg);
-				// debugger;
 			}
 			while(!log_handle.empty()) {
 				let res=log_handle.read();
