@@ -6,6 +6,8 @@
 /** @typedef {{call:"get_server";id:string;reply:Server}} ReplyMsg5 */
 /** @typedef {{call:"get_hack_target";id:string;reply:Server}} ReplyMsg6 */
 
+import {HackState} from "./hack-template";
+
 /** @typedef {CallMsg1|CallMsg2|CallMsg3|CallMsg4|CallMsg5|CallMsg6} CallMsg */
 /** @typedef {{call:"getServerMaxMoney",args:[string]}} CallMsg1 */
 /** @typedef {{call:"getServerMinSecurityLevel",args:[string]}} CallMsg2 */
@@ -86,44 +88,62 @@ function should_accept(reply,call_,arg0) {
 	if("id" in reply) return reply.id===arg0;
 	throw new Error("Unsupported should accept");
 }
-/** @template {CallMsg["call"]} CallId @param {NS} ns @arg {string} target @arg {CallId} call_id */
-export async function generic_get_call(ns,target,call_id) {
-	const request_port=ns.getPortHandle(request_port_id);
-	const reply_port=ns.getPortHandle(reply_port_id);
+/** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
+export async function generic_get_call_with_id(this_,id,call_id) {
+	const request_port=this_.ns.getPortHandle(request_port_id);
+	const reply_port=this_.ns.getPortHandle(reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	while(!request_port.empty()) await ns.sleep(100);
-	await send_call_msg(request_port,{call: call_id,args: [target]});
 	for(;;) {
-		while(reply_port.empty()) await ns.sleep(100);
-		let msg=await peek_reply_msg(reply_port);
-		if(!should_accept(msg,call_id,target)) {
-			await ns.sleep(100);
-			continue;
+		let sent_msg=false;
+		for(let i=0;i<8;i++) {
+			this_.ns.tprint();
+			if(!sent_msg) {
+				if(request_port.full()) {
+					await this_.ns.sleep(100);
+					continue;
+				}
+				await send_call_msg(request_port,{call: call_id,args: [id]});
+				sent_msg=true;
+			}
+			if(reply_port.empty()) {
+				await this_.ns.sleep(100);
+				continue;
+			}
+			let msg=await peek_reply_msg(reply_port);
+			if(!should_accept(msg,call_id,id)) {
+				await this_.ns.sleep(100);
+				continue;
+			}
+			reply_port.read();
+			let ret=msg.reply;
+			assume_return(ret);
+			return ret;
 		}
-		reply_port.read();
-		let ret=msg.reply;
-		assume_return(ret);
-		return ret;
 	}
 }
-/** @param {NS} ns @arg {string} target */
-export function getServerMaxMoney_(ns,target) {
+/** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */
+export async function generic_get_call(this_,call_id) {
+	if(!this_.target) throw new Error("Invalid state.target");
+	return generic_get_call_with_id(this_,this_.target,call_id);
+}
+/** @arg {HackState} this_ */
+export function getServerMaxMoney_(this_) {
 	const call_id="getServerMaxMoney";
-	return generic_get_call(ns,target,call_id);
+	return generic_get_call(this_,call_id);
 }
-/** @param {NS} ns @arg {string} target */
-export async function getServerMinSecurityLevel_(ns,target) {
+/** @arg {HackState} this_ */
+export async function getServerMinSecurityLevel_(this_) {
 	const call_id="getServerMinSecurityLevel";
-	return generic_get_call(ns,target,call_id);
+	return generic_get_call(this_,call_id);
 }
-/** @param {NS} ns @arg {string} target */
-export async function getServerSecurityLevel_(ns,target) {
+/** @arg {HackState} this_ */
+export async function getServerSecurityLevel_(this_) {
 	const call_id="getServerSecurityLevel";
-	return generic_get_call(ns,target,call_id);
+	return generic_get_call(this_,call_id);
 }
-/** @param {NS} ns @arg {string} target */
-export async function getServerMoneyAvailable_(ns,target) {
+/** @arg {HackState} this_ */
+export async function getServerMoneyAvailable_(this_) {
 	const call_id="getServerMoneyAvailable";
-	return generic_get_call(ns,target,call_id);
+	return generic_get_call(this_,call_id);
 }

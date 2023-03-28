@@ -1,51 +1,46 @@
-import {generic_get_call,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support.js";
+import {as_any} from "/run/as.js";
+import {generic_get_call_with_id,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support.js";
 
 
-/**
- * @param {HackState} s
- * @param {string} a1
- * @param {string} a2
- * @param {string} a3
- */
-function write_log_message(s,a1,a2,a3) {
-	s.ns.writePort(3,a1+"->"+a2+":"+a3);
+/** @param {HackState} s @param {string} a1 */
+export function write_log_message(s,a1) {
+	s.ns.writePort(3,s.hostname+"->"+a1+":"+s.target);
 }
 /**
- * @param {HackState} s
+ * @param {HackState} this_
  * @param {number} i
  */
-export async function run_hack(s,i) {
-	const {ns,thread_count,target}=s;
-	if(!target) throw new Error("Bad args");
-	const max_money=await getServerMaxMoney_(ns,target);
+export async function run_hack(this_,i) {
+	if(!this_.target) throw new Error("Bad args");
+	const max_money=await getServerMaxMoney_(this_);
 	if(max_money===0) return;
 	// Defines how much money a server should have before we hack it
-	const moneyThreshold=(await getServerMaxMoney_(ns,target))*0.85;
-	ns.print("moneyThreshold: $",ns.formatNumber(moneyThreshold));
+	const moneyThreshold=(await getServerMaxMoney_(this_))*0.85;
+	this_.ns.print("moneyThreshold: $",this_.ns.formatNumber(moneyThreshold));
 	// Defines the maximum security level the target server can have.
-	const securityThreshold=(await getServerMinSecurityLevel_(ns,target))+2.5;
-	ns.print("securityThreshold: ",ns.formatNumber(securityThreshold));
-	const security_level=await getServerSecurityLevel_(ns,target);
-	const server_money=await getServerMoneyAvailable_(ns,target);
-	ns.print("securityLevel: ",ns.formatNumber(security_level));
-	ns.print("moneyAvailable: $",ns.formatNumber(server_money));
+	const securityThreshold=(await getServerMinSecurityLevel_(this_))+2.5;
+	this_.ns.print("securityThreshold: ",this_.ns.formatNumber(securityThreshold));
+	const security_level=await getServerSecurityLevel_(this_);
+	const server_money=await getServerMoneyAvailable_(this_);
+	this_.ns.print("securityLevel: ",this_.ns.formatNumber(security_level));
+	this_.ns.print("moneyAvailable: $",this_.ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
-		if(i===0) write_log_message(s,s.hostname,"weaken",target);
-		await ns.weaken(target);
+		if(i===0) write_log_message(this_,"weaken");
+		await this_.ns.weaken(this_.target);
 	} else if(server_money<moneyThreshold) {
-		if(i===0) write_log_message(s,s.hostname,"grow",target);
-		await ns.grow(target);
+		if(i===0) write_log_message(this_,"grow");
+		await this_.ns.grow(this_.target);
 	} else {
-		if(i===0) write_log_message(s,s.hostname,"hack",target);
-		await ns.hack(target);
+		if(i===0) write_log_message(this_,"hack");
+		await this_.ns.hack(this_.target);
 	}
-	if(i===0&&thread_count>512) {
+	if(i===0&&this_.thread_count>512) {
 		let j=0;
-		let security_level=await getServerSecurityLevel_(ns,target);
+		let security_level=await getServerSecurityLevel_(this_);
 		while(security_level>securityThreshold) {
-			if(i===0&&j===0) write_log_message(s,s.hostname,"weaken",target);
-			await ns.weaken(target);
-			security_level=await getServerSecurityLevel_(ns,target);
+			if(i===0&&j===0) write_log_message(this_,"weaken");
+			await this_.ns.weaken(this_.target);
+			security_level=await getServerSecurityLevel_(this_);
 			j++;
 		}
 	}
@@ -58,19 +53,12 @@ export async function main(ns) {
 	ns.disableLog("sleep");
 	ns.disableLog("grow");
 	ns.disableLog("hack");
-	/** @type {any} */
-	let pa=ns.flags([]);
 	/** @type {{_:[thread_count:number,hostname:string]}} */
-	let f_=pa;
-	const [thread_count,hostname]=f_._;
+	let pa=as_any(ns.flags([]));
 	/** @type {HackState} */
-	const s={
-		ns,thread_count,hostname,
-		first: true,
-		target: null,
-	};
+	const s=new HackState(ns,pa);
 	for(;;) {
-		const srv=await generic_get_call(ns,Math.random()+"","get_hack_target");
+		const srv=await generic_get_call_with_id(s,Math.random()+"","get_hack_target"); ``;
 		s.target=srv.hostname;
 		ns.printf("[%s] target: %s",s.hostname,s.target);
 		for(let i=0;i<8;i++) {
@@ -79,4 +67,15 @@ export async function main(ns) {
 	}
 }
 
-/** @typedef {{first:boolean;ns:NS;thread_count:number;hostname:string;target:string|null}} HackState */
+export class HackState {
+	first=true;
+	/** @type {string|null} */
+	target=null;
+	/** @arg {NS} ns @arg {{_:[thread_count:number,hostname:string]}} p_flags */
+	constructor(ns,p_flags) {
+		this.ns=ns;
+		const [thread_count,hostname]=p_flags._;
+		this.thread_count=thread_count;
+		this.hostname=hostname;
+	}
+}
