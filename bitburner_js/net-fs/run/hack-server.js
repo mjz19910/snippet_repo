@@ -78,7 +78,6 @@ export async function main(ns) {
 				await send_reply_msg_2(first);
 			}
 			while(!read_handle.empty()) {
-				await ns.sleep(100);
 				let msg=await read_call_msg(read_handle);
 				const {call,args}=msg;
 				switch(call) {
@@ -144,6 +143,7 @@ export async function main(ns) {
 				}
 				if(trace) ns.print(msg);
 				console.log(msg);
+				// debugger;
 			}
 			while(!log_handle.empty()) {
 				let res=log_handle.read();
