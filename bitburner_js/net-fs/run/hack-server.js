@@ -78,6 +78,7 @@ export async function main(ns) {
 				await send_reply_msg_2(first);
 			}
 			while(!read_handle.empty()) {
+				console.log(i);
 				let msg=await read_call_msg(read_handle);
 				const {call,args}=msg;
 				switch(call) {
