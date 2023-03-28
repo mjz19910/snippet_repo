@@ -92,6 +92,7 @@ export async function generic_get_call(ns,target,call_id) {
 	const reply_port=ns.getPortHandle(reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
+	while(!request_port.empty()) await ns.sleep(100);
 	await send_call_msg(request_port,{call: call_id,args: [target]});
 	for(;;) {
 		while(reply_port.empty()) await ns.sleep(100);

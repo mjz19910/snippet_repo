@@ -30,6 +30,7 @@ export async function main(ns) {
 	const randomize_hack=true;
 	/** @type {{[x:string]:Server}} */
 	const server_map={};
+	const scanned_server_map=new Set;
 	/** @type {string[]} */
 	const hostname_list=[];
 	/** @arg {string} hostname */
@@ -89,14 +90,20 @@ export async function main(ns) {
 					case "get_hack_target": {
 						if(randomize_hack) {
 							let reply=null;
-							for(;;) {
+							for(let i=0;;i++) {
+								if(i>64) {
+									i=0;
+									await ns.sleep(100);
+								}
 								let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-								await ns.sleep(100);
 								if(hostname==="home") continue;
 								if(hostname.startsWith("big-")) continue;
-								const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
-								if(scan_results.length>0) ns.printf("scan: %s %s",hostname,JSON.stringify(scan_results));
-								for(let item of scan_results) get_server(item);
+								if(!scanned_server_map.has(hostname)) {
+									scanned_server_map.add(hostname);
+									const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
+									if(scan_results.length>0) ns.printf("scan: %s %s",hostname,JSON.stringify(scan_results));
+									for(let item of scan_results) get_server(item);
+								}
 								let srv=get_server(hostname);
 								if(srv.purchasedByPlayer) continue;
 								if(srv.moneyMax===0) continue;
