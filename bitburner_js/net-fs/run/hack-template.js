@@ -24,10 +24,10 @@ export async function run_hack(s,i) {
 	ns.print("moneyThreshold: $",ns.formatNumber(moneyThreshold));
 	// Defines the maximum security level the target server can have.
 	const securityThreshold=(await getServerMinSecurityLevel_(ns,target))+2.5;
-	ns.print("securityThreshold: ",securityThreshold);
+	ns.print("securityThreshold: ",ns.formatNumber(securityThreshold));
 	const security_level=await getServerSecurityLevel_(ns,target);
 	const server_money=await getServerMoneyAvailable_(ns,target);
-	ns.print("securityLevel: ",security_level);
+	ns.print("securityLevel: ",ns.formatNumber(security_level));
 	ns.print("moneyAvailable: $",ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
 		if(i===0) write_log_message(s,s.hostname,"weaken",target);
@@ -54,7 +54,10 @@ export async function run_hack(s,i) {
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.disableLog("disableLog");
+	ns.disableLog("weaken");
 	ns.disableLog("sleep");
+	ns.disableLog("grow");
+	ns.disableLog("hack");
 	/** @type {any} */
 	let pa=ns.flags([]);
 	/** @type {{_:[thread_count:number,hostname:string]}} */
