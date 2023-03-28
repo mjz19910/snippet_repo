@@ -75,4 +75,5 @@ export async function main(ns) {
 		}
 	}
 }
+
 /** @typedef {{first:boolean;ns:NS;thread_count:number;hostname:string;target:string|null}} HackState */
