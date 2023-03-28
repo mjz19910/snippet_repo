@@ -20,7 +20,7 @@ export const log_port_id=3;
 export const reply_retry_port_id=4;
 
 /** @param {NS} ns @param {NetscriptPort} ns_port */
-export async function read_port_msg(ns,ns_port) {
+export async function async_port_read_data(ns,ns_port) {
 	if(!ns_port) debugger;
 	while(ns_port.empty()) {
 		await ns.sleep(1000);
@@ -38,6 +38,12 @@ export async function async_port_write_data(ns,ns_port,str) {
 		popped=ns_port.write(popped);
 	}
 }
+/** @template {{}} T @param {NS} ns @param {NetscriptPort} ns_port @returns {Promise<T>} */
+export async function async_read_port_msg(ns,ns_port) {
+	let data=await async_port_read_data(ns,ns_port);
+	if(typeof data==="number") throw new Error("Invalid message");
+	return JSON.parse(data);
+}
 /** @param {NS} ns @param {NetscriptPort} ns_port @arg {{}} msg */
 export function send_port_msg(ns,ns_port,msg) {
 	return async_port_write_data(ns,ns_port,JSON.stringify(msg));
@@ -50,21 +56,13 @@ export function send_call_msg(ns,ns_port,msg) {
 export function send_reply_msg(ns,ns_port,msg) {
 	return send_port_msg(ns,ns_port,msg);
 }
-/** @param {NS} ns @param {NetscriptPort} ns_port */
-export async function read_call_msg(ns,ns_port) {
-	let data=await read_port_msg(ns,ns_port);
-	if(typeof data==="number") throw new Error("Invalid message");
-	/** @type {CallMsg} */
-	let msg=JSON.parse(data);
-	return msg;
+/** @param {NS} ns @param {NetscriptPort} ns_port @returns {Promise<CallMsg>} */
+export function read_call_msg(ns,ns_port) {
+	return async_read_port_msg(ns,ns_port);
 }
-/** @param {NS} ns @param {NetscriptPort} ns_port */
-export async function read_reply_msg(ns,ns_port) {
-	let data=await read_port_msg(ns,ns_port);
-	if(typeof data==="number") throw new Error("Invalid message");
-	/** @type {ReplyMsg} */
-	let msg=JSON.parse(data);
-	return msg;
+/** @param {NS} ns @param {NetscriptPort} ns_port @returns {Promise<ReplyMsg>} */
+export function read_reply_msg(ns,ns_port) {
+	return async_read_port_msg(ns,ns_port);
 }
 /**
  * @template {string} CallId
