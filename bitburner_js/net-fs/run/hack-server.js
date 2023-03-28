@@ -63,19 +63,16 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			if(i>64) {await ns.sleep(1); i=0;}
+			await ns.sleep(1);
 			while(!retry_reply_handle.empty()) {
-				console.log(i);
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
 			while(pending_reply_list.length>0&&!write_handle.full()) {
-				console.log(i);
 				let first=pending_reply_list.pop();
 				if(first===void 0) break;
 				await send_reply_msg_2(first);
 			}
 			while(retry_arr.length>0&&!write_handle.full()) {
-				console.log(i);
 				let first=retry_arr.pop();
 				if(first===void 0) break;
 				await send_reply_msg_2(first);
