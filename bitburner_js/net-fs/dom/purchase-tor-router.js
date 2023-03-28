@@ -80,7 +80,6 @@ class DomList {
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
 		const purchase_tor_router_button=as_html_element(this.current_page.children[8]);
 		this.click_on(purchase_tor_router_button);
-		this.click_on(this.current_page);
 	}
 }
 
