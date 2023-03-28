@@ -66,13 +66,22 @@ class DomList {
 	click_on_1(element) {
 		Object.values(element)[1].onClick({});
 	}
+	/** @returns {Window&{__dom_list:this}} */
+	window_() {
+		/** @type {any} */
+		let win=globalThis;
+		return win;
+	}
+	get document_() {
+		return globalThis["document"];
+	}
 	/** @param {NS} ns */
 	async use(ns) {
-		if(ns.hasTorRouter()) return;
+		if(ns["hasTorRouter"]()) return;
 		ns.print("start: purchase_tor_router");
 		/** @type {any} */
-		let win_any=window;
-		win_any.__dom_list=this;
+		let win=this.window_();
+		win.__dom_list=this;
 		this.click_on(this.city_button);
 		/** @type {HTMLDivElement} */
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
@@ -85,7 +94,7 @@ class DomList {
 		const purchase_tor_router_button=as_html_element(this.current_page.children[8]);
 		this.click_on(purchase_tor_router_button);
 		/** @type {HTMLDivElement} */
-		const backdrop_root=query_element(document,"div.MuiBackdrop-root");
+		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
 		this.click_on_1(backdrop_root);
 		this.click_on(this.terminal_button);
 	}
@@ -96,9 +105,10 @@ export async function main(ns) {
 	ns.clearLog();
 	ns.tail();
 	ns.disableLog("disableLog");
+	const win=globalThis;
 	// ns.singularity.purchaseTor();
-	if(!("root" in window)) return;
+	if(!("root" in win)) return;
 	/** @type {HTMLDivElement} */
-	const root_element=as_any(window.root);
+	const root_element=as_any(win.root);
 	await new DomList(root_element).use(ns);
 }
