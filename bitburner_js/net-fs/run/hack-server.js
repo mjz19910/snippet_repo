@@ -52,6 +52,7 @@ export async function main(ns) {
 	let retry_arr=[];
 	async function process_messages() {
 		for(;;) {
+			await ns.sleep(100);
 			while(!retry_reply_handle.empty()) {
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
