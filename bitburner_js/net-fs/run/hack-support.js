@@ -23,7 +23,7 @@ export const reply_retry_port_id=4;
 export async function async_port_read_data(ns,ns_port) {
 	if(!ns_port) debugger;
 	while(ns_port.empty()) {
-		await ns.sleep(1000);
+		await ns.sleep(100);
 	}
 	let data=ns_port.read();
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
@@ -34,8 +34,9 @@ export async function async_port_write_data(ns,ns_port,str) {
 	/** @type {PortData|null} */
 	let popped=str;
 	while(popped!==null) {
-		await ns.sleep(1000);
 		popped=ns_port.write(popped);
+		if(popped===null) break;
+		await ns.sleep(100);
 	}
 }
 /** @template {{}} T @param {NS} ns @param {NetscriptPort} ns_port @returns {Promise<T>} */

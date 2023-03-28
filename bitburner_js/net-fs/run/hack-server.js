@@ -1,4 +1,4 @@
-import {log_port_id,read_call_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
+import {log_port_id,read_call_msg,read_reply_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -20,7 +20,7 @@ export async function main(ns) {
 
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
 
-	await ns.sleep(1000);
+	await ns.sleep(100);
 
 	const width=250;
 	ns.resizeTail(width,0);
@@ -48,11 +48,17 @@ export async function main(ns) {
 	const write_handle=ns.getPortHandle(reply_port_id);
 	const log_handle=ns.getPortHandle(log_port_id);
 	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
+	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
+	let retry_arr=[];
 	async function process_messages() {
 		for(;;) {
 			while(!retry_reply_handle.empty()) {
-				write_handle.write(retry_reply_handle.read());
-				await ns.sleep(1000);
+				retry_arr.push(await read_reply_msg(ns,retry_reply_handle));
+			}
+			while(!write_handle.full()) {
+				let first=retry_arr.pop();
+				if(first===void 0) break;
+				await send_reply_msg(ns,write_handle,first);
 			}
 			let msg=await read_call_msg(ns,read_handle);
 			const {call,args}=msg;
@@ -82,7 +88,7 @@ export async function main(ns) {
 						let reply=null;
 						for(;;) {
 							let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-							await ns.sleep(1000);
+							await ns.sleep(100);
 							if(hostname==="home") continue;
 							if(hostname.startsWith("big-")) continue;
 							const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
