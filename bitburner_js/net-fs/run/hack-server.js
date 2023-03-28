@@ -61,6 +61,7 @@ export async function main(ns) {
 				await send_reply_msg(ns,write_handle,first);
 			}
 			while(!read_handle.empty()) {
+				await ns.sleep(100);
 				let msg=await read_call_msg(ns,read_handle);
 				const {call,args}=msg;
 				switch(call) {
@@ -118,12 +119,12 @@ export async function main(ns) {
 						}
 					} break;
 				}
-				while(!log_handle.empty()) {
-					let res=log_handle.read();
-					ns.printf("%s",res);
-				}
 				if(trace) ns.print(msg);
 				console.log(msg);
+			}
+			while(!log_handle.empty()) {
+				let res=log_handle.read();
+				ns.printf("%s",res);
 			}
 		}
 	}
