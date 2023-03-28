@@ -67,7 +67,7 @@ export async function main(ns) {
 	}
 }
 
-export class HackState {
+class HackState {
 	first=true;
 	/** @type {string|null} */
 	target=null;

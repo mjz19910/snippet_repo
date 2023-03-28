@@ -1,7 +1,10 @@
 import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list_file} from "/run/hack-scripts.js";
 
 export class InitHackScript {
-	scripts=[hack_support,hack_template];
+	scripts=[
+		hack_support,hack_template,
+		"/run/as.js",
+	];
 	/** @readonly */
 	/** @type {string[]} */
 	arr_disabled=[];
