@@ -63,7 +63,7 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(;;) {
-			await ns.sleep(100);
+			await ns.sleep(1);
 			while(!retry_reply_handle.empty()) {
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
