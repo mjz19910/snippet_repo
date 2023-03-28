@@ -1,5 +1,5 @@
 import {as_any} from "/run/as.js";
-import {generic_get_call_with_id,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support.js";
+import {HackState,generic_get_call_with_id,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/run/hack-support.js";
 
 
 /** @param {HackState} s @param {string} a1 */
@@ -64,18 +64,5 @@ export async function main(ns) {
 		for(let i=0;i<8;i++) {
 			await run_hack(s,i);
 		}
-	}
-}
-
-class HackState {
-	first=true;
-	/** @type {string|null} */
-	target=null;
-	/** @arg {NS} ns @arg {{_:[thread_count:number,hostname:string]}} p_flags */
-	constructor(ns,p_flags) {
-		this.ns=ns;
-		const [thread_count,hostname]=p_flags._;
-		this.thread_count=thread_count;
-		this.hostname=hostname;
 	}
 }

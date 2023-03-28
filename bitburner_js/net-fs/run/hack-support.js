@@ -6,20 +6,6 @@
 /** @typedef {{call:"get_server";id:string;reply:Server}} ReplyMsg5 */
 /** @typedef {{call:"get_hack_target";id:string;reply:Server}} ReplyMsg6 */
 
-class HackState {
-	first=true;
-	/** @type {string|null} */
-	target=null;
-	/** @arg {NS} ns @arg {{_:[thread_count:number,hostname:string]}} p_flags */
-	constructor(ns,p_flags) {
-		this.ns=ns;
-		const [thread_count,hostname]=p_flags._;
-		this.thread_count=thread_count;
-		this.hostname=hostname;
-	}
-}
-
-
 /** @typedef {CallMsg1|CallMsg2|CallMsg3|CallMsg4|CallMsg5|CallMsg6} CallMsg */
 /** @typedef {{call:"getServerMaxMoney",args:[string]}} CallMsg1 */
 /** @typedef {{call:"getServerMinSecurityLevel",args:[string]}} CallMsg2 */
@@ -176,4 +162,17 @@ export async function getServerSecurityLevel_(this_) {
 export async function getServerMoneyAvailable_(this_) {
 	const call_id="getServerMoneyAvailable";
 	return generic_get_call(this_,call_id);
+}
+
+export class HackState {
+	first=true;
+	/** @type {string|null} */
+	target=null;
+	/** @arg {NS} ns @arg {{_:[thread_count:number,hostname:string]}} p_flags */
+	constructor(ns,p_flags) {
+		this.ns=ns;
+		const [thread_count,hostname]=p_flags._;
+		this.thread_count=thread_count;
+		this.hostname=hostname;
+	}
 }
