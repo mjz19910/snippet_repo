@@ -1,4 +1,4 @@
-import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list_file} from "/run/hack-scripts.js";
+import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list_file,share_script} from "/run/hack-scripts.js";
 
 export class InitHackScript {
 	scripts=[
@@ -66,15 +66,16 @@ export class InitHackScript {
 			if(this.opts.trace) this.format_print(srv,`t:0 h:${srv.hostname}`);
 			return false;
 		}
-		let t=this.get_thread_count(srv);
-		if(t<=0) return;
 		const processes=ns.ps(srv.hostname);
 		if(processes.length>0) {
 			if(!this.template_changed&&processes.find(ps => ps.filename===hack_template)) return;
 			processes.forEach(ps => {
 				if(ps.filename===hack_template) ns.kill(ps.pid);
+				if(ps.filename===share_script) this.restart_process(srv,ps,0.5);
 			});
 		}
+		let t=this.get_thread_count(srv);
+		if(t<=0) return;
 		this.format_print(srv,`t:${t} m:${ns.formatRam(srv.maxRam)} h:${srv.hostname}`);
 		let pid=ns.exec(hack_template,srv.hostname,t,t,srv.hostname);
 		if(pid===0) {
@@ -83,6 +84,40 @@ export class InitHackScript {
 		}
 		await this.ns.sleep(1000);
 		return;
+	}
+	/**
+	 * @param {Server} srv
+	 * @param {ProcessInfo} info
+	 * @param {number} thread_ratio
+	 */
+	restart_process(srv,info,thread_ratio) {
+		const thread_count=info.threads*thread_ratio|0;
+
+		const ram=this.ns.getScriptRam(info.filename);
+		this.ns.print("script: ",info.filename);
+		this.ns.print("max_threads: ",srv.maxRam/ram);
+		this.ns.print("cur_threads: ",info.threads);
+		this.kill_process(srv,info,ram);
+		this.start_process(srv,info,thread_count,ram);
+	}
+	/**
+	 * @param {Server} srv
+	 * @param {ProcessInfo} info
+	 * @param {number} thread_count
+	 * @param {number} ram
+	 */
+	start_process(srv,info,thread_count,ram) {
+		this.ns.exec(info.filename,srv.hostname,thread_count,...info.args);
+		srv.ramUsed+=thread_count*ram;
+	}
+	/**
+	 * @param {Server} srv
+	 * @param {ProcessInfo} info
+	 * @param {number} ram
+	 */
+	kill_process(srv,info,ram) {
+		this.ns.kill(info.pid);
+		srv.ramUsed-=info.threads*ram;
 	}
 	/** @arg {string} fn_key */
 	disableLog_(fn_key) {
@@ -230,8 +265,14 @@ export class InitHackScript {
 	}
 	/** @arg {Server} srv */
 	get_thread_count(srv) {
-		if(srv.hostname==="home") return (srv.maxRam-48)/2|0;
-		return srv.maxRam/2|0;
+		let srv_ram_avail=srv.maxRam-srv.ramUsed;
+		if(srv.hostname==="home") {
+			if(srv_ram_avail<=64) return 0;
+			return (srv_ram_avail-48)/2|0;
+		}
+		if(srv_ram_avail<=0) return 0;
+		let thread_count=srv_ram_avail/2;
+		return thread_count|0;
 	}
 	do_get_admin_rights() {
 		for(const hostname of this.hostname_list) {
