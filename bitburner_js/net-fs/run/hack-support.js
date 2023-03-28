@@ -16,8 +16,8 @@
 
 /** @param {NS} ns @param {NetscriptPort} ns_port */
 export async function read_port_msg(ns,ns_port) {
+	if(!ns_port) debugger;
 	while(ns_port.empty()) {
-		ns.tprint("port empty");
 		await ns.sleep(1000);
 	}
 	let data=ns_port.read();
