@@ -113,7 +113,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	let sent=send_call_msg(request_port,cur_msg);
 	if(!sent) throw new Error("Invalid state");
 	for(;;) {
-		debugger;
 		await ns.sleep(0);
 		if(reply_port.empty()) throw new Error("reply already removed");
 		let pending_msg=peek_reply_msg(reply_port);
@@ -123,7 +122,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			cur_msg.reply.push({call: call_id,args: [id]});
 			let sent=send_call_msg(request_port,cur_msg);
 			if(!sent) throw new Error("Invalid state");
-			await ns.sleep(310);
+			await ns.sleep(0);
 			continue;
 		}
 		for(let msg of pending_msg.reply) {
