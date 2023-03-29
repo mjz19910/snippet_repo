@@ -33,6 +33,7 @@
         "milli_len",
         "mlis",
         "NetworklessRequestController",
+        "nosources",
         "noti",
         "ONESHELL",
         "opentracker",
@@ -41,6 +42,7 @@
         "plurials",
         "precreate",
         "rebuildtheuniverse",
+        "samesite",
         "secondinterval",
         "specialclick",
         "specialsbought",
@@ -64,6 +66,8 @@
         "vnode",
         "Vnode",
         "vnodes",
-        "Wipfli"
+        "Wipfli",
+        "ytglobal",
+        "ytidb"
     ]
 }

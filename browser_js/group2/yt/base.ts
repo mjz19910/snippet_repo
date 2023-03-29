@@ -1,4 +1,6 @@
-namespace YT_Base_source {
+import {EmptyObj,Ey,taa_base} from "../item_06_types.js";
+
+export namespace YT_Base_source {
 	namespace g {
 		//#region done
 		export function Rw(_x: any): string|undefined {

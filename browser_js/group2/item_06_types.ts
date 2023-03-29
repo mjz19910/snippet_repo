@@ -91,7 +91,7 @@ class qaa<T> {
 		this.JSC$5676_context_=new qa;
 	}
 }
-abstract class taa_base {
+export abstract class taa_base {
 	abstract next(v: any): any;
 	abstract throw(v: any): any;
 	abstract return(v: any): any;
@@ -222,7 +222,7 @@ abstract class YT_NetworklessRequestController_Base {
 	abstract retryQueuedRequests(): void;
 }
 
-type EmptyObj=Record<string,never>;
+export type EmptyObj=Record<string,never>;
 export var Ey: EmptyObj=new (function() {} as any as new () => EmptyObj);
 abstract class YT_NetworklessRequestController extends YT_NetworklessRequestController_Base {
 	abstract override writeThenSend(a: any,b: any): void;
