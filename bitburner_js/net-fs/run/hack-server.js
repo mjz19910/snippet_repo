@@ -75,6 +75,7 @@ export async function main(ns) {
 			}
 		}
 		reply_messages.push(msg);
+		console.log("waiting replies",reply_messages.length);
 		notify_new_reply_port.write(1);
 		await send_reply_msg(reply_port,{call: "pending",reply: reply_messages});
 	}
