@@ -121,13 +121,11 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 const log_module_loading_enabled=false;
 export_(exports => {exports.__log_module_loading_enabled__=log_module_loading_enabled;},{global: true});
-export_(exports => exports.__path_map__=path_map);
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
-export_(exports => {exports.required=required;});
 /** @template {AllImportPaths} T @arg {T} arg @returns {import("./ProcessImport").ProcessImport<T>} */
 function require(arg) {
 	if(arg===void 0) {throw new Error("missing required");}
@@ -145,9 +143,17 @@ function require(arg) {
 	correct_return_type(mod);
 	return mod;
 }
-export_(exports => exports.get_exports=get_exports);
 
-export_(exports => exports.do_export=do_export);
+// module exports
+export_(exports => {
+	exports.get_exports=get_exports;
+	exports.do_export=do_export;
+	exports.as=as;
+	exports.required=required;
+	exports.__path_map__=path_map;
+});
+
+// global exports
 export_(exports => {
 	if(exports.require!==void 0) {
 		exports.__global_require__=exports.require;
@@ -159,4 +165,6 @@ export_(exports => {
 	Object.defineProperty(exports,"require",{value: require});
 	exports.__base_require_module_loaded__=true;
 },{global: true});
+
+// module loaded
 export_(exports => exports.__module_loaded__=true);

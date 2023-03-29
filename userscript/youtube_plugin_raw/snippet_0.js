@@ -1,3 +1,5 @@
+import {as} from "./zc_child_modules/YtPlugin_Base.user";
+
 export function con_snippet_1() {
 	let x={};
 	/** @arg {{}} o */
@@ -24,8 +26,6 @@ try {
 	let r=localStorage.getItem("test");
 	if(r!=="test_value") no_storage_access=true;
 } catch {no_storage_access=true;}
-/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function as(e,x=e) {return x;}
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {

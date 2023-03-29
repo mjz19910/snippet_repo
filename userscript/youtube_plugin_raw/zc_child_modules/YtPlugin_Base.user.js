@@ -23,12 +23,9 @@ export_(exports => {exports.__is_module_flag__=true;});
 if(window.__log_module_loading_enabled__) console.log("Load PluginBase");
 //#endregion
 //#region basic
-/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function as(e,x=e) {return x;}
 /** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
 function as_any(e,x=e) {return x;}
 export_(exports => {
-	exports.as=as;
 	exports.as_any=as_any;
 });
 //#endregion
