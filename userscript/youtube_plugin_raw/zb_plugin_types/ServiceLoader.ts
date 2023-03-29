@@ -1,1 +1,1 @@
-type ServiceLoader=InstanceType<PluginStore["mod$ServiceLoaderPlugin"]["ServiceLoader"]>;
+type ServiceLoader=InstanceType<RequireModuleCache["mod$ServiceLoaderPlugin"]["ServiceLoader"]>;

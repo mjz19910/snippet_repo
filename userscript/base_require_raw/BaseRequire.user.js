@@ -87,13 +87,13 @@ function resolve_path_to_userscript_dir(x) {
 	throw new Error("Unable to resolve path: "+u);
 }
 function get_exports() {
-	window.__plugin_modules__??={};
-	let all_modules=window.__plugin_modules__;
-	/** @type {{[U in keyof PluginStore]?:BaseModuleType}} */
+	window.__require_module_cache__??={};
+	let all_modules=window.__require_module_cache__;
+	/** @type {{[U in keyof RequireModuleCache]?:BaseModuleType}} */
 	let ok_modules=all_modules;
 	return ok_modules;
 }
-/** @arg {keyof PluginStore} module_name @template {BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+/** @arg {keyof RequireModuleCache} module_name @template {BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn,flags,exports,module_name) {
 	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {fn(exports);} else {
@@ -104,10 +104,10 @@ function do_export(fn,flags,exports,module_name) {
 			let win_exp=window;
 			exports=as(win_exp);
 		} else {
-			window.__plugin_modules__??={};
-			let all_modules=window.__plugin_modules__;
+			window.__require_module_cache__??={};
+			let all_modules=window.__require_module_cache__;
 			exports=as(all_modules[module_name]??{});
-			/** @type {{[U in keyof PluginStore]?:BaseModuleType}} */
+			/** @type {{[U in keyof RequireModuleCache]?:BaseModuleType}} */
 			let ok_modules=all_modules;
 			ok_modules[module_name]=as(exports);
 		}
@@ -130,8 +130,8 @@ export_(exports => {exports.required=required;});
 /** @template {AllImportPaths} T @arg {T} arg @returns {import("./ProcessImport").ProcessImport<T>} */
 function require(arg) {
 	if(arg===void 0) {throw new Error("missing required");}
-	window.__plugin_modules__??={};
-	const M=window.__plugin_modules__,i=required;
+	window.__require_module_cache__??={};
+	const M=window.__require_module_cache__,i=required;
 	const resolved_path=resolve_path_to_userscript_dir(arg);
 	if(resolved_path===null) throw new Error("Unable to resolve path: "+arg);
 	/** @arg {import("./ProcessImport").ProcessImport<keyof path_map>} x @returns {asserts x is import("./ProcessImport").ProcessImport<T>} */
@@ -144,8 +144,11 @@ function require(arg) {
 	correct_return_type(mod);
 	return mod;
 }
-export_(exports => exports.require=require,{global: true});
 export_(exports => exports.get_exports=get_exports);
 
 export_(exports => exports.do_export=do_export);
+export_(exports => {
+	exports.require=require;
+	exports.__base_require_module_loaded__=true;
+},{global: true});
 export_(exports => exports.__module_loaded__=true);

@@ -1,5 +1,5 @@
-type IndexedDBService=InstanceType<PluginStore["mod$IndexedDBService"]["IndexedDBService"]>;
-type VolumeRange=InstanceType<PluginStore["mod$YoutubePluginBase"]["VolumeRange"]>;
+type IndexedDBService=InstanceType<RequireModuleCache["mod$IndexedDBService"]["IndexedDBService"]>;
+type VolumeRange=InstanceType<RequireModuleCache["mod$YoutubePluginBase"]["VolumeRange"]>;
 type ServiceResolverBox<T>={
 	value: T|null;
 	listeners: (() => void)[];
@@ -22,8 +22,8 @@ type AsyncPluginEventDetail={
 		on_yt_playlist_manager(element: HTMLElement): void;
 	};
 };
-type ServiceMethods=InstanceType<PluginStore["mod$ServiceMethods"]["ServiceMethods"]>;
-type ParserService=InstanceType<PluginStore["mod$ParserService"]["ParserService"]>;
-type HandleTypes=InstanceType<PluginStore["mod$HandleTypes"]["HandleTypes"]>;
+type ServiceMethods=InstanceType<RequireModuleCache["mod$ServiceMethods"]["ServiceMethods"]>;
+type ParserService=InstanceType<RequireModuleCache["mod$ParserService"]["ParserService"]>;
+type HandleTypes=InstanceType<RequireModuleCache["mod$HandleTypes"]["HandleTypes"]>;
 
 type Y_PutBoxedArgs=[store_type: string,store_args: [string,make_item_group<any>]|[null,number]];

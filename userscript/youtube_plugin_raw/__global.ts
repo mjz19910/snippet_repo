@@ -3,7 +3,6 @@ declare global {
 	interface Window {
 		Polymer: {Class?: <T>(x: {}) => T;};
 		__youtube_plugin_base_loaded__?: boolean;
-		__plugin_modules__?: Partial<PluginStore>;
 	}
 }
 declare global {
