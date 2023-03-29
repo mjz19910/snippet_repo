@@ -46,17 +46,6 @@ export_(exports => {exports.do_export=do_export;});
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {return x;}
 //#endregion
-// #region Use module
-// Use module constants
-const DebugApiH_o={
-	/** @type {unique symbol} */
-	InjectApi: Symbol.for("InjectApi"),
-	/** @type {unique symbol} */
-	Repeat_0: Symbol.for("Repeat_0"),
-};
-export_(exports => {exports.DebugApiH_o=DebugApiH_o;});
-// Use module types
-// #endregion
 // #region saved
 /** @type {[string,{name:string}][]} */
 const saved_function_objects=[];
