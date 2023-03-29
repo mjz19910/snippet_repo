@@ -35,6 +35,7 @@ export async function main(ns) {
 				ns.upgradePurchasedServer(hostname,ram);
 				srv.maxRam=ram;
 			} else {
+				debugger;
 				let new_host=purchase_server(hostname);
 				srv=ns.getServer(new_host);
 			}
