@@ -79,7 +79,6 @@ export async function main(ns) {
 		if(reply_messages.length===1) {
 			await send_reply_msg(reply_port,msg);
 		} else {
-			reply_messages;
 			await send_reply_msg(reply_port,{call: "pending",reply: reply_messages});
 		}
 	}
