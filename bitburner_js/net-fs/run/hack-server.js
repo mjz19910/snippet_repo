@@ -184,7 +184,7 @@ export async function main(ns) {
 			}
 			msg_arr.length=0;
 			request_port.read();
-			await send_call_msg(reply_port,msg);
+			await send_call_msg(request_port,msg);
 			while(!log_port.empty()) {
 				let res=log_port.read();
 				ns.printf("%s",res);
