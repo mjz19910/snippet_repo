@@ -49,6 +49,7 @@ export async function main(ns) {
 	const pending_reply_list=[];
 	/** @type {ReplyMsg[]} */
 	const retry_arr=[];
+	/** @type {number[]} */
 	let complete_reply_id_list=[];
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
@@ -73,7 +74,21 @@ export async function main(ns) {
 		}
 		let reply_id=pending_reply_message.reply.push(msg)-1;
 		msg.uid=reply_id;
-		console.log("waiting replies",pending_reply_message.reply.length);
+		let pending_msg_count=0;
+		/** @type {(ReplyMsg|null)[]} */
+		const reply_cache=pending_reply_message.reply.slice();
+		for(let done_id of complete_reply_id_list) {
+			const idx=pending_reply_message.reply.findIndex(v => v.uid===done_id);
+			if(idx===-1) {
+				pending_msg_count++;
+				continue;
+			}
+			reply_cache[idx]=null;
+			let done_msg=pending_reply_message.reply[idx];
+			console.log("done with",done_msg);
+		}
+		console.log("reply cache",reply_cache);
+		console.log("waiting replies",pending_msg_count);
 		notify_new_reply_port.write(1);
 		await send_reply_msg(reply_port,pending_reply_message);
 	}
