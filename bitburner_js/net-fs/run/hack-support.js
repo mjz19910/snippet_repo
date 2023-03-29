@@ -140,7 +140,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		this_.ns.printf("%s retry",call_id);
 		await notify_port1.nextWrite();
 	}
-	throw new Error("Timeout waiting for response from server (is /run/hack-server.js running)");
+	throw new Error("Timeout waiting for response from server (is hack-server.js running?)");
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */
 export async function generic_get_call(this_,call_id) {
