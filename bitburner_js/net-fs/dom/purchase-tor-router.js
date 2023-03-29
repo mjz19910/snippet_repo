@@ -95,7 +95,7 @@ export class DomList {
 		this.click_on(purchase_tor_router_button);
 		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
 		this.click_on_1(backdrop_root);
-		this.click_on(this.terminal_button);
+		this.current_page=this.click_to_page(this.terminal_button);
 	}
 	/**
 	 * @returns {HTMLDivElement}
