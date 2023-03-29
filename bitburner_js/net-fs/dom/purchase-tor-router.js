@@ -138,6 +138,11 @@ export class DomList {
 		this.click_on_trusted(infiltrate_company_button);
 		let current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
 		const start_infiltrate_button=current_container.children[1].children[2].children[0];
+		/** @type {any} */
+		let e_target_obj_any=EventTarget;
+		/** @type {{__arg_list_for_add_event_listeners:any[]}} */
+		let EventTarget_=e_target_obj_any;
+		EventTarget_.__arg_list_for_add_event_listeners.length=0;
 		this.click_on(start_infiltrate_button);
 		await ns.sleep(33);
 		forever_loop: for(;;) {
@@ -146,7 +151,7 @@ export class DomList {
 				await ns.sleep(33);
 				current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
 			}
-			/** @type {(["cut_num",number]|["key","left"|"up"]|["type_rev",string]|["type_bracket",string])[]} */
+			/** @type {(["mines",("mine"|"empty")[]]|["cut_num",number]|["enter_code","key","left"|"up"]|["type_rev",string]|["type_bracket",string])[]} */
 			let instruction_arr=[];
 			const instruction_source=current_container.children[2].children;
 			this.instruction_source=instruction_source;
@@ -157,8 +162,8 @@ export class DomList {
 					let node_text=instruction_source[1].textContent;
 					switch(node_text) {
 						default: console.log("enter_code",node_text); debugger; break;
-						case "→": instruction_arr.push(["key","left"]); break;
-						case "↑": instruction_arr.push(["key","up"]); break;
+						case "→": instruction_arr.push(["enter_code","key","left"]); break;
+						case "↑": instruction_arr.push(["enter_code","key","up"]); break;
 					}
 				} break;
 				case "Type it backward": {
@@ -202,7 +207,7 @@ export class DomList {
 							mine_arr.push("mine");
 						}
 					}
-					debugger;
+					instruction_arr.push(["mines",mine_arr]);
 				} break;
 				case "Attack when his guard is down!": {
 					while(instruction_source[1].textContent?.includes("Guarding")) {
@@ -230,7 +235,7 @@ export class DomList {
 			for(let instruction of instruction_arr) {
 				switch(instruction[0]) {
 					case "cut_num": debugger; break;
-					case "key": {
+					case "enter_code": {
 						debugger;
 					} break;
 					case "type_rev": {
@@ -240,6 +245,21 @@ export class DomList {
 							this.document_.dispatchEvent(new KeyboardEvent("keypress",{key: char}));
 						}
 						debugger;
+					} break;
+					case "type_bracket": debugger; break;
+					case "mines": {
+						const [,mine_arr]=instruction;
+						switch(mine_arr.length) {
+							default: debugger; break;
+							case 3*4: {
+								let mine_grid=[];
+								for(let i=0;i<mine_arr.length;i+=3) {
+									mine_grid.push(mine_arr.slice(i,i+3));
+								}
+								console.log(mine_grid);
+								debugger;
+							} break;
+						}
 					} break;
 				}
 			}

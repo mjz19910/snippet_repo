@@ -14,7 +14,7 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 // yt_plugin/Base(4) => base_require/BaseRequire(1)
-const {do_export,get_exports,required,as}=require("../../base_require_raw/BaseRequire.user");
+const {do_export,get_exports,required,as}=require.require("../../base_require_raw/BaseRequire.user");
 
 // priority yt_plugin/Base(4)
 
@@ -1833,7 +1833,7 @@ function yt_plugin_base_main() {
 		test_base.module_debug_log(mod);
 	}
 	if(failed_to_load) return;
-	const {ServiceLoader}=require("./YtPlugin_ServiceLoader_Plugin.user");
+	const {ServiceLoader}=require.require("./YtPlugin_ServiceLoader_Plugin.user");
 	const log_enabled_page_type_change=false;
 	/** @private @type {ServiceResolverBox<{}>} */
 	const resolver_value={
