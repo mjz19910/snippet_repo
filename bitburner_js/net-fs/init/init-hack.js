@@ -149,13 +149,6 @@ export class InitHackScript {
 		}
 		return [];
 	}
-	log_servers_to_backdoor() {
-		for(const hostname of this.to_backdoor) {
-			const srv=this.get_server(hostname);
-			this.ns.print("backdoor: ",hostname," ",srv.requiredHackingSkill);
-		}
-		this.ns.write(backdoor_list_file,this.to_backdoor.join("\n")+"\n","w");
-	}
 	async start_hack_script() {
 		await this.ns.sleep(0);
 		for(const hostname of this.hostname_list) {
@@ -179,21 +172,6 @@ export class InitHackScript {
 		let format_str=this.ns.tFormat(time_ms);
 		format_str=format_str.replace(" seconds","s");
 		return format_str;
-	}
-	update_backdoor_cache() {
-		const {to_backdoor}=this;
-		for(let hostname of this.hostname_list) {
-			if(hostname.startsWith("big-")) continue;
-			const srv=this.get_server(hostname);
-			if(srv.purchasedByPlayer) continue;
-			if(!srv.hasAdminRights) continue;
-			if(srv.requiredHackingSkill<=this.player_hacking_skill&&!srv.backdoorInstalled) {
-				if(!to_backdoor.includes(hostname)) to_backdoor.push(hostname);
-			} else {
-				let idx=to_backdoor.indexOf(hostname);
-				if(idx!==-1) to_backdoor.splice(idx,1);
-			}
-		}
 	}
 	/** @arg {Server} srv */
 	get_thread_count(srv) {
@@ -271,32 +249,33 @@ export async function main(ns) {
 
 /** @arg {InitHackScript} this_ */
 async function init_hack_run(this_) {
+	const {ns,hostname_list}=this_;
 	if(this_.f_.tail) this_.ns.tail();
 	this_.ns.print("init_hack");
-	await start_host_scan(this_,"home");
+	await start_host_scan(ns,hostname_list,"home");
 	if(!this_.has_process_by_file("home",hack_server)) this_.ns.exec(hack_server,"home");
-	for(const hostname of this_.hostname_list) this_.ns.scp(this_.scripts,hostname);
+	for(const hostname of hostname_list) this_.ns.scp(this_.scripts,hostname);
 	await this_.do_get_admin_rights();
 	await this_.start_hack_script();
-	this_.update_backdoor_cache();
-	this_.log_servers_to_backdoor();
 }
 
 /**
- * @param {InitHackScript} this_ 
+ * @param {NS} ns
  * @param {string} src_host
- * @param {number} depth @arg {Map<string,string[]>} map
+ * @param {number} depth
+ * @param {Map<string, string[]>} map
  * @param {Set<string>} seen_set
- * */
-async function iter_host_scan_entries(this_,src_host,seen_set,depth,map) {
+ * @param {string[]} hostname_list
+ */
+async function iter_host_scan_entries(ns,hostname_list,src_host,seen_set,depth,map) {
 	let depth_list=[];
 	const clone=new Map(map);
 	for(let [key,val] of clone.entries()) {
 		for(let srv of val) {
 			if(seen_set.has(srv)) continue;
 			seen_set.add(srv);
-			this_.hostname_list.push(srv);
-			let scan_res=this_.ns.scan(srv);
+			hostname_list.push(srv);
+			let scan_res=ns.scan(srv);
 			let home_idx=scan_res.indexOf(src_host);
 			if(home_idx>-1) scan_res.splice(home_idx,1);
 			scan_res=scan_res.filter(v => !seen_set.has(v));
@@ -330,21 +309,21 @@ async function iter_host_scan_entries(this_,src_host,seen_set,depth,map) {
 	return file_data.join("");
 }
 
-/** @param {InitHackScript} this_ @arg {string} src_host */
-async function start_host_scan(this_,src_host) {
+/** @param {NS} ns @param {string[]} hostname_list @arg {string} src_host */
+export async function start_host_scan(ns,hostname_list,src_host) {
 	/** @type {Map<string, string[]>} */
 	let map=new Map;
 	/** @type {Set<string>} */
 	let seen_set=new Set;
-	this_.hostname_list.push(src_host);
-	map.set(src_host,this_.ns.scan(src_host));
+	hostname_list.push(src_host);
+	map.set(src_host,ns.scan(src_host));
 	let scan_results=["------\n","\n"];
 	let depth=0;
 	for(;;) {
 		depth++;
-		const result=await iter_host_scan_entries(this_,src_host,seen_set,depth,map);
+		const result=await iter_host_scan_entries(ns,hostname_list,src_host,seen_set,depth,map);
 		scan_results.push(result);
 		if(map.size===0) break;
 	}
-	this_.ns.write(host_scan_list_file,scan_results.join(""),"w");
+	ns.write(host_scan_list_file,scan_results.join(""),"w");
 }
