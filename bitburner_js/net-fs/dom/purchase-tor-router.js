@@ -65,7 +65,7 @@ export class DomList {
 		let win=this.window_();
 		win.dom_list=this;
 	}
-	/** @param {ParentNode} node @returns {{onClick(event:{isTrusted:boolean}):void;}} */
+	/** @param {ParentNode} node @returns {{children:{type:symbol};onClick(event:{isTrusted:boolean}):void;}} */
 	get_react_props(node) {
 		return Object.values(node)[1];
 	}
@@ -190,6 +190,20 @@ export class DomList {
 				case "Say something nice about the guard": {
 					debugger;
 				} break;
+				case "Remember all the mines!": {
+					const mine_grid=instruction_source[1].children;
+					/** @type {("mine"|"empty")[]} */
+					let mine_arr=[];
+					for(let i=0;i<mine_grid.length;i++) {
+						let mine_pos=mine_grid[i];
+						if(typeof this.get_react_props(mine_pos).children.type==="symbol") {
+							mine_arr.push("empty");
+						} else {
+							mine_arr.push("mine");
+						}
+					}
+					debugger;
+				} break;
 				default: {
 					for(let i=1;i<instruction_source.length-1;i++) {
 						let node_text=instruction_source[i].textContent;
@@ -217,9 +231,7 @@ export class DomList {
 						const str_lower=instruction[1].toLowerCase(); str_lower;
 						for(let char of str_lower) {
 							debugger;
-							window.dispatchEvent(new KeyboardEvent("keydown",{key: char}));
-							window.dispatchEvent(new KeyboardEvent("keyup",{key: char}));
-							window.dispatchEvent(new KeyboardEvent("keypress",{key: char}));
+							this.document_.dispatchEvent(new KeyboardEvent("keypress",{key: char}));
 						}
 						debugger;
 					} break;
