@@ -150,6 +150,7 @@ export class DomList {
 			let instruction_arr=[];
 			const instruction_source=current_container.children[2].children;
 			const game_instruction=instruction_source[0].textContent;
+			console.log("game",JSON.stringify(game_instruction));
 			switch(game_instruction) {
 				case "Enter the Code!": {
 					const left_char="→";
@@ -161,7 +162,6 @@ export class DomList {
 					instruction_arr.push(["key","left"]);
 				} break;
 				default: {
-					console.log("game",JSON.stringify(game_instruction));
 					for(let i=1;i<instruction_source.length-1;i++) {
 						let node_text=instruction_source[i].textContent;
 						if(node_text===null) throw new Error("Invalid textContent");
