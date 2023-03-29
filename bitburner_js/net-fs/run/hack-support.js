@@ -113,6 +113,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	let sent=send_call_msg(request_port,cur_msg);
 	if(!sent) throw new Error("Invalid state");
 	for(;;) {
+		debugger;
 		await ns.sleep(307);
 		if(reply_port.empty()) throw new Error("reply already removed");
 		let pending_msg=peek_reply_msg(reply_port);

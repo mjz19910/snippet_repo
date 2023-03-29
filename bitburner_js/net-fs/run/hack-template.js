@@ -82,7 +82,6 @@ export async function main(ns) {
 }
 /** @arg {HackState} s */
 async function hack_forever(s) {
-	debugger;
 	for(;;) {
 		await s.ns.sleep(309);
 		const srv=await generic_get_call_with_id(s,Math.random()+"","get_hack_target"); ``;
