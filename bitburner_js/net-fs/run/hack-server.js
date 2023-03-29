@@ -1,4 +1,4 @@
-import {complete_pipe_port_id,log_port_id,max_port_id,read_call_msg,read_reply_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
+import {complete_pipe_port_id,log_port_id,max_port_id,read_call_msg,read_reply_msg,reply_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -45,23 +45,17 @@ export async function main(ns) {
 
 	for(let item of ns.scan("home")) get_server(item);
 
-	/** @type {ReplyMsg[]} */
-	const pending_reply_list=[];
-	/** @type {ReplyMsg[]} */
-	const retry_arr=[];
 	/** @type {number[]} */
 	let complete_reply_id_list=[];
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
-	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
 	const complete_port=ns.getPortHandle(complete_pipe_port_id);
 	const notify_request_has_space_port=ns.getPortHandle(max_port_id+2);
 	const notify_new_reply_port=ns.getPortHandle(max_port_id+4);
 	notify_request_has_space_port.clear();
 	notify_request_has_space_port.write(1);
 	complete_port.clear();
-	retry_reply_handle.clear();
 	request_port.clear();
 	reply_port.clear();
 	let reply_id_offset=0;
@@ -105,20 +99,8 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
+			console.log("server",i);
 			await ns.sleep(1);
-			while(!retry_reply_handle.empty()) {
-				retry_arr.push(...(await read_reply_msg(retry_reply_handle)).reply);
-			}
-			while(pending_reply_list.length>0&&!reply_port.full()) {
-				let first=pending_reply_list.pop();
-				if(first===void 0) break;
-				await send_reply_msg_2(first);
-			}
-			while(retry_arr.length>0&&!reply_port.full()) {
-				let first=retry_arr.pop();
-				if(first===void 0) break;
-				await send_reply_msg_2(first);
-			}
 			while(!request_port.empty()) {
 				let msg=await read_call_msg(request_port);
 				const {call,args}=msg;
