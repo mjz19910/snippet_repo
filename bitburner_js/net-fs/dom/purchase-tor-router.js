@@ -68,7 +68,7 @@ export class DomList {
 	click_on_1(element) {
 		Object.values(element)[1].onClick({});
 	}
-	/** @returns {Window&{__dom_list:this}} */
+	/** @returns {Window&{__dom_list?:DomList}} */
 	window_() {
 		/** @type {any} */
 		let win=globalThis;
@@ -89,7 +89,6 @@ export class DomList {
 		return this.get_div(this.MuiBox_root,"div.MuiBox-root");
 	}
 	async buy_tor_router() {
-		/** @type {any} */
 		let win=this.window_();
 		win.__dom_list=this;
 		this.current_page=this.click_to_page(this.city_button);
