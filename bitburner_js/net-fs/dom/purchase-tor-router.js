@@ -204,6 +204,15 @@ export class DomList {
 					debugger;
 				} break;
 			}
+			for(let instruction of instruction_arr) {
+				switch(instruction[0]) {
+					case "cut_num": break;
+					case "key": {
+						debugger;
+					} break;
+					case "type": break;
+				}
+			}
 			console.log("game",JSON.stringify(instruction_arr));
 			break;
 		}
