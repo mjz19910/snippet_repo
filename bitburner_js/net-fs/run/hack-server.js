@@ -50,12 +50,12 @@ export async function main(ns) {
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
-	const complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
+	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
 	const notify_new_reply_port=ns.getPortHandle(notify_new_reply_port_id);
 	notify_request_has_space_port.clear();
 	notify_request_has_space_port.write(1);
-	complete_port.clear();
+	notify_complete_port.clear();
 	request_port.clear();
 	reply_port.clear();
 	let reply_id_offset=0;
@@ -165,8 +165,8 @@ export async function main(ns) {
 				if(trace) ns.print(msg);
 				console.log("server_msg",msg);
 				notify_request_has_space_port.write(1);
-				while(!complete_port.empty()) {
-					let complete_id=complete_port.read();
+				while(!notify_complete_port.empty()) {
+					let complete_id=notify_complete_port.read();
 					if(typeof complete_id==="number") {
 						if(complete_reply_id_list.includes(complete_id)) continue;
 						complete_reply_id_list.push(complete_id);
