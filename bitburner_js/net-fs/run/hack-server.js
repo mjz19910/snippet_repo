@@ -181,6 +181,7 @@ export async function main(ns) {
 					} break;
 				}
 				if(trace) ns.print(msg);
+				console.log("server_msg",msg);
 				notify_request_has_space_port.write(1);
 				while(!complete_port.empty()) {
 					let complete_id=complete_port.read();
