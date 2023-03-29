@@ -11,13 +11,18 @@ export async function main(ns) {
 
 	let ram=1;
 	let purchased_server_list=ns.getPurchasedServers();
-	let server_hostname_list=purchased_server_list.slice();
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
 	const s=new InitHackScript(ns,{trace: false,template_changed});
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
 	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
+		if(hostname_list.length!==purchased_server_limit) {
+			for(let i=hostname_list.length;i<purchased_server_limit;i++) {
+				let srv=purchase_server(`pserv-${i}`);
+				await s.start_script_template(srv);
+			}
+		}
 		for(let hostname of hostname_list) {
 			let cur_server_money=ns.getServerMoneyAvailable("home");
 			if(cur_server_money<buy_cost1) return;
@@ -30,28 +35,27 @@ export async function main(ns) {
 				ns.upgradePurchasedServer(hostname,ram);
 				srv.maxRam=ram;
 			} else {
-				ns.print("buy_server: ",hostname);
-				let new_host=ns.purchaseServer(hostname,ram);
-				if(new_host==="") throw new Error("failed to purchase server");
-				purchased_server_list.push(new_host);
-				ns.scp(s.scripts,new_host);
-				srv=ns.getServer(new_host);
+				srv=purchase_server(hostname);
 			}
 			await s.start_script_template(srv);
 		}
 	}
-	server_hostname_list=ns.getPurchasedServers();
-	/** @param {string[]} a @param {number} limit */
-	function add_new_purchased_servers(a,limit) {
-		if(a.length!==limit) for(let i=0;i<limit;i++) a.push(`pserv-${i}`);
+	/** @param {string} hostname */
+	function purchase_server(hostname) {
+		ns.print("buy_server: ",hostname);
+		let new_host=ns.purchaseServer(hostname,ram);
+		if(new_host==="") throw new Error("failed to purchase server");
+		purchased_server_list.push(new_host);
+		ns.scp(s.scripts,new_host);
+		return ns.getServer(new_host);
 	}
-	add_new_purchased_servers(server_hostname_list,purchased_server_limit);
-	if(server_hostname_list.length!==purchased_server_limit) for(let i=0;i<purchased_server_limit;i++) server_hostname_list.push(`pserv-${i}`);
-	await upgrade_purchased_server_list(0,ram,server_hostname_list);
+	purchased_server_list=ns.getPurchasedServers();
+	await upgrade_purchased_server_list(0,ram,purchased_server_list);
 	/** @arg {string} hostname */
 	function get_ram(hostname) {return ns.getServerMaxRam(hostname);}
-	if(server_hostname_list.length===0) return;
-	let min_mem=server_hostname_list.reduce(
+	if(purchased_server_list.length===0) return;
+	for(let hostname of purchased_server_list) {ns.getServerMaxRam(hostname);}
+	let min_mem=purchased_server_list.reduce(
 		(a,r) => get_ram(a)>get_ram(r)? r:a
 	);
 	ram=get_ram(min_mem);
@@ -63,7 +67,7 @@ export async function main(ns) {
 	let cur_server_money=ns.getServerMoneyAvailable("home");
 	if(cur_server_money>(buy_cost1*25*2)) ns.tail();
 	while(cur_server_money>(buy_cost1*25*2)) {
-		await upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
+		await upgrade_purchased_server_list(prev_ram,ram,purchased_server_list);
 		prev_ram=ram; ram*=2;
 		buy_cost1=ns.getPurchasedServerCost(ram-prev_ram);
 		cur_server_money=ns.getServerMoneyAvailable("home");
