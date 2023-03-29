@@ -29,6 +29,7 @@ export class InitHackScript {
 		};
 		this.f_=ns.flags([
 			["limit",-1],
+			["tail",false],
 		]);
 		if(typeof this.f_.limit!=="number") throw new Error("Invalid arguments");
 		this.start_limit=this.f_.limit;
@@ -270,6 +271,7 @@ export async function main(ns) {
 
 /** @arg {InitHackScript} this_ */
 async function init_hack_run(this_) {
+	if(this_.f_.tail) this_.ns.tail();
 	this_.ns.print("init_hack");
 	await start_host_scan(this_,"home");
 	if(!this_.has_process_by_file("home",hack_server)) this_.ns.exec(hack_server,"home");

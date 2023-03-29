@@ -282,7 +282,6 @@ export class DomList {
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.clearLog();
-	ns.tail();
 	ns.disableLog("disableLog");
 	const win=globalThis;
 	// ns.singularity.purchaseTor();
