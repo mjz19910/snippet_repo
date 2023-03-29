@@ -68,19 +68,16 @@ export async function main(ns) {
 		let reply_id=reply_uid_counter;
 		reply_uid_counter++;
 		msg.uid=reply_id;
-		let pending_msg_count=0;
 		/** @type {(ReplyMsg|null)[]} */
 		const reply_cache=pending_reply_message.reply.slice();
 		for(let done_id of complete_reply_id_list) {
 			const idx=pending_reply_message.reply.findIndex(v => v.uid===done_id);
-			if(idx===-1) {
-				pending_msg_count++;
-				continue;
-			}
+			if(idx===-1) continue;
 			reply_cache[idx]=null;
 		}
 		for(let i=0;i<reply_cache.length;i++) {
-			if(reply_cache[i]===null) {
+			let reply_val=reply_cache[i];
+			if(reply_val===null) {
 				reply_cache.splice(i,1);
 				i--;
 				continue;
@@ -100,18 +97,16 @@ export async function main(ns) {
 		pending_reply_message.reply.push(msg);
 		if(reply_cache.length>0) {
 			console.log("reply cache",reply_cache);
-			console.log("waiting replies",pending_msg_count);
+			console.log("waiting replies",pending_reply_message.reply.length);
 		}
 		let sent=send_reply_msg(reply_port,pending_reply_message);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
-		debugger;
 		for(let i=0;;i++) {
 			await ns.sleep(0);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
-			debugger;
 			const msg_arr=msg.reply;
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
