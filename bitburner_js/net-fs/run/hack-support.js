@@ -3,7 +3,7 @@ export const reply_port_id=2;
 export const log_port_id=3;
 export const reply_retry_port_id=4;
 export const notify_request_has_space_id=5;
-export const complete_pipe_port_id=5;
+export const notify_complete_pipe_port_id=5;
 export const max_port_id=6;
 /** @param {NetscriptPort} ns_port */
 export async function async_port_read_data(ns_port) {
@@ -84,7 +84,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
-	const complete_port=ns.getPortHandle(complete_pipe_port_id);
+	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	const notify_new_reply_port=ns.getPortHandle(max_port_id+4);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
@@ -103,7 +103,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			for(let msg of pending_msg.reply) {
 				if(!should_accept(msg,call_id,id)) continue;
 				accepted_messages.push(msg);
-				complete_port.write(msg.uid);
+				notify_complete_port.write(msg.uid);
 			}
 			for(let ok_msg of accepted_messages) {
 				let ret=ok_msg.reply;

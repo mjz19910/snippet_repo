@@ -1,4 +1,4 @@
-import {complete_pipe_port_id,log_port_id,max_port_id,read_call_msg,read_reply_msg,reply_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,max_port_id,read_call_msg,read_reply_msg,reply_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -50,7 +50,7 @@ export async function main(ns) {
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
-	const complete_port=ns.getPortHandle(complete_pipe_port_id);
+	const complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	const notify_request_has_space_port=ns.getPortHandle(max_port_id+2);
 	const notify_new_reply_port=ns.getPortHandle(max_port_id+4);
 	notify_request_has_space_port.clear();
