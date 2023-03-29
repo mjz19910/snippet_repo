@@ -57,6 +57,7 @@ export async function main(ns) {
 	const notify_port1=ns.getPortHandle(max_port_id+1);
 	const notify_request_has_space_port=ns.getPortHandle(max_port_id+2);
 	const notify_port3=this_.ns.getPortHandle(max_port_id+3);
+	const notify_port4=this_.ns.getPortHandle(max_port_id+4);
 	notify_request_has_space_port.clear();
 	notify_request_has_space_port.write(1);
 	retry_reply_handle.clear();
@@ -69,6 +70,7 @@ export async function main(ns) {
 			pending_reply_list.push(msg);
 			return;
 		}
+		notify_port4.write(1);
 		await send_reply_msg(reply_port,msg);
 	}
 	async function process_messages() {
