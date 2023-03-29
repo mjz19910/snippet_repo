@@ -64,6 +64,7 @@ export async function main(ns) {
 	retry_reply_handle.clear();
 	request_port.clear();
 	reply_port.clear();
+	let reply_id_offset=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
 		await ns.sleep(1000);
@@ -74,7 +75,7 @@ export async function main(ns) {
 			let reply_msg=await read_reply_msg(reply_port);
 			pending_reply_message.reply.push(...reply_msg.reply);
 		}
-		let reply_id=pending_reply_message.reply.push(msg)-1;
+		let reply_id=pending_reply_message.reply.push(msg)-1+reply_id_offset;
 		msg.uid=reply_id;
 		let pending_msg_count=0;
 		/** @type {(ReplyMsg|null)[]} */
@@ -86,6 +87,11 @@ export async function main(ns) {
 				continue;
 			}
 			reply_cache[idx]=null;
+		}
+		for(let i=0;i<reply_cache.length;i++) {
+			if(reply_cache[i]!==null) break;
+			pending_reply_message.reply.shift();
+			reply_id_offset++;
 		}
 		console.log("reply cache",reply_cache);
 		console.log("waiting replies",pending_msg_count);
