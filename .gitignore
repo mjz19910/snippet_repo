@@ -1,16 +1,4 @@
 .vscode/
-venv/
 **/node_modules
-lib/final/
-lib/types/
-lib/modules/rebuild_universe_automation
-lib/temporary/
-offline_notes/
-build/
-javascript_build/
-typescript_build/
 dist/
-errors.txt
-*.hidden.*
-/*.out
-/*.out.[jt]s
+venv/
