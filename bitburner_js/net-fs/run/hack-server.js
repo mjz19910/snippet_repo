@@ -67,11 +67,9 @@ export async function main(ns) {
 	let reply_id_offset=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		await ns.sleep(1000);
 		/** @type {ReplyMsgPending} */
 		let pending_reply_message={call: "pending",reply: []};
 		while(!reply_port.empty()) {
-			await ns.sleep(1000);
 			let reply_msg=await read_reply_msg(reply_port);
 			pending_reply_message.reply.push(...reply_msg.reply);
 		}

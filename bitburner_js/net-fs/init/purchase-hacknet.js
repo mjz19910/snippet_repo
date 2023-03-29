@@ -19,7 +19,7 @@ export async function main(ns) {
 			hacknet_entries.push([node_id,node_info]);
 			ns.print("new node",node_id);
 		}
-		await ns.sleep(1000);
+		await ns.sleep(300);
 	}
 	let nodes_not=hacknet_entries.filter(v => (v[1].level%10)!==0);
 	nodes_not.forEach(([idx,node]) => {
