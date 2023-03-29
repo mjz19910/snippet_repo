@@ -80,17 +80,14 @@ export class DomList {
 		let win=this.window_();
 		win.__dom_list=this;
 		this.click_on(this.city_button);
-		/** @type {HTMLDivElement} */
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
 		const city_location=this.current_page.children[0].textContent;
 		if(city_location!=="Sector-12") throw new Error("Handle new city");
-		/** @type {HTMLSpanElement} */
 		const alpha_enterprises_map_location=query_element(this.current_page,"[aria-label='Alpha Enterprises']");
 		this.click_on(alpha_enterprises_map_location);
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
 		const purchase_tor_router_button=as_html_element(this.current_page.children[8]);
 		this.click_on(purchase_tor_router_button);
-		/** @type {HTMLDivElement} */
 		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
 		this.click_on_1(backdrop_root);
 		this.click_on(this.terminal_button);
