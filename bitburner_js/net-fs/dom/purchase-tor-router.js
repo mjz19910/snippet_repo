@@ -1,7 +1,7 @@
 import {as_div_element,as_html_element,as_svg_element,query_element} from "/dom/dom-support.js";
 import {as_any} from "/run/as.js";
 
-class DomList {
+export class DomList {
 	/** @arg {HTMLDivElement} header_element */
 	expand_collapsed_section(header_element) {
 		if(as_svg_element(query_element(header_element,"svg:nth-child(3)")).dataset.testid==="ExpandMoreIcon") {
@@ -75,10 +75,7 @@ class DomList {
 	get document_() {
 		return globalThis["document"];
 	}
-	/** @param {NS} ns */
-	async use(ns) {
-		if(ns.hasTorRouter()) return;
-		ns.print("start: purchase_tor_router");
+	async buy_tor_router() {
 		/** @type {any} */
 		let win=this.window_();
 		win.__dom_list=this;
@@ -110,5 +107,11 @@ export async function main(ns) {
 	if(!("root" in win)) return;
 	/** @type {HTMLDivElement} */
 	const root_element=as_any(win.root);
-	await new DomList(root_element).use(ns);
+	function purchase_tor_router() {
+		if(ns.hasTorRouter()) return;
+		ns.print("start: purchase_tor_router");
+		return new DomList(root_element).buy_tor_router(ns);
+	}
+	let res=purchase_tor_router();
+	if(res) await res;
 }
