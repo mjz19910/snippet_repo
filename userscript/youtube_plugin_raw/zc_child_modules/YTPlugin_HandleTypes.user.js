@@ -30,8 +30,6 @@ function init_module() {
 	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 	// [new_fexp_expected]
 	ECatcherService.known_experiments.push(...[
-		[24489232,24491070],
-		[24412855],
 	].flat());
 }
 export_(exports => {exports.init_module=init_module;});
