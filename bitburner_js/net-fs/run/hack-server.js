@@ -18,7 +18,7 @@ export async function main(ns) {
 	ns.disableLog("sleep");
 	ns.disableLog("scan");
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
-	await ns.sleep(301);
+	await ns.sleep(0);
 	const width=250+120;
 	ns.resizeTail(width,120);
 	ns.moveTail(window_width-width-4,1);
@@ -63,7 +63,7 @@ export async function main(ns) {
 		while(!reply_port.empty()) {
 			let reply_msg=read_reply_msg(reply_port);
 			pending_reply_message.reply.push(...reply_msg.reply);
-			await ns.sleep(302);
+			await ns.sleep(0);
 		}
 		let reply_id=reply_uid_counter;
 		reply_uid_counter++;
@@ -108,7 +108,7 @@ export async function main(ns) {
 	async function process_messages() {
 		debugger;
 		for(let i=0;;i++) {
-			await ns.sleep(303);
+			await ns.sleep(0);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
 			debugger;
@@ -140,7 +140,7 @@ export async function main(ns) {
 						if(randomize_hack) {
 							let reply=null;
 							for(let i=0;;i++) {
-								if(i>64) {await ns.sleep(304); i=0;}
+								if(i>64) {await ns.sleep(0); i=0;}
 								let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
 								if(hostname==="home") continue;
 								if(hostname.startsWith("big-")) continue;
@@ -188,7 +188,7 @@ export async function main(ns) {
 			send_call_msg(request_port,msg);
 			if(request_port.empty()) throw new Error("Port should not be empty");
 			while(!log_port.empty()) {
-				await ns.sleep(305);
+				await ns.sleep(0);
 				let res=log_port.read();
 				ns.printf("%s",res);
 			}

@@ -105,7 +105,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	while(request_port.empty()) {
 		let sent=send_call_msg(request_port,{call: "pending",id: "call",reply: []});
 		if(!sent) throw new Error("Invalid state");
-		await ns.sleep(306);
+		await ns.sleep(0);
 	}
 	if(request_port.empty()) throw new Error("Invalid state");
 	let cur_msg=read_call_msg(request_port);
@@ -114,7 +114,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	if(!sent) throw new Error("Invalid state");
 	for(;;) {
 		debugger;
-		await ns.sleep(307);
+		await ns.sleep(0);
 		if(reply_port.empty()) throw new Error("reply already removed");
 		let pending_msg=peek_reply_msg(reply_port);
 		let accepted_messages=[];
@@ -130,7 +130,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			if(!should_accept(msg,call_id,id)) continue;
 			accepted_messages.push(msg);
 			for(;;) {
-				while(notify_complete_port.full()) await ns.sleep(308);
+				while(notify_complete_port.full()) await ns.sleep(0);
 				notify_complete_port.write(msg.uid);
 				break;
 			}
