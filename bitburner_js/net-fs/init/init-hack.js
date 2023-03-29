@@ -253,10 +253,7 @@ export class InitHackScript {
 			if(srv.purchasedByPlayer) continue;
 			if(!srv.hasAdminRights) continue;
 			if(srv.requiredHackingSkill<=this.player_hacking_skill&&!srv.backdoorInstalled) {
-				if(!to_backdoor.includes(hostname)) {
-					this.ns.print("to_backdoor: ",hostname);
-					to_backdoor.push(hostname);
-				}
+				if(!to_backdoor.includes(hostname)) to_backdoor.push(hostname);
 			} else {
 				let idx=to_backdoor.indexOf(hostname);
 				if(idx!==-1) to_backdoor.splice(idx,1);

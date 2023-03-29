@@ -18,7 +18,7 @@ export const request_port_id=1;
 export const reply_port_id=2;
 export const log_port_id=3;
 export const reply_retry_port_id=4;
-
+export const max_port_id=5;
 /** @param {NetscriptPort} ns_port */
 export async function async_port_read_data(ns_port) {
 	let data=ns_port.read();
@@ -91,6 +91,9 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const wait_start_perf=performance.now();
 	const request_port=this_.ns.getPortHandle(request_port_id);
 	const reply_port=this_.ns.getPortHandle(reply_port_id);
+	const notify_port1=this_.ns.getPortHandle(max_port_id+1);
+	const notify_request_has_space_port=this_.ns.getPortHandle(max_port_id+2);
+	const notify_port3=this_.ns.getPortHandle(max_port_id+3);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	/** @param {string|number} i */
@@ -111,10 +114,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			function delay_for() {return this_.ns.sleep(delay_time());}
 			tprint_log(`${i} ${id}`);
 			if(!sent_msg) {
-				if(request_port.full()) {
-					await delay_for();
-					continue;
-				}
+				if(request_port.full()) await notify_request_has_space_port.nextWrite();
 				await send_call_msg(request_port,{call: call_id,args: [id]});
 				sent_msg=true;
 			}
@@ -136,10 +136,13 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 				return ret;
 			}
 			const retry_reply_handle=this_.ns.getPortHandle(reply_retry_port_id);
-			if(!reply_port.empty()) retry_reply_handle.write(reply_port.read());
+			if(!reply_port.empty()) {
+				while(retry_reply_handle.full()) await notify_port3.nextWrite();
+				retry_reply_handle.write(reply_port.read());
+			}
 		}
 		this_.ns.printf("%s retry",call_id);
-		await this_.ns.sleep(15*1000);
+		await notify_port1.nextWrite();
 	}
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */

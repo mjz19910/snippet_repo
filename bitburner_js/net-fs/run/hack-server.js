@@ -1,4 +1,4 @@
-import {log_port_id,read_call_msg,read_reply_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
+import {log_port_id,max_port_id,read_call_msg,read_reply_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -49,19 +49,25 @@ export async function main(ns) {
 	const pending_reply_list=[];
 	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
 	const retry_arr=[];
-	const read_handle=ns.getPortHandle(request_port_id);
-	const write_handle=ns.getPortHandle(reply_port_id);
-	const log_handle=ns.getPortHandle(log_port_id);
+	const request_port=ns.getPortHandle(request_port_id);
+	const reply_port=ns.getPortHandle(reply_port_id);
+	const log_port=ns.getPortHandle(log_port_id);
 	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
+	const notify_port1=ns.getPortHandle(max_port_id+1);
+	const notify_request_has_space_port=ns.getPortHandle(max_port_id+2);
+	notify_request_has_space_port.clear();
+	notify_request_has_space_port.write(1);
 	retry_reply_handle.clear();
-	read_handle.clear();
+
+	request_port.clear();
+	reply_port.clear();
 	/** @param {import("/run/hack-support.js").ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		if(write_handle.full()) {
+		if(reply_port.full()) {
 			pending_reply_list.push(msg);
 			return;
 		}
-		await send_reply_msg(write_handle,msg);
+		await send_reply_msg(reply_port,msg);
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
@@ -69,18 +75,18 @@ export async function main(ns) {
 			while(!retry_reply_handle.empty()) {
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
-			while(pending_reply_list.length>0&&!write_handle.full()) {
+			while(pending_reply_list.length>0&&!reply_port.full()) {
 				let first=pending_reply_list.pop();
 				if(first===void 0) break;
 				await send_reply_msg_2(first);
 			}
-			while(retry_arr.length>0&&!write_handle.full()) {
+			while(retry_arr.length>0&&!reply_port.full()) {
 				let first=retry_arr.pop();
 				if(first===void 0) break;
 				await send_reply_msg_2(first);
 			}
-			while(!read_handle.empty()) {
-				let msg=await read_call_msg(read_handle);
+			while(!request_port.empty()) {
+				let msg=await read_call_msg(request_port);
 				const {call,args}=msg;
 				switch(call) {
 					case "getServerMaxMoney": {
@@ -141,9 +147,11 @@ export async function main(ns) {
 					} break;
 				}
 				if(trace) ns.print(msg);
+				notify_request_has_space_port.write(1);
+				notify_port1.write(1);
 			}
-			while(!log_handle.empty()) {
-				let res=log_handle.read();
+			while(!log_port.empty()) {
+				let res=log_port.read();
 				ns.printf("%s",res);
 			}
 		}
