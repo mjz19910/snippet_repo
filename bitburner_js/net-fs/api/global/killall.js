@@ -2,7 +2,6 @@ import {hack_server} from "/run/hack-scripts";
 
 /** @param {NS} ns */
 export async function main(ns) {
-	const close_tail=false;
 	ns.disableLog("disableLog");
 	ns.disableLog("killall");
 	ns.disableLog("scan");
@@ -12,10 +11,10 @@ export async function main(ns) {
 		if(item.filename===hack_server) ns.closeTail(item.pid);
 		if(item.filename==="/api/share.js") ns.closeTail(item.pid);
 	}
-	if(close_tail) for(let item of ns.getRecentScripts()) {
+	for(let item of ns.getRecentScripts()) {
 		close_script_tail(item);
 	}
-	if(close_tail) for(let item of ns.ps("home")) {
+	for(let item of ns.ps("home")) {
 		close_script_tail(item);
 	}
 	let killed=new Set;

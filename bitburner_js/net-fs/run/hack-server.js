@@ -84,8 +84,6 @@ export async function main(ns) {
 				continue;
 			}
 			reply_cache[idx]=null;
-			let done_msg=pending_reply_message.reply[idx];
-			console.log("done with",done_msg);
 		}
 		console.log("reply cache",reply_cache);
 		console.log("waiting replies",pending_msg_count);
