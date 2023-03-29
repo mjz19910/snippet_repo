@@ -49,6 +49,7 @@ export async function main(ns) {
 	const pending_reply_list=[];
 	/** @type {ReplyMsg[]} */
 	const retry_arr=[];
+	let complete_reply_id_list=[];
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
@@ -155,6 +156,11 @@ export async function main(ns) {
 				}
 				if(trace) ns.print(msg);
 				notify_request_has_space_port.write(1);
+				while(!complete_port.empty()) {
+					let complete_id=complete_port.read();
+					if(typeof complete_id==="number") complete_reply_id_list.push(complete_id);
+					else ns.print("ERROR complete message not a number");
+				}
 			}
 			while(!log_port.empty()) {
 				let res=log_port.read();
