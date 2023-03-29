@@ -140,7 +140,7 @@ export class DomList {
 		const start_infiltrate_button=current_container.children[1].children[2].children[0];
 		/** @type {any} */
 		let e_target_obj_any=EventTarget;
-		/** @type {{__arg_list_for_add_event_listeners:any[]}} */
+		/** @type {{__arg_list_for_add_event_listeners:[WeakRef<Node>,number,"keydown",WeakRef<(x:{})=>{}>][]}} */
 		let EventTarget_=e_target_obj_any;
 		EventTarget_.__arg_list_for_add_event_listeners.length=0;
 		this.click_on(start_infiltrate_button);
@@ -151,7 +151,7 @@ export class DomList {
 				await ns.sleep(33);
 				current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
 			}
-			/** @type {(["mines",("mine"|"empty")[]]|["cut_num",number]|["enter_code","key","left"|"up"]|["type_rev",string]|["type_bracket",string])[]} */
+			/** @type {(["mines",("mine"|"empty")[]]|["cut_num",number]|["enter_code","key","up"|"down"|"left"|"right"]|["type_rev",string]|["type_bracket",string])[]} */
 			let instruction_arr=[];
 			const instruction_source=current_container.children[2].children;
 			this.instruction_source=instruction_source;
@@ -162,8 +162,10 @@ export class DomList {
 					let node_text=instruction_source[1].textContent;
 					switch(node_text) {
 						default: console.log("enter_code",node_text); debugger; break;
-						case "→": instruction_arr.push(["enter_code","key","left"]); break;
 						case "↑": instruction_arr.push(["enter_code","key","up"]); break;
+						case "↓": instruction_arr.push(["enter_code","key","down"]); break;
+						case "←": instruction_arr.push(["enter_code","key","left"]); break;
+						case "→": instruction_arr.push(["enter_code","key","right"]); break;
 					}
 				} break;
 				case "Type it backward": {
@@ -181,16 +183,16 @@ export class DomList {
 						"{": "}",
 						"<": ">",
 					};
-					let bracket_res="";
+					let bracket_res=[];
 					for(let bracket of bracket_arr) {
 						switch(bracket) {
-							case "(": bracket_res+=close_map[bracket]; break;
-							case "[": bracket_res+=close_map[bracket]; break;
-							case "{": bracket_res+=close_map[bracket]; break;
-							case "<": bracket_res+=close_map[bracket]; break;
+							case "(":
+							case "[":
+							case "{":
+							case "<": bracket_res.unshift(close_map[bracket]);
 						}
 					}
-					instruction_arr.push(["type_bracket",bracket_res]);
+					instruction_arr.push(["type_bracket",bracket_res.join("")]);
 				} break;
 				case "Say something nice about the guard": {
 					debugger;
@@ -239,14 +241,19 @@ export class DomList {
 						debugger;
 					} break;
 					case "type_rev": {
+						const handler_ref=EventTarget_.__arg_list_for_add_event_listeners[5][3];
+						const handler=handler_ref.deref();
+						if(!handler) throw new Error("No handler");
 						const str_lower=instruction[1].toLowerCase(); str_lower;
 						for(let char of str_lower) {
 							debugger;
-							this.document_.dispatchEvent(new KeyboardEvent("keypress",{key: char}));
+							handler({isTrusted: true,charCode: char.charCodeAt(0),key: char});
 						}
 						debugger;
 					} break;
-					case "type_bracket": debugger; break;
+					case "type_bracket": {
+
+					} break;
 					case "mines": {
 						const [,mine_arr]=instruction;
 						switch(mine_arr.length) {
