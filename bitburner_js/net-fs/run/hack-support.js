@@ -93,6 +93,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		while(!sent) {
 			while(request_port.full()) await notify_request_has_space_port.nextWrite();
 			sent=await send_call_msg(request_port,{call: call_id,args: [id]});
+			if(!sent) await ns.sleep(100);
 		}
 		for(;;) {
 			await notify_new_reply_port.nextWrite();
