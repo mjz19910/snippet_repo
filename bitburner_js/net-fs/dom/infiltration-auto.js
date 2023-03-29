@@ -45,8 +45,7 @@ class InfiltrationDomState extends DomList {
 		const dom_list=this;
 		let current_page=this.click_to_page(this.city_button);
 		const city_location=current_page.children[0].textContent;
-		if(city_location!==target_city) {
-		}
+		if(city_location!==target_city) this.goto_city(target_city);
 		const nwo_map_location=query_element(current_page,`[aria-label='${map_location}']`);
 		this.current_page=this.click_to_page(nwo_map_location);
 		const company_action_buttons=dom_list.current_page.children[2];
