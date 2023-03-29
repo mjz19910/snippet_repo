@@ -92,8 +92,12 @@ export async function main(ns) {
 			if(reply_cache[i]!==null) break;
 			reply_cache.shift();
 			i--;
-			pending_reply_message.reply.shift();
+			let removed=pending_reply_message.reply.shift();
 			reply_id_offset++;
+			if(!removed) break;
+			let idx=complete_reply_id_list.indexOf(removed.uid);
+			if(idx===-1) break;
+			complete_reply_id_list.splice(idx,1);
 		}
 		console.log("reply cache",reply_cache);
 		console.log("waiting replies",pending_msg_count);
