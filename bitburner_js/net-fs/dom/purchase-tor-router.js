@@ -216,6 +216,7 @@ export class DomList {
 					case "type_rev": {
 						const str_lower=instruction[1].toLowerCase(); str_lower;
 						for(let char of str_lower) {
+							debugger;
 							window.dispatchEvent(new KeyboardEvent("keydown",{key: char}));
 							window.dispatchEvent(new KeyboardEvent("keyup",{key: char}));
 							window.dispatchEvent(new KeyboardEvent("keypress",{key: char}));
