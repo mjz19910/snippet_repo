@@ -48,6 +48,7 @@ export async function run_hack(this_,i) {
 
 /** @param {NS} ns */
 export async function main(ns) {
+	ns.clearLog();
 	ns.disableLog("disableLog");
 	ns.disableLog("sleep");
 	let disable_log_action=false;

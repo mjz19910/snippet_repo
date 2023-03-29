@@ -93,45 +93,23 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	function perf_diff() {return performance.now()-wait_start_perf;}
 	const request_port=this_.ns.getPortHandle(request_port_id);
 	const reply_port=this_.ns.getPortHandle(reply_port_id);
-	const notify_port1=this_.ns.getPortHandle(max_port_id+1);
 	const notify_request_has_space_port=this_.ns.getPortHandle(max_port_id+2);
-	const notify_port3=this_.ns.getPortHandle(max_port_id+3);
-	const notify_port4=this_.ns.getPortHandle(max_port_id+4);
+	const notify_new_reply_port=this_.ns.getPortHandle(max_port_id+4);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	/** @param {string|number} i */
-	function tprint_log(i) {
-		const cur_timer=perf_diff();
-		if(cur_timer<1000) return;
-		console.log(this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
-		this_.ns.printf("%s %s %s",this_.hostname,call_id,i);
-	}
 	for(let i=0;i<20;i++) {
 		if(request_port.full()) await notify_request_has_space_port.nextWrite();
 		await send_call_msg(request_port,{call: call_id,args: [id]});
-		await notify_port4.nextWrite();
-		for(let j=0;j<32;j++) {
-			if(reply_port.empty()) throw new Error("reply already removed");
-			let msg=await peek_reply_msg(reply_port);
-			if(!should_accept(msg,call_id,id)) {
-				tprint_log(`reject_reply ${i} ${j}`);
-				await notify_port4.nextWrite();
-				continue;
-			}
-			reply_port.read();
-			let ret=msg.reply;
-			const cur_timer=perf_diff();
-			console.log("complete",this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
-			assume_return(ret);
-			return ret;
-		}
-		const retry_reply_handle=this_.ns.getPortHandle(reply_retry_port_id);
-		if(!reply_port.empty()) {
-			while(retry_reply_handle.full()) await notify_port3.nextWrite();
-			retry_reply_handle.write(reply_port.read());
-		}
-		this_.ns.printf("%s retry %s",call_id,i);
-		await notify_port1.nextWrite();
+		await notify_new_reply_port.nextWrite();
+		if(reply_port.empty()) throw new Error("reply already removed");
+		let msg=await peek_reply_msg(reply_port);
+		if(!should_accept(msg,call_id,id)) throw new Error("reply wrong type");
+		reply_port.read();
+		let ret=msg.reply;
+		const cur_timer=perf_diff();
+		console.log("complete",this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
+		assume_return(ret);
+		return ret;
 	}
 	throw new Error("Timeout waiting for response from server (is hack-server.js running?)");
 }

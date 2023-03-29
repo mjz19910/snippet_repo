@@ -54,10 +54,8 @@ export async function main(ns) {
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
 	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
-	const notify_port1=ns.getPortHandle(max_port_id+1);
 	const notify_request_has_space_port=ns.getPortHandle(max_port_id+2);
-	const notify_port3=this_.ns.getPortHandle(max_port_id+3);
-	const notify_port4=this_.ns.getPortHandle(max_port_id+4);
+	const notify_new_reply_port=this_.ns.getPortHandle(max_port_id+4);
 	notify_request_has_space_port.clear();
 	notify_request_has_space_port.write(1);
 	retry_reply_handle.clear();
@@ -70,7 +68,7 @@ export async function main(ns) {
 			pending_reply_list.push(msg);
 			return;
 		}
-		notify_port4.write(1);
+		notify_new_reply_port.write(1);
 		await send_reply_msg(reply_port,msg);
 	}
 	async function process_messages() {
@@ -79,8 +77,6 @@ export async function main(ns) {
 			while(!retry_reply_handle.empty()) {
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
-			// retry_reply_handle is empty
-			notify_port3.write(1);
 			while(pending_reply_list.length>0&&!reply_port.full()) {
 				let first=pending_reply_list.pop();
 				if(first===void 0) break;
@@ -154,7 +150,6 @@ export async function main(ns) {
 				}
 				if(trace) ns.print(msg);
 				notify_request_has_space_port.write(1);
-				notify_port1.write(1);
 			}
 			while(!log_port.empty()) {
 				let res=log_port.read();
