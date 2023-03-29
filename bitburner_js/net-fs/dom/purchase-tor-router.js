@@ -75,6 +75,11 @@ export class DomList {
 	get document_() {
 		return globalThis["document"];
 	}
+	/** @param {ParentNode} target */
+	click_to_page(target) {
+		this.click_on(target);
+		return this.get_div(this.MuiBox_root,"div.MuiBox-root");
+	}
 	async buy_tor_router() {
 		/** @type {any} */
 		let win=this.window_();
@@ -101,11 +106,6 @@ export class DomList {
 		let div=query_element(src,selector);
 		if(div instanceof HTMLDivElement) return div;
 		throw new Error("element is not a div element");
-	}
-	/** @param {ParentNode} target */
-	click_to_page(target) {
-		this.click_on(target);
-		return this.get_div(this.MuiBox_root,"div.MuiBox-root");
 	}
 	async play_infiltration() {
 		this.current_page=this.click_to_page(this.city_button);
