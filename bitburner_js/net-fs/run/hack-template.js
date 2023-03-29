@@ -49,10 +49,13 @@ export async function run_hack(this_,i) {
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.disableLog("disableLog");
-	ns.disableLog("weaken");
 	ns.disableLog("sleep");
-	ns.disableLog("grow");
-	ns.disableLog("hack");
+	let disable_log_action=false;
+	if(disable_log_action) {
+		ns.disableLog("weaken");
+		ns.disableLog("grow");
+		ns.disableLog("hack");
+	}
 	/** @type {{_:[thread_count:number,hostname:string]}} */
 	let pa=as_any(ns.flags([]));
 	/** @type {HackState} */
