@@ -27,13 +27,6 @@ export class InitHackScript {
 			http: ns.httpworm,
 			sql: ns.sqlinject,
 		};
-		this.f_=ns.flags([
-			["limit",-1],
-		]);
-		if(typeof this.f_.limit!=="number") throw new Error("Invalid arguments");
-		this.start_limit=this.f_.limit;
-		if(this.start_limit===-1) this.start_limit=Infinity;
-		this.start_count=0;
 	}
 	disable_log_use() {
 		this.disableLog_("scan");
@@ -79,6 +72,7 @@ export class InitHackScript {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
 		}
+		await ns.sleep(33);
 		return true;
 	}
 	/**
@@ -160,9 +154,7 @@ export class InitHackScript {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
-			if(this.start_count>this.start_limit) return;
-			let increased=await this.start_script_template(srv);
-			if(increased) this.start_count++;
+			await this.start_script_template(srv);
 		}
 	}
 	/** @arg {Server} srv @arg {string} msg */
