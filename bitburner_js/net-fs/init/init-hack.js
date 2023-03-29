@@ -41,7 +41,6 @@ export class InitHackScript {
 		this.disableLog_("scp");
 		this.disableLog_("exec");
 		this.disableLog_("sleep");
-		this.disableLog_("asleep");
 		this.disableLog_("brutessh");
 		this.disableLog_("ftpcrack");
 		this.disableLog_("relaysmtp");
