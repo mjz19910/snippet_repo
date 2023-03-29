@@ -11,11 +11,11 @@ export class DomList {
 	}
 	/** @arg {HTMLDivElement} root_element */
 	constructor(root_element) {
-		this.MuiBox_root=query_element(root_element,"#root > div.MuiBox-root");
+		this.MuiBox_root=this.get_div(root_element,"#root > div.MuiBox-root");
 		/** @type {HTMLDivElement} */
-		this.MuiDrawer_root=query_element(this.MuiBox_root,"div.MuiDrawer-root");
+		this.MuiDrawer_root=this.get_div(this.MuiBox_root,"div.MuiDrawer-root");
 		/** @type {HTMLDivElement} */
-		this.MuiPaper_root=query_element(this.MuiDrawer_root,"div.MuiPaper-root");
+		this.MuiPaper_root=this.get_div(this.MuiDrawer_root,"div.MuiPaper-root");
 		/** @type {HTMLUListElement} */
 		const MuiList_root=query_element(this.MuiPaper_root,"ul.MuiList-root");
 		this.MuiList_root=MuiList_root;
