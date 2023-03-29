@@ -119,13 +119,13 @@ class HashMap {
 	/** @type {Map<K,V>|null} */
 	m_data=null;
 	is_empty() {
-		if(this.m_data===null) {return true;}
-		if(this.m_data.size===0) {return true;}
+		if(this.m_data===null) return true;
+		if(this.m_data.size===0) return true;
 		return false;
 	}
 	/** @arg {K} key @arg {V} value */
 	set(key,value) {
-		if(!this.m_data) {this.m_data=new Map;}
+		if(!this.m_data) this.m_data=new Map;
 		this.m_data.set(key,value);
 		return this;
 	}
@@ -137,16 +137,15 @@ class HashMap {
 	}
 	/** @arg {K} key */
 	has(key) {
-		if(!this.m_data) {return false;}
+		if(!this.m_data) return false;
 		return this.m_data.has(key);
 	}
 	/** @arg {(this:this,arg1:K,arg2:V)=>"Break"|"Continue"} callback */
 	iterate(callback) {
 		// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
 		// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
-		if(!this.m_data)
-			return;
-		for(let x of this.m_data.entries()) {if(callback.apply(this,x)==="Break") {break;} }
+		if(!this.m_data) return;
+		for(let x of this.m_data.entries()) if(callback.apply(this,x)==="Break") break;
 	}
 }
 
