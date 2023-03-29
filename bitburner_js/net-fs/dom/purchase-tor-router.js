@@ -57,6 +57,8 @@ export class DomList {
 		this.character_section=character_section;
 		this.world_section=world_section;
 		this.help_section=help_section;
+
+		this.current_page=this.get_div(this.MuiBox_root,"div.MuiBox-root");
 	}
 	/** @arg {ParentNode} element */
 	click_on(element) {
@@ -84,13 +86,11 @@ export class DomList {
 		/** @type {any} */
 		let win=this.window_();
 		win.__dom_list=this;
-		this.click_on(this.city_button);
-		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
+		this.current_page=this.click_to_page(this.city_button);
 		const city_location=this.current_page.children[0].textContent;
 		if(city_location!=="Sector-12") throw new Error("Handle new city");
 		const alpha_enterprises_map_location=query_element(this.current_page,"[aria-label='Alpha Enterprises']");
-		this.click_on(alpha_enterprises_map_location);
-		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
+		this.current_page=this.click_to_page(alpha_enterprises_map_location);
 		const purchase_tor_router_button=this.current_page.children[8];
 		this.click_on(purchase_tor_router_button);
 		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
