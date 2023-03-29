@@ -160,7 +160,7 @@ export_(exports => {
 });
 
 /** @template {S_AllImportPaths} T @typedef {import("./ProcessImport").ProcessImport<T>} ProcessImport */
-/** @type {({__system_require:boolean,require:(x:AllImportPaths)=>ProcessImport<any>})} */
+/** @type {({__system_require:boolean;system_require?:any;require:(x:AllImportPaths)=>ProcessImport<any>})} */
 let cur_require={__system_require: false,require};
 
 // global exports

@@ -21,10 +21,10 @@ if(typeof require_fn==="object") {
 	require={...require_fn,require: window.__module_require__};
 } else if(typeof require_fn==="function") {
 	debugger;
-	require={__system_require: true,require: require_fn};
+	require={__system_require: true,system_require: require_fn,require: window.__module_require__};
 } else {
 	debugger;
-	require={__system_require: true,require: require_fn};
+	require={__system_require: true,system_require: require_fn,require: window.__module_require__};
 }
 const {do_export}=require.require("../base_require_raw/BaseRequire.user");
 
