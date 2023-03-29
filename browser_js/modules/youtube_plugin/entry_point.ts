@@ -4,7 +4,6 @@ import {start_message_channel_loop} from "./dom_observer/start_message_channel_l
 import {init_fetch_plugin} from "./fetch_plugin/init_fetch_plugin.js";
 import {init_Image_plugin} from "./init_Image_plugin.js";
 import {init_navigator_sendBeacon_plugin} from "./init_navigator_sendBeacon_plugin.js";
-import {init_override_getInitialData} from "./init_override_getInitialData.js";
 import {attach_resize_handler} from "./player_plugin_activate/attach_resize_handler.js";
 import {init_playlist_arr} from "./player_plugin_activate/init_playlist_arr.js";
 import {init_title_on_save} from "./player_plugin_activate/init_title_on_save.js";
@@ -28,7 +27,6 @@ export function entry_point() {
 		init_navigator_sendBeacon_plugin();
 	}
 	if(globalThis.window) {
-		init_override_getInitialData();
 		init_playlist_arr();
 	}
 	if(globalThis.localStorage) {
