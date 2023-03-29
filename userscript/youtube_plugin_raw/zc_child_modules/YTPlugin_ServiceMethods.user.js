@@ -12,8 +12,8 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // ==/UserScript==
 
-const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {ServiceData,split_string_once,split_string,as,base64_url_dec,as_any,base64_dec,JsonReplacerState}=require("./YtPlugin_Base.user");
+const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
+const {ServiceData,split_string_once,split_string,base64_url_dec,as_any,base64_dec,JsonReplacerState}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */
