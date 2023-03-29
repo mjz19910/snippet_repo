@@ -114,7 +114,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	if(!sent) throw new Error("Invalid state");
 	for(;;) {
 		await ns.sleep(0);
-		if(reply_port.empty()) throw new Error("reply already removed");
+		if(reply_port.empty()) continue;
 		let pending_msg=peek_reply_msg(reply_port);
 		let accepted_messages=[];
 		if(pending_msg.reply.length===0) {
