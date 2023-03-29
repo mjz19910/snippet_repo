@@ -64,9 +64,9 @@ export function on_react_fiber(ns,fiber_nullable,path=["fiber"]) {
 				p("stateNode",stateNode);
 			}
 			on_react_state_node(stateNode,[...path,"return"]);
-			on_react_fiber(return_,[...path,"return"]);
-			on_react_fiber(child,[...path,"child"]);
-			on_react_fiber(sibling,[...path,"sibling"]);
+			on_react_fiber(ns,return_,[...path,"return"]);
+			on_react_fiber(ns,child,[...path,"child"]);
+			on_react_fiber(ns,sibling,[...path,"sibling"]);
 			if(index!==1) p("index",index);
 			on_react_ref(ref,[...path,"ref"]);
 			on_react_fiber_props(pendingProps,[...path,"pendingProps"]);

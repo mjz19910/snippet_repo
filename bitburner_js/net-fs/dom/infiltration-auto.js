@@ -10,19 +10,6 @@ export async function main(ns) {
 	ns.moveTail(250+3,3);
 	ns.disableLog("disableLog");
 	if(!("root" in window)) return;
-	/** @param {{}} y */
-	function g(y) {
-		if(Object.keys(y).length>0) {ns.print("rest: ",Object.keys(y)); console.log("rest",y);}
-	}
-	/** @param {string} key @param {{}[]} value @param {string[]} path @returns {never} */
-	function unhandled(key,value,path) {
-		ns.toast(key+" not handled: "+path.join("."),"error");
-		console.log(key,path.join("."),...value);
-		ns.exit();
-	}
-	const global_hook=__REACT_DEVTOOLS_GLOBAL_HOOK__.hook_ref;
-	const dispatcher_ref=global_hook.currentDispatcherRef;
-	const react_render_set=new Set;
 	function gen_dispatcher() {
 		/** @arg {number} minified_error_id */
 		function a(minified_error_id) {return "react mini-error: "+minified_error_id;}
