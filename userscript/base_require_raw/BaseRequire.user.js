@@ -176,7 +176,12 @@ export_(exports => {
 	cur_require={__system_require: false,require};
 	let require_property=Object.getOwnPropertyDescriptor(exports,"require");
 	if(require_property) {
-		debugger;
+		if(require_property.configurable!==void 0) {
+			if(require_property.configurable===false) {
+				location.reload();
+				return;
+			}
+		}
 		console.log("skipping set of require");
 		return;
 	} else {
