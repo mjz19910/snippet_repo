@@ -1,4 +1,4 @@
-import {log_port_id,max_port_id,read_call_msg,read_reply_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
+import {complete_pipe_port_id,log_port_id,max_port_id,read_call_msg,read_reply_msg,reply_port_id,reply_retry_port_id,request_port_id,send_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -49,41 +49,38 @@ export async function main(ns) {
 	const pending_reply_list=[];
 	/** @type {ReplyMsg[]} */
 	const retry_arr=[];
-	const this_={ns};
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
 	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
+	const complete_port=ns.getPortHandle(complete_pipe_port_id);
 	const notify_request_has_space_port=ns.getPortHandle(max_port_id+2);
-	const notify_new_reply_port=this_.ns.getPortHandle(max_port_id+4);
+	const notify_new_reply_port=ns.getPortHandle(max_port_id+4);
 	notify_request_has_space_port.clear();
 	notify_request_has_space_port.write(1);
+	complete_port.clear();
 	retry_reply_handle.clear();
-
 	request_port.clear();
 	reply_port.clear();
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		/** @type {ReplyMsg[]} */
-		let reply_messages=[];
+		/** @type {ReplyMsgPending} */
+		let pending_reply_message={call: "pending",reply: []};
 		while(!reply_port.empty()) {
 			let reply_msg=await read_reply_msg(reply_port);
-			if(reply_msg.call==="pending") {
-				reply_messages.push(...reply_msg.reply);
-			} else {
-				reply_messages.push(reply_msg);
-			}
+			pending_reply_message.reply.push(...reply_msg.reply);
 		}
-		reply_messages.push(msg);
-		console.log("waiting replies",reply_messages.length);
+		let reply_id=pending_reply_message.reply.push(msg)-1;
+		msg.uid=reply_id;
+		console.log("waiting replies",pending_reply_message.reply.length);
 		notify_new_reply_port.write(1);
-		await send_reply_msg(reply_port,{call: "pending",reply: reply_messages});
+		await send_reply_msg(reply_port,pending_reply_message);
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
 			await ns.sleep(1);
 			while(!retry_reply_handle.empty()) {
-				retry_arr.push(await read_reply_msg(retry_reply_handle));
+				retry_arr.push(...(await read_reply_msg(retry_reply_handle)).reply);
 			}
 			while(pending_reply_list.length>0&&!reply_port.full()) {
 				let first=pending_reply_list.pop();
@@ -101,23 +98,23 @@ export async function main(ns) {
 				switch(call) {
 					case "getServerMaxMoney": {
 						let reply=ns.getServerMaxMoney(...args);
-						await send_reply_msg_2({call,id: args[0],reply});
+						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
 					} break;
 					case "getServerMinSecurityLevel": {
 						let reply=ns.getServerMinSecurityLevel(...args);
-						await send_reply_msg_2({call,id: args[0],reply});
+						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
 					} break;
 					case "getServerMoneyAvailable": {
 						let reply=ns.getServerMoneyAvailable(...args);
-						await send_reply_msg_2({call,id: args[0],reply});
+						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
 					} break;
 					case "getServerSecurityLevel": {
 						let reply=ns.getServerSecurityLevel(...args);
-						await send_reply_msg_2({call,id: args[0],reply});
+						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
 					} break;
 					case "get_server": {
 						let reply=get_server(args[0]);
-						await send_reply_msg_2({call,id: args[0],reply});
+						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
 					} break;
 					case "get_hack_target": {
 						if(randomize_hack) {
@@ -142,7 +139,7 @@ export async function main(ns) {
 									break;
 								}
 							}
-							await send_reply_msg_2({call,id: args[0],reply});
+							await send_reply_msg_2({call,id: args[0],uid: -1,reply});
 						} else {
 							let srv;
 							for(let name of ["ecorp","foodnstuff","n00dles"]) {
@@ -152,7 +149,7 @@ export async function main(ns) {
 								ns.nuke(name);
 							}
 							if(!srv) srv=get_server("n00dles");
-							await send_reply_msg_2({call,id: args[0],reply: srv});
+							await send_reply_msg_2({call,id: args[0],uid: -1,reply: srv});
 						}
 					} break;
 				}

@@ -2,7 +2,9 @@ export const request_port_id=1;
 export const reply_port_id=2;
 export const log_port_id=3;
 export const reply_retry_port_id=4;
-export const max_port_id=5;
+export const notify_request_has_space_id=5;
+export const complete_pipe_port_id=5;
+export const max_port_id=6;
 /** @param {NetscriptPort} ns_port */
 export async function async_port_read_data(ns_port) {
 	let data=ns_port.read();
@@ -15,11 +17,14 @@ export async function async_port_peek_data(ns_port) {
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
 	return data;
 }
-/** @template {{}} T @param {NetscriptPort} ns_port @returns {Promise<T>} */
+/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
 export async function async_port_peek_msg(ns_port) {
 	let data=await async_port_peek_data(ns_port);
 	if(typeof data==="number") throw new Error("Invalid message");
-	return JSON.parse(data);
+	/** @type {ReplyMsgPending} */
+	let pending_msg=JSON.parse(data);
+	if(pending_msg.call!=="pending") throw new Error("Invalid message");
+	return pending_msg;
 }
 /** @param {NetscriptPort} ns_port @param {PortData} str */
 export async function async_port_write_data(ns_port,str) {
@@ -41,7 +46,7 @@ export function send_port_msg(ns_port,msg) {
 export function send_call_msg(ns_port,msg) {
 	return send_port_msg(ns_port,msg);
 }
-/** @arg {NetscriptPort} ns_port @arg {ReplyMsg} msg */
+/** @arg {NetscriptPort} ns_port @arg {ReplyMsgPending} msg */
 export function send_reply_msg(ns_port,msg) {
 	return send_port_msg(ns_port,msg);
 }
@@ -49,11 +54,11 @@ export function send_reply_msg(ns_port,msg) {
 export function read_call_msg(ns_port) {
 	return async_read_port_msg(ns_port);
 }
-/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsg>} */
+/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
 export function peek_reply_msg(ns_port) {
 	return async_port_peek_msg(ns_port);
 }
-/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsg>} */
+/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
 export function read_reply_msg(ns_port) {
 	return async_read_port_msg(ns_port);
 }
@@ -72,13 +77,15 @@ function should_accept(reply,call_,arg0) {
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
+	const {ns}=this_;
 	const wait_start_perf=performance.now();
 	console.log("start:"+call_id+":"+id);
 	function perf_diff() {return performance.now()-wait_start_perf;}
-	const request_port=this_.ns.getPortHandle(request_port_id);
-	const reply_port=this_.ns.getPortHandle(reply_port_id);
-	const notify_request_has_space_port=this_.ns.getPortHandle(max_port_id+2);
-	const notify_new_reply_port=this_.ns.getPortHandle(max_port_id+4);
+	const request_port=ns.getPortHandle(request_port_id);
+	const reply_port=ns.getPortHandle(reply_port_id);
+	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
+	const complete_port=ns.getPortHandle(complete_pipe_port_id);
+	const notify_new_reply_port=ns.getPortHandle(max_port_id+4);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let i=0;i<20;i++) {
@@ -87,14 +94,16 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		for(;;) {
 			await notify_new_reply_port.nextWrite();
 			if(reply_port.empty()) throw new Error("reply already removed");
-			let msg=await peek_reply_msg(reply_port);
-			if(!should_accept(msg,call_id,id)) continue;
-			reply_port.read();
-			let ret=msg.reply;
-			const cur_timer=perf_diff();
-			console.log("complete",this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
-			assume_return(ret);
-			return ret;
+			let pending_msg=await peek_reply_msg(reply_port);
+			for(let msg of pending_msg.reply) {
+				if(!should_accept(msg,call_id,id)) continue;
+				complete_port.write(msg.uid);
+				let ret=msg.reply;
+				const cur_timer=perf_diff();
+				console.log("complete",ns.tFormat(cur_timer),this_.hostname,call_id,i);
+				assume_return(ret);
+				return ret;
+			}
 		}
 	}
 	throw new Error("Timeout waiting for response from server (is hack-server.js running?)");
