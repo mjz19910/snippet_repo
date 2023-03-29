@@ -50,6 +50,8 @@
 		"notes/*.ts",
 		"notes/*.js",
 		"notes/*.mts",
+		"react-walk/**/*.js",
+		"react-walk/**/*.ts",
 	],
 	"exclude": [
 		"node_modules",
