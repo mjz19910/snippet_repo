@@ -61,10 +61,16 @@ export async function main(ns) {
 	let pa=as_any(ns.flags([]));
 	/** @type {HackState} */
 	const s=new HackState(ns,pa);
+	try {
+		hack_forever(s);
+	} catch {}
+}
+/** @arg {HackState} s */
+async function hack_forever(s) {
 	for(;;) {
 		const srv=await generic_get_call_with_id(s,Math.random()+"","get_hack_target"); ``;
 		s.target=srv.hostname;
-		ns.printf("[%s] target: %s",s.hostname,s.target);
+		s.ns.printf("[%s] target: %s",s.hostname,s.target);
 		for(let i=0;i<8;i++) {
 			await run_hack(s,i);
 		}

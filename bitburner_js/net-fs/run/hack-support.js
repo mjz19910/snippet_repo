@@ -89,7 +89,7 @@ function should_accept(reply,call_,arg0) {
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const wait_start_perf=performance.now();
-	console.log("start:generic_get_call_with_id");
+	console.log("start:"+call_id+":"+id);
 	function perf_diff() {return performance.now()-wait_start_perf;}
 	const request_port=this_.ns.getPortHandle(request_port_id);
 	const reply_port=this_.ns.getPortHandle(reply_port_id);
@@ -103,7 +103,10 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		await notify_new_reply_port.nextWrite();
 		if(reply_port.empty()) throw new Error("reply already removed");
 		let msg=await peek_reply_msg(reply_port);
-		if(!should_accept(msg,call_id,id)) throw new Error("reply wrong type");
+		if(!should_accept(msg,call_id,id)) {
+			reply_port.read(); reply_port.read(); reply_port.read(); reply_port.read();
+			throw new Error("reply wrong type");
+		}
 		reply_port.read();
 		let ret=msg.reply;
 		const cur_timer=perf_diff();
