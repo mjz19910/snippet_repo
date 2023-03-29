@@ -1,3 +1,4 @@
+export type mixed=string|number|object;
 // cspell:ignoreRegexp: /css-1ontqvh/
 type HtmlReactElementType="ul"|"div";
 type ElementMap={
@@ -10,7 +11,7 @@ const react_memo_symbol=Symbol("react.memo");
 type react_memo_symbol=typeof react_memo_symbol;
 const react_forward_ref_symbol=Symbol("react.forward_ref");
 type react_forward_ref_symbol=typeof react_forward_ref_symbol;
-type ReactForwardRef={
+export type ReactForwardRef={
 	$$typeof: react_forward_ref_symbol;
 	render: (n: {},i: null) => any;
 };
@@ -38,7 +39,7 @@ type ReactElementProps2={
 	];
 	sidebarOpen: boolean;
 };
-type ReactElement2={
+export type ReactElement2={
 	$$typeof: react_element_symbol;
 	type: ((e: any) => any)|ReactForwardRef;
 	key: null;
@@ -111,7 +112,7 @@ type ReactFiberElement_UList={
 	alternate: ReactFiberElement_UList;
 };
 
-type ReactFiber5=ReactFiberElement_UList|ReactFiberElement<"div","MuiBox-root css-1ik4laa">;
+export type ReactFiber5=ReactFiberElement_UList|ReactFiberElement<"div","MuiBox-root css-1ik4laa">;
 
 type ReactFiber1={
 	tag: 1;
@@ -146,9 +147,6 @@ type ReactFiber0={
 	childLanes: 0;
 	alternate: ReactFiber0;
 };
-
-type ReactFiber=ReactFiber5|ReactFiber11|ReactFiber7|ReactFiber0;
-
 type ReactFiber11={
 	tag: 11;
 	key: null;
@@ -199,3 +197,9 @@ type ReactFiber7={
 	childLanes: 0;
 	alternate: {};
 };
+export type Dependencies={__not_impl: true;};
+export type Source={__not_impl: true;};
+export type HookType={__not_impl: true;};
+export type Lanes={__not_impl: true;};
+export type TypeOfMode={__not_impl: true;};
+export type Flags={__not_impl: true;};

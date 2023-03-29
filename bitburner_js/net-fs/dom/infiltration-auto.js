@@ -23,7 +23,47 @@ export async function main(ns) {
 	const global_hook=__REACT_DEVTOOLS_GLOBAL_HOOK__.hook_ref;
 	const dispatcher_ref=global_hook.currentDispatcherRef;
 	const react_render_set=new Set;
-	/** @arg {string[]} path @param {ReactForwardRef} forward_ref */
+	function gen_dispatcher() {
+		/** @arg {number} minified_error_id */
+		function a(minified_error_id) {return "react mini-error: "+minified_error_id;}
+		let eo={},Qi={dependencies: {}};
+		let Ji={
+			context: {},observedBits: 0,
+			/** @type {{context:ReactContext,observedBits:number;next:null;}|null} */
+			next: null
+		};
+		return {
+			/** @arg {ReactContext} e @arg {undefined} t */
+			useContext(e,t) {
+				/** @returns {{context:typeof e,observedBits:number;next:null;}} */
+				function get_t() {return as_any(t);}
+				if(eo!==e&&!1!==t&&0!==t) {
+					if('number'==typeof t&&1073741823!==t||(eo=e,
+						// @ts-expect-error
+						t=1073741823),
+						// @ts-expect-error
+						t={
+							context: e,
+							observedBits: t,
+							next: null
+						},null===Ji) {
+						if(null===Qi) throw Error(a(308));
+						Ji=get_t(),
+							Qi.dependencies={
+								lanes: 0,
+								firstContext: t,
+								responders: null
+							};
+					} else {
+						Ji=Ji.next=get_t();
+					}
+				}
+				return e._currentValue;
+			}
+		};
+	}
+	const local_react_context=gen_dispatcher();
+	/** @arg {string[]} path @param {import("/dom/react_fiber").ReactForwardRef} forward_ref */
 	function on_react_forward_ref(path,forward_ref) {
 		const {$$typeof,render,...y}=forward_ref; g(y);
 		x: {
@@ -81,13 +121,14 @@ export async function main(ns) {
 			let ref_render;
 			try {
 				dispatcher_ref.current={
-					/** @arg {{}} obj @arg {undefined} a1 */
-					useContext(obj,a1) {
+					/** @arg {ReactContext} context @arg {undefined} a1 */
+					useContext(context,a1) {
 						if(a1===void 0) {
-							action_log.push(["useContext",1,obj]);
-							return;
+							action_log.push(["useContext",1,context]);
+						} else {
+							action_log.push(["useContext",2,context,a1]);
 						}
-						action_log.push(["useContext",2,obj,a1]);
+						return local_react_context.useContext(context,a1);
 					}
 				};
 				let res=render(owner_state,null);
