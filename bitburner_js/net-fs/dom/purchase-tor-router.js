@@ -58,11 +58,11 @@ export class DomList {
 		this.world_section=world_section;
 		this.help_section=help_section;
 	}
-	/** @arg {HTMLElement} element */
+	/** @arg {ParentNode} element */
 	click_on(element) {
 		Object.values(element)[1].onClick();
 	}
-	/** @arg {HTMLElement} element */
+	/** @arg {ParentNode} element */
 	click_on_1(element) {
 		Object.values(element)[1].onClick({});
 	}
@@ -94,6 +94,26 @@ export class DomList {
 		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
 		this.click_on_1(backdrop_root);
 		this.click_on(this.terminal_button);
+	}
+	/**
+	 * @returns {HTMLDivElement}
+	 * @param {Element} src
+	 * @param {string} selector
+	 */
+	get_div(src,selector) {
+		let div=query_element(src,selector);
+		if(div instanceof HTMLDivElement) return div;
+		throw new Error("element is not a div element");
+	}
+	/** @param {ParentNode} target */
+	click_to_page(target) {
+		this.click_on(target);
+		return this.get_div(this.MuiBox_root,"div.MuiBox-root");
+	}
+	async play_infiltration() {
+		this.current_page=this.click_to_page(this.city_button);
+		const city_location=this.current_page.children[0].textContent;
+		if(city_location!=="Sector-12") throw new Error("Handle new city");
 	}
 }
 
