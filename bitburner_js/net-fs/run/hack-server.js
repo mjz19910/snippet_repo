@@ -64,10 +64,14 @@ export async function main(ns) {
 	async function send_reply_msg_2(msg) {
 		/** @type {ReplyMsgPending} */
 		let pending_reply_message={call: "pending",id: "reply",reply: []};
-		while(!reply_port.empty()) {
-			let reply_msg=await read_reply_msg(reply_port);
-			if(!reply_msg) continue;
+		if(!reply_port.empty()) {
+			let reply_msg=read_reply_msg(reply_port);
 			pending_reply_message.reply.push(...reply_msg.reply);
+		}
+		while(!reply_port.empty()) {
+			let reply_msg=read_reply_msg(reply_port);
+			pending_reply_message.reply.push(...reply_msg.reply);
+			await ns.sleep(33);
 		}
 		let reply_id=reply_uid_counter;
 		reply_uid_counter++;
@@ -104,7 +108,7 @@ export async function main(ns) {
 		console.log("reply cache",reply_cache);
 		console.log("waiting replies",pending_msg_count);
 		notify_new_reply_port.write(1);
-		let sent=await send_reply_msg(reply_port,pending_reply_message);
+		let sent=send_reply_msg(reply_port,pending_reply_message);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
