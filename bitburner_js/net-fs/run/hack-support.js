@@ -97,9 +97,10 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	function assume_return(x) {x;}
 	for(let i=0;i<20;i++) {
 		{
-			if(request_port.empty()) {
+			while(request_port.empty()) {
 				let sent=await send_call_msg(request_port,{call: "pending",id: "call",reply: []});
 				if(!sent) throw new Error("Invalid state");
+				ns.sleep(33);
 			}
 			debugger;
 			let cur_msg=await read_call_msg(request_port);
