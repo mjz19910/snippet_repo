@@ -28,9 +28,7 @@ if(window.__log_module_loading_enabled__) console.log("Load PluginBase");
 //#region basic
 /** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
 function as_any(e,x=e) {return x;}
-export_(exports => {
-	exports.as_any=as_any;
-});
+export_(exports => {exports.as_any=as_any;});
 //#endregion
 //#region helper
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */

@@ -1,4 +1,5 @@
-function run2() {
+async function run2() {
+	const {as_any}=(await import("../api/as_any"));
 	let s_set=new Set([1,2,3]);
 	Object.seal(s_set);
 	Object.freeze(s_set);
@@ -14,9 +15,6 @@ function run2() {
 		}
 		return results;
 	};
-	/** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
-	function as_any(e,x=e) {return x;}
-
 	/**
 	 * @this {{}}
 	 */
@@ -63,7 +61,7 @@ function run2() {
 			}
 			return results;
 		}
-		/** @returns {Some<I_Ret>|None} */
+		/** @returns {Some<I_Ret>} */
 		last() {
 			let cur;
 			if(this.cache_iter) {
@@ -72,7 +70,7 @@ function run2() {
 				cur=this.next();
 			}
 			if(cur.done) return {t: "s",v: cur.value};
-			return {t: "n"};
+			throw new Error("iterator not done");
 		}
 		/** @returns {IteratorResult<T,I_Ret>} */
 		next() {
