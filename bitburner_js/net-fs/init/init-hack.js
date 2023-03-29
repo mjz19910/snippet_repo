@@ -19,7 +19,7 @@ export class InitHackScript {
 		/** @type {string[]} */
 		this.to_backdoor=this.load_to_backdoor_list();
 		this.template_changed=s.template_changed;
-		this.f_=this.gen_crack_flags();
+		this.enabled_exploits=this.gen_crack_flags();
 		this.service_map={
 			ssh: ns.brutessh,
 			ftp: ns.ftpcrack,
@@ -27,6 +27,13 @@ export class InitHackScript {
 			http: ns.httpworm,
 			sql: ns.sqlinject,
 		};
+		this.f_=ns.flags([
+			["limit",-1],
+		]);
+		if(typeof this.f_.limit!=="number") throw new Error("Invalid arguments");
+		this.start_limit=this.f_.limit;
+		if(this.start_limit===-1) this.start_limit=Infinity;
+		this.start_count=0;
 	}
 	disable_log_use() {
 		this.disableLog_("scan");
@@ -75,7 +82,7 @@ export class InitHackScript {
 			});
 		}
 		let t=this.get_thread_count(srv);
-		if(t<=0) return;
+		if(t<=0) return false;
 		this.format_print(srv,`t:${t} m:${ns.formatRam(srv.maxRam)} h:${srv.hostname}`);
 		let pid=ns.exec(hack_template,srv.hostname,t,t,srv.hostname);
 		if(pid===0) {
@@ -83,7 +90,7 @@ export class InitHackScript {
 			ns.exit();
 		}
 		await this.ns.sleep(1000);
-		return;
+		return true;
 	}
 	/**
 	 * @param {Server} srv
@@ -228,7 +235,9 @@ export class InitHackScript {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
-			await this.start_script_template(srv);
+			if(this.start_count>this.start_limit) return;
+			let increased=await this.start_script_template(srv);
+			if(increased) this.start_count++;
 		}
 	}
 	/** @arg {Server} srv @arg {string} msg */
@@ -315,7 +324,7 @@ export class InitHackScript {
 	}
 	/** @arg {Server} srv @arg {"ssh"|"ftp"|"smtp"|"http"|"sql"} type */
 	unlock_service(srv,type) {
-		if(this.f_[`has_${type}`]) {
+		if(this.enabled_exploits[`has_${type}`]) {
 			this.service_map[type](srv.hostname);
 			srv[`${type}PortOpen`]=true;
 			srv.openPortCount++;
