@@ -13,16 +13,16 @@ export function async_port_read_data(ns_port) {
 	return data;
 }
 /** @param {NetscriptPort} ns_port */
-export async function async_port_peek_data(ns_port) {
+export function async_port_peek_data(ns_port) {
 	let data=ns_port.peek();
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
 	return data;
 }
-/** @param {NetscriptPort} ns_port @template {ReplyMsgPending|CallMsgPending} T @returns {Promise<T>} */
-export async function async_port_peek_msg(ns_port) {
-	let data=await async_port_peek_data(ns_port);
+/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|CallMsgPending} */
+export function async_port_peek_msg(ns_port) {
+	let data=async_port_peek_data(ns_port);
 	if(typeof data==="number") throw new Error("Invalid message");
-	/** @type {T} */
+	/** @type {ReplyMsgPending|CallMsgPending} */
 	let pending_msg=JSON.parse(data);
 	if(pending_msg.call!=="pending") throw new Error("Invalid message");
 	return pending_msg;
@@ -61,13 +61,17 @@ export function read_call_msg(ns_port) {
 	if(msg.id==="call") return msg;
 	throw new Error("Bad state");
 }
-/** @param {NetscriptPort} ns_port @returns {Promise<CallMsgPending>} */
+/** @param {NetscriptPort} ns_port @returns {CallMsgPending} */
 export function peek_call_msg(ns_port) {
-	return async_port_peek_msg(ns_port);
+	let msg=async_port_peek_msg(ns_port);
+	if(msg.id==="call") return msg;
+	throw new Error("Bad state");
 }
-/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
+/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending} */
 export function peek_reply_msg(ns_port) {
-	return async_port_peek_msg(ns_port);
+	let msg=async_port_peek_msg(ns_port);
+	if(msg.id==="reply") return msg;
+	throw new Error("Bad state");
 }
 /** @param {NetscriptPort} ns_port @returns {ReplyMsgPending} */
 export function read_reply_msg(ns_port) {
