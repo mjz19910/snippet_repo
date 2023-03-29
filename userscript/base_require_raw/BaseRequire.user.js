@@ -136,7 +136,7 @@ function require(arg,...r_args) {
 	const M=window.__require_module_cache__,i=required;
 	const resolved_path=resolve_path_to_userscript_dir(arg);
 	if(resolved_path===null) {
-		if(cur_require) return cur_require(arg,...r_args);
+		if(cur_require&&cur_require.__system_require) return cur_require.require(arg,...r_args);
 		throw new Error("Unable to resolve path: "+arg);
 	}
 	/** @arg {import("./ProcessImport").ProcessImport<keyof path_map>} x @returns {asserts x is import("./ProcessImport").ProcessImport<T>} */
@@ -160,8 +160,8 @@ export_(exports => {
 });
 
 /** @template {S_AllImportPaths} T @typedef {import("./ProcessImport").ProcessImport<T>} ProcessImport */
-/** @type {((x:string)=>ProcessImport<any>)|null} */
-let cur_require=null;
+/** @type {({__system_require:boolean,require:(x:AllImportPaths)=>ProcessImport<any>})} */
+let cur_require={__system_require: false,require};
 
 // global exports
 export_(exports => {
@@ -172,14 +172,21 @@ export_(exports => {
 		exports.__global_require_is_null__=true;
 	}
 	exports.__module_require__=require;
+	cur_require={__system_require: false,require};
 	let require_property=Object.getOwnPropertyDescriptor(exports,"require");
 	if(require_property) {
 		console.log("skipping set of require");
 		return;
 	} else {
 		Object.defineProperty(exports,"require",{
-			get: () => require,
-			set(value) {cur_require=value;}
+			get: () => cur_require,
+			set(value) {
+				if(typeof value==="object") {
+					cur_require={...cur_require,__system_require: true,...value};
+				} else {
+					cur_require=value;
+				}
+			}
 		});
 	}
 	exports.__base_require_module_loaded__=true;
