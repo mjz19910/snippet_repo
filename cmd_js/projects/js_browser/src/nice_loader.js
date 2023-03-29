@@ -146,7 +146,7 @@ export class IpcLoader {
 				}
 				let target_re_compile=recompile_target.replace("file:","");
 				let result=await new Promise(function(resolve,reject) {
-					let cp=child_process_spawn("tsc",['-t','ESNext',"-m","ESNext","--outDir","./dist/",target_re_compile],{});
+					let cp=child_process_spawn("tsc",['-t','ESNext',"-m","ESNext","--outDir","dist/",target_re_compile],{});
 					cp.stdout.on("data",e => {
 						process.stdout.write(e);
 					});
