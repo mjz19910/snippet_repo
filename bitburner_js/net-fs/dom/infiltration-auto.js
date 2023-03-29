@@ -33,12 +33,19 @@ export async function main(ns) {
 	const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
 	let mui_list_react_fiber=get_react_fiber(MuiList_root);
 	on_react_fiber(mui_list_react_fiber);
+	/** @param {{}} y */
+	function g(y) {if(Object.keys(y).length>0) ns.print("rest: ",Object.keys(y)); console.log("rest",y);}
 	/** @param {ReactElement2} element @arg {string[]} path */
 	function on_react_element(element,path) {
 		const react_element_sym=react_symbols.react_element;
 		switch(element.$$typeof) {
+			default: debugger; {
+				ns.toast("react_element not handled: "+path,"error");
+				console.log("react_element",path,element);
+				ns.exit();
+			}
 			case react_element_sym: {
-				
+				const {$$typeof,type,key,ref,props,_owner,...y}=element; g(y);
 			} break;
 		}
 		ns.toast("react_element not handled: "+path,"error");
@@ -126,7 +133,7 @@ export async function main(ns) {
 					if(stateNode instanceof HTMLDivElement) break x;
 					p("stateNode",stateNode);
 				}
-				on_react_state_node(stateNode,[...path,"return"])
+				on_react_state_node(stateNode,[...path,"return"]);
 				on_react_fiber(return_,[...path,"return"]);
 				on_react_fiber(child,[...path,"child"]);
 				on_react_fiber(sibling,[...path,"sibling"]);
