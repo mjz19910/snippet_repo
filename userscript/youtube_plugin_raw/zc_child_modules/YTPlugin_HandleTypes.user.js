@@ -28,9 +28,10 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#region
 function init_module() {
 	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
-	// [new_fexp_expected]
-	ECatcherService.known_experiments.push(...[
-	].flat());
+	/** @type {(number[]|number)[]} */
+	const new_fexp_expected_many=[];
+	if(new_fexp_expected_many.length===0) return;
+	ECatcherService.known_experiments.push(...new_fexp_expected_many.flat());
 }
 export_(exports => {exports.init_module=init_module;});
 //#region HandleTypes

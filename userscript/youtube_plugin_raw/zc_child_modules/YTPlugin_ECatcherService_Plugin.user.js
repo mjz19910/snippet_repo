@@ -79,7 +79,7 @@ class ECatcherService extends BaseService {
 	/** @arg {[number[]]} experiments_arr_log_args */
 	log_new_experiments(...experiments_arr_log_args) {
 		let [arg]=experiments_arr_log_args;
-		console.log(`-- [new_fexp_expected] --\n\n[%s],`,arg.join());
+		console.log(`-- [new_fexp_expected_many] --\n\n[%s],`,arg.join());
 		this.data.expected_client_values.fexp;
 	}
 	/** @api @public @arg {RC_ECatcher_SPs["params"]} params */
