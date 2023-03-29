@@ -74,7 +74,9 @@ export async function main(ns) {
 		let pending_msg_count=0;
 		/** @type {(ReplyMsg|null)[]} */
 		const reply_cache=pending_reply_message.reply.slice();
-		for(let done_id of complete_reply_id_list) {
+		for(let i=complete_reply_id_list.length-1;i>=0;i--) {
+			let done_id=complete_reply_id_list[i];
+			complete_reply_id_list.splice(i,1);
 			const idx=pending_reply_message.reply.findIndex(v => v.uid===done_id);
 			if(idx===-1) {
 				pending_msg_count++;
