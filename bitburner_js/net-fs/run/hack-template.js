@@ -62,7 +62,7 @@ export async function main(ns) {
 	/** @type {HackState} */
 	const s=new HackState(ns,pa);
 	try {
-		hack_forever(s);
+		await hack_forever(s);
 	} catch {}
 }
 /** @arg {HackState} s */
