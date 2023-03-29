@@ -18,11 +18,11 @@ export async function async_port_peek_data(ns_port) {
 	if(data==="NULL PORT DATA") throw new Error("Invalid message");
 	return data;
 }
-/** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
+/** @param {NetscriptPort} ns_port @template {ReplyMsgPending|CallMsgPending} T @returns {Promise<T>} */
 export async function async_port_peek_msg(ns_port) {
 	let data=await async_port_peek_data(ns_port);
 	if(typeof data==="number") throw new Error("Invalid message");
-	/** @type {ReplyMsgPending} */
+	/** @type {T} */
 	let pending_msg=JSON.parse(data);
 	if(pending_msg.call!=="pending") throw new Error("Invalid message");
 	return pending_msg;
@@ -61,6 +61,10 @@ export async function read_call_msg(ns_port) {
 	if(msg.id==="call") return msg;
 	throw new Error("Bad state");
 }
+/** @param {NetscriptPort} ns_port @returns {Promise<CallMsgPending>} */
+export function peek_call_msg(ns_port) {
+	return async_port_peek_msg(ns_port);
+}
 /** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
 export function peek_reply_msg(ns_port) {
 	return async_port_peek_msg(ns_port);
@@ -98,7 +102,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	for(let i=0;i<20;i++) {
 		{
 			while(request_port.empty()) {
-				debugger;
 				let sent=await send_call_msg(request_port,{call: "pending",id: "call",reply: []});
 				if(!sent) throw new Error("Invalid state");
 				await ns.sleep(5000);

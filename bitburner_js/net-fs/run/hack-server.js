@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,read_call_msg,read_reply_msg,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,notify_new_reply_port_id} from "/run/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,read_reply_msg,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,notify_new_reply_port_id,peek_call_msg,send_call_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -110,7 +110,7 @@ export async function main(ns) {
 	async function process_messages() {
 		for(let i=0;;i++) {
 			while(request_port.empty()) await request_port.nextWrite();
-			let msg=await read_call_msg(request_port);
+			let msg=await peek_call_msg(request_port);
 			const msg_arr=msg.reply;
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
@@ -182,6 +182,9 @@ export async function main(ns) {
 					else ns.tprint("ERROR complete message not a number");
 				}
 			}
+			msg_arr.length=0;
+			request_port.read();
+			await send_call_msg(reply_port,msg);
 			while(!log_port.empty()) {
 				let res=log_port.read();
 				ns.printf("%s",res);
