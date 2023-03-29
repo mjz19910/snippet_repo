@@ -101,6 +101,7 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
+			console.log("server",i);
 			await request_port.nextWrite();
 			while(!request_port.empty()) {
 				let msg=await read_call_msg(request_port);
