@@ -104,7 +104,11 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			for(let msg of pending_msg.reply) {
 				if(!should_accept(msg,call_id,id)) continue;
 				accepted_messages.push(msg);
-				notify_complete_port.write(msg.uid);
+				for(;;) {
+					while(notify_complete_port.full()) await ns.sleep(33);
+					notify_complete_port.write(msg.uid);
+					break;
+				}
 			}
 			for(let ok_msg of accepted_messages) {
 				let ret=ok_msg.reply;
