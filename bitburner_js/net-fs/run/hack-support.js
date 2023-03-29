@@ -109,7 +109,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		if(request_port.full()) await notify_request_has_space_port.nextWrite();
 		await send_call_msg(request_port,{call: call_id,args: [id]});
 		await notify_port4.nextWrite();
-		for(let j=0;j<8;j++) {
+		for(let j=0;j<32;j++) {
 			if(reply_port.empty()) throw new Error("reply already removed");
 			let msg=await peek_reply_msg(reply_port);
 			if(!should_accept(msg,call_id,id)) {
