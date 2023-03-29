@@ -204,6 +204,12 @@ export class DomList {
 					}
 					debugger;
 				} break;
+				case "Attack when his guard is down!": {
+					while(instruction_source[1].textContent?.includes("Guarding")) {
+						await ns.sleep(33);
+					}
+					debugger;
+				} break;
 				default: {
 					for(let i=1;i<instruction_source.length-1;i++) {
 						let node_text=instruction_source[i].textContent;
