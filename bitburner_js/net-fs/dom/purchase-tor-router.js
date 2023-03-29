@@ -132,7 +132,7 @@ export class DomList {
 		this.current_page=this.click_to_page(nwo_map_location);
 		const company_action_buttons=dom_list.current_page.children[2];
 		const infiltrate_company_button=company_action_buttons.children[4];
-		this.click_on_1(infiltrate_company_button);
+		this.click_on_trusted(infiltrate_company_button);
 		this.current_page=this.get_current_page();
 	}
 }
