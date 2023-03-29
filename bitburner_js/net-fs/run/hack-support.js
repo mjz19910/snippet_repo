@@ -102,6 +102,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 				if(!sent) throw new Error("Invalid state");
 				ns.sleep(33);
 			}
+			if(request_port.empty()) throw new Error("Invalid state");
 			let cur_msg=await read_call_msg(request_port);
 			cur_msg.reply.push({call: call_id,args: [id]});
 			let sent=await send_call_msg(request_port,cur_msg);
