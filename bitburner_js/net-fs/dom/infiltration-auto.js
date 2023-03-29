@@ -71,10 +71,9 @@ export async function main(ns) {
 		let fiber=fiber_nullable;
 		if(seen_react_fiber_set.has(fiber)) return;
 		seen_react_fiber_set.add(fiber);
-		console.log(path.join("."),fiber.tag,filter_fiber(fiber));
 		switch(fiber.tag) {
 			default: {
-				ns.print(`${path.join(".")}.tag: `,fiber.tag); console.log(path.join("."),fiber);
+				ns.print(`${path.join(".")}.tag: `,fiber.tag);
 				ns.toast("react_fiber not handled: "+path,"error");
 				console.log("react_fiber",path,fiber);
 				ns.exit();
