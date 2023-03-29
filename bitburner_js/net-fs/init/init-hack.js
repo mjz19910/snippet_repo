@@ -286,8 +286,6 @@ async function iter_host_scan_entries(this_,src_host,seen_set,depth,map) {
 			if(seen_set.has(srv)) continue;
 			seen_set.add(srv);
 			this_.hostname_list.push(srv);
-			await this_.ns.sleep(33);
-			this_.ns.print("scan: ",srv);
 			let scan_res=this_.ns.scan(srv);
 			let home_idx=scan_res.indexOf(src_host);
 			if(home_idx>-1) scan_res.splice(home_idx,1);
