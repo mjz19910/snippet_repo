@@ -58,10 +58,14 @@ export class DomList {
 		this.world_section=world_section;
 		this.help_section=help_section;
 
-		this.current_page=this.get_div(this.MuiBox_root,"div.MuiBox-root");
+		this.current_page=this.get_current_page();
 
 		let win=this.window_();
 		win.dom_list=this;
+	}
+	/** @param {ParentNode} node @returns {{onClick(event:{isTrusted:boolean}):void;}} */
+	get_react_props(node) {
+		return Object.values(node)[1];
 	}
 	/** @arg {ParentNode} element */
 	click_on(element) {
@@ -70,6 +74,10 @@ export class DomList {
 	/** @arg {ParentNode} element */
 	click_on_1(element) {
 		Object.values(element)[1].onClick({});
+	}
+	/** @arg {ParentNode} element */
+	click_on_trusted(element) {
+		this.get_react_props(element).onClick({isTrusted: true});
 	}
 	/** @returns {Window&{dom_list?:DomList}} */
 	window_() {
@@ -89,6 +97,9 @@ export class DomList {
 	/** @param {ParentNode} target */
 	click_to_page(target) {
 		this.click_on(target);
+		return this.get_current_page();
+	}
+	get_current_page() {
 		return this.get_div(this.MuiBox_root,"div.MuiBox-root");
 	}
 	async buy_tor_router() {
@@ -119,7 +130,10 @@ export class DomList {
 		}
 		const nwo_map_location=query_element(this.current_page,"[aria-label=NWO]");
 		this.current_page=this.click_to_page(nwo_map_location);
-		dom_list.current_page.children[2];
+		const company_action_buttons=dom_list.current_page.children[2];
+		const infiltrate_company_button=company_action_buttons.children[4];
+		this.click_on_1(infiltrate_company_button);
+		this.current_page=this.get_current_page();
 	}
 }
 
