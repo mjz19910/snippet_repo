@@ -95,7 +95,9 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	function assume_return(x) {x;}
 	/** @param {string|number} i */
 	function tprint_log(i) {
-		this_.ns.tprintf("%s %s %s %s",this_.ns.tFormat(performance.now()-wait_start_perf),this_.hostname,call_id,i);
+		const perf_diff=performance.now()-wait_start_perf;
+		if(perf_diff<1000) return;
+		this_.ns.printf("%s %s %s %s",this_.ns.tFormat(perf_diff),this_.hostname,call_id,i);
 	}
 	for(;;) {
 		let sent_msg=false;
