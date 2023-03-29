@@ -4725,4 +4725,16 @@ class DebugApi {
 	}
 }
 export_(exports => {exports.DebugApi=DebugApi;});
+export_(exports => {
+	exports.__REACT_DEVTOOLS_GLOBAL_HOOK__={
+		isDisabled: false,
+		supportsFiber: true,
+		/** @type {ReactDevtoolsHook|null} */
+		hook_ref: null,
+		/** @arg {ReactDevtoolsHook} react_devtools_scope */
+		inject(react_devtools_scope) {
+			this.hook_ref=react_devtools_scope;
+		}
+	};
+},{global: true});
 export_(exports => exports.__module_loaded__=true);

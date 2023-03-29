@@ -1,1 +1,0 @@
-type DebuggableFunctions=DbgNewableFn|CallableFunction;
