@@ -45,9 +45,9 @@ export async function main(ns) {
 
 	for(let item of ns.scan("home")) get_server(item);
 
-	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
+	/** @type {ReplyMsg[]} */
 	const pending_reply_list=[];
-	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
+	/** @type {ReplyMsg[]} */
 	const retry_arr=[];
 	const this_={ns};
 	const request_port=ns.getPortHandle(request_port_id);
@@ -62,14 +62,26 @@ export async function main(ns) {
 
 	request_port.clear();
 	reply_port.clear();
-	/** @param {import("/run/hack-support.js").ReplyMsg} msg */
+	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		if(reply_port.full()) {
-			pending_reply_list.push(msg);
-			return;
+		/** @type {ReplyMsg[]} */
+		let reply_messages=[];
+		while(!reply_port.empty()) {
+			let reply_msg=await read_reply_msg(reply_port);
+			if(reply_msg.call==="pending") {
+				reply_messages.push(...reply_msg.reply);
+			} else {
+				reply_messages.push(reply_msg);
+			}
 		}
+		reply_messages.push(msg);
 		notify_new_reply_port.write(1);
-		await send_reply_msg(reply_port,msg);
+		if(reply_messages.length===1) {
+			await send_reply_msg(reply_port,msg);
+		} else {
+			reply_messages;
+			await send_reply_msg(reply_port,{call: "pending",reply: reply_messages});
+		}
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {

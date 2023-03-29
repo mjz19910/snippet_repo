@@ -1,19 +1,3 @@
-/** @typedef {ReplyMsg1|ReplyMsg2|ReplyMsg3|ReplyMsg4|ReplyMsg5|ReplyMsg6} ReplyMsg */
-/** @typedef {{call:"getServerMaxMoney";id:string;reply:number;}} ReplyMsg1 */
-/** @typedef {{call:"getServerMinSecurityLevel";id:string;reply:number}} ReplyMsg2 */
-/** @typedef {{call:"getServerSecurityLevel";id:string;reply:number}} ReplyMsg3 */
-/** @typedef {{call:"getServerMoneyAvailable";id:string;reply:number}} ReplyMsg4 */
-/** @typedef {{call:"get_server";id:string;reply:Server}} ReplyMsg5 */
-/** @typedef {{call:"get_hack_target";id:string;reply:Server}} ReplyMsg6 */
-
-/** @typedef {CallMsg1|CallMsg2|CallMsg3|CallMsg4|CallMsg5|CallMsg6} CallMsg */
-/** @typedef {{call:"getServerMaxMoney",args:[string]}} CallMsg1 */
-/** @typedef {{call:"getServerMinSecurityLevel",args:[string]}} CallMsg2 */
-/** @typedef {{call:"getServerSecurityLevel",args:[string]}} CallMsg3 */
-/** @typedef {{call:"getServerMoneyAvailable",args:[string]}} CallMsg4 */
-/** @typedef {{call:"get_server",args:[string]}} CallMsg5 */
-/** @typedef {{call:"get_hack_target",args:[string]}} CallMsg6 */
-
 export const request_port_id=1;
 export const reply_port_id=2;
 export const log_port_id=3;
