@@ -5,5 +5,5 @@ declare global {
 	}
 }
 declare global {
-	var require: typeof import("../base_require_raw/BaseRequire.user.js").require;
+	var require: typeof import("./BaseRequire.user.js").require;
 }
