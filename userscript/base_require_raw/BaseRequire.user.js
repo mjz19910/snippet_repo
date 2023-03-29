@@ -5,7 +5,8 @@
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2023
-// @match	https://*.youtube.com/*
+// @match		https://*/*
+// @match		http://*/*
 // @grant	none
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/za_userscript_meta/YtPlugin_Base.meta.js
@@ -148,7 +149,14 @@ export_(exports => exports.get_exports=get_exports);
 
 export_(exports => exports.do_export=do_export);
 export_(exports => {
-	exports.require=require;
+	if(exports.require!==void 0) {
+		exports.__global_require__=exports.require;
+	} else {
+		exports.__global_require__=null;
+		exports.__global_require_is_null__=true;
+	}
+	exports.__module_require__=require;
+	Object.defineProperty(exports,"require",{value: require});
 	exports.__base_require_module_loaded__=true;
 },{global: true});
 export_(exports => exports.__module_loaded__=true);
