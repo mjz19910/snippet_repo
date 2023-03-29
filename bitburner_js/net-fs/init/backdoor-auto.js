@@ -17,7 +17,7 @@ export async function main(ns) {
 	async function wait_for_terminal() {
 		let new_element=get_terminal_input(),cnt=0;
 		while(new_element===null) {
-			if(cnt%8===0) ns.print("wait ",cnt/8);
+			if(cnt%16===0) ns.print("wait ",cnt/16);
 			await ns.sleep(33);
 			cnt++;
 			new_element=get_terminal_input();
@@ -48,7 +48,7 @@ export async function main(ns) {
 				terminalInput=await wait_for_terminal();
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
 				if(!has_disabled) break;
-				await ns.sleep(300);
+				await ns.sleep(12);
 			}
 			let srv=ns.getServer(hostname);
 			server_map[hostname]=srv;
@@ -80,7 +80,7 @@ export async function main(ns) {
 				terminalInput=await wait_for_terminal();
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
 				if(!has_disabled) break;
-				await ns.sleep(300);
+				await ns.sleep(12);
 			}
 			srv.backdoorInstalled=true;
 		}
