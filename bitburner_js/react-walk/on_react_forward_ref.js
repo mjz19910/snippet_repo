@@ -1,12 +1,17 @@
-/** @arg {string[]} path @param {import("/dom/react_fiber").ReactForwardRef} forward_ref */
-function on_react_forward_ref(path,forward_ref) {
-	const {$$typeof,render,...y}=forward_ref; g(y);
+import {local_react_context,react_render_set,react_symbols} from "./const";
+import {dispatcher_ref} from "./dispatcher_ref";
+import {g} from "./g";
+import {unhandled} from "./unhandled";
+
+/** @arg {NS} ns @arg {string[]} path @param {import("./react_fiber").ReactForwardRef} forward_ref */
+export function on_react_forward_ref(ns,path,forward_ref) {
+	const {$$typeof,render,...y}=forward_ref; g(ns,y);
 	x: {
 		if(react_render_set.has(render))
 			break x;
 		react_render_set.add(render);
 		if($$typeof!==react_symbols.forward_ref) {
-			unhandled("not_forward_ref",[forward_ref],path);
+			unhandled(ns,"not_forward_ref",[forward_ref],path);
 		}
 		/** @type {{}[]} */
 		const action_log=[];
