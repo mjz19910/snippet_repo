@@ -109,6 +109,7 @@ export async function main(ns) {
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
+		debugger;
 		for(let i=0;;i++) {
 			await ns.sleep(300);
 			while(request_port.empty()) await request_port.nextWrite();
