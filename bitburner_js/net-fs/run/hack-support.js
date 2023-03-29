@@ -104,7 +104,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		if(reply_port.empty()) throw new Error("reply already removed");
 		let msg=await peek_reply_msg(reply_port);
 		if(!should_accept(msg,call_id,id)) {
-			reply_port.read(); reply_port.read(); reply_port.read(); reply_port.read();
+			reply_port.read(); reply_port.read();
 			throw new Error("reply wrong type");
 		}
 		reply_port.read();
