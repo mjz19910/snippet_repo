@@ -170,6 +170,7 @@ export class InitHackScript {
 				seen_set.add(srv);
 				this.hostname_list.push(srv);
 				await this.ns.sleep(33);
+				this.ns.print("scan: ",srv);
 				let scan_res=this.ns.scan(srv);
 				let home_idx=scan_res.indexOf(src_host);
 				if(home_idx>-1) scan_res.splice(home_idx,1);
