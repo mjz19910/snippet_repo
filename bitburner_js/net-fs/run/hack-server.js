@@ -97,6 +97,7 @@ export async function main(ns) {
 			if(item===null) continue;
 			pending_reply_message.reply.push(item);
 		}
+		pending_reply_message.reply.push(msg);
 		if(reply_cache.length>0) {
 			console.log("reply cache",reply_cache);
 			console.log("waiting replies",pending_msg_count);
@@ -110,6 +111,7 @@ export async function main(ns) {
 			await ns.sleep(303);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
+			debugger;
 			const msg_arr=msg.reply;
 			for(let msg of msg_arr) {
 				const {call,args}=msg;

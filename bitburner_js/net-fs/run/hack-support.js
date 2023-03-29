@@ -123,6 +123,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			cur_msg.reply.push({call: call_id,args: [id]});
 			let sent=send_call_msg(request_port,cur_msg);
 			if(!sent) throw new Error("Invalid state");
+			await ns.sleep(310);
 			continue;
 		}
 		for(let msg of pending_msg.reply) {
