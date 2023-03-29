@@ -118,6 +118,13 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		if(reply_port.empty()) throw new Error("reply already removed");
 		let pending_msg=peek_reply_msg(reply_port);
 		let accepted_messages=[];
+		if(pending_msg.reply.length===0) {
+			let cur_msg=read_call_msg(request_port);
+			cur_msg.reply.push({call: call_id,args: [id]});
+			let sent=send_call_msg(request_port,cur_msg);
+			if(!sent) throw new Error("Invalid state");
+			continue;
+		}
 		for(let msg of pending_msg.reply) {
 			if(!should_accept(msg,call_id,id)) continue;
 			accepted_messages.push(msg);
