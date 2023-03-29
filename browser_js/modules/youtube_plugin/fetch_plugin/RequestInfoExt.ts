@@ -1,5 +1,6 @@
 
 export type RequestInfoExt={
-	request_info: RequestInfo|URL;
+	response: Response;
+	request_info: string|Request|URL;
 	init?: RequestInit|undefined;
 };

@@ -8,7 +8,7 @@ type ToFunctionImpl<T extends {
 	ToFunctionImpl<T,[...Acc,any]>
 	;
 ;
-type ToFunction<T extends {
+export type ToFunction<T extends {
 	type: "function";
 	length: number;
 	name: string;
@@ -185,7 +185,7 @@ function q<T>(a: R_State,b: T,c: number): {value: T;} {
 	a.nextAddress=c;
 	return {value: b};
 }
-function ub(this: YT_NetworklessRequestController) {
+export function ub(this: YT_NetworklessRequestController) {
 	let b=this;
 	let tv: YT_NetworklessRequestController_TestFns={
 		setDbToken(y) {
@@ -223,7 +223,7 @@ abstract class YT_NetworklessRequestController_Base {
 }
 
 type EmptyObj=Record<string,never>;
-var Ey: EmptyObj=new (function() {} as any as new () => EmptyObj);
+export var Ey: EmptyObj=new (function() {} as any as new () => EmptyObj);
 abstract class YT_NetworklessRequestController extends YT_NetworklessRequestController_Base {
 	abstract override writeThenSend(a: any,b: any): void;
 	abstract override sendThenWrite(a: any,b: any,c: any): void;
@@ -258,8 +258,8 @@ abstract class YT_NetworklessRequestController extends YT_NetworklessRequestCont
 	abstract offlineEvent: Lowercase<"publicYtNetworkStatus-offline">;
 	abstract initializationPromise: PromiseHolder<{}>;
 };
-type PromiseHolder<T>={
+export type PromiseHolder<T>={
 	promise: Promise<T>;
 };
 
-let a: YT_NetworklessRequestController;
+export let a: YT_NetworklessRequestController;

@@ -1,5 +1,5 @@
-import {EventListenersT} from "../../typescript/modules/DebugApi/src/EventListenersT.js";
-import {T_Split} from "../../../userscript/youtube_plugin_raw/support_0_mod/T_Split.mod.js";
+import {EventListenersT} from "../modules/DebugApi/src/EventListenersT.js";
+import {T_Split} from "../../userscript/youtube_plugin_raw/support_0_mod/T_Split.mod.js";
 export type Split<S extends string,D extends string>=T_Split<S,D>;
 type InterceptFuncType=EventListenerOrEventListenerObject;
 type InterceptThis=[string,InterceptFuncType,any?];

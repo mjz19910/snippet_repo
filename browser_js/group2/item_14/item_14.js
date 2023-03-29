@@ -231,6 +231,7 @@ const overflow_state=new class {
 	/** @type {number|null} */
 	last_stack_space=null;
 };
+export_(exports => exports.overflow_state=overflow_state);
 /** @type {number[]} */
 /** @type {JsonInputType[]} */
 const json_cache_arr=[];
