@@ -1,3 +1,4 @@
+import {forwardRef} from "react";
 import {gen_dispatcher} from "./gen_dispatcher";
 import {get_react_element_sym} from "./get_react_element_sym";
 
@@ -13,6 +14,6 @@ export const react_render_set=new Set;
 
 export const local_react_context=gen_dispatcher();
 export const react_symbols={
-	forward_ref: window.React.forwardRef(() => null)["$$typeof"],
+	forward_ref: forwardRef(() => null)["$$typeof"],
 	react_element: get_react_element_sym(),
 };
