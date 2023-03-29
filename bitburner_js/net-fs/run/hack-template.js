@@ -84,7 +84,6 @@ async function hack_forever(s) {
 	for(;;) {
 		await s.ns.sleep(0);
 		const srv=await generic_get_call_with_id(s,Math.random()+"","get_hack_target"); ``;
-		console.log("hack");
 		s.target=srv.hostname;
 		s.ns.printf("[%s] target: %s",s.hostname,s.target);
 		await run_hack(s);
