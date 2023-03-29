@@ -103,10 +103,9 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		const cur_timer=perf_diff();
 		if(cur_timer<1000) return;
 		console.log(this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
-		this_.ns.printf("%s %s %s %s",this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
+		this_.ns.printf("%s %s %s",this_.hostname,call_id,i);
 	}
 	for(let i=0;i<20;i++) {
-		tprint_log(`${i} ${id}`);
 		function delay_time() {
 			const slow_boundary=11;
 			if(i<=(slow_boundary+1)) return 33;
