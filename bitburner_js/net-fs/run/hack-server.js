@@ -26,7 +26,6 @@ export async function main(ns) {
 	ns.resizeTail(width,120);
 	ns.moveTail(window_width-width-4,1);
 
-	const trace=false;
 	const randomize_hack=true;
 	/** @type {{[x:string]:Server}} */
 	const server_map={};
@@ -74,9 +73,7 @@ export async function main(ns) {
 		let pending_msg_count=0;
 		/** @type {(ReplyMsg|null)[]} */
 		const reply_cache=pending_reply_message.reply.slice();
-		for(let i=complete_reply_id_list.length-1;i>=0;i--) {
-			let done_id=complete_reply_id_list[i];
-			complete_reply_id_list.splice(i,1);
+		for(let done_id of complete_reply_id_list) {
 			const idx=pending_reply_message.reply.findIndex(v => v.uid===done_id);
 			if(idx===-1) {
 				pending_msg_count++;
@@ -165,8 +162,6 @@ export async function main(ns) {
 						}
 					} break;
 				}
-				if(trace) ns.print(msg);
-				console.log("server_msg",msg);
 				notify_request_has_space_port.write(1);
 				while(!notify_complete_port.empty()) {
 					let complete_id=notify_complete_port.read();
