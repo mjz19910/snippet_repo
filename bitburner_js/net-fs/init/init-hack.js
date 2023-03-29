@@ -48,6 +48,7 @@ export class InitHackScript {
 		this.disableLog_("getServerMaxRam");
 	}
 	async init_hack() {
+		this.ns.print("init_hack");
 		await this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.exec(hack_server,"home");
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
