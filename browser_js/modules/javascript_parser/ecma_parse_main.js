@@ -2124,7 +2124,7 @@ function parse_javascript_str(code_str) {
 		console.log(res_description);
 	}
 	console.log(`parsed ${i} tokens`);
-};
+}
 
 if(typeof exports==='object') {
 	exports.parse_javascript_str=parse_javascript_str;
