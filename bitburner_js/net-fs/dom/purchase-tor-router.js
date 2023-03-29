@@ -77,7 +77,7 @@ class DomList {
 	}
 	/** @param {NS} ns */
 	async use(ns) {
-		if(ns["hasTorRouter"]()) return;
+		if(ns.hasTorRouter()) return;
 		ns.print("start: purchase_tor_router");
 		/** @type {any} */
 		let win=this.window_();
