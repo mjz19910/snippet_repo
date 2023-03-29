@@ -38,6 +38,34 @@ export async function main(ns) {
 		let cloned={...obj};
 		return cloned;
 	}
+	/** @param {ReactElement2} element @arg {string[]} path */
+	function on_react_element(element,path) {
+		ns.toast("react_element not handled: "+path,"error");
+		console.log("react_element",path,element);
+		ns.exit();
+
+	}
+	/** @param {ReactElementProps} props @arg {string[]} path */
+	function on_react_fiber_props(props,path) {
+		for(let [idx_i,child_like] of props.children.entries()) {
+			if(child_like===void 0) continue;
+			if(child_like instanceof Array) {
+				let sub_children=child_like;
+				for(let [idx_j,child] of sub_children.entries()) {
+					on_react_element(child,[...path,"children",idx_i+"",idx_j+""]);
+				}
+				return;
+			}
+			if(typeof child_like==="object") {
+				let child=child_like;
+				on_react_element(child,[...path,"children",idx_i+""]);
+				return;
+			}
+			ns.toast("fiber_props not handled","error");
+			console.log("fiber_props.children",child_like);
+			ns.exit();
+		}
+	}
 	/** @param {ReactFiber} fiber @arg {string[]} path */
 	function on_react_fiber(fiber,path=["fiber"]) {
 		if(seen_react_fiber_set.has(fiber)) return;
@@ -92,6 +120,7 @@ export async function main(ns) {
 				p("sibling",sibling);
 				p("index",index);
 				p("ref",ref);
+				on_react_fiber_props(pendingProps,[...path,"pendingProps"]);
 				p("pendingProps.className",pendingProps.className);
 				for(let each_prop of pendingProps.children) {
 					if(each_prop===void 0) continue;

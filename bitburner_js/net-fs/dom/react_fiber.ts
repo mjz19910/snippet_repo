@@ -40,6 +40,11 @@ type ReactFiberElement<ElementType extends HtmlReactElementType,_ClassName exten
 	childLanes: 0;
 	alternate: {};
 };
+type ReactElementProps={
+	className: string;
+	children: (ReactElement2[]|ReactElement2|undefined)[];
+};
+
 type ReactFiberElement_UList={
 	tag: 5;
 	key: null;
@@ -51,10 +56,7 @@ type ReactFiberElement_UList={
 	sibling: null;
 	index: number;
 	ref: null;
-	pendingProps: {
-		className: "MuiList-root MuiList-padding";
-		children: [undefined,ReactElement2[]]|[ReactElement2,ReactElement2];
-	};
+	pendingProps: ReactElementProps;
 	memoizedProps: {
 		className: "MuiList-root MuiList-padding";
 		children: [undefined,ReactElement2[]]|[ReactElement2,ReactElement2];
