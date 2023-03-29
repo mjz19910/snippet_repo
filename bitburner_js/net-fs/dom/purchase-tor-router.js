@@ -1,8 +1,8 @@
-import {as_div_element,as_html_element,as_svg_element,query_element} from "/dom/dom-support.js";
+import {as_svg_element,query_element} from "/dom/dom-support.js";
 import {as_any} from "/run/as.js";
 
 export class DomList {
-	/** @arg {HTMLDivElement} header_element */
+	/** @arg {ParentNode} header_element */
 	expand_collapsed_section(header_element) {
 		if(as_svg_element(query_element(header_element,"svg:nth-child(3)")).dataset.testid==="ExpandMoreIcon") {
 			let r=Object.values(header_element)[1];
@@ -20,13 +20,13 @@ export class DomList {
 		const MuiList_root=query_element(this.MuiPaper_root,"ul.MuiList-root");
 		this.MuiList_root=MuiList_root;
 		// 2,5,8 are dividers
-		this.hacking_section_header=as_div_element(MuiList_root.children[0]);
+		this.hacking_section_header=MuiList_root.children[0];
 		this.expand_collapsed_section(this.hacking_section_header);
-		this.character_section_header=as_div_element(MuiList_root.children[3]);
+		this.character_section_header=MuiList_root.children[3];
 		this.expand_collapsed_section(this.character_section_header);
-		this.world_section_header=as_div_element(MuiList_root.children[6]);
+		this.world_section_header=MuiList_root.children[6];
 		this.expand_collapsed_section(this.world_section_header);
-		this.help_section_header=as_div_element(MuiList_root.children[9]);
+		this.help_section_header=MuiList_root.children[9];
 		this.expand_collapsed_section(this.help_section_header);
 
 		const hacking_section=MuiList_root.children[1];
@@ -34,7 +34,7 @@ export class DomList {
 		const world_section=MuiList_root.children[7];
 		const help_section=MuiList_root.children[10];
 
-		this.terminal_button=as_div_element(hacking_section.children[0].children[0].children[0]);
+		this.terminal_button=hacking_section.children[0].children[0].children[0];
 		this.script_editor_button=hacking_section.children[0].children[0].children[1];
 		this.active_scripts_button=hacking_section.children[0].children[0].children[2];
 		this.create_program_button=hacking_section.children[0].children[0].children[3];
@@ -44,7 +44,7 @@ export class DomList {
 		this.augmentations_button=character_section.children[0].children[0].children[2];
 		this.hacknet_button=character_section.children[0].children[0].children[3];
 
-		this.city_button=as_div_element(world_section.children[0].children[0].children[0]);
+		this.city_button=world_section.children[0].children[0].children[0];
 		this.travel_button=world_section.children[0].children[0].children[1];
 		this.stock_market_button=world_section.children[0].children[0].children[2];
 
@@ -86,7 +86,7 @@ export class DomList {
 		const alpha_enterprises_map_location=query_element(this.current_page,"[aria-label='Alpha Enterprises']");
 		this.click_on(alpha_enterprises_map_location);
 		this.current_page=query_element(this.MuiBox_root,"div.MuiBox-root");
-		const purchase_tor_router_button=as_html_element(this.current_page.children[8]);
+		const purchase_tor_router_button=this.current_page.children[8];
 		this.click_on(purchase_tor_router_button);
 		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
 		this.click_on_1(backdrop_root);
