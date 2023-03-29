@@ -34,19 +34,11 @@ export async function main(ns) {
 			}
 			/** @type {{}[]} */
 			const action_log=[];
-			const base_ref={
-				absolute: Symbol.for("absolute"),
-				children: Symbol.for("children"),
-				className: Symbol.for("className"),
-				component: Symbol.for("component"),
-				flexItem: Symbol.for("flexItem"),
-				light: Symbol.for("light"),
-				orientation: Symbol.for("orientation"),
-				role: Symbol.for("role"),
-				textAlign: Symbol.for("textAlign"),
-				/** @type {"variant"} */
-				variant: "variant",
-			};
+			const known_ref_properties=[
+				"absolute","children","className","component","flexItem",
+				"light","orientation","role","textAlign","variant",
+			];
+			const base_ref={};
 			const proxy_config={log_own_keys: false};
 			/** @satisfies {ProxyHandler<typeof base_ref>} */
 			const proxy_target={
@@ -55,6 +47,7 @@ export async function main(ns) {
 					let key=obj===base_ref? "base_ref":"unknown";
 					action_log.push(["get",key,k]);
 					if(k in obj) return obj[k];
+					if(known_ref_properties.includes(k)) return void 0;
 					console.log("ref get",k);
 					return void 0;
 				},
@@ -72,14 +65,17 @@ export async function main(ns) {
 					return void 0;
 				}
 			};
-			let owner_state=new Proxy(base_ref,new Proxy(proxy_target,{
+			let ex_proxy=new Proxy(proxy_target,{
 				/** @arg {keyof typeof proxy_target} k */
 				get(obj,k) {
 					if(k in obj) return obj[k];
 					console.log("proxy get",k);
 					return void 0;
 				},
-			}));
+			});
+			let is_debug=true;
+			if(is_debug) ex_proxy=proxy_target;
+			let owner_state=new Proxy(base_ref,ex_proxy);
 			let prev_dispatcher=dispatcher_ref.current;
 			/** @type {["error",unknown]|["result",{},{}[]]} */
 			let ref_render;
@@ -90,7 +86,6 @@ export async function main(ns) {
 						action_log.push(["useContext",obj,a1]);
 					}
 				};
-				debugger;
 				let res=render(owner_state,null);
 				ref_render=["result",res,action_log];
 			} catch(e) {
