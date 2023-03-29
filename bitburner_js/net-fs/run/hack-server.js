@@ -100,7 +100,8 @@ export async function main(ns) {
 		console.log("reply cache",reply_cache);
 		console.log("waiting replies",pending_msg_count);
 		notify_new_reply_port.write(1);
-		await send_reply_msg(reply_port,pending_reply_message);
+		let sent=await send_reply_msg(reply_port,pending_reply_message);
+		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
