@@ -65,7 +65,9 @@ export async function main(ns) {
 		try {
 			await hack_forever(s);
 			continue;
-		} catch {}
+		} catch(e) {
+			console.log(e);
+		}
 		await ns.sleep(1000*Math.random()+1000);
 	}
 }

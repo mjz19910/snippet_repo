@@ -119,7 +119,6 @@ export class InitHackScript {
 		this.disableLog_("disableLog");
 		this.disable_log_use();
 
-		ns.tail();
 		ns.clearLog();
 	}
 	/** @type {NS["fileExists"]} */
