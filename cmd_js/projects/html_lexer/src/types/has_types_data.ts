@@ -15,9 +15,7 @@ export function has_types_arr_with<T>(
 		t: 'y',
 		v: {types: T[];};
 	};
-	function as<U,V>(x: U): U|V {
-		return x;
-	};
+	function as<U,V>(x: U): U|V {return x;};
 	let s=as<U,V>({t: 'x',v});
 	if(!cast_to_object_and_fn<U['v']>(s)) return false;
 	if(!s.v.hasOwnProperty('types'))
