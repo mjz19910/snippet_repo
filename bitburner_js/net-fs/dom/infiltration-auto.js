@@ -22,27 +22,88 @@ export async function main(ns) {
 	}
 	const global_hook=__REACT_DEVTOOLS_GLOBAL_HOOK__.hook_ref;
 	const dispatcher_ref=global_hook.currentDispatcherRef;
+	const react_render_set=new Set;
 	/** @arg {string[]} path @param {ReactForwardRef} forward_ref */
 	function on_react_forward_ref(path,forward_ref) {
 		const {$$typeof,render,...y}=forward_ref; g(y);
-		if($$typeof!==react_symbols.forward_ref) {
-			unhandled("not_forward_ref",[forward_ref],path);
+		x: {
+			if(react_render_set.has(render)) break x;
+			react_render_set.add(render);
+			if($$typeof!==react_symbols.forward_ref) {
+				unhandled("not_forward_ref",[forward_ref],path);
+			}
+			/** @type {{}[]} */
+			const action_log=[];
+			const base_ref={
+				absolute: Symbol.for("absolute"),
+				children: Symbol.for("children"),
+				className: Symbol.for("className"),
+				component: Symbol.for("component"),
+				flexItem: Symbol.for("flexItem"),
+				light: Symbol.for("light"),
+				orientation: Symbol.for("orientation"),
+				role: Symbol.for("role"),
+				textAlign: Symbol.for("textAlign"),
+				/** @type {"variant"} */
+				variant: "variant",
+			};
+			const proxy_config={log_own_keys: false};
+			/** @satisfies {ProxyHandler<typeof base_ref>} */
+			const proxy_target={
+				/** @arg {keyof typeof base_ref} k */
+				get(obj,k) {
+					let key=obj===base_ref? "base_ref":"unknown";
+					action_log.push(["get",key,k]);
+					if(k in obj) return obj[k];
+					console.log("ref get",k);
+					return void 0;
+				},
+				ownKeys(obj) {
+					let key=obj===base_ref? "base_ref":"unknown";
+					action_log.push(["ownKeys",key]);
+					if(proxy_config.log_own_keys) console.log("ref ownKeys");
+					return Reflect.ownKeys(obj);
+				},
+				getOwnPropertyDescriptor(target,p) {
+					let key=target===base_ref? "base_ref":"unknown";
+					action_log.push(["getOwnPropertyDescriptor",key,p]);
+					if(p in target) return Reflect.getOwnPropertyDescriptor(target,p);
+					console.log("ref getOwnPropertyDescriptor",p);
+					return void 0;
+				}
+			};
+			let owner_state=new Proxy(base_ref,new Proxy(proxy_target,{
+				/** @arg {keyof typeof proxy_target} k */
+				get(obj,k) {
+					if(k in obj) return obj[k];
+					console.log("proxy get",k);
+					return void 0;
+				},
+			}));
+			let prev_dispatcher=dispatcher_ref.current;
+			/** @type {["error",unknown]|["result",{},{}[]]} */
+			let ref_render;
+			try {
+				dispatcher_ref.current={
+					/** @arg {{}} obj @arg {undefined} a1 */
+					useContext(obj,a1) {
+						action_log.push(["useContext",obj,a1]);
+					}
+				};
+				debugger;
+				let res=render(owner_state,null);
+				ref_render=["result",res,action_log];
+			} catch(e) {
+				ref_render=["error",e];
+			} finally {
+				dispatcher_ref.current=prev_dispatcher;
+			}
+			if(ref_render[0]==="error") {
+				ns.print("forward_ref.render.name: ",render.name," ",render.length);
+			} else {
+				console.log("forward_ref",ref_render[1],{log: ref_render[2]});
+			}
 		}
-		ns.print("forward_ref.render.name: ",render.name," ",render.length);
-		let ref_render;
-		let ref_obj={};
-		let prev_dispatcher=dispatcher_ref.current;
-		try {
-			dispatcher_ref.current={};
-			debugger;
-			let res=render(ref_obj,null);
-			ref_render=[ref_obj,res];
-		} catch(e) {
-			ref_render=[ref_obj,e];
-		} finally {
-			dispatcher_ref.current=prev_dispatcher;
-		}
-		console.log("forward_ref",ref_render);
 	}
 	/** @type {string[]} */
 	const fn_str_list=[];
@@ -56,7 +117,7 @@ export async function main(ns) {
 			default: unhandled("react_element",[element],path);
 			case react_element_sym: {
 				const {$$typeof,type,key,ref,props,_owner,...y}=element; g(y);
-				if(typeof type!=="function") {
+				x: if(typeof type!=="function") {
 					on_react_forward_ref(path,type);
 				} else {
 					/** @type {[number,string]} */
@@ -72,6 +133,7 @@ export async function main(ns) {
 						if(!item) ns.exit();
 						fn_string=item;
 					}
+					if(type.name==="p"&&fn_string[0]===0) break x;
 					ns.print("react_element.type: ",type.name," idx:",fn_string[0]);
 				}
 				x: {
@@ -170,7 +232,7 @@ export async function main(ns) {
 				on_react_ref(ref,[...path,"ref"]);
 				on_react_fiber_props(pendingProps,[...path,"pendingProps"]);
 				on_react_fiber_props(memoizedProps,[...path,"memoizedProps"]);
-				p("updateQueue",updateQueue);
+				if(updateQueue!==null) p("updateQueue",updateQueue);
 			} break;
 		}
 		fiber.tag;
