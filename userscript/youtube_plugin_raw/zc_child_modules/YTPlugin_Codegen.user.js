@@ -12,8 +12,8 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {as,split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YtPlugin_Base.user");
+const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
+const {split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YtPlugin_Base.user");
 
 if(window.__log_module_loading_enabled__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
