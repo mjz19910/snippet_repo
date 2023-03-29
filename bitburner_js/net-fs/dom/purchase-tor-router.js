@@ -263,7 +263,10 @@ export class DomList {
 								for(let i=0;i<mine_arr.length;i+=3) {
 									mine_grid.push(mine_arr.slice(i,i+3));
 								}
-								console.log(mine_grid);
+								let grid_str=mine_grid.map(row => {
+									return row.map(v => v==="mine"? "*":" ").join("");
+								}).join("\n");
+								console.log(grid_str);
 								debugger;
 							} break;
 						}
