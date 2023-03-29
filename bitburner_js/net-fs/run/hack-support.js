@@ -78,9 +78,8 @@ function should_accept(reply,call_,arg0) {
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
-	const wait_start_perf=performance.now();
-	console.log("start:"+call_id+":"+id);
-	function perf_diff() {return performance.now()-wait_start_perf;}
+	// const wait_start_perf=performance.now();
+	// function perf_diff() {return performance.now()-wait_start_perf;}
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
@@ -103,8 +102,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			}
 			for(let ok_msg of accepted_messages) {
 				let ret=ok_msg.reply;
-				const cur_timer=perf_diff();
-				console.log("complete",ns.tFormat(cur_timer),this_.hostname,call_id,i);
 				assume_return(ret);
 				return ret;
 			}
