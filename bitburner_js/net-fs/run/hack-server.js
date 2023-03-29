@@ -76,11 +76,7 @@ export async function main(ns) {
 		}
 		reply_messages.push(msg);
 		notify_new_reply_port.write(1);
-		if(reply_messages.length===1) {
-			await send_reply_msg(reply_port,msg);
-		} else {
-			await send_reply_msg(reply_port,{call: "pending",reply: reply_messages});
-		}
+		await send_reply_msg(reply_port,{call: "pending",reply: reply_messages});
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
