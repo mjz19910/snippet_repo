@@ -43,7 +43,6 @@ export async function main(ns) {
 		ns.toast("react_element not handled: "+path,"error");
 		console.log("react_element",path,element);
 		ns.exit();
-
 	}
 	/** @param {ReactElementProps} props @arg {string[]} path */
 	function on_react_fiber_props(props,path) {
@@ -66,14 +65,26 @@ export async function main(ns) {
 			ns.exit();
 		}
 	}
-	/** @param {ReactFiber} fiber @arg {string[]} path */
-	function on_react_fiber(fiber,path=["fiber"]) {
+	/** @param {ReactFiber|null} fiber_nullable @arg {string[]} path */
+	function on_react_fiber(fiber_nullable,path=["fiber"]) {
+		if(fiber_nullable===null) return;
+		let fiber=fiber_nullable;
 		if(seen_react_fiber_set.has(fiber)) return;
 		seen_react_fiber_set.add(fiber);
 		console.log(path.join("."),fiber.tag,filter_fiber(fiber));
 		switch(fiber.tag) {
-			default: ns.print(`${path.join(".")}.tag: `,fiber.tag); console.log(path.join("."),fiber); break;
+			default: {
+				ns.print(`${path.join(".")}.tag: `,fiber.tag); console.log(path.join("."),fiber);
+				ns.toast("react_fiber not handled: "+path,"error");
+				console.log("react_fiber",path,fiber);
+				ns.exit();
+			};
 			case 11: {
+				const {tag,key,elementType,type,stateNode,return: return_,child,sibling,index,ref,pendingProps,memoizedProps,updateQueue,...y}=fiber;
+				const {memoizedState,dependencies,mode,flags,nextEffect,firstEffect,lastEffect,lanes,childLanes,alternate,...y1}=y;
+				if(Object.keys(y1).length>0) ns.print("rest: ",y1);
+			} break;
+			case 7: {
 				const {tag,key,elementType,type,stateNode,return: return_,child,sibling,index,ref,pendingProps,memoizedProps,updateQueue,...y}=fiber;
 				const {memoizedState,dependencies,mode,flags,nextEffect,firstEffect,lastEffect,lanes,childLanes,alternate,...y1}=y;
 				if(Object.keys(y1).length>0) ns.print("rest: ",y1);
@@ -117,26 +128,23 @@ export async function main(ns) {
 				}
 				on_react_fiber(return_,[...path,"return"]);
 				on_react_fiber(child,[...path,"child"]);
-				p("sibling",sibling);
-				p("index",index);
-				p("ref",ref);
+				on_react_fiber(sibling,[...path,"sibling"]);
+				if(index!==1) p("index",index);
+				on_react_ref(ref,[...path,"ref"]);
 				on_react_fiber_props(pendingProps,[...path,"pendingProps"]);
-				p("pendingProps.className",pendingProps.className);
-				for(let each_prop of pendingProps.children) {
-					if(each_prop===void 0) continue;
-					if(each_prop instanceof Array) {
-						for(let prop_item of each_prop) {
-							console.log("pendingProps.item",prop_item);
-						}
-						continue;
-					}
-					console.log("pendingProps",each_prop);
-				}
-				p("memoizedProps.className",memoizedProps.className);
+				on_react_fiber_props(memoizedProps,[...path,"memoizedProps"]);
 				p("updateQueue",updateQueue);
 			} break;
 		}
 		fiber.tag;
+	}
+	/** @param {object|null} ref @param {string[]} path */
+	function on_react_ref(ref,path) {
+		if(ref===null) return;
+		console.log(path.join("."),ref);
+		ns.toast("react_ref not handled: "+path,"error");
+		console.log("react_ref",path,ref);
+		ns.exit();
 	}
 	react_symbols;
 }
