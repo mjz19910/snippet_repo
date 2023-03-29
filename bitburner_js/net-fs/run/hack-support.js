@@ -100,44 +100,38 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
-	const notify_new_reply_port=ns.getPortHandle(notify_new_reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	for(let i=0;i<20;i++) {
-		{
-			while(request_port.empty()) {
-				let sent=send_call_msg(request_port,{call: "pending",id: "call",reply: []});
-				if(!sent) throw new Error("Invalid state");
-				await ns.sleep(5000);
+	while(request_port.empty()) {
+		let sent=send_call_msg(request_port,{call: "pending",id: "call",reply: []});
+		if(!sent) throw new Error("Invalid state");
+		await ns.sleep(5000);
+	}
+	if(request_port.empty()) throw new Error("Invalid state");
+	let cur_msg=read_call_msg(request_port);
+	cur_msg.reply.push({call: call_id,args: [id]});
+	let sent=send_call_msg(request_port,cur_msg);
+	if(!sent) throw new Error("Invalid state");
+	for(;;) {
+		await ns.sleep(33);
+		if(reply_port.empty()) throw new Error("reply already removed");
+		let pending_msg=peek_reply_msg(reply_port);
+		let accepted_messages=[];
+		for(let msg of pending_msg.reply) {
+			if(!should_accept(msg,call_id,id)) continue;
+			accepted_messages.push(msg);
+			for(;;) {
+				while(notify_complete_port.full()) await ns.sleep(33);
+				notify_complete_port.write(msg.uid);
+				break;
 			}
-			if(request_port.empty()) throw new Error("Invalid state");
-			let cur_msg=read_call_msg(request_port);
-			cur_msg.reply.push({call: call_id,args: [id]});
-			let sent=send_call_msg(request_port,cur_msg);
-			if(!sent) throw new Error("Invalid state");
 		}
-		for(;;) {
-			await notify_new_reply_port.nextWrite();
-			if(reply_port.empty()) throw new Error("reply already removed");
-			let pending_msg=await peek_reply_msg(reply_port);
-			let accepted_messages=[];
-			for(let msg of pending_msg.reply) {
-				if(!should_accept(msg,call_id,id)) continue;
-				accepted_messages.push(msg);
-				for(;;) {
-					while(notify_complete_port.full()) await ns.sleep(33);
-					notify_complete_port.write(msg.uid);
-					break;
-				}
-			}
-			for(let ok_msg of accepted_messages) {
-				let ret=ok_msg.reply;
-				assume_return(ret);
-				return ret;
-			}
+		for(let ok_msg of accepted_messages) {
+			let ret=ok_msg.reply;
+			assume_return(ret);
+			return ret;
 		}
 	}
-	throw new Error("Timeout waiting for response from server (is hack-server.js running?)");
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */
 export function generic_get_call(this_,call_id) {
