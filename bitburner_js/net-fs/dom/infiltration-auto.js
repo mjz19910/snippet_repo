@@ -126,6 +126,7 @@ export async function main(ns) {
 					if(stateNode instanceof HTMLDivElement) break x;
 					p("stateNode",stateNode);
 				}
+				on_react_state_node(stateNode,[...path,"return"])
 				on_react_fiber(return_,[...path,"return"]);
 				on_react_fiber(child,[...path,"child"]);
 				on_react_fiber(sibling,[...path,"sibling"]);
@@ -141,9 +142,15 @@ export async function main(ns) {
 	/** @param {object|null} ref @param {string[]} path */
 	function on_react_ref(ref,path) {
 		if(ref===null) return;
-		console.log(path.join("."),ref);
 		ns.toast("react_ref not handled: "+path,"error");
 		console.log("react_ref",path,ref);
+		ns.exit();
+	}
+	/** @param {HTMLElement} node @param {string[]} path */
+	function on_react_state_node(node,path) {
+		if(node instanceof HTMLElement) return;
+		ns.toast("react_state_node not handled: "+path,"error");
+		console.log("react_state_node",path,node);
 		ns.exit();
 	}
 	react_symbols;
