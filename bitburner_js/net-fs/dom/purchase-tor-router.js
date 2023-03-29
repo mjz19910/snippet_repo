@@ -11,7 +11,8 @@ export class DomList {
 	}
 	/** @arg {HTMLDivElement} root_element */
 	constructor(root_element) {
-		this.MuiBox_root=this.get_div(root_element,"#root > div.MuiBox-root");
+		this.root=root_element;
+		this.MuiBox_root=this.get_div(this.root,"#root > div.MuiBox-root");
 		/** @type {HTMLDivElement} */
 		this.MuiDrawer_root=this.get_div(this.MuiBox_root,"div.MuiDrawer-root");
 		/** @type {HTMLDivElement} */
@@ -59,6 +60,7 @@ export class DomList {
 		this.help_section=help_section;
 
 		this.current_page=this.get_current_page();
+		this.current_container=null;
 
 		let win=this.window_();
 		win.dom_list=this;
@@ -114,7 +116,8 @@ export class DomList {
 		this.click_on_1(backdrop_root);
 		this.current_page=this.click_to_page(this.terminal_button);
 	}
-	async play_infiltration() {
+	/** @arg {NS} ns */
+	async play_infiltration(ns) {
 		const dom_list=this;
 		this.current_page=this.click_to_page(this.city_button);
 		const city_location=this.current_page.children[0].textContent;
@@ -133,7 +136,45 @@ export class DomList {
 		const company_action_buttons=dom_list.current_page.children[2];
 		const infiltrate_company_button=company_action_buttons.children[4];
 		this.click_on_trusted(infiltrate_company_button);
-		this.current_page=this.get_current_page();
+		let current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
+		const start_infiltrate_button=current_container.children[1].children[2].children[0];
+		this.click_on(start_infiltrate_button);
+		await ns.sleep(33);
+		current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
+		while(current_container.children[1].children[0].textContent==="Get Ready!") {
+			await ns.sleep(33);
+			current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
+		}
+		/** @type {(["cut_num",number]|["key","left"])[]} */
+		let instruction_arr=[];
+		const instruction_source=current_container.children[2].children;
+		const game_instruction=instruction_source[0].textContent;
+		switch(game_instruction) {
+			case "Enter the Code!": {
+				const left_char="→";
+				let node_text=instruction_source[1].textContent;
+				switch(node_text) {
+					default: console.log("enter_code",node_text); debugger; break;
+					case left_char: instruction_arr.push(["key","left"]); break;
+				}
+				instruction_arr.push(["key","left"]);
+			} break;
+		}
+		console.log("game",JSON.stringify(game_instruction));
+		for(let i=1;i<instruction_source.length-1;i++) {
+			let node_text=instruction_source[i].textContent;
+			if(node_text===null) throw new Error("Invalid textContent");
+			let match_arr=node_text.match(/Cut wires number (\d)\./);
+			if(match_arr) {
+				instruction_arr.push(["cut_num",parseInt(match_arr[1])]);
+			} else {
+				console.log("unable to match:",node_text);
+				debugger;
+				ns.exit();
+			}
+		}
+		this.current_container=current_container;
+		debugger;
 	}
 }
 

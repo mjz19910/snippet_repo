@@ -16,5 +16,5 @@ export async function main(ns) {
 	const root_element=as_any(win.root);
 	if(!("root" in window)) return;
 	let dom_list=new DomList(root_element);
-	await dom_list.play_infiltration();
+	await dom_list.play_infiltration(ns);
 }
