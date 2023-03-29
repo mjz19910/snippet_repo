@@ -159,7 +159,7 @@ export async function main(ns) {
 				while(!complete_port.empty()) {
 					let complete_id=complete_port.read();
 					if(typeof complete_id==="number") complete_reply_id_list.push(complete_id);
-					else ns.print("ERROR complete message not a number");
+					else ns.tprint("ERROR complete message not a number");
 				}
 			}
 			while(!log_port.empty()) {
