@@ -106,20 +106,11 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		this_.ns.printf("%s %s %s",this_.hostname,call_id,i);
 	}
 	for(let i=0;i<20;i++) {
-		function delay_time() {
-			const slow_boundary=11;
-			if(i<=(slow_boundary+1)) return 33;
-			return 33+(i-slow_boundary)*33;
-		}
-		function delay_for() {return this_.ns.sleep(delay_time());}
 		if(request_port.full()) await notify_request_has_space_port.nextWrite();
 		await send_call_msg(request_port,{call: call_id,args: [id]});
 		await notify_port4.nextWrite();
 		for(let j=0;j<8;j++) {
-			if(reply_port.empty()) {
-				await delay_for();
-				continue;
-			}
+			if(reply_port.empty()) throw new Error("reply already removed");
 			let msg=await peek_reply_msg(reply_port);
 			if(!should_accept(msg,call_id,id)) {
 				const {reply,...l_msg}=msg;
