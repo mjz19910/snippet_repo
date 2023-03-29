@@ -1,5 +1,5 @@
-/** @param {import("/dom/react_fiber").ReactElementProps} props @arg {string[]} path */
-export function on_react_fiber_props(props,path) {
+/** @param {NS} ns @param {import("./react_fiber").ReactElementProps} props @arg {string[]} path */
+export function on_react_fiber_props(ns,props,path) {
 	for(let [idx_i,child_like] of props.children.entries()) {
 		if(child_like===void 0)
 			continue;

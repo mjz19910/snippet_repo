@@ -63,14 +63,14 @@ export function on_react_fiber(ns,fiber_nullable,path=["fiber"]) {
 				if(stateNode instanceof HTMLDivElement) break x;
 				p("stateNode",stateNode);
 			}
-			on_react_state_node(stateNode,[...path,"return"]);
+			on_react_state_node(ns,stateNode,[...path,"return"]);
 			on_react_fiber(ns,return_,[...path,"return"]);
 			on_react_fiber(ns,child,[...path,"child"]);
 			on_react_fiber(ns,sibling,[...path,"sibling"]);
 			if(index!==1) p("index",index);
 			on_react_ref(ref,[...path,"ref"]);
-			on_react_fiber_props(pendingProps,[...path,"pendingProps"]);
-			on_react_fiber_props(memoizedProps,[...path,"memoizedProps"]);
+			on_react_fiber_props(ns,pendingProps,[...path,"pendingProps"]);
+			on_react_fiber_props(ns,memoizedProps,[...path,"memoizedProps"]);
 			if(updateQueue!==null) p("updateQueue",updateQueue);
 		} break;
 	}
