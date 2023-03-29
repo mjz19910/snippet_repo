@@ -1,5 +1,5 @@
 import {ecma_parse_init} from "./ecma_parse_init.js";
-import {parse_javascript_str} from "./ecma_parse_main.js";
+import {ecma_parse_main} from "./ecma_parse_main.js";
 
 ecma_parse_init();
-parse_javascript_str("function main(){}");
+ecma_parse_main();

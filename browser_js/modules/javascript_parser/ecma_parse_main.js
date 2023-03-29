@@ -2126,8 +2126,15 @@ function parse_javascript_str(code_str) {
 	console.log(`parsed ${i} tokens`);
 }
 
+
+function ecma_parse_main() {
+	let parse_str="function x(){}";
+	parse_javascript_str(parse_str);
+}
+
 if(typeof exports==='object') {
 	exports.parse_javascript_str=parse_javascript_str;
+	exports.ecma_parse_main=ecma_parse_main;
 } else if(window.g_api!==void 0) {
 	window.g_api.parse_javascript_str=parse_javascript_str;
 }
