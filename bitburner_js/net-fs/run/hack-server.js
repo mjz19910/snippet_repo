@@ -49,12 +49,14 @@ export async function main(ns) {
 	const pending_reply_list=[];
 	/** @type {import("/run/hack-support.js").ReplyMsg[]} */
 	const retry_arr=[];
+	const this_={ns};
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
 	const retry_reply_handle=ns.getPortHandle(reply_retry_port_id);
 	const notify_port1=ns.getPortHandle(max_port_id+1);
 	const notify_request_has_space_port=ns.getPortHandle(max_port_id+2);
+	const notify_port3=this_.ns.getPortHandle(max_port_id+3);
 	notify_request_has_space_port.clear();
 	notify_request_has_space_port.write(1);
 	retry_reply_handle.clear();
@@ -75,6 +77,8 @@ export async function main(ns) {
 			while(!retry_reply_handle.empty()) {
 				retry_arr.push(await read_reply_msg(retry_reply_handle));
 			}
+			// retry_reply_handle is empty
+			notify_port3.write(1);
 			while(pending_reply_list.length>0&&!reply_port.full()) {
 				let first=pending_reply_list.pop();
 				if(first===void 0) break;
