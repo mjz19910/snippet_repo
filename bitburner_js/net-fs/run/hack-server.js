@@ -95,10 +95,6 @@ export async function main(ns) {
 			pending_reply_message.reply.push(item);
 		}
 		pending_reply_message.reply.push(msg);
-		if(reply_cache.length>0) {
-			console.log("reply cache",reply_cache);
-			console.log("waiting replies",pending_reply_message.reply.length);
-		}
 		let sent=send_reply_msg(reply_port,pending_reply_message);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
