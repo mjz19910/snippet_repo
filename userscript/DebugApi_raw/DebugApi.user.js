@@ -16,7 +16,15 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
-const {do_export}=require("../base_require_raw/BaseRequire.user");
+let require_fn=require;
+if(typeof require_fn==="object") {
+	require={...require_fn,require: window.__module_require__};
+} else if(typeof require_fn==="function") {
+	require={require: require_fn};
+} else {
+	require={require: require_fn};
+}
+const {do_export}=require.require("../base_require_raw/BaseRequire.user");
 
 const __module_name__="DebugApi";
 /** @private @arg {(x:typeof exports)=>void} fn */

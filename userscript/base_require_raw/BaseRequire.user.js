@@ -159,7 +159,7 @@ export_(exports => {
 	exports.__path_map__=path_map;
 });
 
-/** @template T @typedef {import("./ProcessImport").ProcessImport<T>} ProcessImport */
+/** @template {S_AllImportPaths} T @typedef {import("./ProcessImport").ProcessImport<T>} ProcessImport */
 /** @type {((x:string)=>ProcessImport<any>)|null} */
 let cur_require=null;
 
@@ -172,7 +172,16 @@ export_(exports => {
 		exports.__global_require_is_null__=true;
 	}
 	exports.__module_require__=require;
-	Object.defineProperty(exports,"require",{get: () => require,set(value) {cur_require=value;} });
+	let require_property=Object.getOwnPropertyDescriptor(exports,"require");
+	if(require_property) {
+		console.log("skipping set of require");
+		return;
+	} else {
+		Object.defineProperty(exports,"require",{
+			get: () => require,
+			set(value) {cur_require=value;}
+		});
+	}
 	exports.__base_require_module_loaded__=true;
 	exports.__log_module_loading_enabled__=log_module_loading_enabled;
 },{global: true});
