@@ -59,7 +59,7 @@ export async function main(ns) {
 	notify_request_has_space_port.write(1);
 	const notify_new_reply_port=ns.getPortHandle(notify_new_reply_port_id);
 	notify_new_reply_port.clear();
-	let reply_id_offset=0;
+	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
 		/** @type {ReplyMsgPending} */
@@ -69,7 +69,8 @@ export async function main(ns) {
 			if(!reply_msg) continue;
 			pending_reply_message.reply.push(...reply_msg.reply);
 		}
-		let reply_id=pending_reply_message.reply.push(msg)-1+reply_id_offset;
+		let reply_id=reply_uid_counter;
+		reply_uid_counter++;
 		msg.uid=reply_id;
 		let pending_msg_count=0;
 		/** @type {(ReplyMsg|null)[]} */
@@ -89,7 +90,7 @@ export async function main(ns) {
 				continue;
 			}
 			let removed=pending_reply_message.reply.shift();
-			reply_id_offset++;
+			reply_uid_counter++;
 			if(!removed) continue;
 			let idx=complete_reply_id_list.indexOf(removed.uid);
 			if(idx===-1) continue;
