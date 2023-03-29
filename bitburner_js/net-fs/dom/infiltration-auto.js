@@ -7,11 +7,13 @@ import {as_any} from "/run/as.js";
 export async function main(ns) {
 	ns.clearLog();
 	ns.tail();
-	ns.moveTail(250+3,3);
+	ns.moveTail(250+150+3,3);
 	ns.disableLog("disableLog");
-	if(!("root" in window)) return;
+	const win=globalThis;
+	if(!("root" in win)) return;
 	/** @type {HTMLDivElement} */
-	const root_element=as_any(window.root);
+	const root_element=as_any(win.root);
+	if(!("root" in window)) return;
 	let dom_list=new DomList(root_element);
 	dom_list.city_button;
 }
