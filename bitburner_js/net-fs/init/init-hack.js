@@ -49,10 +49,10 @@ export class InitHackScript {
 		this.disableLog_("getServerMaxRam");
 	}
 	async init_hack() {
-		this.start_host_scan("home");
+		await this.start_host_scan("home");
 		if(!this.has_process_by_file("home",hack_server)) this.ns.exec(hack_server,"home");
 		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
-		this.do_get_admin_rights();
+		await this.do_get_admin_rights();
 		await this.start_hack_script();
 		this.update_backdoor_cache();
 		this.log_servers_to_backdoor();
@@ -141,7 +141,7 @@ export class InitHackScript {
 		ns.clearLog();
 	}
 	/** @arg {string} src_host */
-	start_host_scan(src_host) {
+	async start_host_scan(src_host) {
 		/** @type {Map<string, string[]>} */
 		let map=new Map;
 		/** @type {Set<string>} */
@@ -152,7 +152,7 @@ export class InitHackScript {
 		let depth=0;
 		for(;;) {
 			depth++;
-			const result=this.iter_host_scan_entries(src_host,seen_set,depth,map);
+			const result=await this.iter_host_scan_entries(src_host,seen_set,depth,map);
 			scan_results.push(result);
 			if(map.size===0) break;
 		}
@@ -163,7 +163,7 @@ export class InitHackScript {
 	 * @param {number} depth @arg {Map<string,string[]>} map
 	 * @param {Set<string>} seen_set
 	 * */
-	iter_host_scan_entries(src_host,seen_set,depth,map) {
+	async iter_host_scan_entries(src_host,seen_set,depth,map) {
 		let depth_list=[];
 		const clone=new Map(map);
 		for(let [key,val] of clone.entries()) {
@@ -171,6 +171,7 @@ export class InitHackScript {
 				if(seen_set.has(srv)) continue;
 				seen_set.add(srv);
 				this.hostname_list.push(srv);
+				await this.ns.sleep(33);
 				let scan_res=this.ns.scan(srv);
 				let home_idx=scan_res.indexOf(src_host);
 				if(home_idx>-1) scan_res.splice(home_idx,1);
@@ -280,7 +281,7 @@ export class InitHackScript {
 		let thread_count=srv_ram_avail/2;
 		return thread_count|0;
 	}
-	do_get_admin_rights() {
+	async do_get_admin_rights() {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			const num_ports=srv.numOpenPortsRequired;
@@ -298,6 +299,7 @@ export class InitHackScript {
 				srv.hasAdminRights=true;
 				if(!this.to_backdoor.includes(hostname)) this.to_backdoor.push(hostname);
 			}
+			await this.ns.sleep(33);
 		}
 	}
 	/** @type {{[x:string]:Server}} */
