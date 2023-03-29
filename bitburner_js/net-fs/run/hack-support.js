@@ -28,7 +28,7 @@ export async function async_port_peek_msg(ns_port) {
 	return pending_msg;
 }
 /** @param {NetscriptPort} ns_port @param {PortData} str */
-export async function async_port_write_data(ns_port,str) {
+export function async_port_write_data(ns_port,str) {
 	if(ns_port.full()) return false;
 	let popped=ns_port.write(str);
 	if(popped!==null) throw new Error("Unreachable");
