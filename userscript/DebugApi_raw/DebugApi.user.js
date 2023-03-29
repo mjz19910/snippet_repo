@@ -140,7 +140,7 @@ class HashMap {
 		if(!this.m_data) {return false;}
 		return this.m_data.has(key);
 	}
-	/** @arg {(this: this,arg1: K,arg2: V) => "Break"|"Continue"} callback */
+	/** @arg {(this:this,arg1:K,arg2:V)=>"Break"|"Continue"} callback */
 	iterate(callback) {
 		// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
 		// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
