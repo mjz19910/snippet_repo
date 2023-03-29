@@ -100,7 +100,6 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			await ns.sleep(1000);
 			while(!request_port.empty()) {
 				let msg=await read_call_msg(request_port);
 				const {call,args}=msg;
