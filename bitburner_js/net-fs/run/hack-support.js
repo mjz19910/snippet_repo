@@ -78,6 +78,7 @@ function should_accept(reply,call_,arg0) {
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
+	await ns.sleep(1000);
 	const wait_start_perf=performance.now();
 	console.log("start:"+call_id+":"+id);
 	function perf_diff() {return performance.now()-wait_start_perf;}
@@ -109,7 +110,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	throw new Error("Timeout waiting for response from server (is hack-server.js running?)");
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */
-export async function generic_get_call(this_,call_id) {
+export function generic_get_call(this_,call_id) {
 	if(!this_.target) throw new Error("Invalid state.target");
 	return generic_get_call_with_id(this_,this_.target,call_id);
 }

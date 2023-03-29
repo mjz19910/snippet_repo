@@ -62,6 +62,7 @@ export async function main(ns) {
 	/** @type {HackState} */
 	const s=new HackState(ns,pa);
 	for(let i=0;i<32;i++) {
+		await ns.sleep(1000);
 		try {
 			await hack_forever(s);
 		} catch {}
@@ -70,7 +71,9 @@ export async function main(ns) {
 }
 /** @arg {HackState} s */
 async function hack_forever(s) {
+	const {ns}=s;
 	for(;;) {
+		await ns.sleep(1000);
 		const srv=await generic_get_call_with_id(s,Math.random()+"","get_hack_target"); ``;
 		s.target=srv.hostname;
 		s.ns.printf("[%s] target: %s",s.hostname,s.target);
