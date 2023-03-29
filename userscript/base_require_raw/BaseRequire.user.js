@@ -120,7 +120,6 @@ function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_
 export_(exports => {exports.__is_module_flag__=true;});
 
 const log_module_loading_enabled=false;
-export_(exports => {exports.__log_module_loading_enabled__=log_module_loading_enabled;},{global: true});
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
@@ -164,6 +163,7 @@ export_(exports => {
 	exports.__module_require__=require;
 	Object.defineProperty(exports,"require",{value: require});
 	exports.__base_require_module_loaded__=true;
+	exports.__log_module_loading_enabled__=log_module_loading_enabled;
 },{global: true});
 
 // module loaded

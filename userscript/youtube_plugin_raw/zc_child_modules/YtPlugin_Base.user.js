@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-const {do_export,get_exports,required}=require("../../base_require_raw/BaseRequire.user");
+const {do_export,get_exports,required,as}=require("../../base_require_raw/BaseRequire.user");
 
 //#region module init
 const __module_name__="mod$YoutubePluginBase";

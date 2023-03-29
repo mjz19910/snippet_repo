@@ -12,14 +12,14 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user.js
 // ==/UserScript==
 
-const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {BaseService,split_string,split_string_once,as}=require("./YtPlugin_Base.user");
+const {do_export,as}=require("../../base_require_raw/BaseRequire.user");
+const {BaseService,split_string,split_string_once}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$ParserService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-if(window.__yt_plugin_log_imports__) console.log("Load Parser Service");
+if(window.__log_module_loading_enabled__) console.log("Load Parser Service");
 class ParserService extends BaseService {
 	log_playlist_parse=false;
 	/** @api @public @arg {S_PageTypeStr} x */

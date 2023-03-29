@@ -1,4 +1,4 @@
-import {as} from "./zc_child_modules/YtPlugin_Base.user";
+import {as} from "../base_require_raw/BaseRequire.user";
 
 export function con_snippet_1() {
 	let x={};

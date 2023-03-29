@@ -20,7 +20,7 @@ const {as,base64_url_dec,split_string_once,MyReader,split_string,as_any,JsonRepl
 //#region module setup
 const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {throw new Error("Failed to load base plugin");}
-if(window.__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
+if(window.__log_module_loading_enabled__) console.log("Load HandleTypes Service");
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
