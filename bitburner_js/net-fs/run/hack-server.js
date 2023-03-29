@@ -110,6 +110,7 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
+			await ns.sleep(300);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
 			const msg_arr=msg.reply;
