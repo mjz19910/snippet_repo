@@ -33,11 +33,6 @@ export async function main(ns) {
 	const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
 	let mui_list_react_fiber=get_react_fiber(MuiList_root);
 	on_react_fiber(mui_list_react_fiber);
-	/** @arg {{}} obj */
-	function filter_fiber(obj) {
-		let cloned={...obj};
-		return cloned;
-	}
 	/** @param {ReactElement2} element @arg {string[]} path */
 	function on_react_element(element,path) {
 		ns.toast("react_element not handled: "+path,"error");
