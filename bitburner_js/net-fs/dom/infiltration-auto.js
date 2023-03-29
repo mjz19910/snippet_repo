@@ -150,7 +150,7 @@ export async function main(ns) {
 	/** @type {Map<Function,[number,string]>} */
 	const fn_str_map=new Map;
 	const fn_set=new Set;
-	/** @param {ReactElement2} element @arg {string[]} path */
+	/** @param {import("/dom/react_fiber").ReactElement2} element @arg {string[]} path */
 	function on_react_element(element,path) {
 		const react_element_sym=react_symbols.react_element;
 		switch(element.$$typeof) {
@@ -183,7 +183,7 @@ export async function main(ns) {
 			} return;
 		}
 	}
-	/** @param {ReactElementProps} props @arg {string[]} path */
+	/** @param {import("/dom/react_fiber").ReactElementProps} props @arg {string[]} path */
 	function on_react_fiber_props(props,path) {
 		for(let [idx_i,child_like] of props.children.entries()) {
 			if(child_like===void 0) continue;

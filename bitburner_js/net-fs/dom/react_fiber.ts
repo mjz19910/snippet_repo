@@ -1,5 +1,6 @@
+import {ClassComponent} from "/dom/react_internal/ReactWorkTags.js";
 export type mixed=string|number|object;
-// cspell:ignoreRegexp: /css-1ontqvh/
+
 type HtmlReactElementType="ul"|"div";
 type ElementMap={
 	div: HTMLDivElement;
@@ -24,7 +25,7 @@ type ReactElementClasses={
 	active: "jss101";
 	listitem: "jss102";
 };
-type ReactElementProps2={
+export type ReactElementProps2={
 	key_: "Hacking";
 	page: "Terminal";
 	classes: ReactElementClasses;
@@ -53,8 +54,8 @@ type ReactFiberElement<ElementType extends HtmlReactElementType,_ClassName exten
 	elementType: ElementType;
 	type: ElementType;
 	stateNode: ElementMap[ElementType];
-	return: ReactFiber11;
-	child: ReactFiber7;
+	return: ReactFiberForwardRef;
+	child: ReactFiberFragment;
 	sibling: null;
 	index: number;
 	ref: null;
@@ -78,19 +79,18 @@ type ReactFiberElement<ElementType extends HtmlReactElementType,_ClassName exten
 	childLanes: 0;
 	alternate: {};
 };
-type ReactElementProps={
+export type ReactElementProps={
 	className: string;
 	children: (ReactElement2[]|ReactElement2|undefined)[];
 };
-
 type ReactFiberElement_UList={
 	tag: 5;
 	key: null;
 	elementType: "ul";
 	type: "ul";
 	stateNode: ElementMap["ul"];
-	return: ReactFiber11;
-	child: ReactFiber7;
+	return: ReactFiberForwardRef;
+	child: ReactFiberFragment;
 	sibling: null;
 	index: number;
 	ref: null;
@@ -105,56 +105,53 @@ type ReactFiberElement_UList={
 	mode: 0;
 	flags: 0;
 	nextEffect: null;
-	firstEffect: ReactFiber1;
-	lastEffect: ReactFiber0;
+	firstEffect: ReactFiberClassComponent;
+	lastEffect: ReactFiberFunctionComponent;
 	lanes: 0;
 	childLanes: 0;
 	alternate: ReactFiberElement_UList;
 };
 
-export type ReactFiber5=ReactFiberElement_UList|ReactFiberElement<"div","MuiBox-root css-1ik4laa">;
-
-type ReactFiber1={
-	tag: 1;
+export type ReactFiberHostComponent=ReactFiberElement_UList|ReactFiberElement<"div","MuiBox-root css-1ik4laa">;
+type ReactFiberClassComponent={
+	tag: typeof ClassComponent;
 };
-
-type ReactFiber0_Props={
+type ReactElementProps3={
 	page: "Terminal";
 };
-
-type ReactFiber0={
+type ReactFiberFunctionComponent={
 	tag: 0;
 	key: null;
 	elementType: (x: any) => any;
 	type: (x: any) => any;
 	stateNode: null;
 	return: ReactFiberElement<"div","MuiBox-root css-1ik4laa">;
-	child: ReactFiber7;
-	sibling: ReactFiber11;
+	child: ReactFiberFragment;
+	sibling: ReactFiberForwardRef;
 	index: number;
 	ref: null;
-	pendingProps: ReactFiber0_Props;
-	memoizedProps: ReactFiber0_Props;
+	pendingProps: ReactElementProps3;
+	memoizedProps: ReactElementProps3;
 	updateQueue: null;
 	memoizedState: null;
 	dependencies: null;
 	mode: 0;
 	flags: 0;
 	nextEffect: null;
-	firstEffect: ReactFiber1;
-	lastEffect: ReactFiber1;
+	firstEffect: ReactFiberClassComponent;
+	lastEffect: ReactFiberClassComponent;
 	lanes: 0;
 	childLanes: 0;
-	alternate: ReactFiber0;
+	alternate: ReactFiberFunctionComponent;
 };
-type ReactFiber11={
+export type ReactFiberForwardRef={
 	tag: 11;
 	key: null;
 	elementType: {};
 	type: {};
 	stateNode: {};
-	return: ReactFiber11;
-	child: ReactFiber7;
+	return: ReactFiberForwardRef;
+	child: ReactFiberFragment;
 	sibling: null;
 	index: number;
 	ref: null;
@@ -172,14 +169,14 @@ type ReactFiber11={
 	childLanes: 0;
 	alternate: {};
 };
-type ReactFiber7={
+export type ReactFiberFragment={
 	tag: 7;
 	key: null;
 	elementType: {};
 	type: {};
 	stateNode: {};
-	return: ReactFiber11;
-	child: ReactFiber7;
+	return: ReactFiberForwardRef;
+	child: ReactFiberFragment;
 	sibling: null;
 	index: number;
 	ref: null;
