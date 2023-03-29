@@ -146,9 +146,10 @@ export class DomList {
 				await ns.sleep(33);
 				current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
 			}
-			/** @type {(["cut_num",number]|["key","left"])[]} */
+			/** @type {(["cut_num",number]|["key","left"]|["type",string])[]} */
 			let instruction_arr=[];
 			const instruction_source=current_container.children[2].children;
+			this.instruction_source=instruction_source;
 			const game_instruction=instruction_source[0].textContent;
 			console.log("game",JSON.stringify(game_instruction));
 			switch(game_instruction) {
@@ -160,6 +161,32 @@ export class DomList {
 						case left_char: instruction_arr.push(["key","left"]); break;
 					}
 					instruction_arr.push(["key","left"]);
+				} break;
+				case "Type it backward": {
+					let node_text=instruction_source[1].textContent;
+					if(node_text===null) throw new Error("Invalid textContent");
+					instruction_arr.push(["type",node_text]);
+				} break;
+				case "Close the brackets": {
+					let node_text=instruction_source[1].textContent;
+					if(node_text===null) throw new Error("Invalid textContent");
+					let bracket_arr=node_text.split("");
+					const close_map={
+						"(": ")",
+						"[": "]",
+						"{": "}",
+						"<": ">",
+					};
+					let bracket_res="";
+					for(let bracket of bracket_arr) {
+						switch(bracket) {
+							case "(": bracket_res+=close_map[bracket]; break;
+							case "[": bracket_res+=close_map[bracket]; break;
+							case "{": bracket_res+=close_map[bracket]; break;
+							case "<": bracket_res+=close_map[bracket]; break;
+						}
+					}
+					instruction_arr.push(["type",bracket_res]);
 				} break;
 				default: {
 					for(let i=1;i<instruction_source.length-1;i++) {
