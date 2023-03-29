@@ -229,7 +229,7 @@ export namespace YT_Base_source {
 					d={
 						actualName: "yt-idb-test-do-not-use",
 						publicName: "yt-idb-test-do-not-use",
-						userIdentifier: void 0
+						userIdentifier: void 0,
 					};
 					return g.y(e,Woa(d,Ey),4);
 				case 4:
