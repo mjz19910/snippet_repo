@@ -1,0 +1,1 @@
+# this folder is whenever I run into something I want to figure out how it was done
