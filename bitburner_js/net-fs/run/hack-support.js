@@ -96,11 +96,12 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let i=0;i<20;i++) {
-		x: {
+		{
 			if(request_port.empty()) {
 				let sent=await send_call_msg(request_port,{call: "pending",id: "call",reply: []});
 				if(!sent) throw new Error("Invalid state");
 			}
+			debugger;
 			let cur_msg=await read_call_msg(request_port);
 			cur_msg.reply.push({call: call_id,args: [id]});
 			let sent=await send_call_msg(request_port,cur_msg);

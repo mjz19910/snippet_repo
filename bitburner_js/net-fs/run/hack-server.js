@@ -111,6 +111,7 @@ export async function main(ns) {
 		for(let i=0;;i++) {
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=await read_call_msg(request_port);
+			debugger;
 			const msg_arr=msg.reply;
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
