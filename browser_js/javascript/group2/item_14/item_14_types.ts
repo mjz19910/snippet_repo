@@ -81,7 +81,7 @@ type DataItemReturn =
 	| ["EVENT::dom_nodes", ["Node", Node[]]]
 	| ["EVENT::json_cache", ["JsonInputType", JsonInputType[]]]
 	| ["RESULT::handle_json_event", JsonEventResult]
-	| ["TAG::result_data", HistoryResultData]
+	| ["TAG::result_data", import("./item_14.js").HistoryResultData]
 	| UnpackCommand
 	| UnpackUnitCommand
 	;
@@ -96,7 +96,7 @@ type IterObjectStoreType = {
 	cache_index: number;
 	arr: CacheIndexWithArr[][];
 };
-type JsonHistoryType = { id: number; items: JsonOutputBox[] };
+type JsonHistoryType = { id: number; items: import("./item_14.js").JsonOutputBox[] };
 interface ChromeDomNode extends Node {
 	get wholeText(): string;
 }

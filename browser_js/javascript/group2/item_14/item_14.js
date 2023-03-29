@@ -220,6 +220,7 @@ class JsonOutputBox {
 		return out_state;
 	}
 }
+export_(exports => exports.JsonOutputBox=JsonOutputBox);
 const overflow_state=new class {
 	ran_out_of_stack=false;
 	/** @type {[string]|null} */
@@ -275,7 +276,7 @@ function main_start_json_replace() {
 }
 let do_join_str=() => join_string(["\n","%o"],"");
 export_(exports => exports.do_join_str=do_join_str);
-/** @type {["TAG::result_data", HistoryResultData][]} */
+/** @type {["TAG::result_data",HistoryResultData][]} */
 const result_data_arr=[];
 export_(exports => exports.result_data_arr=result_data_arr);
 /** @type {{}[]} */
@@ -735,6 +736,7 @@ class HistoryResultData {
 		return ["DATA::from_json",as(empty_ret)];
 	}
 }
+export_(exports => exports.HistoryResultData=HistoryResultData);
 /** @type {{value:VueApp|null}} */
 const vue_app={
 	value: null

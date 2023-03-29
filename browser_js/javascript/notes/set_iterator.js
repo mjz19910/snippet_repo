@@ -1,5 +1,6 @@
+import {as_any} from "../api/as_any";
+
 async function run2() {
-	const {as_any}=(await import("../api/as_any"));
 	let s_set=new Set([1,2,3]);
 	Object.seal(s_set);
 	Object.freeze(s_set);
@@ -122,4 +123,4 @@ async function run2() {
 	console.log(rr);
 	return mr.last();
 }
-run2();
+await run2();
