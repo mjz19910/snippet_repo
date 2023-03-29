@@ -110,7 +110,7 @@ export async function main(ns) {
 	function purchase_tor_router() {
 		if(ns.hasTorRouter()) return;
 		ns.print("start: purchase_tor_router");
-		return new DomList(root_element).buy_tor_router(ns);
+		return new DomList(root_element).buy_tor_router();
 	}
 	let res=purchase_tor_router();
 	if(res) await res;
