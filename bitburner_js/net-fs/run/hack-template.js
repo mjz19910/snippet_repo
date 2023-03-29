@@ -77,8 +77,8 @@ export async function main(ns) {
 /** @arg {HackState} s */
 async function hack_forever(s) {
 	for(;;) {
-		console.log("hack");
 		const srv=await generic_get_call_with_id(s,Math.random()+"","get_hack_target"); ``;
+		console.log("hack");
 		s.target=srv.hostname;
 		s.ns.printf("[%s] target: %s",s.hostname,s.target);
 		await run_hack(s);
