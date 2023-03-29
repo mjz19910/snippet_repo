@@ -32,7 +32,7 @@ export class InitHackScript {
 		]);
 		if(typeof this.f_.limit!=="number") throw new Error("Invalid arguments");
 		this.start_limit=this.f_.limit;
-		if(this.start_limit===-1) this.start_limit=26;
+		if(this.start_limit===-1) this.start_limit=100;
 		this.start_count=0;
 	}
 	disable_log_use() {
