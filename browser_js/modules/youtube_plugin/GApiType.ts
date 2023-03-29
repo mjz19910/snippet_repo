@@ -26,6 +26,7 @@ export class GApiType {
 			blob_create_args_arr: typeof blob_create_args_arr,
 			gain_controller: HTMLMediaElementGainController|null,
 			plugin_overlay_element: {}|null,
+			parse_javascript_str: ((code_str: string) => void)|null,
 		}={
 			Seen,
 			PropertyHandler,
@@ -40,6 +41,7 @@ export class GApiType {
 			blob_create_args_arr,
 			gain_controller: null,
 			plugin_overlay_element: null,
+			parse_javascript_str: null,
 		};
 		return g_api;
 	}
