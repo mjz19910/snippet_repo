@@ -40,7 +40,7 @@ type ReactElementProps2={
 };
 type ReactElement2={
 	$$typeof: react_element_symbol;
-	type: (e: any) => any;
+	type: ((e: any) => any)|ReactForwardRef;
 	key: null;
 	ref: null;
 	props: ReactElementProps2;

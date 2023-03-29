@@ -7,6 +7,7 @@ import {as_any} from "/run/as.js";
 export async function main(ns) {
 	ns.clearLog();
 	ns.tail();
+	ns.moveTail(250+3,3);
 	ns.disableLog("disableLog");
 	if(!("root" in window)) return;
 	/** @type {HTMLDivElement} */
@@ -34,23 +35,29 @@ export async function main(ns) {
 	let mui_list_react_fiber=get_react_fiber(MuiList_root);
 	on_react_fiber(mui_list_react_fiber);
 	/** @param {{}} y */
-	function g(y) {if(Object.keys(y).length>0) ns.print("rest: ",Object.keys(y)); console.log("rest",y);}
+	function g(y) {
+		if(Object.keys(y).length>0) {ns.print("rest: ",Object.keys(y)); console.log("rest",y);}
+	}
+	/** @param {string} key @param {{}[]} value @param {string[]} path @returns {never} */
+	function unhandled(key,value,path) {
+		ns.toast(key+" not handled: "+path.join("."),"error");
+		console.log(key,path.join("."),...value);
+		ns.exit();
+	}
 	/** @param {ReactElement2} element @arg {string[]} path */
 	function on_react_element(element,path) {
 		const react_element_sym=react_symbols.react_element;
 		switch(element.$$typeof) {
-			default: debugger; {
-				ns.toast("react_element not handled: "+path,"error");
-				console.log("react_element",path,element);
-				ns.exit();
-			}
+			default: unhandled("react_element",[element],path);
 			case react_element_sym: {
 				const {$$typeof,type,key,ref,props,_owner,...y}=element; g(y);
-			} break;
+				if(typeof type!=="function") {
+					unhandled("react_element.type",[element,type],path);
+				}
+				console.log("type name",type.name);
+				ns.print(path.join(".")+".key: ",key);
+			} return;
 		}
-		ns.toast("react_element not handled: "+path,"error");
-		console.log("react_element",path,element);
-		ns.exit();
 	}
 	/** @param {ReactElementProps} props @arg {string[]} path */
 	function on_react_fiber_props(props,path) {
