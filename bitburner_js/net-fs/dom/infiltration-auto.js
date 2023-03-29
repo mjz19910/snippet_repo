@@ -83,7 +83,11 @@ export async function main(ns) {
 				dispatcher_ref.current={
 					/** @arg {{}} obj @arg {undefined} a1 */
 					useContext(obj,a1) {
-						action_log.push(["useContext",obj,a1]);
+						if(a1===void 0) {
+							action_log.push(["useContext",1,obj]);
+							return;
+						}
+						action_log.push(["useContext",2,obj,a1]);
 					}
 				};
 				let res=render(owner_state,null);
