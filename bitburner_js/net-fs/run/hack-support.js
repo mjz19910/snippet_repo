@@ -78,7 +78,6 @@ function should_accept(reply,call_,arg0) {
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
-	await ns.sleep(1000);
 	const wait_start_perf=performance.now();
 	console.log("start:"+call_id+":"+id);
 	function perf_diff() {return performance.now()-wait_start_perf;}
