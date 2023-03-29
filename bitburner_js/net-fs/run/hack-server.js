@@ -103,8 +103,10 @@ export async function main(ns) {
 			if(item===null) continue;
 			pending_reply_message.reply.push(item);
 		}
-		console.log("reply cache",reply_cache);
-		console.log("waiting replies",pending_msg_count);
+		if(reply_cache.length>0) {
+			console.log("reply cache",reply_cache);
+			console.log("waiting replies",pending_msg_count);
+		}
 		let sent=send_reply_msg(reply_port,pending_reply_message);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
