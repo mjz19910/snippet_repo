@@ -89,6 +89,7 @@ function should_accept(reply,call_,arg0) {
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const wait_start_perf=performance.now();
+	function perf_diff() {return performance.now()-wait_start_perf;}
 	const request_port=this_.ns.getPortHandle(request_port_id);
 	const reply_port=this_.ns.getPortHandle(reply_port_id);
 	const notify_port1=this_.ns.getPortHandle(max_port_id+1);
@@ -99,10 +100,10 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	function assume_return(x) {x;}
 	/** @param {string|number} i */
 	function tprint_log(i) {
-		const perf_diff=performance.now()-wait_start_perf;
-		if(perf_diff<1000) return;
-		console.log(this_.ns.tFormat(perf_diff),this_.hostname,call_id,i);
-		this_.ns.printf("%s %s %s %s",this_.ns.tFormat(perf_diff),this_.hostname,call_id,i);
+		const cur_timer=perf_diff();
+		if(cur_timer<1000) return;
+		console.log(this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
+		this_.ns.printf("%s %s %s %s",this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
 	}
 	for(let i=0;i<20;i++) {
 		tprint_log(`${i} ${id}`);
@@ -129,6 +130,8 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			}
 			reply_port.read();
 			let ret=msg.reply;
+			const cur_timer=perf_diff();
+			console.log("complete",this_.ns.tFormat(cur_timer),this_.hostname,call_id,i);
 			assume_return(ret);
 			return ret;
 		}
@@ -137,7 +140,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			while(retry_reply_handle.full()) await notify_port3.nextWrite();
 			retry_reply_handle.write(reply_port.read());
 		}
-		this_.ns.printf("%s retry",call_id);
+		this_.ns.printf("%s retry %s",call_id,i);
 		await notify_port1.nextWrite();
 	}
 	throw new Error("Timeout waiting for response from server (is hack-server.js running?)");
