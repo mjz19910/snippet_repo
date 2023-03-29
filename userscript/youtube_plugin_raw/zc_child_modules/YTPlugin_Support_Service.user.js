@@ -12,7 +12,8 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-const {do_export,as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YtPlugin_Base.user");
+const {do_export}=require("../../base_require_raw/BaseRequire.user");
+const {as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YtPlugin_Base.user");
 
 // priority SupportService(6)
 

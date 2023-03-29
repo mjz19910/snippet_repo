@@ -1,9 +1,3 @@
-/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-export function as(e,x=e) {return x;}
-
-/** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
-export function as_any(e,x=e) {return x;}
-
 /** @template {{}} T @typedef {T extends infer A ? keyof A : never} T_DistributedKeyof */
 /** @template {{}} T @typedef {T_DistributedKeyof<T> extends never?[]:T_DistributedKeyof<T>[]} T_DistributedKeysOf */
 /** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */

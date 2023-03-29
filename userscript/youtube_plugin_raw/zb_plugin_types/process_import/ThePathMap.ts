@@ -1,2 +1,3 @@
-import {__path_map__} from "../../zc_child_modules/YtPlugin_Base.user.js";
+import {__path_map__} from "../../../base_require_raw/BaseRequire.user.js";
+
 export type ThePathMap=typeof __path_map__;

@@ -12,7 +12,8 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js
 // ==/UserScript==
 
-const {do_export,CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers,YtPlugin,ModifyEnv}=require("./YtPlugin_Base.user");
+const {do_export}=require("../../base_require_raw/BaseRequire.user");
+const {CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers,YtPlugin,ModifyEnv}=require("./YtPlugin_Base.user");
 const {CodegenService}=require("./YTPlugin_Codegen.user");
 const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
@@ -30,7 +31,7 @@ const __module_name__="mod$ServiceLoaderPlugin";
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 
-if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
+if(window.__log_module_loading_enabled__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {

@@ -16,36 +16,12 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
+const {do_export}=require("../base_require_raw/BaseRequire.user");
+
 const __module_name__="DebugApi";
-/** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
-function do_export(fn,flags,exports,module_name) {
-	/** @typedef {typeof exports} ExportsT */
-	if(typeof exports==="object") {fn(exports);} else {
-		/** @type {ExportsT} */
-		let exports;
-		if(flags.global) {
-			/** @type {{}} */
-			let win_exp=window;
-			exports=as(win_exp);
-		} else {
-			window.__plugin_modules__??={};
-			let all_modules=window.__plugin_modules__;
-			exports=as(all_modules[module_name]??{});
-			/** @type {{[U in keyof PluginStore]?:{}}} */
-			let ok_modules=all_modules;
-			ok_modules[module_name]=as(exports);
-		}
-		fn(as(exports));
-	}
-}
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-export_(exports => {exports.do_export=do_export;});
-//#region basic
-/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function as(e,x=e) {return x;}
-//#endregion
 // #region saved
 /** @type {[string,{name:string}][]} */
 const saved_function_objects=[];

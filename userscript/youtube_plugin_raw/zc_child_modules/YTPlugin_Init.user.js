@@ -12,7 +12,8 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Init.user.js
 // ==/UserScript==
 
-const {yt_plugin_base_main,do_export}=require("./YtPlugin_Base.user");
+const {do_export}=require("../../base_require_raw/BaseRequire.user");
+const {yt_plugin_base_main}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$InitPlugin";
 /** @private @arg {(x:typeof exports)=>void} fn */

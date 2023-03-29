@@ -12,7 +12,8 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user.js
 // ==/UserScript==
 
-const {do_export,BaseService,split_string,split_string_once,as}=require("./YtPlugin_Base.user");
+const {do_export}=require("../../base_require_raw/BaseRequire.user");
+const {BaseService,split_string,split_string_once,as}=require("./YtPlugin_Base.user");
 
 const __module_name__="mod$ParserService";
 /** @private @arg {(x:typeof exports)=>void} fn */

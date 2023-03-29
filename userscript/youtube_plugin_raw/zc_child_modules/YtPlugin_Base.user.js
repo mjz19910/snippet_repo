@@ -12,131 +12,15 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+
+const {do_export,get_exports,required}=require("../../base_require_raw/BaseRequire.user");
+
 //#region module init
 const __module_name__="mod$YoutubePluginBase";
-/** @arg {keyof PluginStore} module_name @template {BaseModuleType} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
-function do_export(fn,flags,exports,module_name) {
-	/** @typedef {typeof exports} ExportsT */
-	if(typeof exports==="object") {fn(exports);} else {
-		/** @type {ExportsT} */
-		let exports;
-		if(flags.global) {
-			/** @type {{}} */
-			let win_exp=window;
-			exports=as(win_exp);
-		} else {
-			window.__plugin_modules__??={};
-			let all_modules=window.__plugin_modules__;
-			exports=as(all_modules[module_name]??{});
-			/** @type {{[U in keyof PluginStore]?:BaseModuleType}} */
-			let ok_modules=all_modules;
-			ok_modules[module_name]=as(exports);
-		}
-		fn(as(exports));
-	}
-}
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
-function get_exports() {
-	window.__plugin_modules__??={};
-	let all_modules=window.__plugin_modules__;
-	/** @type {{[U in keyof PluginStore]?:BaseModuleType}} */
-	let ok_modules=all_modules;
-	return ok_modules;
-}
-/** @template T @arg {T|undefined} x @returns {T} */
-function required(x) {
-	if(x===void 0) {throw new Error("missing required");}
-	return x;
-}
-const path_map={
-	/** @type {["mod","YoutubePluginBase"]} */
-	["./youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user"]: ["mod","YoutubePluginBase"],
-	/** @type {["mod","SupportService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user"]: ["mod","SupportService"],
-	/** @type {["mod","ECatcherService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ECatcherService_Plugin.user"]: ["mod","ECatcherService"],
-	/** @type {["mod","ServiceMethods"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user"]: ["mod","ServiceMethods"],
-	/** @type {["raw","DebugApi"]} */
-	["./DebugApi_raw/DebugApi.user.js"]: ["raw","DebugApi"],
-	/** @type {["mod","ServiceLoaderPlugin"]} */
-	["./youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user"]: ["mod","ServiceLoaderPlugin"],
-	/** @type {["mod","CodegenService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Codegen.user"]: ["mod","CodegenService"],
-	/** @type {["mod","HandleTypes"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user"]: ["mod","HandleTypes"],
-	/** @type {["mod","IndexedDBService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user"]: ["mod","IndexedDBService"],
-	/** @type {["mod","ParserService"]} */
-	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user"]: ["mod","ParserService"],
-	/** @type {["sys","moment"]} */
-	["moment"]: ["sys","moment"],
-};
-export_(exports => exports.__path_map__=path_map);
-/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
-function str_starts_with(str,needle) {return str.startsWith(needle);}
-/** @template {MakeImportPath<keyof typeof path_map>} T @arg {T} x @returns {(keyof typeof path_map)|null} */
-function resolve_path_to_userscript_dir(x) {
-	/** @type {MakeImportPath<keyof typeof path_map>} */
-	let u=x;
-	const yt_plugin_base_path="youtube_plugin_raw/zc_child_modules";
-	if(!str_starts_with(u,".")) return u;
-	let parts=split_string(u,"/");
-	switch(parts[0]) {
-		default: debugger; throw new Error("Unable to resolve path: "+u);
-		case "..": {
-			switch(parts[1]) {
-				default: debugger; throw new Error("Unable to resolve path: "+u);
-				case "DebugApi_raw": {
-					switch(parts[2]) {
-						case "DebugApi.user.js": return `./${parts[1]}/${parts[2]}`;
-					}
-				}
-			}
-		}
-		case ".": {
-			switch(parts[1]) {
-				default: debugger; throw new Error("Unable to resolve path: "+u);
-				case "YTPlugin_Codegen.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YTPlugin_ECatcherService_Plugin.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YTPlugin_HandleTypes.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YTPlugin_IndexedDB.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YTPlugin_Parser_Service.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YTPlugin_ServiceMethods.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YTPlugin_Support_Service.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YtPlugin_Base.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-				case "YtPlugin_ServiceLoader_Plugin.user": return `./${yt_plugin_base_path}/${parts[1]}`;
-			}
-		}
-	}
-}
-/** @template {keyof typeof path_map} P @template {MakeImportPath<P>} T @arg {T} arg @returns {import("../zb_plugin_types/exports").ProcessImport<T>} */
-function require(arg) {
-	if(arg===void 0) {throw new Error("missing required");}
-	window.__plugin_modules__??={};
-	const M=window.__plugin_modules__,i=required;
-	const resolved_path=resolve_path_to_userscript_dir(arg);
-	if(resolved_path===null) throw new Error("Unable to resolve path: "+arg);
-	/** @arg {import("../zb_plugin_types/exports").ProcessImport<keyof path_map>} x @returns {asserts x is import("../zb_plugin_types/exports").ProcessImport<T>} */
-	function correct_return_type(x) {x;}
-	const loc=path_map[resolved_path];
-	let mod;
-	if(loc[0]==="sys") mod=i(window[loc[1]]);
-	else if(loc[0]==="raw") mod=i(M[loc[1]]);
-	else mod=i(M[`${loc[0]}$${loc[1]}`]);
-	correct_return_type(mod);
-	return mod;
-}
-export_(exports => exports.require=require,{global: true});
-export_(exports => {
-	exports.get_exports=get_exports;
-	exports.do_export=do_export;
-});
-const log_imports=false;
-export_(exports => {exports.__yt_plugin_log_imports__=log_imports;},{global: true});
 export_(exports => {exports.__is_module_flag__=true;});
-if(log_imports) console.log("Load PluginBase");
+if(window.__log_module_loading_enabled__) console.log("Load PluginBase");
 //#endregion
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
@@ -1935,16 +1819,16 @@ function yt_plugin_base_main() {
 		let mod=modules[module_name];
 		if(!mod) continue;
 		if("__init_module__" in mod&&mod.__init_module__===true) {
-			if(log_imports) console.log("module_is: module init",mod);
+			if(window.__log_module_loading_enabled__) console.log("module_is: module init",mod);
 			continue;
 		}
 		if(mod.__module_loaded__===false) {
-			if(log_imports) console.log("module_state: module not loaded",mod);
+			if(window.__log_module_loading_enabled__) console.log("module_state: module not loaded",mod);
 			failed_to_load=true;
 			continue;
 		}
 		if("init_module" in mod&&typeof mod.init_module==="function") {
-			if(log_imports) console.log("module_action: init",mod);
+			if(window.__log_module_loading_enabled__) console.log("module_action: init",mod);
 			mod.init_module();
 			continue;
 		}

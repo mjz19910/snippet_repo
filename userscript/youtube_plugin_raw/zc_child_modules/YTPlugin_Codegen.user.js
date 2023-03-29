@@ -12,9 +12,10 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
 
-const {as,do_export,split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YtPlugin_Base.user");
+const {do_export}=require("../../base_require_raw/BaseRequire.user");
+const {as,split_string_once,split_string,as_any,JsonReplacerState,ServiceWithAccessors}=require("./YtPlugin_Base.user");
 
-if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
+if(window.__log_module_loading_enabled__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}

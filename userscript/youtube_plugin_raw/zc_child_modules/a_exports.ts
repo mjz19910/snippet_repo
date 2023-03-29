@@ -12,4 +12,5 @@ interface PluginStore {
 	mod$ServiceMethods: typeof import("./YTPlugin_ServiceMethods.user.js");
 	DebugApi: typeof import("../../DebugApi_raw/DebugApi.user.js");
 	debug$RebuildTheUniverse: typeof import("../../DebugApi_raw/DebugApi.user.js");
+	mod$base_require: typeof import("../../base_require_raw/BaseRequire.user.js");
 }

@@ -12,7 +12,8 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export,as,BaseService}=require("./YtPlugin_Base.user");
+const {do_export}=require("../../base_require_raw/BaseRequire.user");
+const {as,BaseService}=require("./YtPlugin_Base.user");
 // IndexedDB_Service(7) => Support_Service(6) => Base(1)
 const {StoreData}=require("./YTPlugin_Support_Service.user");
 

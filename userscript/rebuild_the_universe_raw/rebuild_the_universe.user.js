@@ -21,7 +21,8 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-const {do_export,MulCompression,CompressionStatsCalculator}=require("../DebugApi_raw/DebugApi.user.js");
+const {MulCompression,CompressionStatsCalculator}=require("../DebugApi_raw/DebugApi.user");
+const {do_export}=require("../base_require_raw/BaseRequire.user");
 
 const __module_name__="debug$RebuildTheUniverse";
 /** @private @arg {(x:typeof exports)=>void} fn */
