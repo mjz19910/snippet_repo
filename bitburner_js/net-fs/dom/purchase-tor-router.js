@@ -59,6 +59,9 @@ export class DomList {
 		this.help_section=help_section;
 
 		this.current_page=this.get_div(this.MuiBox_root,"div.MuiBox-root");
+
+		let win=this.window_();
+		win.dom_list=this;
 	}
 	/** @arg {ParentNode} element */
 	click_on(element) {
@@ -68,7 +71,7 @@ export class DomList {
 	click_on_1(element) {
 		Object.values(element)[1].onClick({});
 	}
-	/** @returns {Window&{__dom_list?:DomList}} */
+	/** @returns {Window&{dom_list?:DomList}} */
 	window_() {
 		/** @type {any} */
 		let win=globalThis;
@@ -89,8 +92,6 @@ export class DomList {
 		return this.get_div(this.MuiBox_root,"div.MuiBox-root");
 	}
 	async buy_tor_router() {
-		let win=this.window_();
-		win.__dom_list=this;
 		this.current_page=this.click_to_page(this.city_button);
 		const city_location=this.current_page.children[0].textContent;
 		if(city_location!=="Sector-12") throw new Error("Handle new city");
@@ -105,7 +106,18 @@ export class DomList {
 	async play_infiltration() {
 		this.current_page=this.click_to_page(this.city_button);
 		const city_location=this.current_page.children[0].textContent;
-		if(city_location!=="Sector-12") throw new Error("Handle new city");
+		if(city_location!=="Volhaven") {
+			this.current_page=this.click_to_page(this.travel_button);
+			const volhaven_city=this.current_page.querySelectorAll("span")[1];
+			this.click_on(volhaven_city);
+			this.current_page=this.click_to_page(this.city_button);
+			const city_location=this.current_page.children[0].textContent;
+			if(city_location!=="Volhaven") throw new Error();
+			const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
+			this.click_on_1(backdrop_root);
+		}
+		const nwo_map_location=query_element(this.current_page,"[aria-label=NWO]");
+		this.current_page=this.click_to_page(nwo_map_location);
 	}
 }
 
