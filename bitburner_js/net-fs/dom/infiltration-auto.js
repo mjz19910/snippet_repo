@@ -20,6 +20,8 @@ export async function main(ns) {
 		console.log(key,path.join("."),...value);
 		ns.exit();
 	}
+	const global_hook=__REACT_DEVTOOLS_GLOBAL_HOOK__.hook_ref;
+	const dispatcher_ref=global_hook.currentDispatcherRef;
 	/** @arg {string[]} path @param {ReactForwardRef} forward_ref */
 	function on_react_forward_ref(path,forward_ref) {
 		const {$$typeof,render,...y}=forward_ref; g(y);
@@ -29,12 +31,16 @@ export async function main(ns) {
 		ns.print("forward_ref.render.name: ",render.name," ",render.length);
 		let ref_render;
 		let ref_obj={};
+		let prev_dispatcher=dispatcher_ref.current;
 		try {
+			dispatcher_ref.current={};
 			debugger;
 			let res=render(ref_obj,null);
 			ref_render=[ref_obj,res];
 		} catch(e) {
 			ref_render=[ref_obj,e];
+		} finally {
+			dispatcher_ref.current=prev_dispatcher;
 		}
 		console.log("forward_ref",ref_render);
 	}
