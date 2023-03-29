@@ -96,10 +96,14 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			await notify_new_reply_port.nextWrite();
 			if(reply_port.empty()) throw new Error("reply already removed");
 			let pending_msg=await peek_reply_msg(reply_port);
+			let accepted_messages=[];
 			for(let msg of pending_msg.reply) {
 				if(!should_accept(msg,call_id,id)) continue;
+				accepted_messages.push(msg);
 				complete_port.write(msg.uid);
-				let ret=msg.reply;
+			}
+			for(let ok_msg of accepted_messages) {
+				let ret=ok_msg.reply;
 				const cur_timer=perf_diff();
 				console.log("complete",ns.tFormat(cur_timer),this_.hostname,call_id,i);
 				assume_return(ret);
