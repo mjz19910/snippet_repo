@@ -11,7 +11,7 @@
 		"module": "ESNext",
 		"moduleResolution": "NodeNext",
 		"sourceMap": true,
-		"outDir": "./build",
+		"outDir": "./dist",
 		"strict": true,
 		"typeRoots": [
 			"./node_modules/@types"
@@ -43,6 +43,6 @@
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
-		"./build"
+		"./dist"
 	],
 }

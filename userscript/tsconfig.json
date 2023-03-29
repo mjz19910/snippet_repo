@@ -11,7 +11,7 @@
 		],
 		"module": "ESNext",
 		"moduleResolution": "NodeNext",
-		"outDir": "./build",
+		"outDir": "./dist",
 		"allowJs": true,
 		"checkJs": true,
 		"experimentalDecorators": true,
@@ -41,7 +41,7 @@
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
-		"./build",
+		"./dist",
 		"*/_template.user.js",
 	],
 }

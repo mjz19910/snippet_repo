@@ -16,7 +16,7 @@
 		"moduleResolution": "Node16",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"outDir": "./build",
+		"outDir": "./dist",
 		"typeRoots": [
 			"~/workspace/node_types/node_modules/@types"
 		],

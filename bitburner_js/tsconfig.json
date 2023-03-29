@@ -14,7 +14,7 @@
 		"typeRoots": [
 			"./node_modules/@types"
 		],
-		"outDir": "./build",
+		"outDir": "./dist",
 		"baseUrl": "net-fs",
 		"esModuleInterop": true,
 		"sourceMap": true,
@@ -54,6 +54,6 @@
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
-		"./build"
+		"./dist"
 	],
 }

@@ -12,7 +12,7 @@
 		"typeRoots": [
 			"./node_modules/@types"
 		],
-		"outDir": "./build",
+		"outDir": "./dist",
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"declaration": true,
@@ -44,6 +44,6 @@
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
-		"./build"
+		"./dist"
 	],
 }

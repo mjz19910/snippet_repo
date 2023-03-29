@@ -7,7 +7,7 @@
 		],
 		"module": "ESNext",
 		"moduleResolution": "NodeNext",
-		"outDir": "./build/_rebuild",
+		"outDir": "./dist",
 		"allowJs": true,
 		"checkJs": true,
 		"declaration": true,
@@ -32,11 +32,11 @@
 		"esm": true
 	},
 	"include": [
-		"./build/**/*"
+		"**/*"
 	],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
-		"./build/_rebuild"
+		"./dist"
 	]
 }
