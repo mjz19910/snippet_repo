@@ -10,30 +10,6 @@ export async function main(ns) {
 	ns.moveTail(250+3,3);
 	ns.disableLog("disableLog");
 	if(!("root" in window)) return;
-	/** @type {HTMLDivElement} */
-	const root_element=as_any(window.root);
-	/** @param {Element} val @returns {ReactFiber} */
-	function get_react_fiber(val) {
-		return Object.values(val)[0];
-	}
-	const react_symbols={
-		forward_ref: window.React.forwardRef(() => null)["$$typeof"],
-		react_element: (() => {
-			let u=window.React.createElement("div");
-			/** @type {DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>,HTMLElement>} */
-			let r=as_any(u);
-			return r["$$typeof"];
-		})(),
-	};
-	const seen_react_fiber_set=new Set;
-	/** @type {HTMLDivElement} */
-	const MuiDrawer_root=query_element(root_element,"div.MuiBox-root>div.MuiDrawer-root");
-	/** @type {HTMLDivElement} */
-	const MuiPaper_root=query_element(MuiDrawer_root,"div.MuiPaper-root");
-	/** @type {HTMLUListElement} */
-	const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
-	let mui_list_react_fiber=get_react_fiber(MuiList_root);
-	on_react_fiber(mui_list_react_fiber);
 	/** @param {{}} y */
 	function g(y) {
 		if(Object.keys(y).length>0) {ns.print("rest: ",Object.keys(y)); console.log("rest",y);}
@@ -44,6 +20,29 @@ export async function main(ns) {
 		console.log(key,path.join("."),...value);
 		ns.exit();
 	}
+	/** @arg {string[]} path @param {ReactForwardRef} forward_ref */
+	function on_react_forward_ref(path,forward_ref) {
+		const {$$typeof,render,...y}=forward_ref; g(y);
+		if($$typeof!==react_symbols.forward_ref) {
+			unhandled("not_forward_ref",[forward_ref],path);
+		}
+		ns.print("forward_ref.render.name: ",render.name," ",render.length);
+		let ref_render;
+		let ref_obj={};
+		try {
+			debugger;
+			let res=render(ref_obj,null);
+			ref_render=[ref_obj,res];
+		} catch(e) {
+			ref_render=[ref_obj,e];
+		}
+		console.log("forward_ref",ref_render);
+	}
+	/** @type {string[]} */
+	const fn_str_list=[];
+	/** @type {Map<Function,[number,string]>} */
+	const fn_str_map=new Map;
+	const fn_set=new Set;
 	/** @param {ReactElement2} element @arg {string[]} path */
 	function on_react_element(element,path) {
 		const react_element_sym=react_symbols.react_element;
@@ -52,10 +51,27 @@ export async function main(ns) {
 			case react_element_sym: {
 				const {$$typeof,type,key,ref,props,_owner,...y}=element; g(y);
 				if(typeof type!=="function") {
-					unhandled("react_element.type",[element,type],path);
+					on_react_forward_ref(path,type);
+				} else {
+					/** @type {[number,string]} */
+					let fn_string=[0,""];
+					if(!fn_set.has(type)) {
+						fn_set.add(type);
+						fn_string[1]=type.toString();
+						if(!fn_str_list.includes(fn_string[1])) fn_str_list.push(fn_string[1]);
+						fn_string[0]=fn_str_list.indexOf(fn_string[1]);
+						fn_str_map.set(type,fn_string);
+					} else {
+						let item=fn_str_map.get(type);
+						if(!item) ns.exit();
+						fn_string=item;
+					}
+					ns.print("react_element.type: ",type.name," idx:",fn_string[0]);
 				}
-				console.log("type name",type.name);
-				ns.print(path.join(".")+".key: ",key);
+				x: {
+					if(key===null) break x;
+					ns.print("react_element.key: ",key);
+				}
 			} return;
 		}
 	}
@@ -167,5 +183,28 @@ export async function main(ns) {
 		console.log("react_state_node",path,node);
 		ns.exit();
 	}
-	react_symbols;
+	/** @type {HTMLDivElement} */
+	const root_element=as_any(window.root);
+	/** @param {Element} val @returns {ReactFiber} */
+	function get_react_fiber(val) {
+		return Object.values(val)[0];
+	}
+	const react_symbols={
+		forward_ref: window.React.forwardRef(() => null)["$$typeof"],
+		react_element: (() => {
+			let u=window.React.createElement("div");
+			/** @type {DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>,HTMLElement>} */
+			let r=as_any(u);
+			return r["$$typeof"];
+		})(),
+	};
+	const seen_react_fiber_set=new Set;
+	/** @type {HTMLDivElement} */
+	const MuiDrawer_root=query_element(root_element,"div.MuiBox-root>div.MuiDrawer-root");
+	/** @type {HTMLDivElement} */
+	const MuiPaper_root=query_element(MuiDrawer_root,"div.MuiPaper-root");
+	/** @type {HTMLUListElement} */
+	const MuiList_root=query_element(MuiPaper_root,"ul.MuiList-root");
+	let mui_list_react_fiber=get_react_fiber(MuiList_root);
+	on_react_fiber(mui_list_react_fiber);
 }

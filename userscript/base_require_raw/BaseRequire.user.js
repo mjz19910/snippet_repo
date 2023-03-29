@@ -9,8 +9,8 @@
 // @match		http://*/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/za_userscript_meta/YtPlugin_Base.meta.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/base_require_raw/BaseRequire.user.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/base_require_raw/BaseRequire.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 const __module_name__="mod$base_require";
@@ -51,6 +51,7 @@ function split_string(x,s=as(",")) {
 	let r=x.split(s);
 	return as(r);
 }
+const log_path_resolve=false;
 /** @template {AllImportPaths} T @arg {T} x @returns {(keyof typeof path_map)|null} */
 function resolve_path_to_userscript_dir(x) {
 	/** @type {AllImportPaths} */
@@ -85,7 +86,7 @@ function resolve_path_to_userscript_dir(x) {
 		}
 	}
 	if(resolved_path) {
-		console.log("resolved path",x,"->",resolved_path);
+		if(log_path_resolve) console.log("resolved path",x,"->",resolved_path);
 	} else {
 		console.log("resolved_path",x);
 	}
@@ -175,6 +176,7 @@ export_(exports => {
 	cur_require={__system_require: false,require};
 	let require_property=Object.getOwnPropertyDescriptor(exports,"require");
 	if(require_property) {
+		debugger;
 		console.log("skipping set of require");
 		return;
 	} else {

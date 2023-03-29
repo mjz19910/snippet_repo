@@ -12,7 +12,7 @@ const react_forward_ref_symbol=Symbol("react.forward_ref");
 type react_forward_ref_symbol=typeof react_forward_ref_symbol;
 type ReactForwardRef={
 	$$typeof: react_forward_ref_symbol;
-	render: (n: any,i: any) => any;
+	render: (n: {},i: null) => any;
 };
 type ReactMemo={
 	$$typeof: react_memo_symbol;
