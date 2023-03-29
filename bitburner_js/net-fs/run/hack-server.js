@@ -101,8 +101,12 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			console.log("server",i);
-			await request_port.nextWrite();
+			console.log("server2",i);
+			await Promise.race([
+				request_port.nextWrite(),log_port.nextWrite(),
+				notify_complete_port.nextWrite(),notify_request_has_space_port.nextWrite(),
+				notify_new_reply_port.nextWrite(),
+			]);
 			while(!request_port.empty()) {
 				let msg=await read_call_msg(request_port);
 				const {call,args}=msg;

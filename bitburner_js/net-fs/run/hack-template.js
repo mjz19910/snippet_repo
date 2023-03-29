@@ -61,15 +61,10 @@ export async function main(ns) {
 	let pa=as_any(ns.flags([]));
 	/** @type {HackState} */
 	const s=new HackState(ns,pa);
-	for(let i=0;i<32;i++) {
+	for(let i=0;;i++) {
 		console.log("hack1");
-		try {
-			await hack_forever(s);
-			continue;
-		} catch(e) {
-			console.log(e);
-		}
-		await ns.sleep(1000*Math.random()+1000);
+		await hack_forever(s);
+		await ns.sleep(Math.random()*33);
 	}
 }
 /** @arg {HackState} s */
