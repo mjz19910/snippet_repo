@@ -3,8 +3,9 @@ export const reply_port_id=2;
 export const log_port_id=3;
 export const reply_retry_port_id=4;
 export const notify_request_has_space_id=5;
-export const notify_complete_pipe_port_id=5;
-export const max_port_id=6;
+export const notify_complete_pipe_port_id=6;
+export const notify_new_reply_port_id=7;
+export const max_port_id=8;
 /** @param {NetscriptPort} ns_port */
 export async function async_port_read_data(ns_port) {
 	let data=ns_port.read();
@@ -85,7 +86,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
-	const notify_new_reply_port=ns.getPortHandle(max_port_id+4);
+	const notify_new_reply_port=ns.getPortHandle(notify_new_reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let i=0;i<20;i++) {
