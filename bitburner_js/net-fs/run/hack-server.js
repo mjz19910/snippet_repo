@@ -185,6 +185,7 @@ export async function main(ns) {
 			msg_arr.length=0;
 			request_port.read();
 			await send_call_msg(request_port,msg);
+			if(request_port.empty()) throw new Error("Port should not be empty");
 			while(!log_port.empty()) {
 				let res=log_port.read();
 				ns.printf("%s",res);
