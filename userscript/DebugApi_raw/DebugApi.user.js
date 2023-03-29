@@ -4741,12 +4741,21 @@ export_(exports => {
 	const proxy_map=new Map;
 	exports.__proxy_map__=proxy_map;
 	const proxy_make=window.Proxy;
-	exports.Proxy=new window.Proxy(proxy_make,{
+	const proxy_construct_handler={
+		/** @arg {Parameters<ProxyHandler<ProxyConstructor>["construct"]>} args */
 		construct(...args) {
 			let ret=Reflect.construct(...args);
 			proxy_map.set(ret,args);
 			return ret;
 		}
-	});
+	};
+	exports.Proxy=new window.Proxy(proxy_make,new Proxy(proxy_construct_handler,{
+		/** @arg {typeof proxy_construct_handler} o @arg {keyof typeof proxy_construct_handler} k */
+		get(o,k) {
+			if(k in o) return o[k];
+			console.log("proxy key",o,k);
+			return void 0;
+		}
+	}));
 },{global: true});
 export_(exports => exports.__module_loaded__=true);
