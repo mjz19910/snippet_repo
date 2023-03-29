@@ -2,7 +2,6 @@ import {InitHackScript} from "/init/init-hack.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
-	ns.tail();
 	ns.clearLog();
 	ns.disableLog("disableLog");
 	ns.disableLog("getServerMoneyAvailable");
@@ -62,6 +61,7 @@ export async function main(ns) {
 	ns.print("upg_ram: ",ns.formatRam(ram));
 	let buy_cost1=ns.getPurchasedServerCost(ram-prev_ram);
 	let cur_server_money=ns.getServerMoneyAvailable("home");
+	if(cur_server_money>(buy_cost1*25*2)) ns.tail();
 	while(cur_server_money>(buy_cost1*25*2)) {
 		await upgrade_purchased_server_list(prev_ram,ram,server_hostname_list);
 		prev_ram=ram; ram*=2;
@@ -69,4 +69,5 @@ export async function main(ns) {
 		cur_server_money=ns.getServerMoneyAvailable("home");
 		ns.print("upg_ram: ",ns.formatRam(ram));
 	}
+	ns.closeTail();
 }
