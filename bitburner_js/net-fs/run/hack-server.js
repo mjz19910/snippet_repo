@@ -184,7 +184,10 @@ export async function main(ns) {
 				notify_request_has_space_port.write(1);
 				while(!complete_port.empty()) {
 					let complete_id=complete_port.read();
-					if(typeof complete_id==="number") complete_reply_id_list.push(complete_id);
+					if(typeof complete_id==="number") {
+						if(complete_reply_id_list.includes(complete_id)) return;
+						complete_reply_id_list.push(complete_id);
+					}
 					else ns.tprint("ERROR complete message not a number");
 				}
 			}
