@@ -77,6 +77,12 @@ export class DomList {
 	get document_() {
 		return globalThis["document"];
 	}
+	/** @returns {HTMLDivElement} @param {Element} src @param {string} selector */
+	get_div(src,selector) {
+		let div=query_element(src,selector);
+		if(div instanceof HTMLDivElement) return div;
+		throw new Error("element is not a div element");
+	}
 	/** @param {ParentNode} target */
 	click_to_page(target) {
 		this.click_on(target);
@@ -96,16 +102,6 @@ export class DomList {
 		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
 		this.click_on_1(backdrop_root);
 		this.current_page=this.click_to_page(this.terminal_button);
-	}
-	/**
-	 * @returns {HTMLDivElement}
-	 * @param {Element} src
-	 * @param {string} selector
-	 */
-	get_div(src,selector) {
-		let div=query_element(src,selector);
-		if(div instanceof HTMLDivElement) return div;
-		throw new Error("element is not a div element");
 	}
 	async play_infiltration() {
 		this.current_page=this.click_to_page(this.city_button);
