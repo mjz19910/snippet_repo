@@ -6,8 +6,45 @@ type ElementMap={
 };
 const react_element_symbol=Symbol("react.element");
 type react_element_symbol=typeof react_element_symbol;
+const react_memo_symbol=Symbol("react.memo");
+type react_memo_symbol=typeof react_memo_symbol;
+const react_forward_ref_symbol=Symbol("react.forward_ref");
+type react_forward_ref_symbol=typeof react_forward_ref_symbol;
+type ReactForwardRef={
+	$$typeof: react_forward_ref_symbol;
+	render: (n: any,i: any) => any;
+};
+type ReactMemo={
+	$$typeof: react_memo_symbol;
+	compare: null;
+	type: ReactForwardRef;
+};
+type ReactElementClasses={
+	active: "jss101";
+	listitem: "jss102";
+};
+type ReactElementProps2={
+	key_: "Hacking";
+	page: "Terminal";
+	classes: ReactElementClasses;
+	clickPage: (e: any) => any;
+	flash: null;
+	icon: ReactMemo;
+	items: [
+		{key_: "Terminal"; icon: ReactMemo;},
+		{key_: "Script Editor"; icon: ReactMemo;},
+		{key_: "Active Scripts"; icon: ReactMemo;},
+		{key_: "Create Program"; icon: ReactMemo; count: -6;},
+	];
+	sidebarOpen: boolean;
+};
 type ReactElement2={
-	"$$typeof": react_element_symbol;
+	$$typeof: react_element_symbol;
+	type: (e: any) => any;
+	key: null;
+	ref: null;
+	props: ReactElementProps2;
+	_owner: null;
 };
 type ReactFiberElement<ElementType extends HtmlReactElementType,_ClassName extends string>={
 	tag: 5;

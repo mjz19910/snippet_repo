@@ -35,6 +35,12 @@ export async function main(ns) {
 	on_react_fiber(mui_list_react_fiber);
 	/** @param {ReactElement2} element @arg {string[]} path */
 	function on_react_element(element,path) {
+		const react_element_sym=react_symbols.react_element;
+		switch(element.$$typeof) {
+			case react_element_sym: {
+				
+			} break;
+		}
 		ns.toast("react_element not handled: "+path,"error");
 		console.log("react_element",path,element);
 		ns.exit();
