@@ -72,7 +72,6 @@ export class InitHackScript {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
 			ns.exit();
 		}
-		await ns.sleep(33);
 		return true;
 	}
 	/**
@@ -151,6 +150,7 @@ export class InitHackScript {
 		this.ns.write(backdoor_list_file,this.to_backdoor.join("\n")+"\n","w");
 	}
 	async start_hack_script() {
+		await this.ns.sleep(0);
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
@@ -198,6 +198,7 @@ export class InitHackScript {
 		return thread_count|0;
 	}
 	async do_get_admin_rights() {
+		await this.ns.sleep(0);
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			const num_ports=srv.numOpenPortsRequired;
@@ -215,7 +216,6 @@ export class InitHackScript {
 				srv.hasAdminRights=true;
 				if(!this.to_backdoor.includes(hostname)) this.to_backdoor.push(hostname);
 			}
-			await this.ns.sleep(33);
 		}
 	}
 	/** @type {{[x:string]:Server}} */
