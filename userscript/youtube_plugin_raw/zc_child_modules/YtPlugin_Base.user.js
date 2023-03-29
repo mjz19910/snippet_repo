@@ -13,7 +13,10 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+// yt_plugin/Base(4) => base_require/BaseRequire(1)
 const {do_export,get_exports,required,as}=require("../../base_require_raw/BaseRequire.user");
+
+// priority yt_plugin/Base(4)
 
 //#region module init
 const __module_name__="mod$YoutubePluginBase";

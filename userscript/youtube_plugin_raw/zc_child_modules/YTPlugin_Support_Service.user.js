@@ -12,10 +12,12 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
-const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {as,split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YtPlugin_Base.user");
+// yt_plugin/SupportService(10) => base_require/BaseRequire(1)
+const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
+// yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4)
+const {split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YtPlugin_Base.user");
 
-// priority SupportService(6)
+// priority yt_plugin/SupportService(9)
 
 const __module_name__="mod$SupportService";
 /** @private @arg {(x:typeof exports)=>void} fn */

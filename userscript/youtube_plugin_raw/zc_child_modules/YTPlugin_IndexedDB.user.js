@@ -12,12 +12,14 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
-const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {as,BaseService}=require("./YtPlugin_Base.user");
-// IndexedDB_Service(7) => Support_Service(6) => Base(1)
+// yt_plugin/IndexedDB_Service(10) => base_require/BaseRequire(1)
+const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
+// yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4) => base_require/BaseRequire(1)
+const {BaseService}=require("./YtPlugin_Base.user");
+// yt_plugin/IndexedDB_Service(10) => yt_plugin/Support_Service(9) => yt_plugin/Base(4)
 const {StoreData}=require("./YTPlugin_Support_Service.user");
 
-// priority IndexedDB_Service(7)
+// priority yt_plugin/IndexedDB_Service(10)
 
 const __module_name__="mod$IndexedDBService";
 /** @private @arg {(x:typeof exports)=>void} fn */
