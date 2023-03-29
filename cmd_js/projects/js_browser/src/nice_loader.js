@@ -1,6 +1,7 @@
 import * as path from "path";
 import {spawn as child_process_spawn} from "child_process";
 import {env} from "process";
+import * as process from "process";
 
 const system_modules=[
 	'repl',
