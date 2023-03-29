@@ -90,6 +90,8 @@ export async function main(ns) {
 		}
 		for(let i=0;i<reply_cache.length;i++) {
 			if(reply_cache[i]!==null) break;
+			reply_cache.shift();
+			i--;
 			pending_reply_message.reply.shift();
 			reply_id_offset++;
 		}
