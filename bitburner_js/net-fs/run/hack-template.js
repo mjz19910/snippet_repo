@@ -84,7 +84,7 @@ export async function main(ns) {
 async function hack_forever(s) {
 	debugger;
 	for(;;) {
-		await s.ns.sleep(300);
+		await s.ns.sleep(309);
 		const srv=await generic_get_call_with_id(s,Math.random()+"","get_hack_target"); ``;
 		console.log("hack");
 		s.target=srv.hostname;
