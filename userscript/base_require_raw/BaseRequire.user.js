@@ -84,8 +84,12 @@ function resolve_path_to_userscript_dir(x) {
 			case "YtPlugin_ServiceLoader_Plugin.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 		}
 	}
-	if(resolved_path!==null) return resolved_path;
-	throw new Error("Unable to resolve path: "+u);
+	if(resolved_path) {
+		console.log("resolved path",x,"->",resolved_path);
+	} else {
+		console.log("resolved_path",x);
+	}
+	return resolved_path;
 }
 function get_exports() {
 	window.__require_module_cache__??={};
@@ -125,13 +129,16 @@ function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
-/** @template {AllImportPaths} T @arg {T} arg @returns {import("./ProcessImport").ProcessImport<T>} */
-function require(arg) {
-	if(arg===void 0) {throw new Error("missing required");}
+/** @template {AllImportPaths} T @arg {T} arg @arg {[]} r_args @returns {import("./ProcessImport").ProcessImport<T>} */
+function require(arg,...r_args) {
+	if(arg===void 0) {throw new Error("missing required argument");}
 	window.__require_module_cache__??={};
 	const M=window.__require_module_cache__,i=required;
 	const resolved_path=resolve_path_to_userscript_dir(arg);
-	if(resolved_path===null) throw new Error("Unable to resolve path: "+arg);
+	if(resolved_path===null) {
+		if(cur_require) return cur_require(arg,...r_args);
+		throw new Error("Unable to resolve path: "+arg);
+	}
 	/** @arg {import("./ProcessImport").ProcessImport<keyof path_map>} x @returns {asserts x is import("./ProcessImport").ProcessImport<T>} */
 	function correct_return_type(x) {x;}
 	const loc=path_map[resolved_path];
@@ -152,6 +159,10 @@ export_(exports => {
 	exports.__path_map__=path_map;
 });
 
+/** @template T @typedef {import("./ProcessImport").ProcessImport<T>} ProcessImport */
+/** @type {((x:string)=>ProcessImport<any>)|null} */
+let cur_require=null;
+
 // global exports
 export_(exports => {
 	if(exports.require!==void 0) {
@@ -161,7 +172,7 @@ export_(exports => {
 		exports.__global_require_is_null__=true;
 	}
 	exports.__module_require__=require;
-	Object.defineProperty(exports,"require",{value: require});
+	Object.defineProperty(exports,"require",{get: () => require,set(value) {cur_require=value;} });
 	exports.__base_require_module_loaded__=true;
 	exports.__log_module_loading_enabled__=log_module_loading_enabled;
 },{global: true});
