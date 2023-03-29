@@ -50,14 +50,16 @@ export async function main(ns) {
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
-	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
-	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
-	const notify_new_reply_port=ns.getPortHandle(notify_new_reply_port_id);
-	notify_request_has_space_port.clear();
-	notify_request_has_space_port.write(1);
-	notify_complete_port.clear();
 	request_port.clear();
 	reply_port.clear();
+	log_port.clear();
+	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
+	notify_complete_port.clear();
+	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
+	notify_request_has_space_port.clear();
+	notify_request_has_space_port.write(1);
+	const notify_new_reply_port=ns.getPortHandle(notify_new_reply_port_id);
+	notify_new_reply_port.clear();
 	let reply_id_offset=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
