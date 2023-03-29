@@ -146,7 +146,7 @@ export class DomList {
 				await ns.sleep(33);
 				current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
 			}
-			/** @type {(["cut_num",number]|["key","left"]|["type_rev",string]|["type_bracket",string])[]} */
+			/** @type {(["cut_num",number]|["key","left"|"up"]|["type_rev",string]|["type_bracket",string])[]} */
 			let instruction_arr=[];
 			const instruction_source=current_container.children[2].children;
 			this.instruction_source=instruction_source;
@@ -154,11 +154,11 @@ export class DomList {
 			console.log("game",JSON.stringify(game_instruction));
 			switch(game_instruction) {
 				case "Enter the Code!": {
-					const left_char="→";
 					let node_text=instruction_source[1].textContent;
 					switch(node_text) {
 						default: console.log("enter_code",node_text); debugger; break;
-						case left_char: instruction_arr.push(["key","left"]); break;
+						case "→": instruction_arr.push(["key","left"]); break;
+						case "↑": instruction_arr.push(["key","up"]); break;
 					}
 				} break;
 				case "Type it backward": {
@@ -215,6 +215,11 @@ export class DomList {
 					} break;
 					case "type_rev": {
 						const str_lower=instruction[1].toLowerCase(); str_lower;
+						for(let char of str_lower) {
+							window.dispatchEvent(new KeyboardEvent("keydown",{key: char}));
+							window.dispatchEvent(new KeyboardEvent("keyup",{key: char}));
+							window.dispatchEvent(new KeyboardEvent("keypress",{key: char}));
+						}
 						debugger;
 					} break;
 				}
