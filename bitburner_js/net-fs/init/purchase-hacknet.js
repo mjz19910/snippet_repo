@@ -12,24 +12,20 @@ export async function main(ns) {
 
 	let hacknet_entries=get_hacknet_node_entries(ns);
 	while(hacknet_entries.length<9) {
-		ns.tail();
 		let node_id=ns.hacknet.purchaseNode();
 		if(node_id!==-1) {
 			let node_info=ns.hacknet.getNodeStats(node_id);
 			hacknet_entries.push([node_id,node_info]);
 			ns.print("new node",node_id);
 		}
-		await ns.sleep(300);
+		await ns.sleep(33);
 	}
 	let nodes_not=hacknet_entries.filter(v => (v[1].level%10)!==0);
 	nodes_not.forEach(([idx,node]) => {
 		const {level}=node;
 		const offset=10-level%10;
 		let upgraded=ns.hacknet.upgradeLevel(idx,offset);
-		if(upgraded) {
-			node.level+=offset;
-			ns.tail();
-		}
+		if(upgraded) node.level+=offset;
 	});
 	if(nodes_not.length>0) {
 		ns.print("not: ",nodes_not[0][1].name);
@@ -112,7 +108,6 @@ function upgrade_node_cores(ns,idx,node) {
 	while(cores_n>0) {
 		let res=ns.hacknet.upgradeCore(idx,cores_n);
 		if(res) {
-			ns.tail();
 			upgraded_cores=true;
 			node.cores+=cores_n;
 			break;
@@ -136,7 +131,6 @@ function upgrade_node_ram(ns,idx,node) {
 	while(ram_n>0) {
 		let res=ns.hacknet.upgradeRam(idx,ram_n);
 		if(res) {
-			ns.tail();
 			upgraded_ram=true;
 			let cnt=ram_n;
 			for(let i=0;i<cnt;i++) {
@@ -162,7 +156,6 @@ function upgrade_node_level_entry(ns,idx,node) {
 	while(level_n>0) {
 		let res=ns.hacknet.upgradeLevel(idx,level_n);
 		if(res) {
-			ns.tail();
 			node.level+=level_n;
 			break;
 		}
