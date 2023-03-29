@@ -11,7 +11,6 @@ export function write_log_message(s,a1) {
  */
 export async function run_hack(this_) {
 	if(!this_.target) throw new Error("Bad args");
-	debugger;
 	const perf_start=performance.now();
 	const max_money=await getServerMaxMoney_(this_);
 	if(max_money===0) return;
@@ -67,7 +66,7 @@ export async function run_hack(this_) {
 export async function main(ns) {
 	ns.clearLog();
 	ns.disableLog("disableLog");
-	// ns.disableLog("sleep");
+	ns.disableLog("sleep");
 	let disable_log_action=false;
 	if(disable_log_action) {
 		ns.disableLog("weaken");

@@ -1,25 +1,53 @@
 // infiltration-auto
 
-import {query_element} from "./dom-support";
-import {DomList} from "./DomList";
+import {query_element} from "/dom/dom-support.js";
+import {DomList} from "/dom/DomList.js";
 import {as_any} from "/run/as.js";
 class InfiltrationDomState extends DomList {
+	target_map={
+		Chongqing: {
+			["KuaiGong International"]: true,
+		},
+		Volhaven: {
+			/** @type {true} */
+			NWO: true,
+		},
+	};
+	/** @arg {keyof typeof this['target_map']} city */
+	goto_city(city) {
+		let current_page=this.click_to_page(this.travel_button);
+		const all_span=current_page.querySelectorAll("span");
+		switch(city) {
+			case "Chongqing": {
+				debugger;
+			} break;
+			case "Volhaven": {
+				const volhaven_city=all_span[1];
+				this.click_on(volhaven_city);
+			} break;
+		}
+		current_page=this.click_to_page(this.city_button);
+		const city_location=current_page.children[0].textContent;
+		if(city_location!==city) throw new Error();
+		const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
+		this.click_on_1(backdrop_root);
+		return current_page;
+
+	}
 	/** @arg {NS} ns */
 	async play_infiltration(ns) {
+		const target_city="Chongqing";
+		const city_map=this.target_map["Chongqing"];
+		const map_location="KuaiGong International";
+		if(!city_map[map_location]) {
+			debugger;
+		}
 		const dom_list=this;
 		let current_page=this.click_to_page(this.city_button);
 		const city_location=current_page.children[0].textContent;
-		if(city_location!=="Volhaven") {
-			current_page=this.click_to_page(this.travel_button);
-			const volhaven_city=current_page.querySelectorAll("span")[1];
-			this.click_on(volhaven_city);
-			current_page=this.click_to_page(this.city_button);
-			const city_location=current_page.children[0].textContent;
-			if(city_location!=="Volhaven") throw new Error();
-			const backdrop_root=query_element(this.document_,"div.MuiBackdrop-root");
-			this.click_on_1(backdrop_root);
+		if(city_location!==target_city) {
 		}
-		const nwo_map_location=query_element(current_page,"[aria-label=NWO]");
+		const nwo_map_location=query_element(current_page,`[aria-label='${map_location}']`);
 		this.current_page=this.click_to_page(nwo_map_location);
 		const company_action_buttons=dom_list.current_page.children[2];
 		const infiltrate_company_button=company_action_buttons.children[4];
