@@ -152,6 +152,7 @@ function get_keys_of(obj) {
 	let ra=rq;
 	return ra;
 }
+export_(exports => exports.get_keys_of=get_keys_of);
 /** @type {JsonOutputBox[]} */
 const index_box_store=[];
 export_(exports => exports.index_box_store=index_box_store);
