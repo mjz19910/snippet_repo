@@ -25,19 +25,25 @@ export async function run_hack(this_) {
 	this_.ns.print("moneyAvailable: $",this_.ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
 		write_log_message(this_,"weaken");
-		await this_.ns.weaken(this_.target);
-		await this_.ns.grow(this_.target);
-		await this_.ns.hack(this_.target);
+		for(let i=0;i<8;i++) {
+			await this_.ns.weaken(this_.target);
+			await this_.ns.grow(this_.target);
+			await this_.ns.hack(this_.target);
+		}
 	} else if(server_money<moneyThreshold) {
 		write_log_message(this_,"grow");
-		await this_.ns.grow(this_.target);
-		await this_.ns.weaken(this_.target);
-		await this_.ns.hack(this_.target);
+		for(let i=0;i<8;i++) {
+			await this_.ns.grow(this_.target);
+			await this_.ns.weaken(this_.target);
+			await this_.ns.hack(this_.target);
+		}
 	} else {
 		write_log_message(this_,"hack");
-		await this_.ns.hack(this_.target);
-		await this_.ns.weaken(this_.target);
-		await this_.ns.grow(this_.target);
+		for(let i=0;i<8;i++) {
+			await this_.ns.hack(this_.target);
+			await this_.ns.weaken(this_.target);
+			await this_.ns.grow(this_.target);
+		}
 	}
 	if(this_.thread_count>512) {
 		let j=0;
