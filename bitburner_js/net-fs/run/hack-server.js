@@ -63,9 +63,10 @@ export async function main(ns) {
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
 		/** @type {ReplyMsgPending} */
-		let pending_reply_message={call: "pending",reply: []};
+		let pending_reply_message={call: "pending",id: "reply",reply: []};
 		while(!reply_port.empty()) {
 			let reply_msg=await read_reply_msg(reply_port);
+			if(!reply_msg) continue;
 			pending_reply_message.reply.push(...reply_msg.reply);
 		}
 		let reply_id=pending_reply_message.reply.push(msg)-1+reply_id_offset;
@@ -82,15 +83,22 @@ export async function main(ns) {
 			reply_cache[idx]=null;
 		}
 		for(let i=0;i<reply_cache.length;i++) {
-			if(reply_cache[i]!==null) break;
-			reply_cache.shift();
-			i--;
+			if(reply_cache[i]===null) {
+				reply_cache.splice(i,1);
+				i--;
+				continue;
+			}
 			let removed=pending_reply_message.reply.shift();
 			reply_id_offset++;
-			if(!removed) break;
+			if(!removed) continue;
 			let idx=complete_reply_id_list.indexOf(removed.uid);
-			if(idx===-1) break;
+			if(idx===-1) continue;
 			complete_reply_id_list.splice(idx,1);
+		}
+		pending_reply_message.reply.length=0;
+		for(let item of reply_cache) {
+			if(item===null) continue;
+			pending_reply_message.reply.push(item);
 		}
 		console.log("reply cache",reply_cache);
 		console.log("waiting replies",pending_msg_count);
@@ -100,8 +108,10 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			while(!request_port.empty()) {
-				let msg=await read_call_msg(request_port);
+			while(request_port.empty()) await request_port.nextWrite();
+			let msg=await read_call_msg(request_port);
+			const msg_arr=msg.reply;
+			for(let msg of msg_arr) {
 				const {call,args}=msg;
 				switch(call) {
 					case "getServerMaxMoney": {

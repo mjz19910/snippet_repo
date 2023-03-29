@@ -34,17 +34,20 @@ export async function async_port_write_data(ns_port,str) {
 	if(popped!==null) throw new Error("Unreachable");
 	return true;
 }
-/** @template {{}} T @param {NetscriptPort} ns_port @returns {Promise<T>} */
+/** @param {NetscriptPort} ns_port @returns {Promise<CallMsgPending|ReplyMsgPending>} */
 export async function async_read_port_msg(ns_port) {
 	let data=await async_port_read_data(ns_port);
 	if(typeof data==="number") throw new Error("Invalid message");
-	return JSON.parse(data);
+	/** @type {CallMsgPending|ReplyMsgPending} */
+	let msg=JSON.parse(data);
+	if(msg.call!=="pending") throw new Error("Invalid message");
+	return msg;
 }
-/** @param {NetscriptPort} ns_port @arg {{}} msg */
+/** @param {NetscriptPort} ns_port @arg {CallMsgPending|ReplyMsgPending} msg */
 export function send_port_msg(ns_port,msg) {
 	return async_port_write_data(ns_port,JSON.stringify(msg));
 }
-/** @arg {NetscriptPort} ns_port @arg {CallMsg} msg */
+/** @arg {NetscriptPort} ns_port @arg {CallMsgPending} msg */
 export function send_call_msg(ns_port,msg) {
 	return send_port_msg(ns_port,msg);
 }
@@ -52,17 +55,21 @@ export function send_call_msg(ns_port,msg) {
 export function send_reply_msg(ns_port,msg) {
 	return send_port_msg(ns_port,msg);
 }
-/** @param {NetscriptPort} ns_port @returns {Promise<CallMsg>} */
-export function read_call_msg(ns_port) {
-	return async_read_port_msg(ns_port);
+/** @param {NetscriptPort} ns_port @returns {Promise<CallMsgPending>} */
+export async function read_call_msg(ns_port) {
+	let msg=await async_read_port_msg(ns_port);
+	if(msg.id==="call") return msg;
+	throw new Error("Bad state");
 }
 /** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
 export function peek_reply_msg(ns_port) {
 	return async_port_peek_msg(ns_port);
 }
 /** @param {NetscriptPort} ns_port @returns {Promise<ReplyMsgPending>} */
-export function read_reply_msg(ns_port) {
-	return async_read_port_msg(ns_port);
+export async function read_reply_msg(ns_port) {
+	let msg=await async_read_port_msg(ns_port);
+	if(msg.id==="reply") return msg;
+	throw new Error("Bad state");
 }
 /**
  * @template {string} CallId
@@ -84,17 +91,20 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	// function perf_diff() {return performance.now()-wait_start_perf;}
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
-	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	const notify_new_reply_port=ns.getPortHandle(notify_new_reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	for(let i=0;i<20;i++) {
-		let sent=false;
-		while(!sent) {
-			while(request_port.full()) await notify_request_has_space_port.nextWrite();
-			sent=await send_call_msg(request_port,{call: call_id,args: [id]});
-			if(!sent) await ns.sleep(100);
+		x: {
+			if(request_port.empty()) {
+				let sent=await send_call_msg(request_port,{call: "pending",id: "call",reply: []});
+				if(!sent) throw new Error("Invalid state");
+			}
+			let cur_msg=await read_call_msg(request_port);
+			cur_msg.reply.push({call: call_id,args: [id]});
+			let sent=await send_call_msg(request_port,cur_msg);
+			if(!sent) throw new Error("Invalid state");
 		}
 		for(;;) {
 			await notify_new_reply_port.nextWrite();

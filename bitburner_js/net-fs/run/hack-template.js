@@ -11,6 +11,7 @@ export function write_log_message(s,a1) {
  */
 export async function run_hack(this_) {
 	if(!this_.target) throw new Error("Bad args");
+	const perf_start=performance.now();
 	const max_money=await getServerMaxMoney_(this_);
 	if(max_money===0) return;
 	// Defines how much money a server should have before we hack it
@@ -25,11 +26,15 @@ export async function run_hack(this_) {
 	this_.ns.print("moneyAvailable: $",this_.ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
 		write_log_message(this_,"weaken");
-		for(let i=0;i<8;i++) {
+		let perf_diff=-1;
+		for(let i=0;;i++) {
+			perf_diff=performance.now()-perf_start;
 			await this_.ns.weaken(this_.target);
 			await this_.ns.grow(this_.target);
 			await this_.ns.hack(this_.target);
+			if(perf_diff>2*60*1000) break;
 		}
+		write_log_message(this_,"weaken_done "+this_.ns.tFormat(perf_diff,true));
 	} else if(server_money<moneyThreshold) {
 		write_log_message(this_,"grow");
 		for(let i=0;i<8;i++) {
