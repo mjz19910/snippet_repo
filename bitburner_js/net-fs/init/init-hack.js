@@ -47,16 +47,6 @@ export class InitHackScript {
 		this.disableLog_("httpworm");
 		this.disableLog_("getServerMaxRam");
 	}
-	async init_hack() {
-		this.ns.print("init_hack");
-		await this.start_host_scan("home");
-		if(!this.has_process_by_file("home",hack_server)) this.ns.exec(hack_server,"home");
-		for(const hostname of this.hostname_list) this.ns.scp(this.scripts,hostname);
-		await this.do_get_admin_rights();
-		await this.start_hack_script();
-		this.update_backdoor_cache();
-		this.log_servers_to_backdoor();
-	}
 	/**
 	 * @param {string} hostname
 	 * @param {string} filename
@@ -138,72 +128,6 @@ export class InitHackScript {
 
 		ns.tail();
 		ns.clearLog();
-	}
-	/** @arg {string} src_host */
-	async start_host_scan(src_host) {
-		/** @type {Map<string, string[]>} */
-		let map=new Map;
-		/** @type {Set<string>} */
-		let seen_set=new Set;
-		this.hostname_list.push(src_host);
-		map.set(src_host,this.ns.scan(src_host));
-		let scan_results=["------\n","\n"];
-		let depth=0;
-		for(;;) {
-			depth++;
-			const result=await this.iter_host_scan_entries(src_host,seen_set,depth,map);
-			scan_results.push(result);
-			if(map.size===0) break;
-		}
-		this.ns.write(host_scan_list_file,scan_results.join(""),"w");
-	}
-	/**
-	 * @param {string} src_host
-	 * @param {number} depth @arg {Map<string,string[]>} map
-	 * @param {Set<string>} seen_set
-	 * */
-	async iter_host_scan_entries(src_host,seen_set,depth,map) {
-		let depth_list=[];
-		const clone=new Map(map);
-		for(let [key,val] of clone.entries()) {
-			for(let srv of val) {
-				if(seen_set.has(srv)) continue;
-				seen_set.add(srv);
-				this.hostname_list.push(srv);
-				await this.ns.sleep(33);
-				this.ns.print("scan: ",srv);
-				let scan_res=this.ns.scan(srv);
-				let home_idx=scan_res.indexOf(src_host);
-				if(home_idx>-1) scan_res.splice(home_idx,1);
-				scan_res=scan_res.filter(v => !seen_set.has(v));
-				depth_list.push([depth," ",srv," ",scan_res]);
-				map.set(srv,scan_res);
-			}
-			map.delete(key);
-		}
-		/** @type {string[]} */
-		let file_data=[];
-		/** @arg {string} str */
-		function append(str) {
-			file_data.push(str);
-		}
-		for(let depth_item of depth_list) {
-			for(let part of depth_item) {
-				if(part instanceof Array) {
-					append("[");
-					for(let v of part.slice(0,-1)) {
-						append(v+",");
-					}
-					append(part[part.length-1]);
-					append("]");
-					continue;
-				}
-				append(""+part);
-			}
-			append("\n");
-		}
-		append("\n");
-		return file_data.join("");
 	}
 	/** @type {NS["fileExists"]} */
 	fileExists(a,b) {
@@ -341,5 +265,86 @@ export async function main(ns) {
 		template_changed,
 		trace,
 	});
-	await s.init_hack();
+	await init_hack_run(s);
+}
+
+/** @arg {InitHackScript} this_ */
+async function init_hack_run(this_) {
+	this_.ns.print("init_hack");
+	await start_host_scan(this_,"home");
+	if(!this_.has_process_by_file("home",hack_server)) this_.ns.exec(hack_server,"home");
+	for(const hostname of this_.hostname_list) this_.ns.scp(this_.scripts,hostname);
+	await this_.do_get_admin_rights();
+	await this_.start_hack_script();
+	this_.update_backdoor_cache();
+	this_.log_servers_to_backdoor();
+}
+
+/**
+ * @param {InitHackScript} this_ 
+ * @param {string} src_host
+ * @param {number} depth @arg {Map<string,string[]>} map
+ * @param {Set<string>} seen_set
+ * */
+async function iter_host_scan_entries(this_,src_host,seen_set,depth,map) {
+	let depth_list=[];
+	const clone=new Map(map);
+	for(let [key,val] of clone.entries()) {
+		for(let srv of val) {
+			if(seen_set.has(srv)) continue;
+			seen_set.add(srv);
+			this_.hostname_list.push(srv);
+			await this_.ns.sleep(33);
+			this_.ns.print("scan: ",srv);
+			let scan_res=this_.ns.scan(srv);
+			let home_idx=scan_res.indexOf(src_host);
+			if(home_idx>-1) scan_res.splice(home_idx,1);
+			scan_res=scan_res.filter(v => !seen_set.has(v));
+			depth_list.push([depth," ",srv," ",scan_res]);
+			map.set(srv,scan_res);
+		}
+		map.delete(key);
+	}
+	/** @type {string[]} */
+	let file_data=[];
+	/** @arg {string} str */
+	function append(str) {
+		file_data.push(str);
+	}
+	for(let depth_item of depth_list) {
+		for(let part of depth_item) {
+			if(part instanceof Array) {
+				append("[");
+				for(let v of part.slice(0,-1)) {
+					append(v+",");
+				}
+				append(part[part.length-1]);
+				append("]");
+				continue;
+			}
+			append(""+part);
+		}
+		append("\n");
+	}
+	append("\n");
+	return file_data.join("");
+}
+
+/** @param {InitHackScript} this_ @arg {string} src_host */
+async function start_host_scan(this_,src_host) {
+	/** @type {Map<string, string[]>} */
+	let map=new Map;
+	/** @type {Set<string>} */
+	let seen_set=new Set;
+	this_.hostname_list.push(src_host);
+	map.set(src_host,this_.ns.scan(src_host));
+	let scan_results=["------\n","\n"];
+	let depth=0;
+	for(;;) {
+		depth++;
+		const result=await iter_host_scan_entries(this_,src_host,seen_set,depth,map);
+		scan_results.push(result);
+		if(map.size===0) break;
+	}
+	this_.ns.write(host_scan_list_file,scan_results.join(""),"w");
 }
