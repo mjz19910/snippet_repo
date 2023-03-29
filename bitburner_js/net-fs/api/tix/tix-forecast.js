@@ -23,7 +23,7 @@ export async function main(ns) {
 			}
 			ns.printf("%s:\t%s%%",sym,ns.formatNumber(tix.getForecast(sym)*100,3));
 		}
-		await ns.sleep(2000);
+		await ns.sleep(1000);
 		header_printed=false;
 	}
 }

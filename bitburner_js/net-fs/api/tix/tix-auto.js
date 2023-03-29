@@ -12,7 +12,7 @@ export async function main(ns) {
 	for(const cur_sym of symbols) stock_ask_price_change_rate.set(cur_sym,[]);
 
 	for(;;) {
-		await ns.sleep(2000);
+		await ns.sleep(1000);
 		let did_update=false;
 		for(const cur_sym of symbols) {
 			let cur_price=ns.stock.getAskPrice(cur_sym);
