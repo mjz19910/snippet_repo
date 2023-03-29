@@ -74,5 +74,4 @@ export function on_react_fiber(ns,fiber_nullable,path=["fiber"]) {
 			if(updateQueue!==null) p("updateQueue",updateQueue);
 		} break;
 	}
-	fiber.tag;
 }
