@@ -4737,4 +4737,16 @@ export_(exports => {
 		}
 	};
 },{global: true});
+export_(exports => {
+	const proxy_map=new Map;
+	exports.__proxy_map__=proxy_map;
+	const proxy_make=window.Proxy;
+	exports.Proxy=new window.Proxy(proxy_make,{
+		construct(...args) {
+			let ret=Reflect.construct(...args);
+			proxy_map.set(ret,args);
+			return ret;
+		}
+	});
+},{global: true});
 export_(exports => exports.__module_loaded__=true);
