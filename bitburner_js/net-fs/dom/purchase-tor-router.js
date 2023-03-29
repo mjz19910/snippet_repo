@@ -146,7 +146,7 @@ export class DomList {
 				await ns.sleep(33);
 				current_container=this.get_div(this.root,"#root > div.MuiBox-root div.MuiContainer-root");
 			}
-			/** @type {(["cut_num",number]|["key","left"]|["type",string])[]} */
+			/** @type {(["cut_num",number]|["key","left"]|["type_rev",string]|["type_bracket",string])[]} */
 			let instruction_arr=[];
 			const instruction_source=current_container.children[2].children;
 			this.instruction_source=instruction_source;
@@ -164,7 +164,7 @@ export class DomList {
 				case "Type it backward": {
 					let node_text=instruction_source[1].textContent;
 					if(node_text===null) throw new Error("Invalid textContent");
-					instruction_arr.push(["type",node_text]);
+					instruction_arr.push(["type_rev",node_text]);
 				} break;
 				case "Close the brackets": {
 					let node_text=instruction_source[1].textContent;
@@ -185,7 +185,10 @@ export class DomList {
 							case "<": bracket_res+=close_map[bracket]; break;
 						}
 					}
-					instruction_arr.push(["type",bracket_res]);
+					instruction_arr.push(["type_bracket",bracket_res]);
+				} break;
+				case "Say something nice about the guard": {
+					debugger;
 				} break;
 				default: {
 					for(let i=1;i<instruction_source.length-1;i++) {
@@ -206,11 +209,14 @@ export class DomList {
 			}
 			for(let instruction of instruction_arr) {
 				switch(instruction[0]) {
-					case "cut_num": break;
+					case "cut_num": debugger; break;
 					case "key": {
 						debugger;
 					} break;
-					case "type": break;
+					case "type_rev": {
+						const str_lower=instruction[1].toLowerCase(); str_lower;
+						debugger;
+					} break;
 				}
 			}
 			console.log("game",JSON.stringify(instruction_arr));
