@@ -160,7 +160,6 @@ export class DomList {
 						default: console.log("enter_code",node_text); debugger; break;
 						case left_char: instruction_arr.push(["key","left"]); break;
 					}
-					instruction_arr.push(["key","left"]);
 				} break;
 				case "Type it backward": {
 					let node_text=instruction_source[1].textContent;
@@ -205,6 +204,7 @@ export class DomList {
 					debugger;
 				} break;
 			}
+			console.log("game",JSON.stringify(instruction_arr));
 			break;
 		}
 	}
