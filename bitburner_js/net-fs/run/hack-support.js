@@ -88,13 +88,14 @@ function should_accept(reply,call_,arg0) {
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
+	const wait_start_perf=performance.now();
 	const request_port=this_.ns.getPortHandle(request_port_id);
 	const reply_port=this_.ns.getPortHandle(reply_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	/** @param {string|number} i */
 	function tprint_log(i) {
-		this_.ns.printf("%s %s %s",this_.hostname,call_id,i);
+		this_.ns.tprintf("%s %s %s %s",this_.ns.tFormat(performance.now()-wait_start_perf),this_.hostname,call_id,i);
 	}
 	for(;;) {
 		let sent_msg=false;
