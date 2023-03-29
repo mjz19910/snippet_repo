@@ -104,6 +104,7 @@ export class DomList {
 		this.current_page=this.click_to_page(this.terminal_button);
 	}
 	async play_infiltration() {
+		const dom_list=this;
 		this.current_page=this.click_to_page(this.city_button);
 		const city_location=this.current_page.children[0].textContent;
 		if(city_location!=="Volhaven") {
@@ -118,6 +119,7 @@ export class DomList {
 		}
 		const nwo_map_location=query_element(this.current_page,"[aria-label=NWO]");
 		this.current_page=this.click_to_page(nwo_map_location);
+		dom_list.current_page.children[2];
 	}
 }
 
