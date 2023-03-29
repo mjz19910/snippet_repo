@@ -1,3 +1,4 @@
+// 2
 export const request_port_id=1;
 export const reply_port_id=2;
 export const log_port_id=3;
@@ -9,22 +10,23 @@ export const max_port_id=8;
 /** @param {NetscriptPort} ns_port */
 export function async_port_read_data(ns_port) {
 	let data=ns_port.read();
-	if(data==="NULL PORT DATA") throw new Error("Invalid message");
+	if(data==="NULL PORT DATA") return null;
 	return data;
 }
 /** @param {NetscriptPort} ns_port */
 export function async_port_peek_data(ns_port) {
 	let data=ns_port.peek();
-	if(data==="NULL PORT DATA") throw new Error("Invalid message");
+	if(data==="NULL PORT DATA") return null;
 	return data;
 }
-/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|CallMsgPending} */
+/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|CallMsgPending|null} */
 export function async_port_peek_msg(ns_port) {
 	let data=async_port_peek_data(ns_port);
-	if(typeof data==="number") throw new Error("Invalid message");
+	if(data===null) return null;
+	if(typeof data==="number") return null;
 	/** @type {ReplyMsgPending|CallMsgPending} */
 	let pending_msg=JSON.parse(data);
-	if(pending_msg.call!=="pending") throw new Error("Invalid message");
+	if(pending_msg.call!=="pending") return null;
 	return pending_msg;
 }
 /** @param {NetscriptPort} ns_port @param {PortData} str */
@@ -34,13 +36,14 @@ export function async_port_write_data(ns_port,str) {
 	if(popped!==null) throw new Error("Unreachable");
 	return true;
 }
-/** @param {NetscriptPort} ns_port @returns {CallMsgPending|ReplyMsgPending} */
+/** @param {NetscriptPort} ns_port @returns {CallMsgPending|ReplyMsgPending|null} */
 export function async_read_port_msg(ns_port) {
 	let data=async_port_read_data(ns_port);
-	if(typeof data==="number") throw new Error("Invalid message");
+	if(data===null) return null;
+	if(typeof data==="number") return null;
 	/** @type {CallMsgPending|ReplyMsgPending} */
 	let msg=JSON.parse(data);
-	if(msg.call!=="pending") throw new Error("Invalid message");
+	if(msg.call!=="pending") return null;
 	return msg;
 }
 /** @param {NetscriptPort} ns_port @arg {CallMsgPending|ReplyMsgPending} msg */
@@ -55,29 +58,33 @@ export function send_call_msg(ns_port,msg) {
 export function send_reply_msg(ns_port,msg) {
 	return send_port_msg(ns_port,msg);
 }
-/** @param {NetscriptPort} ns_port @returns {CallMsgPending} */
+/** @param {NetscriptPort} ns_port @returns {CallMsgPending|null} */
 export function read_call_msg(ns_port) {
 	let msg=async_read_port_msg(ns_port);
+	if(msg===null) return null;
 	if(msg.id==="call") return msg;
-	throw new Error("Bad state");
+	return null;
 }
-/** @param {NetscriptPort} ns_port @returns {CallMsgPending} */
+/** @param {NetscriptPort} ns_port @returns {CallMsgPending|null} */
 export function peek_call_msg(ns_port) {
 	let msg=async_port_peek_msg(ns_port);
+	if(msg===null) return null;
 	if(msg.id==="call") return msg;
-	throw new Error("Bad state");
+	return null;
 }
-/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending} */
+/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|null} */
 export function peek_reply_msg(ns_port) {
 	let msg=async_port_peek_msg(ns_port);
+	if(msg===null) return null;
 	if(msg.id==="reply") return msg;
-	throw new Error("Bad state");
+	return null;
 }
-/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending} */
+/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|null} */
 export function read_reply_msg(ns_port) {
 	let msg=async_read_port_msg(ns_port);
+	if(msg===null) return null;
 	if(msg.id==="reply") return msg;
-	throw new Error("Bad state");
+	return null;
 }
 /**
  * @template {string} CallId
@@ -114,20 +121,21 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	}
 	if(reply_port.empty()) throw new Error("Invalid state");
 	if(request_port.empty()) throw new Error("Invalid state");
-	let cur_msg=read_call_msg(request_port);
-	cur_msg.reply.push({call: call_id,args: [id]});
-	let sent=send_call_msg(request_port,cur_msg);
-	if(!sent) throw new Error("Invalid state");
+	let send_message=true;
 	for(;;) {
 		await ns.sleep(0);
-		let pending_msg=peek_reply_msg(reply_port);
-		let accepted_messages=[];
-		if(pending_msg.reply.length===0) {
+		if(send_message) {
 			let cur_msg=read_call_msg(request_port);
+			if(cur_msg===null) continue;
 			cur_msg.reply.push({call: call_id,args: [id]});
 			let sent=send_call_msg(request_port,cur_msg);
 			if(!sent) throw new Error("Invalid state");
-			await ns.sleep(0);
+		}
+		let pending_msg=peek_reply_msg(reply_port);
+		if(!pending_msg) continue;
+		let accepted_messages=[];
+		if(pending_msg.reply.length===0) {
+			send_message=true;
 			continue;
 		}
 		for(let msg of pending_msg.reply) {
