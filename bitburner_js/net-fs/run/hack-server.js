@@ -116,11 +116,6 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			let reply_promises=[];
-			/** @arg {Promise<void>} promise */
-			function await_(promise) {
-				reply_promises.push(promise);
-			}
 			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=await peek_call_msg(ns,request_port);
@@ -188,10 +183,10 @@ export async function main(ns) {
 					} break;
 				}
 				if(reply.t==="s"&&reply.l==="number") {
-					await_(send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v}));
+					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
 				}
 				if(reply.t==="s"&&reply.l==="Server") {
-					await_(send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v}));
+					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
 				}
 				notify_request_has_space_port.write(1);
 				while(!notify_complete_port.empty()) {
