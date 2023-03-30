@@ -1,6 +1,6 @@
-import {DomList} from "/api/DomList.js";
-import {query_element} from "./dom-support.js";
-import {as_any} from "./as.js";
+import {DomList} from "/api/v100/DomList.js";
+import {query_element} from "/api/v100/dom-support.js";
+import {as_any} from "/api/v100/as.js";
 
 class PurchaseTorRouterDomState extends DomList {
 	async buy_tor_router() {

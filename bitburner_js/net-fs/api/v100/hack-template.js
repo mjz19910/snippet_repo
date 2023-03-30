@@ -1,4 +1,4 @@
-import {as_any} from "./as.js";
+import {as_any} from "/api/v100/as.js";
 import {HackState,generic_get_call_with_id,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "./hack-support.js";
 
 
