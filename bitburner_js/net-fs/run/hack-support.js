@@ -110,16 +110,12 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	let send_message=true;
+	let first_loop=true;
 	for(;;) {
-		await ns.sleep(0);
-		if(request_port.empty()) {
-			send_call_msg(request_port,{call: "pending",id: "call",reply: []});
-			continue;
-		}
-		if(reply_port.empty()) {
-			send_reply_msg(reply_port,{call: "pending",id: "reply",reply: []});
-			continue;
-		}
+		if(!first_loop) await ns.sleep(0);
+		if(first_loop) first_loop=false;
+		if(request_port.empty()) {send_call_msg(request_port,{call: "pending",id: "call",reply: []}); continue;}
+		if(reply_port.empty()) {send_reply_msg(reply_port,{call: "pending",id: "reply",reply: []}); continue;}
 		if(send_message) {
 			let cur_msg=read_call_msg(request_port);
 			if(cur_msg===null) continue;
