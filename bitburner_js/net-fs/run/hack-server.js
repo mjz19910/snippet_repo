@@ -112,7 +112,7 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			await ns.sleep(33);
+			await ns.asleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
 			let reply=peek_reply_msg(reply_port);
