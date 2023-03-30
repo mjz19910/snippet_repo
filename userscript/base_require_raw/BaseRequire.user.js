@@ -130,7 +130,7 @@ function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
-/** @template {AllImportPaths} T @arg {T} arg @arg {[]} r_args @returns {import("./ProcessImport").ProcessImport<T>} */
+/** @template {AllImportPaths} T @arg {T} arg @arg {[]} r_args @returns {ProcessImport<T>} */
 function require(arg,...r_args) {
 	if(arg===void 0) {throw new Error("missing required argument");}
 	window.__require_module_cache__??={};
@@ -140,7 +140,7 @@ function require(arg,...r_args) {
 		if(cur_require&&cur_require.__system_require) return cur_require.require(arg,...r_args);
 		throw new Error("Unable to resolve path: "+arg);
 	}
-	/** @arg {import("./ProcessImport").ProcessImport<keyof path_map>} x @returns {asserts x is import("./ProcessImport").ProcessImport<T>} */
+	/** @arg {ProcessImport<keyof path_map>} x @returns {asserts x is ProcessImport<T>} */
 	function correct_return_type(x) {x;}
 	const loc=path_map[resolved_path];
 	let mod;
@@ -160,8 +160,7 @@ export_(exports => {
 	exports.__path_map__=path_map;
 });
 
-/** @template {S_AllImportPaths} T @typedef {import("./ProcessImport").ProcessImport<T>} ProcessImport */
-/** @type {({__system_require:boolean;system_require?:any;require:(x:AllImportPaths)=>ProcessImport<any>})} */
+/** @type {({__system_require:boolean;system_require?:any;require:<T extends AllImportPaths>(x:T)=>ProcessImport<T>})} */
 let cur_require={__system_require: false,require};
 
 // global exports
