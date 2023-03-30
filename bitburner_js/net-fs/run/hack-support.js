@@ -109,27 +109,23 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	while(request_port.empty()) {
-		let sent=send_call_msg(request_port,{call: "pending",id: "call",reply: []});
-		if(!sent) throw new Error("Invalid state");
-		await ns.sleep(0);
-	}
-	while(reply_port.empty()) {
-		let sent=send_reply_msg(reply_port,{call: "pending",id: "reply",reply: []});
-		if(!sent) throw new Error("Invalid state");
-		await ns.sleep(0);
-	}
-	if(reply_port.empty()) throw new Error("Invalid state");
-	if(request_port.empty()) throw new Error("Invalid state");
 	let send_message=true;
 	for(;;) {
 		await ns.sleep(0);
+		if(request_port.empty()) {
+			send_call_msg(request_port,{call: "pending",id: "call",reply: []});
+			continue;
+		}
+		if(reply_port.empty()) {
+			send_reply_msg(reply_port,{call: "pending",id: "reply",reply: []});
+			continue;
+		}
 		if(send_message) {
 			let cur_msg=read_call_msg(request_port);
 			if(cur_msg===null) continue;
 			cur_msg.reply.push({call: call_id,args: [id]});
 			let sent=send_call_msg(request_port,cur_msg);
-			if(!sent) throw new Error("Invalid state");
+			if(!sent) continue;
 			send_message=false;
 		}
 		let pending_msg=peek_reply_msg(reply_port);
