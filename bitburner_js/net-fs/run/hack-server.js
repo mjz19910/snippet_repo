@@ -180,6 +180,7 @@ export async function main(ns) {
 								if(srv.hasAdminRights) break;
 								if(srv.openPortCount<srv.numOpenPortsRequired) continue;
 								ns.nuke(name);
+								if(srv.requiredHackingSkill>player.skills.hacking) continue;
 							}
 							if(!srv) srv=get_server("n00dles");
 							reply={t: "s",l: "Server",f: call,v: srv};
