@@ -60,7 +60,7 @@ export async function main(ns) {
 			let reply_msg=read_reply_msg(reply_port);
 			if(reply_msg===null) continue;
 			pending_reply_message.reply.push(...reply_msg.reply);
-			await ns.sleep(0);
+			await ns.asleep(0);
 		}
 		let reply_id=reply_uid_counter;
 		reply_uid_counter++;
