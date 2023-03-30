@@ -8,9 +8,10 @@ function rand_num(min,max) {
 }
 /** @param {NS} ns */
 function serve_functions_list(ns) {
-	ns.getServerMoneyAvailable;
 	ns.getServerMinSecurityLevel;
+	ns.getServerMoneyAvailable;
 	ns.getServerSecurityLevel;
+	ns.getServerMaxMoney;
 }
 /** @param {NS} ns */
 export async function main(ns) {
@@ -60,8 +61,7 @@ export async function main(ns) {
 		await ns.sleep(33);
 		if(wait_count>20) {
 			reply_port.clear();
-			ns.print("failed to wait for replies to be read");
-			ns.exit();
+			break;
 		}
 		if(reply_port.empty()) break;
 		let reply_msg=await peek_reply_msg(ns,reply_port);
