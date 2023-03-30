@@ -1,3 +1,5 @@
+import {as_any} from "/api/as.js";
+
 export function gen_dispatcher() {
 	/** @arg {number} minified_error_id */
 	function a(minified_error_id) {return "react mini-error: "+minified_error_id;}

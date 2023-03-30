@@ -7,7 +7,7 @@
  * @flow
  */
 
-import {WorkTag} from "./react_internal/ReactWorkTags.js";
+import {WorkTag} from "../net-fs/api/react_internal/ReactWorkTags.js";
 import {mixed,Dependencies,Source,HookType,TypeOfMode,Flags,Lanes} from "./react_fiber";
 export type RefObject={
 	current: any,

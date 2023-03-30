@@ -1,4 +1,5 @@
-import {as,canHack,getNetworkNodes,get_keys_of} from "/api/utils.js";
+import {as} from "/api/as";
+import {canHack,getNetworkNodes,get_keys_of} from "/api/utils.js";
 
 /** @param {NS} ns */
 export async function main(ns) {

@@ -1,4 +1,4 @@
-import {hack_support,hack_template} from "/run/hack-scripts.js";
+import {hack_support,hack_template} from "/api/hack-scripts.js";
 
 /** @param {NS} ns */
 export async function main(ns) {

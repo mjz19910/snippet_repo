@@ -1,5 +1,5 @@
-import {start_host_scan} from "/init/init-hack.js";
-import {backdoor_list_file} from "/run/hack-scripts.js";
+import {start_host_scan} from "/api/init-hack.js";
+import {backdoor_list_file} from "/api/hack-scripts.js";
 
 /** @arg {{ns:NS;to_backdoor:string[];get_server(x:string):Server}} obj */
 export function log_servers_to_backdoor(obj) {

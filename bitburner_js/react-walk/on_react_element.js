@@ -1,12 +1,17 @@
-/** @param {import("/dom/react_fiber").ReactElement2} element @arg {string[]} path */
-function on_react_element(element,path) {
+import {fn_set,fn_str_list,fn_str_map,react_symbols} from "./const";
+import {g} from "./g";
+import {on_react_forward_ref} from "./on_react_forward_ref";
+import {unhandled} from "./unhandled";
+
+/** @param {NS} ns @param {import("./react_fiber").ReactElement2} element @arg {string[]} path */
+export function on_react_element(ns,element,path) {
 	const react_element_sym=react_symbols.react_element;
 	switch(element.$$typeof) {
-		default: unhandled("react_element",[element],path);
+		default: unhandled(ns,"react_element",[element],path);
 		case react_element_sym: {
-			const {$$typeof,type,key,ref,props,_owner,...y}=element; g(y);
+			const {$$typeof,type,key,ref,props,_owner,...y}=element; g(ns,y);
 			x: if(typeof type!=="function") {
-				on_react_forward_ref(path,type);
+				on_react_forward_ref(ns,path,type);
 			} else {
 				/** @type {[number,string]} */
 				let fn_string=[0,""];

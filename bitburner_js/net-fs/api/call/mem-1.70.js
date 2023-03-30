@@ -1,4 +1,4 @@
-import {as} from "/run/as.js";
+import {as} from "/api/as.js";
 
 /** @param {NS} ns */
 export function main(ns) {

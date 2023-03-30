@@ -68,7 +68,7 @@ export function on_react_fiber(ns,fiber_nullable,path=["fiber"]) {
 			on_react_fiber(ns,child,[...path,"child"]);
 			on_react_fiber(ns,sibling,[...path,"sibling"]);
 			if(index!==1) p("index",index);
-			on_react_ref(ref,[...path,"ref"]);
+			on_react_ref(ns,ref,[...path,"ref"]);
 			on_react_fiber_props(ns,pendingProps,[...path,"pendingProps"]);
 			on_react_fiber_props(ns,memoizedProps,[...path,"memoizedProps"]);
 			if(updateQueue!==null) p("updateQueue",updateQueue);

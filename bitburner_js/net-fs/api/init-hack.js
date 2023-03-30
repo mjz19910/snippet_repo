@@ -1,9 +1,9 @@
-import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list_file,share_script} from "/run/hack-scripts.js";
+import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list_file,share_script} from "/api/hack-scripts.js";
 
 export class InitHackScript {
 	scripts=[
 		hack_support,hack_template,
-		"/run/as.js",
+		"/api/as.js",
 	];
 	/** @readonly */
 	/** @type {string[]} */

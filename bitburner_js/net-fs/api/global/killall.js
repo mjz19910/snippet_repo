@@ -1,4 +1,4 @@
-import {hack_server} from "/run/hack-scripts";
+import {hack_server} from "/api/hack-scripts.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
