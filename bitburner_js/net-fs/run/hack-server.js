@@ -131,6 +131,7 @@ export async function main(ns) {
 						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
 					} break;
 					case "get_hack_target": {
+						const player=ns.getPlayer();
 						if(randomize_hack) {
 							let reply=null;
 							for(let i=0;;i++) {
@@ -148,6 +149,7 @@ export async function main(ns) {
 								if(srv.purchasedByPlayer) continue;
 								if(srv.moneyMax===0) continue;
 								if(srv.maxRam===0) continue;
+								if(srv.requiredHackingSkill>player.skills.hacking) continue;
 								if(srv.hasAdminRights) {
 									reply=srv;
 									break;
