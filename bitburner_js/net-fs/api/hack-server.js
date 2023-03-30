@@ -222,7 +222,10 @@ export async function main(ns) {
 				await ns.sleep(33);
 				let reply=await peek_reply_msg(ns,reply_port);
 				if(reply?.reply.length===0) break;
-				if(i>64) debugger;
+				if(i>12) {
+					ns.tprint("replies lost: ",reply?.reply.length," messages");
+					break;
+				}
 			}
 			cur_perf=performance.now();
 			end_perf_diff=cur_perf-start_perf;
