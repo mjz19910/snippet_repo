@@ -155,30 +155,41 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		}
 	}
 }
+/** @type {Map<string,number>} */
+const memoized_number=new Map;
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */
 export function generic_get_call(this_,call_id) {
 	if(!this_.target) throw new Error("Invalid state.target");
 	return generic_get_call_with_id(this_,this_.target,call_id);
 }
+/** @arg {HackState} this_ @arg {Extract<ReplyMsg,{reply:number}>["call"]} call_id */
+async function memoed_get_call_ret_number(this_,call_id) {
+	let prev_ret=memoized_number.get(call_id);
+	if(prev_ret!==void 0) return prev_ret;
+	let memoized_ret=await generic_get_call(this_,call_id);
+	memoized_number.set(call_id,memoized_ret);
+	return memoized_ret;
+
+}
 /** @arg {HackState} this_ */
 export function getServerMaxMoney_(this_) {
 	const call_id="getServerMaxMoney";
-	return generic_get_call(this_,call_id);
+	return memoed_get_call_ret_number(this_,call_id);
 }
 /** @arg {HackState} this_ */
 export async function getServerMinSecurityLevel_(this_) {
 	const call_id="getServerMinSecurityLevel";
-	return generic_get_call(this_,call_id);
+	return memoed_get_call_ret_number(this_,call_id);
 }
 /** @arg {HackState} this_ */
 export async function getServerSecurityLevel_(this_) {
 	const call_id="getServerSecurityLevel";
-	return generic_get_call(this_,call_id);
+	return memoed_get_call_ret_number(this_,call_id);
 }
 /** @arg {HackState} this_ */
 export async function getServerMoneyAvailable_(this_) {
 	const call_id="getServerMoneyAvailable";
-	return generic_get_call(this_,call_id);
+	return memoed_get_call_ret_number(this_,call_id);
 }
 
 export class HackState {
