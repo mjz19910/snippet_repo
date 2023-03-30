@@ -29,7 +29,10 @@ export_(exports => {exports.__is_module_flag__=true;});
 function init_module() {
 	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 	/** @type {(number[]|number)[]} */
-	const new_fexp_expected_many=[];
+	const new_fexp_expected_many=[
+		[24235780,24430079,24440519,24451319,24455284,24466827,24468690,24474986,24477228,24482081,24485421,24488188,24493736,24495060,24496739,24496968,24498927,24499415,24499417,24499792,24510798,24512929,24515366,24516063,24516157,24517587,24518452,24519143],
+		[24477227],
+	];
 	if(new_fexp_expected_many.length===0) return;
 	ECatcherService.known_experiments.push(...new_fexp_expected_many.flat());
 }
