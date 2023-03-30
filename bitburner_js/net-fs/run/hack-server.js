@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,read_reply_msg,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,peek_call_msg,send_call_msg} from "/run/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,read_reply_msg,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,peek_call_msg,send_call_msg,peek_reply_msg} from "/run/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -100,10 +100,15 @@ export async function main(ns) {
 			await ns.sleep(0);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
+			let reply=peek_reply_msg(reply_port);
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) continue;
-			ns.print("send_len ",msg_arr.length," rx_len");
+			if(reply) {
+				ns.print("send_len ",msg_arr.length," rx_len ",reply.reply.length);
+			} else {
+				ns.print("send_len ",msg_arr.length);
+			}
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
 				switch(call) {
