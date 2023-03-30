@@ -175,6 +175,7 @@ export class InitHackScript {
 	}
 	/** @arg {Server} srv */
 	get_thread_count(srv) {
+		this.ns.print(this.ns.formatRam(srv.ramUsed));
 		let srv_ram_avail=srv.maxRam-srv.ramUsed;
 		if(srv.hostname==="home") {
 			if(srv_ram_avail<=64) return srv_ram_avail/2|0;
