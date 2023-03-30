@@ -10,6 +10,7 @@ function rand_num(min,max) {
 function serve_functions_list(ns) {
 	ns.getServerMoneyAvailable;
 	ns.getServerMinSecurityLevel;
+	ns.getServerSecurityLevel;
 }
 /** @param {NS} ns */
 export async function main(ns) {
@@ -56,7 +57,7 @@ export async function main(ns) {
 	let wait_count=0;
 	while(!reply_port.empty()) {
 		wait_count++;
-		await ns.sleep(100);
+		await ns.sleep(33);
 		if(wait_count>20) {
 			reply_port.clear();
 			ns.print("failed to wait for replies to be read");
