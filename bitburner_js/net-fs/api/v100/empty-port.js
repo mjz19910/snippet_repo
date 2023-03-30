@@ -1,4 +1,4 @@
-import {async_port_read_data} from "/api/v1.00/hack-support.js";
+import {async_port_read_data} from "./hack-support.js";
 /** @arg {NS} ns @arg {NetscriptPort} ns_port */
 async function read_all_ns_port(ns,ns_port) {
 	while(!ns_port.empty()) {

@@ -1,10 +1,10 @@
-import {as} from "/api/v1.00/as.js";
+import {as} from "../as.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
 	/** @type {{_:[string]}} */
 	let flags_=as(ns.flags([]));
 	while(true) {
-		await ns.weaken(flags_._[0]);
+		await ns.hack(flags_._[0]);
 	}
 }

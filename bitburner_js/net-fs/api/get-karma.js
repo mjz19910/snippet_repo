@@ -1,4 +1,4 @@
-import {as_any} from "/api/v1.00/as.js";
+import {as_any} from "./v100/as.js";
 
 /** @param {NS_With_GetSet} ns */
 export async function main(ns) {
