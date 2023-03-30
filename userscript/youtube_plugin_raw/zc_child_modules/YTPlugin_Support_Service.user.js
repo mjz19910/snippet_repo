@@ -15,7 +15,7 @@
 // yt_plugin/SupportService(10) => base_require/BaseRequire(1)
 const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4)
-const {split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YtPlugin_Base.user");
+const {split_string_once,split_string,split_string_once_ex,split_string_once_last,ApiBase,ApiBase2,as_any,BaseService,JsonReplacerState}=require("./YTPlugin_Base.user");
 
 // priority yt_plugin/SupportService(9)
 

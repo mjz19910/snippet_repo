@@ -1,4 +1,4 @@
-import {ApiBase} from "../zc_child_modules/YtPlugin_Base.user.js";
+import {ApiBase} from "../zc_child_modules/YTPlugin_Base.user.js";
 
 export class ApiBaseExported extends ApiBase {
 	override parse_url_search_params<T extends string>(x: T) {return super.parse_url_search_params(x);}

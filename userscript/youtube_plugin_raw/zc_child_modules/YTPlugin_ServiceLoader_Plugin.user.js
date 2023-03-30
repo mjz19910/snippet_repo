@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers,YtPlugin,ModifyEnv}=require("./YtPlugin_Base.user");
+const {CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers,YtPlugin,ModifyEnv}=require("./YTPlugin_Base.user");
 const {CodegenService}=require("./YTPlugin_Codegen.user");
 const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 const {HandleTypes}=require("./YTPlugin_HandleTypes.user");

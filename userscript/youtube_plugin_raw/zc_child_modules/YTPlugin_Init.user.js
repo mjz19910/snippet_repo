@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {yt_plugin_base_main}=require("./YtPlugin_Base.user");
+const {yt_plugin_base_main}=require("./YTPlugin_Base.user");
 
 const __module_name__="mod$InitPlugin";
 /** @private @arg {(x:typeof exports)=>void} fn */

@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 const {do_export}=require("../../base_require_raw/BaseRequire.user");
-const {BaseService}=require("./YtPlugin_Base.user");
+const {BaseService}=require("./YTPlugin_Base.user");
 
 const __module_name__="mod$ECatcherService";
 /** @private @arg {(x:typeof exports)=>void} fn */

@@ -16,16 +16,12 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
-let require_fn=require;
-if(typeof require_fn==="object") {
-	require={...require_fn,require: window.__module_require__};
-} else if(typeof require_fn==="function") {
-	require={__system_require: true,system_require: require_fn,require: window.__module_require__};
-} else {
-	debugger;
-	require={__system_require: true,system_require: require_fn,require: window.__module_require__};
+let page_require=require,reset_require=false;
+if(require!==__module_require__) {
+	require=__module_require__;
+	reset_require=true;
 }
-const {do_export}=require.require("../base_require_raw/BaseRequire.user");
+const {do_export}=require("../base_require_raw/BaseRequire.user");
 
 const __module_name__="DebugApi";
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -4759,3 +4755,6 @@ export_(exports => {
 	}));
 },{global: true});
 export_(exports => exports.__module_loaded__=true);
+if(reset_require) {
+	require=page_require;
+}

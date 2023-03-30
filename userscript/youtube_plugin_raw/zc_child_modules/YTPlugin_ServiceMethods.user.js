@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
-const {ServiceData,split_string_once,split_string,base64_url_dec,as_any,base64_dec,JsonReplacerState}=require("./YtPlugin_Base.user");
+const {ServiceData,split_string_once,split_string,base64_url_dec,as_any,base64_dec,JsonReplacerState}=require("./YTPlugin_Base.user");
 
 const __module_name__="mod$ServiceMethods";
 /** @private @arg {(x:typeof exports)=>void} fn */

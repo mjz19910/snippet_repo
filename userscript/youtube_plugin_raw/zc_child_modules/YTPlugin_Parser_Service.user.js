@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 const {do_export,as}=require("../../base_require_raw/BaseRequire.user");
-const {BaseService,split_string,split_string_once}=require("./YtPlugin_Base.user");
+const {BaseService,split_string,split_string_once}=require("./YTPlugin_Base.user");
 
 const __module_name__="mod$ParserService";
 /** @private @arg {(x:typeof exports)=>void} fn */

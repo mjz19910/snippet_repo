@@ -14,8 +14,8 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 const {do_export,as}=require("../../base_require_raw/BaseRequire.user");
-const {split_string_once_ex2}=require("./YtPlugin_Base.user");
-const {base64_url_dec,split_string_once,MyReader,split_string,as_any,JsonReplacerState,BaseService,split_string_once_ex}=require("./YtPlugin_Base.user");
+const {split_string_once_ex2}=require("./YTPlugin_Base.user");
+const {base64_url_dec,split_string_once,MyReader,split_string,as_any,JsonReplacerState,BaseService,split_string_once_ex}=require("./YTPlugin_Base.user");
 
 //#region module setup
 const __module_name__="mod$HandleTypes";

@@ -21,7 +21,7 @@ const path_map={
 	/** @type {["raw","DebugApi"]} */
 	["./DebugApi_raw/DebugApi.user"]: ["raw","DebugApi"],
 	/** @type {["mod","YoutubePluginBase"]} */
-	["./youtube_plugin_raw/zc_child_modules/YtPlugin_Base.user"]: ["mod","YoutubePluginBase"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Base.user"]: ["mod","YoutubePluginBase"],
 	/** @type {["mod","SupportService"]} */
 	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user"]: ["mod","SupportService"],
 	/** @type {["mod","ECatcherService"]} */
@@ -29,7 +29,7 @@ const path_map={
 	/** @type {["mod","ServiceMethods"]} */
 	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user"]: ["mod","ServiceMethods"],
 	/** @type {["mod","ServiceLoaderPlugin"]} */
-	["./youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user"]: ["mod","ServiceLoaderPlugin"],
+	["./youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceLoader_Plugin.user"]: ["mod","ServiceLoaderPlugin"],
 	/** @type {["mod","CodegenService"]} */
 	["./youtube_plugin_raw/zc_child_modules/YTPlugin_Codegen.user"]: ["mod","CodegenService"],
 	/** @type {["mod","HandleTypes"]} */
@@ -74,15 +74,15 @@ function resolve_path_to_userscript_dir(x) {
 			}
 		}
 		case ".": switch(parts[1]) {
+			case "YTPlugin_Base.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 			case "YTPlugin_Codegen.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 			case "YTPlugin_ECatcherService_Plugin.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 			case "YTPlugin_HandleTypes.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 			case "YTPlugin_IndexedDB.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 			case "YTPlugin_Parser_Service.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
+			case "YTPlugin_ServiceLoader_Plugin.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 			case "YTPlugin_ServiceMethods.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 			case "YTPlugin_Support_Service.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
-			case "YtPlugin_Base.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
-			case "YtPlugin_ServiceLoader_Plugin.user": resolved_path=`./${yt_plugin_base_path}/${parts[1]}`; break;
 		}
 	}
 	if(resolved_path) {
@@ -137,12 +137,13 @@ function require(arg,...r_args) {
 	const M=window.__require_module_cache__,i=required;
 	const resolved_path=resolve_path_to_userscript_dir(arg);
 	if(resolved_path===null) {
-		if(cur_require&&cur_require.__system_require) return cur_require.require(arg,...r_args);
+		if(cur_require&&cur_require.__system_require) return cur_require(arg,...r_args);
 		throw new Error("Unable to resolve path: "+arg);
 	}
-	/** @arg {ProcessImport<keyof path_map>} x @returns {asserts x is ProcessImport<T>} */
+	/** @arg {any} x @returns {asserts x is ProcessImport<T>} */
 	function correct_return_type(x) {x;}
 	const loc=path_map[resolved_path];
+	/** @type {ProcessImport<AllImportPaths>} */
 	let mod;
 	if(loc[0]==="sys") mod=i(window[loc[1]]);
 	else if(loc[0]==="raw") mod=i(M[loc[1]]);
@@ -159,9 +160,9 @@ export_(exports => {
 	exports.required=required;
 	exports.__path_map__=path_map;
 });
-
-/** @type {({__system_require:boolean;system_require?:any;require:<T extends AllImportPaths>(x:T)=>ProcessImport<T>})} */
-let cur_require={__system_require: false,require};
+require.__system_require=false;
+/** @type {({__system_require:boolean;system_require?:any;<T extends AllImportPaths>(x:T):ProcessImport<T>})} */
+let cur_require=require;
 
 // global exports
 export_(exports => {
@@ -172,7 +173,6 @@ export_(exports => {
 		exports.__global_require_is_null__=true;
 	}
 	exports.__module_require__=require;
-	cur_require={__system_require: false,require};
 	let require_property=Object.getOwnPropertyDescriptor(exports,"require");
 	if(require_property) {
 		if(require_property.configurable!==void 0) {
@@ -187,9 +187,11 @@ export_(exports => {
 		Object.defineProperty(exports,"require",{
 			get: () => cur_require,
 			set(value) {
-				if(typeof value==="object") {
-					cur_require={...cur_require,__system_require: true,...value};
+				if(typeof value==="object"||typeof value==="function") {
+					value.__system_require=true;
+					cur_require=value;
 				} else {
+					debugger;
 					cur_require=value;
 				}
 			}
