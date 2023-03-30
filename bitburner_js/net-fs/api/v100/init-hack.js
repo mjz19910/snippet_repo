@@ -3,7 +3,7 @@ import {backdoor_list_file,hack_server,hack_support,hack_template,host_scan_list
 export class InitHackScript {
 	scripts=[
 		hack_support,hack_template,
-		"/api/v1.00/as.js",
+		"/api/v100/as.js",
 	];
 	/** @readonly */
 	/** @type {string[]} */
