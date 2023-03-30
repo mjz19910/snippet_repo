@@ -134,8 +134,7 @@ export async function main(ns) {
 						const player=ns.getPlayer();
 						if(randomize_hack) {
 							let reply=null;
-							for(let i=0;;i++) {
-								if(i>64) {await ns.sleep(0); i=0;}
+							for(let i=0;i<hostname_list.length;i++) {
 								let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
 								if(hostname==="home") continue;
 								if(hostname.startsWith("big-")) continue;
@@ -155,7 +154,8 @@ export async function main(ns) {
 									break;
 								}
 							}
-							await send_reply_msg_2({call,id: args[0],uid: -1,reply});
+							if(reply===null) reply=get_server("n00dles");
+							await send_reply_msg_2({call: "get_hack_target",id: args[0],uid: -1,reply});
 						} else {
 							let srv;
 							for(let name of ["ecorp","foodnstuff","n00dles"]) {
