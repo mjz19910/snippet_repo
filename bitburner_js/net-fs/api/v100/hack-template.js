@@ -1,5 +1,5 @@
 import {as_any} from "/api/v100/as.js";
-import {HackState,generic_get_call_with_id,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "./hack-support.js";
+import {HackState,generic_get_call_with_id,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/api/v100/hack-support.js";
 
 
 /** @param {HackState} s @param {string} a1 */
