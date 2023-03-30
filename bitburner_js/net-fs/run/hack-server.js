@@ -57,13 +57,15 @@ export async function main(ns) {
 		wait_count++;
 		await ns.sleep(100);
 		if(wait_count>20) {
+			reply_port.clear();
 			ns.print("failed to wait for replies to be read");
 			ns.exit();
 		}
-		if(reply_port.empty()) continue;
+		if(reply_port.empty()) break;
 		let reply_msg=await peek_reply_msg(ns,reply_port);
 		// invalid state: the reply port is not empty.
 		if(reply_msg===null) throw new Error("Invalid state");
+		ns.print(reply_msg.reply.length);
 		if(reply_msg?.reply.length===0) break;
 	}
 	request_port.clear();
@@ -203,7 +205,6 @@ export async function main(ns) {
 			msg_arr.length=0;
 			request_port.read();
 			await send_call_msg(ns,request_port,msg);
-			if(request_port.empty()) throw new Error("Port should not be empty");
 			if(!log_port.empty()) {
 				let res=log_port.read();
 				ns.printf("%s",res);
