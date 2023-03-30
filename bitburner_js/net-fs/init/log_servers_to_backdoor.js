@@ -12,11 +12,12 @@ export function log_servers_to_backdoor(obj) {
 
 /** @arg {NS} ns */
 export async function main(ns) {
-	ns.tail();
 	ns.disableLog("disableLog");
 	ns.disableLog("getHackingLevel");
 	ns.disableLog("getServer");
 	ns.disableLog("scan");
+	ns.tail();
+	ns.clearLog();
 	ns.print("init_hack");
 	const player_hacking_skill=ns.getHackingLevel();
 	/** @type {string[]} */
