@@ -1,4 +1,4 @@
-import {as_any} from "/run/as";
+import {as_any} from "/api/as.js";
 
 /** @param {NS_With_GetSet} ns */
 export async function main(ns) {
