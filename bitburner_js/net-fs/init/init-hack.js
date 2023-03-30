@@ -74,7 +74,7 @@ export class InitHackScript {
 		}
 		let t=this.get_thread_count(srv);
 		if(t<=0) return false;
-		this.format_print(srv,`t:${t} m:${ns.formatRam(srv.maxRam)} h:${srv.hostname}`);
+		this.format_print(srv,`t:${t} m:${ns.formatRam(srv.maxRam-srv.ramUsed)} h:${srv.hostname}`);
 		let pid=ns.exec(hack_template,srv.hostname,t,t,srv.hostname);
 		if(pid===0) {
 			ns.print("failed to start '",hack_template,"' on ",srv.hostname);
@@ -177,7 +177,7 @@ export class InitHackScript {
 	get_thread_count(srv) {
 		let srv_ram_avail=srv.maxRam-srv.ramUsed;
 		if(srv.hostname==="home") {
-			if(srv_ram_avail<=64) return srv_ram_avail|0;
+			if(srv_ram_avail<=64) return srv_ram_avail/2|0;
 			return (srv_ram_avail-48)/2|0;
 		}
 		if(srv_ram_avail<=0) return 0;
