@@ -121,7 +121,10 @@ export async function main(ns) {
 			let reply=peek_reply_msg(reply_port);
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
-			if(msg_arr.length===0) continue;
+			if(msg_arr.length===0) {
+				ns.sleep(100);
+				continue;
+			}
 			if(reply) {
 				ns.print("send_len ",msg_arr.length," rx_len ",reply.reply.length);
 			} else {
