@@ -73,13 +73,9 @@ export async function main(ns) {
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		/** @type {ReplyMsgPending} */
-		let pending_reply_message={call: "pending",id: "reply",reply: []};
-		while(!reply_port.empty()) {
-			let reply_msg=peek_reply_msg(reply_port);
-			if(reply_msg===null) throw new Error("No pending reply");
-			pending_reply_message.reply.push(...reply_msg.reply);
-		}
+		let reply_msg=peek_reply_msg(reply_port);
+		if(reply_msg===null) throw new Error("No pending reply");
+		let pending_reply_message=reply_msg;
 		let reply_id=reply_uid_counter;
 		reply_uid_counter++;
 		msg.uid=reply_id;
@@ -122,7 +118,7 @@ export async function main(ns) {
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) {
-				ns.sleep(100);
+				await ns.asleep(100);
 				continue;
 			}
 			if(reply) {
