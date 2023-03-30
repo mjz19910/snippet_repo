@@ -45,7 +45,7 @@ export async function main(ns) {
 		ns.toast("Wrote targets to "+filename,"info");
 	}
 
-	/** @returns {(a:NodeInfoType,b:NodeInfoType)} */
+	/** @returns {(a:NodeInfoType,b:NodeInfoType)=>-1|0|1} */
 	function getComparator() {
 		return (a,b) => {
 			if(a[compareField]>b[compareField]) {
