@@ -40,8 +40,9 @@ export async function main(ns) {
 	let karma=ns.heart.break();
 	ns.tprint("karma: ",karma);
 	console.log("memoed_state",memoed_state);
+	let bypass_=get_func("bypass")(make_state("bypass"));
 	debugger;
 	// ns.alterReality();
-	ns.bypass(globalThis["window"]["document"]);
+	bypass_(globalThis["window"]["document"]);
 	// console.log(ns.exploit());
 }
