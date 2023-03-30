@@ -139,30 +139,18 @@ export async function main(ns) {
 			}
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
-				/** @type {{t:"n"}|{t:"s",f:Extract<ReplyMsg,{reply:number}>["call"],v:number}} */
+				/** @type {{t:"n"}|{t:"s",l:"Server",f:Extract<ReplyMsg,{reply:Server}>["call"],v:Server}|{t:"s",l:"number",f:Extract<ReplyMsg,{reply:number}>["call"],v:number}} */
 				let reply={t: "n"};
 				switch(call) {
-					case "getServerMaxMoney": {
-						reply={t: "s",f: call,v:ns[call](...args)};
-					} break;
-					case "getServerMinSecurityLevel": {
-						reply={t: "s",f: call,v:ns[call](...args)};
-					} break;
-					case "getServerMoneyAvailable": {
-						reply={t: "s",f: call,v:ns[call](...args)};
-					} break;
-					case "getServerSecurityLevel": {
-						let reply=ns.getServerSecurityLevel(...args);
-						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
-					} break;
-					case "get_server": {
-						let reply=get_server(args[0]);
-						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
-					} break;
+					case "getServerMaxMoney":
+					case "getServerMinSecurityLevel":
+					case "getServerMoneyAvailable":
+					case "getServerSecurityLevel": reply={t: "s",l: "number",f: call,v: ns[call](...args)}; break;
+					case "get_server": reply={t: "s",l: "Server",f: call,v: get_server(args[0])}; break;
 					case "get_hack_target": {
 						const player=ns.getPlayer();
 						if(randomize_hack) {
-							let reply=null;
+							let v=null;
 							for(let i=0;i<hostname_list.length;i++) {
 								let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
 								if(hostname==="home") continue;
@@ -179,12 +167,12 @@ export async function main(ns) {
 								if(srv.maxRam===0) continue;
 								if(srv.requiredHackingSkill>player.skills.hacking) continue;
 								if(srv.hasAdminRights) {
-									reply=srv;
+									v=srv;
 									break;
 								}
 							}
-							if(reply===null) reply=get_server("n00dles");
-							await send_reply_msg_2({call: "get_hack_target",id: args[0],uid: -1,reply});
+							if(v===null) v=get_server("n00dles");
+							reply={t: "s",l: "Server",f: call,v};
 						} else {
 							let srv;
 							for(let name of ["ecorp","foodnstuff","n00dles"]) {
@@ -194,11 +182,14 @@ export async function main(ns) {
 								ns.nuke(name);
 							}
 							if(!srv) srv=get_server("n00dles");
-							await send_reply_msg_2({call,id: args[0],uid: -1,reply: srv});
+							reply={t: "s",l: "Server",f: call,v: srv};
 						}
 					} break;
 				}
-				if(reply.t==="s") {
+				if(reply.t==="s"&&reply.l==="number") {
+					await_(send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v}));
+				}
+				if(reply.t==="s"&&reply.l==="Server") {
 					await_(send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v}));
 				}
 				notify_request_has_space_port.write(1);
