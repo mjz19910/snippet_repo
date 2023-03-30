@@ -109,10 +109,19 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
+	let notify_complete_arr=[];
 	let send_message=true;
 	let first_loop=true;
 	for(;;) {
-		if(!first_loop) await ns.sleep(0);
+		await ns.sleep(33);
+		{
+			if(notify_complete_port.full()) continue;
+			let last=notify_complete_arr.pop();
+			if(last!==void 0) {
+				notify_complete_port.write(last);
+				continue;
+			}
+		}
 		if(first_loop) first_loop=false;
 		if(request_port.empty()) {send_call_msg(request_port,{call: "pending",id: "call",reply: []}); continue;}
 		if(reply_port.empty()) {send_reply_msg(reply_port,{call: "pending",id: "reply",reply: []}); continue;}
@@ -134,11 +143,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		for(let msg of pending_msg.reply) {
 			if(!should_accept(msg,call_id,id)) continue;
 			accepted_messages.push(msg);
-			for(;;) {
-				while(notify_complete_port.full()) await ns.sleep(0);
-				notify_complete_port.write(msg.uid);
-				break;
-			}
+			notify_complete_arr.push(msg.uid);
 		}
 		for(let ok_msg of accepted_messages) {
 			let ret=ok_msg.reply;
