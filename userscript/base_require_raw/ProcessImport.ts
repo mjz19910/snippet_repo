@@ -6,4 +6,6 @@ async function test_ProcessImport() {
 	const t1: ProcessImport_Test1=await import("../base_require_raw/BaseRequire.user.js");
 	const t2: ProcessImport_Test2=t1;
 	t2;
+	const t3: typeof import("./ProcessImportTest.js")={Test2: {run_test: async () => {}}};
+	t3;
 }

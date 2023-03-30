@@ -1,9 +1,12 @@
 type ProcessWorkingDirImport_Impl<T extends MatchType_WorkingDir>=
 	T extends `../../${infer P1 extends string}/${infer P2 extends string}`
 	? `./${P1}/${P2}`
-	:
-	T extends `../${infer P1 extends string}/${infer P2 extends string}`
+	:T extends `../${infer P1 extends string}/${infer P2 extends string}`
 	? `./${P1}/${P2}`
+	:T extends `./${infer P1 extends string}`
+	? P1 extends `YTPlugin_${string}`
+	? `./youtube_plugin_raw/zc_child_modules/${P1}`
+	:`./unk_module/${P1}`
 	:T
 	;
 ;
