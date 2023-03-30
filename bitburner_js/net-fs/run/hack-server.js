@@ -56,11 +56,6 @@ export async function main(ns) {
 	async function send_reply_msg_2(msg) {
 		/** @type {ReplyMsgPending} */
 		let pending_reply_message={call: "pending",id: "reply",reply: []};
-		x: if(!reply_port.empty()) {
-			let reply_msg=read_reply_msg(reply_port);
-			if(reply_msg===null) break x;
-			pending_reply_message.reply.push(...reply_msg.reply);
-		}
 		while(!reply_port.empty()) {
 			let reply_msg=read_reply_msg(reply_port);
 			if(reply_msg===null) continue;
@@ -107,6 +102,8 @@ export async function main(ns) {
 			let msg=peek_call_msg(request_port);
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
+			if(msg_arr.length===0) continue;
+			ns.print("send_len ",msg_arr.length," rx_len");
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
 				switch(call) {
