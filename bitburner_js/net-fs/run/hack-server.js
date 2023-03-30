@@ -19,7 +19,7 @@ export async function main(ns) {
 	ns.disableLog("sleep");
 	ns.disableLog("scan");
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
-	await ns.sleep(0);
+	await ns.sleep(33);
 	x: {
 		if(ns.args.length===0) break x;
 		if(ns.args.includes("--no-size")) break x;
@@ -112,7 +112,7 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			await ns.sleep(0);
+			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
 			let reply=peek_reply_msg(reply_port);
