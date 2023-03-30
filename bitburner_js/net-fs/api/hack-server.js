@@ -60,6 +60,7 @@ export async function main(ns) {
 		wait_count++;
 		await ns.sleep(33);
 		if(wait_count>20) {
+			ns.print("cleared reply port");
 			reply_port.clear();
 			break;
 		}
@@ -212,8 +213,19 @@ export async function main(ns) {
 				ns.printf("%s",res);
 				continue;
 			}
-			let end_perf_diff=performance.now()-start_perf;
-			ns.tprint("done processing all messages in ",ns.tFormat(end_perf_diff));
+			let cur_perf=0;
+			cur_perf=performance.now();
+			let end_perf_diff=cur_perf-start_perf;
+			start_perf=cur_perf;
+			ns.print("done processing all messages in ",ns.tFormat(end_perf_diff));
+			for(let i=0;;i++) {
+				await ns.sleep(33);
+				let reply=await peek_reply_msg(ns,reply_port);
+				if(reply?.reply.length===0) break;
+				if(i>64) debugger;
+			}
+			end_perf_diff=cur_perf-start_perf;
+			ns.print("clients done processing replies in ",ns.tFormat(end_perf_diff));
 		}
 	}
 	await process_messages();
