@@ -215,7 +215,6 @@ class StoreData extends BaseService {
 						for(let err_iter of cur_err.errors) stack.push(err_iter);
 					}
 				}
-				debugger;
 				return;
 			}
 			this.idle_id=null;

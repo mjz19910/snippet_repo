@@ -343,7 +343,9 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {TypedIndexedDB} typed_db @arg {"boxed_id"} key @arg {number} version */
 	async open_rw_object_store(typed_db,key,version) {
-		let db=await this.get_async_result(this.get_db_request(version));
+		let db_request=this.get_db_request(version);
+		if(!db_request) throw new Error("Unable to access IndexedDB");
+		let db=await this.get_async_result(db_request);
 		let s=this.open_transaction_scope(typed_db,db,key,"readwrite");
 		return typed_db.objectStore(s.tx,key);
 	}
@@ -398,9 +400,13 @@ class IndexedDBService extends BaseService {
 	}
 	/** @arg {number} version */
 	get_db_request(version) {
-		let db_req=indexedDB.open("yt_plugin",version);
-		db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
-		return db_req;
+		try {
+			let db_req=indexedDB.open("yt_plugin",version);
+			db_req.onupgradeneeded=event => this.onUpgradeNeeded(db_req,event);
+			return db_req;
+		} catch(err) {
+			throw new AggregateError([err],"Unable to access IndexedDB");
+		}
 	}
 	/**
 	 * @param {TypedIndexedDB} typed_db
