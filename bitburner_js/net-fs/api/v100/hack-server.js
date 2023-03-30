@@ -223,7 +223,7 @@ export async function main(ns) {
 				let reply=await peek_reply_msg(ns,reply_port);
 				if(reply?.reply.length===0) break;
 				if(i>12) {
-					ns.tprint("replies lost: ",reply?.reply.length," messages");
+					ns.print("replies lost: ",reply?.reply.length," messages");
 					break;
 				}
 			}
