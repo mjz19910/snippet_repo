@@ -15,6 +15,7 @@ export async function main(ns) {
 	ns.disableLog("getServerMoneyAvailable");
 	ns.disableLog("getServerSecurityLevel");
 	ns.disableLog("getServerMaxMoney");
+	ns.disableLog("asleep");
 	ns.disableLog("sleep");
 	ns.disableLog("scan");
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
