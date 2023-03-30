@@ -224,6 +224,7 @@ export async function main(ns) {
 				if(reply?.reply.length===0) break;
 				if(i>64) debugger;
 			}
+			cur_perf=performance.now();
 			end_perf_diff=cur_perf-start_perf;
 			ns.print("clients done processing replies in ",ns.tFormat(end_perf_diff));
 		}
