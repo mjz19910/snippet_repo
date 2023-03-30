@@ -180,7 +180,6 @@ export_(exports => {
 				require_property.value.__system_require=true;
 				let require_value=require_property.value;
 				require_value;
-				debugger;
 				return;
 			}
 		}
