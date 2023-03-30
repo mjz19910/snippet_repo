@@ -43,7 +43,7 @@ export async function main(ns) {
 		get_func2("run")(copy_name);
 		let rm_=get_func2("rm");
 		while(true) {
-			await ns.asleep(100);
+			await ns.sleep(100);
 			let removed=rm_(copy_name);
 			if(removed) break;
 		}

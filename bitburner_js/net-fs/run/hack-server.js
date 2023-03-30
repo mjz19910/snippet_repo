@@ -20,7 +20,6 @@ export async function main(ns) {
 	ns.disableLog("getServerMoneyAvailable");
 	ns.disableLog("getServerSecurityLevel");
 	ns.disableLog("getServerMaxMoney");
-	ns.disableLog("asleep");
 	ns.disableLog("sleep");
 	ns.disableLog("scan");
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
@@ -122,14 +121,14 @@ export async function main(ns) {
 			function await_(promise) {
 				reply_promises.push(promise);
 			}
-			await ns.asleep(33);
+			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
 			let reply=peek_reply_msg(reply_port);
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) {
-				await ns.asleep(100);
+				await ns.sleep(100);
 				continue;
 			}
 			if(reply) {
