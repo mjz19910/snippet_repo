@@ -44,12 +44,13 @@
 		}
 	},
 	"include": [
-		"NetscriptDefinitions.d.ts",
 		"net-fs/**/*.js",
 		"net-fs/**/*.ts",
-		"notes/*.ts",
+		"NetscriptDefinitions.d.ts",
+		"NetscriptExtra.d.ts",
 		"notes/*.js",
 		"notes/*.mts",
+		"notes/*.ts",
 		"react-walk/**/*.js",
 		"react-walk/**/*.ts",
 	],
