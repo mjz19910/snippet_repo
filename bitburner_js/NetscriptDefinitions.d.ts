@@ -2295,7 +2295,16 @@ interface Singularity {
    *
    * @returns - An object representing the current work. Fields depend on the kind of work.
    */
-  getCurrentWork(): any|null;
+  getCurrentWork(): {
+    type: "CLASS";
+    cyclesWorked: number;
+    classType: "str";
+    location: "Powerhouse Gym";
+  }|{
+    type: "COMPANY";
+    cyclesWorked: number;
+    companyName: "FoodNStuff";
+  }|null;
 }
 
 /**
