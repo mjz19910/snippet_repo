@@ -59,17 +59,17 @@ export async function main(ns) {
 	while(!reply_port.empty()) {
 		wait_count++;
 		await ns.sleep(33);
-		if(wait_count>20) {
-			ns.print("cleared reply port");
-			reply_port.clear();
-			break;
-		}
 		if(reply_port.empty()) break;
 		let reply_msg=await peek_reply_msg(ns,reply_port);
 		// invalid state: the reply port is not empty.
 		if(reply_msg===null) throw new Error("Invalid state");
 		if(reply_msg?.reply.length===0) break;
-		ns.print("reply_len ",reply_msg.reply.length);
+		if(wait_count>20) {
+			ns.print("reply_len ",reply_msg.reply.length);
+			ns.print("cleared reply port");
+			reply_port.clear();
+			break;
+		}
 	}
 	request_port.clear();
 	reply_port.clear();
