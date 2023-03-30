@@ -178,6 +178,8 @@ export_(exports => {
 		if(require_property.configurable!==void 0) {
 			if(require_property.configurable===false) {
 				require_property.value.__system_require=true;
+				let require_value=require_property.value;
+				debugger;
 				return;
 			}
 		}
