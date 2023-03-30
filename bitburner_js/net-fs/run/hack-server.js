@@ -117,6 +117,7 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
+			let start_perf=performance.now();
 			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=await peek_call_msg(ns,request_port);
@@ -203,11 +204,13 @@ export async function main(ns) {
 			request_port.read();
 			await send_call_msg(ns,request_port,msg);
 			if(request_port.empty()) throw new Error("Port should not be empty");
-			while(!log_port.empty()) {
-				await ns.sleep(0);
+			if(!log_port.empty()) {
 				let res=log_port.read();
 				ns.printf("%s",res);
+				continue;
 			}
+			let end_perf_diff=performance.now()-start_perf;
+			ns.tprint("done processing all messages in ",ns.tFormat(end_perf_diff));
 		}
 	}
 	await process_messages();
