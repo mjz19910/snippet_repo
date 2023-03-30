@@ -177,7 +177,7 @@ export_(exports => {
 	if(require_property) {
 		if(require_property.configurable!==void 0) {
 			if(require_property.configurable===false) {
-				location.reload();
+				require_property.value.__system_require=true;
 				return;
 			}
 		}
