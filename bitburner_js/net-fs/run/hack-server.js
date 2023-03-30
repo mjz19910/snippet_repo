@@ -9,6 +9,7 @@ function rand_num(min,max) {
 /** @param {NS} ns */
 function serve_functions_list(ns) {
 	ns.getServerMoneyAvailable;
+	ns.getServerMinSecurityLevel;
 }
 /** @param {NS} ns */
 export async function main(ns) {
