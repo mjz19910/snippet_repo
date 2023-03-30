@@ -13,9 +13,7 @@ interface NS {
 	tprintRaw?: (...x: any[]) => void;
 	get_memoed_state?: () => {
 		memoed: Partial<NS>;
-		ns: ReqState<NS&{
-			get_state_set(): true;
-		}>;
+		ns: ReqState<NS_With_GetSet>;
 	};
 }
 interface NS_With_GetSet extends NS {

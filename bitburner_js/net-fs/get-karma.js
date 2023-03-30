@@ -1,5 +1,10 @@
+import {as_any} from "/run/as";
+
 /** @param {NS_With_GetSet} ns */
 export async function main(ns) {
+	// a condition breakpoint at this.memoed\[\w\];
+	// with "this.memoed.get_memoed_state=()=>this;0;"
+	// as the condition
 	while(ns.get_memoed_state===void 0) {
 		debugger;
 		await ns.sleep(1000);
@@ -17,7 +22,7 @@ export async function main(ns) {
 	let script_state=state_export_obj.v;
 	if(script_state===null) throw new Error("Did not get state");
 	let ws=script_state.workerScript;
-	/** @template {keyof GetCallableState<NS>} K @arg {K} name */
+	/** @template {keyof GetCallableState<NS_With_GetSet>} K @arg {K} name */
 	function get_func(name) {
 		return r_ns[name];
 	}
@@ -25,14 +30,21 @@ export async function main(ns) {
 	function make_state(name) {
 		return {workerScript: ws,function: name,functionPath: name};
 	}
+	/** @template {keyof GetCallableState<NS_With_GetSet>} K @arg {K} name @returns {NS_With_GetSet[K]} */
+	function get_func2(name) {
+		/** @type {ReqState<NS_With_GetSet>[keyof ReqState<NS_With_GetSet>]} */
+		let gf_r=get_func(name);
+		return as_any(gf_r(make_state(name)));
+	}
 	if(ns.getScriptName()==="get-karma.js") {
 		let script_content=ns.read("get-karma.js");
 		const copy_name=`get-karma.${Math.random()*255|0}.js`;
-		get_func("write")(make_state("write"))(copy_name,script_content,"w");
-		get_func("run")(make_state("run"))(copy_name);
+		get_func2("write")(copy_name,script_content,"w");
+		get_func2("run")(copy_name);
+		let rm_=get_func2("rm");
 		while(true) {
 			await ns.asleep(100);
-			let removed=ns.rm(copy_name);
+			let removed=rm_(copy_name);
 			if(removed) break;
 		}
 		return;
