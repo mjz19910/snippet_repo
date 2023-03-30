@@ -68,8 +68,8 @@ export async function main(ns) {
 		let reply_msg=await peek_reply_msg(ns,reply_port);
 		// invalid state: the reply port is not empty.
 		if(reply_msg===null) throw new Error("Invalid state");
-		ns.print("reply_len ",reply_msg.reply.length);
 		if(reply_msg?.reply.length===0) break;
+		ns.print("reply_len ",reply_msg.reply.length);
 	}
 	request_port.clear();
 	reply_port.clear();
