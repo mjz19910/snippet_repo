@@ -1,4 +1,4 @@
-import {ClassComponent} from "../net-fs/api/react_internal/ReactWorkTags.js";
+import {ClassComponent} from "../net-fs/api/v1.00/react_internal/ReactWorkTags.js";
 export type mixed=string|number|object;
 
 type HtmlReactElementType="ul"|"div";

@@ -1,4 +1,4 @@
-import {as_any} from "/api/as.js";
+import {as_any} from "/api/v1.00/as.js";
 
 export function gen_dispatcher() {
 	/** @arg {number} minified_error_id */

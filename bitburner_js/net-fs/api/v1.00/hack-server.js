@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,peek_call_msg,send_call_msg,peek_reply_msg,read_reply_msg} from "/api/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,peek_call_msg,send_call_msg,peek_reply_msg,read_reply_msg} from "/api/v1.00/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max

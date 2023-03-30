@@ -1,6 +1,6 @@
-import {query_element} from "/api/dom-support.js";
+import {query_element} from "/api/v1.00/dom-support.js";
 import {DomList} from "/api/DomList.js";
-import {as_any} from "/api/as.js";
+import {as_any} from "/api/v1.00/as.js";
 
 // infiltration-auto
 class InfiltrationDomState extends DomList {

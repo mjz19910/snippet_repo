@@ -1,4 +1,4 @@
-import {InitHackScript} from "/api/init-hack.js";
+import {InitHackScript} from "/api/v1.00/init-hack.js";
 
 /** @param {NS} ns */
 export async function main(ns) {

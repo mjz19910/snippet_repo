@@ -1,4 +1,4 @@
-import {as_svg_element,query_element} from "/api/dom-support.js";
+import {as_svg_element,query_element} from "/api/v1.00/dom-support.js";
 
 
 export class DomList {

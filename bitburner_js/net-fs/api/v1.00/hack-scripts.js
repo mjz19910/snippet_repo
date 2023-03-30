@@ -1,5 +1,5 @@
 export const hack_template="/api/hack-template.js";
-export const hack_support="/api/hack-support.js";
+export const hack_support="/api/v1.00/hack-support.js";
 export const hack_server="/api/hack-server.js";
 export const remote_share="/init/remote-share.js";
 export const share_script="/api/share.js";
