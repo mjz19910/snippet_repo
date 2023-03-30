@@ -61,7 +61,7 @@ export async function main(ns) {
 			ns.exit();
 		}
 		if(reply_port.empty()) continue;
-		let reply_msg=peek_reply_msg(reply_port);
+		let reply_msg=await peek_reply_msg(ns,reply_port);
 		// invalid state: the reply port is not empty.
 		if(reply_msg===null) throw new Error("Invalid state");
 		if(reply_msg?.reply.length===0) break;
@@ -69,7 +69,7 @@ export async function main(ns) {
 	request_port.clear();
 	reply_port.clear();
 	log_port.clear();
-	send_reply_msg(reply_port,{call: "pending",id: "reply",reply: []});
+	await send_reply_msg(ns,reply_port,{call: "pending",id: "reply",reply: []});
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	notify_complete_port.clear();
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
@@ -78,7 +78,7 @@ export async function main(ns) {
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		let reply_msg=peek_reply_msg(reply_port);
+		let reply_msg=await peek_reply_msg(ns,reply_port);
 		if(reply_msg===null) throw new Error("No pending reply");
 		let pending_reply_message=reply_msg;
 		let reply_id=reply_uid_counter;
@@ -111,7 +111,7 @@ export async function main(ns) {
 			pending_reply_message.reply.push(item);
 		}
 		pending_reply_message.reply.push(msg);
-		let sent=send_reply_msg(reply_port,pending_reply_message);
+		let sent=await send_reply_msg(ns,reply_port,pending_reply_message);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
@@ -123,8 +123,8 @@ export async function main(ns) {
 			}
 			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
-			let msg=peek_call_msg(request_port);
-			let reply=peek_reply_msg(reply_port);
+			let msg=await peek_call_msg(ns,request_port);
+			let reply=await peek_reply_msg(ns,reply_port);
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) {
@@ -204,7 +204,7 @@ export async function main(ns) {
 			}
 			msg_arr.length=0;
 			request_port.read();
-			send_call_msg(request_port,msg);
+			await send_call_msg(ns,request_port,msg);
 			if(request_port.empty()) throw new Error("Port should not be empty");
 			while(!log_port.empty()) {
 				await ns.sleep(0);

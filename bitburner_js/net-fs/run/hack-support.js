@@ -7,21 +7,23 @@ export const notify_request_has_space_id=5;
 export const notify_complete_pipe_port_id=6;
 export const notify_new_reply_port_id=7;
 export const max_port_id=8;
-/** @param {NetscriptPort} ns_port */
-export function async_port_read_data(ns_port) {
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function async_port_read_data(ns,ns_port) {
+	await ns.sleep(33);
 	let data=ns_port.read();
 	if(data==="NULL PORT DATA") return null;
 	return data;
 }
-/** @param {NetscriptPort} ns_port */
-export function async_port_peek_data(ns_port) {
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function async_port_peek_data(ns,ns_port) {
+	await ns.sleep(33);
 	let data=ns_port.peek();
 	if(data==="NULL PORT DATA") return null;
 	return data;
 }
-/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|CallMsgPending|null} */
-export function async_port_peek_msg(ns_port) {
-	let data=async_port_peek_data(ns_port);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function async_port_peek_msg(ns,ns_port) {
+	let data=await async_port_peek_data(ns,ns_port);
 	if(data===null) return null;
 	if(typeof data==="number") return null;
 	/** @type {ReplyMsgPending|CallMsgPending} */
@@ -29,16 +31,17 @@ export function async_port_peek_msg(ns_port) {
 	if(pending_msg.call!=="pending") return null;
 	return pending_msg;
 }
-/** @param {NetscriptPort} ns_port @param {PortData} str */
-export function async_port_write_data(ns_port,str) {
+/** @param {NS} ns @param {NetscriptPort} ns_port @param {PortData} str */
+export async function async_port_write_data(ns,ns_port,str) {
+	await ns.sleep(33);
 	if(ns_port.full()) return false;
 	let popped=ns_port.write(str);
 	if(popped!==null) throw new Error("Unreachable");
 	return true;
 }
-/** @param {NetscriptPort} ns_port @returns {CallMsgPending|ReplyMsgPending|null} */
-export function async_read_port_msg(ns_port) {
-	let data=async_port_read_data(ns_port);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function async_read_port_msg(ns,ns_port) {
+	let data=await async_port_read_data(ns,ns_port);
 	if(data===null) return null;
 	if(typeof data==="number") return null;
 	/** @type {CallMsgPending|ReplyMsgPending} */
@@ -46,42 +49,42 @@ export function async_read_port_msg(ns_port) {
 	if(msg.call!=="pending") return null;
 	return msg;
 }
-/** @param {NetscriptPort} ns_port @arg {CallMsgPending|ReplyMsgPending} msg */
-export function send_port_msg(ns_port,msg) {
-	return async_port_write_data(ns_port,JSON.stringify(msg));
+/** @param {NS} ns @param {NetscriptPort} ns_port @arg {CallMsgPending|ReplyMsgPending} msg */
+export function send_port_msg(ns,ns_port,msg) {
+	return async_port_write_data(ns,ns_port,JSON.stringify(msg));
 }
-/** @arg {NetscriptPort} ns_port @arg {CallMsgPending} msg */
-export function send_call_msg(ns_port,msg) {
-	return send_port_msg(ns_port,msg);
+/** @param {NS} ns @arg {NetscriptPort} ns_port @arg {CallMsgPending} msg */
+export function send_call_msg(ns,ns_port,msg) {
+	return send_port_msg(ns,ns_port,msg);
 }
-/** @arg {NetscriptPort} ns_port @arg {ReplyMsgPending} msg */
-export function send_reply_msg(ns_port,msg) {
-	return send_port_msg(ns_port,msg);
+/** @param {NS} ns @arg {NetscriptPort} ns_port @arg {ReplyMsgPending} msg */
+export function send_reply_msg(ns,ns_port,msg) {
+	return send_port_msg(ns,ns_port,msg);
 }
-/** @param {NetscriptPort} ns_port @returns {CallMsgPending|null} */
-export function read_call_msg(ns_port) {
-	let msg=async_read_port_msg(ns_port);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function read_call_msg(ns,ns_port) {
+	let msg=await async_read_port_msg(ns,ns_port);
 	if(msg===null) return null;
 	if(msg.id==="call") return msg;
 	return null;
 }
-/** @param {NetscriptPort} ns_port @returns {CallMsgPending|null} */
-export function peek_call_msg(ns_port) {
-	let msg=async_port_peek_msg(ns_port);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function peek_call_msg(ns,ns_port) {
+	let msg=await async_port_peek_msg(ns,ns_port);
 	if(msg===null) return null;
 	if(msg.id==="call") return msg;
 	return null;
 }
-/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|null} */
-export function peek_reply_msg(ns_port) {
-	let msg=async_port_peek_msg(ns_port);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function peek_reply_msg(ns,ns_port) {
+	let msg=await async_port_peek_msg(ns,ns_port);
 	if(msg===null) return null;
 	if(msg.id==="reply") return msg;
 	return null;
 }
-/** @param {NetscriptPort} ns_port @returns {ReplyMsgPending|null} */
-export function read_reply_msg(ns_port) {
-	let msg=async_read_port_msg(ns_port);
+/** @param {NS} ns @param {NetscriptPort} ns_port */
+export async function read_reply_msg(ns,ns_port) {
+	let msg=await async_read_port_msg(ns,ns_port);
 	if(msg===null) return null;
 	if(msg.id==="reply") return msg;
 	return null;
@@ -123,17 +126,17 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			}
 		}
 		if(first_loop) first_loop=false;
-		if(request_port.empty()) {send_call_msg(request_port,{call: "pending",id: "call",reply: []}); continue;}
-		if(reply_port.empty()) {send_reply_msg(reply_port,{call: "pending",id: "reply",reply: []}); continue;}
+		if(request_port.empty()) {await send_call_msg(ns,request_port,{call: "pending",id: "call",reply: []}); continue;}
+		if(reply_port.empty()) {await send_reply_msg(ns,reply_port,{call: "pending",id: "reply",reply: []}); continue;}
 		if(send_message) {
-			let cur_msg=read_call_msg(request_port);
+			let cur_msg=await read_call_msg(ns,request_port);
 			if(cur_msg===null) continue;
 			cur_msg.reply.push({call: call_id,args: [id]});
-			let sent=send_call_msg(request_port,cur_msg);
+			let sent=await send_call_msg(ns,request_port,cur_msg);
 			if(!sent) continue;
 			send_message=false;
 		}
-		let pending_msg=peek_reply_msg(reply_port);
+		let pending_msg=await peek_reply_msg(ns,reply_port);
 		if(!pending_msg) continue;
 		let accepted_messages=[];
 		if(pending_msg.reply.length===0) {
