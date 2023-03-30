@@ -24,6 +24,14 @@ export async function main(ns) {
 		}
 		return new_element;
 	}
+	/** @arg {string} command */
+	async function start_terminal_command(command) {
+		terminalInput=await wait_for_terminal();
+		terminalInput.value=command;
+		const handler=Object.keys(terminalInput)[1];
+		terminalInput[handler].onChange({target: terminalInput});
+		terminalInput[handler].onKeyDown({key: 'Enter',preventDefault: () => null});
+	}
 	let terminalInput=await wait_for_terminal();
 	let hacking_level=ns.getHackingLevel();
 	let seen_hosts=new Set(["home"]);
@@ -33,6 +41,7 @@ export async function main(ns) {
 	let scan_res=ns.scan().map(v => [{final: v},{path: ["home"]}]);
 	/** @type {([{final:string},{path:string[]}])[]} */
 	let scan_res2=[];
+	let world_daemon_path=null;
 	do {
 		scan_res2.length=0;
 		for(let host_desc of scan_res) {
@@ -48,7 +57,7 @@ export async function main(ns) {
 				terminalInput=await wait_for_terminal();
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
 				if(!has_disabled) break;
-				await ns.sleep(33);
+				await ns.sleep(0);
 			}
 			let srv=ns.getServer(hostname);
 			server_map[hostname]=srv;
@@ -56,36 +65,38 @@ export async function main(ns) {
 			if(!srv.hasAdminRights) continue;
 			if(srv.backdoorInstalled) continue;
 			if(srv.requiredHackingSkill>hacking_level) continue;
-			let delay=ns.getHackTime(hostname);
-			/** @arg {string} command */
-			async function start_terminal_command(command) {
-				terminalInput=await wait_for_terminal();
-				terminalInput.value=command;
-				const handler=Object.keys(terminalInput)[1];
-				terminalInput[handler].onChange({target: terminalInput});
-				terminalInput[handler].onKeyDown({key: 'Enter',preventDefault: () => null});
-			}
-			let full_path=[...host_desc[1].path,hostname].filter((v,idx,arr) => {
+			let full_path=[...host_desc[1].path,hostname];
+			let backdoor_path=full_path.filter((v,idx,arr) => {
 				if(idx+1>=arr.length) return !server_map[v].backdoorInstalled;
 				let v2=arr[idx+1];
 				return !server_map[v2].backdoorInstalled;
 			});
-			let cmd_list=full_path.map(v => "connect "+v);
+			if(hostname==="w0r1d_d43m0n") {world_daemon_path=full_path; continue;}
+			let cmd_list=backdoor_path.map(v => "connect "+v);
 			cmd_list.push("backdoor");
 			await start_terminal_command(cmd_list.join(";"));
+			let delay=ns.getHackTime(hostname);
 			const est_delay=delay/4;
 			ns.printf("est_delay:%s",tFormat(ns,est_delay));
-			await ns.sleep(est_delay/1.03);
+			await ns.sleep(est_delay*0.97);
 			for(;;) {
 				terminalInput=await wait_for_terminal();
 				let has_disabled=terminalInput.classList.contains("Mui-disabled");
 				if(!has_disabled) break;
-				await ns.sleep(33);
+				await ns.sleep(0);
 			}
 			srv.backdoorInstalled=true;
 		}
 		scan_res.push(...scan_res2);
 	} while(scan_res2.length>0);
+	if(world_daemon_path) {
+		let connect_path=world_daemon_path.filter((v,idx,arr) => {
+			if(idx+1>=arr.length) return !server_map[v].backdoorInstalled;
+			let v2=arr[idx+1];
+			return !server_map[v2].backdoorInstalled;
+		}).map(v => "connect "+v);
+		await start_terminal_command(connect_path.join(";"));
+	}
 }
 
 /**
