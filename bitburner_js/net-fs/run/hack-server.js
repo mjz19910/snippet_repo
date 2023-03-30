@@ -19,9 +19,13 @@ export async function main(ns) {
 	ns.disableLog("scan");
 	const window_width=globalThis["document"].body.getClientRects()[0].width;
 	await ns.sleep(0);
-	const width=250+120;
-	ns.resizeTail(width,120);
-	ns.moveTail(window_width-width-4,1);
+	x: {
+		if(ns.args.length===0) break x;
+		if(ns.args.includes("--no-size")) break x;
+		const width=250+120;
+		ns.resizeTail(width,120);
+		ns.moveTail(window_width-width-4,1);
+	}
 	const randomize_hack=true;
 	/** @type {{[x:string]:Server}} */
 	const server_map={};
@@ -43,6 +47,20 @@ export async function main(ns) {
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
 	const log_port=ns.getPortHandle(log_port_id);
+	let wait_count=0;
+	while(!reply_port.empty()) {
+		wait_count++;
+		await ns.sleep(100);
+		if(wait_count>20) {
+			ns.print("failed to wait for replies to be read");
+			ns.exit();
+		}
+		if(reply_port.empty()) continue;
+		let reply_msg=peek_reply_msg(reply_port);
+		// invalid state: the reply port is not empty.
+		if(reply_msg===null) throw new Error("Invalid state");
+		if(reply_msg?.reply.length===0) break;
+	}
 	request_port.clear();
 	reply_port.clear();
 	log_port.clear();
