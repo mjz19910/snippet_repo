@@ -57,10 +57,9 @@ export async function main(ns) {
 		/** @type {ReplyMsgPending} */
 		let pending_reply_message={call: "pending",id: "reply",reply: []};
 		while(!reply_port.empty()) {
-			let reply_msg=read_reply_msg(reply_port);
-			if(reply_msg===null) continue;
+			let reply_msg=peek_reply_msg(reply_port);
+			if(reply_msg===null) throw new Error("No pending reply");
 			pending_reply_message.reply.push(...reply_msg.reply);
-			await ns.asleep(0);
 		}
 		let reply_id=reply_uid_counter;
 		reply_uid_counter++;
