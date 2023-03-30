@@ -6,6 +6,7 @@ export async function main(ns) {
 		// ns.exploit();
 		while(ns.get_memoed_state===void 0) {
 			debugger;
+			await ns.sleep(1000);
 		}
 		let memoed_state=ns.get_memoed_state();
 		/** @type {{v:ScriptState<"get_state_set">|null}} */
@@ -29,7 +30,7 @@ export async function main(ns) {
 		function make_state(name) {
 			return {workerScript: ws,function: name,functionPath: name};
 		}
-		get_func("write")(make_state("write"))("home",script_content,"w");
+		get_func("write")(make_state("write"))(copy_name,script_content,"w");
 		get_func("run")(make_state("run"))(copy_name);
 		while(true) {
 			await ns.asleep(100);
