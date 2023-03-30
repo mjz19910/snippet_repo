@@ -7,7 +7,12 @@ function rand_num(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
 }
 /** @param {NS} ns */
+function serve_functions_list(ns) {
+	ns.getServerMoneyAvailable;
+}
+/** @param {NS} ns */
 export async function main(ns) {
+	serve_functions_list(ns);
 	ns.tail();
 	ns.clearLog();
 	ns.disableLog("disableLog");
@@ -112,6 +117,11 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
+			let reply_promises=[];
+			/** @arg {Promise<void>} promise */
+			function await_(promise) {
+				reply_promises.push(promise);
+			}
 			await ns.asleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=peek_call_msg(request_port);
@@ -129,18 +139,17 @@ export async function main(ns) {
 			}
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
+				/** @type {{t:"n"}|{t:"s",f:Extract<ReplyMsg,{reply:number}>["call"],v:number}} */
+				let reply={t: "n"};
 				switch(call) {
 					case "getServerMaxMoney": {
-						let reply=ns.getServerMaxMoney(...args);
-						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
+						reply={t: "s",f: call,v:ns[call](...args)};
 					} break;
 					case "getServerMinSecurityLevel": {
-						let reply=ns.getServerMinSecurityLevel(...args);
-						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
+						reply={t: "s",f: call,v:ns[call](...args)};
 					} break;
 					case "getServerMoneyAvailable": {
-						let reply=ns.getServerMoneyAvailable(...args);
-						await send_reply_msg_2({call,id: args[0],uid: -1,reply});
+						reply={t: "s",f: call,v:ns[call](...args)};
 					} break;
 					case "getServerSecurityLevel": {
 						let reply=ns.getServerSecurityLevel(...args);
@@ -188,6 +197,9 @@ export async function main(ns) {
 							await send_reply_msg_2({call,id: args[0],uid: -1,reply: srv});
 						}
 					} break;
+				}
+				if(reply.t==="s") {
+					await_(send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v}));
 				}
 				notify_request_has_space_port.write(1);
 				while(!notify_complete_port.empty()) {
