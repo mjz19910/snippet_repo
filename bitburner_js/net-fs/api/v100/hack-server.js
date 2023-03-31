@@ -251,7 +251,7 @@ export async function main(ns) {
 			}
 			cur_perf=performance.now();
 			end_perf_diff=cur_perf-start_perf;
-			ns.print("clients done processing replies in ",ns.tFormat(end_perf_diff));
+			ns.print("clients done ",ns.tFormat(end_perf_diff,true));
 		}
 	}
 	await process_messages();
