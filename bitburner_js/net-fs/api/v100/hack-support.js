@@ -103,6 +103,7 @@ function should_accept(reply,call_,arg0) {
 	if("id" in reply) return reply.id===arg0;
 	throw new Error("Unsupported should accept");
 }
+let resend_count=0;
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
@@ -141,7 +142,8 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		if(!pending_msg) continue;
 		let accepted_messages=[];
 		if(((i%(512+1))===512)||pending_msg.reply.length===0) {
-			ns.print("resend");
+			resend_count++;
+			ns.print("resend ",resend_count);
 			send_message=true;
 			continue;
 		}
