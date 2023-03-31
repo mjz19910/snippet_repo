@@ -18,5 +18,5 @@
 	2x Ops + 1x Eng + 1x Man: 0.12365%
 	1x Ops + 2x Eng + 1x Man: 0.13919%
 	1x Ops + 1x Eng + 2x Man: 0.13847%
-	1x Ops + 2x Eng + 2x Man: 0.15389%
+	1x Ops + 2x Eng + 2x Man: 0.15391%
 }
