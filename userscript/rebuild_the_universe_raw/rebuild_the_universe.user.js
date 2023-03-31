@@ -4,8 +4,7 @@
 // @version		0.1.1
 // @description	rebuildtheuniverse.com automation
 // @author		You
-// @match		http://rebuildtheuniverse.com/*
-// @match		https://rebuildtheuniverse.com/*
+// @match		*://rebuildtheuniverse.com/*
 // @match		https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/*
 // @run-at		document-start
 // @grant		none
