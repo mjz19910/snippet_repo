@@ -145,9 +145,9 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			let cur_msg=request_port.mustRead();
 			cur_msg.reply.push({call: call_id,args: [id]});
 			request_port.mustWrite(cur_msg);
+			await reply_port.nextWrite();
 			send_message=false;
 		}
-		await reply_port.nextWrite();
 		let pending_msg=reply_port.mustPeek();
 		let accepted_messages=[];
 		if(pending_msg.reply.length===0) continue;
