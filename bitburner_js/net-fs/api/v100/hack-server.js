@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,peek_call_msg,send_call_msg,peek_reply_msg,read_reply_msg,notify_dead_reply_id} from "/api/v100/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,peek_call_msg,send_call_msg,notify_dead_reply_id} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -18,32 +18,79 @@ class StringPort {
 	constructor(port) {
 		this.port=port;
 	}
-	read_impl() {
+	read() {
 		let res=this.port.read();
 		if(typeof res==="number") throw new Error("Invalid message");
+		if(res==="NULL PORT DATA") return null;
+		return res;
+	}
+	peek() {
+		let res=this.port.peek();
+		if(typeof res==="number") throw new Error("Invalid message");
+		if(res==="NULL PORT DATA") return null;
 		return res;
 	}
 	/** @arg {string} str */
-	tryWrite_impl(str) {
+	write(str) {
+		let last=this.port.write(str);
+		if(last===null) return null;
+		if(typeof last==="number") throw new Error("Invalid message");
+		return last;
+	}
+	/** @arg {string} str */
+	tryWrite(str) {
 		return this.port.tryWrite(str);
 	}
 }
 /** @template {{}} T */
-class ObjectPort extends StringPort {
-	/** @returns {T} */
+class ObjectPort {
+	/** @arg {StringPort} port */
+	constructor(port) {
+		this.port=port;
+	}
+	empty() {
+		return this.port.port.empty();
+	}
+	clear() {this.port.port.clear();}
+	/** @returns {T|null} */
 	read() {
-		let res=super.read_impl();
+		let res=this.port.read();
+		if(res===null) return null;
 		let ret=JSON.parse(res);
 		return ret;
 	}
 	/** @arg {T} obj */
+	write(obj) {
+		let str=JSON.stringify(obj);
+		let last=this.port.write(str);
+		if(last===null) return null;
+		/** @type {T} */
+		let last_obj=JSON.parse(last);
+		return last_obj;
+	}
+	/** @arg {T} obj */
 	tryWrite(obj) {
 		let str=JSON.stringify(obj);
-		return super.tryWrite_impl(str);
+		return this.port.tryWrite(str);
 	}
-	/** @param {NS} ns @param {number} port_id */
+	nextWrite() {
+		return this.port.port.nextWrite();
+	}
+	/** @returns {T|null} */
+	peek() {
+		let res=this.port.peek();
+		if(res===null) return null;
+		let ret=JSON.parse(res);
+		return ret;
+	}
+	full() {
+		return this.port.port.full();
+	}
+	/** @template {{}} T @param {NS} ns @param {number} port_id @returns {ObjectPort<T>} */
 	static getPortHandle(ns,port_id) {
-		return new ObjectPort(ns.getPortHandle(port_id));
+		let handle=ns.getPortHandle(port_id);
+		let str_port=new StringPort(handle);
+		return new ObjectPort(str_port);
 	}
 }
 /** @param {NS} ns */
@@ -86,7 +133,8 @@ export async function main(ns) {
 	/** @type {number[]} */
 	let complete_reply_id_list=[];
 	const request_port=ns.getPortHandle(request_port_id);
-	const reply_port=ns.getPortHandle(reply_port_id);
+	/** @type {ObjectPort<ReplyMsgPending>} */
+	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
 	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
 	const log_port=ns.getPortHandle(log_port_id);
 	let wait_count=0;
@@ -94,7 +142,7 @@ export async function main(ns) {
 		wait_count++;
 		await ns.sleep(33);
 		if(reply_port.empty()) break;
-		let reply_msg=await peek_reply_msg(ns,reply_port);
+		let reply_msg=await reply_port.peek();
 		// invalid state: the reply port is not empty.
 		if(reply_msg===null) throw new Error("Invalid state");
 		if(reply_msg?.reply.length===0) break;
@@ -108,7 +156,7 @@ export async function main(ns) {
 	request_port.clear();
 	reply_port.clear();
 	log_port.clear();
-	await send_reply_msg(ns,reply_port,{call: "pending",id: "reply",reply: []});
+	await reply_port.write({call: "pending",id: "reply",reply: []});
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	notify_complete_port.clear();
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
@@ -117,7 +165,7 @@ export async function main(ns) {
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		let reply_msg=await peek_reply_msg(ns,reply_port);
+		let reply_msg=reply_port.peek();
 		if(reply_msg===null) throw new Error("No pending reply");
 		let pending_reply_message=reply_msg;
 		let reply_id=reply_uid_counter;
@@ -150,8 +198,8 @@ export async function main(ns) {
 			pending_reply_message.reply.push(item);
 		}
 		pending_reply_message.reply.push(msg);
-		await read_reply_msg(ns,reply_port);
-		let sent=await send_reply_msg(ns,reply_port,pending_reply_message);
+		reply_port.read();
+		let sent=reply_port.tryWrite(pending_reply_message);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
@@ -160,7 +208,7 @@ export async function main(ns) {
 			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
 			let msg=await peek_call_msg(ns,request_port);
-			let reply=await peek_reply_msg(ns,reply_port);
+			let reply=reply_port.peek();
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) {
@@ -254,7 +302,7 @@ export async function main(ns) {
 			ns.print("done processing all messages in ",ns.tFormat(end_perf_diff));
 			for(let i=0;;i++) {
 				await ns.sleep(33);
-				let reply=await peek_reply_msg(ns,reply_port);
+				let reply=reply_port.peek();
 				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
 				if(reply.reply.length===0) break;
 				if(i>12) {
