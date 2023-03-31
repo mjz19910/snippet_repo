@@ -104,11 +104,12 @@ function should_accept(reply,type,id) {
 	throw new Error("Unsupported should accept");
 }
 let resend_count=0;
+/** @type {Map<number,NetscriptPortV2>} */
 const known_port_handles=new Map;
 /** @arg {NS} ns */
 export function fill_port_handle_cache(ns) {
 	for(let i=0;i<max_port_id;i++) {
-		const port_handle=ns.getPortHandle(i);
+		const port_handle=NetscriptPortV2.getPortHandle(ns,i);
 		known_port_handles.set(i,port_handle);
 	}
 }
@@ -121,7 +122,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const request_port=ObjectPort.getPortHandle(ns,request_port_id);
 	/** @type {ObjectPort<ReplyMsgPending>} */
 	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
-	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
+	const notify_complete_port=NetscriptPortV2.getPortHandle(ns,notify_complete_pipe_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	let notify_complete_arr=[];
@@ -279,11 +280,12 @@ export class NetscriptPortV2 {
 	static getPortHandle(ns,port_id) {
 		let handle_cache=known_port_handles.get(port_id);
 		if(handle_cache!==void 0) {
-			return new this(handle_cache);
+			return new this(handle_cache.port);
 		}
 		let handle=ns.getPortHandle(port_id);
-		known_port_handles.set(port_id,handle);
-		return new this(handle);
+		let ret=new this(handle);
+		known_port_handles.set(port_id,ret);
+		return ret;
 	}
 }
 export class StringPort {
