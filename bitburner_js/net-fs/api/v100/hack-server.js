@@ -18,9 +18,6 @@ class StringPort {
 	constructor(port) {
 		this.port=port;
 	}
-	nextWrite() {
-		return this.port.nextWrite();
-	}
 	read() {
 		let res=this.port.read();
 		if(typeof res==="number") throw new Error("Invalid message");
@@ -52,6 +49,9 @@ class StringPort {
 	}
 	full() {
 		return this.port.full();
+	}
+	nextWrite() {
+		return this.port.nextWrite();
 	}
 }
 /** @template {{}} T */
