@@ -18,15 +18,28 @@ class ThreadState {
 	signal;
 	/** @type {number[]} */
 	timers=[];
+	/** @type {(()=>void)[]} */
+	abort_callbacks=[];
 	/** @param {AbortSignal} signal */
 	constructor(signal) {
 		this.signal=signal;
+		signal.addEventListener("abort",() => {
+			for(let cb of this.abort_callbacks) {
+				cb();
+			}
+		});
 	}
 	/** @arg {number} id */
 	remove_timer(id) {
 		let idx=this.timers.indexOf(id);
 		if(idx===-1) return;
 		this.timers.splice(idx,1);
+	}
+	/** @arg {()=>void} cb */
+	remove_abort_callback(cb) {
+		let idx=this.abort_callbacks.indexOf(cb);
+		if(idx===-1) return;
+		this.abort_callbacks.splice(idx,1);
 	}
 }
 /** @param {(state:ThreadState)=>void} func */
@@ -54,7 +67,9 @@ function async_sleep(t,delay) {
 	if(t.signal.aborted) return Promise.reject(new Error("Aborted"));
 	/** @type {Promise<void>} */
 	let ret=new Promise((a) => {
+		t.abort_callbacks.push(a);
 		let id=setTimeout(() => {
+			t.remove_abort_callback(a);
 			t.remove_timer(id);
 			a();
 		},delay);
