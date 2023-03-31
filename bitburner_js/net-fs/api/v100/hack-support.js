@@ -205,3 +205,141 @@ export class HackState {
 		this.hostname=hostname;
 	}
 }
+export class NetscriptPortV2 {
+	/** @arg {NetscriptPort} port */
+	constructor(port) {
+		this.port=port;
+	}
+	read() {
+		let res=this.port.read();
+		if(res==="NULL PORT DATA") return null;
+		return res;
+	}
+	peek() {
+		let res=this.port.peek();
+		if(res==="NULL PORT DATA") return null;
+		return res;
+	}
+	/** @arg {string|number} data */
+	write(data) {
+		return this.port.write(data);
+	}
+	/** @arg {string|number} data */
+	tryWrite(data) {
+		return this.port.tryWrite(data);
+	}
+	empty() {
+		return this.port.empty();
+	}
+	clear() {
+		this.port.clear();
+	}
+	full() {
+		return this.port.full();
+	}
+	nextWrite() {
+		return this.port.nextWrite();
+	}
+	/** @param {NS} ns @param {number} port_id */
+	static getPortHandle(ns,port_id) {
+		let handle=ns.getPortHandle(port_id);
+		return new this(handle);
+	}
+}
+export class StringPort {
+	/** @arg {NetscriptPortV2} port */
+	constructor(port) {
+		this.port=port;
+	}
+	read() {
+		let res=this.port.read();
+		if(typeof res==="number") throw new Error("Invalid message");
+		if(res==="NULL PORT DATA") return null;
+		return res;
+	}
+	peek() {
+		let res=this.port.peek();
+		if(typeof res==="number") throw new Error("Invalid message");
+		return res;
+	}
+	/** @arg {string} str */
+	write(str) {
+		let last=this.port.write(str);
+		if(last===null) return null;
+		if(typeof last==="number") throw new Error("Invalid message");
+		return last;
+	}
+	/** @arg {string} str */
+	tryWrite(str) {
+		return this.port.tryWrite(str);
+	}
+	empty() {
+		return this.port.empty();
+	}
+	clear() {
+		this.port.clear();
+	}
+	full() {
+		return this.port.full();
+	}
+	nextWrite() {
+		return this.port.nextWrite();
+	}
+	/** @param {NS} ns @param {number} port_id @returns {StringPort} */
+	static getPortHandle(ns,port_id) {
+		let handle=NetscriptPortV2.getPortHandle(ns,port_id);
+		return new StringPort(handle);
+	}
+}
+/** @template {{}} T */
+export class ObjectPort {
+	/** @arg {StringPort} port */
+	constructor(port) {
+		this.port=port;
+	}
+	empty() {
+		return this.port.empty();
+	}
+	clear() {
+		this.port.clear();
+	}
+	full() {
+		return this.port.full();
+	}
+	nextWrite() {
+		return this.port.nextWrite();
+	}
+	/** @returns {T|null} */
+	read() {
+		let res=this.port.read();
+		if(res===null) return null;
+		let ret=JSON.parse(res);
+		return ret;
+	}
+	/** @arg {T} obj */
+	write(obj) {
+		let str=JSON.stringify(obj);
+		let last=this.port.write(str);
+		if(last===null) return null;
+		/** @type {T} */
+		let last_obj=JSON.parse(last);
+		return last_obj;
+	}
+	/** @arg {T} obj */
+	tryWrite(obj) {
+		let str=JSON.stringify(obj);
+		return this.port.tryWrite(str);
+	}
+	/** @returns {T|null} */
+	peek() {
+		let res=this.port.peek();
+		if(res===null) return null;
+		let ret=JSON.parse(res);
+		return ret;
+	}
+	/** @template {{}} T @param {NS} ns @param {number} port_id @returns {ObjectPort<T>} */
+	static getPortHandle(ns,port_id) {
+		let str_port=StringPort.getPortHandle(ns,port_id);
+		return new ObjectPort(str_port);
+	}
+}

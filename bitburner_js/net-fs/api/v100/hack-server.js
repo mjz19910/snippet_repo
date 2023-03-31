@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,peek_call_msg,send_call_msg,notify_dead_reply_id} from "/api/v100/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -12,100 +12,6 @@ function serve_functions_list(ns) {
 	ns.getServerMoneyAvailable;
 	ns.getServerSecurityLevel;
 	ns.getServerMaxMoney;
-}
-class StringPort {
-	/** @arg {NetscriptPort} port */
-	constructor(port) {
-		this.port=port;
-	}
-	read() {
-		let res=this.port.read();
-		if(typeof res==="number") throw new Error("Invalid message");
-		if(res==="NULL PORT DATA") return null;
-		return res;
-	}
-	peek() {
-		let res=this.port.peek();
-		if(typeof res==="number") throw new Error("Invalid message");
-		if(res==="NULL PORT DATA") return null;
-		return res;
-	}
-	/** @arg {string} str */
-	write(str) {
-		let last=this.port.write(str);
-		if(last===null) return null;
-		if(typeof last==="number") throw new Error("Invalid message");
-		return last;
-	}
-	/** @arg {string} str */
-	tryWrite(str) {
-		return this.port.tryWrite(str);
-	}
-	empty() {
-		return this.port.empty();
-	}
-	clear() {
-		this.port.clear();
-	}
-	full() {
-		return this.port.full();
-	}
-	nextWrite() {
-		return this.port.nextWrite();
-	}
-}
-/** @template {{}} T */
-class ObjectPort {
-	/** @arg {StringPort} port */
-	constructor(port) {
-		this.port=port;
-	}
-	empty() {
-		return this.port.empty();
-	}
-	clear() {
-		this.port.clear();
-	}
-	full() {
-		return this.port.port.full();
-	}
-	nextWrite() {
-		return this.port.nextWrite();
-	}
-	/** @returns {T|null} */
-	read() {
-		let res=this.port.read();
-		if(res===null) return null;
-		let ret=JSON.parse(res);
-		return ret;
-	}
-	/** @arg {T} obj */
-	write(obj) {
-		let str=JSON.stringify(obj);
-		let last=this.port.write(str);
-		if(last===null) return null;
-		/** @type {T} */
-		let last_obj=JSON.parse(last);
-		return last_obj;
-	}
-	/** @arg {T} obj */
-	tryWrite(obj) {
-		let str=JSON.stringify(obj);
-		return this.port.tryWrite(str);
-	}
-	/** @returns {T|null} */
-	peek() {
-		let res=this.port.peek();
-		if(res===null) return null;
-		let ret=JSON.parse(res);
-		return ret;
-	}
-	/** @template {{}} T @param {NS} ns @param {number} port_id @returns {ObjectPort<T>} */
-	static getPortHandle(ns,port_id) {
-		let handle=ns.getPortHandle(port_id);
-		let str_port=new StringPort(handle);
-		return new ObjectPort(str_port);
-	}
 }
 /** @param {NS} ns */
 export async function main(ns) {
@@ -146,7 +52,8 @@ export async function main(ns) {
 	for(let item of ns.scan("home")) get_server(item);
 	/** @type {number[]} */
 	let complete_reply_id_list=[];
-	const request_port=ns.getPortHandle(request_port_id);
+	/** @type {ObjectPort<CallMsgPending>} */
+	const request_port=ObjectPort.getPortHandle(ns,request_port_id);
 	/** @type {ObjectPort<ReplyMsgPending>} */
 	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
 	/** @typedef {{id:"link",data:number,next:LinkType|null}} LinkType */
@@ -223,7 +130,7 @@ export async function main(ns) {
 			let start_perf=performance.now();
 			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
-			let msg=await peek_call_msg(ns,request_port);
+			let msg=request_port.peek();
 			let reply=reply_port.peek();
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
@@ -305,7 +212,8 @@ export async function main(ns) {
 			}
 			msg_arr.length=0;
 			request_port.read();
-			await send_call_msg(ns,request_port,msg);
+			let success=request_port.tryWrite(msg);
+			if(!success) throw new Error("Failed to write to request_port");
 			if(!log_port.empty()) {
 				let res=log_port.read();
 				ns.printf("%s",res);
