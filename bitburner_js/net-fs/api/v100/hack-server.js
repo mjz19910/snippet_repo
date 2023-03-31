@@ -65,7 +65,7 @@ export async function main(ns) {
 		wait_count++;
 		await ns.sleep(33);
 		if(reply_port.empty()) break;
-		let reply_msg=await reply_port.peek();
+		let reply_msg=reply_port.peek();
 		// invalid state: the reply port is not empty.
 		if(reply_msg===null) throw new Error("Invalid state");
 		if(reply_msg?.reply.length===0) break;
@@ -79,7 +79,7 @@ export async function main(ns) {
 	request_port.clear();
 	reply_port.clear();
 	log_port.clear();
-	await reply_port.write({call: "pending",id: "reply",reply: []});
+	reply_port.write({call: "pending",id: "reply",reply: []});
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	notify_complete_port.clear();
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
