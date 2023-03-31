@@ -66,7 +66,7 @@ function start_thread(func) {
 	};
 }
 /** @param {ThreadState} t @param {number} delay */
-function async_sleep(t,delay) {
+export function async_sleep(t,delay) {
 	if(t.signal.aborted) return Promise.reject(new Error("Aborted"));
 	/** @type {Promise<void>} */
 	let ret=new Promise((a) => {
@@ -134,7 +134,7 @@ export async function main(ns) {
 	let wait_count=0;
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
-			await async_sleep(thread,33);
+			await log_port.nextWrite();
 			let msg=log_port.read();
 			if(msg===null) continue;
 			log_messages.push(msg);
