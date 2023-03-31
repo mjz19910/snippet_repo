@@ -36,9 +36,9 @@ export async function main(ns) {
 		if(typeof gf_r==="object") return as_any(gf_r);
 		return as_any(gf_r(make_state(name)));
 	}
-	if(ns.getScriptName()==="/api/get-karma.js") {
-		let script_content=ns.read("/api/get-karma.js");
-		const copy_name=`/api/get-karma.${Math.random()*255|0}.js`;
+	if(ns.getScriptName()==="get_memoed_state.js") {
+		let script_content=ns.read("get_memoed_state.js");
+		const copy_name=`get_memoed_state.${Math.random()*255|0}.js`;
 		get_func2("write")(copy_name,script_content,"w");
 		get_func2("run")(copy_name);
 		let rm_=get_func2("rm");
@@ -49,17 +49,5 @@ export async function main(ns) {
 		}
 		return;
 	}
-	let karma=ns.heart.break();
-	ns.tail();
-	ns.tprintf("karma: %s",karma);
-	// let bypass_=get_func("bypass")(make_state("bypass"));
-	// ns.alterReality();
-	// bypass_(globalThis["window"]["document"]);
-	// let exploit_=get_func2("exploit");
-	// exploit_();
-	// let rainbow_=get_func2("rainbow");
-	// rainbow_("noodles");
-	// ns.iKnowWhatImDoing();
-	// if(ns.tprintRaw) ns.tprintRaw(globalThis["window"].React.createElement("div"));
-	// ns.openDevMenu();
+	console.log("memoed_state",memoed_state);
 }
