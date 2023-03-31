@@ -24,6 +24,9 @@ class ThreadState {
 	constructor(signal) {
 		this.signal=signal;
 		signal.addEventListener("abort",() => {
+			for(let timer of this.timers) {
+				clearTimeout(timer);
+			}
 			for(let cb of this.abort_callbacks) {
 				cb();
 			}
