@@ -138,6 +138,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			request_port.mustWrite(cur_msg);
 			send_message=false;
 		}
+		await reply_port.nextWrite();
 		let pending_msg=reply_port.mustPeek();
 		let accepted_messages=[];
 		if(((i%(64+2))===64)||pending_msg.reply.length===0) {
