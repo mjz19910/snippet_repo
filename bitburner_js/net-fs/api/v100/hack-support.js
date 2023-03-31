@@ -116,7 +116,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	let notify_complete_arr=[];
 	let send_message=true;
 	let first_loop=true;
-	for(;;) {
+	for(let i=0;;) {
 		await ns.sleep(33);
 		{
 			if(notify_complete_port.full()) continue;
@@ -140,7 +140,8 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		let pending_msg=await peek_reply_msg(ns,reply_port);
 		if(!pending_msg) continue;
 		let accepted_messages=[];
-		if(pending_msg.reply.length===0) {
+		if(((i%(512+1))===512)||pending_msg.reply.length===0) {
+			ns.print("resend");
 			send_message=true;
 			continue;
 		}
@@ -154,6 +155,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			assume_return(ret);
 			return ret;
 		}
+		i++;
 	}
 }
 /** @type {Map<string,number>} */

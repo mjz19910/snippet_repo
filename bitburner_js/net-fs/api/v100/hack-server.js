@@ -59,6 +59,7 @@ export async function main(ns) {
 	/** @typedef {{id:"link",data:number,next:LinkType|null}} LinkType */
 	/** @type {ObjectPort<LinkType>} */
 	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
+	notify_dead_port.clear();
 	const log_port=ns.getPortHandle(log_port_id);
 	let wait_count=0;
 	while(!reply_port.empty()) {
@@ -227,10 +228,14 @@ export async function main(ns) {
 			let end_perf_diff=cur_perf-start_perf;
 			start_perf=cur_perf;
 			ns.print("server done ",ns.tFormat(end_perf_diff,true));
+			let prev_len=-1,cur_len=-1;
 			for(let i=0;;i++) {
 				await ns.sleep(33);
 				let reply=reply_port.peek();
 				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
+				prev_len=cur_len;
+				cur_len=reply.reply.length;
+				ns.tprint(prev_len," ",cur_len);
 				if(reply.reply.length===0) break;
 				if(i>30) {
 					ns.print("replies lost: ",reply.reply.length," messages");
