@@ -76,7 +76,6 @@ function do_local_mirror_write() {
 	document.close();
 }
 function main() {
-	console.log("re action 0");
 	let non_proto_url=page_url_no_protocol();
 	if(history.state&&history.state.real_page) {do_real_page_action();} else if(localStorage["justReset"]) {do_just_reset();} else if(history.state&&history.state.prev) {do_just_reset();} else if(non_proto_url=="//rebuildtheuniverse/?type=real") {
 		history.pushState({real_page: true},'',non_proto_url);
