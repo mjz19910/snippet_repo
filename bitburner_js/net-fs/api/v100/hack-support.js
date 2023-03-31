@@ -166,8 +166,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	for(let i=0;;) {
 		await ns.asleep(1500);
 		if(first_loop) first_loop=false;
-		if(request_port.empty()) {request_port.mustWrite({call: "pending",id: "call",reply: []}); continue;}
-		if(reply_port.empty()) {reply_port.mustWrite({call: "pending",id: "reply",reply: []}); continue;}
 		if(send_message) {
 			let cur_msg=request_port.mustRead();
 			cur_msg.reply.push({call: call_id,args: [id]});
