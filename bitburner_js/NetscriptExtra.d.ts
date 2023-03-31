@@ -25,6 +25,7 @@ interface NetscriptContext {
 	function: string;
 	functionPath: string;
 }
+type GenericAPI<T>={[key in keyof T]: APIFn|GenericAPI<T[key]>};
 type APIFn=(...x: any[]) => any;
 type InternalFn<F extends APIFn>=(ctx: NetscriptContext) => ((...args: unknown[]) => ReturnType<F>)&F;
 
