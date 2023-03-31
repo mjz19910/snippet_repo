@@ -81,6 +81,8 @@ Investment: {
 	prod-3: [design: 1e6,marketing: 1e6],
 	// $200 million
 	prod-4: [design: 2e8,marketing: 2e8],
+	// prod-0 @ $1 billion
+	prod-0: [design: 1e9,marketing: 1e9],
 }
 Materials: {
 	Water: 1.597 / 3
