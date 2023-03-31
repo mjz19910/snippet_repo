@@ -204,7 +204,10 @@ export async function main(ns) {
 					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
 				}
 				let success=notify_request_has_space_port.tryWrite(1);
-				if(!success) throw new Error("Failed (tryWrite)");
+				while(!success) {
+					notify_request_has_space_port.read();
+					success=notify_request_has_space_port.tryWrite(1);
+				}
 				while(!notify_complete_port.empty()) {
 					let complete_id=notify_complete_port.read();
 					if(typeof complete_id==="number") {
