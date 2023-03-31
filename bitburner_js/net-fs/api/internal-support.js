@@ -119,6 +119,7 @@ export class NSProxyHandler {
  * @param {WorkerScript} ws
  * @param {InternalAPI<API>} ns
  * @param {string[]} tree
+ * @returns {API}
  */
 export function NSProxy(
 	ws,
