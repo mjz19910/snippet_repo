@@ -438,7 +438,7 @@ export class ObjectPort {
 		for(;;) {
 			let success=this.tryWrite(obj);
 			if(success) break;
-			await ns.sleep(0);
+			await ns.asleep(0);
 		}
 	}
 	mustRead() {

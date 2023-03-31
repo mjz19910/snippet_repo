@@ -24,8 +24,6 @@ export async function main(ns) {
 	m;
 	let diff1_1=0.01; diff1_1;
 	let diff1_2=0.001; diff1_2;
-	let diff2=(prod1-sell1)+0.78;
-	ns.print("d2 ",diff2);
 	ns.print("pd ",prod1-sell1);
 	log_product(product);
 }
