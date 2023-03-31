@@ -79,4 +79,6 @@ Investment: {
 	prod-2: [design: 1e5,marketing: 1e5],
 	// $1 million
 	prod-3: [design: 1e6,marketing: 1e6],
+	// $20 million
+	prod-4: [design: 2e7,marketing: 2e7],
 }
