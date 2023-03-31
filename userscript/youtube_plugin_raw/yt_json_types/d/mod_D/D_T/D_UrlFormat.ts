@@ -21,8 +21,8 @@ type D_UrlFormat=
 	|`https://www.youtube.com/watch?${string}`
 	|`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`
 	|D_ApiPathFormat_1
-	|D_MicroformatEmbed["flashSecureUrl"]
-	|D_MicroformatEmbed["flashUrl"]
+	|NonNullable<D_MicroformatEmbed["flashSecureUrl"]>
+	|NonNullable<D_MicroformatEmbed["flashUrl"]>
 	|D_MicroformatEmbed["iframeUrl"]
 	|D_PlayerMicroformat["ownerProfileUrl"]
 	|D_ResultsPageUrl

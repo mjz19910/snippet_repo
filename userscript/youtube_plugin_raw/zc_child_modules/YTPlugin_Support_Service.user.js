@@ -881,10 +881,10 @@ class Support_RS_Player extends BaseService {
 		const cf="D_CardCollection";
 		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
 		this.ps.parse_url(cf,iframeUrl);
-		this.ps.parse_url(cf,flashUrl);
+		flashUrl&&this.ps.parse_url(cf,flashUrl);
 		this.save_primitive(`${cf}.width`,width);
 		this.save_primitive(`${cf}.height`,height);
-		this.ps.parse_url(cf,flashSecureUrl);
+		flashSecureUrl&&this.ps.parse_url(cf,flashSecureUrl);
 	}
 	/** @private @arg {D_VideoCategory} x */
 	D_VideoCategory(x) {

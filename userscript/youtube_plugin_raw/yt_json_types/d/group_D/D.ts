@@ -2013,10 +2013,10 @@ type D_Microformat={
 };
 type D_MicroformatEmbed={
 	iframeUrl: `https://www.youtube.com/embed/${string}`;
-	flashUrl: `http://www.youtube.com/v/${string}?version=3&autohide=1`;
+	flashUrl?: `http://www.youtube.com/v/${string}?version=3&autohide=1`;
 	width: number;
 	height: number;
-	flashSecureUrl: `https://www.youtube.com/v/${string}?version=3&autohide=1`;
+	flashSecureUrl?: `https://www.youtube.com/v/${string}?version=3&autohide=1`;
 };
 type D_ModifiedSetItem={
 	autoplayVideo?: E_WatchPlaylist;

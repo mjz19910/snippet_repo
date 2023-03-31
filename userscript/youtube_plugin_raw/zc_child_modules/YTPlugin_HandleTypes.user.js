@@ -30,6 +30,7 @@ function init_module() {
 	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 	/** @type {(number[]|number)[]} */
 	const new_fexp_expected_many=[
+		[24517720,39323453,39323495,39323568,39323575,39323582],
 		[24468691,24512414,24516064,24519102,24530335,24530379,24530441],
 		[24487188,24519101,24519788],
 		[24477227],
