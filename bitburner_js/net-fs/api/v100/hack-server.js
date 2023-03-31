@@ -149,6 +149,8 @@ export async function main(ns) {
 	const request_port=ns.getPortHandle(request_port_id);
 	/** @type {ObjectPort<ReplyMsgPending>} */
 	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
+	/** @typedef {{id:"link",data:number,next:LinkType|null}} LinkType */
+	/** @type {ObjectPort<LinkType>} */
 	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
 	const log_port=ns.getPortHandle(log_port_id);
 	let wait_count=0;
@@ -322,11 +324,11 @@ export async function main(ns) {
 				if(i>12) {
 					for(let i=0;i<reply.reply.length;i++) {
 						let reply_msg=reply.reply[i];
-						let is_full=notify_dead_port.tryWrite(JSON.stringify({id: "link",data: reply_msg.uid,next: null}));
+						let is_full=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: null});
 						if(is_full) {
 							let json_1=notify_dead_port.read();
-							if(typeof json_1==="number") throw new Error("Bad data on notify_dead port");
-							is_full=notify_dead_port.tryWrite(JSON.stringify({id: "link",data: reply_msg.uid,next: json_1}));
+							if(json_1===null) throw new Error("port is full, bot there is nothing to read");
+							is_full=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: json_1});
 							await ns.sleep(100);
 						}
 					}
