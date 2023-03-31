@@ -340,7 +340,6 @@ export class StringPort {
 	read() {
 		let res=this.port.read();
 		if(typeof res==="number") throw new Error("Invalid message");
-		if(res==="NULL PORT DATA") return null;
 		return res;
 	}
 	peek() {
@@ -351,7 +350,6 @@ export class StringPort {
 	/** @arg {string} str */
 	write(str) {
 		let last=this.port.write(str);
-		if(last===null) return null;
 		if(typeof last==="number") throw new Error("Invalid message");
 		return last;
 	}

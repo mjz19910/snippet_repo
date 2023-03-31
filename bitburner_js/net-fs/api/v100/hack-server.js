@@ -80,7 +80,7 @@ export function async_sleep(t,delay) {
 	});
 	return ret;
 }
-/** @type {PortData[]} */
+/** @type {{host:string;msg:any[]}[]} */
 let log_messages=[];
 /** @param {NS} ns */
 export async function main(ns) {
@@ -130,11 +130,13 @@ export async function main(ns) {
 	/** @type {ObjectPort<LinkType>} */
 	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
 	notify_dead_port.clear();
-	const log_port=NetscriptPortV2.getPortHandle(ns,log_port_id);
+	/** @type {ObjectPort<{host:string;msg:any[]}>} */
+	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
 	let wait_count=0;
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
 			await log_port.nextWrite();
+			debugger;
 			let msg=log_port.read();
 			if(msg===null) continue;
 			log_messages.push(msg);
@@ -303,7 +305,7 @@ export async function main(ns) {
 			if(!success) throw new Error("Failed (request_port.tryWrite)");
 			while(log_messages.length>0) {
 				let res=log_messages.shift();
-				if(res!==void 0) ns.printf("%s",res);
+				if(res!==void 0) ns.tprintf("%s: %s",res.host,res.msg);
 			}
 			let cur_perf=0;
 			cur_perf=performance.now();
