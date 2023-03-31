@@ -436,6 +436,17 @@ export class ObjectPort {
 		if(out===null) throw new Error("must failed");
 		return out;
 	}
+	peekAll() {
+		let acc_arr=[];
+		while(!this.empty()) {
+			let cur=this.mustRead();
+			acc_arr.push(cur);
+		}
+		for(let msg of acc_arr) {
+			this.mustWrite(msg);
+		}
+		return acc_arr;
+	}
 }
 /** @arg {NS} ns */
 export function support_disable_log_opts(ns) {
