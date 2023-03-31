@@ -1,5 +1,8 @@
 /** @param {NS_With_GetSet} ns */
 export async function main(ns) {
+	// a condition breakpoint at this.memoed\[\w\];
+	// with "this.memoed.get_memoed_state=()=>this;0;"
+	// as the condition
 	while(ns.get_memoed_state===void 0) {
 		debugger;
 		await ns.sleep(1000);
