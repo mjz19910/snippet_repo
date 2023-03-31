@@ -198,6 +198,7 @@ async function memoed_get_call_ret_number(this_,call_id) {
 		(async () => {
 			let updated_ret=await generic_get_call(this_,call_id);
 			memoized_number.set(call_id,updated_ret);
+			debugger;
 		})();
 		return prev_ret;
 	}
