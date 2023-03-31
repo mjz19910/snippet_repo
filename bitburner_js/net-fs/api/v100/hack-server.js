@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,peek_call_msg,send_call_msg,peek_reply_msg,read_reply_msg} from "/api/v100/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,send_reply_msg,notify_request_has_space_id,peek_call_msg,send_call_msg,peek_reply_msg,read_reply_msg,notify_dead_reply_id} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -12,6 +12,39 @@ function serve_functions_list(ns) {
 	ns.getServerMoneyAvailable;
 	ns.getServerSecurityLevel;
 	ns.getServerMaxMoney;
+}
+class StringPort {
+	/** @arg {NetscriptPort} port */
+	constructor(port) {
+		this.port=port;
+	}
+	read_impl() {
+		let res=this.port.read();
+		if(typeof res==="number") throw new Error("Invalid message");
+		return res;
+	}
+	/** @arg {string} str */
+	tryWrite_impl(str) {
+		return this.port.tryWrite(str);
+	}
+}
+/** @template {{}} T */
+class ObjectPort extends StringPort {
+	/** @returns {T} */
+	read() {
+		let res=super.read_impl();
+		let ret=JSON.parse(res);
+		return ret;
+	}
+	/** @arg {T} obj */
+	tryWrite(obj) {
+		let str=JSON.stringify(obj);
+		return super.tryWrite_impl(str);
+	}
+	/** @param {NS} ns @param {number} port_id */
+	static getPortHandle(ns,port_id) {
+		return new ObjectPort(ns.getPortHandle(port_id));
+	}
 }
 /** @param {NS} ns */
 export async function main(ns) {
@@ -54,6 +87,7 @@ export async function main(ns) {
 	let complete_reply_id_list=[];
 	const request_port=ns.getPortHandle(request_port_id);
 	const reply_port=ns.getPortHandle(reply_port_id);
+	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
 	const log_port=ns.getPortHandle(log_port_id);
 	let wait_count=0;
 	while(!reply_port.empty()) {
@@ -221,9 +255,20 @@ export async function main(ns) {
 			for(let i=0;;i++) {
 				await ns.sleep(33);
 				let reply=await peek_reply_msg(ns,reply_port);
-				if(reply?.reply.length===0) break;
+				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
+				if(reply.reply.length===0) break;
 				if(i>12) {
-					ns.print("replies lost: ",reply?.reply.length," messages");
+					for(let i=0;i<reply.reply.length;i++) {
+						let reply_msg=reply.reply[i];
+						let is_full=notify_dead_port.tryWrite(JSON.stringify({id: "link",data: reply_msg.uid,next: null}));
+						if(is_full) {
+							let json_1=notify_dead_port.read();
+							if(typeof json_1==="number") throw new Error("Bad data on notify_dead port");
+							is_full=notify_dead_port.tryWrite(JSON.stringify({id: "link",data: reply_msg.uid,next: json_1}));
+							await ns.sleep(100);
+						}
+					}
+					ns.print("replies lost: ",reply.reply.length," messages");
 					break;
 				}
 			}
