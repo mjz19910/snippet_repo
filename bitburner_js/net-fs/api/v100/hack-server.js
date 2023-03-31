@@ -227,12 +227,12 @@ export async function main(ns) {
 			let end_perf_diff=cur_perf-start_perf;
 			start_perf=cur_perf;
 			ns.print("server done ",ns.tFormat(end_perf_diff,true));
-			l: for(let i=0;;i++) {
+			for(let i=0;;i++) {
 				await ns.sleep(33);
 				let reply=reply_port.peek();
 				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
 				if(reply.reply.length===0) break;
-				if(i>12) {
+				if(i>30) {
 					ns.print("replies lost: ",reply.reply.length," messages");
 					let linked=notify_dead_port.read();
 					for(let i=0;i<reply.reply.length;i++) {
