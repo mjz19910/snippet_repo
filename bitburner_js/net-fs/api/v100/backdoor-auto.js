@@ -1,3 +1,5 @@
+import {as_any} from "/api/v100/as.js";
+
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
@@ -33,6 +35,14 @@ export async function main(ns) {
 		terminalInput[handler].onKeyDown({key: 'Enter',preventDefault: () => null});
 	}
 	let terminalInput=await wait_for_terminal();
+	let terminal_prompt=terminalInput.previousSibling;
+	if(terminal_prompt===null) throw new Error("Invalid dom");
+	/** @type {ReactFiber} */
+	const fiber=as_any(Object.values(terminal_prompt)[1]);
+	/** @type {{children:[string,string]}} */
+	let props=fiber.memoizedProps;
+	const cur_server=props.children[1];
+	let left_home_server=false;
 	let hacking_level=ns.getHackingLevel();
 	let seen_hosts=new Set(["home"]);
 	/** @type {{[x:string]:Server}} */
@@ -42,6 +52,8 @@ export async function main(ns) {
 	/** @type {([{final:string},{path:string[]}])[]} */
 	let scan_res2=[];
 	let world_daemon_path=null;
+	/** @type {Map<string,string[]>} */
+	let connect_path_map=new Map;
 	do {
 		scan_res2.length=0;
 		for(let host_desc of scan_res) {
@@ -61,11 +73,12 @@ export async function main(ns) {
 			}
 			let srv=ns.getServer(hostname);
 			server_map[hostname]=srv;
+			let full_path=[...host_desc[1].path,hostname];
+			connect_path_map.set(hostname,full_path);
 			if(srv.purchasedByPlayer) continue;
 			if(!srv.hasAdminRights) continue;
 			if(srv.backdoorInstalled) continue;
 			if(srv.requiredHackingSkill>hacking_level) continue;
-			let full_path=[...host_desc[1].path,hostname];
 			let backdoor_path=full_path.filter((v,idx,arr) => {
 				if(idx+1>=arr.length) return !server_map[v].backdoorInstalled;
 				let v2=arr[idx+1];
@@ -74,6 +87,7 @@ export async function main(ns) {
 			if(hostname==="w0r1d_d43m0n") {world_daemon_path=full_path; continue;}
 			let cmd_list=backdoor_path.map(v => "connect "+v);
 			cmd_list.push("backdoor");
+			left_home_server=true;
 			await start_terminal_command(cmd_list.join(";"));
 			let delay=ns.getHackTime(hostname);
 			const est_delay=delay/4;
@@ -89,8 +103,19 @@ export async function main(ns) {
 		}
 		scan_res.push(...scan_res2);
 	} while(scan_res2.length>0);
-	if(world_daemon_path) {
+	x: if(world_daemon_path) {
 		let connect_path=world_daemon_path.filter((v,idx,arr) => {
+			if(idx+1>=arr.length) return !server_map[v].backdoorInstalled;
+			let v2=arr[idx+1];
+			return !server_map[v2].backdoorInstalled;
+		}).map(v => "connect "+v);
+		await start_terminal_command(connect_path.join(";"));
+	} else if(left_home_server) {
+		let rev_connect=connect_path_map.get(cur_server);
+		if(!rev_connect) {
+			break x;
+		}
+		let connect_path=rev_connect.filter((v,idx,arr) => {
 			if(idx+1>=arr.length) return !server_map[v].backdoorInstalled;
 			let v2=arr[idx+1];
 			return !server_map[v2].backdoorInstalled;
