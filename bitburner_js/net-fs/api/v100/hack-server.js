@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort, NetscriptPortV2} from "/api/v100/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort,NetscriptPortV2} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max

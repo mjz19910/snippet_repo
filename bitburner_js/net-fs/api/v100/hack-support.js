@@ -372,6 +372,11 @@ export class StringPort {
 }
 /** @template {{}} T */
 export class ObjectPort {
+	/** @template {{}} T @param {NS} ns @param {number} port_id @returns {ObjectPort<T>} */
+	static getPortHandle(ns,port_id) {
+		let str_port=StringPort.getPortHandle(ns,port_id);
+		return new ObjectPort(str_port);
+	}
 	/** @arg {StringPort} port */
 	constructor(port) {
 		this.port=port;
@@ -430,11 +435,6 @@ export class ObjectPort {
 		let out=this.peek();
 		if(out===null) throw new Error("must failed");
 		return out;
-	}
-	/** @template {{}} T @param {NS} ns @param {number} port_id @returns {ObjectPort<T>} */
-	static getPortHandle(ns,port_id) {
-		let str_port=StringPort.getPortHandle(ns,port_id);
-		return new ObjectPort(str_port);
 	}
 }
 /** @arg {NS} ns */
