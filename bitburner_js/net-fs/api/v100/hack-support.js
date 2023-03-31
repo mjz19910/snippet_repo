@@ -129,7 +129,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	let send_message=true;
 	let first_loop=true;
 	for(let i=0;;) {
-		await ns.sleep(33);
+		await ns.asleep(33);
 		{
 			if(notify_complete_port.full()) continue;
 			let last=notify_complete_arr.pop();
@@ -199,7 +199,6 @@ async function memoed_get_call_ret_number(this_,call_id) {
 			let updated_ret=await generic_get_call(this_,call_id);
 			memoized_number.set(call_id,updated_ret);
 		})();
-		await this_.ns.sleep(10);
 		return prev_ret;
 	}
 	let memoized_ret=await generic_get_call(this_,call_id);
