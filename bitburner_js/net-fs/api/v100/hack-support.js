@@ -113,6 +113,40 @@ export function fill_port_handle_cache(ns) {
 		known_port_handles.set(i,port_handle);
 	}
 }
+export let netscript_lock={
+	locked: false,
+	/** @type {(()=>void)[]} */
+	waiters: [],
+	async lock() {
+		if(this.locked) {
+			await this.wait();
+		}
+		this.locked=true;
+	},
+	unlock() {
+		let last=this.waiters.pop();
+		if(last!==void 0) {
+			last();
+		}
+		this.locked=false;
+	},
+	async wait() {
+		if(this.locked) {
+			let {waiters}=this;
+			/** @type {Promise<void>} */
+			let waiter=new Promise(function(a) {
+				waiters.push(a);
+			});
+			await waiter;
+		}
+	},
+	/** @arg {()=>void} callback */
+	async critical(callback) {
+		await this.lock();
+		callback();
+		this.unlock();
+	}
+};
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
@@ -153,7 +187,9 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		if(pending_msg.reply.length===0) continue;
 		if(i%64+2===64) {
 			resend_count++;
-			ns.print("resend ",resend_count," ",i);
+			await netscript_lock.critical(() => {
+				ns.print("resend ",resend_count," ",i);
+			});
 			send_message=true;
 			i++;
 			continue;
@@ -192,6 +228,7 @@ export function generic_get_call(this_,call_id) {
 }
 /** @arg {HackState} this_ @arg {Extract<ReplyMsg,{reply:number}>["call"]} call_id */
 async function memoed_get_call_ret_number(this_,call_id) {
+	await netscript_lock.lock();
 	let prev_ret=memoized_number.get(call_id);
 	if(prev_ret!==void 0) {
 		fill_port_handle_cache(this_.ns);
@@ -201,6 +238,7 @@ async function memoed_get_call_ret_number(this_,call_id) {
 		})();
 		return prev_ret;
 	}
+	Promise.resolve().then(() => netscript_lock.unlock());
 	let memoized_ret=await generic_get_call(this_,call_id);
 	memoized_number.set(call_id,memoized_ret);
 	return memoized_ret;

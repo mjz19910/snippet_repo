@@ -11,9 +11,15 @@ export async function main(ns) {
 
 	let ram=1;
 	let purchased_server_list=ns.getPurchasedServers();
+	debugger;
 	const purchased_server_limit=ns.getPurchasedServerLimit();
 	const template_changed=false;
 	const s=new InitHackScript(ns,{trace: false,template_changed});
+	for(let hostname of purchased_server_list) {
+		let srv=ns.getServer(hostname);
+		ns.print("will start on ",hostname);
+		await s.start_script_template(srv);
+	}
 	/** @arg {number} prev_ram @arg {number} ram @arg {string[]} hostname_list */
 	async function upgrade_purchased_server_list(prev_ram,ram,hostname_list) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
@@ -56,12 +62,6 @@ export async function main(ns) {
 		return new_host;
 	}
 	purchased_server_list=ns.getPurchasedServers();
-	for(let hostname of purchased_server_list) {
-		let old_proc=ns.ps(hostname);
-		old_proc.forEach(v => ns.kill(v.pid));
-		let srv=ns.getServer(hostname);
-		await s.start_script_template(srv);
-	}
 	await upgrade_purchased_server_list(0,ram,purchased_server_list);
 	/** @arg {string} hostname */
 	function get_ram(hostname) {return ns.getServerMaxRam(hostname);}
