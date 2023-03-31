@@ -49,13 +49,15 @@ function start_thread(func) {
 		}
 	};
 }
-/** @param {number} delay */
-function async_sleep(delay) {
+/** @param {ThreadState} t @param {number} delay */
+function async_sleep(t,delay) {
 	/** @type {Promise<void>} */
 	let ret=new Promise((a) => {
-		return setTimeout(() => {
+		let id=setTimeout(() => {
+			t.remove_timer(id);
 			a();
 		},delay);
+		t.timers.push(id);
 	});
 	return ret;
 }
