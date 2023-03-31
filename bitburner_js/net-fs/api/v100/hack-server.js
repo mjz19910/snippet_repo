@@ -327,8 +327,7 @@ export async function main(ns) {
 			let prev_len=-1,cur_len=-1;
 			for(let i=0;;i++) {
 				await ns.sleep(33);
-				let reply=reply_port.peek();
-				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
+				let reply=reply_port.mustPeek();
 				let real_prev_len=cur_len;
 				prev_len=cur_len;
 				cur_len=reply.reply.length;
