@@ -50,6 +50,9 @@ class StringPort {
 	clear() {
 		this.port.clear();
 	}
+	full() {
+		return this.port.full();
+	}
 }
 /** @template {{}} T */
 class ObjectPort {
@@ -62,6 +65,12 @@ class ObjectPort {
 	}
 	clear() {
 		this.port.clear();
+	}
+	full() {
+		return this.port.port.full();
+	}
+	nextWrite() {
+		return this.port.nextWrite();
 	}
 	/** @returns {T|null} */
 	read() {
@@ -84,18 +93,12 @@ class ObjectPort {
 		let str=JSON.stringify(obj);
 		return this.port.tryWrite(str);
 	}
-	nextWrite() {
-		return this.port.nextWrite();
-	}
 	/** @returns {T|null} */
 	peek() {
 		let res=this.port.peek();
 		if(res===null) return null;
 		let ret=JSON.parse(res);
 		return ret;
-	}
-	full() {
-		return this.port.port.full();
 	}
 	/** @template {{}} T @param {NS} ns @param {number} port_id @returns {ObjectPort<T>} */
 	static getPortHandle(ns,port_id) {
