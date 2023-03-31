@@ -220,7 +220,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		i++;
 	}
 }
-/** @type {Map<string,number>} */
+/** @type {Map<string,{t:"r",v:number}|{t:"e",err:unknown}>} */
 const memoized_number=new Map;
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {CallId} call_id */
 export function generic_get_call(this_,call_id) {
@@ -228,19 +228,28 @@ export function generic_get_call(this_,call_id) {
 	return generic_get_call_with_id(this_,this_.target,call_id);
 }
 /** @arg {HackState} this_ @arg {Extract<ReplyMsg,{reply:number}>["call"]} call_id */
-async function memoed_get_call_ret_number(this_,call_id) {
+function memoed_get_call_ret_number(this_,call_id) {
 	let prev_ret=memoized_number.get(call_id);
 	if(prev_ret!==void 0) {
 		fill_port_handle_cache(this_.ns);
-		(async () => {
-			let updated_ret=await generic_get_call(this_,call_id);
-			memoized_number.set(call_id,updated_ret);
-		})();
-		return prev_ret;
+		generic_get_call(this_,call_id).then(v => {
+			memoized_number.set(call_id,{t: "r",v});
+		}).catch(err => {
+			memoized_number.set(call_id,{t: "e",err});
+		});
+		if(prev_ret.t==="r") {
+			return prev_ret.v;
+		} else {
+			throw prev_ret.err;
+		}
 	}
-	let memoized_ret=await generic_get_call(this_,call_id);
-	memoized_number.set(call_id,memoized_ret);
-	return memoized_ret;
+	return generic_get_call(this_,call_id).then(v => {
+		memoized_number.set(call_id,{t: "r",v});
+		return v;
+	}).catch(err => {
+		memoized_number.set(call_id,{t: "e",err});
+		throw err;
+	});
 
 }
 /** @arg {HackState} this_ */
