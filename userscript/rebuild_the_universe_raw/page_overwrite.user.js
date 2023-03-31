@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         rebuild the universe page_overwrite.user.js
+// @name         rebuild the universe page overwrite
 // @namespace    https://github.com/mjz19910/
 // @version      0.1.0.0
 // @description  try to take over the world!
