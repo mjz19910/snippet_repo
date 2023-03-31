@@ -227,25 +227,21 @@ export async function main(ns) {
 			let end_perf_diff=cur_perf-start_perf;
 			start_perf=cur_perf;
 			ns.print("server done ",ns.tFormat(end_perf_diff,true));
-			for(let i=0;;i++) {
+			l: for(let i=0;;i++) {
 				await ns.sleep(33);
 				let reply=reply_port.peek();
 				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
 				if(reply.reply.length===0) break;
 				if(i>12) {
+					ns.print("replies lost: ",reply.reply.length," messages");
+					let linked=notify_dead_port.read();
 					for(let i=0;i<reply.reply.length;i++) {
 						let reply_msg=reply.reply[i];
-						let success=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: null});
-						if(!success) {
-							let json_1=notify_dead_port.read();
-							while(json_1!==null) {
-								success=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: json_1});
-								await ns.sleep(100);
-								json_1=notify_dead_port.read();
-							}
-						}
+						linked={id: "link",data: reply_msg.uid,next: linked};
 					}
-					ns.print("replies lost: ",reply.reply.length," messages");
+					if(linked===null) break;
+					let success=notify_dead_port.tryWrite(linked);
+					if(!success) throw new Error("Invalid state");
 					break;
 				}
 			}
