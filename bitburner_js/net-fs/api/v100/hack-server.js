@@ -148,7 +148,6 @@ export async function main(ns) {
 				ns.print("send_len ",msg_arr.length);
 			}
 			for(let msg of msg_arr) {
-				await ns.sleep(33);
 				const {call,args}=msg;
 				/** @type {{t:"n"}|{t:"s",l:"Server",f:Extract<ReplyMsg,{reply:Server}>["call"],v:Server}|{t:"s",l:"number",f:Extract<ReplyMsg,{reply:number}>["call"],v:number}} */
 				let reply={t: "n"};
