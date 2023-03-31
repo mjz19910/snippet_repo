@@ -80,13 +80,13 @@ export async function main(ns) {
 	reply_port.clear();
 	log_port.clear();
 	let success=reply_port.tryWrite({call: "pending",id: "reply",reply: []});
-	if(!success) throw new Error("Failed to write to reply port");
+	if(!success) throw new Error("Failed (tryWrite,reply_port)");
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	notify_complete_port.clear();
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
 	notify_request_has_space_port.clear();
 	success=notify_request_has_space_port.tryWrite(1);
-	if(!success) throw new Error("Failed to write (notify_request_has_space)");
+	if(!success) throw new Error("Failed (tryWrite,notify_request_has_space)");
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
@@ -202,7 +202,8 @@ export async function main(ns) {
 				if(reply.t==="s"&&reply.l==="Server") {
 					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
 				}
-				notify_request_has_space_port.write(1);
+				let success=notify_request_has_space_port.tryWrite(1);
+				if(!success) throw new Error("Failed (tryWrite)");
 				while(!notify_complete_port.empty()) {
 					let complete_id=notify_complete_port.read();
 					if(typeof complete_id==="number") {
@@ -215,7 +216,7 @@ export async function main(ns) {
 			msg_arr.length=0;
 			request_port.read();
 			let success=request_port.tryWrite(msg);
-			if(!success) throw new Error("Failed to write to request_port");
+			if(!success) throw new Error("Failed (request_port.tryWrite)");
 			if(!log_port.empty()) {
 				let res=log_port.read();
 				ns.printf("%s",res);
@@ -234,12 +235,14 @@ export async function main(ns) {
 				if(i>12) {
 					for(let i=0;i<reply.reply.length;i++) {
 						let reply_msg=reply.reply[i];
-						let is_full=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: null});
-						if(is_full) {
+						let success=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: null});
+						if(!success) {
 							let json_1=notify_dead_port.read();
-							if(json_1===null) throw new Error("port is full, bot there is nothing to read");
-							is_full=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: json_1});
-							await ns.sleep(100);
+							while(json_1!==null) {
+								success=notify_dead_port.tryWrite({id: "link",data: reply_msg.uid,next: json_1});
+								await ns.sleep(100);
+								json_1=notify_dead_port.read();
+							}
 						}
 					}
 					ns.print("replies lost: ",reply.reply.length," messages");
