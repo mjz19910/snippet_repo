@@ -82,3 +82,7 @@ Investment: {
 	// $200 million
 	prod-4: [design: 2e8,marketing: 2e8],
 }
+Materials: {
+	Water: 1.597 / 3
+	Energy: 0.639 / 3
+}
