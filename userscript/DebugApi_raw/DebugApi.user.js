@@ -4736,11 +4736,19 @@ export_(exports => {
 },{global: true});
 export_(exports => {
 	const proxy_map=new Map;
+	const proxy_revoke_fn_map=new Map;
 	exports.__proxy_map__=proxy_map;
 	const proxy_make=window.Proxy;
 	const proxy_revocable_make=proxy_make.revocable;
 	/** @type {ProxyHandler<ProxyConstructor["revocable"]>} */
 	const proxy_revocable_handler={
+		apply(...args) {
+			/** @type {ReturnType<ProxyConstructor["revocable"]>} */
+			let ret=Reflect.apply(...args);
+			proxy_revoke_fn_map.set(ret.proxy,ret.revoke);
+			proxy_map.set(ret.proxy,args);
+			return ret;
+		},
 		get(obj,key,rx) {
 			let ret=Reflect.get(obj,key,rx);
 			console.log("Proxy.revocable.",key);
