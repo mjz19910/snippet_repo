@@ -79,12 +79,14 @@ export async function main(ns) {
 	request_port.clear();
 	reply_port.clear();
 	log_port.clear();
-	reply_port.write({call: "pending",id: "reply",reply: []});
+	let success=reply_port.tryWrite({call: "pending",id: "reply",reply: []});
+	if(!success) throw new Error("Failed to write to reply port");
 	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
 	notify_complete_port.clear();
 	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
 	notify_request_has_space_port.clear();
-	notify_request_has_space_port.write(1);
+	success=notify_request_has_space_port.tryWrite(1);
+	if(!success) throw new Error("Failed to write (notify_request_has_space)");
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
