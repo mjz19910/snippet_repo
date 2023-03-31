@@ -227,6 +227,7 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
+			debugger;
 			let start_perf=performance.now();
 			await ns.sleep(33);
 			while(request_port.empty()) await request_port.nextWrite();
