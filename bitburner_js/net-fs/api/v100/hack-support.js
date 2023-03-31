@@ -227,9 +227,11 @@ export function generic_get_call(this_,call_id) {
 	if(!this_.target) throw new Error("Invalid state.target");
 	return generic_get_call_with_id(this_,this_.target,call_id);
 }
+let locked_for_memoize=false;
 /** @arg {HackState} this_ @arg {Extract<ReplyMsg,{reply:number}>["call"]} call_id */
 async function memoed_get_call_ret_number(this_,call_id) {
-	await netscript_lock.lock();
+	if(!locked_for_memoize) await netscript_lock.lock();
+	locked_for_memoize=true;
 	let prev_ret=memoized_number.get(call_id);
 	if(prev_ret!==void 0) {
 		fill_port_handle_cache(this_.ns);
@@ -239,7 +241,10 @@ async function memoed_get_call_ret_number(this_,call_id) {
 		})();
 		return prev_ret;
 	}
-	Promise.resolve().then(() => netscript_lock.unlock());
+	Promise.resolve().then(() => {
+		locked_for_memoize=false;
+		netscript_lock.unlock();
+	});
 	let memoized_ret=await generic_get_call(this_,call_id);
 	memoized_number.set(call_id,memoized_ret);
 	return memoized_ret;
