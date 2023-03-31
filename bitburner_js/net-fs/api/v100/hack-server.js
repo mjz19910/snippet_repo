@@ -342,20 +342,6 @@ export async function main(ns) {
 				}
 				if(prev_len!==-1&&prev_len!==cur_len) i=0;
 				if(reply.reply.length===0) break;
-				let drop_replies=true;
-				if(drop_replies&&i>80) {
-					ns.print("replies lost: ",reply.reply.length," messages");
-					let linked=notify_dead_port.read();
-					for(let i=0;i<reply.reply.length;i++) {
-						let reply_msg=reply.reply[i];
-						forgotten_ids.add(reply_msg.uid);
-						linked={id: "link",data: reply_msg.uid,next: linked};
-					}
-					if(linked===null) break;
-					let success=notify_dead_port.tryWrite(linked);
-					if(!success) throw new Error("Invalid state");
-					break;
-				}
 			}
 			cur_perf=performance.now();
 			end_perf_diff=cur_perf-start_perf;
