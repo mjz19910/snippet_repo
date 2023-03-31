@@ -108,7 +108,7 @@ let resend_count=0;
 const known_port_handles=new Map;
 /** @arg {NS} ns */
 export function fill_port_handle_cache(ns) {
-	for(let i=0;i<max_port_id;i++) {
+	for(let i=1;i<max_port_id;i++) {
 		const port_handle=NetscriptPortV2.getPortHandle(ns,i);
 		known_port_handles.set(i,port_handle);
 	}
@@ -172,7 +172,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			pending_msg.reply.splice(idx,1);
 		}
 		if(received_reply) {
-			debugger;
 			reply_port.mustRead();
 			reply_port.mustWrite(pending_msg);
 		}
