@@ -103,7 +103,6 @@ function should_accept(reply,type,id) {
 	if("id" in reply) return reply.id===id;
 	throw new Error("Unsupported should accept");
 }
-let resend_count=0;
 /** @type {Map<number,NetscriptPortV2>} */
 const known_port_handles=new Map;
 /** @arg {NS} ns */
@@ -147,6 +146,13 @@ export let netscript_lock={
 		this.unlock();
 	}
 };
+/** @arg {NS} ns */
+export function get_log_port(ns) {
+	/** @type {ObjectPort<{host:string;msg:any[]}>} */
+	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
+	return log_port;
+
+}
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
@@ -156,14 +162,12 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const request_port=ObjectPort.getPortHandle(ns,request_port_id);
 	/** @type {ObjectPort<ReplyMsgPending>} */
 	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
-	/** @type {ObjectPort<{host:string;msg:any[]}>} */
-	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	let notify_complete_arr=[];
 	let send_message=true;
 	let first_loop=true;
-	for(let i=0;;) {
+	for(;;) {
 		await ns.asleep(1500);
 		if(first_loop) first_loop=false;
 		if(send_message) {
@@ -176,13 +180,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		let pending_msg=reply_port.mustPeek();
 		let accepted_messages=[];
 		if(pending_msg.reply.length===0) continue;
-		if(i%64+2===64) {
-			resend_count++;
-			await log_port.asyncWrite(ns,{host: this_.hostname,msg: ["resend ",resend_count," ",i]});
-			send_message=true;
-			i++;
-			continue;
-		}
 		let received_reply=false;
 		for(let msg of pending_msg.reply) {
 			if(!should_accept(msg,call_id,id)) continue;
@@ -205,7 +202,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			assume_return(ret);
 			return ret;
 		}
-		i++;
 	}
 }
 /** @type {Map<string,{t:"r",v:number}|{t:"e",err:unknown}>} */
