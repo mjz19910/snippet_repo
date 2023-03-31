@@ -238,9 +238,10 @@ export async function main(ns) {
 				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
 				prev_len=cur_len;
 				cur_len=reply.reply.length;
-				ns.tprint(prev_len," ",cur_len);
+				if(prev_len!==-1) ns.tprint(prev_len," ",cur_len);
 				if(reply.reply.length===0) break;
-				if(i>30) {
+				let drop_replies=false;
+				if(drop_replies&&i>30) {
 					ns.print("replies lost: ",reply.reply.length," messages");
 					let linked=notify_dead_port.read();
 					for(let i=0;i<reply.reply.length;i++) {

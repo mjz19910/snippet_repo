@@ -145,6 +145,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			ns.print("resend ",resend_count);
 			send_message=true;
 			await ns.sleep(5000);
+			i=0;
 			continue;
 		}
 		for(let msg of pending_msg.reply) {
