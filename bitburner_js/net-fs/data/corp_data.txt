@@ -1,0 +1,22 @@
+1x Operations: 0.030%
+1x Business: 0%
+1x R&D: 0%
+1x Training: 0%
+{
+	1x Engineer: 0.066%
+	2x Engineer: 0.084%
+	3x Engineer: 0.096%
+	4x Engineer: 0.106%
+	5x Engineer: 0.114%
+	6x Engineer: 0.122%
+}
+{
+	1x Eng + 1x Ops: 0.096% (equiv of 3x Engineer)
+	1x Eng + 2x Ops: 0.100%
+	1x Eng + 3x Ops: 0.103%
+	1x Eng + 1x Ops + 1x Man: 0.125%
+	2x Ops + 1x Eng + 1x Man: 0.12365%
+	1x Ops + 2x Eng + 1x Man: 0.13919%
+	1x Ops + 1x Eng + 2x Man: 0.13847%
+	1x Ops + 2x Eng + 2x Man: 0.15389%
+}
