@@ -36,9 +36,9 @@ export async function main(ns) {
 		if(typeof gf_r==="object") return as_any(gf_r);
 		return as_any(gf_r(make_state(name)));
 	}
-	if(ns.getScriptName()==="get_memoed_state.js") {
-		let script_content=ns.read("get_memoed_state.js");
-		const copy_name=`get_memoed_state.${Math.random()*255|0}.js`;
+	if(ns.getScriptName()==="/api/get_memoed_state.js") {
+		let script_content=ns.read("/api/get_memoed_state.js");
+		const copy_name=`/api/get_memoed_state.${Math.random()*255|0}.js`;
 		get_func2("write")(copy_name,script_content,"w");
 		get_func2("run")(copy_name);
 		let rm_=get_func2("rm");
