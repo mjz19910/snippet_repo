@@ -93,14 +93,14 @@ export async function read_reply_msg(ns,ns_port) {
 /**
  * @template {string} CallId
  * @param {ReplyMsg} reply
- * @param {CallId} call_
- * @param {string} arg0
+ * @param {CallId} type
+ * @param {string} id
  * @returns {reply is {call:CallId}}
  */
-function should_accept(reply,call_,arg0) {
-	if(reply.call!==call_) return false;
-	if("hostname" in reply) return reply.hostname===arg0;
-	if("id" in reply) return reply.id===arg0;
+function should_accept(reply,type,id) {
+	if(reply.call!==type) return false;
+	if("hostname" in reply) return reply.hostname===id;
+	if("id" in reply) return reply.id===id;
 	throw new Error("Unsupported should accept");
 }
 let resend_count=0;
