@@ -10,7 +10,7 @@ export async function main(ns) {
 		await ns.sleep(1000);
 	}
 	let memoed_state=ns.get_memoed_state();
-	/** @type {{v:ScriptState<"get_state_set">|null}} */
+	/** @type {{v:NetscriptContext|null}} */
 	let state_export_obj={v: null};
 	memoed_state.ns.get_state_set=function(s) {
 		state_export_obj.v=s;
@@ -22,7 +22,7 @@ export async function main(ns) {
 	let script_state=state_export_obj.v;
 	if(script_state===null) throw new Error("Did not get state");
 	let ws=script_state.workerScript;
-	/** @template {keyof GetCallableState<NS_With_GetSet>} K @arg {K} name */
+	/** @template {keyof NS_With_GetSet} K @arg {K} name */
 	function get_func(name) {
 		return r_ns[name];
 	}
@@ -30,10 +30,10 @@ export async function main(ns) {
 	function make_state(name) {
 		return {workerScript: ws,function: name,functionPath: name};
 	}
-	/** @template {keyof GetCallableState<NS_With_GetSet>} K @arg {K} name @returns {NS_With_GetSet[K]} */
+	/** @template {keyof NS_With_GetSet} K @arg {K} name @returns {NS_With_GetSet[K]} */
 	function get_func2(name) {
-		/** @type {ReqState<NS_With_GetSet>[keyof ReqState<NS_With_GetSet>]} */
 		let gf_r=get_func(name);
+		if(typeof gf_r==="object") return as_any(gf_r);
 		return as_any(gf_r(make_state(name)));
 	}
 	if(ns.getScriptName()==="get-karma.js") {
