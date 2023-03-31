@@ -243,6 +243,10 @@ export async function main(ns) {
 				reply.reply=reply.reply.filter(v => {
 					return !forgotten_ids.has(v.uid);
 				});
+				if(cur_len!==reply.reply.length) {
+					reply_port.mustRead();
+					reply_port.write(reply);
+				}
 				if(reply.reply.length===0) break;
 				let drop_replies=true;
 				if(drop_replies&&i>80) {
