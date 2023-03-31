@@ -145,6 +145,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			resend_count++;
 			ns.print("resend ",resend_count);
 			send_message=true;
+			await ns.sleep(5000);
 			continue;
 		}
 		for(let msg of pending_msg.reply) {
@@ -152,6 +153,14 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			accepted_messages.push(msg);
 			notify_complete_arr.push(msg.uid);
 		}
+		for(let msg of pending_msg.reply.slice()) {
+			if(!should_accept(msg,call_id,id)) continue;
+			let idx=pending_msg.reply.indexOf(msg);
+			if(idx===-1) continue;
+			pending_msg.reply.splice(idx,1);
+		}
+		await read_reply_msg(ns,reply_port);
+		await send_reply_msg(ns,reply_port,pending_msg);
 		for(let ok_msg of accepted_messages) {
 			let ret=ok_msg.reply;
 			assume_return(ret);
