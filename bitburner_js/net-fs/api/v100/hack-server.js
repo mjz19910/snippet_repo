@@ -226,15 +226,14 @@ export async function main(ns) {
 	}
 	async function process_messages() {
 		for(let i=0;;i++) {
-			debugger;
 			let start_perf=performance.now();
-			await ns.sleep(33);
+			await ns.sleep(500);
 			let msg=request_port.peek();
 			let reply=reply_port.peek();
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) {
-				await ns.sleep(100);
+				await ns.sleep(1500);
 				continue;
 			}
 			if(reply) {
