@@ -53,9 +53,8 @@ function start_thread(func) {
 function async_sleep(t,delay) {
 	if(t.signal.aborted) return Promise.reject(new Error("Aborted"));
 	/** @type {Promise<void>} */
-	let ret=new Promise((a,r) => {
+	let ret=new Promise((a) => {
 		let id=setTimeout(() => {
-			if(t.signal.aborted) r(new Error("Aborted"));
 			t.remove_timer(id);
 			a();
 		},delay);
@@ -63,6 +62,8 @@ function async_sleep(t,delay) {
 	});
 	return ret;
 }
+/** @type {PortData[]} */
+let log_messages=[];
 /** @param {NS} ns */
 export async function main(ns) {
 	serve_functions_list(ns);
@@ -114,7 +115,12 @@ export async function main(ns) {
 	const log_port=NetscriptPortV2.getPortHandle(ns,log_port_id);
 	let wait_count=0;
 	let thread_handle=start_thread(async function(thread) {
-		await async_sleep(thread,30);
+		while(!thread.signal.aborted) {
+			await async_sleep(thread,33);
+			let msg=log_port.read();
+			if(msg===null) continue;
+			log_messages.push(msg);
+		}
 	});
 	ns.atExit(() => {
 		thread_handle.kill();
@@ -277,10 +283,9 @@ export async function main(ns) {
 			request_port.read();
 			let success=request_port.tryWrite(msg);
 			if(!success) throw new Error("Failed (request_port.tryWrite)");
-			if(!log_port.empty()) {
-				let res=log_port.read();
-				ns.printf("%s",res);
-				continue;
+			while(log_messages.length>0) {
+				let res=log_messages.shift();
+				if(res!==void 0) ns.printf("%s",res);
 			}
 			let cur_perf=0;
 			cur_perf=performance.now();
