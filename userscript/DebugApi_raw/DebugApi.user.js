@@ -16,8 +16,9 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
-let page_require=typeof require==="undefined"? __module_require__:require,reset_require=false;
-if(page_require!==__module_require__) {
+let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
+if(typeof require==="undefined"||page_require!==__module_require__) {
+	delete_require=typeof require==="undefined";
 	require=__module_require__;
 	reset_require=true;
 }
@@ -4757,4 +4758,7 @@ export_(exports => {
 export_(exports => exports.__module_loaded__=true);
 if(reset_require) {
 	require=page_require;
+}
+if(delete_require) {
+	delete require;
 }
