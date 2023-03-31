@@ -16,7 +16,6 @@ export function write_log_message(s,a1) {
  */
 export async function run_hack(this_) {
 	if(!this_.target) throw new Error("Bad args");
-	debugger;
 	const max_money=await getServerMaxMoney_(this_);
 	if(max_money===0) return;
 	// Defines how much money a server should have before we hack it

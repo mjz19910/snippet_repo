@@ -341,10 +341,7 @@ export async function main(ns) {
 					prev_len=real_prev_len;
 					cur_len=reply.reply.length;
 				}
-				if(prev_len!==-1&&prev_len!==cur_len) {
-					ns.tprintf("%s %s",prev_len,cur_len);
-					i=0;
-				}
+				if(prev_len!==-1&&prev_len!==cur_len) i=0;
 				if(reply.reply.length===0) break;
 				let drop_replies=true;
 				if(drop_replies&&i>80) {
