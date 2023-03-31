@@ -17,7 +17,7 @@
 /* eslint-disable no-undef */
 
 let page_require=typeof require==="undefined"? __module_require__:require,reset_require=false;
-if(require!==__module_require__) {
+if(page_require!==__module_require__) {
 	require=__module_require__;
 	reset_require=true;
 }
