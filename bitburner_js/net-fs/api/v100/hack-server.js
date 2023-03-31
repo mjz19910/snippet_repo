@@ -237,16 +237,19 @@ export async function main(ns) {
 				await ns.sleep(33);
 				let reply=reply_port.peek();
 				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
+				let real_prev_len=cur_len;
 				prev_len=cur_len;
 				cur_len=reply.reply.length;
-				if(prev_len!==-1&&(i%8===0||prev_len!==cur_len)) ns.tprintf("%s %s",prev_len,cur_len);
 				reply.reply=reply.reply.filter(v => {
 					return !forgotten_ids.has(v.uid);
 				});
 				if(cur_len!==reply.reply.length) {
 					reply_port.mustRead();
 					reply_port.write(reply);
+					prev_len=real_prev_len;
+					cur_len=reply.reply.length;
 				}
+				if(prev_len!==-1&&(i%8===0||prev_len!==cur_len)) ns.tprintf("%s %s",prev_len,cur_len);
 				if(reply.reply.length===0) break;
 				let drop_replies=true;
 				if(drop_replies&&i>80) {
