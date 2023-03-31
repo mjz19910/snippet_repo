@@ -52,8 +52,9 @@ function start_thread(func) {
 /** @param {ThreadState} t @param {number} delay */
 function async_sleep(t,delay) {
 	/** @type {Promise<void>} */
-	let ret=new Promise((a) => {
+	let ret=new Promise((a,r) => {
 		let id=setTimeout(() => {
+			if(t.signal.aborted) r(new Error("Aborted"));
 			t.remove_timer(id);
 			a();
 		},delay);
