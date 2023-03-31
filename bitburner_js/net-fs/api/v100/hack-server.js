@@ -226,7 +226,7 @@ export async function main(ns) {
 			cur_perf=performance.now();
 			let end_perf_diff=cur_perf-start_perf;
 			start_perf=cur_perf;
-			ns.print("done processing all messages in ",ns.tFormat(end_perf_diff));
+			ns.print("server done ",ns.tFormat(end_perf_diff,true));
 			for(let i=0;;i++) {
 				await ns.sleep(33);
 				let reply=reply_port.peek();
