@@ -140,10 +140,10 @@ export let netscript_lock={
 			await waiter;
 		}
 	},
-	/** @arg {()=>void} callback */
+	/** @arg {()=>Promise<void>} callback */
 	async critical(callback) {
 		await this.lock();
-		callback();
+		await callback();
 		this.unlock();
 	}
 };
@@ -189,6 +189,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			resend_count++;
 			await netscript_lock.critical(() => {
 				ns.print("resend ",resend_count," ",i);
+				return Promise.resolve();
 			});
 			send_message=true;
 			i++;

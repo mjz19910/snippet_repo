@@ -2,6 +2,7 @@ import {as_any} from "/api/v100/as.js";
 import {
 	HackState,generic_get_call_with_id,
 	getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_,
+	netscript_lock,
 	support_disable_log_opts
 } from "/api/v100/hack-support.js";
 
@@ -29,13 +30,22 @@ export async function run_hack(this_) {
 	this_.ns.print("moneyAvailable: $",this_.ns.formatNumber(server_money));
 	if(security_level>securityThreshold) {
 		write_log_message(this_,"weaken");
-		await this_.ns.weaken(this_.target);
+		let {target}=this_;
+		await netscript_lock.critical(async () => {
+			await this_.ns.weaken(target);
+		});
 	} else if(server_money<moneyThreshold) {
 		write_log_message(this_,"grow");
-		await this_.ns.grow(this_.target);
+		let {target}=this_;
+		await netscript_lock.critical(async () => {
+			await this_.ns.grow(target);
+		});
 	} else {
 		write_log_message(this_,"hack");
-		await this_.ns.hack(this_.target);
+		let {target}=this_;
+		await netscript_lock.critical(async () => {
+			await this_.ns.hack(target);
+		});
 	}
 	if(this_.thread_count>512) {
 		let j=0;
