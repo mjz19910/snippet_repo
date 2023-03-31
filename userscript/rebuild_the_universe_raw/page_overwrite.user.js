@@ -84,6 +84,10 @@ function main() {
 	} else if(location.href=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real") {
 		history.pushState({real_page: true},'',non_proto_url);
 		do_real_page_action();
-	} else if(location.href=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/") {do_local_mirror_write();} else {do_local_mirror_write();}
+	} else if(location.href=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/") {
+		do_local_mirror_write();
+	} else if(non_proto_url==="//rebuildtheuniverse.com/") {
+		do_local_mirror_write();
+	}
 }
 main();
