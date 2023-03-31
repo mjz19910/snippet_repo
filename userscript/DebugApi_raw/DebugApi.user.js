@@ -4744,6 +4744,11 @@ export_(exports => {
 			let ret=Reflect.construct(...args);
 			proxy_map.set(ret,args);
 			return ret;
+		},
+		/** @arg {Parameters<ProxyHandler<ProxyConstructor>["get"]>} args */
+		get(...args) {
+			let ret=Reflect.get(...args);
+			return ret;
 		}
 	};
 	exports.Proxy=new window.Proxy(proxy_make,new Proxy(proxy_construct_handler,{
