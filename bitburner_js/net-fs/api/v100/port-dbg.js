@@ -1,3 +1,5 @@
+import {NetscriptPortV2} from "./hack-support";
+
 /** @param {NS} ns */
 export async function main(ns) {
 	ns.tail();
@@ -5,13 +7,15 @@ export async function main(ns) {
 	/** @param {number} port */
 	function debug_port_handle(port) {
 		let delayed_messages=[];
-		let handle=ns.getPortHandle(port);
+		let handle=NetscriptPortV2.getPortHandle(ns,port);
 		if(handle.empty()) {
 			ns.print(port,": empty");
 			return;
 		}
 		while(!handle.empty()) {
-			delayed_messages.push(handle.read());
+			let res=handle.read();
+			if(res===null) break;
+			delayed_messages.push(res);
 		}
 		ns.print(port,": ",delayed_messages.map(v => {
 			if(typeof v==="string") return JSON.parse(v);

@@ -1,13 +1,13 @@
-import {async_port_read_data} from "./hack-support.js";
-/** @arg {NS} ns @arg {NetscriptPort} ns_port */
+import {NetscriptPortV2} from "./hack-support.js";
+/** @arg {NS} ns @arg {NetscriptPortV2} ns_port */
 async function read_all_ns_port(ns,ns_port) {
 	while(!ns_port.empty()) {
-		let msg=await async_port_read_data(ns,ns_port);
+		let msg=ns_port.read();
 		ns.tprint(msg);
 	}
 }
 /** @param {NS} ns */
 export async function main(ns) {
-	await read_all_ns_port(ns,ns.getPortHandle(1));
-	await read_all_ns_port(ns,ns.getPortHandle(2));
+	await read_all_ns_port(ns,NetscriptPortV2.getPortHandle(ns,1));
+	await read_all_ns_port(ns,NetscriptPortV2.getPortHandle(ns,2));
 }

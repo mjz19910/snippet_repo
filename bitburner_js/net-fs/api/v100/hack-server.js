@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort} from "/api/v100/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort, NetscriptPortV2} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -61,7 +61,7 @@ export async function main(ns) {
 	/** @type {ObjectPort<LinkType>} */
 	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
 	notify_dead_port.clear();
-	const log_port=ns.getPortHandle(log_port_id);
+	const log_port=NetscriptPortV2.getPortHandle(ns,log_port_id);
 	let wait_count=0;
 	while(!reply_port.empty()) {
 		wait_count++;
@@ -83,9 +83,9 @@ export async function main(ns) {
 	log_port.clear();
 	let success=reply_port.tryWrite({call: "pending",id: "reply",reply: []});
 	if(!success) throw new Error("Failed (tryWrite,reply_port)");
-	const notify_complete_port=ns.getPortHandle(notify_complete_pipe_port_id);
+	const notify_complete_port=NetscriptPortV2.getPortHandle(ns,notify_complete_pipe_port_id);
 	notify_complete_port.clear();
-	const notify_request_has_space_port=ns.getPortHandle(notify_request_has_space_id);
+	const notify_request_has_space_port=NetscriptPortV2.getPortHandle(ns,notify_request_has_space_id);
 	notify_request_has_space_port.clear();
 	success=notify_request_has_space_port.tryWrite(1);
 	if(!success) throw new Error("Failed (tryWrite,notify_request_has_space)");
