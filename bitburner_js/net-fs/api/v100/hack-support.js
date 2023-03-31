@@ -267,6 +267,7 @@ export class HackState {
 		const [thread_count,hostname]=p_flags._;
 		this.thread_count=thread_count;
 		this.hostname=hostname;
+		this.log_port=get_log_port(ns);
 	}
 }
 export class NetscriptPortV2 {
