@@ -9,7 +9,7 @@ import {
 
 /** @param {HackState} s @param {string} a1 */
 export function write_log_message(s,a1) {
-	s.log_port.mustWrite({host: s.hostname,msg: [a1,":",s.target]});
+	s.log_port.mustWrite({host: s.hostname,msg: [a1,s.target]});
 }
 /**
  * @param {HackState} this_
