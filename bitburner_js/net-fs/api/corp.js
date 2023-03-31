@@ -1,4 +1,4 @@
-import {NSProxy} from "/api/internal-support";
+import {NSProxy} from "api/internal-support";
 
 /** @param {NS_With_GetSet} ns */
 export async function main(ns) {
