@@ -1,5 +1,6 @@
 /** @param {NS} ns */
 export async function main(ns) {
+	ns.clearLog();
 	ns.tail();
 	let corporation=ns.corporation;
 	let my_corp=corporation.getCorporation();
