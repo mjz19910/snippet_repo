@@ -136,6 +136,14 @@ export async function main(ns) {
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
 			await log_port.nextWrite();
+			if(log_messages.length>1000) {
+				try {
+					log_port.read();
+				} catch {
+					log_port.port.read();
+				}
+				continue;
+			}
 			try {
 				let msg=log_port.peek();
 				if(msg===null) {
