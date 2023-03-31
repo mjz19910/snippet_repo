@@ -156,7 +156,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const request_port=ObjectPort.getPortHandle(ns,request_port_id);
 	/** @type {ObjectPort<ReplyMsgPending>} */
 	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
-	const notify_complete_port=NetscriptPortV2.getPortHandle(ns,notify_complete_pipe_port_id);
 	/** @type {ObjectPort<{host:string;msg:any[]}>} */
 	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
@@ -166,14 +165,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	let first_loop=true;
 	for(let i=0;;) {
 		await ns.asleep(1500);
-		{
-			if(notify_complete_port.full()) continue;
-			let last=notify_complete_arr.pop();
-			if(last!==void 0) {
-				notify_complete_port.write(last);
-				continue;
-			}
-		}
 		if(first_loop) first_loop=false;
 		if(request_port.empty()) {request_port.mustWrite({call: "pending",id: "call",reply: []}); continue;}
 		if(reply_port.empty()) {reply_port.mustWrite({call: "pending",id: "reply",reply: []}); continue;}
