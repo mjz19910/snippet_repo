@@ -17,8 +17,6 @@ const {CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers
 const {CodegenService}=require("./YTPlugin_Codegen.user");
 const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
-// IndexedDB_Service(7)
-const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 const {ParserService}=require("./YTPlugin_Parser_Service.user");
 const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 // SupportService(6)
@@ -35,6 +33,8 @@ if(window.__log_module_loading_enabled__) console.log("Load ServiceLoader Plugin
 class ServiceLoader {
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {
+		// IndexedDB_Service(7)
+		const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 		this.service_methods=new ServiceMethods(x);
 		this.codegen=new CodegenService(x);
 		this.csi_service=new CsiService(x);
