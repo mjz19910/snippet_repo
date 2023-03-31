@@ -305,6 +305,11 @@ export class NetscriptPortV2 {
 	nextWrite() {
 		return this.port.nextWrite();
 	}
+	/** @arg {string|number} data */
+	mustWrite(data) {
+		let success=this.tryWrite(data);
+		if(!success) throw new Error("must failed");
+	}
 	/** @param {NS} ns @param {number} port_id */
 	static getPortHandle(ns,port_id) {
 		let handle_cache=known_port_handles.get(port_id);

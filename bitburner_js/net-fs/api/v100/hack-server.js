@@ -177,14 +177,13 @@ export async function main(ns) {
 	request_port.clear();
 	reply_port.clear();
 	log_port.clear();
-	let success=reply_port.tryWrite({call: "pending",id: "reply",reply: []});
-	if(!success) throw new Error("Failed (tryWrite,reply_port)");
+	reply_port.mustWrite({call: "pending",id: "reply",reply: []});
+	request_port.mustWrite({call: "pending",id: "call",reply: []});
 	const notify_complete_port=NetscriptPortV2.getPortHandle(ns,notify_complete_pipe_port_id);
 	notify_complete_port.clear();
 	const notify_request_has_space_port=NetscriptPortV2.getPortHandle(ns,notify_request_has_space_id);
 	notify_request_has_space_port.clear();
-	success=notify_request_has_space_port.tryWrite(1);
-	if(!success) throw new Error("Failed (tryWrite,notify_request_has_space)");
+	notify_request_has_space_port.mustWrite(1);
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
