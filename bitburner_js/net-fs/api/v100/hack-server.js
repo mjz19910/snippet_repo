@@ -257,7 +257,6 @@ export async function main(ns) {
 				let drop_replies=true;
 				if(drop_replies&&i>80) {
 					ns.print("replies lost: ",reply.reply.length," messages");
-					debugger;
 					let linked=notify_dead_port.read();
 					for(let i=0;i<reply.reply.length;i++) {
 						let reply_msg=reply.reply[i];
