@@ -1,5 +1,9 @@
 import {as_any} from "/api/v100/as.js";
-import {HackState,generic_get_call_with_id,getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_} from "/api/v100/hack-support.js";
+import {
+	HackState,generic_get_call_with_id,
+	getServerMaxMoney_,getServerMinSecurityLevel_,getServerMoneyAvailable_,getServerSecurityLevel_,
+	support_disable_log_opts
+} from "/api/v100/hack-support.js";
 
 
 /** @param {HackState} s @param {string} a1 */
@@ -49,6 +53,7 @@ export async function run_hack(this_) {
 export async function main(ns) {
 	ns.clearLog();
 	ns.disableLog("disableLog");
+	support_disable_log_opts(ns);
 	ns.disableLog("sleep");
 	let disable_log_action=false;
 	if(disable_log_action) {

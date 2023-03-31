@@ -398,3 +398,7 @@ export class ObjectPort {
 		return new ObjectPort(str_port);
 	}
 }
+/** @arg {NS} ns */
+export function support_disable_log_opts(ns) {
+	ns.disableLog("asleep");
+}
