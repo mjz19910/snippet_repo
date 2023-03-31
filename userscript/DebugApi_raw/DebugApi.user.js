@@ -16,7 +16,7 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
-let page_require=require,reset_require=false;
+let page_require=typeof require==="undefined"? __module_require__:require,reset_require=false;
 if(require!==__module_require__) {
 	require=__module_require__;
 	reset_require=true;
