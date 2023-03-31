@@ -141,7 +141,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		let pending_msg=await peek_reply_msg(ns,reply_port);
 		if(!pending_msg) continue;
 		let accepted_messages=[];
-		if(((i%(512+1))===512)||pending_msg.reply.length===0) {
+		if(((i%(1024+2))===1024)||pending_msg.reply.length===0) {
 			resend_count++;
 			ns.print("resend ",resend_count);
 			send_message=true;
