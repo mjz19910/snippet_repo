@@ -185,11 +185,14 @@ export function generic_get_call(this_,call_id) {
 /** @arg {HackState} this_ @arg {Extract<ReplyMsg,{reply:number}>["call"]} call_id */
 async function memoed_get_call_ret_number(this_,call_id) {
 	let prev_ret=memoized_number.get(call_id);
-	(async () => {
-		let updated_ret=await generic_get_call(this_,call_id);
-		memoized_number.set(call_id,updated_ret);
-	})();
-	if(prev_ret!==void 0) return prev_ret;
+	if(prev_ret!==void 0) {
+		(async () => {
+			let updated_ret=await generic_get_call(this_,call_id);
+			memoized_number.set(call_id,updated_ret);
+		})();
+		await this_.ns.sleep(2);
+		return prev_ret;
+	}
 	let memoized_ret=await generic_get_call(this_,call_id);
 	memoized_number.set(call_id,memoized_ret);
 	return memoized_ret;
