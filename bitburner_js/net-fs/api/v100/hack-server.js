@@ -240,8 +240,8 @@ export async function main(ns) {
 				cur_len=reply.reply.length;
 				if(prev_len!==-1) ns.tprint(prev_len," ",cur_len);
 				if(reply.reply.length===0) break;
-				let drop_replies=false;
-				if(drop_replies&&i>30) {
+				let drop_replies=true;
+				if(drop_replies&&i>80) {
 					ns.print("replies lost: ",reply.reply.length," messages");
 					let linked=notify_dead_port.read();
 					for(let i=0;i<reply.reply.length;i++) {

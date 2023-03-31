@@ -140,9 +140,9 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		}
 		let pending_msg=reply_port.mustPeek();
 		let accepted_messages=[];
-		if(((i%(1024+2))===1024)||pending_msg.reply.length===0) {
+		if(((i%(64+2))===64)||pending_msg.reply.length===0) {
 			resend_count++;
-			ns.print("resend ",resend_count);
+			ns.print("resend ",resend_count," ",i);
 			send_message=true;
 			i++;
 			continue;
