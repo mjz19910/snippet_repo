@@ -242,6 +242,7 @@ async function memoed_get_call_ret_number(this_,call_id) {
 	if(netscript_lock.locked) netscript_lock.unlock();
 	let memoized_ret=await generic_get_call(this_,call_id);
 	memoized_number.set(call_id,memoized_ret);
+	if(!netscript_lock.locked) await netscript_lock.lock();
 	return memoized_ret;
 
 }
