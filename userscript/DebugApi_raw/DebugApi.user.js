@@ -4748,6 +4748,7 @@ export_(exports => {
 		/** @arg {Parameters<ProxyHandler<ProxyConstructor>["get"]>} args */
 		get(...args) {
 			let ret=Reflect.get(...args);
+			console.log("Proxy.",args[1]);
 			return ret;
 		}
 	};
