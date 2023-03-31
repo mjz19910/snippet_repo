@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort,NetscriptPortV2} from "/api/v100/hack-support.js";
+import {notify_complete_pipe_port_id,log_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort,NetscriptPortV2,get_log_port} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -130,8 +130,7 @@ export async function main(ns) {
 	/** @type {ObjectPort<LinkType>} */
 	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
 	notify_dead_port.clear();
-	/** @type {ObjectPort<{host:string;msg:any[]}>} */
-	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
+	const log_port=get_log_port(ns);
 	let wait_count=0;
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
