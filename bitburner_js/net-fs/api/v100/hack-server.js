@@ -318,7 +318,7 @@ export async function main(ns) {
 			if(!success) throw new Error("Failed (request_port.tryWrite)");
 			while(log_messages.length>0) {
 				let res=log_messages.shift();
-				if(res!==void 0) ns.tprintf("%s: %s",res.host,res.msg);
+				if(res!==void 0) ns.tprintf("%s: "+res.msg.map(() => "%s").join(" "),res.host,...res.msg);
 			}
 			let cur_perf=0;
 			cur_perf=performance.now();
