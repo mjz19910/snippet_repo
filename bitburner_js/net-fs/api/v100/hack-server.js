@@ -44,6 +44,12 @@ class StringPort {
 	tryWrite(str) {
 		return this.port.tryWrite(str);
 	}
+	empty() {
+		return this.port.empty();
+	}
+	clear() {
+		this.port.clear();
+	}
 }
 /** @template {{}} T */
 class ObjectPort {
@@ -52,9 +58,11 @@ class ObjectPort {
 		this.port=port;
 	}
 	empty() {
-		return this.port.port.empty();
+		return this.port.empty();
 	}
-	clear() {this.port.port.clear();}
+	clear() {
+		this.port.clear();
+	}
 	/** @returns {T|null} */
 	read() {
 		let res=this.port.read();
