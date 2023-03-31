@@ -173,31 +173,31 @@ export_(exports => {
 		exports.__global_require_is_null__=true;
 	}
 	exports.__module_require__=require;
-	let require_property=Object.getOwnPropertyDescriptor(exports,"require");
-	if(require_property) {
-		if(require_property.configurable!==void 0) {
-			if(require_property.configurable===false) {
-				require_property.value.__system_require=true;
-				let require_value=require_property.value;
-				require_value;
-				return;
-			}
-		}
-		console.log("skipping set of require");
-		return;
-	} else {
-		Object.defineProperty(exports,"require",{
-			get: () => cur_require,
-			set(value) {
-				if(typeof value==="object"||typeof value==="function") {
-					value.__system_require=true;
-					cur_require=value;
-				} else {
-					debugger;
-					cur_require=value;
+	x: {
+		if(location.href.includes("://codesandbox.io/")) break x;;
+		let require_property=Object.getOwnPropertyDescriptor(exports,"require");
+		if(require_property&&require_property.configurable===false) {
+			require_property.value.__system_require=true;
+			let require_value=require_property.value;
+			require_value;
+			return;
+		} else if(require_property) {
+			console.log("skipping set of require");
+			return;
+		} else {
+			Object.defineProperty(exports,"require",{
+				get: () => cur_require,
+				set(value) {
+					if(typeof value==="object"||typeof value==="function") {
+						value.__system_require=true;
+						cur_require=value;
+					} else {
+						debugger;
+						cur_require=value;
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	exports.__base_require_module_loaded__=true;
 	exports.__log_module_loading_enabled__=log_module_loading_enabled;
