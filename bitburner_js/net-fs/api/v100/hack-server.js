@@ -45,7 +45,7 @@ class ThreadState {
 		this.abort_callbacks.splice(idx,1);
 	}
 }
-/** @param {(state:ThreadState)=>void} func */
+/** @param {(state:ThreadState)=>Promise<void>} func */
 function start_thread(func) {
 	const controller=new AbortController();
 	const signal=controller.signal;
@@ -53,7 +53,9 @@ function start_thread(func) {
 	const thread_state=new ThreadState(signal);
 	let timeout_id=setTimeout(() => {
 		thread_state.remove_timer(timeout_id);
-		func(thread_state);
+		func(thread_state).then(null,(err) => {
+			console.log("thread error",err);
+		});
 	},0);
 	thread_state.timers.push(timeout_id);
 	return {
@@ -143,7 +145,7 @@ export async function main(ns) {
 				}
 				continue;
 			}
-			try {
+			while(!log_port.empty()) {
 				let msg=log_port.peek();
 				if(msg===null) {
 					log_port.read();
@@ -151,14 +153,6 @@ export async function main(ns) {
 				}
 				log_messages.push(msg);
 				log_port.read();
-			} catch {
-				let msg=log_port.port.peek();
-				if(msg===null) {
-					log_port.port.read();
-					continue;
-				}
-				log_messages.push({host: "unknown",msg: [msg]});
-				log_port.port.read();
 			}
 		}
 	});
