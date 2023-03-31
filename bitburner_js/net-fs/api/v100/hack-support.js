@@ -148,10 +148,12 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			i++;
 			continue;
 		}
+		let received_reply=false;
 		for(let msg of pending_msg.reply) {
 			if(!should_accept(msg,call_id,id)) continue;
 			accepted_messages.push(msg);
 			notify_complete_arr.push(msg.uid);
+			received_reply=true;
 		}
 		for(let msg of pending_msg.reply.slice()) {
 			if(!should_accept(msg,call_id,id)) continue;
@@ -159,8 +161,11 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 			if(idx===-1) continue;
 			pending_msg.reply.splice(idx,1);
 		}
-		reply_port.mustRead();
-		reply_port.mustWrite(pending_msg);
+		if(received_reply) {
+			debugger;
+			reply_port.mustRead();
+			reply_port.mustWrite(pending_msg);
+		}
 		for(let ok_msg of accepted_messages) {
 			let ret=ok_msg.reply;
 			assume_return(ret);
