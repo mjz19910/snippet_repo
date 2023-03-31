@@ -238,7 +238,7 @@ export async function main(ns) {
 				if(!reply) throw new Error("Busy processing messages, but there was not reply generated");
 				prev_len=cur_len;
 				cur_len=reply.reply.length;
-				if(prev_len!==-1) ns.tprint(prev_len," ",cur_len);
+				if(prev_len!==-1) ns.tprintf("%s %s",prev_len,cur_len);
 				if(reply.reply.length===0) break;
 				let drop_replies=true;
 				if(drop_replies&&i>80) {
