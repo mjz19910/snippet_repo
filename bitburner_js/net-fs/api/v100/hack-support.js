@@ -166,7 +166,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	let first_loop=true;
 	for(let i=0;;) {
 		await log_port.asyncWrite(ns,{host: this_.hostname,msg: ["cnt: ",i]});
-		await ns.asleep(33);
+		await ns.asleep(1500);
 		{
 			if(notify_complete_port.full()) continue;
 			let last=notify_complete_arr.pop();

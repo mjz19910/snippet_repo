@@ -137,7 +137,7 @@ export async function main(ns) {
 		while(!thread.signal.aborted) {
 			await log_port.nextWrite();
 			if(log_messages.length>1000) {
-				debugger;
+				if(false) debugger;
 				try {
 					log_port.read();
 				} catch {
