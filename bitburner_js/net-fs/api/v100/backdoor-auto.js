@@ -38,7 +38,7 @@ export async function main(ns) {
 	let terminal_prompt=terminalInput.previousSibling;
 	if(terminal_prompt===null) throw new Error("Invalid dom");
 	/** @type {ReactFiber} */
-	const fiber=as_any(Object.values(terminal_prompt)[1]);
+	const fiber=as_any(Object.values(terminal_prompt)[0]);
 	/** @type {{children:[string,string]}} */
 	let props=fiber.memoizedProps;
 	const cur_server=props.children[1];
