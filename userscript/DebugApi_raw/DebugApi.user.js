@@ -4760,5 +4760,7 @@ if(reset_require) {
 	require=page_require;
 }
 if(delete_require) {
-	delete require;
+	/** @type {{require?:any}} */
+	let opt_req_win=window;
+	delete opt_req_win.require;
 }
