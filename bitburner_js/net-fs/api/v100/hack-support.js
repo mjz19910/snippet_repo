@@ -157,12 +157,15 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	/** @type {ObjectPort<ReplyMsgPending>} */
 	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
 	const notify_complete_port=NetscriptPortV2.getPortHandle(ns,notify_complete_pipe_port_id);
+	/** @type {ObjectPort<{host:string;msg:any[]}>} */
+	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	let notify_complete_arr=[];
 	let send_message=true;
 	let first_loop=true;
 	for(let i=0;;) {
+		log_port.mustWrite({host: this_.hostname,msg: ["cnt: ",i]});
 		await ns.asleep(33);
 		{
 			if(notify_complete_port.full()) continue;
@@ -187,10 +190,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		if(pending_msg.reply.length===0) continue;
 		if(i%64+2===64) {
 			resend_count++;
-			await netscript_lock.critical(() => {
-				ns.print("resend ",resend_count," ",i);
-				return Promise.resolve();
-			});
+			log_port.mustWrite({host: this_.hostname,msg: ["resend ",resend_count," ",i]});
 			send_message=true;
 			i++;
 			continue;

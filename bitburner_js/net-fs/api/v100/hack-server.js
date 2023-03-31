@@ -13,6 +13,52 @@ function serve_functions_list(ns) {
 	ns.getServerSecurityLevel;
 	ns.getServerMaxMoney;
 }
+class ThreadState {
+	/** @type {AbortSignal} */
+	signal;
+	/** @type {number[]} */
+	timers=[];
+	/** @param {AbortSignal} signal */
+	constructor(signal) {
+		this.signal=signal;
+	}
+	/** @arg {number} id */
+	remove_timer(id) {
+		let idx=this.timers.indexOf(id);
+		if(idx===-1) return;
+		this.timers.splice(idx,1);
+	}
+}
+/** @param {(state:ThreadState)=>void} func */
+function start_thread(func) {
+	const controller=new AbortController();
+	const signal=controller.signal;
+	/** @type {ThreadState} */
+	const thread_state=new ThreadState(signal);
+	let timeout_id=setTimeout(() => {
+		thread_state.remove_timer(timeout_id);
+		func(thread_state);
+	},0);
+	thread_state.timers.push(timeout_id);
+	return {
+		kill() {
+			for(let timer of thread_state.timers) {
+				clearTimeout(timer);
+			}
+			controller.abort("thread killed");
+		}
+	};
+}
+/** @param {number} delay */
+function async_sleep(delay) {
+	/** @type {Promise<void>} */
+	let ret=new Promise((a) => {
+		return setTimeout(() => {
+			a();
+		},delay);
+	});
+	return ret;
+}
 /** @param {NS} ns */
 export async function main(ns) {
 	serve_functions_list(ns);
@@ -63,6 +109,12 @@ export async function main(ns) {
 	notify_dead_port.clear();
 	const log_port=NetscriptPortV2.getPortHandle(ns,log_port_id);
 	let wait_count=0;
+	let thread_handle=start_thread(async function(thread) {
+		await async_sleep(thread,30);
+	});
+	ns.atExit(() => {
+		thread_handle.kill();
+	});
 	while(!reply_port.empty()) {
 		wait_count++;
 		await ns.sleep(33);
