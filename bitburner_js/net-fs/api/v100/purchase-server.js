@@ -19,7 +19,9 @@ export async function main(ns) {
 		const buy_cost1=ns.getPurchasedServerCost(ram)-prev_ram;
 		if(hostname_list.length!==purchased_server_limit) {
 			for(let i=hostname_list.length;i<purchased_server_limit;i++) {
-				let hostname=purchase_server(`pserv-${i}`);
+				let cur_server_money=ns.getServerMoneyAvailable("home");
+				if(ns.getPurchasedServerCost(ram)>cur_server_money) break;
+				let hostname=purchase_server(`pserv-${i}`,ram);
 				hostname_list.push(hostname);
 			}
 		}
@@ -42,8 +44,8 @@ export async function main(ns) {
 			await s.start_script_template(srv);
 		}
 	}
-	/** @param {string} hostname */
-	function purchase_server(hostname) {
+	/** @param {string} hostname @param {number} ram */
+	function purchase_server(hostname,ram) {
 		ns.print("buy_server: ",hostname);
 		let new_host=ns.purchaseServer(hostname,ram);
 		if(new_host==="") throw new Error("failed to purchase server");
