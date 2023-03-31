@@ -4738,17 +4738,33 @@ export_(exports => {
 	const proxy_map=new Map;
 	exports.__proxy_map__=proxy_map;
 	const proxy_make=window.Proxy;
+	const proxy_revocable_make=proxy_make.revocable;
+	/** @type {ProxyHandler<ProxyConstructor["revocable"]>} */
+	const proxy_revocable_handler={
+		get(obj,key,rx) {
+			let ret=Reflect.get(obj,key,rx);
+			console.log("Proxy.revocable.",key);
+			return ret;
+		}
+	};
+	let proxy_revocable_proxy=new window.Proxy(proxy_revocable_make,new Proxy(proxy_revocable_handler,{
+		/** @arg {typeof proxy_revocable_handler} o @arg {keyof typeof proxy_revocable_handler} k */
+		get(o,k) {
+			if(k in o) return o[k];
+			console.log("Proxy.revocable proxy key",o,k);
+			return void 0;
+		}
+	}));
+	/** @type {ProxyHandler<ProxyConstructor>} */
 	const proxy_construct_handler={
-		/** @arg {Parameters<ProxyHandler<ProxyConstructor>["construct"]>} args */
 		construct(...args) {
 			let ret=Reflect.construct(...args);
 			proxy_map.set(ret,args);
 			return ret;
 		},
-		/** @arg {Parameters<ProxyHandler<ProxyConstructor>["get"]>} args */
-		get(...args) {
-			let ret=Reflect.get(...args);
-			console.log("Proxy.",args[1]);
+		get(obj,key,rx) {
+			let ret=Reflect.get(obj,key,rx);
+			if(key==="revocable") return proxy_revocable_proxy;
 			return ret;
 		}
 	};
@@ -4756,7 +4772,7 @@ export_(exports => {
 		/** @arg {typeof proxy_construct_handler} o @arg {keyof typeof proxy_construct_handler} k */
 		get(o,k) {
 			if(k in o) return o[k];
-			console.log("proxy key",o,k);
+			console.log("Proxy proxy key",o,k);
 			return void 0;
 		}
 	}));
