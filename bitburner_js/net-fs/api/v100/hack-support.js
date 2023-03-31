@@ -347,7 +347,7 @@ export class ObjectPort {
 		return this.port.full();
 	}
 	nextWrite() {
-		return this.port.nextWrite();
+		return Promise.race([this.port.nextWrite(),new Promise(a => setTimeout(a,1000))]);
 	}
 	/** @returns {T|null} */
 	read() {
