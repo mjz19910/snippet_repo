@@ -136,10 +136,23 @@ export async function main(ns) {
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
 			await log_port.nextWrite();
-			debugger;
-			let msg=log_port.read();
-			if(msg===null) continue;
-			log_messages.push(msg);
+			try {
+				let msg=log_port.peek();
+				if(msg===null) {
+					log_port.read();
+					continue;
+				}
+				log_messages.push(msg);
+				log_port.read();
+			} catch {
+				let msg=log_port.port.peek();
+				if(msg===null) {
+					log_port.port.read();
+					continue;
+				}
+				log_messages.push({host: "unknown",msg: [msg]});
+				log_port.port.read();
+			}
 		}
 	});
 	ns.atExit(() => {
