@@ -104,6 +104,14 @@ function should_accept(reply,type,id) {
 	throw new Error("Unsupported should accept");
 }
 let resend_count=0;
+const known_port_handles=new Map;
+/** @arg {NS} ns */
+export function fill_port_handle_cache(ns) {
+	for(let i=0;i<max_port_id;i++) {
+		const port_handle=ns.getPortHandle(i);
+		known_port_handles.set(i,port_handle);
+	}
+}
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
@@ -186,11 +194,12 @@ export function generic_get_call(this_,call_id) {
 async function memoed_get_call_ret_number(this_,call_id) {
 	let prev_ret=memoized_number.get(call_id);
 	if(prev_ret!==void 0) {
+		fill_port_handle_cache(this_.ns);
 		(async () => {
 			let updated_ret=await generic_get_call(this_,call_id);
 			memoized_number.set(call_id,updated_ret);
 		})();
-		await this_.ns.sleep(2);
+		await this_.ns.sleep(10);
 		return prev_ret;
 	}
 	let memoized_ret=await generic_get_call(this_,call_id);
@@ -268,7 +277,12 @@ export class NetscriptPortV2 {
 	}
 	/** @param {NS} ns @param {number} port_id */
 	static getPortHandle(ns,port_id) {
+		let handle_cache=known_port_handles.get(port_id);
+		if(handle_cache!==void 0) {
+			return new this(handle_cache);
+		}
 		let handle=ns.getPortHandle(port_id);
+		known_port_handles.set(port_id,handle);
 		return new this(handle);
 	}
 }
