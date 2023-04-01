@@ -5129,9 +5129,7 @@ class ForService_CommonMethods extends BaseService {
 export_(exports => {exports.ForService_CommonMethods=ForService_CommonMethods;});
 export_(exports => exports.__module_loaded__=true);
 if(delete_require) {
-	/** @type {{require?:any}} */
-	let opt_req_win=window;
-	delete opt_req_win.require;
+	delete window.require;
 } else if(reset_require) {
 	require=page_require;
 }
