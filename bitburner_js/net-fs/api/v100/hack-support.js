@@ -181,15 +181,12 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		let accepted_messages=[];
 		if(pending_msg.reply.length===0) continue;
 		let received_reply=false;
-		for(let msg of pending_msg.reply) {
+		for(let msg of pending_msg.reply.slice()) {
 			if(!should_accept(msg,call_id,id)) continue;
 			accepted_messages.push(msg);
 			received_reply=true;
-		}
-		for(let msg of pending_msg.reply.slice()) {
-			if(!should_accept(msg,call_id,id)) continue;
 			let idx=pending_msg.reply.indexOf(msg);
-			if(idx===-1) continue;
+			if(idx===-1) throw new Error("Not found");
 			pending_msg.reply.splice(idx,1);
 		}
 		if(received_reply) {
