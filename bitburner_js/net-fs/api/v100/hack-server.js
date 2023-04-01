@@ -1,4 +1,4 @@
-import {reply_port_id,ObjectPort,get_log_port,get_request_port} from "/api/v100/hack-support.js";
+import {get_log_port,get_request_port,get_reply_port} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -125,8 +125,7 @@ export async function main(ns) {
 	/** @type {number[]} */
 	let complete_reply_id_list=[];
 	const request_port=get_request_port(ns);
-	/** @type {ObjectPort<ReplyMsgPending>} */
-	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
+	const reply_port=get_reply_port(ns);
 	const log_port=get_log_port(ns);
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
