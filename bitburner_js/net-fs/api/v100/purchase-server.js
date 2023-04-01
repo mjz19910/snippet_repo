@@ -85,5 +85,4 @@ export async function main(ns) {
 		cur_server_money=ns.getServerMoneyAvailable("home");
 		ns.print("upg_ram: ",ns.formatRam(ram));
 	}
-	ns.closeTail();
 }
