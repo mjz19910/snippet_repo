@@ -90,3 +90,11 @@ Materials: {
 	Water: 1.597 / 3
 	Energy: 0.639 / 3
 }
+Office Space: {
+	Operations: 9
+	Engineer: 9
+	Business: 5
+	Management: 10
+	Research & Development: 5
+	Training: 10
+}
