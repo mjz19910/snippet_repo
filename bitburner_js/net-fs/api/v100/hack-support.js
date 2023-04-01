@@ -151,7 +151,6 @@ export function get_log_port(ns) {
 	/** @type {ObjectPort<{host:string;msg:any[]}>} */
 	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
 	return log_port;
-
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
