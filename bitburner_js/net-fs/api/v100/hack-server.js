@@ -161,8 +161,8 @@ export async function main(ns) {
 	request_port.clear();
 	reply_port.clear();
 	log_port.clear();
-	reply_port.mustWrite({call: "pending",id: "reply",reply: []});
 	request_port.mustWrite({call: "pending",id: "call",reply: []});
+	reply_port.mustWrite({call: "pending",id: "reply",reply: []});
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
