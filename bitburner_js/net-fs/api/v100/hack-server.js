@@ -163,10 +163,8 @@ export async function main(ns) {
 		wait_count++;
 		await ns.sleep(33);
 		if(reply_port.empty()) break;
-		let reply_msg=reply_port.peek();
-		// invalid state: the reply port is not empty.
-		if(reply_msg===null) throw new Error("Invalid state");
-		if(reply_msg?.reply.length===0) break;
+		let reply_msg=reply_port.mustPeek();
+		if(reply_msg.reply.length===0) break;
 		if(wait_count>80) {
 			ns.print("reply_len ",reply_msg.reply.length);
 			ns.print("cleared reply port");
