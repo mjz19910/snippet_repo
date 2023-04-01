@@ -206,12 +206,12 @@ export async function main(ns) {
 	async function process_messages() {
 		for(let i=0;;i++) {
 			let start_perf=performance.now();
-			await ns.sleep(500);
+			await ns.sleep(100);
 			let msg=request_port.peek();
 			let reply=reply_port.peek();
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
-			if(msg_arr.length===0) {
+			if(i%5===0&&msg_arr.length===0) {
 				await ns.sleep(1500);
 				continue;
 			}
