@@ -165,7 +165,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	const reply_port=get_reply_port(ns);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
-	let notify_complete_arr=[];
 	let send_message=true;
 	let first_loop=true;
 	for(;;) {
@@ -185,7 +184,6 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 		for(let msg of pending_msg.reply) {
 			if(!should_accept(msg,call_id,id)) continue;
 			accepted_messages.push(msg);
-			notify_complete_arr.push(msg.uid);
 			received_reply=true;
 		}
 		for(let msg of pending_msg.reply.slice()) {
