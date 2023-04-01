@@ -18,7 +18,6 @@ const {CodegenService}=require("./YTPlugin_Codegen.user");
 const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 const {HandleTypes}=require("./YTPlugin_HandleTypes.user");
 const {ParserService}=require("./YTPlugin_Parser_Service.user");
-const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 // SupportService(6)
 const {LocalStorageSeenDatabase,Support_RS_Player,Support_RS_WatchPage,Support_RS_Watch,Support_RS_Page_Browse,Support_RS_Browse,Support_GenericApi,Support_EventInput,Support_VE37414,Support_VE,TypedefGenerator,Support_Renderer,ForService_XMethods,ForService_CommonMethods,StoreData}=require("./YTPlugin_Support_Service.user");
 
@@ -35,6 +34,7 @@ class ServiceLoader {
 	constructor(x) {
 		// IndexedDB_Service(7)
 		const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
+		const {ServiceMethods}=require("./YTPlugin_ServiceMethods.user");
 		this.service_methods=new ServiceMethods(x);
 		this.codegen=new CodegenService(x);
 		this.csi_service=new CsiService(x);
