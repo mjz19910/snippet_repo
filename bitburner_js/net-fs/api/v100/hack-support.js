@@ -152,15 +152,23 @@ export function get_log_port(ns) {
 	const log_port=ObjectPort.getPortHandle(ns,log_port_id);
 	return log_port;
 }
+/** @arg {NS} ns */
+export function get_request_port(ns) {
+	/** @type {ObjectPort<CallMsgPending>} */
+	const request_port=ObjectPort.getPortHandle(ns,request_port_id);
+	return request_port;
+}
+/** @arg {NS} ns */
+export function get_reply_port(ns) {
+	/** @type {ObjectPort<ReplyMsgPending>} */
+	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
+	return reply_port;
+}
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
 	const {ns}=this_;
-	// const wait_start_perf=performance.now();
-	// function perf_diff() {return performance.now()-wait_start_perf;}
-	/** @type {ObjectPort<CallMsgPending>} */
-	const request_port=ObjectPort.getPortHandle(ns,request_port_id);
-	/** @type {ObjectPort<ReplyMsgPending>} */
-	const reply_port=ObjectPort.getPortHandle(ns,reply_port_id);
+	const request_port=get_request_port(ns);
+	const reply_port=get_reply_port(ns);
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	let notify_complete_arr=[];
