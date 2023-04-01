@@ -290,7 +290,7 @@ export async function main(ns) {
 						if(complete_reply_id_list.includes(complete_id)) continue;
 						complete_reply_id_list.push(complete_id);
 					}
-					else ns.tprint("ERROR complete message not a number");
+					else ns.print("ERROR complete message not a number");
 				}
 			}
 			msg_arr.length=0;
@@ -299,7 +299,7 @@ export async function main(ns) {
 			if(!success) throw new Error("Failed (request_port.tryWrite)");
 			while(log_messages.length>0) {
 				let res=log_messages.shift();
-				if(res!==void 0) ns.tprintf("%s: "+res.msg.map(() => "%s").join(" "),res.host,...res.msg);
+				if(res!==void 0) ns.printf("%s: "+res.msg.map(() => "%s").join(" "),res.host,...res.msg);
 			}
 			let cur_perf=0;
 			cur_perf=performance.now();
