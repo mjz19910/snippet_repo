@@ -323,7 +323,7 @@ export async function main(ns) {
 			cur_perf=performance.now();
 			end_perf_diff=cur_perf-start_perf;
 			if(has_request||has_reply) ns.printf(
-				"server [%s] clients [%s] messages: %s",
+				"[%s]<->[%s] messages: %s",
 				ns.tFormat(server_processing_time,true),
 				ns.tFormat(end_perf_diff,true),
 				JSON.stringify(messages).slice(1,-1)
