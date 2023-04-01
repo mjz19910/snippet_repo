@@ -85,6 +85,8 @@ Investment: {
 	prod-0: [design: 1e9,marketing: 1e9],
 	// prod-1 @ $500 million
 	prod-1: [design: 5e8,marketing: 5e8],
+	// prod-2 @ $3.6 billion / 2
+	prod-2: [design: 18e8,marketing: 18e8],
 }
 Materials: {
 	Water: 1.597 / 3
@@ -97,4 +99,12 @@ Office Space: {
 	Management: 10
 	Research & Development: 5
 	Training: 10
+}
+prod-2 @ $3.6 billion / 2 : {
+	MP*2: 0.355
+	MP*1.7: 0.723
+	MP*1.6: 0.943
+	MP*1.5: 1.311
+	MP*1.46: 1.584
+
 }
