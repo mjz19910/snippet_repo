@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,reply_port_id,ObjectPort,NetscriptPortV2,get_log_port, get_request_port} from "/api/v100/hack-support.js";
+import {reply_port_id,ObjectPort,get_log_port,get_request_port} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -164,8 +164,6 @@ export async function main(ns) {
 	log_port.clear();
 	reply_port.mustWrite({call: "pending",id: "reply",reply: []});
 	request_port.mustWrite({call: "pending",id: "call",reply: []});
-	const notify_complete_port=NetscriptPortV2.getPortHandle(ns,notify_complete_pipe_port_id);
-	notify_complete_port.clear();
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
@@ -278,14 +276,6 @@ export async function main(ns) {
 				}
 				if(reply.t==="s"&&reply.l==="Server") {
 					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
-				}
-				while(!notify_complete_port.empty()) {
-					let complete_id=notify_complete_port.read();
-					if(typeof complete_id==="number") {
-						if(complete_reply_id_list.includes(complete_id)) continue;
-						complete_reply_id_list.push(complete_id);
-					}
-					else ns.print("ERROR complete message not a number");
 				}
 			}
 			msg_arr.length=0;
