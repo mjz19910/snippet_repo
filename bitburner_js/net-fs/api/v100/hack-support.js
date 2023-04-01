@@ -1,4 +1,3 @@
-// 2
 export const request_port_id=1;
 export const reply_port_id=2;
 export const log_port_id=3;
