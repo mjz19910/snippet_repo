@@ -206,7 +206,9 @@ export async function main(ns) {
 	async function process_messages() {
 		const initial_delay=10;
 		let cur_delay=initial_delay;
+		let server_cycles=0;
 		for(let i=0;;i++) {
+			server_cycles++;
 			let messages=[];
 			let start_perf=performance.now();
 			await ns.sleep(cur_delay);
@@ -323,12 +325,15 @@ export async function main(ns) {
 			}
 			cur_perf=performance.now();
 			let client_work_time=cur_perf-start_perf;
-			if(has_request||has_reply) ns.printf(
-				"[%s]<->[%s](%s) messages: %s",
-				ns.tFormat(server_work_time,true),
-				ns.tFormat(client_work_time,true),client_cycles,
-				JSON.stringify(messages).slice(1,-1)
-			);
+			if(has_request||has_reply) {
+				ns.printf(
+					"[%s](%s)<->[%s](%s) messages: %s",
+					ns.tFormat(server_work_time,true),server_cycles,
+					ns.tFormat(client_work_time,true),client_cycles,
+					JSON.stringify(messages).slice(1,-1)
+				);
+				server_cycles=0;
+			}
 		}
 	}
 	await process_messages();
