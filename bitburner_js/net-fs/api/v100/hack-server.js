@@ -298,9 +298,8 @@ export async function main(ns) {
 			}
 			let cur_perf=0;
 			cur_perf=performance.now();
-			let end_perf_diff=cur_perf-start_perf;
 			start_perf=cur_perf;
-			let server_processing_time=end_perf_diff;
+			let server_work_time=cur_perf-start_perf;
 			let prev_len=-1,cur_len=-1;
 			for(let i=0;;i++) {
 				await ns.sleep(33);
@@ -321,11 +320,11 @@ export async function main(ns) {
 				if(reply.reply.length===0) break;
 			}
 			cur_perf=performance.now();
-			end_perf_diff=cur_perf-start_perf;
+			let client_work_time=cur_perf-start_perf;
 			if(has_request||has_reply) ns.printf(
 				"[%s]<->[%s] messages: %s",
-				ns.tFormat(server_processing_time,true),
-				ns.tFormat(end_perf_diff,true),
+				ns.tFormat(server_work_time,true),
+				ns.tFormat(client_work_time,true),
 				JSON.stringify(messages).slice(1,-1)
 			);
 		}
