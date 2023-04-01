@@ -301,8 +301,10 @@ export async function main(ns) {
 			start_perf=cur_perf;
 			let server_work_time=cur_perf-start_perf;
 			let prev_len=-1,cur_len=-1;
+			let client_cycles=0;
 			for(let i=0;;i++) {
-				await ns.sleep(33);
+				client_cycles++;
+				await ns.sleep(10);
 				let reply=reply_port.mustPeek();
 				let real_prev_len=cur_len;
 				prev_len=cur_len;
@@ -322,9 +324,9 @@ export async function main(ns) {
 			cur_perf=performance.now();
 			let client_work_time=cur_perf-start_perf;
 			if(has_request||has_reply) ns.printf(
-				"[%s]<->[%s] messages: %s",
+				"[%s]<->[%s](%s) messages: %s",
 				ns.tFormat(server_work_time,true),
-				ns.tFormat(client_work_time,true),
+				ns.tFormat(client_work_time,true),client_cycles,
 				JSON.stringify(messages).slice(1,-1)
 			);
 		}
