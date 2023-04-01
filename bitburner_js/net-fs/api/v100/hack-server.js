@@ -1,4 +1,4 @@
-import {notify_complete_pipe_port_id,reply_port_id,request_port_id,notify_request_has_space_id,notify_dead_reply_id,ObjectPort,NetscriptPortV2,get_log_port} from "/api/v100/hack-support.js";
+import {notify_complete_pipe_port_id,reply_port_id,request_port_id,notify_dead_reply_id,ObjectPort,NetscriptPortV2,get_log_port} from "/api/v100/hack-support.js";
 /**
  * @param {number} min
  * @param {number} max
@@ -171,9 +171,6 @@ export async function main(ns) {
 	request_port.mustWrite({call: "pending",id: "call",reply: []});
 	const notify_complete_port=NetscriptPortV2.getPortHandle(ns,notify_complete_pipe_port_id);
 	notify_complete_port.clear();
-	const notify_request_has_space_port=NetscriptPortV2.getPortHandle(ns,notify_request_has_space_id);
-	notify_request_has_space_port.clear();
-	notify_request_has_space_port.mustWrite(1);
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
@@ -286,11 +283,6 @@ export async function main(ns) {
 				}
 				if(reply.t==="s"&&reply.l==="Server") {
 					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
-				}
-				let success=notify_request_has_space_port.tryWrite(1);
-				while(!success) {
-					notify_request_has_space_port.read();
-					success=notify_request_has_space_port.tryWrite(1);
 				}
 				while(!notify_complete_port.empty()) {
 					let complete_id=notify_complete_port.read();
