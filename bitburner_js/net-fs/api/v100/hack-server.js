@@ -159,7 +159,7 @@ export async function main(ns) {
 		thread_handle.kill();
 	});
 	while(!reply_port.empty()) {
-		await ns.sleep(33);
+		await ns.sleep(100);
 		if(reply_port.empty()) break;
 		let reply_msg=reply_port.mustPeek();
 		if(reply_msg.reply.length===0) break;
