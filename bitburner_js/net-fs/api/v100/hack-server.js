@@ -133,7 +133,6 @@ export async function main(ns) {
 	const notify_dead_port=ObjectPort.getPortHandle(ns,notify_dead_reply_id);
 	notify_dead_port.clear();
 	const log_port=get_log_port(ns);
-	let wait_count=0;
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
 			await log_port.nextWrite();
@@ -160,17 +159,10 @@ export async function main(ns) {
 		thread_handle.kill();
 	});
 	while(!reply_port.empty()) {
-		wait_count++;
 		await ns.sleep(33);
 		if(reply_port.empty()) break;
 		let reply_msg=reply_port.mustPeek();
 		if(reply_msg.reply.length===0) break;
-		if(wait_count>80) {
-			ns.print("reply_len ",reply_msg.reply.length);
-			ns.print("cleared reply port");
-			reply_port.clear();
-			break;
-		}
 	}
 	request_port.clear();
 	reply_port.clear();
