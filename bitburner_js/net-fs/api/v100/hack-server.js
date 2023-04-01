@@ -215,6 +215,7 @@ export async function main(ns) {
 				await ns.sleep(1500);
 				continue;
 			}
+			let has_request=msg_arr.length>0,has_reply=reply&&reply.reply.length>0;
 			if(reply&&reply.reply.length>0) {
 				ns.print("send_len ",msg_arr.length," rx_len ",reply.reply.length);
 			} else if(msg_arr.length>0) {
@@ -289,7 +290,7 @@ export async function main(ns) {
 			cur_perf=performance.now();
 			let end_perf_diff=cur_perf-start_perf;
 			start_perf=cur_perf;
-			ns.print("server done ",ns.tFormat(end_perf_diff,true));
+			if(has_request||has_reply) ns.print("server done ",ns.tFormat(end_perf_diff,true));
 			let prev_len=-1,cur_len=-1;
 			for(let i=0;;i++) {
 				await ns.sleep(33);
@@ -311,7 +312,7 @@ export async function main(ns) {
 			}
 			cur_perf=performance.now();
 			end_perf_diff=cur_perf-start_perf;
-			ns.print("clients done ",ns.tFormat(end_perf_diff,true));
+			if(has_request||has_reply) ns.print("clients done ",ns.tFormat(end_perf_diff,true));
 		}
 	}
 	await process_messages();
