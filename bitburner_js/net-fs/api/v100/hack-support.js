@@ -169,7 +169,7 @@ export async function generic_get_call_with_id(this_,id,call_id) {
 	let send_message=true;
 	let first_loop=true;
 	for(;;) {
-		await ns.asleep(500);
+		await ns.asleep(10);
 		if(first_loop) first_loop=false;
 		if(send_message) {
 			let cur_msg=request_port.mustRead();
