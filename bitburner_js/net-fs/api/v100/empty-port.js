@@ -1,4 +1,4 @@
-import {NetscriptPortV2} from "./hack-support.js";
+import {NetscriptPortV2} from "/api/v100/hack-support.js";
 /** @arg {NS} ns @arg {NetscriptPortV2} ns_port */
 async function read_all_ns_port(ns,ns_port) {
 	while(!ns_port.empty()) {

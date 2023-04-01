@@ -1,4 +1,4 @@
-import {NetscriptPortV2} from "./hack-support";
+import {NetscriptPortV2} from "/api/v100/hack-support.js";
 
 /** @param {NS} ns */
 export async function main(ns) {
