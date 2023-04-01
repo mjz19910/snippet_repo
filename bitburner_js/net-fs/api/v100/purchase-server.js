@@ -78,7 +78,7 @@ export async function main(ns) {
 	let buy_cost1=ns.getPurchasedServerCost(ram-prev_ram);
 	let cur_server_money=ns.getServerMoneyAvailable("home");
 	if(cur_server_money>buy_cost1*25) ns.tail();
-	ns.tprint(ns.formatNumber(buy_cost1*25));
+	ns.tprintf("[purchase-server] upgrade_cost*25: %s",ns.formatNumber(buy_cost1*25));
 	while(cur_server_money>buy_cost1*25) {
 		await upgrade_purchased_server_list(prev_ram,ram,purchased_server_list);
 		prev_ram=ram; ram*=2;
