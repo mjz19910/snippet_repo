@@ -167,7 +167,7 @@ export async function main(ns) {
 		// invalid state: the reply port is not empty.
 		if(reply_msg===null) throw new Error("Invalid state");
 		if(reply_msg?.reply.length===0) break;
-		if(wait_count>20) {
+		if(wait_count>80) {
 			ns.print("reply_len ",reply_msg.reply.length);
 			ns.print("cleared reply port");
 			reply_port.clear();
