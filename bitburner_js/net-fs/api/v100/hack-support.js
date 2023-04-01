@@ -217,7 +217,15 @@ function memoed_get_call_ret_number(this_,call_id) {
 	let prev_ret=memoized_number.get(call_id);
 	if(prev_ret!==void 0) {
 		fill_port_handle_cache(this_.ns);
-		generic_get_call(this_,call_id).then(v => {
+		(async () => {
+			try {
+				let ret=await generic_get_call(this_,call_id);
+				return ret;
+			} catch(e) {
+				debugger;
+				throw e;
+			}
+		})().then(v => {
 			memoized_number.set(call_id,{t: "r",v});
 		}).catch(err => {
 			memoized_number.set(call_id,{t: "e",err});
