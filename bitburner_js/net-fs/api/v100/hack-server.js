@@ -204,8 +204,10 @@ export async function main(ns) {
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
-		let cur_delay=100;
+		const initial_delay=10;
+		let cur_delay=initial_delay;
 		for(let i=0;;i++) {
+			let messages=[];
 			let start_perf=performance.now();
 			await ns.sleep(cur_delay);
 			let msg=request_port.peek();
@@ -216,13 +218,14 @@ export async function main(ns) {
 				cur_delay*=2;
 				continue;
 			} else {
-				cur_delay=100;
+				cur_delay=initial_delay;
 			}
 			let has_request=msg_arr.length>0,has_reply=reply&&reply.reply.length>0;
+			if(msg_arr.length>0) {
+				messages.push(["send_len",msg_arr.length]);
+			}
 			if(reply&&reply.reply.length>0) {
-				ns.print("send_len ",msg_arr.length," rx_len ",reply.reply.length);
-			} else if(msg_arr.length>0) {
-				ns.print("send_len ",msg_arr.length);
+				messages.push(["rx_len",reply.reply.length]);
 			}
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
@@ -245,7 +248,9 @@ export async function main(ns) {
 								if(!scanned_server_map.has(hostname)) {
 									scanned_server_map.add(hostname);
 									const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
-									if(scan_results.length>0) ns.printf("scan: %s %s",hostname,JSON.stringify(scan_results));
+									if(scan_results.length>0) {
+										messages.push(["scan",hostname,...scan_results]);
+									}
 									for(let item of scan_results) get_server(item);
 								}
 								let srv=get_server(hostname);
@@ -287,13 +292,15 @@ export async function main(ns) {
 			if(!success) throw new Error("Failed (request_port.tryWrite)");
 			while(log_messages.length>0) {
 				let res=log_messages.shift();
-				if(res!==void 0) ns.printf("%s "+res.msg.map(() => "%s").join(" "),res.host,...res.msg);
+				if(res!==void 0) {
+					messages.push(["log",res.host,...res.msg]);
+				}
 			}
 			let cur_perf=0;
 			cur_perf=performance.now();
 			let end_perf_diff=cur_perf-start_perf;
 			start_perf=cur_perf;
-			if(has_request||has_reply) ns.print("server done ",ns.tFormat(end_perf_diff,true));
+			let server_processing_time=end_perf_diff;
 			let prev_len=-1,cur_len=-1;
 			for(let i=0;;i++) {
 				await ns.sleep(33);
@@ -315,7 +322,12 @@ export async function main(ns) {
 			}
 			cur_perf=performance.now();
 			end_perf_diff=cur_perf-start_perf;
-			if(has_request||has_reply) ns.print("clients done ",ns.tFormat(end_perf_diff,true));
+			if(has_request||has_reply) ns.printf(
+				"server [%s] clients [%s] messages: %s",
+				ns.tFormat(server_processing_time,true),
+				ns.tFormat(end_perf_diff,true),
+				JSON.stringify(messages).slice(1,-1)
+			);
 		}
 	}
 	await process_messages();
