@@ -2,12 +2,7 @@
 export const request_port_id=1;
 export const reply_port_id=2;
 export const log_port_id=3;
-export const reply_retry_port_id=4;
-export const notify_request_has_space_id=5;
-export const notify_complete_pipe_port_id=6;
-export const notify_new_reply_port_id=7;
-export const notify_dead_reply_id=8;
-export const max_port_id=9;
+export const max_port_id=4;
 /** @param {NS} ns @param {NetscriptPort} ns_port */
 export async function async_port_read_data(ns,ns_port) {
 	await ns.sleep(33);
