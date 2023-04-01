@@ -155,8 +155,8 @@ export class InitHackScript {
 			const srv=this.get_server(hostname);
 			if(!srv.hasAdminRights) continue;
 			if(this.start_count>=this.start_limit) return;
-			let increased=await this.start_script_template(srv);
-			if(increased) {
+			let started=await this.start_script_template(srv);
+			if(started) {
 				this.start_count++;
 				await this.ns.sleep(2000);
 			}
