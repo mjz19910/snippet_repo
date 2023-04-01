@@ -12,6 +12,12 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 
+let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
+if(typeof require==="undefined"||page_require!==__module_require__) {
+	delete_require=typeof require==="undefined";
+	require=__module_require__;
+	reset_require=true;
+}
 // yt_plugin/SupportService(10) => base_require/BaseRequire(1)
 const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4)
@@ -5122,3 +5128,10 @@ class ForService_CommonMethods extends BaseService {
 }
 export_(exports => {exports.ForService_CommonMethods=ForService_CommonMethods;});
 export_(exports => exports.__module_loaded__=true);
+if(delete_require) {
+	/** @type {{require?:any}} */
+	let opt_req_win=window;
+	delete opt_req_win.require;
+} else if(reset_require) {
+	require=page_require;
+}

@@ -13,6 +13,12 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
+if(typeof require==="undefined"||page_require!==__module_require__) {
+	delete_require=typeof require==="undefined";
+	require=__module_require__;
+	reset_require=true;
+}
 // yt_plugin/Base(4) => base_require/BaseRequire(1)
 const {do_export,get_exports,required,as}=require("../../base_require_raw/BaseRequire.user");
 
@@ -1833,6 +1839,7 @@ function yt_plugin_base_main() {
 		test_base.module_debug_log(mod);
 	}
 	if(failed_to_load) return;
+	let require=__module_require__;
 	const {ServiceLoader}=require("./YTPlugin_ServiceLoader_Plugin.user");
 	const log_enabled_page_type_change=false;
 	/** @private @type {ServiceResolverBox<{}>} */
@@ -3445,3 +3452,10 @@ export_(exports => exports.__module_loaded__=true);
 //#region global exports
 export_(exports => {exports.__youtube_plugin_base_loaded__=true;},{global: true});
 //#endregion
+if(delete_require) {
+	/** @type {{require?:any}} */
+	let opt_req_win=window;
+	delete opt_req_win.require;
+} else if(reset_require) {
+	require=page_require;
+}

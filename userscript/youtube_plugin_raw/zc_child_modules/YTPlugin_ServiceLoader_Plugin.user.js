@@ -12,6 +12,12 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js
 // ==/UserScript==
 
+let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
+if(typeof require==="undefined"||page_require!==__module_require__) {
+	delete_require=typeof require==="undefined";
+	require=__module_require__;
+	reset_require=true;
+}
 const {do_export}=require("../../base_require_raw/BaseRequire.user");
 const {CsiService,GFeedbackService,GuidedHelpService,TrackingServices,YtHandlers,YtPlugin,ModifyEnv}=require("./YTPlugin_Base.user");
 const {CodegenService}=require("./YTPlugin_Codegen.user");
@@ -30,6 +36,7 @@ if(window.__log_module_loading_enabled__) console.log("Load ServiceLoader Plugin
 class ServiceLoader {
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {
+		let require=__module_require__;
 		// IndexedDB_Service(7)
 		const {IndexedDBService}=require("./YTPlugin_IndexedDB.user");
 		// SupportService(6)
@@ -72,3 +79,10 @@ class ServiceLoader {
 
 export_(exports => {exports.ServiceLoader=ServiceLoader;});
 export_(exports => exports.__module_loaded__=true);
+if(delete_require) {
+	/** @type {{require?:any}} */
+	let opt_req_win=window;
+	delete opt_req_win.require;
+} else if(reset_require) {
+	require=page_require;
+}

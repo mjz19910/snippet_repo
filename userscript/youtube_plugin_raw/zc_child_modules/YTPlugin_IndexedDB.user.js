@@ -12,6 +12,12 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB.user.js
 // ==/UserScript==
 
+let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
+if(typeof require==="undefined"||page_require!==__module_require__) {
+	delete_require=typeof require==="undefined";
+	require=__module_require__;
+	reset_require=true;
+}
 // yt_plugin/IndexedDB_Service(10) => base_require/BaseRequire(1)
 const {as,do_export}=require("../../base_require_raw/BaseRequire.user");
 // yt_plugin/IndexedDB_Service(10) => yt_plugin/Base(4) => base_require/BaseRequire(1)
@@ -24,6 +30,7 @@ const __module_name__="mod$IndexedDBService";
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 function init_module() {
+	let require=__module_require__;
 	// yt_plugin/IndexedDB_Service(9) => yt_plugin/Support_Service(11) => yt_plugin/Base(4)
 	const {StoreData}=require("./YTPlugin_Support_Service.user");
 	class IndexedDBService extends BaseService {
@@ -744,3 +751,10 @@ class TypedIDBValidKeyS {
 	}
 }
 export_(exports => exports.__module_loaded__=true);
+if(delete_require) {
+	/** @type {{require?:any}} */
+	let opt_req_win=window;
+	delete opt_req_win.require;
+} else if(reset_require) {
+	require=page_require;
+}

@@ -12,6 +12,12 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Parser_Service.user.js
 // ==/UserScript==
 
+let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
+if(typeof require==="undefined"||page_require!==__module_require__) {
+	delete_require=typeof require==="undefined";
+	require=__module_require__;
+	reset_require=true;
+}
 const {do_export,as}=require("../../base_require_raw/BaseRequire.user");
 const {BaseService,split_string,split_string_once}=require("./YTPlugin_Base.user");
 
@@ -645,3 +651,10 @@ class ParserService extends BaseService {
 
 export_(exports => {exports.ParserService=ParserService;});
 export_(exports => exports.__module_loaded__=true);
+if(delete_require) {
+	/** @type {{require?:any}} */
+	let opt_req_win=window;
+	delete opt_req_win.require;
+} else if(reset_require) {
+	require=page_require;
+}
