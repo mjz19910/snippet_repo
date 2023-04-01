@@ -215,10 +215,12 @@ export async function main(ns) {
 				await ns.sleep(1500);
 				continue;
 			}
-			if(reply) {
-				ns.print("send_len ",msg_arr.length," rx_len ",reply.reply.length);
-			} else {
-				ns.print("send_len ",msg_arr.length);
+			if(msg_arr.length>0||(reply&&reply.reply.length>0)) {
+				if(reply) {
+					ns.print("send_len ",msg_arr.length," rx_len ",reply.reply.length);
+				} else {
+					ns.print("send_len ",msg_arr.length);
+				}
 			}
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
