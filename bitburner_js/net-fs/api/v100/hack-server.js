@@ -298,8 +298,8 @@ export async function main(ns) {
 			}
 			let cur_perf=0;
 			cur_perf=performance.now();
-			start_perf=cur_perf;
 			let server_work_time=cur_perf-start_perf;
+			start_perf=cur_perf;
 			let prev_len=-1,cur_len=-1;
 			let client_cycles=0;
 			for(let i=0;;i++) {
