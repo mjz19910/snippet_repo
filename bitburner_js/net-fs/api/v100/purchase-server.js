@@ -84,6 +84,6 @@ export async function main(ns) {
 		prev_ram=ram; ram*=2;
 		buy_cost1=ns.getPurchasedServerCost(ram-prev_ram);
 		cur_server_money=ns.getServerMoneyAvailable("home");
-		ns.print("upg_ram: ",ns.formatRam(ram));
+		ns.tprintf("upg_ram: %s",ns.formatRam(ram));
 	}
 }
