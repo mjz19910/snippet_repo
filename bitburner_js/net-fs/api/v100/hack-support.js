@@ -1,7 +1,7 @@
-export const request_port_id=1;
-export const reply_port_id=2;
-export const log_port_id=3;
-export const max_port_id=4;
+const request_port_id=1;
+const reply_port_id=2;
+const log_port_id=3;
+const max_port_id=4;
 /** @param {NS} ns @param {NetscriptPort} ns_port */
 export async function async_port_read_data(ns,ns_port) {
 	await ns.sleep(33);
