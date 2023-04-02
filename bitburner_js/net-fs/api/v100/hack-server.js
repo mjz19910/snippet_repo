@@ -111,7 +111,6 @@ export async function main(ns) {
 	const scanned_server_map=new Set;
 	/** @type {string[]} */
 	const hostname_list=[];
-	const forgotten_ids=new Set;
 	/** @arg {string} hostname */
 	function get_server(hostname) {
 		let server=server_map[hostname];
@@ -152,17 +151,8 @@ export async function main(ns) {
 	ns.atExit(() => {
 		thread_handle.kill();
 	});
-	while(!reply_port.empty()) {
-		await ns.sleep(100);
-		if(reply_port.empty()) break;
-		let reply_msg=reply_port.mustPeek();
-		if(reply_msg.reply.length===0) break;
-	}
-	request_port.clear();
-	reply_port.clear();
-	log_port.clear();
-	request_port.mustWrite({call: "pending",id: "call",reply: []});
-	reply_port.mustWrite({call: "pending",id: "reply",reply: []});
+	if(request_port.empty()) request_port.mustWrite({call: "pending",id: "call",reply: []});
+	if(reply_port.empty()) reply_port.mustWrite({call: "pending",id: "reply",reply: []});
 	let reply_uid_counter=0;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
@@ -203,10 +193,69 @@ export async function main(ns) {
 		let sent=reply_port.tryWrite(pending_reply_message);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
+	/**
+	 * @returns {{t: "n";} | {t: "s";l: "Server";f: Extract<ReplyMsg, {reply: Server;}>["call"];v: Server;} | {t: "s";l: "number";f: Extract<ReplyMsg, {reply: number;}>["call"];v: number;}}
+	 * @param {NS} ns
+	 * @param {CallMsg} msg
+	 * @param {any[][]} messages
+	 */
+	function process_one_message(ns,msg,messages) {
+		const {call,args}=msg;
+		switch(call) {
+			default: return {t: "n"};
+			case "getServerMaxMoney":
+			case "getServerMinSecurityLevel":
+			case "getServerMoneyAvailable":
+			case "getServerSecurityLevel": return {t: "s",l: "number",f: call,v: ns[call](...args)};
+			case "get_server": return {t: "s",l: "Server",f: call,v: get_server(args[0])};
+			case "get_hack_target": {
+				const player=ns.getPlayer();
+				if(randomize_hack) {
+					let v=null;
+					for(let i=0;i<hostname_list.length;i++) {
+						let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
+						if(hostname==="home") continue;
+						if(hostname.startsWith("big-")) continue;
+						if(!scanned_server_map.has(hostname)) {
+							scanned_server_map.add(hostname);
+							const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
+							if(scan_results.length>0) {
+								messages.push(["scan",hostname,...scan_results]);
+							}
+							for(let item of scan_results) get_server(item);
+						}
+						let srv=get_server(hostname);
+						if(srv.purchasedByPlayer) continue;
+						if(srv.moneyMax===0) continue;
+						if(srv.maxRam===0) continue;
+						if(srv.requiredHackingSkill>player.skills.hacking) continue;
+						if(srv.hasAdminRights) {
+							v=srv;
+							break;
+						}
+					}
+					if(v===null) v=get_server("n00dles");
+					return {t: "s",l: "Server",f: call,v};
+				} else {
+					let srv;
+					for(let name of ["ecorp","foodnstuff","n00dles"]) {
+						srv=get_server(name);
+						if(srv.hasAdminRights) break;
+						if(srv.openPortCount<srv.numOpenPortsRequired) continue;
+						ns.nuke(name);
+						if(srv.requiredHackingSkill>player.skills.hacking) continue;
+					}
+					if(!srv) srv=get_server("n00dles");
+					return {t: "s",l: "Server",f: call,v: srv};
+				}
+			}
+		}
+	}
 	async function process_messages() {
 		let server_cycles=0;
 		for(let i=0;;i++) {
 			server_cycles++;
+			/** @type {[string,...any[]][]} */
 			const messages=[];
 			const start_perf=performance.now();
 			await ns.sleep(800);
@@ -219,62 +268,12 @@ export async function main(ns) {
 			if(msg_arr.length>0) messages.push(["send_len",msg_arr.length]);
 			if(reply&&reply.reply.length>0) messages.push(["rx_len",reply.reply.length]);
 			for(const msg of msg_arr) {
-				const {call,args}=msg;
-				/** @type {{t:"n"}|{t:"s",l:"Server",f:Extract<ReplyMsg,{reply:Server}>["call"],v:Server}|{t:"s",l:"number",f:Extract<ReplyMsg,{reply:number}>["call"],v:number}} */
-				let reply={t: "n"};
-				switch(call) {
-					case "getServerMaxMoney":
-					case "getServerMinSecurityLevel":
-					case "getServerMoneyAvailable":
-					case "getServerSecurityLevel": reply={t: "s",l: "number",f: call,v: ns[call](...args)}; break;
-					case "get_server": reply={t: "s",l: "Server",f: call,v: get_server(args[0])}; break;
-					case "get_hack_target": {
-						const player=ns.getPlayer();
-						if(randomize_hack) {
-							let v=null;
-							for(let i=0;i<hostname_list.length;i++) {
-								let hostname=hostname_list[rand_num(0,(hostname_list.length-1))];
-								if(hostname==="home") continue;
-								if(hostname.startsWith("big-")) continue;
-								if(!scanned_server_map.has(hostname)) {
-									scanned_server_map.add(hostname);
-									const scan_results=ns.scan(hostname).filter(v => !hostname_list.includes(v));
-									if(scan_results.length>0) {
-										messages.push(["scan",hostname,...scan_results]);
-									}
-									for(let item of scan_results) get_server(item);
-								}
-								let srv=get_server(hostname);
-								if(srv.purchasedByPlayer) continue;
-								if(srv.moneyMax===0) continue;
-								if(srv.maxRam===0) continue;
-								if(srv.requiredHackingSkill>player.skills.hacking) continue;
-								if(srv.hasAdminRights) {
-									v=srv;
-									break;
-								}
-							}
-							if(v===null) v=get_server("n00dles");
-							reply={t: "s",l: "Server",f: call,v};
-						} else {
-							let srv;
-							for(let name of ["ecorp","foodnstuff","n00dles"]) {
-								srv=get_server(name);
-								if(srv.hasAdminRights) break;
-								if(srv.openPortCount<srv.numOpenPortsRequired) continue;
-								ns.nuke(name);
-								if(srv.requiredHackingSkill>player.skills.hacking) continue;
-							}
-							if(!srv) srv=get_server("n00dles");
-							reply={t: "s",l: "Server",f: call,v: srv};
-						}
-					} break;
-				}
+				const reply=process_one_message(ns,msg,messages);
 				if(reply.t==="s"&&reply.l==="number") {
-					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
+					await send_reply_msg_2({call: reply.f,id: msg.args[0],uid: -1,reply: reply.v});
 				}
 				if(reply.t==="s"&&reply.l==="Server") {
-					await send_reply_msg_2({call: reply.f,id: args[0],uid: -1,reply: reply.v});
+					await send_reply_msg_2({call: reply.f,id: msg.args[0],uid: -1,reply: reply.v});
 				}
 			}
 			msg_arr.length=0;
