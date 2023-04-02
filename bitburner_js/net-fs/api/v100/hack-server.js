@@ -216,12 +216,8 @@ export async function main(ns) {
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) continue;
 			let has_request=msg_arr.length>0,has_reply=reply&&reply.reply.length>0;
-			if(msg_arr.length>0) {
-				messages.push(["send_len",msg_arr.length]);
-			}
-			if(reply&&reply.reply.length>0) {
-				messages.push(["rx_len",reply.reply.length]);
-			}
+			if(msg_arr.length>0) messages.push(["send_len",msg_arr.length]);
+			if(reply&&reply.reply.length>0) messages.push(["rx_len",reply.reply.length]);
 			for(let msg of msg_arr) {
 				const {call,args}=msg;
 				/** @type {{t:"n"}|{t:"s",l:"Server",f:Extract<ReplyMsg,{reply:Server}>["call"],v:Server}|{t:"s",l:"number",f:Extract<ReplyMsg,{reply:number}>["call"],v:number}} */
