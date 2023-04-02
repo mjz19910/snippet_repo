@@ -151,9 +151,10 @@ export async function main(ns) {
 	let reply_msg=reply_port.peek();
 	if(reply_msg) {
 		reply_msg.reply.forEach(v => {
-			if(reply_uid_counter>(v.uid+1)) reply_uid_counter=v.uid+1;
+			if(reply_uid_counter>v.uid) reply_uid_counter=v.uid;
 		});
 	}
+	reply_uid_counter++;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
 		let reply_msg=reply_port.peek();
