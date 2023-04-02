@@ -160,9 +160,7 @@ export function get_reply_port(ns) {
 }
 /** @template {CallMsg["call"]} CallId @arg {HackState} this_ @arg {string} id @arg {CallId} call_id */
 export async function generic_get_call_with_id(this_,id,call_id) {
-	const {ns}=this_;
-	const request_port=get_request_port(ns);
-	const reply_port=get_reply_port(ns);
+	const {ns,request_port,reply_port}=this_;
 	/** @arg {any} x @returns {asserts x is Extract<ReplyMsg,{call:CallId}>['reply']} */
 	function assume_return(x) {x;}
 	let send_message=true;
@@ -271,6 +269,8 @@ export class HackState {
 		const [thread_count,hostname]=p_flags._;
 		this.thread_count=thread_count;
 		this.hostname=hostname;
+		this.request_port=get_request_port(ns);
+		this.reply_port=get_reply_port(ns);
 		this.log_port=get_log_port(ns);
 	}
 }
