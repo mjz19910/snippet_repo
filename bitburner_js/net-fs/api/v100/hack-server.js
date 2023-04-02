@@ -121,8 +121,6 @@ export async function main(ns) {
 		return server;
 	}
 	for(let item of ns.scan("home")) get_server(item);
-	/** @type {number[]} */
-	let complete_reply_id_list=[];
 	const request_port=get_request_port(ns);
 	const reply_port=get_reply_port(ns);
 	const log_port=get_log_port(ns);
