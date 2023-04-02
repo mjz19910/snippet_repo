@@ -14,6 +14,7 @@ export class InitHackScript {
 	constructor(ns,s) {
 		this.opts=s;
 		this.ns=ns;
+		ns.tail();
 		this.init_script();
 		this.player_hacking_skill=ns.getPlayer().skills.hacking;
 		/** @type {string[]} */
