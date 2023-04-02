@@ -8,9 +8,21 @@ async function read_all_ns_port(ns,ns_port,reset_port) {
 	reset_port(ns_port);
 }
 /** @param {NS} ns */
-export async function main(ns) {
-	await read_all_ns_port(ns,get_request_port(ns),(port) =>
+export function reset_request_port(ns) {
+	return read_all_ns_port(ns,get_request_port(ns),(port) =>
 		port.mustWrite({call: "pending",id: "call",reply: []}));
-	await read_all_ns_port(ns,get_reply_port(ns),(port) =>
+}
+/** @param {NS} ns */
+export function reset_reply_port(ns) {
+	return read_all_ns_port(ns,get_reply_port(ns),(port) =>
 		port.mustWrite({call: "pending",id: "reply",reply: []}));
+}
+/** @param {NS} ns */
+export async function reset_all_ports(ns) {
+	await reset_request_port(ns);
+	await reset_reply_port(ns);
+}
+/** @param {NS} ns */
+export function main(ns) {
+	return reset_all_ports(ns);
 }

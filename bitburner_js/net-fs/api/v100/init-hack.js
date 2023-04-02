@@ -193,11 +193,11 @@ export class InitHackScript {
 		for(const hostname of this.hostname_list) {
 			const srv=this.get_server(hostname);
 			const num_ports=srv.numOpenPortsRequired;
-			if(num_ports>=1&&!srv.sshPortOpen) this.unlock_service(srv,"ssh");
-			if(num_ports>=2&&!srv.ftpPortOpen) this.unlock_service(srv,"ftp");
-			if(num_ports>=3&&!srv.smtpPortOpen) this.unlock_service(srv,"smtp");
-			if(num_ports>=4&&!srv.httpPortOpen) this.unlock_service(srv,"http");
-			if(num_ports>=5&&!srv.sqlPortOpen) this.unlock_service(srv,"sql");
+			if(num_ports>=1&&!srv.sshPortOpen) this.exploit_service(srv,"ssh");
+			if(num_ports>=2&&!srv.ftpPortOpen) this.exploit_service(srv,"ftp");
+			if(num_ports>=3&&!srv.smtpPortOpen) this.exploit_service(srv,"smtp");
+			if(num_ports>=4&&!srv.httpPortOpen) this.exploit_service(srv,"http");
+			if(num_ports>=5&&!srv.sqlPortOpen) this.exploit_service(srv,"sql");
 			if(num_ports>5) {
 				this.ns.print("failed (too many ports required) ",num_ports," ",hostname);
 				this.ns.exit();
@@ -232,7 +232,7 @@ export class InitHackScript {
 		srv.hostname=str;
 	}
 	/** @arg {Server} srv @arg {"ssh"|"ftp"|"smtp"|"http"|"sql"} type */
-	unlock_service(srv,type) {
+	exploit_service(srv,type) {
 		if(this.enabled_exploits[`has_${type}`]) {
 			this.service_map[type](srv.hostname);
 			srv[`${type}PortOpen`]=true;
