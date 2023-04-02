@@ -162,6 +162,7 @@ export async function main(ns) {
 		if(reply_msg===null) throw new Error("No pending reply");
 		msg.uid=reply_uid_counter;
 		reply_uid_counter++;
+		if(reply_uid_counter>0xffff) reply_uid_counter=0;
 		reply_msg.uid=reply_uid_counter;
 		reply_msg.reply.push(msg);
 		reply_port.read();
