@@ -111,19 +111,16 @@ export let netscript_lock={
 	/** @type {(()=>void)[]} */
 	waiters: [],
 	async lock() {
-		console.log("will lock");
 		if(this.locked) {
+			console.log("lock.wait()");
 			await this.wait();
+			console.log("lock.unlocked()");
 		}
 		this.locked=true;
-		console.log("locked");
 	},
 	unlock() {
-		console.log("unlock");
 		let last=this.waiters.pop();
-		if(last!==void 0) {
-			last();
-		}
+		if(last!==void 0) last();
 		this.locked=false;
 	},
 	async wait() {
