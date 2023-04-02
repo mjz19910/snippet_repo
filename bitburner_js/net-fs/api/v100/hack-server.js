@@ -145,22 +145,23 @@ export async function main(ns) {
 	ns.atExit(() => {
 		thread_handle.kill();
 	});
-	if(request_port.empty()) request_port.mustWrite({call: "pending",id: "call",reply: []});
-	if(reply_port.empty()) reply_port.mustWrite({call: "pending",id: "reply",reply: []});
+	if(request_port.empty()) request_port.mustWrite({call: "pending",uid: -1,id: "call",reply: []});
+	if(reply_port.empty()) reply_port.mustWrite({call: "pending",uid: -1,id: "reply",reply: []});
 	let reply_uid_counter=0;
 	let reply_msg=reply_port.peek();
 	if(reply_msg) {
-		reply_msg.reply.forEach(v => {
-			if(reply_uid_counter>v.uid) reply_uid_counter=v.uid;
-		});
+		reply_uid_counter=reply_msg.uid+1;
 	}
 	reply_uid_counter++;
+	reply_msg=reply_port.mustRead();
+	reply_msg.uid=reply_uid_counter;
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
 		let reply_msg=reply_port.peek();
 		if(reply_msg===null) throw new Error("No pending reply");
 		msg.uid=reply_uid_counter;
 		reply_uid_counter++;
+		reply_msg.uid=reply_uid_counter;
 		reply_msg.reply.push(msg);
 		reply_port.read();
 		let sent=reply_port.tryWrite(reply_msg);
