@@ -259,6 +259,7 @@ export async function main(ns) {
 				log_messages.forEach(res => {
 					messages.push(["log",res.host,...res.msg]);
 				});
+				log_messages.length=0;
 			}
 			let cur_perf=performance.now();
 			let server_work_time=cur_perf-start_perf;
