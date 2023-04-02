@@ -158,13 +158,12 @@ export async function main(ns) {
 	reply_port.mustWrite(reply_msg);
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		const reply_msg=reply_port.mustPeek();
+		const reply_msg=reply_port.mustRead();
 		msg.uid=reply_uid_counter;
 		reply_uid_counter++;
 		if(reply_uid_counter>0xffff) reply_uid_counter=0;
 		reply_msg.uid=reply_uid_counter;
 		reply_msg.reply.push(msg);
-		reply_port.mustRead();
 		reply_port.mustWrite(reply_msg);
 	}
 	/**
