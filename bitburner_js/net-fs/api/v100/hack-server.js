@@ -148,6 +148,12 @@ export async function main(ns) {
 	if(request_port.empty()) request_port.mustWrite({call: "pending",id: "call",reply: []});
 	if(reply_port.empty()) reply_port.mustWrite({call: "pending",id: "reply",reply: []});
 	let reply_uid_counter=0;
+	let reply_msg=reply_port.peek();
+	if(reply_msg) {
+		reply_msg.reply.forEach(v => {
+			if(reply_uid_counter>(v.uid+1)) reply_uid_counter=v.uid+1;
+		});
+	}
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
 		let reply_msg=reply_port.peek();
