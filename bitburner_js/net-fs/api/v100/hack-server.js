@@ -299,7 +299,7 @@ export async function main(ns) {
 			let client_cycles=0;
 			for(let i=0;;i++) {
 				client_cycles++;
-				await ns.sleep(10);
+				await ns.sleep(800);
 				let reply=reply_port.mustPeek();
 				let real_prev_len=cur_len;
 				prev_len=cur_len;
