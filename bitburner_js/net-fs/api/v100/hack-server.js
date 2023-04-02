@@ -167,7 +167,7 @@ export async function main(ns) {
 		reply_port.mustWrite(reply_msg);
 	}
 	/**
-	 * @returns {{t: "n";} | {t: "s";l: "Server";f: Extract<ReplyMsg, {reply: Server;}>["call"];v: Server;} | {t: "s";l: "number";f: Extract<ReplyMsg, {reply: number;}>["call"];v: number;}}
+	 * @returns {{t: "n"}|{t:"s";l:"Server";f:Extract<ReplyMsg,{reply:Server}>["call"];a:string;v:Server}|{t:"s";l:"number";f: Extract<ReplyMsg,{reply:number}>["call"];a:string;v:number}}
 	 * @param {NS} ns
 	 * @param {CallMsg} msg
 	 * @param {any[][]} messages
@@ -179,8 +179,8 @@ export async function main(ns) {
 			case "getServerMaxMoney":
 			case "getServerMinSecurityLevel":
 			case "getServerMoneyAvailable":
-			case "getServerSecurityLevel": return {t: "s",l: "number",f: call,v: ns[call](...args)};
-			case "get_server": return {t: "s",l: "Server",f: call,v: get_server(args[0])};
+			case "getServerSecurityLevel": return {t: "s",l: "number",f: call,a: args[0],v: ns[call](...args)};
+			case "get_server": return {t: "s",l: "Server",f: call,a: args[0],v: get_server(args[0])};
 			case "get_hack_target": {
 				const player=ns.getPlayer();
 				if(randomize_hack) {
@@ -208,7 +208,7 @@ export async function main(ns) {
 						}
 					}
 					if(v===null) v=get_server("n00dles");
-					return {t: "s",l: "Server",f: call,v};
+					return {t: "s",l: "Server",f: call,a: args[0],v};
 				} else {
 					let srv;
 					for(let name of ["ecorp","foodnstuff","n00dles"]) {
@@ -219,7 +219,7 @@ export async function main(ns) {
 						if(srv.requiredHackingSkill>player.skills.hacking) continue;
 					}
 					if(!srv) srv=get_server("n00dles");
-					return {t: "s",l: "Server",f: call,v: srv};
+					return {t: "s",l: "Server",f: call,a: args[0],v: srv};
 				}
 			}
 		}
@@ -243,10 +243,11 @@ export async function main(ns) {
 			for(const msg of msg_arr) {
 				const reply=process_one_message(ns,msg,messages);
 				if(reply.t==="s"&&reply.l==="number") {
-					await send_reply_msg_2({call: reply.f,id: msg.args[0],uid: -1,reply: reply.v});
+					const {f: call,a: id,v}=reply;
+					await send_reply_msg_2({call,id,uid: -1,reply: v});
 				}
 				if(reply.t==="s"&&reply.l==="Server") {
-					await send_reply_msg_2({call: reply.f,id: msg.args[0],uid: -1,reply: reply.v});
+					await send_reply_msg_2({call: reply.f,id: reply.a,uid: -1,reply: reply.v});
 				}
 			}
 			msg_arr.length=0;
