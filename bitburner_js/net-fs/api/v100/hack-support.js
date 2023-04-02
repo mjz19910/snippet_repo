@@ -107,10 +107,13 @@ export function fill_port_handle_cache(ns) {
 	}
 }
 let lock_is_locked=false;
+let lock_debug=false;
 function notify_locked() {
+	if(!lock_debug) return;
 	console.log("notify_locked");
 }
 function notify_released() {
+	if(!lock_debug) return;
 	console.log("notify_released");
 }
 export let netscript_lock={
