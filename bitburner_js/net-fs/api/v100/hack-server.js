@@ -204,24 +204,17 @@ export async function main(ns) {
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	async function process_messages() {
-		const initial_delay=10;
-		let cur_delay=initial_delay;
 		let server_cycles=0;
 		for(let i=0;;i++) {
 			server_cycles++;
 			let messages=[];
 			let start_perf=performance.now();
-			await ns.sleep(cur_delay);
+			await ns.sleep(800);
 			let msg=request_port.peek();
 			let reply=reply_port.peek();
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
-			if(msg_arr.length===0) {
-				cur_delay*=2;
-				continue;
-			} else {
-				cur_delay=initial_delay;
-			}
+			if(msg_arr.length===0) continue;
 			let has_request=msg_arr.length>0,has_reply=reply&&reply.reply.length>0;
 			if(msg_arr.length>0) {
 				messages.push(["send_len",msg_arr.length]);
