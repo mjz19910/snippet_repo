@@ -207,18 +207,18 @@ export async function main(ns) {
 		let server_cycles=0;
 		for(let i=0;;i++) {
 			server_cycles++;
-			let messages=[];
-			let start_perf=performance.now();
+			const messages=[];
+			const start_perf=performance.now();
 			await ns.sleep(800);
-			let msg=request_port.peek();
-			let reply=reply_port.peek();
+			const msg=request_port.peek();
+			const reply=reply_port.peek();
 			if(msg===null) continue;
 			const msg_arr=msg.reply;
 			if(msg_arr.length===0) continue;
-			let has_request=msg_arr.length>0,has_reply=reply&&reply.reply.length>0;
+			const has_request=msg_arr.length>0,has_reply=reply&&reply.reply.length>0;
 			if(msg_arr.length>0) messages.push(["send_len",msg_arr.length]);
 			if(reply&&reply.reply.length>0) messages.push(["rx_len",reply.reply.length]);
-			for(let msg of msg_arr) {
+			for(const msg of msg_arr) {
 				const {call,args}=msg;
 				/** @type {{t:"n"}|{t:"s",l:"Server",f:Extract<ReplyMsg,{reply:Server}>["call"],v:Server}|{t:"s",l:"number",f:Extract<ReplyMsg,{reply:number}>["call"],v:number}} */
 				let reply={t: "n"};
@@ -287,38 +287,12 @@ export async function main(ns) {
 					messages.push(["log",res.host,...res.msg]);
 				}
 			}
-			let cur_perf=0;
-			cur_perf=performance.now();
+			let cur_perf=performance.now();
 			let server_work_time=cur_perf-start_perf;
-			start_perf=cur_perf;
-			let prev_len=-1,cur_len=-1;
-			let client_cycles=0;
-			for(let i=0;;i++) {
-				client_cycles++;
-				await ns.sleep(800);
-				let reply=reply_port.mustPeek();
-				let real_prev_len=cur_len;
-				prev_len=cur_len;
-				cur_len=reply.reply.length;
-				reply.reply=reply.reply.filter(v => {
-					return !forgotten_ids.has(v.uid);
-				});
-				if(cur_len!==reply.reply.length) {
-					reply_port.mustRead();
-					reply_port.write(reply);
-					prev_len=real_prev_len;
-					cur_len=reply.reply.length;
-				}
-				if(prev_len!==-1&&prev_len!==cur_len) i=0;
-				if(reply.reply.length===0) break;
-			}
-			cur_perf=performance.now();
-			let client_work_time=cur_perf-start_perf;
 			if(has_request||has_reply) {
 				ns.printf(
-					"[%s](%s)<->[%s](%s) messages: %s",
+					"[%s](%s) messages: %s",
 					ns.tFormat(server_work_time,true),server_cycles,
-					ns.tFormat(client_work_time,true),client_cycles,
 					JSON.stringify(messages).slice(1,-1)
 				);
 				server_cycles=0;
