@@ -130,11 +130,7 @@ export async function main(ns) {
 		while(!thread.signal.aborted) {
 			await log_port.nextWrite();
 			if(log_messages.length>1000) {
-				try {
-					log_port.read();
-				} catch {
-					log_port.port.read();
-				}
+				log_port.read();
 				continue;
 			}
 			while(!log_port.empty()) {
