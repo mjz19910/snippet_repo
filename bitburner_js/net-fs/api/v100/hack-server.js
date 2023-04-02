@@ -129,11 +129,11 @@ export async function main(ns) {
 	let thread_handle=start_thread(async function(thread) {
 		while(!thread.signal.aborted) {
 			await log_port.nextWrite();
-			if(log_messages.length>1000) {
-				log_port.read();
-				continue;
-			}
 			while(!log_port.empty()) {
+				if(log_messages.length>1000) {
+					log_port.read();
+					continue;
+				}
 				let msg=log_port.peek();
 				if(msg===null) {
 					log_port.read();
