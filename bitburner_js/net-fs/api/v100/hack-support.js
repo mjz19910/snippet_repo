@@ -119,9 +119,9 @@ export let netscript_lock={
 		this.locked=true;
 	},
 	unlock() {
+		this.locked=false;
 		let last=this.waiters.pop();
 		if(last!==void 0) last();
-		this.locked=false;
 	},
 	async wait() {
 		if(this.locked) {
