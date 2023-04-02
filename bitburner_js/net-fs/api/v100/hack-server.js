@@ -154,39 +154,12 @@ export async function main(ns) {
 	async function send_reply_msg_2(msg) {
 		let reply_msg=reply_port.peek();
 		if(reply_msg===null) throw new Error("No pending reply");
-		let pending_reply_message=reply_msg;
 		let reply_id=reply_uid_counter;
 		reply_uid_counter++;
 		msg.uid=reply_id;
-		/** @type {(ReplyMsg|null)[]} */
-		const reply_cache=pending_reply_message.reply.slice();
-		for(let done_id of complete_reply_id_list) {
-			const idx=pending_reply_message.reply.findIndex(v => v.uid===done_id);
-			if(idx===-1) continue;
-			reply_cache[idx]=null;
-		}
-		for(let i=0;i<reply_cache.length;i++) {
-			let reply_val=reply_cache[i];
-			if(reply_val===null) {
-				reply_cache.splice(i,1);
-				i--;
-				continue;
-			}
-			let removed=pending_reply_message.reply.shift();
-			reply_uid_counter++;
-			if(!removed) continue;
-			let idx=complete_reply_id_list.indexOf(removed.uid);
-			if(idx===-1) continue;
-			complete_reply_id_list.splice(idx,1);
-		}
-		pending_reply_message.reply.length=0;
-		for(let item of reply_cache) {
-			if(item===null) continue;
-			pending_reply_message.reply.push(item);
-		}
-		pending_reply_message.reply.push(msg);
+		reply_msg.reply.push(msg);
 		reply_port.read();
-		let sent=reply_port.tryWrite(pending_reply_message);
+		let sent=reply_port.tryWrite(reply_msg);
 		if(!sent) throw new Error("Unable to send queued messages");
 	}
 	/**
