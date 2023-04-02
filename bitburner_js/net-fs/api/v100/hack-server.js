@@ -247,7 +247,8 @@ export async function main(ns) {
 					await send_reply_msg_2({call,id,uid: -1,reply: v});
 				}
 				if(reply.t==="s"&&reply.l==="Server") {
-					await send_reply_msg_2({call: reply.f,id: reply.a,uid: -1,reply: reply.v});
+					const {f: call,a: id,v}=reply;
+					await send_reply_msg_2({call,id,uid: -1,reply: v});
 				}
 			}
 			msg_arr.length=0;
