@@ -265,9 +265,11 @@ export async function main(ns) {
 			if(has_request||has_reply) {
 				ns.printf(
 					"[%s](%s) messages: %s",
-					ns.tFormat(server_work_time,true),server_cycles,
-					JSON.stringify(messages).slice(1,-1)
+					ns.tFormat(server_work_time,true),server_cycles
 				);
+				for(let msg of messages) {
+					ns.print(msg);
+				}
 				server_cycles=0;
 			}
 		}
