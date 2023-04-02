@@ -165,7 +165,7 @@ export async function main(ns) {
 		if(reply_uid_counter>0xffff) reply_uid_counter=0;
 		reply_msg.uid=reply_uid_counter;
 		reply_msg.reply.push(msg);
-		reply_port.read();
+		reply_port.mustRead();
 		reply_port.mustWrite(reply_msg);
 	}
 	/**
