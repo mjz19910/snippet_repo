@@ -106,22 +106,33 @@ export function fill_port_handle_cache(ns) {
 		known_port_handles.set(i,port_handle);
 	}
 }
+let lock_is_locked=false;
+function notify_locked() {
+	console.log("notify_locked");
+}
+function notify_released() {
+	console.log("notify_released");
+}
 export let netscript_lock={
 	locked: false,
 	/** @type {(()=>void)[]} */
 	waiters: [],
 	async lock() {
-		if(this.locked) {
+		if(this.locked&&lock_is_locked) {
 			console.log("lock.wait()");
 			await this.wait();
 			console.log("lock.unlocked()");
 		}
+		lock_is_locked=true;
 		this.locked=true;
+		notify_locked();
 	},
 	unlock() {
 		this.locked=false;
+		lock_is_locked=false;
 		let last=this.waiters.pop();
 		if(last!==void 0) last();
+		notify_released();
 	},
 	async wait() {
 		if(this.locked) {
