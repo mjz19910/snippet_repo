@@ -264,7 +264,7 @@ export async function main(ns) {
 			let server_work_time=cur_perf-start_perf;
 			if(has_request||has_reply) {
 				ns.printf(
-					"[%s](%s) messages: %s",
+					"[%s](%s)",
 					ns.tFormat(server_work_time,true),server_cycles
 				);
 				for(let msg of messages) {
