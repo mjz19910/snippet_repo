@@ -152,9 +152,8 @@ export async function main(ns) {
 	async function send_reply_msg_2(msg) {
 		let reply_msg=reply_port.peek();
 		if(reply_msg===null) throw new Error("No pending reply");
-		let reply_id=reply_uid_counter;
+		msg.uid=reply_uid_counter;
 		reply_uid_counter++;
-		msg.uid=reply_id;
 		reply_msg.reply.push(msg);
 		reply_port.read();
 		let sent=reply_port.tryWrite(reply_msg);
