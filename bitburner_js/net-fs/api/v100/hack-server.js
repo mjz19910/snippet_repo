@@ -158,8 +158,7 @@ export async function main(ns) {
 	reply_port.mustWrite(reply_msg);
 	/** @param {ReplyMsg} msg */
 	async function send_reply_msg_2(msg) {
-		let reply_msg=reply_port.peek();
-		if(reply_msg===null) throw new Error("No pending reply");
+		const reply_msg=reply_port.mustPeek();
 		msg.uid=reply_uid_counter;
 		reply_uid_counter++;
 		if(reply_uid_counter>0xffff) reply_uid_counter=0;
