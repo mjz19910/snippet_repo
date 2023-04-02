@@ -255,11 +255,10 @@ export async function main(ns) {
 			request_port.read();
 			let success=request_port.tryWrite(msg);
 			if(!success) throw new Error("Failed (request_port.tryWrite)");
-			while(log_messages.length>0) {
-				let res=log_messages.shift();
-				if(res!==void 0) {
+			if(log_messages.length>0) {
+				log_messages.forEach(res => {
 					messages.push(["log",res.host,...res.msg]);
-				}
+				});
 			}
 			let cur_perf=performance.now();
 			let server_work_time=cur_perf-start_perf;
