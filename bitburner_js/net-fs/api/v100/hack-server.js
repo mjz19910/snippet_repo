@@ -166,8 +166,7 @@ export async function main(ns) {
 		reply_msg.uid=reply_uid_counter;
 		reply_msg.reply.push(msg);
 		reply_port.read();
-		let sent=reply_port.tryWrite(reply_msg);
-		if(!sent) throw new Error("Unable to send queued messages");
+		reply_port.mustWrite(reply_msg);
 	}
 	/**
 	 * @returns {{t: "n";} | {t: "s";l: "Server";f: Extract<ReplyMsg, {reply: Server;}>["call"];v: Server;} | {t: "s";l: "number";f: Extract<ReplyMsg, {reply: number;}>["call"];v: number;}}
