@@ -2,6 +2,9 @@
 	let res=null;
 	class OutputResult {
 		result=res;
+		/**
+		 * @param {{ setup: { pot: number; }[]; used: { mana: number; time: string; }; result: { mana: number; gold: number; time: string; }; }} val_any
+		 */
 		use(val_any) {
 			val_any;
 		}
