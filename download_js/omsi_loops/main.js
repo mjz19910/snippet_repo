@@ -40,5 +40,23 @@
 			time: "14.1s",
 		},
 	});
+	ret.use({
+		setup: [
+			{pot: 50},
+			{pick_locks: 7},
+			{buy_mana: 1},
+			{pick_locks: 3},
+			{buy_mana: 1},
+		],
+		used: {
+			mana: 6_448,
+			time: "25.8s",
+		},
+		result: {
+			mana: 3_801,
+			gold: 0,
+			time: "15.2s",
+		},
+	});
 	return ret;
 })();
