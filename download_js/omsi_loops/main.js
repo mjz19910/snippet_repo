@@ -16,9 +16,9 @@
 			time: "9.75s",
 		},
 		result: {
-			mana: "13.7k",
+			mana: 2_813,
 			gold: 0,
-			reputation: 10,
+			time: "11.3s",
 		},
 	});
 	return ret;
