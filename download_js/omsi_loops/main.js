@@ -31,13 +31,13 @@
 			{buy_mana: 1},
 		],
 		used: {
-			mana: 2_436,
-			time: "9.75s",
+			mana: 5_225,
+			time: "20.9s",
 		},
 		result: {
-			mana: 2_813,
+			mana: 3_534,
 			gold: 0,
-			time: "11.3s",
+			time: "14.1s",
 		},
 	});
 	return ret;
