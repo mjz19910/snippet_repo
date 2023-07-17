@@ -3640,10 +3640,6 @@ class ModifyEnv extends BaseService
 					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
 				}
 			},response);
-			/** @private @type {any} */
-			let any_x=fake_res;
-			/** @private @type {Response} */
-			let fake_res_t=any_x;
 			return fake_res.make_proxy_from();
 		}
 		/** @private @type {typeof fetch|null} */
