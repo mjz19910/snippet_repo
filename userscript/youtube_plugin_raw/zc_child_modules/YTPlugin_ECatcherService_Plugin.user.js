@@ -13,7 +13,8 @@
 // ==/UserScript==
 
 let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__) {
+if(typeof require==="undefined"||page_require!==__module_require__)
+{
 	delete_require=typeof require==="undefined";
 	require=__module_require__;
 	reset_require=true;
@@ -25,7 +26,8 @@ const __module_name__="mod$ECatcherService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-class ECatcherService extends BaseService {
+class ECatcherService extends BaseService
+{
 	/** @type {number[]} */
 	static known_experiments=[
 		[1714247],
@@ -80,11 +82,13 @@ class ECatcherService extends BaseService {
 	/** @private @type {number[]} */
 	seen_new_expected=[];
 	/** @api @public @arg {number[]} x */
-	iterate_fexp(x) {
+	iterate_fexp(x)
+	{
 		let expected=this.data.expected_client_values.fexp;
 		/** @private @type {number[]} */
 		let new_expected=[];
-		x.forEach(e => {
+		x.forEach(e =>
+		{
 			if(expected.includes(e))
 				return;
 			if(this.seen_new_expected.includes(e))
@@ -95,17 +99,25 @@ class ECatcherService extends BaseService {
 		if(new_expected.length>0) this.log_new_experiments(new_expected);
 	}
 	/** @arg {[number[]]} experiments_arr_log_args */
-	log_new_experiments(...experiments_arr_log_args) {
+	log_new_experiments(...experiments_arr_log_args)
+	{
 		let [arg]=experiments_arr_log_args;
-		console.log(`-- [new_fexp_expected_many] --\n\n[%s],`,arg.join());
-		this.data.expected_client_values.fexp;
+		var do_new_fexp_expected_many=false;
+		if(do_new_fexp_expected_many)
+		{
+			console.log(`-- [new_fexp_expected_many] --\n\n[%s],`,arg.join());
+			this.data.expected_client_values.fexp;
+		}
 	}
 	/** @api @public @arg {RC_ECatcher_SPs["params"]} params */
-	on_params(params) {
+	on_params(params)
+	{
 		/** @private @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
-		for(let param of params) {
-			switch(param.key) {
+		for(let param of params)
+		{
+			switch(param.key)
+			{
 				case "client.version": new_client.version=param.value; break;
 				case "client.name": new_client.name=param.value; break;
 				case "client.fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
@@ -125,8 +137,10 @@ class ECatcherService extends BaseService {
 }
 export_(exports => {exports.ECatcherService=ECatcherService;});
 export_(exports => exports.__module_loaded__=true);
-if(delete_require) {
+if(delete_require)
+{
 	delete window.require;
-} else if(reset_require) {
+} else if(reset_require)
+{
 	require=page_require;
 }
