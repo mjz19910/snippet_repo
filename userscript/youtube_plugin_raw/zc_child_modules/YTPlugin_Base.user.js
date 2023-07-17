@@ -3616,11 +3616,12 @@ class ModifyEnv extends BaseService
 			{
 				let fake_res=this;
 				return new Proxy(fake_res,{
-					/** @private @arg {keyof Response} key */
+					/** @private @arg {keyof Response|"then"} key */
 					get(obj,key,_proxy)
 					{
 						switch(key)
 						{
+							case "then": return void 0;
 							case "body": case "headers": case "text": case "redirected": case "ok": case "status": case "clone": return obj[key];
 							default: console.log("[new_response_key] [%s]",key); debugger;
 						}
