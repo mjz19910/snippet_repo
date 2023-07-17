@@ -953,6 +953,8 @@ class HandleTypes extends BaseService
 					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				}; break;
 				case "n4v7s": case "nx57y": case "o097z": case "nx5s7": case "9gv7l":
+				case "vgqsk":
+				case "vgqsr": break;
 			}
 		}
 		this.save_primitive(`${cf1}.ms`,ms);
