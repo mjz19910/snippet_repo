@@ -521,7 +521,6 @@ class Support_RS_Player extends BaseService {
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
-		this.sm.trackingParams(trackingParams);
 		this.t(attestation,this.R_PlayerAttestation);
 		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
 		this.t(captions,this.R_PlayerCaptionsTracklist);
@@ -569,7 +568,6 @@ class Support_RS_Player extends BaseService {
 		if(durationMs!=="10000") debugger;
 		this.xm.E_Url(navigationEndpoint);
 		this.sm.T_Icon(cf,icon);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
@@ -681,7 +679,6 @@ class Support_RS_Player extends BaseService {
 		const {elements,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.z(elements,this.R_EndscreenElement);
 		this.t(startMs,x => this.sm.a_primitive_str(x));
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
 	D_PlayerAnnotationsExpanded(x) {
@@ -765,7 +762,6 @@ class Support_RS_Player extends BaseService {
 		this.D_TriggerCriteria(triggerCriteria);
 		this.sm.G_Text(text);
 		this.xm.E_Url(endpoint);
-		this.sm.trackingParams(trackingParams);
 		this.sm.RA_Notification(snackbar);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
@@ -852,7 +848,6 @@ class Support_RS_Player extends BaseService {
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z([startTimeMs,endTimeMs],x => this.sm.a_primitive_str(x));
 		this.sm.D_Thumbnail(watermark);
-		this.sm.trackingParams(trackingParams);
 		x: {
 			let x2=navigationEndpoint;
 			if(this.sm.is_TE_VE(x2,3611)) {this.sm.E_VE3611(x2); break x;}
@@ -878,7 +873,6 @@ class Support_RS_Player extends BaseService {
 		this.sm.G_Text(headerText);
 		this.R_InfoCardIcon(icon);
 		this.R_InfoCardIcon(closeButton);
-		this.sm.trackingParams(trackingParams);
 		this.sm.cq(allowTeaserDismiss,true);
 		this.sm.cq(logIconVisibilityUpdates,true);
 	}
@@ -1042,7 +1036,6 @@ class Support_RS_Player extends BaseService {
 		this.sm.D_EndscreenElement_EP(endpoint);
 		this.sm.t(subscribersText,this.sm.G_Text);
 		this.xm.t(hovercardButton,this.xm.R_SubscribeButton);
-		this.sm.trackingParams(trackingParams);
 		this.sm.t(productPrice,this.sm.G_Text);
 		this.sm.t(additionalFeesText,this.sm.G_Text);
 		this.sm.t(isSubscribe,this.sm.a_primitive_bool);
@@ -1073,7 +1066,6 @@ class Support_RS_Player extends BaseService {
 		this.R_SimpleCardTeaser(teaser);
 		this.t(content,this.D_Card_Content);
 		this.z(cueRanges,this.D_CueRangeItem);
-		this.sm.trackingParams(trackingParams);
 		this.t(cardId,x => this.sm.a_primitive_str(x));
 		this.t(feature,x => {
 			if(x!=="cards") debugger;
@@ -1104,7 +1096,6 @@ class Support_RS_Player extends BaseService {
 		const cf="D_SimpleCardTeaser";
 		const {message,trackingParams,prominent,logVisibilityUpdates,onTapCommand,...y}=this.s(cf,x); this.g(y);
 		this.sm.G_Text(message);
-		this.sm.trackingParams(trackingParams);
 		this.sm.cq(prominent,true);
 		this.sm.cq(logVisibilityUpdates,true);
 		this.sm.t(onTapCommand,this.sm.A_ChangeEngagementPanelVisibility);
@@ -1167,7 +1158,6 @@ class Support_RS_Watch extends BaseService {
 		this.sm.RC_ResponseContext(responseContext);
 		this.sm.R_TwoColumnWatchNextResults(contents);
 		this.sm.E_Watch(currentVideoEndpoint);
-		this.sm.trackingParams(trackingParams);
 		this.sm.R_PlayerOverlay(playerOverlays);
 		this.z(onResponseReceivedEndpoints,x => this.xm.GE_ResponseReceived(cf,x));
 		this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
@@ -1314,7 +1304,6 @@ class Support_RS_Browse extends BaseService {
 		const {responseContext,header,trackingParams,onResponseReceivedActions,onResponseReceivedEndpoints,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.RC_ResponseContext(responseContext);
 		this.xm.t(header,this.xm.G_BrowseHeader);
-		this.sm.trackingParams(trackingParams);
 		this.xm.tz(onResponseReceivedActions,this.xm.GA_ResponseReceived);
 		this.tz_cf(cf,onResponseReceivedEndpoints,this.xm.GE_ResponseReceived);
 		this.xm.t(contents,this.xm.G_BrowseContents);
@@ -1406,7 +1395,6 @@ class Support_GenericApi extends BaseService {
 		const cf="RS_GetAddToPlaylist";
 		const {responseContext,contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.R_AddToPlaylist);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {RSB_EditPlaylist} x */
 	RSB_EditPlaylist(x) {
@@ -1419,7 +1407,6 @@ class Support_GenericApi extends BaseService {
 		});
 		this.z(r,a => a);
 		this.z(playlistEditResults,this.g);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
@@ -1432,7 +1419,6 @@ class Support_GenericApi extends BaseService {
 			return this.T_OpenPopup_Toast(a);
 		});
 		this.sm.z(u1,this.sm.RA_Notification);
-		this.sm.trackingParams(trackingParams);
 		this.sm.R_EntityBatchUpdate(frameworkUpdates);
 		this.sm.channelId(channelId);
 		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
@@ -1510,7 +1496,6 @@ class Support_GenericApi extends BaseService {
 		this.sm.cq(privacyIcon.iconType,"PRIVACY_PRIVATE");
 		this.sm.E_PlaylistEdit(addToPlaylistServiceEndpoint);
 		this.sm.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
@@ -1997,7 +1982,6 @@ class Support_EventInput extends BaseService {
 		const {responseContext,overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
-		this.sm.trackingParams(trackingParams);
 		this.sm.R_DesktopTopbar(desktopTopbar);
 		if(!engagementPanels) debugger;
 		else {this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));}
@@ -2011,7 +1995,6 @@ class Support_EventInput extends BaseService {
 		this.tz_cf(cf,alerts,this.sm.RS_Playlist_AlertItem);
 		this.xr.R_Playlist_MD(metadata);
 		this.sm.R_DesktopTopbar(topbar);
-		this.sm.trackingParams(trackingParams);
 		this.sm.R_Microformat(microformat);
 		this.xr.R_PlaylistSidebar(sidebar);
 	}
@@ -2021,7 +2004,6 @@ class Support_EventInput extends BaseService {
 		const {responseContext,contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.R_TwoColumnBrowseResults(contents);
 		this.sm.R_DesktopTopbar(topbar);
-		this.sm.trackingParams(trackingParams);
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.xr.R_SettingsSidebar(sidebar);
 	}
@@ -2030,7 +2012,6 @@ class Support_EventInput extends BaseService {
 		const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s("D_Tab_WhatToWatch",x); this.g(y);
 		this.sm.cq(selected,true);
 		this.sm.R_RichGrid(content);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_Tab_Library} x */
 	D_Tab_Library(x) {x;}
@@ -2056,8 +2037,7 @@ class Support_EventInput extends BaseService {
 			const cf2=`${cf}_${"R_MusicQueue"}`;
 			const {content,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
 			this.sm.R_MusicQueue(content);
-			this.sm.trackingParams(trackingParams);
-			return;
+				return;
 		}
 		x: {
 			if(!("endpoint" in x)) break x;
@@ -2068,8 +2048,7 @@ class Support_EventInput extends BaseService {
 				if(this.sm.is_TE_VE(endpoint,3611)) {this.sm.E_VE3611(endpoint); break y;}
 				debugger;
 			}
-			this.sm.trackingParams(trackingParams);
-			this.save_primitive(`${cf2}.title`,title);
+				this.save_primitive(`${cf2}.title`,title);
 		}
 	}
 	/** @private @arg {D_Tab_History} x */
@@ -2079,7 +2058,6 @@ class Support_EventInput extends BaseService {
 		if(selected!==true) debugger;
 		if(!content.sectionListRenderer) debugger;
 		this.xm.R_SectionList(content);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_Tab_Subscriptions} x */
 	D_Tab_Subscriptions(x) {
@@ -2088,7 +2066,6 @@ class Support_EventInput extends BaseService {
 		this.D_Tab_Subscriptions_EP(endpoint);
 		this.sm.cq(selected,true);
 		this.xm.R_SectionList(content);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
 	D_Tab_Subscriptions_EP(x) {
@@ -2304,7 +2281,6 @@ class Support_Renderer extends BaseService {
 			if(!x.superVodBuyFlowContentRenderer) debugger;
 			return this.R_SuperVodBuyFlowContent(x);
 		});
-		this.sm.trackingParams(trackingParams);
 		if("getSurveyCommand" in onCloseCommand) return this.sm.C_GetSurvey(onCloseCommand);
 		{debugger;}
 	}
@@ -2316,7 +2292,6 @@ class Support_Renderer extends BaseService {
 		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.z([description,disclaimerText],this.sm.G_Text);
 		this.xm.R_Button(buyButton);
-		this.sm.trackingParams(trackingParams);
 		this.R_PdgCommentPreview(commentPreview);
 		this.R_PdgColorSlider(colorSlider);
 		console.log("defaultPriceTier",defaultPriceTier);
@@ -2402,7 +2377,6 @@ class Support_Renderer extends BaseService {
 	D_Transcript(x) {
 		const cf="D_Transcript";
 		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
 		this.R_TranscriptSearchPanel(a);
 	}
 	/** @private @arg {R_TranscriptSegmentList} x */
@@ -2426,7 +2400,6 @@ class Support_Renderer extends BaseService {
 		const {body,footer,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_TranscriptSegmentList(body);
 		this.R_TranscriptFooter(footer);
-		this.sm.trackingParams(trackingParams);
 		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
 	}
 	/** @private @arg {R_TranscriptSegment} x */
@@ -2439,7 +2412,6 @@ class Support_Renderer extends BaseService {
 		this.sm.a_primitive_str(endMs);
 		this.sm.G_Text(snippet);
 		this.sm.G_Text(startTimeText);
-		this.sm.trackingParams(trackingParams);
 		this.sm.D_Accessibility(accessibility);
 		this.t(targetId,x => this.save_primitive(`${cf}.targetId`,x));
 	}
@@ -2501,8 +2473,7 @@ class Support_Renderer extends BaseService {
 			this.sm.E_VE3611(navigationEndpoint);
 			this.sm.D_Thumbnail(thumbnail);
 			this.D_LiveBroadcastingBadge(badges);
-			this.sm.trackingParams(trackingParams);
-			this.sm.G_Text(formattedTitle);
+				this.sm.G_Text(formattedTitle);
 			this.sm.D_Accessibility(accessibility);
 			this.R_GuideEntryData(entryData);
 			switch(presentationStyle) {
@@ -2516,8 +2487,7 @@ class Support_Renderer extends BaseService {
 			const {navigationEndpoint,thumbnail,trackingParams,formattedTitle,accessibility,entryData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.sm.E_VE3611(navigationEndpoint);
 			this.sm.D_Thumbnail(thumbnail);
-			this.sm.trackingParams(trackingParams);
-			this.sm.G_Text(formattedTitle);
+				this.sm.G_Text(formattedTitle);
 			this.sm.D_Accessibility(accessibility);
 			this.R_GuideEntryData(entryData);
 			return;
@@ -2579,14 +2549,12 @@ class Support_Renderer extends BaseService {
 			let [a,b]=this.sm.T_SE_Signal(cf3,serviceEndpoint);
 			this.sm.M_SendPost(a);
 			this.xm.G_ClientSignal(b);
-			this.sm.trackingParams(trackingParams);
-			return;
+				return;
 		}
 		if("icon" in x&&"trackingParams" in x&&"formattedTitle" in x&&"accessibility" in x) {
 			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf1,x); this.g(y);
 			this.sm.D_Accessibility(accessibility);
-			this.sm.trackingParams(trackingParams);
-			this.sm.G_Text(formattedTitle);
+				this.sm.G_Text(formattedTitle);
 			this.sm.D_Accessibility(accessibility);
 			return;
 		}
@@ -2597,7 +2565,6 @@ class Support_Renderer extends BaseService {
 		const {accessibility,formattedTitle,trackingParams,...y}=this.s(cf,x);
 		this.sm.D_Accessibility(accessibility);
 		this.sm.G_Text(formattedTitle);
-		this.sm.trackingParams(trackingParams);
 		return y;
 	}
 	/** @arg {Extract<D_GuideEntry,{targetId:any;}>["targetId"]} x */
@@ -2712,7 +2679,6 @@ class Support_Renderer extends BaseService {
 		}
 		this.sm.G_Text(title);
 		this.sm.z(contents,this.sm.R_RichItem);
-		this.sm.trackingParams(trackingParams);
 		this.sm.R_Menu(menu);
 		this.xm.R_Button(showMoreButton);
 		switch(rowIndex) {
@@ -2731,7 +2697,6 @@ class Support_Renderer extends BaseService {
 		if(onStateIcon.iconType!=="STAR") debugger;
 		this.ht.C_FollowUp(followUpCommand);
 		this.sm.E_Feedback(responseEndpoint);
-		this.sm.trackingParams(trackingParams);
 		this.sm.a_primitive_bool(checked);
 		this.sm.a_primitive_bool(selected);
 	}
@@ -2742,7 +2707,6 @@ class Support_Renderer extends BaseService {
 		const cf="D_ExpandableSurveyResponse";
 		const {ratings,trackingParams,notSureButton,undoButton,notSureEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(ratings,x => this.xr.R_RatingSurveyOption(x));
-		this.sm.trackingParams(trackingParams);
 		this.xm.R_Button(notSureButton);
 		this.xm.R_Button(undoButton);
 		this.g(notSureEndpoint);
@@ -2760,7 +2724,6 @@ class Support_Renderer extends BaseService {
 		const cf="D_Message";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(text);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_ConversationBar} x */
 	R_ConversationBar(x) {this.H_("conversationBarRenderer",x,this.R_AvailabilityMessage);}
@@ -2786,7 +2749,6 @@ class Support_Renderer extends BaseService {
 	D_LiveChatViewerEngagementMessage(x) {
 		const cf="D_LiveChatViewerEngagementMessage";
 		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_LiveChatPlaceholderItem} x */
 	R_LiveChatPlaceholderItem(x) {this.H_("liveChatPlaceholderItemRenderer",x,this.D_LiveChatPlaceholderItem);}
@@ -2869,7 +2831,6 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(subtitle);
 		this.sm.R_CompactVideo(inlineContent);
 		this.xr.R_ExpandableSurveyResponse(response);
-		this.sm.trackingParams(trackingParams);
 		this.sm.G_Text(dismissalText);
 		this.z(impressionEndpoints,this.g);
 	}
@@ -2881,7 +2842,6 @@ class Support_Renderer extends BaseService {
 		const {headerInformation,buttonRow,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_ProfilePageHeaderInformationViewModel(headerInformation);
 		this.xr.R_ProfilePageHeaderButtonRowViewModel(buttonRow);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @arg {R_ProfilePageHeaderInformationViewModel} x */
 	R_ProfilePageHeaderInformationViewModel(x) {this.H_("profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
@@ -2915,7 +2875,6 @@ class Support_Renderer extends BaseService {
 		const {options,submitButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_RatingSurvey(options);
 		this.xm.R_Button(submitButton);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @arg {R_AutomixPreviewVideo} x */
 	R_AutomixPreviewVideo(x) {this.H_("automixPreviewVideoRenderer",x,this.g);}
@@ -3001,7 +2960,6 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(subscriberCountText);
 		this.sm.D_Thumbnail(tvBanner);
 		this.sm.D_Thumbnail(mobileBanner);
-		this.sm.trackingParams(trackingParams);
 		this.xm.t(sponsorButton,this.xm.R_Button);
 		this.sm.G_Text(channelHandleText);
 		this.sm.G_Text(videosCountText);
@@ -3018,7 +2976,6 @@ class Support_Renderer extends BaseService {
 		this.sm.D_Thumbnail(accountPhoto);
 		this.sm.E_ApplicationSettings(settingsEndpoint);
 		this.sm.G_Text(manageAccountTitle);
-		this.sm.trackingParams(trackingParams);
 		this.sm.G_Text(channelHandle);
 	}
 	/** @private @arg {R_DismissalFollowUp} x */
@@ -3027,7 +2984,6 @@ class Support_Renderer extends BaseService {
 	D_DismissalFollowUp(x) {
 		const cf="D_DismissalFollowUp";
 		const {trackingParams,dismissalReasonsPrompt,reasons,cancelButton,submitButton,submitFeedbackEndpoint,dismissalViewStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
 		this.sm.G_Text(dismissalReasonsPrompt);
 		this.z(reasons,this.R_DismissalReasonText);
 		this.xm.R_Button(cancelButton);
@@ -3046,8 +3002,7 @@ class Support_Renderer extends BaseService {
 			this.sm.G_Text(timeDescription);
 			this.sm.D_Thumbnail(thumbnail);
 			this.sm.E_Watch(onTap);
-			this.sm.trackingParams(trackingParams);
-			this.xm.R_Button(shareButton);
+				this.xm.R_Button(shareButton);
 			this.xm.t(repeatButton,this.xm.R_ToggleButton);
 			this.sm.params("macro_marker_repeat_state.entity.key",a);
 			this.sm.t(endRepeatCommand,this.sm.C_CommandExecutor);
@@ -3063,7 +3018,6 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(timeDescription);
 		this.sm.D_Thumbnail(thumbnail);
 		this.sm.E_Watch(onTap);
-		this.sm.trackingParams(trackingParams);
 		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
 	}
@@ -3088,7 +3042,6 @@ class Support_Renderer extends BaseService {
 			debugger;
 		});
 		this.sm.G_Text(syncButtonLabel);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_HorizontalCardList} x */
 	R_HorizontalCardList(x) {this.H_("horizontalCardListRenderer",x,this.D_HorizontalCardList);}
@@ -3101,7 +3054,6 @@ class Support_Renderer extends BaseService {
 			if("placeDataViewModel" in x) return this.ht.VM_PlaceData(x);
 			x===""; debugger;
 		});
-		this.sm.trackingParams(trackingParams);
 		this.sm.R_RichListHeader(header);
 		x: {
 			let x1=style;
@@ -3143,7 +3095,6 @@ class Support_Renderer extends BaseService {
 		const cf="MP_SystemMenu";
 		const {header,sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_ActiveAccountHeader(header);
-		this.sm.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
 	}
 	/** @private @arg {R_DismissalReasonText} x */
@@ -3152,7 +3103,6 @@ class Support_Renderer extends BaseService {
 	D_DismissalReasonText(x) {
 		const cf="D_DismissalReasonText";
 		const {trackingParams,text,feedbackToken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
 		this.sm.G_Text(text);
 		this.sm.save_b64_binary(`${cf}.feedbackToken`,feedbackToken);
 	}
@@ -3276,7 +3226,6 @@ class Support_Renderer extends BaseService {
 		const cf="D_PlaylistSidebar";
 		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.z(items,this.xm.G_PlaylistSidebarItem);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_NotchesItem} x */
 	D_NotchesItem(x) {
@@ -3316,7 +3265,6 @@ class Support_Renderer extends BaseService {
 			let ua=this.get_keys_of(x);
 			if(ua.length>0) console.log("[G_GuideSubscriptionsSectionItem.key]",ua);
 		});
-		this.sm.trackingParams(trackingParams);
 		this.sm.t(formattedTitle,this.sm.G_Text);
 		if(!this.eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
 	}
@@ -3325,7 +3273,6 @@ class Support_Renderer extends BaseService {
 		const cf="D_GuideSection";
 		const {items,trackingParams,formattedTitle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,this.G_GuideSectionItem);
-		this.sm.trackingParams(trackingParams);
 		this.sm.t(formattedTitle,this.sm.G_Text);
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
@@ -3376,7 +3323,6 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(chipText);
 		this.D_ChipColorPalette(chipColorPalette);
 		if(chipIcon.iconType!=="FILL_DOLLAR_SIGN_HEART_12") debugger;
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_RemarketingPing} x */
 	D_RemarketingPing(x) {
@@ -3570,7 +3516,6 @@ class Support_Renderer extends BaseService {
 		this.sm.G_Text(channelName);
 		this.sm.G_Text(viewCountText);
 		this.sm.E_Watch(action);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {R_SimpleCardContent} x */
 	R_SimpleCardContent(x) {this.H_("simpleCardContentRenderer",x,this.D_SimpleCardContent);}
@@ -3581,7 +3526,6 @@ class Support_Renderer extends BaseService {
 		this.sm.D_Thumbnail(image);
 		this.sm.G_Text(title);
 		this.R_SimpleCardButton(actionButton);
-		this.sm.trackingParams(trackingParams);
 		this.sm.G_Text(displayDomain);
 		this.sm.cq(showLinkIcon,true);
 		this.sm.G_Text(callToAction);
@@ -3606,7 +3550,6 @@ class Support_Renderer extends BaseService {
 		this.xm.t(viewCommentsButton,this.xm.R_Button);
 		this.t(videoInteractions,this.g);
 		const {trackingParams,reelPlayerNavigationModel,shareButton,pivotButton,multimixAttributionLabel,badge,...y}=u; this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
 		{const x2=reelPlayerNavigationModel; this.t(x2,this.sm.wg(x2,"REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED"));}
 		this.xm.t(shareButton,this.xm.R_Button);
 		this.t(pivotButton,this.R_PivotButton);
@@ -3624,7 +3567,6 @@ class Support_Renderer extends BaseService {
 		this.sm.E_VE3611(channelNavigationEndpoint);
 		this.sm.G_Text(channelTitleText);
 		this.sm.D_Thumbnail(channelThumbnail);
-		this.sm.trackingParams(trackingParams);
 		this.sm.D_Accessibility(accessibility);
 	}
 	/** @use_import D_ReelPlayerOverlay @public @arg {R_ReelMultimixAttributionLabel} x */
@@ -3638,7 +3580,6 @@ class Support_Renderer extends BaseService {
 		if(!command.watchEndpoint) debugger;
 		this.sm.E_Watch(command);
 		this.sm.a_primitive_str(a11yLabel);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @use_import D_ReelPlayerOverlay @public @arg {R_PivotButton} x */
 	R_PivotButton(x) {this.H_("pivotButtonRenderer",x,this.D_PivotButton);}
@@ -3674,7 +3615,6 @@ class ForService_XMethods extends BaseService {
 	D_VoiceSearchDialog(x) {
 		const cf="D_VoiceSearchDialog";
 		const {trackingParams,exitButton,...y}=this.s(cf,x);
-		this.sm.trackingParams(trackingParams);
 		this.xm.R_Button(exitButton);
 		let u=Object.entries(y);
 		for(let x of u) {
@@ -3885,7 +3825,6 @@ class ForService_XMethods extends BaseService {
 		this.sm.k(cf,x);
 		let [p1,{...o1}]=this.sm.unwrap_prefix(x,"toggled");
 		let [p2,{trackingParams,...o2}]=this.sm.unwrap_prefix(o1,"untoggled");
-		this.sm.trackingParams(trackingParams);
 		return [p1,p2,o2];
 	}
 	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
@@ -4020,7 +3959,6 @@ class ForService_XMethods extends BaseService {
 		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.D_Thumbnail(thumbnail);
 		if(this.sm.num_to_string(maxRatio)!=="0.5625") debugger;
-		this.sm.trackingParams(trackingParams);
 		this.sm.E_Watch(onTap);
 		this.G_ThumbnailOverlayItem(thumbnailOverlays);
 	}
@@ -4036,7 +3974,6 @@ class ForService_XMethods extends BaseService {
 		this.sm.D_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		this.sm.G_Text(title);
-		this.sm.trackingParams(trackingParams);
 		this.sm.t(lengthInSeconds,this.sm.a_primitive_num);
 		this.sm.t(lengthText,this.sm.G_Text);
 		this.sm.G_Text(publishedTimeText);
@@ -4061,7 +3998,6 @@ class ForService_XMethods extends BaseService {
 		this.sm.D_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		this.sm.G_Text(title);
-		this.sm.trackingParams(trackingParams);
 		this.sm.videoId(videoId);
 		this.sm.a_primitive_str(playlistSetVideoId);
 		this.sm.D_DarkColorPalette(cf,darkColorPalette);
@@ -4095,7 +4031,6 @@ class ForService_XMethods extends BaseService {
 		this.t(toggledServiceEndpoint,this.D_ToggleButton_ToggledSrvEP);
 		const {accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...u2}=u;/*#destructure_done*/
 		this.xm.t(accessibility,this.xm.D_Label);
-		this.sm.trackingParams(trackingParams);
 		this.t(toggledStyle,x => this.save_primitive(`${cf}.toggledStyle.type`,x.styleType));
 		this.t(defaultTooltip,x => this.add_string_to_map(cf,"defaultTooltip",x));
 		this.t(toggledTooltip,x => this.add_string_to_map(cf,"toggledTooltip",x));
@@ -4235,7 +4170,6 @@ class ForService_XMethods extends BaseService {
 		const cf="D_ThumbnailOverlayEndorsement";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(text);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {
@@ -4377,7 +4311,6 @@ class ForService_XMethods extends BaseService {
 			if("musicShelfRenderer" in x) return this.sm.R_MusicShelf(x);
 		});
 		this.sm.R_TextHeader(header);
-		this.sm.trackingParams(trackingParams);
 		if(targetId!=="browse-feedFEhistory") debugger;
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
@@ -4390,14 +4323,12 @@ class ForService_XMethods extends BaseService {
 			if("musicCarouselShelfRenderer" in x) return this.sm.R_MusicCarouselShelf(x);
 			if("musicShelfRenderer" in x) return this.sm.R_MusicShelf(x);
 		});
-		this.sm.trackingParams(trackingParams);
 		if(targetId!=="browse-feedFEsubscriptions") debugger;
 	}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x) {
 		const cf="DC_SectionList_SearchFeed";
 		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
 		if(targetId!=="search-feed") debugger;
 		this.sm.z(contents,this.sm.TR_SectionListItem_3_Empty);
 	}
@@ -4419,8 +4350,7 @@ class ForService_XMethods extends BaseService {
 		}
 		if("disablePullToRefresh" in x) {
 			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.sm.trackingParams(trackingParams);
-			if(disablePullToRefresh!==true) debugger;
+				if(disablePullToRefresh!==true) debugger;
 			return;
 		}
 		debugger;
@@ -4865,7 +4795,6 @@ class ForService_XMethods extends BaseService {
 		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.sm.R_Menu(menu);
 		this.t(activeView,this.D_ActiveView);
-		this.sm.trackingParams(trackingParams);
 		this.z(clickLocationTargets,this.D_ClickLocationTarget);
 		this.sm.t(adBadge,this.sm.RMD_Badge);
 	}
@@ -4897,7 +4826,6 @@ class ForService_XMethods extends BaseService {
 		this.sm.playlistId(playlistId);
 		this.save_primitive(`${cf}.privacy`,privacy);
 		this.xm.R_Button(shufflePlayButton);
-		this.sm.trackingParams(trackingParams);
 		this.sm.D_EditableDetails(editableDetails);
 		this.sm.t(editorEndpoint,this.sm.E_PlaylistEditor);
 		this.sm.a_primitive_bool(isEditable);
@@ -5005,7 +4933,6 @@ class ForService_XMethods extends BaseService {
 		const cf="D_PlaylistVideoThumbnail";
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.D_Thumbnail(thumbnail);
-		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {D_Label} x */
 	D_Label(x) {this.sm.H_s("label",x,this.sm.a_primitive_str);}
@@ -5066,7 +4993,6 @@ class ForService_XMethods extends BaseService {
 			default: debugger; break;
 			case 0: case 2: case 3:
 		}
-		this.sm.trackingParams(trackingParams);
 		this.sm.C_CommandExecutor(command);
 		switch(targetId) {
 			default: if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
@@ -5096,7 +5022,6 @@ class ForService_XMethods extends BaseService {
 	D_MP_MenuNotificationSection(x) {
 		const cf="D_MP_MenuNotificationSection";
 		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
 		this.z(items,this.GR_MP_MenuNotificationSection_Item);
 	}
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
@@ -5112,7 +5037,6 @@ class ForService_XMethods extends BaseService {
 	D_Notification(x) {
 		const cf="D_Notification";
 		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(trackingParams);
 		this.sm.z([thumbnail,videoThumbnail],this.sm.D_Thumbnail);
 		this.sm.z([shortMessage,sentTimeText],this.sm.G_Text);
 		if(navigationEndpoint.watchEndpoint) {this.sm.E_Watch(navigationEndpoint);} else {debugger;}

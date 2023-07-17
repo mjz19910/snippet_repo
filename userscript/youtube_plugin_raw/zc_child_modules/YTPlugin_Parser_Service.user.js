@@ -427,7 +427,6 @@ class ParserService extends BaseService {
 	/** @private @arg {string[]} parts @arg {string} cur_part */
 	api_no_handler(parts,cur_part) {
 		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
-		{debugger;}
 		return null;
 	}
 	/** @private @arg {Extract<DG_ApiUrl,["youtubei","v1",string]>} x */

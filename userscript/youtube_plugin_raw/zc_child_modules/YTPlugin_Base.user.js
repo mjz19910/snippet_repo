@@ -2468,18 +2468,6 @@ class ServiceWithMembers extends ServiceWithAccessors
 }
 class BaseService extends ServiceWithMembers
 {
-	/** @public @arg {CF_P_ParamParse} cf @arg {string} x */
-	params(cf,x)
-	{
-		this.ht.decode_binary_obj(cf,x);
-	}
-	/** @api @public @arg {CF_P_ParamParse} cf @arg {string} x */
-	playerParams(cf,x)
-	{
-		this.ht.decode_binary_obj(cf,x);
-	}
-	/** @public @arg {string} x */
-	trackingParams(x) {this.params("params.tracking",x);}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_s(k,x,f)
 	{
@@ -2748,7 +2736,6 @@ class BaseService extends ServiceWithMembers
 		if(this.logged_keys.includes(jk)) return;
 		this.logged_keys.push(jk);
 		console.log("[empty_object] [%s]",jk);
-		debugger;
 	}
 	//#region short names
 	/** @protected @name iterate_obj @arg {{}|undefined} x @arg {(this:this,k:string,v: {})=>void} f */
@@ -3616,13 +3603,13 @@ class ModifyEnv extends BaseService
 			{
 				let fake_res=this;
 				return new Proxy(fake_res,{
-					/** @private @arg {keyof Response|"then"} key */
+					/** @private @arg {keyof R_Fake|keyof Response|"then"} key */
 					get(obj,key,_proxy)
 					{
 						switch(key)
 						{
 							case "then": return void 0;
-							case "body": case "headers": case "text": case "redirected": case "ok": case "status": case "clone": return obj[key];
+							case "__handlers__": case "__response__": case "body": case "headers": case "text": case "redirected": case "ok": case "status": case "clone": return obj[key];
 							default: console.log("[new_response_key] [%s]",key); debugger;
 						}
 						return obj[key];
