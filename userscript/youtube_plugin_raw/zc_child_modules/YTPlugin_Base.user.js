@@ -3588,42 +3588,63 @@ class ModifyEnv extends BaseService
 				[Symbol.toStringTag]: "Promise",
 			};
 		}
+		class R_Fake
+		{
+			/** @arg {{text():Promise<string>}} handlers @arg {Response} response */
+			constructor(handlers,response) {this.__handlers__=handlers; this.__response__=response;}
+			text() {return this.__handlers__.text();}
+			get redirected() {return this.__response__.redirected;}
+			get ok() {return this.__response__.ok;}
+			get status() {return this.__response__.status;}
+			get headers() {return this.__response__.headers;}
+			get statusText() {return this.__response__.statusText;}
+			get type() {return this.__response__.type;}
+			get url() {return this.__response__.url;}
+			get body() {return this.__response__.body;}
+			get bodyUsed() {return this.__response__.bodyUsed;}
+			arrayBuffer() {return this.__response__.arrayBuffer();}
+			blob() {return this.__response__.blob();}
+			formData() {return this.__response__.formData();}
+			json() {return this.__response__.json();}
+			/** @returns {Response} */
+			clone()
+			{
+				let fake_res=new R_Fake(this.__handlers__,this.__response__.clone());
+				return fake_res.make_proxy_from();
+			}
+			make_proxy_from()
+			{
+				let fake_res=this;
+				return new Proxy(fake_res,{
+					/** @private @arg {keyof Response} key */
+					get(obj,key,_proxy)
+					{
+						if(!(key in obj.__response__)) return void 0;
+						switch(key)
+						{
+							case "body": case "headers": case "text": case "redirected": case "ok": case "status": case "clone": return obj[key];
+							default: console.log("[new_response_key] [%s]",key); debugger;
+						}
+						return obj[key];
+					}
+				});
+			}
+		}
 		/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
 		function fetch_promise_handler(request,options,response)
 		{
-			class R_Fake
-			{
+			let fake_res=new R_Fake({
 				text()
 				{
 					if(is_yt_debug_enabled) console.log("response.text()");
 					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
 				}
-				get redirected() {return response.redirected;}
-				get ok() {return response.ok;}
-				get status() {return response.status;}
-			}
-			let fake_res=new R_Fake;
+			},response);
 			/** @private @type {any} */
 			let any_x=fake_res;
 			/** @private @type {Response} */
 			let fake_res_t=any_x;
-			return new Proxy(fake_res_t,{
-				/** @private @arg {keyof Response} key */
-				get(_obj,key,_proxy)
-				{
-					/** @private @type {string} */
-					let ks=as(key);
-					if(ks==="then") {return void 0;}
-					switch(key)
-					{
-						case "text": case "redirected": case "ok": case "status": return fake_res[key];
-						case "body": return response.body;
-						case "headers": return response.headers;
-						default: console.log("[new_response_key] [%s]",key); debugger;
-					}
-					return Reflect.get(response,key);
-				}
-			});
+			return fake_res.make_proxy_from();
 		}
 		/** @private @type {typeof fetch|null} */
 		let original_fetch=null;
