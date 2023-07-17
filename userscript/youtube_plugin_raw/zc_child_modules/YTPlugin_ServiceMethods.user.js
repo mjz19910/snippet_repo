@@ -4128,7 +4128,7 @@ class ServiceMethods extends ServiceData
 		this.a_primitive_str(overrideEntityKey);
 	}
 	/** @public @arg {D_SerializedAdServingDataEntry} x */
-	D_SerializedAdServingDataEntry(x) {this.H_s("serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x));}
+	D_SerializedAdServingDataEntry(x) {this.H_s("serializedAdServingDataEntry",x,() => {});}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_s("displayAdRenderer",x,this.D_DisplayAd);}
 	/** @private @arg {D_DisplayAd} x */
