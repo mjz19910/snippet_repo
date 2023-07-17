@@ -2558,9 +2558,10 @@ type D_TemplateUpdate={
 	serializedTemplateConfig: string;
 	dependencies: [`bottom_sheet_list_option.eml|${string}`];
 }|{
-	identifier: `bottom_sheet_list_option.eml|${string}`;
+	identifier: `${TemplateIdentFile}|${string}`;
 	serializedTemplateConfig: string;
 };
+type TemplateIdentFile="bottom_sheet_list_option.eml"|"switch_button.eml";
 type D_TextInputFormField={
 	label: G_Text;
 	value?: string;

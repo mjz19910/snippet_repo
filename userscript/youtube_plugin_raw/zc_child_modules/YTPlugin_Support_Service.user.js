@@ -2624,15 +2624,16 @@ class Support_Renderer extends BaseService
 				const dep=dep_arr[0];
 				let ddp=split_string_once(dep,"|");
 				if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
-				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
-				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
+				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].id`,ddp[0]);
+				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,ddp[1]);
 			});
 			this.sm.a_primitive_str(a);
 		} else
 		{
 			const {identifier,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			let idp=split_string_once(identifier,"|");
-			if(idp[0]!=="bottom_sheet_list_option.eml") debugger;
+			this.save_primitive("D_TemplateUpdate.identifier.id",idp[0]);
+			this.save_primitive("D_TemplateUpdate.identifier.hash",idp[1]);
 			this.sm.a_primitive_str(a);
 		}
 	}
