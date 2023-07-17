@@ -1336,6 +1336,7 @@ type D_ApiPathFormat_1=
 	|`/youtubei/v1/share/get_share_panel`
 	|`/youtubei/v1/subscription/${"subscribe"|"unsubscribe"}`
 	|`/youtubei/v1/updated_metadata`
+	|`/s/i/youtube_outline/bars_3/v2/24px.svg`
 	;
 ;
 type D_AttBgChallenge={

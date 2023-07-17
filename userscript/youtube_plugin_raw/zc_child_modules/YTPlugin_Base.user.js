@@ -3061,6 +3061,7 @@ class YtHandlers extends BaseService
 		/** @private @type {D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
 		let url_type=this.sm.decode_url(api_url);
+		if(url_type==="s.i.youtube_outline.bars_3.v2.24px.svg") throw new Error("Invalid url_type");
 		let res=this.sm.decode_json_response(url_type,parsed_obj);
 		if(!res) {console.log("Decoding of the json response did not return a result"); return;}
 		this.x.get("x_GenericApi").G_ResponseTypes(response,res);
@@ -3520,6 +3521,7 @@ class ModifyEnv extends BaseService
 			} catch(e)
 			{
 				console.log("target error",e);
+				JSON.parse=json_action_obj.json_parse;
 				throw e;
 			} finally
 			{
