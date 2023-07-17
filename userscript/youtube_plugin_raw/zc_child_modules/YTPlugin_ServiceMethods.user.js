@@ -5908,7 +5908,7 @@ class ServiceMethods extends ServiceData
 		return as_any([contents]);
 	}
 	/** @private @arg {DE_GetTranscript} x */
-	DE_GetTranscript(x) {this.D_Params("DE_GetTranscript","get_transcript.params",x);}
+	DE_GetTranscript(x) {this.D_Params("DE_GetTranscript",x);}
 	/** @private @arg {DE_GetNotificationMenu} x */
 	DE_GetNotificationMenu(x)
 	{
@@ -6238,8 +6238,7 @@ class ServiceMethods extends ServiceData
 	/** @private @arg {CD_NextRadio} x */
 	CD_NextRadio(x)
 	{
-		this.y("CD_NextRadio","nextRadioContinuationData",x,
-			x => this.DC_Generic_CTP("next_radio.continuation",x));
+		this.y("CD_NextRadio","nextRadioContinuationData",x,this.DC_Generic_CTP);
 	}
 	/** @public @arg {string} cf1 @arg {NonNullable<RS_Playlist['alerts']>[number]} x */
 	RS_Playlist_AlertItem(cf1,x)
