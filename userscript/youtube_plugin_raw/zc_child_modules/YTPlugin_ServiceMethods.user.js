@@ -1689,7 +1689,6 @@ class ServiceMethods extends ServiceData
 				this.z(items,x =>
 				{
 					if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-					debugger;
 				});
 				this.D_Accessibility(accessibility);
 				this.D_Menu_TargetId(targetId);
