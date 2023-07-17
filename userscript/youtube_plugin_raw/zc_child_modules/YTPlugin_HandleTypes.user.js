@@ -14,7 +14,8 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__) {
+if(typeof require==="undefined"||page_require!==__module_require__)
+{
 	delete_require=typeof require==="undefined";
 	require=__module_require__;
 	reset_require=true;
@@ -32,7 +33,8 @@ function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_
 export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 //#region
-function init_module() {
+function init_module()
+{
 	let require=__module_require__;
 	const {ECatcherService}=require("./YTPlugin_ECatcherService_Plugin.user");
 	/** @type {(number[]|number)[]} */
@@ -47,7 +49,8 @@ function init_module() {
 }
 export_(exports => {exports.init_module=init_module;});
 //#region HandleTypes
-class HandleTypes extends BaseService {
+class HandleTypes extends BaseService
+{
 	//#region TODO_minimal_member_fns
 	/** @temporary @private @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;/*!*/}
@@ -58,36 +61,44 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region remote service plugins
 	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
-	indexed_db_createDatabaseSchema(service,old_version,db) {
-		if(old_version<1) {
+	indexed_db_createDatabaseSchema(service,old_version,db)
+	{
+		if(old_version<1)
+		{
 			service.create_store("boxed_id",db);
 		}
 	}
 	//#endregion
 	//#region other
 	/** @arg {D_ProtobufObj[]} x */
-	tr_arr_to_obj(x) {
+	tr_arr_to_obj(x)
+	{
 		if(!x) {debugger; return null;}
 		/** @private @type {V_ParamObj} */
 		let res_obj={};
 		/** @arg {number} id @arg {V_Param} obj */
-		const add_obj=(id,obj) => {
+		const add_obj=(id,obj) =>
+		{
 			res_obj[id]??=["v_param_arr",[]];
 			res_obj[id][1].push(obj);
 		};
-		for(let v of x) {
-			switch(v[0]) {
+		for(let v of x)
+		{
+			switch(v[0])
+			{
 				default: debugger; break;
 				case "child":/*to*/{
 					let [,id,a,b]=v;
-					if(b===null) {
+					if(b===null)
+					{
 						let decoded_string=this._decoder.decode(a);
 						if(decoded_string===null) {debugger; continue;}
 						add_obj(id,["v_raw_child",a,b,["string",decoded_string]]);
 						continue;
 					}
 					let c=this.tr_arr_to_obj(b);
-					if(c===null) {
+					if(c===null)
+					{
 						let decoded_string=this._decoder.decode(a);
 						if(decoded_string===null) {debugger; continue;}
 						add_obj(id,["v_child_str",a,null,["string",decoded_string]]);
@@ -126,9 +137,11 @@ class HandleTypes extends BaseService {
 				case "struct":/*to*/{
 					let [,id,a]=v;
 					let res=this.tr_arr_to_obj(a);
-					if(res) {
+					if(res)
+					{
 						add_obj(id,["v_struct",res]);
-					} else {
+					} else
+					{
 						debugger;
 					}
 				} break;
@@ -142,17 +155,21 @@ class HandleTypes extends BaseService {
 		return res_obj;
 	}
 	/** @arg {V_ParamMapValue} x @returns {V_ParamObj|null} */
-	tr_to_param_item(x) {
+	tr_to_param_item(x)
+	{
 		if(typeof x==='string') return {0: ["v_param_arr",[["v_raw",["string",x]]]]};
 		if(typeof x==="number") return {0: ["v_param_arr",[["v_raw",["number",x]]]]};
-		if(x instanceof Map) {
+		if(x instanceof Map)
+		{
 			let x1=this.tr_map_to_obj(x);
 			if(!x1) {debugger; return null;}
 			return {0: ["v_param_arr",[["v_raw",["V_ParamMapType",x]]]]};
 		}
-		if(x instanceof Array) {
+		if(x instanceof Array)
+		{
 			if(x[0]==="bigint") return {0: ["v_param_arr",[["v_raw",["bigint",x[2]]]]]};
-			if(x[0]==="group") {
+			if(x[0]==="group")
+			{
 				const [,r]=x;
 				let vr=this.tr_arr_to_obj(r);
 				if(!vr) {debugger; return null;}
@@ -167,18 +184,22 @@ class HandleTypes extends BaseService {
 		return null;
 	}
 	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
-	tr_map_to_obj(x) {
+	tr_map_to_obj(x)
+	{
 		/** @template T @arg {T[]} x */
-		function first(x) {
+		function first(x)
+		{
 			if(x.length!==1) return null;
 			return x[0];
 		}
 		/** @type {V_ParamObj} */
 		let res={};
 		debugger;
-		for(let k of x.keys()) {
+		for(let k of x.keys())
+		{
 			let value=x.get(k);
-			if(k in res) {
+			if(k in res)
+			{
 				debugger;
 			}
 			if(value===void 0) {debugger; continue;}
@@ -189,14 +210,17 @@ class HandleTypes extends BaseService {
 			if(ca[0]!=="v_raw") {debugger; continue;}
 			if(ca[1][0]!=="array") {debugger; continue;}
 			const t=ca[1][1];
-			if(value.length===0) {
+			if(value.length===0)
+			{
 				t.push({});
 				continue;
 			}
-			if(value.length!==1) {
+			if(value.length!==1)
+			{
 				/** @template T @arg {T|null} x @returns {x is T} */
 				function is_not_null(x) {return x!==null;}
-				let v1=value.map(x => {
+				let v1=value.map(x =>
+				{
 					let r=this.tr_to_param_item(x);
 					if(r===null) {debugger; return null;}
 					return r;
@@ -216,14 +240,17 @@ class HandleTypes extends BaseService {
 	log_buffer=[];
 	/** @type {Promise<null>|null} */
 	loading_promise=null;
-	load_moment_js_if_not_loaded() {
+	load_moment_js_if_not_loaded()
+	{
 		if(this.loading_promise!==null) return this.loading_promise;
 		if(this.is_moment_js_loading) return null;
 		let s=document.createElement("script");
 		s.src="https://momentjs.com/downloads/moment.min.js";
 		this.is_moment_js_loading=true;
-		this.loading_promise=new Promise((a) => {
-			s.onload=() => {
+		this.loading_promise=new Promise((a) =>
+		{
+			s.onload=() =>
+			{
 				this.is_moment_js_loaded=true;
 				this.loading_promise=null;
 				a(null);
@@ -232,22 +259,26 @@ class HandleTypes extends BaseService {
 		});
 		return this.loading_promise;
 	}
-	async run_logger() {
+	async run_logger()
+	{
 		if(this.log_buffer.length===0) return;
 		let ms_set=new Set;
-		for(let log of this.log_buffer) {
+		for(let log of this.log_buffer)
+		{
 			let [type,cf1,cf2,size,value]=log;
 			if(type!=="number") continue;
 			if(ms_set.has(value)) continue;
 			// `moment(x/1000).toString()` -> "Sun Feb 19 2023 12:32:55 GMT-0700"
-			if(value>=0b101111101_010001_0010_100111_001_11110110110_000000000000) {
+			if(value>=0b101111101_010001_0010_100111_001_11110110110_000000000000)
+			{
 				ms_set.add(value);
 				let skip=true;
 				if(skip) break;
 				let lp=this.load_moment_js_if_not_loaded();
 				if(lp!==null) await lp;
 				let moment=require("moment");
-				switch(size) {
+				switch(size)
+				{
 					case "milliseconds":/*rl*/{
 						let as_moment=moment(value/1000);
 						let now_moment=moment(); let load_moment=moment(this.client_now);
@@ -276,9 +307,11 @@ class HandleTypes extends BaseService {
 	request_start_time=null;
 	/** @type {null|Promise<void>} */
 	imm_wait_promise=null;
-	immediate_run_logger() {
+	immediate_run_logger()
+	{
 		if(this.imm_wait_promise) return;
-		let wait_promise=Promise.resolve().then(this.run_logger.bind(this)).then(() => {
+		let wait_promise=Promise.resolve().then(this.run_logger.bind(this)).then(() =>
+		{
 			this.imm_wait_promise=null;
 		});
 		this.imm_wait_promise=wait_promise;
@@ -288,7 +321,8 @@ class HandleTypes extends BaseService {
 	/** @template {number} T @arg {T} t @arg {{2:T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
 	is_tp_xx_2(x,t) {return x[2][0]==="v_param_arr"&&x[2][1][0][1]===t;}
 	/** @private @arg {V_BinaryTimestamp} x */
-	V_BinaryTimestamp(x) {
+	V_BinaryTimestamp(x)
+	{
 		const cf="V_BinaryTimestamp";
 		const {1: request_timestamp_milli_utc,2: microseconds_ts,3: nanoseconds_ts,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.log_buffer.push(["number",`max_gen:${cf}:binary_ts_gen`,"f1","milliseconds",this.T_D32(request_timestamp_milli_utc)]);
@@ -305,7 +339,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @arg {CF_P_ParamParse} cf @arg {V_ParamObj} x */
-	decode_binary_object_log_info(cf,x) {
+	decode_binary_object_log_info(cf,x)
+	{
 		this._continuation_logged_str.push(cf);
 		const n_cf=`P_${cf.replaceAll(".","_")}`;
 		this.codegen_typedef_bin(n_cf,x,false);
@@ -315,18 +350,21 @@ class HandleTypes extends BaseService {
 		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
 	/** @protected @template T @arg {[T]} x */
-	unwrap_tuple_1(x) {
+	unwrap_tuple_1(x)
+	{
 		if(x.length!==1) return null;
 		return x[0];
 	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
-	fmt_arr(x) {
+	fmt_arr(x)
+	{
 		return as(x.map(v => `${v}`).join(".f"));
 	}
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
-	_continuation_token_data_f49(cf,x) {
+	_continuation_token_data_f49(cf,x)
+	{
 		let x1=decodeURIComponent(x);
 		let buffer=base64_url_dec.decodeByteArray(x1);
 		if(!buffer) {debugger; return;}
@@ -343,7 +381,8 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region Renderer Templates & Binary Templates; T & TV
 	/** @private @arg {CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
-	T_Attachment(cf,x) {
+	T_Attachment(cf,x)
+	{
 		const {startIndex,length,...y}=this.s(cf,x);
 		this.sm.a_primitive_num(startIndex);
 		this.sm.a_primitive_num(length);
@@ -364,26 +403,30 @@ class HandleTypes extends BaseService {
 	/** @protected @template {bigint} T @arg {T_VW_Bigint<T>} x */
 	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
 	/** @private @template {string} T @arg {["v_param_arr", [[any,any,any,["string",T]]]]} x */
-	TV_Str(x) {
+	TV_Str(x)
+	{
 		if(!x) debugger;
 		return this.T_RawChild(x)[3][1];
 	}
 	/** @private @template {string} T @arg {["v_param_arr", [[any,any,any,["string",T]]]]} x */
-	TA_Str(x) {
+	TA_Str(x)
+	{
 		if(!x) debugger;
 		return this.T_RawChild(x)[3][1];
 	}
 	/** @protected @template T @template {string} Str @arg {T_VW<T>|TV_Str_CS<Str>} x */
 	T_PArr_1(x) {return x[1];}
 	/** @protected @template J @template {T_PArr_1<[J]>} T @arg {T} x @returns {T[1][0]} */
-	T_RawChild(x) {
+	T_RawChild(x)
+	{
 		if(x===void 0) {debugger; throw new Error("x is missing");}
 		return x[1][0];
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
 	/** @protected @template T @arg {T_Command_TP<T>} x @arg {(this:this,x:T)=>void} f */
-	T_Command_TP(x,f) {
+	T_Command_TP(x,f)
+	{
 		const cf="T_Command_TP";
 		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
@@ -400,22 +443,26 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region moved data methods
 	/** @public @arg {D_WebPlayerConfig} x */
-	D_WebPlayerConfig(x) {
+	D_WebPlayerConfig(x)
+	{
 		const cf="D_WebPlayerConfig";
 		const {useCobaltTvosDash,webPlayerActionsPorting,...y}=this.s(cf,x); this.g(y);
 		this.sm.cq(useCobaltTvosDash,true);
 		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
 	}
 	/** @public @arg {D_WebPlayerActionsPorting} x */
-	D_WebPlayerActionsPorting(x) {
+	D_WebPlayerActionsPorting(x)
+	{
 		const cf="D_WebPlayerActionsPorting";
 		const {getSharePanelCommand,subscribeCommand,unsubscribeCommand,addToWatchLaterCommand,removeFromWatchLaterCommand,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @public @arg {CF_L_TP_Params} cf @arg {D_WatchPageUrl} x */
-	D_WatchPageUrl(cf,x) {
+	D_WatchPageUrl(cf,x)
+	{
 		let u1=split_string_once(x,"/")[1];
 		let uq=split_string_once(u1,"?");
-		if(uq.length===1) {
+		if(uq.length===1)
+		{
 			let uv=uq[0];
 			let [p,a]=split_string_once(uv,"/");
 			if(p!=="v") debugger;
@@ -426,7 +473,8 @@ class HandleTypes extends BaseService {
 		let u3=this.parse_url_search_params(u2);
 		let u4=this.keyof_search_params(u2);
 		x: {
-			if(this.is_eq_keys(u4,this.exact_arr("v"))) {
+			if(this.is_eq_keys(u4,this.exact_arr("v")))
+			{
 				u4;
 				return;
 			}
@@ -445,7 +493,8 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region Renderer Data Templates
 	/** @private @arg {CF_M_HD} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
-	HD(cf,k,x) {
+	HD(cf,k,x)
+	{
 		this.sm.k(cf,x);
 		let kx=this.get_keys_of(x);
 		if(kx.length!==1) debugger;
@@ -462,7 +511,8 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region member functions
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
-	w_priv(k,x) {
+	w_priv(k,x)
+	{
 		if(!(k in x)) {debugger; return null;}
 		return x[k];
 	}
@@ -485,7 +535,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
 	/** @private @arg {D_VideoSecondaryInfo} x */
-	D_VideoSecondaryInfo(x) {
+	D_VideoSecondaryInfo(x)
+	{
 		const cf="D_VideoSecondaryInfo";
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,attributedDescription,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
@@ -502,14 +553,16 @@ class HandleTypes extends BaseService {
 		this.t(attributedDescription,this.D_AttributedDescription);
 	}
 	/** @private @arg {D_CommandRunItem} x */
-	D_CommandRunItem(x) {
+	D_CommandRunItem(x)
+	{
 		const cf="D_CommandRunItem";
 		const {onTap,loggingDirectives,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.C_Innertube(onTap);
 		this.t(loggingDirectives,x => this.sm.D_LoggingDirectives(x));
 	}
 	/** @private @arg {D_StyleRunItem} x */
-	D_StyleRunItem(x) {
+	D_StyleRunItem(x)
+	{
 		const cf="D_StyleRunItem";
 		const {fontColor,fontName,weight,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.save_primitive(`${cf}.fontColor`,fontColor);
@@ -517,7 +570,8 @@ class HandleTypes extends BaseService {
 		this.t(weight,x => this.save_primitive("style.weight",x));
 	}
 	/** @private @arg {D_AttributedDescription} x */
-	D_AttributedDescription(x) {
+	D_AttributedDescription(x)
+	{
 		const cf="D_VideoSecondaryInfo";
 		const {content,commandRuns,styleRuns,attachmentRuns,decorationRuns,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.a_primitive_str(content);
@@ -527,7 +581,8 @@ class HandleTypes extends BaseService {
 		this.tz(decorationRuns,this.R_TextDecorator);
 	}
 	/** @private @arg {R_AttachmentElement} x */
-	R_AttachmentElement(x) {
+	R_AttachmentElement(x)
+	{
 		const cf="D_VideoSecondaryInfo";
 		const {element,alignment,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.D_AttachmentElement(element);
@@ -540,7 +595,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
-	D_ExpandableVideoDescriptionBody(x) {
+	D_ExpandableVideoDescriptionBody(x)
+	{
 		const cf="D_ExpandableVideoDescriptionBody";
 		const {descriptionBodyText,showMoreText,showLessText,attributedDescriptionBodyText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(descriptionBodyText,x => this.sm.G_Text(x));
@@ -549,14 +605,16 @@ class HandleTypes extends BaseService {
 		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
 	}
 	/** @private @arg {D_HighlightTextDecorator} x */
-	D_HighlightTextDecorator(x) {
+	D_HighlightTextDecorator(x)
+	{
 		const cf="D_HighlightTextDecorator";
 		const {backgroundColor,backgroundCornerRadius,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 		this.save_primitive(`${cf}.backgroundColor`,backgroundColor);
 		this.sm.cq(backgroundCornerRadius,8);
 	}
 	/** @private @arg {D_AttachmentElement} x */
-	D_AttachmentElement(x) {
+	D_AttachmentElement(x)
+	{
 		const cf="D_AttachmentElement";
 		const {type,properties,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_ImageType(type);
@@ -565,14 +623,17 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_LayoutProperties} x */
 	R_LayoutProperties(x) {this.H_("layoutProperties",x,this.D_LayoutProperties);}
 	/** @private @arg {D_LayoutProperties} x */
-	D_LayoutProperties(x) {
+	D_LayoutProperties(x)
+	{
 		const cf="D_LayoutProperties";
 		const {height,width,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(height) {
+		if(height)
+		{
 			this.sm.cq(height.unit,"DIMENSION_UNIT_POINT");
 			this.sm.cq(height.value,10);
 		} else debugger;
-		if(width) {
+		if(width)
+		{
 			this.sm.cq(width.unit,"DIMENSION_UNIT_POINT");
 			this.sm.cq(width.value,14);
 		} else debugger;
@@ -582,8 +643,10 @@ class HandleTypes extends BaseService {
 	/** @private @arg {D_Image} x */
 	D_Image(x) {this.H_("image",x,this.D_Sources);}
 	/** @private @arg {D_Sources} x */
-	D_Sources(x) {
-		this.H_("sources",x,x => this.z(x,x => {
+	D_Sources(x)
+	{
+		this.H_("sources",x,x => this.z(x,x =>
+		{
 			const {url,...y}=this.s("D_Sources.sources[]",x); this.g(y);
 			this.sm.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
 		}));
@@ -591,7 +654,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_BackgroundPromo} x */
 	R_BackgroundPromo(x) {this.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
 	/** @public @arg {D_BackgroundPromo} x */
-	D_BackgroundPromo(x) {
+	D_BackgroundPromo(x)
+	{
 		const cf="D_LayoutProperties";
 		const {title,bodyText,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(title);
@@ -604,13 +668,15 @@ class HandleTypes extends BaseService {
 	/** @public @arg {C_Innertube} x */
 	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {G_DC_Innertube} x */
-	G_DC_Innertube(x) {
+	G_DC_Innertube(x)
+	{
 		const cf="G_DC_Innertube"; this.sm.k(cf,x);
 		if("setActivePanelItemAction" in x) return this.sm.A_SetActivePanelItem(x);
 		if("ypcGetOfflineUpsellEndpoint" in x) return this.sm.E_YpcGetOfflineUpsell(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
 		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("browseEndpoint" in x) {
+		if("browseEndpoint" in x)
+		{
 			if(this.sm.is_TE_VE(x,3611)) return this.sm.E_VE3611(x);
 			if(this.sm.is_TE_VE(x,5754)) return this.sm.E_VE5754(x);
 			if(this.sm.is_TE_VE(x,6827)) return this.sm.E_VE6827(x);
@@ -633,26 +699,31 @@ class HandleTypes extends BaseService {
 	/** @arg {C_FollowUp} x */
 	C_FollowUp(x) {let [a,y]=this.sm.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
-	DC_AddFollowUpSurvey(x) {
+	DC_AddFollowUpSurvey(x)
+	{
 		const cf="DC_AddFollowUpSurvey";
 		const {followUpOptions,followUpText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
 	/** @private @arg {DC_ResetChannelUnreadCount} x */
-	DC_ResetChannelUnreadCount(x) {
+	DC_ResetChannelUnreadCount(x)
+	{
 		const cf="DC_ResetChannelUnreadCount";
 		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.channelId(channelId);
 	}
 	/** @private @arg {DC_Timed} x */
-	DC_Timed(x) {
+	DC_Timed(x)
+	{
 		const cf="DC_Timed";
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_TimeoutMs(timeoutMs);
 		this.sm.params("timed_continuation.data",continuation);
 	}
 	/** @private @arg {D_TimeoutMs} x */
-	D_TimeoutMs(x) {
-		switch(x) {
+	D_TimeoutMs(x)
+	{
+		switch(x)
+		{
 			default: debugger; break;
 			case 60000:
 			case 5000:
@@ -661,7 +732,8 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region E & M & GM & DE
 	/** @public @arg {DE_SuperThanksSelectedTier} x */
-	DE_SuperThanksSelectedTier(x) {
+	DE_SuperThanksSelectedTier(x)
+	{
 		const cf="DE_SuperThanksSelectedTier";
 		const {index,key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		console.log("super_thanks_selected_tier.index",index);
@@ -674,7 +746,8 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region D
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
-	D_Microformat_Other(x) {
+	D_Microformat_Other(x)
+	{
 		const cf="D_Microformat_Other";
 		let {tags,familySafe,noindex,unlisted,thumbnail,title,description,schemaDotOrgType,androidPackage,appName,availableCountries,linkAlternates,siteName,ogType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(tags,x => this.sm.a_primitive_str(x));
@@ -689,7 +762,8 @@ class HandleTypes extends BaseService {
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */
-	D_MenuServiceItem(x) {
+	D_MenuServiceItem(x)
+	{
 		const cf="D_MenuServiceItem";
 		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(text);
@@ -701,14 +775,16 @@ class HandleTypes extends BaseService {
 	/** @type {{cache:string[];new_:string[]}} */
 	partition={cache: [],new_: []};
 	/** @private @arg {D_GoogleVideoHostPartition} x */
-	D_GoogleVideoHostPartition(x) {
+	D_GoogleVideoHostPartition(x)
+	{
 		const cf="google_video";
 		const {partition,selector}=x;
 		this.save_primitive(`${cf}.partition`,partition);
 		this.save_primitive(`${cf}.selector`,selector);
 		/** @type {G_GV_0} */
 		// cSpell:ignoreRegExp /"(5u|qx|vg)[a-z]{3}"/
-		switch(partition) {
+		switch(partition)
+		{
 			default: {
 				if(!this.partition.new_.includes(partition)) this.partition.new_.push(partition);
 				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
@@ -716,7 +792,8 @@ class HandleTypes extends BaseService {
 				if(gen.has) break;
 				console.log(`-- [g_case:${cf}:host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				debugger;
-				switch((partition)) {
+				switch((partition))
+				{
 				}
 			}; break;
 			case "5uaez":
@@ -764,7 +841,8 @@ class HandleTypes extends BaseService {
 				break;
 		}
 		/** @type {G_GV_1} */
-		switch(selector) {
+		switch(selector)
+		{
 			default: {
 				if(!this.selector.new_.includes(selector)) this.selector.new_.push(selector);
 				if(this.selector.cache.includes(selector)) break;
@@ -787,7 +865,8 @@ class HandleTypes extends BaseService {
 	/** @type {Map<string,Intl.RelativeTimeFormat>} */
 	rtf_lang=new Map;
 	/** @arg {string} lang */
-	get_rtf_lang(lang) {
+	get_rtf_lang(lang)
+	{
 		let rtf_val=this.rtf_lang.get(lang);
 		if(rtf_val) return rtf_val;
 		const rtf=new Intl.RelativeTimeFormat(lang,{numeric: "auto"});
@@ -798,7 +877,8 @@ class HandleTypes extends BaseService {
 	 * @arg {Date|number} date
 	 * adapted from https://gist.github.com/LewisJEllis/9ad1f35d102de8eee78f6bd081d486ad
 	 */
-	getRelativeTimeString(date,lang=navigator.language) {
+	getRelativeTimeString(date,lang=navigator.language)
+	{
 		// Allow dates or times to be passed
 		const timeMs=typeof date==="number"? date:date.getTime();
 		// Get the amount of seconds between the given date and now
@@ -818,7 +898,8 @@ class HandleTypes extends BaseService {
 		return rtf.format(Math.floor(deltaSeconds/divisor),units[unitIndex]);
 	}
 	/** @private @arg {D_VideoPlaybackShape_S_Params} x */
-	D_VideoPlaybackShape_S_Params(x) {
+	D_VideoPlaybackShape_S_Params(x)
+	{
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
 		const {expire,ei,ip,aitags,id,itag,source,requiressl,ctier,gcr,spc,vprv,ufph,live,hang,noclen,xtags,mime,ns,cnr,gir,clen,ratebypass,dur,lmt,...y}=this.s(cf1,x); this.g(y);
 		this.sm.a_primitive_str(expire);
@@ -827,7 +908,8 @@ class HandleTypes extends BaseService {
 		aitags&&this.save_primitive(`${cf1}.aitags`,aitags);
 		{
 			let idp=split_string_once(id,".");
-			switch(idp.length) {
+			switch(idp.length)
+			{
 				case 2: this.sm.save_b64_binary(`${cf2}.id.0`,idp[0]); this.save_primitive(`${cf2}.id.1`,idp[1]); break;
 				case 1: this.sm.save_b64_binary(`${cf2}.id.0`,idp[0]); break;
 			}
@@ -849,31 +931,37 @@ class HandleTypes extends BaseService {
 		this.sm.save_b64_binary(`${cf2}.ns`,ns);
 		cnr&&this.save_primitive(`${cf1}.cnr`,cnr);
 		if(gir) this.save_primitive(`${cf1}.gir`,gir);
-		this.t(clen,x => {
+		this.t(clen,x =>
+		{
 			let x1=this.sm.parse_number_template(x);
 			this.sm.a_primitive_num(x1);
 		});
 		ratebypass&&this.save_primitive(`${cf1}.ratebypass`,ratebypass);
-		this.t(dur,x => {
+		this.t(dur,x =>
+		{
 			let dur_=this.sm.parse_number_template(x);
 			this.sm.a_primitive_num(dur_);
 		});
-		this.t(lmt,x => {
+		this.t(lmt,x =>
+		{
 			let lmt_=this.sm.parse_number_template(x);
 			this.sm.a_primitive_num(lmt_);
 		});
 	}
 	/** @private @arg {D_VideoPlaybackShape_LS_Params} x */
-	D_VideoPlaybackShape_LS_Params(x) {
+	D_VideoPlaybackShape_LS_Params(x)
+	{
 		const cf1="D_VideoPlaybackShape_LS_Params",cf2="video_playback.api_url"; cf2;
 		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,...y}=this.s(cf1,x); this.g(y);
 		this.save_primitive(`${cf1}.mh`,mh);
 		this.save_primitive(`${cf1}.mm`,mm);
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
-		for(let mi of mn_arr) {
+		for(let mi of mn_arr)
+		{
 			let ap=this.get_host_partition(mi);
-			switch(ap.partition) {
+			switch(ap.partition)
+			{
 				default: {
 					let {partition: x}=ap;
 					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
@@ -895,7 +983,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @arg {D_VideoPlaybackShape_Other} x */
-	D_VideoPlaybackShape_Other(x) {
+	D_VideoPlaybackShape_Other(x)
+	{
 		const cf1="D_VideoPlaybackShape_Other",cf2="video_playback.api_url";
 		const {fvip,keepalive,fexp,c,txp,n,lsig,sig,...y1}=this.s(cf1,x);
 		this.save_primitive(`${cf1}.fvip`,fvip);
@@ -916,7 +1005,8 @@ class HandleTypes extends BaseService {
 		this.t(gcr,x => this.sm.cq(x,"ca"));
 	}
 	/** @private @arg {D_VideoPlaybackShape} uv */
-	D_VideoPlaybackShape(uv) {
+	D_VideoPlaybackShape(uv)
+	{
 		const cf1="D_VideoPlaybackShape";
 		const {s,ls,y}=this.extract_shape_params(cf1,uv);
 		this.D_VideoPlaybackShape_S_Params(s);
@@ -924,7 +1014,8 @@ class HandleTypes extends BaseService {
 		this.D_VideoPlaybackShape_Other(y);
 	}
 	/** @public @arg {D_PlayerConfig} x */
-	D_PlayerConfig(x) {
+	D_PlayerConfig(x)
+	{
 		const cf="D_PlayerConfig";
 		const {audioConfig,playbackStartConfig,streamSelectionConfig,livePlayerConfig,mediaCommonConfig,webPlayerConfig,inlinePlaybackConfig,...y}=this.s(cf,x); this.g(y);
 		this.D_AudioConfig(audioConfig);
@@ -936,7 +1027,8 @@ class HandleTypes extends BaseService {
 		this.t(inlinePlaybackConfig,this.D_InlinePlaybackConfig);
 	}
 	/** @private @arg {D_LivePlayerConfig} x */
-	D_LivePlayerConfig(x) {
+	D_LivePlayerConfig(x)
+	{
 		const cf="D_LivePlayerConfig";
 		const {liveReadaheadSeconds,hasSubfragmentedFmp4,isLiveHeadPlayable,...y}=this.s(cf,x); this.g(y);
 		x: {
@@ -950,14 +1042,16 @@ class HandleTypes extends BaseService {
 		this.t(isLiveHeadPlayable,x => this.sm.cq(x,true));
 	}
 	/** @arg {number} x @arg {number} nv @arg {number} tol */
-	float_near_48(x,nv,tol) {
+	float_near_48(x,nv,tol)
+	{
 		if(tol>0.00000000000001) debugger;
 		if(x===nv+tol) return true;
 		if(x===nv-tol) return true;
 		return false;
 	}
 	/** @public @arg {D_VideoDetails} x */
-	D_VideoDetails(x) {
+	D_VideoDetails(x)
+	{
 		const cf="D_VideoDetails";
 		const {videoId,title,lengthSeconds,isLive,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,isLiveDvrEnabled,thumbnail,liveChunkReadahead,allowRatings,viewCount,author,isLowLatencyLiveStream,isPrivate,isUnpluggedCorpus,latencyClass,isLiveContent,isPostLiveDvr,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(videoId);
@@ -974,7 +1068,8 @@ class HandleTypes extends BaseService {
 		this.sm.D_Thumbnail(thumbnail);
 		this.t(liveChunkReadahead,x => this.sm.cq(x,2));
 		this.sm.a_primitive_bool(allowRatings);
-		this.t(viewCount,x => {
+		this.t(viewCount,x =>
+		{
 			let num=this.sm.parse_number_template(x);
 			this.sm.a_primitive_num(num);
 		});
@@ -991,21 +1086,25 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region RS & RSG & RSL & REG & RSW
 	/** @public @arg {RS_AccountMenu} x */
-	RS_AccountMenu(x) {
+	RS_AccountMenu(x)
+	{
 		const cf="RS_AccountMenu";
 		const {responseContext,actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,x => {
+		this.z(actions,x =>
+		{
 			if("openPopupAction" in x) return this.xr.A_GetSystemMenu(x);
 			return null;
 		});
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RS_UpdateMetadata} x */
-	RS_UpdateMetadata(x) {
+	RS_UpdateMetadata(x)
+	{
 		const cf="RS_UpdateMetadata";
 		const {responseContext,continuation,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.CD_TimedContinuation(continuation);
-		this.z(actions,x => {
+		this.z(actions,x =>
+		{
 			if("updateViewershipAction" in x) return this.AU_Viewership(x);
 			if("updateToggleButtonTextAction" in x) return this.AU_ToggleButtonText(x);
 			if("updateDateTextAction" in x) return this.AU_DateText(x);
@@ -1015,7 +1114,8 @@ class HandleTypes extends BaseService {
 		});
 	}
 	/** @public @arg {RS_Search} x */
-	RS_Search(x) {
+	RS_Search(x)
+	{
 		const cf="RS_Search";
 		const {responseContext,estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.a_primitive_str(estimatedResults);
@@ -1023,13 +1123,15 @@ class HandleTypes extends BaseService {
 		this.sm.trackingParams(trackingParams);
 		this.sm.R_DesktopTopbar(topbar);
 		this.z(refinements,x => this.sm.a_primitive_str(x));
-		this.z(onResponseReceivedCommands,x => {
+		this.z(onResponseReceivedCommands,x =>
+		{
 			if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
 		});
 		this.sm.targetId(cf,targetId);
 	}
 	/** @public @arg {RS_ReelWatchSequence} x */
-	RS_ReelWatchSequence(x) {
+	RS_ReelWatchSequence(x)
+	{
 		const cf="RS_ReelWatchSequence";
 		const {responseContext,entries,prevEntries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
@@ -1038,7 +1140,8 @@ class HandleTypes extends BaseService {
 		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
 	}
 	/** @public @arg {RS_GetLiveChat} x */
-	RS_GetLiveChat(x) {
+	RS_GetLiveChat(x)
+	{
 		const cf="RS_GetLiveChat";
 		const {responseContext,continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_LiveChat(a1);
@@ -1047,7 +1150,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {string} x */
 	RS_Next_ContextParams(x) {this.sm.params("next.queue_context.params",x);}
 	/** @public @arg {RS_Next} x */
-	RS_Next(x) {
+	RS_Next(x)
+	{
 		const cf="RS_Next";
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(contents,x => this.xr.G_NextContents(x));
@@ -1064,40 +1168,46 @@ class HandleTypes extends BaseService {
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
 	/** @public @arg {RS_AccountsList} x */
-	RS_AccountsList(x) {
+	RS_AccountsList(x)
+	{
 		const cf="RS_AccountsList";
 		const {responseContext,selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(selectText);
 		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
 	/** @public @arg {RS_SetSetting} x */
-	RS_SetSetting(x) {
+	RS_SetSetting(x)
+	{
 		const cf="RS_SetSetting";
 		const {responseContext,settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(settingItemId!=="407") debugger;
 	}
 	/** @public @arg {RS_Feedback} x */
-	RS_Feedback(x) {
+	RS_Feedback(x)
+	{
 		const cf="RS_Feedback";
 		const {responseContext,feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
 	}
 	/** @public @arg {RS_AttGet} x */
-	RS_AttGet(x) {
+	RS_AttGet(x)
+	{
 		const cf="RS_AttGet";
 		const {responseContext,challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.a_primitive_str(challenge);
 		this.xr.D_AttBgChallenge(bgChallenge);
 	}
 	/** @public @arg {RS_Guide} x */
-	RS_Guide(x) {
+	RS_Guide(x)
+	{
 		const cf="RS_Guide";
 		const {responseContext,items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,x => this.xr.G_GuideSectionItem(x));
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RS_WatchReelItem} x */
-	RS_WatchReelItem(x) {
+	RS_WatchReelItem(x)
+	{
 		const cf="RS_WatchReelItem";
 		const {responseContext,overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_ReelPlayerOverlay(overlay);
@@ -1109,23 +1219,27 @@ class HandleTypes extends BaseService {
 		this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
 	}
 	/** @public @arg {RSG_Survey} x */
-	RSG_Survey(x) {
+	RSG_Survey(x)
+	{
 		const cf="RSG_Survey";
 		const {responseContext,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @template T @template {{popup:T}} V @arg {V} x @arg {(x:Omit<V,"popup">)=>void} f */
-	T_AnyPopup(x,f) {
+	T_AnyPopup(x,f)
+	{
 		const {popup,...y}=x;
 		f.call(this,y);
 		return popup;
 	}
 	/** @public @arg {RSG_PdgBuyFlow} x */
-	RSG_PdgBuyFlow(x) {
+	RSG_PdgBuyFlow(x)
+	{
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext,command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let pu=this.xm.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
-		let pr=this.T_AnyPopup(pu,({popupType,...y2}) => {
+		let pr=this.T_AnyPopup(pu,({popupType,...y2}) =>
+		{
 			this.cq(popupType,"DIALOG"); this.g(y2);
 		});
 		if("pdgBuyFlowRenderer" in pr) {this.xr.R_PdgBuyFlow(pr);}
@@ -1133,34 +1247,41 @@ class HandleTypes extends BaseService {
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @public @arg {RSG_SearchSuggestions} x */
-	RSG_SearchSuggestions(x) {
+	RSG_SearchSuggestions(x)
+	{
 		const cf="RSG_SearchSuggestions";
 		const {responseContext,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSG_Transcript} x */
-	RSG_Transcript(x) {
+	RSG_Transcript(x)
+	{
 		const cf="RSG_Transcript";
 		const {responseContext,actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,a => {
+		this.z(actions,a =>
+		{
 			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
 		});
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {RSL_Like} x */
-	RSL_Like(x) {
+	RSL_Like(x)
+	{
 		const cf="RSL_Like";
 		const {responseContext,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.tz(actions,x => {
+		this.tz(actions,x =>
+		{
 			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
 	}
 	/** @public @arg {RSL_Dislike} x */
-	RSL_Dislike(x) {
+	RSL_Dislike(x)
+	{
 		const cf="RSL_Dislike";
 		const {responseContext,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let ac=this.tz(actions,x => {
+		let ac=this.tz(actions,x =>
+		{
 			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
@@ -1169,22 +1290,26 @@ class HandleTypes extends BaseService {
 		this.z(r1,this.g);
 	}
 	/** @public @arg {RSL_RemoveLike} x */
-	RSL_RemoveLike(x) {
+	RSL_RemoveLike(x)
+	{
 		const cf="RSL_RemoveLike";
 		const {responseContext,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.tz(actions,(x => {
+		this.tz(actions,(x =>
+		{
 			if("openPopupAction" in x) return this.xm.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		}));
 	}
 	/** @public @arg {REG_DatasyncIds} x */
-	REG_DatasyncIds(x) {
+	REG_DatasyncIds(x)
+	{
 		const cf="REG_DatasyncIds";
 		const {responseContext,datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(datasyncIds,x => this.sm.a_primitive_str(x));
 	}
 	/** @public @arg {REG_AccountSwitcher} x */
-	REG_AccountSwitcher(x) {
+	REG_AccountSwitcher(x)
+	{
 		const cf="REG_AccountSwitcher";
 		const {responseContext,selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(selectText);
@@ -1193,12 +1318,14 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region A & AU
 	/** @private @arg {AU_Description} x */
-	AU_Description(x) {
+	AU_Description(x)
+	{
 		const cf="AU_Description";
 		this.y(cf,"updateDescriptionAction",x,this.AD_Description);
 	}
 	/** @private @arg {AD_Description} x */
-	AD_Description(x) {
+	AD_Description(x)
+	{
 		const cf="AD_Description";
 		const {description,...y}=this.s(cf,x); this.g(y);
 		this.sm.G_Text(description);
@@ -1208,8 +1335,10 @@ class HandleTypes extends BaseService {
 	/** @private @arg {AU_DateText} x */
 	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.sm.y("UA_DateTextData","dateText",x,this.sm.G_Text));}
 	/** @private @arg {AU_ToggleButtonText} x */
-	AU_ToggleButtonText(x) {
-		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
+	AU_ToggleButtonText(x)
+	{
+		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 =>
+		{
 			const cf="AU_ToggleButtonTextData";
 			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
 			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
@@ -1220,14 +1349,16 @@ class HandleTypes extends BaseService {
 	/** @private @arg {AU_Viewership} x */
 	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.sm.y("AU_ViewershipData","viewCount",x,this.sm.R_VideoViewCount));}
 	/** @private @arg {AU_EngagementPanel} x */
-	AU_EngagementPanel(x) {
+	AU_EngagementPanel(x)
+	{
 		const cf="AU_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
 		this.sm.clickTrackingParams(clickTrackingParams);
 	}
 	/** @private @arg {AD_UpdateEngagementPanel} x */
-	AD_UpdateEngagementPanel(x) {
+	AD_UpdateEngagementPanel(x)
+	{
 		const cf="AD_UpdateEngagementPanel";
 		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xr.R_Transcript(content);
@@ -1242,11 +1373,14 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region Misc
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{type:T}} */
-	make_str_tag(x,tag) {
+	make_str_tag(x,tag)
+	{
 		/** @template T */
-		class UrlEncodedTag extends String {
+		class UrlEncodedTag extends String
+		{
 			/** @arg {string} str @arg {T} type */
-			constructor(str,type) {
+			constructor(str,type)
+			{
 				super(str);
 				this.type=type;
 			}
@@ -1255,8 +1389,10 @@ class HandleTypes extends BaseService {
 		return as(tagged_obj);
 	}
 	/** @template {keyof D_UrlInfoMap} K @arg {K} k @arg {D_UrlInfoMap[K]["url"]} x @returns {D_UrlInfoMap[K]} */
-	getInfoForUrl(x,k) {
-		switch(k) {
+	getInfoForUrl(x,k)
+	{
+		switch(k)
+		{
 			case "https://www.youtube.com/redirect":/*unk*/{
 				let parsed_url=this._convert_url_to_obj(x);
 				if("_tag" in parsed_url) throw new Error();
@@ -1273,37 +1409,50 @@ class HandleTypes extends BaseService {
 		throw new Error();
 	}
 	/** @template {{}} T @arg {T} x */
-	get_omit_gen(x) {
-		return new (class Gen1 {
+	get_omit_gen(x)
+	{
+		return new (class Gen1
+		{
 			/** @arg {T} x */
-			constructor(x) {
+			constructor(x)
+			{
 				this.x=x;
 			}
 			/** @arg {T} x */
-			set(x) {
+			set(x)
+			{
 				this.x=x;
 			}
 			/** @returns {T} */
-			get() {
+			get()
+			{
 				return this.x;
 			}
 		})(x);
 	}
 	/** @public @arg {CF_P_ParamParse} cf @arg {string} x */
-	decode_binary_obj(cf,x) {
+	decode_binary_obj(cf,x)
+	{
 		let binary_arr=this.read_b64_protobuf(decodeURIComponent(x));
-		if(!binary_arr) {debugger; return;}
+		if(!binary_arr)
+		{
+			debugger;
+			binary_arr=this.read_b64_protobuf(decodeURIComponent(x));
+			return;
+		}
 		this.decode_binary_arr(cf,binary_arr);
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
 	/** @arg {JsonReplacerState} s @arg {V_ParamObj} x @returns {RetParam_BinaryTimestamp|RetParam_VW_2|null} */
-	replace_bin_binary_ts(s,x) {
+	replace_bin_binary_ts(s,x)
+	{
 		if(!(1 in x&&2 in x&&3 in x)) return null;
 		let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
 		let kk=this.get_keys_of(x);
 		/** @type {V_BinaryTimestamp} */
-		if(f1&&f2&&f3&&f1[0]==="v_data32"&&f2[0]==="v_data_fixed32"&&f3[0]==="v_data_fixed32"&&this.eq_keys(kk,[1,2,3])) {
+		if(f1&&f2&&f3&&f1[0]==="v_data32"&&f2[0]==="v_data_fixed32"&&f3[0]==="v_data_fixed32"&&this.eq_keys(kk,[1,2,3]))
+		{
 			return `TYPE::T_VW<V_BinaryTimestamp>`;
 		};
 		let gen_json=this.gen_typedef_bin_json(s,x);
@@ -1313,15 +1462,18 @@ class HandleTypes extends BaseService {
 		function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 	}
 	/** @arg {JsonReplacerState} s @arg {V_ParamObj} x @returns {RetParam_ShortTimestamp|null} */
-	replace_bin_short_ts(s,x) {
+	replace_bin_short_ts(s,x)
+	{
 		if(!(1 in x&&2 in x&&3 in x)) return null;
 		if(x[1][1].length!==1) return null;
 		if(x[2][1].length!==1) return null;
 		let f1=x[1][1][0];
 		let f2=x[2][1][0];
-		if(f1[0]==="v_data32"&&f2[0]==="v_data32") {
+		if(f1[0]==="v_data32"&&f2[0]==="v_data32")
+		{
 			let kk=this.get_keys_of(x);
-			if(this.eq_keys(kk,[1,2,3])) {
+			if(this.eq_keys(kk,[1,2,3]))
+			{
 				/** @type {V_ShortTimestamp} */
 				let bts={...x,1: ["v_param_arr",[f1]],2: ["v_param_arr",[f2]]}; bts;
 				return `TYPE::T_VW<V_ShortTimestamp>`;
@@ -1332,9 +1484,11 @@ class HandleTypes extends BaseService {
 		return null;
 	};
 	/** @arg {JsonReplacerState} s @arg {V_Param_Child} x @returns {RetParam_child|RetParam_VW_2} */
-	v_param_2_child(s,x) {
+	v_param_2_child(s,x)
+	{
 		const [,binary_arr,obj]=x;
-		if(obj!==null) {
+		if(obj!==null)
+		{
 			let bin_ts=this.replace_bin_binary_ts(s,obj);
 			if(bin_ts) return bin_ts;
 			let short_ts=this.replace_bin_short_ts(s,obj);
@@ -1343,7 +1497,8 @@ class HandleTypes extends BaseService {
 			return `TYPE::T_VW_Child<${gen_json},"json">`;
 		}
 		let decoded_string=this._decoder.decode(binary_arr);
-		if(binary_arr[0]===0) {
+		if(binary_arr[0]===0)
+		{
 			console.log("[maybe_handle_bin.do_maybe_string]",x,decoded_string);
 			throw new Error();
 		}
@@ -1358,8 +1513,10 @@ class HandleTypes extends BaseService {
 	/** @arg {[type:"v_data_fixed64",value: bigint]} x @returns {RetParam_FD64} */
 	v_param_2_FD64(x) {return `TYPE::T_FD64<${x[1]}n>`;};
 	/** @arg {JsonReplacerState} s @arg {V_Param_Raw} x @returns {RetParam_raw} */
-	v_param_2_raw(s,x) {
-		switch(x[1][0]) {
+	v_param_2_raw(s,x)
+	{
+		switch(x[1][0])
+		{
 			case "string": return `TYPE::T_VW_Str<"${x[1][1]}">`;
 			case "bigint": return `TYPE::T_VW_Bigint<${x[1][1]}n>`;
 			case "number": return `TYPE::T_VW_R<"${x[1][0]}",${x[1][1]}>`;
@@ -1370,28 +1527,35 @@ class HandleTypes extends BaseService {
 	/** @arg {V_Param_D64} x @returns {RetParam_VW_Bigint} */
 	param_vw_bigint(x) {return `TYPE::T_VW_Bigint<${x[2]}n>`;}
 	/** @arg {JsonReplacerState} s @arg {V_Param_RawChild} x @returns {RetParam_raw_child} */
-	v_param_rc_def(s,x) {
+	v_param_rc_def(s,x)
+	{
 		let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
 		let obj_json;
 		let raw_json="{}";
-		if(x[2]===null) {
+		if(x[2]===null)
+		{
 			obj_json="null";
-		} else {
+		} else
+		{
 			obj_json=this.gen_typedef_bin_json(s,x[1]);
 		}
 		return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 	};
 	/** @arg {JsonReplacerState} s @arg {V_Param_RawChild} x @returns {RetParam_raw_child} */
-	v_param_2_raw_child(s,x) {
+	v_param_2_raw_child(s,x)
+	{
 		let x1=x[3];
-		switch(x1[0]) {
+		switch(x1[0])
+		{
 			default: return this.v_param_rc_def(s,x);
 			case "string": return `TYPE::T_RC_Str<"${x1[1]}">`;
 		}
 	};
 	/** @arg {JsonReplacerState} s @arg {V_Param} x @returns {V_ParamItemFiltered} */
-	v_param_item(s,x) {
-		switch(x[0]) {
+	v_param_item(s,x)
+	{
+		switch(x[0])
+		{
 			default: x[0]===""; debugger; return x;
 			case "v_child": return this.v_param_2_child(s,x);
 			case "v_data_fixed32": return this.v_param_2_FD32(x);
@@ -1409,16 +1573,20 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @arg {JsonReplacerState} s @arg {V_ParamArrBox} x */
-	v_param_arr(s,x) {
+	v_param_arr(s,x)
+	{
 		let x1=x[1];
 		let res=[];
-		if(x1.length===1) {
+		if(x1.length===1)
+		{
 			let x2=x1[0];
-			switch(x2[0]) {
+			switch(x2[0])
+			{
 				default: x2[0]===""; debugger; break;
 				case "v_raw":/*unk*/{
 					let x3=x2[1];
-					switch(x3[0]) {
+					switch(x3[0])
+					{
 						default: debugger; break;
 						case "string": return `TYPE::TV_Str_R<"${x2[1]}">`;
 					}
@@ -1430,8 +1598,10 @@ class HandleTypes extends BaseService {
 				case "v_data_fixed64": return this.v_param_2_FD64(x2);
 				case "v_raw_child":/*unk*/{
 					let x3=x2[3];
-					if(x2[2]===null) {
-						switch(x3[0]) {
+					if(x2[2]===null)
+					{
+						switch(x3[0])
+						{
 							default: break;
 							case "string": return `TYPE::TV_Str<"${x3[1]}">`;
 						}
@@ -1440,8 +1610,10 @@ class HandleTypes extends BaseService {
 				} break;
 				case "v_child_str":/*unk*/{
 					let x3=x2[3];
-					if(x2[2]===null) {
-						switch(x3[0]) {
+					if(x2[2]===null)
+					{
+						switch(x3[0])
+						{
 							default: break;
 							case "string": return `TYPE::TV_Str_CS<"${x3[1]}">`;
 						}
@@ -1465,7 +1637,8 @@ class HandleTypes extends BaseService {
 				case "v_param_arr": debugger; break;
 			}
 		}
-		for(let x2 of x1) {
+		for(let x2 of x1)
+		{
 			res.push(this.v_param_item(s,x2));
 		}
 		if(res.length===1) return res;
@@ -1477,18 +1650,23 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region codegen_typedef_bin
 	/** @private @arg {JsonReplacerState} s @arg {object|null} x @returns {string|object|null} */
-	typedef_json_replace_bin_obj(s,x) {
+	typedef_json_replace_bin_obj(s,x)
+	{
 		if(x===null) return x;
-		if(x instanceof Array) {
-			if(x.length===1) {
-				if(typeof x[0]==="number") {
+		if(x instanceof Array)
+		{
+			if(x.length===1)
+			{
+				if(typeof x[0]==="number")
+				{
 					return `TYPE::T_Tuple_1<${x[0]}>`;
 				}
 				return `TYPE::T_Tuple_1<${this.gen_typedef_bin_json(s,x[0])}>`;
 			}
 			/** @type {D_ProtobufObj|V_ParamArrBox} */
 			let x3=as(x);
-			switch(x3[0]) {
+			switch(x3[0])
+			{
 				case "data32": case "data_fixed32": case "data_fixed64":/*unk*/{
 					if(x3.length!==3) {debugger; return null;}
 					return this.tr_arr_to_obj([x3]);
@@ -1500,8 +1678,10 @@ class HandleTypes extends BaseService {
 				}
 				case "v_param_arr": return this.v_param_arr(s,x3);
 			}
-			if(x3.length===2&&typeof x3[0]==="string") {
-				switch(x3[0]) {
+			if(x3.length===2&&typeof x3[0]==="string")
+			{
+				switch(x3[0])
+				{
 					case "error": debugger; break;
 				}
 			}
@@ -1509,7 +1689,8 @@ class HandleTypes extends BaseService {
 			console.log("[maybe_handle_bin.do_fx]",fx);
 			/** @type {(D_ProtobufObj|V_ParamArrBox)[]} */
 			let x_t1=x;
-			if(x_t1[0][0]==="child") {
+			if(x_t1[0][0]==="child")
+			{
 				debugger;
 				return x_t1;
 			}
@@ -1517,7 +1698,8 @@ class HandleTypes extends BaseService {
 			return x;
 		}
 		if(x instanceof Uint8Array) return `TYPE::T_Uint8Array<${x.length}>`;
-		if(s.is_root&&s.cur_key==="") {
+		if(s.is_root&&s.cur_key==="")
+		{
 			/** @type {{}} */
 			let xt=x;
 			/** @type {{[U in string|number]: unknown}} */
@@ -1525,10 +1707,13 @@ class HandleTypes extends BaseService {
 			/** @type {{[U in string|number]: unknown}} */
 			let fx={};
 			let fk=Object.keys(x);
-			for(let kk of fk) {
-				if(kk.match(/^\d+$/)) {
+			for(let kk of fk)
+			{
+				if(kk.match(/^\d+$/))
+				{
 					let num=parseInt(kk,10);
-					if(num>=256) {
+					if(num>=256)
+					{
 						fx[`0x${num.toString(16)}`]=xa[kk];
 						continue;
 					}
@@ -1541,7 +1726,8 @@ class HandleTypes extends BaseService {
 		}
 		/** @type {(`${number}`|string)[]} */
 		let keys=Object.keys(x);
-		let kn=keys.map(e => {
+		let kn=keys.map(e =>
+		{
 			/** @arg {string} _x @returns {asserts _x is `${number}`} */
 			function assume_numeric_template(_x) {}
 			assume_numeric_template(e);
@@ -1549,7 +1735,8 @@ class HandleTypes extends BaseService {
 		});
 		if(kn.every(x => !Number.isNaN(x))) return x;
 		if("message" in x) return x;
-		if("type" in x&&"v" in x&&keys.length===2) {
+		if("type" in x&&"v" in x&&keys.length===2)
+		{
 			console.log("[maybe_handle_bin.keys.typed_obj]",x.type,x.v);
 			return x;
 		}
@@ -1558,9 +1745,11 @@ class HandleTypes extends BaseService {
 		return x;
 	}
 	/** @private @arg {JsonReplacerState} s @arg {string} k @arg {unknown} x @returns {string|symbol|number|boolean|undefined|object|null} */
-	typedef_json_replace_bin(s,k,x) {
+	typedef_json_replace_bin(s,k,x)
+	{
 		s.next_key(k,x);
-		switch(typeof x) {
+		switch(typeof x)
+		{
 			default: x===""; throw new Error("New type from typeof obj");
 			case "undefined": return x;
 			case "symbol": return x;
@@ -1573,14 +1762,18 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @arg {JsonReplacerState} s @arg {object} x @returns {Ret_gen_json} */
-	gen_typedef_bin_json(s,x) {
+	gen_typedef_bin_json(s,x)
+	{
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,s),"\t");
-		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) =>
+		{
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `[${vi}]`;
 		});
-		json_res=json_res.replaceAll(/"TYPE::(.+)"/gm,(_a,/**@type {string} */x) => {
-			let [f,...r]=x.replaceAll(/\\"|\\n|\\t/g,(/**@type {string} */v) => {
+		json_res=json_res.replaceAll(/"TYPE::(.+)"/gm,(_a,/**@type {string} */x) =>
+		{
+			let [f,...r]=x.replaceAll(/\\"|\\n|\\t/g,(/**@type {string} */v) =>
+			{
 				if(v==="\\\"") return "\"";
 				if(v==="\\n") return "\n";
 				if(v==="\\t") return "\t";
@@ -1593,11 +1786,13 @@ class HandleTypes extends BaseService {
 		return json_res;
 	}
 	/** @private @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
-	gen_typedef_bin(s,cf,x) {
+	gen_typedef_bin(s,cf,x)
+	{
 		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)};\n`;
 	}
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] */
-	codegen_typedef_bin(cf,x,do_break=true) {
+	codegen_typedef_bin(cf,x,do_break=true)
+	{
 		/** @private @type {JsonReplacerState} */
 		let s=new JsonReplacerState({
 			text_decoder: this._decoder,
@@ -1605,8 +1800,10 @@ class HandleTypes extends BaseService {
 		});
 		let res_str=this.gen_typedef_bin(s,cf,x);
 		let is_new=false;
-		if(res_str) {
-			if(!this.typedef_cache.includes(res_str)) {
+		if(res_str)
+		{
+			if(!this.typedef_cache.includes(res_str))
+			{
 				this.typedef_cache.push(res_str);
 				console.log(res_str);
 				is_new=true;
@@ -1618,7 +1815,8 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region More misc
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {CF_M_H_d} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
-	H_d(cf,k,x,f) {
+	H_d(cf,k,x,f)
+	{
 		if(!x) {debugger; return null;}
 		this.sm.k(cf,x);
 		let keys=this.get_keys_of(x);
@@ -1635,7 +1833,8 @@ class HandleTypes extends BaseService {
 	 * @param {K} k @param {CF_H_a} cf @param {T} x @param {(this:this,x:T[K][0])=>V} f
 	 * @returns {[y,ret]}
 	 */
-	H_a(cf,k,x,f,save=false) {
+	H_a(cf,k,x,f,save=false)
+	{
 		if(save) this.sm.k(cf,x);
 		const {[k]: [a],...y}=this.s(cf,x);
 		const ret=f.call(this,a);
@@ -1644,23 +1843,29 @@ class HandleTypes extends BaseService {
 	/** @type {string[]} */
 	_continuation_logged_str=[];
 	/** @private @arg {CF_P_ParamParse} cf @arg {D_ProtobufObj[]} x */
-	decode_binary_arr(cf,x) {
+	decode_binary_arr(cf,x)
+	{
 		if(x.length===0) debugger;
 		let bin_obj=this.tr_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
-		try {
+		try
+		{
 			this.binary_result(cf,bin_obj);
-		} catch(e) {
-			if(e instanceof Error) {
+		} catch(e)
+		{
+			if(e instanceof Error)
+			{
 				console.log("binary_result err",e);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,bin_obj,false);
-			} else {
+			} else
+			{
 				debugger;
 			}
 		}
 	}
 	/** @private @arg {string} x */
-	read_b64_protobuf(x) {
+	read_b64_protobuf(x)
+	{
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return null;}
 		let reader=new MyReader(buffer);
@@ -1670,7 +1875,8 @@ class HandleTypes extends BaseService {
 		return protobuf_arr;
 	}
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
-	parse_shorts_url(x) {
+	parse_shorts_url(x)
+	{
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
 		this.sm.videoId(raw_id);
 	}
@@ -1679,11 +1885,13 @@ class HandleTypes extends BaseService {
 	log_start_radio=false;
 	log_playlist_index=false;
 	/** @public @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
-	parse_watch_page_url_url_arr(root,x) {
+	parse_watch_page_url_url_arr(root,x)
+	{
 		root;
 		let {...x2}=this.parse_url_search_params(x);
 		/** @arg {typeof x2} x @returns {typeof y2|null} */
-		const px_x2=(x) => {
+		const px_x2=(x) =>
+		{
 			const {v,...y}=x;
 			this.sm.videoId(v);
 			if(this.sm.is_empty_obj(y)) return null;
@@ -1693,19 +1901,22 @@ class HandleTypes extends BaseService {
 		let x3=px_x2(x2);
 		if(x3===null) return;
 		let x4=null;
-		if("pp" in x3) {
+		if("pp" in x3)
+		{
 			const {pp,...y}=x3;
 			this.sm.playerParams("watch.player_params",pp);
 			if(!this.sm.is_not_empty_obj(y)) return;
 			x4=y;
 		}
 		let x5=null;
-		if(x4) {
+		if(x4)
+		{
 			const {list,...y}=x4;
 			this.sm.playlistId(list);
 			x5=y;
 		}
-		x: if(x5) {
+		x: if(x5)
+		{
 			const {index,...y}=x5;
 			y: {
 				if(this.cache_playlist_index.includes(index)) break y;
@@ -1716,23 +1927,27 @@ class HandleTypes extends BaseService {
 			this.g(y);
 		}
 		if("pp" in x3) return;
-		if("t" in x3) {
+		if("t" in x3)
+		{
 			const {t,...y}=x3;
 			if(this.sm.is_empty_obj(y)) return;
 			this.g(y); return;
 		}
-		x: if("list" in x3) {
+		x: if("list" in x3)
+		{
 			y: {
 				const {list,...y2}=x3;
 				this.sm.playlistId(list);
-				if("playnext" in y2) {
+				if("playnext" in y2)
+				{
 					const {playnext,...y}=y2;
 					this.save_primitive("video_url.info.playnext",playnext);
 					if(this.sm.is_not_empty_obj(y)) break y;
 					this.g(y); break y;
 				}
 				if(!this.sm.is_not_empty_obj(y2)) break x;
-				if("index" in y2) {
+				if("index" in y2)
+				{
 					const {index,...y3}=y2; this.g(y3);
 					if(this.cache_playlist_index.includes(index)) break x;
 					this.cache_playlist_index.push(index);
@@ -1751,7 +1966,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @public @arg {[DU_VE3832_PreconnectUrl]} x */
-	parse_preconnect_arr(x) {
+	parse_preconnect_arr(x)
+	{
 		if(x.length!==1) debugger;
 		this.RE_D_VE3832_PreconnectUrl(x[0]);
 	}
@@ -1759,8 +1975,10 @@ class HandleTypes extends BaseService {
 	logged_hosts=[];
 	log_googlevideo_host=false;
 	/** @private @template {D_GoogleVideoPathname} T @arg {D_GoogleVideoHostPartitionRet<T>} x */
-	D_GoogleVideoHostPartitionRet(x) {
-		if(this.log_googlevideo_host) {
+	D_GoogleVideoHostPartitionRet(x)
+	{
+		if(this.log_googlevideo_host)
+		{
 			if(this.logged_hosts.includes(x.host)) return;
 			this.logged_hosts.push(x.host);
 			let [s1,s2,s3,s4,s5,partition,s7,selector,s8,s9,s10,s11,...py]=x.parts; this.eq_keys(py,[]);
@@ -1769,10 +1987,12 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @template {UrlParse<GU_GoogleVideoUrl>} T @arg {T} x @returns {D_GoogleVideoHostPartitionRet<T["pathname"]>} */
-	get_google_host_parts(x) {
+	get_google_host_parts(x)
+	{
 		/** @type {`${"r"|"rr"}${number}---sn-${string}n${string}.googlevideo.com`} */
 		const host=as_any(x.host);
-		if(!this.sm.str_starts_with(host,"rr")) {
+		if(!this.sm.str_starts_with(host,"rr"))
+		{
 			let [host_parts_1,empty_1,...y]=split_string(host,".googlevideo.com");
 			if(empty_1!=="") debugger; if(y.length!==0) debugger;
 			let parts_1=split_string(host_parts_1,"---");
@@ -1798,7 +2018,8 @@ class HandleTypes extends BaseService {
 		};
 	}
 	/** @private @arg {DU_VE3832_PreconnectUrl} x */
-	RE_D_VE3832_PreconnectUrl(x) {
+	RE_D_VE3832_PreconnectUrl(x)
+	{
 		let pu=this._convert_url_to_obj(x);
 		let parts=this.get_google_host_parts(pu);
 		if(parts.path!=="/generate_204") debugger;
@@ -1809,7 +2030,8 @@ class HandleTypes extends BaseService {
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
 	/** @public @arg {RS_Channel} x */
-	RS_Channel(x) {
+	RS_Channel(x)
+	{
 		const cf="RS_Channel";
 		let kk=this.get_keys_of(x);
 		let idx=kk.indexOf("microformat");
@@ -1825,11 +2047,13 @@ class HandleTypes extends BaseService {
 		this.t(cacheMetadata,x => this.sm.D_Cache_MD(x));
 	}
 	/** @public @arg {RSG_SharePanel} x */
-	RSG_SharePanel(x) {
+	RSG_SharePanel(x)
+	{
 		const cf="RSG_SharePanel";
 		const {responseContext,trackingParams,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.trackingParams(trackingParams);
-		this.z(actions,x => {
+		this.z(actions,x =>
+		{
 			const cf="RSG_SharePanel_Action";
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.sm.clickTrackingParams(clickTrackingParams);
@@ -1837,7 +2061,8 @@ class HandleTypes extends BaseService {
 		});
 	}
 	/** @public @arg {RS_Subscribe} x */
-	RS_Subscribe(x) {
+	RS_Subscribe(x)
+	{
 		const cf="RS_Subscribe";
 		const {responseContext,actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,x => this.xr.G_RS_Subscribe_Action(x));
@@ -1848,18 +2073,21 @@ class HandleTypes extends BaseService {
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,x => this.xr.R_ChannelSwitcherPage(x));}
 	/** @public @arg {RS_Unsubscribe} x */
-	RS_Unsubscribe(x) {
+	RS_Unsubscribe(x)
+	{
 		const cf="RS_Unsubscribe";
 		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.RC_ResponseContext(responseContext);
-		this.z(actions,x => {
+		this.z(actions,x =>
+		{
 			x;
 		});
 		this.sm.trackingParams(trackingParams);
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {DC_LiveChat} x */
-	DC_LiveChat(x) {
+	DC_LiveChat(x)
+	{
 		const cf="DC_LiveChat";
 		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(continuations,x => this.xr.G_LiveChatContinuationItem(x));
@@ -1876,7 +2104,8 @@ class HandleTypes extends BaseService {
 		this.t(viewerName,x => this.sm.a_primitive_str(x));
 	}
 	/** @private @arg {AD_AccountItem} x */
-	AD_AccountItem(x) {
+	AD_AccountItem(x)
+	{
 		const cf="AD_AccountItem";
 		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(accountName);
@@ -1889,7 +2118,8 @@ class HandleTypes extends BaseService {
 		this.sm.G_Text(channelHandle);
 	}
 	/** @arg {S_VideoGoodPutShape} x */
-	S_VideoGoodPutShape(x) {
+	S_VideoGoodPutShape(x)
+	{
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
 		this.sm.save_b64_binary(`${cf}.id`,id);
@@ -1902,7 +2132,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.mm`,mm);
 		this.save_primitive(`${cf}.pl`,pl);
 		this.sm.save_b64_binary(`${cf}.nh`,nh);
-		switch(sparams) {
+		switch(sparams)
+		{
 			default: this.cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
@@ -1910,7 +2141,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.key`,key);
 	}
 	/** @private @arg {`sn-${string}n${string}`} x @returns {D_GoogleVideoHostPartition} */
-	get_host_partition(x) {
+	get_host_partition(x)
+	{
 		let parts=this.get_gv_parts_impl(x);
 		let partition={
 			parts,
@@ -1921,7 +2153,8 @@ class HandleTypes extends BaseService {
 		return partition;
 	}
 	/** @private @arg {`sn-${string}n${string}`} x @returns {["sn","-",G_GV_0,"n",G_GV_1]} */
-	get_gv_parts_impl(x) {
+	get_gv_parts_impl(x)
+	{
 		let ss=split_string(x,"-")[1];
 		let idx=5;
 		let r1=ss.slice(0,idx);
@@ -1932,11 +2165,13 @@ class HandleTypes extends BaseService {
 		return ["sn","-",r1,"n",r2];
 	}
 	/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
-	y_copy_key(trg,src,k) {
+	y_copy_key(trg,src,k)
+	{
 		trg[k]=src[k];
 	}
 	/** @private @template {"sparams"|"lsparams"} K @arg {(keyof D_VideoPlaybackShape)[]} key_list @arg {D_VideoPlaybackShape} x @arg {D_VideoPlaybackShape[K]} params_list @arg {K} target_src_key */
-	extract_sparams(key_list,x,params_list,target_src_key) {
+	extract_sparams(key_list,x,params_list,target_src_key)
+	{
 		/** @type {{[U in T_Split<typeof params_list>[number]]:D_VideoPlaybackShape[U&keyof D_VideoPlaybackShape]}} */
 		let obj_sparams=as({});
 		let kk_x=key_list;
@@ -1947,7 +2182,8 @@ class HandleTypes extends BaseService {
 		let xa=x;
 		/** @type {typeof obj_sparams} */
 		let xt=xa;
-		for(let k of kk_sparams) {
+		for(let k of kk_sparams)
+		{
 			this.y_copy_key(obj_sparams,xt,k);
 			let idx=kk_x.indexOf(k);
 			kk_x.splice(idx,1);
@@ -1955,7 +2191,8 @@ class HandleTypes extends BaseService {
 		return obj_sparams;
 	}
 	/** @private @arg {"D_VideoPlaybackShape"} cf @arg {D_VideoPlaybackShape} uv */
-	extract_shape_params(cf,uv) {
+	extract_shape_params(cf,uv)
+	{
 		const {sparams,lsparams}=this.s(cf,uv);
 		this.save_primitive(`${cf}.sparams`,sparams);
 		this.save_primitive(`${cf}.lsparams`,lsparams);
@@ -1975,18 +2212,22 @@ class HandleTypes extends BaseService {
 		};
 	}
 	/** @arg {D_InitPlayback} x */
-	D_InitPlayback(x) {
+	D_InitPlayback(x)
+	{
 		this.save_primitive("D_InitPlayback",x);
 	}
 	/** @api @public @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
-	on_google_video_url(x) {
+	on_google_video_url(x)
+	{
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
 		let s_host=split_string_once(x.host,".");
 		let p_ret=this.get_google_host_parts(x);
 		this.D_GoogleVideoHostPartitionRet(p_ret);
-		switch(s_host[1]) {
+		switch(s_host[1])
+		{
 			case "googlevideo.com":/*unk*/{
-				switch(x.pathname) {
+				switch(x.pathname)
+				{
 					case "/videoplayback":/*unk*/{
 						let vp_search=x.search;
 						let {...pp}=this.parse_url_search_params(vp_search);
@@ -2010,22 +2251,26 @@ class HandleTypes extends BaseService {
 		{debugger;}
 	}
 	/** @arg {string} cf @arg {string} sig_str */
-	validate_sig(cf,sig_str) {
+	validate_sig(cf,sig_str)
+	{
 		if(sig_str.match(/^[0-9A-F]+$/)===null) debugger;
 		this.save_primitive(cf,sig_str.length);
-		switch(sig_str.length) {
+		switch(sig_str.length)
+		{
 			default: debugger; break;
 			case 38: case 40:
 		}
 	}
 	/** @arg {`${string}.${string}`} x */
-	parse_signature(x) {
+	parse_signature(x)
+	{
 		let [sig_0,sig_1]=split_string_once(x,".");
 		this.validate_sig("sig.0",sig_0);
 		this.validate_sig("sig.1",sig_1);
 	}
 	/** @api @public @arg {CF_L_TP_Params} cf @arg {`/${string}`} x */
-	parse_url_alt(cf,x) {
+	parse_url_alt(cf,x)
+	{
 		cf;
 		let s=split_string_once(x,"/"); this.sm.cq(s[0],"");
 		let [,v]=s;
@@ -2037,8 +2282,10 @@ class HandleTypes extends BaseService {
 	//#region binary
 	//#region binary done
 	/** @public @arg {BinaryVe} x */
-	BinaryVe(x) {
-		switch(x) {
+	BinaryVe(x)
+	{
+		switch(x)
+		{
 			default: x; debugger; break;
 			case 3832:
 			case 3854:
@@ -2046,7 +2293,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @protected @arg {RB_Obj_f19} x @name V_VeDescObj */
-	RB_Obj_f19(x) {
+	RB_Obj_f19(x)
+	{
 		const cf="R_Obj_f19",t=this;
 		const {1: obj_tag,2: binary_ve,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.t(obj_tag,x => t.save_primitive(`${cf}.tag`,t.T_D32(x)));
@@ -2056,7 +2304,8 @@ class HandleTypes extends BaseService {
 		this.codegen_typedef_bin(cf,x,false);
 	}
 	/** @protected @arg {D_TrackingObj_f16} x */
-	PR_TrackingObj_f16(x) {
+	PR_TrackingObj_f16(x)
+	{
 		const cf="G_PR_TrackingObj_f16";
 		const {1: v_tag,2: v_id,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v_tag));
@@ -2067,7 +2316,8 @@ class HandleTypes extends BaseService {
 	/** @type {string[]} */
 	h_f6_str_arr=[];
 	/** @protected @arg {H_TrackingObj} x */
-	H_TrackingObj(x) {
+	H_TrackingObj(x)
+	{
 		if(this.ht!==this) {this.ht.H_TrackingObj(x); return;}
 		const cf="H_TrackingObj",t=this;
 		const {1: obj_tag,2: obj_id,3: v3,4: f4,6: f6,7: f7,8: f8,9: f9,11: v11,16: f16,19: f19,21: f21,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
@@ -2075,10 +2325,12 @@ class HandleTypes extends BaseService {
 		t.t(obj_id,x => t.TK_D32(cf,x,"id"));
 		t.t(v3,x => t.TK_D32(cf,x,"f3"));
 		t.t(f4,t.VW_BinaryTimestamp);
-		t.t(f6,x => {
+		t.t(f6,x =>
+		{
 			let str=this.TV_Str(x);
 			this.save_primitive(`${cf}.f6`,str);
-			switch(str) {
+			switch(str)
+			{
 				default: if(this.h_f6_str_arr.includes(str)) break; this.h_f6_str_arr.push(str); debugger; break;
 				case "cards":
 				case "endscreen":
@@ -2097,9 +2349,11 @@ class HandleTypes extends BaseService {
 			}
 		});
 		t.t(f7,x => t.sm.save_b64_binary(`${cf}.f7`,t.TV_Str(x)));
-		t.ms_t(f8,u8 => {
+		t.ms_t(f8,u8 =>
+		{
 			let [v8]=u8[1];
-			switch(v8[0]) {
+			switch(v8[0])
+			{
 				default: debugger; break;
 				case "v_data32":/*unk*/{
 					let [,i8]=v8; this.save_primitive(`${cf}.f8`,i8);
@@ -2110,8 +2364,10 @@ class HandleTypes extends BaseService {
 			}
 		});
 		f9;
-		v11&&(x => {
-			switch(x) {
+		v11&&(x =>
+		{
+			switch(x)
+			{
 				default: debugger; break;
 				case "FEwhat_to_watch":
 			}
@@ -2128,10 +2384,12 @@ class HandleTypes extends BaseService {
 	/** @arg {"H_TrackingObj"} cf @arg {{tag: H_TrackingObj_Tag,id: H_TrackingObj_Id;}} x */
 	P_Tag_TrackingObj(cf,x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");}
 	/** @protected @arg {{type:"click_tracking",v:H_TrackingObj}|{type:"tracking",v:H_TrackingObj}} x */
-	P_Typed_TrackingObj(x) {
+	P_Typed_TrackingObj(x)
+	{
 		const cf="P_Typed_TrackingObj";
 		const {type,v: z}=x; this.sm.k(cf,z);
-		switch(type) {
+		switch(type)
+		{
 			case "click_tracking": return this.H_TrackingObj(z);
 			case "tracking": return this.H_TrackingObj(z);
 		}
@@ -2139,28 +2397,35 @@ class HandleTypes extends BaseService {
 	/** @type {{}[]} */
 	missing_objs=[];
 	/** @arg {string} cf @arg {{}} x @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} y */
-	h_gen_keys(cf,x,y) {
-		let u=this.get_keys_of_2(y); if(u.length>0) {
+	h_gen_keys(cf,x,y)
+	{
+		let u=this.get_keys_of_2(y); if(u.length>0)
+		{
 			let is_new=this.codegen_typedef_bin(cf+"$new",y,false);
-			if(is_new) {
+			if(is_new)
+			{
 				let k=u.join(); console.log(`[${cf}.next_key]`,k);
 				this.missing_objs.push(x);
 			}
 		}
 	}
 	/** @private @arg {"P_invalidation_continuation"|"P_timed_continuation_data"|"PR_continuation_params"} [cf] @arg {PR_continuation_params} x */
-	PR_continuation_params(x,cf="PR_continuation_params") {
-		if(0x6b7c87f in x) {
+	PR_continuation_params(x,cf="PR_continuation_params")
+	{
+		if(0x6b7c87f in x)
+		{
 			const {0x6b7c87f: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.PD_timed_continuation(this.T_VW(n));
 			return;
 		}
-		if(0x722607a in x) {
+		if(0x722607a in x)
+		{
 			const {0x722607a: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.PD_invalidation_continuation(this.T_VW(n));
 			return;
 		}
-		if(0x94d81d4 in x) {
+		if(0x94d81d4 in x)
+		{
 			const {0x94d81d4: n,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.PD_continuation_params(this.T_VW(n));
 			return;
@@ -2172,20 +2437,24 @@ class HandleTypes extends BaseService {
 	/** @private @arg {P_timed_continuation_data} x */
 	P_timed_continuation_data(x) {this.PR_continuation_params(x,"P_timed_continuation_data");}
 	/** @private @arg {P_trending_bp} x */
-	P_trending_bp(x) {
+	P_trending_bp(x)
+	{
 		const cf="P_trending_bp";
 		const {77: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		if(a) {
+		if(a)
+		{
 			let ia=this.TV_Str(a);
 			this.save_primitive(`${cf}.f77`,ia);
-			switch(ia) {
+			switch(ia)
+			{
 				default: debugger; break;
 				case "FEexplore":
 			}
 		}
 	}
 	/** @private @arg {V_ShortTimestamp} x */
-	V_ShortTimestamp(x) {
+	V_ShortTimestamp(x)
+	{
 		const cf="V_ShortTimestamp";
 		const {1: request_timestamp_milli_utc,2: nanoseconds_ts,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.log_buffer.push(["number",`max_gen:V_ShortTimestamp:binary_ts_gen`,"f1","milliseconds",this.T_D32(request_timestamp_milli_utc)]);
@@ -2195,7 +2464,8 @@ class HandleTypes extends BaseService {
 		console.log(`-- [max_gen:V_ShortTimestamp:f2] --\n\n[0b${x2.toString(2)}]`);
 	}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
-	P_logging_context_serialized_context_data(x) {
+	P_logging_context_serialized_context_data(x)
+	{
 		const cf="P_logging_context_serialized_context_data",t=this;
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.PK_f1("lc.scd",this.T_VW(v1));
@@ -2204,30 +2474,35 @@ class HandleTypes extends BaseService {
 	/** @type {string[]} */
 	params_to_decode=[];
 	/** @private @arg {PD_continuation_request_browse_token} x */
-	PD_continuation_request_browse_token(x) {
+	PD_continuation_request_browse_token(x)
+	{
 		const cf="PD_continuation_request_browse_token";
 		const {2: browse_id,3: target_params,35: target_id,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(browse_id),x => this.save_primitive(`${cf}.f2`,x));
-		this.t(this.TV_Str(target_params),x => {
+		this.t(this.TV_Str(target_params),x =>
+		{
 			if(this.params_to_decode.includes(x)) return;
 			this.params_to_decode.push(x);
 		});
 		this.t(target_id,x => this.t(this.TV_Str(x),x => this.save_primitive(`${cf}.f35`,x)));
 	}
 	/** @private @arg {PR_continuation_request_browse_token} x */
-	PR_continuation_request_browse_token(x) {
+	PR_continuation_request_browse_token(x)
+	{
 		const cf="PR_continuation_request_browse_token";
 		const {0x4c82a9c: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PD_continuation_request_browse_token(this.T_VW(a));
 	}
 	/** @private @arg {P_create_playlist_params} x */
-	P_create_playlist_params(x) {
+	P_create_playlist_params(x)
+	{
 		const cf="P_create_playlist_params";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_reel_player_params} x */
-	P_reel_player_params(x) {
+	P_reel_player_params(x)
+	{
 		const cf="P_reel_player_params"; let t=this;
 		const {30: f30,57: f57,71: f71,72: f72,...y}=t.s(cf,x); t.h_gen_keys(cf,x,y);/*#destructure_start*/
 		/** @template {number} T @arg {T_ObjGetNumKey<P_reel_player_params>} k @arg {T_D32<T>|undefined} v */
@@ -2236,15 +2511,18 @@ class HandleTypes extends BaseService {
 		f72&&t.save_primitive(`${cf}.f72`,t.T_VW_Bigint(f72));
 	}
 	/** @arg {CF_P_EntityKey} cf @arg {P_EntityKey} x */
-	P_EntityKey(cf,x) {
-		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194)) {
+	P_EntityKey(cf,x)
+	{
+		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194))
+		{
 			const {2: video_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			this.t(this.TV_Str(video_id),x => this.sm.videoId(x));
 			this.save_primitive(`${cf}.f4`,this.T_D32(f4));
 			this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 			return;
 		}
-		if(this.is_T_D32_at(x,246)) {
+		if(this.is_T_D32_at(x,246))
+		{
 			const {2: wrapped_str,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			const {1: f2_f1,...y1}=this.T_VW(wrapped_str); this.g(y1);
 			this.t(this.TV_Str(f2_f1),x => this.save_primitive(`${cf}.f2.f1`,x));
@@ -2253,13 +2531,16 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {2: entity_target_id,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(this.TV_Str(entity_target_id),x => {
+		this.t(this.TV_Str(entity_target_id),x =>
+		{
 			if(this.sm.str_starts_with(x,"RD")) return this.sm.playlistId(x);
 			if(this.sm.str_starts_with(x,"UC")) return this.sm.channelId(x);
-			switch(x) {
+			switch(x)
+			{
 				default: {
 					debugger;
-					switch(x) {
+					switch(x)
+					{
 						case "":
 					}
 				} break;
@@ -2278,20 +2559,23 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 	}
 	/** @private @arg {P_search_params} x */
-	P_search_params(x) {
+	P_search_params(x)
+	{
 		const cf="P_search_params";
 		const {2: pf_value,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PF_23n24n(this.T_VW(pf_value));
 	}
 	/** @private @arg {PF_23n24n} x */
-	PF_23n24n(x) {
+	PF_23n24n(x)
+	{
 		const cf="PF_23n24n";
 		const {23: a,24: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.cq(this.T_D32(a),1);
 		this.t(this.TV_Str(b),b => this.sm.params("pf_23n24n.bin_params",b));
 	}
 	/** @private @arg {P_bin_params_1_f1} x */
-	P_bin_params_1_f1(x) {
+	P_bin_params_1_f1(x)
+	{
 		const cf="P_bin_params_1.f1";
 		const {1: a,2: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let iv_fa=parseInt(this.T_FD64(a).toString(16).slice(0,2),16);
@@ -2300,7 +2584,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f2.first_byte`,iv_fb);
 	}
 	/** @private @arg {P_bin_params_1} x */
-	P_bin_params_1(x) {
+	P_bin_params_1(x)
+	{
 		const cf="P_bin_params_1";
 		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_bin_params_1_f1(this.T_VW(a));
@@ -2309,7 +2594,8 @@ class HandleTypes extends BaseService {
 	//#region binary partial
 	//#region sub_region done
 	/** @private @arg {PD_invalidation_continuation_f9} x */
-	PD_invalidation_continuation_f9(x) {
+	PD_invalidation_continuation_f9(x)
+	{
 		const cf="PD_invalidation_continuation.f9";
 		const {
 			1: v1,3: v3,4: f4,9: f9,
@@ -2325,7 +2611,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f33`,this.T_D32(v33));
 	}
 	/** @private @arg {PD_invalidation_continuation} x */
-	PD_invalidation_continuation(x) {
+	PD_invalidation_continuation(x)
+	{
 		const cf="PD_invalidation_continuation";
 		const {3: v3,5: f5,6: f6,8: f8,9: f9,10: f10,11: v11,16: f16,17: f17,19: f19,20: f20,21: f21,22: v22,23: f23,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f3`,this.TV_Str(v3));
@@ -2345,7 +2632,8 @@ class HandleTypes extends BaseService {
 	}
 	PG_subscription_state_key=this.P_subscription_state_key;
 	/** @private @arg {P_subscription_state_key} x */
-	P_subscription_state_key(x) {
+	P_subscription_state_key(x)
+	{
 		const cf="P_subscription_state_key";
 		const {2: a,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(a),x => this.sm.channelId(x));
@@ -2355,12 +2643,14 @@ class HandleTypes extends BaseService {
 	/** @type {string[]} */
 	LP_dislike=[];
 	/** @private @arg {P_dislike_params_f1} x */
-	P_dislike_params_f1(x) {
+	P_dislike_params_f1(x)
+	{
 		const cf="P_dislike_params.f1";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		if(v1[0]!=="v_param_arr") {debugger; return;}
 		let [,[a,...y1]]=v1; this.sm.cq(y1.length,0);
-		switch(a[0]) {
+		switch(a[0])
+		{
 			default: debugger; break;
 			case "v_child":/*unk*/{
 				let [,bin,]=a;
@@ -2381,7 +2671,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @arg {P_dislike_params} x */
-	P_dislike_params(x) {
+	P_dislike_params(x)
+	{
 		const cf="P_dislike_params";
 		const {1: v1,2: v2,3: v3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_dislike_params_f1(this.T_VW(v1));
@@ -2391,19 +2682,22 @@ class HandleTypes extends BaseService {
 		this.t(f5,x => this.save_primitive(`${cf}.f5`,this.T_D32(x)));
 	}
 	/** @private @template {string} T @arg {T} cf1 @arg {PK_f1} x */
-	PK_f1(cf1,x) {
+	PK_f1(cf1,x)
+	{
 		const cf2=`${cf1}_PK_f1`;
 		const {1: v1,...y}=this.s(as(cf2),x); this.h_gen_keys(cf2,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf2}.data`,this.T_D32(v1));
 	}
 	/** @protected @template T @arg {{1:T}} x */
-	PT_f1(x) {
+	PT_f1(x)
+	{
 		const cf="PT_f1";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		return v1;
 	}
 	/** @private @arg {P_playability_status_context_params} x */
-	P_playability_status_context_params(x) {
+	P_playability_status_context_params(x)
+	{
 		const cf="P_playability_status_context_params";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
@@ -2411,7 +2705,8 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	/** @private @arg {P_reel_params} x */
-	P_reel_params(x) {
+	P_reel_params(x)
+	{
 		const cf="P_reel_params";
 		const {1: v1,3: v3,5: g5,6: v6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
@@ -2424,14 +2719,16 @@ class HandleTypes extends BaseService {
 	//#region binary get keys
 	//#region sub_region done
 	/** @private @arg {P_ypc_get_offers_params_f1} x */
-	P_ypc_get_offers_params_f1(x) {
+	P_ypc_get_offers_params_f1(x)
+	{
 		const cf="P_ypc_get_offers_params.f1";
 		const {1: v1,2: v2,...y}=x; this.h_gen_keys(cf,x,y);
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.t(this.TV_Str(v2),x => this.sm.channelId(x));
 	}
 	/** @private @arg {P_ypc_get_offers_params} x */
-	P_ypc_get_offers_params(x) {
+	P_ypc_get_offers_params(x)
+	{
 		const cf="P_ypc_get_offers_params";
 		const {1: v1,3: v3,5: f5,9: f9,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_ypc_get_offers_params_f1(this.T_VW(v1));
@@ -2439,7 +2736,8 @@ class HandleTypes extends BaseService {
 		this.P_ypc_get_offers_params_f5(this.T_VW(f5));
 	}
 	/** @private @arg {P_ypc_get_offers_params_f5} x */
-	P_ypc_get_offers_params_f5(x) {
+	P_ypc_get_offers_params_f5(x)
+	{
 		const cf="P_ypc_get_offers_params";
 		const {1: v1,3: v3,5: f5,9: f9,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1;
@@ -2448,7 +2746,8 @@ class HandleTypes extends BaseService {
 		f9;
 	}
 	/** @private @arg {P_create_comment_params} x */
-	P_create_comment_params(x) {
+	P_create_comment_params(x)
+	{
 		const cf="P_create_comment_params";
 		const {2: v2,5: f5,10: f10,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(v2),x => this.sm.videoId(x));
@@ -2456,7 +2755,8 @@ class HandleTypes extends BaseService {
 		f10;
 	}
 	/** @private @arg {PD_continuation_params_f3} x */
-	PD_continuation_params_f3(x) {
+	PD_continuation_params_f3(x)
+	{
 		const cf="PD_continuation_params.f3";
 		const {4: f4,8: f8,9: f9,10: f10,12: f12,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		f4;
@@ -2468,13 +2768,15 @@ class HandleTypes extends BaseService {
 		f14;
 	}
 	/** @private @arg {PD_continuation_params_f11} x */
-	PD_continuation_params_f11(x) {
+	PD_continuation_params_f11(x)
+	{
 		const cf="PD_continuation_params.f11";
 		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		f2;
 	}
 	/** @private @arg {PD_continuation_params_f14} x */
-	PD_continuation_params_f14(x) {
+	PD_continuation_params_f14(x)
+	{
 		const cf="PD_continuation_params.f14";
 		const {1: f1,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		f1;
@@ -2482,12 +2784,15 @@ class HandleTypes extends BaseService {
 		f4;
 	}
 	/** @private @arg {PD_continuation_params} x */
-	PD_continuation_params(x) {
+	PD_continuation_params(x)
+	{
 		const cf="PD_continuation_params";
 		const {3: v3,8: f8,11: v11,14: f14,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		if(this.is_T_VW(v3)) {
+		if(this.is_T_VW(v3))
+		{
 			this.PD_continuation_params_f3(this.T_VW(v3));
-		} else {
+		} else
+		{
 			this.sm.params(`${cf}.f3`,this.TV_Str(v3));
 		}
 		this.save_primitive(`${cf}.f8`,this.T_D32(f8));
@@ -2496,13 +2801,15 @@ class HandleTypes extends BaseService {
 		f15&&this.save_primitive(`${cf}.f15`,this.T_D32(f15));
 	}
 	/** @private @arg {P_get_pdg_buy_flow_params} x */
-	P_get_pdg_buy_flow_params(x) {
+	P_get_pdg_buy_flow_params(x)
+	{
 		const cf="P_get_pdg_buy_flow_params";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_buy_flow_params(this.T_VW(v1));
 	}
 	/** @private @arg {PX_buy_flow_params} x */
-	PX_buy_flow_params(x) {
+	PX_buy_flow_params(x)
+	{
 		const cf="PX_buy_flow_params";
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(v1));
@@ -2510,13 +2817,15 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {TX_sequence_info} x */
-	TX_sequence_info(x) {
+	TX_sequence_info(x)
+	{
 		const cf="TX_sequence_info";
 		const {3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f3`,this.T_D32(f3));
 	}
 	/** @private @arg {R_obj1} x */
-	R_obj1(x) {
+	R_obj1(x)
+	{
 		const cf="R_obj1";
 		const {1: v1,3: v3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1;
@@ -2525,7 +2834,8 @@ class HandleTypes extends BaseService {
 		f6;
 	}
 	/** @private @arg {P_reel_sequence_params} x */
-	P_reel_sequence_params(x) {
+	P_reel_sequence_params(x)
+	{
 		const cf="P_reel_sequence_params";
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(v1,x => this.sm.videoId(this.TV_Str(x)));
@@ -2535,7 +2845,8 @@ class HandleTypes extends BaseService {
 		this.t(f12,x => this.sm.cq(this.TV_Str(x),"RDSH"));
 	}
 	/** @private @arg {PX_watch_sequence_info} x */
-	PX_watch_sequence_info(x) {
+	PX_watch_sequence_info(x)
+	{
 		const cf="PX_watch_sequence_info",t=this;
 		const {1: v1,3: v3,4: v4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		t.sm.videoId(t.TV_Str(v1));
@@ -2544,7 +2855,8 @@ class HandleTypes extends BaseService {
 		t.t(t.T_VW_Bigint(f6),x => t.save_primitive(`${cf}.f6`,x));
 	}
 	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
-	P_continuation_request_reel_watch_sequence_token(x) {
+	P_continuation_request_reel_watch_sequence_token(x)
+	{
 		const cf="P_continuation_request_reel_watch_sequence_token",t=this;
 		const {1: v1,3: v3,5: f5,8: f8,12: f12,15: f15,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&t.sm.videoId(t.TV_Str(v1));
@@ -2552,7 +2864,8 @@ class HandleTypes extends BaseService {
 		f5; f8; f12; f15;
 	}
 	/** @arg {"P_transcript_track_selection_serialized_params"|"P_get_transcript_params"} cf @template {PE_transcript_params} T @arg {T} x */
-	PE_transcript_params(cf,x) {
+	PE_transcript_params(cf,x)
+	{
 		const {1: v1,2: v2,3: v3,6: f6,7: f7,8: f8,...y}=this.s(cf,x);
 		this.sm.videoId(this.TV_Str(v1));
 		this.sm.params("transcript.params",this.TV_Str(v2));
@@ -2563,35 +2876,41 @@ class HandleTypes extends BaseService {
 		return y;
 	}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
-	P_transcript_track_selection_serialized_params(x) {
+	P_transcript_track_selection_serialized_params(x)
+	{
 		const cf="P_transcript_track_selection_serialized_params";
 		const {...y}=this.PE_transcript_params(cf,x); this.h_gen_keys(cf,x,y);
 	}
 	/** @private @arg {P_get_transcript_params} x */
-	P_get_transcript_params(x) {
+	P_get_transcript_params(x)
+	{
 		const cf="P_get_transcript_params";
 		const {5: v5,...y}=this.PE_transcript_params(cf,x); this.h_gen_keys(cf,x,y);
 		let i5=this.TV_Str(v5);
-		switch(i5) {
+		switch(i5)
+		{
 			default: debugger; break;
 			case "engagement-panel-searchable-transcript-search-panel": break;
 		}
 	}
 	/** @private @arg {P_shorts_source_bp} x */
-	P_shorts_source_bp(x) {
+	P_shorts_source_bp(x)
+	{
 		const cf="P_shorts_source_bp";
 		const {94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		f94;
 	}
 	/** @private @arg {P_create_backstage_post_params} x */
-	P_create_backstage_post_params(x) {
+	P_create_backstage_post_params(x)
+	{
 		const cf="P_create_backstage_post_params";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.TV_Str(v1),x => this.sm.channelId(x));
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_watch_playlist_params} x */
-	P_watch_playlist_params(x) {
+	P_watch_playlist_params(x)
+	{
 		const cf="P_watch_playlist_params";
 		const {2: v2,3: v3,7: f7,12: f12,13: f13,27: f27,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
@@ -2600,29 +2919,35 @@ class HandleTypes extends BaseService {
 	}
 	// cspell:ignoreRegexp /0x[0-9a-fA-F_]+n/
 	/** @arg {string} cf @arg {bigint} big_num */
-	log_big_num(cf,big_num) {
-		if(big_num>0xffffffffffffff00n) {
+	log_big_num(cf,big_num)
+	{
+		if(big_num>0xffffffffffffff00n)
+		{
 			let ba=new BigInt64Array(1);
 			ba[0]=big_num; big_num=ba[0];
 		}
 		console.log(cf,big_num);
 	}
 	/** @arg {bigint} big_num */
-	dec_num64(big_num) {
+	dec_num64(big_num)
+	{
 		if(big_num===void 0) debugger;
-		if(big_num>0xffffffffffffff00n) {
+		if(big_num>0xffffffffffffff00n)
+		{
 			let ba=new BigInt64Array(1);
 			ba[0]=big_num; return ba[0];
 		}
 		return big_num;
 	}
 	/** @private @arg {PX_watch_next_token_info} x */
-	PX_watch_next_token_info(x) {
+	PX_watch_next_token_info(x)
+	{
 		const cf="PX_watch_next_token_info";
 		const {2: v2,4: f4,6: f6,7: f7,24: f24,25: f25,28: f28,36: f36,47: f47,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(v2));
 		this.t(this.ms_t(f4,this.TV_Str).v,x => console.log(`${cf}.f4`,x));
-		this.t(this.ms_t(f6,this.TA_Str).v,x => {
+		this.t(this.ms_t(f6,this.TA_Str).v,x =>
+		{
 			if(x==="") return;
 			this.sm.params("watch_next_info_next1",x);
 		});
@@ -2630,14 +2955,17 @@ class HandleTypes extends BaseService {
 		this.t(this.ms_t(f24,this.T_D32).v,x => x!==0&&console.log(`${cf}.f24`,x));
 		this.t(this.ms_t(f25,this.T_D32).v,x => x!==0&&console.log(`${cf}.f25`,x));
 		this.t(this.ms_t(f28,this.T_D32).v,x => x!==3&&x!==1&&console.log(`${cf}.f28`,x));
-		this.t(this.ms_t(f36,this.T_VW).v,x => {
+		this.t(this.ms_t(f36,this.T_VW).v,x =>
+		{
 			/** @type {`${cf}.f36`} */
 			const cf2=`${cf}.f36`;
 			const {5: f5,8: f8,...y}=this.s(cf2,x); this.h_gen_keys(cf2,x,y);/*#destructure_start*/
-			if(this.is_T_D32(f5)) {
+			if(this.is_T_D32(f5))
+			{
 				let x5=this.T_D32(f5);
 				x5!==0&&console.log(`${cf2}.f5`,x5);
-			} else {
+			} else
+			{
 				let x5=this.dec_num64(this.T_D64(f5));
 				x: {
 					if(x5===void 0) {debugger; break x;}
@@ -2650,21 +2978,26 @@ class HandleTypes extends BaseService {
 		this.t(this.ms_t(f47,this.T_D32).v,x => x!==0&&console.log(`${cf}.f47`,x));
 	}
 	/** @private @arg {PX_watch_next_token_item} x */
-	PX_watch_next_token_item(x) {
+	PX_watch_next_token_item(x)
+	{
 		const cf="PX_watch_next_token_item";
 		const {1: v1,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		if(this.is_T_D32(v1)) {
+		if(this.is_T_D32(v1))
+		{
 			this.sm.a_primitive_num(this.T_D32(v1));
-		} else {
+		} else
+		{
 			this.sm.a_primitive_bigint(this.T_D64(v1));
 		}
 		v3&&this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {PX_watch_next_token_6} x */
-	PX_watch_next_token_6(x) {
+	PX_watch_next_token_6(x)
+	{
 		const cf="PX_watch_next_token_6";
 		const {1: v1,3: v3,4: v4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		if(v1) {
+		if(v1)
+		{
 			let n1=v1[1];
 			for(let [,,u1] of n1) this.PX_watch_next_token_item(u1);
 		}
@@ -2672,7 +3005,8 @@ class HandleTypes extends BaseService {
 		v4&&this.save_primitive(`${cf}.f4`,this.TV_Str(v4));
 	}
 	/** @private @arg {PX_watch_next_token_3} x */
-	PX_watch_next_token_3(x) {
+	PX_watch_next_token_3(x)
+	{
 		const cf="PX_watch_next_token_3";
 		const {1: v1,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_watch_next_token_6(this.T_VW(v1));
@@ -2681,20 +3015,23 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f5`,this.T_D32(v5));
 	}
 	/** @private @arg {PX_watch_next_token_1} x */
-	PX_watch_next_token_1(x) {
+	PX_watch_next_token_1(x)
+	{
 		const cf="PX_watch_next_token_1";
 		const {4: v4,6: v6,8: v8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_watch_next_token_2(this.T_VW(v4));
 		v6&&this.save_primitive(`${cf}.f6`,this.T_D32(v6));
 		let i8=this.TV_Str(v8);
-		switch(i8) {
+		switch(i8)
+		{
 			default: debugger; break;
 			case "engagement-panel-comments-section":
 			case "comments-section":
 		}
 	}
 	/** @private @arg {PX_watch_next_token_2} x */
-	PX_watch_next_token_2(x) {
+	PX_watch_next_token_2(x)
+	{
 		const cf="PX_watch_next_token_2";
 		const {4: a,6: b,15: c,37: f37,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(a));
@@ -2703,20 +3040,23 @@ class HandleTypes extends BaseService {
 		f37&&this.save_primitive(`${cf}.f37`,this.TV_Str(f37));
 	}
 	/** @private @arg {PX_watch_next_token_4} x */
-	PX_watch_next_token_4(x) {
+	PX_watch_next_token_4(x)
+	{
 		const cf="PX_watch_next_token_4";
 		const {5: a,12: b,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f5`,this.T_FD32(a));
 		this.save_primitive(`${cf}.f12`,this.T_FD64(b));
 	}
 	/** @private @arg {PX_watch_next_token_5} x */
-	PX_watch_next_token_5(x) {
+	PX_watch_next_token_5(x)
+	{
 		const cf="PX_watch_next_token_5";
 		const {1: a,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		a&&this.save_primitive(`${cf}.f1`,this.T_D32(a));
 	}
 	/** @private @arg {P_continuation_request_watch_next_token} x */
-	P_continuation_request_watch_next_token(x) {
+	P_continuation_request_watch_next_token(x)
+	{
 		const cf="P_continuation_request_watch_next_token";
 		const {1: v1,2: v2,3: v3,5: f5,6: f6,9: f9,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v1&&this.save_primitive(`${cf}.f1`,this.T_D32(v1));
@@ -2731,7 +3071,8 @@ class HandleTypes extends BaseService {
 	/** @private @template {string} T @arg {TV_Str<T>|TW_TagStr<T>} x */
 	TV_Str_ex(x) {return x[1][0][3][1];}
 	/** @private @arg {P_unsubscribe_params} x */
-	P_unsubscribe_params(x) {
+	P_unsubscribe_params(x)
+	{
 		const cf="P_unsubscribe_params";
 		if(14 in x) {debugger; return;}
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
@@ -2740,7 +3081,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_subscribe_params} x */
-	P_subscribe_params(x) {
+	P_subscribe_params(x)
+	{
 		const cf="P_subscribe_params";
 		const {2: v2,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1("sp",this.T_VW(v2));
@@ -2748,9 +3090,11 @@ class HandleTypes extends BaseService {
 		f4;
 	}
 	/** @private @template {string} T @arg {TW_Str<T>} x */
-	TW_Str(x) {
+	TW_Str(x)
+	{
 		let x2=x[1][0];
-		switch(x2[0]) {
+		switch(x2[0])
+		{
 			default: debugger; throw new Error();
 			case "v_child_str":
 			case "v_child":
@@ -2758,7 +3102,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @arg {P_like_params} x */
-	P_like_params(x) {
+	P_like_params(x)
+	{
 		const cf="P_like_params";
 		const {1: v1,4: f4,5: f5,6: f6,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		let m1=this.mw(this.m(v1));
@@ -2767,11 +3112,13 @@ class HandleTypes extends BaseService {
 		f4; f5; f6; f7;
 	}
 	/** @private @arg {{1:TV_Str<DU_VideoId>|TV_Str_CS<DU_VideoId>|TW_TagStr<DU_VideoId>;}} x */
-	PK_f1_str(x) {
+	PK_f1_str(x)
+	{
 		let m1=this.mw(this.m(x));
 		let v1_v1=m1.mc(this.PT_f1).some.v;
 		let v1_v1i=v1_v1[1][0];
-		switch(v1_v1i[0]) {
+		switch(v1_v1i[0])
+		{
 			default: debugger; break;
 			case "v_child_str":
 			case "v_child":
@@ -2782,7 +3129,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @arg {P_remove_like_params} x */
-	P_remove_like_params(x) {
+	P_remove_like_params(x)
+	{
 		const cf="P_remove_like_params";
 		const {1: v1,3: v3,4: f4,5: f5,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PK_f1_str(this.T_VW(v1));
@@ -2790,13 +3138,15 @@ class HandleTypes extends BaseService {
 		f4; f5; f6;
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
-	P_ad_layout_ad_serving_data_entry(x) {
+	P_ad_layout_ad_serving_data_entry(x)
+	{
 		const cf="P_ad_layout_ad_serving_data_entry";
 		const {4: f4,5: f5,6: f6,7: f7,9: f9,10: f10,13: f13,14: f14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		f4; f5; f6; f7; f9; f10; f13; f14;
 	}
 	/** @arg {PX_ad_data_info} x */
-	PX_ad_data_info(x) {
+	PX_ad_data_info(x)
+	{
 		const cf="PX_ad_data_info";
 		const {1: v1,6: f6,11: f11,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
@@ -2804,7 +3154,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f11`,this.T_D32(f11));
 	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
-	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
+	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x)
+	{
 		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
 		const {1: v1,3: v3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.VW_BinaryTimestamp(v1);
@@ -2814,13 +3165,16 @@ class HandleTypes extends BaseService {
 		f4&&this.save_primitive(`${cf}.f4`,this.T_D32(f4));
 	}
 	/** @private @arg {P_ve_6827_params} x */
-	P_ve_6827_params(x) {
+	P_ve_6827_params(x)
+	{
 		const cf="P_ve_6827_params";
 		const {77: f77,84: f84,93: f93,94: f94,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		if(f77) {
+		if(f77)
+		{
 			let i77=this.TV_Str(f77);
 			this.save_primitive(`${cf}.f77`,i77);
-			switch(i77) {
+			switch(i77)
+			{
 				default: debugger; break;
 				case "FEexplore": break;
 			}
@@ -2830,20 +3184,23 @@ class HandleTypes extends BaseService {
 		f94&&this.P_ve_6827_params_f94(this.T_VW(f94));
 	}
 	/** @private @arg {P_ve_6827_params_f94} x */
-	P_ve_6827_params_f94(x) {
+	P_ve_6827_params_f94(x)
+	{
 		const cf="P_ve_6827_params_f94";
 		const {1: f1,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_ve_6827_params_f1(this.T_VW(f1));
 		this.save_primitive(`${cf}.f5`,f5);
 	}
 	/** @private @arg {P_ve_6827_params_f1} x */
-	P_ve_6827_params_f1(x) {
+	P_ve_6827_params_f1(x)
+	{
 		const cf="P_ve_6827_params_f1";
 		const {2: f2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_ve_6827_params_f1_f2(this.T_VW(f2));
 	}
 	/** @private @arg {P_ve_6827_params_f1_f2} x */
-	P_ve_6827_params_f1_f2(x) {
+	P_ve_6827_params_f1_f2(x)
+	{
 		const cf="P_ve_6827_params_f1_f2";
 		const {1: f1,2: f2,3: f3,4: f4,5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(f1));
@@ -2853,7 +3210,8 @@ class HandleTypes extends BaseService {
 		f5&&console.log(this.TV_Str(f5));
 	}
 	/** @private @arg {P_ve_6827_params_f93} x */
-	P_ve_6827_params_f93(x) {
+	P_ve_6827_params_f93(x)
+	{
 		const cf="P_ve_6827_params_f93";
 		const {1: f1,3: f3,4: f4,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.TV_Str(f1));
@@ -2861,13 +3219,15 @@ class HandleTypes extends BaseService {
 		f4&&this.save_primitive(`${cf}.f3`,this.T_D64(f4));
 	}
 	/** @private @arg {P_ve_6827_params_f84} x */
-	P_ve_6827_params_f84(x) {
+	P_ve_6827_params_f84(x)
+	{
 		const cf="P_ve_6827_params_f84";
 		const {5: f5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 	}
 	/** @private @arg {PX_watch_bin} x */
-	PX_watch_bin(x) {
+	PX_watch_bin(x)
+	{
 		const cf="PX_watch_bin";
 		const {2: v2,3: v3,4: v4,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.TV_Str(v2));
@@ -2876,20 +3236,23 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f5`,this.T_D32(v5));
 	}
 	/** @private @arg {PR_watch_bin} x */
-	PR_watch_bin(x) {
+	PR_watch_bin(x)
+	{
 		const cf="PR_watch_bin";
 		const {1: r,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PD_watch_bin(this.T_VW(r));
 	}
 	/** @private @arg {PD_watch_bin} x */
-	PD_watch_bin(x) {
+	PD_watch_bin(x)
+	{
 		const cf="PD_watch_bin";
 		const {2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_watch_params} x */
-	P_watch_params(x) {
+	P_watch_params(x)
+	{
 		const cf="P_watch_params";
 		const {2: v2,3: v3,7: f7,12: f12,13: f13,15: f15,24: f24,27: f27,33: v33,36: f36,39: f39,40: v40,56: f56,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		v2&&this.save_primitive(`${cf}.f2`,this.T_D32(v2));
@@ -2907,19 +3270,22 @@ class HandleTypes extends BaseService {
 		f56&&this.save_primitive(`${cf}.f56`,this.TV_Str(f56));
 	}
 	/** @private @arg {P_obj1} x */
-	P_obj1(x) {
+	P_obj1(x)
+	{
 		const cf="P_obj1";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_obj2} x */
-	P_obj2(x) {
+	P_obj2(x)
+	{
 		const cf="P_obj2";
 		const {24: v24,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f24`,this.T_D32(v24));
 	}
 	/** @private @arg {P_watch_player_params} x */
-	P_watch_player_params(x) {
+	P_watch_player_params(x)
+	{
 		const cf="P_watch_player_params";
 		const {8: f8,9: f9,12: f12,25: f25,27: f27,34: f34,40: f40,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		f8&&this.save_primitive(`${cf}.f8`,this.T_D32(f8));
@@ -2930,39 +3296,45 @@ class HandleTypes extends BaseService {
 		f40&&this.PX_wpp_f40(this.T_VW(f40));
 	}
 	/** @private @arg {PX_wpp_f40} x */
-	PX_wpp_f40(x) {
+	PX_wpp_f40(x)
+	{
 		const cf="PX_wpp_f40";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.PX_wpp_f1(this.T_VW(v1));
 	}
 	/** @private @arg {PX_wpp_f1} x */
-	PX_wpp_f1(x) {
+	PX_wpp_f1(x)
+	{
 		const cf="PX_wpp_f1";
 		const {2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 		this.save_primitive(`${cf}.f3`,this.T_D32(v3));
 	}
 	/** @private @arg {P_format_item_xtags_f1} x */
-	P_format_item_xtags_f1(x) {
+	P_format_item_xtags_f1(x)
+	{
 		const cf="P_format_item_xtags.f1";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		console.log(this.TV_Str(v1));
 		this.sm.cq(this.TV_Str(v2),"true");
 	}
 	/** @private @arg {P_format_item_xtags} x */
-	P_format_item_xtags(x) {
+	P_format_item_xtags(x)
+	{
 		const cf="P_format_item_xtags";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_format_item_xtags_f1(this.T_VW(v1));
 	}
 	/** @private @arg {P_get_notification_menu_ctoken} x */
-	P_get_notification_menu_ctoken(x) {
+	P_get_notification_menu_ctoken(x)
+	{
 		const cf="P_get_notification_menu_ctoken";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_notification_opt_out} x */
-	P_notification_opt_out(x) {
+	P_notification_opt_out(x)
+	{
 		const cf="P_notification_opt_out";
 		const {2: v2,3: v3,4: f4,7: f7,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
@@ -2971,7 +3343,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f7`,this.TV_Str(f7));
 	}
 	/** @private @arg {P_get_report_form_params} x */
-	P_get_report_form_params(x) {
+	P_get_report_form_params(x)
+	{
 		const cf="P_get_report_form_params";
 		const {25: f25,26: f26,28: f28,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.cq(this.TV_Str(f25),"shopping");
@@ -2979,13 +3352,15 @@ class HandleTypes extends BaseService {
 		this.t(f28,x => this.P_grf_p_f28(this.T_VW(x)));
 	}
 	/** @private @arg {PR_grf_p_f28} x */
-	P_grf_p_f28(x) {
+	P_grf_p_f28(x)
+	{
 		const cf="P_grf_p_f28";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		for(let vi of v1[1]) this.PR_grf_p_obj0(vi[2]);
 	}
 	/** @private @arg {PR_grf_p_obj0} x */
-	PR_grf_p_obj0(x) {
+	PR_grf_p_obj0(x)
+	{
 		const cf="PR_grf_p_obj0";
 		let {1: v1,3: f3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		this.PR_grf_p_obj1(this.T_VW(v1));
@@ -2993,57 +3368,67 @@ class HandleTypes extends BaseService {
 	}
 	log_store_items=false;
 	/** @private @arg {PR_grf_p_obj1} x */
-	PR_grf_p_obj1(x) {
+	PR_grf_p_obj1(x)
+	{
 		const cf="PR_grf_p_obj1";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		let store_item_arr=[];
-		for(let vi of v1[1]) {
+		for(let vi of v1[1])
+		{
 			let ret_str=this.PD_grf_p_obj1(vi[2]);
 			store_item_arr.push(ret_str);
 		}
 		if(this.log_store_items) console.log("[store_item_data] \"%s\"",store_item_arr.join(""));
 	}
 	/** @private @arg {PD_grf_p_obj1} x */
-	PD_grf_p_obj1(x) {
+	PD_grf_p_obj1(x)
+	{
 		const cf="PD_grf_p_obj1";
 		let {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);
 		return this.TV_Str(v1);
 	}
 	/** @private @arg {P_notification_record_interactions} x */
-	P_notification_record_interactions(x) {
+	P_notification_record_interactions(x)
+	{
 		const cf="P_notification_record_interactions";
 		const {2: v2,5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_nri_f2(this.T_VW(v2));
 		this.save_primitive(`${cf}.f5`,this.T_D32(v5));
 	}
 	/** @private @arg {P_nri_f2} x */
-	P_nri_f2(x) {
+	P_nri_f2(x)
+	{
 		const cf="P_nri_f2";
 		const {1: v1,14: v14,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.P_nri_f14(this.T_VW(v14));
 	}
 	/** @private @arg {P_nri_f14} x */
-	P_nri_f14(x) {
+	P_nri_f14(x)
+	{
 		const cf="P_nri_f14";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_nri_f1(this.T_VW(v1));
 		this.save_primitive(`${cf}.f2`,this.TV_Str(v2));
 	}
 	/** @private @arg {P_nri_f1} x */
-	P_nri_f1(x) {
+	P_nri_f1(x)
+	{
 		const cf="P_nri_f1";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_ve_3611_params} x */
-	P_ve_3611_params(x) {
+	P_ve_3611_params(x)
+	{
 		const cf="P_ve_3611_params";
 		const {2: i1,23: i2,73: i3,110: i5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
-		this.t(i1,x => {
+		this.t(i1,x =>
+		{
 			let a=this.TW_Str(x);
-			switch(a) {
+			switch(a)
+			{
 				default: a===""; debugger; break;
 				case "":
 				case "community":
@@ -3053,13 +3438,15 @@ class HandleTypes extends BaseService {
 		this.t(i5,i5 => this.k("110:i5",this.T_VW(i5)));
 	}
 	/** @private @arg {P_playlist_edit_params} x */
-	P_playlist_edit_params(x) {
+	P_playlist_edit_params(x)
+	{
 		const cf="P_playlist_edit_params";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 	}
 	/** @private @arg {P_notification_add_upcoming_event_reminder_params} x */
-	P_notification_add_upcoming_event_reminder_params(x) {
+	P_notification_add_upcoming_event_reminder_params(x)
+	{
 		const cf="P_notification_add_upcoming_event_reminder_params";
 		const {1: v1,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.TW_Str(v1));
@@ -3067,7 +3454,8 @@ class HandleTypes extends BaseService {
 	}
 	//#endregion
 	/** @private @arg {PD_timed_continuation} x */
-	PD_timed_continuation(x) {
+	PD_timed_continuation(x)
+	{
 		const cf="PD_timed_continuation";
 		const {3: v3,4: f4,7: f7,8: f8,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.t(this.T_VW(v3),x => this.save_primitive(`${cf}.f3`,x));
@@ -3076,7 +3464,8 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f8`,this.T_D32(f8));
 	}
 	/** @private @arg {P_f3_PD_continuation_params} x */
-	P_f3_PD_continuation_params(x) {
+	P_f3_PD_continuation_params(x)
+	{
 		const cf="P_f3_PD_continuation_params";
 		const {1: v1,3: f3,4: f4,6: f6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_f3_PD_continuation_params_f1(this.T_VW(v1));
@@ -3085,35 +3474,41 @@ class HandleTypes extends BaseService {
 		this.cq(this.T_D32(f6),0);
 	}
 	/** @private @arg {P_f3_PD_continuation_params_obj} x */
-	P_f3_PD_continuation_params_obj(x) {
+	P_f3_PD_continuation_params_obj(x)
+	{
 		const cf="P_f3_PD_continuation_params_obj"; this.k(cf,x);
-		if(0x2e6ea8d in x) {
+		if(0x2e6ea8d in x)
+		{
 			const {0x2e6ea8d: v1,...y}=x; this.h_gen_keys(cf,x,y);/*#destructure_start*/
 			return this.P_f3_PD_continuation_params_data(this.T_VW(v1));
 		}
 		debugger;
 	}
 	/** @private @arg {P_f3_PD_continuation_params_data} x */
-	P_f3_PD_continuation_params_data(x) {
+	P_f3_PD_continuation_params_data(x)
+	{
 		const cf="P_f3_PD_continuation_params_data";
 		const {1: v1,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.videoId(this.TV_Str(v1));
 	}
 	/** @private @arg {P_f3_PD_continuation_params_f1} x */
-	P_f3_PD_continuation_params_f1(x) {
+	P_f3_PD_continuation_params_f1(x)
+	{
 		const cf="P_f3_PD_continuation_params_f1";
 		const {5: v5,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.P_f3_PD_continuation_params_f1_data(this.T_VW(v5));
 	}
 	/** @private @arg {P_f3_PD_continuation_params_f1_data} x */
-	P_f3_PD_continuation_params_f1_data(x) {
+	P_f3_PD_continuation_params_f1_data(x)
+	{
 		const cf="P_f3_PD_continuation_params_f1_data";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.sm.channelId(this.TV_Str(v1));
 		this.sm.videoId(this.TV_Str(v2));
 	}
 	/** @private @arg {P_create_reply_params} x */
-	P_create_reply_params(x) {
+	P_create_reply_params(x)
+	{
 		const cf="P_create_reply_params";
 		const {2: r,4: f4,5: f5,10: f10,14: f14,29: f29,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f2`,this.TV_Str(r));
@@ -3124,7 +3519,8 @@ class HandleTypes extends BaseService {
 		console.log(`${cf}.f29`,this.T_D32(f29));
 	}
 	/** @private @arg {P_perform_comment_action} x */
-	P_perform_comment_action(x) {
+	P_perform_comment_action(x)
+	{
 		const cf="P_perform_comment_action";
 		const {1: v1,2: v2,3: f3,5: f5,6: f6,7: f7,9: f9,21: f21,23: f23,30: f30,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
@@ -3139,25 +3535,29 @@ class HandleTypes extends BaseService {
 		this.save_primitive(`${cf}.f30`,this.T_D32(f30));
 	}
 	/** @private @arg {P_notification_remove_upcoming_event_reminder_params} x */
-	P_notification_remove_upcoming_event_reminder_params(x) {
+	P_notification_remove_upcoming_event_reminder_params(x)
+	{
 		const cf="P_notification_remove_upcoming_event_reminder_params";
 		const {1: v1,6: v6,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		console.log("nr:ue:r:params.f1",this.TV_Str(v1));
 		this.sm.videoId(this.TV_Str_ex(v1));
-		this.t(this.T_VW(v1),x => {
+		this.t(this.T_VW(v1),x =>
+		{
 			this.save_primitive(`${cf}.f1`,x);
 		});
 		this.PX_upcoming_event_reminder_info(this.T_VW(v6));
 	}
 	/** @private @arg {PX_upcoming_event_reminder_info} x */
-	PX_upcoming_event_reminder_info(x) {
+	PX_upcoming_event_reminder_info(x)
+	{
 		const cf="PX_upcoming_event_reminder_info";
 		const {1: v1,2: v2,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.T_D32(v1));
 		this.save_primitive(`${cf}.f2`,this.T_D32(v2));
 	}
 	/** @private @arg {P_transcript_params} x */
-	P_transcript_params(x) {
+	P_transcript_params(x)
+	{
 		const cf="P_transcript_params";
 		const {1: v1,2: v2,3: v3,...y}=this.s(cf,x); this.h_gen_keys(cf,x,y);/*#destructure_start*/
 		this.save_primitive(`${cf}.f1`,this.TV_Str(v1));
@@ -3167,9 +3567,11 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region binary_result()
 	/** @private @arg {CF_P_ParamParse} cf @arg {V_ParamObj} x */
-	binary_result(cf,x) {
+	binary_result(cf,x)
+	{
 		let u=as_any(x);
-		switch(cf) {
+		switch(cf)
+		{
 			case "_level_2_0._level_2_1":
 			case "_level_1_0": debugger; break;
 			//#region entity.key
@@ -3264,28 +3666,36 @@ class HandleTypes extends BaseService {
 	//#region import group other
 	//#region log_*
 	/** @arg {`promise_rejected_with.errors.${number}`} cf @arg {unknown} x */
-	log_error_sub(cf,x) {
+	log_error_sub(cf,x)
+	{
 		console.log(`[log_error_next_info.${cf}]`,x);
-		if(x instanceof AggregateError) {
-			for(let i=0;i<x.errors.length;i++) {
+		if(x instanceof AggregateError)
+		{
+			for(let i=0;i<x.errors.length;i++)
+			{
 				let c=x.errors[i];
 				console.log(`[log_error_next_info.${cf}]`,c);
 			}
 		}
 	}
 	/** @arg {"promise_rejected_with"} cf @arg {unknown} x */
-	log_error(cf,x) {
+	log_error(cf,x)
+	{
 		console.log(`[log_error_info.${cf}]`,x);
-		if(x instanceof AggregateError) {
-			for(let i=0;i<x.errors.length;i++) {
+		if(x instanceof AggregateError)
+		{
+			for(let i=0;i<x.errors.length;i++)
+			{
 				let c=x.errors[i];
 				this.log_error_sub(`${cf}.errors.${i}`,c);
 			}
 		}
 	}
 	/** @public @arg {string} type @arg {string} id */
-	log_playlist_id(type,id,critical=false) {
-		if(!this.cache_playlist_id.includes(id)) {
+	log_playlist_id(type,id,critical=false)
+	{
+		if(!this.cache_playlist_id.includes(id))
+		{
 			this.cache_playlist_id.push(id);
 			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",type,id);
 		}
@@ -3293,10 +3703,13 @@ class HandleTypes extends BaseService {
 	log_promise_resolve_values=false;
 	//#endregion
 	/** @template T @arg {Promise<T>} x */
-	execute_promise_def(x) {
-		x.then(x => {
+	execute_promise_def(x)
+	{
+		x.then(x =>
+		{
 			if(this.log_promise_resolve_values) console.log("[promise_resolved_with]",x);
-		},x => {
+		},x =>
+		{
 			this.log_error("promise_rejected_with",x);
 		});
 	}
@@ -3304,7 +3717,8 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
 	/** @template {DI_SrcInfo} T @arg {T} x @returns {DI_RetInfo} */
-	get_parsed_info(x) {
+	get_parsed_info(x)
+	{
 		let v=x.z[0];
 		if(typeof v==="number") return {type: "number",exact: false,z: [v]};
 		if(this.str_starts_with_rx("RDCMUC",v)) return {type: "RDCMUC",z: [v]};
@@ -3323,7 +3737,8 @@ class HandleTypes extends BaseService {
 		if(this.str_starts_with_rx("UU",v)) return {type: "UU",z: [v]};
 		if(this.str_starts_with_rx("VL",v)) return {type: "VL",z: [v]};
 		if(this.str_starts_with_rx("VL",v)) return {type: "VL",z: [v]};
-		switch(v) {
+		switch(v)
+		{
 			case "WL": return {type: "WL",z: [v]};
 			case "LL": return {type: "LL",z: [v]};
 		}
@@ -3333,7 +3748,8 @@ class HandleTypes extends BaseService {
 	//#endregion
 	//#region make_*
 	/** @arg {DI_SrcInfo} x */
-	make_R_UrlInfo(x) {
+	make_R_UrlInfo(x)
+	{
 		const p=this.get_parsed_info(x);
 		return p;
 	}
@@ -3344,7 +3760,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
-	D_VideoDescriptionMusicSection(x) {
+	D_VideoDescriptionMusicSection(x)
+	{
 		const cf="D_VideoDescriptionMusicSection";
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(sectionTitle);
@@ -3353,7 +3770,8 @@ class HandleTypes extends BaseService {
 		this.sm.G_Text(premiumUpsellLink);
 	}
 	/** @api @public @arg {string} user_key @arg {string} x @arg {number} [idx] */
-	save_next_char(user_key,x,idx=0) {
+	save_next_char(user_key,x,idx=0)
+	{
 		let f=x[idx];
 		/** @type {`${user_key}.data[${typeof idx}]`} */
 		let rk=`${user_key}.data[${idx}]`;
@@ -3363,7 +3781,8 @@ class HandleTypes extends BaseService {
 		let s_url_data=this.x.get("data_store").get_number_store().data.find(e => e[0]===k);
 		if(!s_url_data) {this.save_primitive(k,1); return;}
 		let wd=s_url_data[1];
-		switch(wd.l) {
+		switch(wd.l)
+		{
 			default: throw new Error("What");
 			case "one": return this.save_primitive(k,wd.z[0]+1);
 			case "arr": {
@@ -3379,20 +3798,24 @@ class HandleTypes extends BaseService {
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
 	/** @arg {G_BoxedDatabaseData} x @returns {G_BoxedInner} */
-	w_db_data(x) {
+	w_db_data(x)
+	{
 		return [1,x];
 	}
 	/** @arg {any} x @returns {Ret_w_diz} */
-	w_diz(x) {
+	w_diz(x)
+	{
 		const a=x.z[0],w=this.w_di(a);
 		return [w,a,x];
 	}
 	/** @arg {any} x @returns {[any,any]} */
-	w_di(x) {
+	w_di(x)
+	{
 		return [x.z[0],x];
 	}
 	/** @template {G_BoxedDatabaseData} T_Put @arg {T_Put} value */
-	on_has_key_in_cache(value) {
+	on_has_key_in_cache(value)
+	{
 		const x=value,loaded_value=this.loaded_map.get(x.key),y=loaded_value;
 		if(y===void 0) return;
 		/** @type {(bigint[]|boolean[]|(string|number)[]|number[]|string[])[]} */
@@ -3402,15 +3825,18 @@ class HandleTypes extends BaseService {
 		const cmp_map=new WeakMap;
 		const xi0=this.w_db_data(x),yi0=this.w_db_data(y);
 		/** @arg {G_BoxedDatabaseData} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
-		function acc_items(container,items_arr) {
-			if(container.key==="boxed_id:load_id"||container.key==="boxed_id:save_id") {
+		function acc_items(container,items_arr)
+		{
+			if(container.key==="boxed_id:load_id"||container.key==="boxed_id:save_id")
+			{
 				const item=container.z[0];
 				items_arr.push([item]);
 				return;
 			}
 			let group_container=container;
 			const item_group=group_container.z[0];
-			switch(item_group.l) {
+			switch(item_group.l)
+			{
 				case "many": {
 					const item_many=item_group.z[0];
 					let xm=item_group.z[0].map(e => e.join(","));
@@ -3426,16 +3852,19 @@ class HandleTypes extends BaseService {
 		let x_set=new Set,y_set=new Set;
 		for(let arr of x_many) for(let item of arr) x_set.add(item);
 		for(let arr of y_many) for(let item of arr) y_set.add(item);
-		for(let arr of x_many) for(let x_item of arr) {
+		for(let arr of x_many) for(let x_item of arr)
+		{
 			if(y_set.has(x_item)) continue;
 			diff_plus.push(x_item);
 		}
-		for(let arr of x_many) for(let y_item of arr) {
+		for(let arr of x_many) for(let y_item of arr)
+		{
 			if(x_set.has(y_item)) continue;
 			diff_minus.push(y_item);
 		}
 		let key=x.key;
-		if(key!=="boxed_id:load_id"&&key!=="boxed_id:save_id") {
+		if(key!=="boxed_id:load_id"&&key!=="boxed_id:save_id")
+		{
 			console.log("[cur_cache_value] [x.key]",key);
 			console.log("[val] [x]",xi0[0],xi0.slice(1));
 			console.log("[val] [y]",yi0[0],yi0.slice(1));
@@ -3443,13 +3872,17 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @api @public @template {G_BoxedDatabaseData} T_Put @arg {"boxed_id"} key @arg {T_Put} value @arg {number} version */
-	async put(key,value,version) {
+	async put(key,value,version)
+	{
 		if(this.loaded_keys.has(value.key)) this.on_has_key_in_cache(value);
-		try {
+		try
+		{
 			let ret=await this.ix.putImpl(key,value,version);
 			return ret;
-		} catch(e) {
-			if(this.log_failed) {
+		} catch(e)
+		{
+			if(this.log_failed)
+			{
 				console.log("waiting for put request resulted in an error:",e);
 				setTimeout(() => this.log_failed=true,5000);
 			}
@@ -3461,10 +3894,12 @@ class HandleTypes extends BaseService {
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	//#endregion
 	/** @public @arg {RSG_NotificationMenu} x */
-	RSG_NotificationMenu(x) {
+	RSG_NotificationMenu(x)
+	{
 		const cf="RSG_NotificationMenu";
 		const {responseContext,actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,x => {
+		this.z(actions,x =>
+		{
 			if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
 			if("openPopupAction" in x) return this.A_NotificationMenuPopup(x);
 			debugger;
@@ -3472,7 +3907,8 @@ class HandleTypes extends BaseService {
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @public @arg {MP_NotificationMenu} x */
-	MP_NotificationMenu(x) {
+	MP_NotificationMenu(x)
+	{
 		const cf="MP_NotificationMenu";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.R_SimpleMenuHeader(header);
@@ -3481,14 +3917,16 @@ class HandleTypes extends BaseService {
 		this.sm.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_NotificationMenu_SectionItem} x */
-	D_NotificationMenu_SectionItem(x) {
+	D_NotificationMenu_SectionItem(x)
+	{
 		const cf="D_NotificationMenu_SectionItem";
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.xm.R_MP_MenuNotificationSection(x);
 		if("backgroundPromoRenderer" in x) return this.R_BackgroundPromo(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {Popup_DD_NotificationMenu} x */
-	Popup_DD_NotificationMenu(x) {
+	Popup_DD_NotificationMenu(x)
+	{
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(a!=="DROPDOWN") this.sm.codegen_typedef(cf,x);
@@ -3496,9 +3934,11 @@ class HandleTypes extends BaseService {
 		return b;
 	}
 	/** @private @arg {A_NotificationMenuPopup} x */
-	A_NotificationMenuPopup(x) {
+	A_NotificationMenuPopup(x)
+	{
 		const cf="A_NotificationMenuPopup";
-		if("openPopupAction" in x) {
+		if("openPopupAction" in x)
+		{
 			let action=this.xm.TA_OpenPopup("A_NotificationMenuPopup",x);
 			let popup=this.Popup_DD_NotificationMenu(action);
 			let menu=this.sm.TR_MultiPageMenu("R_NotificationMenu",popup);
@@ -3510,7 +3950,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_ReelItem} x */
 	R_ReelItem(x) {this.H_s("reelItemRenderer",x,this.D_ReelItem);}
 	/** @private @arg {D_ReelItem} x */
-	D_ReelItem(x) {
+	D_ReelItem(x)
+	{
 		const cf="D_ReelItem";
 		const {videoId,headline,thumbnail,viewCountText,navigationEndpoint,menu,trackingParams,accessibility,style,dismissalInfo,videoType,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.videoId(videoId);
@@ -3521,7 +3962,8 @@ class HandleTypes extends BaseService {
 		this.sm.R_Menu(menu);
 		this.sm.trackingParams(trackingParams);
 		this.sm.D_Accessibility(accessibility);
-		switch(style) {
+		switch(style)
+		{
 			default: debugger; break;
 			case "REEL_ITEM_STYLE_AVATAR_CIRCLE": break;
 		}
@@ -3530,13 +3972,15 @@ class HandleTypes extends BaseService {
 		this.sm.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @arg {D_FeedbackToken} x */
-	D_FeedbackToken(x) {
+	D_FeedbackToken(x)
+	{
 		const cf="D_FeedbackToken";
 		const {feedbackToken: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.params("feedbackToken",a);
 	}
 	/** @arg {G_Menu_TopLevelButton} x */
-	G_Menu_TopLevelButton(x) {
+	G_Menu_TopLevelButton(x)
+	{
 		const cf="G_Menu_TopLevelButton"; this.k(cf,x);
 		if("playlistLoopButtonRenderer" in x) return this.sm.R_PlaylistLoopButton(x);
 		if("toggleButtonRenderer" in x) return this.xm.R_ToggleButton(x);
@@ -3546,7 +3990,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_s("notificationMultiActionRenderer",x,this.AD_NotificationMulti);}
 	/** @private @arg {AD_NotificationMulti} x */
-	AD_NotificationMulti(x) {
+	AD_NotificationMulti(x)
+	{
 		const cf="AD_NotificationMulti";
 		const {responseText,buttons,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(responseText);
@@ -3556,7 +4001,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_PlayerErrorMessage} x */
 	R_PlayerErrorMessage(x) {this.H_s("playerErrorMessageRenderer",x,this.D_PlayerErrorMessage);}
 	/** @private @arg {D_PlayerErrorMessage} x */
-	D_PlayerErrorMessage(x) {
+	D_PlayerErrorMessage(x)
+	{
 		const cf="D_PlayerErrorMessage";
 		const {reason,proceedButton,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(reason);
@@ -3565,14 +4011,16 @@ class HandleTypes extends BaseService {
 		this.sm.cq(icon.iconType,"OFFLINE_NO_CONTENT");
 	}
 	/** @public @arg {D_InlinePlaybackConfig} x */
-	D_InlinePlaybackConfig(x) {
+	D_InlinePlaybackConfig(x)
+	{
 		const cf="D_InlinePlaybackConfig";
 		const {showAudioControls,showScrubbingControls,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.cq(showAudioControls,true);
 		this.sm.cq(showScrubbingControls,true);
 	}
 	/** @public @arg {D_AudioConfig} x */
-	D_AudioConfig(x) {
+	D_AudioConfig(x)
+	{
 		const cf="D_AudioConfig";
 		const {loudnessDb,perceptualLoudnessDb,muteOnStart,enablePerFormatLoudness,...y}=this.s(cf,x); this.g(y);
 		this.sm.t(loudnessDb,this.sm.a_primitive_num);
@@ -3581,7 +4029,8 @@ class HandleTypes extends BaseService {
 		this.t(muteOnStart,x => this.sm.cq(x,true));
 	}
 	/** @public @arg {CF_M_wn} cf @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_x(cf,k,x,f) {
+	H_x(cf,k,x,f)
+	{
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
 		if(keys.length!==1) {debugger; return;}
@@ -3592,7 +4041,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_MenuServiceItemDownload} x */
 	M_DownloadRenderer(x) {this.H_x("M_DownloadRenderer","menuServiceItemDownloadRenderer",x,this.D_MenuServiceItemDownload);}
 	/** @public @arg {D_MenuServiceItemDownload} x */
-	D_MenuServiceItemDownload(x) {
+	D_MenuServiceItemDownload(x)
+	{
 		const cf="D_MenuServiceItemDownload";
 		const {serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.sm.trackingParams(trackingParams);
@@ -3600,14 +4050,16 @@ class HandleTypes extends BaseService {
 		this.E_OfflineVideo(serviceEndpoint);
 	}
 	/** @public @arg {E_OfflineVideo} x */
-	E_OfflineVideo(x) {
+	E_OfflineVideo(x)
+	{
 		const cf="E_OfflineVideo";
 		const {clickTrackingParams,offlineVideoEndpoint,...y}=this.s(cf,x); this.g(y);
 		this.sm.clickTrackingParams(clickTrackingParams);
 		this.DE_OfflineVideo(offlineVideoEndpoint);
 	}
 	/** @public @arg {DE_OfflineVideo} x */
-	DE_OfflineVideo(x) {
+	DE_OfflineVideo(x)
+	{
 		const cf="DE_OfflineVideo";
 		const {videoId,onAddCommand,action,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(videoId);
@@ -3615,14 +4067,16 @@ class HandleTypes extends BaseService {
 		this.t(action,x => this.cq(x,"ACTION_ADD"));
 	}
 	/** @private @arg {AC_GetDownload} x */
-	AC_GetDownload(x) {
+	AC_GetDownload(x)
+	{
 		const cf="AC_GetDownload";
 		const {clickTrackingParams,getDownloadActionCommand,...y}=this.s(cf,x); this.g(y);
 		this.sm.clickTrackingParams(clickTrackingParams);
 		this.DC_GetDownload(getDownloadActionCommand);
 	}
 	/** @private @arg {DC_GetDownload} x */
-	DC_GetDownload(x) {
+	DC_GetDownload(x)
+	{
 		const cf="DC_GetDownload";
 		const {videoId,params,offlineabilityEntityKey,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(videoId);
@@ -3630,14 +4084,16 @@ class HandleTypes extends BaseService {
 		this.sm.params("offlineability.entity_key",offlineabilityEntityKey);
 	}
 	/** @public @arg {G_MenuItem_2} x */
-	G_MenuItem_2(x) {
+	G_MenuItem_2(x)
+	{
 		const cf="G_MenuItem_2"; this.k(cf,x);
 		if("menuServiceItemRenderer" in x) return this.sm.R_MenuServiceItem(x);
 		if("menuServiceItemDownloadRenderer" in x) return this.M_DownloadRenderer(x);
 		debugger;
 	}
 	/** @public @arg {DT_MenuItem_Button} x */
-	DT_MenuItem_Button(x) {
+	DT_MenuItem_Button(x)
+	{
 		const cf="DT_MenuItem_Button"; this.k(cf,x);
 		if("downloadButtonRenderer" in x) return this.R_DownloadButton(x);
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
@@ -3646,7 +4102,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_DownloadButton} x */
 	R_DownloadButton(x) {this.H_("downloadButtonRenderer",x,this.D_DownloadButton);}
 	/** @private @arg {D_DownloadButton} x */
-	D_DownloadButton(x) {
+	D_DownloadButton(x)
+	{
 		const cf="D_DownloadButton";
 		const {trackingParams,style,size,targetId,command,...y}=this.s(cf,x); this.g(y);
 		this.trackingParams(trackingParams);
@@ -3656,7 +4113,8 @@ class HandleTypes extends BaseService {
 		this.E_OfflineVideo(command);
 	}
 	/** @public @arg {G_AdPlacementRendererItem} x */
-	G_AdPlacementRendererItem(x) {
+	G_AdPlacementRendererItem(x)
+	{
 		const cf="G_AdPlacementRendererItem"; this.k(cf,x);
 		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
 		if("clientForecastingAdRenderer" in x) return this.xm.R_ClientForecastingAd(x);
@@ -3667,14 +4125,16 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_AdBreakService} x */
 	R_AdBreakService(x) {this.H_s("adBreakServiceRenderer",x,this.D_AdBreakService);}
 	/** @private @arg {D_AdBreakService} x */
-	D_AdBreakService(x) {
+	D_AdBreakService(x)
+	{
 		const cf="D_AdBreakService";
 		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
 		if(prefetchMilliseconds!=="10000") debugger;
 		let p1=split_string(getAdBreakUrl,"://")[1];
 		let p2=split_string(p1,"/");
 		let pp=split_string_once(p2[1],"?");
-		switch(pp[0]) {
+		switch(pp[0])
+		{
 			default: debugger; break;
 			case "get_midroll_info": {
 				/** @type {D_GetMidrollInfoParams} */
@@ -3685,7 +4145,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @public @arg {D_CsiParameterItem} x */
-	D_CsiParameterItem(x) {
+	D_CsiParameterItem(x)
+	{
 		const cf="D_CsiParameterItem";
 		const {key,value}=x;
 		console.log(cf,key,value);
@@ -3693,7 +4154,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {R_InstreamAdPlayerOverlay} x */
 	R_InstreamAdPlayerOverlay(x) {this.H_s("instreamAdPlayerOverlayRenderer",x,this.D_InstreamAdPlayerOverlay);}
 	/** @public @arg {D_SodarExtensionData} x */
-	D_SodarExtensionData(x) {
+	D_SodarExtensionData(x)
+	{
 		const cf="D_SodarExtensionData";
 		const {siub,bgub,scs,bgp,...y}=this.s(cf,x); this.g(y);
 		console.log(`${cf}.siub`,siub);
@@ -3704,7 +4166,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_SkipAd} x */
 	R_SkipAd(x) {this.H_("skipAdRenderer",x,this.D_SkipAd);}
 	/** @private @arg {D_SkipAd} x */
-	D_SkipAd(x) {
+	D_SkipAd(x)
+	{
 		const cf="D_SkipAd";
 		const {preskipRenderer,skippableRenderer,trackingParams,skipOffsetMilliseconds,...y}=this.s(cf,x); this.g(y);
 		this.R_AdPreview(preskipRenderer);
@@ -3715,7 +4178,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_AdPreview} x */
 	R_AdPreview(x) {this.H_("adPreviewRenderer",x,this.D_AdPreview);}
 	/** @private @arg {D_AdPreview} x */
-	D_AdPreview(x) {
+	D_AdPreview(x)
+	{
 		const cf="D_AdPreview";
 		const {thumbnail,trackingParams,templatedCountdown,durationMilliseconds,...y}=this.s(cf,x); this.g(y);
 		this.sm.D_TrackedThumbnail(thumbnail);
@@ -3724,7 +4188,8 @@ class HandleTypes extends BaseService {
 		this.sm.cq(durationMilliseconds,5000);
 	}
 	/** @public @arg {G_RelatedItem} x */
-	G_RelatedItem(x) {
+	G_RelatedItem(x)
+	{
 		const cf="D_AdPreview"; this.k(cf,x);
 		if("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
 		if("compactRadioRenderer" in x) return this.sm.R_CompactRadio(x);
@@ -3735,7 +4200,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_TemplatedAdText} x */
 	R_TemplatedAdText(x) {this.H_("templatedAdText",x,this.D_TemplatedAdText);}
 	/** @private @arg {D_TemplatedAdText} x */
-	D_TemplatedAdText(x) {
+	D_TemplatedAdText(x)
+	{
 		const cf="D_TemplatedAdText";
 		const {text,isTemplated,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.cq(text,"{TIME_REMAINING}");
@@ -3745,7 +4211,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_SkipButton} x */
 	R_SkipButton(x) {this.H_("skipButtonRenderer",x,this.D_SkipButton);}
 	/** @private @arg {D_SkipButton} x */
-	D_SkipButton(x) {
+	D_SkipButton(x)
+	{
 		const cf="D_TemplatedAdText";
 		const {message,trackingParams,...y}=this.s(cf,x); this.g(y);
 		let text=this.T_MaybeTemplatedText(message);
@@ -3753,7 +4220,8 @@ class HandleTypes extends BaseService {
 		this.trackingParams(trackingParams);
 	}
 	/** @private @template T @arg {T_MaybeTemplatedText<T>} x */
-	T_MaybeTemplatedText(x) {
+	T_MaybeTemplatedText(x)
+	{
 		const cf="D_TemplatedAdText";
 		const {text,isTemplated,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.cq(isTemplated,false);
@@ -3763,7 +4231,8 @@ class HandleTypes extends BaseService {
 	/** @public @arg {VM_PlaceData} x */
 	VM_PlaceData(x) {this.H_x("VM_PlaceData","placeDataViewModel",x,this.VD_PlaceData);}
 	/** @private @arg {VD_PlaceData} x */
-	VD_PlaceData(x) {
+	VD_PlaceData(x)
+	{
 		const cf="D_InstreamAdPlayerOverlay";
 		const {placeName,placeCategory,rating,ratingA11yLabel,reviewsCount,reviewsCountA11yLabel,thumbnailUrl,onTap,trackingParams,placeCardA11yHint,openLinkUiStyle,cardStyle,...y}=this.s(cf,x); this.g(y);
 		this.sm.a_primitive_str(placeName);
@@ -3774,12 +4243,14 @@ class HandleTypes extends BaseService {
 		this.sm.a_primitive_str(reviewsCountA11yLabel);
 		let uo=this._convert_url_to_obj(thumbnailUrl);
 		let up=split_string(split_string_once(uo.pathname,"/")[1],"/");
-		switch(up[0]) {
+		switch(up[0])
+		{
 			default: debugger; break;
 			case "p": break;
 		}
 		let ua=split_string(up[1],"=");
-		let ur=(/** @returns {[(typeof ua)[0],...typeof p2]} */(cv) => {
+		let ur=(/** @returns {[(typeof ua)[0],...typeof p2]} */(cv) =>
+		{
 			let p2=split_string(cv[1],"-");
 			return [cv[0],...p2];
 		})(ua);
@@ -3792,15 +4263,18 @@ class HandleTypes extends BaseService {
 		this.join_string(this.get_keys_of_2(y),",")==="";
 	}
 	/** @public @arg {DU_UrlParams_PageAd_AClk} x */
-	DU_UrlParams_PageAd_AClk(x) {
+	DU_UrlParams_PageAd_AClk(x)
+	{
 		const cf="DU_UrlParams_PageAd_AClk";
 		const {sa,ai,ae,num,cid,ad_cpn,sig,act,ri,adurl,label,ctype,ms,...y}=this.s(cf,x); this.g(y);
-		switch(label) {
+		switch(label)
+		{
 			default: debugger; break;
 			case "video_click_to_advertiser_site": break;
 		}
 		let po=this._convert_url_to_obj(adurl);
-		switch(po.hostname) {
+		switch(po.hostname)
+		{
 			default: debugger; break;
 			case "www.xometry.com": {
 				console.log("adurl.search",po.search);
@@ -3809,7 +4283,8 @@ class HandleTypes extends BaseService {
 		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,ctype,ms);
 	}
 	/** @private @arg {D_InstreamAdPlayerOverlay} x */
-	D_InstreamAdPlayerOverlay(x) {
+	D_InstreamAdPlayerOverlay(x)
+	{
 		const cf="D_InstreamAdPlayerOverlay";
 		const {skipOrPreviewRenderer,trackingParams,visitAdvertiserRenderer,adBadgeRenderer,adDurationRemaining,adInfoRenderer,flyoutCtaRenderer,adLayoutLoggingData,elementId,...y}=this.s(cf,x); this.g(y);
 		this.R_SkipAd(skipOrPreviewRenderer);
@@ -3825,7 +4300,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_SimpleAdBadge} x */
 	R_SimpleAdBadge(x) {this.H_("simpleAdBadgeRenderer",x,this.D_SimpleAdBadge);}
 	/** @private @arg {D_SimpleAdBadge} x */
-	D_SimpleAdBadge(x) {
+	D_SimpleAdBadge(x)
+	{
 		const cf="D_SimpleAdBadge";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);
 		let a=this.T_MaybeTemplatedText(text);
@@ -3835,7 +4311,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_AdDurationRemaining} x */
 	R_AdDurationRemaining(x) {this.H_("adDurationRemainingRenderer",x,this.D_AdDurationRemaining);}
 	/** @private @arg {D_AdDurationRemaining} x */
-	D_AdDurationRemaining(x) {
+	D_AdDurationRemaining(x)
+	{
 		const cf="D_AdDurationRemaining";
 		const {templatedCountdown,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.D_TemplatedAdText(templatedCountdown);
@@ -3844,7 +4321,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_AdHoverTextButton} x */
 	R_AdHoverTextButton(x) {this.H_("adHoverTextButtonRenderer",x,this.D_AdHoverTextButton);}
 	/** @private @arg {D_AdHoverTextButton} x */
-	D_AdHoverTextButton(x) {
+	D_AdHoverTextButton(x)
+	{
 		const cf="D_AdHoverTextButton";
 		const {button,hoverText,trackingParams,...y}=this.s(cf,x); this.g(y);
 		button;
@@ -3854,7 +4332,8 @@ class HandleTypes extends BaseService {
 	/** @private @arg {R_FlyoutCta} x */
 	R_FlyoutCta(x) {this.H_("flyoutCtaRenderer",x,this.D_FlyoutCta);}
 	/** @private @arg {D_FlyoutCta} x */
-	D_FlyoutCta(x) {
+	D_FlyoutCta(x)
+	{
 		const cf="D_FlyoutCta";
 		const {image,headline,description,actionButton,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.D_TrackedThumbnail2(image);
@@ -3866,21 +4345,24 @@ class HandleTypes extends BaseService {
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_TrackedThumbnail2} x */
-	D_TrackedThumbnail2(x) {
+	D_TrackedThumbnail2(x)
+	{
 		const cf="D_TrackedThumbnail2";
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.sm.D_Thumbnail(thumbnail);
 		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_TrackedText} x */
-	D_TrackedText(x) {
+	D_TrackedText(x)
+	{
 		const cf="D_TrackedText";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.sm.a_primitive_str(text);
 		this.trackingParams(trackingParams);
 	}
 	/** @public @arg {D_Pings} x */
-	D_Pings(x) {
+	D_Pings(x)
+	{
 		const cf="D_Pings";
 		const {impressionPings,errorPings,mutePings,unmutePings,pausePings,rewindPings,resumePings,skipPings,closePings,progressPings,fullscreenPings,activeViewViewablePings,endFullscreenPings,activeViewMeasurablePings,abandonPings,activeViewFullyViewableAudibleHalfDurationPings,completePings,activeViewTracking,...y}=this.s(cf,x); this.g(y);
 		/** @type {`https://www.youtube.com/pagead/adview?${string}`[]} */
@@ -3908,21 +4390,24 @@ class HandleTypes extends BaseService {
 		[r]=this.z(activeViewFullyViewableAudibleHalfDurationPings,x => this.xm.T_BaseUrl(x)); pcs_active_view_urls.push(...r);
 		[r]=this.z(completePings,x => this.xm.T_BaseUrl(x)); interaction_urls.push(...r);
 		this.D_TrafficType(activeViewTracking);
-		this.z(ad_view_urls,x => {
+		this.z(ad_view_urls,x =>
+		{
 			let [hostname,path_and_search]=this.parse_url_parts(x); this.cq(hostname,"www.youtube.com");
 			let [pathname,search]=split_string_once(path_and_search,"?");
 			let [path1,path2]=split_string_once(pathname,"/"); this.cq(path1,"pagead"); this.cq(path2,"adview");
 			let so=this.parse_url_search_params(`?${search}`);
 			console.log("[search_params]",pathname,so);
 		});
-		this.z(interaction_urls,x => {
+		this.z(interaction_urls,x =>
+		{
 			let [hostname,path_and_search]=this.parse_url_parts(x); this.cq(hostname,"www.youtube.com");
 			let [pathname,search]=split_string_once(path_and_search,"?");
 			let [path1,path2]=split_string_once(pathname,"/"); this.cq(path1,"pagead"); this.cq(path2,"interaction/");
 			let so=this.parse_url_search_params(`?${search}`);
 			console.log("[search_params]",pathname,so);
 		});
-		this.z(pcs_active_view_urls,x => {
+		this.z(pcs_active_view_urls,x =>
+		{
 			let [hostname,path_and_search]=this.parse_url_parts(x); this.cq(hostname,"www.youtube.com");
 			let [pathname,search]=split_string_once(path_and_search,"?");
 			let [path1,path2]=split_string_once(pathname,"/"); this.cq(path1,"pcs"); this.cq(path2,"activeview");
@@ -3931,7 +4416,8 @@ class HandleTypes extends BaseService {
 		});
 	}
 	/** @private @template {string} A @template {string} B @arg {`https://${A}/${B}`} x @returns {[A,B]} */
-	parse_url_parts(x) {
+	parse_url_parts(x)
+	{
 		/** @arg {`${A}/${B}`|null} x */
 		function wa(x) {return x;}
 		/** @type {`${A}/${B}`|null} */
@@ -3947,7 +4433,8 @@ class HandleTypes extends BaseService {
 		return p2;
 	}
 	/** @private @arg {D_TrafficType} x */
-	D_TrafficType(x) {
+	D_TrafficType(x)
+	{
 		const cf="D_TrafficType";
 		const {trafficType,...y}=this.s(cf,x); this.g(y);
 		this.cq(trafficType,"ACTIVE_VIEW_TRAFFIC_TYPE_VIDEO");
@@ -3956,8 +4443,10 @@ class HandleTypes extends BaseService {
 //#endregion
 export_(exports => {exports.HandleTypes=HandleTypes;});
 export_(exports => {exports.__module_loaded__=true;});
-if(delete_require) {
+if(delete_require)
+{
 	delete window.require;
-} else if(reset_require) {
+} else if(reset_require)
+{
 	require=page_require;
 }
