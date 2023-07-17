@@ -2615,7 +2615,12 @@ class Support_Renderer extends BaseService
 		{
 			const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			let idp=split_string_once(identifier,"|");
-			if(idp[0]!=="track_selection_sheet_option.eml") debugger;
+			switch(idp[0])
+			{
+				case "track_selection_sheet_option.eml": break;
+				case "bottom_sheet_list_option.eml": break;
+				default: debugger;
+			}
 			this.save_primitive("D_TemplateUpdate.identifier.id",idp[0]);
 			this.save_primitive("D_TemplateUpdate.identifier.hash",idp[1]);
 			this.t(dependencies,dep_arr =>

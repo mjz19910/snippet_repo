@@ -2554,14 +2554,14 @@ type D_SubscriptionButton={
 };
 type D_TabbedSearchResults={tabs: R_SearchResultsTab[];};
 type D_TemplateUpdate={
-	identifier: `track_selection_sheet_option.eml|${string}`;
+	identifier: `${TemplateIdentFile}|${string}`;
 	serializedTemplateConfig: string;
-	dependencies: [`bottom_sheet_list_option.eml|${string}`];
+	dependencies: `${TemplateIdentFile}|${string}`[];
 }|{
 	identifier: `${TemplateIdentFile}|${string}`;
 	serializedTemplateConfig: string;
 };
-type TemplateIdentFile="bottom_sheet_list_option.eml"|"switch_button.eml";
+type TemplateIdentFile="track_selection_sheet_option.eml"|"bottom_sheet_list_option.eml"|"switch_button.eml";
 type D_TextInputFormField={
 	label: G_Text;
 	value?: string;
