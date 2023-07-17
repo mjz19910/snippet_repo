@@ -2168,9 +2168,9 @@ class ServiceMethods extends ServiceData
 		switch(a1[0])
 		{
 			default: switch(a1[0])
-			{
-				case "":
-			} debugger; break;
+				{
+					case "":
+				} debugger; break;
 			case "user": {
 				if(a1.length!==2) debugger;
 				let [,y1]=a1;
@@ -2950,13 +2950,13 @@ class ServiceMethods extends ServiceData
 		switch(t.length)
 		{
 			case 2: switch(t[1])
-			{
-				case "edit_playlist": return {
-					type: `${t[0]}.${t[1]}`,
-					/** @private @type {RSB_EditPlaylist} */
-					data: as(x),
-				};
-			}
+				{
+					case "edit_playlist": return {
+						type: `${t[0]}.${t[1]}`,
+						/** @private @type {RSB_EditPlaylist} */
+						data: as(x),
+					};
+				}
 			case 1: break;
 		}
 		switch(t[0])
@@ -3135,9 +3135,14 @@ class ServiceMethods extends ServiceData
 		const cf="D_SegmentedLikeDislikeButton";
 		if("likeButton" in x)
 		{
-			const {likeButton,dislikeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			const {likeButton,dislikeButton,likeCount,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.xm.R_ToggleButton(likeButton);
 			this.xm.R_ToggleButton(dislikeButton);
+			this.t(likeCount,x =>
+			{
+				let res=this.parse_number(x);
+				void res;
+			});
 			return;
 		}
 		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

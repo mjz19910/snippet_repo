@@ -2488,6 +2488,7 @@ type D_SearchResultsTab={
 type D_SegmentedLikeDislikeButton={
 	likeButton: R_ToggleButton;
 	dislikeButton: R_ToggleButton;
+	likeCount?: `${number}`;
 }|{
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
