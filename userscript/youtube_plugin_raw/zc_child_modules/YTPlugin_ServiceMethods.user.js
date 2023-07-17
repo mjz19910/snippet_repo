@@ -1698,7 +1698,6 @@ class ServiceMethods extends ServiceData
 				this.z(items,x =>
 				{
 					if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-					debugger;
 				});
 				this.D_Accessibility(accessibility);
 				this.D_Menu_TargetId(targetId);
@@ -6606,7 +6605,6 @@ class ServiceMethods extends ServiceData
 		{
 			if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
 			if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-			debugger;
 		});
 		const {trackingParams,...u2}=u1;
 		this.trackingParams(trackingParams);
