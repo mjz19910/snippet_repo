@@ -3533,8 +3533,7 @@ class ModifyEnv extends BaseService
 			/** @returns {Response} */
 			clone()
 			{
-				let fake_res=new R_Fake(this.__handlers__,this.__response__.clone());
-				return fake_res.make_proxy_from();
+				return this.__response__.clone();
 			}
 			make_proxy_from()
 			{
