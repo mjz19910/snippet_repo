@@ -3574,7 +3574,6 @@ class ModifyEnv extends BaseService
 			x: if(request_init)
 			{
 				if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
-				console.log("[fetch_request_init_data]",user_request,request_init);
 			}
 			if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {return original_fetch(user_request,request_init);}
 			handle_types.request_start_time=Date.now();
