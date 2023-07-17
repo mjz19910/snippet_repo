@@ -2628,7 +2628,12 @@ class Support_Renderer extends BaseService
 				if(dep_arr.length!==1) debugger;
 				const dep=dep_arr[0];
 				let ddp=split_string_once(dep,"|");
-				if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
+				switch(ddp[0])
+				{
+					case "bottom_sheet_list_option.eml": break;
+					case "switch_button.eml": break;
+					default: debugger;
+				}
 				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].id`,ddp[0]);
 				this.save_primitive(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,ddp[1]);
 			});
