@@ -3478,75 +3478,11 @@ class ModifyEnv extends BaseService
 	leftover_args=[];
 	modify_global_env()
 	{
-		let yt_handlers=this.x.get("yt_handlers");
 		let handle_types=this.x.get("handle_types");
-		const json_action_obj={
-			/** @arg {Parameters<NonNullable<ProxyHandler<JSON['parse']>["apply"]>>} proxy_args @returns {G_RS_AllResponses} */
-			original_action: (proxy_args) => Reflect.apply(...proxy_args),
-			/** @type {JSON["parse"]} */
-			json_parse: JSON.parse,
-			/** @arg {FetchJsonParseArgs} target_args */
-			json_response_parsed(target_args)
-			{
-				try
-				{
-					yt_handlers.on_handle_api(target_args);
-				} catch(e)
-				{
-					console.log("plugin error");
-					console.log(e);
-				}
-			}
-		};
-		/**
-		 * @param {Parameters<NonNullable<ProxyHandler<JSON['parse']>["apply"]>>} proxy_args
-		 * @param {typeof json_parse_callback} callback
-		 * @param {string | URL | Request} request
-		 * @param {Response} response
-		 */
-		function on_json_parse_called(proxy_args,request,response,callback)
-		{
-			if(is_yt_debug_enabled) console.log("JSON.parse()");
-			try
-			{
-				let response_obj=json_action_obj.original_action(proxy_args);
-				/** @type {FetchJsonParseArgs} */
-				const target_args={
-					request,
-					response,
-					parsed_obj: response_obj,
-				};
-				callback(target_args);
-				return response_obj;
-			} catch(e)
-			{
-				console.log("target error",e);
-				JSON.parse=json_action_obj.json_parse;
-				throw e;
-			} finally
-			{
-				JSON.parse=json_action_obj.json_parse;
-			}
-		}
-		/** @arg {FetchJsonParseArgs} target_args */
-		function json_parse_callback(target_args)
-		{
-			json_action_obj.json_response_parsed(target_args);
-		}
-		/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
-		function handle_json_parse({request,options},state,onfulfilled,on_rejected,response_text)
+		/** @private @arg {FetchInjectInputArgs} input @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
+		function handle_json_parse({request,options},onfulfilled,on_rejected,response_text)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
-			json_action_obj.json_parse=JSON.parse;
-			if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
-			/** @type {ProxyHandler<JSON['parse']>} */
-			const proxy_handler={
-				apply: (...proxy_args) =>
-				{
-					return on_json_parse_called(proxy_args,request,state.response,json_parse_callback);
-				}
-			};
-			JSON.parse=new Proxy(JSON.parse,proxy_handler);
 			let ret;
 			try {if(onfulfilled) {ret=onfulfilled(response_text);} else {ret=response_text;} } catch(err)
 			{
@@ -3557,19 +3493,19 @@ class ModifyEnv extends BaseService
 			}
 			return ret;
 		}
-		/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
-		function bind_promise_handler(input,state,onfulfilled,onrejected)
+		/** @private @arg {FetchInjectInputArgs} input @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
+		function bind_promise_handler(input,onfulfilled,onrejected)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
-			let ret=handle_json_parse.bind(null,input,state,onfulfilled,onrejected);
+			let ret=handle_json_parse.bind(null,input,onfulfilled,onrejected);
 			return ret;
 		}
-		/** @private @arg {{input: FetchInjectInputArgs}} input_args @arg {{response: Response}} state @arg {{result:Promise<any>}} result @return {Promise<any>} */
-		function handle_fetch_response_2({input},state,result)
+		/** @private @arg {{input: FetchInjectInputArgs}} input_args @arg {{result:Promise<any>}} result @return {Promise<any>} */
+		function handle_fetch_response_2({input},result)
 		{
 			return {
 				/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
-				then(onfulfilled,onrejected) {return result.result.then(bind_promise_handler(input,state,onfulfilled,onrejected));},
+				then(onfulfilled,onrejected) {return result.result.then(bind_promise_handler(input,onfulfilled,onrejected));},
 				/** @private @type {<TResult = never>(onrejected?: ((reason: any) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<any>} */
 				catch(onrejected) {return result.result.catch(onrejected);},
 				finally(onfinally) {return result.result.finally(onfinally);},
@@ -3625,7 +3561,7 @@ class ModifyEnv extends BaseService
 				text()
 				{
 					if(is_yt_debug_enabled) console.log("response.text()");
-					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
+					return handle_fetch_response_2({input: {request,options}},{result: response.text()});
 				}
 			},response);
 			return fake_res.make_proxy_from();
