@@ -1958,7 +1958,6 @@ class Support_EventInput extends BaseService
 	/** @public @arg {G_RS_ByPageType} x */
 	DataResponsePageType(x)
 	{
-		const cf="DataResponsePageType";
 		this.sm.RC_ResponseContext(x.response.responseContext);
 		switch(x.page)
 		{
@@ -2318,7 +2317,6 @@ class Support_EventInput extends BaseService
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
 	D_Tab_Subscriptions_EP(x)
 	{
-		const cf="D_Tab_Subscriptions_EP";
 		if(this.sm.is_TE_VE(x,96368)) return this.sm.E_VE96368(x);
 	}
 }
@@ -3405,7 +3403,6 @@ class Support_Renderer extends BaseService
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x)
 	{
-		const cf="G_StructuredDescriptionContentItem";
 		if("expandableVideoDescriptionBodyRenderer" in x) return this.ht.R_ExpandableVideoDescriptionBody(x);
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.sm.R_VideoDescriptionHeader(x);
@@ -3451,21 +3448,18 @@ class Support_Renderer extends BaseService
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x)
 	{
-		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
 		if("accountItem" in x) return this.ht.A_AccountItem(x);
 	}
 	/** @public @arg {G_NextContents} x */
 	G_NextContents(x)
 	{
-		const cf="G_NextContents";
 		if("twoColumnWatchNextResults" in x) return this.sm.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
 	}
 	/** @public @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x)
 	{
-		const cf="G_GuideSectionItem";
 		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
@@ -3476,7 +3470,6 @@ class Support_Renderer extends BaseService
 	/** @public @arg {G_ChatItem} x */
 	G_ChatItem(x)
 	{
-		const cf="G_ChatItem";
 		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
 		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
 		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
@@ -3500,7 +3493,6 @@ class Support_Renderer extends BaseService
 	/** @public @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x)
 	{
-		const cf="G_LiveChatContinuationItem";
 		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
 		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
 		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
@@ -3508,14 +3500,12 @@ class Support_Renderer extends BaseService
 	/** @public @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x)
 	{
-		const cf="G_LiveChatContinuationActions";
 		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 	}
 	/** @public @arg {G_WatchNext} x */
 	G_WatchNext(x)
 	{
-		const cf="G_WatchNext";
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.sm.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
@@ -3847,7 +3837,6 @@ class Support_Renderer extends BaseService
 		this.sm.targetId(cf,targetId);
 		this.z(continuationItems,x =>
 		{
-			const cf="G_CommentsSection";
 			if("commentThreadRenderer" in x) return this.sm.R_CommentThread(x);
 			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		});
@@ -4310,7 +4299,6 @@ class ForService_XMethods extends BaseService
 	/** @private @arg {D_Button_NavEP} x */
 	D_Button_NavEP(x)
 	{
-		const cf="D_Button_NavEP";
 		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
 		if("browseEndpoint" in x)
 		{
@@ -4644,7 +4632,6 @@ class ForService_XMethods extends BaseService
 	/** @public @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x)
 	{
-		const cf="G_BrowseHeader";
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.xr.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.xm.R_PlaylistHeader(x);
@@ -4663,14 +4650,12 @@ class ForService_XMethods extends BaseService
 	/** @public @arg {G_Browse_MD} x */
 	G_Browse_MD(x)
 	{
-		const cf="G_Browse_MD";
 		if("channelMetadataRenderer" in x) return this.xr.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.xr.R_Playlist_MD(x);
 	}
 	/** @public @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x)
 	{
-		const cf="G_BrowseSidebar";
 		if("settingsSidebarRenderer" in x) return this.xr.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.xr.R_PlaylistSidebar(x);
 	}
@@ -4686,7 +4671,6 @@ class ForService_XMethods extends BaseService
 	/** @public @arg {GA_ResponseReceived} x */
 	GA_ResponseReceived(x)
 	{
-		const cf="GA_ResponseReceived";
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
 		if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
 		if("reloadContinuationItemsCommand" in x) return this.sm.C_ReloadContinuationItems(x);
@@ -4695,7 +4679,6 @@ class ForService_XMethods extends BaseService
 	/** @public @arg {G_BrowseContents} x */
 	G_BrowseContents(x)
 	{
-		const cf="G_BrowseContents";
 		if("twoColumnBrowseResultsRenderer" in x) return this.xm.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.sm.R_FeedFilterChipBar(x);
 	}
@@ -4988,7 +4971,6 @@ class ForService_XMethods extends BaseService
 	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x)
 	{
-		const cf="G_EngagementPanelSectionShowCommands";
 		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.sm.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.sm.C_ScrollToEngagementPanel(x);
@@ -5399,7 +5381,6 @@ class ForService_XMethods extends BaseService
 	/** @public @arg {G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x)
 	{
-		const cf="G_PlaylistSidebarItem";
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 	}
@@ -5536,7 +5517,6 @@ class ForService_XMethods extends BaseService
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
 	GR_MP_MenuNotificationSection_Item(x)
 	{
-		const cf="R_MP_MenuNotificationSection_Item";
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 	}
