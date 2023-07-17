@@ -266,7 +266,7 @@ type PX_watch_next_token_item={
 };
 type PX_watch_next_token_3={
 	1: T_VW<PX_watch_next_token_6>;
-	3: T_D32<0>;
+	3?: T_D32<0>;
 	4: TV_Str<"Watched">;
 	5: T_D32<19>;
 };
