@@ -1328,7 +1328,7 @@ class HandleTypes extends BaseService
 		const cf="AU_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
-		this.sm.clickTrackingParams(clickTrackingParams);
+
 	}
 	/** @private @arg {AD_UpdateEngagementPanel} x */
 	AD_UpdateEngagementPanel(x)
@@ -1983,7 +1983,7 @@ class HandleTypes extends BaseService
 		{
 			const cf="RSG_SharePanel_Action";
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.sm.clickTrackingParams(clickTrackingParams);
+
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
@@ -2775,7 +2775,7 @@ class HandleTypes extends BaseService
 	{
 		const cf="E_OfflineVideo";
 		const {clickTrackingParams,offlineVideoEndpoint,...y}=this.s(cf,x); this.g(y);
-		this.sm.clickTrackingParams(clickTrackingParams);
+
 		this.DE_OfflineVideo(offlineVideoEndpoint);
 	}
 	/** @public @arg {DE_OfflineVideo} x */
@@ -2792,7 +2792,7 @@ class HandleTypes extends BaseService
 	{
 		const cf="AC_GetDownload";
 		const {clickTrackingParams,getDownloadActionCommand,...y}=this.s(cf,x); this.g(y);
-		this.sm.clickTrackingParams(clickTrackingParams);
+
 		this.DC_GetDownload(getDownloadActionCommand);
 	}
 	/** @private @arg {DC_GetDownload} x */
