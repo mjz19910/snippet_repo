@@ -14,7 +14,8 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__) {
+if(typeof require==="undefined"||page_require!==__module_require__)
+{
 	delete_require=typeof require==="undefined";
 	require=__module_require__;
 	reset_require=true;
@@ -38,9 +39,11 @@ export_(exports => {exports.as_any=as_any;});
 //#endregion
 //#region helper
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
-function split_string_once(s,d=as(",")) {
+function split_string_once(s,d=as(","))
+{
 	if(!s) {debugger; return as_any([]);}
-	if(s==="") {
+	if(s==="")
+	{
 		/** @private @type {[]} */
 		let r=[];
 		/** @private @type {any} */
@@ -48,7 +51,8 @@ function split_string_once(s,d=as(",")) {
 		return as(q);
 	}
 	let i=s.indexOf(d);
-	if(i===-1) {
+	if(i===-1)
+	{
 		/** @private @type {[S]} */
 		let r=[s];
 		/** @private @type {any} */
@@ -98,17 +102,21 @@ function assume_assert_is_instanceof(x,c_ty) {x; c_ty;}
  * @param {U} c_ty
  * @returns {X}
  */
-function as_instanceof(x,c_ty) {
+function as_instanceof(x,c_ty)
+{
 	assume_assert_is_instanceof(x,c_ty);
 	return x;
 }
 /** @private @template {{length:number;[x:number]:T[number]}} T */
-class Iterator {
+class Iterator
+{
 	i=0;
 	/** @constructor @public @arg {T} x */
 	constructor(x) {this.x=x;}
-	next() {
-		if(this.i<this.x.length) {
+	next()
+	{
+		if(this.i<this.x.length)
+		{
 			let res={
 				value: this.x[this.i],
 				done: false,
@@ -127,18 +135,22 @@ class Iterator {
 function make_iterator(x) {return new Iterator(x);}
 //#endregion
 //#region ui_plugin & on_${element}
-class CustomEventTarget {
+class CustomEventTarget
+{
 	/** @private @type {J_CustomEventTargetEvents} */
 	_events={};
 	/** @api @public @arg {J_HandlerInfoArgs} args */
-	addEventListener(...args) {
+	addEventListener(...args)
+	{
 		let [type,handler]=args;
 		let ht1=this._events[type];
-		if(ht1) {
+		if(ht1)
+		{
 			/** @type {NonNullable<J_CustomEventTargetEvents[keyof J_CustomEventTargetEvents]>[number][]} */
 			let handlers=ht1;
 			handlers.push(handler);
-		} else {
+		} else
+		{
 			ht1=this._events[type]=[];
 			/** @type {NonNullable<J_CustomEventTargetEvents[keyof J_CustomEventTargetEvents]>[number][]} */
 			let handlers=ht1;
@@ -146,22 +158,26 @@ class CustomEventTarget {
 		}
 	}
 	/** @api @public @arg {J_HandlerInfoArgs} args */
-	removeEventListener(...args) {
+	removeEventListener(...args)
+	{
 		let [type,handler]=args;
 		let event_arr=this._events[type];
 		if(!event_arr) return;
 		if(event_arr.length) return;
-		for(let i=event_arr.length-1;i>=0;i--) {
+		for(let i=event_arr.length-1;i>=0;i--)
+		{
 			let cur=event_arr[i];
 			if(cur!==handler) continue;
 			event_arr.splice(i,1);
 		}
 	}
 	/** @api @public @arg {CustomEventType} event */
-	dispatchEvent(event) {
+	dispatchEvent(event)
+	{
 		let msg_arr=this._events[event.type];
 		if(!msg_arr) return;
-		for(let i=0;i<msg_arr.length;i++) {
+		for(let i=0;i<msg_arr.length;i++)
+		{
 			/** @type {(this: CustomEventTarget, event: CustomEventType) => void} */
 			let cur=as(msg_arr[i]);
 			cur.call(this,event);
@@ -169,14 +185,17 @@ class CustomEventTarget {
 	}
 }
 export_(exports => {exports.CustomEventTarget=CustomEventTarget;});
-class DomObserver extends CustomEventTarget {
+class DomObserver extends CustomEventTarget
+{
 	/** @private @type {Set<MessagePort>} */
 	wait_ports=new Set;
 	/** @private @type {Map<MessagePort,D_ResState[]>} */
 	port_to_resolvers_map=new Map;
 	/** @api @public @arg {MessagePort} port */
-	notify_with_port(port) {
-		if(this.wait_ports.has(port)) {
+	notify_with_port(port)
+	{
+		if(this.wait_ports.has(port))
+		{
 			let list=this.port_to_resolvers_map.get(port);
 			if(!list) return;
 			if(list.every(e => !e.active)) {this.port_to_resolvers_map.set(port,[]);}
@@ -185,11 +204,14 @@ class DomObserver extends CustomEventTarget {
 		};
 	}
 	/** @api @public @arg {MessagePort} port @arg {number} cur_count */
-	wait_for_port(port,cur_count) {
+	wait_for_port(port,cur_count)
+	{
 		this.next_tick_action(port,cur_count);
 		this.wait_ports.add(port);
-		return new Promise((accept) => {
-			let resolver=() => {
+		return new Promise((accept) =>
+		{
+			let resolver=() =>
+			{
 				state.active=false;
 				accept(null);
 			};
@@ -199,7 +221,8 @@ class DomObserver extends CustomEventTarget {
 	}
 	trace=false;
 	/** @private @arg {MessagePort} port @arg {number} count */
-	next_tick_action(port,count) {
+	next_tick_action(port,count)
+	{
 		if(this.trace) console.log("tick_trace",count);
 		port.postMessage(count);
 	}
@@ -208,14 +231,16 @@ let dom_observer=new DomObserver;
 let waiting_for_ytd_player=false;
 /** @private @type {number|null} */
 let current_timeout=null;
-function do_find_video() {
+function do_find_video()
+{
 	if(!audio_gain_controller) return;
 	const element_list=get_html_elements(document,"video");
 	if(element_list.length<=0) return;
 	let list=box_map.get("video-list");
 	/** @private @type {boolean} */
 	let first_run;
-	if(list) {first_run=false;} else {
+	if(list) {first_run=false;} else
+	{
 		first_run=true;
 		list=new HTMLVideoElementArrayBox([]);
 		box_map.set("video-list",list);
@@ -223,30 +248,35 @@ function do_find_video() {
 	let new_elements=get_new_video_element_list(element_list,list);
 	if(new_elements.length<=0) return;
 	audio_gain_controller.attach_element_list(new_elements);
-	if(first_run) {
+	if(first_run)
+	{
 		found_element_count++;
 		if(async_plugin_init.__debug) console.log("found video elements");
 	} else {if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);}
 }
 //#region on element handlers
 /** @private @arg {HTMLElement} element */
-function on_ytcp_app(element) {
+function on_ytcp_app(element)
+{
 	ytcp_app=element;
 	window.ytcp_app=element;
 }
 /** @private @arg {HTMLElement} element */
-function on_ytmusic_app(element) {
+function on_ytmusic_app(element)
+{
 	ytmusic_app=element;
 	window.ytmusic_app=element;
 }
 /** @private @arg {HTMLElement} element */
-function on_ytd_app(element) {
+function on_ytd_app(element)
+{
 	const element_id="ytd-app";
 	if(is_yt_debug_enabled||is_ytd_app_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	window.ytd_app=element;
 	ytd_app=as_instanceof(element,YtdAppElement);
-	ytd_app.addEventListener("yt-navigate-finish",function(event) {
+	ytd_app.addEventListener("yt-navigate-finish",function(event)
+	{
 		const target_element=get_html_elements(document,"ytd-page-manager")[0];
 		if(!target_element) throw new Error("Missing ytd-page-manager when we have ytd-app");
 		on_ytd_page_manager(target_element);
@@ -256,26 +286,33 @@ function on_ytd_app(element) {
 		for(let handler of on_yt_navigate_finish) {handler(real_event);}
 	});
 	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
-	if(document.visibilityState==="visible") {
+	if(document.visibilityState==="visible")
+	{
 		ytd_app.app_is_visible=true;
-		if(do_restart_video_playback) {
+		if(do_restart_video_playback)
+		{
 			fire_on_visibility_change_restart_video_playback();
 			do_restart_video_playback=false;
 		}
 	} else {ytd_app.app_is_visible=false;}
-	ytd_app.ytp_click_cint=setInterval(() => {
+	ytd_app.ytp_click_cint=setInterval(() =>
+	{
 		if(!is_watch_page_active()||!ytd_app) return;
-		if(!ytd_app.app_is_visible) {
+		if(!ytd_app.app_is_visible)
+		{
 			do_restart_video_playback=true;
 			return;
 		}
 	},15*60*1000);
-	document.addEventListener("visibilitychange",function() {
+	document.addEventListener("visibilitychange",function()
+	{
 		if(!ytd_app) throw new Error("No ytd-app");
 		if(!is_watch_page_active()) return;
-		if(document.visibilityState==="visible") {
+		if(document.visibilityState==="visible")
+		{
 			ytd_app.app_is_visible=true;
-			if(do_restart_video_playback) {
+			if(do_restart_video_playback)
+			{
 				fire_on_visibility_change_restart_video_playback();
 				do_restart_video_playback=false;
 			}
@@ -284,7 +321,8 @@ function on_ytd_app(element) {
 }
 //#endregion
 /** @arg {Node|null} element_value @arg {string} tag_name @arg {Document|Element|null} src_element @arg {(x:HTMLElement)=>void} cb */
-function iterate_find_element(element_value,tag_name,src_element,cb) {
+function iterate_find_element(element_value,tag_name,src_element,cb)
+{
 	if(element_value) return;
 	if(!src_element) return;
 	const target_element=get_html_elements(src_element,tag_name)[0];
@@ -309,24 +347,29 @@ let main_page_app=null;
  * @param {(ready_event:FindElement_IsReady,iter_count:number) => Promise<void>} fn1
  * @param {number} iter_count
  */
-function iterate_find_element_async(ready_event,fn1,iter_count) {
+function iterate_find_element_async(ready_event,fn1,iter_count)
+{
 	if(ready_event.type==="done") return;
 	if(ready_event.type==="dom-not-ready") return;
 	if(ready_event.type==="current-page-not-found") return;
 	return fn1(ready_event,iter_count);
 }
 /** @arg {FindElement_IsReady} ready_event @arg {number} iter_count */
-async function find_ytd_watch_flexy(ready_event,iter_count) {
+async function find_ytd_watch_flexy(ready_event,iter_count)
+{
 	const {current_page}=ready_event.detail;
-	if(!current_page.__theater_handler_plugin_attached) {
+	if(!current_page.__theater_handler_plugin_attached)
+	{
 		current_page.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 		current_page.__theater_handler_plugin_attached=true;
 	}
 	if(is_yt_debug_enabled) console.log("PageManager:current_page:"+current_page.tagName.toLowerCase());
-	if(current_page.tagName.toLowerCase()!="ytd-watch-flexy") {
+	if(current_page.tagName.toLowerCase()!="ytd-watch-flexy")
+	{
 		if(iter_count>100) {console.log("found current_page [%s] at iter=%o",current_page.tagName.toLowerCase(),iter_count);}
 		/** @private @type {Promise<void>} */
-		let promise=new Promise((accept,reject) => {
+		let promise=new Promise((accept,reject) =>
+		{
 			if(!ytd_page_manager) return reject(new Error("missing data"));
 			ytd_page_manager.addEventListener(
 				"yt-page-type-changed",
@@ -348,7 +391,8 @@ async function find_ytd_watch_flexy(ready_event,iter_count) {
  * @param {number} cur_count
  * @returns {Promise<IterationDecision>}
  */
-async function find_from_ytd_app(event,iter_count,obj,cur_count) {
+async function find_from_ytd_app(event,iter_count,obj,cur_count)
+{
 	iterate_find_element(ytd_page_manager,"ytd-page-manager",document,on_ytd_page_manager);
 	iterate_find_element(yt_playlist_manager,"yt-playlist-manager",document,event.detail.elements.on_yt_playlist_manager);
 	const find_event=create_find_event_for_ytd_watch_flexy();
@@ -358,7 +402,8 @@ async function find_from_ytd_app(event,iter_count,obj,cur_count) {
 	do_find_video();
 
 	await obj.wait_for_port(event.port,cur_count);
-	if(found_element_count>=expected_element_count) {
+	if(found_element_count>=expected_element_count)
+	{
 		obj.dispatchEvent({...event,type: "plugin-activate"});
 		return {type: "break"};
 	}
@@ -372,7 +417,8 @@ async function find_from_ytd_app(event,iter_count,obj,cur_count) {
 	return {type: "break"};
 }
 /** @returns {MaybeReadyEvent} */
-function create_find_event_for_ytd_watch_flexy() {
+function create_find_event_for_ytd_watch_flexy()
+{
 	if(ytd_watch_flexy) return {type: "done"};
 	if(!ytd_page_manager) return {type: "dom-not-ready"};
 	let current_page=ytd_page_manager.getCurrentPage();
@@ -380,14 +426,17 @@ function create_find_event_for_ytd_watch_flexy() {
 	return {type: "ready",detail: {current_page,ytd_page_manager}};
 }
 /** @private @arg {AsyncPluginInitEvent} event */
-async function async_plugin_init(event) {
+async function async_plugin_init(event)
+{
 	let plugin_state={};
 	plugin_state.show_interesting_elements=true;
 	let cur_count=1;
 	let obj=dom_observer;
 	let iter_count=0;
-	try {
-		while(true) {
+	try
+	{
+		while(true)
+		{
 			if(iter_count!==0) {await new Promise((soon) => setTimeout(soon,40));}
 			iter_count++;
 			VolumeRange.create_if_needed();
@@ -398,8 +447,10 @@ async function async_plugin_init(event) {
 				if(!window.Polymer.Class) break x;
 				plugin_state.polymer_loaded=true;
 			}
-			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body) {
-				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => {
+			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body)
+			{
+				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e =>
+				{
 					let e_tn=e.tagName;
 					let lower_tagName=e_tn.toLowerCase();
 					if(e_tn=="SPAN") return false;
@@ -415,8 +466,8 @@ async function async_plugin_init(event) {
 					if(e.id==="home-page-skeleton") return false;
 					// cspell: ignore skeletonhidden
 					if(e.id==="watch-page-skeleton"&&(
-						e.classList.value==="watch-skeletonhidden"||
-						e.classList.value==="watch-skeleton"
+						e.classList[0]==="watch-skeletonhidden"||
+						e.classList[0]==="watch-skeleton"
 					)) return false;
 					if(e.id==="player"&&e.classList.value==="skeleton flexy") return false;
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
@@ -427,7 +478,8 @@ async function async_plugin_init(event) {
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
-				if(interesting_body_elements.length===1) {main_page_app=interesting_body_elements[0];} else {
+				if(interesting_body_elements.length===1) {main_page_app=interesting_body_elements[0];} else
+				{
 					console.log(interesting_body_elements);
 					debugger;
 				}
@@ -442,17 +494,21 @@ async function async_plugin_init(event) {
 			// BEGIN(ytmusic-app): dispatchEvent({type: "find-ytmusic-app"});
 			iterate_find_element(ytmusic_app,"ytmusic-app",document,on_ytmusic_app);
 			// END(ytmusic-app): obj.dispatchEvent({type: "ytmusic-app"});
-			if(ytd_app) {
+			if(ytd_app)
+			{
 				let do_break=await find_from_ytd_app(event,iter_count,obj,cur_count);
 				if(do_break.type==="break") break;
 				if(do_break.type==="continue") continue;
-			} else if(ytcp_app) {
+			} else if(ytcp_app)
+			{
 				// handle creator page
 				break;
-			} else if(ytmusic_app) {
+			} else if(ytmusic_app)
+			{
 				// handle ytmusic app
 				break;
-			} else if(main_page_app&&!ytd_app) {
+			} else if(main_page_app&&!ytd_app)
+			{
 				console.log("[found.main_page_app]",main_page_app);
 				break;
 			}
@@ -493,15 +549,18 @@ user-select: none;
 width: 10px;
 `;
 const is_ytd_app_debug_enabled=false;
-class VolumeRange {
+class VolumeRange
+{
 	static enabled=true;
-	static create_if_needed() {
+	static create_if_needed()
+	{
 		if(!this.enabled) return;
 		if(!ytd_app) return;
 		if(!ytd_app.__shady_children.masthead) return;
 		let player_masthead=ytd_app.__shady_children.masthead;
 		if(!player_masthead.$) return;
-		if(!ytd_app.volume_range&&audio_gain_controller) {
+		if(!ytd_app.volume_range&&audio_gain_controller)
+		{
 			if(is_yt_debug_enabled) console.log("create VolumeRange");
 			document.head.append(volume_plugin_style_element);
 			let volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
@@ -512,7 +571,8 @@ class VolumeRange {
 		}
 	}
 	/** @api @public @arg {number} min @arg {number} max @arg {number} overdrive @arg {AudioGainController} gain_controller */
-	constructor(min,max,overdrive,gain_controller) {
+	constructor(min,max,overdrive,gain_controller)
+	{
 		this.use_cache=true;
 		this.max=max;
 		this.min=min;
@@ -520,15 +580,18 @@ class VolumeRange {
 		this.gain_controller=gain_controller;
 	}
 	/** @private @arg {number} gain */
-	setGain(gain) {
+	setGain(gain)
+	{
 		this.updateRangeElement(gain);
 		this.gain_controller.setGain(gain);
 	}
 	getGain() {return this.gain_controller.getGain();}
-	calculateGain() {
+	calculateGain()
+	{
 		if(!this.use_cache) return 1;
 		let c_gain=this.getGain();
-		if(!(typeof c_gain==="object"||typeof c_gain==="number")) {
+		if(!(typeof c_gain==="object"||typeof c_gain==="number"))
+		{
 			this.setGain(1);
 			return 1;
 		}
@@ -539,12 +602,15 @@ class VolumeRange {
 	}
 	max_compressor_reduction=-0.00011033167538698763;
 	/** @private @arg {KeyboardEvent} event */
-	onKeyDown(event) {
+	onKeyDown(event)
+	{
 		if(!this.range_element) return;
 		this.gain_controller.onKeyDown(event);
-		if(event.key=="f") {
+		if(event.key=="f")
+		{
 			var compressor_reduction_factor=this.gain_controller.dynamics_compressor.reduction;
-			if(compressor_reduction_factor>0) {
+			if(compressor_reduction_factor>0)
+			{
 				console.log("+",compressor_reduction_factor);
 				return;
 			}
@@ -558,24 +624,30 @@ class VolumeRange {
 		}
 	}
 	/** @private @arg {number} new_gain */
-	updateRangeElement(new_gain) {
+	updateRangeElement(new_gain)
+	{
 		if(!this.range_element) return;
 		this.range_element.value=""+Math.floor(this.max*new_gain);
 	}
 	/** @private @arg {Element} view_parent */
-	attach_to_element(view_parent) {
-		if(!this.view_div) {
+	attach_to_element(view_parent)
+	{
+		if(!this.view_div)
+		{
 			let element=document.getElementById("rh_css");
-			if(!element) {
+			if(!element)
+			{
 				element=document.createElement("div");
 				element.id="rh_css";
 			}
 			this.view_div=element;
 		}
-		if(!this.range_element) {
+		if(!this.range_element)
+		{
 			let element=document.getElementById("i_r_css");
 			if(element instanceof HTMLInputElement) this.range_element=element;
-			if(!this.range_element) {
+			if(!this.range_element)
+			{
 				if(element) element.remove();
 				this.range_element=document.createElement("input");
 				this.range_element.type="range";
@@ -585,7 +657,8 @@ class VolumeRange {
 				range_style.marginLeft="0";
 				range_style.marginRight="0";
 			}
-			this.range_element.oninput=() => {
+			this.range_element.oninput=() =>
+			{
 				if(!this.range_element) return;
 				let range_value=Number.parseInt(this.range_element.value,10);
 				this.setGain(range_value/this.max);
@@ -603,14 +676,16 @@ class VolumeRange {
 /** @private @arg {string|URL} url */
 function to_url(url) {if(url instanceof URL) {return url;} else {return new URL(url);} }
 /** @private @arg {Error} rejection @returns {Promise<Response>} */
-function fetch_rejection_handler(rejection) {
+function fetch_rejection_handler(rejection)
+{
 	if(rejection instanceof DOMException) {throw rejection;}
 	if(rejection instanceof TypeError) {throw rejection;}
 	console.log("fetch_rejection_handler");
 	console.log("\t",rejection);
 	throw rejection;
 }
-class PropertyHandler {
+class PropertyHandler
+{
 	/** @private @type {PropertyHandler[]} */
 	static instances=[];
 	/** @private @type {Map<{}, {}>} */
@@ -618,22 +693,27 @@ class PropertyHandler {
 	/** @private @type {{value: any}} */
 	override_value={value: void 0};
 	/** @constructor @public @arg {(args: [any, any, any]) => any} on_target_apply_callback */
-	constructor(on_target_apply_callback) {
+	constructor(on_target_apply_callback)
+	{
 		this.on_target_apply_callback=on_target_apply_callback;
 		PropertyHandler.instances.push(this);
 	}
 	get() {return this.override_value.value;}
 	/** @api @public @arg {any} value */
-	set(value) {
-		if(value===void 0||value===null) {
+	set(value)
+	{
+		if(value===void 0||value===null)
+		{
 			this.override_value.value=value;
 			return;
 		}
-		if(this.proxy_map.has(value)) {
+		if(this.proxy_map.has(value))
+		{
 			let proxy_override=this.proxy_map.get(value);
 			if(!proxy_override) return;
 			this.override_value.value=proxy_override;
-		} else {
+		} else
+		{
 			let t=this;
 			let proxy_override=new Proxy(value,{apply(...arr) {return t.on_target_apply_callback(arr);} });
 			this.proxy_map.set(value,proxy_override);
@@ -642,15 +722,18 @@ class PropertyHandler {
 	}
 }
 /** @private @arg {{}} object @arg {PropertyKey} property @arg {PropertyHandler} property_handler */
-function override_prop(object,property,property_handler) {
+function override_prop(object,property,property_handler)
+{
 	Object.defineProperty(object,property,{
 		get() {return property_handler.get();},
 		set(value) {return property_handler.set(value);}
 	});
 }
 override_prop(window,"getInitialCommand",new PropertyHandler((/** @private @type {[any,any,any]} */args) => Reflect.apply(...args)));
-class ObjectInfo {
-	constructor() {
+class ObjectInfo
+{
+	constructor()
+	{
 		let [gr_0,gr_1,gr_2]="{{:,:}}".split(":");
 		this.chunk_beg=gr_0;
 		this.chunk_sep=gr_1;
@@ -659,7 +742,8 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-class R_HandleRichGrid_Base {
+class R_HandleRichGrid_Base
+{
 	enable_logging=false;
 	/** @readonly */
 	class_name="HandleRichGridRenderer";
@@ -668,10 +752,13 @@ class R_HandleRichGrid_Base {
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
 	constructor(x) {this.rendererContentItemArray=new HandleRendererContentItemArray(x);}
 	/** @handler @public @arg {string} path @arg {Todo_D_RichGrid} renderer */
-	richGridRenderer(path,renderer) {
+	richGridRenderer(path,renderer)
+	{
 		if(this.enable_logging) console.log("run handler richGridRenderer");
-		if("masthead" in renderer) {
-			if(renderer.masthead.videoMastheadAdV3Renderer) {
+		if("masthead" in renderer)
+		{
+			if(renderer.masthead.videoMastheadAdV3Renderer)
+			{
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
 				/** @private @type {{masthead?: {}}&Omit<typeof renderer,"masthead">} */
 				let no_ad_renderer=renderer;
@@ -679,7 +766,8 @@ class R_HandleRichGrid_Base {
 				no_ad_renderer.masthead=masthead;
 			}
 		}
-		if(renderer.contents) {
+		if(renderer.contents)
+		{
 			if(this.enable_logging) console.log("on_contents",path);
 			let filtered=this.rendererContentItemArray.replace_array(renderer.contents);
 			if(filtered.length>0) {renderer.contents=filtered;}
@@ -687,15 +775,18 @@ class R_HandleRichGrid_Base {
 	}
 }
 // based on https://web.archive.org/web/20190504040958/http://ntt.cc/2008/01/19/base64-encoder-decoder-with-javascript.html
-class Base64Binary {
+class Base64Binary
+{
 	/** @constructor @public @arg {string} key_str @arg {RegExp} key_regexp */
-	constructor(key_str,key_regexp) {
+	constructor(key_str,key_regexp)
+	{
 		this._keyStr=key_str;
 		this.key_regexp=key_regexp;
 	}
 	/* will return a  Uint8Array type */
 	/** @api @public @arg {string} input */
-	decodeByteArray(input) {
+	decodeByteArray(input)
+	{
 		let real_len=input.length-1;
 		while(real_len>=0&&input[real_len]==="=") real_len--;
 		var byte_len=((real_len+1)/4)*3|0;
@@ -707,20 +798,23 @@ class Base64Binary {
 	}
 	decoder=new TextDecoder();
 	/** @api @public @arg {string} input */
-	decode_str(input) {
+	decode_str(input)
+	{
 		let y=this.decodeByteArray(input);
 		if(!y) return null;
 		return this.decoder.decode(y);
 	}
 	/** @arg {Uint8Array} binary_arr */
-	encode(binary_arr) {
+	encode(binary_arr)
+	{
 		let output="";
 		let chr1,chr2,chr3;
 		let enc1,enc2,enc3,enc4;
 		chr1=chr2=chr3=0;
 		enc1=enc2=enc3=enc4=0;
 		let i=0;
-		do {
+		do
+		{
 			chr1=binary_arr[i++];
 			chr2=binary_arr[i++];
 			chr3=binary_arr[i++];
@@ -728,15 +822,18 @@ class Base64Binary {
 			enc2=((chr1&3)<<4)|(chr2>>4);
 			enc3=((chr2&15)<<2)|(chr3>>6);
 			enc4=chr3&63;
-			if(isNaN(chr2)) {
+			if(isNaN(chr2))
+			{
 				output+=this._keyStr.charAt(enc1);
 				output+=this._keyStr.charAt(enc2);
-			} else if(isNaN(chr3)) {
+			} else if(isNaN(chr3))
+			{
 				output+=this._keyStr.charAt(enc1);
 				output+=this._keyStr.charAt(enc2);
 				output+=this._keyStr.charAt(enc3);
 				enc4=64;
-			} else {
+			} else
+			{
 				output+=this._keyStr.charAt(enc1);
 				output+=this._keyStr.charAt(enc2);
 				output+=this._keyStr.charAt(enc3);
@@ -748,7 +845,8 @@ class Base64Binary {
 		return output;
 	}
 	/** @private @arg {string} input @arg {Uint8Array} binary_arr */
-	decode(input,binary_arr) {
+	decode(input,binary_arr)
+	{
 		var byte_len=(input.length/4)*3|0;
 		var chr1,chr2,chr3;
 		var enc1,enc2,enc3,enc4;
@@ -757,7 +855,8 @@ class Base64Binary {
 
 		let prev_len=input.length;
 		let new_input=input.replace(this.key_regexp,"");
-		if(prev_len!==new_input.length) {
+		if(prev_len!==new_input.length)
+		{
 			console.log("removed %o non base64 chars",prev_len-new_input.length);
 			console.log("base64_str: \"%s\"",input);
 			debugger;
@@ -765,7 +864,8 @@ class Base64Binary {
 		}
 		input=new_input;
 
-		for(i=0;i<byte_len;i+=3) {
+		for(i=0;i<byte_len;i+=3)
+		{
 			//get the 3 octets in 4 ascii chars
 			enc1=this._keyStr.indexOf(input.charAt(j++));
 			enc2=this._keyStr.indexOf(input.charAt(j++));
@@ -786,13 +886,16 @@ class Base64Binary {
 }
 let bigint_val_32=new Uint32Array(2);
 let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
-class LongBits {
+class LongBits
+{
 	/** @constructor @public @arg {number} a @arg {number} b */
-	constructor(a,b) {
+	constructor(a,b)
+	{
 		this.lo=a;
 		this.hi=b;
 	}
-	toBigInt() {
+	toBigInt()
+	{
 		bigint_val_32[0]=this.lo;
 		bigint_val_32[1]=this.hi;
 		return bigint_buf[0];
@@ -800,22 +903,26 @@ class LongBits {
 }
 /** @private @arg {MyReader} reader @arg {number} [writeLength] */
 function indexOutOfRange(reader,writeLength) {return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);}
-class MyReader {
+class MyReader
+{
 	noisy_log_level=false;
 	/** @constructor @public @arg {Uint8Array} buf  */
-	constructor(buf) {
+	constructor(buf)
+	{
 		this.buf=buf;
 		this.pos=0;
 		this.len=buf.length;
 		this.last_pos=0;
 	}
 	/** @api @public @arg {number} off */
-	offset(off) {
+	offset(off)
+	{
 		this.pos+=off;
 		this.last_pos=this.pos;
 	}
 	/** @api @public @arg {number} size */
-	read_bytes(size) {
+	read_bytes(size)
+	{
 		let ret=this.buf.slice(this.pos,this.pos+size);
 		this.pos+=size;
 		return ret;
@@ -833,14 +940,16 @@ class MyReader {
 	/** @private @type {boolean} */
 	failed=false;
 	/** @private @arg {number} [size] @arg {number} [pos] */
-	read_any(size,pos) {
+	read_any(size,pos)
+	{
 		let was_failed=this.failed;
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
 		if(pos!==void 0) this.pos=pos;
 		if(size===void 0) {this.cur_len=this.len;} else {this.cur_len=this.pos+size;}
 		this.failed=false;
-		try {return this.read_any_impl();} finally {
+		try {return this.read_any_impl();} finally
+		{
 			this.pos=prev_pos;
 			this.cur_len=prev_len;
 			this.failed=was_failed;
@@ -848,15 +957,18 @@ class MyReader {
 	}
 	cur_len=0;
 	/** @private */
-	read_any_impl() {
+	read_any_impl()
+	{
 		this.failed=false;
 		/** @private @type {D_ProtobufWireFormat[]} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
-		for(;this.pos<this.cur_len;loop_count++) {
+		for(;this.pos<this.cur_len;loop_count++)
+		{
 			let cur_byte=this.uint32();
-			if(cur_byte===null) {
+			if(cur_byte===null)
+			{
 				this.failed=true;
 				break;
 			}
@@ -865,7 +977,8 @@ class MyReader {
 			let first_num=this.skipTypeEx(fieldId,wireType);
 			data.push([fieldId,wireType,first_num]);
 			if(this.failed) {break;}
-			if(log_slow&&loop_count>128) {
+			if(log_slow&&loop_count>128)
+			{
 				console.log("taking a long time to read protobuf data");
 				log_slow=false;
 			}
@@ -873,7 +986,8 @@ class MyReader {
 		}
 		/** @private @type {D_ProtobufObj[]} */
 		let res_arr=[];
-		for(let i=0;i<data.length;i++) {
+		for(let i=0;i<data.length;i++)
+		{
 			let cur=data[i];
 			let [_fieldId,_type,decoded_data]=cur;
 			for(let item of decoded_data) {res_arr.push(item);}
@@ -881,22 +995,27 @@ class MyReader {
 		return res_arr;
 	}
 	/** @private @template T @arg {number} pos @arg {()=>T} f */
-	revert_to(pos,f) {
+	revert_to(pos,f)
+	{
 		let prev_pos=this.pos;
 		this.pos=pos;
 		try {return f();} finally {this.pos=prev_pos;}
 	}
 	/** @private @arg {number} [length] */
-	skip(length) {
+	skip(length)
+	{
 		this.last_pos=this.pos;
 		let start_pos=this.pos;
-		if(typeof length==="number") {
+		if(typeof length==="number")
+		{
 			/* istanbul ignore if */
 			if(this.pos+length>this.len)
 				throw indexOutOfRange(this,length);
 			this.pos+=length;
-		} else {
-			do {
+		} else
+		{
+			do
+			{
 				/* istanbul ignore if */
 				if(this.pos>=this.len)
 					throw indexOutOfRange(this);
@@ -904,7 +1023,8 @@ class MyReader {
 		}
 		if(length!==void 0) {if(this.noisy_log_level) console.log("asked to skip %o bytes",this.pos-start_pos);} else {if(this.noisy_log_level) console.log("asked to skip %o bytes of VarInt",this.pos-start_pos);}
 	}
-	uint32() {
+	uint32()
+	{
 		this.last_pos=this.pos;
 		let ret=this.do_uint32_read();
 		let diff=this.pos-this.last_pos;
@@ -912,20 +1032,24 @@ class MyReader {
 		if(ret===null) throw new Error("Failed to read uint32");
 		return ret;
 	}
-	read_varint() {
+	read_varint()
+	{
 		let sa=[this.buf[this.pos]&127];
-		while(true) {
+		while(true)
+		{
 			if(this.buf[this.pos++]<128) break;
 			sa.push(this.buf[this.pos]&127);
 			if(this.pos>this.len) return null;
 		}
 		return sa;
 	}
-	do_uint32_read() {
+	do_uint32_read()
+	{
 		let varint_arr=this.read_varint();
 		if(varint_arr===null) return null;
 		/** @private @arg {number} r @arg {[index:number,num:number]} v */
-		function do_reduce_varint(r,[k,e]) {
+		function do_reduce_varint(r,[k,e])
+		{
 			let mul_pos=2**(7*k);
 			let mul_res=e*mul_pos;
 			let num_ret=r+mul_res;
@@ -937,7 +1061,8 @@ class MyReader {
 		let varint_entries=varint_arr.map(into_entries);
 		/** @private @type {number|null} */
 		let res=0;
-		for(let i=0;i<varint_entries.length;i++) {
+		for(let i=0;i<varint_entries.length;i++)
+		{
 			let cur_res=do_reduce_varint(res,varint_entries[i]);
 			if(cur_res===null) return null;
 			res=cur_res;
@@ -945,11 +1070,13 @@ class MyReader {
 		return res;
 	}
 	/** @returns {[number[],bigint]|null} */
-	uint64() {
+	uint64()
+	{
 		this.last_pos=this.pos;
 		let u64_varint=this.read_varint();
 		if(!u64_varint) return null;
-		let ret=u64_varint.map((e,n) => [n,e]).reduce((acc,[k,e]) => {
+		let ret=u64_varint.map((e,n) => [n,e]).reduce((acc,[k,e]) =>
+		{
 			let k_=BigInt(k);
 			let e_=BigInt(e);
 			let mul_pos=2n**(7n*k_);
@@ -958,12 +1085,15 @@ class MyReader {
 		},0n);
 		return [u64_varint,ret];
 	}
-	readLongVarint() {
+	readLongVarint()
+	{
 		// tends to deopt with local vars for octet etc.
 		var bits=new LongBits(0,0);
 		var i=0;
-		if(this.len-this.pos>4) { // fast route (lo)
-			for(;i<4;++i) {
+		if(this.len-this.pos>4)
+		{ // fast route (lo)
+			for(;i<4;++i)
+			{
 				// 1st..4th
 				bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
 				if(this.buf[this.pos++]<128)
@@ -975,8 +1105,10 @@ class MyReader {
 			if(this.buf[this.pos++]<128)
 				return bits;
 			i=0;
-		} else {
-			for(;i<3;++i) {
+		} else
+		{
+			for(;i<3;++i)
+			{
 				/* istanbul ignore if */
 				if(this.pos>=this.len) throw new Error("indexOutOfRange");
 				// 1st..3th
@@ -988,15 +1120,19 @@ class MyReader {
 			bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
 			return bits;
 		}
-		if(this.len-this.pos>4) { // fast route (hi)
-			for(;i<5;++i) {
+		if(this.len-this.pos>4)
+		{ // fast route (hi)
+			for(;i<5;++i)
+			{
 				// 6th..10th
 				bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
 				if(this.buf[this.pos++]<128)
 					return bits;
 			}
-		} else {
-			for(;i<5;++i) {
+		} else
+		{
+			for(;i<5;++i)
+			{
 				if(this.pos>=this.len)
 					throw new Error("indexOutOfRange");
 				// 6th..10th
@@ -1008,7 +1144,8 @@ class MyReader {
 		/* istanbul ignore next */
 		throw Error("invalid varint encoding");
 	}
-	readFixed64() {
+	readFixed64()
+	{
 		if(this.pos+8>this.len)
 			throw indexOutOfRange(this,8);
 		return new LongBits(
@@ -1017,19 +1154,22 @@ class MyReader {
 		).toBigInt();
 	}
 	/** @private @arg {Uint8Array} buf @arg {number} end */
-	readFixed32_end(buf,end) {
+	readFixed32_end(buf,end)
+	{
 		return (buf[end-4]
 			|buf[end-3]<<8
 			|buf[end-2]<<16
 			|buf[end-1]<<24)>>>0;
 	}
-	fixed64() {
+	fixed64()
+	{
 		this.last_pos=this.pos;
 		return this.readFixed64();
 	}
 	/** @private @arg {number} writeLength */
 	indexOutOfRange(writeLength) {return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);}
-	fixed32() {
+	fixed32()
+	{
 		/* istanbul ignore if */
 		if(this.pos+4>this.len)
 			throw this.indexOutOfRange(4);
@@ -1037,9 +1177,11 @@ class MyReader {
 		return this.readFixed32_end(this.buf,this.pos+=4);
 	}
 	/** @returns {[number,number]|null} */
-	read_field_description() {
+	read_field_description()
+	{
 		let cur_byte=this.uint32();
-		if(!cur_byte) {
+		if(!cur_byte)
+		{
 			this.failed=true;
 			return null;
 		}
@@ -1047,16 +1189,20 @@ class MyReader {
 	}
 	log_range_error=false;
 	/** @private @arg {number} fieldId @arg {number} wireType */
-	skipTypeEx(fieldId,wireType) {
+	skipTypeEx(fieldId,wireType)
+	{
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
 		/** @private @type {D_ProtobufObj[]} */
 		let first_num=[];
-		switch(wireType) {
+		switch(wireType)
+		{
 			case 0:
 				/** @private @type {[true,[number[], bigint],number]|[false,null,number]} */
-				let revert_res=this.revert_to(pos_start,() => {
-					try {
+				let revert_res=this.revert_to(pos_start,() =>
+				{
+					try
+					{
 						let u64=this.uint64();
 						if(u64===null) return [false,u64,this.pos];
 						return [true,u64,this.pos];
@@ -1070,16 +1216,20 @@ class MyReader {
 					first_num.push(["error",fieldId]);
 					break;
 				}
-				if(revert_res[0]&&num32===null) {
+				if(revert_res[0]&&num32===null)
+				{
 					let [,num64,new_pos]=revert_res;
 					first_num.push(["data64",fieldId,...num64]);
 					this.pos=new_pos;
-				} else if(num32===null) {
+				} else if(num32===null)
+				{
 					this.failed=true;
 					first_num.push(["error",fieldId]);
-				} else if(revert_res[0]) {
+				} else if(revert_res[0])
+				{
 					let [,num64,new_pos]=revert_res;
-					if(num64[1]!==BigInt(num32)) {
+					if(num64[1]!==BigInt(num32))
+					{
 						first_num.push(["data64",fieldId,...num64]);
 						this.pos=new_pos;
 					} else {first_num.push(["data32",fieldId,num32]);}
@@ -1089,7 +1239,8 @@ class MyReader {
 			case 1:
 				let last_pos=this.pos;
 				let f64=this.fixed64();
-				if(this.pos>this.cur_len) {
+				if(this.pos>this.cur_len)
+				{
 					first_num.push(['error',last_pos]);
 					break;
 				}
@@ -1097,12 +1248,14 @@ class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
-				if(size===null) {
+				if(size===null)
+				{
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 					break;
 				}
-				if(this.pos+size>this.cur_len) {
+				if(this.pos+size>this.cur_len)
+				{
 					if(this.log_range_error) console.log("range error at",this.pos,fieldId,"size is too big",size);
 					first_num.push(["error",fieldId]);
 					this.failed=true;
@@ -1116,8 +1269,10 @@ class MyReader {
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 				}
-				x: if(res) {
-					if(res.findIndex(([t]) => t==="error")>-1) {
+				x: if(res)
+				{
+					if(res.findIndex(([t]) => t==="error")>-1)
+					{
 						first_num.push(["child",fieldId,sub_buffer,null]);
 						break x;
 					}
@@ -1127,9 +1282,11 @@ class MyReader {
 			} break;
 			case 3: {
 				let res;
-				while((wireType=(res=this.uint32())&7)!==4) {
+				while((wireType=(res=this.uint32())&7)!==4)
+				{
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
-					if(this.failed) {
+					if(this.failed)
+					{
 						first_num.push(["error",res>>>3]);
 						break;
 					}
@@ -1152,12 +1309,15 @@ const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmno
 let blob_create_args_arr=[];
 /** @private @type {any[]} */
 let mk_tree_arr=[];
-function act_found_create_yt_player(/** @private @type {{ data: { type: string; data: [any, any, any]; }; }} */ event) {
+function act_found_create_yt_player(/** @private @type {{ data: { type: string; data: [any, any, any]; }; }} */ event)
+{
 	function plr_raw_replace_embed() {return;}
 	let plr_raw_replace_debug=true;
-	function plr_raw_replace(/** @private @type {{ args: { raw_player_response: any; }; }} */ player_config) {
+	function plr_raw_replace(/** @private @type {{ args: { raw_player_response: any; }; }} */ player_config)
+	{
 		let raw_plr_rsp=player_config.args.raw_player_response;
-		if(raw_plr_rsp===void 0) {
+		if(raw_plr_rsp===void 0)
+		{
 			console.log("yt_cfg",player_config);
 			return;
 		}
@@ -1172,23 +1332,28 @@ function act_found_create_yt_player(/** @private @type {{ data: { type: string; 
 	let [,,value]=event.data.data;
 	let [,player_config,static_config]=value;
 	if(!player_config) return;
-	if(static_config.isEmbed) {
+	if(static_config.isEmbed)
+	{
 		void player_config;
 		plr_raw_replace_embed();
 	} else {plr_raw_replace(player_config);}
 }
 let locked_set=new WeakMap();
 let ud_func=new WeakSet();
-class OnWindowProperty {
-	constructor() {
+class OnWindowProperty
+{
+	constructor()
+	{
 		/** @private @type {{[str:string]:any}} */
 		this._events={};
 	}
 	/** @api @public @arg {{ type: any; data?: { type: any; data: any[]; }; }} ev */
-	dispatchEvent(ev) {
+	dispatchEvent(ev)
+	{
 		let evt=this._events[ev.type].slice();
 		if(evt===undefined) return;
-		for(let i=0;i<evt.length;i++) {
+		for(let i=0;i<evt.length;i++)
+		{
 			let hnd=evt[i];
 			if(hnd.disposed) continue;
 			let handler=hnd.handler;
@@ -1196,12 +1361,15 @@ class OnWindowProperty {
 		}
 	}
 	/** @api @public @arg {string|number} ev_name @arg {any} fn */
-	removeEventListener(ev_name,fn) {
+	removeEventListener(ev_name,fn)
+	{
 		let evt=this._events[ev_name];
 		if(evt===undefined) return;
-		for(let i=0;i<evt.length;i++) {
+		for(let i=0;i<evt.length;i++)
+		{
 			let ce=evt[i];
-			if(!ce.disposed&&ce.handler===fn) {
+			if(!ce.disposed&&ce.handler===fn)
+			{
 				evt.splice(i,1);
 				i-=1;
 			}
@@ -1211,7 +1379,8 @@ class OnWindowProperty {
 	addEventListener(ev_name,fn) {(this._events[ev_name]??=[]).push({disposed: false,handler: fn});}
 }
 /** @private @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc @arg {string} ms @arg {{}} obj @arg {string} [mc] */
-function walk_key_path(cc,ms,obj,mc) {
+function walk_key_path(cc,ms,obj,mc)
+{
 	let fs;
 	let mt=ms.match(cc.value_tr);
 	if(mt!==null) {fs=mt[0];} else {return mc;}
@@ -1219,7 +1388,8 @@ function walk_key_path(cc,ms,obj,mc) {
 	let dx=f2.indexOf(".");
 	let pq;
 	if(dx>-1) {pq=f2.slice(0,dx);} else {pq=f2;}
-	if(pq.length>0) {
+	if(pq.length>0)
+	{
 		if((cc.value_tr+"."+pq)==mc) {return cc.value_tr+"."+pq;}
 		new MKState({},obj,pq,`${cc.value_tr}.${pq}`,cc.noisy_flag).run();
 		return cc.value_tr+"."+pq;
@@ -1228,7 +1398,8 @@ function walk_key_path(cc,ms,obj,mc) {
 }
 let win_watch=new OnWindowProperty;
 /** @private @arg {any} val @arg {MKState} cc */
-function new_pv_fn(val,cc, /** @private @type {any[]} */ ...args) {
+function new_pv_fn(val,cc, /** @private @type {any[]} */ ...args)
+{
 	let ret;
 	let act_cb_obj={fired: false,ret: ret};
 	win_watch.dispatchEvent({type: "new_window_object",data: {type: cc.value_tr,data: [cc.function_value,val,args,act_cb_obj]}});
@@ -1236,21 +1407,25 @@ function new_pv_fn(val,cc, /** @private @type {any[]} */ ...args) {
 	return ret;
 }
 /** @private @arg {MKState} cc */
-function on_mk_function_property(cc) {
+function on_mk_function_property(cc)
+{
 	/** @this {{}} */
 	function with_this(/** @private @type {any} */ ...args) {new_pv_fn(this,cc,...args);}
 	cc.value=with_this;
 	ud_func.add(cc.value);
 }
 const ghost_symbol=Symbol.for("ghost");
-class WithGhostSymbol {
+class WithGhostSymbol
+{
 	/** @private @type {boolean|undefined} */
 	[ghost_symbol]=true;
 }
-class MKState {
+class MKState
+{
 	[ghost_symbol]=true;
 	/** @constructor @public @arg {{}} value @arg {PropertyKey} property_key @arg {object} target @arg {string} property_path @arg {boolean} noisy */
-	constructor(value,target,property_key,property_path,noisy) {
+	constructor(value,target,property_key,property_path,noisy)
+	{
 		this.value=value;
 		this.property_key=property_key;
 		this.target=target;
@@ -1265,16 +1440,20 @@ class MKState {
 	noisy=false;
 }
 /** @private @arg {MKState} cc @arg {{}} obj */
-function on_mk_new_property(cc,obj) {
-	if(obj instanceof Function) {
+function on_mk_new_property(cc,obj)
+{
+	if(obj instanceof Function)
+	{
 		cc.function_value=obj;
 		on_mk_function_property(cc);
-	} else {
+	} else
+	{
 		let mc;
 		let ck_i=0;
 		let ck_str=mk_tree_arr[ck_i];
 		mc=walk_key_path(cc,ck_str,obj,mc);
-		for(;ck_i<mk_tree_arr.length;ck_i++) {
+		for(;ck_i<mk_tree_arr.length;ck_i++)
+		{
 			ck_str=mk_tree_arr[ck_i];
 			mc=walk_key_path(cc,ck_str,obj,mc);
 		}
@@ -1282,12 +1461,14 @@ function on_mk_new_property(cc,obj) {
 	}
 }
 /** @private @arg {MKState} cc @arg {{}} obj */
-function on_mk_property_set(cc,obj) {
+function on_mk_property_set(cc,obj)
+{
 	if(ud_func.has(obj)) cc.value=obj;
 	if(as_instanceof(obj,WithGhostSymbol)[ghost_symbol]===undefined) {on_mk_new_property(cc,obj);} else {cc.value=obj;}
 }
 /** @private @arg {MKState} cc */
-function mk_run(cc) {
+function mk_run(cc)
+{
 	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {return cc;}
 	Object.defineProperty(cc.target,cc.property_key,{
 		configurable: true,
@@ -1302,14 +1483,16 @@ let yta_str="yt.player.Application";
 mk_tree_arr.push(yta_str+".create",yta_str+".createAlternate");
 new MKState({},window,"yt","yt",true).run();
 win_watch.addEventListener("new_window_object",act_found_create_yt_player);
-class YtdPageManagerElement extends HTMLElement {
+class YtdPageManagerElement extends HTMLElement
+{
 	/** @returns {YtCurrentPage|undefined} */
 	getCurrentPage() {throw new Error();}
 }
 /** @private @type {YtdPageManagerElement|null} */
 let ytd_page_manager=null;
 /** @private @arg {HTMLElement} element */
-function on_ytd_page_manager(element) {
+function on_ytd_page_manager(element)
+{
 	const element_id="ytd-page-manager";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
@@ -1319,7 +1502,8 @@ function on_ytd_page_manager(element) {
 /** @private @type {HTMLElement|null} */
 let ytd_watch_flexy=null;
 /** @private @arg {HTMLElement} element */
-function on_ytd_watch_flexy(element) {
+function on_ytd_watch_flexy(element)
+{
 	const element_id="ytd-watch-flexy";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
@@ -1329,7 +1513,8 @@ function on_ytd_watch_flexy(element) {
 }
 /** @private @type {string[]} */
 let page_type_changes=[];
-function is_watch_page_active() {
+function is_watch_page_active()
+{
 	if(!ytd_page_manager?.getCurrentPage()) {return false;}
 	return ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()==="ytd-watch-flexy";
 }
@@ -1342,7 +1527,8 @@ let box_map=new Map;
 /** @private @type {YtdPlayerElement|null} */
 let ytd_player=null;
 /** @private @arg {HTMLElement} element */
-function on_ytd_player(element) {
+function on_ytd_player(element)
+{
 	const element_id="ytd-player";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
@@ -1354,22 +1540,26 @@ function on_ytd_player(element) {
 	window.ytd_player=element;
 }
 // visibilitychange handler (resume video when page is visible again)
-function fire_on_visibility_change_restart_video_playback() {
+function fire_on_visibility_change_restart_video_playback()
+{
 	if(!is_watch_page_active()) return;
 	if(!ytd_player||!ytd_player.player_) return;
 	if(ytd_player.player_.getPlayerState()!=2) return;
 	ytd_player.pause();
 	ytd_player.play();
 }
-class HTMLVideoElementArrayBox {
+class HTMLVideoElementArrayBox
+{
 	/** @readonly */
 	type="HTMLVideoElementArrayBox";
 	/** @constructor @public @arg {HTMLVideoElement[]} value */
 	constructor(value) {this.value=value;}
 }
-class YTNavigateFinishEvent {
+class YTNavigateFinishEvent
+{
 	/** @api @public @arg {Event} value @return {YTNavigateFinishEvent} */
-	static cast(value) {
+	static cast(value)
+	{
 		/** @private @type {any} */
 		let ret=value;
 		return ret;
@@ -1388,7 +1578,8 @@ let css_str=`
 	/*# sourceURL=yt_css_user */
 `;
 /** @private @arg {string} css_content */
-function createStyleElement(css_content) {
+function createStyleElement(css_content)
+{
 	let style=document.createElement("style");
 	style.innerHTML=css_content;
 	return style;
@@ -1396,23 +1587,29 @@ function createStyleElement(css_content) {
 let ui_plugin_style_element=createStyleElement(css_str);
 ui_plugin_style_element.innerHTML=css_str;
 let ui_plugin_css_enabled=false;
-function ui_css_toggle_click_handler() {
-	if(ui_plugin_css_enabled) {
+function ui_css_toggle_click_handler()
+{
+	if(ui_plugin_css_enabled)
+	{
 		ui_plugin_style_element.remove();
 		ui_plugin_css_enabled=false;
-	} else {
+	} else
+	{
 		document.head.append(ui_plugin_style_element);
 		ui_plugin_css_enabled=true;
 	}
 }
 dom_observer.addEventListener("async-plugin-init",_plugin_init);
 /** @private @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
-function get_new_video_element_list(element_list,list_box) {
+function get_new_video_element_list(element_list,list_box)
+{
 	let new_video_elements=[];
-	for(let i=0;i<element_list.length;i++) {
+	for(let i=0;i<element_list.length;i++)
+	{
 		let item=element_list[i];
 		if(!(item instanceof HTMLVideoElement)) continue;
-		if(!list_box.value.includes(item)) {
+		if(!list_box.value.includes(item))
+		{
 			new_video_elements.push(item);
 			list_box.value.push(item);
 		}
@@ -1424,7 +1621,8 @@ function get_new_video_element_list(element_list,list_box) {
 let yt_playlist_manager=null;
 /** @private @type {[number, number][]} */
 let port_state_log=[];
-class MessagePortState {
+class MessagePortState
+{
 	port_state_log=port_state_log;
 	time_offset=performance.now();
 	/** @readonly */
@@ -1435,10 +1633,12 @@ let port_state=new MessagePortState;
 let slow_message_event=false;
 const message_channel_loop_delay=80;
 /** @private @arg {MessageEvent<number>} event */
-function on_port_message(event) {
+function on_port_message(event)
+{
 	if(is_yt_debug_enabled) console.log("msg_port:message %o",event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
-	if(slow_message_event) {
+	if(slow_message_event)
+	{
 		setTimeout(fire_observer_event,message_channel_loop_delay);
 		return;
 	}
@@ -1449,10 +1649,12 @@ let message_channel=new MessageChannel();
 
 function fire_observer_event() {dom_observer.notify_with_port(message_channel.port1);}
 /** @private @arg {AsyncPluginEventDetail["handle_types"]} handle_types @arg {AsyncPluginEventDetail["elements"]} elements */
-function start_message_channel_loop(handle_types,elements) {
+function start_message_channel_loop(handle_types,elements)
+{
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
-	if(top===window) {
+	if(top===window)
+	{
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {
@@ -1467,11 +1669,13 @@ function start_message_channel_loop(handle_types,elements) {
 function get_html_elements(node,child_node_tag_name) {return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);}
 /** @private @type {((event:{})=>void)[]} */
 var on_yt_navigate=[];
-async function wait_for_yt_player() {
+async function wait_for_yt_player()
+{
 	if(!ytd_player) {throw new Error("No ytd_player to await");}
 	await ytd_player.playerResolver_.promise;
 }
-function _close_div_scope() {
+function _close_div_scope()
+{
 	let overlay_content_div=document.createElement("div");
 	let input_modify_css_style=document.createElement("div");
 	let overlay_hide_ui_input=document.createElement("div");
@@ -1495,23 +1699,29 @@ function _close_div_scope() {
 	/** @private @type {string[]} */
 	let playlist_arr=[];
 	on_yt_navigate_finish.push(log_current_video_data);
-	function title_text_overlay_update() {
-		if(title_text_overlay_enabled) {
+	function title_text_overlay_update()
+	{
+		if(title_text_overlay_enabled)
+		{
 			overlay_hide_ui_input.style.color="";
 			if(title_on) {overlay_content_div.style.display="";} else {overlay_content_div.style.display="none";}
-		} else {
+		} else
+		{
 			overlay_hide_ui_input.style.color="#888";
 			overlay_content_div.style.display="none";
 		}
 	}
-	function page_changed_next_frame() {
+	function page_changed_next_frame()
+	{
 		if(!plugin_overlay_element) return;
 		if(!ytd_page_manager) return;
 		ytd_page_manager.getCurrentPage()?.append(as_node(plugin_overlay_element));
 	}
-	function yt_watch_page_loaded_handler() {
+	function yt_watch_page_loaded_handler()
+	{
 		if(!is_watch_page_active()) {return;}
-		if(ytd_page_manager===null) {
+		if(ytd_page_manager===null)
+		{
 			console.log("no ytd-page-manager");
 			return;
 		}
@@ -1521,49 +1731,60 @@ function _close_div_scope() {
 		ytd_player.active_nav=false;
 		ytd_player.init_nav=true;
 	}
-	function init_ui_plugin() {
+	function init_ui_plugin()
+	{
 		if(waiting_for_ytd_player) return;
 		if(current_timeout===null)
 			return;
-		if(typeof current_timeout==="number") {
-			if(current_timeout>0) {
+		if(typeof current_timeout==="number")
+		{
+			if(current_timeout>0)
+			{
 				clearTimeout(current_timeout);
 				current_timeout=null;
 			}
-		} else if("hasRef" in current_timeout) {
+		} else if("hasRef" in current_timeout)
+		{
 			clearTimeout(current_timeout);
 			current_timeout=null;
 		}
-		if(!ytd_player||!ytd_player.player_) {
+		if(!ytd_player||!ytd_player.player_)
+		{
 			console.log("wait for player");
 			waiting_for_ytd_player=true;
-			wait_for_yt_player().then(function() {
+			wait_for_yt_player().then(function()
+			{
 				waiting_for_ytd_player=false;
 				init_ui_plugin();
 			});
 			return;
 		}
-		if(!ytd_player.player_.getVideoData) {
+		if(!ytd_player.player_.getVideoData)
+		{
 			current_timeout=setTimeout(init_ui_plugin,0);
 			return;
 		}
-		if(ytd_player.active_nav) {
+		if(ytd_player.active_nav)
+		{
 			console.log("ytd-player:active_nav = true");
 			return;
 		}
 		current_timeout=setTimeout(activate_nav,0);
 	}
-	function activate_nav() {
+	function activate_nav()
+	{
 		if(is_yt_debug_enabled) console.log("activate_nav:fire");
 		if(!ytd_player) return;
 		if(!ytd_page_manager) return;
 		if(ytd_player.active_nav) return;
 		ytd_player.active_nav=true;
-		ytd_page_manager.addEventListener("yt-page-type-changed",function() {
+		ytd_page_manager.addEventListener("yt-page-type-changed",function()
+		{
 			if(!ytd_player) return;
 			if(!ytd_page_manager) return;
 			setTimeout(function() {do_find_video();},80);
-			if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
+			if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy")
+			{
 				ytd_player.is_watch_page_active=false;
 				plugin_overlay_element&&plugin_overlay_element.remove();
 				return;
@@ -1571,10 +1792,12 @@ function _close_div_scope() {
 			requestAnimationFrame(page_changed_next_frame);
 		});
 	}
-	function update_plugin_overlay_location() {
+	function update_plugin_overlay_location()
+	{
 		if(!ytd_player) return;
 		/** @private @arg {HTMLElement} element */
-		function sumOffset(element) {
+		function sumOffset(element)
+		{
 			let cache={
 				top_offset: 0,
 				left_offset: 0
@@ -1582,7 +1805,8 @@ function _close_div_scope() {
 			/** @private @type {HTMLElement|null} */
 			let cur_element=null;
 			cur_element=element;
-			for(;;) {
+			for(;;)
+			{
 				cache.top_offset+=cur_element.offsetTop;
 				cache.left_offset+=cur_element.offsetLeft;
 				/** @private @type {Element|null} */
@@ -1595,9 +1819,11 @@ function _close_div_scope() {
 		plugin_overlay_element.style.top=player_offset.top_offset+"px";
 		plugin_overlay_element.style.left=player_offset.left_offset+"px";
 	}
-	function log_current_video_data() {
+	function log_current_video_data()
+	{
 		if(!ytd_player) return;
-		if(!ytd_player.player_) {
+		if(!ytd_player.player_)
+		{
 			wait_for_yt_player().then(log_current_video_data);
 			return;
 		}
@@ -1612,13 +1838,16 @@ function _close_div_scope() {
 		overlay_content_div.innerText=`[${video_id}] ${title}`;
 	}
 	/** @private @arg {Event|CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
-	function on_yt_action(event) {
-		if(!("detail" in event)) {
+	function on_yt_action(event)
+	{
+		if(!("detail" in event))
+		{
 			console.log("[on_yt_action] event [yt-action] has no detail (not a CustomEvent)");
 			return;
 		}
 		let {detail}=event;
-		if(is_yt_fullscreen_change_action(detail)) {
+		if(is_yt_fullscreen_change_action(detail))
+		{
 			let {args}=detail;
 			update_plugin_overlay_location();
 			setTimeout(update_plugin_overlay_location);
@@ -1626,7 +1855,8 @@ function _close_div_scope() {
 			title_text_overlay_update();
 		}
 	}
-	function title_display_toggle() {
+	function title_display_toggle()
+	{
 		title_on=!title_on;
 		title_text_overlay_update();
 		if(no_storage_access) return;
@@ -1636,7 +1866,8 @@ function _close_div_scope() {
 let no_storage_access=false;
 let title_save;
 try {title_save=localStorage.getItem("title_save_data");} catch {no_storage_access=true;}
-if(!title_save) {
+if(!title_save)
+{
 	title_save="{\"value\":false}";
 	if(!no_storage_access) {localStorage.setItem("title_save_data",title_save);}
 }
@@ -1723,14 +1954,16 @@ let volume_plugin_style_source=`
 	}
 	/\*# sourceURL=youtube_volume_plugin_style_source*\/
 `;
-class AudioGainController {
+class AudioGainController
+{
 	/** @type {(HTMLVideoElement|HTMLAudioElement)[]} */
 	attached_element_list=[];
 	/** @private @type {MediaElementAudioSourceNode[]} */
 	media_element_source_list=[];
 	/** @protected @type {Event|null} */
 	last_event=null;
-	constructor() {
+	constructor()
+	{
 		this.audioCtx=new AudioContext();
 		this.gain_node=this.audioCtx.createGain();
 		this.dynamics_compressor=this.initCompressor(this.audioCtx.createDynamicsCompressor());
@@ -1745,7 +1978,8 @@ class AudioGainController {
 	/** @private @arg {AudioNode[]} node_chain */
 	init_node_chain(node_chain) {for(let i=0;i<node_chain.length-1;i++) {node_chain[i].connect(node_chain[i+1]);} }
 	/** @private @arg {DynamicsCompressorNode} node */
-	initCompressor(node) {
+	initCompressor(node)
+	{
 		node.knee.value=27;
 		node.attack.value=1;
 		node.release.value=1;
@@ -1757,8 +1991,10 @@ class AudioGainController {
 	setGain(gain) {this.gain_node.gain.value=gain;}
 	getGain() {return this.gain_node.gain.value;}
 	/** @api @public @arg {HTMLMediaElement[]} media_node_list */
-	attach_element_list(media_node_list) {
-		for(let i=0;i<media_node_list.length;i++) {
+	attach_element_list(media_node_list)
+	{
+		for(let i=0;i<media_node_list.length;i++)
+		{
 			let video_element=media_node_list[i];
 			// video_element.crossOrigin="anonymous";
 			if(this.attached_element_list.includes(video_element)) continue;
@@ -1772,7 +2008,8 @@ class AudioGainController {
 /** @private @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
 /** @private @template {string} T @template {{}} U @template {T_Split<T,",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
-Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str) {
+Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str)
+{
 	/** @private @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
 	/** @private @type {C} */
@@ -1781,7 +2018,8 @@ Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|Arra
 	var key;
 	var rest,i=0;
 	var obj=Object.fromEntries(Object.entries(target));
-	for(;i<ex_keys.length;i++) {
+	for(;i<ex_keys.length;i++)
+	{
 		{
 			key=ex_keys[i];
 			let {
@@ -1800,9 +2038,11 @@ Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|Arra
 };
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 /** @private @template T @template U */
-class ServiceResolver {
+class ServiceResolver
+{
 	/** @constructor @public @arg {T} services @arg {U} params */
-	constructor(services,params) {
+	constructor(services,params)
+	{
 		this.services=services;
 		this.params=params;
 	}
@@ -1813,25 +2053,30 @@ class ServiceResolver {
 }
 //#endregion
 //#region main
-function yt_plugin_base_main() {
+function yt_plugin_base_main()
+{
 	console=typeof window==="undefined"? console:(() => window.console)();
 	let modules=get_exports();
 	const test_base=new ApiBase2;
 	let module_keys=test_base.get_keys_of(modules);
 	let failed_to_load=false;
-	for(let module_name of module_keys) {
+	for(let module_name of module_keys)
+	{
 		let mod=modules[module_name];
 		if(!mod) continue;
-		if("__init_module__" in mod&&mod.__init_module__===true) {
+		if("__init_module__" in mod&&mod.__init_module__===true)
+		{
 			if(window.__log_module_loading_enabled__) console.log("module_is: module init",mod);
 			continue;
 		}
-		if(mod.__module_loaded__===false) {
+		if(mod.__module_loaded__===false)
+		{
 			if(window.__log_module_loading_enabled__) console.log("module_state: module not loaded",mod);
 			failed_to_load=true;
 			continue;
 		}
-		if("init_module" in mod&&typeof mod.init_module==="function") {
+		if("init_module" in mod&&typeof mod.init_module==="function")
+		{
 			if(window.__log_module_loading_enabled__) console.log("module_action: init",mod);
 			mod.init_module();
 			continue;
@@ -1852,7 +2097,8 @@ function yt_plugin_base_main() {
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
 
-	class ServiceFlags {
+	class ServiceFlags
+	{
 		log_tracking_params=log_tracking_params;
 		log_click_tracking_params=log_click_tracking_params;
 		noisy_logging=false;
@@ -1873,7 +2119,8 @@ function yt_plugin_base_main() {
 
 	// required for message_channel_loop
 	/** @private @arg {HTMLElement} element */
-	function on_yt_playlist_manager(element) {
+	function on_yt_playlist_manager(element)
+	{
 		const element_id="yt-playlist-manager";
 		if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 		element_map.set(element_id,element);
@@ -1884,15 +2131,18 @@ function yt_plugin_base_main() {
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types,{on_yt_playlist_manager});
 	/** @private @arg {[()=>G_NavFinishDetail["response"], object, []]} apply_args */
-	function do_proxy_call_getInitialData(apply_args) {
+	function do_proxy_call_getInitialData(apply_args)
+	{
 		return yt_handlers.on_initial_data(apply_args);
 	}
 	let current_page_type="";
 	/** @private @arg {YTNavigateFinishEvent} event */
-	function log_page_type_change(event) {
+	function log_page_type_change(event)
+	{
 		let {detail}=event;
 		if(!detail) return;
-		if(!ytd_page_manager) {
+		if(!ytd_page_manager)
+		{
 			const target_element=get_html_elements(document,"ytd-page-manager")[0];
 			if(!target_element) {throw new Error("Missing ytd_page_manager");} else {on_ytd_page_manager(target_element);}
 		}
@@ -1906,7 +2156,8 @@ function yt_plugin_base_main() {
 		if(log_enabled_page_type_change) console.log(nav_load_str);
 	}
 }
-export_(exports => {
+export_(exports =>
+{
 	exports.ServiceResolver=ServiceResolver;
 	exports.VolumeRange=VolumeRange;
 	exports.sizeof_js=sizeof_js;
@@ -1914,14 +2165,17 @@ export_(exports => {
 //#endregion
 //#region string manipulation
 /** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
-function split_string(x,s=as(",")) {
+function split_string(x,s=as(","))
+{
 	if(!x) {debugger;}
 	let r=x.split(s);
 	return as(r);
 }
 /** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce<WA,S,D>} */
-function split_string_once_ex(s,d=as(","),_wa) {
-	if(s==="") {
+function split_string_once_ex(s,d=as(","),_wa)
+{
+	if(s==="")
+	{
 		/** @private @type {[]} */
 		let r=[];
 		/** @private @type {any} */
@@ -1929,7 +2183,8 @@ function split_string_once_ex(s,d=as(","),_wa) {
 		return as(q);
 	}
 	let i=s.indexOf(d);
-	if(i===-1) {
+	if(i===-1)
+	{
 		/** @private @type {[S]} */
 		let r=[s];
 		/** @private @type {any} */
@@ -1945,8 +2200,10 @@ function split_string_once_ex(s,d=as(","),_wa) {
 	return as(q);
 }
 /** @private @arg {A1|null} _a1 @template {string} A1 @arg {A2|null} _a2 @template {string} A2 @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_2arg<A1,A2,S,D>} */
-function split_string_once_ex2(s,d=as(","),_a1,_a2) {
-	if(s==="") {
+function split_string_once_ex2(s,d=as(","),_a1,_a2)
+{
+	if(s==="")
+	{
 		/** @private @type {[]} */
 		let r=[];
 		/** @private @type {any} */
@@ -1954,7 +2211,8 @@ function split_string_once_ex2(s,d=as(","),_a1,_a2) {
 		return as(q);
 	}
 	let i=s.indexOf(d);
-	if(i===-1) {
+	if(i===-1)
+	{
 		/** @private @type {[S]} */
 		let r=[s];
 		/** @private @type {any} */
@@ -1971,8 +2229,10 @@ function split_string_once_ex2(s,d=as(","),_a1,_a2) {
 }
 export_(exports => exports.split_string_once_ex2=split_string_once_ex2);
 /** @private @arg {WA|null} _wx @template {string} S @template {string} WA @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_NE<WA,S,D>} */
-function split_string_once_last(s,d,_wx) {
-	if(s==="") {
+function split_string_once_last(s,d,_wx)
+{
+	if(s==="")
+	{
 		/** @private @type {[]} */
 		let r=[];
 		/** @private @type {any} */
@@ -1980,7 +2240,8 @@ function split_string_once_last(s,d,_wx) {
 		return as(q);
 	}
 	let i=s.lastIndexOf(d);
-	if(i===-1) {
+	if(i===-1)
+	{
 		/** @private @type {[S]} */
 		let r=[s];
 		/** @private @type {any} */
@@ -2006,17 +2267,21 @@ const general_service_state={
 	/** @private @type {"non_member"|null} */
 	premium_membership: null,
 };
-class ApiBase2 {
+class ApiBase2
+{
 	/** @arg {{}} mod */
-	module_debug_log(mod) {
+	module_debug_log(mod)
+	{
 		let log=false;
 		if(log) console.log("module_debug: module");
 		if(log) console.log(mod);
 	}
 	/** @public @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
-	get_keys_of(obj) {
+	get_keys_of(obj)
+	{
 		if(!obj) {debugger;}
-		let rq=Object.keys(obj).map(v => {
+		let rq=Object.keys(obj).map(v =>
+		{
 			/** @returns {number|string} */
 			function mk() {return parseInt(v,10);}
 			/** @type {string|number} */
@@ -2030,7 +2295,8 @@ class ApiBase2 {
 		return ra;
 	}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
-	get_keys_of_2(obj) {
+	get_keys_of_2(obj)
+	{
 		if(!obj) {debugger;}
 		let rq=Object.keys(obj);
 		/** @private @type {any} */
@@ -2038,9 +2304,11 @@ class ApiBase2 {
 		return ra;
 	}
 	/** @protected @template {string|number|bigint|boolean} U @template {U[]} T @arg {T} src @arg {T} target */
-	eq_keys(src,target) {
+	eq_keys(src,target)
+	{
 		if(src.length!==target.length) return false;
-		for(let i=0;i<src.length;i++) {
+		for(let i=0;i<src.length;i++)
+		{
 			let a=src[i];
 			if(!target.includes(a)) return false;
 		}
@@ -2048,27 +2316,33 @@ class ApiBase2 {
 	}
 }
 export_(exports => {exports.ApiBase2=ApiBase2;});
-class ApiBase extends ApiBase2 {
+class ApiBase extends ApiBase2
+{
 	/** @protected @template {any[]} T @arg {T} a */
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
 	/** @protected @template {string} S @arg {S} x @returns {Capitalize<S>} */
-	uppercase_first(x) {
+	uppercase_first(x)
+	{
 		let rr=x[0].toUpperCase()+x.slice(1);
 		/** @type {Capitalize<S>} */
 		let rt=as(rr);
 		return rt;
 	}
 	/** @protected @template T @arg {T[]} x */
-	filter_keys(x) {
+	filter_keys(x)
+	{
 		let ret=[];
-		for(let k of x) {
+		for(let k of x)
+		{
 			if(k==="clickTrackingParams") continue;
 			if(k==="commandMetadata") continue;
 			ret.push(k);
 		}
-		if(!ret.length) {
-			for(let k of x) {
+		if(!ret.length)
+		{
+			for(let k of x)
+			{
 				if(k==="clickTrackingParams") continue;
 				ret.push(k);
 			}
@@ -2077,11 +2351,13 @@ class ApiBase extends ApiBase2 {
 		return ret;
 	}
 	/** @protected @arg {unknown} x */
-	get_name_from_keys(x) {
+	get_name_from_keys(x)
+	{
 		if(typeof x!=='object') return null;
 		if(x===null) return null;
 		let keys=Object.keys(x);
-		for(let c of keys) {
+		for(let c of keys)
+		{
 			if(c==="clickTrackingParams") continue;
 			if(c==="commandMetadata") continue;
 			return c;
@@ -2091,7 +2367,8 @@ class ApiBase extends ApiBase2 {
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
 	_primitive_of(x,y) {if(typeof x!==y) debugger;}
 	/** @protected @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
-	upgrade_obj(x,_b) {
+	upgrade_obj(x,_b)
+	{
 		/** @private @type {Partial<B>} */
 		let cd=x;
 		/** @private @type {Partial<U|B>} */
@@ -2099,14 +2376,16 @@ class ApiBase extends ApiBase2 {
 		return id;
 	}
 	/** @protected @template {string} T @arg {T} t @returns {TP_ParseUrlSearchParams<T>} */
-	parse_url_search_params(t) {
+	parse_url_search_params(t)
+	{
 		let sp=new URLSearchParams(t);
 		/** @private @type {any} */
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
 	/** @protected @template {string} T @arg {T} t @returns {TP_KeyofSearchParams<T>} */
-	keyof_search_params(t) {
+	keyof_search_params(t)
+	{
 		let tmp=this.parse_url_search_params(t);
 		let ret=[];
 		for(let k in tmp) {ret.push(k);}
@@ -2119,10 +2398,12 @@ class ApiBase extends ApiBase2 {
 }
 //#endregion
 //#region Service
-class ServiceWithResolver extends ApiBase {
+class ServiceWithResolver extends ApiBase
+{
 	#x;
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
-	constructor(x) {
+	constructor(x)
+	{
 		super();
 		this.#x=x;
 	}
@@ -2131,7 +2412,8 @@ class ServiceWithResolver extends ApiBase {
 	/** @arg {()=>void} cb */
 	addOnServicesListener(cb) {this.#x.listeners.push(cb);}
 }
-class PrivateAccessorCache extends ServiceWithResolver {
+class PrivateAccessorCache extends ServiceWithResolver
+{
 	get codegen() {return this.x.get("codegen");}
 	get common_methods() {return this.x.get("common_methods");}
 	get handle_types() {return this.x.get("handle_types");}
@@ -2142,12 +2424,15 @@ class PrivateAccessorCache extends ServiceWithResolver {
 	get x_methods() {return this.x.get("x_methods");}
 	get x_Renderer() {return this.x.get("x_Renderer");}
 }
-class ServiceWithAccessors extends ServiceWithResolver {
+class ServiceWithAccessors extends ServiceWithResolver
+{
 	/** @param {ServiceResolverBox<{}>} x */
-	constructor(x) {
+	constructor(x)
+	{
 		super(x);
 		this.accessor=new PrivateAccessorCache(x);
-		this.addOnServicesListener(() => {
+		this.addOnServicesListener(() =>
+		{
 			this.cg=this.accessor.codegen;
 			this.cm=this.accessor.common_methods;
 			this.ht=this.accessor.handle_types;
@@ -2160,39 +2445,48 @@ class ServiceWithAccessors extends ServiceWithResolver {
 		});
 	}
 }
-class TextDecoderExt {
+class TextDecoderExt
+{
 	decoder=new TextDecoder("utf-8",{fatal: false});
 	/** @arg {BufferSource} buffer */
-	decode(buffer) {
-		try {
+	decode(buffer)
+	{
+		try
+		{
 			return this.decoder.decode(buffer);
 		} catch {
 			return null;
 		}
 	}
 }
-class ServiceWithMembers extends ServiceWithAccessors {
+class ServiceWithMembers extends ServiceWithAccessors
+{
 	/** @public */
 	_decoder=new TextDecoderExt;
 	/** @protected @type {string[]} */
 	logged_keys=[];
 }
-class BaseService extends ServiceWithMembers {
+class BaseService extends ServiceWithMembers
+{
 	/** @public @arg {CF_P_ParamParse} cf @arg {string} x */
-	params(cf,x) {
+	params(cf,x)
+	{
 		this.ht.decode_binary_obj(cf,x);
 	}
 	/** @api @public @arg {CF_P_ParamParse} cf @arg {string} x */
-	playerParams(cf,x) {
+	playerParams(cf,x)
+	{
 		this.ht.decode_binary_obj(cf,x);
 	}
 	/** @public @arg {string} x */
 	trackingParams(x) {this.params("params.tracking",x);}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_s(k,x,f) {
+	H_s(k,x,f)
+	{
 		let tm=this;
 
-		x: if(!(tm instanceof ServiceData)) {
+		x: if(!(tm instanceof ServiceData))
+		{
 			/** @type {(...args:any[])=>void} */
 			let a_fn=f;
 			if(a_fn===this.xm.D_Label) break x;
@@ -2202,13 +2496,15 @@ class BaseService extends ServiceWithMembers {
 		this.sm.H_cls(this,k,x,f);
 	}
 	/** @public @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
-	T_GM(cf,x,f) {
+	T_GM(cf,x,f)
+	{
 		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
 	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
-	s(cf,x) {
+	s(cf,x)
+	{
 		if(!x) debugger;
 		this.sm.k(cf,x);
 		return x;
@@ -2219,7 +2515,8 @@ class BaseService extends ServiceWithMembers {
 	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
 	 * @returns {[U,Omit<T,"webCommandMetadata">]}
 	 */
-	T_WCM(cf,x,f) {
+	T_WCM(cf,x,f)
+	{
 		const {webCommandMetadata: a,...y}=this.s(cf,x);
 		let ret=f.call(this,a,`G${cf}`);
 		return [ret,y];
@@ -2231,7 +2528,8 @@ class BaseService extends ServiceWithMembers {
 	 * @param {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
 	 * @returns {[typeof y,R_M,R_D]}
 	 */
-	TE_Endpoint_3_v2(k,x,f1,f2) {
+	TE_Endpoint_3_v2(k,x,f1,f2)
+	{
 		let keys=this.get_keys_of(x);
 		let s=new JsonReplacerState({
 			text_decoder: this._decoder,
@@ -2245,17 +2543,20 @@ class BaseService extends ServiceWithMembers {
 		return [y,r1,r2];
 	}
 	/** @public @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_(k,x,f) {
+	H_(k,x,f)
+	{
 		if(f===void 0) {debugger; return;}
 		this.sm.H_cls(this,k,x,f);
 	}
 	//#region string replace
 	/** @public @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
-	replace_until_same(s,rx,fn) {
+	replace_until_same(s,rx,fn)
+	{
 		if(s===void 0) debugger;
 		let i=0;
 		let ps=s;
-		do {
+		do
+		{
 			let p=s;
 			let ts=s.replaceAll(rx,fn);
 			if(ts===void 0) debugger;
@@ -2266,7 +2567,8 @@ class BaseService extends ServiceWithMembers {
 		return s;
 	}
 	/** @arg {string} x */
-	trim_brackets(x) {
+	trim_brackets(x)
+	{
 		/** @type {`[${string}]`} */
 		let y=as(x);
 		return this.sd.unwrap_brackets(y);
@@ -2285,12 +2587,15 @@ class BaseService extends ServiceWithMembers {
 	save_primitive(k,x) {k; x;}
 	//#endregion
 	/** @arg {string} k @arg {number[]|Uint8Array} a */
-	tag_num_like(k,a) {
+	tag_num_like(k,a)
+	{
 		let r=[];
 		let ty;
-		if(a instanceof Uint8Array) {
+		if(a instanceof Uint8Array)
+		{
 			ty=`__type__\0uint8\0array\0\0`;
-		} else {
+		} else
+		{
 			ty="__type__\0number\0array\0\0";
 		}
 		for(let v of ty) r.push(v.charCodeAt(0));
@@ -2322,8 +2627,10 @@ class BaseService extends ServiceWithMembers {
 	/** @template {string} L @template T @arg {L} l @arg {T} x @returns {T_DI_Raw<L,T>} */
 	make_DI_Raw(l,x) {return {a: this.get_KZ("kl"),k: "raw",l,z: [x]};}
 	/** @template T @arg {T} x @returns {T_GetPrimitiveTag<T>} */
-	get_primitive_tag(x) {
-		switch(typeof x) {
+	get_primitive_tag(x)
+	{
+		switch(typeof x)
+		{
 			case "bigint": return as("bigint");
 			case "number": return as("number");
 			case "string": return as("string");
@@ -2345,19 +2652,22 @@ class BaseService extends ServiceWithMembers {
 	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	//#endregion
 	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?T_Split<X1,string extends S?",":S>:never} */
-	split_str(x,s=as(",")) {
+	split_str(x,s=as(","))
+	{
 		if(!x) {debugger;}
 		let r=x.split(s);
 		return as(r);
 	}
 	/** @public @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
-	join_string(x,s) {
+	join_string(x,s)
+	{
 		if(!x) {debugger;}
 		let r=x.join(s);
 		return as(r);
 	}
 	/** @protected @template {`https://${string}`|`http://${string}`} T @arg {T} str @returns {UrlParse<T>} */
-	_convert_url_to_obj(str) {
+	_convert_url_to_obj(str)
+	{
 		let s=new URL(str);
 		/** @private @type {any} */
 		let a=s;
@@ -2366,14 +2676,16 @@ class BaseService extends ServiceWithMembers {
 		return ret;
 	}
 	/** @protected @arg {string} str */
-	_decode_b64_proto_obj(str) {
+	_decode_b64_proto_obj(str)
+	{
 		let buffer=base64_dec.decodeByteArray(str);
 		if(!buffer) return null;
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
 	/** @protected @arg {string} str */
-	_decode_b64_url_proto_obj(str) {
+	_decode_b64_url_proto_obj(str)
+	{
 		let buffer=base64_url_dec.decodeByteArray(str);
 		if(!buffer) return null;
 		let reader=new MyReader(buffer);
@@ -2386,18 +2698,21 @@ class BaseService extends ServiceWithMembers {
 	/** @protected */
 	get TODO_true() {return true;}
 	/** @protected @template {string} T @template {string} Sep @template {`${T}${Sep}${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
-	save_enum_with_sep(enum_base,enum_str,sep) {
+	save_enum_with_sep(enum_base,enum_str,sep)
+	{
 		const ns_name="ELEMENT";
 		let n1=split_string_once(enum_str,enum_base);
 		if(!n1[1]) throw new Error();
 		let n2=n1[1];
-		if(sep!=="") {
+		if(sep!=="")
+		{
 			let sd=this.drop_separator(n1[1],sep);
 			this.save_primitive(`${ns_name}::${enum_base}`,sd);
 		} else {this.save_primitive(`${ns_name}::${enum_base}`,n2);}
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]} */
-	drop_separator(x,sep) {
+	drop_separator(x,sep)
+	{
 		let v=split_string_once(x,sep);
 		if(v[0]) return v[0];
 		let q=v[1];
@@ -2405,7 +2720,8 @@ class BaseService extends ServiceWithMembers {
 		return x;
 	}
 	/** @protected @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
-	get_keys_of_ex(obj) {
+	get_keys_of_ex(obj)
+	{
 		let pd=Object.getOwnPropertyDescriptors(obj);
 		let l1_pk=this.get_keys_of(pd);
 		/** @private @type {T} */
@@ -2416,13 +2732,15 @@ class BaseService extends ServiceWithMembers {
 		return rq;
 	}
 	/** @protected @template {{}} T @arg {T} x */
-	is_empty_object(x) {
+	is_empty_object(x)
+	{
 		let keys=this.get_keys_of(x);
 		if(!keys.length) return true;
 		return false;
 	}
 	/** @private @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
-	on_empty_object(x) {
+	on_empty_object(x)
+	{
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
 		if(!keys.length) return;
@@ -2436,13 +2754,15 @@ class BaseService extends ServiceWithMembers {
 	/** @protected @name iterate_obj @arg {{}|undefined} x @arg {(this:this,k:string,v: {})=>void} f */
 	v(x,f) {if(x===void 0) return; this.z(Object.entries(x),([k,v]) => f.call(this,k,v));}
 	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
-	z(x,f) {
+	z(x,f)
+	{
 		if(x===void 0||!x.entries) {debugger; return [[],[]];}
 		/** @private @type {any[]} */
 		let c=[];
 		/** @private @type {any[]} */
 		let v=[];
-		for(let it of x.entries()) {
+		for(let it of x.entries())
+		{
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
 			let u=f.call(this,a,i);
@@ -2486,16 +2806,20 @@ class BaseService extends ServiceWithMembers {
 	/** @template T @arg {T} x @returns {Some<T>} */
 	m(x) {return this.some(x);}
 	/** @template T @arg {Some<T>} x */
-	mw(x) {
+	mw(x)
+	{
 		/** @template ST @template {this} CU */
-		class SomeEx {
+		class SomeEx
+		{
 			/** @arg {CU} cls @arg {Some<ST>} x */
-			constructor(cls,x) {
+			constructor(cls,x)
+			{
 				this.cls=cls;
 				this.some=x;
 			}
 			/** @arg {(this:this["cls"],x:ST)=>U} f @template U */
-			mc(f) {
+			mc(f)
+			{
 				let s=f.call(this.cls,this.some.v);
 				return new SomeEx(this.cls,this.cls.m(s));
 			}
@@ -2509,7 +2833,8 @@ class BaseService extends ServiceWithMembers {
 	/** @arg {(this:this,x:T)=>U} y @template {{}} T @arg {Some<T|null|undefined>} x @template U @returns {Some<U|null>} */
 	m_t(x,y) {return this.m(this.t_base(x.v,y));}
 	/** @template {{}|undefined} T @arg {Some<T>} x @returns {T extends infer V?V extends undefined?None:Some<V>:never} */
-	m_ud(x) {
+	m_ud(x)
+	{
 		/** @arg {Some<T>|None} x @returns {asserts x is T extends infer V?V extends undefined?None:Some<V>:never} */
 		function assume_ret(x) {x;}
 		/** @type {Some<T>|None} */
@@ -2522,28 +2847,34 @@ class BaseService extends ServiceWithMembers {
 	/** @template {{}|undefined} T @arg {T} x */
 	ms_ud(x) {return this.m_ud(this.m(x));}
 	/** @template {{}|null} T @arg {Some<T>} x @returns {T extends infer V?V extends null?None:Some<V>:never} */
-	m_nu(x) {
+	m_nu(x)
+	{
 		/** @arg {Some<T>|None} x @returns {asserts x is T extends infer V?V extends null?None:Some<V>:never} */
 		function assume_ret(x) {x;}
 		/** @type {Some<T>|None} */
 		let mr;
-		if(x.v===null) {
+		if(x.v===null)
+		{
 			mr={type: "n"};
 		} else mr={type: "s",v: x.v};
 		assume_ret(mr);
 		return mr;
 	}
 	/** @arg {(this:this,x:Extract<A,Some<any>>["v"])=>U} y @template {{}} T @template {None|Some<T>} A @arg {A} x @template {{}|undefined|void} U @returns {A extends None?None:U extends void|undefined?None:Some<U>} */
-	m_nu_t(x,y) {
+	m_nu_t(x,y)
+	{
 		/** @arg {Some<U>|None} x @returns {asserts x is A extends None?None:U extends void|undefined?None:Some<U>} */
 		function assume_ret(x) {x;}
 		/** @type {Some<U>|None} */
 		let mr;
-		if(x.type==="n") {
+		if(x.type==="n")
+		{
 			mr={type: "n"};
-		} else {
+		} else
+		{
 			let r=y.call(this,x.v);
-			if(r===void 0) {
+			if(r===void 0)
+			{
 				mr={type: "n"};
 			} else mr={type: "s",v: r};
 		}
@@ -2575,52 +2906,62 @@ class BaseService extends ServiceWithMembers {
 	cq=this._cq_no_infer;
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
-class YtObjectVisitor {
+class YtObjectVisitor
+{
 	/** @handler @public @arg {ApiIterateState} state @arg {AD_AppendContinuationItems} action */
-	appendContinuationItemsAction(state,action) {
+	appendContinuationItemsAction(state,action)
+	{
 		if(!action.continuationItems) {debugger;}
 		let filtered=state.t.handlers.renderer_content_item_array.replace_array(action.continuationItems);
 		if(filtered.length>0) action.continuationItems=filtered;
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
-	reloadContinuationItemsCommand({t: state},command) {
+	reloadContinuationItemsCommand({t: state},command)
+	{
 		if(!("continuationItems" in command)) return;
 		let iterable_items=command.continuationItems;
 		let filtered=state.handlers.renderer_content_item_array.replace_array(iterable_items);
 		if(filtered.length>0) command.continuationItems=filtered;
 	}
 	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3<T1,T2,T3>} renderer */
-	itemSectionRenderer_with_state(state,renderer) {
+	itemSectionRenderer_with_state(state,renderer)
+	{
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter(state.t.filter_renderer_contents_item,state.t);
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg {Todo_D_RichGrid} renderer */
-	richGridRenderer(state,renderer) {
+	richGridRenderer(state,renderer)
+	{
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
 		state.path="richGridRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
-	compactVideoRenderer(state,renderer) {
+	compactVideoRenderer(state,renderer)
+	{
 		state.path="compactVideoRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
-	thumbnailOverlayToggleButtonRenderer(state,renderer) {
+	thumbnailOverlayToggleButtonRenderer(state,renderer)
+	{
 		state.path="thumbnailOverlayToggleButtonRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
-	videoRenderer(state,renderer) {
+	videoRenderer(state,renderer)
+	{
 		state.path="videoRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
 }
-class IterateApiResultBase extends BaseService {
+class IterateApiResultBase extends BaseService
+{
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x @arg {YtObjectVisitor} obj_visitor */
-	constructor(x,obj_visitor) {
+	constructor(x,obj_visitor)
+	{
 		super(x);
 		this.obj_visitor=obj_visitor;
 		/** @private @type {Map<string,keyof YtObjectVisitor>} */
@@ -2629,29 +2970,36 @@ class IterateApiResultBase extends BaseService {
 		for(let i of keys) {this.keys_map.set(i,i);}
 	}
 	/** @api @public @arg {ApiIterateState} state @arg {{}} data */
-	default_iter(state,data) {
+	default_iter(state,data)
+	{
 		if(data===void 0) {return;}
 		if(typeof data==="string") {return;}
 		let {t,path}=state;
-		if(data instanceof Array) {
+		if(data instanceof Array)
+		{
 			for(let [key,value] of data.entries()) {this.default_iter({t,path: `${path}[${key}]`},value);}
 			return;
 		}
-		for(let key in data) {
+		for(let key in data)
+		{
 			/** @private @type {{[x: string]: any}} */
 			let wk=data;
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
 			let iter_target=this.obj_visitor;
 			const state={t,path: `${path}.${key}`};
-			if(rk!==void 0) {
-				if(this.obj_visitor[rk]===void 0) {
+			if(rk!==void 0)
+			{
+				if(this.obj_visitor[rk]===void 0)
+				{
 					console.log("update keys map remove",key);
 					debugger;
 				}
 				iter_target[rk](state,as(value));
-			} else {
-				if(key in this.obj_visitor) {
+			} else
+			{
+				if(key in this.obj_visitor)
+				{
 					console.log("update keys map new key",key);
 					debugger;
 				}
@@ -2660,11 +3008,14 @@ class IterateApiResultBase extends BaseService {
 		}
 	}
 }
-class YtHandlers extends BaseService {
+class YtHandlers extends BaseService
+{
 	/** @api @public @arg {{}} item */
-	filter_renderer_contents_item(item) {
+	filter_renderer_contents_item(item)
+	{
 		let keys=this.get_keys_of(item);
-		for(let key of keys) {
+		for(let key of keys)
+		{
 			let is_blacklisted=this.blacklisted_item_sections.get(key);
 			if(is_blacklisted!==void 0) return !is_blacklisted;
 			console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
@@ -2672,7 +3023,8 @@ class YtHandlers extends BaseService {
 		return true;
 	}
 	/** @constructor @public @arg {ServiceResolverBox<{}>} res */
-	constructor(res) {
+	constructor(res)
+	{
 		super(res);
 		this.filter_handler_debug=false;
 		this.handlers={
@@ -2709,10 +3061,12 @@ class YtHandlers extends BaseService {
 		]);
 	}
 	/** @api @public @arg {FetchJsonParseArgs} target_args  */
-	on_handle_api(target_args) {
+	on_handle_api(target_args)
+	{
 		const {request,response,parsed_obj}=target_args;
 		/** @private @arg {string|URL|Request} req */
-		function convert_to_url(req) {
+		function convert_to_url(req)
+		{
 			if(typeof req=="string") {return {url: to_url(req)};}
 			if(req instanceof URL) {return {url: req};}
 			return {url: to_url(req.url)};
@@ -2729,10 +3083,12 @@ class YtHandlers extends BaseService {
 	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
 	/** @private @arg {G_RS_ByPageType} x */
-	plugin_run_on_data(x) {
+	plugin_run_on_data(x)
+	{
 		/** @arg {G_RS_ByPageType} x */
 		let ok=x => this.x.get("x_EventInput").DataResponsePageType(x);
-		switch(x.page) {
+		switch(x.page)
+		{
 			case "browse": {
 				x: if("rootVe" in x) {if(x.rootVe!==3854) break x; ok(x); break;}
 				x: if("rootVe" in x) {if(x.rootVe!==6827) break x; ok(x); break;}
@@ -2751,63 +3107,77 @@ class YtHandlers extends BaseService {
 		}
 	}
 	/** @api @public @arg {[()=>G_NavFinishDetail["response"], object, []]} apply_args */
-	on_initial_data(apply_args) {
+	on_initial_data(apply_args)
+	{
 		/** @private @type {G_NavFinishDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
 		let start_path="unknown";
 		if("page" in ret) start_path=ret.page;
 		this.iteration.default_iter({t: this,path: start_path},ret);
 		if(!("page" in ret)) return ret;
-		if(!ret.response) {
+		if(!ret.response)
+		{
 			console.log("[unhandled_return_value]",ret);
 			debugger;
 		}
-		if(this.do_initial_data_trace) {
+		if(this.do_initial_data_trace)
+		{
 			this.upgrade_obj(ret,{is_initial_data: true}).is_initial_data=true;
 			this.upgrade_obj(ret.endpoint,{is_initial_endpoint: true}).is_initial_endpoint=true;
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
-		try {
+		try
+		{
 			this.plugin_run_on_data(ret);
-		} catch(e) {
+		} catch(e)
+		{
 			console.log("plugin error",e);
 		}
 		let page_type=window.ytPageType;
-		if(!page_type) {
+		if(!page_type)
+		{
 			debugger;
 			return ret;
 		}
 		/** @private @template {U[]} T @template U @arg {T} a @arg {U} t */
 		function includes(a,t) {return a.includes(t);}
-		if(!includes(this.known_page_types,page_type)) {
+		if(!includes(this.known_page_types,page_type))
+		{
 			console.log("unknown page type",page_type);
 			debugger;
 		}
 		return ret;
 	}
 	/** @api @public @arg {G_NavFinishDetail} detail */
-	on_page_type_changed(detail) {
-		try {
+	on_page_type_changed(detail)
+	{
+		try
+		{
 			if(this.do_initial_data_trace) console.log('ptc detail',detail);
 			this.x.get("x_EventInput").YTNavigateFinishDetail(detail);
-		} catch(e) {
+		} catch(e)
+		{
 			console.log("plugin error");
 			console.log(e);
 			debugger;
-			try {
+			try
+			{
 				this.x.get("x_EventInput").YTNavigateFinishDetail(detail);
 			} catch {}
 		}
 	}
 }
-class HandleRendererContentItemArray extends BaseService {
+class HandleRendererContentItemArray extends BaseService
+{
 	flag_log_debug=false;
 	/** @private @arg {R_RichItem} content_item */
-	filter_for_rich_item_renderer(content_item) {
+	filter_for_rich_item_renderer(content_item)
+	{
 		let noisy_logging=this.x.get_param("noisy_logging");
 		let renderer=content_item.richItemRenderer;
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
-		if("adSlotRenderer" in renderer.content) {
+		if("adSlotRenderer" in renderer.content)
+		{
 			if(noisy_logging) console.log("adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
 		}
@@ -2822,18 +3192,21 @@ class HandleRendererContentItemArray extends BaseService {
 		return true;
 	}
 	/** @private @arg {R_RichSection} content_item */
-	handle_rich_section_renderer(content_item) {
+	handle_rich_section_renderer(content_item)
+	{
 		let renderer=content_item.richSectionRenderer;
 		/** @private @type {G_RichSection} */
 		let content=renderer.content;
 		if("inlineSurveyRenderer" in content) return true;
 		if("sourcePivotHeaderRenderer" in content) return true;
-		if(!("richShelfRenderer" in content)) {
+		if(!("richShelfRenderer" in content))
+		{
 			console.log("rich section content",content);
 			return true;
 		}
 		let rich_shelf=content.richShelfRenderer;
-		if(rich_shelf.icon) {
+		if(rich_shelf.icon)
+		{
 			if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {return false;}
 			console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
 			return true;
@@ -2845,15 +3218,18 @@ class HandleRendererContentItemArray extends BaseService {
 		return true;
 	}
 	/** @api @public @template {(G_RendererContentItem|Extract<(DC_ReloadContinuationItems|AD_AppendContinuationItems),{continuationItems:any}>["continuationItems"][number])[]} T @arg {T} arr @returns {T} */
-	replace_array(arr) {
-		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
+	replace_array(arr)
+	{
+		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) =>
+		{
 			if("richItemRenderer" in content_item) {return this.filter_for_rich_item_renderer(content_item);}
 			if(!("richSectionRenderer" in content_item)) return true;
 			return this.handle_rich_section_renderer(content_item);
 		}));
 	}
 }
-class CsiService extends BaseService {
+class CsiService extends BaseService
+{
 	/** @private @type {(T_RidFormat<string>)[]} */
 	rid_keys=[
 		"GetAccountAdvanced_rid","GetAccountBilling_rid","GetAccountDownloads_rid","GetAccountMenu_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountSharing_rid","GetAccountsList_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetHistory_rid","GetHome_rid","GetLibrary_rid","GetLiveChatReplay_rid","GetNotificationsMenu_rid","GetPlayer_rid","GetPlaylist_rid","GetReelItemWatch_rid","GetReelWatchSequence_rid","GetSubscriptions_rid","GetUnseenNotificationCount_rid","GetVideoTranscript_rid","GetWatchNext_rid","GetWatchPageWebCommentReplies_rid","GetWatchPageWebTopLevelComments_rid","GetWebMainAppGuide_rid","RecordNotificationInteractions_rid","RemoveLike_rid",
@@ -2863,28 +3239,34 @@ class CsiService extends BaseService {
 		"EditPlaylist_rid",
 	];
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
-	decode_rid_param_key(x) {
+	decode_rid_param_key(x)
+	{
 		this.decode_rid_section(x);
 		this.save_primitive("rid_key",x.key);
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
-	decode_rid_section(x) {
+	decode_rid_section(x)
+	{
 		let section=/[A-Z][a-z]+/.exec(x.key);
-		if(section) {
+		if(section)
+		{
 			let section_id=section[0].toLowerCase();
 			this.save_primitive("section_id",section_id);
 		} else {debugger;}
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} param */
-	parse_rid_param(param) {
+	parse_rid_param(param)
+	{
 		this.decode_rid_param_key(param);
-		if(param.key in this.rid) {
+		if(param.key in this.rid)
+		{
 			/** @private @type {T_RidFormat<string>} */
 			let rid_key=param.key;
 			this.rid[rid_key]=param.value;
 			return;
 		}
-		if(!this.str_ends_with(param.key,"_rid")) {
+		if(!this.str_ends_with(param.key,"_rid"))
+		{
 			console.log("new csi param",param);
 			debugger;
 			return;
@@ -2894,7 +3276,8 @@ class CsiService extends BaseService {
 	/** @private @type {{[x: T_RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
-	constructor(x) {
+	constructor(x)
+	{
 		super(x);
 		this.data={
 			/** @private @type {D_BrowseEndpointPages|null} */
@@ -2911,8 +3294,10 @@ class CsiService extends BaseService {
 		for(let x of this.rid_keys) {this.rid[x]=void 0;}
 	}
 	/** @private @arg {D_BrowseEndpointPages} value */
-	verify_param_yt_fn(value) {
-		switch(value) {
+	verify_param_yt_fn(value)
+	{
+		switch(value)
+		{
 			case "history":
 			case "library":
 			case "subscriptions":
@@ -2922,9 +3307,12 @@ class CsiService extends BaseService {
 		};
 	}
 	/** @api @public @arg {DRC_CsiVarKV[]} params */
-	on_params(params) {
-		for(let param of params) {
-			switch(param.key) {
+	on_params(params)
+	{
+		for(let param of params)
+		{
+			switch(param.key)
+			{
 				case "c": {
 					this.save_primitive(`CsiService.${param.key}`,param.value);
 					this.data[param.key]=param.value;
@@ -2938,7 +3326,8 @@ class CsiService extends BaseService {
 		}
 	}
 }
-class GFeedbackService extends BaseService {
+class GFeedbackService extends BaseService
+{
 	data={
 		/** @private @type {number[]|null} */
 		e: null,
@@ -2952,7 +3341,8 @@ class GFeedbackService extends BaseService {
 	seen_e_param=[];
 	has_new_e_param=false;
 	/** @private @arg {Extract<ToKeyValue<SP_GFeedbackVarMap>,{key:"e"}>} param */
-	parse_e_param(param) {
+	parse_e_param(param)
+	{
 		if(this.seen_e_param.includes(param.value)) return;
 		this.seen_e_param.push(param.value);
 		let inner=param.value.split(",").map(e => parseInt(e,10));
@@ -2960,9 +3350,11 @@ class GFeedbackService extends BaseService {
 		this.has_new_e_param=true;
 	}
 	/** @api @public @arg {{context: D_ContextTypeStr|null;}} data_target @arg {D_ContextTypeStr} x */
-	on_context_param(data_target,x) {
+	on_context_param(data_target,x)
+	{
 		data_target.context=x;
-		switch(x) {
+		switch(x)
+		{
 			case "channel_creator": return;
 			case "yt_web_remix_unlimited": return;
 			case "yt_web_search": return;
@@ -2970,15 +3362,19 @@ class GFeedbackService extends BaseService {
 			case "yt_web_unlimited": return;
 			default:
 		}
-		switch(x) {
+		switch(x)
+		{
 			case "": break;
 			default: debugger; break;
 		}
 	}
 	/** @api @public @arg {SP_GFeedbackServiceParams[]} params */
-	on_params(params) {
-		for(let param of params) {
-			switch(param.key) {
+	on_params(params)
+	{
+		for(let param of params)
+		{
+			switch(param.key)
+			{
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
 				case "browse_id": this.sm.browseId(param.value); break;
 				case "context": this.on_context_param(this.data,param.value); break;
@@ -3006,11 +3402,13 @@ class GFeedbackService extends BaseService {
 		}
 	}
 	/** @private @arg {SP_GFeedbackServiceRouteParam} x */
-	parse_route_param(x) {
+	parse_route_param(x)
+	{
 		let h=this.ps;
 		this.data.route=x.value;
 		let route_parts=split_string_once(x.value,".");
-		switch(route_parts[0]) {
+		switch(route_parts[0])
+		{
 			case "channel": {
 				if(route_parts[1]==="") return;
 				h.parse_channel_section(route_parts);
@@ -3018,21 +3416,26 @@ class GFeedbackService extends BaseService {
 			default: debugger;
 		}
 	}
-	maybe_new_e() {
+	maybe_new_e()
+	{
 		if(!this.data.e) return;
 		if(!this.has_new_e_param) return;
 		this.x.get("e_catcher_service").iterate_fexp(this.data.e);
 	}
 }
-class GuidedHelpService extends BaseService {
+class GuidedHelpService extends BaseService
+{
 	data={
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
 	/** @api @public @arg {SP_GuidedHelp_SPs["params"]} params */
-	on_params(params) {
-		for(let param of params) {
-			switch(param.key) {
+	on_params(params)
+	{
+		for(let param of params)
+		{
+			switch(param.key)
+			{
 				case "logged_in": {
 					if(param.value=="0") {general_service_state.logged_in=false; break;}
 					if(param.value=="1") {general_service_state.logged_in=true; break;}
@@ -3044,7 +3447,8 @@ class GuidedHelpService extends BaseService {
 		}
 	}
 }
-class TrackingServices extends BaseService {
+class TrackingServices extends BaseService
+{
 	/** @private @arg {RC_Csi_SPs} service */
 	on_csi_service(service) {this.x.get("csi_service").on_params(service.params);}
 	/** @private @arg {RC_ECatcher_SPs} service */
@@ -3055,9 +3459,12 @@ class TrackingServices extends BaseService {
 	on_guided_help_service(service) {this.x.get("guided_help_service").on_params(service.params);}
 	get handle_types() {return this.x.get("handle_types");}
 	/** @private @arg {RC_GoogleHelp_SPs} service */
-	on_google_help_service(service) {
-		for(let param of service.params) {
-			switch(param.key) {
+	on_google_help_service(service)
+	{
+		for(let param of service.params)
+		{
+			switch(param.key)
+			{
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
 				case "browse_id": this.sm.browseId(param.value); break;
 				default: console.log("[new_param_key]",param); debugger;
@@ -3065,8 +3472,10 @@ class TrackingServices extends BaseService {
 		}
 	}
 	/** @api @public @arg {GRC_ServiceTrackingParams} service_arg */
-	set_service_params(service_arg) {
-		switch(service_arg.service) {
+	set_service_params(service_arg)
+	{
+		switch(service_arg.service)
+		{
 			case "CSI": this.on_csi_service(service_arg); break;
 			case "ECATCHER": this.on_e_catcher_service(service_arg); break;
 			case "GFEEDBACK": this.on_g_feedback_service(service_arg); break;
@@ -3076,10 +3485,12 @@ class TrackingServices extends BaseService {
 		}
 	}
 }
-class ModifyEnv extends BaseService {
+class ModifyEnv extends BaseService
+{
 	/** @private @type {[(obj: Blob|MediaSource) => string,typeof URL,Blob|MediaSource][]} */
 	leftover_args=[];
-	modify_global_env() {
+	modify_global_env()
+	{
 		let yt_handlers=this.x.get("yt_handlers");
 		let handle_types=this.x.get("handle_types");
 		const json_action_obj={
@@ -3088,10 +3499,13 @@ class ModifyEnv extends BaseService {
 			/** @type {JSON["parse"]} */
 			json_parse: JSON.parse,
 			/** @arg {FetchJsonParseArgs} target_args */
-			json_response_parsed(target_args) {
-				try {
+			json_response_parsed(target_args)
+			{
+				try
+				{
 					yt_handlers.on_handle_api(target_args);
-				} catch(e) {
+				} catch(e)
+				{
 					console.log("plugin error");
 					console.log(e);
 				}
@@ -3103,9 +3517,11 @@ class ModifyEnv extends BaseService {
 		 * @param {string | URL | Request} request
 		 * @param {Response} response
 		 */
-		function on_json_parse_called(proxy_args,request,response,callback) {
+		function on_json_parse_called(proxy_args,request,response,callback)
+		{
 			if(is_yt_debug_enabled) console.log("JSON.parse()");
-			try {
+			try
+			{
 				let response_obj=json_action_obj.original_action(proxy_args);
 				/** @type {FetchJsonParseArgs} */
 				const target_args={
@@ -3115,45 +3531,54 @@ class ModifyEnv extends BaseService {
 				};
 				callback(target_args);
 				return response_obj;
-			} catch(e) {
+			} catch(e)
+			{
 				console.log("target error",e);
 				throw e;
-			} finally {
+			} finally
+			{
 				JSON.parse=json_action_obj.json_parse;
 			}
 		}
 		/** @arg {FetchJsonParseArgs} target_args */
-		function json_parse_callback(target_args) {
+		function json_parse_callback(target_args)
+		{
 			json_action_obj.json_response_parsed(target_args);
 		}
 		/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
-		function handle_json_parse({request,options},state,onfulfilled,on_rejected,response_text) {
+		function handle_json_parse({request,options},state,onfulfilled,on_rejected,response_text)
+		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
 			json_action_obj.json_parse=JSON.parse;
 			if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
 			/** @type {ProxyHandler<JSON['parse']>} */
 			const proxy_handler={
-				apply: (...proxy_args) => {
+				apply: (...proxy_args) =>
+				{
 					return on_json_parse_called(proxy_args,request,state.response,json_parse_callback);
 				}
 			};
 			JSON.parse=new Proxy(JSON.parse,proxy_handler);
 			let ret;
-			try {if(onfulfilled) {ret=onfulfilled(response_text);} else {ret=response_text;} } catch(err) {
+			try {if(onfulfilled) {ret=onfulfilled(response_text);} else {ret=response_text;} } catch(err)
+			{
 				if(on_rejected) return on_rejected(err);
 				throw err;
-			} finally {
+			} finally
+			{
 			}
 			return ret;
 		}
 		/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
-		function bind_promise_handler(input,state,onfulfilled,onrejected) {
+		function bind_promise_handler(input,state,onfulfilled,onrejected)
+		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 			let ret=handle_json_parse.bind(null,input,state,onfulfilled,onrejected);
 			return ret;
 		}
 		/** @private @arg {{input: FetchInjectInputArgs}} input_args @arg {{response: Response}} state @arg {{result:Promise<any>}} result @return {Promise<any>} */
-		function handle_fetch_response_2({input},state,result) {
+		function handle_fetch_response_2({input},state,result)
+		{
 			return {
 				/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
 				then(onfulfilled,onrejected) {return result.result.then(bind_promise_handler(input,state,onfulfilled,onrejected));},
@@ -3164,9 +3589,12 @@ class ModifyEnv extends BaseService {
 			};
 		}
 		/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
-		function fetch_promise_handler(request,options,response) {
-			class R_Fake {
-				text() {
+		function fetch_promise_handler(request,options,response)
+		{
+			class R_Fake
+			{
+				text()
+				{
 					if(is_yt_debug_enabled) console.log("response.text()");
 					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
 				}
@@ -3181,11 +3609,13 @@ class ModifyEnv extends BaseService {
 			let fake_res_t=any_x;
 			return new Proxy(fake_res_t,{
 				/** @private @arg {keyof Response} key */
-				get(_obj,key,_proxy) {
+				get(_obj,key,_proxy)
+				{
 					/** @private @type {string} */
 					let ks=as(key);
 					if(ks==="then") {return void 0;}
-					switch(key) {
+					switch(key)
+					{
 						case "text": case "redirected": case "ok": case "status": return fake_res[key];
 						case "body": return response.body;
 						case "headers": return response.headers;
@@ -3198,9 +3628,11 @@ class ModifyEnv extends BaseService {
 		/** @private @type {typeof fetch|null} */
 		let original_fetch=null;
 		/** @private @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>} */
-		function fetch_inject(user_request,request_init) {
+		function fetch_inject(user_request,request_init)
+		{
 			if(!original_fetch) throw new Error("No original fetch");
-			x: if(request_init) {
+			x: if(request_init)
+			{
 				if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
 				console.log("[fetch_request_init_data]",user_request,request_init);
 			}
@@ -3213,7 +3645,8 @@ class ModifyEnv extends BaseService {
 		let t=this;
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
 			/** @private @arg {typeof URL["createObjectURL"]} target @arg {typeof URL} thisArg @arg {[Blob|MediaSource]} args */
-			apply(target,thisArg,args) {
+			apply(target,thisArg,args)
+			{
 				let [url_source,...rest]=args;
 				if(rest.length>0) {t.leftover_args.push([target,thisArg,url_source,...rest]);}
 				blob_create_args_arr.push(url_source);
@@ -3225,7 +3658,8 @@ class ModifyEnv extends BaseService {
 		});
 		URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
 			/** @private @arg {typeof URL["revokeObjectURL"]} target @arg {typeof URL} thisArg @arg {[string]} args */
-			apply(target,thisArg,args) {
+			apply(target,thisArg,args)
+			{
 				let val=args[0];
 				active_blob_set.delete(val);
 				return Reflect.apply(target,thisArg,args);
@@ -3235,7 +3669,8 @@ class ModifyEnv extends BaseService {
 		window.fetch=fetch_inject;
 		fetch_inject.__proxy_target__=original_fetch;
 		let navigator_sendBeacon=navigator.sendBeacon;
-		navigator.sendBeacon=function(...args) {
+		navigator.sendBeacon=function(...args)
+		{
 			if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {return true;}
 			console.log("send_beacon",args[0]);
 			return navigator_sendBeacon.call(this,...args);
@@ -3244,13 +3679,16 @@ class ModifyEnv extends BaseService {
 }
 //#endregion Service
 //#region YtPlugin
-class YtPlugin extends BaseService {
+class YtPlugin extends BaseService
+{
 	static init_once=false;
 	/** @arg {YtPlugin} instance */
-	static do_init(instance) {
+	static do_init(instance)
+	{
 		if(this.init_once) return;
 		this.init_once=true;
-		export_(exports => {
+		export_(exports =>
+		{
 			exports.modules=new Map;
 			exports.modules.set("yt",instance);
 		});
@@ -3259,19 +3697,22 @@ class YtPlugin extends BaseService {
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
 	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
-	constructor(x) {
+	constructor(x)
+	{
 		super(x);
 		YtPlugin.do_init(this);
 	}
 	/** @type {HTMLElement|null} */
 	yt_playlist_manager=null;
 	/** @api @public @template {{name:string}} T @arg {T} function_obj */
-	add_function(function_obj) {
+	add_function(function_obj)
+	{
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
 }
-function h_detect_firefox() {
+function h_detect_firefox()
+{
 	let ua=navigator.userAgent;
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
 }
@@ -3286,33 +3727,39 @@ sizeof_cache.set(null,1);
 sizeof_cache.set(undefined,1);
 let count=0;
 /** @private @arg {unknown} obj */
-function sizeof_js(obj) {
+function sizeof_js(obj)
+{
 	let cache=sizeof_cache.get(obj);
 	if(cache!==void 0) return cache;
 	count++;
 	if(count>1024) {throw new Error("Too big");}
 	let size=0;
 	x: {
-		if(typeof obj=="string") {
+		if(typeof obj=="string")
+		{
 			size=text_encoder.encode(obj).length;
 			break x;
 		}
-		if(typeof obj=="number") {
+		if(typeof obj=="number")
+		{
 			size=1;
 			break x;
 		}
-		if(obj instanceof EventTarget) {
+		if(obj instanceof EventTarget)
+		{
 			size=1;
 			break x;
 		}
-		if(obj instanceof Storage) {
+		if(obj instanceof Storage)
+		{
 			size=1;
 			break x;
 		}
 		if(typeof obj!=="object") {debugger; return 1;}
 		if(obj===null) return 1;
 		let ent;
-		try {ent=Object.entries(obj);} catch(e) {
+		try {ent=Object.entries(obj);} catch(e)
+		{
 			console.log("failed_to_get_entries",e,obj);
 			size=1;
 			break x;
@@ -3324,7 +3771,8 @@ function sizeof_js(obj) {
 }
 //#endregion
 //#region HandleTypesSupport
-class ServiceData extends BaseService {
+class ServiceData extends BaseService
+{
 	/** @protected @type {GA_FormatItagNum[]} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
 	/** @protected @type {QualArr} */
@@ -3339,25 +3787,31 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 //#endregion
-class ParentWalker {
+class ParentWalker
+{
 	/** @arg {JsonReplacerState} store @arg {unknown} obj */
-	constructor(store,obj) {
+	constructor(store,obj)
+	{
 		this.store=store;
 		this.obj=obj;
 	}
-	get() {
+	get()
+	{
 		return this.obj;
 	}
-	get_parent() {
+	get_parent()
+	{
 		let parent_info=this.store.parent_map.get(this.obj);
 		if(!parent_info) return null;
 		let [index]=parent_info;
 		return new ParentWalker(this.store,this.store.object_store[index]);
 	}
 }
-class JsonReplacerState {
+class JsonReplacerState
+{
 	/** @constructor @public @arg {D_JsonReplacerArgs} args */
-	constructor(args) {
+	constructor(args)
+	{
 		this.object_count=0;
 		this.cur_cf=args.cf;
 		this.key_keep_arr=args.keys;
@@ -3376,22 +3830,27 @@ class JsonReplacerState {
 		this.parent_map=new Map;
 	}
 	/** @arg {string} cf */
-	set_cf(cf) {
+	set_cf(cf)
+	{
 		this.cf_stack.push(this.cur_cf);
 		this.cur_cf=cf;
 	}
-	pop_cf() {
+	pop_cf()
+	{
 		this.cur_cf=required(this.cf_stack.pop());
 	}
 	/** @arg {unknown} x */
-	get_parent_walker(x) {
+	get_parent_walker(x)
+	{
 		return new ParentWalker(this,x);
 	}
 	/** @arg {string} key @arg {unknown} obj */
-	next_key(key,obj) {
+	next_key(key,obj)
+	{
 		let s=this;
 		let x=obj;
-		if(!s.object_store.includes(x)) {
+		if(!s.object_store.includes(x))
+		{
 			s.object_store.push(x);
 			let mi=s.object_store.indexOf(x);
 			s.parent_map.set(x,[mi,key]);
@@ -3399,14 +3858,16 @@ class JsonReplacerState {
 		}
 	}
 	/** @arg {object|null} obj */
-	next_key_obj(obj) {
+	next_key_obj(obj)
+	{
 		let s=this;
 		let x=obj;
 		if(x instanceof Uint8Array) return;
 		if(x===null) return;
 		let mi=s.object_store.indexOf(x);
 		let xi=Object.entries(x);
-		for(let [k_in,val] of xi) {
+		for(let [k_in,val] of xi)
+		{
 			if(s.object_store.includes(val)) continue;
 			s.object_store.push(val);
 			s.parent_map.set(val,[mi,k_in]);
@@ -3415,10 +3876,12 @@ class JsonReplacerState {
 }
 export_(exports => {exports.JsonReplacerState=JsonReplacerState;});
 //#region exports
-export_(exports => {
+export_(exports =>
+{
 	exports.ServiceData=ServiceData;
 });
-export_(exports => {
+export_(exports =>
+{
 	exports.split_string_once=split_string_once;
 	exports.base64_dec=base64_dec;
 	exports.AudioGainController=AudioGainController;
@@ -3429,7 +3892,8 @@ export_(exports => {
 export_(exports => {exports.ApiBase=ApiBase;});
 export_(exports => {exports.ServiceWithResolver=ServiceWithResolver;});
 export_(exports => {exports.ServiceWithAccessors=ServiceWithAccessors;});
-export_(exports => {
+export_(exports =>
+{
 	exports.BaseService=BaseService;
 	exports.YtPlugin=YtPlugin;
 	exports.ModifyEnv=ModifyEnv;
@@ -3440,7 +3904,8 @@ export_(exports => {
 	exports.YtHandlers=YtHandlers;
 });
 export_(exports => {exports.start_message_channel_loop=start_message_channel_loop;});
-export_(exports => {
+export_(exports =>
+{
 	exports.MyReader=MyReader;
 	exports.split_string=split_string;
 	exports.split_string_once_ex=split_string_once_ex;
@@ -3452,8 +3917,10 @@ export_(exports => exports.__module_loaded__=true);
 //#region global exports
 export_(exports => {exports.__youtube_plugin_base_loaded__=true;},{global: true});
 //#endregion
-if(delete_require) {
+if(delete_require)
+{
 	delete window.require;
-} else if(reset_require) {
+} else if(reset_require)
+{
 	require=page_require;
 }

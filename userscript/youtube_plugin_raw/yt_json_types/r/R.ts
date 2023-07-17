@@ -457,6 +457,7 @@ type RC_GoogleHelp_SPs={service: "GOOGLE_HELP"; params: ToKeyValue<SP_GoogleHelp
 type RC_MainAppWebResponseContext={
 	datasyncId: `${number}||${number}`;
 	loggedOut: boolean;
+	trackingParam?: string;
 };
 type RC_ResponseContext={
 	mainAppWebResponseContext?: RC_MainAppWebResponseContext;
