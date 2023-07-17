@@ -676,8 +676,6 @@ class Support_RS_Player extends BaseService
 				this.t(liveStreamability,this.R_LiveStreamability);
 				this.xm.t(offlineability,x => this.xm.R_Button(x));
 				this.t(miniplayer,this.R_Miniplayer);
-				let ctx=atob(contextParams);
-				this.sm.params("playability_status.context_params",ctx);
 			} break;
 			case "UNPLAYABLE": {
 				const {status: {},errorScreen,...y}=this.s(cf,x); this.g(y);
@@ -938,7 +936,6 @@ class Support_RS_Player extends BaseService
 		});
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 		const {xtags,...y}=u; this.g(y);
-		this.t(xtags,x => this.sm.params("format_item.xtags",x));
 	}
 	/** @private @arg {D_UUIDString} x */
 	parse_uuid(x)
@@ -1047,7 +1044,6 @@ class Support_RS_Player extends BaseService
 		this.t(lastModified,x => this.sm.a_primitive_str(x));
 		this.t(contentLength,x => this.sm.a_primitive_str(x));
 		this.sm.a_primitive_str(quality);
-		this.t(xtags,x => this.sm.params("adaptive_format_item.xtags",x));
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,x => this.sm.a_primitive_str(x));
 		if(projectionType!=="RECTANGULAR") debugger;
@@ -1217,7 +1213,7 @@ class Support_RS_Player extends BaseService
 	/** @private @arg {D_CollaboratorInfoCardContent} x */
 	D_CollaboratorInfoCardContent(x) {x;}
 	/** @private @arg {D_TrackingParams} x */
-	D_InfoCardIcon(x) {this.sm.D_TrackingParams("D_InfoCardIcon",x);}
+	D_InfoCardIcon(x) {const {trackingParams,...y}=this.s("D_InfoCardIcon",x); this.g(y);}
 	/** @private @arg {R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
 	/** @private @arg {D_CueRangeItem} x */
@@ -1257,10 +1253,10 @@ class Support_RS_WatchPage extends BaseService
 	{
 		const cf="R_WatchPage"; this.sm.k(cf,x);
 		if("rootVe" in x) switch(x.rootVe)
-		{
-			case 3832: return this.RS_VE3832_Page_Watch(x);
-			default: debugger; return;
-		}
+			{
+				case 3832: return this.RS_VE3832_Page_Watch(x);
+				default: debugger; return;
+			}
 		this.RS_Page_Watch(x);
 	}
 	/** @private @arg {RS_VE3832_Page_Watch} x */
@@ -1322,27 +1318,27 @@ class Support_RS_Page_Browse extends BaseService
 		let x=null,x2=null;
 		if("rootVe" in ux) x=ux; else x2=ux;
 		if(x!==null) switch(x.rootVe)
-		{
-			case 3854: {
-				const cf="RS_VE3854_BrowsePage";
-				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-				this._primitive_of(expirationTime,"number");
-				this.save_primitive(`${cf}.rootVe`,rootVe);
-			} break;
-			case 6827: {
-				const cf="RS_VE6827_BrowsePage";
-				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-				this._primitive_of(expirationTime,"number");
-				this.save_primitive(`${cf}.rootVe`,rootVe);
-			} break;
-			case 96368: {
-				const cf="RS_VE96368_BrowsePage";
-				const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
-				this._primitive_of(expirationTime,"number");
-				this.save_primitive(`${cf}.rootVe`,rootVe);
-			} break;
-			default: debugger; break;
-		}
+			{
+				case 3854: {
+					const cf="RS_VE3854_BrowsePage";
+					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
+					this._primitive_of(expirationTime,"number");
+					this.save_primitive(`${cf}.rootVe`,rootVe);
+				} break;
+				case 6827: {
+					const cf="RS_VE6827_BrowsePage";
+					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
+					this._primitive_of(expirationTime,"number");
+					this.save_primitive(`${cf}.rootVe`,rootVe);
+				} break;
+				case 96368: {
+					const cf="RS_VE96368_BrowsePage";
+					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
+					this._primitive_of(expirationTime,"number");
+					this.save_primitive(`${cf}.rootVe`,rootVe);
+				} break;
+				default: debugger; break;
+			}
 		x=x2;
 		x2;
 	}
@@ -1725,9 +1721,9 @@ class Support_EventInput extends BaseService
 					switch(url)
 					{
 						default: debugger; switch(url)
-						{
-							case "/":
-						} break;
+							{
+								case "/":
+							} break;
 						case "/":
 					}
 				} break;
@@ -1736,9 +1732,9 @@ class Support_EventInput extends BaseService
 					switch(url)
 					{
 						default: debugger; switch(url)
-						{
-							case "/feed":
-						} break;
+							{
+								case "/feed":
+							} break;
 						case "/feed/library":
 					}
 				} break;
@@ -1747,9 +1743,9 @@ class Support_EventInput extends BaseService
 					switch(url)
 					{
 						default: debugger; switch(url)
-						{
-							case "/feed":
-						} break;
+							{
+								case "/feed":
+							} break;
 						case "/feed/subscriptions":
 					}
 				} break;
@@ -1768,9 +1764,9 @@ class Support_EventInput extends BaseService
 					switch(x)
 					{
 						default: x===""; debugger; switch(x)
-						{
-							case "/":
-						} break;
+							{
+								case "/":
+							} break;
 						case "/":
 					}
 				},
@@ -1798,12 +1794,11 @@ class Support_EventInput extends BaseService
 					switch(up[0])
 					{
 						default: up[0]===""; debugger; switch(up[0])
-						{
-							case "/":
-						} break;
+							{
+								case "/":
+							} break;
 						case "/feed/trending": {
 							let {bp,...y}=this.parse_url_search_params(up[1]); this.g(y);
-							this.sm.params("trending.bp",bp);
 						}
 					}
 					return;
@@ -1811,9 +1806,9 @@ class Support_EventInput extends BaseService
 				switch(url)
 				{
 					default: url===""; debugger; switch(url)
-					{
-						case "/":
-					} break;
+						{
+							case "/":
+						} break;
 					case "/feed/history":
 					case "/feed/library":
 				}
@@ -1826,9 +1821,9 @@ class Support_EventInput extends BaseService
 				switch(url)
 				{
 					default: url===""; debugger; switch(url)
-					{
-						case "/":
-					} break;
+						{
+							case "/":
+						} break;
 					case "/feed/subscriptions":
 				}
 			}
@@ -2340,7 +2335,6 @@ class Support_VE extends BaseService
 	{
 		const cf="D_VssLoggingContext";
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.params("logging_context.serialized_context_data",serializedContextData);
 	}
 }
 export_(exports => {exports.Support_VE=Support_VE;});
@@ -2353,7 +2347,6 @@ class Support_VE37414 extends BaseService
 	{
 		const cf="D_QoeLoggingContext";
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.params("logging_context.serialized_context_data",serializedContextData);
 	}
 	/** @private @arg {DE_ReelWatch} x */
 	DE_VE37414_ReelWatch(x)
@@ -2361,14 +2354,11 @@ class Support_VE37414 extends BaseService
 		const cf="DE_VE37414_ReelWatch";
 		const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,inputType,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(videoId,x => this.sm.videoId(x));
-		this.sm.params("reel.player_params",playerParams);
 		this.sm.t(thumbnail,this.sm.D_Thumbnail);
 		this.xr.R_ReelPlayerOverlay(overlay);
-		this.sm.params("reel.params",params);
 		this.t(loggingContext,this.D_LoggingContext);
 		this.t(sequenceProvider,x => this.sm.cq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
 		this.t(inputType,x => this.sm.cq(x,"REEL_WATCH_INPUT_TYPE_SEEDLESS"));
-		this.t(sequenceParams,x => this.sm.params("reel.sequence_params",x));
 	}
 	/** @private @arg {D_LoggingContext} x */
 	D_LoggingContext(x)
@@ -2423,7 +2413,6 @@ class Support_Renderer extends BaseService
 	{
 		const cf="A_AddChatItem";
 		const {clickTrackingParams,addChatItemAction,...y}=this.s(cf,x); this.g(y);
-		this.sm.t(clickTrackingParams,this.sm.clickTrackingParams);
 		this.AD_AddChatItem(addChatItemAction);
 	}
 	/**
@@ -2442,7 +2431,6 @@ class Support_Renderer extends BaseService
 		});
 		let cf=this.cg.get_auto_type_name(s,x);
 		const {clickTrackingParams: a,[k]: b,...y}=this.s(cf,x);
-		a&&this.sm.clickTrackingParams(a);
 		const r1=f1.call(this,b);
 		return [y,r1];
 	}
@@ -2491,16 +2479,15 @@ class Support_Renderer extends BaseService
 		this.t(clientId,x => this.save_primitive(`${cf}.clientId`,x));
 	}
 	// CommandData Data methods
-	/** @private @arg {"DC_PlayerSeek"} cf @arg {CF_P_ParamParse} path @arg {DC_Generic} x */
-	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.sm.params(path,x));}
+	/** @private @arg {"DC_PlayerSeek"} cf @arg {DC_Generic} x */
+	DC_Generic(cf,x) {this.y(cf,"continuation",x,() => {});}
 	/** @private @arg {DC_PlayerSeek} x */
-	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}
+	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek",x);}
 	/** @private @arg {DC_LiveChatReplay} x */
 	DC_LiveChatReplay(x)
 	{
 		const cf="DC_LiveChatReplay";
 		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
-		this.sm.params("live_chat_replay.continuation",continuation);
 		this.sm.a_primitive_num(timeUntilLastMessageMsec);
 	}
 	// ContinuationData Renderer methods
@@ -2518,8 +2505,6 @@ class Support_Renderer extends BaseService
 		const {invalidationId,timeoutMs,continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
 		this.D_InvalidationId(invalidationId);
 		if(timeoutMs!==10000) debugger;
-		this.sm.params("invalidation.continuation",continuation);
-		this.sm.t(clickTrackingParams,this.sm.clickTrackingParams);
 	}
 	// Endpoint Data methods
 	//#endregion
@@ -3355,9 +3340,7 @@ class Support_Renderer extends BaseService
 			this.sm.E_Watch(onTap);
 			this.xm.R_Button(shareButton);
 			this.xm.t(repeatButton,this.xm.R_ToggleButton);
-			this.sm.params("macro_marker_repeat_state.entity.key",a);
 			this.sm.t(endRepeatCommand,this.sm.C_CommandExecutor);
-			this.sm.params("player_state.entity.key",b);
 			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 			this.sm.a_primitive_str(timeDescriptionA11yLabel);
 			this.t_cf(cf,lightColorPalette,(cf,x) => this.sm.D_LightColorPalette(cf,x));
@@ -3516,7 +3499,6 @@ class Support_Renderer extends BaseService
 			/** @type {`${typeof cf}_Action`} */
 			const cf1=`${cf}_Action`;
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
-			this.sm.clickTrackingParams(clickTrackingParams);
 			console.log(`[${cf}.openPopupAction]`,openPopupAction);
 			return;
 		}
@@ -3578,7 +3560,6 @@ class Support_Renderer extends BaseService
 	{
 		const cf="GA_MenuNavigationPopup";
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.clickTrackingParams(clickTrackingParams);
 		{
 			const {popup,popupType,beReused,...y}=this.s("Popup_DL_MenuNavigation",a); this.g(y);
 			x: {
@@ -3816,7 +3797,6 @@ class Support_Renderer extends BaseService
 	{
 		const cf="C_ShowReloadUi";
 		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
-		this.sm.clickTrackingParams(clickTrackingParams);
 		this.DC_ShowReloadUi(a);
 	}
 	/** @private @arg {DC_ShowReloadUi} x */
@@ -3840,13 +3820,6 @@ class Support_Renderer extends BaseService
 	DC_Continuation_Omit(cf,x)
 	{
 		const {token,request,...y}=this.s(cf,x);
-		switch(request)
-		{
-			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": this.sm.params("continuation_request.browse.token",token); break;
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": this.sm.params("continuation_request.reel_watch_sequence.token",token); break;
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": this.sm.params("continuation_request.watch_next.token",token); break;
-		};
 		/** @returns {T_OmitKey<T,"token"|"request">|null} */
 		function gu() {return null;}
 		this.assert_is_omit_key(y,gu);
@@ -3858,7 +3831,6 @@ class Support_Renderer extends BaseService
 		const cf="DC_Continuation_Browse";
 		const {token,request,command,...y}=this.s(cf,x); this.g(y);
 		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
-		this.sm.params("continuation_request.browse.token",token);
 		this.t(command,this.C_ShowReloadUi);
 	}
 	/** @public @arg {DC_Continuation_ReelWatchSeq} x */
@@ -3867,7 +3839,6 @@ class Support_Renderer extends BaseService
 		const cf="DC_Continuation_ReelWatchSeq";
 		const {token,request,...y}=this.s(cf,x); this.g(y);
 		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
-		this.sm.params("continuation_request.reel_watch_sequence.token",token);
 	}
 	/** @public @arg {DC_Continuation_WatchNext} x */
 	DC_Continuation_WatchNext(x)
@@ -3875,7 +3846,6 @@ class Support_Renderer extends BaseService
 		const cf="DC_Continuation_WatchNext";
 		const {token,request,command,...y}=this.s(cf,x); this.g(y);
 		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
-		this.sm.params("continuation_request.watch_next.token",token);
 		this.t(command,this.C_ShowReloadUi);
 	}
 	/** @protected @arg {M_Browse} x */
@@ -4010,7 +3980,6 @@ class Support_Renderer extends BaseService
 			if(this.sm.is_TE_VE(x,3611)) return this.sm.E_VE3611(x);
 			x;
 		});
-		if(trackingParams) this.sm.trackingParams(trackingParams);
 		this.sm.t(contentDescription,this.sm.G_Text);
 		this.sm.t(soundAttributionTitle,this.sm.G_Text);
 		this.t(backgroundColor,x =>
@@ -4074,7 +4043,6 @@ class ForService_XMethods extends BaseService
 	{
 		const cf="S_Client_Popup";
 		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.clickTrackingParams(clickTrackingParams);
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
@@ -4131,7 +4099,6 @@ class ForService_XMethods extends BaseService
 		/** @type {TA_OpenPopup<unknown>} */
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.clickTrackingParams(clickTrackingParams);
 		/** @type {G_OpenPopup_All["openPopupAction"]|G_Popup_All|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&typeof ax==="object"&&"popupType" in ax&&"popup" in ax)
@@ -4220,7 +4187,6 @@ class ForService_XMethods extends BaseService
 		this.sm.t(subscribed,this.sm.a_primitive_bool);
 		this.t(type,x => this.sm.cq(x,"FREE"));
 		this.sm.t(channelId,this.sm.channelId);
-		if(trackingParams) this.sm.trackingParams(trackingParams);
 		this.sm.t(showPreferences,this.sm.a_primitive_bool);
 		let [p1,o1]=this.sm.unwrap_prefix(y1,"subscribed");
 		this.sm.D_SubscribeButton_SubscribedPrefix(p1);
@@ -4387,7 +4353,6 @@ class ForService_XMethods extends BaseService
 		this.t(navigationEndpoint,this.D_Button_NavEP);
 		this.xm.t(accessibility,this.xm.D_Label);
 		this.t(tooltip,x => this.sm.a_primitive_str(x));
-		this.t(trackingParams,x => this.sm.trackingParams(x));
 		this.sm.t(accessibilityData,this.sm.D_Accessibility);
 		this.xm.t(command,this.xm.GC_Button);
 	}
@@ -4540,7 +4505,6 @@ class ForService_XMethods extends BaseService
 		const cf="DE_Unsubscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.z(channelIds,this.sm.channelId);
-		this.sm.params("unsubscribe.params",params);
 	}
 	/** @private @arg {E_CreateComment} x */
 	E_CreateComment(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
@@ -4552,7 +4516,6 @@ class ForService_XMethods extends BaseService
 		const cf="DE_Subscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.z(channelIds,this.sm.channelId);
-		this.sm.params("subscribe.params",params);
 	}
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
@@ -4663,11 +4626,11 @@ class ForService_XMethods extends BaseService
 		if(icon.iconType!=="PLAY_ALL") debugger;
 	}
 	/** @private @arg {DE_CreateComment} x */
-	DE_CreateComment(x) {this.sm.TD_Params("DE_CreateComment","create_comment.params","createCommentParams",x);}
+	DE_CreateComment(x) {const {createCommentParams,...y}=this.s("DE_CreateComment",x); this.g(y);}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.sm.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
 	/** @private @arg {DE_YpcGetOffers} x */
-	DE_YpcGetOffers(x) {this.sm.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
+	DE_YpcGetOffers(x) {this.sm.D_Params("DE_YpcGetOffers",x);}
 	/** @private @arg {T_Icon<"MIX">} x */
 	D_MixIcon(x) {this.sm.T_Icon("D_MixIcon",x);}
 	/** @private @arg {M_YpcGetOffers} x */
@@ -4709,7 +4672,6 @@ class ForService_XMethods extends BaseService
 	{
 		const cf="D_MusicThumbnail";
 		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.trackingParams(a);
 		this.sm.D_Thumbnail(thumbnail);
 		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
 		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
@@ -5323,7 +5285,6 @@ class ForService_XMethods extends BaseService
 	{
 		const cf="D_ImpressionCommand";
 		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);
-		this.sm.clickTrackingParams(clickTrackingParams);
 		let [r]=this.z(loggingUrls,this.T_BaseUrl);
 		this.z(r,x => this.ps.parse_url(`${cf}:LoggingUrlItem`,x));
 		this.sm.B_Hack(pingingEndpoint);

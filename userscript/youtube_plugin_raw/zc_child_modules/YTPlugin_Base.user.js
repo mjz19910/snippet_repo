@@ -2490,7 +2490,7 @@ class BaseService extends ServiceWithMembers
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
-	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
+	/** @api @public @template {{}} T @arg {string|CF_M_s} cf @arg {T} x */
 	s(cf,x)
 	{
 		if(!x) debugger;
@@ -2568,7 +2568,7 @@ class BaseService extends ServiceWithMembers
 	make_arr_t(k,x) {const b="item",c="arr"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	//#endregion
 	//#region save
-	/** @public @arg {CF_M_k} k @arg {{}} x */
+	/** @public @arg {CF_M_k|string} k @arg {{}} x */
 	k(k,x) {this.save_primitive(k,x);}
 	/** @protected @arg {string} k @arg {object|string|number|bigint|number[]|string[]|Uint8Array} x */
 	save_primitive(k,x) {k; x;}
