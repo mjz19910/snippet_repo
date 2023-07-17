@@ -4182,7 +4182,6 @@ class ServiceMethods extends ServiceData
 		if(!clickthroughEndpoint.urlEndpoint) {debugger; return;}
 		this.xm.E_Url(clickthroughEndpoint);
 		this.z(csiParameters,x => this.ht.D_CsiParameterItem(x));
-		this.params("instream_video_ad.player_vars",playerVars);
 		this.ht.R_InstreamAdPlayerOverlay(playerOverlay);
 		this.save_primitive(`${cf}.elementId`,elementId);
 		if(legacyInfoCardVastExtension!=="") debugger;
@@ -4229,7 +4228,6 @@ class ServiceMethods extends ServiceData
 	{
 		const cf="D_SerializedSlotAdServingDataEntry";
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params("ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
 	}
 	/** @private @arg {"DMD_AdSlot"} cf @arg {DMD_AdSlot} x */
 	DMD_AdSlot_Omit(cf,x)
@@ -4314,7 +4312,7 @@ class ServiceMethods extends ServiceData
 		this.save_enum(cf,"FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @private @arg {CD_Next} x */
-	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
+	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.DC_Generic_CTP);}
 	/** @private @arg {R_ProductListItem} x */
 	R_ProductListItem(x) {this.H_s("productListItemRenderer",x,this.D_ProductListItem);}
 	/** @private @arg {R_MerchandiseShelf} x */
@@ -4379,16 +4377,15 @@ class ServiceMethods extends ServiceData
 		this.t(ghostCards,this.R_GhostGrid);
 		this.xm.t(button,this.xm.R_Button);
 	}
-	/** @public @arg {CF_P_ParamParse} path @arg {DC_Generic_CTP} x */
-	DC_Generic_CTP(path,x)
+	/** @public @arg {DC_Generic_CTP} x */
+	DC_Generic_CTP(x)
 	{
 		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
-		this.params(path,continuation);
 	}
 	/** @private @arg {CD_Reload} x */
 	CD_Reload(x)
 	{
-		this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("reload.continuation",x));
+		this.y("CD_Reload","reloadContinuationData",x,this.DC_Generic_CTP);
 	}
 	/** @public @arg {R_CompactVideo} x */
 	R_CompactVideo(x) {this.H_s("compactVideoRenderer",x,this.D_CompactVideo);}
@@ -4512,7 +4509,6 @@ class ServiceMethods extends ServiceData
 		this.sm.G_Text(errorMessage);
 		this.xm.R_Button(emojiButton);
 		this.R_EmojiPicker(emojiPicker);
-		this.sm.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
 	}
 	/** @public @arg {R_EmojiPicker} x */
 	R_EmojiPicker(x) {this.H_("emojiPickerRenderer",x,this.D_EmojiPicker);}
@@ -4734,7 +4730,6 @@ class ServiceMethods extends ServiceData
 	{
 		const {text: b,trackingParams: c,...y}=this.s(cf,x);
 		this.G_Text(b);
-		this.trackingParams(c);
 		return y;
 	}
 	/** @private @arg {string} cf @arg {Extract<D_ChipCloudChip,{style:any}>["style"]} x */
@@ -4946,8 +4941,6 @@ class ServiceMethods extends ServiceData
 		this.save_enum(cf,"RELOAD_CONTINUATION_SLOT",x.slot);
 		return y;
 	}
-	/** @private @arg {DC_Generic_CTP} x */
-	D_CD_Next(x) {this.DC_Generic_CTP("next.continuation",x);}
 	/** @public @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_s("metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {R_MerchandiseItem} x */
@@ -5389,7 +5382,6 @@ class ServiceMethods extends ServiceData
 		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.R_Button(submitButton);
 		this.xm.R_Button(cancelButton);
-		this.params("aadc_guidelines_state.entity.key",aadcGuidelinesStateEntityKey);
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);
@@ -5425,7 +5417,6 @@ class ServiceMethods extends ServiceData
 	{
 		const cf="D_ViewCountFactoid";
 		const {viewCountEntityKey,factoid,viewCountType,...y}=this.s(cf,x); this.g(y);
-		this.params("view_count.entity.key",viewCountEntityKey);
 		this.R_Factoid(factoid);
 		this.save_enum(cf,"VIEW_COUNT_FACTOID_TYPE",viewCountType);
 	}
