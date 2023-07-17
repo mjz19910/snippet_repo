@@ -3619,7 +3619,6 @@ class ModifyEnv extends BaseService
 					/** @private @arg {keyof Response} key */
 					get(obj,key,_proxy)
 					{
-						if(!(key in obj.__response__)) return void 0;
 						switch(key)
 						{
 							case "body": case "headers": case "text": case "redirected": case "ok": case "status": case "clone": return obj[key];
