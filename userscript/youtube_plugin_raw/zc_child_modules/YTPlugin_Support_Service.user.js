@@ -1188,7 +1188,6 @@ class Support_RS_Player extends BaseService
 		if("playlistInfoCardContentRenderer" in x) return this.R_PlaylistInfoCardContent(x);
 		if("simpleCardContentRenderer" in x) return this.xr.R_SimpleCardContent(x);
 		if("videoInfoCardContentRenderer" in x) return this.xr.R_VideoInfoCardContent(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Card} x */
 	D_Card(x)
@@ -1973,7 +1972,6 @@ class Support_EventInput extends BaseService
 			default: break;
 		}
 		console.log("pt",x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	//#endregion
 	/** @template {{}} T @arg {{}} x @arg {()=>T|null} wx @returns {asserts x is T} */
@@ -2322,7 +2320,6 @@ class Support_EventInput extends BaseService
 	{
 		const cf="D_Tab_Subscriptions_EP";
 		if(this.sm.is_TE_VE(x,96368)) return this.sm.E_VE96368(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 }
 export_(exports => {exports.Support_EventInput=Support_EventInput;});
@@ -2771,7 +2768,6 @@ class Support_Renderer extends BaseService
 			this.R_GuideEntryData(entryData);
 			return;
 		}
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<D_GuideEntry,{targetId:any;}>|D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
 	D_GuideEntry_WithTargetId(cf,x)
@@ -3415,7 +3411,6 @@ class Support_Renderer extends BaseService
 		if("videoDescriptionHeaderRenderer" in x) return this.sm.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.ht.R_VideoDescriptionMusicSection(x);
 		if("videoDescriptionCourseSectionRenderer" in x) return this.sm.R_VideoDescriptionCourseSection(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {A_GetSystemMenu} x */
 	A_GetSystemMenu(x)
@@ -3459,7 +3454,6 @@ class Support_Renderer extends BaseService
 		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
 		if("accountItem" in x) return this.ht.A_AccountItem(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_NextContents} x */
 	G_NextContents(x)
@@ -3467,7 +3461,6 @@ class Support_Renderer extends BaseService
 		const cf="G_NextContents";
 		if("twoColumnWatchNextResults" in x) return this.sm.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x)
@@ -3479,7 +3472,6 @@ class Support_Renderer extends BaseService
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_ChatItem} x */
 	G_ChatItem(x)
@@ -3488,7 +3480,6 @@ class Support_Renderer extends BaseService
 		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
 		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
 		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_RS_Subscribe_Action} x */
 	G_RS_Subscribe_Action(x)
@@ -3505,7 +3496,6 @@ class Support_Renderer extends BaseService
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x)
@@ -3514,7 +3504,6 @@ class Support_Renderer extends BaseService
 		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
 		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
 		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x)
@@ -3522,7 +3511,6 @@ class Support_Renderer extends BaseService
 		const cf="G_LiveChatContinuationActions";
 		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_WatchNext} x */
 	G_WatchNext(x)
@@ -3531,7 +3519,6 @@ class Support_Renderer extends BaseService
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.sm.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_MenuNavigationItem_NavEP} x */
 	G_MenuNavigationItem_NavEP(x)
@@ -3863,7 +3850,6 @@ class Support_Renderer extends BaseService
 			const cf="G_CommentsSection";
 			if("commentThreadRenderer" in x) return this.sm.R_CommentThread(x);
 			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
-			x===""; this.sm.codegen_typedef(cf,x);
 		});
 	}
 	/** @public @arg {R_AuthorCommentBadge} x */
@@ -4335,7 +4321,6 @@ class ForService_XMethods extends BaseService
 		if("urlEndpoint" in x) return this.xm.E_Url(x);
 		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
 		if("createCommentReplyDialogEndpoint" in x) return this.sm.E_CreateCommentReplyDialog(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x)
@@ -4663,7 +4648,6 @@ class ForService_XMethods extends BaseService
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.xr.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.xm.R_PlaylistHeader(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("musicThumbnailRenderer",x,this.D_MusicThumbnail);}
@@ -4682,7 +4666,6 @@ class ForService_XMethods extends BaseService
 		const cf="G_Browse_MD";
 		if("channelMetadataRenderer" in x) return this.xr.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.xr.R_Playlist_MD(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x)
@@ -4690,7 +4673,6 @@ class ForService_XMethods extends BaseService
 		const cf="G_BrowseSidebar";
 		if("settingsSidebarRenderer" in x) return this.xr.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.xr.R_PlaylistSidebar(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
@@ -4709,7 +4691,6 @@ class ForService_XMethods extends BaseService
 		if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
 		if("reloadContinuationItemsCommand" in x) return this.sm.C_ReloadContinuationItems(x);
 		if("resetChannelUnreadCountCommand" in x) return this.xm.C_ResetChannelUnreadCount(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_BrowseContents} x */
 	G_BrowseContents(x)
@@ -4717,7 +4698,6 @@ class ForService_XMethods extends BaseService
 		const cf="G_BrowseContents";
 		if("twoColumnBrowseResultsRenderer" in x) return this.xm.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.sm.R_FeedFilterChipBar(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
 	DC_SectionList_BrowseFeed_ChannelFeatured(x)
@@ -5012,7 +4992,6 @@ class ForService_XMethods extends BaseService
 		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.sm.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.sm.C_ScrollToEngagementPanel(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x)
@@ -5423,7 +5402,6 @@ class ForService_XMethods extends BaseService
 		const cf="G_PlaylistSidebarItem";
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
 	R_PlaylistSidebarSecondaryInfo(x) {this.H_("playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
@@ -5561,7 +5539,6 @@ class ForService_XMethods extends BaseService
 		const cf="R_MP_MenuNotificationSection_Item";
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
-		x===""; this.sm.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("notificationRenderer",x,this.D_Notification);}
