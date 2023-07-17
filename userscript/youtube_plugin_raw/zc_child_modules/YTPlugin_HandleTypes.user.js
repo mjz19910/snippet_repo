@@ -544,11 +544,7 @@ class HandleTypes extends BaseService
 			const {styleRunExtensions,...y}=this.T_Attachment(cf,x); this.g(y);/*#destructure_done*/
 			if("styleRunColorMapExtension" in styleRunExtensions)
 			{
-				let cm=styleRunExtensions.styleRunColorMapExtension.colorMap;
-				this.sm.cq(cm[0].key,"USER_INTERFACE_THEME_DARK");
-				this.sm.cq(cm[0].value,0xffffffff);
-				this.sm.cq(cm[1].key,"USER_INTERFACE_THEME_LIGHT");
-				this.sm.cq(cm[1].value,0xff131313);
+				styleRunExtensions.styleRunColorMapExtension.colorMap;
 			} else
 			{
 				debugger;
