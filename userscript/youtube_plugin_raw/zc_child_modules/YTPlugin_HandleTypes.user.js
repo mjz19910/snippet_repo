@@ -1434,12 +1434,7 @@ class HandleTypes extends BaseService
 	decode_binary_obj(cf,x)
 	{
 		let binary_arr=this.read_b64_protobuf(decodeURIComponent(x));
-		if(!binary_arr)
-		{
-			debugger;
-			binary_arr=this.read_b64_protobuf(decodeURIComponent(x));
-			return;
-		}
+		if(!binary_arr) return;
 		this.decode_binary_arr(cf,binary_arr);
 	}
 	/** @private @type {string[]} */
