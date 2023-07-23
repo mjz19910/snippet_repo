@@ -2500,11 +2500,12 @@ class BaseService extends ServiceWithMembers
 	/** @public @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.sm.w(cf,k,x),`${cf}.${k}`);}
 	/**
-	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
-	 * @returns {[U,Omit<T,"webCommandMetadata">]}
+	 * @protected @template {CF_T_WCM} T_CF @arg {T_CF} cf @template {{webCommandMetadata:any;}} T @template U @arg {T|undefined} x @arg {(this:this,x:T["webCommandMetadata"],cf:`G${T_CF}`)=>U} f
+	 * @returns {[U,Omit<T,"webCommandMetadata">]|null}
 	 */
 	T_WCM(cf,x,f)
 	{
+		if(x===void 0) return null;
 		const {webCommandMetadata: a,...y}=this.s(cf,x);
 		let ret=f.call(this,a,`G${cf}`);
 		return [ret,y];
