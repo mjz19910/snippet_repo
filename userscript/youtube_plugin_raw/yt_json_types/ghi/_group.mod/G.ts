@@ -1,8 +1,8 @@
 //#region G_RS
-type G_RS_Page_Playlist=RS_PlaylistPage|RS_VE5754_Page_Playlist;
+export type G_RS_Page_Playlist=RS_PlaylistPage|RS_VE5754_Page_Playlist;
 //#endregion
 //#region from G_EY.ts
-type G_EY_Entity=
+export type G_EY_Entity=
 	|EY_MacroMarkersList
 	|EY_Offlineability
 	|EY_TranscriptTrackSelection
@@ -20,7 +20,7 @@ type G_EY_Entity=
 ;
 //#endregion
 //#region Panel Section (from G_SI.ts)
-type G_SI_DB_EngagementPanel=
+export type G_SI_DB_EngagementPanel=
 	|SI_DB_EngagementPanel_Ads
 	|SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters
 	|SI_DB_EngagementPanel_ClipCreate
@@ -29,7 +29,7 @@ type G_SI_DB_EngagementPanel=
 ;
 //#endregion
 //#region Action Renderers and Actions (from G_RA.ts)
-type G_RA_LiveChatContinuationActions=
+export type G_RA_LiveChatContinuationActions=
 	|A_ReplayChatItem
 	|A_AddChatItem
 	;
@@ -37,13 +37,13 @@ type G_RA_LiveChatContinuationActions=
 //#endregion
 //#region (from G.ts)
 //#region done
-type G_LiveChatContinuationItem=
+export type G_LiveChatContinuationItem=
 	|CD_Invalidation
 	|CD_LiveChatReplay
 	|CD_PlayerSeek
 	;
 ;
-type G_SettingItemIdEnum=
+export type G_SettingItemIdEnum=
 	|"NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS"
 	|"NOTIFICATION_RECOMMENDATION_WEB_CONTROL"
 	|"NOTIFICATION_COMMENT_WEB_CONTROL"
@@ -57,9 +57,9 @@ type G_SettingItemIdEnum=
 	|"EMAIL_CREATOR_NEWSLETTER"
 	;
 ;
-type G_CardList_StyleType="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION";
-type G_AccountItemSection=R_AccountItem|R_CompactLink;
-type G_AccountPageSettingsSections=
+export type G_CardList_StyleType="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION";
+export type G_AccountItemSection=R_AccountItem|R_CompactLink;
+export type G_AccountPageSettingsSections=
 	|"advanced"
 	|"billing"
 	|"notifications"
@@ -68,7 +68,7 @@ type G_AccountPageSettingsSections=
 	|"playback"
 	;
 ;
-type G_Actions=
+export type G_Actions=
 	|A_AddToGuideSection
 	|A_GetMultiPageMenu
 	|A_RemoveFromGuideSection
@@ -80,45 +80,45 @@ type G_Actions=
 	|TA_OpenPopup_Empty
 	;
 ;
-type G_Browse_MD=R_Channel_MD|R_Playlist_MD;
-type G_BrowseContents=R_TwoColumnBrowseResults|R_FeedFilterChipBar;
-type G_BrowseFeedContent=R_SearchBox|R_SubFeedSelector|R_Button|R_CompactLink;
-type G_BrowseHeader=R_FeedTabbedHeader|R_C4TabbedHeader;
-type G_BrowseSidebar=
+export type G_Browse_MD=R_Channel_MD|R_Playlist_MD;
+export type G_BrowseContents=R_TwoColumnBrowseResults|R_FeedFilterChipBar;
+export type G_BrowseFeedContent=R_SearchBox|R_SubFeedSelector|R_Button|R_CompactLink;
+export type G_BrowseHeader=R_FeedTabbedHeader|R_C4TabbedHeader;
+export type G_BrowseSidebar=
 	|R_SettingsSidebar
 	|R_PlaylistSidebar
 	;
 ;
-type G_ChannelSwitcherContent=R_Button|A_AccountItem;
-type G_ChatItem=
+export type G_ChannelSwitcherContent=R_Button|A_AccountItem;
+export type G_ChatItem=
 	|R_LiveChatTextMessage
 	|R_LiveChatPlaceholderItem
 	|R_LiveChatViewerEngagementMessage
 	;
 ;
-type G_CodecType=
+export type G_CodecType=
 	|G_CodecTypeStr
 	|T_SplitOnce<G_GenericCodecType,".">[0]
 	;
 ;
-type G_CodecTypeStr="opus"|"vp9";
-type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
-type G_ExtraUrlParamItem={key: "inline";};
-type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;
-type G_FormatQuality=
+export type G_CodecTypeStr="opus"|"vp9";
+export type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
+export type G_ExtraUrlParamItem={key: "inline";};
+export type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;
+export type G_FormatQuality=
 	|"hd2160"|"hd1440"|"hd1080"|"hd720"
 	|"large"|"medium"|"small"|"tiny"
 	;
 ;
-type G_GenericCodecType=
+export type G_GenericCodecType=
 	|S_acv1_codec
 	|"mp4a.40.2"
 	// av1 profile=0 level_id=08M bit_depth=8-bit
 	|"av01.0.08M.08"
 	;
 ;
-type G_GuideItem=R_GuideSection|R_GuideSubscriptionsSection;
-type G_GuideSectionItem=
+export type G_GuideItem=R_GuideSection|R_GuideSubscriptionsSection;
+export type G_GuideSectionItem=
 	|R_GuideCollapsibleEntry
 	|R_GuideCollapsibleSectionEntry
 	|R_GuideDownloadsEntry
@@ -127,15 +127,15 @@ type G_GuideSectionItem=
 	|R_GuideSubscriptionsSection
 	;
 ;
-type G_GuideSubscriptionsSectionItem=
+export type G_GuideSubscriptionsSectionItem=
 	|R_GuideEntry
 	|R_GuideCollapsibleEntry
 	;
 ;
-type G_HexNibbleStr=T_Split<"abcdef0123456789","">[number];
-type G_ItemSectionItems=R_CompactRadio|R_ContinuationItem|R_CompactVideo|R_CompactPlaylist|R_AdSlot;
-type G_MenuItem=R_MenuServiceItem|R_ToggleMenuServiceItem|R_MenuNavigationItem;
-type G_MimeTypeFormat=
+export type G_HexNibbleStr=T_Split<"abcdef0123456789","">[number];
+export type G_ItemSectionItems=R_CompactRadio|R_ContinuationItem|R_CompactVideo|R_CompactPlaylist|R_AdSlot;
+export type G_MenuItem=R_MenuServiceItem|R_ToggleMenuServiceItem|R_MenuNavigationItem;
+export type G_MimeTypeFormat=
 	|`video/mp4; codecs="${S_acv1_codec}"`
 	|`video/mp4; codecs="av01.0.08M.08"`
 	|`video/webm; codecs="vp9"`
@@ -143,7 +143,7 @@ type G_MimeTypeFormat=
 	|`audio/webm; codecs="opus"`
 	;
 ;
-type G_PopupItem=
+export type G_PopupItem=
 	|R_ConfirmDialog
 	|TR_MultiPageMenu_Empty
 	|RA_Notification
@@ -152,10 +152,10 @@ type G_PopupItem=
 	|R_VoiceSearchDialog
 	;
 ;
-type G_ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;
-type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
-type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
-type G_ClientSignal_Item=
+export type G_ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;
+export type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
+export type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
+export type G_ClientSignal_Item=
 	|A_SendFeedback
 	|A_Signal
 	|C_AddToPlaylist
@@ -163,27 +163,27 @@ type G_ClientSignal_Item=
 	|A_ClientSignal
 	;
 ;
-type G_RichSection=R_RichShelf|R_InlineSurvey|R_SourcePivotHeader;
-type G_Text={
+export type G_RichSection=R_RichShelf|R_InlineSurvey|R_SourcePivotHeader;
+export type G_Text={
 	runs?: D_TextRun[];
 	simpleText?: string;
 	accessibility?: D_Accessibility;
 };
-type G_Text_Base={accessibility?: D_Accessibility;};
-type G_PlaylistPanel_Item=R_AutomixPreviewVideo|R_PlaylistPanelVideo;
-type G_AllSignalTypes=
+export type G_Text_Base={accessibility?: D_Accessibility;};
+export type G_PlaylistPanel_Item=R_AutomixPreviewVideo|R_PlaylistPanelVideo;
+export type G_AllSignalTypes=
 	|Signal_GetNotificationsMenu
 	|G_ClientSignal
 	|G_AllSignalServiceEndpoint['signalServiceEndpoint']
 	;
 ;
-type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];
-type G_AdditionalDataItem=
+export type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];
+export type G_AdditionalDataItem=
 	|T_UserFeedbackEndpointProductSpecificValueData<"lockup","player">
 	|T_UserFeedbackEndpointProductSpecificValueData<"video_id",string>
 	;
 ;
-type G_ResponseActions=
+export type G_ResponseActions=
 	|TA_OpenPopup_Empty
 	|AU_NotificationsUnseenCount
 	|A_RemoveFromGuideSection
@@ -191,7 +191,7 @@ type G_ResponseActions=
 	|never
 	;
 ;
-type G_ResponseTypes=
+export type G_ResponseTypes=
 	|B_GenericResponseType
 	|WD_account_account_menu
 	|WD_account_set_setting
@@ -229,10 +229,10 @@ type G_ResponseTypes=
 	|WD_update_metadata
 	;
 ;
-type G_RichGridContent=R_RichItem|R_ContinuationItem;
-type G_RichItemContent=R_AdSlot|R_Video|R_Radio|R_FeedNudge;
-type G_SecondaryContents=R_ProfileColumn|R_BrowseFeedActions;
-type G_SectionItem=
+export type G_RichGridContent=R_RichItem|R_ContinuationItem;
+export type G_RichItemContent=R_AdSlot|R_Video|R_Radio|R_FeedNudge;
+export type G_SecondaryContents=R_ProfileColumn|R_BrowseFeedActions;
+export type G_SectionItem=
 	|R_RichItem
 	|R_RichSection
 	|R_CommentsHeader
@@ -241,7 +241,7 @@ type G_SectionItem=
 	|R_ContinuationItem
 	;
 ;
-type G_SettingsOptionItem=
+export type G_SettingsOptionItem=
 	|R_ChannelOptions
 	|R_SettingsSwitch
 	|R_SettingsCheckbox
@@ -249,12 +249,12 @@ type G_SettingsOptionItem=
 	|R_CopyLink
 	;
 ;
-type G_ShortsSurfaceIdentifier_ValidTag=
+export type G_ShortsSurfaceIdentifier_ValidTag=
 	|"engagement-panel-structured-description"
 	|"shorts-comments-panel"
 	;
 ;
-type G_StructuredDescriptionContentItem=
+export type G_StructuredDescriptionContentItem=
 	|R_ExpandableVideoDescriptionBody
 	|R_HorizontalCardList
 	|R_VideoDescriptionHeader
@@ -262,7 +262,7 @@ type G_StructuredDescriptionContentItem=
 	|R_VideoDescriptionCourseSection
 	;
 ;
-type G_ThumbnailOverlayItem=
+export type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayBottomPanel
 	|R_ThumbnailOverlayHoverText
 	|R_ThumbnailOverlayLoadingPreview
@@ -275,34 +275,34 @@ type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayInlineUnplayable
 	;
 ;
-type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
-type G_WatchNext=
+export type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
+export type G_WatchNext=
 	|R_CompactPlaylist
 	|R_CompactVideo
 	|R_ContinuationItem
 	;
 ;
-type G_WatchNextEndScreenItem=
+export type G_WatchNextEndScreenItem=
 	|R_EndScreenPlaylist
 	|R_EndScreenVideo
 	;
 ;
-type G_YtWatchUrl=
+export type G_YtWatchUrl=
 	|D_PlayerParamsUrl
 	|D_WatchPlaylistUrlFormat
 	;
 ;
-type G_PlaylistSidebarItem=R_PlaylistSidebarPrimaryInfo|R_PlaylistSidebarSecondaryInfo;
-type G_AdPlacementRendererItem=
+export type G_PlaylistSidebarItem=R_PlaylistSidebarPrimaryInfo|R_PlaylistSidebarSecondaryInfo;
+export type G_AdPlacementRendererItem=
 	|R_AdBreakService
 	|R_ClientForecastingAd
 	|R_InstreamVideoAd
 	|R_LinearAdSequence
 	;
 ;
-type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;
+export type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;
 //#endregion
-type G_RendererContentItem=
+export type G_RendererContentItem=
 	|R_RichItem
 	|R_RichSection
 	|R_CommentsHeader
@@ -314,7 +314,7 @@ type G_RendererContentItem=
 ;
 //#endregion
 //#region (from G_SE.ts)
-type G_SE_MenuService=
+export type G_SE_MenuService=
 	|A_ChangeEngagementPanelVisibility
 	|E_AddToPlaylistService
 	|E_PlaylistEdit

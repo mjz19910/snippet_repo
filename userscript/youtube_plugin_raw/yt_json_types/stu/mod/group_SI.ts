@@ -1,11 +1,11 @@
 //#region SI_DB
-type SI_DB_EngagementPanel_Ads={
+export type SI_DB_EngagementPanel_Ads={
 	content: R_AdsEngagementPanelContent;
 	targetId: "engagement-panel-ads";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: D_LoggingDirectives;
 };
-type SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters={
+export type SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters={
 	panelIdentifier: "engagement-panel-macro-markers-description-chapters";
 	header: R_EngagementPanelTitleHeader;
 	content: R_MacroMarkersList;
@@ -13,7 +13,7 @@ type SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters={
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: D_LoggingDirectives;
 };
-type SI_DB_EngagementPanel_ClipCreate={
+export type SI_DB_EngagementPanel_ClipCreate={
 	panelIdentifier: "engagement-panel-clip-create";
 	header: R_EngagementPanelTitleHeader;
 	content: R_ClipSection;
@@ -22,7 +22,7 @@ type SI_DB_EngagementPanel_ClipCreate={
 	onShowCommands: G_EngagementPanelSectionShowCommands[];
 	loggingDirectives: D_LoggingDirectives;
 };
-type SI_DB_EngagementPanel_MacroMarkers_AutoChapters={
+export type SI_DB_EngagementPanel_MacroMarkers_AutoChapters={
 	panelIdentifier: "engagement-panel-macro-markers-auto-chapters";
 	header: R_EngagementPanelTitleHeader;
 	content: R_MacroMarkersList;
@@ -32,7 +32,7 @@ type SI_DB_EngagementPanel_MacroMarkers_AutoChapters={
 };
 //#endregion
 //#region SI_VE
-type SI_VE76278_EngagementPanel={
+export type SI_VE76278_EngagementPanel={
 	panelIdentifier: "comment-item-section";
 	header: R_EngagementPanelTitleHeader;
 	content: R_SectionList;
@@ -41,7 +41,7 @@ type SI_VE76278_EngagementPanel={
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: D_LoggingDirectives;
 };
-type SI_VE99999_EngagementPanel={
+export type SI_VE99999_EngagementPanel={
 	panelIdentifier: DU_TargetId_ShoppingPanel_EntryPoint;
 	header: R_EngagementPanelTitleHeader;
 	content: R_ProductList;
@@ -50,7 +50,7 @@ type SI_VE99999_EngagementPanel={
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: D_LoggingDirectives;
 };
-type SI_VE126250_EngagementPanel={
+export type SI_VE126250_EngagementPanel={
 	panelIdentifier: "engagement-panel-searchable-transcript";
 	header: R_EngagementPanelTitleHeader;
 	content: R_ContinuationItem;
@@ -60,7 +60,7 @@ type SI_VE126250_EngagementPanel={
 	onShowCommands: C_ScrollToEngagementPanel[];
 	loggingDirectives: D_LoggingDirectives;
 };
-type SI_VE124975_EngagementPanel={
+export type SI_VE124975_EngagementPanel={
 	panelIdentifier: "engagement-panel-structured-description";
 	header: R_EngagementPanelTitleHeader;
 	content: R_StructuredDescriptionContent;
@@ -70,7 +70,7 @@ type SI_VE124975_EngagementPanel={
 	identifier?: T_ShortsSurfaceIdentifier<"engagement-panel-structured-description">;
 	loggingDirectives: D_LoggingDirectives;
 };
-type SI_VE139722_EngagementPanel={
+export type SI_VE139722_EngagementPanel={
 	header: R_EngagementPanelTitleHeader;
 	content: R_SectionList;
 	veType: 139722;

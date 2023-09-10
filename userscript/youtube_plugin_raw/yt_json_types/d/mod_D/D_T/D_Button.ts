@@ -1,6 +1,6 @@
-type DC_ShowReelsCommentsOverlay={engagementPanel: R_EngagementPanelSectionList;};
-type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsOverlayCommand: DC_ShowReelsCommentsOverlay;};
-type D_Button_style=
+export type DC_ShowReelsCommentsOverlay={engagementPanel: R_EngagementPanelSectionList;};
+export type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsOverlayCommand: DC_ShowReelsCommentsOverlay;};
+export type D_Button_style=
 	|"STYLE_BLUE_TEXT"
 	|"STYLE_DEFAULT"
 	|"STYLE_LIGHT_TEXT"
@@ -12,15 +12,15 @@ type D_Button_style=
 	|"STYLE_TEXT"
 	;
 ;
-type W_Some_r=Some_A<W_Some_s>;
-type W_Some_f=T_Str_Some<W_Some_s>;
-type W_Some_e="https://www.youtube.com/channel/UC";
-type Some_t1<S extends string>=[T_Split<S,""> extends [any,...infer L]? L["length"]:0];
-type Some_t<T extends string>=T extends `${infer S}${infer X}`? [
+export type W_Some_r=Some_A<W_Some_s>;
+export type W_Some_f=T_Str_Some<W_Some_s>;
+export type W_Some_e="https://www.youtube.com/channel/UC";
+export type Some_t1<S extends string>=[T_Split<S,""> extends [any,...infer L]? L["length"]:0];
+export type Some_t<T extends string>=T extends `${infer S}${infer X}`? [
 	T_Split<S,""> extends [any,...infer L]? L["length"]:0,
 	X,
 ]:never;
-type Some_A<T extends string,A extends any[]=[]>=
+export type Some_A<T extends string,A extends any[]=[]>=
 	T extends `${infer S}${infer E}`?
 	Some_t<T> extends infer V extends [any,any]?
 	Some_A<E,[...A,[S,V[0]]]>
@@ -28,8 +28,8 @@ type Some_A<T extends string,A extends any[]=[]>=
 	:A;
 ;
 
-type T_Str_Some<T extends string>=Some_t<T>[0] extends 0? "":T extends `${infer S}${infer E}`? `${S}${T_Str_Some<E>}`:T;
-type D_Button_targetId=
+export type T_Str_Some<T extends string>=Some_t<T>[0] extends 0? "":T extends `${infer S}${infer E}`? `${S}${T_Str_Some<E>}`:T;
+export type D_Button_targetId=
 	|"sponsorships-button"
 	|"create-clip-button-action-bar"
 	|"clip-info-button"
@@ -37,7 +37,7 @@ type D_Button_targetId=
 	;
 ;
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
-type D_Button={
+export type D_Button={
 	style?: D_Button_style;
 	size?: "SIZE_DEFAULT";
 	isDisabled?: boolean;
@@ -54,9 +54,9 @@ type D_Button={
 	targetId?: D_Button_targetId;
 	command?: C_ShowReelsCommentsOverlay|A_ChangeEngagementPanelVisibility;
 };
-type D_Button_Gen={
+export type D_Button_Gen={
 	icon: T_Icon<"SHORTS_SHARE">;
 	text: G_Text;
 };
 
-type R_Button={buttonRenderer: D_Button;};
+export type R_Button={buttonRenderer: D_Button;};

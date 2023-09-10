@@ -1,14 +1,21 @@
+import {T_Split} from "../../../support_0_mod/T_Split.mod.js";
+import {G_SI_DB_EngagementPanel} from "../../ghi/_group.mod/G.js";
+import {SI_DB_EngagementPanel_ClipCreate,SI_DB_EngagementPanel_MacroMarkers_AutoChapters,SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters} from "../../stu/mod/group_SI.js";
+import {T_EnumStr,T_TargetIdStr,TD_Label,T_SE_Signal,T_Signal,T_StyleType,TD_GuideEntry_Simple,T_SplitOnce,T_UrlWrappedValue,T_Setting_AutoNavForDesktop,T_ElementId,TP_Color,TR_MultiPageMenuSection,TM_Visibility,T_OmitKey,T_ExtractIconType,T_Types} from "../../stu/mod/group_T.js";
+import {D_TargetIdUuid,D_UserIdStr,D_ApiStatsAdsStr,D_UUIDString,G_SettingsEndpointPages} from "../mod_D/DU_T/DU.js";
+import {T_FeedEntry,T_IdTemplate} from "../mod_D/DU_T/DU_TemplateString.js";
+
 //#region String data, ie `D_${string}`
-type D_EndpointLikeEndings="Endpoint"|"Command"|"Action"|"Renderer";
+export type D_EndpointLikeEndings="Endpoint"|"Command"|"Action"|"Renderer";
 //#endregion
 //#region Enum data, ie `D_${string}`
-type D_AddToOfflineButtonState=T_EnumStr<
+export type D_AddToOfflineButtonState=T_EnumStr<
 	"ADD_TO_OFFLINE_BUTTON_STATE",[
 		"UNKNOWN",
 		"ENABLED"
 	][number]
 >;
-type D_UiTargetId=
+export type D_UiTargetId=
 	|SI_VE76278_EngagementPanel["targetId"]
 	|A_WatchNextContinuation["targetId"]
 	|DC_ReloadContinuationItems['targetId']
@@ -24,7 +31,7 @@ export type WatchUrlFormat=
 	|`/watch?v=${string}&playnext=1&list=${DU_Playlist_Radio_Id}`
 	;
 ;
-type D_WatchPageUrl=
+export type D_WatchPageUrl=
 	|`/watch?v=${string}&list=RD${string}&index=${number}&pp=${string}`
 	|`/watch?v=${string}&list=RD${string}&index=${number}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1`
@@ -34,23 +41,23 @@ type D_WatchPageUrl=
 	|`/v/${string}`
 	;
 ;
-type D_WatchPlaylistUrlFormat=
+export type D_WatchPlaylistUrlFormat=
 	|`list=${DU_Playlist_Id}`
 	|`list=${DU_Playlist_Id}&index=${number}`
 	|`list=${DU_Playlist_Radio_Id}&start_radio=${DU_StartRadio}`
 	;
 ;
-type D_WatchUrlStr=
+export type D_WatchUrlStr=
 	|`v=${string}`
 	|`v=${string}&${G_YtWatchUrl}`
 	;
 ;
-type D_ChannelPageGridStyleType=
+export type D_ChannelPageGridStyleType=
 	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID"
 	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT"
 	;
 ;
-type D_ContextTypeStr=
+export type D_ContextTypeStr=
 	|"channel_creator"
 	|"yt_web_remix_unlimited"
 	|"yt_web_search"
@@ -58,7 +65,7 @@ type D_ContextTypeStr=
 	|"yt_web_unlimited"
 	;
 ;
-type D_Settings_Id=
+export type D_Settings_Id=
 	|"account_advanced"
 	|"account_billing"
 	|"account_downloads"
@@ -72,7 +79,7 @@ type D_Settings_Id=
 	|"unlimited"
 	;
 ;
-type D_VideoCategory=
+export type D_VideoCategory=
 	|"Autos & Vehicles"
 	|"Comedy"
 	|"Education"
@@ -90,13 +97,13 @@ type D_VideoCategory=
 	|"Travel & Events"
 	;
 ;
-type D_VE6827_PageLocation=
+export type D_VE6827_PageLocation=
 	|"history"
 	|"library"
 	;
 ;
-type D_FE_SectionId=T_FeedEntry<"trending"|"history"|"library"|"storefront"|"guide_builder">;
-type D_EngagementPanelTargetId=
+export type D_FE_SectionId=T_FeedEntry<"trending"|"history"|"library"|"storefront"|"guide_builder">;
+export type D_EngagementPanelTargetId=
 	|"engagement-panel-clip-view"
 	|"engagement-panel-error-corrections"
 	|"engagement-panel-macro-markers-problem-walkthroughs"
@@ -109,15 +116,15 @@ type D_EngagementPanelTargetId=
 	|SI_VE126250_EngagementPanel["targetId"]
 	;
 ;
-type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
-type D_ChannelSwitcherUrlFormat="/channel_switcher";
-type D_ConnectionWhitelistItem="WIFI";
-type D_CountryCode="CA";
-type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
+export type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+export type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
+export type D_ChannelSwitcherUrlFormat="/channel_switcher";
+export type D_ConnectionWhitelistItem="WIFI";
+export type D_CountryCode="CA";
+export type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 //#endregion
 //#region Entity data, ie `D_EY_${string}`
-type D_EY_Offlineability={
+export type D_EY_Offlineability={
 	key: string;
 	command: C_Innertube;
 	addToOfflineButtonState: D_AddToOfflineButtonState;
@@ -129,7 +136,7 @@ type D_EY_Offlineability={
 	addToOfflineButtonState: "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN";
 };
 //#endregion
-type D_AddToPlaylistCreate={
+export type D_AddToPlaylistCreate={
 	openCreateLink: R_CompactLink;
 	nameInput: R_TextInputFormField;
 	privacyInput: R_Dropdown;
@@ -137,13 +144,13 @@ type D_AddToPlaylistCreate={
 	serviceEndpoint: E_CreatePlaylistService;
 };
 //#region Icons
-type D_Icon_Button=T_Icon<DE_IconType_Button>;
+export type D_Icon_Button=T_Icon<DE_IconType_Button>;
 //#endregion
 //#region D_Survey
-type D_Survey_Watch={watch: B_Hack;};
+export type D_Survey_Watch={watch: B_Hack;};
 //#endregion
-type D_ProfileColumn={items: G_ProfileColumnItem[];};
-type D_EngagementPanelSectionList=
+export type D_ProfileColumn={items: G_ProfileColumnItem[];};
+export type D_EngagementPanelSectionList=
 	|G_SI_DB_EngagementPanel
 	|SI_VE76278_EngagementPanel
 	|SI_VE99999_EngagementPanel
@@ -152,7 +159,7 @@ type D_EngagementPanelSectionList=
 	|SI_VE139722_EngagementPanel
 	;
 ;
-type D_EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
+export type D_EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};
 	identifier: {
@@ -164,7 +171,7 @@ type D_EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
 	veType: 139722;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 };
-type D_EngagementPanelSectionTargetId=T_TargetIdStr<
+export type D_EngagementPanelSectionTargetId=T_TargetIdStr<
 	"engagement-panel",[
 		"ads",
 		"clip-create",
@@ -173,7 +180,7 @@ type D_EngagementPanelSectionTargetId=T_TargetIdStr<
 		"macro-markers-description-chapters"
 	][number]
 >;
-type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
+export type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
 	header: {};
 	identifier: {
 		surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
@@ -184,14 +191,14 @@ type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
 	veType: 124975;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 };
-type D_TranscriptSearchPanel={
+export type D_TranscriptSearchPanel={
 	body: R_TranscriptSegmentList;
 	footer: R_TranscriptFooter;
 	trackingParams: string;
 	targetId: "engagement-panel-searchable-transcript-search-panel";
 };
-type TD_Accessibility<T>={accessibilityData: TD_Label<T>;};
-type D_SubscriptionNotificationToggleButton_States=[
+export type TD_Accessibility<T>={accessibilityData: TD_Label<T>;};
+export type D_SubscriptionNotificationToggleButton_States=[
 	{
 		stateId: 2;
 		nextStateId: 2;
@@ -209,7 +216,7 @@ type D_SubscriptionNotificationToggleButton_States=[
 	}
 ];
 
-type D_SubscriptionNotificationToggleButton={
+export type D_SubscriptionNotificationToggleButton={
 	states: D_SubscriptionNotificationToggleButton_States;
 	currentStateId: D_SubscriptionNotificationToggleButton_States[number]["stateId"];
 	trackingParams: string;
@@ -217,7 +224,7 @@ type D_SubscriptionNotificationToggleButton={
 	targetId: "notification-bell";
 	secondaryIcon: T_Icon<"EXPAND_MORE">;
 };
-type D_CompactRadio={
+export type D_CompactRadio={
 	playlistId: `RD${string}`|`RDGM${string}`;
 	thumbnail: D_Thumbnail&R_SampledThumbnailColor;
 	title: G_Text;
@@ -232,13 +239,13 @@ type D_CompactRadio={
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
-type D_PdgColorSlider={
+export type D_PdgColorSlider={
 	notches: D_NotchesItem[];
 	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
 	maxTierValue: G_Text;
 	minTierValue: G_Text;
 };
-type D_SuperVodBuyFlowContent={
+export type D_SuperVodBuyFlowContent={
 	description: G_Text;
 	buyButton: R_Button;
 	trackingParams: string;
@@ -248,7 +255,7 @@ type D_SuperVodBuyFlowContent={
 	defaultPriceTier: number;
 	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
 };
-type D_PdgCommentPreview={
+export type D_PdgCommentPreview={
 	title: G_Text;
 	authorThumbnail: D_Thumbnail;
 	authorText: G_Text;
@@ -257,7 +264,7 @@ type D_PdgCommentPreview={
 	editButton: R_Button;
 	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
 };
-type D_NotificationTopbarButton={
+export type D_NotificationTopbarButton={
 	icon: T_Icon<"NOTIFICATIONS">;
 	menuRequest: EG_GetNotificationMenuRequest;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
@@ -268,12 +275,12 @@ type D_NotificationTopbarButton={
 	notificationCount: number;
 	handlerDatas: ["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"];
 };
-type D_RichSection={
+export type D_RichSection={
 	content: G_RichSection;
 	trackingParams: string;
 	fullBleed: false;
 };
-type D_RichShelf={
+export type D_RichShelf={
 	icon?: T_Icon<"YOUTUBE_SHORTS_BRAND_24">;
 	title: G_Text;
 	contents: R_RichItem[];
@@ -282,7 +289,7 @@ type D_RichShelf={
 	showMoreButton: R_Button;
 	rowIndex: 2|4;
 };
-type D_InlineSurvey={
+export type D_InlineSurvey={
 	dismissalEndpoint: {};
 	title: G_Text;
 	subtitle: G_Text;
@@ -292,12 +299,12 @@ type D_InlineSurvey={
 	dismissalText: G_Text;
 	impressionEndpoints: {}[];
 };
-type D_SourcePivotHeader={
+export type D_SourcePivotHeader={
 	headerInformation: R_ProfilePageHeaderInformationViewModel;
 	buttonRow: R_ProfilePageHeaderButtonRowViewModel;
 	trackingParams: string;
 };
-type D_CompactVideo=
+export type D_CompactVideo=
 	|{
 		videoId: string;
 		thumbnail: D_Thumbnail;
@@ -354,22 +361,22 @@ type D_CompactVideo=
 		accessibility: D_Accessibility;
 		richThumbnail: R_MovingThumbnail;
 	};
-type D_ExpandableSurveyResponse={
+export type D_ExpandableSurveyResponse={
 	options: R_RatingSurvey;
 	submitButton: R_Button;
 	trackingParams: string;
 };
-type D_ProfileColumnStatsEntry={label: G_Text; value: G_Text;};
-type D_ProfileColumnStats={items: R_ProfileColumnStatsEntry[];};
-type D_GuideDownloadsEntry={
+export type D_ProfileColumnStatsEntry={label: G_Text; value: G_Text;};
+export type D_ProfileColumnStats={items: R_ProfileColumnStatsEntry[];};
+export type D_GuideDownloadsEntry={
 	alwaysShow: false;
 	entryRenderer: R_GuideEntry;
 };
-type D_AccountLinkButton={
+export type D_AccountLinkButton={
 	providerKey: K_AccountLinkProviderKey;
 	unlinkedButton: R_Button;
 };
-type D_ActionCompanionAd={
+export type D_ActionCompanionAd={
 	headline: T_MaybeTemplatedText<string>;
 	description: T_MaybeTemplatedText<string>;
 	actionButton: R_Button;
@@ -383,14 +390,14 @@ type D_ActionCompanionAd={
 	adLayoutLoggingData: D_SerializedAdServingDataEntry;
 	associatedCompositePlayerBytesLayoutId?: D_TargetIdUuid;
 };
-type D_AlertWithButton={
+export type D_AlertWithButton={
 	type: "INFO";
 	text: G_Text;
 	dismissButton: R_Button;
 };
-type D_RemarketingPing={remarketingPing: `https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`;};
+export type D_RemarketingPing={remarketingPing: `https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`;};
 
-type D_C4TabbedHeader={
+export type D_C4TabbedHeader={
 	channelId: T_IdTemplate<"UC",D_UserIdStr>;
 	title: string;
 	navigationEndpoint: E_VE3611;
@@ -408,7 +415,7 @@ type D_C4TabbedHeader={
 	videosCountText: G_Text;
 	visitTracking?: D_RemarketingPing;
 };
-type D_CardCollection={
+export type D_CardCollection={
 	cards: R_Card[];
 	headerText: G_Text;
 	icon: R_InfoCardIcon;
@@ -417,14 +424,14 @@ type D_CardCollection={
 	allowTeaserDismiss: boolean;
 	logIconVisibilityUpdates: boolean;
 };
-type D_ChipCloud={
+export type D_ChipCloud={
 	chips: R_ChipCloudChip[];
 	trackingParams: string;
 	horizontalScrollable: false;
 	nextButton: R_Button;
 	previousButton: R_Button;
 };
-type D_ClipCreation={
+export type D_ClipCreation={
 	trackingParams: string;
 	userAvatar: D_Thumbnail;
 	titleInput: R_ClipCreationTextInput;
@@ -437,7 +444,7 @@ type D_ClipCreation={
 	externalVideoId: string;
 	publicityLabelIcon: `PRIVACY_${D_PlaylistAddToOption['privacy']}`;
 };
-type D_CommentSimplebox={
+export type D_CommentSimplebox={
 	submitButton: R_Button;
 	cancelButton: R_Button;
 	authorThumbnail: D_Thumbnail;
@@ -448,7 +455,7 @@ type D_CommentSimplebox={
 	emojiPicker?: R_EmojiPicker;
 	aadcGuidelinesStateEntityKey: string;
 };
-type D_ConfirmDialog={
+export type D_ConfirmDialog={
 	title?: G_Text;
 	trackingParams: string;
 	dialogMessages: G_Text[];
@@ -456,23 +463,23 @@ type D_ConfirmDialog={
 	cancelButton: R_Button;
 	primaryIsCancel: boolean;
 };
-type D_ConnectedApp={
+export type D_ConnectedApp={
 	icon: {};
 	title: {};
 	text: {};
 	connectButton: R_Button;
 };
-type D_CopyLink={
+export type D_CopyLink={
 	copyButton: R_Button;
 	shortUrl: string;
 	trackingParams: string;
 	style: "COPY_LINK_RENDERER_STYLE_SETTINGS";
 };
-type D_DecoratedPlayerBar={playerBar: R_MultiMarkersPlayerBar;}|{
+export type D_DecoratedPlayerBar={playerBar: R_MultiMarkersPlayerBar;}|{
 	playerBar: R_MultiMarkersPlayerBar;
 	playerBarActionButton: R_Button;
 };
-type D_DesktopTopbar={
+export type D_DesktopTopbar={
 	logo: R_TopbarLogo;
 	searchbox: R_FusionSearchbox;
 	trackingParams: string;
@@ -484,7 +491,7 @@ type D_DesktopTopbar={
 	a11ySkipNavigationButton: R_Button;
 	voiceSearchButton: R_Button;
 };
-type D_DisplayAd={
+export type D_DisplayAd={
 	trackingParams: string;
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: G_Text;
@@ -499,7 +506,7 @@ type D_DisplayAd={
 	mediaHoverOverlay: R_Button;
 	mediaBadge: RMD_Badge;
 };
-type D_EngagementPanelTitleHeader={
+export type D_EngagementPanelTitleHeader={
 	title: G_Text;
 	contextualInfo?: G_Text;
 	informationButton?: R_Button;
@@ -507,7 +514,7 @@ type D_EngagementPanelTitleHeader={
 	visibilityButton: R_Button;
 	trackingParams: string;
 };
-type D_FeaturedChannel={
+export type D_FeaturedChannel={
 	startTimeMs: `${number}`;
 	endTimeMs: `${number}`;
 	watermark: D_Thumbnail;
@@ -516,14 +523,14 @@ type D_FeaturedChannel={
 	channelName: string;
 	subscribeButton: R_SubscribeButton;
 };
-type D_FeedFilterChipBar={
+export type D_FeedFilterChipBar={
 	contents: R_ChipCloudChip[];
 	trackingParams: string;
 	nextButton?: R_Button;
 	previousButton?: R_Button;
 	styleType: D_ChannelPageGridStyleType;
 };
-type D_FusionSearchbox={
+export type D_FusionSearchbox={
 	icon: T_Icon<"SEARCH">;
 	placeholderText: G_Text;
 	config: R_WebSearchboxConfig;
@@ -531,14 +538,14 @@ type D_FusionSearchbox={
 	searchEndpoint: E_Search;
 	clearButton: R_Button;
 };
-type D_ChannelOptions={
+export type D_ChannelOptions={
 	avatar: D_Thumbnail;
 	avatarEndpoint: {};
 	name: string;
 	links: G_Text[];
 	avatarAccessibility: D_Accessibility;
 };
-type D_ChannelThumbnailWithLink={
+export type D_ChannelThumbnailWithLink={
 	thumbnail: D_Thumbnail;
 	navigationEndpoint: E_VE3611;
 	accessibility: D_Accessibility;
@@ -548,25 +555,25 @@ type D_ChannelThumbnailWithLink={
 	navigationEndpoint: E_VE3611;
 	accessibility: D_Accessibility;
 };
-type D_CheckboxSurveyOption={
+export type D_CheckboxSurveyOption={
 	responseText: G_Text;
 	responseEndpoint: {};
 	value: T_Split<"ANSWER_FOLLOWUP_DISAPPOINTING,ANSWER_FOLLOWUP_MEDIOCRE,ANSWER_FOLLOWUP_IRRELEVANT,ANSWER_FOLLOWUP_DIFFERENT,ANSWER_FOLLOWUP_OTHER,ANSWER_FOLLOWUP_RELAXING,ANSWER_FOLLOWUP_USEFUL,ANSWER_REASON_INFORMATIVE,ANSWER_FOLLOWUP_HELPS_FOCUS,ANSWER_FOLLOWUP_ENTERTAINING,ANSWER_FOLLOWUP_NOVEL,ANSWER_FOLLOWUP_INSPIRING,ANSWER_FOLLOWUP_CALMING,ANSWER_FOLLOWUP_ENJOYABLE,ANSWER_FOLLOWUP_LIFE_CHANGING,ANSWER_FOLLOWUP_HEARTWARMING">[number];
 	trackingParams: string;
 };
-type D_ChildVideo={
+export type D_ChildVideo={
 	title: G_Text;
 	navigationEndpoint: E_Watch;
 	lengthText: G_Text;
 	videoId: string;
 };
-type D_ChildVideo_Omit={
+export type D_ChildVideo_Omit={
 	title: G_Text;
 	navigationEndpoint: E_Watch;
 	lengthText: G_Text;
 	videoId: string;
 };
-type D_ThumbnailOverlay_Omit_Keys=[
+export type D_ThumbnailOverlay_Omit_Keys=[
 	"thumbnailOverlays",
 	"trackingParams",
 	"shortViewCountText",
@@ -579,14 +586,14 @@ type D_ThumbnailOverlay_Omit_Keys=[
 	"viewCountText",
 	"shortBylineText",
 ][number];
-type D_Video_Omit_Keys=D_ThumbnailOverlay_Omit_Keys|[
+export type D_Video_Omit_Keys=D_ThumbnailOverlay_Omit_Keys|[
 	"ownerText",
 	"showActionMenu",
 	"channelThumbnailSupportedRenderers",
 	"inlinePlaybackEndpoint",
 ][number];
-type D_Video_Omit_Owner_Keys=D_ThumbnailOverlay_Omit_Keys|"owner";
-type D_ChipCloudChip_tid={
+export type D_Video_Omit_Owner_Keys=D_ThumbnailOverlay_Omit_Keys|"owner";
+export type D_ChipCloudChip_tid={
 	style: T_StyleType<"STYLE_DEFAULT"|"STYLE_HOME_FILTER"|"STYLE_REFRESH_TO_NOVEL_CHIP">;
 	text: G_Text;
 	trackingParams: string;
@@ -595,13 +602,13 @@ type D_ChipCloudChip_tid={
 	navigationEndpoint: C_Continuation|C_RelatedChip;
 	targetId: "feed_filter_chip_bar_second_chip";
 };
-type D_ChipCloudChip_Style=[
+export type D_ChipCloudChip_Style=[
 	"STYLE_DEFAULT",
 	"STYLE_HOME_FILTER",
 	"STYLE_REFRESH_TO_NOVEL_CHIP",
 ][number];
-type D_ChipCloudChip_navigationEndpoint=C_Continuation|C_RelatedChip|E_Feedback;
-type D_ChipCloudChip=
+export type D_ChipCloudChip_navigationEndpoint=C_Continuation|C_RelatedChip|E_Feedback;
+export type D_ChipCloudChip=
 	|{
 		text: G_Text;
 		navigationEndpoint: D_ChipCloudChip_navigationEndpoint;
@@ -650,8 +657,8 @@ type D_ChipCloudChip=
 		trackingParams: string;
 		targetId: "feed_filter_chip_bar_second_chip";
 	};
-type EG_CompactLink_1=E_Upload|E_SignalNavigation;
-type D_CompactPlaylist={
+export type EG_CompactLink_1=E_Upload|E_SignalNavigation;
+export type D_CompactPlaylist={
 	playlistId: T_IdTemplate<"PL">;
 	thumbnail: D_Thumbnail;
 	title: G_Text;
@@ -670,20 +677,20 @@ type D_CompactPlaylist={
 	longBylineText: G_Text;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
-type D_ContinuationItem={
+export type D_ContinuationItem={
 	trigger?: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN";
 	continuationEndpoint?: C_Continuation;
 	ghostCards?: R_GhostGrid;
 	button?: R_Button;
 };
-type D_AutoplaySetItem_ButtonVideoEP=E_Watch|E_WatchPlaylist;
-type D_AutoplaySetItem_NormalOpt={
+export type D_AutoplaySetItem_ButtonVideoEP=E_Watch|E_WatchPlaylist;
+export type D_AutoplaySetItem_NormalOpt={
 	mode: "NORMAL";
 	autoplayVideo: E_Watch;
 	nextButtonVideo: E_Watch;
 	previousButtonVideo?: E_Watch;
 };
-type D_AutoplaySetItem={
+export type D_AutoplaySetItem={
 	mode: "NORMAL";
 	autoplayVideo: E_Watch;
 	nextButtonVideo?: E_Watch;
@@ -698,7 +705,7 @@ type D_AutoplaySetItem={
 	autoplayVideo: E_Watch;
 	nextButtonVideo: E_Watch;
 };
-type D_EndScreenPlaylist={
+export type D_EndScreenPlaylist={
 	playlistId: `RD${string}`;
 	title: G_Text;
 	thumbnail: D_Thumbnail;
@@ -708,7 +715,7 @@ type D_EndScreenPlaylist={
 	navigationEndpoint: E_Watch;
 	trackingParams: string;
 };
-type D_EndScreenVideo={
+export type D_EndScreenVideo={
 	videoId: string;
 	thumbnail: D_Thumbnail;
 	title: G_Text;
@@ -721,14 +728,14 @@ type D_EndScreenVideo={
 	publishedTimeText: G_Text;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
-type D_HeroPlaylistThumbnail={
+export type D_HeroPlaylistThumbnail={
 	thumbnail: D_Thumbnail;
 	maxRatio: 0.5625;
 	trackingParams: string;
 	onTap: E_Watch;
 	thumbnailOverlays: G_ThumbnailOverlayItem;
 };
-type D_MacroMarkersListItem={
+export type D_MacroMarkersListItem={
 	title: G_Text;
 	timeDescription: G_Text;
 	thumbnail: D_Thumbnail;
@@ -752,7 +759,7 @@ type D_MacroMarkersListItem={
 	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
 };
-type D_Notification={
+export type D_Notification={
 	thumbnail: D_Thumbnail;
 	videoThumbnail: D_Thumbnail;
 	shortMessage: G_Text;
@@ -764,19 +771,19 @@ type D_Notification={
 	trackingParams: string;
 	notificationId: `${number}`;
 };
-type D_DarkColorPalette_2={
+export type D_DarkColorPalette_2={
 	primaryTitleColor: 4294961637;
 	secondaryTitleColor: 4291602851;
 	section2Color: 4063436571;
 	section4Color: 4061728525;
 };
-type D_DarkColorPalette_3={
+export type D_DarkColorPalette_3={
 	primaryTitleColor: 4294963429;
 	secondaryTitleColor: 4291605667;
 	section2Color: 4063436046;
 	section4Color: 4061728263;
 };
-type D_DarkColorPalette_4={
+export type D_DarkColorPalette_4={
 	primaryTitleColor: 4294964965;
 	secondaryTitleColor: 4291608227;
 	section2Color: 4062716698;
@@ -792,19 +799,19 @@ type D_DarkColorPalette_4={
 	section2Color: number;
 	section4Color: number;
 };
-type D_LightColorPalette_2={
+export type D_LightColorPalette_2={
 	primaryTitleColor: 4279833104;
 	secondaryTitleColor: 4286207567;
 	section2Color: 4076401393;
 	section4Color: 4075544541;
 };
-type D_LightColorPalette_3={
+export type D_LightColorPalette_3={
 	primaryTitleColor: 4279833616;
 	secondaryTitleColor: 4285881676;
 	section2Color: 4076401905;
 	section4Color: 4075545565;
 };
-type D_LightColorPalette_4={
+export type D_LightColorPalette_4={
 	primaryTitleColor: 4279834128;
 	secondaryTitleColor: 4285555272;
 	section2Color: 4076402417;
@@ -820,7 +827,7 @@ type D_LightColorPalette_4={
 	section2Color: number;
 	section4Color: number;
 };
-type D_PlaylistPanelVideo_Base={
+export type D_PlaylistPanelVideo_Base={
 	title: G_Text;
 	longBylineText: G_Text;
 	thumbnail: D_Thumbnail;
@@ -836,13 +843,13 @@ type D_PlaylistPanelVideo_Base={
 	lightColorPalette: D_LightColorPalette;
 	darkColorPalette: D_DarkColorPalette;
 };
-type D_PlaylistPanelVideo=
+export type D_PlaylistPanelVideo=
 	|never
 	|D_PlaylistPanelVideo_Base
 	|(D_PlaylistPanelVideo_Base&{indexText: G_Text;})
 	;
 ;
-type D_Radio={
+export type D_Radio={
 	playlistId: `RD${string}`;
 	title: G_Text;
 	thumbnail: D_Thumbnail;
@@ -856,27 +863,27 @@ type D_Radio={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	videoCountShortText: G_Text;
 };
-type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch|E_VE37414_ReelWatch;
-type D_WebPrefetch={navigationEndpoints: E_Watch[];};
-type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
-type D_SubFeedOption={
+export type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch|E_VE37414_ReelWatch;
+export type D_WebPrefetch={navigationEndpoints: E_Watch[];};
+export type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
+export type D_SubFeedOption={
 	name: G_Text;
 	isSelected: boolean;
 	navigationEndpoint: E_Watch|GE_Browse;
 	trackingParams: string;
 };
-type D_BrowseEndpointContextMusicConfig={pageType: T_EnumStr<"MUSIC_PAGE_TYPE","ALBUM"|"ARTIST"|"USER_CHANNEL">;};
-type D_AdSlot={
+export type D_BrowseEndpointContextMusicConfig={pageType: T_EnumStr<"MUSIC_PAGE_TYPE","ALBUM"|"ARTIST"|"USER_CHANNEL">;};
+export type D_AdSlot={
 	adSlotMetadata: DMD_AdSlot;
 	fulfillmentContent: R_FulfilledLayout;
 	enablePacfLoggingWeb: boolean;
 };
-type D_SerializedAdServingDataEntry={serializedAdServingDataEntry: string;};
-type D_PageTopAdLayout={
+export type D_SerializedAdServingDataEntry={serializedAdServingDataEntry: string;};
+export type D_PageTopAdLayout={
 	adLayoutMetadata: MG_AdLayout_DisplayBillboardImageButtoned;
 	renderingContent: R_VideoMastheadAdV3;
 };
-type D_Emoji={
+export type D_Emoji={
 	emojiId: "🤣";
 	shortcuts: [":rolling_on_the_floor_laughing:"];
 	searchTerms: ["rolling"];
@@ -894,7 +901,7 @@ type D_Emoji={
 		accessibility: TD_Accessibility<"☹">;
 	};
 };
-type D_VE3611_TextRun=|{
+export type D_VE3611_TextRun=|{
 	text: string;
 	navigationEndpoint: E_VE3611;
 }|{
@@ -910,7 +917,7 @@ type D_VE3611_TextRun=|{
 	navigationEndpoint: E_VE3611;
 	loggingDirectives: D_LoggingDirectives;
 };
-type D_VE5754_TextRun={
+export type D_VE5754_TextRun={
 	text: "Watch Later";
 	navigationEndpoint: E_VE5754;
 }|{
@@ -918,7 +925,7 @@ type D_VE5754_TextRun={
 	navigationEndpoint: E_VE5754;
 	loggingDirectives: D_LoggingDirectives;
 };
-type D_VE6827_TextRun={
+export type D_VE6827_TextRun={
 	text: "Original sound";
 	navigationEndpoint: E_VE6827;
 }|{
@@ -931,15 +938,15 @@ type D_VE6827_TextRun={
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;
 };
-type D_VE11487_TextRun={
+export type D_VE11487_TextRun={
 	text: "Get YouTube Premium";
 	navigationEndpoint: E_VE11487;
 };
-type D_VE83769_TextRun={
+export type D_VE83769_TextRun={
 	text: "https://www.deviantart.com/zianu/art/...";
 	navigationEndpoint: E_Url;
 };
-type D_VE_TextRun=
+export type D_VE_TextRun=
 	|D_VE3611_TextRun
 	|D_VE5754_TextRun
 	|D_VE6827_TextRun
@@ -947,8 +954,8 @@ type D_VE_TextRun=
 	|D_VE83769_TextRun
 	;
 ;
-type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_Url;
-type D_TextRun=|{
+export type D_TextRun_NavEP_1=E_VE37414_ReelWatch|E_Watch|E_VE3611|E_VE5754|E_VE6827|E_VE11487|E_Url;
+export type D_TextRun=|{
 	text: "☹";
 	loggingDirectives: D_LoggingDirectives;
 	emoji: D_Emoji;
@@ -971,7 +978,7 @@ type D_TextRun=|{
 	text: string;
 	emoji: D_Emoji;
 };
-type D_PlaylistPanel={
+export type D_PlaylistPanel={
 	title: "YouTube Mix";
 	contents: G_PlaylistPanel_Item[];
 	currentIndex?: number;
@@ -987,7 +994,7 @@ type D_PlaylistPanel={
 	previewDescription?: {};
 	numItemsToShow?: 25;
 };
-type D_Omit_Menu_Video={
+export type D_Omit_Menu_Video={
 	thumbnail: D_Thumbnail;
 	longBylineText: G_Text;
 	viewCountText: G_Text;
@@ -995,12 +1002,12 @@ type D_Omit_Menu_Video={
 	shortBylineText: G_Text;
 	menu: R_Menu;
 };
-type D_Omit_Menu_Radio={
+export type D_Omit_Menu_Radio={
 	navigationEndpoint: E_Watch;
 	menu: R_Menu;
 };
-type D_Omit_Menu_Video_Ex={ownerBadges: RMD_Badge[];};
-type D_Channel_MD={
+export type D_Omit_Menu_Video_Ex={ownerBadges: RMD_Badge[];};
+export type D_Channel_MD={
 	title: string;
 	description: string;
 	rssUrl: string;
@@ -1018,18 +1025,18 @@ type D_Channel_MD={
 	vanityChannelUrl: `http://www.youtube.com/@${string}`;
 	channelConversionUrl?: `https://www.youtube.com/pagead/viewthroughconversion/962985656/?${string}`;
 };
-type D_Chapter={
+export type D_Chapter={
 	title: G_Text;
 	timeRangeStartMillis: 0;
 	onActiveCommand: A_SetActivePanelItem;
 	thumbnail: D_Thumbnail;
 };
-type D_CommentsEntryPointTeaser={
+export type D_CommentsEntryPointTeaser={
 	teaserAvatar: D_Thumbnail&{accessibility: D_Accessibility;};
 	teaserContent: G_Text;
 	trackingParams: string;
 };
-type D_GuideEntry_PresentationNewContent={
+export type D_GuideEntry_PresentationNewContent={
 	navigationEndpoint: E_VE3611;
 	thumbnail: D_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
@@ -1039,7 +1046,7 @@ type D_GuideEntry_PresentationNewContent={
 	entryData: R_GuideEntryData;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT";
 };
-type D_GuideEntry_PresentationNone={
+export type D_GuideEntry_PresentationNone={
 	navigationEndpoint: E_VE3611;
 	thumbnail: D_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
@@ -1049,7 +1056,7 @@ type D_GuideEntry_PresentationNone={
 	entryData: R_GuideEntryData;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 };
-type D_LiveChatTextMessage={
+export type D_LiveChatTextMessage={
 	message: G_Text;
 	authorName: G_Text;
 	authorPhoto: D_Thumbnail;
@@ -1061,7 +1068,7 @@ type D_LiveChatTextMessage={
 	contextMenuAccessibility: D_Accessibility;
 	timestampText: G_Text;
 };
-type D_MerchandiseItem={
+export type D_MerchandiseItem={
 	title: string;
 	description: string;
 	thumbnail: D_Thumbnail;
@@ -1078,21 +1085,21 @@ type D_MerchandiseItem={
 	showOpenInNewIcon?: true;
 };
 //#region D_GuideEntry
-type D_GuideEntry_HelpService={
+export type D_GuideEntry_HelpService={
 	icon: T_Icon<"HELP">;
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
 	serviceEndpoint: E_SignalService_SendPost;
 };
-type D_GuideEntry_MyVideosTab={
+export type D_GuideEntry_MyVideosTab={
 	navigationEndpoint: E_Url;
 	icon: T_Icon<"MY_VIDEOS">;
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
 };
-type D_GuideEntry_OfflineDownloadEntry={
+export type D_GuideEntry_OfflineDownloadEntry={
 	navigationEndpoint: E_VE42352;
 	icon: T_Icon<"OFFLINE_DOWNLOAD">;
 	trackingParams: string;
@@ -1101,7 +1108,7 @@ type D_GuideEntry_OfflineDownloadEntry={
 	targetId: "downloads-guide-item";
 	isPrimary: true;
 };
-type D_GuideEntry_ShortsTab={
+export type D_GuideEntry_ShortsTab={
 	icon: T_Icon<"TAB_SHORTS">;
 	trackingParams: string;
 	formattedTitle: G_Text;
@@ -1109,7 +1116,7 @@ type D_GuideEntry_ShortsTab={
 	serviceEndpoint: T_SE_Signal<M_Empty_WCM,{}>|E_VE37414_ReelWatch;
 	isPrimary: true;
 };
-type D_GuideEntry_Subscriptions={
+export type D_GuideEntry_Subscriptions={
 	navigationEndpoint: E_VE96368;
 	icon: T_Icon<"SUBSCRIPTIONS">;
 	trackingParams: string;
@@ -1117,7 +1124,7 @@ type D_GuideEntry_Subscriptions={
 	accessibility: TD_Accessibility<"Subscriptions">;
 	isPrimary: true;
 };
-type D_GuideEntry_VideoLibrary={
+export type D_GuideEntry_VideoLibrary={
 	navigationEndpoint: E_VE6827;
 	icon: T_Icon<"VIDEO_LIBRARY_WHITE">;
 	trackingParams: string;
@@ -1126,21 +1133,21 @@ type D_GuideEntry_VideoLibrary={
 	targetId: "library-guide-item";
 	isPrimary: true;
 };
-type D_GuideEntry_WatchHistory={
+export type D_GuideEntry_WatchHistory={
 	navigationEndpoint: E_VE6827;
 	icon: T_Icon<"WATCH_HISTORY">;
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: TD_Accessibility<"History">;
 };
-type D_GuideEntry_WatchLater={
+export type D_GuideEntry_WatchLater={
 	navigationEndpoint: E_VE5754;
 	icon: T_Icon<"WATCH_LATER">;
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: TD_Accessibility<"Watch Later">;
 };
-type D_GuideEntry_WhatToWatch={
+export type D_GuideEntry_WhatToWatch={
 	navigationEndpoint: E_VE3854;
 	icon: T_Icon<"WHAT_TO_WATCH">;
 	trackingParams: string;
@@ -1148,7 +1155,7 @@ type D_GuideEntry_WhatToWatch={
 	accessibility: TD_Accessibility<"Home">;
 	isPrimary: true;
 };
-type D_GuideEntry=
+export type D_GuideEntry=
 	|never
 	|{
 		navigationEndpoint: E_VE3611;
@@ -1242,9 +1249,9 @@ type D_GuideEntry=
 	;
 ;
 //#endregion
-type D_GuideEntryData={guideEntryId: DU_GuideEntry_Id;};
+export type D_GuideEntryData={guideEntryId: DU_GuideEntry_Id;};
 // COMPLETED: #13
-type D_FeedNudge={
+export type D_FeedNudge={
 	lightIconImage: D_Thumbnail;
 	title: G_Text;
 	subtitle: G_Text;
@@ -1254,63 +1261,63 @@ type D_FeedNudge={
 	style: "FEED_NUDGE_STYLE_CHIP";
 	contents: R_ChipCloudChip[];
 };
-type D_YoutubeUrl=DE_U_InternalUrl["url"]|DE_U_ChannelUrl["url"];
+export type D_YoutubeUrl=DE_U_InternalUrl["url"]|DE_U_ChannelUrl["url"];
 //#region imported
-type D_AboutThisAd={
+export type D_AboutThisAd={
 	url: D_UrlWrappedValue;
 	trackingParams: string;
 };
-type D_Accessibility={accessibilityData: D_Label;};
-type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;
-type D_AccountSettingIdList=[407];
-type D_AdHoverTextButton={
+export type D_Accessibility={accessibilityData: D_Label;};
+export type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;
+export type D_AccountSettingIdList=[407];
+export type D_AdHoverTextButton={
 	button: R_Button;
 	hoverText: G_Text;
 	trackingParams: string;
 };
-type D_AdLayout={serializedAdServingDataEntry: string;};
-type D_AdPlacement={
+export type D_AdLayout={serializedAdServingDataEntry: string;};
+export type D_AdPlacement={
 	config: R_AdPlacementConfig;
 	renderer: G_AdPlacementRendererItem;
 	adSlotLoggingData?: D_SerializedSlotAdServingDataEntry;
 };
-type D_AdPlacementConfig={
+export type D_AdPlacementConfig={
 	kind: DE_AdPlacementKind;
 	adTimeOffset?: D_AdTimeOffset;
 	hideCueRangeMarker: true;
 };
-type D_AdTimeOffset={
+export type D_AdTimeOffset={
 	offsetStartMilliseconds: `${number}`;
 	offsetEndMilliseconds: "-1"|`${number}`;
 };
-type QualArr=[
+export type QualArr=[
 	...make_qual_for_fps<50>,
 	...make_qual_for_fps<60>,
 	"1080p","720p","480p","360p","240p","144p",
 ];
-type make_qual_for_fps<T extends 50|60>=[`2160p${T}`,`1440p${T}`,`1080p${T}`,`720p${T}`,];
-type D_QualityLabel=QualArr[number];
-type D_AddToPlaylist={playlists: R_PlaylistAddToOption[];}&T_Actions<R_AddToPlaylistCreate>;
-type D_AnimationConfig={
+export type make_qual_for_fps<T extends 50|60>=[`2160p${T}`,`1440p${T}`,`1080p${T}`,`720p${T}`,];
+export type D_QualityLabel=QualArr[number];
+export type D_AddToPlaylist={playlists: R_PlaylistAddToOption[];}&T_Actions<R_AddToPlaylistCreate>;
+export type D_AnimationConfig={
 	minImageUpdateIntervalMs: 10000|5000;
 	crossfadeDurationMs: 5000;
 	crossfadeStartOffset: 1;
 	maxFrameRate: 30;
 };
-type D_AnySaved={[U in DU_UrlTypeWithPageType]?: GD_SD_Item;};
-type ApiFormatObj=[
+export type D_AnySaved={[U in DU_UrlTypeWithPageType]?: GD_SD_Item;};
+export type ApiFormatObj=[
 	["youtubei",[["v1",[
 	]]]]
 ];
-type ApiNotificationLast=
+export type ApiNotificationLast=
 	|"get_unseen_count"
 	|"get_notification_menu"
 	|"record_interactions"
 	|"modify_channel_preference"
 	;
 ;
-type DG_ApiUrl=T_Split<T_SplitOnce<D_ApiPathFormat_1,"/">[1],"/">;
-type D_ApiPathFormat_1=
+export type DG_ApiUrl=T_Split<T_SplitOnce<D_ApiPathFormat_1,"/">[1],"/">;
+export type D_ApiPathFormat_1=
 	|"/getAccountSwitcherEndpoint"
 	|"/getDatasyncIdsEndpoint"
 	|"/youtubei/v1/backstage/create_post"
@@ -1339,14 +1346,14 @@ type D_ApiPathFormat_1=
 	|`/s/i/youtube_outline/bars_3/v2/24px.svg`
 	;
 ;
-type D_AttBgChallenge={
+export type D_AttBgChallenge={
 	interpreterUrl?: T_UrlWrappedValue<`//www.google.com/js/th/${string}.js`>;
 	interpreterHash: string;
 	program: string;
 	globalName: "trayride";
 };
-type D_AudioSampleRate=22050|44100|48000;
-type D_AudioTrackItem={
+export type D_AudioSampleRate=22050|44100|48000;
+export type D_AudioTrackItem={
 	captionTrackIndices: number[];
 }|{
 	captionTrackIndices: number[];
@@ -1355,7 +1362,7 @@ type D_AudioTrackItem={
 	hasDefaultTrack: true;
 	captionsInitialState: "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED"|"CAPTIONS_INITIAL_STATE_ON_REQUIRED";
 };
-type D_AutoplaySwitchButton={
+export type D_AutoplaySwitchButton={
 	onEnabledCommand: T_Setting_AutoNavForDesktop<true>;
 	onDisabledCommand: T_Setting_AutoNavForDesktop<false>;
 	enabledAccessibilityData: D_Accessibility;
@@ -1363,12 +1370,12 @@ type D_AutoplaySwitchButton={
 	trackingParams: string;
 	enabled: boolean;
 };
-type D_Botguard={
+export type D_Botguard={
 	program: string;
 	interpreterSafeUrl: T_UrlWrappedValue<`//www.google.com/js/th/${string}.js`>;
 	serverEnvironment: number;
 };
-type D_BrowseEndpointPages=[
+export type D_BrowseEndpointPages=[
 	"comment_shorts_web_top_level",
 	"explore",
 	"guide_builder",
@@ -1393,9 +1400,9 @@ type D_BrowseEndpointPages=[
 	"what_to_watch",
 ][number]
 	;
-type D_BrowseFeedActions={contents: G_BrowseFeedContent[];};
-type D_Browse_Id<T>={browseId: T;};
-type D_ButtonStyleType=
+export type D_BrowseFeedActions={contents: G_BrowseFeedContent[];};
+export type D_Browse_Id<T>={browseId: T;};
+export type D_ButtonStyleType=
 	|"STYLE_ALERT_INFO"
 	|"STYLE_BLUE_TEXT_WITH_INVERSE_THEME"
 	|"STYLE_BLUE_TEXT"
@@ -1422,10 +1429,10 @@ type D_ButtonStyleType=
 	|"STYLE_WHITE_WITH_BORDER"
 	;
 ;
-type D_Cache_MD={isCacheHit: true;};
-type D_CanShare={canShare: boolean;};
-type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
-type D_TimedTextApi={
+export type D_Cache_MD={isCacheHit: true;};
+export type D_CanShare={canShare: boolean;};
+export type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
+export type D_TimedTextApi={
 	v: DU_VideoId;
 	caps?: "asr";
 	exp?: "xpo";
@@ -1443,8 +1450,8 @@ type D_TimedTextApi={
 	lang: string;
 };
 // D_TimedTextApi["signature"]
-type D_TimedTextApi_Req=Required<D_TimedTextApi>;
-type D_CaptionTrackItem={
+export type D_TimedTextApi_Req=Required<D_TimedTextApi>;
+export type D_CaptionTrackItem={
 	baseUrl: GU_CaptionTrackItem_BaseUrl;
 	name: G_Text;
 	vssId: "a.en"|".en"|".ar";
@@ -1453,12 +1460,12 @@ type D_CaptionTrackItem={
 	kind?: "asr";
 	isTranslatable: true;
 };
-type D_CarouselLockup={infoRows: R_InfoRow[];};
-type D_ChannelHeaderLinks={
+export type D_CarouselLockup={infoRows: R_InfoRow[];};
+export type D_ChannelHeaderLinks={
 	primaryLinks: D_NavigationLinkItem[];
 	secondaryLinks?: D_NavigationLinkItem[];
 };
-type ChannelSubUrlFormat=
+export type ChannelSubUrlFormat=
 	|""
 	|"/about"
 	|"/channels"
@@ -1470,18 +1477,18 @@ type ChannelSubUrlFormat=
 	|"/streams"
 	|"/videos"
 	|`/search?query=${string}`;
-type D_ChannelSwitcherHeader={
+export type D_ChannelSwitcherHeader={
 	title: G_Text;
 	button: R_Button;
 };
-type D_ChannelSwitcherPage=Record<"contents",G_ChannelSwitcherContent[]>&{
+export type D_ChannelSwitcherPage=Record<"contents",G_ChannelSwitcherContent[]>&{
 	header: R_ChannelSwitcherHeader;
 	targetId: "ceq";
 };
-type ChannelUrlFormat=[
+export type ChannelUrlFormat=[
 	`/@${string}`,
 ][number];
-type D_CinematicConfig={
+export type D_CinematicConfig={
 	lightThemeBackgroundColor: 4278190080;
 	darkThemeBackgroundColor: 4278190080;
 	animationConfig?: {
@@ -1499,25 +1506,25 @@ type D_CinematicConfig={
 	blurStrength?: 5;
 	watchFullscreenConfig?: {};
 };
-type D_CinematicContainer={
+export type D_CinematicContainer={
 	backgroundImageConfig?: D_TrackedThumbnail;
 	gradientColorConfig: D_GradientColorConfig;
 	presentationStyle?: "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED";
 	config: D_CinematicConfig;
 };
-type D_ClientForecastingAd={impressionUrls?: T_BaseUrl<`https://www.youtube.com/api/stats/ads?${D_ApiStatsAdsStr}`>[];};
-type D_ClientMessages={
+export type D_ClientForecastingAd={impressionUrls?: T_BaseUrl<`https://www.youtube.com/api/stats/ads?${D_ApiStatsAdsStr}`>[];};
+export type D_ClientMessages={
 	reconnectMessage: G_Text;
 	unableToReconnectMessage: G_Text;
 	fatalError: G_Text;
 	reconnectedMessage: G_Text;
 	genericError: G_Text;
 };
-type D_ClipAdState={
+export type D_ClipAdState={
 	title: G_Text;
 	body: G_Text;
 };
-type D_ClipCreationScrubber={
+export type D_ClipCreationScrubber={
 	lengthTemplate: "$clip_length seconds";
 	maxLengthMs: 60000;
 	minLengthMs: 5000;
@@ -1527,20 +1534,20 @@ type D_ClipCreationScrubber={
 	endAccessibility: D_Accessibility;
 	durationAccessibility: D_Accessibility;
 };
-type D_ClipCreationTextInput={
+export type D_ClipCreationTextInput={
 	placeholderText: G_Text;
 	maxCharacterLimit: 140;
 };
-type D_ClipSection={contents: R_ClipCreation[];};
-type D_Color={red: number; green: number; blue: number;};
-type ColorSourceVars={
+export type D_ClipSection={contents: R_ClipCreation[];};
+export type D_Color={red: number; green: number; blue: number;};
+export type ColorSourceVars={
 	colorSourceSizeMultiplier: 1.4;
 	bottomColorSourceHeightMultiplier: 0.67;
 	maxBottomColorSourceHeight: 260;
 	colorSourceWidthMultiplier: 1.5;
 	colorSourceHeightMultiplier: 2;
 };
-type D_CommentReplies={
+export type D_CommentReplies={
 	contents: R_ContinuationItem[];
 	trackingParams: string;
 	viewReplies: R_Button;
@@ -1548,8 +1555,8 @@ type D_CommentReplies={
 	targetId: `comment-replies-item-${string}`;
 };
 
-type R_CommentReplies={commentRepliesRenderer: D_CommentReplies;};
-type D_CommentThread={
+export type R_CommentReplies={commentRepliesRenderer: D_CommentReplies;};
+export type D_CommentThread={
 	comment: R_Comment;
 	replies?: R_CommentReplies;
 	trackingParams: string;
@@ -1557,14 +1564,14 @@ type D_CommentThread={
 	isModeratedElqComment: false;
 	loggingDirectives: D_LoggingDirectives;
 };
-type D_CommentsSimplebox={
+export type D_CommentsSimplebox={
 	simpleboxAvatar: D_Thumbnail;
 	simpleboxPlaceholder: G_Text;
 	trackingParams: string;
 };
 
-type R_CommentsSimplebox={commentsSimpleboxRenderer: D_CommentsSimplebox;};
-type D_CommentsEntryPointHeader={
+export type R_CommentsSimplebox={commentsSimpleboxRenderer: D_CommentsSimplebox;};
+export type D_CommentsEntryPointHeader={
 	headerText: G_Text;
 	onTap: C_CommandExecutor;
 	trackingParams: string;
@@ -1572,8 +1579,8 @@ type D_CommentsEntryPointHeader={
 	contentRenderer: R_CommentsEntryPointTeaser|R_CommentsSimplebox;
 	targetId: "comments-entry-point-header-identifier";
 };
-type D_CommentsEntryPointHeader_contentRenderer=D_CommentsEntryPointHeader["contentRenderer"];
-type D_CommentsHeader={
+export type D_CommentsEntryPointHeader_contentRenderer=D_CommentsEntryPointHeader["contentRenderer"];
+export type D_CommentsHeader={
 	countText?: G_Text;
 	createRenderer: R_CommentSimplebox;
 	sortMenu?: R_SortFilterSubMenu;
@@ -1585,24 +1592,24 @@ type D_CommentsHeader={
 	unicodeEmojisUrl?: `type://unicodeEmojisUrl.v/${string}`;
 	loggingDirectives?: D_LoggingDirectives;
 };
-type D_CommentsHeaderContent={
+export type D_CommentsHeaderContent={
 	continuationItems: [
 		R_CommentsHeader
 	];
 };
-type D_CommonConfig={url: GU_InitPlaybackUrl;};
-type D_CompactLinkStyle=[
+export type D_CommonConfig={url: GU_InitPlaybackUrl;};
+export type D_CompactLinkStyle=[
 	`${"COMPACT_LINK_STYLE_TYPE"}_${[
 		"SETTINGS_SIDEBAR",
 		"ACCOUNT_SWITCHER_FOOTER"
 	][number]}`,
 	"COMPACT_LINK_STYLE_TYPE_CREATION_MENU",
 ][number];
-type DS_CreatePlaylist={
+export type DS_CreatePlaylist={
 	params?: string;
 	videoIds: string[];
 };
-type D_CustomEmoji={
+export type D_CustomEmoji={
 	emojiId: `UC${string}/${string}`;
 	shortcuts: `:${string}:`[];
 	searchTerms: string[];
@@ -1610,7 +1617,7 @@ type D_CustomEmoji={
 	isCustomEmoji: boolean;
 	isLocked?: true;
 };
-type D_DarkColorPalette={
+export type D_DarkColorPalette={
 	primaryTitleColor: number;
 	secondaryTitleColor: number;
 	section1Color?: number;
@@ -1618,8 +1625,8 @@ type D_DarkColorPalette={
 	section3Color?: number;
 	section4Color: number;
 };
-type D_ProtobufWireFormat=[fieldId: number,wireType: number,arr: D_ProtobufObj[]];
-type D_ProtobufObj=
+export type D_ProtobufWireFormat=[fieldId: number,wireType: number,arr: D_ProtobufObj[]];
+export type D_ProtobufObj=
 	|[type: "data32",fieldId: number,value: number]
 	|[type: "data_fixed32",fieldId: number,value: number]
 	|[type: "data64",fieldId: number,as_arr: number[],value: bigint]
@@ -1629,7 +1636,7 @@ type D_ProtobufObj=
 	|[type: "struct",fieldId: number,arr: D_ProtobufObj[]]
 	|[type: "group",fieldId: number,arr: D_ProtobufObj[]]
 	|[type: "error",fieldId: number];
-type D_DesktopWatchAds={
+export type D_DesktopWatchAds={
 	// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
 	gutParams?: B_TagObj<"\\4061\\ytpwmpu">;
 	playerAdParams: D_PlayerAdParams;
@@ -1637,20 +1644,20 @@ type D_DesktopWatchAds={
 	showInstream?: true;
 	useGut?: true;
 };
-type D_Dropdown_Privacy={
+export type D_Dropdown_Privacy={
 	entries: R_PrivacyDropdownItem[];
 	label?: "Privacy";
 };
-type D_Dropdown=D_Dropdown_Privacy;
-type D_CanDelete={canDelete: boolean;};
-type D_ElementResourceStatus={
+export type D_Dropdown=D_Dropdown_Privacy;
+export type D_CanDelete={canDelete: boolean;};
+export type D_ElementResourceStatus={
 	identifier: "bottom_sheet_list_option.eml|cd39732d53f1132c"|
 	"track_selection_sheet_option.eml|f3619d8bb085c9a9";
 	status: "ELEMENTS_RESOURCE_STATUS_ATTACHED";
 };
-type D_ElementUpdate=R_TemplateUpdate|R_ResourceStatusInResponseCheck;
+export type D_ElementUpdate=R_TemplateUpdate|R_ResourceStatusInResponseCheck;
 // [ELEMENT::structured-description-music-section::@::row-state-id]
-type D_Element_StructuredDescription=T_ElementId<
+export type D_Element_StructuredDescription=T_ElementId<
 	"structured-description-music-section",T_ElementId<
 		[
 			"artists",
@@ -1658,25 +1665,25 @@ type D_Element_StructuredDescription=T_ElementId<
 		][number],"row-state-id"
 	>
 >;
-type D_EmojiImage={
+export type D_EmojiImage={
 	accessibility: D_Accessibility;
 	thumbnails: D_ThumbnailItem[];
 };
-type D_Endscreen={
+export type D_Endscreen={
 	elements: R_EndscreenElement[];
 	startMs: `${number}`;
 	trackingParams: string;
 };
-type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
+export type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
 	"clip-create",
 	"structured-description"
 ][number]>|
 	"comment-item-section"|
 	string&{type: "string";};
-type D_Enum_GuideAction=T_EnumStr<"GUIDE_ACTION","ADD_TO_PLAYLISTS"|
+export type D_Enum_GuideAction=T_EnumStr<"GUIDE_ACTION","ADD_TO_PLAYLISTS"|
 	"ADD_TO_SUBSCRIPTIONS"
 >;
-type D_ExpandableTab={
+export type D_ExpandableTab={
 	endpoint: E_VE3611;
 	title: "Search";
 	selected: false;
@@ -1692,33 +1699,33 @@ type D_ExpandableTab={
 	expandedText: string;
 	content: R_SectionList;
 };
-type D_ExpandableVideoDescriptionBody={
+export type D_ExpandableVideoDescriptionBody={
 	descriptionBodyText?: G_Text;
 	showMoreText?: G_Text;
 	showLessText?: G_Text;
 	attributedDescriptionBodyText?: D_AttributedDescription;
 };
-type D_Factoid={
+export type D_Factoid={
 	value: G_Text;
 	label: G_Text;
 	accessibilityText: string;
 };
-type D_FancyDismissibleDialog={
+export type D_FancyDismissibleDialog={
 	dialogMessage: G_Text;
 	title?: G_Text;
 	confirmLabel: G_Text;
 	trackingParams: string;
 };
-type D_FeedTabbedHeader={title: G_Text;};
-type D_FeedbackResponseItem=D_FeedbackResponseProcessedStatus;
-type D_DismissalReasonText={
+export type D_FeedTabbedHeader={title: G_Text;};
+export type D_FeedbackResponseItem=D_FeedbackResponseProcessedStatus;
+export type D_DismissalReasonText={
 	trackingParams: string;
 	text: G_Text;
 	feedbackToken: string;
 };
-type R_DismissalReasonText={dismissalReasonTextRenderer: D_DismissalReasonText;};
-type E_SubmitFeedback=T_SE_Signal<M_Feedback,DE_SubmitFeedback>;
-type D_DismissalFollowUp={
+export type R_DismissalReasonText={dismissalReasonTextRenderer: D_DismissalReasonText;};
+export type E_SubmitFeedback=T_SE_Signal<M_Feedback,DE_SubmitFeedback>;
+export type D_DismissalFollowUp={
 	trackingParams: string;
 	dismissalReasonsPrompt: G_Text;
 	reasons: R_DismissalReasonText[];
@@ -1727,20 +1734,20 @@ type D_DismissalFollowUp={
 	submitFeedbackEndpoint: E_SubmitFeedback;
 	dismissalViewStyle: "DISMISSAL_VIEW_STYLE_COMPACT_TALL";
 };
-type R_DismissalFollowUp={dismissalFollowUpRenderer: D_DismissalFollowUp;};
-type D_FeedbackResponseProcessedStatus={
+export type R_DismissalFollowUp={dismissalFollowUpRenderer: D_DismissalFollowUp;};
+export type D_FeedbackResponseProcessedStatus={
 	isProcessed: true;
 	followUpDialog?: R_DismissalFollowUp;
 };
-type D_FormatColorInfo={
+export type D_FormatColorInfo={
 	primaries?: "COLOR_PRIMARIES_BT709"|"COLOR_PRIMARIES_BT2020";
 	transferCharacteristics: "COLOR_TRANSFER_CHARACTERISTICS_BT709"|"COLOR_TRANSFER_CHARACTERISTICS_ARIB_STD_B67";
 	matrixCoefficients?: "COLOR_MATRIX_COEFFICIENTS_BT709"|"COLOR_MATRIX_COEFFICIENTS_BT2020_NCL";
 };
-type G_GetAccountMenuItem=MP_LoadingNotificationMenu|MP_LoadingAccountMenu;
-type D_GhostGrid={rows: number;};
-type D_GoogleLoginExternalUrl={url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";}["url"];
-type D_GradientColorConfig=[
+export type G_GetAccountMenuItem=MP_LoadingNotificationMenu|MP_LoadingAccountMenu;
+export type D_GhostGrid={rows: number;};
+export type D_GoogleLoginExternalUrl={url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";}["url"];
+export type D_GradientColorConfig=[
 	{
 		darkThemeColor: TP_Color<0x99000000,"0x99000000">;
 		startLocation: 0;
@@ -1751,66 +1758,66 @@ type D_GradientColorConfig=[
 		startLocation: 1;
 	}
 ];
-type D_GradientColorConfigEnd={
+export type D_GradientColorConfigEnd={
 	darkThemeColor: TP_Color<0xff000000,"0xff000000">;
 	startLocation: 1;
 };
-type D_GradientColorConfigItem=D_GradientColorConfigStart|D_GradientColorConfigMid|D_GradientColorConfigEnd;
-type D_GradientColorConfigMid={darkThemeColor: TP_Color<0x7f000000,"0x7f000000">;};
-type D_GradientColorConfigStart={
+export type D_GradientColorConfigItem=D_GradientColorConfigStart|D_GradientColorConfigMid|D_GradientColorConfigEnd;
+export type D_GradientColorConfigMid={darkThemeColor: TP_Color<0x7f000000,"0x7f000000">;};
+export type D_GradientColorConfigStart={
 	darkThemeColor: TP_Color<0x99000000,"0x99000000">;
 	startLocation: 0;
 };
-type D_GuideCollapsibleEntry={
+export type D_GuideCollapsibleEntry={
 	expanderItem: R_GuideEntry;
 	expandableItems: R_GuideEntry[];
 	collapserItem: R_GuideEntry;
 };
-type D_GuideCollapsibleSectionEntry={
+export type D_GuideCollapsibleSectionEntry={
 	headerEntry: R_GuideEntry;
 	expanderIcon: T_Icon<"EXPAND">;
 	collapserIcon: T_Icon<"COLLAPSE">;
 	sectionItems: G_GuideSectionItem[];
 	handlerDatas: ["GUIDE_ACTION_ADD_TO_PLAYLISTS","GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"];
 };
-type D_GuideSection={
+export type D_GuideSection={
 	items: G_GuideSectionItem[];
 	trackingParams: string;
 	formattedTitle?: G_Text;
 };
-type D_GuideSubscriptionsSection={
+export type D_GuideSubscriptionsSection={
 	sort: "CHANNEL_ACTIVITY";
 	items: G_GuideSubscriptionsSectionItem[];
 	trackingParams: string;
 	formattedTitle: G_Text;
 	handlerDatas: ["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"];
 };
-type D_HasSeparator={hasSeparator: boolean;};
-type D_HeartbeatParams={
+export type D_HasSeparator={hasSeparator: boolean;};
+export type D_HeartbeatParams={
 	intervalMilliseconds: `${number}`;
 	softFailOnError: boolean;
 	heartbeatServerData: string;
 };
-type D_HeatSeekerItemData={
+export type D_HeatSeekerItemData={
 	trackingParams: string;
 	heatmap: R_Heatmap;
 };
-type D_Heatmap={
+export type D_Heatmap={
 	maxHeightDp: 40;
 	minHeightDp: 4;
 	showHideAnimationDurationMillis: 200;
 	heatMarkers: {heatMarkerRenderer: {};}[];
 	heatMarkersDecorations: {timedMarkerDecorationRenderer: {};}[];
 };
-type D_HideEnclosingContainer={hideEnclosingContainer: true;};
-type D_Hint={
+export type D_HideEnclosingContainer={hideEnclosingContainer: true;};
+export type D_Hint={
 	hintId: "sponsor-pre-purchase";
 	dwellTimeMs: "60000";
 	hintCap: D_ImpressionCap;
 	trackingParams: string;
 };
-type D_HistoryEntryTime={entryTime: number;};
-type VD_PlaceData={
+export type D_HistoryEntryTime={entryTime: number;};
+export type VD_PlaceData={
 	placeName: string;
 	placeCategory: string;
 	rating: `${number}`;
@@ -1824,25 +1831,25 @@ type VD_PlaceData={
 	openLinkUiStyle: "OPEN_LINK_UI_STYLE_UNSPECIFIED";
 	cardStyle: "PLACE_CARD_STYLE_TALL";
 };
-type VM_PlaceData={placeDataViewModel: VD_PlaceData;};
-type D_HorizontalCardList={
+export type VM_PlaceData={placeDataViewModel: VD_PlaceData;};
+export type D_HorizontalCardList={
 	cards: (R_MacroMarkersListItem|VM_PlaceData)[];
 	trackingParams: string;
 	header: R_RichListHeader;
 	style: T_StyleType<G_CardList_StyleType>|{type: G_CardList_StyleType;};
 	centerItems: false;
 };
-type D_HotkeyDialog={
+export type D_HotkeyDialog={
 	title: G_Text;
 	sections: R_HotkeyDialogSection[];
 	dismissButton: R_Button;
 	trackingParams: string;
 };
-type D_HotkeyDialogSection={
+export type D_HotkeyDialogSection={
 	title: G_Text;
 	options: R_HotkeyDialogSectionOption[];
 };
-type D_HotkeyDialogSectionOption={
+export type D_HotkeyDialogSectionOption={
 	label: G_Text;
 	hotkey: string;
 }|{
@@ -1850,25 +1857,25 @@ type D_HotkeyDialogSectionOption={
 	hotkey: string;
 	hotkeyAccessibilityLabel: D_Accessibility;
 };
-type D_ImpressionCap={impressionCap: "1";};
-type D_ImpressionCommand={
+export type D_ImpressionCap={impressionCap: "1";};
+export type D_ImpressionCommand={
 	clickTrackingParams: string;
 	loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/adview?${string}`>[];
 	pingingEndpoint: B_Hack;
 };
-type D_ClickLocationTarget={
+export type D_ClickLocationTarget={
 	location: "PROMOTED_SPARKLES_CLICK_LOCATION_AD_BADGE";
 	code: 31;
 	behaviorType: "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE_OPEN_AD";
 };
-type D_EmptyMap={emptyMap: true;};
-type D_ActiveView={
+export type D_EmptyMap={emptyMap: true;};
+export type D_ActiveView={
 	viewableCommands: E_Pinging[];
 	endOfSessionCommands: E_Pinging[];
 	regexUriMacroValidator: D_EmptyMap;
 };
 
-type D_PromotedSparklesWeb={
+export type D_PromotedSparklesWeb={
 	thumbnail: D_Thumbnail;
 	icon: T_Icon<"EXTERNAL_LINK">;
 	title: G_Text;
@@ -1884,10 +1891,10 @@ type D_PromotedSparklesWeb={
 	clickLocationTargets: D_ClickLocationTarget[];
 	adBadge?: RMD_Badge;
 };
-type D_InFeedAdLayout={adLayoutMetadata: MG_AdLayout; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
-type D_LinearAdSequence={adLayoutMetadata: MG_AdLayout; linearAds: G_LinearAdsItem[];};
-type D_AdSlotAndLayoutItem={adLayoutMetadata: MG_AdLayout[]; adSlotMetadata: DMD_AdSlot;};
-type D_InfoRow={
+export type D_InFeedAdLayout={adLayoutMetadata: MG_AdLayout; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
+export type D_LinearAdSequence={adLayoutMetadata: MG_AdLayout; linearAds: G_LinearAdsItem[];};
+export type D_AdSlotAndLayoutItem={adLayoutMetadata: MG_AdLayout[]; adSlotMetadata: DMD_AdSlot;};
+export type D_InfoRow={
 	title: G_Text;
 	defaultMetadata?: G_Text;
 	expandedMetadata?: G_Text;
@@ -1895,21 +1902,21 @@ type D_InfoRow={
 	trackingParams: string;
 	infoRowExpandStatusKey?: D_Element_StructuredDescription;
 };
-type D_InvalidationId={
+export type D_InvalidationId={
 	objectSource: number;
 	objectId: string;
 	topic: `chat~${string}~${number}`;
 	subscribeToGcmTopics: boolean;
 	protoCreationTimestampMs: `${number}`;
 };
-type D_ItemSectionHeader={
+export type D_ItemSectionHeader={
 	title: G_Text;
 	subtitle: G_Text;
 };
-type D_Label={label: string;};
-type D_Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
-type D_LikeApi={videoId: string;}|D_PlaylistId;
-type D_LiveBroadcastDetails={
+export type D_Label={label: string;};
+export type D_Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
+export type D_LikeApi={videoId: string;}|D_PlaylistId;
+export type D_LiveBroadcastDetails={
 	isLiveNow: true;
 	startTimestamp: string;
 }|{
@@ -1917,13 +1924,13 @@ type D_LiveBroadcastDetails={
 	startTimestamp: string;
 	endTimestamp: string;
 };
-type D_LiveBroadcastingBadge={liveBroadcasting: boolean;};
-type D_LiveChatAuthorBadge={
+export type D_LiveBroadcastingBadge={liveBroadcasting: boolean;};
+export type D_LiveChatAuthorBadge={
 	icon: T_Icon<"MODERATOR">;
 	tooltip: string;
 	accessibility: D_Accessibility;
 };
-type D_LiveChatEmoji={
+export type D_LiveChatEmoji={
 	emojiId: `UC${string}/${string}`;
 	shortcuts: `:${string}:`[];
 	searchTerms: string[];
@@ -1931,11 +1938,11 @@ type D_LiveChatEmoji={
 	isCustomEmoji: boolean;
 	isLocked: boolean;
 };
-type D_LiveChatPlaceholderItem={
+export type D_LiveChatPlaceholderItem={
 	id: string;
 	timestampUsec: `${number}`;
 };
-type D_LiveChatViewerEngagementMessage={
+export type D_LiveChatViewerEngagementMessage={
 	id: string;
 	timestampUsec: `${number}`;
 	icon: T_Icon<"YOUTUBE_ROUND">;
@@ -1943,42 +1950,42 @@ type D_LiveChatViewerEngagementMessage={
 	actionButton: R_Button;
 	trackingParams: string;
 };
-type D_LoggingUrl={baseUrl: string;};
-type D_MP_MenuStyle={style: DE_MP_MenuStyle;};
-type D_MP_Menu_Section={
+export type D_LoggingUrl={baseUrl: string;};
+export type D_MP_MenuStyle={style: DE_MP_MenuStyle;};
+export type D_MP_Menu_Section={
 	notification_menu: R_MultiPageMenuNotificationSection;
 	account_section_list: R_AccountSectionList;
 	page_menu: TR_MultiPageMenuSection<R_CompactLink>;
 };
-type D_MP_Menu_Sections_Items=D_MP_Menu_Section[keyof D_MP_Menu_Section];
-type D_VideoLike_richThumbnail=R_MovingThumbnail;
-type D_MenuServiceIcon={icon: T_Icon<"FLAG">;};
-type D_MenuServiceIconTypeStr=[
+export type D_MP_Menu_Sections_Items=D_MP_Menu_Section[keyof D_MP_Menu_Section];
+export type D_VideoLike_richThumbnail=R_MovingThumbnail;
+export type D_MenuServiceIcon={icon: T_Icon<"FLAG">;};
+export type D_MenuServiceIconTypeStr=[
 	"SUBTITLES",
 	"PLAYLIST_ADD",
 	"VISIBILITY_OFF",
 	"SHARE",
 	"ALIGN_LEFT"
 ][number]|"WATCH_LATER"|"NOT_INTERESTED"|"LIBRARY_ADD"|"LIBRARY_REMOVE"|(D_MenuServiceIcon['icon']['iconType']);
-type D_MenuServiceItem<T_EI>={
+export type D_MenuServiceItem<T_EI>={
 	text: G_Text;
 	serviceEndpoint: T_EI;
 	trackingParams: string;
 };
-type D_MenuServiceItem_Icon<T extends string,T_EI>={
+export type D_MenuServiceItem_Icon<T extends string,T_EI>={
 	text: G_Text;
 	icon: T_Icon<T>;
 	serviceEndpoint: T_EI;
 	trackingParams: string;
 };
-type D_MenuServiceItem_Separated<T extends string,T_EI>={
+export type D_MenuServiceItem_Separated<T extends string,T_EI>={
 	text: G_Text;
 	icon: T_Icon<T>;
 	serviceEndpoint: T_EI;
 	trackingParams: string;
 	hasSeparator: true;
 };
-type D_MerchandiseShelf={
+export type D_MerchandiseShelf={
 	title: string;
 	items: R_MerchandiseItem[];
 	trackingParams: string;
@@ -1986,7 +1993,7 @@ type D_MerchandiseShelf={
 	hideText: string;
 	actionButton: R_Menu;
 };
-type D_Microformat={
+export type D_Microformat={
 	urlCanonical: string;
 	title: string;
 	description: string;
@@ -2012,28 +2019,28 @@ type D_Microformat={
 	availableCountries?: string[];
 	linkAlternates: B_HrefUrl[];
 };
-type D_MicroformatEmbed={
+export type D_MicroformatEmbed={
 	iframeUrl: `https://www.youtube.com/embed/${string}`;
 	flashUrl?: `http://www.youtube.com/v/${string}?version=3&autohide=1`;
 	width: number;
 	height: number;
 	flashSecureUrl?: `https://www.youtube.com/v/${string}?version=3&autohide=1`;
 };
-type D_ModifiedSetItem={
+export type D_ModifiedSetItem={
 	autoplayVideo?: E_WatchPlaylist;
 	nextButtonVideo?: E_WatchPlaylist;
 	previousButtonVideo?: E_WatchPlaylist;
 };
-type D_MovingThumbnail={
+export type D_MovingThumbnail={
 	movingThumbnailDetails?: D_Thumbnail|D_MovingThumbnail_Thumbnails;
 	enableHoveredLogging: true;
 	enableOverlay: true;
 };
-type D_MovingThumbnailDetails={
+export type D_MovingThumbnailDetails={
 	thumbnails: D_ThumbnailItem[];
 	logAsMovingThumbnail: boolean;
 };
-type D_MovingThumbnail_Thumbnails={
+export type D_MovingThumbnail_Thumbnails={
 	thumbnails: {
 		url: string;
 		width: 320;
@@ -2041,18 +2048,18 @@ type D_MovingThumbnail_Thumbnails={
 	}[];
 	logAsMovingThumbnail: true;
 };
-type TG_Key<T>={key: T;};
-type D_MultiMarkersPlayerBar={
+export type TG_Key<T>={key: T;};
+export type D_MultiMarkersPlayerBar={
 	visibleOnLoad: TG_Key<"DESCRIPTION_CHAPTERS"|"">;
 	markersMap: [R_DescriptionChaptersItem,R_HeatSeekerItem];
 };
-type D_MusicCarouselShelf=Record<"contents",{}[]>&{
+export type D_MusicCarouselShelf=Record<"contents",{}[]>&{
 	header: {};
 	trackingParams: string;
 	itemSize: "COLLECTION_STYLE_ITEM_SIZE_MEDIUM";
 };
-type D_MusicQueue=Partial<Record<"content",R_PlaylistPanel>>&B_Hack;
-type D_MusicShelf=Record<"contents",R_MusicResponsiveListItem[]>&{
+export type D_MusicQueue=Partial<Record<"content",R_PlaylistPanel>>&B_Hack;
+export type D_MusicShelf=Record<"contents",R_MusicResponsiveListItem[]>&{
 	title: G_Text;
 	trackingParams: string;
 	continuations: CD_Reload[];
@@ -2060,19 +2067,19 @@ type D_MusicShelf=Record<"contents",R_MusicResponsiveListItem[]>&{
 	autoReloadWhenEmpty: true;
 	bottomButton: R_Button;
 };
-type D_MusicThumbnail={
+export type D_MusicThumbnail={
 	thumbnail: D_Thumbnail;
 	thumbnailCrop: "MUSIC_THUMBNAIL_CROP_UNSPECIFIED";
 	thumbnailScale: "MUSIC_THUMBNAIL_SCALE_UNSPECIFIED";
 	trackingParams: string;
 };
-type D_NotchesItem={
+export type D_NotchesItem={
 	linearGradientCssStyle?: string;
 	knobColorArgb: 4280191205;
 	purchaseCommand: E_YpcGetCart;
 	tierValue: G_Text;
 };
-type D_NotificationText={
+export type D_NotificationText={
 	successResponseText: G_Text;
 	undoText: G_Text;
 	undoEndpoint: E_UndoFeedback;
@@ -2081,24 +2088,24 @@ type D_NotificationText={
 	successResponseText: G_Text;
 	trackingParams: string;
 };
-type D_OptionAv1Options={
+export type D_OptionAv1Options={
 	id: "SETTINGS_OPTIONS_ID_TYPE_AV1_OPTIONS";
 	options: G_SettingsOptionItem[];
 	title: G_Text;
 	hidden: true;
 };
-type D_OptionWithText={
+export type D_OptionWithText={
 	options: G_SettingsOptionItem[];
 	title: G_Text;
 	text: G_Text;
 };
-type D_PageIntroduction={
+export type D_PageIntroduction={
 	bodyText: G_Text;
 	headerIcon: T_Icon<"ACCOUNT_ADVANCED">|T_Icon<"ACCOUNT_SHARING">;
 	headerText: G_Text;
 	pageTitle: G_Text;
 };
-type PageTypeList=[
+export type PageTypeList=[
 	"watch",
 	"browse",
 	"channel",
@@ -2106,33 +2113,33 @@ type PageTypeList=[
 	"settings",
 	"shorts"
 ];
-type D_PdgBuyFlow={
+export type D_PdgBuyFlow={
 	header: R_PdgBuyFlowHeader;
 	content: R_SuperVodBuyFlowContent[];
 	trackingParams: string;
 	onCloseCommand: C_GetSurvey;
 };
-type D_PdgBuyFlowHeader={
+export type D_PdgBuyFlowHeader={
 	text: G_Text;
 	helpButton: R_Button;
 	dismissButton: R_Button;
 };
-type D_PdgCommentOption={
+export type D_PdgCommentOption={
 	commentText: G_Text;
 	chipRenderer: R_PdgCommentChip;
 };
-type D_LiveStreamability={
+export type D_LiveStreamability={
 	videoId: DU_VideoId;
 	broadcastId?: `${1}`;
 	pollDelayMs: `${15000}`;
 };
-type R_LiveStreamability={liveStreamabilityRenderer: D_LiveStreamability;};
-type D_PlayabilityOkReason=
+export type R_LiveStreamability={liveStreamabilityRenderer: D_LiveStreamability;};
+export type D_PlayabilityOkReason=
 	|"This live event has ended."
 	|"We're experiencing technical difficulties."
 	;
 ;
-type D_PlaybackTracking={
+export type D_PlaybackTracking={
 	atrUrl: D_UrlAndElapsedMediaTime<`https://s.youtube.com/api/stats/atr?${string}`>;
 	ptrackingUrl: T_BaseUrl<`https://www.youtube.com/ptracking?${string}`>;
 	qoeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/qoe?${string}`>;
@@ -2143,28 +2150,28 @@ type D_PlaybackTracking={
 	videostatsWatchtimeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/watchtime?${string}`>;
 	youtubeRemarketingUrl?: T_BaseUrl<`https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`>;
 };
-type D_PlayerAdParams={
+export type D_PlayerAdParams={
 	enabledEngageTypes: string;
 	showContentThumbnail: boolean;
 };
-type D_PlayerAnnotationsExpanded={
+export type D_PlayerAnnotationsExpanded={
 	featuredChannel: D_FeaturedChannel;
 	allowSwipeDismiss: boolean;
 	annotationId: D_UUIDString;
 };
-type D_PlayerAttestation={
+export type D_PlayerAttestation={
 	challenge: string;
 	botguardData: D_Botguard;
 };
-type D_PlayerCaptionsTracklist={
+export type D_PlayerCaptionsTracklist={
 	captionTracks: D_CaptionTrackItem[];
 	audioTracks: D_AudioTrackItem[];
 	translationLanguages: D_TranslationLanguage[];
 	defaultAudioTrackIndex: number;
 	openTranscriptCommand?: A_ChangeEngagementPanelVisibility;
 };
-type D_PlayerLiveStoryboardSpec={spec: string;};
-type D_PlayerMicroformat={
+export type D_PlayerLiveStoryboardSpec={spec: string;};
+export type D_PlayerMicroformat={
 	thumbnail: D_Thumbnail;
 	embed?: D_MicroformatEmbed;
 	title: G_Text;
@@ -2184,7 +2191,7 @@ type D_PlayerMicroformat={
 	uploadDate: string;
 	learningResource?: D_LearningResource;
 };
-type D_PlayerOverlay={
+export type D_PlayerOverlay={
 	endScreen: R_WatchNextEndScreen;
 	shareButton: R_Button;
 	addToMenu: R_Menu;
@@ -2206,7 +2213,7 @@ type D_PlayerOverlay={
 	autonavToggle: R_AutoplaySwitchButton;
 	decoratedPlayerBarRenderer: R_DecoratedPlayerBar;
 };
-type D_PlayerOverlayAutoplay={
+export type D_PlayerOverlayAutoplay={
 	title: G_Text;
 	videoTitle: G_Text;
 	byline: G_Text;
@@ -2226,12 +2233,12 @@ type D_PlayerOverlayAutoplay={
 	shortViewCountText: G_Text;
 	countDownSecsForFullscreen: 3;
 };
-type D_PlayerOverlayVideoDetails={
+export type D_PlayerOverlayVideoDetails={
 	title: G_Text;
 	subtitle: G_Text;
 };
-type D_PlayerStoryboardSpec={spec: string;};
-type D_PlaylistAddToOption={
+export type D_PlayerStoryboardSpec={spec: string;};
+export type D_PlaylistAddToOption={
 	title: G_Text;
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";
 	containsSelectedVideos: "NONE";
@@ -2240,8 +2247,8 @@ type D_PlaylistAddToOption={
 	removeFromPlaylistServiceEndpoint: E_PlaylistEdit;
 	trackingParams: string;
 }&D_PlaylistId;
-type D_PlaylistByline={text: G_Text;};
-type D_InlineForm={
+export type D_PlaylistByline={text: G_Text;};
+export type D_InlineForm={
 	formField: R_TextInputFormField;
 	editButton: R_Button;
 	saveButton: R_Button;
@@ -2250,13 +2257,13 @@ type D_InlineForm={
 	style: "INLINE_FORM_STYLE_TITLE"|"INLINE_FORM_STYLE_BODY_TEXT_PLACEHOLDER";
 	placeholder?: G_Text;
 };
-type R_InlineForm={inlineFormRenderer: D_InlineForm;};
-type D_DropdownFormField={
+export type R_InlineForm={inlineFormRenderer: D_InlineForm;};
+export type D_DropdownFormField={
 	dropdown: R_Dropdown;
 	key: "playlistEditEndpoint.actions.0.playlistPrivacy";
 	onChange: E_PlaylistEdit;
 };
-type D_PlaylistHeader={
+export type D_PlaylistHeader={
 	title: G_Text;
 	numVideosText: G_Text;
 	descriptionText: {};
@@ -2286,34 +2293,34 @@ type D_PlaylistHeader={
 	// key = playlistEditEndpoint.actions.0.playlistPrivacy
 	privacyForm?: R_DropdownFormField;
 }&D_PlaylistId;
-type D_PlaylistSidebar={
+export type D_PlaylistSidebar={
 	items: G_PlaylistSidebarItem[];
 	trackingParams: string;
 };
-type D_PlaylistSidebarSecondaryInfo={videoOwner: R_VideoOwner;};
-type D_PlaylistVideoList={
+export type D_PlaylistSidebarSecondaryInfo={videoOwner: R_VideoOwner;};
+export type D_PlaylistVideoList={
 	playlistId: "WL";
 	sortFilterMenu: R_SortFilterSubMenu;
 	targetId: "WL";
 	trackingParams: string;
 };
-type D_PlaylistVideoThumbnail={
+export type D_PlaylistVideoThumbnail={
 	thumbnail: D_Thumbnail;
 	trackingParams: string;
 };
-type D_PrefetchHintConfig={
+export type D_PrefetchHintConfig={
 	prefetchPriority: 0;
 	countdownUiRelativeSecondsPrefetchCondition: -3;
 }|{
 	prefetchPriority: 0;
 	playbackRelativeSecondsPrefetchCondition: -3;
 };
-type D_NavigationLinkItem={
+export type D_NavigationLinkItem={
 	navigationEndpoint: E_Url;
 	icon: D_Thumbnail;
 	title: G_Text;
 };
-type D_PrivacyDropdownItem={
+export type D_PrivacyDropdownItem={
 	label: G_Text;
 	icon: T_Icon<"PRIVACY_PUBLIC">;
 	description: G_Text;
@@ -2321,11 +2328,11 @@ type D_PrivacyDropdownItem={
 	isSelected: boolean;
 	accessibility: D_Label;
 };
-type D_ProductList={
+export type D_ProductList={
 	contents: R_ProductListItem[];
 	trackingParams: string;
 };
-type D_ProductListItem={
+export type D_ProductListItem={
 	title: G_Text;
 	accessibilityTitle: string;
 	thumbnail: D_Thumbnail;
@@ -2334,37 +2341,37 @@ type D_ProductListItem={
 	trackingParams: string;
 	loggingDirectives: D_LoggingDirectives;
 };
-type D_ProfileColumnUserInfo={
+export type D_ProfileColumnUserInfo={
 	title: G_Text;
 	thumbnail: D_Thumbnail;
 };
-type D_ProfilePageHeaderInformation={
+export type D_ProfilePageHeaderInformation={
 	title: R_ProfilePageHeaderTitleViewModel;
 	metadata: R_ProfilePageHeaderMetadataViewModel;
 	thumbnail: R_ProfilePageHeaderThumbnailViewModel;
 	alignment: string;
 	onTap: C_Innertube;
 };
-type D_ProfilePageHeaderTitle_Content={content: string;};
-type D_ProfilePageHeaderTitle={title: D_ProfilePageHeaderTitle_Content;};
-type D_RadioButtonSurveyOption={
+export type D_ProfilePageHeaderTitle_Content={content: string;};
+export type D_ProfilePageHeaderTitle={title: D_ProfilePageHeaderTitle_Content;};
+export type D_RadioButtonSurveyOption={
 	option: {};
 	submissionEndpoint: {};
 	enumName: T_Split<"ANSWER_VWT_INLINE_REGRET_WATCHING,ANSWER_VWT_INLINE_DONT_REGRET_WATCHING,ANSWER_VWT_INLINE_DONT_REGRET_WATCHING,ANSWER_VWT_INLINE_REGRET_WATCHING">[number];
 	trackingParams: string;
 };
-type D_Range={
+export type D_Range={
 	start: `${number}`;
 	end: `${number}`;
 };
-type D_RatingSurvey={
+export type D_RatingSurvey={
 	ratings: R_RatingSurveyOption[];
 	trackingParams: string;
 	notSureButton: R_Button;
 	undoButton: R_Button;
 	notSureEndpoint: {};
 };
-type D_RatingSurveyOption={
+export type D_RatingSurveyOption={
 	responseText: G_Text;
 	defaultStateIcon: T_Icon<"STAR_BORDER">;
 	onStateIcon: T_Icon<"STAR">;
@@ -2374,8 +2381,8 @@ type D_RatingSurveyOption={
 	checked: boolean;
 	selected: boolean;
 };
-type D_FeedbackToken={feedbackToken: string;};
-type D_ReelItem={
+export type D_FeedbackToken={feedbackToken: string;};
+export type D_ReelItem={
 	videoId: D_VideoIdTagStr;
 	headline: G_Text;
 	thumbnail: D_Thumbnail;
@@ -2389,7 +2396,7 @@ type D_ReelItem={
 	videoType: "REEL_VIDEO_TYPE_VIDEO";
 	loggingDirectives: D_LoggingDirectives;
 };
-type D_ReelPlayerHeader={
+export type D_ReelPlayerHeader={
 	reelTitleText: G_Text;
 	timestampText: G_Text;
 	channelNavigationEndpoint: E_VE3611;
@@ -2398,29 +2405,29 @@ type D_ReelPlayerHeader={
 	trackingParams: string;
 	accessibility: D_Accessibility;
 };
-type D_ReelShelf={
+export type D_ReelShelf={
 	title: G_Text;
 	items: R_ReelItem[];
 	trackingParams: string;
 	icon: T_Icon<"YOUTUBE_SHORTS_BRAND_24">;
 };
-type D_ReflowOptions={
+export type D_ReflowOptions={
 	minimumRowsOfVideosAtStart: 2;
 	minimumRowsOfVideosBetweenSections: 1;
 };
-type D_ResState={
+export type D_ResState={
 	active: boolean;
 	resolver: () => void;
 };
-type D_ResourceStatusInResponseCheck={
+export type D_ResourceStatusInResponseCheck={
 	resourceStatuses: D_ElementResourceStatus[];
 	serverBuildLabel: `boq_youtube-watch-ui_${number}.${string}_p${number}`;
 };
-type D_ResponsePageUrlList=[
+export type D_ResponsePageUrlList=[
 	`/${G_SettingsEndpointPages}`
 ];
-type Todo_D_RichGrid=Record<"contents",G_RendererContentItem[]>&{masthead: R_VideoMastheadAdV3;};
-type D_RichGrid={
+export type Todo_D_RichGrid=Record<"contents",G_RendererContentItem[]>&{masthead: R_VideoMastheadAdV3;};
+export type D_RichGrid={
 	contents: G_RichGridContent[];
 	trackingParams: string;
 	header: R_FeedFilterChipBar;
@@ -2434,7 +2441,7 @@ type D_RichGrid={
 	masthead: R_AdSlot;
 	reflowOptions: D_ReflowOptions;
 };
-type D_RichItem={
+export type D_RichItem={
 	content: G_RichItemContent;
 	trackingParams: string;
 	rowIndex: number;
@@ -2443,12 +2450,12 @@ type D_RichItem={
 	content: G_RichItemContent;
 	trackingParams: string;
 };
-type D_RichListHeader={
+export type D_RichListHeader={
 	title: G_Text;
 	trackingParams: string;
 	navigationButton: R_Button;
 };
-type D_RootVisualElementType=[
+export type D_RootVisualElementType=[
 	3611,
 	3832,
 	3854,
@@ -2458,27 +2465,27 @@ type D_RootVisualElementType=[
 	83769,
 	96368,
 ][number];
-type D_RunAttestation={
+export type D_RunAttestation={
 	ids: D_ExternalChannelId[];
 	engagementType: "ENGAGEMENT_TYPE_SUBSCRIBE";
 };
-type D_Saved={
+export type D_Saved={
 	any_data?: D_AnySaved;
 	ad_layout_data?: D_AdLayout;
 	data?: {[x: string]: ({}[])|undefined;};
 };
-type D_SearchBox={
+export type D_SearchBox={
 	endpoint: E_VE6827;
 	searchButton: R_Button;
 	clearButton: R_Button;
 	placeholderText: G_Text;
 	trackingParams: string;
 };
-type D_SearchPyv={
+export type D_SearchPyv={
 	ads: R_AdSlot[];
 	trackingParams: string;
 };
-type D_SearchResultsTab={
+export type D_SearchResultsTab={
 	endpoint?: E_Search;
 	title: string;
 	selected?: boolean;
@@ -2486,7 +2493,7 @@ type D_SearchResultsTab={
 	tabIdentifier: string;
 	trackingParams: string;
 };
-type D_SegmentedLikeDislikeButton={
+export type D_SegmentedLikeDislikeButton={
 	likeButton: R_ToggleButton;
 	dislikeButton: R_ToggleButton;
 	likeCount?: `${number}`;
@@ -2501,13 +2508,13 @@ type D_SegmentedLikeDislikeButton={
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
 };
-type D_SerializedSlotAdServingDataEntry={serializedSlotAdServingDataEntry: string;};
-type D_SetSetting={
+export type D_SerializedSlotAdServingDataEntry={serializedSlotAdServingDataEntry: string;};
+export type D_SetSetting={
 	settingItemId: `${number}`;
 	boolValue?: boolean;
 	settingItemIdForClient: G_SettingItemIdEnum;
 };
-type D_SettingsCheckbox={
+export type D_SettingsCheckbox={
 	title: G_Text;
 	helpText?: G_Text;
 	enabled: boolean;
@@ -2515,18 +2522,18 @@ type D_SettingsCheckbox={
 	disableServiceEndpoint: {};
 	disabled: boolean;
 };
-type D_SettingsOptions={options: G_SettingsOptionItem[]; title: G_Text;};
-type D_SettingsRadioOption={
+export type D_SettingsOptions={options: G_SettingsOptionItem[]; title: G_Text;};
+export type D_SettingsRadioOption={
 	id: "SETTINGS_OPTIONS_ID_TYPE_AV1_SD"|"SETTINGS_OPTIONS_ID_TYPE_AV1_ALWAYS";
 	title: G_Text;
 	helpText?: G_Text;
 	hidden: boolean;
 };
-type D_SettingsSidebar={
+export type D_SettingsSidebar={
 	title: G_Text;
 	items: R_CompactLink[];
 };
-type D_SettingsSwitch={
+export type D_SettingsSwitch={
 	title: G_Text;
 	subtitle: G_Text;
 	enabled: boolean;
@@ -2537,23 +2544,23 @@ type D_SettingsSwitch={
 	thumbnail?: D_Thumbnail;
 	trackingParams: string;
 };
-type D_SimpleMenuHeader={
+export type D_SimpleMenuHeader={
 	title: G_Text;
 	buttons: R_Button[];
 };
-type D_StreamSelectionConfig={maxBitrate: `${number}`;};
-type D_StructuredDescriptionContent={items: G_StructuredDescriptionContentItem[];};
-type D_SubFeedSelector={
+export type D_StreamSelectionConfig={maxBitrate: `${number}`;};
+export type D_StructuredDescriptionContent={items: G_StructuredDescriptionContentItem[];};
+export type D_SubFeedSelector={
 	title: G_Text;
 	options: R_SubFeedOption[];
 	trackingParams: string;
 };
-type D_SubscriptionButton={
+export type D_SubscriptionButton={
 	type: "FREE";
 	subscribed?: boolean;
 };
-type D_TabbedSearchResults={tabs: R_SearchResultsTab[];};
-type D_TemplateUpdate={
+export type D_TabbedSearchResults={tabs: R_SearchResultsTab[];};
+export type D_TemplateUpdate={
 	identifier: `${TemplateIdentFile}|${string}`;
 	serializedTemplateConfig: string;
 	dependencies: `${TemplateIdentFile}|${string}`[];
@@ -2561,8 +2568,8 @@ type D_TemplateUpdate={
 	identifier: `${TemplateIdentFile}|${string}`;
 	serializedTemplateConfig: string;
 };
-type TemplateIdentFile="track_selection_sheet_option.eml"|"bottom_sheet_list_option.eml"|"switch_button.eml";
-type D_TextInputFormField={
+export type TemplateIdentFile="track_selection_sheet_option.eml"|"bottom_sheet_list_option.eml"|"switch_button.eml";
+export type D_TextInputFormField={
 	label: G_Text;
 	value?: string;
 	maxCharacterLimit: 150|5000;
@@ -2574,41 +2581,41 @@ type D_TextInputFormField={
 	isMultiline?: true;
 	required?: true;
 };
-type D_ThemeBackgroundVars={
+export type D_ThemeBackgroundVars={
 	lightThemeBackgroundColor: TP_Color<0xffffff,"0xffffff">;
 	darkThemeBackgroundColor: TP_Color<0xff000000,"0xff000000">;
 };
-type D_ThumbnailColor=D_Color;
-type D_ThumbnailItem={
+export type D_ThumbnailColor=D_Color;
+export type D_ThumbnailItem={
 	url: string;
 	width?: number;
 	height?: number;
 };
-type D_ThumbnailOverlayBottomPanel={icon: T_Icon<"MIX">;};
-type D_ThumbnailOverlayEndorsement={
+export type D_ThumbnailOverlayBottomPanel={icon: T_Icon<"MIX">;};
+export type D_ThumbnailOverlayEndorsement={
 	text: G_Text;
 	trackingParams: string;
 };
-type D_ThumbnailOverlayHoverText={
+export type D_ThumbnailOverlayHoverText={
 	text: G_Text;
 	icon: T_Icon<"PLAY_ALL">;
 };
-type D_ThumbnailOverlayLoadingPreview={text: G_Text;};
-type D_ThumbnailOverlayNowPlaying={text: G_Text;};
-type D_ThumbnailOverlayResumePlayback={percentDurationWatched: Percent;};
-type Percent=[
+export type D_ThumbnailOverlayLoadingPreview={text: G_Text;};
+export type D_ThumbnailOverlayNowPlaying={text: G_Text;};
+export type D_ThumbnailOverlayResumePlayback={percentDurationWatched: Percent;};
+export type Percent=[
 	10|100,
 ][number];
-type tz<T extends (any[]|undefined)>=NonNullable<T>[number];
-type D_ThumbnailOverlaySidePanel_iconTypes=[
+export type tz<T extends (any[]|undefined)>=NonNullable<T>[number];
+export type D_ThumbnailOverlaySidePanel_iconTypes=[
 	"PLAY_ALL",
 	"PLAYLISTS",
 ];
-type D_ThumbnailOverlaySidePanel={
+export type D_ThumbnailOverlaySidePanel={
 	text: G_Text;
 	icon: T_Icon<D_ThumbnailOverlaySidePanel_iconTypes[number]>;
 };
-type D_ThumbnailOverlayTimeStatus=
+export type D_ThumbnailOverlayTimeStatus=
 	|D_ThumbnailOverlayTimeStatus_1
 	|D_ThumbnailOverlayTimeStatus_2
 	|D_ThumbnailOverlayTimeStatus_3
@@ -2618,22 +2625,22 @@ type D_ThumbnailOverlayTimeStatus=
 	}
 	;
 ;
-type D_ThumbnailOverlayTimeStatus_1={
+export type D_ThumbnailOverlayTimeStatus_1={
 	text: G_Text;
 	style: "DEFAULT";
 };
-type D_ThumbnailOverlayTimeStatus_2={
+export type D_ThumbnailOverlayTimeStatus_2={
 	text: G_Text;
 	style: "LIVE";
 	icon: T_Icon<"LIVE">;
 };
-type D_ThumbnailOverlayTimeStatus_3={
+export type D_ThumbnailOverlayTimeStatus_3={
 	text: G_Text;
 	style: "SHORTS";
 	icon: T_Icon<"YOUTUBE_SHORTS_FILL_NO_TRIANGLE_RED_16">;
 };
-type D_ThumbnailOverlayToggleButton=D_ThumbnailOverlayToggleButton_1|D_ThumbnailOverlayToggleButton_2;
-type D_ThumbnailOverlayToggleButton_1={
+export type D_ThumbnailOverlayToggleButton=D_ThumbnailOverlayToggleButton_1|D_ThumbnailOverlayToggleButton_2;
+export type D_ThumbnailOverlayToggleButton_1={
 	untoggledIcon: T_Icon<"WATCH_LATER">;
 	toggledIcon: T_Icon<"CHECK">;
 	untoggledTooltip: "Watch Later";
@@ -2645,7 +2652,7 @@ type D_ThumbnailOverlayToggleButton_1={
 	trackingParams: string;
 	isToggled: false;
 };
-type D_ThumbnailOverlayToggleButton_2={
+export type D_ThumbnailOverlayToggleButton_2={
 	untoggledIcon: T_Icon<"ADD_TO_QUEUE_TAIL">;
 	toggledIcon: T_Icon<"PLAYLIST_ADD_CHECK">;
 	untoggledTooltip: "Add to queue";
@@ -2655,15 +2662,15 @@ type D_ThumbnailOverlayToggleButton_2={
 	toggledAccessibility: D_Accessibility;
 	trackingParams: string;
 };
-type D_TimestampWithNanos={
+export type D_TimestampWithNanos={
 	seconds: `${number}`;
 	nanos: number;
 };
-type T_Id<T>={id: T;};
-type D_ToggleButtonIdData=T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;
-type R_ToggleButtonIdData={toggleButtonIdData: D_ToggleButtonIdData;};
-type T_SizeType<T>={sizeType: T;};
-type D_ToggleMenuServiceItem={
+export type T_Id<T>={id: T;};
+export type D_ToggleButtonIdData=T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;
+export type R_ToggleButtonIdData={toggleButtonIdData: D_ToggleButtonIdData;};
+export type T_SizeType<T>={sizeType: T;};
+export type D_ToggleMenuServiceItem={
 	defaultText: G_Text;
 	defaultIcon: T_Icon<"LIBRARY_ADD">;
 	defaultServiceEndpoint: E_Like;
@@ -2673,16 +2680,16 @@ type D_ToggleMenuServiceItem={
 	trackingParams: string;
 	isToggled: boolean;
 };
-type D_Token={token: string;};
-type D_TokenJarDefaultExpirationSeconds=600;
-type D_TopbarLogo={
+export type D_Token={token: string;};
+export type D_TokenJarDefaultExpirationSeconds=600;
+export type D_TopbarLogo={
 	iconImage: T_Icon<"YOUTUBE_LOGO">;
 	tooltipText: G_Text;
 	endpoint: E_VE3854;
 	trackingParams: string;
 	overrideEntityKey: string;
 };
-type D_TopbarMenuButton={
+export type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
 	menuRenderer: R_TopbarMenu;
 	trackingParams: string;
@@ -2696,17 +2703,17 @@ type D_TopbarMenuButton={
 	accessibility: D_Accessibility;
 	tooltip: string;
 };
-type D_TopicLink={
+export type D_TopicLink={
 	title: G_Text;
 	thumbnailDetails: D_Thumbnail;
 	endpoint: E_VE3611;
 	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
 	trackingParams: string;
 };
-type D_TrackingParams={trackingParams: string;};
-type D_Transcript=Record<"content",R_TranscriptSearchPanel>&{trackingParams: string;};
-type D_TranscriptFooter={languageMenu: R_SortFilterSubMenu;};
-type D_TranscriptSegment={
+export type D_TrackingParams={trackingParams: string;};
+export type D_Transcript=Record<"content",R_TranscriptSearchPanel>&{trackingParams: string;};
+export type D_TranscriptFooter={languageMenu: R_SortFilterSubMenu;};
+export type D_TranscriptSegment={
 	startMs: `${number}`;
 	endMs: `${number}`;
 	snippet: G_Text;
@@ -2715,54 +2722,54 @@ type D_TranscriptSegment={
 	accessibility: D_Accessibility;
 	targetId?: `${string}.${string}.${number}.${number}`;
 };
-type D_TranscriptSegmentList={
+export type D_TranscriptSegmentList={
 	initialSegments: R_TranscriptSegment[];
 	noResultLabel: G_Text;
 	retryLabel: G_Text;
 	touchCaptionsEnabled: boolean;
 };
-type D_TranslationLanguage={
+export type D_TranslationLanguage={
 	languageCode: string;
 	languageName: G_Text;
 };
-type D_TriggerCriteria={
+export type D_TriggerCriteria={
 	connectionWhitelist: [D_ConnectionWhitelistItem];
 	joinLatencySeconds: 15;
 	rebufferTimeSeconds: 10;
 	watchTimeWindowSeconds: 180;
 	refractorySeconds: 2592000;
 };
-type D_TwoColumnBrowseResults={
+export type D_TwoColumnBrowseResults={
 	tabs: RG_Result[];
 	secondaryContents?: G_SecondaryContents;
 };
-type D_TwoColumnSearchResults={primaryContents: R_SectionList;};
-type D_UnifiedSharePanel={
+export type D_TwoColumnSearchResults={primaryContents: R_SectionList;};
+export type D_UnifiedSharePanel={
 	trackingParams: string;
 	showLoadingSpinner: true;
 };
-type D_UpcomingEvent={
+export type D_UpcomingEvent={
 	startTime: `${number}`;
 	isReminderSet: false;
 	upcomingEventText: G_Text;
 };
-type D_Url={
+export type D_Url={
 	url: string;
 	target?: "TARGET_NEW_WINDOW";
 	nofollow?: true;
 };
-type D_UrlAndElapsedMediaTime<T>={
+export type D_UrlAndElapsedMediaTime<T>={
 	baseUrl: T;
 	elapsedMediaTimeSeconds: number;
 };
-type D_UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};
-type D_ViewCountFactoid={
+export type D_UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};
+export type D_ViewCountFactoid={
 	viewCountEntityKey: string;
 	factoid: R_Factoid;
 	viewCountType: "VIEW_COUNT_FACTOID_TYPE_CONCURRENT_VIEWERS";
 };
-type R_ViewCountFactoid={viewCountFactoidRenderer: D_ViewCountFactoid;};
-type D_VideoDescriptionHeader={
+export type R_ViewCountFactoid={viewCountFactoidRenderer: D_ViewCountFactoid;};
+export type D_VideoDescriptionHeader={
 	title: G_Text;
 	channel: G_Text;
 	views: G_Text;
@@ -2771,14 +2778,14 @@ type D_VideoDescriptionHeader={
 	channelNavigationEndpoint: E_VE3611;
 	channelThumbnail: D_Thumbnail;
 };
-type D_VideoDescriptionMusicSection={
+export type D_VideoDescriptionMusicSection={
 	sectionTitle: G_Text;
 	carouselLockups: R_CarouselLockup[];
 	topicLink: R_TopicLink;
 	premiumUpsellLink: G_Text;
 };
-type D_VideoIdTagStr=string&{type: "YtVideoId";};
-type D_VideoOwner={
+export type D_VideoIdTagStr=string&{type: "YtVideoId";};
+export type D_VideoOwner={
 	thumbnail: D_Thumbnail;
 	title: G_Text;
 	subscriptionButton?: D_SubscriptionButton;
@@ -2788,7 +2795,7 @@ type D_VideoOwner={
 	badges?: RMD_Badge[];
 	membershipButton?: R_Button;
 };
-type TD_VideoOwner={
+export type TD_VideoOwner={
 	thumbnail: D_Thumbnail;
 	title: G_Text;
 	subscriptionButton: D_SubscriptionButton;
@@ -2813,27 +2820,27 @@ type TD_VideoOwner={
 	subscriberCountText: G_Text;
 	trackingParams: string;
 };
-type D_VideoQualityPromo={
+export type D_VideoQualityPromo={
 	triggerCriteria: D_TriggerCriteria;
 	text: G_Text;
 	endpoint: E_Url;
 	trackingParams: string;
 	snackbar: RA_Notification;
 };
-type D_VideoViewCount={
+export type D_VideoViewCount={
 	viewCount: G_Text;
 	isLive?: boolean;
 	extraShortViewCount?: G_Text;
 	shortViewCount?: G_Text;
 };
-type D_Video_Owner={
+export type D_Video_Owner={
 	thumbnail: D_Thumbnail;
 	navigationEndpoint: E_VE3611;
 	accessibility: D_Accessibility;
 	title: string;
 };
-type D_VisualElementType=keyof B_VEMap;
-type D_VoiceSearchDialog={
+export type D_VisualElementType=keyof B_VEMap;
+export type D_VoiceSearchDialog={
 	placeholderHeader: G_Text;
 	promptHeader: G_Text;
 	exampleQuery1: G_Text;
@@ -2851,38 +2858,38 @@ type D_VoiceSearchDialog={
 	trackingParams: string;
 	microphoneOffPromptHeader: G_Text;
 };
-type D_VssLoggingContext={serializedContextData: string;};
-type D_WatchEndpointMusicConfig={
+export type D_VssLoggingContext={serializedContextData: string;};
+export type D_WatchEndpointMusicConfig={
 	hasPersistentPlaylistPanel: boolean;
 	musicVideoType: "MUSIC_VIDEO_TYPE_ATV";
 };
-type D_WatchNextEndScreen={
+export type D_WatchNextEndScreen={
 	results: G_WatchNextEndScreenItem[];
 	title: G_Text;
 	trackingParams: string;
 };
-type D_WatchNextTabbedResults={tabs: R_Tab[];};
-type D_WebSearchboxConfig={
+export type D_WatchNextTabbedResults={tabs: R_Tab[];};
+export type D_WebSearchboxConfig={
 	requestLanguage: "en";
 	requestDomain: "ca";
 	hasOnscreenKeyboard: false;
 	focusSearchbox: true;
 };
-type D_YtConfig={
+export type D_YtConfig={
 	visitorData: string;
 	sessionIndex: 0;
 	rootVisualElementType: D_VisualElementType;
 };
 //#endregion
-type D_ParamObjType={[x: number]: number|string|D_ParamObjType;};
-type D_LoggingDirectives={
+export type D_ParamObjType={[x: number]: number|string|D_ParamObjType;};
+export type D_LoggingDirectives={
 	trackingParams: string;
 	visibility?: TM_Visibility;
 	enableDisplayloggerExperiment?: boolean;
 	gestures?: D_LoggingDirectives_Gestures;
 };
 //#region D_Button
-type D_Button_With_TargetId=
+export type D_Button_With_TargetId=
 	|{
 		style: "STYLE_SUGGESTIVE";
 		size: "SIZE_DEFAULT";
@@ -2896,8 +2903,8 @@ type D_Button_With_TargetId=
 	;
 ;
 //#endregion
-type D_TrackedThumbnail={thumbnail: D_Thumbnail; trackingParams?: string;};
-type D_Thumbnail={
+export type D_TrackedThumbnail={thumbnail: D_Thumbnail; trackingParams?: string;};
+export type D_Thumbnail={
 	thumbnails: D_ThumbnailItem[];
 	accessibility?: D_Accessibility;
 	isOriginalAspectRatio?: true;
@@ -2905,31 +2912,31 @@ type D_Thumbnail={
 	lightColorPalette?: D_LightColorPalette;
 	darkColorPalette?: D_DarkColorPalette;
 };
-type D_Omit_Compact_Player={
+export type D_Omit_Compact_Player={
 	title: G_Text;
 	trackingParams: string;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
-type D_Omit_Compact_Video=D_Omit_Compact_Player&{
+export type D_Omit_Compact_Video=D_Omit_Compact_Player&{
 	videoId: string;
 	shortViewCountText: G_Text;
 	publishedTimeText: G_Text;
 };
-type D_PaidDigitalGoods={paidDigitalGoods: B_Hack;};
-type D_AudioConfig={
+export type D_PaidDigitalGoods={paidDigitalGoods: B_Hack;};
+export type D_AudioConfig={
 	loudnessDb?: number;
 	perceptualLoudnessDb?: number;
 	muteOnStart?: true;
 	enablePerFormatLoudness?: boolean;
 };
-type D_DescriptionChapters={
+export type D_DescriptionChapters={
 	chapters: R_Chapter[];
 	trackingParams: string;
 	onChapterRepeat: TA_OpenPopup_Empty;
 };
 //#region DoExtract & DoOmit
-type D_Button_DoExtract<T extends D_Button>=T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never;
-type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>=
+export type D_Button_DoExtract<T extends D_Button>=T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never;
+export type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>=
 	T_Btn extends infer T?
 	T_OmitKey<T,U> extends infer Z?
 	{
@@ -2937,30 +2944,30 @@ type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>
 	}
 	:never
 	:never;
-type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
+export type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
 //#endregion
 //#region Extract & Exclude from data
-type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
-type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
-type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
-type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
-type D_GuideEntry_IconType_Obj={
+export type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
+export type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
+export type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
+export type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
+export type D_GuideEntry_IconType_Obj={
 	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
 	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
 //#endregion
-type D_Playlist_MD={
+export type D_Playlist_MD={
 	title: string;
 	androidAppindexingLink: string;
 	iosAppindexingLink: string;
 };
-type D_RichMetadataRow={
+export type D_RichMetadataRow={
 	contents: R_RichMetadata[];
 	trackingParams: string;
 };
-type D_RelatedChipCloud={content: R_ChipCloud;};
-type D_LoggingDirectives_Gestures=T_Types<4>;
-type DD_Streaming={
+export type D_RelatedChipCloud={content: R_ChipCloud;};
+export type D_LoggingDirectives_Gestures=T_Types<4>;
+export type DD_Streaming={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: D_AdaptiveFormatItem[];
 	formats?: D_FormatItem[];
@@ -2968,7 +2975,7 @@ type DD_Streaming={
 	dashManifestUrl?: `https://manifest.googlevideo.com/api/manifest/dash/expire/${number}/ei/${string}/ip/${string}/id/${string}/source/yt_live_broadcast/requiressl/yes/hfr/all/as/fmp4_audio_clear%2Cwebm_audio_clear%2Cwebm2_audio_clear%2Cfmp4_sd_hd_clear%2Cwebm2_sd_hd_clear/vprv/1/pacing/0/keepalive/yes/fexp/${string}/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cas%2Cvprv%2Citag%2Cplaylist_type/sig/${string}`;
 	hlsManifestUrl?: `https://manifest.googlevideo.com/api/manifest/hls_variant/expire/${number}/ei/${string}/ip/${string}/id/${string}/source/yt_live_broadcast/requiressl/yes/hfr/1/maxh/${string}/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/${string}/dover/11/itag/0/playlist_type/LIVE/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cmaxh%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/${string}/file/index.m3u8`;
 };
-type DMD_AdSlot={
+export type DMD_AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;
 	slotType: "SLOT_TYPE_IN_FEED";
 	slotPhysicalPosition: 1;
@@ -2982,7 +2989,7 @@ type DMD_AdSlot={
 	slotType: "SLOT_TYPE_PAGE_TOP";
 	slotPhysicalPosition: 0;
 };
-type DMD_Badge={
+export type DMD_Badge={
 	icon: T_Icon<"PRIVACY_PRIVATE">;
 	style: "BADGE_STYLE_TYPE_SIMPLE";
 	label: "Private";
@@ -3031,16 +3038,16 @@ type DMD_Badge={
 	label: "Fundraiser";
 	trackingParams: string;
 };
-type D_MetadataRow={
+export type D_MetadataRow={
 	title: G_Text;
 	contents: G_Text[];
 	trackingParams: string;
 };
-type DMD_RowItem=R_RichMetadataRow|R_MetadataRow;
-type DMD_RowContainer={
+export type DMD_RowItem=R_RichMetadataRow|R_MetadataRow;
+export type DMD_RowContainer={
 	rows?: DMD_RowItem[];
 	collapsedItemCount: number;
 	trackingParams: string;
 };
-type DRC_CsiVarKV=ToKeyValue<RC_CsiVarMap>|RC_CsiServiceC|RC_CsiServiceCVer;
-type DSS_Context={context: D_ContextTypeStr|null;};
+export type DRC_CsiVarKV=ToKeyValue<RC_CsiVarMap>|RC_CsiServiceC|RC_CsiServiceCVer;
+export type DSS_Context={context: D_ContextTypeStr|null;};

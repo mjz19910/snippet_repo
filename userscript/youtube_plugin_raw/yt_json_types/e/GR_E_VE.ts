@@ -1,22 +1,26 @@
-type TM_VE<T extends number>=TM_Gen<{rootVe: T;}>;
-type TE_VE<T extends number>=TE_Endpoint_3<"browseEndpoint",any,TM_VE<T>>;
-type TE_VE_In=TE_Endpoint_3<"browseEndpoint",any,TM_VE<number>>;
+import {DE_VE3611,DE_VE3854,DE_VE5754,DE_VE6827,DE_VE11487,DE_VE23462,DE_VE42352,DE_VE96368} from "../d/group_DE/DE_VE.js";
+import {M_VE12924} from "../r/RS.js";
+import {TM_Gen,TE_Endpoint_3} from "../stu/mod/group_T.js";
+
+export type TM_VE<T extends number>=TM_Gen<{rootVe: T;}>;
+export type TE_VE<T extends number>=TE_Endpoint_3<"browseEndpoint",any,TM_VE<T>>;
+export type TE_VE_In=TE_Endpoint_3<"browseEndpoint",any,TM_VE<number>>;
 //#region E_VE
-type E_VE3611=TE_Endpoint_3<"browseEndpoint",DE_VE3611,M_VE3611>;
-type E_VE3854=TE_Endpoint_3<"browseEndpoint",DE_VE3854,M_VE3854>;
-type E_Search=TE_Endpoint_3<"searchEndpoint",DE_Search,M_Search>;
-type E_VE5754=TE_Endpoint_3<"browseEndpoint",DE_VE5754,M_VE5754>;
-type E_VE6827={
+export type E_VE3611=TE_Endpoint_3<"browseEndpoint",DE_VE3611,M_VE3611>;
+export type E_VE3854=TE_Endpoint_3<"browseEndpoint",DE_VE3854,M_VE3854>;
+export type E_Search=TE_Endpoint_3<"searchEndpoint",DE_Search,M_Search>;
+export type E_VE5754=TE_Endpoint_3<"browseEndpoint",DE_VE5754,M_VE5754>;
+export type E_VE6827={
 	clickTrackingParams: string;
 	commandMetadata: M_VE6827;
 	browseEndpoint: DE_VE6827;
 	trackingParams?: string;
 };
-type E_VE11487=TE_Endpoint_3<"browseEndpoint",DE_VE11487,M_VE11487>;
-type DE_ApplicationSettings=B_Hack;
-type E_ApplicationSettings=TE_Endpoint_3<"applicationSettingsEndpoint",DE_ApplicationSettings,M_VE12924>;
-type E_VE23462=TE_Endpoint_3<"browseEndpoint",DE_VE23462,M_VE23462>;
-type E_VE37414_ReelWatch=TE_Endpoint_3<"reelWatchEndpoint",DE_ReelWatch,TM_Gen<GM_VE37414>>;
-type E_VE42352=TE_Endpoint_3<"browseEndpoint",DE_VE42352,M_VE42352>;
-type E_VE96368=TE_Endpoint_3<"browseEndpoint",DE_VE96368,M_VE96368>;
+export type E_VE11487=TE_Endpoint_3<"browseEndpoint",DE_VE11487,M_VE11487>;
+export type DE_ApplicationSettings=B_Hack;
+export type E_ApplicationSettings=TE_Endpoint_3<"applicationSettingsEndpoint",DE_ApplicationSettings,M_VE12924>;
+export type E_VE23462=TE_Endpoint_3<"browseEndpoint",DE_VE23462,M_VE23462>;
+export type E_VE37414_ReelWatch=TE_Endpoint_3<"reelWatchEndpoint",DE_ReelWatch,TM_Gen<GM_VE37414>>;
+export type E_VE42352=TE_Endpoint_3<"browseEndpoint",DE_VE42352,M_VE42352>;
+export type E_VE96368=TE_Endpoint_3<"browseEndpoint",DE_VE96368,M_VE96368>;
 //#endregion

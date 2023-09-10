@@ -1,4 +1,4 @@
-type T_GetPrimitiveTag<T>=
+export type T_GetPrimitiveTag<T>=
 	T extends bigint? |"bigint":
 	T extends boolean? |"boolean":
 	T extends number? |"number":
@@ -10,7 +10,7 @@ type T_GetPrimitiveTag<T>=
 	"unknown"
 	;
 ;
-type G_PrimitiveTag=
+export type G_PrimitiveTag=
 	|"bigint"
 	|"boolean"
 	|"number"

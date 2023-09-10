@@ -1,4 +1,5 @@
 import {RequireModuleCache} from "../../_module_cache/RequireModuleCache.js";
+import {ServiceOptions} from "../support_1/ServiceOptions.js";
 import {ServiceResolver} from "../zc_child_modules/YTPlugin_Base.user.js";
 import {ServiceLoader} from "../zc_child_modules/YTPlugin_ServiceLoader_Plugin.user.js";
 import {PathMapType} from "./ambient_exports.js";

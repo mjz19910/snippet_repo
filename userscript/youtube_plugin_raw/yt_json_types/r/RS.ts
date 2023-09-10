@@ -1,5 +1,5 @@
 //#region Response
-type RS_WatchReelItem={
+export type RS_WatchReelItem={
 	responseContext: RC_ResponseContext;
 	overlay: R_ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
@@ -9,18 +9,18 @@ type RS_WatchReelItem={
 	desktopTopbar: R_DesktopTopbar;
 	engagementPanels: R_EngagementPanelSectionList[];
 };
-type D_MultiPageMenuSection={
+export type D_MultiPageMenuSection={
 	items: R_CompactLink[];
 	trackingParams: string;
 };
-type R_MultiPageMenuSection={multiPageMenuSectionRenderer: D_MultiPageMenuSection;};
-type GM_VE12924={
+export type R_MultiPageMenuSection={multiPageMenuSectionRenderer: D_MultiPageMenuSection;};
+export type GM_VE12924={
 	url: "/select_site";
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
 	rootVe: 12924;
 };
-type M_VE12924={webCommandMetadata: GM_VE12924;};
-type D_ActiveAccountHeader={
+export type M_VE12924={webCommandMetadata: GM_VE12924;};
+export type D_ActiveAccountHeader={
 	accountName: G_Text;
 	accountPhoto: D_Thumbnail;
 	settingsEndpoint: E_ApplicationSettings;
@@ -28,24 +28,24 @@ type D_ActiveAccountHeader={
 	trackingParams: string;
 	channelHandle: G_Text;
 };
-type R_ActiveAccountHeader={activeAccountHeaderRenderer: D_ActiveAccountHeader;};
-type RS_AccountMenu={
+export type R_ActiveAccountHeader={activeAccountHeaderRenderer: D_ActiveAccountHeader;};
+export type RS_AccountMenu={
 	responseContext: RC_ResponseContext;
 	actions: A_GetSystemMenu[];
 	trackingParams: string;
 };
-type RS_AccountsList={
+export type RS_AccountsList={
 	responseContext: RC_ResponseContext;
 	actions: AU_ChannelSwitcherPage[];
 	selectText: G_Text;
 };
-type RS_AttGet={
+export type RS_AttGet={
 	responseContext: RC_ResponseContext;
 	challenge: string;
 	bgChallenge: D_AttBgChallenge;
 };
-type RS_AttLog_RC={responseContext: RC_ResponseContext;};
-type RS_Browse={
+export type RS_AttLog_RC={responseContext: RC_ResponseContext;};
+export type RS_Browse={
 	// responseContext,contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates
 	responseContext: RC_ResponseContext;
 	contents?: G_BrowseContents;
@@ -66,7 +66,7 @@ type RS_Browse={
 	observedStateTags?: B_StateTag[];
 	cacheMetadata?: D_Cache_MD;
 };
-type RS_Channel={
+export type RS_Channel={
 	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnBrowseResults;
 	header: R_C4TabbedHeader;
@@ -78,16 +78,16 @@ type RS_Channel={
 	onResponseReceivedActions?: C_ResetChannelUnreadCount[];
 	cacheMetadata?: D_Cache_MD;
 };
-type RS_Feedback={
+export type RS_Feedback={
 	responseContext: RC_ResponseContext;
 	feedbackResponses: D_FeedbackResponseItem[];
 };
-type RS_GetLiveChat={
+export type RS_GetLiveChat={
 	responseContext: RC_ResponseContext;
 	continuationContents: RC_LiveChat;
 	trackingParams?: string;
 };
-type RS_Watch={
+export type RS_Watch={
 	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnWatchNextResults;
 	currentVideoEndpoint: E_Watch;
@@ -99,12 +99,12 @@ type RS_Watch={
 	pageVisualEffects: R_CinematicContainer[];
 	frameworkUpdates: D_FrameworkUpdates;
 };
-type RS_Guide={
+export type RS_Guide={
 	responseContext: RC_ResponseContext;
 	items: G_GuideItem[];
 	trackingParams: string;
 };
-type RS_Next={
+export type RS_Next={
 	responseContext: RC_ResponseContext;
 	contents?: G_NextContents;
 	continuationContents?: RC_PlaylistPanel;
@@ -119,7 +119,7 @@ type RS_Next={
 	pageVisualEffects?: R_CinematicContainer[];
 	frameworkUpdates?: D_FrameworkUpdates;
 };
-type D_PaidContentOverlay={
+export type D_PaidContentOverlay={
 	text: G_Text;
 	durationMs: "10000";
 	navigationEndpoint: E_Url;
@@ -127,7 +127,7 @@ type D_PaidContentOverlay={
 	trackingParams: string;
 };
 
-type RS_Player={
+export type RS_Player={
 	responseContext: RC_ResponseContext;
 	playabilityStatus: D_PlayabilityStatus;
 	streamingData?: DD_Streaming;
@@ -150,7 +150,7 @@ type RS_Player={
 	annotations?: R_PlayerAnnotationsExpanded[];
 	cacheMetadata?: D_IsCacheHit;
 };
-type RS_Playlist={
+export type RS_Playlist={
 	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnBrowseResults;
 	header: R_PlaylistHeader;
@@ -161,7 +161,7 @@ type RS_Playlist={
 	microformat: R_MicroformatData;
 	sidebar: R_PlaylistSidebar;
 };
-type RS_Reel={
+export type RS_Reel={
 	responseContext: RC_ResponseContext;
 	overlay: R_ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
@@ -169,14 +169,14 @@ type RS_Reel={
 	desktopTopbar: R_DesktopTopbar;
 	engagementPanels: R_EngagementPanelSectionList[];
 };
-type RS_ReelWatchSequence={
+export type RS_ReelWatchSequence={
 	responseContext: RC_ResponseContext;
 	entries: T_Command_TP<E_VE37414_ReelWatch>[];
 	prevEntries?: T_Command_TP<E_VE37414_ReelWatch>[];
 	trackingParams: string;
 	continuationEndpoint?: C_Continuation;
 };
-type RS_Search=Record<"contents",R_TwoColumnSearchResults>&{
+export type RS_Search=Record<"contents",R_TwoColumnSearchResults>&{
 	responseContext: RC_ResponseContext;
 	estimatedResults: `${number}`;
 	trackingParams: string;
@@ -185,11 +185,11 @@ type RS_Search=Record<"contents",R_TwoColumnSearchResults>&{
 	onResponseReceivedCommands: C_AdsControlFlowOpportunityReceived[];
 	targetId: "search-page";
 };
-type RS_SetSetting={
+export type RS_SetSetting={
 	responseContext: RC_ResponseContext;
 	settingItemId: `${D_AccountSettingIdList[number]}`;
 };
-type RS_Settings={
+export type RS_Settings={
 	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnBrowseResults;
 	trackingParams: string;
@@ -197,32 +197,32 @@ type RS_Settings={
 	onResponseReceivedEndpoints?: {}[];
 	sidebar: R_SettingsSidebar;
 };
-type RS_Subscribe={
+export type RS_Subscribe={
 	responseContext: RC_ResponseContext;
 	actions: G_RS_Subscribe_Action[];
 	newNotificationButton: R_SubscriptionNotificationToggleButton;
 	trackingParams: string;
 	frameworkUpdates: D_FrameworkUpdates;
 };
-type RS_Success={
+export type RS_Success={
 	responseContext: RC_ResponseContext;
 	success: boolean;
 };
-type RS_Unsubscribe={
+export type RS_Unsubscribe={
 	responseContext: RC_ResponseContext;
 	actions: (A_RemoveFromGuideSection|TA_OpenPopup_Empty|AU_SubscribeButton)[];
 	trackingParams: string;
 	frameworkUpdates: D_FrameworkUpdates;
 };
-type RS_Search_1={
+export type RS_Search_1={
 	responseContext: RC_ResponseContext;
 	contents?: R_TabbedSearchResults;
 	continuationContents?: RC_MusicShelf;
 	trackingParams: string;
 	header?: R_MusicHeader;
 };
-type RS_SearchApi=RS_Search_1|RS_Search;
-type RS_UpdateMetadata={
+export type RS_SearchApi=RS_Search_1|RS_Search;
+export type RS_UpdateMetadata={
 	responseContext: RC_ResponseContext;
 	continuation: CD_TimedContinuation;
 	actions: UMA_Item[];
@@ -230,20 +230,20 @@ type RS_UpdateMetadata={
 //#endregion
 //#region Response page
 
-type RS_Page_Settings={
+export type RS_Page_Settings={
 	page: "settings";
 	endpoint: E_VE23462;
 	response: RS_Settings;
 	url: string;
 };
-type RS_VE23462_Page_Settings={
+export type RS_VE23462_Page_Settings={
 	page: "settings";
 	endpoint: E_VE23462;
 	response: RS_Settings;
 	url: string;
 	rootVe: 23462;
 };
-type RS_Page_Shorts={
+export type RS_Page_Shorts={
 	page: "shorts";
 	endpoint: E_VE37414_ReelWatch;
 	response: RS_Reel;
@@ -254,7 +254,7 @@ type RS_Page_Shorts={
 	cachedReelWatchSequenceResponse?: RS_ReelWatchSequence;
 };
 // cspell: ignoreRegExp /"([A-Za-z0-9]{27})\."/
-type RS_Page_Watch={
+export type RS_Page_Watch={
 	page: "watch";
 	endpoint: E_Watch;
 	response: RS_Watch;
@@ -263,7 +263,7 @@ type RS_Page_Watch={
 	previousCsn?: string;
 	csn?: "MC4wMjg2Nzc5NzkwNzQ3NjQ1NDg.";
 };
-type RS_Page_Browse={
+export type RS_Page_Browse={
 	page: "browse";
 	endpoint: GE_Browse;
 	response: RS_Browse;
@@ -282,8 +282,8 @@ type RS_Page_Browse={
 	response: RS_Browse;
 	expirationTime: number;
 };
-type R_ChannelMetadata=R_Channel_MD;
-type RS_Page_Channel_1={
+export type R_ChannelMetadata=R_Channel_MD;
+export type RS_Page_Channel_1={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
@@ -292,7 +292,7 @@ type RS_Page_Channel_1={
 	expirationTime: number;
 };
 
-type RS_Page_Channel_2={
+export type RS_Page_Channel_2={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
@@ -300,7 +300,7 @@ type RS_Page_Channel_2={
 	expirationTime: number;
 };
 
-type RS_Page_Channel_3={
+export type RS_Page_Channel_3={
 	rootVe: 3611;
 	url: GU_VE3611_3;
 	endpoint: E_VE3611;
@@ -310,7 +310,7 @@ type RS_Page_Channel_3={
 	csn?: string;
 };
 
-type RS_Page_Channel_4={
+export type RS_Page_Channel_4={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
@@ -319,7 +319,7 @@ type RS_Page_Channel_4={
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
-type RS_ChannelPage=
+export type RS_ChannelPage=
 	|RS_Page_Channel_1
 	|RS_Page_Channel_2
 	|RS_Page_Channel_3
@@ -341,13 +341,13 @@ type RS_ChannelPage=
 	}
 	;
 ;
-type RS_Page_Playlist_R={
+export type RS_Page_Playlist_R={
 	page: "playlist";
 	endpoint: E_VE5754;
 	response: RS_Playlist;
 	url: "/playlist?list=WL";
 };
-type RS_PlaylistPage={
+export type RS_PlaylistPage={
 	page: "playlist";
 	endpoint: E_VE5754;
 	response: {
@@ -362,7 +362,7 @@ type RS_PlaylistPage={
 	};
 	url: "/playlist?list=WL";
 };
-type RS_SearchPage={
+export type RS_SearchPage={
 	page: "search";
 	endpoint: E_Search;
 	response: RS_Search;
@@ -370,7 +370,7 @@ type RS_SearchPage={
 };
 //#endregion
 //#region Response with {rootVe:number}
-type RS_VE3832_Page_Watch={
+export type RS_VE3832_Page_Watch={
 	rootVe: 3832;
 	url: D_WatchPageUrl;
 	endpoint: E_Watch;
@@ -380,14 +380,14 @@ type RS_VE3832_Page_Watch={
 	response: RS_Watch;
 	csn?: string;
 };
-type RS_VE5754_Page_Playlist={
+export type RS_VE5754_Page_Playlist={
 	page: "playlist";
 	endpoint: E_VE5754;
 	response: RS_Playlist;
 	url: string;
 	rootVe: 5754;
 };
-type RS_VE37414_Shorts={
+export type RS_VE37414_Shorts={
 	page: "shorts";
 	endpoint: E_VE37414_ReelWatch;
 	response: RS_Reel;

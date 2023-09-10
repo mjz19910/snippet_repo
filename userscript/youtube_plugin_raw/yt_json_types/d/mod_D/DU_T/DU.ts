@@ -1,10 +1,10 @@
 //#region UrlType
-type DU_UrlTypeWithPageType=`page_type_${S_PageTypeStr}`|DU_UrlType;
-type DU_UrlType=NonNullable<Ret_ParserService_GetUrlType>;
+export type DU_UrlTypeWithPageType=`page_type_${S_PageTypeStr}`|DU_UrlType;
+export type DU_UrlType=NonNullable<Ret_ParserService_GetUrlType>;
 //#endregion
 //#region TargetId
-type DU_TargetId_ShoppingPanel_EntryPoint=`shopping_panel_for_entry_point_${"5"|"22"}`;
-type DU_TargetId=
+export type DU_TargetId_ShoppingPanel_EntryPoint=`shopping_panel_for_entry_point_${"5"|"22"}`;
+export type DU_TargetId=
 	|Extract<D_Menu,{targetId: any;}>["targetId"]
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
@@ -26,15 +26,15 @@ type DU_TargetId=
 ;
 //#endregion
 //#region Key type
-type DU_EndpointKey=`${string}${D_EndpointLikeEndings}`;
+export type DU_EndpointKey=`${string}${D_EndpointLikeEndings}`;
 //#endregion
 //#region RetParam
-type RetParam_D32=`TYPE::T_D32<${number}>`;
-type RetParam_D64=`TYPE::T_D64<${bigint}n>`;
-type RetParam_FD32=`TYPE::T_FD32<${number}>`;
-type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
-type RetParam_TV_Str=`TYPE::TV_Str<"${string}">`;
-type RetParam_VW_Bigint=`TYPE::T_VW_Bigint<${bigint}n>`;
+export type RetParam_D32=`TYPE::T_D32<${number}>`;
+export type RetParam_D64=`TYPE::T_D64<${bigint}n>`;
+export type RetParam_FD32=`TYPE::T_FD32<${number}>`;
+export type RetParam_FD64=`TYPE::T_FD64<${bigint}n>`;
+export type RetParam_TV_Str=`TYPE::TV_Str<"${string}">`;
+export type RetParam_VW_Bigint=`TYPE::T_VW_Bigint<${bigint}n>`;
 //#endregion
 
 export type D_ApiStatsAdsStr=`ver=${string}&ns=${string}&event=${string}&device=${string}&content_v=${string}&el=${string}&ei=${string}&devicever=${string}&bti=${string}&break_type=${string}&conn=${string}&cpn=${string}&lact=${string}&m_pos=${string}&mt=${string}&p_h=${string}&p_w=${string}&rwt=${string}&sdkv=${string}&slot_pos=${string}&vis=${string}&vol=${string}&wt=${string}&sli=${string}&slfs=${string}&loginael=${string}`;
@@ -60,12 +60,12 @@ export type S_acv1_codec=`avc1.${string}`;
 export type GV_SubDomain=`${string}${number}---sn-${string}n${string}`;
 export type G_SettingsEndpointPages=`/account${""|`_${G_AccountPageSettingsSections}`}`;
 
-type LP_LogItems_Str=`like.${"likeParams"|"dislikeParams"|"removeLikeParams"}`;
+export type LP_LogItems_Str=`like.${"likeParams"|"dislikeParams"|"removeLikeParams"}`;
 
 export type P_param_known_like=`${LP_LogItems_Str}.${P_param_known_like_paths}`;
 
 //#region Url Templates & Unions
-type DU_VE3832_PreconnectUrl=`https://${GV_SubDomain}.googlevideo.com/generate_204`;
+export type DU_VE3832_PreconnectUrl=`https://${GV_SubDomain}.googlevideo.com/generate_204`;
 export type DU_Str_ChannelUrl=`https://www.youtube.com/${string}`;
 export type DFU_GoogleVideoUrl_Hostname=UrlParse<GU_GoogleVideoUrl>["host"];
 export type GU_InternalUrl=
@@ -73,7 +73,7 @@ export type GU_InternalUrl=
 	|"https://www.youtube.com/t/creative_commons"
 	;
 ;
-type GU_GoogleVideoUrl=
+export type GU_GoogleVideoUrl=
 	|DU_VE3832_PreconnectUrl
 	|GU_GoodPut_ProbeUrl
 	|GU_InitPlaybackUrl
@@ -94,3 +94,9 @@ export type DU_IdCacheItem=
 	|`exact:play_next:${1}`
 	;
 ;
+
+//#region Aliases
+export type DU_UserId=string;
+export type DU_VideoId=string;
+export type DU_VideoId_Arr=[string,string,string,string,string,string,string,string,string,string,string];
+//#endregion
