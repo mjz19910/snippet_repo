@@ -1,1 +1,4 @@
-type ProcessImport1<T extends string>=T extends keyof ThePathMap? ProcessImport3<ThePathMap[T]>:["bad_import",T];
+import {ProcessImport3} from "./ProcessImport3.js";
+import {ThePathMap} from "./ThePathMap.js";
+
+export type ProcessImport1<T extends string>=T extends keyof ThePathMap? ProcessImport3<ThePathMap[T]>:["bad_import",T];

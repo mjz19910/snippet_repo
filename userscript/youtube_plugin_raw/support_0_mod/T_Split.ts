@@ -9,7 +9,7 @@ type T_Split_Helper<S extends string,D extends string=",">=
 	[S]
 	;
 ;
-type T_Split_Helper_t<S extends string,D extends string=",">=
+export type T_Split_Helper_t<S extends string,D extends string=",">=
 	string extends S
 	? string[]:S extends ''
 	? [0.1]:S extends `${infer T}${D}${infer U}${D}${infer X}`
@@ -18,7 +18,7 @@ type T_Split_Helper_t<S extends string,D extends string=",">=
 	? [2.1,T,...T_Split_Helper<U,D>]:[2.2,S]
 	;
 ;
-type TS_Test2=T_Split<"g","">;
+export type TS_Test2=T_Split<"g","">;
 type T_Split<S extends string,D extends string=",">=
 	string extends S? string[]:
 	S extends ''? []:
@@ -30,4 +30,4 @@ type T_Split<S extends string,D extends string=",">=
 type T_StringWhitespace=" "|"\n"|"\t";
 type T_StringTrimStart<T extends string>=T extends `${T_StringWhitespace}${infer P}`? T_StringTrimStart<P>:T;
 type T_StringTrimEnd<T extends string>=T extends `${infer P}${T_StringWhitespace}`? T_StringTrimEnd<P>:T;
-type T_StringTrim<T extends string>=T_StringTrimEnd<T_StringTrimStart<T>>;
+export type T_StringTrim<T extends string>=T_StringTrimEnd<T_StringTrimStart<T>>;

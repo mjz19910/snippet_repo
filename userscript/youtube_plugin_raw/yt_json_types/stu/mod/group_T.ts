@@ -45,17 +45,17 @@ type LastOf<T>=UnionToIntersection<T extends any? () => T:never> extends () => (
 // TS4.1+
 type Union2Tuple<T,L=LastOf<T>,N=[T] extends [never]? true:false>=true extends N? []:[...Union2Tuple<Exclude<T,L>>,L];
 type T_DistributedKeysOf_2<T extends {}>=T_DistributedKeyof_2<T> extends []? []:T_DistributedKeyof_2<T>;
-namespace X_T_DistributedKeysOf {
+export namespace X_T_DistributedKeysOf {
 	export type T1={v: string;};
 	export type U1=T_DistributedKeysOf_2<T1>;
 }
 
-type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
-type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
+export type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
+export type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
 type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
-type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
-type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
-type T_GetTypeof<T>=
+export type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
+export type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
+export type T_GetTypeof<T>=
 	T extends undefined? "undefined":
 	T extends number? "number":
 	T extends bigint? "bigint":
@@ -64,28 +64,28 @@ type T_GetTypeof<T>=
 	T extends {}? "object":
 	never;
 type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
-type HexLen<T extends string,L extends number>=T_Split<T,"">["length"] extends L? T:T_Split<T,"">["length"];
+export type HexLen<T extends string,L extends number>=T_Split<T,"">["length"] extends L? T:T_Split<T,"">["length"];
 type T_HexNibble<T extends string>=string extends T? "0":T extends G_HexNibbleStr? T:never;
 type T_Icon<T extends string>={iconType: T;};
 type T_IsColorHelper<T,U>=U extends `0x${infer I}`? T_Split<I,""> extends infer G extends T_Split<I,"">? G['length'] extends 6|8? T_EnsureHex<`0x${I}`> extends infer V extends string? V extends string? T:never:never:never:never:never;
 type T_MapEntry<T,U>={key: T; value: U;};
-type T_SettingsPageStr<T extends string>=`SP${T}`;
+export type T_SettingsPageStr<T extends string>=`SP${T}`;
 type T_MapValidHex<T extends string[]>=T_HexByte<T[number]> extends never? never:T;
-type T_VerifyHex<T extends string>=T extends `0x${infer U}`? T_MapValidHex<T_SplitIntoGroups<U,string>>["length"] extends 8? T:never:never;
-type T_Playlist<T>={playlist: T;};
-type T_Replace<T extends string,S extends string,R extends string>=T extends `${S}${infer N}`? `${R}${T_Replace<N,S,R>}`:T extends `${infer B}${S}${infer N}`? `${B}${R}${T_Replace<N,S,R>}`:T;
-type T_Results<T>={results: T;};
-type T_ResultsArray<T>={
+export type T_VerifyHex<T extends string>=T extends `0x${infer U}`? T_MapValidHex<T_SplitIntoGroups<U,string>>["length"] extends 8? T:never:never;
+export type T_Playlist<T>={playlist: T;};
+export type T_Replace<T extends string,S extends string,R extends string>=T extends `${S}${infer N}`? `${R}${T_Replace<N,S,R>}`:T extends `${infer B}${S}${infer N}`? `${B}${R}${T_Replace<N,S,R>}`:T;
+export type T_Results<T>={results: T;};
+export type T_ResultsArray<T>={
 	results: T[];
 	trackingParams: string;
 };
-type T_RidFormat<T extends string>=`${T}_rid`;
-type T_SecondaryResults<T>={secondaryResults: T;};
-type T_ShortsSurfaceIdentifier<T>={
+export type T_RidFormat<T extends string>=`${T}_rid`;
+export type T_SecondaryResults<T>={secondaryResults: T;};
+export type T_ShortsSurfaceIdentifier<T>={
 	surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
 	tag: T;
 };
-type T_Signal<T>=Record<"signal",T>;
+export type T_Signal<T>=Record<"signal",T>;
 type T_SplitIntoGroups<S extends string,D extends string>=
 	string extends S? string[]:
 	S extends ''? []:
@@ -93,20 +93,20 @@ type T_SplitIntoGroups<S extends string,D extends string>=
 	[S]
 	;
 ;
-type T_SplitOnce_Helper<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? string extends U? never:[T,U]:[S];
-type T_SplitOnce_Helper2<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? [T,U]:[S];
-type T_SplitOnce<S extends string,D extends string>=string extends S?
+export type T_SplitOnce_Helper<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? string extends U? never:[T,U]:[S];
+export type T_SplitOnce_Helper2<S extends string,D extends string>=S extends `${infer T}${D}${infer U}`? [T,U]:[S];
+export type T_SplitOnce<S extends string,D extends string>=string extends S?
 	[string]|[string,string]:S extends ''? []:T_SplitOnce_Helper2<S,D>;
-type T_StyleType<T>={styleType: T;};
-type T_TargetIdStr<T extends string,U extends string>=`${T}-${U}`;
-type T_Text<T>={text: T;};
-type T_TextRuns<T>={runs: T;};
-type T_TrackingParamsAsString<T,V extends string>=V extends "trackingParams"? string:T;
-type T_Types<T extends number>={types: `${T}`;};
-type T_UnionToPartial<T>=NS_UnionToPartial.UnionToPartial<T>;
-type T_UrlWrappedValue<T extends string>={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;};
-type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;
-type T_WCM_={
+export type T_StyleType<T>={styleType: T;};
+export type T_TargetIdStr<T extends string,U extends string>=`${T}-${U}`;
+export type T_Text<T>={text: T;};
+export type T_TextRuns<T>={runs: T;};
+export type T_TrackingParamsAsString<T,V extends string>=V extends "trackingParams"? string:T;
+export type T_Types<T extends number>={types: `${T}`;};
+export type T_UnionToPartial<T>=NS_UnionToPartial.UnionToPartial<T>;
+export type T_UrlWrappedValue<T extends string>={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;};
+export type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;
+export type T_WCM_={
 	url?: string;
 	webPageType?: YtPageTypeEnum;
 	apiUrl?: string;
@@ -114,7 +114,7 @@ type T_WCM_={
 	rootVe?: D_RootVisualElementType;
 };
 // path,map_entry_values,map_entry_key_path,map_keys,root
-type T_ParseCallbackFunction<T extends CF_L_Params>=(
+export type T_ParseCallbackFunction<T extends CF_L_Params>=(
 	root: T,
 	path: CF_P_ParamParse,
 	map_entry_values: V_ParamMapValue[],
@@ -122,30 +122,30 @@ type T_ParseCallbackFunction<T extends CF_L_Params>=(
 	map_keys: number[],
 	is_debug_enabled: boolean,
 ) => boolean;
-type T_UserFeedbackEndpointProductSpecificValueData<K,V>={userFeedbackEndpointProductSpecificValueData: T_MapEntry<K,V>;};
+export type T_UserFeedbackEndpointProductSpecificValueData<K,V>={userFeedbackEndpointProductSpecificValueData: T_MapEntry<K,V>;};
 //#endregion
 //#region Types that modify other types
-type T_OmitKey<T,K extends keyof T>=T extends infer U? Omit<U,K>:never;
+export type T_OmitKey<T,K extends keyof T>=T extends infer U? Omit<U,K>:never;
 //#endregion
 //#region Object conversion Templates
-type T_RemovePrefix<T,T2 extends string>={[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];};
+export type T_RemovePrefix<T,T2 extends string>={[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];};
 //#endregion
 //#region T_DC_
-type T_DC_Content<T>={trackingParams: string; contents: T[];};
-type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
-type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
+export type T_DC_Content<T>={trackingParams: string; contents: T[];};
+export type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
+export type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
 //#endregion
 //#region T_Omit_
-type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
-type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
+export type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
+export type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
 //#endregion
 //#region TA
-type G_CommentRepliesItem=R_Comment|R_ContinuationItem;
-type GA_Continuation_CommentRepliesItem=TA_Continuation<`comment-replies-item-${string}`,R_Comment|R_ContinuationItem>;
+export type G_CommentRepliesItem=R_Comment|R_ContinuationItem;
+export type GA_Continuation_CommentRepliesItem=TA_Continuation<`comment-replies-item-${string}`,R_Comment|R_ContinuationItem>;
 //#endregion
 //#region TB_
 
-type TB_ContinuationItemMap={
+export type TB_ContinuationItemMap={
 	"browse-feedFEwhat_to_watch": G_BrowseFeed;
 	"comments-section": G_CommentsSection;
 	[x: `comment-replies-item-${string}`]: GA_Continuation_CommentRepliesItem["continuationItems"][number];
@@ -156,82 +156,82 @@ type TB_ContinuationItemMap={
 };
 //#endregion
 //#region TD_
-type TD_ContinuationItem_CE<T>={trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN"; continuationEndpoint: T;};
-type TD_GuideEntry_EntryData<T_IconType extends string>=TD_GuideEntry_Simple<T_IconType>&{entryData: R_GuideEntryData;};
-type TD_GuideEntry_Primary<T_IconType extends string>=TD_GuideEntry_Simple<T_IconType>&{isPrimary: true;};
-type TD_GuideEntry_Simple<T_IconType extends string>={navigationEndpoint: {}; icon: T_Icon<T_IconType>; trackingParams: string; formattedTitle: G_Text; accessibility: D_Accessibility;};
-type TD_GuideEntry_Tid_Primary<T_IconType extends string,Tid>=TD_GuideEntry_Primary<T_IconType>&{targetId: Tid;};
-type TD_ItemSection_2<T_ContentType,T_sectionIdentifier>={trackingParams: string; contents: T_ContentType[]; sectionIdentifier: T_sectionIdentifier;};
-type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={targetId: T_targetId;}&TD_ItemSection_2<T_ContentType,T_sectionIdentifier>;
-type TD_Label<T>={label: T;};
+export type TD_ContinuationItem_CE<T>={trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN"; continuationEndpoint: T;};
+export type TD_GuideEntry_EntryData<T_IconType extends string>=TD_GuideEntry_Simple<T_IconType>&{entryData: R_GuideEntryData;};
+export type TD_GuideEntry_Primary<T_IconType extends string>=TD_GuideEntry_Simple<T_IconType>&{isPrimary: true;};
+export type TD_GuideEntry_Simple<T_IconType extends string>={navigationEndpoint: {}; icon: T_Icon<T_IconType>; trackingParams: string; formattedTitle: G_Text; accessibility: D_Accessibility;};
+export type TD_GuideEntry_Tid_Primary<T_IconType extends string,Tid>=TD_GuideEntry_Primary<T_IconType>&{targetId: Tid;};
+export type TD_ItemSection_2<T_ContentType,T_sectionIdentifier>={trackingParams: string; contents: T_ContentType[]; sectionIdentifier: T_sectionIdentifier;};
+export type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={targetId: T_targetId;}&TD_ItemSection_2<T_ContentType,T_sectionIdentifier>;
+export type TD_Label<T>={label: T;};
 //#endregion
 //#region TE_
-type EP_Key=DU_EndpointKey;
-type TE_Endpoint_1_Generic<T_Key extends PropertyKey,T_Data>={[I in T_Key]: T_Data};
-type TE_Endpoint_1<T_Key extends EP_Key,T_Data>={[I in T_Key]: T_Data};
-type TE_EndpointImpl_2<T_Key extends EP_Key,T_Data>={clickTrackingParams: string;}&{[I in T_Key]: T_Data};
-type TE_Endpoint_2<T_Key extends EP_Key,T_Data>={[K in keyof TE_EndpointImpl_2<T_Key,T_Data>]: TE_EndpointImpl_2<T_Key,T_Data>[K]};
-type TE_Endpoint_2_OptImpl<T_Key extends EP_Key,T_Data>={clickTrackingParams?: string;}&{[I in T_Key]: T_Data};
-type TE_Endpoint_2_Opt<T_Key extends EP_Key,T_Data>={[K in keyof TE_Endpoint_2_OptImpl<T_Key,T_Data>]: TE_EndpointImpl_2<T_Key,T_Data>[K]};
-type TE_Endpoint_NoTrack_3<T_Key extends EP_Key,T_Data,T_Meta>={commandMetadata: T_Meta;}&{[I in T_Key]: T_Data};
-type TE_TrackedObj_2<T_Key extends EP_Key,T_Data>={trackingParams: string;}&{[I in T_Key]: T_Data};
-type TE_Endpoint_3_Helper<T_Key extends EP_Key,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in T_Key]: T_Data};
-type TE_Endpoint_3<T_Key extends EP_Key,T_Data,T_Meta>={[K in keyof TE_Endpoint_3_Helper<T_Key,T_Data,T_Meta>]: TE_Endpoint_3_Helper<T_Key,T_Data,T_Meta>[K]};
-type TE_Endpoint_Opt_1<T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta|undefined;};
-type TE_Endpoint_Opt_3<T_Key extends EP_Key,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata?: T_Meta;}&{[I in T_Key]: T_Data};
-type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint_3<"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>,M_SetSetting>;
+export type EP_Key=DU_EndpointKey;
+export type TE_Endpoint_1_Generic<T_Key extends PropertyKey,T_Data>={[I in T_Key]: T_Data};
+export type TE_Endpoint_1<T_Key extends EP_Key,T_Data>={[I in T_Key]: T_Data};
+export type TE_EndpointImpl_2<T_Key extends EP_Key,T_Data>={clickTrackingParams: string;}&{[I in T_Key]: T_Data};
+export type TE_Endpoint_2<T_Key extends EP_Key,T_Data>={[K in keyof TE_EndpointImpl_2<T_Key,T_Data>]: TE_EndpointImpl_2<T_Key,T_Data>[K]};
+export type TE_Endpoint_2_OptImpl<T_Key extends EP_Key,T_Data>={clickTrackingParams?: string;}&{[I in T_Key]: T_Data};
+export type TE_Endpoint_2_Opt<T_Key extends EP_Key,T_Data>={[K in keyof TE_Endpoint_2_OptImpl<T_Key,T_Data>]: TE_EndpointImpl_2<T_Key,T_Data>[K]};
+export type TE_Endpoint_NoTrack_3<T_Key extends EP_Key,T_Data,T_Meta>={commandMetadata: T_Meta;}&{[I in T_Key]: T_Data};
+export type TE_TrackedObj_2<T_Key extends EP_Key,T_Data>={trackingParams: string;}&{[I in T_Key]: T_Data};
+export type TE_Endpoint_3_Helper<T_Key extends EP_Key,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in T_Key]: T_Data};
+export type TE_Endpoint_3<T_Key extends EP_Key,T_Data,T_Meta>={[K in keyof TE_Endpoint_3_Helper<T_Key,T_Data,T_Meta>]: TE_Endpoint_3_Helper<T_Key,T_Data,T_Meta>[K]};
+export type TE_Endpoint_Opt_1<T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta|undefined;};
+export type TE_Endpoint_Opt_3<T_Key extends EP_Key,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata?: T_Meta;}&{[I in T_Key]: T_Data};
+export type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint_3<"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>,M_SetSetting>;
 //#endregion
 //#region TM_
-type TM_GetByVE<T extends keyof B_VEMap>=B_VEMap[T]['CommandMetadata'];
-type TM_Gen<T>={webCommandMetadata: T;};
+export type TM_GetByVE<T extends keyof B_VEMap>=B_VEMap[T]['CommandMetadata'];
+export type TM_Gen<T>={webCommandMetadata: T;};
 //#endregion
 //#region T_DE_
-type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
+export type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
 //#endregion
 //#region T_GM
-type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
+export type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
 //#endregion
 //#region T_SE
-type T_SE_Signal<T_Meta extends {webCommandMetadata: {};},T_Data>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
+export type T_SE_Signal<T_Meta extends {webCommandMetadata: {};},T_Data>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
 //#endregion
 //#region T_Setting
-type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
+export type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
 //#endregion
 //#region T_Extract
-type T_ExtractImport<T extends string>=Extract<CF_Generated,{n: T;}>["v"];
-type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["iconType"]>=U;
-type T_NumArrStr<T extends string>=T extends `${infer U extends number},${infer A extends number},${infer X}`? [U,A,...T_NumArrStr<X>]:T extends `${infer U extends number},${infer X}`? [U,...T_NumArrStr<X>]:T extends `${infer U extends number}`? [U]:never;
-type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''? T extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:C extends ''? `${T}`:`${T},${C}`:C extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:T;
-type T_NumRange<T,U>=NS_NumRange.NumRange<T,U>;
+export type T_ExtractImport<T extends string>=Extract<CF_Generated,{n: T;}>["v"];
+export type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["iconType"]>=U;
+export type T_NumArrStr<T extends string>=T extends `${infer U extends number},${infer A extends number},${infer X}`? [U,A,...T_NumArrStr<X>]:T extends `${infer U extends number},${infer X}`? [U,...T_NumArrStr<X>]:T extends `${infer U extends number}`? [U]:never;
+export type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''? T extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:C extends ''? `${T}`:`${T},${C}`:C extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:T;
+export type T_NumRange<T,U>=NS_NumRange.NumRange<T,U>;
 //#endregion
 //#region Check if the passed in type meets certain conditions
-type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
-type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
+export type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
+export type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
 //#region TR_
-type TR_SectionListItem_3_Empty=TR_ItemSection_3<{},{},{}>;
-type TR_MultiPageMenuSection<T>={multiPageMenuSectionRenderer: T_TrackedItems<T>;};
-type TR_ContinuationItem_CE<T>={continuationItemRenderer: TD_ContinuationItem_CE<T>;};
-type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
-type TD_ItemSection_1<T_ContentType>={trackingParams: string; contents: T_ContentType[];};
-type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSectionRenderer: TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>;};
-type TR_ItemSection_1<T_ContentType>={itemSectionRenderer: TD_ItemSection_1<T_ContentType>;};
-type TR_SectionListItem_1<T_ContentType>=TR_ItemSection_1<T_ContentType>;
-type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
+export type TR_SectionListItem_3_Empty=TR_ItemSection_3<{},{},{}>;
+export type TR_MultiPageMenuSection<T>={multiPageMenuSectionRenderer: T_TrackedItems<T>;};
+export type TR_ContinuationItem_CE<T>={continuationItemRenderer: TD_ContinuationItem_CE<T>;};
+export type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
+export type TD_ItemSection_1<T_ContentType>={trackingParams: string; contents: T_ContentType[];};
+export type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSectionRenderer: TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>;};
+export type TR_ItemSection_1<T_ContentType>={itemSectionRenderer: TD_ItemSection_1<T_ContentType>;};
+export type TR_SectionListItem_1<T_ContentType>=TR_ItemSection_1<T_ContentType>;
+export type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
 //#endregion
-type TG_SecondaryResultsItem_3<A,B,C>=[
+export type TG_SecondaryResultsItem_3<A,B,C>=[
 	R_RelatedChipCloud,
 	TR_ItemSection_3<A,B,C>
 ][number];
-type TM_Visibility=T_Types<12|14|15>;
-type TP_Color<T extends T_IsColorHelper<T,U>,U extends string>=T;
+export type TM_Visibility=T_Types<12|14|15>;
+export type TP_Color<T extends T_IsColorHelper<T,U>,U extends string>=T;
 
-type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${infer Z}`? [U,...TP_KeyofSearchParams<Z>]:T extends `${infer U}=${string}`? [U]:[];
+export type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${infer Z}`? [U,...TP_KeyofSearchParams<Z>]:T extends `${infer U}=${string}`? [U]:[];
 
 type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: DecodeUriComponent<C>;}:T;
 
 type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
-type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? string extends V? {[U in string]?: string;}:TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
+export type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? string extends V? {[U in string]?: string;}:TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
 type Map_UriDecode={
 	// not alphanumeric
 	"%20": " ";
@@ -264,7 +264,7 @@ type Map_UriDecode={
 type DecodeUriComponent_all_1<T extends string>=T extends ""? T:[{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode]] extends [never]? T:{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode];
 type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof Map_UriDecode}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`? `${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`? `${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
 type DecodeUriComponent<T extends string>=Join<DecodeUriComponentEach_Init<T_Split<T,"%">>,"">;
-type Do_Dec=DecodeUriComponent<"%5Bab%5D%5Bab%5D">;
+export type Do_Dec=DecodeUriComponent<"%5Bab%5D%5Bab%5D">;
 type TMP_UrP1=T_Split<D_FormatItem_SignatureCipher_SP,"&">[2];
 type DoDec3=T_Split<T_Split<TMP_UrP1,"=">[1],"%">;
 type DecodeUriComponentEach<T extends string[]>=
@@ -272,10 +272,10 @@ type DecodeUriComponentEach<T extends string[]>=
 	T extends [infer F extends string]? [DecodeUriComponent_all<`%${F}`>]:
 	T extends [infer F extends string,...infer R extends string[]]? DecodeUriComponentEach<R> extends infer R2 extends string[]? [DecodeUriComponent_all<`%${F}`>,...R2]:never:T;
 type DecodeUriComponentEach_Init<T extends string[]>=T extends [infer S,...infer R extends string[]]? [S,...DecodeUriComponentEach<R>]:T;
-type DoDec4=Join<DecodeUriComponentEach_Init<DoDec3>,"">;
-type DoDec2=DecodeUriComponent_all_1<"=">;
-type T_EncodeUriComponent<T extends string>=T;
-type Map_UriComponentEncode={
+export type DoDec4=Join<DecodeUriComponentEach_Init<DoDec3>,"">;
+export type DoDec2=DecodeUriComponent_all_1<"=">;
+export type T_EncodeUriComponent<T extends string>=T;
+export type Map_UriComponentEncode={
 	// not alphanumeric
 	" ": "%20";
 	'"': "%22";
@@ -304,7 +304,7 @@ type Map_UriComponentEncode={
 	",": "%2C";
 	"#": "%23";
 };
-type TRS_Actions={
+export type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
 };

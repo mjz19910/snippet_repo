@@ -1,1 +1,1 @@
-abstract class YtdMastheadContainerChildren {abstract center?: Element;}
+export abstract class YtdMastheadContainerChildren {abstract center?: Element;}

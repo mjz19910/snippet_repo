@@ -1,4 +1,4 @@
-type AllImportPaths=
+export type AllImportPaths=
 	|"../../base_require_raw/BaseRequire.user"
 	|"../base_require_raw/BaseRequire.user"
 	|"../DebugApi_raw/DebugApi.user"

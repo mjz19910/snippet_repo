@@ -1,4 +1,7 @@
-interface YtdAppElementI extends HTMLElement {
+import {VolumeRange} from "../zc_child_modules/YTPlugin_Base.user.js";
+import {YtdShadyChildrenOfYtdApp} from "./YtdShadyChildrenOfYtdApp.js";
+
+export interface YtdAppElementI extends HTMLElement {
 	/** @type {HTMLStyleElement|undefined} */
 	ui_plugin_style_element?: HTMLStyleElement;
 	/** @type {VolumeRange|undefined} */

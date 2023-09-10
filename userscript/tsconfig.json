@@ -9,7 +9,7 @@
 		"types": [
 			"moment",
 		],
-		"module": "ESNext",
+		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"outDir": "./dist",
 		"allowJs": true,

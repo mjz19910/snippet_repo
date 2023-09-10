@@ -1,4 +1,4 @@
-interface RequireModuleCache {
+export interface RequireModuleCache {
 	debug$RebuildTheUniverse: typeof import("../rebuild_the_universe_raw/rebuild_the_universe.user.js");
 	DebugApi: typeof import("../DebugApi_raw/DebugApi.user.js");
 	mod$base_require: typeof import("../base_require_raw/BaseRequire.user.js");

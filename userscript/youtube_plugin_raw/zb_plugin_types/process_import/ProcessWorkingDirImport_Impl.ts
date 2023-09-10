@@ -1,4 +1,7 @@
-type ProcessWorkingDirImport_Impl<T extends MatchType_WorkingDir>=
+import {MatchType_WorkingDir} from "./MatchType_WorkingDir.js";
+import {ProcessImport9} from "./ProcessImport9.js";
+
+export type ProcessWorkingDirImport_Impl<T extends MatchType_WorkingDir>=
 	T extends `../../${infer P1 extends string}/${infer P2 extends string}`
 	? `./${P1}/${P2}`
 	:T extends `../${infer P1 extends string}/${infer P2 extends string}`

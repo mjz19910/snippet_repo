@@ -1,6 +1,11 @@
-type ProcessWorkingDirImport<T extends MatchType_WorkingDir>=ProcessImport1<ProcessWorkingDirImport_Impl<T>&string>;
+import {ProcessImport} from "../../../base_require_raw/ProcessImport.js";
+import {MatchType_WorkingDir} from "./MatchType_WorkingDir.js";
+import {ProcessImport1} from "./ProcessImport1.js";
+import {ProcessWorkingDirImport_Impl} from "./ProcessWorkingDirImport_Impl.js";
 
-async function test_ProcessWorkingDirImport() {
+export type ProcessWorkingDirImport<T extends MatchType_WorkingDir>=ProcessImport1<ProcessWorkingDirImport_Impl<T>&string>;
+
+export async function test_ProcessWorkingDirImport() {
 	type T1Test<T>=T extends ProcessImport1<any>? T:never;
 	const T2_const: ProcessImport1<"./base_require_raw/BaseRequire.user">=await import("../../../base_require_raw/BaseRequire.user.js");
 	T2_const;

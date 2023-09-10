@@ -1,1 +1,3 @@
-type YtdShadyChildrenOfYtdApp={masthead: YtdMasthead;};
+import {YtdMasthead} from "./YtdMasthead.js";
+
+export type YtdShadyChildrenOfYtdApp={masthead: YtdMasthead;};

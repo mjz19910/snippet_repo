@@ -1,1 +1,3 @@
-type Keyof_PathMap=keyof ThePathMap;
+import {ThePathMap} from "./ThePathMap.js";
+
+export type Keyof_PathMap=keyof ThePathMap;

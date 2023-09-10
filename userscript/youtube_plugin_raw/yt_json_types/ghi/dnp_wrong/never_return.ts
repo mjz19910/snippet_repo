@@ -1,1 +1,1 @@
-function never_return(): never {throw new Error();}
+export function never_return(): never {throw new Error();}

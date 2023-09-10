@@ -38,7 +38,7 @@ function as_any(e,x=e) {return x;}
 export_(exports => {exports.as_any=as_any;});
 //#endregion
 //#region helper
-/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/stu/mod/group_T.js").T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(","))
 {
 	if(!s) {debugger; return as_any([]);}
@@ -69,7 +69,7 @@ function split_string_once(s,d=as(","))
 }
 //#endregion
 //#region constants
-/** @private @type {YtdAppElement} */
+/** @private @type {import("../support_2/YtdAppElement.js").YtdAppElement} */
 const YtdAppElement=as({});
 const is_yt_debug_enabled=false;
 //#endregion
@@ -137,27 +137,27 @@ function make_iterator(x) {return new Iterator(x);}
 //#region ui_plugin & on_${element}
 class CustomEventTarget
 {
-	/** @private @type {J_CustomEventTargetEvents} */
+	/** @private @type {import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents} */
 	_events={};
-	/** @api @public @arg {J_HandlerInfoArgs} args */
+	/** @api @public @arg {import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_HandlerInfoArgs} args */
 	addEventListener(...args)
 	{
 		let [type,handler]=args;
 		let ht1=this._events[type];
 		if(ht1)
 		{
-			/** @type {NonNullable<J_CustomEventTargetEvents[keyof J_CustomEventTargetEvents]>[number][]} */
+			/** @type {NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents[keyof import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents]>[number][]} */
 			let handlers=ht1;
 			handlers.push(handler);
 		} else
 		{
 			ht1=this._events[type]=[];
-			/** @type {NonNullable<J_CustomEventTargetEvents[keyof J_CustomEventTargetEvents]>[number][]} */
+			/** @type {NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents[keyof import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents]>[number][]} */
 			let handlers=ht1;
 			handlers.push(handler);
 		}
 	}
-	/** @api @public @arg {J_HandlerInfoArgs} args */
+	/** @api @public @arg {import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_HandlerInfoArgs} args */
 	removeEventListener(...args)
 	{
 		let [type,handler]=args;
@@ -171,7 +171,8 @@ class CustomEventTarget
 			event_arr.splice(i,1);
 		}
 	}
-	/** @api @public @arg {CustomEventType} event */
+	/** @type {EX_CustomEventType} */
+	/** @api @public @arg {EX_CustomEventType} event */
 	dispatchEvent(event)
 	{
 		let msg_arr=this._events[event.type];
@@ -2087,7 +2088,7 @@ function yt_plugin_base_main()
 	let require=__module_require__;
 	const {ServiceLoader}=require("./YTPlugin_ServiceLoader_Plugin.user");
 	const log_enabled_page_type_change=false;
-	/** @private @type {ServiceResolverBox<{}>} */
+	/** @private @type {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} */
 	const resolver_value={
 		value: null,
 		listeners: [],
@@ -2407,7 +2408,9 @@ class ServiceWithResolver extends ApiBase
 		super();
 		this.#x=x;
 	}
-	/** @protected @returns {ServiceResolver<ServiceLoader,ServiceOptions>} */
+	/** @type {ServiceLoader} */
+	vv=["",ServiceLoader];
+	/** @protected @returns {ServiceResolver<ServiceLoader,import("../support_1/ServiceOptions.js").ServiceOptions>} */
 	get x() {return as_any(this.#x.value);}
 	/** @arg {()=>void} cb */
 	addOnServicesListener(cb) {this.#x.listeners.push(cb);}

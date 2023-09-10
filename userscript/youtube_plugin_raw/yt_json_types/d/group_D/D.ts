@@ -16,7 +16,7 @@ type D_UiTargetId=
 ;
 //#endregion
 //#region String data
-type WatchUrlFormat=
+export type WatchUrlFormat=
 	|D_WatchPageUrl
 	|`/watch?${D_WatchUrlStr}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
