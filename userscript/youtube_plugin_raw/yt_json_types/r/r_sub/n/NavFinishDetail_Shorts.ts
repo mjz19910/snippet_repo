@@ -1,4 +1,4 @@
-type NavFinishDetail_Shorts={
+export type NavFinishDetail_Shorts={
 	pageType: "shorts";
 	endpoint: E_VE37414_ReelWatch;
 	response: G_RS_ShortsPage;

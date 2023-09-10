@@ -1,4 +1,4 @@
-type NavFinishDetail_Search={
+export type NavFinishDetail_Search={
 	pageType: "search";
 	endpoint: E_Search;
 	response: RS_SearchPage;

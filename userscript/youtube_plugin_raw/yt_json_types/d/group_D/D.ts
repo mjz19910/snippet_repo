@@ -3051,3 +3051,29 @@ export type DMD_RowContainer={
 };
 export type DRC_CsiVarKV=ToKeyValue<RC_CsiVarMap>|RC_CsiServiceC|RC_CsiServiceCVer;
 export type DSS_Context={context: D_ContextTypeStr|null;};
+
+//#region D_VideoPrimaryInfo
+export type D_VideoPrimaryInfo={
+	title: G_Text;
+	viewCount: R_VideoViewCount;
+	videoActions: R_Menu;
+	trackingParams: string;
+	updatedMetadataEndpoint?: E_UpdatedMetadata;
+	superTitleLink?: G_Text;
+	superTitleIcon?: T_Icon<"LOCATION_PIN">;
+	badges?: RMD_Badge[];
+	dateText: G_Text;
+	relativeDateText?: G_Text;
+};
+export type GM_UpdatedMetadata={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/updated_metadata";
+};
+export type M_UpdatedMetadata={webCommandMetadata: GM_UpdatedMetadata;};
+export type E_UpdatedMetadata={
+	clickTrackingParams: string;
+	commandMetadata: M_UpdatedMetadata|M_UpdatedMetadata;
+	updatedMetadataEndpoint: D_VideoId;
+};
+export type D_VideoId={videoId: DU_VideoId;};
+//#endregion

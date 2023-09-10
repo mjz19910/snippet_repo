@@ -1,3 +1,10 @@
+import {D_AboutThisAd,D_AccountItemSection,D_AccountLinkButton,D_ActionCompanionAd,D_AddToPlaylist,D_AddToPlaylistCreate,D_AdHoverTextButton,D_AdPlacement,D_AdPlacementConfig,D_AdSlot,D_AlertWithButton,D_AutoplaySwitchButton,D_BrowseEndpointContextMusicConfig,D_BrowseFeedActions,D_C4TabbedHeader,D_CardCollection,D_CarouselLockup,D_Channel_MD,D_ChannelHeaderLinks,D_ChannelOptions,D_ChannelSwitcherHeader,D_ChannelSwitcherPage,D_ChannelThumbnailWithLink,D_Chapter,D_CheckboxSurveyOption,D_ChildVideo,D_ChipCloud,D_ChipCloudChip,D_CinematicContainer,D_ClientForecastingAd,D_ClipAdState,D_ClipCreation,D_ClipCreationScrubber,D_ClipCreationTextInput,D_ClipSection,D_CommentsEntryPointHeader,D_CommentsEntryPointTeaser,D_CommentsHeader,D_CommentSimplebox,D_CommentThread,D_CommonConfig,D_CompactPlaylist,D_CompactRadio,D_CompactVideo,D_ConfirmDialog,D_ConnectedApp,D_ContinuationItem,D_CopyLink,D_DecoratedPlayerBar,D_DescriptionChapters,D_DesktopTopbar,D_DesktopWatchAds,D_DisplayAd,D_Dropdown_Privacy,D_ElementUpdate,D_Endscreen,D_EndScreenPlaylist,D_EndScreenVideo,D_EngagementPanelSectionList,D_EngagementPanelTitleHeader,D_ExpandableSurveyResponse,D_ExpandableTab,D_ExpandableVideoDescriptionBody,D_Factoid,D_FancyDismissibleDialog,D_FeedFilterChipBar,D_FeedNudge,D_FeedTabbedHeader,D_FusionSearchbox,D_GhostGrid,D_GuideCollapsibleEntry,D_GuideCollapsibleSectionEntry,D_GuideDownloadsEntry,D_GuideEntry,D_GuideEntryData,D_GuideSection,D_GuideSubscriptionsSection,D_Heatmap,D_HeatSeekerItemData,D_HeroPlaylistThumbnail,D_Hint,D_HorizontalCardList,D_HotkeyDialog,D_HotkeyDialogSection,D_HotkeyDialogSectionOption,D_InFeedAdLayout,D_TrackingParams,D_InfoRow,D_InlineSurvey,D_ItemSectionHeader,D_LinearAdSequence,D_LiveChatAuthorBadge,D_LiveChatPlaceholderItem,D_LiveChatTextMessage,D_LiveChatViewerEngagementMessage,D_MacroMarkersListItem,D_MerchandiseItem,D_MerchandiseShelf,D_MetadataRow,D_Microformat,D_MovingThumbnail,D_MultiMarkersPlayerBar,D_MusicCarouselShelf,D_MusicQueue,D_MusicShelf,D_MusicThumbnail,D_Notification,D_NotificationText,D_NotificationTopbarButton,D_PageIntroduction,D_PageTopAdLayout,D_PdgBuyFlow,D_PdgBuyFlowHeader,D_PdgColorSlider,D_PdgCommentOption,D_PdgCommentPreview,D_PlayerAnnotationsExpanded,D_PlayerAttestation,D_PlayerCaptionsTracklist,D_PlayerLiveStoryboardSpec,D_PlayerMicroformat,D_PlayerOverlay,D_PlayerOverlayAutoplay,D_PlayerOverlayVideoDetails,D_PlayerStoryboardSpec,D_Playlist_MD,D_PlaylistAddToOption,D_PlaylistByline,D_PlaylistHeader,D_PlaylistPanel,D_PlaylistPanelVideo,D_PlaylistSidebar,R_InlineForm,D_PlaylistSidebarSecondaryInfo,D_PlaylistVideoList,D_PlaylistVideoThumbnail,D_PrefetchHintConfig,D_PrivacyDropdownItem,D_ProductList,D_ProductListItem,D_ProfileColumn,D_ProfileColumnStats,D_ProfileColumnStatsEntry,D_ProfileColumnUserInfo,D_ProfilePageHeaderInformation,D_ProfilePageHeaderTitle,D_PromotedSparklesWeb,D_Radio,D_RadioButtonSurveyOption,D_RatingSurvey,D_RatingSurveyOption,D_ReelItem,D_ReelPlayerHeader,D_ReelShelf,D_RelatedChipCloud,D_ResourceStatusInResponseCheck,D_RichGrid,D_RichItem,D_RichListHeader,D_RichMetadataRow,D_RichSection,D_RichShelf,D_ThumbnailColor,D_SearchBox,D_SearchPyv,D_SearchResultsTab,D_SegmentedLikeDislikeButton,D_SettingsCheckbox,D_SettingsOptions,D_SettingsRadioOption,D_SettingsSidebar,D_SettingsSwitch,D_SimpleMenuHeader,D_SourcePivotHeader,D_StructuredDescriptionContent,D_SubFeedOption,D_SubFeedSelector,D_SubscriptionNotificationToggleButton,D_SuperVodBuyFlowContent,D_TabbedSearchResults,D_TemplateUpdate,D_TextInputFormField,D_ThumbnailOverlayBottomPanel,D_ThumbnailOverlayEndorsement,D_ThumbnailOverlayHoverText,D_ThumbnailOverlayLoadingPreview,D_ThumbnailOverlayNowPlaying,D_ThumbnailOverlayResumePlayback,D_ThumbnailOverlaySidePanel,D_ThumbnailOverlayTimeStatus,D_ThumbnailOverlayToggleButton,D_ToggleMenuServiceItem,D_TopbarLogo,D_TopbarMenuButton,D_TopicLink,D_Transcript,D_TranscriptFooter,D_TranscriptSearchPanel,D_TranscriptSegment,D_TranscriptSegmentList,D_TwoColumnBrowseResults,D_TwoColumnSearchResults,D_UnifiedSharePanel,D_VideoDescriptionHeader,D_VideoDescriptionMusicSection,D_VideoOwner,D_VideoQualityPromo,D_VideoViewCount,D_VoiceSearchDialog,D_VssLoggingContext,D_WatchEndpointMusicConfig,D_WatchNextEndScreen,D_WatchNextTabbedResults,D_WebSearchboxConfig,D_TokenJarDefaultExpirationSeconds,D_BrowseEndpointPages,DRC_CsiVarKV,D_YtConfig,D_WebPrefetch} from "../d/group_D/D.js";
+import {D_Button} from "../d/mod_D/D_T/D_Button.js";
+import {E_VE6827,E_VE96368,E_VE3854} from "../e/GR_E_VE.js";
+import {G_Text,G_ThumbnailOverlayItem,G_RS_Page_Playlist} from "../ghi/_group.mod/G.js";
+import {T_RidFormat} from "../stu/mod/group_T.js";
+import {RS_Page_Browse,RS_Browse,RS_ChannelPage,RS_SearchPage} from "./RS.js";
+
 //#region Renderer
 export type R_AboutThisAd={aboutThisAdRenderer: D_AboutThisAd;};
 export type R_AccountItem={accountItemRenderer: D_AccountItem;};
@@ -188,117 +195,117 @@ export type D_PlaylistSidebarPrimaryInfo={
 	descriptionForm?: R_InlineForm;
 	privacyForm?: R_DropdownFormField;
 };
-type R_PlaylistSidebarSecondaryInfo={playlistSidebarSecondaryInfoRenderer: D_PlaylistSidebarSecondaryInfo;};
-type R_PlaylistVideoList={playlistVideoListRenderer: D_PlaylistVideoList;};
-type R_PlaylistVideoThumbnail={playlistVideoThumbnailRenderer: D_PlaylistVideoThumbnail;};
-type R_PrefetchHintConfig={prefetchHintConfig: D_PrefetchHintConfig;};
-type R_PrivacyDropdownItem={privacyDropdownItemRenderer: D_PrivacyDropdownItem;};
-type R_ProductList={productListRenderer: D_ProductList;};
-type R_ProductListItem={productListItemRenderer: D_ProductListItem;};
-type R_ProfileColumn={profileColumnRenderer: D_ProfileColumn;};
-type R_ProfileColumnStats={profileColumnStatsRenderer: D_ProfileColumnStats;};
-type R_ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D_ProfileColumnStatsEntry;};
-type R_ProfileColumnUserInfo={profileColumnUserInfoRenderer: D_ProfileColumnUserInfo;};
-type R_ProfilePageHeaderButtonRowViewModel={profilePageHeaderButtonRowViewModel: {};};
-type R_ProfilePageHeaderInformationViewModel={profilePageHeaderInformationViewModel: D_ProfilePageHeaderInformation;};
-type R_ProfilePageHeaderMetadataViewModel={profilePageHeaderMetadataViewModel: {};};
-type R_ProfilePageHeaderThumbnailViewModel={profilePageHeaderThumbnailViewModel: {};};
-type R_ProfilePageHeaderTitleViewModel={profilePageHeaderTitleViewModel: D_ProfilePageHeaderTitle;};
-type R_PromotedSparklesWeb={promotedSparklesWebRenderer: D_PromotedSparklesWeb;};
-type R_Radio={radioRenderer: D_Radio;};
-type R_RadioButtonSurveyOption={radioButtonSurveyOptionRenderer: D_RadioButtonSurveyOption;};
-type R_RatingSurvey={ratingSurveyRenderer: D_RatingSurvey;};
-type R_RatingSurveyOption={ratingSurveyOptionRenderer: D_RatingSurveyOption;};
-type R_ReelItem={reelItemRenderer: D_ReelItem;};
-type R_ReelMultimixAttributionLabel={reelMultimixAttributionLabelRenderer: D_ReelMultimixAttributionLabel;};
-type R_ReelPlayerHeader={reelPlayerHeaderRenderer: D_ReelPlayerHeader;};
-type R_ReelPlayerOverlay={reelPlayerOverlayRenderer: D_ReelPlayerOverlay;};
-type R_ReelShelf={reelShelfRenderer: D_ReelShelf;};
-type R_RelatedChipCloud={relatedChipCloudRenderer: D_RelatedChipCloud;};
-type R_ReportFormModal={reportFormModalRenderer: D_ReportFormModal;};
-type R_ResourceStatusInResponseCheck={resourceStatusInResponseCheck: D_ResourceStatusInResponseCheck;};
-type R_RichGrid={richGridRenderer: D_RichGrid;};
-type R_RichItem={richItemRenderer: D_RichItem;};
-type R_RichListHeader={richListHeaderRenderer: D_RichListHeader;};
-type R_RichMetadata={richMetadataRenderer: D_RichMetadata;};
-type R_RichMetadataRow={richMetadataRowRenderer: D_RichMetadataRow;};
-type R_RichSection={richSectionRenderer: D_RichSection;};
-type R_RichShelf={richShelfRenderer: D_RichShelf;};
-type R_RichThumbnail={movingThumbnailRenderer: D_MovingThumbnail;};
-type R_SampledThumbnailColor={sampledThumbnailColor: D_ThumbnailColor;};
-type R_SearchBox={searchBoxRenderer: D_SearchBox;};
-type R_SearchPyv={searchPyvRenderer: D_SearchPyv;};
-type R_SearchResultsTab={tabRenderer: D_SearchResultsTab;};
-type R_SectionList={sectionListRenderer: GD_RC_SectionList;};
-type R_SegmentedLikeDislikeButton={segmentedLikeDislikeButtonRenderer: D_SegmentedLikeDislikeButton;};
-type R_SettingsCheckbox={settingsCheckboxRenderer: D_SettingsCheckbox;};
-type R_SettingsOption={settingsOptionsRenderer: D_SettingsOptions;};
-type R_SettingsRadioOption={settingsRadioOptionRenderer: D_SettingsRadioOption;};
-type R_SettingsSidebar={settingsSidebarRenderer: D_SettingsSidebar;};
-type R_SettingsSwitch={settingsSwitchRenderer: D_SettingsSwitch;};
-type R_SimpleMenuHeader={simpleMenuHeaderRenderer: D_SimpleMenuHeader;};
-type R_SingleColumnMusicWatchNextResults={singleColumnMusicWatchNextResultsRenderer: R_Tabbed;};
-type R_SortFilterSubMenu={sortFilterSubMenuRenderer: D_SortFilterSubMenu;};
-type R_SourcePivotHeader={sourcePivotHeaderRenderer: D_SourcePivotHeader;};
-type R_StructuredDescriptionContent={structuredDescriptionContentRenderer: D_StructuredDescriptionContent;};
-type R_SubFeedOption={subFeedOptionRenderer: D_SubFeedOption;};
-type R_SubFeedSelector={subFeedSelectorRenderer: D_SubFeedSelector;};
-type R_SubscribeButton={subscribeButtonRenderer: D_SubscribeButton;};
-type R_SubscriptionNotificationToggleButton={subscriptionNotificationToggleButtonRenderer: D_SubscriptionNotificationToggleButton;};
-type R_SuperVodBuyFlowContent={superVodBuyFlowContentRenderer: D_SuperVodBuyFlowContent;};
-type R_Tab={tabRenderer: D_Tab;};
-type R_Tabbed={tabbedRenderer: R_WatchNextTabbedResults;};
-type R_TabbedSearchResults={tabbedSearchResultsRenderer: D_TabbedSearchResults;};
-type R_TemplateUpdate={templateUpdate: D_TemplateUpdate;};
-type R_TextInputFormField={textInputFormFieldRenderer: D_TextInputFormField;};
-type R_ThumbnailOverlayBottomPanel={thumbnailOverlayBottomPanelRenderer: D_ThumbnailOverlayBottomPanel;};
-type R_ThumbnailOverlayEndorsement={thumbnailOverlayEndorsementRenderer: D_ThumbnailOverlayEndorsement;};
-type R_ThumbnailOverlayHoverText={thumbnailOverlayHoverTextRenderer: D_ThumbnailOverlayHoverText;};
-type R_ThumbnailOverlayLoadingPreview={thumbnailOverlayLoadingPreviewRenderer: D_ThumbnailOverlayLoadingPreview;};
-type R_ThumbnailOverlayNowPlaying={thumbnailOverlayNowPlayingRenderer: D_ThumbnailOverlayNowPlaying;};
-type R_ThumbnailOverlayResumePlayback={thumbnailOverlayResumePlaybackRenderer: D_ThumbnailOverlayResumePlayback;};
-type R_ThumbnailOverlaySidePanel={thumbnailOverlaySidePanelRenderer: D_ThumbnailOverlaySidePanel;};
-type R_ThumbnailOverlayTimeStatus={thumbnailOverlayTimeStatusRenderer: D_ThumbnailOverlayTimeStatus;};
-type R_ThumbnailOverlayToggleButton={thumbnailOverlayToggleButtonRenderer: D_ThumbnailOverlayToggleButton;};
-type R_ToggleButton={toggleButtonRenderer: D_ToggleButton;};
-type R_ToggleMenuServiceItem={toggleMenuServiceItemRenderer: D_ToggleMenuServiceItem;};
-type R_TopbarLogo={topbarLogoRenderer: D_TopbarLogo;};
-type R_TopbarMenuButton={topbarMenuButtonRenderer: D_TopbarMenuButton;};
-type R_TopicLink={topicLinkRenderer: D_TopicLink;};
-type R_Transcript={transcriptRenderer: D_Transcript;};
-type R_TranscriptFooter={transcriptFooterRenderer: D_TranscriptFooter;};
-type R_TranscriptSearchPanel={transcriptSearchPanelRenderer: D_TranscriptSearchPanel;};
-type R_TranscriptSegment={transcriptSegmentRenderer: D_TranscriptSegment;};
-type R_TranscriptSegmentList={transcriptSegmentListRenderer: D_TranscriptSegmentList;};
-type R_TwoColumnBrowseResults={twoColumnBrowseResultsRenderer: D_TwoColumnBrowseResults;};
-type R_TwoColumnSearchResults={twoColumnSearchResultsRenderer: D_TwoColumnSearchResults;};
-type R_UnifiedSharePanel={unifiedSharePanelRenderer: D_UnifiedSharePanel;};
-type R_Video={videoRenderer: D_Video;};
-type R_VideoDescriptionHeader={videoDescriptionHeaderRenderer: D_VideoDescriptionHeader;};
-type R_VideoDescriptionMusicSection={videoDescriptionMusicSectionRenderer: D_VideoDescriptionMusicSection;};
-type R_VideoMastheadAdV3={videoMastheadAdV3Renderer: D_VideoMastheadAdV3;};
-type R_VideoOwner={videoOwnerRenderer: D_VideoOwner;};
-type R_VideoPrimaryInfo={videoPrimaryInfoRenderer: D_VideoPrimaryInfo;};
-type R_VideoQualityPromo={videoQualityPromoRenderer: D_VideoQualityPromo;};
-type R_VideoSecondaryInfo={videoSecondaryInfoRenderer: D_VideoSecondaryInfo;};
-type R_VideoViewCount={videoViewCountRenderer: D_VideoViewCount;};
-type R_VoiceSearchDialog={voiceSearchDialogRenderer: D_VoiceSearchDialog;};
-type R_VssLoggingContext={vssLoggingContext: D_VssLoggingContext;};
-type R_WatchEndpointMusicConfig={watchEndpointMusicConfig: D_WatchEndpointMusicConfig;};
-type R_WatchNextEndScreen={watchNextEndScreenRenderer: D_WatchNextEndScreen;};
-type R_WatchNextTabbedResults={watchNextTabbedResultsRenderer: D_WatchNextTabbedResults;};
-type R_WebSearchboxConfig={webSearchboxConfig: D_WebSearchboxConfig;};
+export type R_PlaylistSidebarSecondaryInfo={playlistSidebarSecondaryInfoRenderer: D_PlaylistSidebarSecondaryInfo;};
+export type R_PlaylistVideoList={playlistVideoListRenderer: D_PlaylistVideoList;};
+export type R_PlaylistVideoThumbnail={playlistVideoThumbnailRenderer: D_PlaylistVideoThumbnail;};
+export type R_PrefetchHintConfig={prefetchHintConfig: D_PrefetchHintConfig;};
+export type R_PrivacyDropdownItem={privacyDropdownItemRenderer: D_PrivacyDropdownItem;};
+export type R_ProductList={productListRenderer: D_ProductList;};
+export type R_ProductListItem={productListItemRenderer: D_ProductListItem;};
+export type R_ProfileColumn={profileColumnRenderer: D_ProfileColumn;};
+export type R_ProfileColumnStats={profileColumnStatsRenderer: D_ProfileColumnStats;};
+export type R_ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D_ProfileColumnStatsEntry;};
+export type R_ProfileColumnUserInfo={profileColumnUserInfoRenderer: D_ProfileColumnUserInfo;};
+export type R_ProfilePageHeaderButtonRowViewModel={profilePageHeaderButtonRowViewModel: {};};
+export type R_ProfilePageHeaderInformationViewModel={profilePageHeaderInformationViewModel: D_ProfilePageHeaderInformation;};
+export type R_ProfilePageHeaderMetadataViewModel={profilePageHeaderMetadataViewModel: {};};
+export type R_ProfilePageHeaderThumbnailViewModel={profilePageHeaderThumbnailViewModel: {};};
+export type R_ProfilePageHeaderTitleViewModel={profilePageHeaderTitleViewModel: D_ProfilePageHeaderTitle;};
+export type R_PromotedSparklesWeb={promotedSparklesWebRenderer: D_PromotedSparklesWeb;};
+export type R_Radio={radioRenderer: D_Radio;};
+export type R_RadioButtonSurveyOption={radioButtonSurveyOptionRenderer: D_RadioButtonSurveyOption;};
+export type R_RatingSurvey={ratingSurveyRenderer: D_RatingSurvey;};
+export type R_RatingSurveyOption={ratingSurveyOptionRenderer: D_RatingSurveyOption;};
+export type R_ReelItem={reelItemRenderer: D_ReelItem;};
+export type R_ReelMultimixAttributionLabel={reelMultimixAttributionLabelRenderer: D_ReelMultimixAttributionLabel;};
+export type R_ReelPlayerHeader={reelPlayerHeaderRenderer: D_ReelPlayerHeader;};
+export type R_ReelPlayerOverlay={reelPlayerOverlayRenderer: D_ReelPlayerOverlay;};
+export type R_ReelShelf={reelShelfRenderer: D_ReelShelf;};
+export type R_RelatedChipCloud={relatedChipCloudRenderer: D_RelatedChipCloud;};
+export type R_ReportFormModal={reportFormModalRenderer: D_ReportFormModal;};
+export type R_ResourceStatusInResponseCheck={resourceStatusInResponseCheck: D_ResourceStatusInResponseCheck;};
+export type R_RichGrid={richGridRenderer: D_RichGrid;};
+export type R_RichItem={richItemRenderer: D_RichItem;};
+export type R_RichListHeader={richListHeaderRenderer: D_RichListHeader;};
+export type R_RichMetadata={richMetadataRenderer: D_RichMetadata;};
+export type R_RichMetadataRow={richMetadataRowRenderer: D_RichMetadataRow;};
+export type R_RichSection={richSectionRenderer: D_RichSection;};
+export type R_RichShelf={richShelfRenderer: D_RichShelf;};
+export type R_RichThumbnail={movingThumbnailRenderer: D_MovingThumbnail;};
+export type R_SampledThumbnailColor={sampledThumbnailColor: D_ThumbnailColor;};
+export type R_SearchBox={searchBoxRenderer: D_SearchBox;};
+export type R_SearchPyv={searchPyvRenderer: D_SearchPyv;};
+export type R_SearchResultsTab={tabRenderer: D_SearchResultsTab;};
+export type R_SectionList={sectionListRenderer: GD_RC_SectionList;};
+export type R_SegmentedLikeDislikeButton={segmentedLikeDislikeButtonRenderer: D_SegmentedLikeDislikeButton;};
+export type R_SettingsCheckbox={settingsCheckboxRenderer: D_SettingsCheckbox;};
+export type R_SettingsOption={settingsOptionsRenderer: D_SettingsOptions;};
+export type R_SettingsRadioOption={settingsRadioOptionRenderer: D_SettingsRadioOption;};
+export type R_SettingsSidebar={settingsSidebarRenderer: D_SettingsSidebar;};
+export type R_SettingsSwitch={settingsSwitchRenderer: D_SettingsSwitch;};
+export type R_SimpleMenuHeader={simpleMenuHeaderRenderer: D_SimpleMenuHeader;};
+export type R_SingleColumnMusicWatchNextResults={singleColumnMusicWatchNextResultsRenderer: R_Tabbed;};
+export type R_SortFilterSubMenu={sortFilterSubMenuRenderer: D_SortFilterSubMenu;};
+export type R_SourcePivotHeader={sourcePivotHeaderRenderer: D_SourcePivotHeader;};
+export type R_StructuredDescriptionContent={structuredDescriptionContentRenderer: D_StructuredDescriptionContent;};
+export type R_SubFeedOption={subFeedOptionRenderer: D_SubFeedOption;};
+export type R_SubFeedSelector={subFeedSelectorRenderer: D_SubFeedSelector;};
+export type R_SubscribeButton={subscribeButtonRenderer: D_SubscribeButton;};
+export type R_SubscriptionNotificationToggleButton={subscriptionNotificationToggleButtonRenderer: D_SubscriptionNotificationToggleButton;};
+export type R_SuperVodBuyFlowContent={superVodBuyFlowContentRenderer: D_SuperVodBuyFlowContent;};
+export type R_Tab={tabRenderer: D_Tab;};
+export type R_Tabbed={tabbedRenderer: R_WatchNextTabbedResults;};
+export type R_TabbedSearchResults={tabbedSearchResultsRenderer: D_TabbedSearchResults;};
+export type R_TemplateUpdate={templateUpdate: D_TemplateUpdate;};
+export type R_TextInputFormField={textInputFormFieldRenderer: D_TextInputFormField;};
+export type R_ThumbnailOverlayBottomPanel={thumbnailOverlayBottomPanelRenderer: D_ThumbnailOverlayBottomPanel;};
+export type R_ThumbnailOverlayEndorsement={thumbnailOverlayEndorsementRenderer: D_ThumbnailOverlayEndorsement;};
+export type R_ThumbnailOverlayHoverText={thumbnailOverlayHoverTextRenderer: D_ThumbnailOverlayHoverText;};
+export type R_ThumbnailOverlayLoadingPreview={thumbnailOverlayLoadingPreviewRenderer: D_ThumbnailOverlayLoadingPreview;};
+export type R_ThumbnailOverlayNowPlaying={thumbnailOverlayNowPlayingRenderer: D_ThumbnailOverlayNowPlaying;};
+export type R_ThumbnailOverlayResumePlayback={thumbnailOverlayResumePlaybackRenderer: D_ThumbnailOverlayResumePlayback;};
+export type R_ThumbnailOverlaySidePanel={thumbnailOverlaySidePanelRenderer: D_ThumbnailOverlaySidePanel;};
+export type R_ThumbnailOverlayTimeStatus={thumbnailOverlayTimeStatusRenderer: D_ThumbnailOverlayTimeStatus;};
+export type R_ThumbnailOverlayToggleButton={thumbnailOverlayToggleButtonRenderer: D_ThumbnailOverlayToggleButton;};
+export type R_ToggleButton={toggleButtonRenderer: D_ToggleButton;};
+export type R_ToggleMenuServiceItem={toggleMenuServiceItemRenderer: D_ToggleMenuServiceItem;};
+export type R_TopbarLogo={topbarLogoRenderer: D_TopbarLogo;};
+export type R_TopbarMenuButton={topbarMenuButtonRenderer: D_TopbarMenuButton;};
+export type R_TopicLink={topicLinkRenderer: D_TopicLink;};
+export type R_Transcript={transcriptRenderer: D_Transcript;};
+export type R_TranscriptFooter={transcriptFooterRenderer: D_TranscriptFooter;};
+export type R_TranscriptSearchPanel={transcriptSearchPanelRenderer: D_TranscriptSearchPanel;};
+export type R_TranscriptSegment={transcriptSegmentRenderer: D_TranscriptSegment;};
+export type R_TranscriptSegmentList={transcriptSegmentListRenderer: D_TranscriptSegmentList;};
+export type R_TwoColumnBrowseResults={twoColumnBrowseResultsRenderer: D_TwoColumnBrowseResults;};
+export type R_TwoColumnSearchResults={twoColumnSearchResultsRenderer: D_TwoColumnSearchResults;};
+export type R_UnifiedSharePanel={unifiedSharePanelRenderer: D_UnifiedSharePanel;};
+export type R_Video={videoRenderer: D_Video;};
+export type R_VideoDescriptionHeader={videoDescriptionHeaderRenderer: D_VideoDescriptionHeader;};
+export type R_VideoDescriptionMusicSection={videoDescriptionMusicSectionRenderer: D_VideoDescriptionMusicSection;};
+export type R_VideoMastheadAdV3={videoMastheadAdV3Renderer: D_VideoMastheadAdV3;};
+export type R_VideoOwner={videoOwnerRenderer: D_VideoOwner;};
+export type R_VideoPrimaryInfo={videoPrimaryInfoRenderer: D_VideoPrimaryInfo;};
+export type R_VideoQualityPromo={videoQualityPromoRenderer: D_VideoQualityPromo;};
+export type R_VideoSecondaryInfo={videoSecondaryInfoRenderer: D_VideoSecondaryInfo;};
+export type R_VideoViewCount={videoViewCountRenderer: D_VideoViewCount;};
+export type R_VoiceSearchDialog={voiceSearchDialogRenderer: D_VoiceSearchDialog;};
+export type R_VssLoggingContext={vssLoggingContext: D_VssLoggingContext;};
+export type R_WatchEndpointMusicConfig={watchEndpointMusicConfig: D_WatchEndpointMusicConfig;};
+export type R_WatchNextEndScreen={watchNextEndScreenRenderer: D_WatchNextEndScreen;};
+export type R_WatchNextTabbedResults={watchNextTabbedResultsRenderer: D_WatchNextTabbedResults;};
+export type R_WebSearchboxConfig={webSearchboxConfig: D_WebSearchboxConfig;};
 //#endregion
 //#region {pageType:string}
-type NavFinishDetail_Watch={
+export type NavFinishDetail_Watch={
 	pageType: "watch";
 	endpoint: E_Watch;
 	response: G_RS_WatchPage;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
-type G_RS_Page_Browse=RS_VE6827_BrowsePage|RS_VE96368_BrowsePage|RS_Page_Browse;
-type RS_VE6827_BrowsePage={
+export type G_RS_Page_Browse=RS_VE6827_BrowsePage|RS_VE96368_BrowsePage|RS_Page_Browse;
+export type RS_VE6827_BrowsePage={
 	rootVe: 6827;
 	url: "/feed/library";
 	endpoint: E_VE6827;
@@ -348,7 +355,7 @@ type RS_VE6827_BrowsePage={
 	expirationTime: number;
 };
 
-type RS_VE96368_BrowsePage={
+export type RS_VE96368_BrowsePage={
 	rootVe: 96368;
 	url: "/feed/subscriptions";
 	endpoint: E_VE96368;
@@ -383,7 +390,7 @@ type RS_VE96368_BrowsePage={
 	url: "/feed/subscriptions";
 	expirationTime: number;
 };
-type RS_VE3854_BrowsePage={
+export type RS_VE3854_BrowsePage={
 	page: "browse";
 	endpoint: E_VE3854;
 	response: RS_Browse;
@@ -412,54 +419,54 @@ type RS_VE3854_BrowsePage={
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
-type G_ResponseBrowse=
+export type G_ResponseBrowse=
 	|RS_VE3854_BrowsePage
 	|RS_VE6827_BrowsePage
 	|RS_VE96368_BrowsePage
 	;
 ;
-type G_RS_ByPageType=G_RS_WatchPage|RS_ChannelPage|G_RS_Page_Playlist|G_RS_SettingsPage|RS_SearchPage|RS_Page_Browse|G_RS_ShortsPage|RS_VE6827_BrowsePage|RS_VE96368_BrowsePage;
+export type G_RS_ByPageType=G_RS_WatchPage|RS_ChannelPage|G_RS_Page_Playlist|G_RS_SettingsPage|RS_SearchPage|RS_Page_Browse|G_RS_ShortsPage|RS_VE6827_BrowsePage|RS_VE96368_BrowsePage;
 //#endregion
 //#region RA_
-type RA_Notification={notificationActionRenderer: AD_Notification;};
-type RA_NotificationMulti={notificationMultiActionRenderer: AD_NotificationMulti;};
-type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
+export type RA_Notification={notificationActionRenderer: AD_Notification;};
+export type RA_NotificationMulti={notificationMultiActionRenderer: AD_NotificationMulti;};
+export type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
 //#endregion
 //#region RC_
 //#region Continuation Renderer
-type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
-type RC_MusicShelf={musicShelfContinuation: DC_MusicShelf;};
-type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
-type RC_SectionList={sectionListContinuation: GD_RC_SectionList;};
+export type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
+export type RC_MusicShelf={musicShelfContinuation: DC_MusicShelf;};
+export type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
+export type RC_SectionList={sectionListContinuation: GD_RC_SectionList;};
 //#endregion
 //#region RC
-type RC_ConsistencyTokenJar={encryptedTokenJarContents: string; expirationSeconds: `${D_TokenJarDefaultExpirationSeconds}`;};
-type RC_CsiServiceC={key: "c"; value: RC_ECatcherClientName['value'];};
-type RC_CsiServiceCVer={key: "cver"; value: string;};
-type RC_CsiVarMap={
+export type RC_ConsistencyTokenJar={encryptedTokenJarContents: string; expirationSeconds: `${D_TokenJarDefaultExpirationSeconds}`;};
+export type RC_CsiServiceC={key: "c"; value: RC_ECatcherClientName['value'];};
+export type RC_CsiServiceCVer={key: "cver"; value: string;};
+export type RC_CsiVarMap={
 	yt_li: "1";
 	yt_ad: "1";
 	yt_fn: D_BrowseEndpointPages;
 	[x: T_RidFormat<string>]: `0x${string}`;
 };
-type RC_CsiVarTypes={cver: Extract<DRC_CsiVarKV,{key: "cver";}>['value'];};
-type RC_Csi_SPs={
+export type RC_CsiVarTypes={cver: Extract<DRC_CsiVarKV,{key: "cver";}>['value'];};
+export type RC_Csi_SPs={
 	service: "CSI",
 	params: DRC_CsiVarKV[];
 };
-type RC_ECatcherClientName={key: "client.name"; value: "WEB"|"WEB_REMIX";};
-type RC_ECatcherClientVersion={key: "client.version"; value: RC_SomeVer<RC_CsiVarTypes['cver']>;};
-type RC_ECatcherServiceType={["client.fexp"]: `${number}`|`${number},${number}`|`${number},${number},${string}`;};
-type RC_ECatcher_ParamItem=RC_ECatcherClientName|RC_ECatcherClientVersion;
-type RC_ECatcher_SPs={service: "ECATCHER"; params: (RC_ECatcher_ParamItem|ToKeyValue<RC_ECatcherServiceType>)[];};
-type RC_GFeedback_SPs={service: "GFEEDBACK"; params: SP_GFeedbackServiceParams[];};
-type RC_GoogleHelp_SPs={service: "GOOGLE_HELP"; params: ToKeyValue<SP_GoogleHelpServiceObj>[];};
-type RC_MainAppWebResponseContext={
+export type RC_ECatcherClientName={key: "client.name"; value: "WEB"|"WEB_REMIX";};
+export type RC_ECatcherClientVersion={key: "client.version"; value: RC_SomeVer<RC_CsiVarTypes['cver']>;};
+export type RC_ECatcherServiceType={["client.fexp"]: `${number}`|`${number},${number}`|`${number},${number},${string}`;};
+export type RC_ECatcher_ParamItem=RC_ECatcherClientName|RC_ECatcherClientVersion;
+export type RC_ECatcher_SPs={service: "ECATCHER"; params: (RC_ECatcher_ParamItem|ToKeyValue<RC_ECatcherServiceType>)[];};
+export type RC_GFeedback_SPs={service: "GFEEDBACK"; params: SP_GFeedbackServiceParams[];};
+export type RC_GoogleHelp_SPs={service: "GOOGLE_HELP"; params: ToKeyValue<SP_GoogleHelpServiceObj>[];};
+export type RC_MainAppWebResponseContext={
 	datasyncId: `${number}||${number}`;
 	loggedOut: boolean;
 	trackingParam?: string;
 };
-type RC_ResponseContext={
+export type RC_ResponseContext={
 	mainAppWebResponseContext?: RC_MainAppWebResponseContext;
 	serviceTrackingParams?: GRC_ServiceTrackingParams[];
 	webResponseContextExtensionData?: RC_WR_ContextExtension;
@@ -467,14 +474,14 @@ type RC_ResponseContext={
 	maxAgeSeconds?: number;
 	stateTags?: RCA_RelevantStateTags;
 };
-type RC_ResponseContext_1={
+export type RC_ResponseContext_1={
 	mainAppWebResponseContext: RC_MainAppWebResponseContext;
 	serviceTrackingParams: GRC_ServiceTrackingParams[];
 	webResponseContextExtensionData: RC_WR_ContextExtension;
 };
-type RC_SomeVer<T extends string>=T extends `${infer V0}.${infer V1}.${string}.${string}`? `${V0}.${V1}`:T;
-type ToKeyValue<T>={[U in keyof T]: {key: U; value: T[U];};}[keyof T];
-type RC_WR_ContextExtension={
+export type RC_SomeVer<T extends string>=T extends `${infer V0}.${infer V1}.${string}.${string}`? `${V0}.${V1}`:T;
+export type ToKeyValue<T>={[U in keyof T]: {key: U; value: T[U];};}[keyof T];
+export type RC_WR_ContextExtension={
 	hasDecorated?: boolean;
 	ytConfigData?: D_YtConfig;
 	webPrefetchData?: D_WebPrefetch;

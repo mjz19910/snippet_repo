@@ -325,3 +325,18 @@ export type G_SE_MenuService=
 	;
 ;
 //#endregion
+
+export type G_NavFinishDetail=
+	|NavFinishDetail_Browse
+	|NavFinishDetail_Channel
+	|NavFinishDetail_Playlist
+	|NavFinishDetail_Settings
+	|NavFinishDetail_Shorts
+	|NavFinishDetail_Watch
+	|NavFinishDetail_Search
+	;
+;
+//#region derived
+export type E_Page=G_NavFinishDetail['endpoint'];
+export type S_PageTypeStr=G_NavFinishDetail["pageType"];
+//#endregion

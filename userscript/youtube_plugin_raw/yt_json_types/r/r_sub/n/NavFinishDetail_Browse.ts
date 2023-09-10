@@ -1,4 +1,6 @@
-type NavFinishDetail_Browse={
+import {E_VE6827,E_VE96368,E_VE3854} from "../../../e/GR_E_VE.js";
+
+export type NavFinishDetail_Browse={
 	endpoint: E_VE6827;
 	pageType: "browse";
 	fromHistory: boolean;
