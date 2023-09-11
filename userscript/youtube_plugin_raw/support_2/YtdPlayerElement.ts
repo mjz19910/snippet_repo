@@ -1,4 +1,6 @@
-interface YtdPlayerElement extends HTMLElement {
+import {YtPlayerApi} from "./YtPlayerApi.js";
+
+export interface YtdPlayerElement extends HTMLElement {
 	active_nav: boolean;
 	player_: YtPlayerApi|null;
 	playerResolver_: {promise: Promise<void>;};

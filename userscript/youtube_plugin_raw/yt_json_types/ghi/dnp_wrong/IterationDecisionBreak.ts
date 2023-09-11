@@ -1,3 +1,3 @@
-type IterationDecisionBreak={
+export type IterationDecisionBreak={
 	type: "break";
 };

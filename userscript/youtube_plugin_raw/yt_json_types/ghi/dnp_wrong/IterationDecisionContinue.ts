@@ -1,3 +1,3 @@
-type IterationDecisionContinue={
+export type IterationDecisionContinue={
 	type: "continue";
 };

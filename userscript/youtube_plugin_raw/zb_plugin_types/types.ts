@@ -1,5 +1,6 @@
 import {RequireModuleCache} from "../../_module_cache/RequireModuleCache.js";
 import {ServiceOptions} from "../support_1/ServiceOptions.js";
+import {make_item_group} from "../yt_json_types/m/make_item_group.js";
 import {ServiceResolver} from "../zc_child_modules/YTPlugin_Base.user.js";
 import {ServiceLoader} from "../zc_child_modules/YTPlugin_ServiceLoader_Plugin.user.js";
 import {PathMapType} from "./ambient_exports.js";
@@ -34,8 +35,8 @@ type HandleTypes=InstanceType<RequireModuleCache["mod$HandleTypes"]["HandleTypes
 
 export type Y_PutBoxedArgs=[store_type: string,store_args: [string,make_item_group<any>]|[null,number]];
 
-export class CustomEventType {
-	type="event_type"
-	detail={}
-	port=new MessagePort
-}
+export type CustomEventType={
+	type: keyof NonNullable<import("../yt_json_types/j/J_CustomEventTargetEvents.js").J_CustomEventTargetEvents>;
+	detail: {};
+	port: MessagePort;
+};
