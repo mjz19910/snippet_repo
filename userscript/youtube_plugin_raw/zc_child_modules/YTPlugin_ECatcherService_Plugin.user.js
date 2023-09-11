@@ -109,7 +109,7 @@ class ECatcherService extends BaseService
 			this.data.expected_client_values.fexp;
 		}
 	}
-	/** @api @public @arg {RC_ECatcher_SPs["params"]} params */
+	/** @api @public @arg {import("../yt_json_types/r/group_R.js").RC_ECatcher_SPs["params"]} params */
 	on_params(params)
 	{
 		/** @private @type {NonNullable<this["data"]["client"]>} */
