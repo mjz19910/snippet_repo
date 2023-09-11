@@ -58,3 +58,8 @@ export type AU_Title={updateTitleAction: AD_Title;};
 export type AU_ToggleButtonText={updateToggleButtonTextAction: AD_ToggleButtonText;};
 export type AU_Viewership={updateViewershipAction: AD_ViewCount;};
 //#endregion
+
+type AC_GetDownload={
+	clickTrackingParams: string;
+	getDownloadActionCommand: DC_GetDownload;
+};
