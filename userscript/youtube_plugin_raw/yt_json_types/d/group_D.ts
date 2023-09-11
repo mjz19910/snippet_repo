@@ -27,6 +27,7 @@ import {R_SimpleCardContent} from "../r/r_sub/r/R_SimpleCardContent.js";
 import {R_CollaboratorInfoCardContent} from "../r/r_sub/r/R_CollaboratorInfoCardContent.js";
 import {V_BinaryTimestamp} from "../nop_q/P.js";
 import {R_EmojiPickerCategory} from "../r/r_sub/r/R_EmojiPickerCategory.js";
+import {R_EmojiPickerUpsellCategory} from "../r/r_sub/r/R_EmojiPickerUpsellCategory.js";
 
 //#region String data, ie `D_${string}`
 export type D_EndpointLikeEndings="Endpoint"|"Command"|"Action"|"Renderer";
