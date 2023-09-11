@@ -1,1 +1,0 @@
-type G_StoreDescription=StoreDescription<string>;

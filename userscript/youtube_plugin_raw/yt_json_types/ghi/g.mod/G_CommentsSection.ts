@@ -1,1 +1,0 @@
-type G_CommentsSection=R_CommentThread|R_ContinuationItem;

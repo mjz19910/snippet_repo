@@ -1,5 +1,6 @@
 import {T_Split} from "../../support_0_mod/T_Split.mod.js";
 import {Join} from "../../support_1/Join.js";
+import {StoreDescription} from "../../zc_child_modules/YTPlugin_Support_Service.user.js";
 import {AU_ChannelSwitcherPage,AU_NotificationsUnseenCount,AU_SubscribeButton,A_AccountItem,A_AddChatItem,A_AddToGuideSection,A_ChangeEngagementPanelVisibility,A_GetMultiPageMenu,A_RemoveFromGuideSection,A_ReplayChatItem,A_SendFeedback,A_ShowEngagementPanelScrim,A_Signal} from "../abc/A.js";
 import {B_GenericResponseType} from "../abc/B.js";
 import {CD_Invalidation,CD_LiveChatReplay,CD_PlayerSeek,C_AddToPlaylist,C_RefreshPlaylist,C_RunAttestation,C_ScrollToEngagementPanel} from "../abc/C.js";
@@ -912,3 +913,41 @@ export type G_RS_WatchPage=RS_Page_Watch|RS_VE3832_Page_Watch;
 
 export type VW_BinaryTimestamp=T_VW<V_BinaryTimestamp>;
 export type T_Base64Str=string;
+export type G_BrowseFeed=
+	|R_RichItem
+	|R_ContinuationItem
+	;
+;
+export type G_BrowseIdStr_SP_Inner="unlimited"|"account_advanced"|"account_billing"|"account_notifications"|"account_privacy"|"account_sharing"|"account_playback"|"account"|"account_downloads"|"account_overview"|"report_history";
+export type G_CacheSetItems=
+	|make_item_group<bigint>|G_BoxedDatabaseData|G_BoxedDatabaseData["z"][0]
+	|make_item_group<boolean>
+	|make_item_group<string|number>
+	|make_item_group<number>
+	|make_item_group<string>
+	|{type: "store"; z: [make_item_group<bigint>];}
+	;
+;
+export type CacheTreeDepth1=G_BoxedDatabaseData["z"][0];
+export type G_CommentsSection=R_CommentThread|R_ContinuationItem;
+export type G_IdSrc=B_IdSrcNum|B_IdSrcStr;
+export type G_PlayerStoryboards=R_PlayerStoryboardSpec|R_PlayerLiveStoryboardSpec;
+export type G_Primitives=string|number|bigint|boolean|null|undefined;
+export type G_StoredChangeItem={
+	a: "store_change"; b: "root_visual_element"; d: string;
+	z: [make_item_group<number>];
+}|{
+	a: "store_change"; b: "number"; d: string;
+	z: [make_item_group<number>];
+}|{
+	a: "store_change"; b: "string"; d: string;
+	z: [make_item_group<string>];
+}|{
+	a: "store_change"; b: "keys"; d: string;
+	z: [make_item_group<number|string>];
+}|{
+	a: "store_change"; b: "boolean"; d: string;
+	z: [make_item_group<boolean>];
+};
+export type G_StoreDescription=StoreDescription<string>;
+
