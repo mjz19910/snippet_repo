@@ -19,6 +19,7 @@ import {DE_U_ChannelUrl, DE_U_InternalUrl, DU_GuideEntry_Id, DU_Playlist_Id, DU_
 import {D_Button,R_Button} from "./mod_D/D_T/D_Button.js";
 import {DC_ReloadContinuationItems} from "./group_DC.js";
 import {DE_IconType_Button,DE_SuperThanksSelectedTier,DE_AdPlacementKind,DE_SubmitFeedback,DE_MP_MenuStyle,DE_VE83769_Url_1} from "./group_DE.js";
+import {GD_SD_Item} from "../abc/a_sub/G_empty_obj.js";
 
 //#region String data, ie `D_${string}`
 export type D_EndpointLikeEndings="Endpoint"|"Command"|"Action"|"Renderer";
@@ -3471,3 +3472,33 @@ export type D_SimpleCardTeaser={
 	onTapCommand?: A_ChangeEngagementPanelVisibility;
 };
 export type D_FrameworkUpdates={entityBatchUpdate: DR_DC_EntityBatchUpdate; elementUpdate?: R_ElementUpdate;};
+type D_CommandRunItem={
+	startIndex: number;
+	length: number;
+	onTap: C_Innertube;
+	loggingDirectives?: D_LoggingDirectives;
+};
+type D_StyleRunItem=({
+	fontColor: number;
+	fontName: string;
+	weight: number;
+}|{
+	styleRunExtensions: {
+		styleRunColorMapExtension: {
+			colorMap: [
+				{key: "USER_INTERFACE_THEME_DARK",value: 0xffffffff;},
+				{key: "USER_INTERFACE_THEME_LIGHT",value: 0xff131313;}
+			];
+		};
+	};
+})&{
+	startIndex: number;
+	length: number;
+};
+type D_AttributedDescription={
+	content: string;
+	commandRuns?: D_CommandRunItem[];
+	styleRuns?: D_StyleRunItem[];
+	attachmentRuns?: R_AttachmentElement[];
+	decorationRuns?: R_TextDecorator[];
+};
