@@ -1,4 +1,8 @@
-type D_CommentReplyDialog={
+import {R_Button,D_Thumbnail} from "../../../d/group_D.js";
+import {G_Text} from "../../../ghi/group_G.js";
+import {R_EmojiPicker} from "../../group_R.js";
+
+export type D_CommentReplyDialog={
 	replyButton: R_Button;
 	cancelButton: R_Button;
 	authorThumbnail: D_Thumbnail;
@@ -9,4 +13,4 @@ type D_CommentReplyDialog={
 	emojiPicker: R_EmojiPicker;
 	aadcGuidelinesStateEntityKey: string;
 };
-type R_CommentReplyDialog={commentReplyDialogRenderer: D_CommentReplyDialog;};
+export type R_CommentReplyDialog={commentReplyDialogRenderer: D_CommentReplyDialog;};
