@@ -954,11 +954,7 @@ class Support_RS_Player extends BaseService
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z([startTimeMs,endTimeMs],x => this.sm.a_primitive_str(x));
 		this.sm.D_Thumbnail(watermark);
-		x: {
-			let x2=navigationEndpoint;
-			if(this.sm.is_TE_VE(x2,3611)) {this.sm.E_VE3611(x2); break x;}
-			debugger;
-		}
+		this.sm.E_VE3611(navigationEndpoint);
 		this.sm.a_primitive_str(channelName);
 		this.xm.R_SubscribeButton(subscribeButton);
 	}
@@ -1646,7 +1642,7 @@ class Support_GenericApi extends BaseService
 	{
 		const cf="D_AddToPlaylistCreate";
 		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.sm.R_CompactLink(openCreateLink);
+		// this.sm.R_CompactLink(openCreateLink);
 		this.xm.R_TextInputFormField(nameInput);
 		this.R_Dropdown(privacyInput);
 		this.xm.R_Button(createAction);
@@ -1706,165 +1702,11 @@ class Support_EventInput extends BaseService
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_EventInput,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
 	//#region Renderer & Group
-	/** @private @arg {import("../yt_json_types/r/group_R.js").G_ResponseBrowse} x */
-	G_ResponseBrowse(x)
-	{
-		const cf="R_PageTypeBrowse_Response";
-		if("rootVe" in x)
-		{
-			switch(x.rootVe)
-			{
-				default: x===""; debugger; break;
-				case 3854: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					switch(url)
-					{
-						default: debugger; switch(url)
-							{
-								case "/":
-							} break;
-						case "/":
-					}
-				} break;
-				case 6827: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					switch(url)
-					{
-						default: debugger; switch(url)
-							{
-								case "/feed":
-							} break;
-						case "/feed/library":
-					}
-				} break;
-				case 96368: {
-					const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					switch(url)
-					{
-						default: debugger; switch(url)
-							{
-								case "/feed":
-							} break;
-						case "/feed/subscriptions":
-					}
-				} break;
-			}
-			return;
-		}
-		if(this.sm.is_EP_Val(x,3854))
-		{
-			let {...u}=this.RS_Page_Type1(cf,x,{
-				page: x => this.sm.cq(x,"browse"),
-				endpoint: x => this.sm.E_VE3854(x),
-				response: x => this.x.get("x_RS_Browse").RS_Browse(x),
-				/** @arg {import("../yt_json_types/r/group_R.js").RS_VE3854_BrowsePage["url"]} x */
-				url(x)
-				{
-					switch(x)
-					{
-						default: x===""; debugger; switch(x)
-							{
-								case "/":
-							} break;
-						case "/":
-					}
-				},
-				expirationTime: x => this.sm.t(x,this.sm.a_primitive_num),
-			});
-			if(!this.sm.is_not_empty_obj(u)) return;
-			if("previousCsn" in u)
-			{
-				const {previousCsn,...y}=u; this.g(y);
-				this.sm.D_VeCsn(previousCsn,{prev: true});
-				return;
-			}
-			const {graftedVes,csn,...y}=u; this.g(y);
-			this.z(graftedVes,this.D_GraftedVeItem);
-			this.sm.D_VeCsn(csn);
-			return;
-		}
-		if(this.sm.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
-			/** @arg {import("../yt_json_types/r/group_R.js").RS_VE6827_BrowsePage["url"]} url */
-			url: (url) =>
-			{
-				if(this.sm.str_is_search(url))
-				{
-					let up=split_string_once(url,"?");
-					switch(up[0])
-					{
-						default: up[0]===""; debugger; switch(up[0])
-							{
-								case "/":
-							} break;
-						case "/feed/trending": {
-							let {bp,...y}=this.parse_url_search_params(up[1]); this.g(y);
-						}
-					}
-					return;
-				}
-				switch(url)
-				{
-					default: url===""; debugger; switch(url)
-						{
-							case "/":
-						} break;
-					case "/feed/history":
-					case "/feed/library":
-				}
-			}
-		}));
-		if(this.sm.is_EP_Val(x,96368)) return this.g(this.RS_Page_Type1(cf,x,{
-			/** @arg {import("../yt_json_types/r/group_R.js").RS_VE96368_BrowsePage["url"]} url */
-			url(url)
-			{
-				switch(url)
-				{
-					default: url===""; debugger; switch(url)
-						{
-							case "/":
-						} break;
-					case "/feed/subscriptions":
-				}
-			}
-		}));
-		debugger;
-	}
 	//#endregion
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Browse.js").NavFinishDetail_Browse} x */
 	NavFinishDetail_Browse(x)
 	{
-		const cf="R_PageTypeBrowse";
-		if(this.sm.is_EP_Val(x,3854))
-		{
-			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.sm.E_VE3854(endpoint);
-			this.G_ResponseBrowse(response);
-			if(pageType!=="browse") debugger;
-			this._primitive_of(fromHistory,"boolean");
-			this.sm.a_primitive_num(navigationDoneMs);
-			return;
-		}
-		if(this.sm.is_EP_Val(x,6827))
-		{
-			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.G_ResponseBrowse(response);
-			this.sm.E_VE6827(endpoint);
-			if(pageType!=="browse") debugger;
-			this._primitive_of(fromHistory,"boolean");
-			this.sm.a_primitive_num(navigationDoneMs);
-			return;
-		}
-		if(this.sm.is_EP_Val(x,96368))
-		{
-			const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.G_ResponseBrowse(response);
-			this.sm.E_VE96368(endpoint);
-			if(pageType!=="browse") debugger;
-			this._primitive_of(fromHistory,"boolean");
-			this.sm.a_primitive_num(navigationDoneMs);
-			return;
-		}
-		debugger;
+		x; debugger;
 	}
 	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Channel.js").NavFinishDetail_Channel} x */
 	NavFinishDetail_Channel(x)
@@ -2051,16 +1893,12 @@ class Support_EventInput extends BaseService
 			}
 		};
 		/** @arg {(typeof x)["endpoint"]} x */
-		let h_ep=x =>
-		{
-			if(this.sm.is_TE_VE(x,3611)) return this.sm.E_VE3611(x);
-			debugger;
-		};
+		let h_ep=x => this.sm.E_VE3611(x);
 		/** @arg {(typeof x)["response"]} x */
 		let h_rs=x => this.ht.RS_Channel(x);
 		/** @arg {(typeof x)["expirationTime"]} x */
 		let h_et=x => this.sm.a_primitive_num(x);
-		/** @type {T_MakeHandlers<typeof x>} */
+		/** @type {import("../yt_json_types/T_MakeHandlers.js").T_MakeHandlers<typeof x>} */
 		const h_d={
 			page: x => this.sm.cq(x,"channel"),
 			endpoint: h_ep,
@@ -2069,7 +1907,7 @@ class Support_EventInput extends BaseService
 		if(!this.sm.is_EP_Val(x,3611)) debugger;
 		if("previousCsn" in x)
 		{
-			/** @type {T_MakeHandlers<typeof x>} */
+			/** @type {import("../yt_json_types/T_MakeHandlers.js").T_MakeHandlers<typeof x>} */
 			const handlers={...h_d,url: h_url,expirationTime: h_et};
 			let {previousCsn,...u1}=this.RS_Page_Type1(cf,x,handlers); this.g(u1);
 			this.sm.D_VeCsn(previousCsn,{prev: true});
@@ -2077,7 +1915,7 @@ class Support_EventInput extends BaseService
 		}
 		if("rootVe" in x)
 		{
-			/** @type {T_MakeHandlers<typeof x>} */
+			/** @type {import("../yt_json_types/T_MakeHandlers.js").T_MakeHandlers<typeof x>} */
 			const handlers={
 				page: h_d.page,
 				endpoint: h_d.endpoint,
@@ -2093,7 +1931,7 @@ class Support_EventInput extends BaseService
 		}
 		if("csn" in x)
 		{
-			/** @type {T_MakeHandlers<typeof x>} */
+			/** @type {import("../yt_json_types/T_MakeHandlers.js").T_MakeHandlers<typeof x>} */
 			const handlers={
 				page: h_d.page,
 				endpoint: h_d.endpoint,
@@ -2106,7 +1944,7 @@ class Support_EventInput extends BaseService
 			this.z(graftedVes,this.D_GraftedVeItem);
 			return;
 		}
-		/** @type {T_MakeHandlers<typeof x>} */
+		/** @type {import("../yt_json_types/T_MakeHandlers.js").T_MakeHandlers<typeof x>} */
 		const handlers={
 			page: h_d.page,
 			endpoint: h_d.endpoint,
@@ -2520,7 +2358,7 @@ class Support_Renderer extends BaseService
 		const cf="D_SettingsSidebar";
 		const {title,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(title);
-		this.sm.z(items,this.sm.R_CompactLink);
+		// this.sm.z(items,this.sm.R_CompactLink);
 	}
 	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PlaylistSidebar} x */
 	R_PlaylistSidebar(x) {this.H_("playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
@@ -2783,9 +2621,7 @@ class Support_Renderer extends BaseService
 	{
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		{
-			let x2=navigationEndpoint;
-			if(this.sm.is_TE_VE(x2,6827)) return this.sm.E_VE6827(x2);
-			if(this.sm.is_TE_VE(x2,42352)) return this.sm.E_VE42352(x2);
+			// let x2=navigationEndpoint;
 			debugger;
 		}
 		if(icon.iconType!=="VIDEO_LIBRARY_WHITE") debugger;
@@ -2880,16 +2716,6 @@ class Support_Renderer extends BaseService
 		{
 			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			if(this.sm.is_TE_VE(navigationEndpoint,3854))
-			{
-				this.sm.E_VE3854(navigationEndpoint);
-			} else if(this.sm.is_TE_VE(navigationEndpoint,96368))
-			{
-				this.sm.E_VE96368(navigationEndpoint);
-			} else
-			{
-				debugger;
-			}
 			switch(icon.iconType)
 			{
 				case "SUBSCRIPTIONS": break;
@@ -2904,11 +2730,6 @@ class Support_Renderer extends BaseService
 			let x2=navigationEndpoint;
 			if("browseEndpoint" in x2)
 			{
-				if(this.sm.is_TE_VE(x2,3611)) return this.sm.E_VE3611(x2);
-				if(this.sm.is_TE_VE(x2,5754)) return this.sm.E_VE5754(x2);
-				if(this.sm.is_TE_VE(x2,6827)) return this.sm.E_VE6827(x2);
-				if(this.sm.is_TE_VE(x2,11487)) return this.sm.E_VE11487(x2);
-				if(this.sm.is_TE_VE(x2,23462)) return this.sm.E_VE23462(x2);
 				x2; debugger;
 				break x;
 			}
@@ -2926,8 +2747,6 @@ class Support_Renderer extends BaseService
 			if("urlEndpoint" in x2) return this.xm.E_Url(x2);
 			if("browseEndpoint" in x2)
 			{
-				if(this.sm.is_TE_VE(x2,6827)) return this.sm.E_VE6827(x2);
-				if(this.sm.is_TE_VE(x2,5754)) return this.sm.E_VE5754(x2);
 				x2; debugger;
 				return;
 			};
@@ -3963,8 +3782,7 @@ class Support_Renderer extends BaseService
 		this.t(onClickCommand,x =>
 		{
 			if("addToToastAction" in x) return this.sm.A_AddToToast(x);
-			if(this.sm.is_TE_VE(x,3611)) return this.sm.E_VE3611(x);
-			x;
+			this.sm.E_VE3611(x);
 		});
 		this.sm.t(contentDescription,this.sm.G_Text);
 		this.sm.t(soundAttributionTitle,this.sm.G_Text);
@@ -4313,7 +4131,7 @@ class ForService_XMethods extends BaseService
 		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
 		if("browseEndpoint" in x)
 		{
-			if(this.sm.is_TE_VE(x,23462)) return this.sm.E_VE23462(x);
+			this.sm.E_VE23462(x);
 			debugger;
 		}
 		if("watchEndpoint" in x) return this.sm.E_Watch(x);
@@ -5005,7 +4823,7 @@ class ForService_XMethods extends BaseService
 		if("searchBoxRenderer" in x) return this.sm.R_SearchBox(x);
 		if("subFeedSelectorRenderer" in x) return this.sm.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
-		if("compactLinkRenderer" in x) return this.sm.R_CompactLink(x);
+		if("compactLinkRenderer" in x) return /*this.sm.R_CompactLink(x)*/;
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ProfileColumn} x */

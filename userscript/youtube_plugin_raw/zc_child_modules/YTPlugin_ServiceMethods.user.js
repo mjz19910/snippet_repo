@@ -2071,19 +2071,6 @@ class ServiceMethods extends ServiceData
 			} break;
 		}
 	}
-	/** @public @arg {import("../yt_json_types/ghi/group_G.js").GE_Browse} x */
-	GE_Browse_old(x)
-	{
-		if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
-		if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-		if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-		if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
-		if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
-		if(this.is_TE_VE(x,42352)) return this.E_VE42352(x);
-		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
-		debugger;
-	}
 	/** @arg {{endpoint:import("../yt_json_types/e/GR_E_VE.js").TE_VE<number>}} x @template {number} T @arg {T} t @returns {x is {endpoint:import("../yt_json_types/e/GR_E_VE.js").TE_VE<T>}} */
 	is_EP_Val(x,t) {return this.is_TE_VE(x.endpoint,t);}
 	/** @public @template {U["commandMetadata"]["webCommandMetadata"]["rootVe"]} T @template {import("../yt_json_types/e/GR_E_VE.js").TE_VE_In} U @arg {U} x @arg {T} t @returns {x is import("../yt_json_types/e/GR_E_VE.js").TE_VE<T>} */
@@ -4280,8 +4267,6 @@ class ServiceMethods extends ServiceData
 		}
 		this.save_enum(cf,"FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CD_Next} x */
-	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.DC_Generic_CTP);}
 	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ProductListItem} x */
 	R_ProductListItem(x) {this.H_s("productListItemRenderer",x,this.D_ProductListItem);}
 	/** @private @arg {import("../yt_json_types/r/group_R.js").R_MerchandiseShelf} x */
@@ -5616,30 +5601,6 @@ class ServiceMethods extends ServiceData
 		if(beReused!==true) debugger;
 		return a;
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_CompactLink} x */
-	R_CompactLink(x) {this.H_s("compactLinkRenderer",x,this.D_CompactLink);}
-	/** @private @template {import("../yt_json_types/d/group_D.js").D_CompactLink} T @arg {import("../yt_json_types/abc/group_C.js").CF_D_Link} cf @arg {T} x */
-	D_Link_Omit(cf,x)
-	{
-		const {title,trackingParams,...y}=this.s(cf,x);
-		this.G_Text(title);
-		return y;
-	}
-	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
-	D_CompactLink_NavEndpoint(x)
-	{
-		const cf="D_CompactLink_NavEndpoint";
-		if("uploadEndpoint" in x) return this.xm.E_VE83769_Upload(x);
-		if("browseEndpoint" in x)
-		{
-			if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			this.is_TE_VE(x,this.assume_type.never()); debugger; return;
-		}
-		if("signalNavigationEndpoint" in x) return this.xm.E_SignalNavigation(x);
-		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	assume_type={
 		/** @returns {never} */
 		never()
@@ -5651,56 +5612,10 @@ class ServiceMethods extends ServiceData
 			return v;
 		}
 	};
-	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<import("../yt_json_types/d/group_D.js").D_CompactLink,{style:any}>} x */
-	D_CompactLink_Styled(cf,x)
-	{
-		switch(x.style)
-		{
-			default: x===""; debugger; break;
-			case "COMPACT_LINK_STYLE_TYPE_HISTORY_MY_ACTIVITY_LINK": {
-				let u=this.D_Link_Omit(cf,x);
-				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
-				this.D_CompactLink_NavEndpoint(navigationEndpoint);
-			} break;
-			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": {
-				let u=this.D_Link_Omit(cf,x);
-				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
-				this.D_CompactLink_NavEndpoint(navigationEndpoint);
-			} break;
-			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
-				let u=this.D_Link_Omit(cf,x);
-				const {icon,style,navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
-				this.D_CompactLink_NavEndpoint(navigationEndpoint);
-			} break;
-		}
-	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_CompactLink} x */
-	D_CompactLink(x)
-	{
-		const cf="D_CompactLink";
-		if("style" in x) {return this.D_CompactLink_Styled(`${cf}.Styled`,x);}
-		if("icon" in x)
-		{
-			let u=this.D_Link_Omit(cf,x);
-			const {icon,...y}=this.s(`${cf}.icon`,u); this.g(y);
-			switch(x.icon.iconType)
-			{
-				case "PERSON_ADD": break;
-				default: debugger; break;
-			}
-			return;
-		}
-		this.cg.make_codegen_group(cf,x);
-	}
 	/** @private @arg {import("../yt_json_types/nop_q/Popup.js").MP_TopbarMenu} x */
 	D_TopbarMenuButton_MenuItem(x)
 	{
-		const cf="D_TopbarMenuButton_MenuItem";
-		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let [n,y1]=this.z(sections,this.TR_MP_MenuSection); this.cq(this.eq_keys(y1,[]),true);
-		let [n1,y2]=this.z(n,v => this.T_Items_TP("R_CompactLink_Items",v[0])); this.cq(this.eq_keys(y2,[]),true);
-		this.z(n1,x => this.z(x,this.R_CompactLink));
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
+		x; debugger;
 	}
 	/** @private @template {import("../yt_json_types/d/group_D.js").D_Omit_Menu_Radio&import("../yt_json_types/d/group_D.js").D_Omit_Compact_Player} T @arg {import("../yt_json_types/abc/group_C.js").CF_D_Menu_Omit} cf @arg {T} x */
 	D_Omit_Menu_Radio(cf,x)
@@ -6448,34 +6363,13 @@ class ServiceMethods extends ServiceData
 	D_TextRun_NavEP_1(x)
 	{
 		const cf="D_TextRun_NavEP_1"; this.k(cf,x);
-		if("browseEndpoint" in x)
-		{
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-			if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
-			x===""; debugger;
-			return;
-		}
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("reelWatchEndpoint" in x) return this.x.get("x_VE37414").E_VE37414_ReelWatch(x);
-		x===""; debugger;
+		x; debugger;
 	}
 	/** @public @arg {Extract<import("../yt_json_types/d/group_D.js").D_TextRun,{navigationEndpoint:any;loggingDirectives:any}>["navigationEndpoint"]} x */
 	D_TextRun_NavEP_2(x)
 	{
-		if("browseEndpoint" in x)
-		{
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-			if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-			debugger;
-			return;
-		}
-		if("urlEndpoint" in x) return this.xm.E_Url(x);
-		if("searchEndpoint" in x) return this.E_Search(x);
-		x===""; debugger;
+		const cf="D_TextRun_NavEP_2"; this.k(cf,x);
+		x; debugger;
 	}
 	/** @public @arg {import("../yt_json_types/d/group_D.js").D_TextRun} x */
 	D_TextRun(x)
