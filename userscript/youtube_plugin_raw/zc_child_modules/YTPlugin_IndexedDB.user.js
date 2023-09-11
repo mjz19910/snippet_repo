@@ -623,7 +623,6 @@ function init_module()
 		 * @template {"boxed_id"} K
 		 * @template {import("../yt_json_types/d/mod_D/_T/DT_DatabaseStoreTypes.js").DT_DatabaseStoreTypes[K]} T
 		 * @param {T["key"]} store_key
-		 * @template {Extract<T,{key:T["key"]}>} T2
 		 * @param {number} version
 		 * @returns {Promise<T|null>}
 		 */
@@ -632,7 +631,7 @@ function init_module()
 			let typed_db=new TypedIndexedDB;
 			let db=await this.get_async_result(this.get_db_request(version));
 			const tx=typed_db.transaction(db,key,"readonly");
-			/** @type {import("../zb_plugin_types/TypedIDB.js").TypedIDBObjectStore<T2>} */
+			/** @type {import("../zb_plugin_types/TypedIDB.js").TypedIDBObjectStore<T>} */
 			const obj_store=typed_db.objectStore(tx,key);
 			let result=await this.get_async_result(typed_db.get(obj_store,store_key));
 			return result;
