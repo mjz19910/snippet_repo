@@ -1,4 +1,4 @@
-type dbg_var={
+export type dbg_var={
 	type: "var";
 	data: any[];
 };

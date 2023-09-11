@@ -1,4 +1,8 @@
-namespace Replace {
+import {UrlParse} from "../support_1/url_parse/UrlParse.js";
+import {D_GoogleLoginExternalUrl} from "../yt_json_types/d/group_D.js";
+import {T_Split,TP_ParseUrlSearchParams,T_Replace} from "../yt_json_types/stu/group_T.js";
+
+export namespace Replace {
 	type G1=UrlParse<D_GoogleLoginExternalUrl>['search'];
 	type G2=T_Split<G1,"?">[1];
 	type G3=TP_ParseUrlSearchParams<G2>['continue'];

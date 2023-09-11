@@ -1,4 +1,4 @@
-type TemplateElement={
+export type TemplateElement={
 	[x: `f_n${number}`]: number|bigint;
 	[x: `f_rep_n${number}`]: (number|bigint)[];
 	[x: `f_o${number}`]: TemplateElement;

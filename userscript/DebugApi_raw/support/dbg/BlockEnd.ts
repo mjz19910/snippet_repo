@@ -1,1 +1,1 @@
-interface BlockEnd {}
+export interface BlockEnd {}

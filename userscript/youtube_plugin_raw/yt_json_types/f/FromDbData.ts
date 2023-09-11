@@ -1,4 +1,4 @@
-type FromDbData={
+export type FromDbData={
 	key: `boxed_id:channel_id:UC:${string}`;
 	tag: "channel_id:UC";
 	type: "boxed_id";

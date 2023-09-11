@@ -1,4 +1,4 @@
-type ActivateFunction={
+export type ActivateFunction={
 	type: "function-breakpoint";
 	name: string;
 	target: CallableFunction;

@@ -1,2 +1,2 @@
 // inject_api global
-type SavedArrayItemType<T>=[string,T];
+export type SavedArrayItemType<T>=[string,T];

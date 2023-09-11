@@ -1,1 +1,1 @@
-type IdHolderBox={value: number;};
+export type IdHolderBox={value: number;};

@@ -1,4 +1,8 @@
-type ConnectionMessage={
+import {ConnectFlag} from "./ConnectFlag.js";
+import {ConnectionForward} from "./ConnectionForward.js";
+import {MessageType} from "./MessageType.js";
+
+export type ConnectionMessage={
 	type: "tcp";
 	flags: ConnectFlag;
 	seq: number;

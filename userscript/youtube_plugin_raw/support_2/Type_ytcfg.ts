@@ -1,1 +1,1 @@
-type Type_ytcfg={data_: Record<string,any>;};
+export type Type_ytcfg={data_: Record<string,any>;};

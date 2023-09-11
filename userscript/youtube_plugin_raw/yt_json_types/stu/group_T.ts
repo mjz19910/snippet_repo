@@ -352,9 +352,9 @@ export type T_Split<S extends string,D extends string=",">=
 	;
 ;
 export type TS_Test2=T_Split<"g","">;
-type T_StringWhitespace=" "|"\n"|"\t";
-type T_StringTrimStart<T extends string>=T extends `${T_StringWhitespace}${infer P}`? T_StringTrimStart<P>:T;
-type T_StringTrimEnd<T extends string>=T extends `${infer P}${T_StringWhitespace}`? T_StringTrimEnd<P>:T;
+export type T_StringWhitespace=" "|"\n"|"\t";
+export type T_StringTrimStart<T extends string>=T extends `${T_StringWhitespace}${infer P}`? T_StringTrimStart<P>:T;
+export type T_StringTrimEnd<T extends string>=T extends `${infer P}${T_StringWhitespace}`? T_StringTrimEnd<P>:T;
 export type T_StringTrim<T extends string>=T_StringTrimEnd<T_StringTrimStart<T>>;
 
 //#endregion

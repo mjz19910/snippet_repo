@@ -1,4 +1,4 @@
-type EventListenerInternal={
+export type EventListenerInternal={
 	listener: Function;
 	once: boolean;
 	passive: boolean;

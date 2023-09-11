@@ -1,1 +1,1 @@
-type HolderResultBox=RealHolderUnk|ValueIdArrBox|DepthBoxA;
+export type HolderResultBox=RealHolderUnk|ValueIdArrBox|DepthBoxA;

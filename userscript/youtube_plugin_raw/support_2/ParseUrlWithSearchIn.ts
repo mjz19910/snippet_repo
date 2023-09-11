@@ -1,7 +1,7 @@
 import {D_PlaylistUrlFormat,WatchUrlFormat} from "../yt_json_types/d/group_D.js";
 import {T_SplitOnce} from "../yt_json_types/stu/group_T.js";
 
-type DoSearchExtract<T extends string>=
+export type DoSearchExtract<T extends string>=
 	T extends infer C extends `/${string}`?
 	T_SplitOnce<Exclude<C,"/">,"/">[1] extends infer C1 extends string?
 	Extract<T_SplitOnce<C1,"/">,[`${string}?${string}`]>[0]

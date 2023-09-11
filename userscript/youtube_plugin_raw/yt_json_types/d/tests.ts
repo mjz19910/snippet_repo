@@ -1,10 +1,10 @@
 export function cache_item_decompose_info_0_info_0(x: G_BoxedDatabaseData) {
 	return x;
 }
-type A1=ReturnType<typeof cache_item_decompose_info_0_info_0>;
-type A2=Extract<A1,object>;
-type A3=Extract<A2,{type: any;}>;
-type E1=Extract<A3,{info_arr: any;}>["z"][0];
+export type A1=ReturnType<typeof cache_item_decompose_info_0_info_0>;
+export type A2=Extract<A1,object>;
+export type A3=Extract<A2,{type: any;}>;
+export type E1=Extract<A3,{info_arr: any;}>["z"][0];
 class ChainWalker {
 	/** @arg {RetValue} parent */
 	constructor(parent: RetValue) {
@@ -53,5 +53,5 @@ class RetValue {
 		return new ChainWalker(this);
 	}
 }
-type G_Ex_WV=[t: 1,r: {}];
-type G_Ex_Ret=[t: -1,n: number,v: G_Ex_WV,n: G_Ex_Ret|null];
+export type G_Ex_WV=[t: 1,r: {}];
+export type G_Ex_Ret=[t: -1,n: number,v: G_Ex_WV,n: G_Ex_Ret|null];

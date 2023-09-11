@@ -6,7 +6,7 @@ Symbol(Symbol.toStringTag): "Map Iterator"
  ​
 <prototype>: Object { … }
 */
-interface IterableIteratorPrototype {
+export interface IterableIteratorPrototype {
 	next: IterableIterator<any>["next"];
 	map<T,U>(func: (v: T) => U): IterableIterator<U>;
 	[Symbol.toStringTag]: "Map Iterator";

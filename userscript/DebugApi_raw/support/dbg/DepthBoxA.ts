@@ -1,1 +1,1 @@
-type DepthBoxA=["depth",number,WeakRef<HolderResultBox[]>];
+export type DepthBoxA=["depth",number,WeakRef<HolderResultBox[]>];

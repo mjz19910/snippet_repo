@@ -1,1 +1,1 @@
-type Type_yt={config_: Record<string,any>;};
+export type Type_yt={config_: Record<string,any>;};

@@ -1,10 +1,10 @@
-type ExtractTypes_5<T>=T extends Promise<infer U>?[Promise<U>]:[null];
-type ExtractTypes_4<T>=T extends (...v:infer A)=>infer R?[(...v:A)=>R,...ExtractTypes_5<T>]:[null,...ExtractTypes_5<T>];
-type ExtractTypes_3<T>=T extends any[]? T extends infer R extends any[]?[R[0][],...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>];
-type ExtractTypes_2<T>=T extends string?  [string,...ExtractTypes_3<T>]:[null,...ExtractTypes_3<T>];
-type ExtractTypes_1<T>=T extends number?  [number,...ExtractTypes_2<T>]:[null,...ExtractTypes_2<T>];
-type ExtractTypeAt<T,U extends number>=ExtractTypes_1<T>[U];
-type ExtractTypes<T>=[ExtractTypeAt<T,0>,ExtractTypeAt<T,1>,ExtractTypeAt<T,2>,ExtractTypeAt<T,3>,
+export type ExtractTypes_5<T>=T extends Promise<infer U>?[Promise<U>]:[null];
+export type ExtractTypes_4<T>=T extends (...v:infer A)=>infer R?[(...v:A)=>R,...ExtractTypes_5<T>]:[null,...ExtractTypes_5<T>];
+export type ExtractTypes_3<T>=T extends any[]? T extends infer R extends any[]?[R[0][],...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>];
+export type ExtractTypes_2<T>=T extends string?  [string,...ExtractTypes_3<T>]:[null,...ExtractTypes_3<T>];
+export type ExtractTypes_1<T>=T extends number?  [number,...ExtractTypes_2<T>]:[null,...ExtractTypes_2<T>];
+export type ExtractTypeAt<T,U extends number>=ExtractTypes_1<T>[U];
+export type ExtractTypes<T>=[ExtractTypeAt<T,0>,ExtractTypeAt<T,1>,ExtractTypeAt<T,2>,ExtractTypeAt<T,3>,
 	ExtractTypeAt<T,4>,
 ];
 

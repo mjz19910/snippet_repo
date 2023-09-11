@@ -1,2 +1,2 @@
-type YtEndpointBase={
+export type YtEndpointBase={
 };

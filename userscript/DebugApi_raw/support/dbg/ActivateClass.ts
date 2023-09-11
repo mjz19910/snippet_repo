@@ -1,7 +1,7 @@
-type ActivateClass={
+export type ActivateClass={
 	type: "class-breakpoint";
 	name: string;
-	target: Constructor;
-	activate: (fn_val: Constructor,args: any[]) => any;
+	target: Function;
+	activate: (fn_val: Function,args: any[]) => any;
 	activate_args: any[];
 };

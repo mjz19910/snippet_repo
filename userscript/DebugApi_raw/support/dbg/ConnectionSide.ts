@@ -1,1 +1,1 @@
-type ConnectionSide="client"|"server";
+export type ConnectionSide="client"|"server";

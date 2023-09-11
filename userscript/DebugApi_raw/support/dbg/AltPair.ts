@@ -1,2 +1,2 @@
 // AltPair
-type AltPair<T,U>=["T",T]|["U",U];
+export type AltPair<T,U>=["T",T]|["U",U];

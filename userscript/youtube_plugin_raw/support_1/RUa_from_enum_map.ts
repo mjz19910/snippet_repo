@@ -1,4 +1,4 @@
-type RUa_from_enum_map={
+export type RUa_from_enum_map={
 	2: "fakeChannel",
 	17: "musicAlbumRelease",
 	18: "musicAlbumReleaseDetail",

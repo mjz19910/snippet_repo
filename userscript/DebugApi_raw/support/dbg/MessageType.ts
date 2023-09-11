@@ -1,4 +1,4 @@
-type MessageType=
+export type MessageType=
 	|ConnectionConnected
 	|ConnectionDisconnected
 	|ConnectionSideMsg

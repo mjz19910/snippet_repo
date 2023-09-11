@@ -1,1 +1,1 @@
-type ConnectionConnected={type: "connected";};
+export type ConnectionConnected={type: "connected";};

@@ -1,4 +1,4 @@
-type ReportInfo<T>={
+export type ReportInfo<T>={
 	data: ConnectionMessage;
 	handler: T;
 };
