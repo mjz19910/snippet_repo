@@ -2,7 +2,7 @@ import {YtPageTypeEnum} from "../../../support_2/YtPageTypeEnum.js";
 import {T_D32} from "../../_rtv_wrong/T_Data.js";
 import {TA_Continuation} from "../../abc/A.js";
 import {B_VEMap} from "../../abc/B.js";
-import {D_RootVisualElementType,D_Omit_Compact_Player,D_Omit_Compact_Video,D_Accessibility} from "../../d/group_D/D.js";
+import {D_RootVisualElementType,D_Omit_Compact_Player,D_Omit_Compact_Video,D_Accessibility} from "../../d/group_D.js";
 import {D_TargetIdUuid,DU_EndpointKey} from "../../d/mod_D/DU_T/DU.js";
 import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions} from "../../ghi/_group.mod/G.js";
 import {D_FormatItem_SignatureCipher_SP} from "../../ghi/_group.mod/GU.js";

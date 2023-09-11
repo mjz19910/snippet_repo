@@ -1,4 +1,4 @@
-import {D_UrlFormat} from "../d/group_D/D.js";
+import {D_UrlFormat} from "../d/group_D.js";
 import {M_VE3832,M_VE3611,M_VE3854,M_Search,M_VE5754,M_VE6827,M_VE11487,M_VE23462,M_VE37414,M_Url,M_VE96368} from "../m/M.js";
 
 export type B_GenericResponseType={

@@ -50,12 +50,12 @@ import {A_UpdateCommentVote} from "../../e/E.js";
 import {G_AdditionalDataItem,G_Text,G_EY_Entity, G_ExtraUrlParamItem} from "../../ghi/_group.mod/G.js";
 import {A_ShareEntityService} from "../../nop_q/Popup.js";
 import {T_Signal,T_MutType} from "../../stu/mod/group_T.js";
-import {D_HideEnclosingContainer,D_LikeApi, D_PlaylistId, D_Thumbnail} from "../group_D/D.js";
-import {D_UserIdStr} from "../mod_D/DU_T/DU.js";
+import {D_HideEnclosingContainer,D_LikeApi, D_PlaylistId, D_Thumbnail} from "./group_D.js";
+import {DE_U_ChannelUrl, DE_U_ExternalUrl, DE_U_InternalUrl, DE_U_RedirectUrl, D_UserIdStr} from "../mod_D/DU_T/DU.js";
 import {T_IdTemplate} from "../mod_D/DU_T/DU_TemplateString.js";
 import {GU_VE6827_Id,GU_VE23462_Id} from "../../ghi/_group.mod/GU.js";
 import {R_AdFeedback,R_VssLoggingContext,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_WatchEndpointMusicConfig,R_ReelPlayerOverlay} from "../../r/R.js";
-import {DC_Params} from "../group_D/DC.js";
+import {DC_Params} from "./group_DC.js";
 
 //#region Endpoint Data
 export type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
@@ -107,6 +107,10 @@ export type DE_Url=
 	|DE_U_ExternalUrl_GRU_Open
 	;
 ;
+export type DE_U_ExternalUrl_GRU_Open={
+	url: `https://support.google.com/youtube?${string}`;
+	grwOpenInOverride: "GRW_OPEN_IN_OVERRIDE_USE_PREFERRED_APP_NO_PROMPT";
+};
 export type DE_VE3832_Watch={
 	videoId: string;
 	index?: number;

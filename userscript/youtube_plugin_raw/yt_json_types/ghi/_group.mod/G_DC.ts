@@ -1,6 +1,6 @@
 import {A_ChangeEngagementPanelVisibility,A_HideEngagementPanelScrim,A_SetActivePanelItem} from "../../abc/A.js";
 import {C_ChangeMarkersVisibility,C_EngagementPanelHeaderShowNavigationButton,C_EntityUpdate,C_Loop,C_RepeatChapter,C_ScrollToEngagementPanel,C_UpdateToggleButtonState} from "../../abc/C.js";
-import {D_Survey_Watch,D_PaidDigitalGoods} from "../../d/group_D/D.js";
+import {D_Survey_Watch,D_PaidDigitalGoods} from "../../d/group_D.js";
 import {E_VE3611,E_VE5754,E_VE6827} from "../../e/GR_E_VE.js";
 import {TA_OpenPopup_Empty} from "../../nop_q/Popup.js";
 

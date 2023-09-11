@@ -6,7 +6,7 @@ import {SI_VE76278_EngagementPanel} from "../../stu/mod/group_SI.js";
 import {DE_OpportunityType} from "../group_DE/DE_StringEnum.js";
 import {D_TargetIdUuid,DU_VideoId} from "../mod_D/DU_T/DU.js";
 import {R_Button} from "../mod_D/D_T/D_Button.js";
-import {D_AdSlotAndLayoutItem,D_InvalidationId,D_LiveChatEmoji,D_ClientMessages} from "./D.js";
+import {D_AdSlotAndLayoutItem,D_InvalidationId,D_LiveChatEmoji,D_ClientMessages} from "./group_D.js";
 
 //#region Common data
 export type DC_Params={params: string;};

@@ -1,4 +1,4 @@
-import {D_Enum_GuideAction,D_EngagementPanelTargetId,D_EngagementPanelVisibility,D_Thumbnail} from "../d/group_D/D.js";
+import {D_Enum_GuideAction,D_EngagementPanelTargetId,D_EngagementPanelVisibility,D_Thumbnail} from "../d/group_D.js";
 import {D_UserIdStr} from "../d/mod_D/DU_T/DU.js";
 import {T_IdTemplate} from "../d/mod_D/DU_T/DU_TemplateString.js";
 import {R_Button} from "../d/mod_D/D_T/D_Button.js";

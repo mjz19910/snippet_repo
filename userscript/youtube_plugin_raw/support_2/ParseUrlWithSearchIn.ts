@@ -1,4 +1,4 @@
-import {WatchUrlFormat} from "../yt_json_types/d/group_D/D.js";
+import {WatchUrlFormat} from "../yt_json_types/d/group_D.js";
 import {D_PlaylistUrlFormat} from "../yt_json_types/d/mod_D/DU_T/DU.js";
 import {T_SplitOnce} from "../yt_json_types/stu/mod/group_T.js";
 

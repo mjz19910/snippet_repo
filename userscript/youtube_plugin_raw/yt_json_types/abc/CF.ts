@@ -1,5 +1,6 @@
-import {G_Ret_get_auto_type_name} from "../_rtv_wrong/Ret_get_auto_type_name.js";
-import {T_ExtractImport} from "../stu/mod/group_T.js";
+import {CF_GetAutoTypename as CF_GetAutoTypename, CF_ShortTypeName} from "../_rtv_wrong/Ret_get_auto_type_name.js";
+import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.js";
+import {T_ExtractImport, T_Split} from "../stu/mod/group_T.js";
 
 export type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map";
 export type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen";
@@ -33,10 +34,10 @@ export type GCF_M_k=
 ;
 export type CF_M_k=T_ExtractImport<"CF_M_k">|"CF_M_k"|GCF_M_k;
 export type CF_M_rl=T_ExtractImport<"CF_M_rl">|"CF_M_rl"|CF_D_Video_Handle;
-export type CF_M_s=T_ExtractImport<"CF_M_s">|"CF_M_s"|GCF_s;
+export type CF_M_s=T_ExtractImport<"CF_M_s">|"CF_M_s"|CF_s;
 export type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE";
-export type CF_M_w=T_ExtractImport<"CF_M_w">|"CF_M_w"|GCF_w;
-type GCF_s=
+export type CF_M_w=T_ExtractImport<"CF_M_w">|"CF_M_w"|CF_w;
+type CF_s=
 	|CF_D_ChipCloudChip_Omit
 	|CF_D_CustomEmoji
 	|CF_D_GuideEntry
@@ -65,10 +66,27 @@ type GCF_s=
 	|CF_TE_Endpoint_3
 	|CF_TE_Endpoint_Opt_3
 	|CF_TE_TrackedObj_2
-	|G_Ret_get_auto_type_name
+	|CF_GetAutoTypename
 	;
 ;
-type GCF_w=
+export type CF_GetAutoTypename=
+	|"{}"
+	|`D_${"PrefetchHintConfig"}`
+	|`TA_OpenPopup<T_OpenPopup_Dialog<${string}>>`
+	|`TA_OpenPopup<T_OpenPopup_Toast<${string}>>`
+	|CF_ShortTypeName
+	;
+;
+export type CF_ShortTypeName=
+	|"R_TwoColumnBrowseResults"
+	|"A_OpenPopup"
+	|`C_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Command`>,"Command">[0]}`
+	|`R_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Renderer`>,"Renderer">[0]}`
+	|"GE_Browse"
+	|"RMD_Badge"
+	;
+;
+type CF_w=
 	|CF_M_y
 	|CF_M_zy
 	|CF_T_Commands

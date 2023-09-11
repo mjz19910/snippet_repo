@@ -5,8 +5,8 @@ import {DC_ScrollToEngagementPanel,DC_SectionList_TargetId} from "../../../abc/C
 import {G_AccountPageSettingsSections,G_SI_DB_EngagementPanel,S_PageTypeStr} from "../../../ghi/_group.mod/G.js";
 import {GU_GoodPut_ProbeUrl,GU_InitPlaybackUrl,GU_VE83769_Url_External,GU_VideoPlaybackUrl} from "../../../ghi/_group.mod/GU.js";
 import {RS_Search} from "../../../r/RS.js";
-import {D_ApiPathFormat_1,D_BrowseEndpointPages,D_Button_With_TargetId,D_ChipCloudChip_tid,D_EndpointLikeEndings,D_EngagementPanelSectionTargetId,D_Settings_Id,D_TranscriptSearchPanel} from "../../group_D/D.js";
-import {DC_ReloadContinuationItems} from "../../group_D/DC.js";
+import {D_ApiPathFormat_1,D_BrowseEndpointPages,D_Button_With_TargetId,D_ChipCloudChip_tid,D_EndpointLikeEndings,D_EngagementPanelSectionTargetId,D_Settings_Id,D_TranscriptSearchPanel} from "../../group_D.js";
+import {DC_ReloadContinuationItems} from "../../group_D/group_DC.js";
 import {D_Button_targetId} from "../D_T/D_Button.js";
 
 //#region UrlType
