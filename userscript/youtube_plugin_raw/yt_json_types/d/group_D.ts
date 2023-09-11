@@ -3376,7 +3376,7 @@ export type D_PlaylistContent={
 	totalVideosText: G_Text;
 	trackingParams: string;
 	titleText: G_Text;
-	isEditable: true;
+	isEditable?: boolean;
 	endpoint: E_VE5754;
 	localCurrentIndex: number;
 	playlistButtons: R_Menu;
@@ -3385,6 +3385,7 @@ export type D_PlaylistContent={
 	onReorderEndpoint: E_PlaylistEdit;
 	isCourse: false;
 	nextVideoLabel: G_Text;
+	playlistShareUrl?: string;
 };
 
 export type D_Menu_Button=

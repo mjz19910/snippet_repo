@@ -31,7 +31,7 @@ const __module_name__="mod$SupportService";
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 //#region SeenDatabase & non support exports
-/** @private @arg {WA|null} _wa @template {[string,string]} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {TI_SplitOnce_v2<WA,S,D>} */
+/** @private @arg {WA|null} _wa @template {[string,string]} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/_rtv_wrong/T_InferTypedSplitOnce.js").TI_SplitOnce_v2<WA,S,D>} */
 function split_string_once_ex_v2(s,d=as(","),_wa)
 {
 	if(s==="")
@@ -81,7 +81,7 @@ class OnePropertyObjArray
 export_(exports => {exports.OnePropertyObjArray=OnePropertyObjArray;});
 class TypedefGenerator extends BaseService
 {
-	/** @arg {D_TypedefGenerator_Popup} x */
+	/** @arg {import("../yt_json_types/d/group_D.js").D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x)
 	{
 		const cf="popup_dialog"; cf; this.sm.k(cf,x);
@@ -90,7 +90,7 @@ class TypedefGenerator extends BaseService
 		let dialog=x1[1];
 		return this.D_TypedefGenerator_Popup_R(dialog);
 	}
-	/** @arg {D_TypedefGenerator_Popup_R} x */
+	/** @arg {import("../yt_json_types/d/group_D.js").D_TypedefGenerator_Popup_R} x */
 	D_TypedefGenerator_Popup_R(x)
 	{
 		const cf="R_ConfirmDialog"; cf; this.sm.k(cf,x);
@@ -117,10 +117,10 @@ class StoreDescription extends ApiBase2
 	key_index=new Map;
 	/** @type {Map<string,number>} */
 	new_key_index=new Map;
-	/** @typedef {CLS_Kx&keyof J_StoreTypeMap} CLS_K */
-	/** @type {[string, make_item_group<J_StoreTypeMap[CLS_K]>][]} */
+	/** @typedef {CLS_Kx&keyof import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap} CLS_K */
+	/** @type {[string, import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>][]} */
 	data=[];
-	/** @type {[string, make_item_group<J_StoreTypeMap[CLS_K]>][]} */
+	/** @type {[string, import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>][]} */
 	new_data=[];
 	/** @arg {CLS_Kx} type @arg {[string]} type_arr */
 	constructor(type,type_arr)
@@ -129,7 +129,7 @@ class StoreDescription extends ApiBase2
 		this.type=type;
 		this.type_arr=type_arr;
 	}
-	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} x */
 	add_data_to_index(k,x)
 	{
 		let idx=this.key_index.get(k);
@@ -141,7 +141,7 @@ class StoreDescription extends ApiBase2
 		let new_len=this.data.push([k,x]);
 		this.key_index.set(k,new_len-1);
 	}
-	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} x */
 	add_new_data_to_index(k,x)
 	{
 		let idx=this.new_key_index.get(k);
@@ -153,13 +153,13 @@ class StoreDescription extends ApiBase2
 		let new_len=this.new_data.push([k,x]);
 		this.new_key_index.set(k,new_len-1);
 	}
-	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} x */
 	push_new_data(k,x)
 	{
 		this.add_new_data_to_index(k,x);
 		this.add_data_to_index(k,x);
 	}
-	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
+	/** @template {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} R @arg {R} x @returns {R} */
 	clone_container(x)
 	{
 		switch(x.l)
@@ -182,19 +182,19 @@ class StoreDescription extends ApiBase2
 			}
 		}
 	}
-	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} T @arg {T} x @template {make_item_group<J_StoreTypeMap[CLS_K]>} U @arg {(x:T)=>U} prepare */
+	/** @template {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} T @arg {T} x @template {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} U @arg {(x:T)=>U} prepare */
 	clone_and_then(x,prepare)
 	{
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
-	/** @template {make_item_group<J_StoreTypeMap[CLS_K]>} T @arg {T} x @template TI @template {make_arr_t<TI>} U @arg {(x:T)=>U} prepare */
+	/** @template {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} T @arg {T} x @template TI @template {import("../yt_json_types/m/make_item_group.js").make_arr_t<TI>} U @arg {(x:T)=>U} prepare */
 	clone_and_then_arr(x,prepare)
 	{
 		let x1=this.clone_container(x);
 		return prepare(x1);
 	}
-	/** @arg {string} k @arg {make_item_group<J_StoreTypeMap[CLS_K]>} x */
+	/** @arg {string} k @arg {import("../yt_json_types/m/make_item_group.js").make_item_group<import("../yt_json_types/j/J_StoreTypeMap.js").J_StoreTypeMap[CLS_K]>} x */
 	add_to_index(k,x)
 	{
 		/** @type {[typeof k,typeof x]} */
@@ -223,11 +223,11 @@ class StoreData extends BaseService
 {
 	/** @type {Map<string,StoreDescription<string>>} */
 	stores=new Map;
-	/** @arg {ServiceResolverBox<{}>} x */
+	/** @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
 	constructor(x)
 	{
 		super(x);
-		/** @arg {string} type @returns {T_StoreDataInput<string>} */
+		/** @arg {string} type @returns {import("../zb_plugin_types/Support_Service.js").T_StoreDataInput<string>} */
 		function make_store(type)
 		{
 			const description=new StoreDescription(type,[type]); return {type,description};
@@ -272,9 +272,9 @@ class StoreData extends BaseService
 		if(item===void 0) return null;
 		return item;
 	}
-	/** @arg {T_StoreDataInput<string>} args */
+	/** @arg {import("../zb_plugin_types/Support_Service.js").T_StoreDataInput<string>} args */
 	add_store(args) {let {type,description}=args; this.stores.set(type,description);}
-	/** @arg {G_BoxedDatabaseData} item */
+	/** @arg {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} item */
 	on_item_loaded_from_database(item)
 	{
 		item;
@@ -396,7 +396,7 @@ class LocalStorageSeenDatabase extends BaseService
 		if(!no_ns[1]) throw new Error();
 		let nn=split_string_once(no_ns[1],sep);
 		if(!nn[1]) throw new Error();
-		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
+		/** @private @type {import("../yt_json_types/stu/group_T.js").T_SplitOnce<NonNullable<import("../yt_json_types/stu/group_T.js").T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
 		this.save_primitive(`${ns_name}::${ns}`,no_ns_part);
 		this.save_primitive(`${cf}::enum_type`,ns_name);
@@ -579,7 +579,7 @@ class Support_RS_Player extends BaseService
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_Player,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
 	nop() {}
-	/** @public @arg {RS_Player} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Player} x */
 	RS_Player(x)
 	{
 		const cf="RS_Player";
@@ -614,29 +614,29 @@ class Support_RS_Player extends BaseService
 		});
 		this.sm.t(cacheMetadata,this.sm.D_Cache_MD);
 	}
-	/** @private @arg {R_EndscreenElement} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("endscreenElementRenderer",x,this.D_EndscreenElement);}
-	/** @private @arg {R_PlayerAnnotationsExpanded} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
-	/** @private @arg {R_Miniplayer} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_Miniplayer} x */
 	R_Miniplayer(x) {this.H_("miniplayerRenderer",x,this.D_Miniplayer);}
-	/** @private @arg {R_DesktopWatchAds} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_DesktopWatchAds} x */
 	R_DesktopWatchAds(x) {this.H_("playerLegacyDesktopWatchAdsRenderer",x,this.D_DesktopWatchAds);}
-	/** @private @arg {R_PlayerCaptionsTracklist} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlayerCaptionsTracklist} x */
 	R_PlayerCaptionsTracklist(x) {this.H_("playerCaptionsTracklistRenderer",x,this.D_PlayerCaptionsTracklist);}
-	/** @private @arg {R_VideoQualityPromo} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_VideoQualityPromo} x */
 	R_VideoQualityPromo(x) {this.H_("videoQualityPromoRenderer",x,this.D_VideoQualityPromo);}
-	/** @private @arg {R_PlayerAttestation} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlayerAttestation} x */
 	R_PlayerAttestation(x) {this.H_("playerAttestationRenderer",x,this.D_PlayerAttestation);}
-	/** @private @arg {R_CardCollection} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_CardCollection} x */
 	R_CardCollection(x) {this.H_("cardCollectionRenderer",x,this.D_CardCollection);}
-	/** @private @arg {R_PlayerMicroformat} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlayerMicroformat} x */
 	R_PlayerMicroformat(x) {this.H_("playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
-	/** @private @arg {R_Endscreen} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_Endscreen} x */
 	R_Endscreen(x) {this.H_("endscreenRenderer",x,this.D_Endscreen);}
-	/** @private @arg {R_PaidContentOverlay} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PaidContentOverlay} x */
 	R_PaidContentOverlay(x) {this.H_("paidContentOverlayRenderer",x,this.D_PaidContentOverlay);}
-	/** @private @arg {D_PaidContentOverlay} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").D_PaidContentOverlay} x */
 	D_PaidContentOverlay(x)
 	{
 		const cf="D_PaidContentOverlay";
@@ -646,7 +646,7 @@ class Support_RS_Player extends BaseService
 		this.xm.E_Url(navigationEndpoint);
 		this.sm.T_Icon(cf,icon);
 	}
-	/** @private @arg {D_PlayabilityStatus} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x)
 	{
 		const cf="D_PlayabilityStatus";
@@ -683,9 +683,9 @@ class Support_RS_Player extends BaseService
 			} break;
 		}
 	}
-	/** @private @arg {R_LiveStreamability} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").R_LiveStreamability} x */
 	R_LiveStreamability(x) {this.H_("liveStreamabilityRenderer",x,this.D_LiveStreamability);}
-	/** @private @arg {D_LiveStreamability} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_LiveStreamability} x */
 	D_LiveStreamability(x)
 	{
 		const cf="D_LiveStreamability";
@@ -694,7 +694,7 @@ class Support_RS_Player extends BaseService
 		this.t(broadcastId,x => this.sm.cq(x,"1"));
 		this.sm.cq(pollDelayMs,"15000");
 	}
-	/** @private @arg {G_PlayerStoryboards} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x)
 	{
 		const cf="G_PlayerStoryboards"; this.sm.k(cf,x);
@@ -702,7 +702,7 @@ class Support_RS_Player extends BaseService
 		if("playerLiveStoryboardSpecRenderer" in x) return;
 		this.sm.codegen_typedef(cf,x);
 	}
-	/** @private @arg {D_CaptionTrackItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_CaptionTrackItem} x */
 	D_CaptionTrackItem(x)
 	{
 		const cf="D_CaptionTrackItem",t=this;
@@ -721,7 +721,7 @@ class Support_RS_Player extends BaseService
 		if(isTranslatable!==true) debugger;
 		t.t(rtl,x => t.sm.cq(x,true));
 	}
-	/** @private @arg {D_AudioTrackItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AudioTrackItem} x */
 	D_AudioTrackItem(x)
 	{
 		const cf="D_AudioTrackItem";
@@ -751,7 +751,7 @@ class Support_RS_Player extends BaseService
 		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
 		this.sm.z(captionTrackIndices,this.sm.a_primitive_num);
 	}
-	/** @private @arg {D_TranslationLanguage} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TranslationLanguage} x */
 	D_TranslationLanguage(x)
 	{
 		const cf="D_TranslationLanguage";
@@ -759,7 +759,7 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(languageCode);
 		this.sm.G_Text(languageName);
 	}
-	/** @private @arg {D_Endscreen} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Endscreen} x */
 	D_Endscreen(x)
 	{
 		const cf="D_Endscreen";
@@ -767,7 +767,7 @@ class Support_RS_Player extends BaseService
 		this.z(elements,this.R_EndscreenElement);
 		this.t(startMs,x => this.sm.a_primitive_str(x));
 	}
-	/** @private @arg {D_PlayerAnnotationsExpanded} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlayerAnnotationsExpanded} x */
 	D_PlayerAnnotationsExpanded(x)
 	{
 		const cf="D_PlayerAnnotationsExpanded"; this.sm.k(cf,x);
@@ -776,7 +776,7 @@ class Support_RS_Player extends BaseService
 		this.parse_uuid(annotationId);
 		this.sm.a_primitive_bool(allowSwipeDismiss);
 	}
-	/** @private @arg {D_HeartbeatParams} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_HeartbeatParams} x */
 	D_HeartbeatParams(x)
 	{
 		const cf="D_HeartbeatParams";
@@ -785,14 +785,14 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_bool(softFailOnError);
 		this.save_primitive(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
-	/** @private @arg {D_Miniplayer} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Miniplayer} x */
 	D_Miniplayer(x)
 	{
 		const cf="D_Miniplayer";
 		const {playbackMode,...y}=this.s(cf,x); this.g(y);
 		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
 	}
-	/** @private @arg {D_DesktopWatchAds} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x)
 	{
 		const cf="D_DesktopWatchAds";
@@ -811,7 +811,7 @@ class Support_RS_Player extends BaseService
 			console.log(`[${cf}.next_key] [${ka.shift()}]`);
 		}
 	}
-	/** @private @arg {D_PlayerMicroformat} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x)
 	{
 		const cf="D_PlayerMicroformat";
@@ -835,7 +835,7 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(uploadDate);
 		this.t(learningResource,this.D_LearningResource);
 	}
-	/** @private @arg {D_PlayerCaptionsTracklist} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x)
 	{
 		const cf="D_PlayerCaptionsTracklist";
@@ -850,7 +850,7 @@ class Support_RS_Player extends BaseService
 			debugger;
 		});
 	}
-	/** @private @arg {D_VideoQualityPromo} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x)
 	{
 		const cf="D_VideoQualityPromo";
@@ -860,7 +860,7 @@ class Support_RS_Player extends BaseService
 		this.xm.E_Url(endpoint);
 		this.sm.RA_Notification(snackbar);
 	}
-	/** @private @arg {D_PlayerAttestation} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlayerAttestation} x */
 	D_PlayerAttestation(x)
 	{
 		const cf="D_PlayerAttestation";
@@ -868,7 +868,7 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(challenge);
 		this.D_Botguard(botguardData);
 	}
-	/** @private @arg {DD_Streaming} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").DD_Streaming} x */
 	DD_Streaming(x)
 	{
 		const cf="DD_Streaming";
@@ -880,7 +880,7 @@ class Support_RS_Player extends BaseService
 		this.t(dashManifestUrl,x => this.sm.a_primitive_str(x));
 		this.t(hlsManifestUrl,x => this.sm.a_primitive_str(x));
 	}
-	/** @private @arg {D_TriggerCriteria} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TriggerCriteria} x */
 	D_TriggerCriteria(x)
 	{
 		const cf="D_TriggerCriteria";
@@ -892,7 +892,7 @@ class Support_RS_Player extends BaseService
 		if(watchTimeWindowSeconds!==180) debugger;
 		if(refractorySeconds!==2592000) debugger;
 	}
-	/** @private @arg {`${D_AudioSampleRate}`} x */
+	/** @private @arg {`${import("../yt_json_types/d/group_D.js").D_AudioSampleRate}`} x */
 	D_AudioSampleRate(x)
 	{
 		switch(x)
@@ -901,7 +901,7 @@ class Support_RS_Player extends BaseService
 			case "22050": case "44100": case "48000":
 		}
 	}
-	/** @private @arg {D_FormatItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_FormatItem} x */
 	D_FormatItem(x)
 	{
 		const cf="D_FormatItem";
@@ -937,7 +937,7 @@ class Support_RS_Player extends BaseService
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 		const {xtags,...y}=u; this.g(y);
 	}
-	/** @private @arg {D_UUIDString} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_UUIDString} x */
 	parse_uuid(x)
 	{
 		let uuid_parts=split_string(x,"-");
@@ -947,7 +947,7 @@ class Support_RS_Player extends BaseService
 		if(bd.slice(0,2)!=="10") debugger;
 		return uuid_parts;
 	}
-	/** @private @arg {D_FeaturedChannel} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_FeaturedChannel} x */
 	D_FeaturedChannel(x)
 	{
 		const cf="D_FeaturedChannel"; this.sm.k(cf,x);
@@ -962,7 +962,7 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(channelName);
 		this.xm.R_SubscribeButton(subscribeButton);
 	}
-	/** @private @arg {D_Botguard} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Botguard} x */
 	D_Botguard(x)
 	{
 		const cf="D_Botguard";
@@ -972,7 +972,7 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(interpreterUrl);
 		this.save_primitive(`${cf}.serverEnvironment`,serverEnvironment);
 	}
-	/** @private @arg {D_CardCollection} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_CardCollection} x */
 	D_CardCollection(x)
 	{
 		const cf="D_CardCollection";
@@ -984,7 +984,7 @@ class Support_RS_Player extends BaseService
 		this.sm.cq(allowTeaserDismiss,true);
 		this.sm.cq(logIconVisibilityUpdates,true);
 	}
-	/** @private @arg {D_MicroformatEmbed} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_MicroformatEmbed} x */
 	D_MicroformatEmbed(x)
 	{
 		const cf="D_CardCollection";
@@ -995,7 +995,7 @@ class Support_RS_Player extends BaseService
 		this.save_primitive(`${cf}.height`,height);
 		flashSecureUrl&&this.ps.parse_url(cf,flashSecureUrl);
 	}
-	/** @private @arg {D_VideoCategory} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VideoCategory} x */
 	D_VideoCategory(x)
 	{
 		switch(x)
@@ -1013,7 +1013,7 @@ class Support_RS_Player extends BaseService
 			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
 		}
 	}
-	/** @private @arg {D_LiveBroadcastDetails} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_LiveBroadcastDetails} x */
 	D_LiveBroadcastDetails(x)
 	{
 		const cf="D_LiveBroadcastDetails";
@@ -1027,7 +1027,7 @@ class Support_RS_Player extends BaseService
 		}
 		this.g(y);
 	}
-	/** @private @arg {D_AdaptiveFormatItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x)
 	{
 		const cf="D_AdaptiveFormatItem";
@@ -1078,11 +1078,11 @@ class Support_RS_Player extends BaseService
 		this.sm.t(loudnessDb,this.sm.a_primitive_num);
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 	}
-	/** @private @arg {R_Card} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_Card} x */
 	R_Card(x) {this.H_("cardRenderer",x,this.D_Card);}
-	/** @private @arg {R_InfoCardIcon} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_InfoCardIcon} x */
 	R_InfoCardIcon(x) {this.H_("infoCardIconRenderer",x,this.D_InfoCardIcon);}
-	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {D_FormatItem_SignatureCipher_SP} x */
+	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {import("../yt_json_types/ghi/group_G.js").D_FormatItem_SignatureCipher_SP} x */
 	D_Format_signatureCipher(cf,x)
 	{
 		/** @type {`${cf}:signatureCipher`} */
@@ -1095,7 +1095,7 @@ class Support_RS_Player extends BaseService
 		}
 		this.ps.parse_url(cf1,as_any(url));
 	}
-	/** @private @arg {D_FormatColorInfo} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_FormatColorInfo} x */
 	D_FormatColorInfo(x)
 	{
 		const cf="D_Range";
@@ -1121,13 +1121,13 @@ class Support_RS_Player extends BaseService
 			case void 0:
 		}
 	}
-	/** @private @arg {D_FormatFps} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_FormatFps} x */
 	D_FormatFps(x)
 	{
 		const cf="D_FormatFps";
 		this.save_primitive(cf,x);
 	}
-	/** @private @arg {D_Range} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Range} x */
 	D_Range(x)
 	{
 		const cf="D_Range";
@@ -1135,7 +1135,7 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(start);
 		this.sm.a_primitive_str(end);
 	}
-	/** @private @arg {D_EndscreenElement} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_EndscreenElement} x */
 	D_EndscreenElement(x)
 	{
 		const cf="D_EndscreenElement";
@@ -1171,7 +1171,7 @@ class Support_RS_Player extends BaseService
 		this.sm.a_primitive_str(id);
 		this.xm.tz(thumbnailOverlays,this.xm.G_ThumbnailOverlayItem);
 	}
-	/** @private @arg {D_AudioTrack} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AudioTrack} x */
 	D_AudioTrack(x)
 	{
 		const cf="D_AudioTrack";
@@ -1180,7 +1180,7 @@ class Support_RS_Player extends BaseService
 		this.save_primitive(`${cf}.id`,id);
 		this.sm.cq(audioIsDefault,false);
 	}
-	/** @private @arg {D_Card_Content} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Card_Content} x */
 	D_Card_Content(x)
 	{
 		const cf="D_Card_Content"; this.sm.k(cf,x);
@@ -1189,7 +1189,7 @@ class Support_RS_Player extends BaseService
 		if("simpleCardContentRenderer" in x) return this.xr.R_SimpleCardContent(x);
 		if("videoInfoCardContentRenderer" in x) return this.xr.R_VideoInfoCardContent(x);
 	}
-	/** @private @arg {D_Card} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Card} x */
 	D_Card(x)
 	{
 		const cf="D_Card";
@@ -1203,19 +1203,19 @@ class Support_RS_Player extends BaseService
 			if(x!=="cards") debugger;
 		});
 	}
-	/** @private @arg {R_PlaylistInfoCardContent} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlaylistInfoCardContent} x */
 	R_PlaylistInfoCardContent(x) {this.H_("playlistInfoCardContentRenderer",x,this.DI_PlaylistCardContent);}
-	/** @private @arg {D_PlaylistInfoCardContent} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistInfoCardContent} x */
 	DI_PlaylistCardContent(x) {x;}
-	/** @private @arg {R_CollaboratorInfoCardContent} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_CollaboratorInfoCardContent.js").R_CollaboratorInfoCardContent} x */
 	R_CollaboratorInfoCardContent(x) {this.H_("collaboratorInfoCardContentRenderer",x,this.D_CollaboratorInfoCardContent);}
-	/** @private @arg {D_CollaboratorInfoCardContent} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_CollaboratorInfoCardContent} x */
 	D_CollaboratorInfoCardContent(x) {x;}
-	/** @private @arg {D_TrackingParams} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TrackingParams} x */
 	D_InfoCardIcon(x) {const {trackingParams,...y}=this.s("D_InfoCardIcon",x); this.g(y);}
-	/** @private @arg {R_SimpleCardTeaser} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardTeaser.js").R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
-	/** @private @arg {D_CueRangeItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_CueRangeItem} x */
 	D_CueRangeItem(x)
 	{
 		const cf="D_CueRangeItem",t=this;
@@ -1224,7 +1224,7 @@ class Support_RS_Player extends BaseService
 		this.save_primitive(`${cf}.teaserDurationMs`,this.sm.parse_number_template(teaserDurationMs));
 		this.save_primitive(`${cf}.endCardActiveMs`,this.sm.parse_number_template(endCardActiveMs));
 	}
-	/** @private @arg {D_SimpleCardTeaser} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SimpleCardTeaser} x */
 	D_SimpleCardTeaser(x)
 	{
 		const cf="D_SimpleCardTeaser";
@@ -1234,7 +1234,7 @@ class Support_RS_Player extends BaseService
 		this.sm.cq(logVisibilityUpdates,true);
 		this.sm.t(onTapCommand,this.sm.A_ChangeEngagementPanelVisibility);
 	}
-	/** @private @arg {D_LearningResource} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_LearningResource} x */
 	D_LearningResource(x)
 	{
 		const cf="D_LearningResource";
@@ -1247,7 +1247,7 @@ class Support_RS_Player extends BaseService
 export_(exports => {exports.Support_RS_Player=Support_RS_Player;});
 class Support_RS_WatchPage extends BaseService
 {
-	/** @public @arg {G_RS_WatchPage} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_RS_WatchPage} x */
 	RS_WatchPage(x)
 	{
 		const cf="R_WatchPage"; this.sm.k(cf,x);
@@ -1258,7 +1258,7 @@ class Support_RS_WatchPage extends BaseService
 			}
 		this.RS_Page_Watch(x);
 	}
-	/** @private @arg {RS_VE3832_Page_Watch} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_VE3832_Page_Watch} x */
 	RS_VE3832_Page_Watch(x)
 	{
 		const cf="R_WatchPage_VE3832"; this.sm.k(cf,x);
@@ -1275,7 +1275,7 @@ class Support_RS_WatchPage extends BaseService
 	}
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_WatchPage,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @private @arg {RS_Page_Watch} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_Page_Watch} x */
 	RS_Page_Watch(x)
 	{
 		const cf="RS_Page_Watch"; this.sm.k(cf,x);
@@ -1292,7 +1292,7 @@ class Support_RS_WatchPage extends BaseService
 export_(exports => {exports.Support_RS_WatchPage=Support_RS_WatchPage;});
 class Support_RS_Watch extends BaseService
 {
-	/** @public @arg {RS_Watch} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Watch} x */
 	RS_Watch(x)
 	{
 		const cf="RS_Watch";
@@ -1311,7 +1311,7 @@ class Support_RS_Watch extends BaseService
 export_(exports => {exports.Support_RS_Watch=Support_RS_Watch;});
 class Support_RS_Page_Browse extends BaseService
 {
-	/** @public @arg {G_RS_Page_Browse} ux */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").G_RS_Page_Browse} ux */
 	G_RS_Page_Browse(ux)
 	{
 		let x=null,x2=null;
@@ -1341,7 +1341,7 @@ class Support_RS_Page_Browse extends BaseService
 		x=x2;
 		x2;
 	}
-	/** @public @arg {RS_Page_Browse} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Page_Browse} x */
 	RS_Page_Browse(x)
 	{
 		const cf="RS_Page_Browse";
@@ -1368,7 +1368,7 @@ class Support_RS_Page_Browse extends BaseService
 	}
 	/** @private */
 	log_url=false;
-	/** @private @arg {CF_RS_Page_Browse} cf @template {G_RS_Page_Browse} T @arg {T} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_RS_Page_Browse} cf @template {import("../yt_json_types/r/group_R.js").G_RS_Page_Browse} T @arg {T} x */
 	RS_Page_Browse_Omit(cf,x)
 	{
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
@@ -1384,7 +1384,7 @@ class Support_RS_Browse extends BaseService
 {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_RS_Browse,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @public @arg {RS_Browse} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Browse} x */
 	RS_Browse(x)
 	{
 		const cf="RS_Browse";
@@ -1484,7 +1484,7 @@ class Support_GenericApi extends BaseService
 {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_GenericApi,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @public @arg {Response} response @arg {G_ResponseTypes} x */
+	/** @public @arg {Response} response @arg {import("../yt_json_types/ghi/group_G.js").G_ResponseTypes} x */
 	G_ResponseTypes(response,x)
 	{
 		const cf="G_ResponseTypes"; this.sm.k(cf,x);
@@ -1498,7 +1498,7 @@ class Support_GenericApi extends BaseService
 		switch(x.type) {case "_Generic": return g(x);}
 		/** @private */
 		this._current_response_type=x.type;
-		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
+		/** @private @type {{data:{responseContext:import("../yt_json_types/r/group_R.js").RC_ResponseContext;}}} */
 		let v=x;
 		this.sm.RC_ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data)
@@ -1554,14 +1554,14 @@ class Support_GenericApi extends BaseService
 			default: debugger; return g(x);
 		}
 	}
-	/** @private @arg {RSG_AddToPlaylist} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RSG_AddToPlaylist} x */
 	RSG_AddToPlaylist(x)
 	{
 		const cf="RS_GetAddToPlaylist";
 		const {responseContext,contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.R_AddToPlaylist);
 	}
-	/** @private @arg {RSB_EditPlaylist} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RSB_EditPlaylist} x */
 	RSB_EditPlaylist(x)
 	{
 		const cf="RSB_EditPlaylist";
@@ -1575,7 +1575,7 @@ class Support_GenericApi extends BaseService
 		this.z(r,a => a);
 		this.z(playlistEditResults,this.g);
 	}
-	/** @private @arg {RSM_ChannelPreference} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x)
 	{
 		const cf="RSM_ChannelPreference";
@@ -1592,14 +1592,14 @@ class Support_GenericApi extends BaseService
 		this.sm.channelId(channelId);
 		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
-	/** @private @arg {RS_Success} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_Success} x */
 	RS_Success(x)
 	{
 		const cf="RS_Success";
 		const {responseContext,success,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this._primitive_of(success,"boolean");
 	}
-	/** @private @arg {RSG_GetUnseenCount} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RSG_GetUnseenCount} x */
 	RSG_GetUnseenCount(x)
 	{
 		const cf="RSG_GetUnseenCount";
@@ -1610,9 +1610,9 @@ class Support_GenericApi extends BaseService
 		}));
 		if(unseenCount!==void 0) this.sm.a_primitive_num(unseenCount);
 	}
-	/** @private @arg {AU_NotificationsUnseenCount} x */
+	/** @private @arg {import("../yt_json_types/abc/A.js").AU_NotificationsUnseenCount} x */
 	AU_NotificationsUnseenCount(x) {let [a,y]=this.sm.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
-	/** @private @template T @arg {T_OpenPopup_Toast<T>} x */
+	/** @private @template T @arg {import("../yt_json_types/nop_q/Popup.js").T_OpenPopup_Toast<T>} x */
 	T_OpenPopup_Toast(x)
 	{
 		const cf="T_OpenPopup_Toast";
@@ -1620,7 +1620,7 @@ class Support_GenericApi extends BaseService
 		if(popupType!=="TOAST") return null;
 		return popup;
 	}
-	/** @private @arg {AD_UpdateNotificationsUnseenCount} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_UpdateNotificationsUnseenCount} x */
 	AD_UpdateNotificationsUnseenCount(x)
 	{
 		const cf="AD_UpdateNotificationsUnseenCount";
@@ -1629,9 +1629,9 @@ class Support_GenericApi extends BaseService
 		this.sm.a_primitive_num(unseenCount);
 		this.sm.a_primitive_num(timeoutMs);
 	}
-	/** @private @arg {R_AddToPlaylist} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("addToPlaylistRenderer",x,this.D_AddToPlaylist);}
-	/** @private @arg {D_AddToPlaylist} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AddToPlaylist} x */
 	D_AddToPlaylist(x)
 	{
 		const cf="D_AddToPlaylist";
@@ -1639,9 +1639,9 @@ class Support_GenericApi extends BaseService
 		this.z(playlists,this.R_PlaylistAddToOption);
 		this.z(actions,this.R_AddToPlaylistCreate);
 	}
-	/** @private @arg {R_AddToPlaylistCreate} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_AddToPlaylistCreate} x */
 	R_AddToPlaylistCreate(x) {this.H_("addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
-	/** @private @arg {D_AddToPlaylistCreate} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x)
 	{
 		const cf="D_AddToPlaylistCreate";
@@ -1652,11 +1652,11 @@ class Support_GenericApi extends BaseService
 		this.xm.R_Button(createAction);
 		this.sm.E_CreatePlaylistService(serviceEndpoint);
 	}
-	/** @private @arg {R_PlaylistAddToOption} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlaylistAddToOption} x */
 	R_PlaylistAddToOption(x) {this.H_("playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
-	/** @private @arg {C_RefreshPlaylist} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.sm.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {D_PlaylistAddToOption} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistAddToOption} x */
 	D_PlaylistAddToOption(x)
 	{
 		const cf="D_PlaylistAddToOption";
@@ -1675,9 +1675,9 @@ class Support_GenericApi extends BaseService
 		this.sm.E_PlaylistEdit(addToPlaylistServiceEndpoint);
 		this.sm.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
 	}
-	/** @private @arg {R_Dropdown} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
-	/** @private @arg {D_Dropdown_Privacy} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Dropdown_Privacy} x */
 	D_Dropdown(x)
 	{
 		const cf="D_Dropdown";
@@ -1685,9 +1685,9 @@ class Support_GenericApi extends BaseService
 		this.z(entries,this.R_PrivacyDropdownItem);
 		this.t(label,x => this.sm.cq(x,"Privacy"));
 	}
-	/** @private @arg {R_PrivacyDropdownItem} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
-	/** @private @arg {D_PrivacyDropdownItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PrivacyDropdownItem} x */
 	D_PrivacyDropdownItem(x)
 	{
 		const cf="D_PrivacyDropdownItem";
@@ -1706,7 +1706,7 @@ class Support_EventInput extends BaseService
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_EventInput,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
 	//#region Renderer & Group
-	/** @private @arg {G_ResponseBrowse} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").G_ResponseBrowse} x */
 	G_ResponseBrowse(x)
 	{
 		const cf="R_PageTypeBrowse_Response";
@@ -1757,7 +1757,7 @@ class Support_EventInput extends BaseService
 				page: x => this.sm.cq(x,"browse"),
 				endpoint: x => this.sm.E_VE3854(x),
 				response: x => this.x.get("x_RS_Browse").RS_Browse(x),
-				/** @arg {RS_VE3854_BrowsePage["url"]} x */
+				/** @arg {import("../yt_json_types/r/group_R.js").RS_VE3854_BrowsePage["url"]} x */
 				url(x)
 				{
 					switch(x)
@@ -1784,7 +1784,7 @@ class Support_EventInput extends BaseService
 			return;
 		}
 		if(this.sm.is_EP_Val(x,6827)) return this.g(this.RS_Page_Type1(cf,x,{
-			/** @arg {RS_VE6827_BrowsePage["url"]} url */
+			/** @arg {import("../yt_json_types/r/group_R.js").RS_VE6827_BrowsePage["url"]} url */
 			url: (url) =>
 			{
 				if(this.sm.str_is_search(url))
@@ -1814,7 +1814,7 @@ class Support_EventInput extends BaseService
 			}
 		}));
 		if(this.sm.is_EP_Val(x,96368)) return this.g(this.RS_Page_Type1(cf,x,{
-			/** @arg {RS_VE96368_BrowsePage["url"]} url */
+			/** @arg {import("../yt_json_types/r/group_R.js").RS_VE96368_BrowsePage["url"]} url */
 			url(url)
 			{
 				switch(url)
@@ -1830,7 +1830,7 @@ class Support_EventInput extends BaseService
 		debugger;
 	}
 	//#endregion
-	/** @private @arg {NavFinishDetail_Browse} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Browse.js").NavFinishDetail_Browse} x */
 	NavFinishDetail_Browse(x)
 	{
 		const cf="R_PageTypeBrowse";
@@ -1866,7 +1866,7 @@ class Support_EventInput extends BaseService
 		}
 		debugger;
 	}
-	/** @private @arg {NavFinishDetail_Channel} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Channel.js").NavFinishDetail_Channel} x */
 	NavFinishDetail_Channel(x)
 	{
 		const cf="R_PageTypeChannel";
@@ -1877,7 +1877,7 @@ class Support_EventInput extends BaseService
 		this._primitive_of(fromHistory,"boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {NavFinishDetail_Playlist} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Playlist.js").NavFinishDetail_Playlist} x */
 	NavFinishDetail_Playlist(x)
 	{
 		const cf="R_PageTypePlaylist";
@@ -1888,7 +1888,7 @@ class Support_EventInput extends BaseService
 		this._primitive_of(fromHistory,"boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {NavFinishDetail_Search} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Search.js").NavFinishDetail_Search} x */
 	NavFinishDetail_Search(x)
 	{
 		const cf="R_PageTypeSearch";
@@ -1899,7 +1899,7 @@ class Support_EventInput extends BaseService
 		this._primitive_of(fromHistory,"boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {NavFinishDetail_Settings} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Settings.js").NavFinishDetail_Settings} x */
 	NavFinishDetail_Settings(x)
 	{
 		const cf="R_PageTypeSettings";
@@ -1915,7 +1915,7 @@ class Support_EventInput extends BaseService
 		this._primitive_of(fromHistory,"boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {NavFinishDetail_Shorts} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/n/NavFinishDetail_Shorts.js").NavFinishDetail_Shorts} x */
 	NavFinishDetail_Shorts(x)
 	{
 		const cf="R_PageTypeShorts";
@@ -1926,7 +1926,7 @@ class Support_EventInput extends BaseService
 		this._primitive_of(fromHistory,"boolean");
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
-	/** @private @arg {NavFinishDetail_Watch} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").NavFinishDetail_Watch} x */
 	NavFinishDetail_Watch(x)
 	{
 		const cf="R_PageTypeWatch";
@@ -1938,7 +1938,7 @@ class Support_EventInput extends BaseService
 		this.sm.a_primitive_num(navigationDoneMs);
 	}
 	//#region Event handlers
-	/** @public @arg {G_NavFinishDetail} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_NavFinishDetail} x */
 	YTNavigateFinishDetail(x)
 	{
 		const cf="YTNavigateFinishDetail"; this.sm.k(cf,x);
@@ -1955,7 +1955,7 @@ class Support_EventInput extends BaseService
 		}
 	}
 	//#endregion
-	/** @public @arg {G_RS_ByPageType} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").G_RS_ByPageType} x */
 	DataResponsePageType(x)
 	{
 		this.sm.RC_ResponseContext(x.response.responseContext);
@@ -1980,9 +1980,9 @@ class Support_EventInput extends BaseService
 		u1;
 	}
 	/**
-	 * @template {CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x
-	 * @param {T_MakeHandlers<T>} handlers
-	 * @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>}
+	 * @template {import("../yt_json_types/abc/group_C.js").CF_RS_Page_Type1} T_CF @arg {T_CF} cf @template {{page:string,endpoint:any,response:any,url:string,expirationTime?:number}} T @arg {T} x
+	 * @param {import("../yt_json_types/T_MakeHandlers.js").T_MakeHandlers<T>} handlers
+	 * @returns {import("../yt_json_types/stu/group_T.js").T_OmitKey<T,import("../yt_json_types/stu/group_T.js").T_Split<"page,endpoint,response,url,expirationTime">[number]>}
 	 */
 	RS_Page_Type1(cf,x,handlers)
 	{
@@ -1992,16 +1992,16 @@ class Support_EventInput extends BaseService
 		handlers.response?.(c);
 		handlers.url?.(d);
 		handlers.expirationTime?.(e);
-		/** @returns {T_OmitKey<T,T_Split<"page,endpoint,response,url,expirationTime">[number]>|null} */
+		/** @returns {import("../yt_json_types/stu/group_T.js").T_OmitKey<T,import("../yt_json_types/stu/group_T.js").T_Split<"page,endpoint,response,url,expirationTime">[number]>|null} */
 		function wx() {return null;}
 		this.assert_is_omit_key(u,wx);
 		return u;
 	}
-	/** @private @arg {RS_ChannelPage} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_ChannelPage} x */
 	RS_Page_Channel(x)
 	{
 		const cf="RS_Page_Channel";
-		/** @arg {RS_ChannelPage["url"]} url */
+		/** @arg {import("../yt_json_types/r/group_R.js").RS_ChannelPage["url"]} url */
 		const h_url=url =>
 		{
 			let [a,u]=split_string_once(url,"/"); this.sm.cq(a,"");
@@ -2111,14 +2111,14 @@ class Support_EventInput extends BaseService
 			page: h_d.page,
 			endpoint: h_d.endpoint,
 			response: h_d.response,
-			/** @arg {GU_VE3611_2} x */
+			/** @arg {import("../yt_json_types/ghi/group_G.js").GU_VE3611_2} x */
 			url: x => h_url(x),
 			expirationTime: h_et,
 		};
 		const {...y}=this.RS_Page_Type1(cf,x,handlers); this.g(y);
 		if(this.sm.is_not_empty_obj(y)) debugger;
 	}
-	/** @private @arg {G_RS_Page_Playlist} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_RS_Page_Playlist} x */
 	G_RS_Page_Playlist(x)
 	{
 		const cf="R_PlaylistPage";
@@ -2139,7 +2139,7 @@ class Support_EventInput extends BaseService
 		}
 		this.g(y);
 	}
-	/** @private @arg {G_RS_SettingsPage} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_RS_SettingsPage} x */
 	G_RS_Page_Settings(x)
 	{
 		const cf="R_SettingsPage";
@@ -2150,7 +2150,7 @@ class Support_EventInput extends BaseService
 		this.RS_Settings(response);
 		this.sm.a_primitive_str(url);
 	}
-	/** @private @arg {G_RS_ShortsPage} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_RS_ShortsPage} x */
 	G_RS_Page_Shorts(x)
 	{
 		const cf="RS_ShortsPage";
@@ -2166,7 +2166,7 @@ class Support_EventInput extends BaseService
 		this.t(previousCsn,x => this.sm.D_VeCsn(x,{prev: true}));
 		this.t(cachedReelWatchSequenceResponse,x => this.ht.RS_ReelWatchSequence(x));
 	}
-	/** @private @arg {RS_SearchPage} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_SearchPage} x */
 	RS_Page_Search(x)
 	{
 		const cf="RS_SearchPage";
@@ -2177,14 +2177,14 @@ class Support_EventInput extends BaseService
 		if(!this.sm.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
-	/** @private @arg {D_GraftedVeItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GraftedVeItem} x */
 	D_GraftedVeItem(x)
 	{
 		const cf="D_GraftedVeItem";
 		const {veData,csn,...y}=this.s(cf,x); this.g(y);
 		this.sm.D_VeCsn(csn);
 	}
-	/** @private @arg {RS_VE23462_Page_Settings} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_VE23462_Page_Settings} x */
 	RS_VE23462_Page_Settings(x)
 	{
 		const cf="Settings_VE23462";
@@ -2196,7 +2196,7 @@ class Support_EventInput extends BaseService
 		this.sm.rootVe(rootVe);
 		this.cq(rootVe,23462);
 	}
-	/** @private @arg {RS_VE37414_Shorts} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_VE37414_Shorts} x */
 	RS_VE37414_Shorts(x)
 	{
 		const cf="Shorts_VE37414";
@@ -2213,7 +2213,7 @@ class Support_EventInput extends BaseService
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.ht.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
-	/** @private @arg {RS_Reel} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_Reel} x */
 	RS_Reel(x)
 	{
 		const cf="RS_Reel";
@@ -2224,7 +2224,7 @@ class Support_EventInput extends BaseService
 		if(!engagementPanels) debugger;
 		else {this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));}
 	}
-	/** @private @arg {RS_Playlist} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_Playlist} x */
 	RS_Playlist(x)
 	{
 		const cf="RS_Playlist";
@@ -2237,7 +2237,7 @@ class Support_EventInput extends BaseService
 		this.sm.R_Microformat(microformat);
 		this.xr.R_PlaylistSidebar(sidebar);
 	}
-	/** @private @arg {RS_Settings} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RS_Settings} x */
 	RS_Settings(x)
 	{
 		const cf="RS_Settings";
@@ -2247,18 +2247,18 @@ class Support_EventInput extends BaseService
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.xr.R_SettingsSidebar(sidebar);
 	}
-	/** @private @arg {D_Tab_WhatToWatch} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Tab_WhatToWatch} x */
 	D_Tab_WhatToWatch(x)
 	{
 		const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s("D_Tab_WhatToWatch",x); this.g(y);
 		this.sm.cq(selected,true);
 		this.sm.R_RichGrid(content);
 	}
-	/** @private @arg {D_Tab_Library} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Tab_Library} x */
 	D_Tab_Library(x) {x;}
-	/** @public @arg {R_Tab} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_Tab} x */
 	R_Tab(x) {this.H_("tabRenderer",x,this.D_Tab);}
-	/** @private @arg {D_Tab} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Tab} x */
 	D_Tab(x)
 	{
 		const cf="D_Tab";
@@ -2296,7 +2296,7 @@ class Support_EventInput extends BaseService
 			this.save_primitive(`${cf2}.title`,title);
 		}
 	}
-	/** @private @arg {D_Tab_History} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Tab_History} x */
 	D_Tab_History(x)
 	{
 		const cf="D_Tab_History";
@@ -2305,7 +2305,7 @@ class Support_EventInput extends BaseService
 		if(!content.sectionListRenderer) debugger;
 		this.xm.R_SectionList(content);
 	}
-	/** @private @arg {D_Tab_Subscriptions} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Tab_Subscriptions} x */
 	D_Tab_Subscriptions(x)
 	{
 		const cf="D_Tab_Subscriptions";
@@ -2314,7 +2314,7 @@ class Support_EventInput extends BaseService
 		this.sm.cq(selected,true);
 		this.xm.R_SectionList(content);
 	}
-	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
+	/** @private @arg {Extract<import("../yt_json_types/d/group_D.js").D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
 	D_Tab_Subscriptions_EP(x)
 	{
 		if(this.sm.is_TE_VE(x,96368)) return this.sm.E_VE96368(x);
@@ -2323,9 +2323,9 @@ class Support_EventInput extends BaseService
 export_(exports => {exports.Support_EventInput=Support_EventInput;});
 class Support_VE extends BaseService
 {
-	/** @public @arg {R_VssLoggingContext} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("vssLoggingContext",x,this.D_VssLoggingContext);}
-	/** @public @arg {D_VssLoggingContext} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_VssLoggingContext} x */
 	D_VssLoggingContext(x)
 	{
 		const cf="D_VssLoggingContext";
@@ -2337,13 +2337,13 @@ class Support_VE37414 extends BaseService
 {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:Support_VE37414,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @private @arg {D_SerializedContextData} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SerializedContextData} x */
 	D_QoeLoggingContext(x)
 	{
 		const cf="D_QoeLoggingContext";
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @private @arg {DE_ReelWatch} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_ReelWatch} x */
 	DE_VE37414_ReelWatch(x)
 	{
 		const cf="DE_VE37414_ReelWatch";
@@ -2355,7 +2355,7 @@ class Support_VE37414 extends BaseService
 		this.t(sequenceProvider,x => this.sm.cq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
 		this.t(inputType,x => this.sm.cq(x,"REEL_WATCH_INPUT_TYPE_SEEDLESS"));
 	}
-	/** @private @arg {D_LoggingContext} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_LoggingContext} x */
 	D_LoggingContext(x)
 	{
 		if(!x) {debugger; return;}
@@ -2364,11 +2364,11 @@ class Support_VE37414 extends BaseService
 		this.x.get("x_VE").D_VssLoggingContext(vssLoggingContext);
 		this.D_QoeLoggingContext(qoeLoggingContext);
 	}
-	/** @public @arg {E_VE37414_ReelWatch} x */
+	/** @public @arg {import("../yt_json_types/e/GR_E_VE.js").E_VE37414_ReelWatch} x */
 	E_VE37414_ReelWatch(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_VE37414_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
-	/** @private @arg {M_VE37414} x */
+	/** @private @arg {import("../yt_json_types/m/M.js").M_VE37414} x */
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
-	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_VE37414} x @returns {`VE${rootVe}`} */
 	GM_VE37414(x)
 	{
 		const cf="GM_VE37414";
@@ -2399,11 +2399,11 @@ class Support_Renderer extends BaseService
 	//#region Endpoint methods
 	//#endregion
 	//#region Action methods
-	/** @private @arg {A_AddToGuideSection} x */
+	/** @private @arg {import("../yt_json_types/abc/A.js").A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {let [a,y]=this.sm.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
-	/** @private @arg {A_ReplayChatItem} x */
+	/** @private @arg {import("../yt_json_types/abc/A.js").A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("replayChatItemAction",x,this.AD_ReplayChatItem);}
-	/** @private @arg {A_AddChatItem} x */
+	/** @private @arg {import("../yt_json_types/abc/A.js").A_AddChatItem} x */
 	A_AddChatItem(x)
 	{
 		const cf="A_AddChatItem";
@@ -2412,7 +2412,7 @@ class Support_Renderer extends BaseService
 	}
 	/**
 	 * @protected @template R_D
-	 * @template {Extract<keyof T_Endpoint,KA_EndpointKey>} T_Key @template {TE_Endpoint_2_Opt<any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.js").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.js").TE_Endpoint_2_Opt<any,any>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint[T_Key])=>R_D} f1
 	 * @returns {[typeof y,R_D]}
@@ -2430,14 +2430,14 @@ class Support_Renderer extends BaseService
 		return [y,r1];
 	}
 	// UpdateAction methods
-	/** @private @arg {AU_SubscribeButton} x */
+	/** @private @arg {import("../yt_json_types/abc/A.js").AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.TE_Endpoint_2_opt_v2("updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	// Command methods
-	/** @private @arg {C_RunAttestation} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").C_RunAttestation} x */
 	C_RunAttestation(x) {this.TE_Endpoint_2_opt_v2("runAttestationCommand",x,this.D_RunAttestation);}
 	//#endregion
 	//#region ActionData methods
-	/** @private @arg {AD_AddToGuideSection} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_AddToGuideSection} x */
 	AD_AddToGuideSection(x)
 	{
 		const cf="AD_AddToGuideSection";
@@ -2449,7 +2449,7 @@ class Support_Renderer extends BaseService
 		}
 		this.z(items,x => this.xr.R_GuideEntry(x));
 	}
-	/** @private @arg {AD_SubscribeButton} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_SubscribeButton} x */
 	AD_SubscribeButton(x)
 	{
 		const cf="AD_SubscribeButton";
@@ -2457,7 +2457,7 @@ class Support_Renderer extends BaseService
 		this.sm.a_primitive_bool(subscribed);
 		this.sm.channelId(channelId);
 	}
-	/** @private @arg {AD_ReplayChatItem} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_ReplayChatItem} x */
 	AD_ReplayChatItem(x)
 	{
 		const cf="AD_ReplayChatItem";
@@ -2465,7 +2465,7 @@ class Support_Renderer extends BaseService
 		this.z(actions,this.A_AddChatItem);
 		this.sm.a_primitive_str(videoOffsetTimeMsec);
 	}
-	/** @private @arg {AD_AddChatItem} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_AddChatItem} x */
 	AD_AddChatItem(x)
 	{
 		const cf="AD_AddChatItem";
@@ -2474,11 +2474,11 @@ class Support_Renderer extends BaseService
 		this.t(clientId,x => this.save_primitive(`${cf}.clientId`,x));
 	}
 	// CommandData Data methods
-	/** @private @arg {"DC_PlayerSeek"} cf @arg {DC_Generic} x */
+	/** @private @arg {"DC_PlayerSeek"} cf @arg {import("../yt_json_types/abc/group_C.js").DC_Generic} x */
 	DC_Generic(cf,x) {this.y(cf,"continuation",x,() => {});}
-	/** @private @arg {DC_PlayerSeek} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_PlayerSeek} x */
 	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek",x);}
-	/** @private @arg {DC_LiveChatReplay} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_LiveChatReplay} x */
 	DC_LiveChatReplay(x)
 	{
 		const cf="DC_LiveChatReplay";
@@ -2486,14 +2486,14 @@ class Support_Renderer extends BaseService
 		this.sm.a_primitive_num(timeUntilLastMessageMsec);
 	}
 	// ContinuationData Renderer methods
-	/** @private @arg {CD_PlayerSeek} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").CD_PlayerSeek} x */
 	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
-	/** @private @arg {CD_LiveChatReplay} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").CD_LiveChatReplay} x */
 	CD_LiveChatReplay(x) {this.y("CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
-	/** @private @arg {CD_Invalidation} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").CD_Invalidation} x */
 	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
 	// ContinuationData Data methods
-	/** @private @arg {DC_Invalidation} x */
+	/** @private @arg {import("../yt_json_types/d/group_DC.js").DC_Invalidation} x */
 	DC_Invalidation(x)
 	{
 		const cf="DC_Invalidation";
@@ -2506,15 +2506,15 @@ class Support_Renderer extends BaseService
 	//#region CommandMetadata methods
 	//#endregion
 	//#region WebCommandMetadata methods
-	/** @private @arg {GM_Browse} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_Browse} x */
 	GM_Browse(x) {this.sm.T_GM("GM_Browse",x,x => this.sm.cq(x,"/youtubei/v1/browse"));}
-	/** @private @arg {GM_Next} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_Next} x */
 	GM_Next(x) {this.sm.T_GM("GM_Next",x,x => this.sm.cq(x,"/youtubei/v1/next"));}
 	//#endregion
 	//#region Renderer
-	/** @public @arg {R_SettingsSidebar} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("settingsSidebarRenderer",x,this.D_SettingsSidebar);}
-	/** @private @arg {D_SettingsSidebar} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SettingsSidebar} x */
 	D_SettingsSidebar(x)
 	{
 		const cf="D_SettingsSidebar";
@@ -2522,11 +2522,11 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(title);
 		this.sm.z(items,this.sm.R_CompactLink);
 	}
-	/** @public @arg {R_PlaylistSidebar} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PlaylistSidebar} x */
 	R_PlaylistSidebar(x) {this.H_("playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
-	/** @public @arg {R_PdgBuyFlow} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PdgBuyFlow} x */
 	R_PdgBuyFlow(x) {this.H_("pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
-	/** @private @arg {D_PdgBuyFlow} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x)
 	{
 		const cf="D_PdgBuyFlow";
@@ -2540,9 +2540,9 @@ class Support_Renderer extends BaseService
 		if("getSurveyCommand" in onCloseCommand) return this.sm.C_GetSurvey(onCloseCommand);
 		{debugger;}
 	}
-	/** @private @arg {R_SuperVodBuyFlowContent} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_SuperVodBuyFlowContent} x */
 	R_SuperVodBuyFlowContent(x) {this.H_("superVodBuyFlowContentRenderer",x,this.D_SuperVodBuyFlowContent);}
-	/** @private @arg {D_SuperVodBuyFlowContent} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SuperVodBuyFlowContent} x */
 	D_SuperVodBuyFlowContent(x)
 	{
 		const cf="D_SuperVodBuyFlowContent";
@@ -2554,9 +2554,9 @@ class Support_Renderer extends BaseService
 		console.log("defaultPriceTier",defaultPriceTier);
 		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
-	/** @private @arg {R_PdgColorSlider} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PdgColorSlider} x */
 	R_PdgColorSlider(x) {this.H_("pdgColorSliderRenderer",x,this.D_PdgColorSlider);}
-	/** @private @arg {D_PdgColorSlider} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PdgColorSlider} x */
 	D_PdgColorSlider(x)
 	{
 		const cf="D_PdgColorSlider";
@@ -2566,9 +2566,9 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(maxTierValue);
 		this.sm.G_Text(minTierValue);
 	}
-	/** @private @arg {R_PdgCommentPreview} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PdgCommentPreview} x */
 	R_PdgCommentPreview(x) {this.H_("pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
-	/** @private @arg {D_PdgCommentPreview} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PdgCommentPreview} x */
 	D_PdgCommentPreview(x)
 	{
 		const cf="D_PdgCommentPreview";
@@ -2581,9 +2581,9 @@ class Support_Renderer extends BaseService
 		this.xm.R_Button(editButton);
 		this.ht.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
-	/** @private @arg {R_PdgBuyFlowHeader} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
-	/** @private @arg {D_PdgBuyFlowHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x)
 	{
 		const cf="D_PdgBuyFlowHeader";
@@ -2592,22 +2592,22 @@ class Support_Renderer extends BaseService
 		this.xm.R_Button(helpButton);
 		this.xm.R_Button(dismissButton);
 	}
-	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_SingleColumnMusicWatchNextResults} x */
 	R_SingleColumnMusicWatchNextResults(x) {this.H_("singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
-	/** @private @arg {R_Tabbed} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_Tabbed} x */
 	R_Tabbed(x) {this.H_("tabbedRenderer",x,this.R_WatchNextTabbedResults);}
-	/** @private @arg {R_WatchNextTabbedResults} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
-	/** @private @arg {D_WatchNextTabbedResults} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x)
 	{
 		const cf="D_WatchNextTabbedResults";
 		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(tabs,x => this.x.get("x_EventInput").R_Tab(x));
 	}
-	/** @public @arg {R_TemplateUpdate} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_("templateUpdate",x,this.D_TemplateUpdate);}
-	/** @private @arg {D_TemplateUpdate} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TemplateUpdate} x */
 	D_TemplateUpdate(x)
 	{
 		const cf="D_TemplateUpdate";
@@ -2647,18 +2647,18 @@ class Support_Renderer extends BaseService
 			this.sm.a_primitive_str(a);
 		}
 	}
-	/** @public @arg {R_Transcript} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_Transcript} x */
 	R_Transcript(x) {this.H_("transcriptRenderer",x,this.D_Transcript);}
-	/** @private @arg {D_Transcript} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Transcript} x */
 	D_Transcript(x)
 	{
 		const cf="D_Transcript";
 		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_TranscriptSearchPanel(a);
 	}
-	/** @private @arg {R_TranscriptSegmentList} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
-	/** @private @arg {D_TranscriptSegmentList} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TranscriptSegmentList} x */
 	D_TranscriptSegmentList(x)
 	{
 		const cf="D_TranscriptSegmentList";
@@ -2668,11 +2668,11 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(retryLabel);
 		this.sm.a_primitive_bool(touchCaptionsEnabled);
 	}
-	/** @private @arg {R_TranscriptFooter} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_TranscriptFooter} x */
 	R_TranscriptFooter(x) {this.H_("transcriptFooterRenderer",x,this.D_TranscriptFooter);}
-	/** @private @arg {R_TranscriptSearchPanel} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
-	/** @private @arg {D_TranscriptSearchPanel} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x)
 	{
 		const cf="D_TranscriptSearchPanel";
@@ -2681,9 +2681,9 @@ class Support_Renderer extends BaseService
 		this.R_TranscriptFooter(footer);
 		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
 	}
-	/** @private @arg {R_TranscriptSegment} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
-	/** @private @arg {D_TranscriptSegment} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TranscriptSegment} x */
 	D_TranscriptSegment(x)
 	{
 		const cf="D_TranscriptSegment";
@@ -2695,9 +2695,9 @@ class Support_Renderer extends BaseService
 		this.sm.D_Accessibility(accessibility);
 		this.t(targetId,x => this.save_primitive(`${cf}.targetId`,x));
 	}
-	/** @private @arg {D_TranscriptFooter} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TranscriptFooter} x */
 	D_TranscriptFooter(x) {this.sm.H_("languageMenu",x,this.sm.R_SortFilterSubMenu);}
-	/** @public @arg {D_TimedTextApi} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_TimedTextApi} x */
 	D_TimedTextApi(x)
 	{
 		const cf="D_TimedTextApi";
@@ -2720,15 +2720,15 @@ class Support_Renderer extends BaseService
 		kind&&this.save_primitive(`${cf}.kind`,kind);
 		this.save_primitive(`${cf}.lang`,lang);
 	}
-	/** @private @arg {R_GuideSubscriptionsSection} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
-	/** @private @arg {R_GuideDownloadsEntry} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_GuideDownloadsEntry} x */
 	R_GuideDownloadsEntry(x) {this.H_("guideDownloadsEntryRenderer",x,this.D_GuideDownloadsEntry);}
-	/** @private @arg {R_GuideCollapsibleEntry} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_GuideCollapsibleEntry} x */
 	R_GuideCollapsibleEntry(x) {this.H_("guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
-	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_GuideCollapsibleSectionEntry} x */
 	R_GuideCollapsibleSectionEntry(x) {this.H_("guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
-	/** @type {D_GuideEntry_IconType_Obj} */
+	/** @type {import("../yt_json_types/d/group_D.js").D_GuideEntry_IconType_Obj} */
 	D_GuideEntry_IconType={
 		WithNavEP: [
 			"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
@@ -2740,11 +2740,11 @@ class Support_Renderer extends BaseService
 			"HELP","FEEDBACK",
 		]
 	};
-	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
+	/** @type {Extract<import("../yt_json_types/d/group_D.js").D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
 	D_GuideEntry_MissingIconType=[];
-	/** @public @arg {R_GuideEntry} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_GuideEntry} x */
 	R_GuideEntry(x) {this.H_("guideEntryRenderer",x,this.D_GuideEntry);}
-	/** @private @arg {D_GuideEntry} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GuideEntry} x */
 	D_GuideEntry(x)
 	{
 		const cf="D_GuideEntry";
@@ -2778,7 +2778,7 @@ class Support_Renderer extends BaseService
 			return;
 		}
 	}
-	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<D_GuideEntry,{targetId:any;}>|D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
+	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<import("../yt_json_types/d/group_D.js").D_GuideEntry,{targetId:any;}>|import("../yt_json_types/d/group_D.js").D_GuideEntry_OfflineDownloadEntry|import("../yt_json_types/d/group_D.js").D_GuideEntry_VideoLibrary} x */
 	D_GuideEntry_WithTargetId(cf,x)
 	{
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
@@ -2793,7 +2793,7 @@ class Support_Renderer extends BaseService
 		this.D_GuideEntry_TargetId(targetId);
 		if(isPrimary!==true) debugger;
 	}
-	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry} x */
+	/** @private @arg {"D_GuideEntry"} cf1 @arg {import("../yt_json_types/d/group_D.js").D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf1,x)
 	{
 		const cf2="D_GuideEntry_WithIcon";
@@ -2852,7 +2852,7 @@ class Support_Renderer extends BaseService
 		}
 		this.sm.codegen_typedef(cf1,x);
 	}
-	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {CF_D_GuideEntry} cf @arg {T} x */
+	/** @private @template {Extract<import("../yt_json_types/d/group_D.js").D_GuideEntry,{accessibility:any}>} T @arg {import("../yt_json_types/abc/group_C.js").CF_D_GuideEntry} cf @arg {T} x */
 	D_GuideEntry_Omit(cf,x)
 	{
 		const {accessibility,formattedTitle,trackingParams,...y}=this.s(cf,x);
@@ -2860,7 +2860,7 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(formattedTitle);
 		return y;
 	}
-	/** @arg {Extract<D_GuideEntry,{targetId:any;}>["targetId"]} x */
+	/** @arg {Extract<import("../yt_json_types/d/group_D.js").D_GuideEntry,{targetId:any;}>["targetId"]} x */
 	D_GuideEntry_TargetId(x)
 	{
 		const cf="D_GuideEntry_TargetId";
@@ -2871,7 +2871,7 @@ class Support_Renderer extends BaseService
 			case "library-guide-item":
 		}
 	}
-	/** @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithNavEP} x */
+	/** @arg {"D_GuideEntry"} cf1 @arg {import("../yt_json_types/d/group_D.js").D_GuideEntry_WithNavEP} x */
 	D_GuideEntry_WithNavEP(cf1,x)
 	{
 		const cf2="D_GuideEntry_WithNavEP";
@@ -2933,7 +2933,7 @@ class Support_Renderer extends BaseService
 			};
 		}
 	}
-	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithPrimary} x */
+	/** @private @arg {"D_GuideEntry"} cf1 @arg {import("../yt_json_types/d/group_D.js").D_GuideEntry_WithPrimary} x */
 	D_GuideEntry_WithPrimary(cf1,x)
 	{
 		/** @type {`${cf1}_WithPrimary`} */
@@ -2956,28 +2956,28 @@ class Support_Renderer extends BaseService
 			x===""; debugger;
 		}
 	}
-	/** @private @arg {R_GuideEntryData} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_GuideEntryData} x */
 	R_GuideEntryData(x) {this.H_("guideEntryData",x,this.D_GuideEntryData);}
-	/** @private @arg {D_GuideEntryData} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GuideEntryData} x */
 	D_GuideEntryData(x)
 	{
 		const cf="D_GuideEntryData";
 		const {guideEntryId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.guideEntryId(guideEntryId);
 	}
-	/** @private @arg {R_GuideSection} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_GuideSection} x */
 	R_GuideSection(x) {this.H_("guideSectionRenderer",x,this.D_GuideSection);}
-	/** @public @arg {R_ResourceStatusInResponseCheck} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ResourceStatusInResponseCheck} x */
 	R_ResourceStatusInResponseCheck(x) {this.H_("resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
-	/** @public @arg {R_ReportFormModal} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ReportFormModal} x */
 	R_ReportFormModal(x) {this.H_("reportFormModalRenderer",x,this.g);}
-	/** @arg {R_RichShelf} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_RichShelf} x */
 	R_RichShelf(x) {this.H_("richShelfRenderer",x,this.D_RichShelf);}
-	/** @private @arg {D_RichShelf} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_RichShelf} x */
 	D_RichShelf(x)
 	{
 		const cf="D_RichShelf";
-		/** @type {T_UnionToPartial<D_RichShelf>} */
+		/** @type {import("../yt_json_types/stu/group_T.js").T_UnionToPartial<import("../yt_json_types/d/group_D.js").D_RichShelf>} */
 		let pt=x;
 		const {icon,title,contents,trackingParams,menu,showMoreButton,rowIndex,...y}=this.s(cf,pt); this.g(y);
 		if(icon)
@@ -2998,9 +2998,9 @@ class Support_Renderer extends BaseService
 			case 2: case 4: break;
 		}
 	}
-	/** @arg {R_RatingSurveyOption} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_RatingSurveyOption} x */
 	R_RatingSurveyOption(x) {this.H_("ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
-	/** @private @arg {D_RatingSurveyOption} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_RatingSurveyOption} x */
 	D_RatingSurveyOption(x)
 	{
 		const cf="D_ExpandableSurveyResponse";
@@ -3013,9 +3013,9 @@ class Support_Renderer extends BaseService
 		this.sm.a_primitive_bool(checked);
 		this.sm.a_primitive_bool(selected);
 	}
-	/** @arg {R_RatingSurvey} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_RatingSurvey} x */
 	R_RatingSurvey(x) {this.H_("ratingSurveyRenderer",x,this.D_RatingSurvey);}
-	/** @private @arg {D_RatingSurvey} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_RatingSurvey} x */
 	D_RatingSurvey(x)
 	{
 		const cf="D_ExpandableSurveyResponse";
@@ -3025,51 +3025,51 @@ class Support_Renderer extends BaseService
 		this.xm.R_Button(undoButton);
 		this.g(notSureEndpoint);
 	}
-	/** @public @arg {R_Channel_MD} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_Channel_MD} x */
 	R_Channel_MD(x) {this.H_("channelMetadataRenderer",x,this.D_Channel_MD);}
-	/** @public @arg {R_Playlist_MD} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_Playlist_MD} x */
 	R_Playlist_MD(x) {this.H_("playlistMetadataRenderer",x,this.D_Playlist_MD);}
-	/** @public @arg {R_ChannelSwitcherPage} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
-	/** @public @arg {R_Message} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_Message} x */
 	R_Message(x) {this.H_("messageRenderer",x,this.D_Message);}
-	/** @private @arg {D_Message} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Message} x */
 	D_Message(x)
 	{
 		const cf="D_Message";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(text);
 	}
-	/** @public @arg {R_ConversationBar} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ConversationBar} x */
 	R_ConversationBar(x) {this.H_("conversationBarRenderer",x,this.R_AvailabilityMessage);}
-	/** @public @arg {R_AvailabilityMessage} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_AvailabilityMessage} x */
 	R_AvailabilityMessage(x) {this.H_("availabilityMessage",x,x => this.R_Message(x));}
-	/** @private @arg {D_LiveBroadcastingBadge} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_LiveBroadcastingBadge} x */
 	D_LiveBroadcastingBadge(x)
 	{
 		const cf="D_LiveBroadcastingBadge";
 		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.a_primitive_bool(liveBroadcasting);
 	}
-	/** @public @arg {R_LiveChatParticipantsList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_LiveChatParticipantsList} x */
 	R_LiveChatParticipantsList(x) {this.H_("liveChatParticipantsListRenderer",x,this.g);}
-	/** @public @arg {R_LiveChatTicker} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_LiveChatTicker} x */
 	R_LiveChatTicker(x) {this.H_("liveChatTickerRenderer",x,this.g);}
-	/** @public @arg {R_LiveChatItemList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_LiveChatItemList} x */
 	R_LiveChatItemList(x) {this.H_("liveChatItemListRenderer",x,this.g);}
-	/** @public @arg {R_LiveChatMessageInput} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("liveChatMessageInputRenderer",x,this.g);}
-	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_LiveChatViewerEngagementMessage} x */
 	R_LiveChatViewerEngagementMessage(x) {this.H_("liveChatViewerEngagementMessageRenderer",x,this.D_LiveChatViewerEngagementMessage);}
-	/** @public @arg {D_LiveChatViewerEngagementMessage} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_LiveChatViewerEngagementMessage} x */
 	D_LiveChatViewerEngagementMessage(x)
 	{
 		const cf="D_LiveChatViewerEngagementMessage";
 		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);
 	}
-	/** @public @arg {R_LiveChatPlaceholderItem} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_LiveChatPlaceholderItem} x */
 	R_LiveChatPlaceholderItem(x) {this.H_("liveChatPlaceholderItemRenderer",x,this.D_LiveChatPlaceholderItem);}
-	/** @public @arg {D_LiveChatPlaceholderItem} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_LiveChatPlaceholderItem} x */
 	D_LiveChatPlaceholderItem(x)
 	{
 		const cf="D_LiveChatPlaceholderItem";
@@ -3078,9 +3078,9 @@ class Support_Renderer extends BaseService
 		let u_seconds=this.sm.parse_number_template(timestampUsec);
 		this.sm.a_primitive_num(u_seconds);
 	}
-	/** @public @arg {R_LiveChatTextMessage} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_LiveChatTextMessage} x */
 	R_LiveChatTextMessage(x) {this.H_("liveChatTextMessageRenderer",x,this.D_LiveChatTextMessage);}
-	/** @public @arg {D_LiveChatTextMessage} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_LiveChatTextMessage} x */
 	D_LiveChatTextMessage(x)
 	{
 		const cf="D_LiveChatTextMessage";
@@ -3088,16 +3088,16 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(message);
 		console.log(`${cf}.id`,id);
 	}
-	/** @public @arg {D_LiveChatEmoji} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_LiveChatEmoji} x */
 	D_LiveChatEmoji(x)
 	{
 		const cf="D_LiveChatEmoji";
 		const {isLocked,...y}=this.sm.D_CustomEmoji_Omit(cf,x); this.g(y);
 		this.sm.a_primitive_bool(isLocked);
 	}
-	/** @private @arg {R_ChannelSwitcherHeader} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
-	/** @private @arg {D_ChannelSwitcherPage} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ChannelSwitcherPage} x */
 	D_ChannelSwitcherPage(x)
 	{
 		const cf="D_ChannelSwitcherPage";
@@ -3106,7 +3106,7 @@ class Support_Renderer extends BaseService
 		this.sm.cq(targetId,"ceq");
 		this.z(contents,this.G_ChannelSwitcherContent);
 	}
-	/** @private @arg {D_ChannelSwitcherHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x)
 	{
 		const cf="D_ChannelSwitcherHeader";
@@ -3114,9 +3114,9 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(title);
 		this.xm.R_Button(button);
 	}
-	/** @private @arg {D_ChipColorPalette} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ChipColorPalette} x */
 	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.sm.codegen_typedef(cf,x); this.sm.GEN(cf,x);}
-	/** @private @arg {D_Channel_MD} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Channel_MD} x */
 	D_Channel_MD(x)
 	{
 		const cf="D_Channel_MD";
@@ -3141,11 +3141,11 @@ class Support_Renderer extends BaseService
 		const {channelConversionUrl,...y}=u; this.g(y);/*#destructure_done*/
 		this.t_cf(`${cf}.channelConversionUrl`,channelConversionUrl,(cf,x) => this.ps.parse_url(cf,x));
 	}
-	/** @private @arg {R_PdgCommentOption} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
-	/** @arg {R_InlineSurvey} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_InlineSurvey} x */
 	R_InlineSurvey(x) {this.H_("inlineSurveyRenderer",x,this.D_InlineSurvey);}
-	/** @private @arg {D_InlineSurvey} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_InlineSurvey} x */
 	D_InlineSurvey(x)
 	{
 		const cf="D_InlineSurvey";
@@ -3158,9 +3158,9 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(dismissalText);
 		this.z(impressionEndpoints,this.g);
 	}
-	/** @arg {R_SourcePivotHeader} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_SourcePivotHeader} x */
 	R_SourcePivotHeader(x) {this.H_("sourcePivotHeaderRenderer",x,this.D_SourcePivotHeader);}
-	/** @private @arg {D_SourcePivotHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SourcePivotHeader} x */
 	D_SourcePivotHeader(x)
 	{
 		const cf="D_SourcePivotHeader";
@@ -3168,9 +3168,9 @@ class Support_Renderer extends BaseService
 		this.xr.R_ProfilePageHeaderInformationViewModel(headerInformation);
 		this.xr.R_ProfilePageHeaderButtonRowViewModel(buttonRow);
 	}
-	/** @arg {R_ProfilePageHeaderInformationViewModel} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_ProfilePageHeaderInformationViewModel} x */
 	R_ProfilePageHeaderInformationViewModel(x) {this.H_("profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
-	/** @private @arg {D_ProfilePageHeaderInformation} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ProfilePageHeaderInformation} x */
 	D_ProfilePageHeaderInformation(x)
 	{
 		const cf="D_ProfilePageHeaderInformation";
@@ -3181,21 +3181,21 @@ class Support_Renderer extends BaseService
 		if(alignment!=="a") debugger;
 		this.ht.C_Innertube(onTap);
 	}
-	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
-	/** @private @arg {D_ProfilePageHeaderTitle} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ProfilePageHeaderTitle} x */
 	D_ProfilePageHeaderTitle(x) {this.y("D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
-	/** @private @arg {D_ProfilePageHeaderTitle_Content} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ProfilePageHeaderTitle_Content} x */
 	D_ProfilePageHeaderTitle_Content(x) {this.sm.y("D_ProfilePageHeaderTitle_Content","content",x,this.sm.a_primitive_str);}
-	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_ProfilePageHeaderThumbnailViewModel} x */
 	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("profilePageHeaderThumbnailViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_ProfilePageHeaderMetadataViewModel} x */
 	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("profilePageHeaderMetadataViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_ProfilePageHeaderButtonRowViewModel} x */
 	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("profilePageHeaderButtonRowViewModel",x,this.g);}
-	/** @arg {R_ExpandableSurveyResponse} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_ExpandableSurveyResponse} x */
 	R_ExpandableSurveyResponse(x) {this.H_("expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
-	/** @private @arg {D_ExpandableSurveyResponse} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ExpandableSurveyResponse} x */
 	D_ExpandableSurveyResponse(x)
 	{
 		const cf="D_ExpandableSurveyResponse";
@@ -3203,9 +3203,9 @@ class Support_Renderer extends BaseService
 		this.xr.R_RatingSurvey(options);
 		this.xm.R_Button(submitButton);
 	}
-	/** @arg {R_AutomixPreviewVideo} x */
+	/** @arg {import("../yt_json_types/r/group_R.js").R_AutomixPreviewVideo} x */
 	R_AutomixPreviewVideo(x) {this.H_("automixPreviewVideoRenderer",x,this.g);}
-	/** @public @arg {D_AttBgChallenge} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_AttBgChallenge} x */
 	D_AttBgChallenge(x)
 	{
 		const cf="D_AttBgChallenge";
@@ -3219,9 +3219,9 @@ class Support_Renderer extends BaseService
 		this.sm.a_primitive_str(program);
 		if(globalName!=="trayride") debugger;
 	}
-	/** @public @arg {R_DynamicReadaheadConfig} x */
+	/** @public @arg {import("../yt_json_types/r/r_sub/r/R_DynamicReadaheadConfig.js").R_DynamicReadaheadConfig} x */
 	R_DynamicReadaheadConfig(x) {this.H_("dynamicReadaheadConfig",x,this.D_DynamicReadaheadConfig);}
-	/** @public @arg {D_DynamicReadaheadConfig} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_DynamicReadaheadConfig} x */
 	D_DynamicReadaheadConfig(x)
 	{
 		const cf="D_DynamicReadaheadConfig";
@@ -3230,16 +3230,16 @@ class Support_Renderer extends BaseService
 		this.sm.cq(minReadAheadMediaTimeMs,15000);
 		this.sm.cq(readAheadGrowthRateMs,1000);
 	}
-	/** @private @arg {R_PdgCommentChip} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
-	/** @public @arg {A_FancyDismissibleDialog} x */
+	/** @public @arg {import("../yt_json_types/nop_q/Popup.js").A_FancyDismissibleDialog} x */
 	A_FancyDismissibleDialog(x)
 	{
 		let dl=this.xm.TA_OpenPopup("A_FancyDismissibleDialog",x);
 		let pu=this.Popup_DL_DismissibleDialog(dl);
 		this.sm.R_FancyDismissibleDialog(pu);
 	}
-	/** @protected @arg {Popup_DL_DismissibleDialog} x */
+	/** @protected @arg {import("../yt_json_types/nop_q/Popup.js").Popup_DL_DismissibleDialog} x */
 	Popup_DL_DismissibleDialog(x)
 	{
 		const {popup,popupType,beReused,...y}=this.s("Popup_DL_DismissibleDialog",x); this.g(y);/*#destructure_done*/
@@ -3247,9 +3247,9 @@ class Support_Renderer extends BaseService
 		this.t(beReused,x => this.sm.cq(x,true));
 		return popup;
 	}
-	/** @public @arg {R_Dropdown} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_Dropdown} x */
 	R_Dropdown(x) {this.H_("dropdownRenderer",x,this.D_Dropdown);}
-	/** @public @arg {D_Dropdown} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_Dropdown} x */
 	D_Dropdown(x)
 	{
 		const cf="D_Dropdown";
@@ -3261,9 +3261,9 @@ class Support_Renderer extends BaseService
 		});
 		this.t(label,x => this.sm.a_primitive_str(x));
 	}
-	/** @public @arg {R_PrivacyDropdownItem} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
-	/** @public @arg {D_PrivacyDropdownItem} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_PrivacyDropdownItem} x */
 	D_PrivacyDropdownItem(x)
 	{
 		const cf="D_PrivacyDropdownItem";
@@ -3279,9 +3279,9 @@ class Support_Renderer extends BaseService
 		this.sm.a_primitive_bool(isSelected);
 		this.xm.D_Label(accessibility);
 	}
-	/** @public @arg {R_C4TabbedHeader} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
-	/** @private @arg {D_C4TabbedHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x)
 	{
 		const cf="D_C4TabbedHeader";
@@ -3303,9 +3303,9 @@ class Support_Renderer extends BaseService
 		const {visitTracking,...y}=u; this.g(y);
 		this.t(visitTracking,this.D_RemarketingPing);
 	}
-	/** @public @arg {R_ActiveAccountHeader} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ActiveAccountHeader} x */
 	R_ActiveAccountHeader(x) {this.H_("activeAccountHeaderRenderer",x,this.D_ActiveAccountHeader);}
-	/** @private @arg {D_ActiveAccountHeader} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").D_ActiveAccountHeader} x */
 	D_ActiveAccountHeader(x)
 	{
 		const cf="D_ActiveAccountHeader";
@@ -3316,9 +3316,9 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(manageAccountTitle);
 		this.sm.G_Text(channelHandle);
 	}
-	/** @private @arg {R_DismissalFollowUp} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").R_DismissalFollowUp} x */
 	R_DismissalFollowUp(x) {this.H_("dismissalFollowUpRenderer",x,this.D_DismissalFollowUp);}
-	/** @private @arg {D_DismissalFollowUp} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_DismissalFollowUp} x */
 	D_DismissalFollowUp(x)
 	{
 		const cf="D_DismissalFollowUp";
@@ -3330,9 +3330,9 @@ class Support_Renderer extends BaseService
 		this.sm.E_SubmitFeedback(submitFeedbackEndpoint);
 		this.sm.cq(dismissalViewStyle,"DISMISSAL_VIEW_STYLE_COMPACT_TALL");
 	}
-	/** @public @arg {R_MacroMarkersListItem} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_MacroMarkersListItem} x */
 	R_MacroMarkersListItem(x) {this.H_("macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
-	/** @private @arg {D_MacroMarkersListItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x)
 	{
 		const cf="D_MacroMarkersListItem";
@@ -3360,9 +3360,9 @@ class Support_Renderer extends BaseService
 		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
 	}
-	/** @private @arg {R_MacroMarkersInfoItem} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_MacroMarkersInfoItem} x */
 	R_MacroMarkersInfoItem(x) {this.H_("macroMarkersInfoItemRenderer",x,this.D_MacroMarkersInfoItem);}
-	/** @private @arg {D_MacroMarkersInfoItem} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/r/D_MacroMarkersInfoItem.js").D_MacroMarkersInfoItem} x */
 	D_MacroMarkersInfoItem(x)
 	{
 		const cf="D_MacroMarkersList";
@@ -3370,9 +3370,9 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(infoText);
 		this.sm.R_Menu(menu);
 	}
-	/** @public @arg {R_MacroMarkersList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_MacroMarkersList} x */
 	R_MacroMarkersList(x) {this.H_("macroMarkersListRenderer",x,this.D_MacroMarkersList);}
-	/** @private @arg {D_MacroMarkersList} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_MacroMarkersList} x */
 	D_MacroMarkersList(x)
 	{
 		const cf="D_MacroMarkersList";
@@ -3385,9 +3385,9 @@ class Support_Renderer extends BaseService
 		});
 		this.sm.G_Text(syncButtonLabel);
 	}
-	/** @public @arg {R_HorizontalCardList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_HorizontalCardList} x */
 	R_HorizontalCardList(x) {this.H_("horizontalCardListRenderer",x,this.D_HorizontalCardList);}
-	/** @private @arg {D_HorizontalCardList} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_HorizontalCardList} x */
 	D_HorizontalCardList(x)
 	{
 		const cf="D_HorizontalCardList";
@@ -3407,11 +3407,11 @@ class Support_Renderer extends BaseService
 		}
 		this.sm.cq(centerItems,false);
 	}
-	/** @public @arg {R_StructuredDescriptionContent} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_StructuredDescriptionContent} x */
 	R_StructuredDescriptionContent(x) {this.H_("structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
-	/** @private @arg {D_StructuredDescriptionContent} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_StructuredDescriptionContent} x */
 	D_StructuredDescriptionContent(x) {this.H_("items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
-	/** @private @arg {G_StructuredDescriptionContentItem} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x)
 	{
 		if("expandableVideoDescriptionBodyRenderer" in x) return this.ht.R_ExpandableVideoDescriptionBody(x);
@@ -3420,22 +3420,22 @@ class Support_Renderer extends BaseService
 		if("videoDescriptionMusicSectionRenderer" in x) return this.ht.R_VideoDescriptionMusicSection(x);
 		if("videoDescriptionCourseSectionRenderer" in x) return this.sm.R_VideoDescriptionCourseSection(x);
 	}
-	/** @public @arg {A_GetSystemMenu} x */
+	/** @public @arg {import("../yt_json_types/nop_q/Popup.js").A_GetSystemMenu} x */
 	A_GetSystemMenu(x)
 	{
 		const cf="A_GetSystemMenu";
 		let pu=this.xm.TA_OpenPopup(cf,x);
 		this.Popup_DD_SystemMenu(pu);
 	}
-	/** @private @arg {Popup_DD_SystemMenu} x */
+	/** @private @arg {import("../yt_json_types/nop_q/Popup.js").Popup_DD_SystemMenu} x */
 	Popup_DD_SystemMenu(x)
 	{
 		let m=this.sm.T_OpenPopup_Dropdown("Popup_DD_SystemMenu",x);
 		this.t(m,this.R_SystemMenu);
 	}
-	/** @public @arg {R_SystemMenu} x */
+	/** @public @arg {import("../yt_json_types/nop_q/Popup.js").R_SystemMenu} x */
 	R_SystemMenu(x) {this.t(this.sm.TR_MultiPageMenu("R_SystemMenu",x),this.MP_SystemMenu);}
-	/** @public @arg {MP_SystemMenu} x */
+	/** @public @arg {import("../yt_json_types/nop_q/Popup.js").MP_SystemMenu} x */
 	MP_SystemMenu(x)
 	{
 		const cf="MP_SystemMenu";
@@ -3443,9 +3443,9 @@ class Support_Renderer extends BaseService
 		this.xr.R_ActiveAccountHeader(header);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SYSTEM") debugger;
 	}
-	/** @private @arg {R_DismissalReasonText} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").R_DismissalReasonText} x */
 	R_DismissalReasonText(x) {this.H_("dismissalReasonTextRenderer",x,this.D_DismissalReasonText);}
-	/** @private @arg {D_DismissalReasonText} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_DismissalReasonText} x */
 	D_DismissalReasonText(x)
 	{
 		const cf="D_DismissalReasonText";
@@ -3456,19 +3456,19 @@ class Support_Renderer extends BaseService
 	//#endregion
 	//#region Group Union
 	//#region G_
-	/** @private @arg {G_ChannelSwitcherContent} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x)
 	{
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
 		if("accountItem" in x) return this.ht.A_AccountItem(x);
 	}
-	/** @public @arg {G_NextContents} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_NextContents} x */
 	G_NextContents(x)
 	{
 		if("twoColumnWatchNextResults" in x) return this.sm.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
 	}
-	/** @public @arg {G_GuideSectionItem} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_GuideSectionItem} x */
 	G_GuideSectionItem(x)
 	{
 		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
@@ -3478,14 +3478,14 @@ class Support_Renderer extends BaseService
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
 	}
-	/** @public @arg {G_ChatItem} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_ChatItem} x */
 	G_ChatItem(x)
 	{
 		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
 		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
 		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
 	}
-	/** @public @arg {G_RS_Subscribe_Action} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_RS_Subscribe_Action} x */
 	G_RS_Subscribe_Action(x)
 	{
 		const cf="RS_Subscribe_ActionItem";
@@ -3501,27 +3501,27 @@ class Support_Renderer extends BaseService
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
 	}
-	/** @public @arg {G_LiveChatContinuationItem} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x)
 	{
 		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
 		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
 		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
 	}
-	/** @public @arg {G_RA_LiveChatContinuationActions} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x)
 	{
 		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 	}
-	/** @public @arg {G_WatchNext} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_WatchNext} x */
 	G_WatchNext(x)
 	{
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.sm.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.sm.R_CompactPlaylist(x);
 	}
-	/** @public @arg {G_MenuNavigationItem_NavEP} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").G_MenuNavigationItem_NavEP} x */
 	G_MenuNavigationItem_NavEP(x)
 	{
 		if("userFeedbackEndpoint" in x) return this.sm.E_UserFeedback(x);
@@ -3530,7 +3530,7 @@ class Support_Renderer extends BaseService
 		if("urlEndpoint" in x) return this.xm.E_Url(x);
 		debugger;
 	}
-	/** @public @arg {E_AdFeedback} x */
+	/** @public @arg {import("../yt_json_types/e/E.js").E_AdFeedback} x */
 	E_AdFeedback(x)
 	{
 		const cf="E_AdFeedback";
@@ -3539,11 +3539,11 @@ class Support_Renderer extends BaseService
 		let [r]=this.z(loggingUrls,x => this.xm.T_BaseUrl(x));
 		this.z(r,x => this.ps.parse_url(`${cf}.loggingUrls[]`,x));
 	}
-	/** @public @arg {DE_AdFeedback} x */
+	/** @public @arg {import("../yt_json_types/d/group_DE.js").DE_AdFeedback} x */
 	DE_AdFeedback(x) {x;}
 	//#endregion
 	//#region GA_
-	/** @private @arg {GA_MenuNavigationPopup} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GA_MenuNavigationPopup} x */
 	GA_MenuNavigationPopup(x)
 	{
 		const cf="GA_MenuNavigationPopup";
@@ -3563,14 +3563,14 @@ class Support_Renderer extends BaseService
 	//#endregion
 	//#endregion
 	//#region Data methods
-	/** @private @arg {D_PlaylistSidebar} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistSidebar} x */
 	D_PlaylistSidebar(x)
 	{
 		const cf="D_PlaylistSidebar";
 		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.xm.z(items,this.xm.G_PlaylistSidebarItem);
 	}
-	/** @private @arg {D_NotchesItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_NotchesItem} x */
 	D_NotchesItem(x)
 	{
 		const cf="NotchesItem";
@@ -3580,7 +3580,7 @@ class Support_Renderer extends BaseService
 		this.sm.E_YpcGetCart(purchaseCommand);
 		this.sm.G_Text(tierValue);
 	}
-	/** @private @arg {D_GuideCollapsibleEntry} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x)
 	{
 		const cf="D_GuideCollapsibleEntry";
@@ -3592,7 +3592,7 @@ class Support_Renderer extends BaseService
 		});
 		this.R_GuideEntry(collapserItem);
 	}
-	/** @private @arg {D_GuideDownloadsEntry} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GuideDownloadsEntry} x */
 	D_GuideDownloadsEntry(x)
 	{
 		const cf="D_GuideDownloadsEntry";
@@ -3601,7 +3601,7 @@ class Support_Renderer extends BaseService
 		if(!entryRenderer.guideEntryRenderer) debugger;
 		this.R_GuideEntry(entryRenderer);
 	}
-	/** @private @arg {D_GuideSubscriptionsSection} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GuideSubscriptionsSection} x */
 	D_GuideSubscriptionsSection(x)
 	{
 		const cf="D_GuideSubscriptionsSection";
@@ -3617,7 +3617,7 @@ class Support_Renderer extends BaseService
 		this.sm.t(formattedTitle,this.sm.G_Text);
 		if(!this.eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
 	}
-	/** @private @arg {D_GuideSection} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GuideSection} x */
 	D_GuideSection(x)
 	{
 		const cf="D_GuideSection";
@@ -3625,7 +3625,7 @@ class Support_Renderer extends BaseService
 		this.z(items,this.G_GuideSectionItem);
 		this.sm.t(formattedTitle,this.sm.G_Text);
 	}
-	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x)
 	{
 		const cf="D_GuideCollapsibleSectionEntry";
@@ -3638,7 +3638,7 @@ class Support_Renderer extends BaseService
 		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
 		if(handlerDatas.length!==2) debugger;
 	}
-	/** @private @arg {D_ResourceStatusInResponseCheck} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x)
 	{
 		const cf="D_ResourceStatusInResponseCheckData";
@@ -3646,7 +3646,7 @@ class Support_Renderer extends BaseService
 		this.sm.a_primitive_str(serverBuildLabel);
 		this.z(a,this.D_ElementResourceStatus);
 	}
-	/** @private @arg {D_ElementResourceStatus} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ElementResourceStatus} x */
 	D_ElementResourceStatus(x)
 	{
 		const cf="D_ElementResourceStatus";
@@ -3654,7 +3654,7 @@ class Support_Renderer extends BaseService
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		this.sm.a_primitive_str(identifier);
 	}
-	/** @private @arg {D_Playlist_MD} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Playlist_MD} x */
 	D_Playlist_MD(x)
 	{
 		const cf="D_Playlist_MD";
@@ -3663,7 +3663,7 @@ class Support_Renderer extends BaseService
 		this.sm.a_primitive_str(iosAppindexingLink);
 		this.sm.a_primitive_str(androidAppindexingLink);
 	}
-	/** @private @arg {D_PdgCommentOption} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PdgCommentOption} x */
 	D_PdgCommentOption(x)
 	{
 		const cf="D_PdgCommentOption";
@@ -3671,7 +3671,7 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(commentText);
 		this.R_PdgCommentChip(chipRenderer);
 	}
-	/** @private @arg {D_PdgCommentChip} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PdgCommentChip} x */
 	D_PdgCommentChip(x)
 	{
 		const cf="D_PdgCommentChip";
@@ -3680,7 +3680,7 @@ class Support_Renderer extends BaseService
 		this.D_ChipColorPalette(chipColorPalette);
 		if(chipIcon.iconType!=="FILL_DOLLAR_SIGN_HEART_12") debugger;
 	}
-	/** @private @arg {D_RemarketingPing} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_RemarketingPing} x */
 	D_RemarketingPing(x)
 	{
 		const cf="D_RemarketingPing",{remarketingPing,...y}=this.s(cf,x),t=this; this.g(y);
@@ -3695,14 +3695,14 @@ class Support_Renderer extends BaseService
 		console.log(`[${cf}]`,"[keys]",kk.join());
 		this.view_conversion_info.set(np,sp);
 	}
-	/** @public @arg {D_ExternalChannelId} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_ExternalChannelId} x */
 	D_ExternalChannelId(x)
 	{
 		const cf="D_ExternalChannelId";
 		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.channelId(externalChannelId);
 	}
-	/** @private @arg {D_InvalidationId} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_InvalidationId} x */
 	D_InvalidationId(x)
 	{
 		const cf="D_InvalidationId";
@@ -3713,7 +3713,7 @@ class Support_Renderer extends BaseService
 		if(subscribeToGcmTopics!==true) debugger;
 		console.log(`[${cf}.protoCreationTimestampMs]`,protoCreationTimestampMs);
 	}
-	/** @private @arg {D_RunAttestation} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_RunAttestation} x */
 	D_RunAttestation(x)
 	{
 		const cf="D_RunAttestation";
@@ -3723,7 +3723,7 @@ class Support_Renderer extends BaseService
 	}
 	//#endregion
 	//#region New Data methods
-	/** @public @arg {D_FeedbackResponseProcessedStatus} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x)
 	{
 		const cf="D_FeedbackResponseProcessedStatus";
@@ -3733,9 +3733,9 @@ class Support_Renderer extends BaseService
 	}
 	//#endregion
 	//#region new
-	/** @template {C_Continuation} BT @template {BT["continuationCommand"]["request"]} T @arg {BT} x @arg {T} t @returns {x is {continuationCommand:{request:T}}} */
+	/** @template {import("../yt_json_types/abc/group_C.js").C_Continuation} BT @template {BT["continuationCommand"]["request"]} T @arg {BT} x @arg {T} t @returns {x is {continuationCommand:{request:T}}} */
 	is_C_Continuation_one(x,t) {return x.continuationCommand.request===t;}
-	/** @public @arg {C_Continuation} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.js").C_Continuation} x */
 	C_Continuation(x)
 	{
 		if(this.is_C_Continuation_one(x,"CONTINUATION_REQUEST_TYPE_BROWSE"))
@@ -3761,7 +3761,7 @@ class Support_Renderer extends BaseService
 		}
 		debugger;
 	}
-	/** @public @arg {DC_Continuation} x */
+	/** @public @arg {import("../yt_json_types/d/group_DC.js").DC_Continuation} x */
 	DC_Continuation(x)
 	{
 		if("continuationCommand" in x) debugger;
@@ -3780,18 +3780,18 @@ class Support_Renderer extends BaseService
 			}
 		}
 	}
-	/** @private @arg {C_ShowReloadUi} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").C_ShowReloadUi} x */
 	C_ShowReloadUi(x)
 	{
 		const cf="C_ShowReloadUi";
 		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
 		this.DC_ShowReloadUi(a);
 	}
-	/** @private @arg {DC_ShowReloadUi} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_ShowReloadUi} x */
 	DC_ShowReloadUi(x) {this.y("DC_ShowReloadUi","targetId",x,this.D_UiTargetId);}
-	/** @type {D_UiTargetId[]} */
+	/** @type {import("../yt_json_types/d/group_D.js").D_UiTargetId[]} */
 	reload_ui_target_id_arr=[];
-	/** @arg {D_UiTargetId} x */
+	/** @arg {import("../yt_json_types/d/group_D.js").D_UiTargetId} x */
 	D_UiTargetId(x)
 	{
 		if(this.sm.is_yt_uuid(x)) return;
@@ -3804,16 +3804,16 @@ class Support_Renderer extends BaseService
 	}
 	/** @template {{}} T @arg {{}} x @arg {()=>T|null} wx @returns {asserts x is T} */
 	assert_is_omit_key(x,wx) {x; wx;}
-	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
+	/** @private @template {import("../yt_json_types/d/group_DC.js").DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {import("../yt_json_types/stu/group_T.js").T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x)
 	{
 		const {token,request,...y}=this.s(cf,x);
-		/** @returns {T_OmitKey<T,"token"|"request">|null} */
+		/** @returns {import("../yt_json_types/stu/group_T.js").T_OmitKey<T,"token"|"request">|null} */
 		function gu() {return null;}
 		this.assert_is_omit_key(y,gu);
 		return y;
 	}
-	/** @public @arg {DC_Continuation_Browse} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.js").DC_Continuation_Browse} x */
 	DC_Continuation_Browse(x)
 	{
 		const cf="DC_Continuation_Browse";
@@ -3821,14 +3821,14 @@ class Support_Renderer extends BaseService
 		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
 		this.t(command,this.C_ShowReloadUi);
 	}
-	/** @public @arg {DC_Continuation_ReelWatchSeq} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.js").DC_Continuation_ReelWatchSeq} x */
 	DC_Continuation_ReelWatchSeq(x)
 	{
 		const cf="DC_Continuation_ReelWatchSeq";
 		const {token,request,...y}=this.s(cf,x); this.g(y);
 		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
 	}
-	/** @public @arg {DC_Continuation_WatchNext} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.js").DC_Continuation_WatchNext} x */
 	DC_Continuation_WatchNext(x)
 	{
 		const cf="DC_Continuation_WatchNext";
@@ -3836,11 +3836,11 @@ class Support_Renderer extends BaseService
 		this.save_enum(`${cf}.request`,"CONTINUATION_REQUEST_TYPE",request);
 		this.t(command,this.C_ShowReloadUi);
 	}
-	/** @protected @arg {M_Browse} x */
+	/** @protected @arg {import("../yt_json_types/m/M.js").M_Browse} x */
 	M_Browse(x) {this.T_WCM("M_Browse",x,x => this.GM_Browse(x));}
-	/** @protected @arg {M_Next} x */
+	/** @protected @arg {import("../yt_json_types/m/M.js").M_Next} x */
 	M_Next(x) {this.T_WCM("M_Next",x,x => this.GM_Next(x));}
-	/** @public @arg {TA_Continuation<"engagement-panel-comments-section", G_CommentsSection>} x */
+	/** @public @arg {import("../yt_json_types/abc/A.js").TA_Continuation<"engagement-panel-comments-section", import("../yt_json_types/ghi/group_G.js").G_CommentsSection>} x */
 	A_CommentsSectionContinuation_2(x)
 	{
 		const cf="A_CommentsSectionContinuation";
@@ -3852,17 +3852,17 @@ class Support_Renderer extends BaseService
 			if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		});
 	}
-	/** @public @arg {R_AuthorCommentBadge} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_AuthorCommentBadge} x */
 	R_AuthorCommentBadge(x) {this.H_("authorCommentBadgeRenderer",x,this.D_AuthorCommentBadge);}
-	/** @private @arg {D_AuthorCommentBadge} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AuthorCommentBadge} x */
 	D_AuthorCommentBadge(x)
 	{
 		const cf="D_AuthorCommentBadge";
 		const {icon,color,authorText,authorEndpoint,iconTooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @public @arg {R_SponsorCommentBadge} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_SponsorCommentBadge} x */
 	R_SponsorCommentBadge(x) {this.H_("sponsorCommentBadgeRenderer",x,this.D_SponsorCommentBadge);}
-	/** @private @arg {D_SponsorCommentBadge} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SponsorCommentBadge} x */
 	D_SponsorCommentBadge(x)
 	{
 		const cf="D_SponsorCommentBadge";
@@ -3870,9 +3870,9 @@ class Support_Renderer extends BaseService
 		this.sm.D_Thumbnail(customBadge);
 		this.sm.a_primitive_str(tooltip);
 	}
-	/** @public @arg {R_VideoInfoCardContent} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_VideoInfoCardContent} x */
 	R_VideoInfoCardContent(x) {this.H_("videoInfoCardContentRenderer",x,this.D_VideoInfoCardContent);}
-	/** @private @arg {D_VideoInfoCardContent} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_VideoInfoCardContent.js").D_VideoInfoCardContent} x */
 	D_VideoInfoCardContent(x)
 	{
 		const cf="D_VideoInfoCardContent";
@@ -3884,9 +3884,9 @@ class Support_Renderer extends BaseService
 		this.sm.G_Text(viewCountText);
 		this.sm.E_Watch(action);
 	}
-	/** @public @arg {R_SimpleCardContent} x */
+	/** @public @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardContent.js").R_SimpleCardContent} x */
 	R_SimpleCardContent(x) {this.H_("simpleCardContentRenderer",x,this.D_SimpleCardContent);}
-	/** @private @arg {D_SimpleCardContent} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardContent.js").D_SimpleCardContent} x */
 	D_SimpleCardContent(x)
 	{
 		const cf="D_SimpleCardContent";
@@ -3900,11 +3900,11 @@ class Support_Renderer extends BaseService
 		if(command.urlEndpoint) this.xm.E_Url(command);
 		else debugger;
 	}
-	/** @private @arg {R_SimpleCardButton} x */
+	/** @private @arg {import("../yt_json_types/r/r_sub/r/R_SimpleCardButton.js").R_SimpleCardButton} x */
 	R_SimpleCardButton(x) {this.H_("simpleCardButtonRenderer",x,this.g);}
-	/** @public @arg {R_ReelPlayerOverlay} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
-	/** @private @arg {D_ReelPlayerOverlay} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x)
 	{
 		const cf="D_ReelPlayerOverlay";
@@ -3925,9 +3925,9 @@ class Support_Renderer extends BaseService
 		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
 		this.sm.t(badge,this.sm.RMD_Badge);
 	}
-	/** @use_import D_ReelPlayerOverlay @public @arg {R_ReelPlayerHeader} x */
+	/** @use_import D_ReelPlayerOverlay @public @arg {import("../yt_json_types/r/group_R.js").R_ReelPlayerHeader} x */
 	R_ReelPlayerHeader(x) {this.H_("reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
-	/** @private @arg {D_ReelPlayerHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ReelPlayerHeader} x */
 	D_ReelPlayerHeader(x)
 	{
 		const cf="D_ReelPlayerHeader";
@@ -3939,9 +3939,9 @@ class Support_Renderer extends BaseService
 		this.sm.D_Thumbnail(channelThumbnail);
 		this.sm.D_Accessibility(accessibility);
 	}
-	/** @use_import D_ReelPlayerOverlay @public @arg {R_ReelMultimixAttributionLabel} x */
+	/** @use_import D_ReelPlayerOverlay @public @arg {import("../yt_json_types/r/group_R.js").R_ReelMultimixAttributionLabel} x */
 	R_ReelMultimixAttributionLabel(x) {this.H_("reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
-	/** @private @arg {D_ReelMultimixAttributionLabel} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ReelMultimixAttributionLabel} x */
 	D_ReelMultimixAttributionLabel(x)
 	{
 		const cf="D_ReelMultimixAttributionLabel";
@@ -3952,9 +3952,9 @@ class Support_Renderer extends BaseService
 		this.sm.E_Watch(command);
 		this.sm.a_primitive_str(a11yLabel);
 	}
-	/** @use_import D_ReelPlayerOverlay @public @arg {R_PivotButton} x */
+	/** @use_import D_ReelPlayerOverlay @public @arg {import("../yt_json_types/r/group_R.js").R_PivotButton} x */
 	R_PivotButton(x) {this.H_("pivotButtonRenderer",x,this.D_PivotButton);}
-	/** @private @arg {D_PivotButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PivotButton} x */
 	D_PivotButton(x)
 	{
 		const cf="D_PivotButton";
@@ -3984,9 +3984,9 @@ class ForService_XMethods extends BaseService
 {
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @template {(this:ForService_XMethods,x:T)=>U} F @arg {F} f */
 	t(x,f) {return this.t_base(x,f);}
-	/** @private @arg {R_VoiceSearchDialog} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
-	/** @private @arg {D_VoiceSearchDialog} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VoiceSearchDialog} x */
 	D_VoiceSearchDialog(x)
 	{
 		const cf="D_VoiceSearchDialog";
@@ -4003,9 +4003,9 @@ class ForService_XMethods extends BaseService
 			}
 		}
 	}
-	/** @protected @arg {E_SignalService_SendPost} x */
+	/** @protected @arg {import("../yt_json_types/e/E.js").E_SignalService_SendPost} x */
 	E_SignalService_SendPost(x) {const [a,b]=this.sm.T_SE_Signal("E_SignalService_SendPost",x); this.sm.M_SendPost(a); this.G_ClientSignal(b);}
-	/** @public @arg {G_ClientSignal} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_ClientSignal} x */
 	G_ClientSignal(x)
 	{
 		const cf="G_ClientSignal";
@@ -4013,7 +4013,7 @@ class ForService_XMethods extends BaseService
 		this.save_primitive(`${cf}.signal`,signal);
 		this.z(actions,this.G_ClientSignal_Item);
 	}
-	/** @arg {G_ClientSignal_Item} x */
+	/** @arg {import("../yt_json_types/ghi/group_G.js").G_ClientSignal_Item} x */
 	G_ClientSignal_Item(x)
 	{
 		const cf="G_ClientSignal_Item"; this.sm.k(cf,x);
@@ -4024,14 +4024,14 @@ class ForService_XMethods extends BaseService
 		if("addToPlaylistCommand" in x) return this.sm.C_AddToPlaylist(x);
 		this.sm.codegen_typedef(cf,x);
 	}
-	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<Popup_ClientSignal>>} x */
+	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.js").G_ClientSignal_Item,import("../yt_json_types/nop_q/Popup.js").TA_OpenPopup<import("../yt_json_types/nop_q/Popup.js").Popup_ClientSignal>>} x */
 	S_Client_Popup(x)
 	{
 		const cf="S_Client_Popup";
 		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
-	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
+	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.js").G_ClientSignal_Item,import("../yt_json_types/nop_q/Popup.js").TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x)
 	{
 		const cf="S_VoiceSearchPopup_Dialog";
@@ -4056,20 +4056,20 @@ class ForService_XMethods extends BaseService
 			} break;
 		}
 	}
-	/** @private @arg {A_SendFeedback} x */
+	/** @private @arg {import("../yt_json_types/abc/A.js").A_SendFeedback} x */
 	A_SendFeedback(x) {let [a,b]=this.sm.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
-	/** @private @arg {E_ShowEngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/e/E.js").E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {let [a,b]=this.sm.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
-	/** @private @arg {DE_ShowEngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_ShowEngagementPanel} x */
 	DE_ShowEngagementPanel(x)
 	{
 		const cf="D_ShowEngagementPanel";
 		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
-	/** @private @arg {A_Signal} x */
+	/** @private @arg {import("../yt_json_types/abc/A.js").A_Signal} x */
 	A_Signal(x) {let [a,y]=this.sm.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
-	/** @arg {Extract<G_Popup_All,{popupType:"DIALOG"}>["popup"]} x */
+	/** @arg {Extract<import("../yt_json_types/nop_q/Popup.js").G_Popup_All,{popupType:"DIALOG"}>["popup"]} x */
 	G_Popup_DL(x)
 	{
 		if("confirmDialogRenderer" in x) return this.sm.R_ConfirmDialog(x);
@@ -4079,13 +4079,13 @@ class ForService_XMethods extends BaseService
 		if("pdgBuyFlowRenderer" in x) return this.xr.R_PdgBuyFlow(x);
 		x===""; debugger;
 	}
-	/** @public @template {{}} T @arg {CF_TA_OpenPopup} cf @arg {TA_OpenPopup<T>} x */
+	/** @public @template {{}} T @arg {import("../yt_json_types/abc/group_C.js").CF_TA_OpenPopup} cf @arg {import("../yt_json_types/nop_q/Popup.js").TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf,x)
 	{
-		/** @type {TA_OpenPopup<unknown>} */
+		/** @type {import("../yt_json_types/nop_q/Popup.js").TA_OpenPopup<unknown>} */
 		let xp=x;
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		/** @type {G_OpenPopup_All["openPopupAction"]|G_Popup_All|{}|null|undefined} */
+		/** @type {import("../yt_json_types/nop_q/Popup.js").G_OpenPopup_All["openPopupAction"]|import("../yt_json_types/nop_q/Popup.js").G_Popup_All|{}|null|undefined} */
 		let ax=xp.openPopupAction;
 		if(ax&&typeof ax==="object"&&"popupType" in ax&&"popup" in ax)
 		{
@@ -4127,7 +4127,7 @@ class ForService_XMethods extends BaseService
 		}
 		return a;
 	}
-	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.js").CF_GE_ResponseReceived} cf @arg {import("../yt_json_types/ghi/group_G.js").GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x)
 	{
 		this.save_primitive(`${cf}.response_endpoint`,x);
@@ -4139,7 +4139,7 @@ class ForService_XMethods extends BaseService
 		if("appendContinuationItemsAction" in x) return this.sm.A_AppendContinuationItems(x);
 		debugger;
 	}
-	/** @private @arg {D_ToggleButton_ToggledSrvEP} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ToggleButton_ToggledSrvEP} x */
 	D_ToggleButton_ToggledSrvEP(x)
 	{
 		const cf="D_ToggleButton_ToggledSrvEP"; this.sm.k(cf,x);
@@ -4150,7 +4150,7 @@ class ForService_XMethods extends BaseService
 		if("removeUpcomingEventReminderEndpoint" in x) return this.sm.E_RemoveUpcomingEventReminder(x);
 		x===""; debugger;
 	}
-	/** @private @arg {D_ToggleButton_DefaultSrvEP} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ToggleButton_DefaultSrvEP} x */
 	D_ToggleButton_DefaultSrvEP(x)
 	{
 		const cf="D_ToggleButton_DefaultSrvEP"; this.sm.k(cf,x);
@@ -4161,9 +4161,9 @@ class ForService_XMethods extends BaseService
 		if("addUpcomingEventReminderEndpoint" in x) return this.sm.E_AddUpcomingEventReminder(x);
 		x===""; debugger;
 	}
-	/** @public @arg {R_SubscribeButton} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_SubscribeButton} x */
 	R_SubscribeButton(x) {this.H_("subscribeButtonRenderer",x,this.D_SubscribeButton);}
-	/** @private @arg {D_SubscribeButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SubscribeButton} x */
 	D_SubscribeButton(x)
 	{
 		const cf="D_SubscribeButton";
@@ -4195,7 +4195,7 @@ class ForService_XMethods extends BaseService
 			debugger;
 		});
 	}
-	/** @private @arg {D_Button_SE} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Button_SE} x */
 	D_Button_SE(x)
 	{
 		const cf="D_Button_SE";
@@ -4211,7 +4211,7 @@ class ForService_XMethods extends BaseService
 		x===""; this.sm.GEN(cf,x);
 	}
 	/**
-	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
+	 * @private @template {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
 	 * @returns {[p1,p2,o2]}
 	 */
 	D_ThumbnailOverlayToggleButton_Omit(cf,x)
@@ -4221,9 +4221,9 @@ class ForService_XMethods extends BaseService
 		let [p2,{trackingParams,...o2}]=this.sm.unwrap_prefix(o1,"untoggled");
 		return [p1,p2,o2];
 	}
-	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayToggleButton} x */
 	R_ThumbnailOverlayToggleButton(x) {this.H_("thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
-	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayToggleButton} x */
 	D_ThumbnailOverlayToggleButton(x)
 	{
 		const cf="D_ThumbnailOverlayToggleButton";
@@ -4239,7 +4239,7 @@ class ForService_XMethods extends BaseService
 		this.D_ThumbnailOverlayToggleButton_ToggledPrefix_2(o1);
 		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
 	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"untoggled">} x */
+	/** @private @arg {import("../yt_json_types/stu/group_T.js").T_RemovePrefix<import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayToggleButton_1,"untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x)
 	{
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
@@ -4249,7 +4249,7 @@ class ForService_XMethods extends BaseService
 		if(tooltip!=="Watch Later") debugger;
 		this.sm.E_PlaylistEdit(serviceEndpoint);
 	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"toggled">} x */
+	/** @private @arg {import("../yt_json_types/stu/group_T.js").T_RemovePrefix<import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayToggleButton_2,"toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x)
 	{
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
@@ -4258,7 +4258,7 @@ class ForService_XMethods extends BaseService
 		this.sm.T_Icon(`${cf}:icon`,icon);
 		if(tooltip!=="Added") debugger;
 	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1,"toggled">} x */
+	/** @private @arg {import("../yt_json_types/stu/group_T.js").T_RemovePrefix<import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayToggleButton_1,"toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x)
 	{
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
@@ -4268,7 +4268,7 @@ class ForService_XMethods extends BaseService
 		if(tooltip!=="Added") debugger;
 		this.sm.E_PlaylistEdit(serviceEndpoint);
 	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2,"untoggled">} x */
+	/** @private @arg {import("../yt_json_types/stu/group_T.js").T_RemovePrefix<import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayToggleButton_2,"untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x)
 	{
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";
@@ -4278,7 +4278,7 @@ class ForService_XMethods extends BaseService
 		if(tooltip!=="Add to queue") debugger;
 		this.xm.E_SignalService_SendPost(serviceEndpoint);
 	}
-	/** @private @arg {AD_Signal} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_Signal} x */
 	AD_Signal(x)
 	{
 		const cf="AD_Signal";
@@ -4289,11 +4289,11 @@ class ForService_XMethods extends BaseService
 			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
 		}
 	}
-	/** @private @arg {AD_SendFeedback} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_SendFeedback} x */
 	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
-	/** @public @arg {R_Button} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").R_Button} x */
 	R_Button(x) {this.H_("buttonRenderer",x,this.D_Button);}
-	/** @private @arg {D_Button_targetId} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Button_targetId} x */
 	D_Button_targetId(x)
 	{
 		let cf="D_Button_targetId";
@@ -4307,7 +4307,7 @@ class ForService_XMethods extends BaseService
 		}
 		this.sm.targetId(cf,x);
 	}
-	/** @private @arg {D_Button_NavEP} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Button_NavEP} x */
 	D_Button_NavEP(x)
 	{
 		if("shareEntityServiceEndpoint" in x) return this.sm.E_ShareEntityService(x);
@@ -4321,7 +4321,7 @@ class ForService_XMethods extends BaseService
 		if("openPopupAction" in x) return this.xr.A_FancyDismissibleDialog(x);
 		if("createCommentReplyDialogEndpoint" in x) return this.sm.E_CreateCommentReplyDialog(x);
 	}
-	/** @private @arg {D_Button} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Button} x */
 	D_Button(x)
 	{
 		const cf="D_Button";
@@ -4340,7 +4340,7 @@ class ForService_XMethods extends BaseService
 		this.sm.t(accessibilityData,this.sm.D_Accessibility);
 		this.xm.t(command,this.xm.GC_Button);
 	}
-	/** @public @arg {G_ThumbnailOverlayItem} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_ThumbnailOverlayItem} x */
 	G_ThumbnailOverlayItem(x)
 	{
 		const cf="G_ThumbnailOverlayItem";
@@ -4356,9 +4356,9 @@ class ForService_XMethods extends BaseService
 		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
 		this.sm.codegen_typedef(`ThumbnailOverlay$${cf}`,x);
 	}
-	/** @protected @arg {R_HeroPlaylistThumbnail} x */
+	/** @protected @arg {import("../yt_json_types/r/group_R.js").R_HeroPlaylistThumbnail} x */
 	R_HeroPlaylistThumbnail(x) {this.H_("heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
-	/** @private @arg {D_HeroPlaylistThumbnail} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_HeroPlaylistThumbnail} x */
 	D_HeroPlaylistThumbnail(x)
 	{
 		const cf="D_HeroPlaylistThumbnail";
@@ -4368,9 +4368,9 @@ class ForService_XMethods extends BaseService
 		this.sm.E_Watch(onTap);
 		this.G_ThumbnailOverlayItem(thumbnailOverlays);
 	}
-	/** @public @arg {R_EndScreenVideo} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_EndScreenVideo} x */
 	R_EndScreenVideo(x) {this.H_("endScreenVideoRenderer",x,this.D_EndScreenVideo);}
-	/** @private @arg {D_EndScreenVideo} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_EndScreenVideo} x */
 	D_EndScreenVideo(x)
 	{
 		const cf="D_EndScreenVideo";
@@ -4390,16 +4390,16 @@ class ForService_XMethods extends BaseService
 			if(!x.reelWatchEndpoint) debugger;
 		}
 	}
-	/** @public @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:G_ThumbnailOverlayItem[]}} T @arg {T} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.js").CF_D_Menu_Omit} cf @template {{thumbnailOverlays:import("../yt_json_types/ghi/group_G.js").G_ThumbnailOverlayItem[]}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x)
 	{
 		const {thumbnailOverlays,...y}=this.s(cf,x);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		return y;
 	}
-	/** @public @arg {R_PlaylistPanelVideo} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PlaylistPanelVideo} x */
 	R_PlaylistPanelVideo(x) {this.H_("playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
-	/** @private @arg {D_PlaylistPanelVideo} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x)
 	{
 		const cf="D_PlaylistPanelVideo";
@@ -4425,9 +4425,9 @@ class ForService_XMethods extends BaseService
 		}
 		this.g(y);
 	}
-	/** @public @arg {R_ToggleButton} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ToggleButton} x */
 	R_ToggleButton(x) {this.H_("toggleButtonRenderer",x,this.D_ToggleButton);}
-	/** @private @arg {D_ToggleButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ToggleButton} x */
 	D_ToggleButton(x)
 	{
 		const cf="D_ToggleButton";
@@ -4460,7 +4460,7 @@ class ForService_XMethods extends BaseService
 	}
 	/** @type {Map<string,[string,string[]][]>} */
 	strings_map=new Map;
-	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
 	add_string_to_map(cf,k_arg,x)
 	{
 		/** @type {`${typeof cf}::${typeof k_arg}`} */
@@ -4481,53 +4481,53 @@ class ForService_XMethods extends BaseService
 		if(!group_arr) this.strings_map.set(key,group_arr=[]);
 		return group_arr;
 	}
-	/** @private @arg {E_Unsubscribe} x */
+	/** @private @arg {import("../yt_json_types/e/E.js").E_Unsubscribe} x */
 	E_Unsubscribe(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
-	/** @private @arg {DE_Unsubscribe} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_Unsubscribe} x */
 	DE_Unsubscribe(x)
 	{
 		const cf="DE_Unsubscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.z(channelIds,this.sm.channelId);
 	}
-	/** @private @arg {E_CreateComment} x */
+	/** @private @arg {import("../yt_json_types/e/E.js").E_CreateComment} x */
 	E_CreateComment(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
-	/** @private @arg {E_Subscribe} x */
+	/** @private @arg {import("../yt_json_types/e/E.js").E_Subscribe} x */
 	E_Subscribe(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
-	/** @private @arg {DE_Subscribe} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_Subscribe} x */
 	DE_Subscribe(x)
 	{
 		const cf="DE_Subscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.z(channelIds,this.sm.channelId);
 	}
-	/** @private @arg {M_Subscribe} x */
+	/** @private @arg {import("../yt_json_types/m/M.js").M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
-	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayBottomPanel} x */
 	R_ThumbnailOverlayBottomPanel(x) {this.H_("thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
-	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayEndorsement} x */
 	R_ThumbnailOverlayEndorsement(x) {this.H_("thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
-	/** @private @arg {R_ThumbnailOverlayHoverText} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayHoverText} x */
 	R_ThumbnailOverlayHoverText(x) {this.H_("thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
-	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayInlineUnplayable} x */
 	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
-	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayLoadingPreview} x */
 	R_ThumbnailOverlayLoadingPreview(x) {this.H_("thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
-	/** @public @arg {D_ThumbnailOverlayLoadingPreview} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {this.sm.H_s("text",x,this.sm.G_Text);}
-	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayNowPlaying} x */
 	R_ThumbnailOverlayNowPlaying(x) {this.H_("thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
-	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayNowPlaying} x */
 	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.sm.y(cf,"text",x,this.sm.G_Text);}
-	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_("thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
-	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlaySidePanel} x */
 	R_ThumbnailOverlaySidePanel(x) {this.H_("thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
-	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ThumbnailOverlayTimeStatus} x */
 	R_ThumbnailOverlayTimeStatus(x) {this.H_("thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
-	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayResumePlayback} x */
 	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_primitive("resume_playback.percentDurationWatched",x));}
-	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayTimeStatus} x */
 	D_ThumbnailOverlayTimeStatus(x)
 	{
 		const cf="D_ThumbnailOverlayTimeStatus";
@@ -4555,7 +4555,7 @@ class ForService_XMethods extends BaseService
 	}
 	make_icon_types_map()
 	{
-		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
+		/** @type {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlaySidePanel_iconTypes} */
 		let r=[
 			"PLAY_ALL","PLAYLISTS",
 		];
@@ -4572,7 +4572,7 @@ class ForService_XMethods extends BaseService
 		return mp;
 	}
 	icon_types_map=this.make_icon_types_map();
-	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlaySidePanel} x */
 	D_ThumbnailOverlaySidePanel(x)
 	{
 		const cf="D_ThumbnailOverlaySidePanel";
@@ -4584,16 +4584,16 @@ class ForService_XMethods extends BaseService
 		let missing=this.sm.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
 		if(missing) this.sm.onMissingIcon(cf,icon,x,known,unknown);
 	}
-	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayBottomPanel} x */
 	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,this.D_MixIcon);}
-	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x)
 	{
 		const cf="D_ThumbnailOverlayEndorsement";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(text);
 	}
-	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x)
 	{
 		const cf="D_ThumbnailOverlayInlineUnplayable";
@@ -4601,7 +4601,7 @@ class ForService_XMethods extends BaseService
 		this.sm.G_Text(text);
 		this.sm.cq(icon.iconType,"PLAY_DISABLED");
 	}
-	/** @private @arg {D_ThumbnailOverlayHoverText} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ThumbnailOverlayHoverText} x */
 	D_ThumbnailOverlayHoverText(x)
 	{
 		const cf="D_ThumbnailOverlayHoverText";
@@ -4609,47 +4609,47 @@ class ForService_XMethods extends BaseService
 		this.sm.G_Text(text);
 		if(icon.iconType!=="PLAY_ALL") debugger;
 	}
-	/** @private @arg {DE_CreateComment} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_CreateComment} x */
 	DE_CreateComment(x) {const {createCommentParams,...y}=this.s("DE_CreateComment",x); this.g(y);}
-	/** @private @arg {E_YpcGetOffers} x */
+	/** @private @arg {import("../yt_json_types/e/E.js").E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.sm.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
-	/** @private @arg {DE_YpcGetOffers} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_YpcGetOffers} x */
 	DE_YpcGetOffers(x) {this.sm.D_Params("DE_YpcGetOffers",x);}
-	/** @private @arg {T_Icon<"MIX">} x */
+	/** @private @arg {import("../yt_json_types/stu/group_T.js").T_Icon<"MIX">} x */
 	D_MixIcon(x) {this.sm.T_Icon("D_MixIcon",x);}
-	/** @private @arg {M_YpcGetOffers} x */
+	/** @private @arg {import("../yt_json_types/m/M.js").M_YpcGetOffers} x */
 	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
-	/** @private @arg {M_CreateComment} x */
+	/** @private @arg {import("../yt_json_types/m/M.js").M_CreateComment} x */
 	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
-	/** @private @arg {M_Unsubscribe} x */
+	/** @private @arg {import("../yt_json_types/m/M.js").M_Unsubscribe} x */
 	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
-	/** @private @arg {GM_Unsubscribe} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_Unsubscribe} x */
 	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.sm.cq(x,"/youtubei/v1/subscription/unsubscribe"));}
-	/** @private @arg {GM_YpcGetOffers} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_YpcGetOffers} x */
 	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.sm.cq(x,"/youtubei/v1/ypc/get_offers"));}
-	/** @private @arg {GM_CreateComment} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_CreateComment} x */
 	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.sm.cq(x,"/youtubei/v1/comment/create_comment"));}
-	/** @private @arg {GM_Subscribe} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_Subscribe} x */
 	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.sm.cq(x,"/youtubei/v1/subscription/subscribe"));}
-	/** @private @arg {R_FeedTabbedHeader} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_FeedTabbedHeader} x */
 	R_FeedTabbedHeader(x) {this.H_("feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
-	/** @private @arg {D_FeedTabbedHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x)
 	{
 		const cf="D_FeedTabbedHeader";
 		const {title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.G_Text(title);
 	}
-	/** @public @arg {G_BrowseHeader} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_BrowseHeader} x */
 	G_BrowseHeader(x)
 	{
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.xr.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.xm.R_PlaylistHeader(x);
 	}
-	/** @public @arg {R_MusicThumbnail} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("musicThumbnailRenderer",x,this.D_MusicThumbnail);}
-	/** @private @arg {D_MusicThumbnail} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_MusicThumbnail} x */
 	D_MusicThumbnail(x)
 	{
 		const cf="D_MusicThumbnail";
@@ -4658,28 +4658,28 @@ class ForService_XMethods extends BaseService
 		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
 		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
-	/** @public @arg {G_Browse_MD} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_Browse_MD} x */
 	G_Browse_MD(x)
 	{
 		if("channelMetadataRenderer" in x) return this.xr.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.xr.R_Playlist_MD(x);
 	}
-	/** @public @arg {G_BrowseSidebar} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_BrowseSidebar} x */
 	G_BrowseSidebar(x)
 	{
 		if("settingsSidebarRenderer" in x) return this.xr.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.xr.R_PlaylistSidebar(x);
 	}
-	/** @private @arg {C_ResetChannelUnreadCount} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
-	/** @private @arg {DC_ResetChannelUnreadCount} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_ResetChannelUnreadCount} x */
 	DC_ResetChannelUnreadCount(x)
 	{
 		const cf="DC_ResetChannelUnreadCount";
 		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.channelId(channelId);
 	}
-	/** @public @arg {GA_ResponseReceived} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").GA_ResponseReceived} x */
 	GA_ResponseReceived(x)
 	{
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.sm.C_AdsControlFlowOpportunityReceived(x);
@@ -4687,13 +4687,13 @@ class ForService_XMethods extends BaseService
 		if("reloadContinuationItemsCommand" in x) return this.sm.C_ReloadContinuationItems(x);
 		if("resetChannelUnreadCountCommand" in x) return this.xm.C_ResetChannelUnreadCount(x);
 	}
-	/** @public @arg {G_BrowseContents} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_BrowseContents} x */
 	G_BrowseContents(x)
 	{
 		if("twoColumnBrowseResultsRenderer" in x) return this.xm.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.sm.R_FeedFilterChipBar(x);
 	}
-	/** @private @arg {G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
+	/** @private @arg {import("../yt_json_types/abc/G_DC_SectionList_BrowseFeed_ChannelFeatured.js").G_DC_SectionList_BrowseFeed_ChannelFeatured} x */
 	DC_SectionList_BrowseFeed_ChannelFeatured(x)
 	{
 		let b_info=this.sm.is_browse_feedUC(x);
@@ -4726,7 +4726,7 @@ class ForService_XMethods extends BaseService
 		}
 		this.sm.channelId(channelId);
 	}
-	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
+	/** @private @arg {import("../yt_json_types/d/mod_D/_T/DC_SectionList_BrowseFeed_History.js").DC_SectionList_BrowseFeed_History} x */
 	D_SectionList_BrowseFeed_History(x)
 	{
 		const cf="D_SectionList_BrowseFeed_History";
@@ -4741,7 +4741,7 @@ class ForService_XMethods extends BaseService
 		this.sm.R_TextHeader(header);
 		if(targetId!=="browse-feedFEhistory") debugger;
 	}
-	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x)
 	{
 		const cf="D_SectionList_BrowseFeed_Subscriptions";
@@ -4755,7 +4755,7 @@ class ForService_XMethods extends BaseService
 		});
 		if(targetId!=="browse-feedFEsubscriptions") debugger;
 	}
-	/** @private @arg {DC_SectionList_SearchFeed} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x)
 	{
 		const cf="DC_SectionList_SearchFeed";
@@ -4763,9 +4763,9 @@ class ForService_XMethods extends BaseService
 		if(targetId!=="search-feed") debugger;
 		this.sm.z(contents,this.sm.TR_SectionListItem_3_Empty);
 	}
-	/** @public @arg {RC_SectionList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").RC_SectionList} x */
 	RC_SectionList(x) {this.H_("sectionListContinuation",x,this.GD_RC_SectionList);}
-	/** @public @arg {GD_RC_SectionList} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").GD_RC_SectionList} x */
 	GD_RC_SectionList(x)
 	{
 		const cf="GD_RC_SectionList";
@@ -4791,11 +4791,11 @@ class ForService_XMethods extends BaseService
 		}
 		debugger;
 	}
-	/** @public @arg {R_SectionList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_SectionList} x */
 	R_SectionList(x) {this.H_("sectionListRenderer",x,this.GD_RC_SectionList);}
-	/** @private @arg {R_ExpandableTab} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ExpandableTab} x */
 	R_ExpandableTab(x) {this.H_("expandableTabRenderer",x,this.D_ExpandableTab);}
-	/** @private @arg {D_ExpandableTab} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ExpandableTab} x */
 	D_ExpandableTab(x)
 	{
 		const cf="D_ExpandableTab";
@@ -4819,7 +4819,7 @@ class ForService_XMethods extends BaseService
 		}
 		this.g(y);
 	}
-	/** @private @arg {SI_VE139722_EngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/stu/group_S.js").SI_VE139722_EngagementPanel} x */
 	SI_VE139722_EngagementPanel(x)
 	{
 		const cf="SI_VE139722_EngagementPanel";
@@ -4835,7 +4835,7 @@ class ForService_XMethods extends BaseService
 		let a1=this.sm.GT_ShortsSurfaceIdentifier(identifier);
 		if(a1!=="shorts-comments-panel") debugger;
 	}
-	/** @private @arg {SI_VE76278_EngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/stu/group_S.js").SI_VE76278_EngagementPanel} x */
 	SI_VE76278_EngagementPanel(x)
 	{
 		const cf="SI_VE76278_EngagementPanel";
@@ -4854,9 +4854,9 @@ class ForService_XMethods extends BaseService
 		}
 		this.g(y);
 	}
-	/** @public @arg {R_EngagementPanelSectionList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_EngagementPanelSectionList} x */
 	R_EngagementPanelSectionList(x) {this.H_("engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
-	/** @private @arg {D_EngagementPanelSectionList} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x)
 	{
 		const cf="D_EngagementPanelSectionList"; this.sm.k(cf,x);
@@ -4876,7 +4876,7 @@ class ForService_XMethods extends BaseService
 		if("targetId" in x) return this.G_SI_DB_EngagementPanel(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @public @arg {G_SI_DB_EngagementPanel} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_SI_DB_EngagementPanel} x */
 	G_SI_DB_EngagementPanel(x)
 	{
 		const cf="DB_SI_EngagementPanel";
@@ -4911,7 +4911,7 @@ class ForService_XMethods extends BaseService
 			} break;
 		}
 	}
-	/** @private @arg {SI_VE99999_EngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/stu/group_S.js").SI_VE99999_EngagementPanel} x */
 	SI_VE99999_EngagementPanel(x)
 	{
 		const cf="SI_VE99999_EngagementPanel";
@@ -4924,7 +4924,7 @@ class ForService_XMethods extends BaseService
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.sm.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {SI_VE126250_EngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/stu/group_S.js").SI_VE126250_EngagementPanel} x */
 	SI_VE126250_EngagementPanel(x)
 	{
 		const cf="SI_VE126250_EngagementPanel";
@@ -4943,7 +4943,7 @@ class ForService_XMethods extends BaseService
 		}
 		this.g(y);
 	}
-	/** @private @arg {SI_VE124975_EngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/stu/group_S.js").SI_VE124975_EngagementPanel} x */
 	SI_VE124975_EngagementPanel(x)
 	{
 		const cf="SI_VE124975_EngagementPanel";
@@ -4961,9 +4961,9 @@ class ForService_XMethods extends BaseService
 			if(a1!=="engagement-panel-structured-description") debugger;
 		}
 	}
-	/** @public @arg {R_TwoColumnBrowseResults} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_TwoColumnBrowseResults} x */
 	R_TwoColumnBrowseResults(x) {this.H_("twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
-	/** @private @arg {D_TwoColumnBrowseResults} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x)
 	{
 		const cf="D_TwoColumnBrowseResults";
@@ -4971,7 +4971,7 @@ class ForService_XMethods extends BaseService
 		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.G_SecondaryContents);
 	}
-	/** @private @arg {RG_Result} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").RG_Result} x */
 	RG_Result(x)
 	{
 		const cf="RG_Result";
@@ -4979,14 +4979,14 @@ class ForService_XMethods extends BaseService
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x)
 	{
 		if("changeEngagementPanelVisibilityAction" in x) return this.sm.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.sm.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.sm.C_ScrollToEngagementPanel(x);
 	}
-	/** @private @arg {G_SecondaryContents} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_SecondaryContents} x */
 	G_SecondaryContents(x)
 	{
 		const cf="G_SecondaryContents";
@@ -4994,11 +4994,11 @@ class ForService_XMethods extends BaseService
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {R_BrowseFeedActions} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_BrowseFeedActions} x */
 	R_BrowseFeedActions(x) {this.H_("browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
-	/** @private @arg {D_BrowseFeedActions} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_BrowseFeedActions} x */
 	D_BrowseFeedActions(x) {this.H_("contents",x,x => this.z(x,this.G_BrowseFeedContent));}
-	/** @private @arg {G_BrowseFeedContent} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_BrowseFeedContent} x */
 	G_BrowseFeedContent(x)
 	{
 		const cf="G_BrowseFeedContent";
@@ -5008,13 +5008,13 @@ class ForService_XMethods extends BaseService
 		if("compactLinkRenderer" in x) return this.sm.R_CompactLink(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {R_ProfileColumn} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_ProfileColumn} x */
 	R_ProfileColumn(x) {this.H_("profileColumnRenderer",x,this.D_ProfileColumn);}
-	/** @public @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.js").CF_T_Items} cf @template T @private @arg {import("../yt_json_types/stu/group_T.js").T_Items<T>} x */
 	T_Items(cf,x) {return this.sm.w(cf,"items",x);}
-	/** @private @arg {D_ProfileColumn} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ProfileColumn} x */
 	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
-	/** @private @arg {G_ProfileColumnItem} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_ProfileColumnItem} x */
 	G_ProfileColumnItem(x)
 	{
 		const cf="G_ProfileColumnItem";
@@ -5022,19 +5022,19 @@ class ForService_XMethods extends BaseService
 		if("profileColumnUserInfoRenderer" in x) return this.sm.R_ProfileColumnUserInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @public @arg {E_Upload} x */
+	/** @public @arg {import("../yt_json_types/e/E.js").E_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_Url(a); this.sm.B_Hack(b);}
-	/** @public @arg {E_SignalNavigation} x */
+	/** @public @arg {import("../yt_json_types/e/E.js").E_SignalNavigation} x */
 	E_SignalNavigation(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_Url(a); this.DE_SignalNavigation(b);}
-	/** @public @arg {E_Url} x */
+	/** @public @arg {import("../yt_json_types/e/E.js").E_Url} x */
 	E_Url(x)
 	{
 		const [a,b,{loggingUrls,...y}]=this.sm.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y);
 		this.M_Url(a); this.DE_Url(b); this.tz(loggingUrls,this.DU_BaseUrl);
 	}
-	/** @public @arg {M_Url} x */
+	/** @public @arg {import("../yt_json_types/m/M.js").M_Url} x */
 	M_Url(x) {this.T_WCM("M_Url",x,this.GM_Url);}
-	/** @private @arg {GM_Url} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_Url} x */
 	GM_Url(x)
 	{
 		const cf="GM_Url";
@@ -5044,7 +5044,7 @@ class ForService_XMethods extends BaseService
 		this.sm.rootVe(rootVe);
 		this.cq(rootVe,83769);
 	}
-	/** @public @arg {NonNullable<E_Url["loggingUrls"]>[number]} x */
+	/** @public @arg {NonNullable<import("../yt_json_types/e/E.js").E_Url["loggingUrls"]>[number]} x */
 	DU_BaseUrl(x)
 	{
 		const cf="DU_BaseUrl";
@@ -5052,14 +5052,14 @@ class ForService_XMethods extends BaseService
 		this.DU_Url(baseUrl);
 		this.sm.t(elapsedMediaTimeSeconds,this.sm.a_primitive_num);
 	}
-	/** @private @arg {NonNullable<E_Url["loggingUrls"]>[number]["baseUrl"]} x */
+	/** @private @arg {NonNullable<import("../yt_json_types/e/E.js").E_Url["loggingUrls"]>[number]["baseUrl"]} x */
 	DU_Url(x)
 	{
 		const uo=this._convert_url_to_obj(x);
 		let {...pp}=this.parse_url_search_params(uo.search);
 		this.DU_UrlParse({host: uo.host,pathname: uo.pathname,search: pp});
 	}
-	/** @arg {DU_UrlParse} x */
+	/** @arg {import("../yt_json_types/d/group_D.js").DU_UrlParse} x */
 	DU_UrlParse(x)
 	{
 		const cf="DU_UrlParse";
@@ -5072,7 +5072,7 @@ class ForService_XMethods extends BaseService
 			case "/pagead/paralleladinteraction": this.sm.DU_UrlParams_PageadParallelAdInteraction(x.search); break;
 		}
 	}
-	/** @private @arg {DE_Url} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_Url} x */
 	DE_Url(x)
 	{
 		const cf="DE_VE83769_Url";
@@ -5105,13 +5105,13 @@ class ForService_XMethods extends BaseService
 		}
 		this.g(u);
 	}
-	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_VE83769_Url_TargetUrlType(x)
 	{
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x))
 		{
-			/** @type {GU_VE83769_Url_Redirect} */
+			/** @type {import("../yt_json_types/ghi/group_G.js").GU_VE83769_Url_Redirect} */
 			let arg_x=as(x);
 			return this.sm.GU_YoutubeUrlRedirect(arg_x);
 		}
@@ -5119,7 +5119,7 @@ class ForService_XMethods extends BaseService
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
 		this.xm.GU_Url(sp.href);
 	}
-	/** @private @arg {GU_VE83769_Url} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GU_VE83769_Url} x */
 	GU_Url(x)
 	{
 		if(this.str_starts_with_rx("/",x))
@@ -5154,7 +5154,7 @@ class ForService_XMethods extends BaseService
 		if(this.str_starts_with_rx("https://googleads.g.doubleclick.net",x)) return;
 		x;
 	}
-	/** @private @arg {Extract<GU_VE83769_Url,`https://${string}`>} x */
+	/** @private @arg {Extract<import("../yt_json_types/ghi/group_G.js").GU_VE83769_Url,`https://${string}`>} x */
 	GU_UrlObj(x)
 	{
 		let up=this._convert_url_to_obj(x);
@@ -5177,7 +5177,7 @@ class ForService_XMethods extends BaseService
 			default: get_host(up)===""; console.log("new GU_UrlObj.host",get_host(up)); break;
 		}
 	}
-	/** @public @template {string} T @arg {T_BaseUrl<T>} x */
+	/** @public @template {string} T @arg {import("../yt_json_types/stu/group_T.js").T_BaseUrl<T>} x */
 	T_BaseUrl(x)
 	{
 		const cf="T_BaseUrl";
@@ -5185,7 +5185,7 @@ class ForService_XMethods extends BaseService
 		this.t(elapsedMediaTimeSeconds,x => this.sm.a_primitive_num(x));
 		return baseUrl;
 	}
-	/** @public @arg {D_PlaybackTracking} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_PlaybackTracking} x */
 	D_PlaybackTracking(x)
 	{
 		const cf="D_PlaybackTracking"; this.sm.k(cf,x);
@@ -5200,7 +5200,7 @@ class ForService_XMethods extends BaseService
 		let r=this.sm.t(youtubeRemarketingUrl,this.T_BaseUrl);
 		this.t(r,this.sm.a_primitive_str);
 	}
-	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template T @private @arg {import("../yt_json_types/d/group_D.js").D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
 	D_UrlAndElapsedMediaTime(x,f)
 	{
 		const cf="D_UrlAndElapsedMediaTime";
@@ -5208,7 +5208,7 @@ class ForService_XMethods extends BaseService
 		f.call(this,baseUrl);
 		this.sm.a_primitive_num(elapsedMediaTimeSeconds);
 	}
-	/** @private @arg {D_ActiveView} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ActiveView} x */
 	D_ActiveView(x)
 	{
 		const cf="D_ActiveView";
@@ -5217,7 +5217,7 @@ class ForService_XMethods extends BaseService
 		this.z(endOfSessionCommands,this.E_Pinging);
 		this.sm.D_EmptyMap(regexUriMacroValidator);
 	}
-	/** @public @arg {E_Pinging} x */
+	/** @public @arg {import("../yt_json_types/e/E.js").E_Pinging} x */
 	E_Pinging(x)
 	{
 		const cf="E_Pinging";
@@ -5242,9 +5242,9 @@ class ForService_XMethods extends BaseService
 			};
 		});
 	}
-	/** @public @arg {R_ClientForecastingAd} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ClientForecastingAd} x */
 	R_ClientForecastingAd(x) {this.H_("clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
-	/** @private @arg {D_ClientForecastingAd} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ClientForecastingAd} x */
 	D_ClientForecastingAd(x)
 	{
 		const cf="D_ClientForecastingAd";
@@ -5252,7 +5252,7 @@ class ForService_XMethods extends BaseService
 		let r=this.tz(impressionUrls,this.T_BaseUrl);
 		this.t(r,([x]) => this.z(x,x => this.ps.parse_url(`${cf}.impressionUrl`,x)));
 	}
-	/** @private @arg {D_ImpressionCommand} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ImpressionCommand} x */
 	D_ImpressionCommand(x)
 	{
 		const cf="D_ImpressionCommand";
@@ -5261,9 +5261,9 @@ class ForService_XMethods extends BaseService
 		this.z(r,x => this.ps.parse_url(`${cf}:LoggingUrlItem`,x));
 		this.sm.B_Hack(pingingEndpoint);
 	}
-	/** @public @arg {R_PromotedSparklesWeb} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
-	/** @private @arg {D_PromotedSparklesWeb} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x)
 	{
 		const cf="D_PromotedSparklesWeb";
@@ -5282,7 +5282,7 @@ class ForService_XMethods extends BaseService
 		this.z(clickLocationTargets,this.D_ClickLocationTarget);
 		this.sm.t(adBadge,this.sm.RMD_Badge);
 	}
-	/** @private @arg {D_ClickLocationTarget} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ClickLocationTarget} x */
 	D_ClickLocationTarget(x)
 	{
 		const cf="D_ClickLocationTarget";
@@ -5291,7 +5291,7 @@ class ForService_XMethods extends BaseService
 		this.save_primitive(`${cf}.code`,code);
 		this.save_enum(cf,"PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
-	/** @private @arg {DE_SignalNavigation} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_SignalNavigation} x */
 	DE_SignalNavigation(x)
 	{
 		const cf="DE_SignalNavigation",a=this.sm.T_Signal(cf,x);
@@ -5302,9 +5302,9 @@ class ForService_XMethods extends BaseService
 			case "LIVE_CONTROL_ROOM":
 		}
 	}
-	/** @public @arg {R_PlaylistHeader} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @private @arg {D_PlaylistHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistHeader} x */
 	D_PlaylistHeader(x)
 	{
 		const cf="D_PlaylistHeader";
@@ -5343,9 +5343,9 @@ class ForService_XMethods extends BaseService
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
 	}
-	/** @public @arg {R_InlineForm} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").R_InlineForm} x */
 	R_InlineForm(x) {this.H_("inlineFormRenderer",x,this.D_InlineForm);}
-	/** @public @arg {D_InlineForm} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_InlineForm} x */
 	D_InlineForm(x)
 	{
 		const cf="D_InlineForm";
@@ -5358,9 +5358,9 @@ class ForService_XMethods extends BaseService
 		this.save_enum(cf,"INLINE_FORM_STYLE",style);
 		this.sm.t(placeholder,this.sm.G_Text);
 	}
-	/** @public @arg {R_TextInputFormField} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_TextInputFormField} x */
 	R_TextInputFormField(x) {this.H_("textInputFormFieldRenderer",x,this.D_TextInputFormField);}
-	/** @public @arg {D_TextInputFormField} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_TextInputFormField} x */
 	D_TextInputFormField(x)
 	{
 		const cf="D_TextInputFormField";
@@ -5376,9 +5376,9 @@ class ForService_XMethods extends BaseService
 		this.t(isMultiline,x => this.sm.cq(x,true));
 		this.t(required,x => this.sm.cq(x,true));
 	}
-	/** @public @arg {R_DropdownFormField} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_DropdownFormField} x */
 	R_DropdownFormField(x) {this.H_("dropdownFormFieldRenderer",x,this.D_DropdownFormField);}
-	/** @public @arg {D_DropdownFormField} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_DropdownFormField} x */
 	D_DropdownFormField(x)
 	{
 		const cf="D_DropdownFormField";
@@ -5389,19 +5389,19 @@ class ForService_XMethods extends BaseService
 		this.sm.cq(kp[0],"playlistEditEndpoint");
 		this.sm.E_PlaylistEdit(onChange);
 	}
-	/** @public @arg {G_PlaylistSidebarItem} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x)
 	{
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 	}
-	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlaylistSidebarSecondaryInfo} x */
 	R_PlaylistSidebarSecondaryInfo(x) {this.H_("playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
-	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistSidebarSecondaryInfo} x */
 	D_PlaylistSidebarSecondaryInfo(x) {this.sm.H_("videoOwner",x,this.sm.R_VideoOwner);}
-	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlaylistSidebarPrimaryInfo} x */
 	R_PlaylistSidebarPrimaryInfo(x) {this.H_("playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
-	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x)
 	{
 		const cf="D_PlaylistSidebarPrimaryInfo";
@@ -5418,18 +5418,18 @@ class ForService_XMethods extends BaseService
 		this.t(descriptionForm,this.R_InlineForm);
 		this.t(privacyForm,this.R_DropdownFormField);
 	}
-	/** @private @arg {R_PlaylistVideoThumbnail} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_PlaylistVideoThumbnail} x */
 	R_PlaylistVideoThumbnail(x) {this.H_("playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
-	/** @private @arg {D_PlaylistVideoThumbnail} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlaylistVideoThumbnail} x */
 	D_PlaylistVideoThumbnail(x)
 	{
 		const cf="D_PlaylistVideoThumbnail";
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.D_Thumbnail(thumbnail);
 	}
-	/** @public @arg {D_Label} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.js").D_Label} x */
 	D_Label(x) {this.sm.H_s("label",x,this.sm.a_primitive_str);}
-	/** @public @arg {GC_Button} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.js").GC_Button} x */
 	GC_Button(x)
 	{
 		const cf="GC_Button";
@@ -5447,24 +5447,24 @@ class ForService_XMethods extends BaseService
 		if("feedbackEndpoint" in x) return this.sm.E_Feedback(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {E_CreateBackstagePost} x */
+	/** @private @arg {import("../yt_json_types/e/E.js").E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {const [a,b,y]=this.sm.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
-	/** @private @arg {DE_CreateBackstagePost} x */
+	/** @private @arg {import("../yt_json_types/d/group_DE.js").DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const {createBackstagePostParams,...y}=this.s("DE_CreateBackstagePost",x); this.g(y);}
-	/** @private @arg {C_ShowReelsCommentsOverlay} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
-	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").DC_ShowReelsCommentsOverlay} x */
 	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.xm.R_EngagementPanelSectionList(x));}
-	/** @private @arg {M_CreateBackstagePost} x */
+	/** @private @arg {import("../yt_json_types/m/M.js").M_CreateBackstagePost} x */
 	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
-	/** @private @arg {GM_CreateBackstagePost} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.sm.cq(x,"/youtubei/v1/backstage/create_post"));}
 	/** @type {string[]} */
 	logged_strings=[];
 	group_sub_noti_toggle_btn=false;
-	/** @public @arg {R_SubscriptionNotificationToggleButton} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_s("subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
-	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SubscriptionNotificationToggleButton} x */
 	D_SubscriptionNotificationToggleButton(x)
 	{
 		const cf="D_SubscriptionNotificationToggleButton";
@@ -5502,13 +5502,13 @@ class ForService_XMethods extends BaseService
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
-	/** @public @arg {R_TwoColumnSearchResults} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_TwoColumnSearchResults} x */
 	R_TwoColumnSearchResults(x) {this.H_("twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
-	/** @private @arg {D_TwoColumnSearchResults} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("primaryContents",x,this.R_SectionList);}
-	/** @public @arg {R_SimpleMenuHeader} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_SimpleMenuHeader} x */
 	R_SimpleMenuHeader(x) {this.H_("simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
-	/** @private @arg {D_SimpleMenuHeader} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x)
 	{
 		const cf="D_SimpleMenuHeader";
@@ -5516,24 +5516,24 @@ class ForService_XMethods extends BaseService
 		this.sm.G_Text(title);
 		this.z(buttons,this.R_Button);
 	}
-	/** @public @arg {R_MultiPageMenuNotificationSection} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.js").R_MultiPageMenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
-	/** @private @arg {D_MultiPageMenuNotificationSection} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_MultiPageMenuNotificationSection} x */
 	D_MP_MenuNotificationSection(x)
 	{
 		const cf="D_MP_MenuNotificationSection";
 		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,this.GR_MP_MenuNotificationSection_Item);
 	}
-	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.js").GR_MP_MenuNotificationSection_Item} x */
 	GR_MP_MenuNotificationSection_Item(x)
 	{
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 	}
-	/** @private @arg {R_Notification} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.js").R_Notification} x */
 	R_Notification(x) {this.H_("notificationRenderer",x,this.D_Notification);}
-	/** @private @arg {D_Notification} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.js").D_Notification} x */
 	D_Notification(x)
 	{
 		const cf="D_Notification";
