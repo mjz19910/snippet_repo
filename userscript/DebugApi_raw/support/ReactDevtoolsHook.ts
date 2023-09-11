@@ -1,9 +1,9 @@
-type ReactDispatcher={
+export type ReactDispatcher={
 
 };
-type ReactDispatcherRef={
+export type ReactDispatcherRef={
 	current: ReactDispatcher;
 };
-type ReactDevtoolsHook={
+export type ReactDevtoolsHook={
 	currentDispatcherRef: ReactDispatcherRef;
 };

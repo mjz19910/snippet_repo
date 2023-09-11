@@ -1,1 +1,1 @@
-type CM<T>={type: "cast"; data: T;};
+export type CM<T>={type: "cast"; data: T;};

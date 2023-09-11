@@ -1,4 +1,4 @@
-type JsLexerInputState={
+export type JsLexerInputState={
 	str: string;
 	index: number;
 };

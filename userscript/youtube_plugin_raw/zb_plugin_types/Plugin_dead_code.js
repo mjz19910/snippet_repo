@@ -2,7 +2,7 @@ import {IndexedDBService,TypedIndexedDB} from "../zc_child_modules/YTPlugin_Inde
 export class IndexedDBDeadCode extends IndexedDBService {
 	/**
 	 * @template {"boxed_id"} K
-	 * @template {G_BoxedDatabaseData} T
+	 * @template {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} T
 	 * @param {IDBTransaction} tx
 	 * @param {K} key
 	 * @param {IDBDatabase} db

@@ -1,4 +1,4 @@
-type J_StoreStrMap={
+export type J_StoreStrMap={
 	bigint: ["bigint"];
 	boolean: ["boolean"];
 	keys: ["number","string"];

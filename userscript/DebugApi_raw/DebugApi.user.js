@@ -239,7 +239,7 @@ const s_single_char_tokens=new HashMap();
 }
 
 class ECMA262Base {
-	/** @arg {JsLexerOutputState} state @arg {JsLexerReturnType} lex_return @arg {string} type */
+	/** @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} state @arg {JsLexerReturnType} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
 			state.type=type;
@@ -1731,7 +1731,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 class ecma_root {
 	/** @type {string} */
 	str;
-	/** @arg {JsLexerOutputState} state @arg {JsLexerReturnType} lex_return @arg {string} type */
+	/** @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} state @arg {JsLexerReturnType} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
 			state.type=type;
@@ -1739,47 +1739,47 @@ class ecma_root {
 			state.length=lex_return[2];
 		}
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseWhiteSpace(in_state,out_state) {
 		let res=this.white_space.WhiteSpace(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"WhiteSpace");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseLineTerminator(in_state,out_state) {
 		let res=this.line_terminators.LineTerminator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"LineTerminator");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseComment(in_state,out_state) {
 		let res=this.comments.Comment(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"Comment");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseRightBracePunctuator(in_state,out_state) {
 		let res=this.punctuators.RightBracePunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RightBracePunctuator");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseDivPunctuator(in_state,out_state) {
 		let res=this.punctuators.DivPunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"DivPunctuator");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseCommonToken(in_state,out_state) {
 		let res=this.tokens.CommonToken(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"CommonToken");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseRegularExpressionLiteral(in_state,out_state) {
 		let res=this.RegularExpressionLiterals.RegularExpressionLiteral(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RegularExpressionLiteral");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseTemplateSubstitutionTail(in_state,out_state) {
 		let res=this.template_literal_lexical_components.TemplateSubstitutionTail(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"TemplateSubstitutionTail");
 	}
-	/** @arg {JsLexerInputState} in_state @arg {JsLexerOutputState} out_state */
+	/** @arg {import("./support/dbg/JsLexerInputState.js").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} out_state */
 	ParseCommonElements(in_state,out_state) {
 		this.ParseWhiteSpace(in_state,out_state);
 		this.ParseLineTerminator(in_state,out_state);
@@ -1790,7 +1790,7 @@ class ecma_root {
 	InputElementDiv() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, RightBracePunctuator
-		/** @type {JsLexerOutputState} */
+		/** @type {import("./support/dbg/JsLexerOutputState.js").JsLexerOutputState} */
 		let out_state={
 			type: null,
 			item: null,
@@ -2156,7 +2156,7 @@ export_(exports => {
 
 /** @arg {AddEventListenerExtension} obj */
 function overwrite_addEventListener(obj) {
-	/** @type {arg_list_item_type[][]} */
+	/** @type {import("./support/dbg/arg_list_item_type.js").arg_list_item_type[][]} */
 	let arg_list=[];
 	let t=obj;
 	let prototype=obj.get_target_prototype();
@@ -2166,7 +2166,7 @@ function overwrite_addEventListener(obj) {
 		apply(target,callback,argArray) {
 			/** @type {{}[]} */
 			let cq=[callback,argArray.length,...argArray];
-			/** @type {arg_list_item_type[]} */
+			/** @type {import("./support/dbg/arg_list_item_type.js").arg_list_item_type[]} */
 			let rq=[];
 			cq.forEach(e => {
 				switch(typeof e) {
@@ -2221,16 +2221,6 @@ function do_message_handler_overwrite(handler) {
 			handler.handleEvent(event);
 			return;
 		}
-		if(event instanceof MessageEvent) {
-			/** @type {unknown} */
-			let d=event.data;
-			if(typeof d==="object"&&d!==null&&"type" in d) {
-				if(d.type===post_message_connect_message_type) {
-					if(api_debug_enabled) console.log("skip page event handler for "+d.type);
-					return;
-				}
-			}
-		}
 		handler.call(this,event);
 	};
 }
@@ -2242,12 +2232,9 @@ class ProxyTargetMap {
 export_(exports => {exports.ProxyTargetMap=ProxyTargetMap;});
 let proxyTargetMap=new ProxyTargetMap;
 
-/** @type {((arg0: EventListenersT) => void)[]} */
+/** @type {((arg0: import("./support/dbg/EventListenersT.js").EventListenersT) => void)[]} */
 let new_elevated_event_handlers=[];
 export_(exports => {exports.new_elevated_event_handlers=new_elevated_event_handlers;});
-
-/** @arg {EventListenersT} event_handler */
-function elevate_event_handler(event_handler) {export_(exports => {exports.addEventListenerExtension.elevate_handler(event_handler);});}
 
 class AddEventListenerExtension {
 	static attach_to_api() {
@@ -2272,16 +2259,10 @@ class AddEventListenerExtension {
 	object_ids=[];
 	/** @private @readonly @type {`__inject_api_${commit_id_sha1}_namespace`} */
 	namespace_key=`__inject_api_${commit_id_sha1}_namespace`;
-	/** @type {EventListenersT[]} */
+	/** @type {import("./support/dbg/EventListenersT.js").EventListenersT[]} */
 	elevated_event_handlers=[];
 	/** @private */
 	clear_count=0;
-	/** @private @type {WeakRef<WeakRef<Node>[]>} */
-	node_list=new WeakRef([]);
-	/** @private @type {WeakRef<WeakRef<{value:number}>[]>} */
-	node_list_ids=new WeakRef([]);
-	/** @private */
-	node_id_max=0;
 	constructor() {
 		overwrite_addEventListener(this);
 		new_elevated_event_handlers.push(this.elevate_handler.bind(this));
@@ -2291,7 +2272,7 @@ class AddEventListenerExtension {
 		this.init_overwrite("removeEventListener");
 	}
 	get_target_prototype() {return this.target_prototype;}
-	/** @arg {EventListenersT} handler */
+	/** @arg {import("./support/dbg/EventListenersT.js").EventListenersT} handler */
 	elevate_handler(handler) {this.elevated_event_handlers.push(handler);}
 	/** @private @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	convert_to_namespaced_string(real_value,val,key,index) {
@@ -2314,24 +2295,16 @@ class AddEventListenerExtension {
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
-		if(val instanceof Socket) {
-			this.convert_to_id_key(real_value,key,val,"Socket:client_"+val.client_id());
-			return;
-		}
-		if(val instanceof ListenSocket) {
-			this.convert_to_id_key(real_value,key,val,"ListenSocket:client_"+val.client_id);
-			return;
-		}
 		if(val===window) {
 			real_value[key]="window:"+this.window_list.indexOf(window);
 			return;
 		}
 		if(val instanceof Node) {
-			real_value[key]=this.generate_node_id(val);
+			real_value[key]=null;
 			return;
 		}
 		if(val instanceof Document) {
-			real_value[key]=this.generate_node_id(val);
+			real_value[key]=null;
 			return;
 		}
 		let is_react_element=false;
@@ -2387,21 +2360,6 @@ class AddEventListenerExtension {
 		if(this.failed_obj) return;
 		try {this.add_to_call_list_impl(list);} catch(e) {console.log("err in add to call list",e);}
 	}
-	/** @private @arg {Node} val */
-	generate_node_id(val) {
-		if(val.__id_holder) {return val.__id_holder.value;}
-		let list=this.node_list.deref();
-		if(!list) {list=[];}
-		let ids=this.node_list_ids.deref();
-		if(!ids) {ids=[];}
-		list.push(new WeakRef(val));
-		let node_id=this.node_id_max++;
-		let id_holder={value: node_id};
-		val.__id_holder=id_holder;
-		ids.push(new WeakRef(id_holder));
-		this.node_list=new WeakRef(list);
-		return node_id;
-	}
 	/** @private @arg {Extract<keyof EventTarget,string>} target */
 	init_overwrite(target) {
 		let t=this;
@@ -2430,17 +2388,6 @@ class AddEventListenerExtension {
 	}
 	/** @typedef {EventListenerOrEventListenerObject} InterceptFuncType @typedef {[string, InterceptFuncType, any?]} InterceptThis @arg {InterceptThis[1]} arg_function @arg {InterceptThis} arg_this @arg {[evt: Event]} args @private */
 	eventFireInterceptor(arg_function,arg_this,args) {
-		if(args[0] instanceof MessageEvent) {
-			/** @type {MessageEvent<unknown>} */
-			let msg_event=args[0];
-			let d=msg_event.data;
-			if(typeof d==="object"&&d!==null&&"type" in d) {
-				if(d.type===post_message_connect_message_type) {
-					if(api_debug_enabled) console.log("skip page event handler for "+d.type);
-					return;
-				}
-			}
-		}
 		if(typeof arg_function==="function") {return arg_function.apply(arg_this,args);} else {return arg_function.handleEvent(...args);}
 	}
 }
@@ -2471,45 +2418,6 @@ function iterable_iterator_map(func) {
 	return new MappedIterableIterator(this,func);
 }
 MappedIterableIterator.prototype.map=iterable_iterator_map;
-class IterExtensions {
-	static attach_to_api() {export_(exports => {exports.IterExtensions=this;});}
-	/** @template T @arg {T} x @returns {T extends IteratorPrototype? Object:T extends IterableIteratorPrototype? IteratorPrototype:T extends IterableIterator<any>? IterableIteratorPrototype:Object} */
-	static get_prototype(x) {
-		return Object.getPrototypeOf(x);
-	}
-	static init() {
-		let iterable_map_value=new Map;
-		let iterable_map_iterator_values=iterable_map_value.values();
-		this.init_tree(iterable_map_iterator_values);
-	}
-	/** @arg {IterableIterator<any>} iterable_map_iterator_values */
-	static init_tree(iterable_map_iterator_values) {
-		console.log("[is] [IterableIterator<any>]",iterable_map_iterator_values);
-		let iterable_map_iterator_prototype=this.get_prototype(iterable_map_iterator_values);
-		iterable_map_iterator_prototype.map=MappedIterableIterator.prototype.map;
-		let iterator_prototype=this.get_prototype(iterable_map_iterator_prototype);
-		let object_prototype=this.get_prototype(iterator_prototype);
-		if(object_prototype!==Object.prototype) debugger;
-	}
-}
-IterExtensions.attach_to_api();
-
-/** @arg {boolean} include_uninteresting */
-function getPlaybackRateMap(include_uninteresting) {
-	let progress_map=new Map;
-	if(include_uninteresting) {
-		let elem_list=document.querySelectorAll("ytd-compact-video-renderer:has(#overlays:not(* > #progress))");
-		elem_list.length>0&&progress_map.set("none",[...elem_list]);
-	}
-	let sel=(/** @type {string}*/e) => `ytd-compact-video-renderer:has(#progress[style="width: ${e}%;"])`;
-	for(let i=0;i<=100;i++) {
-		if(!include_uninteresting&&i===100) continue;
-		let elem=document.querySelectorAll(sel(i.toString()));
-		if(elem.length==1) {progress_map.set("some:"+i,[...elem]);} else if(elem.length>0) {progress_map.set("some:"+i,[...elem]);}
-	}; return progress_map;
-};
-export_(exports => {exports.getPlaybackRateMap=getPlaybackRateMap;});
-
 class CreateObjURLCache {
 	/** @readonly */
 	static originalScope={
@@ -2551,135 +2459,6 @@ class CreateObjURLCache {
 }
 export_(exports => {exports.CreateObjURLCache=CreateObjURLCache;});
 CreateObjURLCache.enable();
-
-/** @template T @implements {Repeat_0<T>} */
-class RepeatImpl_0 {
-	/** @type {Map<string,Map<number,Repeat_0<string>>>} */
-	static map=new Map;
-	/** @type {Map<number,Map<number,Repeat_0<number>>>} */
-	static map_num=new Map;
-	/** @arg {string} value @arg {number} times */
-	static get(value,times) {
-		if(!this.map.has(value)) {this.map.set(value,new Map);}
-		let tm_map=this.map.get(value);
-		if(!tm_map)
-			throw new Error("no-reach");
-		if(tm_map.has(times)) {
-			let rep=tm_map.get(times);
-			if(!rep)
-				throw new Error("no-reach");
-			return rep;
-		} else {
-			let rep=new this(value,times);
-			tm_map.set(times,rep);
-			return rep;
-		}
-	}
-	/** @arg {number} value @arg {number} times */
-	static get_num(value,times) {
-		if(!this.map_num.has(value)) {this.map_num.set(value,new Map);}
-		let tm_map=this.map_num.get(value);
-		if(!tm_map)
-			throw new Error("no-reach");
-		if(tm_map.has(times)) {
-			let rep=tm_map.get(times);
-			if(!rep)
-				throw new Error("no-reach");
-			return rep;
-		} else {
-			let rep=new this(value,times);
-			tm_map.set(times,rep);
-			return rep;
-		}
-	}
-	/** @type {T} */
-	value;
-	/** @type {number} */
-	times;
-	/** @arg {T} value @arg {number} times */
-	constructor(value,times) {
-		this.value=value;
-		this.times=times;
-	}
-	toString() {return this.value+"x"+this.times;}
-}
-
-export_(exports => {exports.RepeatImpl_0=RepeatImpl_0;});
-class CompressRepeated {
-	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
-	did_compress(src,dst) {return dst.length<src.length;}
-	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
-	did_decompress(src,dst) {return dst.length>src.length;}
-	/** @arg {string[]} src @arg {(string|RepeatImpl_0<string>)[]} dst @returns {[boolean, (string|RepeatImpl_0<string>)[]]} */
-	compress_result(src,dst) {
-		if(this.did_compress(src,dst)) return [true,dst];
-		return [false,src];
-	}
-	/** @arg {(string|RepeatImpl_0<string>)[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
-	decompress_result(src,dst) {
-		if(this.did_decompress(src,dst)) return [true,dst];
-		return [false,dst];
-	}
-	/** @arg {string|any[]} arr */
-	static can_compress_items(arr) {
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(typeof item!=="string") return false;
-			if(item.match(/[a-zA-Z]/)===null) return false;
-		}
-		return true;
-	}
-	/** @arg {string[]} arr */
-	try_compress(arr) {
-		/** @type {(string|RepeatImpl_0<string>)[]} */
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(i+1<arr.length&&item===arr[i+1]) {
-				let off=0;
-				while(item===arr[i+off+1]) off++;
-				if(off>0) {
-					let rep_count=off+1;
-					ret.push(RepeatImpl_0.get(item,rep_count));
-					i+=off;
-					continue;
-				}
-			}
-			ret.push(item);
-		}
-		return this.compress_result(arr,ret);
-	}
-	/** @arg {(string|RepeatImpl_0<string>)[]} arr */
-	try_decompress(arr) {
-		/** @type {string[]} */
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(!item) continue;
-			if(item instanceof RepeatImpl_0) {
-				let {value,times}=item;
-				for(let j=0;j<times;j++)ret.push(value);
-				continue;
-			}
-			ret.push(item);
-		}
-		return this.decompress_result(arr,ret);
-	}
-	/** @arg {string[]} arr */
-	compress_array(arr) {
-		let success,res;
-		[success,res]=this.try_decompress(arr);
-		if(success) arr=res;
-		{
-			let [success,res]=this.try_compress(arr);
-			this.try_decompress(res);
-			if(success) return res;
-		}
-		return arr;
-	}
-}
-export_(exports => {exports.CompressRepeated=CompressRepeated;});
-
 /** @template T */
 class W {
 	/** @arg {T} val */
@@ -2708,186 +2487,11 @@ function range_matches(arr,value,index) {
 	return true;
 }
 
-class BaseCompression {
-	/** @arg {CompressDual} arg0 @returns {DualR_0} */
-	compress_result_state_dual(arg0) {return this.compress_result_dual(arg0.arr,arg0.ret);}
-	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string, number>[]} dst @returns {DualR_0} */
-	compress_result_dual(src,dst) {
-		if(this.did_compress(src,dst)) return [true,dst];
-		return [false,src];
-	}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress(src,dst) {return dst.length<src.length;}
-	/** @template T @arg {T[]} src @arg {T[]} dst */
-	did_decompress(src,dst) {return dst.length>src.length;}
-	/** @template T,U @arg {CompressStateBase<T, U>} state */
-	compress_result_state(state) {return this.compress_result(state.arr,state.ret);}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
-	compress_result(src,dst) {
-		if(this.did_compress(src,dst))
-			return [true,dst];
-		return [false,src];
-	}
-	/** @arg {string[]} src @arg {string[]} dst @returns {[res: boolean,dst: string[]]} */
-	decompress_result(src,dst) {
-		// maybe this is not a decompression, just a modification to make
-		// later decompression work
-		if(this.did_decompress(src,dst))
-			return [true,dst];
-		return [false,dst];
-	}
-}
-export_(exports => {exports.BaseCompression=BaseCompression;});
 
-/** @template T @template U */
-class CompressStateBase {
-	/** @type {number} */
-	i;
-	/** @type {T[]} */
-	arr;
-	/** @type {U[]} */
-	ret;
-	/** @arg {number} i @arg {T[]} arr @arg {U[]} ret */
-	constructor(i,arr,ret) {
-		this.i=i;
-		this.arr=arr;
-		this.ret=ret;
-	}
-}
-
-/** @template T @template U @extends {CompressStateBase<T,U>} */
-class CompressState extends CompressStateBase {
-	/** @type {T|null} */
-	item;
-	/** @arg {T[]} arr */
-	constructor(arr) {
-		super(0,arr,[]);
-		this.item=null;
-	}
-}
-
-// CompressionStatsCalculator -> MulCompression
-class MulCompression extends BaseCompression {
-	constructor() {
-		super();
-		/** @type {any[]} */
-		this.compression_stats=[];
-	}
-	/** @arg {{i:number,arr:string[],ret:string[]}} state @arg {string} item */
-	compress_rle(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(`${item}${off}`);
-		state.i+=off-1;
-		return true;
-	}
-	/** @arg {{i:number,arr:number[],ret:(number|RepeatImpl_0<number>)[]}} state @arg {number} item */
-	compress_rle_number(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(new RepeatImpl_0(item,off));
-		state.i+=off-1;
-		return true;
-	}
-	/** @arg {string[]} arr */
-	try_compress(arr) {
-		/** @type {CompressState<string, string>} */
-		let state=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return this.compress_result_state(state);
-	}
-	/** @arg {number[]} arr */
-	try_compress_number(arr) {
-		/** @type {CompressState<number, number>} */
-		let state=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle_number(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return this.compress_result_state(state);
-	}
-	/** @arg {string[]} arr */
-	try_decompress(arr) {
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(!item) continue;
-			let [item_type,num_data]=[item[0],item.slice(1)];
-			let parsed=parseInt(num_data);
-			if(!Number.isNaN(parsed)) {
-				for(let j=0;j<parsed;j++)ret.push(item_type);
-				continue;
-			}
-			ret.push(arr[i]);
-		}
-		return this.decompress_result(arr,ret);
-	}
-}
-export_(exports => {exports.MulCompression=MulCompression;});
-
-/** @typedef {typeof DisabledMulCompression} DisabledMulCompressionT */
-class DisabledMulCompression extends MulCompression {
-	/** @template T @arg {T[]} arr @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
-	try_compress_T(arr) {
-		/** @type {CompressState<T,AnyOrRepeat_0<T>>} */
-		let state=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle_T_X(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return this.compress_result_state(state);
-	}
-	/** @template {RecordKey<symbol>} U @template {InstanceType<U>} T @arg {CompressState<T, AnyOrRepeat_0<T>>} state @arg {T} item */
-	compress_rle_T_X(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(new RepeatImpl_0(item,off));
-		state.i+=off-1;
-		return true;
-	}
-	/** @template {InstanceType<U>} T @template {new (...args: any) => any} U @arg {U} _ @arg {T[]} arr @arg {AnyOrRepeat_0<T>[]} ret @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
-	compress_result_T(_,arr,ret) {
-		if(this.did_compress(arr,ret)) return [true,ret];
-		return [false,arr];
-	}
-}
-export_(exports => {exports.DisabledMulCompression=DisabledMulCompression;});
-/** @type {HTMLIFrameElement|null} */
-let cached_iframe=null;
 /** @type {string[]} */
 let function_as_string_vec=[];
 export_(exports => {exports.function_as_string_vec=function_as_string_vec;});
 
-function resolve_function_constructor() {
-	if(globalThis.Node===void 0) {throw new Error("Javascript Runtime without DOM not supported (node js)");}
-	if(!cached_iframe) {
-		let iframe_element=document.createElement("iframe");
-		document.head.append(iframe_element);
-		cached_iframe=iframe_element;
-	}
-
-	if(!cached_iframe.contentWindow) throw new Error("No content window");
-
-	let content_window_r=cached_iframe.contentWindow;
-	let content_window=content_window_r.self;
-
-	return content_window.Function;
-}
 
 /** @arg {number} id @arg {number[]} arr */
 function wasm_encode_section(id,arr) {
@@ -3039,616 +2643,10 @@ async function decode_wasm_data() {
 	console.log(wasm_module_bytes);
 }
 add_function(decode_wasm_data);
-
-/** @arg {SafeFunctionPrototype} safe_function_prototype */
-function gen_function_prototype_use(safe_function_prototype) {
-	/** @type {["apply","bind","call"]}*/
-	let keys=["apply","bind","call"];
-	let apply_=safe_function_prototype[keys[0]];
-	let bind_=safe_function_prototype[keys[1]];
-	let call_=safe_function_prototype[keys[2]];
-	/** @type {[typeof apply_,typeof bind_,typeof call_]}*/
-	let funcs=[apply_,bind_,call_];
-
-	let bound_bind=apply_.bind(bind_);
-	let bound_call=apply_.bind(call_);
-	let bound_apply=apply_.bind(apply_);
-
-	/** @type {[typeof bound_apply,typeof bound_bind,typeof bound_call]}*/
-	let bound_funcs=[
-		bound_apply,
-		bound_call,
-		bound_apply,
-	];
-	return {funcs,bound_funcs};
-}
-
-function run_modules_plugin() {
-	let function_prototype=resolve_function_constructor().prototype;
-
-	let function_prototype_call=function_prototype.call;
-	let function_prototype_apply=function_prototype.apply;
-	let function_prototype_bind=function_prototype.bind;
-
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_call_call=function_prototype_call.bind(function_prototype_call);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_call_apply=function_prototype_call.bind(function_prototype_apply);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_call_bind=function_prototype_call.bind(function_prototype_bind);
-
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_bind_call=function_prototype_bind.bind(function_prototype_call);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_bind_apply=function_prototype_bind.bind(function_prototype_apply);
-	/** @type {(thisArg:Function, bindThisArg:any, ...argArray:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_bind_bind=function_prototype_bind.bind(function_prototype_bind);
-
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_apply_call=function_prototype_apply.bind(function_prototype_call);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, argArray?:any])=>any} */
-	let bound_apply_apply=function_prototype_apply.bind(function_prototype_apply);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
-	let bound_apply_bind=function_prototype_apply.bind(function_prototype_bind);
-
-	let safe_function_prototype={
-		apply: function_prototype.apply,
-		bind: function_prototype.bind,
-		call: function_prototype.call,
-	};
-	console.log(safe_function_prototype);
-
-	let info=gen_function_prototype_use(safe_function_prototype);
-	console.log(info);
-
-	let bound_function_prototype_vec=[
-		[function_prototype_call,function_prototype_call,bound_call_call],
-		[function_prototype_call,function_prototype_apply,bound_call_apply],
-		[function_prototype_call,function_prototype_bind,bound_call_bind],
-		[function_prototype_apply,function_prototype_call,bound_apply_call],
-		[function_prototype_apply,function_prototype_apply,bound_apply_apply],
-		[function_prototype_apply,function_prototype_bind,bound_apply_bind],
-		[function_prototype_bind,function_prototype_call,bound_bind_call],
-		[function_prototype_bind,function_prototype_apply,bound_bind_apply],
-		[function_prototype_bind,function_prototype_bind,bound_bind_bind],
-	];
-	console.log(bound_function_prototype_vec);
-	Function.prototype.call=function_prototype_call_inject;
-	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
-	function function_prototype_call_inject(thisArg,...argArray) {
-		let ret=bound_apply_call(this,[thisArg,...argArray]);
-		if(function_as_string_vec.indexOf(this.toString())==-1) {function_as_string_vec.push(this.toString());}
-		return ret;
-	};
-	/** @this {()=>void} @arg {any} tv @arg {any} r */
-	function function_prototype_apply_inject(tv,r) {
-		if(r===void 0||r===null) r=[];
-		let ret=bound_apply_call(this,[tv,...r]);
-		if(function_as_string_vec.indexOf(this.toString())==-1) {function_as_string_vec.push(this.toString());}
-		return ret;
-	};
-	Function.prototype.apply=function_prototype_apply_inject;
-}
-export_(exports => {exports.run_modules_plugin=new VoidCallback(run_modules_plugin,[]);});
-
-// CompressionStatsCalculator -> MulCompression
-class CompressionStatsCalculator extends MulCompression {
-	/** @type {number[]} */
-	hit_counts=[];
-	/** @type {string[]} */
-	cache=[];
-	/** @arg {string[]} arr @returns {string[]} */
-	compress_array(arr) {
-		let success,res;
-		[success,res]=this.try_decompress(arr);
-		if(success) arr=res;
-		for(let i=0;i<4;i++) {
-			this.calc_for_stats_index(this.compression_stats,arr,i);
-			let ls=this.compression_stats[i];
-			if(ls.length>0) {continue;}
-			break;
-		}
-		[success,res]=this.try_compress(arr);
-		if(success) return res;
-		return arr;
-	}
-	/** @arg {string[]} arr @arg {number} calc_win */
-	sorted_comp_stats(arr,calc_win) {
-		let ret=this.calc_compression_stats(arr,calc_win);
-		ret.sort((a,b) => b[1]-a[1]);
-		return ret;
-	}
-	/** @arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
-	calc_for_stats_index(stats_arr,arr,index) {stats_arr[index]=this.calc_compression_stats(arr,index+1);}
-	/** @arg {number} index */
-	add_hit(index) {
-		if(!this.hit_counts[index]) {this.hit_counts[index]=1;} else this.hit_counts[index]++;
-	}
-	/** @arg {string} key */
-	add_item(key) {
-		let index=this.cache.indexOf(key);
-		if(index==-1) {index=this.cache.push(key)-1;}
-		this.add_hit(index);
-	}
-	reset() {
-		this.cache.length=0;
-		this.hit_counts.length=0;
-	}
-	map_values() {return this.hit_counts;}
-	map_keys() {return this.cache;}
-	/** @arg {string[]} arr @arg {number} win_size */
-	calc_compression_stats(arr,win_size) {
-		this.reset();
-		for(let i=0;i<arr.length;i++) {if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));} }
-		let keys=this.map_keys();
-		let values=this.map_values();
-		return to_tuple_arr(keys,values);
-	}
-	/** @template T @template U @arg {T[]} arr @arg {number} range @arg {U} replacement @returns {(["T", T]|["U", U])[]} */
-	replace_range(arr,range,replacement) {
-		/** @type {(["T", T]|["U", U])[]} */
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			if(range_matches(arr,range,i)) {
-				i+=1;
-				ret.push(["U",replacement]);
-				continue;
-			}
-			let rest=arr[i];
-			ret.push(["T",rest]);
-		}
-		return ret;
-	}
-	test() {
-		let obj={arr: [],};
-		let rep_val=0.03/(100*4*1);
-		let res=this.replace_range(obj.arr,rep_val,max_id);
-		console.log("compressed",res);
-	}
-}
-export_(exports => {exports.CompressionStatsCalculator=CompressionStatsCalculator;});
 export_(exports => {exports.range_matches=range_matches;});
 /** @arg {[unknown, number][]} stats */
 function log_stats(stats) {console.log(...stats.sort((a,b) => b[1]-a[1]));}
 add_function(log_stats);
-/** @type {{value:string[]}} */
-let ids={value: []};
-/** @arg {string} value */
-function get_ids(value) {return ids.value.indexOf(value);}
-
-/** @arg {CompressionStatsCalculator} this_ @arg {IDValueImpl_0} obj */
-function sorted_comp_stats(this_,obj) {
-	if(obj.arr_str!=null&&obj.stats_win!=null) {
-		/** @type {[string,number][]} */
-		let ret=[];
-		let types=this_.calc_compression_stats(obj.arr_str,obj.stats_win);
-		let t=types[0];
-		if(!t) return;
-		let [z,x]=t;
-		if(typeof z==="string"&&typeof x==="number") {ret.push([z,x]);}
-		obj.stats=ret;
-		obj.stats.sort((a,b) => b[1]-a[1]);
-	}
-}
-
-/** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj */
-function calc_cur(stats,obj) {
-	if(!obj.stats_win||obj.arr_str===void 0)
-		return;
-	sorted_comp_stats(stats,obj);
-}
-
-class IDValueImpl {
-	/** @arg {number} id @arg {IDValueImpl_0|null} next */
-	constructor(id,next) {
-		this.id=id;
-		this.next=next;
-		/** @type {AltPair<string, number>[]} */
-		this.arr_dual=[];
-		/** @type {AnyOrRepeat2_0<string,number>[]} */
-		this.arr_dual_compressed=[];
-		/** @type {AnyOrRepeat_0<number>[]} */
-		this.arr_rep_num=[];
-		/** @type {string[]} */
-		this.arr_str=[];
-		/** @type {number[]} */
-		this.arr_num=[];
-		/** @type {[number,"=",number]|null} */
-		this.value=null;
-		/** @type {number[]} */
-		this.arr_rep=[];
-		/** @type {[number,"=",string,number]|null} */
-		this.log_val=null;
-		/** @type {[string, number][]} */
-		this.stats=[];
-		this.stats_win=0;
-	}
-}
-add_function(IDValueImpl);
-
-/** @arg {IDValueImpl_0} next */
-function get_next({next}) {
-	if(next===null)
-		throw new Error("Unexpected type");
-	return next;
-}
-
-/** @implements {IDValue_0} */
-class IDValueImpl_0 {
-	/** @template {{}} T @arg {T[]} arr */
-	set_arr_T(arr) {
-		if(arr.length===0)
-			throw new Error("Unable to use zero length array");
-		let item=arr[0];
-		console.log("new_proto_keys",Object.keys(item));
-		console.log("new_proto",Object.getPrototypeOf(item));
-	}
-	/** @type {number} */
-	id;
-	/** @type {IDValueImpl_0|null} */
-	next;
-	/** @type {AltPair<string,number>[]} */
-	arr_dual;
-	/** @type {AltPair<AnyOrRepeat_0<string>,AnyOrRepeat_0<number>>[]} */
-	arr_dual_x;
-	/** @type {AnyOrRepeat_0<string>[]} */
-	arr_rep_str;
-	/** @type {AnyOrRepeat_0<number>[]} */
-	arr_rep_num;
-	/** @type {string[]} */
-	arr_str;
-	/** @type {number[]} */
-	arr_num;
-	/** @type {AnyOrRepeat2_0<string,number>[]} */
-	arr_dual_compressed;
-	/** @type {[number,"=",number]|null} */
-	value;
-	/** @type {number[]} */
-	arr_rep;
-	/** @type {[number,"=",string,number]|null} */
-	log_val;
-	/** @type {[string,number][]} */
-	stats;
-	stats_win=0;
-	/** @arg {number} id @arg {IDValueImpl_0|null} next */
-	constructor(id,next) {
-		this.id=id;
-		this.next=next;
-		this.arr_dual=[];
-		this.arr_dual_x=[];
-		this.arr_rep_str=[];
-		this.arr_rep_num=[];
-		this.arr_str=[];
-		this.arr_num=[];
-		this.arr_dual_compressed=[];
-		this.value=null;
-		this.arr_rep=[];
-		this.log_val=null;
-		this.stats=[];
-	}
-}
-
-class DoCalc {
-	get_result() {return this.m_return_value;}
-	/** @type {DualR_0|null} */
-	m_return_value=null;
-	run() {
-		this.obj.stats_win=2;
-		calc_cur(this.stats,this.obj);
-		if(!this.obj.stats) {return null;}
-		if(this.obj.stats.length===0) {return null;}
-		max_id.value++;
-		this.br_obj=Object.assign({},this.obj);
-		if(!this.br_obj.stats_win) {return null;}
-		this.br_obj.stats_win++;
-		calc_cur(this.stats,this.br_obj);
-		this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
-		console.log("br_res",this.br_res);
-		this.m_return_value=calc_next(this.stats,this.obj,max_id.value);
-		this.br_next=get_next(this.br_obj);
-		this.next=get_next(this.obj);
-		while(true) {
-			if(!this.next||this.next.arr_str===void 0) break;
-			if(!this.br_next||this.br_next.arr_str===void 0) break;
-			if(this.obj.stats_win>30) break;
-			if(this.br_next.arr_str.length+1>=this.next.arr_str.length) break;
-			let br_st=this.br_next.arr_str.length;
-			this.br_obj.stats_win++;
-			this.obj.stats_win++;
-			calc_cur(this.stats,this.br_obj);
-			this.br_next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
-			this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
-			calc_cur(this.stats,this.obj);
-			this.next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
-			this.res=calc_next(this.stats,this.obj,max_id.value);
-			if(!this.br_next.arr_str) continue;
-			let cd=br_st-this.br_next.arr_str.length;
-			if(cd<=1) break;
-		}
-		return null;
-	}
-	/** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj */
-	constructor(stats,obj) {
-		this.stats=stats;
-		x: {
-			this.obj=obj;
-			this.obj.stats_win=2;
-			calc_cur(stats,this.obj);
-			if(!this.obj.stats) {
-				this.m_return_value=null;
-				break x;
-			}
-			if(this.obj.stats.length===0) {
-				this.m_return_value=null;
-				break x;
-			}
-			max_id.value++;
-			this.br_obj=Object.assign({},this.obj);
-			if(!this.br_obj.stats_win) {
-				this.m_return_value=null;
-				break x;
-			}
-			this.br_obj.stats_win++;
-			calc_cur(stats,this.br_obj);
-			this.br_res=calc_next(stats,this.br_obj,max_id.value);
-			console.log("br_res",this.br_res);
-			this.m_return_value=calc_next(stats,this.obj,max_id.value);
-			this.br_next=get_next(this.br_obj);
-			this.next=get_next(this.obj);
-			while(true) {
-				if(!this.next||this.next.arr_str===void 0) break;
-				if(!this.br_next||this.br_next.arr_str===void 0) break;
-				if(this.obj.stats_win>30) break;
-				if(this.br_next.arr_str.length+1>=this.next.arr_str.length) break;
-				let br_st=this.br_next.arr_str.length;
-				this.br_obj.stats_win++;
-				this.obj.stats_win++;
-				calc_cur(stats,this.br_obj);
-				this.br_next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
-				this.br_res=calc_next(stats,this.br_obj,max_id.value);
-				calc_cur(stats,this.obj);
-				this.next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
-				this.res=calc_next(stats,this.obj,max_id.value);
-				if(!this.br_next.arr_str) continue;
-				let cd=br_st-this.br_next.arr_str.length;
-				if(cd<=1) break;
-			}
-		}
-	}
-}
-export_(exports => {exports.DoCalc=DoCalc;});
-
-class CompressDual {
-	/** @type {number} */
-	i;
-	/** @type {AltPair<string,number>[]} */
-	arr=[];
-	/** @type {AnyOrRepeat2_0<string,number>[]} */
-	ret=[];
-	m_base=new BaseCompression;
-	/** @returns {DualR_0} */
-	try_compress_dual() {
-		let state=this;
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle_TU_to_TX(item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return this.m_base.compress_result_state_dual(this);
-	}
-	/** @arg {AltPair<string,number>} item */
-	compress_rle_TU_to_TX(item) {
-		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
-		let off=1;
-		while(item===this.arr[this.i+off]) off++;
-		if(off==1) return false;
-		this.ret.push(item);
-		this.i+=off-1;
-		return true;
-	}
-	/** @arg {AltPair<string,number>[]} arr */
-	constructor(arr) {
-		this.i=0;
-		this.arr=arr;
-		this.ret=[];
-	}
-}
-export_(exports => {exports.CompressDual=CompressDual;});
-
-
-/** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj @arg {number} max_id */
-function calc_next(stats,obj,max_id) {
-	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {return null;}
-	let f_val=obj.stats[0];
-	let rep_val=f_val[1];
-	if(!obj.next) {return null;}
-	/** @type {IDValueImpl_0} */
-	let next=obj;
-	next.value=[max_id,"=",rep_val];
-	next.log_val=[max_id,"=",f_val[0],f_val[1]];
-	if(obj.arr_str===void 0)
-		throw new Error("No arr");
-	let rep_range=stats.replace_range(obj.arr_str,rep_val,max_id);
-	next.arr_dual=[];
-	for(let i of rep_range) {
-		switch(i[0]) {
-			case "T": next.arr_dual.push(["T",i[1]]); break;
-			case "U": next.arr_dual.push(["U",i[1]]); break;
-		}
-	}
-	if(next.arr_str)
-		return null;
-	let com=new CompressDual(next.arr_dual);
-	/** @type {DualR_0} */
-	let compress_result=com.try_compress_dual();
-	if(!compress_result[0]) {next.arr_dual=compress_result[1];} else {next.arr_dual_compressed=compress_result[1];}
-	return compress_result;
-}
-
-/** @arg {IDValueImpl_0} value @arg {IDValueImpl_0} next */
-function assign_next(value,next) {
-	value.next=next;
-	return next;
-}
-add_function(assign_next);
-/** @implements {IDValueImpl_0} */
-class Value {
-	set_arr_T() {}
-	/** @type {AltPair<AnyOrRepeat_0<string>,AnyOrRepeat_0<number>>[]} */
-	arr_dual_x=[];
-	/** @type {AnyOrRepeat_0<string>[]} */
-	arr_rep_str=[];
-	/** @arg {number} id */
-	constructor(id) {this.id=id;}
-	/** @type {any} */
-	next;
-	/** @type {any} */
-	arr_dual;
-	/** @type {any} */
-	arr_dual_compressed;
-	/** @type {any} */
-	arr_rep_num;
-	/** @type {any} */
-	arr_str;
-	/** @type {any} */
-	arr_num;
-	/** @type {any} */
-	value;
-	/** @type {any} */
-	arr_rep;
-	/** @type {any} */
-	log_val;
-	/** @type {any} */
-	stats;
-	/** @type {any} */
-	stats_win;
-}
-add_function(Value);
-
-let max_id={value: 0};
-/** @arg {IDValueImpl_0} obj @arg {CompressionStatsCalculator} stats */
-function run_calc(stats,obj) {
-	let calc_value=new DoCalc(stats,obj);
-	let res=calc_value.get_result();
-	if(!res) return [false,null];
-	return [true,res];
-}
-/** @arg {IDValueImpl_0} obj */
-function flat_obj(obj) {
-	let ret=[];
-	while(obj.next) {
-		let {next}=obj;
-		ret.push(obj);
-		obj=next;
-	}
-	ret.push(obj);
-	return ret;
-}
-/** @type {{value:IDValueImpl_0[]}} */
-let g_obj_arr={value: []};
-/** @arg {number|string} val @arg {unknown} e */
-function find_matching_value(val,e) {
-	if(typeof val==="string") {
-		console.log("TODO: find matching string",e,val);
-		return false;
-	} else {
-		if(typeof e==="object"&&e!==null&&"value" in e&&e.value instanceof Array) {return e.value[0]===val;}
-		return false;
-	}
-}
-
-/** @arg {string|number} val */
-function key_not_found(val) {console.log("not found",val);}
-
-/** @type {number[]} */
-let id_map_one=[];
-
-/** @arg {string|number} val */
-function do_decode(val) {
-	let fv=g_obj_arr.value.slice(1).find(e => find_matching_value(val,e));
-	if(!fv) return key_not_found(val);
-	if(typeof val==="number") {
-		if(typeof fv==="object"&&"value" in fv&&fv.value instanceof Array) {
-			let [,,keep]=fv.value;
-			id_map_one[val]=keep;
-		}
-		console.log("not found",val,fv);
-	} else {
-		if(typeof fv==="object"&&"value" in fv&&fv.value instanceof Array) {
-			let [,,keep]=fv.value;
-			id_map_str.set(val,keep);
-		}
-		console.log("not found",val,fv);
-	}
-}
-
-/** @type {(string|number)[][]} */
-let dr_map_num=[];
-
-/** @type {(string|number)[][]} */
-let ids_dec_num=[];
-
-/** @type {RepeatImpl_0<(string|number)[]>[]} */
-let dr_map_rep=[];
-
-/** @type {(string|number)[][]} */
-let id_map_rep=[];
-
-/** @type {(string|number)[][]} */
-let id_map_num=[];
-
-/** @type {number[]} */
-let ids_dec_rep=[];
-
-/** @arg {string|number|RepeatImpl_0<number>} e @returns {["dr_map_num", any]|["id_map_num",any]|["dr_map_rep", any]|["ids_dec_rep",any]|["ids_dec_num",any]|null} */
-function try_decode(e,deep=true) {
-	if(typeof e==="number") {
-		if(dr_map_num[e]) {return ["dr_map_num",dr_map_num[e]];}
-		if(id_map_num[e]) {
-			/** @type {(string|number)[]} */
-			let res=id_map_num[e];
-			if(!deep)
-				return ["id_map_num",res];
-			let dec_res=[];
-			for(let i=0;i<res.length;i++) {
-				let cur_res=decode_map(res[i]);
-				dec_res[i]=cur_res;
-			}
-			dr_map_num[e]=dec_res;
-			return ["dr_map_num",dec_res];
-		}
-		if(ids_dec_num[e]) {return ["ids_dec_num",ids_dec_num[e]];}
-	}
-	if(e instanceof RepeatImpl_0) {
-		if(dr_map[e.value]) {return ["dr_map_rep",dr_map[e.value]];}
-		if(id_map_rep[e.value]) {
-			/** @type {(string|number)[]} */
-			let res=id_map_rep[e.value];
-			let dec_res=[];
-			for(let i=0;i<res.length;i++) {
-				let cur_res=decode_map(res[i]);
-				dec_res[i]=cur_res;
-			}
-			let ret=new RepeatImpl_0(dec_res,e.times);
-			dr_map_rep[e.value]=ret;
-			return ["dr_map_rep",ret];
-		}
-		if(ids_dec_rep[e.value]) {return ["ids_dec_rep",new RepeatImpl_0(ids_dec_rep[e.value],e.times)];}
-	}
-	return null;
-}
-
-/** @type {number[][]} */
-let id_map=[];
-/** @type {Map<string, number>} */
-let id_map_str=new Map;
-/** @type {JsonValueBox[]} */
-let ids_dec=[];
-/** @type {(RepeatImpl_0<string|number>|RepeatImpl_0<(string|number)[]>|(string|number)[])[]} */
-let dr_map=[];
-add_array(ids_dec);
-
 class JsonNullBox {
 	type="null";
 	value=null;
@@ -3665,48 +2663,6 @@ class JsonArrayBox {
 	value;
 	/** @arg {JsonValueBox[]} value */
 	constructor(value) {this.value=value;}
-}
-
-class SafeJsonParser {
-	/** @arg {string} e */
-	parse(e) {
-		/** @type {unknown} */
-		let res_unk=JSON.parse(e);
-		return this.convert(res_unk);
-	}
-	/** @arg {unknown} obj */
-	convert(obj) {
-		if(obj===null) {return new JsonValueBox(new JsonNullBox);}
-		if(obj instanceof Array) {
-			/** @type {JsonValueBox[]} */
-			let new_arr=[];
-			for(let [k,v] of obj.entries()) {
-				let res=this.convert(v);
-				new_arr[k]=res;
-			}
-			return new JsonValueBox(new JsonArrayBox(new_arr));
-		}
-		console.log("don't know how to handle",obj);
-		throw new Error("parse more");
-	}
-}
-
-function init_decode() {
-	let parser=new SafeJsonParser;
-	ids_dec=ids.value.map(e => parser.parse(e));
-}
-/** @arg {string|number} value @returns {string|number} */
-function decode_map(value) {
-	if(!id_map)
-		init_decode();
-	let dec=try_decode(value);
-	if(!dec) {do_decode(value);}
-	dec=try_decode(value);
-	if(!dec) {console.log(value);} else {
-		console.log("handle decode_map",value);
-		throw new Error("1");
-	}
-	return value;
 }
 
 /** @template {{}} T @arg {T} obj_1 @arg {T} obj_2 @returns {boolean} */
@@ -3732,58 +2688,6 @@ function deep_eq(obj_1,obj_2) {
 	throw new Error("Fixme");
 }
 add_function(deep_eq);
-
-/** @arg {string[][]} arr_2d @arg {number} key @arg {string} value */
-function make_group_from_item(arr_2d,key,value) {
-	arr_2d[key]??=[];
-	let arr=arr_2d[key];
-	for(let i=0;i<arr.length;i++) {
-		if(arr[i]!==value) continue;
-		return;
-	}
-	arr_2d[key].push(value);
-}
-
-
-/** @type {InstanceType<import("../rebuild_the_universe_raw/rebuild_the_universe.user")["rebuild_the_universe_plugin"]["AutoBuyImplR"]>} */
-let g_auto_buy;
-/** @type {{value:string[]}} */
-let src_arr={value: []};
-function compress_init() {dr_map=[];}
-/** @type {{value:string[][]}} */
-let id_groups={value: []};
-/** @type {{value:number[]}} */
-let el_ids={value: []};
-/** @arg {CompressionStatsCalculator} stats */
-function compress_main(stats) {
-	compress_init();
-	if(g_auto_buy) {src_arr.value=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];} else {
-		console.log("TODO: use event_log (can't find it)");
-		return;
-	}
-	ids.value=[...new Set(src_arr.value)];
-	id_groups.value=[];
-	for(let value of src_arr.value) {make_group_from_item(id_groups.value,ids.value.indexOf(value),value);}
-	el_ids.value=src_arr.value.map(get_ids);
-	max_id.value=new Set(el_ids.value).size;
-	let disabled_com=new DisabledMulCompression;
-	let arr=disabled_com.try_compress_T(el_ids.value);
-	let obj_start=new IDValueImpl_0(0,null);
-	obj_start.arr_rep=el_ids.value;
-	if(arr[0]===true) {obj_start.arr_rep_num=arr[1];} else if(arr[0]===false) {obj_start.arr_num=arr[1];}
-	for(let i=0,cur=obj_start;i<3000;i++) {
-		let comp_res=run_calc(stats,cur);
-		if(!cur.stats) break;
-		if(cur.log_val&&comp_res===null) {console.log("id:"+cur.id,"[",...cur.log_val,"]",cur.stats_win);}
-		if(cur.stats.length===0) break;
-		if(cur.stats[0][1]===1) break;
-		if(!cur.next) break;
-		if(!(cur.next instanceof IDValueImpl_0)) {throw new Error("Don't know how to use this type (cur.next is not IDValue_0)");}
-		cur=cur.next;
-	}
-	g_obj_arr.value=flat_obj(obj_start);
-}
-export_(exports => {exports.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);});
 
 class HexRandomDataGenerator {
 	constructor() {
@@ -3877,584 +2781,6 @@ class GenericDataEvent extends GenericEvent {
 }
 export_(exports => {exports.GenericDataEvent=GenericDataEvent;});
 
-//#region is_helpers
-/** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
-function is_record_with_string_type(x,k) {
-	if(!x?.data) return false;
-	if(!is_record_with_T(x.data,k)) return false;
-	if(typeof x.data[k]!=="string") return false;
-	return true;
-}
-
-/** @template T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<T>&MessageEvent<Record<U,unknown>>>} */
-function is_record_with_T_msg_m(x,k) {
-	if(!is_record_with_T(x.data,k)) return false;
-	return true;
-}
-
-/** @template T @arg {CM<T>|null} x @returns {x is CM<T&{}>} */
-function is_object(x) {
-	if(!x?.data) return false;
-	if(typeof x.data!=="object") return false;
-	return true;
-}
-
-/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
-function is_record_with_T(x,k) {
-	if(x===null) return false;
-	if(!(k in x)) return false;
-	return true;
-}
-//#endregion
-
-//#region cast_monad
-/** @template T @arg {T} x @returns {CM<T>} */
-function new_cast_monad(x) {return {type: "cast",data: x};}
-
-/** @template T @arg {CM<T>|null} x @returns {CM<T&{}|null>|null} */
-function cast_to_object(x) {
-	if(!is_object(x)) return null;
-	return x;
-}
-
-/** @template T @arg {CM<T>|null} x @returns {CM<T&{type:string}>|null} */
-function cast_to_record_with_string_type(x) {
-	let cast_result=cast_to_object(x);
-	if(!is_record_with_string_type(cast_result,"type")) return null;
-	return cast_result;
-}
-/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {x is CM<MessageEvent<T&{}>>} */
-function is_object_msg(x) {
-	if(!x?.data) return false;
-	if(typeof x.data.data!=="object") return false;
-	if(x.data.data===null) return false;
-	return true;
-}
-
-/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<T&{}>>|null} */
-function cast_to_object_msg(x) {
-	if(!is_object_msg(x)) return null;
-	return x;
-}
-/** @template {{}} T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<T&Record<U,string>>>} */
-function is_record_with_string_type_msg(x,k) {
-	if(x.data===null) return false;
-	if(x.data.data===null) return false;
-	return is_record_with_string_type(new_cast_monad(x.data.data),k);
-}
-
-/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<T&{type:string}>>|null} */
-function cast_to_record_with_string_type_msg(x) {
-	let cast_result=cast_to_object_msg(x);
-	if(!cast_result?.data?.data) return null;
-	if(!is_record_with_string_type_msg(cast_result,"type")) return null;
-	return cast_result;
-}
-
-/** @template {CM<MessageEvent<any>>} T @arg {T} x @returns {CM<MessageEvent<T["data"]["data"]&{data:unknown}>>|null} */
-function cast_to_record_with_string_type_msg_data(x) {
-	if(!is_record_with_T_msg_m(x,"data")) return null;
-	/** @type {CM<MessageEvent<T&{data:unknown}>>} */
-	let xr=x;
-	return xr;
-}
-
-/** @arg {CM<MessageEvent<{type:string,data:unknown}>>} x @returns {x is CM<MessageEvent<WrappedMessage<unknown>>>} */
-function is_record_with_string_type_msg_data_wrapped(x) {
-	if(x.data.data.type===post_message_connect_message_type) return true;
-	return false;
-}
-
-/** @arg {CM<MessageEvent<{type:string,data:unknown}>>} x @returns {CM<MessageEvent<WrappedMessage<unknown>>>|null} */
-function cast_to_record_with_string_type_msg_data_wrapped(x) {
-	if(!is_record_with_string_type_msg_data_wrapped(x)) return null;
-	return x;
-}
-
-/** @template {string} U @template {{}} T @arg {CM<T>|null} x @arg {U} k @returns {CM<T&{[P in U]:string}>|null} */
-function cast_to_record_with_key_and_string_type(x,k) {
-	if(x===null) return null;
-	if(!is_record_with_string_type(x,k)) return null;
-	return x;
-}
-add_function(cast_to_record_with_key_and_string_type);
-//#endregion
-
-
-/** @readonly @type {`CrossOriginConnection_${typeof commit_id_sha1}`} */
-const post_message_connect_message_type=`CrossOriginConnection_${commit_id_sha1}`;
-export_(exports => {exports.post_message_connect_message_type=post_message_connect_message_type;});
-
-class FlagHandler {
-	is_none() {return this.f===0;}
-	is_syn() {return (this.f&1)==1;}
-	is_ack() {return (this.f&2)==2;}
-	get_flags() {return this.f;}
-	valueOf() {return this.f;}
-	/** @arg {ConnectFlag} flags */
-	constructor(flags) {this.f=flags;}
-}
-
-/** @type {1} */
-const tcp_syn=1;
-/** @type {(typeof ConnectFlag)["Syn"]} */
-const val_tcp_syn=tcp_syn; val_tcp_syn;
-/** @type {2} */
-const tcp_ack=2;
-/** @readonly @type {(typeof ConnectFlag)["Ack"]} */
-const val_tcp_ack=tcp_ack; val_tcp_ack;
-
-const ack_win=5000;
-class TCPMessage {
-	/** @readonly */
-	type="tcp";
-	/** @arg {ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number|null} ack @arg {ConnectionMessage["data"]} data */
-	constructor(flags,client_id,seq,ack,data) {
-		this.flags=flags;
-		this.client_id=client_id;
-		this.seq=seq;
-		this.ack=ack;
-		/** @type {ConnectionMessage["data"]} */
-		this.data=data;
-	}
-	/** @arg {number} client_id @returns {ConnectionMessage} */
-	static make_syn(client_id) {
-		let seq=(Math.random()*ack_win)%ack_win|0;
-		if(testing_tcp) {seq=100;}
-		return new TCPMessage(tcp_syn,client_id,seq,null,null);
-	}
-	/** @arg {number} client_id @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	static make_message(client_id,data,seq,ack) {return new TCPMessage(0,client_id,seq,ack,data);}
-}
-
-let testing_tcp=false;
-
-class Socket {
-	static direct_message=false;
-	/** @readonly */
-	m_side="client";
-	/** @private */
-	m_debug=false;
-	/** @private */
-	m_local_log=false;
-	/** @private */
-	m_client_id;
-	/** @private */
-	m_port;
-	/** @private */
-	m_remote_target;
-	/** @private */
-	m_event_source;
-	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
-	constructor(connection_timeout,client_id,remote_target) {
-		this.m_connection_timeout=connection_timeout;
-		this.m_client_id=client_id;
-		this.m_remote_target=remote_target;
-		this.m_event_source=remote_target;
-		if(this.m_remote_target===window) {throw new Error("Sending messages to self is means i have a bad time");}
-		let {ports,client_port}=this.init_syn_data();
-		this.m_port=client_port;
-		this.send_syn(ports);
-	}
-	client_id() {return this.m_client_id;}
-	/** @returns {{ports:[MessagePort],client_port:MessagePort}} */
-	init_syn_data() {
-		let {
-			port1: server_port,
-			port2: client_port,
-		}=new MessageChannel;
-		return {ports: [server_port],client_port};
-	}
-	reconnect() {
-		let {ports,client_port}=this.init_syn_data();
-		this.m_port=client_port;
-		this.send_syn(ports);
-	}
-	init_handler() {
-		this.m_port.addEventListener("message",this);
-		this.m_port.start();
-		elevate_event_handler(this);
-	}
-	/** @arg {[MessagePort]} ports */
-	send_syn(ports) {
-		if(testing_tcp) {// <group syn>
-			console.group("syn");
-		}
-		this.init_handler();
-		this.send_init_request(TCPMessage.make_syn(this.m_client_id),ports);
-	}
-	/** @arg {ConnectionMessage} data @arg {[MessagePort]} ports */
-	send_init_request(data,ports) {
-		if(this.m_debug) {console.log("post request ConnectOverPostMessage");}
-		if(testing_tcp) {
-			console.groupCollapsed("-tx-C-> Socket<"+data.seq+","+data.ack+">");
-			console.log("Socket ->");
-			console.log("top.onmessage.handleEvent ->");
-			console.log("-C> CrossOriginConnection",data);
-			console.groupEnd();
-			console.log("<?-");
-		}
-		this.post_wrapped(data,ports);
-	}
-	/** @arg {ConnectionMessage} data @arg {[MessagePort]} ports */
-	post_wrapped(data,ports) {
-		/** @type {WrappedMessage<ConnectionMessage>} */
-		let msg={
-			type: post_message_connect_message_type,
-			data,
-		};
-		this.m_remote_target.postMessage(msg,"*",ports);
-	}
-	/** @arg {ConnectionMessage} data */
-	push_tcp_message(data) {
-		if(testing_tcp) {
-			console.groupCollapsed("-tx-L-> Socket<"+data.seq+","+data.ack+">");
-			console.log("Socket ->");
-			console.log("l_port.onmessage.handleEvent ->");
-			console.log("-L> ListenSocket",data);
-			console.groupEnd();
-			console.log("<?-");
-		}
-		if(ListenSocket.direct_message) {ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));} else {this.m_port.postMessage(data);}
-	}
-	/** @arg {ConnectionMessage} message */
-	client_connect(message) {if(testing_tcp) {console.log("on_client_connect",message,this.m_event_source);} }
-	/** @arg {MessageEvent<ConnectionMessage>} event */
-	handleEvent(event) {
-		if(Socket.prototype===this) return;
-		let data=event.data;
-		if(data.type!=="tcp") throw new Error();
-		if(testing_tcp) {
-			console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags+">");
-			console.log("ListenSocket ->");
-			console.log("s_port.onmessage.handleEvent ->");
-			console.log("-?> Socket",data);
-			console.groupEnd();
-			console.log("<?-");
-
-		}
-		this.handle_tcp_data(data);
-	}
-	/** @arg {ConnectionMessage} tcp_message @arg {ConnectFlag} flags */
-	send_ack(tcp_message,flags) {
-		// seq=number & ack=number;
-		let seq=tcp_message.ack;
-		if(!seq) {
-			seq=(Math.random()*ack_win)%ack_win|0;
-			if(testing_tcp) {seq=300;}
-		}
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.m_client_id,
-			ack: tcp_message.seq+1,
-			seq,
-			flags: flags|tcp_ack,
-			data: null,
-		});
-	}
-	/** @arg {ConnectionMessage} tcp_message */
-	handle_tcp_data(tcp_message) {
-		let f=new FlagHandler(tcp_message.flags);
-		if(this.m_local_log) {console.log("local",tcp_message);}
-		if(f.is_syn()&&f.is_ack()) {this.send_ack(tcp_message,0);}
-		if(tcp_message.flags==0) {this.send_ack(tcp_message,0);}
-		if(!tcp_message.data) return;
-		let tcp_data=tcp_message.data;
-		if(testing_tcp) {console.log("Socket.handle_tcp_data(message.data())");}
-		switch(tcp_data.type) {
-			case "connected": {this.client_connect(tcp_message);} break;
-			case "will_disconnect": {
-				this.m_can_reconnect=tcp_data.can_reconnect;
-				this.m_disconnect_start=performance.now();
-			} break;
-			case "disconnected": {
-				if(!this.m_disconnect_start) throw new Error("missed will_disconnect");
-				console.log("before_unload took",performance.now()-this.m_disconnect_start);
-				this.client_disconnect(tcp_message);
-			} break;
-			case "side":
-		}
-	}
-	client_start_connect() {if(!this.m_port) {throw new Error("No remote port to communicate with");} }
-	/** @arg {ConnectionMessage} message */
-	client_disconnect(message) {
-		if(testing_tcp) {console.log("on_client_disconnect",message);}
-		this.m_connected=false;
-		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
-		this.m_port.removeEventListener("message",this);
-		this.m_port.close();
-		setTimeout(this.reconnect.bind(this),20);
-	}
-}
-export_(exports => {exports.Socket=Socket;});
-
-class OriginState {
-	/** @private @readonly */
-	m_top=window.top;
-	/** @private @readonly @type {Window|null} */
-	m_opener=window.opener;
-	/** @arg {ConnectionFlags} flags */
-	get_connect_target(flags) {
-		if(this.m_opener) {
-			flags.does_proxy_to_opener=true;
-			return this.m_opener;
-		} else if(this.m_top) {return this.m_top;} else {throw new Error("Invalid state, not top and window.top is null");}
-	}
-}
-export_(exports => {exports.OriginState=OriginState;});
-
-class ConnectionFlags {does_proxy_to_opener=false;}
-
-class ListenSocket {
-	static direct_message=false;
-	/** @private @type {ConnectionSide} */
-	m_side="server";
-	/** @private @type {ConnectionMessage[]} */
-	m_unhandled_events=[];
-	/** @private */
-	m_is_connected=false;
-	/** @private */
-	m_log_downstream=false;
-	/** @private */
-	m_is_connecting=true;
-	/** @private @type {ConnectionFlags} */
-	m_flags;
-	/** @private @type {MessagePort} */
-	m_port;
-	/** @private @type {number} */
-	m_client_id;
-	/** @private @type {MessageEventSource} */
-	m_event_source;
-	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @arg {MessageEventSource} event_source */
-	constructor(flags,connection_port,client_id,event_source) {
-		this.m_flags=flags;
-		this.m_client_id=client_id;
-		this.m_event_source=event_source;
-		this.m_port=connection_port;
-		this.m_port.addEventListener("message",this);
-		this.m_port.start();
-	}
-	get side() {return this.m_side;}
-	get client_id() {return this.m_client_id;}
-	get event_source() {return this.m_event_source;}
-	get is_connected() {return this.m_is_connected;}
-	/** @arg {ConnectionMessage} data */
-	push_tcp_message(data) {
-		if(testing_tcp) {
-			console.groupCollapsed("-tx-S-> ListenSocket<"+data.seq+","+data.ack+">");
-			console.log("ListenSocket ->");
-			console.log("s_port.onmessage.handleEvent ->");
-			console.log("-S> Socket",data);
-			console.groupEnd();
-			console.log("<?-");
-		}
-		if(Socket.direct_message) {Socket.prototype.handleEvent(new MessageEvent("message",{data}));} else {this.m_port.postMessage(data);}
-	}
-	/** @arg {ConnectionMessage} tcp_message */
-	downstream_connect(tcp_message) {
-		let {seq,ack}=tcp_message;
-		if(!ack) throw new Error("Invalid message");
-		if(testing_tcp) {console.log("on_server_connect",this.m_client_id,this.m_event_source);}
-		this.push_tcp_message(TCPMessage.make_message(
-			this.m_client_id,{type: "connected"},
-			seq,ack,
-		));
-	}
-	/** @arg {ConnectionMessage} info */
-	downstream_handle_event(info) {
-		if(!info.data) return;
-		export_(exports => {
-			if(!exports.remote_origin) return;
-			exports.remote_origin.push_tcp_message(info);
-		});
-		if(info.data.type==="forward"&&this.m_flags.does_proxy_to_opener) {
-			return;
-		}
-		if(this.m_log_downstream) {console.log("downstream_event",info.data,info.flags,info.client_id);}
-	}
-	disconnected() {
-		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{type: "disconnected",},1,1));
-	}
-	/** @arg {boolean} can_reconnect */
-	will_disconnect(can_reconnect) {
-		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
-			type: "will_disconnect",
-			can_reconnect,
-		},0,0));
-	}
-	/** @arg {MessageEvent<ConnectionMessage>} event */
-	handleEvent(event) {
-		let {data}=event;
-		if(data.type!=="tcp") {
-			this.m_unhandled_events.push(data);
-			console.log("unhandled event",data);
-			return;
-		}
-		if(this.m_flags.does_proxy_to_opener) {
-			let real_data=data.data;
-			/** @type {[number,number,null][]} */
-			let id_path=[];
-			if(real_data&&real_data.type==="forward") {
-				id_path.push(...real_data.client_id_path,[data.client_id,this.m_client_id,null]);
-				real_data=real_data.data;
-			}
-			data.data={
-				type: "forward",
-				client_id_path: id_path,
-				data: real_data,
-			};
-		}
-		if(testing_tcp) {
-			console.groupCollapsed("-rx-L?-> ListenSocket<"+data.seq+","+data.ack+">");
-			console.log("Socket ->");
-			console.log("l_port.onmessage.handleEvent ->");
-			console.log("-?> ListenSocket",data);
-			console.groupEnd();
-			console.log("<?-");
-		}
-		this.handle_tcp_data(data);
-	}
-	/** @arg {ConnectionMessage} tcp_message @arg {ConnectFlag} flags */
-	send_ack(tcp_message,flags) {
-		let {seq: ack,ack: seq}=tcp_message;
-		seq=(Math.random()*ack_win)%ack_win|0;
-		if(testing_tcp) {seq=300;}
-		ack+=1;
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.m_client_id,
-			ack,
-			seq,
-			flags: flags|tcp_ack,
-			data: null,
-		});
-	}
-	/** @arg {ConnectionMessage} tcp_message */
-	handle_tcp_data(tcp_message) {
-		let f=new FlagHandler(tcp_message.flags);
-		let {ack: seq}=tcp_message;
-		if(f.is_syn()&&!f.is_ack()) {
-			// seq=number & ack=null;
-			this.send_ack(tcp_message,tcp_syn);
-		}
-		if(f.is_none()&&!f.is_syn()) {this.send_ack(tcp_message,0);}
-		if(f.is_none()&&seq==null) {console.log("bad tcp",tcp_message);}
-		if(f.is_ack()&&this.m_is_connecting) {
-			this.m_is_connecting=false;
-			this.m_connected=true;
-			this.downstream_connect(tcp_message);
-		}
-		if(f.is_ack()&&this.m_is_connecting&&seq==null) {console.log("bad tcp",tcp_message);}
-		let downstream_data=tcp_message.data;
-		if(downstream_data) {this.downstream_handle_event(tcp_message);}
-	}
-}
-
-class CrossOriginConnection {
-	/** @private */
-	m_flags=new ConnectionFlags;
-	/** @private */
-	m_state=new OriginState;
-	/** @private @type {Socket|null} */
-	m_local_handler=null;
-	/** @private @type {ListenSocket[]} */
-	m_connections=[];
-	/** @private */
-	m_client_max_id=0;
-	constructor() {
-		elevate_event_handler(this);
-		let client_id=this.m_client_max_id++;
-		this.start_root_server();
-		let connect_target=this.m_state.get_connect_target(this.m_flags);
-		if(connect_target!==window) {
-			this.m_local_handler=new Socket(
-				30000,
-				client_id,
-				connect_target,
-			);
-		}
-	}
-	/** @arg {MessageEvent<unknown>} event_0 */
-	on_message_event(event_0) {
-		let e_monad_1=cast_to_record_with_string_type_msg(new_cast_monad(event_0));
-		if(!e_monad_1) return;
-		if(!this.is_with_data_decay(e_monad_1)) return;
-		/** @type {msg_ev_01} */
-		let e_monad_2=cast_to_record_with_string_type_msg_data(e_monad_1);
-		if(!e_monad_2?.data) return;
-		let e_monad_3=cast_to_record_with_string_type_msg_data_wrapped(e_monad_2);
-		if(!e_monad_3) return;
-		let cast_monad_data=cast_to_record_with_string_type(new_cast_monad(e_monad_3.data.data.data));
-		if(!cast_monad_data) return;
-		let unwrapped_event=cast_monad_data.data;
-		switch(unwrapped_event.type) {
-			case "tcp": break;
-			default: return;
-		}
-		if(!this.is_connection_message(event_0)) return;
-		let client_id=this.m_client_max_id++;
-		let connection_port=event_0.ports[0];
-		if(!event_0.source) throw new Error("No event source");
-		let event_source=event_0.source;
-		let handler=new ListenSocket(this.m_flags,connection_port,client_id,event_source);
-		let prev_connection_index=this.m_connections.findIndex(e => {return e.event_source===event_source;});
-		if(testing_tcp) {
-			console.groupCollapsed("-rx-C!-> CrossOriginConnection<"+event_0.data.data.seq+","+event_0.data.data.ack+">");
-			console.log("CrossOriginConnection ->");
-			console.log("ListenSocket.handle_tcp_data ->");
-			console.log("s_port.onmessage.handleEvent ->");
-			console.log("-!> Socket",event_0.data.data);
-			console.groupEnd();
-			console.log("<?-");
-		}
-		handler.handle_tcp_data(event_0.data.data);
-		if(prev_connection_index>-1) {this.m_connections.splice(prev_connection_index,1);}
-		this.m_connections.push(handler);
-	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
-	is_wrapped_message(event) {
-		let data=cast_to_record_with_string_type(new_cast_monad(event.data));
-		if(!data) return false;
-		return data.data.type===post_message_connect_message_type;
-	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
-	is_connection_message(event) {
-		if(!this.is_wrapped_message(event)) return false;
-		let data_record=cast_to_record_with_string_type(new_cast_monad(event.data.data));
-		if(!data_record) return false;
-		if(data_record.data.type!=="tcp") return false;
-		return true;
-	}
-	/** @template {CM<{type:string}>} T @arg {T} data @returns {data is T&CM<{type:string,data:unknown}>} */
-	is_with_data_decay(data) {
-		if(!is_record_with_T(data.data,"data")) return false;
-		return true;
-	}
-	/** @arg {ConnectionMessage} message */
-	push_tcp_message(message) {
-		if(!this.m_local_handler) {throw new Error("send tcp message to non-existent connection");}
-		this.m_local_handler.push_tcp_message(message);
-	}
-	/** @arg {Event} event */
-	handleEvent(event) {
-		switch(event.type) {
-			case "message": {if(event instanceof MessageEvent) {this.on_message_event(event);} else {console.log("Event type is \"message\" and not an instance of MessageEvent",event);} } break;
-			case "beforeunload": {for(let connection of this.m_connections) {connection.will_disconnect(false);} } break;
-			case "unload": {
-				for(let connection of this.m_connections) {connection.disconnected();}
-				this.m_connections.length=0;
-			} break;
-		}
-	}
-	start_root_server() {
-		window.addEventListener("message",this);
-		window.addEventListener("beforeunload",this);
-		window.addEventListener("unload",this);
-	}
-	static connect_to_api() {export_(exports => {exports.CrossOriginConnection=this; exports.remote_origin=new this;});}
-}
-CrossOriginConnection.connect_to_api();
-
 const html_parsing_div_element=document.createElement("div");
 /** @arg {string} html */
 function parse_html_to_binary_arr(html) {
@@ -4477,12 +2803,6 @@ class DebugApi {
 	hasData(key) {return this.data_store.has(key);}
 	/** @arg {string} key @returns {any} */
 	getData(key) {return this.data_store.get(key);}
-	/** @arg {"__k"} key @returns {dbg_get_ty} */
-	get_k(key) {return this.getData(key);}
-	/** @returns {I_debug} */
-	get_d() {return this.getData("d");}
-	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: EventListenerInternal[]}} */
-	get_getEventListeners(key) {return this.data_store.get(key);}
 	/** @arg {string} key @arg {any} value @returns {this} */
 	setData(key,value) {
 		this.data_store.set(key,value);
@@ -4490,235 +2810,15 @@ class DebugApi {
 	}
 	/** @arg {string} key @returns {boolean} */
 	deleteData(key) {return this.data_store.delete(key);}
-	/** @arg {any} element @returns {{[x: string]: EventListenerInternal[]}} */
-	getEventListeners(element) {
-		if(!this.hasData("getEventListeners"))
-			throw new Error("1");
-		return this.get_getEventListeners("getEventListeners")(element);
-	}
-	/** @arg {I_debug} debug @arg {I_undebug} undebug @arg {Constructor} func @arg {string} name @returns {dbg_result} */
-	get_event_listener_var_vec_1(debug,undebug,func,name) {
-		this.attach(debug,undebug,null);
-		/** @arg {Constructor} func @arg {any} f_this @arg {any[]} c_args */
-		function do_activate(func,f_this,c_args) {try {return Reflect.apply(func,f_this,c_args);} catch {} }
-		let activate=do_activate.bind(null,func,{},[{get target() {throw new Error("1");} }]);
-		return this.debuggerGetVar_a({
-			type: "class-breakpoint",
-			name,
-			target: func,
-			activate,
-			activate_args: [],
-		});
-	}
-	/** @arg {any} debug @arg {any} undebug @arg {null} getEventListeners @returns {this} */
-	attach(debug,undebug,getEventListeners) {
-		//Attach to the chrome DebugApi functions the user specified.
-		let obj_debug=this.get_d();
-		let obj_undebug=this.getData("u");
-		let get_ev_lis=this.getData("getEventListeners");
-		if(obj_debug!==debug||obj_undebug!==undebug||get_ev_lis!==getEventListeners) {
-			this.setData("d",debug);
-			this.setData("u",undebug);
-			this.setData("getEventListeners",getEventListeners);
-		}
-		return this;
-	}
 	/** @arg {new (...arg0: any[]) => any} class_value @arg {any[]} arg_vec @returns {boolean} */
 	activateClass(class_value,arg_vec) {return new class_value(...arg_vec);}
 	/** @arg {any} function_value @arg {any} target_obj @arg {any} arg_vec @returns {boolean} */
 	activateApply(function_value,target_obj,arg_vec) {return Reflect.apply(function_value,target_obj,arg_vec);}
-	/** @returns {void} */
-	debuggerBreakpointCode() {
-		console.log("FIXME add breakpoint code");
-		// window.inject_api?.DebugApi&&(window.inject_api.DebugApi.the().get_k("__k").get=(/** @type {string} */ __v) => {
-		// 	if(__v==="__v") {return {type: "eval-hidden-var"};}
-		// 	try {
-		// 		return {
-		// 			type: "var",
-		// 			data: [__v,eval(__v)]
-		// 		};
-		// 	} catch {return {type: "no-var"};}
-		// });
-		// if(window.inject_api?.DebugApi) {if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");} } else {console.log("missing window.inject_api");}
-		0;
-	}
-	/** @returns {boolean} */
-	clearCurrentBreakpoint() {
-		let undebug;
-		if(undebug=this.getData("u")) {
-			undebug(this.current_function_value);
-			return true;
-		}
-		return false;
-	}
 	/** @argument {Function} function_value @returns {string} */
 	stringifyFunction(function_value) {
 		let function_code=function_value.toString();
 		if(function_code.includes("{}"[0])) {function_code=function_code.slice(function_code.indexOf("{}"[0]));} else {console.log(function_code);}
 		return function_code;
-	}
-	/** @arg {IDebugBreakpointArgs} breakpoint_arguments @returns {dbg_result} */
-	debuggerGetVarArray_a(breakpoint_arguments) {
-		let function_value=breakpoint_arguments.target;
-		let var_match=breakpoint_arguments.name;
-		if(!this.hasData("d")||!this.getData("u")) {return {type: "invalid-state-error"};}
-		if(typeof function_value!="function") {return {type: "argument-error"};}
-		let ma=var_match.matchAll(/.-.|./g);
-		let sr=[];
-		let qs=[...ma].map(e => e[0]);
-		for(let j of qs) {
-			if(j.length===1) {
-				sr.push(j.charCodeAt(0));
-				continue;
-			}
-			let fs=j.split("-");
-			let sa=fs[0].charCodeAt(0);
-			let se=fs[1].charCodeAt(0);
-			for(let i=sa;i<=se;i++) {sr.push(i);}
-		}
-		let vars_arr=sr.map(e => String.fromCharCode(e));
-		this.current_function_value=function_value;
-		let tmp_key="__k";
-		/** @type {dbg_get_ty} */
-		let tmp_value={};
-		this.setData(tmp_key,tmp_value);
-		let debug=this.get_d();
-		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode);
-		debug(this.current_function_value,`${breakpoint_code_string}`);
-		// ---- Activate ----
-		let activate_return=null;
-		if(breakpoint_arguments.type==="function-breakpoint") {
-			let activate_vec=breakpoint_arguments.activate_args;
-			let target_fn=breakpoint_arguments.target;
-			activate_return=breakpoint_arguments.activate(target_fn,...activate_vec);
-		} else {
-			this.getData("u")(this.current_function_value);
-			return {type: "argument-error"};
-		}
-		let exec_res_arr=[];
-		if(tmp_value.get) {
-			for(let j of vars_arr) {
-				let res=tmp_value.get(j);
-				switch(res.type) {
-					case "var":
-						exec_res_arr.push(res.data);
-						break;
-					case "no-var":
-						break;
-					case "eval-hidden-var":
-						console.log("can't use dynamic eval for var hidden by eval argument \""+j+"\"");
-				}
-			}
-		}
-		this.deleteData(tmp_key);
-		if(exec_res_arr.length) {
-			return {
-				type: "data-arr",
-				data: {
-					result: exec_res_arr,
-					return: activate_return
-				}
-			};
-		}
-		return {
-			type: "no-response",
-			return: activate_return
-		};
-	}
-	/** @arg {Constructor} class_value @arg {[any,any[]]} activate_args @arg {string} var_match @returns {dbg_result} */
-	debuggerGetVarArray_c(class_value,activate_args,var_match) {
-		return this.debuggerGetVarArray_a({
-			type: "class-breakpoint",
-			name: var_match,
-			target: class_value,
-			activate: this.activateClass,
-			activate_args,
-		});
-	}
-	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_args @arg {string} var_match @returns {dbg_result} */
-	debuggerGetVarArray(function_value,activate_args,var_match) {
-		return this.debuggerGetVarArray_a({
-			type: "function-breakpoint",
-			name: var_match,
-			target: function_value,
-			activate: this.activateApply,
-			activate_args,
-		});
-	}
-	/** @arg {IDebugBreakpointArgs} breakpoint_arguments @returns {dbg_result} */
-	debuggerGetVar_a(breakpoint_arguments) {
-		if(!this.hasData("d")||!this.getData("u")) return {type: "invalid-state-error"};
-		if(typeof breakpoint_arguments.target!="function") return {type: "argument-error"};
-		this.current_function_value=breakpoint_arguments.target;
-		let dbg_str_func=this.stringifyFunction(this.debuggerBreakpointCode);
-		let tmp_key="__k";
-		class DebugInfoValue {
-			valid=false;
-			/** @arg {string} __v @returns {{type: "hidden-var",var: string}|{type: "var",data: [string,any]}|{type: "no-var", data: null}|null} */
-			get(__v) {return null;}
-		}
-		let tmp_value=new DebugInfoValue;
-		this.setData(tmp_key,tmp_value);
-		/** @type {I_debug} */
-		let debug=this.getData("d");
-		debug(this.current_function_value,`${dbg_str_func}`);
-		// ---- Activate ----
-		let activate_return=null;
-		if(breakpoint_arguments.type==="class-breakpoint") {activate_return=breakpoint_arguments.activate(breakpoint_arguments.target,breakpoint_arguments.activate_args);} else if(breakpoint_arguments.type==="function-breakpoint") {activate_return=breakpoint_arguments.activate(breakpoint_arguments.target,...breakpoint_arguments.activate_args);} else {
-			this.getData("u")(this.current_function_value);
-			return {type: "argument-error"};
-		}
-		let breakpoint_result=null;
-		if(tmp_value.get) {breakpoint_result=tmp_value.get(breakpoint_arguments.name);}
-		this.deleteData(tmp_key);
-		if(breakpoint_result?.type==="var") {
-			return {
-				type: "data",
-				result: breakpoint_result.data,
-				return: activate_return,
-			};
-		}
-		if(breakpoint_result) {
-			return {
-				type: "unexpected",
-				data: {
-					result: breakpoint_result,
-					return: activate_return
-				}
-			};
-		}
-		return {
-			type: "no-response",
-			return: activate_return,
-		};
-	}
-	/** @arg {Constructor} class_value @arg {any[]} activate_args @arg {string} var_name @returns {dbg_result} */
-	debuggerGetVar_c(class_value,activate_args,var_name) {
-		return this.debuggerGetVar_a({
-			type: "class-breakpoint",
-			name: var_name,
-			target: class_value,
-			activate: this.activateClass,
-			activate_args,
-		});
-	}
-	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_vec @arg {string} var_name @returns {dbg_result} */
-	debuggerGetVar(function_value,activate_vec,var_name) {
-		if(typeof function_value!="function") {return {type: "argument-error"};}
-		let ret=this.debuggerGetVar_a({
-			type: "function-breakpoint",
-			target: function_value,
-			name: var_name,
-			activate: this.activateApply,
-			activate_args: activate_vec,
-		});
-		if(ret.type!=="data") throw new Error("Debug fail");
-		return {
-			type: "var-result",
-			name: ret.result[0],
-			result: ret.result[1],
-			return: ret.return
-		};
 	}
 }
 export_(exports => {exports.DebugApi=DebugApi;});
@@ -4726,9 +2826,9 @@ export_(exports => {
 	exports.__REACT_DEVTOOLS_GLOBAL_HOOK__={
 		isDisabled: false,
 		supportsFiber: true,
-		/** @type {ReactDevtoolsHook|null} */
+		/** @type {import("./support/ReactDevtoolsHook.js").ReactDevtoolsHook|null} */
 		hook_ref: null,
-		/** @arg {ReactDevtoolsHook} react_devtools_scope */
+		/** @arg {import("./support/ReactDevtoolsHook.js").ReactDevtoolsHook} react_devtools_scope */
 		inject(react_devtools_scope) {
 			this.hook_ref=react_devtools_scope;
 		}
