@@ -2,7 +2,7 @@ import {D_Enum_GuideAction,D_EngagementPanelTargetId,D_EngagementPanelVisibility
 import {D_UserIdStr} from "../d/mod_D/DU_T/DU.js";
 import {T_IdTemplate} from "../d/mod_D/DU_T/DU_TemplateString.js";
 import {R_Button} from "../d/mod_D/D_T/D_Button.js";
-import {G_ChatItem,G_Text,G_WatchNext} from "../ghi/_group.mod/G.js";
+import {G_ChatItem,G_Text,G_WatchNext} from "../ghi/group_G.js";
 import {TR_MultiPageMenu_Empty,A_ConfirmDialog} from "../nop_q/Popup.js";
 import {R_GuideEntry,R_NotificationText,RA_ReelDismissal,RA_NotificationMulti,R_ChannelSwitcherPage,R_Transcript,R_VideoViewCount,RA_Notification} from "../r/R.js";
 import {SU_SignalStr} from "../stu/mod/group_SU_StringUnion.js";

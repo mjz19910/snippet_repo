@@ -28,8 +28,9 @@ import {A_ReplaceEnclosing,A_HideEnclosing,GA_Playlist,A_UndoFeedback} from "../
 import {B_Hack} from "../abc/B.js";
 import {C_FilterChipTransform,C_MusicLibraryStatusUpdate} from "../abc/C.js";
 import {A_UpdateCommentVote} from "../e/E.js";
-import {G_AdditionalDataItem,G_Text,G_EY_Entity,G_ExtraUrlParamItem} from "../ghi/_group.mod/G.js";
+import {G_AdditionalDataItem,G_Text,G_EY_Entity,G_ExtraUrlParamItem} from "../ghi/group_G.js";
 import {GU_VE6827_Id,GU_VE23462_Id} from "../ghi/_group.mod/GU.js";
+import {O_DU_Persistence} from "../nop_q/O.js";
 import {A_ShareEntityService} from "../nop_q/Popup.js";
 import {R_AdFeedback,R_VssLoggingContext,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_WatchEndpointMusicConfig,R_ReelPlayerOverlay} from "../r/R.js";
 //#endregion

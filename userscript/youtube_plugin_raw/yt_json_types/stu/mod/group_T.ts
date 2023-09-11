@@ -4,7 +4,7 @@ import {TA_Continuation} from "../../abc/A.js";
 import {B_VEMap} from "../../abc/B.js";
 import {D_RootVisualElementType,D_Omit_Compact_Player,D_Omit_Compact_Video,D_Accessibility} from "../../d/group_D.js";
 import {D_TargetIdUuid,DU_EndpointKey} from "../../d/mod_D/DU_T/DU.js";
-import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions} from "../../ghi/_group.mod/G.js";
+import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions} from "../../ghi/group_G.js";
 import {D_FormatItem_SignatureCipher_SP} from "../../ghi/_group.mod/GU.js";
 import {KM_TrackingObj} from "../../k/KM.js";
 import {NS_UnionToPartial} from "../../nop_q/Namespaces.js";

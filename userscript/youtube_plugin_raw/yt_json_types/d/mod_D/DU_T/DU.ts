@@ -2,7 +2,7 @@ import {Ret_ParserService_GetUrlType} from "../../../../zb_plugin_types/types.js
 import {A_WatchNextContinuation,TA_Continuation} from "../../../abc/A.js";
 import {AD_AppendContinuationItems,AD_UpdateEngagementPanel} from "../../../abc/AD.js";
 import {DC_ScrollToEngagementPanel,DC_SectionList_TargetId} from "../../../abc/C.js";
-import {G_AccountPageSettingsSections,G_SI_DB_EngagementPanel,S_PageTypeStr} from "../../../ghi/_group.mod/G.js";
+import {G_AccountPageSettingsSections,G_SI_DB_EngagementPanel,S_PageTypeStr} from "../../../ghi/group_G.js";
 import {GU_GoodPut_ProbeUrl,GU_InitPlaybackUrl,GU_VE83769_Url_External,GU_VideoPlaybackUrl} from "../../../ghi/_group.mod/GU.js";
 import {RS_Search} from "../../../r/RS.js";
 import {D_ApiPathFormat_1,D_BrowseEndpointPages,D_Button_With_TargetId,D_ChipCloudChip_tid,D_EndpointLikeEndings,D_EngagementPanelSectionTargetId,D_Settings_Id,D_TranscriptSearchPanel} from "../../group_D.js";

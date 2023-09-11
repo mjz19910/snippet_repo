@@ -340,3 +340,27 @@ export type G_NavFinishDetail=
 export type E_Page=G_NavFinishDetail['endpoint'];
 export type S_PageTypeStr=G_NavFinishDetail["pageType"];
 //#endregion
+//#region G_DE Union
+export type G_DE_MutationItem=DE_MutationReplace|DE_MutationDelete;
+export type G_DE_UserFeedback=DE_AdditionalDatas|DE_BucketIdentifier;
+//#endregion
+//#region g.mod
+export type G_UrlInfoSrc=
+	|{b: "playlist_id"; id: DU_Playlist_Id;}
+	|{b: "browse_id"; id: string;}
+	;
+;
+type G_Boxed_StrArr=[
+	Join<Extract<G_Boxed_StrExtract,[any,any]>,":">,
+	// 3
+	Join<Extract<G_Boxed_StrExtract,[any,any,any]>,":">,
+	// 4
+	Join<Exclude<Extract<G_Boxed_StrExtract,[any,any,any,any]>,[any,any,"FE",any]>,":">,
+	Join<Extract<Extract<G_Boxed_StrExtract,[any,any,any,any]>,[any,any,"FE",any]>,":">,
+	// 5
+	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any]>,":">,
+	// 6
+	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any,any]>,":">
+];
+
+//#endregion

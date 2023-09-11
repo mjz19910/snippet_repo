@@ -1,5 +1,5 @@
 
-type Join<T extends string[], U_arg extends string = ","> =
+export type Join<T extends string[], U_arg extends string = ","> =
 	string[] extends T ? string : T extends [] ? "" : T extends [infer U extends string, infer C extends string, ...infer Z] ? Z extends string[] ?
 	Join<Z, U_arg> extends "" ? `${U}${U_arg}${C}` :
 	Join<Z, U_arg> extends string ? `${U}${U_arg}${C}${U_arg}${Join<Z, U_arg>}` : `${U}${U_arg}${C}` : `${U}${U_arg}${C}` :

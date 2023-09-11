@@ -1,6 +1,6 @@
-type Join<T extends string[],D extends string=",">=NS_MakeJoin.JoinNonspecificStringArray<T,NS_MakeJoin.JoinInferParts_2<T,D>>;
+export type Join<T extends string[],D extends string=",">=NS_MakeJoin.JoinNonspecificStringArray<T,NS_MakeJoin.JoinInferParts_2<T,D>>;
 
-namespace NS_MakeJoin {
+export namespace NS_MakeJoin {
 	export type JoinInferParts_2<T extends string[],D extends string>=T extends [infer U extends string,infer V extends string,...infer R extends string[]]? JoinHandleEmptyJoinResult_Len2<U,V,D,R>:JoinInferParts<T,D>;
 	export type JoinNonspecificStringArray<T,U>=T extends []? "":string[] extends T? string:U;
 	type JoinHandleEmptyJoinResult_Len2<U extends string,V extends string,D extends string,R extends string[]>=Join<R,D> extends ""? `${U}${D}${V}`:Join<R,D> extends string? `${U}${D}${V}${D}${Join<R,D>}`:`${U}${D}${V}`;
@@ -25,5 +25,5 @@ namespace NS_MakeJoin {
 		use_all_types;
 	}
 }
-namespace NS_Outer {export type Join<T extends string[],U extends string=",">=NS_Outer_2.Join1<T,U>;}
-namespace NS_Outer_2 {export type Join1<T extends string[],U extends string=",">=Join<T,U>;}
+export namespace NS_Outer {export type Join<T extends string[],U extends string=",">=NS_Outer_2.Join1<T,U>;}
+export namespace NS_Outer_2 {export type Join1<T extends string[],U extends string=",">=Join<T,U>;}

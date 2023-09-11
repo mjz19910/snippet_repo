@@ -1,6 +1,6 @@
 import {C_ShowReloadUi} from "../abc/C.js";
 import {E_CreatePlaylistService} from "../e/E.js";
-import {G_LiveChatContinuationItem,G_RA_LiveChatContinuationActions,G_SectionItem} from "../ghi/_group.mod/G.js";
+import {G_LiveChatContinuationItem,G_RA_LiveChatContinuationActions,G_SectionItem} from "../ghi/group_G.js";
 import {R_CommentThread,R_CommentsHeader,R_FeedFilterChipBar,R_LiveChatHeader,R_LiveChatItemList,R_LiveChatMessageInput,R_LiveChatParticipantsList,R_LiveChatTicker,R_Message,R_RichItem} from "../r/R.js";
 import {SI_VE76278_EngagementPanel} from "../stu/mod/group_SI.js";
 import {D_AdSlotAndLayoutItem,D_ClientMessages,D_InvalidationId,D_LiveChatEmoji} from "./group_D.js";
