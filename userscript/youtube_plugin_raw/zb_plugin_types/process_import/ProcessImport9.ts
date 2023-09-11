@@ -1,4 +1,4 @@
-import {T_Split} from "../../support_0_mod/T_Split.mod.js";
+import {T_Split} from "../../yt_json_types/stu/group_T.js";
 import {Keyof_PathMap} from "./Keyof_PathMap.js";
 import {MatchType_Import2} from "./MatchType_Import2.js";
 import {ProcessImport8} from "./ProcessImport8.js";

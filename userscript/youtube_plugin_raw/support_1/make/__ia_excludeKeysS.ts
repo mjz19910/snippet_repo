@@ -13,3 +13,4 @@ export function __ia_excludeKeysS<T extends string,U extends {},C extends T_Spli
 	};
 	return obj as {[I in Exclude<keyof U,C[number]>]: U[I];};
 }
+export type __ia_excludeKeysS2={fn: __ia_excludeKeysS2;};

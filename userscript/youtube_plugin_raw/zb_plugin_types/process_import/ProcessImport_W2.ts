@@ -1,4 +1,4 @@
-import {T_Split} from "../../support_0_mod/T_Split.mod.js";
+import {T_Split} from "../../yt_json_types/stu/group_T.js";
 import {MatchType_Import4} from "./MatchType_Import4.js";
 import {S_AllImportPaths} from "./S_AllImportPaths.js";
 

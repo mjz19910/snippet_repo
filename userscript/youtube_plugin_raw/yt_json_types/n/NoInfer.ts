@@ -1,1 +1,1 @@
-type NoInfer<T>=T extends infer NoInferT? NoInferT:never;
+export type NoInfer<T>=T extends infer NoInferT? NoInferT:never;

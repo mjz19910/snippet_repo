@@ -1,3 +1,3 @@
-type TextDecoderExt={
+export type TextDecoderExt={
 	decode(buffer: BufferSource): string|null;
 };

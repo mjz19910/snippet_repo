@@ -2007,7 +2007,7 @@ class AudioGainController
 }
 /** @private @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
-/** @private @template {string} T @template {{}} U @template {import("../support_0_mod/T_Split.mod.js").T_Split<T,",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
+/** @private @template {string} T @template {{}} U @template {import("../yt_json_types/stu/group_T.js").T_Split<T,",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("../support_1/make/__ia_excludeKeysS.js").__ia_excludeKeysS2['fn']} */
 Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str)
 {
 	/** @private @type {any} */
@@ -2085,7 +2085,7 @@ function yt_plugin_base_main()
 	}
 	if(failed_to_load) return;
 	let require=__module_require__;
-	const {ServiceLoader,ServiceLoader}=require("./YTPlugin_ServiceLoader_Plugin.user");
+	const {ServiceLoader}=require("./YTPlugin_ServiceLoader_Plugin.user");
 	const log_enabled_page_type_change=false;
 	/** @private @type {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} */
 	const resolver_value={
@@ -2164,7 +2164,7 @@ export_(exports =>
 });
 //#endregion
 //#region string manipulation
-/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("../support_0_mod/T_Split.mod.js").T_Split<X,string extends S?",":S>} */
+/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("../yt_json_types/stu/group_T.js").T_Split<X,string extends S?",":S>} */
 function split_string(x,s=as(","))
 {
 	if(!x) {debugger;}
@@ -2407,9 +2407,7 @@ class ServiceWithResolver extends ApiBase
 		super();
 		this.#x=x;
 	}
-	/** @type {ServiceLoader} */
-	vv=["",ServiceLoader];
-	/** @protected @returns {ServiceResolver<ServiceLoader,import("../support_1/ServiceOptions.js").ServiceOptions>} */
+	/** @protected @returns {import("../zb_plugin_types/types.js").ServiceResolverValue} */
 	get x() {return as_any(this.#x.value);}
 	/** @arg {()=>void} cb */
 	addOnServicesListener(cb) {this.#x.listeners.push(cb);}
@@ -2514,7 +2512,7 @@ class BaseService extends ServiceWithMembers
 	}
 	/**
 	 * @protected @template R_D,R_M
-	 * @template {Extract<keyof T_Endpoint,KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.js").TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
+	 * @template {Extract<keyof T_Endpoint,import("../zb_plugin_types/KA_EndpointKey.js").KA_EndpointKey>} T_Key @template {import("../yt_json_types/stu/group_T.js").TE_Endpoint_3<any,any,any>} T_Endpoint @arg {T_Endpoint} x
 	 * @param {T_Key} k
 	 * @param {(this:this,x:T_Endpoint["commandMetadata"])=>R_M} f1 @arg {(this:this,x:T_Endpoint[T_Key])=>R_D} f2
 	 * @returns {[typeof y,R_M,R_D]}
@@ -2565,9 +2563,9 @@ class BaseService extends ServiceWithMembers
 	}
 	//#endregion
 	//#region make
-	/** @arg {string} k @template T @arg {T} x @returns {make_one_t<T>} */
+	/** @arg {string} k @template T @arg {T} x @returns {import("../yt_json_types/m/make_item_group.js").make_one_t<T>} */
 	make_one_t(k,x) {const b="item",c="one"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
-	/** @arg {string} k @template T @arg {T[]} x @returns {make_arr_t<T>} */
+	/** @arg {string} k @template T @arg {T[]} x @returns {import("../yt_json_types/m/make_item_group.js").make_arr_t<T>} */
 	make_arr_t(k,x) {const b="item",c="arr"; return {a: "/di/a/k/l/m/z",k: b,l: c,m: k,z: [x]};}
 	//#endregion
 	//#region save
@@ -2641,7 +2639,7 @@ class BaseService extends ServiceWithMembers
 	/** @template {number} T @param {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").T_PrimitiveBox<T>} */
 	make_prim_num_t(x) {return {a: this.get_KZ("k"),k: this.get_primitive_tag(x),z: [x]};}
 	//#endregion
-	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?import("../support_0_mod/T_Split.mod.js").T_Split<X1,string extends S?",":S>:never} */
+	/** @public @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {X extends infer X1?import("../yt_json_types/stu/group_T.js").T_Split<X1,string extends S?",":S>:never} */
 	split_str(x,s=as(","))
 	{
 		if(!x) {debugger;}
@@ -2887,11 +2885,11 @@ class BaseService extends ServiceWithMembers
 	/** @template {string} T_CF @arg {T_CF} cf @arg {(this:this,cf:T_CF,x:T)=>U} f @template T @arg {import("../yt_json_types/stu/group_T.js").Some<T>} m @template U @returns {import("../yt_json_types/stu/group_T.js").Some<U|null>} */
 	mt_cf(m,cf,f) {return this.mt(m,x => this.t_cf(cf,x,f));}
 	//#endregion
-	/** @private @template T @template {T} U @arg {T} a @arg {NoInfer<U>} b */
+	/** @private @template T @template {T} U @arg {T} a @arg {import("../yt_json_types/n/NoInfer.js").NoInfer<U>} b */
 	_cq_no_infer(a,b) {if(a!==b) debugger;}
 	/** @public @template T @template {T} U @arg {T} a @arg {U} b */
 	_cq_infer(a,b) {if(a!==b) debugger;}
-	/** @public @type {<T,U extends T>(a:T,b:NoInfer<U>)=>void} */
+	/** @public @type {<T,U extends T>(a:T,b:import("../yt_json_types/n/NoInfer.js").NoInfer<U>)=>void} */
 	cq=this._cq_no_infer;
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
@@ -3049,7 +3047,7 @@ class YtHandlers extends BaseService
 			["videoRenderer",false],
 		]);
 	}
-	/** @api @public @arg {FetchJsonParseArgs} target_args  */
+	/** @api @public @arg {import("../support_2/FetchJsonParseArgs.js").FetchJsonParseArgs} target_args  */
 	on_handle_api(target_args)
 	{
 		const {request,response,parsed_obj}=target_args;
@@ -3482,7 +3480,7 @@ class ModifyEnv extends BaseService
 	modify_global_env()
 	{
 		let handle_types=this.x.get("handle_types");
-		/** @private @arg {FetchInjectInputArgs} input @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
+		/** @private @arg {import("../support_2/FetchInjectInputArgs.js").FetchInjectInputArgs} input @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 		function handle_json_parse({request,options},onfulfilled,on_rejected,response_text)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
@@ -3496,14 +3494,14 @@ class ModifyEnv extends BaseService
 			}
 			return ret;
 		}
-		/** @private @arg {FetchInjectInputArgs} input @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
+		/** @private @arg {import("../support_2/FetchInjectInputArgs.js").FetchInjectInputArgs} input @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
 		function bind_promise_handler(input,onfulfilled,onrejected)
 		{
 			if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 			let ret=handle_json_parse.bind(null,input,onfulfilled,onrejected);
 			return ret;
 		}
-		/** @private @arg {{input: FetchInjectInputArgs}} input_args @arg {{result:Promise<any>}} result @return {Promise<any>} */
+		/** @private @arg {{input: import("../support_2/FetchInjectInputArgs.js").FetchInjectInputArgs}} input_args @arg {{result:Promise<any>}} result @return {Promise<any>} */
 		function handle_fetch_response_2({input},result)
 		{
 			return {
@@ -3751,7 +3749,7 @@ class ParentWalker
 }
 class JsonReplacerState
 {
-	/** @constructor @public @arg {D_JsonReplacerArgs} args */
+	/** @constructor @public @arg {import("../yt_json_types/D_JsonReplacerArgs.js").D_JsonReplacerArgs} args */
 	constructor(args)
 	{
 		this.object_count=0;

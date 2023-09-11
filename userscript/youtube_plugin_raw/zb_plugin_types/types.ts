@@ -12,6 +12,7 @@ export type ServiceResolverBox<T>={
 	listeners: (() => void)[];
 };
 export type ServiceResolverValue=ServiceResolver<ServiceLoader,ServiceOptions>;
+export type ServiceResolverValueInBox=ServiceResolverBox<ServiceResolverValue>;
 export type MakeImportPath1<T>=
 	T extends `./DebugApi_raw/${infer BaseName1}`
 	? `../DebugApi_raw/${BaseName1}`
