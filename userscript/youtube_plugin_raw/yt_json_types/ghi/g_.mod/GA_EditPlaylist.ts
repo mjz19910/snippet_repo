@@ -1,1 +1,0 @@
-type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;

@@ -461,3 +461,4 @@ export type EY_TranscriptTrackSelection={transcriptTrackSelectionEntity: DS_EY_T
 export type S_EY_TranscriptSearchBox={transcriptSearchBoxStateEntity: DS_EY_TranscriptSearchBox;};
 //#endregion
 
+export type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;
