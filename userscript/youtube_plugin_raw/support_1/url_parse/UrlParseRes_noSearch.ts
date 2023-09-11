@@ -1,4 +1,4 @@
-type UrlParseRes_noSearch<
+export type UrlParseRes_noSearch<
 	T extends string,
 	Host extends string,
 	Protocol extends string,

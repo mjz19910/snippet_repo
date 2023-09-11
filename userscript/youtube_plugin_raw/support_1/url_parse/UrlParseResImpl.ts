@@ -1,4 +1,4 @@
-type UrlParseResImpl<
+export type UrlParseResImpl<
 	T extends string,
 	Host extends string,
 	Protocol extends string,

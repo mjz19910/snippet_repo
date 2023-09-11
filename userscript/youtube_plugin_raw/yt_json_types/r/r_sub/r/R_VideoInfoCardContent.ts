@@ -11,4 +11,3 @@ export type D_VideoInfoCardContent={
 	action: E_Watch;
 	trackingParams: string;
 };
-export type R_VideoInfoCardContent={videoInfoCardContentRenderer: D_VideoInfoCardContent;};

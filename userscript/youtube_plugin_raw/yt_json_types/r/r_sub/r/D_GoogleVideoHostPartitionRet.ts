@@ -1,3 +1,4 @@
+import {D_GoogleVideoHostPartition,G_GV_0,G_GV_1} from "../../../d/group_D.js";
 import {D_GoogleVideoPathname} from "./D_GoogleVideoPathname";
 
 export type D_GoogleVideoHostPartitionRet<T extends D_GoogleVideoPathname>={
