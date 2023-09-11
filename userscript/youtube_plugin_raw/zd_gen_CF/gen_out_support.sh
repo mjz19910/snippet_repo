@@ -63,12 +63,12 @@ function gen_code_v1 {
 		echo "--- [tmp_out.txt] $i ---"
 		tail "$TMP_DIR/tmp_out.txt"
 		if grep -q "n:" "$TMP_DIR/tmp_out.txt"; then
-			generate_typescript_code_unique
+			generate_typescript_code_unique >"$TMP_DIR/tmp.ts"
 			cp "$TMP_DIR/tmp.ts" "generated/tmp.ts"
 			tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 			grep "|{n:" "$TMP_DIR/tmp.ts" | sort -u >"$TMP_DIR/tmp_partial.ts"
 		else
-			generate_typescript_code_unique
+			generate_typescript_code_unique >"$TMP_DIR/tmp.ts"
 			cp "$TMP_DIR/tmp.ts" "generated/tmp.ts"
 			cp "$TMP_DIR/tmp.ts" "generated/out.ts"
 			grep "|{n:" "$TMP_DIR/tmp.ts" | sort -u >"$TMP_DIR/tmp_partial_end.ts"
@@ -77,14 +77,20 @@ function gen_code_v1 {
 	done
 }
 
+append_imports_tmp_js() {
+	echo 'import {CF_D_CaseGen,CF_D_ChipCloudChip_Omit,CF_D_CustomEmoji,CF_D_GuideEntry,CF_D_Link,CF_D_Menu_Omit,CF_D_Params,CF_D_Playlist_Omit,CF_D_STR,CF_D_Video_Handle,CF_GE_ResponseReceived,CF_L_TP_Params,CF_M_HD,CF_M_k,CF_M_s,CF_M_w,CF_M_wn,CF_M_y,CF_P_EntityKey,CF_P_ParamParse,CF_RS_Page_Browse,CF_RS_Page_Type1,CF_TA_OpenPopup,CF_TA_Page,CF_TD_ItemSection,CF_TD_Params,CF_TE_Endpoint_2,CF_TE_Endpoint_3,CF_TE_Endpoint_Opt_3,CF_TE_TrackedObj_2,CF_TR_MultiPageMenu,CF_T_Attachment,CF_T_Commands,CF_T_GM,CF_T_Icon,CF_T_Icon_Any,CF_T_Items,CF_T_Items_TP,CF_T_OpenPopup_Dropdown,CF_T_SE_Signal,CF_T_Signal,CF_T_WCM,CF_T_WCM_Unpack,CF_add_string_to_map,CF_onMissingIcon,CF_parse_identifier} from "../../yt_json_types/abc/group_C.js";\n\n'
+}
+
 generate_typescript_code_unique() {
-	echo "export namespace Gen {\n\texport type CF_Generated=" >"$TMP_DIR/tmp.ts"
+	append_imports_tmp_js
+	echo "export namespace Gen {\n\texport type CF_Generated=" >>"$TMP_DIR/tmp.ts"
 	cat "$TMP_DIR/tmp_partial.ts" "$TMP_DIR/tmp_out.txt" | sort -u >>"$TMP_DIR/tmp.ts"
 	echo "\t\t;" >>"$TMP_DIR/tmp.ts"
 	echo "}" >>"$TMP_DIR/tmp.ts"
 }
 
 generate_typescript_code_unique_final() {
+	append_imports_tmp_js
 	echo "export namespace Gen {\n\texport type CF_Generated="
 	cat "$TMP_DIR/tmp_partial.ts" "$TMP_DIR/tmp_out.txt" | sort -u
 	echo "\t\t;"
@@ -92,6 +98,7 @@ generate_typescript_code_unique_final() {
 }
 
 generate_typescript_code_force_valid() {
+	append_imports_tmp_js
 	echo "export namespace Gen {\n\texport type CF_Generated="
 	echo "\n\t\t|never"
 	cat "$TMP_DIR/tmp_partial.ts"
