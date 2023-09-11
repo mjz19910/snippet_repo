@@ -488,3 +488,7 @@ export type RC_WR_ContextExtension={
 };
 //#endregion
 //#endregion
+
+//#region group_R
+export type R_AdFeedback={adFeedbackRenderer: D_AdFeedback;};
+//#endregion

@@ -3163,3 +3163,56 @@ export type D_SkipAd={
 	trackingParams: string;
 	skipOffsetMilliseconds: 5000;
 };
+
+export type D_AdFeedback={
+	title: G_Text;
+	confirmLabel: G_Text;
+	cancelLabel: G_Text;
+	reasons: D_ReasonItem[];
+	completionMessage: G_Text;
+	trackingParams: string;
+	impressionEndpoint: E_MuteAd;
+};
+export type D_SimpleAdBadge={
+	text: T_MaybeTemplatedText<"Ad 1 of 2">;
+	trackingParams: string;
+};
+export type D_Pings={
+	impressionPings: T_BaseUrl<`https://www.youtube.com/pagead/adview?${string}`>[];
+	errorPings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	mutePings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	unmutePings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	pausePings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	rewindPings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	resumePings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	skipPings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	closePings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	progressPings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	fullscreenPings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	activeViewViewablePings: T_BaseUrl<`https://www.youtube.com/pcs/activeview?${string}`>[];
+	endFullscreenPings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	activeViewMeasurablePings: T_BaseUrl<`https://www.youtube.com/pcs/activeview?${string}`>[];
+	abandonPings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	activeViewFullyViewableAudibleHalfDurationPings: T_BaseUrl<`https://www.youtube.com/pcs/activeview?${string}`>[];
+	completePings: T_BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	activeViewTracking: D_TrafficType|D_TrafficType;
+};
+export type D_FlyoutCta={
+	image: D_TrackedThumbnail2;
+	headline: T_MaybeTemplatedText<string>;
+	description: D_TrackedText;
+	actionButton: R_Button;
+	startMs: 1;
+	trackingParams: string;
+};
+export type D_InstreamAdPlayerOverlay={
+	skipOrPreviewRenderer: R_SkipAd;
+	trackingParams: string;
+	visitAdvertiserRenderer: R_Button;
+	adBadgeRenderer: R_SimpleAdBadge;
+	adDurationRemaining: R_AdDurationRemaining;
+	adInfoRenderer: R_AdHoverTextButton;
+	flyoutCtaRenderer: R_FlyoutCta;
+	adLayoutLoggingData: D_SerializedAdServingDataEntry;
+	elementId: string;
+};

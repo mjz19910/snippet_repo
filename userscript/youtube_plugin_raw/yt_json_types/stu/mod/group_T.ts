@@ -1,3 +1,15 @@
+import {T_Split} from "../../../support_0_mod/T_Split.mod.js";
+import {YtPageTypeEnum} from "../../../support_2/YtPageTypeEnum.js";
+import {T_D32} from "../../_rtv_wrong/T_Data.js";
+import {TA_Continuation} from "../../abc/A.js";
+import {B_VEMap} from "../../abc/B.js";
+import {D_RootVisualElementType,D_Omit_Compact_Player,D_Omit_Compact_Video,D_Accessibility} from "../../d/group_D/D.js";
+import {D_TargetIdUuid,DU_EndpointKey} from "../../d/mod_D/DU_T/DU.js";
+import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions} from "../../ghi/_group.mod/G.js";
+import {D_FormatItem_SignatureCipher_SP} from "../../ghi/_group.mod/GU.js";
+import {KM_TrackingObj} from "../../k/KM.js";
+import {R_Comment,R_ContinuationItem,R_RichItem,R_CommentThread,R_GuideEntryData,R_RelatedChipCloud,RC_ResponseContext} from "../../r/R.js";
+
 //#region GetNumKey
 export type T_GetKeyMap<T,U extends keyof T,KM>=Extract<KM[Extract<keyof KM,U>],string>|T_MakeNumFieldFmt<T,U,Extract<U,number>,keyof KM,T_D32<number>|undefined>;
 export type T_Extract_D32_Keys<T,U extends keyof T,Y extends number,L>=T[U] extends L? Y:never;
@@ -307,4 +319,10 @@ export type Map_UriComponentEncode={
 export type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
+};
+
+export type T_MaybeTemplatedText<T>={
+	text: T;
+	isTemplated: false;
+	trackingParams: string;
 };

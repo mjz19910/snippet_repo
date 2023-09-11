@@ -1,3 +1,8 @@
+import {T_Split} from "../../support_0_mod/T_Split.mod.js";
+import {Decay} from "../../support_1/parse_url/Decay.js";
+import {D_UrlFormat,D_CompactVideo} from "../d/group_D/D.js";
+import {T_DistributedKeyof,T_SplitOnce} from "../stu/mod/group_T.js";
+
 namespace NS_DP_Parse {
 	type GA_ParseUrlStr_1=[T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1]];
 	export type GA_ParseUrlStr_2=[
@@ -48,7 +53,7 @@ namespace NS_NumRange {
 		`${MR2d}`,
 	];
 }
-namespace NS_UnionToPartial {
+export namespace NS_UnionToPartial {
 	type ExtractValueFromUnion<T,U extends keyof T>=Extract<T,Record<U,any>>[U];
 	type ExtractUnionCommon<T>={[U in T_DistributedKeyof<T>]: ExtractValueFromUnion<T,U>;};
 	type UnionGetPartialPart<T>=Partial<Omit<ExtractUnionCommon<T>,keyof T>>;
