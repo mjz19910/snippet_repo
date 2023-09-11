@@ -1,11 +1,15 @@
 import {T_Split} from "../../../support_0_mod/T_Split.mod.js";
+import {A_WatchNextContinuation,A_SetActivePanelItem,A_ChangeEngagementPanelVisibility} from "../../abc/A.js";
+import {B_Hack,B_TagObj,B_HrefUrl,B_VEMap} from "../../abc/B.js";
 import {E_VE37414_ReelWatch,E_VE3611,E_Search,E_VE5754,E_VE6827,E_VE11487,E_VE42352,E_VE96368,E_VE3854,E_VE23462} from "../../e/GR_E_VE.js";
-import {G_AccountItemSection,G_AdPlacementRendererItem,G_BrowseFeedContent,G_CardList_StyleType,G_ChannelSwitcherContent,G_EngagementPanelMenu,G_GuideSectionItem,G_GuideSubscriptionsSectionItem,G_PlaylistPanel_Item,G_PlaylistSidebarItem,G_ProfileColumnItem,G_RendererContentItem,G_RichGridContent,G_RichItemContent,G_RichSection,G_SI_DB_EngagementPanel,G_SecondaryContents,G_SettingItemIdEnum,G_SettingsOptionItem,G_StructuredDescriptionContentItem,G_Text,G_ThumbnailOverlayItem,G_TopbarButtonItem,G_WatchNextEndScreenItem,G_YtWatchUrl} from "../../ghi/_group.mod/G.js";
-import {GU_RadioShareUrl,GU_CaptionTrackItem_BaseUrl,GU_InitPlaybackUrl,GU_GoodPut_ProbeUrl} from "../../ghi/_group.mod/GU.js";
+import {G_AccountItemSection,G_AccountPageSettingsSections,G_AdPlacementRendererItem,G_BrowseFeedContent,G_CardList_StyleType,G_ChannelSwitcherContent,G_EngagementPanelMenu,G_GuideSectionItem,G_GuideSubscriptionsSectionItem,G_PlaylistPanel_Item,G_PlaylistSidebarItem,G_ProfileColumnItem,G_RendererContentItem,G_RichGridContent,G_RichItemContent,G_RichSection,G_SI_DB_EngagementPanel,G_SecondaryContents,G_SettingItemIdEnum,G_SettingsOptionItem,G_StructuredDescriptionContentItem,G_Text,G_ThumbnailOverlayItem,G_TopbarButtonItem,G_WatchNextEndScreenItem,G_YtWatchUrl} from "../../ghi/_group.mod/G.js";
+import {GM_VE3854} from "../../ghi/_group.mod/GM.js";
+import {GU_RadioShareUrl,GU_CaptionTrackItem_BaseUrl,GU_InitPlaybackUrl,GU_GoodPut_ProbeUrl,GU_ExternalUrl,GU_VE11487_Url,GU_VE3611_Url,GU_VE6827_Url,GU_YTExternalUrl} from "../../ghi/_group.mod/GU.js";
+import {MP_LoadingNotificationMenu,MP_LoadingAccountMenu,A_FancyDismissibleDialog,R_TopbarMenu,TA_OpenPopup_Empty} from "../../nop_q/Popup.js";
 import {R_CompactLink,R_TextInputFormField,R_Dropdown,R_SectionList,R_TranscriptSegmentList,R_TranscriptFooter,R_SampledThumbnailColor,R_Menu,R_PdgCommentPreview,R_PdgColorSlider,R_PdgCommentOption,R_RichItem,R_CompactVideo,R_ExpandableSurveyResponse,R_ProfilePageHeaderInformationViewModel,R_ProfilePageHeaderButtonRowViewModel,R_ThumbnailOverlayTimeStatus,R_MovingThumbnail,R_ThumbnailOverlayToggleButton,R_RatingSurvey,R_ProfileColumnStatsEntry,R_GuideEntry,R_AdHoverTextButton,R_ChannelHeaderLinks,R_SubscribeButton,R_Card,R_InfoCardIcon,R_ChipCloudChip,R_ClipCreationTextInput,R_ClipCreationScrubber,R_ClipAdState,R_EmojiPicker,R_MultiMarkersPlayerBar,R_TopbarLogo,R_FusionSearchbox,R_HotkeyDialog,R_WebSearchboxConfig,R_PlaylistVideoThumbnail,R_GhostGrid,R_ToggleButton,R_ChildVideo,R_FulfilledLayout,R_VideoMastheadAdV3,R_GuideEntryData,R_LiveChatAuthorBadge,R_AdPlacementConfig,R_PlaylistAddToOption,R_AddToPlaylistCreate,R_InfoRow,R_ChannelSwitcherHeader,R_ClipCreation,R_ContinuationItem,R_Comment,R_CommentsEntryPointTeaser,R_CommentSimplebox,R_SortFilterSubMenu,R_CommentsHeader,R_PrivacyDropdownItem,R_TemplateUpdate,R_ResourceStatusInResponseCheck,R_EndscreenElement,R_Heatmap,R_MacroMarkersListItem,R_RichListHeader,R_HotkeyDialogSection,R_HotkeyDialogSectionOption,R_PromotedSparklesWeb,R_DisplayAd,R_AccountSectionList,R_MerchandiseItem,R_DescriptionChaptersItem,R_HeatSeekerItem,R_PlaylistPanel,R_MusicResponsiveListItem,R_MusicShelfDivider,R_PdgBuyFlowHeader,R_SuperVodBuyFlowContent,R_PdgCommentChip,R_WatchNextEndScreen,R_PlayerOverlayVideoDetails,R_DecoratedPlayerBar,R_PlayerOverlayAutoplay,R_AutoplaySwitchButton,R_HeroPlaylistThumbnail,R_CinematicContainer,R_PlaylistByline,R_VideoOwner,R_ProductListItem,R_ProfilePageHeaderTitleViewModel,R_ProfilePageHeaderMetadataViewModel,R_ProfilePageHeaderThumbnailViewModel,R_RatingSurveyOption,R_ReelItem,R_FeedFilterChipBar,R_AdSlot,R_SubFeedOption,R_SearchResultsTab,R_TranscriptSearchPanel,R_TranscriptSegment,R_Factoid,R_CarouselLockup,R_TopicLink,RA_Notification,R_Tab,R_Chapter,R_RichMetadata,R_ChipCloud,R_RichMetadataRow,R_MetadataRow,ToKeyValue,RC_CsiVarMap,RC_CsiServiceC,RC_CsiServiceCVer,R_VideoViewCount} from "../../r/R.js";
 import {SI_DB_EngagementPanel_ClipCreate,SI_DB_EngagementPanel_MacroMarkers_AutoChapters,SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters,SI_VE124975_EngagementPanel,SI_VE126250_EngagementPanel,SI_VE139722_EngagementPanel,SI_VE76278_EngagementPanel,SI_VE99999_EngagementPanel} from "../../stu/mod/group_SI.js";
-import {T_EnumStr,T_TargetIdStr,TD_Label,T_SE_Signal,T_Signal,T_StyleType,TD_GuideEntry_Simple,T_SplitOnce,T_UrlWrappedValue,T_Setting_AutoNavForDesktop,T_ElementId,TP_Color,TR_MultiPageMenuSection,TM_Visibility,T_OmitKey,T_ExtractIconType,T_Types} from "../../stu/mod/group_T.js";
-import {D_TargetIdUuid,D_UserIdStr,D_ApiStatsAdsStr,D_UUIDString,G_SettingsEndpointPages,DU_TargetId_ShoppingPanel_EntryPoint,DU_UrlTypeWithPageType,DU_VideoId} from "../mod_D/DU_T/DU.js";
+import {T_EnumStr,T_TargetIdStr,TD_Label,T_SE_Signal,T_Signal,T_StyleType,TD_GuideEntry_Simple,T_SplitOnce,T_UrlWrappedValue,T_Setting_AutoNavForDesktop,T_ElementId,TP_Color,TR_MultiPageMenuSection,TM_Visibility,T_OmitKey,T_ExtractIconType,T_Types,T_Actions,T_BaseUrl,T_DistributedKeyof,T_Icon} from "../../stu/mod/group_T.js";
+import {D_TargetIdUuid,D_UserIdStr,D_ApiStatsAdsStr,D_UUIDString,G_SettingsEndpointPages,DU_TargetId_ShoppingPanel_EntryPoint,DU_UrlTypeWithPageType,DU_VideoId,D_PlaylistUrlParams,D_ResultsPageUrl,S_YtUrlHttp_Watch} from "../mod_D/DU_T/DU.js";
 import {DU_GuideEntry_Id,DU_Playlist_Id,DU_Playlist_Radio_Id,DU_StartRadio,T_FeedEntry,T_IdTemplate} from "../mod_D/DU_T/DU_TemplateString.js";
 import {R_Button,D_Button} from "../mod_D/D_T/D_Button.js";
 
@@ -3081,3 +3085,81 @@ export type E_UpdatedMetadata={
 };
 export type D_VideoId={videoId: DU_VideoId;};
 //#endregion
+
+//#region D_UrlFormat
+export type D_UrlFormat=
+	|"/channel_switcher"
+	|"/upload"
+	|"android-app://com.google.android.youtube/http/youtube.com/premium"
+	|`/@${string}`
+	|`/@${string}${ChannelSubUrlFormat}`
+	|`/account_${G_AccountPageSettingsSections}`
+	|`/account`
+	|`/api/stats/ads?${string}`
+	|`/channel/UC${string}`
+	|`/embed/${string}`
+	|`/feed/${D_BrowseEndpointPages}`
+	|`/feed/trending?${string}`
+	|`/gaming`
+	|`/playlist?${D_PlaylistUrlParams}`
+	|`/shorts/${string}`
+	|`/v/${string}?version=3&autohide=1`
+	|`/v/${string}`
+	|`/watch?${string}`
+	|`https://www.youtube.com/pagead/adview?${string}`
+	|`https://www.youtube.com/watch?${string}`
+	|`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`
+	|D_ApiPathFormat_1
+	|NonNullable<D_MicroformatEmbed["flashSecureUrl"]>
+	|NonNullable<D_MicroformatEmbed["flashUrl"]>
+	|D_MicroformatEmbed["iframeUrl"]
+	|D_PlayerMicroformat["ownerProfileUrl"]
+	|D_ResultsPageUrl
+	|DE_VE83769_Url_1["url"]
+	|GM_VE3854["url"]
+	|GU_ExternalUrl
+	|GU_GoodPut_ProbeUrl
+	|GU_VE3611_Url
+	|GU_VE6827_Url
+	|GU_VE6827_Url
+	|GU_VE11487_Url
+	|GU_YTExternalUrl
+	|NonNullable<D_AdaptiveFormatItem["url"]>
+	|NonNullable<D_Channel_MD["channelConversionUrl"]>
+	|NonNullable<D_CommentsHeader["unicodeEmojisUrl"]>
+	|NonNullable<D_FormatItem["url"]>
+	|S_YtUrlHttp_Watch
+	;
+;
+//#endregion
+//#region group_D
+export type D_TrafficType={trafficType: "ACTIVE_VIEW_TRAFFIC_TYPE_VIDEO";};
+export type D_TrackedThumbnail2={
+	thumbnail: D_Thumbnail;
+	trackingParams: string;
+};
+export type D_TrackedText={
+	text: string;
+	trackingParams: string;
+};
+export type D_TemplatedAdText={
+	text: "{TIME_REMAINING}";
+	isTemplated: true;
+	trackingParams: string;
+};
+export type D_SodarExtensionData={
+	siub: "56-y-0RG";
+	bgub: string;
+	scs: string;
+	bgp: string;
+};
+export type D_SkipButton={
+	message: T_MaybeTemplatedText<"Skip Ads">;
+	trackingParams: string;
+};
+export type D_SkipAd={
+	preskipRenderer: R_AdPreview;
+	skippableRenderer: R_SkipButton;
+	trackingParams: string;
+	skipOffsetMilliseconds: 5000;
+};

@@ -1,5 +1,5 @@
 //#region Long Objects
-type DE_Url=
+export type DE_Url=
 	|DE_U_InternalUrl
 	|DE_U_RedirectUrl
 	|DE_U_ExternalUrl
@@ -7,7 +7,7 @@ type DE_Url=
 	|DE_U_ExternalUrl_GRU_Open
 	;
 ;
-type DE_VE3832_Watch={
+export type DE_VE3832_Watch={
 	videoId: string;
 	index?: number;
 	playlistSetVideoId?: string;
@@ -36,7 +36,7 @@ type DE_VE3832_Watch={
 	nofollow?: boolean;
 	playerExtraUrlParams?: [G_ExtraUrlParamItem];
 }&D_PlaylistId);
-type DE_ReelWatch={
+export type DE_ReelWatch={
 	videoId?: string;
 	playerParams: string;
 	thumbnail?: D_Thumbnail;
@@ -47,7 +47,7 @@ type DE_ReelWatch={
 	inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
 	sequenceParams?: string;
 };
-type DE_VE83769_Url_1$d$ad_url2={
+export type DE_VE83769_Url_1$d$ad_url2={
 	utm_term: "";
 	utm_campaign: "DISPLAY campaign for \"web development\" landing page";
 	utm_source: "adwords";
@@ -64,7 +64,7 @@ type DE_VE83769_Url_1$d$ad_url2={
 	hsa_ver: "3";
 	gclid: string;
 };
-type DE_VE83769_Url_Shape={
+export type DE_VE83769_Url_Shape={
 	sa: "l";
 	ai: string;
 	ae: "1";
@@ -75,7 +75,7 @@ type DE_VE83769_Url_Shape={
 	rf: "3";
 	adurl: `https://plantagreenhouses.ca/?gclid=${string}`|`https://www.newdawndevelopments.com/service/custom-homes?gclid=${string}&hsa_ver=3&hsa_net=adwords&hsa_mt=&hsa_kw=&hsa_tgt=&hsa_src=d&hsa_ad=${number}&hsa_grp=${number}&hsa_cam=${number}&hsa_acc=${number}&utm_medium=ppc&utm_source=adwords&utm_campaign=DISPLAY+campaign+for+%22web+development%22+landing+page&utm_term=`;
 };
-type DE_VE83769_Url_1={
+export type DE_VE83769_Url_1={
 	url: `https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`;
 	target: "TARGET_NEW_WINDOW";
 };

@@ -1,5 +1,5 @@
 //#region String Union
-type SU_SignalStr=
+export type SU_SignalStr=
 	|"ENABLE_CHROME_NOTIFICATIONS"
 	|"HELP"
 	|"HISTORY_BACK"

@@ -1,16 +1,16 @@
 //#region Common data
-type DC_Params={params: string;};
-type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
+export type DC_Params={params: string;};
+export type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 //#endregion
 //#region ContinuationData
-type DC_ChangeKeyedMarkersVisibility={key: "HEATSEEKER"; isVisible: true;};
-type DC_RepeatChapter={
+export type DC_ChangeKeyedMarkersVisibility={key: "HEATSEEKER"; isVisible: true;};
+export type DC_RepeatChapter={
 	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT"|"REPEAT_CHAPTER_TYPE_DISABLE_REPEAT";
 	startTimeMs?: `${number}`;
 	endTimeMs?: `${number}`;
 	repeatStateEntityKey?: string;
 };
-type DC_ReloadContinuationItems={
+export type DC_ReloadContinuationItems={
 	targetId: SI_VE76278_EngagementPanel["targetId"];
 	continuationItems: R_CommentThread[];
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
@@ -42,17 +42,17 @@ type DC_ReloadContinuationItems={
 	continuationItems: R_CommentsHeader[];
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 };
-type DC_AdsControlFlowOpportunityReceived={
+export type DC_AdsControlFlowOpportunityReceived={
 	opportunityType: DE_OpportunityType;
 	adSlotAndLayoutMetadata?: D_AdSlotAndLayoutItem[];
 	isInitialLoad: boolean;
 	enablePacfLoggingWeb: boolean;
 };
-type DC_Continuation_Shape={
+export type DC_Continuation_Shape={
 	token: string;
 	request: DC_Continuation["request"];
 };
-type DC_Continuation=
+export type DC_Continuation=
 	|{
 		token: string;
 		request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
@@ -78,11 +78,11 @@ type DC_Continuation=
 	;
 ;
 //#region DC_
-type DC_EngagementPanelHeaderShowNavigationButton={
+export type DC_EngagementPanelHeaderShowNavigationButton={
 	targetId: "engagement-panel-macro-markers-description-chapters";
 	navigationButton: R_Button;
 };
-type DC_Continuation_Omit_Return<T>=
+export type DC_Continuation_Omit_Return<T>=
 	Omit<T,"token"|"request"> extends infer y?
 	|["BROWSE",y]
 	|["REEL_WATCH_SEQUENCE",y]
@@ -91,13 +91,13 @@ type DC_Continuation_Omit_Return<T>=
 	never
 	;
 ;
-type DC_Invalidation={
+export type DC_Invalidation={
 	invalidationId: D_InvalidationId;
 	timeoutMs: 10000;
 	continuation: string;
 	clickTrackingParams?: string;
 };
-type DC_LiveChat={
+export type DC_LiveChat={
 	continuations: G_LiveChatContinuationItem[];
 	actions?: G_RA_LiveChatContinuationActions[];
 	actionPanel?: R_LiveChatMessageInput;
@@ -111,7 +111,7 @@ type DC_LiveChat={
 	clientMessages?: D_ClientMessages;
 	viewerName?: string;
 };
-type DC_AddToPlaylist=
+export type DC_AddToPlaylist=
 	|{
 		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
 		onCreateListCommand: E_CreatePlaylistService;
@@ -129,3 +129,10 @@ type DC_AddToPlaylist=
 	}
 	;
 ;
+//#region group_D
+export type DC_GetDownload={
+	videoId: string;
+	params: "CAE%3D";
+	offlineabilityEntityKey: string;
+};
+//#endregion
