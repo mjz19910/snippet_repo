@@ -24,8 +24,19 @@ export type DE_VE11487=DE_VE<"SPunlimited">;
 export type DE_VE23462=DE_VE<GU_VE23462_Id>;
 export type DE_VE42352=DE_VE<"FEdownloads">;
 export type DE_VE96368=DE_VE<"FEsubscriptions">;
+import {A_ReplaceEnclosing,A_HideEnclosing,GA_Playlist,A_UndoFeedback} from "../abc/A.js";
+import {B_Hack} from "../abc/B.js";
+import {C_FilterChipTransform,C_MusicLibraryStatusUpdate} from "../abc/C.js";
+import {A_UpdateCommentVote} from "../e/E.js";
+import {G_AdditionalDataItem,G_Text,G_EY_Entity,G_ExtraUrlParamItem} from "../ghi/_group.mod/G.js";
+import {GU_VE6827_Id,GU_VE23462_Id} from "../ghi/_group.mod/GU.js";
+import {A_ShareEntityService} from "../nop_q/Popup.js";
+import {R_AdFeedback,R_VssLoggingContext,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_WatchEndpointMusicConfig,R_ReelPlayerOverlay} from "../r/R.js";
 //#endregion
-import {T_EnumStr} from "../../stu/mod/group_T.js";
+import {T_EnumStr, T_MutType, T_Signal} from "../stu/mod/group_T.js";
+import {D_HideEnclosingContainer,D_LikeApi,D_PlaylistId,D_Thumbnail} from "./group_D.js";
+import {DC_Params} from "./group_DC.js";
+import {T_IdTemplate,D_UserIdStr,DE_U_InternalUrl,DE_U_RedirectUrl,DE_U_ExternalUrl,DE_U_ChannelUrl} from "./mod_D/DU_T/DU.js";
 
 //#region String Enum
 export type DE_AdPlacementKind=T_EnumStr<"AD_PLACEMENT_KIND","END"|"SELF_START"|"START"|"MILLISECONDS">;
@@ -43,20 +54,6 @@ export type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",
 	|"ACCOUNT"
 >;
 //#endregion
-import {A_ReplaceEnclosing,A_HideEnclosing,GA_Playlist,A_UndoFeedback} from "../../abc/A.js";
-import {B_Hack} from "../../abc/B.js";
-import {C_FilterChipTransform,C_MusicLibraryStatusUpdate} from "../../abc/C.js";
-import {A_UpdateCommentVote} from "../../e/E.js";
-import {G_AdditionalDataItem,G_Text,G_EY_Entity, G_ExtraUrlParamItem} from "../../ghi/_group.mod/G.js";
-import {A_ShareEntityService} from "../../nop_q/Popup.js";
-import {T_Signal,T_MutType} from "../../stu/mod/group_T.js";
-import {D_HideEnclosingContainer,D_LikeApi, D_PlaylistId, D_Thumbnail} from "./group_D.js";
-import {DE_U_ChannelUrl, DE_U_ExternalUrl, DE_U_InternalUrl, DE_U_RedirectUrl, D_UserIdStr} from "../mod_D/DU_T/DU.js";
-import {T_IdTemplate} from "../mod_D/DU_T/DU_TemplateString.js";
-import {GU_VE6827_Id,GU_VE23462_Id} from "../../ghi/_group.mod/GU.js";
-import {R_AdFeedback,R_VssLoggingContext,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_WatchEndpointMusicConfig,R_ReelPlayerOverlay} from "../../r/R.js";
-import {DC_Params} from "./group_DC.js";
-
 //#region Endpoint Data
 export type DE_AdditionalDatas={additionalDatas: G_AdditionalDataItem[];};
 export type DE_AddToPlaylistService={videoId: string;};
