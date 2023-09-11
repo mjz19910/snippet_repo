@@ -1,1 +1,0 @@
-type R_MultiPageMenuNotificationSection={multiPageMenuNotificationSectionRenderer: D_MultiPageMenuNotificationSection;};

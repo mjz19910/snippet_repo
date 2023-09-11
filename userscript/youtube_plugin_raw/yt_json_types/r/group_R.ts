@@ -1,6 +1,6 @@
 import {AD_Notification,AD_NotificationMulti,AD_ReelDismissal} from "../abc/AD.js";
 import {B_Hack} from "../abc/B.js";
-import {D_AboutThisAd,D_AccountItemSection,D_AccountLinkButton,D_ActionCompanionAd,D_AddToPlaylist,D_AddToPlaylistCreate,D_AdHoverTextButton,D_AdPlacement,D_AdPlacementConfig,D_AdSlot,D_AlertWithButton,D_AutoplaySwitchButton,D_BrowseEndpointContextMusicConfig,D_BrowseFeedActions,D_C4TabbedHeader,D_CardCollection,D_CarouselLockup,D_Channel_MD,D_ChannelHeaderLinks,D_ChannelOptions,D_ChannelSwitcherHeader,D_ChannelSwitcherPage,D_ChannelThumbnailWithLink,D_Chapter,D_CheckboxSurveyOption,D_ChildVideo,D_ChipCloud,D_ChipCloudChip,D_CinematicContainer,D_ClientForecastingAd,D_ClipAdState,D_ClipCreation,D_ClipCreationScrubber,D_ClipCreationTextInput,D_ClipSection,D_CommentsEntryPointHeader,D_CommentsEntryPointTeaser,D_CommentsHeader,D_CommentSimplebox,D_CommentThread,D_CommonConfig,D_CompactPlaylist,D_CompactRadio,D_CompactVideo,D_ConfirmDialog,D_ConnectedApp,D_ContinuationItem,D_CopyLink,D_DecoratedPlayerBar,D_DescriptionChapters,D_DesktopTopbar,D_DesktopWatchAds,D_DisplayAd,D_Dropdown_Privacy,D_ElementUpdate,D_Endscreen,D_EndScreenPlaylist,D_EndScreenVideo,D_EngagementPanelSectionList,D_EngagementPanelTitleHeader,D_ExpandableSurveyResponse,D_ExpandableTab,D_ExpandableVideoDescriptionBody,D_Factoid,D_FancyDismissibleDialog,D_FeedFilterChipBar,D_FeedNudge,D_FeedTabbedHeader,D_FusionSearchbox,D_GhostGrid,D_GuideCollapsibleEntry,D_GuideCollapsibleSectionEntry,D_GuideDownloadsEntry,D_GuideEntry,D_GuideEntryData,D_GuideSection,D_GuideSubscriptionsSection,D_Heatmap,D_HeatSeekerItemData,D_HeroPlaylistThumbnail,D_Hint,D_HorizontalCardList,D_HotkeyDialog,D_HotkeyDialogSection,D_HotkeyDialogSectionOption,D_InFeedAdLayout,D_TrackingParams,D_InfoRow,D_InlineSurvey,D_ItemSectionHeader,D_LinearAdSequence,D_LiveChatAuthorBadge,D_LiveChatPlaceholderItem,D_LiveChatTextMessage,D_LiveChatViewerEngagementMessage,D_MacroMarkersListItem,D_MerchandiseItem,D_MerchandiseShelf,D_MetadataRow,D_Microformat,D_MovingThumbnail,D_MultiMarkersPlayerBar,D_MusicCarouselShelf,D_MusicQueue,D_MusicShelf,D_MusicThumbnail,D_Notification,D_NotificationText,D_NotificationTopbarButton,D_PageIntroduction,D_PageTopAdLayout,D_PdgBuyFlow,D_PdgBuyFlowHeader,D_PdgColorSlider,D_PdgCommentOption,D_PdgCommentPreview,D_PlayerAnnotationsExpanded,D_PlayerAttestation,D_PlayerCaptionsTracklist,D_PlayerLiveStoryboardSpec,D_PlayerMicroformat,D_PlayerOverlay,D_PlayerOverlayAutoplay,D_PlayerOverlayVideoDetails,D_PlayerStoryboardSpec,D_Playlist_MD,D_PlaylistAddToOption,D_PlaylistByline,D_PlaylistHeader,D_PlaylistPanel,D_PlaylistPanelVideo,D_PlaylistSidebar,R_InlineForm,D_PlaylistSidebarSecondaryInfo,D_PlaylistVideoList,D_PlaylistVideoThumbnail,D_PrefetchHintConfig,D_PrivacyDropdownItem,D_ProductList,D_ProductListItem,D_ProfileColumn,D_ProfileColumnStats,D_ProfileColumnStatsEntry,D_ProfileColumnUserInfo,D_ProfilePageHeaderInformation,D_ProfilePageHeaderTitle,D_PromotedSparklesWeb,D_Radio,D_RadioButtonSurveyOption,D_RatingSurvey,D_RatingSurveyOption,D_ReelItem,D_ReelPlayerHeader,D_ReelShelf,D_RelatedChipCloud,D_ResourceStatusInResponseCheck,D_RichGrid,D_RichItem,D_RichListHeader,D_RichMetadataRow,D_RichSection,D_RichShelf,D_ThumbnailColor,D_SearchBox,D_SearchPyv,D_SearchResultsTab,D_SegmentedLikeDislikeButton,D_SettingsCheckbox,D_SettingsOptions,D_SettingsRadioOption,D_SettingsSidebar,D_SettingsSwitch,D_SimpleMenuHeader,D_SourcePivotHeader,D_StructuredDescriptionContent,D_SubFeedOption,D_SubFeedSelector,D_SubscriptionNotificationToggleButton,D_SuperVodBuyFlowContent,D_TabbedSearchResults,D_TemplateUpdate,D_TextInputFormField,D_ThumbnailOverlayBottomPanel,D_ThumbnailOverlayEndorsement,D_ThumbnailOverlayHoverText,D_ThumbnailOverlayLoadingPreview,D_ThumbnailOverlayNowPlaying,D_ThumbnailOverlayResumePlayback,D_ThumbnailOverlaySidePanel,D_ThumbnailOverlayTimeStatus,D_ThumbnailOverlayToggleButton,D_ToggleMenuServiceItem,D_TopbarLogo,D_TopbarMenuButton,D_TopicLink,D_Transcript,D_TranscriptFooter,D_TranscriptSearchPanel,D_TranscriptSegment,D_TranscriptSegmentList,D_TwoColumnBrowseResults,D_TwoColumnSearchResults,D_UnifiedSharePanel,D_VideoDescriptionHeader,D_VideoDescriptionMusicSection,D_VideoOwner,D_VideoQualityPromo,D_VideoViewCount,D_VoiceSearchDialog,D_VssLoggingContext,D_WatchEndpointMusicConfig,D_WatchNextEndScreen,D_WatchNextTabbedResults,D_WebSearchboxConfig,D_TokenJarDefaultExpirationSeconds,D_BrowseEndpointPages,DRC_CsiVarKV,D_YtConfig,D_WebPrefetch,D_AdBreakService,D_AdFeedback,D_InstreamVideoAd,D_Menu,D_Video,D_VideoPrimaryInfo} from "../d/group_D.js";
+import {D_AboutThisAd,D_AccountItemSection,D_AccountLinkButton,D_ActionCompanionAd,D_AddToPlaylist,D_AddToPlaylistCreate,D_AdHoverTextButton,D_AdPlacement,D_AdPlacementConfig,D_AdSlot,D_AlertWithButton,D_AutoplaySwitchButton,D_BrowseEndpointContextMusicConfig,D_BrowseFeedActions,D_C4TabbedHeader,D_CardCollection,D_CarouselLockup,D_Channel_MD,D_ChannelHeaderLinks,D_ChannelOptions,D_ChannelSwitcherHeader,D_ChannelSwitcherPage,D_ChannelThumbnailWithLink,D_Chapter,D_CheckboxSurveyOption,D_ChildVideo,D_ChipCloud,D_ChipCloudChip,D_CinematicContainer,D_ClientForecastingAd,D_ClipAdState,D_ClipCreation,D_ClipCreationScrubber,D_ClipCreationTextInput,D_ClipSection,D_CommentsEntryPointHeader,D_CommentsEntryPointTeaser,D_CommentsHeader,D_CommentSimplebox,D_CommentThread,D_CommonConfig,D_CompactPlaylist,D_CompactRadio,D_CompactVideo,D_ConfirmDialog,D_ConnectedApp,D_ContinuationItem,D_CopyLink,D_DecoratedPlayerBar,D_DescriptionChapters,D_DesktopTopbar,D_DesktopWatchAds,D_DisplayAd,D_Dropdown_Privacy,D_ElementUpdate,D_Endscreen,D_EndScreenPlaylist,D_EndScreenVideo,D_EngagementPanelSectionList,D_EngagementPanelTitleHeader,D_ExpandableSurveyResponse,D_ExpandableTab,D_ExpandableVideoDescriptionBody,D_Factoid,D_FancyDismissibleDialog,D_FeedFilterChipBar,D_FeedNudge,D_FeedTabbedHeader,D_FusionSearchbox,D_GhostGrid,D_GuideCollapsibleEntry,D_GuideCollapsibleSectionEntry,D_GuideDownloadsEntry,D_GuideEntry,D_GuideEntryData,D_GuideSection,D_GuideSubscriptionsSection,D_Heatmap,D_HeatSeekerItemData,D_HeroPlaylistThumbnail,D_Hint,D_HorizontalCardList,D_HotkeyDialog,D_HotkeyDialogSection,D_HotkeyDialogSectionOption,D_InFeedAdLayout,D_TrackingParams,D_InfoRow,D_InlineSurvey,D_ItemSectionHeader,D_LinearAdSequence,D_LiveChatAuthorBadge,D_LiveChatPlaceholderItem,D_LiveChatTextMessage,D_LiveChatViewerEngagementMessage,D_MacroMarkersListItem,D_MerchandiseItem,D_MerchandiseShelf,D_MetadataRow,D_Microformat,D_MovingThumbnail,D_MultiMarkersPlayerBar,D_MusicCarouselShelf,D_MusicQueue,D_MusicShelf,D_MusicThumbnail,D_Notification,D_NotificationText,D_NotificationTopbarButton,D_PageIntroduction,D_PageTopAdLayout,D_PdgBuyFlow,D_PdgBuyFlowHeader,D_PdgColorSlider,D_PdgCommentOption,D_PdgCommentPreview,D_PlayerAnnotationsExpanded,D_PlayerAttestation,D_PlayerCaptionsTracklist,D_PlayerLiveStoryboardSpec,D_PlayerMicroformat,D_PlayerOverlay,D_PlayerOverlayAutoplay,D_PlayerOverlayVideoDetails,D_PlayerStoryboardSpec,D_Playlist_MD,D_PlaylistAddToOption,D_PlaylistByline,D_PlaylistHeader,D_PlaylistPanel,D_PlaylistPanelVideo,D_PlaylistSidebar,R_InlineForm,D_PlaylistSidebarSecondaryInfo,D_PlaylistVideoList,D_PlaylistVideoThumbnail,D_PrefetchHintConfig,D_PrivacyDropdownItem,D_ProductList,D_ProductListItem,D_ProfileColumn,D_ProfileColumnStats,D_ProfileColumnStatsEntry,D_ProfileColumnUserInfo,D_ProfilePageHeaderInformation,D_ProfilePageHeaderTitle,D_PromotedSparklesWeb,D_Radio,D_RadioButtonSurveyOption,D_RatingSurvey,D_RatingSurveyOption,D_ReelItem,D_ReelPlayerHeader,D_ReelShelf,D_RelatedChipCloud,D_ResourceStatusInResponseCheck,D_RichGrid,D_RichItem,D_RichListHeader,D_RichMetadataRow,D_RichSection,D_RichShelf,D_ThumbnailColor,D_SearchBox,D_SearchPyv,D_SearchResultsTab,D_SegmentedLikeDislikeButton,D_SettingsCheckbox,D_SettingsOptions,D_SettingsRadioOption,D_SettingsSidebar,D_SettingsSwitch,D_SimpleMenuHeader,D_SourcePivotHeader,D_StructuredDescriptionContent,D_SubFeedOption,D_SubFeedSelector,D_SubscriptionNotificationToggleButton,D_SuperVodBuyFlowContent,D_TabbedSearchResults,D_TemplateUpdate,D_TextInputFormField,D_ThumbnailOverlayBottomPanel,D_ThumbnailOverlayEndorsement,D_ThumbnailOverlayHoverText,D_ThumbnailOverlayLoadingPreview,D_ThumbnailOverlayNowPlaying,D_ThumbnailOverlayResumePlayback,D_ThumbnailOverlaySidePanel,D_ThumbnailOverlayTimeStatus,D_ThumbnailOverlayToggleButton,D_ToggleMenuServiceItem,D_TopbarLogo,D_TopbarMenuButton,D_TopicLink,D_Transcript,D_TranscriptFooter,D_TranscriptSearchPanel,D_TranscriptSegment,D_TranscriptSegmentList,D_TwoColumnBrowseResults,D_TwoColumnSearchResults,D_UnifiedSharePanel,D_VideoDescriptionHeader,D_VideoDescriptionMusicSection,D_VideoOwner,D_VideoQualityPromo,D_VideoViewCount,D_VoiceSearchDialog,D_VssLoggingContext,D_WatchEndpointMusicConfig,D_WatchNextEndScreen,D_WatchNextTabbedResults,D_WebSearchboxConfig,D_TokenJarDefaultExpirationSeconds,D_BrowseEndpointPages,DRC_CsiVarKV,D_YtConfig,D_WebPrefetch,D_AdBreakService,D_AdFeedback,D_InstreamVideoAd,D_Menu,D_Video,D_VideoPrimaryInfo, D_MultiPageMenuNotificationSection, D_DropdownFormField} from "../d/group_D.js";
 import {DC_LiveChat} from "../d/group_DC.js";
 import {D_Button} from "../d/mod_D/D_T/D_Button.js";
 import {E_Watch} from "../e/E.js";
@@ -8,9 +8,146 @@ import {E_VE6827,E_VE96368,E_VE3854} from "../e/GR_E_VE.js";
 import {G_Text,G_ThumbnailOverlayItem,G_RS_Page_Playlist} from "../ghi/group_G.js";
 import {T_MapEntry,T_RidFormat} from "../stu/mod/group_T.js";
 import {D_AccountItem,D_AdActionInterstitial,D_AutomixPreviewVideo,D_BrowserMediaSessionRenderer,D_LiveChatItemList,D_LiveChatMessageInput,D_LiveChatParticipantsList,D_LiveChatTicker,D_MusicResponsiveListItem,D_MusicShelfDivider,D_ReportFormModal,D_VideoMastheadAdV3,DC_MusicShelf,DC_PlaylistPanel} from "../z/ZD_empty_obj.js";
-import {RS_Page_Browse,RS_Browse,RS_ChannelPage,RS_SearchPage} from "./RS.js";
+import {RS_Page_Browse,RS_Browse,RS_ChannelPage,RS_SearchPage, D_PaidContentOverlay} from "./RS.js";
 import {RD_MenuServiceItem,RMD_Badge,RCA_RelevantStateTags} from "./R_other.js";
+import {D_MacroMarkersInfoItem} from "./r_sub/r/D_MacroMarkersInfoItem.js";
 
+//#region base(R)
+import {AU_EngagementPanel,AU_NotificationsUnseenCount,A_AddToGuideSection,A_AppendContinuationItems,A_GetMultiPageMenu,A_RemoveFromGuideSection} from "../abc/A.js";
+import {B_StateTag} from "../abc/B.js";
+import {DC_EntityBatchUpdate} from "../abc/C.js";
+import {DMD_Badge,DMD_RowContainer,D_FrameworkUpdates,D_LoggingDirectives} from "../d/group_D.js";
+import {D_UserIdStr,T_IdTemplate} from "../d/mod_D/DU_T/DU.js";
+import {E_NotificationOptOut,E_RecordNotificationInteractions} from "../e/E.js";
+import {G_SE_MenuService,G_Text} from "../ghi/group_G.js";
+import {A_NotificationMenuPopup,A_NotificationToast,A_PdgBuyFlow,TA_OpenPopup_Empty} from "../nop_q/Popup.js";
+import {T_Icon} from "../stu/mod/group_T.js";
+import {RC_ResponseContext,R_AddToPlaylist,R_ExpandableTab,R_SubscriptionNotificationToggleButton,R_Tab} from "./group_R.js";
+//#region RCA
+export type RCA_RelevantStateTags={relevantStateTags: B_StateTag[];};
+//#endregion
+//#region RD
+export type RD_MenuServiceIconType_1=[
+	"NOT_INTERESTED"|"ADD_TO_QUEUE_TAIL",
+	"FLAG",
+	"CONTENT_CUT",
+	"PLAYLIST_ADD",
+	"WATCH_LATER",
+	"SHARE",
+	"REMOVE",
+][number];
+export type RD_MenuServiceIconType_Sep="SHARE";
+export type RD_MenuServiceItem=
+	|{
+		text: G_Text;
+		icon: T_Icon<"VISIBILITY_OFF">;
+		serviceEndpoint: E_RecordNotificationInteractions;
+		trackingParams: string;
+		loggingDirectives: D_LoggingDirectives;
+	}
+	|{
+		text: G_Text;
+		serviceEndpoint: E_NotificationOptOut;
+		trackingParams: string;
+		loggingDirectives: D_LoggingDirectives;
+	}
+	|{
+		text: G_Text;
+		icon: T_Icon<RD_MenuServiceIconType_1>;
+		serviceEndpoint: G_SE_MenuService;
+		trackingParams: string;
+		hasSeparator: true;
+		isDisabled: false;
+	};
+//#endregion
+//#region REG
+export type REG_AccountSwitcher={
+	responseContext: RC_ResponseContext;
+	selectText: G_Text;
+	actions: A_GetMultiPageMenu[];
+};
+export type REG_DatasyncIds={
+	responseContext: RC_ResponseContext;
+	datasyncIds: (`${number}||${number}`|`${number}||`)[];
+};
+//#endregion
+//#region RG
+export type RG_Result=R_Tab|R_ExpandableTab;
+//#endregion
+//#region RMD
+export type RMD_Badge={metadataBadgeRenderer: DMD_Badge;};
+export type RMD_RowContainer={metadataRowContainerRenderer: DMD_RowContainer;};
+//#endregion
+//#region RRC
+export type RRC_ResponseContext={responseContext: RC_ResponseContext;};
+//#endregion RRC
+//#region RSG
+export type RSG_AddToPlaylist={
+	responseContext: RC_ResponseContext;
+	contents: R_AddToPlaylist[];
+	trackingParams: string;
+};
+export type RSG_GetUnseenCount={
+	responseContext: RC_ResponseContext;
+	actions?: [AU_NotificationsUnseenCount];
+	unseenCount?: number;
+};
+export type RSG_NotificationMenu={
+	responseContext: RC_ResponseContext;
+	actions: (A_NotificationMenuPopup|A_AppendContinuationItems)[];
+	trackingParams: string;
+};
+export type RSG_PdgBuyFlow={
+	responseContext: RC_ResponseContext;
+	command: A_PdgBuyFlow;
+	trackingParams: string;
+	frameworkUpdates: D_FrameworkUpdates;
+};
+export type RSG_SearchSuggestions={
+	responseContext: RC_ResponseContext;
+	trackingParams: string;
+};
+export type RSG_SharePanel={
+	responseContext: RC_ResponseContext;
+	trackingParams: string;
+	actions: TA_OpenPopup_Empty[];
+};
+export type RSG_Survey={
+	responseContext: RC_ResponseContext;
+	trackingParams: string;
+};
+export type RSG_Transcript={
+	responseContext: RC_ResponseContext;
+	actions: AU_EngagementPanel[];
+	trackingParams: string;
+};
+//#endregion
+//#region RSL
+export type RSL_Dislike={
+	responseContext: RC_ResponseContext;
+	actions?: TA_OpenPopup_Empty[];
+};
+export type RSL_Like={
+	responseContext: RC_ResponseContext;
+	actions?: (TA_OpenPopup_Empty|A_AddToGuideSection)[];
+};
+export type RSL_RemoveLike={
+	responseContext: RC_ResponseContext;
+	actions?: (TA_OpenPopup_Empty|A_RemoveFromGuideSection)[];
+};
+//#endregion
+//#region RSM
+export type RSM_ChannelPreference={
+	responseContext: RC_ResponseContext;
+	actions: A_NotificationToast[];
+	channelId: T_IdTemplate<"UC",D_UserIdStr>;
+	newNotificationButton: R_SubscriptionNotificationToggleButton;
+	trackingParams: string;
+	frameworkUpdates: DC_EntityBatchUpdate;
+};
+//#endregion
+//#endregion base(R)
+//#region R
 //#region Renderer
 export type R_AboutThisAd={aboutThisAdRenderer: D_AboutThisAd;};
 export type R_AccountItem={accountItemRenderer: D_AccountItem;};
@@ -528,3 +665,8 @@ export type R_AttachmentElement={
 	alignment: "ALIGNMENT_VERTICAL_CENTER";
 };
 //#endregion
+export type R_MultiPageMenuNotificationSection={multiPageMenuNotificationSectionRenderer: D_MultiPageMenuNotificationSection;};
+export type R_MacroMarkersInfoItem={macroMarkersInfoItemRenderer: D_MacroMarkersInfoItem;};
+export type R_DropdownFormField={dropdownFormFieldRenderer: D_DropdownFormField;};
+export type R_PaidContentOverlay={paidContentOverlayRenderer: D_PaidContentOverlay;};
+//#endregion R
