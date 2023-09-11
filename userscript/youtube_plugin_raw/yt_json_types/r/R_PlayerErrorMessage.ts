@@ -1,1 +1,1 @@
-type R_PlayerErrorMessage={playerErrorMessageRenderer: D_PlayerErrorMessage;};
+export type R_PlayerErrorMessage={playerErrorMessageRenderer: D_PlayerErrorMessage;};

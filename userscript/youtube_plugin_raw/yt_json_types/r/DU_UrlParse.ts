@@ -1,4 +1,4 @@
-type DU_UrlParams_PageAd_AClk={
+export type DU_UrlParams_PageAd_AClk={
 	sa: "L";
 	ai: string;
 	ae: "2";
@@ -15,7 +15,7 @@ type DU_UrlParams_PageAd_AClk={
 };
 
 // cspell:ignoreRegexp /"AOD64_.+"/
-type DU_UrlParse={
+export type DU_UrlParse={
 	host: "www.youtube.com";
 	pathname: "/pagead/paralleladinteraction";
 	search: DU_UrlParams_PageadParallelAdInteraction;

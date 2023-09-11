@@ -1,6 +1,3 @@
-//#region G
-export type G_LinearAdsItem=R_InstreamVideoAd|R_AdActionInterstitial;
-//#endregion
 import {T_StringTrim} from "../../support_0_mod/T_Split.js";
 import {T_Split} from "../../support_0_mod/T_Split.mod.js";
 import {AC_GetDownload,A_ChangeEngagementPanelVisibility,A_SetActivePanelItem,A_WatchNextContinuation} from "../abc/A.js";
@@ -9,14 +6,11 @@ import {CD_NextRadio,CD_Reload,C_CommandExecutor,C_Continuation,C_FollowUp,C_Get
 import {GD_SD_Item} from "../abc/a_sub/G_empty_obj.js";
 import {EG_GetNotificationMenuRequest,E_CreatePlaylistService,E_Feedback,E_Like,E_MuteAd,E_Pinging,E_PlaylistDelete,E_PlaylistEdit,E_PlaylistEditor,E_RecordNotificationInteractions,E_ShareEntityService,E_SignalNavigation,E_SignalService_SendPost,E_UndoFeedback,E_Upload,E_Url,E_Watch,E_WatchPlaylist,E_YpcGetCart,E_YpcGetOffers} from "../e/E.js";
 import {E_Search,E_VE11487,E_VE23462,E_VE3611,E_VE37414_ReelWatch,E_VE3854,E_VE42352,E_VE5754,E_VE6827,E_VE96368} from "../e/GR_E_VE.js";
-import {GM_VE3854} from "../ghi/_group.mod/GM.js";
-import {GU_CaptionTrackItem_BaseUrl,GU_ExternalUrl,GU_GoodPut_ProbeUrl,GU_InitPlaybackUrl,GU_RadioShareUrl,GU_VE11487_Url,GU_VE3611_Url,GU_VE6827_Url,GU_YTExternalUrl} from "../ghi/_group.mod/GU.js";
-import {GE_Browse,GR_MP_MenuNotificationSection_Item} from "../ghi/g_.mod/group_GE.js";
-import {G_AccountItemSection,G_AccountPageSettingsSections,G_AdPlacementRendererItem,G_BrowseFeedContent,G_CardList_StyleType,G_ChannelSwitcherContent,G_EngagementPanelMenu,G_GuideSectionItem,G_GuideSubscriptionsSectionItem,G_MenuItem,G_PlaylistPanel_Item,G_PlaylistSidebarItem,G_ProfileColumnItem,G_RendererContentItem,G_RichGridContent,G_RichItemContent,G_RichSection,G_SI_DB_EngagementPanel,G_SecondaryContents,G_SettingItemIdEnum,G_SettingsOptionItem,G_StructuredDescriptionContentItem,G_Text,G_ThumbnailOverlayItem,G_TopbarButtonItem,G_WatchNextEndScreenItem,G_YtWatchUrl} from "../ghi/group_G.js";
+import {GE_Browse,GM_VE3854,GR_MP_MenuNotificationSection_Item,GU_CaptionTrackItem_BaseUrl,GU_ExternalUrl,GU_GoodPut_ProbeUrl,GU_InitPlaybackUrl,GU_RadioShareUrl,GU_VE11487_Url,GU_VE3611_Url,GU_VE6827_Url,GU_YTExternalUrl,GV_gen_g2_t1,GV_gen_g3_t2,G_AccountItemSection,G_AccountPageSettingsSections,G_AdPlacementRendererItem,G_BrowseFeedContent,G_CardList_StyleType,G_ChannelSwitcherContent,G_EngagementPanelMenu,G_GuideSectionItem,G_GuideSubscriptionsSectionItem,G_LinearAdsItem,G_MenuItem,G_PlaylistPanel_Item,G_PlaylistSidebarItem,G_ProfileColumnItem,G_RendererContentItem,G_RichGridContent,G_RichItemContent,G_RichSection,G_SI_DB_EngagementPanel,G_SecondaryContents,G_SettingItemIdEnum,G_SettingsOptionItem,G_StructuredDescriptionContentItem,G_Text,G_ThumbnailOverlayItem,G_TopbarButtonItem,G_WatchNextEndScreenItem,G_YtWatchUrl} from "../ghi/group_G.js";
 import {K_AccountLinkProviderKey} from "../k/K.js";
 import {MG_AdLayout,MG_AdLayout_DisplayBillboardImageButtoned,M_AccountMenu,M_Empty_WCM,M_Feedback,M_GetUnseenNotificationCount} from "../m/M.js";
 import {A_FancyDismissibleDialog,MP_LoadingAccountMenu,MP_LoadingNotificationMenu,R_TopbarMenu,TA_OpenPopup_Empty} from "../nop_q/Popup.js";
-import {RA_Notification,RC_CsiServiceC,RC_CsiServiceCVer,RC_CsiVarMap,RG_Result,RMD_Badge,R_AccountSectionList,R_AdActionInterstitial,R_AdHoverTextButton,R_AdPlacementConfig,R_AdSlot,R_AddToPlaylistCreate,R_AttachmentElement,R_AuthorCommentBadge,R_AutoplaySwitchButton,R_BasicColorPaletteData,R_BrowserMediaSessionRenderer,R_Card,R_CarouselLockup,R_ChannelHeaderLinks,R_ChannelSwitcherHeader,R_ChannelThumbnailWithLink,R_Chapter,R_ChildVideo,R_ChipCloud,R_ChipCloudChip,R_CinematicContainer,R_ClipAdState,R_ClipCreation,R_ClipCreationScrubber,R_ClipCreationTextInput,R_Comment,R_CommentActionButtons,R_CommentSimplebox,R_CommentsEntryPointTeaser,R_CommentsHeader,R_CompactLink,R_CompactVideo,R_ContinuationItem,R_DecoratedPlayerBar,R_DescriptionChaptersItem,R_DisplayAd,R_Dropdown,R_DropdownFormField,R_ElementUpdate,R_EmojiPicker,R_EndscreenElement,R_ExpandableSurveyResponse,R_Factoid,R_FeedFilterChipBar,R_FulfilledLayout,R_FusionSearchbox,R_GhostGrid,R_GuideEntry,R_GuideEntryData,R_HeatSeekerItem,R_Heatmap,R_HeroPlaylistThumbnail,R_HotkeyDialog,R_HotkeyDialogSection,R_HotkeyDialogSectionOption,R_InfoCardIcon,R_InfoRow,R_InstreamVideoAd,R_LikeButton,R_LiveChatAuthorBadge,R_MacroMarkersListItem,R_Menu,R_MenuFlexibleItem,R_MenuNavigationItem,R_MenuServiceItem,R_MerchandiseItem,R_MetadataRow,R_MovingThumbnail,R_MultiMarkersPlayerBar,R_MultiPageMenuNotificationSection,R_MusicResponsiveListItem,R_MusicShelfDivider,R_PdgBuyFlowHeader,R_PdgColorSlider,R_PdgCommentChip,R_PdgCommentOption,R_PdgCommentPreview,R_PlayerOverlayAutoplay,R_PlayerOverlayVideoDetails,R_PlaylistAddToOption,R_PlaylistByline,R_PlaylistLoopButton,R_PlaylistPanel,R_PlaylistPanelVideo,R_PlaylistVideoThumbnail,R_PrivacyDropdownItem,R_ProductListItem,R_ProfileColumnStatsEntry,R_ProfilePageHeaderButtonRowViewModel,R_ProfilePageHeaderInformationViewModel,R_ProfilePageHeaderMetadataViewModel,R_ProfilePageHeaderThumbnailViewModel,R_ProfilePageHeaderTitleViewModel,R_PromotedSparklesWeb,R_RatingSurvey,R_RatingSurveyOption,R_ReelItem,R_ResourceStatusInResponseCheck,R_RichItem,R_RichListHeader,R_RichMetadata,R_RichMetadataRow,R_SampledThumbnailColor,R_SearchResultsTab,R_SectionList,R_SegmentedLikeDislikeButton,R_SortFilterSubMenu,R_SponsorCommentBadge,R_StructuredDescriptionPlaylistLockup,R_SubFeedOption,R_SubscribeButton,R_SuperVodBuyFlowContent,R_Tab,R_TemplateUpdate,R_TextInputFormField,R_ThumbnailOverlayTimeStatus,R_ThumbnailOverlayToggleButton,R_ToggleButton,R_TopbarLogo,R_TopicLink,R_TranscriptFooter,R_TranscriptSearchPanel,R_TranscriptSegment,R_TranscriptSegmentList,R_VideoMastheadAdV3,R_VideoOwner,R_VideoViewCount,R_WatchNextEndScreen,R_WebSearchboxConfig,ToKeyValue} from "../r/group_R.js";
+import {RA_Notification,RC_CsiServiceC,RC_CsiServiceCVer,RC_CsiVarMap,RG_Result,RMD_Badge,R_AccountSectionList,R_AdHoverTextButton,R_AdPlacementConfig,R_AdSlot,R_AddToPlaylistCreate,R_AttachmentElement,R_AuthorCommentBadge,R_AutoplaySwitchButton,R_BasicColorPaletteData,R_BrowserMediaSessionRenderer,R_Card,R_CarouselLockup,R_ChannelHeaderLinks,R_ChannelSwitcherHeader,R_ChannelThumbnailWithLink,R_Chapter,R_ChildVideo,R_ChipCloud,R_ChipCloudChip,R_CinematicContainer,R_ClipAdState,R_ClipCreation,R_ClipCreationScrubber,R_ClipCreationTextInput,R_Comment,R_CommentActionButtons,R_CommentSimplebox,R_CommentsEntryPointTeaser,R_CommentsHeader,R_CompactLink,R_CompactVideo,R_ContinuationItem,R_DecoratedPlayerBar,R_DescriptionChaptersItem,R_DisplayAd,R_Dropdown,R_DropdownFormField,R_ElementUpdate,R_EmojiPicker,R_EndscreenElement,R_ExpandableSurveyResponse,R_Factoid,R_FeedFilterChipBar,R_FulfilledLayout,R_FusionSearchbox,R_GhostGrid,R_GuideEntry,R_GuideEntryData,R_HeatSeekerItem,R_Heatmap,R_HeroPlaylistThumbnail,R_HotkeyDialog,R_HotkeyDialogSection,R_HotkeyDialogSectionOption,R_InfoCardIcon,R_InfoRow,R_InstreamVideoAd,R_LikeButton,R_LiveChatAuthorBadge,R_MacroMarkersListItem,R_Menu,R_MenuFlexibleItem,R_MenuNavigationItem,R_MenuServiceItem,R_MerchandiseItem,R_MetadataRow,R_MovingThumbnail,R_MultiMarkersPlayerBar,R_MultiPageMenuNotificationSection,R_MusicResponsiveListItem,R_MusicShelfDivider,R_PdgBuyFlowHeader,R_PdgColorSlider,R_PdgCommentChip,R_PdgCommentOption,R_PdgCommentPreview,R_PlayerOverlayAutoplay,R_PlayerOverlayVideoDetails,R_PlaylistAddToOption,R_PlaylistByline,R_PlaylistLoopButton,R_PlaylistPanel,R_PlaylistPanelVideo,R_PlaylistVideoThumbnail,R_PrivacyDropdownItem,R_ProductListItem,R_ProfileColumnStatsEntry,R_ProfilePageHeaderButtonRowViewModel,R_ProfilePageHeaderInformationViewModel,R_ProfilePageHeaderMetadataViewModel,R_ProfilePageHeaderThumbnailViewModel,R_ProfilePageHeaderTitleViewModel,R_PromotedSparklesWeb,R_RatingSurvey,R_RatingSurveyOption,R_ReelItem,R_ResourceStatusInResponseCheck,R_RichItem,R_RichListHeader,R_RichMetadata,R_RichMetadataRow,R_SampledThumbnailColor,R_SearchResultsTab,R_SectionList,R_SegmentedLikeDislikeButton,R_SortFilterSubMenu,R_SponsorCommentBadge,R_StructuredDescriptionPlaylistLockup,R_SubFeedOption,R_SubscribeButton,R_SuperVodBuyFlowContent,R_Tab,R_TemplateUpdate,R_TextInputFormField,R_ThumbnailOverlayTimeStatus,R_ThumbnailOverlayToggleButton,R_ToggleButton,R_TopbarLogo,R_TopicLink,R_TranscriptFooter,R_TranscriptSearchPanel,R_TranscriptSegment,R_TranscriptSegmentList,R_VideoMastheadAdV3,R_VideoOwner,R_VideoViewCount,R_WatchNextEndScreen,R_WebSearchboxConfig,ToKeyValue} from "../r/group_R.js";
 import {R_SimpleCardTeaser} from "../r/r_sub/r/R_SimpleCardTeaser.js";
 import {SI_DB_EngagementPanel_ClipCreate,SI_DB_EngagementPanel_MacroMarkers_AutoChapters,SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters,SI_VE124975_EngagementPanel,SI_VE126250_EngagementPanel,SI_VE139722_EngagementPanel,SI_VE76278_EngagementPanel,SI_VE99999_EngagementPanel,S_GetAccountMenu} from "../stu/group_S.js";
 import {TD_GuideEntry_Simple,TD_Label,TM_Visibility,TP_Color,TR_MultiPageMenuSection,T_Actions,T_BaseUrl,T_DistributedKeyof,T_ElementId,T_EnumStr,T_ExtractIconType,T_Icon,T_MaybeTemplatedText,T_OmitKey,T_SE_Signal,T_Setting_AutoNavForDesktop,T_Signal,T_SplitOnce,T_StyleType,T_TargetIdStr,T_TrackedItems,T_Types,T_UrlWrappedValue} from "../stu/group_T.js";
@@ -3905,3 +3899,840 @@ export type D_VideoDescriptionCourseSection={
 	mediaLockups: R_StructuredDescriptionPlaylistLockup[];
 };
 export type D_StructuredDescriptionPlaylistLockup={trackingParams: string;};
+
+// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
+export type D_AudioTrack={
+	displayName: string;
+	id: string;
+	audioIsDefault: false;
+};
+export type D_AdaptiveFormatItem={
+	itag: number;
+	url?: GU_VideoPlaybackUrl;
+	mimeType: G_MimeTypeFormat;
+	bitrate: number;
+	width?: number;
+	height?: number;
+	initRange?: D_Range;
+	indexRange?: D_Range;
+	lastModified?: string;
+	contentLength?: string;
+	quality: G_FormatQuality;
+	xtags?: string;
+	fps?: D_FormatFps;
+	qualityLabel?: D_QualityLabel;
+	projectionType: "RECTANGULAR";
+	audioTrack?: D_AudioTrack;
+	averageBitrate?: number;
+	colorInfo?: D_FormatColorInfo;
+	highReplication?: true;
+	audioQuality?: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
+	approxDurationMs?: `${number}`;
+	audioSampleRate?: `${D_AudioSampleRate}`;
+	audioChannels?: 2;
+	loudnessDb?: number;
+	signatureCipher?: D_FormatItem_SignatureCipher_SP;
+	targetDurationSec?: 1|2;
+	maxDvrDurationSec?: 43200;
+};
+export type D_BackgroundPromo={
+	title: G_Text;
+	bodyText: G_Text;
+	icon: T_Icon<"NOTIFICATIONS">;
+	trackingParams: string;
+};
+export type D_BinaryTokenType="page_snapshot_token"|"filtered_page_token";
+export type DC_ShowReelsCommentsOverlay={engagementPanel: R_EngagementPanelSectionList;};
+export type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsOverlayCommand: DC_ShowReelsCommentsOverlay;};
+export type D_Button_style=
+	|"STYLE_BLUE_TEXT"
+	|"STYLE_DEFAULT"
+	|"STYLE_LIGHT_TEXT"
+	|"STYLE_MONO_FILLED_OVERLAY"
+	|"STYLE_MONO_TONAL_OVERLAY"
+	|"STYLE_OPACITY"
+	|"STYLE_PRIMARY"
+	|"STYLE_SUGGESTIVE"
+	|"STYLE_TEXT"
+	;
+;
+export type W_Some_r=Some_A<W_Some_s>;
+export type W_Some_f=T_Str_Some<W_Some_s>;
+export type W_Some_e="https://www.youtube.com/channel/UC";
+export type Some_t1<S extends string>=[T_Split<S,""> extends [any,...infer L]? L["length"]:0];
+export type Some_t<T extends string>=T extends `${infer S}${infer X}`? [
+	T_Split<S,""> extends [any,...infer L]? L["length"]:0,
+	X,
+]:never;
+export type Some_A<T extends string,A extends any[]=[]>=
+	T extends `${infer S}${infer E}`?
+	Some_t<T> extends infer V extends [any,any]?
+	Some_A<E,[...A,[S,V[0]]]>
+	:A
+	:A;
+;
+
+export type T_Str_Some<T extends string>=Some_t<T>[0] extends 0? "":T extends `${infer S}${infer E}`? `${S}${T_Str_Some<E>}`:T;
+export type D_Button_targetId=
+	|"sponsorships-button"
+	|"create-clip-button-action-bar"
+	|"clip-info-button"
+	|"watch-supervod-button"
+	;
+;
+// cSpell:ignoreRegExp /(?<=")[^"]{40,}/
+export type D_Button={
+	style?: D_Button_style;
+	size?: "SIZE_DEFAULT";
+	isDisabled?: boolean;
+	serviceEndpoint?: D_Button_SE;
+	text?: G_Text;
+	icon?: T_Icon<"SHORTS_COMMENT">;
+	navigationEndpoint?: D_Button_NavEP;
+	accessibility?: D_Label;
+	tooltip?: string;
+	trackingParams?: string;
+	hint?: R_Hint;
+	iconPosition?: "BUTTON_ICON_POSITION_TYPE_LEFT_OF_TEXT";
+	accessibilityData?: D_Accessibility;
+	targetId?: D_Button_targetId;
+	command?: C_ShowReelsCommentsOverlay|A_ChangeEngagementPanelVisibility;
+};
+export type D_Button_Gen={
+	icon: T_Icon<"SHORTS_SHARE">;
+	text: G_Text;
+};
+
+export type R_Button={buttonRenderer: D_Button;};
+export type D_Button_DefServiceEP=C_CommandExecutor|E_PerformCommentAction;
+export type D_Button_NavEP=
+	|A_FancyDismissibleDialog
+	|E_CreateCommentReplyDialog
+	|E_ShareEntityService
+	|E_Url
+	|E_VE23462
+	|E_Watch
+	;
+;
+export type D_Button_SE=
+	|C_GetPdgBuyFlow
+	|E_CreateComment
+	|E_CreateCommentReply
+	|E_Feedback
+	|E_ShareEntityService
+	|E_SignalService_SendPost
+	|E_Unsubscribe
+	|E_YpcGetOffers
+	;
+;
+export type D_Card_Content=
+	|R_SimpleCardContent
+	|R_CollaboratorInfoCardContent
+	|R_PlaylistInfoCardContent
+	|R_VideoInfoCardContent
+	;
+;
+export type D_ChipColorPalette={
+	backgroundColor: 4280191205;
+	foregroundTitleColor: 4294967295;
+};
+export type D_CollaboratorInfoCardContent={
+	channelAvatar: D_Thumbnail;
+	customText: G_Text;
+	channelName: G_Text;
+	subscriberCountText: G_Text;
+	endpoint: E_VE3611;
+	trackingParams: string;
+};
+export type D_CommentActionButtons={
+	likeButton: R_ToggleButton;
+	replyButton: R_Button;
+	dislikeButton: R_ToggleButton;
+	trackingParams: string;
+	protoCreationMs: `${number}`;
+	style: "COMMENT_ACTION_BUTTON_STYLE_TYPE_DESKTOP_TOOLBAR";
+};
+export type D_CompactLink={
+	icon: T_Icon<"CREATION_POST">;
+	title: G_Text;
+	navigationEndpoint: E_VE3611;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
+}|{
+	title: G_Text;
+	navigationEndpoint: E_Url;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_HISTORY_MY_ACTIVITY_LINK";
+}|{
+	icon: T_Icon<"PERSON_ADD">;
+	title: G_Text;
+	trackingParams: string;
+}|{
+	title: G_Text;
+	navigationEndpoint: E_VE23462;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR";
+}|{
+	icon: T_Icon<"CREATION_UPLOAD">;
+	title: G_Text;
+	navigationEndpoint: E_Upload;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
+}|{
+	icon: T_Icon<"CREATION_LIVE">;
+	title: G_Text;
+	navigationEndpoint: E_SignalNavigation;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
+};
+export type D_CueRangeItem={
+	startCardActiveMs: `${number}`;
+	endCardActiveMs: `${number}`;
+	teaserDurationMs: "6000";
+	iconAfterTeaserMs: "5000";
+};
+export type D_DynamicReadaheadConfig={
+	maxReadAheadMediaTimeMs?: 120000;
+	minReadAheadMediaTimeMs: 15000;
+	readAheadGrowthRateMs: 1000;
+};
+export type D_EmojiPicker={
+	id: "emoji";
+	categories: (R_EmojiPickerCategory|R_EmojiPickerUpsellCategory)[];
+	categoryButtons: R_EmojiPickerCategoryButton[];
+	searchPlaceholderText: G_Text;
+	searchNoResultsText: G_Text;
+	pickSkinToneText: G_Text;
+	trackingParams: string;
+	clearSearchLabel: "Clear search";
+	skinToneGenericLabel: "Generic skin tone";
+	skinToneLightLabel: "Light skin tone";
+	skinToneMediumLightLabel: "Medium-light skin tone";
+	skinToneMediumLabel: "Medium skin tone";
+	skinToneMediumDarkLabel: "Medium-dark skin tone";
+	skinToneDarkLabel: "Dark skin tone";
+};
+export type D_EmojiPickerCategory={
+	categoryId: T_IdTemplate<"UC",D_UserIdStr>;
+	title: G_Text;
+	emojiIds: `UC${string}/${string}`[];
+	trackingParams: string;
+	categoryType: "CATEGORY_TYPE_GLOBAL";
+}|{
+	categoryId: "people";
+	title: G_Text;
+	emojiIds: "😀"[];
+	trackingParams: string;
+	imageLoadingLazy: true;
+	categoryType: "CATEGORY_TYPE_UNICODE";
+}|{
+	categoryId: "nature";
+	title: G_Text;
+	emojiIds: "🐵"[];
+	trackingParams: string;
+	imageLoadingLazy: true;
+	categoryType: "CATEGORY_TYPE_UNICODE";
+}|{
+	categoryId: "food";
+	title: G_Text;
+	emojiIds: "🍇"[];
+	trackingParams: string;
+	imageLoadingLazy: true;
+	categoryType: "CATEGORY_TYPE_UNICODE";
+}|{
+	categoryId: "travel";
+	title: G_Text;
+	emojiIds: "🌍"[];
+	trackingParams: string;
+	imageLoadingLazy: true;
+	categoryType: "CATEGORY_TYPE_UNICODE";
+}|{
+	categoryId: "activities";
+	title: G_Text;
+	emojiIds: "🎃"[];
+	trackingParams: string;
+	imageLoadingLazy: true;
+	categoryType: "CATEGORY_TYPE_UNICODE";
+}|{
+	categoryId: "objects";
+	title: G_Text;
+	emojiIds: "👓"[];
+	trackingParams: string;
+	imageLoadingLazy: true;
+	categoryType: "CATEGORY_TYPE_UNICODE";
+}|{
+	categoryId: "symbols";
+	title: G_Text;
+	emojiIds: "🏧"[];
+	trackingParams: string;
+	imageLoadingLazy: true;
+	categoryType: "CATEGORY_TYPE_UNICODE";
+};
+export type D_EmojiPickerCategoryButton={
+	categoryId: T_IdTemplate<"UC",D_UserIdStr>;
+	icon: T_Icon<"SPONSORSHIP_STAR">;
+	tooltip: "Custom emoji";
+	accessibility: TD_Accessibility<"Custom emoji">;
+}|{
+	categoryId: T_IdTemplate<"UC",D_UserIdStr>;
+	icon: T_Icon<"VIDEO_YOUTUBE">;
+	tooltip: "YouTube";
+	accessibility: TD_Accessibility<"YouTube">;
+}|{
+	categoryId: "people";
+	icon: T_Icon<"EMOJI_PEOPLE">;
+	tooltip: "People";
+	accessibility: TD_Accessibility<"People">;
+	targetId: "emoji-picker-category-button-people";
+}|{
+	categoryId: "nature";
+	icon: T_Icon<"EMOJI_NATURE">;
+	tooltip: "Nature";
+	accessibility: TD_Accessibility<"Nature">;
+}|{
+	categoryId: "food";
+	icon: T_Icon<"EMOJI_FOOD">;
+	tooltip: "Food";
+	accessibility: TD_Accessibility<"Food">;
+}|{
+	categoryId: "travel";
+	icon: T_Icon<"EMOJI_TRAVEL">;
+	tooltip: "Travel";
+	accessibility: TD_Accessibility<"Travel">;
+}|{
+	categoryId: "activities";
+	icon: T_Icon<"EMOJI_ACTIVITIES">;
+	tooltip: "Activities";
+	accessibility: TD_Accessibility<"Activities">;
+}|{
+	categoryId: "objects";
+	icon: T_Icon<"EMOJI_OBJECTS">;
+	tooltip: "Objects";
+	accessibility: TD_Accessibility<"Objects">;
+}|{
+	categoryId: "symbols";
+	icon: T_Icon<"EMOJI_SYMBOLS">;
+	tooltip: "Symbols";
+	accessibility: TD_Accessibility<"Symbols">;
+};
+export type D_EmojiPickerUpsellCategory={
+	categoryId: T_IdTemplate<"UC",D_UserIdStr>;
+	title: G_Text;
+	upsell: G_Text;
+	emojiTooltip: "Join to unlock";
+	command: E_YpcGetOffers;
+	trackingParams: string;
+	emojiIds: `UC${string}/${string}`[];
+};
+export type D_EndscreenElement={
+	style: "VIDEO"|"CHANNEL"|"WEBSITE"|"PLAYLIST"|"CREATOR_MERCHANDISE";
+	image: D_Thumbnail;
+	playlistLength?: G_Text;
+	icon?: D_Thumbnail;
+	left: number;
+	width: number;
+	top: number;
+	aspectRatio: number;
+	startMs: `${number}`;
+	endMs: `${number}`;
+	title: G_Text;
+	metadata: G_Text;
+	callToAction?: G_Text;
+	dismiss?: G_Text;
+	endpoint: D_EndscreenElement_EP;
+	subscribersText?: G_Text;
+	hovercardButton?: R_SubscribeButton;
+	trackingParams: string;
+	productPrice?: G_Text;
+	additionalFeesText?: G_Text;
+	isSubscribe?: boolean;
+	id: string;
+	thumbnailOverlays?: G_ThumbnailOverlayItem[];
+};
+export type D_EndscreenElement_EP=E_VE3611|E_Watch|E_Url;
+export type D_FormatFps=
+	|13
+	|15
+	|24
+	|25
+	|30
+	|50
+	|60
+	;
+;
+export type D_FormatItem={
+	itag: number;
+	url: GU_VideoPlaybackUrl;
+	mimeType: "video/mp4; codecs=\"avc1.42001E, mp4a.40.2\"";
+	bitrate: number;
+	width: number;
+	height: number;
+	lastModified: `${number}`;
+	contentLength?: `${number}`;
+	quality: D_QualityLabel;
+	fps: D_FormatFps;
+	qualityLabel: "360p";
+	projectionType: "RECTANGULAR";
+	averageBitrate?: number;
+	audioQuality: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
+	approxDurationMs: `${number}`;
+	audioSampleRate: `${D_AudioSampleRate}`;
+	audioChannels: 1|2;
+	signatureCipher?: D_FormatItem_SignatureCipher_SP;
+	xtags?: string;
+};
+export type D_GraftedVeItem={
+	veData: D_TrackingParams;
+	csn: string;
+};
+export type DI_A_VideoTime={
+	a: DStr_DI_AKZ;
+	k: "video_time";
+	z: [T_PrimitiveBox<`${number}s`>];
+};
+export type D_InlinePlaybackConfig={
+	showAudioControls: true;
+	showScrubbingControls: true;
+};
+export type D_IsCacheHit=D_Cache_MD;
+export type D_ItemSection_T_Message={contents: R_Message[]; trackingParams: string;};
+export type D_LikeButton_Like={
+	status: "INDIFFERENT"|"DISLIKE";
+	count?: number;
+	countText: G_Text;
+	countWithLikeText?: G_Text;
+	countWithUnlikeText?: G_Text;
+	countTooltipText?: G_Text;
+};
+export type D_LikeButton_Dislike={
+	countText: G_Text;
+	countWithDislikeText?: G_Text;
+	countWithUndislikeText?: G_Text;
+	countTooltipText?: G_Text;
+};
+export type D_LikeButton_FP=T_AddPrefix<D_LikeButton_Like,"like">;
+export type T_AddPrefix<T,T2 extends string>={[U in keyof T as `${T2}${Capitalize<U&string>}`]: T[U];};
+export type D_LikeButton=T_AddPrefix<D_LikeButton_Like,"like">&T_AddPrefix<D_LikeButton_Dislike,"dislike">&{
+	target?: D_LikeApi;
+	trackingParams?: string;
+	likesAllowed: true;
+	serviceEndpoints?: E_Like[];
+};
+export type D_Continuation={
+	continuation: string;
+	clickTrackingParams: string;
+};
+export type D_ReloadContinuationData={reloadContinuationData: D_Continuation;};
+export type D_LiveChat={
+	continuations: D_ReloadContinuationData[];
+	header: R_LiveChatHeader;
+	trackingParams: string;
+	clientMessages: D_ClientMessages;
+	isReplay?: boolean;
+	initialDisplayState: "LIVE_CHAT_DISPLAY_STATE_EXPANDED";
+	showHideButton: R_ToggleButton;
+};
+export type D_LiveChatHeader={
+	overflowMenu: R_Menu;
+	collapseButton: R_Button;
+	viewSelector: R_SortFilterSubMenu;
+};
+export type D_LivePlayerConfig={
+	liveReadaheadSeconds: 1.6|4.8;
+	hasSubfragmentedFmp4: true;
+	isLiveHeadPlayable?: true;
+};
+// STOP
+export type D_MacroMarkersList={
+	contents: (R_MacroMarkersListItem|R_MacroMarkersInfoItem|R_MacroMarkersInfoItem)[];
+	syncButtonLabel: G_Text;
+	trackingParams: string;
+};
+export type D_MenuNavigationItem={
+	text: G_Text;
+	icon?: T_Icon<"INFO"|"FEEDBACK">;
+	navigationEndpoint: G_MenuNavigationItem_NavEP;
+	trackingParams: string;
+	accessibility?: TD_Accessibility<"Send feedback">;
+};
+export type D_Menu_TargetId="watch-related-menu-button";
+export type D_Miniplayer={playbackMode: "PLAYBACK_MODE_ALLOW";};
+export type D_NotificationMenu_SectionItem=R_MultiPageMenuNotificationSection|R_BackgroundPromo;
+export type D_PageSnapshotToken={
+	1: 0;
+	2: "page_snapshot_token";
+	3: V_BinaryTimestamp;
+	4: V_BinaryTimestamp;
+};
+export type D_PdgCommentChip={
+	chipText: G_Text;
+	chipColorPalette: D_ChipColorPalette;
+	chipIcon: T_Icon<"FILL_DOLLAR_SIGN_HEART_12">;
+	trackingParams: string;
+};
+export type D_PivotButton={
+	thumbnail?: D_Thumbnail;
+	onClickCommand?: E_VE3611|A_AddToToast;
+	trackingParams?: string;
+	contentDescription?: G_Text;
+	soundAttributionTitle?: G_Text;
+	backgroundColor?: "THEME_ATTRIBUTE_OVERLAY_BACKGROUND_MEDIUM";
+	icon?: T_Icon<"WAVEFORM">;
+};
+export type D_PlayabilityStatus={
+	status: "OK";
+	reason?: D_PlayabilityOkReason;
+	playableInEmbed: boolean;
+	liveStreamability?: R_LiveStreamability;
+	offlineability?: R_Button;
+	miniplayer?: R_Miniplayer;
+	contextParams: string;
+}|{
+	status: "LIVE_STREAM_OFFLINE";
+	reason: "This live event will begin in a few moments.";
+	playableInEmbed: true;
+	liveStreamability: R_LiveStreamability;
+	miniplayer: R_Miniplayer;
+	contextParams: string;
+}|{
+	status: "UNPLAYABLE";
+	errorScreen: R_PlayerErrorMessage;
+};
+export type D_PlayerConfig={
+	audioConfig: D_AudioConfig;
+	playbackStartConfig?: D_StartSeconds;
+	streamSelectionConfig?: D_StreamSelectionConfig;
+	livePlayerConfig?: D_LivePlayerConfig;
+	mediaCommonConfig: R_DynamicReadaheadConfig;
+	webPlayerConfig: D_WebPlayerConfig;
+	inlinePlaybackConfig?: D_InlinePlaybackConfig;
+};
+export type D_PlayerErrorMessage={
+	reason: G_Text;
+	proceedButton: R_Button;
+	icon: T_Icon<"OFFLINE_NO_CONTENT">;
+};
+export type D_PlaylistInfoCardContent={
+	playlistThumbnail: D_Thumbnail;
+	playlistVideoCount: G_Text;
+	playlistTitle: G_Text;
+	channelName: G_Text;
+	videoCountText: G_Text;
+	action: E_Watch;
+	trackingParams: string;
+};
+export type D_PlaylistLoopButton={
+	states: R_PlaylistLoopButtonState[];
+	currentState: "PLAYLIST_LOOP_STATE_NONE";
+	playlistLoopStateEntityKey: string;
+};
+export type D_PlaylistLoopButtonState={state: "PLAYLIST_LOOP_STATE_NONE"; button: R_Button;};
+export type D_ReasonItem={
+	reason: G_Text;
+	endpoint: E_Pinging;
+};
+export type D_ReelMultimixAttributionLabel={
+	icon: T_Icon<"PLAY_ARROW">;
+	title: G_Text;
+	command: E_Watch;
+	a11yLabel: string;
+	trackingParams: string;
+};
+export type D_ReelPlayerOverlay={
+	likeButton: R_LikeButton;
+	reelPlayerHeaderSupportedRenderers: R_ReelPlayerHeader;
+	menu: R_Menu;
+	nextItemButton: R_Button;
+	prevItemButton: R_Button;
+	subscribeButtonRenderer: R_SubscribeButton;
+	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
+	viewCommentsButton: R_Button;
+	videoInteractions?: {};
+	trackingParams: string;
+	reelPlayerNavigationModel?: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
+	shareButton: R_Button;
+	pivotButton: R_PivotButton;
+	multimixAttributionLabel?: R_ReelMultimixAttributionLabel;
+	badge?: RMD_Badge;
+};
+export type D_RichMetadata=D_RichMetadata_BoxArt|D_RichMetadata_Topic;
+export type D_RichMetadata_BoxArt={
+	style: "RICH_METADATA_RENDERER_STYLE_BOX_ART";
+	thumbnail: D_Thumbnail;
+	title: G_Text;
+	subtitle?: G_Text;
+	callToAction: G_Text;
+	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
+	endpoint: E_VE3611;
+	trackingParams: string;
+};
+export type D_RichMetadata_Topic={
+	style: "RICH_METADATA_RENDERER_STYLE_TOPIC";
+	thumbnail: D_Thumbnail;
+	title: G_Text;
+	callToAction: G_Text;
+	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
+	endpoint: E_VE3611;
+	trackingParams: string;
+};
+export type D_ActionSetPlaylistVideoOrder={
+	title: string;
+	selected: boolean;
+	continuation?: CD_Reload;
+	serviceEndpoint?: C_Continuation;
+	accessibility?: D_Accessibility;
+	trackingParams: string;
+};
+export type D_SubMenuItem={
+	title: "Top chat replay";
+	selected: boolean;
+	continuation: D_ReloadContinuationData;
+	accessibility: TD_Accessibility<"Top chat replay">;
+	subtitle: "Some messages, such as potential spam, may not be visible";
+	trackingParams: string;
+};
+export type D_SortFilterSubMenu={
+	subMenuItems: D_ActionSetPlaylistVideoOrder[];
+	title?: string;
+	icon?: T_Icon<"SORT">;
+	accessibility?: D_Accessibility;
+	tooltip?: string;
+	trackingParams: string;
+}|{
+	subMenuItems: D_SubMenuItem[];
+	accessibility: TD_Accessibility<"Live Chat mode selection">;
+	trackingParams: string;
+	targetId: "live-chat-view-selector-sub-menu";
+};
+export type D_StartSeconds={startSeconds: number;};
+export type D_StoreCacheIndex=T_StoreCacheIndex<keyof DT_DatabaseStoreTypes>;
+export type D_SubscribeButton_UnsubscribedPrefix={buttonText: G_Text;};
+export type D_SubscribeButton_SubscribedPrefix={
+	buttonText?: G_Text;
+	entityKey?: string;
+};
+export type D_SubscribeButton_SubscribePrefix={
+	accessibility?: D_Accessibility;
+};
+export type D_SubscribeButton_UnsubscribePrefix={
+	buttonText?: G_Text;
+	accessibility?: D_Accessibility;
+};
+export type D_SubscribeButton=
+	&T_AddPrefix<D_SubscribeButton_SubscribedPrefix,"subscribed">
+	&T_AddPrefix<D_SubscribeButton_UnsubscribedPrefix,"unsubscribed">
+	&T_AddPrefix<D_SubscribeButton_SubscribePrefix,"subscribe">
+	&T_AddPrefix<D_SubscribeButton_UnsubscribePrefix,"unsubscribe">
+	&{
+		buttonText?: G_Text;
+		subscribed?: boolean;
+		enabled: true;
+		type?: "FREE";
+		channelId?: T_IdTemplate<"UC",D_UserIdStr>;
+		showPreferences?: boolean;
+		trackingParams?: string;
+		serviceEndpoints?: (E_Subscribe|E_SignalService_SendPost)[];
+		notificationPreferenceButton?: R_SubscriptionNotificationToggleButton;
+		targetId?: "watch-subscribe";
+		onSubscribeEndpoints?: E_Subscribe[];
+		onUnsubscribeEndpoints?: E_SignalService_SendPost[];
+	}
+	;
+;
+export type D_Tab_History={
+	selected: true;
+	content: R_SectionList;
+	tabIdentifier: "FEhistory";
+	accessibility: TD_Accessibility<"history">;
+	trackingParams: string;
+};
+export type D_Tab_Home={
+	endpoint: E_VE3611;
+	title: "Home";
+	trackingParams: string;
+};
+export type D_Tab_WhatToWatch={
+	selected: true;
+	content: R_RichGrid;
+	tabIdentifier: "FEwhat_to_watch";
+	trackingParams: string;
+};
+export type D_Tab_ContentSectionList={
+	selected: true;
+	content: R_SectionList;
+	trackingParams: string;
+};
+export type D_Tab_Subscriptions={
+	endpoint: E_VE96368;
+	selected: true;
+	content: R_SectionList;
+	tabIdentifier: "FEsubscriptions";
+	accessibility: D_Accessibility;
+	trackingParams: string;
+};
+export type D_Tab_ContentMusicQueue={
+	content: R_MusicQueue;
+	trackingParams: string;
+};
+export type D_Tab_Library={
+	endpoint: E_VE6827;
+	selected: true;
+	content: R_SectionList;
+	tabIdentifier: "FElibrary";
+	accessibility: TD_Accessibility<"library">;
+	trackingParams: string;
+};
+export type D_Tab=D_Tab_Library|D_Tab_Home|D_Tab_WhatToWatch|D_Tab_History|D_Tab_ContentSectionList|D_Tab_Subscriptions|D_Tab_ContentMusicQueue;
+export type D_TextHeader={
+	title: G_Text;
+	style: "TEXT_HEADER_RENDERER_STYLE_BOLD";
+};
+export type D_ThumbnailOverlayInlineUnplayable={
+	text: G_Text;
+	icon: T_Icon<"PLAY_DISABLED">;
+};
+export type D_ToggleButton_ToggledSrvEP=E_RemoveUpcomingEventReminder|E_SignalService_SendPost|E_PerformCommentAction|E_Like|C_CommandExecutor;
+
+export type D_ToggleButton_DefaultSrvEP=E_AddUpcomingEventReminder|E_SignalService_SendPost|E_PerformCommentAction|C_RepeatChapter|C_CommandExecutor;
+
+export type D_ToggleButton={
+	style?: T_StyleType<"STYLE_COMPACT_GRAY"|"STYLE_TEXT"|"STYLE_GREY_TEXT"|"STYLE_DEFAULT_ACTIVE">;
+	isToggled?: boolean;
+	isDisabled?: false;
+	defaultText: G_Text;
+	defaultServiceEndpoint?: D_ToggleButton_DefaultSrvEP;
+	toggledText: G_Text;
+	toggledServiceEndpoint?: D_ToggleButton_ToggledSrvEP;
+	defaultTooltip?: string;
+	toggledStyle?: T_StyleType<"STYLE_COMPACT_GRAY"|"STYLE_DEFAULT_ACTIVE"|"STYLE_BLUE_TEXT">;
+	accessibility?: D_Label;
+	trackingParams: string;
+	accessibilityData?: D_Accessibility;
+	defaultIcon?: T_Icon<"DISLIKE"|"LIKE"|"LOOP"|"SHUFFLE">;
+	size?: T_SizeType<"SIZE_DEFAULT">;
+	targetId?: "watch-dislike"|"watch-like";
+	toggleButtonSupportedData?: R_ToggleButtonIdData;
+	toggledAccessibilityData?: D_Accessibility;
+	toggledTooltip?: string;
+};
+export type D_TypedefGenerator_Popup=Popup_DL_ConfirmDialog|Popup_DL_DismissibleDialog;
+export type D_TypedefGenerator_Popup_R=D_TypedefGenerator_Popup["popup"];
+export type D_VE6827_PageUrl_parts=["source",string,`shorts?${string}`]|["feed",`trending?${string}`]|["feed",`storefront?${string}`]|["reporthistory"]|["feed","trending"|"history"|"library"|"storefront"|"guide_builder"]|["hashtag",string]|["hashtag","shorts","shorts"];
+export type D_VideoDetails={
+	videoId: string;
+	title: string;
+	lengthSeconds: `${number}`;
+	isLive?: true;
+	keywords?: string[];
+	channelId: T_IdTemplate<"UC",D_UserIdStr>;
+	isOwnerViewing: false;
+	shortDescription: string;
+	isCrawlable: boolean;
+	isLiveDvrEnabled?: true;
+	thumbnail: D_Thumbnail;
+	liveChunkReadahead?: 2;
+	allowRatings: boolean;
+	viewCount?: `${number}`;
+	author: string;
+	isLowLatencyLiveStream?: false;
+	isPrivate: false;
+	isUnpluggedCorpus: false;
+	latencyClass?: "MDE_STREAM_OPTIMIZATIONS_RENDERER_LATENCY_NORMAL";
+	isLiveContent: boolean;
+	isPostLiveDvr?: true;
+};
+export type D_VideoPlayback_Itag="137"|"140";
+
+export type D_VideoPlaybackShape_Other={
+	itag?: D_VideoPlayback_Itag;
+	gcr?: "ca";
+	mt: `${number}`;
+	fvip: "4";
+	keepalive?: "yes";
+	fexp: `${24007246}`;
+	c: "WEB";
+	txp?: `${number}`;
+	n: string;
+	sig?: string;
+	lsig: string;
+};
+
+// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
+export type D_VideoPlaybackShape=D_VideoPlaybackShape_S_Params&D_VideoPlaybackShape_LS_Params&D_VideoPlaybackShape_Other&{
+	lsparams: "mh,mm,mn,ms,mv,mvi,pl,initcwndbps";
+	sparams: "expire,ei,ip,id,itag,source,requiressl,vprv,mime,ns,cnr,ratebypass,dur,lmt"|"expire,ei,ip,id,aitags,source,requiressl,vprv,mime,ns,gir,clen,dur,lmt"|"expire,ei,ip,id,itag,source,requiressl,vprv,mime,ns,gir,clen,dur,lmt";
+};
+export type D_VPS_Req=Required<D_VideoPlaybackShape>;
+export type D_VideoPlaybackShape_LS_Params={
+	mh: "B2";
+	mm: `${31},${26}`;
+	mn: `sn-${string}n${string}`;
+	ms: "au,onr";
+	mv: "m";
+	mvi: "3";
+	pl: "24";
+	initcwndbps?: `${number}`;
+};
+export type D_VideoSecondaryInfo={
+	owner: R_VideoOwner;
+	description?: G_Text;
+	subscribeButton: R_SubscribeButton;
+	metadataRowContainer: RMD_RowContainer;
+	showMoreText: G_Text;
+	showLessText: G_Text;
+	trackingParams: string;
+	defaultExpanded: boolean;
+	descriptionCollapsedLines: number;
+	showMoreCommand?: C_CommandExecutor;
+	showLessCommand?: A_ChangeEngagementPanelVisibility;
+	attributedDescription?: D_AttributedDescription;
+};
+export type D_WebPlayerActionsPorting={
+	getSharePanelCommand: E_WebPlayerShareEntityService;
+	subscribeCommand: E_Subscribe;
+	unsubscribeCommand: E_Unsubscribe;
+	addToWatchLaterCommand: E_PlaylistEdit;
+	removeFromWatchLaterCommand: E_PlaylistEdit;
+};
+export type D_WebPlayerConfig={
+	useCobaltTvosDash: true;
+	webPlayerActionsPorting: D_WebPlayerActionsPorting;
+};
+export type D_YtPageSnapshot={
+	1: "yt_page_snapshot_regional";
+	// token in url_base64
+	2: string;
+	3: V_Uint8Array<"\u0000\u0000en-GB\u0000\u0001CA\u0000\u0001CA\u0000\u0001\u0000FEwhat_to_watch\u0000\u0001\u0001\u0001\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0001\u0001\u0000">;
+};
+export type D_f3_idx_item={
+	index: 0;
+	type: "d";
+	v: 0;
+}|{
+	index: 2;
+	type: "str";
+	v: "en-GB";
+}|{
+	index: 3;
+	type: "d";
+	v: 1;
+}|{
+	index: 4;
+	type: "str";
+	v: "CA";
+}|{
+	index: 6;
+	type: "str";
+	v: "CA";
+}|{
+	index: 9;
+	type: "str";
+	v: "FEwhat_to_watch";
+};
+export type G_MenuNavigationItem_NavEP=
+	|E_Url
+	|E_UserFeedback
+	|GA_MenuNavigationPopup
+	|E_AdFeedback
+	;
+;

@@ -1,1 +1,0 @@
-type D_Miniplayer={playbackMode: "PLAYBACK_MODE_ALLOW";};

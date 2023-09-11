@@ -1,1 +1,0 @@
-type D_RichMetadata=D_RichMetadata_BoxArt|D_RichMetadata_Topic;

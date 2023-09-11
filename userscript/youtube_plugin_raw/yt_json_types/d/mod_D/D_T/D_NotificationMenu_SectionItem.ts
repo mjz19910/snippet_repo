@@ -1,1 +1,0 @@
-type D_NotificationMenu_SectionItem=R_MultiPageMenuNotificationSection|R_BackgroundPromo;

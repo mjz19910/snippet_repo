@@ -1,1 +1,0 @@
-type D_VE6827_PageUrl_parts=["source",string,`shorts?${string}`]|["feed",`trending?${string}`]|["feed",`storefront?${string}`]|["reporthistory"]|["feed","trending"|"history"|"library"|"storefront"|"guide_builder"]|["hashtag",string]|["hashtag","shorts","shorts"];
