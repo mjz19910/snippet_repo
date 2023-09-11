@@ -1,5 +1,6 @@
 import {Join} from "../../support_1/Join.js";
 import {StoreDescription} from "../../zc_child_modules/YTPlugin_Support_Service.user.js";
+import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.js";
 import {AU_ChannelSwitcherPage,AU_NotificationsUnseenCount,AU_SubscribeButton,A_AccountItem,A_AddChatItem,A_AddToGuideSection,A_AppendContinuationItems,A_ChangeEngagementPanelVisibility,A_GetMultiPageMenu,A_HideEngagementPanelScrim,A_RemoveFromGuideSection,A_ReplayChatItem,A_SendFeedback,A_SetActivePanelItem,A_ShowEngagementPanelScrim,A_Signal} from "../abc/A.js";
 import {G_DC_SectionList_BrowseFeed_ChannelFeatured} from "../abc/G_DC_SectionList_BrowseFeed_ChannelFeatured.js";
 import {B_GenericResponseType,B_IdSrcNum,B_IdSrcStr} from "../abc/group_B.js";
@@ -1099,3 +1100,12 @@ export type G_DC_Innertube=
 	;
 ;
 //#endregion
+export type G_ShortTypeName=
+	|"R_TwoColumnBrowseResults"
+	|"A_OpenPopup"
+	|`C_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Command`>,"Command">[0]}`
+	|`R_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Renderer`>,"Renderer">[0]}`
+	|"GE_Browse"
+	|"RMD_Badge"
+	;
+;

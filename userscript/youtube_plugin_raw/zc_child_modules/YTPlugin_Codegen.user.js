@@ -13,7 +13,8 @@
 // ==/UserScript==
 
 let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
-if(typeof require==="undefined"||page_require!==__module_require__) {
+if(typeof require==="undefined"||page_require!==__module_require__)
+{
 	delete_require=typeof require==="undefined";
 	require=__module_require__;
 	reset_require=true;
@@ -26,64 +27,75 @@ const __module_name__="mod$CodegenService";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-class CodegenService extends ServiceWithAccessors {
+class CodegenService extends ServiceWithAccessors
+{
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";}
-	#R_ThumbnailStr() {
-		/** @private @type {D_Thumbnail} */
+	#R_ThumbnailStr()
+	{
+		/** @private @type {import("../yt_json_types/d/group_D.js").D_Thumbnail} */
 		return "D_Thumbnail";
 	}
 	#simple_gen_names=[
 		"clickTrackingParams",
 	];
 	/** @arg {string} cf @arg {{}} x @arg {string} k */
-	get_renderer_codegen_str(cf,x,k) {
-		for(let first=true;;first=false) {
+	get_renderer_codegen_str(cf,x,k)
+	{
+		for(let first=true;;first=false)
+		{
 			if(!first) break;
 			if(typeof x==="string") return this.generate_code_for_string(k,x);
 			if(typeof x=="number") {return (`this.primitive_of(${k},"number");`);}
 			if(typeof x=="boolean") {return (`if(${k}!==${x}) debugger;`);}
 			if(typeof x!=="object") {debugger; continue;}
-			if(x instanceof Array) {
+			if(x instanceof Array)
+			{
 				let arr_str=this.#generate_body_array_item(k,x);
 				if(arr_str!==null) return arr_str;
 				debugger;
 			}
 			if(x===null) {return (`if(${k}!==null) debugger;`);}
 			if("simpleText" in x) {return (`this.G_Text(${k});`);};
-			/** @private @type {G_Text} */
+			/** @private @type {import("../yt_json_types/ghi/group_G.js").G_Text} */
 			if("runs" in x&&x.runs instanceof Array) {return (`this.G_Text(${k});`);};
 			if(this.#is_Thumbnail(x)) {return (`this.${this.#R_ThumbnailStr()}(${k});`);}
 			if("iconType" in x) {return (`this.T$Icon(${k});`);}
 		}
 		if(x===null) return `if(${k}!==null) debugger;`;
-		if(cf.startsWith("E_")&&k.endsWith("Endpoint")) {
+		if(cf.startsWith("E_")&&k.endsWith("Endpoint"))
+		{
 			let ic=split_string_once(cf,"E_")[1];
 			return `this.DE_${ic}(${k});`;
 		}
-		if(k.endsWith("Endpoint")) {
+		if(k.endsWith("Endpoint"))
+		{
 			let ic=this.uppercase_first(split_string_once(k,"Endpoint")[0]);
 			return `this.E_${ic}(${k});`;
 		}
-		if(k.endsWith("Renderer")) {
+		if(k.endsWith("Renderer"))
+		{
 			let ic=this.uppercase_first(split_string_once(k,"Renderer")[0]);
 			return `this.R_${ic}(${k});`;
 		}
-		if(this.#simple_gen_names.includes(k)) {
+		if(this.#simple_gen_names.includes(k))
+		{
 			return `this.${k}(${k});`;
 		}
 		let ic=this.uppercase_first(k);
 		return `this.D_${ic}(${k});`;
 	}
 	/** @no_mod @arg {string} cf @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
-	#codegen_renderer_body(cf,x,keys,t_name) {
+	#codegen_renderer_body(cf,x,keys,t_name)
+	{
 		/** @private @type {{[x:string]:{}}} */
 		let x1=x;
 		/** @private @type {string[]} */
 		let ret_arr=[];
 		ret_arr.push(`const cf="${t_name}";`);
 		ret_arr.push(`const {${keys.join()},...y}=this.s(cf,x); this.g(y);`);
-		for(let k of keys) {
+		for(let k of keys)
+		{
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
 			if(k=="responseContext") {ret_arr.push(`this.RC$ResponseContext(${k});`); continue;}
@@ -99,27 +111,33 @@ class CodegenService extends ServiceWithAccessors {
 		return no_pad_arr.join("\nd2!");
 	}
 	/** @arg {string} x */
-	get_codegen_name(x) {
+	get_codegen_name(x)
+	{
 		const k=this.uppercase_first(x);
-		if(k.endsWith("Renderer")) {
+		if(k.endsWith("Renderer"))
+		{
 			let ic=this.uppercase_first(split_string_once(k,"Renderer")[0]);
 			return `R_${ic}`;
 		}
 		return `D_${k}`;
 	}
 	/** @no_mod @arg {string} k @arg {unknown[]} x */
-	#generate_body_array_item(k,x) {
+	#generate_body_array_item(k,x)
+	{
 		if(typeof x[0]!=="object") return null;
 		if(x[0]===null) return null;
 		/** @private @type {{[x:string]:{};[x:number]:{};}} */
 		let io=as(x[0]);
 		let c=this.get_name_from_keys(io);
-		if(c) {
-			if(c.endsWith("Renderer")) {
+		if(c)
+		{
+			if(c.endsWith("Renderer"))
+			{
 				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
 				return `this.z(${k},this.R_${ic});`;
 			}
-			if(c.endsWith("Endpoint")) {
+			if(c.endsWith("Endpoint"))
+			{
 				let ic=this.uppercase_first(c);
 				return (`this.z(${k},this.E_${ic});`);
 			}
@@ -131,7 +149,8 @@ class CodegenService extends ServiceWithAccessors {
 	/** @no_mod @arg {string} x */
 	#codegen_padding(x) {return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {return "\t".repeat(g);});}
 	/** @arg {string} cf @arg {string[]} keys @arg {object} x @arg {string} e */
-	#codegen_required_renderer_names(cf,keys,x,e) {
+	#codegen_required_renderer_names(cf,keys,x,e)
+	{
 		let kk=keys.find(v => this.uppercase_first(v)===e);
 		if(!kk) {debugger; return "";}
 		/** @private @type {{}} */
@@ -139,10 +158,12 @@ class CodegenService extends ServiceWithAccessors {
 		/** @private @type {{[x:string]:unknown}} */
 		let x1=ucx;
 		let val_2=x1[kk];
-		let gen_data_name=() => {
+		let gen_data_name=() =>
+		{
 			if(!kk) throw new Error();
 			let kn_pre=this.get_codegen_name(kk);
-			if(this.sm.str_starts_with_rx("R_",kn_pre)) {
+			if(this.sm.str_starts_with_rx("R_",kn_pre))
+			{
 				let np_arr_2=split_string_once(kn_pre,"R_");
 				return `D_${np_arr_2[1]}`;
 			}
@@ -165,7 +186,8 @@ class CodegenService extends ServiceWithAccessors {
 		return tmp0;
 	}
 	/** @arg {string} cf @arg {string[]} req_names @arg {string} code @arg {string[]} keys @arg {object} x */
-	#codegen_renderer_finalize(cf,req_names,code,keys,x) {
+	#codegen_renderer_finalize(cf,req_names,code,keys,x)
+	{
 		let required_names_code_arr=req_names.map(e => this.#codegen_required_renderer_names(cf,keys,x,e));
 		let all_code=required_names_code_arr.join("")+code;
 		let trimmed_code=all_code.split("\n").map(e => e.trim()).filter(e => e).join("\n");
@@ -173,9 +195,11 @@ class CodegenService extends ServiceWithAccessors {
 		return `\n${code_with_padding}`;
 	}
 	/** @no_mod @arg {`A$R_Test`|`${string}Renderer`} t_name */
-	codegen_get_renderer_name(t_name) {
+	codegen_get_renderer_name(t_name)
+	{
 		let np_arr=split_string(t_name,"$");
-		switch(np_arr.length) {
+		switch(np_arr.length)
+		{
 			case 1: {
 				let tc_name=np_arr[np_arr.length-1];
 				let np_arr_2=split_string_once(tc_name,"Renderer");
@@ -194,7 +218,8 @@ class CodegenService extends ServiceWithAccessors {
 	/** @public @template {string} T @arg {T} x @template {string} V @arg {V} v @returns {x is `${string}${V}${string}`} */
 	str_is_including(x,v) {return x.includes(v);}
 	/** @no_mod @arg {unknown} x @arg {string|null} r_name */
-	#codegen_renderer(x,r_name=null) {
+	#codegen_renderer(x,r_name=null)
+	{
 		if(typeof x!=='object') return null;
 		if(x===null) return null;
 		/** @private @type {string[]} */
@@ -202,7 +227,8 @@ class CodegenService extends ServiceWithAccessors {
 		/** @type {string|null} */
 		let k=null;
 		if(r_name) k=r_name;
-		if(k&&this.str_is_including(k,"$")) {
+		if(k&&this.str_is_including(k,"$"))
+		{
 			k=split_string_once(k,"$")[1];
 		}
 		if(!k) k=this.get_name_from_keys(x);
@@ -212,8 +238,10 @@ class CodegenService extends ServiceWithAccessors {
 		/** @type {`A$R_Test`|`${string}Renderer`} */
 		let t_name=as_any(this.uppercase_first(k));
 		let keys=Object.keys(x);
-		if(keys.length===1) {
-			if(keys[0].endsWith("Renderer")) {
+		if(keys.length===1)
+		{
+			if(keys[0].endsWith("Renderer"))
+			{
 				let name=this.codegen_get_renderer_name(t_name);
 				// /** @private @arg {$1} x */
 				// $1(x) {this.H_("$1","$2",x,this.$3);}
@@ -237,12 +265,14 @@ class CodegenService extends ServiceWithAccessors {
 	/** @private @type {string[]} */
 	typedef_cache=[];
 	/** @arg {string} cf @arg {string[]} arr */
-	codegen_all_service_menu_icons(arr,cf) {
+	codegen_all_service_menu_icons(arr,cf)
+	{
 		let arr_items=JSON.stringify(arr,null,"\t");
 		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
 	}
 	/** @api @public @arg {string} cf @arg {object} x */
-	codegen_typedef_impl(cf,x) {
+	codegen_typedef_impl(cf,x)
+	{
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		/** @type {{[U in typeof k]?: unknown}} */
@@ -255,8 +285,10 @@ class CodegenService extends ServiceWithAccessors {
 			cf,keys,is_root: true,
 		});
 		let new_typedef=this.codegen_typedef_base(s,cf,x);
-		if(new_typedef) {
-			if(!this.typedef_cache.includes(new_typedef)) {
+		if(new_typedef)
+		{
+			if(!this.typedef_cache.includes(new_typedef))
+			{
 				this.typedef_cache.push(new_typedef);
 				console.log(new_typedef);
 			}
@@ -266,7 +298,8 @@ class CodegenService extends ServiceWithAccessors {
 	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @arg {boolean} [ret_val] @returns {string|null|void} */
-	codegen_typedef(cf,x,do_break,ret_val) {
+	codegen_typedef(cf,x,do_break,ret_val)
+	{
 		let res=this.codegen_typedef_impl(cf,x);
 		if(ret_val) return res;
 		if(!res) return;
@@ -274,7 +307,8 @@ class CodegenService extends ServiceWithAccessors {
 		if(ci&&ci.includes(res)) return;
 		if(!ci) this.missing_codegen_types.set(cf,ci=[]);
 		ci.push(res);
-		let all_ty_1=ci.map(e => {
+		let all_ty_1=ci.map(e =>
+		{
 			let ss=split_string_once(e,"=");
 			if(ss.length==1) throw new Error();
 			return ss[1].trim().slice(0,-1);
@@ -287,8 +321,9 @@ class CodegenService extends ServiceWithAccessors {
 	}
 	/** @type {Map<string,(string|number)[]>} */
 	cases_map=new Map;
-	/** @arg {CF_D_CaseGen} cf @arg {string|number} val */
-	codegen_case_cache(cf,val) {
+	/** @arg {import("../yt_json_types/abc/group_C.js").CF_D_CaseGen} cf @arg {string|number} val */
+	codegen_case_cache(cf,val)
+	{
 		let arr=this.cases_map.get(cf);
 		if(!arr) {arr=[]; this.cases_map.set(cf,arr);}
 		let val_str=JSON.stringify(val);
@@ -297,32 +332,38 @@ class CodegenService extends ServiceWithAccessors {
 		return {arr,has};
 	}
 	/** @protected @arg {(string|number)[]} known @arg {string} [code] */
-	codegen_case_result(known,code) {
+	codegen_case_result(known,code)
+	{
 		if(code) return known.map(e => `case ${e}: ${code}`).join("\n");
 		return known.map(e => `case ${e}:`).join("\n");
 	}
-	/** @api @public @arg {CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
-	codegen_case(cf,val,code) {
+	/** @api @public @arg {import("../yt_json_types/abc/group_C.js").CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
+	codegen_case(cf,val,code)
+	{
 		let {arr}=this.codegen_case_cache(cf,val);
 		console.log(`-- [js_gen_case:${cf}] --\n\n${this.codegen_case_result(arr,code)}`);
 	}
 	/** @api @public @arg {{arr:(string | number)[]}} obj */
-	codegen_case_ret(obj) {
+	codegen_case_ret(obj)
+	{
 		return this.codegen_case_result(obj.arr);
 	}
-	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
-	codegen_case_key(cf,obj,key,code) {
+	/** @arg {import("../yt_json_types/abc/group_C.js").CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
+	codegen_case_key(cf,obj,key,code)
+	{
 		let val=obj[key];
 		this.codegen_case(cf,val,code);
 	}
 	codegen_group_id=1;
 	/** @private @arg {{[U in string]: unknown}} x */
-	_decode_WCM(x) {
+	_decode_WCM(x)
+	{
 		if("rootVe" in x) {return `M_VE${x.rootVe}`;}
 		return null;
 	}
 	/** @api @public @arg {string} cf @arg {object} x1 */
-	get_codegen_name_obj(cf,x1) {
+	get_codegen_name_obj(cf,x1)
+	{
 		let keys=this.get_keys_of(x1);
 		let s=new JsonReplacerState({
 			text_decoder: this.sm._decoder,
@@ -332,14 +373,17 @@ class CodegenService extends ServiceWithAccessors {
 		let x2=x1;
 		/** @type {{[x:string]:unknown;}} */
 		let x=x2;
-		if(typeof x.type==='string') {
-			return x.type.split(".").map(x => {
+		if(typeof x.type==='string')
+		{
+			return x.type.split(".").map(x =>
+			{
 				if(x.includes("_")) {return x.split("_").map(x => this.uppercase_first(x)).join("");}
 				return this.uppercase_first(x);
 			}).join("$");
 		}
 		let wc=x.webCommandMetadata;
-		if(typeof wc==="object"&&wc!==null) {
+		if(typeof wc==="object"&&wc!==null)
+		{
 			/** @type {{}} */
 			let wo=wc;
 			let dec=this._decode_WCM(wo);
@@ -360,7 +404,8 @@ class CodegenService extends ServiceWithAccessors {
 		["PrefetchHintConfig","R_PrefetchHintConfig"],
 	]);
 	/** @api @public @arg {string} cf @arg {{}} x */
-	make_codegen_group(cf,x,collapsed=true) {
+	make_codegen_group(cf,x,collapsed=true)
+	{
 		let u_name=this.get_codegen_name_obj(cf,x);
 		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
 		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
@@ -368,31 +413,37 @@ class CodegenService extends ServiceWithAccessors {
 		this.codegen_typedef_impl(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
-	/** @api @public @arg {CF_D_STR} cf @arg {string} x */
-	codegen_str(cf,x) {
+	/** @api @public @arg {import("../yt_json_types/abc/group_C.js").CF_D_STR} cf @arg {string} x */
+	codegen_str(cf,x)
+	{
 		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
-		if(x.startsWith("https://")) {
+		if(x.startsWith("https://"))
+		{
 			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
 			return;
 		}
-		if(x.startsWith("http://")) {
+		if(x.startsWith("http://"))
+		{
 			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
 			return;
 		}
 	}
 	/** @api @public @arg {string} o @arg {string} k1 */
-	typedef_json_replace_string(o,k1) {
+	typedef_json_replace_string(o,k1)
+	{
 		const max_str_len=120;
 		if(k1==="apiUrl") return o;
 		if(k1==="targetId") return o;
 		if(k1==="panelIdentifier") return o;
 		if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {return o;}
-		if(o.startsWith("https://")||o.startsWith("http://")) {
+		if(o.startsWith("https://")||o.startsWith("http://"))
+		{
 			let pt=split_string_once(o,"?");
 			if(pt.length===1) return o;
 			return `TYPE::\`${pt[0]}?\${string}\``;
 		}
-		if(o.length>max_str_len) {
+		if(o.length>max_str_len)
+		{
 			console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
 			return "TYPE::string";
 		}
@@ -400,7 +451,8 @@ class CodegenService extends ServiceWithAccessors {
 		if(o.includes("%")) {if(u_ty_count>13) {return "TYPE::string";} }
 		if(k1=="trackingParams") return "TYPE::string";
 		if(k1=="clickTrackingParams") return "TYPE::string";
-		if(k1=="playlistId") {
+		if(k1=="playlistId")
+		{
 			if(o.startsWith("RDMM")) return `TYPE::\`RDMM$\{string}\``;
 			if(o.startsWith("RD")) return "TYPE::`RD${string}`";
 			if(o.startsWith("PL")) return `TYPE::\`PL$\{string}\``;
@@ -415,7 +467,8 @@ class CodegenService extends ServiceWithAccessors {
 		return o;
 	}
 	/** @arg {{[U in string]: unknown}} x */
-	is_GuideEntrySimple(x) {
+	is_GuideEntrySimple(x)
+	{
 		return !!(x.navigationEndpoint
 			&&x.icon
 			&&x.trackingParams
@@ -423,11 +476,13 @@ class CodegenService extends ServiceWithAccessors {
 			&&x.accessibility);
 	}
 	/** @arg {string} x */
-	filter_typedef_part_gen(x) {
+	filter_typedef_part_gen(x)
+	{
 		let x_arr=x.split("\n");
 		x_arr=x_arr.map(e => e.trim());
 		x_arr=x_arr.map(e => e.match(/;$/)? e.slice(0,-1):e);
-		return x_arr.reduce((prev,cur) => {
+		return x_arr.reduce((prev,cur) =>
+		{
 			if(cur==="") return prev+cur;
 			if(cur==="}") return prev+";"+cur;
 			if(cur==="]") return prev+";"+cur;
@@ -436,7 +491,8 @@ class CodegenService extends ServiceWithAccessors {
 		},"");
 	}
 	/** @arg {JsonReplacerState} s @template {{}} T @arg {T} x */
-	get_typedef_part(s,x) {
+	get_typedef_part(s,x)
+	{
 		let gn=this.get_name_from_keys(x);
 		if(!gn) return null;
 		let gr=this.codegen_typedef_base(s,gn,x);
@@ -447,39 +503,47 @@ class CodegenService extends ServiceWithAccessors {
 		if(sr.endsWith(";")) {sr=sr.slice(0,-1);}
 		return sr;
 	}
-	/** @arg {{}} x @returns {T_SE_Signal<{},{}>} */
+	/** @arg {{}} x @returns {import("../yt_json_types/stu/group_T.js").T_SE_Signal<{},{}>} */
 	as_T_SE_Signal=x => as(x);
-	/** @arg {{}} x @returns {TR_MultiPageMenu<{}>} */
+	/** @arg {{}} x @returns {import("../yt_json_types/nop_q/Popup.js").TR_MultiPageMenu<{}>} */
 	as$TR_MultiPageMenu=x => as(x);
-	/** @arg {{}} x @returns {T_Signal<string>} */
+	/** @arg {{}} x @returns {import("../yt_json_types/stu/group_T.js").T_Signal<string>} */
 	as$T_Signal=x => as(x);
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} s @arg {{[U in string|number]: unknown}|Uint8Array} x @arg {string} k1 @returns {JsonReplacementType} */
-	typedef_json_replace_object(s,x,k1) {
-		if(!s.object_store.includes(x)) {
+	typedef_json_replace_object(s,x,k1)
+	{
+		if(!s.object_store.includes(x))
+		{
 			s.object_store.push(x);
 			let mi=s.object_store.indexOf(x);
 			s.parent_map.set(x,[mi,k1]);
 		}
 		let mi=s.object_store.indexOf(x);
-		if(x instanceof Uint8Array) {
+		if(x instanceof Uint8Array)
+		{
 			let res=this.sm._decoder.decode(x);
 			return `TYPE::V_Uint8Array<"${res}">`;
 		}
 		let xi=Object.entries(x);
-		for(let [k_in,val] of xi) {
+		for(let [k_in,val] of xi)
+		{
 			if(s.object_store.includes(val)) continue;
 			s.object_store.push(val);
 			s.parent_map.set(val,[mi,k_in]);
 		}
-		if(s.is_root&&k1==="") {
+		if(s.is_root&&k1==="")
+		{
 			/** @type {{[U in string|number]: unknown}} */
 			let fx={};
 			let fk=Object.keys(x);
-			for(let kk of fk) {
-				if(kk.match(/^\d+$/)) {
+			for(let kk of fk)
+			{
+				if(kk.match(/^\d+$/))
+				{
 					let num=parseInt(kk,10);
-					if(num>=50) {
+					if(num>=50)
+					{
 						fx[`0x${num.toString(16)}`]=x[kk];
 						continue;
 					}
@@ -492,18 +556,23 @@ class CodegenService extends ServiceWithAccessors {
 		}
 		let g=() => this.json_auto_replace(s,x);
 		const {cur_cf: r,key_keep_arr}=s;
-		if(x instanceof Array) {
+		if(x instanceof Array)
+		{
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
 		}
-		if(xi.length===1) {
-			x: if(this.is_GuideEntrySimple(x)&&typeof x.icon==="object"&&x.icon) {
+		if(xi.length===1)
+		{
+			x: if(this.is_GuideEntrySimple(x)&&typeof x.icon==="object"&&x.icon)
+			{
 				/** @type {{iconType?:string}} */
 				let ru=x.icon;
 				if(!ru.iconType) break x;
 				/** @arg {unknown} u @returns {{[x:string]:unknown}|null} */
-				function o(u) {
-					if(typeof u==='object') {
+				function o(u)
+				{
+					if(typeof u==='object')
+					{
 						/** @type {{}|null} */
 						let c=u;
 						return c;
@@ -511,44 +580,51 @@ class CodegenService extends ServiceWithAccessors {
 					return null;
 				}
 				let kk=this.get_keys_of(x);
-				if(this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"])) {
-					if(!o(x.navigationEndpoint)?.browseEndpoint) {
-						/** @type {TD_GuideEntry_EntryData<any>} */
+				if(this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"]))
+				{
+					if(!o(x.navigationEndpoint)?.browseEndpoint)
+					{
+						/** @type {import("../yt_json_types/stu/group_T.js").TD_GuideEntry_EntryData<any>} */
 						console.log("[Generate.TD_GuideEntry_EntryData.wrong_endpoint]",this.get_keys_of(x));
 						break x;
 					}
 					return `TYPE::TD_GuideEntry_EntryData<"${ru.iconType}">`;
 				}
-				/** @type {TD_GuideEntry_Simple<any>} */
-				if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
+				/** @type {import("../yt_json_types/stu/group_T.js").TD_GuideEntry_Simple<any>} */
+				if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"]))
+				{
 					console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(x));
 					break x;
 				}
 				return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 			}
-			x: if(x.signalServiceEndpoint) {
+			x: if(x.signalServiceEndpoint)
+			{
 				let v=this.as_T_SE_Signal(x);
 				let sr=this.get_typedef_part(s,v.signalServiceEndpoint);
 				if(!sr) break x;
 				let wc=this.get_typedef_part(s,v.commandMetadata);
 				let sig_type=`T_SE_Signal<${wc},${sr}>`;
-				/** @type {E_SignalService_SendPost} */
+				/** @type {import("../yt_json_types/e/E.js").E_SignalService_SendPost} */
 				if(sig_type==="T_SE_Signal<M_SendPost,G_ClientSignal>") sig_type="E_SignalService_SendPost";
 				return `TYPE::${sig_type}`;
 			}
-			x: if(x.multiPageMenuRenderer) {
+			x: if(x.multiPageMenuRenderer)
+			{
 				let v=this.as$TR_MultiPageMenu(x);
 				let sr=this.get_typedef_part(s,v.multiPageMenuRenderer);
 				if(!sr) break x;
 				return `TYPE::TR_MultiPageMenu<${sr}>`;
 			}
-			if(x.webCommandMetadata) {
+			if(x.webCommandMetadata)
+			{
 				/** @type {{webCommandMetadata:{sendPost?:true;rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
 				let v=as(x);
 				let u1=v.webCommandMetadata.apiUrl;
 				let u2=v.webCommandMetadata.rootVe;
 				if(u2) return `TYPE::M_VE${u2}`;
-				if(u1) {
+				if(u1)
+				{
 					let ss=this.sm.split_str(u1,"/");
 					if(ss[0]!=="") debugger;
 					let [,a2,a3,...rest]=ss;
@@ -557,57 +633,66 @@ class CodegenService extends ServiceWithAccessors {
 					let cq=this.sm.join_string(rest,"_");
 					return `TYPE::M_${cq}`;
 				}
-				/** @type {M_SendPost} */
+				/** @type {import("../yt_json_types/m/M.js").M_SendPost} */
 				if(this.eq_keys(this.get_keys_of(v.webCommandMetadata),["sendPost"])) return "TYPE::M_SendPost";
 				return x;
 			}
-			x: if(x.accessibilityData) {
-				/** @type {{accessibilityData?:Partial<D_Label>}} */
+			x: if(x.accessibilityData)
+			{
+				/** @type {{accessibilityData?:Partial<import("../yt_json_types/d/group_D.js").D_Label>}} */
 				let xu=x;
 				if(!xu?.accessibilityData?.label) break x;
 				return `TYPE::TD_Accessibility<${JSON.stringify(xu.accessibilityData.label)}>`;
 			}
-			x: if(x.label) {
-				/** @type {Partial<D_Label>} */
+			x: if(x.label)
+			{
+				/** @type {Partial<import("../yt_json_types/d/group_D.js").D_Label>} */
 				let xu=x;
 				if(!xu.label) break x;
 				return `TYPE::TD_Label<${JSON.stringify(xu.label)}>`;
 			}
-			x: if(x.browseEndpoint) {
-				/** @type {Partial<GE_Browse>} */
+			x: if(x.browseEndpoint)
+			{
+				/** @type {Partial<import("../yt_json_types/ghi/group_G.js").GE_Browse>} */
 				let xu=x;
 				if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
 				let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
 				return `TYPE::E_VE${ve_num}`;
 			}
-			x: if(x.urlEndpoint) {
-				/** @type {Partial<E_Url>} */
+			x: if(x.urlEndpoint)
+			{
+				/** @type {Partial<import("../yt_json_types/e/E.js").E_Url>} */
 				let xu=x;
 				if(!(xu.urlEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
 				let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
 				if(ve_num!==83769) break x;
 				return `TYPE::E_Url`;
 			}
-			/** @private @type {G_Text} */
+			/** @private @type {import("../yt_json_types/ghi/group_G.js").G_Text} */
 			if(x.runs&&x.runs instanceof Array) return "TYPE::G_Text";
 			if(x.simpleText) return "TYPE::G_Text";
 			if(x.thumbnails&&x.thumbnails instanceof Array) return `TYPE::${this.#R_ThumbnailStr()}`;
-			/** @private @type {T_Icon<"">} */
+			/** @private @type {import("../yt_json_types/stu/group_T.js").T_Icon<"">} */
 			if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
-			if(x.signal) {
+			if(x.signal)
+			{
 				let sig_type=this.getType$Signal(x);
 				return `TYPE::${sig_type}`;
 			}
-			x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
+			x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility)
+			{
 				let p=s.parent_map.get(x);
 				if(!p) break x;
 				if(p[1]==="owner") {return "TYPE::D_Video_Owner";}
-				if(p[1].endsWith("Renderer")) {
+				if(p[1].endsWith("Renderer"))
+				{
 					let pre_str=this.uppercase_first(p[1]);
 					let res=this.get_short_typename(as(pre_str));
-					if(res[0]) {
+					if(res[0])
+					{
 						let str=res[1];
-						if(this.sm.str_starts_with(str,"R_")) {
+						if(this.sm.str_starts_with(str,"R_"))
+						{
 							let d=split_string_once(str,"R_")[1];
 							return `TYPE::D_${d}`;
 						}
@@ -620,18 +705,20 @@ class CodegenService extends ServiceWithAccessors {
 				console.log(p);
 				debugger;
 			}
-			/** @private @type {D_Accessibility} */
+			/** @private @type {import("../yt_json_types/d/group_D.js").D_Accessibility} */
 			if(x.accessibilityData) return "TYPE::D_Accessibility";
-			/** @private @type {R_GuideEntryData} */
+			/** @private @type {import("../yt_json_types/r/group_R.js").R_GuideEntryData} */
 			if(x.guideEntryData) return "TYPE::R_GuideEntryData";
 			if(x.styleType&&typeof x.styleType==="string") return `TYPE::T_StyleType<"${x.styleType}">`;
 			if(x.sizeType&&typeof x.sizeType==="string") return `TYPE::T_SizeType<"${x.sizeType}">`;
 			if(x.button_id) return `TYPE::ButtonId<"${x.button_id}">`;
-			/** @private @type {D_Label} */
+			/** @private @type {import("../yt_json_types/d/group_D.js").D_Label} */
 			if(x.label) return "TYPE::D_Label";
-			if(x.baseUrl&&"baseUrl" in x&&typeof x.baseUrl==="string") {
+			if(x.baseUrl&&"baseUrl" in x&&typeof x.baseUrl==="string")
+			{
 				let gen_url=x.baseUrl;
-				if(gen_url.startsWith("https://")) {
+				if(gen_url.startsWith("https://"))
+				{
 					let pt=split_string_once(gen_url,"?");
 					if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
 					return `TYPE::T_BaseUrl<\`${pt[0]}?\${string}\`>`;
@@ -639,15 +726,16 @@ class CodegenService extends ServiceWithAccessors {
 				return `TYPE::T_BaseUrl<${x.baseUrl}>`;
 			}
 			if(x.hack&&x.hack===true) return "TYPE::B_Hack";
-		} else {
+		} else
+		{
 			debugger;
 		}
 		if(1 in x) return x;
-		/** @private @type {RC_ResponseContext} */
+		/** @private @type {import("../yt_json_types/r/group_R.js").RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC_ResponseContext";
-		/** @private @type {D_FrameworkUpdates} */
+		/** @private @type {import("../yt_json_types/d/group_D.js").D_FrameworkUpdates} */
 		if(k1==="frameworkUpdates") return "TYPE::R_FrameworkUpdates";
-		/** @private @type {D_LoggingDirectives} */
+		/** @private @type {import("../yt_json_types/d/group_D.js").D_LoggingDirectives} */
 		if(k1==="loggingDirectives") return "TYPE::D_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
@@ -665,10 +753,11 @@ class CodegenService extends ServiceWithAccessors {
 		if(keys.length===1) return this.get_json_replace_type_len_1(s,r,x,keys);
 		if(s.key_keep_arr.includes(s.cur_key)) return x;
 		{
-			/** @type {Partial<Popup_DL_ConfirmDialog>} */
+			/** @type {Partial<import("../yt_json_types/nop_q/Popup.js").Popup_DL_ConfirmDialog>} */
 			let xt=x;
-			if(xt.popup&&xt.popupType) {
-				/** @type {Popup_DL_ConfirmDialog} */
+			if(xt.popup&&xt.popupType)
+			{
+				/** @type {import("../yt_json_types/nop_q/Popup.js").Popup_DL_ConfirmDialog} */
 				let xr={popup: xt.popup,popupType: xt.popupType};
 				return this.x.get("gen_code").D_TypedefGenerator_Popup(xr);
 			}
@@ -679,7 +768,8 @@ class CodegenService extends ServiceWithAccessors {
 		return null;
 	}
 	/** @private @arg {JsonReplacerState} s @arg {string} k1 @arg {unknown} o */
-	typedef_json_replacer(s,k1,o) {
+	typedef_json_replacer(s,k1,o)
+	{
 		s.cur_key=k1;
 		s.next_key(k1,o);
 		if(o===null||o===void 0) return o;
@@ -700,7 +790,8 @@ class CodegenService extends ServiceWithAccessors {
 		return {};
 	}
 	/** @private @arg {JsonReplacerState} s @arg {string} cf @arg {object} x */
-	codegen_typedef_base(s,cf,x) {
+	codegen_typedef_base(s,cf,x)
+	{
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		/** @private @type {{[x: number|string]:{}}} */
@@ -711,11 +802,13 @@ class CodegenService extends ServiceWithAccessors {
 		s.set_cf(cf);
 		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,s),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
-		tc=this.sm.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+		tc=this.sm.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) =>
+		{
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
 		});
-		tc=tc.replaceAll(/\[\s+([^\[\]]*)\s+\]/g,(_a,/**@type {string} */v) => {
+		tc=tc.replaceAll(/\[\s+([^\[\]]*)\s+\]/g,(_a,/**@type {string} */v) =>
+		{
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).filter(e => e).join("\n").trimEnd();
 			return `${vi}:ARRAY_TAG`;
 		});
@@ -724,28 +817,34 @@ class CodegenService extends ServiceWithAccessors {
 		tc=tc.replaceAll(/,$/gm,"");
 		tc=tc.replaceAll(/[^[{;,]$/gm,a => `${a};`);
 		let ret;
-		if(typeof cf==="number") {ret=`\ntype ArrayType_${cf}=${tc}\n`;} else {
+		if(typeof cf==="number") {ret=`\ntype ArrayType_${cf}=${tc}\n`;} else
+		{
 			cf=cf.replaceAll(".","$d$");
 			ret=`\ntype ${cf}=${tc}\n`;
 		}
 		return ret;
 	}
-	/** @param {{[U in string]:unknown}} x @returns {Ret_json_auto_replace_1} */
-	json_auto_replace_1(x) {
+	/** @param {{[U in string]:unknown}} x @returns {import("../yt_json_types/_rtv_wrong/Ret_json_auto_replace_1.js").Ret_json_auto_replace_1} */
+	json_auto_replace_1(x)
+	{
 		let o_keys=this.filter_keys(this.get_keys_of(x));
-		if(o_keys.length===1) {
+		if(o_keys.length===1)
+		{
 			let kk=this.get_name_from_keys(x);
-			if(kk) {
-				/** @type {Ret_json_auto_raw} */
+			if(kk)
+			{
+				/** @type {import("../yt_json_types/_rtv_wrong/Ret_json_auto_raw.js").Ret_json_auto_raw} */
 				let kt=as(kk);
 				let rt=this.uppercase_first(kt);
 				return rt;
 			}
 		}
-		if(o_keys.length>0) {
+		if(o_keys.length>0)
+		{
 			let kk=o_keys[0];
-			if(kk) {
-				/** @type {Ret_json_auto_raw} */
+			if(kk)
+			{
+				/** @type {import("../yt_json_types/_rtv_wrong/Ret_json_auto_raw.js").Ret_json_auto_raw} */
 				let kt=as(kk);
 				let rt=this.uppercase_first(kt);
 				return rt;
@@ -753,14 +852,16 @@ class CodegenService extends ServiceWithAccessors {
 		}
 		return "{}";
 	}
-	/** @arg {Exclude<Ret_json_auto_replace_1,"{}">} type_name @returns {[true,G_ShortTypeName]|[false,"PrefetchHintConfig"]} */
-	get_short_typename(type_name) {
+	/** @type {(type_name:Exclude<import("../yt_json_types/_rtv_wrong/Ret_json_auto_replace_1.js").Ret_json_auto_replace_1,"{}">)=>[true,G_ShortTypeName]|[false,"PrefetchHintConfig"]} */
+	get_short_typename(type_name)
+	{
 		if(type_name==="MetadataBadgeRenderer") return [true,"RMD_Badge"];
 		/** @template {string} O @arg {O} x @arg {U} _sec @template {string} U @returns {asserts x is Exclude<O,`${string}${U}`>}  */
 		function assert_not_ends_with(x,_sec) {x;}
 		{
 			let split_val=split_string_once(type_name,"Action");
-			if(split_val.length===2) {
+			if(split_val.length===2)
+			{
 				let real_val=split_val[0];
 				return [true,`A_${real_val}`];
 			}
@@ -769,7 +870,8 @@ class CodegenService extends ServiceWithAccessors {
 		{
 			const ed="Command";
 			let split_val=split_string_once(type_name,ed);
-			if(split_val.length!==1) {
+			if(split_val.length!==1)
+			{
 				let real_val=split_val[0];
 				return [true,`C_${real_val}`];
 			}
@@ -778,12 +880,14 @@ class CodegenService extends ServiceWithAccessors {
 		{
 			const ed="Endpoint";
 			let split_val=split_string_once(type_name,ed);
-			if(split_val.length!==1) {
+			if(split_val.length!==1)
+			{
 				let real_val=split_val[0];
-				if(real_val==="Browse") {
+				if(real_val==="Browse")
+				{
 					console.log(type_name);
 					debugger;
-					/** @type {GE_Browse} */
+					/** @type {import("../yt_json_types/ghi/group_G.js").GE_Browse} */
 					return [true,"GE_Browse"];
 				}
 				return [true,`E_${real_val}`];
@@ -793,7 +897,8 @@ class CodegenService extends ServiceWithAccessors {
 		{
 			const ed="Renderer";
 			let split_val=split_string_once(type_name,ed);
-			if(split_val.length!==1) {
+			if(split_val.length!==1)
+			{
 				let real_val=split_val[0];
 				return [true,`R_${real_val}`];
 			}
@@ -802,15 +907,18 @@ class CodegenService extends ServiceWithAccessors {
 		return [false,type_name];
 	}
 	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {Ret_get_auto_type_name} */
-	get_auto_type_name(s,x) {
+	get_auto_type_name(s,x)
+	{
 		let type_name=this.json_auto_replace_1(x);
 		if(type_name==="{}") return "{}";
-		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
+		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object")
+		{
 			if(!x.openPopupAction) break x;
-			/** @type {TA_OpenPopup<T_OpenPopup_Dialog<{}>|T_OpenPopup_Toast<{}>>} */
+			/** @type {import("../yt_json_types/nop_q/Popup.js").TA_OpenPopup<import("../yt_json_types/nop_q/Popup.js").T_OpenPopup_Dialog<{}>|import("../yt_json_types/nop_q/Popup.js").T_OpenPopup_Toast<{}>>} */
 			let u=as(x);
 			let at=u.openPopupAction;
-			switch(at.popupType) {
+			switch(at.popupType)
+			{
 				case "DIALOG": {
 					/** @type {string} */
 					let t_name=this.get_auto_type_name(s,at.popup);
@@ -834,13 +942,16 @@ class CodegenService extends ServiceWithAccessors {
 		return `D_${res[1]}`;
 	}
 	/** @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x */
-	json_auto_replace(s,x) {
+	json_auto_replace(s,x)
+	{
 		let type_name_str=this.get_auto_type_name(s,x);
 		return `TYPE::${type_name_str}`;
 	}
 	/** @param {{[U in string]:unknown}} x */
-	decode_PopupTypeMap(x) {
-		switch(x.popupType) {
+	decode_PopupTypeMap(x)
+	{
+		switch(x.popupType)
+		{
 			default: debugger; break;
 			case "DIALOG":
 				let jy=Object.keys(x).filter(e => e!=="popupType").join(":any;");
@@ -850,10 +961,12 @@ class CodegenService extends ServiceWithAccessors {
 		return `TYPE::PopupTypeMap["${x.popupType}"]`;
 	}
 	/** @param {{[U in string]:unknown}} x */
-	getType$Signal(x) {
-		/** @private @type {G_AllSignalTypes} */
+	getType$Signal(x)
+	{
+		/** @private @type {import("../yt_json_types/ghi/group_G.js").G_AllSignalTypes} */
 		let u=as(x);
-		switch(u.signal) {
+		switch(u.signal)
+		{
 			case "CLIENT_SIGNAL": {
 				if(u.actions instanceof Array) return "G_ClientSignal";
 				console.log("[no_actions_arr] %o",u);
@@ -865,7 +978,8 @@ class CodegenService extends ServiceWithAccessors {
 				let action=u.actions[0];
 				if(!action.openPopupAction) debugger;
 				let popup_action=action.openPopupAction;
-				switch(popup_action.popupType) {
+				switch(popup_action.popupType)
+				{
 					default: debugger; break;
 					case "DROPDOWN":
 				}
@@ -885,7 +999,8 @@ class CodegenService extends ServiceWithAccessors {
 		return x;
 	}
 	/** @private @arg {JsonReplacerState} s @arg {string|null} r @param {{}} x @arg {(string | number)[]} keys */
-	get_json_replace_type_len_1(s,r,x,keys) {
+	get_json_replace_type_len_1(s,r,x,keys)
+	{
 		/** @type {{[U in string]:unknown}} */
 		let b=x;
 		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
@@ -1171,9 +1286,11 @@ class CodegenService extends ServiceWithAccessors {
 			//#endregion
 			//#endregion
 			;
-		if(hg) {
+		if(hg)
+		{
 			let hr=g();
-			if(this.sm.str_ends_with(hr,"Command")) {
+			if(this.sm.str_ends_with(hr,"Command"))
+			{
 				let sq=split_string_once(hr,"Command");
 				if(sq[1]==="") {return `TYPE::C_${split_string_once(sq[0],"TYPE::")[1]}`;}
 				console.log(sq);
@@ -1183,7 +1300,8 @@ class CodegenService extends ServiceWithAccessors {
 		}
 		let g_res=g();
 		let k_str=keys.join();
-		if(!this.logged_replace_keys.includes(k_str)) {
+		if(!this.logged_replace_keys.includes(k_str))
+		{
 			this.logged_replace_keys.push(k_str);
 			console.log("[json_maybe_replace]%o\n[%s] [%s] [%s]",b,keys.join(","),g(),r);
 		}
@@ -1192,16 +1310,19 @@ class CodegenService extends ServiceWithAccessors {
 	/** @type {string[]} */
 	logged_replace_keys=[];
 	/** @api @public @arg {string} x1 */
-	generate_depth(x1) {
+	generate_depth(x1)
+	{
 		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);
 		if(!rxr?.groups) return null;
 		let x=rxr.groups.x.trim().split(/([;{}])/).filter(e => e);
 		/** @private @arg {string[]} x */
-		function make_depth_arr(x) {
+		function make_depth_arr(x)
+		{
 			/** @private @type {[number,string][]} */
 			let o=[];
 			let depth=0;
-			for(let v of x) {
+			for(let v of x)
+			{
 				if(v==="{}"[0]) depth++;
 				o.push([depth,v]);
 				if(v==="{}"[1]) depth--;
@@ -1211,8 +1332,10 @@ class CodegenService extends ServiceWithAccessors {
 		let depth_state={ld: 0,};
 		let da=make_depth_arr(x);
 		/** @private @type {string[]} */
-		let r1=da.reduce((a,c) => {
-			if(c[0]===0) {
+		let r1=da.reduce((a,c) =>
+		{
+			if(c[0]===0)
+			{
 				a.push(c[1]);
 				return a;
 			};
@@ -1221,8 +1344,10 @@ class CodegenService extends ServiceWithAccessors {
 			depth_state.ld=c[0];
 			return a;
 		},[""]);
-		let r2=r1.reduce((a,c) => {
-			if(c===";") {
+		let r2=r1.reduce((a,c) =>
+		{
+			if(c===";")
+			{
 				a.push(a.pop()+";","");
 				return a;
 			};
@@ -1231,7 +1356,8 @@ class CodegenService extends ServiceWithAccessors {
 		},[""]);
 		let trimmed_r2=r2.map(e => e.trim());
 		let no_empty_r2=trimmed_r2.filter(e => e);
-		let typedef_members=no_empty_r2.map(e => {
+		let typedef_members=no_empty_r2.map(e =>
+		{
 			let ss=split_string_once(e,":");
 			if(ss.length==1) throw new Error();
 			return ss;
@@ -1239,15 +1365,18 @@ class CodegenService extends ServiceWithAccessors {
 		return new Map(typedef_members);
 	}
 	/** @api @public @arg {unknown} x @arg {string|null} cf @arg {boolean} [w] */
-	codegen_renderer(cf,x,w) {
+	codegen_renderer(cf,x,w)
+	{
 		let gen_obj=this.#codegen_renderer(x,cf);
 		if(w) return gen_obj;
 		console.log(gen_obj);
 		return null;
 	}
 	/** @private @arg {string} k1 @arg {string} x */
-	generate_code_for_string(k1,x) {
-		function gen_str() {
+	generate_code_for_string(k1,x)
+	{
+		function gen_str()
+		{
 			return `this.a_primitive_str(${k1});`;
 		}
 		if(k1==="playlistId"&&x.startsWith("RD")) return `this.str_starts_with("RD",${k1},"string");`;
@@ -1255,7 +1384,8 @@ class CodegenService extends ServiceWithAccessors {
 		let x2=x;
 		if(x2.startsWith("https:")) return gen_str();
 		let u_count=[...new Set(x2.split("").sort())].join("").length;
-		if(x2.includes("%")) {
+		if(x2.includes("%"))
+		{
 			if(u_count>13) return gen_str();
 		}
 		console.log("[unique_chars_count]",k1,[...new Set(x2.split("").sort())].join("").length);
@@ -1264,8 +1394,10 @@ class CodegenService extends ServiceWithAccessors {
 }
 export_(exports => {exports.CodegenService=CodegenService;});
 export_(exports => exports.__module_loaded__=true);
-if(delete_require) {
+if(delete_require)
+{
 	delete window.require;
-} else if(reset_require) {
+} else if(reset_require)
+{
 	require=page_require;
 }

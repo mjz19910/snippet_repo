@@ -34,7 +34,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 
 if(window.__log_module_loading_enabled__) console.log("Load ServiceLoader Plugin");
 class ServiceLoader {
-	/** @constructor @public @arg {ServiceResolverBox<{}>} x */
+	/** @constructor @public @arg {import("../zb_plugin_types/types.js").ServiceResolverBox<{}>} x */
 	constructor(x) {
 		let require=__module_require__;
 		// IndexedDB_Service(7)
