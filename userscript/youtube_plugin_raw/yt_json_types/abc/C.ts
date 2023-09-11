@@ -98,6 +98,7 @@ export type CD_TimedContinuation={timedContinuationData: DC_Timed;};
 import {CF_GetAutoTypename as CF_GetAutoTypename,CF_ShortTypeName} from "../_rtv_wrong/Ret_get_auto_type_name.js";
 import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.js";
 import {T_ExtractImport,T_Split} from "../stu/group_T.js";
+import {P_LogItems} from "../nop_q/P_LogItems.js";
 
 export type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map";
 export type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen";
@@ -227,6 +228,13 @@ export type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">|"CF_TE_
 export type CF_TE_TrackedObj_2=T_ExtractImport<"CF_TE_TrackedObj_2">|"CF_TE_TrackedObj_2";
 export type CF_TR_MultiPageMenu=T_ExtractImport<"CF_TR_MultiPageMenu">|"CF_TR_MultiPageMenu";
 
+export type CF_P_ParamParse=
+	|"_level_1_0"
+	|"_level_2_0._level_2_1"
+	|T_ExtractImport<"CF_P_ParamParse">
+	|P_param_category
+	;
+;
 
 export type GCF_D_Menu=CF_D_Video_Handle|CF_D_Playlist_Omit;
 
@@ -267,10 +275,3 @@ export type P_param_tracking<T extends string="tracking">=[
 	`${T}.trackingParams.f9`,
 	`${T}.trackingParams`
 ][number];
-export type CF_P_ParamParse=
-	|"_level_1_0"
-	|"_level_2_0._level_2_1"
-	|T_ExtractImport<"CF_P_ParamParse">
-	|P_param_category
-	;
-;
