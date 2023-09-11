@@ -351,6 +351,12 @@ export type T_Split<S extends string,D extends string=",">=
 	T_Split_Helper<S,D>:T_Split_Helper<S,D>
 	;
 ;
+export type TS_Test2=T_Split<"g","">;
+type T_StringWhitespace=" "|"\n"|"\t";
+type T_StringTrimStart<T extends string>=T extends `${T_StringWhitespace}${infer P}`? T_StringTrimStart<P>:T;
+type T_StringTrimEnd<T extends string>=T extends `${infer P}${T_StringWhitespace}`? T_StringTrimEnd<P>:T;
+export type T_StringTrim<T extends string>=T_StringTrimEnd<T_StringTrimStart<T>>;
+
 //#endregion
 export type T_VW<T>=T_PArr_1<[T_Param_Child<T,["string",string]>]>;
 export type T_VW2<T,S extends string>=T_PArr_1<[T_Param_Child<T,["string",S]>]>;
