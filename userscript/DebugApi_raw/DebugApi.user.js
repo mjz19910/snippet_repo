@@ -15,8 +15,6 @@
 // @sha1		ce87fbfd
 // @hash_for_version 0.1.2
 
-import {ConnectFlag} from "./support/dbg/ConnectFlag.js";
-
 /* eslint-disable no-undef */
 let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
 if(typeof require==="undefined"||page_require!==__module_require__)
@@ -3083,9 +3081,9 @@ function range_matches(arr,value,index)
 
 class BaseCompression
 {
-	/** @arg {CompressDual} arg0 @returns {DualR_0} */
+	/** @arg {CompressDual} arg0 @returns {import("./support/dbg/DualR_0.js").DualR_0} */
 	compress_result_state_dual(arg0) {return this.compress_result_dual(arg0.arr,arg0.ret);}
-	/** @arg {import("./support/dbg/AltPair.js").AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string, number>[]} dst @returns {DualR_0} */
+	/** @arg {import("./support/dbg/AltPair.js").AltPair<string,number>[]} src @arg {import("./support/dbg/DualR_0.js").AnyOrRepeat2_0<string, number>[]} dst @returns {import("./support/dbg/DualR_0.js").DualR_0} */
 	compress_result_dual(src,dst)
 	{
 		if(this.did_compress(src,dst)) return [true,dst];
@@ -3245,7 +3243,7 @@ class DisabledMulCompression extends MulCompression
 		}
 		return this.compress_result_state(state);
 	}
-	/** @template {RecordKey<symbol>} U @template {InstanceType<U>} T @arg {CompressState<T, import("./support/dbg/AnyOrRepeat_0.js").AnyOrRepeat_0<T>>} state @arg {T} item */
+	/** @template {import("./support/dbg/ConnectFlag.js").RecordKey<symbol>} U @template {InstanceType<U>} T @arg {CompressState<T, import("./support/dbg/AnyOrRepeat_0.js").AnyOrRepeat_0<T>>} state @arg {T} item */
 	compress_rle_T_X(state,item)
 	{
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
@@ -3691,7 +3689,7 @@ class IDValueImpl
 		this.next=next;
 		/** @type {import("./support/dbg/AltPair.js").AltPair<string, number>[]} */
 		this.arr_dual=[];
-		/** @type {AnyOrRepeat2_0<string,number>[]} */
+		/** @type {import("./support/dbg/DualR_0.js").AnyOrRepeat2_0<string,number>[]} */
 		this.arr_dual_compressed=[];
 		/** @type {import("./support/dbg/AnyOrRepeat_0.js").AnyOrRepeat_0<number>[]} */
 		this.arr_rep_num=[];
@@ -3719,8 +3717,6 @@ function get_next({next})
 		throw new Error("Unexpected type");
 	return next;
 }
-
-/** @implements {IDValue_0} */
 class IDValueImpl_0
 {
 	/** @template {{}} T @arg {T[]} arr */
@@ -3748,7 +3744,7 @@ class IDValueImpl_0
 	arr_str;
 	/** @type {number[]} */
 	arr_num;
-	/** @type {AnyOrRepeat2_0<string,number>[]} */
+	/** @type {import("./support/dbg/DualR_0.js").AnyOrRepeat2_0<string,number>[]} */
 	arr_dual_compressed;
 	/** @type {[number,"=",number]|null} */
 	value;
@@ -3781,7 +3777,7 @@ class IDValueImpl_0
 class DoCalc
 {
 	get_result() {return this.m_return_value;}
-	/** @type {DualR_0|null} */
+	/** @type {import("./support/dbg/DualR_0.js").DualR_0|null} */
 	m_return_value=null;
 	run()
 	{
@@ -3882,10 +3878,10 @@ class CompressDual
 	i;
 	/** @type {import("./support/dbg/AltPair.js").AltPair<string,number>[]} */
 	arr=[];
-	/** @type {AnyOrRepeat2_0<string,number>[]} */
+	/** @type {import("./support/dbg/DualR_0.js").AnyOrRepeat2_0<string,number>[]} */
 	ret=[];
 	m_base=new BaseCompression;
-	/** @returns {DualR_0} */
+	/** @returns {import("./support/dbg/DualR_0.js").DualR_0} */
 	try_compress_dual()
 	{
 		let state=this;
@@ -3946,7 +3942,7 @@ function calc_next(stats,obj,max_id)
 	if(next.arr_str)
 		return null;
 	let com=new CompressDual(next.arr_dual);
-	/** @type {DualR_0} */
+	/** @type {import("./support/dbg/DualR_0.js").DualR_0} */
 	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {next.arr_dual=compress_result[1];} else {next.arr_dual_compressed=compress_result[1];}
 	return compress_result;
@@ -4527,17 +4523,17 @@ class FlagHandler
 	is_ack() {return (this.f&2)==2;}
 	get_flags() {return this.f;}
 	valueOf() {return this.f;}
-	/** @arg {ConnectFlag} flags */
+	/** @arg {import("./support/dbg/ConnectFlag.js").ConnectFlag} flags */
 	constructor(flags) {this.f=flags;}
 }
 
 /** @type {1} */
 const tcp_syn=1;
-/** @type {(typeof ConnectFlag)["Syn"]} */
+/** @type {(import("./support/dbg/ConnectFlag.js").ConnectFlagT)["Syn"]} */
 const val_tcp_syn=tcp_syn; val_tcp_syn;
 /** @type {2} */
 const tcp_ack=2;
-/** @readonly @type {(typeof ConnectFlag)["Ack"]} */
+/** @readonly @type {import("./support/dbg/ConnectFlag.js").ConnectFlagT["Ack"]} */
 const val_tcp_ack=tcp_ack; val_tcp_ack;
 
 const ack_win=5000;
@@ -4545,7 +4541,7 @@ class TCPMessage
 {
 	/** @readonly */
 	type="tcp";
-	/** @arg {ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number|null} ack @arg {import("./support/dbg/ConnectionMessage.js").ConnectionMessage["data"]} data */
+	/** @arg {import("./support/dbg/ConnectFlag.js").ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number|null} ack @arg {import("./support/dbg/ConnectionMessage.js").ConnectionMessage["data"]} data */
 	constructor(flags,client_id,seq,ack,data)
 	{
 		this.flags=flags;
@@ -4688,7 +4684,7 @@ class Socket
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.js").ConnectionMessage} tcp_message @arg {ConnectFlag} flags */
+	/** @arg {import("./support/dbg/ConnectionMessage.js").ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.js").ConnectFlag} flags */
 	send_ack(tcp_message,flags)
 	{
 		// seq=number & ack=number;
@@ -4890,7 +4886,7 @@ class ListenSocket
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {import("./support/dbg/ConnectionMessage.js").ConnectionMessage} tcp_message @arg {ConnectFlag} flags */
+	/** @arg {import("./support/dbg/ConnectionMessage.js").ConnectionMessage} tcp_message @arg {import("./support/dbg/ConnectFlag.js").ConnectFlag} flags */
 	send_ack(tcp_message,flags)
 	{
 		let {seq: ack,ack: seq}=tcp_message;
