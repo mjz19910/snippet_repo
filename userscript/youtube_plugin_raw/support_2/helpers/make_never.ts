@@ -1,1 +1,1 @@
-function make_never(): never {throw new TypeError("make_never should not be used at runtime");}
+export function make_never(): never {throw new TypeError("make_never should not be used at runtime");}

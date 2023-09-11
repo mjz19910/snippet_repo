@@ -1,4 +1,6 @@
-namespace hidden_namespace {
+import {T_Split,T_VideoIdStr} from "../yt_json_types/stu/group_T.js";
+
+export namespace hidden_namespace {
 	type AbcChar=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
 	type NumChar=T_Split<"0123456789","">[number];
 	type Char=Uppercase<AbcChar>|AbcChar|NumChar;

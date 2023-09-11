@@ -1,1 +1,3 @@
-export{};declare global {interface Window {ytcfg?: Type_ytcfg;}}
+import {Type_ytcfg} from "./Type_ytcfg.js";
+
+declare global {interface Window {ytcfg?: Type_ytcfg;}}

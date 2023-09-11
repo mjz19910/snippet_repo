@@ -1,3 +1,5 @@
+import {ProcessImport} from "./ProcessImport.js";
+
 export namespace Test2 {
 	export type T2_Type=ProcessImport<"./YTPlugin_HandleTypes.user">;
 	export async function run_test() {

@@ -1,3 +1,5 @@
+import {RequireModuleCache} from "../_module_cache/RequireModuleCache.js";
+
 export {};
 declare global {
 	interface Window {

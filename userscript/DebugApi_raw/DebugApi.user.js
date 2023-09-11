@@ -2776,6 +2776,7 @@ class MappedIterableIterator
 	/** @arg {IterableIterator<CLS_T>} iterator @arg {(arg0:CLS_T)=>CLS_U} mapper */
 	constructor(iterator,mapper)
 	{
+		// @ts-ignore
 		/** @template T,U @this {MappedIterableIterator<T,U>} */
 		this.next=() =>
 		{
