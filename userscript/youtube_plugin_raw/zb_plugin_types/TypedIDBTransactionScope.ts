@@ -1,4 +1,6 @@
-type TypedIDBTransactionScope={
+import {TypedIndexedDB} from "./TypedIDB.js";
+
+export type TypedIDBTransactionScope={
 	tx: IDBTransaction;
 	is_tx_complete: boolean;
 	complete_promise: Promise<Event>;

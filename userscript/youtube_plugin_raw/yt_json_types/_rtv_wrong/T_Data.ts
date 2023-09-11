@@ -1,3 +1,5 @@
+import {T_PArr_1} from "../stu/group_T.js";
+
 export type T_D32<T extends number>=T_PArr_1<[["v_data32",T]]>;
 export type T_D64<T extends bigint>=T_PArr_1<[["v_data64",number[],T]]>;
 export type TV_Str<T extends string>=T_PArr_1<[["v_raw_child",Uint8Array,null,["string",T]]]>;
