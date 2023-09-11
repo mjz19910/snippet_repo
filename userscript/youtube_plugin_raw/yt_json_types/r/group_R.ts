@@ -668,3 +668,4 @@ export type R_MacroMarkersInfoItem={macroMarkersInfoItemRenderer: D_MacroMarkers
 export type R_DropdownFormField={dropdownFormFieldRenderer: D_DropdownFormField;};
 export type R_PaidContentOverlay={paidContentOverlayRenderer: D_PaidContentOverlay;};
 //#endregion R
+export type R_SponsorCommentBadge={sponsorCommentBadgeRenderer: D_SponsorCommentBadge;};
