@@ -1,5 +1,4 @@
-import {CF_P_ParamParse} from "../nop_q/P_LogItems.js";
-import {CF_L_Params} from "./group_C.js";
+import {CF_L_Params,CF_P_ParamParse} from "./group_C.js";
 
 export type ARG_on_player_params_callback_ty_len1<T extends CF_L_Params,U extends CF_P_ParamParse>=[
 	root: T,
