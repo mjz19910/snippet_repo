@@ -372,7 +372,7 @@ export type G_UrlInfoSrc=
 	|{b: "browse_id"; id: string;}
 	;
 ;
-type G_Boxed_StrArr=[
+export type G_Boxed_StrArr=[
 	Join<Extract<G_Boxed_StrExtract,[any,any]>,":">,
 	// 3
 	Join<Extract<G_Boxed_StrExtract,[any,any,any]>,":">,
@@ -384,5 +384,22 @@ type G_Boxed_StrArr=[
 	// 6
 	Join<Extract<G_Boxed_StrExtract,[any,any,any,any,any,any]>,":">
 ];
+export type G_Boxed_StrExtract=G_BoxedDatabaseData['key'] extends infer I?
+	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}:${infer f5}`? [f0,f1,f2,f3,f4,f5]:
+	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}:${infer f4}`? [f0,f1,f2,f3,f4]:
+	I extends `${infer f0}:${infer f1}:${infer f2}:${infer f3}`? [f0,f1,f2,f3]:
+	I extends `${infer f0}:${infer f1}:${infer f2}`? [f0,f1,f2]:
+	I extends `${infer f0}:${infer f1}`? [f0,f1]:[I]:never
+	;
+;
 
 //#endregion
+//#region GR_EY
+export type EY_MacroMarkersList={macroMarkersListEntity: DS_EY_MacroMarkersList;};
+export type EY_Offlineability={offlineabilityEntity: D_EY_Offlineability;};
+export type S_EY_Subscription={subscriptionStateEntity: DS_EY_Subscription;};
+export type S_EY_PlaylistLoop={playlistLoopStateEntity: DS_EY_PlaylistLoop;};
+export type EY_TranscriptTrackSelection={transcriptTrackSelectionEntity: DS_EY_TranscriptTrackSelection;};
+export type S_EY_TranscriptSearchBox={transcriptSearchBoxStateEntity: DS_EY_TranscriptSearchBox;};
+//#endregion
+
