@@ -1,3 +1,8 @@
+import {D_Survey_Watch,D_PaidDigitalGoods} from "../d/group_D/D.js";
+import {DC_GetDownload} from "../d/group_D/DC.js";
+import {TE_Endpoint_1_Generic,TE_Endpoint_2,TE_Endpoint_1} from "../stu/mod/group_T.js";
+import {AD_AccountItem,AD_AddChatItem,AD_AddToGuideSection,AD_AddToToast,AD_AppendContinuationItems,AD_ChangeEngagementPanelVisibility,AD_GetMultiPageMenu,AD_HideEnclosing,AD_HideEngagementPanelTargetId,AD_RemoveFromGuideSection,AD_ReplaceEnclosing,AD_ReplayChatItem,AD_SendFeedback,AD_SetActivePanelItem,AD_ShowEngagementPanelScrim,AD_Signal,AD_UndoFeedback,AD_WatchNextContinuation,AD_UpdateChannelSwitcherPage,AD_DateText,AD_Description,AD_UpdateEngagementPanel,AD_UpdateNotificationsUnseenCount,AD_SubscribeButton,AD_Title,AD_ToggleButtonText,AD_ViewCount} from "./AD.js";
+
 //#region TA_
 export type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId; continuationItems: T_ItemType[];};
 export type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
@@ -59,7 +64,7 @@ export type AU_ToggleButtonText={updateToggleButtonTextAction: AD_ToggleButtonTe
 export type AU_Viewership={updateViewershipAction: AD_ViewCount;};
 //#endregion
 
-type AC_GetDownload={
+export type AC_GetDownload={
 	clickTrackingParams: string;
 	getDownloadActionCommand: DC_GetDownload;
 };

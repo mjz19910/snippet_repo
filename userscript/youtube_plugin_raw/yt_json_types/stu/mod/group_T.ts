@@ -8,6 +8,7 @@ import {D_TargetIdUuid,DU_EndpointKey} from "../../d/mod_D/DU_T/DU.js";
 import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions} from "../../ghi/_group.mod/G.js";
 import {D_FormatItem_SignatureCipher_SP} from "../../ghi/_group.mod/GU.js";
 import {KM_TrackingObj} from "../../k/KM.js";
+import {NS_UnionToPartial} from "../../nop_q/Namespaces.js";
 import {R_Comment,R_ContinuationItem,R_RichItem,R_CommentThread,R_GuideEntryData,R_RelatedChipCloud,RC_ResponseContext} from "../../r/R.js";
 
 //#region GetNumKey
