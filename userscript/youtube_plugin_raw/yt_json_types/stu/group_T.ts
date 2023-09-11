@@ -13,6 +13,7 @@ import {Join} from "../../support_1/Join.js";
 import {M_SetSetting} from "../m/M.js";
 import {make_item_group} from "../m/make_item_group.js";
 import {R_GridChannel} from "../r/r_sub/r/R_GridChannel.js";
+import {CF_Generated} from "../../zd_gen_CF/export_gen.js";
 
 //#region GetNumKey
 export type T_GetKeyMap<T,U extends keyof T,KM>=Extract<KM[Extract<keyof KM,U>],string>|T_MakeNumFieldFmt<T,U,Extract<U,number>,keyof KM,T_D32<number>|undefined>;
