@@ -20,3 +20,4 @@ export type V_RawValue=
 	|["V_ParamMapType",V_ParamMapType]
 	|["binary",Uint8Array];
 ;
+export type V_RawBox=["raw",V_RawValue];

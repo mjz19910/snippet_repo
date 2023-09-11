@@ -84,3 +84,5 @@ export type RetParam_raw_child=
 	|`TYPE::["raw_child",${Ret_gen_json},${Ret_gen_json},${Ret_gen_json}]`
 	;
 ;
+export type V_ParamArrBox=["v_param_arr",V_Param[]];
+export type V_ParamObj={[x: number]: V_ParamArrBox;};
