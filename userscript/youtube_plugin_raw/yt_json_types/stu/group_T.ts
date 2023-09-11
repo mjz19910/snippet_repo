@@ -8,7 +8,7 @@ import {KM_TrackingObj} from "../k/KM.js";
 import {NS_UnionToPartial} from "../nop_q/Namespaces.js";
 import {R_Comment,R_ContinuationItem,R_RichItem,R_CommentThread,R_GuideEntryData,R_RelatedChipCloud,RC_ResponseContext} from "../r/group_R.js";
 import {CF_P_ParamParse} from "../nop_q/P_LogItems.js";
-import {CF_L_Params} from "../abc/C.js";
+import {CF_L_Params} from "../abc/group_C.js";
 import {V_ParamMapValue,V_RawValue} from "../vw/group_V.js";
 import {Join} from "../../support_1/Join.js";
 import {M_SetSetting} from "../m/M.js";

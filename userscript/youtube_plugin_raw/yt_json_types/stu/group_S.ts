@@ -1,4 +1,4 @@
-import {C_ScrollToEngagementPanel} from "../abc/C.js";
+import {C_ScrollToEngagementPanel} from "../abc/group_C.js";
 import {D_LoggingDirectives} from "../d/group_D.js";
 import {DU_Browse_Id,DU_TargetId_ShoppingPanel_EntryPoint,D_ChanLoc} from "../d/mod_D/DU_T/DU.js";
 import {G_EngagementPanelSectionShowCommands} from "../ghi/group_G.js";
