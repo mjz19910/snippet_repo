@@ -493,3 +493,32 @@ export type RC_WR_ContextExtension={
 export type R_AdFeedback={adFeedbackRenderer: D_AdFeedback;};
 //#endregion
 export type R_PlaylistLoopButton={playlistLoopButtonRenderer: D_PlaylistLoopButton;};
+//#region R_AttachmentElement
+export type D_Sources={
+	sources: {
+		url: "https://www.gstatic.com/youtube/img/watch/yt_favicon.png";
+	}[];
+};
+export type D_Image={image: D_Sources;};
+export type D_ImageType={imageType: D_Image;};
+export type S_DimensionUnitPoint="DIMENSION_UNIT_POINT";
+export type D_DimensionUnit<T_Value,T_Unit=S_DimensionUnitPoint>={
+	value: T_Value;
+	unit: T_Unit;
+};
+export type D_LayoutProperties={
+	height: D_DimensionUnit<10>;
+	width: D_DimensionUnit<14>;
+};
+export type R_LayoutProperties={layoutProperties: D_LayoutProperties;};
+export type D_AttachmentElement={
+	type: D_ImageType;
+	properties: R_LayoutProperties;
+};
+export type R_AttachmentElement={
+	startIndex: number;
+	length: number;
+	element: D_AttachmentElement;
+	alignment: "ALIGNMENT_VERTICAL_CENTER";
+};
+//#endregion

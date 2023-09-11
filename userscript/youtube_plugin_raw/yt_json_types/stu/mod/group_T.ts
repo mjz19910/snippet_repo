@@ -8,7 +8,7 @@ import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions} from "../../ghi/gro
 import {D_FormatItem_SignatureCipher_SP} from "../../ghi/_group.mod/GU.js";
 import {KM_TrackingObj} from "../../k/KM.js";
 import {NS_UnionToPartial} from "../../nop_q/Namespaces.js";
-import {R_Comment,R_ContinuationItem,R_RichItem,R_CommentThread,R_GuideEntryData,R_RelatedChipCloud,RC_ResponseContext} from "../../r/R.js";
+import {R_Comment,R_ContinuationItem,R_RichItem,R_CommentThread,R_GuideEntryData,R_RelatedChipCloud,RC_ResponseContext} from "../../r/group_R.js";
 
 //#region GetNumKey
 export type T_GetKeyMap<T,U extends keyof T,KM>=Extract<KM[Extract<keyof KM,U>],string>|T_MakeNumFieldFmt<T,U,Extract<U,number>,keyof KM,T_D32<number>|undefined>;
