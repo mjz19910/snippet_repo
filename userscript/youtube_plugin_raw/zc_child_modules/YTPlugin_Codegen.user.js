@@ -906,7 +906,7 @@ class CodegenService extends ServiceWithAccessors
 		}
 		return [false,type_name];
 	}
-	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {G_Ret_get_auto_type_name} */
+	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {import("../yt_json_types/ghi/group_G.js").G_Ret_get_auto_type_name} */
 	get_auto_type_name(s,x)
 	{
 		let type_name=this.json_auto_replace_1(x);
