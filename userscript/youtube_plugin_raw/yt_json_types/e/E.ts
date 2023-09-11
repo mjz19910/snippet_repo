@@ -3,7 +3,7 @@ import {DS_CreatePlaylist} from "../d/group_D.js";
 import {DC_Params} from "../d/group_D/group_DC.js";
 import {DE_VE3832_Watch,DE_Url} from "../d/group_DE/DE_LongObjects.js";
 import {G_ClientSignal,G_Text} from "../ghi/group_G.js";
-import {TE_Endpoint_3,TE_SetSetting,TE_Endpoint_2,T_SE_Signal,TE_Endpoint_NoTrack_3,T_BaseUrl,TM_Gen} from "../stu/mod/group_T.js";
+import {TE_Endpoint_3,TE_SetSetting,TE_Endpoint_2,T_SE_Signal,TE_Endpoint_NoTrack_3,T_BaseUrl,TM_Gen} from "../stu/group_T.js";
 
 //#region Endpoints (E_)
 export type E_AddToPlaylistService=TE_Endpoint_3<"addToPlaylistServiceEndpoint",DE_AddToPlaylistService,M_AddToPlaylistService>;

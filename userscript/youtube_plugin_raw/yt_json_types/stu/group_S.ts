@@ -1,4 +1,12 @@
-//#region S_
+import {C_ScrollToEngagementPanel} from "../abc/C.js";
+import {D_LoggingDirectives} from "../d/group_D.js";
+import {DU_Browse_Id,DU_TargetId_ShoppingPanel_EntryPoint,D_ChanLoc} from "../d/mod_D/DU_T/DU.js";
+import {G_EngagementPanelSectionShowCommands} from "../ghi/group_G.js";
+import {A_LoadingAccountMenu,A_LoadingNotificationsMenu} from "../nop_q/Popup.js";
+import {R_AdsEngagementPanelContent,R_ClipSection,R_ContinuationItem,R_EngagementPanelTitleHeader,R_MacroMarkersList,R_ProductList,R_SectionList,R_StructuredDescriptionContent,ToKeyValue} from "../r/group_R.js";
+import {T_ShortsSurfaceIdentifier} from "./group_T.js";
+
+//#region S
 export type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU"; actions: A_LoadingAccountMenu[];};
 //#endregion
 //#region SI_DB
@@ -85,11 +93,11 @@ export type SI_VE139722_EngagementPanel={
 };
 //#endregion
 //#region SP_
-type SP_GFeedbackServiceRouteParam={
+export type SP_GFeedbackServiceRouteParam={
 	key: "route";
 	value: D_ChanLoc;
 };
-type SP_GFeedbackVarMap={
+export type SP_GFeedbackVarMap={
 	browse_id_prefix: "";
 	browse_id: DU_Browse_Id;
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
@@ -107,16 +115,16 @@ type SP_GFeedbackVarMap={
 	num_shelves: "1";
 	premium_membership: "non_member";
 };
-type SP_GFeedbackServiceParams=SP_GFeedbackServiceRouteParam|ToKeyValue<SP_GFeedbackVarMap>;
-type SP_GoogleHelpServiceObj={
+export type SP_GFeedbackServiceParams=SP_GFeedbackServiceRouteParam|ToKeyValue<SP_GFeedbackVarMap>;
+export type SP_GoogleHelpServiceObj={
 	browse_id: DU_Browse_Id;
 	browse_id_prefix: "";
 };
-type SP_GuidedHelp_SPs={
+export type SP_GuidedHelp_SPs={
 	service: "GUIDED_HELP";
 	params: ToKeyValue<SP_GuidedHelpState>[];
 };
-type SP_GuidedHelpState={
+export type SP_GuidedHelpState={
 	logged_in: "0"|"1";
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
 };
@@ -131,4 +139,26 @@ export type SU_SignalStr=
 	|"TOGGLE_TRANSCRIPT_TIMESTAMPS"
 	;
 ;
+//#endregion
+
+export interface S_MapState {
+	set_entry(key_pos: number,value_pos: number): void;
+}
+export type S_VideoGoodPutShape={
+	id: string;
+	source: string;
+	range: string;
+	expire: `${number}`;
+	ip: string;
+	ms: string;
+	mm: string;
+	pl: string;
+	nh: string;
+	sparams: string;
+	signature: `${string}.${string}`;
+	key: string;
+};
+//#endregion
+//#region Signal
+export type Signal_GetNotificationsMenu={signal: "GET_NOTIFICATIONS_MENU"; actions: A_LoadingNotificationsMenu[];};
 //#endregion

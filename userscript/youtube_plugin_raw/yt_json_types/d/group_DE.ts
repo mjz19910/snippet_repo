@@ -34,7 +34,7 @@ import {O_DU_Persistence} from "../nop_q/O.js";
 import {A_ShareEntityService} from "../nop_q/Popup.js";
 import {R_AdFeedback,R_VssLoggingContext,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_WatchEndpointMusicConfig,R_ReelPlayerOverlay} from "../r/group_R.js";
 //#endregion
-import {T_EnumStr, T_MutType, T_Signal} from "../stu/mod/group_T.js";
+import {T_EnumStr, T_MutType, T_Signal} from "../stu/group_T.js";
 import {D_HideEnclosingContainer,D_LikeApi,D_PlaylistId,D_Thumbnail} from "./group_D.js";
 import {DC_Params} from "./group_DC.js";
 import {T_IdTemplate,D_UserIdStr,DE_U_InternalUrl,DE_U_RedirectUrl,DE_U_ExternalUrl,DE_U_ChannelUrl} from "./mod_D/DU_T/DU.js";

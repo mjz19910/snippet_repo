@@ -1,6 +1,6 @@
 import {DE_VE3611,DE_VE3854,DE_VE5754,DE_VE6827,DE_VE11487,DE_VE23462,DE_VE42352,DE_VE96368} from "../d/group_DE/DE_VE.js";
 import {M_VE12924} from "../r/RS.js";
-import {TM_Gen,TE_Endpoint_3} from "../stu/mod/group_T.js";
+import {TM_Gen,TE_Endpoint_3} from "../stu/group_T.js";
 
 export type TM_VE<T extends number>=TM_Gen<{rootVe: T;}>;
 export type TE_VE<T extends number>=TE_Endpoint_3<"browseEndpoint",any,TM_VE<T>>;

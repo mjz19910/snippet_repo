@@ -6,7 +6,7 @@ import {D_Button} from "../d/mod_D/D_T/D_Button.js";
 import {E_Watch} from "../e/E.js";
 import {E_VE3854,E_VE6827,E_VE96368} from "../e/GR_E_VE.js";
 import {G_RS_Page_Playlist,G_ThumbnailOverlayItem} from "../ghi/group_G.js";
-import {T_MapEntry,T_RidFormat} from "../stu/mod/group_T.js";
+import {T_MapEntry,T_RidFormat} from "../stu/group_T.js";
 import {DC_MusicShelf,DC_PlaylistPanel,D_AccountItem,D_AdActionInterstitial,D_AutomixPreviewVideo,D_BrowserMediaSessionRenderer,D_LiveChatItemList,D_LiveChatMessageInput,D_LiveChatParticipantsList,D_LiveChatTicker,D_MusicResponsiveListItem,D_MusicShelfDivider,D_ReportFormModal,D_VideoMastheadAdV3} from "../z/ZD_empty_obj.js";
 import {D_PaidContentOverlay,RS_Browse,RS_ChannelPage,RS_Page_Browse,RS_SearchPage} from "./RS.js";
 import {D_MacroMarkersInfoItem} from "./r_sub/r/D_MacroMarkersInfoItem.js";
@@ -20,7 +20,7 @@ import {D_UserIdStr,T_IdTemplate} from "../d/mod_D/DU_T/DU.js";
 import {E_NotificationOptOut,E_RecordNotificationInteractions} from "../e/E.js";
 import {G_SE_MenuService,G_Text} from "../ghi/group_G.js";
 import {A_NotificationMenuPopup,A_NotificationToast,A_PdgBuyFlow,TA_OpenPopup_Empty} from "../nop_q/Popup.js";
-import {T_Icon} from "../stu/mod/group_T.js";
+import {T_Icon} from "../stu/group_T.js";
 //#region RCA
 export type RCA_RelevantStateTags={relevantStateTags: B_StateTag[];};
 //#endregion
@@ -680,8 +680,8 @@ import {GU_VE3611_2,GU_VE3611_3} from "../ghi/_group.mod/GU.js";
 import {GE_ResponseReceived,GE_Browse} from "../ghi/g_.mod/group_GE.js";
 import {G_Text,G_BrowseContents,G_BrowseHeader,G_Browse_MD,G_BrowseSidebar,G_GuideItem,G_NextContents} from "../ghi/group_G.js";
 import {A_GetSystemMenu,TA_OpenPopup_Empty} from "../nop_q/Popup.js";
-import {T_Icon,T_AnyObjectOrEmpty,T_Command_TP} from "../stu/mod/group_T.js";
-import {UMA_Item} from "../stu/mod/group_U.js";
+import {T_Icon,T_AnyObjectOrEmpty,T_Command_TP} from "../stu/group_T.js";
+import {UMA_Item} from "../stu/group_U.js";
 import {RC_ResponseContext,R_ReelPlayerOverlay,R_DesktopTopbar,R_EngagementPanelSectionList,R_CompactLink,RC_SectionList,R_AlertWithButton,R_MicroformatData,R_MusicThumbnail,R_TwoColumnBrowseResults,R_C4TabbedHeader,R_Channel_MD,RC_LiveChat,R_PlayerOverlay,R_CinematicContainer,RC_PlaylistPanel,R_ReportFormModal,R_DesktopWatchAds,R_PlayerCaptionsTracklist,R_PlayerMicroformat,R_CardCollection,R_PlayerAttestation,R_VideoQualityPromo,R_AdPlacement,R_Endscreen,R_PaidContentOverlay,R_PlayerAnnotationsExpanded,R_PlaylistHeader,R_Playlist_MD,R_PlaylistSidebar,R_TwoColumnSearchResults,R_SettingsSidebar,R_SubscriptionNotificationToggleButton,R_TabbedSearchResults,RC_MusicShelf,R_MusicHeader} from "./group_R.js";
 
 //#region RS (Response)

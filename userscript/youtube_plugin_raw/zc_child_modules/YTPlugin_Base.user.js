@@ -38,7 +38,7 @@ function as_any(e,x=e) {return x;}
 export_(exports => {exports.as_any=as_any;});
 //#endregion
 //#region helper
-/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/stu/mod/group_T.js").T_SplitOnce<S,D>} */
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {import("../yt_json_types/stu/group_T.js").T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(","))
 {
 	if(!s) {debugger; return as_any([]);}

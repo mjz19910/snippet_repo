@@ -18,7 +18,7 @@ import {NavFinishDetail_Search} from "../r/r_sub/n/NavFinishDetail_Search.js";
 import {NavFinishDetail_Settings} from "../r/r_sub/n/NavFinishDetail_Settings.js";
 import {NavFinishDetail_Shorts} from "../r/r_sub/n/NavFinishDetail_Shorts.js";
 import {SI_DB_EngagementPanel_Ads,SI_DB_EngagementPanel_ClipCreate,SI_DB_EngagementPanel_MacroMarkers_AutoChapters,SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters} from "../stu/mod/group_SI.js";
-import {T_SplitOnce,T_UserFeedbackEndpointProductSpecificValueData} from "../stu/mod/group_T.js";
+import {T_SplitOnce,T_UserFeedbackEndpointProductSpecificValueData} from "../stu/group_T.js";
 
 //#region G_RS
 export type G_RS_Page_Playlist=RS_PlaylistPage|RS_VE5754_Page_Playlist;

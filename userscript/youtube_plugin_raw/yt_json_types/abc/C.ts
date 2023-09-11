@@ -8,7 +8,7 @@ import {G_DE_MutationItem,G_FollowUpOption,G_Text} from "../ghi/group_G.js";
 import {M_Browse,M_GetPdgBuyFlow,M_GetSurvey,M_Next} from "../m/M.js";
 import {R_ContinuationItem} from "../r/group_R.js";
 import {SI_VE76278_EngagementPanel} from "../stu/mod/group_SI.js";
-import {TE_Endpoint_2,TE_Endpoint_3,TE_Endpoint_Opt_3,TR_ItemSection_3,TR_SectionListItem_3_Empty,T_DC_Content,T_DC_Content_2} from "../stu/mod/group_T.js";
+import {TE_Endpoint_2,TE_Endpoint_3,TE_Endpoint_Opt_3,TR_ItemSection_3,TR_SectionListItem_3_Empty,T_DC_Content,T_DC_Content_2} from "../stu/group_T.js";
 import {A_GetSurvey} from "./A.js";
 
 //#region Commands
@@ -97,7 +97,7 @@ export type CD_TimedContinuation={timedContinuationData: DC_Timed;};
 //#region CF
 import {CF_GetAutoTypename as CF_GetAutoTypename, CF_ShortTypeName} from "../_rtv_wrong/Ret_get_auto_type_name.js";
 import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.js";
-import {T_ExtractImport, T_Split} from "../stu/mod/group_T.js";
+import {T_ExtractImport, T_Split} from "../stu/group_T.js";
 
 export type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map";
 export type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen";

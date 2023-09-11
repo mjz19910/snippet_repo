@@ -6,7 +6,7 @@ import {G_ChatItem,G_Text,G_WatchNext} from "../ghi/group_G.js";
 import {TR_MultiPageMenu_Empty,A_ConfirmDialog} from "../nop_q/Popup.js";
 import {R_GuideEntry,R_NotificationText,RA_ReelDismissal,RA_NotificationMulti,R_ChannelSwitcherPage,R_Transcript,R_VideoViewCount,RA_Notification} from "../r/group_R.js";
 import {SU_SignalStr} from "../stu/mod/group_SU_StringUnion.js";
-import {TB_ContinuationItemMap,T_Item,T_Items,T_Menu,T_Page} from "../stu/mod/group_T.js";
+import {TB_ContinuationItemMap,T_Item,T_Items,T_Menu,T_Page} from "../stu/group_T.js";
 import {TA_CreateObjectFromContinuationMap,A_AddChatItem} from "./A.js";
 import {B_Hack} from "./B.js";
 
