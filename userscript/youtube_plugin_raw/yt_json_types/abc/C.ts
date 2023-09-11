@@ -1,3 +1,16 @@
+//#region group_C
+
+import {D_RunAttestation,D_TimestampWithNanos,D_UiTargetId} from "../d/group_D.js";
+import {DC_AddToPlaylist,DC_AdsControlFlowOpportunityReceived,DC_ChangeKeyedMarkersVisibility,DC_EngagementPanelHeaderShowNavigationButton,DC_Generic_CTP,DC_Invalidation,DC_Params,DC_ReloadContinuationItems,DC_RepeatChapter} from "../d/group_DC.js";
+import {D_UserIdStr,T_IdTemplate} from "../d/mod_D/DU_T/DU.js";
+import {G_DC_CommandExecutor_CommandItem,G_DC_Innertube} from "../ghi/_group.mod/G_DC.js";
+import {G_DE_MutationItem,G_FollowUpOption,G_Text} from "../ghi/group_G.js";
+import {M_Browse,M_GetPdgBuyFlow,M_GetSurvey,M_Next} from "../m/M.js";
+import {R_ContinuationItem} from "../r/R.js";
+import {SI_VE76278_EngagementPanel} from "../stu/mod/group_SI.js";
+import {TE_Endpoint_2,TE_Endpoint_3,TE_Endpoint_Opt_3,TR_ItemSection_3,TR_SectionListItem_3_Empty,T_DC_Content,T_DC_Content_2} from "../stu/mod/group_T.js";
+import {A_GetSurvey} from "./A.js";
+
 //#region Commands
 export type MC_Continuation=M_Next|M_Browse;
 export type C_Continuation=
@@ -34,7 +47,7 @@ export type C_ScrollToEngagementPanel=TE_Endpoint_2<"scrollToEngagementPanelComm
 export type C_ShowReloadUi=TE_Endpoint_2<"showReloadUiCommand",DC_ShowReloadUi>;
 export type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC_UpdateToggleButtonState>;
 //#endregion
-//#region Command Data
+//#region DC (Command Data)
 export type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
 export type DC_ChangeMarkersVisibility={entityKeys: string[]; isVisible: boolean;};
 export type DC_ChipUniqueId={chipUniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";};
@@ -63,7 +76,7 @@ export type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,
 export type DC_ShowReloadUi={targetId: D_UiTargetId;};
 export type DC_Timed={continuation: string; timeoutMs: D_TimeoutMs;};
 export type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION"; toggled: false;};
-//#endregion
+//#endregion DC (Command Data)
 export type DR_DC_EntityBatchUpdate={mutations: G_DE_MutationItem[]; timestamp?: D_TimestampWithNanos;};
 export type CP_Tracking={clickTrackingParams: string;};
 export type CR_ContinuationItemsFor<T,U,V extends {continuationItems: any;}>={
@@ -71,3 +84,13 @@ export type CR_ContinuationItemsFor<T,U,V extends {continuationItems: any;}>={
 	targetId: T;
 	continuationItems: V["continuationItems"];
 };
+//#endregion group_C
+//#region CD (ContinuationData)
+export type CD_Invalidation={invalidationContinuationData: DC_Invalidation;};
+export type CD_LiveChatReplay={liveChatReplayContinuationData: DC_LiveChatReplay;};
+export type CD_Next={nextContinuationData: DC_Next;};
+export type CD_NextRadio={nextRadioContinuationData: DC_NextRadio;};
+export type CD_PlayerSeek={playerSeekContinuationData: DC_PlayerSeek;};
+export type CD_Reload={reloadContinuationData: DC_Reload;};
+export type CD_TimedContinuation={timedContinuationData: DC_Timed;};
+//#endregion

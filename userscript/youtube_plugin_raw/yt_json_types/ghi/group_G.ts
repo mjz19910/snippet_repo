@@ -392,8 +392,63 @@ export type G_Boxed_StrExtract=G_BoxedDatabaseData['key'] extends infer I?
 	I extends `${infer f0}:${infer f1}`? [f0,f1]:[I]:never
 	;
 ;
-
+//#region G_BoxedDatabaseData
+export type D_ManyValue={
+	l: "many";
+	z: [any[][]];
+};
+export type D_ArrValue={
+	l: "arr";
+	z: [any[]];
+};
+export type D_ExactValue={
+	l: "one";
+	z: [any];
+};
+export type DST_Group={
+	key: `boxed_id:${string}:${string}`;
+	z: [make_item_group<any>];
+	_z: [string,string];
+};
+export type DST_SaveId={
+	key: "boxed_id:save_id";
+	z: [number];
+	_z: ["save_id"];
+};
+export type DST_LoadId={
+	key: "boxed_id:load_id";
+	z: [number];
+	_z: ["load_id"];
+};
+export type G_BoxedDatabaseData=DST_SaveId|DST_LoadId|DST_Group;
 //#endregion
+export type G_BoxedInner=[1,any];
+	;
+;
+export type Ret_w_dst=
+	|[
+		true,1,
+		[
+			x1: "",
+			x2: string
+		],
+		[{}]
+	]
+	|[
+		true,2,
+		[
+			x1: "",
+			x2: ""
+		],
+		[{}]
+	]
+	|[false,4,[x1: ""],[any,any]]
+	|[false,5,[],[any,any]]
+	|[false,6,[],[]]
+	;
+;
+export type U1=Ret_w_dst[2];
+//#endregion g.mod
 //#region GR_EY
 export type EY_MacroMarkersList={macroMarkersListEntity: DS_EY_MacroMarkersList;};
 export type EY_Offlineability={offlineabilityEntity: D_EY_Offlineability;};
