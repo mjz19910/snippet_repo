@@ -1,3 +1,5 @@
+import {G_BoxedDatabaseData} from "../ghi/group_G.js";
+
 export function cache_item_decompose_info_0_info_0(x: G_BoxedDatabaseData) {
 	return x;
 }
