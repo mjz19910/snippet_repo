@@ -3,7 +3,7 @@ import {Decay} from "../../support_1/parse_url/Decay.js";
 import {D_UrlFormat,D_CompactVideo} from "../d/group_D.js";
 import {T_DistributedKeyof,T_SplitOnce} from "../stu/group_T.js";
 
-namespace NS_DP_Parse {
+export namespace NS_DP_Parse {
 	type GA_ParseUrlStr_1=[T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1]];
 	export type GA_ParseUrlStr_2=[
 		...GA_ParseUrlStr_1,
@@ -22,7 +22,7 @@ namespace NS_DP_Parse {
 	export type ParseUrlStr_4=GA_ParseUrlStr[4];
 	export type ParseApiUrlStr=T_SplitOnce<Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["api",...any]>[1],"/">[1];
 }
-namespace NS_DD_CompactVideoTest {
+export namespace NS_DD_CompactVideoTest {
 	type SM1="videoId,thumbnail,title,longBylineText,publishedTimeText,viewCountText,lengthText,navigationEndpoint,shortBylineText";
 	type CT="channelThumbnail";
 	type ED1="trackingParams,shortViewCountText,menu,thumbnailOverlays,accessibility,richThumbnail";
@@ -32,7 +32,7 @@ namespace NS_DD_CompactVideoTest {
 	type S3=/*!*/`${SM1},badges,${CT},${ED1}`;
 	export type T3=Extract<D_CompactVideo,{lengthText: any; badges: any;}>[T_Split<S3>[number]];
 }
-namespace NS_NumRange {
+export namespace NS_NumRange {
 	export type NextMakeNum_3<U extends any[],T>=T extends 0? 1:[any,...U]['length'] extends T? [any,any,...U]['length']:NextMakeNum_3<[any,...U],T>;
 	type NumRange_1<T,E>=T extends E? T:NextMakeNum_3<[],T> extends E? E:T|NextMakeNum_3<[],T>|NumRange_1<NextMakeNum_3<[],T>,E>;
 	export type NumRange<T,E>=T extends E? T:T|NextMakeNum_3<[],T>|NumRange_1<NextMakeNum_3<[],T>,E>;

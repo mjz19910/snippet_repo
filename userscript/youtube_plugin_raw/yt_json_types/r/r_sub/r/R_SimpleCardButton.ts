@@ -1,3 +1,3 @@
-type R_SimpleCardButton={
+export type R_SimpleCardButton={
 	simpleCardButtonRenderer: {};
 };
