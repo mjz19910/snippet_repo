@@ -1,1 +1,1 @@
-type D_TimeoutMs=5000|60000;
+export type D_TimeoutMs=5000|60000;

@@ -1,4 +1,4 @@
-type B_BinaryBrowseTab={
+export type B_BinaryBrowseTab={
 	2: "about";
 	3: "store";
 	6: "featured";

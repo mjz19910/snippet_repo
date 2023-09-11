@@ -95,9 +95,9 @@ export type CD_Reload={reloadContinuationData: DC_Reload;};
 export type CD_TimedContinuation={timedContinuationData: DC_Timed;};
 //#endregion CD
 //#region CF
-import {CF_GetAutoTypename as CF_GetAutoTypename, CF_ShortTypeName} from "../_rtv_wrong/Ret_get_auto_type_name.js";
+import {CF_GetAutoTypename as CF_GetAutoTypename,CF_ShortTypeName} from "../_rtv_wrong/Ret_get_auto_type_name.js";
 import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.js";
-import {T_ExtractImport, T_Split} from "../stu/group_T.js";
+import {T_ExtractImport,T_Split} from "../stu/group_T.js";
 
 export type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map";
 export type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen";
@@ -231,3 +231,46 @@ export type CF_TR_MultiPageMenu=T_ExtractImport<"CF_TR_MultiPageMenu">|"CF_TR_Mu
 export type GCF_D_Menu=CF_D_Video_Handle|CF_D_Playlist_Omit;
 
 //#endregion CF
+export type P_param_category=P_LogItems extends []? never:P_LogItems[number] extends `[${string}] [${infer U}]`? U:never;
+export type P_param=Extract<P_param_category,`${string}.params.${string}`>;
+export type P_param_known_like_paths=[
+	"f1.f1",
+	"f1",
+	"f2",
+	"f3",
+	"f4.f1",
+	"f4.f2",
+	"f4",
+	"f5.f1",
+	"f5.f2",
+	"f5",
+	"f6.f1",
+	"f6.f2",
+	"f6",
+	"f7"
+][number];
+export type P_param_tracking<T extends string="tracking">=[
+	`${T}.parentTrackingParams`,
+	`${T}.trackingParams.f1`,
+	`${T}.trackingParams.f19.f1`,
+	`${T}.trackingParams.f19.f2`,
+	`${T}.trackingParams.f19`,
+	`${T}.trackingParams.f2`,
+	`${T}.trackingParams.f3`,
+	`${T}.trackingParams.f4.f1`,
+	`${T}.trackingParams.f4.f2`,
+	`${T}.trackingParams.f4.f3`,
+	`${T}.trackingParams.f4`,
+	`${T}.trackingParams.f6.f12`,
+	`${T}.trackingParams.f6.f13`,
+	`${T}.trackingParams.f6`,
+	`${T}.trackingParams.f9`,
+	`${T}.trackingParams`
+][number];
+export type CF_P_ParamParse=
+	|"_level_1_0"
+	|"_level_2_0._level_2_1"
+	|T_ExtractImport<"CF_P_ParamParse">
+	|P_param_category
+	;
+;

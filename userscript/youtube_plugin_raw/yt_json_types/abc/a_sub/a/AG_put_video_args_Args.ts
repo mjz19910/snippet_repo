@@ -1,4 +1,4 @@
-type AG_put_video_args_Args={
+export type AG_put_video_args_Args={
 	type: "normal";
 	v: string;
 }|{
