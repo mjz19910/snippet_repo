@@ -12,3 +12,11 @@ export type V_StoreBool=StoreDescription<"boolean">;
 export type V_StoreKeys=StoreDescription<"keys">;
 export type V_StoreNumber=StoreDescription<"number">;
 export type V_StoreString=StoreDescription<"string">;
+export type V_RawValue=
+	|["bigint",bigint]
+	|["string",string]
+	|["number",number]
+	|["array",{}[]]
+	|["V_ParamMapType",V_ParamMapType]
+	|["binary",Uint8Array];
+;

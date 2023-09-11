@@ -329,7 +329,7 @@ export type T_MaybeTemplatedText<T>={
 	trackingParams: string;
 };
 //#region split tools
-type T_Split_Helper<S extends string,D extends string=",">=
+export type T_Split_Helper<S extends string,D extends string=",">=
 	string extends S? string[]:
 	S extends ''? []:
 	S extends `${infer T}${D}${infer U}${D}${infer X}`?
@@ -347,3 +347,8 @@ export type T_Split<S extends string,D extends string=",">=
 	;
 ;
 //#endregion
+export type T_VW<T>=T_PArr_1<[T_Param_Child<T,["string",string]>]>;
+export type T_VW2<T,S extends string>=T_PArr_1<[T_Param_Child<T,["string",S]>]>;
+export type T_Param_Child<T,U extends V_RawValue=["string",string]>=[type: "v_child",binary_arr: Uint8Array,obj: T,raw_value: U];
+export type T_PArr_1<T extends [any]>=["v_param_arr",T];
+export type T_PArr_R<T extends any[]>=["v_param_arr",T];

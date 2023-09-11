@@ -909,3 +909,6 @@ export type G_RS_ShortsPage=RS_Page_Shorts|RS_VE37414_Shorts;
 export type G_RS_SettingsPage=RS_Page_Settings|RS_VE23462_Page_Settings;
 export type G_RS_WatchPage=RS_Page_Watch|RS_VE3832_Page_Watch;
 //#endregion G_RS
+
+export type VW_BinaryTimestamp=T_VW<V_BinaryTimestamp>;
+export type T_Base64Str=string;
