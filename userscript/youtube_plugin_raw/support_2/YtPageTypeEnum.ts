@@ -1,4 +1,4 @@
-type YtPageTypeEnum=[
+export type YtPageTypeEnum=[
 	"WEB_PAGE_TYPE_BROWSE",
 	"WEB_PAGE_TYPE_CHANNEL",
 	"WEB_PAGE_TYPE_PLAYLIST",

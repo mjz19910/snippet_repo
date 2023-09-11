@@ -1,50 +1,50 @@
 //#region GetNumKey
-type T_GetKeyMap<T,U extends keyof T,KM>=Extract<KM[Extract<keyof KM,U>],string>|T_MakeNumFieldFmt<T,U,Extract<U,number>,keyof KM,T_D32<number>|undefined>;
-type T_Extract_D32_Keys<T,U extends keyof T,Y extends number,L>=T[U] extends L? Y:never;
-type T_OmitKeyMapKeys<Y extends number>=Exclude<Y,keyof KM_TrackingObj>;
-type T_MakeNumFieldFmt<T,U extends keyof T=keyof T,V extends number=Extract<U,number>,W=never,L=T_D32<number>|undefined>=`f${T_Extract_D32_Keys<T,U,Exclude<V,W>,L>}`;
-type T_ObjGetNumKey_1<T extends {},KM>={[U in keyof T as T_GetKeyMap<T,U,KM>]: U;};
-type T_ObjGetNumKey<T extends {},KM={}>=`${Extract<keyof T_ObjGetNumKey_1<T,KM>,string>}`;
+export type T_GetKeyMap<T,U extends keyof T,KM>=Extract<KM[Extract<keyof KM,U>],string>|T_MakeNumFieldFmt<T,U,Extract<U,number>,keyof KM,T_D32<number>|undefined>;
+export type T_Extract_D32_Keys<T,U extends keyof T,Y extends number,L>=T[U] extends L? Y:never;
+export type T_OmitKeyMapKeys<Y extends number>=Exclude<Y,keyof KM_TrackingObj>;
+export type T_MakeNumFieldFmt<T,U extends keyof T=keyof T,V extends number=Extract<U,number>,W=never,L=T_D32<number>|undefined>=`f${T_Extract_D32_Keys<T,U,Exclude<V,W>,L>}`;
+export type T_ObjGetNumKey_1<T extends {},KM>={[U in keyof T as T_GetKeyMap<T,U,KM>]: U;};
+export type T_ObjGetNumKey<T extends {},KM={}>=`${Extract<keyof T_ObjGetNumKey_1<T,KM>,string>}`;
 //#endregion
-type MonadFn<U,A extends any[]>=(...s: A) => U;
-type M_Optional<T>=Some<T>|None;
-type Some<T>={
+export type MonadFn<U,A extends any[]>=(...s: A) => U;
+export type M_Optional<T>=Some<T>|None;
+export type Some<T>={
 	type: "s";
 	v: T;
 };
-type None={type: "n";};
+export type None={type: "n";};
 
 //#region Template strings
 //#endregion
 //#region Enum templates
-type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
+export type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 //#endregion
 //#region Templates
 //#region T_
-type T_Item<T>={item: T;};
-type T_Menu<T>={menu: T;};
-type T_Page<T>={page: T;};
-type T_Items<T>={items: T[];};
-type T_TrackedItems<T>={trackingParams: string; items: T[];};
-type T_Actions<T>={actions: T[];};
-type T_AnyObjectOrEmpty<T extends {}>={}|T;
-type T_Autoplay<T>={autoplay: T;};
-type T_BaseUrl<T extends string>={
+export type T_Item<T>={item: T;};
+export type T_Menu<T>={menu: T;};
+export type T_Page<T>={page: T;};
+export type T_Items<T>={items: T[];};
+export type T_TrackedItems<T>={trackingParams: string; items: T[];};
+export type T_Actions<T>={actions: T[];};
+export type T_AnyObjectOrEmpty<T extends {}>={}|T;
+export type T_Autoplay<T>={autoplay: T;};
+export type T_BaseUrl<T extends string>={
 	baseUrl: T;
 	elapsedMediaTimeSeconds?: number;
 };
-type T_Command_TP<T>={
+export type T_Command_TP<T>={
 	command: T;
 	trackingParams: string;
 };
-type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
-type T_DistributedKeyof_2<T>=T extends infer A? Union2Tuple<keyof A>:[];
+export type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
+export type T_DistributedKeyof_2<T>=T extends infer A? Union2Tuple<keyof A>:[];
 // oh boy don't do this
-type UnionToIntersection<U>=(U extends any? (k: U) => void:never) extends ((k: infer I) => void)? I:never;
-type LastOf<T>=UnionToIntersection<T extends any? () => T:never> extends () => (infer R)? R:never;
+export type UnionToIntersection<U>=(U extends any? (k: U) => void:never) extends ((k: infer I) => void)? I:never;
+export type LastOf<T>=UnionToIntersection<T extends any? () => T:never> extends () => (infer R)? R:never;
 // TS4.1+
-type Union2Tuple<T,L=LastOf<T>,N=[T] extends [never]? true:false>=true extends N? []:[...Union2Tuple<Exclude<T,L>>,L];
-type T_DistributedKeysOf_2<T extends {}>=T_DistributedKeyof_2<T> extends []? []:T_DistributedKeyof_2<T>;
+export type Union2Tuple<T,L=LastOf<T>,N=[T] extends [never]? true:false>=true extends N? []:[...Union2Tuple<Exclude<T,L>>,L];
+export type T_DistributedKeysOf_2<T extends {}>=T_DistributedKeyof_2<T> extends []? []:T_DistributedKeyof_2<T>;
 export namespace X_T_DistributedKeysOf {
 	export type T1={v: string;};
 	export type U1=T_DistributedKeysOf_2<T1>;
@@ -52,7 +52,7 @@ export namespace X_T_DistributedKeysOf {
 
 export type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
 export type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
-type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
+export type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
 export type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
 export type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
 export type T_GetTypeof<T>=
@@ -63,14 +63,14 @@ export type T_GetTypeof<T>=
 	T extends boolean? "boolean":
 	T extends {}? "object":
 	never;
-type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
+export type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
 export type HexLen<T extends string,L extends number>=T_Split<T,"">["length"] extends L? T:T_Split<T,"">["length"];
-type T_HexNibble<T extends string>=string extends T? "0":T extends G_HexNibbleStr? T:never;
-type T_Icon<T extends string>={iconType: T;};
-type T_IsColorHelper<T,U>=U extends `0x${infer I}`? T_Split<I,""> extends infer G extends T_Split<I,"">? G['length'] extends 6|8? T_EnsureHex<`0x${I}`> extends infer V extends string? V extends string? T:never:never:never:never:never;
-type T_MapEntry<T,U>={key: T; value: U;};
+export type T_HexNibble<T extends string>=string extends T? "0":T extends G_HexNibbleStr? T:never;
+export type T_Icon<T extends string>={iconType: T;};
+export type T_IsColorHelper<T,U>=U extends `0x${infer I}`? T_Split<I,""> extends infer G extends T_Split<I,"">? G['length'] extends 6|8? T_EnsureHex<`0x${I}`> extends infer V extends string? V extends string? T:never:never:never:never:never;
+export type T_MapEntry<T,U>={key: T; value: U;};
 export type T_SettingsPageStr<T extends string>=`SP${T}`;
-type T_MapValidHex<T extends string[]>=T_HexByte<T[number]> extends never? never:T;
+export type T_MapValidHex<T extends string[]>=T_HexByte<T[number]> extends never? never:T;
 export type T_VerifyHex<T extends string>=T extends `0x${infer U}`? T_MapValidHex<T_SplitIntoGroups<U,string>>["length"] extends 8? T:never:never;
 export type T_Playlist<T>={playlist: T;};
 export type T_Replace<T extends string,S extends string,R extends string>=T extends `${S}${infer N}`? `${R}${T_Replace<N,S,R>}`:T extends `${infer B}${S}${infer N}`? `${B}${R}${T_Replace<N,S,R>}`:T;
@@ -86,7 +86,7 @@ export type T_ShortsSurfaceIdentifier<T>={
 	tag: T;
 };
 export type T_Signal<T>=Record<"signal",T>;
-type T_SplitIntoGroups<S extends string,D extends string>=
+export type T_SplitIntoGroups<S extends string,D extends string>=
 	string extends S? string[]:
 	S extends ''? []:
 	S extends `${infer T}${infer X extends D}${infer U}`? [`${T}${X}`,...T_SplitIntoGroups<U,D>]:
@@ -228,11 +228,11 @@ export type TP_Color<T extends T_IsColorHelper<T,U>,U extends string>=T;
 
 export type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${infer Z}`? [U,...TP_KeyofSearchParams<Z>]:T extends `${infer U}=${string}`? [U]:[];
 
-type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: DecodeUriComponent<C>;}:T;
+export type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: DecodeUriComponent<C>;}:T;
 
-type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
+export type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
 export type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? string extends V? {[U in string]?: string;}:TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
-type Map_UriDecode={
+export type Map_UriDecode={
 	// not alphanumeric
 	"%20": " ";
 	"%22": '"';
@@ -261,17 +261,17 @@ type Map_UriDecode={
 	"%2C": ",";
 	"%23": "#";
 };
-type DecodeUriComponent_all_1<T extends string>=T extends ""? T:[{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode]] extends [never]? T:{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode];
-type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof Map_UriDecode}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`? `${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`? `${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
-type DecodeUriComponent<T extends string>=Join<DecodeUriComponentEach_Init<T_Split<T,"%">>,"">;
+export type DecodeUriComponent_all_1<T extends string>=T extends ""? T:[{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode]] extends [never]? T:{[U in keyof Map_UriDecode]: T extends `${U}${string}`? Map_UriDecode[U]:never}[keyof Map_UriDecode];
+export type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof Map_UriDecode}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`? `${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`? `${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
+export type DecodeUriComponent<T extends string>=Join<DecodeUriComponentEach_Init<T_Split<T,"%">>,"">;
 export type Do_Dec=DecodeUriComponent<"%5Bab%5D%5Bab%5D">;
-type TMP_UrP1=T_Split<D_FormatItem_SignatureCipher_SP,"&">[2];
-type DoDec3=T_Split<T_Split<TMP_UrP1,"=">[1],"%">;
-type DecodeUriComponentEach<T extends string[]>=
+export type TMP_UrP1=T_Split<D_FormatItem_SignatureCipher_SP,"&">[2];
+export type DoDec3=T_Split<T_Split<TMP_UrP1,"=">[1],"%">;
+export type DecodeUriComponentEach<T extends string[]>=
 	T extends []? []:
 	T extends [infer F extends string]? [DecodeUriComponent_all<`%${F}`>]:
 	T extends [infer F extends string,...infer R extends string[]]? DecodeUriComponentEach<R> extends infer R2 extends string[]? [DecodeUriComponent_all<`%${F}`>,...R2]:never:T;
-type DecodeUriComponentEach_Init<T extends string[]>=T extends [infer S,...infer R extends string[]]? [S,...DecodeUriComponentEach<R>]:T;
+export type DecodeUriComponentEach_Init<T extends string[]>=T extends [infer S,...infer R extends string[]]? [S,...DecodeUriComponentEach<R>]:T;
 export type DoDec4=Join<DecodeUriComponentEach_Init<DoDec3>,"">;
 export type DoDec2=DecodeUriComponent_all_1<"=">;
 export type T_EncodeUriComponent<T extends string>=T;
