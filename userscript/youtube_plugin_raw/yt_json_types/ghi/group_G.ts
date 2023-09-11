@@ -1109,3 +1109,11 @@ export type G_ShortTypeName=
 	|"RMD_Badge"
 	;
 ;
+export type G_Ret_get_auto_type_name=
+	|"{}"
+	|`D_${"PrefetchHintConfig"}`
+	|`TA_OpenPopup<T_OpenPopup_Dialog<${string}>>`
+	|`TA_OpenPopup<T_OpenPopup_Toast<${string}>>`
+	|G_ShortTypeName
+	;
+;

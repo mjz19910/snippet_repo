@@ -852,7 +852,7 @@ class CodegenService extends ServiceWithAccessors
 		}
 		return "{}";
 	}
-	/** @type {(type_name:Exclude<import("../yt_json_types/_rtv_wrong/Ret_json_auto_replace_1.js").Ret_json_auto_replace_1,"{}">)=>[true,G_ShortTypeName]|[false,"PrefetchHintConfig"]} */
+	/** @type {(type_name:Exclude<import("../yt_json_types/_rtv_wrong/Ret_json_auto_replace_1.js").Ret_json_auto_replace_1,"{}">)=>[true,import("../yt_json_types/ghi/group_G.js").G_ShortTypeName]|[false,"PrefetchHintConfig"]} */
 	get_short_typename(type_name)
 	{
 		if(type_name==="MetadataBadgeRenderer") return [true,"RMD_Badge"];
@@ -906,7 +906,7 @@ class CodegenService extends ServiceWithAccessors
 		}
 		return [false,type_name];
 	}
-	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {Ret_get_auto_type_name} */
+	/** @api @public @arg {JsonReplacerState} s @param {{[U in string]:unknown}} x @returns {G_Ret_get_auto_type_name} */
 	get_auto_type_name(s,x)
 	{
 		let type_name=this.json_auto_replace_1(x);
