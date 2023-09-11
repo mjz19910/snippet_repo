@@ -3123,6 +3123,7 @@ class HandleTypes extends BaseService
 		function wa(x) {return x;}
 		/** @type {`${A}/${B}`|null} */
 		let xv=wa(null);
+		/** @type {["https", `${A}/${B}`]} */
 		let [...p]=split_string_once_ex(x,"://",xv);
 		/** @arg {A|null} x */
 		function wa1(x) {return x;}
@@ -3130,8 +3131,13 @@ class HandleTypes extends BaseService
 		/** @arg {B|null} x */
 		function wa2(x) {return x;}
 		let xv2=wa2(null);
-		let [...p2]=split_string_once_ex2(p[1],"/",xv1,xv2);
-		return p2;
+		/** @type {["https", `${A}/${B}`]} */
+		let px=p;
+		/** @type {[A, B]} */
+		let [...p2]=split_string_once_ex2(px[1],"/",xv1,xv2);
+		/** @type {[A, B]} */
+		let p2x=p2;
+		return p2x;
 	}
 	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TrafficType} x */
 	D_TrafficType(x)

@@ -15,9 +15,17 @@
 // ==/UserScript==
 /*eslint-disable no-undef*/
 
+let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
+if(typeof require==="undefined"||page_require!==__module_require__)
+{
+	delete_require=typeof require==="undefined";
+	require=__module_require__;
+	reset_require=true;
+}
 const {do_export}=require("../../base_require_raw/BaseRequire.user");
 
-(function() {
+(function()
+{
 	'use strict';
 	const __module_name__="mod$Template";
 	/** 
@@ -29,3 +37,10 @@ const {do_export}=require("../../base_require_raw/BaseRequire.user");
 	// Your code here...
 	export_(exports => exports.__module_loaded__=true);
 })();
+if(delete_require)
+{
+	delete window.require;
+} else if(reset_require)
+{
+	require=page_require;
+}

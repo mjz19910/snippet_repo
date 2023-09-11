@@ -75,7 +75,7 @@ class ECatcherService extends BaseService
 		[24510798,24512929,24515366,24516063,24516157,24517587,24518452,24519143],
 	].flat();
 	data={
-		/** @private @type {{name:RC_ECatcherClientName['value'];fexp:number[];version:RC_SomeVer<RC_CsiVarTypes["cver"]>}|null} */
+		/** @private @type {{name:import("../yt_json_types/r/group_R.js").RC_ECatcherClientName['value'];fexp:number[];version:import("../yt_json_types/r/group_R.js").RC_SomeVer<import("../yt_json_types/r/group_R.js").RC_CsiVarTypes["cver"]>}|null} */
 		client: null,
 		expected_client_values: {fexp: ECatcherService.known_experiments},
 	};
