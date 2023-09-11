@@ -28,6 +28,9 @@ import {R_CollaboratorInfoCardContent} from "../r/r_sub/r/R_CollaboratorInfoCard
 import {V_BinaryTimestamp} from "../nop_q/P.js";
 import {R_EmojiPickerCategory} from "../r/r_sub/r/R_EmojiPickerCategory.js";
 import {R_EmojiPickerUpsellCategory} from "../r/r_sub/r/R_EmojiPickerUpsellCategory.js";
+import {R_EmojiPickerCategoryButton} from "../r/r_sub/r/R_EmojiPickerCategoryButton.js";
+import {R_BackgroundPromo} from "../r/r_sub/r/R_BackgroundPromo.js";
+import {R_DynamicReadaheadConfig} from "../r/r_sub/r/R_DynamicReadaheadConfig.js";
 
 //#region String data, ie `D_${string}`
 export type D_EndpointLikeEndings="Endpoint"|"Command"|"Action"|"Renderer";
