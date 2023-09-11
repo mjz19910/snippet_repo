@@ -1,4 +1,3 @@
-import {T_Split} from "../../../support_0_mod/T_Split.mod.js";
 import {YtPageTypeEnum} from "../../../support_2/YtPageTypeEnum.js";
 import {T_D32} from "../../_rtv_wrong/T_Data.js";
 import {TA_Continuation} from "../../abc/A.js";
@@ -327,3 +326,22 @@ export type T_MaybeTemplatedText<T>={
 	isTemplated: false;
 	trackingParams: string;
 };
+//#region split tools
+type T_Split_Helper<S extends string,D extends string=",">=
+	string extends S? string[]:
+	S extends ''? []:
+	S extends `${infer T}${D}${infer U}${D}${infer X}`?
+	[T,U,...T_Split_Helper<X,D>]:
+	S extends `${infer T}${D}${infer U}`?
+	[T,...T_Split_Helper<U,D>]:
+	[S]
+	;
+;
+export type T_Split<S extends string,D extends string=",">=
+	string extends S? string[]:
+	S extends ''? []:
+	S extends `${infer T}${D}${infer U}`? U extends ""? [T,""]:
+	T_Split_Helper<S,D>:T_Split_Helper<S,D>
+	;
+;
+//#endregion

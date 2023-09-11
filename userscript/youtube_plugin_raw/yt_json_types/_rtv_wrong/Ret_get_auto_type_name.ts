@@ -1,4 +1,6 @@
-type G_ShortTypeName=
+import {T_Split} from "../stu/mod/group_T.js";
+
+export type G_ShortTypeName=
 	|"R_TwoColumnBrowseResults"
 	|"A_OpenPopup"
 	|`C_${T_Split<Extract<Ret_json_auto_replace_1,`${string}Command`>,"Command">[0]}`
@@ -8,7 +10,7 @@ type G_ShortTypeName=
 	;
 ;
 
-type Ret_get_auto_type_name=
+export type G_Ret_get_auto_type_name=
 	|"{}"
 	|`D_${"PrefetchHintConfig"}`
 	|`TA_OpenPopup<T_OpenPopup_Dialog<${string}>>`

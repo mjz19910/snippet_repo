@@ -1,3 +1,4 @@
+import {G_Ret_get_auto_type_name} from "../_rtv_wrong/Ret_get_auto_type_name.js";
 import {T_ExtractImport} from "../stu/mod/group_T.js";
 
 export type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map";
@@ -64,7 +65,7 @@ type GCF_s=
 	|CF_TE_Endpoint_3
 	|CF_TE_Endpoint_Opt_3
 	|CF_TE_TrackedObj_2
-	|Ret_get_auto_type_name
+	|G_Ret_get_auto_type_name
 	;
 ;
 type GCF_w=

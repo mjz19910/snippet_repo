@@ -1,5 +1,5 @@
 import {T_Split} from "../../../support_0_mod/T_Split.mod.js";
-import {A_ChangeEngagementPanelVisibility,A_SetActivePanelItem,A_WatchNextContinuation} from "../../abc/A.js";
+import {AC_GetDownload, A_ChangeEngagementPanelVisibility,A_SetActivePanelItem,A_WatchNextContinuation} from "../../abc/A.js";
 import {B_Hack,B_HrefUrl,B_TagObj,B_VEMap} from "../../abc/B.js";
 import {C_Innertube,C_CommandExecutor,C_Continuation,C_RelatedChip,C_GetSurvey,C_FollowUp} from "../../abc/C.js";
 import {E_CreatePlaylistService,E_Watch,EG_GetNotificationMenuRequest,E_Pinging,E_Url,E_Feedback,E_Upload,E_SignalNavigation,E_WatchPlaylist,E_RecordNotificationInteractions,E_SignalService_SendPost,E_YpcGetCart,E_UndoFeedback,E_PlaylistEdit,E_PlaylistDelete,E_PlaylistEditor,E_ShareEntityService,E_Like,E_YpcGetOffers,E_MuteAd} from "../../e/E.js";
@@ -7,12 +7,14 @@ import {E_Search,E_VE11487,E_VE23462,E_VE3611,E_VE37414_ReelWatch,E_VE3854,E_VE4
 import {G_AccountItemSection,G_AccountPageSettingsSections,G_AdPlacementRendererItem,G_BrowseFeedContent,G_CardList_StyleType,G_ChannelSwitcherContent,G_EngagementPanelMenu,G_GuideSectionItem,G_GuideSubscriptionsSectionItem,G_PlaylistPanel_Item,G_PlaylistSidebarItem,G_ProfileColumnItem,G_RendererContentItem,G_RichGridContent,G_RichItemContent,G_RichSection,G_SI_DB_EngagementPanel,G_SecondaryContents,G_SettingItemIdEnum,G_SettingsOptionItem,G_StructuredDescriptionContentItem,G_Text,G_ThumbnailOverlayItem,G_TopbarButtonItem,G_WatchNextEndScreenItem,G_YtWatchUrl} from "../../ghi/_group.mod/G.js";
 import {GM_VE3854} from "../../ghi/_group.mod/GM.js";
 import {GU_CaptionTrackItem_BaseUrl,GU_ExternalUrl,GU_GoodPut_ProbeUrl,GU_InitPlaybackUrl,GU_RadioShareUrl,GU_VE11487_Url,GU_VE3611_Url,GU_VE6827_Url,GU_YTExternalUrl} from "../../ghi/_group.mod/GU.js";
+import {M_GetUnseenNotificationCount,MG_AdLayout_DisplayBillboardImageButtoned,M_Empty_WCM,M_Feedback,MG_AdLayout,M_AccountMenu} from "../../m/M.js";
 import {A_FancyDismissibleDialog,MP_LoadingAccountMenu,MP_LoadingNotificationMenu,R_TopbarMenu,TA_OpenPopup_Empty} from "../../nop_q/Popup.js";
 import {RA_Notification,RC_CsiServiceC,RC_CsiServiceCVer,RC_CsiVarMap,R_AccountSectionList,R_AdHoverTextButton,R_AdPlacementConfig,R_AdSlot,R_AddToPlaylistCreate,R_AutoplaySwitchButton,R_Card,R_CarouselLockup,R_ChannelHeaderLinks,R_ChannelSwitcherHeader,R_Chapter,R_ChildVideo,R_ChipCloud,R_ChipCloudChip,R_CinematicContainer,R_ClipAdState,R_ClipCreation,R_ClipCreationScrubber,R_ClipCreationTextInput,R_Comment,R_CommentSimplebox,R_CommentsEntryPointTeaser,R_CommentsHeader,R_CompactLink,R_CompactVideo,R_ContinuationItem,R_DecoratedPlayerBar,R_DescriptionChaptersItem,R_DisplayAd,R_Dropdown,R_EmojiPicker,R_EndscreenElement,R_ExpandableSurveyResponse,R_Factoid,R_FeedFilterChipBar,R_FulfilledLayout,R_FusionSearchbox,R_GhostGrid,R_GuideEntry,R_GuideEntryData,R_HeatSeekerItem,R_Heatmap,R_HeroPlaylistThumbnail,R_HotkeyDialog,R_HotkeyDialogSection,R_HotkeyDialogSectionOption,R_InfoCardIcon,R_InfoRow,R_LiveChatAuthorBadge,R_MacroMarkersListItem,R_Menu,R_MerchandiseItem,R_MetadataRow,R_MovingThumbnail,R_MultiMarkersPlayerBar,R_MusicResponsiveListItem,R_MusicShelfDivider,R_PdgBuyFlowHeader,R_PdgColorSlider,R_PdgCommentChip,R_PdgCommentOption,R_PdgCommentPreview,R_PlayerOverlayAutoplay,R_PlayerOverlayVideoDetails,R_PlaylistAddToOption,R_PlaylistByline,R_PlaylistPanel,R_PlaylistVideoThumbnail,R_PrivacyDropdownItem,R_ProductListItem,R_ProfileColumnStatsEntry,R_ProfilePageHeaderButtonRowViewModel,R_ProfilePageHeaderInformationViewModel,R_ProfilePageHeaderMetadataViewModel,R_ProfilePageHeaderThumbnailViewModel,R_ProfilePageHeaderTitleViewModel,R_PromotedSparklesWeb,R_RatingSurvey,R_RatingSurveyOption,R_ReelItem,R_ResourceStatusInResponseCheck,R_RichItem,R_RichListHeader,R_RichMetadata,R_RichMetadataRow,R_SampledThumbnailColor,R_SearchResultsTab,R_SectionList,R_SortFilterSubMenu,R_SubFeedOption,R_SubscribeButton,R_SuperVodBuyFlowContent,R_Tab,R_TemplateUpdate,R_TextInputFormField,R_ThumbnailOverlayTimeStatus,R_ThumbnailOverlayToggleButton,R_ToggleButton,R_TopbarLogo,R_TopicLink,R_TranscriptFooter,R_TranscriptSearchPanel,R_TranscriptSegment,R_TranscriptSegmentList,R_VideoMastheadAdV3,R_VideoOwner,R_VideoViewCount,R_WatchNextEndScreen,R_WebSearchboxConfig,ToKeyValue} from "../../r/R.js";
 import {SI_DB_EngagementPanel_ClipCreate,SI_DB_EngagementPanel_MacroMarkers_AutoChapters,SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters,SI_VE124975_EngagementPanel,SI_VE126250_EngagementPanel,SI_VE139722_EngagementPanel,SI_VE76278_EngagementPanel,SI_VE99999_EngagementPanel} from "../../stu/mod/group_SI.js";
 import {TD_GuideEntry_Simple,TD_Label,TM_Visibility,TP_Color,TR_MultiPageMenuSection,T_Actions,T_BaseUrl,T_DistributedKeyof,T_ElementId,T_EnumStr,T_ExtractIconType,T_Icon,T_MaybeTemplatedText,T_OmitKey,T_SE_Signal,T_Setting_AutoNavForDesktop,T_Signal,T_SplitOnce,T_StyleType,T_TargetIdStr,T_Types,T_UrlWrappedValue} from "../../stu/mod/group_T.js";
 import {DE_VE83769_Url_1} from "../group_DE/DE_LongObjects.js";
 import {DE_SuperThanksSelectedTier,DE_SubmitFeedback} from "../group_DE/DE_ShortObjects.js";
+import {DE_IconType_Button,DE_AdPlacementKind,DE_MP_MenuStyle} from "../group_DE/DE_StringEnum.js";
 import {DU_TargetId_ShoppingPanel_EntryPoint,DU_UrlTypeWithPageType,DU_VideoId,D_ApiStatsAdsStr,D_PlaylistUrlParams,D_ResultsPageUrl,D_TargetIdUuid,D_UUIDString,D_UserIdStr,G_SettingsEndpointPages,S_YtUrlHttp_Watch} from "../mod_D/DU_T/DU.js";
 import {DU_GuideEntry_Id,DU_Playlist_Id,DU_Playlist_Radio_Id,DU_StartRadio,T_FeedEntry,T_IdTemplate} from "../mod_D/DU_T/DU_TemplateString.js";
 import {D_Button,R_Button} from "../mod_D/D_T/D_Button.js";
@@ -3230,11 +3232,11 @@ export type D_LightColorPalette={
 	section3Color?: number;
 	section4Color: number;
 };
-type D_MenuServiceItemDownload={
+export type D_MenuServiceItemDownload={
 	serviceEndpoint: E_OfflineVideo;
 	trackingParams: string;
 };
-type D_InstreamVideoAd={
+export type D_InstreamVideoAd={
 	skipOffsetMilliseconds?: number;
 	pings: D_Pings;
 	clickthroughEndpoint: E_Url;
@@ -3249,18 +3251,18 @@ type D_InstreamVideoAd={
 	adLayoutLoggingData: D_SerializedAdServingDataEntry;
 	layoutId: "TUcDnyC2fuGT3fcz";
 };
-type D_DownloadButton={
+export type D_DownloadButton={
 	trackingParams: string;
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	targetId: "watch-download-button";
 	command: E_OfflineVideo;
 };
-type D_CsiParameterItem={
+export type D_CsiParameterItem={
 	key: "ad_at";
 	value: "15_2_1";
 };
-type D_AdPreview={
+export type D_AdPreview={
 	thumbnail: {
 		thumbnail: D_Thumbnail;
 		trackingParams: string;
@@ -3269,15 +3271,15 @@ type D_AdPreview={
 	templatedCountdown: R_TemplatedAdText;
 	durationMilliseconds: 5000;
 };
-type D_AdDurationRemaining={
+export type D_AdDurationRemaining={
 	templatedCountdown: D_TemplatedAdText;
 	trackingParams: string;
 };
-type D_AdBreakService={
+export type D_AdBreakService={
 	prefetchMilliseconds: "10000";
 	getAdBreakUrl: `https://www.youtube.com/get_midroll_info?ei=${string}&index=${number}&cpn=[CPN]&lact=[LACT]&vis=[VIS]&ad_block=[AD_BLOCK]&tsla=[TSLA]&bid=[BISCOTTI_ID]&dt=[DT]&flash=[FLASH]&frm=[FRM]&ca_type=[CA_TYPE]&u_tz=[U_TZ]&u_his=[U_HIS]&u_java=[U_JAVA]&u_h=[U_H]&u_w=[U_W]&u_ah=[U_AH]&u_aw=[U_AW]&u_cd=[U_CD]&u_nplug=[U_NPLUG]&u_nmime=[U_NMIME]&p_w=[P_W]&p_h=[P_H]&c=WEB&cver=2.20230309.08.00&m_pos_ms=-1`;
 };
-type D_GetMidrollInfoParams={
+export type D_GetMidrollInfoParams={
 	ei: string; m_pos: `${number}`; token: string; index: `${number}`;
 	cpn: "[CPN]";
 	lact: "[LACT]";
@@ -3305,3 +3307,11 @@ type D_GetMidrollInfoParams={
 	cver: "2.20230309.08.00";
 	m_pos_ms: "-1";
 };
+
+//#region DE (DE_OfflineVideo)
+export type DE_OfflineVideo={
+	videoId: string;
+	onAddCommand: AC_GetDownload;
+	action?: "ACTION_ADD";
+};
+//#endregion

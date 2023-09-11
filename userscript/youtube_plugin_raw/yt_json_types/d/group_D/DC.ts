@@ -1,8 +1,18 @@
+import {C_ShowReloadUi} from "../../abc/C.js";
+import {E_CreatePlaylistService} from "../../e/E.js";
+import {G_SectionItem,G_LiveChatContinuationItem,G_RA_LiveChatContinuationActions} from "../../ghi/_group.mod/G.js";
+import {R_CommentThread,R_RichItem,R_CommentsHeader,R_FeedFilterChipBar,R_LiveChatMessageInput,R_LiveChatItemList,R_LiveChatHeader,R_LiveChatTicker,R_LiveChatParticipantsList,R_Message} from "../../r/R.js";
+import {SI_VE76278_EngagementPanel} from "../../stu/mod/group_SI.js";
+import {DE_OpportunityType} from "../group_DE/DE_StringEnum.js";
+import {D_TargetIdUuid,DU_VideoId} from "../mod_D/DU_T/DU.js";
+import {R_Button} from "../mod_D/D_T/D_Button.js";
+import {D_AdSlotAndLayoutItem,D_InvalidationId,D_LiveChatEmoji,D_ClientMessages} from "./D.js";
+
 //#region Common data
 export type DC_Params={params: string;};
 export type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 //#endregion
-//#region ContinuationData
+//#region group_D (DC & ContinuationData)
 export type DC_ChangeKeyedMarkersVisibility={key: "HEATSEEKER"; isVisible: true;};
 export type DC_RepeatChapter={
 	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT"|"REPEAT_CHAPTER_TYPE_DISABLE_REPEAT";
@@ -77,7 +87,6 @@ export type DC_Continuation=
 	}
 	;
 ;
-//#region DC_
 export type DC_EngagementPanelHeaderShowNavigationButton={
 	targetId: "engagement-panel-macro-markers-description-chapters";
 	navigationButton: R_Button;
@@ -129,7 +138,6 @@ export type DC_AddToPlaylist=
 	}
 	;
 ;
-//#region group_D
 export type DC_GetDownload={
 	videoId: string;
 	params: "CAE%3D";
