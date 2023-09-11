@@ -28,3 +28,16 @@ export type B_VEMap={
 	83769: {CommandMetadata: M_Url;};
 	96368: {CommandMetadata: M_VE96368;};
 };
+export type B_BoxedStoreTypeofToType={
+	string: "keys"|"string";
+	number: "number"|"root_visual_element";
+	boolean: "boolean";
+};
+export type B_IdSrcNum={
+	key_type: "num";
+	type: number;
+};
+export type B_IdSrcStr={
+	key_type: "str";
+	type: string;
+};

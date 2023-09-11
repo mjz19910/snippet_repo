@@ -1,14 +1,13 @@
 import {T_Split} from "../../support_0_mod/T_Split.mod.js";
 import {Join} from "../../support_1/Join.js";
 import {StoreDescription} from "../../zc_child_modules/YTPlugin_Support_Service.user.js";
-import {AU_ChannelSwitcherPage,AU_NotificationsUnseenCount,AU_SubscribeButton,A_AccountItem,A_AddChatItem,A_AddToGuideSection,A_AppendContinuationItems,A_ChangeEngagementPanelVisibility,A_GetMultiPageMenu,A_RemoveFromGuideSection,A_ReplayChatItem,A_SendFeedback,A_ShowEngagementPanelScrim,A_Signal} from "../abc/A.js";
-import {B_GenericResponseType} from "../abc/B.js";
-import {CD_Invalidation,CD_LiveChatReplay,CD_PlayerSeek,C_AddToPlaylist,C_AdsControlFlowOpportunityReceived,C_ChangeKeyedMarkersVisibility,C_CommandExecutor,C_Continuation,C_GetSurvey,C_LoadMarkers,C_RefreshPlaylist,C_ReloadContinuationItems,C_ResetChannelUnreadCount,C_RunAttestation,C_ScrollToEngagementPanel,DC_SectionListBase,DC_SectionList_BrowseFeed_Subscriptions,DC_SectionList_SearchFeed} from "../abc/C.js";
-import {D_Accessibility,D_AutoplaySetItem,D_EY_Offlineability,D_ModifiedSetItem,D_NotificationTopbarButton,D_PlaylistContent,D_TextRun,D_TimedTextApi,D_TimedTextApi_Req,D_WatchPlaylistUrlFormat} from "../d/group_D.js";
+import {AU_ChannelSwitcherPage,AU_NotificationsUnseenCount,AU_SubscribeButton,A_AccountItem,A_AddChatItem,A_AddToGuideSection,A_AppendContinuationItems,A_ChangeEngagementPanelVisibility,A_GetMultiPageMenu,A_HideEngagementPanelScrim,A_RemoveFromGuideSection,A_ReplayChatItem,A_SendFeedback,A_SetActivePanelItem,A_ShowEngagementPanelScrim,A_Signal} from "../abc/A.js";
+import {B_GenericResponseType} from "../abc/group_B.js";
+import {CD_Invalidation,CD_LiveChatReplay,CD_PlayerSeek,C_AddToPlaylist,C_AdsControlFlowOpportunityReceived,C_ChangeKeyedMarkersVisibility,C_ChangeMarkersVisibility,C_CommandExecutor,C_Continuation,C_EngagementPanelHeaderShowNavigationButton,C_EntityUpdate,C_GetSurvey,C_LoadMarkers,C_Loop,C_RefreshPlaylist,C_ReloadContinuationItems,C_RepeatChapter,C_ResetChannelUnreadCount,C_RunAttestation,C_ScrollToEngagementPanel,C_UpdateToggleButtonState,DC_SectionListBase,DC_SectionList_BrowseFeed_Subscriptions,DC_SectionList_SearchFeed} from "../abc/C.js";
+import {D_Accessibility,D_AutoplaySetItem,D_EY_Offlineability,D_ModifiedSetItem,D_NotificationTopbarButton,D_PaidDigitalGoods,D_PlaylistContent,D_Survey_Watch,D_TextRun,D_TimedTextApi,D_TimedTextApi_Req,D_VPS_Req,D_VideoPlayback_Itag,D_WatchPlaylistUrlFormat,R_Button} from "../d/group_D.js";
 import {DE_AdditionalDatas,DE_BucketIdentifier,DE_MutationDelete,DE_MutationReplace,DE_Url} from "../d/group_DE.js";
 import {DU_Playlist_Id,D_PlayerParamsUrl,D_ResultsPageUrl,GV_SubDomain,S_acv1_codec,T_IdTemplate} from "../d/mod_D/DU_T/DU.js";
-import {C_ShowReelsCommentsOverlay,R_Button} from "../d/mod_D/D_T/D_Button.js";
-import {E_AddToPlaylistService,E_CreateBackstagePost,E_Feedback,E_GetNotificationMenu,E_GetReportForm,E_GetTranscript,E_PlaylistEdit,E_ShareEntityService,E_ShowEngagementPanel,E_SignalService_SendPost,E_Url} from "../e/E.js";
+import {E_AddToPlaylistService,E_CreateBackstagePost,E_Feedback,E_GetNotificationMenu,E_GetReportForm,E_GetTranscript,E_Like,E_PlaylistEdit,E_ShareEntityService,E_ShowEngagementPanel,E_SignalService_SendPost,E_Url,E_Watch,E_YpcGetOfflineUpsell} from "../e/E.js";
 import {E_VE3611,E_VE3854,E_VE5754,E_VE6827,E_VE11487,E_VE23462,E_VE42352,E_VE96368} from "../e/GR_E_VE.js";
 import {make_item_group} from "../m/make_item_group.js";
 import {A_AboutThisAd,A_ClientSignal,A_FancyDismissibleDialog,TA_OpenPopup_Empty,TR_MultiPageMenu_Empty} from "../nop_q/Popup.js";
@@ -1067,3 +1066,32 @@ export type GM_AddUpcomingEventReminder={
 };
 export type GS_StoreType="number"|"keys"|"boolean"|"root_visual_element"|"string"|"bigint";
 export type G_LinearAdsItem=R_InstreamVideoAd|R_AdActionInterstitial;
+
+//#region G_DC
+export type G_DC_CommandExecutor_CommandItem=
+	|A_ChangeEngagementPanelVisibility
+	|A_HideEngagementPanelScrim
+	|C_ChangeMarkersVisibility
+	|C_EngagementPanelHeaderShowNavigationButton
+	|C_EntityUpdate
+	|C_Loop
+	|C_RepeatChapter
+	|C_ScrollToEngagementPanel
+	|C_UpdateToggleButtonState
+	|E_Like
+	|TA_OpenPopup_Empty
+	;
+;
+export type G_DC_GetSurvey_Endpoint=D_Survey_Watch|D_PaidDigitalGoods;
+export type G_DC_Innertube=
+	|A_ChangeEngagementPanelVisibility
+	|A_SetActivePanelItem
+	|E_Url
+	|E_VE3611
+	|E_VE5754
+	|E_VE6827
+	|E_Watch
+	|E_YpcGetOfflineUpsell
+	;
+;
+//#endregion

@@ -1,4 +1,4 @@
-import {B_Hack} from "../abc/B.js";
+import {B_Hack} from "../abc/group_B.js";
 import {DS_CreatePlaylist} from "../d/group_D.js";
 import {DC_Params} from "../d/group_D/group_DC.js";
 import {DE_VE3832_Watch,DE_Url} from "../d/group_DE/DE_LongObjects.js";
@@ -85,3 +85,9 @@ export type E_AdFeedback={
 export type E_MuteAd=TE_Endpoint_2<"muteAdEndpoint",DE_MuteAd>;
 //#endregion
 export type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
+export type E_CreateCommentReplyDialog={
+	clickTrackingParams: string;
+	commandMetadata: M_CreateCommentReplyDialog;
+	createCommentReplyDialogEndpoint: DE_CreateCommentReplyDialog;
+};
+

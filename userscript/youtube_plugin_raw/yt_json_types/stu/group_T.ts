@@ -1,16 +1,18 @@
 import {YtPageTypeEnum} from "../../support_2/YtPageTypeEnum.js";
 import {T_D32} from "../_rtv_wrong/T_Data.js";
 import {TA_Continuation} from "../abc/A.js";
-import {B_VEMap} from "../abc/B.js";
-import {D_RootVisualElementType,D_Omit_Compact_Player,D_Omit_Compact_Video,D_Accessibility} from "../d/group_D.js";
-import {D_TargetIdUuid,DU_EndpointKey} from "../d/mod_D/DU_T/DU.js";
-import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions} from "../ghi/group_G.js";
+import {B_VEMap} from "../abc/group_B.js";
+import {D_RootVisualElementType,D_Omit_Compact_Player,D_Omit_Compact_Video,D_Accessibility,DU_EndpointKey,D_BinaryTokenType,D_TargetIdUuid} from "../d/group_D.js";
+import {G_HexNibbleStr,G_WatchNext,G_Text,G_ResponseActions,D_FormatItem_SignatureCipher_SP,G_BrowseFeed,G_CommentsSection,G_IdSrc} from "../ghi/group_G.js";
 import {KM_TrackingObj} from "../k/KM.js";
 import {NS_UnionToPartial} from "../nop_q/Namespaces.js";
 import {R_Comment,R_ContinuationItem,R_RichItem,R_CommentThread,R_GuideEntryData,R_RelatedChipCloud,RC_ResponseContext} from "../r/group_R.js";
 import {CF_P_ParamParse} from "../nop_q/p_sub/P_ParamParse.js";
 import {CF_L_Params} from "../abc/C.js";
-import {V_ParamMapValue, V_RawValue} from "../vw/group_V.js";
+import {V_ParamMapValue,V_RawValue} from "../vw/group_V.js";
+import {Join} from "../../support_1/Join.js";
+import {M_SetSetting} from "../m/M.js";
+import {make_item_group} from "../m/make_item_group.js";
 
 //#region GetNumKey
 export type T_GetKeyMap<T,U extends keyof T,KM>=Extract<KM[Extract<keyof KM,U>],string>|T_MakeNumFieldFmt<T,U,Extract<U,number>,keyof KM,T_D32<number>|undefined>;
@@ -352,3 +354,55 @@ export type T_VW2<T,S extends string>=T_PArr_1<[T_Param_Child<T,["string",S]>]>;
 export type T_Param_Child<T,U extends V_RawValue=["string",string]>=[type: "v_child",binary_arr: Uint8Array,obj: T,raw_value: U];
 export type T_PArr_1<T extends [any]>=["v_param_arr",T];
 export type T_PArr_R<T extends any[]>=["v_param_arr",T];
+export type T_Dialog<T>={dialog: T;};
+export type T_AO_Z1<T extends {z: [{}];}>=T["z"][0];
+export type T_BoxStore_adz<K,A,L,T>={key: K; a: A; b: "boxed_id"; l: L; z: [T];};
+export type T_DI_AKLZ<Z extends any[]>={z: Z;};
+export type T_GetPrimitiveTag<T>=
+	T extends bigint? |"bigint":
+	T extends boolean? |"boolean":
+	T extends number? |"number":
+	T extends string? |"string":
+	T extends symbol? |"symbol":
+	T extends undefined? |"undefined":
+	T extends Function? |"function":
+	T extends object? |"object":
+	"unknown"
+	;
+;
+export type G_PrimitiveTag=
+	|"bigint"
+	|"boolean"
+	|"number"
+	|"string"
+	|"object"
+	|"symbol"
+	|"undefined"
+	|"function"
+	|"unknown"
+	;
+;
+export type T_IdBox<SV extends G_IdSrc,T_IdType extends string,T extends SV["key_type"]=SV["key_type"],V=SV["type"]>={
+	b: "boxed_id"; c: T; d: T_IdType;
+	key: `boxed_id:${T}:${T_IdType}`;
+	z: [make_item_group<V>];
+};
+export type T_ObjectFromOptions<A extends [string,string]>=A[0] extends infer EA extends A[0]? EA extends infer I? {b: I; raw_id: A[1];}:never:never;
+export type T_StoreCacheIndex<T extends keyof DT_DatabaseStoreTypes>={
+	[R in T]?: [R,Map<string,number>];
+};
+export type T_UnixTime_In6Hours<T>=T;
+export type TR_Binary_f1<T>={1: T;};
+export type TR_Binary_Num_f1<T extends number>={1: T;};
+export type TR_BinaryTokenObj<T_TokenType extends D_BinaryTokenType>={
+	1: 0;
+	2: T_TokenType;
+	3: V_BinaryTimestamp;
+	4: V_BinaryTimestamp;
+};
+export type TY_BoxedShape<T_Type extends string,T_Tag extends string,T_Value>={
+	type: T_Type;
+	tag: T_Tag;
+	key: `${T_Type}:${T_Tag}`;
+	value: T_Value;
+};
