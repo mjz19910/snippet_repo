@@ -1,1 +1,0 @@
-type R_VideoDescriptionCourseSection={videoDescriptionCourseSectionRenderer: D_VideoDescriptionCourseSection;};
