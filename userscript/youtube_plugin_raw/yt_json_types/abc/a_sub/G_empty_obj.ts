@@ -1,4 +1,4 @@
 // TODO #6
-type GD_SD_Item={};
+export type GD_SD_Item={};
 
-type G_PlaylistEditResult={};
+export type G_PlaylistEditResult={};

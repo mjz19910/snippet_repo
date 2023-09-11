@@ -492,3 +492,4 @@ export type RC_WR_ContextExtension={
 //#region group_R
 export type R_AdFeedback={adFeedbackRenderer: D_AdFeedback;};
 //#endregion
+export type R_PlaylistLoopButton={playlistLoopButtonRenderer: D_PlaylistLoopButton;};

@@ -8,6 +8,7 @@ import {G_Text,G_SE_MenuService} from "../ghi/group_G.js";
 import {A_NotificationMenuPopup,A_PdgBuyFlow,TA_OpenPopup_Empty,A_NotificationToast} from "../nop_q/Popup.js";
 import {T_Icon} from "../stu/mod/group_T.js";
 import {RC_ResponseContext,R_Tab,R_ExpandableTab,R_AddToPlaylist,R_SubscriptionNotificationToggleButton} from "./R.js";
+import {D_FrameworkUpdates} from "./r_sub/r/D_FrameworkUpdates.js";
 
 export type RCA_RelevantStateTags={relevantStateTags: B_StateTag[];};
 export type RD_MenuServiceIconType_1=[
