@@ -3472,13 +3472,13 @@ export type D_SimpleCardTeaser={
 	onTapCommand?: A_ChangeEngagementPanelVisibility;
 };
 export type D_FrameworkUpdates={entityBatchUpdate: DR_DC_EntityBatchUpdate; elementUpdate?: R_ElementUpdate;};
-type D_CommandRunItem={
+export type D_CommandRunItem={
 	startIndex: number;
 	length: number;
 	onTap: C_Innertube;
 	loggingDirectives?: D_LoggingDirectives;
 };
-type D_StyleRunItem=({
+export type D_StyleRunItem=({
 	fontColor: number;
 	fontName: string;
 	weight: number;
@@ -3495,10 +3495,19 @@ type D_StyleRunItem=({
 	startIndex: number;
 	length: number;
 };
-type D_AttributedDescription={
+export type D_AttributedDescription={
 	content: string;
 	commandRuns?: D_CommandRunItem[];
 	styleRuns?: D_StyleRunItem[];
 	attachmentRuns?: R_AttachmentElement[];
 	decorationRuns?: R_TextDecorator[];
+};
+export type D_Card={
+	teaser: R_SimpleCardTeaser;
+	content?: D_Card_Content;
+	cueRanges: D_CueRangeItem[];
+	icon?: R_InfoCardIcon;
+	trackingParams: string;
+	cardId?: `${bigint}`;
+	feature?: "cards";
 };
