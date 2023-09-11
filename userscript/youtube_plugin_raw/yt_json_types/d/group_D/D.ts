@@ -7,6 +7,7 @@ import {E_Search,E_VE11487,E_VE23462,E_VE3611,E_VE37414_ReelWatch,E_VE3854,E_VE4
 import {G_AccountItemSection,G_AccountPageSettingsSections,G_AdPlacementRendererItem,G_BrowseFeedContent,G_CardList_StyleType,G_ChannelSwitcherContent,G_EngagementPanelMenu,G_GuideSectionItem,G_GuideSubscriptionsSectionItem,G_PlaylistPanel_Item,G_PlaylistSidebarItem,G_ProfileColumnItem,G_RendererContentItem,G_RichGridContent,G_RichItemContent,G_RichSection,G_SI_DB_EngagementPanel,G_SecondaryContents,G_SettingItemIdEnum,G_SettingsOptionItem,G_StructuredDescriptionContentItem,G_Text,G_ThumbnailOverlayItem,G_TopbarButtonItem,G_WatchNextEndScreenItem,G_YtWatchUrl} from "../../ghi/_group.mod/G.js";
 import {GM_VE3854} from "../../ghi/_group.mod/GM.js";
 import {GU_CaptionTrackItem_BaseUrl,GU_ExternalUrl,GU_GoodPut_ProbeUrl,GU_InitPlaybackUrl,GU_RadioShareUrl,GU_VE11487_Url,GU_VE3611_Url,GU_VE6827_Url,GU_YTExternalUrl} from "../../ghi/_group.mod/GU.js";
+import {GE_Browse} from "../../ghi/g_.mod/group_GE.js";
 import {K_AccountLinkProviderKey} from "../../k/K.js";
 import {M_GetUnseenNotificationCount,MG_AdLayout_DisplayBillboardImageButtoned,M_Empty_WCM,M_Feedback,MG_AdLayout,M_AccountMenu} from "../../m/M.js";
 import {A_FancyDismissibleDialog,MP_LoadingAccountMenu,MP_LoadingNotificationMenu,R_TopbarMenu,TA_OpenPopup_Empty} from "../../nop_q/Popup.js";
@@ -882,6 +883,34 @@ export type D_Radio={
 };
 export type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch|E_VE37414_ReelWatch;
 export type D_WebPrefetch={navigationEndpoints: E_Watch[];};
+export type D_Video={
+	videoId: string;
+	thumbnail: D_Thumbnail;
+	title: G_Text;
+	descriptionSnippet?: G_Text;
+	longBylineText?: G_Text;
+	publishedTimeText?: G_Text;
+	lengthText?: G_Text;
+	viewCountText?: G_Text;
+	navigationEndpoint: E_Watch;
+	ownerBadges?: RMD_Badge[];
+	badges?: RMD_Badge[];
+	ownerText?: G_Text;
+	upcomingEventData?: D_UpcomingEvent;
+	shortBylineText?: G_Text;
+	trackingParams: string;
+	showActionMenu: false;
+	shortViewCountText?: G_Text;
+	isWatched?: true;
+	menu: R_Menu;
+	channelThumbnailSupportedRenderers?: R_ChannelThumbnailWithLink;
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
+	topStandaloneBadge?: RMD_Badge;
+	richThumbnail?: R_MovingThumbnail;
+	inlinePlaybackEndpoint?: E_Watch;
+	owner?: D_Video_Owner;
+	buttons?: R_ToggleButton[];
+};
 export type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
 export type D_SubFeedOption={
 	name: G_Text;
@@ -3316,4 +3345,119 @@ export type DE_OfflineVideo={
 	onAddCommand: AC_GetDownload;
 	action?: "ACTION_ADD";
 };
+//#endregion
+
+//#region D_Menu
+export type D_PlaylistId={playlistId: DU_Playlist_Id;};
+export type D_PlaylistContent={
+	title: string;
+	contents: R_PlaylistPanelVideo[];
+	currentIndex: number;
+	playlistId: string;
+	totalVideos: number;
+	ownerName: G_Text;
+	isInfinite: false;
+	shortBylineText: G_Text;
+	longBylineText: G_Text;
+	totalVideosText: G_Text;
+	trackingParams: string;
+	titleText: G_Text;
+	isEditable: true;
+	endpoint: E_VE5754;
+	localCurrentIndex: number;
+	playlistButtons: R_Menu;
+	badges: RMD_Badge[];
+	videoCountText: G_Text;
+	onReorderEndpoint: E_PlaylistEdit;
+	isCourse: false;
+	nextVideoLabel: G_Text;
+};
+
+export type D_Menu_Button=
+	|R_PlaylistLoopButton
+	|R_Button
+	|R_ToggleButton
+	|R_SegmentedLikeDislikeButton
+	;
+;
+export type D_Menu_old={
+	items?: G_MenuItem[];
+	trackingParams: string;
+	topLevelButtons?: (D_Menu_Button)[];
+	accessibility?: D_Accessibility;
+	targetId?: "browse-video-menu-button";
+	loggingDirectives?: D_LoggingDirectives;
+	flexibleItems?: R_MenuFlexibleItem[];
+};
+export type D_Menu_WithItems={
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	menuPopupAccessibility: TD_Label<"List of menu actions">;
+}|{
+	items: R_MenuServiceItem[];
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	loggingDirectives: D_LoggingDirectives;
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons: R_Button[];
+	accessibility: TD_Accessibility<"Action menu">;
+}|{
+	items: (R_MenuNavigationItem|R_MenuServiceItem)[];
+	trackingParams: string;
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons: (R_SegmentedLikeDislikeButton|R_Button)[];
+	accessibility: TD_Accessibility<"More actions">;
+	flexibleItems: R_MenuFlexibleItem[];
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+};
+export type D_Menu_WithTargetId=|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "browse-video-menu-button";
+}|{
+	items: (R_MenuServiceItem|R_MenuNavigationItem)[];
+	trackingParams: string;
+	topLevelButtons: R_Button[];
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "playlist-browse-action-menu";
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "watch-related-menu-button";
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
+	accessibility: D_Accessibility;
+	menuPopupAccessibility: TD_Label<"List of menu actions">;
+	flexibleItems: R_MenuFlexibleItem[];
+	loggingDirectives: D_LoggingDirectives;
+	targetId: "browse-video-menu-button";
+}|{
+	items: (R_MenuNavigationItem|R_MenuServiceItem)[];
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Action menu">;
+	targetId: "playlist-browse-action-menu";
+};
+export type G_Menu_TopLevelButton=R_PlaylistLoopButton|R_ToggleButton|R_Button;
+export type D_Menu_WithButtons={
+	trackingParams: string;
+	topLevelButtons: G_Menu_TopLevelButton[];
+};
+
+export type D_Menu=D_Menu_WithItems|D_Menu_WithTargetId|D_Menu_WithButtons;
+export type R_MenuPopup={menuPopupRenderer: D_MenuPopup;};
+export type D_MenuPopup={items: R_MenuServiceItem[];};
 //#endregion

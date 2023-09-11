@@ -1,3 +1,14 @@
+import {Ret_ParserService_GetUrlType} from "../../../../zb_plugin_types/types.js";
+import {A_WatchNextContinuation,TA_Continuation} from "../../../abc/A.js";
+import {AD_AppendContinuationItems,AD_UpdateEngagementPanel} from "../../../abc/AD.js";
+import {DC_ScrollToEngagementPanel,DC_SectionList_TargetId} from "../../../abc/C.js";
+import {G_AccountPageSettingsSections,G_SI_DB_EngagementPanel,S_PageTypeStr} from "../../../ghi/_group.mod/G.js";
+import {GU_GoodPut_ProbeUrl,GU_InitPlaybackUrl,GU_VE83769_Url_External,GU_VideoPlaybackUrl} from "../../../ghi/_group.mod/GU.js";
+import {RS_Search} from "../../../r/RS.js";
+import {D_ApiPathFormat_1,D_BrowseEndpointPages,D_Button_With_TargetId,D_ChipCloudChip_tid,D_EndpointLikeEndings,D_EngagementPanelSectionTargetId,D_Settings_Id,D_TranscriptSearchPanel} from "../../group_D/D.js";
+import {DC_ReloadContinuationItems} from "../../group_D/DC.js";
+import {D_Button_targetId} from "../D_T/D_Button.js";
+
 //#region UrlType
 export type DU_UrlTypeWithPageType=`page_type_${S_PageTypeStr}`|DU_UrlType;
 export type DU_UrlType=NonNullable<Ret_ParserService_GetUrlType>;
@@ -99,4 +110,47 @@ export type DU_IdCacheItem=
 export type DU_UserId=string;
 export type DU_VideoId=string;
 export type DU_VideoId_Arr=[string,string,string,string,string,string,string,string,string,string,string];
+//#endregion
+//#region Discriminated Object Union
+export type DE_U_ExternalUrl={url: GU_VE83769_Url_External; target: "TARGET_NEW_WINDOW";};
+export type DE_U_RedirectUrl={url: `https://www.youtube.com/redirect?${string}`; target: "TARGET_NEW_WINDOW"; nofollow: true;};
+export type DE_U_InternalUrl={url: GU_InternalUrl; nofollow: true;};
+export type DE_U_ChannelUrl={url: DU_Str_ChannelUrl; nofollow: true;};
+//#endregion
+//#region Templates
+export type T_ChannelIdStr<T extends string>=`UC${T}`;
+export type T_FeedEntry<T extends D_BrowseEndpointPages=D_BrowseEndpointPages>=T_IdTemplate<"FE",T>;
+export type T_IdTemplate<B extends keyof B_IdTemplateArgs,T extends B_IdTemplateArgs[B]=B_IdTemplateArgs[B]>=`${B}${T}`;
+export type B_IdTemplateArgs={
+	VL: T_IdTemplate<"PL">|DU_Playlist_Static;
+	UC: D_UserIdStr;
+	FE: D_BrowseEndpointPages;
+	PL: string;
+	RD: string;
+	RDCMUC: string;
+	RDGMEM: string;
+	RDMM: string;
+	UU: string;
+	SP: D_Settings_Id;
+	MP: `${string}_${string}`;
+};
+//#endregion
+export type DU_PlaylistId_Base=
+	|"PL"
+	|"RD"
+	|"RDCMUC"
+	|"RDGMEM"
+	|"RDMM"
+	|"UU"
+	;
+;
+//#region DU Template String
+export type DU_Browse_Id=T_IdTemplate<"FE">|T_IdTemplate<"VL">|T_IdTemplate<"UC">|T_IdTemplate<"MP">|T_IdTemplate<"SP">;
+export type DU_ChannelId=T_IdTemplate<"UC">;
+export type DU_GuideEntry_Id=DU_Playlist_Static|T_IdTemplate<"UC">|T_IdTemplate<"PL">|"VLLL";
+export type DU_HashtagId=string;
+export type DU_Playlist_Id=DU_Playlist_Static|T_IdTemplate<DU_PlaylistId_Base>;
+export type DU_Playlist_Radio_Id=T_IdTemplate<Extract<DU_PlaylistId_Base,`RD${string}`>>;
+export type DU_Playlist_Static="WL"|"LL";
+export type DU_StartRadio=0|1;
 //#endregion
