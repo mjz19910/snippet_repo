@@ -1,6 +1,5 @@
 import {C_ScrollToEngagementPanel} from "../abc/group_C.js";
-import {D_LoggingDirectives} from "../d/group_D.js";
-import {DU_Browse_Id,DU_TargetId_ShoppingPanel_EntryPoint,D_ChanLoc} from "../d/mod_D/DU_T/DU.js";
+import {DU_Browse_Id,DU_TargetId_ShoppingPanel_EntryPoint,D_ChanLoc,D_LoggingDirectives} from "../d/group_D.js";
 import {G_EngagementPanelSectionShowCommands} from "../ghi/group_G.js";
 import {A_LoadingAccountMenu,A_LoadingNotificationsMenu} from "../nop_q/Popup.js";
 import {R_AdsEngagementPanelContent,R_ClipSection,R_ContinuationItem,R_EngagementPanelTitleHeader,R_MacroMarkersList,R_ProductList,R_SectionList,R_StructuredDescriptionContent,ToKeyValue} from "../r/group_R.js";

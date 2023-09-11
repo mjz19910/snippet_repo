@@ -28,15 +28,14 @@ import {A_HideEnclosing,A_ReplaceEnclosing,A_UndoFeedback,GA_Playlist} from "../
 import {B_Hack} from "../abc/group_B.js";
 import {C_FilterChipTransform,C_MusicLibraryStatusUpdate} from "../abc/group_C.js";
 import {A_UpdateCommentVote} from "../e/E.js";
-import {G_AdditionalDataItem,G_EY_Entity,G_ExtraUrlParamItem,G_Text} from "../ghi/group_G.js";
+import {GU_VE23462_Id,GU_VE6827_Id,G_AdditionalDataItem,G_EY_Entity,G_ExtraUrlParamItem,G_Text} from "../ghi/group_G.js";
 import {O_DU_Persistence} from "../nop_q/O.js";
 import {A_ShareEntityService} from "../nop_q/Popup.js";
 import {R_AdFeedback,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_ReelPlayerOverlay,R_VssLoggingContext,R_WatchEndpointMusicConfig} from "../r/group_R.js";
 //#endregion
 import {T_EnumStr,T_MutType,T_Signal} from "../stu/group_T.js";
-import {D_HideEnclosingContainer,D_LikeApi,D_PlaylistId,D_Thumbnail} from "./group_D.js";
+import {DE_U_ChannelUrl,DE_U_ExternalUrl,DE_U_InternalUrl,DE_U_RedirectUrl,D_HideEnclosingContainer,D_LikeApi,D_LoggingContext,D_PlaylistId,D_Thumbnail,D_UserIdStr,T_IdTemplate} from "./group_D.js";
 import {DC_Params} from "./group_DC.js";
-import {DE_U_ChannelUrl,DE_U_ExternalUrl,DE_U_InternalUrl,DE_U_RedirectUrl,D_UserIdStr,T_IdTemplate} from "./mod_D/DU_T/DU.js";
 
 //#region String Enum
 export type DE_AdPlacementKind=T_EnumStr<"AD_PLACEMENT_KIND","END"|"SELF_START"|"START"|"MILLISECONDS">;
