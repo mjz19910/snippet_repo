@@ -961,9 +961,9 @@ class NumericLiterals extends ECMA262Base {
 					continue;
 				}
 				// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
-				let [, , s_len] = this.NumericLiteralSeparator(index + off);
+				const [, , s_len] = this.NumericLiteralSeparator(index + off);
 				if (s_len > 0) {
-					let [, , exl] = this.DecimalDigit(str, index + off + 1);
+					const [, , exl] = this.DecimalDigit(str, index + off + 1);
 					if (exl > 0) {
 						off++;
 						// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
@@ -978,7 +978,7 @@ class NumericLiterals extends ECMA262Base {
 			// DecimalDigit
 			let off = 0;
 			for (;;) {
-				let [, , len] = this.DecimalDigit(str, index + off);
+				const [, , len] = this.DecimalDigit(str, index + off);
 				if (len > 0) {
 					off++;
 					continue;
@@ -1036,7 +1036,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} index @returns {JsLexerReturnType} */
 	BinaryIntegerLiteral_Sep(index) {
 		if (this.str.startsWith("0b", index) || this.str.startsWith("0B", index)) {
-			let res = this.BinaryDigits_Sep(index);
+			const res = this.BinaryDigits_Sep(index);
 			if (res[0]) return [true, "BinaryIntegerLiteral", res[2] + 2];
 		}
 		return [false, null, 0];
@@ -1045,7 +1045,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	BinaryIntegerLiteral(str, index) {
 		if (str.startsWith("0b", index) || str.startsWith("0B", index)) {
-			let res = this.BinaryDigits(index + 2);
+			const res = this.BinaryDigits(index + 2);
 			if (res[0]) return [true, "BinaryIntegerLiteral", res[2] + 2];
 		}
 		return [false, null, 0];
@@ -1059,9 +1059,9 @@ class NumericLiterals extends ECMA262Base {
 		while (res[0]) {
 			this.len++;
 			this.C.index++;
-			let res_peek_digit = this.BinaryDigit(this.C.index);
-			let res_sep = this.NumericLiteralSeparator(this.C.index);
-			let res_sep_peek = this.BinaryDigit(this.C.index + 1);
+			const res_peek_digit = this.BinaryDigit(this.C.index);
+			const res_sep = this.NumericLiteralSeparator(this.C.index);
+			const res_sep_peek = this.BinaryDigit(this.C.index + 1);
 			if (res_peek_digit[0]) res = res_peek_digit;
 			else if (res_sep[0] && res_sep_peek[0]) res = res_sep;
 			else break;
@@ -1076,7 +1076,7 @@ class NumericLiterals extends ECMA262Base {
 		let res = this.BinaryDigit(i);
 		while (res[0]) {
 			this.len++;
-			let res_peek_digit = this.BinaryDigit(i + this.len);
+			const res_peek_digit = this.BinaryDigit(i + this.len);
 			if (res_peek_digit[0]) res = res_peek_digit;
 			else break;
 		}
@@ -1096,7 +1096,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} i @returns {JsLexerReturnType} */
 	OctalIntegerLiteral_Sep(i) {
 		if (this.str.startsWith("0o", i) || this.str.startsWith("0O", i)) {
-			let res = this.BinaryDigits(i + 2);
+			const res = this.BinaryDigits(i + 2);
 			if (res[0]) return [true, "SignedInteger", res[2] + 2];
 		}
 		return [false, null, 0];
@@ -1143,7 +1143,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} i @returns {JsLexerReturnType} */
 	HexIntegerLiteral_Sep(i) {
 		if (this.str.startsWith("0x", i) || this.str.startsWith("0x", i)) {
-			let res = this.HexDigits({ sep: true }, i + 2);
+			const res = this.HexDigits({ sep: true }, i + 2);
 			if (res[0]) return [true, "HexIntegerLiteral", res[2] + 2, ["sep", res]];
 		}
 		return [false, null, 0];
@@ -1152,7 +1152,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} i @returns {JsLexerReturnType} */
 	HexIntegerLiteral(i) {
 		if (this.str.startsWith("0x", i) || this.str.startsWith("0x", i)) {
-			let res = this.HexDigits({ sep: false }, i + 2);
+			const res = this.HexDigits({ sep: false }, i + 2);
 			if (res[0]) return [true, "HexIntegerLiteral", res[2] + 2, ["sep", res]];
 		}
 		return [false, null, 0];
@@ -1165,8 +1165,8 @@ class NumericLiterals extends ECMA262Base {
 			let res = this.HexDigit(i + this.len);
 			while (res[0] && (i + this.len) < this.str.length) {
 				this.len++;
-				let res_digit = this.HexDigit(i + this.len);
-				let num_sep = this.NumericLiteralSeparator(i + this.len);
+				const res_digit = this.HexDigit(i + this.len);
+				const num_sep = this.NumericLiteralSeparator(i + this.len);
 				if (num_sep[0]) res = num_sep;
 				else if (res_digit[0]) res = res_digit;
 				else break;
@@ -1179,7 +1179,7 @@ class NumericLiterals extends ECMA262Base {
 		let res = this.HexDigit(i + this.len);
 		while (res[0]) {
 			this.len++;
-			let res_digit = this.HexDigit(i + this.len);
+			const res_digit = this.HexDigit(i + this.len);
 			if (res_digit[0]) res = res_digit;
 			else break;
 		}
@@ -1190,7 +1190,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-HexDigit
 	/** @arg {number} index @returns {JsLexerReturnType} */
 	HexDigit(index) {
-		let str = this.str;
+		const str = this.str;
 		if (
 			str.charCodeAt(index) >= "0".charCodeAt(0) &&
 			str.charCodeAt(index) <= "9".charCodeAt(0)
@@ -1212,10 +1212,10 @@ class StringLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-StringLiteral
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	StringLiteral(str, index) {
-		let cur = str[index];
+		const cur = str[index];
 		if (cur === '"') {
 			if (str[index + 1] === '"') return [true, "StringLiteral", 2];
-			let [, , double_string_chars_len] = this.DoubleStringCharacters(
+			const [, , double_string_chars_len] = this.DoubleStringCharacters(
 				str,
 				index + 1,
 			);
@@ -1226,7 +1226,7 @@ class StringLiterals extends ECMA262Base {
 		}
 		if (cur === "'") {
 			if (str[index + 1] === "'") return [true, "StringLiteral", 2];
-			let [, , single_string_chars_len] = this.SingleStringCharacters(
+			const [, , single_string_chars_len] = this.SingleStringCharacters(
 				str,
 				index + 1,
 			);
@@ -1242,7 +1242,7 @@ class StringLiterals extends ECMA262Base {
 	DoubleStringCharacters(str, index) {
 		let off = 0;
 		for (;;) {
-			let len = this.DoubleStringCharacter(str, index + off);
+			const len = this.DoubleStringCharacter(str, index + off);
 			if (len[2] > 0) {
 				off += len[2];
 				continue;
@@ -1257,17 +1257,17 @@ class StringLiterals extends ECMA262Base {
 		x: {
 			if (str[index] === '"') return [false, null, 0];
 			if (str[index] === "\\") break x;
-			let len = this.C.line_terminators.LineTerminator(str, index);
+			const len = this.C.line_terminators.LineTerminator(str, index);
 			if (len !== null) break x;
 			return [true, "DoubleStringCharacter", 1];
 		}
 		if (str[index] === "\u{2028}") return [true, "DoubleStringCharacter", 1];
 		if (str[index] === "\u{2029}") return [true, "DoubleStringCharacter", 1];
 		if (str[index] === "\\") {
-			let [, , esc_len] = this.EscapeSequence(str, index);
+			const [, , esc_len] = this.EscapeSequence(str, index);
 			return [true, "DoubleStringCharacter", esc_len + 1];
 		}
-		let [, , lc_len] = this.LineContinuation(str, index);
+		const [, , lc_len] = this.LineContinuation(str, index);
 		if (lc_len > 0) return [true, "DoubleStringCharacter", lc_len];
 		return [true, "DoubleStringCharacter", 1];
 	}
@@ -1276,7 +1276,7 @@ class StringLiterals extends ECMA262Base {
 	SingleStringCharacters(str, index) {
 		let off = 0;
 		for (;;) {
-			let len = this.SingleStringCharacter(str, index + off);
+			const len = this.SingleStringCharacter(str, index + off);
 			if (len[2] > 0) {
 				off += len[2];
 				continue;
@@ -1292,17 +1292,17 @@ class StringLiterals extends ECMA262Base {
 		x: {
 			if (str[index] === "'") return [false, null, 0];
 			if (str[index] === "\\") break x;
-			let len = this.C.line_terminators.LineTerminator(str, index);
+			const len = this.C.line_terminators.LineTerminator(str, index);
 			if (len !== null) break x;
 			return [true, "SingleStringCharacter", 1];
 		}
 		if (str[index] === "\u{2028}") return [true, "SingleStringCharacter", 1];
 		if (str[index] === "\u{2029}") return [true, "SingleStringCharacter", 1];
 		if (str[index] === "\\") {
-			let esc_len = this.EscapeSequence(str, index);
+			const esc_len = this.EscapeSequence(str, index);
 			return [true, "SingleStringCharacter", esc_len[2] + 1];
 		}
-		let [, , lc_len] = this.LineContinuation(str, index);
+		const [, , lc_len] = this.LineContinuation(str, index);
 		if (lc_len > 0) return [true, "SingleStringCharacter", lc_len];
 		return [true, "SingleStringCharacter", 1];
 	}
@@ -1310,7 +1310,7 @@ class StringLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	LineContinuation(str, index) {
 		if (str[index] === "\\") {
-			let [, , lt_len] = this.C.line_terminators.LineTerminatorSequence(
+			const [, , lt_len] = this.C.line_terminators.LineTerminatorSequence(
 				str,
 				index + 1,
 			);
@@ -1325,7 +1325,7 @@ class StringLiterals extends ECMA262Base {
 		if (len[2] > 0) return len;
 		x: {
 			if (str[index] === "0") {
-				let peek = this.C.numeric_literals.DecimalDigit(str, index);
+				const peek = this.C.numeric_literals.DecimalDigit(str, index);
 				if (peek[2] > 0) break x;
 				// \0 null escape found
 				return [true, "EscapeSequence", 1];
@@ -1353,8 +1353,8 @@ class StringLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-SingleEscapeCharacter
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	SingleEscapeCharacter(str, index) {
-		let val = ["'", '"', "\\", "b", "f", "n", "r", "t", "v"];
-		let cur = str[index];
+		const val = ["'", '"', "\\", "b", "f", "n", "r", "t", "v"];
+		const cur = str[index];
 		if (val.includes(cur)) return [true, "SingleEscapeCharacter", 1];
 		return [false, null, 0];
 	}
@@ -1370,8 +1370,8 @@ class StringLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	EscapeCharacter(str, index) {
-		let len0 = this.SingleEscapeCharacter(str, index);
-		let len1 = this.C.numeric_literals.DecimalDigit(str, index);
+		const len0 = this.SingleEscapeCharacter(str, index);
+		const len1 = this.C.numeric_literals.DecimalDigit(str, index);
 		let act = 0;
 		if (len0 > len1) act = 1;
 		if (str[index] === "x") return [true, "EscapeCharacter", 1];
@@ -1390,9 +1390,9 @@ class StringLiterals extends ECMA262Base {
 			}
 		}
 		x: {
-			let len = this.NonZeroOctalDigit(str, index);
+			const len = this.NonZeroOctalDigit(str, index);
 			if (!len[0]) break x;
-			let n_len = this.C.numeric_literals.OctalDigit(str, index + 1);
+			const n_len = this.C.numeric_literals.OctalDigit(str, index + 1);
 			if (n_len[2] > 0) break x;
 			return [true, "LegacyOctalEscapeSequence", 1];
 		}
@@ -1427,23 +1427,23 @@ class StringLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	NonZeroOctalDigit(str, index) {
 		if (str[index] === "0") return [false, null, 0];
-		let len = this.C.numeric_literals.OctalDigit(str, index);
+		const len = this.C.numeric_literals.OctalDigit(str, index);
 		if (len[2] > 0) return [true, "NonZeroOctalDigit", 1];
 		return [false, null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	ZeroToThree(str, index) {
-		let cur = str[index];
-		let chk = "0123";
+		const cur = str[index];
+		const chk = "0123";
 		if (chk.includes(cur)) return [true, "ZeroToThree", 1];
 		return [false, null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	FourToSeven(str, index) {
-		let cur = str[index];
-		let chk = "4567";
+		const cur = str[index];
+		const chk = "4567";
 		if (chk.includes(cur)) return [true, "FourToSeven", 1];
 		return [false, null, 0];
 	}
@@ -1472,11 +1472,11 @@ class StringLiterals extends ECMA262Base {
 	UnicodeEscapeSequence(index) {
 		let off = 0;
 		if (this.str[index] === "u") off++;
-		let len0 = this.Hex4Digits(index + off);
+		const len0 = this.Hex4Digits(index + off);
 		if (len0[2] > 0) return [true, "UnicodeEscapeSequence", len0[2] + 1];
 		if (this.str[index + off] === "{}"[0]) {
 			off++;
-			let len = this.C.template_literal_lexical_components.CodePoint(
+			const len = this.C.template_literal_lexical_components.CodePoint(
 				this.str,
 				index + off,
 			);
@@ -1525,7 +1525,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		//` TemplateCharacters opt `
 		if (str[cur_index] === "`") cur_index++;
 		else return [false, null, 0];
-		let opt = this.TemplateCharacters(str, cur_index);
+		const opt = this.TemplateCharacters(str, cur_index);
 		if (!opt[0]) return [false, null, 0];
 		return [true, "NoSubstitutionTemplate", cur_index - index + opt[2]];
 	}
@@ -1536,7 +1536,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		// ` TemplateCharacters_opt ${
 		if (str[cur_index] === "`") {
 			cur_index++;
-			let res = this.TemplateCharacters(str, cur_index);
+			const res = this.TemplateCharacters(str, cur_index);
 			if (res[0] === false) throw res[1];
 			if (res[2] > 0) cur_index += res[2];
 			if (str[cur_index] === "$" && str[cur_index + 1] === "{") {
@@ -1566,7 +1566,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			if (str[index + len] === "$" && str[index + len + 1] === "{}"[0]) {
 				return [true, "TemplateMiddle", len + 2];
 			}
-			let res = this.TemplateCharacters(str, index);
+			const res = this.TemplateCharacters(str, index);
 			if (res[0]) {
 				len += res[2];
 				if (str[index + len] === "$" && str[index + len + 1] === "{}"[0]) {
@@ -1587,7 +1587,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 				len++;
 				return [true, "TemplateTail", len];
 			}
-			let res = this.TemplateCharacters(str, index);
+			const res = this.TemplateCharacters(str, index);
 			if (res[0]) {
 				len += res[2];
 				if (str[index + len] === "`") {
@@ -1618,11 +1618,11 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			return [true, "TemplateCharacter", 1];
 		}
 		if (str[index] === "\\") {
-			let escape_res = this.TemplateEscapeSequence(str, index);
+			const escape_res = this.TemplateEscapeSequence(str, index);
 			if (escape_res[0]) return [true, "TemplateCharacter", escape_res[2]];
 		}
 		if (str[index] === "\\") {
-			let not_esc = this.NotEscapeSequence(str, index);
+			const not_esc = this.NotEscapeSequence(str, index);
 			if (not_esc[2] > 0) return [false, null, 0];
 		}
 		let res = this.C.string_literals.LineContinuation(str, index);
@@ -1644,12 +1644,12 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	TemplateEscapeSequence(str, index) {
 		let len = 0;
 		/* CharacterEscapeSequence */
-		let tmp = this.C.string_literals.CharacterEscapeSequence(str, index);
+		const tmp = this.C.string_literals.CharacterEscapeSequence(str, index);
 		if (tmp[0]) return [true, "TemplateEscapeSequence", tmp[2]];
 		/* 0 [lookahead ∉ DecimalDigit]*/
 		if (str[index] === "0") {
 			len++;
-			let la = this.C.numeric_literals.DecimalDigit(str, index);
+			const la = this.C.numeric_literals.DecimalDigit(str, index);
 			if (!la[0]) return [true, "TemplateEscapeSequence", len];
 		}
 		len = 0;
@@ -1663,10 +1663,10 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	NotEscapeSequence(str, index) {
 		if (str[index] === "0") {
-			let res = this.C.numeric_literals.DecimalDigit(str, index + 1);
+			const res = this.C.numeric_literals.DecimalDigit(str, index + 1);
 			if (res[0]) return [true, "NotEscapeSequence", res[2] + 1];
 		} else {
-			let res = this.C.numeric_literals.DecimalDigit(str, index);
+			const res = this.C.numeric_literals.DecimalDigit(str, index);
 			if (res[0]) return [true, "NotEscapeSequence", res[2]];
 		}
 		if (str[index] === "x") {
@@ -1678,7 +1678,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			}
 		}
 		if (str[index] !== "u") return [false, null, 0];
-		let res_1, res_2, res_3;
+		let res_1, res_2;
 		let len = 1;
 		let lookahead_res_1 = this.C.numeric_literals.HexDigit(index + len);
 		if (!lookahead_res_1[0] && str[index + 1] !== "{}"[0]) {
@@ -1695,7 +1695,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		}
 		res_1 = this.C.numeric_literals.HexDigit(index + len);
 		res_2 = this.C.numeric_literals.HexDigit(index + len + 1);
-		res_3 = this.C.numeric_literals.HexDigit(index + len + 2);
+		const res_3 = this.C.numeric_literals.HexDigit(index + len + 2);
 		lookahead_res_1 = this.C.numeric_literals.HexDigit(index + len + 3);
 		if (res_1[0] && res_2[0] && res_3[0] && !lookahead_res_1[0]) {
 			return [true, "NotEscapeSequence", 4];
@@ -1723,11 +1723,11 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	NotCodePoint(str, index) {
 		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
-		let res = this.C.numeric_literals.HexDigits({ sep: false }, index);
+		const res = this.C.numeric_literals.HexDigits({ sep: false }, index);
 		if (!res[0]) return [false, null, 0];
-		let mv_raw = str.slice(index, index + res[2]);
+		const mv_raw = str.slice(index, index + res[2]);
 		// but only if MV of HexDigits ≤ 0x10FFFF
-		let MV = parseInt(mv_raw, 16);
+		const MV = parseInt(mv_raw, 16);
 		if (MV > 0x10FFFF) return [true, "NotCodePoint", res[2]];
 		return [false, null, 0];
 	}
@@ -1735,11 +1735,11 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	CodePoint(str, index) {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-		let res = this.C.numeric_literals.HexDigits({ sep: false }, index);
+		const res = this.C.numeric_literals.HexDigits({ sep: false }, index);
 		if (!res[0]) return [false, null, 0];
-		let mv_raw = str.slice(index, index + res[2]);
+		const mv_raw = str.slice(index, index + res[2]);
 		// but only if MV of HexDigits ≤ 0x10FFFF
-		let MV = parseInt(mv_raw, 16);
+		const MV = parseInt(mv_raw, 16);
 		if (MV <= 0x10FFFF) return [true, "CodePoint", res[2]];
 		return [false, null, 0];
 	}
@@ -1766,17 +1766,19 @@ class RegularExpressionLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	RegularExpressionBody(str, index) {
 		// RegularExpressionFirstChar RegularExpressionChars
-		let res = this.RegularExpressionFirstChar(str, index);
+		const res = this.RegularExpressionFirstChar(str, index);
 		if (res[2] > 0) {
-			let cont = this.RegularExpressionChars(str, index + 1);
-			if (cont[2] === 0) {}
+			const cont = this.RegularExpressionChars(str, index + 1);
+			if (cont[2] === 0) {
+				throw new Error("TODO.");
+			}
 		}
 		throw new Error("Method not implemented.");
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionChars
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	RegularExpressionChars(str, index) {
-		let res = this.RegularExpressionChar(str, index);
+		const res = this.RegularExpressionChar(str, index);
 		return [true, "RegularExpressionChars", res[2]];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionChar
@@ -1787,7 +1789,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 			if (str[index] === "\\" && str[index] === "/" || str[index] === "[]"[0]) {
 				break x;
 			}
-			let res = this.RegularExpressionNonTerminator(str, index);
+			const res = this.RegularExpressionNonTerminator(str, index);
 			if (res[0]) {
 				return [true, "RegularExpressionChar", res[2]];
 			}
@@ -1813,7 +1815,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 				str[index] === "*" || str[index] === "\\" && str[index] === "/" ||
 				str[index] === "[]"[0]
 			) break x;
-			let res = this.RegularExpressionNonTerminator(str, index);
+			const res = this.RegularExpressionNonTerminator(str, index);
 			if (res[0]) {
 				return [true, "RegularExpressionFirstChar", res[2]];
 			}
@@ -1837,7 +1839,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 		// [ RegularExpressionClassChars ]
 		if (str[index] === "[]"[0]) {
 			len++;
-			let res = this.RegularExpressionClassChars(str, index + len);
+			const res = this.RegularExpressionClassChars(str, index + len);
 			if (res[0]) {
 				if (str[index + res[2]] === "[]"[1]) {
 					len++;
@@ -1852,7 +1854,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 	RegularExpressionBackslashSequence(str, index) {
 		// \ RegularExpressionNonTerminator
 		if (str[index] === "\\") {
-			let res = this.RegularExpressionNonTerminator(str, index + 1);
+			const res = this.RegularExpressionNonTerminator(str, index + 1);
 			if (res[0]) {
 				return [true, "RegularExpressionBackslashSequence", res[2] + 1];
 			}
@@ -1863,7 +1865,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	RegularExpressionNonTerminator(str, index) {
 		// SourceCharacter but not LineTerminator
-		let vv = this.C.line_terminators.LineTerminator(str, index);
+		const vv = this.C.line_terminators.LineTerminator(str, index);
 		if (vv[0]) {
 			return [false, null, 0];
 		}
@@ -1904,8 +1906,8 @@ class RegularExpressionLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	RegularExpressionFlags(str, index) {
 		// [empty]
-		let len = 0;
-		let is_class_chars = this.C.names_and_keywords.IdentifierPartChar(
+		const len = 0;
+		const is_class_chars = this.C.names_and_keywords.IdentifierPartChar(
 			str,
 			index + len,
 		);
@@ -1929,12 +1931,12 @@ class ecma_root {
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseWhiteSpace(in_state, out_state) {
-		let res = this.white_space.WhiteSpace(in_state.str, in_state.index);
+		const res = this.white_space.WhiteSpace(in_state.str, in_state.index);
 		this.modify_output(out_state, res, "WhiteSpace");
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseLineTerminator(in_state, out_state) {
-		let res = this.line_terminators.LineTerminator(
+		const res = this.line_terminators.LineTerminator(
 			in_state.str,
 			in_state.index,
 		);
@@ -1942,12 +1944,12 @@ class ecma_root {
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseComment(in_state, out_state) {
-		let res = this.comments.Comment(in_state.str, in_state.index);
+		const res = this.comments.Comment(in_state.str, in_state.index);
 		this.modify_output(out_state, res, "Comment");
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseRightBracePunctuator(in_state, out_state) {
-		let res = this.punctuators.RightBracePunctuator(
+		const res = this.punctuators.RightBracePunctuator(
 			in_state.str,
 			in_state.index,
 		);
@@ -1955,17 +1957,17 @@ class ecma_root {
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseDivPunctuator(in_state, out_state) {
-		let res = this.punctuators.DivPunctuator(in_state.str, in_state.index);
+		const res = this.punctuators.DivPunctuator(in_state.str, in_state.index);
 		this.modify_output(out_state, res, "DivPunctuator");
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseCommonToken(in_state, out_state) {
-		let res = this.tokens.CommonToken(in_state.str, in_state.index);
+		const res = this.tokens.CommonToken(in_state.str, in_state.index);
 		this.modify_output(out_state, res, "CommonToken");
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseRegularExpressionLiteral(in_state, out_state) {
-		let res = this.RegularExpressionLiterals.RegularExpressionLiteral(
+		const res = this.RegularExpressionLiterals.RegularExpressionLiteral(
 			in_state.str,
 			in_state.index,
 		);
@@ -1973,10 +1975,11 @@ class ecma_root {
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
 	ParseTemplateSubstitutionTail(in_state, out_state) {
-		let res = this.template_literal_lexical_components.TemplateSubstitutionTail(
-			in_state.str,
-			in_state.index,
-		);
+		const res = this.template_literal_lexical_components
+			.TemplateSubstitutionTail(
+				in_state.str,
+				in_state.index,
+			);
 		this.modify_output(out_state, res, "TemplateSubstitutionTail");
 	}
 	/** @arg {import("./support/dbg/JsLexerInputState.ts").JsLexerInputState} in_state @arg {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} out_state */
@@ -1991,7 +1994,7 @@ class ecma_root {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, RightBracePunctuator
 		/** @type {import("./support/dbg/JsLexerOutputState.ts").JsLexerOutputState} */
-		let out_state = {
+		const out_state = {
 			type: null,
 			item: null,
 			length: 0,
@@ -2006,7 +2009,7 @@ class ecma_root {
 	InputElementRegExp() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// RightBracePunctuator, RegularExpressionLiteral
-		let out_state = {
+		const out_state = {
 			/** @type {string|null} */
 			type: null,
 			/** @type {string|null} */
@@ -2023,7 +2026,7 @@ class ecma_root {
 	InputElementRegExpOrTemplateTail() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// RegularExpressionLiteral, TemplateSubstitutionTail
-		let out_state = {
+		const out_state = {
 			/** @type {string|null} */
 			type: null,
 			/** @type {string|null} */
@@ -2040,7 +2043,7 @@ class ecma_root {
 	InputElementTemplateTail() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, TemplateSubstitutionTail
-		let out_state = {
+		const out_state = {
 			/** @type {string|null} */
 			type: null,
 			/** @type {string|null} */
@@ -2056,7 +2059,7 @@ class ecma_root {
 	/** @arg {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
 	describe_token(token_value) {
 		if (!token_value) return ["undefined"];
-		let tok_str = this.str.slice(
+		const tok_str = this.str.slice(
 			token_value[3],
 			token_value[3] + token_value[2],
 		);
@@ -2081,7 +2084,7 @@ class ecma_root {
 		}
 		/** @type {[true,string,number,number]} */
 		let ret;
-		let cur = this.InputElementDiv();
+		const cur = this.InputElementDiv();
 		if (cur[1] !== null) {
 			if (cur[2] === 0) {
 				ret = [cur[0], cur[1], cur[2], this.index];
@@ -2150,7 +2153,7 @@ function parse_javascript_str(code_str) {
 	}
 	// code_str="function x(){}";
 	// code_str="(function(){return function x(){}})()";
-	let token_gen = new js_token_generator(code_str);
+	const token_gen = new js_token_generator(code_str);
 	let res_item;
 	let i = 0;
 	for (;; i++) {
@@ -2159,7 +2162,7 @@ function parse_javascript_str(code_str) {
 			console.log("parse error at ", token_gen.index);
 			break;
 		}
-		let res_description = token_gen.root.describe_token(res_item);
+		const res_description = token_gen.root.describe_token(res_item);
 		if (res_description[0] === "WhiteSpace") i -= 1;
 		if (!res_item[0]) {
 			if (res_item[1] === js_token_generator.EOF_TOKEN) console.log("EOF");
@@ -2174,14 +2177,14 @@ export_((exports) => {
 });
 // #endregion
 
-var api_debug_enabled = false;
+const api_debug_enabled = false;
 // #region console
-const base_console = window.console;
+const base_console = self.console;
 add_object_with_name("Console", base_console);
 
 /** @type {Console} */
-var console = { ...window.console };
-console.log = console.log.bind(window.console);
+const console = { ...self.console };
+console.log = console.log.bind(self.console);
 // #endregion
 
 class LoggingEventTarget {
@@ -2198,23 +2201,23 @@ class ApiProxyManager {
 	}
 	/** @template {(...x:any[])=>any} T @arg {string} message_to_send @arg {T} function_value @returns {T} */
 	create_proxy_for_function(message_to_send, function_value) {
-		let t = this.event_handler;
+		const t = this.event_handler;
 		/** @arg {[target: T, thisArg: any, argArray: any[]]} post_message_proxy_spread */
 		function do_apply(...post_message_proxy_spread) {
 			t.dispatchEvent({
 				type: message_to_send,
 				data: post_message_proxy_spread,
 			});
-			let ret = Reflect.apply(...post_message_proxy_spread);
+			const ret = Reflect.apply(...post_message_proxy_spread);
 			return ret;
 		}
 		return new Proxy(function_value, { apply: do_apply });
 	}
 	start_postMessage_proxy() {
 		if (!api_debug_enabled) return;
-		window.postMessage = this.create_proxy_for_function(
+		self.postMessage = this.create_proxy_for_function(
 			"postMessage_sent",
-			window.postMessage,
+			self.postMessage,
 		);
 	}
 	static do_postMessage_logging = true;
@@ -2226,7 +2229,7 @@ class ApiProxyManager {
 }
 export_((exports) => {
 	exports.ApiProxyManager = ApiProxyManager;
-	let any_api_logger = new ApiProxyManager(new LoggingEventTarget());
+	const any_api_logger = new ApiProxyManager(new LoggingEventTarget());
 	ApiProxyManager.attach_to_api(any_api_logger);
 	exports.any_api_logger = any_api_logger;
 });
@@ -2257,28 +2260,32 @@ class ReversePrototypeChain {
 			}
 			this.window_list.push(window[i]);
 		}
-		for (let target of this.targets) this.process_target(target);
+		for (const target of this.targets) this.process_target(target);
 		if (top === window) if (api_debug_enabled) console.log(this.destination);
 	}
 	/** @arg {{}|null} value */
 	get_cache_key(value) {
 		if (!this.object_cache.includes(value)) this.object_cache.push(value);
-		let object_index = this.object_cache.indexOf(value);
+		const object_index = this.object_cache.indexOf(value);
 		if (!value) return `a_null::${object_index}`;
 		if (value instanceof Window && this.window_list.includes(value)) {
 			return "window_id::" + this.window_list.indexOf(value);
 		}
 		let key;
 		if (Symbol.toStringTag in value) key = value[Symbol.toStringTag];
+		// deno-lint-ignore no-prototype-builtins
 		if (value.hasOwnProperty("constructor")) {
-			let constructor_name = value.constructor.name;
+			const constructor_name = value.constructor.name;
 			if (key) {
 				return `constructor_key::${constructor_name}:${key}:${object_index}`;
 			} else return `constructor_key::${constructor_name}:${object_index}`;
 		} else if (key) return `to_string_tag::${key}:${object_index}`;
 		try {
-			if (value.hasOwnProperty("constructor")) {}
-		} catch {}
+			// deno-lint-ignore no-prototype-builtins
+			value.hasOwnProperty("constructor");
+		} catch {
+			// swallow
+		}
 		let index = this.object_cache.indexOf(value);
 		if (index < 0) index = this.object_cache.push(value) - 1;
 		return "cache_id::" + index;
