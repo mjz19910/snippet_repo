@@ -104,6 +104,14 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "scientists":
+			case "depending":
+			case "as":
+			case "it's":
+			case "the":
+			case "meaning":
+			case "linguists":
+			case "...":
 			case "generally":
 			case "when":
 			case "this":
