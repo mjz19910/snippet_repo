@@ -336,7 +336,7 @@ const new_words_set = new Set();
 /**
  * @param {string} word
  */
-function parse_rng_word(word, destructure_word = false) {
+function parse_rng_word(word, add_new_words = true, destructure_word = false) {
   if (destructure_word) {
     const word_arr = [];
     let w2 = word;
@@ -354,7 +354,9 @@ function parse_rng_word(word, destructure_word = false) {
   }
   if (dict.has(word)) return;
   dict.add(word);
-  new_words_set.add(word);
+  if (add_new_words) {
+    new_words_set.add(word);
+  }
   const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
     const pair1 = word_chars[char_idx];
@@ -447,7 +449,7 @@ async function run() {
   /** @type {string[]} */
   const load_arr2 = await read_json_array_file(dictionary_file);
   for (const word of load_arr2) {
-    parse_rng_word(word);
+    parse_rng_word(word, false, false);
   }
   let before_wait = dict.size;
   const request_log_interval = 10;
@@ -477,7 +479,7 @@ async function run() {
   dictionary_file.close();
   const new_words_arr = [...new_words_set.values()].sort();
   for (const new_word of new_words_arr) {
-    parse_rng_word(new_word, true);
+    parse_rng_word(new_word, true, true);
   }
 }
 await run();
