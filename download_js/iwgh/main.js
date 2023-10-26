@@ -67,6 +67,8 @@ function parse_sentence(str) {
 				}
 				break x;
 			}
+			case "local":
+			case "traditional":
 			case "national":
 			case "popular": {
 				let word2=parsed_src.shift();
@@ -76,14 +78,12 @@ function parse_sentence(str) {
 					break x;
 				}
 			} break x;
-			case "traditional":
 			case "rare":
-			case "sort":
-			case "local":
 			case "plant": {
 				let word2=parsed_src.shift();
 				console.log(["w1",word1,"w2",word2]);
 			} break x;
+			case "sort":
 			case "kind":
 			case "type": {
 				let word2=parsed_src.shift();
