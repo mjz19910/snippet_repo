@@ -253,22 +253,22 @@ function parse_sentence(str) {
 /** @arg {string} prefix @arg {string} word */
 function strip_vowel(prefix, word) {
   if (word.startsWith(prefix + "a")) {
-    return "!" + word.slice(prefix.length + 1);
+    return word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "e")) {
-    return "!" + word.slice(prefix.length + 1);
+    return word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "i")) {
-    return "!" + word.slice(prefix.length + 1);
+    return word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "o")) {
-    return "!" + word.slice(prefix.length + 1);
+    return word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "u")) {
-    return "!" + word.slice(prefix.length + 1);
+    return word.slice(prefix.length + 1);
   }
   if (word.startsWith(prefix + "y")) {
-    return "!" + word.slice(prefix.length + 1);
+    return word.slice(prefix.length + 1);
   }
   return word;
 }
@@ -308,6 +308,7 @@ const rng_word_num_map = new Map();
  */
 function parse_rng_word(word) {
   word = word.toLowerCase();
+  if (word.startsWith("!")) word = word.slice(1);
   if (word_starts_with_vowel(word)) {
     word = strip_vowel("", word);
   } else {
