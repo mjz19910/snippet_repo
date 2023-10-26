@@ -1,5 +1,5 @@
-import {GenTestCallbackTemplate} from "./GenTestCallbackTemplate.js"
-import {debug} from "./const.js"
+import {GenTestCallbackTemplate} from "./GenTestCallbackTemplate.ts"
+import {debug} from "./const.ts"
 export class BaseTestRunner {
 	m_total=0
 	m_successful=0

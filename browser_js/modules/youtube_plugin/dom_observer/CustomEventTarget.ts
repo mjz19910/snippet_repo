@@ -1,4 +1,4 @@
-import {CustomEventType} from "./CustomEventType.js"
+import {CustomEventType} from "./CustomEventType.ts"
 
 export class CustomEventTarget {
 	trace=false

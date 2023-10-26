@@ -1,9 +1,9 @@
 import {debug} from "../debug.js"
 import {ytd_app} from "../player_plugin_activate/elements/ytd_app.js"
-import {createGainController} from "./createGainController.js"
-import {gain_controller} from "./gain_controller.js"
-import {on_gain_controller} from "./on_gain_controller.js"
-import {VolumeRange} from "./VolumeRange.js"
+import {createGainController} from "./createGainController.ts"
+import {gain_controller} from "./gain_controller.ts"
+import {on_gain_controller} from "./on_gain_controller.ts"
+import {VolumeRange} from "./VolumeRange.ts"
 
 export function VolumeRangePlugin() {
 	if(debug.value) console.log('VolumeRangePlugin')

@@ -1,8 +1,8 @@
-import {rebuild_the_universe_plugin} from "./rebuild_the_universe.user";
+import {rebuild_the_universe_plugin} from "./rebuild_the_universe.user.js";
 
 
 declare global {
-	interface Window {
+	export interface Window {
 		document_write_list: InstanceType<typeof rebuild_the_universe_plugin.DocumentWriteListImpl>;
 		g_do_load: () => void;
 		g_page_content: {request_content: string; cur: string;};
@@ -10,15 +10,21 @@ declare global {
 }
 
 // g_mut_observers
-declare global {interface Window {g_mut_observers: any[];}}
+declare global {
+	export interface Window {g_mut_observers: unknown[];}
+}
 
-declare global {interface Window {mute(): void;}}
+declare global {
+	export interface Window {mute(): void;}
+}
 
 // AutoBuyImplR
-declare global {interface Window {g_auto_buy: InstanceType<typeof rebuild_the_universe_plugin.AutoBuyImplR>;}}
+declare global {
+	export interface Window {g_auto_buy: InstanceType<typeof rebuild_the_universe_plugin.AutoBuyImplR>;}
+}
 
 interface GoogleAdList {
-	op: any;
+	op: unknown;
 	push(v: number): void;
 }
 
@@ -26,63 +32,79 @@ export {};
 // #region begin declare_global_sec
 // rebuild_the_universe main
 declare global {
-	interface Document {
+	export interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
 		stop(): void;
+	}
+	export type CSSStyleSheetInit={
+		_: 1;
+	};
+	export class CSSStyleSheet {
+		opt: CSSStyleSheetInit|undefined;
+		constructor(options?: CSSStyleSheetInit);
+	}
+}
+
+export class CSSStyleSheet {
+	opt: CSSStyleSheetInit|undefined;
+	constructor(options?: CSSStyleSheetInit) {
+		this.opt=options;
 	}
 }
 
 // on_game_data_set
 declare global {
-	function constelOff(): void;
+	export function constelOff(): void;
 
-	interface Window {constelOff(): void;}
+	export interface Window {constelOff(): void;}
 }
 
 // AutoBuyState
 declare global {
-	function calcPres(): number;
+	export function calcPres(): number;
 
-	interface Window {
+	export interface Window {
 		atomepersecond: number;
 		prestige: number;
 	}
 }
 // tonext_async
 declare global {
-	function Find_ToNext(v: number): number;
-	function mainCalc(v: any): void;
+	export function Find_ToNext(v: number): number;
+	export function mainCalc(v: unknown): void;
 
-	var arUnit: any[];
+	export let arUnit: unknown[];
 }
 
 // do_auto_unit_promote
 declare global {
-	interface Window {
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
-		_targets_achi: any[];
+	export interface Window {
+		Get_Unit_Type(v: unknown): unknown;
+		getUnitPromoCost(v: unknown): number;
+		_targets_achi: unknown[];
 		totalAchi(): number;
-		_targets: any[];
+		_targets: unknown[];
 		tonext(v: number): void;
 	}
 }
 
 // on_timers_moved
-declare global {interface Window {_SM_Data: unknown;}}
+declare global {
+	export interface Window {_SM_Data: unknown;}
+}
 
 // AutoBuy
 declare global {
-	interface Window {
+	export interface Window {
 		timeplayed: number;
 		secondinterval?: number|undefined;
 		doc: Document;
-		rounding(v: number,x: any,y: any): string;
+		rounding(v: number,x: unknown,y: unknown): string;
 		totalAtome: number;
 		atomsaccu: number;
 		calcPres(): number;
 		lightreset(): void;
-		specialclick(that: any): void;
+		specialclick(that: unknown): void;
 		__testing__: false;
 		bonusAll(): void;
 		allspec: {done: boolean; cost: number;}[];
@@ -91,17 +113,17 @@ declare global {
 
 // specialclick_inject
 declare global {
-	interface Window {
+	export interface Window {
 		specialsbought: number;
 		atomsinvest: number;
 		calcDiff(v: number): number;
 		noti: boolean;
-		gritter: any;
+		gritter: unknown;
 		toTitleCase(v: string): string;
 		plurials(v: string): string;
 		arrayNames: string[];
-		updateprogress(v: any): void;
-		seeUnit(v: number): any;
+		updateprogress(v: unknown): void;
+		seeUnit(v: number): unknown;
 		checkspec(): void;
 		achiSpec(): void;
 	}
@@ -109,7 +131,7 @@ declare global {
 
 // do_fetch_load
 declare global {
-	interface Window {
+	export interface Window {
 		adsbygoogle: GoogleAdList;
 		cint_arr: number[][];
 		on_on_timers_moved_first: boolean;

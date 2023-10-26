@@ -1,5 +1,5 @@
-import {got_jquery} from "./got_jquery.js"
-import {use_jquery} from "./use_jquery.js"
+import {got_jquery} from "./got_jquery.ts"
+import {use_jquery} from "./use_jquery.ts"
 
 export function proxy_jquery() {
 	let val=use_jquery()

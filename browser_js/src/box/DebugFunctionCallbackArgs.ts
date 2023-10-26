@@ -1,3 +1,3 @@
-import {DebugFunctionType} from "./DebugFunctionType.js"
+import {DebugFunctionType} from "./DebugFunctionType.ts"
 
 export type DebugFunctionCallbackArgs=['function',DebugFunctionType,{},any[]]

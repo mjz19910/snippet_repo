@@ -1,4 +1,4 @@
-import {DebugClassValue} from "./DebugClassValue.js"
-import {DebugFunctionValue} from "./DebugFunctionValue.js"
+import {DebugClassValue} from "./DebugClassValue.ts"
+import {DebugFunctionValue} from "./DebugFunctionValue.ts"
 
 export type DebugDataValue=DebugClassValue|DebugFunctionValue

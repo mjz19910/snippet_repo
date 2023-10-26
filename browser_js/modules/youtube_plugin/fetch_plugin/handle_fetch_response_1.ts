@@ -1,5 +1,5 @@
 import {debug} from "../debug.js"
-import {handle_fetch_response_2} from "./handle_fetch_response_2.js"
+import {handle_fetch_response_2} from "./handle_fetch_response_2.ts"
 import {RequestInfoExt} from "./RequestInfoExt.ts";
 
 export function handle_fetch_response_1(request_info: RequestInfoExt,response: Response): Response {

@@ -3,15 +3,6 @@ import {Box} from "./Box.ts";
 import {BoxTemplate} from "../template/BoxTemplate.ts";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.ts";
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.ts";
-type CSSStyleSheetInit={
-	_: 1;
-};
-class CSSStyleSheet {
-	opt: CSSStyleSheetInit|undefined;
-	constructor(options?: CSSStyleSheetInit) {
-		this.opt=options;
-	}
-}
 export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",typeof CSSStyleSheet> {
 	readonly type="constructor_box";
 	readonly next_member="instance_type";

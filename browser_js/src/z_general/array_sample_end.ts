@@ -1,4 +1,4 @@
-import {char_len_of} from "./char_len_of.js"
+import {char_len_of} from "./char_len_of.ts"
 
 export function array_sample_end(arr: string[],rem_target_len: number) {
 	arr=arr.slice(-300)

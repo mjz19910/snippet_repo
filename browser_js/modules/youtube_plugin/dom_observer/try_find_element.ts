@@ -1,6 +1,6 @@
-import {find_element_tag_name} from "./find_element_tag_name.js"
-import {found_element} from "./found_element.js"
-import {found_element_arr} from "./found_element_arr.js"
+import {find_element_tag_name} from "./find_element_tag_name.ts"
+import {found_element} from "./found_element.ts"
+import {found_element_arr} from "./found_element_arr.ts"
 
 export function try_find_element(message_id: number) {
 	if(found_element_arr.includes(find_element_tag_name))

@@ -1,5 +1,5 @@
 import {ytd_app} from "./elements/ytd_app.js"
-import {ui_plugin_css_enabled} from "./ui_plugin_css_enabled.js"
+import {ui_plugin_css_enabled} from "./ui_plugin_css_enabled.ts"
 
 export function ui_css_toggle_click_handler() {
 	if(ui_plugin_css_enabled.value) {

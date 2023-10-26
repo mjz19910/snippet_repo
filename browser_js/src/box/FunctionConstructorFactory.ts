@@ -1,5 +1,5 @@
-import {FunctionBox} from "./FunctionBox.js"
-import {NewableFunctionConstructor} from "./NewableFunctionConstructor.js"
+import {FunctionBox} from "./FunctionBox.ts"
+import {NewableFunctionConstructor} from "./NewableFunctionConstructor.ts"
 
 export interface FunctionConstructorFactory {
 	factory: (box_value: NewableFunctionConstructor) => FunctionBox

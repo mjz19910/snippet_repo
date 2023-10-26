@@ -1,4 +1,4 @@
-import {handle_fetch_response_1} from "./handle_fetch_response_1.js"
+import {handle_fetch_response_1} from "./handle_fetch_response_1.ts"
 import {RequestInfoExt} from "./RequestInfoExt.ts";
 
 export function fetch_promise_handler(request_info: RequestInfoExt,response: Response) {

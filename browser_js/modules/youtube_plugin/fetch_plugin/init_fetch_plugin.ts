@@ -1,5 +1,5 @@
-import {fetch_inject} from "./fetch_inject.js"
-import {original_fetch} from "./original_fetch.js"
+import {fetch_inject} from "./fetch_inject.ts"
+import {original_fetch} from "./original_fetch.ts"
 
 export function init_fetch_plugin() {
 	original_fetch.value=fetch

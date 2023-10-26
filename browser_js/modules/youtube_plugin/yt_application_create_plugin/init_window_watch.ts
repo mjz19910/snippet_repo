@@ -1,4 +1,4 @@
-import {act_found_create_yt_player} from "./act_found_create_yt_player.js"
+import {act_found_create_yt_player} from "./act_found_create_yt_player.ts"
 import {object_property_watcher} from "../object_property_watcher.js"
 
 export function init_window_watch() {

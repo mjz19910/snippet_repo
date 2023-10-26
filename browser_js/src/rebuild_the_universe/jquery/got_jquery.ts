@@ -1,4 +1,4 @@
-import {use_jquery} from "./use_jquery.js"
+import {use_jquery} from "./use_jquery.ts"
 
 export function got_jquery(value: any) {
 	Object.defineProperty(window,'$',{

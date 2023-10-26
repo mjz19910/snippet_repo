@@ -1,7 +1,7 @@
 import {overlay_content_div} from "./elements/overlay_content_div.js"
-import {playlist_arr} from "./playlist_arr.js"
-import {update_plugin_overlay} from "./update_plugin_overlay.js"
-import {wait_for_yt_player} from "./wait_for_yt_player.js"
+import {playlist_arr} from "./playlist_arr.ts"
+import {update_plugin_overlay} from "./update_plugin_overlay.ts"
+import {wait_for_yt_player} from "./wait_for_yt_player.ts"
 
 export function log_current_video_data() {
 	if(!ytd_player.value) return

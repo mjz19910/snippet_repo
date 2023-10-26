@@ -1,5 +1,5 @@
-import {DocumentWriteFn} from "./DocumentWriteFn.js"
-import {DocumentWriteList} from "./DocumentWriteList.js"
+import {DocumentWriteFn} from "./DocumentWriteFn.ts"
+import {DocumentWriteList} from "./DocumentWriteList.ts"
 
 export class DocumentWriteFnProxyHandler {
 	other: DocumentWriteList|null=null

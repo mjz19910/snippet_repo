@@ -1,4 +1,4 @@
-import {AverageRatio} from "./AverageRatio.js"
+import {AverageRatio} from "./AverageRatio.ts"
 
 export class AverageRatioRoot {
 	map: Map<string,AverageRatio>

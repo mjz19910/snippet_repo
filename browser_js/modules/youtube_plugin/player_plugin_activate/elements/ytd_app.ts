@@ -1,3 +1,3 @@
-import {YtdAppElement} from "./YtdAppElement.js"
+import {YtdAppElement} from "./YtdAppElement.ts"
 
 export const ytd_app: {value:YtdAppElement|null}={value:null}

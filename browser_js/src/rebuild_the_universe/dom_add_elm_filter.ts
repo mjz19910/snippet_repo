@@ -1,4 +1,4 @@
-import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.js"
+import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.ts"
 
 export function dom_add_elm_filter(elm: HTMLScriptElement|null) {
 	if(elm&&elm.nodeName==="SCRIPT") {

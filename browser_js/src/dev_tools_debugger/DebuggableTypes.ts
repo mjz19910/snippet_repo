@@ -1,1 +1,1 @@
-export type DebuggableTypes=((...v: any[]) => any)|(new (...v: any[]) => {})
+export type DebuggableTypes=((...v: any[]) => any)|(new (...a: unknown[]) => Record<never,never>)

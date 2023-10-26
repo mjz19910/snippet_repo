@@ -1,5 +1,5 @@
-import {Box} from "./Box.js"
-import {FunctionBox_Value} from "./FunctionBox_Value.js"
+import {Box} from "./Box.ts"
+import {FunctionBox_Value} from "./FunctionBox_Value.ts"
 
 type not_prim_or_null=Exclude<Box,{value:{}|null|void}>;
 type Equal<T,U extends T>=T&U;

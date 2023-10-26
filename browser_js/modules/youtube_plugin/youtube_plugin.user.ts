@@ -10,6 +10,6 @@
 // ==/UserScript==
 // eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences
 
-import {entry_point} from "./entry_point.js"
+import {entry_point} from "./entry_point.ts"
 
 entry_point()

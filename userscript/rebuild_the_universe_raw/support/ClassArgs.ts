@@ -1,1 +1,1 @@
-export type ClassArgs=any[]
+export type ClassArgs=unknown[]

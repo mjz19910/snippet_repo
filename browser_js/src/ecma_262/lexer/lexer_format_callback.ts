@@ -1,5 +1,5 @@
-import {LexReturnType} from "./LexReturnType.js"
-import {LexerStateData} from "./LexerStateData.js"
+import {LexReturnType} from "./LexReturnType.ts"
+import {LexerStateData} from "./LexerStateData.ts"
 export function lexer_format_callback(state: LexerStateData,code: string,res: LexReturnType) {
 	if(res[0]) {
 		let ret: [typeof res[0],string]=[res[0],code.slice(state.cur_index,state.cur_index+res[1])]

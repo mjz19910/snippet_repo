@@ -1,4 +1,4 @@
-import {map_to_tuple} from "./map_to_tuple.js"
+import {map_to_tuple} from "./map_to_tuple.ts"
 
 export function to_tuple_arr<T,X>(keys: T[],values: X[]): [T,X][] {
 	let arr_res: [T,X][]=[]

@@ -1,4 +1,4 @@
-import {TimerTag} from "./TimerTag.js"
+import {TimerTag} from "./TimerTag.ts"
 
 export class TimerState {
 	active

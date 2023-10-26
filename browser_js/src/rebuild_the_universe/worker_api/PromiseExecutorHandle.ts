@@ -1,4 +1,4 @@
-import {WorkerApi} from "./WorkerApi.js"
+import {WorkerApi} from "./WorkerApi.ts"
 
 export class PromiseExecutorHandle {
 	m_closed

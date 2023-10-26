@@ -1,5 +1,5 @@
-import {InstructionType} from "./InstructionType.js"
-import {DomInstructionType} from "./DomInstructionType.js"
+import {InstructionType} from "./InstructionType.ts"
+import {DomInstructionType} from "./DomInstructionType.ts"
 
 export type DomTaggedPack=
 	['dom',DomInstructionType]|

@@ -1,4 +1,4 @@
-import {bind_promise_handler} from "./bind_promise_handler.js"
+import {bind_promise_handler} from "./bind_promise_handler.ts"
 import {RequestInfoExt} from "./RequestInfoExt.ts";
 
 export function handle_fetch_response_2(request_info: RequestInfoExt,ov: Promise<string>): Promise<string> {

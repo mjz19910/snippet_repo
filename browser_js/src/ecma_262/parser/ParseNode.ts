@@ -1,4 +1,4 @@
-import {IParseNodeItems} from "./IParseNodeItems.js"
+import {IParseNodeItems} from "./IParseNodeItems.ts"
 
 export class ParseNode {
 	data_vec: IParseNodeItems[]

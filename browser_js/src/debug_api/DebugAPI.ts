@@ -100,7 +100,7 @@ export class DebugApi {
 	activate_function(target: DebugFunctionType,thisArgument: {},argumentsList: any[]): any {
 		return Reflect.apply(target,thisArgument,argumentsList);
 	}
-	activate_class(target_type: new (...a: any[]) => {},argumentsList: any[]): {} {
+	activate_class(target_type: new (...a: unknown[]) => Record<never,never>,argumentsList: any[]): {} {
 		return Reflect.construct(target_type,argumentsList);
 	}
 	debuggerBreakpointCode() {
@@ -223,7 +223,7 @@ export class DebugApi {
 			}
 		};
 	}
-	debuggerGetVarArrayClass(class_value: new (...a: any[]) => {},target_arg_vec: any[],var_match: string) {
+	debuggerGetVarArrayClass(class_value: new (...a: unknown[]) => Record<never,never>,target_arg_vec: any[],var_match: string) {
 		let data: DebugClassValue={
 			type: 'class',callback: this.activate_class,constructor_: class_value,args: target_arg_vec,
 			get_target() {
