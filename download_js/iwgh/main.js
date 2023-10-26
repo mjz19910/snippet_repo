@@ -324,6 +324,16 @@ async function read_entire_file(file) {
   } while (true);
   return new TextDecoder().decode(buf);
 }
+/** @arg {Deno.FsFile} file @arg {any} obj */
+async function write_entire_file(file, obj) {
+  const data = JSON.stringify(obj, void 0, "\t");
+  await file.seek(0, 0);
+  const encoder = new TextEncoder();
+  const buf = encoder.encode(data);
+  const n_written = await file.write(buf);
+  console.log(n_written, buf.length);
+  await file.truncate(buf.length);
+}
 async function run() {
   const arr = [];
   const description_file = await Deno.open("./description_cache.json", {
@@ -331,7 +341,7 @@ async function run() {
     write: true,
     create: true,
   });
-  let description_str = await read_entire_file(description_file);
+  const description_str = await read_entire_file(description_file);
   if (description_str !== "") {
     const description_load_arr = JSON.parse(description_str);
     for (const description_item of description_load_arr) {
@@ -343,7 +353,7 @@ async function run() {
     write: true,
     create: true,
   });
-  let dictionary_str = await read_entire_file(dictionary_file);
+  const dictionary_str = await read_entire_file(dictionary_file);
   if (dictionary_str !== "") {
     const load_arr = JSON.parse(dictionary_str);
     for (const word of load_arr) {
@@ -367,21 +377,10 @@ async function run() {
   }
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   console.log(rng_map);
-  description_str = JSON.stringify(description_set_arr, void 0, "\t");
-  await description_file.seek(0, 0);
-  const encoder = new TextEncoder();
-  const description_data = encoder.encode(description_str);
-  const n_written = await description_file.write(description_data);
-  console.log(n_written, description_data.length);
-  await description_file.truncate(description_data.length);
+  write_entire_file(description_file, description_set_arr);
   description_file.close();
-  await dictionary_file.seek(0, 0);
   const dictionary_arr = [...dict.values()].sort();
-  dictionary_str = JSON.stringify(dictionary_arr, void 0, "\t");
-  const dictionary_data = encoder.encode(dictionary_str);
-  const n_written2 = await dictionary_file.write(dictionary_data);
-  console.log(n_written2, dictionary_data.length);
-  await dictionary_file.truncate(dictionary_data.length);
+  write_entire_file(dictionary_file, dictionary_arr);
   dictionary_file.close();
 }
 await run();
