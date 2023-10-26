@@ -207,7 +207,7 @@ async function run() {
 		console.log("dict word num",dict.size-before_wait);
 		arr.length=0;
 	}
-	let description_arr=[...description_set.values()].sort();
+	let description_arr=[...description_set.values()].sort().slice(0,3);
 	for(let description of description_arr) {
 		console.log("%o",description);
 	}
