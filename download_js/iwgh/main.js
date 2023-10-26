@@ -272,6 +272,11 @@ function strip_vowel(prefix, word) {
   }
   return word;
 }
+function strip_word_part(word) {
+  if (word.startsWith("b")) return strip_vowel("b", word);
+  if (word.startsWith("c")) return strip_vowel("c", word);
+  if (word.startsWith("ch")) return strip_vowel("ch", word);
+}
 /** @type {Map<string,number>} */
 const rng_word_num_map = new Map();
 /**
@@ -280,21 +285,7 @@ const rng_word_num_map = new Map();
 function parse_rng_word(word) {
   word = word.toLowerCase();
   word = strip_vowel("", word);
-  word = strip_vowel("b", word);
-  word = strip_vowel("c", word);
-  word = strip_vowel("ch", word);
-  if (word.startsWith("ca")) {
-    word = "!" + word.slice(2);
-  }
-  if (word.startsWith("ce")) {
-    word = "!" + word.slice(2);
-  }
-  if (word.startsWith("cha")) {
-    word = "!" + word.slice(3);
-  }
-  if (word.startsWith("che")) {
-    word = "!" + word.slice(3);
-  }
+  word = strip_word_part(word);
   dict.add(word);
   const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
