@@ -60,14 +60,14 @@ function arr_end(arr) {
  */
 function next_word(arr) {
 	let v=arr.shift();
-	if(v===void 0) throw new Error("next_word underflow");
+	if(v===void 0) return null;
 	if(v==="") {
 		v=arr.shift();
-		if(v===void 0) throw new Error("next_word underflow");
+		if(v===void 0) return null;
 	}
 	if(v===" ") {
 		v=arr.shift();
-		if(v===void 0) throw new Error("next_word underflow");
+		if(v===void 0) return null;
 	}
 	return v;
 }
