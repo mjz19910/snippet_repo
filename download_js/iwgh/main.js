@@ -281,7 +281,8 @@ async function run() {
 	let dict=new Set;
 	let description_set=new Set;
 	let arr=[];
-	for(let j=0;j<1;j++) {
+	let before_wait=dict.size;
+	for(let j=0;j<5;j++) {
 		const request_count=20;
 		for(let i=0;i<request_count;i++) {
 			async function one_page() {
@@ -302,11 +303,10 @@ async function run() {
 			}
 			arr.push(one_page());
 		}
-		let before_wait=dict.size;
 		await Promise.all(arr);
-		console.log("dict word num",dict.size-before_wait);
 		arr.length=0;
 	}
+	console.log("dict word num",dict.size-before_wait);
 	let description_arr=[...description_set.values()].sort().slice(0,5);
 	for(let description of description_arr) {
 		console.log("%o",description);
