@@ -104,6 +104,8 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "generally":
+			case "when":
 			case "this":
 			case ",":
 			case "though":
