@@ -269,6 +269,9 @@ function parse_rng_word(word) {
 	if(word.startsWith("th")) {
 		word=word.slice(2);
 	}
+	if(word.startsWith("ch")) {
+		word=word.slice(2);
+	}
 	let word_chars=word.split("");
 	for(let char_idx=0;char_idx<word_chars.length-1;char_idx++) {
 		let pair1=word_chars[char_idx];
