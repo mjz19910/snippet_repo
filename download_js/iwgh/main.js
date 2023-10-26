@@ -43,6 +43,7 @@ const word3_dict=[
 	"toy",
 	"profession",
 	"martial",
+	"sculpture",
 ];
 /**
  * @template T
@@ -182,7 +183,7 @@ async function run() {
 	let description_set=new Set;
 	let arr=[];
 	for(let j=0;j<1;j++) {
-		const request_count=4;
+		const request_count=8;
 		for(let i=0;i<request_count;i++) {
 			async function one_page() {
 				let res=await fetch("https://louigiverona.com/iwgh/?page=dictionary");
