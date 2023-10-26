@@ -276,6 +276,7 @@ function parse_rng_word(word) {
 		} else {
 			rng_word_num_map.set(pair_key,1);
 		}
+		break;
 	}
 }
 /**
