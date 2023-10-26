@@ -36,12 +36,6 @@ declare global {
 		adoptedStyleSheets: CSSStyleSheet[];
 		stop(): void;
 	}
-	export type CSSStyleSheetInit={
-		_: 1;
-	};
-	export class CSSStyleSheet {
-		constructor(options?: CSSStyleSheetInit);
-	}
 }
 
 // on_game_data_set

@@ -18,6 +18,7 @@
 // @grant			none
 // ==/UserScript==
 
+import {StringBox} from "../../src/box/StringBox.ts";
 import captureStackTrace from "../../src/capture-stack-trace.ts";
 import {CompressDual} from "../DebugApi/types/CompressDual.ts";
 import {AltPair} from "./AltPair.ts";
@@ -74,6 +75,20 @@ export interface BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplateImpl<string,
 		value: FunctionConstructor
 	) => TBoxRet;
 }
+
+declare global {
+	export class Node {}
+	export class MediaList {}
+	export type CSSStyleSheetInit={
+		baseURL: string;
+		disabled: boolean;
+		media: MediaList|string;
+	};
+	export class CSSStyleSheet {
+		constructor(options?: CSSStyleSheetInit);
+	}
+}
+
 export class CSSStyleSheetConstructorBox extends BoxTemplateImpl<"constructor_box",typeof CSSStyleSheet> {
 	readonly type="constructor_box";
 	readonly next_member="instance_type";
@@ -103,7 +118,7 @@ export class CSSStyleSheetInitBox extends BoxTemplateImpl<"shape_box",CSSStyleSh
 	set_property(key: keyof CSSStyleSheetInit,value: string|boolean|MediaListBox|undefined) {
 		if(key==="baseURL") {
 			if(typeof value=="string") {
-				this.value[key]=value;
+				this.value.baseURL=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
 			}
@@ -316,7 +331,7 @@ export class StackVMBox extends BoxTemplateImpl<"custom_box",StackVMImpl> {
 	readonly type="custom_box";
 	readonly box_type="StackVM";
 }
-export class StringBoxImpl extends BoxTemplateImpl<"string",string> implements StringBoxT {
+export class StringBoxImpl extends BoxTemplateImpl<"string",string> implements StringBox {
 	readonly type="string";
 }
 export class VoidBoxImpl {
