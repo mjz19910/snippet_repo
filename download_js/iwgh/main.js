@@ -365,13 +365,10 @@ async function read_json_array_file(file) {
 async function run() {
   const arr = [];
   const description_file = await deno_default_open("./description_cache.json");
-  const description_str = await read_entire_file(description_file);
-  if (description_str !== "") {
-    const description_load_arr = JSON.parse(description_str);
-    for (const description_item of description_load_arr) {
-      description_set.add(description_item);
-    }
-  }
+  const description_load_arr = await read_json_array_file(description_file);
+	for (const description_item of description_load_arr) {
+		description_set.add(description_item);
+	}
   const dictionary_file = await deno_default_open("./random_dictionary.json");
   const load_arr2 = await read_json_array_file(dictionary_file);
   for (const word of load_arr2) {
