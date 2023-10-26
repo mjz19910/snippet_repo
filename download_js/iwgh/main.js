@@ -272,6 +272,20 @@ function strip_vowel(prefix, word) {
   }
   return word;
 }
+function word_starts_with_vowel(word) {
+  switch (word[0]) {
+    case "a":
+    case "e":
+    case "i":
+    case "o":
+    case "u":
+    case "y":
+      return true;
+    default:
+      return false;
+  }
+  word[0] === "y";
+}
 function strip_word_part(word) {
   if (word.startsWith("b")) return strip_vowel("b", word);
   if (word.startsWith("c")) return strip_vowel("c", word);
@@ -284,8 +298,11 @@ const rng_word_num_map = new Map();
  */
 function parse_rng_word(word) {
   word = word.toLowerCase();
-  word = strip_vowel("", word);
-  word = strip_word_part(word);
+  if (word_starts_with_vowel(word)) {
+    word = strip_vowel("", word);
+  } else {
+    word = strip_word_part(word);
+  }
   dict.add(word);
   const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
