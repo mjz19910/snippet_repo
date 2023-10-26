@@ -98,10 +98,6 @@ function parse_sentence(str) {
 					break x;
 				}
 			} break x;
-			case "plant": {
-				let word2=parsed_src.shift();
-				console.log(["w1",word1,"w2",word2]);
-			} break x;
 			case "sort":
 			case "kind":
 			case "type": {
