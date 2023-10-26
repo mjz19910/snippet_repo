@@ -357,6 +357,11 @@ function show_rng_map() {
   }
 }
 export { show_rng_map };
+async function read_json_array_file(file) {
+  const data = await read_entire_file(file);
+  if (data === "") return [];
+  return JSON.parse(data);
+}
 async function run() {
   const arr = [];
   const description_file = await deno_default_open("./description_cache.json");
@@ -368,12 +373,9 @@ async function run() {
     }
   }
   const dictionary_file = await deno_default_open("./random_dictionary.json");
-  const dictionary_str = await read_entire_file(dictionary_file);
-  if (dictionary_str !== "") {
-    const load_arr = JSON.parse(dictionary_str);
-    for (const word of load_arr) {
-      parse_rng_word(word);
-    }
+  const load_arr2 = await read_json_array_file(dictionary_file);
+  for (const word of load_arr2) {
+    parse_rng_word(word);
   }
   const before_wait = dict.size;
   for (let j = 0; j < (10 * 2); j++) {
