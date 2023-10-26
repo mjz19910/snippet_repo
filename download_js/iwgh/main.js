@@ -331,6 +331,7 @@ async function run() {
 	for(let description of description_arr) {
 		console.log("%o",description);
 	}
+	console.log(rng_word_num_map);
 }
 await run();
 
