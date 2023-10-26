@@ -408,7 +408,7 @@ async function fetch_one_dictionary_page() {
     let [word, description] = v.split(" - ");
     word = word.slice(3, -4);
     word = word.toLowerCase();
-    parse_rng_word(word);
+    parse_rng_word(word, true, false);
     description = parse_sentence(description);
     if (!description_set.has(description)) {
       description_set.add(description);
