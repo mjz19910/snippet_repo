@@ -8,6 +8,7 @@ const word3_dict=[
 	"ritual",
 	"emblem",
 	"melody",
+	"art",
 ];
 /**
  * @template T
@@ -56,7 +57,7 @@ function parse_sentence(str) {
 			case "local":
 			case "national":
 			case "popular":
-			case "plant":
+			case "plant": break x;
 			case "kind": {
 				let word2=parsed_src.shift();
 				console.log(["w1",word1,"w2",word2]);
