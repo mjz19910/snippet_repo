@@ -104,6 +104,9 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "this":
+			case ",":
+			case "though":
 			case "but":
 			case "instrument":
 			case "of":
@@ -126,7 +129,6 @@ function parse_sentence(str) {
 			}
 			default: {
 				console.log("parsed default:",cur_word);
-				throw new Error("parse_next_word default");
 			}
 		}
 	}
