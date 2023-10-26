@@ -336,10 +336,8 @@ const new_words_set = new Set();
 /**
  * @param {string} word
  */
-function parse_rng_word(word) {
-  word = word.toLowerCase();
-  if (dict.has(word)) return;
-  {
+function parse_rng_word(word, destructure_word = false) {
+  if (destructure_word) {
     const word_arr = [];
     let w2 = word;
     do {
@@ -354,6 +352,7 @@ function parse_rng_word(word) {
     } while (w2 !== "");
     console.log(word_arr.length, word_arr.join(","));
   }
+  if (dict.has(word)) return;
   dict.add(word);
   new_words_set.add(word);
   const word_chars = word.split("");
@@ -406,6 +405,7 @@ async function fetch_one_dictionary_page() {
   page_arr.forEach((v) => {
     let [word, description] = v.split(" - ");
     word = word.slice(3, -4);
+    word = word.toLowerCase();
     parse_rng_word(word);
     description = parse_sentence(description);
     if (!description_set.has(description)) {
@@ -475,6 +475,10 @@ async function run() {
     await write_entire_file(dictionary_file, dictionary_arr);
   }
   dictionary_file.close();
+  const new_words_arr = [...new_words_set.values()].sort();
+  for (const new_word of new_words_arr) {
+    parse_rng_word(new_word, true);
+  }
 }
 await run();
 
