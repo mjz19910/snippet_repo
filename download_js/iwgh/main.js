@@ -1,4 +1,6 @@
-
+const word_list_1=[
+	"popular",
+];
 /**
  * @param {string} str
  */
@@ -17,12 +19,29 @@ function parse_sentence(str) {
 					type: "this_is_a",
 				});
 				parsed_src.shift();
-				console.log([parsed[0].type,parsed_src[0]]);
+				let word=parsed_src.shift();
+				if(word===void 0) throw new Error();
+				switch(word) {
+					case "category": {
+						let word2=parsed_src.shift();
+						if(word2!=="of") throw new Error("word2 not of");
+					} break;
+				}
+				parsed_src.unshift(word);
+				console.log([parsed[0].type,parsed_src]);
 				throw 1;
 			}
 			case "usually": {
 				parsed.push({
 					type: "this_is_usually",
+				});
+				parsed_src.shift();
+				console.log([parsed[0].type,parsed_src[0]]);
+				throw 1;
+			}
+			case "generally": {
+				parsed.push({
+					type: "this_is_generally",
 				});
 				parsed_src.shift();
 				console.log([parsed[0].type,parsed_src[0]]);
