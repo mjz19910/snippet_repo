@@ -359,7 +359,7 @@ function show_rng_map() {
   }
 }
 export { show_rng_map };
-/** @arg {Deno.FsFile} file @returns {Promise<any[]>} */
+/** @template T @arg {Deno.FsFile} file @returns {Promise<T[]>} */
 async function read_json_array_file(file) {
   const data = await read_entire_file(file);
   if (data === "") return [];
