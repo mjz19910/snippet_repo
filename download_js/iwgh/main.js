@@ -462,10 +462,10 @@ async function run() {
       parse_rng_word(new_word, true, true);
     }
     new_words_set.clear();
-		console.log("dict word num", new_words);
+    console.log("dict word num", new_words);
   };
   const request_log_interval = 10;
-  for (let j = 0; j < (10 * 8 + 1); j++) {
+  for (let j = 0; j < (10 * 8 + request_log_interval - 1); j++) {
     const request_count = 4;
     for (let i = 0; i < request_count; i++) {
       arr.push(fetch_one_dictionary_page());
