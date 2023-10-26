@@ -4518,19 +4518,13 @@ export_((exports) => {
 
 class FlagHandler {
 	is_none() {
-		return this.f === 0;
+		return this.f.none;
 	}
 	is_syn() {
-		return (this.f & 1) == 1;
+		return this.f.syn;
 	}
 	is_ack() {
-		return (this.f & 2) == 2;
-	}
-	get_flags() {
-		return this.f;
-	}
-	valueOf() {
-		return this.f;
+		return this.f.ack;
 	}
 	/** @arg {import("./support/dbg/ConnectFlag.ts").ConnectFlag} flags */
 	constructor(flags) {
@@ -4720,8 +4714,9 @@ class Socket {
 	handle_tcp_data(tcp_message) {
 		const f = new FlagHandler(tcp_message.flags);
 		if (this.m_local_log) console.log("local", tcp_message);
-		if (f.is_syn() && f.is_ack()) this.send_ack(tcp_message, 0);
-		if (tcp_message.flags == 0) this.send_ack(tcp_message, 0);
+		if ((f.is_syn() && f.is_ack()) || f.is_none()) {
+			this.send_ack(tcp_message, []);
+		}
 		if (!tcp_message.data) return;
 		const tcp_data = tcp_message.data;
 		if (testing_tcp) console.log("Socket.handle_tcp_data(message.data())");
