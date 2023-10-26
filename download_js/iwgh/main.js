@@ -37,6 +37,9 @@ function parse_sentence(str) {
 				switch(word3) {
 					case "clothing": break x;
 					case "plant": break x;
+					case "book": break x;
+					case "profession": break x;
+					case "weapon": break x;
 				}
 				console.log(["w3",word3]);
 				break x;
