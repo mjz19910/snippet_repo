@@ -358,7 +358,7 @@ function show_rng_map() {
   const arr = [];
   let cur_item = [];
   for (let i = 0; i < rng_map.length; i++) {
-    if (i % 5 === 0) arr.push(cur_item = []);
+    if (i % 4 === 0) arr.push(cur_item = []);
     cur_item.push(rng_map[i]);
   }
   for (const part of arr) {
