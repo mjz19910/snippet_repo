@@ -102,7 +102,7 @@ function parse_sentence(str) {
 					break x;
 				}
 				let word4=parsed_src.shift();
-				if(word4===void 0) throw new Error("word4 null");
+				if(word4===void 0) break x;
 				console.log(["w4",word4]);
 			} break x;
 			default: {
