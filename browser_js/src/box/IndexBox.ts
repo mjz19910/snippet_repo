@@ -1,5 +1,5 @@
 import {Box} from "./Box.ts";
-import {BoxTemplate} from "./template/BoxTemplate.js";
+import {BoxTemplate} from "./template/BoxTemplate.ts";
 import {IndexAccess} from "./IndexAccess.ts";
 
 export class IndexBox extends BoxTemplate<"object_box",IndexAccess<Box>> {

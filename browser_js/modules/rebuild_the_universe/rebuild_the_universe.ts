@@ -21,6 +21,8 @@
 declare global {
 	export interface Window {
 		g_auto_buy: AutoBuy;
+
+		$: void;
 	}
 }
 
@@ -55,11 +57,11 @@ export class AsyncFunctionBoxImpl extends BoxTemplateImpl<"function_box",(...a: 
 	readonly return_type="promise_box";
 	readonly await_type="Box";
 	wrap_call(target_this: BoxImpl,...args: BoxImpl[]): BoxImpl {
-		let ret=this.value.apply(target_this,args);
+		const ret=this.value.apply(target_this,args);
 		return new PromiseBox(ret);
 	}
 }
-export class BoxWithPropertiesIsBoxImpl extends BoxTemplateImpl<"with_properties",{}> {
+export class BoxWithPropertiesIsBoxImpl extends BoxTemplateImpl<"with_properties",Record<never,never>> {
 	readonly type="with_properties";
 	properties: string[];
 	constructor(value: BoxWithPropertiesObjTypeImpl<BoxWithPropertiesIsBoxImpl["properties"]>,properties: string[]) {
@@ -75,7 +77,7 @@ export class CSSStyleSheetBoxImpl extends BoxTemplateImpl<"CSSStyleSheetBox",CSS
 	readonly next_member="instance_type";
 	readonly instance_type="CSSStyleSheet";
 }
-export interface BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplateImpl<string,any>> {
+export interface BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplateImpl<string,unknown>> {
 	maker: (
 		make_new: (do_box: () => TBoxRet["value"],...a: TMakerArgs[]) => TBoxRet,
 		value: FunctionConstructor
@@ -92,15 +94,15 @@ export class CSSStyleSheetConstructorBox extends BoxTemplateImpl<"constructor_bo
 		console.log("get","CSSStyleSheetConstructorBox",key);
 	}
 	factory(...arr: BoxImpl[]) {
-		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
+		const valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {
-			let val=arr[i];
+			const val=arr[i];
 			if(val.type!="shape_box") continue;
 			if(val.shape!="CSSStyleSheetInit") continue;
 			valid_args[0]=val.value;
 		}
-		let value=this.value;
-		let obj: CSSStyleSheet=new value(...valid_args);
+		const value=this.value;
+		const obj: CSSStyleSheet=new value(...valid_args);
 		return new CSSStyleSheetBoxImpl(obj);
 	}
 }
@@ -156,16 +158,16 @@ export interface FunctionConstructorFactoryImpl {
 export class FunctionBoxImpl extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]) => BoxImpl> {
 	readonly type="function_box";
 	readonly return_type="Box";
+	on_get_toString(vm: StackVMImpl,inner_value: () => string) {
+		function bound_executor(this: (...a: BoxImpl[]) => BoxImpl) {
+			return new StringBoxImpl(inner_value.call(this));
+		}
+		const push_value=new FunctionBoxImpl(bound_executor.bind(this.value));
+		vm.push(push_value);
+	}
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
-			case "toString": {
-				let inner_value=this.value[key];
-				function bound_executor(this: (...a: BoxImpl[]) => BoxImpl) {
-					return new StringBoxImpl(inner_value.call(this));
-				}
-				let push_value=new FunctionBoxImpl(bound_executor.bind(this.value));
-				vm.push(push_value);
-			} break;
+			case "toString": this.on_get_toString(vm,this.value[key]); break;
 			case "apply":
 			case "call":
 			case "bind":
@@ -194,11 +196,11 @@ export class FunctionConstructorBoxImpl {
 		this.instance_factory=instance_factory;
 		this.box_maker=box_maker;
 	}
-	on_get(vm: StackVMImpl,key: string) {
+	on_get(vm: StackVMImpl,key: keyof CallableFunction) {
 		switch(key) {
 			case "name": vm.push(new StringBoxImpl(this.value[key])); break;
 			case "prototype": {
-				let value=new RawBoxImpl({as_interface: this.value[key]},Symbol.for("Function"));
+				const value=new RawBoxImpl({as_interface: this.value[key]},Symbol.for("Function"));
 				vm.push(value);
 			} break;
 			case "length": vm.push(new NumberBoxImpl(this.value[key])); break;
@@ -206,7 +208,7 @@ export class FunctionConstructorBoxImpl {
 				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
 					if(e===key) {
 						console.log("case needed for key '"+e+"'");
-						vm.push((this.value as any)[e]);
+						vm.push(this.value[e]);
 					}
 				});
 				this.on_get(vm,key);
@@ -251,9 +253,9 @@ export class MediaListBox extends BoxTemplateImpl<"instance_box",MediaList> {
 	readonly type="instance_box";
 	readonly instance_type="MediaList";
 }
-export class NewableInstancePackBox extends BoxTemplateImpl<"instance_box",NewableInstancePack<{}>> {
+export class NewableInstancePackBox extends BoxTemplateImpl<"instance_box",NewableInstancePack<Record<never,never>>> {
 	readonly type="instance_box";
-	readonly instance_type="NewableInstancePack<{}>";
+	readonly instance_type="NewableInstancePack<Record<never,never>>";
 }
 
 export class NewableFunctionBox {
@@ -262,11 +264,11 @@ export class NewableFunctionBox {
 	readonly arguments="box[]";
 	readonly return="box";
 	readonly value_name="[factory_value,class_value]";
-	value: {factory_value: NewableInstancePack<{}>,class_value: new (...a: BoxImpl[]) => {};};
-	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: BoxImpl[]) => {}) {
+	value: {factory_value: NewableInstancePack<Record<never,never>>,class_value: new (...a: BoxImpl[]) => Record<never,never>;};
+	constructor(factory_value: NewableInstancePack<Record<never,never>>,class_value: new (...a: BoxImpl[]) => Record<never,never>) {
 		this.value={factory_value,class_value};
 	}
-	get_construct_arguments(): [NewableInstancePack<{}>,new (...a: BoxImpl[]) => {}] {
+	get_construct_arguments(): [NewableInstancePack<Record<never,never>>,new (...a: BoxImpl[]) => Record<never,never>] {
 		return [this.value.factory_value,this.value.class_value];
 	}
 	on_get(vm: StackVMImpl,key: string) {
@@ -282,8 +284,8 @@ export class NewableFunctionBox {
 export interface NewableInstancePack<T> {
 	make_box(box_value: new (...a: BoxImpl[]) => T,construct_args: BoxImpl[]): BoxImpl;
 }
-export class NewableInstancePackObjectBox extends BoxTemplateImpl<"NewableInstancePack<{}>",NewableInstancePack<{}>> {
-	readonly type="NewableInstancePack<{}>";
+export class NewableInstancePackObjectBox extends BoxTemplateImpl<"NewableInstancePack<Record<never,never>>",NewableInstancePack<Record<never,never>>> {
+	readonly type="NewableInstancePack<Record<never,never>>";
 }
 export class NodeBox extends BoxTemplateImpl<"instance_box",Node> {
 	readonly type="instance_box";
@@ -295,7 +297,7 @@ export class NullBox extends BoxTemplateImpl<"null",null>  {
 export class NumberBox extends BoxTemplateImpl<"number",number>  {
 	readonly type="number";
 }
-export class ObjectBox extends BoxTemplateImpl<"object_box",{}> {
+export class ObjectBox extends BoxTemplateImpl<"object_box",Record<never,never>> {
 	readonly type="object_box";
 	readonly inner_type="object";
 	readonly extension="null";
@@ -316,7 +318,7 @@ export class RawBox<T> {
 		this.type_symbol=symbol_;
 	}
 }
-export type RawBoxes=RawBox<{as_interface: Function;}>|RawBox<{as_unknown: unknown;}>|RawBox<{as_any: any;}>;
+export type RawBoxes=RawBox<{as_interface: CallableFunction;}>|RawBox<{as_unknown: unknown;}>;
 export class RealVoidBox extends BoxTemplateImpl<"real_void",void> {
 	readonly type="real_void";
 }
@@ -399,7 +401,7 @@ export type DomTaggedPack=
 	["dom",DomInstructionType]|
 	["vm",InstructionTypeImpl]|
 	["dom_mem",number];
-type ArgAny4=[4,any,any,any,any];
+type ArgAny4=[4,unknown,unknown,unknown,unknown];
 export type DomInstructionMapImpl={
 	append: [number,"append"];
 	breakpoint: [number,"breakpoint"];
@@ -435,11 +437,11 @@ export type DomInstructionType=DomInstructionMapImpl[keyof DomInstructionMapImpl
 export type DomTaggedPackImpl=["dom",DomInstructionType]|["vm",InstructionTypeImpl]|["dom_mem",number];
 
 declare global {
-	interface Window {
+	export interface Window {
 		console: Console;
 	}
 }
-console=window.console;
+const console=self.console;
 
 const AUDIO_ELEMENT_VOLUME=0.58;
 const AudioMuted=true;
@@ -458,7 +460,7 @@ const LOG_LEVEL_TRACE=7;
 let local_logging_level=3;
 let LogErrorAsConsoleError=false;
 
-function append_console_message(level: number,format_str: string,...args: any[]) {
+function append_console_message(level: number,format_str: string,...args: unknown[]) {
 	update_logger_vars();
 	const level_str=human_log_level(level);
 	if(level_str!=="unknown") {
@@ -496,7 +498,7 @@ function human_log_level(level: number) {
 	}
 }
 
-function log_if(level: number,format_str: string,...args: any[]) {
+function log_if(level: number,format_str: string,...args: unknown[]) {
 	if(level>local_logging_level) return;
 	append_console_message(level,format_str,...args);
 }
@@ -512,9 +514,18 @@ function update_logger_vars() {
 }
 
 function trigger_debug_breakpoint() {
+	// deno-lint-ignore no-debugger
 	debugger;
 }
 
+const typeof_type=typeof {};
+function generic_as_type<T extends {value: unknown;}>(box: T,target_typeof: typeof typeof_type) {
+	switch(target_typeof) {
+		case "object": if(typeof box.value=="object") return box; break;
+		default: throw new Error("need new case for generic as_type");
+	}
+	return null;
+}
 class StackVMBoxImpl {
 	type: "custom_box";
 	box_type: "StackVM";
@@ -524,8 +535,8 @@ class StackVMBoxImpl {
 		this.box_type="StackVM";
 		this.value=value;
 	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
+	as_type(input_typeof: typeof typeof_type): this|null {
+		return generic_as_type(this,input_typeof);
 	}
 }
 
@@ -861,7 +872,7 @@ class InstructionGetImpl {
 				}
 			} break;
 			case "constructor_box": {
-				let return_value: {value: BoxImpl;}|null=null;
+				const return_value: {value: BoxImpl;}|null=null;
 				switch(typeof key) {
 					case "string": {
 						switch(value_box.instance_type) {
@@ -870,7 +881,7 @@ class InstructionGetImpl {
 								value_box.on_get(vm,key);
 							} break;
 							case "Function": {
-								value_box.on_get(vm,key);
+								value_box.on_get(vm,key as keyof CallableFunction);
 							} break;
 							case "unknown": {
 								if(typeof key!="string") throw new Error("Bad");

@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./template/BoxTemplate.js";
+import {BoxTemplate} from "./template/BoxTemplate.ts";
 
 export class EmptyArrayBox extends BoxTemplate<"array_box",[]> {
 	readonly type="array_box";

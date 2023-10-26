@@ -1,5 +1,5 @@
 import {Box} from "./Box.ts";
-import {BoxTemplate} from "./template/BoxTemplate.js";
+import {BoxTemplate} from "./template/BoxTemplate.ts";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.ts";
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.ts";
 import {StackVM} from "../ns_import_type.ts";

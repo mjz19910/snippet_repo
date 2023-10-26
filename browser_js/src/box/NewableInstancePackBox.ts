@@ -1,5 +1,5 @@
 import {NewableInstancePack} from "./NewableInstancePack.ts";
-import {BoxTemplate} from "./template/BoxTemplate.js";
+import {BoxTemplate} from "./template/BoxTemplate.ts";
 
 export class NewableInstancePackBox extends BoxTemplate<"instance_box",NewableInstancePack<{}>> {
 	readonly type="instance_box";
