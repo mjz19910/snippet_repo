@@ -30,6 +30,14 @@ const word3_dict=[
 	"transport",
 	"village",
 	"weapon",
+	"coin",
+	"dance",
+	"establishment",
+	"drink",
+	"god",
+	"philosophy",
+	"club",
+	"treehouse",
 ];
 /**
  * @template T
