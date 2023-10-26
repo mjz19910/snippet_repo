@@ -98,7 +98,7 @@ function parse_sentence(str) {
 	function parse_next_word(parsed,parsed_src) {
 		if(parsed_src.length==0) return;
 		let cur_word=next_word(parsed_src);
-		if(cur_word===void 0) throw new Error("word1 null");
+		if(cur_word===null) return;
 		if(word3_dict.includes(cur_word)) {
 			parsed.push({type: "dictionary_word",value: cur_word});
 			return parse_next_word(parsed,parsed_src);
