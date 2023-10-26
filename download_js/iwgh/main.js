@@ -72,177 +72,177 @@ function next_word(arr) {
 	return v;
 }
 /**
+ * @typedef {{type: "section";value: string;}} SentenceSectionWord
+ */
+
+/**
+ * @typedef {{type: "a" | "this_is" | "usually" | "generally" | "of";}} GeneralSentenceWord
+ */
+
+/**
+ * @typedef {GeneralSentenceWord|SentenceSectionWord|{type:"dictionary_word"|"sentence_structure"; value: string;} } ParsedArrItem
+ */
+
+/**
+ * @param {(ParsedArrItem)[]} parsed
+ * @param {string[]} parsed_src
+ */
+function parse_next_word(parsed,parsed_src) {
+	if(parsed_src.length==0) return;
+	let cur_word=next_word(parsed_src);
+	if(cur_word===null) return;
+	if(word3_dict.includes(cur_word)) {
+		parsed.push({type: "dictionary_word",value: cur_word});
+		return parse_next_word(parsed,parsed_src);
+	}
+	switch(cur_word) {
+		case "thing":
+		case "else":
+		case "polite":
+		case "p.m.":
+		case "mean":
+		case "might":
+		case "lied":
+		case "cases":
+		case "16":
+		case "sound":
+		case "most":
+		case "different":
+		case "being":
+		case "after":
+		case "texts":
+		case "suspect":
+		case "priest":
+		case "outdated":
+		case "otherwise":
+		case "older":
+		case "least":
+		case "central":
+		case "wants":
+		case "slightly":
+		case "among":
+		case "mostly":
+		case "politician":
+		case "lost":
+		case "lips":
+		case "which":
+		case "was":
+		case "from":
+		case "letters":
+		case "holidays":
+		case "heard":
+		case "generation":
+		case "speech":
+		case "figure":
+		case "ancient":
+		case "sure":
+		case "you":
+		case "younger":
+		case "morning":
+		case "less":
+		case "explained":
+		case "exact":
+		case "especially":
+		case "more":
+		case "entirely":
+		case "during":
+		case "a.m.":
+		case "day":
+		case "if":
+		case "11":
+		case "before":
+		case "change":
+		case "time":
+		case "not":
+		case "often":
+		case "bakers":
+		case "barber":
+		case "children":
+		case "country":
+		case "interests":
+		case "means":
+		case "at":
+		case "peasant":
+		case "someone":
+		case "course":
+		case "usage":
+		case "common":
+		case "modern":
+		case "vary":
+		case "eastern":
+		case "elderly":
+		case "circumstances":
+		case "citizens":
+		case "museum":
+		case "rarely":
+		case "party":
+		case "may":
+		case "on":
+		case "spotted":
+		case "foreigner":
+		case "like":
+		case "that":
+		case "are":
+		case "to":
+		case "uttered":
+		case "sometimes":
+		case "something":
+		case "told":
+		case "by":
+		case "official":
+		case "it":
+		case "debate":
+		case "used":
+		case "part":
+		case "northern":
+		case "southern":
+		case "or":
+		case "scientists":
+		case "depending":
+		case "as":
+		case "its":
+		case "it's":
+		case "the":
+		case "meaning":
+		case "linguists":
+		case "...":
+		case "generally":
+		case "when":
+		case "this":
+		case ",":
+		case "though":
+		case "but":
+		case "instrument":
+		case "of":
+		case "in":
+		case "rare":
+		case "local":
+		case "traditional":
+		case "national":
+		case "popular":
+		case "category":
+		case "sort":
+		case "kind":
+		case "type":
+		case "usually":
+		case "This":
+		case "is":
+		case "a": {
+			parsed.push({type: "sentence_structure",value: cur_word});
+			return parse_next_word(parsed,parsed_src);
+		}
+		default: {
+			console.log(["parsed_default",cur_word]);
+		}
+	}
+}
+/**
  * @param {string} str
  */
 function parse_sentence(str) {
 	// remove period
 	if(str.endsWith(".")) {
 		str=str.slice(0,-1);
-	}
-	/**
-	 * @typedef {{type: "section";value: string;}} SentenceSectionWord
-	 */
-
-	/**
-	 * @typedef {{type: "a" | "this_is" | "usually" | "generally" | "of";}} GeneralSentenceWord
-	 */
-
-	/**
-	 * @typedef {GeneralSentenceWord|SentenceSectionWord|{type:"dictionary_word"|"sentence_structure"; value: string;} } ParsedArrItem
-	 */
-
-	/**
-	 * @param {(ParsedArrItem)[]} parsed
-	 * @param {string[]} parsed_src
-	 */
-	function parse_next_word(parsed,parsed_src) {
-		if(parsed_src.length==0) return;
-		let cur_word=next_word(parsed_src);
-		if(cur_word===null) return;
-		if(word3_dict.includes(cur_word)) {
-			parsed.push({type: "dictionary_word",value: cur_word});
-			return parse_next_word(parsed,parsed_src);
-		}
-		switch(cur_word) {
-			case "thing":
-			case "else":
-			case "polite":
-			case "p.m.":
-			case "mean":
-			case "might":
-			case "lied":
-			case "cases":
-			case "16":
-			case "sound":
-			case "most":
-			case "different":
-			case "being":
-			case "after":
-			case "texts":
-			case "suspect":
-			case "priest":
-			case "outdated":
-			case "otherwise":
-			case "older":
-			case "least":
-			case "central":
-			case "wants":
-			case "slightly":
-			case "among":
-			case "mostly":
-			case "politician":
-			case "lost":
-			case "lips":
-			case "which":
-			case "was":
-			case "from":
-			case "letters":
-			case "holidays":
-			case "heard":
-			case "generation":
-			case "speech":
-			case "figure":
-			case "ancient":
-			case "sure":
-			case "you":
-			case "younger":
-			case "morning":
-			case "less":
-			case "explained":
-			case "exact":
-			case "especially":
-			case "more":
-			case "entirely":
-			case "during":
-			case "a.m.":
-			case "day":
-			case "if":
-			case "11":
-			case "before":
-			case "change":
-			case "time":
-			case "not":
-			case "often":
-			case "bakers":
-			case "barber":
-			case "children":
-			case "country":
-			case "interests":
-			case "means":
-			case "at":
-			case "peasant":
-			case "someone":
-			case "course":
-			case "usage":
-			case "common":
-			case "modern":
-			case "vary":
-			case "eastern":
-			case "elderly":
-			case "circumstances":
-			case "citizens":
-			case "museum":
-			case "rarely":
-			case "party":
-			case "may":
-			case "on":
-			case "spotted":
-			case "foreigner":
-			case "like":
-			case "that":
-			case "are":
-			case "to":
-			case "uttered":
-			case "sometimes":
-			case "something":
-			case "told":
-			case "by":
-			case "official":
-			case "it":
-			case "debate":
-			case "used":
-			case "part":
-			case "northern":
-			case "southern":
-			case "or":
-			case "scientists":
-			case "depending":
-			case "as":
-			case "its":
-			case "it's":
-			case "the":
-			case "meaning":
-			case "linguists":
-			case "...":
-			case "generally":
-			case "when":
-			case "this":
-			case ",":
-			case "though":
-			case "but":
-			case "instrument":
-			case "of":
-			case "in":
-			case "rare":
-			case "local":
-			case "traditional":
-			case "national":
-			case "popular":
-			case "category":
-			case "sort":
-			case "kind":
-			case "type":
-			case "usually":
-			case "This":
-			case "is":
-			case "a": {
-				parsed.push({type: "sentence_structure",value: cur_word});
-				return parse_next_word(parsed,parsed_src);
-			}
-			default: {
-				console.log(["parsed_default",cur_word]);
-			}
-		}
 	}
 	/** @type {ParsedArrItem[]} */
 	let parsed=[];
