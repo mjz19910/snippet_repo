@@ -454,7 +454,6 @@ async function run() {
     parse_rng_word(word, false, false);
   }
   let before_wait = dict.size;
-  const request_log_interval = 10;
   const at_loop_end = () => {
     console.log("dict word num", dict.size - before_wait);
     before_wait = dict.size;
@@ -463,6 +462,7 @@ async function run() {
       parse_rng_word(new_word, true, true);
     }
   };
+  const request_log_interval = 10;
   for (let j = 0; j < (10 * 8); j++) {
     const request_count = 4;
     for (let i = 0; i < request_count; i++) {
