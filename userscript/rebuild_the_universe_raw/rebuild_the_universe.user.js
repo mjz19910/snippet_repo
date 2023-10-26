@@ -3421,8 +3421,8 @@ function specialclick_inject(that) {
 	const noti = window.noti;
 	const rounding = window.rounding,
 		calcDiff = window.calcDiff,
-		arUnit = window.arUnit,
-		atomepersecond = window.atomepersecond;
+		arUnit = window.arUnit;
+	let atomepersecond = window.atomepersecond;
 	const arrayNames = window.arrayNames,
 		plurials = window.plurials,
 		toTitleCase = window.toTitleCase;
@@ -3449,7 +3449,7 @@ function specialclick_inject(that) {
 		const diff1 = calcDiff(that);
 		for (const a in arUnit[that][17]) arUnit[that][17][a] *= 100;
 		arUnit[that][5] *= 100;
-		const spec_aps = 0;
+		let spec_aps = 0;
 		if (arUnit[that][4] > 0) {
 			spec_aps = calcDiff(that) - diff1;
 			atomepersecond += spec_aps;

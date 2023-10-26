@@ -3,5 +3,12 @@
 		"options": {
 			"useTabs": true
 		}
+	},
+	"lint": {
+		"rules": {
+			"include": [
+				"no-const-assign"
+			]
+		}
 	}
 }
