@@ -132,6 +132,7 @@ function parse_sentence(str) {
 					case "in":
 					case "pipe":
 					case "though":
+					case "instrument":
 					case "when":
 						break x;
 				}
