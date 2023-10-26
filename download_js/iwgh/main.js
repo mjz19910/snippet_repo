@@ -7,6 +7,7 @@ const word_list_2=[
 const word3_dict=[
 	"company",
 	"symbol",
+	"poem",
 ];
 /**
  * @template T
