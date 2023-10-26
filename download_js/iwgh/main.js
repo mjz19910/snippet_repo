@@ -46,6 +46,7 @@ function parse_sentence(str) {
 			case "local": break x;
 			case "national": break x;
 			case "popular": break x;
+			case "plant": break x;
 			default: {
 				console.log(["w1",word1]);
 			} break;
