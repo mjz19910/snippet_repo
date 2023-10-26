@@ -455,12 +455,14 @@ async function run() {
   }
   let before_wait = dict.size;
   const at_loop_end = () => {
+    let new_words = dict.size - before_wait;
     console.log("dict word num", dict.size - before_wait);
     before_wait = dict.size;
     const new_words_arr = [...new_words_set.values()].sort();
     for (const new_word of new_words_arr) {
       parse_rng_word(new_word, true, true);
     }
+    new_words_set.clear();
   };
   const request_log_interval = 10;
   for (let j = 0; j < (10 * 8); j++) {
@@ -474,7 +476,7 @@ async function run() {
       at_loop_end();
     }
   }
-	at_loop_end();
+  at_loop_end();
   if (description_set_state.modified) {
     const description_arr = [...description_set.values()].sort();
     console.log("description_arr.length", description_arr.length);
