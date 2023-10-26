@@ -6,6 +6,8 @@ const word3_dict=[
 	"performance",
 	"painting",
 	"ritual",
+	"emblem",
+	"melody",
 ];
 /**
  * @template T
