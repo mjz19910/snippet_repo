@@ -394,9 +394,9 @@ async function run() {
     parse_rng_word(word);
   }
   let before_wait = dict.size;
-  const request_log_interval = 1; // 10
+  const request_log_interval = 10; // 10
   for (let j = 0; j < (10 * 3); j++) {
-    const request_count = 1; // 20
+    const request_count = 20; // 20
     for (let i = 0; i < request_count; i++) {
       arr.push(fetch_one_dictionary_page());
     }
