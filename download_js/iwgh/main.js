@@ -374,6 +374,7 @@ async function run() {
   }
   console.log("dict word num", dict.size - before_wait);
   const description_set_arr = [...description_set.values()].sort();
+  const dictionary_arr = [...dict.values()].sort();
   const description_arr = description_set_arr.slice(0, 5);
   for (const description of description_arr) {
     console.log("%o", description);
@@ -382,16 +383,14 @@ async function run() {
   {
     const arr = [];
     let cur_item = [];
-    arr.push(cur_item);
     for (let i = 0; i < rng_map.length; i++) {
+      if (i % 5 === 0) arr.push(cur_item = []);
       cur_item.push(rng_map[i]);
-      if (i % 6 === 5) arr.push(cur_item = []);
     }
 		for(const part of arr) {
 			console.log(part);
 		}
   }
-  const dictionary_arr = [...dict.values()].sort();
   console.log("description_set_arr.length", description_set_arr.length);
   await write_entire_file(description_file, description_set_arr);
   await write_entire_file(dictionary_file, dictionary_arr);
