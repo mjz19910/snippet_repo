@@ -286,8 +286,9 @@ function word_starts_with_vowel(word) {
   }
 }
 function strip_word_part(word) {
-  if (word.startsWith("b")) return strip_vowel("b", word);
   if (word.startsWith("ch")) return strip_vowel("ch", word);
+  if (word.startsWith("th")) return strip_vowel("th", word);
+  if (word.startsWith("b")) return strip_vowel("b", word);
   if (word.startsWith("c")) return strip_vowel("c", word);
   if (word.startsWith("d")) return strip_vowel("d", word);
   if (word.startsWith("f")) return strip_vowel("f", word);
