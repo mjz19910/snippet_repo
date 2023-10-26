@@ -314,17 +314,13 @@ async function one_page() {
     description_set.add(description);
   });
 }
-async function run() {
-  const arr = [];
-  const description_file = await Deno.open("./description_cache.json", {
-    read: true,
-    write: true,
-    create: true,
-  });
+/** @arg {Deno.FsFile} file */
+async function read_entire_file(file) {
+  await file.seek(0, 0);
   let description_data = new Uint8Array(0);
   const buf = new Uint8Array(1024);
   do {
-    const n = await description_file.read(buf);
+    const n = await file.read(buf);
     if (n === null) break;
     const prev_end = description_data.length;
     const prev_data = description_data;
@@ -332,11 +328,21 @@ async function run() {
     description_data.set(prev_data, 0);
     description_data.set(buf.slice(0, n), prev_end);
   } while (true);
-  let description_str = new TextDecoder().decode(description_data);
-  console.log(["description_cache.json", description_str]);
-  const description_load_arr = JSON.parse(description_str);
-  for (const description_item of description_load_arr) {
-    description_set.add(description_item);
+  return new TextDecoder().decode(description_data);
+}
+async function run() {
+  const arr = [];
+  const description_file = await Deno.open("./description_cache.json", {
+    read: true,
+    write: true,
+    create: true,
+  });
+  let description_str = await read_entire_file(description_file);
+  if (description_str !== "") {
+    const description_load_arr = JSON.parse(description_str);
+    for (const description_item of description_load_arr) {
+      description_set.add(description_item);
+    }
   }
   const before_wait = dict.size;
   for (let j = 0; j < 2; j++) {
@@ -355,12 +361,13 @@ async function run() {
   }
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   console.log(rng_map);
-  description_str = JSON.stringify(description_set_arr);
+  description_str = JSON.stringify(description_set_arr, void 0, "\t");
   await description_file.seek(0, 0);
   const encoder = new TextEncoder();
   description_data = encoder.encode(description_str);
   const n_written = await description_file.write(description_data);
   console.log(n_written, description_data.length);
+  await description_file.truncate(description_data.length);
   description_file.close();
 }
 await run();
