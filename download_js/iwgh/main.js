@@ -350,7 +350,7 @@ function parse_rng_word(word, add_new_words = true, destructure_word = false) {
       word_arr.push("c:" + w2.slice(0, seq_len));
       w2 = w2.slice(seq_len);
     } while (w2 !== "");
-    if (word_arr.length < 5) {
+    if (word_arr.length < 4) {
       console.log(word_arr.length, word_arr.join(","));
     }
   }
