@@ -256,7 +256,7 @@ class WindowBoxImpl {
 		this.value = value;
 	}
 }
-/** @typedef {import("./ns.ts").GenericObjectBox} ObjectBox_CJS */
+/** @typedef {import("./ns.ts").ObjectBox} ObjectBox_CJS */
 /** @implements {ObjectBox_CJS} */
 class ObjectBoxImpl {
 	/** @readonly */
