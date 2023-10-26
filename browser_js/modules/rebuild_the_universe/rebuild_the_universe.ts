@@ -19,16 +19,8 @@
 // ==/UserScript==
 
 declare global {
-	export class Element {}
-	export class Node {}
-	export class MediaList {}
-	export type CSSStyleSheetInit={
-		baseURL: string;
-		disabled: boolean;
-		media: MediaList|string;
-	};
-	export class CSSStyleSheet {
-		constructor(options?: CSSStyleSheetInit);
+	export interface Window {
+		g_auto_buy: AutoBuy;
 	}
 }
 
@@ -2521,7 +2513,7 @@ function call_mute_fn() {
 }
 
 declare global {
-	interface HTMLDivElement {
+	export interface HTMLDivElement {
 		style: CSSStyleDeclaration;
 	}
 }
@@ -2606,11 +2598,9 @@ class AutoBuy {
 		this.debug_arr.push(...trimmed);
 	}
 	check_for_symbols() {
-		let this_as_any: any=this;
-		let sym_indexed_this: {[x: symbol]: string;}=this_as_any;
 		for(let i=0;i<debug_id_syms.length;i++) {
-			let val=debug_id_syms[i].deref();
-			if(val) this.iterate_symbols(sym_indexed_this,val);
+			const val=debug_id_syms[i].deref();
+			if(val) this.iterate_symbols(this,val);
 		}
 	}
 	pre_init() {
@@ -3973,12 +3963,12 @@ function no_aev(...v: any[]) {
 	console.log("aev",v);
 }
 declare global {
-	interface Window {
+	export interface Window {
 		document_write_list: DocumentWriteList;
 	}
 }
 function create_document_write_list() {
-	let document_write_list=new DocumentWriteList;
+	const document_write_list=new DocumentWriteList;
 	document_write_list.attach_proxy(document);
 	document_write_list.document_write_proxy;
 	window.document_write_list=document_write_list;
@@ -3987,7 +3977,7 @@ function create_document_write_list() {
 
 // rebuild_the_universe main
 declare global {
-	interface Document {
+	export interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
 		stop(): void;
 	}
