@@ -34,6 +34,8 @@ function parse_sentence(str) {
 					case "rare": break x;
 					case "sort": break x;
 					case "local": break x;
+					case "national": break x;
+					case "popular": break x;
 					default: {
 						console.log(["w1",word1]);
 					} break x;
