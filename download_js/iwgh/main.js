@@ -391,7 +391,7 @@ async function run() {
   }
   let before_wait = dict.size;
   const request_log_interval = 10;
-  for (let j = 0; j < (10 * 20 * 5); j++) {
+  for (let j = 0; j < (10 * 16); j++) {
     const request_count = 20;
     for (let i = 0; i < request_count; i++) {
       arr.push(fetch_one_dictionary_page());
