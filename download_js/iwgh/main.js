@@ -50,15 +50,42 @@ function parse_sentence(str) {
 				}
 				break x;
 			}
-			case "traditional": break x;
-			case "rare": break x;
-			case "sort": break x;
-			case "local": break x;
-			case "national": break x;
-			case "popular": break x;
-			case "plant": break x;
-			case "kind": break x;
-			case "type": break x;
+			case "traditional": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "rare": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "sort": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "local": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "national": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "popular": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "plant": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "kind": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
+			case "type": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
+			} break x;
 			default: {
 				console.log(["w1",word1]);
 			} break;
