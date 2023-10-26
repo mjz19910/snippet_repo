@@ -3582,7 +3582,7 @@ class CompressionStatsCalculator extends MulCompression {
 		if (success) arr = res;
 		for (let i = 0; i < 4; i++) {
 			this.calc_for_stats_index(this.compression_stats, arr, i);
-			let ls = this.compression_stats[i];
+			const ls = this.compression_stats[i];
 			if (ls.length > 0) continue;
 			break;
 		}
@@ -3592,7 +3592,7 @@ class CompressionStatsCalculator extends MulCompression {
 	}
 	/** @arg {string[]} arr @arg {number} calc_win */
 	sorted_comp_stats(arr, calc_win) {
-		let ret = this.calc_compression_stats(arr, calc_win);
+		const ret = this.calc_compression_stats(arr, calc_win);
 		ret.sort((a, b) => b[1] - a[1]);
 		return ret;
 	}
@@ -3629,29 +3629,29 @@ class CompressionStatsCalculator extends MulCompression {
 				this.add_item(arr.slice(i, i + win_size).join(","));
 			}
 		}
-		let keys = this.map_keys();
-		let values = this.map_values();
+		const keys = this.map_keys();
+		const values = this.map_values();
 		return to_tuple_arr(keys, values);
 	}
 	/** @template T @template U @arg {T[]} arr @arg {number} range @arg {U} replacement @returns {(["T", T]|["U", U])[]} */
 	replace_range(arr, range, replacement) {
 		/** @type {(["T", T]|["U", U])[]} */
-		let ret = [];
+		const ret = [];
 		for (let i = 0; i < arr.length; i++) {
 			if (range_matches(arr, range, i)) {
 				i += 1;
 				ret.push(["U", replacement]);
 				continue;
 			}
-			let rest = arr[i];
+			const rest = arr[i];
 			ret.push(["T", rest]);
 		}
 		return ret;
 	}
 	test() {
-		let obj = { arr: [] };
-		let rep_val = 0.03 / (100 * 4 * 1);
-		let res = this.replace_range(obj.arr, rep_val, max_id);
+		const obj = { arr: [] };
+		const rep_val = 0.03 / (100 * 4 * 1);
+		const res = this.replace_range(obj.arr, rep_val, max_id);
 		console.log("compressed", res);
 	}
 }
@@ -3667,7 +3667,7 @@ function log_stats(stats) {
 }
 add_function(log_stats);
 /** @type {{value:string[]}} */
-let ids = { value: [] };
+const ids = { value: [] };
 /** @arg {string} value */
 function get_ids(value) {
 	return ids.value.indexOf(value);
@@ -3677,11 +3677,11 @@ function get_ids(value) {
 function sorted_comp_stats(this_, obj) {
 	if (obj.arr_str != null && obj.stats_win != null) {
 		/** @type {[string,number][]} */
-		let ret = [];
-		let types = this_.calc_compression_stats(obj.arr_str, obj.stats_win);
-		let t = types[0];
+		const ret = [];
+		const types = this_.calc_compression_stats(obj.arr_str, obj.stats_win);
+		const t = types[0];
 		if (!t) return;
-		let [z, x] = t;
+		const [z, x] = t;
 		if (typeof z === "string" && typeof x === "number") ret.push([z, x]);
 		obj.stats = ret;
 		obj.stats.sort((a, b) => b[1] - a[1]);
@@ -3737,7 +3737,7 @@ class IDValueImpl_0 {
 		if (arr.length === 0) {
 			throw new Error("Unable to use zero length array");
 		}
-		let item = arr[0];
+		const item = arr[0];
 		console.log("new_proto_keys", Object.keys(item));
 		console.log("new_proto", Object.getPrototypeOf(item));
 	}
@@ -3812,7 +3812,7 @@ class DoCalc {
 			if (!this.br_next || this.br_next.arr_str === void 0) break;
 			if (this.obj.stats_win > 30) break;
 			if (this.br_next.arr_str.length + 1 >= this.next.arr_str.length) break;
-			let br_st = this.br_next.arr_str.length;
+			const br_st = this.br_next.arr_str.length;
 			this.br_obj.stats_win++;
 			this.obj.stats_win++;
 			calc_cur(this.stats, this.br_obj);
@@ -3822,7 +3822,7 @@ class DoCalc {
 			this.next = new IDValueImpl_0(this.obj.id + 1, this.br_obj);
 			this.res = calc_next(this.stats, this.obj, max_id.value);
 			if (!this.br_next.arr_str) continue;
-			let cd = br_st - this.br_next.arr_str.length;
+			const cd = br_st - this.br_next.arr_str.length;
 			if (cd <= 1) break;
 		}
 		return null;
@@ -3860,7 +3860,7 @@ class DoCalc {
 				if (!this.br_next || this.br_next.arr_str === void 0) break;
 				if (this.obj.stats_win > 30) break;
 				if (this.br_next.arr_str.length + 1 >= this.next.arr_str.length) break;
-				let br_st = this.br_next.arr_str.length;
+				const br_st = this.br_next.arr_str.length;
 				this.br_obj.stats_win++;
 				this.obj.stats_win++;
 				calc_cur(stats, this.br_obj);
@@ -3870,7 +3870,7 @@ class DoCalc {
 				this.next = new IDValueImpl_0(this.obj.id + 1, this.br_obj);
 				this.res = calc_next(stats, this.obj, max_id.value);
 				if (!this.br_next.arr_str) continue;
-				let cd = br_st - this.br_next.arr_str.length;
+				const cd = br_st - this.br_next.arr_str.length;
 				if (cd <= 1) break;
 			}
 		}
@@ -3890,12 +3890,11 @@ class CompressDual {
 	m_base = new BaseCompression();
 	/** @returns {import("./support/dbg/DualR_0.ts").DualR_0} */
 	try_compress_dual() {
-		let state = this;
-		for (; state.i < state.arr.length; state.i++) {
-			let item = state.arr[state.i];
-			let use_item = this.compress_rle_TU_to_TX(item);
+		for (; this.i < this.arr.length; this.i++) {
+			const item = this.arr[this.i];
+			const use_item = this.compress_rle_TU_to_TX(item);
 			if (use_item) continue;
-			state.ret.push(item);
+			this.ret.push(item);
 		}
 		return this.m_base.compress_result_state_dual(this);
 	}
@@ -3927,19 +3926,19 @@ function calc_next(stats, obj, max_id) {
 	if (
 		obj.stats === void 0 || (obj.stats !== void 0 && obj.stats.length === 0)
 	) return null;
-	let f_val = obj.stats[0];
-	let rep_val = f_val[1];
+	const f_val = obj.stats[0];
+	const rep_val = f_val[1];
 	if (!obj.next) return null;
 	/** @type {IDValueImpl_0} */
-	let next = obj;
+	const next = obj;
 	next.value = [max_id, "=", rep_val];
 	next.log_val = [max_id, "=", f_val[0], f_val[1]];
 	if (obj.arr_str === void 0) {
 		throw new Error("No arr");
 	}
-	let rep_range = stats.replace_range(obj.arr_str, rep_val, max_id);
+	const rep_range = stats.replace_range(obj.arr_str, rep_val, max_id);
 	next.arr_dual = [];
-	for (let i of rep_range) {
+	for (const i of rep_range) {
 		switch (i[0]) {
 			case "T":
 				next.arr_dual.push(["T", i[1]]);
@@ -3952,9 +3951,9 @@ function calc_next(stats, obj, max_id) {
 	if (next.arr_str) {
 		return null;
 	}
-	let com = new CompressDual(next.arr_dual);
+	const com = new CompressDual(next.arr_dual);
 	/** @type {import("./support/dbg/DualR_0.ts").DualR_0} */
-	let compress_result = com.try_compress_dual();
+	const compress_result = com.try_compress_dual();
 	if (!compress_result[0]) next.arr_dual = compress_result[1];
 	else next.arr_dual_compressed = compress_result[1];
 	return compress_result;
@@ -4002,19 +4001,19 @@ class Value {
 }
 add_function(Value);
 
-let max_id = { value: 0 };
+const max_id = { value: 0 };
 /** @arg {IDValueImpl_0} obj @arg {CompressionStatsCalculator} stats */
 function run_calc(stats, obj) {
-	let calc_value = new DoCalc(stats, obj);
-	let res = calc_value.get_result();
+	const calc_value = new DoCalc(stats, obj);
+	const res = calc_value.get_result();
 	if (!res) return [false, null];
 	return [true, res];
 }
 /** @arg {IDValueImpl_0} obj */
 function flat_obj(obj) {
-	let ret = [];
+	const ret = [];
 	while (obj.next) {
-		let { next } = obj;
+		const { next } = obj;
 		ret.push(obj);
 		obj = next;
 	}
@@ -4022,7 +4021,7 @@ function flat_obj(obj) {
 	return ret;
 }
 /** @type {{value:IDValueImpl_0[]}} */
-let g_obj_arr = { value: [] };
+const g_obj_arr = { value: [] };
 /** @arg {number|string} val @arg {unknown} e */
 function find_matching_value(val, e) {
 	if (typeof val === "string") {
@@ -4043,21 +4042,21 @@ function key_not_found(val) {
 }
 
 /** @type {number[]} */
-let id_map_one = [];
+const id_map_one = [];
 
 /** @arg {string|number} val */
 function do_decode(val) {
-	let fv = g_obj_arr.value.slice(1).find((e) => find_matching_value(val, e));
+	const fv = g_obj_arr.value.slice(1).find((e) => find_matching_value(val, e));
 	if (!fv) return key_not_found(val);
 	if (typeof val === "number") {
 		if (typeof fv === "object" && "value" in fv && fv.value instanceof Array) {
-			let [, , keep] = fv.value;
+			const [, , keep] = fv.value;
 			id_map_one[val] = keep;
 		}
 		console.log("not found", val, fv);
 	} else {
 		if (typeof fv === "object" && "value" in fv && fv.value instanceof Array) {
-			let [, , keep] = fv.value;
+			const [, , keep] = fv.value;
 			id_map_str.set(val, keep);
 		}
 		console.log("not found", val, fv);
@@ -4065,22 +4064,22 @@ function do_decode(val) {
 }
 
 /** @type {(string|number)[][]} */
-let dr_map_num = [];
+const dr_map_num = [];
 
 /** @type {(string|number)[][]} */
-let ids_dec_num = [];
+const ids_dec_num = [];
 
 /** @type {RepeatImpl_0<(string|number)[]>[]} */
-let dr_map_rep = [];
+const dr_map_rep = [];
 
 /** @type {(string|number)[][]} */
-let id_map_rep = [];
+const id_map_rep = [];
 
 /** @type {(string|number)[][]} */
-let id_map_num = [];
+const id_map_num = [];
 
 /** @type {number[]} */
-let ids_dec_rep = [];
+const ids_dec_rep = [];
 
 /** @arg {string|number|RepeatImpl_0<number>} e @returns {["dr_map_num", any]|["id_map_num",any]|["dr_map_rep", any]|["ids_dec_rep",any]|["ids_dec_num",any]|null} */
 function try_decode(e, deep = true) {
@@ -4088,13 +4087,13 @@ function try_decode(e, deep = true) {
 		if (dr_map_num[e]) return ["dr_map_num", dr_map_num[e]];
 		if (id_map_num[e]) {
 			/** @type {(string|number)[]} */
-			let res = id_map_num[e];
+			const res = id_map_num[e];
 			if (!deep) {
 				return ["id_map_num", res];
 			}
-			let dec_res = [];
+			const dec_res = [];
 			for (let i = 0; i < res.length; i++) {
-				let cur_res = decode_map(res[i]);
+				const cur_res = decode_map(res[i]);
 				dec_res[i] = cur_res;
 			}
 			dr_map_num[e] = dec_res;
@@ -4106,13 +4105,13 @@ function try_decode(e, deep = true) {
 		if (dr_map[e.value]) return ["dr_map_rep", dr_map[e.value]];
 		if (id_map_rep[e.value]) {
 			/** @type {(string|number)[]} */
-			let res = id_map_rep[e.value];
-			let dec_res = [];
+			const res = id_map_rep[e.value];
+			const dec_res = [];
 			for (let i = 0; i < res.length; i++) {
-				let cur_res = decode_map(res[i]);
+				const cur_res = decode_map(res[i]);
 				dec_res[i] = cur_res;
 			}
-			let ret = new RepeatImpl_0(dec_res, e.times);
+			const ret = new RepeatImpl_0(dec_res, e.times);
 			dr_map_rep[e.value] = ret;
 			return ["dr_map_rep", ret];
 		}
@@ -4124,9 +4123,9 @@ function try_decode(e, deep = true) {
 }
 
 /** @type {number[][]} */
-let id_map = [];
+const id_map = [];
 /** @type {Map<string, number>} */
-let id_map_str = new Map();
+const id_map_str = new Map();
 /** @type {JsonValueBox[]} */
 let ids_dec = [];
 /** @type {(RepeatImpl_0<string|number>|RepeatImpl_0<(string|number)[]>|(string|number)[])[]} */
@@ -4159,7 +4158,7 @@ class SafeJsonParser {
 	/** @arg {string} e */
 	parse(e) {
 		/** @type {unknown} */
-		let res_unk = JSON.parse(e);
+		const res_unk = JSON.parse(e);
 		return this.convert(res_unk);
 	}
 	/** @arg {unknown} obj */
@@ -4167,9 +4166,9 @@ class SafeJsonParser {
 		if (obj === null) return new JsonValueBox(new JsonNullBox());
 		if (obj instanceof Array) {
 			/** @type {JsonValueBox[]} */
-			let new_arr = [];
-			for (let [k, v] of obj.entries()) {
-				let res = this.convert(v);
+			const new_arr = [];
+			for (const [k, v] of obj.entries()) {
+				const res = this.convert(v);
 				new_arr[k] = res;
 			}
 			return new JsonValueBox(new JsonArrayBox(new_arr));
@@ -4180,7 +4179,7 @@ class SafeJsonParser {
 }
 
 function init_decode() {
-	let parser = new SafeJsonParser();
+	const parser = new SafeJsonParser();
 	ids_dec = ids.value.map((e) => parser.parse(e));
 }
 /** @arg {string|number} value @returns {string|number} */
@@ -4207,14 +4206,14 @@ function deep_eq(obj_1, obj_2) {
 	if (obj_1 instanceof Array && obj_2 instanceof Array) {
 		if (obj_1.length !== obj_2.length) return false;
 		for (let i = 0; i < obj_1.length; i++) {
-			let cur = obj_1[i];
-			let cur_other = obj_2[i];
+			const cur = obj_1[i];
+			const cur_other = obj_2[i];
 			if (!deep_eq(cur, cur_other)) return false;
 		}
 		return true;
 	}
 	if (Object.getPrototypeOf(obj_1) === Object.prototype) {
-		let is_eq = deep_eq(Object.entries(obj_1), Object.entries(obj_2));
+		const is_eq = deep_eq(Object.entries(obj_1), Object.entries(obj_2));
 		if (is_eq) {
 			return true;
 		}
@@ -4230,7 +4229,7 @@ add_function(deep_eq);
 /** @arg {string[][]} arr_2d @arg {number} key @arg {string} value */
 function make_group_from_item(arr_2d, key, value) {
 	arr_2d[key] ??= [];
-	let arr = arr_2d[key];
+	const arr = arr_2d[key];
 	for (let i = 0; i < arr.length; i++) {
 		if (arr[i] !== value) continue;
 		return;
@@ -4241,14 +4240,14 @@ function make_group_from_item(arr_2d, key, value) {
 /** @type {InstanceType<import("../rebuild_the_universe_raw/rebuild_the_universe.user.js")["rebuild_the_universe_plugin"]["AutoBuyImplR"]>} */
 let g_auto_buy;
 /** @type {{value:string[]}} */
-let src_arr = { value: [] };
+const src_arr = { value: [] };
 function compress_init() {
 	dr_map = [];
 }
 /** @type {{value:string[][]}} */
-let id_groups = { value: [] };
+const id_groups = { value: [] };
 /** @type {{value:number[]}} */
-let el_ids = { value: [] };
+const el_ids = { value: [] };
 /** @arg {CompressionStatsCalculator} stats */
 function compress_main(stats) {
 	compress_init();
@@ -4261,19 +4260,19 @@ function compress_main(stats) {
 	}
 	ids.value = [...new Set(src_arr.value)];
 	id_groups.value = [];
-	for (let value of src_arr.value) {
+	for (const value of src_arr.value) {
 		make_group_from_item(id_groups.value, ids.value.indexOf(value), value);
 	}
 	el_ids.value = src_arr.value.map(get_ids);
 	max_id.value = new Set(el_ids.value).size;
-	let disabled_com = new DisabledMulCompression();
-	let arr = disabled_com.try_compress_T(el_ids.value);
-	let obj_start = new IDValueImpl_0(0, null);
+	const disabled_com = new DisabledMulCompression();
+	const arr = disabled_com.try_compress_T(el_ids.value);
+	const obj_start = new IDValueImpl_0(0, null);
 	obj_start.arr_rep = el_ids.value;
 	if (arr[0] === true) obj_start.arr_rep_num = arr[1];
 	else if (arr[0] === false) obj_start.arr_num = arr[1];
 	for (let i = 0, cur = obj_start; i < 3000; i++) {
-		let comp_res = run_calc(stats, cur);
+		const comp_res = run_calc(stats, cur);
 		if (!cur.stats) break;
 		if (cur.log_val && comp_res === null) {
 			console.log("id:" + cur.id, "[", ...cur.log_val, "]", cur.stats_win);
@@ -4312,8 +4311,8 @@ class HexRandomDataGenerator {
 	}
 	/** @arg {number} bit_count */
 	next(bit_count) {
-		let random_size = 1 << bit_count;
-		let num = ~~(this.random_num * random_size);
+		const random_size = 1 << bit_count;
+		const num = ~~(this.random_num * random_size);
 		this.used_bits += bit_count;
 		this.random_num *= random_size;
 		this.random_num -= num;
@@ -4348,11 +4347,11 @@ class HexRandomDataGenerator {
 		return this.cur_part.value;
 	}
 	next_byte() {
-		let size = 1 << 8;
+		const size = 1 << 8;
 		this.reset_part();
 		this.next_part(4);
 		this.next_part(4);
-		let num = this.complete();
+		const num = this.complete();
 		return (size + num).toString(16).slice(1);
 	}
 }
@@ -4450,7 +4449,7 @@ function cast_to_object(x) {
 
 /** @template T @arg {import("./support/dbg/CM.ts").CM<T>|null} x @returns {import("./support/dbg/CM.ts").CM<T&{type:string}>|null} */
 function cast_to_record_with_string_type(x) {
-	let cast_result = cast_to_object(x);
+	const cast_result = cast_to_object(x);
 	if (!is_record_with_string_type(cast_result, "type")) return null;
 	return cast_result;
 }
@@ -4476,7 +4475,7 @@ function is_record_with_string_type_msg(x, k) {
 
 /** @template T @arg {import("./support/dbg/CM.ts").CM<MessageEvent<T>>|null} x @returns {import("./support/dbg/CM.ts").CM<MessageEvent<T&{type:string}>>|null} */
 function cast_to_record_with_string_type_msg(x) {
-	let cast_result = cast_to_object_msg(x);
+	const cast_result = cast_to_object_msg(x);
 	if (!cast_result?.data?.data) return null;
 	if (!is_record_with_string_type_msg(cast_result, "type")) return null;
 	return cast_result;
@@ -4486,7 +4485,7 @@ function cast_to_record_with_string_type_msg(x) {
 function cast_to_record_with_string_type_msg_data(x) {
 	if (!is_record_with_T_msg_m(x, "data")) return null;
 	/** @type {import("./support/dbg/CM.ts").CM<MessageEvent<T&{data:unknown}>>} */
-	let xr = x;
+	const xr = x;
 	return xr;
 }
 
@@ -4566,7 +4565,7 @@ class TCPMessage {
 	}
 	/** @arg {number} client_id @returns {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} */
 	static make_syn(client_id) {
-		let seq = (Math.random() * ack_win) % ack_win | 0;
+		const seq = (Math.random() * ack_win) % ack_win | 0;
 		return new TCPMessage(tcp_syn, client_id, seq, null, null);
 	}
 	/** @arg {number} client_id @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} */
@@ -4575,7 +4574,7 @@ class TCPMessage {
 	}
 }
 
-let testing_tcp = true;
+const testing_tcp = true;
 
 class Socket {
 	static direct_message = false;
@@ -4602,7 +4601,7 @@ class Socket {
 		if (this.m_remote_target === window) {
 			throw new Error("Sending messages to self is means i have a bad time");
 		}
-		let { ports, client_port } = this.init_syn_data();
+		const { ports, client_port } = this.init_syn_data();
 		this.m_port = client_port;
 		this.send_syn(ports);
 	}
@@ -4611,14 +4610,14 @@ class Socket {
 	}
 	/** @returns {{ports:[MessagePort],client_port:MessagePort}} */
 	init_syn_data() {
-		let {
+		const {
 			port1: server_port,
 			port2: client_port,
 		} = new MessageChannel();
 		return { ports: [server_port], client_port };
 	}
 	reconnect() {
-		let { ports, client_port } = this.init_syn_data();
+		const { ports, client_port } = this.init_syn_data();
 		this.m_port = client_port;
 		this.send_syn(ports);
 	}
@@ -4653,7 +4652,7 @@ class Socket {
 	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} data @arg {[MessagePort]} ports */
 	post_wrapped(data, ports) {
 		/** @type {import("./support/dbg/WrappedMessage.ts").WrappedMessage<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} */
-		let msg = {
+		const msg = {
 			type: post_message_connect_message_type,
 			data,
 		};
@@ -4686,7 +4685,7 @@ class Socket {
 	/** @arg {MessageEvent<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} event */
 	handleEvent(event) {
 		if (Socket.prototype === this) return;
-		let data = event.data;
+		const data = event.data;
 		if (data.type !== "tcp") throw new Error();
 		if (testing_tcp) {
 			console.groupCollapsed(
@@ -4719,12 +4718,12 @@ class Socket {
 	}
 	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
-		let f = new FlagHandler(tcp_message.flags);
+		const f = new FlagHandler(tcp_message.flags);
 		if (this.m_local_log) console.log("local", tcp_message);
 		if (f.is_syn() && f.is_ack()) this.send_ack(tcp_message, 0);
 		if (tcp_message.flags == 0) this.send_ack(tcp_message, 0);
 		if (!tcp_message.data) return;
-		let tcp_data = tcp_message.data;
+		const tcp_data = tcp_message.data;
 		if (testing_tcp) console.log("Socket.handle_tcp_data(message.data())");
 		switch (tcp_data.type) {
 			case "connected":
@@ -4855,7 +4854,7 @@ class ListenSocket {
 	}
 	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message */
 	downstream_connect(tcp_message) {
-		let { seq, ack } = tcp_message;
+		const { seq, ack } = tcp_message;
 		if (!ack) throw new Error("Invalid message");
 		if (testing_tcp) {
 			console.log("on_server_connect", this.m_client_id, this.m_event_source);
@@ -4900,7 +4899,7 @@ class ListenSocket {
 	}
 	/** @arg {MessageEvent<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} event */
 	handleEvent(event) {
-		let { data } = event;
+		const { data } = event;
 		if (data.type !== "tcp") {
 			this.m_unhandled_events.push(data);
 			console.log("unhandled event", data);
@@ -4909,7 +4908,7 @@ class ListenSocket {
 		if (this.m_flags.does_proxy_to_opener) {
 			let real_data = data.data;
 			/** @type {[number,number,null][]} */
-			let id_path = [];
+			const id_path = [];
 			if (real_data && real_data.type === "forward") {
 				id_path.push(...real_data.client_id_path, [
 					data.client_id,
@@ -4953,8 +4952,8 @@ class ListenSocket {
 	}
 	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
-		let f = new FlagHandler(tcp_message.flags);
-		let { ack: seq } = tcp_message;
+		const f = new FlagHandler(tcp_message.flags);
+		const { ack: seq } = tcp_message;
 		if (f.is_syn() && !f.is_ack()) {
 			// seq=number & ack=null;
 			this.send_ack(tcp_message, tcp_syn);
@@ -4969,7 +4968,7 @@ class ListenSocket {
 		if (f.is_ack() && this.m_is_connecting && seq == null) {
 			console.log("bad tcp", tcp_message);
 		}
-		let downstream_data = tcp_message.data;
+		const downstream_data = tcp_message.data;
 		if (downstream_data) this.downstream_handle_event(tcp_message);
 	}
 }
@@ -4987,9 +4986,9 @@ class CrossOriginConnection {
 	m_client_max_id = 0;
 	constructor() {
 		elevate_event_handler(this);
-		let client_id = this.m_client_max_id++;
+		const client_id = this.m_client_max_id++;
 		this.start_root_server();
-		let connect_target = this.m_state.get_connect_target(this.m_flags);
+		const connect_target = this.m_state.get_connect_target(this.m_flags);
 		if (connect_target !== window) {
 			this.m_local_handler = new Socket(
 				30000,
@@ -5000,21 +4999,23 @@ class CrossOriginConnection {
 	}
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
-		let e_monad_1 = cast_to_record_with_string_type_msg(
+		const e_monad_1 = cast_to_record_with_string_type_msg(
 			new_cast_monad(event_0),
 		);
 		if (!e_monad_1) return;
 		if (!this.is_with_data_decay(e_monad_1)) return;
 		/** @type {import("./support/dbg/msg_ev_01.ts").msg_ev_01} */
-		let e_monad_2 = cast_to_record_with_string_type_msg_data(e_monad_1);
+		const e_monad_2 = cast_to_record_with_string_type_msg_data(e_monad_1);
 		if (!e_monad_2?.data) return;
-		let e_monad_3 = cast_to_record_with_string_type_msg_data_wrapped(e_monad_2);
+		const e_monad_3 = cast_to_record_with_string_type_msg_data_wrapped(
+			e_monad_2,
+		);
 		if (!e_monad_3) return;
-		let cast_monad_data = cast_to_record_with_string_type(
+		const cast_monad_data = cast_to_record_with_string_type(
 			new_cast_monad(e_monad_3.data.data.data),
 		);
 		if (!cast_monad_data) return;
-		let unwrapped_event = cast_monad_data.data;
+		const unwrapped_event = cast_monad_data.data;
 		switch (unwrapped_event.type) {
 			case "tcp":
 				break;
@@ -5022,17 +5023,17 @@ class CrossOriginConnection {
 				return;
 		}
 		if (!this.is_connection_message(event_0)) return;
-		let client_id = this.m_client_max_id++;
-		let connection_port = event_0.ports[0];
+		const client_id = this.m_client_max_id++;
+		const connection_port = event_0.ports[0];
 		if (!event_0.source) throw new Error("No event source");
-		let event_source = event_0.source;
-		let handler = new ListenSocket(
+		const event_source = event_0.source;
+		const handler = new ListenSocket(
 			this.m_flags,
 			connection_port,
 			client_id,
 			event_source,
 		);
-		let prev_connection_index = this.m_connections.findIndex((e) => {
+		const prev_connection_index = this.m_connections.findIndex((e) => {
 			return e.event_source === event_source;
 		});
 		if (testing_tcp) {
@@ -5055,14 +5056,14 @@ class CrossOriginConnection {
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
-		let data = cast_to_record_with_string_type(new_cast_monad(event.data));
+		const data = cast_to_record_with_string_type(new_cast_monad(event.data));
 		if (!data) return false;
 		return data.data.type === post_message_connect_message_type;
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<import("./support/dbg/WrappedMessage.ts").WrappedMessage<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>>} */
 	is_connection_message(event) {
 		if (!this.is_wrapped_message(event)) return false;
-		let data_record = cast_to_record_with_string_type(
+		const data_record = cast_to_record_with_string_type(
 			new_cast_monad(event.data.data),
 		);
 		if (!data_record) return false;
@@ -5095,23 +5096,25 @@ class CrossOriginConnection {
 				break;
 			case "beforeunload":
 				{
-					for (let connection of this.m_connections) {
+					for (const connection of this.m_connections) {
 						connection.will_disconnect(false);
 					}
 				}
 				break;
 			case "unload":
 				{
-					for (let connection of this.m_connections) connection.disconnected();
+					for (const connection of this.m_connections) {
+						connection.disconnected();
+					}
 					this.m_connections.length = 0;
 				}
 				break;
 		}
 	}
 	start_root_server() {
-		window.addEventListener("message", this);
-		window.addEventListener("beforeunload", this);
-		window.addEventListener("unload", this);
+		self.addEventListener("message", this);
+		self.addEventListener("beforeunload", this);
+		self.addEventListener("unload", this);
 	}
 	static connect_to_api() {
 		export_((exports) => {
@@ -5192,7 +5195,7 @@ class DebugApi {
 				console.log("do_activate swallow error", e);
 			}
 		}
-		let activate = do_activate.bind(null, func, {}, [{
+		const activate = do_activate.bind(null, func, {}, [{
 			get target() {
 				throw new Error("1");
 			},
@@ -5208,9 +5211,9 @@ class DebugApi {
 	/** @arg {any} debug @arg {any} undebug @arg {null} getEventListeners @returns {this} */
 	attach(debug, undebug, getEventListeners) {
 		//Attach to the chrome DebugApi functions the user specified.
-		let obj_debug = this.get_d();
-		let obj_undebug = this.getData("u");
-		let get_ev_lis = this.getData("getEventListeners");
+		const obj_debug = this.get_d();
+		const obj_undebug = this.getData("u");
+		const get_ev_lis = this.getData("getEventListeners");
 		if (
 			obj_debug !== debug || obj_undebug !== undebug ||
 			get_ev_lis !== getEventListeners
@@ -5246,8 +5249,8 @@ class DebugApi {
 	}
 	/** @returns {boolean} */
 	clearCurrentBreakpoint() {
-		let undebug;
-		if (undebug = this.getData("u")) {
+		const undebug = this.getData("u");
+		if (undebug) {
 			undebug(this.current_function_value);
 			return true;
 		}
@@ -5263,41 +5266,41 @@ class DebugApi {
 	}
 	/** @arg {import("./support/dbg/IDebugBreakpointArgs.ts").IDebugBreakpointArgs} breakpoint_arguments @returns {import("./__global.ts").dbg_result} */
 	debuggerGetVarArray_a(breakpoint_arguments) {
-		let function_value = breakpoint_arguments.target;
-		let var_match = breakpoint_arguments.name;
+		const function_value = breakpoint_arguments.target;
+		const var_match = breakpoint_arguments.name;
 		if (!this.hasData("d") || !this.getData("u")) {
 			return { type: "invalid-state-error" };
 		}
 		if (typeof function_value != "function") return { type: "argument-error" };
-		let ma = var_match.matchAll(/.-.|./g);
-		let sr = [];
-		let qs = [...ma].map((e) => e[0]);
-		for (let j of qs) {
+		const ma = var_match.matchAll(/.-.|./g);
+		const sr = [];
+		const qs = [...ma].map((e) => e[0]);
+		for (const j of qs) {
 			if (j.length === 1) {
 				sr.push(j.charCodeAt(0));
 				continue;
 			}
-			let fs = j.split("-");
-			let sa = fs[0].charCodeAt(0);
-			let se = fs[1].charCodeAt(0);
+			const fs = j.split("-");
+			const sa = fs[0].charCodeAt(0);
+			const se = fs[1].charCodeAt(0);
 			for (let i = sa; i <= se; i++) sr.push(i);
 		}
-		let vars_arr = sr.map((e) => String.fromCharCode(e));
+		const vars_arr = sr.map((e) => String.fromCharCode(e));
 		this.current_function_value = function_value;
-		let tmp_key = "__k";
+		const tmp_key = "__k";
 		/** @type {import("./support/dbg/dbg_get_ty.ts").dbg_get_ty} */
-		let tmp_value = {};
+		const tmp_value = {};
 		this.setData(tmp_key, tmp_value);
-		let debug = this.get_d();
-		let breakpoint_code_string = this.stringifyFunction(
+		const debug = this.get_d();
+		const breakpoint_code_string = this.stringifyFunction(
 			this.debuggerBreakpointCode,
 		);
 		debug(this.current_function_value, `${breakpoint_code_string}`);
 		// ---- Activate ----
 		let activate_return = null;
 		if (breakpoint_arguments.type === "function-breakpoint") {
-			let activate_vec = breakpoint_arguments.activate_args;
-			let target_fn = breakpoint_arguments.target;
+			const activate_vec = breakpoint_arguments.activate_args;
+			const target_fn = breakpoint_arguments.target;
 			activate_return = breakpoint_arguments.activate(
 				target_fn,
 				...activate_vec,
@@ -5306,10 +5309,10 @@ class DebugApi {
 			this.getData("u")(this.current_function_value);
 			return { type: "argument-error" };
 		}
-		let exec_res_arr = [];
+		const exec_res_arr = [];
 		if (tmp_value.get) {
-			for (let j of vars_arr) {
-				let res = tmp_value.get(j);
+			for (const j of vars_arr) {
+				const res = tmp_value.get(j);
 				switch (res.type) {
 					case "var":
 						exec_res_arr.push(res.data);
@@ -5368,8 +5371,8 @@ class DebugApi {
 			return { type: "argument-error" };
 		}
 		this.current_function_value = breakpoint_arguments.target;
-		let dbg_str_func = this.stringifyFunction(this.debuggerBreakpointCode);
-		let tmp_key = "__k";
+		const dbg_str_func = this.stringifyFunction(this.debuggerBreakpointCode);
+		const tmp_key = "__k";
 		class DebugInfoValue {
 			valid = false;
 			/** @arg {string} __v @returns {{type: "hidden-var",var: string}|{type: "var",data: [string,any]}|{type: "no-var", data: null}|null} */
@@ -5377,10 +5380,10 @@ class DebugApi {
 				return null;
 			}
 		}
-		let tmp_value = new DebugInfoValue();
+		const tmp_value = new DebugInfoValue();
 		this.setData(tmp_key, tmp_value);
 		/** @type {import("./support/dbg/I_debug.ts").I_debug} */
-		let debug = this.getData("d");
+		const debug = this.getData("d");
 		debug(this.current_function_value, `${dbg_str_func}`);
 		// ---- Activate ----
 		let activate_return = null;
@@ -5437,7 +5440,7 @@ class DebugApi {
 	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_vec @arg {string} var_name @returns {import("./__global.ts").dbg_result} */
 	debuggerGetVar(function_value, activate_vec, var_name) {
 		if (typeof function_value != "function") return { type: "argument-error" };
-		let ret = this.debuggerGetVar_a({
+		const ret = this.debuggerGetVar_a({
 			type: "function-breakpoint",
 			target: function_value,
 			name: var_name,
@@ -5478,18 +5481,18 @@ export_((exports) => {
 	const proxy_revocable_handler = {
 		apply(...args) {
 			/** @type {ReturnType<ProxyConstructor["revocable"]>} */
-			let ret = Reflect.apply(...args);
+			const ret = Reflect.apply(...args);
 			proxy_revoke_fn_map.set(ret.proxy, ret.revoke);
 			proxy_map.set(ret.proxy, args);
 			return ret;
 		},
 		get(obj, key, rx) {
-			let ret = Reflect.get(obj, key, rx);
+			const ret = Reflect.get(obj, key, rx);
 			console.log("Proxy.revocable.", key);
 			return ret;
 		},
 	};
-	let proxy_revocable_proxy = new window.Proxy(
+	const proxy_revocable_proxy = new window.Proxy(
 		proxy_revocable_make,
 		new Proxy(proxy_revocable_handler, {
 			/** @arg {typeof proxy_revocable_handler} o @arg {keyof typeof proxy_revocable_handler} k */
@@ -5503,12 +5506,12 @@ export_((exports) => {
 	/** @type {ProxyHandler<ProxyConstructor>} */
 	const proxy_construct_handler = {
 		construct(...args) {
-			let ret = Reflect.construct(...args);
+			const ret = Reflect.construct(...args);
 			proxy_map.set(ret, args);
 			return ret;
 		},
 		get(obj, key, rx) {
-			let ret = Reflect.get(obj, key, rx);
+			const ret = Reflect.get(obj, key, rx);
 			if (key === "revocable") return proxy_revocable_proxy;
 			return ret;
 		},
