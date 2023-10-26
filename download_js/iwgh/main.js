@@ -88,7 +88,6 @@ function parse_sentence(str) {
 	 */
 	function parse_a(parsed,parsed_src) {
 		parsed.push({type: "a"});
-		parsed_src.shift();
 		let word1=parsed_src.shift();
 		if(word1===void 0) throw new Error("word1 null");
 		if(word3_dict.includes(word1)) {
@@ -148,7 +147,6 @@ function parse_sentence(str) {
 				parsed.push({type: "usually"});
 				let next=parsed_src.shift();
 				if(next==="a") {
-					parsed_src.unshift(next);
 					parse_a(parsed,parsed_src);
 					break;
 				}
