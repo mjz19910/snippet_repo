@@ -104,6 +104,31 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "sure":
+			case "you":
+			case "younger":
+			case "morning":
+			case "less":
+			case "explained":
+			case "exact":
+			case "especially":
+			case "more":
+			case "entirely":
+			case "during":
+			case "a.m.":
+			case "day":
+			case "if":
+			case "11":
+			case "before":
+			case "change":
+			case "time":
+			case "not":
+			case "often":
+			case "bakers":
+			case "barber":
+			case "children":
+			case "country":
+			case "interests":
 			case "means":
 			case "at":
 			case "peasant":
