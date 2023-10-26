@@ -22,8 +22,8 @@ function parse_sentence(str) {
 					type: "this_is_a",
 				});
 				parsed_src.shift();
-				let word=parsed_src.shift();
-				switch(word) {
+				let word1=parsed_src.shift();
+				switch(word1) {
 					case "category": {
 						let word2=parsed_src.shift();
 						if(word2!=="of") throw new Error("word2 not of");
@@ -33,9 +33,10 @@ function parse_sentence(str) {
 					}
 					case "traditional": break x;
 					case "rare": break x;
+					default: {
+						console.log(["w1",word1]);
+					} break x;
 				}
-				console.log([parsed[0].type,parsed_src]);
-				throw 1;
 			}
 			case "usually": {
 				parsed.push({
