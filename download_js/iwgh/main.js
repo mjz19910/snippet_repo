@@ -284,7 +284,6 @@ function word_starts_with_vowel(word) {
     default:
       return false;
   }
-  word[0] === "y";
 }
 function strip_word_part(word) {
   if (word.startsWith("b")) return strip_vowel("b", word);
