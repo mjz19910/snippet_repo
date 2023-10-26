@@ -36,6 +36,7 @@ function parse_sentence(str) {
 				let word3=parsed_src.shift();
 				switch(word3) {
 					case "clothing": break x;
+					case "plant": break x;
 				}
 				console.log(["w3",word3]);
 				break x;
