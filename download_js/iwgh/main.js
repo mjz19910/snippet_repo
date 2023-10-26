@@ -332,6 +332,7 @@ function strip_word_part(word) {
 export { strip_word_part };
 /** @type {Map<string,number>} */
 const rng_word_num_map = new Map();
+const new_words_set = new Set();
 /**
  * @param {string} word
  */
@@ -354,6 +355,7 @@ function parse_rng_word(word) {
     console.log(word_arr.length, word_arr.join(","));
   }
   dict.add(word);
+  new_words_set.add(word);
   const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
     const pair1 = word_chars[char_idx];
