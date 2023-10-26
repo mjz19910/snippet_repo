@@ -6,21 +6,9 @@ export enum ConnectFlag_base {
 	Ack=1<<1
 }
 export type ConnectFlag={
-	none: true;
-	ack: false;
-	syn: false;
-}|{
-	none: false;
-	ack: false;
-	syn: true;
-}|{
-	none: false;
-	ack: true;
-	syn: false;
-}|{
-	none: false;
-	ack: true;
-	syn: true;
+	none: boolean;
+	ack: boolean;
+	syn: boolean;
 };
 export type ConnectFlagT=typeof ConnectFlag_base;
 export type RecordKey<T>=Constructor&{key: T;};
