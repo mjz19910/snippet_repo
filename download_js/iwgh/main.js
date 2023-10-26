@@ -347,7 +347,9 @@ function parse_rng_word(word, add_new_words = true, destructure_word = false) {
         continue;
       }
       const seq_len = word_starts_with_consonant_seq(w2);
-      if (seq_len === null) break;
+      if (seq_len === null) {
+        throw new Error("invalid consonant_seq:'" + w2 + "'");
+      }
       word_arr.push("c:" + w2.slice(0, seq_len));
       w2 = w2.slice(seq_len);
     } while (w2 !== "");
