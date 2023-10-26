@@ -379,7 +379,18 @@ async function run() {
     console.log("%o", description);
   }
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
-  console.log(rng_map);
+  {
+    const arr = [];
+    let cur_item = [];
+    arr.push(cur_item);
+    for (let i = 0; i < rng_map.length; i++) {
+      cur_item.push(rng_map[i]);
+      if (i % 6 === 5) arr.push(cur_item = []);
+    }
+		for(const part of arr) {
+			console.log(part);
+		}
+  }
   const dictionary_arr = [...dict.values()].sort();
   console.log("description_set_arr.length", description_set_arr.length);
   await write_entire_file(description_file, description_set_arr);
