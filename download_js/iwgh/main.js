@@ -26,7 +26,9 @@ function parse_sentence(str) {
 		str=str.slice(0,str.length-"... or something like that".length);
 	}
 	if(str.startsWith("This is ")) {
-		let parsed=["This","is"];
+		let parsed_src=str.split(" ");
+		parsed_src.shift(); parsed_src.shift();
+		console.log(parsed_src);
 	}
 	return str;
 }
