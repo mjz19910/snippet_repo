@@ -352,9 +352,9 @@ async function run() {
   let dictionary_str = await read_entire_file(dictionary_file);
   if (dictionary_str !== "") {
     const load_arr = JSON.parse(dictionary_str);
-    for (const item of load_arr) {
+    for (const word of load_arr) {
 			parse_rng_word(word);
-      dict.add(item);
+      dict.add(word);
     }
   }
   const before_wait = dict.size;
