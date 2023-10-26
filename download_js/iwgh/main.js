@@ -332,8 +332,8 @@ async function run() {
     description_data.set(prev_data, 0);
     description_data.set(buf.slice(0, n), prev_end);
   } while (true);
-  const description_str = new TextDecoder().decode(description_data);
-  console.log("description_cache.json", description_str);
+  let description_str = new TextDecoder().decode(description_data);
+  console.log(["description_cache.json", description_str]);
   const before_wait = dict.size;
   for (let j = 0; j < 2; j++) {
     const request_count = 20;
@@ -351,6 +351,12 @@ async function run() {
   }
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   console.log(rng_map);
+  description_str = JSON.stringify(description_set_arr);
+  await description_file.seek(0, 0);
+  const encoder = new TextEncoder();
+  description_data = encoder.encode(description_str);
+  const n_written = await description_file.write(description_data);
+  console.log(n_written, description_data.length);
   description_file.close();
 }
 await run();
