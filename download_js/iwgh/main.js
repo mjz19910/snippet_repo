@@ -125,11 +125,13 @@ function parse_sentence(str) {
 				if(parsed_src.length==0) break x;
 				let word4=next_word(parsed_src);
 				switch(word4) {
-					case "when": break x;
-					case "but": break x;
-					case "in": break x;
-					case "...": break x;
-					case ",": break x;
+					case "when":
+					case "but":
+					case "in":
+					case "...":
+					case ",":
+					case "art":
+					case "though": break x;
 				}
 				console.log(["w4",word4]);
 			} break x;
