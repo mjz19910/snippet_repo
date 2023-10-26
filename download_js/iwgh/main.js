@@ -104,6 +104,9 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "elderly":
+			case "circumstances":
+			case "citizens":
 			case "museum":
 			case "rarely":
 			case "party":
