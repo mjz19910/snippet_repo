@@ -331,6 +331,7 @@ const rng_word_num_map = new Map();
  */
 function parse_rng_word(word) {
   word = word.toLowerCase();
+  if (dict.has(word)) return;
   {
     const word_arr = [];
     let w2 = word;
