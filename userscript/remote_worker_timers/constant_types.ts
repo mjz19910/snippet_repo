@@ -1,5 +1,4 @@
-import {WorkerConstants} from "./constants.js";
-const {
+import {
 	ReplyClearAny,
 	ReplyClearRepeating,
 	ReplyClearSingle,
@@ -32,7 +31,7 @@ const {
 	WorkerReadyReply,
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
-}=WorkerConstants;
+} from "./constants.ts";
 
 export type TimeoutSetStringsT={
 	single: typeof TimeoutSetStringSingle;
@@ -190,8 +189,6 @@ export type DispatchMessageType=
 	|ReplyToLocalTimerMessageT
 	|MessageReplyFromWorkerData
 	;
-;
-
 export type WorkerReplyTypes=
 	|ReplyFromWorkerMessage
 	|ReplyToLocalTimerMessageT
@@ -199,8 +196,6 @@ export type WorkerReplyTypes=
 	|WorkerDestroyTypeMessageT
 	|TimeoutFireSingleMessageT
 	;
-;
-
 export type WorkerSendTypes=
 	|TimeoutSetSingleMessageT
 	|TimeoutSetRepeatingMessageT
@@ -210,8 +205,6 @@ export type WorkerSendTypes=
 	|TimeoutClearSingleMessageT
 	|TimeoutClearRepeatingMessageT
 	;
-;
-
 export type SetSingleMessageDataT={
 	t: number;
 	v: number;

@@ -1,6 +1,4 @@
-import {SavedArrayItemType} from "./SavedArrayItemType.js";
-import {SavedInstanceSubType} from "./SavedInstanceSubType";
+import {SavedArrayItemType} from "./SavedArrayItemType.ts";
+import {SavedInstanceSubType} from "./SavedInstanceSubType.ts";
 
-declare global {type SavedInstanceType=SavedArrayItemType<SavedInstanceSubType>;}
-
-export {type SavedInstanceType};
+export type SavedInstanceType=SavedArrayItemType<SavedInstanceSubType>;
