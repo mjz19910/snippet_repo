@@ -13,7 +13,6 @@ function split_at(str,needle) {
 	do {
 		let sp=str.slice(start,idx+n_len);
 		arr.push(sp);
-		console.log(sp);
 		start=idx+n_len;
 		idx=str.indexOf(needle,start);
 	} while(idx!==-1);
