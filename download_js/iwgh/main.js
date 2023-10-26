@@ -364,7 +364,7 @@ async function run() {
   description_str = JSON.stringify(description_set_arr, void 0, "\t");
   await description_file.seek(0, 0);
   const encoder = new TextEncoder();
-  description_data = encoder.encode(description_str);
+  const description_data = encoder.encode(description_str);
   const n_written = await description_file.write(description_data);
   console.log(n_written, description_data.length);
   await description_file.truncate(description_data.length);
