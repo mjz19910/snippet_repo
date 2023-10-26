@@ -265,7 +265,11 @@ let rng_word_num_map=new Map;
  * @param {string} word
  */
 function parse_rng_word(word) {
-	let word_chars=word.toLowerCase().split("");
+	word=word.toLowerCase();
+	if(word.startsWith("th")) {
+		console.log(["word",word]);
+	}
+	let word_chars=word.split("");
 	for(let char_idx=0;char_idx<word_chars.length-1;char_idx++) {
 		let pair1=word_chars[char_idx];
 		let pair2=word_chars[char_idx+1];
