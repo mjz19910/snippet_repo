@@ -21,6 +21,32 @@ function parse_sentence(str) {
 	if(str.endsWith(".")) {
 		str=str.slice(0,-1);
 	}
+	function parse_a(parsed,parsed_src) {
+		parsed.push({type: "a"});
+		parsed_src.shift();
+		let word1=parsed_src.shift();
+		x: switch(word1) {
+			case "category": {
+				let word2=parsed_src.shift();
+				if(word2!=="of") throw new Error("word2 not of");
+				let word3=parsed_src.shift();
+				switch(word3) {
+					case "clothing": break x;
+				}
+				console.log(["w3",word3]);
+				break x;
+			}
+			case "traditional": break x;
+			case "rare": break x;
+			case "sort": break x;
+			case "local": break x;
+			case "national": break x;
+			case "popular": break x;
+			default: {
+				console.log(["w1",word1]);
+			} break;
+		}
+	}
 	if(str.startsWith("This is ")) {
 		let parsed=[];
 		let parsed_src=str.split(/[ ,]/);
@@ -28,30 +54,8 @@ function parse_sentence(str) {
 		parsed.push({type: "this_is"});
 		x: switch(parsed_src[0]) {
 			case "a": {
-				parsed.push({type: "a"});
-				parsed_src.shift();
-				let word1=parsed_src.shift();
-				switch(word1) {
-					case "category": {
-						let word2=parsed_src.shift();
-						if(word2!=="of") throw new Error("word2 not of");
-						let word3=parsed_src.shift();
-						switch(word3) {
-							case "clothing": break x;
-						}
-						console.log(["w3",word3]);
-						break x;
-					}
-					case "traditional": break x;
-					case "rare": break x;
-					case "sort": break x;
-					case "local": break x;
-					case "national": break x;
-					case "popular": break x;
-					default: {
-						console.log(["w1",word1]);
-					} break x;
-				}
+				parse_a(parsed,parsed_src);
+				break x;
 			}
 			case "usually": {
 				parsed.push({type: "usually"});
