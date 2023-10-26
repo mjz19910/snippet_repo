@@ -1,4 +1,4 @@
-import {AsyncPluginInitEvent} from "./AsyncPluginInitEvent.js";
-import {PluginActivateEvent} from "./PluginActivateEvent.js";
+import {AsyncPluginInitEvent} from "./AsyncPluginInitEvent.ts";
+import {PluginActivateEvent} from "./PluginActivateEvent.ts";
 
 export type CustomEventType=AsyncPluginInitEvent|PluginActivateEvent;

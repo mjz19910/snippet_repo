@@ -1,6 +1,6 @@
-import {R_Button,D_Thumbnail} from "../../../d/group_D.js";
-import {G_Text} from "../../../ghi/group_G.js";
-import {R_EmojiPicker} from "../../group_R.js";
+import {R_Button,D_Thumbnail} from "../../../d/group_D.ts";
+import {G_Text} from "../../../ghi/group_G.ts";
+import {R_EmojiPicker} from "../../group_R.ts";
 
 export type D_CommentReplyDialog={
 	replyButton: R_Button;

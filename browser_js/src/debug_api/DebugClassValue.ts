@@ -1,4 +1,4 @@
-import {ClassCallbackFunction} from "./ClassCallbackFunction.js";
+import {ClassCallbackFunction} from "./ClassCallbackFunction.ts";
 
 export class DebugClassValue {
 	readonly type='class';

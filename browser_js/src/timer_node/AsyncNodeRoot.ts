@@ -1,10 +1,10 @@
-import {BaseNode} from "./BaseNode.js";
-import {IntervalIdNode} from "./IntervalIdNode.js";
-import {IntervalNode} from "./IntervalNode.js";
-import {BoundFireNode} from "./BoundFireNode.js";
-import {TimeoutIdNode} from "./TimeoutIdNode.js";
-import {TimeoutNode} from "./TimeoutNode.js";
-import {TimeoutTargetFireNode} from "./TimeoutTargetFireNode.js";
+import {BaseNode} from "./BaseNode.ts";
+import {IntervalIdNode} from "./IntervalIdNode.ts";
+import {IntervalNode} from "./IntervalNode.ts";
+import {BoundFireNode} from "./BoundFireNode.ts";
+import {TimeoutIdNode} from "./TimeoutIdNode.ts";
+import {TimeoutNode} from "./TimeoutNode.ts";
+import {TimeoutTargetFireNode} from "./TimeoutTargetFireNode.ts";
 
 export class AsyncNodeRoot extends BaseNode {
 	set(target_fn: () => void,timeout: number|undefined, once=true) {

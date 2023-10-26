@@ -1,6 +1,6 @@
-import {get_nearest_script} from "./get_nearest_script.js";
-import {register_obj_with_registry} from "./register_obj_with_registry.js";
-import {scripts} from "./scripts.js";
+import {get_nearest_script} from "./get_nearest_script.ts";
+import {register_obj_with_registry} from "./register_obj_with_registry.ts";
+import {scripts} from "./scripts.ts";
 
 export function str_index_of_inject() {
 	let cur_script=get_nearest_script();

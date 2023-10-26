@@ -1,4 +1,4 @@
-import {CM} from "./CM.js";
+import {CM} from "./CM.ts";
 
 export type msg_ev_01=CM<MessageEvent<{
 	type: string;

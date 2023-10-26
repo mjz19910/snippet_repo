@@ -1,6 +1,6 @@
-import {RetParam_D32,RetParam_FD32,RetParam_FD64,RetParam_VW_Bigint} from "../d/group_D.js";
-import {T_Param_Child} from "../stu/group_T.js";
-import {V_RawValue} from "../vw/group_V.js";
+import {RetParam_D32,RetParam_FD32,RetParam_FD64,RetParam_VW_Bigint} from "../d/group_D.ts";
+import {T_Param_Child} from "../stu/group_T.ts";
+import {V_RawValue} from "../vw/group_V.ts";
 
 export type Ret_gen_json=string;
 export type V_Param_D32=[type: "v_data32",value: number];

@@ -1,4 +1,4 @@
-import {seen_elements} from "./seen_elements.js";
+import {seen_elements} from "./seen_elements.ts";
 
 export function remove_bad_dom_script_element_callback(e: HTMLScriptElement) {
 	if(seen_elements.has(e))

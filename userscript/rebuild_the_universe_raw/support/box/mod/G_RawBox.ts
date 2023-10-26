@@ -1,5 +1,4 @@
-import {RawAnyBox} from "./RawAnyBox";
-import {RawInterfaceBox} from "./RawInterfaceBox";
-import {RawUnknownBox} from "./RawUnknownBox";
+import {RawInterfaceBox} from "./RawInterfaceBox.ts";
+import {RawUnknownBox} from "./RawUnknownBox.ts";
 
-export type G_RawBox=RawInterfaceBox|RawUnknownBox|RawAnyBox;
+export type G_RawBox=RawInterfaceBox|RawUnknownBox;

@@ -1,5 +1,5 @@
-import {IHashMap} from "./IHashMap.js";
-import {IterationDecision} from "./IterationDecision.js";
+import {IHashMap} from "./IHashMap.ts";
+import {IterationDecision} from "./IterationDecision.ts";
 
 export class HashMap<K,V> implements IHashMap<K,V> {
 	backing_map: Map<K,V>|null;

@@ -1,9 +1,9 @@
-import {HeldType} from "../HeldType.js";
-import {script_registry} from "../script_registry.js";
-import {Counter} from "../Counter.js";
+import {HeldType} from "../HeldType.ts";
+import {script_registry} from "../script_registry.ts";
+import {Counter} from "../Counter.ts";
 import {WeakRefTo} from "../WeakRefTo";
 import {UnregisterToken} from "../UnregisterToken";
-import {gc_store_counter} from "../gc_store_counter.js";
+import {gc_store_counter} from "../gc_store_counter.ts";
 
 export class GCStore<T extends {}> {
 	static all_storage: GCStore<{}>[]=[];

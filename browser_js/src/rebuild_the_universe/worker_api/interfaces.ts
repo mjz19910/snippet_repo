@@ -28,7 +28,7 @@ import {
 	WorkerReadyReply,
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
-} from "./constants.js";
+} from "./constants.ts";
 import {
 	ReplyClearAnyT,
 	ReplyClearRepeatingT,
@@ -66,7 +66,7 @@ import {
 	WorkerReplyTimerFireTypesT,
 	WorkerUpdateMessageHandlerReplyT,
 	WorkerUpdateMessageHandlerT
-} from "./constant_types.js";
+} from "./constant_types.ts";
 import {WorkerReplyTypesT} from "./WorkerReplyTypesT";
 
 export class TimeoutClearStrings implements TimeoutClearStringsT {

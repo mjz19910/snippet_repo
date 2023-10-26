@@ -1,5 +1,5 @@
-import {E_Search} from "../../../e/GR_E_VE.js";
-import {RS_SearchPage} from "../../group_R.js";
+import {E_Search} from "../../../e/GR_E_VE.ts";
+import {RS_SearchPage} from "../../group_R.ts";
 
 export type NavFinishDetail_Search={
 	pageType: "search";

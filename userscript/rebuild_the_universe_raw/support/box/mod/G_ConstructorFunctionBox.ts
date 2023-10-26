@@ -1,9 +1,9 @@
-import {AsyncFunctionBox} from "./AsyncFunctionBox.js";
-import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox.js";
-import {FunctionBox} from "./FunctionBox.js";
-import {FunctionConstructorBox} from "./FunctionConstructorBox.js";
-import {NewableFunctionBox} from "./NewableFunctionBox.js";
-import {NewableInstancePackBox} from "./NewableInstancePackBox.js";
+import {AsyncFunctionBox} from "./AsyncFunctionBox.ts";
+import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox.ts";
+import {FunctionBox} from "./FunctionBox.ts";
+import {FunctionConstructorBox} from "./FunctionConstructorBox.ts";
+import {NewableFunctionBox} from "./NewableFunctionBox.ts";
+import {NewableInstancePackBox} from "./NewableInstancePackBox.ts";
 
 export type G_ConstructorFunctionBox=
 	|CSSStyleSheetConstructorBox

@@ -1,7 +1,7 @@
-import {T_IdTemplate,D_UserIdStr,D_Thumbnail} from "../../../d/group_D.js";
-import {E_VE3611} from "../../../e/GR_E_VE.js";
-import {G_Text} from "../../../ghi/group_G.js";
-import {R_SubscribeButton} from "../../group_R.js";
+import {T_IdTemplate,D_UserIdStr,D_Thumbnail} from "../../../d/group_D.ts";
+import {E_VE3611} from "../../../e/GR_E_VE.ts";
+import {G_Text} from "../../../ghi/group_G.ts";
+import {R_SubscribeButton} from "../../group_R.ts";
 
 export type D_GridChannel={
 	channelId: T_IdTemplate<"UC",D_UserIdStr>;

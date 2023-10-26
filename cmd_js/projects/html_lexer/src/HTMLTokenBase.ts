@@ -1,8 +1,8 @@
 import {Ref} from "./from_cpp/Ref.js";
-import {move} from "./move.js";
-import {MyDocTypeData} from "./MyDocTypeData.js";
+import {move} from "./move.ts";
+import {MyDocTypeData} from "./MyDocTypeData.ts";
 import {OwnPtr} from "./OwnPtr";
-import {u32} from "./u32.js";
+import {u32} from "./u32.ts";
 import {Variant} from "./Variant";
 import {Vector} from "./Vector";
 

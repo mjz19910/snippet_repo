@@ -1,6 +1,6 @@
-import {handle_json_parse} from "./handle_json_parse.js";
-import {debug} from "../debug.js";
-import {RequestInfoExt} from "./RequestInfoExt.js";
+import {handle_json_parse} from "./handle_json_parse.ts";
+import {debug} from "../debug.ts";
+import {RequestInfoExt} from "./RequestInfoExt.ts";
 
 export function bind_promise_handler<T extends Function,U extends Function>(
 	{request_info: request,init: options,response}: RequestInfoExt,

@@ -1,7 +1,7 @@
-import {D_Thumbnail} from "../../../d/group_D.js";
-import {E_Url} from "../../../e/E.js";
-import {G_Text} from "../../../ghi/group_G.js";
-import {R_SimpleCardButton} from "./R_SimpleCardButton.js";
+import {D_Thumbnail} from "../../../d/group_D.ts";
+import {E_Url} from "../../../e/E.ts";
+import {G_Text} from "../../../ghi/group_G.ts";
+import {R_SimpleCardButton} from "./R_SimpleCardButton.ts";
 
 export type D_SimpleCardContent={
 	image: D_Thumbnail;

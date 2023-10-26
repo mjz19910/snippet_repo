@@ -1,6 +1,6 @@
-import {ytd_page_manager} from "../elements/ytd_page_manager.js";
-import {on_ytd_watch_flexy} from "../found_elements/on_ytd_watch_flexy.js";
-import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "./ns.js";
+import {ytd_page_manager} from "../elements/ytd_page_manager.ts";
+import {on_ytd_watch_flexy} from "../found_elements/on_ytd_watch_flexy.ts";
+import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "./ns.ts";
 
 /** ID(40) */
 export function event_find_ytd_watch_flexy(this: CustomEventTarget,event: CustomEventType) {

@@ -9,12 +9,12 @@ import {
 	TimeoutSetRepeating,
 	TimeoutSetSingle,
 	WorkerReadyReply
-} from "./constants.js";
+} from "./constants.ts";
 import {
 	TimeoutClearStrings,
 	TimeoutSetStrings,
 	TimerMessageTypes,
-} from "./interfaces.js";
+} from "./interfaces.ts";
 
 export class TimerApi {
 	msg_types=new TimerMessageTypes;

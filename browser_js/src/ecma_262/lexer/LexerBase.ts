@@ -1,4 +1,4 @@
-import {Dispatcher} from "./Dispatcher.js";
+import {Dispatcher} from "./Dispatcher.ts";
 
 export const debug_flag_override=false;
 

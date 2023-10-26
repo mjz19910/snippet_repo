@@ -1,6 +1,6 @@
-import {ytd_app} from "../elements/ytd_app.js";
-import {element_map} from "../event/element_map.js";
-import {YtdAppElement} from "../elements/YtdAppElement.js";
+import {ytd_app} from "../elements/ytd_app.ts";
+import {element_map} from "../event/element_map.ts";
+import {YtdAppElement} from "../elements/YtdAppElement.ts";
 
 declare global {
 	interface Window {

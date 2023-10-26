@@ -1,5 +1,5 @@
-import {DStr_DI_AKZ} from "../DI_T/DI_T_move.js";
-import {DST_MoveRegion1_Dst} from "./DST_MakeLM.js";
+import {DStr_DI_AKZ} from "../DI_T/DI_T_move.ts";
+import {DST_MoveRegion1_Dst} from "./DST_MakeLM.ts";
 
 //#region KStr
 export type DST_KStr_AK_LMN_Z=`/di/a/k/l/m/n/z`;

@@ -1,6 +1,6 @@
-import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.js";
-import {on_game_data_set} from "./on_game_data_set.js";
-import {wait_for_game_data} from "./wait_for_game_data.js";
+import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.ts";
+import {on_game_data_set} from "./on_game_data_set.ts";
+import {wait_for_game_data} from "./wait_for_game_data.ts";
 
 declare global {
 	interface Window {

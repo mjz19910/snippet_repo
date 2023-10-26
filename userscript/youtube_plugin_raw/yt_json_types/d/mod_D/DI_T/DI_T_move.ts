@@ -1,8 +1,8 @@
 //#region Templates
 
-import {G_Primitives} from "../../../../../rebuild_the_universe_raw/support/G_Primitives.js";
-import {T_GetPrimitiveTag} from "../../../stu/group_T.js";
-import {B_IdTemplateArgs, DU_Browse_Id, DU_ChannelId, DU_GuideEntry_Id, DU_Playlist_Id, DU_Playlist_Static, DU_StartRadio, DU_VideoId, T_IdTemplate} from "../../group_D.js";
+import {G_Primitives} from "../../../../../rebuild_the_universe_raw/support/G_Primitives.ts";
+import {T_GetPrimitiveTag} from "../../../stu/group_T.ts";
+import {B_IdTemplateArgs, DU_Browse_Id, DU_ChannelId, DU_GuideEntry_Id, DU_Playlist_Id, DU_Playlist_Static, DU_StartRadio, DU_VideoId, T_IdTemplate} from "../../group_D.ts";
 
 
 export type MakeInfoInput_Len2=

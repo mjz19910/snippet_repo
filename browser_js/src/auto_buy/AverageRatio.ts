@@ -1,4 +1,4 @@
-import {calc_ratio} from "./calc_ratio.js";
+import {calc_ratio} from "./calc_ratio.ts";
 
 export class AverageRatio {
 	history: number[];

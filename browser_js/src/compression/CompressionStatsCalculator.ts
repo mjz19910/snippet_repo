@@ -1,4 +1,4 @@
-import {to_tuple_arr} from "./to_tuple_arr.js";
+import {to_tuple_arr} from "./to_tuple_arr.ts";
 
 export class CompressionStatsCalculator {
 	hit_counts: number[];

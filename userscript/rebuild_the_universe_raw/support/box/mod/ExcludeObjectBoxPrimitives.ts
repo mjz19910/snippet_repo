@@ -1,5 +1,5 @@
-import {Box} from "./Box.js";
-import {NumberBox} from "./NumberBox.js";
-import {StringBox} from "./StringBox.js";
+import {Box} from "./Box.ts";
+import {NumberBox} from "./NumberBox.ts";
+import {StringBox} from "./StringBox.ts";
 
 export type ExcludeObjectBoxPrimitives<T extends Box>=Exclude<T,StringBox|NumberBox>;

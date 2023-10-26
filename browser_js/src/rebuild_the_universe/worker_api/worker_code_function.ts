@@ -11,10 +11,10 @@ import {
 	TimeoutClearRepeatingMessageT,
 	TimeoutSetRepeatingMessageT,
 	WorkerVerifyCallback
-} from "./constant_types.js";
-import {TimeoutWorkerTypes} from "./interfaces.js";
-import {TimerApi} from "./TimerApi.js";
-import {TimerTag} from "./TimerTag.js";
+} from "./constant_types.ts";
+import {TimeoutWorkerTypes} from "./interfaces.ts";
+import {TimerApi} from "./TimerApi.ts";
+import {TimerTag} from "./TimerTag.ts";
 
 export function worker_code_function(verify_callback?: WorkerVerifyCallback) {
 	const TIMER_SINGLE=1;

@@ -1,4 +1,4 @@
-import {ItemType} from "./ItemType.js";
+import {ItemType} from "./ItemType.ts";
 
 export type DesType={
 	items: (ItemType)[];

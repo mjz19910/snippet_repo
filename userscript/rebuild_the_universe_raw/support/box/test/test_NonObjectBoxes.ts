@@ -1,6 +1,6 @@
-import {Box} from "../mod/Box.js";
-import {G_BasicBox} from "../mod/G_BasicBox.js";
-import {ObjectBoxesExcludeImpl} from "./ObjectBoxesExcludeImpl.js";
+import {Box} from "../mod/Box.ts";
+import {G_BasicBox} from "../mod/G_BasicBox.ts";
+import {ObjectBoxesExcludeImpl} from "./ObjectBoxesExcludeImpl.ts";
 
 export type NonObjectBoxes=Exclude<ObjectBoxesExcludeImpl<Box>,G_BasicBox>;
 

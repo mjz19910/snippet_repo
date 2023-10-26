@@ -1,6 +1,6 @@
-import {R_MenuPopup,D_NotificationMenu_SectionItem} from "../d/group_D.js";
-import {R_AboutThisAd,R_ConfirmDialog,R_FancyDismissibleDialog,R_PdgBuyFlow,R_UnifiedSharePanel,R_VoiceSearchDialog,RA_Notification,R_ActiveAccountHeader,R_MultiPageMenuSection,R_SimpleMenuHeader,R_CompactLink} from "../r/group_R.js";
-import {TE_Endpoint_2,TR_MultiPageMenuSection,T_EnumStr} from "../stu/group_T.js";
+import {R_MenuPopup,D_NotificationMenu_SectionItem} from "../d/group_D.ts";
+import {R_AboutThisAd,R_ConfirmDialog,R_FancyDismissibleDialog,R_PdgBuyFlow,R_UnifiedSharePanel,R_VoiceSearchDialog,RA_Notification,R_ActiveAccountHeader,R_MultiPageMenuSection,R_SimpleMenuHeader,R_CompactLink} from "../r/group_R.ts";
+import {TE_Endpoint_2,TR_MultiPageMenuSection,T_EnumStr} from "../stu/group_T.ts";
 
 //#region Strings
 export type S_MenuStyle=T_MP_SG<"ACCOUNT"|"CREATION"|"NOTIFICATIONS"|"SYSTEM">;

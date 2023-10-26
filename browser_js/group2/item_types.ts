@@ -1,21 +1,26 @@
-import {EventListenersT} from "../modules/DebugApi/src/EventListenersT.js";
-import {T_Split} from "../../userscript/youtube_plugin_raw/support_0_mod/T_Split.mod.js";
+class ServiceWorkerContainer {}
+class Node {}
+class IDBTransaction {}
+class Document {}
+class IDBDatabase {}
+import {T_Split} from "../../userscript/youtube_plugin_raw/yt_json_types/stu/group_T.ts";
+import {EventListenersT} from "../modules/DebugApi/src/EventListenersT.ts";
 export type Split<S extends string,D extends string>=T_Split<S,D>;
 type InterceptFuncType=EventListenerOrEventListenerObject;
-type InterceptThis=[string,InterceptFuncType,any?];
+type InterceptThis=[string,InterceptFuncType,Record<never,never>?];
+type ValueType=Record<`__${typeof InjectApiStr}_namespace`,never>;
 class Socket {
-	client_id() {return 0;};
+	client_id() {return 0;}
 }
 class ListenSocket {
 	client_id=0;
 }
-let new_elevated_event_handlers: ((arg0: EventListenersT) => void)[]=[];
+const new_elevated_event_handlers: ((arg0: EventListenersT) => void)[]=[];
 const sha1_initial="781ee649";
 const post_message_connect_message_type=`ConnectOverPostMessage_${sha1_initial}` as const;
-const commit_id_sha1=/* @sha1 */"ce87fbfd";
 const InjectApiStr="inject_api";
 
-let api_debug_enabled=false;
+const api_debug_enabled=false;
 type NodeExt={
 	__id_holder: {
 		value: number;
@@ -32,9 +37,9 @@ class AddEventListenerExtension {
 	/** @private */
 	target_prototype=EventTarget.prototype;
 	window_list: Window[]=[window];
-	failed_obj: null|{v: any;}=null;
-	object_ids: WeakRef<{}>[]=[];
-	namespace_key: `__${typeof InjectApiStr}_${typeof commit_id_sha1}_namespace`=`__${InjectApiStr}_${commit_id_sha1}_namespace`;
+	failed_obj: null|{v: unknown;}=null;
+	object_ids: WeakRef<Record<never,never>>[]=[];
+	namespace_key: `__${typeof InjectApiStr}_namespace`=`__${InjectApiStr}_namespace`;
 	elevated_event_handlers: EventListenersT[]=[];
 	clear_count=0;
 	node_list: WeakRef<WeakRef<Node>[]>=new WeakRef([]);
@@ -56,7 +61,7 @@ class AddEventListenerExtension {
 		this.elevated_event_handlers.push(handler);
 	}
 	/** @private @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
-	convert_to_namespaced_string(real_value: unknown[],val: {},key: number,index: number) {
+	convert_to_namespaced_string(real_value: unknown[],val: Record<`__${typeof InjectApiStr}_namespace`,never>,key: number,index: number) {
 		if(!(this.namespace_key in val))
 			throw new Error("Unreachable");
 		if(typeof val[this.namespace_key]!=="string") {
@@ -73,7 +78,7 @@ class AddEventListenerExtension {
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
 	/** @private @returns {void} @arg {[unknown,number,unknown,...unknown[]]} real_value @arg {number} key @arg {{}|null} val */
-	args_iter_on_object(real_value: [unknown,number,unknown,...unknown[]],key: number,val: {}|null): void {
+	args_iter_on_object(real_value: [unknown,number,unknown,...unknown[]],key: number,val: ValueType|(Window&typeof globalThis&ValueType)|null): void {
 		if(val===null)
 			return;
 		if(val instanceof Socket) {
@@ -120,25 +125,25 @@ class AddEventListenerExtension {
 	}
 	/** @private @arg {[unknown, unknown, unknown[]]} list */
 	add_to_call_list_impl(list: [unknown,unknown,unknown[]]) {
-		let [target,orig_this,args]=list;
+		const [target,orig_this,args]=list;
 		/** @type {[unknown,number,unknown,...unknown[]]} */
-		let real_value: [unknown,number,unknown,...unknown[]]=[target,args.length+1,orig_this,...args];
-		for(let [key,val] of real_value.entries()) {
+		const real_value: [unknown,number,unknown,...unknown[]]=[target,args.length+1,orig_this,...args];
+		for(const [key,val] of real_value.entries()) {
 			switch(typeof val) {
-				case "object": this.args_iter_on_object(real_value,key,val); break;
-				case "function": this.args_iter_on_function(real_value,key,val); break;
+				case "object": this.args_iter_on_object(real_value,key,val as ValueType); break;
+				case "function": this.args_iter_on_function(real_value,key,val as CallableFunction&ValueType); break;
 				default: break;
 			}
 		}
 	}
-	convert_to_id_key(real_value: unknown[],key: number,val: {}|CallableFunction,namespace: string) {
+	convert_to_id_key(real_value: unknown[],key: number,val: ValueType,namespace: string) {
 		define_property_as_value(val,this.namespace_key,namespace);
 		this.convert_to_namespaced_string(real_value,val,key,this.add_object_id(val));
 	}
-	args_iter_on_function<T extends CallableFunction>(real_value: unknown[],key: number,val: T) {
+	args_iter_on_function<T extends CallableFunction&ValueType>(real_value: unknown[],key: number,val: T) {
 		this.convert_to_id_key(real_value,key,val,"function");
 	}
-	add_to_call_list(list: [any,any,any[]]) {
+	add_to_call_list(list: [unknown,unknown,unknown[]]) {
 		if(!api_debug_enabled) return;
 		if(this.failed_obj) return;
 		try {

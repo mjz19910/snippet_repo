@@ -1,5 +1,5 @@
-import {PromiseBox} from "./PromiseBox.js";
-import {VoidPromiseBox} from "./VoidPromiseBox.js";
+import {PromiseBox} from "./PromiseBox.ts";
+import {VoidPromiseBox} from "./VoidPromiseBox.ts";
 
 export type G_PromiseBox=
 	|VoidPromiseBox

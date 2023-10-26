@@ -1,5 +1,5 @@
-import {LexerBase} from "./LexerBase.js";
-import {JSParseError} from "../JSParseError.js";
+import {LexerBase} from "./LexerBase.ts";
+import {JSParseError} from "../JSParseError.ts";
 
 // https://tc39.es/ecma262/#sec-comments
 export class LexJSComments extends LexerBase {

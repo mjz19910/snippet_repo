@@ -1,5 +1,5 @@
-import {D_PlaylistUrlFormat,WatchUrlFormat} from "../yt_json_types/d/group_D.js";
-import {T_SplitOnce} from "../yt_json_types/stu/group_T.js";
+import {D_PlaylistUrlFormat,WatchUrlFormat} from "../yt_json_types/d/group_D.ts";
+import {T_SplitOnce} from "../yt_json_types/stu/group_T.ts";
 
 export type DoSearchExtract<T extends string>=
 	T extends infer C extends `/${string}`?

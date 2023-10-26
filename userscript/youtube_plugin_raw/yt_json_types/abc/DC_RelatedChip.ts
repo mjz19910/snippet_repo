@@ -1,4 +1,4 @@
-import {G_RelatedItem} from "./G_RelatedItem.js";
+import {G_RelatedItem} from "./G_RelatedItem.ts";
 
 export type DC_RelatedChip={
 	targetSectionIdentifier: "sid-wn-chips";

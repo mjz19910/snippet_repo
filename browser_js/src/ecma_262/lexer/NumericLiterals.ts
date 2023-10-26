@@ -1,8 +1,8 @@
-import {Dispatcher} from "./Dispatcher.js";
-import {is_octal_digit} from "../is_octal_digit.js";
-import {LexerBase} from "./LexerBase.js";
-import {LexReturnType} from "./LexReturnType.js";
-import {TokenType} from "../TokenType.js";
+import {Dispatcher} from "./Dispatcher.ts";
+import {is_octal_digit} from "../is_octal_digit.ts";
+import {LexerBase} from "./LexerBase.ts";
+import {LexReturnType} from "./LexReturnType.ts";
+import {TokenType} from "../TokenType.ts";
 import {is_ascii_digit} from "./is_ascii_digit";
 
 // https://tc39.es/ecma262/#sec-literals-numeric-literals

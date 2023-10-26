@@ -1,5 +1,5 @@
-import {RootTestRunner} from "./TestRunner.js";
-import {TestState} from "../TestState.js";
+import {RootTestRunner} from "./TestRunner.ts";
+import {TestState} from "../TestState.ts";
 
 export async function test_mod_execute_tests(test_arr: TestState<any[],any>): Promise<void> {
 	let test_runner=new RootTestRunner;

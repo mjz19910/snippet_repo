@@ -1,6 +1,6 @@
-import {BoxTemplate} from "../template/BoxTemplate.js";
-import {BoxWithPropertiesObjType} from "../interface/BoxWithPropertiesObjType.js";
-import {MakeRequirements} from "../../MakeRequirements.js";
+import {BoxTemplate} from "../template/BoxTemplate.ts";
+import {BoxWithPropertiesObjType} from "../interface/BoxWithPropertiesObjType.ts";
+import {MakeRequirements} from "../../MakeRequirements.ts";
 class TemplateDescription<T extends string,U extends string> {
 	_template_description: `${T}<${U}>`;
 	template_args: [U];

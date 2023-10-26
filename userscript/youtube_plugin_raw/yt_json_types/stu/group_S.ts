@@ -1,9 +1,9 @@
-import {C_ScrollToEngagementPanel} from "../abc/group_C.js";
-import {DU_Browse_Id,DU_TargetId_ShoppingPanel_EntryPoint,D_ChanLoc,D_LoggingDirectives} from "../d/group_D.js";
-import {G_EngagementPanelSectionShowCommands} from "../ghi/group_G.js";
-import {A_LoadingAccountMenu,A_LoadingNotificationsMenu} from "../nop_q/Popup.js";
-import {R_AdsEngagementPanelContent,R_ClipSection,R_ContinuationItem,R_EngagementPanelTitleHeader,R_MacroMarkersList,R_ProductList,R_SectionList,R_StructuredDescriptionContent,ToKeyValue} from "../r/group_R.js";
-import {T_ShortsSurfaceIdentifier} from "./group_T.js";
+import {C_ScrollToEngagementPanel} from "../abc/group_C.ts";
+import {DU_Browse_Id,DU_TargetId_ShoppingPanel_EntryPoint,D_ChanLoc,D_LoggingDirectives} from "../d/group_D.ts";
+import {G_EngagementPanelSectionShowCommands} from "../ghi/group_G.ts";
+import {A_LoadingAccountMenu,A_LoadingNotificationsMenu} from "../nop_q/Popup.ts";
+import {R_AdsEngagementPanelContent,R_ClipSection,R_ContinuationItem,R_EngagementPanelTitleHeader,R_MacroMarkersList,R_ProductList,R_SectionList,R_StructuredDescriptionContent,ToKeyValue} from "../r/group_R.ts";
+import {T_ShortsSurfaceIdentifier} from "./group_T.ts";
 
 //#region S
 export type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU"; actions: A_LoadingAccountMenu[];};

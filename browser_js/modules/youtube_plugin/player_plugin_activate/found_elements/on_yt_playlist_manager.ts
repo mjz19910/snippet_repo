@@ -1,5 +1,5 @@
-import {yt_playlist_manager} from "../elements/yt_playlist_manager.js";
-import {element_map} from "../event/element_map.js";
+import {yt_playlist_manager} from "../elements/yt_playlist_manager.ts";
+import {element_map} from "../event/element_map.ts";
 
 declare global {
 	interface Window {

@@ -1,5 +1,5 @@
-import {AsyncTimeoutFireNode} from "./AsyncTimeoutFireNode.js";
-import {TimeoutNode} from "./TimeoutNode.js";
+import {AsyncTimeoutFireNode} from "./AsyncTimeoutFireNode.ts";
+import {TimeoutNode} from "./TimeoutNode.ts";
 
 export class AsyncTimeoutNode extends TimeoutNode {
 	override run() {

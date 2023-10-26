@@ -1,4 +1,4 @@
-import {CustomEventTarget,CustomEventType,port_state} from "./ns.js";
+import {CustomEventTarget,CustomEventType,port_state} from "./ns.ts";
 
 export function event_yt_page_type_changed(this: CustomEventTarget,event: CustomEventType) {
 	let {detail,port}=event;

@@ -1,4 +1,4 @@
-import {TextDecoderExt} from "../zb_plugin_types/TextDecoderExt.js";
+import {TextDecoderExt} from "../zb_plugin_types/TextDecoderExt.ts";
 
 export type D_JsonReplacerArgs={
 	text_decoder: TextDecoderExt;

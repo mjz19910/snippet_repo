@@ -1,4 +1,4 @@
-import {InitialData} from "./InitialData.js";
+import {InitialData} from "./InitialData.ts";
 var yt_handlers={
 	on_initial_data<A extends () => InitialData>(a: [A,null,Parameters<A>]) {a;}
 };

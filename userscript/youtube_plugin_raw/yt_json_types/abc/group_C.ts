@@ -1,17 +1,17 @@
 //#region group_C
-import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.js";
-import {D_RunAttestation,D_TimestampWithNanos,D_UiTargetId,D_UserIdStr,T_IdTemplate} from "../d/group_D.js";
-import {DC_AddToPlaylist,DC_AdsControlFlowOpportunityReceived,DC_ChangeKeyedMarkersVisibility,DC_EngagementPanelHeaderShowNavigationButton,DC_Generic_CTP,DC_Invalidation,DC_Params,DC_ReloadContinuationItems,DC_RepeatChapter} from "../d/group_DC.js";
-import {GD_RC_SectionList,G_DC_CommandExecutor_CommandItem,G_DC_Innertube,G_DE_MutationItem,G_FollowUpOption,G_Text} from "../ghi/group_G.js";
-import {M_Browse,M_GetPdgBuyFlow,M_GetSurvey,M_Next} from "../m/M.js";
-import {P_LogItems} from "../nop_q/P_LogItems.js";
-import {R_ContinuationItem} from "../r/group_R.js";
-import {SI_VE76278_EngagementPanel} from "../stu/group_S.js";
-import {TE_Endpoint_2,TE_Endpoint_3,TE_Endpoint_Opt_3,TR_ItemSection_3,TR_SectionListItem_3_Empty,T_DC_Content,T_DC_Content_2,T_ExtractImport,T_Split} from "../stu/group_T.js";
-import {DC_RefreshPlaylist} from "../z/ZD_empty_obj.js";
-import {A_GetSurvey} from "./A.js";
-import {DC_RelatedChip} from "./DC_RelatedChip.js";
-import {D_TimeoutMs} from "./D_TimeoutMs.js";
+import {Ret_json_auto_replace_1} from "../_rtv_wrong/Ret_json_auto_replace_1.ts";
+import {D_RunAttestation,D_TimestampWithNanos,D_UiTargetId,D_UserIdStr,T_IdTemplate} from "../d/group_D.ts";
+import {DC_AddToPlaylist,DC_AdsControlFlowOpportunityReceived,DC_ChangeKeyedMarkersVisibility,DC_EngagementPanelHeaderShowNavigationButton,DC_Generic_CTP,DC_Invalidation,DC_Params,DC_ReloadContinuationItems,DC_RepeatChapter} from "../d/group_DC.ts";
+import {GD_RC_SectionList,G_DC_CommandExecutor_CommandItem,G_DC_Innertube,G_DE_MutationItem,G_FollowUpOption,G_Text} from "../ghi/group_G.ts";
+import {M_Browse,M_GetPdgBuyFlow,M_GetSurvey,M_Next} from "../m/M.ts";
+import {P_LogItems} from "../nop_q/P_LogItems.ts";
+import {R_ContinuationItem} from "../r/group_R.ts";
+import {SI_VE76278_EngagementPanel} from "../stu/group_S.ts";
+import {TE_Endpoint_2,TE_Endpoint_3,TE_Endpoint_Opt_3,TR_ItemSection_3,TR_SectionListItem_3_Empty,T_DC_Content,T_DC_Content_2,T_ExtractImport,T_Split} from "../stu/group_T.ts";
+import {DC_RefreshPlaylist} from "../z/ZD_empty_obj.ts";
+import {A_GetSurvey} from "./A.ts";
+import {DC_RelatedChip} from "./DC_RelatedChip.ts";
+import {D_TimeoutMs} from "./D_TimeoutMs.ts";
 
 //#region Commands
 export type MC_Continuation=M_Next|M_Browse;

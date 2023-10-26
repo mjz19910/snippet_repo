@@ -1,10 +1,10 @@
-import {C_ShowReloadUi} from "../abc/group_C.js";
-import {E_CreatePlaylistService} from "../e/E.js";
-import {G_LiveChatContinuationItem,G_RA_LiveChatContinuationActions,G_SectionItem} from "../ghi/group_G.js";
-import {R_CommentThread,R_CommentsHeader,R_FeedFilterChipBar,R_LiveChatHeader,R_LiveChatItemList,R_LiveChatMessageInput,R_LiveChatParticipantsList,R_LiveChatTicker,R_Message,R_RichItem} from "../r/group_R.js";
-import {SI_VE76278_EngagementPanel} from "../stu/group_S.js";
-import {DU_VideoId,D_AdSlotAndLayoutItem,D_ClientMessages,D_InvalidationId,D_LiveChatEmoji,D_TargetIdUuid,R_Button} from "./group_D.js";
-import {DE_OpportunityType} from "./group_DE.js";
+import {C_ShowReloadUi} from "../abc/group_C.ts";
+import {E_CreatePlaylistService} from "../e/E.ts";
+import {G_LiveChatContinuationItem,G_RA_LiveChatContinuationActions,G_SectionItem} from "../ghi/group_G.ts";
+import {R_CommentThread,R_CommentsHeader,R_FeedFilterChipBar,R_LiveChatHeader,R_LiveChatItemList,R_LiveChatMessageInput,R_LiveChatParticipantsList,R_LiveChatTicker,R_Message,R_RichItem} from "../r/group_R.ts";
+import {SI_VE76278_EngagementPanel} from "../stu/group_S.ts";
+import {DU_VideoId,D_AdSlotAndLayoutItem,D_ClientMessages,D_InvalidationId,D_LiveChatEmoji,D_TargetIdUuid,R_Button} from "./group_D.ts";
+import {DE_OpportunityType} from "./group_DE.ts";
 
 //#region Common data
 export type DC_Params={params: string;};

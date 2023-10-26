@@ -1,4 +1,4 @@
-export * from "../ns.js";
+export * from "../ns.ts";
 
 import {CustomEventTarget} from "./dom_observer/CustomEventTarget.js";
 import {CustomEventType} from "./dom_observer/CustomEventType.js";

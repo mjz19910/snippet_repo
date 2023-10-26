@@ -1,4 +1,4 @@
-import {ItemInfoType} from "./ItemInfoType.js";
+import {ItemInfoType} from "./ItemInfoType.ts";
 
 
 export function item_info_type_to_string(value: ItemInfoType|null) {

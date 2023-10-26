@@ -1,6 +1,6 @@
 import {readFile} from "fs/promises";
-import {r} from "./r.js";
-import {get_token_data} from "./get_token_data.js";
+import {r} from "./r.ts";
+import {get_token_data} from "./get_token_data.ts";
 
 export async function get_token_data_from_file(file_path: string) {
 	let bin_file=await readFile(r(file_path));

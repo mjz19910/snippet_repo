@@ -1,4 +1,4 @@
-import {RouteDescription} from "./RouteDescription.js";
+import {RouteDescription} from "./RouteDescription.ts";
 
 export class Route {
 	m_route_description: RouteDescription;

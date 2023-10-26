@@ -1,4 +1,4 @@
-import {T_Split} from "../../yt_json_types/stu/group_T.js";
+import {T_Split} from "../../yt_json_types/stu/group_T.ts";
 
 export function __ia_excludeKeysS<T extends string,U extends {},C extends T_Split<T,",">>(target: U,ex_keys_str: T_Split<T,","> extends any[]? T:never): {[I in Exclude<keyof U,C[number]>]: U[I];} {
 	let ex_keys: C=ex_keys_str.split(",") as C;

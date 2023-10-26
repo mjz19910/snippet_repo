@@ -1,7 +1,7 @@
-import {InstructionType} from "../instruction/InstructionType.js";
-import {Box} from "../box/Box.js";
-import {NumberBox} from "../box/NumberBox.js";
-import {StringBox} from "../../modules/rebuild_the_universe/ns.js";
+import {InstructionType} from "../instruction/InstructionType.ts";
+import {Box} from "../box/Box.ts";
+import {NumberBox} from "../box/NumberBox.ts";
+import {StringBox} from "../../modules/rebuild_the_universe/ns.ts";
 
 export class SimpleStackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;

@@ -1,4 +1,4 @@
-import {GApiType} from "./GApiType.js";
+import {GApiType} from "./GApiType.ts";
 
 declare global {
 	interface Window {

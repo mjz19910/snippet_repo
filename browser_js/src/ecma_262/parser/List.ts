@@ -1,5 +1,5 @@
-import {ListWithArray} from "./ListWithArray.js";
-import {ListWithOneItem} from "./ListWithOneItem.js";
+import {ListWithArray} from "./ListWithArray.ts";
+import {ListWithOneItem} from "./ListWithOneItem.ts";
 
 export class List<T> {
 	contents: ListWithOneItem<T[]>|ListWithArray<T>;

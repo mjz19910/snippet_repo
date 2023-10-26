@@ -1,4 +1,4 @@
-import {IterationDecisionBreak} from "./IterationDecisionBreak.js";
-import {IterationDecisionContinue} from "./IterationDecisionContinue.js";
+import {IterationDecisionBreak} from "./IterationDecisionBreak.ts";
+import {IterationDecisionContinue} from "./IterationDecisionContinue.ts";
 
 export type IterationDecision=IterationDecisionContinue|IterationDecisionBreak;

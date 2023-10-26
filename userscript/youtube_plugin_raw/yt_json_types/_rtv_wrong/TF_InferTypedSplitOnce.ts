@@ -1,6 +1,6 @@
-import {never_return} from "../ghi/dnp_wrong/never_return.js";
-import {TF_InferredSplitOnce_NB_2} from "./TF_InferredSplitOnce_NB_2.js";
-import {T_SplitOnce_NB_1} from "./T_SplitOnce_NB_1.js";
+import {never_return} from "../ghi/dnp_wrong/never_return.ts";
+import {TF_InferredSplitOnce_NB_2} from "./TF_InferredSplitOnce_NB_2.ts";
+import {T_SplitOnce_NB_1} from "./T_SplitOnce_NB_1.ts";
 
 export function TF_InferTypedSplitOnce<
 	WA extends string,S extends string,D extends string

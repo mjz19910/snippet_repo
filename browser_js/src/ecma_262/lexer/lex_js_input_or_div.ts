@@ -1,6 +1,6 @@
-import {Dispatcher} from "./Dispatcher.js";
-import {LexerStateData} from "./LexerStateData.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {Dispatcher} from "./Dispatcher.ts";
+import {LexerStateData} from "./LexerStateData.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 
 export function lex_js_input_or_div(state: LexerStateData,term_lexer: Dispatcher,str: string,res_arr: LexReturnType[]) {
 	let res=term_lexer.InputElementDiv(str,state.cur_index);

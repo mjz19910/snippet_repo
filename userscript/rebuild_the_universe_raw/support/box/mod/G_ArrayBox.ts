@@ -1,6 +1,6 @@
-import {ArrayBox} from "./ArrayBox.js";
-import {EmptyArrayBox} from "./EmptyArrayBox.js";
-import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox.js";
+import {ArrayBox} from "./ArrayBox.ts";
+import {EmptyArrayBox} from "./EmptyArrayBox.ts";
+import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox.ts";
 
 export type G_ArrayBox=
 	|ArrayBox

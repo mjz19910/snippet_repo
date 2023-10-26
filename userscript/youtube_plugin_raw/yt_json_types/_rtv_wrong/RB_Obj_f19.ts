@@ -1,4 +1,4 @@
-import {T_D32} from "./T_Data.js";
+import {T_D32} from "./T_Data.ts";
 
 export type BinaryVe=3832|3854|5754;
 export type RB_Obj_f19={

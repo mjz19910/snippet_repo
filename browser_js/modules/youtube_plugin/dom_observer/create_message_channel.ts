@@ -1,4 +1,4 @@
-import {ReadonlyMessageChannel} from "./ReadonlyMessageChannel.js";
+import {ReadonlyMessageChannel} from "./ReadonlyMessageChannel.ts";
 
 export function create_message_channel(on_port_message: (event: MessageEvent<number>) => void): Readonly<ReadonlyMessageChannel> {
 	let channel=Object.freeze(new MessageChannel());

@@ -1,9 +1,9 @@
-import {B_Hack} from "../abc/group_B.js";
-import {DE_VE3611,DE_VE3854,DE_Search,DE_VE5754,DE_VE6827,DE_VE11487,DE_VE23462,DE_ReelWatch,DE_VE42352,DE_VE96368} from "../d/group_DE.js";
-import {GM_VE37414} from "../ghi/group_G.js";
-import {M_VE3611,M_VE3854,M_Search,M_VE5754,M_VE6827,M_VE11487,M_VE23462,M_VE42352,M_VE96368} from "../m/M.js";
-import {M_VE12924} from "../r/group_R.js";
-import {TM_Gen,TE_Endpoint_3} from "../stu/group_T.js";
+import {B_Hack} from "../abc/group_B.ts";
+import {DE_VE3611,DE_VE3854,DE_Search,DE_VE5754,DE_VE6827,DE_VE11487,DE_VE23462,DE_ReelWatch,DE_VE42352,DE_VE96368} from "../d/group_DE.ts";
+import {GM_VE37414} from "../ghi/group_G.ts";
+import {M_VE3611,M_VE3854,M_Search,M_VE5754,M_VE6827,M_VE11487,M_VE23462,M_VE42352,M_VE96368} from "../m/M.ts";
+import {M_VE12924} from "../r/group_R.ts";
+import {TM_Gen,TE_Endpoint_3} from "../stu/group_T.ts";
 
 export type TM_VE<T extends number>=TM_Gen<{rootVe: T;}>;
 export type TE_VE<T extends number>=TE_Endpoint_3<"browseEndpoint",any,TM_VE<T>>;

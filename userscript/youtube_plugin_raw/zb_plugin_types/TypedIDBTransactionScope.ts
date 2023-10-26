@@ -1,4 +1,4 @@
-import {TypedIndexedDB} from "./TypedIDB.js";
+import {TypedIndexedDB} from "./TypedIDB.ts";
 
 export type TypedIDBTransactionScope={
 	tx: IDBTransaction;

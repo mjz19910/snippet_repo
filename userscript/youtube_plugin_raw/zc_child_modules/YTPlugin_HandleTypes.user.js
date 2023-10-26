@@ -13,6 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+// deno-lint-ignore-file
 let page_require=typeof require==="undefined"? __module_require__:require,delete_require=false,reset_require=false;
 if(typeof require==="undefined"||page_require!==__module_require__)
 {
@@ -60,7 +61,7 @@ class HandleTypes extends BaseService
 	assert_assume_is_type(x,_ty) {x;}
 	//#endregion
 	//#region remote service plugins
-	/** @api @public @arg {import("../zb_plugin_types/types.js").IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
+	/** @api @public @arg {import("../zb_plugin_types/types.ts").IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
 	indexed_db_createDatabaseSchema(service,old_version,db)
 	{
 		if(old_version<1)
@@ -70,13 +71,13 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region other
-	/** @arg {import("../yt_json_types/d/group_D.js").D_ProtobufObj[]} x */
+	/** @arg {import("../yt_json_types/d/group_D.ts").D_ProtobufObj[]} x */
 	tr_arr_to_obj(x)
 	{
 		if(!x) {debugger; return null;}
-		/** @private @type {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamObj} */
+		/** @private @type {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamObj} */
 		let res_obj={};
-		/** @arg {number} id @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_Param} obj */
+		/** @arg {number} id @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_Param} obj */
 		const add_obj=(id,obj) =>
 		{
 			res_obj[id]??=["v_param_arr",[]];
@@ -154,7 +155,7 @@ class HandleTypes extends BaseService
 		return this.convert_map_to_obj(x1);*/
 		return res_obj;
 	}
-	/** @arg {import("../yt_json_types/vw/group_V.js").V_ParamMapValue} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamObj|null} */
+	/** @arg {import("../yt_json_types/vw/group_V.ts").V_ParamMapValue} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamObj|null} */
 	tr_to_param_item(x)
 	{
 		if(typeof x==='string') return {0: ["v_param_arr",[["v_raw",["string",x]]]]};
@@ -183,7 +184,7 @@ class HandleTypes extends BaseService
 		debugger;
 		return null;
 	}
-	/** @arg {import("../yt_json_types/vw/group_V.js").V_ParamMapType} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamObj|null} */
+	/** @arg {import("../yt_json_types/vw/group_V.ts").V_ParamMapType} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamObj|null} */
 	tr_map_to_obj(x)
 	{
 		/** @template T @arg {T[]} x */
@@ -192,7 +193,7 @@ class HandleTypes extends BaseService
 			if(x.length!==1) return null;
 			return x[0];
 		}
-		/** @type {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamObj} */
+		/** @type {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamObj} */
 		let res={};
 		debugger;
 		for(let k of x.keys())
@@ -316,11 +317,11 @@ class HandleTypes extends BaseService
 		});
 		this.imm_wait_promise=wait_promise;
 	}
-	/** @template {number} T @arg {T} t @arg {{1:import("../yt_json_types/_rtv_wrong/T_Data.js").T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
+	/** @template {number} T @arg {T} t @arg {{1:import("../yt_json_types/_rtv_wrong/T_Data.ts").T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
 	is_tp_xx(x,t) {return x[1][0]==="v_param_arr"&&x[1][1][0][1]===t;}
-	/** @template {number} T @arg {T} t @arg {{2:import("../yt_json_types/_rtv_wrong/T_Data.js").T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
+	/** @template {number} T @arg {T} t @arg {{2:import("../yt_json_types/_rtv_wrong/T_Data.ts").T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
 	is_tp_xx_2(x,t) {return x[2][0]==="v_param_arr"&&x[2][1][0][1]===t;}
-	/** @private @arg {import("../yt_json_types/nop_q/P.js").V_BinaryTimestamp} x */
+	/** @private @arg {import("../yt_json_types/nop_q/P.ts").V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x)
 	{
 		const cf="V_BinaryTimestamp";
@@ -346,7 +347,7 @@ class HandleTypes extends BaseService
 	}
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
-	/** @template U @template {U[]} T @arg {T} x @returns {import("../support_1/Join.js").Join<{[R in keyof T]:`${T[R]}`},".f">} */
+	/** @template U @template {U[]} T @arg {T} x @returns {import("../support_1/Join.ts").Join<{[R in keyof T]:`${T[R]}`},".f">} */
 	fmt_arr(x)
 	{
 		return as(x.map(v => `${v}`).join(".f"));
@@ -369,7 +370,7 @@ class HandleTypes extends BaseService
 	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
 	//#endregion
 	//#region Renderer Templates & Binary Templates; T & TV
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_T_Attachment} cf @template {{startIndex:number;length:number;}} T @arg {T} x */
 	T_Attachment(cf,x)
 	{
 		const {startIndex,length,...y}=this.s(cf,x);
@@ -377,13 +378,13 @@ class HandleTypes extends BaseService
 		this.sm.a_primitive_num(length);
 		return y;
 	}
-	/** @private @template {number} T @arg {import("../yt_json_types/_rtv_wrong/T_Data.js").T_D32<T>} x */
+	/** @private @template {number} T @arg {import("../yt_json_types/_rtv_wrong/T_Data.ts").T_D32<T>} x */
 	T_D32(x) {return this.T_RawChild(x)[1];}
-	/** @private @template {number} T @arg {import("../yt_json_types/_rtv_wrong/T_Data.js").T_FD32<T>} x */
+	/** @private @template {number} T @arg {import("../yt_json_types/_rtv_wrong/T_Data.ts").T_FD32<T>} x */
 	T_FD32(x) {return this.T_RawChild(x)[1];}
 	/** @protected @template T @arg {["v_param_arr", [[any,any,T,any]]]} x */
 	T_VW(x) {return this.T_RawChild(x)[2];}
-	/** @protected @template {bigint} T @arg {import("../yt_json_types/_rtv_wrong/T_Data.js").T_VW_Bigint<T>} x */
+	/** @protected @template {bigint} T @arg {import("../yt_json_types/_rtv_wrong/T_Data.ts").T_VW_Bigint<T>} x */
 	T_VW_Bigint(x) {return this.T_RawChild(x)[2];}
 	/** @private @template {string} T @arg {["v_param_arr", [[any,any,any,["string",T]]]]} x */
 	TV_Str(x)
@@ -391,9 +392,9 @@ class HandleTypes extends BaseService
 		if(!x) debugger;
 		return this.T_RawChild(x)[3][1];
 	}
-	/** @protected @template T @template {string} Str @arg {import("../yt_json_types/stu/group_T.js").T_VW<T>|import("../yt_json_types/_rtv_wrong/T_Data.js").TV_Str_CS<Str>} x */
+	/** @protected @template T @template {string} Str @arg {import("../yt_json_types/stu/group_T.ts").T_VW<T>|import("../yt_json_types/_rtv_wrong/T_Data.ts").TV_Str_CS<Str>} x */
 	T_PArr_1(x) {return x[1];}
-	/** @protected @template J @template {import("../yt_json_types/stu/group_T.js").T_PArr_1<[J]>} T @arg {T} x @returns {T[1][0]} */
+	/** @protected @template J @template {import("../yt_json_types/stu/group_T.ts").T_PArr_1<[J]>} T @arg {T} x @returns {T[1][0]} */
 	T_RawChild(x)
 	{
 		if(x===void 0) {debugger; throw new Error("x is missing");}
@@ -401,7 +402,7 @@ class HandleTypes extends BaseService
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @protected @template T @arg {import("../yt_json_types/stu/group_T.js").T_Command_TP<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template T @arg {import("../yt_json_types/stu/group_T.ts").T_Command_TP<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f)
 	{
 		const cf="T_Command_TP";
@@ -410,15 +411,15 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region is_T
-	/** @arg {import("../yt_json_types/nop_q/P.js").P_EntityKey} x @template {number} T @arg {T} t @returns {x is {4:import("../yt_json_types/_rtv_wrong/T_Data.js").T_D32<T>;}} */
+	/** @arg {import("../yt_json_types/nop_q/P.ts").P_EntityKey} x @template {number} T @arg {T} t @returns {x is {4:import("../yt_json_types/_rtv_wrong/T_Data.ts").T_D32<T>;}} */
 	is_T_D32_at(x,t) {return x[4][1][0][1]===t;}
-	/** @arg {import("../yt_json_types/_rtv_wrong/T_Data.js").T_D32<number>|import("../yt_json_types/_rtv_wrong/T_Data.js").T_D64<bigint>} x @returns {x is T_D32<number>} */
+	/** @arg {import("../yt_json_types/_rtv_wrong/T_Data.ts").T_D32<number>|import("../yt_json_types/_rtv_wrong/T_Data.ts").T_D64<bigint>} x @returns {x is T_D32<number>} */
 	is_T_D32(x) {return x[1][0][0]==="v_data32";}
-	/** @arg {import("../yt_json_types/stu/group_T.js").T_VW<any>|import("../yt_json_types/_rtv_wrong/T_Data.js").TV_Str<string>} x @returns {x is T_VW<any>} */
+	/** @arg {import("../yt_json_types/stu/group_T.ts").T_VW<any>|import("../yt_json_types/_rtv_wrong/T_Data.ts").TV_Str<string>} x @returns {x is T_VW<any>} */
 	is_T_VW(x) {return x[1][0][0]==="v_child";}
 	//#endregion
 	//#region moved data methods
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_WebPlayerConfig} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_WebPlayerConfig} x */
 	D_WebPlayerConfig(x)
 	{
 		const cf="D_WebPlayerConfig";
@@ -426,13 +427,13 @@ class HandleTypes extends BaseService
 		this.sm.cq(useCobaltTvosDash,true);
 		this.D_WebPlayerActionsPorting(webPlayerActionsPorting);
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_WebPlayerActionsPorting} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_WebPlayerActionsPorting} x */
 	D_WebPlayerActionsPorting(x)
 	{
 		const cf="D_WebPlayerActionsPorting";
 		const {getSharePanelCommand,subscribeCommand,unsubscribeCommand,addToWatchLaterCommand,removeFromWatchLaterCommand,...y}=this.s(cf,x); this.g(y);
 	}
-	/** @public @arg {import("../yt_json_types/abc/group_C.js").CF_L_TP_Params} cf @arg {import("../yt_json_types/d/group_D.js").D_WatchPageUrl} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} cf @arg {import("../yt_json_types/d/group_D.ts").D_WatchPageUrl} x */
 	D_WatchPageUrl(cf,x)
 	{
 		let u1=split_string_once(x,"/")[1];
@@ -468,7 +469,7 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region Renderer Data Templates
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_M_HD} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_M_HD} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD(cf,k,x)
 	{
 		this.sm.k(cf,x);
@@ -478,7 +479,7 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region helpers
-	/** @protected @template {{}} T @arg {import("../yt_json_types/abc/group_C.js").CF_M_s} cf @arg {{} extends T?import("../yt_json_types/stu/group_T.js").T_DistributedKeysOf<T> extends []?T:never:never} x */
+	/** @protected @template {{}} T @arg {import("../yt_json_types/abc/group_C.ts").CF_M_s} cf @arg {{} extends T?import("../yt_json_types/stu/group_T.ts").T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
 	//#region static & typedefs
@@ -486,31 +487,31 @@ class HandleTypes extends BaseService
 	static {this.prototype.minimal_handler_member_2({});}
 	//#endregion
 	//#region member functions
-	/** @protected @arg {K} k @template {import("../yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
+	/** @protected @arg {K} k @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
 	w_priv(k,x)
 	{
 		if(!(k in x)) {debugger; return null;}
 		return x[k];
 	}
-	/** @protected @arg {import("../yt_json_types/abc/group_C.js").CF_M_zy} cf @template U @arg {K} k @template {import("../yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
+	/** @protected @arg {import("../yt_json_types/abc/group_C.ts").CF_M_zy} cf @template U @arg {K} k @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
 	zy(cf,k,x,f) {return this.z(this.sm.w(cf,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CF_TA_Page} cf @template T @arg {import("../yt_json_types/stu/group_T.js").T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CF_TA_Page} cf @template T @arg {import("../yt_json_types/stu/group_T.ts").T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.sm.w(cf,"page",x));}
 	//#endregion
 	//#region Action methods
-	/** @private @arg {import("../yt_json_types/abc/A.js").A_GetMultiPageMenu} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
-	/** @public @arg {import("../yt_json_types/abc/A.js").A_AccountItem} x */
+	/** @public @arg {import("../yt_json_types/abc/A.ts").A_AccountItem} x */
 	A_AccountItem(x) {this.H_("accountItem",x,this.AD_AccountItem);}
 	//#endregion
 	/** @public @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:HandleTypes,x:T)=>U} f */
 	t(x,f) {return this.t_base(x,f);}
 	//#region Renderer methods
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_VideoSecondaryInfo} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VideoSecondaryInfo} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x)
 	{
 		const cf="D_VideoSecondaryInfo";
@@ -527,7 +528,7 @@ class HandleTypes extends BaseService
 		this.sm.t(showLessCommand,x => this.sm.A_ChangeEngagementPanelVisibility(x));
 		this.t(attributedDescription,this.D_AttributedDescription);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_CommandRunItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_CommandRunItem} x */
 	D_CommandRunItem(x)
 	{
 		const cf="D_CommandRunItem";
@@ -535,7 +536,7 @@ class HandleTypes extends BaseService
 		this.C_Innertube(onTap);
 		this.t(loggingDirectives,x => this.sm.D_LoggingDirectives(x));
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_StyleRunItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_StyleRunItem} x */
 	D_StyleRunItem(x)
 	{
 		const cf="D_StyleRunItem";
@@ -556,7 +557,7 @@ class HandleTypes extends BaseService
 		this.t(fontName,x => this.save_primitive("style.font_name",x));
 		this.t(weight,x => this.save_primitive("style.weight",x));
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AttributedDescription} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AttributedDescription} x */
 	D_AttributedDescription(x)
 	{
 		const cf="D_VideoSecondaryInfo";
@@ -567,7 +568,7 @@ class HandleTypes extends BaseService
 		this.tz(attachmentRuns,this.R_AttachmentElement);
 		this.tz(decorationRuns,this.R_TextDecorator);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_AttachmentElement} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_AttachmentElement} x */
 	R_AttachmentElement(x)
 	{
 		const cf="D_VideoSecondaryInfo";
@@ -575,13 +576,13 @@ class HandleTypes extends BaseService
 		this.D_AttachmentElement(element);
 		this.save_enum(cf,"ALIGNMENT",alignment);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_TextDecorator} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_TextDecorator} x */
 	R_TextDecorator(x) {this.H_("textDecorator",x,this.R_HighlightTextDecorator);}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_HighlightTextDecorator} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_HighlightTextDecorator} x */
 	R_HighlightTextDecorator(x) {this.H_("highlightTextDecorator",x,this.D_HighlightTextDecorator);}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ExpandableVideoDescriptionBody} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ExpandableVideoDescriptionBody} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x)
 	{
 		const cf="D_ExpandableVideoDescriptionBody";
@@ -591,7 +592,7 @@ class HandleTypes extends BaseService
 		this.t(showLessText,x => this.sm.G_Text(x));
 		this.t(attributedDescriptionBodyText,this.D_AttributedDescription);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_HighlightTextDecorator} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_HighlightTextDecorator} x */
 	D_HighlightTextDecorator(x)
 	{
 		const cf="D_HighlightTextDecorator";
@@ -599,7 +600,7 @@ class HandleTypes extends BaseService
 		this.save_primitive(`${cf}.backgroundColor`,backgroundColor);
 		this.sm.cq(backgroundCornerRadius,8);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").D_AttachmentElement} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_AttachmentElement} x */
 	D_AttachmentElement(x)
 	{
 		const cf="D_AttachmentElement";
@@ -607,9 +608,9 @@ class HandleTypes extends BaseService
 		this.D_ImageType(type);
 		this.R_LayoutProperties(properties);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_LayoutProperties} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_LayoutProperties} x */
 	R_LayoutProperties(x) {this.H_("layoutProperties",x,this.D_LayoutProperties);}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").D_LayoutProperties} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_LayoutProperties} x */
 	D_LayoutProperties(x)
 	{
 		const cf="D_LayoutProperties";
@@ -625,11 +626,11 @@ class HandleTypes extends BaseService
 			this.sm.cq(width.value,14);
 		} else debugger;
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").D_ImageType} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_ImageType} x */
 	D_ImageType(x) {this.H_("imageType",x,this.D_Image);}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").D_Image} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_Image} x */
 	D_Image(x) {this.H_("image",x,this.D_Sources);}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").D_Sources} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").D_Sources} x */
 	D_Sources(x)
 	{
 		this.H_("sources",x,x => this.z(x,x =>
@@ -638,9 +639,9 @@ class HandleTypes extends BaseService
 			this.sm.cq(url,"https://www.gstatic.com/youtube/img/watch/yt_favicon.png");
 		}));
 	}
-	/** @public @arg {import("../yt_json_types/r/r_sub/r/R_BackgroundPromo.js").R_BackgroundPromo} x */
+	/** @public @arg {import("../yt_json_types/r/r_sub/r/R_BackgroundPromo.ts").R_BackgroundPromo} x */
 	R_BackgroundPromo(x) {this.H_("backgroundPromoRenderer",x,this.D_BackgroundPromo);}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_BackgroundPromo} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_BackgroundPromo} x */
 	D_BackgroundPromo(x)
 	{
 		const cf="D_LayoutProperties";
@@ -651,9 +652,9 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region G
-	/** @public @arg {import("../yt_json_types/abc/group_C.js").C_Innertube} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").C_Innertube} x */
 	C_Innertube(x) {this.H_("innertubeCommand",x,this.G_DC_Innertube);}
-	/** @private @arg {import("../yt_json_types/ghi/group_G.js").G_DC_Innertube} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").G_DC_Innertube} x */
 	G_DC_Innertube(x)
 	{
 		const cf="G_DC_Innertube"; this.sm.k(cf,x);
@@ -671,37 +672,37 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region CD & AU & C & DC
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").CD_TimedContinuation} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("timedContinuationData",x,this.DC_Timed);}
-	/** @private @arg {import("../yt_json_types/abc/A.js").AU_ChannelSwitcherPage} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_ChannelSwitcherPage} x */
 	AU_ChannelSwitcherPage(x) {this.H_("updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
-	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_GetMultiPageMenu} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("menu",x,x => this.sm.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").C_ResetChannelUnreadCount} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.sm.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
-	/** @arg {import("../yt_json_types/abc/group_C.js").C_FollowUp} x */
+	/** @arg {import("../yt_json_types/abc/group_C.ts").C_FollowUp} x */
 	C_FollowUp(x) {let [a,y]=this.sm.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_AddFollowUpSurvey} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_AddFollowUpSurvey} x */
 	DC_AddFollowUpSurvey(x)
 	{
 		const cf="DC_AddFollowUpSurvey";
 		const {followUpOptions,followUpText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_ResetChannelUnreadCount} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_ResetChannelUnreadCount} x */
 	DC_ResetChannelUnreadCount(x)
 	{
 		const cf="DC_ResetChannelUnreadCount";
 		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.sm.channelId(channelId);
 	}
-	/** @private @arg {import("../yt_json_types/abc/group_C.js").DC_Timed} x */
+	/** @private @arg {import("../yt_json_types/abc/group_C.ts").DC_Timed} x */
 	DC_Timed(x)
 	{
 		const cf="DC_Timed";
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_TimeoutMs(timeoutMs);
 	}
-	/** @private @arg {import("../yt_json_types/abc/D_TimeoutMs.js").D_TimeoutMs} x */
+	/** @private @arg {import("../yt_json_types/abc/D_TimeoutMs.ts").D_TimeoutMs} x */
 	D_TimeoutMs(x)
 	{
 		switch(x)
@@ -713,7 +714,7 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region E & M & GM & DE
-	/** @public @arg {import("../yt_json_types/d/group_DE.js").DE_SuperThanksSelectedTier} x */
+	/** @public @arg {import("../yt_json_types/d/group_DE.ts").DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x)
 	{
 		const cf="DE_SuperThanksSelectedTier";
@@ -723,11 +724,11 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region B
-	/** @public @arg {import("../yt_json_types/abc/group_B.js").B_HrefUrl} x */
+	/** @public @arg {import("../yt_json_types/abc/group_B.ts").B_HrefUrl} x */
 	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.ps.parse_url("B_HrefUrl.url",x));}
 	//#endregion
 	//#region D
-	/** @arg {Omit<Omit<Omit<import("../yt_json_types/d/group_D.js").D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
+	/** @arg {Omit<Omit<Omit<import("../yt_json_types/d/group_D.ts").D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x)
 	{
 		const cf="D_Microformat_Other";
@@ -741,9 +742,9 @@ class HandleTypes extends BaseService
 		this.tz(availableCountries,x => this.sm.a_primitive_str(x));
 		this.z(linkAlternates,this.B_HrefUrl);
 	}
-	/** @protected @template T @template {string} U @arg {import("../yt_json_types/d/group_D.js").D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template T @template {string} U @arg {import("../yt_json_types/d/group_D.ts").D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
-	/** @protected @arg {import("../yt_json_types/d/group_D.js").D_MenuServiceItem<{}>} x */
+	/** @protected @arg {import("../yt_json_types/d/group_D.ts").D_MenuServiceItem<{}>} x */
 	D_MenuServiceItem(x)
 	{
 		const cf="D_MenuServiceItem";
@@ -755,14 +756,14 @@ class HandleTypes extends BaseService
 	selector={cache: [],new_: []};
 	/** @type {{cache:string[];new_:string[]}} */
 	partition={cache: [],new_: []};
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_GoogleVideoHostPartition} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_GoogleVideoHostPartition} x */
 	D_GoogleVideoHostPartition(x)
 	{
 		const cf="google_video";
 		const {partition,selector}=x;
 		this.save_primitive(`${cf}.partition`,partition);
 		this.save_primitive(`${cf}.selector`,selector);
-		/** @type {import("../yt_json_types/d/group_D.js").G_GV_0} */
+		/** @type {import("../yt_json_types/d/group_D.ts").G_GV_0} */
 		// cSpell:ignoreRegExp /"(5u|qx|vg)[a-z]{3}"/
 		switch(partition)
 		{
@@ -821,7 +822,7 @@ class HandleTypes extends BaseService
 				if(!this.partition.cache.includes(partition)) this.partition.cache.push(partition);
 				break;
 		}
-		/** @type {import("../yt_json_types/d/group_D.js").G_GV_1} */
+		/** @type {import("../yt_json_types/d/group_D.ts").G_GV_1} */
 		switch(selector)
 		{
 			default: {
@@ -878,7 +879,7 @@ class HandleTypes extends BaseService
 		const rtf=this.get_rtf_lang(lang);
 		return rtf.format(Math.floor(deltaSeconds/divisor),units[unitIndex]);
 	}
-	/** @private @arg {import("../yt_json_types/ghi/group_G.js").D_VideoPlaybackShape_S_Params} x */
+	/** @private @arg {import("../yt_json_types/ghi/group_G.ts").D_VideoPlaybackShape_S_Params} x */
 	D_VideoPlaybackShape_S_Params(x)
 	{
 		const cf1="D_VideoPlaybackShape_S_Params",cf2="video_playback.api_url"; cf2;
@@ -929,7 +930,7 @@ class HandleTypes extends BaseService
 			this.sm.a_primitive_num(lmt_);
 		});
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape_LS_Params} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape_LS_Params} x */
 	D_VideoPlaybackShape_LS_Params(x)
 	{
 		const cf1="D_VideoPlaybackShape_LS_Params",cf2="video_playback.api_url"; cf2;
@@ -965,7 +966,7 @@ class HandleTypes extends BaseService
 			this.sm.a_primitive_num(x3);
 		}
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape_Other} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape_Other} x */
 	D_VideoPlaybackShape_Other(x)
 	{
 		const cf1="D_VideoPlaybackShape_Other",cf2="video_playback.api_url";
@@ -987,7 +988,7 @@ class HandleTypes extends BaseService
 		}
 		this.t(gcr,x => this.sm.cq(x,"ca"));
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape} uv */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape} uv */
 	D_VideoPlaybackShape(uv)
 	{
 		const cf1="D_VideoPlaybackShape";
@@ -996,7 +997,7 @@ class HandleTypes extends BaseService
 		this.D_VideoPlaybackShape_LS_Params(ls);
 		this.D_VideoPlaybackShape_Other(y);
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_PlayerConfig} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_PlayerConfig} x */
 	D_PlayerConfig(x)
 	{
 		const cf="D_PlayerConfig";
@@ -1009,7 +1010,7 @@ class HandleTypes extends BaseService
 		this.D_WebPlayerConfig(webPlayerConfig);
 		this.t(inlinePlaybackConfig,this.D_InlinePlaybackConfig);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_LivePlayerConfig} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_LivePlayerConfig} x */
 	D_LivePlayerConfig(x)
 	{
 		const cf="D_LivePlayerConfig";
@@ -1032,7 +1033,7 @@ class HandleTypes extends BaseService
 		if(x===nv-tol) return true;
 		return false;
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_VideoDetails} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_VideoDetails} x */
 	D_VideoDetails(x)
 	{
 		const cf="D_VideoDetails";
@@ -1062,13 +1063,13 @@ class HandleTypes extends BaseService
 		this.sm.a_primitive_bool(isLiveContent);
 		this.t(isPostLiveDvr,x => this.sm.cq(x,true));
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_StartSeconds} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_StartSeconds} x */
 	D_StartSeconds(x) {this.sm.y("D_StartSeconds","startSeconds",x,this.sm.a_primitive_num);}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_StreamSelectionConfig} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_StreamSelectionConfig} x */
 	D_StreamSelectionConfig(x) {this.sm.y("D_StreamSelectionConfig","maxBitrate",x,this.sm.visit_number_template);}
 	//#endregion
 	//#region RS & RSG & RSL & REG & RSW
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_AccountMenu} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_AccountMenu} x */
 	RS_AccountMenu(x)
 	{
 		const cf="RS_AccountMenu";
@@ -1079,7 +1080,7 @@ class HandleTypes extends BaseService
 			return null;
 		});
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_UpdateMetadata} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_UpdateMetadata} x */
 	RS_UpdateMetadata(x)
 	{
 		const cf="RS_UpdateMetadata";
@@ -1095,7 +1096,7 @@ class HandleTypes extends BaseService
 			console.log(x);
 		});
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Search} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Search} x */
 	RS_Search(x)
 	{
 		const cf="RS_Search";
@@ -1110,7 +1111,7 @@ class HandleTypes extends BaseService
 		});
 		this.sm.targetId(cf,targetId);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_ReelWatchSequence} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x)
 	{
 		const cf="RS_ReelWatchSequence";
@@ -1119,14 +1120,14 @@ class HandleTypes extends BaseService
 		this.tz(prevEntries,x => this.T_Command_TP(x,x => this.x.get("x_VE37414").E_VE37414_ReelWatch(x)));
 		this.t(continuationEndpoint,x => this.xr.C_Continuation(x));
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_GetLiveChat} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_GetLiveChat} x */
 	RS_GetLiveChat(x)
 	{
 		const cf="RS_GetLiveChat";
 		const {responseContext,continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_LiveChat(a1);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Next} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Next} x */
 	RS_Next(x)
 	{
 		const cf="RS_Next";
@@ -1142,7 +1143,7 @@ class HandleTypes extends BaseService
 		this.t(videoReporting,x => this.xr.R_ReportFormModal(x));
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_AccountsList} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_AccountsList} x */
 	RS_AccountsList(x)
 	{
 		const cf="RS_AccountsList";
@@ -1150,21 +1151,21 @@ class HandleTypes extends BaseService
 		this.sm.G_Text(selectText);
 		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_SetSetting} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_SetSetting} x */
 	RS_SetSetting(x)
 	{
 		const cf="RS_SetSetting";
 		const {responseContext,settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(settingItemId!=="407") debugger;
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Feedback} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Feedback} x */
 	RS_Feedback(x)
 	{
 		const cf="RS_Feedback";
 		const {responseContext,feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(feedbackResponses,x => this.xr.D_FeedbackResponseProcessedStatus(x));
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_AttGet} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_AttGet} x */
 	RS_AttGet(x)
 	{
 		const cf="RS_AttGet";
@@ -1172,14 +1173,14 @@ class HandleTypes extends BaseService
 		this.sm.a_primitive_str(challenge);
 		this.xr.D_AttBgChallenge(bgChallenge);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Guide} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Guide} x */
 	RS_Guide(x)
 	{
 		const cf="RS_Guide";
 		const {responseContext,items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,x => this.xr.G_GuideSectionItem(x));
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_WatchReelItem} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_WatchReelItem} x */
 	RS_WatchReelItem(x)
 	{
 		const cf="RS_WatchReelItem";
@@ -1191,7 +1192,7 @@ class HandleTypes extends BaseService
 		this.sm.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,x => this.xm.R_EngagementPanelSectionList(x));
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSG_Survey} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSG_Survey} x */
 	RSG_Survey(x)
 	{
 		const cf="RSG_Survey";
@@ -1204,7 +1205,7 @@ class HandleTypes extends BaseService
 		f.call(this,y);
 		return popup;
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSG_PdgBuyFlow} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x)
 	{
 		const cf="RSG_PdgBuyFlow";
@@ -1217,13 +1218,13 @@ class HandleTypes extends BaseService
 		if("pdgBuyFlowRenderer" in pr) {this.xr.R_PdgBuyFlow(pr);}
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSG_SearchSuggestions} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x)
 	{
 		const cf="RSG_SearchSuggestions";
 		const {responseContext,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSG_Transcript} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSG_Transcript} x */
 	RSG_Transcript(x)
 	{
 		const cf="RSG_Transcript";
@@ -1233,7 +1234,7 @@ class HandleTypes extends BaseService
 			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
 		});
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSL_Like} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSL_Like} x */
 	RSL_Like(x)
 	{
 		const cf="RSL_Like";
@@ -1244,7 +1245,7 @@ class HandleTypes extends BaseService
 			return null;
 		});
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSL_Dislike} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSL_Dislike} x */
 	RSL_Dislike(x)
 	{
 		const cf="RSL_Dislike";
@@ -1258,7 +1259,7 @@ class HandleTypes extends BaseService
 		let [r1]=ac;
 		this.z(r1,this.g);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSL_RemoveLike} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSL_RemoveLike} x */
 	RSL_RemoveLike(x)
 	{
 		const cf="RSL_RemoveLike";
@@ -1269,14 +1270,14 @@ class HandleTypes extends BaseService
 			return null;
 		}));
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").REG_DatasyncIds} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").REG_DatasyncIds} x */
 	REG_DatasyncIds(x)
 	{
 		const cf="REG_DatasyncIds";
 		const {responseContext,datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(datasyncIds,x => this.sm.a_primitive_str(x));
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").REG_AccountSwitcher} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").REG_AccountSwitcher} x */
 	REG_AccountSwitcher(x)
 	{
 		const cf="REG_AccountSwitcher";
@@ -1286,24 +1287,24 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region A & AU
-	/** @private @arg {import("../yt_json_types/abc/A.js").AU_Description} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_Description} x */
 	AU_Description(x)
 	{
 		const cf="AU_Description";
 		this.y(cf,"updateDescriptionAction",x,this.AD_Description);
 	}
-	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_Description} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_Description} x */
 	AD_Description(x)
 	{
 		const cf="AD_Description";
 		const {description,...y}=this.s(cf,x); this.g(y);
 		this.sm.G_Text(description);
 	}
-	/** @private @arg {import("../yt_json_types/abc/A.js").AU_Title} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_Title} x */
 	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.sm.y("UA_TitleData","title",x,this.sm.G_Text));}
-	/** @private @arg {import("../yt_json_types/abc/A.js").AU_DateText} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_DateText} x */
 	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.sm.y("UA_DateTextData","dateText",x,this.sm.G_Text));}
-	/** @private @arg {import("../yt_json_types/abc/A.js").AU_ToggleButtonText} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_ToggleButtonText} x */
 	AU_ToggleButtonText(x)
 	{
 		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 =>
@@ -1315,9 +1316,9 @@ class HandleTypes extends BaseService
 			this.sm.G_Text(toggledText);
 		});
 	}
-	/** @private @arg {import("../yt_json_types/abc/A.js").AU_Viewership} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_Viewership} x */
 	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.sm.y("AU_ViewershipData","viewCount",x,this.sm.R_VideoViewCount));}
-	/** @private @arg {import("../yt_json_types/abc/A.js").AU_EngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AU_EngagementPanel} x */
 	AU_EngagementPanel(x)
 	{
 		const cf="AU_EngagementPanel";
@@ -1325,7 +1326,7 @@ class HandleTypes extends BaseService
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
 
 	}
-	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_UpdateEngagementPanel} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_UpdateEngagementPanel} x */
 	AD_UpdateEngagementPanel(x)
 	{
 		const cf="AD_UpdateEngagementPanel";
@@ -1335,9 +1336,9 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region Continuation [RC]
-	/** @private @arg {import("../yt_json_types/r/group_R.js").RC_PlaylistPanel} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").RC_PlaylistPanel} x */
 	RC_PlaylistPanel(x) {this.H_("playlistPanelContinuation",x,this.g);}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").RC_LiveChat} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("liveChatContinuation",x,this.DC_LiveChat);}
 	//#endregion
 	//#region Misc
@@ -1357,7 +1358,7 @@ class HandleTypes extends BaseService
 		let tagged_obj=new UrlEncodedTag(x,tag);
 		return as(tagged_obj);
 	}
-	/** @template {keyof import("../yt_json_types/ghi/group_G.js").D_UrlInfoMap} K @arg {K} k @arg {import("../yt_json_types/ghi/group_G.js").D_UrlInfoMap[K]["url"]} x @returns {import("../yt_json_types/ghi/group_G.js").D_UrlInfoMap[K]} */
+	/** @template {keyof import("../yt_json_types/ghi/group_G.ts").D_UrlInfoMap} K @arg {K} k @arg {import("../yt_json_types/ghi/group_G.ts").D_UrlInfoMap[K]["url"]} x @returns {import("../yt_json_types/ghi/group_G.ts").D_UrlInfoMap[K]} */
 	getInfoForUrl(x,k)
 	{
 		switch(k)
@@ -1367,7 +1368,7 @@ class HandleTypes extends BaseService
 				if("_tag" in parsed_url) throw new Error();
 				let parsed_params=this.parse_url_search_params(parsed_url.search);
 				if(!("q" in parsed_params)) {debugger; throw new Error();}
-				/** @type {import("../yt_json_types/ghi/group_G.js").GU_YoutubeUrlRedirect_Info} */
+				/** @type {import("../yt_json_types/ghi/group_G.ts").GU_YoutubeUrlRedirect_Info} */
 				let wt={
 					url: x,
 					encoded_params: {q: this.make_str_tag(parsed_params.q,"EncodedURIComponent"),}
@@ -1401,13 +1402,13 @@ class HandleTypes extends BaseService
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamObj} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_BinaryTimestamp|import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_VW_2|null} */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamObj} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_BinaryTimestamp|import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_VW_2|null} */
 	replace_bin_binary_ts(s,x)
 	{
 		if(!(1 in x&&2 in x&&3 in x)) return null;
 		let f1=i(x[1]); let f2=i(x[2]); let f3=i(x[3]);
 		let kk=this.get_keys_of(x);
-		/** @type {import("../yt_json_types/nop_q/P.js").V_BinaryTimestamp} */
+		/** @type {import("../yt_json_types/nop_q/P.ts").V_BinaryTimestamp} */
 		if(f1&&f2&&f3&&f1[0]==="v_data32"&&f2[0]==="v_data_fixed32"&&f3[0]==="v_data_fixed32"&&this.eq_keys(kk,[1,2,3]))
 		{
 			return `TYPE::T_VW<V_BinaryTimestamp>`;
@@ -1415,10 +1416,10 @@ class HandleTypes extends BaseService
 		let gen_json=this.gen_typedef_bin_json(s,x);
 		console.log("maybe_handle_bin.do_V_BinaryTimestamp",x,gen_json);
 		return `TYPE::T_VW_BinTs<${gen_json},"json">`;
-		/** @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamArrBox} x */
+		/** @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamArrBox} x */
 		function i(x) {if(x[1].length!==1) return null; return x[1][0];}
 	}
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamObj} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_ShortTimestamp|null} */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamObj} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_ShortTimestamp|null} */
 	replace_bin_short_ts(s,x)
 	{
 		if(!(1 in x&&2 in x&&3 in x)) return null;
@@ -1431,7 +1432,7 @@ class HandleTypes extends BaseService
 			let kk=this.get_keys_of(x);
 			if(this.eq_keys(kk,[1,2,3]))
 			{
-				/** @type {import("../yt_json_types/nop_q/P.js").V_ShortTimestamp} */
+				/** @type {import("../yt_json_types/nop_q/P.ts").V_ShortTimestamp} */
 				let bts={...x,1: ["v_param_arr",[f1]],2: ["v_param_arr",[f2]]}; bts;
 				return `TYPE::T_VW<V_ShortTimestamp>`;
 			}
@@ -1440,7 +1441,7 @@ class HandleTypes extends BaseService
 		console.log("maybe_handle_bin.do_V_ShortTimestamp",x,gen_json);
 		return null;
 	};
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_Param_Child} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_child|import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_VW_2} */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_Param_Child} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_child|import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_VW_2} */
 	v_param_2_child(s,x)
 	{
 		const [,binary_arr,obj]=x;
@@ -1461,15 +1462,15 @@ class HandleTypes extends BaseService
 		}
 		return `TYPE::T_VW_Child<"${decoded_string}","string">`;
 	}
-	/** @arg {[type:"v_data32",value: number]} x @returns {import("../yt_json_types/d/group_D.js").RetParam_D32} */
+	/** @arg {[type:"v_data32",value: number]} x @returns {import("../yt_json_types/d/group_D.ts").RetParam_D32} */
 	v_param_2_D32(x) {return `TYPE::T_D32<${x[1]}>`;}
-	/** @arg {[type:"v_data64",raw:number[],value: bigint]} x @returns {import("../yt_json_types/d/group_D.js").RetParam_D64} */
+	/** @arg {[type:"v_data64",raw:number[],value: bigint]} x @returns {import("../yt_json_types/d/group_D.ts").RetParam_D64} */
 	v_param_2_D64(x) {return `TYPE::T_D64<${x[2]}n>`;}
-	/** @arg {[type:"v_data_fixed32",value: number]} x @returns {import("../yt_json_types/d/group_D.js").RetParam_FD32} */
+	/** @arg {[type:"v_data_fixed32",value: number]} x @returns {import("../yt_json_types/d/group_D.ts").RetParam_FD32} */
 	v_param_2_FD32(x) {return `TYPE::T_FD32<${x[1]}>`;}
-	/** @arg {[type:"v_data_fixed64",value: bigint]} x @returns {import("../yt_json_types/d/group_D.js").RetParam_FD64} */
+	/** @arg {[type:"v_data_fixed64",value: bigint]} x @returns {import("../yt_json_types/d/group_D.ts").RetParam_FD64} */
 	v_param_2_FD64(x) {return `TYPE::T_FD64<${x[1]}n>`;};
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_Param_Raw} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_raw} */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_Param_Raw} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_raw} */
 	v_param_2_raw(s,x)
 	{
 		switch(x[1][0])
@@ -1481,9 +1482,9 @@ class HandleTypes extends BaseService
 		let obj_json=this.gen_typedef_bin_json(s,x[1][1]);
 		return `TYPE::T_VW_R<"${x[1][0]}",${obj_json}>`;
 	};
-	/** @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_Param_D64} x @returns {import("../yt_json_types/d/group_D.js").RetParam_VW_Bigint} */
+	/** @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_Param_D64} x @returns {import("../yt_json_types/d/group_D.ts").RetParam_VW_Bigint} */
 	param_vw_bigint(x) {return `TYPE::T_VW_Bigint<${x[2]}n>`;}
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_Param_RawChild} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_raw_child} */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_Param_RawChild} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_raw_child} */
 	v_param_rc_def(s,x)
 	{
 		let gen_json_binary_arr=this.gen_typedef_bin_json(s,x[1]);
@@ -1498,7 +1499,7 @@ class HandleTypes extends BaseService
 		}
 		return `TYPE::["raw_child",${gen_json_binary_arr},${obj_json},${raw_json}]`;
 	};
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_Param_RawChild} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").RetParam_raw_child} */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_Param_RawChild} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").RetParam_raw_child} */
 	v_param_2_raw_child(s,x)
 	{
 		let x1=x[3];
@@ -1508,7 +1509,7 @@ class HandleTypes extends BaseService
 			case "string": return `TYPE::T_RC_Str<"${x1[1]}">`;
 		}
 	};
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_Param} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamItemFiltered} */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_Param} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamItemFiltered} */
 	v_param_item(s,x)
 	{
 		switch(x[0])
@@ -1529,7 +1530,7 @@ class HandleTypes extends BaseService
 			case "v_param_arr": return ["f_param_arr",x[1]];
 		}
 	}
-	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamArrBox} x */
+	/** @arg {JsonReplacerState} s @arg {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamArrBox} x */
 	v_param_arr(s,x)
 	{
 		let x1=x[1];
@@ -1620,7 +1621,7 @@ class HandleTypes extends BaseService
 				}
 				return `TYPE::T_Tuple_1<${this.gen_typedef_bin_json(s,x[0])}>`;
 			}
-			/** @type {import("../yt_json_types/d/group_D.js").D_ProtobufObj|import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamArrBox} */
+			/** @type {import("../yt_json_types/d/group_D.ts").D_ProtobufObj|import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamArrBox} */
 			let x3=as(x);
 			switch(x3[0])
 			{
@@ -1644,7 +1645,7 @@ class HandleTypes extends BaseService
 			}
 			let fx=x[0];
 			console.log("[maybe_handle_bin.do_fx]",fx);
-			/** @type {(import("../yt_json_types/d/group_D.js").D_ProtobufObj|import("../yt_json_types/_rtv_wrong/V_ParamItem.js").V_ParamArrBox)[]} */
+			/** @type {(import("../yt_json_types/d/group_D.ts").D_ProtobufObj|import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").V_ParamArrBox)[]} */
 			let x_t1=x;
 			if(x_t1[0][0]==="child")
 			{
@@ -1718,7 +1719,7 @@ class HandleTypes extends BaseService
 			case "bigint": return `TYPE::V_Bigint<${x}n>`;
 		}
 	}
-	/** @private @arg {JsonReplacerState} s @arg {object} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.js").Ret_gen_json} */
+	/** @private @arg {JsonReplacerState} s @arg {object} x @returns {import("../yt_json_types/_rtv_wrong/V_ParamItem.ts").Ret_gen_json} */
 	gen_typedef_bin_json(s,x)
 	{
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,s),"\t");
@@ -1771,7 +1772,7 @@ class HandleTypes extends BaseService
 	}
 	//#endregion
 	//#region More misc
-	/** @protected @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {import("../yt_json_types/abc/group_C.js").CF_M_H_d} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
+	/** @protected @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{[U in string]:[T];}} T @arg {import("../yt_json_types/abc/group_C.ts").CF_M_H_d} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f)
 	{
 		if(!x) {debugger; return null;}
@@ -1787,7 +1788,7 @@ class HandleTypes extends BaseService
 	/**
 	 * @protected
 	 * @template V @template {PropertyKey} K @template {{[U in K]:[T];}} T
-	 * @param {K} k @param {import("../yt_json_types/abc/group_C.js").CF_H_a} cf @param {T} x @param {(this:this,x:T[K][0])=>V} f
+	 * @param {K} k @param {import("../yt_json_types/abc/group_C.ts").CF_H_a} cf @param {T} x @param {(this:this,x:T[K][0])=>V} f
 	 * @returns {[y,ret]}
 	 */
 	H_a(cf,k,x,f,save=false)
@@ -1799,7 +1800,7 @@ class HandleTypes extends BaseService
 	}
 	/** @type {string[]} */
 	_continuation_logged_str=[];
-	/** @public @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.js").NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
+	/** @public @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../yt_json_types/nop_q/Namespaces.ts").NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x)
 	{
 		const [sec,raw_id]=x; if(sec!=="shorts") debugger;
@@ -1809,7 +1810,7 @@ class HandleTypes extends BaseService
 	cache_playlist_index=[];
 	log_start_radio=false;
 	log_playlist_index=false;
-	/** @public @arg {import("../yt_json_types/abc/group_C.js").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.js").T_SplitOnce<import("../support_2/ParseUrlWithSearchIn.js").ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} root @arg {Extract<import("../yt_json_types/stu/group_T.ts").T_SplitOnce<import("../support_2/ParseUrlWithSearchIn.ts").ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url_url_arr(root,x)
 	{
 		root;
@@ -1889,7 +1890,7 @@ class HandleTypes extends BaseService
 			return;
 		}
 	}
-	/** @public @arg {[import("../yt_json_types/d/group_D.js").DU_VE3832_PreconnectUrl]} x */
+	/** @public @arg {[import("../yt_json_types/d/group_D.ts").DU_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x)
 	{
 		if(x.length!==1) debugger;
@@ -1898,7 +1899,7 @@ class HandleTypes extends BaseService
 	/** @type {string[]} */
 	logged_hosts=[];
 	log_googlevideo_host=false;
-	/** @private @template {import("../yt_json_types/r/r_sub/r/D_GoogleVideoPathname.js").D_GoogleVideoPathname} T @arg {import("../yt_json_types/r/r_sub/r/D_GoogleVideoHostPartitionRet.js").D_GoogleVideoHostPartitionRet<T>} x */
+	/** @private @template {import("../yt_json_types/r/r_sub/r/D_GoogleVideoPathname.ts").D_GoogleVideoPathname} T @arg {import("../yt_json_types/r/r_sub/r/D_GoogleVideoHostPartitionRet.ts").D_GoogleVideoHostPartitionRet<T>} x */
 	D_GoogleVideoHostPartitionRet(x)
 	{
 		if(this.log_googlevideo_host)
@@ -1910,7 +1911,7 @@ class HandleTypes extends BaseService
 			Promise.resolve().then(() => this.logged_hosts.length=0);
 		}
 	}
-	/** @private @template {import("../support_1/url_parse/UrlParse.js").UrlParse<import("../yt_json_types/d/group_D.js").GU_GoogleVideoUrl>} T @arg {T} x @returns {import("../yt_json_types/r/r_sub/r/D_GoogleVideoHostPartitionRet.js").D_GoogleVideoHostPartitionRet<T["pathname"]>} */
+	/** @private @template {import("../support_1/url_parse/UrlParse.ts").UrlParse<import("../yt_json_types/d/group_D.ts").GU_GoogleVideoUrl>} T @arg {T} x @returns {import("../yt_json_types/r/r_sub/r/D_GoogleVideoHostPartitionRet.ts").D_GoogleVideoHostPartitionRet<T["pathname"]>} */
 	get_google_host_parts(x)
 	{
 		/** @type {`${"r"|"rr"}${number}---sn-${string}n${string}.googlevideo.com`} */
@@ -1941,7 +1942,7 @@ class HandleTypes extends BaseService
 			partitioned,
 		};
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").DU_VE3832_PreconnectUrl} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").DU_VE3832_PreconnectUrl} x */
 	RE_D_VE3832_PreconnectUrl(x)
 	{
 		let pu=this._convert_url_to_obj(x);
@@ -1949,11 +1950,11 @@ class HandleTypes extends BaseService
 		if(parts.path!=="/generate_204") debugger;
 		this.D_GoogleVideoHostPartitionRet(parts);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_AttLog_RC} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD("RS_AttLog_RC","responseContext",x);}
-	/** @type {Map<string,((y:import("../yt_json_types/abc/group_C.js").C_UpdateToggleButtonState)=>void)>} */
+	/** @type {Map<string,((y:import("../yt_json_types/abc/group_C.ts").C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Channel} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Channel} x */
 	RS_Channel(x)
 	{
 		const cf="RS_Channel";
@@ -1969,7 +1970,7 @@ class HandleTypes extends BaseService
 		this.tz(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
 		this.t(cacheMetadata,x => this.sm.D_Cache_MD(x));
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSG_SharePanel} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSG_SharePanel} x */
 	RSG_SharePanel(x)
 	{
 		const cf="RSG_SharePanel";
@@ -1982,7 +1983,7 @@ class HandleTypes extends BaseService
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Subscribe} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Subscribe} x */
 	RS_Subscribe(x)
 	{
 		const cf="RS_Subscribe";
@@ -1991,9 +1992,9 @@ class HandleTypes extends BaseService
 		this.xm.R_SubscriptionNotificationToggleButton(newNotificationButton);
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_UpdateChannelSwitcherPage} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,x => this.xr.R_ChannelSwitcherPage(x));}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RS_Unsubscribe} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RS_Unsubscribe} x */
 	RS_Unsubscribe(x)
 	{
 		const cf="RS_Unsubscribe";
@@ -2005,7 +2006,7 @@ class HandleTypes extends BaseService
 		});
 		this.sm.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_DC.js").DC_LiveChat} x */
+	/** @private @arg {import("../yt_json_types/d/group_DC.ts").DC_LiveChat} x */
 	DC_LiveChat(x)
 	{
 		const cf="DC_LiveChat";
@@ -2022,7 +2023,7 @@ class HandleTypes extends BaseService
 		this.t(popoutMessage,x => this.xr.R_Message(x));
 		this.t(viewerName,x => this.sm.a_primitive_str(x));
 	}
-	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_AccountItem} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_AccountItem} x */
 	AD_AccountItem(x)
 	{
 		const cf="AD_AccountItem";
@@ -2036,7 +2037,7 @@ class HandleTypes extends BaseService
 		this.sm.G_Text(accountByline);
 		this.sm.G_Text(channelHandle);
 	}
-	/** @arg {import("../yt_json_types/stu/group_S.js").S_VideoGoodPutShape} x */
+	/** @arg {import("../yt_json_types/stu/group_S.ts").S_VideoGoodPutShape} x */
 	S_VideoGoodPutShape(x)
 	{
 		const cf="S_VideoGoodPutShape";
@@ -2059,7 +2060,7 @@ class HandleTypes extends BaseService
 		this.parse_signature(signature);
 		this.save_primitive(`${cf}.key`,key);
 	}
-	/** @private @arg {`sn-${string}n${string}`} x @returns {import("../yt_json_types/d/group_D.js").D_GoogleVideoHostPartition} */
+	/** @private @arg {`sn-${string}n${string}`} x @returns {import("../yt_json_types/d/group_D.ts").D_GoogleVideoHostPartition} */
 	get_host_partition(x)
 	{
 		let parts=this.get_gv_parts_impl(x);
@@ -2071,7 +2072,7 @@ class HandleTypes extends BaseService
 		this.D_GoogleVideoHostPartition(partition);
 		return partition;
 	}
-	/** @private @arg {`sn-${string}n${string}`} x @returns {["sn","-",import("../yt_json_types/d/group_D.js").G_GV_0,"n",import("../yt_json_types/d/group_D.js").G_GV_1]} */
+	/** @private @arg {`sn-${string}n${string}`} x @returns {["sn","-",import("../yt_json_types/d/group_D.ts").G_GV_0,"n",import("../yt_json_types/d/group_D.ts").G_GV_1]} */
 	get_gv_parts_impl(x)
 	{
 		let ss=split_string(x,"-")[1];
@@ -2079,8 +2080,8 @@ class HandleTypes extends BaseService
 		let r1=ss.slice(0,idx);
 		let r2=ss.slice(idx+1);
 		if(ss[idx]!=="n") debugger;
-		this.assert_assume_is_type(r1,/**@returns {import("../yt_json_types/d/group_D.js").G_GV_0} */() => {throw new Error();});
-		this.assert_assume_is_type(r2,/**@returns {import("../yt_json_types/d/group_D.js").G_GV_1} */() => {throw new Error();});
+		this.assert_assume_is_type(r1,/**@returns {import("../yt_json_types/d/group_D.ts").G_GV_0} */() => {throw new Error();});
+		this.assert_assume_is_type(r2,/**@returns {import("../yt_json_types/d/group_D.ts").G_GV_1} */() => {throw new Error();});
 		return ["sn","-",r1,"n",r2];
 	}
 	/** @template T @arg {T} trg @arg {T} src @arg {keyof T} k */
@@ -2088,10 +2089,10 @@ class HandleTypes extends BaseService
 	{
 		trg[k]=src[k];
 	}
-	/** @private @template {"sparams"|"lsparams"} K @arg {(keyof import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape)[]} key_list @arg {import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape} x @arg {import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape[K]} params_list @arg {K} target_src_key */
+	/** @private @template {"sparams"|"lsparams"} K @arg {(keyof import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape)[]} key_list @arg {import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape} x @arg {import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape[K]} params_list @arg {K} target_src_key */
 	extract_sparams(key_list,x,params_list,target_src_key)
 	{
-		/** @type {{[U in import("../yt_json_types/stu/group_T.js").T_Split<typeof params_list>[number]]:import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape[U&keyof import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape]}} */
+		/** @type {{[U in import("../yt_json_types/stu/group_T.ts").T_Split<typeof params_list>[number]]:import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape[U&keyof import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape]}} */
 		let obj_sparams=as({});
 		let kk_x=key_list;
 		let idx=kk_x.indexOf(target_src_key);
@@ -2109,7 +2110,7 @@ class HandleTypes extends BaseService
 		}
 		return obj_sparams;
 	}
-	/** @private @arg {"D_VideoPlaybackShape"} cf @arg {import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape} uv */
+	/** @private @arg {"D_VideoPlaybackShape"} cf @arg {import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape} uv */
 	extract_shape_params(cf,uv)
 	{
 		const {sparams,lsparams}=this.s(cf,uv);
@@ -2118,7 +2119,7 @@ class HandleTypes extends BaseService
 		let kk_x=this.get_keys_of(uv);
 		let s_params_obj=this.extract_sparams(kk_x,uv,sparams,"sparams");
 		let ls_params_obj=this.extract_sparams(kk_x,uv,lsparams,"lsparams");
-		/** @typedef {"sparams"|"lsparams"|keyof import("../yt_json_types/ghi/group_G.js").D_VideoPlaybackShape_S_Params|keyof import("../yt_json_types/d/group_D.js").D_VideoPlaybackShape_LS_Params} OmitY1Keys */
+		/** @typedef {"sparams"|"lsparams"|keyof import("../yt_json_types/ghi/group_G.ts").D_VideoPlaybackShape_S_Params|keyof import("../yt_json_types/d/group_D.ts").D_VideoPlaybackShape_LS_Params} OmitY1Keys */
 		/** @type {Omit<typeof uv,OmitY1Keys>} */
 		let y1=as({});
 		/** @type {Exclude<(typeof kk_x)[number],OmitY1Keys>[]} */
@@ -2130,12 +2131,12 @@ class HandleTypes extends BaseService
 			y: y1,
 		};
 	}
-	/** @arg {import("../yt_json_types/r/r_sub/r/D_InitPlayback.js").D_InitPlayback} x */
+	/** @arg {import("../yt_json_types/r/r_sub/r/D_InitPlayback.ts").D_InitPlayback} x */
 	D_InitPlayback(x)
 	{
 		this.save_primitive("D_InitPlayback",x);
 	}
-	/** @api @public @arg {import("../support_1/url_parse/UrlParse.js").UrlParse<Extract<import("../yt_json_types/d/group_D.js").D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
+	/** @api @public @arg {import("../support_1/url_parse/UrlParse.ts").UrlParse<Extract<import("../yt_json_types/d/group_D.ts").D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x)
 	{
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
@@ -2165,7 +2166,7 @@ class HandleTypes extends BaseService
 			} return;
 			default:
 		}
-		/** @private @type {import("../yt_json_types/d/group_D.js").D_UrlFormat|import("../yt_json_types/ghi/group_G.js").GU_ExternalUrl} */
+		/** @private @type {import("../yt_json_types/d/group_D.ts").D_UrlFormat|import("../yt_json_types/ghi/group_G.ts").GU_ExternalUrl} */
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
@@ -2187,7 +2188,7 @@ class HandleTypes extends BaseService
 		this.validate_sig("sig.0",sig_0);
 		this.validate_sig("sig.1",sig_1);
 	}
-	/** @api @public @arg {import("../yt_json_types/abc/group_C.js").CF_L_TP_Params} cf @arg {`/${string}`} x */
+	/** @api @public @arg {import("../yt_json_types/abc/group_C.ts").CF_L_TP_Params} cf @arg {`/${string}`} x */
 	parse_url_alt(cf,x)
 	{
 		cf;
@@ -2200,7 +2201,7 @@ class HandleTypes extends BaseService
 	//#endregion
 	//#region binary
 	//#region binary done
-	/** @public @arg {import("../yt_json_types/_rtv_wrong/RB_Obj_f19.js").BinaryVe} x */
+	/** @public @arg {import("../yt_json_types/_rtv_wrong/RB_Obj_f19.ts").BinaryVe} x */
 	BinaryVe(x)
 	{
 		switch(x)
@@ -2211,7 +2212,7 @@ class HandleTypes extends BaseService
 			case 5754: break;
 		}
 	}
-	/** @protected @arg {import("../yt_json_types/_rtv_wrong/RB_Obj_f19.js").RB_Obj_f19} x @name V_VeDescObj */
+	/** @protected @arg {import("../yt_json_types/_rtv_wrong/RB_Obj_f19.ts").RB_Obj_f19} x @name V_VeDescObj */
 	RB_Obj_f19(x)
 	{
 		const cf="R_Obj_f19",t=this;
@@ -2222,7 +2223,7 @@ class HandleTypes extends BaseService
 		t.t(v3,x => t.save_primitive(`${cf}.f3`,t.T_D32(x)));
 		this.codegen_typedef_bin(cf,x,false);
 	}
-	/** @protected @arg {import("../yt_json_types/nop_q/P.js").D_TrackingObj_f16} x */
+	/** @protected @arg {import("../yt_json_types/nop_q/P.ts").D_TrackingObj_f16} x */
 	PR_TrackingObj_f16(x)
 	{
 		const cf="G_PR_TrackingObj_f16";
@@ -2234,7 +2235,7 @@ class HandleTypes extends BaseService
 	}
 	/** @type {string[]} */
 	h_f6_str_arr=[];
-	/** @protected @arg {import("../yt_json_types/nop_q/P.js").H_TrackingObj} x */
+	/** @protected @arg {import("../yt_json_types/nop_q/P.ts").H_TrackingObj} x */
 	H_TrackingObj(x)
 	{
 		if(this.ht!==this) {this.ht.H_TrackingObj(x); return;}
@@ -2296,15 +2297,15 @@ class HandleTypes extends BaseService
 		f19;
 		f21;
 	}
-	/** @arg {import("../yt_json_types/ghi/group_G.js").VW_BinaryTimestamp} x */
+	/** @arg {import("../yt_json_types/ghi/group_G.ts").VW_BinaryTimestamp} x */
 	VW_BinaryTimestamp(x) {this.V_BinaryTimestamp(this.T_VW(x));}
-	/** @arg {"H_TrackingObj"} cf @arg {import("../yt_json_types/_rtv_wrong/T_Data.js").T_D32<number>} x @arg {import("../yt_json_types/stu/group_T.js").T_ObjGetNumKey<import("../yt_json_types/nop_q/P.js").H_TrackingObj,import("../yt_json_types/k/KM.js").KM_TrackingObj>} k */
+	/** @arg {"H_TrackingObj"} cf @arg {import("../yt_json_types/_rtv_wrong/T_Data.ts").T_D32<number>} x @arg {import("../yt_json_types/stu/group_T.ts").T_ObjGetNumKey<import("../yt_json_types/nop_q/P.ts").H_TrackingObj,import("../yt_json_types/k/KM.ts").KM_TrackingObj>} k */
 	TK_D32(cf,x,k) {this.save_primitive(`${cf}.${k}`,this.T_D32(x));}
-	/** @arg {"H_TrackingObj"} cf @arg {{tag: import("../yt_json_types/nop_q/P.js").H_TrackingObj_Tag,id: import("../yt_json_types/nop_q/P.js").H_TrackingObj_Id;}} x */
+	/** @arg {"H_TrackingObj"} cf @arg {{tag: import("../yt_json_types/nop_q/P.ts").H_TrackingObj_Tag,id: import("../yt_json_types/nop_q/P.ts").H_TrackingObj_Id;}} x */
 	P_Tag_TrackingObj(cf,x) {this.TK_D32(cf,x.tag,"tag"); this.TK_D32(cf,x.id,"id");}
 	/** @type {{}[]} */
 	missing_objs=[];
-	/** @arg {string} cf @arg {{}} x @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?import("../yt_json_types/stu/group_T.js").T_DistributedKeysOf<T> extends []?T:never:never} y */
+	/** @arg {string} cf @arg {{}} x @template {{}} T @arg {T extends Record<string, never>?T:{} extends T?import("../yt_json_types/stu/group_T.ts").T_DistributedKeysOf<T> extends []?T:never:never} y */
 	h_gen_keys(cf,x,y)
 	{
 		let u=this.get_keys_of_2(y); if(u.length>0)
@@ -2319,7 +2320,7 @@ class HandleTypes extends BaseService
 	}
 	/** @type {string[]} */
 	params_to_decode=[];
-	/** @arg {import("../yt_json_types/abc/group_C.js").CF_P_EntityKey} cf @arg {import("../yt_json_types/nop_q/P.js").P_EntityKey} x */
+	/** @arg {import("../yt_json_types/abc/group_C.ts").CF_P_EntityKey} cf @arg {import("../yt_json_types/nop_q/P.ts").P_EntityKey} x */
 	P_EntityKey(cf,x)
 	{
 		if(this.is_T_D32_at(x,341)||this.is_T_D32_at(x,194))
@@ -2368,7 +2369,7 @@ class HandleTypes extends BaseService
 		this.save_primitive(`${cf}.f5`,this.T_D32(f5));
 	}
 	PG_subscription_state_key=this.P_subscription_state_key;
-	/** @private @arg {import("../yt_json_types/nop_q/P.js").P_subscription_state_key} x */
+	/** @private @arg {import("../yt_json_types/nop_q/P.ts").P_subscription_state_key} x */
 	P_subscription_state_key(x)
 	{
 		const cf="P_subscription_state_key";
@@ -2438,7 +2439,7 @@ class HandleTypes extends BaseService
 	//#region get
 	/** @template T @arg {{tag:T}} x */
 	get_tag(x) {return x.tag;}
-	/** @template {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").DI_SrcInfo} T @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").DI_RetInfo} */
+	/** @template {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").DI_SrcInfo} T @arg {T} x @returns {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").DI_RetInfo} */
 	get_parsed_info(x)
 	{
 		let v=x.z[0];
@@ -2469,7 +2470,7 @@ class HandleTypes extends BaseService
 	//#endregion
 	//#endregion
 	//#region make_*
-	/** @arg {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.js").DI_SrcInfo} x */
+	/** @arg {import("../yt_json_types/d/mod_D/DI_T/DI_T_move.ts").DI_SrcInfo} x */
 	make_R_UrlInfo(x)
 	{
 		const p=this.get_parsed_info(x);
@@ -2479,9 +2480,9 @@ class HandleTypes extends BaseService
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
 	cache_playlist_id=[];
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_VideoDescriptionMusicSection} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_VideoDescriptionMusicSection} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x)
 	{
 		const cf="D_VideoDescriptionMusicSection";
@@ -2515,16 +2516,16 @@ class HandleTypes extends BaseService
 			}
 		}
 	}
-	/** @type {Map<string,import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData>} */
+	/** @type {Map<string,import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData>} */
 	loaded_map=new Map;
 	/** @type {Set<string>} */
 	loaded_keys=new Set;
-	/** @arg {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} x @returns {import("../yt_json_types/ghi/group_G.js").G_BoxedInner} */
+	/** @arg {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} x @returns {import("../yt_json_types/ghi/group_G.ts").G_BoxedInner} */
 	w_db_data(x)
 	{
 		return [1,x];
 	}
-	/** @arg {any} x @returns {import("../yt_json_types/k/kv_mod/KV_T_move.js").Ret_w_diz} */
+	/** @arg {any} x @returns {import("../yt_json_types/k/kv_mod/KV_T_move.ts").Ret_w_diz} */
 	w_diz(x)
 	{
 		const a=x.z[0],w=this.w_di(a);
@@ -2535,7 +2536,7 @@ class HandleTypes extends BaseService
 	{
 		return [x.z[0],x];
 	}
-	/** @template {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} T_Put @arg {T_Put} value */
+	/** @template {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} T_Put @arg {T_Put} value */
 	on_has_key_in_cache(value)
 	{
 		const x=value,loaded_value=this.loaded_map.get(x.key),y=loaded_value;
@@ -2546,7 +2547,7 @@ class HandleTypes extends BaseService
 		const y_many=[];
 		const cmp_map=new WeakMap;
 		const xi0=this.w_db_data(x),yi0=this.w_db_data(y);
-		/** @arg {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
+		/** @arg {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} container @arg {(bigint[]|boolean[]|(string|number)[]|number[]|string[]|(bigint|boolean|string|number)[])[]} items_arr */
 		function acc_items(container,items_arr)
 		{
 			if(container.key==="boxed_id:load_id"||container.key==="boxed_id:save_id")
@@ -2593,7 +2594,7 @@ class HandleTypes extends BaseService
 			console.log(diff_plus,diff_minus);
 		}
 	}
-	/** @api @public @template {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} T_Put @arg {"boxed_id"} key @arg {T_Put} value @arg {number} version */
+	/** @api @public @template {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} T_Put @arg {"boxed_id"} key @arg {T_Put} value @arg {number} version */
 	async put(key,value,version)
 	{
 		if(this.loaded_keys.has(value.key)) this.on_has_key_in_cache(value);
@@ -2612,10 +2613,10 @@ class HandleTypes extends BaseService
 			throw new AggregateError([e],"put request failed");
 		}
 	}
-	/** @template {import("../yt_json_types/ghi/group_G.js").G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
+	/** @template {import("../yt_json_types/ghi/group_G.ts").G_BoxedDatabaseData} T @arg {T} x @arg {number} version @returns {Promise<T|null>} */
 	put_box(x,version) {return this.put("boxed_id",x,version);}
 	//#endregion
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RSG_NotificationMenu} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x)
 	{
 		const cf="RSG_NotificationMenu";
@@ -2627,7 +2628,7 @@ class HandleTypes extends BaseService
 			debugger;
 		});
 	}
-	/** @public @arg {import("../yt_json_types/nop_q/Popup.js").MP_NotificationMenu} x */
+	/** @public @arg {import("../yt_json_types/nop_q/Popup.ts").MP_NotificationMenu} x */
 	MP_NotificationMenu(x)
 	{
 		const cf="MP_NotificationMenu";
@@ -2636,7 +2637,7 @@ class HandleTypes extends BaseService
 		this.z(sections,this.D_NotificationMenu_SectionItem);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_NotificationMenu_SectionItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_NotificationMenu_SectionItem} x */
 	D_NotificationMenu_SectionItem(x)
 	{
 		const cf="D_NotificationMenu_SectionItem";
@@ -2644,7 +2645,7 @@ class HandleTypes extends BaseService
 		if("backgroundPromoRenderer" in x) return this.R_BackgroundPromo(x);
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
-	/** @private @arg {import("../yt_json_types/nop_q/Popup.js").Popup_DD_NotificationMenu} x */
+	/** @private @arg {import("../yt_json_types/nop_q/Popup.ts").Popup_DD_NotificationMenu} x */
 	Popup_DD_NotificationMenu(x)
 	{
 		const cf="D_NotificationMenu_Popup";
@@ -2653,7 +2654,7 @@ class HandleTypes extends BaseService
 		this.t(beReused,x => this.sm.cq(x,true));
 		return b;
 	}
-	/** @private @arg {import("../yt_json_types/nop_q/Popup.js").A_NotificationMenuPopup} x */
+	/** @private @arg {import("../yt_json_types/nop_q/Popup.ts").A_NotificationMenuPopup} x */
 	A_NotificationMenuPopup(x)
 	{
 		const cf="A_NotificationMenuPopup";
@@ -2667,9 +2668,9 @@ class HandleTypes extends BaseService
 		}
 		x===""; this.sm.codegen_typedef(cf,x);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_ReelItem} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_ReelItem} x */
 	R_ReelItem(x) {this.H_s("reelItemRenderer",x,this.D_ReelItem);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_ReelItem} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_ReelItem} x */
 	D_ReelItem(x)
 	{
 		const cf="D_ReelItem";
@@ -2690,13 +2691,13 @@ class HandleTypes extends BaseService
 		this.sm.cq(videoType,"REEL_VIDEO_TYPE_VIDEO");
 		this.sm.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @arg {import("../yt_json_types/d/group_D.js").D_FeedbackToken} x */
+	/** @arg {import("../yt_json_types/d/group_D.ts").D_FeedbackToken} x */
 	D_FeedbackToken(x)
 	{
 		const cf="D_FeedbackToken";
 		const {feedbackToken: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @arg {import("../yt_json_types/d/group_D.js").G_Menu_TopLevelButton} x */
+	/** @arg {import("../yt_json_types/d/group_D.ts").G_Menu_TopLevelButton} x */
 	G_Menu_TopLevelButton(x)
 	{
 		const cf="G_Menu_TopLevelButton"; this.k(cf,x);
@@ -2705,9 +2706,9 @@ class HandleTypes extends BaseService
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
 		debugger;
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").RA_NotificationMulti} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_s("notificationMultiActionRenderer",x,this.AD_NotificationMulti);}
-	/** @private @arg {import("../yt_json_types/abc/AD.js").AD_NotificationMulti} x */
+	/** @private @arg {import("../yt_json_types/abc/AD.ts").AD_NotificationMulti} x */
 	AD_NotificationMulti(x)
 	{
 		const cf="AD_NotificationMulti";
@@ -2715,9 +2716,9 @@ class HandleTypes extends BaseService
 		this.sm.G_Text(responseText);
 		this.xm.z(buttons,this.xm.R_Button);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_PlayerErrorMessage} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_PlayerErrorMessage} x */
 	R_PlayerErrorMessage(x) {this.H_s("playerErrorMessageRenderer",x,this.D_PlayerErrorMessage);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_PlayerErrorMessage} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_PlayerErrorMessage} x */
 	D_PlayerErrorMessage(x)
 	{
 		const cf="D_PlayerErrorMessage";
@@ -2727,7 +2728,7 @@ class HandleTypes extends BaseService
 		this.sm.T_Icon(cf,icon);
 		this.sm.cq(icon.iconType,"OFFLINE_NO_CONTENT");
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_InlinePlaybackConfig} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_InlinePlaybackConfig} x */
 	D_InlinePlaybackConfig(x)
 	{
 		const cf="D_InlinePlaybackConfig";
@@ -2735,7 +2736,7 @@ class HandleTypes extends BaseService
 		this.sm.cq(showAudioControls,true);
 		this.sm.cq(showScrubbingControls,true);
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_AudioConfig} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_AudioConfig} x */
 	D_AudioConfig(x)
 	{
 		const cf="D_AudioConfig";
@@ -2745,7 +2746,7 @@ class HandleTypes extends BaseService
 		this.sm.t(enablePerFormatLoudness,this.sm.a_primitive_bool);
 		this.t(muteOnStart,x => this.sm.cq(x,true));
 	}
-	/** @public @arg {import("../yt_json_types/abc/group_C.js").CF_M_wn} cf @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.js").T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	/** @public @arg {import("../yt_json_types/abc/group_C.ts").CF_M_wn} cf @arg {K} k @template U @template {import("../yt_json_types/stu/group_T.ts").T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_x(cf,k,x,f)
 	{
 		if(!x) {debugger; return;}
@@ -2755,9 +2756,9 @@ class HandleTypes extends BaseService
 		if(!wr) return;
 		return f.call(this,wr[0]);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_MenuServiceItemDownload} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_MenuServiceItemDownload} x */
 	M_DownloadRenderer(x) {this.H_x("M_DownloadRenderer","menuServiceItemDownloadRenderer",x,this.D_MenuServiceItemDownload);}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_MenuServiceItemDownload} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_MenuServiceItemDownload} x */
 	D_MenuServiceItemDownload(x)
 	{
 		const cf="D_MenuServiceItemDownload";
@@ -2765,7 +2766,7 @@ class HandleTypes extends BaseService
 		if(!serviceEndpoint.offlineVideoEndpoint) debugger;
 		this.E_OfflineVideo(serviceEndpoint);
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").E_OfflineVideo} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").E_OfflineVideo} x */
 	E_OfflineVideo(x)
 	{
 		const cf="E_OfflineVideo";
@@ -2773,7 +2774,7 @@ class HandleTypes extends BaseService
 
 		this.DE_OfflineVideo(offlineVideoEndpoint);
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").DE_OfflineVideo} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").DE_OfflineVideo} x */
 	DE_OfflineVideo(x)
 	{
 		const cf="DE_OfflineVideo";
@@ -2782,7 +2783,7 @@ class HandleTypes extends BaseService
 		this.AC_GetDownload(onAddCommand);
 		this.t(action,x => this.cq(x,"ACTION_ADD"));
 	}
-	/** @private @arg {import("../yt_json_types/abc/A.js").AC_GetDownload} x */
+	/** @private @arg {import("../yt_json_types/abc/A.ts").AC_GetDownload} x */
 	AC_GetDownload(x)
 	{
 		const cf="AC_GetDownload";
@@ -2790,14 +2791,14 @@ class HandleTypes extends BaseService
 
 		this.DC_GetDownload(getDownloadActionCommand);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_DC.js").DC_GetDownload} x */
+	/** @private @arg {import("../yt_json_types/d/group_DC.ts").DC_GetDownload} x */
 	DC_GetDownload(x)
 	{
 		const cf="DC_GetDownload";
 		const {videoId,params,offlineabilityEntityKey,...y}=this.s(cf,x); this.g(y);
 		this.sm.videoId(videoId);
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D/G_MenuItem_2.js").G_MenuItem_2} x */
+	/** @public @arg {import("../yt_json_types/d/group_D/G_MenuItem_2.ts").G_MenuItem_2} x */
 	G_MenuItem_2(x)
 	{
 		const cf="G_MenuItem_2"; this.k(cf,x);
@@ -2805,7 +2806,7 @@ class HandleTypes extends BaseService
 		if("menuServiceItemDownloadRenderer" in x) return this.M_DownloadRenderer(x);
 		debugger;
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").DT_MenuItem_Button} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").DT_MenuItem_Button} x */
 	DT_MenuItem_Button(x)
 	{
 		const cf="DT_MenuItem_Button"; this.k(cf,x);
@@ -2813,9 +2814,9 @@ class HandleTypes extends BaseService
 		if("buttonRenderer" in x) return this.xm.R_Button(x);
 		debugger;
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_DownloadButton} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_DownloadButton} x */
 	R_DownloadButton(x) {this.H_("downloadButtonRenderer",x,this.D_DownloadButton);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_DownloadButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_DownloadButton} x */
 	D_DownloadButton(x)
 	{
 		const cf="D_DownloadButton";
@@ -2825,7 +2826,7 @@ class HandleTypes extends BaseService
 		this.cq(targetId,"watch-download-button");
 		this.E_OfflineVideo(command);
 	}
-	/** @public @arg {import("../yt_json_types/ghi/group_G.js").G_AdPlacementRendererItem} x */
+	/** @public @arg {import("../yt_json_types/ghi/group_G.ts").G_AdPlacementRendererItem} x */
 	G_AdPlacementRendererItem(x)
 	{
 		const cf="G_AdPlacementRendererItem"; this.k(cf,x);
@@ -2835,9 +2836,9 @@ class HandleTypes extends BaseService
 		if("linearAdSequenceRenderer" in x) return this.sm.R_LinearAdSequence(x);
 		debugger;
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_AdBreakService} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_AdBreakService} x */
 	R_AdBreakService(x) {this.H_s("adBreakServiceRenderer",x,this.D_AdBreakService);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AdBreakService} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AdBreakService} x */
 	D_AdBreakService(x)
 	{
 		const cf="D_AdBreakService";
@@ -2850,23 +2851,23 @@ class HandleTypes extends BaseService
 		{
 			default: debugger; break;
 			case "get_midroll_info": {
-				/** @type {import("../yt_json_types/d/group_D.js").D_GetMidrollInfoParams} */
+				/** @type {import("../yt_json_types/d/group_D.ts").D_GetMidrollInfoParams} */
 				let po=as_any(this.parse_url_search_params(pp[1]));
 				let {ei,m_pos,token,index,cpn,lact,vis,ad_block,tsla,bid,dt,flash,frm,ca_type,u_tz,u_his,u_java,u_h,u_w,u_ah,u_aw,u_cd,u_nplug,u_nmime,p_w,p_h,c,cver,m_pos_ms,...px}=po;
 				if(this.get_keys_of(px).length!==0) console.log("get_midroll_info",px);
 			} break;
 		}
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_CsiParameterItem} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_CsiParameterItem} x */
 	D_CsiParameterItem(x)
 	{
 		const cf="D_CsiParameterItem";
 		const {key,value}=x;
 		console.log(cf,key,value);
 	}
-	/** @public @arg {import("../yt_json_types/r/group_R.js").R_InstreamAdPlayerOverlay} x */
+	/** @public @arg {import("../yt_json_types/r/group_R.ts").R_InstreamAdPlayerOverlay} x */
 	R_InstreamAdPlayerOverlay(x) {this.H_s("instreamAdPlayerOverlayRenderer",x,this.D_InstreamAdPlayerOverlay);}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_SodarExtensionData} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_SodarExtensionData} x */
 	D_SodarExtensionData(x)
 	{
 		const cf="D_SodarExtensionData";
@@ -2876,9 +2877,9 @@ class HandleTypes extends BaseService
 		console.log(`${cf}.scs`,scs);
 		console.log(`${cf}.bgp`,bgp);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_SkipAd} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_SkipAd} x */
 	R_SkipAd(x) {this.H_("skipAdRenderer",x,this.D_SkipAd);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SkipAd} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SkipAd} x */
 	D_SkipAd(x)
 	{
 		const cf="D_SkipAd";
@@ -2887,9 +2888,9 @@ class HandleTypes extends BaseService
 		this.R_SkipButton(skippableRenderer);
 		this.cq(skipOffsetMilliseconds,5000);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_AdPreview} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_AdPreview} x */
 	R_AdPreview(x) {this.H_("adPreviewRenderer",x,this.D_AdPreview);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AdPreview} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AdPreview} x */
 	D_AdPreview(x)
 	{
 		const cf="D_AdPreview";
@@ -2898,7 +2899,7 @@ class HandleTypes extends BaseService
 		this.R_TemplatedAdText(templatedCountdown);
 		this.sm.cq(durationMilliseconds,5000);
 	}
-	/** @public @arg {import("../yt_json_types/abc/G_RelatedItem.js").G_RelatedItem} x */
+	/** @public @arg {import("../yt_json_types/abc/G_RelatedItem.ts").G_RelatedItem} x */
 	G_RelatedItem(x)
 	{
 		const cf="D_AdPreview"; this.k(cf,x);
@@ -2908,9 +2909,9 @@ class HandleTypes extends BaseService
 		if("continuationItemRenderer" in x) return this.sm.R_ContinuationItem(x);
 		debugger;
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_TemplatedAdText} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_TemplatedAdText} x */
 	R_TemplatedAdText(x) {this.H_("templatedAdText",x,this.D_TemplatedAdText);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TemplatedAdText} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TemplatedAdText} x */
 	D_TemplatedAdText(x)
 	{
 		const cf="D_TemplatedAdText";
@@ -2918,9 +2919,9 @@ class HandleTypes extends BaseService
 		this.cq(text,"{TIME_REMAINING}");
 		this.cq(isTemplated,true);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_SkipButton} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_SkipButton} x */
 	R_SkipButton(x) {this.H_("skipButtonRenderer",x,this.D_SkipButton);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SkipButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SkipButton} x */
 	D_SkipButton(x)
 	{
 		const cf="D_TemplatedAdText";
@@ -2928,7 +2929,7 @@ class HandleTypes extends BaseService
 		let text=this.T_MaybeTemplatedText(message);
 		this.cq(text,"Skip Ads");
 	}
-	/** @private @template T @arg {import("../yt_json_types/stu/group_T.js").T_MaybeTemplatedText<T>} x */
+	/** @private @template T @arg {import("../yt_json_types/stu/group_T.ts").T_MaybeTemplatedText<T>} x */
 	T_MaybeTemplatedText(x)
 	{
 		const cf="D_TemplatedAdText";
@@ -2936,9 +2937,9 @@ class HandleTypes extends BaseService
 		this.cq(isTemplated,false);
 		return text;
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").VM_PlaceData} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").VM_PlaceData} x */
 	VM_PlaceData(x) {this.H_x("VM_PlaceData","placeDataViewModel",x,this.VD_PlaceData);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").VD_PlaceData} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").VD_PlaceData} x */
 	VD_PlaceData(x)
 	{
 		const cf="D_InstreamAdPlayerOverlay";
@@ -2969,7 +2970,7 @@ class HandleTypes extends BaseService
 		this.sm.a_primitive_str(cardStyle);
 		this.join_string(this.get_keys_of_2(y),",")==="";
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").DU_UrlParams_PageAd_AClk} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").DU_UrlParams_PageAd_AClk} x */
 	DU_UrlParams_PageAd_AClk(x)
 	{
 		const cf="DU_UrlParams_PageAd_AClk";
@@ -2989,7 +2990,7 @@ class HandleTypes extends BaseService
 		};
 		console.log(cf,x,sa,ai,ae,num,cid,ad_cpn,sig,act,ri,ctype,ms);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_InstreamAdPlayerOverlay} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_InstreamAdPlayerOverlay} x */
 	D_InstreamAdPlayerOverlay(x)
 	{
 		const cf="D_InstreamAdPlayerOverlay";
@@ -3003,9 +3004,9 @@ class HandleTypes extends BaseService
 		this.sm.D_SerializedAdServingDataEntry(adLayoutLoggingData);
 		console.log("elementId",elementId);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_SimpleAdBadge} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_SimpleAdBadge} x */
 	R_SimpleAdBadge(x) {this.H_("simpleAdBadgeRenderer",x,this.D_SimpleAdBadge);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_SimpleAdBadge} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_SimpleAdBadge} x */
 	D_SimpleAdBadge(x)
 	{
 		const cf="D_SimpleAdBadge";
@@ -3013,18 +3014,18 @@ class HandleTypes extends BaseService
 		let a=this.T_MaybeTemplatedText(text);
 		this.cq(a,"Ad 1 of 2");
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_AdDurationRemaining} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_AdDurationRemaining} x */
 	R_AdDurationRemaining(x) {this.H_("adDurationRemainingRenderer",x,this.D_AdDurationRemaining);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AdDurationRemaining} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AdDurationRemaining} x */
 	D_AdDurationRemaining(x)
 	{
 		const cf="D_AdDurationRemaining";
 		const {templatedCountdown,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.D_TemplatedAdText(templatedCountdown);
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_AdHoverTextButton} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_AdHoverTextButton} x */
 	R_AdHoverTextButton(x) {this.H_("adHoverTextButtonRenderer",x,this.D_AdHoverTextButton);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_AdHoverTextButton} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_AdHoverTextButton} x */
 	D_AdHoverTextButton(x)
 	{
 		const cf="D_AdHoverTextButton";
@@ -3033,9 +3034,9 @@ class HandleTypes extends BaseService
 		hoverText;
 		trackingParams;
 	}
-	/** @private @arg {import("../yt_json_types/r/group_R.js").R_FlyoutCta} x */
+	/** @private @arg {import("../yt_json_types/r/group_R.ts").R_FlyoutCta} x */
 	R_FlyoutCta(x) {this.H_("flyoutCtaRenderer",x,this.D_FlyoutCta);}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_FlyoutCta} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_FlyoutCta} x */
 	D_FlyoutCta(x)
 	{
 		const cf="D_FlyoutCta";
@@ -3047,21 +3048,21 @@ class HandleTypes extends BaseService
 		this.xm.R_Button(actionButton);
 		this.cq(startMs,1);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TrackedThumbnail2} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TrackedThumbnail2} x */
 	D_TrackedThumbnail2(x)
 	{
 		const cf="D_TrackedThumbnail2";
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.sm.D_Thumbnail(thumbnail);
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TrackedText} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TrackedText} x */
 	D_TrackedText(x)
 	{
 		const cf="D_TrackedText";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.sm.a_primitive_str(text);
 	}
-	/** @public @arg {import("../yt_json_types/d/group_D.js").D_Pings} x */
+	/** @public @arg {import("../yt_json_types/d/group_D.ts").D_Pings} x */
 	D_Pings(x)
 	{
 		const cf="D_Pings";
@@ -3139,7 +3140,7 @@ class HandleTypes extends BaseService
 		let p2x=p2;
 		return p2x;
 	}
-	/** @private @arg {import("../yt_json_types/d/group_D.js").D_TrafficType} x */
+	/** @private @arg {import("../yt_json_types/d/group_D.ts").D_TrafficType} x */
 	D_TrafficType(x)
 	{
 		const cf="D_TrafficType";

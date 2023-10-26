@@ -1,6 +1,6 @@
-import {InstructionImplMap} from "./InstructionImplMap.js";
-import {InstructionImplObj} from "./InstructionImplObj.js";
-import {InstructionMap} from "./InstructionMap.js";
+import {InstructionImplMap} from "./InstructionImplMap.ts";
+import {InstructionImplObj} from "./InstructionImplObj.ts";
+import {InstructionMap} from "./InstructionMap.ts";
 
 export interface InstructionImpl<T extends keyof InstructionImplMap> {
 	new(): InstructionImplObj<T,InstructionImplMap[T],InstructionMap[T]>;

@@ -1,5 +1,5 @@
-import {Route} from "./Route.js";
-import {RouteDescription} from "./RouteDescription.js";
+import {Route} from "./Route.ts";
+import {RouteDescription} from "./RouteDescription.ts";
 
 const tree_map=[
 	{

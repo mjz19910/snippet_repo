@@ -1,5 +1,5 @@
-import {YtPlayerApi} from "./YtPlayerApi.js";
-
+import {YtPlayerApi} from "./YtPlayerApi.ts";
+class HTMLElement {}
 export interface YtdPlayerElement extends HTMLElement {
 	active_nav: boolean;
 	player_: YtPlayerApi|null;

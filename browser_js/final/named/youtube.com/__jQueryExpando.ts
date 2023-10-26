@@ -1,6 +1,6 @@
-import {DInstanceType} from "./DInstanceType.js";
-import {JQueryExpandoData} from "./JQueryExpandoData.js";
-import {RxType} from "./RxType.js";
+import {DInstanceType} from "./DInstanceType.ts";
+import {JQueryExpandoData} from "./JQueryExpandoData.ts";
+import {RxType} from "./RxType.ts";
 
 declare global {
 	interface Element {

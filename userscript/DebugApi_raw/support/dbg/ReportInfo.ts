@@ -1,4 +1,4 @@
-import {ConnectionMessage} from "./ConnectionMessage.js";
+import {ConnectionMessage} from "./ConnectionMessage.ts";
 
 export type ReportInfo<T>={
 	data: ConnectionMessage;

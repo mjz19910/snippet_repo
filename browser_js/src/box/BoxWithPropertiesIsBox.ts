@@ -1,5 +1,5 @@
 import {BoxTemplate} from "./template/BoxTemplate.js";
-import {BoxWithPropertiesObjType} from "./BoxWithPropertiesObjType.js";
+import {BoxWithPropertiesObjType} from "./BoxWithPropertiesObjType.ts";
 
 export class BoxWithPropertiesIsBox extends BoxTemplate<'with_properties',{}> {
 	readonly type='with_properties';

@@ -1,5 +1,5 @@
 import {AbstractFireNode} from "./AbstractFireNode";
-import {BaseNode} from "./BaseNode.js";
+import {BaseNode} from "./BaseNode.ts";
 import {CallbackFireNode} from "./CallbackFireNode";
 
 export class IntervalNode extends BaseNode {

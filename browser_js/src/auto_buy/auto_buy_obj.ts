@@ -1,3 +1,3 @@
-import {AutoBuy} from "./AutoBuy.js";
+import {AutoBuy} from "./AutoBuy.ts";
 
 export const auto_buy_obj=new AutoBuy;

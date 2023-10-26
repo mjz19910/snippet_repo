@@ -1,7 +1,7 @@
-import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
-import {MediaListBox} from "./MediaListBox.js";
-import {NodeBox} from "./NodeBox.js";
-import {StackVMBox} from "./StackVMBox.js";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox.ts";
+import {MediaListBox} from "./MediaListBox.ts";
+import {NodeBox} from "./NodeBox.ts";
+import {StackVMBox} from "./StackVMBox.ts";
 
 export type G_ObjectInstanceBox=
 	|StackVMBox

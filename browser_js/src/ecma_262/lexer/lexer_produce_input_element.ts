@@ -1,7 +1,7 @@
-import {item_info_type_to_string} from "../item_info_type_to_string.js";
-import {ItemInfoType} from "../ItemInfoType.js";
-import {Dispatcher} from "./Dispatcher.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {item_info_type_to_string} from "../item_info_type_to_string.ts";
+import {ItemInfoType} from "../ItemInfoType.ts";
+import {Dispatcher} from "./Dispatcher.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 import {debug} from "./LexGrammarSyntax";
 
 

@@ -1,5 +1,5 @@
-import {MatchType_WorkingDir} from "./MatchType_WorkingDir.js";
-import {ProcessImport9} from "./ProcessImport9.js";
+import {MatchType_WorkingDir} from "./MatchType_WorkingDir.ts";
+import {ProcessImport9} from "./ProcessImport9.ts";
 
 export type ProcessWorkingDirImport_Impl<T extends MatchType_WorkingDir>=
 	T extends `../../${infer P1 extends string}/${infer P2 extends string}`

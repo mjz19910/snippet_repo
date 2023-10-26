@@ -1,5 +1,5 @@
-import {ParseReturnType} from "./ParseReturnType.js";
-import {ParserBase} from "./ParserBase.js";
+import {ParseReturnType} from "./ParseReturnType.ts";
+import {ParserBase} from "./ParserBase.ts";
 
 export class section_14_2 extends ParserBase {
 	// https://tc39.es/ecma262/#prod-BlockStatement

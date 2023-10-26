@@ -1,4 +1,4 @@
-import {JQueryStatic} from "../rebuild_the_universe/jquery/JQueryStatic.js";
+import {JQueryStatic} from "../rebuild_the_universe/jquery/JQueryStatic.ts";
 
 declare global {
 	var $: JQueryStatic;

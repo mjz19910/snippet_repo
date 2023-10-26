@@ -1,16 +1,16 @@
-import {InstructionType} from "../instruction/InstructionType.js";
-import {AutoBuyInterface} from "../auto_buy/AutoBuyInterface.js";
-import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.js";
-import {Box} from "../box/Box.js";
-import {VoidBox} from "../box/VoidBox.js";
-import {IndexBox} from "../box/IndexBox.js";
-import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
-import {log_if} from "../log_if.js";
-import {LOG_LEVEL_VERBOSE} from "../log_level_enum.js";
-import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
-import {NumberBox} from "../box/NumberBox.js";
-import {AbstractVM} from "./AbstractVM.js";
-import {StackVMBase} from "./StackVM.js";
+import {InstructionType} from "../instruction/InstructionType.ts";
+import {AutoBuyInterface} from "../auto_buy/AutoBuyInterface.ts";
+import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.ts";
+import {Box} from "../box/Box.ts";
+import {VoidBox} from "../box/VoidBox.ts";
+import {IndexBox} from "../box/IndexBox.ts";
+import {NewableFunctionBox} from "../box/NewableFunctionBox.ts";
+import {log_if} from "../log_if.ts";
+import {LOG_LEVEL_VERBOSE} from "../log_level_enum.ts";
+import {SimpleStackVMParser} from "./SimpleStackVMParser.ts";
+import {NumberBox} from "../box/NumberBox.ts";
+import {AbstractVM} from "./AbstractVM.ts";
+import {StackVMBase} from "./StackVM.ts";
 
 export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 	flags: Map<string,boolean>;

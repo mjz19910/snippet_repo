@@ -1,4 +1,4 @@
-import {debug as is_yt_debug_enabled} from "../debug.js";
+import {debug as is_yt_debug_enabled} from "../debug.ts";
 
 type FetchInjectInputArgs={
 	request: string|URL|Request;

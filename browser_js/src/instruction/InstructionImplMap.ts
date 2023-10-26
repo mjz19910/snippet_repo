@@ -1,5 +1,5 @@
-import {InstructionImpl} from "./InstructionImpl.js";
-import {InstructionMap} from "./InstructionMap.js";
+import {InstructionImpl} from "./InstructionImpl.ts";
+import {InstructionMap} from "./InstructionMap.ts";
 
 export type InstructionImplMap={
 	[U in keyof InstructionMap]: InstructionImpl<U>;

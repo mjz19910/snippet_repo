@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate.js";
+import {BoxTemplate} from "./BoxTemplate.ts";
 
 export class AbstractBoxTemplate<K extends string,T> extends BoxTemplate<K,T> {
 	readonly type: K;

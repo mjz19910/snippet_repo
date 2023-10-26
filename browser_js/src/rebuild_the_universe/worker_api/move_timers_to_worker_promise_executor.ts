@@ -1,12 +1,12 @@
-import {TimerApi} from "./TimerApi.js";
-import {worker_code_function} from "./worker_code_function.js";
-import {WorkerApi as WorkerApi} from "./WorkerApi.js";
-import {Timer} from "./Timer.js";
-import {do_worker_verify} from "./do_worker_verify.js";
-import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyType} from "./constants.js";
-import {RemoteWorkerState} from "./RemoteWorkerState.js";
-import {log_if, LOG_LEVEL_WARN, UniqueIdGenerator} from "./ns.js";
+import {TimerApi} from "./TimerApi.ts";
+import {worker_code_function} from "./worker_code_function.ts";
+import {WorkerApi as WorkerApi} from "./WorkerApi.ts";
+import {Timer} from "./Timer.ts";
+import {do_worker_verify} from "./do_worker_verify.ts";
+import {PromiseExecutorHandle} from "./PromiseExecutorHandle.ts";
+import {TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyType} from "./constants.ts";
+import {RemoteWorkerState} from "./RemoteWorkerState.ts";
+import {log_if, LOG_LEVEL_WARN, UniqueIdGenerator} from "./ns.ts";
 
 declare global {
 	interface Window {

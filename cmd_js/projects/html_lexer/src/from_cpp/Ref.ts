@@ -1,5 +1,5 @@
-import {OwnPtr} from "../OwnPtr.js";
-import {Vector} from "../Vector.js";
+import {OwnPtr} from "../OwnPtr.ts";
+import {Vector} from "../Vector.ts";
 
 export class Ref<T> {
     static wrap_vec<T extends Vector<any>>(arg0: T): Ref<T> {

@@ -1,4 +1,4 @@
-import {AbstractFireNode} from "./AbstractFireNode.js";
+import {AbstractFireNode} from "./AbstractFireNode.ts";
 
 export class CallbackFireNode implements AbstractFireNode {
 	m_callback: any;

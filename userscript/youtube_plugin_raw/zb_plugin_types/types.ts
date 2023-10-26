@@ -1,9 +1,9 @@
-import {RequireModuleCache} from "../../_module_cache/RequireModuleCache.js";
-import {ServiceOptions} from "../support_1/ServiceOptions.js";
-import {make_item_group} from "../yt_json_types/m/make_item_group.js";
+import {RequireModuleCache} from "../../_module_cache/RequireModuleCache.ts";
+import {ServiceOptions} from "../support_1/ServiceOptions.ts";
+import {make_item_group} from "../yt_json_types/m/make_item_group.ts";
 import {ServiceResolver} from "../zc_child_modules/YTPlugin_Base.user.js";
 import {ServiceLoader} from "../zc_child_modules/YTPlugin_ServiceLoader_Plugin.user.js";
-import {PathMapType} from "./ambient_exports.js";
+import {PathMapType} from "./ambient_exports.ts";
 
 export type IndexedDBService=InstanceType<RequireModuleCache["mod$IndexedDBService"]["IndexedDBService"]>;
 export type VolumeRange=InstanceType<RequireModuleCache["mod$YoutubePluginBase"]["VolumeRange"]>;

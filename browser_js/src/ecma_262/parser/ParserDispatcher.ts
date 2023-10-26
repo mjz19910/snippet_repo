@@ -1,7 +1,7 @@
-import {section_14} from "./section_14.js";
-import {section_14_16} from "./section_14_16.js";
-import {section_14_2} from "./section_14_2.js";
-import {section_14_3_2} from "./section_14_3_2.js";
+import {section_14} from "./section_14.ts";
+import {section_14_16} from "./section_14_16.ts";
+import {section_14_2} from "./section_14_2.ts";
+import {section_14_3_2} from "./section_14_3_2.ts";
 
 export class ParserDispatcher {
 	DebuggerStatement(str: string,index: number) {

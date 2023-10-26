@@ -1,4 +1,4 @@
-import {yt_state_map} from "./yt_state_map.js";
+import {yt_state_map} from "./yt_state_map.ts";
 
 export class YTIterateAllBase {
 	default_iter(path: string,data: {[str: string]: {};}) {

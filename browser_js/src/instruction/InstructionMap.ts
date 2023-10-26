@@ -1,7 +1,7 @@
-import {AsyncFunctionBox} from "../box/AsyncFunctionBox.js";
-import {Box} from "../box/Box.js";
-import {CastOperandTarget} from "./CastOperandTarget.js";
-import {VMBlockTraceOperand} from "./VMBlockTraceOperand.js";
+import {AsyncFunctionBox} from "../box/AsyncFunctionBox.ts";
+import {Box} from "../box/Box.ts";
+import {CastOperandTarget} from "./CastOperandTarget.ts";
+import {VMBlockTraceOperand} from "./VMBlockTraceOperand.ts";
 
 export type InstructionMap={
 	append: ["append"];

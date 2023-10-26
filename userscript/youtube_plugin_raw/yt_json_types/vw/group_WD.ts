@@ -11,7 +11,7 @@ import {
 	RSL_Dislike,RSL_Like,RSL_RemoveLike,
 	RSM_ChannelPreference,
 	RS_AccountMenu,RS_AccountsList,RS_AttGet,RS_AttLog_RC,RS_Browse,RS_Feedback,RS_GetLiveChat,RS_Guide,RS_Next,RS_Player,RS_ReelWatchSequence,RS_Search,RS_SetSetting,RS_Subscribe,RS_Success,RS_Unsubscribe,RS_UpdateMetadata,RS_WatchReelItem
-} from "../r/group_R.js";
+} from "../r/group_R.ts";
 
 export type WD_account_account_menu={type: "account.account_menu"; data: RS_AccountMenu;};
 export type WD_account_set_setting={type: "account.set_setting"; data: RS_SetSetting;};

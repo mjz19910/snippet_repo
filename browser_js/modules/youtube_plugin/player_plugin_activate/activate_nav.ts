@@ -1,10 +1,10 @@
-import {page_changed_next_frame} from "./page_changed_next_frame.js";
+import {page_changed_next_frame} from "./page_changed_next_frame.ts";
 import {player_overlay_style_source} from "./css/player_overlay_style_source.js";
-import {load_volume_range_plugin} from "./load_volume_range_plugin.js";
+import {load_volume_range_plugin} from "./load_volume_range_plugin.ts";
 import {ytd_page_manager} from "./elements/ytd_page_manager.js";
-import {debug} from "../debug.js";
+import {debug} from "../debug.ts";
 import {plugin_overlay_element} from "./elements/plugin_overlay_element.js";
-import {yt_navigate_finish_handler_array} from "./yt_navigate_finish_handler_array.js";
+import {yt_navigate_finish_handler_array} from "./yt_navigate_finish_handler_array.ts";
 
 export function activate_nav() {
 	if(debug.value) console.log('activate_nav:fire');

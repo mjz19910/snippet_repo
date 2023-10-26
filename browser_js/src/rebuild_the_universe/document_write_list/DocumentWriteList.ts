@@ -1,5 +1,5 @@
-import {DocumentWriteFnProxyHandler} from "./DocumentWriteFnProxyHandler.js";
-import {DocumentWriteFn} from "./DocumentWriteFn.js";
+import {DocumentWriteFnProxyHandler} from "./DocumentWriteFnProxyHandler.ts";
+import {DocumentWriteFn} from "./DocumentWriteFn.ts";
 
 export class DocumentWriteList {
 	list: (string[]|null)[];

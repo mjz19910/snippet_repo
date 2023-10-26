@@ -1,4 +1,4 @@
-import {Route} from "./Route.js";
+import {Route} from "./Route.ts";
 
 interface RouteDesc {
 	target: string;

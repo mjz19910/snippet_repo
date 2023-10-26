@@ -1,4 +1,4 @@
-import {YtdPlayerElement} from "./YtdPlayerElement.js";
+import {YtdPlayerElement} from "./YtdPlayerElement.ts";
 
 export interface YtCurrentPage extends HTMLElement {
 	getPlayer(): YtdPlayerElement;

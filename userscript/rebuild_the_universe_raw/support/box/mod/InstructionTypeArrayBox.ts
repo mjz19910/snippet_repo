@@ -1,5 +1,5 @@
-import {InstructionType} from "../../InstructionType.js";
-import {BoxTemplate} from "../template/BoxTemplate.js";
+import {InstructionType} from "../../InstructionType.ts";
+import {BoxTemplate} from "../template/BoxTemplate.ts";
 
 export class InstructionTypeArrayBox extends BoxTemplate<"array_box",InstructionType[]> {
 	readonly type="array_box";

@@ -1,3 +1,3 @@
-import {YtdAppElementI} from "./YtdAppElementI.js";
+import {YtdAppElementI} from "./YtdAppElementI.ts";
 
 export type YtdAppElement={new(): YtdAppElementI;};

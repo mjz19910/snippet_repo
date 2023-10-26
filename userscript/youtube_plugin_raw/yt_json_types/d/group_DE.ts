@@ -24,18 +24,18 @@ export type DE_VE11487=DE_VE<"SPunlimited">;
 export type DE_VE23462=DE_VE<GU_VE23462_Id>;
 export type DE_VE42352=DE_VE<"FEdownloads">;
 export type DE_VE96368=DE_VE<"FEsubscriptions">;
-import {A_HideEnclosing,A_ReplaceEnclosing,A_UndoFeedback,GA_Playlist} from "../abc/A.js";
-import {B_Hack} from "../abc/group_B.js";
-import {C_FilterChipTransform,C_MusicLibraryStatusUpdate} from "../abc/group_C.js";
-import {A_UpdateCommentVote} from "../e/E.js";
-import {GU_VE23462_Id,GU_VE6827_Id,G_AdditionalDataItem,G_EY_Entity,G_ExtraUrlParamItem,G_Text} from "../ghi/group_G.js";
-import {O_DU_Persistence} from "../nop_q/O.js";
-import {A_ShareEntityService} from "../nop_q/Popup.js";
-import {R_AdFeedback,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_ReelPlayerOverlay,R_VssLoggingContext,R_WatchEndpointMusicConfig} from "../r/group_R.js";
+import {A_HideEnclosing,A_ReplaceEnclosing,A_UndoFeedback,GA_Playlist} from "../abc/A.ts";
+import {B_Hack} from "../abc/group_B.ts";
+import {C_FilterChipTransform,C_MusicLibraryStatusUpdate} from "../abc/group_C.ts";
+import {A_UpdateCommentVote} from "../e/E.ts";
+import {GU_VE23462_Id,GU_VE6827_Id,G_AdditionalDataItem,G_EY_Entity,G_ExtraUrlParamItem,G_Text} from "../ghi/group_G.ts";
+import {O_DU_Persistence} from "../nop_q/O.ts";
+import {A_ShareEntityService} from "../nop_q/Popup.ts";
+import {R_AdFeedback,R_Html5PlaybackOnesieConfig,R_PrefetchHintConfig,R_ReelPlayerOverlay,R_VssLoggingContext,R_WatchEndpointMusicConfig} from "../r/group_R.ts";
 //#endregion
-import {T_EnumStr,T_MutType,T_Signal} from "../stu/group_T.js";
-import {DE_U_ChannelUrl,DE_U_ExternalUrl,DE_U_InternalUrl,DE_U_RedirectUrl,D_HideEnclosingContainer,D_LikeApi,D_LoggingContext,D_PlaylistId,D_Thumbnail,D_UserIdStr,T_IdTemplate} from "./group_D.js";
-import {DC_Params} from "./group_DC.js";
+import {T_EnumStr,T_MutType,T_Signal} from "../stu/group_T.ts";
+import {DE_U_ChannelUrl,DE_U_ExternalUrl,DE_U_InternalUrl,DE_U_RedirectUrl,D_HideEnclosingContainer,D_LikeApi,D_LoggingContext,D_PlaylistId,D_Thumbnail,D_UserIdStr,T_IdTemplate} from "./group_D.ts";
+import {DC_Params} from "./group_DC.ts";
 
 //#region String Enum
 export type DE_AdPlacementKind=T_EnumStr<"AD_PLACEMENT_KIND","END"|"SELF_START"|"START"|"MILLISECONDS">;

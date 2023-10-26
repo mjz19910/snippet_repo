@@ -1,13 +1,13 @@
-import {fix_offset} from "./fix_offset.js";
-import {init_ui_plugin} from "./init_ui_plugin.js";
+import {fix_offset} from "./fix_offset.ts";
+import {init_ui_plugin} from "./init_ui_plugin.ts";
 import {is_watch_page_active} from "./event/is_watch_page_active.js";
-import {title_display_toggle} from "./title_display_toggle.js";
-import {title_display_update} from "./title_display_update.js";
-import {title_text_overlay_update} from "./title_text_overlay_update.js";
-import {ui_css_toggle_click_handler} from "./ui_css_toggle_click_handler.js";
+import {title_display_toggle} from "./title_display_toggle.ts";
+import {title_display_update} from "./title_display_update.ts";
+import {title_text_overlay_update} from "./title_text_overlay_update.ts";
+import {ui_css_toggle_click_handler} from "./ui_css_toggle_click_handler.ts";
 import {PluginOverlayElement} from "./elements/PluginOverlayElement.js";
-import {update_ui_plugin} from "./update_ui_plugin.js";
-import {fire_on_visibility_change_restart_video_playback} from "./fire_on_visibility_change_restart_video_playback.js";
+import {update_ui_plugin} from "./update_ui_plugin.ts";
+import {fire_on_visibility_change_restart_video_playback} from "./fire_on_visibility_change_restart_video_playback.ts";
 import {ytd_page_manager} from "./elements/ytd_page_manager.js";
 import {ytd_app} from "./elements/ytd_app.js";
 import {ytd_watch_flexy} from "./elements/ytd_watch_flexy.js";
@@ -15,9 +15,9 @@ import {yt_playlist_manager} from "./elements/yt_playlist_manager.js";
 import {overlay_content_div} from "./elements/overlay_content_div.js";
 import {overlay_hide_ui_input} from "./elements/overlay_hide_ui_input.js";
 import {plugin_overlay_element} from "./elements/plugin_overlay_element.js";
-import {g_api} from "../g_api.js";
-import {yt_navigate_handler_array} from "./yt_navigate_handler_array.js";
-import {yt_navigate_finish_handler_array} from "./yt_navigate_finish_handler_array.js";
+import {g_api} from "../g_api.ts";
+import {yt_navigate_handler_array} from "./yt_navigate_handler_array.ts";
+import {yt_navigate_finish_handler_array} from "./yt_navigate_finish_handler_array.ts";
 function log_yt_finish_navigation() {}
 export function yt_watch_page_loaded_handler() {
 	if(!ytd_app.value) {

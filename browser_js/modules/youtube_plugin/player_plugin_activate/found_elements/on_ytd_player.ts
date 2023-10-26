@@ -1,4 +1,4 @@
-import {element_map} from "../event/element_map.js";
+import {element_map} from "../event/element_map.ts";
 
 declare global {
 	interface Window {

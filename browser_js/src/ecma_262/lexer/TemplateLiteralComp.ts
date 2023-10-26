@@ -1,6 +1,6 @@
-import {Dispatcher} from "./Dispatcher.js";
-import {LexerBase} from "./LexerBase.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {Dispatcher} from "./Dispatcher.ts";
+import {LexerBase} from "./LexerBase.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 
 // https://tc39.es/ecma262/#sec-template-literal-lexical-components
 // Template Literal Lexical Components

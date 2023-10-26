@@ -1,8 +1,8 @@
-import {Box} from "./Box.js";
+import {Box} from "./Box.ts";
 import {BoxTemplate} from "./template/BoxTemplate.js";
-import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
-import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.js";
-import {StackVM} from "../ns_import_type.js";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox.ts";
+import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.ts";
+import {StackVM} from "../ns_import_type.ts";
 
 export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",typeof CSSStyleSheet> {
 	readonly type="constructor_box";

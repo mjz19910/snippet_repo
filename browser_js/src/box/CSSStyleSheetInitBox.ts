@@ -1,4 +1,4 @@
-import {MediaListBox} from "./MediaListBox.js";
+import {MediaListBox} from "./MediaListBox.ts";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetInit> {

@@ -1,11 +1,11 @@
-import {ItemInfoType} from "../ItemInfoType.js";
-import {LexerBase} from "./LexerBase.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {ItemInfoType} from "../ItemInfoType.ts";
+import {LexerBase} from "./LexerBase.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 import {run_test_1} from "./test/run_test_1.js";
 import {run_test_2} from "./test/run_test_2.js";
 import {produce_input_element_or_div} from "./produce_input_element_or_div";
 import {lexer_produce_input_element} from "./lexer_produce_input_element";
-import {Test} from "../Test.js";
+import {Test} from "../Test.ts";
 
 export const debug=false;
 

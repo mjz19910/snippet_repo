@@ -1,3 +1,3 @@
-import {HeldType} from "./HeldType.js";
+import {HeldType} from "./HeldType.ts";
 
 export let scripts_holders: HeldType[]=[];

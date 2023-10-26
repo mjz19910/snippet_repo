@@ -1,6 +1,6 @@
-import {D_Thumbnail} from "../../../d/group_D.js";
-import {E_Watch} from "../../../e/E.js";
-import {G_Text} from "../../../ghi/group_G.js";
+import {D_Thumbnail} from "../../../d/group_D.ts";
+import {E_Watch} from "../../../e/E.ts";
+import {G_Text} from "../../../ghi/group_G.ts";
 
 export type D_VideoInfoCardContent={
 	videoThumbnail: D_Thumbnail;

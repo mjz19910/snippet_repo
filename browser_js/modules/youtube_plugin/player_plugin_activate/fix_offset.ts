@@ -1,5 +1,5 @@
 import {plugin_overlay_element} from "./elements/plugin_overlay_element.js";
-import {sumOffset} from "./sumOffset.js";
+import {sumOffset} from "./sumOffset.ts";
 
 export function fix_offset() {
 	if(!ytd_player.value)

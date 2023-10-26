@@ -1,5 +1,5 @@
-import {Dispatcher} from "../Dispatcher.js";
-import {lexer_format_callback} from "../lexer_format_callback.js";
+import {Dispatcher} from "../Dispatcher.ts";
+import {lexer_format_callback} from "../lexer_format_callback.ts";
 import {lex_js} from "../lex_js";
 
 export function run_test_1(test_class: any) {

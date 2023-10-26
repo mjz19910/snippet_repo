@@ -1,3 +1,3 @@
-import {Box} from "../mod/Box.js";
+import {Box} from "../mod/Box.ts";
 
 export interface NewableInstancePack<T> {make_box(box_value: new (...a: Box[]) => T,construct_args: Box[]): Box;}

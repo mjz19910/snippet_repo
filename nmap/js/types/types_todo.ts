@@ -1,7 +1,7 @@
-import {lit_value} from "./lit_value.js";
-import {lit_valueT} from "./lit_valueT.js";
-import {range} from "./range.js";
-import {rangeT} from "./rangeT.js";
+import {lit_value} from "./lit_value.ts";
+import {lit_valueT} from "./lit_valueT.ts";
+import {range} from "./range.ts";
+import {rangeT} from "./rangeT.ts";
 export type LongRetType=[
 	[64,233,rangeT<[[160,171],[176,191]]>,1],
 	[66,102,[0,1,12,15],1],

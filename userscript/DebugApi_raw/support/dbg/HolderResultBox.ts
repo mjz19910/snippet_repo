@@ -1,5 +1,5 @@
-import {DepthBoxA} from "./DepthBoxA.js";
-import {RealHolderUnk} from "./RealHolderUnk.js";
-import {ValueIdArrBox} from "./ValueIdArrBox.js";
+import {DepthBoxA} from "./DepthBoxA.ts";
+import {RealHolderUnk} from "./RealHolderUnk.ts";
+import {ValueIdArrBox} from "./ValueIdArrBox.ts";
 
 export type HolderResultBox=RealHolderUnk|ValueIdArrBox|DepthBoxA;

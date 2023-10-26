@@ -1,3 +1,3 @@
-import {YtdMastheadWithContainer} from "./YtdMastheadWithContainer.js";
+import {YtdMastheadWithContainer} from "./YtdMastheadWithContainer.ts";
 
 export abstract class YtdMasthead {abstract $: YtdMastheadWithContainer;}

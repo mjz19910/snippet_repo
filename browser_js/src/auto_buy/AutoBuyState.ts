@@ -1,8 +1,8 @@
-import {AverageRatioRoot} from "./AverageRatioRoot.js";
-import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
+import {AverageRatioRoot} from "./AverageRatioRoot.ts";
+import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.ts";
 import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode";
-import {AverageRatio} from "./AverageRatio.js";
-import {BaseNode} from "../timer_node/BaseNode.js";
+import {AverageRatio} from "./AverageRatio.ts";
+import {BaseNode} from "../timer_node/BaseNode.ts";
 
 // AutoBuyState
 declare global {

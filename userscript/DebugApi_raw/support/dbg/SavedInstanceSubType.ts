@@ -1,6 +1,3 @@
-import {SavedInstanceObject} from "./SavedInstanceObject";
-import {SavedInstanceMetaType} from "./SavedInstanceMetaType";
-
-declare global {type SavedInstanceSubType=[SavedInstanceMetaType,SavedInstanceObject];}
-
-export {type SavedInstanceSubType};
+import {SavedInstanceObject} from "./SavedInstanceObject.ts";
+import {SavedInstanceMetaType} from "./SavedInstanceMetaType.ts";
+export type SavedInstanceSubType=[SavedInstanceMetaType,SavedInstanceObject];

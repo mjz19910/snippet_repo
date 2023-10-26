@@ -1,7 +1,7 @@
-import {Dispatcher} from "./Dispatcher.js";
-import {LexerStateData} from "./LexerStateData.js";
-import {LexReturnType} from "./LexReturnType.js";
-import {lexer_format_callback} from "./lexer_format_callback.js";
+import {Dispatcher} from "./Dispatcher.ts";
+import {LexerStateData} from "./LexerStateData.ts";
+import {LexReturnType} from "./LexReturnType.ts";
+import {lexer_format_callback} from "./lexer_format_callback.ts";
 
 export function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,dispatcher: Dispatcher,str: string,res_arr: LexReturnType[]) {
 	let res=dispatcher.InputElementRegExpOrTemplateTail(str,state.cur_index);

@@ -1,4 +1,4 @@
-import {BoxTemplate} from "../template/BoxTemplate.js";
+import {BoxTemplate} from "../template/BoxTemplate.ts";
 
 export class CSSStyleSheetPromiseBox extends BoxTemplate<"promise_box",Promise<CSSStyleSheet>> {
 	readonly type="promise_box";

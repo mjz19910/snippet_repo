@@ -1,10 +1,10 @@
-import {Box} from "../box/Box.js";
-import {NumberBox} from "../box/NumberBox.js";
-import {VoidBox} from "../box/VoidBox.js";
-import {InstructionType} from "../instruction/InstructionType.js";
-import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.js";
-import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
-import {StackVMFlags} from "./StackVMFlags.js";
+import {Box} from "../box/Box.ts";
+import {NumberBox} from "../box/NumberBox.ts";
+import {VoidBox} from "../box/VoidBox.ts";
+import {InstructionType} from "../instruction/InstructionType.ts";
+import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.ts";
+import {SimpleStackVMParser} from "./SimpleStackVMParser.ts";
+import {StackVMFlags} from "./StackVMFlags.ts";
 
 export class StackVMBase {
 	update_instruction(offset: number, value: Box, lex_instruction: [string,...any[]]) {

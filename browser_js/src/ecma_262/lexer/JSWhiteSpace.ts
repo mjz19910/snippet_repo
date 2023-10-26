@@ -1,5 +1,5 @@
-import {LexerBase} from "./LexerBase.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {LexerBase} from "./LexerBase.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 // https://tc39.es/ecma262/#sec-white-space
 export class JSWhiteSpace extends LexerBase {
 	// https://tc39.es/ecma262/#prod-WhiteSpace

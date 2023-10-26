@@ -1,5 +1,5 @@
-import {ytd_page_manager} from "../elements/ytd_page_manager.js";
-import {element_map} from "../event/element_map.js";
+import {ytd_page_manager} from "../elements/ytd_page_manager.ts";
+import {element_map} from "../event/element_map.ts";
 
 declare global {
 	interface Window {

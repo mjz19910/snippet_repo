@@ -1,5 +1,5 @@
-import {plr_raw_replace} from "./plr_raw_replace.js";
-import {plr_raw_replace_embed} from "./plr_raw_replace_embed.js";
+import {plr_raw_replace} from "./plr_raw_replace.ts";
+import {plr_raw_replace_embed} from "./plr_raw_replace_embed.ts";
 
 export function act_found_create_yt_player(event: {data: {type: string; data: [any,any,any];};}) {
 	let tr=event.data.type;

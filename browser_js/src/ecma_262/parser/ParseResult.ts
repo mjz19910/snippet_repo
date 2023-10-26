@@ -1,4 +1,4 @@
-import {ParseTree} from "./ParseTree.js";
+import {ParseTree} from "./ParseTree.ts";
 
 export class ParseResult {
 	m_is_ok=false;

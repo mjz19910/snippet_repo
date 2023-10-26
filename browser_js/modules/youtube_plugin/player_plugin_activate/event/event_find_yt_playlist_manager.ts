@@ -1,5 +1,5 @@
-import {on_yt_playlist_manager} from "../found_elements/on_yt_playlist_manager.js";
-import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "./ns.js";
+import {on_yt_playlist_manager} from "../found_elements/on_yt_playlist_manager.ts";
+import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "./ns.ts";
 
 /** ID(20) */
 export function event_find_yt_playlist_manager(this: CustomEventTarget,event: CustomEventType) {

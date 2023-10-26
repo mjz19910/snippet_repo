@@ -1,5 +1,5 @@
-import {ytd_watch_flexy} from "../elements/ytd_watch_flexy.js";
-import {element_map} from "../event/element_map.js";
+import {ytd_watch_flexy} from "../elements/ytd_watch_flexy.ts";
+import {element_map} from "../event/element_map.ts";
 
 declare global {
 	interface Window {

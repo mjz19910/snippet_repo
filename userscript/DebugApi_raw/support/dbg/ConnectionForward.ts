@@ -1,4 +1,4 @@
-import {MessageType} from "./MessageType.js";
+import {MessageType} from "./MessageType.ts";
 
 export type ConnectionForward={
 	type: "forward";

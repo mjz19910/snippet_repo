@@ -1,5 +1,5 @@
-import {DStr_DI_AKLMZ} from "../d/mod_D/DI_T/DI_T_move.js";
-import {T_GetTypeof} from "../stu/group_T.js";
+import {DStr_DI_AKLMZ} from "../d/mod_D/DI_T/DI_T_move.ts";
+import {T_GetTypeof} from "../stu/group_T.ts";
 
 export type G_MakeGroupShape<T,L extends "one"|"arr"|"many"|"typeof_name"|"instance_name"="one",M=string>={
 	a: DStr_DI_AKLMZ; k: "item"; l: L; m: M; z: [T];

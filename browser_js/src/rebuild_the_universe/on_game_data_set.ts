@@ -1,7 +1,7 @@
-import {auto_buy_obj} from "../auto_buy/auto_buy_obj.js";
-import {PaceType} from "../PaceType.js";
-import {pace_finish_proxy_apply} from "../pace_finish_proxy_apply.js";
-import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.js";
+import {auto_buy_obj} from "../auto_buy/auto_buy_obj.ts";
+import {PaceType} from "../PaceType.ts";
+import {pace_finish_proxy_apply} from "../pace_finish_proxy_apply.ts";
+import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.ts";
 
 declare global {
 	interface Window {

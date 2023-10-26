@@ -1,8 +1,8 @@
-import {attached_proxy_arr} from "./attached_proxy_arr.js";
-import {attach_event_target_add_event_listener_proxy} from "./attach_event_target_add_event_listener_proxy.js";
-import {attach_promise_then_proxy} from "./attach_promise_then_proxy.js";
-import {attach_request_animation_frame_proxy} from "./attach_request_animation_frame_proxy.js";
-import {attach_string_index_of_proxy} from "./attach_string_index_of_proxy.js";
+import {attached_proxy_arr} from "./attached_proxy_arr.ts";
+import {attach_event_target_add_event_listener_proxy} from "./attach_event_target_add_event_listener_proxy.ts";
+import {attach_promise_then_proxy} from "./attach_promise_then_proxy.ts";
+import {attach_request_animation_frame_proxy} from "./attach_request_animation_frame_proxy.ts";
+import {attach_string_index_of_proxy} from "./attach_string_index_of_proxy.ts";
 
 declare global {
 	interface Window {

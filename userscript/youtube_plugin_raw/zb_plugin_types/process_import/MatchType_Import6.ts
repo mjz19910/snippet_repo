@@ -1,4 +1,4 @@
-import {MatchType_Import2} from "./MatchType_Import2.js";
-import {ThePathMap} from "./ThePathMap.js";
+import {MatchType_Import2} from "./MatchType_Import2.ts";
+import {ThePathMap} from "./ThePathMap.ts";
 
 export type MatchType_Import6=Extract<MatchType_Import2,keyof ThePathMap>;

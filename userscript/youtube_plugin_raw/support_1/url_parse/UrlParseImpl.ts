@@ -1,5 +1,5 @@
-import {UrlParseRes} from "./UrlParseRes.js";
-import {UrlParseRes_noSearch} from "./UrlParseRes_noSearch.js";
+import {UrlParseRes} from "./UrlParseRes.ts";
+import {UrlParseRes_noSearch} from "./UrlParseRes_noSearch.ts";
 
 export type UrlParseImpl<T extends string>=
 	T extends `${infer Protocol extends `${string}:`}//${infer Host}/${infer PathName}?${infer Search}`?

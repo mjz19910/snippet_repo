@@ -1,4 +1,4 @@
-import {T_PArr_1} from "../stu/group_T.js";
+import {T_PArr_1} from "../stu/group_T.ts";
 
 export type T_D32<T extends number>=T_PArr_1<[["v_data32",T]]>;
 export type T_D64<T extends bigint>=T_PArr_1<[["v_data64",number[],T]]>;

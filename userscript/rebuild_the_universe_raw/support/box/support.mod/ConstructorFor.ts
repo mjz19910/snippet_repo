@@ -1,1 +1,1 @@
-export type ConstructorFor<T,A extends any[]>=new (...args: A) => T;
+export type ConstructorFor<T,A extends unknown[]>=new (...args: A) => T;

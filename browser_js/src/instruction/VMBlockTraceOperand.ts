@@ -1,5 +1,5 @@
-import {DomInstructionType} from "./DomInstructionType.js";
-import {DomTaggedPack} from "./DomTaggedPack.js";
+import {DomInstructionType} from "./DomInstructionType.ts";
+import {DomTaggedPack} from "./DomTaggedPack.ts";
 
 export type VMBlockTraceOperand=
 	["begin",DomInstructionType|null]|

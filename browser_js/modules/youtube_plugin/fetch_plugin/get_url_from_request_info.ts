@@ -1,5 +1,5 @@
-import {debug} from "../debug.js";
-import {RequestInfoExt} from "./RequestInfoExt.js";
+import {debug} from "../debug.ts";
+import {RequestInfoExt} from "./RequestInfoExt.ts";
 
 export function get_url_from_request_info(value: RequestInfoExt) {
 	if(typeof value.request_info==='string') {

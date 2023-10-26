@@ -1,4 +1,4 @@
-import {UniqueIdGenerator} from "./ns.js";
+import {UniqueIdGenerator} from "./ns.ts";
 import {
 	ReplyClearSingle,
 	ReplySetRepeating,
@@ -6,17 +6,17 @@ import {
 	TIMER_REPEATING,
 	TIMER_SINGLE,
 	TIMER_TAG_COUNT
-} from "./constants.js";
-import {DispatchMessageType} from "./constant_types.js";
+} from "./constants.ts";
+import {DispatchMessageType} from "./constant_types.ts";
 import {
 	TimeoutClearStrings,
 	TimeoutSetStrings
-} from "./interfaces.js";
-import {SetMessageData} from "./SetMessageData.js";
-import {TimerApi} from "./TimerApi.js";
-import {TimerState} from "./TimerState.js";
-import {TimerTag} from "./TimerTag.js";
-import {WorkerApi} from "./WorkerApi.js";
+} from "./interfaces.ts";
+import {SetMessageData} from "./SetMessageData.ts";
+import {TimerApi} from "./TimerApi.ts";
+import {TimerState} from "./TimerState.ts";
+import {TimerTag} from "./TimerTag.ts";
+import {WorkerApi} from "./WorkerApi.ts";
 
 export class Timer {
 	id_generator;

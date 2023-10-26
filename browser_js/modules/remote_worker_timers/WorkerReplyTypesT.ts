@@ -1,3 +1,3 @@
-import {WorkerReplyTimerFireTypesT} from "./constant_types.js";
+import {WorkerReplyTimerFireTypesT} from "./constant_types.ts";
 
 export type WorkerReplyTypesT={fire: WorkerReplyTimerFireTypesT;};

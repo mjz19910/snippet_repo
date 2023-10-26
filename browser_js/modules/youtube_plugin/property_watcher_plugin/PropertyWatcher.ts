@@ -1,9 +1,9 @@
-import {active_property_watcher_paths} from "./active_property_watcher_paths.js";
-import {ghost_symbol} from "./ghost_symbol.js";
-import {watched_target_map} from "./watched_target_map.js";
-import {object_property_watcher} from "../object_property_watcher.js";
-import {watched_function_weak_set} from "./watched_function_weak_set.js";
-import {init_property_watcher_for_target} from "./init_property_watcher_for_target.js";
+import {active_property_watcher_paths} from "./active_property_watcher_paths.ts";
+import {ghost_symbol} from "./ghost_symbol.ts";
+import {watched_target_map} from "./watched_target_map.ts";
+import {object_property_watcher} from "../object_property_watcher.ts";
+import {watched_function_weak_set} from "./watched_function_weak_set.ts";
+import {init_property_watcher_for_target} from "./init_property_watcher_for_target.ts";
 
 export class PropertyWatcher {
 	[ghost_symbol]=true;

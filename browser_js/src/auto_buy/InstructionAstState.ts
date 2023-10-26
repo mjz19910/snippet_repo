@@ -1,5 +1,5 @@
-import {InstructionType} from "../instruction/InstructionType.js";
-import {TreeItem} from "./TreeItem.js";
+import {InstructionType} from "../instruction/InstructionType.ts";
+import {TreeItem} from "./TreeItem.ts";
 
 type StackItemType=['children',number,[number,TreeItem[]]];
 

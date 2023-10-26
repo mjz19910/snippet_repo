@@ -1,13 +1,14 @@
+// deno-disable-lint-file
 import {
 	default as protobufjs,
 	type Reader,
 	type Root,
 	type Type,
 } from "protobufjs";
-import {into_type} from "../support/into_type.js";
-import {get_token_data} from "./get_token_data.js";
-import {get_token_data_from_file} from "./get_token_data_from_file.js";
-import {r,__dirname} from "./r.js";
+import {into_type} from "../support/into_type.ts";
+import {get_token_data} from "./get_token_data.ts";
+import {get_token_data_from_file} from "./get_token_data_from_file.ts";
+import {r,__dirname} from "./r.ts";
 type Long=import("long");
 
 function run() {

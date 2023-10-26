@@ -1,5 +1,5 @@
-import {attached_proxy_arr} from "./attached_proxy_arr.js";
-import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy.js";
+import {attached_proxy_arr} from "./attached_proxy_arr.ts";
+import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy.ts";
 
 export function attach_event_target_add_event_listener_proxy() {
 	EventTarget.prototype.addEventListener=new Proxy(EventTarget.prototype.addEventListener,{

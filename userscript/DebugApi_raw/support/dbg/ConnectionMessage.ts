@@ -1,6 +1,6 @@
-import {ConnectFlag} from "./ConnectFlag.js";
-import {ConnectionForward} from "./ConnectionForward.js";
-import {MessageType} from "./MessageType.js";
+import {ConnectFlag} from "./ConnectFlag.ts";
+import {ConnectionForward} from "./ConnectionForward.ts";
+import {MessageType} from "./MessageType.ts";
 
 export type ConnectionMessage={
 	type: "tcp";

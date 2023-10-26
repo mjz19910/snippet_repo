@@ -7,7 +7,7 @@ import {port_state} from "./dom_observer/port_state.js";
 import {yt_state_map} from "./fetch_result_handler_plugin/yt_state_map.js";
 import {PluginOverlayElement} from "./player_plugin_activate/elements/PluginOverlayElement.js";
 import {yt_watch_page_loaded_handler} from "./player_plugin_activate/yt_watch_page_loaded_handler.js";
-import {PropertyHandler} from "./PropertyHandler.js";
+import {PropertyHandler} from "./PropertyHandler.ts";
 import {HTMLMediaElementGainController} from "./volume_range_plugin/HTMLMediaElementGainController.js";
 
 export class GApiType {

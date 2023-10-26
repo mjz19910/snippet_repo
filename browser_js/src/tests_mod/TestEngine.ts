@@ -1,4 +1,4 @@
-import {BaseTestRunner} from "./BaseTestRunner.js";
+import {BaseTestRunner} from "./BaseTestRunner.ts";
 export class TestEngine extends BaseTestRunner {
 	m_is_user_completing_tests=false;
 	is_user_reporting_completion() {

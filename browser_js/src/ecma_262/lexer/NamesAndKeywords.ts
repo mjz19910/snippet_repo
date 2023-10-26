@@ -1,5 +1,5 @@
-import {LexerBase} from "./LexerBase.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {LexerBase} from "./LexerBase.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 
 export class NamesAndKeywords extends LexerBase {
 	debug=false;

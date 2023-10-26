@@ -1,5 +1,5 @@
-import {as_cast} from "../group2/WorkerStateModel_item.js";
-import {ParseJsState} from "./_deparsejs.js";
+import {as_cast} from "../group2/WorkerStateModel_item.ts";
+import {ParseJsState} from "./_deparsejs.ts";
 // cspell:ignore deparsejs
 
 export function test_fn() {

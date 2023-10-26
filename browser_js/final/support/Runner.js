@@ -20,7 +20,7 @@ export class Runner {
 	self_sym=Symbol();
 	/** @arg {any[]} e */
 	do_cur(...e) {
-		var i;
+		let i;
 		this.argv=e;
 		if(this.rx_lx) {
 			i=this.names.indexOf(this.rx_lx.result_name);

@@ -1,7 +1,7 @@
-import {ObjectBox_WithPropertyList} from "./BoxWithPropertiesIsBox.js";
-import {GenericObjectBox as ObjectBox} from "./GenericObjectBox.js";
-import {ObjectIndexWithBox as ObjectBox_WithIndexAsBox} from "./ObjectIndexWithBox.js";
-import {ObjectNullBox as ObjectBox_Null} from "./ObjectNullBox.js";
+import {ObjectBox_WithPropertyList} from "./BoxWithPropertiesIsBox.ts";
+import {GenericObjectBox as ObjectBox} from "./GenericObjectBox.ts";
+import {ObjectIndexWithBox as ObjectBox_WithIndexAsBox} from "./ObjectIndexWithBox.ts";
+import {ObjectNullBox as ObjectBox_Null} from "./ObjectNullBox.ts";
 
 export type G_BaseObjectBox=
 	|ObjectBox_WithPropertyList

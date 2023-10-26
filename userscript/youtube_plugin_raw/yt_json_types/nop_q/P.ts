@@ -1,12 +1,12 @@
-import {TW_Str,TW_Str2} from "../_rtv_wrong/TW_Str.js";
-import {TW_TagStr} from "../_rtv_wrong/TW_TagStr.js";
-import {T_D32,T_FD32,T_FD64,TV_Str,T_VW_Bigint,TV_Str_CS,T_D64} from "../_rtv_wrong/T_Data.js";
-import {T_VA} from "../_rtv_wrong/T_VA.js";
-import {T_VW_Child} from "../_rtv_wrong/T_VW.js";
-import {T_VW_J} from "../_rtv_wrong/T_VW_J.js";
-import {DU_VideoId,T_IdTemplate,D_UserIdStr,DU_Playlist_Id} from "../d/group_D.js";
-import {VW_BinaryTimestamp,T_Base64Str} from "../ghi/group_G.js";
-import {T_PArr_R,T_VW,T_Param_Child} from "../stu/group_T.js";
+import {TW_Str,TW_Str2} from "../_rtv_wrong/TW_Str.ts";
+import {TW_TagStr} from "../_rtv_wrong/TW_TagStr.ts";
+import {T_D32,T_FD32,T_FD64,TV_Str,T_VW_Bigint,TV_Str_CS,T_D64} from "../_rtv_wrong/T_Data.ts";
+import {T_VA} from "../_rtv_wrong/T_VA.ts";
+import {T_VW_Child} from "../_rtv_wrong/T_VW.ts";
+import {T_VW_J} from "../_rtv_wrong/T_VW_J.ts";
+import {DU_VideoId,T_IdTemplate,D_UserIdStr,DU_Playlist_Id} from "../d/group_D.ts";
+import {VW_BinaryTimestamp,T_Base64Str} from "../ghi/group_G.ts";
+import {T_PArr_R,T_VW,T_Param_Child} from "../stu/group_T.ts";
 
 export type D_TrackingObj_f16={
 	1: T_D32<41>;

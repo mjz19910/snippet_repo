@@ -1,6 +1,6 @@
-import {title_text_overlay_enabled} from "../title_text_overlay_enabled.js";
-import {fix_offset} from "../fix_offset.js";
-import {title_text_overlay_update} from "../title_text_overlay_update.js";
+import {title_text_overlay_enabled} from "../title_text_overlay_enabled.ts";
+import {fix_offset} from "../fix_offset.ts";
+import {title_text_overlay_update} from "../title_text_overlay_update.ts";
 
 export function on_yt_action(event: CustomEvent<{actionName: "yt-fullscreen-change-action"; args: [boolean];}>|CustomEvent<{actionName: string;}>) {
 	let {detail}=event;

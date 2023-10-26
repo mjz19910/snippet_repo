@@ -1,7 +1,7 @@
-import {ProcessImport} from "../../../base_require_raw/ProcessImport.js";
-import {MatchType_WorkingDir} from "./MatchType_WorkingDir.js";
-import {ProcessImport1} from "./ProcessImport1.js";
-import {ProcessWorkingDirImport_Impl} from "./ProcessWorkingDirImport_Impl.js";
+import {ProcessImport} from "../../../base_require_raw/ProcessImport.ts";
+import {MatchType_WorkingDir} from "./MatchType_WorkingDir.ts";
+import {ProcessImport1} from "./ProcessImport1.ts";
+import {ProcessWorkingDirImport_Impl} from "./ProcessWorkingDirImport_Impl.ts";
 
 export type ProcessWorkingDirImport<T extends MatchType_WorkingDir>=ProcessImport1<ProcessWorkingDirImport_Impl<T>&string>;
 

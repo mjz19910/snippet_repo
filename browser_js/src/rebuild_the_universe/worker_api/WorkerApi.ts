@@ -10,14 +10,14 @@ import {
 	WorkerDestroyType,
 	WorkerReadyReply,
 	WorkerUpdateMessageHandlerReply
-} from "./constants.js";
+} from "./constants.ts";
 import {
 	DispatchMessageType,
 	WorkerReplyTypes,
 	WorkerSendTypes
-} from "./constant_types.js";
-import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {Timer} from "./Timer.js";
+} from "./constant_types.ts";
+import {PromiseExecutorHandle} from "./PromiseExecutorHandle.ts";
+import {Timer} from "./Timer.ts";
 
 declare global {
 	interface Window {

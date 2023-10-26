@@ -1,4 +1,4 @@
-import {ProcessImport} from "./ProcessImport.js";
+import {ProcessImport} from "./ProcessImport.ts";
 
 export namespace Test2 {
 	export type T2_Type=ProcessImport<"./YTPlugin_HandleTypes.user">;

@@ -1,5 +1,5 @@
-import {LexerBase} from "./LexerBase.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {LexerBase} from "./LexerBase.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 
 export class HashbangComments extends LexerBase {
 	HashbangComment(str: string,index: number): LexReturnType {

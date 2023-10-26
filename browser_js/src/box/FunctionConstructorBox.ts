@@ -1,7 +1,7 @@
-import {Box} from "./Box.js";
-import {FunctionBox} from "./FunctionBox.js";
-import {BoxMaker} from "./BoxMaker.js";
-import {FunctionConstructorFactory} from "./FunctionConstructorFactory.js";
+import {Box} from "./Box.ts";
+import {FunctionBox} from "./FunctionBox.ts";
+import {BoxMaker} from "./BoxMaker.ts";
+import {FunctionConstructorFactory} from "./FunctionConstructorFactory.ts";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class FunctionConstructorBox extends BoxTemplate<"constructor_box",FunctionConstructor> {

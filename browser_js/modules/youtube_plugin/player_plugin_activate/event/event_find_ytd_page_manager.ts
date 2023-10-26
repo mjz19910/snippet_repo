@@ -1,5 +1,5 @@
-import {on_ytd_page_manager} from "../found_elements/on_ytd_page_manager.js";
-import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "./ns.js";
+import {on_ytd_page_manager} from "../found_elements/on_ytd_page_manager.ts";
+import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "./ns.ts";
 
 /** ID(30) */
 export function event_find_ytd_page_manager(this: CustomEventTarget,event: CustomEventType) {

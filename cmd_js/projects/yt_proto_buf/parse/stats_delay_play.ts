@@ -1,4 +1,4 @@
-import {protobuf} from "./protobuf.js";
+import {protobuf} from "./protobuf.ts";
 declare global {
 	interface URLSearchParams {
 		[Symbol.iterator](): IterableIterator<[string,string]>;

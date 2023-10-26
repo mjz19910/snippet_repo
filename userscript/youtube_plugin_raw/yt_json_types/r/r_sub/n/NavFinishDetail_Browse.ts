@@ -1,5 +1,5 @@
-import {E_VE6827,E_VE96368,E_VE3854} from "../../../e/GR_E_VE.js";
-import {RS_VE6827_BrowsePage,RS_VE96368_BrowsePage,RS_VE3854_BrowsePage} from "../../group_R.js";
+import {E_VE6827,E_VE96368,E_VE3854} from "../../../e/GR_E_VE.ts";
+import {RS_VE6827_BrowsePage,RS_VE96368_BrowsePage,RS_VE3854_BrowsePage} from "../../group_R.ts";
 
 export type NavFinishDetail_Browse={
 	endpoint: E_VE6827;

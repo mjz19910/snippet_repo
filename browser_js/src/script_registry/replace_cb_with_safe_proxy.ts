@@ -1,6 +1,6 @@
 import {add_own_property} from "./add_own_property";
-import {cur_event_fns} from "./cur_event_fns.js";
-import {register_obj_with_registry} from "./register_obj_with_registry.js";
+import {cur_event_fns} from "./cur_event_fns.ts";
+import {register_obj_with_registry} from "./register_obj_with_registry.ts";
 
 export function replace_cb_with_safe_proxy(args: any[],index: number) {
 	let value=args[index];

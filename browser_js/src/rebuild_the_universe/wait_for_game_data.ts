@@ -1,5 +1,5 @@
-import {cint_arr} from "./cint_arr.js";
-import {cint_arr_str} from "./cint_arr_str.js";
+import {cint_arr} from "./cint_arr.ts";
+import {cint_arr_str} from "./cint_arr_str.ts";
 import {on_game_data_set} from "./on_game_data_set.js"
 import {remove_cint_item} from "./remove_cint_item.js"
 

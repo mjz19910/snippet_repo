@@ -1,6 +1,6 @@
-import {Decay} from "../../support_1/parse_url/Decay.js";
-import {D_UrlFormat,D_CompactVideo} from "../d/group_D.js";
-import {T_DistributedKeyof,T_Split,T_SplitOnce} from "../stu/group_T.js";
+import {Decay} from "../../support_1/parse_url/Decay.ts";
+import {D_UrlFormat,D_CompactVideo} from "../d/group_D.ts";
+import {T_DistributedKeyof,T_Split,T_SplitOnce} from "../stu/group_T.ts";
 
 export namespace NS_DP_Parse {
 	type GA_ParseUrlStr_1=[T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1]];

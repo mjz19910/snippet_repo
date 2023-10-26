@@ -2,14 +2,14 @@
 // 0 "<built-in>"
 // 0 "<command-line>"
 // 1 "from_cpp/HTMLToken.cppts"
-import {HTMLTokenBase} from "../HTMLTokenBase.js";
+import {HTMLTokenBase} from "../HTMLTokenBase.ts";
 // 1 "from_cpp/HTMLToken.pre.ts" 1
-import * as super_ from "../HTMLToken.js";
-import {move} from "../move.js";
-import {Optional} from "../Optional.js";
-import {OwnPtr} from "../OwnPtr.js";
-import {Vector} from "../Vector.js";
-import {Ref} from "./Ref.js";
+import * as super_ from "../HTMLToken.ts";
+import {move} from "../move.ts";
+import {Optional} from "../Optional.ts";
+import {OwnPtr} from "../OwnPtr.ts";
+import {Vector} from "../Vector.ts";
+import {Ref} from "./Ref.ts";
 
 export function use_types() {
     let ex=[

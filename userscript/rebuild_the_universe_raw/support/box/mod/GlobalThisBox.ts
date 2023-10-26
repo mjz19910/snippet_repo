@@ -1,4 +1,4 @@
-import {BoxTemplate} from "../template/BoxTemplate.js";
+import {BoxTemplate} from "../template/BoxTemplate.ts";
 
 export class GlobalThisBox extends BoxTemplate<"value_box",typeof globalThis> {
 	readonly type="value_box";

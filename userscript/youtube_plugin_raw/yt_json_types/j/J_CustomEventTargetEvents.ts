@@ -1,5 +1,5 @@
-import {AsyncPluginInitEvent} from "../../support_1/AsyncPluginInitEvent.js";
-import {PluginActivateEvent} from "../../support_1/PluginActivateEvent.js";
+import {AsyncPluginInitEvent} from "../../support_1/AsyncPluginInitEvent.ts";
+import {PluginActivateEvent} from "../../support_1/PluginActivateEvent.ts";
 import {CustomEventTarget} from "../../zc_child_modules/YTPlugin_Base.user.js";
 
 export type J_CustomEventTargetEvents={

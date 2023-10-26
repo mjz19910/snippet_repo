@@ -1,4 +1,4 @@
-import {FunctionLike} from "../types/FunctionLike.js";
+import {FunctionLike} from "../types/FunctionLike.ts";
 
 export type I_debug={
 	_bad: true;

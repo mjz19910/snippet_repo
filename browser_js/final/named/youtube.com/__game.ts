@@ -1,4 +1,4 @@
-import {IGame} from "./IGame.js";
+import {IGame} from "./IGame.ts";
 
 declare global {
 	var game: IGame;

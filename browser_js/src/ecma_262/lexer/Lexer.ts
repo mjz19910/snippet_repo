@@ -1,6 +1,6 @@
-import {Dispatcher} from "./Dispatcher.js";
-import {LexerBase} from "./LexerBase.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {Dispatcher} from "./Dispatcher.ts";
+import {LexerBase} from "./LexerBase.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 import {StopIteration} from "./StopIteration";
 
 

@@ -1,4 +1,4 @@
-import {IParseTreeRoot} from "./IParseTreeRoot.js";
+import {IParseTreeRoot} from "./IParseTreeRoot.ts";
 
 export class ParseTree {
 	root: IParseTreeRoot;

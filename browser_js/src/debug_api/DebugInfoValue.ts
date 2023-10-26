@@ -1,6 +1,6 @@
-import {DebugVarValue} from "./DebugVarValue.js";
-import {DebugNullValue} from "./DebugNullValue.js";
-import {DebugHiddenVarValue} from "./DebugHiddenVarValue.js";
+import {DebugVarValue} from "./DebugVarValue.ts";
+import {DebugNullValue} from "./DebugNullValue.ts";
+import {DebugHiddenVarValue} from "./DebugHiddenVarValue.ts";
 
 export class DebugInfoValue {
 	valid=false;

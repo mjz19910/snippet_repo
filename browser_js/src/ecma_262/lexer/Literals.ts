@@ -1,3 +1,3 @@
-import {LexerBase} from "./LexerBase.js";
+import {LexerBase} from "./LexerBase.ts";
 
 export class Literals extends LexerBase {}

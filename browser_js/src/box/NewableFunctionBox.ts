@@ -1,7 +1,7 @@
-import {StackVM} from "../ns_import_type.js";
-import {Box} from "./Box.js";
-import {NewableInstancePack} from "./NewableInstancePack.js";
-import {NewableInstancePackBox} from "./NewableInstancePackBox.js";
+import {StackVM} from "../ns_import_type.ts";
+import {Box} from "./Box.ts";
+import {NewableInstancePack} from "./NewableInstancePack.ts";
+import {NewableInstancePackBox} from "./NewableInstancePackBox.ts";
 
 
 

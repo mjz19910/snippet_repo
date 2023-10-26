@@ -1,5 +1,5 @@
-import {cur_event_fns} from "./cur_event_fns.js";
-import {has_reg_id} from "./has_reg_id.js";
+import {cur_event_fns} from "./cur_event_fns.ts";
+import {has_reg_id} from "./has_reg_id.ts";
 import {target_script_store} from "./gc_store/target_script_store.js";
 
 export function get_nearest_script() {

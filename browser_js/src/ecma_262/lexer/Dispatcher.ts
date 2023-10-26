@@ -1,18 +1,18 @@
-import {EnvSettingsType} from "../EnvSettingsType.js";
-import {LexGrammarSyntax} from "./LexGrammarSyntax.js";
+import {EnvSettingsType} from "../EnvSettingsType.ts";
+import {LexGrammarSyntax} from "./LexGrammarSyntax.ts";
 import {Lexer} from "./Lexer";
-import {JSWhiteSpace} from "./JSWhiteSpace.js";
-import {JSLineTerminators} from "./JSLineTerminators.js";
-import {LexJSComments} from "./LexJSComments.js";
-import {Tokens} from "./Tokens.js";
-import {NamesAndKeywords} from "./NamesAndKeywords.js";
-import {JSPunctuators} from "./JSPunctuators.js";
-import {Literals as Literals} from "./Literals.js";
-import {NumericLiterals} from "./NumericLiterals.js";
-import {StringLiterals} from "./StringLiterals.js";
-import {RegularExpressionLiterals} from "./RegularExpressionLiterals.js";
-import {TemplateLiteralComp} from "./TemplateLiteralComp.js";
-import {HashbangComments} from "./HashbangComments.js";
+import {JSWhiteSpace} from "./JSWhiteSpace.ts";
+import {JSLineTerminators} from "./JSLineTerminators.ts";
+import {LexJSComments} from "./LexJSComments.ts";
+import {Tokens} from "./Tokens.ts";
+import {NamesAndKeywords} from "./NamesAndKeywords.ts";
+import {JSPunctuators} from "./JSPunctuators.ts";
+import {Literals as Literals} from "./Literals.ts";
+import {NumericLiterals} from "./NumericLiterals.ts";
+import {StringLiterals} from "./StringLiterals.ts";
+import {RegularExpressionLiterals} from "./RegularExpressionLiterals.ts";
+import {TemplateLiteralComp} from "./TemplateLiteralComp.ts";
+import {HashbangComments} from "./HashbangComments.ts";
 
 export class Dispatcher {
 	lexer: Lexer;

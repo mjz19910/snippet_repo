@@ -1,5 +1,5 @@
-import {Dispatcher} from "./Dispatcher.js";
-import {LexReturnType} from "./LexReturnType.js";
+import {Dispatcher} from "./Dispatcher.ts";
+import {LexReturnType} from "./LexReturnType.ts";
 
 // https://tc39.es/ecma262/#sec-line-terminators
 export class JSLineTerminators {

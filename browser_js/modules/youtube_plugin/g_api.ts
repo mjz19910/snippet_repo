@@ -1,4 +1,4 @@
-import {GApiType} from "./GApiType.js";
+import {GApiType} from "./GApiType.ts";
 
 export const g_api: {
 	value: ReturnType<GApiType["create"]>|null;

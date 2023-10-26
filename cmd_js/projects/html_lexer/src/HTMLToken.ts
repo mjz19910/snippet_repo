@@ -1,5 +1,5 @@
-import {HTMLTokenBase} from "./HTMLTokenBase.js";
-import {Optional} from "./Optional.js";
+import {HTMLTokenBase} from "./HTMLTokenBase.ts";
+import {Optional} from "./Optional.ts";
 
 export class HTMLToken extends HTMLTokenBase {
     opt(): Optional<HTMLTokenBase> {

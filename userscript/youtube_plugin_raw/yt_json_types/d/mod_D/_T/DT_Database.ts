@@ -1,4 +1,4 @@
-import {DT_DatabaseStoreTypes} from "./DT_DatabaseStoreTypes.js";
+import {DT_DatabaseStoreTypes} from "./DT_DatabaseStoreTypes.ts";
 
 export namespace DT_Database {
 	const V_StoreKeys=(["boxed_id"] as const) satisfies readonly (keyof DT_DatabaseStoreTypes)[];

@@ -1,4 +1,4 @@
-import {playlist_arr} from "./playlist_arr.js";
+import {playlist_arr} from "./playlist_arr.ts";
 
 declare global {
 	interface Window {

@@ -1,11 +1,11 @@
-import {GoogleAdList} from "./GoogleAdList.js";
+import {GoogleAdList} from "./GoogleAdList.ts";
 import {DocumentWriteList} from "./document_write_list/DocumentWriteList.js";
-import {dom_add_elm_filter} from "./dom_add_elm_filter.js";
+import {dom_add_elm_filter} from "./dom_add_elm_filter.ts";
 import {move_timers_to_worker_promise_executor} from "./worker_api/move_timers_to_worker_promise_executor.js";
-import {on_timers_moved} from "./on_timers_moved.js";
+import {on_timers_moved} from "./on_timers_moved.ts";
 import {proxy_jquery} from "./jquery/proxy_jquery.js";
-import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.js";
-import {cint_arr} from "./cint_arr.js";
+import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.ts";
+import {cint_arr} from "./cint_arr.ts";
 
 export function rebuild_auto_main() {
 	let enable_proxy=true;

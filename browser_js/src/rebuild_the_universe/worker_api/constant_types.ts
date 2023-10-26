@@ -32,7 +32,7 @@ import {
 	WorkerReadyReply,
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
-} from "./constants.js";
+} from "./constants.ts";
 
 export type TimeoutSetStringsT={
 	single: typeof TimeoutSetStringSingle;

@@ -1,7 +1,7 @@
-import {C_Innertube} from "../../abc/group_C.js";
-import {G_Text} from "../../ghi/group_G.js";
-import {T_EnumStr} from "../../stu/group_T.js";
-import {D_Thumbnail,D_LoggingDirectives} from "../group_D.js";
+import {C_Innertube} from "../../abc/group_C.ts";
+import {G_Text} from "../../ghi/group_G.ts";
+import {T_EnumStr} from "../../stu/group_T.ts";
+import {D_Thumbnail,D_LoggingDirectives} from "../group_D.ts";
 
 export type D_MarkerItem={
 	title: G_Text;

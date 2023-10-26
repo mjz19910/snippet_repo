@@ -1,11 +1,11 @@
-import {D_Enum_GuideAction,D_EngagementPanelTargetId,D_EngagementPanelVisibility,D_Thumbnail,D_UserIdStr,R_Button,T_IdTemplate} from "../d/group_D.js";
-import {G_ChatItem,G_Text,G_WatchNext} from "../ghi/group_G.js";
-import {TR_MultiPageMenu_Empty,A_ConfirmDialog} from "../nop_q/Popup.js";
-import {R_GuideEntry,R_NotificationText,RA_ReelDismissal,RA_NotificationMulti,R_ChannelSwitcherPage,R_Transcript,R_VideoViewCount,RA_Notification} from "../r/group_R.js";
-import {SU_SignalStr} from "../stu/group_S.js";
-import {TB_ContinuationItemMap,T_Item,T_Items,T_Menu,T_Page} from "../stu/group_T.js";
-import {TA_CreateObjectFromContinuationMap,A_AddChatItem} from "./A.js";
-import {B_Hack} from "./group_B.js";
+import {D_Enum_GuideAction,D_EngagementPanelTargetId,D_EngagementPanelVisibility,D_Thumbnail,D_UserIdStr,R_Button,T_IdTemplate} from "../d/group_D.ts";
+import {G_ChatItem,G_Text,G_WatchNext} from "../ghi/group_G.ts";
+import {TR_MultiPageMenu_Empty,A_ConfirmDialog} from "../nop_q/Popup.ts";
+import {R_GuideEntry,R_NotificationText,RA_ReelDismissal,RA_NotificationMulti,R_ChannelSwitcherPage,R_Transcript,R_VideoViewCount,RA_Notification} from "../r/group_R.ts";
+import {SU_SignalStr} from "../stu/group_S.ts";
+import {TB_ContinuationItemMap,T_Item,T_Items,T_Menu,T_Page} from "../stu/group_T.ts";
+import {TA_CreateObjectFromContinuationMap,A_AddChatItem} from "./A.ts";
+import {B_Hack} from "./group_B.ts";
 
 //#region Action data
 export type AD_AddChatItem={item: G_ChatItem; clientId?: string;};

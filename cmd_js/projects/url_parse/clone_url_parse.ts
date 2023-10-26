@@ -1,5 +1,5 @@
-import {UrlParseOpt} from "./UrlParse.js";
-import {UrlParseErr} from "./UrlParseErr.js";
+import {UrlParseOpt} from "./UrlParse.ts";
+import {UrlParseErr} from "./UrlParseErr.ts";
 
 
 export function clone_url_parse<T extends string extends (infer U extends string)? UrlParseOpt<U> extends {}? U:never:never>(v: UrlParseOpt<T>) {

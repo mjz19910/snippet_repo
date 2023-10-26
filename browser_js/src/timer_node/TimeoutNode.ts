@@ -1,5 +1,5 @@
-import {AbstractFireNode} from "./AbstractFireNode.js";
-import {BaseNode} from "./BaseNode.js";
+import {AbstractFireNode} from "./AbstractFireNode.ts";
+import {BaseNode} from "./BaseNode.ts";
 
 export class TimeoutNode extends BaseNode {
 	m_timeout: number;

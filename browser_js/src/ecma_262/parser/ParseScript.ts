@@ -1,4 +1,4 @@
-import {ParseText} from "./ParseText.js";
+import {ParseText} from "./ParseText.ts";
 
 export interface IRealm {}
 export class ECMAScriptCode {}

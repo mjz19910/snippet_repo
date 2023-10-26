@@ -1,6 +1,6 @@
-import {Box} from "./Box.js";
+import {Box} from "./Box.ts";
 import {BoxTemplate} from "./template/BoxTemplate.js";
-import {PromiseBox} from "./PromiseBox.js";
+import {PromiseBox} from "./PromiseBox.ts";
 
 export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Promise<Box>> {
 	readonly type="function_box";
