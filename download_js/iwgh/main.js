@@ -57,10 +57,13 @@ function parse_sentence(str) {
 			case "national":
 			case "popular":
 			case "plant":
-			case "kind":
-			case "type": {
+			case "kind": {
 				let word2=parsed_src.shift();
 				console.log(["w1",word1,"w2",word2]);
+			} break x;
+			case "type": {
+				let word2=parsed_src.shift();
+				console.log(["w2",word2]);
 			} break x;
 			default: {
 				console.log(["w1",word1]);
