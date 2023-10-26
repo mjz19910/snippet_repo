@@ -1,1 +1,1 @@
-export type DebugFunctionType=(this: {},...a: any[]) => any
+export type DebugFunctionType=(this: Record<never,never>,...a: unknown[]) => unknown;
