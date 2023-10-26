@@ -455,7 +455,15 @@ async function run() {
   }
   let before_wait = dict.size;
   const request_log_interval = 10;
-  for (let j = 0; j < 2; j++) {
+  const at_loop_end = () => {
+    console.log("dict word num", dict.size - before_wait);
+    before_wait = dict.size;
+    const new_words_arr = [...new_words_set.values()].sort();
+    for (const new_word of new_words_arr) {
+      parse_rng_word(new_word, true, true);
+    }
+  };
+  for (let j = 0; j < (10 * 8); j++) {
     const request_count = 4;
     for (let i = 0; i < request_count; i++) {
       arr.push(fetch_one_dictionary_page());
@@ -463,10 +471,10 @@ async function run() {
     await Promise.all(arr);
     arr.length = 0;
     if (j % request_log_interval === (request_log_interval - 1)) {
-      console.log("dict word num", dict.size - before_wait);
-      before_wait = dict.size;
+      at_loop_end();
     }
   }
+	at_loop_end();
   if (description_set_state.modified) {
     const description_arr = [...description_set.values()].sort();
     console.log("description_arr.length", description_arr.length);
@@ -479,10 +487,6 @@ async function run() {
     await write_entire_file(dictionary_file, dictionary_arr);
   }
   dictionary_file.close();
-  const new_words_arr = [...new_words_set.values()].sort();
-  for (const new_word of new_words_arr) {
-    parse_rng_word(new_word, true, true);
-  }
 }
 await run();
 
