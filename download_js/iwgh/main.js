@@ -18,10 +18,12 @@ function parse_sentence(str) {
 				});
 				parsed_src.shift();
 				console.log(parsed_src);
-			} break;
+				throw 1;
+			}
 			default: {
 				console.log(parsed_src[0]);
-			} break;
+				throw 1;
+			}
 		}
 	}
 	return str;
