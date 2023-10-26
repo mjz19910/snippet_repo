@@ -257,7 +257,7 @@ const rng_word_num_map = new Map();
  */
 function parse_rng_word(word) {
   word = word.toLowerCase();
-	dict.add(word);
+  dict.add(word);
   if (word.startsWith("th")) {
     word = word.slice(2);
   }
@@ -318,7 +318,7 @@ async function one_page() {
 async function read_entire_file(file) {
   await file.seek(0, 0);
   let buf = new Uint8Array(0);
-  const tmp_buf = new Uint8Array(1024);
+  const tmp_buf = new Uint8Array(1024 * 8);
   do {
     const n = await file.read(tmp_buf);
     if (n === null) break;
@@ -353,7 +353,7 @@ async function run() {
   if (dictionary_str !== "") {
     const load_arr = JSON.parse(dictionary_str);
     for (const word of load_arr) {
-			parse_rng_word(word);
+      parse_rng_word(word);
     }
   }
   const before_wait = dict.size;
