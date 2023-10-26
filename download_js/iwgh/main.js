@@ -314,6 +314,7 @@ function parse_rng_word(word) {
   } else {
     word = strip_word_part(word);
   }
+  if (word === "") return;
   dict.add(word);
   const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
