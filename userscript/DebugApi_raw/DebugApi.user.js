@@ -2311,38 +2311,37 @@ class ReversePrototypeChain {
 		if (prototype === void 0) {
 			return;
 		}
-		let cache_key = this.get_cache_key(prototype);
+		const cache_key = this.get_cache_key(prototype);
 		this.cache_prototype(cache_key, prototype);
 		x:
 		if (next_proto) {
-			let next = this.add_one(next_proto, this.list.at(index - 1), index - 1);
+			const next = this.add_one(next_proto, this.list.at(index - 1), index - 1);
 			if (!next) {
 				break x;
 			}
-			let non_null_next = next;
-			let idx = this.destination[cache_key].child.prototypes.findIndex((e) =>
+			const non_null_next = next;
+			const idx = this.destination[cache_key].child.prototypes.findIndex((e) =>
 				e.name === non_null_next.name
 			);
 			if (idx < 0) {
 				this.destination[cache_key].child.prototypes.push(next);
 			}
 		}
-		let ret = this.destination[cache_key];
-		return ret;
+		return this.destination[cache_key];
 	}
 	/** @arg {string} key @arg {{}} value */
 	add_prototype_value(key, value) {
-		let prototypes = this.destination[key].child.prototypes;
-		let index = prototypes.findIndex((e) => e.prototype === value);
+		const prototypes = this.destination[key].child.prototypes;
+		const index = prototypes.findIndex((e) => e.prototype === value);
 		if (index >= 0) {
 			return;
 		}
-		let sub_key = this.get_cache_key(value);
-		let dest_value = this.destination[sub_key];
+		const sub_key = this.get_cache_key(value);
+		const dest_value = this.destination[sub_key];
 		if (dest_value) prototypes.push(dest_value);
 		else {
 			/** @type {destination_index_type} */
-			let sub_value = {
+			const sub_value = {
 				__proto__: null,
 				name: sub_key,
 				prototype: value,
@@ -2369,25 +2368,25 @@ class ReversePrototypeChain {
 		if (this.list.length === 0) {
 			return;
 		}
-		let final = this.list.at(-1);
+		const final = this.list.at(-1);
 		if (final === void 0) throw new Error("Unexpected");
 		this.add_prototype_value(this.null_cache_key, final);
-		let item_0 = this.list.at(-2);
+		const item_0 = this.list.at(-2);
 		this.add_one(final, item_0, -2);
-		for (let x of this.values) {
-			let prototype = Object.getPrototypeOf(x);
-			let cache_key = this.get_cache_key(prototype);
+		for (const x of this.values) {
+			const prototype = Object.getPrototypeOf(x);
+			const cache_key = this.get_cache_key(prototype);
 			if (!this.destination[cache_key]) {
 				this.cache_prototype(cache_key, prototype);
 			}
-			let values = this.destination[cache_key].child.values;
+			const values = this.destination[cache_key].child.values;
 			if (values.includes(x)) continue;
 			values.push(x);
 		}
 	}
 	/** @arg {{}} target */
 	add_target(target) {
-		let prototype = Object.getPrototypeOf(target);
+		const prototype = Object.getPrototypeOf(target);
 		p: {
 			if (prototype === null) {
 				break p;
@@ -2416,17 +2415,17 @@ export_((exports) => {
 /** @arg {AddEventListenerExtension} obj */
 function overwrite_addEventListener(obj) {
 	/** @type {import("./support/dbg/arg_list_item_type.ts").arg_list_item_type[][]} */
-	let arg_list = [];
-	let t = obj;
-	let prototype = obj.get_target_prototype();
-	let target = prototype.addEventListener;
-	let new_target = new Proxy(target, {
+	const arg_list = [];
+	const t = obj;
+	const prototype = obj.get_target_prototype();
+	const target = prototype.addEventListener;
+	const new_target = new Proxy(target, {
 		/** @arg {[type: string, callback: EventListenerOrEventListenerObject|null, options?: boolean|AddEventListenerOptions|undefined]} argArray */
 		apply(target, callback, argArray) {
 			/** @type {{}[]} */
-			let cq = [callback, argArray.length, ...argArray];
+			const cq = [callback, argArray.length, ...argArray];
 			/** @type {import("./support/dbg/arg_list_item_type.ts").arg_list_item_type[]} */
-			let rq = [];
+			const rq = [];
 			cq.forEach((e) => {
 				switch (typeof e) {
 					case "function":
@@ -2459,7 +2458,7 @@ function overwrite_addEventListener(obj) {
 			arg_list.push(rq);
 			x:
 			if (argArray[0] === "message") {
-				let handler = argArray[1];
+				const handler = argArray[1];
 				if (handler === null) break x;
 				if (t.elevated_event_handlers.includes(handler)) break x;
 				argArray[1] = do_message_handler_overwrite(handler);
@@ -2496,7 +2495,7 @@ function do_message_handler_overwrite(handler) {
 		}
 		if (event instanceof MessageEvent) {
 			/** @type {unknown} */
-			let d = event.data;
+			const d = event.data;
 			if (typeof d === "object" && d !== null && "type" in d) {
 				if (d.type === post_message_connect_message_type) {
 					if (api_debug_enabled) {
@@ -2521,10 +2520,10 @@ class ProxyTargetMap {
 export_((exports) => {
 	exports.ProxyTargetMap = ProxyTargetMap;
 });
-let proxyTargetMap = new ProxyTargetMap();
+const proxyTargetMap = new ProxyTargetMap();
 
 /** @type {((arg0: import("./support/dbg/EventListenersT.ts").EventListenersT) => void)[]} */
-let new_elevated_event_handlers = [];
+const new_elevated_event_handlers = [];
 export_((exports) => {
 	exports.new_elevated_event_handlers = new_elevated_event_handlers;
 });
@@ -2660,10 +2659,10 @@ class AddEventListenerExtension {
 	}
 	/** @private @arg {[unknown, unknown, unknown[]]} list */
 	add_to_call_list_impl(list) {
-		let [target, orig_this, args] = list;
+		const [target, orig_this, args] = list;
 		/** @type {[unknown,number,unknown,...unknown[]]} */
-		let real_value = [target, args.length + 1, orig_this, ...args];
-		for (let [key, val] of real_value.entries()) {
+		const real_value = [target, args.length + 1, orig_this, ...args];
+		for (const [key, val] of real_value.entries()) {
 			switch (typeof val) {
 				case "object":
 					this.args_iter_on_object(real_value, key, val);
@@ -2711,16 +2710,14 @@ class AddEventListenerExtension {
 	}
 	/** @private @arg {Node} val */
 	generate_node_id(val) {
-		// @ts-expect-error
 		if (val.__id_holder) return val.__id_holder.value;
 		let list = this.node_list.deref();
 		if (!list) list = [];
 		let ids = this.node_list_ids.deref();
 		if (!ids) ids = [];
 		list.push(new WeakRef(val));
-		let node_id = this.node_id_max++;
-		let id_holder = { value: node_id };
-		// @ts-expect-error
+		const node_id = this.node_id_max++;
+		const id_holder = { value: node_id };
 		val.__id_holder = id_holder;
 		ids.push(new WeakRef(id_holder));
 		this.node_list = new WeakRef(list);
@@ -2728,13 +2725,14 @@ class AddEventListenerExtension {
 	}
 	/** @private @arg {Extract<keyof EventTarget,string>} target */
 	init_overwrite(target) {
-		let t = this;
+		// deno-lint-ignore no-this-alias
+		const t = this;
 		switch (target) {
 			case "addEventListener":
 				/** @arg {[string,EventListenerOrEventListenerObject,any?]} args */
 				t.target_prototype[target] = function (...args) {
 					if (api_debug_enabled) t.add_to_call_list([target, this, args]);
-					let original_function = args[1];
+					const original_function = args[1];
 					if (!t.elevated_event_handlers.includes(original_function)) {
 						/** @arg {[evt: Event]} args */
 						args[1] = function (...args) {
@@ -2764,8 +2762,8 @@ class AddEventListenerExtension {
 	eventFireInterceptor(arg_function, arg_this, args) {
 		if (args[0] instanceof MessageEvent) {
 			/** @type {MessageEvent<unknown>} */
-			let msg_event = args[0];
-			let d = msg_event.data;
+			const msg_event = args[0];
+			const d = msg_event.data;
 			if (typeof d === "object" && d !== null && "type" in d) {
 				if (d.type === post_message_connect_message_type) {
 					if (api_debug_enabled) {
@@ -2785,8 +2783,6 @@ AddEventListenerExtension.attach_to_api();
 class MappedIterableIterator {
 	/** @arg {IterableIterator<CLS_T>} iterator @arg {(arg0:CLS_T)=>CLS_U} mapper */
 	constructor(iterator, mapper) {
-		// @ts-ignore
-		/** @template T,U @this {MappedIterableIterator<T,U>} */
 		this.next = () => {
 			const result = iterator.next();
 			if (result.done === true) {
@@ -2821,21 +2817,22 @@ class IterExtensions {
 		return Object.getPrototypeOf(x);
 	}
 	static init() {
-		let iterable_map_value = new Map();
-		let iterable_map_iterator_values = iterable_map_value.values();
+		const iterable_map_value = new Map();
+		const iterable_map_iterator_values = iterable_map_value.values();
 		this.init_tree(iterable_map_iterator_values);
 	}
 	/** @arg {IterableIterator<any>} iterable_map_iterator_values */
 	static init_tree(iterable_map_iterator_values) {
 		console.log("[is] [IterableIterator<any>]", iterable_map_iterator_values);
-		let iterable_map_iterator_prototype = this.get_prototype(
+		const iterable_map_iterator_prototype = this.get_prototype(
 			iterable_map_iterator_values,
 		);
 		iterable_map_iterator_prototype.map = MappedIterableIterator.prototype.map;
-		let iterator_prototype = this.get_prototype(
+		const iterator_prototype = this.get_prototype(
 			iterable_map_iterator_prototype,
 		);
-		let object_prototype = this.get_prototype(iterator_prototype);
+		const object_prototype = this.get_prototype(iterator_prototype);
+		// deno-lint-ignore no-debugger
 		if (object_prototype !== Object.prototype) debugger;
 	}
 }
@@ -2843,20 +2840,18 @@ IterExtensions.attach_to_api();
 
 /** @arg {boolean} include_uninteresting */
 function getPlaybackRateMap(include_uninteresting) {
-	let progress_map = new Map();
+	const progress_map = new Map();
 	if (include_uninteresting) {
-		let elem_list = document.querySelectorAll(
+		const elem_list = document.querySelectorAll(
 			"ytd-compact-video-renderer:has(#overlays:not(* > #progress))",
 		);
-		// @ts-expect-error
 		elem_list.length > 0 && progress_map.set("none", [...elem_list]);
 	}
-	let sel = (/** @type {string}*/ e) =>
+	const sel = (/** @type {string}*/ e) =>
 		`ytd-compact-video-renderer:has(#progress[style="width: ${e}%;"])`;
 	for (let i = 0; i <= 100; i++) {
 		if (!include_uninteresting && i === 100) continue;
-		let elem = document.querySelectorAll(sel(i.toString()));
-		// @ts-expect-error
+		const elem = document.querySelectorAll(sel(i.toString()));
 		if (elem.length == 1) progress_map.set("some:" + i, [...elem]);
 		else if (elem.length > 0) progress_map.set("some:" + i, [...elem]);
 	}
@@ -2888,23 +2883,23 @@ class CreateObjURLCache {
 		URL.revokeObjectURL = scope.revokeObjectURL;
 	}
 	static getScope() {
-		let base = this.originalScope;
+		const base = this.originalScope;
 		/** @type {CreateObjURLCache.originalScope} */
-		let scope = { createObjectURL, revokeObjectURL };
+		const scope = { createObjectURL, revokeObjectURL };
 		return scope;
 		/** @arg {[Blob|MediaSource]} args */
 		function createObjectURL(...args) {
-			let ret = base.createObjectURL(...args);
+			const ret = base.createObjectURL(...args);
 			CreateObjURLCache.cache.set(ret, [args, ret, true]);
 			return ret;
 		}
 		/** @arg {[string]} args */
 		function revokeObjectURL(...args) {
-			let key = args[0];
-			let cache_value = CreateObjURLCache.cache.get(key);
+			const key = args[0];
+			const cache_value = CreateObjURLCache.cache.get(key);
 			CreateObjURLCache.cache.delete(key);
 			if (cache_value) CreateObjURLCache.expired.push(cache_value);
-			let ret = base.revokeObjectURL(...args);
+			const ret = base.revokeObjectURL(...args);
 			return ret;
 		}
 	}
@@ -2923,18 +2918,18 @@ class RepeatImpl_0 {
 	/** @arg {string} value @arg {number} times */
 	static get(value, times) {
 		if (!this.map.has(value)) this.map.set(value, new Map());
-		let tm_map = this.map.get(value);
+		const tm_map = this.map.get(value);
 		if (!tm_map) {
 			throw new Error("no-reach");
 		}
 		if (tm_map.has(times)) {
-			let rep = tm_map.get(times);
+			const rep = tm_map.get(times);
 			if (!rep) {
 				throw new Error("no-reach");
 			}
 			return rep;
 		} else {
-			let rep = new this(value, times);
+			const rep = new this(value, times);
 			tm_map.set(times, rep);
 			return rep;
 		}
@@ -2942,18 +2937,18 @@ class RepeatImpl_0 {
 	/** @arg {number} value @arg {number} times */
 	static get_num(value, times) {
 		if (!this.map_num.has(value)) this.map_num.set(value, new Map());
-		let tm_map = this.map_num.get(value);
+		const tm_map = this.map_num.get(value);
 		if (!tm_map) {
 			throw new Error("no-reach");
 		}
 		if (tm_map.has(times)) {
-			let rep = tm_map.get(times);
+			const rep = tm_map.get(times);
 			if (!rep) {
 				throw new Error("no-reach");
 			}
 			return rep;
 		} else {
-			let rep = new this(value, times);
+			const rep = new this(value, times);
 			tm_map.set(times, rep);
 			return rep;
 		}
@@ -2997,7 +2992,7 @@ class CompressRepeated {
 	/** @arg {string|any[]} arr */
 	static can_compress_items(arr) {
 		for (let i = 0; i < arr.length; i++) {
-			let item = arr[i];
+			const item = arr[i];
 			if (typeof item !== "string") return false;
 			if (item.match(/[a-zA-Z]/) === null) return false;
 		}
@@ -3006,14 +3001,14 @@ class CompressRepeated {
 	/** @arg {string[]} arr */
 	try_compress(arr) {
 		/** @type {(string|RepeatImpl_0<string>)[]} */
-		let ret = [];
+		const ret = [];
 		for (let i = 0; i < arr.length; i++) {
-			let item = arr[i];
+			const item = arr[i];
 			if (i + 1 < arr.length && item === arr[i + 1]) {
 				let off = 0;
 				while (item === arr[i + off + 1]) off++;
 				if (off > 0) {
-					let rep_count = off + 1;
+					const rep_count = off + 1;
 					ret.push(RepeatImpl_0.get(item, rep_count));
 					i += off;
 					continue;
@@ -3026,12 +3021,12 @@ class CompressRepeated {
 	/** @arg {(string|RepeatImpl_0<string>)[]} arr */
 	try_decompress(arr) {
 		/** @type {string[]} */
-		let ret = [];
+		const ret = [];
 		for (let i = 0; i < arr.length; i++) {
-			let item = arr[i];
+			const item = arr[i];
 			if (!item) continue;
 			if (item instanceof RepeatImpl_0) {
-				let { value, times } = item;
+				const { value, times } = item;
 				for (let j = 0; j < times; j++) ret.push(value);
 				continue;
 			}
@@ -3041,11 +3036,10 @@ class CompressRepeated {
 	}
 	/** @arg {string[]} arr */
 	compress_array(arr) {
-		let success, res;
-		[success, res] = this.try_decompress(arr);
+		const [success, res] = this.try_decompress(arr);
 		if (success) arr = res;
 		{
-			let [success, res] = this.try_compress(arr);
+			const [success, res] = this.try_compress(arr);
 			this.try_decompress(res);
 			if (success) return res;
 		}
@@ -3068,12 +3062,12 @@ add_function(W);
 /** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys, values) {
 	/** @type {[typeof keys[0], typeof values[0]][]} */
-	let ret = [];
+	const ret = [];
 	for (let i = 0; i < keys.length; i++) {
-		let k = keys[i];
-		let v = values[i];
+		const k = keys[i];
+		const v = values[i];
 		/** @type {[typeof k, typeof v]} */
-		let item = [k, v];
+		const item = [k, v];
 		ret.push(item);
 	}
 	return ret;
@@ -3192,10 +3186,10 @@ class MulCompression extends BaseCompression {
 	/** @arg {string[]} arr */
 	try_compress(arr) {
 		/** @type {CompressState<string, string>} */
-		let state = new CompressState(arr);
+		const state = new CompressState(arr);
 		for (; state.i < state.arr.length; state.i++) {
-			let item = state.arr[state.i];
-			let use_item = this.compress_rle(state, item);
+			const item = state.arr[state.i];
+			const use_item = this.compress_rle(state, item);
 			if (use_item) continue;
 			state.ret.push(item);
 		}
@@ -3204,10 +3198,10 @@ class MulCompression extends BaseCompression {
 	/** @arg {number[]} arr */
 	try_compress_number(arr) {
 		/** @type {CompressState<number, number>} */
-		let state = new CompressState(arr);
+		const state = new CompressState(arr);
 		for (; state.i < state.arr.length; state.i++) {
-			let item = state.arr[state.i];
-			let use_item = this.compress_rle_number(state, item);
+			const item = state.arr[state.i];
+			const use_item = this.compress_rle_number(state, item);
 			if (use_item) continue;
 			state.ret.push(item);
 		}
@@ -3215,12 +3209,12 @@ class MulCompression extends BaseCompression {
 	}
 	/** @arg {string[]} arr */
 	try_decompress(arr) {
-		let ret = [];
+		const ret = [];
 		for (let i = 0; i < arr.length; i++) {
-			let item = arr[i];
+			const item = arr[i];
 			if (!item) continue;
-			let [item_type, num_data] = [item[0], item.slice(1)];
-			let parsed = parseInt(num_data);
+			const [item_type, num_data] = [item[0], item.slice(1)];
+			const parsed = parseInt(num_data);
 			if (!Number.isNaN(parsed)) {
 				for (let j = 0; j < parsed; j++) ret.push(item_type);
 				continue;
@@ -3239,10 +3233,10 @@ class DisabledMulCompression extends MulCompression {
 	/** @template T @arg {T[]} arr @returns {[true, import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	try_compress_T(arr) {
 		/** @type {CompressState<T,import("./support/dbg/AnyOrRepeat_0.ts").AnyOrRepeat_0<T>>} */
-		let state = new CompressState(arr);
+		const state = new CompressState(arr);
 		for (; state.i < state.arr.length; state.i++) {
-			let item = state.arr[state.i];
-			let use_item = this.compress_rle_T_X(state, item);
+			const item = state.arr[state.i];
+			const use_item = this.compress_rle_T_X(state, item);
 			if (use_item) continue;
 			state.ret.push(item);
 		}
@@ -3272,7 +3266,7 @@ export_((exports) => {
 /** @type {HTMLIFrameElement|null} */
 let cached_iframe = null;
 /** @type {string[]} */
-let function_as_string_vec = [];
+const function_as_string_vec = [];
 export_((exports) => {
 	exports.function_as_string_vec = function_as_string_vec;
 });
@@ -3282,15 +3276,15 @@ function resolve_function_constructor() {
 		throw new Error("Javascript Runtime without DOM not supported (node js)");
 	}
 	if (!cached_iframe) {
-		let iframe_element = document.createElement("iframe");
+		const iframe_element = document.createElement("iframe");
 		document.head.append(iframe_element);
 		cached_iframe = iframe_element;
 	}
 
 	if (!cached_iframe.contentWindow) throw new Error("No content window");
 
-	let content_window_r = cached_iframe.contentWindow;
-	let content_window = content_window_r.self;
+	const content_window_r = cached_iframe.contentWindow;
+	const content_window = content_window_r.self;
 
 	return content_window.Function;
 }
@@ -3312,7 +3306,7 @@ add_function(wasm_encode_section);
 // Looked at .zz impl for https://github.com/little-core-labs/varint-wasm
 /** @arg {number[]} arr */
 function wasm_encode_string(arr) {
-	let out = [];
+	const out = [];
 	let n = arr.length;
 	while ((n & ~0x7f) != 0) {
 		out.push(n & 0xff | 0x80);
@@ -3360,13 +3354,13 @@ export_((exports) => {
 
 /** @arg {(Promise<{}>|{})[]} arr @arg {Promise<{}>|{}} item */
 async function remove_awaited(arr, item) {
-	let obj_idx = arr.indexOf(item);
+	const obj_idx = arr.indexOf(item);
 	if (obj_idx > -1) {
 		arr.splice(obj_idx, 1);
 		return;
 	}
 	for (let i = arr.length - 1; i >= 0; i--) {
-		let ready_res = await Promise.race([arr[i], null]);
+		const ready_res = await Promise.race([arr[i], null]);
 		if (ready_res === item) {
 			arr.splice(i, 1);
 			return;
@@ -3383,14 +3377,13 @@ class DataFetcher {
 		this.aborted = false;
 	}
 	async begin_fetch() {
-		let data = await fetch(this.target_url);
+		const data = await fetch(this.target_url);
 		if (!data.body) throw new Error("InvalidResponse: Response has no body");
 		this.reader = data.body.getReader();
 	}
 
 	async *read_body_generator() {
-		let state = this;
-		if (!state.reader) {
+		if (!this.reader) {
 			throw new Error(
 				"InvalidState: reader missing, call `DataFetcher.start` first",
 			);
@@ -3398,18 +3391,18 @@ class DataFetcher {
 		/** @typedef {ReadableStreamReadResult<Uint8Array>} ReadRes */
 		/** @typedef {{type:"init"}|{type:"done"|"read"|"wait_start"|"wait_result"}|{type:"read_result",value:ReadRes}} Res */
 		/** @type {(Promise<Res>|Res)[]} */
-		let pa = [{ type: "init" }];
+		const pa = [{ type: "init" }];
 		for (; pa.length > 0;) {
-			if (state.aborted) break;
-			let iter = await Promise.race(pa);
+			if (this.aborted) break;
+			const iter = await Promise.race(pa);
 			await remove_awaited(pa, iter);
 			if (iter.type === "read_result") {
-				let inner = iter.value;
+				const inner = iter.value;
 				if (inner.done) {
 					pa.push({ type: "done" });
 					continue;
 				}
-				let value = inner.value;
+				const value = inner.value;
 				yield {
 					type: "read_value",
 					value,
@@ -3418,13 +3411,13 @@ class DataFetcher {
 			} else if (iter.type === "wait_result") pa.push({ type: "wait_start" });
 			else if (iter.type === "wait_start") {
 				pa.push(
-					new Promise(function (a) {
-						state.timeout_id = setTimeout(a, 30, { type: "wait_result" });
+					new Promise((a) => {
+						this.timeout_id = setTimeout(a, 30, { type: "wait_result" });
 					}),
 				);
 			} else if (iter.type === "read") {
 				pa.push(
-					state.reader.read().then((e) => ({
+					this.reader.read().then((e) => ({
 						type: "read_result",
 						value: e,
 					})),
@@ -3441,14 +3434,14 @@ class DataFetcher {
 	}
 	async read_body() {
 		await this.begin_fetch();
-		var wasm_return = this.read_body_generator();
+		const wasm_return = this.read_body_generator();
 		let req = new Uint8Array(0);
 		let idx = 0;
 		for (;;) {
-			var cur = await wasm_return.next();
+			const cur = await wasm_return.next();
 			if (cur.done) break;
-			let result = cur.value;
-			let inner = result.value;
+			const result = cur.value;
+			const inner = result.value;
 			req = new Uint8Array(idx + inner.length);
 			req.set(inner, idx);
 			idx += inner.length;
@@ -3458,13 +3451,13 @@ class DataFetcher {
 }
 
 async function decode_wasm_data() {
-	async function fetch_wasm_module() {
-		let fetcher = new DataFetcher(
+	function fetch_wasm_module() {
+		const fetcher = new DataFetcher(
 			"https://raw.githack.com/little-core-labs/varint-wasm/master/varint.wasm",
 		);
 		return fetcher.read_body();
 	}
-	let wasm_module_bytes = await fetch_wasm_module();
+	const wasm_module_bytes = await fetch_wasm_module();
 	console.log(wasm_module_bytes);
 }
 add_function(decode_wasm_data);
@@ -3472,67 +3465,67 @@ add_function(decode_wasm_data);
 /** @arg {import("./support/dbg/SafeFunctionPrototype.ts").SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
 	/** @type {["apply","bind","call"]}*/
-	let keys = ["apply", "bind", "call"];
-	let apply_ = safe_function_prototype[keys[0]];
-	let bind_ = safe_function_prototype[keys[1]];
-	let call_ = safe_function_prototype[keys[2]];
+	const keys = ["apply", "bind", "call"];
+	const apply_ = safe_function_prototype[keys[0]];
+	const bind_ = safe_function_prototype[keys[1]];
+	const call_ = safe_function_prototype[keys[2]];
 	/** @type {[typeof apply_,typeof bind_,typeof call_]}*/
-	let funcs = [apply_, bind_, call_];
+	const funcs = [apply_, bind_, call_];
 
-	let bound_bind = apply_.bind(bind_);
-	let bound_call = apply_.bind(call_);
-	let bound_apply = apply_.bind(apply_);
+	const bound_bind = apply_.bind(bind_);
+	const bound_call = apply_.bind(call_);
+	const bound_apply = apply_.bind(apply_);
 
 	/** @type {[typeof bound_apply,typeof bound_bind,typeof bound_call]}*/
-	let bound_funcs = [
+	const bound_funcs = [
 		bound_apply,
 		bound_call,
-		bound_apply,
+		bound_bind,
 	];
 	return { funcs, bound_funcs };
 }
 
 function run_modules_plugin() {
-	let function_prototype = resolve_function_constructor().prototype;
+	const function_prototype = resolve_function_constructor().prototype;
 
-	let function_prototype_call = function_prototype.call;
-	let function_prototype_apply = function_prototype.apply;
-	let function_prototype_bind = function_prototype.bind;
-
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_call_call = function_prototype_call.bind(function_prototype_call);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_call_apply = function_prototype_call.bind(function_prototype_apply);
-	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_call_bind = function_prototype_call.bind(function_prototype_bind);
+	const function_prototype_call = function_prototype.call;
+	const function_prototype_apply = function_prototype.apply;
+	const function_prototype_bind = function_prototype.bind;
 
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_bind_call = function_prototype_bind.bind(function_prototype_call);
+	const bound_call_call = function_prototype_call.bind(function_prototype_call);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_bind_apply = function_prototype_bind.bind(function_prototype_apply);
+	const bound_call_apply = function_prototype_call.bind(function_prototype_apply);
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	const bound_call_bind = function_prototype_call.bind(function_prototype_bind);
+
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	const bound_bind_call = function_prototype_bind.bind(function_prototype_call);
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	const bound_bind_apply = function_prototype_bind.bind(function_prototype_apply);
 	/** @type {(thisArg:Function, bindThisArg:any, ...argArray:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_bind_bind = function_prototype_bind.bind(function_prototype_bind);
+	const bound_bind_bind = function_prototype_bind.bind(function_prototype_bind);
 
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_apply_call = function_prototype_apply.bind(function_prototype_call);
+	const bound_apply_call = function_prototype_apply.bind(function_prototype_call);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, argArray?:any])=>any} */
-	let bound_apply_apply = function_prototype_apply.bind(
+	const bound_apply_apply = function_prototype_apply.bind(
 		function_prototype_apply,
 	);
 	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
-	let bound_apply_bind = function_prototype_apply.bind(function_prototype_bind);
+	const bound_apply_bind = function_prototype_apply.bind(function_prototype_bind);
 
-	let safe_function_prototype = {
+	const safe_function_prototype = {
 		apply: function_prototype.apply,
 		bind: function_prototype.bind,
 		call: function_prototype.call,
 	};
 	console.log(safe_function_prototype);
 
-	let info = gen_function_prototype_use(safe_function_prototype);
+	const info = gen_function_prototype_use(safe_function_prototype);
 	console.log(info);
 
-	let bound_function_prototype_vec = [
+	const bound_function_prototype_vec = [
 		[function_prototype_call, function_prototype_call, bound_call_call],
 		[function_prototype_call, function_prototype_apply, bound_call_apply],
 		[function_prototype_call, function_prototype_bind, bound_call_bind],
@@ -3547,7 +3540,7 @@ function run_modules_plugin() {
 	Function.prototype.call = function_prototype_call_inject;
 	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg, ...argArray) {
-		let ret = bound_apply_call(this, [thisArg, ...argArray]);
+		const ret = bound_apply_call(this, [thisArg, ...argArray]);
 		if (function_as_string_vec.indexOf(this.toString()) == -1) {
 			function_as_string_vec.push(this.toString());
 		}
@@ -3556,7 +3549,7 @@ function run_modules_plugin() {
 	/** @this {()=>void} @arg {any} tv @arg {any} r */
 	function function_prototype_apply_inject(tv, r) {
 		if (r === void 0 || r === null) r = [];
-		let ret = bound_apply_call(this, [tv, ...r]);
+		const ret = bound_apply_call(this, [tv, ...r]);
 		if (function_as_string_vec.indexOf(this.toString()) == -1) {
 			function_as_string_vec.push(this.toString());
 		}
