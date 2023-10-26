@@ -3,6 +3,7 @@ const word3_dict=[
 	"symbol",
 	"poem",
 	"book",
+	"performance",
 ];
 /**
  * @template T
