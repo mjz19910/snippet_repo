@@ -103,6 +103,8 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "instrument":
+			case "of":
 			case "in":
 			case "rare":
 			case "local":
