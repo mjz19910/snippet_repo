@@ -316,6 +316,23 @@ async function one_page() {
 }
 async function run() {
   const arr = [];
+  const description_file = await Deno.open("./description_cache.json", {
+    read: true,
+    write: true,
+    create: true,
+  });
+  let description_data = new Uint8Array(0);
+  const buf = new Uint8Array(1024);
+  do {
+    const n = await description_file.read(buf);
+    if (n === null) break;
+    const prev_end = description_data.length;
+    const prev_data = description_data;
+    description_data = new Uint8Array(prev_end + n);
+    description_data.set(prev_data, 0);
+    description_data.set(buf.slice(0, n), prev_end);
+  } while (true);
+  const text = new TextDecoder().decode(buf);
   const before_wait = dict.size;
   for (let j = 0; j < 2; j++) {
     const request_count = 20;
@@ -333,6 +350,7 @@ async function run() {
   }
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   console.log(rng_map);
+  description_file.close();
 }
 await run();
 
