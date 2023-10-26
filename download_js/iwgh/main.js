@@ -135,11 +135,13 @@ function parse_sentence(str) {
 		let parsed=[];
 		let parsed_src=str.split(/([ ,]|\.\.\.)/);
 		console.log(parsed_src);
-		parsed_src.shift(); parsed_src.shift();
-		parsed_src.shift(); parsed_src.shift();
+		let word1=next_word(parsed_src);
+		if(word1!=="This") throw new Error("first word not 'This'");
+		let word2=next_word(parsed_src);
+		if(word2!=="is") throw new Error("second word not 'is'");
 		parsed.push({type: "this_is"});
-		let word1=parsed_src.shift();
-		switch(word1) {
+		let word3=next_word(parsed_src);
+		switch(word3) {
 			case "a": {
 				parse_a(parsed,parsed_src);
 			} break;
