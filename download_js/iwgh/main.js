@@ -377,9 +377,9 @@ async function run() {
   }
   const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   console.log(rng_map);
-  write_entire_file(description_file, description_set_arr);
   const dictionary_arr = [...dict.values()].sort();
-  write_entire_file(dictionary_file, dictionary_arr);
+  await write_entire_file(description_file, description_set_arr);
+  await write_entire_file(dictionary_file, dictionary_arr);
   description_file.close();
   dictionary_file.close();
 }
