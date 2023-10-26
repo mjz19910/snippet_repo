@@ -1,2 +1,2 @@
 
-export type ExcludeInner<T extends any[],U extends any[]>=Exclude<T[number],U[number]>[];
+export type ExcludeInner<T extends unknown[],U extends unknown[]>=Exclude<T[number],U[number]>[];
