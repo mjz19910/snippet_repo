@@ -259,6 +259,25 @@ function parse_sentence(str) {
 	parse_next_word(parsed,parsed_src);
 	return str;
 }
+/** @type {Map<string,number>} */
+let rng_word_num_map=new Map;
+/**
+ * @param {string} word
+ */
+function parse_rng_word(word) {
+	let word_chars=word.split("");
+	for(let char_idx=0;char_idx<word_chars.length-1;char_idx++) {
+		let pair1=word_chars[char_idx];
+		let pair2=word_chars[char_idx+1];
+		let pair_key=pair1+pair2;
+		let seq_val=rng_word_num_map.get(pair_key);
+		if(seq_val!==void 0) {
+			rng_word_num_map.set(pair_key,seq_val+1);
+		} else {
+			rng_word_num_map.set(pair_key,1);
+		}
+	}
+}
 /**
  * @param {string} str
  * @param {string} needle
@@ -296,6 +315,7 @@ async function run() {
 				page_arr.forEach(v => {
 					let [word,description]=v.split(" - ");
 					word=word.slice(3,-4);
+					parse_rng_word(word);
 					dict.add(word);
 					description=parse_sentence(description);
 					description_set.add(description);
