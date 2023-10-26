@@ -13,6 +13,8 @@ const word3_dict=[
 	"hairstyle",
 	"palace",
 	"pastime",
+	"plant",
+	"landscape",
 ];
 /**
  * @template T
