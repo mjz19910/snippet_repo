@@ -4518,7 +4518,7 @@ export_((exports) => {
 
 class FlagHandler {
 	is_none() {
-		return this.f.none;
+		return !this.f.syn && !this.f.ack;
 	}
 	is_syn() {
 		return this.f.syn;

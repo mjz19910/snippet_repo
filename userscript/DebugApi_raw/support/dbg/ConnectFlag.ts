@@ -6,7 +6,6 @@ export enum ConnectFlag_base {
 	Ack=1<<1
 }
 export type ConnectFlag={
-	none: boolean;
 	ack: boolean;
 	syn: boolean;
 };
