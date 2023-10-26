@@ -337,13 +337,16 @@ async function write_entire_file(file, obj) {
   }
   await file.truncate(buf.length);
 }
-async function run() {
-  const arr = [];
-  const description_file = await Deno.open("./description_cache.json", {
+function deno_default_open(filename) {
+  return Deno.open(filename, {
     read: true,
     write: true,
     create: true,
   });
+}
+async function run() {
+  const arr = [];
+  const description_file = await deno_default_open("./description_cache.json");
   const description_str = await read_entire_file(description_file);
   if (description_str !== "") {
     const description_load_arr = JSON.parse(description_str);
@@ -351,11 +354,7 @@ async function run() {
       description_set.add(description_item);
     }
   }
-  const dictionary_file = await Deno.open("./random_dictionary.json", {
-    read: true,
-    write: true,
-    create: true,
-  });
+  const dictionary_file = await deno_default_open("./random_dictionary.json");
   const dictionary_str = await read_entire_file(dictionary_file);
   if (dictionary_str !== "") {
     const load_arr = JSON.parse(dictionary_str);
@@ -387,9 +386,9 @@ async function run() {
       if (i % 5 === 0) arr.push(cur_item = []);
       cur_item.push(rng_map[i]);
     }
-		for(const part of arr) {
-			console.log(part);
-		}
+    for (const part of arr) {
+      console.log(part);
+    }
   }
   console.log("description_arr.length", description_arr.length);
   console.log("dictionary.length", dictionary_arr.length);
