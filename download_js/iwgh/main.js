@@ -118,16 +118,18 @@ function parse_sentence(str) {
 	if(str.startsWith("This is ")) {
 		/** @type {ParsedArrItem[]} */
 		let parsed=[];
-		let parsed_src=str.split(/(?:[ ,]|\.\.\.)/);
+		let parsed_src=str.split(/([ ,]|\.\.\.)/);
+		console.log(parsed_src);
+		parsed_src.shift(); parsed_src.shift();
 		parsed_src.shift(); parsed_src.shift();
 		parsed.push({type: "this_is"});
-		switch(parsed_src[0]) {
+		let word1=parsed_src.shift();
+		switch(word1) {
 			case "a": {
 				parse_a(parsed,parsed_src);
 			} break;
 			case "usually": {
 				parsed.push({type: "usually"});
-				parsed_src.shift();
 				let next=parsed_src.shift();
 				if(next==="a") {
 					parsed_src.unshift(next);
