@@ -7,8 +7,26 @@ function parse_sentence(str) {
 	if(str.endsWith(".")) {
 		str=str.slice(0,-1);
 	}
-	if(str.endsWith("")) {
-
+	if(str.endsWith(", especially if you suspect you are being lied to")) {
+		str=str.slice(0,str.length-", especially if you suspect you are being lied to".length);
+	}
+	if(str.endsWith(", in that meaning used by the younger generation")) {
+		str=str.slice(0,str.length-", in that meaning used by the younger generation".length);
+	}
+	if(str.endsWith(", but the exact meaning was lost")) {
+		str=str.slice(0,str.length-", but the exact meaning was lost".length);
+	}
+	if(str.endsWith(", as a profanity")) {
+		str=str.slice(0,str.length-", as a profanity".length);
+	}
+	if(str.endsWith(" but the meaning may vary depending on time of the day")) {
+		str=str.slice(0,str.length-" but the meaning may vary depending on time of the day".length);
+	}
+	if(str.endsWith("... or something like that")) {
+		str=str.slice(0,str.length-"... or something like that".length);
+	}
+	if(str.startsWith("This is ")) {
+		let parsed=["This","is"];
 	}
 	return str;
 }
