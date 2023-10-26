@@ -47,15 +47,6 @@ const word3_dict = [
   "pipe",
 ];
 /**
- * @template T
- * @param {T[]} arr
- */
-function arr_end(arr) {
-  let v = arr.at(-1);
-  if (v === void 0) throw new Error("arr_end");
-  return v;
-}
-/**
  * @param {string[]} arr
  */
 function next_word(arr) {
@@ -89,7 +80,7 @@ function next_word(arr) {
  */
 function parse_next_word(parsed, parsed_src) {
   if (parsed_src.length == 0) return;
-  let cur_word = next_word(parsed_src);
+  const cur_word = next_word(parsed_src);
   if (cur_word === null) return;
   if (word3_dict.includes(cur_word)) {
     parsed.push({ type: "dictionary_word", value: cur_word });
@@ -245,12 +236,12 @@ function parse_sentence(str) {
     str = str.slice(0, -1);
   }
   /** @type {ParsedArrItem[]} */
-  let parsed = [];
+  const parsed = [];
   let parsed_src = str.split(/([ ,]|\.\.\.)/);
   {
-    let tmp_arr = [];
+    const tmp_arr = [];
     for (; parsed_src.length > 0;) {
-      let word = next_word(parsed_src);
+      const word = next_word(parsed_src);
       if (word === null) throw new Error("Bad iter");
       tmp_arr.push(word);
     }
@@ -260,7 +251,7 @@ function parse_sentence(str) {
   return str;
 }
 /** @type {Map<string,number>} */
-let rng_word_num_map = new Map();
+const rng_word_num_map = new Map();
 /**
  * @param {string} word
  */
@@ -272,12 +263,12 @@ function parse_rng_word(word) {
   if (word.startsWith("ch")) {
     word = word.slice(2);
   }
-  let word_chars = word.split("");
+  const word_chars = word.split("");
   for (let char_idx = 0; char_idx < word_chars.length - 1; char_idx++) {
-    let pair1 = word_chars[char_idx];
-    let pair2 = word_chars[char_idx + 1];
-    let pair_key = pair1 + pair2;
-    let seq_val = rng_word_num_map.get(pair_key);
+    const pair1 = word_chars[char_idx];
+    const pair2 = word_chars[char_idx + 1];
+    const pair_key = pair1 + pair2;
+    const seq_val = rng_word_num_map.get(pair_key);
     if (seq_val !== void 0) {
       rng_word_num_map.set(pair_key, seq_val + 1);
     } else {
@@ -293,11 +284,11 @@ function parse_rng_word(word) {
 function split_at(str, needle) {
   let idx = str.indexOf(needle);
   if (idx === -1) return [str];
-  let n_len = needle.length;
-  let arr = [];
+  const n_len = needle.length;
+  const arr = [];
   let start = 0;
   do {
-    let sp = str.slice(start, idx + n_len);
+    const sp = str.slice(start, idx + n_len);
     arr.push(sp);
     start = idx + n_len;
     idx = str.indexOf(needle, start);
@@ -305,10 +296,10 @@ function split_at(str, needle) {
   return arr;
 }
 async function one_page() {
-  let res = await fetch("https://louigiverona.com/iwgh/?page=dictionary");
+  const res = await fetch("https://louigiverona.com/iwgh/?page=dictionary");
   let rt = await res.text();
-  let start_pos = rt.indexOf("table ", rt.indexOf("table ") + 43) + 57;
-  let end_pos = rt.indexOf("</table>");
+  const start_pos = rt.indexOf("table ", rt.indexOf("table ") + 43) + 57;
+  const end_pos = rt.indexOf("</table>");
   rt = rt.slice(start_pos + 26, end_pos - 10);
   let page_arr = split_at(rt, "</p>");
   page_arr = page_arr.map((v) => v.slice(3, -4));
@@ -322,10 +313,10 @@ async function one_page() {
   });
 }
 async function run() {
-  let dict = new Set();
-  let description_set = new Set();
-  let arr = [];
-  let before_wait = dict.size;
+  const dict = new Set();
+  const description_set = new Set();
+  const arr = [];
+  const before_wait = dict.size;
   for (let j = 0; j < 20; j++) {
     const request_count = 20;
     for (let i = 0; i < request_count; i++) {
@@ -335,12 +326,12 @@ async function run() {
     arr.length = 0;
   }
   console.log("dict word num", dict.size - before_wait);
-  let description_set_arr = [...description_set.values()].sort();
-  let description_arr = description_set_arr.slice(0, 5);
-  for (let description of description_arr) {
+  const description_set_arr = [...description_set.values()].sort();
+  const description_arr = description_set_arr.slice(0, 5);
+  for (const description of description_arr) {
     console.log("%o", description);
   }
-  let rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
+  const rng_map = [...rng_word_num_map.entries()].sort((a, b) => b[1] - a[1]);
   console.log(rng_map);
 }
 await run();
