@@ -331,7 +331,8 @@ async function run() {
 	for(let description of description_arr) {
 		console.log("%o",description);
 	}
-	console.log(rng_word_num_map);
+	let rng_map=[...rng_word_num_map.entries()].sort((a,b) => b[1]-a[1]);
+	console.log(rng_map);
 }
 await run();
 
