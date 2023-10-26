@@ -336,16 +336,16 @@ function parse_rng_word(word) {
     let w2 = word;
     do {
       if (word_starts_with_vowel(w2)) {
-        word_arr.push(w2[0]);
+        word_arr.push("v:" + w2[0]);
         w2 = w2.slice(1);
       }
       const seq_len = word_starts_with_consonant_seq(w2);
       if (seq_len === null) break;
-      word_arr.push(w2.slice(0, seq_len));
+      word_arr.push("c:" + w2.slice(0, seq_len));
       w2 = w2.slice(seq_len);
     } while (w2 !== "");
-    if (word_arr.length > 7) {
-      console.log(word_arr.length);
+    if (word_arr.length > 6) {
+      console.log(word_arr.length, word_arr.join(","));
     }
   }
   if (word_starts_with_vowel(word)) {
