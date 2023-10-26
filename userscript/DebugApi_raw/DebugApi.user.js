@@ -4678,7 +4678,7 @@ class Socket {
 	/** @arg {import("./support/dbg/ConnectionMessage.ts").ConnectionMessage} message */
 	client_connect(message) {
 		if (testing_tcp) {
-			console.log("on_client_connect", message, this.m_event_source);
+			console.log("on_client_connect", message);
 		}
 	}
 	/** @arg {MessageEvent<import("./support/dbg/ConnectionMessage.ts").ConnectionMessage>} event */
