@@ -40,15 +40,7 @@ declare global {
 		_: 1;
 	};
 	export class CSSStyleSheet {
-		opt: CSSStyleSheetInit|undefined;
 		constructor(options?: CSSStyleSheetInit);
-	}
-}
-
-export class CSSStyleSheet {
-	opt: CSSStyleSheetInit|undefined;
-	constructor(options?: CSSStyleSheetInit) {
-		this.opt=options;
 	}
 }
 
