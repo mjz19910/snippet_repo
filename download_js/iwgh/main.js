@@ -74,7 +74,6 @@ function parse_sentence(str) {
 			case "national": break x;
 			case "popular": {
 				let word2=parsed_src.shift();
-				console.log(["w1",word1,"w2",word2]);
 				if(word2===void 0) throw new Error("word2 null");
 				if(!word3_dict.includes(word2)) {
 					console.log("@w3",["w2",word2]);
