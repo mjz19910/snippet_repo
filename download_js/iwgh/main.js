@@ -294,6 +294,9 @@ function split_at(str, needle) {
 const dict = new Set();
 /** @type {Set<string>} */
 const description_set = new Set();
+const description_set_state = {
+  modified: false,
+};
 async function fetch_one_dictionary_page() {
   const res = await fetch("https://louigiverona.com/iwgh/?page=dictionary");
   let rt = await res.text();
@@ -310,6 +313,7 @@ async function fetch_one_dictionary_page() {
     if (!description_set.has(description)) {
       description_set.add(description);
       console.log(["new_description", description]);
+      description_set_state.modified = true;
     }
   });
 }
@@ -403,11 +407,13 @@ async function run() {
       before_wait = dict.size;
     }
   }
-  const description_arr = [...description_set.values()].sort();
+  if (description_set_state.modified) {
+    const description_arr = [...description_set.values()].sort();
+		console.log("description_arr.length", description_arr.length);
+		await write_entire_file(description_file, description_arr);
+  }
   const dictionary_arr = [...dict.values()].sort();
-  console.log("description_arr.length", description_arr.length);
   console.log("dictionary.length", dictionary_arr.length);
-  await write_entire_file(description_file, description_arr);
   await write_entire_file(dictionary_file, dictionary_arr);
   description_file.close();
   dictionary_file.close();
