@@ -285,6 +285,28 @@ function word_starts_with_vowel(word) {
       return false;
   }
 }
+function word_starts_with_consonant_seq(word) {
+  switch (word.slice(0, 2)) {
+    case "ch":
+    case "th":
+      return 2;
+  }
+  switch (word[0]) {
+    case "b":
+    case "c":
+    case "d":
+    case "f":
+    case "k":
+    case "m":
+    case "n":
+    case "p":
+    case "t":
+    case "v":
+    case "w":
+      return 1;
+  }
+  return null;
+}
 function strip_word_part(word) {
   if (word.startsWith("ch")) return strip_vowel("ch", word);
   if (word.startsWith("th")) return strip_vowel("th", word);
@@ -317,7 +339,10 @@ function parse_rng_word(word) {
         word_arr.push(w2[0]);
         w2 = w2.slice(1);
       }
-      break;
+      const seq_len = word_starts_with_consonant_seq(w2);
+      if (seq_len === null) break;
+      word_arr.push(w2.slice(0, seq_len));
+      w2 = w2.slice(seq_len);
     } while (w2 !== "");
     console.log(word_arr);
   }
