@@ -309,6 +309,7 @@ async function one_page() {
     description = parse_sentence(description);
     if (!description_set.has(description)) {
       description_set.add(description);
+      console.log(["new_description", description]);
     }
   });
 }
