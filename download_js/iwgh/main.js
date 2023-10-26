@@ -147,7 +147,7 @@ function parse_sentence(str) {
 			case "usually":
 			case "generally": {
 				parsed.push({type: word3});
-				let word4=parsed_src.shift();
+				let word4=next_word(parsed_src);
 				if(word4==="a") {
 					parse_a(parsed,parsed_src);
 					break;
