@@ -103,12 +103,24 @@ function parse_sentence(str) {
 			return parse_next_word(parsed,parsed_src);
 		}
 		switch(cur_word) {
+			case "rare":
+			case "local":
+			case "traditional":
+			case "national":
+			case "popular":
+			case "category":
+			case "sort":
+			case "kind":
+			case "type":
+			case "usually":
+			case "This":
+			case "is":
 			case "a": {
-				parsed.push({type: "dictionary_word",value: cur_word});
+				parsed.push({type: "sentence_structure",value: cur_word});
 				return parse_next_word(parsed,parsed_src);
 			}
 			default: {
-				console.log("parsed default:",parsed_src[0]);
+				console.log("parsed default:",cur_word);
 				throw new Error("parse_next_word default");
 			}
 		}
