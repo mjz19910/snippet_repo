@@ -295,6 +295,8 @@ function split_at(str, needle) {
   } while (idx !== -1);
   return arr;
 }
+const dict = new Set();
+const description_set = new Set();
 async function one_page() {
   const res = await fetch("https://louigiverona.com/iwgh/?page=dictionary");
   let rt = await res.text();
@@ -313,11 +315,9 @@ async function one_page() {
   });
 }
 async function run() {
-  const dict = new Set();
-  const description_set = new Set();
   const arr = [];
   const before_wait = dict.size;
-  for (let j = 0; j < 20; j++) {
+  for (let j = 0; j < 2; j++) {
     const request_count = 20;
     for (let i = 0; i < request_count; i++) {
       arr.push(one_page());
