@@ -337,6 +337,11 @@ async function run() {
     write: true,
     create: true,
   });
+  const dictionary_file = await Deno.open("./random_dictionary.json", {
+    read: true,
+    write: true,
+    create: true,
+  });
   let description_str = await read_entire_file(description_file);
   if (description_str !== "") {
     const description_load_arr = JSON.parse(description_str);
