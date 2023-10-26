@@ -33,6 +33,7 @@ function parse_sentence(str) {
 					}
 					case "traditional": break x;
 					case "rare": break x;
+					case "sort": break x;
 					default: {
 						console.log(["w1",word1]);
 					} break x;
