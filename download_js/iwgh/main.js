@@ -294,7 +294,7 @@ function split_at(str, needle) {
 const dict = new Set();
 /** @type {Set<string>} */
 const description_set = new Set();
-async function one_page() {
+async function fetch_one_dictionary_page() {
   const res = await fetch("https://louigiverona.com/iwgh/?page=dictionary");
   let rt = await res.text();
   const start_pos = rt.indexOf("table ", rt.indexOf("table ") + 43) + 57;
@@ -386,7 +386,7 @@ async function run() {
   for (let j = 0; j < (10 * 2); j++) {
     const request_count = 20;
     for (let i = 0; i < request_count; i++) {
-      arr.push(one_page());
+      arr.push(fetch_one_dictionary_page());
     }
     await Promise.all(arr);
     arr.length = 0;
