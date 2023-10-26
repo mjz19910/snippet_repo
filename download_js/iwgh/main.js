@@ -8,6 +8,7 @@ const word3_dict=[
 	"company",
 	"symbol",
 	"poem",
+	"book",
 ];
 /**
  * @template T
